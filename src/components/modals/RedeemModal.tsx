@@ -2,6 +2,7 @@ import { Modal, Space } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
+
 import { NetworkContext } from 'contexts/networkContext'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
@@ -13,6 +14,8 @@ import { CSSProperties, useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formattedNum, formatWad, fromWad, parseWad } from 'utils/formatNumber'
 import { decodeFCMetadata } from 'utils/fundingCycle'
+
+import { CURRENCY_ETH, CURRENCY_USD } from 'constants/currency'
 
 import { useRedeemRate } from '../../hooks/RedeemRate'
 
@@ -75,7 +78,7 @@ export default function RedeemModal({
   })
 
   // 0.5% slippage for USD-denominated projects
-  const minAmount = currentFC?.currency.eq(1)
+  const minAmount = currentFC?.currency.eq(CURRENCY_USD)
     ? rewardAmount?.mul(1000).div(1005)
     : rewardAmount
 
@@ -167,7 +170,7 @@ export default function RedeemModal({
           <p style={statsStyle}>
             Currently worth:{' '}
             <span>
-              <CurrencySymbol currency={0} />
+              <CurrencySymbol currency={CURRENCY_ETH} />
               {formatWad(maxClaimable, { decimals: 4 })}
             </span>
           </p>
@@ -201,7 +204,8 @@ export default function RedeemModal({
               onChange={val => setRedeemAmount(val)}
             />
             <div style={{ fontWeight: 500, marginTop: 20 }}>
-              You will receive {currentFC?.currency.eq(1) ? 'minimum ' : ' '}
+              You will receive{' '}
+              {currentFC?.currency.eq(CURRENCY_USD) ? 'minimum ' : ' '}
               {formatWad(minAmount, { decimals: 8 }) || '--'} ETH
             </div>
           </div>

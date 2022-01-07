@@ -1,4 +1,5 @@
 import { Tooltip } from 'antd'
+
 import { ThemeContext } from 'contexts/themeContext'
 import { BigNumber } from 'ethers'
 
@@ -7,6 +8,8 @@ import { Project } from 'models/subgraph-entities/project'
 import { useContext } from 'react'
 import { formatDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
+
+import { CURRENCY_ETH } from 'constants/currency'
 
 import CurrencySymbol from './CurrencySymbol'
 import Loading from './Loading'
@@ -71,7 +74,7 @@ export default function ProjectCard({
 
             <div style={{ color: colors.text.tertiary }}>
               <span style={{ color: colors.text.primary, fontWeight: 500 }}>
-                <CurrencySymbol currency={0} />
+                <CurrencySymbol currency={CURRENCY_ETH} />
                 {formatWad(project.totalPaid, { decimals })}{' '}
               </span>
               since{' '}

@@ -20,6 +20,7 @@ import { disablePayOverrides } from 'constants/overrides'
 import { readNetwork } from 'constants/networks'
 
 import CurrencySymbol from '../shared/CurrencySymbol'
+import { CURRENCY_ETH } from 'constants/currency'
 
 export default function Pay() {
   const [payIn, setPayIn] = useState<CurrencyOption>(0)
@@ -162,7 +163,7 @@ export default function Pay() {
           {payButton}
           {payIn === 1 && (
             <div style={{ fontSize: '.7rem' }}>
-              Paid as <CurrencySymbol currency={0} />
+              Paid as <CurrencySymbol currency={CURRENCY_ETH} />
               {formatWad(weiPayAmt) || '0'}
             </div>
           )}

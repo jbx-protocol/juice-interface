@@ -1,3 +1,5 @@
+import { Trans } from '@lingui/macro'
+
 export default function UntrackedErc20Notice({
   tokenSymbol,
 }: {
@@ -5,9 +7,11 @@ export default function UntrackedErc20Notice({
 }) {
   return (
     <div>
-      <b>Notice:</b> These balances will not reflect transfers of claimed tokens
-      because the {tokenSymbol} ERC-20 token has not yet been indexed by
-      Juicebox.
+      <Trans>
+        <b>Notice:</b> These balances will not reflect transfers of claimed
+        tokens because the {tokenSymbol} ERC-20 token has not yet been indexed
+        by Juicebox.
+      </Trans>
     </div>
   )
 }

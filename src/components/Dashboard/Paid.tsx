@@ -1,6 +1,6 @@
 import { RightCircleOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
-import { Progress, Tooltip } from 'antd'
+import { Tooltip } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import EtherscanLink from 'components/shared/EtherscanLink'
 import ProjectTokenBalance from 'components/shared/ProjectTokenBalance'
@@ -8,20 +8,17 @@ import TooltipLabel from 'components/shared/TooltipLabel'
 
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import useContractReader from 'hooks/ContractReader'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useEthBalanceQuery } from 'hooks/EthBalance'
-import { ContractName } from 'models/contract-name'
-import { CurrencyOption } from 'models/currency-option'
 import { NetworkName } from 'models/network-name'
-import { CSSProperties, useContext, useMemo, useState } from 'react'
-import { bigNumbersDiff } from 'utils/bigNumbersDiff'
-import { formatWad, fracDiv, fromWad, parseWad } from 'utils/formatNumber'
+import { CSSProperties, useContext, useState } from 'react'
+import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
 import { hasFundingTarget } from 'utils/fundingCycle'
 
 import { readNetwork } from 'constants/networks'
 
 import BalancesModal from '../modals/BalancesModal'
+import FundingProgressBar from './FundingProgressBar'
 
 export default function Paid() {
   const [balancesModalVisible, setBalancesModalVisible] = useState<boolean>()
@@ -34,53 +31,7 @@ export default function Paid() {
 
   const converter = useCurrencyConverter()
 
-  const totalOverflow = useContractReader<BigNumber>({
-    contract: ContractName.TerminalV1,
-    functionName: 'currentOverflowOf',
-    args: projectId ? [projectId.toHexString()] : null,
-    valueDidChange: bigNumbersDiff,
-    updateOn: useMemo(
-      () =>
-        projectId
-          ? [
-              {
-                contract: ContractName.TerminalV1,
-                eventName: 'Pay',
-                topics: [[], projectId.toHexString()],
-              },
-              {
-                contract: ContractName.TerminalV1,
-                eventName: 'Tap',
-                topics: [[], projectId.toHexString()],
-              },
-            ]
-          : undefined,
-      [projectId],
-    ),
-  })
-
-  const overflowInCurrency = converter.wadToCurrency(
-    totalOverflow ?? 0,
-    currentFC?.currency.toNumber() as CurrencyOption,
-    0,
-  )
-
   const { data: ownerBalance } = useEthBalanceQuery(owner)
-
-  const percentPaid = useMemo(
-    () =>
-      balanceInCurrency && currentFC?.target
-        ? fracDiv(balanceInCurrency.toString(), currentFC.target.toString()) *
-          100
-        : 0,
-    [balanceInCurrency, currentFC],
-  )
-
-  // Percent overflow of target
-  const percentOverflow = fracDiv(
-    (overflowInCurrency?.sub(currentFC?.target ?? 0) ?? 0).toString(),
-    (currentFC?.target ?? 0).toString(),
-  )
 
   const primaryTextStyle: CSSProperties = {
     fontWeight: 500,
@@ -249,57 +200,7 @@ export default function Paid() {
           </div>
         ))}
 
-      {hasFundingTarget(currentFC) &&
-        currentFC.target.gt(0) &&
-        (totalOverflow?.gt(0) ? (
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <Tooltip
-              title={
-                <>Funding target: {formatCurrencyAmount(currentFC.target)}</>
-              }
-            >
-              <Progress
-                style={{
-                  width: (1 - percentOverflow) * 100 + '%',
-                  minWidth: 10,
-                }}
-                percent={100}
-                showInfo={false}
-                strokeColor={colors.text.brand.primary}
-              />
-            </Tooltip>
-            <div
-              style={{
-                minWidth: 4,
-                height: 15,
-                borderRadius: 2,
-                background: colors.text.primary,
-                marginLeft: 5,
-                marginRight: 5,
-                marginTop: 3,
-              }}
-            ></div>
-            <Tooltip
-              title={<>Overflow: {formatCurrencyAmount(overflowInCurrency)}</>}
-            >
-              <Progress
-                style={{
-                  width: percentOverflow * 100 + '%',
-                  minWidth: 10,
-                }}
-                percent={100}
-                showInfo={false}
-                strokeColor={colors.text.brand.primary}
-              />
-            </Tooltip>
-          </div>
-        ) : (
-          <Progress
-            percent={percentPaid ? Math.max(percentPaid, 1) : 0}
-            showInfo={false}
-            strokeColor={colors.text.brand.primary}
-          />
-        ))}
+      <FundingProgressBar />
 
       <div
         style={{

@@ -1,5 +1,6 @@
 import React, { CSSProperties } from 'react'
 import { Select } from 'antd'
+import { GlobalOutlined } from '@ant-design/icons'
 
 import { Languages } from 'constants/languages/language-options'
 
@@ -31,18 +32,20 @@ export default function LanguageSelector() {
   }
 
   return (
-    <Select
-      className="medium language-selector"
-      style={{
-        ...selectStyle,
-        width: 82,
-      }}
-      value={Languages[currentSelectedLanguage].short}
-      onChange={newLanguage => {
-        setLanguage(newLanguage)
-      }}
-    >
-      {Object.keys(Languages).map(renderLanguageOption)}
-    </Select>
+    <div className="language-selector">
+      <GlobalOutlined />
+      <Select
+        className="medium"
+        style={{
+          ...selectStyle,
+        }}
+        value={Languages[currentSelectedLanguage].long}
+        onChange={newLanguage => {
+          setLanguage(newLanguage)
+        }}
+      >
+        {Object.keys(Languages).map(renderLanguageOption)}
+      </Select>
+    </div>
   )
 }

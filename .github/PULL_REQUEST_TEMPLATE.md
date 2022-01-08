@@ -11,3 +11,4 @@ changes._
 ## Acceptance checklist
 
 - [ ] I have evaluted the [Approval Guidelines](../../CONTRIBUTING.md#approval-guidelines) for this PR.
+- [ ] I have tested this PR in [all supported browsers](../../CONTRIBUTING.md#browser-support).

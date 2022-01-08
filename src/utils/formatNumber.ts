@@ -1,6 +1,5 @@
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 import { formatUnits, parseUnits } from '@ethersproject/units'
-
 import { WAD_PRECISION } from 'constants/numbers'
 
 type FormatConfig = {
@@ -87,23 +86,47 @@ export const formattedNum = (
 
   if (!str.length) return _empty
 
+  // Return ~0 for >0 numbers trimmed to only zeros
+  function formatNearZero(formatted: string) {
+    if (
+      num?.toString().trim() &&
+      formatted
+        ?.split('')
+        .filter(
+          char => char !== _decimalSeparator && char !== _thousandsSeparator,
+        )
+        .every(char => char === '0')
+    ) {
+      return '~' + formatted
+    }
+
+    return formatted
+  }
+
   if (str.includes(_decimalSeparator)) {
-    const [integer, decimal] = str.split(_decimalSeparator)
+    const [pre, post] = str.split(_decimalSeparator)
 
-    const preDecimal = separateThousands(integer, _thousandsSeparator) || '0'
+    // Formatted preDecimal
+    const formattedPre = separateThousands(pre, _thousandsSeparator) || '0'
 
-    if (decimal === '0') return preDecimal
+    if (post === '0') return formatNearZero(pre)
 
-    const postDecimal = decimal
+    const formattedPost = post
       .substr(0, config?.decimals ?? 18)
       .padEnd(config?.padEnd ? config?.decimals ?? 0 : 0, '0')
 
-    if (!postDecimal || config?.decimals === 0) return preDecimal
+    // If we can ignore postDecimal
+    if (!formattedPost || config?.decimals === 0) {
+      return formatNearZero(formattedPre)
+    }
 
-    return [preDecimal, postDecimal].join(_decimalSeparator)
+    // Return entire preDecimal + postDecimal
+    return formatNearZero([formattedPre, formattedPost].join(_decimalSeparator))
   }
 
-  return separateThousands(str, _thousandsSeparator)
+  const formatted = separateThousands(str, _thousandsSeparator)
+
+  return formatted
 }
 
 export const toUint256 = (num: BigNumber) =>

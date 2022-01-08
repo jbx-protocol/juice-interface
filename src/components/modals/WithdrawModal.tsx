@@ -29,8 +29,14 @@ export default function WithdrawModal({
   const [loading, setLoading] = useState<boolean>()
   const [tapAmount, setTapAmount] = useState<string>()
   const { transactor, contracts } = useContext(UserContext)
-  const { balanceInCurrency, projectId, currentFC, currentPayoutMods, owner } =
-    useContext(ProjectContext)
+  const {
+    balanceInCurrency,
+    projectId,
+    currentFC,
+    currentPayoutMods,
+    owner,
+    terminal,
+  } = useContext(ProjectContext)
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -57,7 +63,13 @@ export default function WithdrawModal({
     : balanceInCurrency
 
   function tap() {
-    if (!transactor || !contracts?.TerminalV1_1 || !currentFC || !projectId)
+    if (
+      !transactor ||
+      !contracts?.TerminalV1_1 ||
+      !currentFC ||
+      !projectId ||
+      !terminal?.version
+    )
       return
 
     setLoading(true)
@@ -74,7 +86,9 @@ export default function WithdrawModal({
     )?.sub(1e12) // Arbitrary value subtracted
 
     transactor(
-      contracts.TerminalV1_1,
+      terminal.version === '1.1'
+        ? contracts.TerminalV1_1
+        : contracts.TerminalV1,
       'tap',
       [
         projectId.toHexString(),

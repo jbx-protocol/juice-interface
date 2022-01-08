@@ -29,22 +29,30 @@ export default function ConfirmPayOwnerModal({
   const [form] = useForm<{ note: string }>()
   const { contracts, transactor } = useContext(UserContext)
   const { userAddress } = useContext(NetworkContext)
-  const { tokenSymbol, tokenAddress, currentFC, projectId, metadata } =
-    useContext(ProjectContext)
+  const {
+    tokenSymbol,
+    tokenAddress,
+    currentFC,
+    projectId,
+    metadata,
+    terminal,
+  } = useContext(ProjectContext)
 
   const converter = useCurrencyConverter()
 
   const usdAmount = converter.weiToUsd(weiAmount)
 
   async function pay() {
-    if (!contracts || !projectId || !transactor) return
+    if (!contracts || !projectId || !transactor || !terminal?.version) return
 
     await form.validateFields()
 
     setLoading(true)
 
     transactor(
-      contracts.TerminalV1_1,
+      terminal.version === '1.1'
+        ? contracts.TerminalV1_1
+        : contracts.TerminalV1,
       'pay',
       [
         projectId.toHexString(),

@@ -22,7 +22,7 @@ export default function ProjectToolDrawerModal({
 }) {
   const { transactor, contracts } = useContext(UserContext)
   const { userAddress } = useContext(NetworkContext)
-  const { projectId, tokenSymbol, owner } = useContext(ProjectContext)
+  const { projectId, tokenSymbol, owner, terminal } = useContext(ProjectContext)
 
   const [loadingAddToBalance, setLoadingAddToBalance] = useState<boolean>()
   const [loadingTransferTokens, setLoadingTransferTokens] = useState<boolean>()
@@ -82,14 +82,23 @@ export default function ProjectToolDrawerModal({
   }
 
   function addToBalance() {
-    if (!transactor || !contracts || !userAddress || !projectId) return
+    if (
+      !transactor ||
+      !contracts ||
+      !userAddress ||
+      !projectId ||
+      !terminal?.version
+    )
+      return
 
     setLoadingAddToBalance(true)
 
     const fields = addToBalanceForm.getFieldsValue(true)
 
     transactor(
-      contracts.TerminalV1_1,
+      terminal.version === '1.1'
+        ? contracts.TerminalV1_1
+        : contracts.TerminalV1,
       'addToBalance',
       [projectId.toHexString()],
       {

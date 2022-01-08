@@ -1,5 +1,9 @@
 import { Button, Divider, Form, Space, Switch } from 'antd'
 import { FormItems } from 'components/shared/formItems'
+import {
+  targetSubFeeToTargetFormatted,
+  targetToTargetSubFeeFormatted,
+} from 'components/shared/formItems/formHelpers'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
@@ -8,15 +12,11 @@ import { useAppDispatch } from 'hooks/AppDispatch'
 import { useEditingFundingCycleSelector } from 'hooks/AppSelector'
 import { useTerminalFee } from 'hooks/TerminalFee'
 import { CurrencyOption } from 'models/currency-option'
-import { useContext, useLayoutEffect, useState, useMemo } from 'react'
+import { useContext, useLayoutEffect, useMemo, useState } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
+import { fromWad, parseWad } from 'utils/formatNumber'
 import { hasFundingTarget, isRecurring } from 'utils/fundingCycle'
 import { helpPagePath } from 'utils/helpPageHelper'
-import { fromWad } from 'utils/formatNumber'
-import {
-  targetToTargetSubFeeFormatted,
-  targetSubFeeToTargetFormatted,
-} from 'components/shared/formItems/formHelpers'
 
 const DEFAULT_TARGET_AFTER_FEE = '10000'
 
@@ -40,10 +40,10 @@ export default function BudgetForm({
   const [targetSubFee, setTargetSubFee] = useState<string>('0')
   const [duration, setDuration] = useState<string>('0')
   const [showFundingFields, setShowFundingFields] = useState<boolean>()
-  const editingFC = useEditingFundingCycleSelector()
   // TODO budgetForm should not depend on dispatch
   const dispatch = useAppDispatch()
   const { terminal } = useContext(ProjectContext)
+  const editingFC = useEditingFundingCycleSelector()
   const { contracts } = useContext(UserContext)
 
   const terminalFee = useTerminalFee(terminal?.version, contracts)
@@ -53,8 +53,12 @@ export default function BudgetForm({
     setTarget(initialTarget)
     setTargetSubFee(targetToTargetSubFeeFormatted(initialTarget, terminalFee))
     setDuration(initialDuration)
-    setShowFundingFields(hasFundingTarget(editingFC))
-  }, [editingFC, initialCurrency, initialDuration, initialTarget, terminalFee])
+    setShowFundingFields(
+      hasFundingTarget({
+        target: parseWad(initialTarget),
+      }),
+    )
+  }, [initialCurrency, initialDuration, initialTarget, terminalFee])
 
   const maxIntStr = fromWad(constants.MaxUint256)
   const hasTarget = useMemo(() => {

@@ -36,7 +36,10 @@ about the differences between merge and rebase Git workflows.
 
 #### Rebase procedure
 
-You can rebase your feature branch with the following procedure, where `feature-branch` is the name of your branch. Further explanation of rebase and its options can be found [here](https://docs.gitlab.com/ee/topics/git/git_rebase.html).
+You can rebase your feature branch with the following procedure, where
+`feature-branch` is the name of your branch. Further explanation of rebase and
+its options can be found
+[here](https://docs.gitlab.com/ee/topics/git/git_rebase.html).
 
 1. `git checkout feature-branch`
 2. `git fetch origin main`
@@ -57,6 +60,14 @@ Before your PR is merged, it must meet the following criteria:
 
 All changes to the `main` branch will be automatically deployed via
 [Fleek](https://fleek.co).
+
+### Supported browsers
+
+Juicebox supports the following web browsers:
+
+- Google Chrome
+- Mozilla Firefox
+- Chromium-based browsers (e.g. Brave Browser)
 
 ## Translations
 

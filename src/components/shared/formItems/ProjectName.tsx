@@ -1,5 +1,7 @@
 import { Form, Input } from 'antd'
 
+import { t } from '@lingui/macro'
+
 import { FormItemExt } from './formItemExt'
 
 export default function ProjectName({
@@ -11,11 +13,11 @@ export default function ProjectName({
   return (
     <Form.Item
       name={name}
-      label={hideLabel ? undefined : 'Project name'}
+      label={hideLabel ? undefined : t`Project name`}
       {...formItemProps}
     >
       <Input
-        placeholder="Peach's Juicebox Stand"
+        placeholder={t`Peach's Juicebox Stand`}
         type="string"
         autoComplete="off"
         onChange={onChange ? e => onChange(e.target.value) : undefined}

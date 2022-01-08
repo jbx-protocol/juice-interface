@@ -62,14 +62,16 @@ export default function BudgetForm({
           funding target and a duration. Your project's funding cycle
           configuration will depend on the kind of project you're starting.
         </Trans>{' '}
-        <a
-          href={helpPagePath('protocol/learn/topics/funding-cycle')}
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          <Trans>Learn more</Trans>
-        </a>{' '}
-        <Trans>about funding cycles.</Trans>
+        <Trans>
+          <a
+            href={helpPagePath('protocol/learn/topics/funding-cycle')}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Learn more
+          </a>{' '}
+          about funding cycles.
+        </Trans>
       </p>
 
       <Form layout="vertical">
@@ -79,9 +81,10 @@ export default function BudgetForm({
           </h4>
           <p>
             <Trans>
-              Set the amount of funds you'd like to raise each funding cycle. Any
-            funds raised within the funding cycle target can be distributed by
-            the project, and can't be redeemed by your project's token holders.
+              Set the amount of funds you'd like to raise each funding cycle.
+              Any funds raised within the funding cycle target can be
+              distributed by the project, and can't be redeemed by your
+              project's token holders.
             </Trans>
           </p>
           <p>
@@ -90,14 +93,16 @@ export default function BudgetForm({
               cycle target. Overflow can be redeemed by your project's token
               holders.
             </Trans>{' '}
-            <a
-              href={helpPagePath('protocol/learn/topics/overflow')}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <Trans>Learn more</Trans>
-            </a>{' '}
-            <Trans>about overflow.</Trans>
+            <Trans>
+              <a
+                href={helpPagePath('protocol/learn/topics/overflow')}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Learn more
+              </a>{' '}
+              about overflow.
+            </Trans>
           </p>
         </div>
 
@@ -151,14 +156,16 @@ export default function BudgetForm({
             <Trans>
               The project's entire balance will be considered overflow.{' '}
             </Trans>
-            <a
-              href={helpPagePath('protocol/learn/topics/overflow')}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <Trans>Learn more</Trans>
-            </a>{' '}
-            <Trans>about overflow.</Trans>
+            <Trans>
+              <a
+                href={helpPagePath('protocol/learn/topics/overflow')}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Learn more
+              </a>{' '}
+              about overflow.
+            </Trans>
           </p>
         )}
 
@@ -175,14 +182,16 @@ export default function BudgetForm({
           </h4>
           <p style={{ color: colors.text.secondary }}>
             <Trans>Set the length of your funding cycles.</Trans>{' '}
-            <a
-              href={helpPagePath('protocol/learn/topics/funding-cycle')}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <Trans>Learn more</Trans>
-            </a>{' '}
-            <Trans>about funding cycle duration.</Trans>
+            <Trans>
+              <a
+                href={helpPagePath('protocol/learn/topics/funding-cycle')}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Learn more
+              </a>{' '}
+              about funding cycle duration.
+            </Trans>
           </p>
 
           {hasTarget && (

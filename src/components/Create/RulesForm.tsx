@@ -94,7 +94,7 @@ export default function RulesForm({
             <div>
               <p>{s.description}</p>
               <p style={{ fontSize: '0.7rem', color: colors.text.tertiary }}>
-                <Trans>Contract address</Trans>: {s.address}
+                <Trans>Contract address: {s.address}</Trans>
               </p>
             </div>,
             i,

@@ -25,7 +25,7 @@ export default function LanguageSelector() {
   let currentSelectedLanguage = localStorage.getItem('lang') || 'en'
 
   // Sets the new language with localStorage and reloads the page
-  function setLanguage(newLanguage: string) {
+  const setLanguage = (newLanguage: string) => {
     currentSelectedLanguage = newLanguage
     localStorage.setItem('lang', newLanguage)
     window.location.reload()

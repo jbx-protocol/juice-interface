@@ -362,10 +362,13 @@ export default function ProjectPayoutMods({
               color: total > 100 ? colors.text.warn : colors.text.secondary,
             }}
           >
-            <Trans>Total</Trans>: {total.toFixed(2)}%
+            <Trans>Total: {total.toFixed(2)}%</Trans>
           </div>
           <div>
-            {(100 - total).toFixed(2)}% to <FormattedAddress address={owner} />
+            <Trans>
+              {(100 - total).toFixed(2)}% to{' '}
+              <FormattedAddress address={owner} />
+            </Trans>
           </div>
         </div>
         <Button

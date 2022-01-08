@@ -31,7 +31,7 @@ export default function Footer() {
   )
 
   // Sets the new language with localStorage and reloads the page
-  function setLanguage(newLanguage: string) {
+  const setLanguage = (newLanguage: string) => {
     localStorage.setItem('lang', newLanguage)
     window.location.reload()
     window.scrollTo(0, 0) // scroll to top of page after reload

@@ -264,18 +264,19 @@ export default function ProjectTicketMods({
                 color: total > 100 ? colors.text.warn : colors.text.secondary,
               }}
             >
-              <Trans>Total</Trans>:{' '}
-              {total
-                .toString()
-                .split('.')
-                .map((x, i) => (i > 0 ? x[0] : x))
-                .join('.')}
-              %
+              <Trans>
+                Total:{' '}
+                {total
+                  .toString()
+                  .split('.')
+                  .map((x, i) => (i > 0 ? x[0] : x))
+                  .join('.')}
+                %
+              </Trans>
             </span>
           </div>
           <div>
-            {100 - total}% <Trans>to</Trans>{' '}
-            <FormattedAddress address={owner} />
+            <Trans>{100 - total}%to</Trans> <FormattedAddress address={owner} />
           </div>
         </div>
         <Button

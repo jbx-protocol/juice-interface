@@ -28,7 +28,9 @@ import {
   fromWad,
 } from 'utils/formatNumber'
 import { amountSubFee } from 'utils/math'
+import { currencyName } from 'utils/currency'
 
+import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 
 import { FormItems } from '.'
@@ -518,6 +520,9 @@ export default function ProjectPayoutMods({
                 formItemProps={{
                   rules: [{ validator: validatePayout }],
                 }}
+                accessory={
+                  <InputAccessoryButton content={currencyName(currency)} />
+                }
               />
             </div>
           </Form.Item>

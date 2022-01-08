@@ -10,7 +10,7 @@ import RulesForm from 'components/Create/RulesForm'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import PayoutModsList from 'components/shared/PayoutModsList'
 import TicketModsList from 'components/shared/TicketModsList'
-
+import { getBallotStrategyByAddress } from 'constants/ballot-strategies'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
@@ -39,8 +39,6 @@ import {
 } from 'utils/fundingCycle'
 import { amountSubFee } from 'utils/math'
 import { serializeFundingCycle } from 'utils/serializers'
-
-import { getBallotStrategyByAddress } from 'constants/ballot-strategies'
 
 import BudgetForm from '../Create/BudgetForm'
 import IncentivesForm from '../Create/IncentivesForm'
@@ -83,11 +81,11 @@ export default function ReconfigureFCModal({
   const [loading, setLoading] = useState<boolean>()
   const [ticketingForm] = useForm<TicketingFormFields>()
   const [restrictedActionsForm] = useForm<RestrictedActionsFormFields>()
-  const editingFC = useEditingFundingCycleSelector()
   const [editingPayoutMods, setEditingPayoutMods] = useState<PayoutMod[]>([])
   const [editingTicketMods, setEditingTicketMods] = useState<TicketMod[]>([])
   const dispatch = useAppDispatch()
   const { currentFC, terminal, isPreviewMode } = useContext(ProjectContext)
+  const editingFC = useEditingFundingCycleSelector()
   const terminalFee = useTerminalFee(terminal?.version, contracts)
 
   const resetTicketingForm = () =>
@@ -95,13 +93,17 @@ export default function ReconfigureFCModal({
       reserved: parseFloat(fromPerbicent(editingFC?.reserved)),
     })
 
-  const fcMetadata = decodeFundingCycleMetadata(currentFC?.metadata)
+  const fcMetadata: FundingCycleMetadata | undefined =
+    decodeFundingCycleMetadata(currentFC?.metadata)
 
-  const resetRestrictedActionsForm = () =>
-    restrictedActionsForm.setFieldsValue({
-      payIsPaused: fcMetadata?.payIsPaused,
-      ticketPrintingIsAllowed: fcMetadata?.ticketPrintingIsAllowed,
-    })
+  const resetRestrictedActionsForm = () => {
+    if (fcMetadata?.version === 1) {
+      restrictedActionsForm.setFieldsValue({
+        payIsPaused: fcMetadata?.payIsPaused,
+        ticketPrintingIsAllowed: fcMetadata?.ticketPrintingIsAllowed,
+      })
+    }
+  }
 
   const onPayModsFormSaved = (mods: PayoutMod[]) => setEditingPayoutMods(mods)
 
@@ -144,7 +146,14 @@ export default function ReconfigureFCModal({
   }
 
   useLayoutEffect(() => {
-    if (!fundingCycle || !ticketMods || !payoutMods || isPreviewMode) return
+    if (
+      !visible ||
+      isPreviewMode ||
+      !fundingCycle ||
+      !ticketMods ||
+      !payoutMods
+    )
+      return
 
     const metadata = decodeFundingCycleMetadata(fundingCycle.metadata)
     if (!metadata) return
@@ -164,10 +173,13 @@ export default function ReconfigureFCModal({
     ticketingForm.setFieldsValue({
       reserved: parseFloat(fromPerbicent(metadata.reservedRate)),
     })
-    restrictedActionsForm.setFieldsValue({
-      payIsPaused: metadata.payIsPaused,
-      ticketPrintingIsAllowed: metadata.ticketPrintingIsAllowed,
-    })
+
+    if (metadata.version === 1) {
+      restrictedActionsForm.setFieldsValue({
+        payIsPaused: metadata.payIsPaused,
+        ticketPrintingIsAllowed: metadata.ticketPrintingIsAllowed,
+      })
+    }
   }, [
     dispatch,
     fundingCycle,
@@ -176,10 +188,17 @@ export default function ReconfigureFCModal({
     ticketingForm,
     restrictedActionsForm,
     isPreviewMode,
+    visible,
   ])
 
   async function reconfigure() {
-    if (!transactor || !contracts?.TerminalV1_1 || !projectId) return
+    if (
+      !transactor ||
+      !contracts?.TerminalV1_1 ||
+      !projectId ||
+      !terminal?.version
+    )
+      return
 
     setLoading(true)
 
@@ -202,7 +221,9 @@ export default function ReconfigureFCModal({
     }
 
     transactor(
-      contracts.TerminalV1_1,
+      terminal.version === '1.1'
+        ? contracts.TerminalV1_1
+        : contracts.TerminalV1,
       'configure',
       [
         projectId.toHexString(),
@@ -291,6 +312,8 @@ export default function ReconfigureFCModal({
     [currentStep, colors, radii],
   )
 
+  if (!terminal?.version) return null
+
   return (
     <Modal
       visible={visible}
@@ -332,10 +355,15 @@ export default function ReconfigureFCModal({
                 title: 'Rules',
                 callback: () => setRulesFormModalVisible(true),
               },
-              {
-                title: 'Actions',
-                callback: () => setRestrictedActionsFormModalVisible(true),
-              },
+              ...(terminal.version === '1.1'
+                ? [
+                    {
+                      title: 'Actions',
+                      callback: () =>
+                        setRestrictedActionsFormModalVisible(true),
+                    },
+                  ]
+                : []),
               ...(isRecurring(editingFC) && hasFundingTarget(editingFC)
                 ? [
                     {
@@ -430,6 +458,21 @@ export default function ReconfigureFCModal({
               )
             }}
           />
+
+          {terminal.version === '1.1' && (
+            <Space size="large">
+              <Statistic
+                title="Payments paused"
+                value={editingFC.payIsPaused ? 'Yes' : 'No'}
+              />
+              <Statistic
+                title="Token printing"
+                value={
+                  editingFC.ticketPrintingIsAllowed ? 'Allowed' : 'Disabled'
+                }
+              />
+            </Space>
+          )}
 
           <div>
             <h4>Spending</h4>
@@ -555,24 +598,26 @@ export default function ReconfigureFCModal({
         />
       </Drawer>
 
-      <Drawer
-        visible={restrictedActionsFormModalVisible}
-        {...drawerStyle}
-        onClose={() => {
-          resetRestrictedActionsForm()
-          setRestrictedActionsFormModalVisible(false)
-          setCurrentStep(undefined)
-        }}
-      >
-        <RestrictedActionsForm
-          form={restrictedActionsForm}
-          onSave={() => {
-            onRestrictedActionsFormSaved()
+      {terminal.version === '1.1' && (
+        <Drawer
+          visible={restrictedActionsFormModalVisible}
+          {...drawerStyle}
+          onClose={() => {
+            resetRestrictedActionsForm()
             setRestrictedActionsFormModalVisible(false)
             setCurrentStep(undefined)
           }}
-        />
-      </Drawer>
+        >
+          <RestrictedActionsForm
+            form={restrictedActionsForm}
+            onSave={() => {
+              onRestrictedActionsFormSaved()
+              setRestrictedActionsFormModalVisible(false)
+              setCurrentStep(undefined)
+            }}
+          />
+        </Drawer>
+      )}
     </Modal>
   )
 }

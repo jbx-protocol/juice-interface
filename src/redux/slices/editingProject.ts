@@ -64,6 +64,7 @@ export const defaultProjectState: EditingProjectState = {
     ballot: constants.AddressZero,
     payIsPaused: false,
     ticketPrintingIsAllowed: true,
+    treasuryExtension: constants.AddressZero,
   }),
   payoutMods: [],
   ticketMods: [],

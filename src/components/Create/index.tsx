@@ -58,6 +58,8 @@ import RestrictedActionsForm, {
 import RulesForm from './RulesForm'
 import TicketingForm, { TicketingFormFields } from './TicketingForm'
 
+const terminalVersion: TerminalVersion = '1.1'
+
 export default function Create() {
   const { transactor, contracts } = useContext(UserContext)
   const { signerNetwork, userAddress } = useContext(NetworkContext)
@@ -94,7 +96,7 @@ export default function Create() {
   } = useAppSelector(state => state.editingProject)
   const dispatch = useAppDispatch()
 
-  const terminalFee = useTerminalFee('1.1', contracts)
+  const terminalFee = useTerminalFee(terminalVersion, contracts)
 
   useEffect(() => {
     if (terminalFee) {
@@ -134,21 +136,24 @@ export default function Create() {
       ticketingForm.setFieldsValue({
         reserved: parseFloat(fromPerbicent(editingFC?.reserved)),
       }),
-    [editingFC.reserved, ticketingForm],
+    [editingFC?.reserved, ticketingForm],
   )
 
-  const resetRestrictedActionsForm = useCallback(
-    () =>
+  const resetRestrictedActionsForm = useCallback(() => {
+    if (
+      editingFC?.payIsPaused !== null &&
+      editingFC?.ticketPrintingIsAllowed !== null
+    ) {
       restrictedActionsForm.setFieldsValue({
-        payIsPaused: editingFC.payIsPaused,
-        ticketPrintingIsAllowed: editingFC.ticketPrintingIsAllowed,
-      }),
-    [
-      editingFC.payIsPaused,
-      editingFC.ticketPrintingIsAllowed,
-      restrictedActionsForm,
-    ],
-  )
+        payIsPaused: editingFC?.payIsPaused,
+        ticketPrintingIsAllowed: editingFC?.ticketPrintingIsAllowed,
+      })
+    }
+  }, [
+    editingFC?.payIsPaused,
+    editingFC?.ticketPrintingIsAllowed,
+    restrictedActionsForm,
+  ])
 
   useLayoutEffect(() => {
     dispatch(editingProjectActions.resetState())
@@ -223,7 +228,7 @@ export default function Create() {
   }
 
   const deployProject = useCallback(async () => {
-    if (!transactor || !contracts || !editingFC) return
+    if (!transactor || !contracts) return
 
     setLoadingCreate(true)
 
@@ -261,7 +266,7 @@ export default function Create() {
     }
 
     transactor(
-      contracts.TerminalV1_1,
+      contracts.TerminalV1,
       'deploy',
       [
         userAddress,
@@ -436,8 +441,6 @@ export default function Create() {
     ],
   )
 
-  const spacing = 40
-
   const fundingCycle: FundingCycle = useMemo(
     () => ({
       ...editingFC,
@@ -452,8 +455,6 @@ export default function Create() {
     }),
     [editingFC],
   )
-
-  const terminalVersion: TerminalVersion = '1.1'
 
   const project = useMemo<ProjectContextType>(
     () => ({
@@ -492,6 +493,8 @@ export default function Create() {
     ],
   )
 
+  const spacing = 40
+
   return (
     <ProjectContext.Provider value={project}>
       <Row style={{ marginTop: 40 }}>
@@ -527,7 +530,7 @@ export default function Create() {
               description: 'Reward specific community members with tokens.',
               callback: () => setTicketingFormModalVisible(true),
             },
-            ...(editingFC.duration.gt(0)
+            ...(editingFC?.duration.gt(0)
               ? [
                   {
                     title: 'Reconfiguration',
@@ -606,7 +609,7 @@ export default function Create() {
           <BudgetForm
             initialCurrency={editingFC.currency.toNumber() as CurrencyOption}
             initialTarget={fromWad(editingFC.target)}
-            initialDuration={editingFC?.duration.toString()}
+            initialDuration={editingFC.duration.toString()}
             onSave={async (currency, target, duration) => {
               viewedCurrentStep()
               onBudgetFormSaved(currency, target, duration)

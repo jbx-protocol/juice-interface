@@ -19,40 +19,57 @@ const bits1 = 0b1
 
 export const decodeFundingCycleMetadata = (
   metadata?: BigNumber,
-): FundingCycleMetadata | undefined =>
-  metadata
-    ? {
-        version: metadata.and(bits8).toNumber(),
-        reservedRate: metadata.shr(8).and(bits8).toNumber(),
-        bondingCurveRate: metadata.shr(16).and(bits8).toNumber(),
-        reconfigurationBondingCurveRate: metadata.shr(24).and(bits8).toNumber(),
-        payIsPaused: Boolean(metadata.shr(32).and(bits1).toNumber()),
-        ticketPrintingIsAllowed: Boolean(
-          metadata.shr(33).and(bits1).toNumber(),
-        ),
-        treasuryExtension: metadata.shr(34).toHexString(),
-      }
-    : undefined
+): FundingCycleMetadata | undefined => {
+  if (!metadata) return
+
+  const version = metadata
+    .and(bits8)
+    .toNumber() as FundingCycleMetadata['version']
+
+  return {
+    version,
+    reservedRate: metadata.shr(8).and(bits8).toNumber(),
+    bondingCurveRate: metadata.shr(16).and(bits8).toNumber(),
+    reconfigurationBondingCurveRate: metadata.shr(24).and(bits8).toNumber(),
+    payIsPaused:
+      version === 0 ? null : Boolean(metadata.shr(32).and(bits1).toNumber()),
+    ticketPrintingIsAllowed:
+      version === 0 ? null : Boolean(metadata.shr(33).and(bits1).toNumber()),
+    treasuryExtension: version === 0 ? null : metadata.shr(34).toHexString(),
+  } as FundingCycleMetadata
+}
 
 export const encodeFundingCycleMetadata = (
   reserved: BigNumberish,
   bondingCurveRate: BigNumberish,
   reconfigurationBondingCurveRate: BigNumberish,
-  payIsPaused: boolean,
-  ticketPrintingIsAllowed: boolean,
-  treasuryExtension: string,
-): BigNumber =>
-  BigNumber.from(0)
+  payIsPaused: boolean | null,
+  ticketPrintingIsAllowed: boolean | null,
+  treasuryExtension: string | null,
+): BigNumber => {
+  let encoded = BigNumber.from(0)
     .or(BigNumber.from(reserved).shl(8))
     .or(BigNumber.from(bondingCurveRate).shl(16))
     .or(BigNumber.from(reconfigurationBondingCurveRate).shl(24))
-    .or(BigNumber.from(payIsPaused ? 1 : 0).shl(32))
-    .or(BigNumber.from(ticketPrintingIsAllowed ? 1 : 0).shl(33))
-    .or(BigNumber.from(treasuryExtension).shl(34))
+
+  if (payIsPaused !== null) {
+    encoded = encoded.or(BigNumber.from(payIsPaused ? 1 : 0).shl(32))
+  }
+  if (ticketPrintingIsAllowed !== null) {
+    encoded = encoded.or(
+      BigNumber.from(ticketPrintingIsAllowed ? 1 : 0).shl(33),
+    )
+  }
+  if (treasuryExtension !== null) {
+    encoded = encoded.or(BigNumber.from(treasuryExtension).shl(34))
+  }
+
+  return encoded
+}
 
 export const isRecurring = (fundingCycle: FundingCycle | EditingFundingCycle) =>
   fundingCycle.discountRate.lt(201)
 
 export const hasFundingTarget = (
-  fundingCycle: FundingCycle | EditingFundingCycle,
+  fundingCycle: Pick<FundingCycle | EditingFundingCycle, 'target'>,
 ) => fundingCycle.target.lt(constants.MaxUint256)

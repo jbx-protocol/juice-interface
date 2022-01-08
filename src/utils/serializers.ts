@@ -9,21 +9,27 @@ import {
   parseWad,
 } from 'utils/formatNumber'
 
+// Spreads all properties from both v0 or v1 FundingCycleMetadata
 export type EditingFundingCycle = Omit<FundingCycle, 'metadata'> & {
   reserved: BigNumber
   bondingCurveRate: BigNumber
-  payIsPaused: boolean
-  ticketPrintingIsAllowed: boolean
+  payIsPaused: boolean | null
+  ticketPrintingIsAllowed: boolean | null
+  treasuryExtension: string | null
 }
 
 export type SerializedFundingCycle = Record<
-  keyof Omit<EditingFundingCycle, 'payIsPaused' | 'ticketPrintingIsAllowed'>,
+  keyof Omit<
+    EditingFundingCycle,
+    'payIsPaused' | 'ticketPrintingIsAllowed' | 'treasuryExtension'
+  >,
   string
 > &
   Record<
     keyof Pick<EditingFundingCycle, 'payIsPaused' | 'ticketPrintingIsAllowed'>,
-    boolean
-  >
+    null | boolean
+  > &
+  Record<keyof Pick<EditingFundingCycle, 'treasuryExtension'>, null | string>
 
 export const serializeFundingCycle = (
   fc: EditingFundingCycle,
@@ -47,30 +53,31 @@ export const serializeFundingCycle = (
   ballot: fc.ballot,
   payIsPaused: fc.payIsPaused,
   ticketPrintingIsAllowed: fc.ticketPrintingIsAllowed,
+  treasuryExtension: fc.treasuryExtension,
 })
 
 export const deserializeFundingCycle = (
   fc: SerializedFundingCycle,
-): EditingFundingCycle =>
-  fc
-    ? {
-        ...fc,
-        projectId: BigNumber.from(fc.projectId),
-        id: BigNumber.from(fc.id),
-        number: BigNumber.from(fc.number),
-        basedOn: BigNumber.from(fc.basedOn),
-        target: parseWad(fc.target),
-        currency: BigNumber.from(fc.currency),
-        start: BigNumber.from(fc.start),
-        duration: BigNumber.from(fc.duration),
-        tapped: parseWad(fc.tapped),
-        weight: parseWad(fc.weight),
-        fee: parsePerbicent(fc.fee),
-        reserved: parsePerbicent(fc.reserved),
-        bondingCurveRate: parsePerbicent(fc.bondingCurveRate),
-        discountRate: parsePermille(fc.discountRate),
-        cycleLimit: BigNumber.from(fc.cycleLimit),
-        configured: BigNumber.from(fc.configured),
-        ballot: fc.ballot,
-      }
-    : fc
+): EditingFundingCycle => ({
+  ...fc,
+  projectId: BigNumber.from(fc.projectId),
+  id: BigNumber.from(fc.id),
+  number: BigNumber.from(fc.number),
+  basedOn: BigNumber.from(fc.basedOn),
+  target: parseWad(fc.target),
+  currency: BigNumber.from(fc.currency),
+  start: BigNumber.from(fc.start),
+  duration: BigNumber.from(fc.duration),
+  tapped: parseWad(fc.tapped),
+  weight: parseWad(fc.weight),
+  fee: parsePerbicent(fc.fee),
+  reserved: parsePerbicent(fc.reserved),
+  bondingCurveRate: parsePerbicent(fc.bondingCurveRate),
+  discountRate: parsePermille(fc.discountRate),
+  cycleLimit: BigNumber.from(fc.cycleLimit),
+  configured: BigNumber.from(fc.configured),
+  ballot: fc.ballot,
+  payIsPaused: fc.payIsPaused,
+  ticketPrintingIsAllowed: fc.ticketPrintingIsAllowed,
+  treasuryExtension: fc.treasuryExtension,
+})

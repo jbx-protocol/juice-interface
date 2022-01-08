@@ -107,6 +107,7 @@
   }
   .ant-collapse-content {
     float: left;
+    padding-right: 10px;
     padding-left: 10px;
     width: 100%;
   }
@@ -115,7 +116,7 @@
     flex-direction: column;
     z-index: 1000;
     margin-top: -2px;
-    padding: 7px 0;
+    padding: 7px 0 15px;
     border: none;
     border-bottom: 1px solid var(--stroke-secondary);
   }
@@ -125,9 +126,12 @@
   .resouces-dropdown {
     position: static;
     margin-left: 3px;
+    .ant-collapse-content {
+      padding-top: 5px;
+    }
     .ant-collapse-content-box {
       padding: 0 6px;
-      margin-left: 16px;
+      margin-left: 25px;
       border: none;
     }
   }

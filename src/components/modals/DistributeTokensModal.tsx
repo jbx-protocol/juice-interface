@@ -1,5 +1,4 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { plural } from '@lingui/macro'
 import { Modal, Space } from 'antd'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import TicketModsList from 'components/shared/TicketModsList'
@@ -86,10 +85,7 @@ export default function DistributeTokensModal({
           <div>
             {tokenSymbol
               ? `${reservedTokensFormatted} ${tokenSymbol}`
-              : plural(reservedTokensFormatted ?? 0, {
-                  one: '# token',
-                  other: '# tokens',
-                })}
+              : reservedTokensFormatted}
           </div>
         </div>
         {currentTicketMods?.length ? (

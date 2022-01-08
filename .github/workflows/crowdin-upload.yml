@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  synchronize-with-crowdin:
+  upload-translations:
     name: Upload sources to Crowdin
     runs-on: ubuntu-latest
 

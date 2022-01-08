@@ -123,12 +123,12 @@
   .nav-menu-item {
     padding: 10px 15px;
   }
-  .resouces-dropdown {
+  .resources-dropdown {
     top: 190px;
     left: 12px;
     .ant-collapse-content-box {
       padding: 0 6px;
-      margin-left: 16px;
+      margin-left: 6px;
     }
   }
   .account-badge {
@@ -144,7 +144,7 @@
 }
 
 // Specific to the resources dropdown in the top nav
-.resouces-dropdown {
+.resources-dropdown {
   position: absolute;
   top: 9px;
   .ant-collapse-header {

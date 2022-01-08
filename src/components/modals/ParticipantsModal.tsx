@@ -5,12 +5,14 @@ import {
 } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Modal, Select } from 'antd'
+import CurrencySymbol from 'components/shared/CurrencySymbol'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import Loading from 'components/shared/Loading'
 import UntrackedErc20Notice from 'components/shared/UntrackedErc20Notice'
 import { indexedProjectERC20s } from 'constants/indexed-project-erc20s'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
+import { constants } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
 import { ContractName } from 'models/contract-name'
 import { NetworkName } from 'models/network-name'
@@ -18,7 +20,7 @@ import {
   parseParticipantJson,
   Participant,
 } from 'models/subgraph-entities/participant'
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { useContext, useEffect, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatPercent, formatWad } from 'utils/formatNumber'
 import { OrderDirection, querySubgraph } from 'utils/graph'
@@ -36,13 +38,14 @@ export default function ParticipantsModal({
 }) {
   const [loading, setLoading] = useState<boolean>()
   const [participants, setParticipants] = useState<Participant[]>([])
+  // const [holdersCount, setHoldersCount] = useState<BigNumber>()
   const [sortPayerReports, setSortPayerReports] =
     useState<keyof Participant>('balance')
   const [pageNumber, setPageNumber] = useState<number>(0)
   const [downloadModalVisible, setDownloadModalVisible] = useState<boolean>()
   const [sortPayerReportsDirection, setSortPayerReportsDirection] =
     useState<OrderDirection>('desc')
-  const { projectId, tokenSymbol } = useContext(ProjectContext)
+  const { projectId, tokenSymbol, tokenAddress } = useContext(ProjectContext)
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -57,9 +60,33 @@ export default function ParticipantsModal({
   useEffect(() => {
     setLoading(true)
 
+    if (!projectId || !visible) {
+      setParticipants([])
+      // setHoldersCount(undefined)
+      return
+    }
+
+    const url = 'https://api.studio.thegraph.com/query/2231/juicebox/1.0.24'
+
+    // querySubgraph(
+    //   {
+    //     url,
+    //     entity: 'project',
+    //     keys: ['holdersCount'],
+    //     where: {
+    //       key: 'id',
+    //       value: projectId.toString(),
+    //     },
+    //   },
+    //   res => {
+    //     if (!res) return
+    //     setHoldersCount(formatGraphResponse('project', res)[0].holdersCount)
+    //   },
+    // )
+
     querySubgraph(
       {
-        url: 'https://api.studio.thegraph.com/query/2231/juicebox/1.0.19',
+        url,
         entity: 'participant',
         keys: [
           'wallet',
@@ -73,10 +100,22 @@ export default function ParticipantsModal({
         orderBy: sortPayerReports,
         orderDirection: sortPayerReportsDirection,
         where: projectId
-          ? {
-              key: 'project',
-              value: projectId.toString(),
-            }
+          ? [
+              {
+                key: 'project',
+                value: projectId.toString(),
+              },
+              {
+                key: 'balance',
+                value: 0,
+                operator: 'gt',
+              },
+              {
+                key: 'wallet',
+                value: constants.AddressZero,
+                operator: 'not',
+              },
+            ]
           : undefined,
       },
       res => {
@@ -92,33 +131,15 @@ export default function ParticipantsModal({
         setLoading(false)
       },
     )
-  }, [pageNumber, projectId, sortPayerReportsDirection, sortPayerReports])
+  }, [
+    pageNumber,
+    projectId,
+    sortPayerReportsDirection,
+    sortPayerReports,
+    visible,
+  ])
 
   const contentLineHeight = '1.4rem'
-
-  const formattedTokenBalance = useCallback(
-    (balance: BigNumber | undefined) => (
-      <span>
-        {formatWad(balance, { decimals: 0 })} {tokenSymbol ?? 'tokens'} (
-        {formatPercent(balance, totalTokenSupply)}%)
-      </span>
-    ),
-    [tokenSymbol, totalTokenSupply],
-  )
-
-  // const formattedPaid = (amount: BigNumber | undefined) => (
-  //   <span>
-  //     <CurrencySymbol currency={0} />
-  //     {formatWad(amount, { decimals: 6 })}
-  //   </span>
-  // )
-
-  // const lastPaid = (lastPaidTimestamp: number | undefined) =>
-  //   lastPaidTimestamp ? (
-  //     <span>Last paid {formatHistoricalDate(lastPaidTimestamp * 1000)}</span>
-  //   ) : (
-  //     <span>No payments</span>
-  //   )
 
   const list = useMemo(() => {
     const smallHeaderStyle = {
@@ -200,9 +221,10 @@ export default function ParticipantsModal({
                 >
                   <FormattedAddress address={p.wallet} />
                 </div>
-                {/* <div style={smallHeaderStyle}>
-                  {lastPaid(p.lastPaidTimestamp)}
-                </div> */}
+                <div style={smallHeaderStyle}>
+                  <CurrencySymbol currency={0} />
+                  {formatWad(p.totalPaid, { decimals: 6 })} contributed
+                </div>
               </div>
 
               <div style={{ textAlign: 'right' }}>
@@ -211,14 +233,14 @@ export default function ParticipantsModal({
                     lineHeight: contentLineHeight,
                   }}
                 >
-                  {formattedTokenBalance(p.balance)}
+                  {formatWad(p.balance, { decimals: 0 })}{' '}
+                  {tokenSymbol ?? 'tokens'} (
+                  {formatPercent(p.balance, totalTokenSupply)}%)
                 </div>
                 <div style={smallHeaderStyle}>
-                  {formatWad(p.stakedBalance, { decimals: 0 })} staked
+                  {formatWad(p.stakedBalance, { decimals: 0 })}{' '}
+                  {tokenSymbol ?? 'tokens'} staked
                 </div>
-                {/* <div style={smallHeaderStyle}>
-                  <span>{formattedPaid(p.totalPaid)} total contributed</span>
-                </div> */}
               </div>
             </div>
           </div>
@@ -233,7 +255,7 @@ export default function ParticipantsModal({
     sortPayerReportsDirection,
     setDownloadModalVisible,
     participants,
-    formattedTokenBalance,
+    totalTokenSupply,
   ])
 
   const erc20IsUntracked =
@@ -254,10 +276,13 @@ export default function ParticipantsModal({
       <div>
         <h4>{tokenSymbol || 'Token'} holders</h4>
 
-        <p style={{ padding: 10, background: colors.background.l1 }}>
-          This list is using an experimental data index and may be inaccurate
-          for some projects.
-        </p>
+        {/* <div>{formattedNum(holdersCount)} holders</div> */}
+
+        {tokenAddress && tokenAddress !== constants.AddressZero && (
+          <div style={{ marginBottom: 20 }}>
+            Token address: <FormattedAddress address={tokenAddress} />
+          </div>
+        )}
 
         {erc20IsUntracked && (
           <p style={{ padding: 10, background: colors.background.l1 }}>

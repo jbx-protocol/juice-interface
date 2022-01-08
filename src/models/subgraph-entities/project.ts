@@ -17,6 +17,7 @@ export interface Project {
   totalPaid?: BigNumber
   totalRedeemed?: BigNumber
   participants?: Participant[]
+  holdersCount?: BigNumber
 }
 
 export type ProjectJson = Record<keyof Project, string> & {
@@ -40,4 +41,7 @@ export const parseProjectJson = (project: ProjectJson): Project => ({
     : undefined,
   participants:
     project.participants?.map(p => parseParticipantJson(JSON.parse(p))) ?? [],
+  holdersCount: project.holdersCount
+    ? BigNumber.from(project.holdersCount)
+    : undefined,
 })

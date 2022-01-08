@@ -22,6 +22,7 @@ export default function ProjectDescription({
         placeholder={`Max ${MAX_DESCRIPTION_LENGTH} characters`}
         maxLength={MAX_DESCRIPTION_LENGTH}
         onChange={onChange ? e => onChange(e.target.value) : undefined}
+        rows={10}
       />
     </Form.Item>
   )

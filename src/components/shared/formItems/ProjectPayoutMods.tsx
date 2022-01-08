@@ -500,9 +500,13 @@ export default function ProjectPayoutMods({
             // and no error is present
             className="ant-form-item-extra-only"
             extra={
-              isPercentBeingRounded() && !(form.getFieldValue('percent') > 100)
-                ? `Will be rounded to $${roundedDownAmount()}`
-                : ''
+              isPercentBeingRounded() &&
+              !(form.getFieldValue('percent') > 100) ? (
+                <div>
+                  Will be rounded to <CurrencySymbol currency={currency} />
+                  {roundedDownAmount()}
+                </div>
+              ) : null
             }
           >
             <div
@@ -527,7 +531,7 @@ export default function ProjectPayoutMods({
           </Form.Item>
           <Form.Item label="Percent">
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <span style={{ flex: 1, marginRight: 10 }}>
+              <span style={{ flex: 1 }}>
                 <NumberSlider
                   onChange={(percent: number | undefined) => {
                     let newAmount = getAmountFromPercent(

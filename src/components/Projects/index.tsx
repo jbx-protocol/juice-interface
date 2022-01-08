@@ -93,12 +93,12 @@ export default function Projects() {
       </h1>
       <p style={{ marginBottom: 40, maxWidth: 800 }}>
         <Trans>
-          <InfoCircleOutlined />
-          The Juicebox protocol is open to anyone, and project configurations
-          can vary widely. There are risks associated with interacting with all
-          projects on the protocol. Projects built on the protocol are not
-          endorsed or vetted by JuiceboxDAO, so you should do your own research
-          and understand the risks before committing your funds.
+          <InfoCircleOutlined /> The Juicebox protocol is open to anyone, and
+          project configurations can vary widely. There are risks associated
+          with interacting with all projects on the protocol. Projects built on
+          the protocol are not endorsed or vetted by JuiceboxDAO, so you should
+          do your own research and understand the risks before committing your
+          funds.
         </Trans>
       </p>
       <div

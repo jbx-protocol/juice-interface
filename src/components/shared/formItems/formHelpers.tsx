@@ -63,7 +63,7 @@ export const targetToTargetSubFeeFormatted = (
   fee: BigNumber | undefined,
 ) => {
   const newTargetSubFee = amountSubFee(parseWad(target ?? ''), fee)
-  return stripCommas(formatWad(newTargetSubFee, { decimals: 4 }) || '0') // formatWad returns formatted bigNum with commas, must remove
+  return fromWad(newTargetSubFee)
 }
 
 // Returns formatted 'funding target' given
@@ -73,7 +73,7 @@ export const targetSubFeeToTargetFormatted = (
   fee: BigNumber | undefined,
 ) => {
   const newTarget = amountAddFee(parseWad(targetSubFee ?? '0'), fee)
-  return stripCommas(formatWad(newTarget, { decimals: 4 }) || '0')
+  return fromWad(newTarget)
 }
 
 // Returns amount from a given percentage of the

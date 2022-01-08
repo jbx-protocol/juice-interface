@@ -13,7 +13,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { OperatorPermission, useHasPermission } from 'hooks/HasPermission'
 import { useContext, useState } from 'react'
 
-import Paragraph from '../shared/Paragraph'
+import MDXViewer from '../shared/MDXViewer'
 
 export default function ProjectHeader() {
   const [editProjectModalVisible, setEditProjectModalVisible] =
@@ -213,14 +213,9 @@ export default function ProjectHeader() {
               </a>
             )}
           </div>
-          {metadata?.description && (
-            <Paragraph
-              description={metadata.description}
-              characterLimit={250}
-            />
-          )}
         </div>
       </div>
+      {metadata?.description && <MDXViewer>{metadata.description}</MDXViewer>}
 
       <EditProjectModal
         visible={editProjectModalVisible}

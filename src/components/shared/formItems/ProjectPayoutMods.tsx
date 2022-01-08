@@ -515,7 +515,6 @@ export default function ProjectPayoutMods({
               <FormattedNumberInput
                 value={form.getFieldValue('amount')}
                 placeholder={'0'}
-                currency={<CurrencySymbol currency={currency} />}
                 onChange={amount => onAmountChange(parseFloat(amount || '0'))}
                 formItemProps={{
                   rules: [{ validator: validatePayout }],

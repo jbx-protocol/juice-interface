@@ -82,9 +82,6 @@ For details of how to contribute as a translator, see our
 [How to become a Juicebox translator](https://www.notion.so/juicebox/How-to-become-a-Juicebox-translator-81fdd9344ef043909a48bd7373ef73d7)
 Notion page.
 
-<<<<<<< HEAD
-### Adding a language (for devs)
-=======
 1. Create a
    [fork](https://docs.github.com/en/get-started/quickstart/fork-a-repo) of this
    repository.
@@ -119,7 +116,6 @@ If you need help at any stage, reach out in the
 [Discord](https://discord.gg/6jXrJSyDFf).
 
 ### Adding a language
->>>>>>> d65d52d1827a2fcf338dceeb1f36082548c12c12
 
 1. Add the locale code, english name, and short and long alias's to
    `constants/languages/language-options.ts`.
@@ -164,13 +160,8 @@ If you need help at any stage, reach out in the
    })
    ```
 
-<<<<<<< HEAD
-1. Extract the strings marked for translation and compile them. This creates a
+1. Extract and compile the strings marked for translation. This creates a
    directory for the locale within the `./locale/` directory:
-=======
-1. Extract and compile the strings marked for translation. This creates a directory for the
-   locale within the `./locale/` directory:
->>>>>>> d65d52d1827a2fcf338dceeb1f36082548c12c12
 
    ```bash
    yarn i18n:compile

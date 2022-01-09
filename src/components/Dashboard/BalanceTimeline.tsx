@@ -1,4 +1,5 @@
 import { Select, Space } from 'antd'
+import { t } from '@lingui/macro'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 
 import { ProjectContext } from 'contexts/projectContext'
@@ -320,10 +321,10 @@ export default function BalanceTimeline({ height }: { height: number }) {
     let text: string
     switch (tab) {
       case 'balance':
-        text = 'In Juicebox'
+        text = t`In Juicebox`
         break
       case 'volume':
-        text = 'Volume'
+        text = t`Volume`
         break
     }
 

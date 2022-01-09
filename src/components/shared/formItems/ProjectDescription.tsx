@@ -1,4 +1,6 @@
 import { Form } from 'antd'
+import { t } from '@lingui/macro'
+
 import TextArea from 'antd/lib/input/TextArea'
 
 import { FormItemExt } from './formItemExt'
@@ -14,12 +16,12 @@ export default function ProjectDescription({
   return (
     <Form.Item
       name={name}
-      label={hideLabel ? undefined : 'Project description'}
+      label={hideLabel ? undefined : t`Project description`}
       {...formItemProps}
     >
       <TextArea
         autoComplete="off"
-        placeholder={`Max ${MAX_DESCRIPTION_LENGTH} characters`}
+        placeholder={MAX_DESCRIPTION_LENGTH + ' ' + t`characters max`}
         maxLength={MAX_DESCRIPTION_LENGTH}
         onChange={onChange ? e => onChange(e.target.value) : undefined}
       />

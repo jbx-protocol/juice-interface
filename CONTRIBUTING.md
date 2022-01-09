@@ -82,7 +82,56 @@ For details of how to contribute as a translator, see our
 [How to become a Juicebox translator](https://www.notion.so/juicebox/How-to-become-a-Juicebox-translator-81fdd9344ef043909a48bd7373ef73d7)
 Notion page.
 
+<<<<<<< HEAD
 ### Adding a language (for devs)
+=======
+1. Create a
+   [fork](https://docs.github.com/en/get-started/quickstart/fork-a-repo) of this
+   repository.
+1. Clone your fork to your local machine.
+
+1. Open the `messages.po` file for the locale you want to add translations for.
+   For example, to add Chinese translations, open the `./locale/zh/messages.po`
+   file.
+
+1. Locate the string you want translate in the `msgid` field.
+
+   > For strings where a `msgid` has been manually set, find the `msgstr` for
+   > the given `msgid` in the `./locales/en/messages.po` file (the source
+   > locale).
+
+   > If the `msgid` you're looking for doesn't exist, find where the text is
+   > being rendered in the code and wrap it in either a <Trans> tag or a `t()`
+   > function (import both from "@lingui/macro"). Then run `yarn i18n:extract`
+   > to generate the new `msgid's`in the `.po` files.
+
+1. Add the translation in the `msgstr` field.
+
+   ```diff
+   msgid "Community funding for people and projects"
+   - msgstr ""
+   + msgstr "为个人和项目提供社区资助"
+   ```
+
+1. Commit the changes and create a pull request on GitHub.
+
+If you need help at any stage, reach out in the
+[Discord](https://discord.gg/6jXrJSyDFf).
+
+### Adding a language
+>>>>>>> 185fbc1c11c28b95ae8f8bffe6e89506e5df4a45
+
+1. Add the locale code, english name, and short and long alias's to
+   `constants/languages/language-options.ts`.
+
+   ```diff
+   export const Languages: Language = {
+      en: { code: 'en', name: 'english', short: 'EN', long: 'English' },
+      zh: { code: 'zh', name: 'chinese', short: '中文', long: '中文' },
+      ru: { code: 'ru', name: 'russian', short: 'RU', long: 'Pусский' },
+   +  es: { code: 'es', name: 'spanish', short: 'ES', long: 'Español' },
+   }
+   ```
 
 1. Add the locale code to `./linguirc.json`.
 
@@ -115,7 +164,11 @@ Notion page.
    })
    ```
 
+<<<<<<< HEAD
 1. Extract the strings marked for translation and compile them. This creates a
+=======
+1. Extract and compile the strings marked for translation. This creates a
+>>>>>>> 185fbc1c11c28b95ae8f8bffe6e89506e5df4a45
    directory for the locale within the `./locale/` directory:
 
    ```bash

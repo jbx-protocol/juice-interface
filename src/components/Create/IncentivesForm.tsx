@@ -1,4 +1,5 @@
 import { Button, Form, Space } from 'antd'
+import { Trans } from '@lingui/macro'
 import { FormItems } from 'components/shared/formItems'
 import { ThemeContext } from 'contexts/themeContext'
 import { CSSProperties, useContext, useLayoutEffect, useState } from 'react'
@@ -56,7 +57,9 @@ export default function IncentivesForm({
 
   return (
     <Space direction="vertical" size="large" style={{ width: '100%' }}>
-      <h1>Incentives</h1>
+      <h1>
+        <Trans>Incentives</Trans>
+      </h1>
 
       <Form layout="vertical">
         {disableDiscountRate && (

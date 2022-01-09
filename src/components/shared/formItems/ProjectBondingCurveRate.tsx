@@ -1,4 +1,6 @@
 import { Form } from 'antd'
+import { t, Trans } from '@lingui/macro'
+
 import { ThemeContext } from 'contexts/themeContext'
 import {
   CSSProperties,
@@ -115,7 +117,7 @@ export default function ProjectBondingCurveRate({
   return (
     <Form.Item
       name={name}
-      label={hideLabel ? undefined : 'Bonding curve rate'}
+      label={hideLabel ? undefined : t`Bonding curve rate`}
       extra={
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <div style={{ position: 'relative' }}>
@@ -157,7 +159,7 @@ export default function ProjectBondingCurveRate({
                 right: 0,
               }}
             >
-              % tokens redeemed
+              % <Trans>tokens redeemed</Trans>
             </div>
 
             <div
@@ -170,17 +172,19 @@ export default function ProjectBondingCurveRate({
                 width: graphSize,
               }}
             >
-              Token redeem value
+              <Trans>Token redeem value</Trans>
             </div>
           </div>
 
           <div>
-            This rate determines the amount of overflow that each token can be
-            redeemed for at any given time. On a lower bonding curve, redeeming
-            a token increases the value of each remaining token, creating an
-            incentive to hodl tokens longer than others. A bonding curve of 100%
-            means all tokens will have equal value regardless of when they are
-            redeemed.
+            <Trans>
+              This rate determines the amount of overflow that each token can be
+              redeemed for at any given time. On a lower bonding curve,
+              redeeming a token increases the value of each remaining token,
+              creating an incentive to hodl tokens longer than others. A bonding
+              curve of 100% means all tokens will have equal value regardless of
+              when they are redeemed.
+            </Trans>
           </div>
         </div>
       }

@@ -8,8 +8,6 @@ import React, { useContext } from 'react'
 
 import { ThemeOption } from 'constants/theme/theme-option'
 
-// import MobileThemePicker from './MobileThemePicker'
-
 export default function ThemePicker({ mobile }: { mobile?: boolean }) {
   const { themeOption, setThemeOption } = useContext(ThemeContext)
 
@@ -31,9 +29,6 @@ export default function ThemePicker({ mobile }: { mobile?: boolean }) {
         )
       }
     >
-      {/* {mobile ? (
-        <MobileThemePicker />
-      ) : ( */}
       <React.Fragment>
         {themeOption === ThemeOption.dark ? (
           <React.Fragment>
@@ -51,7 +46,6 @@ export default function ThemePicker({ mobile }: { mobile?: boolean }) {
           </React.Fragment>
         )}
       </React.Fragment>
-      {/* // )} */}
     </div>
   )
 }

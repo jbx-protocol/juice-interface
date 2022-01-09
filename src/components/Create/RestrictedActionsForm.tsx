@@ -35,7 +35,7 @@ export default function RestrictedActionsForm({
         </Form.Item>
         <Form.Item
           name="ticketPrintingIsAllowed"
-          label="Allow printing tokens"
+          label="Allow minting tokens"
           extra="Enabling this allows the project owner to manually mint any amount of tokens to any address."
           valuePropName="checked"
         >

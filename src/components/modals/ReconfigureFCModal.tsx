@@ -466,7 +466,7 @@ export default function ReconfigureFCModal({
                 value={editingFC.payIsPaused ? 'Yes' : 'No'}
               />
               <Statistic
-                title="Token printing"
+                title="Token minting"
                 value={
                   editingFC.ticketPrintingIsAllowed ? 'Allowed' : 'Disabled'
                 }

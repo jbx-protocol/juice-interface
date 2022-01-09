@@ -165,8 +165,8 @@ export default function FundingCycleDetails({
           span={2}
           label={
             <TooltipLabel
-              label="Token printing"
-              tip="When token printing is allowed, the owner of this project has permission to print any number of tokens to any address at their discretion. This has the effect of diluting all current token holders, without increasing the project's treasury balance. The project owner can reconfigure this along with all other properties of the funding cycle."
+              label="Token minting"
+              tip="When token minting is allowed, the owner of this project has permission to mint any number of tokens to any address at their discretion. This has the effect of diluting all current token holders, without increasing the project's treasury balance. The project owner can reconfigure this along with all other properties of the funding cycle."
             />
           }
         >

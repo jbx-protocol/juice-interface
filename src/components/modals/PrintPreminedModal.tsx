@@ -7,7 +7,7 @@ import { CURRENCY_ETH } from 'constants/currency'
 import { ProjectContext } from 'contexts/projectContext'
 import { UserContext } from 'contexts/userContext'
 import { constants, Contract, utils } from 'ethers'
-import { useContext, useState } from 'react'
+import { useContext, useMemo, useState } from 'react'
 import { parseWad } from 'utils/formatNumber'
 
 export default function PrintPreminedModal({
@@ -77,6 +77,25 @@ export default function PrintPreminedModal({
     })
   }
 
+  const formItemProps: { label: string; extra: string } | undefined =
+    useMemo(() => {
+      if (!terminal?.version) return
+
+      switch (terminal.version) {
+        case '1':
+          return {
+            label: 'Payment equivalent',
+            extra:
+              'The amount of tokens minted to the receiver will be calculated based on if they had paid this amount to the project in the current funding cycle.',
+          }
+        case '1.1':
+          return {
+            label: 'Token amount',
+            extra: 'The amount of tokens to mint to the receiver.',
+          }
+      }
+    }, [terminal?.version])
+
   const erc20Issued =
     tokenSymbol && tokenAddress && tokenAddress !== constants.AddressZero
 
@@ -111,11 +130,7 @@ export default function PrintPreminedModal({
           <Input placeholder={constants.AddressZero} />
         </Form.Item>
         <FormattedNumberInput
-          formItemProps={{
-            label: 'Payment equivalent',
-            extra:
-              'The amount of tokens minted to the receiver will be calculated based on if they had paid this amount to the project in the current funding cycle.',
-          }}
+          formItemProps={formItemProps}
           value={value}
           onChange={val => setValue(val ?? '0')}
           accessory={<InputAccessoryButton content="ETH" />}

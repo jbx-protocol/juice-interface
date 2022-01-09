@@ -58,7 +58,7 @@ export default function ProjectDuration({
           <FormattedNumberInput
             placeholder="30"
             value={value}
-            suffix="days"
+            suffix=" days"
             onChange={onValueChange}
             min={1}
             // Disabled toggle for recurring/one-time

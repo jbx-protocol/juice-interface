@@ -40,7 +40,7 @@ export default function BudgetForm({
   const [currency, setCurrency] = useState<CurrencyOption>(0)
   const [target, setTarget] = useState<string>('0')
   const [targetSubFee, setTargetSubFee] = useState<string>('0')
-  const [duration, setDuration] = useState<string>('0')
+  const [duration, setDuration] = useState<string | undefined>('0')
   const [showFundingFields, setShowFundingFields] = useState<boolean>()
   // TODO budgetForm should not depend on dispatch
   const dispatch = useAppDispatch()
@@ -174,7 +174,7 @@ export default function BudgetForm({
             onTargetSubFeeChange={targetSubFee => {
               setTargetSubFee(targetSubFee ?? '0')
               setTarget(
-                targetSubFeeToTargetFormatted(targetSubFee ?? '0', terminalFee),
+                targetSubFeeToTargetFormatted(targetSubFee ?? '', terminalFee),
               )
             }}
             currency={currency}
@@ -250,7 +250,7 @@ export default function BudgetForm({
               editingProjectActions.setIsRecurring(!isRecurring(editingFC)),
             )
           }
-          onValueChange={val => setDuration(val ?? '0')}
+          onValueChange={val => setDuration(val)}
           formItemProps={{
             rules: [{ required: true }],
           }}
@@ -273,7 +273,7 @@ export default function BudgetForm({
             style={{ marginTop: 20 }}
             htmlType="submit"
             type="primary"
-            onClick={() => onSave(currency, target, duration)}
+            onClick={() => onSave(currency, target, duration ?? '0')}
           >
             <Trans>Save funding configuration</Trans>
           </Button>

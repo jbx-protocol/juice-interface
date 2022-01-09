@@ -87,8 +87,8 @@ export default function MigrateV1Pt1Modal({
       {needsBalance && (
         <div>
           <p>
-            <b>NOTE:</b> Projects cannot be migrated without a balance, and this
-            project currently has a balance of 0. To migrate this project, first
+            <b>NOTE:</b> This project has a balance of 0. Projects cannot be migrated without a balance.
+            To migrate this project, first
             pay it or use the button below to deposit 1 gwei
             (0.000000000000000001 ETH).
           </p>

@@ -55,6 +55,7 @@ const keys: (keyof Project)[] = [
   'currentBalance',
   'totalPaid',
   'totalRedeemed',
+  'terminal',
 ]
 
 const queryOpts = (

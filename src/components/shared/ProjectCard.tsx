@@ -13,11 +13,15 @@ import { CURRENCY_ETH } from 'constants/currency'
 import CurrencySymbol from './CurrencySymbol'
 import Loading from './Loading'
 import ProjectLogo from './ProjectLogo'
+import { getTerminalVersion } from 'utils/terminal-versions'
 
 export default function ProjectCard({
   project,
 }: {
-  project: Pick<Project, 'handle' | 'uri' | 'totalPaid' | 'createdAt'>
+  project: Pick<
+    Project,
+    'handle' | 'uri' | 'totalPaid' | 'createdAt' | 'terminal'
+  >
 }) {
   const {
     theme: { colors, radii },
@@ -30,6 +34,9 @@ export default function ProjectCard({
     project.totalPaid.lt(BigNumber.from('10000000000000000000'))
       ? 2
       : 0
+
+  const terminalVersion = getTerminalVersion(project.terminal)
+
   return (
     <div
       style={{
@@ -61,6 +68,7 @@ export default function ProjectCard({
 
           <div
             style={{
+              flex: 1,
               minWidth: 0,
             }}
           >
@@ -75,8 +83,20 @@ export default function ProjectCard({
               {metadata.name}
             </h2>
 
-            <div style={{ color: colors.text.primary, fontWeight: 500 }}>
-              @{project.handle}
+            <div>
+              <span style={{ color: colors.text.primary, fontWeight: 500 }}>
+                @{project.handle}
+              </span>
+              <span
+                style={{
+                  marginLeft: 10,
+                  color: colors.text.tertiary,
+                  fontSize: '0.7rem',
+                  fontWeight: 500,
+                }}
+              >
+                V{terminalVersion}
+              </span>
             </div>
 
             <div style={{ color: colors.text.secondary }}>

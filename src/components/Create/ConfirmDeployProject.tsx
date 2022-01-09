@@ -114,7 +114,7 @@ export default function ConfirmDeployProject() {
           value={editingFC.payIsPaused ? 'Yes' : 'No'}
         />
         <Statistic
-          title="Token printing"
+          title="Token minting"
           value={editingFC.ticketPrintingIsAllowed ? 'Allowed' : 'Disabled'}
         />
       </Space>

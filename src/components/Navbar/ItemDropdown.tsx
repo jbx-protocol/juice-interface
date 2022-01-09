@@ -15,7 +15,7 @@ export default function ItemDropDown({
   const iconSize = 12
 
   return (
-    <div className="resouces-dropdown">
+    <div className="resources-dropdown">
       <Collapse style={{ border: 'none' }} activeKey={activeKey}>
         <CollapsePanel
           style={{

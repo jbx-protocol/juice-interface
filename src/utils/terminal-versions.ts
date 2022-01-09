@@ -25,13 +25,18 @@ export const getTerminalVersion = (
   if (!address) return
 
   if (
-    address === loadTerminalAddress(readNetwork.name, ContractName.TerminalV1)
+    address.toLowerCase() ===
+    loadTerminalAddress(readNetwork.name, ContractName.TerminalV1).toLowerCase()
   ) {
     return '1'
   }
 
   if (
-    address === loadTerminalAddress(readNetwork.name, ContractName.TerminalV1_1)
+    address.toLowerCase() ===
+    loadTerminalAddress(
+      readNetwork.name,
+      ContractName.TerminalV1_1,
+    ).toLowerCase()
   ) {
     return '1.1'
   }

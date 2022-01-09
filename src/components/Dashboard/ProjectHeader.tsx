@@ -130,7 +130,7 @@ export default function ProjectHeader() {
                           setMigrateDrawerVisible(true)
                         }}
                       >
-                        v{terminal.version}
+                        V{terminal.version}
                       </span>
                     </Tooltip>
                   )}

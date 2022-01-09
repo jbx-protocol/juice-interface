@@ -100,40 +100,44 @@
 
 .top-nav-mobile {
   height: 50px;
-  padding: 8px;
+  padding: 16px 8px;
   .ant-collapse {
-    position: absolute; // collapses need absolutes
-    top: 0;
     width: 100%;
     height: 45px;
   }
   .ant-collapse-content {
     float: left;
-    margin-left: 8px;
-    width: 150px;
+    padding-right: 10px;
+    padding-left: 10px;
+    width: 100%;
   }
   .ant-collapse-content-box {
     display: flex;
     flex-direction: column;
     z-index: 1000;
     margin-top: -2px;
-    width: 150px;
-    padding: 7px 0;
+    padding: 7px 0 15px;
+    border: none;
+    border-bottom: 1px solid var(--stroke-secondary);
   }
   .nav-menu-item {
     padding: 10px 15px;
   }
   .resources-dropdown {
-    top: 190px;
-    left: 12px;
+    position: static;
+    margin-left: 3px;
+    .ant-collapse-content {
+      padding-top: 5px;
+    }
     .ant-collapse-content-box {
       padding: 0 6px;
-      margin-left: 6px;
+      margin-left: 25px;
+      border: none;
     }
   }
   .account-badge {
     margin: auto !important;
-    margin-top: 15px !important;
+    margin-top: 22px !important;
   }
 }
 

@@ -45,14 +45,12 @@ export default function MobileCollapse({ menu }: { menu: JSX.Element }) {
               <MenuOutlined style={{ color: colors.icon.primary }} />
             </Space>
           }
-          extra={
-            <div style={{ display: 'flex' }}>
-              <ThemePicker mobile={true} />
-            </div>
-          }
         >
           {menu}
-          <LanguageSelector />
+          <div style={{ paddingLeft: 15 }}>
+            <LanguageSelector />
+            <ThemePicker mobile={true} />
+          </div>
           <Account mobile={true} />
           {signingProvider ? (
             <div

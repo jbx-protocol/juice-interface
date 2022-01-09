@@ -476,8 +476,7 @@ export default function Create() {
               ? [
                   {
                     title: t`Reconfiguration`,
-                    description:
-                      t`Rules for how changes can be made to your project.`,
+                    description: t`Rules for how changes can be made to your project.`,
                     callback: () => setRulesFormModalVisible(true),
                   },
                 ]

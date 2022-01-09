@@ -45,8 +45,8 @@ export default function TicketingForm({
           <Trans>
             You'll be able to issue ERC-20 tokens once your project contract has
             been deployed. Until then, the protocol will track token balances,
-            allowing your supporters to earn tokens and redeem for overflow in the
-            meantime.
+            allowing your supporters to earn tokens and redeem for overflow in
+            the meantime.
           </Trans>
         </p>
       </div>

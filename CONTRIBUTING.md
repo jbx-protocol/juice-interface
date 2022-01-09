@@ -36,7 +36,10 @@ about the differences between merge and rebase Git workflows.
 
 #### Rebase procedure
 
-You can rebase your feature branch with the following procedure, where `feature-branch` is the name of your branch. Further explanation of rebase and its options can be found [here](https://docs.gitlab.com/ee/topics/git/git_rebase.html).
+You can rebase your feature branch with the following procedure, where
+`feature-branch` is the name of your branch. Further explanation of rebase and
+its options can be found
+[here](https://docs.gitlab.com/ee/topics/git/git_rebase.html).
 
 1. `git checkout feature-branch`
 2. `git fetch origin main`
@@ -153,8 +156,8 @@ If you need help at any stage, reach out in the
    })
    ```
 
-1. Extract and compile the strings marked for translation. This creates a directory for the
-   locale within the `./locale/` directory:
+1. Extract and compile the strings marked for translation. This creates a
+   directory for the locale within the `./locale/` directory:
 
    ```bash
    yarn i18n:compile

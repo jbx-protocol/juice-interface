@@ -167,7 +167,7 @@ export default function ConfirmDeployProject() {
         )}
       />
       <Statistic
-        title="Reserved token allocations"
+        title={t`Reserved token allocations`}
         valueRender={() => (
           <TicketModsList
             mods={ticketMods}

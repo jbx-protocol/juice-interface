@@ -61,31 +61,11 @@ export default function ParticipantsModal({
 
     if (!projectId || !visible) {
       setParticipants([])
-      // setHoldersCount(undefined)
       return
     }
 
-    const url = 'https://api.studio.thegraph.com/query/2231/juicebox/1.0.24'
-
-    // querySubgraph(
-    //   {
-    //     url,
-    //     entity: 'project',
-    //     keys: ['holdersCount'],
-    //     where: {
-    //       key: 'id',
-    //       value: projectId.toString(),
-    //     },
-    //   },
-    //   res => {
-    //     if (!res) return
-    //     setHoldersCount(formatGraphResponse('project', res)[0].holdersCount)
-    //   },
-    // )
-
     querySubgraph(
       {
-        url,
         entity: 'participant',
         keys: [
           'wallet',

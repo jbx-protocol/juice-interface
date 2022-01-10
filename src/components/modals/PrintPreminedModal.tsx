@@ -119,7 +119,7 @@ export default function PrintPreminedModal({
           rules={[
             {
               required: true,
-              validator: (rule: any, value: any) => {
+              validator: () => {
                 if (!utils.isAddress(value))
                   return Promise.reject('Not a valid ETH address')
                 else return Promise.resolve()
@@ -144,7 +144,7 @@ export default function PrintPreminedModal({
           valuePropName="checked"
           extra={
             erc20Issued
-              ? `Enabling this will mint ${tokenSymbol} ERC-20 tokens. Otherwise staked ${tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the recever.`
+              ? `Enabling this will mint ${tokenSymbol} ERC-20 tokens. Otherwise staked ${tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver.`
               : 'ERC-20 tokens can only be minted once an ERC-20 token has been issued for this project.'
           }
           initialValue={false}

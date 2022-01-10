@@ -38,7 +38,7 @@ export default function MigrateV1Pt1Modal({
     )
   }
 
-  function add1Gwei() {
+  function add1Wei() {
     if (!transactor || !contracts || !projectId) return
 
     setLoadingAddToBalance(true)
@@ -64,10 +64,10 @@ export default function MigrateV1Pt1Modal({
       confirmLoading={loadingMigrate}
       okButtonProps={{ disabled: needsBalance }}
     >
-      <h2>Migrate to v1.1</h2>
+      <h2>Migrate to Juicebox V1.1</h2>
       <p>
-        This project is currently using the Juicebox v1 terminal. New features
-        introduced in v1.1 allow the project owner to:
+        This project is currently using the Juicebox V1 terminal contract. New
+        features introduced in V1.1 allow the project owner to:
       </p>
       <ul>
         <li>Pause received payments</li>
@@ -87,14 +87,13 @@ export default function MigrateV1Pt1Modal({
       {needsBalance && (
         <div>
           <p>
-            <b>NOTE:</b> This project has a balance of 0. Projects cannot be migrated without a balance.
-            To migrate this project, first
-            pay it or use the button below to deposit 1 gwei
-            (0.000000000000000001 ETH).
+            <b>NOTE:</b> This project has a balance of 0. Projects cannot be
+            migrated without a balance. To migrate this project, first pay it or
+            use the button below to deposit 1 wei (0.000000000000000001 ETH).
           </p>
           <p>
-            <Button block onClick={add1Gwei} loading={loadingAddToBalance}>
-              Deposit 1 gwei to @{handle}
+            <Button block onClick={add1Wei} loading={loadingAddToBalance}>
+              Deposit 1 wei to @{handle}
             </Button>
           </p>
         </div>

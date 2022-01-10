@@ -2108,10 +2108,10 @@
   resolved "https://registry.yarnpkg.com/@istanbuljs/schema/-/schema-0.1.3.tgz#e45e384e4b8ec16bce2fd903af78450f6bf7ec98"
   integrity sha512-ZXRY4jNvVgSVQ8DL3LTcakaAtXwTVUxE81hslsyD2AtoXW/wVob10HkOJ1X/pAlcI7D+2YoZKg5do8G/w6RYgA==
 
-"@jbx-protocol/contracts-v1@1.1.4":
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/@jbx-protocol/contracts-v1/-/contracts-v1-1.1.4.tgz#f9d0c499305b22b45aaf17a3184aa1ae1a07dd6f"
-  integrity sha512-ka31Bxc7upf4gIWQB2yPHEB8auS/gNqZSZNvHD1UAurRAKBMO/hnR4IM4FUNLgYmkSO3wk62gEcZFqNijR6UeA==
+"@jbx-protocol/contracts-v1@^1.1.5":
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/@jbx-protocol/contracts-v1/-/contracts-v1-1.1.5.tgz#9f4c5f584be598346aca3e9e06e8a207ed4d74f3"
+  integrity sha512-YfR4SWLO5EsAvA3hBTQVo9QdH2mwXh9DxDhOAkCTwoYtiI3EIhxQpVEXdzeEhI60c/mxWOrAuFGTl5B+aoPKAA==
   dependencies:
     "@chainlink/contracts" "^0.1.6"
     "@nomiclabs/hardhat-etherscan" "^2.1.4"

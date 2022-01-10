@@ -9,6 +9,7 @@ import EditProjectModal from 'components/modals/EditProjectModal'
 import MigrateV1Pt1Modal from 'components/modals/MigrateV1Pt1Modal'
 import ProjectToolDrawerModal from 'components/modals/ProjectToolDrawerModal'
 import ProjectLogo from 'components/shared/ProjectLogo'
+import { NetworkContext } from 'contexts/networkContext'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { OperatorPermission, useHasPermission } from 'hooks/HasPermission'
@@ -22,9 +23,17 @@ export default function ProjectHeader() {
   const [toolDrawerVisible, setToolDrawerVisible] = useState<boolean>(false)
   const [migrateDrawerVisible, setMigrateDrawerVisible] =
     useState<boolean>(false)
+  const { userAddress } = useContext(NetworkContext)
 
-  const { projectId, handle, metadata, isPreviewMode, isArchived, terminal } =
-    useContext(ProjectContext)
+  const {
+    projectId,
+    handle,
+    metadata,
+    isPreviewMode,
+    isArchived,
+    terminal,
+    owner,
+  } = useContext(ProjectContext)
 
   const {
     theme: { colors },
@@ -53,6 +62,11 @@ export default function ProjectHeader() {
   }
 
   const spacing = 20
+
+  const allowMigrate =
+    terminal?.version === '1' &&
+    userAddress &&
+    owner?.toLowerCase() === userAddress?.toLowerCase()
 
   if (!projectId) return null
 
@@ -122,11 +136,10 @@ export default function ProjectHeader() {
                         style={{
                           padding: '2px 4px',
                           background: colors.background.l1,
-                          cursor:
-                            terminal.version === '1' ? 'pointer' : 'default',
+                          cursor: allowMigrate ? 'pointer' : 'default',
                         }}
                         onClick={() => {
-                          if (terminal.version !== '1') return
+                          if (!allowMigrate) return
                           setMigrateDrawerVisible(true)
                         }}
                       >

@@ -171,7 +171,6 @@ export default function ParticipantsModal({
             type="text"
             icon={<DownloadOutlined />}
             onClick={() => setDownloadModalVisible(true)}
-            disabled
           />
         </div>
 

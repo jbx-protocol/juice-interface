@@ -38,7 +38,6 @@ export default function ParticipantsModal({
 }) {
   const [loading, setLoading] = useState<boolean>()
   const [participants, setParticipants] = useState<Participant[]>([])
-  // const [holdersCount, setHoldersCount] = useState<BigNumber>()
   const [sortPayerReports, setSortPayerReports] =
     useState<keyof Participant>('balance')
   const [pageNumber, setPageNumber] = useState<number>(0)
@@ -276,13 +275,16 @@ export default function ParticipantsModal({
       <div>
         <h4>{tokenSymbol || 'Token'} holders</h4>
 
-        {/* <div>{formattedNum(holdersCount)} holders</div> */}
-
         {tokenAddress && tokenAddress !== constants.AddressZero && (
           <div style={{ marginBottom: 20 }}>
             Token address: <FormattedAddress address={tokenAddress} />
           </div>
         )}
+
+        <p style={{ padding: 10, background: colors.background.l1 }}>
+          This list is using an experimental data index and may be inaccurate
+          for some projects.
+        </p>
 
         {erc20IsUntracked && (
           <p style={{ padding: 10, background: colors.background.l1 }}>

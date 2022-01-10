@@ -6,9 +6,42 @@ import remarkMdx from 'remark-mdx'
 import { MDXComponents, MDXContent } from 'mdx/types'
 import { YouTube } from 'mdx-embed'
 
+const htmlElements = [
+  'h1',
+  'h2',
+  'h3',
+  'h4',
+  'h5',
+  'h6',
+  'a',
+  'em',
+  'strong',
+  'code',
+  'hr',
+  'ol',
+  'ul',
+  'li',
+  'table',
+  'tr',
+  'td',
+  'img',
+]
+
+function buildEmptyMarkdownComponents(elements: string[]) {
+  // Reduce all elements to return just a string (this overrides the markdown -> html components)
+  return elements.reduce(
+    (acc: { [key: string]: any }, key: string) => ({
+      ...acc,
+      [key]: (props: { children: string }) => props.children || '',
+    }),
+    {},
+  )
+}
+
 // Not sure why MDXComponents doesn't work here
 const components: MDXComponents | any = {
   YouTube,
+  ...buildEmptyMarkdownComponents(htmlElements),
   // More embeds can be added here.
   // They will be available in Markdown as <YouTube youTubeId="..." />
 }

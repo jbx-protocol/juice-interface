@@ -5,6 +5,7 @@ import remarkGfm from 'remark-gfm'
 import remarkMdx from 'remark-mdx'
 import { MDXComponents, MDXContent } from 'mdx/types'
 import { YouTube } from 'mdx-embed'
+import ErrorBoundary from 'antd/lib/alert/ErrorBoundary'
 
 const htmlElements = [
   'h1',
@@ -64,16 +65,21 @@ function useMdx(content: string) {
       })
         .then(({ value }) => run(value, runtime))
         .then(({ default: MDX }: { default: MDXContent }) =>
-          setState(s => ({ ...s, MDX })),
+          setState(s => ({ ...s, MDX, error: null })),
         )
-        .catch(err => setState(s => ({ ...s, error: err.toString() })))
+        .catch(err =>
+          setState(s => ({ ...s, MDX: null, error: err.toString() })),
+        )
     }
   }, [content])
 
   return state
 }
 
-export default function MDXViewer({ children }: { children: string }) {
+type IProps = {
+  children: string
+}
+function MDXViewer({ children }: IProps) {
   const { MDX, error } = useMdx(children)
   if (error) {
     return <code>{error}</code>
@@ -82,4 +88,12 @@ export default function MDXViewer({ children }: { children: string }) {
     return <pre>compiling mdx...</pre>
   }
   return <MDX components={components} />
+}
+
+export default function MDXWithErrorBoundary({ children }: IProps) {
+  return (
+    <ErrorBoundary>
+      <MDXViewer>{children}</MDXViewer>
+    </ErrorBoundary>
+  )
 }

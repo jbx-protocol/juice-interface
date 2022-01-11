@@ -98,8 +98,10 @@ export default function FormattedAddress({
       trigger={['hover', 'click']}
       title={
         <span>
-          <span style={{ userSelect: 'all' }}>{address}</span>{' '}
-          <EtherscanLink value={address} type="address" />{' '}
+          <span style={{ userSelect: 'all' }}>
+            <EtherscanLink value={address} type="address" />
+          </span>{' '}
+          {/* <EtherscanLink value={address} type="address" />{' '} */}
           <CopyTextButton value={address} />
         </span>
       }

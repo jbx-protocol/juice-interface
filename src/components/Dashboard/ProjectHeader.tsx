@@ -4,11 +4,14 @@ import {
   TwitterOutlined,
 } from '@ant-design/icons'
 import { t } from '@lingui/macro'
-import { Button } from 'antd'
+
+import { Button, Tooltip } from 'antd'
 import Discord from 'components/icons/Discord'
 import EditProjectModal from 'components/modals/EditProjectModal'
+import MigrateV1Pt1Modal from 'components/modals/MigrateV1Pt1Modal'
 import ProjectToolDrawerModal from 'components/modals/ProjectToolDrawerModal'
 import ProjectLogo from 'components/shared/ProjectLogo'
+import { NetworkContext } from 'contexts/networkContext'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { OperatorPermission, useHasPermission } from 'hooks/HasPermission'
@@ -20,9 +23,19 @@ export default function ProjectHeader() {
   const [editProjectModalVisible, setEditProjectModalVisible] =
     useState<boolean>(false)
   const [toolDrawerVisible, setToolDrawerVisible] = useState<boolean>(false)
+  const [migrateDrawerVisible, setMigrateDrawerVisible] =
+    useState<boolean>(false)
+  const { userAddress } = useContext(NetworkContext)
 
-  const { projectId, handle, metadata, isPreviewMode, isArchived } =
-    useContext(ProjectContext)
+  const {
+    projectId,
+    handle,
+    metadata,
+    isPreviewMode,
+    isArchived,
+    terminal,
+    owner,
+  } = useContext(ProjectContext)
 
   const {
     theme: { colors },
@@ -51,6 +64,11 @@ export default function ProjectHeader() {
   }
 
   const spacing = 20
+
+  const allowMigrate =
+    terminal?.version === '1' &&
+    userAddress &&
+    owner?.toLowerCase() === userAddress?.toLowerCase()
 
   if (!projectId) return null
 
@@ -113,7 +131,24 @@ export default function ProjectHeader() {
                     paddingRight: 10,
                   }}
                 >
-                  ID: {projectId.toNumber()}
+                  ID: {projectId.toNumber()}{' '}
+                  {terminal?.version && (
+                    <Tooltip title="Version of the terminal contract used by this project.">
+                      <span
+                        style={{
+                          padding: '2px 4px',
+                          background: colors.background.l1,
+                          cursor: allowMigrate ? 'pointer' : 'default',
+                        }}
+                        onClick={() => {
+                          if (!allowMigrate) return
+                          setMigrateDrawerVisible(true)
+                        }}
+                      >
+                        V{terminal.version}
+                      </span>
+                    </Tooltip>
+                  )}
                 </span>
 
                 <div>
@@ -235,6 +270,11 @@ export default function ProjectHeader() {
       <ProjectToolDrawerModal
         visible={toolDrawerVisible}
         onClose={() => setToolDrawerVisible(false)}
+      />
+
+      <MigrateV1Pt1Modal
+        visible={migrateDrawerVisible}
+        onCancel={() => setMigrateDrawerVisible(false)}
       />
     </div>
   )

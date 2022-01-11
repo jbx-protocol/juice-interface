@@ -1,4 +1,4 @@
-.ant-btn:not(.ant-btn-link) {
+.ant-btn {
   background: transparent;
   border-color: var(--stroke-action-secondary);
   color: var(--text-over-action-secondary);
@@ -20,9 +20,11 @@
 }
 
 .ant-btn-primary {
-  background: var(--background-action-primary) !important;
-  border-color: transparent !important;
-  color: var(--text-over-action-primary) !important;
+  &:not(.ant-btn[disabled]) {
+    background: var(--background-action-primary) !important;
+    border-color: transparent !important;
+    color: var(--text-over-action-primary) !important;
+  }
 
   &:hover {
     background: var(--background-action-highlight);

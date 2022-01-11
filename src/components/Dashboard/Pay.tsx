@@ -2,10 +2,12 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Tooltip } from 'antd'
 import ConfirmPayOwnerModal from 'components/modals/ConfirmPayOwnerModal'
 import PayWarningModal from 'components/modals/PayWarningModal'
+import AMMPrices from 'components/shared/AMMPrices'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
-import AMMPrices from 'components/shared/AMMPrices'
-
+import { CURRENCY_ETH } from 'constants/currency'
+import { readNetwork } from 'constants/networks'
+import { disablePayOverrides } from 'constants/overrides'
 import { ProjectContext } from 'contexts/projectContext'
 import { parseEther } from 'ethers/lib/utils'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
@@ -13,11 +15,8 @@ import { CurrencyOption } from 'models/currency-option'
 import { useContext, useMemo, useState } from 'react'
 import { currencyName } from 'utils/currency'
 import { formatWad } from 'utils/formatNumber'
-import { decodeFCMetadata } from 'utils/fundingCycle'
+import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
 import { weightedRate } from 'utils/math'
-
-import { disablePayOverrides } from 'constants/overrides'
-import { readNetwork } from 'constants/networks'
 
 import CurrencySymbol from '../shared/CurrencySymbol'
 
@@ -39,8 +38,6 @@ export default function Pay() {
 
   const converter = useCurrencyConverter()
 
-  const fcMetadata = decodeFCMetadata(currentFC?.metadata)
-
   const weiPayAmt =
     payIn === 1 ? converter.usdToWei(payAmount) : parseEther(payAmount ?? '0')
 
@@ -58,6 +55,10 @@ export default function Pay() {
   const payButton = useMemo(() => {
     if (!metadata || !currentFC) return null
 
+    const fcMetadata = decodeFundingCycleMetadata(currentFC?.metadata)
+
+    if (!fcMetadata) return
+
     const payButtonText = metadata.payButton?.length
       ? metadata.payButton
       : 'Pay'
@@ -73,16 +74,24 @@ export default function Pay() {
           </Button>
         </Tooltip>
       )
-    } else if (fcMetadata?.reservedRate === 200 || overridePayDisabled) {
+    } else if (
+      fcMetadata.reservedRate === 200 ||
+      fcMetadata.payIsPaused ||
+      overridePayDisabled
+    ) {
+      let disabledMessage: string
+
+      if (fcMetadata.reservedRate === 200) {
+        disabledMessage =
+          'Paying this project is currently disabled, because the token reserved rate is 100% and no tokens will be earned by making a payment.'
+      } else if (fcMetadata.payIsPaused) {
+        disabledMessage = 'Payments are paused for the current funding cycle.'
+      } else {
+        disabledMessage = 'Paying this project is currently disabled.'
+      }
+
       return (
-        <Tooltip
-          title={
-            fcMetadata?.reservedRate === 200
-              ? 'Paying this project is currently disabled, because the token reserved rate is 100% and no tokens will be earned by making a payment.'
-              : 'Paying this project is currently disabled.'
-          }
-          className="block"
-        >
+        <Tooltip title={disabledMessage} className="block">
           <Button style={{ width: '100%' }} type="primary" disabled>
             {payButtonText}
           </Button>
@@ -100,14 +109,7 @@ export default function Pay() {
         </Button>
       )
     }
-  }, [
-    metadata,
-    currentFC,
-    isArchived,
-    fcMetadata,
-    overridePayDisabled,
-    weiPayAmt,
-  ])
+  }, [metadata, currentFC, isArchived, overridePayDisabled, weiPayAmt])
 
   if (!currentFC || !projectId || !metadata) return null
 
@@ -162,7 +164,7 @@ export default function Pay() {
           {payButton}
           {payIn === 1 && (
             <div style={{ fontSize: '.7rem' }}>
-              Paid as <CurrencySymbol currency={0} />
+              Paid as <CurrencySymbol currency={CURRENCY_ETH} />
               {formatWad(weiPayAmt) || '0'}
             </div>
           )}

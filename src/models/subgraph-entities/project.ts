@@ -1,12 +1,10 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { utils } from 'ethers'
-
-import { NetworkName } from 'models/network-name'
+import { parseParticipantJson } from 'models/subgraph-entities/participant'
 
 import { Participant } from './participant'
-import { readNetwork } from 'constants/networks'
 
 export interface Project {
+  terminal?: string
   createdAt?: number
   handle?: string
   id?: BigNumber
@@ -16,6 +14,7 @@ export interface Project {
   totalPaid?: BigNumber
   totalRedeemed?: BigNumber
   participants?: Participant[]
+  holdersCount?: BigNumber
 }
 
 export type ProjectJson = Record<keyof Project, string> & {
@@ -26,10 +25,6 @@ export const parseProjectJson = (project: ProjectJson): Project => ({
   ...project,
   id: project.id ? BigNumber.from(project.id) : undefined,
   createdAt: project.createdAt ? parseInt(project.createdAt) : undefined,
-  handle:
-    readNetwork.name === NetworkName.mainnet && project.handle
-      ? utils.parseBytes32String(project.handle) // Temporarily handle difference between mainnet subgraph (Bytes32 handle) and testnet (string handle)
-      : project.handle,
   currentBalance: project.currentBalance
     ? BigNumber.from(project.currentBalance)
     : undefined,
@@ -38,14 +33,8 @@ export const parseProjectJson = (project: ProjectJson): Project => ({
     ? BigNumber.from(project.totalRedeemed)
     : undefined,
   participants:
-    project.participants?.map(p => {
-      const payer: Record<keyof Participant, string> = JSON.parse(p)
-      return {
-        ...payer,
-        totalPaid: BigNumber.from(payer.totalPaid),
-        project: BigNumber.from(payer.project),
-        lastPaidTimestamp: parseInt(payer.lastPaidTimestamp),
-        tokenBalance: BigNumber.from(payer.tokenBalance),
-      }
-    }) ?? [],
+    project.participants?.map(p => parseParticipantJson(JSON.parse(p))) ?? [],
+  holdersCount: project.holdersCount
+    ? BigNumber.from(project.holdersCount)
+    : undefined,
 })

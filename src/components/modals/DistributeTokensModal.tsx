@@ -1,16 +1,14 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Modal, Space } from 'antd'
-import { plural } from '@lingui/macro'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import TicketModsList from 'components/shared/TicketModsList'
 import { ProjectContext } from 'contexts/projectContext'
 import { UserContext } from 'contexts/userContext'
 import useContractReader from 'hooks/ContractReader'
-import { ContractName } from 'models/contract-name'
 import { useContext, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatWad } from 'utils/formatNumber'
-import { decodeFCMetadata } from 'utils/fundingCycle'
+import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
 
 export default function DistributeTokensModal({
   visible,
@@ -23,13 +21,21 @@ export default function DistributeTokensModal({
 }) {
   const [loading, setLoading] = useState<boolean>()
   const { contracts, transactor } = useContext(UserContext)
-  const { tokenSymbol, currentFC, projectId, currentTicketMods, owner } =
-    useContext(ProjectContext)
+  const {
+    tokenSymbol,
+    currentFC,
+    projectId,
+    currentTicketMods,
+    owner,
+    terminal,
+  } = useContext(ProjectContext)
 
-  const metadata = decodeFCMetadata(currentFC?.metadata)
+  const terminalContractName = terminal?.name
+
+  const metadata = decodeFundingCycleMetadata(currentFC?.metadata)
 
   const reservedTokens = useContractReader<BigNumber>({
-    contract: ContractName.TerminalV1,
+    contract: terminalContractName,
     functionName: 'reservedTicketBalanceOf',
     args:
       projectId && metadata?.reservedRate
@@ -42,12 +48,14 @@ export default function DistributeTokensModal({
   })
 
   function distribute() {
-    if (!transactor || !contracts || !projectId) return
+    if (!transactor || !contracts || !projectId || !terminal) return
 
     setLoading(true)
 
     transactor(
-      contracts.TerminalV1,
+      terminal.version === '1.1'
+        ? contracts.TerminalV1_1
+        : contracts.TerminalV1,
       'printReservedTickets',
       [projectId.toHexString()],
       {
@@ -77,10 +85,7 @@ export default function DistributeTokensModal({
           <div>
             {tokenSymbol
               ? `${reservedTokensFormatted} ${tokenSymbol}`
-              : plural(reservedTokensFormatted ?? 0, {
-                  one: '# token',
-                  other: '# tokens',
-                })}
+              : reservedTokensFormatted}
           </div>
         </div>
         {currentTicketMods?.length ? (

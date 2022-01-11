@@ -3,17 +3,17 @@ import { Trans } from '@lingui/macro'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
+import { CURRENCY_ETH, CURRENCY_USD } from 'constants/currency'
 import { NetworkContext } from 'contexts/networkContext'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
 import { BigNumber } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
-import { ContractName } from 'models/contract-name'
 import { CSSProperties, useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formattedNum, formatWad, fromWad, parseWad } from 'utils/formatNumber'
-import { decodeFCMetadata } from 'utils/fundingCycle'
+import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
 
 import { useRedeemRate } from '../../hooks/RedeemRate'
 
@@ -38,12 +38,13 @@ export default function RedeemModal({
   } = useContext(ThemeContext)
   const { userAddress } = useContext(NetworkContext)
   const { contracts, transactor } = useContext(UserContext)
-  const { projectId, tokenSymbol, currentFC } = useContext(ProjectContext)
+  const { projectId, tokenSymbol, currentFC, terminal } =
+    useContext(ProjectContext)
 
-  const fcMetadata = decodeFCMetadata(currentFC?.metadata)
+  const fcMetadata = decodeFundingCycleMetadata(currentFC?.metadata)
 
   const maxClaimable = useContractReader<BigNumber>({
-    contract: ContractName.TerminalV1,
+    contract: terminal?.name,
     functionName: 'claimableOverflowOf',
     args:
       userAddress && projectId
@@ -55,18 +56,18 @@ export default function RedeemModal({
         projectId && userAddress
           ? [
               {
-                contract: ContractName.TerminalV1,
+                contract: terminal?.name,
                 eventName: 'Pay',
                 topics: [[], projectId.toHexString(), userAddress],
               },
               {
-                contract: ContractName.TerminalV1,
+                contract: terminal?.name,
                 eventName: 'Redeem',
                 topics: [projectId.toHexString(), userAddress],
               },
             ]
           : undefined,
-      [projectId, userAddress],
+      [projectId, userAddress, terminal?.name],
     ),
   })
 
@@ -76,12 +77,12 @@ export default function RedeemModal({
   })
 
   // 0.5% slippage for USD-denominated projects
-  const minAmount = currentFC?.currency.eq(1)
+  const minAmount = currentFC?.currency.eq(CURRENCY_USD)
     ? rewardAmount?.mul(1000).div(1005)
     : rewardAmount
 
   function redeem() {
-    if (!transactor || !contracts || !rewardAmount) return
+    if (!transactor || !contracts || !rewardAmount || !terminal) return
 
     setLoading(true)
 
@@ -90,7 +91,9 @@ export default function RedeemModal({
     if (!redeemWad || !projectId) return
 
     transactor(
-      contracts.TerminalV1,
+      terminal.version === '1.1'
+        ? contracts.TerminalV1_1
+        : contracts.TerminalV1,
       'redeem',
       [
         userAddress,
@@ -168,7 +171,7 @@ export default function RedeemModal({
           <p style={statsStyle}>
             Currently worth:{' '}
             <span>
-              <CurrencySymbol currency={0} />
+              <CurrencySymbol currency={CURRENCY_ETH} />
               {formatWad(maxClaimable, { decimals: 4 })}
             </span>
           </p>
@@ -204,7 +207,8 @@ export default function RedeemModal({
               onChange={val => setRedeemAmount(val)}
             />
             <div style={{ fontWeight: 500, marginTop: 20 }}>
-              You will receive {currentFC?.currency.eq(1) ? 'minimum ' : ' '}
+              You will receive{' '}
+              {currentFC?.currency.eq(CURRENCY_USD) ? 'minimum ' : ' '}
               {formatWad(minAmount, { decimals: 8 }) || '--'} ETH
             </div>
           </div>

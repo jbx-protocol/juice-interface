@@ -4,12 +4,14 @@ import CurrencySymbol from 'components/shared/CurrencySymbol'
 import PayoutModsList from 'components/shared/PayoutModsList'
 import ProjectLogo from 'components/shared/ProjectLogo'
 import TicketModsList from 'components/shared/TicketModsList'
-
+import { getBallotStrategyByAddress } from 'constants/ballot-strategies'
+import { ProjectContext } from 'contexts/projectContext'
 import { UserContext } from 'contexts/userContext'
 import {
   useAppSelector,
   useEditingFundingCycleSelector,
 } from 'hooks/AppSelector'
+import { useTerminalFee } from 'hooks/TerminalFee'
 import { CurrencyOption } from 'models/currency-option'
 import { useContext } from 'react'
 import {
@@ -22,15 +24,17 @@ import { hasFundingTarget, isRecurring } from 'utils/fundingCycle'
 import { amountSubFee } from 'utils/math'
 import { orEmpty } from 'utils/orEmpty'
 
-import { getBallotStrategyByAddress } from 'constants/ballot-strategies'
-
 export default function ConfirmDeployProject() {
   const editingFC = useEditingFundingCycleSelector()
   const editingProject = useAppSelector(state => state.editingProject.info)
-  const { adminFeePercent } = useContext(UserContext)
+  const { terminal } = useContext(ProjectContext)
+  const { contracts } = useContext(UserContext)
   const { payoutMods, ticketMods } = useAppSelector(
     state => state.editingProject,
   )
+
+  const terminalFee = useTerminalFee(terminal?.version, contracts)
+
   return (
     <Space size="large" direction="vertical">
       <h1 style={{ fontSize: '2rem' }}>Review project</h1>
@@ -80,7 +84,10 @@ export default function ConfirmDeployProject() {
                         editingFC?.currency.toNumber() as CurrencyOption
                       }
                     />
-                    {formatWad(amountSubFee(editingFC.target, adminFeePercent))}{' '}
+                    {formatWad(
+                      amountSubFee(editingFC.target, terminalFee),
+                      { decimals: 4 },
+                    )}{' '}
                     after JBX fee)
                   </span>
                 )}
@@ -102,6 +109,16 @@ export default function ConfirmDeployProject() {
         title="Pay disclosure"
         value={orEmpty(editingProject?.metadata.payDisclosure)}
       />
+      <Space size="large">
+        <Statistic
+          title="Payments paused"
+          value={editingFC.payIsPaused ? 'Yes' : 'No'}
+        />
+        <Statistic
+          title="Token minting"
+          value={editingFC.ticketPrintingIsAllowed ? 'Allowed' : 'Disabled'}
+        />
+      </Space>
       <Space size="large">
         <Statistic
           title="Website"
@@ -162,7 +179,7 @@ export default function ConfirmDeployProject() {
             mods={payoutMods}
             projectId={undefined}
             fundingCycle={editingFC}
-            fee={adminFeePercent}
+            fee={terminalFee}
           />
         )}
       />

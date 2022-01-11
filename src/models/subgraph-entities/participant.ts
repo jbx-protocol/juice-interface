@@ -5,7 +5,9 @@ export interface Participant {
   wallet: string
   totalPaid?: BigNumber
   project?: BigNumber
-  tokenBalance?: BigNumber
+  balance?: BigNumber
+  stakedBalance?: BigNumber
+  unstakedBalance?: BigNumber
   lastPaidTimestamp?: number
 }
 
@@ -15,8 +17,12 @@ export const parseParticipantJson = (json: ParticipantJson): Participant => ({
   ...json,
   totalPaid: json.totalPaid ? BigNumber.from(json.totalPaid) : undefined,
   project: json.project ? BigNumber.from(json.project) : undefined,
-  tokenBalance: json.tokenBalance
-    ? BigNumber.from(json.tokenBalance)
+  balance: json.balance ? BigNumber.from(json.balance) : undefined,
+  stakedBalance: json.stakedBalance
+    ? BigNumber.from(json.stakedBalance)
+    : undefined,
+  unstakedBalance: json.unstakedBalance
+    ? BigNumber.from(json.unstakedBalance)
     : undefined,
   lastPaidTimestamp: json.lastPaidTimestamp
     ? parseInt(json.lastPaidTimestamp)

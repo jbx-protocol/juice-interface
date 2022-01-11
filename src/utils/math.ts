@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { FundingCycle } from 'models/funding-cycle'
 
 import { fromWad, parsePerbicent } from './formatNumber'
-import { decodeFCMetadata } from './fundingCycle'
+import { decodeFundingCycleMetadata } from './fundingCycle'
 
 export const weightedRate = (
   fc: FundingCycle | undefined,
@@ -10,7 +10,7 @@ export const weightedRate = (
   output: 'payer' | 'reserved',
 ) => {
   if (!fc || !wad) return
-  const reserved = decodeFCMetadata(fc.metadata)?.reservedRate
+  const reserved = decodeFundingCycleMetadata(fc.metadata)?.reservedRate
 
   if (reserved === undefined) return
 
@@ -37,5 +37,5 @@ export const amountSubFee = (amount?: BigNumber, feePercent?: BigNumber) => {
 
 export const amountAddFee = (amount?: BigNumber, feePercent?: BigNumber) => {
   if (!feePercent || !amount) return
-  return amount.add(feeForAmount(amount, feePercent) ?? 0)
+  return amount.add(amount.mul(100).div(feePercent.mul(200)))
 }

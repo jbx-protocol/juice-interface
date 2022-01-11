@@ -2,8 +2,8 @@ import { Contract } from '@ethersproject/contracts'
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
 
 import { NetworkContext } from 'contexts/networkContext'
-import { Contracts } from 'models/contracts'
 import { ContractName } from 'models/contract-name'
+import { Contracts } from 'models/contracts'
 import { NetworkName } from 'models/network-name'
 import { useContext, useEffect, useState } from 'react'
 

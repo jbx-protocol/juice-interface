@@ -1,10 +1,10 @@
+import axios from 'axios'
 import {
+  useQuery,
   useInfiniteQuery,
   UseInfiniteQueryOptions,
-  useQuery,
   UseQueryOptions,
 } from 'react-query'
-import axios from 'axios'
 
 import {
   EntityKey,
@@ -12,6 +12,7 @@ import {
   formatGraphQuery,
   formatGraphResponse,
   GraphQueryOpts,
+  InfiniteGraphQueryOpts,
   SubgraphEntities,
   SubgraphError,
   SubgraphQueryReturnTypes,
@@ -25,16 +26,17 @@ type GraphResult<E extends EntityKey, K extends EntityKeys<E>[]> = {
   [PropertyKey in K[number]]: SubgraphEntities[E][PropertyKey]
 }[]
 
+// Pass `opts = null` to prevent http request
 export default function useSubgraphQuery<
   E extends EntityKey,
   K extends EntityKeys<E>,
 >(
-  opts: GraphQueryOpts<E, K>,
+  opts: GraphQueryOpts<E, K> | null,
   reactQueryOptions?: UseQueryOptions<
     GraphResult<E, K[]>,
     Error,
     GraphResult<E, K[]>,
-    readonly [string, GraphQueryOpts<E, K>]
+    readonly [string, GraphQueryOpts<E, K> | null]
   >,
 ) {
   if (!subgraphUrl) {
@@ -45,10 +47,12 @@ export default function useSubgraphQuery<
     GraphResult<E, K[]>,
     Error,
     GraphResult<E, K[]>,
-    readonly [string, GraphQueryOpts<E, K>]
+    readonly [string, GraphQueryOpts<E, K> | null]
   >(
     ['subgraph-query', opts],
     async () => {
+      if (!opts) return []
+
       const response = await axios.post<{
         errors?: SubgraphError[]
         data: SubgraphQueryReturnTypes[E]
@@ -74,17 +78,6 @@ export default function useSubgraphQuery<
       ...reactQueryOptions,
     },
   )
-}
-
-// Re-type GraphQueryOpts to remove skip and add pageSize.
-// This is so we can calculate our own `skip` value based on
-// the react-query managed page number multiplied by the provided
-// page size.
-type InfiniteGraphQueryOpts<
-  E extends EntityKey,
-  K extends EntityKeys<E>,
-> = Omit<GraphQueryOpts<E, K>, 'skip'> & {
-  pageSize: number
 }
 
 export function useInfiniteSubgraphQuery<
@@ -113,6 +106,7 @@ export function useInfiniteSubgraphQuery<
     ['infinite-subgraph-query', opts] as const,
     async ({ queryKey, pageParam = 0 }) => {
       const { pageSize, ...evaluatedOpts } = queryKey[1]
+
       const response = await axios.post<{
         errors?: SubgraphError[]
         data: SubgraphQueryReturnTypes[E]

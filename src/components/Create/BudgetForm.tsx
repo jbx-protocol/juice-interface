@@ -2,17 +2,25 @@ import { Button, Divider, Form, Space, Switch } from 'antd'
 import { Trans } from '@lingui/macro'
 
 import { FormItems } from 'components/shared/formItems'
+import {
+  targetSubFeeToTargetFormatted,
+  targetToTargetSubFeeFormatted,
+} from 'components/shared/formItems/formHelpers'
+import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
 import { constants } from 'ethers'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useEditingFundingCycleSelector } from 'hooks/AppSelector'
+import { useTerminalFee } from 'hooks/TerminalFee'
 import { CurrencyOption } from 'models/currency-option'
-import { useContext, useLayoutEffect, useState, useMemo } from 'react'
+import { useContext, useLayoutEffect, useMemo, useState } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
-import { fromWad } from 'utils/formatNumber'
+import { fromWad, parseWad } from 'utils/formatNumber'
 import { hasFundingTarget, isRecurring } from 'utils/fundingCycle'
 import { helpPagePath } from 'utils/helpPageHelper'
+
+const DEFAULT_TARGET_AFTER_FEE = '10000'
 
 export default function BudgetForm({
   initialCurrency,
@@ -31,19 +39,28 @@ export default function BudgetForm({
   // State objects avoid antd form input dependency rerendering issues
   const [currency, setCurrency] = useState<CurrencyOption>(0)
   const [target, setTarget] = useState<string>('0')
+  const [targetSubFee, setTargetSubFee] = useState<string>('0')
   const [duration, setDuration] = useState<string>('0')
   const [showFundingFields, setShowFundingFields] = useState<boolean>()
-  const editingFC = useEditingFundingCycleSelector()
   // TODO budgetForm should not depend on dispatch
   const dispatch = useAppDispatch()
-  const { adminFeePercent } = useContext(UserContext)
+  const { terminal } = useContext(ProjectContext)
+  const editingFC = useEditingFundingCycleSelector()
+  const { contracts } = useContext(UserContext)
+
+  const terminalFee = useTerminalFee(terminal?.version, contracts)
 
   useLayoutEffect(() => {
     setCurrency(initialCurrency)
     setTarget(initialTarget)
+    setTargetSubFee(targetToTargetSubFeeFormatted(initialTarget, terminalFee))
     setDuration(initialDuration)
-    setShowFundingFields(hasFundingTarget(editingFC))
-  }, [editingFC, initialCurrency, initialDuration, initialTarget])
+    setShowFundingFields(
+      hasFundingTarget({
+        target: parseWad(initialTarget),
+      }),
+    )
+  }, [initialCurrency, initialDuration, initialTarget, terminalFee])
 
   const maxIntStr = fromWad(constants.MaxUint256)
   const hasTarget = useMemo(() => {
@@ -111,7 +128,13 @@ export default function BudgetForm({
             <Switch
               checked={showFundingFields}
               onChange={checked => {
-                setTarget(checked ? '10000' : maxIntStr || '0')
+                const targetSubFee = checked
+                  ? DEFAULT_TARGET_AFTER_FEE
+                  : maxIntStr || '0'
+                setTargetSubFee(targetSubFee)
+                setTarget(
+                  targetSubFeeToTargetFormatted(targetSubFee, terminalFee),
+                )
                 setCurrency(1)
                 setShowFundingFields(checked)
               }}
@@ -140,11 +163,23 @@ export default function BudgetForm({
               rules: [{ required: true }],
               extra: null,
             }}
-            value={target.toString()}
-            onValueChange={val => setTarget(val || '0')}
+            target={target}
+            targetSubFee={targetSubFee}
+            onTargetChange={target => {
+              setTarget(target ?? '0')
+              setTargetSubFee(
+                targetToTargetSubFeeFormatted(target ?? '0', terminalFee),
+              )
+            }}
+            onTargetSubFeeChange={targetSubFee => {
+              setTargetSubFee(targetSubFee ?? '0')
+              setTarget(
+                targetSubFeeToTargetFormatted(targetSubFee ?? '0', terminalFee),
+              )
+            }}
             currency={currency}
             onCurrencyChange={setCurrency}
-            fee={adminFeePercent}
+            fee={terminalFee}
           />
         )}
 

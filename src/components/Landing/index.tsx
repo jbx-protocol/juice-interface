@@ -1,20 +1,17 @@
+import { t, Trans } from '@lingui/macro'
 import { Button, Col, Row, Space } from 'antd'
 import Create from 'components/Create'
 import Loading from 'components/shared/Loading'
 
 import { ThemeContext } from 'contexts/themeContext'
-
 import { useProjectsQuery } from 'hooks/Projects'
-
 import { CSSProperties, useContext } from 'react'
-import { t, Trans } from '@lingui/macro'
 
 import { ThemeOption } from 'constants/theme/theme-option'
 
 import ProjectsGrid from '../shared/ProjectsGrid'
 import Faq from './Faq'
 import Footer from './Footer'
-
 import Payments from './Payments'
 
 export default function Landing() {

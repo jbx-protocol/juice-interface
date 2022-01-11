@@ -62,6 +62,9 @@ export const defaultProjectState: EditingProjectState = {
     cycleLimit: BigNumber.from(0),
     configured: BigNumber.from(0),
     ballot: constants.AddressZero,
+    payIsPaused: false,
+    ticketPrintingIsAllowed: true,
+    treasuryExtension: constants.AddressZero,
   }),
   payoutMods: [],
   ticketMods: [],
@@ -259,6 +262,20 @@ export const editingProjectSlice = createSlice({
         bondingCurveRate: fromPerbicent(
           action.payload ? defaultBondingCurveRate : 0,
         ),
+      },
+    }),
+    setPayIsPaused: (state, action: PayloadAction<boolean>) => ({
+      ...state,
+      fundingCycle: {
+        ...state.fundingCycle,
+        payIsPaused: action.payload,
+      },
+    }),
+    setticketPrintingIsAllowed: (state, action: PayloadAction<boolean>) => ({
+      ...state,
+      fundingCycle: {
+        ...state.fundingCycle,
+        ticketPrintingIsAllowed: action.payload,
       },
     }),
     setPayoutMods: (state, action: PayloadAction<PayoutMod[]>) => ({

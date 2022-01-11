@@ -13,9 +13,10 @@ import { useContext, useLayoutEffect, useMemo, useState } from 'react'
 import { formatWad, fromPermyriad, fromWad } from 'utils/formatNumber'
 import { amountSubFee } from 'utils/math'
 
-import { getTotalPercentage } from './FormHelpers'
+import { getTotalPercentage } from 'components/shared/formItems/formHelpers'
 
 import ProjectPayoutMods from './formItems/ProjectPayoutMods'
+import { CURRENCY_ETH } from 'constants/currency'
 
 export default function PayoutModsList({
   mods,
@@ -127,7 +128,9 @@ export default function PayoutModsList({
                             }
                           />
                           {formatWad(baseTotal?.mul(mod.percent).div(10000), {
-                            decimals: fundingCycle.currency.eq(0) ? 4 : 0,
+                            decimals: fundingCycle.currency.eq(CURRENCY_ETH)
+                              ? 4
+                              : 0,
                             padEnd: true,
                           })}
                           )
@@ -156,7 +159,7 @@ export default function PayoutModsList({
                     }
                   />
                   {formatWad(baseTotal?.mul(ownerPercent).div(10000), {
-                    decimals: fundingCycle.currency.eq(0) ? 4 : 0,
+                    decimals: fundingCycle.currency.eq(CURRENCY_ETH) ? 4 : 0,
                     padEnd: true,
                   })}
                   )

@@ -42,6 +42,7 @@ import {
 
 export interface SubgraphEntities {
   project: Project
+  projectSearch: Project
   payEvent: PayEvent
   redeemEvent: RedeemEvent
   participant: Participant
@@ -53,6 +54,7 @@ export interface SubgraphEntities {
 
 export interface SubgraphQueryReturnTypes {
   project: { projects: ProjectJson[] }
+  projectSearch: { projectSearch: ProjectJson[] }
   payEvent: { payEvents: PayEventJson[] }
   redeemEvent: { redeemEvents: RedeemEventJson[] }
   participant: { participants: ParticipantJson[] }
@@ -105,10 +107,12 @@ export type EntityKeys<E extends EntityKey> = keyof SubgraphEntities[E]
 
 export interface GraphQueryOpts<E extends EntityKey, K extends EntityKeys<E>> {
   entity: E
+  text?: string
   first?: number
   skip?: number
   orderBy?: keyof SubgraphEntities[E]
   block?: BlockConfig
+  url?: string
 
   // `keys` can be a mix of the entity's keys or an entity specifier with its own keys
   keys: (
@@ -122,10 +126,23 @@ export interface GraphQueryOpts<E extends EntityKey, K extends EntityKeys<E>> {
   where?: WhereConfig<E> | WhereConfig<E>[]
 }
 
+// Re-type GraphQueryOpts to remove skip and add pageSize.
+// This is so we can calculate our own `skip` value based on
+// the react-query managed page number multiplied by the provided
+// page size.
+export type InfiniteGraphQueryOpts<
+  E extends EntityKey,
+  K extends EntityKeys<E>,
+> = Omit<GraphQueryOpts<E, K>, 'skip'> & {
+  pageSize: number
+}
+
 // https://thegraph.com/docs/graphql-api#filtering
 export const formatGraphQuery = <E extends EntityKey, K extends EntityKeys<E>>(
   opts: GraphQueryOpts<E, K>,
 ) => {
+  if (!opts) return
+
   let args = ''
 
   const addArg = (
@@ -136,6 +153,7 @@ export const formatGraphQuery = <E extends EntityKey, K extends EntityKeys<E>>(
     args += (args.length ? ', ' : '') + `${name}: ` + value
   }
 
+  addArg('text', opts.text ? `"${opts.text}"` : undefined)
   addArg('first', opts.first)
   addArg('skip', opts.skip)
   addArg('orderBy', opts.orderBy)
@@ -160,7 +178,9 @@ export const formatGraphQuery = <E extends EntityKey, K extends EntityKeys<E>>(
       : undefined,
   )
 
-  return `{ ${opts.entity}s${args ? `(${args})` : ''} {${opts.keys.reduce(
+  return `{ ${opts.entity}${isPluralQuery(opts.entity) ? 's' : ''}${
+    args ? `(${args})` : ''
+  } {${opts.keys.reduce(
     (acc, key) =>
       typeof key === 'string' ||
       typeof key === 'number' ||
@@ -176,21 +196,24 @@ const subgraphUrl = process.env.REACT_APP_SUBGRAPH_URL
 export const querySubgraph = <E extends EntityKey, K extends EntityKeys<E>>(
   opts: GraphQueryOpts<E, K>,
   callback: (res?: SubgraphQueryReturnTypes[E]) => void,
-) =>
-  subgraphUrl
-    ? axios
-        .post(
-          subgraphUrl,
-          {
-            query: formatGraphQuery(opts),
-          },
-          { headers: { 'Content-Type': 'application/json' } },
-        )
-        .then((res: AxiosResponse<{ data?: SubgraphQueryReturnTypes[E] }>) =>
-          callback(res.data?.data),
-        )
-        .catch(err => console.log('Error getting ' + opts.entity + 's', err))
-    : Promise.reject('Missing url for subgraph query')
+) => {
+  const url = opts.url || subgraphUrl
+
+  if (!url) return Promise.reject('Missing url for subgraph query')
+
+  return axios
+    .post(
+      url,
+      {
+        query: formatGraphQuery(opts),
+      },
+      { headers: { 'Content-Type': 'application/json' } },
+    )
+    .then((res: AxiosResponse<{ data?: SubgraphQueryReturnTypes[E] }>) =>
+      callback(res.data?.data),
+    )
+    .catch(err => console.log('Error getting ' + opts.entity + 's', err))
+}
 
 export const trimHexZero = (hexStr: string) => hexStr.replace('0x0', '0x')
 
@@ -221,6 +244,12 @@ export function formatGraphResponse<E extends EntityKey>(
       if ('projects' in response) {
         // @ts-ignore
         return response.projects.map(parseProjectJson)
+      }
+      break
+    case 'projectSearch':
+      if ('projectSearch' in response) {
+        // @ts-ignore
+        return response.projectSearch.map(parseProjectJson)
       }
       break
     case 'payEvent':
@@ -272,4 +301,10 @@ export function formatGraphResponse<E extends EntityKey>(
   }
 
   return []
+}
+
+const isPluralQuery = (key: EntityKey): boolean => {
+  if (key === 'projectSearch') return false
+
+  return true
 }

@@ -1,10 +1,12 @@
 import { BigNumber } from '@ethersproject/bignumber'
-
 import { ProjectState } from 'models/project-visibility'
 import { Project } from 'models/subgraph-entities/project'
+import { TerminalVersion } from 'models/terminal-version'
+import { EntityKeys, GraphQueryOpts, InfiniteGraphQueryOpts } from 'utils/graph'
+import { getTerminalAddress } from 'utils/terminal-versions'
 
-import useSubgraphQuery, { useInfiniteSubgraphQuery } from './SubgraphQuery'
 import { archivedProjectIds } from '../constants/archived-projects'
+import useSubgraphQuery, { useInfiniteSubgraphQuery } from './SubgraphQuery'
 
 // Take just an object that might contain an ID. That way we can support
 // arbitrary `keys` properties.
@@ -38,94 +40,100 @@ interface ProjectsOptions {
   pageSize?: number
   filter?: ProjectState
   keys?: (keyof Project)[]
+  terminalVersion?: TerminalVersion
+  searchText?: string
 }
 
-let defaultPageSize = 20
+const staleTime = 60000
 
-export function useProjectsQuery({
-  pageNumber,
-  projectId,
-  keys,
-  handle,
-  uri,
-  orderBy,
-  orderDirection,
-  pageSize = defaultPageSize,
-  filter,
-}: ProjectsOptions) {
+const keys: (keyof Project)[] = [
+  'id',
+  'handle',
+  'creator',
+  'createdAt',
+  'uri',
+  'currentBalance',
+  'totalPaid',
+  'totalRedeemed',
+  'terminal',
+]
+
+const queryOpts = (
+  opts: ProjectsOptions,
+): Partial<
+  | GraphQueryOpts<'project', EntityKeys<'project'>>
+  | InfiniteGraphQueryOpts<'project', EntityKeys<'project'>>
+> => {
+  const terminalAddress = getTerminalAddress(opts.terminalVersion)
+
+  return {
+    entity: 'project',
+    keys: opts.keys ?? keys,
+    orderDirection: opts.orderDirection ?? 'desc',
+    orderBy: opts.orderBy ?? 'totalPaid',
+    pageSize: opts.pageSize,
+    where: [
+      ...(opts.projectId
+        ? [
+            {
+              key: 'id' as const,
+              value: opts.projectId.toString(),
+            },
+          ]
+        : []),
+      ...(terminalAddress
+        ? [
+            {
+              key: 'terminal' as const,
+              value: terminalAddress,
+            },
+          ]
+        : []),
+    ],
+  }
+}
+
+export function useProjectsQuery(opts: ProjectsOptions) {
   return useSubgraphQuery(
     {
-      entity: 'project',
-      keys: keys ?? [
-        'id',
-        'handle',
-        'creator',
-        'createdAt',
-        'uri',
-        'currentBalance',
-        'totalPaid',
-        'totalRedeemed',
-      ],
-      first: pageSize,
-      skip: pageNumber ? pageNumber * pageSize : undefined,
-      orderDirection: orderDirection ?? 'desc',
-      orderBy: orderBy ?? 'totalPaid',
-      where:
-        projectId != null
-          ? {
-              key: 'id',
-              value: projectId.toString(),
-            }
+      ...(queryOpts(opts) as GraphQueryOpts<'project', EntityKeys<'project'>>),
+      first: opts.pageSize,
+      skip:
+        opts.pageNumber && opts.pageSize
+          ? opts.pageNumber * opts.pageSize
           : undefined,
     },
     {
-      staleTime: 60000,
-      select: data => filterOutArchivedProjects(data, filter),
+      staleTime,
+      select: data => filterOutArchivedProjects(data, opts.filter),
     },
   )
 }
 
-export function useInfiniteProjectsQuery({
-  projectId,
-  keys,
-  handle,
-  uri,
-  orderBy,
-  orderDirection,
-  pageSize = defaultPageSize,
-  filter,
-}: ProjectsOptions) {
-  return useInfiniteSubgraphQuery(
+export function useProjectsSearch(handle: string | undefined) {
+  return useSubgraphQuery(
+    handle
+      ? {
+          text: `${handle}:*`,
+          entity: 'projectSearch',
+          keys,
+        }
+      : null,
     {
-      pageSize,
-      entity: 'project',
-      keys: keys ?? [
-        'id',
-        'handle',
-        'creator',
-        'createdAt',
-        'uri',
-        'currentBalance',
-        'totalPaid',
-        'totalRedeemed',
-      ],
-      orderDirection: orderDirection ?? 'desc',
-      orderBy: orderBy ?? 'totalPaid',
-      where:
-        projectId != null
-          ? {
-              key: 'id',
-              value: projectId.toString(),
-            }
-          : undefined,
+      staleTime,
     },
-    {
-      staleTime: 60000,
+  )
+}
 
+export function useInfiniteProjectsQuery(opts: ProjectsOptions) {
+  return useInfiniteSubgraphQuery(
+    queryOpts(opts) as InfiniteGraphQueryOpts<'project', EntityKeys<'project'>>,
+    {
+      staleTime,
       select: data => ({
         ...data,
         pages: data.pages.map(pageData =>
-          filterOutArchivedProjects(pageData, filter),
+          filterOutArchivedProjects(pageData, opts.filter),
         ),
       }),
     },

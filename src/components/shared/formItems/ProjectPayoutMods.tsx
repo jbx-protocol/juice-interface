@@ -1,6 +1,15 @@
 import { CloseCircleOutlined, LockOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Col, DatePicker, Form, Modal, Row, Select, Space } from 'antd'
+import {
+  validateEthAddress,
+  validatePercentage,
+  getAmountFromPercent,
+  getPercentFromAmount,
+  countDecimalPlaces,
+  roundDown,
+  ModalMode,
+} from 'components/shared/formItems/formHelpers'
 import { useForm } from 'antd/lib/form/Form'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
@@ -17,8 +26,13 @@ import {
   fromPermyriad,
   parsePermyriad,
   parseWad,
+  fromWad,
 } from 'utils/formatNumber'
 import { amountSubFee } from 'utils/math'
+import { currencyName } from 'utils/currency'
+
+import InputAccessoryButton from 'components/shared/InputAccessoryButton'
+import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 
 import { FormItems } from '.'
 import CurrencySymbol from '../CurrencySymbol'
@@ -27,10 +41,7 @@ import NumberSlider from '../inputs/NumberSlider'
 import ProjectHandle from '../ProjectHandle'
 import { FormItemExt } from './formItemExt'
 
-import { validateEthAddress, validateGreaterThanZero } from '../FormHelpers'
-
 type ModType = 'project' | 'address'
-type ModalMode = 'Add' | 'Edit' | undefined
 
 type EditingPayoutMod = PayoutMod & { handle?: string }
 
@@ -54,6 +65,7 @@ export default function ProjectPayoutMods({
     handle: string
     beneficiary: string
     percent: number
+    amount: number
     lockedUntil: moment.Moment
   }>()
   const [modalMode, setModalMode] = useState<ModalMode>() //either 'Add', 'Edit' or undefined
@@ -129,17 +141,23 @@ export default function ProjectPayoutMods({
                   ? 'project'
                   : 'address',
               )
-              form.setFieldsValue({
-                ...mod,
-                percent,
-                lockedUntil: mod.lockedUntil
-                  ? moment.default(mod.lockedUntil * 1000)
-                  : undefined,
-              })
               setModalMode('Edit')
               setEditingModIndex(index)
               setEditingPercent(percent)
               setEditingModProjectId(mod.projectId)
+
+              form.setFieldsValue({
+                ...mod,
+                percent,
+                amount: getAmountFromPercent(
+                  editingPercent ?? percent,
+                  target,
+                  fee,
+                ),
+                lockedUntil: mod.lockedUntil
+                  ? moment.default(mod.lockedUntil * 1000)
+                  : undefined,
+              })
             }}
           >
             {mod.projectId?.gt(0) ? (
@@ -276,6 +294,7 @@ export default function ProjectPayoutMods({
       fee,
       form,
       onModsChanged,
+      editingPercent,
     ],
   )
 
@@ -314,19 +333,14 @@ export default function ProjectPayoutMods({
         : [...mods, newMod],
     )
 
-    if (handle) {
-      setSettingHandle(handle)
-      setSettingHandleIndex(editingModIndex)
-    }
-
     setEditingModIndex(undefined)
 
     form.resetFields()
   }
 
-  // Validates the slider (ensures percent !== 0)
-  const validateSlider = () => {
-    return validateGreaterThanZero(form.getFieldValue('percent'))
+  // Validates the amount and percentage (ensures percent !== 0 or > 100)
+  const validatePayout = () => {
+    return validatePercentage(form.getFieldValue('percent'))
   }
 
   // Validates new payout receiving address
@@ -339,6 +353,24 @@ export default function ProjectPayoutMods({
     )
   }
 
+  const isPercentBeingRounded = () => {
+    return countDecimalPlaces(form.getFieldValue('percent')) > 2
+  }
+
+  const roundedDownAmount = () => {
+    const percent = roundDown(form.getFieldValue('percent'), 2)
+    const targetSubFee = parseFloat(
+      fromWad(amountSubFee(parseWad(target), fee)),
+    )
+    return parseFloat(((percent * targetSubFee) / 100).toFixed(4))
+  }
+
+  const onAmountChange = (newAmount: number | undefined) => {
+    let newPercent = getPercentFromAmount(newAmount, target, fee)
+    setEditingPercent(newPercent)
+    form.setFieldsValue({ amount: newAmount })
+    form.setFieldsValue({ percent: newPercent })
+  }
   return (
     <Form.Item {...formItemProps}>
       <Space direction="vertical" style={{ width: '100%' }} size="large">
@@ -464,35 +496,66 @@ export default function ProjectPayoutMods({
               }
             />
           ) : null}
+          <Form.Item
+            label="Amount"
+            // Display message to user if the amount they inputted
+            // will result in percentage with > 2 decimal places
+            // and no error is present
+            className="ant-form-item-extra-only"
+            extra={
+              isPercentBeingRounded() &&
+              !(form.getFieldValue('percent') > 100) ? (
+                <div>
+                  Will be rounded to <CurrencySymbol currency={currency} />
+                  {roundedDownAmount()}
+                </div>
+              ) : null
+            }
+          >
+            <div
+              style={{
+                display: 'flex',
+                color: colors.text.primary,
+                alignItems: 'center',
+              }}
+            >
+              <FormattedNumberInput
+                value={form.getFieldValue('amount')}
+                placeholder={'0'}
+                onChange={amount => onAmountChange(parseFloat(amount || '0'))}
+                formItemProps={{
+                  rules: [{ validator: validatePayout }],
+                }}
+                accessory={
+                  <InputAccessoryButton content={currencyName(currency)} />
+                }
+              />
+            </div>
+          </Form.Item>
           <Form.Item label="Percent">
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <span style={{ flex: 1, marginRight: 10 }}>
+              <span style={{ flex: 1 }}>
                 <NumberSlider
                   onChange={(percent: number | undefined) => {
+                    let newAmount = getAmountFromPercent(
+                      percent ?? 0,
+                      target,
+                      fee,
+                    )
+                    form.setFieldsValue({ amount: newAmount })
                     form.setFieldsValue({ percent })
                     setEditingPercent(percent)
                   }}
                   step={0.01}
                   defaultValue={form.getFieldValue('percent') || 0}
+                  sliderValue={form.getFieldValue('percent')}
                   suffix="%"
                   name="percent"
                   formItemProps={{
-                    rules: [{ validator: validateSlider }],
+                    rules: [{ validator: validatePayout }],
                   }}
                 />
               </span>
-
-              {parseWad(target).lt(constants.MaxUint256) && (
-                <span style={{ color: colors.text.primary, marginBottom: 22 }}>
-                  <CurrencySymbol currency={currency} />
-                  {formatWad(
-                    amountSubFee(parseWad(target), fee)
-                      ?.mul(Math.floor((editingPercent ?? 0) * 100))
-                      .div(10000),
-                    { decimals: 4, padEnd: true },
-                  )}
-                </span>
-              )}
             </div>
           </Form.Item>
           <Form.Item

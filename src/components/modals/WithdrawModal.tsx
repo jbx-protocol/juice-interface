@@ -1,10 +1,10 @@
 import { Space } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
-import PayoutModsList from 'components/shared/PayoutModsList'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
+import PayoutModsList from 'components/shared/PayoutModsList'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
@@ -14,6 +14,8 @@ import { useContext, useEffect, useState } from 'react'
 import { currencyName } from 'utils/currency'
 import { formatWad, fromPerbicent, fromWad, parseWad } from 'utils/formatNumber'
 import { amountSubFee, feeForAmount } from 'utils/math'
+
+import { CURRENCY_ETH, CURRENCY_USD } from 'constants/currency'
 
 export default function WithdrawModal({
   visible,
@@ -27,8 +29,14 @@ export default function WithdrawModal({
   const [loading, setLoading] = useState<boolean>()
   const [tapAmount, setTapAmount] = useState<string>()
   const { transactor, contracts } = useContext(UserContext)
-  const { balanceInCurrency, projectId, currentFC, currentPayoutMods, owner } =
-    useContext(ProjectContext)
+  const {
+    balanceInCurrency,
+    projectId,
+    currentFC,
+    currentPayoutMods,
+    owner,
+    terminal,
+  } = useContext(ProjectContext)
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -55,7 +63,13 @@ export default function WithdrawModal({
     : balanceInCurrency
 
   function tap() {
-    if (!transactor || !contracts?.TerminalV1 || !currentFC || !projectId)
+    if (
+      !transactor ||
+      !contracts?.TerminalV1_1 ||
+      !currentFC ||
+      !projectId ||
+      !terminal?.version
+    )
       return
 
     setLoading(true)
@@ -66,13 +80,15 @@ export default function WithdrawModal({
     }
 
     const minAmount = (
-      currentFC.currency.eq(1)
+      currentFC.currency.eq(CURRENCY_USD)
         ? converter.usdToWei(tapAmount)
         : parseWad(tapAmount)
     )?.sub(1e12) // Arbitrary value subtracted
 
     transactor(
-      contracts.TerminalV1,
+      terminal.version === '1.1'
+        ? contracts.TerminalV1_1
+        : contracts.TerminalV1,
       'tap',
       [
         projectId.toHexString(),
@@ -173,10 +189,10 @@ export default function WithdrawModal({
 
           <div style={{ color: colors.text.primary, marginBottom: 10 }}>
             <span style={{ fontWeight: 500 }}>
-              <CurrencySymbol currency={0} />
+              <CurrencySymbol currency={CURRENCY_ETH} />
               {formatWad(
                 amountSubFee(
-                  currentFC.currency.eq(1)
+                  currentFC.currency.eq(CURRENCY_USD)
                     ? converter.usdToWei(tapAmount)
                     : parseWad(tapAmount),
                   currentFC.fee,
@@ -201,10 +217,10 @@ export default function WithdrawModal({
           </div>
         ) : (
           <p>
-            <CurrencySymbol currency={0} />
+            <CurrencySymbol currency={CURRENCY_ETH} />
             {formatWad(
               amountSubFee(
-                currentFC.currency.eq(1)
+                currentFC.currency.eq(CURRENCY_USD)
                   ? converter.usdToWei(tapAmount)
                   : parseWad(tapAmount),
                 currentFC.fee,

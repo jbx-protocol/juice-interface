@@ -22,6 +22,7 @@ export enum OperatorPermission {
   'SetPayoutMods' = 14,
   'SetTicketMods' = 15,
   'SetTerminal' = 16,
+  'PrintTickets' = 17,
 }
 
 export function useHasPermission(

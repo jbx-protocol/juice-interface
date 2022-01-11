@@ -12,6 +12,7 @@ import RichNote from './RichNote'
 import { contentLineHeight, smallHeaderStyle } from './styles'
 import { useInfiniteSubgraphQuery } from '../../../hooks/SubgraphQuery'
 import ActivityTabContent from './ActivityTabContent'
+import { CURRENCY_ETH } from 'constants/currency'
 
 // Maps a project id to an internal map of payment event overrides.
 let payEventOverrides = new Map<string, Map<string, string>>([
@@ -108,7 +109,7 @@ export function PaymentActivity({ pageSize }: { pageSize: number }) {
                       fontSize: '1rem',
                     }}
                   >
-                    <CurrencySymbol currency={0} />
+                    <CurrencySymbol currency={CURRENCY_ETH} />
                     {formatWad(e.amount, { decimals: 4 })}
                   </div>
                 </div>

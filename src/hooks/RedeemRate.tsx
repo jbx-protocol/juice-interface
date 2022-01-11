@@ -1,11 +1,12 @@
 import { ProjectContext } from 'contexts/projectContext'
 import { BigNumber } from 'ethers'
+import { BallotState } from 'models/ballot-state'
 import { ContractName } from 'models/contract-name'
-import { BallotState, FundingCycle } from 'models/funding-cycle'
+import { FundingCycle } from 'models/funding-cycle'
 import { useContext, useMemo } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { parseWad } from 'utils/formatNumber'
-import { decodeFCMetadata } from 'utils/fundingCycle'
+import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
 
 import useContractReader from './ContractReader'
 
@@ -17,19 +18,19 @@ export function useRedeemRate({
   tokenAmount: string | undefined
   fundingCycle: FundingCycle | undefined
 }) {
-  const { projectId } = useContext(ProjectContext)
+  const { projectId, terminal } = useContext(ProjectContext)
 
-  const metadata = decodeFCMetadata(fundingCycle?.metadata)
+  const metadata = decodeFundingCycleMetadata(fundingCycle?.metadata)
 
   const currentOverflow = useContractReader<BigNumber>({
-    contract: ContractName.TerminalV1,
+    contract: terminal?.name,
     functionName: 'currentOverflowOf',
     args: projectId ? [projectId.toHexString()] : null,
     valueDidChange: bigNumbersDiff,
   })
 
   const reservedTicketBalance = useContractReader<BigNumber>({
-    contract: ContractName.TerminalV1,
+    contract: terminal?.name,
     functionName: 'reservedTicketBalanceOf',
     args:
       projectId && metadata?.reservedRate

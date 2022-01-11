@@ -1,4 +1,5 @@
 import { Button } from 'antd'
+
 import TooltipLabel from 'components/shared/TooltipLabel'
 
 import { NetworkContext } from 'contexts/networkContext'
@@ -12,7 +13,7 @@ import { NetworkName } from 'models/network-name'
 import { useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatWad, fromPerbicent } from 'utils/formatNumber'
-import { decodeFCMetadata } from 'utils/fundingCycle'
+import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
 
 import { readNetwork } from 'constants/networks'
 
@@ -31,12 +32,13 @@ export default function ReservedTokens({
   const [modalIsVisible, setModalIsVisible] = useState<boolean>()
   const { userAddress } = useContext(NetworkContext)
 
-  const { projectId, tokenSymbol, isPreviewMode } = useContext(ProjectContext)
+  const { projectId, tokenSymbol, isPreviewMode, terminal } =
+    useContext(ProjectContext)
 
-  const metadata = decodeFCMetadata(fundingCycle?.metadata)
+  const metadata = decodeFundingCycleMetadata(fundingCycle?.metadata)
 
   const reservedTickets = useContractReader<BigNumber>({
-    contract: ContractName.TerminalV1,
+    contract: terminal?.name,
     functionName: 'reservedTicketBalanceOf',
     args:
       projectId && metadata?.reservedRate
@@ -49,13 +51,13 @@ export default function ReservedTokens({
     updateOn: useMemo(
       () => [
         {
-          contract: ContractName.TerminalV1,
+          contract: terminal?.name,
           eventName: 'Pay',
           topics: projectId ? [[], projectId.toHexString()] : undefined,
         },
         {
-          contract: ContractName.TerminalV1,
-          eventName: 'PrintPreminedTickets',
+          contract: terminal?.name,
+          eventName: 'PrintTickets',
           topics: projectId ? [projectId.toHexString()] : undefined,
         },
         {
@@ -72,12 +74,12 @@ export default function ReservedTokens({
               : undefined,
         },
         {
-          contract: ContractName.TerminalV1,
+          contract: terminal?.name,
           eventName: 'PrintReserveTickets',
           topics: projectId ? [[], projectId.toHexString()] : undefined,
         },
       ],
-      [userAddress, projectId],
+      [userAddress, projectId, terminal?.name],
     ),
   })
 

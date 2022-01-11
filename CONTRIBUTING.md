@@ -61,6 +61,14 @@ Before your PR is merged, it must meet the following criteria:
 All changes to the `main` branch will be automatically deployed via
 [Fleek](https://fleek.co).
 
+### Supported browsers
+
+Juicebox supports the following web browsers:
+
+- Google Chrome
+- Mozilla Firefox
+- Chromium-based browsers (e.g. Brave Browser)
+
 ## Translations
 
 Juicebox uses [`lingui.js`](https://lingui.js.org) for internationlization

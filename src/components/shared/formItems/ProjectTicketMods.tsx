@@ -2,6 +2,11 @@ import { CloseCircleOutlined, LockOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 
 import { Button, Col, DatePicker, Form, Modal, Row, Space } from 'antd'
+import {
+  validateEthAddress,
+  validatePercentage,
+} from 'components/shared/formItems/formHelpers'
+
 import { useForm } from 'antd/lib/form/Form'
 import { ThemeContext } from 'contexts/themeContext'
 import { TicketMod } from 'models/mods'
@@ -16,8 +21,6 @@ import { FormItems } from '.'
 import FormattedAddress from '../FormattedAddress'
 import NumberSlider from '../inputs/NumberSlider'
 import { FormItemExt } from './formItemExt'
-
-import { validateEthAddress, validateGreaterThanZero } from '../FormHelpers'
 
 type ModalMode = 'Add' | 'Edit' | undefined
 
@@ -222,9 +225,9 @@ export default function ProjectTicketMods({
     )
   }
 
-  // Validates slider (ensures percent !== 0)
+  // Validates slider (ensures percent !== 0 && percent <= 100)
   const validateSlider = () => {
-    return validateGreaterThanZero(form.getFieldValue('percent'))
+    return validatePercentage(form.getFieldValue('percent'))
   }
 
   return (

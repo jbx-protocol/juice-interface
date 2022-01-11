@@ -1,6 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
-import { Button, Descriptions, Modal, Space, Statistic } from 'antd'
+
+import { Button, Descriptions, Modal, Space, Statistic, Tooltip } from 'antd'
 import ConfirmUnstakeTokensModal from 'components/modals/ConfirmUnstakeTokensModal'
 import ParticipantsModal from 'components/modals/ParticipantsModal'
 import RedeemModal from 'components/modals/RedeemModal'
@@ -13,17 +14,12 @@ import useContractReader, { ContractUpdateOn } from 'hooks/ContractReader'
 import { useErc20Contract } from 'hooks/Erc20Contract'
 import { OperatorPermission, useHasPermission } from 'hooks/HasPermission'
 import { ContractName } from 'models/contract-name'
-import {
-  CSSProperties,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-} from 'react'
+import { CSSProperties, useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatPercent, formatWad } from 'utils/formatNumber'
-import { decodeFCMetadata } from 'utils/fundingCycle'
+import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
 
+import PrintPreminedModal from '../modals/PrintPreminedModal'
 import IssueTickets from './IssueTickets'
 import SectionHeader from './SectionHeader'
 
@@ -35,12 +31,19 @@ export default function Rewards({
   const [manageTokensModalVisible, setManageTokensModalVisible] =
     useState<boolean>()
   const [unstakeModalVisible, setUnstakeModalVisible] = useState<boolean>()
+  const [mintModalVisible, setMintModalVisible] = useState<boolean>()
   const [participantsModalVisible, setParticipantsModalVisible] =
     useState<boolean>(false)
   const { userAddress } = useContext(NetworkContext)
 
-  const { projectId, tokenAddress, tokenSymbol, isPreviewMode, currentFC } =
-    useContext(ProjectContext)
+  const {
+    projectId,
+    tokenAddress,
+    tokenSymbol,
+    isPreviewMode,
+    currentFC,
+    terminal,
+  } = useContext(ProjectContext)
 
   const {
     theme: { colors },
@@ -48,16 +51,22 @@ export default function Rewards({
 
   const [redeemModalVisible, setRedeemModalVisible] = useState<boolean>(false)
 
+  const canPrintPreminedV1Tickets = useContractReader<boolean>({
+    contract: ContractName.TerminalV1,
+    functionName: 'canPrintPreminedTickets',
+    args: projectId ? [projectId.toHexString()] : null,
+  })
+
   const ticketsUpdateOn: ContractUpdateOn = useMemo(
     () => [
       {
-        contract: ContractName.TerminalV1,
+        contract: terminal?.name,
         eventName: 'Pay',
         topics: projectId ? [[], projectId.toHexString()] : undefined,
       },
       {
-        contract: ContractName.TerminalV1,
-        eventName: 'PrintPreminedTickets',
+        contract: terminal?.name,
+        eventName: 'PrintTickets',
         topics: projectId ? [projectId.toHexString()] : undefined,
       },
       {
@@ -74,7 +83,7 @@ export default function Rewards({
             : undefined,
       },
     ],
-    [projectId, userAddress],
+    [projectId, userAddress, terminal?.name],
   )
 
   const ticketContract = useErc20Contract(tokenAddress)
@@ -103,10 +112,10 @@ export default function Rewards({
     updateOn: ticketsUpdateOn,
   })
 
-  const metadata = decodeFCMetadata(currentFC?.metadata)
+  const metadata = decodeFundingCycleMetadata(currentFC?.metadata)
 
   const reservedTicketBalance = useContractReader<BigNumber>({
-    contract: ContractName.TerminalV1,
+    contract: terminal?.name,
     functionName: 'reservedTicketBalanceOf',
     args:
       projectId && metadata?.reservedRate
@@ -131,10 +140,15 @@ export default function Rewards({
     : false
 
   const hasIssueTicketsPermission = useHasPermission(OperatorPermission.Issue)
-  const closeParticipantsModal = useCallback(
-    () => setParticipantsModalVisible(false),
-    [],
+  const hasPrintPreminePermission = useHasPermission(
+    OperatorPermission.PrintTickets,
   )
+
+  const mintingTokensIsAllowed =
+    metadata &&
+    (metadata.version === 0
+      ? canPrintPreminedV1Tickets
+      : metadata.ticketPrintingIsAllowed)
 
   const labelStyle: CSSProperties = {
     width: 128,
@@ -264,6 +278,17 @@ export default function Rewards({
           <Button onClick={() => setUnstakeModalVisible(true)} block>
             Claim {tokenSymbol || 'tokens'} as ERC20
           </Button>
+          {hasPrintPreminePermission && projectId?.gt(0) && (
+            <Tooltip title="Minting tokens can be enabled or disabled by reconfiguring a v1.1 project's funding cycle. Tokens can only be minted by the project owner.">
+              <Button
+                disabled={!mintingTokensIsAllowed}
+                onClick={() => setMintModalVisible(true)}
+                block
+              >
+                Mint {tokenSymbol ? tokenSymbol + ' ' : ''}tokens{' '}
+              </Button>
+            </Tooltip>
+          )}
         </Space>
       </Modal>
       <RedeemModal
@@ -283,7 +308,11 @@ export default function Rewards({
       />
       <ParticipantsModal
         visible={participantsModalVisible}
-        onCancel={closeParticipantsModal}
+        onCancel={() => setParticipantsModalVisible(false)}
+      />
+      <PrintPreminedModal
+        visible={mintModalVisible}
+        onCancel={() => setMintModalVisible(false)}
       />
     </div>
   )

@@ -1,10 +1,10 @@
 import { CaretRightFilled, CheckCircleFilled } from '@ant-design/icons'
 import { t } from '@lingui/macro'
 import { BigNumber } from '@ethersproject/bignumber'
+import { Trans } from '@lingui/macro'
 import { Button, Col, Drawer, DrawerProps, Row, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import Modal from 'antd/lib/modal/Modal'
-import { Trans } from '@lingui/macro'
 import Project from 'components/Dashboard/Project'
 import { NetworkContext } from 'contexts/networkContext'
 import { ProjectContext, ProjectContextType } from 'contexts/projectContext'
@@ -16,10 +16,14 @@ import {
   useAppSelector,
   useEditingFundingCycleSelector,
 } from 'hooks/AppSelector'
+import { useTerminalFee } from 'hooks/TerminalFee'
+import { ContractName } from 'models/contract-name'
 import { CurrencyOption } from 'models/currency-option'
-import { FCMetadata, FundingCycle } from 'models/funding-cycle'
+import { FundingCycle } from 'models/funding-cycle'
+import { FundingCycleMetadata } from 'models/funding-cycle-metadata'
 import { FCProperties } from 'models/funding-cycle-properties'
 import { PayoutMod, TicketMod } from 'models/mods'
+import { TerminalVersion } from 'models/terminal-version'
 import {
   useCallback,
   useContext,
@@ -30,7 +34,10 @@ import {
 } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
 import { fromPerbicent, fromPermille, fromWad } from 'utils/formatNumber'
-import { encodeFCMetadata, hasFundingTarget } from 'utils/fundingCycle'
+import {
+  encodeFundingCycleMetadata,
+  hasFundingTarget,
+} from 'utils/fundingCycle'
 import {
   cidFromUrl,
   editMetadataForCid,
@@ -39,17 +46,23 @@ import {
   uploadProjectMetadata,
 } from 'utils/ipfs'
 import { feeForAmount } from 'utils/math'
+import { getTerminalAddress } from 'utils/terminal-versions'
 
 import BudgetForm from './BudgetForm'
 import ConfirmDeployProject from './ConfirmDeployProject'
 import IncentivesForm from './IncentivesForm'
 import PayModsForm from './PayModsForm'
 import ProjectForm, { ProjectFormFields } from './ProjectForm'
+import RestrictedActionsForm, {
+  RestrictedActionsFormFields,
+} from './RestrictedActionsForm'
 import RulesForm from './RulesForm'
 import TicketingForm, { TicketingFormFields } from './TicketingForm'
 
+const terminalVersion: TerminalVersion = '1.1'
+
 export default function Create() {
-  const { transactor, contracts, adminFeePercent } = useContext(UserContext)
+  const { transactor, contracts } = useContext(UserContext)
   const { signerNetwork, userAddress } = useContext(NetworkContext)
   const { colors, radii } = useContext(ThemeContext).theme
   const [currentStep, setCurrentStep] = useState<number>()
@@ -66,11 +79,16 @@ export default function Create() {
     useState<boolean>(false)
   const [rulesFormModalVisible, setRulesFormModalVisible] =
     useState<boolean>(false)
+  const [
+    restrictedActionsFormModalVisible,
+    setRestrictedActionsFormModalVisible,
+  ] = useState<boolean>(false)
   const [deployProjectModalVisible, setDeployProjectModalVisible] =
     useState<boolean>(false)
   const [loadingCreate, setLoadingCreate] = useState<boolean>()
   const [projectForm] = useForm<ProjectFormFields>()
   const [ticketingForm] = useForm<TicketingFormFields>()
+  const [restrictedActionsForm] = useForm<RestrictedActionsFormFields>()
   const editingFC = useEditingFundingCycleSelector()
   const {
     info: editingProjectInfo,
@@ -79,13 +97,15 @@ export default function Create() {
   } = useAppSelector(state => state.editingProject)
   const dispatch = useAppDispatch()
 
+  const terminalFee = useTerminalFee(terminalVersion, contracts)
+
   useEffect(() => {
-    if (adminFeePercent) {
+    if (terminalFee) {
       dispatch(
-        editingProjectActions.setFee(fromPerbicent(adminFeePercent).toString()),
+        editingProjectActions.setFee(fromPerbicent(terminalFee).toString()),
       )
     }
-  }, [adminFeePercent, dispatch])
+  }, [terminalFee, dispatch])
 
   const resetProjectForm = useCallback(() => {
     projectForm.setFieldsValue({
@@ -117,8 +137,24 @@ export default function Create() {
       ticketingForm.setFieldsValue({
         reserved: parseFloat(fromPerbicent(editingFC?.reserved)),
       }),
-    [editingFC.reserved, ticketingForm],
+    [editingFC?.reserved, ticketingForm],
   )
+
+  const resetRestrictedActionsForm = useCallback(() => {
+    if (
+      editingFC?.payIsPaused !== null &&
+      editingFC?.ticketPrintingIsAllowed !== null
+    ) {
+      restrictedActionsForm.setFieldsValue({
+        payIsPaused: editingFC?.payIsPaused,
+        ticketPrintingIsAllowed: editingFC?.ticketPrintingIsAllowed,
+      })
+    }
+  }, [
+    editingFC?.payIsPaused,
+    editingFC?.ticketPrintingIsAllowed,
+    restrictedActionsForm,
+  ])
 
   useLayoutEffect(() => {
     dispatch(editingProjectActions.resetState())
@@ -133,6 +169,10 @@ export default function Create() {
   useEffect(() => {
     resetTicketingForm()
   }, [resetTicketingForm])
+
+  useEffect(() => {
+    resetRestrictedActionsForm()
+  }, [resetRestrictedActionsForm])
 
   const onPayModsFormSaved = (mods: PayoutMod[]) =>
     dispatch(editingProjectActions.setPayoutMods(mods))
@@ -178,8 +218,18 @@ export default function Create() {
     dispatch(editingProjectActions.setBondingCurveRate(bondingCurveRate))
   }
 
+  const onRestrictedActionsFormSaved = () => {
+    const fields = restrictedActionsForm.getFieldsValue(true)
+    dispatch(
+      editingProjectActions.setticketPrintingIsAllowed(
+        fields.ticketPrintingIsAllowed,
+      ),
+    )
+    dispatch(editingProjectActions.setPayIsPaused(fields.payIsPaused))
+  }
+
   const deployProject = useCallback(async () => {
-    if (!transactor || !contracts || !editingFC) return
+    if (!transactor || !contracts) return
 
     setLoadingCreate(true)
 
@@ -207,10 +257,13 @@ export default function Create() {
       ballot: editingFC.ballot,
     }
 
-    const metadata: Omit<FCMetadata, 'version'> = {
+    const metadata: Omit<FundingCycleMetadata, 'version'> = {
       reservedRate: editingFC.reserved.toNumber(),
       bondingCurveRate: editingFC.bondingCurveRate.toNumber(),
       reconfigurationBondingCurveRate: editingFC.bondingCurveRate.toNumber(),
+      payIsPaused: editingFC.payIsPaused,
+      ticketPrintingIsAllowed: editingFC.ticketPrintingIsAllowed,
+      treasuryExtension: constants.AddressZero,
     }
 
     transactor(
@@ -389,15 +442,16 @@ export default function Create() {
     ],
   )
 
-  const spacing = 40
-
   const fundingCycle: FundingCycle = useMemo(
     () => ({
       ...editingFC,
-      metadata: encodeFCMetadata(
+      metadata: encodeFundingCycleMetadata(
         editingFC.reserved,
         editingFC.bondingCurveRate,
-        1000,
+        200,
+        editingFC.payIsPaused,
+        editingFC.ticketPrintingIsAllowed,
+        constants.AddressZero,
       ),
     }),
     [editingFC],
@@ -424,6 +478,11 @@ export default function Create() {
       tokenAddress: constants.AddressZero,
       isPreviewMode: true,
       isArchived: false,
+      terminal: {
+        version: terminalVersion,
+        name: ContractName.TerminalV1_1,
+        address: getTerminalAddress(terminalVersion),
+      },
     }),
     [
       editingPayoutMods,
@@ -434,6 +493,8 @@ export default function Create() {
       userAddress,
     ],
   )
+
+  const spacing = 40
 
   return (
     <ProjectContext.Provider value={project}>
@@ -472,7 +533,7 @@ export default function Create() {
               description: t`Reward specific community members with tokens.`,
               callback: () => setTicketingFormModalVisible(true),
             },
-            ...(editingFC.duration.gt(0)
+            ...(editingFC?.duration.gt(0)
               ? [
                   {
                     title: t`Reconfiguration`,
@@ -485,6 +546,11 @@ export default function Create() {
               title: t`Incentives`,
               description: t`Adjust incentivizes for paying your project.`,
               callback: () => setIncentivesFormModalVisible(true),
+            },
+            {
+              title: 'Restricted actions',
+              description: 'Restrict payments and printing tokens.',
+              callback: () => setRestrictedActionsFormModalVisible(true),
             },
           ])}
         </Col>
@@ -545,7 +611,7 @@ export default function Create() {
           <BudgetForm
             initialCurrency={editingFC.currency.toNumber() as CurrencyOption}
             initialTarget={fromWad(editingFC.target)}
-            initialDuration={editingFC?.duration.toString()}
+            initialDuration={editingFC.duration.toString()}
             onSave={async (currency, target, duration) => {
               viewedCurrentStep()
               onBudgetFormSaved(currency, target, duration)
@@ -649,12 +715,32 @@ export default function Create() {
           />
         </Drawer>
 
+        <Drawer
+          visible={restrictedActionsFormModalVisible}
+          {...drawerStyle}
+          onClose={() => {
+            setRestrictedActionsFormModalVisible(false)
+            setCurrentStep(undefined)
+          }}
+        >
+          <RestrictedActionsForm
+            form={restrictedActionsForm}
+            onSave={() => {
+              onRestrictedActionsFormSaved()
+              setRestrictedActionsFormModalVisible(false)
+              setCurrentStep(undefined)
+            }}
+          />
+        </Drawer>
+
         <Modal
           visible={deployProjectModalVisible}
           okText={
-            signerNetwork
-              ? 'Deploy project on ' + signerNetwork
-              : 'Deploy project'
+            userAddress
+              ? signerNetwork
+                ? 'Deploy project on ' + signerNetwork
+                : 'Deploy project'
+              : 'Connect wallet to deploy'
           }
           onOk={deployProject}
           confirmLoading={loadingCreate}

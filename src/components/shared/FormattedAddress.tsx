@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { readProvider } from 'constants/readProvider'
 
 import EtherscanLink from './EtherscanLink'
+import CopyTextButton from './CopyTextButton'
 
 type EnsRecord = {
   name: string | null
@@ -98,7 +99,8 @@ export default function FormattedAddress({
       title={
         <span>
           <span style={{ userSelect: 'all' }}>{address}</span>{' '}
-          <EtherscanLink value={address} type="address" />
+          <EtherscanLink value={address} type="address" />{' '}
+          <CopyTextButton value={address} />
         </span>
       }
     >

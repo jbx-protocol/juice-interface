@@ -1,4 +1,5 @@
 import { LinkOutlined } from '@ant-design/icons'
+import { Tooltip } from 'antd'
 
 import { NetworkName } from 'models/network-name'
 
@@ -20,13 +21,15 @@ export default function EtherscanLink({
   }
 
   return (
-    <a
-      className="quiet"
-      href={`https://${subdomain}etherscan.io/${type}/${value}`}
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <LinkOutlined />
-    </a>
+    <Tooltip trigger={['hover', 'click']} title={'Go to Etherscan'}>
+      <a
+        className="quiet"
+        href={`https://${subdomain}etherscan.io/${type}/${value}`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <LinkOutlined />
+      </a>
+    </Tooltip>
   )
 }

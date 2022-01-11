@@ -23,7 +23,7 @@ export default function EtherscanLink({
   return (
     <Tooltip trigger={['hover', 'click']} title={'Go to Etherscan'}>
       <a
-        className="quiet"
+        className="etherscan-link"
         style={{ fontWeight: 400 }}
         href={`https://${subdomain}etherscan.io/${type}/${value}`}
         target="_blank"

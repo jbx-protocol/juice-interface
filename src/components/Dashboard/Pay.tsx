@@ -1,6 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Tooltip } from 'antd'
 import ConfirmPayOwnerModal from 'components/modals/ConfirmPayOwnerModal'
+import TwitterModal from 'components/modals/ShareToTwitterModal'
 import PayWarningModal from 'components/modals/PayWarningModal'
 import AMMPrices from 'components/shared/AMMPrices'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
@@ -24,6 +25,7 @@ export default function Pay() {
   const [payIn, setPayIn] = useState<CurrencyOption>(0)
   const [payAmount, setPayAmount] = useState<string>()
   const [payModalVisible, setPayModalVisible] = useState<boolean>(false)
+  const [twitterModalVisible, setTwitterModalVisible] = useState<boolean>(false)
   const [payWarningModalVisible, setPayWarningModalVisible] =
     useState<boolean>(false)
 
@@ -181,9 +183,17 @@ export default function Pay() {
       />
       <ConfirmPayOwnerModal
         visible={payModalVisible}
-        onSuccess={() => setPayModalVisible(false)}
+        onSuccess={() => {
+          setPayModalVisible(false)
+          setTwitterModalVisible(true)
+        }}
         onCancel={() => setPayModalVisible(false)}
         weiAmount={weiPayAmt}
+      />
+      <TwitterModal
+        visible={twitterModalVisible}
+        onSuccess={() => setTwitterModalVisible(false)}
+        onCancel={() => setTwitterModalVisible(false)}
       />
     </div>
   )

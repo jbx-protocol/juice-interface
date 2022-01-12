@@ -1,4 +1,5 @@
 import { Form, Input } from 'antd'
+import { t } from '@lingui/macro'
 
 import { FormItemExt } from './formItemExt'
 
@@ -10,13 +11,13 @@ export default function ProjectTwitter({
   return (
     <Form.Item
       name={name}
-      label={hideLabel ? undefined : 'Twitter'}
-      extra="Your project's Twitter handle."
+      label={hideLabel ? undefined : t`Twitter`}
+      extra={t`Your project's Twitter handle.`}
       {...formItemProps}
     >
       <Input
-        prefix="@"
-        placeholder="juiceboxETH"
+        prefix={t`@`}
+        placeholder={t`juiceboxETH"`}
         type="string"
         autoComplete="off"
       />

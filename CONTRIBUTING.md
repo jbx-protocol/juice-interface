@@ -92,6 +92,18 @@ Notion page.
 
 ### Adding a language (for devs)
 
+1. Add the locale code, english name, and short and long alias's to
+   `constants/languages/language-options.ts`.
+
+   ```diff
+   export const Languages: Language = {
+      en: { code: 'en', name: 'english', short: 'EN', long: 'English' },
+      zh: { code: 'zh', name: 'chinese', short: '中文', long: '中文' },
+      ru: { code: 'ru', name: 'russian', short: 'RU', long: 'Pусский' },
+   +  es: { code: 'es', name: 'spanish', short: 'ES', long: 'Español' },
+   }
+   ```
+
 1. Add the locale code to `./linguirc.json`.
 
    ```diff
@@ -123,7 +135,7 @@ Notion page.
    })
    ```
 
-1. Extract the strings marked for translation and compile them. This creates a
+1. Extract and compile the strings marked for translation. This creates a
    directory for the locale within the `./locale/` directory:
 
    ```bash

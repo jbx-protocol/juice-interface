@@ -1,4 +1,5 @@
 import { Form, Input } from 'antd'
+import { t } from '@lingui/macro'
 
 import { FormItemExt } from './formItemExt'
 
@@ -10,12 +11,12 @@ export default function ProjectDiscord({
   return (
     <Form.Item
       name={name}
-      label={hideLabel ? undefined : 'Discord'}
-      extra="An invite link to your project's Discord server."
+      label={hideLabel ? undefined : t`Discord`}
+      extra={t`An invite link to your project's Discord server.`}
       {...formItemProps}
     >
       <Input
-        placeholder="https://discord.gg/abcdefgh"
+        placeholder={t`https://discord.gg/abcdefgh`}
         type="string"
         autoComplete="off"
       />

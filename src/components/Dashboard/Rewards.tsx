@@ -1,4 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { t, Trans } from '@lingui/macro'
+
 import { Button, Descriptions, Modal, Space, Statistic, Tooltip } from 'antd'
 import ConfirmUnstakeTokensModal from 'components/modals/ConfirmUnstakeTokensModal'
 import ParticipantsModal from 'components/modals/ParticipantsModal'
@@ -158,17 +160,18 @@ export default function Rewards({
         <Statistic
           title={
             <SectionHeader
-              text={tokenSymbol ? tokenSymbol + ' tokens' : 'Tokens'}
-              tip={`${
-                tokenSymbol ? tokenSymbol + ' ERC20' : 'Tokens'
-              } are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet.`}
+              text={tokenSymbol ? tokenSymbol + ' ' + t`tokens` : t`Tokens`}
+              tip={
+                `${tokenSymbol ? tokenSymbol + ' ' + t`ERC20` : t`Tokens`}` +
+                t`are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet.`
+              }
             />
           }
           valueRender={() => (
             <Descriptions layout="horizontal" column={1}>
               {ticketsIssued && (
                 <Descriptions.Item
-                  label="Address"
+                  label={t`Address`}
                   labelStyle={labelStyle}
                   children={
                     <div style={{ width: '100%' }}>
@@ -178,7 +181,7 @@ export default function Rewards({
                 />
               )}
               <Descriptions.Item
-                label="Total supply"
+                label={t`Total supply`}
                 labelStyle={labelStyle}
                 children={
                   <div
@@ -195,13 +198,13 @@ export default function Rewards({
                       onClick={() => setParticipantsModalVisible(true)}
                       disabled={isPreviewMode}
                     >
-                      Holders
+                      <Trans>Holders</Trans>
                     </Button>
                   </div>
                 }
               />
               <Descriptions.Item
-                label="Your balance"
+                label={t`Your balance`}
                 labelStyle={labelStyle}
                 children={
                   <div
@@ -239,7 +242,7 @@ export default function Rewards({
                           color: colors.text.tertiary,
                         }}
                       >
-                        {share || 0}% of supply
+                        {share || 0}% <Trans>of supply</Trans>
                       </div>
                     </div>
 

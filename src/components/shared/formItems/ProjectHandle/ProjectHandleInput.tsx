@@ -1,4 +1,6 @@
 import { Input } from 'antd'
+import { t } from '@lingui/macro'
+
 import { useContext, useState, useEffect, useCallback } from 'react'
 import { UserContext } from 'contexts/userContext'
 import { normalizeHandle } from 'utils/formatHandle'
@@ -73,7 +75,7 @@ export function ProjectHandleInput({
       prefix="@"
       suffix={suffix}
       className="err-suffix"
-      placeholder="handle"
+      placeholder={t`handle`}
       type="string"
       autoComplete="off"
       spellCheck={false}

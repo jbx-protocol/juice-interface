@@ -1,6 +1,7 @@
 import { RightCircleOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Progress, Tooltip } from 'antd'
+import { t, Trans } from '@lingui/macro'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import EtherscanLink from 'components/shared/EtherscanLink'
 import ProjectTokenBalance from 'components/shared/ProjectTokenBalance'
@@ -151,8 +152,8 @@ export default function Paid() {
       >
         <span style={secondaryTextStyle}>
           <TooltipLabel
-            label="Volume"
-            tip="The total amount received by this project through Juicebox since it was created."
+            label={t`Volume`}
+            tip={t`The total amount received by this project through Juicebox since it was created.`}
           />
         </span>
         <span style={primaryTextStyle}>
@@ -308,11 +309,13 @@ export default function Paid() {
       >
         <span style={secondaryTextStyle}>
           <TooltipLabel
-            label="In wallet"
+            label={t`In wallet`}
             tip={
               <div>
                 <p>
-                  The balance of the wallet that owns this Juicebox project.
+                  <Trans>
+                    The balance of the wallet that owns this Juicebox project.
+                  </Trans>
                 </p>
                 <span style={{ userSelect: 'all' }}>{owner}</span>{' '}
                 <EtherscanLink value={owner} type="address" />
@@ -346,7 +349,7 @@ export default function Paid() {
           style={{ ...secondaryTextStyle, cursor: 'pointer' }}
           onClick={() => setBalancesModalVisible(true)}
         >
-          All assets <RightCircleOutlined />
+          <Trans>All assets</Trans> <RightCircleOutlined />
         </span>
       </div>
 

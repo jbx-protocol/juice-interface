@@ -1,5 +1,6 @@
 import { parseEther } from '@ethersproject/units'
 import { Descriptions } from 'antd'
+import { t, Trans } from '@lingui/macro'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 
 import { ProjectContext } from 'contexts/projectContext'
@@ -60,12 +61,12 @@ export default function FundingCycleDetails({
                 {formatWad(fundingCycle.target)}
               </>
             ) : (
-              'No target'
+              t`No target`
             )}
           </Descriptions.Item>
         }
 
-        <Descriptions.Item label="Duration">
+        <Descriptions.Item label={t`Duration`}>
           {fundingCycle.duration.gt(0)
             ? fundingCycle.duration.toString() + ' days'
             : 'Not set'}
@@ -85,8 +86,8 @@ export default function FundingCycleDetails({
           <Descriptions.Item
             label={
               <TooltipLabel
-                label="Discount rate"
-                tip="The ratio of tokens rewarded per payment amount will decrease by this percentage with each new funding cycle. A higher discount rate will incentivize supporters to pay your project earlier than later."
+                label={t`Discount rate`}
+                tip={t`The ratio of tokens rewarded per payment amount will decrease by this percentage with each new funding cycle. A higher discount rate will incentivize supporters to pay your project earlier than later.`}
               />
             }
           >
@@ -99,8 +100,8 @@ export default function FundingCycleDetails({
             span={2}
             label={
               <TooltipLabel
-                label="Bonding curve"
-                tip="This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hodl tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
+                label={t`Bonding curve rate`}
+                tip={t`This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hodl tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed.`}
               />
             }
           >
@@ -112,7 +113,7 @@ export default function FundingCycleDetails({
           label={
             <TooltipLabel
               label={`Reserved ${tokenSymbol ?? 'tokens'}`}
-              tip='Whenever someone pays your project, this percentage of tokens will be reserved and the rest will go to the payer. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner. Once tokens are reserved, anyone can "mint" them, which distributes them to their intended receivers.'
+              tip={t`Whenever someone pays your project, this percentage of tokens will be reserved and the rest will go to the payer. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner. Once tokens are reserved, anyone can "mint" them, which distributes them to their intended receivers.`}
             />
           }
         >
@@ -181,15 +182,16 @@ export default function FundingCycleDetails({
       <div>
         <span style={{ fontWeight: 600, color: colors.text.secondary }}>
           <TooltipLabel
-            label="Reconfiguration strategy"
-            tip="Rules for determining how funding cycles can be reconfigured."
+            label={t`Reconfiguration strategy`}
+            tip={t`Rules for determining how funding cycles can be reconfigured.`}
           />
           :
         </span>{' '}
         {getBallotStrategyByAddress(fundingCycle.ballot).name}
         <div style={{ color: colors.text.secondary }}>
           <div style={{ fontSize: '0.7rem' }}>
-            Address: {getBallotStrategyByAddress(fundingCycle.ballot).address}
+            <Trans>Address</Trans>:{' '}
+            {getBallotStrategyByAddress(fundingCycle.ballot).address}
             <br />
             {getBallotStrategyByAddress(fundingCycle.ballot).description}
           </div>

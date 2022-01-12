@@ -7,9 +7,11 @@ import { readNetwork } from 'constants/networks'
 export default function EtherscanLink({
   value,
   type,
+  showText,
 }: {
   value: string | undefined
   type: 'tx' | 'address'
+  showText?: boolean
 }) {
   if (!value) return null
 
@@ -21,12 +23,15 @@ export default function EtherscanLink({
 
   return (
     <a
-      className="quiet"
+      className={'quiet'}
       href={`https://${subdomain}etherscan.io/${type}/${value}`}
       target="_blank"
       rel="noopener noreferrer"
     >
       <LinkOutlined />
+      {showText ? (
+        <div style={{ margin: '0 0 2px 13px' }}>Etherscan</div>
+      ) : null}
     </a>
   )
 }

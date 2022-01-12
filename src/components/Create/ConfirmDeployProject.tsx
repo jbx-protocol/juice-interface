@@ -139,20 +139,20 @@ export default function ConfirmDeployProject() {
       </Space>
       <Space size="large" align="end">
         <Statistic
-          title="Reserved tokens"
+          title={t`Reserved tokens`}
           value={fromPerbicent(editingFC?.reserved)}
           suffix="%"
         />
         {editingFC && isRecurring(editingFC) && (
           <Statistic
-            title="Discount rate"
+            title={t`Discount rate`}
             value={fromPermille(editingFC?.discountRate)}
             suffix="%"
           />
         )}
         {editingFC && isRecurring(editingFC) && hasFundingTarget(editingFC) && (
           <Statistic
-            title="Bonding curve rate"
+            title={t`Bonding curve rate`}
             value={fromPerbicent(editingFC?.bondingCurveRate)}
             suffix="%"
           />
@@ -160,7 +160,7 @@ export default function ConfirmDeployProject() {
       </Space>
       {editingFC.duration.gt(0) && (
         <Statistic
-          title="Reconfiguration strategy"
+          title={t`Reconfiguration strategy`}
           valueRender={() => {
             const ballot = getBallotStrategyByAddress(editingFC.ballot)
             return (

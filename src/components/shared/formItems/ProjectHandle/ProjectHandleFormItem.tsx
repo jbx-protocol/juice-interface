@@ -1,4 +1,5 @@
 /* eslint-disable */
+import { t } from '@lingui/macro'
 import { CheckCircleOutlined, LoadingOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Form } from 'antd'
@@ -144,7 +145,7 @@ export default function ProjectHandleFormItem({
   return (
     <Form.Item
       name={name}
-      label={hideLabel ? undefined : formItemProps?.label ?? 'Project handle'}
+      label={hideLabel ? undefined : formItemProps?.label ?? t`Project handle`}
       {...formItemProps}
       rules={[{ required }, { validator }, ...(formItemProps?.rules ?? [])]}
       validateTrigger={false}

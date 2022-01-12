@@ -1,4 +1,5 @@
 import { Form, Input } from 'antd'
+import { t } from '@lingui/macro'
 
 import { FormItemExt } from './formItemExt'
 
@@ -10,12 +11,12 @@ export default function ProjectLink({
   return (
     <Form.Item
       name={name}
-      label={hideLabel ? undefined : 'Website'}
-      extra="Your project's website."
+      label={hideLabel ? undefined : t`Website`}
+      extra={t`Your project's website.`}
       {...formItemProps}
     >
       <Input
-        placeholder="https://your-project.com"
+        placeholder={t`https://your-project.com`}
         type="string"
         autoComplete="off"
       />

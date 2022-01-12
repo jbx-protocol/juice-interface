@@ -1,4 +1,3 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Tooltip } from 'antd'
 import { t, Trans } from '@lingui/macro'
 
@@ -7,7 +6,6 @@ import PayWarningModal from 'components/modals/PayWarningModal'
 import AMMPrices from 'components/shared/AMMPrices'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
-
 import { ProjectContext } from 'contexts/projectContext'
 import { parseEther } from 'ethers/lib/utils'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
@@ -16,13 +14,12 @@ import { useContext, useMemo, useState } from 'react'
 import { currencyName } from 'utils/currency'
 import { formatWad, fromWad } from 'utils/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
-import { weightedRate } from 'utils/math'
 
 import { disablePayOverrides } from 'constants/overrides'
 import { readNetwork } from 'constants/networks'
-import { CURRENCY_ETH } from 'constants/currency'
-
-import CurrencySymbol from '../shared/CurrencySymbol'
+import { CURRENCY_ETH, CURRENCY_USD } from 'constants/currency'
+import CurrencySymbol from '../../shared/CurrencySymbol'
+import PayInputSubText from './PayInputSubText'
 
 export default function Pay() {
   const [payIn, setPayIn] = useState<CurrencyOption>(0)
@@ -43,14 +40,13 @@ export default function Pay() {
   const converter = useCurrencyConverter()
 
   const weiPayAmt =
-    payIn === 1 ? converter.usdToWei(payAmount) : parseEther(payAmount ?? '0')
+    payIn === CURRENCY_USD
+      ? converter.usdToWei(payAmount)
+      : parseEther(payAmount ?? '0')
 
   function pay() {
     setPayWarningModalVisible(true)
   }
-
-  const formatReceivedTickets = (wei: BigNumber) =>
-    formatWad(weightedRate(currentFC, wei, 'payer'), { precision: 0 })
 
   const overridePayDisabled =
     projectId &&
@@ -146,26 +142,12 @@ export default function Pay() {
               />
             }
           />
-
-          <div style={{ fontSize: '.7rem' }}>
-            <Trans>Receive</Trans>{' '}
-            {weiPayAmt?.gt(0) ? (
-              formatReceivedTickets(weiPayAmt) + ' ' + (tokenSymbol ?? 'tokens')
-            ) : (
-              <span>
-                {formatReceivedTickets(
-                  (payIn === 0 ? parseEther('1') : converter.usdToWei('1')) ??
-                    BigNumber.from(0),
-                )}{' '}
-                {tokenSymbol ?? 'tokens'}/{currencyName(payIn)}
-              </span>
-            )}
-          </div>
+          <PayInputSubText payInCurrrency={payIn} weiPayAmt={weiPayAmt} />
         </div>
 
         <div style={{ textAlign: 'center', minWidth: 150 }}>
           {payButton}
-          {payIn === 1 && (
+          {payIn === CURRENCY_USD && (
             <div style={{ fontSize: '.7rem' }}>
               <Trans>
                 Paid as <CurrencySymbol currency={CURRENCY_ETH} />

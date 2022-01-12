@@ -35,6 +35,9 @@ msgstr ""
 
 #: src/components/shared/formItems/ProjectTwitter.tsx
 msgid "@"
+
+#: src/components/shared/UntrackedErc20Notice.tsx
+msgid "<0>Notice:</0> These balances will not reflect transfers of claimed tokens because the {tokenSymbol} ERC-20 token has not yet been indexed by Juicebox."
 msgstr ""
 
 #: src/components/Landing/Faq.tsx
@@ -384,6 +387,10 @@ msgstr ""
 msgid "Juicebox is experimental software. Although the founding contributors have done their part to shape the smart contracts for public use and have run the code through tons of tests, there still may be bugs."
 msgstr ""
 
+#: src/components/Navbar/index.tsx
+msgid "Juicebox logo"
+msgstr ""
+
 #: src/components/Landing/Faq.tsx
 msgid "Juicebox was built to allow people and projects to get paid for creating public art and infrastructure, as much as or more than they would working towards corporate ends. No more shady business."
 msgstr ""
@@ -611,6 +618,9 @@ msgstr ""
 
 #: src/components/Create/BudgetForm.tsx
 msgid "Set a funding target"
+
+#: src/components/Create/ConfirmDeployProject.tsx
+msgid "Reserved token allocations"
 msgstr ""
 
 #: src/components/Landing/index.tsx
@@ -950,8 +960,8 @@ msgid "until"
 msgstr ""
 
 #: src/components/modals/DistributeTokensModal.tsx
-msgid "{0, plural, one {# token} other {# tokens}}"
-msgstr "{0, plural, one {# token} other {# tokens}}"
+#~ msgid "{0, plural, one {# token} other {# tokens}}"
+#~ msgstr "{0, plural, one {# token} other {# tokens}}"
 
 #: src/components/shared/TokenAMMPriceBadge.tsx
 msgid "{exchangeName} has no liquidity pool for {tokenSymbol}."

@@ -72,6 +72,9 @@ export const targetSubFeeToTargetFormatted = (
   targetSubFee: string,
   fee: BigNumber | undefined,
 ) => {
+  if (targetSubFee === fromWad(constants.MaxUint256)) {
+    return fromWad(constants.MaxUint256)
+  }
   const newTarget = amountAddFee(parseWad(targetSubFee ?? '0'), fee)
   return fromWad(newTarget)
 }

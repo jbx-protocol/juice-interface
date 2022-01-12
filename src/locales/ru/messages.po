@@ -12,14 +12,29 @@ msgstr ""
 "Last-Translator: \n"
 "Language-Team: \n"
 "Plural-Forms: \n"
-
-#: src/constants/ballot-strategies.ts
-msgid "3-day delay"
-msgstr "3-дневная задержка"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ru\n"
+"Project-Id-Version: juicebox-interface\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2022-01-12 01:38\n"
+"Last-Translator: \n"
+"Language-Team: Russian\n"
+"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
+"X-Crowdin-Project: juicebox-interface\n"
+"X-Crowdin-Project-ID: 492549\n"
+"X-Crowdin-Language: ru\n"
+"X-Crowdin-File: messages.po\n"
+"X-Crowdin-File-ID: 9\n"
 
 #: src/components/Landing/Faq.tsx
 msgid "5% of all money made by projects is sent to help pay for the maintenance and development of Juicebox itself. In exchange, projects get Juicebox tokens ($JBX), which will be worth more as the ecosystem grows over time."
 msgstr "5% всех денег, заработанных проектами, направляется на поддержку и развитие самого Juicebox. Взамен проекты получают токены Juicebox ($ JBX), которые будут стоить больше по мере роста экосистемы со временем. "
+
+#: src/constants/ballot-strategies.ts
+msgid "3-day delay"
+msgstr "3-дневная задержка"
 
 #: src/constants/ballot-strategies.ts
 msgid "7-day delay"
@@ -35,6 +50,15 @@ msgstr ""
 
 #: src/components/shared/formItems/ProjectTwitter.tsx
 msgid "@"
+msgid "<0/> The Juicebox protocol is open to anyone, and project configurations can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO, so you should do your own research and understand the risks before committing your funds."
+msgstr ""
+
+#: src/components/Projects/index.tsx
+#~ msgid "<0/>The Juicebox protocol is open to anyone, and project configurations can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO, so you should do your own research and understand the risks before committing your funds."
+#~ msgstr ""
+
+#: src/components/shared/UntrackedErc20Notice.tsx
+msgid "<0>Notice:</0> These balances will not reflect transfers of claimed tokens because the {tokenSymbol} ERC-20 token has not yet been indexed by Juicebox."
 msgstr ""
 
 #: src/components/Landing/Faq.tsx
@@ -273,7 +297,7 @@ msgstr "FAQ (Вопросы)"
 
 #: src/components/Landing/index.tsx
 msgid "FAQs"
-msgstr ""
+msgstr "FAQ (Вопросы)"
 
 #: src/components/Landing/Faq.tsx
 msgid "For example, with a bonding curve of 70%, redeeming 10% of the token supply at any given time will claim around 7% of the total overflow."
@@ -344,7 +368,7 @@ msgstr ""
 
 #: src/components/Landing/Faq.tsx
 msgid "If you know how much your project needs to earn over some period of time to be sustainable, you can set a funding target with that amount. If your project earns more than that, the surplus funds are locked in an overflow pool. Anyone holding your project's tokens can claim a portion of the overflow pool in exchange for burning their tokens."
-msgstr "If you know how much your project needs to earn over some period of time to be sustainable, you can set a funding target with that amount. If your project earns more than that, the surplus funds are locked in an overflow pool. Anyone holding your project's tokens can claim a portion of the overflow pool in exchange for burning their tokens."
+msgstr "Если вы знаете, сколько ваш проект должен заработать в течение определенного периода времени, чтобы быть устойчивым, вы можете установить цель финансирования с этой суммой. Если ваш проект приносит больше, избыточные средства. Любой, у кого есть токены вашего проекта, может потребовать часть пула переполнения в обмен на сжигание своих токенов."
 
 #: src/components/Dashboard/BalanceTimeline.tsx
 msgid "In Juicebox"
@@ -384,6 +408,10 @@ msgstr "Juicebox - это открытый протокол Ethereum, котор
 msgid "Juicebox is experimental software. Although the founding contributors have done their part to shape the smart contracts for public use and have run the code through tons of tests, there still may be bugs."
 msgstr "Juicebox - экспериментальная программа. Хотя участники-основатели внесли свой вклад в формирование смарт-контрактов для публичного использования и прогнали код через множество тестов, все же могут быть ошибки."
 
+#: src/components/Navbar/index.tsx
+msgid "Juicebox logo"
+msgstr ""
+
 #: src/components/Landing/Faq.tsx
 msgid "Juicebox was built to allow people and projects to get paid for creating public art and infrastructure, as much as or more than they would working towards corporate ends. No more shady business."
 msgstr "Juicebox был построен, чтобы позволить людям и проектам получать оплату за создание публичного искусства и инфраструктуры столько же или больше, чем они будут работать для достижения корпоративных целей. Больше никаких теневых дел."
@@ -422,6 +450,10 @@ msgstr "Нет цели"
 #: src/components/Create/BudgetForm.tsx
 msgid "No target set."
 msgstr "Нет цели."
+
+#: src/components/shared/TokenAMMPriceBadge.tsx
+msgid "Loading {exchangeName} price for {tokenSymbol}..."
+msgstr ""
 
 #: src/components/Landing/index.tsx
 msgid "Note: Juicebox is new, unaudited, and not guaranteed to work perfectly. Before spending money, do your own research: <0>ask questions</0>, <1>check out the code</1>, and understand the risks!"
@@ -610,6 +642,10 @@ msgstr "Установите продолжительность цикла фи�
 #: src/components/Create/BudgetForm.tsx
 msgid "Set a funding target"
 msgstr "Установите цель финансирования"
+
+#: src/components/Create/ConfirmDeployProject.tsx
+msgid "Reserved token allocations"
+msgstr ""
 
 #: src/components/Landing/index.tsx
 msgid "Set a funding target to cover predictable expenses. Any extra revenue can be claimed by anyone holding your project's tokens alongside you."
@@ -954,3 +990,14 @@ msgstr ""
 #: src/components/modals/DistributeTokensModal.tsx
 msgid "{0, plural, one {# token} other {# tokens}}"
 msgstr "{0, plural, one {# 代币} other {# 代币}}"
+#: src/components/modals/DistributeTokensModal.tsx
+#~ msgid "{0, plural, one {# token} other {# tokens}}"
+#~ msgstr "{0, plural, one {# token} other {# tokens}}"
+
+#: src/components/shared/TokenAMMPriceBadge.tsx
+msgid "{exchangeName} has no liquidity pool for {tokenSymbol}."
+msgstr ""
+
+#: src/components/shared/TokenAMMPriceBadge.tsx
+msgid "{tokenSymbol}/ETH exchange rate on {exchangeName}."
+msgstr ""

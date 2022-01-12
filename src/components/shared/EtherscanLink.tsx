@@ -1,4 +1,3 @@
-// import { LinkOutlined } from '@ant-design/icons'
 import { Tooltip } from 'antd'
 
 import { NetworkName } from 'models/network-name'

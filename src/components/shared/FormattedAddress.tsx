@@ -101,7 +101,6 @@ export default function FormattedAddress({
           <span style={{ userSelect: 'all' }}>
             <EtherscanLink value={address} type="address" />
           </span>{' '}
-          {/* <EtherscanLink value={address} type="address" />{' '} */}
           <CopyTextButton value={address} />
         </span>
       }

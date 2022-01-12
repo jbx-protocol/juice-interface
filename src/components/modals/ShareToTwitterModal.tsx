@@ -16,8 +16,12 @@ export default function ShareToTwitterModal({
 
   async function tweet() {
     const name = metadata?.twitter ? `@${metadata.twitter}` : metadata?.name
-    const twitterMsg = t`I just joined ${name}%2e See the live fundraiser%3a https%3a%2f%2fjuicebox.money%2f%23%2fp%2f${handle} %23juicebox`
+    const projectUrl = `https://juicebox.money/#/p/${handle}`
+    const twitterMsg = encodeURIComponent(
+      t`I just joined ${name}. See the live fundraiser: ${projectUrl}`,
+    )
     const twitterUrl = `https://twitter.com/intent/tweet?url=${twitterMsg}`
+
     window.open(twitterUrl, '_blank')
     if (onSuccess) {
       onSuccess()
@@ -28,12 +32,12 @@ export default function ShareToTwitterModal({
 
   return (
     <Modal
-      title={t`Share your contribution`}
+      title={t`Share your contribution on Twitter`}
       visible={visible}
       onOk={tweet}
-      okText={t`Tweet`}
+      okText={t`Share to Twitter`}
       onCancel={onCancel}
-      cancelText={t`I'm good`}
+      cancelText={t`Cancel`}
       width={640}
       centered={true}
     >

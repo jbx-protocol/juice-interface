@@ -1,5 +1,4 @@
 import CurrencySymbol from 'components/shared/CurrencySymbol'
-import EtherscanLink from 'components/shared/EtherscanLink'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
@@ -118,7 +117,6 @@ export function PaymentActivity({ pageSize }: { pageSize: number }) {
                   {e.timestamp && (
                     <div style={smallHeaderStyle(colors)}>
                       {formatHistoricalDate(e.timestamp * 1000)}{' '}
-                      <EtherscanLink value={e.txHash} type="tx" />
                     </div>
                   )}
                   <div

@@ -1,0 +1,408 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2021-12-01 13:40+0930\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ru\n"
+"Project-Id-Version: juicebox-interface\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2022-01-12 01:38\n"
+"Last-Translator: \n"
+"Language-Team: Russian\n"
+"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
+"X-Crowdin-Project: juicebox-interface\n"
+"X-Crowdin-Project-ID: 492549\n"
+"X-Crowdin-Language: ru\n"
+"X-Crowdin-File: messages.po\n"
+"X-Crowdin-File-ID: 9\n"
+
+#: src/components/Landing/Faq.tsx
+msgid "5% of all money made by projects is sent to help pay for the maintenance and development of Juicebox itself. In exchange, projects get Juicebox tokens ($JBX), which will be worth more as the ecosystem grows over time."
+msgstr "5% всех денег, заработанных проектами, направляется на поддержку и развитие самого Juicebox. Взамен проекты получают токены Juicebox ($ JBX), которые будут стоить больше по мере роста экосистемы со временем. "
+
+#: src/components/Projects/index.tsx
+msgid "<0/> Archived projects have not been modified or deleted on the blockchain, and can still be interacted with directly through the Juicebox contracts."
+msgstr ""
+
+#: src/components/Projects/index.tsx
+msgid "<0/> The Juicebox protocol is open to anyone, and project configurations can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO, so you should do your own research and understand the risks before committing your funds."
+msgstr ""
+
+#: src/components/Projects/index.tsx
+#~ msgid "<0/>The Juicebox protocol is open to anyone, and project configurations can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO, so you should do your own research and understand the risks before committing your funds."
+#~ msgstr ""
+
+#: src/components/shared/UntrackedErc20Notice.tsx
+msgid "<0>Notice:</0> These balances will not reflect transfers of claimed tokens because the {tokenSymbol} ERC-20 token has not yet been indexed by Juicebox."
+msgstr ""
+
+#: src/components/Landing/Faq.tsx
+msgid "A bonding curve rewards people who wait longer to redeem your tokens for overflow."
+msgstr "Кривая связи вознаграждает людей, которые дольше ждут, чтобы обменять ваши токены на переполнение."
+
+#: src/components/Landing/Faq.tsx
+msgid "A mechanism like Juicebox where upfront financial commitments should be honored over time is only guaranteed within an ecosystem like Ethereum."
+msgstr "Такой механизм, как Juicebox, в котором финансовые обязательства должны выполняться с течением времени, гарантируется только в такой экосистеме, как Ethereum (Эфириум)."
+
+#: src/components/Landing/Faq.tsx
+msgid "A project can choose to reserve a percentage of tokens for itself. Instead of being distributed to paying users, this percentage of tokens is instead minted for the project."
+msgstr "Проект может зарезервировать для себя процент токенов. Вместо того, чтобы распределяться среди платящих пользователей, этот процент токенов создается для проекта."
+
+#: src/components/Landing/Faq.tsx
+msgid "A project owner can propose changes to any part of the contract at any time, with changes taking effect after the current budgeting time frame has ended."
+msgstr "Владелец проекта может предлагать изменения к любой части контракта в любое время, причем изменения вступают в силу по истечении текущего периода бюджетирования."
+
+#: src/components/Landing/index.tsx
+msgid "Almost definitely."
+msgstr "Почти определенно."
+
+#: src/components/Landing/Faq.tsx
+msgid "Anyone can deploy and use another governance smart contract to override this scheme."
+msgstr "Любой может развернуть и использовать другой смарт-контракт управления, чтобы переопределить эту схему."
+
+#: src/components/Landing/Faq.tsx
+msgid "At the start, power over the governance smart contract is held by Juicebox's founding contributors. The intent is to soon transfer the power to a community of token holders."
+msgstr "Вначале оперирование над смарт-контрактом управления принадлежит основателям Juicebox. Намерение состоит в том, чтобы вскоре передать власть сообществу держателей токенов."
+
+#: src/components/Landing/index.tsx
+msgid "Big ups to the Ethereum community for crafting the infrastructure and economy to make Juicebox possible."
+msgstr ""
+
+#: src/components/Navbar/index.tsx
+msgid "Blog"
+msgstr "Блог"
+
+#: src/components/Landing/index.tsx
+msgid "Build a community around a project, fund it, and program its spending. Light enough for a group of friends, powerful enough for a global network of anons."
+msgstr "Это возможность построить сообщество вокруг проекта, профинансировать его, и распределить затраты. Достаточно легкий для группы друзей и достаточно мощный для глобальной сети незнакомцев. "
+
+#: src/components/Landing/index.tsx
+msgid "Built for:"
+msgstr "Создан для:"
+
+#: src/components/Landing/Faq.tsx
+msgid "Can I change my project's contract after it's been created?"
+msgstr "Могу ли я изменить контракт своего проекта после его создания?"
+
+#: src/components/Landing/Faq.tsx
+msgid "Can I delete a project?"
+msgstr "Могу ли я удалить проект?"
+
+#: src/components/Landing/index.tsx
+msgid "Changes to your project's funding require a community approval period to take effect. Your supporters don't have to trust you—even though they already do."
+msgstr "Чтобы изменения в финансировании вашего проекта вступили в силу, требуется период утверждения сообществом. Ваши коллеги не обязаны вам доверять, даже если они уже вам доверяют."
+
+#: src/components/Landing/index.tsx
+msgid "Commit portions of your revenue to go to the people or projects you want to support, or the contributors you want to pay. When you get paid, so do they."
+msgstr "Передайте часть своего дохода людям или проектам, которые вы хотите поддержать, или участникам, которым вы хотите платить. Когда вам платят, им платят тоже."
+
+#: src/components/Landing/index.tsx
+msgid "Community funding for people and projects"
+msgstr "Сообщество финансирует людей и их проекты"
+
+#: src/components/Navbar/Account.tsx
+msgid "Connect"
+msgstr "Подключиться"
+
+#: src/components/Landing/Faq.tsx
+msgid "Creating a Juicebox project mints you an NFT (ERC-721) representing ownership over it. Whoever owns this NFT can configure the rules of the game and how payouts are distributed."
+msgstr "При создании проекта Juicebox вы получаете NFT (ERC-721), предоставляющий право собственности на него. Тот, кто владеет этим NFT, может настраивать правила игры и распределять выплаты."
+
+#: src/components/Landing/index.tsx
+msgid "Design your project"
+msgstr "Создай свой проект"
+
+#: src/components/Landing/Faq.tsx
+msgid "Do I have to make my project open source to use Juicebox as its business model?"
+msgstr "Должен ли я сделать свой проект открытым, чтобы использовать Juicebox в качестве бизнес-модели?"
+
+#: src/components/Navbar/index.tsx
+msgid "Docs"
+msgstr "Документы"
+
+#: src/components/Landing/Faq.tsx
+msgid "Does a project benefit from its own overflow?"
+msgstr "Выигрывает ли проект от собственного переполнения?"
+
+#: src/components/Landing/Faq.tsx
+msgid "Due to their public nature, any exploits to the contracts may have irreversable consequences, including loss of funds. Please use Juicebox with caution."
+msgstr "Из-за своего публичного характера любые действия по контрактам могут иметь необратимые последствия, включая потерю средств. Пожалуйста, используйте Juicebox с осторожностью."
+
+#: src/components/Landing/index.tsx
+msgid "ERC20 community tokens"
+msgstr "Токены сообщества ERC20"
+
+#: src/components/Landing/index.tsx
+msgid "Ethereum protocols and DAOs"
+msgstr "Протоколы Ethereum и ДАО (DAO)"
+
+#: src/components/Landing/Faq.tsx
+msgid "Ethereum provides a public environment where internet apps like Juicebox can run permissionlessly, trustlessly, and unstoppably."
+msgstr "Ethereum предоставляет общедоступную среду, в которой интернет-приложения, такие как Juicebox, могут работать без дополнительного разрешения, и без остановок."
+
+#: src/components/Navbar/index.tsx
+msgid "FAQ"
+msgstr "FAQ (Вопросы)"
+
+#: src/components/Landing/index.tsx
+msgid "FAQs"
+msgstr "FAQ (Вопросы)"
+
+#: src/components/Landing/Faq.tsx
+msgid "For example, with a bonding curve of 70%, redeeming 10% of the token supply at any given time will claim around 7% of the total overflow."
+msgstr "Например: с кривой связи 70%, погашение 10% количества токенов в любой момент времени потребует около 7% от общего переполнения."
+
+#: src/components/Landing/Faq.tsx
+msgid "For now, a minimum of 14 days must pass from the time of a proposed reconfiguration for it to take effect. This gives token holders time to react to the decision."
+msgstr "На данный момент с момента предлагаемой реконфигурации должно пройти как минимум 14 дней, чтобы она вступила в силу. Это дает держателям токенов время отреагировать на решение."
+
+#: src/components/Landing/Faq.tsx
+msgid "For users paying through your app, you should route those funds through the Juicebox smart contracts so they receive Tokens in return."
+msgstr "Для пользователей, которые платят через ваше приложение, - вы направляете им эти средства через смарт-контракты Juicebox, чтобы они получали взамен токены."
+
+#: src/components/Landing/Faq.tsx
+msgid "Holding these tokens entitles a project to a portion of its own overflow."
+msgstr "Хранение этих токенов дает проекту право на часть собственного переполнения."
+
+#: src/components/Landing/Faq.tsx
+msgid "How decentralized is Juicebox?"
+msgstr "Насколько децентрализован Juicebox?"
+
+#: src/components/Projects/index.tsx
+msgid "How do I archive a project?"
+msgstr ""
+
+#: src/components/Landing/Faq.tsx
+msgid "How have the contracts been tested?"
+msgstr "Как проверялись контракты?"
+
+#: src/components/Projects/index.tsx
+msgid "If you have a project you'd like to archive, let the Juicebox team know in Discord."
+msgstr ""
+
+#: src/components/Landing/Faq.tsx
+msgid "If you know how much your project needs to earn over some period of time to be sustainable, you can set a funding target with that amount. If your project earns more than that, the surplus funds are locked in an overflow pool. Anyone holding your project's tokens can claim a portion of the overflow pool in exchange for burning their tokens."
+msgstr "Если вы знаете, сколько ваш проект должен заработать в течение определенного периода времени, чтобы быть устойчивым, вы можете установить цель финансирования с этой суммой. Если ваш проект приносит больше, избыточные средства. Любой, у кого есть токены вашего проекта, может потребовать часть пула переполнения в обмен на сжигание своих токенов."
+
+#: src/components/Landing/index.tsx
+msgid "Indie artists, devs, creators"
+msgstr "Инди артистов, музыкантов, разработчиков, и создателей."
+
+#: src/components/Landing/Faq.tsx
+msgid "It isn't possible to remove a project's data from the blockchain, but we can hide it in the app if you'd like to prevent people from seeing or interacting with it—just let us know in Discord. Keep in mind people will still be able to use your project by interacting directly with the contract."
+msgstr "Невозможно удалить данные проекта из хранилища информации , но мы можем скрыть их в приложении, если вы хотите, чтобы люди не видели его или взаимодействовали с ним - просто сообщите нам об этом в Discord. Имейте в виду, что люди по-прежнему смогут использовать ваш проект, напрямую взаимодействуя с контрактом."
+
+#: src/components/Landing/Faq.tsx
+msgid "Juicebox is a governance-minimal protocol. There are only a few levers that can be tuned, none of which impose changes for users without their consent. The Juicebox governance smart contract can adjust these levers."
+msgstr "Juicebox - это протокол с минимальным управлением, что означает, что есть только несколько рычагов, которые можно настроить, ни один из которых не налагает изменений для пользователей без их согласия. Смарт-контракт управления Juicebox может регулировать эти рычаги."
+
+#: src/components/Landing/Faq.tsx
+msgid "Juicebox is an open protocol on Ethereum that is funded using Juicebox itself. You can check out the contractualized budget specs at https://juicebox.money/#/p/juicebox."
+msgstr "Juicebox - это открытый протокол Ethereum, который финансируется за счет самого Juicebox. Вы можете ознакомиться со спецификациями контрактного бюджета на https://juicebox.money/#/p/juicebox."
+
+#: src/components/Landing/Faq.tsx
+msgid "Juicebox is experimental software. Although the founding contributors have done their part to shape the smart contracts for public use and have run the code through tons of tests, there still may be bugs."
+msgstr "Juicebox - экспериментальная программа. Хотя участники-основатели внесли свой вклад в формирование смарт-контрактов для публичного использования и прогнали код через множество тестов, все же могут быть ошибки."
+
+#: src/components/Navbar/index.tsx
+msgid "Juicebox logo"
+msgstr ""
+
+#: src/components/Landing/Faq.tsx
+msgid "Juicebox was built to allow people and projects to get paid for creating public art and infrastructure, as much as or more than they would working towards corporate ends. No more shady business."
+msgstr "Juicebox был построен, чтобы позволить людям и проектам получать оплату за создание публичного искусства и инфраструктуры столько же или больше, чем они будут работать для достижения корпоративных целей. Больше никаких теневых дел."
+
+#: src/components/Landing/index.tsx
+msgid "Latest payments"
+msgstr "Последние платежи"
+
+#: src/components/shared/TokenAMMPriceBadge.tsx
+msgid "Loading {exchangeName} price for {tokenSymbol}..."
+msgstr ""
+
+#: src/components/Landing/index.tsx
+msgid "Note: Juicebox is new, unaudited, and not guaranteed to work perfectly. Before spending money, do your own research: <0>ask questions</0>, <1>check out the code</1>, and understand the risks!"
+msgstr "Примечание: Juicebox является новым проектом, не прошедшим финансовую проверку, и его работа не гарантируется. Прежде чем тратить деньги, проведите собственное исследование: задайте вопросы, проверьте код и осознайте риски!"
+
+#: src/components/Landing/index.tsx
+msgid "Open source businesses"
+msgstr "Бизнес с открытым исходным кодом"
+
+#: src/components/Landing/Faq.tsx
+msgid "People using Juicebox are interacting with each other through public infrastructure—not a private, profit-seeking corporate service that brokers the exchange."
+msgstr "Люди, использующие Juicebox, взаимодействуют друг с другом через общедоступную инфраструктуру, а не через частную, ориентированную на прибыль корпоративную службу, которая является брокером обмена."
+
+#: src/components/Landing/index.tsx
+msgid "Powered by public smart contracts on <0>Ethereum</0>."
+msgstr "Управляется и работает на общественных смарт-контрактах на Ethereum."
+
+#: src/components/Landing/index.tsx
+msgid "Programmable spending"
+msgstr "Планируемые расходы"
+
+#: src/components/Navbar/index.tsx
+msgid "Projects"
+msgstr "Проекты"
+
+#: src/components/Landing/Faq.tsx
+msgid "Projects can be created with an optional discount rate to incentivize funding it earlier than later. The amount of tokens rewarded per amount paid to your project will decrease by the discount rate with each new funding cycle. A higher discount rate will incentivize supporters to pay your project earlier than later."
+msgstr "Можно создавать проекты с дополнительной ставкой дисконтирования, чтобы стимулировать финансирование раньше, чем позже. Количество токенов, выплачиваемых за сумму, выплаченную вашему проекту, будет уменьшаться на ставку дисконтирования с каждым новым циклом финансирования. Более высокая ставка дисконтирования будет стимулировать сторонников платить за ваш проект раньше, чем позже."
+
+#: src/components/Projects/index.tsx
+msgid "Projects on Juicebox"
+msgstr ""
+
+#: src/components/Landing/index.tsx
+msgid "Projects using Juicebox"
+msgstr "Проекты с использованием Juicebox"
+
+#: src/components/Landing/index.tsx
+msgid "Public goods and services"
+msgstr "Общественные товары услуги"
+
+#: src/components/Landing/index.tsx
+msgid "Redistributable surplus"
+msgstr "Перераспределяемый излишек"
+
+#: src/components/modals/ConfirmStakeTokensModal.tsx
+msgid "Remove {0} ERC20 tokens from your wallet and lock them in the Juicebox protocol."
+msgstr "从你的钱包中扣除 {0} ERC20 代币，并把这些代币锁在Juicebox协议中"
+
+#: src/components/Create/ConfirmDeployProject.tsx
+msgid "Reserved token allocations"
+msgstr ""
+
+#: src/components/Landing/index.tsx
+msgid "Set a funding target to cover predictable expenses. Any extra revenue can be claimed by anyone holding your project's tokens alongside you."
+msgstr "Установите цель финансирования для покрытия предсказуемых расходов. Любой дополнительный доход может потребовать любой, у кого так же есть токены вашего проекта."
+
+#: src/components/Landing/index.tsx
+msgid "Should you Juicebox?"
+msgstr "Следует ли вам заниматься Juicebox?"
+
+#: src/components/Navbar/Account.tsx
+msgid "Sign out"
+msgstr ""
+
+#: src/components/Landing/Faq.tsx
+msgid "That's the plan, but the core Juicebox contracts will first be deployed to Ethereum Mainnet."
+msgstr "Это план, но основные контракты Juicebox сначала будут развернуты в основной сети Ethereum."
+
+#: src/components/Create/index.tsx
+msgid "The JBX protocol is unaudited, and projects built on it may be vulnerable to bugs or exploits. Be smart!"
+msgstr "Протокол JBX не прошел аудит, и проекты, построенные на нем, могут быть уязвимы для ошибок или эксплойтов. "
+
+#: src/components/Landing/Faq.tsx
+msgid "The code could always use more eyes and more critique to further the community's confidence. Join our Discord and peek the code on Github to work with us."
+msgstr "Код всегда может использовать больше взглядов и больше критики, чтобы укрепить доверие сообщества. Присоединяйтесь к нашему Discord и посмотрите код на Github, чтобы работать с нами."
+
+#: src/components/Landing/Faq.tsx
+msgid "The founding contributors will then be working on L2 payment terminals for Juicebox projects."
+msgstr "Затем участники-основатели будут работать над платежными терминалами L2 для проектов Juicebox."
+
+#: src/components/Landing/index.tsx
+msgid "The future will be led by creators, and owned by communities."
+msgstr "Будущее будет возглавляться создателями и принадлежать сообществам."
+
+#: src/components/Landing/Faq.tsx
+msgid "The project's tokens that are minted and distributed as a result of a received payment are ERC-20's. The distribution schedule is proportional to payments recieved, weighted by the project's discount rate over time."
+msgstr "Токены проекта, которые создаются и распространяются в результате полученного платежа, относятся к ERC-20. График распределения пропорционально полученным платежам, взвешенным по ставке оценивания проекта с течением времени."
+
+#: src/components/Landing/Faq.tsx
+msgid "The rest is left to share between token hodlers."
+msgstr "Остальное остается разделить между хранителями токенов."
+
+#: src/components/Landing/Faq.tsx
+msgid "There are unit tests written for every condition of every function in the contracts, and integration tests for every workflow that the protocol supports."
+msgstr "Существуют модульные тесты, написанные для каждого условия каждой функции в контрактах, и интеграционные тесты для каждого рабочего процесса, поддерживаемого протоколом."
+
+#: src/components/Landing/Faq.tsx
+msgid "There was also a script written for iteratively running the integration tests using a random input generator, prioritizing edge cases. The code has successfully passed over 1 millions test cases through this stress-testing script."
+msgstr "Также был написан сценарий для итеративного запуска интеграционных тестов с использованием генератора случайных входных данных с приоритетом крайних случаев. Код успешно прошел более 1 миллиона тестовых случаев с помощью этого сценария стресс-тестирования."
+
+#: src/components/Landing/Faq.tsx
+msgid "This means that anyone can see the code that they're using, anyone can use the code without asking for permission, and no one can mess with the code or take it down."
+msgstr "Это означает, что любой может видеть код, который они используют, любой может использовать код, не спрашивая разрешения, и никто не может вмешиваться в код или удалять его."
+
+#: src/components/Landing/Faq.tsx
+msgid "This website (juicebox.money) connects to the Juicebox protocol's smart contracts, deployed on the Ethereum network. (note: anyone else can make a website that also connects to these same smart contracts. For now, don't trust any site other than this one to access the Juicebox protocol.)"
+msgstr "Этот веб-сайт (juicebox.money) подключается к смарт-контрактам протокола Juicebox, развернутым в сети Ethereum. (примечание: любой другой может создать веб-сайт, который также подключается к тем же смарт-контрактам. На данный момент не доверяйте никакому другому сайту, кроме этого, для доступа к протоколу Juicebox.)"
+
+#: src/components/Landing/index.tsx
+msgid "Transparency & accountability"
+msgstr "Прозрачность и подотчетность"
+
+#: src/components/Landing/Faq.tsx
+msgid "Users fund your project by paying to use your app or service, or as a patron or investor by making a payment directly to your project's smart contract (like on this app)."
+msgstr "Пользователи финансируют ваш проект, платя за использование вашего приложения или сервиса, или в качестве покровителя или инвестора, производя оплату непосредственно на смарт-контракт вашего проекта (как в этом приложении)."
+
+#: src/components/Landing/Faq.tsx
+msgid "What are community tokens?"
+msgstr "Что такое токены сообщества?"
+
+#: src/components/Landing/Faq.tsx
+msgid "What are the risks?"
+msgstr "Какие риски?"
+
+#: src/components/Landing/Faq.tsx
+msgid "What does Juicebox cost?"
+msgstr "Сколько стоит Juicebox?"
+
+#: src/components/Landing/Faq.tsx
+msgid "What is overflow?"
+msgstr "Что такое переполнение или излишек финансов?"
+
+#: src/components/Landing/Faq.tsx
+msgid "What's a bonding curve?"
+msgstr "Что такое кривая связи?"
+
+#: src/components/Landing/Faq.tsx
+msgid "What's a discount rate?"
+msgstr "Что такое дисконтная ставка?"
+
+#: src/components/Landing/Faq.tsx
+msgid "What's going on under the hood?"
+msgstr "Что творится под капотом?"
+
+#: src/components/Landing/index.tsx
+msgid "When someone pays your project either as a patron or a user of your app, they earn a proportional amount of your project's token. When you win, your token holders win, so they'll want you to win even more."
+msgstr "Когда кто-то платит вашему проекту в качестве спонсора или пользователя вашего приложения, он зарабатывает пропорциональную сумму токена вашего проекта. Когда вы выигрываете, ваши держатели токенов выигрывают, поэтому они хотят, чтобы вы выиграли еще больше."
+
+#: src/components/Landing/Faq.tsx
+msgid "Who funds Juicebox projects?"
+msgstr "Кто финансирует проекты Juicebox?"
+
+#: src/components/Landing/Faq.tsx
+msgid "Why Ethereum?"
+msgstr "Почему Эфириум/Ethereum?"
+
+#: src/components/Landing/Faq.tsx
+msgid "Why should I want to own a project's tokens?"
+msgstr "Почему я должен владеть токенами проекта?"
+
+#: src/components/Landing/Faq.tsx
+msgid "Will it work on L2s?"
+msgstr "Будет ли работать на L2?"
+
+#: src/components/Landing/index.tsx
+msgid "With Juicebox, projects are built and maintained by motivated punks getting paid transparently, and funded by a community of users and patrons who are rewarded as the projects they support succeed."
+msgstr "С помощью Juicebox проекты создаются и поддерживаются мотивированными панками, получающими оплату и финансируемыми сообществом пользователей и покровителей, которые получают вознаграждение по мере успеха проектов, которые они поддерживают."
+
+#: src/components/Navbar/index.tsx
+msgid "Workspace"
+msgstr "Рабочее пространство"
+
+#: src/components/modals/DistributeTokensModal.tsx
+#~ msgid "{0, plural, one {# token} other {# tokens}}"
+#~ msgstr "{0, plural, one {# token} other {# tokens}}"
+
+#: src/components/shared/TokenAMMPriceBadge.tsx
+msgid "{exchangeName} has no liquidity pool for {tokenSymbol}."
+msgstr ""
+
+#: src/components/shared/TokenAMMPriceBadge.tsx
+msgid "{tokenSymbol}/ETH exchange rate on {exchangeName}."
+msgstr ""
+

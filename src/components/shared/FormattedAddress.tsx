@@ -29,9 +29,11 @@ const getEnsDict = () => {
 export default function FormattedAddress({
   address,
   label,
+  linkDisabled,
 }: {
   address: string | undefined
   label?: string
+  linkDisabled?: boolean
 }) {
   const [ensName, setEnsName] = useState<string | null>()
 
@@ -92,7 +94,13 @@ export default function FormattedAddress({
     (address
       ? address.substring(0, 6) + '...' + address.substr(address.length - 6, 6)
       : '')
-
+  if (linkDisabled) {
+    return (
+      <div style={{ cursor: 'default', userSelect: 'all', lineHeight: '22px' }}>
+        {formatted}
+      </div>
+    )
+  }
   return (
     <Tooltip
       trigger={['hover', 'click']}
@@ -105,7 +113,9 @@ export default function FormattedAddress({
         </span>
       }
     >
-      <span style={{ cursor: 'default', userSelect: 'all' }}>{formatted}</span>
+      <div style={{ cursor: 'default', userSelect: 'all', lineHeight: '22px' }}>
+        {formatted}
+      </div>
     </Tooltip>
   )
 }

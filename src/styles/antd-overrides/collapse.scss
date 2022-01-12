@@ -37,3 +37,151 @@
     }
   }
 }
+
+// Top Nav Select
+// Right side of the top nav
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--background-l0);
+
+  .nav-menu-item {
+    font-weight: 600;
+    color: var(--text-primary) !important;
+  }
+
+  // Resources dropdown and options (dotdotdot) menu
+  .ant-collapse-header {
+    color: var(--text-primary) !important;
+    padding-bottom: 8px !important;
+  }
+
+  .ant-collapse-content {
+    float: right;
+    margin-right: 21px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 2px;
+    background-color: var(--background-l0);
+    border-radius: 2px;
+  }
+  .ant-collapse-content-box {
+    border: 1px solid var(--stroke-secondary);
+    box-shadow: none !important;
+    padding: 0;
+    width: 100%;
+    background-color: var(--background-l0);
+  }
+  .ant-select-arrow {
+    display: none;
+  }
+  .nav-dropdown-item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border: none;
+    padding-left: 10px;
+    width: 100%;
+    height: 40px;
+    color: var(--text-primary);
+    font-weight: 400;
+    cursor: pointer;
+  }
+  .ant-collapse-content-inactive {
+    display: none;
+  }
+  .nav-dropdown-item:hover {
+    background-color: var(--background-l1);
+  }
+}
+
+.top-nav-mobile {
+  height: 50px;
+  padding: 16px 8px;
+  .ant-collapse {
+    width: 100%;
+    height: 45px;
+  }
+  .ant-collapse-content {
+    float: left;
+    padding-right: 10px;
+    padding-left: 10px;
+    width: 100%;
+  }
+  .ant-collapse-content-box {
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+    margin-top: -2px;
+    padding: 7px 0 15px;
+    border: none;
+    border-bottom: 1px solid var(--stroke-secondary);
+  }
+  .nav-menu-item {
+    padding: 10px 15px;
+  }
+  .resources-dropdown {
+    position: static;
+    margin-left: 3px;
+    .ant-collapse-content {
+      padding-top: 5px;
+    }
+    .ant-collapse-content-box {
+      padding: 0 6px;
+      margin-left: 25px;
+      border: none;
+    }
+  }
+  .account-badge {
+    margin: auto !important;
+    margin-top: 22px !important;
+  }
+}
+
+// Logo and links
+.top-left-nav {
+  flex: 1;
+  position: absolute;
+}
+
+// Specific to the resources dropdown in the top nav
+.resources-dropdown {
+  position: absolute;
+  top: 9px;
+  .ant-collapse-header {
+    font-weight: 600 !important;
+    color: var(--text-primary) !important;
+  }
+  .ant-collapse-content {
+    width: 120px;
+  }
+  .ant-select-arrow {
+    display: block;
+  }
+}
+
+// Dotdotdot menu and wallet/balance
+.top-right-nav {
+  display: flex;
+  align-items: flex-start;
+  position: absolute;
+  top: 10px;
+  right: 50px;
+  margin-right: 10px;
+}
+
+// Dotdotdot menu in top right
+.top-nav-options {
+  .ant-collapse {
+    width: 110px;
+    text-align: right;
+    margin-right: -10px;
+  }
+  .ant-collapse-content {
+    width: 170px;
+    margin-right: -22px;
+  }
+}

@@ -1,4 +1,5 @@
 import { Form, Space, Switch } from 'antd'
+import { Trans, t } from '@lingui/macro'
 import { useEffect, useState } from 'react'
 
 import FormattedNumberInput from '../inputs/FormattedNumberInput'
@@ -41,14 +42,16 @@ export default function ProjectDuration({
                 }
               }}
             />
-            <label>Set a funding cycle duration</label>
+            <label>
+              <Trans>Set a funding cycle duration</Trans>
+            </label>
           </Space>
         </div>
 
         <Form.Item
-          extra="How long one funding cycle will last. Changes to upcoming funding cycles will only take effect once the current cycle has ended."
+          extra={t`How long one funding cycle will last. Changes to upcoming funding cycles will only take effect once the current cycle has ended.`}
           name={name}
-          label={hideLabel ? undefined : 'Funding cycle duration'}
+          label={hideLabel ? undefined : t`Funding cycle duration`}
           {...formItemProps}
           style={{ display: showDurationInput ? 'block' : 'none' }}
         >

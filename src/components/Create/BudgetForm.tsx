@@ -1,4 +1,6 @@
 import { Button, Divider, Form, Space, Switch } from 'antd'
+import { Trans } from '@lingui/macro'
+
 import { FormItems } from 'components/shared/formItems'
 import {
   targetSubFeeToTargetFormatted,
@@ -67,47 +69,57 @@ export default function BudgetForm({
 
   return (
     <Space direction="vertical" size="large" style={{ width: '100%' }}>
-      <h1>Funding</h1>
+      <h1>
+        <Trans>Funding</Trans>
+      </h1>
 
       <p>
-        Your project is funded across funding cycles. A funding cycle has a
-        funding target and a duration. Your project's funding cycle
-        configuration will depend on the kind of project you're starting.{' '}
-        <a
-          href={helpPagePath('protocol/learn/topics/funding-cycle')}
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          Learn more
-        </a>{' '}
-        about funding cycles.
+        <Trans>
+          Your project is funded across funding cycles. A funding cycle has a
+          funding target and a duration. Your project's funding cycle
+          configuration will depend on the kind of project you're starting.
+        </Trans>{' '}
+        <Trans>
+          <a
+            href={helpPagePath('protocol/learn/topics/funding-cycle')}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Learn more
+          </a>{' '}
+          about funding cycles.
+        </Trans>
       </p>
 
       <Form layout="vertical">
         <div style={{ color: colors.text.secondary }}>
-          <h4>Funding cycle target</h4>
+          <h4>
+            <Trans>Funding cycle target</Trans>
+          </h4>
           <p>
-            Set the amount of funds you'd like to raise each funding cycle. Any
-            funds raised within the funding cycle target can be distributed by
-            the project, and can't be redeemed by your project's token holders.
+            <Trans>
+              Set the amount of funds you'd like to raise each funding cycle.
+              Any funds raised within the funding cycle target can be
+              distributed by the project, and can't be redeemed by your
+              project's token holders.
+            </Trans>
           </p>
           <p>
-            Funds within the funding cycle target can be distributed at any time
-            during the funding cycle. Distributing funds is a public action;
-            anyone can call the transaction on your behalf.
-          </p>
-          <p>
-            Overflow is created if your project's balance exceeds your funding
-            cycle target. Overflow can be redeemed by your project's token
-            holders.{' '}
-            <a
-              href={helpPagePath('protocol/learn/topics/overflow')}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Learn more
-            </a>{' '}
-            about overflow.
+            <Trans>
+              Overflow is created if your project's balance exceeds your funding
+              cycle target. Overflow can be redeemed by your project's token
+              holders.
+            </Trans>{' '}
+            <Trans>
+              <a
+                href={helpPagePath('protocol/learn/topics/overflow')}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Learn more
+              </a>{' '}
+              about overflow.
+            </Trans>
           </p>
         </div>
 
@@ -127,15 +139,21 @@ export default function BudgetForm({
                 setShowFundingFields(checked)
               }}
             />
-            <label>Set a funding cycle target</label>
+            <label>
+              <Trans>Set a funding cycle target</Trans>
+            </label>
           </Space>
         </Form.Item>
 
         {!hasTarget && (
           <p style={{ color: colors.text.primary }}>
-            <span style={{ fontWeight: 600 }}>No target set.</span> All funds
-            can be distributed by the project. The project will have no overflow
-            (the same as setting the target to infinity).
+            <span style={{ fontWeight: 600 }}>
+              <Trans>No target set.</Trans>{' '}
+            </span>
+            <Trans>
+              All funds can be distributed by the project. The project will have
+              no overflow (the same as setting the target to infinity).
+            </Trans>
           </p>
         )}
 
@@ -167,16 +185,22 @@ export default function BudgetForm({
 
         {showFundingFields && target === '0' && (
           <p style={{ color: colors.text.primary }}>
-            <span style={{ fontWeight: 600 }}>Target is 0.</span> The project's
-            entire balance will be considered overflow.{' '}
-            <a
-              href={helpPagePath('protocol/learn/topics/overflow')}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Learn more
-            </a>{' '}
-            about overflow.
+            <span style={{ fontWeight: 600 }}>
+              <Trans>Target is 0.</Trans>
+            </span>
+            <Trans>
+              The project's entire balance will be considered overflow.{' '}
+            </Trans>
+            <Trans>
+              <a
+                href={helpPagePath('protocol/learn/topics/overflow')}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Learn more
+              </a>{' '}
+              about overflow.
+            </Trans>
           </p>
         )}
 
@@ -188,26 +212,32 @@ export default function BudgetForm({
         />
 
         <div>
-          <h4>Funding cycle duration</h4>
+          <h4>
+            <Trans>Funding cycle duration</Trans>
+          </h4>
           <p style={{ color: colors.text.secondary }}>
-            Set the length of your funding cycles.{' '}
-            <a
-              href={helpPagePath('protocol/learn/topics/funding-cycle')}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Learn more
-            </a>{' '}
-            about funding cycle duration.
+            <Trans>Set the length of your funding cycles.</Trans>{' '}
+            <Trans>
+              <a
+                href={helpPagePath('protocol/learn/topics/funding-cycle')}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Learn more
+              </a>{' '}
+              about funding cycle duration.
+            </Trans>
           </p>
 
           {hasTarget && (
             <p style={{ color: colors.text.secondary }}>
               <span style={{ fontWeight: 600 }}>
-                You have set a funding cycle target.
+                <Trans>You have set a funding cycle target.</Trans>
               </span>{' '}
-              No more than the funding cycle target can be distributed by the
-              project in a single funding cycle.
+              <Trans>
+                No more than the funding cycle target can be distributed by the
+                project in a single funding cycle.
+              </Trans>
             </p>
           )}
         </div>
@@ -228,9 +258,13 @@ export default function BudgetForm({
 
         {duration === '0' && (
           <p style={{ color: colors.text.primary, marginTop: 20 }}>
-            <span style={{ fontWeight: 600 }}>No duration set.</span> Funding
-            can be reconfigured at any time. Reconfigurations will start a new
-            funding cycle.
+            <span style={{ fontWeight: 600 }}>
+              <Trans>No duration set.</Trans>{' '}
+            </span>
+            <Trans>
+              Funding can be reconfigured at any time. Reconfigurations will
+              start a new funding cycle.
+            </Trans>
           </p>
         )}
 
@@ -241,7 +275,7 @@ export default function BudgetForm({
             type="primary"
             onClick={() => onSave(currency, target, duration)}
           >
-            Save funding configuration
+            <Trans>Save funding configuration</Trans>
           </Button>
         </Form.Item>
       </Form>

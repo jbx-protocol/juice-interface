@@ -217,7 +217,9 @@ export default function Landing() {
               </div>
               <div style={{ textAlign: 'center', marginTop: 20 }}>
                 <a href="/#/projects">
-                  <Button>All projects</Button>
+                  <Button>
+                    <Trans>All projects</Trans>
+                  </Button>
                 </a>
               </div>
             </Col>

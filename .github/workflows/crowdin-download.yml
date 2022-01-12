@@ -1,0 +1,36 @@
+name: Crowdin download
+
+on:
+  schedule:
+    - cron: '0 1 * * *' # every day at 1am we download translations from Crowdin and make PR to main
+
+  # manual trigger from Github UI - Action tab
+  workflow_dispatch:
+
+jobs:
+  download-translations:
+    name: Download translations from Crowdin
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Extract translations
+        run: 'yarn i18n:extract'
+
+      - name: Download from Crowdin
+        uses: crowdin/github-action@1.4.4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_translations: false
+          download_translations: true
+          create_pull_request: true
+          project_id: '492549'
+          token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+          source: 'src/locales/en/messages.po'
+          translation: 'src/locales/%two_letters_code%/%original_file_name%'

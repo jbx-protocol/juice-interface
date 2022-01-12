@@ -1,6 +1,6 @@
 import { Collapse } from 'antd'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
-import { t } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 
 const QAs: {
   q: string
@@ -33,13 +33,13 @@ const QAs: {
   {
     q: t`What are community tokens?`,
     a: [
-      `Each project has its own tokens. Everyone who funds a project gets a newly minted supply of tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are issued by the project owner`,
+      t`Each project has its own tokens. Everyone who funds a project gets a newly minted supply of tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are issued by the project owner`,
     ],
   },
   {
     q: t`Why should I want to own a project's tokens?`,
     a: [
-      `Tokens can be redeemed for a portion of a project's overflow, letting you benefit from its success. After all, you helped it get there.`,
+      t`Tokens can be redeemed for a portion of a project's overflow, letting you benefit from its success. After all, you helped it get there.`,
     ],
   },
   {
@@ -128,7 +128,7 @@ const QAs: {
     q: t`Do I have to make my project open source to use Juicebox as its business model?`,
     img: {
       src: '/assets/cooler_if_you_did.png',
-      alt: "It'd be a lot cooler if you did",
+      alt: t`It'd be a lot cooler if you did`,
     },
   },
 ]
@@ -138,7 +138,12 @@ export default function Faq() {
     <Collapse defaultActiveKey={QAs.length ? 0 : undefined} accordion>
       {QAs.map((qa, i) => (
         <CollapsePanel header={qa.q} key={i}>
-          {qa.a && qa.a.map((p, j) => <p key={j}>{p}</p>)}
+          {qa.a &&
+            qa.a.map((p, j) => (
+              <p key={j}>
+                <Trans>{p}</Trans>
+              </p>
+            ))}
           {qa.img && <img src={qa.img.src} alt={qa.img.alt} />}
         </CollapsePanel>
       ))}

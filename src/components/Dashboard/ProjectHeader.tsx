@@ -3,6 +3,8 @@ import {
   ToolOutlined,
   TwitterOutlined,
 } from '@ant-design/icons'
+import { t } from '@lingui/macro'
+
 import { Button, Tooltip } from 'antd'
 import Discord from 'components/icons/Discord'
 import EditProjectModal from 'components/modals/EditProjectModal'
@@ -113,7 +115,7 @@ export default function ProjectHeader() {
                   : colors.text.placeholder,
               }}
             >
-              {metadata?.name || 'Untitled project'}
+              {metadata?.name || t`Untitled project`}
             </h1>
 
             {!isPreviewMode && (

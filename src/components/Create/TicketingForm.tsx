@@ -1,4 +1,5 @@
 import { Button, Form, FormInstance, Space } from 'antd'
+import { t, Trans } from '@lingui/macro'
 import { FormItems } from 'components/shared/formItems'
 import { ThemeContext } from 'contexts/themeContext'
 import { TicketMod } from 'models/mods'
@@ -30,17 +31,23 @@ export default function TicketingForm({
   return (
     <Space direction="vertical" size="large">
       <div style={{ color: colors.text.secondary }}>
-        <h1>Reserved tokens</h1>
+        <h1>
+          <Trans>Reserved tokens</Trans>
+        </h1>
 
         <p>
-          Tokens are earned by anyone who pays your project, and can be redeemed
-          for overflow if your project has set a funding target.
+          <Trans>
+            Tokens are earned by anyone who pays your project, and can be
+            redeemed for overflow if your project has set a funding target.
+          </Trans>
         </p>
         <p>
-          You'll be able to issue ERC-20 tokens once your project contract has
-          been deployed. Until then, the protocol will track token balances,
-          allowing your supporters to earn tokens and redeem for overflow in the
-          meantime.
+          <Trans>
+            You'll be able to issue ERC-20 tokens once your project contract has
+            been deployed. Until then, the protocol will track token balances,
+            allowing your supporters to earn tokens and redeem for overflow in
+            the meantime.
+          </Trans>
         </p>
       </div>
 
@@ -55,14 +62,13 @@ export default function TicketingForm({
           mods={mods}
           onModsChanged={setMods}
           formItemProps={{
-            label: 'Allocate reserved tokens (optional)',
-            extra:
-              "Automatically distribute a portion of your project's reserved tokens to other Juicebox projects or ETH wallets.",
+            label: t`Allocate reserved tokens (optional)`,
+            extra: t`Automatically distribute a portion of your project's reserved tokens to other Juicebox projects or ETH wallets.`,
           }}
         />
         <Form.Item>
           <Button htmlType="submit" type="primary" onClick={() => onSave(mods)}>
-            Save
+            <Trans>Save</Trans>
           </Button>
         </Form.Item>
       </Form>

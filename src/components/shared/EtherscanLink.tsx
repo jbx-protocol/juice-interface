@@ -7,9 +7,11 @@ import { readNetwork } from 'constants/networks'
 export default function EtherscanLink({
   value,
   type,
+  showText,
 }: {
   value: string | undefined
   type: 'tx' | 'address'
+  showText?: boolean
 }) {
   if (!value) return null
 

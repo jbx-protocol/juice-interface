@@ -493,42 +493,47 @@ export default function ProjectPayoutMods({
               }
             />
           ) : null}
-          <Form.Item
-            label="Amount"
-            // Display message to user if the amount they inputted
-            // will result in percentage with > 2 decimal places
-            // and no error is present
-            className="ant-form-item-extra-only"
-            extra={
-              isPercentBeingRounded() &&
-              !(form.getFieldValue('percent') > 100) ? (
-                <div>
-                  Will be rounded to <CurrencySymbol currency={currency} />
-                  {roundedDownAmount()}
-                </div>
-              ) : null
-            }
-          >
-            <div
-              style={{
-                display: 'flex',
-                color: colors.text.primary,
-                alignItems: 'center',
-              }}
+
+          {/* Only show amount input if project has a funding target */}
+          {parseWad(target).lt(constants.MaxUint256) ? ( // Target = MaxUint256 when unset
+            <Form.Item
+              label="Amount"
+              // Display message to user if the amount they inputted
+              // will result in percentage with > 2 decimal places
+              // and no error is present
+              className="ant-form-item-extra-only"
+              extra={
+                isPercentBeingRounded() &&
+                !(form.getFieldValue('percent') > 100) ? (
+                  <div>
+                    Will be rounded to <CurrencySymbol currency={currency} />
+                    {roundedDownAmount()}
+                  </div>
+                ) : null
+              }
             >
-              <FormattedNumberInput
-                value={form.getFieldValue('amount')}
-                placeholder={'0'}
-                onChange={amount => onAmountChange(parseFloat(amount || '0'))}
-                formItemProps={{
-                  rules: [{ validator: validatePayout }],
+              <div
+                style={{
+                  display: 'flex',
+                  color: colors.text.primary,
+                  alignItems: 'center',
                 }}
-                accessory={
-                  <InputAccessoryButton content={currencyName(currency)} />
-                }
-              />
-            </div>
-          </Form.Item>
+              >
+                <FormattedNumberInput
+                  value={form.getFieldValue('amount')}
+                  placeholder={'0'}
+                  onChange={amount => onAmountChange(parseFloat(amount || '0'))}
+                  formItemProps={{
+                    rules: [{ validator: validatePayout }],
+                  }}
+                  accessory={
+                    <InputAccessoryButton content={currencyName(currency)} />
+                  }
+                />
+              </div>
+            </Form.Item>
+          ) : null}
+
           <Form.Item label="Percent">
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <span style={{ flex: 1 }}>

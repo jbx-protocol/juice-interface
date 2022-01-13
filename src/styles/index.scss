@@ -51,6 +51,14 @@ a.quiet {
   }
 }
 
+a.etherscan-link {
+  color: var(--text-primary);
+  &:hover {
+    color: var(--text-action-primary);
+    text-decoration: underline;
+  }
+}
+
 input {
   background: var(--background-l0);
   color: var(--text-primary);

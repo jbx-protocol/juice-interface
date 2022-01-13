@@ -36,7 +36,7 @@ export default function Wallet({ userAddress }: { userAddress: string }) {
           userSelect: 'all',
         }}
       >
-        <FormattedAddress address={userAddress} />
+        <FormattedAddress address={userAddress} tooltipDisabled={true} />
         <Balance address={userAddress} />
       </div>
     </Tooltip>

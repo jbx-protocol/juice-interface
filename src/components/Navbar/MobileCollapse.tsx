@@ -48,7 +48,7 @@ export default function MobileCollapse({ menu }: { menu: JSX.Element }) {
         >
           {menu}
           <div style={{ paddingLeft: 15 }}>
-            <LanguageSelector />
+            <LanguageSelector disableLang="zh" />
             <ThemePicker mobile={true} />
           </div>
           <Account mobile={true} />

@@ -1,4 +1,3 @@
-import EtherscanLink from 'components/shared/EtherscanLink'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
@@ -64,7 +63,6 @@ export default function ReservesEventElem({
                 {formatHistoricalDate(printReservesEvent.timestamp * 1000)}
               </span>
             )}{' '}
-            <EtherscanLink value={printReservesEvent.txHash} type="tx" />
           </div>
           <div style={smallHeaderStyle(colors)}>
             called by <FormattedAddress address={printReservesEvent.caller} />

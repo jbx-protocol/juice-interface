@@ -47,7 +47,7 @@ export default function OptionsCollapse() {
             <ThemePicker />
           </div>
           <div className="nav-dropdown-item">
-            <LanguageSelector />
+            <LanguageSelector disableLang="zh" />
           </div>
           {signingProvider ? (
             <div className="nav-dropdown-item">

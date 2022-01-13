@@ -5,7 +5,11 @@ import { GlobalOutlined } from '@ant-design/icons'
 import { Languages } from 'constants/languages/language-options'
 
 // Language select tool seen in top nav
-export default function LanguageSelector() {
+export default function LanguageSelector({
+  disableLang,
+}: {
+  disableLang?: string
+}) {
   const selectStyle: CSSProperties = {
     display: 'flex',
     alignItems: 'center',
@@ -16,11 +20,16 @@ export default function LanguageSelector() {
   }
 
   // Renders Select Option for each language available on Juicebox
-  const renderLanguageOption = (lang: string) => (
-    <Select.Option class="language-select-option" value={lang}>
-      <div>{Languages[lang].long}</div>
-    </Select.Option>
-  )
+  const renderLanguageOption = (lang: string) => {
+    if (disableLang === lang) {
+      return null
+    }
+    return (
+      <Select.Option class="language-select-option" value={lang}>
+        <div>{Languages[lang].long}</div>
+      </Select.Option>
+    )
+  }
 
   let currentSelectedLanguage = localStorage.getItem('lang') || 'en'
 

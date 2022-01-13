@@ -1,5 +1,11 @@
 import { utils } from 'ethers'
+
+import { Tooltip } from 'antd'
+
 import { useEffect, useState } from 'react'
+
+import EtherscanLink from 'components/shared/EtherscanLink'
+import CopyTextButton from 'components/shared/CopyTextButton'
 
 import { readProvider } from 'constants/readProvider'
 
@@ -89,8 +95,18 @@ export default function FormattedAddress({
       : '')
 
   return (
-    <div style={{ cursor: 'default', userSelect: 'all', lineHeight: '22px' }}>
-      {formatted}
-    </div>
+    <Tooltip
+      trigger={['hover', 'click']}
+      title={
+        <span>
+          <EtherscanLink value={address} type="address" />{' '}
+          <CopyTextButton value={address} />
+        </span>
+      }
+    >
+      <div style={{ cursor: 'default', userSelect: 'all', lineHeight: '22px' }}>
+        {formatted}
+      </div>
+    </Tooltip>
   )
 }

@@ -37,7 +37,6 @@ export default function Navbar() {
     )
   }
 
-
   const menu = () => {
     return (
       <>
@@ -52,7 +51,7 @@ export default function Navbar() {
         })}
         {menuItem(t`Discord`, 'https://discord.gg/6jXrJSyDFf')}
         <ItemDropdown
-          heading="Resources"
+          heading={t`Resources`}
           dropdownItems={[
             dropDownItem(t`Docs`, 'https://docs.juicebox.money'),
             dropDownItem(t`Blog`, 'https://blog.juicebox.money'),

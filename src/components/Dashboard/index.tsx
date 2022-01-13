@@ -1,4 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { Trans } from '@lingui/macro'
 
 import { ProjectContext, ProjectContextType } from 'contexts/projectContext'
 import { utils } from 'ethers'
@@ -355,7 +356,9 @@ export default function Dashboard() {
           ...layouts.centered,
         }}
       >
-        <h2>{handle} not found</h2>
+        <h2>
+          <Trans>{handle} not found</Trans>
+        </h2>
       </div>
     )
   }
@@ -370,7 +373,7 @@ export default function Dashboard() {
           style={{ textAlign: 'center', cursor: 'pointer', padding: 20 }}
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         >
-          Back to top
+          <Trans>Back to top</Trans>
         </div>
       </div>
     </ProjectContext.Provider>

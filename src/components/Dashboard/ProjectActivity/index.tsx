@@ -1,4 +1,6 @@
 import { Space } from 'antd'
+import { t } from '@lingui/macro'
+
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext, useLayoutEffect, useMemo, useState } from 'react'
@@ -55,16 +57,16 @@ export default function ProjectActivity() {
     let text: string
     switch (tab) {
       case 'pay':
-        text = 'Pay'
+        text = t`Pay`
         break
       case 'redeem':
-        text = 'Redeem'
+        text = t`Redeem`
         break
       case 'tap':
-        text = 'Withdraw'
+        text = t`Withdraw`
         break
       case 'reserves':
-        text = 'Reserves'
+        text = t`Reserves`
         break
     }
 
@@ -106,7 +108,7 @@ export default function ProjectActivity() {
           alignItems: 'baseline',
         }}
       >
-        <SectionHeader text="Activity" />
+        <SectionHeader text={t`Activity`} />
         {tabs}
       </div>
 

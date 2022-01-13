@@ -40,6 +40,10 @@ msgid "@"
 msgid "<0>Notice:</0> These balances will not reflect transfers of claimed tokens because the {tokenSymbol} ERC-20 token has not yet been indexed by Juicebox."
 msgstr ""
 
+#: src/components/shared/formItems/ProjectTwitter.tsx
+msgid "@"
+msgstr ""
+
 #: src/components/Landing/Faq.tsx
 msgid "A bonding curve rewards people who wait longer to redeem your tokens for overflow."
 msgstr ""
@@ -560,10 +564,6 @@ msgstr "Remove {0} ERC20 tokens from your wallet and lock them in the Juicebox p
 
 #: src/components/FundingCycle/FundingCycleDetails.tsx
 msgid "Reserved"
-msgstr ""
-
-#: src/components/Create/index.tsx
-msgid "Reserved Tokens"
 msgstr ""
 
 #: src/components/Create/ConfirmDeployProject.tsx

@@ -12,15 +12,10 @@ export default function ProjectPayButton({
     <Form.Item
       name={name}
       label={hideLabel ? undefined : t`Pay button text`}
-      extra={`Text displayed on your project's "pay" button, max 30 characters. Leave this blank to use the default.`}
+      extra={t`Text displayed on your project's "pay" button. Leave this blank to use the default.`}
       {...formItemProps}
     >
-      <Input
-        placeholder="Pay"
-        type="string"
-        autoComplete="off"
-        maxLength={30}
-      />
+      <Input placeholder={t`Pay`} type="string" autoComplete="off" />
     </Form.Item>
   )
 }

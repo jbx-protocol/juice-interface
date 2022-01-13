@@ -424,7 +424,7 @@ export default function Create() {
             !editingProjectInfo?.metadata.name || !editingProjectInfo.handle
           }
         >
-          Review & Deploy
+          <Trans>Review & Deploy</Trans>
         </Button>
       </Space>
     ),
@@ -548,7 +548,7 @@ export default function Create() {
               callback: () => setIncentivesFormModalVisible(true),
             },
             {
-              title: 'Restricted actions',
+              title: t`Restricted actions`,
               description: 'Restrict payments and printing tokens.',
               callback: () => setRestrictedActionsFormModalVisible(true),
             },

@@ -52,7 +52,7 @@ export default function FundingCycleDetails({
         column={{ xs: 1, sm: 1, md: 1, lg: 1, xl: 1, xxl: 2 }}
       >
         {
-          <Descriptions.Item label="Target">
+          <Descriptions.Item label={t`Target`}>
             {hasFundingTarget(fundingCycle) ? (
               <>
                 <CurrencySymbol
@@ -68,18 +68,20 @@ export default function FundingCycleDetails({
 
         <Descriptions.Item label={t`Duration`}>
           {fundingCycle.duration.gt(0)
-            ? fundingCycle.duration.toString() + ' days'
-            : 'Not set'}
+            ? t`${fundingCycle.duration.toString()} days`
+            : t`Not set`}
         </Descriptions.Item>
 
         {fundingCycle.duration.gt(0) && (
-          <Descriptions.Item label="Start">
+          <Descriptions.Item label={t`Start`}>
             {formattedStartTime}
           </Descriptions.Item>
         )}
 
         {fundingCycle.duration.gt(0) && (
-          <Descriptions.Item label="End">{formattedEndTime}</Descriptions.Item>
+          <Descriptions.Item label={t`End`}>
+            {formattedEndTime}
+          </Descriptions.Item>
         )}
 
         {isRecurring(fundingCycle) && (
@@ -112,7 +114,7 @@ export default function FundingCycleDetails({
         <Descriptions.Item
           label={
             <TooltipLabel
-              label={`Reserved ${tokenSymbol ?? 'tokens'}`}
+              label={t`Reserved ${tokenSymbol ?? 'tokens'}`}
               tip={t`Whenever someone pays your project, this percentage of tokens will be reserved and the rest will go to the payer. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner. Once tokens are reserved, anyone can "mint" them, which distributes them to their intended receivers.`}
             />
           }
@@ -123,8 +125,8 @@ export default function FundingCycleDetails({
         <Descriptions.Item
           label={
             <TooltipLabel
-              label="Issue rate"
-              tip={`${
+              label={t`Issue rate`}
+              tip={t`${
                 tokenSymbol ?? 'Tokens'
               } received per ETH paid to the treasury. This can change over time according to the discount rate and reserved tokens amount of future funding cycles.`}
             />
@@ -135,14 +137,14 @@ export default function FundingCycleDetails({
             decimals: 0,
           })}{' '}
           {metadata?.reservedRate
-            ? `(+${formatWad(
+            ? t`(+${formatWad(
                 weightedRate(fundingCycle, parseEther('1'), 'reserved'),
                 {
                   decimals: 0,
                 },
               )} reserved)`
             : ''}{' '}
-          {tokenSymbol ?? 'tokens'}/ETH
+          <Trans>{tokenSymbol ?? 'tokens'}/ETH</Trans>
         </Descriptions.Item>
 
         {/* <Descriptions.Item
@@ -166,16 +168,19 @@ export default function FundingCycleDetails({
           span={2}
           label={
             <TooltipLabel
-              label="Token minting"
-              tip="When token minting is allowed, the owner of this project has permission to mint any number of tokens to any address at their discretion. This has the effect of diluting all current token holders, without increasing the project's treasury balance. The project owner can reconfigure this along with all other properties of the funding cycle."
+              label={t`Token minting`}
+              tip={t`When token minting is allowed, the owner of this project has permission to mint any number of tokens to any address at their discretion. This has the effect of diluting all current token holders, without increasing the project's treasury balance. The project owner can reconfigure this along with all other properties of the funding cycle.`}
             />
           }
         >
           {metadata?.ticketPrintingIsAllowed ? 'Allowed' : 'Disabled'}
         </Descriptions.Item>
 
-        <Descriptions.Item span={2} label={<TooltipLabel label="Payments" />}>
-          {metadata?.payIsPaused ? 'Paused' : 'Enabled'}
+        <Descriptions.Item
+          span={2}
+          label={<TooltipLabel label={t`Payments`} />}
+        >
+          {metadata?.payIsPaused ? t`Paused` : t`Enabled`}
         </Descriptions.Item>
       </Descriptions>
 

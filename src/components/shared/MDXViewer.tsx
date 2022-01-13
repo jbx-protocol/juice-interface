@@ -5,7 +5,7 @@ import remarkGfm from 'remark-gfm'
 import remarkMdx from 'remark-mdx'
 import { MDXComponents, MDXContent } from 'mdx/types'
 import { YouTube } from 'mdx-embed'
-import ErrorBoundary from 'antd/lib/alert/ErrorBoundary'
+import { Alert } from 'antd'
 
 const htmlElements = [
   'h1',
@@ -92,8 +92,8 @@ function MDXViewer({ children }: IProps) {
 
 export default function MDXWithErrorBoundary({ children }: IProps) {
   return (
-    <ErrorBoundary>
+    <Alert.ErrorBoundary>
       <MDXViewer>{children}</MDXViewer>
-    </ErrorBoundary>
+    </Alert.ErrorBoundary>
   )
 }

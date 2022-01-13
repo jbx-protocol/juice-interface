@@ -1,5 +1,11 @@
 import { utils } from 'ethers'
+
+import { Tooltip } from 'antd'
+
 import { useEffect, useState } from 'react'
+
+import EtherscanLink from 'components/shared/EtherscanLink'
+import CopyTextButton from 'components/shared/CopyTextButton'
 
 import { readProvider } from 'constants/readProvider'
 
@@ -24,9 +30,11 @@ const getEnsDict = () => {
 export default function FormattedAddress({
   address,
   label,
+  tooltipDisabled,
 }: {
   address: string | undefined
   label?: string
+  tooltipDisabled?: boolean
 }) {
   const [ensName, setEnsName] = useState<string | null>()
 
@@ -88,9 +96,31 @@ export default function FormattedAddress({
       ? address.substring(0, 6) + '...' + address.substr(address.length - 6, 6)
       : '')
 
+  if (tooltipDisabled) {
+    return (
+      <span
+        style={{ cursor: 'default', userSelect: 'all', lineHeight: '22px' }}
+      >
+        {formatted}
+      </span>
+    )
+  }
+
   return (
-    <div style={{ cursor: 'default', userSelect: 'all', lineHeight: '22px' }}>
-      {formatted}
-    </div>
+    <Tooltip
+      trigger={['hover', 'click']}
+      title={
+        <span>
+          <EtherscanLink value={address} type="address" />{' '}
+          <CopyTextButton value={address} />
+        </span>
+      }
+    >
+      <span
+        style={{ cursor: 'default', userSelect: 'all', lineHeight: '22px' }}
+      >
+        {formatted}
+      </span>
+    </Tooltip>
   )
 }

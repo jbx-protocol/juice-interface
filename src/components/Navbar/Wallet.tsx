@@ -17,7 +17,7 @@ export default function Wallet({ userAddress }: { userAddress: string }) {
     <Tooltip
       trigger={['hover', 'click']}
       title={
-        <span style={{ zIndex: 999999 }}>
+        <span>
           <EtherscanLink value={userAddress} type="address" />{' '}
           <CopyTextButton value={userAddress} />
         </span>

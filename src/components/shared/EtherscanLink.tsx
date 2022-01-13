@@ -21,11 +21,16 @@ export default function EtherscanLink({
     subdomain = readNetwork.name + '.'
   }
 
+  const goToEtherscan = () => {
+    window.open(`https://${subdomain}etherscan.io/${type}/${value}`)
+  }
+
   return (
     <Tooltip trigger={['hover', 'click']} title={'Go to Etherscan'}>
       <a
         className="etherscan-link"
         style={{ fontWeight: 400 }}
+        onClick={goToEtherscan}
         href={`https://${subdomain}etherscan.io/${type}/${value}`}
         target="_blank"
         rel="noopener noreferrer"

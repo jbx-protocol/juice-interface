@@ -1,4 +1,5 @@
 import { useUniswapPriceQuery } from 'hooks/ERC20UniswapPrice'
+import { useSushiswapPriceQuery } from 'hooks/ERC20SushiswapPrice'
 import { CSSProperties } from 'react'
 
 import TokenAMMPriceRow from './TokenAMMPriceRow'
@@ -23,20 +24,28 @@ export default function AMMPrices({
       tokenAddress,
     })
 
+  const { data: sushiswapPriceData, isLoading: sushiswapLoading } =
+    useSushiswapPriceQuery({
+      tokenSymbol,
+      tokenAddress,
+    })
+
   return (
     <div style={{ ...style }}>
       <TokenAMMPriceRow
         exchangeName="Uniswap"
         tokenSymbol={tokenSymbol}
         exchangeLink={`https://app.uniswap.org/#/swap?inputCurrency=${tokenAddress}&outputCurrency=ETH`}
-        WETHPrice={uniswapPriceData?.WETHPrice}
+        WETHPrice={uniswapPriceData?.WETHPrice.toFixed(0)}
         loading={uniswapLoading}
         style={{ marginBottom: '0.5rem' }}
       />
       <TokenAMMPriceRow
         exchangeName="Sushiswap"
         tokenSymbol={tokenSymbol}
-        exchangeSupported={false}
+        exchangeLink={`https://app.sushi.com/swap?inputCurrency=${tokenAddress}&outputCurrency=ETH`}
+        WETHPrice={sushiswapPriceData?.midPrice.toFixed(0)}
+        loading={sushiswapLoading}
       />
     </div>
   )

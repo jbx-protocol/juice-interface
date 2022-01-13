@@ -15,8 +15,9 @@ import ThemePicker from './ThemePicker'
 import Logo from './Logo'
 import Account from './Account'
 import LanguageSelector from './NavLanguageSelector'
+import { menu } from './MenuItems'
 
-export default function MobileCollapse({ menu }: { menu: JSX.Element }) {
+export default function MobileCollapse() {
   const [activeKey, setActiveKey] = useState<0 | undefined>()
   const {
     theme: { colors },
@@ -41,12 +42,21 @@ export default function MobileCollapse({ menu }: { menu: JSX.Element }) {
                 e.stopPropagation()
               }}
             >
-              {<Logo height={30} />}
-              <MenuOutlined style={{ color: colors.icon.primary }} />
+              <a href="/" style={{ display: 'inline-block' }}>
+                {<Logo height={30} />}
+              </a>
+              <MenuOutlined
+                style={{
+                  color: colors.icon.primary,
+                  fontSize: 20,
+                  paddingTop: 6,
+                  paddingLeft: 10,
+                }}
+              />
             </Space>
           }
         >
-          {menu}
+          {menu(() => setActiveKey(activeKey === 0 ? undefined : 0))}
           <div style={{ paddingLeft: 15 }}>
             <LanguageSelector disableLang="zh" />
             <ThemePicker mobile={true} />

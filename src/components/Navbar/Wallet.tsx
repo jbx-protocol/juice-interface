@@ -4,6 +4,7 @@ import { useContext } from 'react'
 import { Tooltip } from 'antd'
 
 import EtherscanLink from 'components/shared/EtherscanLink'
+import CopyTextButton from 'components/shared/CopyTextButton'
 
 import Balance from './Balance'
 
@@ -16,13 +17,13 @@ export default function Wallet({ userAddress }: { userAddress: string }) {
     <Tooltip
       trigger={['hover', 'click']}
       title={
-        <span>
-          <span style={{ userSelect: 'all' }}>{userAddress}</span>{' '}
-          <EtherscanLink value={userAddress} type="address" />
+        <span style={{ zIndex: 999999 }}>
+          <EtherscanLink value={userAddress} type="address" />{' '}
+          <CopyTextButton value={userAddress} />
         </span>
       }
     >
-      <span
+      <div
         style={{
           height,
           borderRadius: 2,
@@ -35,9 +36,9 @@ export default function Wallet({ userAddress }: { userAddress: string }) {
           userSelect: 'all',
         }}
       >
-        <FormattedAddress address={userAddress} linkDisabled />
+        <FormattedAddress address={userAddress} />
         <Balance address={userAddress} />
-      </span>
+      </div>
     </Tooltip>
   )
 }

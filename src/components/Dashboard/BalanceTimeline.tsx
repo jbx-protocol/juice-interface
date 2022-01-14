@@ -309,10 +309,10 @@ export default function BalanceTimeline({ height }: { height: number }) {
 
   switch (showGraph) {
     case 'volume':
-      header = 'Volume'
+      header = t`Volume`
       break
     case 'balance':
-      header = 'Project'
+      header = t`Project`
       break
   }
 

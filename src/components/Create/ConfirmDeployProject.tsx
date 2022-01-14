@@ -1,5 +1,5 @@
 import { Space, Statistic } from 'antd'
-import { t } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import PayoutModsList from 'components/shared/PayoutModsList'
 import ProjectLogo from 'components/shared/ProjectLogo'
@@ -37,38 +37,42 @@ export default function ConfirmDeployProject() {
 
   return (
     <Space size="large" direction="vertical">
-      <h1 style={{ fontSize: '2rem' }}>Review project</h1>
+      <h1 style={{ fontSize: '2rem' }}>
+        <Trans>Review project</Trans>
+      </h1>
       <ProjectLogo
         uri={editingProject?.metadata.logoUri}
         name={editingProject?.metadata.name}
       />
       <Space size="large">
         <Statistic
-          title="Name"
+          title={t`Name`}
           value={orEmpty(editingProject?.metadata.name)}
         />
         <Statistic
-          title="Handle"
-          value={'@' + orEmpty(editingProject?.handle)}
+          title={t`Handle`}
+          value={t`@` + orEmpty(editingProject?.handle)}
         />
         <Statistic
-          title="Duration"
+          title={t`Duration`}
           value={
             editingFC.duration.gt(0)
               ? formattedNum(editingFC.duration)
-              : 'Not set'
+              : t`Not set`
           }
-          suffix={editingFC.duration.gt(0) ? 'days' : ''}
+          suffix={editingFC.duration.gt(0) ? t`days` : ''}
         />
       </Space>
       <Statistic
-        title="Target"
+        title={t`Target`}
         valueRender={() =>
           hasFundingTarget(editingFC) ? (
             editingFC.target.eq(0) ? (
               <span>
-                Target is 0: All funds will be considered overflow and can be
-                redeemed by burning project tokens.
+                <Trans>
+                  Target is 0: All funds will be considered overflow and can be
+                  redeemed by burning project tokens.
+                </Trans>
               </span>
             ) : (
               <span>
@@ -84,48 +88,49 @@ export default function ConfirmDeployProject() {
                         editingFC?.currency.toNumber() as CurrencyOption
                       }
                     />
-                    {formatWad(
-                      amountSubFee(editingFC.target, terminalFee),
-                      { decimals: 4 },
-                    )}{' '}
-                    after JBX fee)
+                    {formatWad(amountSubFee(editingFC.target, terminalFee), {
+                      decimals: 4,
+                    })}{' '}
+                    <Trans>after JBX fee</Trans>)
                   </span>
                 )}
               </span>
             )
           ) : (
             <span>
-              No funding target: The project will control how all funds are
-              distributed, and none can be redeemed by token holders.
+              <Trans>
+                No funding target: The project will control how all funds are
+                distributed, and none can be redeemed by token holders.
+              </Trans>
             </span>
           )
         }
       />
       <Statistic
-        title="Pay button"
+        title={t`Pay button`}
         value={orEmpty(editingProject?.metadata.payButton)}
       />
       <Statistic
-        title="Pay disclosure"
+        title={t`Pay disclosure`}
         value={orEmpty(editingProject?.metadata.payDisclosure)}
       />
       <Space size="large">
         <Statistic
-          title="Payments paused"
+          title={t`Payments paused`}
           value={editingFC.payIsPaused ? 'Yes' : 'No'}
         />
         <Statistic
-          title="Token minting"
+          title={t`Token minting`}
           value={editingFC.ticketPrintingIsAllowed ? 'Allowed' : 'Disabled'}
         />
       </Space>
       <Space size="large">
         <Statistic
-          title="Website"
+          title={t`Website`}
           value={orEmpty(editingProject?.metadata.infoUri)}
         />
         <Statistic
-          title="Twitter"
+          title={t`Twitter`}
           value={
             editingProject?.metadata.twitter
               ? '@' + editingProject.metadata.twitter
@@ -133,7 +138,7 @@ export default function ConfirmDeployProject() {
           }
         />
         <Statistic
-          title="Discord"
+          title={`Discord`}
           value={orEmpty(editingProject?.metadata.discord)}
         />
       </Space>

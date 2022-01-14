@@ -1,4 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { Trans } from '@lingui/macro'
+
 import { Modal, Space } from 'antd'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import TicketModsList from 'components/shared/TicketModsList'
@@ -81,7 +83,7 @@ export default function DistributeTokensModal({
     >
       <Space direction="vertical" style={{ width: '100%' }} size="large">
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          Available:{' '}
+          <Trans>Available:</Trans>{' '}
           <div>
             {tokenSymbol
               ? `${reservedTokensFormatted} ${tokenSymbol}`
@@ -90,7 +92,9 @@ export default function DistributeTokensModal({
         </div>
         {currentTicketMods?.length ? (
           <div>
-            <h4>Funds will be distributed to:</h4>
+            <h4>
+              <Trans>Funds will be distributed to:</Trans>
+            </h4>
             <TicketModsList
               total={reservedTokens}
               mods={currentTicketMods}
@@ -100,7 +104,9 @@ export default function DistributeTokensModal({
           </div>
         ) : (
           <p>
-            All {tokenSymbol ?? 'tokens'} will go to the project owner:{' '}
+            <Trans>
+              All {tokenSymbol ?? 'tokens'} will go to the project owner:
+            </Trans>{' '}
             <FormattedAddress address={owner} />
           </p>
         )}

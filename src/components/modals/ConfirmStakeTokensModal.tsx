@@ -78,9 +78,11 @@ export default function ConfirmStakeTokensModal({
         </Trans>
       </p>
       <p>
-        Staked {tokenSymbol ?? 'tokens'} can still be redeemed for overflow, and
-        can be unstaked at any time. Right now there's no value or utility in
-        staking, though there may be in the future.
+        <Trans>
+          Staked {tokenSymbol ?? 'tokens'} can still be redeemed for overflow,
+          and can be unstaked at any time. Right now there's no value or utility
+          in staking, though there may be in the future.
+        </Trans>
       </p>
       <FormattedNumberInput
         min={0}

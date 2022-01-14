@@ -28,23 +28,37 @@ export default function FundingCycles({
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const tab = (option: TabOption) => (
-    <div
-      style={{
-        textTransform: 'uppercase',
-        cursor: 'pointer',
-        ...(option === selectedTab
-          ? { color: colors.text.secondary, fontWeight: 600 }
-          : { color: colors.text.tertiary, fontWeight: 500 }),
-        ...(option === hoverTab ? { color: colors.text.secondary } : {}),
-      }}
-      onClick={() => setSelectedTab(option)}
-      onMouseEnter={() => setHoverTab(option)}
-      onMouseLeave={() => setHoverTab(undefined)}
-    >
-      {option}
-    </div>
-  )
+  const tab = (option: TabOption) => {
+    let text: string
+    switch (option) {
+      case 'current':
+        text = t`Pay`
+        break
+      case 'upcoming':
+        text = t`Redeem`
+        break
+      case 'history':
+        text = t`Withdraw`
+        break
+    }
+    return (
+      <div
+        style={{
+          textTransform: 'uppercase',
+          cursor: 'pointer',
+          ...(option === selectedTab
+            ? { color: colors.text.secondary, fontWeight: 600 }
+            : { color: colors.text.tertiary, fontWeight: 500 }),
+          ...(option === hoverTab ? { color: colors.text.secondary } : {}),
+        }}
+        onClick={() => setSelectedTab(option)}
+        onMouseEnter={() => setHoverTab(option)}
+        onMouseLeave={() => setHoverTab(undefined)}
+      >
+        {text}
+      </div>
+    )
+  }
 
   let tabContent: JSX.Element
 

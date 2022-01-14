@@ -1,6 +1,7 @@
 import { CopyOutlined } from '@ant-design/icons'
 import { Tooltip } from 'antd'
 import { useState } from 'react'
+import { t } from '@lingui/macro'
 
 // Copies a given text to clipboard when clicked
 export default function CopyTextButton({
@@ -18,7 +19,7 @@ export default function CopyTextButton({
   return (
     <Tooltip
       trigger={['hover']}
-      title={<span>{copied ? 'Copied!' : 'Copy to clipboard'}</span>}
+      title={<span>{copied ? t`Copied!` : t`Copy to clipboard`}</span>}
     >
       <CopyOutlined onClick={copyText} />
     </Tooltip>

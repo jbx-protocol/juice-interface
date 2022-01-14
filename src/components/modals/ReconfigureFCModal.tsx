@@ -467,11 +467,11 @@ export default function ReconfigureFCModal({
           {terminal.version === '1.1' && (
             <Space size="large">
               <Statistic
-                title="Payments paused"
+                title={t`Payments paused`}
                 value={editingFC.payIsPaused ? 'Yes' : 'No'}
               />
               <Statistic
-                title="Token minting"
+                title={t`Token minting`}
                 value={
                   editingFC.ticketPrintingIsAllowed ? 'Allowed' : 'Disabled'
                 }
@@ -480,7 +480,9 @@ export default function ReconfigureFCModal({
           )}
 
           <div>
-            <h4>Spending</h4>
+            <h4>
+              <Trans>Spending</Trans>
+            </h4>
             <PayoutModsList
               mods={editingPayoutMods}
               projectId={undefined}
@@ -490,7 +492,9 @@ export default function ReconfigureFCModal({
           </div>
 
           <div>
-            <h4>Reserved token allocations</h4>
+            <h4>
+              <Trans>Reserved token allocations</Trans>
+            </h4>
             <TicketModsList
               mods={editingTicketMods}
               projectId={undefined}

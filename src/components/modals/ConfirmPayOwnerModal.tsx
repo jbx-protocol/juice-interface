@@ -1,4 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { t, Trans } from '@lingui/macro'
+
 import { Checkbox, Descriptions, Form, Input, Modal, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import FormattedAddress from 'components/shared/FormattedAddress'
@@ -79,10 +81,10 @@ export default function ConfirmPayOwnerModal({
 
   return (
     <Modal
-      title={'Pay ' + metadata.name}
+      title={t`Pay ' + metadata.name`}
       visible={visible}
       onOk={pay}
-      okText="Pay"
+      okText={t`Pay`}
       onCancel={onCancel}
       confirmLoading={loading}
       width={640}
@@ -90,14 +92,18 @@ export default function ConfirmPayOwnerModal({
     >
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
         <p>
-          Paying {metadata.name} is not an investment—it's a way to support the
-          project. Any value or utility of the tokens you receive is determined
-          by {metadata.name}.
+          <Trans>
+            Paying {metadata.name} is not an investment—it's a way to support
+            the project. Any value or utility of the tokens you receive is
+            determined by {metadata.name}.
+          </Trans>
         </p>
 
         {metadata.payDisclosure && (
           <div>
-            <h4>Notice from {metadata.name}:</h4>
+            <h4>
+              <Trans>Notice from {metadata.name}:</Trans>
+            </h4>
             <p>{metadata.payDisclosure}</p>
           </div>
         )}
@@ -113,7 +119,9 @@ export default function ConfirmPayOwnerModal({
           >
             <div>{formatWad(receivedTickets, { decimals: 0 })}</div>
             <div>
-              To: <FormattedAddress address={userAddress} />
+              <Trans>
+                To: <FormattedAddress address={userAddress} />
+              </Trans>
             </div>
           </Descriptions.Item>
           <Descriptions.Item
@@ -126,7 +134,7 @@ export default function ConfirmPayOwnerModal({
         <Form form={form} layout="vertical">
           <Form.Item label="Memo" name="note" rules={[{ max: 256 }]}>
             <Input.TextArea
-              placeholder="(Optional) Add a note to this payment on-chain"
+              placeholder={t`(Optional) Add a note to this payment on-chain`}
               maxLength={256}
               showCount
               autoSize
@@ -134,7 +142,7 @@ export default function ConfirmPayOwnerModal({
           </Form.Item>
           <Form.Item>
             <ImageUploader
-              text="Add image"
+              text={t`Add image`}
               onSuccess={url => {
                 if (!url) return
                 const note = form.getFieldValue('note') || ''
@@ -153,10 +161,12 @@ export default function ConfirmPayOwnerModal({
                   onChange={e => setPreferUnstaked(e.target.checked)}
                 />
                 <label htmlFor="preferUnstaked">
-                  Check this to mint {tokenSymbol} ERC20 to your wallet. Leave
-                  unchecked to have your token balance tracked by Juicebox,
-                  saving gas on this transaction. You can always claim your
-                  ERC20 tokens later.
+                  <Trans>
+                    Check this to mint {tokenSymbol} ERC20 to your wallet. Leave
+                    unchecked to have your token balance tracked by Juicebox,
+                    saving gas on this transaction. You can always claim your
+                    ERC20 tokens later.
+                  </Trans>
                 </label>
               </Space>
             </Form.Item>

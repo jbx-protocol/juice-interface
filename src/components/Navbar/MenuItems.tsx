@@ -16,6 +16,9 @@ export function ItemDropdown({
   const [activeKey, setActiveKey] = useState<0 | undefined>()
   const iconSize = 12
 
+  // Close dropdown when clicking anywhere in the window
+  window.addEventListener('click', () => setActiveKey(undefined), false)
+
   return (
     <div className="resources-dropdown">
       <Collapse style={{ border: 'none' }} activeKey={activeKey}>

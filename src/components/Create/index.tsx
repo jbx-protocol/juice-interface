@@ -496,17 +496,17 @@ export default function Create() {
               callback: () => setProjectFormModalVisible(true),
             },
             {
-              title: t`Funding`,
+              title: t`Funding cycle`,
               description: t`Your project's funding cycle target and duration.`,
               callback: () => setBudgetFormModalVisible(true),
             },
             {
-              title: t`Distribution`,
+              title: t`Funding distribution`,
               description: t`How your project will distribute funds.`,
               callback: () => setPayModsFormModalVisible(true),
             },
             {
-              title: t`Reserved Tokens`,
+              title: t`Reserved tokens`,
               description: t`Reward specific community members with tokens.`,
               callback: () => setTicketingFormModalVisible(true),
             },

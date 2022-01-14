@@ -48,21 +48,13 @@ export default function ReservedTokens({
         <TooltipLabel
           label={
             <h4 style={{ display: 'inline-block' }}>
-              <Trans>Reserved</Trans> {tokenSymbol ?? t`tokens`}(
+              <Trans>Reserved {tokenSymbol ?? t`tokens`}</Trans> (
               {fromPerbicent(metadata?.reservedRate)}%)
             </h4>
           }
-          tip={t`A project can reserve a percentage of tokens minted from every payment it receives. They can be distributed to the receivers below at any time.`}
+          tip={t`A project can reserve a percentage of tokens minted from every payment it receives. Reserved tokens can be distributed according to the allocation below at any time.`}
         />
       </div>
-
-      {metadata?.reservedRate ? (
-        <TicketModsList
-          mods={ticketMods}
-          fundingCycle={fundingCycle}
-          projectId={projectId}
-        />
-      ) : null}
 
       {!hideActions && !isConstitutionDAO && !isSharkDAO && (
         <div
@@ -70,12 +62,14 @@ export default function ReservedTokens({
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'baseline',
-            marginTop: 20,
+            marginBottom: 20,
           }}
         >
           <span>
-            {formatWad(reservedTokens, { precision: 0 }) || 0}{' '}
-            {tokenSymbol ?? t`tokens`}
+            <Trans>
+              {formatWad(reservedTokens, { precision: 0 }) || 0}{' '}
+              {tokenSymbol ?? t`tokens`} reserved
+            </Trans>
           </span>
           <Button
             style={{ marginLeft: 10 }}
@@ -83,7 +77,7 @@ export default function ReservedTokens({
             onClick={() => setModalIsVisible(true)}
             disabled={isPreviewMode}
           >
-            <Trans>Distribute</Trans>
+            <Trans>Distribute {tokenSymbol ?? t`tokens`}</Trans>
           </Button>
 
           <DistributeTokensModal
@@ -93,6 +87,14 @@ export default function ReservedTokens({
           />
         </div>
       )}
+
+      {metadata?.reservedRate ? (
+        <TicketModsList
+          mods={ticketMods}
+          fundingCycle={fundingCycle}
+          projectId={projectId}
+        />
+      ) : null}
     </div>
   )
 }

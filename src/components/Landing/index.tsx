@@ -262,13 +262,13 @@ export default function Landing() {
             <Col xs={24} sm={13}>
               <div style={{ display: 'grid', rowGap: 20, marginBottom: 40 }}>
                 {fourthCol(t`Programmable spending`, [
-                  t`Commit portions of your revenue to go to the people or projects you want to support, or the contributors you want to pay. When you get paid, so do they.`,
+                  t`Commit portions of your funds to the people or projects you want to support, or the contributors you want to pay. When you get paid, so do they.`,
                 ])}
                 {fourthCol(t`ERC20 community tokens`, [
-                  t`When someone pays your project either as a patron or a user of your app, they earn a proportional amount of your project's token. When you win, your token holders win, so they'll want you to win even more.`,
+                  t`When someone pays your project as a patron or a user of your app, they earn a portion of your project's token. When you win, your token holders win, so they'll want you to win even more.`,
                 ])}
                 {fourthCol(t`Redistributable surplus`, [
-                  t`Set a funding target to cover predictable expenses. Any extra revenue can be claimed by anyone holding your project's tokens alongside you.`,
+                  t`Set a funding target to cover predictable expenses. Any extra funds can be claimed by anyone holding your project's tokens alongside you.`,
                 ])}
                 {fourthCol(t`Transparency & accountability`, [
                   t`Changes to your project's funding require a community approval period to take effect. Your supporters don't have to trust you—even though they already do.`,

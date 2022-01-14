@@ -1,4 +1,4 @@
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 
 import { Button, Form, Space, Input } from 'antd'
 import { FormItems } from 'components/shared/formItems'
@@ -61,22 +61,21 @@ export default function PayModsForm({
     <Space direction="vertical" size="large" style={{ width: '100%' }}>
       <div style={{ color: colors.text.secondary }}>
         <h1>
-          <Trans>Distribution</Trans>
+          <Trans>Funding distribution</Trans>
         </h1>
 
         <p>
           <Trans>
-            Payouts let you commit portions of every withdrawal to other
-            Ethereum wallets or Juicebox projects. Use this to pay contributors,
-            charities, other projects you depend on, or anyone else. Payouts
-            will be distributed automatically whenever a withdrawal is made from
-            your project.
+            Distribute available funds to other Ethereum wallets or Juicebox
+            projects as payouts. Use this to pay contributors, charities,
+            Juicebox projects you depend on, or anyone else. Funds are
+            distributed whenever a withdrawal is made from your project.
           </Trans>
         </p>
         <p>
           <Trans>
-            Payouts are optional. By default, all unallocated revenue will be
-            withdrawable to the project owner's wallet.
+            By default, all unallocated funds can be distributed to the project
+            owner's wallet.
           </Trans>
         </p>
       </div>
@@ -106,6 +105,9 @@ export default function PayModsForm({
             })
           }}
           fee={fee}
+          formItemProps={{
+            label: t`Payouts (optional)`,
+          }}
         />
         <Form.Item>
           <Button
@@ -114,7 +116,7 @@ export default function PayModsForm({
             type="primary"
             onClick={validateAndSaveMods}
           >
-            <Trans>Save</Trans>
+            <Trans>Save payouts</Trans>
           </Button>
         </Form.Item>
       </Form>

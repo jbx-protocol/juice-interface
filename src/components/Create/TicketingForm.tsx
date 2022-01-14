@@ -81,8 +81,8 @@ export default function TicketingForm({
           mods={mods}
           onModsChanged={setMods}
           formItemProps={{
-            label: t`Allocate reserved tokens (optional)`,
-            extra: t`Automatically distribute a portion of your project's reserved tokens to other Juicebox projects or ETH wallets.`,
+            label: t`Reserved token allocation (optional)`,
+            extra: t`Allocate a portion of your project's reserved tokens to other Ethereum wallets or Juicebox projects.`,
           }}
         />
         <Form.Item>

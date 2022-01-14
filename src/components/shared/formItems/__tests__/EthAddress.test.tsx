@@ -8,14 +8,9 @@ import { Form } from 'antd'
 
 import { render } from '../../../../../test/test-utils'
 import EthAddress from '../EthAddress'
+import { readProvider } from '../../../../constants/readProvider'
 
-const lookupAddress = jest.fn()
-const resolveName = jest.fn()
-
-jest.mock('../../../../constants/readProvider', () => ({
-  lookupAddress,
-  resolveName,
-}))
+jest.mock('../../../../constants/readProvider')
 
 function TestableEthAddress() {
   const [testForm] = useForm<{ address: string }>()
@@ -26,7 +21,6 @@ function TestableEthAddress() {
     <Form form={testForm}>
       <Form.Item name="address">
         <EthAddress
-          name="address"
           onAddressChange={a => setAddress(a)}
           defaultValue={undefined}
         />
@@ -36,14 +30,13 @@ function TestableEthAddress() {
 }
 
 describe('react using the contract to resolve ETH addresses', () => {
-  test('does not resolve', () => {
+  test('does not resolve', async () => {
     const screen = render(<TestableEthAddress />)
 
-    screen.debug()
+    userEvent.type(await screen.findByRole('textbox'), 'test.eth')
 
-    userEvent.type(screen.getByRole('textbox'), 'test.eth')
-
-    expect(lookupAddress).toHaveBeenCalled()
+    expect(readProvider.lookupAddress).toHaveBeenCalled()
+    expect(readProvider.resolveName).toHaveBeenCalled()
   })
 
   test('resolves to a known ENS name', () => {})

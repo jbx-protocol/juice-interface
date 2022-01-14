@@ -25,7 +25,7 @@ export default function Pay() {
   const [payIn, setPayIn] = useState<CurrencyOption>(0)
   const [payAmount, setPayAmount] = useState<string>()
   const [payModalVisible, setPayModalVisible] = useState<boolean>(false)
-  const [twitterModalVisible, setTwitterModalVisible] = useState<boolean>(false)
+  const [twitterModalVisible, setTwitterModalVisible] = useState<boolean>(true)
   const [payWarningModalVisible, setPayWarningModalVisible] =
     useState<boolean>(false)
 

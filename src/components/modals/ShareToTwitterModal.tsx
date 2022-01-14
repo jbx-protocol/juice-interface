@@ -13,14 +13,14 @@ export default function ShareToTwitterModal({
   onCancel?: VoidFunction
 }) {
   const { metadata, handle } = useContext(ProjectContext)
+  const name = metadata?.twitter ? `@${metadata.twitter}` : metadata?.name
+  const projectUrl = `https://juicebox.money/#/p/${handle}`
+  const twitterMsg = t`I just joined ${name}. See the live fundraiser: ${projectUrl}`
 
   async function tweet() {
-    const name = metadata?.twitter ? `@${metadata.twitter}` : metadata?.name
-    const projectUrl = `https://juicebox.money/#/p/${handle}`
-    const twitterMsg = encodeURIComponent(
-      t`I just joined ${name}. See the live fundraiser: ${projectUrl}`,
-    )
-    const twitterUrl = `https://twitter.com/intent/tweet?url=${twitterMsg}`
+    const twitterUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(
+      twitterMsg,
+    )}`
 
     window.open(twitterUrl, '_blank')
     if (onSuccess) {
@@ -37,16 +37,13 @@ export default function ShareToTwitterModal({
       onOk={tweet}
       okText={t`Share to Twitter`}
       onCancel={onCancel}
-      cancelText={t`Cancel`}
+      cancelText={t`Close`}
       width={640}
       centered={true}
     >
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
         <p>
-          <Trans>
-            Would you like to Tweet about your contribution to {metadata.name}{' '}
-            and encourage others to do the same?
-          </Trans>
+          <Trans>{twitterMsg}</Trans>
         </p>
       </Space>
     </Modal>

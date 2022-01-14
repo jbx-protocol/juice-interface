@@ -1,5 +1,7 @@
 import { Space } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
+import { Trans } from '@lingui/macro'
+
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
@@ -124,7 +126,7 @@ export default function WithdrawModal({
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
         <div>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            Total funds:{' '}
+            <Trans>Total funds:</Trans>{' '}
             <div>
               <CurrencySymbol
                 currency={currentFC.currency.toNumber() as CurrencyOption}
@@ -133,7 +135,9 @@ export default function WithdrawModal({
             </div>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <div>JBX Fee ({fromPerbicent(currentFC.fee)}%):</div>
+            <div>
+              <Trans>JBX Fee ({fromPerbicent(currentFC.fee)}%):</Trans>
+            </div>
             <div>
               -{' '}
               <CurrencySymbol
@@ -151,7 +155,9 @@ export default function WithdrawModal({
               fontWeight: 500,
             }}
           >
-            <div>Available after fee:</div>
+            <div>
+              <Trans>Available after fee:</Trans>
+            </div>
             <div>
               <CurrencySymbol
                 currency={currentFC.currency.toNumber() as CurrencyOption}
@@ -200,13 +206,17 @@ export default function WithdrawModal({
                 { decimals: 4 },
               )}
             </span>{' '}
-            after {fromPerbicent(currentFC.fee?.toString())}% JBX fee
+            <Trans>
+              after {fromPerbicent(currentFC.fee?.toString())}% JBX fee
+            </Trans>
           </div>
         </div>
 
         {currentPayoutMods?.length ? (
           <div>
-            <h4>Funds will be distributed to:</h4>
+            <h4>
+              <Trans>Funds will be distributed to:</Trans>
+            </h4>
             <PayoutModsList
               total={amountSubFee(parseWad(tapAmount || '0'), currentFC.fee)}
               mods={currentPayoutMods}
@@ -218,16 +228,18 @@ export default function WithdrawModal({
         ) : (
           <p>
             <CurrencySymbol currency={CURRENCY_ETH} />
-            {formatWad(
-              amountSubFee(
-                currentFC.currency.eq(CURRENCY_USD)
-                  ? converter.usdToWei(tapAmount)
-                  : parseWad(tapAmount),
-                currentFC.fee,
-              ),
-              { decimals: 4 },
-            )}{' '}
-            will go to the project owner: <FormattedAddress address={owner} />
+            <Trans>
+              {formatWad(
+                amountSubFee(
+                  currentFC.currency.eq(CURRENCY_USD)
+                    ? converter.usdToWei(tapAmount)
+                    : parseWad(tapAmount),
+                  currentFC.fee,
+                ),
+                { decimals: 4 },
+              )}{' '}
+              will go to the project owner: <FormattedAddress address={owner} />
+            </Trans>
           </p>
         )}
       </Space>

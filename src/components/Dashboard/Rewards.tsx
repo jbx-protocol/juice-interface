@@ -230,8 +230,10 @@ export default function Rewards({
                         </div>
                       )}
                       <div>
-                        {formatWad(iouBalance ?? 0, { decimals: 0 })}
-                        {ticketsIssued && <> claimable</>}
+                        <Trans>
+                          {formatWad(iouBalance ?? 0, { decimals: 0 })}
+                          {ticketsIssued && <> claimable</>}
+                        </Trans>
                       </div>
 
                       <div
@@ -242,7 +244,7 @@ export default function Rewards({
                           color: colors.text.tertiary,
                         }}
                       >
-                        {share || 0}% <Trans>of supply</Trans>
+                        <Trans>{share || 0}% of supply</Trans>
                       </div>
                     </div>
 
@@ -250,7 +252,7 @@ export default function Rewards({
                       size="small"
                       onClick={() => setManageTokensModalVisible(true)}
                     >
-                      Manage
+                      <Trans>Manage</Trans>
                     </Button>
                   </div>
                 }
@@ -265,7 +267,7 @@ export default function Rewards({
       </Space>
 
       <Modal
-        title={`Manage ${tokenSymbol ? tokenSymbol + ' ' : ''}tokens`}
+        title={t`Manage ${tokenSymbol ? tokenSymbol + ' ' : ''}tokens`}
         visible={manageTokensModalVisible}
         onCancel={() => setManageTokensModalVisible(false)}
         okButtonProps={{ hidden: true }}
@@ -273,19 +275,23 @@ export default function Rewards({
       >
         <Space direction="vertical" style={{ width: '100%' }}>
           <Button onClick={() => setRedeemModalVisible(true)} block>
-            Return my ETH
+            <Trans>Return my ETH</Trans>
           </Button>
           <Button onClick={() => setUnstakeModalVisible(true)} block>
-            Claim {tokenSymbol || 'tokens'} as ERC20
+            <Trans>Claim {tokenSymbol || 'tokens'} as ERC20</Trans>
           </Button>
           {hasPrintPreminePermission && projectId?.gt(0) && (
-            <Tooltip title="Minting tokens can be enabled or disabled by reconfiguring a v1.1 project's funding cycle. Tokens can only be minted by the project owner.">
+            <Tooltip
+              title={t`Minting tokens can be enabled or disabled by reconfiguring a v1.1 project's funding cycle. Tokens can only be minted by the project owner.`}
+            >
               <Button
                 disabled={!mintingTokensIsAllowed}
                 onClick={() => setMintModalVisible(true)}
                 block
               >
-                Mint {tokenSymbol ? tokenSymbol + ' ' : ''}tokens{' '}
+                <Trans>
+                  Mint {tokenSymbol ? tokenSymbol + ' ' : ''}tokens{' '}
+                </Trans>
               </Button>
             </Tooltip>
           )}

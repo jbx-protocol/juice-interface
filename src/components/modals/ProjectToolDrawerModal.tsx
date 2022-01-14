@@ -1,4 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { Trans } from '@lingui/macro'
+
 import { Button, Divider, Drawer, Form, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { FormItems } from 'components/shared/formItems'
@@ -112,11 +114,17 @@ export default function ProjectToolDrawerModal({
   return (
     <Drawer visible={visible} onClose={onClose} width={600}>
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
-        <h1>Tools</h1>
+        <h1>
+          <Trans>Tools</Trans>
+        </h1>
 
         <section>
-          <h3>Transfer ownership</h3>
-          <p>Current owner: {owner}</p>
+          <h3>
+            <Trans>Transfer ownership</Trans>
+          </h3>
+          <p>
+            <Trans>Current owner: {owner}</Trans>
+          </p>
           <Form
             form={transferOwnershipForm}
             labelCol={{ span: 4 }}
@@ -137,7 +145,7 @@ export default function ProjectToolDrawerModal({
                 size="small"
                 type="primary"
               >
-                Transfer ownership
+                <Trans>Transfer ownership</Trans>
               </Button>
             </Form.Item>
           </Form>
@@ -146,8 +154,14 @@ export default function ProjectToolDrawerModal({
         <Divider />
 
         <section>
-          <h3>Transfer staked {tokenSymbol || 'tokens'}</h3>
-          <p>Your balance: {formatWad(stakedTokenBalance, { decimals: 0 })}</p>
+          <h3>
+            <Trans>Transfer staked {tokenSymbol || 'tokens'}</Trans>
+          </h3>
+          <p>
+            <Trans>
+              Your balance: {formatWad(stakedTokenBalance, { decimals: 0 })}
+            </Trans>
+          </p>
           <Form
             form={transferTokensForm}
             labelCol={{ span: 4 }}
@@ -188,7 +202,7 @@ export default function ProjectToolDrawerModal({
                 size="small"
                 type="primary"
               >
-                Transfer {tokenSymbol || 'tokens'}
+                <Trans>Transfer {tokenSymbol || 'tokens'}</Trans>
               </Button>
             </Form.Item>
           </Form>
@@ -197,8 +211,14 @@ export default function ProjectToolDrawerModal({
         <Divider />
 
         <section>
-          <h3>Add to Balance</h3>
-          <p>Add funds to this project's balance without minting tokens.</p>
+          <h3>
+            <Trans>Add to Balance</Trans>
+          </h3>
+          <p>
+            <Trans>
+              Add funds to this project's balance without minting tokens.
+            </Trans>
+          </p>
           <Form
             form={addToBalanceForm}
             labelCol={{ span: 4 }}
@@ -222,7 +242,7 @@ export default function ProjectToolDrawerModal({
                 size="small"
                 type="primary"
               >
-                Add to balance
+                <Trans>Add to balance</Trans>
               </Button>
             </Form.Item>
           </Form>

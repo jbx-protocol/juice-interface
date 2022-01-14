@@ -1,5 +1,7 @@
 import { Tooltip } from 'antd'
 
+import { t } from '@lingui/macro'
+
 import { NetworkName } from 'models/network-name'
 
 import { readNetwork } from 'constants/networks'
@@ -26,7 +28,7 @@ export default function EtherscanLink({
   }
 
   return (
-    <Tooltip trigger={['hover', 'click']} title={'Go to Etherscan'}>
+    <Tooltip trigger={['hover', 'click']} title={t`Go to Etherscan`}>
       <a
         className="etherscan-link"
         style={{ fontWeight: 400 }}

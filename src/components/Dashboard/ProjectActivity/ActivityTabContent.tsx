@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import { Trans } from '@lingui/macro'
 
 import Loading from '../../shared/Loading'
 import { ThemeContext } from '../../../contexts/themeContext'
@@ -38,7 +39,7 @@ const ActivityTabContent: React.FC<Props> = ({
           borderTop: '1px solid ' + colors.stroke.tertiary,
         }}
       >
-        No activity yet
+        <Trans>No activity yet</Trans>
       </div>
     )
   } else if (hasNextPage) {
@@ -51,7 +52,7 @@ const ActivityTabContent: React.FC<Props> = ({
         }}
         onClick={() => onLoadMore()}
       >
-        Load more
+        <Trans>Load more</Trans>
       </div>
     )
   } else {
@@ -63,7 +64,7 @@ const ActivityTabContent: React.FC<Props> = ({
           color: colors.text.secondary,
         }}
       >
-        {count} total
+        <Trans>{count} total</Trans>
       </div>
     )
   }

@@ -71,7 +71,7 @@ export default function Spending({
               <TooltipLabel
                 style={smallHeaderStyle}
                 label={t`AVAILABLE`}
-                tip={`The funds available to withdraw for this funding cycle after the ${fromPerbicent(
+                tip={t`The funds available to withdraw for this funding cycle after the ${fromPerbicent(
                   currentFC.fee,
                 )}% JBX fee is subtracted. This number won't roll over to the next funding cycle, so funds should be withdrawn before it ends.`}
               />
@@ -82,7 +82,7 @@ export default function Spending({
               onClick={() => setWithdrawModalVisible(true)}
               disabled={isPreviewMode}
             >
-              <Trans>Distribute</Trans>
+              <Trans>Distribute funds</Trans>
             </Button>
           </div>
           <div style={{ ...smallHeaderStyle, color: colors.text.tertiary }}>
@@ -117,10 +117,10 @@ export default function Spending({
             <TooltipLabel
               label={
                 <h4 style={{ display: 'inline-block' }}>
-                  <Trans>Distribution</Trans>
+                  <Trans>Funding Distribution</Trans>
                 </h4>
               }
-              tip={t`Available funds are distributed according to any payouts below.`}
+              tip={t`Available funds are distributed according to the payouts below.`}
             />
             <PayoutModsList
               mods={payoutMods}

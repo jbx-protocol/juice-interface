@@ -309,7 +309,7 @@ export default function ReconfigureFCModal({
     >
       <div>
         <h1 style={{ marginBottom: 20 }}>
-          <Trans>Reconfigure funding</Trans>
+          <Trans>Reconfigure funding cycle</Trans>
         </h1>
 
         {currentFC?.duration.gt(0) && (
@@ -324,13 +324,13 @@ export default function ReconfigureFCModal({
           <div>
             {buildSteps([
               {
-                title: t`Funding`,
+                title: t`Funding cycle`,
                 callback: () => setBudgetFormModalVisible(true),
               },
               ...(editingFC.target.gt(0)
                 ? [
                     {
-                      title: t`Spending`,
+                      title: t`Funding distribution`,
                       callback: () => setPayModsFormModalVisible(true),
                     },
                   ]

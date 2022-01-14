@@ -7,6 +7,11 @@ import {
 } from 'react-query'
 
 import { ProjectContext } from 'contexts/projectContext'
+
+import { useContext } from 'react'
+
+import { NetworkName } from 'models/network-name'
+
 import {
   EntityKey,
   EntityKeys,
@@ -18,9 +23,7 @@ import {
   SubgraphError,
   SubgraphQueryReturnTypes,
 } from '../utils/graph'
-import { useContext } from 'react'
 import { readNetwork } from 'constants/networks'
-import { NetworkName } from 'models/network-name'
 
 const subgraphUrl = process.env.REACT_APP_SUBGRAPH_URL
 

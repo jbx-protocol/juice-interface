@@ -14,7 +14,7 @@
       }
     ],
     "import/order": [
-      "warn",
+      "error",
       {
         "groups": ["external", "internal"],
         "newlines-between": "always-and-inside-groups"

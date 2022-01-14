@@ -8,12 +8,13 @@ import { useContext } from 'react'
 import { formatDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
 
+import { getTerminalVersion } from 'utils/terminal-versions'
+
 import { CURRENCY_ETH } from 'constants/currency'
 
 import CurrencySymbol from './CurrencySymbol'
 import Loading from './Loading'
 import ProjectLogo from './ProjectLogo'
-import { getTerminalVersion } from 'utils/terminal-versions'
 
 export default function ProjectCard({
   project,

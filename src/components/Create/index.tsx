@@ -552,7 +552,7 @@ export default function Create() {
               : []),
             {
               title: t`Incentives`,
-              description: t`Adjust incentivizes for paying your project.`,
+              description: t`Adjust incentives for paying your project.`,
               callback: () => setIncentivesFormModalVisible(true),
             },
             {

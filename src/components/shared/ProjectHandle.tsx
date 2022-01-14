@@ -27,7 +27,7 @@ export default function ProjectHandle({
       title={
         <a
           style={{ fontWeight: 400 }}
-          href={`https://juicebox.money/#/${handle}`}
+          href={`/#/${handle}`}
           target="_blank"
           rel="noopener noreferrer"
         >

@@ -128,7 +128,7 @@ export default function PayoutModsList({
                             }
                           />
                           {formatWad(baseTotal?.mul(mod.percent).div(10000), {
-                            decimals: fundingCycle.currency.eq(CURRENCY_ETH)
+                            precision: fundingCycle.currency.eq(CURRENCY_ETH)
                               ? 4
                               : 0,
                             padEnd: true,
@@ -159,7 +159,7 @@ export default function PayoutModsList({
                     }
                   />
                   {formatWad(baseTotal?.mul(ownerPercent).div(10000), {
-                    decimals: fundingCycle.currency.eq(CURRENCY_ETH) ? 4 : 0,
+                    precision: fundingCycle.currency.eq(CURRENCY_ETH) ? 4 : 0,
                     padEnd: true,
                   })}
                   )

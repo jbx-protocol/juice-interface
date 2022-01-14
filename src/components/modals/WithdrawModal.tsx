@@ -131,7 +131,7 @@ export default function WithdrawModal({
               <CurrencySymbol
                 currency={currentFC.currency.toNumber() as CurrencyOption}
               />
-              {formatWad(withdrawable, { decimals: 4 })}
+              {formatWad(withdrawable, { precision: 4 })}
             </div>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -144,7 +144,7 @@ export default function WithdrawModal({
                 currency={currentFC.currency.toNumber() as CurrencyOption}
               />
               {formatWad(feeForAmount(withdrawable, currentFC.fee) ?? 0, {
-                decimals: 4,
+                precision: 4,
               })}
             </div>
           </div>
@@ -163,7 +163,7 @@ export default function WithdrawModal({
                 currency={currentFC.currency.toNumber() as CurrencyOption}
               />
               {formatWad(amountSubFee(withdrawable, currentFC.fee) ?? 0, {
-                decimals: 4,
+                precision: 4,
               })}
             </div>
           </div>
@@ -203,7 +203,7 @@ export default function WithdrawModal({
                     : parseWad(tapAmount),
                   currentFC.fee,
                 ),
-                { decimals: 4 },
+                { precision: 4 },
               )}
             </span>{' '}
             <Trans>
@@ -236,7 +236,7 @@ export default function WithdrawModal({
                     : parseWad(tapAmount),
                   currentFC.fee,
                 ),
-                { decimals: 4 },
+                { precision: 4 },
               )}{' '}
               will go to the project owner: <FormattedAddress address={owner} />
             </Trans>

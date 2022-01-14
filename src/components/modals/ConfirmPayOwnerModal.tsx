@@ -117,7 +117,7 @@ export default function ConfirmPayOwnerModal({
             label={t`${tokenSymbol ?? 'Tokens'} for you`}
             className="content-right"
           >
-            <div>{formatWad(receivedTickets, { decimals: 0 })}</div>
+            <div>{formatWad(receivedTickets, { precision: 0 })}</div>
             <div>
               {userAddress ? (
                 <Trans>
@@ -130,7 +130,7 @@ export default function ConfirmPayOwnerModal({
             label={t`${tokenSymbol ?? 'Tokens'} reserved`}
             className="content-right"
           >
-            {formatWad(ownerTickets, { decimals: 0 })}
+            {formatWad(ownerTickets, { precision: 0 })}
           </Descriptions.Item>
         </Descriptions>
         <Form form={form} layout="vertical">

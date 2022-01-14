@@ -113,7 +113,7 @@ export default function ConfirmUnstakeTokensModal({
         <div>
           <div>
             <label>Your unclaimed {tokenSymbol} tokens:</label>{' '}
-            {formatWad(iouBalance, { decimals: 8 })}
+            {formatWad(iouBalance, { precision: 8 })}
           </div>
           {ticketsIssued && (
             <div>

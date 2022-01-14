@@ -98,7 +98,7 @@ export default function TicketModsList({
                     '%' +
                     (total
                       ? ` (${formatWad(total?.mul(mod.percent).div(10000), {
-                          decimals: 0,
+                          precision: 0,
                         })} ${tokenSymbol ?? ' tokens'})`
                       : '')
                   }
@@ -115,7 +115,7 @@ export default function TicketModsList({
               {fromPermyriad(ownerPercent)}%
               {total
                 ? ` (${formatWad(total?.mul(ownerPercent).div(10000), {
-                    decimals: 0,
+                    precision: 0,
                   })} ${tokenSymbol ?? ' tokens'})`
                 : ''}
             </span>

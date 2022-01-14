@@ -81,7 +81,7 @@ export function RedeemActivity({ pageSize }: { pageSize: number }) {
                       fontSize: '1rem',
                     }}
                   >
-                    {formatWad(e.amount, { decimals: 0 })}{' '}
+                    {formatWad(e.amount, { precision: 0 })}{' '}
                     {tokenSymbol ?? 'tokens'}
                   </div>
                 </div>
@@ -111,7 +111,7 @@ export function RedeemActivity({ pageSize }: { pageSize: number }) {
 
               <div style={{ color: colors.text.secondary }}>
                 <CurrencySymbol currency={CURRENCY_ETH} />
-                {formatWad(e.returnAmount, { decimals: 4 })} overflow received
+                {formatWad(e.returnAmount, { precision: 4 })} overflow received
               </div>
             </div>
           ))}

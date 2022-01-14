@@ -1,1 +1,1 @@
-export const WAD_PRECISION = 18
+export const WAD_DECIMALS = 18

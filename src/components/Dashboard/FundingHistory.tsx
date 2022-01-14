@@ -94,11 +94,11 @@ export default function FundingHistory({
                 />
                 {hasFundingTarget(cycle) ? (
                   <>
-                    {formatWad(cycle.tapped, { decimals: 2 })}/
-                    {formatWad(cycle.target, { decimals: 2 })} withdrawn
+                    {formatWad(cycle.tapped, { precision: 2 })}/
+                    {formatWad(cycle.target, { precision: 2 })} withdrawn
                   </>
                 ) : (
-                  <>{formatWad(cycle.tapped, { decimals: 2 })} withdrawn</>
+                  <>{formatWad(cycle.tapped, { precision: 2 })} withdrawn</>
                 )}
               </div>
             </Space>

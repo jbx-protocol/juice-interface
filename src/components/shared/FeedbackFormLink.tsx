@@ -24,7 +24,10 @@ export default function FeedbackFormLink({
   }
 
   return (
-    <Button className="feedback-form-link" onClick={goToFeedbackForm}>
+    <Button
+      className="feedback-form-link hide-mobile"
+      onClick={goToFeedbackForm}
+    >
       <MessageOutlined /> <Trans>Feedback for Juicebox</Trans>
     </Button>
   )

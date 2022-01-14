@@ -121,8 +121,8 @@ export default function PrintPreminedModal({
           rules={[
             {
               required: true,
-              validator: () => {
-                if (!utils.isAddress(value))
+              validator: (rule, value) => {
+                if (!value || !utils.isAddress(value))
                   return Promise.reject('Not a valid ETH address')
                 else return Promise.resolve()
               },

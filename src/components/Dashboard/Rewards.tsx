@@ -232,7 +232,7 @@ export default function Rewards({
                       <div>
                         <Trans>
                           {formatWad(iouBalance ?? 0, { decimals: 0 })}
-                          {ticketsIssued && <> claimable</>}
+                          {ticketsIssued ? <> claimable</> : null}
                         </Trans>
                       </div>
 

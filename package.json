@@ -6,7 +6,7 @@
     "@jbx-protocol/contracts-v1": "^1.1.5",
     "@lingui/detect-locale": "^3.13.0",
     "@lingui/react": "^3.13.0",
-    "@reduxjs/toolkit": "^1.5.0",
+    "@reduxjs/toolkit": "^1.6.2",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -53,9 +53,9 @@
     "lint:fix": "yarn lint --fix",
     "lint-staged": "lint-staged",
     "prepare": "husky install",
-    "i18n:extract": "lingui extract",
-    "i18n:compile": "lingui compile",
-    "postinstall": "yarn i18n:extract && yarn i18n:compile",
+    "i18n:extract": "rm -f ./src/locales/en/messages.po && lingui extract --locale en",
+    "i18n:compile": "yarn i18n:extract && lingui compile",
+    "postinstall": "yarn i18n:compile",
     "analyze": "yarn build && source-map-explorer 'build/static/js/*.js'"
   },
   "lint-staged": {

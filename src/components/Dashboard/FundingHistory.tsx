@@ -1,4 +1,6 @@
 import { CaretRightOutlined } from '@ant-design/icons'
+import { Trans } from '@lingui/macro'
+
 import { BigNumber } from '@ethersproject/bignumber'
 import { Space } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
@@ -112,7 +114,9 @@ export default function FundingHistory({
           </div>
         ))
       ) : (
-        <div>No past funding cycles</div>
+        <div>
+          <Trans>No past funding cycles</Trans>
+        </div>
       )}
     </Space>
   )

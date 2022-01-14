@@ -1,4 +1,5 @@
 import { Collapse } from 'antd'
+import { t, Trans } from '@lingui/macro'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import { ThemeContext } from 'contexts/themeContext'
 import { FundingCycle } from 'models/funding-cycle'
@@ -29,11 +30,11 @@ export default function FundingCyclePreview({
 
   let headerText = ''
   if (isRecurring(fundingCycle) && fundingCycle.duration.gt(0)) {
-    headerText = `${detailedTimeString(endTime)} until #${fundingCycle.number
+    headerText = t`${detailedTimeString(endTime)} until #${fundingCycle.number
       .add(1)
       .toString()}`
   } else if (fundingCycle.duration.gt(0)) {
-    headerText = detailedTimeString(endTime) + ' left'
+    headerText = t`${detailedTimeString(endTime)} left`
   }
 
   return (
@@ -59,9 +60,13 @@ export default function FundingCyclePreview({
               }}
             >
               {hasFundingTarget(fundingCycle) && fundingCycle.duration.gt(0) ? (
-                <span>Cycle #{fundingCycle.number.toString()}</span>
+                <span>
+                  <Trans>Cycle #{fundingCycle.number.toString()}</Trans>
+                </span>
               ) : (
-                <span>Details</span>
+                <span>
+                  <Trans>Details</Trans>
+                </span>
               )}
               <span style={{ color: colors.text.secondary }}>{headerText}</span>
             </div>

@@ -1,4 +1,5 @@
 import { CaretRightFilled, CheckCircleFilled } from '@ant-design/icons'
+import { t } from '@lingui/macro'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
 import { Button, Col, Drawer, DrawerProps, Row, Space } from 'antd'
@@ -23,14 +24,7 @@ import { FundingCycleMetadata } from 'models/funding-cycle-metadata'
 import { FCProperties } from 'models/funding-cycle-properties'
 import { PayoutMod, TicketMod } from 'models/mods'
 import { TerminalVersion } from 'models/terminal-version'
-import {
-  useCallback,
-  useContext,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useState,
-} from 'react'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
 import { fromPerbicent, fromPermille, fromWad } from 'utils/formatNumber'
 import {
@@ -84,6 +78,7 @@ export default function Create() {
   ] = useState<boolean>(false)
   const [deployProjectModalVisible, setDeployProjectModalVisible] =
     useState<boolean>(false)
+  const [confirmStartOverVisible, setConfirmStartOverVisible] = useState(false)
   const [loadingCreate, setLoadingCreate] = useState<boolean>()
   const [projectForm] = useForm<ProjectFormFields>()
   const [ticketingForm] = useForm<TicketingFormFields>()
@@ -154,12 +149,6 @@ export default function Create() {
     editingFC?.ticketPrintingIsAllowed,
     restrictedActionsForm,
   ])
-
-  useLayoutEffect(() => {
-    dispatch(editingProjectActions.resetState())
-    // Disable exhaustive-deps because we only need to reset the first time
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch])
 
   useEffect(() => {
     resetProjectForm()
@@ -266,7 +255,7 @@ export default function Create() {
     }
 
     transactor(
-      contracts.TerminalV1,
+      contracts.TerminalV1_1,
       'deploy',
       [
         userAddress,
@@ -303,17 +292,22 @@ export default function Create() {
             name: logoNameForHandle(editingProjectInfo.handle),
           })
 
+          resetProjectForm()
+          dispatch(editingProjectActions.resetState())
+
           window.location.hash = '/p/' + editingProjectInfo.handle
         },
       },
     )
   }, [
     contracts,
+    dispatch,
     editingFC,
     editingPayoutMods,
     editingProjectInfo.handle,
     editingProjectInfo.metadata,
     editingTicketMods,
+    resetProjectForm,
     transactor,
     userAddress,
   ])
@@ -415,16 +409,31 @@ export default function Create() {
           </Trans>
         </p>
 
-        <Button
-          onClick={() => setDeployProjectModalVisible(true)}
-          type="primary"
-          block
-          disabled={
-            !editingProjectInfo?.metadata.name || !editingProjectInfo.handle
-          }
+        <div
+          style={{
+            display: 'flex',
+          }}
         >
-          Review & Deploy
-        </Button>
+          <Button
+            onClick={() => setConfirmStartOverVisible(true)}
+            type="ghost"
+            block
+            style={{ marginRight: 8 }}
+          >
+            <Trans>Start Over</Trans>
+          </Button>
+
+          <Button
+            onClick={() => setDeployProjectModalVisible(true)}
+            type="primary"
+            block
+            disabled={
+              !editingProjectInfo?.metadata.name || !editingProjectInfo.handle
+            }
+          >
+            <Trans>Review & Deploy</Trans>
+          </Button>
+        </div>
       </Space>
     ),
     [
@@ -507,46 +516,47 @@ export default function Create() {
             paddingRight: spacing,
           }}
         >
-          <h1 style={{ marginBottom: spacing / 2 }}>Design your project 🎨</h1>
+          <h1 style={{ marginBottom: spacing / 2 }}>
+            <Trans>Design your project</Trans> 🎨
+          </h1>
 
           {buildSteps([
             {
-              title: 'Project details',
-              description: 'Project name, handle, links, and other details.',
+              title: t`Project details`,
+              description: t`Project name, handle, links, and other details.`,
               callback: () => setProjectFormModalVisible(true),
             },
             {
-              title: 'Funding',
-              description: "Your project's funding cycle target and duration.",
+              title: t`Funding`,
+              description: t`Your project's funding cycle target and duration.`,
               callback: () => setBudgetFormModalVisible(true),
             },
             {
-              title: 'Distribution',
-              description: 'How your project will distribute funds.',
+              title: t`Distribution`,
+              description: t`How your project will distribute funds.`,
               callback: () => setPayModsFormModalVisible(true),
             },
             {
-              title: 'Reserved Tokens',
-              description: 'Reward specific community members with tokens.',
+              title: t`Reserved Tokens`,
+              description: t`Reward specific community members with tokens.`,
               callback: () => setTicketingFormModalVisible(true),
             },
             ...(editingFC?.duration.gt(0)
               ? [
                   {
-                    title: 'Reconfiguration',
-                    description:
-                      'Rules for how changes can be made to your project.',
+                    title: t`Reconfiguration`,
+                    description: t`Rules for how changes can be made to your project.`,
                     callback: () => setRulesFormModalVisible(true),
                   },
                 ]
               : []),
             {
-              title: 'Incentives',
-              description: 'Adjust incentivizes for paying your project.',
+              title: t`Incentives`,
+              description: t`Adjust incentivizes for paying your project.`,
               callback: () => setIncentivesFormModalVisible(true),
             },
             {
-              title: 'Restricted actions',
+              title: t`Restricted actions`,
               description: 'Restrict payments and printing tokens.',
               callback: () => setRestrictedActionsFormModalVisible(true),
             },
@@ -563,7 +573,7 @@ export default function Create() {
               paddingRight: spacing,
             }}
           >
-            Preview:
+            <Trans>Preview</Trans>:
           </h3>
 
           <div
@@ -696,12 +706,12 @@ export default function Create() {
             initialBondingCurveRate={fromPerbicent(editingFC.bondingCurveRate)}
             disableDiscountRate={
               editingFC.duration.eq(0)
-                ? 'Discount rate disabled while funding cycle duration is 0.'
+                ? t`Discount rate disabled while funding cycle duration is 0.`
                 : undefined
             }
             disableBondingCurve={
               !hasFundingTarget(editingFC)
-                ? 'Bonding curve disabled while no funding target is set.'
+                ? t`Bonding curve disabled while no funding target is set.`
                 : undefined
             }
             onSave={async (discountRate: string, bondingCurveRate: string) => {
@@ -746,6 +756,21 @@ export default function Create() {
           onCancel={() => setDeployProjectModalVisible(false)}
         >
           <ConfirmDeployProject />
+        </Modal>
+
+        <Modal
+          visible={confirmStartOverVisible}
+          okText="Start Over"
+          okType="danger"
+          title="Are you sure you want to start over?"
+          onOk={() => {
+            resetProjectForm()
+            dispatch(editingProjectActions.resetState())
+            setConfirmStartOverVisible(false)
+          }}
+          onCancel={() => setConfirmStartOverVisible(false)}
+        >
+          This will erase of your all changes.
         </Modal>
       </Row>
     </ProjectContext.Provider>

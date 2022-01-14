@@ -1,5 +1,5 @@
-import { Button, Space } from 'antd'
-import ReconfigureFCModal from 'components/modals/ReconfigureFCModal'
+import { Space } from 'antd'
+import { t } from '@lingui/macro'
 import { CardSection } from 'components/shared/CardSection'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
@@ -10,6 +10,7 @@ import CurrentFundingCycle from '../FundingCycle/CurrentFundingCycle'
 import QueuedFundingCycle from '../FundingCycle/QueuedFundingCycle'
 import FundingHistory from './FundingHistory'
 import SectionHeader from './SectionHeader'
+import ReconfigureFundingModalTrigger from '../FundingCycle/ReconfigureFundingModalTrigger'
 
 type TabOption = 'current' | 'upcoming' | 'history'
 
@@ -19,42 +20,45 @@ export default function FundingCycles({
   showCurrentDetail?: boolean
 }) {
   const [selectedTab, setSelectedTab] = useState<TabOption>('current')
-  const [reconfigureModalVisible, setReconfigureModalVisible] =
-    useState<boolean>(false)
   const [hoverTab, setHoverTab] = useState<TabOption>()
 
-  const {
-    projectId,
-    currentFC,
-    queuedFC,
-    queuedPayoutMods,
-    queuedTicketMods,
-    currentPayoutMods,
-    currentTicketMods,
-    isPreviewMode,
-  } = useContext(ProjectContext)
+  const { projectId, currentFC } = useContext(ProjectContext)
 
   const {
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const tab = (option: TabOption) => (
-    <div
-      style={{
-        textTransform: 'uppercase',
-        cursor: 'pointer',
-        ...(option === selectedTab
-          ? { color: colors.text.secondary, fontWeight: 600 }
-          : { color: colors.text.tertiary, fontWeight: 500 }),
-        ...(option === hoverTab ? { color: colors.text.secondary } : {}),
-      }}
-      onClick={() => setSelectedTab(option)}
-      onMouseEnter={() => setHoverTab(option)}
-      onMouseLeave={() => setHoverTab(undefined)}
-    >
-      {option}
-    </div>
-  )
+  const tab = (option: TabOption) => {
+    let text: string
+    switch (option) {
+      case 'current':
+        text = t`Pay`
+        break
+      case 'upcoming':
+        text = t`Redeem`
+        break
+      case 'history':
+        text = t`Withdraw`
+        break
+    }
+    return (
+      <div
+        style={{
+          textTransform: 'uppercase',
+          cursor: 'pointer',
+          ...(option === selectedTab
+            ? { color: colors.text.secondary, fontWeight: 600 }
+            : { color: colors.text.tertiary, fontWeight: 500 }),
+          ...(option === hoverTab ? { color: colors.text.secondary } : {}),
+        }}
+        onClick={() => setSelectedTab(option)}
+        onMouseEnter={() => setHoverTab(option)}
+        onMouseLeave={() => setHoverTab(undefined)}
+      >
+        {text}
+      </div>
+    )
+  }
 
   let tabContent: JSX.Element
 
@@ -88,8 +92,8 @@ export default function FundingCycles({
         }}
       >
         <SectionHeader
-          text="Funding cycle"
-          tip="A project's lifetime is defined in funding cycles. If a funding target is set, the project can withdraw no more than the target for the duration of the cycle."
+          text={t`Funding cycle`}
+          tip={t`A project's lifetime is defined in funding cycles. If a funding target is set, the project can withdraw no more than the target for the duration of the cycle.`}
           style={{
             marginBottom: 12,
           }}
@@ -102,29 +106,7 @@ export default function FundingCycles({
       </div>
       <div>{tabContent}</div>
 
-      {canReconfigure && (
-        <Button
-          style={{ marginTop: 20 }}
-          onClick={() => setReconfigureModalVisible(true)}
-          size="small"
-          disabled={isPreviewMode}
-        >
-          Reconfigure funding
-        </Button>
-      )}
-
-      <ReconfigureFCModal
-        visible={reconfigureModalVisible}
-        fundingCycle={queuedFC?.number.gt(0) ? queuedFC : currentFC}
-        payoutMods={
-          queuedFC?.number.gt(0) ? queuedPayoutMods : currentPayoutMods
-        }
-        ticketMods={
-          queuedFC?.number.gt(0) ? queuedTicketMods : currentTicketMods
-        }
-        projectId={projectId}
-        onDone={() => setReconfigureModalVisible(false)}
-      />
+      {canReconfigure && <ReconfigureFundingModalTrigger />}
     </div>
   )
 }

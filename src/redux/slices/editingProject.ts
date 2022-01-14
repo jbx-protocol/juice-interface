@@ -15,12 +15,13 @@ import {
   serializeFundingCycle,
 } from 'utils/serializers'
 
-type EditingProjectInfo = {
+interface EditingProjectInfo {
   metadata: ProjectMetadataV3
   handle: string
 }
 
-export type EditingProjectState = {
+export interface EditingProjectState {
+  version: number
   info: EditingProjectInfo
   fundingCycle: SerializedFundingCycle
   payoutMods: PayoutMod[]
@@ -31,6 +32,10 @@ const defaultDiscountRate = parsePermille(0)
 const defaultBondingCurveRate = parsePerbicent(100)
 
 export const defaultProjectState: EditingProjectState = {
+  // Increment this version by 1 when making breaking changes.
+  // When users return to the site and their local version is less than
+  // this number, their state will be reset.
+  version: 1,
   info: {
     metadata: {
       name: '',
@@ -76,216 +81,93 @@ export const editingProjectSlice = createSlice({
   reducers: {
     setState: (state, action: PayloadAction<EditingProjectState>) =>
       action.payload,
-    resetState: (state, action: PayloadAction) => defaultProjectState,
-    setProjectInfo: (state, action: PayloadAction<EditingProjectInfo>) => ({
-      ...state,
-      info: action.payload,
-    }),
-    setName: (state, action: PayloadAction<string>) => ({
-      ...state,
-      info: {
-        ...state.info,
-        metadata: {
-          ...state.info.metadata,
-          name: action.payload,
-        },
-      },
-    }),
-    setInfoUri: (state, action: PayloadAction<string>) => ({
-      ...state,
-      info: {
-        ...state.info,
-        metadata: {
-          ...state.info.metadata,
-          infoUri: action.payload,
-        },
-      },
-    }),
-    setLogoUri: (state, action: PayloadAction<string>) => ({
-      ...state,
-      info: {
-        ...state.info,
-        metadata: {
-          ...state.info.metadata,
-          logoUri: action.payload,
-        },
-      },
-    }),
-    setTwitter: (state, action: PayloadAction<string>) => ({
-      ...state,
-      info: {
-        ...state.info,
-        metadata: {
-          ...state.info.metadata,
-          twitter: action.payload,
-        },
-      },
-    }),
-    setDiscord: (state, action: PayloadAction<string>) => ({
-      ...state,
-      info: {
-        ...state.info,
-        metadata: {
-          ...state.info.metadata,
-          discord: action.payload,
-        },
-      },
-    }),
-    setPayButton: (state, action: PayloadAction<string>) => ({
-      ...state,
-      info: {
-        ...state.info,
-        metadata: {
-          ...state.info.metadata,
-          payButton: action.payload,
-        },
-      },
-    }),
-    setPayDisclosure: (state, action: PayloadAction<string>) => ({
-      ...state,
-      info: {
-        ...state.info,
-        metadata: {
-          ...state.info.metadata,
-          payDisclosure: action.payload,
-        },
-      },
-    }),
-    setHandle: (state, action: PayloadAction<string>) => ({
-      ...state,
-      info: {
-        ...state.info,
-        handle: action.payload,
-      },
-    }),
-    setDescription: (state, action: PayloadAction<string>) => ({
-      ...state,
-      info: {
-        ...state.info,
-        metadata: {
-          ...state.info.metadata,
-          description: action.payload,
-        },
-      },
-    }),
-    setFundingCycle: (
-      state,
-      action: PayloadAction<SerializedFundingCycle>,
-    ) => ({
-      ...state,
-      fundingCycle: action.payload,
-    }),
-    setId: (state, action: PayloadAction<string>) => ({
-      ...state,
-      fundingCycle: {
-        ...state.fundingCycle,
-        id: action.payload,
-      },
-    }),
-    setProjectId: (state, action: PayloadAction<string>) => ({
-      ...state,
-      fundingCycle: {
-        ...state.fundingCycle,
-        projectId: action.payload,
-      },
-    }),
-    setNumber: (state, action: PayloadAction<string>) => ({
-      ...state,
-      fundingCycle: {
-        ...state.fundingCycle,
-        number: action.payload,
-      },
-    }),
-    setTarget: (state, action: PayloadAction<string>) => ({
-      ...state,
-      fundingCycle: {
-        ...state.fundingCycle,
-        target: action.payload,
-      },
-    }),
-    setFee: (state, action: PayloadAction<string>) => ({
-      ...state,
-      fundingCycle: {
-        ...state.fundingCycle,
-        fee: action.payload,
-      },
-    }),
-    setDuration: (state, action: PayloadAction<string>) => ({
-      ...state,
-      fundingCycle: {
-        ...state.fundingCycle,
-        duration: action.payload,
-      },
-    }),
-    setReserved: (state, action: PayloadAction<string>) => ({
-      ...state,
-      fundingCycle: {
-        ...state.fundingCycle,
-        reserved: action.payload,
-      },
-    }),
-    setDiscountRate: (state, action: PayloadAction<string>) => ({
-      ...state,
-      fundingCycle: {
-        ...state.fundingCycle,
-        discountRate: action.payload,
-      },
-    }),
-    setBondingCurveRate: (state, action: PayloadAction<string>) => ({
-      ...state,
-      fundingCycle: {
-        ...state.fundingCycle,
-        bondingCurveRate: action.payload,
-      },
-    }),
-    setCurrency: (state, action: PayloadAction<CurrencyOption>) => ({
-      ...state,
-      fundingCycle: {
-        ...state.fundingCycle,
-        currency: action.payload.toString(),
-      },
-    }),
-    setBallot: (state, action: PayloadAction<string>) => ({
-      ...state,
-      fundingCycle: {
-        ...state.fundingCycle,
-        ballot: action.payload,
-      },
-    }),
-    setIsRecurring: (state, action: PayloadAction<boolean>) => ({
-      ...state,
-      fundingCycle: {
-        ...state.fundingCycle,
-        discountRate: fromPermille(
-          action.payload ? defaultDiscountRate : '201',
-        ),
-        bondingCurveRate: fromPerbicent(
-          action.payload ? defaultBondingCurveRate : 0,
-        ),
-      },
-    }),
-    setPayIsPaused: (state, action: PayloadAction<boolean>) => ({
-      ...state,
-      fundingCycle: {
-        ...state.fundingCycle,
-        payIsPaused: action.payload,
-      },
-    }),
-    setticketPrintingIsAllowed: (state, action: PayloadAction<boolean>) => ({
-      ...state,
-      fundingCycle: {
-        ...state.fundingCycle,
-        ticketPrintingIsAllowed: action.payload,
-      },
-    }),
-    setPayoutMods: (state, action: PayloadAction<PayoutMod[]>) => ({
-      ...state,
-      payoutMods: action.payload,
-    }),
-    setTicketMods: (state, action: PayloadAction<TicketMod[]>) => ({
-      ...state,
-      ticketMods: action.payload,
-    }),
+    resetState: () => defaultProjectState,
+    setProjectInfo: (state, action: PayloadAction<EditingProjectInfo>) => {
+      state.info = action.payload
+    },
+    setName: (state, action: PayloadAction<string>) => {
+      state.info.metadata.name = action.payload
+    },
+    setInfoUri: (state, action: PayloadAction<string>) => {
+      state.info.metadata.infoUri = action.payload
+    },
+    setLogoUri: (state, action: PayloadAction<string>) => {
+      state.info.metadata.logoUri = action.payload
+    },
+    setTwitter: (state, action: PayloadAction<string>) => {
+      state.info.metadata.twitter = action.payload
+    },
+    setDiscord: (state, action: PayloadAction<string>) => {
+      state.info.metadata.discord = action.payload
+    },
+    setPayButton: (state, action: PayloadAction<string>) => {
+      state.info.metadata.payButton = action.payload
+    },
+    setPayDisclosure: (state, action: PayloadAction<string>) => {
+      state.info.metadata.payDisclosure = action.payload
+    },
+    setHandle: (state, action: PayloadAction<string>) => {
+      state.info.handle = action.payload
+    },
+    setDescription: (state, action: PayloadAction<string>) => {
+      state.info.metadata.description = action.payload
+    },
+    setFundingCycle: (state, action: PayloadAction<SerializedFundingCycle>) => {
+      state.fundingCycle = action.payload
+    },
+    setId: (state, action: PayloadAction<string>) => {
+      state.fundingCycle.id = action.payload
+    },
+    setProjectId: (state, action: PayloadAction<string>) => {
+      state.fundingCycle.projectId = action.payload
+    },
+    setNumber: (state, action: PayloadAction<string>) => {
+      state.fundingCycle.number = action.payload
+    },
+    setTarget: (state, action: PayloadAction<string>) => {
+      state.fundingCycle.target = action.payload
+    },
+    setFee: (state, action: PayloadAction<string>) => {
+      state.fundingCycle.fee = action.payload
+    },
+    setDuration: (state, action: PayloadAction<string>) => {
+      state.fundingCycle.duration = action.payload
+    },
+    setReserved: (state, action: PayloadAction<string>) => {
+      state.fundingCycle.reserved = action.payload
+    },
+    setDiscountRate: (state, action: PayloadAction<string>) => {
+      state.fundingCycle.discountRate = action.payload
+    },
+    setBondingCurveRate: (state, action: PayloadAction<string>) => {
+      state.fundingCycle.bondingCurveRate = action.payload
+    },
+    setCurrency: (state, action: PayloadAction<CurrencyOption>) => {
+      state.fundingCycle.currency = action.payload.toString()
+    },
+    setBallot: (state, action: PayloadAction<string>) => {
+      state.fundingCycle.ballot = action.payload
+    },
+    setIsRecurring: (state, action: PayloadAction<boolean>) => {
+      state.fundingCycle.discountRate = fromPermille(
+        action.payload ? defaultDiscountRate : '201',
+      )
+      state.fundingCycle.bondingCurveRate = fromPerbicent(
+        action.payload ? defaultBondingCurveRate : 0,
+      )
+    },
+    setPayIsPaused: (state, action: PayloadAction<boolean>) => {
+      state.fundingCycle.payIsPaused = action.payload
+    },
+    setticketPrintingIsAllowed: (state, action: PayloadAction<boolean>) => {
+      state.fundingCycle.ticketPrintingIsAllowed = action.payload
+    },
+    setPayoutMods: (state, action: PayloadAction<PayoutMod[]>) => {
+      state.payoutMods = action.payload
+    },
+    setTicketMods: (state, action: PayloadAction<TicketMod[]>) => {
+      state.ticketMods = action.payload
+    },
   },
 })
 

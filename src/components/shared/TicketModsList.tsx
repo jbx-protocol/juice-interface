@@ -1,5 +1,7 @@
 import { Button, Modal } from 'antd'
 import ProjectTicketMods from 'components/shared/formItems/ProjectTicketMods'
+import { t, Trans } from '@lingui/macro'
+
 import Mod from 'components/shared/Mod'
 import { ProjectContext } from 'contexts/projectContext'
 import { UserContext } from 'contexts/userContext'
@@ -124,7 +126,7 @@ export default function TicketModsList({
       {fundingCycle && projectId?.gt(0) && hasEditPermission ? (
         <div style={{ marginTop: 10 }}>
           <Button size="small" onClick={() => setModalVisible(true)}>
-            Edit token receivers
+            <Trans>Edit token receivers</Trans>
           </Button>
         </div>
       ) : null}
@@ -132,8 +134,8 @@ export default function TicketModsList({
       {fundingCycle ? (
         <Modal
           visible={modalVisible}
-          title="Edit reserved token receivers"
-          okText="Save token receivers"
+          title={t`Edit reserved token receivers`}
+          okText={t`Save token receivers`}
           onOk={() => setMods()}
           onCancel={() => {
             setEditingMods(mods)

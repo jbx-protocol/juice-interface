@@ -114,7 +114,9 @@ export default function Projects() {
           </h1>
 
           <a href="/#/create">
-            <Button>New project</Button>
+            <Button>
+              <Trans>New project</Trans>
+            </Button>
           </a>
         </div>
 
@@ -134,7 +136,7 @@ export default function Projects() {
             autoFocus
             style={{ flex: 1, marginBottom: 20, marginRight: 20 }}
             prefix="@"
-            placeholder="Search projects by handle"
+            placeholder={t`Search projects by handle`}
             onSearch={val => setSearchText(val)}
             allowClear
           />
@@ -175,14 +177,14 @@ export default function Projects() {
                   checked={includeV1}
                   onChange={() => setIncludeV1(!includeV1)}
                 />{' '}
-                V1
+                <Trans>V1</Trans>
               </div>
               <div>
                 <Checkbox
                   checked={includeV1_1}
                   onChange={() => setIncludeV1_1(!includeV1_1)}
                 />{' '}
-                V1.1
+                <Trans>V1.1</Trans>
               </div>
             </Space>
 
@@ -195,8 +197,12 @@ export default function Projects() {
                 marginBottom: 10,
               }}
             >
-              <Select.Option value="totalPaid">Volume</Select.Option>
-              <Select.Option value="createdAt">Created</Select.Option>
+              <Select.Option value="totalPaid">
+                <Trans>Volume</Trans>
+              </Select.Option>
+              <Select.Option value="createdAt">
+                <Trans>Created</Trans>
+              </Select.Option>
             </Select>
           </div>
         </div>
@@ -245,7 +251,7 @@ export default function Projects() {
           }}
           onClick={() => fetchNextPage()}
         >
-          Load more
+          <Trans>Load more</Trans>
         </div>
       ) : (
         !isLoadingSearch &&

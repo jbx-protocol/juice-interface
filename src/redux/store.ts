@@ -1,20 +1,29 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { combineReducers, configureStore } from '@reduxjs/toolkit'
 
-import editingProjectReducer, {
-  EditingProjectState,
-} from './slices/editingProject'
+import editingProjectReducer from './slices/editingProject'
+import getLocalStoragePreloadedState, {
+  localStoragePreloadMiddleware,
+} from './localStoragePreload'
 
-export type RootState = {
-  editingProject: EditingProjectState
-}
-
-const store = configureStore<RootState>({
-  reducer: {
-    editingProject: editingProjectReducer,
-  },
-  devTools: process.env.NODE_ENV !== 'production',
+const rootReducer = combineReducers({
+  editingProject: editingProjectReducer,
 })
 
+export function createStore() {
+  return configureStore({
+    reducer: rootReducer,
+    devTools: process.env.NODE_ENV !== 'production',
+    preloadedState: getLocalStoragePreloadedState(),
+    middleware: getDefaultMiddleware => [
+      ...getDefaultMiddleware(),
+      localStoragePreloadMiddleware,
+    ],
+  })
+}
+
+const store = createStore()
+
+export type RootState = ReturnType<typeof rootReducer>
 export type AppDispatch = typeof store.dispatch
 
 export default store

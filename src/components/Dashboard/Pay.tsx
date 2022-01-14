@@ -1,5 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Tooltip } from 'antd'
+import { t, Trans } from '@lingui/macro'
+
 import ConfirmPayOwnerModal from 'components/modals/ConfirmPayOwnerModal'
 import TwitterModal from 'components/modals/ShareToTwitterModal'
 import PayWarningModal from 'components/modals/PayWarningModal'
@@ -63,12 +65,12 @@ export default function Pay() {
 
     const payButtonText = metadata.payButton?.length
       ? metadata.payButton
-      : 'Pay'
+      : t`Pay`
 
     if (isArchived) {
       return (
         <Tooltip
-          title="This project has been archived and cannot be paid."
+          title={t`This project has been archived and cannot be paid.`}
           className="block"
         >
           <Button style={{ width: '100%' }} type="primary" disabled>
@@ -84,12 +86,11 @@ export default function Pay() {
       let disabledMessage: string
 
       if (fcMetadata.reservedRate === 200) {
-        disabledMessage =
-          'Paying this project is currently disabled, because the token reserved rate is 100% and no tokens will be earned by making a payment.'
+        disabledMessage = t`Paying this project is currently disabled, because the token reserved rate is 100% and no tokens will be earned by making a payment.`
       } else if (fcMetadata.payIsPaused) {
-        disabledMessage = 'Payments are paused for the current funding cycle.'
+        disabledMessage = t`Payments are paused for the current funding cycle.`
       } else {
-        disabledMessage = 'Paying this project is currently disabled.'
+        disabledMessage = t`Paying this project is currently disabled.`
       }
 
       return (
@@ -147,7 +148,7 @@ export default function Pay() {
           />
 
           <div style={{ fontSize: '.7rem' }}>
-            Receive{' '}
+            <Trans>Receive</Trans>{' '}
             {weiPayAmt?.gt(0) ? (
               formatReceivedTickets(weiPayAmt) + ' ' + (tokenSymbol ?? 'tokens')
             ) : (
@@ -166,7 +167,9 @@ export default function Pay() {
           {payButton}
           {payIn === 1 && (
             <div style={{ fontSize: '.7rem' }}>
-              Paid as <CurrencySymbol currency={CURRENCY_ETH} />
+              <Trans>
+                Paid as <CurrencySymbol currency={CURRENCY_ETH} />
+              </Trans>
               {formatWad(weiPayAmt) || '0'}
             </div>
           )}

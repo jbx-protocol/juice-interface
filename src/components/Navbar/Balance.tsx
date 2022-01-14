@@ -27,6 +27,7 @@ export default function Balance({
       style={{
         verticalAlign: 'middle',
         lineHeight: 1,
+        color: colors.text.tertiary,
       }}
     >
       <CurrencySymbol currency={CURRENCY_ETH} />

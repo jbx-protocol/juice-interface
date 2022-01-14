@@ -1,4 +1,6 @@
 import { CrownFilled } from '@ant-design/icons'
+import { t, Trans } from '@lingui/macro'
+
 import { Button, Space, Tooltip } from 'antd'
 import WithdrawModal from 'components/modals/WithdrawModal'
 import Balance from 'components/Navbar/Balance'
@@ -68,7 +70,7 @@ export default function Spending({
               </span>
               <TooltipLabel
                 style={smallHeaderStyle}
-                label="AVAILABLE"
+                label={t`AVAILABLE`}
                 tip={`The funds available to withdraw for this funding cycle after the ${fromPerbicent(
                   currentFC.fee,
                 )}% JBX fee is subtracted. This number won't roll over to the next funding cycle, so funds should be withdrawn before it ends.`}
@@ -80,26 +82,30 @@ export default function Spending({
               onClick={() => setWithdrawModalVisible(true)}
               disabled={isPreviewMode}
             >
-              Distribute
+              <Trans>Distribute</Trans>
             </Button>
           </div>
           <div style={{ ...smallHeaderStyle, color: colors.text.tertiary }}>
             <div>
-              <CurrencySymbol
-                currency={currentFC.currency.toNumber() as CurrencyOption}
-              />
-              {formatWad(currentFC.tapped, { decimals: 4 }) || '0'}
-              {hasFundingTarget(currentFC) && (
-                <span>/{formatWad(currentFC.target, { decimals: 4 })} </span>
-              )}{' '}
-              withdrawn
+              <Trans>
+                <CurrencySymbol
+                  currency={currentFC.currency.toNumber() as CurrencyOption}
+                />
+                {formatWad(currentFC.tapped, { decimals: 4 }) || '0'}
+                {hasFundingTarget(currentFC) && (
+                  <span>/{formatWad(currentFC.target, { decimals: 4 })} </span>
+                )}{' '}
+                withdrawn
+              </Trans>
             </div>
 
             <div>
-              <Tooltip title="Project owner balance">
+              <Tooltip title={t`Project owner balance`}>
                 <Space>
                   <Balance address={owner} />
-                  <CrownFilled /> owner balance
+                  <Trans>
+                    <CrownFilled /> owner balance
+                  </Trans>
                 </Space>
               </Tooltip>
             </div>
@@ -109,8 +115,12 @@ export default function Spending({
         {currentFC.target.gt(0) && (
           <div>
             <TooltipLabel
-              label={<h4 style={{ display: 'inline-block' }}>Distribution</h4>}
-              tip="Available funds are distributed according to any payouts below."
+              label={
+                <h4 style={{ display: 'inline-block' }}>
+                  <Trans>Distribution</Trans>
+                </h4>
+              }
+              tip={t`Available funds are distributed according to any payouts below.`}
             />
             <PayoutModsList
               mods={payoutMods}

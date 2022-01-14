@@ -1,5 +1,6 @@
 import { CheckCircleFilled } from '@ant-design/icons'
 import { Button, Input, Space } from 'antd'
+import { Trans } from '@lingui/macro'
 
 import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
@@ -76,10 +77,14 @@ export default function RulesForm({
 
   return (
     <Space direction="vertical" size="large">
-      <h1>Reconfiguration</h1>
+      <h1>
+        <Trans>Reconfiguration</Trans>
+      </h1>
 
       <p style={{ color: colors.text.secondary }}>
-        Rules for how this project's funding cycles can be reconfigured.
+        <Trans>
+          Rules for how this project's funding cycles can be reconfigured.
+        </Trans>
       </p>
 
       <Space direction="vertical">
@@ -89,7 +94,7 @@ export default function RulesForm({
             <div>
               <p>{s.description}</p>
               <p style={{ fontSize: '0.7rem', color: colors.text.tertiary }}>
-                Contract address: {s.address}
+                <Trans>Contract address: {s.address}</Trans>
               </p>
             </div>,
             i,
@@ -107,14 +112,16 @@ export default function RulesForm({
               }
             />
             <p>
-              The address of any smart contract deployed on {signerNetwork} that
-              implements{' '}
+              <Trans>
+                The address of any smart contract deployed on {signerNetwork}{' '}
+                that implements
+              </Trans>{' '}
               <a
                 href="https://github.com/jbx-protocol/juice-contracts-v1/blob/05828d57e3a27580437fc258fe9041b2401fc044/contracts/FundingCycles.sol"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                this interface
+                <Trans>this interface</Trans>
               </a>
               .
             </p>
@@ -140,7 +147,7 @@ export default function RulesForm({
           )
         }}
       >
-        Save
+        <Trans>Save</Trans>
       </Button>
     </Space>
   )

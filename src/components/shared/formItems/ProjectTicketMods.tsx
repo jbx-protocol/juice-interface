@@ -1,4 +1,6 @@
 import { CloseCircleOutlined, LockOutlined } from '@ant-design/icons'
+import { Trans } from '@lingui/macro'
+
 import { Button, Col, DatePicker, Form, Modal, Row, Space } from 'antd'
 import {
   validateEthAddress,
@@ -265,17 +267,19 @@ export default function ProjectTicketMods({
                 color: total > 100 ? colors.text.warn : colors.text.secondary,
               }}
             >
-              Total:{' '}
-              {total
-                .toString()
-                .split('.')
-                .map((x, i) => (i > 0 ? x[0] : x))
-                .join('.')}
-              %
+              <Trans>
+                Total:{' '}
+                {total
+                  .toString()
+                  .split('.')
+                  .map((x, i) => (i > 0 ? x[0] : x))
+                  .join('.')}
+                %
+              </Trans>
             </span>
           </div>
           <div>
-            {100 - total}% to <FormattedAddress address={owner} />
+            <Trans>{100 - total}%to</Trans> <FormattedAddress address={owner} />
           </div>
         </div>
         <Button
@@ -287,7 +291,7 @@ export default function ProjectTicketMods({
           }}
           block
         >
-          Add token receiver
+          <Trans>Add token receiver</Trans>
         </Button>
       </Space>
 

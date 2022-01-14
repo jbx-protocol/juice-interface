@@ -316,8 +316,7 @@ export default function Paid() {
                   <Trans>
                     The balance of the wallet that owns this Juicebox project.
                   </Trans>
-                </p>
-                <span style={{ userSelect: 'all' }}>{owner}</span>{' '}
+                </p>{' '}
                 <EtherscanLink value={owner} type="address" />
               </div>
             }

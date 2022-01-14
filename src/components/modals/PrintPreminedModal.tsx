@@ -1,14 +1,16 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { Contract } from '@ethersproject/contracts'
 import { Form, Input, Modal, Switch } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
-import { CURRENCY_ETH } from 'constants/currency'
 import { ProjectContext } from 'contexts/projectContext'
 import { UserContext } from 'contexts/userContext'
-import { constants, Contract, utils } from 'ethers'
+import { constants, utils } from 'ethers'
 import { useContext, useMemo, useState } from 'react'
 import { parseWad } from 'utils/formatNumber'
+
+import { CURRENCY_ETH } from 'constants/currency'
 
 export default function PrintPreminedModal({
   visible,

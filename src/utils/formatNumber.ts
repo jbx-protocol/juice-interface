@@ -119,7 +119,7 @@ export const formattedNum = (
     if (post === '0') return formatNearZero(pre)
 
     const formattedPost = post
-      .substring(0, config?.precision ?? 18)
+      .substring(0, config?.precision ?? WAD_DECIMALS)
       .padEnd(config?.padEnd ? config?.precision ?? 0 : 0, '0')
 
     // If we can ignore postDecimal

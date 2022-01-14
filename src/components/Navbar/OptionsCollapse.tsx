@@ -47,13 +47,8 @@ export default function OptionsCollapse() {
             </Space>
           }
         >
-          {/* Do not close collapse when clicking its items*/}
-          <div
-            onClick={e => {
-              setActiveKey(0)
-              e.stopPropagation()
-            }}
-          >
+          {/* Do not close collapse when clicking its items (except on wallet disconnect)*/}
+          <div onClick={e => e.stopPropagation()}>
             <div className="nav-dropdown-item">
               <ThemePicker />
             </div>
@@ -61,7 +56,10 @@ export default function OptionsCollapse() {
               <LanguageSelector disableLang="zh" />
             </div>
             {signingProvider ? (
-              <div className="nav-dropdown-item">
+              <div
+                className="nav-dropdown-item"
+                onClick={() => setActiveKey(undefined)}
+              >
                 <LogoutOutlined />
                 <div onClick={onLogOut}>
                   <div style={{ margin: '0 0 2px 13px' }}>

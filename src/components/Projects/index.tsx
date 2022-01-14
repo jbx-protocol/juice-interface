@@ -2,6 +2,7 @@ import { InfoCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Checkbox, Select, Space, Tooltip } from 'antd'
 import Search from 'antd/lib/input/Search'
+import FeedbackFormLink from 'components/shared/FeedbackFormLink'
 import Loading from 'components/shared/Loading'
 import ProjectsGrid from 'components/shared/ProjectsGrid'
 import { layouts } from 'constants/styles/layouts'
@@ -269,6 +270,7 @@ export default function Projects() {
           </div>
         )
       )}
+      <FeedbackFormLink />
     </div>
   )
 }

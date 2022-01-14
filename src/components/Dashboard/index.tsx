@@ -17,6 +17,7 @@ import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { deepEqFundingCycles } from 'utils/deepEqFundingCycles'
 import { normalizeHandle } from 'utils/formatHandle'
 import { getTerminalName, getTerminalVersion } from 'utils/terminal-versions'
+import FeedbackFormLink from 'components/shared/FeedbackFormLink'
 
 import { padding } from 'constants/styles/padding'
 import { layouts } from 'constants/styles/layouts'
@@ -375,6 +376,7 @@ export default function Dashboard() {
         >
           <Trans>Back to top</Trans>
         </div>
+        <FeedbackFormLink projectHandle={handle} />
       </div>
     </ProjectContext.Provider>
   )

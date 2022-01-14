@@ -67,7 +67,7 @@ export default function DistributeTokensModal({
     )
   }
 
-  const reservedTokensFormatted = formatWad(reservedTokens, { decimals: 0 })
+  const reservedTokensFormatted = formatWad(reservedTokens, { precision: 0 })
 
   return (
     <Modal

@@ -109,7 +109,7 @@ export function PaymentActivity({ pageSize }: { pageSize: number }) {
                     }}
                   >
                     <CurrencySymbol currency={CURRENCY_ETH} />
-                    {formatWad(e.amount, { decimals: 4 })}
+                    {formatWad(e.amount, { precision: 4 })}
                   </div>
                 </div>
 

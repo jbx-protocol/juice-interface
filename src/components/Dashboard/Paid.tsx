@@ -118,20 +118,20 @@ export default function Paid() {
                 <span>
                   <CurrencySymbol currency={CURRENCY_ETH} />
                   {formatWad(converter.usdToWei(fromWad(amt)), {
-                    decimals: 2,
+                    precision: 2,
                     padEnd: true,
                   })}
                 </span>
               }
             >
               <CurrencySymbol currency={CURRENCY_USD} />
-              {formatWad(amt, { decimals: 2, padEnd: true })}
+              {formatWad(amt, { precision: 2, padEnd: true })}
             </Tooltip>
           </span>
         ) : (
           <span>
             <CurrencySymbol currency={CURRENCY_ETH} />
-            {formatWad(amt, { decimals: 2, padEnd: true })}
+            {formatWad(amt, { precision: 2, padEnd: true })}
           </span>
         )}
       </>
@@ -161,7 +161,7 @@ export default function Paid() {
             <span style={secondaryTextStyle}>
               <CurrencySymbol currency={CURRENCY_USD} />
               {formatWad(converter.wadToCurrency(earned, 1, 0), {
-                decimals: 2,
+                precision: 2,
                 padEnd: true,
               })}{' '}
             </span>
@@ -176,7 +176,7 @@ export default function Paid() {
             <CurrencySymbol currency={CURRENCY_ETH} />
             {earned?.lt(parseWad('1')) && earned.gt(0)
               ? '<1'
-              : formatWad(earned, { decimals: 0 })}
+              : formatWad(earned, { precision: 0 })}
           </span>
         </span>
       </div>
@@ -208,7 +208,7 @@ export default function Paid() {
           {currentFC.currency.eq(CURRENCY_USD) ? (
             <span style={secondaryTextStyle}>
               <CurrencySymbol currency={CURRENCY_ETH} />
-              {formatWad(balance, { decimals: 2, padEnd: true })}{' '}
+              {formatWad(balance, { precision: 2, padEnd: true })}{' '}
             </span>
           ) : (
             ''
@@ -334,7 +334,7 @@ export default function Paid() {
           </span>
           <span style={primaryTextStyle}>
             <CurrencySymbol currency={CURRENCY_ETH} />
-            {formatWad(ownerBalance, { decimals: 2, padEnd: true })}
+            {formatWad(ownerBalance, { precision: 2, padEnd: true })}
           </span>
         </span>
       </div>

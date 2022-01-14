@@ -210,7 +210,7 @@ export default function ParticipantsModal({
                 <div style={smallHeaderStyle}>
                   <CurrencySymbol currency={0} />
                   <Trans>
-                    {formatWad(p.totalPaid, { decimals: 6 })} contributed
+                    {formatWad(p.totalPaid, { precision: 6 })} contributed
                   </Trans>
                 </div>
               </div>
@@ -221,12 +221,12 @@ export default function ParticipantsModal({
                     lineHeight: contentLineHeight,
                   }}
                 >
-                  {formatWad(p.balance, { decimals: 0 })}{' '}
+                  {formatWad(p.balance, { precision: 0 })}{' '}
                   {tokenSymbol ?? 'tokens'} (
                   {formatPercent(p.balance, totalTokenSupply)}%)
                 </div>
                 <div style={smallHeaderStyle}>
-                  {formatWad(p.stakedBalance, { decimals: 0 })}{' '}
+                  {formatWad(p.stakedBalance, { precision: 0 })}{' '}
                   <Trans>{tokenSymbol ?? 'tokens'} staked</Trans>
                 </div>
               </div>

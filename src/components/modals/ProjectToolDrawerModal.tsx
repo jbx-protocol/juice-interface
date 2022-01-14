@@ -159,7 +159,7 @@ export default function ProjectToolDrawerModal({
           </h3>
           <p>
             <Trans>
-              Your balance: {formatWad(stakedTokenBalance, { decimals: 0 })}
+              Your balance: {formatWad(stakedTokenBalance, { precision: 0 })}
             </Trans>
           </p>
           <Form

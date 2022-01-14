@@ -50,7 +50,7 @@ export default function Pay() {
   }
 
   const formatReceivedTickets = (wei: BigNumber) =>
-    formatWad(weightedRate(currentFC, wei, 'payer'), { decimals: 0 })
+    formatWad(weightedRate(currentFC, wei, 'payer'), { precision: 0 })
 
   const overridePayDisabled =
     projectId &&

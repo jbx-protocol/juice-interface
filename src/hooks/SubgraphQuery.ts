@@ -6,6 +6,7 @@ import {
   UseQueryOptions,
 } from 'react-query'
 
+import { ProjectContext } from 'contexts/projectContext'
 import {
   EntityKey,
   EntityKeys,
@@ -17,6 +18,9 @@ import {
   SubgraphError,
   SubgraphQueryReturnTypes,
 } from '../utils/graph'
+import { useContext } from 'react'
+import { readNetwork } from 'constants/networks'
+import { NetworkName } from 'models/network-name'
 
 const subgraphUrl = process.env.REACT_APP_SUBGRAPH_URL
 
@@ -93,7 +97,15 @@ export function useInfiniteSubgraphQuery<
     readonly [string, InfiniteGraphQueryOpts<E, K>]
   >,
 ) {
-  if (!subgraphUrl) {
+  const { terminal } = useContext(ProjectContext)
+
+  // TODO remove temporary fix
+  const _url =
+    terminal?.version === '1.1' && readNetwork.name === NetworkName.mainnet
+      ? 'https://api.studio.thegraph.com/query/2231/juicebox/2.0.1'
+      : subgraphUrl
+
+  if (!_url) {
     // This should _only_ happen in development
     throw new Error('env.REACT_APP_SUBGRAPH_URL is missing')
   }
@@ -111,7 +123,7 @@ export function useInfiniteSubgraphQuery<
         errors?: SubgraphError[]
         data: SubgraphQueryReturnTypes[E]
       }>(
-        subgraphUrl,
+        _url,
         {
           query: formatGraphQuery({
             ...evaluatedOpts,

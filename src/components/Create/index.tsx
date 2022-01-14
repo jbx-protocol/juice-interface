@@ -24,14 +24,7 @@ import { FundingCycleMetadata } from 'models/funding-cycle-metadata'
 import { FCProperties } from 'models/funding-cycle-properties'
 import { PayoutMod, TicketMod } from 'models/mods'
 import { TerminalVersion } from 'models/terminal-version'
-import {
-  useCallback,
-  useContext,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useState,
-} from 'react'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
 import { fromPerbicent, fromPermille, fromWad } from 'utils/formatNumber'
 import {
@@ -85,6 +78,7 @@ export default function Create() {
   ] = useState<boolean>(false)
   const [deployProjectModalVisible, setDeployProjectModalVisible] =
     useState<boolean>(false)
+  const [confirmStartOverVisible, setConfirmStartOverVisible] = useState(false)
   const [loadingCreate, setLoadingCreate] = useState<boolean>()
   const [projectForm] = useForm<ProjectFormFields>()
   const [ticketingForm] = useForm<TicketingFormFields>()
@@ -155,12 +149,6 @@ export default function Create() {
     editingFC?.ticketPrintingIsAllowed,
     restrictedActionsForm,
   ])
-
-  useLayoutEffect(() => {
-    dispatch(editingProjectActions.resetState())
-    // Disable exhaustive-deps because we only need to reset the first time
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch])
 
   useEffect(() => {
     resetProjectForm()
@@ -304,17 +292,22 @@ export default function Create() {
             name: logoNameForHandle(editingProjectInfo.handle),
           })
 
+          resetProjectForm()
+          dispatch(editingProjectActions.resetState())
+
           window.location.hash = '/p/' + editingProjectInfo.handle
         },
       },
     )
   }, [
     contracts,
+    dispatch,
     editingFC,
     editingPayoutMods,
     editingProjectInfo.handle,
     editingProjectInfo.metadata,
     editingTicketMods,
+    resetProjectForm,
     transactor,
     userAddress,
   ])
@@ -416,16 +409,31 @@ export default function Create() {
           </Trans>
         </p>
 
-        <Button
-          onClick={() => setDeployProjectModalVisible(true)}
-          type="primary"
-          block
-          disabled={
-            !editingProjectInfo?.metadata.name || !editingProjectInfo.handle
-          }
+        <div
+          style={{
+            display: 'flex',
+          }}
         >
-          <Trans>Review & Deploy</Trans>
-        </Button>
+          <Button
+            onClick={() => setConfirmStartOverVisible(true)}
+            type="ghost"
+            block
+            style={{ marginRight: 8 }}
+          >
+            <Trans>Start Over</Trans>
+          </Button>
+
+          <Button
+            onClick={() => setDeployProjectModalVisible(true)}
+            type="primary"
+            block
+            disabled={
+              !editingProjectInfo?.metadata.name || !editingProjectInfo.handle
+            }
+          >
+            <Trans>Review & Deploy</Trans>
+          </Button>
+        </div>
       </Space>
     ),
     [
@@ -748,6 +756,21 @@ export default function Create() {
           onCancel={() => setDeployProjectModalVisible(false)}
         >
           <ConfirmDeployProject />
+        </Modal>
+
+        <Modal
+          visible={confirmStartOverVisible}
+          okText="Start Over"
+          okType="danger"
+          title="Are you sure you want to start over?"
+          onOk={() => {
+            resetProjectForm()
+            dispatch(editingProjectActions.resetState())
+            setConfirmStartOverVisible(false)
+          }}
+          onCancel={() => setConfirmStartOverVisible(false)}
+        >
+          This will erase of your all changes.
         </Modal>
       </Row>
     </ProjectContext.Provider>

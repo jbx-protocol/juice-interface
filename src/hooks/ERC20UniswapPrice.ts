@@ -12,7 +12,7 @@ import { readProvider } from 'constants/readProvider'
 import { readNetwork } from 'constants/networks'
 import { WETH } from 'constants/tokens'
 import { UNISWAP_V3_FACTORY } from 'constants/contracts'
-import { WAD_PRECISION } from 'constants/numbers'
+import { WAD_DECIMALS } from 'constants/numbers'
 
 interface Immutables {
   factory: string
@@ -146,13 +146,13 @@ export function useUniswapPriceQuery({ tokenSymbol, tokenAddress }: Props) {
         const PROJECT_TOKEN = new Token(
           networkId,
           immutables.token0,
-          WAD_PRECISION,
+          WAD_DECIMALS,
           tokenSymbol,
         )
         const WETH = new Token(
           networkId,
           immutables.token1,
-          WAD_PRECISION,
+          WAD_DECIMALS,
           'WETH',
         )
 

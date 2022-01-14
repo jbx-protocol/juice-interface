@@ -1,28 +1,34 @@
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 import { formatUnits, parseUnits } from '@ethersproject/units'
 
-import { WAD_PRECISION } from 'constants/numbers'
+import { WAD_DECIMALS } from 'constants/numbers'
 
 type FormatConfig = {
   empty?: string
   thousandsSeparator?: string
   decimalSeparator?: string
-  decimals?: number
+  precision?: number
   padEnd?: boolean
+  decimals?: number
 }
 
 const decimalSeparator = '.'
 const thousandsSeparator = ','
 
-// Wad: x/1e18
+// Wad: 1e-18
 export const parseWad = (amt?: BigNumberish) =>
-  parseUnits(amt?.toString() || '0', WAD_PRECISION)
-export const fromWad = (amt?: BigNumberish) => {
-  const result = formatUnits(amt ?? '0', WAD_PRECISION)
+  parseUnits(amt?.toString() || '0', WAD_DECIMALS)
+
+export const fromWad = (
+  amt?: BigNumberish,
+  decimals: number = WAD_DECIMALS,
+) => {
+  const result = formatUnits(amt ?? '0', decimals)
   return result.substring(result.length - 2) === '.0'
     ? result.substring(0, result.length - 2)
     : result
 }
+
 export const formatWad = (amt?: BigNumberish, config?: FormatConfig) => {
   if (amt === undefined && amt === null && amt === '') return
 
@@ -31,7 +37,7 @@ export const formatWad = (amt?: BigNumberish, config?: FormatConfig) => {
     _amt = _amt.toString().split('.')[0]
   }
 
-  return formattedNum(fromWad(_amt), config)
+  return formattedNum(fromWad(_amt, config?.decimals), config)
 }
 
 // Strips string of all commas
@@ -82,7 +88,7 @@ export const formattedNum = (
 
   // Trim leading zeros
   while (str.length && str[0] === '0') {
-    str = str.substr(1)
+    str = str.substring(1)
   }
 
   if (!str.length) return _empty
@@ -113,11 +119,11 @@ export const formattedNum = (
     if (post === '0') return formatNearZero(pre)
 
     const formattedPost = post
-      .substr(0, config?.decimals ?? 18)
-      .padEnd(config?.padEnd ? config?.decimals ?? 0 : 0, '0')
+      .substring(0, config?.precision ?? 18)
+      .padEnd(config?.padEnd ? config?.precision ?? 0 : 0, '0')
 
     // If we can ignore postDecimal
-    if (!formattedPost || config?.decimals === 0) {
+    if (!formattedPost || config?.precision === 0) {
       return formatNearZero(formattedPre)
     }
 

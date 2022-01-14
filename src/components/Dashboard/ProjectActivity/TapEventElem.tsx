@@ -98,7 +98,7 @@ export default function TapEventElem({
 
             <div style={{ color: colors.text.secondary }}>
               <CurrencySymbol currency={CURRENCY_ETH} />
-              {formatWad(e.modCut, { decimals: 4 })}
+              {formatWad(e.modCut, { precision: 4 })}
             </div>
           </div>
         ))}
@@ -126,7 +126,7 @@ export default function TapEventElem({
               }
             >
               <CurrencySymbol currency={CURRENCY_ETH} />
-              {formatWad(tapEvent.beneficiaryTransferAmount, { decimals: 4 })}
+              {formatWad(tapEvent.beneficiaryTransferAmount, { precision: 4 })}
             </div>
           </div>
         )}
@@ -141,7 +141,7 @@ export default function TapEventElem({
           }}
         >
           <CurrencySymbol currency={CURRENCY_ETH} />
-          {formatWad(tapEvent.netTransferAmount, { decimals: 4 })}
+          {formatWad(tapEvent.netTransferAmount, { precision: 4 })}
         </div>
       ) : null}
     </div>

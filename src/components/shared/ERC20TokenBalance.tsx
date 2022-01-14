@@ -10,12 +10,12 @@ export default function ERC20TokenBalance({
   tokenAddress,
   wallet,
   style,
-  decimals,
+  precision,
 }: {
   tokenAddress: string | undefined
   wallet: string | undefined
   style?: CSSProperties
-  decimals?: number
+  precision?: number
 }) {
   const contract = useErc20Contract(tokenAddress)
 
@@ -30,11 +30,19 @@ export default function ERC20TokenBalance({
     functionName: 'symbol',
   })
 
+  const decimals = useContractReader<number>({
+    contract,
+    functionName: 'decimals',
+  })
+
   if (balance === undefined) return null
 
   return (
     <div style={style}>
-      {formatWad(balance, { decimals: decimals ?? 0 })}{' '}
+      {formatWad(balance, {
+        precision: precision ?? 0,
+        decimals,
+      })}{' '}
       <FormattedAddress label={symbol} address={tokenAddress} />
     </div>
   )

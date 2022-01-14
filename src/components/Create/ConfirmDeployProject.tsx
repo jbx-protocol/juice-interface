@@ -90,7 +90,7 @@ export default function ConfirmDeployProject() {
                       }
                     />
                     {formatWad(amountSubFee(editingFC.target, terminalFee), {
-                      decimals: 4,
+                      precision: 4,
                     })}{' '}
                     <Trans>after JBX fee</Trans>)
                   </span>

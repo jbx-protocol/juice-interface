@@ -94,5 +94,23 @@
     "lint-staged": "^12.1.1",
     "prettier": "2.4.1",
     "source-map-explorer": "^2.5.2"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy"
+    },
+    "collectCoverageFrom": [
+      "**/*.{ts,tsx}",
+      "!**/*.d.ts",
+      "!**/node_modules/**"
+    ],
+    "transform": {
+      "^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/babel-jest",
+      "^.+\\.(png|jpeg|jpg|svg|webm)$": "<rootDir>/test/assetTransformer.js"
+    },
+    "transformIgnorePatterns": [
+      "/node_modules/",
+      "^.+\\.(css|sass|scss)$"
+    ]
   }
 }

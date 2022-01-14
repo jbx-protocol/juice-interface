@@ -135,7 +135,11 @@ export default function PrintPreminedModal({
           formItemProps={formItemProps}
           value={value}
           onChange={val => setValue(val ?? '0')}
-          accessory={<InputAccessoryButton content="ETH" />}
+          accessory={
+            terminal?.version === '1' ? (
+              <InputAccessoryButton content="ETH" />
+            ) : undefined
+          }
         />
         <Form.Item label="Memo" name="memo">
           <Input placeholder="Memo included on-chain (optional)" />

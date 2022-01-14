@@ -3,6 +3,8 @@ import {
   SortAscendingOutlined,
   SortDescendingOutlined,
 } from '@ant-design/icons'
+import { Trans } from '@lingui/macro'
+
 import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Modal, Select } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
@@ -145,11 +147,15 @@ export default function ParticipantsModal({
             }}
             value={sortPayerReports}
           >
-            <Select.Option value="tokenBalance">
-              {tokenSymbol ?? 'Token'} balance
+            <Select.Option value="balance">
+              <Trans>{tokenSymbol ?? 'Token'} balance</Trans>
             </Select.Option>
-            <Select.Option value="totalPaid">Amount paid</Select.Option>
-            <Select.Option value="lastPaidTimestamp">Last paid</Select.Option>
+            <Select.Option value="totalPaid">
+              <Trans>Amount paid</Trans>
+            </Select.Option>
+            <Select.Option value="lastPaidTimestamp">
+              <Trans>Last paid</Trans>
+            </Select.Option>
           </Select>
           <div
             style={{ cursor: 'pointer', padding: 10 }}
@@ -201,7 +207,9 @@ export default function ParticipantsModal({
                 </div>
                 <div style={smallHeaderStyle}>
                   <CurrencySymbol currency={0} />
-                  {formatWad(p.totalPaid, { decimals: 6 })} contributed
+                  <Trans>
+                    {formatWad(p.totalPaid, { decimals: 6 })} contributed
+                  </Trans>
                 </div>
               </div>
 
@@ -217,7 +225,7 @@ export default function ParticipantsModal({
                 </div>
                 <div style={smallHeaderStyle}>
                   {formatWad(p.stakedBalance, { decimals: 0 })}{' '}
-                  {tokenSymbol ?? 'tokens'} staked
+                  <Trans>{tokenSymbol ?? 'tokens'} staked</Trans>
                 </div>
               </div>
             </div>
@@ -252,17 +260,23 @@ export default function ParticipantsModal({
       cancelButtonProps={{ hidden: true }}
     >
       <div>
-        <h4>{tokenSymbol || 'Token'} holders</h4>
+        <h4>
+          <Trans>{tokenSymbol || 'Token'} holders</Trans>
+        </h4>
 
         {tokenAddress && tokenAddress !== constants.AddressZero && (
           <div style={{ marginBottom: 20 }}>
-            Token address: <FormattedAddress address={tokenAddress} />
+            <Trans>
+              Token address: <FormattedAddress address={tokenAddress} />
+            </Trans>
           </div>
         )}
 
         <p style={{ padding: 10, background: colors.background.l1 }}>
-          This list is using an experimental data index and may be inaccurate
-          for some projects.
+          <Trans>
+            This list is using an experimental data index and may be inaccurate
+            for some projects.
+          </Trans>
         </p>
 
         {erc20IsUntracked && (
@@ -288,7 +302,7 @@ export default function ParticipantsModal({
             }}
             onClick={() => setPageNumber(pageNumber + 1)}
           >
-            Load more
+            <Trans>Load more</Trans>
           </div>
         ) : loading ? null : (
           <div
@@ -298,7 +312,7 @@ export default function ParticipantsModal({
               color: colors.text.secondary,
             }}
           >
-            {participants.length} total
+            <Trans>{participants.length} total</Trans>
           </div>
         )}
       </div>

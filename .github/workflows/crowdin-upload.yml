@@ -2,8 +2,6 @@ name: Crowdin upload
 
 on:
   push:
-    branches:
-      - main
 
   # manual trigger from Github UI - Action tab
   workflow_dispatch:

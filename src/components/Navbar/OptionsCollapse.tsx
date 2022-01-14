@@ -18,6 +18,10 @@ export default function OptionsCollapse() {
     theme: { colors },
   } = useContext(ThemeContext)
   const { signingProvider, onLogOut } = useContext(NetworkContext)
+
+  // Close collapse when clicking anywhere in the window except the collapse items
+  window.addEventListener('click', () => setActiveKey(undefined), false)
+
   return (
     <div className="top-nav-options">
       <Collapse style={{ border: 'none' }} activeKey={activeKey}>
@@ -43,22 +47,30 @@ export default function OptionsCollapse() {
             </Space>
           }
         >
-          <div className="nav-dropdown-item">
-            <ThemePicker />
-          </div>
-          <div className="nav-dropdown-item">
-            <LanguageSelector disableLang="zh" />
-          </div>
-          {signingProvider ? (
+          {/* Do not close collapse when clicking its items*/}
+          <div
+            onClick={e => {
+              setActiveKey(0)
+              e.stopPropagation()
+            }}
+          >
             <div className="nav-dropdown-item">
-              <LogoutOutlined />
-              <div onClick={onLogOut}>
-                <div style={{ margin: '0 0 2px 13px' }}>
-                  <Trans>Disconnect</Trans>
+              <ThemePicker />
+            </div>
+            <div className="nav-dropdown-item">
+              <LanguageSelector disableLang="zh" />
+            </div>
+            {signingProvider ? (
+              <div className="nav-dropdown-item">
+                <LogoutOutlined />
+                <div onClick={onLogOut}>
+                  <div style={{ margin: '0 0 2px 13px' }}>
+                    <Trans>Disconnect</Trans>
+                  </div>
                 </div>
               </div>
-            </div>
-          ) : null}
+            ) : null}
+          </div>
         </CollapsePanel>
       </Collapse>
     </div>

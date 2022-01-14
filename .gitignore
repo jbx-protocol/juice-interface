@@ -24,9 +24,8 @@ yarn-error.log*
 
 mnemonic.txt
 
-# Crowdin and i18n (ignore all except english source file)
-src/locales/**/*
-!src/locales/en/messages.po 
+# i18n
+src/locales/**/*.js
 
 # compiled artifacts
 src/styles/antd.css

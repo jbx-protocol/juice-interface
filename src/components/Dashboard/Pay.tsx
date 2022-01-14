@@ -7,9 +7,7 @@ import PayWarningModal from 'components/modals/PayWarningModal'
 import AMMPrices from 'components/shared/AMMPrices'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
-import { CURRENCY_ETH } from 'constants/currency'
-import { readNetwork } from 'constants/networks'
-import { disablePayOverrides } from 'constants/overrides'
+
 import { ProjectContext } from 'contexts/projectContext'
 import { parseEther } from 'ethers/lib/utils'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
@@ -19,6 +17,10 @@ import { currencyName } from 'utils/currency'
 import { formatWad } from 'utils/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
 import { weightedRate } from 'utils/math'
+
+import { disablePayOverrides } from 'constants/overrides'
+import { readNetwork } from 'constants/networks'
+import { CURRENCY_ETH } from 'constants/currency'
 
 import CurrencySymbol from '../shared/CurrencySymbol'
 

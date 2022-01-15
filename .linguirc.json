@@ -13,5 +13,6 @@
   "fallbackLocales": {
     "default": "en"
   },
-  "locales": ["en", "zh", "ru", "tr"]
+  "locales": ["en", "zh", "ru", "tr"],
+  "sourceLocale": "en"
 }

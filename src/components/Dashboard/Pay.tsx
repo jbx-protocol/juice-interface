@@ -14,7 +14,7 @@ import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { CurrencyOption } from 'models/currency-option'
 import { useContext, useMemo, useState } from 'react'
 import { currencyName } from 'utils/currency'
-import { formatWad } from 'utils/formatNumber'
+import { formatWad, fromWad } from 'utils/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
 import { weightedRate } from 'utils/math'
 
@@ -106,7 +106,7 @@ export default function Pay() {
           style={{ width: '100%' }}
           type="primary"
           disabled={currentFC.configured.eq(0) || isArchived}
-          onClick={weiPayAmt ? pay : undefined}
+          onClick={parseFloat(fromWad(weiPayAmt)) ? pay : undefined}
         >
           {payButtonText}
         </Button>

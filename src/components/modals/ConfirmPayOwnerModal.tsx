@@ -81,7 +81,7 @@ export default function ConfirmPayOwnerModal({
 
   return (
     <Modal
-      title={t`Pay ` + metadata.name}
+      title={t`Pay ${metadata.name}`}
       visible={visible}
       onOk={pay}
       okText={t`Pay`}
@@ -109,23 +109,25 @@ export default function ConfirmPayOwnerModal({
         )}
 
         <Descriptions column={1} bordered>
-          <Descriptions.Item label="Pay amount" className="content-right">
+          <Descriptions.Item label={t`Pay amount`} className="content-right">
             {formattedNum(usdAmount)} {currencyName(1)} ({formatWad(weiAmount)}{' '}
             {currencyName(0)})
           </Descriptions.Item>
           <Descriptions.Item
-            label={(tokenSymbol ?? 'Tokens') + ' for you'}
+            label={t`${tokenSymbol ?? 'Tokens'} for you`}
             className="content-right"
           >
             <div>{formatWad(receivedTickets, { decimals: 0 })}</div>
             <div>
-              <Trans>
-                To: <FormattedAddress address={userAddress} />
-              </Trans>
+              {userAddress ? (
+                <Trans>
+                  To: <FormattedAddress address={userAddress} />
+                </Trans>
+              ) : null}
             </div>
           </Descriptions.Item>
           <Descriptions.Item
-            label={(tokenSymbol ?? 'Tokens') + ' reserved'}
+            label={t`${tokenSymbol ?? 'Tokens'} reserved`}
             className="content-right"
           >
             {formatWad(ownerTickets, { decimals: 0 })}
@@ -153,7 +155,7 @@ export default function ConfirmPayOwnerModal({
             />
           </Form.Item>
           {hasIssuedTokens && (
-            <Form.Item label="Receive ERC20">
+            <Form.Item label={t`Receive ERC20`}>
               <Space align="start">
                 <Checkbox
                   style={{ padding: 20 }}

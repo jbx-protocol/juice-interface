@@ -81,7 +81,7 @@ export default function ConfirmPayOwnerModal({
 
   return (
     <Modal
-      title={t`Pay ' + metadata.name`}
+      title={t`Pay ` + metadata.name}
       visible={visible}
       onOk={pay}
       okText={t`Pay`}

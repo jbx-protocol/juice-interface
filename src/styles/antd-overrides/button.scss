@@ -91,9 +91,33 @@
   }
 }
 
-.feedback-form-link {
+.feedback-button {
   position: fixed;
   background-color: var(--background-l0);
   right: 56px;
   bottom: 40px;
+  padding: 4px 10px;
+  width: 70px;
+  height: 70px;
+  margin: 3px;
+  box-shadow: 3px 3px 7px 0px #88888861;
+  border-radius: 100%;
+  cursor: pointer;
+  img {
+    width: 60px;
+    margin-left: -3px;
+  }
+}
+
+.feedback-button.ant-tooltip-open {
+  background-color: var(--background-l0);
+  box-shadow: 3px 3px 7px 3px #88888861;
+  width: 73px;
+  height: 73px;
+  img {
+    width: 63px;
+  }
+  .show-text-hover {
+    display: inline-block !important;
+  }
 }

@@ -30,7 +30,7 @@ export default function EtherscanLink({
   return (
     <Tooltip trigger={['hover', 'click']} title={t`Go to Etherscan`}>
       <a
-        className="etherscan-link"
+        className="hover-action"
         style={{ fontWeight: 400 }}
         onClick={goToEtherscan}
         href={`https://${subdomain}etherscan.io/${type}/${value}`}

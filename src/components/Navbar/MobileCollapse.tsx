@@ -11,6 +11,8 @@ import { MenuOutlined } from '@ant-design/icons'
 import { ThemeContext } from 'contexts/themeContext'
 import { NetworkContext } from 'contexts/networkContext'
 
+import FeedbackFormLink from 'components/shared/FeedbackFormLink'
+
 import ThemePicker from './ThemePicker'
 import Logo from './Logo'
 import Account from './Account'
@@ -57,9 +59,10 @@ export default function MobileCollapse() {
           }
         >
           {menu(() => setActiveKey(activeKey === 0 ? undefined : 0))}
-          <div style={{ paddingLeft: 15 }}>
+          <div className="nav-subsection">
             <LanguageSelector disableLang="zh" />
             <ThemePicker mobile={true} />
+            <FeedbackFormLink mobile={true} />
           </div>
           <Account mobile={true} />
           {signingProvider ? (

@@ -180,7 +180,12 @@ export default function WithdrawModal({
                   alignItems: 'center',
                 }}
               >
-                <span style={{ marginRight: 8 }}>
+                <span
+                  style={{
+                    marginRight: 8,
+                    color: colors.text.primary,
+                  }}
+                >
                   {currencyName(
                     currentFC.currency.toNumber() as CurrencyOption,
                   )}

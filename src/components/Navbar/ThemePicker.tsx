@@ -15,12 +15,7 @@ export default function ThemePicker({ mobile }: { mobile?: boolean }) {
 
   return (
     <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: mobile ? 'flex-start' : 'space-evenly',
-        cursor: 'pointer',
-      }}
+      className="theme-picker"
       onClick={() =>
         setThemeOption(
           themeOption === ThemeOption.dark

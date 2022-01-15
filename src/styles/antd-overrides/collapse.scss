@@ -135,6 +135,21 @@
       border: none;
     }
   }
+  .nav-subsection {
+    padding-left: 15px;
+    margin-top: 10px;
+    height: 110px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    > div {
+      display: flex;
+      align-items: center;
+    }
+  }
+  .theme-picker {
+    justify-content: flex-start;
+  }
   .account-badge {
     margin: auto !important;
     margin-top: 22px !important;
@@ -171,6 +186,13 @@
   top: 10px;
   right: 50px;
   margin-right: 10px;
+}
+
+.theme-picker {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  justify-content: 'space-evenly';
 }
 
 // Dotdotdot menu in top right

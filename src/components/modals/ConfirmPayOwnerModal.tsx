@@ -119,9 +119,11 @@ export default function ConfirmPayOwnerModal({
           >
             <div>{formatWad(receivedTickets, { decimals: 0 })}</div>
             <div>
-              <Trans>
-                To: <FormattedAddress address={userAddress} />
-              </Trans>
+              {userAddress ? (
+                <Trans>
+                  To: <FormattedAddress address={userAddress} />
+                </Trans>
+              ) : null}
             </div>
           </Descriptions.Item>
           <Descriptions.Item

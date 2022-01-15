@@ -1,34 +1,35 @@
 import './styles/antd.css'
 import './styles/index.scss'
 
-import App from 'components/App'
-import Network from 'Network'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import Theme from 'Theme'
-import User from 'User'
+
+import App from 'App'
+import NetworkProvider from 'providers/NetworkProvider'
+import ThemeProvider from 'providers/ThemeProvider'
+import UserProvider from 'providers/UserProvider'
+import LanguageProvider from 'providers/LanguageProvider'
+import ReactQueryProvier from 'providers/ReactQueryProvider'
 
 import store from './redux/store'
-import reportWebVitals from './reportWebVitals'
-import ProvideReactQuery from './ReactQuery'
-import { LanguageProvider } from './i18n'
+import reportWebVitals from './utils/reportWebVitals'
 
 ReactDOM.render(
   <React.StrictMode>
-    <ProvideReactQuery>
+    <ReactQueryProvier>
       <Provider store={store}>
         <LanguageProvider>
-          <Theme>
-            <Network>
-              <User>
+          <ThemeProvider>
+            <NetworkProvider>
+              <UserProvider>
                 <App />
-              </User>
-            </Network>
-          </Theme>
+              </UserProvider>
+            </NetworkProvider>
+          </ThemeProvider>
         </LanguageProvider>
       </Provider>
-    </ProvideReactQuery>
+    </ReactQueryProvier>
   </React.StrictMode>,
   document.getElementById('root'),
 )

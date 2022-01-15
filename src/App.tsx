@@ -5,9 +5,10 @@ import { NetworkContext } from 'contexts/networkContext'
 import { NetworkName } from 'models/network-name'
 import { useContext, useLayoutEffect, useState } from 'react'
 
+import Navbar from 'components/Navbar'
+
 import { readNetwork } from 'constants/networks'
 
-import Navbar from './Navbar'
 import Router from './Router'
 
 function App() {

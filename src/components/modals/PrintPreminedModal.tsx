@@ -121,8 +121,8 @@ export default function PrintPreminedModal({
           rules={[
             {
               required: true,
-              validator: () => {
-                if (!utils.isAddress(value))
+              validator: (rule, value) => {
+                if (!value || !utils.isAddress(value))
                   return Promise.reject('Not a valid ETH address')
                 else return Promise.resolve()
               },
@@ -135,7 +135,11 @@ export default function PrintPreminedModal({
           formItemProps={formItemProps}
           value={value}
           onChange={val => setValue(val ?? '0')}
-          accessory={<InputAccessoryButton content="ETH" />}
+          accessory={
+            terminal?.version === '1' ? (
+              <InputAccessoryButton content="ETH" />
+            ) : undefined
+          }
         />
         <Form.Item label="Memo" name="memo">
           <Input placeholder="Memo included on-chain (optional)" />

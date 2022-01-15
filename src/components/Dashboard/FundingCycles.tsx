@@ -32,13 +32,13 @@ export default function FundingCycles({
     let text: string
     switch (option) {
       case 'current':
-        text = t`Pay`
+        text = t`Current`
         break
       case 'upcoming':
-        text = t`Redeem`
+        text = t`Upcoming`
         break
       case 'history':
-        text = t`Withdraw`
+        text = t`History`
         break
     }
     return (

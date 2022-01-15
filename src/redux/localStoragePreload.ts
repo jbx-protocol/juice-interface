@@ -1,4 +1,5 @@
 import { Middleware } from '@reduxjs/toolkit'
+
 import { defaultProjectState } from './slices/editingProject'
 
 import { RootState } from './store'

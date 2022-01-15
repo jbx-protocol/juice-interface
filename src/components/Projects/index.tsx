@@ -5,12 +5,14 @@ import Search from 'antd/lib/input/Search'
 import FeedbackFormLink from 'components/shared/FeedbackFormLink'
 import Loading from 'components/shared/Loading'
 import ProjectsGrid from 'components/shared/ProjectsGrid'
-import { layouts } from 'constants/styles/layouts'
+
 import { ThemeContext } from 'contexts/themeContext'
 import { useInfiniteProjectsQuery, useProjectsSearch } from 'hooks/Projects'
 import { ProjectState } from 'models/project-visibility'
 import { TerminalVersion } from 'models/terminal-version'
 import { useContext, useEffect, useMemo, useRef, useState } from 'react'
+
+import { layouts } from 'constants/styles/layouts'
 
 type OrderByOption = 'createdAt' | 'totalPaid'
 

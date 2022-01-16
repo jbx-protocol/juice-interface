@@ -1,11 +1,13 @@
-import { Button, Modal, Form, Input } from 'antd'
-import CurrencySymbol from 'components/shared/CurrencySymbol'
-import Mod from 'components/shared/Mod'
+import { Button, Form, Input, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
+import CurrencySymbol from 'components/shared/CurrencySymbol'
+import { getTotalPercentage } from 'components/shared/formItems/formHelpers'
+import Mod from 'components/shared/Mod'
+
 import { ProjectContext } from 'contexts/projectContext'
-import { UserContext } from 'contexts/userContext'
 import { BigNumber, constants } from 'ethers'
 import { OperatorPermission, useHasPermission } from 'hooks/HasPermission'
+import { useSetPayoutModsTx } from 'hooks/transactor/SetPayoutModsTx'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
 import { PayoutMod } from 'models/mods'
@@ -13,10 +15,8 @@ import { useContext, useLayoutEffect, useMemo, useState } from 'react'
 import { formatWad, fromPermyriad, fromWad } from 'utils/formatNumber'
 import { amountSubFee } from 'utils/math'
 
-import { getTotalPercentage } from 'components/shared/formItems/formHelpers'
-
-import ProjectPayoutMods from './formItems/ProjectPayoutMods'
 import { CURRENCY_ETH } from 'constants/currency'
+import ProjectPayoutMods from './formItems/ProjectPayoutMods'
 
 export default function PayoutModsList({
   mods,
@@ -39,8 +39,8 @@ export default function PayoutModsList({
   const [modalVisible, setModalVisible] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
   const [editingMods, setEditingMods] = useState<PayoutMod[]>()
-  const { transactor, contracts } = useContext(UserContext)
   const { owner } = useContext(ProjectContext)
+  const setPayoutModsTx = useSetPayoutModsTx()
 
   const { editableMods, lockedMods } = useMemo(() => {
     const now = new Date().valueOf() / 1000
@@ -54,34 +54,18 @@ export default function PayoutModsList({
 
   useLayoutEffect(() => setEditingMods(editableMods), [editableMods])
 
-  function setMods() {
-    form.validateFields()
-    if (
-      !transactor ||
-      !contracts ||
-      !projectId ||
-      !fundingCycle ||
-      !editingMods
-    )
-      return
+  async function setMods() {
+    await form.validateFields()
+
+    if (!fundingCycle || !editingMods) return
 
     setLoading(true)
 
-    transactor(
-      contracts.ModStore,
-      'setPayoutMods',
-      [
-        projectId.toHexString(),
-        fundingCycle.configured.toHexString(),
-        [...lockedMods, ...editingMods].map(m => ({
-          preferUnstaked: false,
-          percent: BigNumber.from(m.percent).toHexString(),
-          lockedUntil: BigNumber.from(m.lockedUntil ?? 0).toHexString(),
-          beneficiary: m.beneficiary || constants.AddressZero,
-          projectId: m.projectId || BigNumber.from(0).toHexString(),
-          allocator: constants.AddressZero,
-        })),
-      ],
+    setPayoutModsTx(
+      {
+        configured: fundingCycle.configured,
+        payoutMods: [...lockedMods, ...editingMods],
+      },
       {
         onDone: () => setLoading(false),
         onConfirmed: () => {

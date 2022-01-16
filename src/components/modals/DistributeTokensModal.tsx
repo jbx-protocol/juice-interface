@@ -1,12 +1,11 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
-
 import { Modal, Space } from 'antd'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import TicketModsList from 'components/shared/TicketModsList'
 import { ProjectContext } from 'contexts/projectContext'
-import { UserContext } from 'contexts/userContext'
 import useContractReader from 'hooks/ContractReader'
+import { useDistributeTokensTx } from 'hooks/transactor/DistributeTokensTx'
 import { useContext, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatWad } from 'utils/formatNumber'
@@ -22,7 +21,6 @@ export default function DistributeTokensModal({
   onConfirmed?: VoidFunction
 }) {
   const [loading, setLoading] = useState<boolean>()
-  const { contracts, transactor } = useContext(UserContext)
   const {
     tokenSymbol,
     currentFC,
@@ -31,6 +29,7 @@ export default function DistributeTokensModal({
     owner,
     terminal,
   } = useContext(ProjectContext)
+  const distributeTokensTx = useDistributeTokensTx()
 
   const terminalContractName = terminal?.name
 
@@ -50,16 +49,10 @@ export default function DistributeTokensModal({
   })
 
   function distribute() {
-    if (!transactor || !contracts || !projectId || !terminal) return
-
     setLoading(true)
 
-    transactor(
-      terminal.version === '1.1'
-        ? contracts.TerminalV1_1
-        : contracts.TerminalV1,
-      'printReservedTickets',
-      [projectId.toHexString()],
+    distributeTokensTx(
+      {},
       {
         onDone: () => setLoading(false),
         onConfirmed: () => onConfirmed && onConfirmed(),

@@ -1,4 +1,4 @@
-import { Transactor } from 'hooks/Transactor'
+import { Transactor } from 'hooks/transactor/Transactor'
 import { Contracts } from 'models/contracts'
 import { createContext } from 'react'
 

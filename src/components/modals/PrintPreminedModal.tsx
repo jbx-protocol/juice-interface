@@ -1,12 +1,11 @@
-import { BigNumber } from '@ethersproject/bignumber'
-import { Contract } from '@ethersproject/contracts'
 import { Form, Input, Modal, Switch } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
+
 import { ProjectContext } from 'contexts/projectContext'
-import { UserContext } from 'contexts/userContext'
 import { constants, utils } from 'ethers'
+import { usePrintTokensTx } from 'hooks/transactor/PrintTokensTx'
 import { useContext, useMemo, useState } from 'react'
 import { parseWad } from 'utils/formatNumber'
 
@@ -19,9 +18,8 @@ export default function PrintPreminedModal({
   visible: boolean | undefined
   onCancel: VoidFunction
 }) {
-  const { contracts, transactor } = useContext(UserContext)
-  const { tokenSymbol, tokenAddress, projectId, terminal } =
-    useContext(ProjectContext)
+  const { tokenSymbol, tokenAddress, terminal } = useContext(ProjectContext)
+  const printTokensTx = usePrintTokensTx()
   const [form] = useForm<{
     beneficary: string
     preferUnstaked: boolean
@@ -32,51 +30,32 @@ export default function PrintPreminedModal({
   const [loading, setLoading] = useState<boolean>()
 
   async function mint() {
-    if (!contracts || !projectId || !transactor || !terminal?.version) return
+    const beneficiary = form.getFieldValue('beneficary')
+    if (!utils.isAddress(beneficiary)) return
 
     setLoading(true)
 
     await form.validateFields()
 
-    let terminalContract: Contract
-    let functionName: string
-    let args: any[]
-
-    switch (terminal.version) {
-      case '1':
-        terminalContract = contracts.TerminalV1
-        functionName = 'printPreminedTickets'
-        args = [
-          projectId.toHexString(),
-          parseWad(value).toHexString(),
-          BigNumber.from(CURRENCY_ETH).toHexString(),
-          form.getFieldValue('beneficary') ?? '',
-          form.getFieldValue('memo') ?? '',
-          form.getFieldValue('preferUnstaked'),
-        ]
-        break
-      case '1.1':
-        terminalContract = contracts.TerminalV1_1
-        functionName = 'printTickets'
-        args = [
-          projectId.toHexString(),
-          parseWad(value).toHexString(),
-          form.getFieldValue('beneficary') ?? '',
-          form.getFieldValue('memo') ?? '',
-          form.getFieldValue('preferUnstaked'),
-        ]
-    }
-
-    transactor(terminalContract, functionName, args, {
-      onConfirmed: () => {
-        form.resetFields()
-        setValue('0')
-        if (onCancel) onCancel()
+    printTokensTx(
+      {
+        value: parseWad(value),
+        currency: CURRENCY_ETH,
+        beneficiary,
+        memo: form.getFieldValue('memo'),
+        preferUnstaked: form.getFieldValue('preferUnstaked'),
       },
-      onDone: () => {
-        setLoading(false)
+      {
+        onConfirmed: () => {
+          form.resetFields()
+          setValue('0')
+          if (onCancel) onCancel()
+        },
+        onDone: () => {
+          setLoading(false)
+        },
       },
-    })
+    )
   }
 
   const formItemProps: { label: string; extra: string } | undefined =

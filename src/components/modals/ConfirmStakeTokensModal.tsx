@@ -3,14 +3,14 @@ import { Modal } from 'antd'
 import { t, Trans } from '@lingui/macro'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
-import { ProjectContext } from 'contexts/projectContext'
-import { UserContext } from 'contexts/userContext'
 import { NetworkContext } from 'contexts/networkContext'
+import { ProjectContext } from 'contexts/projectContext'
 import useContractReader, { ContractUpdateOn } from 'hooks/ContractReader'
+import { useErc20Contract } from 'hooks/Erc20Contract'
+import { useStakeTokensTx } from 'hooks/transactor/StakeTokensTx'
 import { useContext, useLayoutEffect, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { fromWad, parseWad } from 'utils/formatNumber'
-import { useErc20Contract } from 'hooks/Erc20Contract'
 
 export default function ConfirmStakeTokensModal({
   visible,
@@ -23,10 +23,10 @@ export default function ConfirmStakeTokensModal({
 }) {
   const [loading, setLoading] = useState<boolean>()
   const [stakeAmount, setStakeAmount] = useState<string>()
-  const { contracts, transactor } = useContext(UserContext)
   const { userAddress } = useContext(NetworkContext)
-  const { tokenSymbol, projectId, tokenAddress } = useContext(ProjectContext)
+  const { tokenSymbol, tokenAddress } = useContext(ProjectContext)
   const ticketContract = useErc20Contract(tokenAddress)
+  const stakeTokensTx = useStakeTokensTx()
 
   const ticketsBalance = useContractReader<BigNumber>({
     contract: ticketContract,
@@ -41,18 +41,10 @@ export default function ConfirmStakeTokensModal({
   }, [ticketsBalance])
 
   function stake() {
-    if (!transactor || !contracts || !userAddress || !projectId) return
-
     setLoading(true)
 
-    transactor(
-      contracts.TicketBooth,
-      'stake',
-      [
-        userAddress,
-        projectId.toHexString(),
-        parseWad(stakeAmount).toHexString(),
-      ],
+    stakeTokensTx(
+      { amount: parseWad(stakeAmount) },
       {
         onDone: () => setLoading(false),
         onConfirmed: onCancel ? () => onCancel() : undefined,

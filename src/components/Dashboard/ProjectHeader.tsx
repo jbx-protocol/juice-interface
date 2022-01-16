@@ -262,7 +262,6 @@ export default function ProjectHeader() {
 
       <EditProjectModal
         visible={editProjectModalVisible}
-        projectId={projectId}
         metadata={metadata}
         handle={handle}
         onSuccess={() => setEditProjectModalVisible(false)}

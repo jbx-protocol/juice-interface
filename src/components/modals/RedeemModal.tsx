@@ -7,10 +7,10 @@ import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { NetworkContext } from 'contexts/networkContext'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { UserContext } from 'contexts/userContext'
 import { BigNumber } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
 import { useRedeemRate } from 'hooks/RedeemRate'
+import { useRedeemTokensTx } from 'hooks/transactor/RedeemTokensTx'
 import { CSSProperties, useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formattedNum, formatWad, fromWad, parseWad } from 'utils/formatNumber'
@@ -33,12 +33,12 @@ export default function RedeemModal({
 }) {
   const [redeemAmount, setRedeemAmount] = useState<string>()
   const [loading, setLoading] = useState<boolean>()
+  const redeemTokensTx = useRedeemTokensTx()
 
   const {
     theme: { colors },
   } = useContext(ThemeContext)
   const { userAddress } = useContext(NetworkContext)
-  const { contracts, transactor } = useContext(UserContext)
   const { projectId, tokenSymbol, currentFC, terminal } =
     useContext(ProjectContext)
 
@@ -83,27 +83,16 @@ export default function RedeemModal({
     : rewardAmount
 
   function redeem() {
-    if (!transactor || !contracts || !rewardAmount || !terminal) return
+    if (!minAmount) return
 
     setLoading(true)
 
-    const redeemWad = parseWad(redeemAmount)
-
-    if (!redeemWad || !projectId) return
-
-    transactor(
-      terminal.version === '1.1'
-        ? contracts.TerminalV1_1
-        : contracts.TerminalV1,
-      'redeem',
-      [
-        userAddress,
-        projectId.toHexString(),
-        redeemWad.toHexString(),
+    redeemTokensTx(
+      {
+        redeemAmount: parseWad(redeemAmount),
         minAmount,
-        userAddress,
-        false, // TODO preferconverted
-      ],
+        preferConverted: false, // TODO support in UI
+      },
       {
         onConfirmed: () => setRedeemAmount(undefined),
         onDone: () => setLoading(false),

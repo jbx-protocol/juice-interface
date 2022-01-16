@@ -1,15 +1,17 @@
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import ProjectHandle from 'components/shared/ProjectHandle'
+
 import { ThemeContext } from 'contexts/themeContext'
+import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { TapEvent } from 'models/subgraph-entities/tap-event'
 import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
 
-import { smallHeaderStyle } from '../styles'
-import useSubgraphQuery from '../../../hooks/SubgraphQuery'
 import { CURRENCY_ETH } from 'constants/currency'
+
+import { smallHeaderStyle } from '../styles'
 
 export default function TapEventElem({
   tapEvent,

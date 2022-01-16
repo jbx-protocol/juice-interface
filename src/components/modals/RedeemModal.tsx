@@ -1,5 +1,5 @@
-import { Modal, Space } from 'antd'
 import { Trans } from '@lingui/macro'
+import { Modal, Space } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
@@ -10,14 +10,13 @@ import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
 import { BigNumber } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
+import { useRedeemRate } from 'hooks/RedeemRate'
 import { CSSProperties, useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formattedNum, formatWad, fromWad, parseWad } from 'utils/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
 
 import { CURRENCY_ETH, CURRENCY_USD } from 'constants/currency'
-
-import { useRedeemRate } from '../../hooks/RedeemRate'
 
 export default function RedeemModal({
   visible,

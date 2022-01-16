@@ -1,13 +1,10 @@
-import React, { useContext, useRef, useState } from 'react'
-
-import { Provider } from 'react-redux'
-
 import { Button } from 'antd'
+import { ProjectContext } from 'contexts/projectContext'
+import React, { useContext, useRef, useState } from 'react'
+import { Provider } from 'react-redux'
+import store, { createStore } from 'redux/store'
 
 import ReconfigureFCModal from '../modals/ReconfigureFCModal'
-import store, { createStore } from '../../redux/store'
-
-import { ProjectContext } from '../../contexts/projectContext'
 
 interface Props {}
 

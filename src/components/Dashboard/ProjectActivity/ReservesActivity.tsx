@@ -1,9 +1,9 @@
 import { ProjectContext } from 'contexts/projectContext'
+import { useInfiniteSubgraphQuery } from 'hooks/SubgraphQuery'
 import React, { useContext } from 'react'
 
-import ReservesEventElem from './ReservesEventElem'
-import { useInfiniteSubgraphQuery } from '../../../hooks/SubgraphQuery'
 import ActivityTabContent from './ActivityTabContent'
+import ReservesEventElem from './ReservesEventElem'
 
 export function ReservesActivity({ pageSize }: { pageSize: number }) {
   const { projectId } = useContext(ProjectContext)

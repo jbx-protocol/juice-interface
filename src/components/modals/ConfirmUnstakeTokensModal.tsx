@@ -1,18 +1,18 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Modal, Form, Space } from 'antd'
+import { Form, Modal, Space } from 'antd'
+import FormattedAddress from 'components/shared/FormattedAddress'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
-import { ProjectContext } from 'contexts/projectContext'
-import { UserContext } from 'contexts/userContext'
 import { NetworkContext } from 'contexts/networkContext'
+import { ProjectContext } from 'contexts/projectContext'
+import { ThemeContext } from 'contexts/themeContext'
+import { constants } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
+import { useUnstakeTokensTx } from 'hooks/transactor/UnstakeTokensTx'
 import { ContractName } from 'models/contract-name'
 import { useContext, useLayoutEffect, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
-import FormattedAddress from 'components/shared/FormattedAddress'
-import { constants } from 'ethers'
-import { ThemeContext } from 'contexts/themeContext'
 
 import { t, Trans } from '@lingui/macro'
 
@@ -25,12 +25,12 @@ export default function ConfirmUnstakeTokensModal({
 }) {
   const [loading, setLoading] = useState<boolean>()
   const [unstakeAmount, setUnstakeAmount] = useState<string>()
-  const { contracts, transactor } = useContext(UserContext)
   const { userAddress } = useContext(NetworkContext)
   const {
     theme: { colors },
   } = useContext(ThemeContext)
   const { tokenSymbol, tokenAddress, projectId } = useContext(ProjectContext)
+  const unstakeTokensTx = useUnstakeTokensTx()
 
   const iouBalance = useContractReader<BigNumber>({
     contract: ContractName.TicketBooth,
@@ -46,24 +46,15 @@ export default function ConfirmUnstakeTokensModal({
 
   function unstake() {
     if (
-      !transactor ||
-      !contracts ||
-      !userAddress ||
-      !projectId ||
+      !unstakeAmount ||
       parseWad(unstakeAmount).eq(0) // Disable claiming 0 tokens
     )
       return
 
     setLoading(true)
 
-    transactor(
-      contracts.TicketBooth,
-      'unstake',
-      [
-        userAddress,
-        projectId.toHexString(),
-        parseWad(unstakeAmount).toHexString(),
-      ],
+    unstakeTokensTx(
+      { unstakeAmount: parseWad(unstakeAmount) },
       {
         onDone: () => setLoading(false),
         onConfirmed: onCancel ? () => onCancel() : undefined,

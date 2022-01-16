@@ -1,15 +1,17 @@
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import FormattedAddress from 'components/shared/FormattedAddress'
+
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
+import { useInfiniteSubgraphQuery } from 'hooks/SubgraphQuery'
 import React, { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
 
-import { contentLineHeight, smallHeaderStyle } from './styles'
-import { useInfiniteSubgraphQuery } from '../../../hooks/SubgraphQuery'
-import ActivityTabContent from './ActivityTabContent'
 import { CURRENCY_ETH } from 'constants/currency'
+
+import ActivityTabContent from './ActivityTabContent'
+import { contentLineHeight, smallHeaderStyle } from './styles'
 
 export function RedeemActivity({ pageSize }: { pageSize: number }) {
   const { projectId, tokenSymbol } = useContext(ProjectContext)

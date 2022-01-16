@@ -1,13 +1,13 @@
 import FormattedAddress from 'components/shared/FormattedAddress'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
+import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { PrintReservesEvent } from 'models/subgraph-entities/print-reserves-event'
 import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
 
 import { smallHeaderStyle } from '../styles'
-import useSubgraphQuery from '../../../hooks/SubgraphQuery'
 
 export default function ReservesEventElem({
   printReservesEvent,

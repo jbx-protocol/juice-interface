@@ -92,9 +92,9 @@ export default function Spending({
                   currency={currentFC.currency.toNumber() as CurrencyOption}
                 />
                 {formatWad(currentFC.tapped, { precision: 4 }) || '0'}
-                {hasFundingTarget(currentFC) && (
+                {hasFundingTarget(currentFC) ? (
                   <span>/{formatWad(currentFC.target, { precision: 4 })} </span>
-                )}{' '}
+                ) : null}{' '}
                 withdrawn
               </Trans>
             </div>

@@ -14,7 +14,11 @@ import { NETWORKS } from 'constants/networks'
 
 const KEY_SELECTED_WALLET = 'selectedWallet'
 
-export default function Network({ children }: { children: ChildElems }) {
+export default function NetworkProvider({
+  children,
+}: {
+  children: ChildElems
+}) {
   const { isDarkMode } = useContext(ThemeContext)
 
   const [signingProvider, setSigningProvider] = useState<Web3Provider>()

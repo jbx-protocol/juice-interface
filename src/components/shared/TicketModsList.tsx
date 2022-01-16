@@ -1,12 +1,11 @@
+import { t, Trans } from '@lingui/macro'
 import { Button, Modal } from 'antd'
 import ProjectTicketMods from 'components/shared/formItems/ProjectTicketMods'
-import { t, Trans } from '@lingui/macro'
-
 import Mod from 'components/shared/Mod'
 import { ProjectContext } from 'contexts/projectContext'
-import { UserContext } from 'contexts/userContext'
-import { BigNumber, constants } from 'ethers'
+import { BigNumber } from 'ethers'
 import { OperatorPermission, useHasPermission } from 'hooks/HasPermission'
+import { useSetTicketModsTx } from 'hooks/transactor/SetTicketModsTx'
 import { FundingCycle } from 'models/funding-cycle'
 import { TicketMod } from 'models/mods'
 import { useContext, useLayoutEffect, useMemo, useState } from 'react'
@@ -26,8 +25,8 @@ export default function TicketModsList({
   const [modalVisible, setModalVisible] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
   const [editingMods, setEditingMods] = useState<TicketMod[]>()
-  const { transactor, contracts } = useContext(UserContext)
   const { owner, tokenSymbol } = useContext(ProjectContext)
+  const setTicketModsTx = useSetTicketModsTx()
 
   const { editableMods, lockedMods } = useMemo(() => {
     const now = new Date().valueOf() / 1000
@@ -42,30 +41,15 @@ export default function TicketModsList({
   useLayoutEffect(() => setEditingMods(editableMods), [editableMods])
 
   function setMods() {
-    if (
-      !transactor ||
-      !contracts ||
-      !projectId ||
-      !fundingCycle ||
-      !editingMods
-    )
-      return
+    if (!fundingCycle || !editingMods) return
 
     setLoading(true)
 
-    transactor(
-      contracts.ModStore,
-      'setTicketMods',
-      [
-        projectId.toHexString(),
-        fundingCycle.configured.toHexString(),
-        [...lockedMods, ...editingMods].map(m => ({
-          preferUnstaked: false,
-          percent: BigNumber.from(m.percent).toHexString(),
-          lockedUntil: BigNumber.from(m.lockedUntil ?? 0).toHexString(),
-          beneficiary: m.beneficiary || constants.AddressZero,
-        })),
-      ],
+    setTicketModsTx(
+      {
+        configured: fundingCycle.configured,
+        ticketMods: [...lockedMods, ...editingMods],
+      },
       {
         onDone: () => setLoading(false),
         onConfirmed: () => {

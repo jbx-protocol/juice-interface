@@ -1,34 +1,23 @@
 import { InfoCircleOutlined } from '@ant-design/icons'
-import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Form, Input, Modal, Space, Tooltip } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import { UserContext } from 'contexts/userContext'
-import { useContext, useState } from 'react'
+import { useIssueTokensTx } from 'hooks/transactor/IssueTokensTx'
+import { useState } from 'react'
 
-export default function IssueTickets({
-  projectId,
-}: {
-  projectId: BigNumber | undefined
-}) {
-  const { transactor, contracts } = useContext(UserContext)
+export default function IssueTickets() {
   const [modalVisible, setModalVisible] = useState<boolean>()
   const [loading, setLoading] = useState<boolean>()
   const [form] = useForm<{ name: string; symbol: string }>()
+  const issueTokensTx = useIssueTokensTx()
 
   function issue() {
-    if (!projectId || !transactor || !contracts) return
-
     setLoading(true)
 
     const fields = form.getFieldsValue(true)
 
-    transactor(
-      contracts.TicketBooth,
-      'issue',
-      [projectId.toHexString(), fields.name, fields.symbol],
-      {
-        onDone: () => setModalVisible(false),
-      },
+    issueTokensTx(
+      { name: fields.name, symbol: fields.symbol },
+      { onDone: () => setModalVisible(false) },
     )
   }
 

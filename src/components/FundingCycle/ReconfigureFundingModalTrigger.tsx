@@ -16,16 +16,7 @@ interface Props {}
 // are independent.
 
 const ReconfigureFundingModalTrigger: React.FC<Props> = () => {
-  const {
-    projectId,
-    currentFC,
-    queuedFC,
-    queuedPayoutMods,
-    queuedTicketMods,
-    currentPayoutMods,
-    currentTicketMods,
-    isPreviewMode,
-  } = useContext(ProjectContext)
+  const { isPreviewMode } = useContext(ProjectContext)
 
   const localStoreRef = useRef<typeof store>()
 
@@ -52,14 +43,6 @@ const ReconfigureFundingModalTrigger: React.FC<Props> = () => {
         <Provider store={localStoreRef.current}>
           <ReconfigureFCModal
             visible={reconfigureModalVisible}
-            fundingCycle={queuedFC?.number.gt(0) ? queuedFC : currentFC}
-            payoutMods={
-              queuedFC?.number.gt(0) ? queuedPayoutMods : currentPayoutMods
-            }
-            ticketMods={
-              queuedFC?.number.gt(0) ? queuedTicketMods : currentTicketMods
-            }
-            projectId={projectId}
             onDone={() => setReconfigureModalVisible(false)}
           />
         </Provider>

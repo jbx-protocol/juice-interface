@@ -7,10 +7,11 @@ import FormattedAddress from 'components/shared/FormattedAddress'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import PayoutModsList from 'components/shared/PayoutModsList'
+
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { UserContext } from 'contexts/userContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
+import { useTapProjectTx } from 'hooks/transactor/TapProjectTx'
 import { CurrencyOption } from 'models/currency-option'
 import { useContext, useEffect, useState } from 'react'
 import { currencyName } from 'utils/currency'
@@ -30,18 +31,12 @@ export default function WithdrawModal({
 }) {
   const [loading, setLoading] = useState<boolean>()
   const [tapAmount, setTapAmount] = useState<string>()
-  const { transactor, contracts } = useContext(UserContext)
-  const {
-    balanceInCurrency,
-    projectId,
-    currentFC,
-    currentPayoutMods,
-    owner,
-    terminal,
-  } = useContext(ProjectContext)
+  const { balanceInCurrency, projectId, currentFC, currentPayoutMods, owner } =
+    useContext(ProjectContext)
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+  const tapProjectTx = useTapProjectTx()
 
   const converter = useCurrencyConverter()
 
@@ -65,21 +60,7 @@ export default function WithdrawModal({
     : balanceInCurrency
 
   function tap() {
-    if (
-      !transactor ||
-      !contracts?.TerminalV1_1 ||
-      !currentFC ||
-      !projectId ||
-      !terminal?.version
-    )
-      return
-
-    setLoading(true)
-
-    if (!tapAmount) {
-      setLoading(false)
-      return
-    }
+    if (!currentFC || !tapAmount) return
 
     const minAmount = (
       currentFC.currency.eq(CURRENCY_USD)
@@ -87,21 +68,18 @@ export default function WithdrawModal({
         : parseWad(tapAmount)
     )?.sub(1e12) // Arbitrary value subtracted
 
-    transactor(
-      terminal.version === '1.1'
-        ? contracts.TerminalV1_1
-        : contracts.TerminalV1,
-      'tap',
-      [
-        projectId.toHexString(),
-        parseWad(tapAmount).toHexString(),
-        currentFC.currency.toHexString(),
-        minAmount?.toHexString(),
-      ],
+    if (!minAmount) return
+
+    setLoading(true)
+
+    tapProjectTx(
       {
-        onDone: () => {
-          setLoading(false)
-        },
+        tapAmount: parseWad(tapAmount),
+        currency: currentFC.currency.toNumber() as CurrencyOption,
+        minAmount,
+      },
+      {
+        onDone: () => setLoading(false),
         onConfirmed: () => onConfirmed && onConfirmed(),
       },
     )

@@ -1,6 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
-
 import { Button, Descriptions, Modal, Space, Statistic, Tooltip } from 'antd'
 import ConfirmUnstakeTokensModal from 'components/modals/ConfirmUnstakeTokensModal'
 import ParticipantsModal from 'components/modals/ParticipantsModal'
@@ -262,7 +261,7 @@ export default function Rewards({
         />
 
         {!ticketsIssued && hasIssueTicketsPermission && !isPreviewMode && (
-          <IssueTickets projectId={projectId} />
+          <IssueTickets />
         )}
       </Space>
 

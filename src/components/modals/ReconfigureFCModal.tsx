@@ -14,15 +14,13 @@ import TicketModsList from 'components/shared/TicketModsList'
 
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { UserContext } from 'contexts/userContext'
 import { constants } from 'ethers'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useEditingFundingCycleSelector } from 'hooks/AppSelector'
 import { useTerminalFee } from 'hooks/TerminalFee'
+import { useConfigureProjectTx } from 'hooks/transactor/ConfigureProjectTx'
 import { CurrencyOption } from 'models/currency-option'
-import { FundingCycle } from 'models/funding-cycle'
 import { FundingCycleMetadata } from 'models/funding-cycle-metadata'
-import { FCProperties } from 'models/funding-cycle-properties'
 import { PayoutMod, TicketMod } from 'models/mods'
 import { useCallback, useContext, useLayoutEffect, useState } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
@@ -49,21 +47,12 @@ import PayModsForm from '../Create/PayModsForm'
 import TicketingForm, { TicketingFormFields } from '../Create/TicketingForm'
 
 export default function ReconfigureFCModal({
-  fundingCycle,
-  projectId,
   visible,
   onDone,
-  payoutMods,
-  ticketMods,
 }: {
   visible?: boolean
-  fundingCycle: FundingCycle | undefined
-  projectId: BigNumber | undefined
-  payoutMods: PayoutMod[] | undefined
-  ticketMods: TicketMod[] | undefined
   onDone?: VoidFunction
 }) {
-  const { transactor, contracts } = useContext(UserContext)
   const { colors, radii } = useContext(ThemeContext).theme
   const [currentStep, setCurrentStep] = useState<number>()
   const [payModsModalVisible, setPayModsFormModalVisible] =
@@ -87,9 +76,19 @@ export default function ReconfigureFCModal({
   const [editingPayoutMods, setEditingPayoutMods] = useState<PayoutMod[]>([])
   const [editingTicketMods, setEditingTicketMods] = useState<TicketMod[]>([])
   const dispatch = useAppDispatch()
-  const { currentFC, terminal, isPreviewMode } = useContext(ProjectContext)
+  const {
+    queuedFC,
+    currentFC,
+    terminal,
+    isPreviewMode,
+    queuedPayoutMods,
+    currentPayoutMods,
+    queuedTicketMods,
+    currentTicketMods,
+  } = useContext(ProjectContext)
   const editingFC = useEditingFundingCycleSelector()
   const terminalFee = useTerminalFee(terminal?.version)
+  const configureProjectTx = useConfigureProjectTx()
 
   const resetTicketingForm = () =>
     ticketingForm.setFieldsValue({
@@ -149,6 +148,14 @@ export default function ReconfigureFCModal({
   }
 
   useLayoutEffect(() => {
+    const fundingCycle = queuedFC?.number.gt(0) ? queuedFC : currentFC
+    const payoutMods = queuedFC?.number.gt(0)
+      ? queuedPayoutMods
+      : currentPayoutMods
+    const ticketMods = queuedFC?.number.gt(0)
+      ? queuedTicketMods
+      : currentTicketMods
+
     if (
       !visible ||
       isPreviewMode ||
@@ -184,10 +191,13 @@ export default function ReconfigureFCModal({
       })
     }
   }, [
+    currentFC,
+    queuedFC,
+    currentPayoutMods,
+    queuedPayoutMods,
+    currentTicketMods,
+    queuedTicketMods,
     dispatch,
-    fundingCycle,
-    payoutMods,
-    ticketMods,
     ticketingForm,
     restrictedActionsForm,
     isPreviewMode,
@@ -195,59 +205,30 @@ export default function ReconfigureFCModal({
   ])
 
   async function reconfigure() {
-    if (
-      !transactor ||
-      !contracts?.TerminalV1_1 ||
-      !projectId ||
-      !terminal?.version
-    )
-      return
-
     setLoading(true)
 
-    const properties: Record<keyof FCProperties, string> = {
-      target: editingFC.target.toHexString(),
-      currency: editingFC.currency.toHexString(),
-      duration: editingFC.duration.toHexString(),
-      discountRate: editingFC.discountRate.toHexString(),
-      cycleLimit: BigNumber.from(0).toHexString(),
-      ballot: editingFC.ballot,
-    }
-
-    const metadata: Omit<FundingCycleMetadata, 'version'> = {
-      reservedRate: editingFC.reserved.toNumber(),
-      bondingCurveRate: editingFC.bondingCurveRate.toNumber(),
-      reconfigurationBondingCurveRate: editingFC.bondingCurveRate.toNumber(),
-      payIsPaused: editingFC.payIsPaused,
-      ticketPrintingIsAllowed: editingFC.ticketPrintingIsAllowed,
-      treasuryExtension: constants.AddressZero,
-    }
-
-    transactor(
-      terminal.version === '1.1'
-        ? contracts.TerminalV1_1
-        : contracts.TerminalV1,
-      'configure',
-      [
-        projectId.toHexString(),
-        properties,
-        metadata,
-        editingPayoutMods.map(m => ({
-          preferUnstaked: false,
-          percent: BigNumber.from(m.percent).toHexString(),
-          lockedUntil: BigNumber.from(m.lockedUntil ?? 0).toHexString(),
-          beneficiary: m.beneficiary || constants.AddressZero,
-          projectId: m.projectId || BigNumber.from(0).toHexString(),
-          allocator: constants.AddressZero,
-        })),
-        editingTicketMods.map(m => ({
-          preferUnstaked: false,
-          percent: BigNumber.from(m.percent).toHexString(),
-          lockedUntil: BigNumber.from(m.lockedUntil ?? 0).toHexString(),
-          beneficiary: m.beneficiary || constants.AddressZero,
-          allocator: constants.AddressZero,
-        })),
-      ],
+    configureProjectTx(
+      {
+        fcProperties: {
+          target: editingFC.target,
+          currency: editingFC.currency,
+          duration: editingFC.duration,
+          discountRate: editingFC.discountRate,
+          cycleLimit: BigNumber.from(0), // TODO support in UI
+          ballot: editingFC.ballot,
+        },
+        fcMetadata: {
+          reservedRate: editingFC.reserved.toNumber(),
+          bondingCurveRate: editingFC.bondingCurveRate.toNumber(),
+          reconfigurationBondingCurveRate:
+            editingFC.bondingCurveRate.toNumber(),
+          payIsPaused: editingFC.payIsPaused,
+          ticketPrintingIsAllowed: editingFC.ticketPrintingIsAllowed,
+          treasuryExtension: constants.AddressZero,
+        },
+        payoutMods: editingPayoutMods,
+        ticketMods: editingTicketMods,
+      },
       {
         onDone: () => {
           setLoading(false)

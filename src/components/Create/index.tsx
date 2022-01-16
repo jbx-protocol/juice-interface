@@ -1,7 +1,6 @@
 import { CaretRightFilled, CheckCircleFilled } from '@ant-design/icons'
-import { t } from '@lingui/macro'
 import { BigNumber } from '@ethersproject/bignumber'
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Button, Col, Drawer, DrawerProps, Row, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import Modal from 'antd/lib/modal/Modal'
@@ -9,19 +8,17 @@ import Project from 'components/Dashboard/Project'
 import { NetworkContext } from 'contexts/networkContext'
 import { ProjectContext, ProjectContextType } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { UserContext } from 'contexts/userContext'
-import { constants, utils } from 'ethers'
+import { constants } from 'ethers'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import {
   useAppSelector,
   useEditingFundingCycleSelector,
 } from 'hooks/AppSelector'
 import { useTerminalFee } from 'hooks/TerminalFee'
+import { useDeployProjectTx } from 'hooks/transactor/DeployProjectTx'
 import { ContractName } from 'models/contract-name'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
-import { FundingCycleMetadata } from 'models/funding-cycle-metadata'
-import { FCProperties } from 'models/funding-cycle-properties'
 import { PayoutMod, TicketMod } from 'models/mods'
 import { TerminalVersion } from 'models/terminal-version'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
@@ -38,7 +35,6 @@ import {
   metadataNameForHandle,
   uploadProjectMetadata,
 } from 'utils/ipfs'
-import { feeForAmount } from 'utils/math'
 import { getTerminalAddress } from 'utils/terminal-versions'
 
 import BudgetForm from './BudgetForm'
@@ -55,7 +51,6 @@ import TicketingForm, { TicketingFormFields } from './TicketingForm'
 const terminalVersion: TerminalVersion = '1.1'
 
 export default function Create() {
-  const { transactor, contracts } = useContext(UserContext)
   const { signerNetwork, userAddress } = useContext(NetworkContext)
   const { colors, radii } = useContext(ThemeContext).theme
   const [currentStep, setCurrentStep] = useState<number>()
@@ -90,6 +85,7 @@ export default function Create() {
     payoutMods: editingPayoutMods,
   } = useAppSelector(state => state.editingProject)
   const dispatch = useAppDispatch()
+  const deployProjectTx = useDeployProjectTx()
 
   const terminalFee = useTerminalFee(terminalVersion)
 
@@ -217,8 +213,6 @@ export default function Create() {
   }
 
   const deployProject = useCallback(async () => {
-    if (!transactor || !contracts) return
-
     setLoadingCreate(true)
 
     const uploadedMetadata = await uploadProjectMetadata(
@@ -230,55 +224,30 @@ export default function Create() {
       return
     }
 
-    const fee = feeForAmount(editingFC.target, editingFC.fee)
-
-    if (!fee) return
-
-    const properties: Record<keyof FCProperties, any> = {
-      target: editingFC.target.toHexString(),
-      currency: hasFundingTarget(editingFC) ? editingFC.currency.toNumber() : 0,
-      duration: editingFC.duration.toNumber(),
-      discountRate: editingFC.duration.gt(0)
-        ? editingFC.discountRate.toNumber()
-        : 0,
-      cycleLimit: editingFC.cycleLimit.toNumber(),
-      ballot: editingFC.ballot,
-    }
-
-    const metadata: Omit<FundingCycleMetadata, 'version'> = {
-      reservedRate: editingFC.reserved.toNumber(),
-      bondingCurveRate: editingFC.bondingCurveRate.toNumber(),
-      reconfigurationBondingCurveRate: editingFC.bondingCurveRate.toNumber(),
-      payIsPaused: editingFC.payIsPaused,
-      ticketPrintingIsAllowed: editingFC.ticketPrintingIsAllowed,
-      treasuryExtension: constants.AddressZero,
-    }
-
-    transactor(
-      contracts.TerminalV1_1,
-      'deploy',
-      [
-        userAddress,
-        utils.formatBytes32String(editingProjectInfo.handle),
-        uploadedMetadata.cid,
-        properties,
-        metadata,
-        editingPayoutMods.map(m => ({
-          preferUnstaked: false,
-          percent: BigNumber.from(m.percent).toHexString(),
-          lockedUntil: BigNumber.from(m.lockedUntil ?? 0).toHexString(),
-          beneficiary: m.beneficiary || constants.AddressZero,
-          projectId: m.projectId || BigNumber.from(0).toHexString(),
-          allocator: constants.AddressZero,
-        })),
-        editingTicketMods.map(m => ({
-          preferUnstaked: false,
-          percent: BigNumber.from(m.percent).toHexString(),
-          lockedUntil: BigNumber.from(m.lockedUntil ?? 0).toHexString(),
-          beneficiary: m.beneficiary || constants.AddressZero,
-          allocator: constants.AddressZero,
-        })),
-      ],
+    deployProjectTx(
+      {
+        handle: editingProjectInfo.handle,
+        projectMetadataCid: uploadedMetadata.cid,
+        properties: {
+          target: editingFC.target,
+          currency: editingFC.currency,
+          duration: editingFC.duration,
+          discountRate: editingFC.discountRate,
+          cycleLimit: editingFC.cycleLimit,
+          ballot: editingFC.ballot,
+        },
+        fundingCycleMetadata: {
+          reservedRate: editingFC.reserved.toNumber(),
+          bondingCurveRate: editingFC.bondingCurveRate.toNumber(),
+          reconfigurationBondingCurveRate:
+            editingFC.bondingCurveRate.toNumber(),
+          payIsPaused: editingFC.payIsPaused,
+          ticketPrintingIsAllowed: editingFC.ticketPrintingIsAllowed,
+          treasuryExtension: constants.AddressZero,
+        },
+        payoutMods: editingPayoutMods,
+        ticketMods: editingTicketMods,
+      },
       {
         onDone: () => setLoadingCreate(false),
         onConfirmed: () => {
@@ -300,16 +269,14 @@ export default function Create() {
       },
     )
   }, [
-    contracts,
     dispatch,
     editingFC,
-    editingPayoutMods,
     editingProjectInfo.handle,
     editingProjectInfo.metadata,
+    editingPayoutMods,
     editingTicketMods,
     resetProjectForm,
-    transactor,
-    userAddress,
+    deployProjectTx,
   ])
 
   const viewedCurrentStep = useCallback(() => {

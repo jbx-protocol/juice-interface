@@ -91,7 +91,7 @@ export default function Create() {
   } = useAppSelector(state => state.editingProject)
   const dispatch = useAppDispatch()
 
-  const terminalFee = useTerminalFee(terminalVersion, contracts)
+  const terminalFee = useTerminalFee(terminalVersion)
 
   useEffect(() => {
     if (terminalFee) {

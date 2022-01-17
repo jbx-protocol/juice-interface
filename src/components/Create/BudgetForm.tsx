@@ -1,6 +1,5 @@
-import { Button, Divider, Form, Space, Switch } from 'antd'
 import { Trans } from '@lingui/macro'
-
+import { Button, Divider, Form, Space, Switch } from 'antd'
 import { FormItems } from 'components/shared/formItems'
 import {
   targetSubFeeToTargetFormatted,
@@ -8,7 +7,6 @@ import {
 } from 'components/shared/formItems/formHelpers'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { UserContext } from 'contexts/userContext'
 import { constants } from 'ethers'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useEditingFundingCycleSelector } from 'hooks/AppSelector'
@@ -46,9 +44,8 @@ export default function BudgetForm({
   const dispatch = useAppDispatch()
   const { terminal } = useContext(ProjectContext)
   const editingFC = useEditingFundingCycleSelector()
-  const { contracts } = useContext(UserContext)
 
-  const terminalFee = useTerminalFee(terminal?.version, contracts)
+  const terminalFee = useTerminalFee(terminal?.version)
 
   useLayoutEffect(() => {
     setCurrency(initialCurrency)

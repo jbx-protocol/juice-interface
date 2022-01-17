@@ -122,7 +122,7 @@ export const menu = (onClickMenuItems?: VoidFunction) => {
       />
 
       <ItemDropdown
-        heading="Resources"
+        heading={t`Resources`}
         dropdownItems={[
           <DropdownItem
             key="docs"

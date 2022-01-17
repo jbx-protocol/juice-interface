@@ -1,5 +1,10 @@
 import { t } from '@lingui/macro'
 
+// t macro function wasn't working when QAs was in the same file
+// as where it was being rendered (FAQs).
+// Saw the suggestion to separate the store and render into 2 files here:
+// https://github.com/lingui/js-lingui/issues/707#issuecomment-657199843
+// Not sure why but this fixed the problem.
 export default function QAs() {
   return [
     {

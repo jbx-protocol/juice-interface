@@ -12,7 +12,7 @@ export function useSetProjectUriTx(): TransactorInstance<{
 
   return ({ cid }, txOpts) => {
     if (!transactor || !projectId || !contracts?.TicketBooth) {
-      if (txOpts?.onDone) txOpts.onDone()
+      txOpts?.onDone?.()
       return Promise.resolve(false)
     }
 

@@ -1,6 +1,7 @@
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import ProjectHandle from 'components/shared/ProjectHandle'
+import EtherscanLink from 'components/shared/EtherscanLink'
 
 import { ThemeContext } from 'contexts/themeContext'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
@@ -69,6 +70,7 @@ export default function TapEventElem({
             {tapEvent.timestamp && (
               <span>{formatHistoricalDate(tapEvent.timestamp * 1000)}</span>
             )}{' '}
+            <EtherscanLink value={tapEvent.txHash} type="tx" />
           </div>
           <div style={smallHeaderStyle(colors)}>
             called by <FormattedAddress address={tapEvent.caller} />

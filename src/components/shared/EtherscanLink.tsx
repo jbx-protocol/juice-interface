@@ -4,6 +4,8 @@ import { t } from '@lingui/macro'
 
 import { NetworkName } from 'models/network-name'
 
+import { LinkOutlined } from '@ant-design/icons'
+
 import { readNetwork } from 'constants/networks'
 
 export default function EtherscanLink({
@@ -27,6 +29,22 @@ export default function EtherscanLink({
     window.open(`https://${subdomain}etherscan.io/${type}/${value}`)
   }
 
+  if (type === 'tx') {
+    return (
+      <Tooltip trigger={['hover', 'click']} title={t`See transaction`}>
+        <a
+          className="hover-action"
+          style={{ fontWeight: 400 }}
+          onClick={goToEtherscan}
+          href={`https://${subdomain}etherscan.io/${type}/${value}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <LinkOutlined />
+        </a>
+      </Tooltip>
+    )
+  }
   return (
     <Tooltip trigger={['hover', 'click']} title={t`Go to Etherscan`}>
       <a

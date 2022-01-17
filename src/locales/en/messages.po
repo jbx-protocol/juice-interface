@@ -691,7 +691,7 @@ msgstr ""
 msgid "Overflow is created if your project's balance exceeds your funding cycle target. Overflow can be redeemed by your project's token holders."
 msgstr ""
 
-#: src/components/Dashboard/Pay.tsx
+#: src/components/Dashboard/Pay/index.tsx
 msgid "Paid as <0/>"
 msgstr ""
 
@@ -703,7 +703,7 @@ msgstr ""
 msgid "Paused"
 msgstr ""
 
-#: src/components/Dashboard/Pay.tsx
+#: src/components/Dashboard/Pay/index.tsx
 #: src/components/Dashboard/ProjectActivity/index.tsx
 #: src/components/modals/ConfirmPayOwnerModal.tsx
 #: src/components/shared/formItems/ProjectPayButton.tsx
@@ -731,11 +731,11 @@ msgstr ""
 msgid "Pay {0}"
 msgstr ""
 
-#: src/components/Dashboard/Pay.tsx
+#: src/components/Dashboard/Pay/index.tsx
 msgid "Paying this project is currently disabled, because the token reserved rate is 100% and no tokens will be earned by making a payment."
 msgstr ""
 
-#: src/components/Dashboard/Pay.tsx
+#: src/components/Dashboard/Pay/index.tsx
 msgid "Paying this project is currently disabled."
 msgstr ""
 
@@ -747,7 +747,7 @@ msgstr ""
 msgid "Payments"
 msgstr ""
 
-#: src/components/Dashboard/Pay.tsx
+#: src/components/Dashboard/Pay/index.tsx
 msgid "Payments are paused for the current funding cycle."
 msgstr ""
 
@@ -847,13 +847,13 @@ msgstr ""
 msgid "Public goods and services"
 msgstr ""
 
-#: src/components/Dashboard/Pay.tsx
-msgid "Receive"
-msgstr ""
-
 #: src/components/modals/ConfirmPayOwnerModal.tsx
 msgid "Receive ERC20"
 msgstr ""
+
+#: src/components/Dashboard/Pay/PayInputSubText.tsx
+msgid "Receive {receiveText}"
+msgstr "Receive {receiveText}"
 
 #: src/components/Create/RulesForm.tsx
 #: src/components/Create/index.tsx
@@ -1109,7 +1109,7 @@ msgstr ""
 msgid "This means that anyone can see the code that they're using, anyone can use the code without asking for permission, and no one can mess with the code or take it down."
 msgstr ""
 
-#: src/components/Dashboard/Pay.tsx
+#: src/components/Dashboard/Pay/index.tsx
 msgid "This project has been archived and cannot be paid."
 msgstr ""
 
@@ -1406,6 +1406,7 @@ msgstr ""
 msgid "ticketPrintingIsAllowed"
 msgstr ""
 
+#: src/components/Dashboard/Pay/PayInputSubText.tsx
 #: src/components/Dashboard/Rewards.tsx
 msgid "tokens"
 msgstr ""

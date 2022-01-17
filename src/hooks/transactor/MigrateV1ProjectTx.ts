@@ -12,7 +12,7 @@ export function useMigrateV1ProjectTx(): TransactorInstance<{
 
   return ({ newTerminalAddress }, txOpts) => {
     if (!transactor || !projectId || !contracts?.TicketBooth) {
-      if (txOpts?.onDone) txOpts.onDone()
+      txOpts?.onDone?.()
       return Promise.resolve(false)
     }
 

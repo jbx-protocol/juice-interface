@@ -15,7 +15,7 @@ export function useUnstakeTokensTx(): TransactorInstance<{
 
   return ({ unstakeAmount }, txOpts) => {
     if (!transactor || !userAddress || !projectId || !contracts?.TicketBooth) {
-      if (txOpts?.onDone) txOpts.onDone()
+      txOpts?.onDone?.()
       return Promise.resolve(false)
     }
 

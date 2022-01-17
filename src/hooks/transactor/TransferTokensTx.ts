@@ -16,7 +16,7 @@ export function useTransferTokensTx(): TransactorInstance<{
 
   return ({ amount, to }, txOpts) => {
     if (!transactor || !projectId || !contracts?.Projects) {
-      if (txOpts?.onDone) txOpts.onDone()
+      txOpts?.onDone?.()
       return Promise.resolve(false)
     }
 

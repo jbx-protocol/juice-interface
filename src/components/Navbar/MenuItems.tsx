@@ -125,20 +125,24 @@ export const menu = (onClickMenuItems?: VoidFunction) => {
         heading="Resources"
         dropdownItems={[
           <DropdownItem
+            key="docs"
             text={t`Docs`}
             route="https://docs.juicebox.money"
             onClick={onClickMenuItems}
           />,
           <DropdownItem
+            key="blog"
             text={t`Blog`}
             route="https://blog.juicebox.money"
             onClick={onClickMenuItems}
           />,
           <DropdownItem
+            key="workspace"
             text={t`Workspace`}
             route="https://juicebox.notion.site/"
           />,
           <DropdownItem
+            key="podcast"
             text={t`Podcast`}
             route="https://open.spotify.com/show/4G8ji7vofcOx2acXcjXIa4?si=1e5e6e171ed744e8"
             onClick={onClickMenuItems}

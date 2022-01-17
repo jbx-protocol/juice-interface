@@ -1,12 +1,11 @@
-import { Space, Statistic } from 'antd'
 import { t, Trans } from '@lingui/macro'
+import { Space, Statistic } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import PayoutModsList from 'components/shared/PayoutModsList'
 import ProjectLogo from 'components/shared/ProjectLogo'
 import TicketModsList from 'components/shared/TicketModsList'
 
 import { ProjectContext } from 'contexts/projectContext'
-import { UserContext } from 'contexts/userContext'
 import {
   useAppSelector,
   useEditingFundingCycleSelector,
@@ -30,11 +29,10 @@ export default function ConfirmDeployProject() {
   const editingFC = useEditingFundingCycleSelector()
   const editingProject = useAppSelector(state => state.editingProject.info)
   const { terminal } = useContext(ProjectContext)
-  const { contracts } = useContext(UserContext)
   const { payoutMods, ticketMods } = useAppSelector(
     state => state.editingProject,
   )
-  const terminalFee = useTerminalFee(terminal?.version, contracts)
+  const terminalFee = useTerminalFee(terminal?.version)
 
   return (
     <Space size="large" direction="vertical">

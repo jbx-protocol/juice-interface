@@ -1,6 +1,6 @@
 import { CaretRightFilled } from '@ant-design/icons'
-import { t, Trans } from '@lingui/macro'
 import { BigNumber } from '@ethersproject/bignumber'
+import { t, Trans } from '@lingui/macro'
 import { Drawer, DrawerProps, Space, Statistic } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import Modal from 'antd/lib/modal/Modal'
@@ -89,7 +89,7 @@ export default function ReconfigureFCModal({
   const dispatch = useAppDispatch()
   const { currentFC, terminal, isPreviewMode } = useContext(ProjectContext)
   const editingFC = useEditingFundingCycleSelector()
-  const terminalFee = useTerminalFee(terminal?.version, contracts)
+  const terminalFee = useTerminalFee(terminal?.version)
 
   const resetTicketingForm = () =>
     ticketingForm.setFieldsValue({

@@ -1,5 +1,7 @@
 import FormattedAddress from 'components/shared/FormattedAddress'
 import { ProjectContext } from 'contexts/projectContext'
+import EtherscanLink from 'components/shared/EtherscanLink'
+
 import { ThemeContext } from 'contexts/themeContext'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { PrintReservesEvent } from 'models/subgraph-entities/print-reserves-event'
@@ -63,6 +65,7 @@ export default function ReservesEventElem({
                 {formatHistoricalDate(printReservesEvent.timestamp * 1000)}
               </span>
             )}{' '}
+            <EtherscanLink value={printReservesEvent.txHash} type="tx" />
           </div>
           <div style={smallHeaderStyle(colors)}>
             called by <FormattedAddress address={printReservesEvent.caller} />

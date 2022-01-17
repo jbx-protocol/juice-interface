@@ -5,6 +5,8 @@ import { t } from '@lingui/macro'
 // Saw the suggestion to separate the store and render into 2 files here:
 // https://github.com/lingui/js-lingui/issues/707#issuecomment-657199843
 // Not sure why but this fixed the problem.
+// Take-away: If you're storing a list of t`` strings in a list,
+// make sure you're not rendering it from the same file.
 export default function QAs() {
   return [
     {

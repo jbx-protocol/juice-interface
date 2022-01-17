@@ -60,7 +60,7 @@ export default function MobileCollapse() {
         >
           {menu(() => setActiveKey(activeKey === 0 ? undefined : 0))}
           <div className="nav-subsection">
-            <LanguageSelector disableLang="zh" />
+            <LanguageSelector />
             <ThemePicker mobile={true} />
             <FeedbackFormLink mobile={true} />
           </div>

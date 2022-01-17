@@ -20,8 +20,8 @@ export default function SushiswapLogo({ size }: Props): JSX.Element {
         <path d="m0 0h24v24h-24z" />
       </clipPath>
       <linearGradient id="b">
-        <stop offset="0" stop-color="#03b8ff" />
-        <stop offset="1" stop-color="#fa52a0" />
+        <stop offset="0" stopColor="#03b8ff" />
+        <stop offset="1" stopColor="#fa52a0" />
       </linearGradient>
       <linearGradient
         id="c"
@@ -53,7 +53,7 @@ export default function SushiswapLogo({ size }: Props): JSX.Element {
         y1="1010.6239"
         y2="997.9576"
       />
-      <g clip-path="url(#a)">
+      <g clipPath="url(#a)">
         <path d="m5 2.3 18.6 12.7-4.6 6.8-18.6-12.8z" fill="url(#c)" />
         <path
           d="m23.6 15c-1.6 2.3-7 1.4-12.1-2.2-5.2-3.5-8-8.2-6.5-10.5 1.6-2.3 7-1.4 12.1 2.2 5.2 3.4 8 8.2 6.5 10.5z"
@@ -69,9 +69,9 @@ export default function SushiswapLogo({ size }: Props): JSX.Element {
         />
         <g fill="#fff">
           <path
-            clip-rule="evenodd"
+            clipRule="evenodd"
             d="m22.9 14.6c-1.4 2-6.3 1-11-2.3-4.8-3.3-7.6-7.5-6.2-9.5s6.3-1 11 2.3 7.5 7.5 6.2 9.5zm-4.4-3c-.7 1-3.1.5-5.5-1.1-2.3-1.6-3.7-3.7-3-4.7s3.1-.5 5.5 1.1c2.3 1.6 3.7 3.7 3 4.7z"
-            fill-rule="evenodd"
+            fillRule="evenodd"
           />
           <path d="m4.6 4.6c0-.1-.1-.2-.2-.1s-.2.1-.2.2c.1.3.2.5.2.7 0 .1.1.2.2.1.1 0 .2-.1.1-.2 0-.2 0-.4-.1-.7z" />
           <path d="m5.1 6.2c0-.1-.1-.2-.2-.1s-.1.1-.1.2c1.1 2.5 3.4 5.2 6.4 7.2.1.1.2 0 .3 0 .1-.1 0-.2 0-.3-3.1-2-5.3-4.6-6.4-7z" />

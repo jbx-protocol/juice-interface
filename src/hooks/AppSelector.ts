@@ -11,9 +11,10 @@ export const useEditingFundingCycleSelector = () => {
     shallowEqual,
   )
 
-  const fc = useMemo(() => deserializeFundingCycle(serializedFundingCycle), [
-    serializedFundingCycle,
-  ])
+  const fc = useMemo(
+    () => deserializeFundingCycle(serializedFundingCycle),
+    [serializedFundingCycle],
+  )
 
   return fc
 }

@@ -47,7 +47,7 @@ export default function RichNote({
       : note
 
   return (
-    <p style={{ marginTop: 5, ...style }}>
+    <div style={{ marginTop: 5, ...style }}>
       <span
         style={{
           color: colors.text.secondary,
@@ -77,6 +77,6 @@ export default function RichNote({
           />
         </div>
       )}
-    </p>
+    </div>
   )
 }

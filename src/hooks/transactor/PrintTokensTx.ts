@@ -19,7 +19,7 @@ export function usePrintTokensTx(): TransactorInstance<{
 
   return ({ value, currency, beneficiary, memo, preferUnstaked }, txOpts) => {
     if (!transactor || !contracts || !projectId || !terminal?.version) {
-      if (txOpts?.onDone) txOpts.onDone()
+      txOpts?.onDone?.()
       return Promise.resolve(false)
     }
 

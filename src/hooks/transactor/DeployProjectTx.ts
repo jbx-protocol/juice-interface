@@ -32,7 +32,7 @@ export function useDeployProjectTx(): TransactorInstance<{
     txOpts,
   ) => {
     if (!transactor || !userAddress || !contracts?.TerminalV1_1) {
-      if (txOpts?.onDone) txOpts.onDone()
+      txOpts?.onDone?.()
       return Promise.resolve(false)
     }
 

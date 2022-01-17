@@ -12,7 +12,7 @@ export function useSafeTransferFromTx(): TransactorInstance<{
 
   return ({ to }, txOpts) => {
     if (!transactor || !projectId || !contracts?.Projects) {
-      if (txOpts?.onDone) txOpts.onDone()
+      txOpts?.onDone?.()
       return Promise.resolve(false)
     }
 

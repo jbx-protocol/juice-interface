@@ -15,7 +15,7 @@ export function useStakeTokensTx(): TransactorInstance<{
 
   return ({ amount }, txOpts) => {
     if (!transactor || !projectId || !userAddress || !contracts?.TicketBooth) {
-      if (txOpts?.onDone) txOpts.onDone()
+      txOpts?.onDone?.()
       return Promise.resolve(false)
     }
 

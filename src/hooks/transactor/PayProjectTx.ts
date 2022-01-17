@@ -23,7 +23,7 @@ export function usePayProjectTx(): TransactorInstance<{
       !contracts?.TicketBooth ||
       !terminal?.version
     ) {
-      if (txOpts?.onDone) txOpts.onDone()
+      txOpts?.onDone?.()
       return Promise.resolve(false)
     }
 

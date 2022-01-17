@@ -10,7 +10,7 @@ export function useDistributeTokensTx(): TransactorInstance<{}> {
 
   return (_, txOpts) => {
     if (!transactor || !terminal || !projectId || !contracts) {
-      if (txOpts?.onDone) txOpts.onDone()
+      txOpts?.onDone?.()
       return Promise.resolve(false)
     }
 

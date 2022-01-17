@@ -23,7 +23,7 @@ export function useSetTicketModsTx(): TransactorInstance<{
       !contracts?.Projects ||
       !terminal?.version
     ) {
-      if (txOpts?.onDone) txOpts.onDone()
+      txOpts?.onDone?.()
       return Promise.resolve(false)
     }
 

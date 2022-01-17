@@ -1,13 +1,13 @@
 import FormattedAddress from 'components/shared/FormattedAddress'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
+import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { PrintReservesEvent } from 'models/subgraph-entities/print-reserves-event'
 import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
 
 import { smallHeaderStyle } from '../styles'
-import useSubgraphQuery from '../../../hooks/SubgraphQuery'
 
 export default function ReservesEventElem({
   printReservesEvent,
@@ -91,7 +91,7 @@ export default function ReservesEventElem({
                   : { fontWeight: 500 }
               }
             >
-              {formatWad(e.modCut, { decimals: 0 })}
+              {formatWad(e.modCut, { precision: 0 })}
             </div>
           </div>
         ))}
@@ -109,7 +109,7 @@ export default function ReservesEventElem({
             </div>
             <div style={{ color: colors.text.secondary }}>
               {formatWad(printReservesEvent.beneficiaryTicketAmount, {
-                decimals: 0,
+                precision: 0,
               })}
             </div>
           </div>
@@ -124,7 +124,7 @@ export default function ReservesEventElem({
             textAlign: 'right',
           }}
         >
-          {formatWad(printReservesEvent.count, { decimals: 0 })}
+          {formatWad(printReservesEvent.count, { precision: 0 })}
         </div>
       ) : null}
     </div>

@@ -412,7 +412,7 @@ export default function ReconfigureFCModal({
                           />
                           {formatWad(
                             amountSubFee(editingFC.target, terminalFee),
-                            { decimals: 4 },
+                            { precision: 4 },
                           )}{' '}
                           after JBX fee
                         </span>

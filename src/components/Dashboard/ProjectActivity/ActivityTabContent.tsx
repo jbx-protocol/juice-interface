@@ -1,8 +1,8 @@
-import React, { useContext } from 'react'
 import { Trans } from '@lingui/macro'
+import { ThemeContext } from 'contexts/themeContext'
+import React, { useContext } from 'react'
 
 import Loading from '../../shared/Loading'
-import { ThemeContext } from '../../../contexts/themeContext'
 
 interface Props {
   count: number

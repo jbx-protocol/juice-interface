@@ -134,13 +134,13 @@ export default function FundingCycleDetails({
           span={2}
         >
           {formatWad(weightedRate(fundingCycle, parseEther('1'), 'payer'), {
-            decimals: 0,
+            precision: 0,
           })}{' '}
           {metadata?.reservedRate
             ? t`(+${formatWad(
                 weightedRate(fundingCycle, parseEther('1'), 'reserved'),
                 {
-                  decimals: 0,
+                  precision: 0,
                 },
               )} reserved)`
             : ''}{' '}

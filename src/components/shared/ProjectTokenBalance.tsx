@@ -14,13 +14,13 @@ export default function ProjectTokenBalance({
   projectId,
   wallet,
   style,
-  decimals,
+  precision,
   hideHandle,
 }: {
   projectId: BigNumber
   wallet: string | undefined
   style?: CSSProperties
-  decimals?: number
+  precision?: number
   hideHandle?: boolean
 }) {
   const {
@@ -41,7 +41,7 @@ export default function ProjectTokenBalance({
     formatter: symbol => symbol ?? null,
   })
 
-  const balance = useContractReader<string>({
+  const balance = useContractReader<BigNumber>({
     contract: ContractName.TicketBooth,
     functionName: 'balanceOf',
     args:
@@ -55,7 +55,7 @@ export default function ProjectTokenBalance({
       <span>
         {symbol !== undefined ? (
           <>
-            {formatWad(balance, { decimals: decimals ?? 0 })}{' '}
+            {formatWad(balance, { precision: precision ?? 0 })}{' '}
             {symbol ?? 'tokens'}
           </>
         ) : (

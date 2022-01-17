@@ -1,9 +1,9 @@
 import { ProjectContext } from 'contexts/projectContext'
+import { useInfiniteSubgraphQuery } from 'hooks/SubgraphQuery'
 import React, { useContext } from 'react'
 
-import TapEventElem from './TapEventElem'
-import { useInfiniteSubgraphQuery } from '../../../hooks/SubgraphQuery'
 import ActivityTabContent from './ActivityTabContent'
+import TapEventElem from './TapEventElem'
 
 export function TapActivity({ pageSize }: { pageSize: number }) {
   const { projectId } = useContext(ProjectContext)

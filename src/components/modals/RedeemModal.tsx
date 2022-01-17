@@ -1,5 +1,5 @@
-import { Modal, Space } from 'antd'
 import { Trans } from '@lingui/macro'
+import { Modal, Space } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
@@ -10,14 +10,13 @@ import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
 import { BigNumber } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
+import { useRedeemRate } from 'hooks/RedeemRate'
 import { CSSProperties, useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formattedNum, formatWad, fromWad, parseWad } from 'utils/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
 
 import { CURRENCY_ETH, CURRENCY_USD } from 'constants/currency'
-
-import { useRedeemRate } from '../../hooks/RedeemRate'
 
 export default function RedeemModal({
   visible,
@@ -134,7 +133,7 @@ export default function RedeemModal({
         if (onCancel) onCancel()
       }}
       okText={`Burn ${formattedNum(redeemAmount, {
-        decimals: 2,
+        precision: 2,
       })} ${tokenSymbol ?? 'tokens'} for ETH`}
       okButtonProps={{
         disabled:
@@ -166,7 +165,7 @@ export default function RedeemModal({
           <p style={statsStyle}>
             {tokenSymbol ?? 'Token'} balance:{' '}
             <span>
-              {formatWad(totalBalance ?? 0, { decimals: 0 })}{' '}
+              {formatWad(totalBalance ?? 0, { precision: 0 })}{' '}
               {tokenSymbol ?? 'tokens'}
             </span>
           </p>
@@ -174,7 +173,7 @@ export default function RedeemModal({
             Currently worth:{' '}
             <span>
               <CurrencySymbol currency={CURRENCY_ETH} />
-              {formatWad(maxClaimable, { decimals: 4 })}
+              {formatWad(maxClaimable, { precision: 4 })}
             </span>
           </p>
         </div>
@@ -211,7 +210,7 @@ export default function RedeemModal({
             <div style={{ fontWeight: 500, marginTop: 20 }}>
               You will receive{' '}
               {currentFC?.currency.eq(CURRENCY_USD) ? 'minimum ' : ' '}
-              {formatWad(minAmount, { decimals: 8 }) || '--'} ETH
+              {formatWad(minAmount, { precision: 8 }) || '--'} ETH
             </div>
           </div>
         )}

@@ -121,7 +121,7 @@ export default function ReservedTokens({
           }}
         >
           <span>
-            {formatWad(reservedTickets, { decimals: 0 }) || 0}{' '}
+            {formatWad(reservedTickets, { precision: 0 }) || 0}{' '}
             {tokenSymbol ?? 'tokens'}
           </span>
           <Button

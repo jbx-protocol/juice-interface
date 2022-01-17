@@ -66,7 +66,7 @@ export default function Spending({
                 <CurrencySymbol
                   currency={currentFC.currency.toNumber() as CurrencyOption}
                 />
-                {formatWad(withdrawable, { decimals: 4 }) || '0'}{' '}
+                {formatWad(withdrawable, { precision: 4 }) || '0'}{' '}
               </span>
               <TooltipLabel
                 style={smallHeaderStyle}
@@ -91,10 +91,10 @@ export default function Spending({
                 <CurrencySymbol
                   currency={currentFC.currency.toNumber() as CurrencyOption}
                 />
-                {formatWad(currentFC.tapped, { decimals: 4 }) || '0'}
-                {hasFundingTarget(currentFC) && (
-                  <span>/{formatWad(currentFC.target, { decimals: 4 })} </span>
-                )}{' '}
+                {formatWad(currentFC.tapped, { precision: 4 }) || '0'}
+                {hasFundingTarget(currentFC) ? (
+                  <span>/{formatWad(currentFC.target, { precision: 4 })} </span>
+                ) : null}{' '}
                 withdrawn
               </Trans>
             </div>

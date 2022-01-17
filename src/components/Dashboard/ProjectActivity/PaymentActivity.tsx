@@ -1,17 +1,19 @@
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import FormattedAddress from 'components/shared/FormattedAddress'
+
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
+import { useInfiniteSubgraphQuery } from 'hooks/SubgraphQuery'
 import { PayEvent } from 'models/subgraph-entities/pay-event'
 import React, { useCallback, useContext } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
 
+import { CURRENCY_ETH } from 'constants/currency'
+
+import ActivityTabContent from './ActivityTabContent'
 import RichNote from './RichNote'
 import { contentLineHeight, smallHeaderStyle } from './styles'
-import { useInfiniteSubgraphQuery } from '../../../hooks/SubgraphQuery'
-import ActivityTabContent from './ActivityTabContent'
-import { CURRENCY_ETH } from 'constants/currency'
 
 // Maps a project id to an internal map of payment event overrides.
 let payEventOverrides = new Map<string, Map<string, string>>([
@@ -109,7 +111,7 @@ export function PaymentActivity({ pageSize }: { pageSize: number }) {
                     }}
                   >
                     <CurrencySymbol currency={CURRENCY_ETH} />
-                    {formatWad(e.amount, { decimals: 4 })}
+                    {formatWad(e.amount, { precision: 4 })}
                   </div>
                 </div>
 

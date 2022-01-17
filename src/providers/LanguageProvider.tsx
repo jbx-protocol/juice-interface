@@ -9,7 +9,7 @@ import { I18nProvider } from '@lingui/react'
 import { ReactNode, useEffect } from 'react'
 import { en, zh, ru, tr } from 'make-plural/plurals'
 
-import { SUPPORTED_LOCALES, DEFAULT_LOCALE } from './constants/locale'
+import { SUPPORTED_LOCALES, DEFAULT_LOCALE } from 'constants/locale'
 
 // load plural configs
 i18n.loadLocaleData({
@@ -32,12 +32,16 @@ const getLocale = (): string => {
 }
 
 async function dynamicActivate(locale: string) {
-  const { messages } = await import(`./locales/${locale}/messages`)
+  const { messages } = await import(`../locales/${locale}/messages`)
   i18n.load(locale, messages)
   i18n.activate(locale)
 }
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
+export default function LanguageProvider({
+  children,
+}: {
+  children: ReactNode
+}) {
   useEffect(() => {
     dynamicActivate(getLocale())
   }, [])

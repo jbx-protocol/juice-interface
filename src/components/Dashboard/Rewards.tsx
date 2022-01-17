@@ -192,7 +192,7 @@ export default function Rewards({
                       width: '100%',
                     }}
                   >
-                    {formatWad(totalSupply, { decimals: 0 })}
+                    {formatWad(totalSupply, { precision: 0 })}
                     <Button
                       size="small"
                       onClick={() => setParticipantsModalVisible(true)}
@@ -221,7 +221,7 @@ export default function Rewards({
                           {ticketsBalance?.gt(0) ? (
                             <>
                               {`${formatWad(ticketsBalance ?? 0, {
-                                decimals: 0,
+                                precision: 0,
                               })} ${tokenSymbol}`}
                             </>
                           ) : (
@@ -231,7 +231,7 @@ export default function Rewards({
                       )}
                       <div>
                         <Trans>
-                          {formatWad(iouBalance ?? 0, { decimals: 0 })}
+                          {formatWad(iouBalance ?? 0, { precision: 0 })}
                           {ticketsIssued ? <> claimable</> : null}
                         </Trans>
                       </div>

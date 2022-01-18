@@ -33,7 +33,7 @@ export default function RestrictedActionsForm({
           name="payIsPaused"
           label={t`Pause payments`}
           extra={t`Your project cannot receive direct payments while paused.`}
-          valuePropName={t`checked`}
+          valuePropName={'checked'}
         >
           <Switch />
         </Form.Item>

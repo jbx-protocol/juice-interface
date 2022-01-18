@@ -215,7 +215,7 @@ msgstr ""
 
 #: src/components/Dashboard/index.tsx
 msgid "Back to top"
-msgstr ""
+msgstr "Back to top"
 
 #: src/components/Landing/index.tsx
 msgid "Big ups to the Ethereum community for crafting the infrastructure and economy to make Juicebox possible."

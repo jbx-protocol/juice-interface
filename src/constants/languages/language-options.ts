@@ -6,5 +6,6 @@ export const Languages: Language = {
   zh: { code: 'zh', name: 'chinese', short: '中文', long: '中文' },
   ru: { code: 'ru', name: 'russian', short: 'RU', long: 'Pусский' },
   tr: { code: 'tr', name: 'turkish', short: 'TR', long: 'Türkçe' },
-  // es: { code: 'es', name: 'spanish', short: 'ES', long: 'Español' },
+  // pt: { code: 'pt', name: 'portuguese', short: 'PT', long: 'Português' },
+  es: { code: 'es', name: 'spanish', short: 'ES', long: 'Español' },
 }

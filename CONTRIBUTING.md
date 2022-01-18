@@ -118,14 +118,14 @@ Notion page.
    + export const SUPPORTED_LOCALES = ['en', 'zh', 'af']
    ```
 
-1. Import the locale plurals in `./src/i18n.tsx`.
+1. Import the locale plurals in `./src/providers/LanguageProvider.tsx`.
 
    ```diff
    - import { en, zh } from 'make-plural/plurals'
    + import { en, zh, af } from 'make-plural/plurals'
    ```
 
-1. Load the locale plurals in `./src/i18n.tsx`
+1. Load the locale plurals in `./src/providers/LanguageProvider.tsx`
 
    ```diff
    i18n.loadLocaleData({

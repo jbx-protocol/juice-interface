@@ -1521,7 +1521,7 @@ msgstr "{exchangeName} has no market for {tokenSymbol}."
 
 #: src/components/Dashboard/index.tsx
 msgid "{handle} not found"
-msgstr "{handle} not found"
+msgstr ""
 
 #: src/components/shared/AMMPrices/TokenAMMPriceRow.tsx
 msgid "{tokenSymbol}/ETH exchange rate on {exchangeName}."

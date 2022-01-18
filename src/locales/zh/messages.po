@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-01-17 01:29\n"
+"PO-Revision-Date: 2022-01-18 02:02\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -34,7 +34,7 @@ msgstr ""
 msgid "3-day delay"
 msgstr ""
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "5% of all money made by projects is sent to help pay for the maintenance and development of Juicebox itself. In exchange, projects get Juicebox tokens ($JBX), which will be worth more as the ecosystem grows over time."
 msgstr "项目募集资金的 5% 用于帮助支付 Juicebox 本身的维护和开发费用。作为交换，项目将获得 Juicebox 代币 ($JBX)，随着生态系统的发展，这些代币将变得更有价值。"
 
@@ -80,19 +80,19 @@ msgstr ""
 msgid "@"
 msgstr ""
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "A bonding curve rewards people who wait longer to redeem your tokens for overflow."
 msgstr "联合曲线奖励那些等待更长时间才去赎回代币的人。"
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "A mechanism like Juicebox where upfront financial commitments should be honored over time is only guaranteed within an ecosystem like Ethereum."
 msgstr "像 Juicebox 这样的机制，前期的财务承诺应该随着时间的推移得到兑现，只有在以太坊这样的生态系统中才能得到保证。"
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "A project can choose to reserve a percentage of tokens for itself. Instead of being distributed to paying users, this percentage of tokens is instead minted for the project."
 msgstr "项目可以选择为自己保留一定比例的代币。这些代币不是分发给付费的用户，而是给到项目方。"
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "A project owner can propose changes to any part of the contract at any time, with changes taking effect after the current budgeting time frame has ended."
 msgstr "项目所有人可以在任何时候对合约的任何部分提出变更建议，变更将在当前预算期限结束后生效。"
 
@@ -194,11 +194,11 @@ msgstr ""
 msgid "Any reconfiguration to an upcoming funding cycle will take effect once the current cycle ends. A project with no strategy may be vulnerable to being rug-pulled by its owner."
 msgstr ""
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "Anyone can deploy and use another governance smart contract to override this scheme."
 msgstr "任何人都可以部署和使用另一个治理智能合约来覆盖此方案。"
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "At the start, power over the governance smart contract is held by Juicebox's founding contributors. The intent is to soon transfer the power to a community of token holders."
 msgstr "在开始时，治理智能合约的控制权由 Juicebox 的创始人掌握。创始人的计划是尽快将权力转移给代币持有人的社区。"
 
@@ -253,11 +253,11 @@ msgstr "围绕一个项目建立一个社区，为其提供资金，并对其支
 msgid "Built for:"
 msgstr "服务的对象:"
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "Can I change my project's contract after it's been created?"
 msgstr "项目合约创建后，我还更改它吗?"
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "Can I delete a project?"
 msgstr "我可以删除一个项目吗？"
 
@@ -301,7 +301,7 @@ msgstr "复制到剪贴板"
 msgid "Created"
 msgstr ""
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "Creating a Juicebox project mints you an NFT (ERC-721) representing ownership over it. Whoever owns this NFT can configure the rules of the game and how payouts are distributed."
 msgstr "创建一个 Juicebox 项目时，你会得到一个代表项目所有权的 NFT（ERC-721）。无论谁拥有这个NFT，都可以设置游戏规则以及决定如何分配报酬。"
 
@@ -369,19 +369,19 @@ msgstr ""
 msgid "Distribution"
 msgstr "资金分配"
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "Do I have to make my project open source to use Juicebox as its business model?"
 msgstr "要把 Juicebox 用作项目的商业模式的话，我必须把项目进行开源吗？"
 
 #: src/components/Navbar/MenuItems.tsx
 msgid "Docs"
-msgstr ""
+msgstr "文档"
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "Does a project benefit from its own overflow?"
 msgstr "项目是否能从溢出中获益？"
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "Due to their public nature, any exploits to the contracts may have irreversable consequences, including loss of funds. Please use Juicebox with caution."
 msgstr "由于其公共性质，任何对合约的恶意利用都可能产生不可逆转的后果，包括资金损失。请谨慎使用 Juicebox。"
 
@@ -398,7 +398,7 @@ msgstr "ERC20"
 msgid "ERC20 community tokens"
 msgstr "ERC20 社区代币"
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "Each project has its own tokens. Everyone who funds a project gets a newly minted supply of tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are issued by the project owner"
 msgstr "每个项目都有自己的代币。每个资助项目的人都会得到新铸造的代币作为回报。在项目方发行 ERC-20 代币之前，代币余额都会由协议来记录。"
 
@@ -426,27 +426,27 @@ msgstr ""
 msgid "Ethereum protocols and DAOs"
 msgstr "以太坊协议和 DAO"
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "Ethereum provides a public environment where internet apps like Juicebox can run permissionlessly, trustlessly, and unstoppably."
 msgstr "以太坊提供了一个公共环境，让 Juicebox 这样的互联网应用可以无需许可、无需信任、不可阻挡地在上面运行。"
 
 #: src/components/Navbar/MenuItems.tsx
 msgid "FAQ"
-msgstr ""
+msgstr "常见问题解答"
 
 #: src/components/Landing/index.tsx
 msgid "FAQs"
 msgstr ""
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "For example, with a bonding curve of 70%, redeeming 10% of the token supply at any given time will claim around 7% of the total overflow."
 msgstr "例如：在 70% 的联合曲线配置下，任意时间赎回 10% 的代币供应将能从总溢出中领取到 7% 左右。"
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "For now, a minimum of 14 days must pass from the time of a proposed reconfiguration for it to take effect. This gives token holders time to react to the decision."
 msgstr "目前，提议的重新配置至少需要14天才能生效。这让代币持有者有时间对更改决定作出反应。"
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "For users paying through your app, you should route those funds through the Juicebox smart contracts so they receive Tokens in return."
 msgstr "对于通过你的应用程序进行支付的用户，你应该将资金再导向 Juicebox 智能合约，这样他们才会收到作为回报的代币。"
 
@@ -503,11 +503,11 @@ msgstr "历史"
 msgid "Holders"
 msgstr "持有者"
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "Holding these tokens entitles a project to a portion of its own overflow."
 msgstr "持有这些代币，项目就有资格获得溢出的一部分。"
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "How decentralized is Juicebox?"
 msgstr "Juicebox 的去中心化程度如何？"
 
@@ -515,7 +515,7 @@ msgstr "Juicebox 的去中心化程度如何？"
 msgid "How do I archive a project?"
 msgstr ""
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "How have the contracts been tested?"
 msgstr "这些合约是如何被测试的？"
 
@@ -535,7 +535,7 @@ msgstr "我明白了"
 msgid "If you have a project you'd like to archive, let the Juicebox team know in Discord."
 msgstr ""
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "If you know how much your project needs to earn over some period of time to be sustainable, you can set a funding target with that amount. If your project earns more than that, the surplus funds are locked in an overflow pool. Anyone holding your project's tokens can claim a portion of the overflow pool in exchange for burning their tokens."
 msgstr "如果你知道你的项目在一段时间内需要获取多少钱才能维持下去，你可以设定一个相应的资金目标。如果项目获取到的资金比预想的多，盈余的资金就会被锁定在一个溢出池中。任何持有你项目代币的人，都可以通过燃烧代币来领取溢出池的一部分。"
 
@@ -561,11 +561,11 @@ msgstr "独立艺术家，开发者，创作者"
 msgid "Issue rate"
 msgstr ""
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "It isn't possible to remove a project's data from the blockchain, but we can hide it in the app if you'd like to prevent people from seeing or interacting with it—just let us know in Discord. Keep in mind people will still be able to use your project by interacting directly with the contract."
 msgstr "从区块链上删除一个项目的数据是不可能的，但如果你不想让人看见它或与它交互，我们可以把它隐藏到应用程序里面--只要在 Discord 中告诉我们。请记住，人们仍然能够通过直接与合约交互来使用你的项目。"
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "It'd be a lot cooler if you did"
 msgstr ""
 
@@ -577,19 +577,23 @@ msgstr ""
 msgid "Juicebox contracts"
 msgstr "Juicebox 智能合约"
 
-#: src/components/Landing/Faq.tsx
+#: src/components/shared/AMMPrices/TokenAMMPriceRow.tsx
+msgid "Juicebox doesn't support {exchangeName} yet."
+msgstr ""
+
+#: src/components/Landing/QAs.tsx
 msgid "Juicebox is a governance-minimal protocol. There are only a few levers that can be tuned, none of which impose changes for users without their consent. The Juicebox governance smart contract can adjust these levers."
 msgstr "Juicebox 是一个治理最小化的协议，这意味着只有少数几个参数可以进行调整，这些调整均需经用户同意后才会生效。Juicebox 的治理合约可以调整这些参数。"
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "Juicebox is an open protocol on Ethereum that is funded using Juicebox itself. You can check out the contractualized budget specs at https://juicebox.money/#/p/juicebox."
 msgstr "Juicebox 是以太坊上的一个开放协议，其本身也通过这个平台筹集资金。你可以在 https://juicebox.money/#/p/juicebox 上查看合约化的预算详情。"
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "Juicebox is experimental software. Although the founding contributors have done their part to shape the smart contracts for public use and have run the code through tons of tests, there still may be bugs."
 msgstr "Juicebox 是实验性软件。虽然创始人已经尽力完善这些智能合约供公众使用，并通过大量的测试来运行代码，但仍然可能存在错误。"
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "Juicebox was built to allow people and projects to get paid for creating public art and infrastructure, as much as or more than they would working towards corporate ends. No more shady business."
 msgstr "Juicebox 的建立是为了让人们和项目在创造公共艺术和基础设施时获得报酬，跟他们为企业工作时获得的一样，甚至会更多。再也没有黑幕交易。"
 
@@ -610,10 +614,6 @@ msgstr "浅色主题"
 #: src/components/modals/ParticipantsModal.tsx
 msgid "Load more"
 msgstr "加载更多"
-
-#: src/components/shared/TokenAMMPriceBadge.tsx
-msgid "Loading {exchangeName} price for {tokenSymbol}..."
-msgstr ""
 
 #: src/components/shared/formItems/ProjectLogoUri.tsx
 msgid "Logo"
@@ -655,6 +655,10 @@ msgstr ""
 msgid "No funding target: The project will control how all funds are distributed, and none can be redeemed by token holders."
 msgstr ""
 
+#: src/components/shared/AMMPrices/TokenAMMPriceRow.tsx
+msgid "No liquidity"
+msgstr ""
+
 #: src/components/Create/BudgetForm.tsx
 msgid "No more than the funding cycle target can be distributed by the project in a single funding cycle."
 msgstr ""
@@ -678,6 +682,10 @@ msgstr "不设定筹款目标。"
 #: src/components/Create/ConfirmDeployProject.tsx
 #: src/components/FundingCycle/FundingCycleDetails.tsx
 msgid "Not set"
+msgstr ""
+
+#: src/components/shared/AMMPrices/TokenAMMPriceRow.tsx
+msgid "Not supported"
 msgstr ""
 
 #: src/components/Landing/index.tsx
@@ -774,13 +782,13 @@ msgstr "项目支出让你可以承诺把项目的每一笔提款按比例分发
 msgid "Peach's Juicebox Stand"
 msgstr "桃子的果汁摊"
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "People using Juicebox are interacting with each other through public infrastructure—not a private, profit-seeking corporate service that brokers the exchange."
 msgstr "使用 Juicebox 的人是通过公共基础设施相互交互的 —— 而不是通过一个私人的、追求利润的企业服务来中介交流。"
 
 #: src/components/Navbar/MenuItems.tsx
 msgid "Podcast"
-msgstr ""
+msgstr "播客"
 
 #: src/components/Landing/index.tsx
 msgid "Powered by public smart contracts on <0>Ethereum</0>."
@@ -835,9 +843,9 @@ msgstr ""
 
 #: src/components/Navbar/MenuItems.tsx
 msgid "Projects"
-msgstr ""
+msgstr "项目"
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "Projects can be created with an optional discount rate to incentivize funding it earlier than later. The amount of tokens rewarded per amount paid to your project will decrease by the discount rate with each new funding cycle. A higher discount rate will incentivize supporters to pay your project earlier than later."
 msgstr "创建项目时，可选择配置一个折扣率用于激励早期支持者。每个新的筹款周期，支付给项目的每笔金额所奖励的代币数量将按折扣率递减。更高的折扣率将激励支持者尽早资助你的项目。"
 
@@ -912,6 +920,10 @@ msgstr ""
 msgid "Reserves"
 msgstr ""
 
+#: src/components/Navbar/MenuItems.tsx
+msgid "Resources"
+msgstr ""
+
 #: src/components/Create/RestrictedActionsForm.tsx
 #: src/components/Create/index.tsx
 msgid "Restricted actions"
@@ -976,6 +988,10 @@ msgstr ""
 msgid "Search projects by handle"
 msgstr "通过标识搜索项目"
 
+#: src/components/shared/EtherscanLink.tsx
+msgid "See transaction"
+msgstr ""
+
 #: src/components/shared/formItems/ProjectDuration.tsx
 msgid "Set a funding cycle duration"
 msgstr ""
@@ -1034,7 +1050,7 @@ msgstr ""
 msgid "Text displayed on your project's \"pay\" button. Leave this blank to use the default."
 msgstr ""
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "That's the plan, but the core Juicebox contracts will first be deployed to Ethereum Mainnet."
 msgstr "有这一个这是计划，但核心的 Juicebox 合约将首先部署到以太坊主网。"
 
@@ -1058,11 +1074,11 @@ msgstr ""
 msgid "The balance of the wallet that owns this Juicebox project."
 msgstr ""
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "The code could always use more eyes and more critique to further the community's confidence. Join our Discord and peek the code on Github to work with us."
 msgstr "如果有更多人来帮助审阅代码，将能够进一步增强社区的信心。加入我们的 Discord，在GitHub 上阅读代码，与我们一起工作。"
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "The founding contributors will then be working on L2 payment terminals for Juicebox projects."
 msgstr "然后，创始贡献者将致力于为 Juicebox 上的项目提供 L2 支付终端。"
 
@@ -1074,7 +1090,7 @@ msgstr "创造者将引领未来, 而社区会拥有未来."
 msgid "The project's entire balance will be considered overflow."
 msgstr ""
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "The project's tokens that are minted and distributed as a result of a received payment are ERC-20's. The distribution schedule is proportional to payments recieved, weighted by the project's discount rate over time."
 msgstr "项目收到付款之后，铸造和分发的代币是 ERC-20 标准的。分发数量与收到的付款金额成正比，随着时间的推移，这个比例会按项目的折扣率不断进行加权计算。"
 
@@ -1083,7 +1099,7 @@ msgstr "项目收到付款之后，铸造和分发的代币是 ERC-20 标准的�
 msgid "The ratio of tokens rewarded per payment amount will decrease by this percentage with each new funding cycle. A higher discount rate will incentivize supporters to pay your project earlier than later."
 msgstr "按付款金额奖励项目代币的比例，会随着进入新的筹款周期不断按这个比率递进减少。较高的折扣率会鼓励您的支持者更早一点给您的项目捐款。"
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "The rest is left to share between token hodlers."
 msgstr "剩下的留给代币持有者共享。"
 
@@ -1095,11 +1111,11 @@ msgstr ""
 msgid "The total amount received by this project through Juicebox since it was created."
 msgstr ""
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "There are unit tests written for every condition of every function in the contracts, and integration tests for every workflow that the protocol supports."
 msgstr "对合约中所有函数的所有条件都写了单元测试，对协议支持的每个工作流程都写了集成测试。"
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "There was also a script written for iteratively running the integration tests using a random input generator, prioritizing edge cases. The code has successfully passed over 1 millions test cases through this stress-testing script."
 msgstr "还有一个脚本，使用随机输入生成器迭代运行集成测试，优先处理边界情况。使用这个压力测试脚本，代码已经成功通过了超过100万个测试用例。"
 
@@ -1111,7 +1127,7 @@ msgstr ""
 msgid "This list is using an experimental data index and may be inaccurate for some projects."
 msgstr ""
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "This means that anyone can see the code that they're using, anyone can use the code without asking for permission, and no one can mess with the code or take it down."
 msgstr "这意味着任何人都可以看到他们正在使用的代码，任何人都可以在不征求许可的情况下使用该代码，而且没有人可以搞乱代码或把它删除掉。"
 
@@ -1128,7 +1144,7 @@ msgstr "这一比率决定了任何特定时间内每赎回一个代币可以获
 msgid "This text will be displayed to your supporters before they complete their payment."
 msgstr "以上文本内容会在您的支持者完成付款前向其显示。"
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "This website (juicebox.money) connects to the Juicebox protocol's smart contracts, deployed on the Ethereum network. (note: anyone else can make a website that also connects to these same smart contracts. For now, don't trust any site other than this one to access the Juicebox protocol.)"
 msgstr "这个网站（juicebox.money）连接到 Juicebox 协议的智能合约，这些合约都部署在 Ethereum 网络上。(注：任何人都可以做一个连接到相同的这些智能合约的网站。目前，除了这个网站，不要通过其他任何网站去访问 Juicebox 协议）。"
 
@@ -1164,7 +1180,7 @@ msgstr ""
 msgid "Tokens are earned by anyone who pays your project, and can be redeemed for overflow if your project has set a funding target."
 msgstr "当有人对你的项目进行支付时，, 他们会获得项目代币。. 在项目设定了筹款目标时, 可以通过赎回项目代币来获得溢出资金。"
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "Tokens can be redeemed for a portion of a project's overflow, letting you benefit from its success. After all, you helped it get there."
 msgstr "代币可以兑换项目溢出的一部分，让您从项目的成功中受益。毕竟，是您促成了这一切。"
 
@@ -1227,7 +1243,7 @@ msgstr ""
 msgid "Upload"
 msgstr ""
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "Users fund your project by paying to use your app or service, or as a patron or investor by making a payment directly to your project's smart contract (like on this app)."
 msgstr "用户可以通过付费使用你的应用程序或服务来资助你的项目，也可以作为赞助人或投资者，直接向你项目的智能合约付款（就像在现在这款应用上）。"
 
@@ -1251,31 +1267,31 @@ msgstr "总收入"
 msgid "Website"
 msgstr ""
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "What are community tokens?"
 msgstr "什么是社区代币？"
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "What are the risks?"
 msgstr "有什么风险？"
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "What does Juicebox cost?"
 msgstr "Juicebox 平台怎么收费？"
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "What is overflow?"
 msgstr "什么是溢出？"
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "What's a bonding curve?"
 msgstr "什么是联合曲线？"
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "What's a discount rate?"
 msgstr "什么是折扣率？"
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "What's going on under the hood?"
 msgstr "里面究竟有什么乾坤？"
 
@@ -1292,19 +1308,19 @@ msgstr ""
 msgid "Whenever someone pays your project, this percentage of tokens will be reserved and the rest will go to the payer. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner. Once tokens are reserved, anyone can \"mint\" them, which distributes them to their intended receivers."
 msgstr "有人对你的项目付款时，这一比例的代币会被保留, 剩余的代币会发送至付款人。在默认情况下, 保留代币会留给项目拥有者, 但是项目拥有者也可以将保留代币分配给其他钱包地址。保留代币产生后，任何人都可以把它们“铸造”出来，亦即把保留代币分发给预先指定的接收人。"
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "Who funds Juicebox projects?"
 msgstr "谁会资助 Juicebox 上的这些项目？"
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "Why Ethereum?"
 msgstr "为什么是以太坊？"
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "Why should I want to own a project's tokens?"
 msgstr "为什么我会想要持有一个项目的代币？"
 
-#: src/components/Landing/Faq.tsx
+#: src/components/Landing/QAs.tsx
 msgid "Will it work on L2s?"
 msgstr "它能在 L2 上运行吗？"
 
@@ -1318,7 +1334,7 @@ msgstr ""
 
 #: src/components/Navbar/MenuItems.tsx
 msgid "Workspace"
-msgstr ""
+msgstr "工作空间"
 
 #: src/components/modals/RedeemModal.tsx
 msgid "You can redeem tokens once this project has overflow."
@@ -1404,6 +1420,10 @@ msgstr ""
 msgid "juiceboxETH\""
 msgstr ""
 
+#: src/components/Dashboard/Pay/PayInputSubText.tsx
+msgid "or <0><1>buy {tokenText} on exchange<2/></1></0>"
+msgstr ""
+
 #: src/components/Create/RulesForm.tsx
 msgid "this interface"
 msgstr ""
@@ -1425,7 +1445,7 @@ msgstr "代币已赎回"
 msgid "until"
 msgstr ""
 
-#: src/utils/formatDate.ts
+#: src/utils/formatDate.tsx
 msgid "{0} ago"
 msgstr ""
 
@@ -1501,19 +1521,15 @@ msgstr ""
 msgid "{count} total"
 msgstr "总共 {count}"
 
-#: src/components/shared/TokenAMMPriceBadge.tsx
-msgid "{exchangeName} has no liquidity pool for {tokenSymbol}."
+#: src/components/shared/AMMPrices/TokenAMMPriceRow.tsx
+msgid "{exchangeName} has no market for {tokenSymbol}."
 msgstr ""
 
 #: src/components/Dashboard/index.tsx
 msgid "{handle} not found"
 msgstr ""
 
-#: src/components/Landing/Faq.tsx
-msgid "{p}"
-msgstr ""
-
-#: src/components/shared/TokenAMMPriceBadge.tsx
+#: src/components/shared/AMMPrices/TokenAMMPriceRow.tsx
 msgid "{tokenSymbol}/ETH exchange rate on {exchangeName}."
 msgstr ""
 

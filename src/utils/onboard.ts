@@ -48,6 +48,7 @@ export function initOnboard(subscriptions: Subscriptions, darkMode: boolean) {
         { walletName: 'operaTouch' },
         { walletName: 'imToken', rpcUrl },
         { walletName: 'meetone' },
+        { walletName: 'tally' },
         { walletName: 'authereum', disableNotifications: true },
       ],
     },

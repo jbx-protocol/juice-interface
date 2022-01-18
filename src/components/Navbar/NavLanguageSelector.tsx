@@ -48,7 +48,7 @@ export default function LanguageSelector({
         style={{
           ...selectStyle,
         }}
-        value={Languages[currentSelectedLanguage].long}
+        value={Languages[currentSelectedLanguage]?.long ?? 'English'}
         onChange={newLanguage => {
           setLanguage(newLanguage)
         }}

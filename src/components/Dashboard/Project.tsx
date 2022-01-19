@@ -1,9 +1,7 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { Col, Row } from 'antd'
 import { ProjectContext } from 'contexts/projectContext'
-import useContractReader from 'hooks/ContractReader'
-import { CSSProperties, useContext, useMemo } from 'react'
-import { bigNumbersDiff } from 'utils/bigNumbersDiff'
+import useOverflowOfProject from 'hooks/contractReader/OverflowOfProject'
+import { CSSProperties, useContext } from 'react'
 import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
 
 import BalanceTimeline from './BalanceTimeline'
@@ -25,30 +23,7 @@ export default function Project({
 }) {
   const { projectId, currentFC, terminal } = useContext(ProjectContext)
 
-  const totalOverflow = useContractReader<BigNumber>({
-    contract: terminal?.name,
-    functionName: 'currentOverflowOf',
-    args: projectId ? [projectId.toHexString()] : null,
-    valueDidChange: bigNumbersDiff,
-    updateOn: useMemo(
-      () =>
-        projectId
-          ? [
-              {
-                contract: terminal?.name,
-                eventName: 'Pay',
-                topics: [[], projectId.toHexString()],
-              },
-              {
-                contract: terminal?.name,
-                eventName: 'Tap',
-                topics: [[], projectId.toHexString()],
-              },
-            ]
-          : undefined,
-      [projectId, terminal?.name],
-    ),
-  })
+  const totalOverflow = useOverflowOfProject(projectId, terminal?.name)
 
   const fcMetadata = decodeFundingCycleMetadata(currentFC?.metadata)
 

@@ -6,7 +6,10 @@ import Mod from 'components/shared/Mod'
 
 import { ProjectContext } from 'contexts/projectContext'
 import { BigNumber, constants } from 'ethers'
-import { OperatorPermission, useHasPermission } from 'hooks/HasPermission'
+import {
+  OperatorPermission,
+  useHasPermission,
+} from 'hooks/contractReader/HasPermission'
 import { useSetPayoutModsTx } from 'hooks/transactor/SetPayoutModsTx'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'

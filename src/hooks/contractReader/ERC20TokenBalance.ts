@@ -3,7 +3,7 @@ import { ContractName } from 'models/contract-name'
 import { TokenRef } from 'models/token-ref'
 
 import useContractReader from './ContractReader'
-import { useErc20Contract } from './Erc20Contract'
+import { useErc20Contract } from '../Erc20Contract'
 
 export function useERC20TokenBalance(
   tokenRef: TokenRef | undefined,

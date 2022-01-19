@@ -1,6 +1,6 @@
-import { BigNumber } from '@ethersproject/bignumber'
-import useContractReader from 'hooks/ContractReader'
-import { useErc20Contract } from 'hooks/Erc20Contract'
+import useClaimedBalanceOfUser from 'hooks/contractReader/ClaimedBalanceOfUser'
+import useDecimalsOfERC20 from 'hooks/contractReader/DecimalsOfERC20'
+import useSymbolOfERC20 from 'hooks/contractReader/SymbolOfERC20'
 import { CSSProperties } from 'react'
 import { formatWad } from 'utils/formatNumber'
 
@@ -17,23 +17,9 @@ export default function ERC20TokenBalance({
   style?: CSSProperties
   precision?: number
 }) {
-  const contract = useErc20Contract(tokenAddress)
-
-  const balance = useContractReader<BigNumber>({
-    contract,
-    functionName: 'balanceOf',
-    args: wallet ? [wallet] : null,
-  })
-
-  const symbol = useContractReader<string>({
-    contract,
-    functionName: 'symbol',
-  })
-
-  const decimals = useContractReader<number>({
-    contract,
-    functionName: 'decimals',
-  })
+  const balance = useClaimedBalanceOfUser(tokenAddress, wallet)
+  const decimals = useDecimalsOfERC20(tokenAddress)
+  const symbol = useSymbolOfERC20(tokenAddress)
 
   if (balance === undefined) return null
 

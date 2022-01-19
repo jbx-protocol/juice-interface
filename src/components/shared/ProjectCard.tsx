@@ -46,8 +46,7 @@ export default function ProjectCard({
         overflow: 'hidden',
       }}
       key={project?.handle}
-      href={`/p/${project.handle}`}
-      onClick={() => (window.location.hash = '/p/' + project.handle)}
+      href={`/#/p/${project.handle}`}
     >
       {metadata ? (
         <div

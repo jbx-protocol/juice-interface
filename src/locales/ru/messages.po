@@ -8,7 +8,7 @@ msgstr ""
 "Language: ru\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-01-18 10:48\n"
+"PO-Revision-Date: 2022-01-19 01:47\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -1394,10 +1394,6 @@ msgstr "являются непроверенными и могут быть у�
 #: src/components/shared/formItems/ProjectDescription.tsx
 msgid "characters max"
 msgstr "максимальное количество символов"
-
-#: src/components/Create/RestrictedActionsForm.tsx
-msgid "checked"
-msgstr "проверено"
 
 #: src/components/Create/ConfirmDeployProject.tsx
 msgid "days"

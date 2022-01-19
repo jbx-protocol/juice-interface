@@ -56,7 +56,7 @@ export default function TokenAMMPriceRow({
           {!exchangeSupported ? (
             <Trans>Not supported</Trans>
           ) : !WETHPrice ? (
-            <Trans>No liquidity</Trans>
+            <Trans>Unavailable</Trans>
           ) : null}
           <InfoCircleOutlined style={{ marginLeft: '0.2rem' }} />
         </span>

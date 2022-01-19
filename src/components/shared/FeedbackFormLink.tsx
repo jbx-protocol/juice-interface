@@ -63,15 +63,10 @@ export default function FeedbackFormLink({
       }
     >
       <a
-        className="feedback-button hide-mobile"
+        className={`feedback-button hide-mobile ${isDarkMode ? 'dark' : ''}`}
         href={formUrl()}
         target="_blank"
         rel="noreferrer"
-        style={
-          isDarkMode
-            ? { boxShadow: 'none', backgroundColor: 'var(--background-l2)' }
-            : undefined
-        }
       >
         <img src="/assets/stoned_banny.png" alt="Stoned banny" />
       </a>

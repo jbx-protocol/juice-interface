@@ -1,13 +1,11 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
 import { Modal, Space } from 'antd'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import TicketModsList from 'components/shared/TicketModsList'
 import { ProjectContext } from 'contexts/projectContext'
-import useContractReader from 'hooks/ContractReader'
+import useReservedTokensOfProject from 'hooks/contractReader/ReservedTokensOfProject'
 import { useDistributeTokensTx } from 'hooks/transactor/DistributeTokensTx'
 import { useContext, useState } from 'react'
-import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatWad } from 'utils/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
 
@@ -31,22 +29,13 @@ export default function DistributeTokensModal({
   } = useContext(ProjectContext)
   const distributeTokensTx = useDistributeTokensTx()
 
-  const terminalContractName = terminal?.name
-
   const metadata = decodeFundingCycleMetadata(currentFC?.metadata)
 
-  const reservedTokens = useContractReader<BigNumber>({
-    contract: terminalContractName,
-    functionName: 'reservedTicketBalanceOf',
-    args:
-      projectId && metadata?.reservedRate
-        ? [
-            projectId.toHexString(),
-            BigNumber.from(metadata.reservedRate).toHexString(),
-          ]
-        : null,
-    valueDidChange: bigNumbersDiff,
-  })
+  const reservedTokens = useReservedTokensOfProject(
+    projectId,
+    terminal?.name,
+    metadata?.reservedRate,
+  )
 
   function distribute() {
     setLoading(true)

@@ -4,7 +4,10 @@ import ProjectTicketMods from 'components/shared/formItems/ProjectTicketMods'
 import Mod from 'components/shared/Mod'
 import { ProjectContext } from 'contexts/projectContext'
 import { BigNumber } from 'ethers'
-import { OperatorPermission, useHasPermission } from 'hooks/HasPermission'
+import {
+  OperatorPermission,
+  useHasPermission,
+} from 'hooks/contractReader/HasPermission'
 import { useSetTicketModsTx } from 'hooks/transactor/SetTicketModsTx'
 import { FundingCycle } from 'models/funding-cycle'
 import { TicketMod } from 'models/mods'

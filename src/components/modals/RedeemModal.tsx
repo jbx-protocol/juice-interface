@@ -8,11 +8,10 @@ import { NetworkContext } from 'contexts/networkContext'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { BigNumber } from 'ethers'
-import useContractReader from 'hooks/ContractReader'
-import { useRedeemRate } from 'hooks/RedeemRate'
+import useClaimableOverflowOf from 'hooks/contractReader/ClaimableOverflowOf'
+import { useRedeemRate } from 'hooks/contractReader/RedeemRate'
 import { useRedeemTokensTx } from 'hooks/transactor/RedeemTokensTx'
-import { CSSProperties, useContext, useMemo, useState } from 'react'
-import { bigNumbersDiff } from 'utils/bigNumbersDiff'
+import { CSSProperties, useContext, useState } from 'react'
 import { formattedNum, formatWad, fromWad, parseWad } from 'utils/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
 
@@ -44,33 +43,12 @@ export default function RedeemModal({
 
   const fcMetadata = decodeFundingCycleMetadata(currentFC?.metadata)
 
-  const maxClaimable = useContractReader<BigNumber>({
-    contract: terminal?.name,
-    functionName: 'claimableOverflowOf',
-    args:
-      userAddress && projectId
-        ? [userAddress, projectId.toHexString(), totalBalance?.toHexString()]
-        : null,
-    valueDidChange: bigNumbersDiff,
-    updateOn: useMemo(
-      () =>
-        projectId && userAddress
-          ? [
-              {
-                contract: terminal?.name,
-                eventName: 'Pay',
-                topics: [[], projectId.toHexString(), userAddress],
-              },
-              {
-                contract: terminal?.name,
-                eventName: 'Redeem',
-                topics: [projectId.toHexString(), userAddress],
-              },
-            ]
-          : undefined,
-      [projectId, userAddress, terminal?.name],
-    ),
-  })
+  const maxClaimable = useClaimableOverflowOf(
+    userAddress,
+    totalBalance,
+    projectId,
+    terminal?.name,
+  )
 
   const rewardAmount = useRedeemRate({
     tokenAmount: redeemAmount,

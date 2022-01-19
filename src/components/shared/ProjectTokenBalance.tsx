@@ -1,12 +1,10 @@
-import { isAddress } from '@ethersproject/address'
 import { BigNumber } from '@ethersproject/bignumber'
-import useContractReader from 'hooks/ContractReader'
-import { useErc20Contract } from 'hooks/Erc20Contract'
-import { ContractName } from 'models/contract-name'
+import { ThemeContext } from 'contexts/themeContext'
+import useSymbolOfERC20 from 'hooks/contractReader/SymbolOfERC20'
+import useTokenAddressOfProject from 'hooks/contractReader/TokenAddressOfProject'
+import useTotalBalanceOfUser from 'hooks/contractReader/TotalBalanceOfUser'
 import { CSSProperties, useContext } from 'react'
 import { formatWad } from 'utils/formatNumber'
-
-import { ThemeContext } from 'contexts/themeContext'
 
 import ProjectHandle from './ProjectHandle'
 
@@ -27,28 +25,11 @@ export default function ProjectTokenBalance({
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const tokenAddress = useContractReader<string>({
-    contract: ContractName.TicketBooth,
-    functionName: 'ticketsOf',
-    args: projectId ? [projectId.toHexString()] : null,
-  })
+  const tokenAddress = useTokenAddressOfProject(projectId)
 
-  const projectTokenContract = useErc20Contract(tokenAddress)
+  const symbol = useSymbolOfERC20(tokenAddress)
 
-  const symbol = useContractReader<string | null>({
-    contract: projectTokenContract,
-    functionName: 'symbol',
-    formatter: symbol => symbol ?? null,
-  })
-
-  const balance = useContractReader<BigNumber>({
-    contract: ContractName.TicketBooth,
-    functionName: 'balanceOf',
-    args:
-      projectId && wallet && isAddress(wallet)
-        ? [wallet, projectId.toHexString()]
-        : null,
-  })
+  const balance = useTotalBalanceOfUser(wallet, projectId)
 
   return (
     <div style={{ display: 'flex', justifyContent: 'space-between', ...style }}>

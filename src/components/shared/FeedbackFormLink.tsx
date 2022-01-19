@@ -63,7 +63,7 @@ export default function FeedbackFormLink({
       }
     >
       <a
-        className={`feedback-button hide-mobile ${isDarkMode ? 'dark' : null}`}
+        className={`feedback-button hide-mobile ${isDarkMode ? 'dark' : ''}`}
         href={formUrl()}
         target="_blank"
         rel="noreferrer"

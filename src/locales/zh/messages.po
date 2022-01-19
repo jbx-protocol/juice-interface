@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-01-18 02:02\n"
+"PO-Revision-Date: 2022-01-19 01:47\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -1394,10 +1394,6 @@ msgstr ""
 
 #: src/components/shared/formItems/ProjectDescription.tsx
 msgid "characters max"
-msgstr ""
-
-#: src/components/Create/RestrictedActionsForm.tsx
-msgid "checked"
 msgstr ""
 
 #: src/components/Create/ConfirmDeployProject.tsx

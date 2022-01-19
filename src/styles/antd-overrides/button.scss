@@ -100,24 +100,35 @@
   width: 70px;
   height: 70px;
   margin: 3px;
-  box-shadow: 3px 3px 7px 0px #88888861;
+  box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.1);
   border-radius: 100%;
+  transition: 0.3s;
   cursor: pointer;
   img {
     width: 60px;
     margin-left: -3px;
+    transition: 0.3s;
   }
+}
+
+.feedback-button.dark {
+  background-color: var(--background-l2);
+  box-shadow: 0px 8px 12px #000000;
 }
 
 .feedback-button.ant-tooltip-open {
   background-color: var(--background-l0);
-  box-shadow: 3px 3px 7px 3px #88888861;
-  width: 73px;
-  height: 73px;
+  box-shadow: 0px 8px 12px 2px rgba(0, 0, 0, 0.1);
+  transform: scale(1.05);
   img {
-    width: 63px;
+    transform: scale(1.05);
   }
   .show-text-hover {
     display: inline-block !important;
   }
+}
+
+.feedback-button.ant-tooltip-open.dark {
+  background-color: var(--background-l2);
+  box-shadow: 0px 8px 12px 2px #000000;
 }

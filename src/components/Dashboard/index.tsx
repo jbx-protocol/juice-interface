@@ -1,23 +1,25 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
 import FeedbackFormLink from 'components/shared/FeedbackFormLink'
 
 import { ProjectContext, ProjectContextType } from 'contexts/projectContext'
-import { utils } from 'ethers'
-import useContractReader from 'hooks/ContractReader'
+import useBalanceOfProject from 'hooks/contractReader/BalanceOfProject'
+import useCurrentFundingCycleOfProject from 'hooks/contractReader/CurrentFundingCycleOfProject'
+import useCurrentPayoutModsOfProject from 'hooks/contractReader/CurrentPayoutModsOfProject'
+import useCurrentTicketModsOfProject from 'hooks/contractReader/CurrentTicketModsOfProject'
+import useOwnerOfProject from 'hooks/contractReader/OwnerOfProject'
+import useProjectIdForHandle from 'hooks/contractReader/ProjectIdForHandle'
+import useQueuedFundingCycleOfProject from 'hooks/contractReader/QueuedFundingCycleOfProject'
+import useQueuedPayoutModsOfProject from 'hooks/contractReader/QueuedPayoutModsOfProject'
+import useQueuedTicketModsOfProject from 'hooks/contractReader/QueuedTicketModsOfProject'
+import useSymbolOfERC20 from 'hooks/contractReader/SymbolOfERC20'
+import useTokenAddressOfProject from 'hooks/contractReader/TokenAddressOfProject'
+import useUriOfProject from 'hooks/contractReader/UriOfProject'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
-import { useErc20Contract } from 'hooks/Erc20Contract'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { useProjectsQuery } from 'hooks/Projects'
-import { ContractName } from 'models/contract-name'
 import { CurrencyOption } from 'models/currency-option'
-import { FundingCycle } from 'models/funding-cycle'
-import { PayoutMod, TicketMod } from 'models/mods'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
-import { bigNumbersDiff } from 'utils/bigNumbersDiff'
-import { deepEqFundingCycles } from 'utils/deepEqFundingCycles'
-import { normalizeHandle } from 'utils/formatHandle'
 import { getTerminalName, getTerminalVersion } from 'utils/terminal-versions'
 
 import { padding } from 'constants/styles/padding'
@@ -25,259 +27,43 @@ import { layouts } from 'constants/styles/layouts'
 import { projectTypes } from 'constants/project-types'
 import { archivedProjectIds } from 'constants/archived-projects'
 
+import useTerminalOfProject from '../../hooks/contractReader/TerminalOfProject'
 import Loading from '../shared/Loading'
 import Project from './Project'
 
 export default function Dashboard() {
-  const [projectExists, setProjectExists] = useState<boolean>()
-
-  const converter = useCurrencyConverter()
-
   const { handle }: { handle?: string } = useParams()
 
-  const projectId = useContractReader<BigNumber>({
-    contract: ContractName.Projects,
-    functionName: 'projectFor',
-    args: handle ? [utils.formatBytes32String(normalizeHandle(handle))] : null,
-    callback: useCallback(
-      (id?: BigNumber) => setProjectExists(id?.gt(0) ?? false),
-      [setProjectExists],
-    ),
-  })
-
-  const { data: projects } = useProjectsQuery({
-    projectId,
-    keys: ['createdAt', 'totalPaid'],
-  })
-
-  const terminalAddress = useContractReader<string>({
-    contract: ContractName.TerminalDirectory,
-    functionName: 'terminalOf',
-    args: projectId ? [projectId.toHexString()] : null,
-  })
-
+  const projectId = useProjectIdForHandle(handle)
+  const owner = useOwnerOfProject(projectId)
+  const terminalAddress = useTerminalOfProject(projectId)
   const terminalName = getTerminalName({
     address: terminalAddress,
   })
-
   const terminalVersion = getTerminalVersion(terminalAddress)
-
-  const createdAt = projects?.[0]?.createdAt
-  const earned = projects?.[0]?.totalPaid
-
-  const owner = useContractReader<string>({
-    contract: ContractName.Projects,
-    functionName: 'ownerOf',
-    args: projectId ? [projectId.toHexString()] : null,
-  })
-
-  const currentFC = useContractReader<FundingCycle>({
-    contract: ContractName.FundingCycles,
-    functionName: 'currentOf',
-    args: projectId ? [projectId.toHexString()] : null,
-    valueDidChange: useCallback((a, b) => !deepEqFundingCycles(a, b), []),
-    updateOn: useMemo(
-      () =>
-        projectId
-          ? [
-              {
-                contract: ContractName.FundingCycles,
-                eventName: 'Configure',
-                topics: [[], projectId.toHexString()],
-              },
-              {
-                contract: terminalName,
-                eventName: 'Pay',
-                topics: [[], projectId.toHexString()],
-              },
-              {
-                contract: terminalName,
-                eventName: 'Tap',
-                topics: [[], projectId.toHexString()],
-              },
-            ]
-          : undefined,
-      [projectId, terminalName],
-    ),
-  })
-
-  const queuedFC = useContractReader<FundingCycle>({
-    contract: ContractName.FundingCycles,
-    functionName: 'queuedOf',
-    args: projectId ? [projectId.toHexString()] : null,
-    updateOn: projectId
-      ? [
-          {
-            contract: ContractName.FundingCycles,
-            eventName: 'Configure',
-            topics: [[], projectId.toHexString()],
-          },
-        ]
-      : undefined,
-  })
-
-  const uri = useContractReader<string>({
-    contract: ContractName.Projects,
-    functionName: 'uriOf',
-    args: projectId ? [projectId.toHexString()] : null,
-  })
-
-  const currentPayoutMods = useContractReader<PayoutMod[]>({
-    contract: ContractName.ModStore,
-    functionName: 'payoutModsOf',
-    args:
-      projectId && currentFC
-        ? [projectId.toHexString(), currentFC.configured.toHexString()]
-        : null,
-    updateOn: useMemo(
-      () =>
-        projectId && currentFC
-          ? [
-              {
-                contract: ContractName.ModStore,
-                eventName: 'SetPayoutMod',
-                topics: [
-                  projectId.toHexString(),
-                  currentFC.configured.toHexString(),
-                ],
-              },
-            ]
-          : [],
-      [projectId, currentFC],
-    ),
-  })
-
-  const queuedPayoutMods = useContractReader<PayoutMod[]>({
-    contract: ContractName.ModStore,
-    functionName: 'payoutModsOf',
-    args:
-      projectId && queuedFC
-        ? [projectId.toHexString(), queuedFC.configured.toHexString()]
-        : null,
-    updateOn: useMemo(
-      () =>
-        projectId && queuedFC
-          ? [
-              {
-                contract: ContractName.ModStore,
-                eventName: 'SetPayoutMod',
-                topics: [
-                  projectId.toHexString(),
-                  queuedFC.configured.toHexString(),
-                ],
-              },
-            ]
-          : [],
-      [projectId, queuedFC],
-    ),
-  })
-
-  const currentTicketMods = useContractReader<TicketMod[]>({
-    contract: ContractName.ModStore,
-    functionName: 'ticketModsOf',
-    args:
-      projectId && currentFC
-        ? [projectId.toHexString(), currentFC.configured.toHexString()]
-        : null,
-    updateOn: useMemo(
-      () =>
-        projectId && currentFC
-          ? [
-              {
-                contract: ContractName.ModStore,
-                eventName: 'SetTicketMod',
-                topics: [
-                  projectId.toHexString(),
-                  currentFC.configured.toHexString(),
-                ],
-              },
-            ]
-          : [],
-      [projectId, currentFC],
-    ),
-  })
-
-  const queuedTicketMods = useContractReader<TicketMod[]>({
-    contract: ContractName.ModStore,
-    functionName: 'ticketModsOf',
-    args:
-      projectId && queuedFC
-        ? [projectId.toHexString(), queuedFC.configured.toHexString()]
-        : null,
-    updateOn: useMemo(
-      () =>
-        projectId && queuedFC
-          ? [
-              {
-                contract: ContractName.ModStore,
-                eventName: 'SetTicketMod',
-                topics: [
-                  projectId.toHexString(),
-                  queuedFC.configured.toHexString(),
-                ],
-              },
-            ]
-          : [],
-      [projectId, queuedFC],
-    ),
-  })
-
-  const tokenAddress = useContractReader<string>({
-    contract: ContractName.TicketBooth,
-    functionName: 'ticketsOf',
-    args: projectId ? [projectId.toHexString()] : null,
-    updateOn: useMemo(
-      () => [
-        {
-          contract: ContractName.TicketBooth,
-          eventName: 'Issue',
-          topics: projectId ? [projectId.toHexString()] : undefined,
-        },
-      ],
-      [projectId],
-    ),
-  })
-  const ticketContract = useErc20Contract(tokenAddress)
-  const tokenSymbol = useContractReader<string>({
-    contract: ticketContract,
-    functionName: 'symbol',
-  })
-
-  const { data: metadata } = useProjectMetadata(uri)
-
-  useEffect(() => {
-    if (metadata?.name) {
-      document.title = metadata.name
-    } else {
-      document.title = 'Juicebox'
-    }
-  }, [metadata])
-
-  const balance = useContractReader<BigNumber>({
-    contract: terminalName,
-    functionName: 'balanceOf',
-    args: projectId ? [projectId.toHexString()] : null,
-    valueDidChange: bigNumbersDiff,
-    updateOn: useMemo(
-      () =>
-        projectId
-          ? [
-              {
-                contract: terminalName,
-                eventName: 'Pay',
-                topics: [[], projectId.toHexString()],
-              },
-              {
-                contract: terminalName,
-                eventName: 'Tap',
-                topics: [[], projectId.toHexString()],
-              },
-            ]
-          : undefined,
-      [projectId, terminalName],
-    ),
-  })
-
+  const currentFC = useCurrentFundingCycleOfProject(projectId, terminalName)
+  const queuedFC = useQueuedFundingCycleOfProject(projectId)
+  const uri = useUriOfProject(projectId)
+  const currentPayoutMods = useCurrentPayoutModsOfProject(
+    projectId,
+    currentFC?.configured,
+  )
+  const queuedPayoutMods = useQueuedPayoutModsOfProject(
+    projectId,
+    queuedFC?.configured,
+  )
+  const currentTicketMods = useCurrentTicketModsOfProject(
+    projectId,
+    currentFC?.configured,
+  )
+  const queuedTicketMods = useQueuedTicketModsOfProject(
+    projectId,
+    queuedFC?.configured,
+  )
+  const tokenAddress = useTokenAddressOfProject(projectId)
+  const tokenSymbol = useSymbolOfERC20(tokenAddress)
+  const balance = useBalanceOfProject(projectId, terminalName)
+  const converter = useCurrencyConverter()
   const balanceInCurrency = useMemo(
     () =>
       balance &&
@@ -288,6 +74,24 @@ export default function Dashboard() {
       ),
     [balance, converter, currentFC],
   )
+
+  const { data: projects } = useProjectsQuery({
+    projectId,
+    keys: ['createdAt', 'totalPaid'],
+  })
+
+  const createdAt = projects?.[0]?.createdAt
+  const earned = projects?.[0]?.totalPaid
+
+  const { data: metadata } = useProjectMetadata(uri)
+
+  useEffect(() => {
+    if (metadata?.name) {
+      document.title = metadata.name
+    } else {
+      document.title = 'Juicebox'
+    }
+  }, [metadata])
 
   const project = useMemo<ProjectContextType>(() => {
     const projectType = projectId
@@ -346,9 +150,9 @@ export default function Dashboard() {
     terminalAddress,
   ])
 
-  if (projectExists === undefined) return <Loading />
+  if (!projectId) return <Loading />
 
-  if (!projectExists) {
+  if (projectId?.eq(0)) {
     return (
       <div
         style={{

@@ -1,9 +1,9 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { ContractName } from 'models/contract-name'
 import { FundingCycle } from 'models/funding-cycle'
 import { PayoutMod, TicketMod } from 'models/mods'
 import { ProjectMetadataV3 } from 'models/project-metadata'
 import { ProjectType } from 'models/project-type'
+import { TerminalName } from 'models/terminal-name'
 import { TerminalVersion } from 'models/terminal-version'
 import { createContext } from 'react'
 
@@ -31,7 +31,7 @@ export type ProjectContextType = {
     | {
         version: TerminalVersion | undefined
         address: string | undefined
-        name: ContractName | undefined
+        name: TerminalName | undefined
       }
     | undefined
 }

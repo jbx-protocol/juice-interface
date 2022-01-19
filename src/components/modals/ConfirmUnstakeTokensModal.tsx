@@ -1,4 +1,3 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { Form, Modal, Space } from 'antd'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
@@ -7,11 +6,9 @@ import { NetworkContext } from 'contexts/networkContext'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { constants } from 'ethers'
-import useContractReader from 'hooks/ContractReader'
+import useUnclaimedBalanceOfUser from 'hooks/contractReader/UnclaimedBalanceOfUser'
 import { useUnstakeTokensTx } from 'hooks/transactor/UnstakeTokensTx'
-import { ContractName } from 'models/contract-name'
 import { useContext, useLayoutEffect, useState } from 'react'
-import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
 
 import { t, Trans } from '@lingui/macro'
@@ -29,16 +26,15 @@ export default function ConfirmUnstakeTokensModal({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const { tokenSymbol, tokenAddress, projectId } = useContext(ProjectContext)
+  const { tokenSymbol, tokenAddress, projectId, terminal } =
+    useContext(ProjectContext)
   const unstakeTokensTx = useUnstakeTokensTx()
 
-  const iouBalance = useContractReader<BigNumber>({
-    contract: ContractName.TicketBooth,
-    functionName: 'stakedBalanceOf',
-    args:
-      userAddress && projectId ? [userAddress, projectId.toHexString()] : null,
-    valueDidChange: bigNumbersDiff,
-  })
+  const iouBalance = useUnclaimedBalanceOfUser(
+    userAddress,
+    projectId,
+    terminal?.name,
+  )
 
   useLayoutEffect(() => {
     setUnstakeAmount(fromWad(iouBalance))

@@ -3,7 +3,10 @@ import { t } from '@lingui/macro'
 import { CardSection } from 'components/shared/CardSection'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { OperatorPermission, useHasPermission } from 'hooks/HasPermission'
+import {
+  OperatorPermission,
+  useHasPermission,
+} from 'hooks/contractReader/HasPermission'
 import { useContext, useState } from 'react'
 
 import CurrentFundingCycle from '../FundingCycle/CurrentFundingCycle'

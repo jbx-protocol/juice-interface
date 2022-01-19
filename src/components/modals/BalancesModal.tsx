@@ -5,7 +5,10 @@ import ERC20TokenBalance from 'components/shared/ERC20TokenBalance'
 import { FormItems } from 'components/shared/formItems'
 import ProjectTokenBalance from 'components/shared/ProjectTokenBalance'
 import { ProjectContext } from 'contexts/projectContext'
-import { OperatorPermission, useHasPermission } from 'hooks/HasPermission'
+import {
+  OperatorPermission,
+  useHasPermission,
+} from 'hooks/contractReader/HasPermission'
 import { useSetProjectUriTx } from 'hooks/transactor/SetProjectUriTx'
 import { ProjectMetadataV3 } from 'models/project-metadata'
 import { TokenRef } from 'models/token-ref'

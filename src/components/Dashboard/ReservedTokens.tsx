@@ -2,16 +2,12 @@ import { Button } from 'antd'
 import { t, Trans } from '@lingui/macro'
 import TooltipLabel from 'components/shared/TooltipLabel'
 
-import { NetworkContext } from 'contexts/networkContext'
 import { ProjectContext } from 'contexts/projectContext'
-import { BigNumber } from 'ethers'
-import useContractReader from 'hooks/ContractReader'
-import { ContractName } from 'models/contract-name'
+import useReservedTokensOfProject from 'hooks/contractReader/ReservedTokensOfProject'
 import { FundingCycle } from 'models/funding-cycle'
 import { TicketMod } from 'models/mods'
 import { NetworkName } from 'models/network-name'
-import { useContext, useMemo, useState } from 'react'
-import { bigNumbersDiff } from 'utils/bigNumbersDiff'
+import { useContext, useState } from 'react'
 import { formatWad, fromPerbicent } from 'utils/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
 
@@ -31,58 +27,17 @@ export default function ReservedTokens({
   hideActions?: boolean
 }) {
   const [modalIsVisible, setModalIsVisible] = useState<boolean>()
-  const { userAddress } = useContext(NetworkContext)
 
   const { projectId, tokenSymbol, isPreviewMode, terminal } =
     useContext(ProjectContext)
 
   const metadata = decodeFundingCycleMetadata(fundingCycle?.metadata)
 
-  const reservedTickets = useContractReader<BigNumber>({
-    contract: terminal?.name,
-    functionName: 'reservedTicketBalanceOf',
-    args:
-      projectId && metadata?.reservedRate
-        ? [
-            projectId.toHexString(),
-            BigNumber.from(metadata.reservedRate).toHexString(),
-          ]
-        : null,
-    valueDidChange: bigNumbersDiff,
-    updateOn: useMemo(
-      () => [
-        {
-          contract: terminal?.name,
-          eventName: 'Pay',
-          topics: projectId ? [[], projectId.toHexString()] : undefined,
-        },
-        {
-          contract: terminal?.name,
-          eventName: 'PrintTickets',
-          topics: projectId ? [projectId.toHexString()] : undefined,
-        },
-        {
-          contract: ContractName.TicketBooth,
-          eventName: 'Redeem',
-          topics: projectId ? [projectId.toHexString()] : undefined,
-        },
-        {
-          contract: ContractName.TicketBooth,
-          eventName: 'Convert',
-          topics:
-            userAddress && projectId
-              ? [userAddress, projectId.toHexString()]
-              : undefined,
-        },
-        {
-          contract: terminal?.name,
-          eventName: 'PrintReserveTickets',
-          topics: projectId ? [[], projectId.toHexString()] : undefined,
-        },
-      ],
-      [userAddress, projectId, terminal?.name],
-    ),
-  })
+  const reservedTokens = useReservedTokensOfProject(
+    projectId,
+    terminal?.name,
+    metadata?.reservedRate,
+  )
 
   const isConstitutionDAO =
     readNetwork.name === NetworkName.mainnet &&
@@ -124,7 +79,7 @@ export default function ReservedTokens({
           }}
         >
           <span>
-            {formatWad(reservedTickets, { precision: 0 }) || 0}{' '}
+            {formatWad(reservedTokens, { precision: 0 }) || 0}{' '}
             {tokenSymbol ?? t`tokens`}
           </span>
           <Button

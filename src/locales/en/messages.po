@@ -1390,10 +1390,6 @@ msgstr ""
 msgid "characters max"
 msgstr ""
 
-#: src/components/Create/RestrictedActionsForm.tsx
-msgid "checked"
-msgstr ""
-
 #: src/components/Create/ConfirmDeployProject.tsx
 msgid "days"
 msgstr ""

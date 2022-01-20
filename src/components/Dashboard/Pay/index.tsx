@@ -55,6 +55,8 @@ export default function Pay() {
     const payButtonText = metadata.payButton?.length
       ? metadata.payButton
       : t`Pay`
+    const isV1AndMaxRR =
+      terminal?.version === '1' && fcMetadata.reservedRate === 200
 
     if (isArchived) {
       return (
@@ -67,10 +69,10 @@ export default function Pay() {
           </Button>
         </Tooltip>
       )
-    } else if (fcMetadata.payIsPaused || overridePayDisabled) {
+    } else if (fcMetadata.payIsPaused || overridePayDisabled || isV1AndMaxRR) {
       let disabledMessage: string
 
-      if (terminal?.version === '1' && fcMetadata.reservedRate === 200) {
+      if (isV1AndMaxRR) {
         disabledMessage = t`Paying this project is currently disabled, because the token reserved rate is 100% and no tokens will be earned by making a payment.`
       } else if (fcMetadata.payIsPaused) {
         disabledMessage = t`Payments are paused for the current funding cycle.`
@@ -86,6 +88,7 @@ export default function Pay() {
         </Tooltip>
       )
     } else {
+      console.log('currentFC.configured.eq(0): ', currentFC.configured.eq(0))
       return (
         <Button
           style={{ width: '100%' }}

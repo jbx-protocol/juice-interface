@@ -79,10 +79,7 @@ export default function Pay() {
       }
 
       return (
-        <Tooltip
-          title={disabledMessage ? disabledMessage : 'nothing'}
-          className="block"
-        >
+        <Tooltip title={disabledMessage} className="block">
           <Button style={{ width: '100%' }} type="primary" disabled>
             {payButtonText}
           </Button>

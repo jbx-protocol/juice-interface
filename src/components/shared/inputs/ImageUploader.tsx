@@ -1,5 +1,6 @@
 import { CloseCircleFilled } from '@ant-design/icons'
 import { FileImageOutlined } from '@ant-design/icons'
+import { Trans } from '@lingui/macro'
 import { Button, Col, message, Row, Space, Upload } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext, useLayoutEffect, useState } from 'react'
@@ -102,10 +103,12 @@ export default function ImageUploader({
               textOverflow: 'ellipsis',
             }}
           >
-            Uploaded to:{' '}
-            <a href={url} target="_blank" rel="noopener noreferrer">
-              {url}
-            </a>
+            <Trans>
+              Uploaded to:{' '}
+              <a href={url} target="_blank" rel="noopener noreferrer">
+                {url}
+              </a>
+            </Trans>
           </span>
         ) : null}
       </Col>

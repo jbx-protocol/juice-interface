@@ -3,7 +3,7 @@ import {
   ToolOutlined,
   TwitterOutlined,
 } from '@ant-design/icons'
-import { t } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 
 import { Button, Tooltip } from 'antd'
 import Discord from 'components/icons/Discord'
@@ -131,9 +131,11 @@ export default function ProjectHeader() {
                     paddingRight: 10,
                   }}
                 >
-                  ID: {projectId.toNumber()}{' '}
+                  <Trans>ID: {projectId.toNumber()}</Trans>{' '}
                   {terminal?.version && (
-                    <Tooltip title="Version of the terminal contract used by this project.">
+                    <Tooltip
+                      title={t`Version of the terminal contract used by this project.`}
+                    >
                       <span
                         style={{
                           padding: '2px 4px',

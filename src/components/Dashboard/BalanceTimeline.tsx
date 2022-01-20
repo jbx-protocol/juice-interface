@@ -1,5 +1,5 @@
 import { Select, Space } from 'antd'
-import { t } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 
 import { ProjectContext } from 'contexts/projectContext'
@@ -374,11 +374,21 @@ export default function BalanceTimeline({ height }: { height: number }) {
           value={duration}
           onChange={val => setDuration(val)}
         >
-          <Select.Option value={1}>24 hours</Select.Option>
-          <Select.Option value={7}>7 days</Select.Option>
-          <Select.Option value={30}>30 days</Select.Option>
-          <Select.Option value={90}>90 days</Select.Option>
-          <Select.Option value={365}>1 year</Select.Option>
+          <Select.Option value={1}>
+            <Trans>24 hours</Trans>
+          </Select.Option>
+          <Select.Option value={7}>
+            <Trans>7 days</Trans>
+          </Select.Option>
+          <Select.Option value={30}>
+            <Trans>30 days</Trans>
+          </Select.Option>
+          <Select.Option value={90}>
+            <Trans>90 days</Trans>
+          </Select.Option>
+          <Select.Option value={365}>
+            <Trans>1 year</Trans>
+          </Select.Option>
         </Select>
       </div>
       <div style={{ position: 'relative' }}>

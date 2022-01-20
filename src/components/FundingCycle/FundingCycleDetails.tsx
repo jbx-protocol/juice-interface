@@ -174,7 +174,7 @@ export default function FundingCycleDetails({
             />
           }
         >
-          {metadata?.ticketPrintingIsAllowed ? 'Allowed' : 'Disabled'}
+          {metadata?.ticketPrintingIsAllowed ? t`Allowed` : t`Disabled`}
         </Descriptions.Item>
 
         <Descriptions.Item

@@ -2,6 +2,7 @@ import { Modal } from 'antd'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import UntrackedErc20Notice from 'components/shared/UntrackedErc20Notice'
+import { t, Trans } from '@lingui/macro'
 
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
@@ -144,14 +145,16 @@ export default function DownloadParticipantsModal({
       visible={visible}
       onCancel={onCancel}
       onOk={download}
-      okText="Download CSV"
+      okText={t`Download CSV`}
       okButtonProps={{ type: 'primary' }}
-      cancelText="Close"
+      cancelText={t`Close`}
       confirmLoading={loading}
       centered
     >
       <div>
-        <h4>Download CSV of {tokenSymbol || 'token'} holders</h4>
+        <h4>
+          <Trans>Download CSV of {tokenSymbol || 'token'} holders</Trans>
+        </h4>
 
         <p style={{ padding: 10, background: colors.background.l1 }}>
           {erc20IsUntracked && (
@@ -160,14 +163,14 @@ export default function DownloadParticipantsModal({
         </p>
 
         <label style={{ display: 'block', marginTop: 20, marginBottom: 5 }}>
-          Block number
+          <Trans>Block number</Trans>
         </label>
         <FormattedNumberInput
           value={blockNumber?.toString()}
           onChange={val => setBlockNumber(val ? parseInt(val) : undefined)}
           accessory={
             <InputAccessoryButton
-              content="Latest"
+              content={t`Latest`}
               onClick={() => setBlockNumber(latestBlockNumber)}
               disabled={blockNumber === latestBlockNumber}
             />

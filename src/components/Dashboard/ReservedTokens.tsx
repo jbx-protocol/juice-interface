@@ -1,5 +1,5 @@
 import { Button } from 'antd'
-
+import { t, Trans } from '@lingui/macro'
 import TooltipLabel from 'components/shared/TooltipLabel'
 
 import { NetworkContext } from 'contexts/networkContext'
@@ -95,11 +95,11 @@ export default function ReservedTokens({
         <TooltipLabel
           label={
             <h4 style={{ display: 'inline-block' }}>
-              Reserved {tokenSymbol ?? 'tokens'} (
+              <Trans>Reserved</Trans> {tokenSymbol ?? t`tokens`}(
               {fromPerbicent(metadata?.reservedRate)}%)
             </h4>
           }
-          tip="A project can reserve a percentage of tokens minted from every payment it receives. They can be distributed to the receivers below at any time."
+          tip={t`A project can reserve a percentage of tokens minted from every payment it receives. They can be distributed to the receivers below at any time.`}
         />
       </div>
 
@@ -122,7 +122,7 @@ export default function ReservedTokens({
         >
           <span>
             {formatWad(reservedTickets, { precision: 0 }) || 0}{' '}
-            {tokenSymbol ?? 'tokens'}
+            {tokenSymbol ?? t`tokens`}
           </span>
           <Button
             style={{ marginLeft: 10 }}
@@ -130,7 +130,7 @@ export default function ReservedTokens({
             onClick={() => setModalIsVisible(true)}
             disabled={isPreviewMode}
           >
-            Distribute
+            <Trans>Distribute</Trans>
           </Button>
 
           <DistributeTokensModal

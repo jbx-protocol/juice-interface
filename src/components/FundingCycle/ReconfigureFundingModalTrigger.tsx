@@ -3,6 +3,7 @@ import { ProjectContext } from 'contexts/projectContext'
 import React, { useContext, useRef, useState } from 'react'
 import { Provider } from 'react-redux'
 import store, { createStore } from 'redux/store'
+import { Trans } from '@lingui/macro'
 
 import ReconfigureFCModal from '../modals/ReconfigureFCModal'
 
@@ -44,7 +45,7 @@ const ReconfigureFundingModalTrigger: React.FC<Props> = () => {
         size="small"
         disabled={isPreviewMode}
       >
-        Reconfigure funding
+        <Trans>Reconfigure funding</Trans>
       </Button>
 
       {localStoreRef.current && (

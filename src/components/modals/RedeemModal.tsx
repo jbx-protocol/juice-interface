@@ -1,4 +1,4 @@
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Modal, Space } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
@@ -170,11 +170,13 @@ export default function RedeemModal({
             </span>
           </p>
           <p style={statsStyle}>
-            Currently worth:{' '}
-            <span>
-              <CurrencySymbol currency={CURRENCY_ETH} />
-              {formatWad(maxClaimable, { precision: 4 })}
-            </span>
+            <Trans>
+              Currently worth:{' '}
+              <span>
+                <CurrencySymbol currency={CURRENCY_ETH} />
+                {formatWad(maxClaimable, { precision: 4 })}
+              </span>
+            </Trans>
           </p>
         </div>
         <p>
@@ -201,16 +203,18 @@ export default function RedeemModal({
               disabled={redeemDisabled}
               accessory={
                 <InputAccessoryButton
-                  content="MAX"
+                  content={t`MAX`}
                   onClick={() => setRedeemAmount(fromWad(totalBalance))}
                 />
               }
               onChange={val => setRedeemAmount(val)}
             />
             <div style={{ fontWeight: 500, marginTop: 20 }}>
-              You will receive{' '}
-              {currentFC?.currency.eq(CURRENCY_USD) ? 'minimum ' : ' '}
-              {formatWad(minAmount, { precision: 8 }) || '--'} ETH
+              <Trans>
+                You will receive{' '}
+                {currentFC?.currency.eq(CURRENCY_USD) ? 'minimum ' : ' '}
+                {formatWad(minAmount, { precision: 8 }) || '--'} ETH
+              </Trans>
             </div>
           </div>
         )}

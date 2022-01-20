@@ -1,5 +1,5 @@
 import { CaretRightOutlined } from '@ant-design/icons'
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 
 import { BigNumber } from '@ethersproject/bignumber'
 import { Space } from 'antd'
@@ -94,11 +94,17 @@ export default function FundingHistory({
                 />
                 {hasFundingTarget(cycle) ? (
                   <>
-                    {formatWad(cycle.tapped, { precision: 2 })}/
-                    {formatWad(cycle.target, { precision: 2 })} withdrawn
+                    <Trans>
+                      {formatWad(cycle.tapped, { precision: 2 })}/
+                      {formatWad(cycle.target, { precision: 2 })} withdrawn
+                    </Trans>
                   </>
                 ) : (
-                  <>{formatWad(cycle.tapped, { precision: 2 })} withdrawn</>
+                  <>
+                    <Trans>
+                      {formatWad(cycle.tapped, { precision: 2 })} withdrawn
+                    </Trans>
+                  </>
                 )}
               </div>
             </Space>
@@ -135,7 +141,7 @@ export default function FundingHistory({
           onCancel={() => setSelectedIndex(undefined)}
           onOk={() => setSelectedIndex(undefined)}
           cancelButtonProps={{ hidden: true }}
-          okText="Done"
+          okText={t`Done`}
         >
           <FundingCycleDetails fundingCycle={selectedFC} />
         </Modal>

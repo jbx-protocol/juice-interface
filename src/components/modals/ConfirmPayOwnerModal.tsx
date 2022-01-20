@@ -114,7 +114,7 @@ export default function ConfirmPayOwnerModal({
             {currencyName(0)})
           </Descriptions.Item>
           <Descriptions.Item
-            label={t`${tokenSymbol ?? 'Tokens'} for you`}
+            label={t`${tokenSymbol ?? t`Tokens`} for you`}
             className="content-right"
           >
             <div>{formatWad(receivedTickets, { precision: 0 })}</div>
@@ -127,7 +127,7 @@ export default function ConfirmPayOwnerModal({
             </div>
           </Descriptions.Item>
           <Descriptions.Item
-            label={t`${tokenSymbol ?? 'Tokens'} reserved`}
+            label={t`${tokenSymbol ?? t`Tokens`} reserved`}
             className="content-right"
           >
             {formatWad(ownerTickets, { precision: 0 })}

@@ -88,7 +88,6 @@ export default function Pay() {
         </Tooltip>
       )
     } else {
-      console.log('currentFC.configured.eq(0): ', currentFC.configured.eq(0))
       return (
         <Button
           style={{ width: '100%' }}

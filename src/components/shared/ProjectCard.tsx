@@ -39,15 +39,14 @@ export default function ProjectCard({
   const terminalVersion = getTerminalVersion(project.terminal)
 
   return (
-    <div
+    <a
       style={{
         borderRadius: radii.lg,
         cursor: 'pointer',
         overflow: 'hidden',
       }}
-      className="clickable-border"
       key={project?.handle}
-      onClick={() => (window.location.hash = '/p/' + project.handle)}
+      href={`/#/p/${project.handle}`}
     >
       {metadata ? (
         <div
@@ -58,6 +57,7 @@ export default function ProjectCard({
             overflow: 'hidden',
             padding: 20,
           }}
+          className="clickable-border"
         >
           <div style={{ marginRight: 20 }}>
             <ProjectLogo
@@ -71,6 +71,7 @@ export default function ProjectCard({
             style={{
               flex: 1,
               minWidth: 0,
+              fontWeight: 400,
             }}
           >
             <h2
@@ -138,6 +139,6 @@ export default function ProjectCard({
           {project.handle} <Loading />
         </div>
       )}
-    </div>
+    </a>
   )
 }

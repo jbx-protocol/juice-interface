@@ -27,7 +27,7 @@ export default function Pay() {
   const [payWarningModalVisible, setPayWarningModalVisible] =
     useState<boolean>(false)
 
-  const { projectId, currentFC, metadata, isArchived } =
+  const { projectId, currentFC, metadata, isArchived, terminal } =
     useContext(ProjectContext)
 
   const converter = useCurrencyConverter()
@@ -70,14 +70,19 @@ export default function Pay() {
     } else if (fcMetadata.payIsPaused || overridePayDisabled) {
       let disabledMessage: string
 
-      if (fcMetadata.payIsPaused) {
+      if (terminal?.version === '1' && fcMetadata.reservedRate === 200) {
+        disabledMessage = t`Paying this project is currently disabled, because the token reserved rate is 100% and no tokens will be earned by making a payment.`
+      } else if (fcMetadata.payIsPaused) {
         disabledMessage = t`Payments are paused for the current funding cycle.`
       } else {
         disabledMessage = t`Paying this project is currently disabled.`
       }
 
       return (
-        <Tooltip title={disabledMessage} className="block">
+        <Tooltip
+          title={disabledMessage ? disabledMessage : 'nothing'}
+          className="block"
+        >
           <Button style={{ width: '100%' }} type="primary" disabled>
             {payButtonText}
           </Button>
@@ -95,7 +100,14 @@ export default function Pay() {
         </Button>
       )
     }
-  }, [metadata, currentFC, isArchived, overridePayDisabled, weiPayAmt])
+  }, [
+    metadata,
+    currentFC,
+    isArchived,
+    overridePayDisabled,
+    weiPayAmt,
+    terminal,
+  ])
 
   if (!currentFC || !projectId || !metadata) return null
 

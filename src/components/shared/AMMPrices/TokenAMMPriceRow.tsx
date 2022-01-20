@@ -23,7 +23,6 @@ type Props = {
   exchangeLink?: string
   WETHPrice?: string
   loading?: boolean
-  exchangeSupported?: boolean
   style?: CSSProperties
 }
 
@@ -38,26 +37,19 @@ export default function TokenAMMPriceRow({
   exchangeLink,
   WETHPrice,
   loading,
-  exchangeSupported = true,
   style,
 }: Props) {
   const LogoComponent = LOGOS[exchangeName]
 
   const NotAvailableText = () => {
-    const tooltip = !exchangeSupported
-      ? t`Juicebox doesn't support ${exchangeName} yet.`
-      : !WETHPrice
+    const tooltip = !WETHPrice
       ? t`${exchangeName} has no market for ${tokenSymbol}.`
       : ''
 
     return (
       <Tooltip title={tooltip} overlayInnerStyle={{ ...fontStyle }}>
         <span style={{ cursor: 'default' }}>
-          {!exchangeSupported ? (
-            <Trans>Not supported</Trans>
-          ) : !WETHPrice ? (
-            <Trans>Unavailable</Trans>
-          ) : null}
+          {!WETHPrice ? <Trans>Unavailable</Trans> : null}
           <InfoCircleOutlined style={{ marginLeft: '0.2rem' }} />
         </span>
       </Tooltip>
@@ -71,7 +63,6 @@ export default function TokenAMMPriceRow({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        opacity: exchangeSupported ? '100%' : '60%',
         ...style,
       }}
     >
@@ -85,7 +76,7 @@ export default function TokenAMMPriceRow({
       {loading && <LoadingOutlined />}
 
       {!loading &&
-        (exchangeSupported && WETHPrice ? (
+        (WETHPrice ? (
           <Tooltip
             title={t`${tokenSymbol}/ETH exchange rate on ${exchangeName}.`}
             overlayInnerStyle={{ ...fontStyle }}

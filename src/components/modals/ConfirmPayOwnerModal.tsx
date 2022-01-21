@@ -135,7 +135,7 @@ export default function ConfirmPayOwnerModal({
           </Descriptions.Item>
         </Descriptions>
         <Form form={form} layout="vertical">
-          <Form.Item label="Memo" name="note" rules={[{ max: 256 }]}>
+          <Form.Item label={t`Memo`} name="note" rules={[{ max: 256 }]}>
             <Input.TextArea
               placeholder={t`(Optional) Add a note to this payment on-chain`}
               maxLength={256}

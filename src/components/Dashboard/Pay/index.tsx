@@ -55,8 +55,13 @@ export default function Pay() {
     const payButtonText = metadata.payButton?.length
       ? metadata.payButton
       : t`Pay`
+
+    // v1 projects who still use 100% RR to disable pay
     const isV1AndMaxRR =
       terminal?.version === '1' && fcMetadata.reservedRate === 200
+
+    // Edge case for MoonDAO, upgraded to v1.1 but can't use payIsPaused for now
+    const isMoonAndMaxRR = projectId?.eq(199) && fcMetadata.reservedRate === 200
 
     if (isArchived) {
       return (
@@ -69,10 +74,16 @@ export default function Pay() {
           </Button>
         </Tooltip>
       )
-    } else if (fcMetadata.payIsPaused || overridePayDisabled || isV1AndMaxRR) {
+    } else if (
+      fcMetadata.payIsPaused || // v1.1 only
+      overridePayDisabled ||
+      isV1AndMaxRR || // v1 projects who still use 100% RR to disable pay
+      currentFC.configured.eq(0) || // Edge case, see sequoiacapitaldao
+      isMoonAndMaxRR // Edge case for MoonDAO
+    ) {
       let disabledMessage: string
 
-      if (isV1AndMaxRR) {
+      if (isV1AndMaxRR || isMoonAndMaxRR) {
         disabledMessage = t`Paying this project is currently disabled, because the token reserved rate is 100% and no tokens will be earned by making a payment.`
       } else if (fcMetadata.payIsPaused) {
         disabledMessage = t`Payments are paused for the current funding cycle.`
@@ -88,11 +99,11 @@ export default function Pay() {
         </Tooltip>
       )
     } else {
+      // Pay enabled
       return (
         <Button
           style={{ width: '100%' }}
           type="primary"
-          disabled={currentFC.configured.eq(0) || isArchived}
           onClick={parseFloat(fromWad(weiPayAmt)) ? pay : undefined}
         >
           {payButtonText}
@@ -106,6 +117,7 @@ export default function Pay() {
     overridePayDisabled,
     weiPayAmt,
     terminal,
+    projectId,
   ])
 
   if (!currentFC || !projectId || !metadata) return null

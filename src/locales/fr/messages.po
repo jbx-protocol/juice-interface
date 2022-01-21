@@ -8,7 +8,7 @@ msgstr ""
 "Language: fr\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-01-19 01:47\n"
+"PO-Revision-Date: 2022-01-21 01:51\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -577,10 +577,6 @@ msgstr ""
 msgid "Juicebox contracts"
 msgstr ""
 
-#: src/components/shared/AMMPrices/TokenAMMPriceRow.tsx
-msgid "Juicebox doesn't support {exchangeName} yet."
-msgstr ""
-
 #: src/components/Landing/QAs.tsx
 msgid "Juicebox is a governance-minimal protocol. There are only a few levers that can be tuned, none of which impose changes for users without their consent. The Juicebox governance smart contract can adjust these levers."
 msgstr ""
@@ -655,10 +651,6 @@ msgstr ""
 msgid "No funding target: The project will control how all funds are distributed, and none can be redeemed by token holders."
 msgstr ""
 
-#: src/components/shared/AMMPrices/TokenAMMPriceRow.tsx
-msgid "No liquidity"
-msgstr ""
-
 #: src/components/Create/BudgetForm.tsx
 msgid "No more than the funding cycle target can be distributed by the project in a single funding cycle."
 msgstr ""
@@ -682,10 +674,6 @@ msgstr ""
 #: src/components/Create/ConfirmDeployProject.tsx
 #: src/components/FundingCycle/FundingCycleDetails.tsx
 msgid "Not set"
-msgstr ""
-
-#: src/components/shared/AMMPrices/TokenAMMPriceRow.tsx
-msgid "Not supported"
 msgstr ""
 
 #: src/components/Landing/index.tsx
@@ -1224,6 +1212,10 @@ msgstr ""
 #: src/components/Create/ConfirmDeployProject.tsx
 #: src/components/shared/formItems/ProjectTwitter.tsx
 msgid "Twitter"
+msgstr ""
+
+#: src/components/shared/AMMPrices/TokenAMMPriceRow.tsx
+msgid "Unavailable"
 msgstr ""
 
 #: src/constants/ballot-strategies.ts

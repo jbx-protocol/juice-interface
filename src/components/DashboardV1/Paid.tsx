@@ -4,7 +4,7 @@ import { Progress, Tooltip } from 'antd'
 import { t, Trans } from '@lingui/macro'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import EtherscanLink from 'components/shared/EtherscanLink'
-import ProjectTokenBalance from 'components/shared/ProjectTokenBalance'
+import ProjectTokenBalanceV1 from 'components/shared/ProjectTokenBalanceV1'
 import TooltipLabel from 'components/shared/TooltipLabel'
 
 import { ProjectContext } from 'contexts/projectContext'
@@ -21,7 +21,7 @@ import { hasFundingTarget } from 'utils/fundingCycle'
 
 import { readNetwork } from 'constants/networks'
 
-import BalancesModal from '../modals/BalancesModal'
+import BalancesModal from './modals/BalancesModal'
 import { CURRENCY_ETH, CURRENCY_USD } from 'constants/currency'
 
 export default function Paid() {
@@ -324,7 +324,7 @@ export default function Paid() {
         </span>
         <span>
           <span style={secondaryTextStyle}>
-            <ProjectTokenBalance
+            <ProjectTokenBalanceV1
               style={{ display: 'inline-block' }}
               wallet={owner}
               projectId={BigNumber.from('0x01')}

@@ -1,9 +1,9 @@
 import { SettingOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Modal, Space } from 'antd'
-import ERC20TokenBalance from 'components/shared/ERC20TokenBalance'
+import ERC20TokenBalanceV1 from 'components/shared/ERC20TokenBalanceV1'
 import { FormItems } from 'components/shared/formItems'
-import ProjectTokenBalance from 'components/shared/ProjectTokenBalance'
+import ProjectTokenBalanceV1 from 'components/shared/ProjectTokenBalanceV1'
 import { ProjectContext } from 'contexts/projectContext'
 import { UserContextV1 } from 'contexts/userContextV1'
 import { OperatorPermission, useHasPermission } from 'hooks/v1/HasPermission'
@@ -94,19 +94,19 @@ export default function BalancesModal({
         <p>Other assets in this project's owner's wallet.</p>
 
         <Space direction="vertical" style={{ width: '100%', marginTop: 20 }}>
-          <ProjectTokenBalance
+          <ProjectTokenBalanceV1
             wallet={owner}
             projectId={BigNumber.from('0x01')}
           />
           {(metadata as ProjectMetadataV3)?.tokens?.map(t =>
             t.type === 'erc20' ? (
-              <ERC20TokenBalance
+              <ERC20TokenBalanceV1
                 key={t.value}
                 wallet={owner}
                 tokenAddress={t.value}
               />
             ) : (
-              <ProjectTokenBalance
+              <ProjectTokenBalanceV1
                 key={t.value}
                 wallet={owner}
                 projectId={BigNumber.from(t.value)}

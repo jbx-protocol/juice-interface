@@ -10,7 +10,7 @@ import { ThemeContext } from 'contexts/themeContext'
 
 import ProjectHandle from './ProjectHandle'
 
-export default function ProjectTokenBalance({
+export default function ProjectTokenBalanceV1({
   projectId,
   wallet,
   style,

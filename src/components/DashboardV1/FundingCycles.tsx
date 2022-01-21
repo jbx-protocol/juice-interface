@@ -6,11 +6,11 @@ import { ThemeContext } from 'contexts/themeContext'
 import { OperatorPermission, useHasPermission } from 'hooks/v1/HasPermission'
 import { useContext, useState } from 'react'
 
-import CurrentFundingCycle from '../FundingCycle/CurrentFundingCycle'
-import QueuedFundingCycle from '../FundingCycle/QueuedFundingCycle'
+import CurrentFundingCycle from './FundingCycle/CurrentFundingCycle'
+import QueuedFundingCycle from './FundingCycle/QueuedFundingCycle'
 import FundingHistory from './FundingHistory'
 import SectionHeader from './SectionHeader'
-import ReconfigureFundingModalTrigger from '../FundingCycle/ReconfigureFundingModalTrigger'
+import ReconfigureFundingModalTrigger from './FundingCycle/ReconfigureFundingModalTrigger'
 
 type TabOption = 'current' | 'upcoming' | 'history'
 

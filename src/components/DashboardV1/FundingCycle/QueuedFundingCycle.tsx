@@ -3,8 +3,8 @@ import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
 
-import ReservedTokens from '../DashboardV1/ReservedTokens'
-import PayoutModsList from '../shared/PayoutModsList'
+import ReservedTokens from '../ReservedTokens'
+import PayoutModsList from '../../shared/PayoutModsList'
 import FundingCycleDetails from './FundingCycleDetails'
 
 export default function QueuedFundingCycle() {

@@ -1,7 +1,7 @@
 import { Button, Tooltip } from 'antd'
 import { t, Trans } from '@lingui/macro'
 
-import ConfirmPayOwnerModal from 'components/modals/ConfirmPayOwnerModal'
+import ConfirmPayOwnerModal from 'components/DashboardV1/modals/ConfirmPayOwnerModal'
 import PayWarningModal from 'components/modals/PayWarningModal'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'

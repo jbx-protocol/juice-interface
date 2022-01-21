@@ -12,6 +12,8 @@ import { TokenRef } from 'models/token-ref'
 import { useContext, useEffect, useState } from 'react'
 import { uploadProjectMetadata } from 'utils/ipfs'
 
+import { t, Trans } from '@lingui/macro'
+
 export default function BalancesModal({
   visible,
   onCancel,
@@ -80,18 +82,24 @@ export default function BalancesModal({
               icon={<SettingOutlined />}
               onClick={() => setEditModalVisible(true)}
             >
-              Edit tracked assets
+              <Trans>Edit tracked assets</Trans>
             </Button>
           ) : (
             <div></div>
           )}
-          <Button onClick={onCancel}>Done</Button>
+          <Button onClick={onCancel}>
+            <Trans>Done</Trans>
+          </Button>
         </div>
       }
     >
       <div>
-        <h2>Assets</h2>
-        <p>Other assets in this project's owner's wallet.</p>
+        <h2>
+          <Trans>Assets</Trans>
+        </h2>
+        <p>
+          <Trans>Other assets in this project's owner's wallet.</Trans>
+        </p>
 
         <Space direction="vertical" style={{ width: '100%', marginTop: 20 }}>
           <ProjectTokenBalance
@@ -116,18 +124,20 @@ export default function BalancesModal({
         </Space>
 
         <Modal
-          title="Edit tracked assets"
+          title={t`Edit tracked assets`}
           visible={editModalVisible}
           onCancel={() => setEditModalVisible(false)}
-          cancelText=""
+          cancelText={t`Cancel`}
           width={600}
           confirmLoading={loading}
           onOk={updateTokenRefs}
-          okText="Save tracked assets"
+          okText={t`Save tracked assets`}
         >
           <p style={{ marginBottom: 40 }}>
-            Display ERC20 tokens and other Juicebox project tokens that are in
-            this project's owner's wallet.
+            <Trans>
+              Display ERC20 tokens and other Juicebox project tokens that are in
+              this project's owner's wallet.
+            </Trans>
           </p>
           <FormItems.TokenRefs
             refs={editingTokenRefs}

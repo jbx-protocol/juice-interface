@@ -14,6 +14,8 @@ import FormattedAddress from 'components/shared/FormattedAddress'
 import { constants } from 'ethers'
 import { ThemeContext } from 'contexts/themeContext'
 
+import { t, Trans } from '@lingui/macro'
+
 export default function ConfirmUnstakeTokensModal({
   visible,
   onCancel,
@@ -88,37 +90,50 @@ export default function ConfirmUnstakeTokensModal({
       <Space direction="vertical" size="large">
         {!ticketsIssued && (
           <div style={{ padding: 10, background: colors.background.l1 }}>
-            <b>Note:</b> Tokens cannot be claimed because no ERC20 token has
-            been issued for this project. ERC20 tokens must be issued by the
-            project owner.
+            <Trans>
+              <b>Note:</b> Tokens cannot be claimed because no ERC20 token has
+              been issued for this project. ERC20 tokens must be issued by the
+              project owner.
+            </Trans>
           </div>
         )}
 
         <div>
           <p>
-            Claiming {tokenSymbol} tokens will convert your {tokenSymbol}{' '}
-            balance to ERC20 tokens and mint them to your wallet.
+            <Trans>
+              Claiming {tokenSymbol} tokens will convert your {tokenSymbol}{' '}
+              balance to ERC20 tokens and mint them to your wallet.
+            </Trans>
           </p>
           <p style={{ fontWeight: 600 }}>
-            If you're unsure if you need to claim, you probably don't.
+            <Trans>
+              If you're unsure if you need to claim, you probably don't.
+            </Trans>
           </p>
           <p>
-            You can still redeem your {tokenSymbol} tokens for overflow without
-            claiming them, and you can transfer your unclaimed {tokenSymbol}{' '}
-            tokens to another address from the Tools menu, which can be accessed
-            from the wrench icon in the upper right hand corner of this project.
+            <Trans>
+              You can still redeem your {tokenSymbol} tokens for overflow
+              without claiming them, and you can transfer your unclaimed{' '}
+              {tokenSymbol} tokens to another address from the Tools menu, which
+              can be accessed from the wrench icon in the upper right hand
+              corner of this project.
+            </Trans>
           </p>
         </div>
 
         <div>
           <div>
-            <label>Your unclaimed {tokenSymbol} tokens:</label>{' '}
-            {formatWad(iouBalance, { precision: 8 })}
+            <Trans>
+              <label>Your unclaimed {tokenSymbol} tokens:</label>{' '}
+              {formatWad(iouBalance, { precision: 8 })}
+            </Trans>
           </div>
           {ticketsIssued && (
             <div>
-              <label>{tokenSymbol} ERC20 address:</label>{' '}
-              <FormattedAddress address={tokenAddress} />
+              <Trans>
+                <label>{tokenSymbol} ERC20 address:</label>{' '}
+                <FormattedAddress address={tokenAddress} />
+              </Trans>
             </div>
           )}
         </div>
@@ -133,7 +148,7 @@ export default function ConfirmUnstakeTokensModal({
               value={unstakeAmount}
               accessory={
                 <InputAccessoryButton
-                  content="MAX"
+                  content={t`MAX`}
                   onClick={() => setUnstakeAmount(fromWad(iouBalance))}
                 />
               }

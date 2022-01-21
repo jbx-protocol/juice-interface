@@ -1,5 +1,4 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { t, Trans } from '@lingui/macro'
 
 import { Checkbox, Descriptions, Form, Input, Modal, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
@@ -14,6 +13,8 @@ import { useContext, useState } from 'react'
 import { currencyName } from 'utils/currency'
 import { formattedNum, formatWad } from 'utils/formatNumber'
 import { weightedRate } from 'utils/math'
+
+import { Trans, t } from '@lingui/macro'
 
 export default function ConfirmPayOwnerModal({
   visible,
@@ -134,7 +135,7 @@ export default function ConfirmPayOwnerModal({
           </Descriptions.Item>
         </Descriptions>
         <Form form={form} layout="vertical">
-          <Form.Item label="Memo" name="note" rules={[{ max: 256 }]}>
+          <Form.Item label={t`Memo`} name="note" rules={[{ max: 256 }]}>
             <Input.TextArea
               placeholder={t`(Optional) Add a note to this payment on-chain`}
               maxLength={256}

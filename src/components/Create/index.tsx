@@ -557,7 +557,7 @@ export default function Create() {
             },
             {
               title: t`Restricted actions`,
-              description: 'Restrict payments and printing tokens.',
+              description: t`Restrict payments and printing tokens.`,
               callback: () => setRestrictedActionsFormModalVisible(true),
             },
           ])}

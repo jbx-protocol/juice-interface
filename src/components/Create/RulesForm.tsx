@@ -7,7 +7,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { constants, utils } from 'ethers'
 import { useContext, useLayoutEffect, useState } from 'react'
 
-import { ballotStrategies } from 'constants/ballot-strategies'
+import { ballotStrategies } from 'constants/ballotStrategies/ballotStrategies'
 
 export default function RulesForm({
   initialBallot,
@@ -21,12 +21,12 @@ export default function RulesForm({
   const [customStrategyAddress, setCustomStrategyAddress] = useState<string>()
 
   useLayoutEffect(() => {
-    const index = ballotStrategies.findIndex(
+    const index = ballotStrategies().findIndex(
       s => s.address.toLowerCase() === initialBallot.toLowerCase(),
     )
     if (index > -1) setSelectedIndex(index)
     else {
-      setSelectedIndex(ballotStrategies.length)
+      setSelectedIndex(ballotStrategies().length)
       setCustomStrategyAddress(initialBallot)
     }
   }, [initialBallot])
@@ -88,7 +88,7 @@ export default function RulesForm({
       </p>
 
       <Space direction="vertical">
-        {ballotStrategies.map((s, i) =>
+        {ballotStrategies().map((s, i) =>
           buildOption(
             s.name,
             <div>
@@ -126,7 +126,7 @@ export default function RulesForm({
               .
             </p>
           </div>,
-          ballotStrategies.length,
+          ballotStrategies().length,
         )}
       </Space>
 
@@ -135,14 +135,14 @@ export default function RulesForm({
         type="primary"
         disabled={
           selectedIndex === undefined ||
-          (selectedIndex === ballotStrategies.length &&
+          (selectedIndex === ballotStrategies().length &&
             (!customStrategyAddress || !utils.isAddress(customStrategyAddress)))
         }
         onClick={() => {
           onSave(
             selectedIndex !== undefined &&
-              selectedIndex < ballotStrategies.length
-              ? ballotStrategies[selectedIndex].address
+              selectedIndex < ballotStrategies().length
+              ? ballotStrategies()[selectedIndex].address
               : customStrategyAddress ?? constants.AddressZero,
           )
         }}

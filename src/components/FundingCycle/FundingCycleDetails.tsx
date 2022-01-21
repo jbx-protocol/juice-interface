@@ -17,7 +17,7 @@ import {
 } from 'utils/fundingCycle'
 import { weightedRate } from 'utils/math'
 
-import { getBallotStrategyByAddress } from 'constants/ballot-strategies'
+import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 
 import TooltipLabel from '../shared/TooltipLabel'
 
@@ -43,7 +43,7 @@ export default function FundingCycleDetails({
   )
 
   const metadata = decodeFundingCycleMetadata(fundingCycle.metadata)
-
+  const ballotStrategy = getBallotStrategyByAddress(fundingCycle.ballot)
   return (
     <div>
       <Descriptions
@@ -173,7 +173,7 @@ export default function FundingCycleDetails({
             />
           }
         >
-          {metadata?.ticketPrintingIsAllowed ? 'Allowed' : 'Disabled'}
+          {metadata?.ticketPrintingIsAllowed ? t`Allowed` : t`Disabled`}
         </Descriptions.Item>
 
         <Descriptions.Item
@@ -192,13 +192,12 @@ export default function FundingCycleDetails({
           />
           :
         </span>{' '}
-        {getBallotStrategyByAddress(fundingCycle.ballot).name}
+        {ballotStrategy.name}
         <div style={{ color: colors.text.secondary }}>
           <div style={{ fontSize: '0.7rem' }}>
-            <Trans>Address</Trans>:{' '}
-            {getBallotStrategyByAddress(fundingCycle.ballot).address}
+            <Trans>Address</Trans>: {ballotStrategy.address}
             <br />
-            {getBallotStrategyByAddress(fundingCycle.ballot).description}
+            {ballotStrategy.description}
           </div>
         </div>
       </div>

@@ -23,6 +23,7 @@ import { readNetwork } from 'constants/networks'
 
 import BalancesModal from '../modals/BalancesModal'
 import { CURRENCY_ETH, CURRENCY_USD } from 'constants/currency'
+import { CONSTITUTIONDAO_PROJECT_ID } from 'constants/projectIds'
 
 export default function Paid() {
   const [balancesModalVisible, setBalancesModalVisible] = useState<boolean>()
@@ -138,7 +139,8 @@ export default function Paid() {
     ) : null
 
   const isConstitutionDAO =
-    readNetwork.name === NetworkName.mainnet && projectId?.eq(36)
+    readNetwork.name === NetworkName.mainnet &&
+    projectId?.eq(CONSTITUTIONDAO_PROJECT_ID)
 
   return (
     <div>

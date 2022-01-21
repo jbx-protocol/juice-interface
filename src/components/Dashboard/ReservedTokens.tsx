@@ -19,10 +19,7 @@ import { readNetwork } from 'constants/networks'
 
 import DistributeTokensModal from '../modals/DistributeTokensModal'
 import TicketModsList from '../shared/TicketModsList'
-import {
-  CONSTITUTIONDAO_PROJECT_ID,
-  SHARKDAO_PROJECT_ID,
-} from 'constants/projectIds'
+import { PROJECT_IDS } from 'constants/projectIds'
 
 export default function ReservedTokens({
   fundingCycle,
@@ -89,11 +86,11 @@ export default function ReservedTokens({
 
   const isConstitutionDAO =
     readNetwork.name === NetworkName.mainnet &&
-    projectId?.eq(CONSTITUTIONDAO_PROJECT_ID)
+    projectId?.eq(PROJECT_IDS.CONSTITUTION_DAO)
 
   const isSharkDAO =
     readNetwork.name === NetworkName.mainnet &&
-    projectId?.eq(SHARKDAO_PROJECT_ID)
+    projectId?.eq(PROJECT_IDS.SHARK_DAO)
 
   return (
     <div>

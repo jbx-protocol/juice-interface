@@ -1,3 +1,5 @@
-export const CONSTITUTIONDAO_PROJECT_ID = 36
-export const MOONDAO_PROJECT_ID = 199
-export const SHARKDAO_PROJECT_ID = 7
+export const PROJECT_IDS = {
+  CONSTITUTION_DAO: 36,
+  MOON_DAO: 199,
+  SHARK_DAO: 7,
+}

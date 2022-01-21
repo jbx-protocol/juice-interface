@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Modal } from 'antd'
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { ProjectContext } from 'contexts/projectContext'
@@ -62,10 +62,10 @@ export default function ConfirmStakeTokensModal({
 
   return (
     <Modal
-      title={'Stake ' + (tokenSymbol ?? 'tokens')}
+      title={t`Stake ${tokenSymbol ?? 'tokens'}`}
       visible={visible}
       onOk={stake}
-      okText="Stake"
+      okText={t`Stake`}
       confirmLoading={loading}
       onCancel={onCancel}
       width={600}
@@ -91,7 +91,7 @@ export default function ConfirmStakeTokensModal({
         value={stakeAmount}
         accessory={
           <InputAccessoryButton
-            content="MAX"
+            content={t`MAX`}
             onClick={() => setStakeAmount(fromWad(ticketsBalance))}
           />
         }

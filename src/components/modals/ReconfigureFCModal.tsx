@@ -41,7 +41,7 @@ import {
 import { amountSubFee } from 'utils/math'
 import { serializeFundingCycle } from 'utils/serializers'
 
-import { getBallotStrategyByAddress } from 'constants/ballot-strategies'
+import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 
 import BudgetForm from '../Create/BudgetForm'
 import IncentivesForm from '../Create/IncentivesForm'
@@ -385,7 +385,7 @@ export default function ReconfigureFCModal({
           {hasFundingTarget(editingFC) && (
             <Space size="large">
               <Statistic
-                title="Duration"
+                title={t`Duration`}
                 value={
                   editingFC.duration.gt(0)
                     ? formattedNum(editingFC.duration)
@@ -394,7 +394,7 @@ export default function ReconfigureFCModal({
                 suffix={editingFC.duration.gt(0) ? 'days' : ''}
               />
               <Statistic
-                title="Amount"
+                title={t`Amount`}
                 valueRender={() => (
                   <span>
                     <CurrencySymbol
@@ -410,14 +410,18 @@ export default function ReconfigureFCModal({
                               editingFC.currency.toNumber() as CurrencyOption
                             }
                           />
-                          {formatWad(
-                            amountSubFee(editingFC.target, terminalFee),
-                            { precision: 4 },
-                          )}{' '}
-                          after JBX fee
+                          <Trans>
+                            {formatWad(
+                              amountSubFee(editingFC.target, terminalFee),
+                              { precision: 4 },
+                            )}{' '}
+                            after JBX fee
+                          </Trans>
                         </span>
                       ) : (
-                        <span>0% fee</span>
+                        <span>
+                          <Trans>0% fee</Trans>
+                        </span>
                       )}
                       )
                     </span>
@@ -454,7 +458,7 @@ export default function ReconfigureFCModal({
           </Space>
 
           <Statistic
-            title="Reconfiguration strategy"
+            title={t`Reconfiguration strategy`}
             valueRender={() => {
               const ballot = getBallotStrategyByAddress(editingFC.ballot)
               return (
@@ -597,7 +601,7 @@ export default function ReconfigureFCModal({
           initialBondingCurveRate={fromPerbicent(editingFC.bondingCurveRate)}
           disableBondingCurve={
             !hasFundingTarget(editingFC)
-              ? 'Bonding curve disabled while no funding target is set.'
+              ? t`Bonding curve disabled while no funding target is set.`
               : undefined
           }
           onSave={async (discountRate: string, bondingCurveRate: string) => {

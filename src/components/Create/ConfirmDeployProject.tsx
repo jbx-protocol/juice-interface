@@ -23,7 +23,7 @@ import { hasFundingTarget, isRecurring } from 'utils/fundingCycle'
 import { amountSubFee } from 'utils/math'
 import { orEmpty } from 'utils/orEmpty'
 
-import { getBallotStrategyByAddress } from 'constants/ballot-strategies'
+import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 
 export default function ConfirmDeployProject() {
   const editingFC = useEditingFundingCycleSelector()
@@ -87,10 +87,13 @@ export default function ConfirmDeployProject() {
                         editingFC?.currency.toNumber() as CurrencyOption
                       }
                     />
-                    {formatWad(amountSubFee(editingFC.target, terminalFee), {
-                      precision: 4,
-                    })}{' '}
-                    <Trans>after JBX fee</Trans>)
+                    <Trans>
+                      {formatWad(amountSubFee(editingFC.target, terminalFee), {
+                        precision: 4,
+                      })}{' '}
+                      after JBX fee
+                    </Trans>
+                    )
                   </span>
                 )}
               </span>

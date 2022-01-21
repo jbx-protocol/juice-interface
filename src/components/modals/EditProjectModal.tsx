@@ -1,4 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { Trans } from '@lingui/macro'
 import { Button, Divider, Form, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { FormItems } from 'components/shared/formItems'
@@ -159,7 +160,7 @@ export default function EditProjectModal({
         />
         <Form.Item>
           <Button type="primary" loading={loadingSetHandle} onClick={setHandle}>
-            Save handle
+            <Trans>Save handle</Trans>
           </Button>
         </Form.Item>
       </Form>
@@ -184,7 +185,7 @@ export default function EditProjectModal({
         />
         <Form.Item>
           <Button type="primary" loading={loadingSetURI} onClick={setUri}>
-            Save changes
+            <Trans>Save changes</Trans>
           </Button>
         </Form.Item>
       </Form>

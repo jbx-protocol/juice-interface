@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 
 import { Button, Divider, Drawer, Form, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
@@ -177,7 +177,7 @@ export default function ProjectToolDrawerModal({
                 }
                 accessory={
                   <InputAccessoryButton
-                    content="MAX"
+                    content={t`MAX`}
                     onClick={() =>
                       transferTokensForm.setFieldsValue({
                         amount: fromWad(stakedTokenBalance),

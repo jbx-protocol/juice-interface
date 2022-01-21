@@ -1,6 +1,6 @@
 import { Space } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import FormattedAddress from 'components/shared/FormattedAddress'
@@ -109,7 +109,7 @@ export default function WithdrawModal({
 
   return (
     <Modal
-      title="Withdraw funds"
+      title={t`Withdraw funds`}
       visible={visible}
       onOk={tap}
       onCancel={() => {
@@ -120,7 +120,7 @@ export default function WithdrawModal({
         disabled: !tapAmount || tapAmount === '0',
       }}
       confirmLoading={loading}
-      okText="Withdraw"
+      okText={t`Withdraw`}
       width={640}
     >
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
@@ -191,7 +191,7 @@ export default function WithdrawModal({
                   )}
                 </span>
                 <InputAccessoryButton
-                  content="MAX"
+                  content={t`MAX`}
                   onClick={() => setTapAmount(fromWad(withdrawable))}
                 />
               </div>

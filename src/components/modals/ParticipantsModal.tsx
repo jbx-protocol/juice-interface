@@ -3,7 +3,7 @@ import {
   SortAscendingOutlined,
   SortDescendingOutlined,
 } from '@ant-design/icons'
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 
 import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Modal, Select } from 'antd'
@@ -258,7 +258,7 @@ export default function ParticipantsModal({
       visible={visible}
       onCancel={onCancel}
       onOk={onCancel}
-      okText="Done"
+      okText={t`Done`}
       cancelButtonProps={{ hidden: true }}
     >
       <div>

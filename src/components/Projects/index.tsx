@@ -78,29 +78,40 @@ export default function Projects() {
     ? searchPages
     : pages?.pages?.reduce((prev, group) => [...prev, ...group], [])
 
-  const tab = (tab: ProjectState) => (
-    <div
-      style={{
-        textTransform: 'uppercase',
-        cursor: 'pointer',
-        borderBottom: '2px solid transparent',
-        paddingBottom: 6,
-        ...(tab === selectedTab
-          ? {
-              color: colors.text.primary,
-              fontWeight: 500,
-              borderColor: colors.text.primary,
-            }
-          : {
-              color: colors.text.secondary,
-              borderColor: 'transparent',
-            }),
-      }}
-      onClick={() => setSelectedTab(tab)}
-    >
-      {tab}
-    </div>
-  )
+  const tab = (tab: ProjectState) => {
+    let text: string
+    switch (tab) {
+      case 'active':
+        text = t`Active`
+        break
+      case 'archived':
+        text = t`Archived`
+        break
+    }
+    return (
+      <div
+        style={{
+          textTransform: 'uppercase',
+          cursor: 'pointer',
+          borderBottom: '2px solid transparent',
+          paddingBottom: 6,
+          ...(tab === selectedTab
+            ? {
+                color: colors.text.primary,
+                fontWeight: 500,
+                borderColor: colors.text.primary,
+              }
+            : {
+                color: colors.text.secondary,
+                borderColor: 'transparent',
+              }),
+        }}
+        onClick={() => setSelectedTab(tab)}
+      >
+        {text}
+      </div>
+    )
+  }
 
   return (
     <div style={{ ...layouts.maxWidth }}>
@@ -267,8 +278,8 @@ export default function Projects() {
             }}
           >
             {concatenatedPages?.length}{' '}
-            {concatenatedPages?.length === 1 ? 'project' : 'projects'}
-            {searchText ? ` matching "${searchText}"` : ''}
+            {concatenatedPages?.length === 1 ? t`project` : t`projects`}
+            {searchText ? t` matching "${searchText}"` : ''}
           </div>
         )
       )}

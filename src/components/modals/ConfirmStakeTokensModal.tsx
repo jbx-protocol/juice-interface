@@ -62,7 +62,7 @@ export default function ConfirmStakeTokensModal({
 
   return (
     <Modal
-      title={t`Stake` + ' ' + (tokenSymbol ?? t`tokens`)}
+      title={t`Stake ${tokenSymbol ?? t`tokens`}`}
       visible={visible}
       onOk={stake}
       okText={t`Stake`}
@@ -79,7 +79,7 @@ export default function ConfirmStakeTokensModal({
       </p>
       <p>
         <Trans>
-          Staked {tokenSymbol ?? 'tokens'} can still be redeemed for overflow,
+          Staked {tokenSymbol ?? t`tokens`} can still be redeemed for overflow,
           and can be unstaked at any time. Right now there's no value or utility
           in staking, though there may be in the future.
         </Trans>

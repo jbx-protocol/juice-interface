@@ -44,7 +44,6 @@ export default function FundingCycleDetails({
 
   const metadata = decodeFundingCycleMetadata(fundingCycle.metadata)
   const ballotStrategy = getBallotStrategyByAddress(fundingCycle.ballot)
-  console.log('ballot strat: ', ballotStrategy)
   return (
     <div>
       <Descriptions

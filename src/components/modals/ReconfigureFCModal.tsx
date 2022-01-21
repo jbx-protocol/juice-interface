@@ -410,11 +410,13 @@ export default function ReconfigureFCModal({
                               editingFC.currency.toNumber() as CurrencyOption
                             }
                           />
-                          {formatWad(
-                            amountSubFee(editingFC.target, terminalFee),
-                            { precision: 4 },
-                          )}{' '}
-                          <Trans>after JBX fee</Trans>
+                          <Trans>
+                            {formatWad(
+                              amountSubFee(editingFC.target, terminalFee),
+                              { precision: 4 },
+                            )}{' '}
+                            after JBX fee
+                          </Trans>
                         </span>
                       ) : (
                         <span>

@@ -45,12 +45,12 @@ export default function DownloadParticipantsModal({
 
     const rows = [
       [
-        'Wallet address',
-        `Total ${tokenSymbol ?? 'token'} balance`,
-        'Staked balance',
-        'Unstaked balance',
-        'Total ETH paid',
-        'Last paid timestamp',
+        t`Wallet address`,
+        `Total ${tokenSymbol ?? t`token`} balance`,
+        t`Staked balance`,
+        t`Unstaked balance`,
+        t`Total ETH paid`,
+        t`Last paid timestamp`,
       ], // CSV header row
     ]
 
@@ -153,7 +153,7 @@ export default function DownloadParticipantsModal({
     >
       <div>
         <h4>
-          <Trans>Download CSV of {tokenSymbol || 'token'} holders</Trans>
+          <Trans>Download CSV of {tokenSymbol || t`token`} holders</Trans>
         </h4>
 
         <p style={{ padding: 10, background: colors.background.l1 }}>

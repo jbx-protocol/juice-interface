@@ -19,7 +19,7 @@ import { readNetwork } from 'constants/networks'
 import { CURRENCY_ETH, CURRENCY_USD } from 'constants/currency'
 import CurrencySymbol from '../../shared/CurrencySymbol'
 import PayInputSubText from './PayInputSubText'
-import { MOONDAO_PROJECT_ID } from 'constants/projectIds'
+import { PROJECT_IDS } from 'constants/projectIds'
 
 export default function Pay() {
   const [payIn, setPayIn] = useState<CurrencyOption>(0)
@@ -63,7 +63,7 @@ export default function Pay() {
 
     // Edge case for MoonDAO, upgraded to v1.1 but can't use payIsPaused for now
     const isMoonAndMaxRR =
-      projectId?.eq(MOONDAO_PROJECT_ID) && fcMetadata.reservedRate === 200
+      projectId?.eq(PROJECT_IDS.MOON_DAO) && fcMetadata.reservedRate === 200
 
     if (isArchived) {
       return (

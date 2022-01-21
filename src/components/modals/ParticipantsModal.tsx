@@ -15,8 +15,8 @@ import UntrackedErc20Notice from 'components/shared/UntrackedErc20Notice'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { constants } from 'ethers'
-import useContractReader from 'hooks/ContractReader'
-import { ContractName } from 'models/contract-name'
+import useContractReaderV1 from 'hooks/ContractReaderV1'
+import { JuiceboxV1ContractName } from 'models/contracts/juiceboxV1'
 import { NetworkName } from 'models/network-name'
 import {
   parseParticipantJson,
@@ -53,8 +53,8 @@ export default function ParticipantsModal({
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const totalTokenSupply = useContractReader<BigNumber>({
-    contract: ContractName.TicketBooth,
+  const totalTokenSupply = useContractReaderV1<BigNumber>({
+    contract: JuiceboxV1ContractName.TicketBooth,
     functionName: 'totalSupplyOf',
     args: [projectId?.toHexString()],
     valueDidChange: bigNumbersDiff,

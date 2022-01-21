@@ -3,10 +3,10 @@ import { Modal, Form, Space } from 'antd'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { ProjectContext } from 'contexts/projectContext'
-import { UserContext } from 'contexts/userContext'
+import { UserContextV1 } from 'contexts/userContextV1'
 import { NetworkContext } from 'contexts/networkContext'
-import useContractReader from 'hooks/ContractReader'
-import { ContractName } from 'models/contract-name'
+import useContractReaderV1 from 'hooks/ContractReaderV1'
+import { JuiceboxV1ContractName } from 'models/contracts/juiceboxV1'
 import { useContext, useLayoutEffect, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
@@ -23,15 +23,15 @@ export default function ConfirmUnstakeTokensModal({
 }) {
   const [loading, setLoading] = useState<boolean>()
   const [unstakeAmount, setUnstakeAmount] = useState<string>()
-  const { contracts, transactor } = useContext(UserContext)
+  const { contracts, transactor } = useContext(UserContextV1)
   const { userAddress } = useContext(NetworkContext)
   const {
     theme: { colors },
   } = useContext(ThemeContext)
   const { tokenSymbol, tokenAddress, projectId } = useContext(ProjectContext)
 
-  const iouBalance = useContractReader<BigNumber>({
-    contract: ContractName.TicketBooth,
+  const iouBalance = useContractReaderV1<BigNumber>({
+    contract: JuiceboxV1ContractName.TicketBooth,
     functionName: 'stakedBalanceOf',
     args:
       userAddress && projectId ? [userAddress, projectId.toHexString()] : null,

@@ -14,7 +14,7 @@ import TicketModsList from 'components/shared/TicketModsList'
 
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { UserContext } from 'contexts/userContext'
+import { UserContextV1 } from 'contexts/userContextV1'
 import { constants } from 'ethers'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useEditingFundingCycleSelector } from 'hooks/AppSelector'
@@ -63,7 +63,7 @@ export default function ReconfigureFCModal({
   ticketMods: TicketMod[] | undefined
   onDone?: VoidFunction
 }) {
-  const { transactor, contracts } = useContext(UserContext)
+  const { transactor, contracts } = useContext(UserContextV1)
   const { colors, radii } = useContext(ThemeContext).theme
   const [currentStep, setCurrentStep] = useState<number>()
   const [payModsModalVisible, setPayModsFormModalVisible] =

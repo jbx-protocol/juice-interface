@@ -1,12 +1,12 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { UserContextV1 } from 'contexts/userContextV1'
-import { useContractLoaderV1 } from 'hooks/ContractLoaderV1'
+import { UserContextV2 } from 'contexts/userContextV2'
+import { useContractLoaderV2 } from 'hooks/ContractLoaderV2'
 import { useGasPriceQuery } from 'hooks/GasPrice'
 import { useTransactor } from 'hooks/Transactor'
 import { ChildElems } from 'models/child-elems'
 
-export default function UserProviderV1({ children }: { children: ChildElems }) {
-  const contracts = useContractLoaderV1()
+export default function UserProviderV2({ children }: { children: ChildElems }) {
+  const contracts = useContractLoaderV2()
 
   const { data: gasPrice } = useGasPriceQuery('average')
 
@@ -15,13 +15,13 @@ export default function UserProviderV1({ children }: { children: ChildElems }) {
   })
 
   return (
-    <UserContextV1.Provider
+    <UserContextV2.Provider
       value={{
         contracts,
         transactor,
       }}
     >
       {children}
-    </UserContextV1.Provider>
+    </UserContextV2.Provider>
   )
 }

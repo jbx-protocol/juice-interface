@@ -9,7 +9,7 @@ import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import PayoutModsList from 'components/shared/PayoutModsList'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { UserContext } from 'contexts/userContext'
+import { UserContextV1 } from 'contexts/userContextV1'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { CurrencyOption } from 'models/currency-option'
 import { useContext, useEffect, useState } from 'react'
@@ -30,7 +30,7 @@ export default function WithdrawModal({
 }) {
   const [loading, setLoading] = useState<boolean>()
   const [tapAmount, setTapAmount] = useState<string>()
-  const { transactor, contracts } = useContext(UserContext)
+  const { transactor, contracts } = useContext(UserContextV1)
   const {
     balanceInCurrency,
     projectId,

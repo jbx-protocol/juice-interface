@@ -1,11 +1,11 @@
-import UserProvider from 'providers/UserProviderV1'
+import UserProviderV2 from 'providers/UserProviderV2'
 
 import Create from './Create'
 
 export default function CreatePage() {
   return (
-    <UserProvider>
+    <UserProviderV2>
       <Create />
-    </UserProvider>
+    </UserProviderV2>
   )
 }

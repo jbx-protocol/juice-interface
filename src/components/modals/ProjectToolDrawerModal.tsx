@@ -8,9 +8,9 @@ import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { NetworkContext } from 'contexts/networkContext'
 import { ProjectContext } from 'contexts/projectContext'
-import { UserContext } from 'contexts/userContext'
-import useContractReader from 'hooks/ContractReader'
-import { ContractName } from 'models/contract-name'
+import { UserContextV1 } from 'contexts/userContextV1'
+import useContractReaderV1 from 'hooks/ContractReaderV1'
+import { JuiceboxV1ContractName } from 'models/contracts/juiceboxV1'
 import { useContext, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
@@ -22,7 +22,7 @@ export default function ProjectToolDrawerModal({
   visible?: boolean
   onClose?: VoidFunction
 }) {
-  const { transactor, contracts } = useContext(UserContext)
+  const { transactor, contracts } = useContext(UserContextV1)
   const { userAddress } = useContext(NetworkContext)
   const { projectId, tokenSymbol, owner, terminal } = useContext(ProjectContext)
 
@@ -34,8 +34,8 @@ export default function ProjectToolDrawerModal({
   const [addToBalanceForm] = useForm<{ amount: string }>()
   const [transferOwnershipForm] = useForm<{ to: string }>()
 
-  const stakedTokenBalance = useContractReader<BigNumber>({
-    contract: ContractName.TicketBooth,
+  const stakedTokenBalance = useContractReaderV1<BigNumber>({
+    contract: JuiceboxV1ContractName.TicketBooth,
     functionName: 'stakedBalanceOf',
     args:
       userAddress && projectId ? [userAddress, projectId.toHexString()] : null,

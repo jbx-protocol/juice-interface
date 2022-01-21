@@ -14,8 +14,8 @@ import { useForm } from 'antd/lib/form/Form'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { BigNumber, constants, utils } from 'ethers'
-import useContractReader from 'hooks/ContractReader'
-import { ContractName } from 'models/contract-name'
+import useContractReaderV1 from 'hooks/ContractReaderV1'
+import { JuiceboxV1ContractName } from 'models/contracts/juiceboxV1'
 import { CurrencyOption } from 'models/currency-option'
 import { PayoutMod } from 'models/mods'
 import * as moment from 'moment'
@@ -78,8 +78,8 @@ export default function ProjectPayoutMods({
 
   const { owner } = useContext(ProjectContext)
 
-  useContractReader<BigNumber>({
-    contract: ContractName.Projects,
+  useContractReaderV1<BigNumber>({
+    contract: JuiceboxV1ContractName.Projects,
     functionName: 'projectFor',
     args: settingHandle ? [utils.formatBytes32String(settingHandle)] : null,
     callback: useCallback(

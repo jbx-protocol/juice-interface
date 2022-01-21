@@ -9,7 +9,7 @@ import Project from 'components/DashboardV1/Project'
 import { NetworkContext } from 'contexts/networkContext'
 import { ProjectContext, ProjectContextType } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { UserContext } from 'contexts/userContext'
+import { UserContextV1 } from 'contexts/userContextV1'
 import { constants, utils } from 'ethers'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import {
@@ -17,7 +17,7 @@ import {
   useEditingFundingCycleSelector,
 } from 'hooks/AppSelector'
 import { useTerminalFee } from 'hooks/TerminalFee'
-import { ContractName } from 'models/contract-name'
+import { JuiceboxV1ContractName } from 'models/contracts/juiceboxV1'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
 import { FundingCycleMetadata } from 'models/funding-cycle-metadata'
@@ -55,7 +55,7 @@ import TicketingForm, { TicketingFormFields } from './TicketingForm'
 const terminalVersion: TerminalVersion = '1.1'
 
 export default function Create() {
-  const { transactor, contracts } = useContext(UserContext)
+  const { transactor, contracts } = useContext(UserContextV1)
   const { signerNetwork, userAddress } = useContext(NetworkContext)
   const { colors, radii } = useContext(ThemeContext).theme
   const [currentStep, setCurrentStep] = useState<number>()
@@ -488,7 +488,7 @@ export default function Create() {
       isArchived: false,
       terminal: {
         version: terminalVersion,
-        name: ContractName.TerminalV1_1,
+        name: JuiceboxV1ContractName.TerminalV1_1,
         address: getTerminalAddress(terminalVersion),
       },
     }),

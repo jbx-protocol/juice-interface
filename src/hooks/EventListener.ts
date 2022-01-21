@@ -1,32 +1,33 @@
 import { Listener } from '@ethersproject/providers'
 
-import { useContractLoader } from 'hooks/ContractLoader'
-import { ContractName } from 'models/contract-name'
+import { useContractLoaderV1 } from 'hooks/ContractLoaderV1'
+import { JuiceboxV1ContractName } from 'models/contracts/juiceboxV1'
 import { useEffect, useMemo, useState } from 'react'
 
 import { readProvider } from 'constants/readProvider'
 
 export default function useEventListener<E>({
-  contractName,
+  JuiceboxV1ContractName,
   eventName,
   startBlock,
   topics,
   includeHistory,
 }: {
-  contractName?: ContractName
+  JuiceboxV1ContractName?: JuiceboxV1ContractName
   eventName?: string
   startBlock?: number
   topics?: (any | any[])[]
   includeHistory?: boolean
 }) {
-  const contracts = useContractLoader()
+  const contracts = useContractLoaderV1()
   const [events, setEvents] = useState<(E & { timestamp: number })[]>([])
   const [shouldGetHistory, setShouldGetHistory] = useState<boolean>(
     !!includeHistory,
   )
   const provider = readProvider
 
-  const contract = contracts && contractName && contracts[contractName]
+  const contract =
+    contracts && JuiceboxV1ContractName && contracts[JuiceboxV1ContractName]
 
   const formatEvent = async (event: any) => {
     const timestamp = (await event.getBlock()).timestamp
@@ -38,9 +39,9 @@ export default function useEventListener<E>({
 
   const eventTopic =
     contracts &&
-    contractName &&
+    JuiceboxV1ContractName &&
     eventName &&
-    contracts[contractName].interface.getEventTopic(eventName)
+    contracts[JuiceboxV1ContractName].interface.getEventTopic(eventName)
 
   const filter = useMemo(() => {
     return (

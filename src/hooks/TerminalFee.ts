@@ -1,12 +1,12 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Contract } from '@ethersproject/contracts'
-import { UserContext } from 'contexts/userContext'
+import { UserContextV1 } from 'contexts/userContextV1'
 import { TerminalVersion } from 'models/terminal-version'
 import { useContext, useEffect, useState } from 'react'
 
 export function useTerminalFee(version?: TerminalVersion) {
   const [fee, setFee] = useState<BigNumber>()
-  const { contracts } = useContext(UserContext)
+  const { contracts } = useContext(UserContextV1)
 
   useEffect(() => {
     async function fetchData() {

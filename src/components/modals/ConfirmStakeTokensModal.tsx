@@ -4,9 +4,9 @@ import { Trans } from '@lingui/macro'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { ProjectContext } from 'contexts/projectContext'
-import { UserContext } from 'contexts/userContext'
+import { UserContextV1 } from 'contexts/userContextV1'
 import { NetworkContext } from 'contexts/networkContext'
-import useContractReader, { ContractUpdateOn } from 'hooks/ContractReader'
+import useContractReaderV1, { ContractUpdateOn } from 'hooks/ContractReaderV1'
 import { useContext, useLayoutEffect, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { fromWad, parseWad } from 'utils/formatNumber'
@@ -23,12 +23,12 @@ export default function ConfirmStakeTokensModal({
 }) {
   const [loading, setLoading] = useState<boolean>()
   const [stakeAmount, setStakeAmount] = useState<string>()
-  const { contracts, transactor } = useContext(UserContext)
+  const { contracts, transactor } = useContext(UserContextV1)
   const { userAddress } = useContext(NetworkContext)
   const { tokenSymbol, projectId, tokenAddress } = useContext(ProjectContext)
   const ticketContract = useErc20Contract(tokenAddress)
 
-  const ticketsBalance = useContractReader<BigNumber>({
+  const ticketsBalance = useContractReaderV1<BigNumber>({
     contract: ticketContract,
     functionName: 'balanceOf',
     args: ticketContract && userAddress ? [userAddress] : null,

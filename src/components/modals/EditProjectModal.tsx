@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Divider, Form, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { FormItems } from 'components/shared/formItems'
-import { UserContext } from 'contexts/userContext'
+import { UserContextV1 } from 'contexts/userContextV1'
 import { utils } from 'ethers'
 import { ProjectMetadataV3 } from 'models/project-metadata'
 import { useContext, useEffect, useState } from 'react'
@@ -45,7 +45,7 @@ export default function EditProjectModal({
   onSuccess?: VoidFunction
   onCancel?: VoidFunction
 }) {
-  const { transactor, contracts } = useContext(UserContext)
+  const { transactor, contracts } = useContext(UserContextV1)
   const [loadingSetURI, setLoadingSetURI] = useState<boolean>()
   const [loadingSetHandle, setLoadingSetHandle] = useState<boolean>()
   const [projectInfoForm] = useForm<ProjectInfoFormFields>()

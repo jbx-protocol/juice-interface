@@ -2,8 +2,8 @@ import { LinkOutlined } from '@ant-design/icons'
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 import { Tooltip } from 'antd'
 import { utils } from 'ethers'
-import useContractReader from 'hooks/ContractReader'
-import { ContractName } from 'models/contract-name'
+import useContractReaderV1 from 'hooks/ContractReaderV1'
+import { JuiceboxV1ContractName } from 'models/contracts/juiceboxV1'
 import { CSSProperties, useCallback } from 'react'
 
 export default function ProjectHandle({
@@ -15,8 +15,8 @@ export default function ProjectHandle({
   style?: CSSProperties
   link?: boolean
 }) {
-  const handle = useContractReader<string>({
-    contract: ContractName.Projects,
+  const handle = useContractReaderV1<string>({
+    contract: JuiceboxV1ContractName.Projects,
     functionName: 'handleOf',
     args: projectId ? [BigNumber.from(projectId ?? 0).toHexString()] : null,
     formatter: useCallback(val => utils.parseBytes32String(val), []),

@@ -1,14 +1,14 @@
 import { ProjectContext } from 'contexts/projectContext'
 import { BigNumber } from 'ethers'
 import { BallotState } from 'models/ballot-state'
-import { ContractName } from 'models/contract-name'
+import { JuiceboxV1ContractName } from 'models/contracts/juiceboxV1'
 import { FundingCycle } from 'models/funding-cycle'
 import { useContext, useMemo } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { parseWad } from 'utils/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
 
-import useContractReader from './ContractReader'
+import useContractReaderV1 from './ContractReaderV1'
 
 // Returns the value in ETH that an amount of tokens can be redeemed for
 export function useRedeemRate({
@@ -22,14 +22,14 @@ export function useRedeemRate({
 
   const metadata = decodeFundingCycleMetadata(fundingCycle?.metadata)
 
-  const currentOverflow = useContractReader<BigNumber>({
+  const currentOverflow = useContractReaderV1<BigNumber>({
     contract: terminal?.name,
     functionName: 'currentOverflowOf',
     args: projectId ? [projectId.toHexString()] : null,
     valueDidChange: bigNumbersDiff,
   })
 
-  const reservedTicketBalance = useContractReader<BigNumber>({
+  const reservedTicketBalance = useContractReaderV1<BigNumber>({
     contract: terminal?.name,
     functionName: 'reservedTicketBalanceOf',
     args:
@@ -39,15 +39,15 @@ export function useRedeemRate({
     valueDidChange: bigNumbersDiff,
   })
 
-  const totalSupply = useContractReader<BigNumber>({
-    contract: ContractName.TicketBooth,
+  const totalSupply = useContractReaderV1<BigNumber>({
+    contract: JuiceboxV1ContractName.TicketBooth,
     functionName: 'totalSupplyOf',
     args: projectId ? [projectId?.toHexString()] : null,
     valueDidChange: bigNumbersDiff,
   })?.add(reservedTicketBalance ? reservedTicketBalance : BigNumber.from(0))
 
-  const currentBallotState = useContractReader<BallotState>({
-    contract: ContractName.FundingCycles,
+  const currentBallotState = useContractReaderV1<BallotState>({
+    contract: JuiceboxV1ContractName.FundingCycles,
     functionName: 'currentBallotStateOf',
     args: projectId ? [projectId.toHexString()] : null,
   })

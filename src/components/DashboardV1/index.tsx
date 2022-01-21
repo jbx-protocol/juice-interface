@@ -4,12 +4,12 @@ import FeedbackFormLink from 'components/shared/FeedbackFormLink'
 
 import { ProjectContext, ProjectContextType } from 'contexts/projectContext'
 import { utils } from 'ethers'
-import useContractReader from 'hooks/ContractReader'
+import useContractReaderV1 from 'hooks/ContractReaderV1'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useErc20Contract } from 'hooks/Erc20Contract'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { useProjectsQuery } from 'hooks/Projects'
-import { ContractName } from 'models/contract-name'
+import { JuiceboxV1ContractName } from 'models/contracts/juiceboxV1'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
 import { PayoutMod, TicketMod } from 'models/mods'
@@ -35,8 +35,8 @@ export default function Dashboard() {
 
   const { handle }: { handle?: string } = useParams()
 
-  const projectId = useContractReader<BigNumber>({
-    contract: ContractName.Projects,
+  const projectId = useContractReaderV1<BigNumber>({
+    contract: JuiceboxV1ContractName.Projects,
     functionName: 'projectFor',
     args: handle ? [utils.formatBytes32String(normalizeHandle(handle))] : null,
     callback: useCallback(
@@ -50,8 +50,8 @@ export default function Dashboard() {
     keys: ['createdAt', 'totalPaid'],
   })
 
-  const terminalAddress = useContractReader<string>({
-    contract: ContractName.TerminalDirectory,
+  const terminalAddress = useContractReaderV1<string>({
+    contract: JuiceboxV1ContractName.TerminalDirectory,
     functionName: 'terminalOf',
     args: projectId ? [projectId.toHexString()] : null,
   })
@@ -65,14 +65,14 @@ export default function Dashboard() {
   const createdAt = projects?.[0]?.createdAt
   const earned = projects?.[0]?.totalPaid
 
-  const owner = useContractReader<string>({
-    contract: ContractName.Projects,
+  const owner = useContractReaderV1<string>({
+    contract: JuiceboxV1ContractName.Projects,
     functionName: 'ownerOf',
     args: projectId ? [projectId.toHexString()] : null,
   })
 
-  const currentFC = useContractReader<FundingCycle>({
-    contract: ContractName.FundingCycles,
+  const currentFC = useContractReaderV1<FundingCycle>({
+    contract: JuiceboxV1ContractName.FundingCycles,
     functionName: 'currentOf',
     args: projectId ? [projectId.toHexString()] : null,
     valueDidChange: useCallback((a, b) => !deepEqFundingCycles(a, b), []),
@@ -81,7 +81,7 @@ export default function Dashboard() {
         projectId
           ? [
               {
-                contract: ContractName.FundingCycles,
+                contract: JuiceboxV1ContractName.FundingCycles,
                 eventName: 'Configure',
                 topics: [[], projectId.toHexString()],
               },
@@ -101,14 +101,14 @@ export default function Dashboard() {
     ),
   })
 
-  const queuedFC = useContractReader<FundingCycle>({
-    contract: ContractName.FundingCycles,
+  const queuedFC = useContractReaderV1<FundingCycle>({
+    contract: JuiceboxV1ContractName.FundingCycles,
     functionName: 'queuedOf',
     args: projectId ? [projectId.toHexString()] : null,
     updateOn: projectId
       ? [
           {
-            contract: ContractName.FundingCycles,
+            contract: JuiceboxV1ContractName.FundingCycles,
             eventName: 'Configure',
             topics: [[], projectId.toHexString()],
           },
@@ -116,14 +116,14 @@ export default function Dashboard() {
       : undefined,
   })
 
-  const uri = useContractReader<string>({
-    contract: ContractName.Projects,
+  const uri = useContractReaderV1<string>({
+    contract: JuiceboxV1ContractName.Projects,
     functionName: 'uriOf',
     args: projectId ? [projectId.toHexString()] : null,
   })
 
-  const currentPayoutMods = useContractReader<PayoutMod[]>({
-    contract: ContractName.ModStore,
+  const currentPayoutMods = useContractReaderV1<PayoutMod[]>({
+    contract: JuiceboxV1ContractName.ModStore,
     functionName: 'payoutModsOf',
     args:
       projectId && currentFC
@@ -134,7 +134,7 @@ export default function Dashboard() {
         projectId && currentFC
           ? [
               {
-                contract: ContractName.ModStore,
+                contract: JuiceboxV1ContractName.ModStore,
                 eventName: 'SetPayoutMod',
                 topics: [
                   projectId.toHexString(),
@@ -147,8 +147,8 @@ export default function Dashboard() {
     ),
   })
 
-  const queuedPayoutMods = useContractReader<PayoutMod[]>({
-    contract: ContractName.ModStore,
+  const queuedPayoutMods = useContractReaderV1<PayoutMod[]>({
+    contract: JuiceboxV1ContractName.ModStore,
     functionName: 'payoutModsOf',
     args:
       projectId && queuedFC
@@ -159,7 +159,7 @@ export default function Dashboard() {
         projectId && queuedFC
           ? [
               {
-                contract: ContractName.ModStore,
+                contract: JuiceboxV1ContractName.ModStore,
                 eventName: 'SetPayoutMod',
                 topics: [
                   projectId.toHexString(),
@@ -172,8 +172,8 @@ export default function Dashboard() {
     ),
   })
 
-  const currentTicketMods = useContractReader<TicketMod[]>({
-    contract: ContractName.ModStore,
+  const currentTicketMods = useContractReaderV1<TicketMod[]>({
+    contract: JuiceboxV1ContractName.ModStore,
     functionName: 'ticketModsOf',
     args:
       projectId && currentFC
@@ -184,7 +184,7 @@ export default function Dashboard() {
         projectId && currentFC
           ? [
               {
-                contract: ContractName.ModStore,
+                contract: JuiceboxV1ContractName.ModStore,
                 eventName: 'SetTicketMod',
                 topics: [
                   projectId.toHexString(),
@@ -197,8 +197,8 @@ export default function Dashboard() {
     ),
   })
 
-  const queuedTicketMods = useContractReader<TicketMod[]>({
-    contract: ContractName.ModStore,
+  const queuedTicketMods = useContractReaderV1<TicketMod[]>({
+    contract: JuiceboxV1ContractName.ModStore,
     functionName: 'ticketModsOf',
     args:
       projectId && queuedFC
@@ -209,7 +209,7 @@ export default function Dashboard() {
         projectId && queuedFC
           ? [
               {
-                contract: ContractName.ModStore,
+                contract: JuiceboxV1ContractName.ModStore,
                 eventName: 'SetTicketMod',
                 topics: [
                   projectId.toHexString(),
@@ -222,14 +222,14 @@ export default function Dashboard() {
     ),
   })
 
-  const tokenAddress = useContractReader<string>({
-    contract: ContractName.TicketBooth,
+  const tokenAddress = useContractReaderV1<string>({
+    contract: JuiceboxV1ContractName.TicketBooth,
     functionName: 'ticketsOf',
     args: projectId ? [projectId.toHexString()] : null,
     updateOn: useMemo(
       () => [
         {
-          contract: ContractName.TicketBooth,
+          contract: JuiceboxV1ContractName.TicketBooth,
           eventName: 'Issue',
           topics: projectId ? [projectId.toHexString()] : undefined,
         },
@@ -238,7 +238,7 @@ export default function Dashboard() {
     ),
   })
   const ticketContract = useErc20Contract(tokenAddress)
-  const tokenSymbol = useContractReader<string>({
+  const tokenSymbol = useContractReaderV1<string>({
     contract: ticketContract,
     functionName: 'symbol',
   })
@@ -253,7 +253,7 @@ export default function Dashboard() {
     }
   }, [metadata])
 
-  const balance = useContractReader<BigNumber>({
+  const balance = useContractReaderV1<BigNumber>({
     contract: terminalName,
     functionName: 'balanceOf',
     args: projectId ? [projectId.toHexString()] : null,

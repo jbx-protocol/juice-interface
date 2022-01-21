@@ -5,8 +5,8 @@ import { Modal, Space } from 'antd'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import TicketModsList from 'components/shared/TicketModsList'
 import { ProjectContext } from 'contexts/projectContext'
-import { UserContext } from 'contexts/userContext'
-import useContractReader from 'hooks/ContractReader'
+import { UserContextV1 } from 'contexts/userContextV1'
+import useContractReaderV1 from 'hooks/ContractReaderV1'
 import { useContext, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatWad } from 'utils/formatNumber'
@@ -22,7 +22,7 @@ export default function DistributeTokensModal({
   onConfirmed?: VoidFunction
 }) {
   const [loading, setLoading] = useState<boolean>()
-  const { contracts, transactor } = useContext(UserContext)
+  const { contracts, transactor } = useContext(UserContextV1)
   const {
     tokenSymbol,
     currentFC,
@@ -32,12 +32,12 @@ export default function DistributeTokensModal({
     terminal,
   } = useContext(ProjectContext)
 
-  const terminalContractName = terminal?.name
+  const terminalJuiceboxV1ContractName = terminal?.name
 
   const metadata = decodeFundingCycleMetadata(currentFC?.metadata)
 
-  const reservedTokens = useContractReader<BigNumber>({
-    contract: terminalContractName,
+  const reservedTokens = useContractReaderV1<BigNumber>({
+    contract: terminalJuiceboxV1ContractName,
     functionName: 'reservedTicketBalanceOf',
     args:
       projectId && metadata?.reservedRate

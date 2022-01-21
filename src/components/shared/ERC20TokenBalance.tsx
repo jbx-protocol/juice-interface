@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import useContractReader from 'hooks/ContractReader'
+import useContractReaderV1 from 'hooks/ContractReaderV1'
 import { useErc20Contract } from 'hooks/Erc20Contract'
 import { CSSProperties } from 'react'
 import { formatWad } from 'utils/formatNumber'
@@ -19,18 +19,18 @@ export default function ERC20TokenBalance({
 }) {
   const contract = useErc20Contract(tokenAddress)
 
-  const balance = useContractReader<BigNumber>({
+  const balance = useContractReaderV1<BigNumber>({
     contract,
     functionName: 'balanceOf',
     args: wallet ? [wallet] : null,
   })
 
-  const symbol = useContractReader<string>({
+  const symbol = useContractReaderV1<string>({
     contract,
     functionName: 'symbol',
   })
 
-  const decimals = useContractReader<number>({
+  const decimals = useContractReaderV1<number>({
     contract,
     functionName: 'decimals',
   })

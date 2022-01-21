@@ -9,7 +9,7 @@ import TooltipLabel from 'components/shared/TooltipLabel'
 
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import useContractReader from 'hooks/ContractReader'
+import useContractReaderV1 from 'hooks/ContractReaderV1'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useEthBalanceQuery } from 'hooks/EthBalance'
 import { CurrencyOption } from 'models/currency-option'
@@ -42,7 +42,7 @@ export default function Paid() {
 
   const converter = useCurrencyConverter()
 
-  const totalOverflow = useContractReader<BigNumber>({
+  const totalOverflow = useContractReaderV1<BigNumber>({
     contract: terminal?.name,
     functionName: 'currentOverflowOf',
     args: projectId ? [projectId.toHexString()] : null,

@@ -1,9 +1,9 @@
 import { NetworkContext } from 'contexts/networkContext'
 import { ProjectContext } from 'contexts/projectContext'
-import { ContractName } from 'models/contract-name'
+import { JuiceboxV1ContractName } from 'models/contracts/juiceboxV1'
 import { useContext } from 'react'
 
-import useContractReader from './ContractReader'
+import useContractReaderV1 from './ContractReaderV1'
 
 export enum OperatorPermission {
   'Configure' = 1,
@@ -31,8 +31,8 @@ export function useHasPermission(
   const { userAddress } = useContext(NetworkContext)
   const { projectId, owner } = useContext(ProjectContext)
 
-  const hasOperatorPermission = useContractReader<boolean>({
-    contract: ContractName.OperatorStore,
+  const hasOperatorPermission = useContractReaderV1<boolean>({
+    contract: JuiceboxV1ContractName.OperatorStore,
     functionName: 'hasPermissions',
     args:
       userAddress && owner && projectId

@@ -10,10 +10,10 @@ import { NetworkContext } from 'contexts/networkContext'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { constants } from 'ethers'
-import useContractReader, { ContractUpdateOn } from 'hooks/ContractReader'
+import useContractReaderV1, { ContractUpdateOn } from 'hooks/ContractReaderV1'
 import { useErc20Contract } from 'hooks/Erc20Contract'
 import { OperatorPermission, useHasPermission } from 'hooks/HasPermission'
-import { ContractName } from 'models/contract-name'
+import { JuiceboxV1ContractName } from 'models/contracts/juiceboxV1'
 import { CSSProperties, useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatPercent, formatWad } from 'utils/formatNumber'
@@ -51,8 +51,8 @@ export default function Rewards({
 
   const [redeemModalVisible, setRedeemModalVisible] = useState<boolean>(false)
 
-  const canPrintPreminedV1Tickets = useContractReader<boolean>({
-    contract: ContractName.TerminalV1,
+  const canPrintPreminedV1Tickets = useContractReaderV1<boolean>({
+    contract: JuiceboxV1ContractName.TerminalV1,
     functionName: 'canPrintPreminedTickets',
     args: projectId ? [projectId.toHexString()] : null,
   })
@@ -70,12 +70,12 @@ export default function Rewards({
         topics: projectId ? [projectId.toHexString()] : undefined,
       },
       {
-        contract: ContractName.TicketBooth,
+        contract: JuiceboxV1ContractName.TicketBooth,
         eventName: 'Redeem',
         topics: projectId ? [projectId.toHexString()] : undefined,
       },
       {
-        contract: ContractName.TicketBooth,
+        contract: JuiceboxV1ContractName.TicketBooth,
         eventName: 'Convert',
         topics:
           userAddress && projectId
@@ -88,23 +88,23 @@ export default function Rewards({
 
   const ticketContract = useErc20Contract(tokenAddress)
 
-  const ticketsBalance = useContractReader<BigNumber>({
+  const ticketsBalance = useContractReaderV1<BigNumber>({
     contract: ticketContract,
     functionName: 'balanceOf',
     args: ticketContract && userAddress ? [userAddress] : null,
     valueDidChange: bigNumbersDiff,
     updateOn: ticketsUpdateOn,
   })
-  const iouBalance = useContractReader<BigNumber>({
-    contract: ContractName.TicketBooth,
+  const iouBalance = useContractReaderV1<BigNumber>({
+    contract: JuiceboxV1ContractName.TicketBooth,
     functionName: 'stakedBalanceOf',
     args:
       userAddress && projectId ? [userAddress, projectId.toHexString()] : null,
     valueDidChange: bigNumbersDiff,
     updateOn: ticketsUpdateOn,
   })
-  const totalBalance = useContractReader<BigNumber>({
-    contract: ContractName.TicketBooth,
+  const totalBalance = useContractReaderV1<BigNumber>({
+    contract: JuiceboxV1ContractName.TicketBooth,
     functionName: 'balanceOf',
     args:
       userAddress && projectId ? [userAddress, projectId.toHexString()] : null,
@@ -114,7 +114,7 @@ export default function Rewards({
 
   const metadata = decodeFundingCycleMetadata(currentFC?.metadata)
 
-  const reservedTicketBalance = useContractReader<BigNumber>({
+  const reservedTicketBalance = useContractReaderV1<BigNumber>({
     contract: terminal?.name,
     functionName: 'reservedTicketBalanceOf',
     args:
@@ -124,8 +124,8 @@ export default function Rewards({
     valueDidChange: bigNumbersDiff,
   })
 
-  const totalSupply = useContractReader<BigNumber>({
-    contract: ContractName.TicketBooth,
+  const totalSupply = useContractReaderV1<BigNumber>({
+    contract: JuiceboxV1ContractName.TicketBooth,
     functionName: 'totalSupplyOf',
     args: projectId ? [projectId?.toHexString()] : null,
     valueDidChange: bigNumbersDiff,

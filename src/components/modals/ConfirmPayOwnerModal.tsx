@@ -7,7 +7,7 @@ import FormattedAddress from 'components/shared/FormattedAddress'
 import ImageUploader from 'components/shared/inputs/ImageUploader'
 import { NetworkContext } from 'contexts/networkContext'
 import { ProjectContext } from 'contexts/projectContext'
-import { UserContext } from 'contexts/userContext'
+import { UserContextV1 } from 'contexts/userContextV1'
 import { constants } from 'ethers'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useContext, useState } from 'react'
@@ -29,7 +29,7 @@ export default function ConfirmPayOwnerModal({
   const [loading, setLoading] = useState<boolean>()
   const [preferUnstaked, setPreferUnstaked] = useState<boolean>(false)
   const [form] = useForm<{ note: string }>()
-  const { contracts, transactor } = useContext(UserContext)
+  const { contracts, transactor } = useContext(UserContextV1)
   const { userAddress } = useContext(NetworkContext)
   const {
     tokenSymbol,

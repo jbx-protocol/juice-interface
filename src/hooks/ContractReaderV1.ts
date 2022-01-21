@@ -1,7 +1,9 @@
 import { Contract, EventFilter } from '@ethersproject/contracts'
-import { UserContext } from 'contexts/userContext'
-import { ContractName } from 'models/contract-name'
-import { Contracts } from 'models/contracts'
+import { UserContextV1 } from 'contexts/userContextV1'
+import {
+  JuiceboxV1ContractName,
+  JuiceboxV1Contracts,
+} from 'models/contracts/juiceboxV1'
 import { useCallback, useContext, useState } from 'react'
 import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect'
 
@@ -11,9 +13,9 @@ export type ContractUpdateOn = {
   topics?: EventFilter['topics']
 }[]
 
-export type ContractConfig = ContractName | Contract | undefined
+export type ContractConfig = JuiceboxV1ContractName | Contract | undefined
 
-export default function useContractReader<V>({
+export default function useContractReaderV1<V>({
   contract,
   functionName,
   args,
@@ -32,7 +34,7 @@ export default function useContractReader<V>({
 }): V | undefined {
   const [value, setValue] = useState<V | undefined>()
 
-  const { contracts } = useContext(UserContext)
+  const { contracts } = useContext(UserContextV1)
 
   const _formatter = useCallback(
     (val: any) => (formatter ? formatter(val) : val),
@@ -134,7 +136,7 @@ export default function useContractReader<V>({
 
 function contractToRead(
   contractConfig?: ContractConfig,
-  contracts?: Contracts,
+  contracts?: JuiceboxV1Contracts,
 ): Contract | undefined {
   if (!contractConfig) return
 

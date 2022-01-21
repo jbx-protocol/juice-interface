@@ -5,7 +5,7 @@ import ERC20TokenBalance from 'components/shared/ERC20TokenBalance'
 import { FormItems } from 'components/shared/formItems'
 import ProjectTokenBalance from 'components/shared/ProjectTokenBalance'
 import { ProjectContext } from 'contexts/projectContext'
-import { UserContext } from 'contexts/userContext'
+import { UserContextV1 } from 'contexts/userContextV1'
 import { OperatorPermission, useHasPermission } from 'hooks/HasPermission'
 import { ProjectMetadataV3 } from 'models/project-metadata'
 import { TokenRef } from 'models/token-ref'
@@ -23,7 +23,7 @@ export default function BalancesModal({
   const [loading, setLoading] = useState<boolean>()
   const [editingTokenRefs, setEditingTokenRefs] = useState<TokenRef[]>([])
   const { owner, projectId, metadata } = useContext(ProjectContext)
-  const { transactor, contracts } = useContext(UserContext)
+  const { transactor, contracts } = useContext(UserContextV1)
 
   useEffect(() => {
     setEditingTokenRefs(

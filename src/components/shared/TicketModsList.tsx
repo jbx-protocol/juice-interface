@@ -4,7 +4,7 @@ import { t, Trans } from '@lingui/macro'
 
 import Mod from 'components/shared/Mod'
 import { ProjectContext } from 'contexts/projectContext'
-import { UserContext } from 'contexts/userContext'
+import { UserContextV1 } from 'contexts/userContextV1'
 import { BigNumber, constants } from 'ethers'
 import { OperatorPermission, useHasPermission } from 'hooks/HasPermission'
 import { FundingCycle } from 'models/funding-cycle'
@@ -26,7 +26,7 @@ export default function TicketModsList({
   const [modalVisible, setModalVisible] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
   const [editingMods, setEditingMods] = useState<TicketMod[]>()
-  const { transactor, contracts } = useContext(UserContext)
+  const { transactor, contracts } = useContext(UserContextV1)
   const { owner, tokenSymbol } = useContext(ProjectContext)
 
   const { editableMods, lockedMods } = useMemo(() => {

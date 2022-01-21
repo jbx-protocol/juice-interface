@@ -2,7 +2,7 @@ import { Input } from 'antd'
 import { t } from '@lingui/macro'
 
 import { useContext, useState, useEffect, useCallback } from 'react'
-import { UserContext } from 'contexts/userContext'
+import { UserContextV1 } from 'contexts/userContextV1'
 import { normalizeHandle } from 'utils/formatHandle'
 import { BigNumber } from '@ethersproject/bignumber'
 import { isBigNumberish } from '@ethersproject/bignumber/lib/bignumber'
@@ -32,7 +32,7 @@ export function ProjectHandleInput({
   suffix,
   initialValue,
 }: ProjectHandleProps) {
-  const { contracts } = useContext(UserContext)
+  const { contracts } = useContext(UserContextV1)
   const [inputContents, setInputContents] = useState<string>()
 
   const triggerChange = useCallback(

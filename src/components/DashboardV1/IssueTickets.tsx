@@ -2,7 +2,7 @@ import { InfoCircleOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Form, Input, Modal, Space, Tooltip } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import { UserContext } from 'contexts/userContext'
+import { UserContextV1 } from 'contexts/userContextV1'
 import { useContext, useState } from 'react'
 
 export default function IssueTickets({
@@ -10,7 +10,7 @@ export default function IssueTickets({
 }: {
   projectId: BigNumber | undefined
 }) {
-  const { transactor, contracts } = useContext(UserContext)
+  const { transactor, contracts } = useContext(UserContextV1)
   const [modalVisible, setModalVisible] = useState<boolean>()
   const [loading, setLoading] = useState<boolean>()
   const [form] = useForm<{ name: string; symbol: string }>()

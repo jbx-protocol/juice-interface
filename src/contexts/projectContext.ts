@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { ContractName } from 'models/contract-name'
+import { JuiceboxV1ContractName } from 'models/contracts/juiceboxV1'
 import { FundingCycle } from 'models/funding-cycle'
 import { PayoutMod, TicketMod } from 'models/mods'
 import { ProjectMetadataV3 } from 'models/project-metadata'
@@ -31,7 +31,7 @@ export type ProjectContextType = {
     | {
         version: TerminalVersion | undefined
         address: string | undefined
-        name: ContractName | undefined
+        name: JuiceboxV1ContractName | undefined
       }
     | undefined
 }

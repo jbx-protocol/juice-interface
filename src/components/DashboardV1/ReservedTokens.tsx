@@ -5,8 +5,8 @@ import TooltipLabel from 'components/shared/TooltipLabel'
 import { NetworkContext } from 'contexts/networkContext'
 import { ProjectContext } from 'contexts/projectContext'
 import { BigNumber } from 'ethers'
-import useContractReader from 'hooks/ContractReader'
-import { ContractName } from 'models/contract-name'
+import useContractReaderV1 from 'hooks/ContractReaderV1'
+import { JuiceboxV1ContractName } from 'models/contracts/juiceboxV1'
 import { FundingCycle } from 'models/funding-cycle'
 import { TicketMod } from 'models/mods'
 import { NetworkName } from 'models/network-name'
@@ -37,7 +37,7 @@ export default function ReservedTokens({
 
   const metadata = decodeFundingCycleMetadata(fundingCycle?.metadata)
 
-  const reservedTickets = useContractReader<BigNumber>({
+  const reservedTickets = useContractReaderV1<BigNumber>({
     contract: terminal?.name,
     functionName: 'reservedTicketBalanceOf',
     args:
@@ -61,12 +61,12 @@ export default function ReservedTokens({
           topics: projectId ? [projectId.toHexString()] : undefined,
         },
         {
-          contract: ContractName.TicketBooth,
+          contract: JuiceboxV1ContractName.TicketBooth,
           eventName: 'Redeem',
           topics: projectId ? [projectId.toHexString()] : undefined,
         },
         {
-          contract: ContractName.TicketBooth,
+          contract: JuiceboxV1ContractName.TicketBooth,
           eventName: 'Convert',
           topics:
             userAddress && projectId

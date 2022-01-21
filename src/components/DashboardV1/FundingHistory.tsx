@@ -7,8 +7,8 @@ import Modal from 'antd/lib/modal/Modal'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import Loading from 'components/shared/Loading'
 import { ThemeContext } from 'contexts/themeContext'
-import useContractReader from 'hooks/ContractReader'
-import { ContractName } from 'models/contract-name'
+import useContractReaderV1 from 'hooks/ContractReaderV1'
+import { JuiceboxV1ContractName } from 'models/contracts/juiceboxV1'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
 import { useCallback, useContext, useState } from 'react'
@@ -40,8 +40,8 @@ export default function FundingHistory({
   const selectedFC =
     selectedIndex !== undefined ? fundingCycles[selectedIndex] : undefined
 
-  useContractReader<FundingCycle>({
-    contract: ContractName.FundingCycles,
+  useContractReaderV1<FundingCycle>({
+    contract: JuiceboxV1ContractName.FundingCycles,
     functionName: 'get',
     args: cycleNumber ? [cycleNumber] : null,
     valueDidChange: useCallback((a, b) => !deepEqFundingCycles(a, b), []),

@@ -7,9 +7,9 @@ import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { NetworkContext } from 'contexts/networkContext'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { UserContext } from 'contexts/userContext'
+import { UserContextV1 } from 'contexts/userContextV1'
 import { BigNumber } from 'ethers'
-import useContractReader from 'hooks/ContractReader'
+import useContractReaderV1 from 'hooks/ContractReaderV1'
 import { useRedeemRate } from 'hooks/RedeemRate'
 import { CSSProperties, useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
@@ -38,13 +38,13 @@ export default function RedeemModal({
     theme: { colors },
   } = useContext(ThemeContext)
   const { userAddress } = useContext(NetworkContext)
-  const { contracts, transactor } = useContext(UserContext)
+  const { contracts, transactor } = useContext(UserContextV1)
   const { projectId, tokenSymbol, currentFC, terminal } =
     useContext(ProjectContext)
 
   const fcMetadata = decodeFundingCycleMetadata(currentFC?.metadata)
 
-  const maxClaimable = useContractReader<BigNumber>({
+  const maxClaimable = useContractReaderV1<BigNumber>({
     contract: terminal?.name,
     functionName: 'claimableOverflowOf',
     args:

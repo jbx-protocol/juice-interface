@@ -5,7 +5,7 @@ import { useForm } from 'antd/lib/form/Form'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { ProjectContext } from 'contexts/projectContext'
-import { UserContext } from 'contexts/userContext'
+import { UserContextV1 } from 'contexts/userContextV1'
 import { constants, utils } from 'ethers'
 import { useContext, useMemo, useState } from 'react'
 import { parseWad } from 'utils/formatNumber'
@@ -19,7 +19,7 @@ export default function PrintPreminedModal({
   visible: boolean | undefined
   onCancel: VoidFunction
 }) {
-  const { contracts, transactor } = useContext(UserContext)
+  const { contracts, transactor } = useContext(UserContextV1)
   const { tokenSymbol, tokenAddress, projectId, terminal } =
     useContext(ProjectContext)
   const [form] = useForm<{

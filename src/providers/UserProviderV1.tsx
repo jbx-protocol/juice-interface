@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { UserContextV1 } from 'contexts/userContextV1'
-import { useContractLoaderV1 } from 'hooks/ContractLoaderV1'
+import { useContractLoaderV1 } from 'hooks/v1/ContractLoaderV1'
 import { useGasPriceQuery } from 'hooks/GasPrice'
 import { useTransactor } from 'hooks/Transactor'
 import { ChildElems } from 'models/child-elems'

@@ -2,7 +2,7 @@ import { LinkOutlined } from '@ant-design/icons'
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 import { Tooltip } from 'antd'
 import { utils } from 'ethers'
-import useContractReaderV1 from 'hooks/ContractReaderV1'
+import useContractReaderV1 from 'hooks/v1/ContractReaderV1'
 import { JuiceboxV1ContractName } from 'models/contracts/juiceboxV1'
 import { CSSProperties, useCallback } from 'react'
 

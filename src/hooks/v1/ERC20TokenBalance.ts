@@ -3,7 +3,7 @@ import { JuiceboxV1ContractName } from 'models/contracts/juiceboxV1'
 import { TokenRef } from 'models/token-ref'
 
 import useContractReaderV1 from './ContractReaderV1'
-import { useErc20Contract } from './Erc20Contract'
+import { useErc20Contract } from '../Erc20Contract'
 
 export function useERC20TokenBalance(
   tokenRef: TokenRef | undefined,

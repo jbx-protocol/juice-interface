@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Col, Row } from 'antd'
 import { ProjectContext } from 'contexts/projectContext'
-import useContractReaderV1 from 'hooks/ContractReaderV1'
+import useContractReaderV1 from 'hooks/v1/ContractReaderV1'
 import { CSSProperties, useContext, useMemo } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { decodeFundingCycleMetadata } from 'utils/fundingCycle'

@@ -10,7 +10,7 @@ import {
   useAppSelector,
   useEditingFundingCycleSelector,
 } from 'hooks/AppSelector'
-import { useTerminalFee } from 'hooks/TerminalFee'
+import { useTerminalFee } from 'hooks/v1/TerminalFee'
 import { CurrencyOption } from 'models/currency-option'
 import { useContext } from 'react'
 import {

@@ -6,7 +6,9 @@ import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { ProjectContext } from 'contexts/projectContext'
 import { UserContextV1 } from 'contexts/userContextV1'
 import { NetworkContext } from 'contexts/networkContext'
-import useContractReaderV1, { ContractUpdateOn } from 'hooks/ContractReaderV1'
+import useContractReaderV1, {
+  ContractUpdateOn,
+} from 'hooks/v1/ContractReaderV1'
 import { useContext, useLayoutEffect, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { fromWad, parseWad } from 'utils/formatNumber'

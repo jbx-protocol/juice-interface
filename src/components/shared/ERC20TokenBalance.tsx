@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import useContractReaderV1 from 'hooks/ContractReaderV1'
+import useContractReaderV1 from 'hooks/v1/ContractReaderV1'
 import { useErc20Contract } from 'hooks/Erc20Contract'
 import { CSSProperties } from 'react'
 import { formatWad } from 'utils/formatNumber'

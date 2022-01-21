@@ -10,9 +10,11 @@ import { NetworkContext } from 'contexts/networkContext'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { constants } from 'ethers'
-import useContractReaderV1, { ContractUpdateOn } from 'hooks/ContractReaderV1'
+import useContractReaderV1, {
+  ContractUpdateOn,
+} from 'hooks/v1/ContractReaderV1'
 import { useErc20Contract } from 'hooks/Erc20Contract'
-import { OperatorPermission, useHasPermission } from 'hooks/HasPermission'
+import { OperatorPermission, useHasPermission } from 'hooks/v1/HasPermission'
 import { JuiceboxV1ContractName } from 'models/contracts/juiceboxV1'
 import { CSSProperties, useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'

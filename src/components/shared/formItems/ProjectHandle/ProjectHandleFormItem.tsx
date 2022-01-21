@@ -7,7 +7,7 @@ import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 
 import { ThemeContext } from 'contexts/themeContext'
 import { utils } from 'ethers'
-import useContractReaderV1 from 'hooks/ContractReaderV1'
+import useContractReaderV1 from 'hooks/v1/ContractReaderV1'
 import { JuiceboxV1ContractName } from 'models/contracts/juiceboxV1'
 import { normalizeHandle } from 'utils/formatHandle'
 

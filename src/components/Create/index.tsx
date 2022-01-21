@@ -16,7 +16,7 @@ import {
   useAppSelector,
   useEditingFundingCycleSelector,
 } from 'hooks/AppSelector'
-import { useTerminalFee } from 'hooks/TerminalFee'
+import { useTerminalFee } from 'hooks/v1/TerminalFee'
 import { JuiceboxV1ContractName } from 'models/contracts/juiceboxV1'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'

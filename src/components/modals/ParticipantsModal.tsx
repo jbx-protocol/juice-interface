@@ -15,7 +15,7 @@ import UntrackedErc20Notice from 'components/shared/UntrackedErc20Notice'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { constants } from 'ethers'
-import useContractReaderV1 from 'hooks/ContractReaderV1'
+import useContractReaderV1 from 'hooks/v1/ContractReaderV1'
 import { JuiceboxV1ContractName } from 'models/contracts/juiceboxV1'
 import { NetworkName } from 'models/network-name'
 import {

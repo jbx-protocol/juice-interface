@@ -572,10 +572,6 @@ msgstr ""
 msgid "Juicebox contracts"
 msgstr ""
 
-#: src/components/shared/AMMPrices/TokenAMMPriceRow.tsx
-msgid "Juicebox doesn't support {exchangeName} yet."
-msgstr "Juicebox doesn't support {exchangeName} yet."
-
 #: src/components/Landing/QAs.tsx
 msgid "Juicebox is a governance-minimal protocol. There are only a few levers that can be tuned, none of which impose changes for users without their consent. The Juicebox governance smart contract can adjust these levers."
 msgstr ""
@@ -650,10 +646,6 @@ msgstr ""
 msgid "No funding target: The project will control how all funds are distributed, and none can be redeemed by token holders."
 msgstr ""
 
-#: src/components/shared/AMMPrices/TokenAMMPriceRow.tsx
-msgid "No liquidity"
-msgstr "No liquidity"
-
 #: src/components/Create/BudgetForm.tsx
 msgid "No more than the funding cycle target can be distributed by the project in a single funding cycle."
 msgstr ""
@@ -678,10 +670,6 @@ msgstr ""
 #: src/components/FundingCycle/FundingCycleDetails.tsx
 msgid "Not set"
 msgstr ""
-
-#: src/components/shared/AMMPrices/TokenAMMPriceRow.tsx
-msgid "Not supported"
-msgstr "Not supported"
 
 #: src/components/Landing/index.tsx
 msgid "Note: Juicebox is new, unaudited, and not guaranteed to work perfectly. Before spending money, do your own research: <0>ask questions</0>, <1>check out the code</1>, and understand the risks!"
@@ -1220,6 +1208,10 @@ msgstr ""
 #: src/components/shared/formItems/ProjectTwitter.tsx
 msgid "Twitter"
 msgstr ""
+
+#: src/components/shared/AMMPrices/TokenAMMPriceRow.tsx
+msgid "Unavailable"
+msgstr "Unavailable"
 
 #: src/constants/ballot-strategies.ts
 msgid "Unrecognized strategy contract. Make sure this is correct!"

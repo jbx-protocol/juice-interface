@@ -1,4 +1,4 @@
-import RichNote from 'components/Dashboard/ProjectActivity/RichNote'
+import RichNote from 'components/DashboardV1/ProjectActivity/RichNote'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import Loading from 'components/shared/Loading'

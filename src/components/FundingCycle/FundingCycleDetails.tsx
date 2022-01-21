@@ -17,7 +17,7 @@ import {
 } from 'utils/fundingCycle'
 import { weightedRate } from 'utils/math'
 
-import { getBallotStrategyByAddress } from 'constants/ballotStrategies/get-ballot-strategies-by-address'
+import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 
 import TooltipLabel from '../shared/TooltipLabel'
 

@@ -7,7 +7,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { constants, utils } from 'ethers'
 import { useContext, useLayoutEffect, useState } from 'react'
 
-import { ballotStrategies } from 'constants/ballotStrategies/ballot-strategies'
+import { ballotStrategies } from 'constants/ballotStrategies/ballotStrategies'
 
 export default function RulesForm({
   initialBallot,

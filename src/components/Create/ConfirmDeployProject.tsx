@@ -23,7 +23,7 @@ import { hasFundingTarget, isRecurring } from 'utils/fundingCycle'
 import { amountSubFee } from 'utils/math'
 import { orEmpty } from 'utils/orEmpty'
 
-import { getBallotStrategyByAddress } from 'constants/ballotStrategies/get-ballot-strategies-by-address'
+import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 
 export default function ConfirmDeployProject() {
   const editingFC = useEditingFundingCycleSelector()

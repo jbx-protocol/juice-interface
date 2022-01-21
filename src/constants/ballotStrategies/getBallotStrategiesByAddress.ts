@@ -1,4 +1,4 @@
-import { ballotStrategies, customStrategy } from './ballot-strategies'
+import { ballotStrategies, customStrategy } from './ballotStrategies'
 
 // Put in separate files because lingui.js t macro was not working on ballot strategies
 export const getBallotStrategyByAddress = (address: string) => {

@@ -41,7 +41,7 @@ import {
 import { amountSubFee } from 'utils/math'
 import { serializeFundingCycle } from 'utils/serializers'
 
-import { getBallotStrategyByAddress } from 'constants/ballotStrategies/get-ballot-strategies-by-address'
+import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 
 import BudgetForm from '../Create/BudgetForm'
 import IncentivesForm from '../Create/IncentivesForm'

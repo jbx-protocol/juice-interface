@@ -1,7 +1,7 @@
 import { Space } from 'antd'
 import { t } from '@lingui/macro'
 import { CardSection } from 'components/shared/CardSection'
-import { ProjectContext } from 'contexts/projectContext'
+import { ProjectContextV1 } from 'contexts/v1/projectContextV1'
 import { ThemeContext } from 'contexts/themeContext'
 import { OperatorPermission, useHasPermission } from 'hooks/v1/HasPermission'
 import { useContext, useState } from 'react'
@@ -22,7 +22,7 @@ export default function FundingCycles({
   const [selectedTab, setSelectedTab] = useState<TabOption>('current')
   const [hoverTab, setHoverTab] = useState<TabOption>()
 
-  const { projectId, currentFC } = useContext(ProjectContext)
+  const { projectId, currentFC } = useContext(ProjectContextV1)
 
   const {
     theme: { colors },

@@ -2,7 +2,10 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
 import FeedbackFormLink from 'components/shared/FeedbackFormLink'
 
-import { ProjectContext, ProjectContextType } from 'contexts/projectContext'
+import {
+  ProjectContextV1,
+  ProjectContextV1Type,
+} from 'contexts/v1/projectContextV1'
 import { utils } from 'ethers'
 import useContractReaderV1 from 'hooks/v1/ContractReaderV1'
 import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
@@ -289,7 +292,7 @@ export default function Dashboard() {
     [balance, converter, currentFC],
   )
 
-  const project = useMemo<ProjectContextType>(() => {
+  const project = useMemo<ProjectContextV1Type>(() => {
     const projectType = projectId
       ? projectTypes[projectId.toNumber()]
       : 'standard'
@@ -367,7 +370,7 @@ export default function Dashboard() {
   if (!projectId || !handle || !metadata) return null
 
   return (
-    <ProjectContext.Provider value={project}>
+    <ProjectContextV1.Provider value={project}>
       <div style={layouts.maxWidth}>
         <Project />
         <div
@@ -378,6 +381,6 @@ export default function Dashboard() {
         </div>
         <FeedbackFormLink projectHandle={handle} />
       </div>
-    </ProjectContext.Provider>
+    </ProjectContextV1.Provider>
   )
 }

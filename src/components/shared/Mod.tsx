@@ -2,7 +2,7 @@ import { CrownFilled, LockOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Tooltip } from 'antd'
-import { ProjectContext } from 'contexts/projectContext'
+import { ProjectContextV1 } from 'contexts/v1/projectContextV1'
 import { ThemeContext } from 'contexts/themeContext'
 import { PayoutMod, TicketMod } from 'models/mods'
 import { useContext } from 'react'
@@ -22,7 +22,7 @@ export default function Mod({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const { owner } = useContext(ProjectContext)
+  const { owner } = useContext(ProjectContextV1)
 
   if (!mod) return null
 

@@ -5,7 +5,7 @@ import PayoutModsList from 'components/shared/PayoutModsList'
 import ProjectLogo from 'components/shared/ProjectLogo'
 import TicketModsList from 'components/shared/TicketModsList'
 
-import { ProjectContext } from 'contexts/projectContext'
+import { ProjectContextV2 } from 'contexts/v2/projectContextV2'
 import {
   useAppSelector,
   useEditingFundingCycleSelector,
@@ -28,7 +28,7 @@ import { getBallotStrategyByAddress } from 'constants/ballot-strategies'
 export default function ConfirmDeployProject() {
   const editingFC = useEditingFundingCycleSelector()
   const editingProject = useAppSelector(state => state.editingProject.info)
-  const { terminal } = useContext(ProjectContext)
+  const { terminal } = useContext(ProjectContextV2)
   const { payoutMods, ticketMods } = useAppSelector(
     state => state.editingProject,
   )

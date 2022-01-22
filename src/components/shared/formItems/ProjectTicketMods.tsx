@@ -15,7 +15,7 @@ import { useCallback, useContext, useState } from 'react'
 import { formatDate } from 'utils/formatDate'
 import { fromPermyriad, parsePermyriad } from 'utils/formatNumber'
 
-import { ProjectContext } from 'contexts/projectContext'
+import { ProjectContextV1 } from 'contexts/v1/projectContextV1'
 
 import { FormItems } from '.'
 import FormattedAddress from '../FormattedAddress'
@@ -42,7 +42,7 @@ export default function ProjectTicketMods({
   }>()
   const [editingModIndex, setEditingModIndex] = useState<number>() // index of the mod currently being edited (edit modal open)
   const [modalMode, setModalMode] = useState<ModalMode>() //either 'Add', 'Edit' or undefined
-  const { owner } = useContext(ProjectContext)
+  const { owner } = useContext(ProjectContextV1)
 
   const {
     theme: { colors, radii },

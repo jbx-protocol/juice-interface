@@ -7,7 +7,7 @@ import EtherscanLink from 'components/shared/EtherscanLink'
 import ProjectTokenBalanceV1 from 'components/shared/ProjectTokenBalanceV1'
 import TooltipLabel from 'components/shared/TooltipLabel'
 
-import { ProjectContext } from 'contexts/projectContext'
+import { ProjectContextV1 } from 'contexts/v1/projectContextV1'
 import { ThemeContext } from 'contexts/themeContext'
 import useContractReaderV1 from 'hooks/v1/ContractReaderV1'
 import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
@@ -38,7 +38,7 @@ export default function Paid() {
     owner,
     earned,
     terminal,
-  } = useContext(ProjectContext)
+  } = useContext(ProjectContextV1)
 
   const converter = useCurrencyConverter()
 

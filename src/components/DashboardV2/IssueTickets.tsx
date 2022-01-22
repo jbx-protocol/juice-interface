@@ -2,7 +2,7 @@ import { InfoCircleOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Form, Input, Modal, Space, Tooltip } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import { UserContextV1 } from 'contexts/userContextV1'
+import { UserContextV1 } from 'contexts/v1/userContextV1'
 import { useContext, useState } from 'react'
 
 export default function IssueTickets({

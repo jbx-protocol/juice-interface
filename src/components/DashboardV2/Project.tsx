@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Col, Row } from 'antd'
-import { ProjectContext } from 'contexts/projectContext'
+import { ProjectContextV1 } from 'contexts/v1/projectContextV1'
 import useContractReaderV1 from 'hooks/v1/ContractReaderV1'
 import { CSSProperties, useContext, useMemo } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
@@ -23,7 +23,7 @@ export default function Project({
   showCurrentDetail?: boolean
   column?: boolean
 }) {
-  const { projectId, currentFC, terminal } = useContext(ProjectContext)
+  const { projectId, currentFC, terminal } = useContext(ProjectContextV1)
 
   const totalOverflow = useContractReaderV1<BigNumber>({
     contract: terminal?.name,

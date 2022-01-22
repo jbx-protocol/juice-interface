@@ -3,8 +3,8 @@ import ProjectTicketMods from 'components/shared/formItems/ProjectTicketMods'
 import { t, Trans } from '@lingui/macro'
 
 import Mod from 'components/shared/Mod'
-import { ProjectContext } from 'contexts/projectContext'
-import { UserContextV1 } from 'contexts/userContextV1'
+import { ProjectContextV1 } from 'contexts/v1/projectContextV1'
+import { UserContextV1 } from 'contexts/v1/userContextV1'
 import { BigNumber, constants } from 'ethers'
 import { OperatorPermission, useHasPermission } from 'hooks/v1/HasPermission'
 import { FundingCycle } from 'models/funding-cycle'
@@ -27,7 +27,7 @@ export default function TicketModsList({
   const [loading, setLoading] = useState<boolean>(false)
   const [editingMods, setEditingMods] = useState<TicketMod[]>()
   const { transactor, contracts } = useContext(UserContextV1)
-  const { owner, tokenSymbol } = useContext(ProjectContext)
+  const { owner, tokenSymbol } = useContext(ProjectContextV1)
 
   const { editableMods, lockedMods } = useMemo(() => {
     const now = new Date().valueOf() / 1000

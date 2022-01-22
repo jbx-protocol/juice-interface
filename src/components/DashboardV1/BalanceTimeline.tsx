@@ -2,7 +2,7 @@ import { Select, Space } from 'antd'
 import { t } from '@lingui/macro'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 
-import { ProjectContext } from 'contexts/projectContext'
+import { ProjectContextV1 } from 'contexts/v1/projectContextV1'
 import { ThemeContext } from 'contexts/themeContext'
 import EthDater from 'ethereum-block-by-date'
 import { parseProjectJson, Project } from 'models/subgraph-entities/project'
@@ -54,7 +54,7 @@ export default function BalanceTimeline({ height }: { height: number }) {
   const [domain, setDomain] = useState<[number, number]>()
   const [duration, setDuration] = useState<Duration>()
   const [showGraph, setShowGraph] = useState<ShowGraph>('volume')
-  const { projectId, projectType, createdAt } = useContext(ProjectContext)
+  const { projectId, projectType, createdAt } = useContext(ProjectContextV1)
   const {
     theme: { colors },
   } = useContext(ThemeContext)

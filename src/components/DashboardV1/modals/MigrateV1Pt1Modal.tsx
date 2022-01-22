@@ -1,6 +1,6 @@
 import { Button, Modal } from 'antd'
-import { ProjectContext } from 'contexts/projectContext'
-import { UserContextV1 } from 'contexts/userContextV1'
+import { ProjectContextV1 } from 'contexts/v1/projectContextV1'
+import { UserContextV1 } from 'contexts/v1/userContextV1'
 import { useContext, useState } from 'react'
 import { getTerminalAddress } from 'utils/terminal-versions'
 
@@ -14,7 +14,7 @@ export default function MigrateV1Pt1Modal({
   const [loadingAddToBalance, setLoadingAddToBalance] = useState<boolean>()
   const [loadingMigrate, setLoadingMigrate] = useState<boolean>()
   const { contracts, transactor } = useContext(UserContextV1)
-  const { projectId, balance, handle } = useContext(ProjectContext)
+  const { projectId, balance, handle } = useContext(ProjectContextV1)
 
   const needsBalance = balance?.eq(0)
 

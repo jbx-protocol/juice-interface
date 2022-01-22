@@ -12,7 +12,7 @@ import MigrateV1Pt1Modal from 'components/DashboardV1/modals/MigrateV1Pt1Modal'
 import ProjectToolDrawerModal from 'components/DashboardV1/modals/ProjectToolDrawerModal'
 import ProjectLogo from 'components/shared/ProjectLogo'
 import { NetworkContext } from 'contexts/networkContext'
-import { ProjectContext } from 'contexts/projectContext'
+import { ProjectContextV1 } from 'contexts/v1/projectContextV1'
 import { ThemeContext } from 'contexts/themeContext'
 import { OperatorPermission, useHasPermission } from 'hooks/v1/HasPermission'
 import { useContext, useState } from 'react'
@@ -35,7 +35,7 @@ export default function ProjectHeader() {
     isArchived,
     terminal,
     owner,
-  } = useContext(ProjectContext)
+  } = useContext(ProjectContextV1)
 
   const {
     theme: { colors },

@@ -12,9 +12,9 @@ import CurrencySymbol from 'components/shared/CurrencySymbol'
 import PayoutModsList from 'components/shared/PayoutModsList'
 import TicketModsList from 'components/shared/TicketModsList'
 
-import { ProjectContext } from 'contexts/projectContext'
+import { ProjectContextV1 } from 'contexts/v1/projectContextV1'
 import { ThemeContext } from 'contexts/themeContext'
-import { UserContextV1 } from 'contexts/userContextV1'
+import { UserContextV1 } from 'contexts/v1/userContextV1'
 import { constants } from 'ethers'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useEditingFundingCycleSelector } from 'hooks/AppSelector'
@@ -87,7 +87,7 @@ export default function ReconfigureFCModal({
   const [editingPayoutMods, setEditingPayoutMods] = useState<PayoutMod[]>([])
   const [editingTicketMods, setEditingTicketMods] = useState<TicketMod[]>([])
   const dispatch = useAppDispatch()
-  const { currentFC, terminal, isPreviewMode } = useContext(ProjectContext)
+  const { currentFC, terminal, isPreviewMode } = useContext(ProjectContextV1)
   const editingFC = useEditingFundingCycleSelector()
   const terminalFee = useTerminalFee(terminal?.version)
 

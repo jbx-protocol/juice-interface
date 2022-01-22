@@ -1,5 +1,5 @@
 import { Contract, EventFilter } from '@ethersproject/contracts'
-import { UserContextV1 } from 'contexts/userContextV1'
+import { UserContextV1 } from 'contexts/v1/userContextV1'
 import {
   JuiceboxV1ContractName,
   JuiceboxV1Contracts,

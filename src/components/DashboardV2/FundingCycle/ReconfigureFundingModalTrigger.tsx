@@ -1,5 +1,5 @@
 import { Button } from 'antd'
-import { ProjectContext } from 'contexts/projectContext'
+import { ProjectContextV1 } from 'contexts/v1/projectContextV1'
 import React, { useContext, useRef, useState } from 'react'
 import { Provider } from 'react-redux'
 import store, { createStore } from 'redux/store'
@@ -24,7 +24,7 @@ const ReconfigureFundingModalTrigger: React.FC<Props> = () => {
     currentPayoutMods,
     currentTicketMods,
     isPreviewMode,
-  } = useContext(ProjectContext)
+  } = useContext(ProjectContextV1)
 
   const localStoreRef = useRef<typeof store>()
 

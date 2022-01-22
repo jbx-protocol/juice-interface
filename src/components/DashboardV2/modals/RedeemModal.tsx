@@ -5,9 +5,9 @@ import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 
 import { NetworkContext } from 'contexts/networkContext'
-import { ProjectContext } from 'contexts/projectContext'
+import { ProjectContextV1 } from 'contexts/v1/projectContextV1'
 import { ThemeContext } from 'contexts/themeContext'
-import { UserContextV1 } from 'contexts/userContextV1'
+import { UserContextV1 } from 'contexts/v1/userContextV1'
 import { BigNumber } from 'ethers'
 import useContractReaderV1 from 'hooks/v1/ContractReaderV1'
 import { useRedeemRate } from 'hooks/v1/RedeemRate'
@@ -40,7 +40,7 @@ export default function RedeemModal({
   const { userAddress } = useContext(NetworkContext)
   const { contracts, transactor } = useContext(UserContextV1)
   const { projectId, tokenSymbol, currentFC, terminal } =
-    useContext(ProjectContext)
+    useContext(ProjectContextV1)
 
   const fcMetadata = decodeFundingCycleMetadata(currentFC?.metadata)
 

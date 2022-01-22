@@ -4,8 +4,8 @@ import { Trans } from '@lingui/macro'
 import { Modal, Space } from 'antd'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import TicketModsList from 'components/shared/TicketModsList'
-import { ProjectContext } from 'contexts/projectContext'
-import { UserContextV1 } from 'contexts/userContextV1'
+import { ProjectContextV1 } from 'contexts/v1/projectContextV1'
+import { UserContextV1 } from 'contexts/v1/userContextV1'
 import useContractReaderV1 from 'hooks/v1/ContractReaderV1'
 import { useContext, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
@@ -30,7 +30,7 @@ export default function DistributeTokensModal({
     currentTicketMods,
     owner,
     terminal,
-  } = useContext(ProjectContext)
+  } = useContext(ProjectContextV1)
 
   const terminalJuiceboxV1ContractName = terminal?.name
 

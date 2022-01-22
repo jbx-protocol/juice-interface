@@ -11,7 +11,7 @@ import {
   ModalMode,
 } from 'components/shared/formItems/formHelpers'
 import { useForm } from 'antd/lib/form/Form'
-import { ProjectContext } from 'contexts/projectContext'
+import { ProjectContextV1 } from 'contexts/v1/projectContextV1'
 import { ThemeContext } from 'contexts/themeContext'
 import { BigNumber, constants, utils } from 'ethers'
 import useContractReaderV1 from 'hooks/v1/ContractReaderV1'
@@ -76,7 +76,7 @@ export default function ProjectPayoutMods({
   const [editingModType, setEditingModType] = useState<ModType>('address')
   const [settingHandle, setSettingHandle] = useState<string>()
 
-  const { owner } = useContext(ProjectContext)
+  const { owner } = useContext(ProjectContextV1)
 
   useContractReaderV1<BigNumber>({
     contract: JuiceboxV1ContractName.Projects,

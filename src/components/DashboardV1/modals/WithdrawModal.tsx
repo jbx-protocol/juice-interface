@@ -7,9 +7,9 @@ import FormattedAddress from 'components/shared/FormattedAddress'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import PayoutModsList from 'components/shared/PayoutModsList'
-import { ProjectContext } from 'contexts/projectContext'
+import { ProjectContextV1 } from 'contexts/v1/projectContextV1'
 import { ThemeContext } from 'contexts/themeContext'
-import { UserContextV1 } from 'contexts/userContextV1'
+import { UserContextV1 } from 'contexts/v1/userContextV1'
 import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
 import { CurrencyOption } from 'models/currency-option'
 import { useContext, useEffect, useState } from 'react'
@@ -38,7 +38,7 @@ export default function WithdrawModal({
     currentPayoutMods,
     owner,
     terminal,
-  } = useContext(ProjectContext)
+  } = useContext(ProjectContextV1)
   const {
     theme: { colors },
   } = useContext(ThemeContext)

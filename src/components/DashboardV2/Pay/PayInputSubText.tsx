@@ -8,7 +8,7 @@ import { t, Trans } from '@lingui/macro'
 import { CurrencyOption } from 'models/currency-option'
 import { useContext, useMemo } from 'react'
 
-import { ProjectContext } from 'contexts/projectContext'
+import { ProjectContextV1 } from 'contexts/v1/projectContextV1'
 import { Tooltip } from 'antd'
 import { InfoCircleOutlined } from '@ant-design/icons'
 import { ThemeContext } from 'contexts/themeContext'
@@ -31,7 +31,7 @@ export default function PayInputSubText({
   payInCurrrency: CurrencyOption
   weiPayAmt: BigNumber | undefined
 }) {
-  const { currentFC, tokenSymbol, tokenAddress } = useContext(ProjectContext)
+  const { currentFC, tokenSymbol, tokenAddress } = useContext(ProjectContextV1)
   const converter = useCurrencyConverter()
   const {
     theme: { colors },

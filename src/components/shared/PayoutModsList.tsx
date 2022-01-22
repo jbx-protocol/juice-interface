@@ -2,8 +2,8 @@ import { Button, Modal, Form, Input } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import Mod from 'components/shared/Mod'
 import { useForm } from 'antd/lib/form/Form'
-import { ProjectContext } from 'contexts/projectContext'
-import { UserContextV1 } from 'contexts/userContextV1'
+import { ProjectContextV1 } from 'contexts/v1/projectContextV1'
+import { UserContextV1 } from 'contexts/v1/userContextV1'
 import { BigNumber, constants } from 'ethers'
 import { OperatorPermission, useHasPermission } from 'hooks/v1/HasPermission'
 import { CurrencyOption } from 'models/currency-option'
@@ -40,7 +40,7 @@ export default function PayoutModsList({
   const [loading, setLoading] = useState<boolean>(false)
   const [editingMods, setEditingMods] = useState<PayoutMod[]>()
   const { transactor, contracts } = useContext(UserContextV1)
-  const { owner } = useContext(ProjectContext)
+  const { owner } = useContext(ProjectContextV1)
 
   const { editableMods, lockedMods } = useMemo(() => {
     const now = new Date().valueOf() / 1000

@@ -1,5 +1,5 @@
 import { NetworkContext } from 'contexts/networkContext'
-import { ProjectContext } from 'contexts/projectContext'
+import { ProjectContextV1 } from 'contexts/v1/projectContextV1'
 import { JuiceboxV1ContractName } from 'models/contracts/juiceboxV1'
 import { useContext } from 'react'
 
@@ -29,7 +29,7 @@ export function useHasPermission(
   permission: OperatorPermission | OperatorPermission[],
 ) {
   const { userAddress } = useContext(NetworkContext)
-  const { projectId, owner } = useContext(ProjectContext)
+  const { projectId, owner } = useContext(ProjectContextV1)
 
   const hasOperatorPermission = useContractReaderV1<boolean>({
     contract: JuiceboxV1ContractName.OperatorStore,

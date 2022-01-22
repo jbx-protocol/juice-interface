@@ -1,5 +1,5 @@
 import { CardSection } from 'components/shared/CardSection'
-import { ProjectContext } from 'contexts/projectContext'
+import { ProjectContextV1 } from 'contexts/v1/projectContextV1'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
 
@@ -13,7 +13,7 @@ export default function CurrentFundingCycle({
   showCurrentDetail?: boolean
 }) {
   const { projectId, currentFC, currentPayoutMods, currentTicketMods } =
-    useContext(ProjectContext)
+    useContext(ProjectContextV1)
 
   const {
     theme: { colors },

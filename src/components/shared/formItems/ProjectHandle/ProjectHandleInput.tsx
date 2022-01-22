@@ -2,7 +2,7 @@ import { Input } from 'antd'
 import { t } from '@lingui/macro'
 
 import { useContext, useState, useEffect, useCallback } from 'react'
-import { UserContextV1 } from 'contexts/userContextV1'
+import { UserContextV1 } from 'contexts/v1/userContextV1'
 import { normalizeHandle } from 'utils/formatHandle'
 import { BigNumber } from '@ethersproject/bignumber'
 import { isBigNumberish } from '@ethersproject/bignumber/lib/bignumber'

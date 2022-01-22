@@ -2,8 +2,8 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Modal, Form, Space } from 'antd'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
-import { ProjectContext } from 'contexts/projectContext'
-import { UserContextV1 } from 'contexts/userContextV1'
+import { ProjectContextV1 } from 'contexts/v1/projectContextV1'
+import { UserContextV1 } from 'contexts/v1/userContextV1'
 import { NetworkContext } from 'contexts/networkContext'
 import useContractReaderV1 from 'hooks/v1/ContractReaderV1'
 import { JuiceboxV1ContractName } from 'models/contracts/juiceboxV1'
@@ -28,7 +28,7 @@ export default function ConfirmUnstakeTokensModal({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const { tokenSymbol, tokenAddress, projectId } = useContext(ProjectContext)
+  const { tokenSymbol, tokenAddress, projectId } = useContext(ProjectContextV1)
 
   const iouBalance = useContractReaderV1<BigNumber>({
     contract: JuiceboxV1ContractName.TicketBooth,

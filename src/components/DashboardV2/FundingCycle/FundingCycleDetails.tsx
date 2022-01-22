@@ -3,7 +3,7 @@ import { Descriptions } from 'antd'
 import { t, Trans } from '@lingui/macro'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 
-import { ProjectContext } from 'contexts/projectContext'
+import { ProjectContextV1 } from 'contexts/v1/projectContextV1'
 import { ThemeContext } from 'contexts/themeContext'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
@@ -30,7 +30,7 @@ export default function FundingCycleDetails({
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const { tokenSymbol } = useContext(ProjectContext)
+  const { tokenSymbol } = useContext(ProjectContextV1)
 
   if (!fundingCycle) return null
 

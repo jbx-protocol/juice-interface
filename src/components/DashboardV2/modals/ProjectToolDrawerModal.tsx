@@ -7,8 +7,8 @@ import { FormItems } from 'components/shared/formItems'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { NetworkContext } from 'contexts/networkContext'
-import { ProjectContext } from 'contexts/projectContext'
-import { UserContextV1 } from 'contexts/userContextV1'
+import { ProjectContextV1 } from 'contexts/v1/projectContextV1'
+import { UserContextV1 } from 'contexts/v1/userContextV1'
 import useContractReaderV1 from 'hooks/v1/ContractReaderV1'
 import { JuiceboxV1ContractName } from 'models/contracts/juiceboxV1'
 import { useContext, useState } from 'react'
@@ -24,7 +24,8 @@ export default function ProjectToolDrawerModal({
 }) {
   const { transactor, contracts } = useContext(UserContextV1)
   const { userAddress } = useContext(NetworkContext)
-  const { projectId, tokenSymbol, owner, terminal } = useContext(ProjectContext)
+  const { projectId, tokenSymbol, owner, terminal } =
+    useContext(ProjectContextV1)
 
   const [loadingAddToBalance, setLoadingAddToBalance] = useState<boolean>()
   const [loadingTransferTokens, setLoadingTransferTokens] = useState<boolean>()

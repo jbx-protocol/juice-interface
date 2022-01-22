@@ -6,8 +6,8 @@ import { useForm } from 'antd/lib/form/Form'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import ImageUploader from 'components/shared/inputs/ImageUploader'
 import { NetworkContext } from 'contexts/networkContext'
-import { ProjectContext } from 'contexts/projectContext'
-import { UserContextV2 } from 'contexts/userContextV2'
+import { ProjectContextV1 } from 'contexts/v1/projectContextV1'
+import { UserContextV2 } from 'contexts/v2/userContextV2'
 import { constants } from 'ethers'
 import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
 import { useContext, useState } from 'react'
@@ -38,7 +38,7 @@ export default function ConfirmPayOwnerModal({
     projectId,
     metadata,
     terminal,
-  } = useContext(ProjectContext)
+  } = useContext(ProjectContextV1)
 
   const converter = useCurrencyConverter()
 

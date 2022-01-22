@@ -2,7 +2,7 @@ import CurrencySymbol from 'components/shared/CurrencySymbol'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import EtherscanLink from 'components/shared/EtherscanLink'
 
-import { ProjectContext } from 'contexts/projectContext'
+import { ProjectContextV1 } from 'contexts/v1/projectContextV1'
 import { ThemeContext } from 'contexts/themeContext'
 import { useInfiniteSubgraphQuery } from 'hooks/SubgraphQuery'
 import React, { useContext } from 'react'
@@ -15,7 +15,7 @@ import ActivityTabContent from './ActivityTabContent'
 import { contentLineHeight, smallHeaderStyle } from './styles'
 
 export function RedeemActivity({ pageSize }: { pageSize: number }) {
-  const { projectId, tokenSymbol } = useContext(ProjectContext)
+  const { projectId, tokenSymbol } = useContext(ProjectContextV1)
   const {
     theme: { colors },
   } = useContext(ThemeContext)

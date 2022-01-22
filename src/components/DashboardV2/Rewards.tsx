@@ -7,7 +7,7 @@ import ParticipantsModal from 'components/DashboardV1/modals/ParticipantsModal'
 import RedeemModal from 'components/DashboardV1/modals/RedeemModal'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import { NetworkContext } from 'contexts/networkContext'
-import { ProjectContext } from 'contexts/projectContext'
+import { ProjectContextV1 } from 'contexts/v1/projectContextV1'
 import { ThemeContext } from 'contexts/themeContext'
 import { constants } from 'ethers'
 import useContractReaderV1, {
@@ -45,7 +45,7 @@ export default function Rewards({
     isPreviewMode,
     currentFC,
     terminal,
-  } = useContext(ProjectContext)
+  } = useContext(ProjectContextV1)
 
   const {
     theme: { colors },

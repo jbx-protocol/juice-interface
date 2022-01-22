@@ -3,7 +3,7 @@ import { Button } from 'antd'
 import TooltipLabel from 'components/shared/TooltipLabel'
 
 import { NetworkContext } from 'contexts/networkContext'
-import { ProjectContext } from 'contexts/projectContext'
+import { ProjectContextV1 } from 'contexts/v1/projectContextV1'
 import { BigNumber } from 'ethers'
 import useContractReaderV1 from 'hooks/v1/ContractReaderV1'
 import { JuiceboxV1ContractName } from 'models/contracts/juiceboxV1'
@@ -33,7 +33,7 @@ export default function ReservedTokens({
   const { userAddress } = useContext(NetworkContext)
 
   const { projectId, tokenSymbol, isPreviewMode, terminal } =
-    useContext(ProjectContext)
+    useContext(ProjectContextV1)
 
   const metadata = decodeFundingCycleMetadata(fundingCycle?.metadata)
 

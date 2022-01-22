@@ -1,4 +1,4 @@
-import { ProjectContext } from 'contexts/projectContext'
+import { ProjectContextV1 } from 'contexts/v1/projectContextV1'
 import { BigNumber } from 'ethers'
 import { BallotState } from 'models/ballot-state'
 import { JuiceboxV1ContractName } from 'models/contracts/juiceboxV1'
@@ -18,7 +18,7 @@ export function useRedeemRate({
   tokenAmount: string | undefined
   fundingCycle: FundingCycle | undefined
 }) {
-  const { projectId, terminal } = useContext(ProjectContext)
+  const { projectId, terminal } = useContext(ProjectContextV1)
 
   const metadata = decodeFundingCycleMetadata(fundingCycle?.metadata)
 

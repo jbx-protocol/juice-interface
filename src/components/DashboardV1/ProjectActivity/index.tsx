@@ -1,7 +1,7 @@
 import { Space } from 'antd'
 import { t } from '@lingui/macro'
 
-import { ProjectContext } from 'contexts/projectContext'
+import { ProjectContextV1 } from 'contexts/v1/projectContextV1'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext, useLayoutEffect, useMemo, useState } from 'react'
 
@@ -18,7 +18,7 @@ export default function ProjectActivity() {
   const [initialized, setInitialized] = useState<boolean>()
   const [tabOption, setTabOption] = useState<TabOption>()
 
-  const { projectId } = useContext(ProjectContext)
+  const { projectId } = useContext(ProjectContextV1)
 
   const pageSize = 50
 

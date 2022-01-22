@@ -1,5 +1,5 @@
 import { CardSection } from 'components/shared/CardSection'
-import { ProjectContext } from 'contexts/projectContext'
+import { ProjectContextV1 } from 'contexts/v1/projectContextV1'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
 
@@ -13,7 +13,7 @@ export default function QueuedFundingCycle() {
   } = useContext(ThemeContext)
 
   const { projectId, queuedFC, queuedPayoutMods, queuedTicketMods } =
-    useContext(ProjectContext)
+    useContext(ProjectContextV1)
 
   if (!projectId) return null
 

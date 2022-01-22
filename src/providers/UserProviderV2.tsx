@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { UserContextV2 } from 'contexts/userContextV2'
+import { UserContextV2 } from 'contexts/v2/userContextV2'
 import { useContractLoaderV2 } from 'hooks/v2/ContractLoaderV2'
 import { useGasPriceQuery } from 'hooks/GasPrice'
 import { useTransactor } from 'hooks/Transactor'

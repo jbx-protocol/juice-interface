@@ -4,8 +4,8 @@ import { Form, Input, Modal, Switch } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
-import { ProjectContext } from 'contexts/projectContext'
-import { UserContextV1 } from 'contexts/userContextV1'
+import { ProjectContextV1 } from 'contexts/v1/projectContextV1'
+import { UserContextV1 } from 'contexts/v1/userContextV1'
 import { constants, utils } from 'ethers'
 import { useContext, useMemo, useState } from 'react'
 import { parseWad } from 'utils/formatNumber'
@@ -21,7 +21,7 @@ export default function PrintPreminedModal({
 }) {
   const { contracts, transactor } = useContext(UserContextV1)
   const { tokenSymbol, tokenAddress, projectId, terminal } =
-    useContext(ProjectContext)
+    useContext(ProjectContextV1)
   const [form] = useForm<{
     beneficary: string
     preferUnstaked: boolean

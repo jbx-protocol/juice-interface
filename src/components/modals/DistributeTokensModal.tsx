@@ -100,6 +100,7 @@ export default function DistributeTokensModal({
               mods={currentTicketMods}
               fundingCycle={currentFC}
               projectId={projectId}
+              reservedRate={metadata?.reservedRate ?? 0}
             />
           </div>
         ) : (

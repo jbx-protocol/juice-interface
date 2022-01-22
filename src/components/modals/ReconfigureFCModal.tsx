@@ -505,6 +505,7 @@ export default function ReconfigureFCModal({
               mods={editingTicketMods}
               projectId={undefined}
               fundingCycle={undefined}
+              reservedRate={fcMetadata?.reservedRate ?? 0}
             />
           </div>
         </Space>

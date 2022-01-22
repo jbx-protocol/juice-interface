@@ -65,6 +65,7 @@ export default function TicketingForm({
             label: t`Allocate reserved tokens (optional)`,
             extra: t`Automatically distribute a portion of your project's reserved tokens to other Juicebox projects or ETH wallets.`,
           }}
+          reservedRate={form.getFieldValue('reserved')}
         />
         <Form.Item>
           <Button htmlType="submit" type="primary" onClick={() => onSave(mods)}>

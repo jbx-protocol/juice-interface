@@ -1,5 +1,5 @@
 import { CloseCircleOutlined, LockOutlined } from '@ant-design/icons'
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 
 import { Button, Col, DatePicker, Form, Modal, Row, Space } from 'antd'
 import {
@@ -28,11 +28,13 @@ export default function ProjectTicketMods({
   name,
   lockedMods,
   mods,
+  reservedRate,
   onModsChanged,
   formItemProps,
 }: {
   lockedMods?: TicketMod[]
   mods: TicketMod[] | undefined
+  reservedRate: number
   onModsChanged: (mods: TicketMod[]) => void
 } & FormItemExt) {
   const [form] = useForm<{
@@ -238,7 +240,7 @@ export default function ProjectTicketMods({
         {
           validator: () => {
             if (total > 100)
-              return Promise.reject('Percentages must add up to 100% or less')
+              return Promise.reject(t`Percentages must add up to 100% or less`)
 
             return Promise.resolve()
           },
@@ -279,7 +281,9 @@ export default function ProjectTicketMods({
             </span>
           </div>
           <div>
-            <Trans>{100 - total}%to</Trans> <FormattedAddress address={owner} />
+            <Trans>
+              {100 - total}% to <FormattedAddress address={owner} />
+            </Trans>
           </div>
         </div>
         <Button
@@ -297,12 +301,12 @@ export default function ProjectTicketMods({
 
       <Modal
         title={
-          modalMode === 'Add' ? 'Add token receiver' : 'Edit token receiver'
+          modalMode === 'Add' ? t`Add token receiver` : t`Edit token receiver`
         } // Full sentences for translation purposes
         visible={editingModIndex !== undefined}
         onOk={setReceiver}
         okText={
-          modalMode === 'Add' ? 'Add token receiver' : 'Save token receiver'
+          modalMode === 'Add' ? t`Add token receiver` : t`Save token receiver`
         }
         onCancel={() => {
           form.resetFields()
@@ -322,8 +326,8 @@ export default function ProjectTicketMods({
             name="beneficiary"
             defaultValue={form.getFieldValue('beneficiary')}
             formItemProps={{
-              label: 'Beneficiary',
-              extra: 'The address that should receive the tokens.',
+              label: t`Beneficiary`,
+              extra: t`The address that should receive the tokens.`,
               rules: [
                 {
                   validator: validateReservedTokenReceiver,
@@ -335,7 +339,23 @@ export default function ProjectTicketMods({
             }
           />
 
-          <Form.Item label="Percent" rules={[{ required: true }]}>
+          <Form.Item
+            label={t`Percent`}
+            rules={[{ required: true }]}
+            extra={t`The percent this individual receives of the overall ${reservedRate}% of reserved tokens
+                    ${
+                      form.getFieldValue('percent')
+                        ? `(${(
+                            ((reservedRate ?? 0) *
+                              1.0 *
+                              form.getFieldValue('percent')) /
+                            100
+                          ).toFixed(2)}%
+                    of all newly minted tokens).`
+                        : null
+                    }`}
+            // Displays extra part about individuals percentage of all newly minted tokens only if percent != 0
+          >
             <NumberSlider
               onChange={(percent: number | undefined) =>
                 form.setFieldsValue({ percent })
@@ -352,8 +372,8 @@ export default function ProjectTicketMods({
 
           <Form.Item
             name="lockedUntil"
-            label="Lock until"
-            extra="If locked, this can't be edited or removed until the lock expires or the funding cycle is reconfigured."
+            label={t`Lock until`}
+            extra={t`If locked, this can't be edited or removed until the lock expires or the funding cycle is reconfigured.`}
           >
             <DatePicker />
           </Form.Item>

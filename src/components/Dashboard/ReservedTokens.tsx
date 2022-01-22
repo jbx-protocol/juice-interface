@@ -111,6 +111,7 @@ export default function ReservedTokens({
           mods={ticketMods}
           fundingCycle={fundingCycle}
           projectId={projectId}
+          reservedRate={metadata?.reservedRate / 2} // metadata.reservedRate is double?
         />
       ) : null}
 

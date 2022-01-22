@@ -6,7 +6,7 @@ import { useForm } from 'antd/lib/form/Form'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import ImageUploader from 'components/shared/inputs/ImageUploader'
 import { NetworkContext } from 'contexts/networkContext'
-import { ProjectContextV1 } from 'contexts/v1/projectContextV1'
+import { ProjectContextV2 } from 'contexts/v2/projectContextV2'
 import { UserContextV2 } from 'contexts/v2/userContextV2'
 import { constants } from 'ethers'
 import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
@@ -38,7 +38,7 @@ export default function ConfirmPayOwnerModal({
     projectId,
     metadata,
     terminal,
-  } = useContext(ProjectContextV1)
+  } = useContext(ProjectContextV2)
 
   const converter = useCurrencyConverter()
 
@@ -51,14 +51,17 @@ export default function ConfirmPayOwnerModal({
 
     setLoading(true)
 
+    // https://docs.juicebox.money/protocol/specifications/contracts/or-payment-terminals/jbethpaymentterminal/write/pay
     transactor(
       contracts.JBETHPaymentTerminal,
       'pay',
       [
-        projectId.toHexString(),
-        userAddress,
-        form.getFieldValue('note') || '',
-        preferUnstaked,
+        projectId.toHexString(), // _projectId
+        userAddress, // _beneficiary
+        1, // _minReturnedTokens
+        false, // _preferClaimedTokens
+        form.getFieldValue('note') || '', // _memo
+        '', // _delegateMetadata
       ],
       {
         value: weiAmount?.toHexString(),

@@ -1,7 +1,7 @@
 import { HashRouter, Route, Switch } from 'react-router-dom'
 import { Redirect, useParams } from 'react-router'
 // import DashboardV1 from 'components/DashboardV1'
-import DashboardV2 from 'components/DashboardV1' // TODO update to V2
+import DashboardV2 from 'components/DashboardV2'
 import Landing from 'components/Landing'
 import Create from 'components/Create'
 import Projects from 'components/Projects'
@@ -30,7 +30,7 @@ export default function Router() {
           <Projects />
         </Route>
         {/* <Route path="/p/:handle(.+\.eth)"> */}
-        <Route path="/p/:handle">
+        <Route path="/p/:projectId">
           <UserProviderV2>
             <UserProviderV1>
               <DashboardV2 />

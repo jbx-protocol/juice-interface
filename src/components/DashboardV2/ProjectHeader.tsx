@@ -7,12 +7,12 @@ import { t } from '@lingui/macro'
 
 import { Button, Tooltip } from 'antd'
 import Discord from 'components/icons/Discord'
-import EditProjectModal from 'components/DashboardV1/modals/EditProjectModal'
-import MigrateV1Pt1Modal from 'components/DashboardV1/modals/MigrateV1Pt1Modal'
-import ProjectToolDrawerModal from 'components/DashboardV1/modals/ProjectToolDrawerModal'
+import EditProjectModal from 'components/DashboardV2/modals/EditProjectModal'
+import MigrateV1Pt1Modal from 'components/DashboardV2/modals/MigrateV1Pt1Modal'
+import ProjectToolDrawerModal from 'components/DashboardV2/modals/ProjectToolDrawerModal'
 import ProjectLogo from 'components/shared/ProjectLogo'
 import { NetworkContext } from 'contexts/networkContext'
-import { ProjectContextV1 } from 'contexts/v1/projectContextV1'
+import { ProjectContextV2 } from 'contexts/v2/projectContextV2'
 import { ThemeContext } from 'contexts/themeContext'
 import { OperatorPermission, useHasPermission } from 'hooks/v1/HasPermission'
 import { useContext, useState } from 'react'
@@ -35,7 +35,7 @@ export default function ProjectHeader() {
     isArchived,
     terminal,
     owner,
-  } = useContext(ProjectContextV1)
+  } = useContext(ProjectContextV2)
 
   const {
     theme: { colors },

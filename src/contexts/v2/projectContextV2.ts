@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { JuiceboxV2ContractName } from 'models/contracts/juiceboxV2'
 import { FundingCycle } from 'models/funding-cycle'
-import { PayoutMod, TicketMod } from 'models/mods'
+// import { PayoutMod, TicketMod } from 'models/mods'
 import { ProjectMetadataV3 } from 'models/project-metadata'
 import { ProjectType } from 'models/project-type'
 import { TerminalVersion } from 'models/terminal-version'
@@ -23,10 +23,10 @@ export type ProjectContextV2Type = {
   earned: BigNumber | undefined
   currentFC: FundingCycle | undefined
   queuedFC: FundingCycle | undefined
-  currentPayoutMods: PayoutMod[] | undefined
-  currentTicketMods: TicketMod[] | undefined
-  queuedPayoutMods: PayoutMod[] | undefined
-  queuedTicketMods: TicketMod[] | undefined
+  // currentPayoutMods: PayoutMod[] | undefined
+  // currentTicketMods: TicketMod[] | undefined
+  // queuedPayoutMods: PayoutMod[] | undefined
+  // queuedTicketMods: TicketMod[] | undefined
   tokenSymbol: string | undefined
   tokenAddress: string | undefined
   balance: BigNumber | undefined
@@ -46,10 +46,10 @@ export const ProjectContextV2 = createContext<ProjectContextV2Type>({
   earned: undefined,
   currentFC: undefined,
   queuedFC: undefined,
-  currentPayoutMods: undefined,
-  currentTicketMods: undefined,
-  queuedPayoutMods: undefined,
-  queuedTicketMods: undefined,
+  // currentPayoutMods: undefined,
+  // currentTicketMods: undefined,
+  // queuedPayoutMods: undefined,
+  // queuedTicketMods: undefined,
   tokenAddress: undefined,
   tokenSymbol: undefined,
   balance: undefined,

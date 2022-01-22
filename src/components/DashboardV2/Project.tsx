@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Col, Row } from 'antd'
-import { ProjectContextV1 } from 'contexts/v1/projectContextV1'
-import useContractReaderV1 from 'hooks/v1/ContractReaderV1'
+import { ProjectContextV2 } from 'contexts/v2/projectContextV2'
+import useContractReaderV2 from 'hooks/v2/ContractReaderV2'
 import { CSSProperties, useContext, useMemo } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
@@ -23,9 +23,9 @@ export default function Project({
   showCurrentDetail?: boolean
   column?: boolean
 }) {
-  const { projectId, currentFC, terminal } = useContext(ProjectContextV1)
+  const { projectId, currentFC, terminal } = useContext(ProjectContextV2)
 
-  const totalOverflow = useContractReaderV1<BigNumber>({
+  const totalOverflow = useContractReaderV2<BigNumber>({
     contract: terminal?.name,
     functionName: 'currentOverflowOf',
     args: projectId ? [projectId.toHexString()] : null,

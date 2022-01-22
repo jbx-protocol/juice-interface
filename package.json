@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@jbx-protocol/contracts-v1": "^1.1.5",
+    "@jbx-protocol/contracts-v2": "^0.0.2",
     "@lingui/detect-locale": "^3.13.0",
     "@lingui/react": "^3.13.0",
     "@reduxjs/toolkit": "^1.6.2",

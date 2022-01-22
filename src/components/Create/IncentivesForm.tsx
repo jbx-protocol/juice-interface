@@ -78,7 +78,7 @@ export default function IncentivesForm({
         )}
         <FormItems.ProjectBondingCurveRate
           name="bondingCurveRate"
-          value={bondingCurveRate?.toString() ?? '0'}
+          value={bondingCurveRate?.toString() ?? '100'}
           onChange={(val?: number) => setBondingCurveRate(val?.toString())}
           disabled={!!disableBondingCurve}
         />

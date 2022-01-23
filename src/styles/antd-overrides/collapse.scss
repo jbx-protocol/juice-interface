@@ -167,12 +167,16 @@
   position: absolute;
   top: 9px;
   margin-left: -8px;
+  width: 100%;
   .ant-collapse-header {
     font-weight: 600 !important;
     color: var(--text-primary) !important;
   }
   .ant-collapse-content {
-    width: 120px;
+    float: left;
+  }
+  .nav-dropdown-item {
+    padding-right: 10px;
   }
   .ant-select-arrow {
     display: block;

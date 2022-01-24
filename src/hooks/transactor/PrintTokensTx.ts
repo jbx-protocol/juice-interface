@@ -1,6 +1,7 @@
+import { Contract } from '@ethersproject/contracts'
 import { ProjectContext } from 'contexts/projectContext'
 import { UserContext } from 'contexts/userContext'
-import { BigNumber, Contract } from 'ethers'
+import { BigNumber } from 'ethers'
 import { CurrencyOption } from 'models/currency-option'
 import { useContext } from 'react'
 import { parseWad } from 'utils/formatNumber'

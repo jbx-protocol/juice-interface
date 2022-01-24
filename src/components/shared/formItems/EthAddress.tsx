@@ -26,18 +26,25 @@ export default function EthAddress({
   const [displayValue, setDisplayValue] = useState<string>()
 
   const onInputChange = useCallback(
-    (value: string) => {
+    async (value: string) => {
       setDisplayValue(value)
 
-      const read = async () => {
-        const address = await readProvider.resolveName(value)
-        if (typeof address === 'string' && utils.isAddress(address)) {
-          setAddressForENS(address)
-          onAddressChange(address)
-        }
-      }
+      try {
+        const resolved = await readProvider.resolveName(value)
 
-      read()
+        if (typeof resolved === 'string' && utils.isAddress(resolved)) {
+          setAddressForENS(resolved)
+          onAddressChange(resolved)
+        } else {
+          setAddressForENS('')
+          onAddressChange('')
+        }
+      } catch (e) {
+        console.log('Error getting address for ENS name:', value)
+
+        setAddressForENS('')
+        onAddressChange('')
+      }
     },
     [onAddressChange],
   )

@@ -34,15 +34,15 @@ export default function ReservedTokenReceiverModal({
   useEffect(() => {
     // Clarifies that the slider percentage is of the overall reserved allocation
     // and shows the percentage of all newly minted tokens only if percent != 0
+    const realTokenAllocation = (reservedRate ?? 0) * (percent ?? 0) * 1.0
+    const realTokenAllocationPercent = (realTokenAllocation / 100).toFixed(2)
     let extra =
       t`The percent this individual receives of the overall ${reservedRate}% 
       reserved token allocation` +
       `${
-        percent
+        realTokenAllocation
           ? ' ' +
-            t`(${(((reservedRate ?? 0) * 1.0 * (percent ?? 0)) / 100).toFixed(
-              2,
-            )}%
+            t`(${realTokenAllocationPercent}%
           of all newly minted tokens).`
           : '.'
       }`
@@ -69,7 +69,7 @@ export default function ReservedTokenReceiverModal({
           name="beneficiary"
           defaultValue={form.getFieldValue('beneficiary')}
           formItemProps={{
-            label: t`Beneficiary`,
+            label: t`Beneficiary address`,
             extra: t`The address that should receive the tokens.`,
             rules: [
               {

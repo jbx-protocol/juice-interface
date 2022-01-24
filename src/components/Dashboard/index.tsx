@@ -6,6 +6,7 @@ import useBalanceOfProject from 'hooks/contractReader/BalanceOfProject'
 import useCurrentFundingCycleOfProject from 'hooks/contractReader/CurrentFundingCycleOfProject'
 import useCurrentPayoutModsOfProject from 'hooks/contractReader/CurrentPayoutModsOfProject'
 import useCurrentTicketModsOfProject from 'hooks/contractReader/CurrentTicketModsOfProject'
+import useOverflowOfProject from 'hooks/contractReader/OverflowOfProject'
 import useOwnerOfProject from 'hooks/contractReader/OwnerOfProject'
 import useProjectIdForHandle from 'hooks/contractReader/ProjectIdForHandle'
 import useQueuedFundingCycleOfProject from 'hooks/contractReader/QueuedFundingCycleOfProject'
@@ -43,7 +44,6 @@ export default function Dashboard() {
   const terminalVersion = getTerminalVersion(terminalAddress)
   const currentFC = useCurrentFundingCycleOfProject(projectId, terminalName)
   const queuedFC = useQueuedFundingCycleOfProject(projectId)
-  const uri = useUriOfProject(projectId)
   const currentPayoutMods = useCurrentPayoutModsOfProject(
     projectId,
     currentFC?.configured,
@@ -74,15 +74,8 @@ export default function Dashboard() {
       ),
     [balance, converter, currentFC],
   )
-
-  const { data: projects } = useProjectsQuery({
-    projectId,
-    keys: ['createdAt', 'totalPaid'],
-  })
-
-  const createdAt = projects?.[0]?.createdAt
-  const earned = projects?.[0]?.totalPaid
-
+  const overflow = useOverflowOfProject(projectId, terminalName)
+  const uri = useUriOfProject(projectId)
   const { data: metadata } = useProjectMetadata(uri)
 
   useEffect(() => {
@@ -92,6 +85,14 @@ export default function Dashboard() {
       document.title = 'Juicebox'
     }
   }, [metadata])
+
+  const { data: projects } = useProjectsQuery({
+    projectId,
+    keys: ['createdAt', 'totalPaid'],
+  })
+
+  const createdAt = projects?.[0]?.createdAt
+  const earned = projects?.[0]?.totalPaid
 
   const project = useMemo<ProjectContextType>(() => {
     const projectType = projectId
@@ -120,6 +121,7 @@ export default function Dashboard() {
       tokenSymbol,
       balance,
       balanceInCurrency,
+      overflow,
       isPreviewMode,
       isArchived,
       terminal: {
@@ -131,6 +133,7 @@ export default function Dashboard() {
   }, [
     balance,
     balanceInCurrency,
+    overflow,
     createdAt,
     currentFC,
     currentPayoutMods,

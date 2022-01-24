@@ -9,7 +9,6 @@ import TooltipLabel from 'components/shared/TooltipLabel'
 
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import useOverflowOfProject from 'hooks/contractReader/OverflowOfProject'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useEthBalanceQuery } from 'hooks/EthBalance'
 import { CurrencyOption } from 'models/currency-option'
@@ -18,12 +17,11 @@ import { CSSProperties, useContext, useMemo, useState } from 'react'
 import { formatWad, fracDiv, fromWad, parseWad } from 'utils/formatNumber'
 import { hasFundingTarget } from 'utils/fundingCycle'
 
+import { PROJECT_IDS } from 'constants/projectIds'
 import { readNetwork } from 'constants/networks'
 import { CURRENCY_ETH, CURRENCY_USD } from 'constants/currency'
 
 import BalancesModal from '../modals/BalancesModal'
-import { CURRENCY_ETH, CURRENCY_USD } from 'constants/currency'
-import { PROJECT_IDS } from 'constants/projectIds'
 
 export default function Paid() {
   const [balancesModalVisible, setBalancesModalVisible] = useState<boolean>()
@@ -38,13 +36,12 @@ export default function Paid() {
     balance,
     owner,
     earned,
-    terminal,
+    overflow,
   } = useContext(ProjectContext)
 
-  const totalOverflow = useOverflowOfProject(projectId, terminal?.name)
   const converter = useCurrencyConverter()
   const overflowInCurrency = converter.wadToCurrency(
-    totalOverflow ?? 0,
+    overflow ?? 0,
     currentFC?.currency.toNumber() as CurrencyOption,
     0,
   )
@@ -236,7 +233,7 @@ export default function Paid() {
 
       {hasFundingTarget(currentFC) &&
         currentFC.target.gt(0) &&
-        (totalOverflow?.gt(0) ? (
+        (overflow?.gt(0) ? (
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <Progress
               style={{

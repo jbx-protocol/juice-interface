@@ -1,10 +1,12 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { ThemeContext } from 'contexts/themeContext'
 import useSymbolOfERC20 from 'hooks/contractReader/SymbolOfERC20'
+import useTerminalOfProject from 'hooks/contractReader/TerminalOfProject'
 import useTokenAddressOfProject from 'hooks/contractReader/TokenAddressOfProject'
-import useTotalBalanceOfUser from 'hooks/contractReader/TotalBalanceOfUser'
+import useTotalBalanceOf from 'hooks/contractReader/TotalBalanceOf'
 import { CSSProperties, useContext } from 'react'
 import { formatWad } from 'utils/formatNumber'
+import { getTerminalName } from 'utils/terminal-versions'
 
 import ProjectHandle from './ProjectHandle'
 
@@ -24,12 +26,13 @@ export default function ProjectTokenBalance({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-
   const tokenAddress = useTokenAddressOfProject(projectId)
-
   const symbol = useSymbolOfERC20(tokenAddress)
-
-  const balance = useTotalBalanceOfUser(wallet, projectId)
+  const terminalAddress = useTerminalOfProject(projectId)
+  const terminalName = getTerminalName({
+    address: terminalAddress,
+  })
+  const balance = useTotalBalanceOf(wallet, projectId, terminalName)
 
   return (
     <div style={{ display: 'flex', justifyContent: 'space-between', ...style }}>

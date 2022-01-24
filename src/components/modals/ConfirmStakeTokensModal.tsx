@@ -1,10 +1,10 @@
-import { Modal } from 'antd'
 import { t, Trans } from '@lingui/macro'
+import { Modal } from 'antd'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { NetworkContext } from 'contexts/networkContext'
 import { ProjectContext } from 'contexts/projectContext'
-import useTotalBalanceOfUser from 'hooks/contractReader/TotalBalanceOfUser'
+import useTotalBalanceOf from 'hooks/contractReader/TotalBalanceOf'
 import { useStakeTokensTx } from 'hooks/transactor/StakeTokensTx'
 import { useContext, useLayoutEffect, useState } from 'react'
 import { fromWad, parseWad } from 'utils/formatNumber'
@@ -22,7 +22,7 @@ export default function ConfirmStakeTokensModal({
   const { tokenSymbol, projectId, terminal } = useContext(ProjectContext)
   const stakeTokensTx = useStakeTokensTx()
 
-  const ticketsBalance = useTotalBalanceOfUser(
+  const ticketsBalance = useTotalBalanceOf(
     userAddress,
     projectId,
     terminal?.name,

@@ -28,16 +28,11 @@ export default function ReservedTokens({
 }) {
   const [modalIsVisible, setModalIsVisible] = useState<boolean>()
 
-  const { projectId, tokenSymbol, isPreviewMode, terminal } =
-    useContext(ProjectContext)
+  const { projectId, tokenSymbol, isPreviewMode } = useContext(ProjectContext)
 
   const metadata = decodeFundingCycleMetadata(fundingCycle?.metadata)
 
-  const reservedTokens = useReservedTokensOfProject(
-    projectId,
-    terminal?.name,
-    metadata?.reservedRate,
-  )
+  const reservedTokens = useReservedTokensOfProject(metadata?.reservedRate)
 
   const isConstitutionDAO =
     readNetwork.name === NetworkName.mainnet &&

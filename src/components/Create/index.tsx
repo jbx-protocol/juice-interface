@@ -449,6 +449,7 @@ export default function Create() {
       queuedTicketMods: undefined,
       balance: BigNumber.from(0),
       balanceInCurrency: BigNumber.from(0),
+      overflow: BigNumber.from(0),
       tokenSymbol: undefined,
       tokenAddress: constants.AddressZero,
       isPreviewMode: true,

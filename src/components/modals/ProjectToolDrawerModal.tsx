@@ -1,11 +1,9 @@
 import { t, Trans } from '@lingui/macro'
-
 import { Button, Divider, Drawer, Form, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { FormItems } from 'components/shared/formItems'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
-import { NetworkContext } from 'contexts/networkContext'
 import { ProjectContext } from 'contexts/projectContext'
 import useUnclaimedBalanceOfUser from 'hooks/contractReader/UnclaimedBalanceOfUser'
 import { useAddToBalanceTx } from 'hooks/transactor/AddToBalanceTx'
@@ -21,8 +19,7 @@ export default function ProjectToolDrawerModal({
   visible?: boolean
   onClose?: VoidFunction
 }) {
-  const { userAddress } = useContext(NetworkContext)
-  const { projectId, tokenSymbol, owner, terminal } = useContext(ProjectContext)
+  const { tokenSymbol, owner } = useContext(ProjectContext)
   const safeTransferFromTx = useSafeTransferFromTx()
   const transferTokensTx = useTransferTokensTx()
   const addToBalanceTx = useAddToBalanceTx()
@@ -35,11 +32,7 @@ export default function ProjectToolDrawerModal({
   const [addToBalanceForm] = useForm<{ amount: string }>()
   const [transferOwnershipForm] = useForm<{ to: string }>()
 
-  const stakedTokenBalance = useUnclaimedBalanceOfUser(
-    userAddress,
-    projectId,
-    terminal?.name,
-  )
+  const stakedTokenBalance = useUnclaimedBalanceOfUser()
 
   function transferOwnership() {
     setLoadingTransferOwnership(true)

@@ -1,6 +1,5 @@
 import { Col, Row } from 'antd'
 import { ProjectContext } from 'contexts/projectContext'
-import useOverflowOfProject from 'hooks/contractReader/OverflowOfProject'
 import { CSSProperties, useContext } from 'react'
 import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
 
@@ -21,9 +20,7 @@ export default function Project({
   showCurrentDetail?: boolean
   column?: boolean
 }) {
-  const { projectId, currentFC, terminal } = useContext(ProjectContext)
-
-  const totalOverflow = useOverflowOfProject(projectId, terminal?.name)
+  const { projectId, currentFC, overflow } = useContext(ProjectContext)
 
   const fcMetadata = decodeFundingCycleMetadata(currentFC?.metadata)
 
@@ -54,7 +51,7 @@ export default function Project({
           )}
 
           <div style={{ marginBottom: gutter }}>
-            <Rewards totalOverflow={totalOverflow} />
+            <Rewards totalOverflow={overflow} />
           </div>
 
           <FundingCycles showCurrentDetail={showCurrentDetail} />

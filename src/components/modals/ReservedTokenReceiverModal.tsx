@@ -80,7 +80,7 @@ export default function ReservedTokenReceiverModal({
           onAddressChange={beneficiary => form.setFieldsValue({ beneficiary })}
         />
 
-        <Form.Item label={t`Percent`} rules={[{ required: true }]}>
+        <Form.Item label={t`Percent allocation`} rules={[{ required: true }]}>
           <NumberSlider
             onChange={(percent: number | undefined) => {
               setPercent(percent ?? form.getFieldValue('percent'))

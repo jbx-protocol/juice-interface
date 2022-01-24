@@ -19,23 +19,13 @@ export default function DistributeTokensModal({
   onConfirmed?: VoidFunction
 }) {
   const [loading, setLoading] = useState<boolean>()
-  const {
-    tokenSymbol,
-    currentFC,
-    projectId,
-    currentTicketMods,
-    owner,
-    terminal,
-  } = useContext(ProjectContext)
+  const { tokenSymbol, currentFC, projectId, currentTicketMods, owner } =
+    useContext(ProjectContext)
   const distributeTokensTx = useDistributeTokensTx()
 
   const metadata = decodeFundingCycleMetadata(currentFC?.metadata)
 
-  const reservedTokens = useReservedTokensOfProject(
-    projectId,
-    terminal?.name,
-    metadata?.reservedRate,
-  )
+  const reservedTokens = useReservedTokensOfProject(metadata?.reservedRate)
 
   function distribute() {
     setLoading(true)

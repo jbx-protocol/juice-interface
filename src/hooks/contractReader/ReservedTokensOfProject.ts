@@ -1,21 +1,21 @@
+import { ProjectContext } from 'contexts/projectContext'
 import { BigNumber, BigNumberish } from 'ethers'
 import { ContractName } from 'models/contract-name'
-import { TerminalName } from 'models/terminal-name'
-import { useMemo } from 'react'
+import { useContext, useMemo } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 
 import useContractReader from './ContractReader'
 
-/** Returns balance of reserved tokens for project with `projectId`. */
+/** Returns supply of reserved tokens for project in current context, using provided `reservedRate` argument. */
 export default function useReservedTokensOfProject(
-  projectId: BigNumberish | undefined,
-  terminalName: TerminalName | undefined,
   reservedRate: BigNumberish | undefined,
 ) {
-  const _projectId = BigNumber.from(projectId).toHexString()
+  const { projectId, terminal } = useContext(ProjectContext)
+
+  const _projectId = projectId?.toHexString()
 
   return useContractReader<BigNumber>({
-    contract: terminalName,
+    contract: terminal?.name,
     functionName: 'reservedTicketBalanceOf',
     args:
       projectId && reservedRate
@@ -25,12 +25,12 @@ export default function useReservedTokensOfProject(
     updateOn: useMemo(
       () => [
         {
-          contract: terminalName,
+          contract: terminal?.name,
           eventName: 'Pay',
           topics: _projectId ? [[], _projectId] : undefined,
         },
         {
-          contract: terminalName,
+          contract: terminal?.name,
           eventName: 'PrintTickets',
           topics: _projectId ? [_projectId] : undefined,
         },
@@ -40,12 +40,12 @@ export default function useReservedTokensOfProject(
           topics: _projectId ? [_projectId] : undefined,
         },
         {
-          contract: terminalName,
+          contract: terminal?.name,
           eventName: 'PrintReserveTickets',
           topics: _projectId ? [[], _projectId] : undefined,
         },
       ],
-      [_projectId, terminalName],
+      [_projectId, terminal?.name],
     ),
   })
 }

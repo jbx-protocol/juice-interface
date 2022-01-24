@@ -1,8 +1,8 @@
+import { t, Trans } from '@lingui/macro'
 import { Form, Modal, Space } from 'antd'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
-import { NetworkContext } from 'contexts/networkContext'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { constants } from 'ethers'
@@ -10,8 +10,6 @@ import useUnclaimedBalanceOfUser from 'hooks/contractReader/UnclaimedBalanceOfUs
 import { useUnstakeTokensTx } from 'hooks/transactor/UnstakeTokensTx'
 import { useContext, useLayoutEffect, useState } from 'react'
 import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
-
-import { t, Trans } from '@lingui/macro'
 
 export default function ConfirmUnstakeTokensModal({
   visible,
@@ -22,23 +20,17 @@ export default function ConfirmUnstakeTokensModal({
 }) {
   const [loading, setLoading] = useState<boolean>()
   const [unstakeAmount, setUnstakeAmount] = useState<string>()
-  const { userAddress } = useContext(NetworkContext)
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const { tokenSymbol, tokenAddress, projectId, terminal } =
-    useContext(ProjectContext)
+  const { tokenSymbol, tokenAddress } = useContext(ProjectContext)
   const unstakeTokensTx = useUnstakeTokensTx()
 
-  const iouBalance = useUnclaimedBalanceOfUser(
-    userAddress,
-    projectId,
-    terminal?.name,
-  )
+  const unclaimedBalance = useUnclaimedBalanceOfUser()
 
   useLayoutEffect(() => {
-    setUnstakeAmount(fromWad(iouBalance))
-  }, [iouBalance])
+    setUnstakeAmount(fromWad(unclaimedBalance))
+  }, [unclaimedBalance])
 
   function unstake() {
     if (
@@ -112,7 +104,7 @@ export default function ConfirmUnstakeTokensModal({
           <div>
             <Trans>
               <label>Your unclaimed {tokenSymbol} tokens:</label>{' '}
-              {formatWad(iouBalance, { precision: 8 })}
+              {formatWad(unclaimedBalance, { precision: 8 })}
             </Trans>
           </div>
           {ticketsIssued && (
@@ -129,14 +121,14 @@ export default function ConfirmUnstakeTokensModal({
           <Form.Item label="Amount of ERC20 tokens to claim">
             <FormattedNumberInput
               min={0}
-              max={parseFloat(fromWad(iouBalance))}
+              max={parseFloat(fromWad(unclaimedBalance))}
               disabled={!ticketsIssued}
               placeholder="0"
               value={unstakeAmount}
               accessory={
                 <InputAccessoryButton
                   content={t`MAX`}
-                  onClick={() => setUnstakeAmount(fromWad(iouBalance))}
+                  onClick={() => setUnstakeAmount(fromWad(unclaimedBalance))}
                 />
               }
               onChange={val => setUnstakeAmount(val)}

@@ -7,9 +7,9 @@ import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { NetworkContext } from 'contexts/networkContext'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { BigNumber } from 'ethers'
 import useClaimableOverflowOf from 'hooks/contractReader/ClaimableOverflowOf'
 import { useRedeemRate } from 'hooks/contractReader/RedeemRate'
+import useTotalBalanceOf from 'hooks/contractReader/TotalBalanceOf'
 import { useRedeemTokensTx } from 'hooks/transactor/RedeemTokensTx'
 import { CSSProperties, useContext, useState } from 'react'
 import { formattedNum, formatWad, fromWad, parseWad } from 'utils/formatNumber'
@@ -22,13 +22,11 @@ export default function RedeemModal({
   redeemDisabled,
   onOk,
   onCancel,
-  totalBalance,
 }: {
   visible?: boolean
   redeemDisabled?: boolean
   onOk: VoidFunction | undefined
   onCancel: VoidFunction | undefined
-  totalBalance: BigNumber | undefined
 }) {
   const [redeemAmount, setRedeemAmount] = useState<string>()
   const [loading, setLoading] = useState<boolean>()
@@ -43,12 +41,9 @@ export default function RedeemModal({
 
   const fcMetadata = decodeFundingCycleMetadata(currentFC?.metadata)
 
-  const maxClaimable = useClaimableOverflowOf(
-    userAddress,
-    totalBalance,
-    projectId,
-    terminal?.name,
-  )
+  const totalBalance = useTotalBalanceOf(userAddress, projectId, terminal?.name)
+
+  const maxClaimable = useClaimableOverflowOf()
 
   const rewardAmount = useRedeemRate({
     tokenAmount: redeemAmount,

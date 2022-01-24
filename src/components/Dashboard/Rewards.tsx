@@ -10,15 +10,15 @@ import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { constants } from 'ethers'
 import useCanPrintPreminedTokens from 'hooks/contractReader/CanPrintPreminedTokens'
-import useClaimedBalanceOfUser from 'hooks/contractReader/ClaimedBalanceOfUser'
-import useReservedTokensOfProject from 'hooks/contractReader/ReservedTokensOfProject'
-import useTotalBalanceOfUser from 'hooks/contractReader/TotalBalanceOfUser'
-import useTotalSupplyOfProjectToken from 'hooks/contractReader/TotalSupplyOfProjectToken'
-import useUnclaimedBalanceOfUser from 'hooks/contractReader/UnclaimedBalanceOfUser'
+import useERC20BalanceOf from 'hooks/contractReader/ERC20BalanceOf'
 import {
   OperatorPermission,
   useHasPermission,
 } from 'hooks/contractReader/HasPermission'
+import useReservedTokensOfProject from 'hooks/contractReader/ReservedTokensOfProject'
+import useTotalBalanceOf from 'hooks/contractReader/TotalBalanceOf'
+import useTotalSupplyOfProjectToken from 'hooks/contractReader/TotalSupplyOfProjectToken'
+import useUnclaimedBalanceOfUser from 'hooks/contractReader/UnclaimedBalanceOfUser'
 import { CSSProperties, useContext, useState } from 'react'
 import { formatPercent, formatWad } from 'utils/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
@@ -55,29 +55,14 @@ export default function Rewards({
 
   const [redeemModalVisible, setRedeemModalVisible] = useState<boolean>(false)
 
-  const canPrintPreminedV1Tickets = useCanPrintPreminedTokens(projectId)
+  const canPrintPreminedV1Tickets = useCanPrintPreminedTokens()
 
-  const ticketsBalance = useClaimedBalanceOfUser(
-    tokenAddress,
-    userAddress,
-    projectId,
-    terminal?.name,
-  )
-  const unclaimedBalance = useUnclaimedBalanceOfUser(
-    userAddress,
-    projectId,
-    terminal?.name,
-  )
-  const totalBalance = useTotalBalanceOfUser(
-    userAddress,
-    projectId,
-    terminal?.name,
-  )
+  const claimedBalance = useERC20BalanceOf(tokenAddress, userAddress)
+  const unclaimedBalance = useUnclaimedBalanceOfUser()
+  const totalBalance = useTotalBalanceOf(userAddress, projectId, terminal?.name)
 
   const metadata = decodeFundingCycleMetadata(currentFC?.metadata)
   const reservedTicketBalance = useReservedTokensOfProject(
-    projectId,
-    terminal?.name,
     metadata?.reservedRate,
   )
 
@@ -172,9 +157,9 @@ export default function Rewards({
                     <div>
                       {ticketsIssued && (
                         <div>
-                          {ticketsBalance?.gt(0) ? (
+                          {claimedBalance?.gt(0) ? (
                             <>
-                              {`${formatWad(ticketsBalance ?? 0, {
+                              {`${formatWad(claimedBalance ?? 0, {
                                 precision: 0,
                               })} ${tokenSymbol}`}
                             </>
@@ -254,7 +239,6 @@ export default function Rewards({
       <RedeemModal
         visible={redeemModalVisible}
         redeemDisabled={redeemDisabled}
-        totalBalance={totalBalance}
         onOk={() => {
           setRedeemModalVisible(false)
         }}

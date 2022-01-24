@@ -19,6 +19,9 @@ export default function TicketingForm({
   onSave: (mods: TicketMod[]) => void
 }) {
   const [mods, setMods] = useState<TicketMod[]>([])
+  const [reservedRate, setReservedRate] = useState<number>(
+    form.getFieldValue('reserved'),
+  )
 
   const {
     theme: { colors },
@@ -55,7 +58,10 @@ export default function TicketingForm({
         <FormItems.ProjectReserved
           value={form.getFieldValue('reserved')}
           name="reserved"
-          onChange={(val?: number) => form.setFieldsValue({ reserved: val })}
+          onChange={(val?: number) => {
+            setReservedRate(val ?? 0)
+            form.setFieldsValue({ reserved: val })
+          }}
         />
         <FormItems.ProjectTicketMods
           name="ticketMods"
@@ -65,7 +71,7 @@ export default function TicketingForm({
             label: t`Allocate reserved tokens (optional)`,
             extra: t`Automatically distribute a portion of your project's reserved tokens to other Juicebox projects or ETH wallets.`,
           }}
-          reservedRate={form.getFieldValue('reserved')}
+          reservedRate={reservedRate}
         />
         <Form.Item>
           <Button htmlType="submit" type="primary" onClick={() => onSave(mods)}>

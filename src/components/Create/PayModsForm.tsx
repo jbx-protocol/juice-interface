@@ -1,4 +1,4 @@
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 
 import { Button, Form, Space, Input } from 'antd'
 import { FormItems } from 'components/shared/formItems'
@@ -53,7 +53,7 @@ export default function PayModsForm({
   // Validates the total distribution percentage
   const validateTotalDistributions = () => {
     if (form.getFieldValue('totalPercent') > 100)
-      return Promise.reject('Percentages must add up to 100% or less')
+      return Promise.reject(t`Sum of percentages cannot exceed 100%.`)
     return Promise.resolve()
   }
 

@@ -140,7 +140,7 @@ export default function ConfirmDeployProject() {
           }
         />
         <Statistic
-          title={`Discord`}
+          title={t`Discord`}
           value={orEmpty(editingProject?.metadata.discord)}
         />
       </Space>
@@ -197,7 +197,7 @@ export default function ConfirmDeployProject() {
             mods={ticketMods}
             projectId={undefined}
             fundingCycle={undefined}
-            reservedRate={editingFC?.reserved.toNumber() / 2}
+            reservedRate={parseFloat(fromPerbicent(editingFC?.reserved))}
           />
         )}
       />

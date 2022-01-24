@@ -283,7 +283,7 @@ export default function ProjectTicketMods({
           <div>
             <Trans>
               {100 - total}% to{' '}
-              {owner ? <FormattedAddress address={owner} /> : 'project owner'}
+              {owner ? <FormattedAddress address={owner} /> : t`project owner`}
             </Trans>
           </div>
         </div>

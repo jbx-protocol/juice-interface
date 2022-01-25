@@ -125,6 +125,51 @@ export function useProjectsSearch(handle: string | undefined) {
   )
 }
 
+export function useTrendingProjects() {
+  const secondsInWeek = 7 * 24 * 60 * 60
+
+  const payments = useSubgraphQuery({
+    first: 1000,
+    entity: 'payEvent',
+    keys: [
+      'amount',
+      {
+        entity: 'project',
+        keys: ['id'],
+      },
+    ],
+    where: [
+      {
+        key: 'timestamp',
+        value: parseInt(
+          (new Date().valueOf() / 1000 - secondsInWeek).toString(),
+        ),
+        operator: 'gte',
+      },
+    ],
+  })
+
+  if (!payments.data) return
+
+  const mapped = payments.data.reduce((acc, curr) => {
+    const projectId = curr.project?.toString()
+
+    if (!projectId) return acc
+
+    return {
+      ...acc,
+      [projectId]: BigNumber.from(acc[projectId] ?? 0).add(curr.amount),
+    }
+  }, {} as Record<string, BigNumber>)
+
+  const sorted = Object.keys(mapped)
+    .sort((a, b) => (mapped[a].gt(mapped[b]) ? -1 : 1))
+    .slice(0, 8)
+    .map(x => BigNumber.from(x))
+
+  return sorted
+}
+
 export function useInfiniteProjectsQuery(opts: ProjectsOptions) {
   return useInfiniteSubgraphQuery(
     queryOpts(opts) as InfiniteGraphQueryOpts<'project', EntityKeys<'project'>>,

@@ -7,7 +7,11 @@ import Loading from 'components/shared/Loading'
 import ProjectsGrid from 'components/shared/ProjectsGrid'
 
 import { ThemeContext } from 'contexts/themeContext'
-import { useInfiniteProjectsQuery, useProjectsSearch } from 'hooks/v1/Projects'
+import {
+  useInfiniteProjectsQuery,
+  useProjectsSearch,
+  useTrendingProjects,
+} from 'hooks/Projects'
 import { ProjectState } from 'models/project-visibility'
 import { V1TerminalVersion } from 'models/v1/terminals'
 import { useContext, useEffect, useMemo, useRef, useState } from 'react'
@@ -52,6 +56,8 @@ export default function Projects() {
 
   const { data: searchPages, isLoading: isLoadingSearch } =
     useProjectsSearch(searchText)
+
+  const trendingProjectIds = useTrendingProjects()
 
   // When we scroll within 200px of our loadMoreContainerRef, fetch the next page.
   useEffect(() => {
@@ -155,6 +161,15 @@ export default function Projects() {
             allowClear
           />
         </div>
+
+        {trendingProjectIds ? (
+          <div hidden={!!searchText}>
+            <h4>Trending projects</h4>
+            <ProjectsGrid projects={trendingProjectIds} />
+          </div>
+        ) : (
+          <Loading />
+        )}
 
         <div
           hidden={!!searchText}

@@ -1,4 +1,5 @@
 import { Col, ColProps, Row, Space } from 'antd'
+import { BigNumber } from 'ethers'
 import { Project } from 'models/subgraph-entities/project'
 
 import ProjectCard from './ProjectCard'
@@ -7,7 +8,9 @@ export default function ProjectsGrid({
   projects,
   list,
 }: {
-  projects: Pick<Project, 'handle' | 'uri' | 'totalPaid' | 'createdAt'>[]
+  projects:
+    | Pick<Project, 'handle' | 'uri' | 'totalPaid' | 'createdAt'>[]
+    | BigNumber[]
   list?: boolean
 }) {
   const gutter = 20
@@ -20,22 +23,45 @@ export default function ProjectsGrid({
 
   return list ? (
     <Space style={{ width: '100%' }} direction="vertical">
-      {projects?.map(project => (
-        <ProjectCard project={project} key={project.handle} />
-      ))}
+      {projects?.map(project => {
+        if (BigNumber.isBigNumber(project)) {
+          return <ProjectCard id={project} key={project.toString()} />
+        } else {
+          return <ProjectCard project={project} key={project.handle} />
+        }
+      })}
     </Space>
   ) : (
     <div>
       {projects?.map(
         (project, i) =>
           i % 2 === 0 && (
-            <Row gutter={gutter} key={project.handle}>
+            <Row
+              gutter={gutter}
+              key={
+                BigNumber.isBigNumber(project)
+                  ? project.toString()
+                  : project.handle
+              }
+            >
               <Col {...colProps}>
-                <ProjectCard project={project} />
+                {BigNumber.isBigNumber(project) ? (
+                  <ProjectCard id={project} />
+                ) : (
+                  <ProjectCard project={project} />
+                )}
               </Col>
               {i + 1 < projects.length && (
                 <Col {...colProps}>
-                  <ProjectCard project={projects[i + 1]} />
+                  {(() => {
+                    const _p = projects[i + 1]
+
+                    return BigNumber.isBigNumber(_p) ? (
+                      <ProjectCard id={_p} />
+                    ) : (
+                      <ProjectCard project={_p} />
+                    )
+                  })()}
                 </Col>
               )}
             </Row>

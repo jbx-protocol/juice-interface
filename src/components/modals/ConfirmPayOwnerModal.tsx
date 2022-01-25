@@ -1,14 +1,13 @@
 import { BigNumber } from '@ethersproject/bignumber'
-
 import { Checkbox, Descriptions, Form, Input, Modal, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import ImageUploader from 'components/shared/inputs/ImageUploader'
 import { NetworkContext } from 'contexts/networkContext'
 import { ProjectContext } from 'contexts/projectContext'
-import { UserContext } from 'contexts/userContext'
 import { constants } from 'ethers'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
+import { usePayProjectTx } from 'hooks/transactor/PayProjectTx'
 import { useContext, useState } from 'react'
 import { currencyName } from 'utils/currency'
 import { formattedNum, formatWad } from 'utils/formatNumber'
@@ -30,41 +29,29 @@ export default function ConfirmPayOwnerModal({
   const [loading, setLoading] = useState<boolean>()
   const [preferUnstaked, setPreferUnstaked] = useState<boolean>(false)
   const [form] = useForm<{ note: string }>()
-  const { contracts, transactor } = useContext(UserContext)
   const { userAddress } = useContext(NetworkContext)
-  const {
-    tokenSymbol,
-    tokenAddress,
-    currentFC,
-    projectId,
-    metadata,
-    terminal,
-  } = useContext(ProjectContext)
+  const { tokenSymbol, tokenAddress, currentFC, metadata } =
+    useContext(ProjectContext)
+  const payProjectTx = usePayProjectTx()
 
   const converter = useCurrencyConverter()
 
   const usdAmount = converter.weiToUsd(weiAmount)
 
   async function pay() {
-    if (!contracts || !projectId || !transactor || !terminal?.version) return
+    if (!weiAmount) return
 
     await form.validateFields()
 
     setLoading(true)
 
-    transactor(
-      terminal.version === '1.1'
-        ? contracts.TerminalV1_1
-        : contracts.TerminalV1,
-      'pay',
-      [
-        projectId.toHexString(),
-        userAddress,
-        form.getFieldValue('note') || '',
-        preferUnstaked,
-      ],
+    payProjectTx(
       {
-        value: weiAmount?.toHexString(),
+        note: form.getFieldValue('note'),
+        preferUnstaked,
+        value: weiAmount,
+      },
+      {
         onConfirmed: () => {
           if (onSuccess) onSuccess()
         },

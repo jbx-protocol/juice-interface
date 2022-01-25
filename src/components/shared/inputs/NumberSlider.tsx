@@ -80,7 +80,9 @@ export default function NumberSlider({
           />
         </Form.Item>
       </div>
-      <div className="ant-form-item-extra">{formItemProps?.extra ?? ''}</div>
+      {formItemProps?.extra ? (
+        <div className="ant-form-item-extra">{formItemProps.extra}</div>
+      ) : null}
     </div>
   )
 }

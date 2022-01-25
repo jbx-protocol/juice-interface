@@ -6,10 +6,9 @@ import { JsonRpcSigner, TransactionRequest } from '@ethersproject/providers'
 import { parseUnits } from '@ethersproject/units'
 import { notification } from 'antd'
 import Notify, { InitOptions, TransactionEvent } from 'bnc-notify'
+import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { useCallback, useContext } from 'react'
-
-import { NetworkContext } from '../contexts/networkContext'
 
 export type TransactorCallback = (
   e?: TransactionEvent,
@@ -30,6 +29,11 @@ export type Transactor = (
   options?: TransactorOptions,
 ) => Promise<boolean>
 
+export type TransactorInstance<T> = (
+  args: T,
+  txOpts?: Omit<TransactorOptions, 'value'>,
+) => ReturnType<Transactor>
+
 // wrapper around BlockNative's Notify.js
 // https://docs.blocknative.com/notify
 export function useTransactor({
@@ -37,9 +41,8 @@ export function useTransactor({
 }: {
   gasPrice?: BigNumber
 }): Transactor | undefined {
-  const { signingProvider: provider, onSelectWallet } = useContext(
-    NetworkContext,
-  )
+  const { signingProvider: provider, onSelectWallet } =
+    useContext(NetworkContext)
 
   const { isDarkMode } = useContext(ThemeContext)
 

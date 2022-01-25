@@ -1,7 +1,9 @@
 import { Trans } from '@lingui/macro'
 import { Button, Modal } from 'antd'
 import { ProjectContext } from 'contexts/projectContext'
-import { UserContext } from 'contexts/userContext'
+import { BigNumber } from 'ethers'
+import { useAddToBalanceTx } from 'hooks/transactor/AddToBalanceTx'
+import { useMigrateV1ProjectTx } from 'hooks/transactor/MigrateV1ProjectTx'
 import { useContext, useState } from 'react'
 import { getTerminalAddress } from 'utils/terminal-versions'
 
@@ -14,22 +16,21 @@ export default function MigrateV1Pt1Modal({
 }) {
   const [loadingAddToBalance, setLoadingAddToBalance] = useState<boolean>()
   const [loadingMigrate, setLoadingMigrate] = useState<boolean>()
-  const { contracts, transactor } = useContext(UserContext)
-  const { projectId, balance, handle } = useContext(ProjectContext)
+  const { balance, handle } = useContext(ProjectContext)
+  const migrateV1ProjectTx = useMigrateV1ProjectTx()
+  const addToBalanceTx = useAddToBalanceTx()
 
   const needsBalance = balance?.eq(0)
 
   function migrate() {
-    const terminalV1_1Address = getTerminalAddress('1.1')
+    const newTerminalAddress = getTerminalAddress('1.1')
 
-    if (!transactor || !contracts || !projectId || !terminalV1_1Address) return
+    if (!newTerminalAddress) return
 
     setLoadingMigrate(true)
 
-    transactor(
-      contracts.TerminalV1,
-      'migrate',
-      [projectId.toHexString(), terminalV1_1Address],
+    migrateV1ProjectTx(
+      { newTerminalAddress },
       {
         onDone: () => {
           setLoadingMigrate(false)
@@ -40,16 +41,11 @@ export default function MigrateV1Pt1Modal({
   }
 
   function add1Wei() {
-    if (!transactor || !contracts || !projectId) return
-
     setLoadingAddToBalance(true)
 
-    transactor(
-      contracts.TerminalV1,
-      'addToBalance',
-      [projectId.toHexString()],
+    addToBalanceTx(
+      { value: BigNumber.from(1) },
       {
-        value: '0x01',
         onDone: () => setLoadingAddToBalance(false),
       },
     )

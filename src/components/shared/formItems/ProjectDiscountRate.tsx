@@ -24,6 +24,7 @@ export default function ProjectDiscountRate({
     >
       <NumberSlider
         max={20}
+        defaultValue={0}
         sliderValue={parseFloat(value ?? '0')}
         suffix="%"
         name={name}

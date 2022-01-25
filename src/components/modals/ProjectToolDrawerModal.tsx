@@ -8,8 +8,10 @@ import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { NetworkContext } from 'contexts/networkContext'
 import { ProjectContext } from 'contexts/projectContext'
-import { UserContext } from 'contexts/userContext'
 import useContractReader from 'hooks/ContractReader'
+import { useAddToBalanceTx } from 'hooks/transactor/AddToBalanceTx'
+import { useSafeTransferFromTx } from 'hooks/transactor/SafeTransferFromTx'
+import { useTransferTokensTx } from 'hooks/transactor/TransferTokensTx'
 import { ContractName } from 'models/contract-name'
 import { useContext, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
@@ -22,9 +24,11 @@ export default function ProjectToolDrawerModal({
   visible?: boolean
   onClose?: VoidFunction
 }) {
-  const { transactor, contracts } = useContext(UserContext)
   const { userAddress } = useContext(NetworkContext)
-  const { projectId, tokenSymbol, owner, terminal } = useContext(ProjectContext)
+  const { projectId, tokenSymbol, owner } = useContext(ProjectContext)
+  const safeTransferFromTx = useSafeTransferFromTx()
+  const transferTokensTx = useTransferTokensTx()
+  const addToBalanceTx = useAddToBalanceTx()
 
   const [loadingAddToBalance, setLoadingAddToBalance] = useState<boolean>()
   const [loadingTransferTokens, setLoadingTransferTokens] = useState<boolean>()
@@ -43,16 +47,10 @@ export default function ProjectToolDrawerModal({
   })
 
   function transferOwnership() {
-    if (!transactor || !contracts || !projectId || !owner) return
-
     setLoadingTransferOwnership(true)
 
-    const fields = transferTokensForm.getFieldsValue(true)
-
-    transactor(
-      contracts.Projects,
-      'safeTransferFrom(address,address,uint256)',
-      [owner, fields.to, projectId.toHexString()],
+    safeTransferFromTx(
+      { to: transferTokensForm.getFieldValue('to') },
       {
         onDone: () => setLoadingTransferOwnership(false),
         onConfirmed: () => transferOwnershipForm.resetFields(),
@@ -61,21 +59,15 @@ export default function ProjectToolDrawerModal({
   }
 
   function transferTokens() {
-    if (!transactor || !contracts || !userAddress || !projectId) return
-
     setLoadingTransferTokens(true)
 
     const fields = transferTokensForm.getFieldsValue(true)
 
-    transactor(
-      contracts.TicketBooth,
-      'transfer',
-      [
-        userAddress,
-        projectId?.toHexString(),
-        parseWad(fields.amount).toHexString(),
-        fields.to,
-      ],
+    transferTokensTx(
+      {
+        to: fields.to,
+        amount: parseWad(fields.amount),
+      },
       {
         onDone: () => setLoadingTransferTokens(false),
         onConfirmed: () => transferTokensForm.resetFields(),
@@ -84,27 +76,11 @@ export default function ProjectToolDrawerModal({
   }
 
   function addToBalance() {
-    if (
-      !transactor ||
-      !contracts ||
-      !userAddress ||
-      !projectId ||
-      !terminal?.version
-    )
-      return
-
     setLoadingAddToBalance(true)
 
-    const fields = addToBalanceForm.getFieldsValue(true)
-
-    transactor(
-      terminal.version === '1.1'
-        ? contracts.TerminalV1_1
-        : contracts.TerminalV1,
-      'addToBalance',
-      [projectId.toHexString()],
+    addToBalanceTx(
+      { value: parseWad(addToBalanceForm.getFieldValue('amount')) },
       {
-        value: parseWad(fields.amount).toHexString(),
         onDone: () => setLoadingAddToBalance(false),
         onConfirmed: () => addToBalanceForm.resetFields(),
       },

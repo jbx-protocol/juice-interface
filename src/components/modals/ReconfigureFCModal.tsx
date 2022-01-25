@@ -505,7 +505,7 @@ export default function ReconfigureFCModal({
               mods={editingTicketMods}
               projectId={undefined}
               fundingCycle={undefined}
-              reservedRate={fcMetadata?.reservedRate ?? 0}
+              reservedRate={parseFloat(fromPerbicent(fcMetadata?.reservedRate))}
             />
           </div>
         </Space>

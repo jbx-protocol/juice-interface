@@ -19,6 +19,9 @@ export default function TicketingForm({
   onSave: (mods: TicketMod[]) => void
 }) {
   const [mods, setMods] = useState<TicketMod[]>([])
+
+  // Using a state here because relying on the form does not
+  // pass through updated reservedRate to ProjectTicketMods
   const [reservedRate, setReservedRate] = useState<number>(
     form.getFieldValue('reserved'),
   )
@@ -56,7 +59,7 @@ export default function TicketingForm({
 
       <Form form={form} layout="vertical">
         <FormItems.ProjectReserved
-          value={form.getFieldValue('reserved')}
+          value={reservedRate}
           name="reserved"
           onChange={(val?: number) => {
             setReservedRate(val ?? 0)

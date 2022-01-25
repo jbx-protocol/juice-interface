@@ -5,7 +5,7 @@ import { FormInstance, Form, DatePicker } from 'antd'
 import { FormItems } from 'components/shared/formItems'
 
 import NumberSlider from 'components/shared/inputs/NumberSlider'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 type ModalMode = 'Add' | 'Edit' | undefined
 
@@ -28,15 +28,20 @@ export default function ReservedTokenReceiverModal({
   validateSlider: VoidFunction
   reservedRate: number
 }) {
-  const [percent, setPercent] = useState<number>(form.getFieldValue('percent'))
-  const [sliderExtra, setSliderExtra] = useState<string>()
+  const [percent, setPercent] = useState<number | undefined>(
+    form.getFieldValue('percent'),
+  )
 
-  useEffect(() => {
-    // Clarifies that the slider percentage is of the overall reserved allocation
-    // and shows the percentage of all newly minted tokens only if percent != 0
-    const realTokenAllocation = (reservedRate ?? 0) * (percent ?? 0) * 1.0
+  // Clarifies that the slider percentage is of the overall reserved allocation
+  // and shows the percentage of all newly minted tokens only if percent != 0
+  function generateExtra() {
+    // Initially the state (percent) is not loaded, so we fall back on the form.
+    // But then subsequently, since the form does not update the UI immediately, we use the state
+    const percentOfReserved = percent ?? form.getFieldValue('percent')
+
+    const realTokenAllocation = (reservedRate ?? 0) * percentOfReserved
     const realTokenAllocationPercent = (realTokenAllocation / 100).toFixed(2)
-    let extra =
+    const extra =
       t`The percent this individual receives of the overall ${reservedRate}% 
       reserved token allocation` +
       `${
@@ -46,16 +51,23 @@ export default function ReservedTokenReceiverModal({
           of all newly minted tokens).`
           : '.'
       }`
-    setSliderExtra(extra)
-  }, [percent, reservedRate])
+    return extra
+  }
 
   return (
     <Modal
       title={mode === 'Add' ? t`Add token receiver` : t`Edit token receiver`} // Full sentences for translation purposes
       visible={visible}
-      onOk={onOk}
+      // Must reset the state in case user opens this modal for another receiver straight away
+      onOk={() => {
+        setPercent(undefined)
+        onOk()
+      }}
       okText={mode === 'Add' ? t`Add token receiver` : t`Save token receiver`}
-      onCancel={onCancel}
+      onCancel={() => {
+        setPercent(undefined)
+        onCancel()
+      }}
       destroyOnClose
     >
       <Form
@@ -92,7 +104,7 @@ export default function ReservedTokenReceiverModal({
             name="percent"
             formItemProps={{
               rules: [{ validator: validateSlider }],
-              extra: sliderExtra,
+              extra: generateExtra(),
             }}
           />
         </Form.Item>

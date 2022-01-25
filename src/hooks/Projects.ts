@@ -148,6 +148,11 @@ export function useTrendingProjects() {
         ),
         operator: 'gte',
       },
+      {
+        key: 'project',
+        value: '1', // Omit Juicebox project
+        operator: 'not'
+      }
     ],
   })
 
@@ -156,7 +161,7 @@ export function useTrendingProjects() {
   const mapped = payments.data.reduce((acc, curr) => {
     const projectId = curr.project?.toString()
 
-    if (!projectId || projectId === '1') return acc
+    if (!projectId) return acc
 
     return {
       ...acc,

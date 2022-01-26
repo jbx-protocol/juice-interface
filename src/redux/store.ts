@@ -1,9 +1,9 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 
 import editingProjectReducer from './slices/editingProject'
-import getLocalStoragePreloadedState, {
-  localStoragePreloadMiddleware,
-} from './localStoragePreload'
+import getLocalStoragePreloadedState from './localStoragePreload'
+
+export const REDUX_STATE_LOCALSTORAGE_KEY = 'jb_redux_preloadedState'
 
 const rootReducer = combineReducers({
   editingProject: editingProjectReducer,
@@ -14,14 +14,19 @@ export function createStore() {
     reducer: rootReducer,
     devTools: process.env.NODE_ENV !== 'production',
     preloadedState: getLocalStoragePreloadedState(),
-    middleware: getDefaultMiddleware => [
-      ...getDefaultMiddleware(),
-      localStoragePreloadMiddleware,
-    ],
   })
 }
 
 const store = createStore()
+
+store.subscribe(() => {
+  localStorage.setItem(
+    REDUX_STATE_LOCALSTORAGE_KEY,
+    JSON.stringify({
+      reduxState: store.getState(),
+    }),
+  )
+})
 
 export type RootState = ReturnType<typeof rootReducer>
 export type AppDispatch = typeof store.dispatch

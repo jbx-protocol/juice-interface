@@ -8,8 +8,10 @@ export default function Footer() {
   const { colors } = useContext(ThemeContext).theme
 
   const footerLinksStyles: CSSProperties = {
-    display: 'inline-flex',
+    display: 'grid',
+    rowGap: 10,
     justifyContent: 'center',
+    marginBottom: 30,
   }
 
   const link = (text: string, link?: string) => (
@@ -27,7 +29,7 @@ export default function Footer() {
 
   // Renders language links
   const languageLink = (lang: string) => (
-    <div onClick={() => setLanguage(lang)}>{link(Languages[lang].long)}</div>
+    <span onClick={() => setLanguage(lang)}>{link(Languages[lang].long)}</span>
   )
 
   // Sets the new language with localStorage and reloads the page
@@ -50,7 +52,7 @@ export default function Footer() {
       <div style={footerLinksStyles}>
         {Object.keys(Languages).map(languageLink)}
       </div>
-      <div style={footerLinksStyles}>
+      <div style={{ ...footerLinksStyles, display: 'flex' }}>
         {link('Discord', 'https://discord.gg/6jXrJSyDFf')}
         {link('GitHub', 'https://github.com/jbx-protocol/juice-interface')}
         {link('Twitter', 'https://twitter.com/juiceboxETH')}

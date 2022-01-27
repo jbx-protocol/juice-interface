@@ -12,7 +12,7 @@ export default function TrendingProjects() {
       {trendingProjectIds ? (
         <Grid
           children={trendingProjectIds.map(p => (
-            <TrendingProjectCard projectId={p.id} volume={p.volume} />
+            <TrendingProjectCard project={p} />
           ))}
         />
       ) : (

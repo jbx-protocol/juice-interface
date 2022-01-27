@@ -6,42 +6,23 @@ import ProjectLogo from 'components/shared/ProjectLogo'
 import { ThemeContext } from 'contexts/themeContext'
 import { BigNumber } from 'ethers'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
-import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { useContext } from 'react'
 import { formatWad } from 'utils/formatNumber'
 import { getTerminalVersion } from 'utils/terminal-versions'
+
+import { Project } from 'models/subgraph-entities/project'
 
 import { CURRENCY_ETH } from 'constants/currency'
 import { trendingWindowDays } from 'constants/trending-projects'
 
 export default function TrendingProjectCard({
-  projectId,
-  volume,
+  project,
 }: {
-  projectId: BigNumber
-  volume: BigNumber
+  project: Project & { trendingVolume: BigNumber | undefined }
 }) {
   const {
     theme: { colors, radii },
   } = useContext(ThemeContext)
-
-  const projectsQuery = useSubgraphQuery(
-    projectId
-      ? {
-          entity: 'project',
-          keys: ['handle', 'uri', 'terminal', 'id'],
-          where: {
-            key: 'id',
-            value: projectId.toString(),
-          },
-        }
-      : null,
-    {
-      staleTime: 10800000, // 3 hours
-    },
-  ).data
-
-  const project = projectsQuery?.length ? projectsQuery[0] : undefined
 
   const { data: metadata } = useProjectMetadata(project?.uri)
 
@@ -49,7 +30,10 @@ export default function TrendingProjectCard({
 
   // If the total paid is greater than 0, but less than 10 ETH, show two decimal places.
   const precision =
-    volume?.gt(0) && volume.lt(BigNumber.from('10000000000000000000')) ? 2 : 0
+    project.trendingVolume?.gt(0) &&
+    project.trendingVolume.lt(BigNumber.from('10000000000000000000'))
+      ? 2
+      : 0
 
   return project ? (
     <a
@@ -100,7 +84,7 @@ export default function TrendingProjectCard({
 
             <div>
               <span style={{ color: colors.text.primary, fontWeight: 500 }}>
-                {project?.id?.toString()} - @{project?.handle}
+                @{project?.handle}
               </span>
               <span
                 style={{
@@ -116,7 +100,8 @@ export default function TrendingProjectCard({
 
             <div style={{ color: colors.text.secondary }}>
               <CurrencySymbol currency={CURRENCY_ETH} />
-              {formatWad(volume, { precision })} last {trendingWindowDays} days
+              {formatWad(project.trendingVolume, { precision })} last{' '}
+              {trendingWindowDays} days
             </div>
 
             {metadata.description && (

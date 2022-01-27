@@ -6,7 +6,10 @@ import { TerminalVersion } from 'models/terminal-version'
 import { EntityKeys, GraphQueryOpts, InfiniteGraphQueryOpts } from 'utils/graph'
 import { getTerminalAddress } from 'utils/terminal-versions'
 
-import { trendingWindowDays } from 'constants/trending-projects'
+import {
+  trendingStaleTime,
+  trendingWindowDays,
+} from 'constants/trending-projects'
 
 import { archivedProjectIds } from '../constants/archived-projects'
 import { trendingProjectsCount } from '../constants/trending-projects'
@@ -157,34 +160,52 @@ export function useTrendingProjects() {
       ],
     },
     {
-      staleTime: 10800000, // 3 hours
+      staleTime: trendingStaleTime,
     },
   )
 
-  if (!payments.data) return
-
-  // Sum payment volume from all payments for each project
-  const mapped = payments.data.reduce((acc, curr) => {
+  // Record total payment volume for each project
+  const mapped = (payments.data ?? []).reduce((acc, curr) => {
     const projectId = curr.project?.toString()
 
-    if (!projectId) return acc
-
-    return {
-      ...acc,
-      [projectId]: BigNumber.from(acc[projectId] ?? 0).add(curr.amount),
-    }
+    return projectId
+      ? {
+          ...acc,
+          [projectId]: BigNumber.from(acc[projectId] ?? 0).add(curr.amount),
+        }
+      : acc
   }, {} as Record<string, BigNumber>)
 
-  // Sort project objects by volume
-  const sorted = Object.keys(mapped)
+  // Get IDs for `trendingProjectsCount` number of highest volume projects
+  const sortedProjectIds = Object.keys(mapped)
     .sort((a, b) => (mapped[a].gt(mapped[b]) ? -1 : 1))
     .slice(0, trendingProjectsCount)
-    .map(id => ({
-      id: BigNumber.from(id),
-      volume: mapped[id],
-    }))
 
-  return sorted
+  // Query project data for all trending project IDs
+  const projects = useSubgraphQuery(
+    sortedProjectIds.length
+      ? {
+          entity: 'project',
+          keys,
+          where: {
+            key: 'id',
+            value: sortedProjectIds,
+            operator: 'in',
+          },
+        }
+      : null,
+    {
+      staleTime: trendingStaleTime,
+    },
+  )
+
+  // Return projects with `trendingVolume` sorted by `trendingVolume`
+  return projects.data
+    ?.map(p => ({
+      ...p,
+      trendingVolume: p.id ? mapped[p.id.toString()] : undefined,
+    }))
+    .sort((a, b) => (a.trendingVolume?.gt(b.trendingVolume ?? 0) ? -1 : 1))
 }
 
 export function useInfiniteProjectsQuery(opts: ProjectsOptions) {

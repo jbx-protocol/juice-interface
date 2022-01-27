@@ -108,7 +108,7 @@ export default function ProjectCard({
 
             <div>
               <span style={{ color: colors.text.primary, fontWeight: 500 }}>
-                {_project?.id?.toString()} - @{_project?.handle}
+                @{_project?.handle}
               </span>
               <span
                 style={{

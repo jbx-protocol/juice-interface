@@ -8,9 +8,12 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useProjectsQuery } from 'hooks/Projects'
 import { CSSProperties, useContext } from 'react'
 
+import Grid from 'components/shared/Grid'
+
+import ProjectCard from 'components/shared/ProjectCard'
+
 import { ThemeOption } from 'constants/theme/theme-option'
 
-import ProjectsGrid from '../shared/ProjectsGrid'
 import Faq from './Faq'
 import Footer from './Footer'
 import Payments from './Payments'
@@ -211,7 +214,12 @@ export default function Landing() {
               {smallHeader(t`Projects using Juicebox`)}
               <div style={{ marginTop: 20 }}>
                 {previewProjects ? (
-                  <ProjectsGrid projects={previewProjects} list />
+                  <Grid
+                    children={previewProjects.map(p => (
+                      <ProjectCard project={p} />
+                    ))}
+                    list
+                  />
                 ) : (
                   <Loading />
                 )}

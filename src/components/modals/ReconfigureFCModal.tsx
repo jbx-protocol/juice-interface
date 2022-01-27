@@ -309,7 +309,7 @@ export default function ReconfigureFCModal({
     >
       <div>
         <h1 style={{ marginBottom: 20 }}>
-          <Trans>Reconfigure funding</Trans>
+          <Trans>Reconfigure upcoming funding</Trans>
         </h1>
 
         {currentFC?.duration.gt(0) && (

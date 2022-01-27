@@ -1,4 +1,4 @@
-import { Button } from 'antd'
+import { Button, Tooltip } from 'antd'
 import { ProjectContext } from 'contexts/projectContext'
 import React, { useContext, useRef, useState } from 'react'
 import { Provider } from 'react-redux'
@@ -29,15 +29,18 @@ const ReconfigureFundingModalTrigger: React.FC<Props> = () => {
   }
 
   return (
-    <>
-      <Button
-        style={{ marginTop: 20 }}
-        onClick={handleModalOpen}
-        size="small"
-        disabled={isPreviewMode}
+    <div style={{ textAlign: 'right' }}>
+      <Tooltip
+        title={
+          <span>
+            <b>Note:</b> The current funding cycle cannot be edited.
+          </span>
+        }
       >
-        <Trans>Reconfigure funding</Trans>
-      </Button>
+        <Button onClick={handleModalOpen} size="small" disabled={isPreviewMode}>
+          <Trans>Reconfigure upcoming</Trans>
+        </Button>
+      </Tooltip>
 
       {localStoreRef.current && (
         <Provider store={localStoreRef.current}>
@@ -47,7 +50,7 @@ const ReconfigureFundingModalTrigger: React.FC<Props> = () => {
           />
         </Provider>
       )}
-    </>
+    </div>
   )
 }
 

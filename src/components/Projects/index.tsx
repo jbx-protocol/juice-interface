@@ -4,19 +4,18 @@ import { Button, Checkbox, Select, Space, Tooltip } from 'antd'
 import Search from 'antd/lib/input/Search'
 import FeedbackFormLink from 'components/shared/FeedbackFormLink'
 import Loading from 'components/shared/Loading'
-import ProjectsGrid from 'components/shared/ProjectsGrid'
 
 import { ThemeContext } from 'contexts/themeContext'
-import {
-  useInfiniteProjectsQuery,
-  useProjectsSearch,
-  useTrendingProjects,
-} from 'hooks/Projects'
+import { useInfiniteProjectsQuery, useProjectsSearch } from 'hooks/Projects'
 import { ProjectState } from 'models/project-visibility'
 import { TerminalVersion } from 'models/terminal-version'
 import { useContext, useEffect, useMemo, useRef, useState } from 'react'
 
+import Grid from 'components/shared/Grid'
+import ProjectCard from 'components/shared/ProjectCard'
+
 import { layouts } from 'constants/styles/layouts'
+import TrendingProjects from './TrendingProjects'
 
 type OrderByOption = 'createdAt' | 'totalPaid'
 
@@ -56,8 +55,6 @@ export default function Projects() {
 
   const { data: searchPages, isLoading: isLoadingSearch } =
     useProjectsSearch(searchText)
-
-  const trendingProjectIds = useTrendingProjects()
 
   // When we scroll within 200px of our loadMoreContainerRef, fetch the next page.
   useEffect(() => {
@@ -162,15 +159,12 @@ export default function Projects() {
           />
         </div>
 
-        {trendingProjectIds ? (
-          <div hidden={!!searchText}>
-            <h4>Trending projects</h4>
-            <ProjectsGrid projects={trendingProjectIds} />
-          </div>
-        ) : (
-          <Loading />
-        )}
+        <div style={{ marginBottom: 40, marginTop: 20 }}>
+          <h3>Trending</h3>
+          {!searchText && <TrendingProjects />}
+        </div>
 
+        <h3>All projects</h3>
         <div
           hidden={!!searchText}
           style={{
@@ -227,10 +221,10 @@ export default function Projects() {
               }}
             >
               <Select.Option value="totalPaid">
-                <Trans>Volume</Trans>
+                <Trans>Total raised</Trans>
               </Select.Option>
               <Select.Option value="createdAt">
-                <Trans>Created</Trans>
+                <Trans>Date created</Trans>
               </Select.Option>
             </Select>
           </div>
@@ -261,7 +255,13 @@ export default function Projects() {
         )}
       </div>
 
-      {concatenatedPages && <ProjectsGrid projects={concatenatedPages} />}
+      {concatenatedPages && (
+        <Grid
+          children={concatenatedPages.map(p => (
+            <ProjectCard project={p} />
+          ))}
+        />
+      )}
       {(isLoading || isFetchingNextPage) && <Loading />}
 
       {/* Place a div below the grid that we can connect to an intersection observer */}

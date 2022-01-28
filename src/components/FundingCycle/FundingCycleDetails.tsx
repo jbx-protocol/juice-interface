@@ -1,4 +1,4 @@
-import { WarningOutlined } from '@ant-design/icons'
+import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { parseEther } from '@ethersproject/units'
 import { t, Trans } from '@lingui/macro'
 import { Descriptions, Tooltip } from 'antd'
@@ -22,6 +22,7 @@ import { weightedRate } from 'utils/math'
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 
 import TooltipLabel from '../shared/TooltipLabel'
+import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
 
 export default function FundingCycleDetails({
   fundingCycle,
@@ -62,7 +63,7 @@ export default function FundingCycleDetails({
       <Tooltip title={tooltipTitle}>
         <span style={{ fontWeight: 500 }}>{text} </span>
         <span style={{ color: colors.text.warn }}>
-          <WarningOutlined />
+          <ExclamationCircleOutlined />
         </span>
       </Tooltip>
     ) : (
@@ -99,7 +100,7 @@ export default function FundingCycleDetails({
             <WarningText
               showWarning={true}
               text={t`Not set`}
-              tooltipTitle={t`The project owner may reconfigure this funding cycle at any time, without notice.`}
+              tooltipTitle={FUNDING_CYCLE_WARNING_TEXT(fundingCycle).duration}
             />
           )}
         </Descriptions.Item>
@@ -155,9 +156,7 @@ export default function FundingCycleDetails({
             showWarning={unsafeFundingCycleProperties.metadataReservedRate}
             text={`${fromPerbicent(metadata?.reservedRate)}%`}
             tooltipTitle={
-              metadata?.reservedRate === 200
-                ? t`Contributors will not receive any tokens in exchange for paying this project.`
-                : t`Contributors will receive a relatively small portion of tokens in exchange for paying this project.`
+              FUNDING_CYCLE_WARNING_TEXT(fundingCycle).metadataReservedRate
             }
           />
         </Descriptions.Item>
@@ -217,7 +216,10 @@ export default function FundingCycleDetails({
             <WarningText
               showWarning={true}
               text={t`Allowed`}
-              tooltipTitle={t`The project owner may mint any supply of tokens at any time, diluting the token share of all existing contributors.`}
+              tooltipTitle={
+                FUNDING_CYCLE_WARNING_TEXT(fundingCycle)
+                  .metadataTicketPrintingIsAllowed
+              }
             />
           ) : (
             t`Disabled`
@@ -243,7 +245,7 @@ export default function FundingCycleDetails({
         <WarningText
           showWarning={unsafeFundingCycleProperties.ballot}
           text={ballotStrategy.name}
-          tooltipTitle={t`The upcoming funding cycle can be reconfigured by the project owner moments before a new cycle begins. This makes it possible to take advantage of contributors, for example by withdrawing all overflow.`}
+          tooltipTitle={FUNDING_CYCLE_WARNING_TEXT(fundingCycle).ballot}
         />
         <div style={{ color: colors.text.secondary }}>
           <div style={{ fontSize: '0.7rem' }}>

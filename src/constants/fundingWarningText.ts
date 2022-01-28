@@ -3,6 +3,8 @@ import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
 
 import { FundingCycle } from '../models/funding-cycle'
 
+export const reservedRateRiskyMin = 90
+
 export type FundingCycleRiskFlags = {
   duration: boolean
   ballot: boolean

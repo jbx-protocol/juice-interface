@@ -2,7 +2,7 @@ import { Button, Form, FormInstance, Space, Switch } from 'antd'
 import { t, Trans } from '@lingui/macro'
 
 import { ThemeContext } from 'contexts/themeContext'
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 export type RestrictedActionsFormFields = {
   payIsPaused: boolean
@@ -16,6 +16,13 @@ export default function RestrictedActionsForm({
   form: FormInstance<RestrictedActionsFormFields>
   onSave: VoidFunction
 }) {
+  const [showTicketPrintingWarning, setShowTicketPrintingWarning] =
+    useState<boolean>()
+
+  useEffect(() => {
+    setShowTicketPrintingWarning(form.getFieldValue('ticketPrintingIsAllowed'))
+  }, [form])
+
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -43,8 +50,22 @@ export default function RestrictedActionsForm({
           extra={t`Enabling this allows the project owner to manually mint any amount of tokens to any address.`}
           valuePropName="checked"
         >
-          <Switch />
+          <Switch
+            onChange={val => {
+              setShowTicketPrintingWarning(val)
+            }}
+          />
         </Form.Item>
+        {showTicketPrintingWarning && (
+          <Form.Item>
+            <p style={{ color: colors.text.warn }}>
+              <Trans>
+                Enabling tokens to be minted will appear risky to contributors,
+                and should only be used when necessary.
+              </Trans>
+            </p>
+          </Form.Item>
+        )}
         <Form.Item>
           <Button htmlType="submit" type="primary" onClick={() => onSave()}>
             <Trans>Save</Trans>

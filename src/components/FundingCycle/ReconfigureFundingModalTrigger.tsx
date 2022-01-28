@@ -5,9 +5,13 @@ import { Provider } from 'react-redux'
 import store, { createStore } from 'redux/store'
 import { Trans } from '@lingui/macro'
 
+import { BigNumber } from 'ethers'
+
 import ReconfigureFCModal from '../modals/ReconfigureFCModal'
 
-interface Props {}
+interface Props {
+  fundingDuration: BigNumber | undefined
+}
 
 // This component uses a local version of the entire Redux store
 // so editing within the Reconfigure Funding modal does not
@@ -15,7 +19,9 @@ interface Props {}
 // persisted Redux state and the Reconfigure Funding modal
 // are independent.
 
-const ReconfigureFundingModalTrigger: React.FC<Props> = () => {
+const ReconfigureFundingModalTrigger: React.FC<Props> = ({
+  fundingDuration,
+}: Props) => {
   const { isPreviewMode } = useContext(ProjectContext)
 
   const localStoreRef = useRef<typeof store>()
@@ -30,17 +36,27 @@ const ReconfigureFundingModalTrigger: React.FC<Props> = () => {
 
   return (
     <div style={{ textAlign: 'right' }}>
-      <Tooltip
-        title={
-          <span>
-            <b>Note:</b> The current funding cycle cannot be edited.
-          </span>
-        }
-      >
+      {fundingDuration?.gt(0) ? (
+        <Tooltip
+          title={
+            <span>
+              <b>Note:</b> The current funding cycle cannot be edited.
+            </span>
+          }
+        >
+          <Button
+            onClick={handleModalOpen}
+            size="small"
+            disabled={isPreviewMode}
+          >
+            <Trans>Reconfigure upcoming</Trans>
+          </Button>
+        </Tooltip>
+      ) : (
         <Button onClick={handleModalOpen} size="small" disabled={isPreviewMode}>
-          <Trans>Reconfigure upcoming</Trans>
+          <Trans>Reconfigure</Trans>
         </Button>
-      </Tooltip>
+      )}
 
       {localStoreRef.current && (
         <Provider store={localStoreRef.current}>

@@ -98,7 +98,11 @@ export default function FundingCycles({
             marginBottom: 30,
           }}
         />
-        {canReconfigure && <ReconfigureFundingModalTrigger />}
+        {canReconfigure && (
+          <ReconfigureFundingModalTrigger
+            fundingDuration={currentFC?.duration}
+          />
+        )}
       </div>
       <Space style={{ fontSize: '.8rem', marginBottom: 12 }} size="middle">
         {tab('current')}

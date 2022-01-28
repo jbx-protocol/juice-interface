@@ -9,7 +9,10 @@ import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallot
 import { fromPerbicent } from './formatNumber'
 
 import { EditingFundingCycle } from './serializers'
-import { FundingCycleRiskFlags } from 'constants/fundingWarningText'
+import {
+  FundingCycleRiskFlags,
+  reservedRateRiskyMin,
+} from 'constants/fundingWarningText'
 
 // packed `metadata` format: 0btTPRRRRRRRRBBBBBBBBrrrrrrrrVVVVVVVV
 // V: version (bits 0-7)
@@ -137,7 +140,10 @@ export const getUnsafeFundingCycleProperties = (
    *
    * Note: max reserve rate is 200.
    */
-  if (parseInt(fromPerbicent(metadata?.reservedRate ?? 0), 10) >= 90) {
+  if (
+    parseInt(fromPerbicent(metadata?.reservedRate ?? 0), 10) >=
+    reservedRateRiskyMin
+  ) {
     configFlags.metadataReservedRate = true
   }
 

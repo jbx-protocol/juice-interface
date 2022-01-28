@@ -5,6 +5,8 @@ import { ThemeContext } from 'contexts/themeContext'
 import { TicketMod } from 'models/mods'
 import { useContext, useLayoutEffect, useState } from 'react'
 
+import { reservedRateRiskyMin } from 'constants/fundingWarningText'
+
 export type TicketingFormFields = {
   reserved: number
 }
@@ -19,6 +21,8 @@ export default function TicketingForm({
   onSave: (mods: TicketMod[]) => void
 }) {
   const [mods, setMods] = useState<TicketMod[]>([])
+  const [showReservedRateWarning, setShowReservedRateWarning] =
+    useState<boolean>()
 
   const {
     theme: { colors },
@@ -55,8 +59,23 @@ export default function TicketingForm({
         <FormItems.ProjectReserved
           value={form.getFieldValue('reserved')}
           name="reserved"
-          onChange={(val?: number) => form.setFieldsValue({ reserved: val })}
+          onChange={(val?: number) => {
+            form.setFieldsValue({ reserved: val })
+            setShowReservedRateWarning(!!(val && val >= reservedRateRiskyMin))
+          }}
         />
+        {showReservedRateWarning && (
+          <Form.Item>
+            <p style={{ color: colors.text.warn }}>
+              <Trans>
+                Projects using a reserved rate of {reservedRateRiskyMin}% or
+                more will appear risky to contributors, as a relatively small
+                number of tokens will be received in exchange for paying your
+                project.
+              </Trans>
+            </p>
+          </Form.Item>
+        )}
         <FormItems.ProjectTicketMods
           name="ticketMods"
           mods={mods}

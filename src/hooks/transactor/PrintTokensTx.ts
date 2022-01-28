@@ -36,7 +36,7 @@ export function usePrintTokensTx(): TransactorInstance<{
           value.toHexString(),
           BigNumber.from(currency).toHexString(),
           beneficiary,
-          memo,
+          memo ?? '',
           preferUnstaked,
         ]
         break
@@ -47,7 +47,7 @@ export function usePrintTokensTx(): TransactorInstance<{
           projectId.toHexString(),
           value.toHexString(),
           beneficiary,
-          memo,
+          memo ?? '',
           preferUnstaked,
         ]
     }

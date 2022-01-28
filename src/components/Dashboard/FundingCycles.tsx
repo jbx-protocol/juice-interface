@@ -1,6 +1,6 @@
 import { Space, Tooltip } from 'antd'
 import { t } from '@lingui/macro'
-import { WarningOutlined } from '@ant-design/icons'
+import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { CardSection } from 'components/shared/CardSection'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
@@ -48,7 +48,7 @@ export default function FundingCycles({
       >
         <span>
           {text}
-          <WarningOutlined
+          <ExclamationCircleOutlined
             style={{
               color: colors.text.warn,
               marginLeft: 4,

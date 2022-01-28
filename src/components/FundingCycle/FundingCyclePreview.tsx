@@ -1,4 +1,4 @@
-import { WarningOutlined } from '@ant-design/icons'
+import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Collapse, Tooltip } from 'antd'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
@@ -78,7 +78,7 @@ export default function FundingCyclePreview({
                       title={t`Some funding cycle properties may indicate risk
                     for project contributors.`}
                     >
-                      <WarningOutlined style={{ marginRight: 2 }} />
+                      <ExclamationCircleOutlined style={{ marginRight: 2 }} />
                       {fundingCycleRiskCount(fundingCycle)}
                     </Tooltip>
                   </span>

@@ -9,6 +9,7 @@ import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallot
 import { fromPerbicent } from './formatNumber'
 
 import { EditingFundingCycle } from './serializers'
+import { FundingCycleRiskFlags } from 'constants/fundingWarningText'
 
 // packed `metadata` format: 0btTPRRRRRRRRBBBBBBBBrrrrrrrrVVVVVVVV
 // V: version (bits 0-7)
@@ -85,7 +86,9 @@ export const hasFundingTarget = (
  *
  * If a value in the returned object is true, it is potentially unsafe.
  */
-export const getUnsafeFundingCycleProperties = (fundingCycle: FundingCycle) => {
+export const getUnsafeFundingCycleProperties = (
+  fundingCycle: FundingCycle,
+): FundingCycleRiskFlags => {
   const metadata = decodeFundingCycleMetadata(fundingCycle.metadata)
 
   // when we set one of these values to true, we're saying it's potentially unsafe.

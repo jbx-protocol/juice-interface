@@ -14,6 +14,8 @@ import { currencyName } from 'utils/currency'
 import { formattedNum, formatWad } from 'utils/formatNumber'
 import { weightedRate } from 'utils/math'
 
+import ProjectRiskNotice from './ProjectRiskNotice'
+
 export default function ConfirmPayOwnerModal({
   visible,
   weiAmount,
@@ -94,6 +96,8 @@ export default function ConfirmPayOwnerModal({
             <p>{metadata.payDisclosure}</p>
           </div>
         )}
+
+        <ProjectRiskNotice />
 
         <Descriptions column={1} bordered>
           <Descriptions.Item label={t`Pay amount`} className="content-right">

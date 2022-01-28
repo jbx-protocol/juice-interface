@@ -243,7 +243,7 @@ export default function FundingCycleDetails({
         <WarningText
           showWarning={unsafeFundingCycleProperties.ballot}
           text={ballotStrategy.name}
-          tooltipTitle={t`The upcoming funding cycle can be reconfigured by the project owner moments before a new cycle begins. This makes it possibe to take advantage of contributors, for example by withdrawing all overflow.`}
+          tooltipTitle={t`The upcoming funding cycle can be reconfigured by the project owner moments before a new cycle begins. This makes it possible to take advantage of contributors, for example by withdrawing all overflow.`}
         />
         <div style={{ color: colors.text.secondary }}>
           <div style={{ fontSize: '0.7rem' }}>

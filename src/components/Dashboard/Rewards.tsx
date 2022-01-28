@@ -27,11 +27,7 @@ import PrintPreminedModal from '../modals/PrintPreminedModal'
 import IssueTickets from './IssueTickets'
 import SectionHeader from './SectionHeader'
 
-export default function Rewards({
-  totalOverflow,
-}: {
-  totalOverflow: BigNumber | undefined
-}) {
+export default function Rewards() {
   const [manageTokensModalVisible, setManageTokensModalVisible] =
     useState<boolean>()
   const [unstakeModalVisible, setUnstakeModalVisible] = useState<boolean>()
@@ -71,8 +67,6 @@ export default function Rewards({
   )
 
   const share = formatPercent(totalBalance, totalSupply)
-
-  const redeemDisabled = !totalOverflow || totalOverflow.eq(0)
 
   const ticketsIssued = tokenAddress
     ? tokenAddress !== constants.AddressZero
@@ -238,7 +232,6 @@ export default function Rewards({
       </Modal>
       <RedeemModal
         visible={redeemModalVisible}
-        redeemDisabled={redeemDisabled}
         onOk={() => {
           setRedeemModalVisible(false)
         }}

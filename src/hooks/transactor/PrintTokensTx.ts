@@ -4,7 +4,6 @@ import { UserContext } from 'contexts/userContext'
 import { BigNumber } from 'ethers'
 import { CurrencyOption } from 'models/currency-option'
 import { useContext } from 'react'
-import { parseWad } from 'utils/formatNumber'
 
 import { TransactorInstance } from './Transactor'
 
@@ -34,7 +33,7 @@ export function usePrintTokensTx(): TransactorInstance<{
         functionName = 'printPreminedTickets'
         args = [
           projectId.toHexString(),
-          parseWad(value).toHexString(),
+          value.toHexString(),
           BigNumber.from(currency).toHexString(),
           beneficiary,
           memo,
@@ -46,7 +45,7 @@ export function usePrintTokensTx(): TransactorInstance<{
         functionName = 'printTickets'
         args = [
           projectId.toHexString(),
-          parseWad(value).toHexString(),
+          value.toHexString(),
           beneficiary,
           memo,
           preferUnstaked,

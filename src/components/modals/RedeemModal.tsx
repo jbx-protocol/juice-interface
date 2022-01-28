@@ -19,12 +19,10 @@ import { CURRENCY_ETH, CURRENCY_USD } from 'constants/currency'
 
 export default function RedeemModal({
   visible,
-  redeemDisabled,
   onOk,
   onCancel,
 }: {
   visible?: boolean
-  redeemDisabled?: boolean
   onOk: VoidFunction | undefined
   onCancel: VoidFunction | undefined
 }) {
@@ -36,7 +34,7 @@ export default function RedeemModal({
     theme: { colors },
   } = useContext(ThemeContext)
   const { userAddress } = useContext(NetworkContext)
-  const { projectId, tokenSymbol, currentFC, terminal } =
+  const { projectId, tokenSymbol, currentFC, terminal, overflow } =
     useContext(ProjectContext)
 
   const fcMetadata = decodeFundingCycleMetadata(currentFC?.metadata)
@@ -68,7 +66,10 @@ export default function RedeemModal({
       },
       {
         onConfirmed: () => setRedeemAmount(undefined),
-        onDone: () => setLoading(false),
+        onDone: () => {
+          setLoading(false)
+          onOk?.()
+        },
       },
     )
   }
@@ -86,8 +87,6 @@ export default function RedeemModal({
       confirmLoading={loading}
       onOk={() => {
         redeem()
-
-        if (onOk) onOk()
       }}
       onCancel={() => {
         setRedeemAmount(undefined)
@@ -98,8 +97,7 @@ export default function RedeemModal({
         precision: 2,
       })} ${tokenSymbol ?? 'tokens'} for ETH`}
       okButtonProps={{
-        disabled:
-          redeemDisabled || !redeemAmount || parseInt(redeemAmount) === 0,
+        disabled: !redeemAmount || parseInt(redeemAmount) === 0,
       }}
       width={540}
       centered
@@ -115,15 +113,6 @@ export default function RedeemModal({
               %
             </span>
           </p>
-          {/* <p style={statsStyle}>
-            Burn rate:{' '}
-            <span>
-              {redeemRate && !redeemRate.isZero()
-                ? formattedNum(parseWad(1).div(redeemRate))
-                : '--'}{' '}
-              {tokenSymbol ?? 'tokens'}/ETH
-            </span>
-          </p> */}
           <p style={statsStyle}>
             {tokenSymbol ?? 'Token'} balance:{' '}
             <span>
@@ -147,39 +136,38 @@ export default function RedeemModal({
             according to the bonding curve rate of the current funding cycle.
           </Trans>{' '}
           <span style={{ fontWeight: 500, color: colors.text.warn }}>
-            <Trans>Tokens are burned when they are redeemed.</Trans>
+            {overflow?.eq(0) ? (
+              <Trans>
+                This project has no overflow, and you will receive no ETH for
+                burning tokens.
+              </Trans>
+            ) : (
+              <Trans>Tokens are burned when they are redeemed.</Trans>
+            )}
           </span>
         </p>
-        {redeemDisabled && (
-          <div style={{ color: colors.text.secondary, fontWeight: 500 }}>
-            <Trans>You can redeem tokens once this project has overflow.</Trans>
+        <div>
+          <FormattedNumberInput
+            min={0}
+            step={0.001}
+            placeholder="0"
+            value={redeemAmount}
+            accessory={
+              <InputAccessoryButton
+                content={t`MAX`}
+                onClick={() => setRedeemAmount(fromWad(totalBalance))}
+              />
+            }
+            onChange={val => setRedeemAmount(val)}
+          />
+          <div style={{ fontWeight: 500, marginTop: 20 }}>
+            <Trans>
+              You will receive{' '}
+              {currentFC?.currency.eq(CURRENCY_USD) ? 'minimum ' : ' '}
+              {formatWad(minAmount, { precision: 8 }) || '--'} ETH
+            </Trans>
           </div>
-        )}
-        {!redeemDisabled && (
-          <div>
-            <FormattedNumberInput
-              min={0}
-              step={0.001}
-              placeholder="0"
-              value={redeemAmount}
-              disabled={redeemDisabled}
-              accessory={
-                <InputAccessoryButton
-                  content={t`MAX`}
-                  onClick={() => setRedeemAmount(fromWad(totalBalance))}
-                />
-              }
-              onChange={val => setRedeemAmount(val)}
-            />
-            <div style={{ fontWeight: 500, marginTop: 20 }}>
-              <Trans>
-                You will receive{' '}
-                {currentFC?.currency.eq(CURRENCY_USD) ? 'minimum ' : ' '}
-                {formatWad(minAmount, { precision: 8 }) || '--'} ETH
-              </Trans>
-            </div>
-          </div>
-        )}
+        </div>
       </Space>
     </Modal>
   )

@@ -91,7 +91,6 @@ export const getUnsafeFundingCycleProperties = (fundingCycle: FundingCycle) => {
   // when we set one of these values to true, we're saying it's potentially unsafe.
   // This object is based on type FundingCycle
   const configFlags = {
-    target: false,
     duration: false,
     ballot: false,
     metadataTicketPrintingIsAllowed: false,
@@ -121,14 +120,6 @@ export const getUnsafeFundingCycleProperties = (fundingCycle: FundingCycle) => {
   }
 
   /**
-   * No funding target.
-   * Means a contributor can't redeem.
-   */
-  if (!fundingCycle.target) {
-    configFlags.target = true
-  }
-
-  /**
    * Token minting is enabled (v1.1).
    * Any supply of tokens could be minted at any time by the project owners, diluting the token share of all existing contributors.
    */
@@ -150,11 +141,11 @@ export const getUnsafeFundingCycleProperties = (fundingCycle: FundingCycle) => {
 }
 
 /**
- * Return false if a funding cycle has a risky property (or many).
- * True if we deem a project "safe" to contribute to.
+ * Return number of risk indicators for a funding cycle.
+ * 0 if we deem a project "safe" to contribute to.
  */
-export const isFundingCycleSafe = (fundingCycle: FundingCycle): Boolean => {
-  return !Object.values(getUnsafeFundingCycleProperties(fundingCycle)).some(
+export const fundingCycleRiskCount = (fundingCycle: FundingCycle): number => {
+  return Object.values(getUnsafeFundingCycleProperties(fundingCycle)).filter(
     v => v === true,
-  )
+  ).length
 }

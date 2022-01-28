@@ -1,6 +1,8 @@
 import { parseEther } from '@ethersproject/units'
-import { Descriptions } from 'antd'
+import { Descriptions, Tooltip } from 'antd'
 import { t, Trans } from '@lingui/macro'
+import { WarningOutlined } from '@ant-design/icons'
+
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 
 import { ProjectContext } from 'contexts/projectContext'
@@ -17,8 +19,9 @@ import {
 } from 'utils/fundingCycle'
 import { weightedRate } from 'utils/math'
 
-import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
+import { getUnsafeFundingCycleProperties } from 'utils/fundingCycle'
 
+import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 import TooltipLabel from '../shared/TooltipLabel'
 
 export default function FundingCycleDetails({
@@ -44,6 +47,29 @@ export default function FundingCycleDetails({
 
   const metadata = decodeFundingCycleMetadata(fundingCycle.metadata)
   const ballotStrategy = getBallotStrategyByAddress(fundingCycle.ballot)
+  const unsafeFundingCycleProperties =
+    getUnsafeFundingCycleProperties(fundingCycle)
+
+  const WarningText = ({
+    text,
+    tooltipTitle,
+    showWarning,
+  }: {
+    text: string
+    tooltipTitle?: string
+    showWarning?: boolean
+  }) => {
+    return showWarning ? (
+      <Tooltip title={tooltipTitle}>
+        <span style={{ color: colors.text.warn }}>
+          {text} <WarningOutlined />
+        </span>
+      </Tooltip>
+    ) : (
+      <span>{text}</span>
+    )
+  }
+
   return (
     <div>
       <Descriptions
@@ -61,15 +87,25 @@ export default function FundingCycleDetails({
                 {formatWad(fundingCycle.target)}
               </>
             ) : (
-              t`No target`
+              <WarningText
+                showWarning={true}
+                text={t`No target`}
+                tooltipTitle={t`This project won't have overflow. Contributors cannot redeem any funds that they contribute.`}
+              />
             )}
           </Descriptions.Item>
         }
 
         <Descriptions.Item label={t`Duration`}>
-          {fundingCycle.duration.gt(0)
-            ? t`${fundingCycle.duration.toString()} days`
-            : t`Not set`}
+          {fundingCycle.duration.gt(0) ? (
+            t`${fundingCycle.duration.toString()} days`
+          ) : (
+            <WarningText
+              showWarning={true}
+              text={t`Not set`}
+              tooltipTitle={t`Funding reconfigurations can be made at any time, without notice.`}
+            />
+          )}
         </Descriptions.Item>
 
         {fundingCycle.duration.gt(0) && (
@@ -119,7 +155,11 @@ export default function FundingCycleDetails({
             />
           }
         >
-          {fromPerbicent(metadata?.reservedRate)}%
+          <WarningText
+            showWarning={unsafeFundingCycleProperties.metadataReservedRate}
+            text={`${fromPerbicent(metadata?.reservedRate)}%`}
+            tooltipTitle={t`Contributors will receive a relatively small portion of tokens (if any) in exchange for paying the project.`}
+          />
         </Descriptions.Item>
 
         <Descriptions.Item
@@ -173,7 +213,15 @@ export default function FundingCycleDetails({
             />
           }
         >
-          {metadata?.ticketPrintingIsAllowed ? t`Allowed` : t`Disabled`}
+          {metadata?.ticketPrintingIsAllowed ? (
+            <WarningText
+              showWarning={true}
+              text={t`Allowed`}
+              tooltipTitle={t`Any supply of tokens could be minted at any time by the project owners, diluting the token share of all existing contributors.`}
+            />
+          ) : (
+            t`Disabled`
+          )}
         </Descriptions.Item>
 
         <Descriptions.Item
@@ -192,7 +240,11 @@ export default function FundingCycleDetails({
           />
           :
         </span>{' '}
-        {ballotStrategy.name}
+        <WarningText
+          showWarning={unsafeFundingCycleProperties.ballot}
+          text={ballotStrategy.name}
+          tooltipTitle={t`Funding cycle reconfigurations can be created moments before a new cycle begins. Project owners can take advantage of contributors, for example by withdrawing overflow.`}
+        />
         <div style={{ color: colors.text.secondary }}>
           <div style={{ fontSize: '0.7rem' }}>
             <Trans>Address</Trans>: {ballotStrategy.address}

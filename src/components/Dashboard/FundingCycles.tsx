@@ -10,7 +10,7 @@ import {
 } from 'hooks/contractReader/HasPermission'
 import { useContext, useState } from 'react'
 
-import { isFundingCycleSafe } from 'utils/fundingCycle'
+import { fundingCycleRiskCount } from 'utils/fundingCycle'
 import { FundingCycle } from 'models/funding-cycle'
 
 import CurrentFundingCycle from '../FundingCycle/CurrentFundingCycle'
@@ -42,16 +42,22 @@ export default function FundingCycles({
     text: string
     fundingCycle: FundingCycle | undefined
   }) => {
-    return fundingCycle && isFundingCycleSafe(fundingCycle) ? (
-      text
-    ) : (
+    return fundingCycle && fundingCycleRiskCount(fundingCycle) ? (
       <Tooltip
         title={t`This funding cycle may pose risks to contributors. Check the funding cycle details before paying this project.`}
       >
         <span>
-          {text} <WarningOutlined style={{ color: colors.text.warn }} />
+          {text}
+          <WarningOutlined
+            style={{
+              color: colors.text.warn,
+              marginLeft: 4,
+            }}
+          />
         </span>
       </Tooltip>
+    ) : (
+      text
     )
   }
 

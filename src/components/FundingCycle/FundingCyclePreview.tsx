@@ -1,11 +1,12 @@
-import { Collapse } from 'antd'
+import { WarningOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
+import { Collapse, Tooltip } from 'antd'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import { ThemeContext } from 'contexts/themeContext'
 import { FundingCycle } from 'models/funding-cycle'
 import { useContext } from 'react'
 import { detailedTimeString } from 'utils/formatTime'
-import { hasFundingTarget, isRecurring } from 'utils/fundingCycle'
+import { fundingCycleRiskCount, isRecurring } from 'utils/fundingCycle'
 
 import FundingCycleDetails from './FundingCycleDetails'
 
@@ -59,16 +60,35 @@ export default function FundingCyclePreview({
                 cursor: 'pointer',
               }}
             >
-              {hasFundingTarget(fundingCycle) && fundingCycle.duration.gt(0) ? (
-                <span>
-                  <Trans>Cycle #{fundingCycle.number.toString()}</Trans>
-                </span>
-              ) : (
-                <span>
-                  <Trans>Details</Trans>
-                </span>
-              )}
-              <span style={{ color: colors.text.secondary }}>{headerText}</span>
+              <span>
+                {fundingCycle.duration.gt(0) ? (
+                  <span>
+                    <Trans>Cycle #{fundingCycle.number.toString()}</Trans>
+                  </span>
+                ) : (
+                  <span>
+                    <Trans>Details</Trans>
+                  </span>
+                )}
+                {fundingCycleRiskCount(fundingCycle) > 0 && (
+                  <span
+                    style={{ marginLeft: 10, color: colors.text.secondary }}
+                  >
+                    <Tooltip
+                      title={t`Some funding cycle properties may indicate risk
+                    for project contributors.`}
+                    >
+                      <WarningOutlined style={{ marginRight: 2 }} />
+                      {fundingCycleRiskCount(fundingCycle)}
+                    </Tooltip>
+                  </span>
+                )}
+              </span>
+              <span style={{ color: colors.text.secondary }}>
+                {headerText.length > 0 && (
+                  <span style={{ marginLeft: 10 }}>{headerText}</span>
+                )}
+              </span>
             </div>
           }
         >

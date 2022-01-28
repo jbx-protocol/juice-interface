@@ -1,8 +1,7 @@
-import { parseEther } from '@ethersproject/units'
-import { Descriptions, Tooltip } from 'antd'
-import { t, Trans } from '@lingui/macro'
 import { WarningOutlined } from '@ant-design/icons'
-
+import { parseEther } from '@ethersproject/units'
+import { t, Trans } from '@lingui/macro'
+import { Descriptions, Tooltip } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 
 import { ProjectContext } from 'contexts/projectContext'
@@ -14,14 +13,14 @@ import { formatDate } from 'utils/formatDate'
 import { formatWad, fromPerbicent, fromPermille } from 'utils/formatNumber'
 import {
   decodeFundingCycleMetadata,
+  getUnsafeFundingCycleProperties,
   hasFundingTarget,
   isRecurring,
 } from 'utils/fundingCycle'
 import { weightedRate } from 'utils/math'
 
-import { getUnsafeFundingCycleProperties } from 'utils/fundingCycle'
-
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
+
 import TooltipLabel from '../shared/TooltipLabel'
 
 export default function FundingCycleDetails({
@@ -61,8 +60,9 @@ export default function FundingCycleDetails({
   }) => {
     return showWarning ? (
       <Tooltip title={tooltipTitle}>
+        <span style={{ fontWeight: 500 }}>{text} </span>
         <span style={{ color: colors.text.warn }}>
-          {text} <WarningOutlined />
+          <WarningOutlined />
         </span>
       </Tooltip>
     ) : (
@@ -87,11 +87,7 @@ export default function FundingCycleDetails({
                 {formatWad(fundingCycle.target)}
               </>
             ) : (
-              <WarningText
-                showWarning={true}
-                text={t`No target`}
-                tooltipTitle={t`This project won't have overflow. Contributors cannot redeem any funds that they contribute.`}
-              />
+              t`No target`
             )}
           </Descriptions.Item>
         }
@@ -103,7 +99,7 @@ export default function FundingCycleDetails({
             <WarningText
               showWarning={true}
               text={t`Not set`}
-              tooltipTitle={t`Funding reconfigurations can be made at any time, without notice.`}
+              tooltipTitle={t`The project owner may reconfigure this funding cycle at any time, without notice.`}
             />
           )}
         </Descriptions.Item>
@@ -158,7 +154,11 @@ export default function FundingCycleDetails({
           <WarningText
             showWarning={unsafeFundingCycleProperties.metadataReservedRate}
             text={`${fromPerbicent(metadata?.reservedRate)}%`}
-            tooltipTitle={t`Contributors will receive a relatively small portion of tokens (if any) in exchange for paying the project.`}
+            tooltipTitle={
+              metadata?.reservedRate === 200
+                ? t`Contributors will not receive any tokens in exchange for paying this project.`
+                : t`Contributors will receive a relatively small portion of tokens in exchange for paying this project.`
+            }
           />
         </Descriptions.Item>
 
@@ -217,7 +217,7 @@ export default function FundingCycleDetails({
             <WarningText
               showWarning={true}
               text={t`Allowed`}
-              tooltipTitle={t`Any supply of tokens could be minted at any time by the project owners, diluting the token share of all existing contributors.`}
+              tooltipTitle={t`The project owner may mint any supply of tokens at any time, diluting the token share of all existing contributors.`}
             />
           ) : (
             t`Disabled`
@@ -243,7 +243,7 @@ export default function FundingCycleDetails({
         <WarningText
           showWarning={unsafeFundingCycleProperties.ballot}
           text={ballotStrategy.name}
-          tooltipTitle={t`Funding cycle reconfigurations can be created moments before a new cycle begins. Project owners can take advantage of contributors, for example by withdrawing overflow.`}
+          tooltipTitle={t`The upcoming funding cycle can be reconfigured by the project owner moments before a new cycle begins. This makes it possibe to take advantage of contributors, for example by withdrawing all overflow.`}
         />
         <div style={{ color: colors.text.secondary }}>
           <div style={{ fontSize: '0.7rem' }}>

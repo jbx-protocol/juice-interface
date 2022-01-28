@@ -1,7 +1,12 @@
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
+
 import { constants } from 'ethers'
 import { FundingCycle } from 'models/funding-cycle'
 import { FundingCycleMetadata } from 'models/funding-cycle-metadata'
+
+import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
+
+import { fromPerbicent } from './formatNumber'
 
 import { EditingFundingCycle } from './serializers'
 
@@ -73,3 +78,83 @@ export const isRecurring = (fundingCycle: FundingCycle | EditingFundingCycle) =>
 export const hasFundingTarget = (
   fundingCycle: Pick<FundingCycle | EditingFundingCycle, 'target'>,
 ) => fundingCycle.target.lt(constants.MaxUint256)
+
+/**
+ * Mark various funding cycle properties as "unsafe",
+ * based on a subjective interpretation.
+ *
+ * If a value in the returned object is true, it is potentially unsafe.
+ */
+export const getUnsafeFundingCycleProperties = (fundingCycle: FundingCycle) => {
+  const metadata = decodeFundingCycleMetadata(fundingCycle.metadata)
+
+  // when we set one of these values to true, we're saying it's potentially unsafe.
+  // This object is based on type FundingCycle
+  const configFlags = {
+    target: false,
+    duration: false,
+    ballot: false,
+    metadataTicketPrintingIsAllowed: false,
+    metadataReservedRate: false,
+  }
+
+  /**
+   * Ballot address is 0x0000.
+   * Funding cycle reconfigurations can be created moments before a new cycle begins,
+   * giving project owners an opportunity to take advantage of contributors, for example by withdrawing overflow.
+   */
+  if (
+    getBallotStrategyByAddress(fundingCycle.ballot).address ===
+    constants.AddressZero
+  ) {
+    configFlags.ballot = true
+  }
+
+  /**
+   * Duration not set. Reconfigurations can be made at any point without notice.
+   */
+  if (
+    !fundingCycle.duration ||
+    fundingCycle.duration.eq(constants.AddressZero)
+  ) {
+    configFlags.duration = true
+  }
+
+  /**
+   * No funding target.
+   * Means a contributor can't redeem.
+   */
+  if (!fundingCycle.target) {
+    configFlags.target = true
+  }
+
+  /**
+   * Token minting is enabled (v1.1).
+   * Any supply of tokens could be minted at any time by the project owners, diluting the token share of all existing contributors.
+   */
+  if (metadata?.ticketPrintingIsAllowed) {
+    configFlags.metadataTicketPrintingIsAllowed = true
+  }
+
+  /**
+   * Reserved rate is very high.
+   * Contributors will receive a relatively small portion of tokens (if any) in exchange for paying the project.
+   *
+   * Note: max reserve rate is 200.
+   */
+  if (parseInt(fromPerbicent(metadata?.reservedRate ?? 0), 10) >= 90) {
+    configFlags.metadataReservedRate = true
+  }
+
+  return configFlags
+}
+
+/**
+ * Return false if a funding cycle has a risky property (or many).
+ * True if we deem a project "safe" to contribute to.
+ */
+export const isFundingCycleSafe = (fundingCycle: FundingCycle): Boolean => {
+  return !Object.values(getUnsafeFundingCycleProperties(fundingCycle)).some(
+    v => v === true,
+  )
+}

@@ -60,8 +60,6 @@ export default function Projects() {
   const { data: searchPages, isLoading: isLoadingSearch } =
     useProjectsSearch(searchText)
 
-  // const trendingProjectIds = useTrendingProjects()
-
   // When we scroll within 200px of our loadMoreContainerRef, fetch the next page.
   useEffect(() => {
     if (loadMoreContainerRef.current) {

@@ -24,17 +24,9 @@ type ProjectCardProject = Pick<
 >
 
 export default function ProjectCard({
-  size,
   project,
-  bg,
-  rank,
-  percentGain,
 }: {
-  size?: 'sm' | 'lg'
   project?: ProjectCardProject | BigNumber
-  bg?: string // Currently used on homepage trending projects
-  rank?: number
-  percentGain?: number
 }) {
   const {
     theme: { colors, radii },
@@ -46,18 +38,6 @@ export default function ProjectCard({
     whiteSpace: 'pre',
     overflow: 'hidden',
     padding: '25px 20px',
-    backgroundColor: bg,
-    // Shows darker border when background is set
-    border: `1px solid ${
-      bg ? 'var(--stroke-secondary)' : 'var(--stroke-tertiary)'
-    }`,
-  }
-
-  const rankStyle: CSSProperties = {
-    fontSize: 22,
-    color: 'var(--text-primary)',
-    fontWeight: 400,
-    marginRight: 15,
   }
 
   // Get ProjectCardProject object if this component was passed a projectId (bigNumber)
@@ -109,12 +89,11 @@ export default function ProjectCard({
     >
       {metadata ? (
         <div style={cardStyle} className="clickable-border">
-          <div style={rankStyle}>{rank}</div>
           <div style={{ marginRight: 20 }}>
             <ProjectLogo
               uri={metadata.logoUri}
               name={metadata.name}
-              size={size === 'sm' ? 70 : 110}
+              size={110}
             />
           </div>
 
@@ -131,30 +110,26 @@ export default function ProjectCard({
                 margin: 0,
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
-                fontSize: size === 'sm' ? 16 : 21,
+                fontSize: 21,
               }}
             >
               {metadata.name}
             </h2>
 
             <div>
-              {size !== 'sm' ? (
-                <React.Fragment>
-                  <span style={{ color: colors.text.primary, fontWeight: 500 }}>
-                    {_project?.id?.toString()} - @{_project?.handle}
-                  </span>
-                  <span
-                    style={{
-                      marginLeft: 10,
-                      color: colors.text.tertiary,
-                      fontSize: '0.7rem',
-                      fontWeight: 500,
-                    }}
-                  >
-                    V{terminalVersion}
-                  </span>
-                </React.Fragment>
-              ) : null}
+              <span style={{ color: colors.text.primary, fontWeight: 500 }}>
+                {_project?.id?.toString()} - @{_project?.handle}
+              </span>
+              <span
+                style={{
+                  marginLeft: 10,
+                  color: colors.text.tertiary,
+                  fontSize: '0.7rem',
+                  fontWeight: 500,
+                }}
+              >
+                V{terminalVersion}
+              </span>
             </div>
 
             <div>
@@ -162,17 +137,12 @@ export default function ProjectCard({
                 <CurrencySymbol currency={CURRENCY_ETH} />
                 {formatWad(_project?.totalPaid, { precision })}{' '}
               </span>
-              {percentGain ? (
-                <span style={{ color: colors.text.header, fontWeight: 600 }}>
-                  +{percentGain}%
-                </span>
-              ) : (
-                <span style={{ color: colors.text.secondary }}>
-                  since{' '}
-                  {!!_project?.createdAt &&
-                    formatDate(_project?.createdAt * 1000, 'MM-DD-YY')}
-                </span>
-              )}
+
+              <span style={{ color: colors.text.secondary }}>
+                since{' '}
+                {!!_project?.createdAt &&
+                  formatDate(_project?.createdAt * 1000, 'MM-DD-YY')}
+              </span>
             </div>
 
             {metadata.description && (

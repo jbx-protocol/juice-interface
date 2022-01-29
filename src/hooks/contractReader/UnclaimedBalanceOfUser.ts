@@ -1,7 +1,7 @@
 import { NetworkContext } from 'contexts/networkContext'
 import { ProjectContext } from 'contexts/projectContext'
 import { BigNumber } from 'ethers'
-import { ContractName } from 'models/contract-name'
+import { JuiceboxV1ContractName } from 'models/v1/contracts'
 import { useContext } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 
@@ -14,7 +14,7 @@ export default function useUnclaimedBalanceOfUser() {
   const { projectId, terminal } = useContext(ProjectContext)
 
   return useContractReader<BigNumber>({
-    contract: ContractName.TicketBooth,
+    contract: JuiceboxV1ContractName.TicketBooth,
     functionName: 'stakedBalanceOf',
     args:
       userAddress && projectId

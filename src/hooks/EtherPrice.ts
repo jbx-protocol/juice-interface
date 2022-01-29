@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { ContractName } from 'models/contract-name'
+import { JuiceboxV1ContractName } from 'models/v1/contracts'
 import { useCallback, useState } from 'react'
 import { fromWad } from 'utils/formatNumber'
 
@@ -9,7 +9,7 @@ export function useEtherPrice() {
   const [price, setPrice] = useState<number>()
 
   useContractReader({
-    contract: ContractName.Prices,
+    contract: JuiceboxV1ContractName.Prices,
     functionName: 'getETHPriceFor',
     args: ['1'], // USD
     callback: useCallback(

@@ -1,5 +1,5 @@
 import { BigNumber, BigNumberish } from 'ethers'
-import { ContractName } from 'models/contract-name'
+import { JuiceboxV1ContractName } from 'models/v1/contracts'
 import { FundingCycle } from 'models/funding-cycle'
 import { TerminalName } from 'models/terminal-name'
 import { useCallback, useMemo } from 'react'
@@ -13,7 +13,7 @@ export default function useCurrentFundingCycleOfProject(
   terminalName: TerminalName | undefined,
 ) {
   return useContractReader<FundingCycle>({
-    contract: ContractName.FundingCycles,
+    contract: JuiceboxV1ContractName.FundingCycles,
     functionName: 'currentOf',
     args: projectId ? [BigNumber.from(projectId).toHexString()] : null,
     valueDidChange: useCallback((a, b) => !deepEqFundingCycles(a, b), []),
@@ -22,7 +22,7 @@ export default function useCurrentFundingCycleOfProject(
         projectId
           ? [
               {
-                contract: ContractName.FundingCycles,
+                contract: JuiceboxV1ContractName.FundingCycles,
                 eventName: 'Configure',
                 topics: [[], BigNumber.from(projectId).toHexString()],
               },

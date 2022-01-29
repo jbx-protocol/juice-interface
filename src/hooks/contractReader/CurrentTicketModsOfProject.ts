@@ -1,5 +1,5 @@
 import { BigNumber, BigNumberish } from 'ethers'
-import { ContractName } from 'models/contract-name'
+import { JuiceboxV1ContractName } from 'models/v1/contracts'
 import { TicketMod } from 'models/mods'
 import { useMemo } from 'react'
 
@@ -11,7 +11,7 @@ export default function useCurrentTicketModsOfProject(
   currentConfigured: BigNumberish | undefined,
 ) {
   return useContractReader<TicketMod[]>({
-    contract: ContractName.ModStore,
+    contract: JuiceboxV1ContractName.ModStore,
     functionName: 'ticketModsOf',
     args:
       projectId && currentConfigured
@@ -25,7 +25,7 @@ export default function useCurrentTicketModsOfProject(
         projectId && currentConfigured
           ? [
               {
-                contract: ContractName.ModStore,
+                contract: JuiceboxV1ContractName.ModStore,
                 eventName: 'SetTicketMod',
                 topics: [
                   BigNumber.from(projectId).toHexString(),

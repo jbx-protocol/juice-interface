@@ -1,7 +1,7 @@
 import { Listener } from '@ethersproject/providers'
 
 import { useContractLoader } from 'hooks/ContractLoader'
-import { ContractName } from 'models/contract-name'
+import { JuiceboxV1ContractName } from 'models/v1/contracts'
 import { useEffect, useMemo, useState } from 'react'
 
 import { readProvider } from 'constants/readProvider'
@@ -13,7 +13,7 @@ export default function useEventListener<E>({
   topics,
   includeHistory,
 }: {
-  contractName?: ContractName
+  contractName?: JuiceboxV1ContractName
   eventName?: string
   startBlock?: number
   topics?: (any | any[])[]

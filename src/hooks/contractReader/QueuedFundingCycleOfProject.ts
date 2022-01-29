@@ -1,5 +1,5 @@
 import { BigNumber, BigNumberish } from 'ethers'
-import { ContractName } from 'models/contract-name'
+import { JuiceboxV1ContractName } from 'models/v1/contracts'
 import { FundingCycle } from 'models/funding-cycle'
 
 import useContractReader from './ContractReader'
@@ -9,13 +9,13 @@ export default function useQueuedFundingCycleOfProject(
   projectId: BigNumberish | undefined,
 ) {
   return useContractReader<FundingCycle>({
-    contract: ContractName.FundingCycles,
+    contract: JuiceboxV1ContractName.FundingCycles,
     functionName: 'queuedOf',
     args: projectId ? [BigNumber.from(projectId).toHexString()] : null,
     updateOn: projectId
       ? [
           {
-            contract: ContractName.FundingCycles,
+            contract: JuiceboxV1ContractName.FundingCycles,
             eventName: 'Configure',
             topics: [[], BigNumber.from(projectId).toHexString()],
           },

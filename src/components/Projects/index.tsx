@@ -297,8 +297,8 @@ export default function Projects() {
             }}
           >
             {concatenatedPages?.length}{' '}
-            {concatenatedPages?.length === 1 ? t`project` : t`projects`}
-            {searchText ? t` matching "${searchText}"` : ''}
+            {concatenatedPages?.length === 1 ? t`project` : t`projects`}{' '}
+            {searchText ? t`matching "${searchText}"` : ''}
           </div>
         )
       )}

@@ -1,5 +1,5 @@
 import { Contract, EventFilter } from '@ethersproject/contracts'
-import { UserContext } from 'contexts/userContext'
+import { V1UserContext } from 'contexts/v1/userContext'
 import { V1ContractName } from 'models/v1/contracts'
 import { V1Contracts } from 'models/v1/contracts'
 import { useCallback, useContext, useState } from 'react'
@@ -32,7 +32,7 @@ export default function useContractReader<V>({
 }): V | undefined {
   const [value, setValue] = useState<V | undefined>()
 
-  const { contracts } = useContext(UserContext)
+  const { contracts } = useContext(V1UserContext)
 
   const _formatter = useCallback(
     (val: any) => (formatter ? formatter(val) : val),

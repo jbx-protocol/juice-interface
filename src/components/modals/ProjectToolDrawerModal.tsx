@@ -4,7 +4,7 @@ import { useForm } from 'antd/lib/form/Form'
 import { FormItems } from 'components/shared/formItems'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
-import { ProjectContext } from 'contexts/projectContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import useUnclaimedBalanceOfUser from 'hooks/contractReader/UnclaimedBalanceOfUser'
 import { useAddToBalanceTx } from 'hooks/transactor/AddToBalanceTx'
 import { useSafeTransferFromTx } from 'hooks/transactor/SafeTransferFromTx'
@@ -19,7 +19,7 @@ export default function ProjectToolDrawerModal({
   visible?: boolean
   onClose?: VoidFunction
 }) {
-  const { tokenSymbol, owner } = useContext(ProjectContext)
+  const { tokenSymbol, owner } = useContext(V1ProjectContext)
   const safeTransferFromTx = useSafeTransferFromTx()
   const transferTokensTx = useTransferTokensTx()
   const addToBalanceTx = useAddToBalanceTx()

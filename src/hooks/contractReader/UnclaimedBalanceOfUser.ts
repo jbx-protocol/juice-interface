@@ -1,5 +1,5 @@
 import { NetworkContext } from 'contexts/networkContext'
-import { ProjectContext } from 'contexts/projectContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { BigNumber } from 'ethers'
 import { V1ContractName } from 'models/v1/contracts'
 import { useContext } from 'react'
@@ -11,7 +11,7 @@ import useShouldUpdateTokens from './ShouldUpdateTokens'
 /** Returns unclaimed balance of user with `userAddress`. */
 export default function useUnclaimedBalanceOfUser() {
   const { userAddress } = useContext(NetworkContext)
-  const { projectId, terminal } = useContext(ProjectContext)
+  const { projectId, terminal } = useContext(V1ProjectContext)
 
   return useContractReader<BigNumber>({
     contract: V1ContractName.TicketBooth,

@@ -1,6 +1,6 @@
 import { NetworkContext } from 'contexts/networkContext'
-import { ProjectContext } from 'contexts/projectContext'
-import { UserContext } from 'contexts/userContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
+import { V1UserContext } from 'contexts/v1/userContext'
 import { BigNumber } from 'ethers'
 import { useContext } from 'react'
 
@@ -10,9 +10,9 @@ export function useTransferTokensTx(): TransactorInstance<{
   amount: BigNumber
   to: string
 }> {
-  const { transactor, contracts } = useContext(UserContext)
+  const { transactor, contracts } = useContext(V1UserContext)
   const { userAddress } = useContext(NetworkContext)
-  const { projectId } = useContext(ProjectContext)
+  const { projectId } = useContext(V1ProjectContext)
 
   return ({ amount, to }, txOpts) => {
     if (!transactor || !projectId || !contracts?.Projects) {

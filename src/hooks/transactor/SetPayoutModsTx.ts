@@ -1,6 +1,6 @@
 import { NetworkContext } from 'contexts/networkContext'
-import { ProjectContext } from 'contexts/projectContext'
-import { UserContext } from 'contexts/userContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
+import { V1UserContext } from 'contexts/v1/userContext'
 import { BigNumber, constants } from 'ethers'
 import { PayoutMod } from 'models/mods'
 import { useContext } from 'react'
@@ -11,9 +11,9 @@ export function useSetPayoutModsTx(): TransactorInstance<{
   configured: BigNumber
   payoutMods: PayoutMod[]
 }> {
-  const { transactor, contracts } = useContext(UserContext)
+  const { transactor, contracts } = useContext(V1UserContext)
   const { userAddress } = useContext(NetworkContext)
-  const { projectId, terminal } = useContext(ProjectContext)
+  const { projectId, terminal } = useContext(V1ProjectContext)
 
   return ({ configured, payoutMods }, txOpts) => {
     if (

@@ -1,6 +1,6 @@
 import { NetworkContext } from 'contexts/networkContext'
-import { ProjectContext } from 'contexts/projectContext'
 import { V1ContractName } from 'models/v1/contracts'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useContext } from 'react'
 
 import useContractReader from './ContractReader'
@@ -29,7 +29,7 @@ export function useHasPermission(
   permission: OperatorPermission | OperatorPermission[],
 ) {
   const { userAddress } = useContext(NetworkContext)
-  const { projectId, owner } = useContext(ProjectContext)
+  const { projectId, owner } = useContext(V1ProjectContext)
 
   const hasOperatorPermission = useContractReader<boolean>({
     contract: V1ContractName.OperatorStore,

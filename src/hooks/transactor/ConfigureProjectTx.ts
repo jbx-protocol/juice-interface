@@ -1,5 +1,5 @@
-import { ProjectContext } from 'contexts/projectContext'
-import { UserContext } from 'contexts/userContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
+import { V1UserContext } from 'contexts/v1/userContext'
 import { BigNumber, constants } from 'ethers'
 import { FundingCycleMetadata } from 'models/funding-cycle-metadata'
 import { FCProperties } from 'models/funding-cycle-properties'
@@ -14,8 +14,8 @@ export function useConfigureProjectTx(): TransactorInstance<{
   payoutMods: PayoutMod[]
   ticketMods: TicketMod[]
 }> {
-  const { transactor, contracts } = useContext(UserContext)
-  const { projectId, terminal } = useContext(ProjectContext)
+  const { transactor, contracts } = useContext(V1UserContext)
+  const { projectId, terminal } = useContext(V1ProjectContext)
 
   return ({ fcProperties, fcMetadata, payoutMods, ticketMods }, txOpts) => {
     if (

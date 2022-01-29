@@ -1,5 +1,5 @@
 import { NetworkContext } from 'contexts/networkContext'
-import { ProjectContext } from 'contexts/projectContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { BigNumber } from 'ethers'
 import { useContext, useMemo } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
@@ -9,7 +9,7 @@ import useTotalBalanceOf from './TotalBalanceOf'
 
 /** Returns claimable amount of project tokens for user with address `userAddress` and balance `totalBalance`. */
 export default function useClaimableOverflowOf() {
-  const { terminal, projectId } = useContext(ProjectContext)
+  const { terminal, projectId } = useContext(V1ProjectContext)
   const { userAddress } = useContext(NetworkContext)
 
   const totalBalance = useTotalBalanceOf(userAddress, projectId, terminal?.name)

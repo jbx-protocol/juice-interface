@@ -2,7 +2,7 @@ import { t, Trans } from '@lingui/macro'
 import { Button, Modal } from 'antd'
 import ProjectTicketMods from 'components/shared/formItems/ProjectTicketMods'
 import Mod from 'components/shared/Mod'
-import { ProjectContext } from 'contexts/projectContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { BigNumber } from 'ethers'
 import {
   OperatorPermission,
@@ -30,7 +30,7 @@ export default function TicketModsList({
   const [modalVisible, setModalVisible] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
   const [editingMods, setEditingMods] = useState<TicketMod[]>()
-  const { owner, tokenSymbol } = useContext(ProjectContext)
+  const { owner, tokenSymbol } = useContext(V1ProjectContext)
   const setTicketModsTx = useSetTicketModsTx()
 
   const { editableMods, lockedMods } = useMemo(() => {

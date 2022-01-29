@@ -2,7 +2,7 @@ import CurrencySymbol from 'components/shared/CurrencySymbol'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import EtherscanLink from 'components/shared/EtherscanLink'
 
-import { ProjectContext } from 'contexts/projectContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { useInfiniteSubgraphQuery } from 'hooks/SubgraphQuery'
 import { PayEvent } from 'models/subgraph-entities/pay-event'
@@ -27,7 +27,7 @@ let payEventOverrides = new Map<string, Map<string, string>>([
 ])
 
 export function PaymentActivity({ pageSize }: { pageSize: number }) {
-  const { projectId } = useContext(ProjectContext)
+  const { projectId } = useContext(V1ProjectContext)
   const {
     theme: { colors },
   } = useContext(ThemeContext)

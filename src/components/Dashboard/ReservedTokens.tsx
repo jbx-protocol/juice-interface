@@ -2,7 +2,7 @@ import { Button } from 'antd'
 import { t, Trans } from '@lingui/macro'
 import TooltipLabel from 'components/shared/TooltipLabel'
 
-import { ProjectContext } from 'contexts/projectContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import useReservedTokensOfProject from 'hooks/contractReader/ReservedTokensOfProject'
 import { FundingCycle } from 'models/funding-cycle'
 import { TicketMod } from 'models/mods'
@@ -28,7 +28,7 @@ export default function ReservedTokens({
 }) {
   const [modalIsVisible, setModalIsVisible] = useState<boolean>()
 
-  const { projectId, tokenSymbol, isPreviewMode } = useContext(ProjectContext)
+  const { projectId, tokenSymbol, isPreviewMode } = useContext(V1ProjectContext)
 
   const metadata = decodeFundingCycleMetadata(fundingCycle?.metadata)
 

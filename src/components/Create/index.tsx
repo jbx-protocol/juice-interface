@@ -6,7 +6,10 @@ import { useForm } from 'antd/lib/form/Form'
 import Modal from 'antd/lib/modal/Modal'
 import Project from 'components/Dashboard/Project'
 import { NetworkContext } from 'contexts/networkContext'
-import { ProjectContext, ProjectContextType } from 'contexts/projectContext'
+import {
+  V1ProjectContext,
+  V1ProjectContextType,
+} from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { constants } from 'ethers'
 import { useAppDispatch } from 'hooks/AppDispatch'
@@ -433,7 +436,7 @@ export default function Create() {
     [editingFC],
   )
 
-  const project = useMemo<ProjectContextType>(
+  const project = useMemo<V1ProjectContextType>(
     () => ({
       createdAt: new Date().valueOf() / 1000,
       projectType: 'standard',
@@ -474,7 +477,7 @@ export default function Create() {
   const spacing = 40
 
   return (
-    <ProjectContext.Provider value={project}>
+    <V1ProjectContext.Provider value={project}>
       <Row style={{ marginTop: 40 }}>
         <Col
           xs={24}
@@ -742,6 +745,6 @@ export default function Create() {
           This will erase of your all changes.
         </Modal>
       </Row>
-    </ProjectContext.Provider>
+    </V1ProjectContext.Provider>
   )
 }

@@ -2,7 +2,7 @@ import { Space, Tooltip } from 'antd'
 import { t } from '@lingui/macro'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { CardSection } from 'components/shared/CardSection'
-import { ProjectContext } from 'contexts/projectContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import {
   OperatorPermission,
@@ -29,7 +29,7 @@ export default function FundingCycles({
   const [selectedTab, setSelectedTab] = useState<TabOption>('current')
   const [hoverTab, setHoverTab] = useState<TabOption>()
 
-  const { projectId, currentFC, queuedFC } = useContext(ProjectContext)
+  const { projectId, currentFC, queuedFC } = useContext(V1ProjectContext)
 
   const {
     theme: { colors },

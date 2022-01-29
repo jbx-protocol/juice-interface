@@ -1,20 +1,20 @@
 import { V1ContractName } from 'models/v1/contracts'
 import { NetworkName } from 'models/network-name'
-import { TerminalVersion } from 'models/terminal-version'
+import { V1TerminalVersion } from 'models/v1/terminals'
 
-import { TerminalName } from 'models/terminal-name'
+import { V1TerminalName } from 'models/v1/terminals'
 
 import { readNetwork } from 'constants/networks'
 
 const loadTerminalAddress = (
   network: NetworkName,
-  terminal: TerminalName,
+  terminal: V1TerminalName,
 ): string =>
   require(`@jbx-protocol/contracts-v1/deployments/${network}/${terminal}.json`)
     .address
 
 export const getTerminalAddress = (
-  version?: TerminalVersion,
+  version?: V1TerminalVersion,
 ): string | undefined => {
   if (!version) return
   const contractName = getTerminalName({ version })
@@ -23,7 +23,7 @@ export const getTerminalAddress = (
 
 export const getTerminalVersion = (
   address?: string,
-): TerminalVersion | undefined => {
+): V1TerminalVersion | undefined => {
   if (!address) return
 
   if (
@@ -51,9 +51,9 @@ export const getTerminalName = ({
   version,
   address,
 }: {
-  version?: TerminalVersion
+  version?: V1TerminalVersion
   address?: string
-}): TerminalName | undefined => {
+}): V1TerminalName | undefined => {
   if (!version && !address) return
 
   const _version =

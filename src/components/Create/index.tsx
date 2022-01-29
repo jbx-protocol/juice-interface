@@ -20,7 +20,7 @@ import { V1ContractName } from 'models/v1/contracts'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
 import { PayoutMod, TicketMod } from 'models/mods'
-import { TerminalVersion } from 'models/terminal-version'
+import { V1TerminalVersion } from 'models/v1/terminals'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
 import { fromPerbicent, fromPermille, fromWad } from 'utils/formatNumber'
@@ -35,7 +35,7 @@ import {
   metadataNameForHandle,
   uploadProjectMetadata,
 } from 'utils/ipfs'
-import { getTerminalAddress } from 'utils/terminal-versions'
+import { getTerminalAddress } from 'utils/v1/terminals'
 
 import BudgetForm from './BudgetForm'
 import ConfirmDeployProject from './ConfirmDeployProject'
@@ -48,7 +48,7 @@ import RestrictedActionsForm, {
 import RulesForm from './RulesForm'
 import TicketingForm, { TicketingFormFields } from './TicketingForm'
 
-const terminalVersion: TerminalVersion = '1.1'
+const terminalVersion: V1TerminalVersion = '1.1'
 
 export default function Create() {
   const { signerNetwork, userAddress } = useContext(NetworkContext)

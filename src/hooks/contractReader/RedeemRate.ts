@@ -1,7 +1,7 @@
 import { ProjectContext } from 'contexts/projectContext'
 import { BigNumber } from 'ethers'
 import { BallotState } from 'models/ballot-state'
-import { ContractName } from 'models/contract-name'
+import { JuiceboxV1ContractName } from 'models/v1/contracts'
 import { FundingCycle } from 'models/funding-cycle'
 import { useContext, useMemo } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
@@ -40,14 +40,14 @@ export function useRedeemRate({
   })
 
   const totalSupply = useContractReader<BigNumber>({
-    contract: ContractName.TicketBooth,
+    contract: JuiceboxV1ContractName.TicketBooth,
     functionName: 'totalSupplyOf',
     args: projectId ? [projectId?.toHexString()] : null,
     valueDidChange: bigNumbersDiff,
   })?.add(reservedTicketBalance ? reservedTicketBalance : BigNumber.from(0))
 
   const currentBallotState = useContractReader<BallotState>({
-    contract: ContractName.FundingCycles,
+    contract: JuiceboxV1ContractName.FundingCycles,
     functionName: 'currentBallotStateOf',
     args: projectId ? [projectId.toHexString()] : null,
   })

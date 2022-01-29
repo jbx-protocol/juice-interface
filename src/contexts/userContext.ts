@@ -1,8 +1,8 @@
 import { Transactor } from 'hooks/transactor/Transactor'
-import { Contracts } from 'models/contracts'
+import { JuiceboxV1Contracts } from 'models/v1/contracts'
 import { createContext } from 'react'
 
 export const UserContext: React.Context<{
-  contracts?: Contracts
+  contracts?: JuiceboxV1Contracts
   transactor?: Transactor
 }> = createContext({})

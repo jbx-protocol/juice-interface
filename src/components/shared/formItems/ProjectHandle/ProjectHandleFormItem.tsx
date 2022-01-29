@@ -8,7 +8,7 @@ import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { ThemeContext } from 'contexts/themeContext'
 import { utils } from 'ethers'
 import useContractReader from 'hooks/contractReader/ContractReader'
-import { ContractName } from 'models/contract-name'
+import { JuiceboxV1ContractName } from 'models/v1/contracts'
 import { normalizeHandle } from 'utils/formatHandle'
 
 import {
@@ -62,7 +62,7 @@ export default function ProjectHandleFormItem({
   }, [inputContents]) // 0xabc...
 
   const idForHandle = useContractReader<BigNumber>({
-    contract: ContractName.Projects,
+    contract: JuiceboxV1ContractName.Projects,
     functionName: 'projectFor',
     args: handleHex && requireState ? [handleHex] : null,
     callback: useCallback(

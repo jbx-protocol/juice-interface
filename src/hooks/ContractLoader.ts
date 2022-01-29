@@ -2,8 +2,8 @@ import { Contract } from '@ethersproject/contracts'
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
 
 import { NetworkContext } from 'contexts/networkContext'
-import { ContractName } from 'models/contract-name'
-import { Contracts } from 'models/contracts'
+import { JuiceboxV1ContractName } from 'models/v1/contracts'
+import { JuiceboxV1Contracts } from 'models/v1/contracts'
 import { NetworkName } from 'models/network-name'
 import { useContext, useEffect, useState } from 'react'
 
@@ -11,7 +11,7 @@ import { readProvider } from 'constants/readProvider'
 import { readNetwork } from 'constants/networks'
 
 export function useContractLoader() {
-  const [contracts, setContracts] = useState<Contracts>()
+  const [contracts, setContracts] = useState<JuiceboxV1Contracts>()
 
   const { signingProvider } = useContext(NetworkContext)
 
@@ -23,16 +23,16 @@ export function useContractLoader() {
         // Contracts can be used read-only without a signer, but require a signer to create transactions.
         const signerOrProvider = signingProvider?.getSigner() ?? readProvider
 
-        const newContracts = Object.values(ContractName).reduce(
-          (accumulator, contractName) => ({
+        const newContracts = Object.values(JuiceboxV1ContractName).reduce(
+          (accumulator, JuiceboxV1ContractName) => ({
             ...accumulator,
-            [contractName]: loadContract(
-              contractName,
+            [JuiceboxV1ContractName]: loadContract(
+              JuiceboxV1ContractName,
               network,
               signerOrProvider,
             ),
           }),
-          {} as Contracts,
+          {} as JuiceboxV1Contracts,
         )
 
         setContracts(newContracts)
@@ -48,7 +48,7 @@ export function useContractLoader() {
 }
 
 const loadContract = (
-  contractName: string,
+  contractName: keyof typeof JuiceboxV1ContractName,
   network: NetworkName,
   signerOrProvider: JsonRpcSigner | JsonRpcProvider,
 ): Contract => {

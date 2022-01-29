@@ -1,5 +1,5 @@
 import { BigNumber, BigNumberish } from 'ethers'
-import { ContractName } from 'models/contract-name'
+import { JuiceboxV1ContractName } from 'models/v1/contracts'
 
 import useContractReader from './ContractReader'
 
@@ -8,7 +8,7 @@ export default function useTerminalOfProject(
   projectId: BigNumberish | undefined,
 ) {
   return useContractReader<string>({
-    contract: ContractName.TerminalDirectory,
+    contract: JuiceboxV1ContractName.TerminalDirectory,
     functionName: 'terminalOf',
     args:
       projectId !== undefined

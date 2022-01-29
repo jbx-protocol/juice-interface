@@ -8,7 +8,7 @@ import CurrencySymbol from 'components/shared/CurrencySymbol'
 import Loading from 'components/shared/Loading'
 import { ThemeContext } from 'contexts/themeContext'
 import useContractReader from 'hooks/contractReader/ContractReader'
-import { ContractName } from 'models/contract-name'
+import { JuiceboxV1ContractName } from 'models/v1/contracts'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
 import { useCallback, useContext, useState } from 'react'
@@ -41,7 +41,7 @@ export default function FundingHistory({
     selectedIndex !== undefined ? fundingCycles[selectedIndex] : undefined
 
   useContractReader<FundingCycle>({
-    contract: ContractName.FundingCycles,
+    contract: JuiceboxV1ContractName.FundingCycles,
     functionName: 'get',
     args: cycleNumber ? [cycleNumber] : null,
     valueDidChange: useCallback((a, b) => !deepEqFundingCycles(a, b), []),

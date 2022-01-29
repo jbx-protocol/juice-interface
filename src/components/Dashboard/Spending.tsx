@@ -6,7 +6,7 @@ import WithdrawModal from 'components/modals/WithdrawModal'
 import Balance from 'components/Navbar/Balance'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import TooltipLabel from 'components/shared/TooltipLabel'
-import { ProjectContext } from 'contexts/projectContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { CurrencyOption } from 'models/currency-option'
 import { PayoutMod } from 'models/mods'
@@ -26,7 +26,7 @@ export default function Spending({
   } = useContext(ThemeContext)
 
   const { balanceInCurrency, projectId, owner, currentFC, isPreviewMode } =
-    useContext(ProjectContext)
+    useContext(V1ProjectContext)
 
   const [withdrawModalVisible, setWithdrawModalVisible] = useState<boolean>()
 

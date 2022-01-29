@@ -5,7 +5,7 @@ import {
   targetSubFeeToTargetFormatted,
   targetToTargetSubFeeFormatted,
 } from 'components/shared/formItems/formHelpers'
-import { ProjectContext } from 'contexts/projectContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { constants } from 'ethers'
 import { useAppDispatch } from 'hooks/AppDispatch'
@@ -42,7 +42,7 @@ export default function BudgetForm({
   const [showFundingFields, setShowFundingFields] = useState<boolean>()
   // TODO budgetForm should not depend on dispatch
   const dispatch = useAppDispatch()
-  const { terminal } = useContext(ProjectContext)
+  const { terminal } = useContext(V1ProjectContext)
   const editingFC = useEditingFundingCycleSelector()
 
   const terminalFee = useTerminalFee(terminal?.version)

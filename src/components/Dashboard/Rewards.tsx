@@ -6,7 +6,7 @@ import ParticipantsModal from 'components/modals/ParticipantsModal'
 import RedeemModal from 'components/modals/RedeemModal'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import { NetworkContext } from 'contexts/networkContext'
-import { ProjectContext } from 'contexts/projectContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { constants } from 'ethers'
 import useCanPrintPreminedTokens from 'hooks/contractReader/CanPrintPreminedTokens'
@@ -43,7 +43,7 @@ export default function Rewards() {
     isPreviewMode,
     currentFC,
     terminal,
-  } = useContext(ProjectContext)
+  } = useContext(V1ProjectContext)
 
   const {
     theme: { colors },

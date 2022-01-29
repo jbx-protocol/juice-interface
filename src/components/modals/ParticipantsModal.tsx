@@ -11,7 +11,7 @@ import FormattedAddress from 'components/shared/FormattedAddress'
 import Loading from 'components/shared/Loading'
 import UntrackedErc20Notice from 'components/shared/UntrackedErc20Notice'
 
-import { ProjectContext } from 'contexts/projectContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { constants } from 'ethers'
 import useTotalSupplyOfProjectToken from 'hooks/contractReader/TotalSupplyOfProjectToken'
@@ -45,7 +45,7 @@ export default function ParticipantsModal({
   const [downloadModalVisible, setDownloadModalVisible] = useState<boolean>()
   const [sortPayerReportsDirection, setSortPayerReportsDirection] =
     useState<OrderDirection>('desc')
-  const { projectId, tokenSymbol, tokenAddress } = useContext(ProjectContext)
+  const { projectId, tokenSymbol, tokenAddress } = useContext(V1ProjectContext)
   const {
     theme: { colors },
   } = useContext(ThemeContext)

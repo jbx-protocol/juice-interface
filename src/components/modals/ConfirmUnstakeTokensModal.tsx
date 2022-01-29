@@ -3,7 +3,7 @@ import { Form, Modal, Space } from 'antd'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
-import { ProjectContext } from 'contexts/projectContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { constants } from 'ethers'
 import useUnclaimedBalanceOfUser from 'hooks/contractReader/UnclaimedBalanceOfUser'
@@ -23,7 +23,7 @@ export default function ConfirmUnstakeTokensModal({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const { tokenSymbol, tokenAddress } = useContext(ProjectContext)
+  const { tokenSymbol, tokenAddress } = useContext(V1ProjectContext)
   const unstakeTokensTx = useUnstakeTokensTx()
 
   const unclaimedBalance = useUnclaimedBalanceOfUser()

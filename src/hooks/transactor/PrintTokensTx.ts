@@ -1,6 +1,6 @@
 import { Contract } from '@ethersproject/contracts'
-import { ProjectContext } from 'contexts/projectContext'
-import { UserContext } from 'contexts/userContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
+import { V1UserContext } from 'contexts/v1/userContext'
 import { BigNumber } from 'ethers'
 import { CurrencyOption } from 'models/currency-option'
 import { useContext } from 'react'
@@ -14,8 +14,8 @@ export function usePrintTokensTx(): TransactorInstance<{
   memo: string
   preferUnstaked: boolean
 }> {
-  const { transactor, contracts } = useContext(UserContext)
-  const { terminal, projectId } = useContext(ProjectContext)
+  const { transactor, contracts } = useContext(V1UserContext)
+  const { terminal, projectId } = useContext(V1ProjectContext)
 
   return ({ value, currency, beneficiary, memo, preferUnstaked }, txOpts) => {
     if (!transactor || !contracts || !projectId || !terminal?.version) {

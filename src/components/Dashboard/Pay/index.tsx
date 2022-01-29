@@ -5,7 +5,7 @@ import ConfirmPayOwnerModal from 'components/modals/ConfirmPayOwnerModal'
 import PayWarningModal from 'components/modals/PayWarningModal'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
-import { ProjectContext } from 'contexts/projectContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { parseEther } from 'ethers/lib/utils'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { CurrencyOption } from 'models/currency-option'
@@ -29,7 +29,7 @@ export default function Pay() {
     useState<boolean>(false)
 
   const { projectId, currentFC, metadata, isArchived, terminal } =
-    useContext(ProjectContext)
+    useContext(V1ProjectContext)
 
   const converter = useCurrencyConverter()
 

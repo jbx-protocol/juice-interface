@@ -6,14 +6,16 @@ import ProjectCard from './ProjectCard'
 
 export default function ProjectsGrid({
   projects,
+  isHomePage,
   list,
 }: {
   projects:
     | Pick<Project, 'handle' | 'uri' | 'totalPaid' | 'createdAt'>[]
     | BigNumber[]
+  isHomePage?: boolean
   list?: boolean
 }) {
-  const gutter = 20
+  const gutter = isHomePage ? 10 : 20
 
   const colProps: ColProps = {
     xs: 24,
@@ -21,15 +23,14 @@ export default function ProjectsGrid({
     style: { marginBottom: gutter },
   }
 
+  const cardSize = isHomePage ? 'sm' : 'lg'
+  const cardBg = isHomePage ? 'var(--background-l0)' : ''
+
   return list ? (
     <Space style={{ width: '100%' }} direction="vertical">
-      {projects?.map(project => {
-        if (BigNumber.isBigNumber(project)) {
-          return <ProjectCard id={project} key={project.toString()} />
-        } else {
-          return <ProjectCard project={project} key={project.handle} />
-        }
-      })}
+      {projects?.map((project, i) => (
+        <ProjectCard project={project} key={i} />
+      ))}
     </Space>
   ) : (
     <div>
@@ -43,23 +44,29 @@ export default function ProjectsGrid({
                   ? project.toString()
                   : project.handle
               }
+              style={{ maxWidth: isHomePage ? 750 : '' }}
             >
               <Col {...colProps}>
-                {BigNumber.isBigNumber(project) ? (
-                  <ProjectCard id={project} />
-                ) : (
-                  <ProjectCard project={project} />
-                )}
+                <ProjectCard
+                  size={cardSize}
+                  project={project}
+                  bg={cardBg}
+                  rank={isHomePage ? i + 1 : undefined}
+                  percentGain={134}
+                />
               </Col>
               {i + 1 < projects.length && (
                 <Col {...colProps}>
                   {(() => {
                     const _p = projects[i + 1]
-
-                    return BigNumber.isBigNumber(_p) ? (
-                      <ProjectCard id={_p} />
-                    ) : (
-                      <ProjectCard project={_p} />
+                    return (
+                      <ProjectCard
+                        project={_p}
+                        size={cardSize}
+                        bg={cardBg}
+                        rank={isHomePage ? i + 2 : undefined}
+                        percentGain={134}
+                      />
                     )
                   })()}
                 </Col>

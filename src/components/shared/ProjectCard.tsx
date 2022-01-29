@@ -4,7 +4,7 @@ import { BigNumber } from 'ethers'
 import { ThemeContext } from 'contexts/themeContext'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { Project } from 'models/subgraph-entities/project'
-import { useContext } from 'react'
+import React, { CSSProperties, useContext } from 'react'
 import { formatDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
 
@@ -24,30 +24,68 @@ type ProjectCardProject = Pick<
 >
 
 export default function ProjectCard({
-  id,
+  size,
   project,
+  bg,
+  rank,
+  percentGain,
 }: {
-  id?: BigNumber
-  project?: ProjectCardProject
+  size?: 'sm' | 'lg'
+  project?: ProjectCardProject | BigNumber
+  bg?: string // Currently used on homepage trending projects
+  rank?: number
+  percentGain?: number
 }) {
   const {
     theme: { colors, radii },
   } = useContext(ThemeContext)
 
-  const projectsQuery = useSubgraphQuery(
-    id
+  const cardStyle: CSSProperties = {
+    display: 'flex',
+    alignItems: 'center',
+    whiteSpace: 'pre',
+    overflow: 'hidden',
+    padding: '25px 20px',
+    backgroundColor: bg,
+    // Shows darker border when background is set
+    border: `1px solid ${
+      bg ? 'var(--stroke-secondary)' : 'var(--stroke-tertiary)'
+    }`,
+  }
+
+  const rankStyle: CSSProperties = {
+    fontSize: 22,
+    color: 'var(--text-primary)',
+    fontWeight: 400,
+    marginRight: 15,
+  }
+
+  // Get ProjectCardProject object if this component was passed a projectId (bigNumber)
+  const projectQuery: ProjectCardProject[] | undefined = useSubgraphQuery(
+    BigNumber.isBigNumber(project)
       ? {
           entity: 'project',
           keys: ['handle', 'uri', 'totalPaid', 'createdAt', 'terminal', 'id'],
           where: {
             key: 'id',
-            value: id.toString(),
+            value: project.toString(),
           },
         }
       : null,
   ).data
 
-  const _project = projectsQuery?.length ? projectsQuery[0] : project
+  // Must use any to convert (ProjectCardProject | bigNumber) to ProjectCardProject
+  const projectObj: any = project
+  let _project: ProjectCardProject
+
+  // If we were given projectId (BN) and therefore projectQuery returned something,
+  // we assign _project to that. Otherwise assign it to the initial
+  // project passed to this component which must be ProjectCardProject
+  if (projectQuery?.length) {
+    _project = projectQuery[0]
+  } else {
+    _project = projectObj
+  }
 
   const { data: metadata } = useProjectMetadata(_project?.uri)
   // If the total paid is greater than 0, but less than 10 ETH, show two decimal places.
@@ -70,21 +108,13 @@ export default function ProjectCard({
       href={`/#/p/${_project?.handle}`}
     >
       {metadata ? (
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            whiteSpace: 'pre',
-            overflow: 'hidden',
-            padding: 20,
-          }}
-          className="clickable-border"
-        >
+        <div style={cardStyle} className="clickable-border">
+          <div style={rankStyle}>{rank}</div>
           <div style={{ marginRight: 20 }}>
             <ProjectLogo
               uri={metadata.logoUri}
               name={metadata.name}
-              size={110}
+              size={size === 'sm' ? 70 : 110}
             />
           </div>
 
@@ -101,35 +131,48 @@ export default function ProjectCard({
                 margin: 0,
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
+                fontSize: size === 'sm' ? 16 : 21,
               }}
             >
               {metadata.name}
             </h2>
 
             <div>
-              <span style={{ color: colors.text.primary, fontWeight: 500 }}>
-                {_project?.id?.toString()} - @{_project?.handle}
-              </span>
-              <span
-                style={{
-                  marginLeft: 10,
-                  color: colors.text.tertiary,
-                  fontSize: '0.7rem',
-                  fontWeight: 500,
-                }}
-              >
-                V{terminalVersion}
-              </span>
+              {size !== 'sm' ? (
+                <React.Fragment>
+                  <span style={{ color: colors.text.primary, fontWeight: 500 }}>
+                    {_project?.id?.toString()} - @{_project?.handle}
+                  </span>
+                  <span
+                    style={{
+                      marginLeft: 10,
+                      color: colors.text.tertiary,
+                      fontSize: '0.7rem',
+                      fontWeight: 500,
+                    }}
+                  >
+                    V{terminalVersion}
+                  </span>
+                </React.Fragment>
+              ) : null}
             </div>
 
-            <div style={{ color: colors.text.secondary }}>
-              <span>
+            <div>
+              <span style={{ color: colors.text.primary, fontWeight: 500 }}>
                 <CurrencySymbol currency={CURRENCY_ETH} />
                 {formatWad(_project?.totalPaid, { precision })}{' '}
               </span>
-              since{' '}
-              {!!_project?.createdAt &&
-                formatDate(_project?.createdAt * 1000, 'MM-DD-YY')}
+              {percentGain ? (
+                <span style={{ color: colors.text.header, fontWeight: 600 }}>
+                  +{percentGain}%
+                </span>
+              ) : (
+                <span style={{ color: colors.text.secondary }}>
+                  since{' '}
+                  {!!_project?.createdAt &&
+                    formatDate(_project?.createdAt * 1000, 'MM-DD-YY')}
+                </span>
+              )}
             </div>
 
             {metadata.description && (

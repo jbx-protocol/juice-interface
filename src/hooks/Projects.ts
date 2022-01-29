@@ -125,6 +125,8 @@ export function useProjectsSearch(handle: string | undefined) {
   )
 }
 
+// Returns projects with highest % volume increase in last week
+// excluding JuiceboxDAO (ID=1)
 export function useTrendingProjects() {
   const secondsInWeek = 7 * 24 * 60 * 60
 
@@ -154,7 +156,7 @@ export function useTrendingProjects() {
   const mapped = payments.data.reduce((acc, curr) => {
     const projectId = curr.project?.toString()
 
-    if (!projectId) return acc
+    if (!projectId || projectId === '1') return acc
 
     return {
       ...acc,

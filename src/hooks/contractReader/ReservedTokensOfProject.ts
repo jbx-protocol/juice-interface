@@ -1,4 +1,4 @@
-import { ProjectContext } from 'contexts/projectContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { BigNumber, BigNumberish } from 'ethers'
 import { V1ContractName } from 'models/v1/contracts'
 import { useContext, useMemo } from 'react'
@@ -10,7 +10,7 @@ import useContractReader from './ContractReader'
 export default function useReservedTokensOfProject(
   reservedRate: BigNumberish | undefined,
 ) {
-  const { projectId, terminal } = useContext(ProjectContext)
+  const { projectId, terminal } = useContext(V1ProjectContext)
 
   const _projectId = projectId?.toHexString()
 

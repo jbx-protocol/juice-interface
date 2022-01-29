@@ -5,7 +5,7 @@ import { useForm } from 'antd/lib/form/Form'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import ImageUploader from 'components/shared/inputs/ImageUploader'
 import { NetworkContext } from 'contexts/networkContext'
-import { ProjectContext } from 'contexts/projectContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { constants } from 'ethers'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { usePayProjectTx } from 'hooks/transactor/PayProjectTx'
@@ -32,7 +32,7 @@ export default function ConfirmPayOwnerModal({
   const [form] = useForm<{ note: string }>()
   const { userAddress } = useContext(NetworkContext)
   const { tokenSymbol, tokenAddress, currentFC, metadata } =
-    useContext(ProjectContext)
+    useContext(V1ProjectContext)
   const payProjectTx = usePayProjectTx()
 
   const converter = useCurrencyConverter()

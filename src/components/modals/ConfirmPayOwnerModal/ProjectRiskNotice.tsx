@@ -1,4 +1,4 @@
-import { ProjectContext } from 'contexts/projectContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useContext } from 'react'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import {
@@ -17,7 +17,7 @@ export default function ProjectRiskNotice() {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const { currentFC } = useContext(ProjectContext)
+  const { currentFC } = useContext(V1ProjectContext)
   if (!currentFC || fundingCycleRiskCount(currentFC) === 0) return null
 
   const unsafeProperties = getUnsafeFundingCycleProperties(currentFC)

@@ -1,7 +1,10 @@
 import { Trans } from '@lingui/macro'
 import FeedbackFormLink from 'components/shared/FeedbackFormLink'
 
-import { ProjectContext, ProjectContextType } from 'contexts/projectContext'
+import {
+  V1ProjectContext,
+  V1ProjectContextType,
+} from 'contexts/v1/projectContext'
 import useBalanceOfProject from 'hooks/contractReader/BalanceOfProject'
 import useCurrentFundingCycleOfProject from 'hooks/contractReader/CurrentFundingCycleOfProject'
 import useCurrentPayoutModsOfProject from 'hooks/contractReader/CurrentPayoutModsOfProject'
@@ -94,7 +97,7 @@ export default function Dashboard() {
   const createdAt = projects?.[0]?.createdAt
   const earned = projects?.[0]?.totalPaid
 
-  const project = useMemo<ProjectContextType>(() => {
+  const project = useMemo<V1ProjectContextType>(() => {
     const projectType = projectId
       ? projectTypes[projectId.toNumber()]
       : 'standard'
@@ -174,7 +177,7 @@ export default function Dashboard() {
   if (!projectId || !handle || !metadata) return null
 
   return (
-    <ProjectContext.Provider value={project}>
+    <V1ProjectContext.Provider value={project}>
       <div style={layouts.maxWidth}>
         <Project />
         <div
@@ -185,6 +188,6 @@ export default function Dashboard() {
         </div>
         <FeedbackFormLink projectHandle={handle} />
       </div>
-    </ProjectContext.Provider>
+    </V1ProjectContext.Provider>
   )
 }

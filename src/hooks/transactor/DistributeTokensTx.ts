@@ -1,12 +1,12 @@
-import { ProjectContext } from 'contexts/projectContext'
-import { UserContext } from 'contexts/userContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
+import { V1UserContext } from 'contexts/v1/userContext'
 import { useContext } from 'react'
 
 import { TransactorInstance } from './Transactor'
 
 export function useDistributeTokensTx(): TransactorInstance<{}> {
-  const { transactor, contracts } = useContext(UserContext)
-  const { terminal, projectId } = useContext(ProjectContext)
+  const { transactor, contracts } = useContext(V1UserContext)
+  const { terminal, projectId } = useContext(V1ProjectContext)
 
   return (_, txOpts) => {
     if (!transactor || !terminal || !projectId || !contracts) {

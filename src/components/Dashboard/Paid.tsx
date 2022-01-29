@@ -7,7 +7,7 @@ import EtherscanLink from 'components/shared/EtherscanLink'
 import ProjectTokenBalance from 'components/shared/ProjectTokenBalance'
 import TooltipLabel from 'components/shared/TooltipLabel'
 
-import { ProjectContext } from 'contexts/projectContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useEthBalanceQuery } from 'hooks/EthBalance'
@@ -37,7 +37,7 @@ export default function Paid() {
     owner,
     earned,
     overflow,
-  } = useContext(ProjectContext)
+  } = useContext(V1ProjectContext)
 
   const converter = useCurrencyConverter()
   const overflowInCurrency = converter.wadToCurrency(

@@ -52,8 +52,9 @@ export const encodeFundingCycleMetadata = (
   payIsPaused: boolean | null,
   ticketPrintingIsAllowed: boolean | null,
   treasuryExtension: string | null,
+  version: 1 | 0,
 ): BigNumber => {
-  let encoded = BigNumber.from(0)
+  let encoded = BigNumber.from(version)
     .or(BigNumber.from(reserved).shl(8))
     .or(BigNumber.from(bondingCurveRate).shl(16))
     .or(BigNumber.from(reconfigurationBondingCurveRate).shl(24))

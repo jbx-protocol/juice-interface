@@ -17,7 +17,7 @@ msgstr ""
 msgid "(+{0} reserved)"
 msgstr ""
 
-#: src/components/modals/ConfirmPayOwnerModal.tsx
+#: src/components/modals/ConfirmPayOwnerModal/index.tsx
 msgid "(Optional) Add a note to this payment on-chain"
 msgstr ""
 
@@ -167,7 +167,7 @@ msgstr ""
 msgid "Add funds to this project's balance without minting tokens."
 msgstr ""
 
-#: src/components/modals/ConfirmPayOwnerModal.tsx
+#: src/components/modals/ConfirmPayOwnerModal/index.tsx
 msgid "Add image"
 msgstr ""
 
@@ -337,7 +337,7 @@ msgstr "Cancel"
 msgid "Changes to your project's funding require a community approval period to take effect. Your supporters don't have to trust you—even though they already do."
 msgstr ""
 
-#: src/components/modals/ConfirmPayOwnerModal.tsx
+#: src/components/modals/ConfirmPayOwnerModal/index.tsx
 msgid "Check this to mint {tokenSymbol} ERC20 to your wallet. Leave unchecked to have your token balance tracked by Juicebox, saving gas on this transaction. You can always claim your ERC20 tokens later."
 msgstr ""
 
@@ -368,6 +368,14 @@ msgstr ""
 #: src/components/Create/RulesForm.tsx
 msgid "Contract address: {0}"
 msgstr ""
+
+#: src/constants/fundingWarningText.ts
+msgid "Contributors will not receive any tokens in exchange for paying this project."
+msgstr "Contributors will not receive any tokens in exchange for paying this project."
+
+#: src/constants/fundingWarningText.ts
+msgid "Contributors will receive a relatively small portion of tokens in exchange for paying this project."
+msgstr "Contributors will receive a relatively small portion of tokens in exchange for paying this project."
 
 #: src/components/shared/CopyTextButton.tsx
 msgid "Copied!"
@@ -594,6 +602,10 @@ msgstr ""
 msgid "Funding cycle target"
 msgstr ""
 
+#: src/constants/fundingWarningText.ts
+msgid "Funding cycles can be reconfigured moments before a new cycle begins, without notifying contributors."
+msgstr "Funding cycles can be reconfigured moments before a new cycle begins, without notifying contributors."
+
 #: src/components/modals/DistributeTokensModal.tsx
 #: src/components/modals/WithdrawModal.tsx
 msgid "Funds will be distributed to:"
@@ -768,7 +780,7 @@ msgstr ""
 msgid "Manage {0}tokens"
 msgstr ""
 
-#: src/components/modals/ConfirmPayOwnerModal.tsx
+#: src/components/modals/ConfirmPayOwnerModal/index.tsx
 msgid "Memo"
 msgstr "Memo"
 
@@ -837,7 +849,7 @@ msgstr ""
 msgid "Note: Juicebox is new, unaudited, and not guaranteed to work perfectly. Before spending money, do your own research: <0>ask questions</0>, <1>check out the code</1>, and understand the risks!"
 msgstr ""
 
-#: src/components/modals/ConfirmPayOwnerModal.tsx
+#: src/components/modals/ConfirmPayOwnerModal/index.tsx
 msgid "Notice from {0}:"
 msgstr ""
 
@@ -871,12 +883,12 @@ msgstr ""
 
 #: src/components/Dashboard/Pay/index.tsx
 #: src/components/Dashboard/ProjectActivity/index.tsx
-#: src/components/modals/ConfirmPayOwnerModal.tsx
+#: src/components/modals/ConfirmPayOwnerModal/index.tsx
 #: src/components/shared/formItems/ProjectPayButton.tsx
 msgid "Pay"
 msgstr ""
 
-#: src/components/modals/ConfirmPayOwnerModal.tsx
+#: src/components/modals/ConfirmPayOwnerModal/index.tsx
 msgid "Pay amount"
 msgstr ""
 
@@ -893,7 +905,7 @@ msgstr ""
 msgid "Pay disclosure"
 msgstr ""
 
-#: src/components/modals/ConfirmPayOwnerModal.tsx
+#: src/components/modals/ConfirmPayOwnerModal/index.tsx
 msgid "Pay {0}"
 msgstr ""
 
@@ -905,7 +917,7 @@ msgstr ""
 msgid "Paying this project is currently disabled."
 msgstr ""
 
-#: src/components/modals/ConfirmPayOwnerModal.tsx
+#: src/components/modals/ConfirmPayOwnerModal/index.tsx
 msgid "Paying {0} is not an investment—it's a way to support the project. Any value or utility of the tokens you receive is determined by {1}."
 msgstr ""
 
@@ -1013,7 +1025,7 @@ msgstr ""
 msgid "Public goods and services"
 msgstr ""
 
-#: src/components/modals/ConfirmPayOwnerModal.tsx
+#: src/components/modals/ConfirmPayOwnerModal/index.tsx
 msgid "Receive ERC20"
 msgstr ""
 
@@ -1190,6 +1202,14 @@ msgstr ""
 msgid "Should you Juicebox?"
 msgstr ""
 
+#: src/components/FundingCycle/FundingCyclePreview.tsx
+msgid ""
+"Some funding cycle properties may indicate risk\n"
+"for project contributors."
+msgstr ""
+"Some funding cycle properties may indicate risk\n"
+"for project contributors."
+
 #: src/components/modals/ReconfigureFCModal.tsx
 #: src/components/modals/ReconfigureFCModal.tsx
 msgid "Spending"
@@ -1272,6 +1292,14 @@ msgstr ""
 msgid "The future will be led by creators, and owned by communities."
 msgstr ""
 
+#: src/constants/fundingWarningText.ts
+msgid "The project owner may mint any supply of tokens at any time, diluting the token share of all existing contributors."
+msgstr "The project owner may mint any supply of tokens at any time, diluting the token share of all existing contributors."
+
+#: src/constants/fundingWarningText.ts
+msgid "The project owner may reconfigure this funding cycle at any time, without notice."
+msgstr "The project owner may reconfigure this funding cycle at any time, without notice."
+
 #: src/components/Create/BudgetForm.tsx
 msgid "The project's entire balance will be considered overflow."
 msgstr ""
@@ -1309,6 +1337,10 @@ msgstr ""
 msgid "This address will receive any tokens minted when the recipient project gets paid."
 msgstr ""
 
+#: src/components/Dashboard/FundingCycles.tsx
+msgid "This funding cycle may pose risks to contributors. Check the funding cycle details before paying this project."
+msgstr "This funding cycle may pose risks to contributors. Check the funding cycle details before paying this project."
+
 #: src/components/modals/ParticipantsModal.tsx
 msgid "This list is using an experimental data index and may be inaccurate for some projects."
 msgstr ""
@@ -1320,6 +1352,10 @@ msgstr ""
 #: src/components/Dashboard/Pay/index.tsx
 msgid "This project has been archived and cannot be paid."
 msgstr ""
+
+#: src/components/modals/RedeemModal.tsx
+msgid "This project has no overflow, and you will receive no ETH for burning tokens."
+msgstr "This project has no overflow, and you will receive no ETH for burning tokens."
 
 #: src/components/modals/MigrateV1Pt1Modal.tsx
 msgid "This project is currently using the Juicebox V1 terminal contract. New features introduced in V1.1 allow the project owner to:"
@@ -1338,7 +1374,7 @@ msgstr ""
 msgid "This website (juicebox.money) connects to the Juicebox protocol's smart contracts, deployed on the Ethereum network. (note: anyone else can make a website that also connects to these same smart contracts. For now, don't trust any site other than this one to access the Juicebox protocol.)"
 msgstr ""
 
-#: src/components/modals/ConfirmPayOwnerModal.tsx
+#: src/components/modals/ConfirmPayOwnerModal/index.tsx
 msgid "To: <0/>"
 msgstr ""
 
@@ -1555,10 +1591,6 @@ msgstr "Withdraw funds"
 msgid "Workspace"
 msgstr ""
 
-#: src/components/modals/RedeemModal.tsx
-msgid "You can redeem tokens once this project has overflow."
-msgstr ""
-
 #: src/components/modals/ConfirmUnstakeTokensModal.tsx
 msgid "You can still redeem your {tokenSymbol} tokens for overflow without claiming them, and you can transfer your unclaimed {tokenSymbol} tokens to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
 msgstr "You can still redeem your {tokenSymbol} tokens for overflow without claiming them, and you can transfer your unclaimed {tokenSymbol} tokens to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
@@ -1700,7 +1732,7 @@ msgstr ""
 msgid "{0} days"
 msgstr ""
 
-#: src/components/modals/ConfirmPayOwnerModal.tsx
+#: src/components/modals/ConfirmPayOwnerModal/index.tsx
 msgid "{0} for you"
 msgstr ""
 
@@ -1716,7 +1748,7 @@ msgstr ""
 msgid "{0} received per ETH paid to the treasury. This can change over time according to the discount rate and reserved tokens amount of future funding cycles."
 msgstr ""
 
-#: src/components/modals/ConfirmPayOwnerModal.tsx
+#: src/components/modals/ConfirmPayOwnerModal/index.tsx
 msgid "{0} reserved"
 msgstr ""
 

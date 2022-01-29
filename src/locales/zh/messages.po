@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-01-25 01:57\n"
+"PO-Revision-Date: 2022-01-29 01:44\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "(+{0} reserved)"
 msgstr "(+{0} 保留)"
 
-#: src/components/modals/ConfirmPayOwnerModal.tsx
+#: src/components/modals/ConfirmPayOwnerModal/index.tsx
 msgid "(Optional) Add a note to this payment on-chain"
 msgstr "（可选的）在此链上付款中添加备注"
 
@@ -172,7 +172,7 @@ msgstr "添加支出对象"
 msgid "Add funds to this project's balance without minting tokens."
 msgstr "往项目中添加资金，但不铸造代币。"
 
-#: src/components/modals/ConfirmPayOwnerModal.tsx
+#: src/components/modals/ConfirmPayOwnerModal/index.tsx
 msgid "Add image"
 msgstr "添加图片"
 
@@ -342,7 +342,7 @@ msgstr "取消"
 msgid "Changes to your project's funding require a community approval period to take effect. Your supporters don't have to trust you—even though they already do."
 msgstr "对项目资金的变动需要经过社区的批准阶段才能生效。项目支持者不需要依赖于对你的信任 —— 尽管他们已经这样做了。"
 
-#: src/components/modals/ConfirmPayOwnerModal.tsx
+#: src/components/modals/ConfirmPayOwnerModal/index.tsx
 msgid "Check this to mint {tokenSymbol} ERC20 to your wallet. Leave unchecked to have your token balance tracked by Juicebox, saving gas on this transaction. You can always claim your ERC20 tokens later."
 msgstr "勾选此项来以 ERC20 形式铸造 {tokenSymbol} 并领取到你的钱包。不勾选的话，你的代币余额会交给 Juicebox 去记录，这次交易就可以省下一些 gas。你之后随时都可以再来领取你的 ERC20 代币。"
 
@@ -373,6 +373,14 @@ msgstr "连接钱包"
 #: src/components/Create/RulesForm.tsx
 msgid "Contract address: {0}"
 msgstr "合约地址：{0}"
+
+#: src/constants/fundingWarningText.ts
+msgid "Contributors will not receive any tokens in exchange for paying this project."
+msgstr ""
+
+#: src/constants/fundingWarningText.ts
+msgid "Contributors will receive a relatively small portion of tokens in exchange for paying this project."
+msgstr ""
 
 #: src/components/shared/CopyTextButton.tsx
 msgid "Copied!"
@@ -599,6 +607,10 @@ msgstr "筹款周期持续时间"
 msgid "Funding cycle target"
 msgstr "筹款周期目标"
 
+#: src/constants/fundingWarningText.ts
+msgid "Funding cycles can be reconfigured moments before a new cycle begins, without notifying contributors."
+msgstr ""
+
 #: src/components/modals/DistributeTokensModal.tsx
 #: src/components/modals/WithdrawModal.tsx
 msgid "Funds will be distributed to:"
@@ -773,7 +785,7 @@ msgstr "管理代币"
 msgid "Manage {0}tokens"
 msgstr "管理 {0} 代币"
 
-#: src/components/modals/ConfirmPayOwnerModal.tsx
+#: src/components/modals/ConfirmPayOwnerModal/index.tsx
 msgid "Memo"
 msgstr "留言"
 
@@ -843,7 +855,7 @@ msgid "Note: Juicebox is new, unaudited, and not guaranteed to work perfectly. B
 msgstr "注意： Juicebox是一个全新的协议，它未经审计且不保证能完美工作。\n"
 " 在花钱之前请先做好您自己的研究：提出疑问，核查代码以及了解所涉及的风险！"
 
-#: src/components/modals/ConfirmPayOwnerModal.tsx
+#: src/components/modals/ConfirmPayOwnerModal/index.tsx
 msgid "Notice from {0}:"
 msgstr "通知自{0}:"
 
@@ -877,12 +889,12 @@ msgstr "已暂停"
 
 #: src/components/Dashboard/Pay/index.tsx
 #: src/components/Dashboard/ProjectActivity/index.tsx
-#: src/components/modals/ConfirmPayOwnerModal.tsx
+#: src/components/modals/ConfirmPayOwnerModal/index.tsx
 #: src/components/shared/formItems/ProjectPayButton.tsx
 msgid "Pay"
 msgstr "支付"
 
-#: src/components/modals/ConfirmPayOwnerModal.tsx
+#: src/components/modals/ConfirmPayOwnerModal/index.tsx
 msgid "Pay amount"
 msgstr "支付金额"
 
@@ -899,7 +911,7 @@ msgstr "支付按钮文本"
 msgid "Pay disclosure"
 msgstr "付款声明"
 
-#: src/components/modals/ConfirmPayOwnerModal.tsx
+#: src/components/modals/ConfirmPayOwnerModal/index.tsx
 msgid "Pay {0}"
 msgstr "支付 {0}"
 
@@ -911,7 +923,7 @@ msgstr "因代币保留率为 100% 且支付后并不会获得相应的代币，
 msgid "Paying this project is currently disabled."
 msgstr "当前项目已暂停接收付款。"
 
-#: src/components/modals/ConfirmPayOwnerModal.tsx
+#: src/components/modals/ConfirmPayOwnerModal/index.tsx
 msgid "Paying {0} is not an investment—it's a way to support the project. Any value or utility of the tokens you receive is determined by {1}."
 msgstr "向 {0} 支付并不是投资——而是支持项目的一种方式。你收到代币的价值和效用都由 {1} 决定。"
 
@@ -1019,7 +1031,7 @@ msgstr "正在使用 Juicebox 的项目"
 msgid "Public goods and services"
 msgstr "公共产品和服务"
 
-#: src/components/modals/ConfirmPayOwnerModal.tsx
+#: src/components/modals/ConfirmPayOwnerModal/index.tsx
 msgid "Receive ERC20"
 msgstr "以 ERC20 形式接收"
 
@@ -1196,6 +1208,11 @@ msgstr "设定您的筹款周期时长。"
 msgid "Should you Juicebox?"
 msgstr "你应该使用Juicebox吗?"
 
+#: src/components/FundingCycle/FundingCyclePreview.tsx
+msgid "Some funding cycle properties may indicate risk\n"
+"for project contributors."
+msgstr ""
+
 #: src/components/modals/ReconfigureFCModal.tsx
 #: src/components/modals/ReconfigureFCModal.tsx
 msgid "Spending"
@@ -1278,6 +1295,14 @@ msgstr "然后，创始贡献者将致力于为 Juicebox 上的项目提供 L2 �
 msgid "The future will be led by creators, and owned by communities."
 msgstr "创造者将引领未来, 而社区会拥有未来."
 
+#: src/constants/fundingWarningText.ts
+msgid "The project owner may mint any supply of tokens at any time, diluting the token share of all existing contributors."
+msgstr ""
+
+#: src/constants/fundingWarningText.ts
+msgid "The project owner may reconfigure this funding cycle at any time, without notice."
+msgstr ""
+
 #: src/components/Create/BudgetForm.tsx
 msgid "The project's entire balance will be considered overflow."
 msgstr "项目的全部余额将被视为溢出。"
@@ -1315,6 +1340,10 @@ msgstr "还有一个脚本，使用随机输入生成器迭代运行集成测试
 msgid "This address will receive any tokens minted when the recipient project gets paid."
 msgstr "有人给这个项目付款时，此地址会收到保留的代币。"
 
+#: src/components/Dashboard/FundingCycles.tsx
+msgid "This funding cycle may pose risks to contributors. Check the funding cycle details before paying this project."
+msgstr ""
+
 #: src/components/modals/ParticipantsModal.tsx
 msgid "This list is using an experimental data index and may be inaccurate for some projects."
 msgstr "这个列表是通过实验性的数据索引统计而得到的，对某些项目来说可能并不精确。"
@@ -1326,6 +1355,10 @@ msgstr "这意味着任何人都可以看到他们正在使用的代码，任何
 #: src/components/Dashboard/Pay/index.tsx
 msgid "This project has been archived and cannot be paid."
 msgstr "此项目已存档，无法支付。"
+
+#: src/components/modals/RedeemModal.tsx
+msgid "This project has no overflow, and you will receive no ETH for burning tokens."
+msgstr ""
 
 #: src/components/modals/MigrateV1Pt1Modal.tsx
 msgid "This project is currently using the Juicebox V1 terminal contract. New features introduced in V1.1 allow the project owner to:"
@@ -1344,7 +1377,7 @@ msgstr "以上文本内容会在您的支持者完成付款前向其显示。"
 msgid "This website (juicebox.money) connects to the Juicebox protocol's smart contracts, deployed on the Ethereum network. (note: anyone else can make a website that also connects to these same smart contracts. For now, don't trust any site other than this one to access the Juicebox protocol.)"
 msgstr "这个网站（juicebox.money）连接到 Juicebox 协议的智能合约，这些合约都部署在 Ethereum 网络上。(注：任何人都可以做一个连接到相同的这些智能合约的网站。目前，除了这个网站，不要通过其他任何网站去访问 Juicebox 协议）。"
 
-#: src/components/modals/ConfirmPayOwnerModal.tsx
+#: src/components/modals/ConfirmPayOwnerModal/index.tsx
 msgid "To: <0/>"
 msgstr "分配给：<0/>"
 
@@ -1561,10 +1594,6 @@ msgstr "提取资金"
 msgid "Workspace"
 msgstr "工作空间"
 
-#: src/components/modals/RedeemModal.tsx
-msgid "You can redeem tokens once this project has overflow."
-msgstr "项目资金有溢出时，你可以赎回代币。"
-
 #: src/components/modals/ConfirmUnstakeTokensModal.tsx
 msgid "You can still redeem your {tokenSymbol} tokens for overflow without claiming them, and you can transfer your unclaimed {tokenSymbol} tokens to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
 msgstr "未领取的 {tokenSymbol} 代币，依然可以用来赎回溢出池中的 ETH，也可以在工具菜单中把代币直接转给其他地址。点击右上角的扳手按钮可以打开工具菜单。"
@@ -1706,7 +1735,7 @@ msgstr "{0} 已贡献"
 msgid "{0} days"
 msgstr "{0} 天"
 
-#: src/components/modals/ConfirmPayOwnerModal.tsx
+#: src/components/modals/ConfirmPayOwnerModal/index.tsx
 msgid "{0} for you"
 msgstr "给到你的 {0}"
 
@@ -1722,7 +1751,7 @@ msgstr "{0} 剩余"
 msgid "{0} received per ETH paid to the treasury. This can change over time according to the discount rate and reserved tokens amount of future funding cycles."
 msgstr "金库中收到 ETH 付款时对应铸造的 {0} 数量。这个数量会根据之后周期的折扣率和保留率，随着时间而改变。"
 
-#: src/components/modals/ConfirmPayOwnerModal.tsx
+#: src/components/modals/ConfirmPayOwnerModal/index.tsx
 msgid "{0} reserved"
 msgstr "{0} 已保留"
 

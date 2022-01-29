@@ -11,7 +11,7 @@ import { useCallback, useContext, useState } from 'react'
 import { formatDate } from 'utils/formatDate'
 import { fromPermyriad, parsePermyriad } from 'utils/formatNumber'
 
-import { ProjectContext } from 'contexts/projectContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 
 import ReservedTokenReceiverModal from 'components/modals/ReservedTokenReceiverModal'
 import {
@@ -44,7 +44,7 @@ export default function ProjectTicketMods({
   }>()
   const [editingModIndex, setEditingModIndex] = useState<number>() // index of the mod currently being edited (edit modal open)
   const [modalMode, setModalMode] = useState<ModalMode>() //either 'Add', 'Edit' or undefined
-  const { owner } = useContext(ProjectContext)
+  const { owner } = useContext(V1ProjectContext)
 
   const {
     theme: { colors, radii },

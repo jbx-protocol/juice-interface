@@ -1,5 +1,5 @@
 import FormattedAddress from 'components/shared/FormattedAddress'
-import { ProjectContext } from 'contexts/projectContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import EtherscanLink from 'components/shared/EtherscanLink'
 
 import { ThemeContext } from 'contexts/themeContext'
@@ -19,7 +19,7 @@ export default function ReservesEventElem({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const { tokenSymbol } = useContext(ProjectContext)
+  const { tokenSymbol } = useContext(V1ProjectContext)
 
   const { data: distributeEvents } = useSubgraphQuery(
     {

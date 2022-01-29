@@ -1,6 +1,6 @@
 import { NetworkContext } from 'contexts/networkContext'
-import { ProjectContext } from 'contexts/projectContext'
-import { UserContext } from 'contexts/userContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
+import { V1UserContext } from 'contexts/v1/userContext'
 import { BigNumber } from 'ethers'
 import { useContext } from 'react'
 
@@ -11,8 +11,8 @@ export function usePayProjectTx(): TransactorInstance<{
   preferUnstaked: boolean
   value: BigNumber
 }> {
-  const { transactor, contracts } = useContext(UserContext)
-  const { terminal, projectId } = useContext(ProjectContext)
+  const { transactor, contracts } = useContext(V1UserContext)
+  const { terminal, projectId } = useContext(V1ProjectContext)
   const { userAddress } = useContext(NetworkContext)
 
   return ({ note, preferUnstaked, value }, txOpts) => {

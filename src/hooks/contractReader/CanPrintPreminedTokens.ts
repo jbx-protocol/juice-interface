@@ -1,4 +1,4 @@
-import { ProjectContext } from 'contexts/projectContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { BigNumber } from 'ethers'
 import { V1ContractName } from 'models/v1/contracts'
 import { useContext } from 'react'
@@ -7,7 +7,7 @@ import useContractReader from './ContractReader'
 
 /** Returns true if premine tokens can be printed for `projectId`. */
 export default function useCanPrintPreminedTokens() {
-  const { projectId } = useContext(ProjectContext)
+  const { projectId } = useContext(V1ProjectContext)
 
   return useContractReader<boolean>({
     contract: V1ContractName.TerminalV1,

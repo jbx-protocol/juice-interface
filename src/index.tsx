@@ -8,7 +8,7 @@ import { Provider } from 'react-redux'
 import App from 'App'
 import NetworkProvider from 'providers/NetworkProvider'
 import ThemeProvider from 'providers/ThemeProvider'
-import UserProvider from 'providers/UserProvider'
+import V1UserProvider from 'providers/v1/UserProvider'
 import LanguageProvider from 'providers/LanguageProvider'
 import ReactQueryProvier from 'providers/ReactQueryProvider'
 
@@ -22,9 +22,9 @@ ReactDOM.render(
         <LanguageProvider>
           <ThemeProvider>
             <NetworkProvider>
-              <UserProvider>
+              <V1UserProvider>
                 <App />
-              </UserProvider>
+              </V1UserProvider>
             </NetworkProvider>
           </ThemeProvider>
         </LanguageProvider>

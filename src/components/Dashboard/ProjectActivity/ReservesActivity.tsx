@@ -1,4 +1,4 @@
-import { ProjectContext } from 'contexts/projectContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useInfiniteSubgraphQuery } from 'hooks/SubgraphQuery'
 import React, { useContext } from 'react'
 
@@ -6,7 +6,7 @@ import ActivityTabContent from './ActivityTabContent'
 import ReservesEventElem from './ReservesEventElem'
 
 export function ReservesActivity({ pageSize }: { pageSize: number }) {
-  const { projectId } = useContext(ProjectContext)
+  const { projectId } = useContext(V1ProjectContext)
 
   const {
     data: printReservesEvents,

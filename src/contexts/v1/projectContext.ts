@@ -7,7 +7,7 @@ import { V1TerminalName } from 'models/v1/terminals'
 import { V1TerminalVersion } from 'models/v1/terminals'
 import { createContext } from 'react'
 
-export type ProjectContextType = {
+export type V1ProjectContextType = {
   projectId: BigNumber | undefined
   projectType: ProjectType | undefined
   createdAt: number | undefined
@@ -37,7 +37,7 @@ export type ProjectContextType = {
     | undefined
 }
 
-export const ProjectContext = createContext<ProjectContextType>({
+export const V1ProjectContext = createContext<V1ProjectContextType>({
   projectId: undefined,
   projectType: 'standard',
   createdAt: undefined,

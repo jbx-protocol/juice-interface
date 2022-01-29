@@ -12,7 +12,7 @@ import MigrateV1Pt1Modal from 'components/modals/MigrateV1Pt1Modal'
 import ProjectToolDrawerModal from 'components/modals/ProjectToolDrawerModal'
 import ProjectLogo from 'components/shared/ProjectLogo'
 import { NetworkContext } from 'contexts/networkContext'
-import { ProjectContext } from 'contexts/projectContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import {
   OperatorPermission,
@@ -38,7 +38,7 @@ export default function ProjectHeader() {
     isArchived,
     terminal,
     owner,
-  } = useContext(ProjectContext)
+  } = useContext(V1ProjectContext)
 
   const {
     theme: { colors },

@@ -1,5 +1,5 @@
 import { Col, Row } from 'antd'
-import { ProjectContext } from 'contexts/projectContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { CSSProperties, useContext } from 'react'
 import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
 
@@ -20,7 +20,7 @@ export default function Project({
   showCurrentDetail?: boolean
   column?: boolean
 }) {
-  const { projectId, currentFC } = useContext(ProjectContext)
+  const { projectId, currentFC } = useContext(V1ProjectContext)
 
   const fcMetadata = decodeFundingCycleMetadata(currentFC?.metadata)
 

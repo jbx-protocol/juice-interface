@@ -1,5 +1,5 @@
 import { NetworkContext } from 'contexts/networkContext'
-import { UserContext } from 'contexts/userContext'
+import { V1UserContext } from 'contexts/v1/userContext'
 import { BigNumber, constants, utils } from 'ethers'
 import { FundingCycleMetadata } from 'models/funding-cycle-metadata'
 import { FCProperties } from 'models/funding-cycle-properties'
@@ -17,7 +17,7 @@ export function useDeployProjectTx(): TransactorInstance<{
   payoutMods: PayoutMod[]
   ticketMods: TicketMod[]
 }> {
-  const { transactor, contracts } = useContext(UserContext)
+  const { transactor, contracts } = useContext(V1UserContext)
   const { userAddress } = useContext(NetworkContext)
 
   return (

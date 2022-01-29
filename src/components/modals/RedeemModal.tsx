@@ -5,7 +5,7 @@ import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 
 import { NetworkContext } from 'contexts/networkContext'
-import { ProjectContext } from 'contexts/projectContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import useClaimableOverflowOf from 'hooks/contractReader/ClaimableOverflowOf'
 import { useRedeemRate } from 'hooks/contractReader/RedeemRate'
@@ -35,7 +35,7 @@ export default function RedeemModal({
   } = useContext(ThemeContext)
   const { userAddress } = useContext(NetworkContext)
   const { projectId, tokenSymbol, currentFC, terminal, overflow } =
-    useContext(ProjectContext)
+    useContext(V1ProjectContext)
 
   const fcMetadata = decodeFundingCycleMetadata(currentFC?.metadata)
 

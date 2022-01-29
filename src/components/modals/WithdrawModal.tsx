@@ -8,7 +8,7 @@ import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import PayoutModsList from 'components/shared/PayoutModsList'
 
-import { ProjectContext } from 'contexts/projectContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useTapProjectTx } from 'hooks/transactor/TapProjectTx'
@@ -32,7 +32,7 @@ export default function WithdrawModal({
   const [loading, setLoading] = useState<boolean>()
   const [tapAmount, setTapAmount] = useState<string>()
   const { balanceInCurrency, projectId, currentFC, currentPayoutMods, owner } =
-    useContext(ProjectContext)
+    useContext(V1ProjectContext)
   const {
     theme: { colors },
   } = useContext(ThemeContext)

@@ -21,7 +21,7 @@ import { useProjectsQuery } from 'hooks/Projects'
 import { CurrencyOption } from 'models/currency-option'
 import { useEffect, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
-import { getTerminalName, getTerminalVersion } from 'utils/terminal-versions'
+import { getTerminalName, getTerminalVersion } from 'utils/v1/terminals'
 
 import { padding } from 'constants/styles/padding'
 import { layouts } from 'constants/styles/layouts'

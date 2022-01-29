@@ -8,7 +8,7 @@ import { useContext } from 'react'
 import { formatDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
 
-import { getTerminalVersion } from 'utils/terminal-versions'
+import { getTerminalVersion } from 'utils/v1/terminals'
 
 import { CURRENCY_ETH } from 'constants/currency'
 

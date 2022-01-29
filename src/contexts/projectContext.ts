@@ -3,8 +3,8 @@ import { FundingCycle } from 'models/funding-cycle'
 import { PayoutMod, TicketMod } from 'models/mods'
 import { ProjectMetadataV3 } from 'models/project-metadata'
 import { ProjectType } from 'models/project-type'
-import { TerminalName } from 'models/terminal-name'
-import { TerminalVersion } from 'models/terminal-version'
+import { V1TerminalName } from 'models/v1/terminals'
+import { V1TerminalVersion } from 'models/v1/terminals'
 import { createContext } from 'react'
 
 export type ProjectContextType = {
@@ -30,9 +30,9 @@ export type ProjectContextType = {
   isArchived: boolean | undefined
   terminal:
     | {
-        version: TerminalVersion | undefined
+        version: V1TerminalVersion | undefined
         address: string | undefined
-        name: TerminalName | undefined
+        name: V1TerminalName | undefined
       }
     | undefined
 }

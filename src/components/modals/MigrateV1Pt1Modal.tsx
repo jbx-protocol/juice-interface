@@ -5,7 +5,7 @@ import { BigNumber } from 'ethers'
 import { useAddToBalanceTx } from 'hooks/transactor/AddToBalanceTx'
 import { useMigrateV1ProjectTx } from 'hooks/transactor/MigrateV1ProjectTx'
 import { useContext, useState } from 'react'
-import { getTerminalAddress } from 'utils/terminal-versions'
+import { getTerminalAddress } from 'utils/v1/terminals'
 
 export default function MigrateV1Pt1Modal({
   visible,

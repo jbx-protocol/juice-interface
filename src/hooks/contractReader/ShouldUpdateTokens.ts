@@ -1,11 +1,11 @@
 import { BigNumber, BigNumberish } from 'ethers'
 import { V1ContractName } from 'models/v1/contracts'
-import { TerminalName } from 'models/terminal-name'
+import { V1TerminalName } from 'models/v1/terminals'
 import { useMemo } from 'react'
 
 export default function useShouldUpdateTokens(
   projectId: BigNumberish | undefined,
-  terminalName: TerminalName | undefined,
+  terminalName: V1TerminalName | undefined,
   userAddress: string | undefined,
 ) {
   const _projectId = projectId

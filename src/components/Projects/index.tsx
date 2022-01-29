@@ -9,7 +9,7 @@ import ProjectsGrid from 'components/shared/ProjectsGrid'
 import { ThemeContext } from 'contexts/themeContext'
 import { useInfiniteProjectsQuery, useProjectsSearch } from 'hooks/Projects'
 import { ProjectState } from 'models/project-visibility'
-import { TerminalVersion } from 'models/terminal-version'
+import { V1TerminalVersion } from 'models/v1/terminals'
 import { useContext, useEffect, useMemo, useRef, useState } from 'react'
 
 import { layouts } from 'constants/styles/layouts'
@@ -31,7 +31,7 @@ export default function Projects() {
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const terminalVersion: TerminalVersion | undefined = useMemo(() => {
+  const terminalVersion: V1TerminalVersion | undefined = useMemo(() => {
     if (includeV1 && !includeV1_1) return '1'
     if (!includeV1 && includeV1_1) return '1.1'
   }, [includeV1, includeV1_1])

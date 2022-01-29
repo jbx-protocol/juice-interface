@@ -1,9 +1,9 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { ProjectState } from 'models/project-visibility'
 import { Project } from 'models/subgraph-entities/project'
-import { TerminalVersion } from 'models/terminal-version'
+import { V1TerminalVersion } from 'models/v1/terminals'
 import { EntityKeys, GraphQueryOpts, InfiniteGraphQueryOpts } from 'utils/graph'
-import { getTerminalAddress } from 'utils/terminal-versions'
+import { getTerminalAddress } from 'utils/v1/terminals'
 
 import { archivedProjectIds } from '../constants/archived-projects'
 import useSubgraphQuery, { useInfiniteSubgraphQuery } from './SubgraphQuery'
@@ -40,7 +40,7 @@ interface ProjectsOptions {
   pageSize?: number
   filter?: ProjectState
   keys?: (keyof Project)[]
-  terminalVersion?: TerminalVersion
+  terminalVersion?: V1TerminalVersion
   searchText?: string
 }
 

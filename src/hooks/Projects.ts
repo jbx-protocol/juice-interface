@@ -1,11 +1,18 @@
 import { BigNumber } from '@ethersproject/bignumber'
+
 import { ProjectState } from 'models/project-visibility'
 import { Project } from 'models/subgraph-entities/project'
 import { TerminalVersion } from 'models/terminal-version'
 import { EntityKeys, GraphQueryOpts, InfiniteGraphQueryOpts } from 'utils/graph'
 import { getTerminalAddress } from 'utils/terminal-versions'
 
+import {
+  trendingStaleTime,
+  trendingWindowDays,
+} from 'constants/trending-projects'
+
 import { archivedProjectIds } from '../constants/archived-projects'
+import { trendingProjectsCount } from '../constants/trending-projects'
 import useSubgraphQuery, { useInfiniteSubgraphQuery } from './SubgraphQuery'
 
 // Take just an object that might contain an ID. That way we can support
@@ -128,48 +135,79 @@ export function useProjectsSearch(handle: string | undefined) {
 // Returns projects with highest % volume increase in last week
 // excluding JuiceboxDAO (ID=1)
 export function useTrendingProjects() {
-  const secondsInWeek = 7 * 24 * 60 * 60
+  const secondsInDay = 24 * 60 * 60
 
-  const payments = useSubgraphQuery({
-    first: 1000,
-    entity: 'payEvent',
-    keys: [
-      'amount',
-      {
-        entity: 'project',
-        keys: ['id'],
-      },
-    ],
-    where: [
-      {
-        key: 'timestamp',
-        value: parseInt(
-          (new Date().valueOf() / 1000 - secondsInWeek).toString(),
-        ),
-        operator: 'gte',
-      },
-    ],
-  })
+  const payments = useSubgraphQuery(
+    {
+      first: 1000,
+      entity: 'payEvent',
+      keys: [
+        'amount',
+        {
+          entity: 'project',
+          keys: ['id'],
+        },
+      ],
+      where: [
+        {
+          key: 'timestamp',
+          value: parseInt(
+            (
+              new Date().valueOf() / 1000 -
+              secondsInDay * trendingWindowDays
+            ).toString(),
+          ),
+          operator: 'gte',
+        },
+      ],
+    },
+    {
+      staleTime: trendingStaleTime,
+    },
+  )
 
-  if (!payments.data) return
-
-  const mapped = payments.data.reduce((acc, curr) => {
+  // Record total payment volume for each project
+  const mapped = (payments.data ?? []).reduce((acc, curr) => {
     const projectId = curr.project?.toString()
 
-    if (!projectId || projectId === '1') return acc
-
-    return {
-      ...acc,
-      [projectId]: BigNumber.from(acc[projectId] ?? 0).add(curr.amount),
-    }
+    return projectId && projectId !== '1'
+      ? {
+          ...acc,
+          [projectId]: BigNumber.from(acc[projectId] ?? 0).add(curr.amount),
+        }
+      : acc
   }, {} as Record<string, BigNumber>)
 
-  const sorted = Object.keys(mapped)
+  // Get IDs for `trendingProjectsCount` number of highest volume projects
+  const sortedProjectIds = Object.keys(mapped)
     .sort((a, b) => (mapped[a].gt(mapped[b]) ? -1 : 1))
-    .slice(0, 8)
-    .map(x => BigNumber.from(x))
+    .slice(0, trendingProjectsCount)
 
-  return sorted
+  // Query project data for all trending project IDs
+  const projects = useSubgraphQuery(
+    sortedProjectIds.length
+      ? {
+          entity: 'project',
+          keys,
+          where: {
+            key: 'id',
+            value: sortedProjectIds,
+            operator: 'in',
+          },
+        }
+      : null,
+    {
+      staleTime: trendingStaleTime,
+    },
+  )
+
+  // Return projects with `trendingVolume` sorted by `trendingVolume`
+  return projects.data
+    ?.map(p => ({
+      ...p,
+      trendingVolume: p.id ? mapped[p.id.toString()] : undefined,
+    }))
+    .sort((a, b) => (a.trendingVolume?.gt(b.trendingVolume ?? 0) ? -1 : 1))
 }
 
 export function useInfiniteProjectsQuery(opts: ProjectsOptions) {

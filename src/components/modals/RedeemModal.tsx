@@ -7,12 +7,11 @@ import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { NetworkContext } from 'contexts/networkContext'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { BigNumber } from 'ethers'
-import useContractReader from 'hooks/ContractReader'
-import { useRedeemRate } from 'hooks/RedeemRate'
+import useClaimableOverflowOf from 'hooks/contractReader/ClaimableOverflowOf'
+import { useRedeemRate } from 'hooks/contractReader/RedeemRate'
+import useTotalBalanceOf from 'hooks/contractReader/TotalBalanceOf'
 import { useRedeemTokensTx } from 'hooks/transactor/RedeemTokensTx'
-import { CSSProperties, useContext, useMemo, useState } from 'react'
-import { bigNumbersDiff } from 'utils/bigNumbersDiff'
+import { CSSProperties, useContext, useState } from 'react'
 import { formattedNum, formatWad, fromWad, parseWad } from 'utils/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
 
@@ -23,13 +22,11 @@ export default function RedeemModal({
   redeemDisabled,
   onOk,
   onCancel,
-  totalBalance,
 }: {
   visible?: boolean
   redeemDisabled?: boolean
   onOk: VoidFunction | undefined
   onCancel: VoidFunction | undefined
-  totalBalance: BigNumber | undefined
 }) {
   const [redeemAmount, setRedeemAmount] = useState<string>()
   const [loading, setLoading] = useState<boolean>()
@@ -44,33 +41,9 @@ export default function RedeemModal({
 
   const fcMetadata = decodeFundingCycleMetadata(currentFC?.metadata)
 
-  const maxClaimable = useContractReader<BigNumber>({
-    contract: terminal?.name,
-    functionName: 'claimableOverflowOf',
-    args:
-      userAddress && projectId
-        ? [userAddress, projectId.toHexString(), totalBalance?.toHexString()]
-        : null,
-    valueDidChange: bigNumbersDiff,
-    updateOn: useMemo(
-      () =>
-        projectId && userAddress
-          ? [
-              {
-                contract: terminal?.name,
-                eventName: 'Pay',
-                topics: [[], projectId.toHexString(), userAddress],
-              },
-              {
-                contract: terminal?.name,
-                eventName: 'Redeem',
-                topics: [projectId.toHexString(), userAddress],
-              },
-            ]
-          : undefined,
-      [projectId, userAddress, terminal?.name],
-    ),
-  })
+  const totalBalance = useTotalBalanceOf(userAddress, projectId, terminal?.name)
+
+  const maxClaimable = useClaimableOverflowOf()
 
   const rewardAmount = useRedeemRate({
     tokenAmount: redeemAmount,

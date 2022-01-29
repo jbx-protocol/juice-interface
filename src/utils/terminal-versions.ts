@@ -2,6 +2,8 @@ import { ContractName } from 'models/contract-name'
 import { NetworkName } from 'models/network-name'
 import { TerminalVersion } from 'models/terminal-version'
 
+import { TerminalName } from 'models/terminal-name'
+
 import { readNetwork } from 'constants/networks'
 
 const loadTerminalAddress = (
@@ -48,7 +50,7 @@ export const getTerminalName = ({
 }: {
   version?: TerminalVersion
   address?: string
-}) => {
+}): TerminalName | undefined => {
   if (!version && !address) return
 
   const _version =

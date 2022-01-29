@@ -4,17 +4,27 @@ import { useTrendingProjects } from 'hooks/Projects'
 
 import TrendingProjectCard from './TrendingProjectCard'
 
-export default function TrendingProjects() {
+export default function TrendingProjects({
+  isHomePage,
+}: {
+  isHomePage?: boolean
+}) {
   const trendingProjectIds = useTrendingProjects()
+  const cardBg = isHomePage ? 'var(--background-l0)' : ''
 
   return (
     <div>
       {trendingProjectIds ? (
-        <Grid
-          children={trendingProjectIds.map(p => (
-            <TrendingProjectCard project={p} />
+        <Grid>
+          {trendingProjectIds.map((p, i) => (
+            <TrendingProjectCard
+              project={p}
+              size={isHomePage ? 'sm' : 'lg'}
+              rank={i + 1}
+              bg={cardBg}
+            />
           ))}
-        />
+        </Grid>
       ) : (
         <Loading />
       )}

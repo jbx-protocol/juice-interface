@@ -6,7 +6,7 @@ import ProjectLogo from 'components/shared/ProjectLogo'
 import { ThemeContext } from 'contexts/themeContext'
 import { BigNumber } from 'ethers'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
-import { useContext } from 'react'
+import { CSSProperties, useContext } from 'react'
 import { formatWad } from 'utils/formatNumber'
 import { getTerminalVersion } from 'utils/terminal-versions'
 
@@ -17,12 +17,38 @@ import { trendingWindowDays } from 'constants/trending-projects'
 
 export default function TrendingProjectCard({
   project,
+  size,
+  bg,
+  rank,
 }: {
   project: Project & { trendingVolume: BigNumber | undefined }
+  size?: 'sm' | 'lg'
+  bg?: string // Used on homepage
+  rank: number
 }) {
   const {
     theme: { colors, radii },
   } = useContext(ThemeContext)
+
+  const cardStyle: CSSProperties = {
+    display: 'flex',
+    alignItems: 'center',
+    whiteSpace: 'pre',
+    overflow: 'hidden',
+    padding: '25px 20px',
+    backgroundColor: bg,
+    // Shows darker border when background is set
+    border: `1px solid ${
+      bg ? 'var(--stroke-secondary)' : 'var(--stroke-tertiary)'
+    }`,
+  }
+
+  const rankStyle: CSSProperties = {
+    fontSize: 22,
+    color: 'var(--text-primary)',
+    fontWeight: 400,
+    marginRight: 15,
+  }
 
   const { data: metadata } = useProjectMetadata(project?.uri)
 
@@ -35,6 +61,21 @@ export default function TrendingProjectCard({
       ? 2
       : 0
 
+  // let percentGain : string
+  // const totalVolume = project.totalPaid
+  // const trendingVolume = project.trendingVolume
+  // console.log('trendingVolume: ', fromWad(trendingVolume))
+  // console.log('totalVol: ', fromWad(totalVolume))
+
+  // if (totalVolume && trendingVolume) {
+  //   const volumeBeforeTrendingWindow = totalVolume.sub(trendingVolume)
+  //   console.log('volumeBeforeTrendingWindow: ', fromWad(volumeBeforeTrendingWindow))
+  //   percentGain = fromWad(trendingVolume.mul(1000000000).div(volumeBeforeTrendingWindow))
+  //   console.log('trendingVolume.div(volumeBeforeTrendingWindow): ', percentGain)
+  // } else {
+  //   percentGain = ''
+  // }
+
   return project ? (
     <a
       style={{
@@ -46,21 +87,15 @@ export default function TrendingProjectCard({
       href={`/#/p/${project?.handle}`}
     >
       {metadata ? (
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            whiteSpace: 'pre',
-            overflow: 'hidden',
-            padding: 20,
-          }}
-          className="clickable-border"
-        >
-          <div style={{ marginRight: 20 }}>
+        <div style={cardStyle} className="clickable-border">
+          <div
+            style={{ marginRight: 20, display: 'flex', alignItems: 'center' }}
+          >
+            <div style={rankStyle}>{rank}</div>
             <ProjectLogo
               uri={metadata.logoUri}
               name={metadata.name}
-              size={110}
+              size={size === 'sm' ? 70 : 110}
             />
           </div>
 
@@ -77,31 +112,38 @@ export default function TrendingProjectCard({
                 margin: 0,
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
+                fontSize: size === 'sm' ? 16 : 21,
               }}
             >
               {metadata.name}
             </h2>
 
-            <div>
-              <span style={{ color: colors.text.primary, fontWeight: 500 }}>
-                @{project?.handle}
-              </span>
-              <span
-                style={{
-                  marginLeft: 10,
-                  color: colors.text.tertiary,
-                  fontSize: '0.7rem',
-                  fontWeight: 500,
-                }}
-              >
-                V{terminalVersion}
-              </span>
-            </div>
+            {size === 'sm' ? null : (
+              <div>
+                <span style={{ color: colors.text.primary, fontWeight: 500 }}>
+                  @{project?.handle}
+                </span>
+                <span
+                  style={{
+                    marginLeft: 10,
+                    color: colors.text.tertiary,
+                    fontSize: '0.7rem',
+                    fontWeight: 500,
+                  }}
+                >
+                  V{terminalVersion}
+                </span>
+              </div>
+            )}
 
-            <div style={{ color: colors.text.secondary }}>
+            <div style={{ color: colors.text.primary }}>
               <CurrencySymbol currency={CURRENCY_ETH} />
-              {formatWad(project.trendingVolume, { precision })} last{' '}
-              {trendingWindowDays} days
+              <span style={{ fontWeight: 600 }}>
+                {formatWad(project.trendingVolume, { precision })}
+              </span>
+              {/* <span style={{ color: colors.text.header, fontWeight: 600 }}>
+                // {/* +{percentGain}% */}
+              {/* </span> */} last {trendingWindowDays} days
             </div>
 
             {metadata.description && (
@@ -110,6 +152,8 @@ export default function TrendingProjectCard({
                   style={{
                     maxHeight: 20,
                     color: colors.text.tertiary,
+                    fontWeight: 500,
+                    fontSize: size === 'sm' ? 13 : 14,
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',
                   }}

@@ -1,9 +1,8 @@
 import { Row, Col, Button } from 'antd'
-import ProjectsGrid from 'components/shared/ProjectsGrid'
 
-import { useTrendingProjects } from 'hooks/Projects'
 import { CSSProperties, useContext } from 'react'
 import { ThemeContext } from 'contexts/themeContext'
+import TrendingProjects from 'components/Projects/TrendingProjects'
 
 export default function TrendingSection() {
   const { isDarkMode } = useContext(ThemeContext)
@@ -16,7 +15,6 @@ export default function TrendingSection() {
     paddingRight: 40,
     paddingBottom: 0,
   }
-  const trendingProjectIds = useTrendingProjects()?.slice(0, 6)
 
   return (
     <section style={trendingProjects}>
@@ -41,10 +39,7 @@ export default function TrendingSection() {
             >
               Trending projects over the last 7 days
             </h3>
-            <ProjectsGrid
-              projects={trendingProjectIds ?? []}
-              isHomePage={true}
-            />
+            <TrendingProjects isHomePage />
             <br />
             <Button type="default" style={{ marginBottom: 40 }}>
               <a href="/#/projects">More trending projects</a>

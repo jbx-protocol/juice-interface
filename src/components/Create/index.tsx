@@ -205,7 +205,7 @@ export default function Create() {
   const onRestrictedActionsFormSaved = () => {
     const fields = restrictedActionsForm.getFieldsValue(true)
     dispatch(
-      editingProjectActions.setticketPrintingIsAllowed(
+      editingProjectActions.setTicketPrintingIsAllowed(
         fields.ticketPrintingIsAllowed,
       ),
     )
@@ -427,6 +427,7 @@ export default function Create() {
         editingFC.payIsPaused,
         editingFC.ticketPrintingIsAllowed,
         constants.AddressZero,
+        1,
       ),
     }),
     [editingFC],

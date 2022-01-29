@@ -56,6 +56,7 @@
     "prepare": "husky install",
     "i18n:extract": "lingui extract --clean --locale en",
     "i18n:compile": "yarn i18n:extract && lingui compile",
+    "postinstall": "yarn i18n:compile",
     "analyze": "yarn build && source-map-explorer 'build/static/js/*.js'"
   },
   "lint-staged": {

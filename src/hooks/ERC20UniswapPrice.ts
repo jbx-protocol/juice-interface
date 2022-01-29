@@ -5,13 +5,12 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Contract } from '@ethersproject/contracts'
 import { abi as IUniswapV3PoolABI } from '@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Pool.sol/IUniswapV3Pool.json'
 import { abi as IUniswapV3FactoryABI } from '@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Factory.sol/IUniswapV3Factory.json'
-
+import { FACTORY_ADDRESS as UNISWAP_V3_FACTORY_ADDRESS } from '@uniswap/v3-sdk'
 import { constants as ethersConstants } from 'ethers'
 
 import { readProvider } from 'constants/readProvider'
 import { readNetwork } from 'constants/networks'
 import { WETH } from 'constants/tokens'
-import { UNISWAP_V3_FACTORY } from 'constants/contracts'
 import { WAD_DECIMALS } from 'constants/numbers'
 
 interface Immutables {
@@ -52,7 +51,7 @@ const networkId = readNetwork.chainId
  */
 export function useUniswapPriceQuery({ tokenSymbol, tokenAddress }: Props) {
   const factoryContract = new Contract(
-    UNISWAP_V3_FACTORY,
+    UNISWAP_V3_FACTORY_ADDRESS,
     IUniswapV3FactoryABI,
     readProvider,
   )

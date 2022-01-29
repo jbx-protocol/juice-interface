@@ -20,6 +20,7 @@ import ProjectCard from 'components/shared/ProjectCard'
 
 import { layouts } from 'constants/styles/layouts'
 import TrendingProjects from './TrendingProjects'
+import MyProjects from './MyProjects'
 
 type OrderByOption = 'createdAt' | 'totalPaid'
 
@@ -233,6 +234,8 @@ export default function Projects() {
             </Select>
           </div>
         </div>
+
+        <MyProjects />
 
         {selectedTab === 'archived' && (
           <p style={{ marginBottom: 40, maxWidth: 800 }}>

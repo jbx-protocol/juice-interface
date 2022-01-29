@@ -201,13 +201,70 @@ export function useTrendingProjects() {
     },
   )
 
-  // Return projects with `trendingVolume` sorted by `trendingVolume`
-  return projects.data
-    ?.map(p => ({
-      ...p,
-      trendingVolume: p.id ? mapped[p.id.toString()] : undefined,
-    }))
-    .sort((a, b) => (a.trendingVolume?.gt(b.trendingVolume ?? 0) ? -1 : 1))
+  return {
+    ...projects,
+    // Return projects with `trendingVolume` sorted by `trendingVolume`
+    data: projects.data
+      ?.map(p => ({
+        ...p,
+        trendingVolume: p.id ? mapped[p.id.toString()] : undefined,
+      }))
+      .sort((a, b) => (a.trendingVolume?.gt(b.trendingVolume ?? 0) ? -1 : 1)),
+  }
+}
+
+// Query all projects that a wallet has previously made payments to
+export function useMyProjectsQuery(wallet: string | undefined) {
+  const { data: payments } = useSubgraphQuery(
+    wallet
+      ? {
+          entity: 'payEvent',
+          first: 1000,
+          orderBy: 'timestamp',
+          orderDirection: 'desc',
+          keys: [
+            'timestamp',
+            {
+              entity: 'project',
+              keys: ['id'],
+            },
+          ],
+          where: [
+            {
+              key: 'beneficiary',
+              value: wallet,
+            },
+          ],
+        }
+      : null,
+  )
+
+  const ids = payments?.reduce(
+    (acc, curr) => [
+      ...acc,
+      ...(curr.project
+        ? acc.includes(curr.project.toString())
+          ? []
+          : [curr.project.toString()]
+        : []),
+    ],
+    [] as string[],
+  )
+
+  return useSubgraphQuery(
+    ids
+      ? {
+          entity: 'project',
+          first: 1000,
+          keys,
+          where: {
+            key: 'id',
+            operator: 'in',
+            value: ids,
+          },
+        }
+      : null,
+  )
 }
 
 export function useInfiniteProjectsQuery(opts: ProjectsOptions) {

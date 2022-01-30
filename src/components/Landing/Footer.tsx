@@ -29,7 +29,9 @@ export default function Footer() {
 
   // Renders language links
   const languageLink = (lang: string) => (
-    <span onClick={() => setLanguage(lang)}>{link(Languages[lang].long)}</span>
+    <span key={lang} onClick={() => setLanguage(lang)}>
+      {link(Languages[lang].long)}
+    </span>
   )
 
   // Sets the new language with localStorage and reloads the page

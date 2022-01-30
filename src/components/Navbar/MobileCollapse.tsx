@@ -16,7 +16,7 @@ import FeedbackFormLink from 'components/shared/FeedbackFormLink'
 import ThemePicker from './ThemePicker'
 import Logo from './Logo'
 import Account from './Account'
-import LanguageSelector from './NavLanguageSelector'
+import NavLanguageSelector from './NavLanguageSelector'
 import { menu } from './MenuItems'
 
 export default function MobileCollapse() {
@@ -60,7 +60,7 @@ export default function MobileCollapse() {
         >
           {menu(() => setActiveKey(activeKey === 0 ? undefined : 0))}
           <div className="nav-subsection">
-            <LanguageSelector />
+            <NavLanguageSelector />
             <ThemePicker mobile={true} />
             <FeedbackFormLink mobile={true} />
           </div>

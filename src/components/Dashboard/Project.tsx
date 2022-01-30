@@ -1,9 +1,6 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { Col, Row } from 'antd'
 import { ProjectContext } from 'contexts/projectContext'
-import useContractReader from 'hooks/ContractReader'
-import { CSSProperties, useContext, useMemo } from 'react'
-import { bigNumbersDiff } from 'utils/bigNumbersDiff'
+import { CSSProperties, useContext } from 'react'
 import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
 
 import BalanceTimeline from './BalanceTimeline'
@@ -23,32 +20,7 @@ export default function Project({
   showCurrentDetail?: boolean
   column?: boolean
 }) {
-  const { projectId, currentFC, terminal } = useContext(ProjectContext)
-
-  const totalOverflow = useContractReader<BigNumber>({
-    contract: terminal?.name,
-    functionName: 'currentOverflowOf',
-    args: projectId ? [projectId.toHexString()] : null,
-    valueDidChange: bigNumbersDiff,
-    updateOn: useMemo(
-      () =>
-        projectId
-          ? [
-              {
-                contract: terminal?.name,
-                eventName: 'Pay',
-                topics: [[], projectId.toHexString()],
-              },
-              {
-                contract: terminal?.name,
-                eventName: 'Tap',
-                topics: [[], projectId.toHexString()],
-              },
-            ]
-          : undefined,
-      [projectId, terminal?.name],
-    ),
-  })
+  const { projectId, currentFC } = useContext(ProjectContext)
 
   const fcMetadata = decodeFundingCycleMetadata(currentFC?.metadata)
 
@@ -79,7 +51,7 @@ export default function Project({
           )}
 
           <div style={{ marginBottom: gutter }}>
-            <Rewards totalOverflow={totalOverflow} />
+            <Rewards />
           </div>
 
           <FundingCycles showCurrentDetail={showCurrentDetail} />

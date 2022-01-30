@@ -9,12 +9,17 @@ import { NetworkContext } from 'contexts/networkContext'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { constants } from 'ethers'
-import useContractReader, { ContractUpdateOn } from 'hooks/ContractReader'
-import { useErc20Contract } from 'hooks/Erc20Contract'
-import { OperatorPermission, useHasPermission } from 'hooks/HasPermission'
-import { ContractName } from 'models/contract-name'
-import { CSSProperties, useContext, useMemo, useState } from 'react'
-import { bigNumbersDiff } from 'utils/bigNumbersDiff'
+import useCanPrintPreminedTokens from 'hooks/contractReader/CanPrintPreminedTokens'
+import useERC20BalanceOf from 'hooks/contractReader/ERC20BalanceOf'
+import {
+  OperatorPermission,
+  useHasPermission,
+} from 'hooks/contractReader/HasPermission'
+import useReservedTokensOfProject from 'hooks/contractReader/ReservedTokensOfProject'
+import useTotalBalanceOf from 'hooks/contractReader/TotalBalanceOf'
+import useTotalSupplyOfProjectToken from 'hooks/contractReader/TotalSupplyOfProjectToken'
+import useUnclaimedBalanceOfUser from 'hooks/contractReader/UnclaimedBalanceOfUser'
+import { CSSProperties, useContext, useState } from 'react'
 import { formatPercent, formatWad } from 'utils/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
 
@@ -22,11 +27,7 @@ import PrintPreminedModal from '../modals/PrintPreminedModal'
 import IssueTickets from './IssueTickets'
 import SectionHeader from './SectionHeader'
 
-export default function Rewards({
-  totalOverflow,
-}: {
-  totalOverflow: BigNumber | undefined
-}) {
+export default function Rewards() {
   const [manageTokensModalVisible, setManageTokensModalVisible] =
     useState<boolean>()
   const [unstakeModalVisible, setUnstakeModalVisible] = useState<boolean>()
@@ -50,89 +51,22 @@ export default function Rewards({
 
   const [redeemModalVisible, setRedeemModalVisible] = useState<boolean>(false)
 
-  const canPrintPreminedV1Tickets = useContractReader<boolean>({
-    contract: ContractName.TerminalV1,
-    functionName: 'canPrintPreminedTickets',
-    args: projectId ? [projectId.toHexString()] : null,
-  })
+  const canPrintPreminedV1Tickets = useCanPrintPreminedTokens()
 
-  const ticketsUpdateOn: ContractUpdateOn = useMemo(
-    () => [
-      {
-        contract: terminal?.name,
-        eventName: 'Pay',
-        topics: projectId ? [[], projectId.toHexString()] : undefined,
-      },
-      {
-        contract: terminal?.name,
-        eventName: 'PrintTickets',
-        topics: projectId ? [projectId.toHexString()] : undefined,
-      },
-      {
-        contract: ContractName.TicketBooth,
-        eventName: 'Redeem',
-        topics: projectId ? [projectId.toHexString()] : undefined,
-      },
-      {
-        contract: ContractName.TicketBooth,
-        eventName: 'Convert',
-        topics:
-          userAddress && projectId
-            ? [userAddress, projectId.toHexString()]
-            : undefined,
-      },
-    ],
-    [projectId, userAddress, terminal?.name],
-  )
-
-  const ticketContract = useErc20Contract(tokenAddress)
-
-  const ticketsBalance = useContractReader<BigNumber>({
-    contract: ticketContract,
-    functionName: 'balanceOf',
-    args: ticketContract && userAddress ? [userAddress] : null,
-    valueDidChange: bigNumbersDiff,
-    updateOn: ticketsUpdateOn,
-  })
-  const iouBalance = useContractReader<BigNumber>({
-    contract: ContractName.TicketBooth,
-    functionName: 'stakedBalanceOf',
-    args:
-      userAddress && projectId ? [userAddress, projectId.toHexString()] : null,
-    valueDidChange: bigNumbersDiff,
-    updateOn: ticketsUpdateOn,
-  })
-  const totalBalance = useContractReader<BigNumber>({
-    contract: ContractName.TicketBooth,
-    functionName: 'balanceOf',
-    args:
-      userAddress && projectId ? [userAddress, projectId.toHexString()] : null,
-    valueDidChange: bigNumbersDiff,
-    updateOn: ticketsUpdateOn,
-  })
+  const claimedBalance = useERC20BalanceOf(tokenAddress, userAddress)
+  const unclaimedBalance = useUnclaimedBalanceOfUser()
+  const totalBalance = useTotalBalanceOf(userAddress, projectId, terminal?.name)
 
   const metadata = decodeFundingCycleMetadata(currentFC?.metadata)
+  const reservedTicketBalance = useReservedTokensOfProject(
+    metadata?.reservedRate,
+  )
 
-  const reservedTicketBalance = useContractReader<BigNumber>({
-    contract: terminal?.name,
-    functionName: 'reservedTicketBalanceOf',
-    args:
-      projectId && metadata?.reservedRate
-        ? [projectId, metadata.reservedRate]
-        : null,
-    valueDidChange: bigNumbersDiff,
-  })
-
-  const totalSupply = useContractReader<BigNumber>({
-    contract: ContractName.TicketBooth,
-    functionName: 'totalSupplyOf',
-    args: projectId ? [projectId?.toHexString()] : null,
-    valueDidChange: bigNumbersDiff,
-  })?.add(reservedTicketBalance ? reservedTicketBalance : BigNumber.from(0))
+  const totalSupply = useTotalSupplyOfProjectToken(projectId)?.add(
+    reservedTicketBalance ? reservedTicketBalance : BigNumber.from(0),
+  )
 
   const share = formatPercent(totalBalance, totalSupply)
-
-  const redeemDisabled = !totalOverflow || totalOverflow.eq(0)
 
   const ticketsIssued = tokenAddress
     ? tokenAddress !== constants.AddressZero
@@ -162,7 +96,7 @@ export default function Rewards({
               text={tokenSymbol ? tokenSymbol + ' ' + t`tokens` : t`Tokens`}
               tip={
                 `${tokenSymbol ? tokenSymbol + ' ' + t`ERC20` : t`Tokens`}` +
-                t`are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet.`
+                t` are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet.`
               }
             />
           }
@@ -217,9 +151,9 @@ export default function Rewards({
                     <div>
                       {ticketsIssued && (
                         <div>
-                          {ticketsBalance?.gt(0) ? (
+                          {claimedBalance?.gt(0) ? (
                             <>
-                              {`${formatWad(ticketsBalance ?? 0, {
+                              {`${formatWad(claimedBalance ?? 0, {
                                 precision: 0,
                               })} ${tokenSymbol}`}
                             </>
@@ -230,7 +164,7 @@ export default function Rewards({
                       )}
                       <div>
                         <Trans>
-                          {formatWad(iouBalance ?? 0, { precision: 0 })}
+                          {formatWad(unclaimedBalance ?? 0, { precision: 0 })}
                           {ticketsIssued ? <> claimable</> : null}
                         </Trans>
                       </div>
@@ -298,8 +232,6 @@ export default function Rewards({
       </Modal>
       <RedeemModal
         visible={redeemModalVisible}
-        redeemDisabled={redeemDisabled}
-        totalBalance={totalBalance}
         onOk={() => {
           setRedeemModalVisible(false)
         }}

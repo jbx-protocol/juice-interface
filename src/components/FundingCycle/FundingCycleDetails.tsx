@@ -1,6 +1,7 @@
+import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { parseEther } from '@ethersproject/units'
-import { Descriptions } from 'antd'
 import { t, Trans } from '@lingui/macro'
+import { Descriptions, Tooltip } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 
 import { ProjectContext } from 'contexts/projectContext'
@@ -12,6 +13,7 @@ import { formatDate } from 'utils/formatDate'
 import { formatWad, fromPerbicent, fromPermille } from 'utils/formatNumber'
 import {
   decodeFundingCycleMetadata,
+  getUnsafeFundingCycleProperties,
   hasFundingTarget,
   isRecurring,
 } from 'utils/fundingCycle'
@@ -20,6 +22,7 @@ import { weightedRate } from 'utils/math'
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 
 import TooltipLabel from '../shared/TooltipLabel'
+import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
 
 export default function FundingCycleDetails({
   fundingCycle,
@@ -44,6 +47,30 @@ export default function FundingCycleDetails({
 
   const metadata = decodeFundingCycleMetadata(fundingCycle.metadata)
   const ballotStrategy = getBallotStrategyByAddress(fundingCycle.ballot)
+  const unsafeFundingCycleProperties =
+    getUnsafeFundingCycleProperties(fundingCycle)
+
+  const WarningText = ({
+    text,
+    tooltipTitle,
+    showWarning,
+  }: {
+    text: string
+    tooltipTitle?: string
+    showWarning?: boolean
+  }) => {
+    return showWarning ? (
+      <Tooltip title={tooltipTitle}>
+        <span style={{ fontWeight: 500 }}>{text} </span>
+        <span style={{ color: colors.text.warn }}>
+          <ExclamationCircleOutlined />
+        </span>
+      </Tooltip>
+    ) : (
+      <span>{text}</span>
+    )
+  }
+
   return (
     <div>
       <Descriptions
@@ -67,9 +94,15 @@ export default function FundingCycleDetails({
         }
 
         <Descriptions.Item label={t`Duration`}>
-          {fundingCycle.duration.gt(0)
-            ? t`${fundingCycle.duration.toString()} days`
-            : t`Not set`}
+          {fundingCycle.duration.gt(0) ? (
+            t`${fundingCycle.duration.toString()} days`
+          ) : (
+            <WarningText
+              showWarning={true}
+              text={t`Not set`}
+              tooltipTitle={FUNDING_CYCLE_WARNING_TEXT(fundingCycle).duration}
+            />
+          )}
         </Descriptions.Item>
 
         {fundingCycle.duration.gt(0) && (
@@ -119,7 +152,13 @@ export default function FundingCycleDetails({
             />
           }
         >
-          {fromPerbicent(metadata?.reservedRate)}%
+          <WarningText
+            showWarning={unsafeFundingCycleProperties.metadataReservedRate}
+            text={`${fromPerbicent(metadata?.reservedRate)}%`}
+            tooltipTitle={
+              FUNDING_CYCLE_WARNING_TEXT(fundingCycle).metadataReservedRate
+            }
+          />
         </Descriptions.Item>
 
         <Descriptions.Item
@@ -173,7 +212,18 @@ export default function FundingCycleDetails({
             />
           }
         >
-          {metadata?.ticketPrintingIsAllowed ? t`Allowed` : t`Disabled`}
+          {metadata?.ticketPrintingIsAllowed ? (
+            <WarningText
+              showWarning={true}
+              text={t`Allowed`}
+              tooltipTitle={
+                FUNDING_CYCLE_WARNING_TEXT(fundingCycle)
+                  .metadataTicketPrintingIsAllowed
+              }
+            />
+          ) : (
+            t`Disabled`
+          )}
         </Descriptions.Item>
 
         <Descriptions.Item
@@ -192,7 +242,11 @@ export default function FundingCycleDetails({
           />
           :
         </span>{' '}
-        {ballotStrategy.name}
+        <WarningText
+          showWarning={unsafeFundingCycleProperties.ballot}
+          text={ballotStrategy.name}
+          tooltipTitle={FUNDING_CYCLE_WARNING_TEXT(fundingCycle).ballot}
+        />
         <div style={{ color: colors.text.secondary }}>
           <div style={{ fontSize: '0.7rem' }}>
             <Trans>Address</Trans>: {ballotStrategy.address}

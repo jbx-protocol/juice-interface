@@ -133,7 +133,7 @@ export default function ReconfigureFCModal({
   const onRestrictedActionsFormSaved = () => {
     const fields = restrictedActionsForm.getFieldsValue(true)
     dispatch(
-      editingProjectActions.setticketPrintingIsAllowed(
+      editingProjectActions.setTicketPrintingIsAllowed(
         fields.ticketPrintingIsAllowed,
       ),
     )
@@ -327,7 +327,7 @@ export default function ReconfigureFCModal({
           </React.Fragment>
         ) : (
           <h1 style={{ marginBottom: 20 }}>
-            <Trans>Reconfigure upcoming funding</Trans>
+            <Trans>Reconfigure funding</Trans>
           </h1>
         )}
 
@@ -335,13 +335,13 @@ export default function ReconfigureFCModal({
           <div>
             {buildSteps([
               {
-                title: t`Funding`,
+                title: t`Funding cycle`,
                 callback: () => setBudgetFormModalVisible(true),
               },
               ...(editingFC.target.gt(0)
                 ? [
                     {
-                      title: t`Spending`,
+                      title: t`Funding distribution`,
                       callback: () => setPayModsFormModalVisible(true),
                     },
                   ]

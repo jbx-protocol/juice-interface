@@ -205,7 +205,7 @@ export default function Create() {
   const onRestrictedActionsFormSaved = () => {
     const fields = restrictedActionsForm.getFieldsValue(true)
     dispatch(
-      editingProjectActions.setticketPrintingIsAllowed(
+      editingProjectActions.setTicketPrintingIsAllowed(
         fields.ticketPrintingIsAllowed,
       ),
     )
@@ -427,6 +427,7 @@ export default function Create() {
         editingFC.payIsPaused,
         editingFC.ticketPrintingIsAllowed,
         constants.AddressZero,
+        1,
       ),
     }),
     [editingFC],
@@ -449,6 +450,7 @@ export default function Create() {
       queuedTicketMods: undefined,
       balance: BigNumber.from(0),
       balanceInCurrency: BigNumber.from(0),
+      overflow: BigNumber.from(0),
       tokenSymbol: undefined,
       tokenAddress: constants.AddressZero,
       isPreviewMode: true,
@@ -494,17 +496,17 @@ export default function Create() {
               callback: () => setProjectFormModalVisible(true),
             },
             {
-              title: t`Funding`,
+              title: t`Funding cycle`,
               description: t`Your project's funding cycle target and duration.`,
               callback: () => setBudgetFormModalVisible(true),
             },
             {
-              title: t`Distribution`,
+              title: t`Funding distribution`,
               description: t`How your project will distribute funds.`,
               callback: () => setPayModsFormModalVisible(true),
             },
             {
-              title: t`Reserved Tokens`,
+              title: t`Reserved tokens`,
               description: t`Reward specific community members with tokens.`,
               callback: () => setTicketingFormModalVisible(true),
             },

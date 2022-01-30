@@ -3,7 +3,7 @@ import { ContractName } from 'models/contract-name'
 import { useCallback, useState } from 'react'
 import { fromWad } from 'utils/formatNumber'
 
-import useContractReader from './ContractReader'
+import useContractReader from './contractReader/ContractReader'
 
 export function useEtherPrice() {
   const [price, setPrice] = useState<number>()

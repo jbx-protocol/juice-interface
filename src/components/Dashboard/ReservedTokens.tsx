@@ -2,16 +2,12 @@ import { Button } from 'antd'
 import { t, Trans } from '@lingui/macro'
 import TooltipLabel from 'components/shared/TooltipLabel'
 
-import { NetworkContext } from 'contexts/networkContext'
 import { ProjectContext } from 'contexts/projectContext'
-import { BigNumber } from 'ethers'
-import useContractReader from 'hooks/ContractReader'
-import { ContractName } from 'models/contract-name'
+import useReservedTokensOfProject from 'hooks/contractReader/ReservedTokensOfProject'
 import { FundingCycle } from 'models/funding-cycle'
 import { TicketMod } from 'models/mods'
 import { NetworkName } from 'models/network-name'
-import { useContext, useMemo, useState } from 'react'
-import { bigNumbersDiff } from 'utils/bigNumbersDiff'
+import { useContext, useState } from 'react'
 import { formatWad, fromPerbicent } from 'utils/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
 
@@ -31,58 +27,12 @@ export default function ReservedTokens({
   hideActions?: boolean
 }) {
   const [modalIsVisible, setModalIsVisible] = useState<boolean>()
-  const { userAddress } = useContext(NetworkContext)
 
-  const { projectId, tokenSymbol, isPreviewMode, terminal } =
-    useContext(ProjectContext)
+  const { projectId, tokenSymbol, isPreviewMode } = useContext(ProjectContext)
 
   const metadata = decodeFundingCycleMetadata(fundingCycle?.metadata)
 
-  const reservedTickets = useContractReader<BigNumber>({
-    contract: terminal?.name,
-    functionName: 'reservedTicketBalanceOf',
-    args:
-      projectId && metadata?.reservedRate
-        ? [
-            projectId.toHexString(),
-            BigNumber.from(metadata.reservedRate).toHexString(),
-          ]
-        : null,
-    valueDidChange: bigNumbersDiff,
-    updateOn: useMemo(
-      () => [
-        {
-          contract: terminal?.name,
-          eventName: 'Pay',
-          topics: projectId ? [[], projectId.toHexString()] : undefined,
-        },
-        {
-          contract: terminal?.name,
-          eventName: 'PrintTickets',
-          topics: projectId ? [projectId.toHexString()] : undefined,
-        },
-        {
-          contract: ContractName.TicketBooth,
-          eventName: 'Redeem',
-          topics: projectId ? [projectId.toHexString()] : undefined,
-        },
-        {
-          contract: ContractName.TicketBooth,
-          eventName: 'Convert',
-          topics:
-            userAddress && projectId
-              ? [userAddress, projectId.toHexString()]
-              : undefined,
-        },
-        {
-          contract: terminal?.name,
-          eventName: 'PrintReserveTickets',
-          topics: projectId ? [[], projectId.toHexString()] : undefined,
-        },
-      ],
-      [userAddress, projectId, terminal?.name],
-    ),
-  })
+  const reservedTokens = useReservedTokensOfProject(metadata?.reservedRate)
 
   const isConstitutionDAO =
     readNetwork.name === NetworkName.mainnet &&
@@ -98,21 +48,13 @@ export default function ReservedTokens({
         <TooltipLabel
           label={
             <h4 style={{ display: 'inline-block' }}>
-              <Trans>Reserved</Trans> {tokenSymbol ?? t`tokens`}(
+              <Trans>Reserved {tokenSymbol ?? t`tokens`}</Trans> (
               {fromPerbicent(metadata?.reservedRate)}%)
             </h4>
           }
-          tip={t`A project can reserve a percentage of tokens minted from every payment it receives. They can be distributed to the receivers below at any time.`}
+          tip={t`A project can reserve a percentage of tokens minted from every payment it receives. Reserved tokens can be distributed according to the allocation below at any time.`}
         />
       </div>
-
-      {metadata?.reservedRate ? (
-        <TicketModsList
-          mods={ticketMods}
-          fundingCycle={fundingCycle}
-          projectId={projectId}
-        />
-      ) : null}
 
       {!hideActions && !isConstitutionDAO && !isSharkDAO && (
         <div
@@ -120,12 +62,14 @@ export default function ReservedTokens({
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'baseline',
-            marginTop: 20,
+            marginBottom: 20,
           }}
         >
           <span>
-            {formatWad(reservedTickets, { precision: 0 }) || 0}{' '}
-            {tokenSymbol ?? t`tokens`}
+            <Trans>
+              {formatWad(reservedTokens, { precision: 0 }) || 0}{' '}
+              {tokenSymbol ?? t`tokens`} reserved
+            </Trans>
           </span>
           <Button
             style={{ marginLeft: 10 }}
@@ -133,7 +77,7 @@ export default function ReservedTokens({
             onClick={() => setModalIsVisible(true)}
             disabled={isPreviewMode}
           >
-            <Trans>Distribute</Trans>
+            <Trans>Distribute {tokenSymbol ?? t`tokens`}</Trans>
           </Button>
 
           <DistributeTokensModal
@@ -143,6 +87,14 @@ export default function ReservedTokens({
           />
         </div>
       )}
+
+      {metadata?.reservedRate ? (
+        <TicketModsList
+          mods={ticketMods}
+          fundingCycle={fundingCycle}
+          projectId={projectId}
+        />
+      ) : null}
     </div>
   )
 }

@@ -53,7 +53,7 @@ export function useRedeemRate({
   })
 
   return useMemo(() => {
-    if (!metadata || !totalSupply?.gt(0)) return
+    if (!metadata || !totalSupply?.gt(0)) return BigNumber.from(0)
 
     const bondingCurveRate =
       currentBallotState === BallotState.Active
@@ -65,7 +65,7 @@ export function useRedeemRate({
         ? currentOverflow.mul(parseWad(tokenAmount)).div(totalSupply)
         : BigNumber.from(0)
 
-    if (!bondingCurveRate || !base || !currentOverflow) return
+    if (!bondingCurveRate || !base || !currentOverflow) return BigNumber.from(0)
 
     const numerator = BigNumber.from(bondingCurveRate).add(
       parseWad(tokenAmount ?? 0)

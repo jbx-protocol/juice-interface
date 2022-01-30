@@ -1,4 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { t, Trans } from '@lingui/macro'
 import { Checkbox, Descriptions, Form, Input, Modal, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import FormattedAddress from 'components/shared/FormattedAddress'
@@ -13,7 +14,7 @@ import { currencyName } from 'utils/currency'
 import { formattedNum, formatWad } from 'utils/formatNumber'
 import { weightedRate } from 'utils/math'
 
-import { Trans, t } from '@lingui/macro'
+import ProjectRiskNotice from './ProjectRiskNotice'
 
 export default function ConfirmPayOwnerModal({
   visible,
@@ -95,6 +96,8 @@ export default function ConfirmPayOwnerModal({
             <p>{metadata.payDisclosure}</p>
           </div>
         )}
+
+        <ProjectRiskNotice />
 
         <Descriptions column={1} bordered>
           <Descriptions.Item label={t`Pay amount`} className="content-right">

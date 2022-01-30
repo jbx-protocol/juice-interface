@@ -1,7 +1,7 @@
 import { RightCircleOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
-import { Progress, Tooltip } from 'antd'
 import { t, Trans } from '@lingui/macro'
+import { Progress, Tooltip } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import EtherscanLink from 'components/shared/EtherscanLink'
 import ProjectTokenBalance from 'components/shared/ProjectTokenBalance'
@@ -9,21 +9,19 @@ import TooltipLabel from 'components/shared/TooltipLabel'
 
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import useContractReader from 'hooks/ContractReader'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useEthBalanceQuery } from 'hooks/EthBalance'
 import { CurrencyOption } from 'models/currency-option'
 import { NetworkName } from 'models/network-name'
 import { CSSProperties, useContext, useMemo, useState } from 'react'
-import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatWad, fracDiv, fromWad, parseWad } from 'utils/formatNumber'
 import { hasFundingTarget } from 'utils/fundingCycle'
 
+import { PROJECT_IDS } from 'constants/projectIds'
 import { readNetwork } from 'constants/networks'
+import { CURRENCY_ETH, CURRENCY_USD } from 'constants/currency'
 
 import BalancesModal from '../modals/BalancesModal'
-import { CURRENCY_ETH, CURRENCY_USD } from 'constants/currency'
-import { PROJECT_IDS } from 'constants/projectIds'
 
 export default function Paid() {
   const [balancesModalVisible, setBalancesModalVisible] = useState<boolean>()
@@ -38,38 +36,12 @@ export default function Paid() {
     balance,
     owner,
     earned,
-    terminal,
+    overflow,
   } = useContext(ProjectContext)
 
   const converter = useCurrencyConverter()
-
-  const totalOverflow = useContractReader<BigNumber>({
-    contract: terminal?.name,
-    functionName: 'currentOverflowOf',
-    args: projectId ? [projectId.toHexString()] : null,
-    valueDidChange: bigNumbersDiff,
-    updateOn: useMemo(
-      () =>
-        projectId
-          ? [
-              {
-                contract: terminal?.name,
-                eventName: 'Pay',
-                topics: [[], projectId.toHexString()],
-              },
-              {
-                contract: terminal?.name,
-                eventName: 'Tap',
-                topics: [[], projectId.toHexString()],
-              },
-            ]
-          : undefined,
-      [projectId, terminal?.name],
-    ),
-  })
-
   const overflowInCurrency = converter.wadToCurrency(
-    totalOverflow ?? 0,
+    overflow ?? 0,
     currentFC?.currency.toNumber() as CurrencyOption,
     0,
   )
@@ -261,7 +233,7 @@ export default function Paid() {
 
       {hasFundingTarget(currentFC) &&
         currentFC.target.gt(0) &&
-        (totalOverflow?.gt(0) ? (
+        (overflow?.gt(0) ? (
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <Progress
               style={{

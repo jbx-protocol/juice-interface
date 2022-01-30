@@ -14,7 +14,6 @@ import ReconfigureFCModal from '../modals/ReconfigureFCModal'
 // conflict with existing Redux state. This is so editing a
 // persisted Redux state and the Reconfigure Funding modal
 // are independent.
-
 export default function ReconfigureFundingModalTrigger({
   fundingDuration,
 }: {

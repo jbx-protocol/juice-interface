@@ -10,7 +10,7 @@ import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 
 import ThemePicker from './ThemePicker'
-import LanguageSelector from './NavLanguageSelector'
+import NavLanguageSelector from './NavLanguageSelector'
 
 export default function OptionsCollapse() {
   const [activeKey, setActiveKey] = useState<0 | undefined>()
@@ -53,7 +53,7 @@ export default function OptionsCollapse() {
               <ThemePicker />
             </div>
             <div className="nav-dropdown-item">
-              <LanguageSelector />
+              <NavLanguageSelector />
             </div>
             {signingProvider ? (
               <div

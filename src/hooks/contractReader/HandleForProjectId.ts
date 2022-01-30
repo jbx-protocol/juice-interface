@@ -1,5 +1,5 @@
 import { BigNumber, BigNumberish, utils } from 'ethers'
-import { JuiceboxV1ContractName } from 'models/v1/contracts'
+import { V1ContractName } from 'models/v1/contracts'
 import { useCallback } from 'react'
 
 import useContractReader from './ContractReader'
@@ -9,7 +9,7 @@ export default function useHandleForProjectId(
   projectId: BigNumberish | undefined,
 ) {
   return useContractReader<string>({
-    contract: JuiceboxV1ContractName.Projects,
+    contract: V1ContractName.Projects,
     functionName: 'handleOf',
     args: projectId ? [BigNumber.from(projectId).toHexString()] : null,
     formatter: useCallback(val => utils.parseBytes32String(val), []),

@@ -1,5 +1,5 @@
 import { BigNumber, BigNumberish } from 'ethers'
-import { JuiceboxV1ContractName } from 'models/v1/contracts'
+import { V1ContractName } from 'models/v1/contracts'
 import { TerminalName } from 'models/terminal-name'
 import { useMemo } from 'react'
 
@@ -27,12 +27,12 @@ export default function useShouldUpdateTokens(
               topics: _projectId ? [_projectId] : undefined,
             },
             {
-              contract: JuiceboxV1ContractName.TicketBooth,
+              contract: V1ContractName.TicketBooth,
               eventName: 'Redeem',
               topics: _projectId ? [_projectId] : undefined,
             },
             {
-              contract: JuiceboxV1ContractName.TicketBooth,
+              contract: V1ContractName.TicketBooth,
               eventName: 'Convert',
               topics:
                 userAddress && _projectId

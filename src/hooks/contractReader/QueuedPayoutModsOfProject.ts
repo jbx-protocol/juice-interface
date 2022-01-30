@@ -1,5 +1,5 @@
 import { BigNumber, BigNumberish } from 'ethers'
-import { JuiceboxV1ContractName } from 'models/v1/contracts'
+import { V1ContractName } from 'models/v1/contracts'
 import { PayoutMod } from 'models/mods'
 import { useMemo } from 'react'
 
@@ -11,7 +11,7 @@ export default function useQueuedPayoutModsOfProject(
   queuedConfigured: BigNumberish | undefined,
 ) {
   return useContractReader<PayoutMod[]>({
-    contract: JuiceboxV1ContractName.ModStore,
+    contract: V1ContractName.ModStore,
     functionName: 'payoutModsOf',
     args:
       projectId && queuedConfigured
@@ -25,7 +25,7 @@ export default function useQueuedPayoutModsOfProject(
         projectId && queuedConfigured
           ? [
               {
-                contract: JuiceboxV1ContractName.ModStore,
+                contract: V1ContractName.ModStore,
                 eventName: 'SetPayoutMod',
                 topics: [
                   BigNumber.from(projectId).toHexString(),

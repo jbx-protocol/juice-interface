@@ -1,4 +1,4 @@
-import { JuiceboxV1ContractName } from 'models/v1/contracts'
+import { V1ContractName } from 'models/v1/contracts'
 import { NetworkName } from 'models/network-name'
 import { TerminalVersion } from 'models/terminal-version'
 
@@ -30,7 +30,7 @@ export const getTerminalVersion = (
     address.toLowerCase() ===
     loadTerminalAddress(
       readNetwork.name,
-      JuiceboxV1ContractName.TerminalV1,
+      V1ContractName.TerminalV1,
     ).toLowerCase()
   ) {
     return '1'
@@ -40,7 +40,7 @@ export const getTerminalVersion = (
     address.toLowerCase() ===
     loadTerminalAddress(
       readNetwork.name,
-      JuiceboxV1ContractName.TerminalV1_1,
+      V1ContractName.TerminalV1_1,
     ).toLowerCase()
   ) {
     return '1.1'
@@ -63,8 +63,8 @@ export const getTerminalName = ({
 
   switch (_version) {
     case '1':
-      return JuiceboxV1ContractName.TerminalV1
+      return V1ContractName.TerminalV1
     case '1.1':
-      return JuiceboxV1ContractName.TerminalV1_1
+      return V1ContractName.TerminalV1_1
   }
 }

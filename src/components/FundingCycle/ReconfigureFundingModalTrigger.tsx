@@ -9,19 +9,17 @@ import { BigNumber } from 'ethers'
 
 import ReconfigureFCModal from '../modals/ReconfigureFCModal'
 
-interface Props {
-  fundingDuration: BigNumber | undefined
-}
-
 // This component uses a local version of the entire Redux store
 // so editing within the Reconfigure Funding modal does not
 // conflict with existing Redux state. This is so editing a
 // persisted Redux state and the Reconfigure Funding modal
 // are independent.
 
-const ReconfigureFundingModalTrigger: React.FC<Props> = ({
+export default function ReconfigureFundingModalTrigger({
   fundingDuration,
-}: Props) => {
+}: {
+  fundingDuration?: BigNumber
+}) {
   const { isPreviewMode } = useContext(ProjectContext)
 
   const localStoreRef = useRef<typeof store>()
@@ -69,5 +67,3 @@ const ReconfigureFundingModalTrigger: React.FC<Props> = ({
     </div>
   )
 }
-
-export default ReconfigureFundingModalTrigger

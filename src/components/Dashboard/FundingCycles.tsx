@@ -95,7 +95,7 @@ export default function FundingCycles({
           text={t`Funding cycle`}
           tip={t`A project's lifetime is defined in funding cycles. If a funding target is set, the project can withdraw no more than the target for the duration of the cycle.`}
           style={{
-            marginBottom: 30,
+            marginBottom: 10,
           }}
         />
         {canReconfigure && (

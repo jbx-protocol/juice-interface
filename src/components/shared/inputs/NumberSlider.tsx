@@ -43,41 +43,46 @@ export default function NumberSlider({
   useEffect(() => setValue(sliderValue), [sliderValue])
 
   return (
-    <div style={{ display: 'flex', alignItems: 'baseline' }}>
-      <Slider
-        {...inputConfig}
-        tooltipVisible={false}
-        style={{ flex: 1, marginRight: 20 }}
-        value={_value}
-        onChange={(val: number) => updateValue(val)}
-        defaultValue={defaultValue}
-        disabled={disabled}
-      />
-      <Form.Item name={name} rules={formItemProps?.rules ?? []}>
-        <InputNumber
+    <div>
+      <div style={{ display: 'flex', alignItems: 'baseline' }}>
+        <Slider
           {...inputConfig}
+          tooltipVisible={false}
+          style={{ flex: 1, marginRight: 20 }}
           value={_value}
-          disabled={disabled}
-          formatter={(val?: string | number | undefined) => {
-            let _val = val?.toString() ?? '0'
-
-            if (_val.includes('.') && _val.split('.')[1].length > decimals) {
-              _val = roundDown(parseFloat(_val), decimals).toString()
-            }
-
-            return `${_val ?? ''}${suffix ?? ''}`
-          }}
-          parser={(val?: string) =>
-            parseFloat(val?.replace(suffix ?? '', '') ?? '0')
-          }
-          onChange={(val: string | number | null | undefined) => {
-            const newVal =
-              (typeof val === 'string' ? parseFloat(val) : val) ?? undefined
-            updateValue(newVal)
-          }}
+          onChange={(val: number) => updateValue(val)}
           defaultValue={defaultValue}
+          disabled={disabled}
         />
-      </Form.Item>
+        <Form.Item name={name} rules={formItemProps?.rules ?? []}>
+          <InputNumber
+            {...inputConfig}
+            value={_value}
+            disabled={disabled}
+            formatter={(val?: string | number | undefined) => {
+              let _val = val?.toString() ?? '0'
+
+              if (_val.includes('.') && _val.split('.')[1].length > decimals) {
+                _val = roundDown(parseFloat(_val), decimals).toString()
+              }
+
+              return `${_val ?? ''}${suffix ?? ''}`
+            }}
+            parser={(val?: string) =>
+              parseFloat(val?.replace(suffix ?? '', '') ?? '0')
+            }
+            onChange={(val: string | number | null | undefined) => {
+              const newVal =
+                (typeof val === 'string' ? parseFloat(val) : val) ?? undefined
+              updateValue(newVal)
+            }}
+            defaultValue={defaultValue}
+          />
+        </Form.Item>
+      </div>
+      {formItemProps?.extra ? (
+        <div className="ant-form-item-extra">{formItemProps.extra}</div>
+      ) : null}
     </div>
   )
 }

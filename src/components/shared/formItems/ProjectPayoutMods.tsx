@@ -397,10 +397,12 @@ export default function ProjectPayoutMods({
             <Trans>Total: {total.toFixed(2)}%</Trans>
           </div>
           <div>
-            <Trans>
-              {(100 - total).toFixed(2)}% to{' '}
-              <FormattedAddress address={owner} />
-            </Trans>
+            {owner ? (
+              <Trans>
+                {(100 - total).toFixed(2)}% to{' '}
+                <FormattedAddress address={owner} />
+              </Trans>
+            ) : null}
           </div>
         </div>
         <Button

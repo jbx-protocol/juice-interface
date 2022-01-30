@@ -5,6 +5,8 @@ import { ThemeContext } from 'contexts/themeContext'
 import { TicketMod } from 'models/mods'
 import { useContext, useLayoutEffect, useState } from 'react'
 
+import { reservedRateRiskyMin } from 'constants/fundingWarningText'
+
 export type TicketingFormFields = {
   reserved: number
 }
@@ -19,6 +21,8 @@ export default function TicketingForm({
   onSave: (mods: TicketMod[]) => void
 }) {
   const [mods, setMods] = useState<TicketMod[]>([])
+  const [showReservedRateWarning, setShowReservedRateWarning] =
+    useState<boolean>()
 
   // Using a state here because relying on the form does not
   // pass through updated reservedRate to ProjectTicketMods
@@ -64,15 +68,28 @@ export default function TicketingForm({
           onChange={(val?: number) => {
             setReservedRate(val ?? 0)
             form.setFieldsValue({ reserved: val })
+            setShowReservedRateWarning(!!(val && val >= reservedRateRiskyMin))
           }}
         />
+        {showReservedRateWarning && (
+          <Form.Item>
+            <p style={{ color: colors.text.warn }}>
+              <Trans>
+                Projects using a reserved rate of {reservedRateRiskyMin}% or
+                more will appear risky to contributors, as a relatively small
+                number of tokens will be received in exchange for paying your
+                project.
+              </Trans>
+            </p>
+          </Form.Item>
+        )}
         <FormItems.ProjectTicketMods
           name="ticketMods"
           mods={mods}
           onModsChanged={setMods}
           formItemProps={{
-            label: t`Allocate reserved tokens (optional)`,
-            extra: t`Automatically distribute a portion of your project's reserved tokens to other Juicebox projects or ETH wallets.`,
+            label: t`Reserved token allocation (optional)`,
+            extra: t`Allocate a portion of your project's reserved tokens to other Ethereum wallets or Juicebox projects.`,
           }}
           reservedRate={reservedRate}
         />

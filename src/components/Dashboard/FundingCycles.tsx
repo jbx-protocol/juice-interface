@@ -1,10 +1,17 @@
-import { Space } from 'antd'
+import { Space, Tooltip } from 'antd'
 import { t } from '@lingui/macro'
+import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { CardSection } from 'components/shared/CardSection'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { OperatorPermission, useHasPermission } from 'hooks/HasPermission'
+import {
+  OperatorPermission,
+  useHasPermission,
+} from 'hooks/contractReader/HasPermission'
 import { useContext, useState } from 'react'
+
+import { fundingCycleRiskCount } from 'utils/fundingCycle'
+import { FundingCycle } from 'models/funding-cycle'
 
 import CurrentFundingCycle from '../FundingCycle/CurrentFundingCycle'
 import QueuedFundingCycle from '../FundingCycle/QueuedFundingCycle'
@@ -22,20 +29,46 @@ export default function FundingCycles({
   const [selectedTab, setSelectedTab] = useState<TabOption>('current')
   const [hoverTab, setHoverTab] = useState<TabOption>()
 
-  const { projectId, currentFC } = useContext(ProjectContext)
+  const { projectId, currentFC, queuedFC } = useContext(ProjectContext)
 
   const {
     theme: { colors },
   } = useContext(ThemeContext)
 
+  const tabText = ({
+    text,
+    fundingCycle,
+  }: {
+    text: string
+    fundingCycle: FundingCycle | undefined
+  }) => {
+    return fundingCycle && fundingCycleRiskCount(fundingCycle) ? (
+      <Tooltip
+        title={t`This funding cycle may pose risks to contributors. Check the funding cycle details before paying this project.`}
+      >
+        <span>
+          {text}
+          <ExclamationCircleOutlined
+            style={{
+              color: colors.text.warn,
+              marginLeft: 4,
+            }}
+          />
+        </span>
+      </Tooltip>
+    ) : (
+      text
+    )
+  }
+
   const tab = (option: TabOption) => {
-    let text: string
+    let text: string | JSX.Element
     switch (option) {
       case 'current':
-        text = t`Current`
+        text = tabText({ text: t`Current`, fundingCycle: currentFC })
         break
       case 'upcoming':
-        text = t`Upcoming`
+        text = tabText({ text: t`Upcoming`, fundingCycle: queuedFC })
         break
       case 'history':
         text = t`History`

@@ -5,7 +5,6 @@ import {
 } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 
-import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Modal, Select } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import FormattedAddress from 'components/shared/FormattedAddress'
@@ -15,15 +14,13 @@ import UntrackedErc20Notice from 'components/shared/UntrackedErc20Notice'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { constants } from 'ethers'
-import useContractReader from 'hooks/ContractReader'
-import { ContractName } from 'models/contract-name'
+import useTotalSupplyOfProjectToken from 'hooks/contractReader/TotalSupplyOfProjectToken'
 import { NetworkName } from 'models/network-name'
 import {
   parseParticipantJson,
   Participant,
 } from 'models/subgraph-entities/participant'
 import { useContext, useEffect, useMemo, useState } from 'react'
-import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatPercent, formatWad } from 'utils/formatNumber'
 import { OrderDirection, querySubgraph } from 'utils/graph'
 
@@ -53,12 +50,7 @@ export default function ParticipantsModal({
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const totalTokenSupply = useContractReader<BigNumber>({
-    contract: ContractName.TicketBooth,
-    functionName: 'totalSupplyOf',
-    args: [projectId?.toHexString()],
-    valueDidChange: bigNumbersDiff,
-  })
+  const totalTokenSupply = useTotalSupplyOfProjectToken(projectId)
 
   useEffect(() => {
     setLoading(true)

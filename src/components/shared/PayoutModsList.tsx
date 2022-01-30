@@ -7,7 +7,10 @@ import Mod from 'components/shared/Mod'
 
 import { ProjectContext } from 'contexts/projectContext'
 import { BigNumber, constants } from 'ethers'
-import { OperatorPermission, useHasPermission } from 'hooks/HasPermission'
+import {
+  OperatorPermission,
+  useHasPermission,
+} from 'hooks/contractReader/HasPermission'
 import { useSetPayoutModsTx } from 'hooks/transactor/SetPayoutModsTx'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
@@ -185,15 +188,14 @@ export default function PayoutModsList({
           >
             <div>
               <p>
-                Payouts let you commit portions of every withdrawal to other
-                Ethereum wallets or Juicebox projects. Use this to pay
-                contributors, charities, other projects you depend on, or anyone
-                else. Payouts will be distributed automatically whenever a
-                withdrawal is made from your project.
+                Distribute available funds to other Ethereum wallets or Juicebox
+                projects as payouts. Use this to pay contributors, charities,
+                Juicebox projects you depend on, or anyone else. Funds are
+                distributed whenever a withdrawal is made from your project.
               </p>
               <p>
-                Payouts are optional. By default, all unallocated revenue will
-                be withdrawable to the project owner's wallet.
+                By default, all unallocated funds can be distributed to the
+                project owner's wallet.
               </p>
             </div>
 

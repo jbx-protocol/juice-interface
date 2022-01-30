@@ -67,7 +67,7 @@ export default function BudgetForm({
   return (
     <Space direction="vertical" size="large" style={{ width: '100%' }}>
       <h1>
-        <Trans>Funding</Trans>
+        <Trans>Funding cycle</Trans>
       </h1>
 
       <p>
@@ -261,7 +261,13 @@ export default function BudgetForm({
             <Trans>
               Funding can be reconfigured at any time. Reconfigurations will
               start a new funding cycle.
-            </Trans>
+            </Trans>{' '}
+            <span style={{ color: colors.text.warn }}>
+              <Trans>
+                Using a duration is recommended. Allowing funding cycles to be
+                reconfigured at any time will appear risky to contributors.
+              </Trans>
+            </span>
           </p>
         )}
 

@@ -1,3 +1,4 @@
+import { t } from '@lingui/macro'
 import { Button, Form, Input, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
@@ -205,7 +206,7 @@ export default function PayoutModsList({
                   validator: () => {
                     if (totalPercentage > 100)
                       return Promise.reject(
-                        'Percentages must add up to 100% or less',
+                        t`Sum of percentages cannot exceed 100%`,
                       )
 
                     return Promise.resolve()

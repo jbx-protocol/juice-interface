@@ -19,11 +19,13 @@ export default function TicketModsList({
   mods,
   fundingCycle,
   projectId,
+  reservedRate,
 }: {
   total?: BigNumber
   mods: TicketMod[] | undefined
   fundingCycle: FundingCycle | undefined
   projectId: BigNumber | undefined
+  reservedRate: number
 }) {
   const [modalVisible, setModalVisible] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
@@ -135,6 +137,7 @@ export default function TicketModsList({
             mods={editingMods}
             lockedMods={lockedMods}
             onModsChanged={setEditingMods}
+            reservedRate={reservedRate}
           />
         </Modal>
       ) : null}

@@ -24,6 +24,12 @@ export default function TicketingForm({
   const [showReservedRateWarning, setShowReservedRateWarning] =
     useState<boolean>()
 
+  // Using a state here because relying on the form does not
+  // pass through updated reservedRate to ProjectTicketMods
+  const [reservedRate, setReservedRate] = useState<number>(
+    form.getFieldValue('reserved'),
+  )
+
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -57,9 +63,10 @@ export default function TicketingForm({
 
       <Form form={form} layout="vertical">
         <FormItems.ProjectReserved
-          value={form.getFieldValue('reserved')}
+          value={reservedRate}
           name="reserved"
           onChange={(val?: number) => {
+            setReservedRate(val ?? 0)
             form.setFieldsValue({ reserved: val })
             setShowReservedRateWarning(!!(val && val >= reservedRateRiskyMin))
           }}
@@ -84,6 +91,7 @@ export default function TicketingForm({
             label: t`Reserved token allocation (optional)`,
             extra: t`Allocate a portion of your project's reserved tokens to other Ethereum wallets or Juicebox projects.`,
           }}
+          reservedRate={reservedRate}
         />
         <Form.Item>
           <Button htmlType="submit" type="primary" onClick={() => onSave(mods)}>

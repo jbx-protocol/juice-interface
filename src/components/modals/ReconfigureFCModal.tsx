@@ -320,8 +320,8 @@ export default function ReconfigureFCModal({
             </h1>
             <p>
               <Trans>
-                All changes will be applied to the <b>upcoming</b> funding
-                cycle.
+                All changes will be applied to the <strong>upcoming</strong>{' '}
+                funding cycle.
               </Trans>
             </p>
           </React.Fragment>

@@ -16,7 +16,7 @@ import {
 } from 'hooks/AppSelector'
 import { useTerminalFee } from 'hooks/TerminalFee'
 import { useDeployProjectTx } from 'hooks/transactor/DeployProjectTx'
-import { JuiceboxV1ContractName } from 'models/v1/contracts'
+import { V1ContractName } from 'models/v1/contracts'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
 import { PayoutMod, TicketMod } from 'models/mods'
@@ -457,7 +457,7 @@ export default function Create() {
       isArchived: false,
       terminal: {
         version: terminalVersion,
-        name: JuiceboxV1ContractName.TerminalV1_1,
+        name: V1ContractName.TerminalV1_1,
         address: getTerminalAddress(terminalVersion),
       },
     }),

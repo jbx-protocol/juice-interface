@@ -1,6 +1,6 @@
 import { Contract } from '@ethersproject/contracts'
 
-export enum JuiceboxV1ContractName {
+export enum V1ContractName {
   FundingCycles = 'FundingCycles',
   TerminalV1 = 'TerminalV1',
   TerminalV1_1 = 'TerminalV1_1',
@@ -12,4 +12,4 @@ export enum JuiceboxV1ContractName {
   TicketBooth = 'TicketBooth',
 }
 
-export type JuiceboxV1Contracts = Record<JuiceboxV1ContractName, Contract>
+export type V1Contracts = Record<V1ContractName, Contract>

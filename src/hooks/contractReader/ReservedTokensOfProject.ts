@@ -1,6 +1,6 @@
 import { ProjectContext } from 'contexts/projectContext'
 import { BigNumber, BigNumberish } from 'ethers'
-import { JuiceboxV1ContractName } from 'models/v1/contracts'
+import { V1ContractName } from 'models/v1/contracts'
 import { useContext, useMemo } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 
@@ -35,7 +35,7 @@ export default function useReservedTokensOfProject(
           topics: _projectId ? [_projectId] : undefined,
         },
         {
-          contract: JuiceboxV1ContractName.TicketBooth,
+          contract: V1ContractName.TicketBooth,
           eventName: 'Redeem',
           topics: _projectId ? [_projectId] : undefined,
         },

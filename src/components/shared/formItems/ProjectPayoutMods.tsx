@@ -15,7 +15,7 @@ import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { BigNumber, constants, utils } from 'ethers'
 import useContractReader from 'hooks/contractReader/ContractReader'
-import { JuiceboxV1ContractName } from 'models/v1/contracts'
+import { V1ContractName } from 'models/v1/contracts'
 import { CurrencyOption } from 'models/currency-option'
 import { PayoutMod } from 'models/mods'
 import * as moment from 'moment'
@@ -79,7 +79,7 @@ export default function ProjectPayoutMods({
   const { owner } = useContext(ProjectContext)
 
   useContractReader<BigNumber>({
-    contract: JuiceboxV1ContractName.Projects,
+    contract: V1ContractName.Projects,
     functionName: 'projectFor',
     args: settingHandle ? [utils.formatBytes32String(settingHandle)] : null,
     callback: useCallback(

@@ -9,14 +9,14 @@ export default function TrendingProjects({
 }: {
   isHomePage?: boolean
 }) {
-  const trendingProjectIds = useTrendingProjects()
+  const { data: projects } = useTrendingProjects()
   const cardBg = isHomePage ? 'var(--background-l0)' : ''
 
   return (
     <div>
-      {trendingProjectIds ? (
+      {projects ? (
         <Grid>
-          {trendingProjectIds.map((p, i) => (
+          {projects.map((p, i) => (
             <TrendingProjectCard
               project={p}
               size={isHomePage ? 'sm' : 'lg'}

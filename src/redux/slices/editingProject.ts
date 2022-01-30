@@ -68,7 +68,7 @@ export const defaultProjectState: EditingProjectState = {
     configured: BigNumber.from(0),
     ballot: constants.AddressZero,
     payIsPaused: false,
-    ticketPrintingIsAllowed: true,
+    ticketPrintingIsAllowed: false,
     treasuryExtension: constants.AddressZero,
   }),
   payoutMods: [],
@@ -159,7 +159,7 @@ export const editingProjectSlice = createSlice({
     setPayIsPaused: (state, action: PayloadAction<boolean>) => {
       state.fundingCycle.payIsPaused = action.payload
     },
-    setticketPrintingIsAllowed: (state, action: PayloadAction<boolean>) => {
+    setTicketPrintingIsAllowed: (state, action: PayloadAction<boolean>) => {
       state.fundingCycle.ticketPrintingIsAllowed = action.payload
     },
     setPayoutMods: (state, action: PayloadAction<PayoutMod[]>) => {

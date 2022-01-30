@@ -20,6 +20,7 @@ import ProjectCard from 'components/shared/ProjectCard'
 
 import { layouts } from 'constants/styles/layouts'
 import TrendingProjects from './TrendingProjects'
+import MyProjects from './MyProjects'
 
 type OrderByOption = 'createdAt' | 'totalPaid'
 
@@ -136,7 +137,7 @@ export default function Projects() {
 
           <a href="/#/create">
             <Button>
-              <Trans>New project</Trans>
+              <Trans>Create project</Trans>
             </Button>
           </a>
         </div>
@@ -234,6 +235,8 @@ export default function Projects() {
           </div>
         </div>
 
+        <MyProjects />
+
         {selectedTab === 'archived' && (
           <p style={{ marginBottom: 40, maxWidth: 800 }}>
             <Trans>
@@ -297,8 +300,8 @@ export default function Projects() {
             }}
           >
             {concatenatedPages?.length}{' '}
-            {concatenatedPages?.length === 1 ? t`project` : t`projects`}
-            {searchText ? t` matching "${searchText}"` : ''}
+            {concatenatedPages?.length === 1 ? t`project` : t`projects`}{' '}
+            {searchText ? t`matching "${searchText}"` : ''}
           </div>
         )
       )}

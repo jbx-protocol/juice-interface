@@ -20,7 +20,7 @@ export default function Project({
   showCurrentDetail?: boolean
   column?: boolean
 }) {
-  const { projectId, currentFC, overflow } = useContext(ProjectContext)
+  const { projectId, currentFC } = useContext(ProjectContext)
 
   const fcMetadata = decodeFundingCycleMetadata(currentFC?.metadata)
 
@@ -51,7 +51,7 @@ export default function Project({
           )}
 
           <div style={{ marginBottom: gutter }}>
-            <Rewards totalOverflow={overflow} />
+            <Rewards />
           </div>
 
           <FundingCycles showCurrentDetail={showCurrentDetail} />

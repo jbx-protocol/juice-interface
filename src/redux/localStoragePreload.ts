@@ -1,33 +1,14 @@
-import { Middleware } from '@reduxjs/toolkit'
-
 import { defaultProjectState } from './slices/editingProject'
 
-import { RootState } from './store'
-
-const KEY = 'jb_redux_preloadedState'
+import { RootState, REDUX_STATE_LOCALSTORAGE_KEY } from './store'
 
 interface PreloadedState {
   reduxState: RootState
 }
 
-export const localStoragePreloadMiddleware: Middleware =
-  store => next => action => {
-    if (typeof localStorage === 'undefined') {
-      return
-    }
-    localStorage.setItem(
-      KEY,
-      JSON.stringify({
-        reduxState: store.getState(),
-      } as PreloadedState),
-    )
-
-    return next(action)
-  }
-
 export default function getLocalStoragePreloadedState(): RootState | undefined {
   try {
-    const stateString = localStorage.getItem(KEY)
+    const stateString = localStorage.getItem(REDUX_STATE_LOCALSTORAGE_KEY)
     if (!stateString) {
       return undefined
     }

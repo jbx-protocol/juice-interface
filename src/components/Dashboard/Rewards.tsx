@@ -27,11 +27,7 @@ import PrintPreminedModal from '../modals/PrintPreminedModal'
 import IssueTickets from './IssueTickets'
 import SectionHeader from './SectionHeader'
 
-export default function Rewards({
-  totalOverflow,
-}: {
-  totalOverflow: BigNumber | undefined
-}) {
+export default function Rewards() {
   const [manageTokensModalVisible, setManageTokensModalVisible] =
     useState<boolean>()
   const [unstakeModalVisible, setUnstakeModalVisible] = useState<boolean>()
@@ -72,8 +68,6 @@ export default function Rewards({
 
   const share = formatPercent(totalBalance, totalSupply)
 
-  const redeemDisabled = !totalOverflow || totalOverflow.eq(0)
-
   const ticketsIssued = tokenAddress
     ? tokenAddress !== constants.AddressZero
     : false
@@ -102,7 +96,7 @@ export default function Rewards({
               text={tokenSymbol ? tokenSymbol + ' ' + t`tokens` : t`Tokens`}
               tip={
                 `${tokenSymbol ? tokenSymbol + ' ' + t`ERC20` : t`Tokens`}` +
-                t`are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet.`
+                t` are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet.`
               }
             />
           }
@@ -238,7 +232,6 @@ export default function Rewards({
       </Modal>
       <RedeemModal
         visible={redeemModalVisible}
-        redeemDisabled={redeemDisabled}
         onOk={() => {
           setRedeemModalVisible(false)
         }}

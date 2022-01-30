@@ -81,11 +81,23 @@ export default function RulesForm({
         <Trans>Reconfiguration</Trans>
       </h1>
 
-      <p style={{ color: colors.text.secondary }}>
-        <Trans>
-          Rules for how this project's funding cycles can be reconfigured.
-        </Trans>
-      </p>
+      <div>
+        <p style={{ color: colors.text.secondary }}>
+          <Trans>
+            Rules for how this project's funding cycles can be reconfigured.
+          </Trans>
+        </p>
+
+        {ballotStrategies()[selectedIndex ?? 0].address ===
+          constants.AddressZero && (
+          <p style={{ color: colors.text.warn }}>
+            <Trans>
+              Using a reconfiguration strategy is recommended. Projects with no
+              strategy will appear risky to contributors.
+            </Trans>
+          </p>
+        )}
+      </div>
 
       <Space direction="vertical">
         {ballotStrategies().map((s, i) =>

@@ -44,7 +44,9 @@ export default function ConfirmPayOwnerModal({
 
     await form.validateFields()
 
-    setLoading(true)
+    if (userAddress) {
+      setLoading(true)
+    }
 
     payProjectTx(
       {

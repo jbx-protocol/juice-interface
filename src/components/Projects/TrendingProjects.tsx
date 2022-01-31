@@ -17,7 +17,7 @@ export default function TrendingProjects({
   return (
     <div>
       {projects ? (
-        <Grid>
+        <Grid gutter={isHomePage ? 10 : undefined}>
           {projects.map((p, i) => (
             <TrendingProjectCard
               project={p}

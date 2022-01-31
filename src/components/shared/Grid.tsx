@@ -1,19 +1,21 @@
 import { Col, ColProps, Row, Space } from 'antd'
 import { ChildElems } from 'models/child-elems'
 
+const DEFAULT_GUTTER = 20
+
 export default function Grid({
   children,
   list,
+  gutter,
 }: {
   children: ChildElems
   list?: boolean
+  gutter?: number
 }) {
-  const gutter = 20
-
   const colProps: ColProps = {
     xs: 24,
     md: 12,
-    style: { marginBottom: gutter },
+    style: { marginBottom: gutter ?? DEFAULT_GUTTER },
   }
 
   if (!children) return null
@@ -29,7 +31,7 @@ export default function Grid({
       {children.map(
         (child, i) =>
           i % 2 === 0 && (
-            <Row gutter={gutter} key={i}>
+            <Row gutter={gutter ?? DEFAULT_GUTTER} key={i}>
               <Col {...colProps}>{child}</Col>
               {i + 1 < children.length && (
                 <Col {...colProps}>{children[i + 1]}</Col>

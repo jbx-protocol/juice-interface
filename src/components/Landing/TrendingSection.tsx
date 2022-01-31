@@ -19,7 +19,15 @@ export default function TrendingSection() {
   return (
     <section style={trendingProjects}>
       <Row>
-        <Col xs={0} md={9}>
+        <Col
+          xs={0}
+          md={9}
+          style={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+            alignItems: 'flex-end',
+          }}
+        >
           <img
             className="hide-mobile"
             style={{ float: 'right', height: 550, marginTop: 30 }}
@@ -40,8 +48,7 @@ export default function TrendingSection() {
               Trending projects over the last 7 days
             </h3>
             <TrendingProjects count={6} isHomePage />
-            <br />
-            <Button type="default" style={{ marginBottom: 40 }}>
+            <Button type="default" style={{ marginBottom: 40, marginTop: 15 }}>
               <a href="/#/projects/?tab=trending">More trending projects</a>
             </Button>
           </div>

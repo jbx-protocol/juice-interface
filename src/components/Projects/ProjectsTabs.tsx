@@ -47,7 +47,7 @@ export default function ProjectsTabs({
         }}
         onClick={() => {
           // Remove ?trending if we came from homepage trending section
-          window.location.href = '/#/projects'
+          window.location.href = `/#/projects?tab=${tab}`
           setSelectedTab(tab)
         }}
       >

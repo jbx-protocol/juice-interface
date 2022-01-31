@@ -42,7 +42,7 @@ export default function TrendingSection() {
             <TrendingProjects count={6} isHomePage />
             <br />
             <Button type="default" style={{ marginBottom: 40 }}>
-              <a href="/#/projects/?trending">More trending projects</a>
+              <a href="/#/projects/?tab=trending">More trending projects</a>
             </Button>
           </div>
         </Col>

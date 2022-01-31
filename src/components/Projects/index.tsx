@@ -28,7 +28,7 @@ const pageSize = 20
 export default function Projects() {
   // Checks if user came from homepage trending section,
   // in which case auto open trending tab
-  const trendingTabOpen = window.location.hash.split('?')[1] === 'trending'
+  const trendingTabOpen = window.location.hash.split('=')[1] === 'trending'
 
   const [searchText, setSearchText] = useState<string>()
   const [selectedTab, setSelectedTab] = useState<ProjectCategory>(

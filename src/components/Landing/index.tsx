@@ -39,18 +39,18 @@ export default function Landing() {
     </h1>
   )
 
-  const bigSubHeader = (text: string) => (
-    <h2
-      style={{
-        fontSize: '2.1rem',
-        fontWeight: 600,
-        lineHeight: 1.2,
-        margin: 0,
-      }}
-    >
-      {text}
-    </h2>
-  )
+  // const bigSubHeader = (text: string) => (
+  //   <h2
+  //     style={{
+  //       fontSize: '2.1rem',
+  //       fontWeight: 600,
+  //       lineHeight: 1.2,
+  //       margin: 0,
+  //     }}
+  //   >
+  //     {text}
+  //   </h2>
+  // )
 
   const { data: previewProjects } = useProjectsQuery({
     pageSize: 4,
@@ -80,31 +80,31 @@ export default function Landing() {
     margin: '0 auto',
   }
 
-  const statsRowStyles: CSSProperties = {
-    borderTop: '1px solid var(--stroke-tertiary)',
-    paddingTop: 60,
-  }
+  // const statsRowStyles: CSSProperties = {
+  //   borderTop: '1px solid var(--stroke-tertiary)',
+  //   paddingTop: 60,
+  // }
 
-  const statsColStyles: CSSProperties = {
-    textAlign: 'center',
-    marginBottom: 40,
-  }
+  // const statsColStyles: CSSProperties = {
+  //   textAlign: 'center',
+  //   marginBottom: 40,
+  // }
 
-  const statsCol = (header: string, subHeader: string) => (
-    <Col xs={24} md={8} style={statsColStyles}>
-      {bigSubHeader(header)}
-      <div
-        style={{
-          fontWeight: 400,
-          fontSize: '1.1rem',
-          marginTop: 8,
-          color: 'var(--text-secondary)',
-        }}
-      >
-        <Trans>{subHeader}</Trans>
-      </div>
-    </Col>
-  )
+  // const statsCol = (header: string, subHeader: string) => (
+  //   <Col xs={24} md={8} style={statsColStyles}>
+  //     {bigSubHeader(header)}
+  //     <div
+  //       style={{
+  //         fontWeight: 400,
+  //         fontSize: '1.1rem',
+  //         marginTop: 8,
+  //         color: 'var(--text-secondary)',
+  //       }}
+  //     >
+  //       <Trans>{subHeader}</Trans>
+  //     </div>
+  //   </Col>
+  // )
 
   function scrollToCreate() {
     document.getElementById('create')?.scrollIntoView({ behavior: 'smooth' })
@@ -233,11 +233,11 @@ export default function Landing() {
               />
             </Col>
           </Row>
-          <Row gutter={40} align="middle" style={statsRowStyles}>
+          {/* <Row gutter={40} align="middle" style={statsRowStyles}>
             {statsCol('292', t`Projects powered by Juicebox`)}
             {statsCol(`$94,137,431`, t`Raised through Juicebox`)}
             {statsCol(`32,671`, t`Payments to projects`)}
-          </Row>
+          </Row> */}
         </div>
       </section>
 

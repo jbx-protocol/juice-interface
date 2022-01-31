@@ -128,18 +128,21 @@ export default function FundingCycles({
           text={t`Funding cycle`}
           tip={t`A project's lifetime is defined in funding cycles. If a funding target is set, the project can withdraw no more than the target for the duration of the cycle.`}
           style={{
-            marginBottom: 12,
+            marginBottom: 10,
           }}
         />
-        <Space style={{ fontSize: '.8rem', marginBottom: 12 }} size="middle">
-          {tab('current')}
-          {currentFC?.duration.gt(0) ? tab('upcoming') : null}
-          {tab('history')}
-        </Space>
+        {canReconfigure && (
+          <ReconfigureFundingModalTrigger
+            fundingDuration={currentFC?.duration}
+          />
+        )}
       </div>
+      <Space style={{ fontSize: '.8rem', marginBottom: 12 }} size="middle">
+        {tab('current')}
+        {currentFC?.duration.gt(0) ? tab('upcoming') : null}
+        {tab('history')}
+      </Space>
       <div>{tabContent}</div>
-
-      {canReconfigure && <ReconfigureFundingModalTrigger />}
     </div>
   )
 }

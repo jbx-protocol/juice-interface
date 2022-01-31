@@ -22,7 +22,12 @@ import { useConfigureProjectTx } from 'hooks/transactor/ConfigureProjectTx'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycleMetadata } from 'models/funding-cycle-metadata'
 import { PayoutMod, TicketMod } from 'models/mods'
-import { useCallback, useContext, useLayoutEffect, useState } from 'react'
+import React, {
+  useCallback,
+  useContext,
+  useLayoutEffect,
+  useState,
+} from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
 import {
   formattedNum,
@@ -308,16 +313,22 @@ export default function ReconfigureFCModal({
       width={600}
     >
       <div>
-        <h1 style={{ marginBottom: 20 }}>
-          <Trans>Reconfigure funding cycle</Trans>
-        </h1>
-
-        {currentFC?.duration.gt(0) && (
-          <p>
-            <Trans>
-              All changes will be applied to the <b>upcoming</b> funding cycle.
-            </Trans>
-          </p>
+        {currentFC?.duration.gt(0) ? (
+          <React.Fragment>
+            <h1 style={{ marginBottom: 20 }}>
+              <Trans>Reconfigure upcoming funding</Trans>
+            </h1>
+            <p>
+              <Trans>
+                All changes will be applied to the <strong>upcoming</strong>{' '}
+                funding cycle.
+              </Trans>
+            </p>
+          </React.Fragment>
+        ) : (
+          <h1 style={{ marginBottom: 20 }}>
+            <Trans>Reconfigure funding</Trans>
+          </h1>
         )}
 
         <Space direction="vertical" size="large" style={{ width: '100%' }}>

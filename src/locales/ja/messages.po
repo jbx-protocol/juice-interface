@@ -8,7 +8,7 @@ msgstr ""
 "Language: ja\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-01-29 01:44\n"
+"PO-Revision-Date: 2022-01-31 01:47\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -24,6 +24,11 @@ msgstr ""
 
 #: src/components/modals/ConfirmPayOwnerModal/index.tsx
 msgid "(Optional) Add a note to this payment on-chain"
+msgstr ""
+
+#: src/components/modals/ReservedTokenReceiverModal.tsx
+msgid "({realTokenAllocationPercent}%\n"
+"of all newly minted tokens)."
 msgstr ""
 
 #: src/components/modals/ReconfigureFCModal.tsx
@@ -133,7 +138,7 @@ msgid "A project can choose to reserve a percentage of tokens for itself. Instea
 msgstr ""
 
 #: src/components/Dashboard/ReservedTokens.tsx
-msgid "A project can reserve a percentage of tokens minted from every payment it receives. They can be distributed to the receivers below at any time."
+msgid "A project can reserve a percentage of tokens minted from every payment it receives. Reserved tokens can be distributed according to the allocation below at any time."
 msgstr ""
 
 #: src/components/Landing/QAs.tsx
@@ -184,6 +189,8 @@ msgstr ""
 msgid "Add to balance"
 msgstr ""
 
+#: src/components/modals/ReservedTokenReceiverModal.tsx
+#: src/components/modals/ReservedTokenReceiverModal.tsx
 #: src/components/shared/formItems/ProjectTicketMods.tsx
 msgid "Add token receiver"
 msgstr ""
@@ -219,7 +226,7 @@ msgid "All {0} will go to the project owner:"
 msgstr ""
 
 #: src/components/Create/TicketingForm.tsx
-msgid "Allocate reserved tokens (optional)"
+msgid "Allocate a portion of your project's reserved tokens to other Ethereum wallets or Juicebox projects."
 msgstr ""
 
 #: src/components/Create/RestrictedActionsForm.tsx
@@ -266,16 +273,12 @@ msgstr ""
 msgid "At the start, power over the governance smart contract is held by Juicebox's founding contributors. The intent is to soon transfer the power to a community of token holders."
 msgstr ""
 
-#: src/components/Create/TicketingForm.tsx
-msgid "Automatically distribute a portion of your project's reserved tokens to other Juicebox projects or ETH wallets."
-msgstr ""
-
 #: src/components/modals/WithdrawModal.tsx
 msgid "Available after fee:"
 msgstr ""
 
 #: src/components/Dashboard/Spending.tsx
-msgid "Available funds are distributed according to any payouts below."
+msgid "Available funds are distributed according to the payouts below."
 msgstr ""
 
 #: src/components/modals/DistributeTokensModal.tsx
@@ -284,6 +287,10 @@ msgstr ""
 
 #: src/components/Dashboard/index.tsx
 msgid "Back to top"
+msgstr ""
+
+#: src/components/modals/ReservedTokenReceiverModal.tsx
+msgid "Beneficiary address"
 msgstr ""
 
 #: src/components/Landing/index.tsx
@@ -326,6 +333,10 @@ msgstr ""
 msgid "Burn project tokens"
 msgstr ""
 
+#: src/components/Create/PayModsForm.tsx
+msgid "By default, all unallocated funds can be distributed to the project owner's wallet."
+msgstr ""
+
 #: src/components/Landing/QAs.tsx
 msgid "Can I change my project's contract after it's been created?"
 msgstr ""
@@ -359,7 +370,7 @@ msgid "Close"
 msgstr ""
 
 #: src/components/Landing/index.tsx
-msgid "Commit portions of your revenue to go to the people or projects you want to support, or the contributors you want to pay. When you get paid, so do they."
+msgid "Commit portions of your funds to the people or projects you want to support, or the contributors you want to pay. When you get paid, so do they."
 msgstr ""
 
 #: src/components/Landing/index.tsx
@@ -388,6 +399,10 @@ msgstr ""
 
 #: src/components/shared/CopyTextButton.tsx
 msgid "Copy to clipboard"
+msgstr ""
+
+#: src/components/Projects/index.tsx
+msgid "Create project"
 msgstr ""
 
 #: src/components/Projects/index.tsx
@@ -444,6 +459,7 @@ msgstr ""
 msgid "Disconnect"
 msgstr ""
 
+#: src/components/Create/ConfirmDeployProject.tsx
 #: src/components/Navbar/MenuItems.tsx
 #: src/components/shared/formItems/ProjectDiscord.tsx
 msgid "Discord"
@@ -464,19 +480,20 @@ msgstr ""
 msgid "Display ERC20 tokens and other Juicebox project tokens that are in this project's owner's wallet."
 msgstr ""
 
-#: src/components/Dashboard/ReservedTokens.tsx
+#: src/components/Create/PayModsForm.tsx
+msgid "Distribute available funds to other Ethereum wallets or Juicebox projects as payouts. Use this to pay contributors, charities, Juicebox projects you depend on, or anyone else. Funds are distributed whenever a withdrawal is made from your project."
+msgstr ""
+
 #: src/components/Dashboard/Spending.tsx
-msgid "Distribute"
+msgid "Distribute funds"
+msgstr ""
+
+#: src/components/Dashboard/ReservedTokens.tsx
+msgid "Distribute {0}"
 msgstr ""
 
 #: src/components/Dashboard/Paid.tsx
 msgid "Distributed"
-msgstr ""
-
-#: src/components/Create/PayModsForm.tsx
-#: src/components/Create/index.tsx
-#: src/components/Dashboard/Spending.tsx
-msgid "Distribution"
 msgstr ""
 
 #: src/components/Landing/QAs.tsx
@@ -532,11 +549,15 @@ msgid "Each project has its own tokens. Everyone who funds a project gets a newl
 msgstr ""
 
 #: src/components/shared/TicketModsList.tsx
-msgid "Edit reserved token receivers"
+msgid "Edit reserved token allocation"
 msgstr ""
 
 #: src/components/shared/TicketModsList.tsx
-msgid "Edit token receivers"
+msgid "Edit token allocation"
+msgstr ""
+
+#: src/components/modals/ReservedTokenReceiverModal.tsx
+msgid "Edit token receiver"
 msgstr ""
 
 #: src/components/modals/BalancesModal.tsx
@@ -550,6 +571,10 @@ msgstr ""
 
 #: src/components/Create/RestrictedActionsForm.tsx
 msgid "Enabling this allows the project owner to manually mint any amount of tokens to any address."
+msgstr ""
+
+#: src/components/Create/RestrictedActionsForm.tsx
+msgid "Enabling tokens to be minted will appear risky to contributors, and should only be used when necessary."
 msgstr ""
 
 #: src/components/FundingCycle/FundingCycleDetails.tsx
@@ -584,17 +609,18 @@ msgstr ""
 msgid "For users paying through your app, you should route those funds through the Juicebox smart contracts so they receive Tokens in return."
 msgstr ""
 
-#: src/components/Create/BudgetForm.tsx
-#: src/components/Create/index.tsx
-#: src/components/modals/ReconfigureFCModal.tsx
-msgid "Funding"
+#: src/components/Dashboard/Spending.tsx
+msgid "Funding Distribution"
 msgstr ""
 
 #: src/components/Create/BudgetForm.tsx
 msgid "Funding can be reconfigured at any time. Reconfigurations will start a new funding cycle."
 msgstr ""
 
+#: src/components/Create/BudgetForm.tsx
+#: src/components/Create/index.tsx
 #: src/components/Dashboard/FundingCycles.tsx
+#: src/components/modals/ReconfigureFCModal.tsx
 msgid "Funding cycle"
 msgstr ""
 
@@ -609,6 +635,12 @@ msgstr ""
 
 #: src/constants/fundingWarningText.ts
 msgid "Funding cycles can be reconfigured moments before a new cycle begins, without notifying contributors."
+msgstr ""
+
+#: src/components/Create/PayModsForm.tsx
+#: src/components/Create/index.tsx
+#: src/components/modals/ReconfigureFCModal.tsx
+msgid "Funding distribution"
 msgstr ""
 
 #: src/components/modals/DistributeTokensModal.tsx
@@ -671,6 +703,10 @@ msgstr ""
 
 #: src/components/Dashboard/ProjectHeader.tsx
 msgid "ID: {0}"
+msgstr ""
+
+#: src/components/modals/ReservedTokenReceiverModal.tsx
+msgid "If locked, this can't be edited or removed until the lock expires or the funding cycle is reconfigured."
 msgstr ""
 
 #: src/components/Projects/index.tsx
@@ -765,6 +801,10 @@ msgstr ""
 msgid "Load more"
 msgstr ""
 
+#: src/components/modals/ReservedTokenReceiverModal.tsx
+msgid "Lock until"
+msgstr ""
+
 #: src/components/shared/formItems/ProjectLogoUri.tsx
 msgid "Logo"
 msgstr ""
@@ -807,10 +847,6 @@ msgstr ""
 
 #: src/components/Create/ConfirmDeployProject.tsx
 msgid "Name"
-msgstr ""
-
-#: src/components/Projects/index.tsx
-msgid "New project"
 msgstr ""
 
 #: src/components/Dashboard/ProjectActivity/ActivityTabContent.tsx
@@ -940,11 +976,7 @@ msgid "Payments paused"
 msgstr ""
 
 #: src/components/Create/PayModsForm.tsx
-msgid "Payouts are optional. By default, all unallocated revenue will be withdrawable to the project owner's wallet."
-msgstr ""
-
-#: src/components/Create/PayModsForm.tsx
-msgid "Payouts let you commit portions of every withdrawal to other Ethereum wallets or Juicebox projects. Use this to pay contributors, charities, other projects you depend on, or anyone else. Payouts will be distributed automatically whenever a withdrawal is made from your project."
+msgid "Payouts (optional)"
 msgstr ""
 
 #: src/components/shared/formItems/ProjectName.tsx
@@ -953,6 +985,14 @@ msgstr ""
 
 #: src/components/Landing/QAs.tsx
 msgid "People using Juicebox are interacting with each other through public infrastructure—not a private, profit-seeking corporate service that brokers the exchange."
+msgstr ""
+
+#: src/components/modals/ReservedTokenReceiverModal.tsx
+msgid "Percent allocation"
+msgstr ""
+
+#: src/components/shared/formItems/ProjectTicketMods.tsx
+msgid "Percentages must add up to 100% or less"
 msgstr ""
 
 #: src/components/Navbar/MenuItems.tsx
@@ -1026,6 +1066,10 @@ msgstr ""
 msgid "Projects using Juicebox"
 msgstr ""
 
+#: src/components/Create/TicketingForm.tsx
+msgid "Projects using a reserved rate of {reservedRateRiskyMin}% or more will appear risky to contributors, as a relatively small number of tokens will be received in exchange for paying your project."
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "Public goods and services"
 msgstr ""
@@ -1051,7 +1095,7 @@ msgstr ""
 
 #: src/components/FundingCycle/ReconfigureFundingModalTrigger.tsx
 #: src/components/modals/ReconfigureFCModal.tsx
-msgid "Reconfigure funding"
+msgid "Reconfigure funding cycle"
 msgstr ""
 
 #: src/components/Dashboard/ProjectActivity/index.tsx
@@ -1066,12 +1110,8 @@ msgstr ""
 msgid "Remove {0} ERC20 tokens from your wallet and lock them in the Juicebox protocol."
 msgstr ""
 
-#: src/components/Dashboard/ReservedTokens.tsx
-msgid "Reserved"
-msgstr ""
-
-#: src/components/Create/index.tsx
-msgid "Reserved Tokens"
+#: src/components/Create/TicketingForm.tsx
+msgid "Reserved token allocation (optional)"
 msgstr ""
 
 #: src/components/Create/ConfirmDeployProject.tsx
@@ -1081,12 +1121,14 @@ msgstr ""
 
 #: src/components/Create/ConfirmDeployProject.tsx
 #: src/components/Create/TicketingForm.tsx
+#: src/components/Create/index.tsx
 #: src/components/modals/ReconfigureFCModal.tsx
 #: src/components/modals/ReconfigureFCModal.tsx
 #: src/components/shared/formItems/ProjectReserved.tsx
 msgid "Reserved tokens"
 msgstr ""
 
+#: src/components/Dashboard/ReservedTokens.tsx
 #: src/components/FundingCycle/FundingCycleDetails.tsx
 msgid "Reserved {0}"
 msgstr ""
@@ -1140,7 +1182,6 @@ msgstr ""
 msgid "Rules for how this project's funding cycles can be reconfigured."
 msgstr ""
 
-#: src/components/Create/PayModsForm.tsx
 #: src/components/Create/RestrictedActionsForm.tsx
 #: src/components/Create/RulesForm.tsx
 #: src/components/Create/TicketingForm.tsx
@@ -1159,6 +1200,10 @@ msgstr ""
 msgid "Save handle"
 msgstr ""
 
+#: src/components/Create/PayModsForm.tsx
+msgid "Save payouts"
+msgstr ""
+
 #: src/components/Create/ProjectForm.tsx
 msgid "Save project details"
 msgstr ""
@@ -1168,7 +1213,11 @@ msgid "Save reconfiguration"
 msgstr ""
 
 #: src/components/shared/TicketModsList.tsx
-msgid "Save token receivers"
+msgid "Save token allocation"
+msgstr ""
+
+#: src/components/modals/ReservedTokenReceiverModal.tsx
+msgid "Save token receiver"
 msgstr ""
 
 #: src/components/modals/BalancesModal.tsx
@@ -1192,7 +1241,7 @@ msgid "Set a funding cycle target"
 msgstr ""
 
 #: src/components/Landing/index.tsx
-msgid "Set a funding target to cover predictable expenses. Any extra revenue can be claimed by anyone holding your project's tokens alongside you."
+msgid "Set a funding target to cover predictable expenses. Any extra funds can be claimed by anyone holding your project's tokens alongside you."
 msgstr ""
 
 #: src/components/Create/BudgetForm.tsx
@@ -1212,7 +1261,7 @@ msgid "Some funding cycle properties may indicate risk\n"
 "for project contributors."
 msgstr ""
 
-#: src/components/modals/ReconfigureFCModal.tsx
+#: src/components/Create/ConfirmDeployProject.tsx
 #: src/components/modals/ReconfigureFCModal.tsx
 msgid "Spending"
 msgstr ""
@@ -1239,6 +1288,14 @@ msgstr ""
 
 #: src/components/Create/index.tsx
 msgid "Start Over"
+msgstr ""
+
+#: src/components/shared/PayoutModsList.tsx
+msgid "Sum of percentages cannot exceed 100%"
+msgstr ""
+
+#: src/components/Create/PayModsForm.tsx
+msgid "Sum of percentages cannot exceed 100%."
 msgstr ""
 
 #: src/components/Create/ConfirmDeployProject.tsx
@@ -1274,6 +1331,10 @@ msgstr ""
 msgid "The address that should receive the tokens minted from paying this project."
 msgstr ""
 
+#: src/components/modals/ReservedTokenReceiverModal.tsx
+msgid "The address that should receive the tokens."
+msgstr ""
+
 #: src/components/Dashboard/Paid.tsx
 msgid "The amount that has been distributed from the Juicebox balance in this funding cycle, out of the current funding target. No more than the funding target can be distributed in a single funding cycle—any remaining ETH in Juicebox is overflow, until the next cycle begins."
 msgstr ""
@@ -1290,8 +1351,17 @@ msgstr ""
 msgid "The founding contributors will then be working on L2 payment terminals for Juicebox projects."
 msgstr ""
 
+#: src/components/Dashboard/Spending.tsx
+msgid "The funds available to withdraw for this funding cycle after the {0}% JBX fee is subtracted. This number won't roll over to the next funding cycle, so funds should be withdrawn before it ends."
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "The future will be led by creators, and owned by communities."
+msgstr ""
+
+#: src/components/modals/ReservedTokenReceiverModal.tsx
+msgid "The percent this individual receives of the overall {reservedRate}% \n"
+"reserved token allocation"
 msgstr ""
 
 #: src/constants/fundingWarningText.ts
@@ -1491,6 +1561,14 @@ msgstr ""
 msgid "Users fund your project by paying to use your app or service, or as a patron or investor by making a payment directly to your project's smart contract (like on this app)."
 msgstr ""
 
+#: src/components/Create/BudgetForm.tsx
+msgid "Using a duration is recommended. Allowing funding cycles to be reconfigured at any time will appear risky to contributors."
+msgstr ""
+
+#: src/components/Create/RulesForm.tsx
+msgid "Using a reconfiguration strategy is recommended. Projects with no strategy will appear risky to contributors."
+msgstr ""
+
 #: src/components/Projects/index.tsx
 msgid "V1"
 msgstr ""
@@ -1548,7 +1626,7 @@ msgid "What's going on under the hood?"
 msgstr ""
 
 #: src/components/Landing/index.tsx
-msgid "When someone pays your project either as a patron or a user of your app, they earn a proportional amount of your project's token. When you win, your token holders win, so they'll want you to win even more."
+msgid "When someone pays your project as a patron or a user of your app, they earn a portion of your project's token. When you win, your token holders win, so they'll want you to win even more."
 msgstr ""
 
 #: src/components/FundingCycle/FundingCycleDetails.tsx
@@ -1685,6 +1763,10 @@ msgstr ""
 msgid "project"
 msgstr ""
 
+#: src/components/shared/formItems/ProjectTicketMods.tsx
+msgid "project owner"
+msgstr ""
+
 #: src/components/Projects/index.tsx
 msgid "projects"
 msgstr ""
@@ -1699,6 +1781,7 @@ msgid "token"
 msgstr ""
 
 #: src/components/Dashboard/Pay/PayInputSubText.tsx
+#: src/components/Dashboard/ReservedTokens.tsx
 #: src/components/Dashboard/ReservedTokens.tsx
 #: src/components/Dashboard/ReservedTokens.tsx
 #: src/components/Dashboard/Rewards.tsx
@@ -1774,6 +1857,10 @@ msgstr ""
 msgid "{0} withdrawn"
 msgstr ""
 
+#: src/components/Dashboard/ReservedTokens.tsx
+msgid "{0} {1} reserved"
+msgstr ""
+
 #: src/components/Dashboard/Rewards.tsx
 msgid "{0}% of supply"
 msgstr ""
@@ -1783,7 +1870,7 @@ msgid "{0}% to <0/>"
 msgstr ""
 
 #: src/components/shared/formItems/ProjectTicketMods.tsx
-msgid "{0}%to"
+msgid "{0}% to {1}"
 msgstr ""
 
 #: src/components/FundingCycle/FundingCycleDetails.tsx

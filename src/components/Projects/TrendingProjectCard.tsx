@@ -61,20 +61,17 @@ export default function TrendingProjectCard({
       ? 2
       : 0
 
-  // let percentGain : string
-  // const totalVolume = project.totalPaid
-  // const trendingVolume = project.trendingVolume
-  // console.log('trendingVolume: ', fromWad(trendingVolume))
-  // console.log('totalVol: ', fromWad(totalVolume))
+  const totalVolume = project.totalPaid
+  const trendingVolume = project.trendingVolume // volume in the last 7 days
 
-  // if (totalVolume && trendingVolume) {
-  //   const volumeBeforeTrendingWindow = totalVolume.sub(trendingVolume)
-  //   console.log('volumeBeforeTrendingWindow: ', fromWad(volumeBeforeTrendingWindow))
-  //   percentGain = fromWad(trendingVolume.mul(1000000000).div(volumeBeforeTrendingWindow))
-  //   console.log('trendingVolume.div(volumeBeforeTrendingWindow): ', percentGain)
-  // } else {
-  //   percentGain = ''
-  // }
+  let percentGain = 0
+  if (totalVolume && trendingVolume) {
+    const volumeBeforeTrendingWindow = totalVolume.sub(trendingVolume)
+    percentGain = trendingVolume
+      .mul(100)
+      .div(volumeBeforeTrendingWindow)
+      .toNumber()
+  }
 
   return project ? (
     <a
@@ -140,10 +137,13 @@ export default function TrendingProjectCard({
               <CurrencySymbol currency={CURRENCY_ETH} />
               <span style={{ fontWeight: 600 }}>
                 {formatWad(project.trendingVolume, { precision })}
-              </span>
-              {/* <span style={{ color: colors.text.header, fontWeight: 600 }}>
-                // {/* +{percentGain}% */}
-              {/* </span> */} last {trendingWindowDays} days
+              </span>{' '}
+              last {trendingWindowDays} days{' '}
+              {percentGain > 0 ? (
+                <span style={{ color: colors.text.header, fontWeight: 600 }}>
+                  +{percentGain}%
+                </span>
+              ) : null}
             </div>
 
             {metadata.description && (

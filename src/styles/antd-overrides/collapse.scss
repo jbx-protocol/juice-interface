@@ -99,11 +99,13 @@
 }
 
 .top-nav-mobile {
-  height: 50px;
   padding: 16px 8px;
+  width: 100%;
+  position: fixed;
   .ant-collapse {
     width: 100%;
-    height: 45px;
+    margin-bottom: 4px;
+    height: 55px;
   }
   .ant-collapse-content {
     float: left;

@@ -1,21 +1,24 @@
-import { Button } from 'antd'
+import { Button, Tooltip } from 'antd'
 import { ProjectContext } from 'contexts/projectContext'
 import React, { useContext, useRef, useState } from 'react'
 import { Provider } from 'react-redux'
 import store, { createStore } from 'redux/store'
 import { Trans } from '@lingui/macro'
 
-import ReconfigureFCModal from '../modals/ReconfigureFCModal'
+import { BigNumber } from 'ethers'
 
-interface Props {}
+import ReconfigureFCModal from '../modals/ReconfigureFCModal'
 
 // This component uses a local version of the entire Redux store
 // so editing within the Reconfigure Funding modal does not
 // conflict with existing Redux state. This is so editing a
 // persisted Redux state and the Reconfigure Funding modal
 // are independent.
-
-const ReconfigureFundingModalTrigger: React.FC<Props> = () => {
+export default function ReconfigureFundingModalTrigger({
+  fundingDuration,
+}: {
+  fundingDuration?: BigNumber
+}) {
   const { isPreviewMode } = useContext(ProjectContext)
 
   const localStoreRef = useRef<typeof store>()
@@ -29,15 +32,28 @@ const ReconfigureFundingModalTrigger: React.FC<Props> = () => {
   }
 
   return (
-    <>
-      <Button
-        style={{ marginTop: 20 }}
-        onClick={handleModalOpen}
-        size="small"
-        disabled={isPreviewMode}
-      >
-        <Trans>Reconfigure funding cycle</Trans>
-      </Button>
+    <div style={{ textAlign: 'right' }}>
+      {fundingDuration?.gt(0) ? (
+        <Tooltip
+          title={
+            <span>
+              <b>Note:</b> The current funding cycle cannot be edited.
+            </span>
+          }
+        >
+          <Button
+            onClick={handleModalOpen}
+            size="small"
+            disabled={isPreviewMode}
+          >
+            <Trans>Reconfigure upcoming</Trans>
+          </Button>
+        </Tooltip>
+      ) : (
+        <Button onClick={handleModalOpen} size="small" disabled={isPreviewMode}>
+          <Trans>Reconfigure</Trans>
+        </Button>
+      )}
 
       {localStoreRef.current && (
         <Provider store={localStoreRef.current}>
@@ -47,8 +63,6 @@ const ReconfigureFundingModalTrigger: React.FC<Props> = () => {
           />
         </Provider>
       )}
-    </>
+    </div>
   )
 }
-
-export default ReconfigureFundingModalTrigger

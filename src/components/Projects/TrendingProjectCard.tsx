@@ -133,12 +133,21 @@ export default function TrendingProjectCard({
               </div>
             )}
 
-            <div style={{ color: colors.text.primary }}>
-              <CurrencySymbol currency={CURRENCY_ETH} />
-              <span style={{ fontWeight: 600 }}>
-                {formatWad(project.trendingVolume, { precision })}
-              </span>{' '}
-              last {trendingWindowDays} days{' '}
+            <div
+              style={{
+                color: colors.text.primary,
+                display: 'flex',
+                flexWrap: 'wrap',
+                width: '100%',
+              }}
+            >
+              <span style={{ display: 'flex', flexWrap: 'wrap' }}>
+                <span style={{ fontWeight: 600 }}>
+                  <CurrencySymbol currency={CURRENCY_ETH} />
+                  {formatWad(project.trendingVolume, { precision })}{' '}
+                </span>
+                last {trendingWindowDays} days{' '}
+              </span>
               {percentGain > 0 ? (
                 <span style={{ color: colors.text.header, fontWeight: 600 }}>
                   +{percentGain}%

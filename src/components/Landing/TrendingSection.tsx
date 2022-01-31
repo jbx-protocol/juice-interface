@@ -21,7 +21,7 @@ export default function TrendingSection() {
       <Row>
         <Col
           xs={0}
-          md={9}
+          lg={9}
           style={{
             display: 'flex',
             justifyContent: 'flex-end',
@@ -29,13 +29,13 @@ export default function TrendingSection() {
           }}
         >
           <img
-            className="hide-mobile"
+            className="hide-mobile hide-tablet"
             style={{ float: 'right', height: 550, marginTop: 30 }}
             src="/assets/green_orange.png"
             alt="Green orange singing"
           />
         </Col>
-        <Col xs={24} md={15}>
+        <Col xs={24} lg={15}>
           <div style={{ paddingBottom: 20 }}>
             <h3
               style={{

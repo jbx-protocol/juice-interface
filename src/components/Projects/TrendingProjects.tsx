@@ -6,10 +6,12 @@ import TrendingProjectCard from './TrendingProjectCard'
 
 export default function TrendingProjects({
   isHomePage,
+  count, //number of trending project cards to show
 }: {
   isHomePage?: boolean
+  count: number
 }) {
-  const { data: projects } = useTrendingProjects()
+  const { data: projects } = useTrendingProjects(count)
   const cardBg = isHomePage ? 'var(--background-l0)' : ''
 
   return (

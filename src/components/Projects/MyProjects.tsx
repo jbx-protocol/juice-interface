@@ -1,3 +1,5 @@
+import Grid from 'components/shared/Grid'
+import ProjectCard from 'components/shared/ProjectCard'
 import { NetworkContext } from 'contexts/networkContext'
 import { useMyProjectsQuery } from 'hooks/Projects'
 import { useContext } from 'react'
@@ -7,7 +9,15 @@ export default function MyProjects() {
 
   const { data: projects } = useMyProjectsQuery(userAddress)
 
-  console.log('My projects:', projects)
-
-  return <div></div>
+  if (projects) {
+    return (
+      <Grid
+        children={projects.map(p => (
+          <ProjectCard project={p} />
+        ))}
+      />
+    )
+  } else {
+    return <div>You have not contributed to any Juicebox projects</div>
+  }
 }

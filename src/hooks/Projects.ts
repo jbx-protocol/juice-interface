@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 
-import { ProjectState } from 'models/project-visibility'
+import { ProjectStateFilter } from 'models/project-visibility'
 import { Project } from 'models/subgraph-entities/project'
 import { TerminalVersion } from 'models/terminal-version'
 import { EntityKeys, GraphQueryOpts, InfiniteGraphQueryOpts } from 'utils/graph'
@@ -12,28 +12,27 @@ import {
 } from 'constants/trending-projects'
 
 import { archivedProjectIds } from '../constants/archived-projects'
-import { trendingProjectsCount } from '../constants/trending-projects'
 import useSubgraphQuery, { useInfiniteSubgraphQuery } from './SubgraphQuery'
 
 // Take just an object that might contain an ID. That way we can support
 // arbitrary `keys` properties.
-function filterOutArchivedProjects<T extends { id?: BigNumber }>(
+function filterByProjectState<T extends { id?: BigNumber }>(
   data: T[],
-  filter?: ProjectState,
+  filter?: ProjectStateFilter,
 ): T[] {
-  switch (filter) {
-    case 'active':
-      return data?.filter(
-        project =>
-          project?.id && !archivedProjectIds.includes(project.id.toNumber()),
-      )
-    case 'archived':
-      return data?.filter(
-        project =>
-          project.id && archivedProjectIds.includes(project.id.toNumber()),
-      )
-    default:
-      return data
+  if (filter?.active && !filter?.archived) {
+    return data?.filter(
+      project =>
+        project?.id && !archivedProjectIds.includes(project.id.toNumber()),
+    )
+  } else if (!filter?.active && filter?.archived) {
+    return data?.filter(
+      project =>
+        project.id && archivedProjectIds.includes(project.id.toNumber()),
+    )
+  } else {
+    // If both or neither are set, show everything
+    return data
   }
 }
 
@@ -45,7 +44,7 @@ interface ProjectsOptions {
   orderBy?: 'createdAt' | 'currentBalance' | 'totalPaid'
   orderDirection?: 'asc' | 'desc'
   pageSize?: number
-  filter?: ProjectState
+  states?: ProjectStateFilter
   keys?: (keyof Project)[]
   terminalVersion?: TerminalVersion
   searchText?: string
@@ -112,7 +111,7 @@ export function useProjectsQuery(opts: ProjectsOptions) {
     },
     {
       staleTime,
-      select: data => filterOutArchivedProjects(data, opts.filter),
+      select: data => filterByProjectState(data, opts.states),
     },
   )
 }
@@ -134,7 +133,7 @@ export function useProjectsSearch(handle: string | undefined) {
 
 // Returns projects with highest % volume increase in last week
 // excluding JuiceboxDAO (ID=1)
-export function useTrendingProjects() {
+export function useTrendingProjects(count: number) {
   const secondsInDay = 24 * 60 * 60
 
   const payments = useSubgraphQuery(
@@ -183,10 +182,10 @@ export function useTrendingProjects() {
       : acc
   }, {} as Record<string, BigNumber>)
 
-  // Get IDs for `trendingProjectsCount` number of highest volume projects
+  // Get IDs for `count` number of highest volume projects
   const sortedProjectIds = Object.keys(mapped)
     .sort((a, b) => (mapped[a].gt(mapped[b]) ? -1 : 1))
-    .slice(0, trendingProjectsCount)
+    .slice(0, count)
 
   // Query project data for all trending project IDs
   const projects = useSubgraphQuery(
@@ -280,7 +279,7 @@ export function useInfiniteProjectsQuery(opts: ProjectsOptions) {
       select: data => ({
         ...data,
         pages: data.pages.map(pageData =>
-          filterOutArchivedProjects(pageData, opts.filter),
+          filterByProjectState(pageData, opts.states),
         ),
       }),
     },

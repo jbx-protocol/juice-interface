@@ -39,10 +39,10 @@ export default function TrendingSection() {
             >
               Trending projects over the last 7 days
             </h3>
-            <TrendingProjects isHomePage />
+            <TrendingProjects count={6} isHomePage />
             <br />
             <Button type="default" style={{ marginBottom: 40 }}>
-              <a href="/#/projects">More trending projects</a>
+              <a href="/#/projects/?trending">More trending projects</a>
             </Button>
           </div>
         </Col>

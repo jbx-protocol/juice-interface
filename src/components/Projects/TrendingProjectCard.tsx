@@ -67,10 +67,15 @@ export default function TrendingProjectCard({
   let percentGain = 0
   if (totalVolume && trendingVolume) {
     const volumeBeforeTrendingWindow = totalVolume.sub(trendingVolume)
-    percentGain = trendingVolume
-      .mul(100)
-      .div(volumeBeforeTrendingWindow)
-      .toNumber()
+    // Only show percent gain if volumeBeforeTrendingWindow > 0
+    if (volumeBeforeTrendingWindow.gt(0)) {
+      percentGain = trendingVolume
+        .mul(100)
+        .div(volumeBeforeTrendingWindow)
+        .toNumber()
+    } else {
+      percentGain = 0
+    }
   }
 
   return project ? (

@@ -210,7 +210,6 @@ export function useTrendingProjects(count: number) {
     // Return projects with `trendingScore` and `trendingVolume` sorted by `trendingScore`
     data: projects.data
       ?.map(p => {
-        // Null check
         const trendingVolume = p.id
           ? mapped[p.id.toString()]
           : BigNumber.from(0)
@@ -220,6 +219,7 @@ export function useTrendingProjects(count: number) {
 
         const k = 69
 
+        // Arbitrary algorithm
         const trendingScore = trendingVolume
           .pow(2)
           .sub(initialVolume)

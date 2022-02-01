@@ -10,9 +10,10 @@ import { useContext, useMemo } from 'react'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { Tooltip } from 'antd'
-import { InfoCircleOutlined } from '@ant-design/icons'
 import { ThemeContext } from 'contexts/themeContext'
 import AMMPrices from 'components/shared/AMMPrices'
+
+import TooltipIcon from 'components/shared/TooltipIcon'
 
 import { CURRENCY_ETH } from 'constants/currency'
 
@@ -77,7 +78,7 @@ export default function PayInputSubText({
             >
               <span style={{ color: colors.text.action.primary }}>
                 buy {tokenText} on exchange
-                <InfoCircleOutlined style={{ marginLeft: '0.2rem' }} />
+                <TooltipIcon style={{ marginLeft: '0.2rem' }} />
               </span>
             </Tooltip>
           </Trans>

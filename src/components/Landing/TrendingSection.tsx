@@ -1,9 +1,10 @@
-import { Row, Col, Button } from 'antd'
+import { Row, Col, Button, Tooltip } from 'antd'
+import { InfoCircleOutlined } from '@ant-design/icons'
 
 import { CSSProperties, useContext } from 'react'
 import { ThemeContext } from 'contexts/themeContext'
 import TrendingProjects from 'components/Projects/TrendingProjects'
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 
 export default function TrendingSection() {
   const {
@@ -11,9 +12,10 @@ export default function TrendingSection() {
     isDarkMode,
   } = useContext(ThemeContext)
 
-  const trendingProjects: CSSProperties = {
+  const trendingProjectsStyle: CSSProperties = {
     // Light theme uses a slightly lighter background than background-l1
     backgroundColor: isDarkMode ? colors.background.l1 : '#e7e3dc80',
+    margin: '150px 0',
     paddingTop: 40,
     paddingLeft: 40,
     paddingRight: 40,
@@ -21,20 +23,12 @@ export default function TrendingSection() {
   }
 
   return (
-    <section style={trendingProjects}>
-      <Row>
-        <Col
-          xs={0}
-          lg={9}
-          style={{
-            display: 'flex',
-            justifyContent: 'flex-end',
-            alignItems: 'flex-end',
-          }}
-        >
+    <section style={trendingProjectsStyle}>
+      <Row style={{ maxWidth: 1200, margin: 'auto' }}>
+        <Col xs={0} lg={8}>
           <img
             className="hide-mobile hide-tablet"
-            style={{ float: 'right', height: 550, marginTop: 30 }}
+            style={{ height: 550, marginTop: 20 }}
             src="/assets/green_orange.png"
             alt="Green orange singing"
           />
@@ -49,7 +43,13 @@ export default function TrendingSection() {
                 marginTop: 20,
               }}
             >
-              <Trans>Trending projects over the last 7 days</Trans>
+              <Trans>Trending projects over the last 7 days</Trans>{' '}
+              <Tooltip
+                title={t`Rankings based on volume and % volume gained in
+                the last 7 days.`}
+              >
+                <InfoCircleOutlined />
+              </Tooltip>
             </h3>
             <TrendingProjects count={6} isHomePage />
             <Button type="default" style={{ marginBottom: 40, marginTop: 15 }}>

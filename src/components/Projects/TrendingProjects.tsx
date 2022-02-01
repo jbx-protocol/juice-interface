@@ -16,16 +16,10 @@ export default function TrendingProjects({
   count: number
 }) {
   const { data: projects } = useTrendingProjects(count)
-  const cardBg = isHomePage ? 'var(--background-l0)' : ''
+  // const cardBg = isHomePage ? 'var(--background-l0)' : ''
 
   return (
     <div>
-      <p style={{ marginBottom: 40, marginTop: 20, maxWidth: 800 }}>
-        <Trans>
-          <InfoCircleOutlined /> Rankings based on volume and % volume gained in
-          the last 7 days.
-        </Trans>
-      </p>
       {projects ? (
         <Grid gutter={isHomePage ? 10 : undefined}>
           {projects.map((p, i) => (
@@ -33,7 +27,7 @@ export default function TrendingProjects({
               project={p}
               size={isHomePage ? 'sm' : 'lg'}
               rank={i + 1}
-              bg={cardBg}
+              // bg={cardBg}
               key={i}
             />
           ))}
@@ -41,6 +35,14 @@ export default function TrendingProjects({
       ) : (
         <Loading />
       )}
+      {!isHomePage ? (
+        <p style={{ marginBottom: 40, marginTop: 20, maxWidth: 800 }}>
+          <Trans>
+            <InfoCircleOutlined /> Rankings based on volume and % volume gained
+            in the last 7 days.
+          </Trans>
+        </p>
+      ) : null}
     </div>
   )
 }

@@ -1,3 +1,5 @@
-import { ContractName } from './contract-name'
+import { V1ContractName } from './v1/contracts'
 
-export type TerminalName = ContractName.TerminalV1 | ContractName.TerminalV1_1
+export type TerminalName =
+  | V1ContractName.TerminalV1
+  | V1ContractName.TerminalV1_1

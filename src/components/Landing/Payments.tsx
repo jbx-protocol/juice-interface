@@ -24,6 +24,7 @@ export default function Payments() {
       'beneficiary',
       'note',
       'timestamp',
+      'id',
       { entity: 'project', keys: ['id'] },
     ],
     first: 20,

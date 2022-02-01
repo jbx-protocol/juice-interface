@@ -15,7 +15,7 @@ import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { BigNumber, constants, utils } from 'ethers'
 import useContractReader from 'hooks/contractReader/ContractReader'
-import { ContractName } from 'models/contract-name'
+import { V1ContractName } from 'models/v1/contracts'
 import { CurrencyOption } from 'models/currency-option'
 import { PayoutMod } from 'models/mods'
 import * as moment from 'moment'
@@ -79,7 +79,7 @@ export default function ProjectPayoutMods({
   const { owner } = useContext(ProjectContext)
 
   useContractReader<BigNumber>({
-    contract: ContractName.Projects,
+    contract: V1ContractName.Projects,
     functionName: 'projectFor',
     args: settingHandle ? [utils.formatBytes32String(settingHandle)] : null,
     callback: useCallback(
@@ -397,10 +397,12 @@ export default function ProjectPayoutMods({
             <Trans>Total: {total.toFixed(2)}%</Trans>
           </div>
           <div>
-            <Trans>
-              {(100 - total).toFixed(2)}% to{' '}
-              <FormattedAddress address={owner} />
-            </Trans>
+            {owner ? (
+              <Trans>
+                {(100 - total).toFixed(2)}% to{' '}
+                <FormattedAddress address={owner} />
+              </Trans>
+            ) : null}
           </div>
         </div>
         <Button

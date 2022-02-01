@@ -1,5 +1,5 @@
 import { BigNumber, BigNumberish } from 'ethers'
-import { ContractName } from 'models/contract-name'
+import { V1ContractName } from 'models/v1/contracts'
 import { TerminalName } from 'models/terminal-name'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 
@@ -13,7 +13,7 @@ export default function useTotalBalanceOf(
   terminalName: TerminalName | undefined,
 ) {
   return useContractReader<BigNumber>({
-    contract: ContractName.TicketBooth,
+    contract: V1ContractName.TicketBooth,
     functionName: 'balanceOf',
     args:
       userAddress && projectId

@@ -140,7 +140,7 @@ export default function ConfirmDeployProject() {
           }
         />
         <Statistic
-          title={`Discord`}
+          title={t`Discord`}
           value={orEmpty(editingProject?.metadata.discord)}
         />
       </Space>
@@ -180,7 +180,7 @@ export default function ConfirmDeployProject() {
         />
       )}
       <Statistic
-        title="Spending"
+        title={t`Spending`}
         valueRender={() => (
           <PayoutModsList
             mods={payoutMods}
@@ -197,6 +197,7 @@ export default function ConfirmDeployProject() {
             mods={ticketMods}
             projectId={undefined}
             fundingCycle={undefined}
+            reservedRate={parseFloat(fromPerbicent(editingFC?.reserved))}
           />
         )}
       />

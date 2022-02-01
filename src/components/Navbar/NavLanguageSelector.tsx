@@ -5,7 +5,7 @@ import { GlobalOutlined } from '@ant-design/icons'
 import { Languages } from 'constants/languages/language-options'
 
 // Language select tool seen in top nav
-export default function LanguageSelector({
+export default function NavLanguageSelector({
   disableLang,
 }: {
   disableLang?: string
@@ -25,7 +25,7 @@ export default function LanguageSelector({
       return null
     }
     return (
-      <Select.Option class="language-select-option" value={lang}>
+      <Select.Option key={lang} class="language-select-option" value={lang}>
         <div>{Languages[lang].long}</div>
       </Select.Option>
     )

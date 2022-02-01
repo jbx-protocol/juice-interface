@@ -56,6 +56,15 @@ export default function ReservedTokens({
         />
       </div>
 
+      {metadata?.reservedRate ? (
+        <TicketModsList
+          mods={ticketMods}
+          fundingCycle={fundingCycle}
+          projectId={projectId}
+          reservedRate={parseFloat(fromPerbicent(metadata?.reservedRate))}
+        />
+      ) : null}
+
       {!hideActions && !isConstitutionDAO && !isSharkDAO && (
         <div
           style={{
@@ -82,19 +91,12 @@ export default function ReservedTokens({
 
           <DistributeTokensModal
             visible={modalIsVisible}
+            reservedRate={parseFloat(fromPerbicent(metadata?.reservedRate))}
             onCancel={() => setModalIsVisible(false)}
             onConfirmed={() => setModalIsVisible(false)}
           />
         </div>
       )}
-
-      {metadata?.reservedRate ? (
-        <TicketModsList
-          mods={ticketMods}
-          fundingCycle={fundingCycle}
-          projectId={projectId}
-        />
-      ) : null}
     </div>
   )
 }

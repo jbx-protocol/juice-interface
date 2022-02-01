@@ -139,5 +139,5 @@ Notion page.
    directory for the locale within the `./locale/` directory:
 
    ```bash
-   yarn i18n:compile
+   yarn i18n:extract && yarn i18n:compile
    ```

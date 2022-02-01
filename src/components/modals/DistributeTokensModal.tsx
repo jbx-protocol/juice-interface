@@ -13,10 +13,12 @@ export default function DistributeTokensModal({
   visible,
   onCancel,
   onConfirmed,
+  reservedRate,
 }: {
   visible?: boolean
   onCancel?: VoidFunction
   onConfirmed?: VoidFunction
+  reservedRate: number
 }) {
   const [loading, setLoading] = useState<boolean>()
   const { tokenSymbol, currentFC, projectId, currentTicketMods, owner } =
@@ -72,6 +74,7 @@ export default function DistributeTokensModal({
               mods={currentTicketMods}
               fundingCycle={currentFC}
               projectId={projectId}
+              reservedRate={reservedRate}
             />
           </div>
         ) : (

@@ -1,11 +1,7 @@
 import { CloseCircleOutlined, LockOutlined } from '@ant-design/icons'
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 
-import { Button, Col, DatePicker, Form, Modal, Row, Space } from 'antd'
-import {
-  validateEthAddress,
-  validatePercentage,
-} from 'components/shared/formItems/formHelpers'
+import { Button, Col, Form, Row, Space } from 'antd'
 
 import { useForm } from 'antd/lib/form/Form'
 import { ThemeContext } from 'contexts/themeContext'
@@ -17,9 +13,13 @@ import { fromPermyriad, parsePermyriad } from 'utils/formatNumber'
 
 import { ProjectContext } from 'contexts/projectContext'
 
-import { FormItems } from '.'
+import ReservedTokenReceiverModal from 'components/modals/ReservedTokenReceiverModal'
+import {
+  validateEthAddress,
+  validatePercentage,
+} from 'components/shared/formItems/formHelpers'
+
 import FormattedAddress from '../FormattedAddress'
-import NumberSlider from '../inputs/NumberSlider'
 import { FormItemExt } from './formItemExt'
 
 type ModalMode = 'Add' | 'Edit' | undefined
@@ -28,11 +28,13 @@ export default function ProjectTicketMods({
   name,
   lockedMods,
   mods,
+  reservedRate,
   onModsChanged,
   formItemProps,
 }: {
   lockedMods?: TicketMod[]
   mods: TicketMod[] | undefined
+  reservedRate: number
   onModsChanged: (mods: TicketMod[]) => void
 } & FormItemExt) {
   const [form] = useForm<{
@@ -238,7 +240,7 @@ export default function ProjectTicketMods({
         {
           validator: () => {
             if (total > 100)
-              return Promise.reject('Percentages must add up to 100% or less')
+              return Promise.reject(t`Percentages must add up to 100% or less`)
 
             return Promise.resolve()
           },
@@ -279,7 +281,10 @@ export default function ProjectTicketMods({
             </span>
           </div>
           <div>
-            <Trans>{100 - total}%to</Trans> <FormattedAddress address={owner} />
+            <Trans>
+              {100 - total}% to{' '}
+              {owner ? <FormattedAddress address={owner} /> : t`project owner`}
+            </Trans>
           </div>
         </div>
         <Button
@@ -294,71 +299,20 @@ export default function ProjectTicketMods({
           <Trans>Add token receiver</Trans>
         </Button>
       </Space>
-
-      <Modal
-        title={
-          modalMode === 'Add' ? 'Add token receiver' : 'Edit token receiver'
-        } // Full sentences for translation purposes
+      <ReservedTokenReceiverModal
         visible={editingModIndex !== undefined}
         onOk={setReceiver}
-        okText={
-          modalMode === 'Add' ? 'Add token receiver' : 'Save token receiver'
-        }
+        mode={modalMode}
+        form={form}
         onCancel={() => {
           form.resetFields()
           setEditingModIndex(undefined)
           setModalMode(undefined)
         }}
-        destroyOnClose
-      >
-        <Form
-          form={form}
-          layout="vertical"
-          onKeyDown={e => {
-            if (e.key === 'Enter') setReceiver()
-          }}
-        >
-          <FormItems.EthAddress
-            name="beneficiary"
-            defaultValue={form.getFieldValue('beneficiary')}
-            formItemProps={{
-              label: 'Beneficiary',
-              extra: 'The address that should receive the tokens.',
-              rules: [
-                {
-                  validator: validateReservedTokenReceiver,
-                },
-              ],
-            }}
-            onAddressChange={beneficiary =>
-              form.setFieldsValue({ beneficiary })
-            }
-          />
-
-          <Form.Item label="Percent" rules={[{ required: true }]}>
-            <NumberSlider
-              onChange={(percent: number | undefined) =>
-                form.setFieldsValue({ percent })
-              }
-              step={0.01}
-              defaultValue={form.getFieldValue('percent') || 0}
-              suffix="%"
-              name="percent"
-              formItemProps={{
-                rules: [{ validator: validateSlider }],
-              }}
-            />
-          </Form.Item>
-
-          <Form.Item
-            name="lockedUntil"
-            label="Lock until"
-            extra="If locked, this can't be edited or removed until the lock expires or the funding cycle is reconfigured."
-          >
-            <DatePicker />
-          </Form.Item>
-        </Form>
-      </Modal>
+        validateReservedTokenReceiver={validateReservedTokenReceiver}
+        validateSlider={validateSlider}
+        reservedRate={reservedRate}
+      />
     </Form.Item>
   )
 }

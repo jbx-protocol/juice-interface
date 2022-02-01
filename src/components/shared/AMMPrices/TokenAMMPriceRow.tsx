@@ -1,14 +1,12 @@
-import {
-  LoadingOutlined,
-  LinkOutlined,
-  InfoCircleOutlined,
-} from '@ant-design/icons'
+import { LinkOutlined, LoadingOutlined } from '@ant-design/icons'
+import { t, Trans } from '@lingui/macro'
+import { Tooltip } from 'antd'
+import SushiswapLogo from 'components/icons/Sushiswap'
+import UniswapLogo from 'components/icons/Uniswap'
 import { CSSProperties } from 'react'
 import { formattedNum } from 'utils/formatNumber'
-import UniswapLogo from 'components/icons/Uniswap'
-import { t, Trans } from '@lingui/macro'
-import SushiswapLogo from 'components/icons/Sushiswap'
-import { Tooltip } from 'antd'
+
+import TooltipIcon from '../TooltipIcon'
 
 type ExchangeName = 'Uniswap' | 'Sushiswap'
 
@@ -50,7 +48,7 @@ export default function TokenAMMPriceRow({
       <Tooltip title={tooltip} overlayInnerStyle={{ ...fontStyle }}>
         <span style={{ cursor: 'default' }}>
           {!WETHPrice ? <Trans>Unavailable</Trans> : null}
-          <InfoCircleOutlined style={{ marginLeft: '0.2rem' }} />
+          <TooltipIcon style={{ marginLeft: '0.2rem' }} />
         </span>
       </Tooltip>
     )

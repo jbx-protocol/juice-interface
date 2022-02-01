@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 
 import { ProjectStateFilter } from 'models/project-visibility'
-import { Project } from 'models/subgraph-entities/project'
+import { Project, TrendingProject } from 'models/subgraph-entities/project'
 import { TerminalVersion } from 'models/terminal-version'
 import { EntityKeys, GraphQueryOpts, InfiniteGraphQueryOpts } from 'utils/graph'
 import { getTerminalAddress } from 'utils/terminal-versions'
@@ -207,13 +207,31 @@ export function useTrendingProjects(count: number) {
 
   return {
     ...projects,
-    // Return projects with `trendingVolume` sorted by `trendingVolume`
+    // Return projects with `trendingScore` and `trendingVolume` sorted by `trendingScore`
     data: projects.data
-      ?.map(p => ({
-        ...p,
-        trendingVolume: p.id ? mapped[p.id.toString()] : undefined,
-      }))
-      .sort((a, b) => (a.trendingVolume?.gt(b.trendingVolume ?? 0) ? -1 : 1)),
+      ?.map(p => {
+        // Null check
+        const trendingVolume = p.id
+          ? mapped[p.id.toString()]
+          : BigNumber.from(0)
+
+        const initialVolume =
+          p.totalPaid?.sub(trendingVolume) ?? BigNumber.from(0)
+
+        const k = 69
+
+        const trendingScore = trendingVolume
+          .pow(2)
+          .sub(initialVolume)
+          .div(initialVolume.add(k))
+
+        return {
+          ...p,
+          trendingScore,
+          trendingVolume,
+        } as TrendingProject
+      })
+      .sort((a, b) => (a.trendingScore?.gt(b.trendingScore ?? 0) ? -1 : 1)),
   }
 }
 

@@ -32,7 +32,10 @@ export default function ProjectsFilterAndSort({
   orderBy: OrderByOption
   setOrderBy: any
 }) {
-  const { isDarkMode } = useContext(ThemeContext)
+  const {
+    theme: { colors },
+    isDarkMode,
+  } = useContext(ThemeContext)
 
   const [activeKey, setActiveKey] = useState<0 | undefined>()
 
@@ -53,12 +56,19 @@ export default function ProjectsFilterAndSort({
     label: string,
     checked: boolean,
     onChange: Function,
+    disabled?: boolean,
   ) => (
-    <div style={filterDropdownItemStyles}>
+    <div
+      style={{
+        ...filterDropdownItemStyles,
+        color: disabled ? colors.text.tertiary : '',
+      }}
+    >
       <Checkbox
         style={{ marginRight: 10 }}
         checked={checked}
         onChange={() => onChange(!checked)}
+        disabled={disabled}
       />
       <Trans>{label}</Trans>
     </div>
@@ -113,7 +123,12 @@ export default function ProjectsFilterAndSort({
           <div onClick={e => e.stopPropagation()}>
             {filterCheckboxItem('V1', includeV1, setIncludeV1)}
             {filterCheckboxItem('V1.1', includeV1_1, setIncludeV1_1)}
-            {filterCheckboxItem('Active', includeActive, setIncludeActive)}
+            {filterCheckboxItem(
+              'Active',
+              includeActive,
+              setIncludeActive,
+              !includeArchived,
+            )}
             {filterCheckboxItem('Archived', includeArchived, toggleArchived)}
           </div>
         </CollapsePanel>

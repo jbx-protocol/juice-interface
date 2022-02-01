@@ -15,12 +15,15 @@ import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import Grid from 'components/shared/Grid'
 import ProjectCard from 'components/shared/ProjectCard'
 
+import { useLocation } from 'react-router-dom'
+
 import { layouts } from 'constants/styles/layouts'
 import TrendingProjects from './TrendingProjects'
 import ProjectsTabs from './ProjectsTabs'
 import MyProjects from './MyProjects'
 import ProjectsFilterAndSort from './ProjectsFilterAndSort'
 import ArchivedProjectsMessage from './ArchivedProjectsMessage'
+
 type OrderByOption = 'createdAt' | 'totalPaid'
 
 const pageSize = 20
@@ -28,11 +31,27 @@ const pageSize = 20
 export default function Projects() {
   // Checks if user came from homepage trending section,
   // in which case auto open trending tab
-  const trendingTabOpen = window.location.hash.split('=')[1] === 'trending'
+  const location = useLocation()
+  const params = new URLSearchParams(location.search)
+  let tab: ProjectCategory | undefined
+  // Convert
+  switch (params.get('tab')) {
+    case 'trending':
+      tab = 'trending'
+      break
+    case 'all':
+      tab = 'all'
+      break
+    default:
+      tab = undefined
+  }
+  // const tab: ProjectCategory | null = search.get('tab')
+  // const trendingTabOpen = tab === 'trending' //window.location.hash.split('=')[1] === 'trending'
+  console.log('tab: ', tab)
 
   const [searchText, setSearchText] = useState<string>()
   const [selectedTab, setSelectedTab] = useState<ProjectCategory>(
-    trendingTabOpen ? 'trending' : 'all',
+    tab ? tab : 'trending', // Show trending by default
   )
   const [orderBy, setOrderBy] = useState<OrderByOption>('totalPaid')
   const [includeV1, setIncludeV1] = useState<boolean>(true)
@@ -134,6 +153,20 @@ export default function Projects() {
           </p>
         </div>
 
+        {!filterOnlyArchived ? (
+          <Search
+            autoFocus
+            style={{ flex: 1, marginBottom: 20, marginRight: 20 }}
+            prefix="@"
+            placeholder={t`Search projects by handle`}
+            onSearch={val => {
+              setSelectedTab('all')
+              setSearchText(val)
+            }}
+            allowClear
+          />
+        ) : null}
+
         <div
           hidden={!!searchText}
           style={{
@@ -164,21 +197,13 @@ export default function Projects() {
             />
           ) : null}
         </div>
-        <ArchivedProjectsMessage hidden={!filterOnlyArchived} />
+        <ArchivedProjectsMessage
+          hidden={!filterOnlyArchived || selectedTab !== 'all'}
+        />
       </div>
 
       {selectedTab === 'all' ? (
         <React.Fragment>
-          {!filterOnlyArchived ? (
-            <Search
-              autoFocus
-              style={{ flex: 1, marginBottom: 20, marginRight: 20 }}
-              prefix="@"
-              placeholder={t`Search projects by handle`}
-              onSearch={val => setSearchText(val)}
-              allowClear
-            />
-          ) : null}
           {concatenatedPages && (
             <Grid
               children={concatenatedPages.map((p, i) => (

@@ -12,6 +12,8 @@ import { getTerminalVersion } from 'utils/terminal-versions'
 
 import { Project } from 'models/subgraph-entities/project'
 
+import { constants } from 'ethers'
+
 import { CURRENCY_ETH } from 'constants/currency'
 import { trendingWindowDays } from 'constants/trending-projects'
 
@@ -57,7 +59,7 @@ export default function TrendingProjectCard({
   // If the total paid is greater than 0, but less than 10 ETH, show two decimal places.
   const precision =
     project.trendingVolume?.gt(0) &&
-    project.trendingVolume.lt(BigNumber.from('10000000000000000000'))
+    project.trendingVolume.lt(constants.WeiPerEther)
       ? 2
       : 0
 

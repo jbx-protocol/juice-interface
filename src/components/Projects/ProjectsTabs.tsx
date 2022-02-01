@@ -59,9 +59,9 @@ export default function ProjectsTabs({
   return (
     <div style={{ height: 40, marginTop: 15 }}>
       <Space direction="horizontal" size="large">
+        {tab('trending')}
         {tab('all')}
         {signingProvider ? tab('myprojects') : null}
-        {tab('trending')}
       </Space>
     </div>
   )

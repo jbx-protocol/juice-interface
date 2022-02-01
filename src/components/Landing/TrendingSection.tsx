@@ -3,13 +3,17 @@ import { Row, Col, Button } from 'antd'
 import { CSSProperties, useContext } from 'react'
 import { ThemeContext } from 'contexts/themeContext'
 import TrendingProjects from 'components/Projects/TrendingProjects'
+import { Trans } from '@lingui/macro'
 
 export default function TrendingSection() {
-  const { isDarkMode } = useContext(ThemeContext)
+  const {
+    theme: { colors },
+    isDarkMode,
+  } = useContext(ThemeContext)
 
   const trendingProjects: CSSProperties = {
     // Light theme uses a slightly lighter background than background-l1
-    backgroundColor: isDarkMode ? 'var(--background-l1)' : '#e7e3dc80',
+    backgroundColor: isDarkMode ? colors.background.l1 : '#e7e3dc80',
     paddingTop: 40,
     paddingLeft: 40,
     paddingRight: 40,
@@ -45,11 +49,13 @@ export default function TrendingSection() {
                 marginTop: 20,
               }}
             >
-              Trending projects over the last 7 days
+              <Trans>Trending projects over the last 7 days</Trans>
             </h3>
             <TrendingProjects count={6} isHomePage />
             <Button type="default" style={{ marginBottom: 40, marginTop: 15 }}>
-              <a href="/#/projects/?tab=trending">More trending projects</a>
+              <a href="/#/projects/?tab=trending">
+                <Trans>More trending projects</Trans>
+              </a>
             </Button>
           </div>
         </Col>

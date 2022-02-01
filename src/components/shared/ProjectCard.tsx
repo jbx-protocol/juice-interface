@@ -1,6 +1,6 @@
 import { Tooltip } from 'antd'
 
-import { BigNumber } from 'ethers'
+import { BigNumber, constants } from 'ethers'
 import { ThemeContext } from 'contexts/themeContext'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { Project } from 'models/subgraph-entities/project'
@@ -70,8 +70,7 @@ export default function ProjectCard({
   const { data: metadata } = useProjectMetadata(_project?.uri)
   // If the total paid is greater than 0, but less than 10 ETH, show two decimal places.
   const precision =
-    _project?.totalPaid?.gt(0) &&
-    _project?.totalPaid.lt(BigNumber.from('10000000000000000000'))
+    _project?.totalPaid?.gt(0) && _project?.totalPaid.lt(constants.WeiPerEther)
       ? 2
       : 0
 

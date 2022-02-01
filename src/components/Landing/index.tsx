@@ -81,7 +81,7 @@ export default function Landing() {
   }
 
   const statsRowStyles: CSSProperties = {
-    borderTop: '1px solid var(--stroke-tertiary)',
+    borderTop: `1px solid var(--stroke-tertiary)`,
     paddingTop: 60,
   }
 
@@ -98,7 +98,7 @@ export default function Landing() {
           fontWeight: 400,
           fontSize: '1.1rem',
           marginTop: 8,
-          color: 'var(--text-secondary)',
+          color: colors.text.secondary,
         }}
       >
         <Trans>{subHeader}</Trans>
@@ -239,7 +239,7 @@ export default function Landing() {
             style={{ ...statsRowStyles, display: 'none' }}
           >
             {statsCol('292', t`Projects powered by Juicebox`)}
-            {statsCol(`$94,137,431`, t`Raised through Juicebox`)}
+            {statsCol(`$94,137,431`, t`Raised on Juicebox`)}
             {statsCol(`32,671`, t`Payments to projects`)}
           </Row>
         </div>
@@ -276,7 +276,7 @@ export default function Landing() {
                 )}
               </div>
               <div style={{ textAlign: 'center', marginTop: 20 }}>
-                <a href="/#/projects">
+                <a href="/#/projects?tab=all">
                   <Button>
                     <Trans>All projects</Trans>
                   </Button>

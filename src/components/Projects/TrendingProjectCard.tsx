@@ -4,18 +4,15 @@ import Loading from 'components/shared/Loading'
 import ProjectLogo from 'components/shared/ProjectLogo'
 
 import { ThemeContext } from 'contexts/themeContext'
-import { BigNumber } from 'ethers'
+import { BigNumber, constants } from 'ethers'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
-import { CSSProperties, useContext } from 'react'
+import { TrendingProject } from 'models/subgraph-entities/project'
+import { CSSProperties, useContext, useMemo } from 'react'
 import { formatWad } from 'utils/formatNumber'
 import { getTerminalVersion } from 'utils/terminal-versions'
 
-import { Project } from 'models/subgraph-entities/project'
-
-import { constants } from 'ethers'
-
-import { CURRENCY_ETH } from 'constants/currency'
 import { trendingWindowDays } from 'constants/trending-projects'
+import { CURRENCY_ETH } from 'constants/currency'
 
 export default function TrendingProjectCard({
   project,
@@ -23,7 +20,7 @@ export default function TrendingProjectCard({
   bg,
   rank,
 }: {
-  project: Project & { trendingVolume: BigNumber | undefined }
+  project: TrendingProject
   size?: 'sm' | 'lg'
   bg?: string // Used on homepage
   rank: number
@@ -41,15 +38,17 @@ export default function TrendingProjectCard({
     backgroundColor: bg,
     // Shows darker border when background is set
     border: `1px solid ${
-      bg ? 'var(--stroke-secondary)' : 'var(--stroke-tertiary)'
+      bg ? colors.stroke.secondary : colors.stroke.tertiary
     }`,
   }
 
   const rankStyle: CSSProperties = {
     fontSize: 22,
-    color: 'var(--text-primary)',
+    color: colors.text.primary,
     fontWeight: 400,
     marginRight: 15,
+    width: 25,
+    textAlign: 'center',
   }
 
   const { data: metadata } = useProjectMetadata(project?.uri)
@@ -63,22 +62,16 @@ export default function TrendingProjectCard({
       ? 2
       : 0
 
-  const totalVolume = project.totalPaid
-  const trendingVolume = project.trendingVolume // volume in the last 7 days
+  const percentGain = useMemo(() => {
+    const totalVolume = project.totalPaid
+    const trendingVolume = project.trendingVolume // volume in the last 7 days
+    const volumeBeforeTrendingWindow =
+      totalVolume?.sub(trendingVolume) ?? BigNumber.from(0)
 
-  let percentGain = 0
-  if (totalVolume && trendingVolume) {
-    const volumeBeforeTrendingWindow = totalVolume.sub(trendingVolume)
-    // Only show percent gain if volumeBeforeTrendingWindow > 0
-    if (volumeBeforeTrendingWindow.gt(0)) {
-      percentGain = trendingVolume
-        .mul(100)
-        .div(volumeBeforeTrendingWindow)
-        .toNumber()
-    } else {
-      percentGain = 0
-    }
-  }
+    return volumeBeforeTrendingWindow.gt(0)
+      ? trendingVolume.mul(100).div(volumeBeforeTrendingWindow).toNumber()
+      : null
+  }, [project])
 
   return project ? (
     <a
@@ -148,6 +141,11 @@ export default function TrendingProjectCard({
                 width: '100%',
               }}
             >
+              {(percentGain === null || percentGain >= 1) && (
+                <span style={{ color: colors.text.header, fontWeight: 600 }}>
+                  {percentGain === null ? 'New' : `+${percentGain}%`}{' '}
+                </span>
+              )}
               <span style={{ display: 'flex', flexWrap: 'wrap' }}>
                 <span style={{ fontWeight: 600 }}>
                   <CurrencySymbol currency={CURRENCY_ETH} />
@@ -155,11 +153,6 @@ export default function TrendingProjectCard({
                 </span>
                 last {trendingWindowDays} days{' '}
               </span>
-              {percentGain > 0 ? (
-                <span style={{ color: colors.text.header, fontWeight: 600 }}>
-                  +{percentGain}%
-                </span>
-              ) : null}
             </div>
 
             {metadata.description && (

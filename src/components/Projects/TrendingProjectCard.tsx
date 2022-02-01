@@ -46,8 +46,8 @@ export default function TrendingProjectCard({
     fontSize: 22,
     color: colors.text.primary,
     fontWeight: 400,
-    width: 25,
     marginRight: 15,
+    width: 25,
     textAlign: 'center',
   }
 

@@ -7,7 +7,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { BigNumber, constants } from 'ethers'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { TrendingProject } from 'models/subgraph-entities/project'
-import { CSSProperties, useContext } from 'react'
+import { CSSProperties, useContext, useMemo } from 'react'
 import { formatWad } from 'utils/formatNumber'
 import { getTerminalVersion } from 'utils/terminal-versions'
 
@@ -62,13 +62,16 @@ export default function TrendingProjectCard({
       ? 2
       : 0
 
-  const totalVolume = project.totalPaid
-  const trendingVolume = project.trendingVolume // volume in the last 7 days
-  const volumeBeforeTrendingWindow =
-    totalVolume?.sub(trendingVolume) ?? BigNumber.from(0)
-  const percentGain = volumeBeforeTrendingWindow.gt(0)
-    ? trendingVolume.mul(100).div(volumeBeforeTrendingWindow).toNumber()
-    : null
+  const percentGain = useMemo(() => {
+    const totalVolume = project.totalPaid
+    const trendingVolume = project.trendingVolume // volume in the last 7 days
+    const volumeBeforeTrendingWindow =
+      totalVolume?.sub(trendingVolume) ?? BigNumber.from(0)
+
+    return volumeBeforeTrendingWindow.gt(0)
+      ? trendingVolume.mul(100).div(volumeBeforeTrendingWindow).toNumber()
+      : null
+  }, [project])
 
   return project ? (
     <a

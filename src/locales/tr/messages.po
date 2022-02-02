@@ -8,7 +8,7 @@ msgstr ""
 "Language: tr\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-01-31 01:47\n"
+"PO-Revision-Date: 2022-02-01 01:54\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -1094,8 +1094,19 @@ msgid "Reconfiguration strategy"
 msgstr "Yeniden yapılandırma stratejisi"
 
 #: src/components/FundingCycle/ReconfigureFundingModalTrigger.tsx
+msgid "Reconfigure"
+msgstr ""
+
 #: src/components/modals/ReconfigureFCModal.tsx
-msgid "Reconfigure funding cycle"
+msgid "Reconfigure funding"
+msgstr ""
+
+#: src/components/FundingCycle/ReconfigureFundingModalTrigger.tsx
+msgid "Reconfigure upcoming"
+msgstr ""
+
+#: src/components/modals/ReconfigureFCModal.tsx
+msgid "Reconfigure upcoming funding"
 msgstr ""
 
 #: src/components/Dashboard/ProjectActivity/index.tsx

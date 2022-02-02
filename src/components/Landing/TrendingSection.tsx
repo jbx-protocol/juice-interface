@@ -4,7 +4,8 @@ import { InfoCircleOutlined } from '@ant-design/icons'
 import { CSSProperties, useContext } from 'react'
 import { ThemeContext } from 'contexts/themeContext'
 import TrendingProjects from 'components/Projects/TrendingProjects'
-import { t, Trans } from '@lingui/macro'
+import RankingExplanation from 'components/Projects/RankingExplanation'
+import { Trans } from '@lingui/macro'
 
 export default function TrendingSection() {
   const {
@@ -44,10 +45,7 @@ export default function TrendingSection() {
               }}
             >
               <Trans>Trending projects over the last 7 days</Trans>{' '}
-              <Tooltip
-                title={t`Rankings based on volume and % volume gained in
-                the last 7 days.`}
-              >
+              <Tooltip title={<RankingExplanation />}>
                 <InfoCircleOutlined />
               </Tooltip>
             </h3>

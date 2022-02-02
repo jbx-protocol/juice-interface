@@ -7,6 +7,7 @@ import { useTrendingProjects } from 'hooks/Projects'
 import { Trans } from '@lingui/macro'
 
 import TrendingProjectCard from './TrendingProjectCard'
+import RankingExplanation from './RankingExplanation'
 
 export default function TrendingProjects({
   isHomePage,
@@ -16,8 +17,6 @@ export default function TrendingProjects({
   count: number
 }) {
   const { data: projects } = useTrendingProjects(count)
-  // const cardBg = isHomePage ? 'var(--background-l0)' : ''
-
   return (
     <div>
       {projects ? (
@@ -27,7 +26,6 @@ export default function TrendingProjects({
               project={p}
               size={isHomePage ? 'sm' : 'lg'}
               rank={i + 1}
-              // bg={cardBg}
               key={i}
             />
           ))}
@@ -38,8 +36,8 @@ export default function TrendingProjects({
       {!isHomePage ? (
         <p style={{ marginBottom: 40, marginTop: 20, maxWidth: 800 }}>
           <Trans>
-            <InfoCircleOutlined /> Rankings based on volume and % volume gained
-            in the last 7 days.
+            <InfoCircleOutlined />
+            <RankingExplanation />
           </Trans>
         </p>
       ) : null}

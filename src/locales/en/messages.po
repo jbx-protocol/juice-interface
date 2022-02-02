@@ -1092,9 +1092,20 @@ msgid "Reconfiguration strategy"
 msgstr ""
 
 #: src/components/FundingCycle/ReconfigureFundingModalTrigger.tsx
+msgid "Reconfigure"
+msgstr "Reconfigure"
+
 #: src/components/modals/ReconfigureFCModal.tsx
-msgid "Reconfigure funding cycle"
-msgstr "Reconfigure funding cycle"
+msgid "Reconfigure funding"
+msgstr "Reconfigure funding"
+
+#: src/components/FundingCycle/ReconfigureFundingModalTrigger.tsx
+msgid "Reconfigure upcoming"
+msgstr "Reconfigure upcoming"
+
+#: src/components/modals/ReconfigureFCModal.tsx
+msgid "Reconfigure upcoming funding"
+msgstr "Reconfigure upcoming funding"
 
 #: src/components/Dashboard/ProjectActivity/index.tsx
 msgid "Redeem"

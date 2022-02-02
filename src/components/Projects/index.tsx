@@ -42,12 +42,7 @@ export default function Projects() {
     case 'all':
       tab = 'all'
       break
-    default:
-      tab = undefined
   }
-  // const tab: ProjectCategory | null = search.get('tab')
-  // const trendingTabOpen = tab === 'trending' //window.location.hash.split('=')[1] === 'trending'
-  console.log('tab: ', tab)
 
   const [searchText, setSearchText] = useState<string>()
   const [selectedTab, setSelectedTab] = useState<ProjectCategory>(
@@ -255,7 +250,7 @@ export default function Projects() {
         </div>
       ) : selectedTab === 'trending' ? (
         <div style={{ paddingBottom: 50 }}>
-          <TrendingProjects count={12} />
+          <TrendingProjects count={20} />
         </div>
       ) : null}
       <FeedbackFormLink />

@@ -20,6 +20,7 @@ export interface Project {
 export type TrendingProject = Project & {
   trendingVolume: BigNumber
   trendingScore: BigNumber
+  trendingPaymentsCount: number
 }
 
 export type ProjectJson = Record<keyof Project, string> & {

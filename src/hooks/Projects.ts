@@ -13,6 +13,7 @@ import {
 
 import { archivedProjectIds } from '../constants/archived-projects'
 import useSubgraphQuery, { useInfiniteSubgraphQuery } from './SubgraphQuery'
+import { SECONDS_IN_DAY } from 'constants/numbers'
 
 // Take just an object that might contain an ID. That way we can support
 // arbitrary `keys` properties.
@@ -132,11 +133,8 @@ export function useProjectsSearch(handle: string | undefined) {
 }
 
 // Returns projects with highest % volume increase in last week
-// excluding JuiceboxDAO (ID=1)
 export function useTrendingProjects(count: number) {
-  const secondsInDay = 24 * 60 * 60
-
-  const payments = useSubgraphQuery(
+  const { data: payments } = useSubgraphQuery(
     {
       first: 1000,
       entity: 'payEvent',
@@ -153,15 +151,10 @@ export function useTrendingProjects(count: number) {
           value: parseInt(
             (
               new Date().valueOf() / 1000 -
-              secondsInDay * trendingWindowDays
+              trendingWindowDays * SECONDS_IN_DAY
             ).toString(),
           ),
           operator: 'gte',
-        },
-        {
-          key: 'project',
-          value: '1', // Omit Juicebox project
-          operator: 'not',
         },
       ],
     },
@@ -170,32 +163,43 @@ export function useTrendingProjects(count: number) {
     },
   )
 
-  // Record total payment volume for each project
-  const mapped = (payments.data ?? []).reduce((acc, curr) => {
-    const projectId = curr.project?.toString()
+  // Project data mapped trending data calculated from payments
+  const projectStats = (payments ?? []).reduce(
+    (acc, curr) => {
+      const projectId = curr.project?.toString()
 
-    return projectId
-      ? {
-          ...acc,
-          [projectId]: BigNumber.from(acc[projectId] ?? 0).add(curr.amount),
-        }
-      : acc
-  }, {} as Record<string, BigNumber>)
+      return projectId
+        ? {
+            ...acc,
+            [projectId]: {
+              trendingVolume: BigNumber.from(
+                acc[projectId]?.trendingVolume ?? 0,
+              ).add(curr.amount),
+              paymentsCount: (acc[projectId]?.paymentsCount ?? 0) + 1,
+            },
+          }
+        : acc
+    },
+    {} as Record<
+      string,
+      {
+        trendingVolume: BigNumber
+        paymentsCount: number
+      }
+    >,
+  )
 
-  // Get IDs for `count` number of highest volume projects
-  const sortedProjectIds = Object.keys(mapped)
-    .sort((a, b) => (mapped[a].gt(mapped[b]) ? -1 : 1))
-    .slice(0, count)
+  const projectIds = Object.keys(projectStats)
 
   // Query project data for all trending project IDs
   const projects = useSubgraphQuery(
-    sortedProjectIds.length
+    projectIds.length
       ? {
           entity: 'project',
           keys,
           where: {
             key: 'id',
-            value: sortedProjectIds,
+            value: projectIds,
             operator: 'in',
           },
         }
@@ -207,31 +211,25 @@ export function useTrendingProjects(count: number) {
 
   return {
     ...projects,
-    // Return projects with `trendingScore` and `trendingVolume` sorted by `trendingScore`
+    // Return TrendingProjects sorted by `trendingScore`
     data: projects.data
       ?.map(p => {
-        const trendingVolume = p.id
-          ? mapped[p.id.toString()]
-          : BigNumber.from(0)
-
-        const initialVolume =
-          p.totalPaid?.sub(trendingVolume) ?? BigNumber.from(0)
-
-        const k = 69
+        const stats = p.id ? projectStats[p.id.toString()] : undefined
 
         // Arbitrary algorithm
-        const trendingScore = trendingVolume
-          .pow(2)
-          .sub(initialVolume)
-          .div(initialVolume.add(k))
+        const trendingScore = stats?.trendingVolume.mul(
+          BigNumber.from(stats.paymentsCount).pow(2),
+        )
 
         return {
           ...p,
           trendingScore,
-          trendingVolume,
+          trendingVolume: stats?.trendingVolume,
+          trendingPaymentsCount: stats?.paymentsCount,
         } as TrendingProject
       })
-      .sort((a, b) => (a.trendingScore?.gt(b.trendingScore ?? 0) ? -1 : 1)),
+      .sort((a, b) => (a.trendingScore?.gt(b.trendingScore ?? 0) ? -1 : 1))
+      .slice(0, count),
   }
 }
 

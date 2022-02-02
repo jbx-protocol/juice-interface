@@ -4,7 +4,7 @@ import Loading from 'components/shared/Loading'
 import ProjectLogo from 'components/shared/ProjectLogo'
 
 import { ThemeContext } from 'contexts/themeContext'
-import { BigNumber, constants } from 'ethers'
+import { constants } from 'ethers'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { TrendingProject } from 'models/subgraph-entities/project'
 import { CSSProperties, useContext, useMemo } from 'react'
@@ -12,6 +12,7 @@ import { formatWad } from 'utils/formatNumber'
 import { getTerminalVersion } from 'utils/terminal-versions'
 
 import { trendingWindowDays } from 'constants/trending-projects'
+import { SECONDS_IN_DAY } from 'constants/numbers'
 import { CURRENCY_ETH } from 'constants/currency'
 
 export default function TrendingProjectCard({
@@ -62,15 +63,27 @@ export default function TrendingProjectCard({
       ? 2
       : 0
 
-  const percentGain = useMemo(() => {
-    const totalVolume = project.totalPaid
-    const trendingVolume = project.trendingVolume // volume in the last 7 days
-    const volumeBeforeTrendingWindow =
-      totalVolume?.sub(trendingVolume) ?? BigNumber.from(0)
+  const percentGainText = useMemo(() => {
+    if (
+      project.createdAt &&
+      project.createdAt >
+        new Date().valueOf() / 1000 - trendingWindowDays * SECONDS_IN_DAY
+    ) {
+      return 'New'
+    }
 
-    return volumeBeforeTrendingWindow.gt(0)
-      ? trendingVolume.mul(100).div(volumeBeforeTrendingWindow).toNumber()
-      : null
+    const preTrendingVolume = project.totalPaid?.sub(project.trendingVolume)
+
+    if (!preTrendingVolume?.gt(0)) return '+∞'
+
+    const percentGain = project.trendingVolume
+      .mul(1000)
+      .div(preTrendingVolume)
+      .toNumber()
+
+    return `+${
+      percentGain >= 10 ? Math.round(percentGain / 10) : percentGain / 10
+    }%`
   }, [project])
 
   return project ? (
@@ -141,17 +154,23 @@ export default function TrendingProjectCard({
                 width: '100%',
               }}
             >
-              {(percentGain === null || percentGain >= 1) && (
-                <span style={{ color: colors.text.header, fontWeight: 600 }}>
-                  {percentGain === null ? 'New' : `+${percentGain}%`}{' '}
-                </span>
-              )}
-              <span style={{ display: 'flex', flexWrap: 'wrap' }}>
+              <span
+                style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  alignItems: 'baseline',
+                }}
+              >
                 <span style={{ fontWeight: 600 }}>
+                  {project.trendingPaymentsCount} payment
+                  {project.trendingPaymentsCount > 1 ? 's' : ''}
+                </span>
+                <span style={{ fontWeight: 500 }}>
+                  {' '}
                   <CurrencySymbol currency={CURRENCY_ETH} />
                   {formatWad(project.trendingVolume, { precision })}{' '}
+                  {percentGainText && <>({percentGainText})</>}
                 </span>
-                last {trendingWindowDays} days{' '}
               </span>
             </div>
 

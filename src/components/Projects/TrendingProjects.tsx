@@ -1,10 +1,8 @@
-import Grid from 'components/shared/Grid'
 import { InfoCircleOutlined } from '@ant-design/icons'
-
+import { Trans } from '@lingui/macro'
+import Grid from 'components/shared/Grid'
 import Loading from 'components/shared/Loading'
 import { useTrendingProjects } from 'hooks/Projects'
-
-import { Trans } from '@lingui/macro'
 
 import TrendingProjectCard from './TrendingProjectCard'
 import RankingExplanation from './RankingExplanation'
@@ -17,6 +15,8 @@ export default function TrendingProjects({
   count: number
 }) {
   const { data: projects } = useTrendingProjects(count)
+  // const cardBg = isHomePage ? 'var(--background-l0)' : ''
+
   return (
     <div>
       {projects ? (

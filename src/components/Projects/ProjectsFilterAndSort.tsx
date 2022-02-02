@@ -62,7 +62,9 @@ export default function ProjectsFilterAndSort({
       style={{
         ...filterDropdownItemStyles,
         color: disabled ? colors.text.tertiary : '',
+        cursor: 'pointer',
       }}
+      onClick={() => onChange(!checked)}
     >
       <Checkbox
         style={{ marginRight: 10 }}

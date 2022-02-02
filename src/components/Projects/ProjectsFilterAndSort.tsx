@@ -81,6 +81,8 @@ export default function ProjectsFilterAndSort({
   const toggleArchived = () => {
     if (includeArchived) {
       setIncludeActive(true)
+    } else {
+      setIncludeActive(false)
     }
     setIncludeArchived(!includeArchived)
   }
@@ -125,12 +127,6 @@ export default function ProjectsFilterAndSort({
           <div onClick={e => e.stopPropagation()}>
             {filterCheckboxItem('V1', includeV1, setIncludeV1)}
             {filterCheckboxItem('V1.1', includeV1_1, setIncludeV1_1)}
-            {filterCheckboxItem(
-              'Active',
-              includeActive,
-              setIncludeActive,
-              !includeArchived,
-            )}
             {filterCheckboxItem('Archived', includeArchived, toggleArchived)}
           </div>
         </CollapsePanel>

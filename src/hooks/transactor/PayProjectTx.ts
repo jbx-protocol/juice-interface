@@ -13,13 +13,7 @@ export function usePayProjectTx(): TransactorInstance<{
 }> {
   const { transactor, contracts } = useContext(UserContext)
   const { terminal, projectId } = useContext(ProjectContext)
-  const { userAddress, onSelectWallet } = useContext(NetworkContext)
-
-  const checkWalletConnected = () => {
-    if (!userAddress && onSelectWallet) {
-      onSelectWallet()
-    }
-  }
+  const { userAddress } = useContext(NetworkContext)
 
   return ({ note, preferUnstaked, value }, txOpts) => {
     if (
@@ -31,8 +25,6 @@ export function usePayProjectTx(): TransactorInstance<{
       txOpts?.onDone?.()
       return Promise.resolve(false)
     }
-
-    checkWalletConnected() //TODO: make this async
 
     return transactor(
       terminal.version === '1.1'

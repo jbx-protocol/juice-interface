@@ -49,7 +49,16 @@ export default function ProjectDuration({
         </div>
 
         <Form.Item
-          extra={t`How long one funding cycle will last. Changes to upcoming funding cycles will only take effect once the current cycle has ended.`}
+          extra={
+            <p>
+              <Trans>
+                How long one funding cycle will last. Funding cycle{' '}
+                <strong>reconfigurations</strong> will only take effect for{' '}
+                <strong>upcoming</strong> funding cycles, i.e. once a current
+                funding cycle has ended.
+              </Trans>
+            </p>
+          }
           name={name}
           label={hideLabel ? undefined : t`Funding cycle duration`}
           {...formItemProps}

@@ -30,6 +30,7 @@ import { fromPerbicent, fromPermille, fromWad } from 'utils/formatNumber'
 import {
   encodeFundingCycleMetadata,
   hasFundingTarget,
+  hasFundingDuration,
 } from 'utils/fundingCycle'
 import {
   cidFromUrl,
@@ -710,6 +711,7 @@ export default function Create() {
               setRestrictedActionsFormModalVisible(false)
               setCurrentStep(undefined)
             }}
+            hasFundingDuration={hasFundingDuration(editingFC)}
           />
         </Drawer>
 

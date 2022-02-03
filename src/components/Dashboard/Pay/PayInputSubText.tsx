@@ -76,9 +76,15 @@ export default function PayInputSubText({
               overlayStyle={{ minWidth: '300px' }}
               overlayInnerStyle={{ padding: '1rem' }}
             >
-              <span style={{ color: colors.text.action.primary }}>
+              <span
+                style={{
+                  color: colors.text.action.primary,
+                  cursor: 'pointer',
+                  padding: '0.5rem 0',
+                }}
+              >
                 buy {tokenText} on exchange
-                <TooltipIcon style={{ marginLeft: '0.2rem' }} />
+                <TooltipIcon iconStyle={{ marginLeft: '0.2rem' }} />
               </span>
             </Tooltip>
           </Trans>

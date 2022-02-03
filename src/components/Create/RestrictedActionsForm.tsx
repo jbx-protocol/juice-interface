@@ -12,9 +12,11 @@ export type RestrictedActionsFormFields = {
 export default function RestrictedActionsForm({
   form,
   onSave,
+  hasFundingDuration,
 }: {
   form: FormInstance<RestrictedActionsFormFields>
   onSave: VoidFunction
+  hasFundingDuration?: boolean
 }) {
   const [showTicketPrintingWarning, setShowTicketPrintingWarning] =
     useState<boolean>()
@@ -33,6 +35,15 @@ export default function RestrictedActionsForm({
         <h1>
           <Trans>Restricted actions</Trans>
         </h1>
+        {hasFundingDuration ? (
+          <p>
+            <Trans>
+              <strong>Note:</strong> These properties will <strong>not</strong>{' '}
+              be editable immediately within a funding cycle. They can only be
+              changed for <strong>upcoming</strong> funding cycles.
+            </Trans>
+          </p>
+        ) : null}
       </div>
 
       <Form form={form} layout="vertical">

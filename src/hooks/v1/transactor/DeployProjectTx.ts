@@ -7,7 +7,7 @@ import { PayoutMod, TicketMod } from 'models/mods'
 import { useContext } from 'react'
 import { hasFundingTarget } from 'utils/fundingCycle'
 
-import { TransactorInstance } from './Transactor'
+import { TransactorInstance } from '../../Transactor'
 
 export function useDeployProjectTx(): TransactorInstance<{
   handle: string

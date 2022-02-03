@@ -17,8 +17,8 @@ import {
   useAppSelector,
   useEditingFundingCycleSelector,
 } from 'hooks/AppSelector'
-import { useTerminalFee } from 'hooks/TerminalFee'
-import { useDeployProjectTx } from 'hooks/transactor/DeployProjectTx'
+import { useTerminalFee } from 'hooks/v1/TerminalFee'
+import { useDeployProjectTx } from 'hooks/v1/transactor/DeployProjectTx'
 import { V1ContractName } from 'models/v1/contracts'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'

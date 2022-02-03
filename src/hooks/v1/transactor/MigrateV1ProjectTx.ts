@@ -2,25 +2,24 @@ import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1UserContext } from 'contexts/v1/userContext'
 import { useContext } from 'react'
 
-import { TransactorInstance } from './Transactor'
+import { TransactorInstance } from '../../Transactor'
 
-export function useIssueTokensTx(): TransactorInstance<{
-  name: string
-  symbol: string
+export function useMigrateV1ProjectTx(): TransactorInstance<{
+  newTerminalAddress: string
 }> {
   const { transactor, contracts } = useContext(V1UserContext)
   const { projectId } = useContext(V1ProjectContext)
 
-  return ({ name, symbol }, txOpts) => {
+  return ({ newTerminalAddress }, txOpts) => {
     if (!transactor || !projectId || !contracts?.TicketBooth) {
       txOpts?.onDone?.()
       return Promise.resolve(false)
     }
 
     return transactor(
-      contracts.TicketBooth,
-      'issue',
-      [projectId.toHexString(), name, symbol],
+      contracts.TerminalV1,
+      'migrate',
+      [projectId.toHexString(), newTerminalAddress],
       txOpts,
     )
   }

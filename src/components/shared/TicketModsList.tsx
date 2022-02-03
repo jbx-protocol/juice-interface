@@ -7,8 +7,8 @@ import { BigNumber } from 'ethers'
 import {
   OperatorPermission,
   useHasPermission,
-} from 'hooks/contractReader/HasPermission'
-import { useSetTicketModsTx } from 'hooks/transactor/SetTicketModsTx'
+} from 'hooks/v1/contractReader/HasPermission'
+import { useSetTicketModsTx } from 'hooks/v1/transactor/SetTicketModsTx'
 import { FundingCycle } from 'models/funding-cycle'
 import { TicketMod } from 'models/mods'
 import { useContext, useLayoutEffect, useMemo, useState } from 'react'

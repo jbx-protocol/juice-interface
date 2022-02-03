@@ -8,8 +8,8 @@ import { V1ProjectContext } from 'contexts/v1/projectContext'
 import {
   OperatorPermission,
   useHasPermission,
-} from 'hooks/contractReader/HasPermission'
-import { useSetProjectUriTx } from 'hooks/transactor/SetProjectUriTx'
+} from 'hooks/v1/contractReader/HasPermission'
+import { useSetProjectUriTx } from 'hooks/v1/transactor/SetProjectUriTx'
 import { ProjectMetadataV3 } from 'models/project-metadata'
 import { TokenRef } from 'models/token-ref'
 import { useContext, useEffect, useState } from 'react'

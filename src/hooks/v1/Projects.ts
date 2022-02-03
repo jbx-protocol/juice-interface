@@ -5,8 +5,8 @@ import { V1TerminalVersion } from 'models/v1/terminals'
 import { EntityKeys, GraphQueryOpts, InfiniteGraphQueryOpts } from 'utils/graph'
 import { getTerminalAddress } from 'utils/v1/terminals'
 
-import { archivedProjectIds } from '../constants/archived-projects'
-import useSubgraphQuery, { useInfiniteSubgraphQuery } from './SubgraphQuery'
+import { archivedProjectIds } from '../../constants/v1/archivedProjects'
+import useSubgraphQuery, { useInfiniteSubgraphQuery } from '../SubgraphQuery'
 
 // Take just an object that might contain an ID. That way we can support
 // arbitrary `keys` properties.

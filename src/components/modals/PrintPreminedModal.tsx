@@ -5,7 +5,7 @@ import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { constants, utils } from 'ethers'
-import { usePrintTokensTx } from 'hooks/transactor/PrintTokensTx'
+import { usePrintTokensTx } from 'hooks/v1/transactor/PrintTokensTx'
 import { useContext, useMemo, useState } from 'react'
 import { parseWad } from 'utils/formatNumber'
 

@@ -7,7 +7,7 @@ import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 
 import { ThemeContext } from 'contexts/themeContext'
 import { utils } from 'ethers'
-import useContractReader from 'hooks/contractReader/ContractReader'
+import useContractReader from 'hooks/v1/contractReader/ContractReader'
 import { V1ContractName } from 'models/v1/contracts'
 import { normalizeHandle } from 'utils/formatHandle'
 

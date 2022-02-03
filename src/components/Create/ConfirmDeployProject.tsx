@@ -19,7 +19,11 @@ import {
   fromPerbicent,
   fromPermille,
 } from 'utils/formatNumber'
-import { hasFundingTarget, isRecurring } from 'utils/fundingCycle'
+import {
+  hasFundingDuration,
+  hasFundingTarget,
+  isRecurring,
+} from 'utils/fundingCycle'
 import { amountSubFee } from 'utils/math'
 import { orEmpty } from 'utils/orEmpty'
 
@@ -110,7 +114,7 @@ export default function ConfirmDeployProject() {
       />
       <Statistic
         title={t`Pay button`}
-        value={orEmpty(editingProject?.metadata.payButton)}
+        value={editingProject?.metadata.payButton ?? t`Pay`}
       />
       <Statistic
         title={t`Pay disclosure`}
@@ -123,7 +127,7 @@ export default function ConfirmDeployProject() {
         />
         <Statistic
           title={t`Token minting`}
-          value={editingFC.ticketPrintingIsAllowed ? 'Allowed' : 'Disabled'}
+          value={editingFC.ticketPrintingIsAllowed ? t`Allowed` : t`Disabled`}
         />
       </Space>
       <Space size="large">
@@ -201,6 +205,16 @@ export default function ConfirmDeployProject() {
           />
         )}
       />
+      {hasFundingDuration(editingFC) ? (
+        <p>
+          <Trans>
+            <strong>Note:</strong> Funding cycle properties will{' '}
+            <strong>not</strong> be editable immediately within a funding cycle.
+            They can only be changed for <strong>upcoming</strong> funding
+            cycles.
+          </Trans>
+        </p>
+      ) : null}
     </Space>
   )
 }

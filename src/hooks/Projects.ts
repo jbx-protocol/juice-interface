@@ -6,11 +6,6 @@ import { TerminalVersion } from 'models/terminal-version'
 import { EntityKeys, GraphQueryOpts, InfiniteGraphQueryOpts } from 'utils/graph'
 import { getTerminalAddress } from 'utils/terminal-versions'
 
-import {
-  trendingStaleTime,
-  trendingWindowDays,
-} from 'constants/trending-projects'
-
 import { archivedProjectIds } from '../constants/archived-projects'
 import useSubgraphQuery, { useInfiniteSubgraphQuery } from './SubgraphQuery'
 import { SECONDS_IN_DAY } from 'constants/numbers'
@@ -133,35 +128,27 @@ export function useProjectsSearch(handle: string | undefined) {
 }
 
 // Returns projects with highest % volume increase in last week
-export function useTrendingProjects(count: number) {
-  const { data: payments } = useSubgraphQuery(
-    {
-      first: 1000,
-      entity: 'payEvent',
-      keys: [
-        'amount',
-        {
-          entity: 'project',
-          keys: ['id'],
-        },
-      ],
-      where: [
-        {
-          key: 'timestamp',
-          value: parseInt(
-            (
-              new Date().valueOf() / 1000 -
-              trendingWindowDays * SECONDS_IN_DAY
-            ).toString(),
-          ),
-          operator: 'gte',
-        },
-      ],
-    },
-    {
-      staleTime: trendingStaleTime,
-    },
-  )
+export function useTrendingProjects(count: number, days: number) {
+  const { data: payments } = useSubgraphQuery({
+    first: 1000,
+    entity: 'payEvent',
+    keys: [
+      'amount',
+      {
+        entity: 'project',
+        keys: ['id'],
+      },
+    ],
+    where: [
+      {
+        key: 'timestamp',
+        value: parseInt(
+          (new Date().valueOf() / 1000 - days * SECONDS_IN_DAY).toString(),
+        ),
+        operator: 'gte',
+      },
+    ],
+  })
 
   // Project data mapped trending data calculated from payments
   const projectStats = (payments ?? []).reduce(
@@ -204,9 +191,6 @@ export function useTrendingProjects(count: number) {
           },
         }
       : null,
-    {
-      staleTime: trendingStaleTime,
-    },
   )
 
   return {

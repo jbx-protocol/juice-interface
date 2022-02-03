@@ -1,20 +1,21 @@
 import { InfoCircleOutlined } from '@ant-design/icons'
-import { Trans } from '@lingui/macro'
 import Grid from 'components/shared/Grid'
 import Loading from 'components/shared/Loading'
 import { useTrendingProjects } from 'hooks/Projects'
 
-import TrendingProjectCard from './TrendingProjectCard'
 import RankingExplanation from './RankingExplanation'
+import TrendingProjectCard from './TrendingProjectCard'
 
 export default function TrendingProjects({
   isHomePage,
-  count, //number of trending project cards to show
+  count, // number of trending project cards to show
+  trendingWindowDays,
 }: {
   isHomePage?: boolean
   count: number
+  trendingWindowDays: number
 }) {
-  const { data: projects } = useTrendingProjects(count)
+  const { data: projects } = useTrendingProjects(count, trendingWindowDays)
   // const cardBg = isHomePage ? 'var(--background-l0)' : ''
 
   return (
@@ -27,6 +28,7 @@ export default function TrendingProjects({
               size={isHomePage ? 'sm' : 'lg'}
               rank={i + 1}
               key={i}
+              trendingWindowDays={trendingWindowDays}
             />
           ))}
         </Grid>
@@ -35,10 +37,7 @@ export default function TrendingProjects({
       )}
       {!isHomePage ? (
         <p style={{ marginBottom: 40, marginTop: 20, maxWidth: 800 }}>
-          <Trans>
-            <InfoCircleOutlined />
-            <RankingExplanation />
-          </Trans>
+          <InfoCircleOutlined /> <RankingExplanation />
         </p>
       ) : null}
     </div>

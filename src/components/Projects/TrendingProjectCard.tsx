@@ -11,7 +11,6 @@ import { CSSProperties, useContext, useMemo } from 'react'
 import { formatWad } from 'utils/formatNumber'
 import { getTerminalVersion } from 'utils/terminal-versions'
 
-import { trendingWindowDays } from 'constants/trending-projects'
 import { SECONDS_IN_DAY } from 'constants/numbers'
 import { CURRENCY_ETH } from 'constants/currency'
 
@@ -20,11 +19,13 @@ export default function TrendingProjectCard({
   size,
   bg,
   rank,
+  trendingWindowDays,
 }: {
   project: TrendingProject
   size?: 'sm' | 'lg'
   bg?: string // Used on homepage
   rank: number
+  trendingWindowDays: number
 }) {
   const {
     theme: { colors, radii },
@@ -84,7 +85,7 @@ export default function TrendingProjectCard({
     return `+${
       percentGain >= 10 ? Math.round(percentGain / 10) : percentGain / 10
     }%`
-  }, [project])
+  }, [project, trendingWindowDays])
 
   return project ? (
     <a

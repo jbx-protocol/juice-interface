@@ -49,7 +49,7 @@ export default function TrendingSection() {
                 <InfoCircleOutlined />
               </Tooltip>
             </h3>
-            <TrendingProjects count={6} isHomePage />
+            <TrendingProjects count={6} trendingWindowDays={7} isHomePage />
             <Button type="default" style={{ marginBottom: 40, marginTop: 15 }}>
               <a href="/#/projects/?tab=trending">
                 <Trans>More trending projects</Trans>

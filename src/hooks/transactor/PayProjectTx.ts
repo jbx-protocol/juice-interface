@@ -19,7 +19,6 @@ export function usePayProjectTx(): TransactorInstance<{
     if (
       !transactor ||
       !projectId ||
-      !userAddress ||
       !contracts?.TicketBooth ||
       !terminal?.version
     ) {

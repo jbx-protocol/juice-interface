@@ -34,6 +34,16 @@ export type TransactorInstance<T> = (
   txOpts?: Omit<TransactorOptions, 'value'>,
 ) => ReturnType<Transactor>
 
+// Check user has their wallet connected. If not, show select wallet prompt
+const checkWalletConnected = (
+  onSelectWallet: VoidFunction,
+  userAddress?: string,
+) => {
+  if (!userAddress && onSelectWallet) {
+    onSelectWallet()
+  }
+}
+
 // wrapper around BlockNative's Notify.js
 // https://docs.blocknative.com/notify
 export function useTransactor({
@@ -41,8 +51,11 @@ export function useTransactor({
 }: {
   gasPrice?: BigNumber
 }): Transactor | undefined {
-  const { signingProvider: provider, onSelectWallet } =
-    useContext(NetworkContext)
+  const {
+    signingProvider: provider,
+    onSelectWallet,
+    userAddress,
+  } = useContext(NetworkContext)
 
   const { isDarkMode } = useContext(ThemeContext)
 
@@ -60,6 +73,8 @@ export function useTransactor({
         if (options?.onDone) options.onDone()
         return false
       }
+
+      checkWalletConnected(onSelectWallet, userAddress)
 
       if (!provider) return false
 
@@ -182,6 +197,6 @@ export function useTransactor({
         return false
       }
     },
-    [onSelectWallet, provider, isDarkMode, gasPrice],
+    [onSelectWallet, provider, isDarkMode, gasPrice, userAddress],
   )
 }

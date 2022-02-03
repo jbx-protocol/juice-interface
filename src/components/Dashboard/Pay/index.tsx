@@ -7,19 +7,19 @@ import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { parseEther } from 'ethers/lib/utils'
-import { useCurrencyConverter } from 'hooks/CurrencyConverter'
+import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
 import { CurrencyOption } from 'models/currency-option'
 import { useContext, useMemo, useState } from 'react'
 import { currencyName } from 'utils/currency'
 import { formatWad, fromWad } from 'utils/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
 
-import { disablePayOverrides } from 'constants/overrides'
+import { disablePayOverrides } from 'constants/v1/overrides'
 import { readNetwork } from 'constants/networks'
 import { CURRENCY_ETH, CURRENCY_USD } from 'constants/currency'
 import CurrencySymbol from '../../shared/CurrencySymbol'
 import PayInputSubText from './PayInputSubText'
-import { PROJECT_IDS } from 'constants/projectIds'
+import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
 
 export default function Pay() {
   const [payIn, setPayIn] = useState<CurrencyOption>(0)
@@ -63,7 +63,7 @@ export default function Pay() {
 
     // Edge case for MoonDAO, upgraded to v1.1 but can't use payIsPaused for now
     const isMoonAndMaxRR =
-      projectId?.eq(PROJECT_IDS.MOON_DAO) && fcMetadata.reservedRate === 200
+      projectId?.eq(V1_PROJECT_IDS.MOON_DAO) && fcMetadata.reservedRate === 200
 
     if (isArchived) {
       return (

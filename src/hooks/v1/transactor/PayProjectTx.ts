@@ -4,25 +4,22 @@ import { V1UserContext } from 'contexts/v1/userContext'
 import { BigNumber } from 'ethers'
 import { useContext } from 'react'
 
-import { CurrencyOption } from 'models/currency-option'
+import { TransactorInstance } from '../../Transactor'
 
-import { TransactorInstance } from './Transactor'
-
-export function useTapProjectTx(): TransactorInstance<{
-  tapAmount: BigNumber
-  minAmount: BigNumber
-  currency: CurrencyOption
+export function usePayProjectTx(): TransactorInstance<{
+  note: string
+  preferUnstaked: boolean
+  value: BigNumber
 }> {
   const { transactor, contracts } = useContext(V1UserContext)
+  const { terminal, projectId } = useContext(V1ProjectContext)
   const { userAddress } = useContext(NetworkContext)
-  const { projectId, terminal } = useContext(V1ProjectContext)
 
-  return ({ tapAmount, minAmount, currency }, txOpts) => {
+  return ({ note, preferUnstaked, value }, txOpts) => {
     if (
       !transactor ||
-      !userAddress ||
       !projectId ||
-      !contracts?.Projects ||
+      !contracts?.TicketBooth ||
       !terminal?.version
     ) {
       txOpts?.onDone?.()
@@ -33,14 +30,12 @@ export function useTapProjectTx(): TransactorInstance<{
       terminal.version === '1.1'
         ? contracts.TerminalV1_1
         : contracts.TerminalV1,
-      'tap',
-      [
-        projectId.toHexString(),
-        tapAmount.toHexString(),
-        currency,
-        minAmount?.toHexString(),
-      ],
-      txOpts,
+      'pay',
+      [projectId.toHexString(), userAddress, note || '', preferUnstaked],
+      {
+        ...txOpts,
+        value: value.toHexString(),
+      },
     )
   }
 }

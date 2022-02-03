@@ -5,7 +5,7 @@ import { BigNumber, constants } from 'ethers'
 import { PayoutMod } from 'models/mods'
 import { useContext } from 'react'
 
-import { TransactorInstance } from './Transactor'
+import { TransactorInstance } from '../../Transactor'
 
 export function useSetPayoutModsTx(): TransactorInstance<{
   configured: BigNumber

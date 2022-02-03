@@ -1,7 +1,7 @@
 import { Button, Form, Input, Modal, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import TooltipIcon from 'components/shared/TooltipIcon'
-import { useIssueTokensTx } from 'hooks/transactor/IssueTokensTx'
+import { useIssueTokensTx } from 'hooks/v1/transactor/IssueTokensTx'
 import { useState } from 'react'
 
 export default function IssueTickets() {

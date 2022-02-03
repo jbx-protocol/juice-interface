@@ -13,7 +13,7 @@ import { fromWad } from 'utils/formatNumber'
 import { querySubgraph } from 'utils/graph'
 
 import { readProvider } from 'constants/readProvider'
-import { indexedProjectERC20s } from 'constants/indexed-project-erc20s'
+import { indexedProjectERC20s } from 'constants/v1/indexedProjectERC20s'
 
 export default function DownloadParticipantsModal({
   visible,

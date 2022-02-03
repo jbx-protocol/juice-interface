@@ -6,7 +6,7 @@ import { FCProperties } from 'models/funding-cycle-properties'
 import { PayoutMod, TicketMod } from 'models/mods'
 import { useContext } from 'react'
 
-import { TransactorInstance } from './Transactor'
+import { TransactorInstance } from '../../Transactor'
 
 export function useConfigureProjectTx(): TransactorInstance<{
   fcProperties: FCProperties

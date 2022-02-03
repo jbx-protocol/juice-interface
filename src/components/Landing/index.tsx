@@ -5,7 +5,7 @@ import Loading from 'components/shared/Loading'
 import FeedbackFormLink from 'components/shared/FeedbackFormLink'
 
 import { ThemeContext } from 'contexts/themeContext'
-import { useProjectsQuery } from 'hooks/Projects'
+import { useProjectsQuery } from 'hooks/v1/Projects'
 import { CSSProperties, useContext } from 'react'
 
 import { ThemeOption } from 'constants/theme/theme-option'

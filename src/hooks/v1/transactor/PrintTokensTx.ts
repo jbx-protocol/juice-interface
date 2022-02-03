@@ -5,7 +5,7 @@ import { BigNumber } from 'ethers'
 import { CurrencyOption } from 'models/currency-option'
 import { useContext } from 'react'
 
-import { TransactorInstance } from './Transactor'
+import { TransactorInstance } from '../../Transactor'
 
 export function usePrintTokensTx(): TransactorInstance<{
   value: BigNumber

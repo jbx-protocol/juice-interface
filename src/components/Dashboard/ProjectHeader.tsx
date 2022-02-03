@@ -17,7 +17,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import {
   OperatorPermission,
   useHasPermission,
-} from 'hooks/contractReader/HasPermission'
+} from 'hooks/v1/contractReader/HasPermission'
 import { useContext, useState } from 'react'
 
 import Paragraph from '../shared/Paragraph'

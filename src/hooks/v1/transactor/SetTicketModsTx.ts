@@ -1,21 +1,21 @@
 import { NetworkContext } from 'contexts/networkContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1UserContext } from 'contexts/v1/userContext'
-import { BigNumber } from 'ethers'
+import { BigNumber, constants } from 'ethers'
+import { TicketMod } from 'models/mods'
 import { useContext } from 'react'
 
-import { TransactorInstance } from './Transactor'
+import { TransactorInstance } from '../../Transactor'
 
-export function useRedeemTokensTx(): TransactorInstance<{
-  redeemAmount: BigNumber
-  minAmount: BigNumber
-  preferConverted: boolean
+export function useSetTicketModsTx(): TransactorInstance<{
+  configured: BigNumber
+  ticketMods: TicketMod[]
 }> {
   const { transactor, contracts } = useContext(V1UserContext)
   const { userAddress } = useContext(NetworkContext)
   const { projectId, terminal } = useContext(V1ProjectContext)
 
-  return ({ redeemAmount, minAmount, preferConverted }, txOpts) => {
+  return ({ configured, ticketMods }, txOpts) => {
     if (
       !transactor ||
       !userAddress ||
@@ -28,17 +28,17 @@ export function useRedeemTokensTx(): TransactorInstance<{
     }
 
     return transactor(
-      terminal.version === '1.1'
-        ? contracts.TerminalV1_1
-        : contracts.TerminalV1,
-      'redeem',
+      contracts.ModStore,
+      'setTicketMods',
       [
-        userAddress,
         projectId.toHexString(),
-        redeemAmount.toHexString(),
-        minAmount.toHexString(),
-        userAddress,
-        preferConverted,
+        configured.toHexString(),
+        ticketMods.map(m => ({
+          preferUnstaked: false,
+          percent: BigNumber.from(m.percent).toHexString(),
+          lockedUntil: BigNumber.from(m.lockedUntil ?? 0).toHexString(),
+          beneficiary: m.beneficiary || constants.AddressZero,
+        })),
       ],
       txOpts,
     )

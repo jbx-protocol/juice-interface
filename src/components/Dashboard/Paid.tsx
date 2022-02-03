@@ -9,7 +9,7 @@ import TooltipLabel from 'components/shared/TooltipLabel'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { useCurrencyConverter } from 'hooks/CurrencyConverter'
+import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
 import { useEthBalanceQuery } from 'hooks/EthBalance'
 import { CurrencyOption } from 'models/currency-option'
 import { NetworkName } from 'models/network-name'
@@ -17,7 +17,7 @@ import { CSSProperties, useContext, useMemo, useState } from 'react'
 import { formatWad, fracDiv, fromWad, parseWad } from 'utils/formatNumber'
 import { hasFundingTarget } from 'utils/fundingCycle'
 
-import { PROJECT_IDS } from 'constants/projectIds'
+import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
 import { readNetwork } from 'constants/networks'
 import { CURRENCY_ETH, CURRENCY_USD } from 'constants/currency'
 
@@ -112,7 +112,7 @@ export default function Paid() {
 
   const isConstitutionDAO =
     readNetwork.name === NetworkName.mainnet &&
-    projectId?.eq(PROJECT_IDS.CONSTITUTION_DAO)
+    projectId?.eq(V1_PROJECT_IDS.CONSTITUTION_DAO)
 
   return (
     <div>

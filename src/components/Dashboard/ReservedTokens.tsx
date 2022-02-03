@@ -3,7 +3,7 @@ import { t, Trans } from '@lingui/macro'
 import TooltipLabel from 'components/shared/TooltipLabel'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
-import useReservedTokensOfProject from 'hooks/contractReader/ReservedTokensOfProject'
+import useReservedTokensOfProject from 'hooks/v1/contractReader/ReservedTokensOfProject'
 import { FundingCycle } from 'models/funding-cycle'
 import { TicketMod } from 'models/mods'
 import { NetworkName } from 'models/network-name'
@@ -15,7 +15,7 @@ import { readNetwork } from 'constants/networks'
 
 import DistributeTokensModal from '../modals/DistributeTokensModal'
 import TicketModsList from '../shared/TicketModsList'
-import { PROJECT_IDS } from 'constants/projectIds'
+import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
 
 export default function ReservedTokens({
   fundingCycle,
@@ -36,11 +36,11 @@ export default function ReservedTokens({
 
   const isConstitutionDAO =
     readNetwork.name === NetworkName.mainnet &&
-    projectId?.eq(PROJECT_IDS.CONSTITUTION_DAO)
+    projectId?.eq(V1_PROJECT_IDS.CONSTITUTION_DAO)
 
   const isSharkDAO =
     readNetwork.name === NetworkName.mainnet &&
-    projectId?.eq(PROJECT_IDS.SHARK_DAO)
+    projectId?.eq(V1_PROJECT_IDS.SHARK_DAO)
 
   return (
     <div>

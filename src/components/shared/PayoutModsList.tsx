@@ -10,8 +10,8 @@ import { BigNumber, constants } from 'ethers'
 import {
   OperatorPermission,
   useHasPermission,
-} from 'hooks/contractReader/HasPermission'
-import { useSetPayoutModsTx } from 'hooks/transactor/SetPayoutModsTx'
+} from 'hooks/v1/contractReader/HasPermission'
+import { useSetPayoutModsTx } from 'hooks/v1/transactor/SetPayoutModsTx'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
 import { PayoutMod } from 'models/mods'

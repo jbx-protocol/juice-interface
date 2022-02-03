@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { formatWad } from 'utils/formatNumber'
 import { parseEther } from 'ethers/lib/utils'
-import { useCurrencyConverter } from 'hooks/CurrencyConverter'
+import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
 import { currencyName } from 'utils/currency'
 import { weightedRate } from 'utils/math'
 import { t, Trans } from '@lingui/macro'

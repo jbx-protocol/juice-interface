@@ -4,22 +4,23 @@ import { V1UserContext } from 'contexts/v1/userContext'
 import { BigNumber } from 'ethers'
 import { useContext } from 'react'
 
-import { TransactorInstance } from './Transactor'
+import { TransactorInstance } from '../../Transactor'
 
-export function usePayProjectTx(): TransactorInstance<{
-  note: string
-  preferUnstaked: boolean
-  value: BigNumber
+export function useRedeemTokensTx(): TransactorInstance<{
+  redeemAmount: BigNumber
+  minAmount: BigNumber
+  preferConverted: boolean
 }> {
   const { transactor, contracts } = useContext(V1UserContext)
-  const { terminal, projectId } = useContext(V1ProjectContext)
   const { userAddress } = useContext(NetworkContext)
+  const { projectId, terminal } = useContext(V1ProjectContext)
 
-  return ({ note, preferUnstaked, value }, txOpts) => {
+  return ({ redeemAmount, minAmount, preferConverted }, txOpts) => {
     if (
       !transactor ||
+      !userAddress ||
       !projectId ||
-      !contracts?.TicketBooth ||
+      !contracts?.Projects ||
       !terminal?.version
     ) {
       txOpts?.onDone?.()
@@ -30,12 +31,16 @@ export function usePayProjectTx(): TransactorInstance<{
       terminal.version === '1.1'
         ? contracts.TerminalV1_1
         : contracts.TerminalV1,
-      'pay',
-      [projectId.toHexString(), userAddress, note || '', preferUnstaked],
-      {
-        ...txOpts,
-        value: value.toHexString(),
-      },
+      'redeem',
+      [
+        userAddress,
+        projectId.toHexString(),
+        redeemAmount.toHexString(),
+        minAmount.toHexString(),
+        userAddress,
+        preferConverted,
+      ],
+      txOpts,
     )
   }
 }

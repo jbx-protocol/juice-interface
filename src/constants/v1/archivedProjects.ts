@@ -1,15 +1,25 @@
 import { NetworkName } from 'models/network-name'
 
 import { readNetwork } from 'constants/networks'
+import { V1_PROJECT_IDS } from './projectIds'
+
+const {
+  PX_DAO,
+  SVSPOOL002,
+  FIDENZA420,
+  SANTA_DAO,
+  INFLATIONLESS_DAO,
+  VOTING_DAO,
+} = V1_PROJECT_IDS
 
 const archivedProjectIdsByNetwork: Partial<Record<NetworkName, number[]>> = {
   [NetworkName.mainnet]: [
-    11, // @pxdao
-    27, // @svspool002
-    32, // @fidenza420
-    146, // @santadao
-    180, // @inflationlessdao
-    290, // @votingdao
+    PX_DAO,
+    SVSPOOL002,
+    FIDENZA420,
+    SANTA_DAO,
+    INFLATIONLESS_DAO,
+    VOTING_DAO,
   ],
   [NetworkName.rinkeby]: [],
 }

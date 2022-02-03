@@ -3,7 +3,7 @@ import { V1UserContext } from 'contexts/v1/userContext'
 import { utils } from 'ethers'
 import { useContext } from 'react'
 
-import { TransactorInstance } from './Transactor'
+import { TransactorInstance } from '../../Transactor'
 
 export function useSetProjectHandleTx(): TransactorInstance<{
   handle: string

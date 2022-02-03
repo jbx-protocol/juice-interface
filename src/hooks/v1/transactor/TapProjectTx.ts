@@ -1,21 +1,23 @@
 import { NetworkContext } from 'contexts/networkContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1UserContext } from 'contexts/v1/userContext'
-import { BigNumber, constants } from 'ethers'
-import { TicketMod } from 'models/mods'
+import { BigNumber } from 'ethers'
 import { useContext } from 'react'
 
-import { TransactorInstance } from './Transactor'
+import { CurrencyOption } from 'models/currency-option'
 
-export function useSetTicketModsTx(): TransactorInstance<{
-  configured: BigNumber
-  ticketMods: TicketMod[]
+import { TransactorInstance } from '../../Transactor'
+
+export function useTapProjectTx(): TransactorInstance<{
+  tapAmount: BigNumber
+  minAmount: BigNumber
+  currency: CurrencyOption
 }> {
   const { transactor, contracts } = useContext(V1UserContext)
   const { userAddress } = useContext(NetworkContext)
   const { projectId, terminal } = useContext(V1ProjectContext)
 
-  return ({ configured, ticketMods }, txOpts) => {
+  return ({ tapAmount, minAmount, currency }, txOpts) => {
     if (
       !transactor ||
       !userAddress ||
@@ -28,17 +30,15 @@ export function useSetTicketModsTx(): TransactorInstance<{
     }
 
     return transactor(
-      contracts.ModStore,
-      'setTicketMods',
+      terminal.version === '1.1'
+        ? contracts.TerminalV1_1
+        : contracts.TerminalV1,
+      'tap',
       [
         projectId.toHexString(),
-        configured.toHexString(),
-        ticketMods.map(m => ({
-          preferUnstaked: false,
-          percent: BigNumber.from(m.percent).toHexString(),
-          lockedUntil: BigNumber.from(m.lockedUntil ?? 0).toHexString(),
-          beneficiary: m.beneficiary || constants.AddressZero,
-        })),
+        tapAmount.toHexString(),
+        currency,
+        minAmount?.toHexString(),
       ],
       txOpts,
     )

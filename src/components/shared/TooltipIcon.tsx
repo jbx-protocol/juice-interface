@@ -5,20 +5,15 @@ import { CSSProperties } from 'react'
 export default function TooltipIcon({
   tip,
   placement,
-  style,
+  iconStyle,
 }: {
   tip?: string | JSX.Element
   placement?: TooltipProps['placement']
-  style?: CSSProperties
+  iconStyle?: CSSProperties
 }) {
   return (
-    <Tooltip
-      title={tip}
-      placement={placement}
-      trigger={['hover', 'click']}
-      style={style}
-    >
-      <QuestionCircleOutlined />
+    <Tooltip title={tip} placement={placement} trigger={['hover', 'click']}>
+      <QuestionCircleOutlined style={iconStyle} />
     </Tooltip>
   )
 }

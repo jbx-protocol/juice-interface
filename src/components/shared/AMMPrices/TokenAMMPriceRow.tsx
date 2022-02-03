@@ -48,7 +48,7 @@ export default function TokenAMMPriceRow({
       <Tooltip title={tooltip} overlayInnerStyle={{ ...fontStyle }}>
         <span style={{ cursor: 'default' }}>
           {!WETHPrice ? <Trans>Unavailable</Trans> : null}
-          <TooltipIcon style={{ marginLeft: '0.2rem' }} />
+          <TooltipIcon iconStyle={{ marginLeft: '0.2rem' }} />
         </span>
       </Tooltip>
     )

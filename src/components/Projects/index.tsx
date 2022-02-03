@@ -191,6 +191,23 @@ export default function Projects() {
               orderBy={orderBy}
               setOrderBy={setOrderBy}
             />
+          ) : selectedTab === 'trending' && !searchText ? (
+            <Select
+              value={trendingWindowDays}
+              onChange={setTrendingWindowDays}
+              style={{
+                width: 180,
+                marginTop: 10,
+                marginBottom: 20,
+              }}
+            >
+              <Select.Option value={7}>
+                <Trans>Last 7 days</Trans>
+              </Select.Option>
+              <Select.Option value={30}>
+                <Trans>Last 30 days</Trans>
+              </Select.Option>
+            </Select>
           ) : null}
         </div>
         <ArchivedProjectsMessage
@@ -251,22 +268,11 @@ export default function Projects() {
         </div>
       ) : selectedTab === 'trending' ? (
         <div style={{ paddingBottom: 50 }}>
-          <Select
-            value={trendingWindowDays}
-            onChange={setTrendingWindowDays}
-            style={{
-              width: 180,
-              marginTop: 10,
-              marginBottom: 20,
-            }}
-          >
-            <Select.Option value={7}>
-              <Trans>7 days</Trans>
-            </Select.Option>
-            <Select.Option value={30}>
-              <Trans>30 days</Trans>
-            </Select.Option>
-          </Select>
+          {/* <p>
+            <Trans>
+              <InfoCircleOutlined /> Stats in cards refer to the last {trendingWindowDays} days.
+            </Trans>
+          </p> */}
           <TrendingProjects
             count={20}
             trendingWindowDays={trendingWindowDays}

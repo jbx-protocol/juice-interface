@@ -233,3 +233,39 @@
   background-color: var(--background-l1);
   box-shadow: 0px 8px 12px #000000;
 }
+
+// Trending window days selector on trending projects section of homepage
+.trending-window-select {
+  background: none;
+  .ant-collapse-header {
+    font-size: 22px;
+    font-weight: 600 !important;
+    color: var(--text-header) !important;
+    min-width: 80px;
+    text-decoration: underline;
+  }
+  .ant-select-selection-item {
+    color: var(--text-header);
+    min-width: 112px;
+  }
+  .ant-collapse-content {
+    position: absolute;
+    background: var(--background-l0);
+    z-index: 999;
+    margin-left: 10px;
+    box-shadow: 0px 8px 12px rgb(0 0 0 / 10%);
+    width: 114px;
+  }
+  .ant-collapse-content-box {
+    padding: 0;
+  }
+  .select-item {
+    font-weight: 500;
+    font-size: 16px;
+    padding: 10px 15px;
+    cursor: pointer;
+  }
+  .select-item.selected {
+    background-color: rgb(255, 236, 187); // Only works for light theme
+  }
+}

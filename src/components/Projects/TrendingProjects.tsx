@@ -37,7 +37,8 @@ export default function TrendingProjects({
       )}
       {!isHomePage ? (
         <p style={{ marginBottom: 40, marginTop: 20, maxWidth: 800 }}>
-          <InfoCircleOutlined /> <RankingExplanation />
+          <InfoCircleOutlined />{' '}
+          <RankingExplanation trendingWindow={trendingWindowDays} />
         </p>
       ) : null}
     </div>

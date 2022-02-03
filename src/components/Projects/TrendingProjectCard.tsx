@@ -163,14 +163,14 @@ export default function TrendingProjectCard({
                 }}
               >
                 <span style={{ fontWeight: 600 }}>
-                  {project.trendingPaymentsCount} payment
-                  {project.trendingPaymentsCount > 1 ? 's' : ''}
-                </span>
-                <span style={{ fontWeight: 500 }}>
-                  {' '}
                   <CurrencySymbol currency={CURRENCY_ETH} />
                   {formatWad(project.trendingVolume, { precision })}{' '}
-                  {percentGainText && <>({percentGainText})</>}
+                </span>
+                <span style={{ fontWeight: 500 }}>
+                  last {trendingWindowDays} days {''}
+                </span>
+                <span style={{ fontWeight: 600, color: colors.text.header }}>
+                  {percentGainText && <>{percentGainText}</>}
                 </span>
               </span>
             </div>

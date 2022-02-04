@@ -41,16 +41,18 @@ import {
 } from 'utils/ipfs'
 import { getTerminalAddress } from 'utils/v1/terminals'
 
-import BudgetForm from './BudgetForm'
+import BudgetForm from '../shared/forms/BudgetForm'
 import ConfirmDeployProject from './ConfirmDeployProject'
-import IncentivesForm from './IncentivesForm'
-import PayModsForm from './PayModsForm'
+import IncentivesForm from '../shared/forms/IncentivesForm'
+import PayModsForm from '../shared/forms/PayModsForm'
 import ProjectForm, { ProjectFormFields } from './ProjectForm'
 import RestrictedActionsForm, {
   RestrictedActionsFormFields,
-} from './RestrictedActionsForm'
-import RulesForm from './RulesForm'
-import TicketingForm, { TicketingFormFields } from './TicketingForm'
+} from '../shared/forms/RestrictedActionsForm'
+import RulesForm from '../shared/forms/RulesForm'
+import TicketingForm, {
+  TicketingFormFields,
+} from '../shared/forms/TicketingForm'
 
 const terminalVersion: V1TerminalVersion = '1.1'
 

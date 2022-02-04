@@ -17,7 +17,7 @@ import CurrentFundingCycle from '../FundingCycle/CurrentFundingCycle'
 import QueuedFundingCycle from '../FundingCycle/QueuedFundingCycle'
 import FundingHistory from './FundingHistory'
 import SectionHeader from './SectionHeader'
-import ReconfigureFundingModalTrigger from '../FundingCycle/ReconfigureFundingModalTrigger'
+import ReconfigureFundingModalTrigger from './ReconfigureFundingModalTrigger'
 
 type TabOption = 'current' | 'upcoming' | 'history'
 

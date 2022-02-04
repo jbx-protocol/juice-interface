@@ -46,10 +46,10 @@ import { serializeFundingCycle } from 'utils/serializers'
 
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 
-import BudgetForm from '../Create/BudgetForm'
-import IncentivesForm from '../Create/IncentivesForm'
-import PayModsForm from '../Create/PayModsForm'
-import TicketingForm, { TicketingFormFields } from '../Create/TicketingForm'
+import BudgetForm from '../../Create/BudgetForm'
+import IncentivesForm from '../../Create/IncentivesForm'
+import PayModsForm from '../../Create/PayModsForm'
+import TicketingForm, { TicketingFormFields } from '../../Create/TicketingForm'
 
 export default function ReconfigureFCModal({
   visible,

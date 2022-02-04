@@ -5,8 +5,7 @@ import CurrencySymbol from 'components/shared/CurrencySymbol'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import EthDater from 'ethereum-block-by-date'
-import { parseProjectJson, Project } from 'models/subgraph-entities/project'
-import { parseTapEventJson } from 'models/subgraph-entities/tap-event'
+import { Project } from 'models/subgraph-entities/project'
 import moment from 'moment'
 import {
   CSSProperties,
@@ -150,51 +149,48 @@ export default function BalanceTimeline({ height }: { height: number }) {
         const blockRef = blockRefs[i]
 
         promises.push(
-          querySubgraph(
-            {
-              entity: 'project',
-              keys: queryKeys,
-              // For block == null, don't specify block param
-              ...(blockRef.block !== null
-                ? { block: { number: blockRef.block } }
-                : {}),
-              where: projectId
-                ? {
-                    key: 'id',
-                    value: projectId.toString(),
-                  }
-                : undefined,
-            },
-            res => {
-              if (!res?.projects.length) return
+          querySubgraph({
+            entity: 'project',
+            keys: queryKeys,
+            // For block == null, don't specify block param
+            ...(blockRef.block !== null
+              ? { block: { number: blockRef.block } }
+              : {}),
+            where: projectId
+              ? {
+                  key: 'id',
+                  value: projectId.toString(),
+                }
+              : undefined,
+          }).then(projects => {
+            if (!projects.length) return
 
-              let value: number | undefined = undefined
+            let value: number | undefined = undefined
 
-              const project = parseProjectJson(res.projects[0])
+            const project = projects[0]
 
-              if (!project) return
+            if (!project) return
 
-              switch (showGraph) {
-                case 'volume':
-                  value = parseFloat(
-                    parseFloat(fromWad(project.totalPaid)).toFixed(4),
-                  )
-                  break
-                case 'balance':
-                  value = parseFloat(
-                    parseFloat(fromWad(project.currentBalance)).toFixed(4),
-                  )
-                  break
-              }
+            switch (showGraph) {
+              case 'volume':
+                value = parseFloat(
+                  parseFloat(fromWad(project.totalPaid)).toFixed(4),
+                )
+                break
+              case 'balance':
+                value = parseFloat(
+                  parseFloat(fromWad(project.currentBalance)).toFixed(4),
+                )
+                break
+            }
 
-              if (value !== undefined) {
-                newEvents.push({
-                  timestamp: blockRef.timestamp,
-                  value,
-                })
-              }
-            },
-          ),
+            if (value !== undefined) {
+              newEvents.push({
+                timestamp: blockRef.timestamp,
+                value,
+              })
+            }
+          }),
         )
       }
 
@@ -216,41 +212,35 @@ export default function BalanceTimeline({ height }: { height: number }) {
 
       // Load tap events
       if (showGraph === 'balance') {
-        await querySubgraph(
-          {
-            entity: 'tapEvent',
-            keys: ['netTransferAmount', 'timestamp'],
-            where: projectId
-              ? [
-                  {
-                    key: 'project',
-                    value: projectId.toString(),
-                  },
-                  {
-                    key: 'timestamp',
-                    value: Math.round((now - daysToMillis(duration)) / 1000),
-                    operator: 'gte',
-                  },
-                ]
-              : undefined,
-          },
-          res => {
-            if (res) {
-              newEvents.push(
-                ...res.tapEvents.map(e => {
-                  const event = parseTapEventJson(e)
-                  return {
-                    ...e,
-                    tapped: parseFloat(
-                      parseFloat(fromWad(event.netTransferAmount)).toFixed(4),
-                    ),
-                    timestamp: event.timestamp ?? 0,
-                  }
-                }),
-              )
-            }
-          },
-        )
+        await querySubgraph({
+          entity: 'tapEvent',
+          keys: ['netTransferAmount', 'timestamp'],
+          where: projectId
+            ? [
+                {
+                  key: 'project',
+                  value: projectId.toString(),
+                },
+                {
+                  key: 'timestamp',
+                  value: Math.round((now - daysToMillis(duration)) / 1000),
+                  operator: 'gte',
+                },
+              ]
+            : undefined,
+        }).then(tapEvents => {
+          newEvents.push(
+            ...tapEvents.map(event => {
+              return {
+                ...event,
+                tapped: parseFloat(
+                  parseFloat(fromWad(event.netTransferAmount)).toFixed(4),
+                ),
+                timestamp: event.timestamp ?? 0,
+              }
+            }),
+          )
+        })
       }
 
       const sortedEvents = newEvents.sort((a, b) =>

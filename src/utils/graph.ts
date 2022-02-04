@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios'
+import axios from 'axios'
 import {
   DistributeToPayoutModEvent,
   DistributeToPayoutModEventJson,
@@ -193,28 +193,6 @@ export const formatGraphQuery = <E extends EntityKey, K extends EntityKeys<E>>(
 
 const subgraphUrl = process.env.REACT_APP_SUBGRAPH_URL
 
-export const querySubgraph = <E extends EntityKey, K extends EntityKeys<E>>(
-  opts: GraphQueryOpts<E, K>,
-  callback: (res?: SubgraphQueryReturnTypes[E]) => void,
-) => {
-  const url = opts.url || subgraphUrl
-
-  if (!url) return Promise.reject('Missing url for subgraph query')
-
-  return axios
-    .post(
-      url,
-      {
-        query: formatGraphQuery(opts),
-      },
-      { headers: { 'Content-Type': 'application/json' } },
-    )
-    .then((res: AxiosResponse<{ data?: SubgraphQueryReturnTypes[E] }>) =>
-      callback(res.data?.data),
-    )
-    .catch(err => console.log('Error getting ' + opts.entity + 's', err))
-}
-
 export const trimHexZero = (hexStr: string) => hexStr.replace('0x0', '0x')
 
 export function formatGraphResponse<E extends EntityKey>(
@@ -301,6 +279,71 @@ export function formatGraphResponse<E extends EntityKey>(
   }
 
   return []
+}
+
+export async function querySubgraph<
+  E extends EntityKey,
+  K extends EntityKeys<E>,
+>(opts: GraphQueryOpts<E, K> | null) {
+  if (!subgraphUrl) {
+    // This should _only_ happen in development
+    throw new Error('env.REACT_APP_SUBGRAPH_URL is missing')
+  }
+
+  if (!opts) return []
+
+  const response = await axios.post<{
+    errors?: SubgraphError[]
+    data: SubgraphQueryReturnTypes[E]
+  }>(
+    subgraphUrl,
+    {
+      query: formatGraphQuery(opts),
+    },
+    { headers: { 'Content-Type': 'application/json' } },
+  )
+
+  if ('errors' in response.data) {
+    throw new Error(
+      response.data.errors?.[0]?.message ||
+        'Something is wrong with this Graph request',
+    )
+  }
+
+  return formatGraphResponse(opts.entity, response.data?.data)
+}
+
+/** Repeats a max page size query until all entities have been returned. */
+export async function querySubgraphExhaustive<
+  E extends EntityKey,
+  K extends EntityKeys<E>,
+>(opts: Omit<GraphQueryOpts<E, K>, 'first' | 'skip'> | null) {
+  const pageSize = 1000
+  const entities: SubgraphEntities[E][] = []
+
+  const query = async (page: number) => {
+    if (!opts) return
+
+    const data = await querySubgraph({
+      ...opts,
+      first: pageSize,
+      ...(page > 0
+        ? {
+            skip: pageSize * page,
+          }
+        : {}),
+    })
+
+    if (!data) return
+
+    entities.push(...data)
+
+    if (data.length === pageSize) await query(page + 1)
+  }
+
+  await query(0)
+
+  return entities
 }
 
 const isPluralQuery = (key: EntityKey): boolean => {

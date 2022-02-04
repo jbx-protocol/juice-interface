@@ -7,7 +7,7 @@ import { Trans } from '@lingui/macro'
 
 import { BigNumber } from 'ethers'
 
-import ReconfigureFCModal from './modals/ReconfigureFCModal'
+import ReconfigureFCModal from '../modals/ReconfigureFCModal'
 
 // This component uses a local version of the entire Redux store
 // so editing within the Reconfigure Funding modal does not

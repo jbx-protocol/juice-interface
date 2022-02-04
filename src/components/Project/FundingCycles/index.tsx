@@ -12,11 +12,11 @@ import { useContext, useState } from 'react'
 
 import { fundingCycleRiskCount } from 'utils/fundingCycle'
 import { FundingCycle } from 'models/funding-cycle'
+import CurrentFundingCycle from 'components/FundingCycle/CurrentFundingCycle'
+import QueuedFundingCycle from 'components/FundingCycle/QueuedFundingCycle'
 
-import CurrentFundingCycle from '../FundingCycle/CurrentFundingCycle'
-import QueuedFundingCycle from '../FundingCycle/QueuedFundingCycle'
 import FundingHistory from './FundingHistory'
-import SectionHeader from './SectionHeader'
+import SectionHeader from '../SectionHeader'
 import ReconfigureFundingModalTrigger from './ReconfigureFundingModalTrigger'
 
 type TabOption = 'current' | 'upcoming' | 'history'

@@ -4,7 +4,7 @@ import { t, Trans } from '@lingui/macro'
 import { Button, Col, Drawer, DrawerProps, Row, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import Modal from 'antd/lib/modal/Modal'
-import Project from 'components/Dashboard/Project'
+import Project from 'components/Project'
 import { NetworkContext } from 'contexts/networkContext'
 import {
   V1ProjectContext,

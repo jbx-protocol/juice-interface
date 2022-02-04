@@ -25,15 +25,15 @@ import { CurrencyOption } from 'models/currency-option'
 import { useEffect, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 import { getTerminalName, getTerminalVersion } from 'utils/v1/terminals'
+import useTerminalOfProject from 'hooks/v1/contractReader/TerminalOfProject'
 
 import { padding } from 'constants/styles/padding'
 import { layouts } from 'constants/styles/layouts'
 import { projectTypes } from 'constants/v1/projectTypes'
 import { archivedProjectIds } from 'constants/v1/archivedProjects'
 
-import useTerminalOfProject from '../../hooks/v1/contractReader/TerminalOfProject'
 import Loading from '../shared/Loading'
-import Project from './Project'
+import Project from '../Project'
 
 export default function Dashboard() {
   const { handle }: { handle?: string } = useParams()

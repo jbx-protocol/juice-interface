@@ -3,7 +3,7 @@ import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
 
-import ReservedTokens from '../Dashboard/ReservedTokens'
+import ReservedTokens from './ReservedTokens'
 import PayoutModsList from '../shared/PayoutModsList'
 import FundingCycleDetails from './FundingCycleDetails'
 

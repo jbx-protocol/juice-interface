@@ -2,11 +2,12 @@ import { InfoCircleOutlined } from '@ant-design/icons'
 import Grid from 'components/shared/Grid'
 import Loading from 'components/shared/Loading'
 import { useTrendingProjects } from 'hooks/Projects'
+import React from 'react'
 
 import RankingExplanation from './RankingExplanation'
 import TrendingProjectCard from './TrendingProjectCard'
 
-export default function TrendingProjects({
+export function TrendingProjects({
   isHomePage,
   count, // number of trending project cards to show
   trendingWindowDays,
@@ -16,7 +17,6 @@ export default function TrendingProjects({
   trendingWindowDays: number
 }) {
   const { data: projects } = useTrendingProjects(count, trendingWindowDays)
-  // const cardBg = isHomePage ? 'var(--background-l0)' : ''
 
   return (
     <div>
@@ -44,3 +44,5 @@ export default function TrendingProjects({
     </div>
   )
 }
+
+export const MemoizedTrendingProjects = React.memo(TrendingProjects)

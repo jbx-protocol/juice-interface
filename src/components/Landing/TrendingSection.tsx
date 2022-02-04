@@ -3,7 +3,7 @@ import { DownOutlined, UpOutlined, InfoCircleOutlined } from '@ant-design/icons'
 
 import { CSSProperties, useContext, useState } from 'react'
 import { ThemeContext } from 'contexts/themeContext'
-import TrendingProjects from 'components/Projects/TrendingProjects'
+import { MemoizedTrendingProjects } from 'components/Projects/TrendingProjects'
 import RankingExplanation from 'components/Projects/RankingExplanation'
 import { Trans } from '@lingui/macro'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
@@ -122,7 +122,7 @@ export default function TrendingSection() {
                 <InfoCircleOutlined />
               </Tooltip>
             </h3>
-            <TrendingProjects
+            <MemoizedTrendingProjects
               count={6}
               trendingWindowDays={trendingWindow}
               isHomePage

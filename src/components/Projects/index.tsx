@@ -18,7 +18,7 @@ import ProjectCard from 'components/shared/ProjectCard'
 import { useLocation } from 'react-router-dom'
 
 import { layouts } from 'constants/styles/layouts'
-import TrendingProjects from './TrendingProjects'
+import { MemoizedTrendingProjects } from './TrendingProjects'
 import ProjectsTabs from './ProjectsTabs'
 import MyProjects from './MyProjects'
 import ProjectsFilterAndSort from './ProjectsFilterAndSort'
@@ -273,7 +273,7 @@ export default function Projects() {
               <InfoCircleOutlined /> Stats in cards refer to the last {trendingWindowDays} days.
             </Trans>
           </p> */}
-          <TrendingProjects
+          <MemoizedTrendingProjects
             count={20}
             trendingWindowDays={trendingWindowDays}
           />

@@ -74,7 +74,7 @@ export default function useSubgraphQuery<
       return formatGraphResponse(opts.entity, response.data?.data)
     },
     {
-      staleTime: 60000,
+      staleTime: 600000,
       ...reactQueryOptions,
     },
   )

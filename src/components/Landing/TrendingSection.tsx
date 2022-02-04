@@ -1,4 +1,4 @@
-import { Row, Col, Button, Tooltip, Collapse } from 'antd'
+import { Row, Col, Tooltip, Collapse } from 'antd'
 import { DownOutlined, UpOutlined, InfoCircleOutlined } from '@ant-design/icons'
 
 import { CSSProperties, useContext, useState } from 'react'
@@ -7,6 +7,8 @@ import { MemoizedTrendingProjects } from 'components/Projects/TrendingProjects'
 import RankingExplanation from 'components/Projects/RankingExplanation'
 import { Trans } from '@lingui/macro'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
+
+import { isMobile } from 'constants/styles/layouts'
 
 export default function TrendingSection() {
   const {
@@ -21,7 +23,7 @@ export default function TrendingSection() {
     // Light theme uses a slightly lighter background than background-l1
     backgroundColor: isDarkMode ? colors.background.l1 : '#e7e3dc80',
     margin: '150px 0',
-    paddingTop: 40,
+    paddingTop: !isMobile ? 40 : 80,
     paddingLeft: 40,
     paddingRight: 40,
     paddingBottom: 0,
@@ -34,6 +36,7 @@ export default function TrendingSection() {
     marginTop: 20,
     display: 'flex',
     alignItems: 'center',
+    flexWrap: 'wrap',
   }
 
   const arrowIconSize = 14
@@ -42,6 +45,10 @@ export default function TrendingSection() {
     fontSize: arrowIconSize,
     marginLeft: 5,
   }
+
+  const dropdownSelectedBg = isDarkMode
+    ? colors.background.l0
+    : colors.background.brand.secondary
 
   // Close dropdown when clicking anywhere in the window
   window.addEventListener('click', () => setActiveKey(undefined), false)
@@ -75,19 +82,32 @@ export default function TrendingSection() {
             </div>
           }
         >
-          <div onClick={e => e.stopPropagation()}>
+          <div
+            onClick={e => e.stopPropagation()}
+            style={{
+              background: isDarkMode
+                ? colors.background.l2
+                : colors.background.l0,
+            }}
+          >
             <option
-              className={`select-item ${
-                trendingWindow === 7 ? 'selected' : ''
-              }`}
+              className="select-item"
+              style={
+                trendingWindow === 7
+                  ? { backgroundColor: dropdownSelectedBg }
+                  : {}
+              }
               onClick={() => setTrendingWindow(7)}
             >
               7 days
             </option>
             <option
-              className={`select-item ${
-                trendingWindow === 30 ? 'selected' : ''
-              }`}
+              className="select-item"
+              style={
+                trendingWindow === 30
+                  ? { backgroundColor: dropdownSelectedBg }
+                  : {}
+              }
               onClick={() => setTrendingWindow(30)}
             >
               30 days
@@ -104,7 +124,7 @@ export default function TrendingSection() {
         <Col xs={0} lg={8}>
           <img
             className="hide-mobile hide-tablet"
-            style={{ height: 550, marginTop: 20 }}
+            style={{ height: 550, marginTop: 46 }}
             src="/assets/green_orange.png"
             alt="Green orange singing"
           />
@@ -112,26 +132,25 @@ export default function TrendingSection() {
         <Col xs={24} lg={15}>
           <div style={{ paddingBottom: 20 }}>
             <h3 style={headingStyles}>
+              {/* Only way I could get the title wrapping properly on mobile was making each word an element  
+                  Also, used 'nbsp;' because{' '} doesn't work in Trans tag) */}
               <Trans>
-                Trending projects over the last {trendingWindowSelect()}
-              </Trans>{' '}
-              <Tooltip
-                title={<RankingExplanation trendingWindow={trendingWindow} />}
-                placement="bottom"
-              >
-                <InfoCircleOutlined />
-              </Tooltip>
+                <span>Trending</span>&nbsp;<span>projects</span>&nbsp;
+                <span>over</span>&nbsp;<span>the</span>&nbsp;<span>last</span>{' '}
+                {trendingWindowSelect()}
+                <Tooltip
+                  title={<RankingExplanation trendingWindow={trendingWindow} />}
+                  placement="bottom"
+                >
+                  <InfoCircleOutlined />
+                </Tooltip>
+              </Trans>
             </h3>
             <MemoizedTrendingProjects
               count={6}
               trendingWindowDays={trendingWindow}
               isHomePage
             />
-            <Button type="default" style={{ marginBottom: 40, marginTop: 15 }}>
-              <a href="/#/projects/?tab=trending">
-                <Trans>More trending projects</Trans>
-              </a>
-            </Button>
           </div>
         </Col>
       </Row>

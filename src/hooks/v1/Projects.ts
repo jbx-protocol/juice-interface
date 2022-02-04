@@ -201,7 +201,8 @@ export function useTrendingProjects(count: number, days: number) {
       ?.map(p => {
         const stats = p.id ? projectStats[p.id.toString()] : undefined
 
-        // Arbitrary algorithm
+        // Algorithm to rank trending projects:
+        //   -  trendingScore = (volume gained in x days) * (number of payments made in x days)^2
         const trendingScore = stats?.trendingVolume.mul(
           BigNumber.from(stats.paymentsCount).pow(2),
         )

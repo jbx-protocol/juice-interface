@@ -244,10 +244,7 @@
     min-width: 80px;
     text-decoration: underline;
   }
-  .ant-select-selection-item {
-    color: var(--text-header);
-    min-width: 112px;
-  }
+
   .ant-collapse-content {
     position: absolute;
     background: var(--background-l0);
@@ -264,8 +261,5 @@
     font-size: 16px;
     padding: 10px 15px;
     cursor: pointer;
-  }
-  .select-item.selected {
-    background-color: rgb(255, 236, 187); // Only works for light theme
   }
 }

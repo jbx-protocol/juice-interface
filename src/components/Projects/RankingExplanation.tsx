@@ -7,7 +7,7 @@ export default function RankingExplanation({
   trendingWindow: number
 }) {
   const trendingRankingExplanationCodeURL =
-    'https://github.com/jbx-protocol/juice-interface/blob/main/src/hooks/Projects.ts#L136'
+    'https://github.com/jbx-protocol/juice-interface/blob/main/src/hooks/v1/Projects.ts#L204'
   return (
     <Trans>
       Rankings based on number of contributions and volume gained in the last{' '}

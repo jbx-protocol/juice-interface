@@ -16,6 +16,8 @@ import { useLocation } from 'react-router-dom'
 import { useInfiniteProjectsQuery, useProjectsSearch } from 'hooks/v1/Projects'
 import { V1TerminalVersion } from 'models/v1/terminals'
 
+import { ThemeContext } from 'contexts/themeContext'
+
 import { layouts } from 'constants/styles/layouts'
 import { MemoizedTrendingProjects } from './TrendingProjects'
 import ProjectsTabs from './ProjectsTabs'

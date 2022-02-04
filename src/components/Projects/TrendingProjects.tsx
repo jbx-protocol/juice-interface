@@ -1,7 +1,9 @@
 import { InfoCircleOutlined } from '@ant-design/icons'
+import { Trans } from '@lingui/macro'
+import { Button } from 'antd'
 import Grid from 'components/shared/Grid'
 import Loading from 'components/shared/Loading'
-import { useTrendingProjects } from 'hooks/Projects'
+import { useTrendingProjects } from 'hooks/v1/Projects'
 import React from 'react'
 
 import RankingExplanation from './RankingExplanation'
@@ -20,27 +22,37 @@ export function TrendingProjects({
 
   return (
     <div>
-      {projects ? (
-        <Grid gutter={isHomePage ? 10 : undefined}>
-          {projects.map((p, i) => (
-            <TrendingProjectCard
-              project={p}
-              size={isHomePage ? 'sm' : 'lg'}
-              rank={i + 1}
-              key={i}
-              trendingWindowDays={trendingWindowDays}
-            />
-          ))}
-        </Grid>
+      {projects && projects.length ? (
+        <React.Fragment>
+          <Grid gutter={isHomePage ? 10 : undefined}>
+            {projects.map((p, i) => (
+              <TrendingProjectCard
+                project={p}
+                size={isHomePage ? 'sm' : 'lg'}
+                rank={i + 1}
+                key={i}
+                trendingWindowDays={trendingWindowDays}
+              />
+            ))}
+          </Grid>
+          {!isHomePage ? (
+            <p style={{ marginBottom: 40, marginTop: 20, maxWidth: 800 }}>
+              <InfoCircleOutlined />{' '}
+              <RankingExplanation trendingWindow={trendingWindowDays} />
+            </p>
+          ) : (
+            <Button type="default" style={{ marginBottom: 40, marginTop: 15 }}>
+              <a href="/#/projects/?tab=trending">
+                <Trans>More trending projects</Trans>
+              </a>
+            </Button>
+          )}
+        </React.Fragment>
       ) : (
-        <Loading />
+        <div style={{ marginTop: 40 }}>
+          <Loading />
+        </div>
       )}
-      {!isHomePage ? (
-        <p style={{ marginBottom: 40, marginTop: 20, maxWidth: 800 }}>
-          <InfoCircleOutlined />{' '}
-          <RankingExplanation trendingWindow={trendingWindowDays} />
-        </p>
-      ) : null}
     </div>
   )
 }

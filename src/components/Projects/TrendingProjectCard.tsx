@@ -1,4 +1,3 @@
-import { Tooltip } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import Loading from 'components/shared/Loading'
 import ProjectLogo from 'components/shared/ProjectLogo'
@@ -9,7 +8,7 @@ import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { TrendingProject } from 'models/subgraph-entities/project'
 import { CSSProperties, useContext, useMemo } from 'react'
 import { formatWad } from 'utils/formatNumber'
-import { getTerminalVersion } from 'utils/terminal-versions'
+import { getTerminalVersion } from 'utils/v1/terminals'
 
 import { SECONDS_IN_DAY } from 'constants/numbers'
 import { CURRENCY_ETH } from 'constants/currency'
@@ -175,22 +174,16 @@ export default function TrendingProjectCard({
               </span>
             </div>
 
-            {metadata.description && (
-              <Tooltip title={metadata.description} placement="bottom">
-                <div
-                  style={{
-                    maxHeight: 20,
-                    color: colors.text.tertiary,
-                    fontWeight: 500,
-                    fontSize: size === 'sm' ? 13 : 14,
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                  }}
-                >
-                  {metadata.description}
-                </div>
-              </Tooltip>
-            )}
+            <div
+              style={{
+                fontWeight: 400,
+                color: colors.text.secondary,
+                fontSize: 13,
+              }}
+            >
+              From {project.trendingPaymentsCount} payment
+              {project.trendingPaymentsCount > 1 ? 's' : ''}
+            </div>
           </div>
         </div>
       ) : (

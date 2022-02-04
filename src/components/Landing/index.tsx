@@ -8,12 +8,16 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useProjectsQuery } from 'hooks/v1/Projects'
 import { CSSProperties, useContext } from 'react'
 
+import Grid from 'components/shared/Grid'
+
+import ProjectCard from 'components/shared/ProjectCard'
+
 import { ThemeOption } from 'constants/theme/theme-option'
 
-import ProjectsGrid from '../shared/ProjectsGrid'
 import Faq from './Faq'
 import Footer from './Footer'
 import Payments from './Payments'
+import TrendingSection from './TrendingSection'
 
 export default function Landing() {
   const { theme, forThemeOption } = useContext(ThemeContext)
@@ -35,13 +39,26 @@ export default function Landing() {
     </h1>
   )
 
+  const bigSubHeader = (text: string) => (
+    <h2
+      style={{
+        fontSize: '2.1rem',
+        fontWeight: 600,
+        lineHeight: 1.2,
+        margin: 0,
+      }}
+    >
+      {text}
+    </h2>
+  )
+
   const { data: previewProjects } = useProjectsQuery({
     pageSize: 4,
-    filter: 'active',
+    states: { active: true, archived: false },
   })
 
   const smallHeader = (text: string) => (
-    <h2 style={{ fontWeight: 600, margin: 0 }}>{text}</h2>
+    <h3 style={{ fontWeight: 600, margin: 0 }}>{text}</h3>
   )
 
   const listData = [
@@ -62,6 +79,32 @@ export default function Landing() {
     maxWidth: totalMaxWidth,
     margin: '0 auto',
   }
+
+  const statsRowStyles: CSSProperties = {
+    borderTop: `1px solid var(--stroke-tertiary)`,
+    paddingTop: 60,
+  }
+
+  const statsColStyles: CSSProperties = {
+    textAlign: 'center',
+    marginBottom: 40,
+  }
+
+  const statsCol = (header: string, subHeader: string) => (
+    <Col xs={24} md={8} style={statsColStyles}>
+      {bigSubHeader(header)}
+      <div
+        style={{
+          fontWeight: 400,
+          fontSize: '1.1rem',
+          marginTop: 8,
+          color: colors.text.secondary,
+        }}
+      >
+        <Trans>{subHeader}</Trans>
+      </div>
+    </Col>
+  )
 
   function scrollToCreate() {
     document.getElementById('create')?.scrollIntoView({ behavior: 'smooth' })
@@ -190,8 +233,19 @@ export default function Landing() {
               />
             </Col>
           </Row>
+          <Row
+            gutter={40}
+            align="middle"
+            style={{ ...statsRowStyles, display: 'none' }}
+          >
+            {statsCol('292', t`Projects powered by Juicebox`)}
+            {statsCol(`$94,137,431`, t`Raised on Juicebox`)}
+            {statsCol(`32,671`, t`Payments to projects`)}
+          </Row>
         </div>
       </section>
+
+      <TrendingSection />
 
       <section
         style={{
@@ -211,13 +265,18 @@ export default function Landing() {
               {smallHeader(t`Projects using Juicebox`)}
               <div style={{ marginTop: 20 }}>
                 {previewProjects ? (
-                  <ProjectsGrid projects={previewProjects} list />
+                  <Grid
+                    children={previewProjects.map(p => (
+                      <ProjectCard project={p} />
+                    ))}
+                    list
+                  />
                 ) : (
                   <Loading />
                 )}
               </div>
               <div style={{ textAlign: 'center', marginTop: 20 }}>
-                <a href="/#/projects">
+                <a href="/#/projects?tab=all">
                   <Button>
                     <Trans>All projects</Trans>
                   </Button>

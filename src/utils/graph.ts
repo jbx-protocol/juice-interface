@@ -152,6 +152,11 @@ export const formatGraphQuery = <E extends EntityKey, K extends EntityKeys<E>>(
     if (value === undefined) return
     args += (args.length ? ', ' : '') + `${name}: ` + value
   }
+  const formatWhere = (where: WhereConfig<E>) =>
+    `${where.key}${where.operator ? '_' + where.operator : ''}:` +
+    (Array.isArray(where.value)
+      ? `[${where.value.map(v => `"${v}"`).join(',')}]`
+      : `"${where.value}"`)
 
   addArg('text', opts.text ? `"${opts.text}"` : undefined)
   addArg('first', opts.first)
@@ -169,12 +174,8 @@ export const formatGraphQuery = <E extends EntityKey, K extends EntityKeys<E>>(
     'where',
     opts.where
       ? Array.isArray(opts.where)
-        ? `{${opts.where.map(
-            w => ` ${w.key}${w.operator ? '_' + w.operator : ''}: "${w.value}"`,
-          )} }`
-        : `{ ${opts.where.key}${
-            opts.where.operator ? '_' + opts.where.operator : ''
-          }: "${opts.where.value}" }`
+        ? `{${opts.where.map(w => ` ${formatWhere(w)}`)} }`
+        : `{ ${formatWhere(opts.where)} }`
       : undefined,
   )
 

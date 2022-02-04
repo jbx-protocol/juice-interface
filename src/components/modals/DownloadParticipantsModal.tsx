@@ -105,7 +105,7 @@ export default function DownloadParticipantsModal({
 
       setLoading(false)
     } catch (e) {
-      console.log('Error downloading participants', e)
+      console.error('Error downloading participants', e)
       setLoading(false)
     }
   }, [projectId, setLoading, blockNumber, handle, tokenSymbol])

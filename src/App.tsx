@@ -10,6 +10,7 @@ import Navbar from 'components/Navbar'
 import { readNetwork } from 'constants/networks'
 
 import Router from './Router'
+import { isMobile } from 'constants/styles/layouts'
 
 function App() {
   const [switchNetworkModalVisible, setSwitchNetworkModalVisible] =

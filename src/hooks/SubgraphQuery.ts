@@ -1,8 +1,8 @@
 import axios from 'axios'
 import {
-  useQuery,
   useInfiniteQuery,
   UseInfiniteQueryOptions,
+  useQuery,
   UseQueryOptions,
 } from 'react-query'
 
@@ -13,6 +13,7 @@ import {
   formatGraphResponse,
   GraphQueryOpts,
   InfiniteGraphQueryOpts,
+  querySubgraph,
   SubgraphEntities,
   SubgraphError,
   SubgraphQueryReturnTypes,
@@ -39,45 +40,15 @@ export default function useSubgraphQuery<
     readonly [string, GraphQueryOpts<E, K> | null]
   >,
 ) {
-  if (!subgraphUrl) {
-    // This should _only_ happen in development
-    throw new Error('env.REACT_APP_SUBGRAPH_URL is missing')
-  }
   return useQuery<
     GraphResult<E, K[]>,
     Error,
     GraphResult<E, K[]>,
     readonly [string, GraphQueryOpts<E, K> | null]
-  >(
-    ['subgraph-query', opts],
-    async () => {
-      if (!opts) return []
-
-      const response = await axios.post<{
-        errors?: SubgraphError[]
-        data: SubgraphQueryReturnTypes[E]
-      }>(
-        subgraphUrl,
-        {
-          query: formatGraphQuery(opts),
-        },
-        { headers: { 'Content-Type': 'application/json' } },
-      )
-
-      if ('errors' in response.data) {
-        throw new Error(
-          response.data.errors?.[0]?.message ||
-            'Something is wrong with this Graph request',
-        )
-      }
-
-      return formatGraphResponse(opts.entity, response.data?.data)
-    },
-    {
-      staleTime: 60000,
-      ...reactQueryOptions,
-    },
-  )
+  >(['subgraph-query', opts], () => querySubgraph(opts), {
+    staleTime: 60000,
+    ...reactQueryOptions,
+  })
 }
 
 export function useInfiniteSubgraphQuery<

@@ -6,7 +6,10 @@ import { useForm } from 'antd/lib/form/Form'
 import Modal from 'antd/lib/modal/Modal'
 import Project from 'components/Dashboard/Project'
 import { NetworkContext } from 'contexts/networkContext'
-import { ProjectContext, ProjectContextType } from 'contexts/projectContext'
+import {
+  V1ProjectContext,
+  V1ProjectContextType,
+} from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { constants } from 'ethers'
 import { useAppDispatch } from 'hooks/AppDispatch'
@@ -14,19 +17,20 @@ import {
   useAppSelector,
   useEditingFundingCycleSelector,
 } from 'hooks/AppSelector'
-import { useTerminalFee } from 'hooks/TerminalFee'
-import { useDeployProjectTx } from 'hooks/transactor/DeployProjectTx'
+import { useTerminalFee } from 'hooks/v1/TerminalFee'
+import { useDeployProjectTx } from 'hooks/v1/transactor/DeployProjectTx'
 import { V1ContractName } from 'models/v1/contracts'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
 import { PayoutMod, TicketMod } from 'models/mods'
-import { TerminalVersion } from 'models/terminal-version'
+import { V1TerminalVersion } from 'models/v1/terminals'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
 import { fromPerbicent, fromPermille, fromWad } from 'utils/formatNumber'
 import {
   encodeFundingCycleMetadata,
   hasFundingTarget,
+  hasFundingDuration,
 } from 'utils/fundingCycle'
 import {
   cidFromUrl,
@@ -35,7 +39,7 @@ import {
   metadataNameForHandle,
   uploadProjectMetadata,
 } from 'utils/ipfs'
-import { getTerminalAddress } from 'utils/terminal-versions'
+import { getTerminalAddress } from 'utils/v1/terminals'
 
 import BudgetForm from './BudgetForm'
 import ConfirmDeployProject from './ConfirmDeployProject'
@@ -48,7 +52,7 @@ import RestrictedActionsForm, {
 import RulesForm from './RulesForm'
 import TicketingForm, { TicketingFormFields } from './TicketingForm'
 
-const terminalVersion: TerminalVersion = '1.1'
+const terminalVersion: V1TerminalVersion = '1.1'
 
 export default function Create() {
   const { signerNetwork, userAddress } = useContext(NetworkContext)
@@ -433,7 +437,7 @@ export default function Create() {
     [editingFC],
   )
 
-  const project = useMemo<ProjectContextType>(
+  const project = useMemo<V1ProjectContextType>(
     () => ({
       createdAt: new Date().valueOf() / 1000,
       projectType: 'standard',
@@ -474,7 +478,7 @@ export default function Create() {
   const spacing = 40
 
   return (
-    <ProjectContext.Provider value={project}>
+    <V1ProjectContext.Provider value={project}>
       <Row style={{ marginTop: 40 }}>
         <Col
           xs={24}
@@ -707,6 +711,7 @@ export default function Create() {
               setRestrictedActionsFormModalVisible(false)
               setCurrentStep(undefined)
             }}
+            hasFundingDuration={hasFundingDuration(editingFC)}
           />
         </Drawer>
 
@@ -742,6 +747,6 @@ export default function Create() {
           This will erase of your all changes.
         </Modal>
       </Row>
-    </ProjectContext.Provider>
+    </V1ProjectContext.Provider>
   )
 }

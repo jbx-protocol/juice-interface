@@ -1,5 +1,5 @@
 import { Button, Tooltip } from 'antd'
-import { ProjectContext } from 'contexts/projectContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import React, { useContext, useRef, useState } from 'react'
 import { Provider } from 'react-redux'
 import store, { createStore } from 'redux/store'
@@ -19,7 +19,7 @@ export default function ReconfigureFundingModalTrigger({
 }: {
   fundingDuration?: BigNumber
 }) {
-  const { isPreviewMode } = useContext(ProjectContext)
+  const { isPreviewMode } = useContext(V1ProjectContext)
 
   const localStoreRef = useRef<typeof store>()
 

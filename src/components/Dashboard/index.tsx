@@ -1,34 +1,37 @@
 import { Trans } from '@lingui/macro'
 import FeedbackFormLink from 'components/shared/FeedbackFormLink'
 
-import { ProjectContext, ProjectContextType } from 'contexts/projectContext'
-import useBalanceOfProject from 'hooks/contractReader/BalanceOfProject'
-import useCurrentFundingCycleOfProject from 'hooks/contractReader/CurrentFundingCycleOfProject'
-import useCurrentPayoutModsOfProject from 'hooks/contractReader/CurrentPayoutModsOfProject'
-import useCurrentTicketModsOfProject from 'hooks/contractReader/CurrentTicketModsOfProject'
-import useOverflowOfProject from 'hooks/contractReader/OverflowOfProject'
-import useOwnerOfProject from 'hooks/contractReader/OwnerOfProject'
-import useProjectIdForHandle from 'hooks/contractReader/ProjectIdForHandle'
-import useQueuedFundingCycleOfProject from 'hooks/contractReader/QueuedFundingCycleOfProject'
-import useQueuedPayoutModsOfProject from 'hooks/contractReader/QueuedPayoutModsOfProject'
-import useQueuedTicketModsOfProject from 'hooks/contractReader/QueuedTicketModsOfProject'
-import useSymbolOfERC20 from 'hooks/contractReader/SymbolOfERC20'
-import useTokenAddressOfProject from 'hooks/contractReader/TokenAddressOfProject'
-import useUriOfProject from 'hooks/contractReader/UriOfProject'
-import { useCurrencyConverter } from 'hooks/CurrencyConverter'
+import {
+  V1ProjectContext,
+  V1ProjectContextType,
+} from 'contexts/v1/projectContext'
+import useBalanceOfProject from 'hooks/v1/contractReader/BalanceOfProject'
+import useCurrentFundingCycleOfProject from 'hooks/v1/contractReader/CurrentFundingCycleOfProject'
+import useCurrentPayoutModsOfProject from 'hooks/v1/contractReader/CurrentPayoutModsOfProject'
+import useCurrentTicketModsOfProject from 'hooks/v1/contractReader/CurrentTicketModsOfProject'
+import useOverflowOfProject from 'hooks/v1/contractReader/OverflowOfProject'
+import useOwnerOfProject from 'hooks/v1/contractReader/OwnerOfProject'
+import useProjectIdForHandle from 'hooks/v1/contractReader/ProjectIdForHandle'
+import useQueuedFundingCycleOfProject from 'hooks/v1/contractReader/QueuedFundingCycleOfProject'
+import useQueuedPayoutModsOfProject from 'hooks/v1/contractReader/QueuedPayoutModsOfProject'
+import useQueuedTicketModsOfProject from 'hooks/v1/contractReader/QueuedTicketModsOfProject'
+import useSymbolOfERC20 from 'hooks/v1/contractReader/SymbolOfERC20'
+import useTokenAddressOfProject from 'hooks/v1/contractReader/TokenAddressOfProject'
+import useUriOfProject from 'hooks/v1/contractReader/UriOfProject'
+import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
-import { useProjectsQuery } from 'hooks/Projects'
+import { useProjectsQuery } from 'hooks/v1/Projects'
 import { CurrencyOption } from 'models/currency-option'
 import { useEffect, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
-import { getTerminalName, getTerminalVersion } from 'utils/terminal-versions'
+import { getTerminalName, getTerminalVersion } from 'utils/v1/terminals'
 
 import { padding } from 'constants/styles/padding'
 import { layouts } from 'constants/styles/layouts'
-import { projectTypes } from 'constants/project-types'
-import { archivedProjectIds } from 'constants/archived-projects'
+import { projectTypes } from 'constants/v1/projectTypes'
+import { archivedProjectIds } from 'constants/v1/archivedProjects'
 
-import useTerminalOfProject from '../../hooks/contractReader/TerminalOfProject'
+import useTerminalOfProject from '../../hooks/v1/contractReader/TerminalOfProject'
 import Loading from '../shared/Loading'
 import Project from './Project'
 
@@ -94,7 +97,7 @@ export default function Dashboard() {
   const createdAt = projects?.[0]?.createdAt
   const earned = projects?.[0]?.totalPaid
 
-  const project = useMemo<ProjectContextType>(() => {
+  const project = useMemo<V1ProjectContextType>(() => {
     const projectType = projectId
       ? projectTypes[projectId.toNumber()]
       : 'standard'
@@ -174,7 +177,7 @@ export default function Dashboard() {
   if (!projectId || !handle || !metadata) return null
 
   return (
-    <ProjectContext.Provider value={project}>
+    <V1ProjectContext.Provider value={project}>
       <div style={layouts.maxWidth}>
         <Project />
         <div
@@ -185,6 +188,6 @@ export default function Dashboard() {
         </div>
         <FeedbackFormLink projectHandle={handle} />
       </div>
-    </ProjectContext.Provider>
+    </V1ProjectContext.Provider>
   )
 }

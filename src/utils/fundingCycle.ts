@@ -84,6 +84,10 @@ export const hasFundingTarget = (
   fundingCycle: Pick<FundingCycle | EditingFundingCycle, 'target'>,
 ) => fundingCycle.target.lt(constants.MaxUint256)
 
+export const hasFundingDuration = (
+  fundingCycle: Pick<FundingCycle | EditingFundingCycle, 'duration'>,
+) => fundingCycle.duration && !fundingCycle.duration.eq(constants.AddressZero)
+
 /**
  * Mark various funding cycle properties as "unsafe",
  * based on a subjective interpretation.
@@ -119,10 +123,7 @@ export const getUnsafeFundingCycleProperties = (
   /**
    * Duration not set. Reconfigurations can be made at any point without notice.
    */
-  if (
-    !fundingCycle.duration ||
-    fundingCycle.duration.eq(constants.AddressZero)
-  ) {
+  if (!hasFundingDuration(fundingCycle)) {
     configFlags.duration = true
   }
 

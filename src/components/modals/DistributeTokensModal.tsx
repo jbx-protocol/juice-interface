@@ -2,9 +2,9 @@ import { Trans } from '@lingui/macro'
 import { Modal, Space } from 'antd'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import TicketModsList from 'components/shared/TicketModsList'
-import { ProjectContext } from 'contexts/projectContext'
-import useReservedTokensOfProject from 'hooks/contractReader/ReservedTokensOfProject'
-import { useDistributeTokensTx } from 'hooks/transactor/DistributeTokensTx'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
+import useReservedTokensOfProject from 'hooks/v1/contractReader/ReservedTokensOfProject'
+import { useDistributeTokensTx } from 'hooks/v1/transactor/DistributeTokensTx'
 import { useContext, useState } from 'react'
 import { formatWad } from 'utils/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
@@ -22,7 +22,7 @@ export default function DistributeTokensModal({
 }) {
   const [loading, setLoading] = useState<boolean>()
   const { tokenSymbol, currentFC, projectId, currentTicketMods, owner } =
-    useContext(ProjectContext)
+    useContext(V1ProjectContext)
   const distributeTokensTx = useDistributeTokensTx()
 
   const metadata = decodeFundingCycleMetadata(currentFC?.metadata)

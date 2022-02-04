@@ -5,17 +5,16 @@ import Search from 'antd/lib/input/Search'
 import FeedbackFormLink from 'components/shared/FeedbackFormLink'
 import Loading from 'components/shared/Loading'
 
-import { ThemeContext } from 'contexts/themeContext'
-
-import { useInfiniteProjectsQuery, useProjectsSearch } from 'hooks/Projects'
 import { ProjectCategory, ProjectStateFilter } from 'models/project-visibility'
-import { TerminalVersion } from 'models/terminal-version'
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
 
 import Grid from 'components/shared/Grid'
 import ProjectCard from 'components/shared/ProjectCard'
 
 import { useLocation } from 'react-router-dom'
+
+import { useInfiniteProjectsQuery, useProjectsSearch } from 'hooks/v1/Projects'
+import { V1TerminalVersion } from 'models/v1/terminals'
 
 import { layouts } from 'constants/styles/layouts'
 import { MemoizedTrendingProjects } from './TrendingProjects'
@@ -66,7 +65,7 @@ export default function Projects() {
     archived: includeArchived,
   }
 
-  const terminalVersion: TerminalVersion | undefined = useMemo(() => {
+  const terminalVersion: V1TerminalVersion | undefined = useMemo(() => {
     if (includeV1 && !includeV1_1) return '1'
     if (!includeV1 && includeV1_1) return '1.1'
   }, [includeV1, includeV1_1])

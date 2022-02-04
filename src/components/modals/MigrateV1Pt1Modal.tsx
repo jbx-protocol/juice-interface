@@ -1,11 +1,11 @@
 import { Trans } from '@lingui/macro'
 import { Button, Modal } from 'antd'
-import { ProjectContext } from 'contexts/projectContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { BigNumber } from 'ethers'
-import { useAddToBalanceTx } from 'hooks/transactor/AddToBalanceTx'
-import { useMigrateV1ProjectTx } from 'hooks/transactor/MigrateV1ProjectTx'
+import { useAddToBalanceTx } from 'hooks/v1/transactor/AddToBalanceTx'
+import { useMigrateV1ProjectTx } from 'hooks/v1/transactor/MigrateV1ProjectTx'
 import { useContext, useState } from 'react'
-import { getTerminalAddress } from 'utils/terminal-versions'
+import { getTerminalAddress } from 'utils/v1/terminals'
 
 export default function MigrateV1Pt1Modal({
   visible,
@@ -16,7 +16,7 @@ export default function MigrateV1Pt1Modal({
 }) {
   const [loadingAddToBalance, setLoadingAddToBalance] = useState<boolean>()
   const [loadingMigrate, setLoadingMigrate] = useState<boolean>()
-  const { balance, handle } = useContext(ProjectContext)
+  const { balance, handle } = useContext(V1ProjectContext)
   const migrateV1ProjectTx = useMigrateV1ProjectTx()
   const addToBalanceTx = useAddToBalanceTx()
 

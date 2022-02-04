@@ -1,5 +1,0 @@
-export const PROJECT_IDS = {
-  CONSTITUTION_DAO: 36,
-  MOON_DAO: 199,
-  SHARK_DAO: 7,
-}

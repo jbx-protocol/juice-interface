@@ -1,18 +1,19 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { formatWad } from 'utils/formatNumber'
 import { parseEther } from 'ethers/lib/utils'
-import { useCurrencyConverter } from 'hooks/CurrencyConverter'
+import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
 import { currencyName } from 'utils/currency'
 import { weightedRate } from 'utils/math'
 import { t, Trans } from '@lingui/macro'
 import { CurrencyOption } from 'models/currency-option'
 import { useContext, useMemo } from 'react'
 
-import { ProjectContext } from 'contexts/projectContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { Tooltip } from 'antd'
-import { InfoCircleOutlined } from '@ant-design/icons'
 import { ThemeContext } from 'contexts/themeContext'
 import AMMPrices from 'components/shared/AMMPrices'
+
+import TooltipIcon from 'components/shared/TooltipIcon'
 
 import { CURRENCY_ETH } from 'constants/currency'
 
@@ -31,7 +32,7 @@ export default function PayInputSubText({
   payInCurrrency: CurrencyOption
   weiPayAmt: BigNumber | undefined
 }) {
-  const { currentFC, tokenSymbol, tokenAddress } = useContext(ProjectContext)
+  const { currentFC, tokenSymbol, tokenAddress } = useContext(V1ProjectContext)
   const converter = useCurrencyConverter()
   const {
     theme: { colors },
@@ -75,9 +76,15 @@ export default function PayInputSubText({
               overlayStyle={{ minWidth: '300px' }}
               overlayInnerStyle={{ padding: '1rem' }}
             >
-              <span style={{ color: colors.text.action.primary }}>
+              <span
+                style={{
+                  color: colors.text.action.primary,
+                  cursor: 'pointer',
+                  padding: '0.5rem 0',
+                }}
+              >
                 buy {tokenText} on exchange
-                <InfoCircleOutlined style={{ marginLeft: '0.2rem' }} />
+                <TooltipIcon iconStyle={{ marginLeft: '0.2rem' }} />
               </span>
             </Tooltip>
           </Trans>

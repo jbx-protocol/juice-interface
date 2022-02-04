@@ -35,7 +35,7 @@ export default function AMMPrices({
       <TokenAMMPriceRow
         exchangeName="Uniswap"
         tokenSymbol={tokenSymbol}
-        exchangeLink={`https://app.uniswap.org/#/swap?inputCurrency=${tokenAddress}&outputCurrency=ETH`}
+        exchangeLink={`https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=${tokenAddress}`}
         WETHPrice={uniswapPriceData?.WETHPrice.toFixed(0)}
         loading={uniswapLoading}
         style={{ marginBottom: '0.5rem' }}
@@ -43,7 +43,7 @@ export default function AMMPrices({
       <TokenAMMPriceRow
         exchangeName="Sushiswap"
         tokenSymbol={tokenSymbol}
-        exchangeLink={`https://app.sushi.com/swap?inputCurrency=${tokenAddress}&outputCurrency=ETH`}
+        exchangeLink={`https://app.sushi.com/swap?inputCurrency=ETH&outputCurrency=${tokenAddress}`}
         WETHPrice={sushiswapPriceData?.midPrice.toFixed(0)}
         loading={sushiswapLoading}
       />

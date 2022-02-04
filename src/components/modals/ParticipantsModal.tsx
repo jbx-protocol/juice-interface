@@ -11,10 +11,10 @@ import FormattedAddress from 'components/shared/FormattedAddress'
 import Loading from 'components/shared/Loading'
 import UntrackedErc20Notice from 'components/shared/UntrackedErc20Notice'
 
-import { ProjectContext } from 'contexts/projectContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { constants } from 'ethers'
-import useTotalSupplyOfProjectToken from 'hooks/contractReader/TotalSupplyOfProjectToken'
+import useTotalSupplyOfProjectToken from 'hooks/v1/contractReader/TotalSupplyOfProjectToken'
 import { NetworkName } from 'models/network-name'
 import {
   parseParticipantJson,
@@ -24,7 +24,7 @@ import { useContext, useEffect, useMemo, useState } from 'react'
 import { formatPercent, formatWad } from 'utils/formatNumber'
 import { OrderDirection, querySubgraph } from 'utils/graph'
 
-import { indexedProjectERC20s } from 'constants/indexed-project-erc20s'
+import { indexedProjectERC20s } from 'constants/v1/indexedProjectERC20s'
 
 import DownloadParticipantsModal from './DownloadParticipantsModal'
 
@@ -45,7 +45,7 @@ export default function ParticipantsModal({
   const [downloadModalVisible, setDownloadModalVisible] = useState<boolean>()
   const [sortPayerReportsDirection, setSortPayerReportsDirection] =
     useState<OrderDirection>('desc')
-  const { projectId, tokenSymbol, tokenAddress } = useContext(ProjectContext)
+  const { projectId, tokenSymbol, tokenAddress } = useContext(V1ProjectContext)
   const {
     theme: { colors },
   } = useContext(ThemeContext)

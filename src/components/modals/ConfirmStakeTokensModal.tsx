@@ -3,9 +3,9 @@ import { Modal } from 'antd'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { NetworkContext } from 'contexts/networkContext'
-import { ProjectContext } from 'contexts/projectContext'
-import useTotalBalanceOf from 'hooks/contractReader/TotalBalanceOf'
-import { useStakeTokensTx } from 'hooks/transactor/StakeTokensTx'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
+import useTotalBalanceOf from 'hooks/v1/contractReader/TotalBalanceOf'
+import { useStakeTokensTx } from 'hooks/v1/transactor/StakeTokensTx'
 import { useContext, useLayoutEffect, useState } from 'react'
 import { fromWad, parseWad } from 'utils/formatNumber'
 
@@ -19,7 +19,7 @@ export default function ConfirmStakeTokensModal({
   const [loading, setLoading] = useState<boolean>()
   const [stakeAmount, setStakeAmount] = useState<string>()
   const { userAddress } = useContext(NetworkContext)
-  const { tokenSymbol, projectId, terminal } = useContext(ProjectContext)
+  const { tokenSymbol, projectId, terminal } = useContext(V1ProjectContext)
   const stakeTokensTx = useStakeTokensTx()
 
   const ticketsBalance = useTotalBalanceOf(

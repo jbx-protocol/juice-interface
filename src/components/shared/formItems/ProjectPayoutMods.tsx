@@ -11,10 +11,10 @@ import {
   ModalMode,
 } from 'components/shared/formItems/formHelpers'
 import { useForm } from 'antd/lib/form/Form'
-import { ProjectContext } from 'contexts/projectContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { BigNumber, constants, utils } from 'ethers'
-import useContractReader from 'hooks/contractReader/ContractReader'
+import useContractReader from 'hooks/v1/contractReader/ContractReader'
 import { V1ContractName } from 'models/v1/contracts'
 import { CurrencyOption } from 'models/currency-option'
 import { PayoutMod } from 'models/mods'
@@ -76,7 +76,7 @@ export default function ProjectPayoutMods({
   const [editingModType, setEditingModType] = useState<ModType>('address')
   const [settingHandle, setSettingHandle] = useState<string>()
 
-  const { owner } = useContext(ProjectContext)
+  const { owner } = useContext(V1ProjectContext)
 
   useContractReader<BigNumber>({
     contract: V1ContractName.Projects,

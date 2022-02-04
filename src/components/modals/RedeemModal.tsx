@@ -5,12 +5,12 @@ import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 
 import { NetworkContext } from 'contexts/networkContext'
-import { ProjectContext } from 'contexts/projectContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import useClaimableOverflowOf from 'hooks/contractReader/ClaimableOverflowOf'
-import { useRedeemRate } from 'hooks/contractReader/RedeemRate'
-import useTotalBalanceOf from 'hooks/contractReader/TotalBalanceOf'
-import { useRedeemTokensTx } from 'hooks/transactor/RedeemTokensTx'
+import useClaimableOverflowOf from 'hooks/v1/contractReader/ClaimableOverflowOf'
+import { useRedeemRate } from 'hooks/v1/contractReader/RedeemRate'
+import useTotalBalanceOf from 'hooks/v1/contractReader/TotalBalanceOf'
+import { useRedeemTokensTx } from 'hooks/v1/transactor/RedeemTokensTx'
 import { CSSProperties, useContext, useState } from 'react'
 import { formattedNum, formatWad, fromWad, parseWad } from 'utils/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
@@ -35,7 +35,7 @@ export default function RedeemModal({
   } = useContext(ThemeContext)
   const { userAddress } = useContext(NetworkContext)
   const { projectId, tokenSymbol, currentFC, terminal, overflow } =
-    useContext(ProjectContext)
+    useContext(V1ProjectContext)
 
   const fcMetadata = decodeFundingCycleMetadata(currentFC?.metadata)
 

@@ -1,8 +1,8 @@
-import { InfoCircleOutlined } from '@ant-design/icons'
+import { Button, Form, Input, Modal, Space } from 'antd'
 import { t, Trans } from '@lingui/macro'
-import { Button, Form, Input, Modal, Space, Tooltip } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import { useIssueTokensTx } from 'hooks/transactor/IssueTokensTx'
+import TooltipIcon from 'components/shared/TooltipIcon'
+import { useIssueTokensTx } from 'hooks/v1/transactor/IssueTokensTx'
 import { useState } from 'react'
 
 export default function IssueTickets() {
@@ -26,14 +26,12 @@ export default function IssueTickets() {
     <div>
       <Space>
         <Button loading={loading} onClick={() => setModalVisible(true)}>
-          Issue ERC-20 token
+          <Trans>Issue ERC-20 token</Trans>
         </Button>
-        <Tooltip
-          title={t`Issue an ERC-20 to be used as this project's token. Once
+        <TooltipIcon
+          tip={t`Issue an ERC-20 to be used as this project's token. Once
           issued, anyone can claim their existing token balance in the new token.`}
-        >
-          <InfoCircleOutlined style={{ color: undefined }} />
-        </Tooltip>
+        />
       </Space>
 
       <Modal

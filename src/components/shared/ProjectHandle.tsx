@@ -1,7 +1,7 @@
 import { LinkOutlined } from '@ant-design/icons'
 import { BigNumberish } from '@ethersproject/bignumber'
 import { Tooltip } from 'antd'
-import useHandleForProjectId from 'hooks/contractReader/HandleForProjectId'
+import useHandleForProjectId from 'hooks/v1/contractReader/HandleForProjectId'
 import { CSSProperties } from 'react'
 
 export default function ProjectHandle({

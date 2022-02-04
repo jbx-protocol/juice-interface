@@ -5,12 +5,12 @@ import PayoutModsList from 'components/shared/PayoutModsList'
 import ProjectLogo from 'components/shared/ProjectLogo'
 import TicketModsList from 'components/shared/TicketModsList'
 
-import { ProjectContext } from 'contexts/projectContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import {
   useAppSelector,
   useEditingFundingCycleSelector,
 } from 'hooks/AppSelector'
-import { useTerminalFee } from 'hooks/TerminalFee'
+import { useTerminalFee } from 'hooks/v1/TerminalFee'
 import { CurrencyOption } from 'models/currency-option'
 import { useContext } from 'react'
 import {
@@ -19,7 +19,11 @@ import {
   fromPerbicent,
   fromPermille,
 } from 'utils/formatNumber'
-import { hasFundingTarget, isRecurring } from 'utils/fundingCycle'
+import {
+  hasFundingDuration,
+  hasFundingTarget,
+  isRecurring,
+} from 'utils/fundingCycle'
 import { amountSubFee } from 'utils/math'
 import { orEmpty } from 'utils/orEmpty'
 
@@ -28,7 +32,7 @@ import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallot
 export default function ConfirmDeployProject() {
   const editingFC = useEditingFundingCycleSelector()
   const editingProject = useAppSelector(state => state.editingProject.info)
-  const { terminal } = useContext(ProjectContext)
+  const { terminal } = useContext(V1ProjectContext)
   const { payoutMods, ticketMods } = useAppSelector(
     state => state.editingProject,
   )
@@ -110,7 +114,7 @@ export default function ConfirmDeployProject() {
       />
       <Statistic
         title={t`Pay button`}
-        value={orEmpty(editingProject?.metadata.payButton)}
+        value={editingProject?.metadata.payButton ?? t`Pay`}
       />
       <Statistic
         title={t`Pay disclosure`}
@@ -123,7 +127,7 @@ export default function ConfirmDeployProject() {
         />
         <Statistic
           title={t`Token minting`}
-          value={editingFC.ticketPrintingIsAllowed ? 'Allowed' : 'Disabled'}
+          value={editingFC.ticketPrintingIsAllowed ? t`Allowed` : t`Disabled`}
         />
       </Space>
       <Space size="large">
@@ -201,6 +205,16 @@ export default function ConfirmDeployProject() {
           />
         )}
       />
+      {hasFundingDuration(editingFC) ? (
+        <p>
+          <Trans>
+            <strong>Note:</strong> Funding cycle properties will{' '}
+            <strong>not</strong> be editable immediately within a funding cycle.
+            They can only be changed for <strong>upcoming</strong> funding
+            cycles.
+          </Trans>
+        </p>
+      ) : null}
     </Space>
   )
 }

@@ -4,12 +4,12 @@ import { Button, Modal, Space } from 'antd'
 import ERC20TokenBalance from 'components/shared/ERC20TokenBalance'
 import { FormItems } from 'components/shared/formItems'
 import ProjectTokenBalance from 'components/shared/ProjectTokenBalance'
-import { ProjectContext } from 'contexts/projectContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import {
   OperatorPermission,
   useHasPermission,
-} from 'hooks/contractReader/HasPermission'
-import { useSetProjectUriTx } from 'hooks/transactor/SetProjectUriTx'
+} from 'hooks/v1/contractReader/HasPermission'
+import { useSetProjectUriTx } from 'hooks/v1/transactor/SetProjectUriTx'
 import { ProjectMetadataV3 } from 'models/project-metadata'
 import { TokenRef } from 'models/token-ref'
 import { useContext, useEffect, useState } from 'react'
@@ -27,7 +27,7 @@ export default function BalancesModal({
   const [editModalVisible, setEditModalVisible] = useState<boolean>()
   const [loading, setLoading] = useState<boolean>()
   const [editingTokenRefs, setEditingTokenRefs] = useState<TokenRef[]>([])
-  const { owner, metadata } = useContext(ProjectContext)
+  const { owner, metadata } = useContext(V1ProjectContext)
   const setProjectUriTx = useSetProjectUriTx()
 
   useEffect(() => {

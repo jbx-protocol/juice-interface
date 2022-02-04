@@ -8,7 +8,7 @@ import React, { CSSProperties, useContext } from 'react'
 import { formatDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
 
-import { getTerminalVersion } from 'utils/terminal-versions'
+import { getTerminalVersion } from 'utils/v1/terminals'
 
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 

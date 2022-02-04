@@ -12,13 +12,13 @@ import CurrencySymbol from 'components/shared/CurrencySymbol'
 import PayoutModsList from 'components/shared/PayoutModsList'
 import TicketModsList from 'components/shared/TicketModsList'
 
-import { ProjectContext } from 'contexts/projectContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { constants } from 'ethers'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useEditingFundingCycleSelector } from 'hooks/AppSelector'
-import { useTerminalFee } from 'hooks/TerminalFee'
-import { useConfigureProjectTx } from 'hooks/transactor/ConfigureProjectTx'
+import { useTerminalFee } from 'hooks/v1/TerminalFee'
+import { useConfigureProjectTx } from 'hooks/v1/transactor/ConfigureProjectTx'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycleMetadata } from 'models/funding-cycle-metadata'
 import { PayoutMod, TicketMod } from 'models/mods'
@@ -90,7 +90,7 @@ export default function ReconfigureFCModal({
     currentPayoutMods,
     queuedTicketMods,
     currentTicketMods,
-  } = useContext(ProjectContext)
+  } = useContext(V1ProjectContext)
   const editingFC = useEditingFundingCycleSelector()
   const terminalFee = useTerminalFee(terminal?.version)
   const configureProjectTx = useConfigureProjectTx()

@@ -5,13 +5,13 @@ import CurrencySymbol from 'components/shared/CurrencySymbol'
 import { getTotalPercentage } from 'components/shared/formItems/formHelpers'
 import Mod from 'components/shared/Mod'
 
-import { ProjectContext } from 'contexts/projectContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { BigNumber, constants } from 'ethers'
 import {
   OperatorPermission,
   useHasPermission,
-} from 'hooks/contractReader/HasPermission'
-import { useSetPayoutModsTx } from 'hooks/transactor/SetPayoutModsTx'
+} from 'hooks/v1/contractReader/HasPermission'
+import { useSetPayoutModsTx } from 'hooks/v1/transactor/SetPayoutModsTx'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
 import { PayoutMod } from 'models/mods'
@@ -43,7 +43,7 @@ export default function PayoutModsList({
   const [modalVisible, setModalVisible] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
   const [editingMods, setEditingMods] = useState<PayoutMod[]>()
-  const { owner } = useContext(ProjectContext)
+  const { owner } = useContext(V1ProjectContext)
   const setPayoutModsTx = useSetPayoutModsTx()
 
   const { editableMods, lockedMods } = useMemo(() => {

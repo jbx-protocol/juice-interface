@@ -2,12 +2,12 @@ import { Space, Tooltip } from 'antd'
 import { t } from '@lingui/macro'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { CardSection } from 'components/shared/CardSection'
-import { ProjectContext } from 'contexts/projectContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import {
   OperatorPermission,
   useHasPermission,
-} from 'hooks/contractReader/HasPermission'
+} from 'hooks/v1/contractReader/HasPermission'
 import { useContext, useState } from 'react'
 
 import { fundingCycleRiskCount } from 'utils/fundingCycle'
@@ -29,7 +29,7 @@ export default function FundingCycles({
   const [selectedTab, setSelectedTab] = useState<TabOption>('current')
   const [hoverTab, setHoverTab] = useState<TabOption>()
 
-  const { projectId, currentFC, queuedFC } = useContext(ProjectContext)
+  const { projectId, currentFC, queuedFC } = useContext(V1ProjectContext)
 
   const {
     theme: { colors },

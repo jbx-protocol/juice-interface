@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-02-01 01:54\n"
+"PO-Revision-Date: 2022-02-04 01:42\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -103,6 +103,14 @@ msgstr "<0>进一步了解</0> 溢出。"
 #: src/components/modals/MigrateV1Pt1Modal.tsx
 msgid "<0>NOTE:</0> This project has a balance of 0. Projects cannot be migrated without a balance. To migrate this project, first pay it or use the button below to deposit 1 wei (0.000000000000000001 or 10<1>-18</1> ETH)."
 msgstr "<0>注意：</0> 该项目余额为零，无法迁移。如果要迁移该项目，先直接支付或是通过下方按钮存入 1 wei （0.000000000000000001 or 10<1>-18</1> ETH）。"
+
+#: src/components/Create/ConfirmDeployProject.tsx
+msgid "<0>Note:</0> Funding cycle properties will <1>not</1> be editable immediately within a funding cycle. They can only be changed for <2>upcoming</2> funding cycles."
+msgstr ""
+
+#: src/components/Create/RestrictedActionsForm.tsx
+msgid "<0>Note:</0> These properties will <1>not</1> be editable immediately within a funding cycle. They can only be changed for <2>upcoming</2> funding cycles."
+msgstr ""
 
 #: src/components/modals/ConfirmUnstakeTokensModal.tsx
 msgid "<0>Note:</0> Tokens cannot be claimed because no ERC20 token has been issued for this project. ERC20 tokens must be issued by the project owner."
@@ -233,6 +241,7 @@ msgstr ""
 msgid "Allow minting tokens"
 msgstr "允许铸造代币"
 
+#: src/components/Create/ConfirmDeployProject.tsx
 #: src/components/FundingCycle/FundingCycleDetails.tsx
 msgid "Allowed"
 msgstr "允许"
@@ -450,6 +459,7 @@ msgstr "设计你的项目"
 msgid "Details"
 msgstr "详情"
 
+#: src/components/Create/ConfirmDeployProject.tsx
 #: src/components/FundingCycle/FundingCycleDetails.tsx
 msgid "Disabled"
 msgstr "已禁用"
@@ -690,8 +700,8 @@ msgid "How have the contracts been tested?"
 msgstr "这些合约是如何被测试的？"
 
 #: src/components/shared/formItems/ProjectDuration.tsx
-msgid "How long one funding cycle will last. Changes to upcoming funding cycles will only take effect once the current cycle has ended."
-msgstr "筹款周期持续多久。对之后周期的修改，只会在当前周期结束后生效。"
+msgid "How long one funding cycle will last. Funding cycle <0>reconfigurations</0> will only take effect for <1>upcoming</1> funding cycles, i.e. once a current funding cycle has ended."
+msgstr ""
 
 #: src/components/Create/index.tsx
 msgid "How your project will distribute funds."
@@ -923,6 +933,7 @@ msgstr "暂停接受付款"
 msgid "Paused"
 msgstr "已暂停"
 
+#: src/components/Create/ConfirmDeployProject.tsx
 #: src/components/Dashboard/Pay/index.tsx
 #: src/components/Dashboard/ProjectActivity/index.tsx
 #: src/components/modals/ConfirmPayOwnerModal/index.tsx

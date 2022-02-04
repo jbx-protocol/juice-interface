@@ -8,7 +8,7 @@ msgstr ""
 "Language: ru\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-02-01 01:54\n"
+"PO-Revision-Date: 2022-02-04 01:42\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -102,6 +102,14 @@ msgstr "<0>Узнайте больше</0> о переполнении."
 
 #: src/components/modals/MigrateV1Pt1Modal.tsx
 msgid "<0>NOTE:</0> This project has a balance of 0. Projects cannot be migrated without a balance. To migrate this project, first pay it or use the button below to deposit 1 wei (0.000000000000000001 or 10<1>-18</1> ETH)."
+msgstr ""
+
+#: src/components/Create/ConfirmDeployProject.tsx
+msgid "<0>Note:</0> Funding cycle properties will <1>not</1> be editable immediately within a funding cycle. They can only be changed for <2>upcoming</2> funding cycles."
+msgstr ""
+
+#: src/components/Create/RestrictedActionsForm.tsx
+msgid "<0>Note:</0> These properties will <1>not</1> be editable immediately within a funding cycle. They can only be changed for <2>upcoming</2> funding cycles."
 msgstr ""
 
 #: src/components/modals/ConfirmUnstakeTokensModal.tsx
@@ -233,6 +241,7 @@ msgstr ""
 msgid "Allow minting tokens"
 msgstr "Разрешить майнинг токенов"
 
+#: src/components/Create/ConfirmDeployProject.tsx
 #: src/components/FundingCycle/FundingCycleDetails.tsx
 msgid "Allowed"
 msgstr ""
@@ -450,6 +459,7 @@ msgstr "Создай свой проект"
 msgid "Details"
 msgstr "Подробности"
 
+#: src/components/Create/ConfirmDeployProject.tsx
 #: src/components/FundingCycle/FundingCycleDetails.tsx
 msgid "Disabled"
 msgstr ""
@@ -690,8 +700,8 @@ msgid "How have the contracts been tested?"
 msgstr "Как проверялись контракты?"
 
 #: src/components/shared/formItems/ProjectDuration.tsx
-msgid "How long one funding cycle will last. Changes to upcoming funding cycles will only take effect once the current cycle has ended."
-msgstr "Продолжительность одного цикла финансирования. Изменения в предстоящие циклы финансирования вступят в силу только после окончания текущего цикла."
+msgid "How long one funding cycle will last. Funding cycle <0>reconfigurations</0> will only take effect for <1>upcoming</1> funding cycles, i.e. once a current funding cycle has ended."
+msgstr ""
 
 #: src/components/Create/index.tsx
 msgid "How your project will distribute funds."
@@ -922,6 +932,7 @@ msgstr ""
 msgid "Paused"
 msgstr "Приостановлено"
 
+#: src/components/Create/ConfirmDeployProject.tsx
 #: src/components/Dashboard/Pay/index.tsx
 #: src/components/Dashboard/ProjectActivity/index.tsx
 #: src/components/modals/ConfirmPayOwnerModal/index.tsx

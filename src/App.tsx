@@ -20,8 +20,6 @@ function App() {
 
   const networkName = readNetwork.name
 
-  const isMobile = window.innerWidth <= 900
-
   const supportedNetworks: NetworkName[] = [
     NetworkName.mainnet,
     NetworkName.rinkeby,

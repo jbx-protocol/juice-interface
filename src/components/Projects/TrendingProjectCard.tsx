@@ -7,7 +7,7 @@ import { constants } from 'ethers'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { TrendingProject } from 'models/subgraph-entities/project'
 import { CSSProperties, useContext, useMemo } from 'react'
-import { formatWad } from 'utils/formatNumber'
+import { formattedNum, formatWad } from 'utils/formatNumber'
 import { getTerminalVersion } from 'utils/v1/terminals'
 
 import { SECONDS_IN_DAY } from 'constants/numbers'
@@ -174,7 +174,7 @@ export default function TrendingProjectCard({
                 fontSize: 13,
               }}
             >
-              From {project.trendingPaymentsCount} payment
+              From {formattedNum(project.trendingPaymentsCount)} payment
               {project.trendingPaymentsCount > 1 ? 's' : ''}
             </div>
           </div>

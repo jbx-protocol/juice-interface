@@ -16,13 +16,11 @@ import { CURRENCY_ETH } from 'constants/currency'
 export default function TrendingProjectCard({
   project,
   size,
-  bg,
   rank,
   trendingWindowDays,
 }: {
   project: TrendingProject
   size?: 'sm' | 'lg'
-  bg?: string // Used on homepage
   rank: number
   trendingWindowDays: number
 }) {
@@ -36,11 +34,6 @@ export default function TrendingProjectCard({
     whiteSpace: 'pre',
     overflow: 'hidden',
     padding: '25px 20px',
-    backgroundColor: bg,
-    // Shows darker border when background is set
-    border: `1px solid ${
-      bg ? colors.stroke.secondary : colors.stroke.tertiary
-    }`,
   }
 
   const rankStyle: CSSProperties = {

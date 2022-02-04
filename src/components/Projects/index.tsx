@@ -30,8 +30,7 @@ type OrderByOption = 'createdAt' | 'totalPaid'
 const pageSize = 20
 
 export default function Projects() {
-  // Checks if user came from homepage trending section,
-  // in which case auto open trending tab
+  // Checks URL to see if tab has been set
   const location = useLocation()
   const params = new URLSearchParams(location.search)
   let tab: ProjectCategory | undefined
@@ -269,11 +268,6 @@ export default function Projects() {
         </div>
       ) : selectedTab === 'trending' ? (
         <div style={{ paddingBottom: 50 }}>
-          {/* <p>
-            <Trans>
-              <InfoCircleOutlined /> Stats in cards refer to the last {trendingWindowDays} days.
-            </Trans>
-          </p> */}
           <MemoizedTrendingProjects
             count={20}
             trendingWindowDays={trendingWindowDays}

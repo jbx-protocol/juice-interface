@@ -16,10 +16,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { constants } from 'ethers'
 import useTotalSupplyOfProjectToken from 'hooks/v1/contractReader/TotalSupplyOfProjectToken'
 import { NetworkName } from 'models/network-name'
-import {
-  parseParticipantJson,
-  Participant,
-} from 'models/subgraph-entities/participant'
+import { Participant } from 'models/subgraph-entities/participant'
 import { useContext, useEffect, useMemo, useState } from 'react'
 import { formatPercent, formatWad } from 'utils/formatNumber'
 import { OrderDirection, querySubgraph } from 'utils/graph'
@@ -60,52 +57,45 @@ export default function ParticipantsModal({
       return
     }
 
-    querySubgraph(
-      {
-        entity: 'participant',
-        keys: [
-          'wallet',
-          'totalPaid',
-          'lastPaidTimestamp',
-          'balance',
-          'stakedBalance',
-        ],
-        first: pageSize,
-        skip: pageNumber * pageSize,
-        orderBy: sortPayerReports,
-        orderDirection: sortPayerReportsDirection,
-        where: projectId
-          ? [
-              {
-                key: 'project',
-                value: projectId.toString(),
-              },
-              {
-                key: 'balance',
-                value: 0,
-                operator: 'gt',
-              },
-              {
-                key: 'wallet',
-                value: constants.AddressZero,
-                operator: 'not',
-              },
-            ]
-          : undefined,
-      },
-      res => {
-        if (!res) return
-
-        setParticipants(participants => {
-          const newParticipants = [...participants]
-          newParticipants.push(
-            ...res.participants.map(e => parseParticipantJson(e)),
-          )
-          return newParticipants
-        })
-        setLoading(false)
-      },
-    )
+    querySubgraph({
+      entity: 'participant',
+      keys: [
+        'wallet',
+        'totalPaid',
+        'lastPaidTimestamp',
+        'balance',
+        'stakedBalance',
+      ],
+      first: pageSize,
+      skip: pageNumber * pageSize,
+      orderBy: sortPayerReports,
+      orderDirection: sortPayerReportsDirection,
+      where: projectId
+        ? [
+            {
+              key: 'project',
+              value: projectId.toString(),
+            },
+            {
+              key: 'balance',
+              value: 0,
+              operator: 'gt',
+            },
+            {
+              key: 'wallet',
+              value: constants.AddressZero,
+              operator: 'not',
+            },
+          ]
+        : undefined,
+    }).then(res => {
+      setParticipants(curr => {
+        const newParticipants = [...curr]
+        newParticipants.push(...res)
+        return newParticipants
+      })
+      setLoading(false)
+    })
   }, [
     pageNumber,
     projectId,

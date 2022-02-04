@@ -1,16 +1,15 @@
+import { t, Trans } from '@lingui/macro'
 import { Modal } from 'antd'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import UntrackedErc20Notice from 'components/shared/UntrackedErc20Notice'
-import { t, Trans } from '@lingui/macro'
 
-import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { NetworkName } from 'models/network-name'
-import { parseParticipantJson } from 'models/subgraph-entities/participant'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { fromWad } from 'utils/formatNumber'
-import { querySubgraph } from 'utils/graph'
+import { querySubgraphExhaustive } from 'utils/graph'
 
 import { readProvider } from 'constants/readProvider'
 import { indexedProjectERC20s } from 'constants/v1/indexedProjectERC20s'
@@ -37,11 +36,10 @@ export default function DownloadParticipantsModal({
     })
   }, [])
 
-  const download = useCallback(() => {
-    setLoading(true)
+  const download = useCallback(async () => {
+    if (blockNumber === undefined || !projectId) return
 
-    const pageSize = 1000
-    let pageNumber = 0
+    setLoading(true)
 
     const rows = [
       [
@@ -54,83 +52,62 @@ export default function DownloadParticipantsModal({
       ], // CSV header row
     ]
 
-    function query() {
-      querySubgraph(
-        {
-          entity: 'participant',
-          keys: [
-            'wallet',
-            'totalPaid',
-            'lastPaidTimestamp',
-            'balance',
-            'stakedBalance',
-            'unstakedBalance',
-          ],
-          first: pageSize,
-          skip: pageSize * pageNumber,
-          orderBy: 'balance',
-          orderDirection: 'desc',
-          block: blockNumber
-            ? {
-                number: blockNumber,
-              }
-            : undefined,
-          where: projectId
-            ? {
-                key: 'project',
-                value: projectId.toString(),
-              }
-            : undefined,
+    try {
+      const participants = await querySubgraphExhaustive({
+        entity: 'participant',
+        keys: [
+          'wallet',
+          'totalPaid',
+          'balance',
+          'stakedBalance',
+          'unstakedBalance',
+        ],
+        orderBy: 'balance',
+        orderDirection: 'desc',
+        block: {
+          number: blockNumber,
         },
-        res => {
-          if (!res) return
-
-          res.participants.forEach(e => {
-            const p = parseParticipantJson(e)
-
-            let date = new Date((p.lastPaidTimestamp ?? 0) * 1000).toUTCString()
-
-            if (date.includes(',')) date = date.split(',')[1]
-
-            rows.push([
-              p.wallet ?? '--',
-              fromWad(p.balance),
-              fromWad(p.stakedBalance),
-              fromWad(p.unstakedBalance),
-              fromWad(p.totalPaid),
-              date,
-            ])
-          })
-
-          const expectNextPage =
-            res.participants.length && res.participants.length % pageSize === 0
-
-          if (expectNextPage) {
-            pageNumber++
-            query()
-          } else {
-            setLoading(false)
-
-            // Encode CSV content and download
-            const csvContent =
-              'data:text/csv;charset=utf-8,' +
-              rows.map(e => e.join(',')).join('\n')
-            const encodedUri = encodeURI(csvContent)
-            const link = document.createElement('a')
-            link.setAttribute('href', encodedUri)
-            link.setAttribute(
-              'download',
-              `@${handle}_holders-block${blockNumber}.csv`,
-            )
-            document.body.appendChild(link)
-
-            link.click()
-          }
+        where: {
+          key: 'project',
+          value: projectId.toString(),
         },
+      })
+
+      if (!participants) throw new Error('No data.')
+
+      participants.forEach(p => {
+        let date = new Date((p.lastPaidTimestamp ?? 0) * 1000).toUTCString()
+
+        if (date.includes(',')) date = date.split(',')[1]
+
+        rows.push([
+          p.wallet ?? '--',
+          fromWad(p.balance),
+          fromWad(p.stakedBalance),
+          fromWad(p.unstakedBalance),
+          fromWad(p.totalPaid),
+          date,
+        ])
+      })
+
+      const csvContent =
+        'data:text/csv;charset=utf-8,' + rows.map(e => e.join(',')).join('\n')
+      const encodedUri = encodeURI(csvContent)
+      const link = document.createElement('a')
+      link.setAttribute('href', encodedUri)
+      link.setAttribute(
+        'download',
+        `@${handle}_holders-block${blockNumber}.csv`,
       )
-    }
+      document.body.appendChild(link)
 
-    query()
+      link.click()
+
+      setLoading(false)
+    } catch (e) {
+      console.log('Error downloading participants', e)
+      setLoading(false)
+    }
   }, [projectId, setLoading, blockNumber, handle, tokenSymbol])
 
   const erc20IsUntracked =
@@ -156,11 +133,12 @@ export default function DownloadParticipantsModal({
           <Trans>Download CSV of {tokenSymbol || t`token`} holders</Trans>
         </h4>
 
-        <p style={{ padding: 10, background: colors.background.l1 }}>
-          {erc20IsUntracked && (
+        {erc20IsUntracked && (
+          <p style={{ padding: 10, background: colors.background.l1 }}>
+            (
             <UntrackedErc20Notice tokenSymbol={tokenSymbol} />
-          )}
-        </p>
+          </p>
+        )}
 
         <label style={{ display: 'block', marginTop: 20, marginBottom: 5 }}>
           <Trans>Block number</Trans>

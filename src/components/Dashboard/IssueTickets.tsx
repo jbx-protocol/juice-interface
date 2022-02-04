@@ -1,4 +1,5 @@
 import { Button, Form, Input, Modal, Space } from 'antd'
+import { t, Trans } from '@lingui/macro'
 import { useForm } from 'antd/lib/form/Form'
 import TooltipIcon from 'components/shared/TooltipIcon'
 import { useIssueTokensTx } from 'hooks/v1/transactor/IssueTokensTx'
@@ -25,30 +26,32 @@ export default function IssueTickets() {
     <div>
       <Space>
         <Button loading={loading} onClick={() => setModalVisible(true)}>
-          Issue ERC-20 token
+          <Trans>Issue ERC-20 token</Trans>
         </Button>
         <TooltipIcon
-          tip="Issue an ERC-20 to be used as this project's token. Once
-          issued, anyone can claim their existing token balance in the new token."
+          tip={t`Issue an ERC-20 to be used as this project's token. Once
+          issued, anyone can claim their existing token balance in the new token.`}
         />
       </Space>
 
       <Modal
         visible={modalVisible}
-        title="Issue ERC-20 token"
-        okText="Issue token"
+        title={t`Issue ERC-20 token`}
+        okText={t`Issue token`}
         onOk={issue}
         onCancel={() => setModalVisible(false)}
       >
         <p>
-          Issue an ERC-20 token for this project. Once issued, anyone can claim
-          their existing token balance in the new token.
+          <Trans>
+            Issue an ERC-20 token for this project. Once issued, anyone can
+            claim their existing token balance in the new token.
+          </Trans>
         </p>
         <Form form={form} layout="vertical">
-          <Form.Item name="name" label="Token name">
-            <Input placeholder="Project Token" />
+          <Form.Item name="name" label={t`Token name`}>
+            <Input placeholder={t`Project Token`} />
           </Form.Item>
-          <Form.Item name="symbol" label="Token symbol">
+          <Form.Item name="symbol" label={t`Token symbol`}>
             <Input
               placeholder="PRJ"
               onChange={e =>

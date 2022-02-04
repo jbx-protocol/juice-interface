@@ -1,32 +1,35 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { ProjectState } from 'models/project-visibility'
-import { Project } from 'models/subgraph-entities/project'
+
+import { ProjectStateFilter } from 'models/project-visibility'
+import { Project, TrendingProject } from 'models/subgraph-entities/project'
 import { V1TerminalVersion } from 'models/v1/terminals'
 import { EntityKeys, GraphQueryOpts, InfiniteGraphQueryOpts } from 'utils/graph'
 import { getTerminalAddress } from 'utils/v1/terminals'
+
+import { SECONDS_IN_DAY } from 'constants/numbers'
 
 import { archivedProjectIds } from '../../constants/v1/archivedProjects'
 import useSubgraphQuery, { useInfiniteSubgraphQuery } from '../SubgraphQuery'
 
 // Take just an object that might contain an ID. That way we can support
 // arbitrary `keys` properties.
-function filterOutArchivedProjects<T extends { id?: BigNumber }>(
+function filterByProjectState<T extends { id?: BigNumber }>(
   data: T[],
-  filter?: ProjectState,
+  filter?: ProjectStateFilter,
 ): T[] {
-  switch (filter) {
-    case 'active':
-      return data?.filter(
-        project =>
-          project?.id && !archivedProjectIds.includes(project.id.toNumber()),
-      )
-    case 'archived':
-      return data?.filter(
-        project =>
-          project.id && archivedProjectIds.includes(project.id.toNumber()),
-      )
-    default:
-      return data
+  if (filter?.active && !filter?.archived) {
+    return data?.filter(
+      project =>
+        project?.id && !archivedProjectIds.includes(project.id.toNumber()),
+    )
+  } else if (!filter?.active && filter?.archived) {
+    return data?.filter(
+      project =>
+        project.id && archivedProjectIds.includes(project.id.toNumber()),
+    )
+  } else {
+    // If both or neither are set, show everything
+    return data
   }
 }
 
@@ -38,7 +41,7 @@ interface ProjectsOptions {
   orderBy?: 'createdAt' | 'currentBalance' | 'totalPaid'
   orderDirection?: 'asc' | 'desc'
   pageSize?: number
-  filter?: ProjectState
+  states?: ProjectStateFilter
   keys?: (keyof Project)[]
   terminalVersion?: V1TerminalVersion
   searchText?: string
@@ -105,7 +108,7 @@ export function useProjectsQuery(opts: ProjectsOptions) {
     },
     {
       staleTime,
-      select: data => filterOutArchivedProjects(data, opts.filter),
+      select: data => filterByProjectState(data, opts.states),
     },
   )
 }
@@ -125,10 +128,9 @@ export function useProjectsSearch(handle: string | undefined) {
   )
 }
 
-export function useTrendingProjects() {
-  const secondsInWeek = 7 * 24 * 60 * 60
-
-  const payments = useSubgraphQuery({
+// Returns projects with highest % volume increase in last week
+export function useTrendingProjects(count: number, days: number) {
+  const { data: payments } = useSubgraphQuery({
     first: 1000,
     entity: 'payEvent',
     keys: [
@@ -142,32 +144,133 @@ export function useTrendingProjects() {
       {
         key: 'timestamp',
         value: parseInt(
-          (new Date().valueOf() / 1000 - secondsInWeek).toString(),
+          (new Date().valueOf() / 1000 - days * SECONDS_IN_DAY).toString(),
         ),
         operator: 'gte',
       },
     ],
   })
 
-  if (!payments.data) return
+  // Project data mapped trending data calculated from payments
+  const projectStats = (payments ?? []).reduce(
+    (acc, curr) => {
+      const projectId = curr.project?.toString()
 
-  const mapped = payments.data.reduce((acc, curr) => {
-    const projectId = curr.project?.toString()
+      return projectId
+        ? {
+            ...acc,
+            [projectId]: {
+              trendingVolume: BigNumber.from(
+                acc[projectId]?.trendingVolume ?? 0,
+              ).add(curr.amount),
+              paymentsCount: (acc[projectId]?.paymentsCount ?? 0) + 1,
+            },
+          }
+        : acc
+    },
+    {} as Record<
+      string,
+      {
+        trendingVolume: BigNumber
+        paymentsCount: number
+      }
+    >,
+  )
 
-    if (!projectId) return acc
+  const projectIds = Object.keys(projectStats)
 
-    return {
+  // Query project data for all trending project IDs
+  const projects = useSubgraphQuery(
+    projectIds.length
+      ? {
+          entity: 'project',
+          keys,
+          where: {
+            key: 'id',
+            value: projectIds,
+            operator: 'in',
+          },
+        }
+      : null,
+  )
+
+  return {
+    ...projects,
+    // Return TrendingProjects sorted by `trendingScore`
+    data: projects.data
+      ?.map(p => {
+        const stats = p.id ? projectStats[p.id.toString()] : undefined
+
+        // Algorithm to rank trending projects:
+        //   -  trendingScore = (volume gained in x days) * (number of payments made in x days)^2
+        const trendingScore = stats?.trendingVolume.mul(
+          BigNumber.from(stats.paymentsCount).pow(2),
+        )
+
+        return {
+          ...p,
+          trendingScore,
+          trendingVolume: stats?.trendingVolume,
+          trendingPaymentsCount: stats?.paymentsCount,
+        } as TrendingProject
+      })
+      .sort((a, b) => (a.trendingScore?.gt(b.trendingScore ?? 0) ? -1 : 1))
+      .slice(0, count),
+  }
+}
+
+// Query all projects that a wallet has previously made payments to
+export function useMyProjectsQuery(wallet: string | undefined) {
+  const { data: payments } = useSubgraphQuery(
+    wallet
+      ? {
+          entity: 'payEvent',
+          first: 1000,
+          orderBy: 'timestamp',
+          orderDirection: 'desc',
+          keys: [
+            'timestamp',
+            {
+              entity: 'project',
+              keys: ['id'],
+            },
+          ],
+          where: [
+            {
+              key: 'beneficiary',
+              value: wallet,
+            },
+          ],
+        }
+      : null,
+  )
+
+  const ids = payments?.reduce(
+    (acc, curr) => [
       ...acc,
-      [projectId]: BigNumber.from(acc[projectId] ?? 0).add(curr.amount),
-    }
-  }, {} as Record<string, BigNumber>)
+      ...(curr.project
+        ? acc.includes(curr.project.toString())
+          ? []
+          : [curr.project.toString()]
+        : []),
+    ],
+    [] as string[],
+  )
 
-  const sorted = Object.keys(mapped)
-    .sort((a, b) => (mapped[a].gt(mapped[b]) ? -1 : 1))
-    .slice(0, 8)
-    .map(x => BigNumber.from(x))
-
-  return sorted
+  return useSubgraphQuery(
+    ids
+      ? {
+          entity: 'project',
+          first: 1000,
+          keys,
+          where: {
+            key: 'id',
+            operator: 'in',
+            value: ids,
+          },
+        }
+      : null,
+  )
 }
 
 export function useInfiniteProjectsQuery(opts: ProjectsOptions) {
@@ -178,7 +281,7 @@ export function useInfiniteProjectsQuery(opts: ProjectsOptions) {
       select: data => ({
         ...data,
         pages: data.pages.map(pageData =>
-          filterOutArchivedProjects(pageData, opts.filter),
+          filterByProjectState(pageData, opts.states),
         ),
       }),
     },

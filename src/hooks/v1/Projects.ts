@@ -3,8 +3,15 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { ProjectStateFilter } from 'models/project-visibility'
 import { Project, TrendingProject } from 'models/subgraph-entities/project'
 import { V1TerminalVersion } from 'models/v1/terminals'
-import { EntityKeys, GraphQueryOpts, InfiniteGraphQueryOpts } from 'utils/graph'
+import {
+  EntityKeys,
+  GraphQueryOpts,
+  InfiniteGraphQueryOpts,
+  querySubgraphExhaustive,
+} from 'utils/graph'
 import { getTerminalAddress } from 'utils/v1/terminals'
+
+import { useEffect, useState } from 'react'
 
 import { SECONDS_IN_DAY } from 'constants/numbers'
 
@@ -130,64 +137,79 @@ export function useProjectsSearch(handle: string | undefined) {
 
 // Returns projects with highest % volume increase in last week
 export function useTrendingProjects(count: number, days: number) {
-  const { data: payments } = useSubgraphQuery({
-    first: 1000,
-    entity: 'payEvent',
-    keys: [
-      'amount',
-      {
-        entity: 'project',
-        keys: ['id'],
-      },
-    ],
-    where: [
-      {
-        key: 'timestamp',
-        value: parseInt(
-          (new Date().valueOf() / 1000 - days * SECONDS_IN_DAY).toString(),
-        ),
-        operator: 'gte',
-      },
-    ],
-  })
-
-  // Project data mapped trending data calculated from payments
-  const projectStats = (payments ?? []).reduce(
-    (acc, curr) => {
-      const projectId = curr.project?.toString()
-
-      return projectId
-        ? {
-            ...acc,
-            [projectId]: {
-              trendingVolume: BigNumber.from(
-                acc[projectId]?.trendingVolume ?? 0,
-              ).add(curr.amount),
-              paymentsCount: (acc[projectId]?.paymentsCount ?? 0) + 1,
-            },
-          }
-        : acc
-    },
-    {} as Record<
+  const [projectStats, setProjectStats] = useState<
+    Record<
       string,
       {
         trendingVolume: BigNumber
         paymentsCount: number
       }
-    >,
-  )
+    >
+  >()
 
-  const projectIds = Object.keys(projectStats)
+  useEffect(() => {
+    const loadPayments = async () => {
+      const payments = await querySubgraphExhaustive({
+        entity: 'payEvent',
+        keys: [
+          'amount',
+          {
+            entity: 'project',
+            keys: ['id'],
+          },
+        ],
+        where: [
+          {
+            key: 'timestamp',
+            value: parseInt(
+              (new Date().valueOf() / 1000 - days * SECONDS_IN_DAY).toString(),
+            ),
+            operator: 'gte',
+          },
+        ],
+      })
+
+      // Project data mapped trending data calculated from payments
+      setProjectStats(
+        (payments ?? []).reduce(
+          (acc, curr) => {
+            const projectId = curr.project?.toString()
+
+            return projectId
+              ? {
+                  ...acc,
+                  [projectId]: {
+                    trendingVolume: BigNumber.from(
+                      acc[projectId]?.trendingVolume ?? 0,
+                    ).add(curr.amount),
+                    paymentsCount: (acc[projectId]?.paymentsCount ?? 0) + 1,
+                  },
+                }
+              : acc
+          },
+          {} as Record<
+            string,
+            {
+              trendingVolume: BigNumber
+              paymentsCount: number
+            }
+          >,
+        ),
+      )
+    }
+
+    loadPayments()
+  }, [count, days])
 
   // Query project data for all trending project IDs
   const projects = useSubgraphQuery(
-    projectIds.length
+    projectStats
       ? {
           entity: 'project',
           keys,
           where: {
             key: 'id',
-            value: projectIds,
+            value: Object.keys(projectStats),
             operator: 'in',
           },
         }
@@ -199,7 +221,8 @@ export function useTrendingProjects(count: number, days: number) {
     // Return TrendingProjects sorted by `trendingScore`
     data: projects.data
       ?.map(p => {
-        const stats = p.id ? projectStats[p.id.toString()] : undefined
+        const stats =
+          p.id && projectStats ? projectStats[p.id.toString()] : undefined
 
         // Algorithm to rank trending projects:
         //   -  trendingScore = (volume gained in x days) * (number of payments made in x days)^2
@@ -221,52 +244,65 @@ export function useTrendingProjects(count: number, days: number) {
 
 // Query all projects that a wallet has previously made payments to
 export function useMyProjectsQuery(wallet: string | undefined) {
-  const { data: payments } = useSubgraphQuery(
-    wallet
-      ? {
-          entity: 'payEvent',
-          first: 1000,
-          orderBy: 'timestamp',
-          orderDirection: 'desc',
-          keys: [
-            'timestamp',
-            {
-              entity: 'project',
-              keys: ['id'],
-            },
-          ],
-          where: [
-            {
-              key: 'beneficiary',
-              value: wallet,
-            },
-          ],
-        }
-      : null,
-  )
+  const [projectIds, setProjectIds] = useState<string[]>()
 
-  const ids = payments?.reduce(
-    (acc, curr) => [
-      ...acc,
-      ...(curr.project
-        ? acc.includes(curr.project.toString())
-          ? []
-          : [curr.project.toString()]
-        : []),
-    ],
-    [] as string[],
-  )
+  useEffect(() => {
+    const loadPayments = async () => {
+      const payments = await querySubgraphExhaustive(
+        wallet
+          ? {
+              entity: 'payEvent',
+              orderBy: 'timestamp',
+              orderDirection: 'desc',
+              keys: [
+                'timestamp',
+                {
+                  entity: 'project',
+                  keys: ['id'],
+                },
+              ],
+              where: [
+                {
+                  key: 'beneficiary',
+                  value: wallet,
+                },
+              ],
+            }
+          : null,
+      )
+
+      if (!payments) {
+        setProjectIds(undefined)
+        return
+      }
+
+      setProjectIds(
+        payments?.reduce(
+          (acc, curr) => [
+            ...acc,
+            ...(curr.project
+              ? acc.includes(curr.project.toString())
+                ? []
+                : [curr.project.toString()]
+              : []),
+          ],
+          [] as string[],
+        ),
+      )
+    }
+
+    loadPayments()
+  }, [wallet])
 
   return useSubgraphQuery(
-    ids
+    projectIds
       ? {
           entity: 'project',
-          first: 1000,
           keys,
           where: {
             key: 'id',
             operator: 'in',
-            value: ids,
+            value: projectIds,
           },
         }
       : null,

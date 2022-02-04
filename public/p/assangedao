@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta property="og:url" content="https://juicebox.money/p/assangedao" />
+    <meta property="og:title" content="AssangeDAO" />
+    <meta
+      property="og:description"
+      content="AssangeDAO is a collective of cypherpunks fighting for the liberation of Julian Assange. The DAO aims to raise ETH in return for the $JUSTICE governance token to bid on a 1/1 NFT produced by digital artist Pak in collaboration with Julian Assange. Proceeds raised from the NFT sale will benefit Julian Assange's defense fund for legal fees and campaigning to raise awareness about Julian's extradition case. The Assange family have worked closely with the DAO and endorses its efforts to unite cypherpunks all over the world."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://jbx.mypinata.cloud/ipfs/QmNiNbh1R6P7EvPLTdHX2UTBRP1dcBufhqVmTFNgUJJjja" />
+    <meta property="og:image:type" content="image/svg" />
+    <meta property="og:image:width" content="2870" />
+    <meta property="og:image:height" content="1245" />
+    <link rel="apple-touch-icon" href="https://jbx.mypinata.cloud/ipfs/QmNiNbh1R6P7EvPLTdHX2UTBRP1dcBufhqVmTFNgUJJjja" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@AssangeDAO" />
+    <meta name="twitter:creator" content="@AssangeDAO" />
+    <meta name="twitter:title" content="AssangeDAO" />
+    <meta
+      name="twitter:description"
+      content="AssangeDAO is a collective of cypherpunks fighting for the liberation of Julian Assange. The DAO aims to raise ETH in return for the $JUSTICE governance token to bid on a 1/1 NFT produced by digital artist Pak in collaboration with Julian Assange. Proceeds raised from the NFT sale will benefit Julian Assange's defense fund for legal fees and campaigning to raise awareness about Julian's extradition case. The Assange family have worked closely with the DAO and endorses its efforts to unite cypherpunks all over the world."
+    />
+    <meta
+      name="twitter:image"
+      content="https://jbx.mypinata.cloud/ipfs/QmNiNbh1R6P7EvPLTdHX2UTBRP1dcBufhqVmTFNgUJJjja"
+    />
+    <title>AssangeDAO</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <script>location.replace('/#' + location.pathname)</script>
+  </body>
+</html>

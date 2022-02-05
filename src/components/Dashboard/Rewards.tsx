@@ -42,6 +42,7 @@ export default function Rewards() {
     tokenSymbol,
     isPreviewMode,
     currentFC,
+    overflow,
     terminal,
   } = useContext(V1ProjectContext)
 
@@ -208,7 +209,11 @@ export default function Rewards() {
       >
         <Space direction="vertical" style={{ width: '100%' }}>
           <Button onClick={() => setRedeemModalVisible(true)} block>
-            <Trans>Return my ETH</Trans>
+            {overflow?.gt(0) ? (
+              <Trans>Return my ETH</Trans>
+            ) : (
+              <Trans>Burn tokens</Trans>
+            )}
           </Button>
           <Button onClick={() => setUnstakeModalVisible(true)} block>
             <Trans>Claim {tokenSymbol || 'tokens'} as ERC20</Trans>

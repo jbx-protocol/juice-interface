@@ -1,5 +1,7 @@
 import { t, Trans } from '@lingui/macro'
-import { Modal, Space } from 'antd'
+import { Modal, Space, Form } from 'antd'
+import { useForm } from 'antd/lib/form/Form'
+
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
@@ -30,6 +32,10 @@ export default function RedeemModal({
   const [loading, setLoading] = useState<boolean>()
   const redeemTokensTx = useRedeemTokensTx()
 
+  const [form] = useForm<{
+    redeemAmount: string
+  }>()
+
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -54,6 +60,7 @@ export default function RedeemModal({
     : rewardAmount
 
   function redeem() {
+    form.validateFields()
     if (!minAmount) return
 
     setLoading(true)
@@ -80,9 +87,45 @@ export default function RedeemModal({
     alignItems: 'baseline',
   }
 
+  const tokensText = tokenSymbol ? tokenSymbol + ' ' + t`tokens` : t`tokens`
+  const tokensTextShort = tokenSymbol ?? t`tokens`
+
+  let modalTitle: string
+  // Defining whole sentence for translations
+  if (overflow?.gt(0)) {
+    modalTitle = t`Burn ${tokensText} for ETH`
+  } else {
+    modalTitle = t`Burn ${tokensText}`
+  }
+
+  let buttonText: string
+  // Defining whole sentence for translations
+  if (overflow?.gt(0)) {
+    buttonText = t`Burn ${formattedNum(redeemAmount, {
+      precision: 2,
+    })} ${tokensTextShort} for ETH`
+  } else {
+    buttonText = t`Burn ${formattedNum(redeemAmount, {
+      precision: 2,
+    })} ${tokensTextShort}`
+  }
+
+  const redeemBN = parseWad(redeemAmount ?? 0)
+
+  const invalidRedeemAmount = redeemBN.eq(0) || redeemBN.gt(totalBalance ?? 0)
+
+  const validateRedeemAmount = () => {
+    if (redeemBN.eq(0)) {
+      return Promise.reject('Required')
+    } else if (redeemBN.gt(totalBalance ?? 0)) {
+      return Promise.reject('Balance exceeded')
+    }
+    return Promise.resolve()
+  }
+
   return (
     <Modal
-      title={`Burn ${tokenSymbol ? tokenSymbol + ' tokens' : 'tokens'} for ETH`}
+      title={modalTitle}
       visible={visible}
       confirmLoading={loading}
       onOk={() => {
@@ -93,11 +136,10 @@ export default function RedeemModal({
 
         if (onCancel) onCancel()
       }}
-      okText={`Burn ${formattedNum(redeemAmount, {
-        precision: 2,
-      })} ${tokenSymbol ?? 'tokens'} for ETH`}
+      okText={buttonText}
       okButtonProps={{
-        disabled: !redeemAmount || parseInt(redeemAmount) === 0,
+        disabled:
+          !redeemAmount || parseInt(redeemAmount) === 0 || invalidRedeemAmount,
       }}
       width={540}
       centered
@@ -131,35 +173,51 @@ export default function RedeemModal({
           </p>
         </div>
         <p>
-          <Trans>
-            Tokens can be redeemed for a portion of this project's ETH overflow,
-            according to the bonding curve rate of the current funding cycle.
-          </Trans>{' '}
-          <span style={{ fontWeight: 500, color: colors.text.warn }}>
-            {overflow?.eq(0) ? (
-              <Trans>
-                This project has no overflow, and you will receive no ETH for
-                burning tokens.
-              </Trans>
-            ) : (
-              <Trans>Tokens are burned when they are redeemed.</Trans>
-            )}
-          </span>
+          {overflow?.gt(0) ? (
+            <Trans>
+              Tokens can be redeemed for a portion of this project's ETH
+              overflow, according to the bonding curve rate of the current
+              funding cycle.{' '}
+              <span style={{ fontWeight: 500, color: colors.text.warn }}>
+                Tokens are burned when they are redeemed.
+              </span>
+            </Trans>
+          ) : (
+            <Trans>
+              Tokens can be usually be redeemed for a portion of a project's ETH
+              overflow.
+              <span style={{ fontWeight: 500, color: colors.text.warn }}>
+                However, since this project <strong>has no overflow</strong> you
+                will receive no ETH for burning tokens.
+              </span>
+            </Trans>
+          )}
         </p>
         <div>
-          <FormattedNumberInput
-            min={0}
-            step={0.001}
-            placeholder="0"
-            value={redeemAmount}
-            accessory={
-              <InputAccessoryButton
-                content={t`MAX`}
-                onClick={() => setRedeemAmount(fromWad(totalBalance))}
-              />
-            }
-            onChange={val => setRedeemAmount(val)}
-          />
+          <Form
+            form={form}
+            onKeyDown={e => {
+              if (e.key === 'Enter') redeem()
+            }}
+          >
+            <FormattedNumberInput
+              min={0}
+              step={0.001}
+              placeholder="0"
+              value={redeemAmount}
+              accessory={
+                <InputAccessoryButton
+                  content={t`MAX`}
+                  onClick={() => setRedeemAmount(fromWad(totalBalance))}
+                />
+              }
+              formItemProps={{
+                rules: [{ validator: validateRedeemAmount }],
+              }}
+              disabled={totalBalance?.eq(0)}
+              onChange={val => setRedeemAmount(val)}
+            />
+          </Form>
           <div style={{ fontWeight: 500, marginTop: 20 }}>
             <Trans>
               You will receive{' '}

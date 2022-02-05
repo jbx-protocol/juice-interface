@@ -1,11 +1,12 @@
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Collapse, Select } from 'antd'
-import Checkbox from 'antd/lib/checkbox/Checkbox'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import { CSSProperties, useContext, useState } from 'react'
 
 import { FilterOutlined } from '@ant-design/icons'
 import { ThemeContext } from 'contexts/themeContext'
+
+import FilterCheckboxItem from './FilterCheckboxItem'
 
 type OrderByOption = 'createdAt' | 'totalPaid'
 
@@ -46,44 +47,10 @@ export default function ProjectsFilterAndSort({
     marginRight: 15,
   }
 
-  const filterDropdownItemStyles: CSSProperties = {
-    display: 'flex',
-    alignItems: 'center',
-    height: 40,
-  }
-
-  const filterCheckboxItem = (
-    label: string,
-    checked: boolean,
-    onChange: Function,
-    disabled?: boolean,
-  ) => (
-    <div
-      style={{
-        ...filterDropdownItemStyles,
-        color: disabled ? colors.text.tertiary : '',
-        cursor: 'pointer',
-      }}
-      onClick={() => onChange(!checked)}
-    >
-      <Checkbox
-        style={{ marginRight: 10 }}
-        checked={checked}
-        onChange={() => onChange(!checked)}
-        disabled={disabled}
-      />
-      <Trans>{label}</Trans>
-    </div>
-  )
-
   // If includeArchived is true, we set active back to true
   // to avoid both being unselected
   const toggleArchived = () => {
-    if (includeArchived) {
-      setIncludeActive(true)
-    } else {
-      setIncludeActive(false)
-    }
+    setIncludeActive(includeArchived)
     setIncludeArchived(!includeArchived)
   }
 
@@ -113,7 +80,7 @@ export default function ProjectsFilterAndSort({
           showArrow={false}
           header={
             <span
-              style={{ color: 'var(--text-secondary)' }}
+              style={{ color: colors.text.secondary }}
               onClick={e => {
                 setActiveKey(activeKey === 0 ? undefined : 0)
                 e.stopPropagation()
@@ -125,9 +92,21 @@ export default function ProjectsFilterAndSort({
         >
           {/* onClick: Do not close collapse when clicking its items*/}
           <div onClick={e => e.stopPropagation()}>
-            {filterCheckboxItem('V1', includeV1, setIncludeV1)}
-            {filterCheckboxItem('V1.1', includeV1_1, setIncludeV1_1)}
-            {filterCheckboxItem('Archived', includeArchived, toggleArchived)}
+            <FilterCheckboxItem
+              label={t`V1`}
+              checked={includeV1}
+              onChange={setIncludeV1}
+            />
+            <FilterCheckboxItem
+              label={t`V1.1`}
+              checked={includeV1_1}
+              onChange={setIncludeV1_1}
+            />
+            <FilterCheckboxItem
+              label={t`Archived`}
+              checked={includeArchived}
+              onChange={toggleArchived}
+            />
           </div>
         </CollapsePanel>
       </Collapse>

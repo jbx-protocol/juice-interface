@@ -9,7 +9,7 @@ import React from 'react'
 import RankingExplanation from './RankingExplanation'
 import TrendingProjectCard from './TrendingProjectCard'
 
-export function TrendingProjects({
+export default function TrendingProjects({
   isHomePage,
   count, // number of trending project cards to show
   trendingWindowDays,
@@ -56,5 +56,3 @@ export function TrendingProjects({
     </div>
   )
 }
-
-export const MemoizedTrendingProjects = React.memo(TrendingProjects)

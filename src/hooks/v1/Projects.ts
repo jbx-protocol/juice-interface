@@ -47,7 +47,7 @@ interface ProjectsOptions {
   searchText?: string
 }
 
-const staleTime = 60000
+const staleTime = 60 * 1000 // 60 seconds
 
 const keys: (keyof Project)[] = [
   'id',
@@ -130,6 +130,10 @@ export function useProjectsSearch(handle: string | undefined) {
 
 // Returns projects with highest % volume increase in last week
 export function useTrendingProjects(count: number, days: number) {
+  const daySeconds = days * SECONDS_IN_DAY
+  const now = new Date().setUTCHours(0, 0, 0, 0) // get start of day, for determinism
+  const nowSeconds = now.valueOf() / 1000
+
   const { data: payments } = useSubgraphQuery({
     first: 1000,
     entity: 'payEvent',
@@ -143,9 +147,7 @@ export function useTrendingProjects(count: number, days: number) {
     where: [
       {
         key: 'timestamp',
-        value: parseInt(
-          (new Date().valueOf() / 1000 - days * SECONDS_IN_DAY).toString(),
-        ),
+        value: nowSeconds - daySeconds,
         operator: 'gte',
       },
     ],

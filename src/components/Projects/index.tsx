@@ -19,7 +19,7 @@ import { V1TerminalVersion } from 'models/v1/terminals'
 import { ThemeContext } from 'contexts/themeContext'
 
 import { layouts } from 'constants/styles/layouts'
-import { MemoizedTrendingProjects } from './TrendingProjects'
+import TrendingProjects from './TrendingProjects'
 import ProjectsTabs from './ProjectsTabs'
 import MyProjects from './MyProjects'
 import ProjectsFilterAndSort from './ProjectsFilterAndSort'
@@ -268,7 +268,7 @@ export default function Projects() {
         </div>
       ) : selectedTab === 'trending' ? (
         <div style={{ paddingBottom: 50 }}>
-          <MemoizedTrendingProjects
+          <TrendingProjects
             count={20}
             trendingWindowDays={trendingWindowDays}
           />

@@ -20,6 +20,7 @@ import {
 } from '../utils/graph'
 
 const subgraphUrl = process.env.REACT_APP_SUBGRAPH_URL
+const staleTime = 60 * 1000 // 60 seconds
 
 // This looks up the entity type and constructs an object
 // only with the keys you specified in K.
@@ -46,7 +47,7 @@ export default function useSubgraphQuery<
     GraphResult<E, K[]>,
     readonly [string, GraphQueryOpts<E, K> | null]
   >(['subgraph-query', opts], () => querySubgraph(opts), {
-    staleTime: 60000,
+    staleTime,
     ...reactQueryOptions,
   })
 }
@@ -103,7 +104,7 @@ export function useInfiniteSubgraphQuery<
       return formatGraphResponse(opts.entity, response.data?.data)
     },
     {
-      staleTime: 60000,
+      staleTime,
       ...reactQueryOptions,
 
       // Don't allow this function to be overwritten by reactQueryOptions

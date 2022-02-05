@@ -54,7 +54,7 @@ interface ProjectsOptions {
   searchText?: string
 }
 
-const staleTime = 60000
+const staleTime = 60 * 1000 // 60 seconds
 
 const keys: (keyof Project)[] = [
   'id',
@@ -149,6 +149,10 @@ export function useTrendingProjects(count: number, days: number) {
 
   useEffect(() => {
     const loadPayments = async () => {
+      const daySeconds = days * SECONDS_IN_DAY
+      const now = new Date().setUTCHours(0, 0, 0, 0) // get start of day, for determinism
+      const nowSeconds = now.valueOf() / 1000
+
       const payments = await querySubgraphExhaustive({
         entity: 'payEvent',
         keys: [
@@ -161,9 +165,7 @@ export function useTrendingProjects(count: number, days: number) {
         where: [
           {
             key: 'timestamp',
-            value: parseInt(
-              (new Date().valueOf() / 1000 - days * SECONDS_IN_DAY).toString(),
-            ),
+            value: nowSeconds - daySeconds,
             operator: 'gte',
           },
         ],

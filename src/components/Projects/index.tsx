@@ -1,6 +1,6 @@
 import { InfoCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Button, Select } from 'antd'
+import { Button } from 'antd'
 import Search from 'antd/lib/input/Search'
 import FeedbackFormLink from 'components/shared/FeedbackFormLink'
 import Loading from 'components/shared/Loading'
@@ -45,7 +45,6 @@ export default function Projects() {
   }
 
   const [searchText, setSearchText] = useState<string>()
-  const [trendingWindowDays, setTrendingWindowDays] = useState<7 | 30>(7)
   const [selectedTab, setSelectedTab] = useState<ProjectCategory>(
     tab ? tab : 'trending', // Show trending by default
   )
@@ -191,23 +190,6 @@ export default function Projects() {
               orderBy={orderBy}
               setOrderBy={setOrderBy}
             />
-          ) : selectedTab === 'trending' && !searchText ? (
-            <Select
-              value={trendingWindowDays}
-              onChange={setTrendingWindowDays}
-              style={{
-                width: 180,
-                marginTop: 10,
-                marginBottom: 20,
-              }}
-            >
-              <Select.Option value={7}>
-                <Trans>Last 7 days</Trans>
-              </Select.Option>
-              <Select.Option value={30}>
-                <Trans>Last 30 days</Trans>
-              </Select.Option>
-            </Select>
           ) : null}
         </div>
         <ArchivedProjectsMessage
@@ -268,10 +250,7 @@ export default function Projects() {
         </div>
       ) : selectedTab === 'trending' ? (
         <div style={{ paddingBottom: 50 }}>
-          <TrendingProjects
-            count={20}
-            trendingWindowDays={trendingWindowDays}
-          />
+          <TrendingProjects count={20} trendingWindowDays={7} />
         </div>
       ) : null}
       <FeedbackFormLink />

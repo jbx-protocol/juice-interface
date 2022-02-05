@@ -1,12 +1,11 @@
-import { Row, Col, Tooltip, Collapse } from 'antd'
-import { DownOutlined, UpOutlined, InfoCircleOutlined } from '@ant-design/icons'
+import { Row, Col, Tooltip } from 'antd'
+import { InfoCircleOutlined } from '@ant-design/icons'
 
-import { CSSProperties, useContext, useState } from 'react'
+import { CSSProperties, useContext } from 'react'
 import { ThemeContext } from 'contexts/themeContext'
 import TrendingProjects from 'components/Projects/TrendingProjects'
 import RankingExplanation from 'components/Projects/RankingExplanation'
 import { Trans } from '@lingui/macro'
-import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 
 import { isMobile } from 'constants/styles/layouts'
 
@@ -15,9 +14,6 @@ export default function TrendingSection() {
     theme: { colors },
     isDarkMode,
   } = useContext(ThemeContext)
-
-  const [trendingWindow, setTrendingWindow] = useState<number>(7)
-  const [activeKey, setActiveKey] = useState<0 | undefined>()
 
   const trendingProjectsStyle: CSSProperties = {
     // Light theme uses a slightly lighter background than background-l1
@@ -39,85 +35,6 @@ export default function TrendingSection() {
     flexWrap: 'wrap',
   }
 
-  const arrowIconSize = 14
-
-  const arrowIconStyle: CSSProperties = {
-    fontSize: arrowIconSize,
-    marginLeft: 5,
-  }
-
-  const dropdownSelectedBg = isDarkMode
-    ? colors.background.l0
-    : colors.background.brand.secondary
-
-  // Close dropdown when clicking anywhere in the window
-  window.addEventListener('click', () => setActiveKey(undefined), false)
-
-  const trendingWindowSelect = () => {
-    return (
-      <Collapse
-        className="trending-window-select"
-        style={{ border: 'none' }}
-        activeKey={activeKey}
-      >
-        <CollapsePanel
-          style={{
-            border: 'none',
-          }}
-          key={0}
-          showArrow={false}
-          header={
-            <div
-              onClick={e => {
-                setActiveKey(activeKey === 0 ? undefined : 0)
-                e.stopPropagation()
-              }}
-            >
-              {trendingWindow} days
-              {activeKey === 0 ? (
-                <UpOutlined style={arrowIconStyle} />
-              ) : (
-                <DownOutlined style={arrowIconStyle} />
-              )}
-            </div>
-          }
-        >
-          <div
-            onClick={e => e.stopPropagation()}
-            style={{
-              background: isDarkMode
-                ? colors.background.l2
-                : colors.background.l0,
-            }}
-          >
-            <option
-              className="select-item"
-              style={
-                trendingWindow === 7
-                  ? { backgroundColor: dropdownSelectedBg }
-                  : {}
-              }
-              onClick={() => setTrendingWindow(7)}
-            >
-              7 days
-            </option>
-            <option
-              className="select-item"
-              style={
-                trendingWindow === 30
-                  ? { backgroundColor: dropdownSelectedBg }
-                  : {}
-              }
-              onClick={() => setTrendingWindow(30)}
-            >
-              30 days
-            </option>
-          </div>
-        </CollapsePanel>
-      </Collapse>
-    )
-  }
-
   return (
     <section style={trendingProjectsStyle}>
       <Row style={{ maxWidth: 1200, margin: 'auto' }}>
@@ -132,25 +49,17 @@ export default function TrendingSection() {
         <Col xs={24} lg={15}>
           <div style={{ paddingBottom: 20 }}>
             <h3 style={headingStyles}>
-              {/* Only way I could get the title wrapping properly on mobile was making each word an element  
-                  Also, used 'nbsp;' because{' '} doesn't work in Trans tag) */}
               <Trans>
-                <span>Trending</span>&nbsp;<span>projects</span>&nbsp;
-                <span>over</span>&nbsp;<span>the</span>&nbsp;<span>last</span>{' '}
-                {trendingWindowSelect()}
+                <span style={{ marginRight: 12 }}>Trending projects</span>
                 <Tooltip
-                  title={<RankingExplanation trendingWindow={trendingWindow} />}
+                  title={<RankingExplanation trendingWindow={7} />}
                   placement="bottom"
                 >
-                  <InfoCircleOutlined />
+                  <InfoCircleOutlined style={{ fontSize: 20 }} />
                 </Tooltip>
               </Trans>
             </h3>
-            <TrendingProjects
-              count={6}
-              trendingWindowDays={trendingWindow}
-              isHomePage
-            />
+            <TrendingProjects count={6} trendingWindowDays={7} isHomePage />
           </div>
         </Col>
       </Row>

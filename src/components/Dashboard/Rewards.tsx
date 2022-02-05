@@ -87,18 +87,19 @@ export default function Rewards() {
     width: 128,
   }
 
+  const tokensLabel = tokenSymbol ? tokenSymbol + ' ' + t`ERC20` : t`Tokens`
+
   return (
     <div>
       <Space direction="vertical" size="large">
         <Statistic
           title={
             <SectionHeader
-              text={tokenSymbol ? tokenSymbol + ' ' + t`tokens` : t`Tokens`}
-              tip={
-                `${tokenSymbol ? tokenSymbol + ' ' + t`ERC20` : t`Tokens`}` +
-                ' ' +
-                t`are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet.`
-              }
+              text={tokensLabel}
+              tip={t`${tokensLabel}
+                  are distributed to anyone who pays this project. If the project 
+                  has set a funding target, tokens can be redeemed for a portion 
+                  of the project's overflow whether or not they have been claimed yet.`}
             />
           }
           valueRender={() => (

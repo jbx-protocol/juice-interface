@@ -2,6 +2,8 @@ import CurrencySymbol from 'components/shared/CurrencySymbol'
 import Loading from 'components/shared/Loading'
 import ProjectLogo from 'components/shared/ProjectLogo'
 
+import { t } from '@lingui/macro'
+
 import { ThemeContext } from 'contexts/themeContext'
 import { constants } from 'ethers'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
@@ -32,6 +34,7 @@ export default function TrendingProjectCard({
     display: 'flex',
     alignItems: 'center',
     whiteSpace: 'pre',
+    height: '100%',
     overflow: 'hidden',
     padding: '25px 20px',
   }
@@ -62,7 +65,7 @@ export default function TrendingProjectCard({
       project.createdAt >
         new Date().valueOf() / 1000 - trendingWindowDays * SECONDS_IN_DAY
     ) {
-      return 'New'
+      return t`New`
     }
 
     const preTrendingVolume = project.totalPaid?.sub(project.trendingVolume)
@@ -70,13 +73,24 @@ export default function TrendingProjectCard({
     if (!preTrendingVolume?.gt(0)) return '+∞'
 
     const percentGain = project.trendingVolume
-      .mul(1000)
+      .mul(10000)
       .div(preTrendingVolume)
       .toNumber()
 
-    return `+${
-      percentGain >= 10 ? Math.round(percentGain / 10) : percentGain / 10
-    }%`
+    let percentRounded: number
+
+    // If percentGain > 1, round to int
+    if (percentGain >= 100) {
+      percentRounded = Math.round(percentGain / 100)
+      // If 0.1 <= percentGain < 1, round to 1dp
+    } else if (percentGain >= 10) {
+      percentRounded = Math.round(percentGain / 10) / 10
+      // If percentGain < 0.1, round to 2dp
+    } else {
+      percentRounded = percentGain / 100
+    }
+
+    return `+${percentRounded}%`
   }, [project, trendingWindowDays])
 
   return project ? (
@@ -172,9 +186,10 @@ export default function TrendingProjectCard({
                 fontWeight: 400,
                 color: colors.text.secondary,
                 fontSize: 13,
+                marginTop: 2,
               }}
             >
-              From {formattedNum(project.trendingPaymentsCount)} payment
+              {formattedNum(project.trendingPaymentsCount)} payment
               {project.trendingPaymentsCount > 1 ? 's' : ''}
             </div>
           </div>

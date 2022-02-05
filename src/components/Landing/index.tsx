@@ -81,7 +81,7 @@ export default function Landing() {
   }
 
   const statsRowStyles: CSSProperties = {
-    borderTop: `1px solid var(--stroke-tertiary)`,
+    borderTop: `1px solid ${colors.stroke.tertiary}`,
     paddingTop: 60,
   }
 

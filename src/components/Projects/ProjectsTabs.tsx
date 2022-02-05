@@ -1,6 +1,7 @@
 import { t } from '@lingui/macro'
 import { Space } from 'antd'
 import { NetworkContext } from 'contexts/networkContext'
+import { ThemeContext } from 'contexts/themeContext'
 import { ProjectCategory } from 'models/project-visibility'
 import React, { useContext } from 'react'
 
@@ -12,6 +13,10 @@ export default function ProjectsTabs({
   setSelectedTab: Function
 }) {
   const { signingProvider } = useContext(NetworkContext)
+
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
 
   const tab = (tab: ProjectCategory) => {
     let text: string = ''
@@ -36,12 +41,12 @@ export default function ProjectsTabs({
           paddingBottom: 6,
           ...(tab === selectedTab
             ? {
-                color: 'var(--text-primary)',
+                color: colors.text.primary,
                 fontWeight: 500,
-                borderColor: 'var(--text-primary)',
+                borderColor: colors.text.primary,
               }
             : {
-                color: 'var(--text-secondary)',
+                color: colors.text.secondary,
                 borderColor: 'transparent',
               }),
         }}

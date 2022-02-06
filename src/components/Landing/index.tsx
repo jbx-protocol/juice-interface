@@ -12,6 +12,8 @@ import Grid from 'components/shared/Grid'
 
 import ProjectCard from 'components/shared/ProjectCard'
 
+import { Link } from 'react-router-dom'
+
 import { ThemeOption } from 'constants/theme/theme-option'
 
 import Faq from './Faq'
@@ -275,11 +277,11 @@ export default function Landing() {
                 )}
               </div>
               <div style={{ textAlign: 'center', marginTop: 20 }}>
-                <a href="/#/projects?tab=all">
+                <Link to="/projects?tab=all">
                   <Button>
                     <Trans>All projects</Trans>
                   </Button>
-                </a>
+                </Link>
               </div>
             </Col>
             <Col xs={24} md={12} style={{ marginBottom: 100 }}>

@@ -3,14 +3,19 @@ import { Space } from 'antd'
 import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { ProjectCategory } from 'models/project-visibility'
-import React, { useContext } from 'react'
+import { useContext } from 'react'
+import { Link } from 'react-router-dom'
+
+const TAB_TYPE_NAMES: { [k in ProjectCategory]: string } = {
+  all: t`All`,
+  myprojects: t`My projects`,
+  trending: t`Trending`,
+}
 
 export default function ProjectsTabs({
   selectedTab,
-  setSelectedTab,
 }: {
   selectedTab: ProjectCategory
-  setSelectedTab: Function
 }) {
   const { signingProvider } = useContext(NetworkContext)
 
@@ -18,28 +23,16 @@ export default function ProjectsTabs({
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const tab = (tab: ProjectCategory) => {
-    let text: string = ''
-    // Need this switch for translations
-    switch (tab) {
-      case 'all':
-        text = t`All`
-        break
-      case 'myprojects':
-        text = t`My projects`
-        break
-      case 'trending':
-        text = t`Trending`
-        break
-    }
+  const Tab = ({ type }: { type: ProjectCategory }) => {
     return (
-      <div
+      <Link
+        to={`/projects?tab=${type}`}
         style={{
           textTransform: 'uppercase',
           cursor: 'pointer',
           borderBottom: '2px solid transparent',
           paddingBottom: 6,
-          ...(tab === selectedTab
+          ...(type === selectedTab
             ? {
                 color: colors.text.primary,
                 fontWeight: 500,
@@ -50,22 +43,19 @@ export default function ProjectsTabs({
                 borderColor: 'transparent',
               }),
         }}
-        onClick={() => {
-          window.location.href = `/#/projects?tab=${tab}`
-          setSelectedTab(tab)
-        }}
       >
-        {text}
-      </div>
+        {TAB_TYPE_NAMES[type]}
+      </Link>
     )
   }
 
   return (
     <div style={{ height: 40, marginTop: 15 }}>
       <Space direction="horizontal" size="large">
-        {tab('trending')}
-        {tab('all')}
-        {signingProvider ? tab('myprojects') : null}
+        <Tab type="trending" />
+        <Tab type="all" />
+
+        {signingProvider ? <Tab type="myprojects" /> : null}
       </Space>
     </div>
   )

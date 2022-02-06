@@ -726,7 +726,7 @@ export default function Create() {
           }
           onOk={deployProject}
           confirmLoading={loadingCreate}
-          width={800}
+          width={600}
           onCancel={() => setDeployProjectModalVisible(false)}
         >
           <ConfirmDeployProject />

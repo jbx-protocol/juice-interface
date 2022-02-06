@@ -11,7 +11,7 @@ import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import Grid from 'components/shared/Grid'
 import ProjectCard from 'components/shared/ProjectCard'
 
-import { useLocation } from 'react-router-dom'
+import { Link, useHistory, useLocation } from 'react-router-dom'
 
 import { useInfiniteProjectsQuery, useProjectsSearch } from 'hooks/v1/Projects'
 import { V1TerminalVersion } from 'models/v1/terminals'
@@ -32,22 +32,28 @@ const pageSize = 20
 export default function Projects() {
   // Checks URL to see if tab has been set
   const location = useLocation()
+  const history = useHistory()
+
   const params = new URLSearchParams(location.search)
-  let tab: ProjectCategory | undefined
+  let selectedTab: ProjectCategory = 'all'
   // Convert
   switch (params.get('tab')) {
     case 'trending':
-      tab = 'trending'
+      selectedTab = 'trending'
       break
     case 'all':
-      tab = 'all'
+      selectedTab = 'all'
+      break
+    case 'myprojects':
+      selectedTab = 'myprojects'
       break
   }
 
-  const [searchText, setSearchText] = useState<string>()
-  const [selectedTab, setSelectedTab] = useState<ProjectCategory>(
-    tab ? tab : 'trending', // Show trending by default
+  const [searchText, setSearchText] = useState<string>(
+    params.get('search') ?? '',
   )
+  const [trendingWindowDays, setTrendingWindowDays] = useState<7 | 30>(7)
+
   const [orderBy, setOrderBy] = useState<OrderByOption>('totalPaid')
   const [includeV1, setIncludeV1] = useState<boolean>(true)
   const [includeV1_1, setIncludeV1_1] = useState<boolean>(true)
@@ -128,11 +134,11 @@ export default function Projects() {
             <Trans>Projects on Juicebox</Trans>
           </h1>
 
-          <a href="/#/create">
+          <Link to="/create">
             <Button>
               <Trans>Create project</Trans>
             </Button>
-          </a>
+          </Link>
         </div>
 
         <div>
@@ -155,9 +161,10 @@ export default function Projects() {
             prefix="@"
             placeholder={t`Search projects by handle`}
             onSearch={val => {
-              setSelectedTab('all')
               setSearchText(val)
+              history.push(`/projects?tab=all${val ? `&search=${val}` : ''}`)
             }}
+            defaultValue={searchText}
             allowClear
           />
         ) : null}
@@ -172,10 +179,7 @@ export default function Projects() {
             maxWidth: '100vw',
           }}
         >
-          <ProjectsTabs
-            selectedTab={selectedTab}
-            setSelectedTab={setSelectedTab}
-          />
+          <ProjectsTabs selectedTab={selectedTab} />
 
           {selectedTab === 'all' && !searchText ? (
             <ProjectsFilterAndSort

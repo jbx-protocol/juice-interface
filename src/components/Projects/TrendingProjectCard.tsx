@@ -13,6 +13,8 @@ import { formattedNum, formatWad } from 'utils/formatNumber'
 import { getTerminalVersion } from 'utils/v1/terminals'
 import pluralize from 'utils/pluralize'
 
+import { Link } from 'react-router-dom'
+
 import { SECONDS_IN_DAY } from 'constants/numbers'
 import { CURRENCY_ETH } from 'constants/currency'
 
@@ -95,14 +97,14 @@ export default function TrendingProjectCard({
   }, [project, trendingWindowDays])
 
   return project ? (
-    <a
+    <Link
       style={{
         borderRadius: radii.lg,
         cursor: 'pointer',
         overflow: 'hidden',
       }}
-      key={project?.handle}
-      href={`/#/p/${project?.handle}`}
+      key={project.handle}
+      to={`/p/${project.handle}`}
     >
       {metadata ? (
         <div style={cardStyle} className="clickable-border">
@@ -213,7 +215,7 @@ export default function TrendingProjectCard({
           {project?.handle} <Loading />
         </div>
       )}
-    </a>
+    </Link>
   ) : (
     <Loading />
   )

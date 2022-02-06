@@ -5,6 +5,7 @@ import Grid from 'components/shared/Grid'
 import Loading from 'components/shared/Loading'
 import { useTrendingProjects } from 'hooks/v1/Projects'
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 import RankingExplanation from './RankingExplanation'
 import TrendingProjectCard from './TrendingProjectCard'
@@ -42,9 +43,9 @@ export default function TrendingProjects({
             </p>
           ) : (
             <Button type="default" style={{ marginBottom: 40, marginTop: 15 }}>
-              <a href="/#/projects/?tab=trending">
+              <Link to="/projects?tab=trending">
                 <Trans>More trending projects</Trans>
-              </a>
+              </Link>
             </Button>
           )}
         </React.Fragment>

@@ -12,6 +12,8 @@ import { getTerminalVersion } from 'utils/v1/terminals'
 
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 
+import { Link } from 'react-router-dom'
+
 import { CURRENCY_ETH } from 'constants/currency'
 
 import CurrencySymbol from './CurrencySymbol'
@@ -77,14 +79,14 @@ export default function ProjectCard({
   const terminalVersion = getTerminalVersion(_project?.terminal)
 
   return (
-    <a
+    <Link
       style={{
         borderRadius: radii.lg,
         cursor: 'pointer',
         overflow: 'hidden',
       }}
       key={_project?.handle}
-      href={`/#/p/${_project?.handle}`}
+      to={`/p/${_project?.handle}`}
     >
       {metadata ? (
         <div style={cardStyle} className="clickable-border">
@@ -172,6 +174,6 @@ export default function ProjectCard({
           {_project?.handle} <Loading />
         </div>
       )}
-    </a>
+    </Link>
   )
 }

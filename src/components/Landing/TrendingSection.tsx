@@ -7,13 +7,15 @@ import TrendingProjects from 'components/Projects/TrendingProjects'
 import RankingExplanation from 'components/Projects/RankingExplanation'
 import { Trans } from '@lingui/macro'
 
-import { isMobile } from 'constants/styles/layouts'
+import useMobile from 'hooks/Mobile'
 
 export default function TrendingSection() {
   const {
     theme: { colors },
     isDarkMode,
   } = useContext(ThemeContext)
+
+  const isMobile = useMobile()
 
   const trendingProjectsStyle: CSSProperties = {
     // Light theme uses a slightly lighter background than background-l1

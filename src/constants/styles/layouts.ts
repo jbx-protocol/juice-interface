@@ -15,5 +15,3 @@ export const layouts: Record<string, CSSProperties> = {
     padding: padding.app,
   },
 }
-
-export const isMobile = window.innerWidth <= 900

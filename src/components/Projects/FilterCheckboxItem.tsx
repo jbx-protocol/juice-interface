@@ -3,6 +3,8 @@ import { Checkbox } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { CSSProperties, useContext } from 'react'
 
+import { CheckboxOnChange } from './ProjectsFilterAndSort'
+
 export default function FilterCheckboxItem({
   label,
   checked,
@@ -11,7 +13,7 @@ export default function FilterCheckboxItem({
 }: {
   label: string
   checked: boolean
-  onChange: Function
+  onChange: CheckboxOnChange
   disabled?: boolean
 }) {
   const {

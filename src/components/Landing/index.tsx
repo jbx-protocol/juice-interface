@@ -265,12 +265,11 @@ export default function Landing() {
               {smallHeader(t`Projects using Juicebox`)}
               <div style={{ marginTop: 20 }}>
                 {previewProjects ? (
-                  <Grid
-                    children={previewProjects.map(p => (
-                      <ProjectCard project={p} />
+                  <Grid list>
+                    {previewProjects.map(p => (
+                      <ProjectCard key={p.uri} project={p} />
                     ))}
-                    list
-                  />
+                  </Grid>
                 ) : (
                   <Loading />
                 )}

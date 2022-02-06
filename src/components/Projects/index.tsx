@@ -52,7 +52,6 @@ export default function Projects() {
   const [searchText, setSearchText] = useState<string>(
     params.get('search') ?? '',
   )
-  const [trendingWindowDays, setTrendingWindowDays] = useState<7 | 30>(7)
 
   const [orderBy, setOrderBy] = useState<OrderByOption>('totalPaid')
   const [includeV1, setIncludeV1] = useState<boolean>(true)

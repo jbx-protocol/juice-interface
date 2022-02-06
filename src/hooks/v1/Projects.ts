@@ -245,10 +245,11 @@ export function useTrendingProjects(count: number, days: number) {
 }
 
 // Query all projects that a wallet has previously made payments to
-export function useMyProjectsQuery(wallet: string | undefined) {
+export function useContributedProjectsQuery(wallet: string | undefined) {
   const [projectIds, setProjectIds] = useState<string[]>()
 
   useEffect(() => {
+    // Get all payment events from wallet
     const loadPayments = async () => {
       const payments = await querySubgraphExhaustive(
         wallet
@@ -278,6 +279,7 @@ export function useMyProjectsQuery(wallet: string | undefined) {
         return
       }
 
+      // Reduce list of paid project ids
       setProjectIds(
         payments?.reduce(
           (acc, curr) => [

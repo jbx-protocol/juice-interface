@@ -16,6 +16,7 @@ import { Link, useHistory, useLocation } from 'react-router-dom'
 import { useInfiniteProjectsQuery, useProjectsSearch } from 'hooks/v1/Projects'
 import { V1TerminalVersion } from 'models/v1/terminals'
 
+import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 
 import { layouts } from 'constants/styles/layouts'
@@ -29,25 +30,37 @@ type OrderByOption = 'createdAt' | 'totalPaid'
 
 const pageSize = 20
 
+const defaultTab: ProjectCategory = 'trending'
+
 export default function Projects() {
+  const [selectedTab, setSelectedTab] = useState<ProjectCategory>(defaultTab)
+
   // Checks URL to see if tab has been set
   const location = useLocation()
   const history = useHistory()
 
-  const params = new URLSearchParams(location.search)
-  let selectedTab: ProjectCategory = 'all'
-  // Convert
-  switch (params.get('tab')) {
-    case 'trending':
-      selectedTab = 'trending'
-      break
-    case 'all':
-      selectedTab = 'all'
-      break
-    case 'myprojects':
-      selectedTab = 'myprojects'
-      break
-  }
+  const { userAddress } = useContext(NetworkContext)
+
+  const params = useMemo(
+    () => new URLSearchParams(location.search),
+    [location.search],
+  )
+
+  useEffect(() => {
+    setSelectedTab(() => {
+      switch (params.get('tab')) {
+        case 'trending':
+          return 'trending'
+        case 'all':
+          return 'all'
+        case 'myprojects':
+          // If no wallet connected, revert to default tab
+          return userAddress ? 'myprojects' : defaultTab
+        default:
+          return defaultTab
+      }
+    })
+  }, [userAddress, params])
 
   const [searchText, setSearchText] = useState<string>(
     params.get('search') ?? '',
@@ -253,7 +266,7 @@ export default function Projects() {
         </div>
       ) : selectedTab === 'trending' ? (
         <div style={{ paddingBottom: 50 }}>
-          <TrendingProjects count={20} trendingWindowDays={7} />
+          <TrendingProjects count={12} trendingWindowDays={7} />
         </div>
       ) : null}
       <FeedbackFormLink />

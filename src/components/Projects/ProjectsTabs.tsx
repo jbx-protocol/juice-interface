@@ -32,10 +32,10 @@ export default function ProjectsTabs({
           cursor: 'pointer',
           borderBottom: '2px solid transparent',
           paddingBottom: 6,
+          fontWeight: 500,
           ...(type === selectedTab
             ? {
                 color: colors.text.primary,
-                fontWeight: 500,
                 borderColor: colors.text.primary,
               }
             : {

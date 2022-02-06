@@ -20,9 +20,11 @@ export default function MyProjects() {
     <React.Fragment>
       {projects && projects.length ? (
         <React.Fragment>
-          <Grid
-            children={projects?.map(p => <ProjectCard project={p} />) ?? <></>}
-          />
+          <Grid>
+            {projects?.map(p => (
+              <ProjectCard project={p} />
+            ))}
+          </Grid>
           <div
             style={{
               textAlign: 'center',

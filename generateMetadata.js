@@ -1,5 +1,6 @@
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 const fs = require('fs').promises;
+require('dotenv').config();
 
 const template = `<!DOCTYPE html>
 <html lang="en">
@@ -31,7 +32,7 @@ const template = `<!DOCTYPE html>
   let projects;
   while (!loaded) {
     try {
-      projects = (await (await fetch('https://gateway.thegraph.com/api/6a7675cd9c288a7b9571d5c9e78d5aff/deployments/id/QmNxBy8UnUsQr3aeBgFvdFyWbTSMiTGpJbkAJzSm5m6vYf', {
+      projects = (await (await fetch(process.env.REACT_APP_SUBGRAPH_URL, {
         method: 'POST',
         body: '{"query":"{ projects(first: 100, skip: 0, orderBy: totalPaid, orderDirection: desc, where: { }) { handle, uri } }"}',
         headers: {'Content-Type': 'application/json'},

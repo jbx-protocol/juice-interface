@@ -22,7 +22,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { layouts } from 'constants/styles/layouts'
 import TrendingProjects from './TrendingProjects'
 import ProjectsTabs from './ProjectsTabs'
-import MyProjects from './MyProjects'
+import ContributedProjects from './ContributedProjects'
 import ProjectsFilterAndSort from './ProjectsFilterAndSort'
 import ArchivedProjectsMessage from './ArchivedProjectsMessage'
 
@@ -53,9 +53,9 @@ export default function Projects() {
           return 'trending'
         case 'all':
           return 'all'
-        case 'myprojects':
+        case 'contributed':
           // If no wallet connected, revert to default tab
-          return userAddress ? 'myprojects' : defaultTab
+          return userAddress ? 'contributed' : defaultTab
         default:
           return defaultTab
       }
@@ -260,9 +260,9 @@ export default function Projects() {
             )
           )}
         </React.Fragment>
-      ) : selectedTab === 'myprojects' ? (
+      ) : selectedTab === 'contributed' ? (
         <div style={{ paddingBottom: 50 }}>
-          <MyProjects />
+          <ContributedProjects />
         </div>
       ) : selectedTab === 'trending' ? (
         <div style={{ paddingBottom: 50 }}>

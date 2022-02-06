@@ -7,16 +7,19 @@ import { useContext, useLayoutEffect, useState } from 'react'
 
 import Navbar from 'components/Navbar'
 
+import useMobile from 'hooks/Mobile'
+
 import { readNetwork } from 'constants/networks'
 
 import Router from './Router'
-import { isMobile } from 'constants/styles/layouts'
 
 function App() {
   const [switchNetworkModalVisible, setSwitchNetworkModalVisible] =
     useState<boolean>()
 
   const { signerNetwork } = useContext(NetworkContext)
+
+  const isMobile = useMobile()
 
   const networkName = readNetwork.name
 

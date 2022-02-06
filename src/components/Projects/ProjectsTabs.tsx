@@ -53,9 +53,8 @@ export default function ProjectsTabs({
     <div style={{ height: 40, marginTop: 15 }}>
       <Space direction="horizontal" size="large">
         <Tab type="trending" />
-        <Tab type="all" />
-
         {signingProvider ? <Tab type="myprojects" /> : null}
+        <Tab type="all" />
       </Space>
     </div>
   )

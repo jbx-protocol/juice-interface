@@ -4,13 +4,13 @@ import Loading from 'components/shared/Loading'
 import ProjectCard from 'components/shared/ProjectCard'
 import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { useMyProjectsQuery } from 'hooks/v1/Projects'
+import { useContributedProjectsQuery } from 'hooks/v1/Projects'
 import React, { useContext } from 'react'
 
 export default function MyProjects() {
   const { userAddress } = useContext(NetworkContext)
 
-  const { data: projects } = useMyProjectsQuery(userAddress)
+  const { data: projects, isLoading } = useContributedProjectsQuery(userAddress)
 
   const {
     theme: { colors },
@@ -18,25 +18,39 @@ export default function MyProjects() {
 
   return (
     <React.Fragment>
-      {projects && projects.length ? (
-        <React.Fragment>
-          <Grid>
-            {projects?.map(p => (
-              <ProjectCard project={p} />
-            ))}
-          </Grid>
+      {projects &&
+        (projects.length ? (
+          <React.Fragment>
+            <Grid>
+              {projects?.map(p => (
+                <ProjectCard project={p} />
+              ))}
+            </Grid>
+            <div
+              style={{
+                textAlign: 'center',
+                color: colors.text.disabled,
+                padding: 20,
+              }}
+            >
+              {projects?.length}{' '}
+              {projects?.length === 1 ? t`project` : t`projects`}{' '}
+            </div>
+          </React.Fragment>
+        ) : (
           <div
             style={{
               textAlign: 'center',
               color: colors.text.disabled,
               padding: 20,
             }}
+            hidden={isLoading}
           >
-            {projects?.length}{' '}
-            {projects?.length === 1 ? t`project` : t`projects`}{' '}
+            Projects you've contributed to will show up here.
           </div>
-        </React.Fragment>
-      ) : (
+        ))}
+
+      {isLoading && (
         <div style={{ marginTop: 40 }}>
           <Loading />
         </div>

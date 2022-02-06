@@ -9,7 +9,7 @@ import { constants } from 'ethers'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { TrendingProject } from 'models/subgraph-entities/project'
 import { CSSProperties, useContext, useMemo } from 'react'
-import { formattedNum, formatWad } from 'utils/formatNumber'
+import { formatWad } from 'utils/formatNumber'
 import { getTerminalVersion } from 'utils/v1/terminals'
 import pluralize from 'utils/pluralize'
 
@@ -96,6 +96,8 @@ export default function TrendingProjectCard({
     return `+${percentRounded}%`
   }, [project, trendingWindowDays])
 
+  const paymentCount = project.trendingPaymentsCount
+
   return project ? (
     <Link
       style={{
@@ -175,7 +177,7 @@ export default function TrendingProjectCard({
                   <CurrencySymbol currency={CURRENCY_ETH} />
                   {formatWad(project.trendingVolume, { precision })}{' '}
                 </span>
-                <span style={{ fontWeight: 500 }}>
+                <span style={{ fontWeight: 400, color: colors.text.secondary }}>
                   <Trans>last {trendingWindowDays} days</Trans>{' '}
                 </span>
                 <span style={{ fontWeight: 600, color: colors.text.header }}>
@@ -192,12 +194,7 @@ export default function TrendingProjectCard({
                 marginTop: 2,
               }}
             >
-              {formattedNum(project.trendingPaymentsCount)}
-              {pluralize(
-                project.trendingPaymentsCount,
-                ` ${t`payment`}`,
-                ` ${t`payments`}`,
-              )}
+              {pluralize(paymentCount, 'payment', 'payments')}
             </div>
           </div>
         </div>

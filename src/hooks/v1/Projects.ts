@@ -249,16 +249,15 @@ export function useContributedProjectsQuery(wallet: string | undefined) {
   const [projectIds, setProjectIds] = useState<string[]>()
 
   useEffect(() => {
-    // Get all payment events from wallet
-    const loadPayments = async () => {
-      const payments = await querySubgraphExhaustive(
+    // Get all participant entities for wallet
+    const loadParticipants = async () => {
+      const participants = await querySubgraphExhaustive(
         wallet
           ? {
-              entity: 'payEvent',
-              orderBy: 'timestamp',
+              entity: 'participant',
+              orderBy: 'balance',
               orderDirection: 'desc',
               keys: [
-                'timestamp',
                 {
                   entity: 'project',
                   keys: ['id'],
@@ -266,7 +265,7 @@ export function useContributedProjectsQuery(wallet: string | undefined) {
               ],
               where: [
                 {
-                  key: 'beneficiary',
+                  key: 'wallet',
                   value: wallet,
                 },
               ],
@@ -274,14 +273,14 @@ export function useContributedProjectsQuery(wallet: string | undefined) {
           : null,
       )
 
-      if (!payments) {
+      if (!participants) {
         setProjectIds(undefined)
         return
       }
 
       // Reduce list of paid project ids
       setProjectIds(
-        payments?.reduce(
+        participants?.reduce(
           (acc, curr) => [
             ...acc,
             ...(curr.project
@@ -295,7 +294,7 @@ export function useContributedProjectsQuery(wallet: string | undefined) {
       )
     }
 
-    loadPayments()
+    loadParticipants()
   }, [wallet])
 
   return useSubgraphQuery(

@@ -7,7 +7,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useContributedProjectsQuery } from 'hooks/v1/Projects'
 import React, { useContext } from 'react'
 
-export default function MyProjects() {
+export default function ContributedProjects() {
   const { userAddress } = useContext(NetworkContext)
 
   const { data: projects, isLoading } = useContributedProjectsQuery(userAddress)

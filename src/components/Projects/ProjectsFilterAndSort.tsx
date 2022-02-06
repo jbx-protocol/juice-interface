@@ -1,7 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Collapse, Select } from 'antd'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
-import { CSSProperties, useContext, useState } from 'react'
+import { CSSProperties, useContext, useEffect, useState } from 'react'
 
 import { FilterOutlined } from '@ant-design/icons'
 import { ThemeContext } from 'contexts/themeContext'
@@ -9,6 +9,8 @@ import { ThemeContext } from 'contexts/themeContext'
 import FilterCheckboxItem from './FilterCheckboxItem'
 
 type OrderByOption = 'createdAt' | 'totalPaid'
+
+export type CheckboxOnChange = (checked: boolean) => void
 
 export default function ProjectsFilterAndSort({
   includeV1,
@@ -23,13 +25,13 @@ export default function ProjectsFilterAndSort({
   setOrderBy,
 }: {
   includeV1: boolean
-  setIncludeV1: Function
+  setIncludeV1: CheckboxOnChange
   includeV1_1: boolean
-  setIncludeV1_1: Function
+  setIncludeV1_1: CheckboxOnChange
   includeActive: boolean
-  setIncludeActive: Function
+  setIncludeActive: CheckboxOnChange
   includeArchived: boolean
-  setIncludeArchived: Function
+  setIncludeArchived: CheckboxOnChange
   orderBy: OrderByOption
   setOrderBy: any
 }) {
@@ -55,7 +57,13 @@ export default function ProjectsFilterAndSort({
   }
 
   // Close collapse when clicking anywhere in the window except the collapse items
-  window.addEventListener('click', () => setActiveKey(undefined), false)
+  useEffect(() => {
+    function handleClick() {
+      setActiveKey(undefined)
+    }
+    window.addEventListener('click', handleClick)
+    return () => window.removeEventListener('click', handleClick)
+  }, [])
 
   return (
     <div

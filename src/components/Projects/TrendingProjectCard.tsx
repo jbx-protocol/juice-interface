@@ -2,7 +2,7 @@ import CurrencySymbol from 'components/shared/CurrencySymbol'
 import Loading from 'components/shared/Loading'
 import ProjectLogo from 'components/shared/ProjectLogo'
 
-import { t } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 
 import { ThemeContext } from 'contexts/themeContext'
 import { constants } from 'ethers'
@@ -11,6 +11,7 @@ import { TrendingProject } from 'models/subgraph-entities/project'
 import { CSSProperties, useContext, useMemo } from 'react'
 import { formattedNum, formatWad } from 'utils/formatNumber'
 import { getTerminalVersion } from 'utils/v1/terminals'
+import pluralize from 'utils/pluralize'
 
 import { SECONDS_IN_DAY } from 'constants/numbers'
 import { CURRENCY_ETH } from 'constants/currency'
@@ -173,7 +174,9 @@ export default function TrendingProjectCard({
                   {formatWad(project.trendingVolume, { precision })}{' '}
                 </span>
                 <span style={{ fontWeight: 500 }}>
-                  last {trendingWindowDays} days {''}
+                  <Trans>
+                    last {trendingWindowDays} days {''}
+                  </Trans>
                 </span>
                 <span style={{ fontWeight: 600, color: colors.text.header }}>
                   {percentGainText && <>{percentGainText}</>}
@@ -189,8 +192,12 @@ export default function TrendingProjectCard({
                 marginTop: 2,
               }}
             >
-              {formattedNum(project.trendingPaymentsCount)} payment
-              {project.trendingPaymentsCount > 1 ? 's' : ''}
+              {formattedNum(project.trendingPaymentsCount)}
+              {pluralize(
+                project.trendingPaymentsCount,
+                ` ${t`payment`}`,
+                ` ${t`payments`}`,
+              )}
             </div>
           </div>
         </div>

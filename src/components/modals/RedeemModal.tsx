@@ -185,10 +185,10 @@ export default function RedeemModal({
           ) : (
             <Trans>
               Tokens can be usually be redeemed for a portion of a project's ETH
-              overflow.
+              overflow.{' '}
               <span style={{ fontWeight: 500, color: colors.text.warn }}>
                 However, since this project <strong>has no overflow</strong> you
-                will receive no ETH for burning tokens.
+                won't receive any ETH for burning tokens.
               </span>
             </Trans>
           )}

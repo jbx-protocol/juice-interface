@@ -11,12 +11,14 @@ export interface Participant {
   lastPaidTimestamp?: number
 }
 
-export type ParticipantJson = Record<keyof Participant, string>
+export type ParticipantJson = Record<keyof Participant, string> & {
+  project: { id: string }
+}
 
 export const parseParticipantJson = (json: ParticipantJson): Participant => ({
   ...json,
   totalPaid: json.totalPaid ? BigNumber.from(json.totalPaid) : undefined,
-  project: json.project ? BigNumber.from(json.project) : undefined,
+  project: json.project ? BigNumber.from(json.project.id) : undefined,
   balance: json.balance ? BigNumber.from(json.balance) : undefined,
   stakedBalance: json.stakedBalance
     ? BigNumber.from(json.stakedBalance)

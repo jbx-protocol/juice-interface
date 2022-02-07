@@ -32,9 +32,10 @@ const template = `<!DOCTYPE html>
   let projects;
   while (!loaded) {
     try {
+      process.env.REACT_APP_SUBGRAPH_URL = 'https://gateway.thegraph.com/api/6a7675cd9c288a7b9571d5c9e78d5aff/deployments/id/QmNxBy8UnUsQr3aeBgFvdFyWbTSMiTGpJbkAJzSm5m6vYf';
       projects = (await (await fetch(process.env.REACT_APP_SUBGRAPH_URL, {
         method: 'POST',
-        body: '{"query":"{ projects(first: 100, skip: 0, orderBy: totalPaid, orderDirection: desc, where: { }) { handle, uri } }"}',
+        body: '{"query":"{ projects(first: 1000, orderBy: totalPaid, orderDirection: desc, where: { }) { handle, uri } }"}',
         headers: {'Content-Type': 'application/json'},
       })).json()).data.projects;
       loaded = true;
@@ -43,6 +44,7 @@ const template = `<!DOCTYPE html>
       await new Promise(resolve => setTimeout(resolve, 1000));
     }
   }
+  console.log(projects.length);
   for (let {handle, uri} of projects) {
     let loaded = false;
     let metadata;

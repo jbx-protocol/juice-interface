@@ -137,7 +137,7 @@ export default function Rewards() {
                   </div>
                 }
               />
-              {totalBalance?.gt(0) ? (
+              {userAddress ? (
                 <Descriptions.Item
                   label={t`Your balance`}
                   labelStyle={labelStyle}

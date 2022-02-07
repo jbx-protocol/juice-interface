@@ -60,8 +60,8 @@ export default function RedeemModal({
     ? rewardAmount?.mul(1000).div(1005)
     : rewardAmount
 
-  function redeem() {
-    form.validateFields()
+  async function redeem() {
+    await form.validateFields()
     if (!minAmount) return
 
     setLoading(true)

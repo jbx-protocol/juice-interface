@@ -211,7 +211,7 @@ export default function Rewards() {
           ) : (
             <React.Fragment>
               <Tooltip
-                title={t`Cannot redeem tokens for ETH since project has no overflow.`}
+                title={t`Cannot redeem tokens for ETH because this project has no overflow.`}
               >
                 <Button disabled block>
                   <Trans>Return my ETH</Trans>

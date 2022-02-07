@@ -19,6 +19,7 @@ import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
 
 import { CURRENCY_ETH, CURRENCY_USD } from 'constants/currency'
 
+// This double as the 'Redeem' and 'Burn' modal depending on if project has overflow
 export default function RedeemModal({
   visible,
   onOk,
@@ -184,11 +185,9 @@ export default function RedeemModal({
             </Trans>
           ) : (
             <Trans>
-              Tokens can be usually be redeemed for a portion of a project's ETH
-              overflow.{' '}
               <span style={{ fontWeight: 500, color: colors.text.warn }}>
-                However, since this project <strong>has no overflow</strong> you
-                won't receive any ETH for burning tokens.
+                <strong>This project has no overflow</strong>, so you will not
+                receive any ETH for burning tokens.
               </span>
             </Trans>
           )}

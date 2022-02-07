@@ -59,37 +59,7 @@ export default function ConfirmDeployProject() {
           <Trans>These attributes can be changed at any time.</Trans>
         </p>
         <Row gutter={rowGutter} style={{ marginBottom: 20 }}>
-          <Col md={5} xs={12}>
-            <Statistic
-              title={t`Name`}
-              value={orEmpty(editingProject?.metadata.name)}
-            />
-          </Col>
-          <Col md={5} xs={12}>
-            <Statistic
-              title={t`Handle`}
-              value={t`@` + orEmpty(editingProject?.handle)}
-            />
-          </Col>
-          <Col md={6} xs={12}>
-            <Statistic
-              title={t`Pay button`}
-              value={
-                editingProject?.metadata.payButton
-                  ? editingProject?.metadata.payButton
-                  : t`Pay`
-              }
-            />
-          </Col>
-          <Col md={7} xs={12}>
-            <Statistic
-              title={t`Pay disclosure`}
-              value={orEmpty(editingProject?.metadata.payDisclosure)}
-            />
-          </Col>
-        </Row>
-        <Row gutter={rowGutter} style={{}}>
-          <Col md={5} xs={12}>
+          <Col md={5} xs={24}>
             <Statistic title={t`Logo`} value={' '} />
             <div style={{ marginTop: -20 }}>
               <ProjectLogo
@@ -99,13 +69,31 @@ export default function ConfirmDeployProject() {
               />
             </div>
           </Col>
-          <Col md={5} xs={12}>
+          <Col md={6} xs={24}>
             <Statistic
-              title={t`Website`}
-              value={orEmpty(editingProject?.metadata.infoUri)}
+              title={t`Name`}
+              value={orEmpty(editingProject?.metadata.name)}
             />
           </Col>
-          <Col md={6} xs={12}>
+          <Col md={6} xs={24}>
+            <Statistic
+              title={t`Handle`}
+              value={t`@` + orEmpty(editingProject?.handle)}
+            />
+          </Col>
+          <Col md={7} xs={24}>
+            <Statistic
+              title={t`Pay button`}
+              value={
+                editingProject?.metadata.payButton
+                  ? editingProject?.metadata.payButton
+                  : t`Pay`
+              }
+            />
+          </Col>
+        </Row>
+        <Row gutter={[30, 20]} style={{ wordBreak: 'break-all' }}>
+          <Col md={5} xs={24}>
             <Statistic
               title={t`Twitter`}
               value={
@@ -115,10 +103,25 @@ export default function ConfirmDeployProject() {
               }
             />
           </Col>
-          <Col md={5} xs={12}>
+          <Col md={9} xs={24}>
             <Statistic
               title={t`Discord`}
               value={orEmpty(editingProject?.metadata.discord)}
+            />
+          </Col>
+          <Col md={9} xs={24}>
+            <Statistic
+              title={t`Website`}
+              value={orEmpty(editingProject?.metadata.infoUri)}
+            />
+          </Col>
+        </Row>
+        <br />
+        <Row gutter={rowGutter}>
+          <Col md={24} xs={24}>
+            <Statistic
+              title={t`Pay disclosure`}
+              value={orEmpty(editingProject?.metadata.payDisclosure)}
             />
           </Col>
         </Row>

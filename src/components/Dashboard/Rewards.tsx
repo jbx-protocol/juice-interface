@@ -123,6 +123,8 @@ export default function Rewards() {
                       justifyContent: 'space-between',
                       alignItems: 'baseline',
                       width: '100%',
+                      gap: 5,
+                      flexWrap: 'wrap',
                     }}
                   >
                     {formatWad(totalSupply, { precision: 0 })}
@@ -144,6 +146,7 @@ export default function Rewards() {
                     style={{
                       display: 'flex',
                       flexWrap: 'wrap',
+                      gap: 5,
                       justifyContent: 'space-between',
                       width: '100%',
                     }}

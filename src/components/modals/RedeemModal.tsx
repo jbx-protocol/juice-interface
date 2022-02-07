@@ -113,8 +113,6 @@ export default function RedeemModal({
 
   const redeemBN = parseWad(redeemAmount ?? 0)
 
-  const invalidRedeemAmount = redeemBN.eq(0) || redeemBN.gt(totalBalance ?? 0)
-
   const validateRedeemAmount = () => {
     if (redeemBN.eq(0)) {
       return Promise.reject('Required')
@@ -139,8 +137,7 @@ export default function RedeemModal({
       }}
       okText={buttonText}
       okButtonProps={{
-        disabled:
-          !redeemAmount || parseInt(redeemAmount) === 0 || invalidRedeemAmount,
+        disabled: !redeemAmount || parseInt(redeemAmount) === 0,
       }}
       width={540}
       centered
@@ -217,13 +214,15 @@ export default function RedeemModal({
               onChange={val => setRedeemAmount(val)}
             />
           </Form>
-          <div style={{ fontWeight: 500, marginTop: 20 }}>
-            <Trans>
-              You will receive{' '}
-              {currentFC?.currency.eq(CURRENCY_USD) ? 'minimum ' : ' '}
-              {formatWad(minAmount, { precision: 8 }) || '--'} ETH
-            </Trans>
-          </div>
+          {overflow?.gt(0) ? (
+            <div style={{ fontWeight: 500, marginTop: 20 }}>
+              <Trans>
+                You will receive{' '}
+                {currentFC?.currency.eq(CURRENCY_USD) ? 'minimum ' : ' '}
+                {formatWad(minAmount, { precision: 8 }) || '--'} ETH
+              </Trans>
+            </div>
+          ) : null}
         </div>
       </Space>
     </Modal>

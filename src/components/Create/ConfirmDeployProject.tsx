@@ -44,7 +44,7 @@ export default function ConfirmDeployProject() {
 
   const isMobile = useMobile()
 
-  const rowGutter: [Gutter, Gutter] = [20, 20]
+  const rowGutter: [Gutter, Gutter] = [25, 20]
 
   return (
     <Space size="large" direction="vertical">
@@ -92,7 +92,7 @@ export default function ConfirmDeployProject() {
             />
           </Col>
         </Row>
-        <Row gutter={[30, 20]} style={{ wordBreak: 'break-all' }}>
+        <Row gutter={rowGutter} style={{ wordBreak: 'break-all' }}>
           <Col md={5} xs={24}>
             <Statistic
               title={t`Twitter`}

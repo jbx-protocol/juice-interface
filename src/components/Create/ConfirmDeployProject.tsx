@@ -114,7 +114,11 @@ export default function ConfirmDeployProject() {
       />
       <Statistic
         title={t`Pay button`}
-        value={editingProject?.metadata.payButton ?? t`Pay`}
+        value={
+          editingProject?.metadata.payButton?.length
+            ? editingProject?.metadata.payButton
+            : t`Pay`
+        }
       />
       <Statistic
         title={t`Pay disclosure`}

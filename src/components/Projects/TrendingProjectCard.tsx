@@ -2,7 +2,7 @@ import CurrencySymbol from 'components/shared/CurrencySymbol'
 import Loading from 'components/shared/Loading'
 import ProjectLogo from 'components/shared/ProjectLogo'
 
-import { t, Trans } from '@lingui/macro'
+import { t, Trans, Plural } from '@lingui/macro'
 
 import { ThemeContext } from 'contexts/themeContext'
 import { constants } from 'ethers'
@@ -11,7 +11,6 @@ import { TrendingProject } from 'models/subgraph-entities/project'
 import { CSSProperties, useContext, useMemo } from 'react'
 import { formatWad } from 'utils/formatNumber'
 import { getTerminalVersion } from 'utils/v1/terminals'
-import pluralize from 'utils/pluralize'
 
 import { Link } from 'react-router-dom'
 
@@ -194,7 +193,7 @@ export default function TrendingProjectCard({
                 marginTop: 2,
               }}
             >
-              {pluralize(paymentCount, 'payment', 'payments')}
+              <Plural value={paymentCount} one="# payment" other="# payments" />
             </div>
           </div>
         </div>

@@ -71,7 +71,6 @@ export default function ProjectPayoutMods({
   const [modalMode, setModalMode] = useState<ModalMode>() //either 'Add', 'Edit' or undefined
   const [editingModProjectId, setEditingModProjectId] = useState<BigNumber>()
   const [editingModIndex, setEditingModIndex] = useState<number>()
-  const [editingPercent, setEditingPercent] = useState<number>()
   const [settingHandleIndex, setSettingHandleIndex] = useState<number>()
   const [editingModType, setEditingModType] = useState<ModType>('address')
   const [settingHandle, setSettingHandle] = useState<string>()
@@ -108,7 +107,7 @@ export default function ProjectPayoutMods({
 
   const gutter = 10
 
-  const modInput = useCallback(
+  const ModInput = useCallback(
     (mod: EditingPayoutMod, index: number, locked?: boolean) => {
       if (!mods) return
 
@@ -143,17 +142,12 @@ export default function ProjectPayoutMods({
               )
               setModalMode('Edit')
               setEditingModIndex(index)
-              setEditingPercent(percent)
               setEditingModProjectId(mod.projectId)
 
               form.setFieldsValue({
                 ...mod,
                 percent,
-                amount: getAmountFromPercent(
-                  editingPercent ?? percent,
-                  target,
-                  fee,
-                ),
+                amount: getAmountFromPercent(percent, target, fee),
                 lockedUntil: mod.lockedUntil
                   ? moment.default(mod.lockedUntil * 1000)
                   : undefined,
@@ -294,7 +288,6 @@ export default function ProjectPayoutMods({
       fee,
       form,
       onModsChanged,
-      editingPercent,
     ],
   )
 
@@ -312,6 +305,8 @@ export default function ProjectPayoutMods({
     const beneficiary = form.getFieldValue('beneficiary')
     const percent = parsePermyriad(form.getFieldValue('percent')).toNumber()
     const _lockedUntil = form.getFieldValue('lockedUntil') as moment.Moment
+
+    console.log('asdf form', form.getFieldsValue(true))
 
     const lockedUntil = _lockedUntil
       ? Math.round(_lockedUntil.valueOf() / 1000)
@@ -332,6 +327,11 @@ export default function ProjectPayoutMods({
           )
         : [...mods, newMod],
     )
+
+    if (handle) {
+      setSettingHandle(handle)
+      setSettingHandleIndex(editingModIndex)
+    }
 
     setEditingModIndex(undefined)
 
@@ -367,20 +367,26 @@ export default function ProjectPayoutMods({
 
   const onAmountChange = (newAmount: number | undefined) => {
     let newPercent = getPercentFromAmount(newAmount, target, fee)
-    setEditingPercent(newPercent)
     form.setFieldsValue({ amount: newAmount })
     form.setFieldsValue({ percent: newPercent })
   }
   return (
-    <Form.Item {...formItemProps}>
-      <Space direction="vertical" style={{ width: '100%' }} size="large">
+    <Form.Item
+      {...formItemProps}
+      style={{ ...formItemProps?.style, display: 'block' }}
+    >
+      <Space
+        direction="vertical"
+        style={{ width: '100%', minHeight: 0 }}
+        size="large"
+      >
         {lockedMods ? (
           <Space style={{ width: '100%' }} direction="vertical" size="small">
-            {lockedMods.map((v, i) => modInput(v, i, true))}
+            {lockedMods.map((v, i) => ModInput(v, i, true))}
           </Space>
         ) : null}
         <Space style={{ width: '100%' }} direction="vertical" size="small">
-          {mods.map((v, i) => modInput(v, i))}
+          {mods.map((v, i) => ModInput(v, i))}
         </Space>
         <div
           style={{
@@ -410,7 +416,6 @@ export default function ProjectPayoutMods({
           onClick={() => {
             setModalMode('Add')
             setEditingModIndex(mods.length)
-            setEditingPercent(0)
             setEditingModProjectId(undefined)
             form.resetFields()
           }}
@@ -551,7 +556,6 @@ export default function ProjectPayoutMods({
                     )
                     form.setFieldsValue({ amount: newAmount })
                     form.setFieldsValue({ percent })
-                    setEditingPercent(percent)
                   }}
                   step={0.01}
                   defaultValue={form.getFieldValue('percent') || 0}

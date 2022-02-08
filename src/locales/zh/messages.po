@@ -27,7 +27,8 @@ msgid "(Optional) Add a note to this payment on-chain"
 msgstr "（可选的）在此链上付款中添加备注"
 
 #: src/components/modals/ReservedTokenReceiverModal.tsx
-msgid "({realTokenAllocationPercent}%\n"
+msgid ""
+"({realTokenAllocationPercent}%\n"
 "of all newly minted tokens)."
 msgstr ""
 
@@ -71,13 +72,13 @@ msgstr "延迟七天生效"
 msgid "90 days"
 msgstr "90 天"
 
-#: src/components/Projects/index.tsx
+#: src/components/Projects/ArchivedProjectsMessage.tsx
 msgid "<0/> Archived projects have not been modified or deleted on the blockchain, and can still be interacted with directly through the Juicebox contracts."
 msgstr "<0/> 被存档的项目在区块链上并没有被修改或删除，用户仍然可以直接通过 Juicebox 合约进行交互。"
 
 #: src/components/Projects/index.tsx
-msgid "<0/> The Juicebox protocol is open to anyone, and project configurations can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO, so you should do your own research and understand the risks before committing your funds."
-msgstr "<0/> Juicebox 协议对任何人开放，不同项目的配置可能会有很大差异。与协议上的项目交互是存在风险的。 协议上部署的项目未经 JuiceboxDAO 认可或审查，所以您应该在付款之前，做好自己的研究并了解清楚风险。"
+msgid "<0/> The Juicebox protocol is open to anyone, and project configurations can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO. Do your own research and understand the risks before committing your funds."
+msgstr ""
 
 #: src/components/Dashboard/Spending.tsx
 msgid "<0/> owner balance"
@@ -119,6 +120,10 @@ msgstr "<0>注意：</0> 该项目还未部署 ERC20 合约，暂时无法领取
 #: src/components/shared/UntrackedErc20Notice.tsx
 msgid "<0>Notice:</0> These balances will not reflect transfers of claimed tokens because the {tokenSymbol} ERC-20 token has not yet been indexed by Juicebox."
 msgstr "<0>注意：</0> 因为 {tokenSymbol} ERC-20 代币还没被 Juicebox 索引，目前还不会根据已领取代币的转移操作来更新这些余额。"
+
+#: src/components/Landing/TrendingSection.tsx
+msgid "<0>Trending projects</0><1><2/></1>"
+msgstr ""
 
 #: src/components/modals/ConfirmUnstakeTokensModal.tsx
 msgid "<0>Your unclaimed {tokenSymbol} tokens:</0> {0}"
@@ -169,10 +174,6 @@ msgstr "对之后筹款周期的重新配置，至少得提前七天提交。"
 msgid "AVAILABLE"
 msgstr "可提取"
 
-#: src/components/Projects/index.tsx
-msgid "Active"
-msgstr "运行中"
-
 #: src/components/Dashboard/ProjectActivity/index.tsx
 msgid "Activity"
 msgstr "最近动态"
@@ -212,6 +213,10 @@ msgstr "地址"
 #: src/components/Create/index.tsx
 msgid "Adjust incentives for paying your project."
 msgstr "调整激励措施，以便鼓励其他人或项目向你的项目付款。"
+
+#: src/components/Projects/ProjectsTabs.tsx
+msgid "All"
+msgstr ""
 
 #: src/components/Dashboard/Paid.tsx
 msgid "All assets"
@@ -270,7 +275,7 @@ msgstr "对之后的筹款周期进行重新配置，更改将在当前周期结
 msgid "Anyone can deploy and use another governance smart contract to override this scheme."
 msgstr "任何人都可以部署和使用另一个治理智能合约来覆盖此方案。"
 
-#: src/components/Projects/index.tsx
+#: src/components/Projects/ProjectsFilterAndSort.tsx
 msgid "Archived"
 msgstr "已存档"
 
@@ -414,10 +419,6 @@ msgstr "复制到剪贴板"
 msgid "Create project"
 msgstr ""
 
-#: src/components/Projects/index.tsx
-msgid "Created"
-msgstr "创建时间"
-
 #: src/components/Landing/QAs.tsx
 msgid "Creating a Juicebox project mints you an NFT (ERC-721) representing ownership over it. Whoever owns this NFT can configure the rules of the game and how payouts are distributed."
 msgstr "创建一个 Juicebox 项目时，你会得到一个代表项目所有权的 NFT（ERC-721）。无论谁拥有这个NFT，都可以设置游戏规则以及决定如何分配报酬。"
@@ -445,6 +446,10 @@ msgstr "周期 #{0}"
 #: src/components/Navbar/ThemePicker.tsx
 msgid "Dark theme"
 msgstr "深色主题"
+
+#: src/components/Projects/ProjectsFilterAndSort.tsx
+msgid "Date created"
+msgstr ""
 
 #: src/components/modals/MigrateV1Pt1Modal.tsx
 msgid "Deposit 1 wei to @{handle}"
@@ -687,11 +692,15 @@ msgstr "持有者"
 msgid "Holding these tokens entitles a project to a portion of its own overflow."
 msgstr "持有这些代币，项目就有资格获得溢出的一部分。"
 
+#: src/components/Projects/ProjectsTabs.tsx
+msgid "Holdings"
+msgstr ""
+
 #: src/components/Landing/QAs.tsx
 msgid "How decentralized is Juicebox?"
 msgstr "Juicebox 的去中心化程度如何？"
 
-#: src/components/Projects/index.tsx
+#: src/components/Projects/ArchivedProjectsMessage.tsx
 msgid "How do I archive a project?"
 msgstr "怎样才能把一个项目存档呢？"
 
@@ -719,7 +728,7 @@ msgstr "ID: {0}"
 msgid "If locked, this can't be edited or removed until the lock expires or the funding cycle is reconfigured."
 msgstr ""
 
-#: src/components/Projects/index.tsx
+#: src/components/Projects/ArchivedProjectsMessage.tsx
 msgid "If you have a project you'd like to archive, let the Juicebox team know in Discord."
 msgstr "如果你想存档一个项目，可以在在 Discord 上告知 Juicebox 团队。"
 
@@ -749,9 +758,28 @@ msgstr "激励措施"
 msgid "Indie artists, devs, creators"
 msgstr "独立艺术家，开发者，创作者"
 
+#: src/components/Dashboard/IssueTickets.tsx
+#: src/components/Dashboard/IssueTickets.tsx
+msgid "Issue ERC-20 token"
+msgstr ""
+
+#: src/components/Dashboard/IssueTickets.tsx
+msgid ""
+"Issue an ERC-20 to be used as this project's token. Once\n"
+"issued, anyone can claim their existing token balance in the new token."
+msgstr ""
+
+#: src/components/Dashboard/IssueTickets.tsx
+msgid "Issue an ERC-20 token for this project. Once issued, anyone can claim their existing token balance in the new token."
+msgstr ""
+
 #: src/components/FundingCycle/FundingCycleDetails.tsx
 msgid "Issue rate"
 msgstr "发行比率"
+
+#: src/components/Dashboard/IssueTickets.tsx
+msgid "Issue token"
+msgstr ""
 
 #: src/components/Landing/QAs.tsx
 msgid "It isn't possible to remove a project's data from the blockchain, but we can hide it in the app if you'd like to prevent people from seeing or interacting with it—just let us know in Discord. Keep in mind people will still be able to use your project by interacting directly with the contract."
@@ -855,9 +883,17 @@ msgstr "铸造 {0} 代币"
 msgid "Minting tokens can be enabled or disabled by reconfiguring a v1.1 project's funding cycle. Tokens can only be minted by the project owner."
 msgstr "可通过重新配置 v 1.1项目的融资周期来启用或禁止代币铸造的功能。代币只能由项目的所有者来铸造。"
 
+#: src/components/Projects/TrendingProjects.tsx
+msgid "More trending projects"
+msgstr ""
+
 #: src/components/Create/ConfirmDeployProject.tsx
 msgid "Name"
 msgstr "名称"
+
+#: src/components/Projects/TrendingProjectCard.tsx
+msgid "New"
+msgstr ""
 
 #: src/components/Dashboard/ProjectActivity/ActivityTabContent.tsx
 msgid "No activity yet"
@@ -898,7 +934,8 @@ msgstr "未设定"
 
 #: src/components/Landing/index.tsx
 msgid "Note: Juicebox is new, unaudited, and not guaranteed to work perfectly. Before spending money, do your own research: <0>ask questions</0>, <1>check out the code</1>, and understand the risks!"
-msgstr "注意： Juicebox是一个全新的协议，它未经审计且不保证能完美工作。\n"
+msgstr ""
+"注意： Juicebox是一个全新的协议，它未经审计且不保证能完美工作。\n"
 " 在花钱之前请先做好您自己的研究：提出疑问，核查代码以及了解所涉及的风险！"
 
 #: src/components/modals/ConfirmPayOwnerModal/index.tsx
@@ -1027,6 +1064,10 @@ msgstr "可编程的开支"
 msgid "Project"
 msgstr "项目"
 
+#: src/components/Dashboard/IssueTickets.tsx
+msgid "Project Token"
+msgstr ""
+
 #: src/components/shared/formItems/ProjectDescription.tsx
 msgid "Project description"
 msgstr "项目说明"
@@ -1085,6 +1126,10 @@ msgstr ""
 #: src/components/Landing/index.tsx
 msgid "Public goods and services"
 msgstr "公共产品和服务"
+
+#: src/components/Projects/RankingExplanation.tsx
+msgid "Rankings based on number of contributions and volume gained in the last {trendingWindow} days. <0>See code</0>"
+msgstr ""
 
 #: src/components/modals/ConfirmPayOwnerModal/index.tsx
 msgid "Receive ERC20"
@@ -1280,7 +1325,8 @@ msgid "Should you Juicebox?"
 msgstr "你应该使用Juicebox吗?"
 
 #: src/components/FundingCycle/FundingCyclePreview.tsx
-msgid "Some funding cycle properties may indicate risk\n"
+msgid ""
+"Some funding cycle properties may indicate risk\n"
 "for project contributors."
 msgstr ""
 
@@ -1383,7 +1429,8 @@ msgid "The future will be led by creators, and owned by communities."
 msgstr "创造者将引领未来, 而社区会拥有未来."
 
 #: src/components/modals/ReservedTokenReceiverModal.tsx
-msgid "The percent this individual receives of the overall {reservedRate}% \n"
+msgid ""
+"The percent this individual receives of the overall {reservedRate}% \n"
 "reserved token allocation"
 msgstr ""
 
@@ -1483,11 +1530,18 @@ msgstr "代币地址：<0/>"
 msgid "Token minting"
 msgstr "代币铸造"
 
+#: src/components/Dashboard/IssueTickets.tsx
+msgid "Token name"
+msgstr ""
+
 #: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 msgid "Token redeem value"
 msgstr "代币赎回价值"
 
-#: src/components/Dashboard/Rewards.tsx
+#: src/components/Dashboard/IssueTickets.tsx
+msgid "Token symbol"
+msgstr ""
+
 #: src/components/Dashboard/Rewards.tsx
 #: src/components/shared/Mod.tsx
 msgid "Tokens"
@@ -1521,6 +1575,10 @@ msgstr "一共支付的 ETH"
 msgid "Total funds:"
 msgstr "总资金："
 
+#: src/components/Projects/ProjectsFilterAndSort.tsx
+msgid "Total raised"
+msgstr ""
+
 #: src/components/Dashboard/Rewards.tsx
 msgid "Total supply"
 msgstr "总供应量"
@@ -1546,6 +1604,10 @@ msgstr "转账 {0}"
 #: src/components/Landing/index.tsx
 msgid "Transparency & accountability"
 msgstr "透明度&问责制"
+
+#: src/components/Projects/ProjectsTabs.tsx
+msgid "Trending"
+msgstr ""
 
 #: src/components/Create/ConfirmDeployProject.tsx
 #: src/components/shared/formItems/ProjectTwitter.tsx
@@ -1592,11 +1654,11 @@ msgstr ""
 msgid "Using a reconfiguration strategy is recommended. Projects with no strategy will appear risky to contributors."
 msgstr ""
 
-#: src/components/Projects/index.tsx
+#: src/components/Projects/ProjectsFilterAndSort.tsx
 msgid "V1"
 msgstr "V1"
 
-#: src/components/Projects/index.tsx
+#: src/components/Projects/ProjectsFilterAndSort.tsx
 msgid "V1.1"
 msgstr "V1.1"
 
@@ -1607,7 +1669,6 @@ msgstr "当前项目所使用的 Terminal 版本。"
 #: src/components/Dashboard/BalanceTimeline.tsx
 #: src/components/Dashboard/BalanceTimeline.tsx
 #: src/components/Dashboard/Paid.tsx
-#: src/components/Projects/index.tsx
 msgid "Volume"
 msgstr "总收入"
 
@@ -1742,10 +1803,6 @@ msgstr "你项目的网站。"
 msgid "after {0}% JBX fee"
 msgstr "计算 {0}% JBX 费用之后"
 
-#: src/components/Dashboard/Rewards.tsx
-msgid "are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
-msgstr "分配给付款的人。如果项目设置了筹款目标，可以燃烧代币来按比例赎回溢出池中的 ETH。"
-
 #: src/components/modals/PayWarningModal.tsx
 msgid "are unaudited, and may be vulnerable to bugs or hacks. All funds moved through Juicebox could be lost or stolen. JuiceboxDAO is not liable for any losses by projects or their supporters."
 msgstr "未经审计，可能容易出 BUG 或者被攻击。所有通过 Juicebox 转移的资金都可能丢失或被盗。JuiceboxDAO 不对项目或其支持者造成的任何损失负责。"
@@ -1774,6 +1831,10 @@ msgstr "https://your-project.com"
 msgid "juiceboxETH"
 msgstr ""
 
+#: src/components/Projects/TrendingProjectCard.tsx
+msgid "last {trendingWindowDays} days"
+msgstr ""
+
 #: src/components/Projects/index.tsx
 msgid "matching \"{searchText}\""
 msgstr "满足条件 \"{searchText}\""
@@ -1782,6 +1843,7 @@ msgstr "满足条件 \"{searchText}\""
 msgid "or <0><1>buy {tokenText} on exchange<2/></1></0>"
 msgstr "或是 <0><1>在交易所购买 {tokenText} <2/></1></0>"
 
+#: src/components/Projects/HoldingsProjects.tsx
 #: src/components/Projects/index.tsx
 msgid "project"
 msgstr "项目"
@@ -1790,6 +1852,7 @@ msgstr "项目"
 msgid "project owner"
 msgstr ""
 
+#: src/components/Projects/HoldingsProjects.tsx
 #: src/components/Projects/index.tsx
 msgid "projects"
 msgstr "项目"
@@ -1807,7 +1870,6 @@ msgstr "代币"
 #: src/components/Dashboard/ReservedTokens.tsx
 #: src/components/Dashboard/ReservedTokens.tsx
 #: src/components/Dashboard/ReservedTokens.tsx
-#: src/components/Dashboard/Rewards.tsx
 msgid "tokens"
 msgstr "代币"
 
@@ -1920,7 +1982,22 @@ msgstr "{exchangeName} 不存在 {tokenSymbol} 的兑换市场"
 msgid "{handle} not found"
 msgstr "{handle} 没有找到"
 
+#: src/components/Projects/FilterCheckboxItem.tsx
+msgid "{label}"
+msgstr ""
+
+#: src/components/Projects/TrendingProjectCard.tsx
+msgid "{paymentCount, plural, one {# payment} other {# payments}}"
+msgstr ""
+
 #: src/components/shared/AMMPrices/TokenAMMPriceRow.tsx
 msgid "{tokenSymbol}/ETH exchange rate on {exchangeName}."
 msgstr "在 {exchangeName} 的兑换率为 {tokenSymbol}/ETH"
 
+#: src/components/Dashboard/Rewards.tsx
+msgid ""
+"{tokensLabel}\n"
+"are distributed to anyone who pays this project. If the project \n"
+"has set a funding target, tokens can be redeemed for a portion \n"
+"of the project's overflow whether or not they have been claimed yet."
+msgstr ""

@@ -6,8 +6,9 @@ import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContributedProjectsQuery } from 'hooks/v1/Projects'
 import React, { useContext } from 'react'
+import { InfoCircleOutlined } from '@ant-design/icons'
 
-export default function ContributedProjects() {
+export default function HoldingsProjects() {
   const { userAddress } = useContext(NetworkContext)
 
   const { data: projects, isLoading } = useContributedProjectsQuery(userAddress)
@@ -18,8 +19,8 @@ export default function ContributedProjects() {
 
   return (
     <React.Fragment>
-      {projects &&
-        (projects.length ? (
+      {projects ? (
+        projects.length ? (
           <React.Fragment>
             <Grid>
               {projects?.map(p => (
@@ -46,15 +47,18 @@ export default function ContributedProjects() {
             }}
             hidden={isLoading}
           >
-            Projects you've contributed to will show up here.
+            You don't hold tokens for any Juicebox project.
           </div>
-        ))}
-
-      {isLoading && (
+        )
+      ) : (
         <div style={{ marginTop: 40 }}>
           <Loading />
         </div>
       )}
+
+      <p style={{ marginBottom: 40, marginTop: 20, maxWidth: 800 }}>
+        <InfoCircleOutlined /> Projects that you hold tokens for.
+      </p>
     </React.Fragment>
   )
 }

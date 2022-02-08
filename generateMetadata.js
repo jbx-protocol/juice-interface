@@ -26,6 +26,7 @@ const template = `<!DOCTYPE html>
     <script>location.replace('/#' + location.pathname)</script>
   </body>
 </html>`;
+const targetDir = './build/p/';
 
 (async () => {
   let loaded = false;
@@ -45,6 +46,7 @@ const template = `<!DOCTYPE html>
     }
   }
   console.log(projects.length);
+  try { await mkdir(targetDir, {recursive: true}); } catch(e) {}
   for (let {handle, uri} of projects) {
     let loaded = false;
     let metadata;
@@ -64,7 +66,7 @@ const template = `<!DOCTYPE html>
     }
     try {
       console.log('Write ' + handle + ' metadata');
-      await fs.writeFile('./build/p/' + handle, data);
+      await fs.writeFile(targetDir + handle, data);
     } catch(e) {
       console.log(e);
       console.log('Write file ' + handle + ' eror')

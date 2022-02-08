@@ -49,7 +49,8 @@
   "scripts": {
     "compile-styles": "lessc ./node_modules/antd/dist/antd.less ./src/styles/antd.css --js",
     "start": "yarn compile-styles && react-scripts start",
-    "build": "yarn compile-styles && react-scripts build",
+    "build": "react-scripts build",
+    "prebuild": "yarn compile-styles && yarn i18n:compile",
     "test": "yarn compile-styles && react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./",

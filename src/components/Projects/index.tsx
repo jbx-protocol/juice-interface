@@ -1,35 +1,87 @@
 import { InfoCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Button, Checkbox, Select, Space, Tooltip } from 'antd'
+import { Button } from 'antd'
 import Search from 'antd/lib/input/Search'
 import FeedbackFormLink from 'components/shared/FeedbackFormLink'
 import Loading from 'components/shared/Loading'
-import ProjectsGrid from 'components/shared/ProjectsGrid'
 
-import { ThemeContext } from 'contexts/themeContext'
+import { ProjectCategory, ProjectStateFilter } from 'models/project-visibility'
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
+
+import Grid from 'components/shared/Grid'
+import ProjectCard from 'components/shared/ProjectCard'
+
+import { Link, useHistory, useLocation } from 'react-router-dom'
+
 import { useInfiniteProjectsQuery, useProjectsSearch } from 'hooks/v1/Projects'
-import { ProjectState } from 'models/project-visibility'
 import { V1TerminalVersion } from 'models/v1/terminals'
-import { useContext, useEffect, useMemo, useRef, useState } from 'react'
+
+import { NetworkContext } from 'contexts/networkContext'
+import { ThemeContext } from 'contexts/themeContext'
 
 import { layouts } from 'constants/styles/layouts'
+import TrendingProjects from './TrendingProjects'
+import ProjectsTabs from './ProjectsTabs'
+import HoldingsProjects from './HoldingsProjects'
+import ProjectsFilterAndSort from './ProjectsFilterAndSort'
+import ArchivedProjectsMessage from './ArchivedProjectsMessage'
 
 type OrderByOption = 'createdAt' | 'totalPaid'
 
 const pageSize = 20
 
+const defaultTab: ProjectCategory = 'trending'
+
 export default function Projects() {
-  const [searchText, setSearchText] = useState<string>()
-  const [selectedTab, setSelectedTab] = useState<ProjectState>('active')
+  const [selectedTab, setSelectedTab] = useState<ProjectCategory>(defaultTab)
+
+  // Checks URL to see if tab has been set
+  const location = useLocation()
+  const history = useHistory()
+
+  const { userAddress } = useContext(NetworkContext)
+
+  const params = useMemo(
+    () => new URLSearchParams(location.search),
+    [location.search],
+  )
+
+  useEffect(() => {
+    setSelectedTab(() => {
+      switch (params.get('tab')) {
+        case 'trending':
+          return 'trending'
+        case 'all':
+          return 'all'
+        case 'holdings':
+          // If no wallet connected, revert to default tab
+          return userAddress ? 'holdings' : defaultTab
+        default:
+          return defaultTab
+      }
+    })
+  }, [userAddress, params])
+
+  const [searchText, setSearchText] = useState<string>(
+    params.get('search') ?? '',
+  )
+
   const [orderBy, setOrderBy] = useState<OrderByOption>('totalPaid')
   const [includeV1, setIncludeV1] = useState<boolean>(true)
   const [includeV1_1, setIncludeV1_1] = useState<boolean>(true)
+  const [includeActive, setIncludeActive] = useState<boolean>(true)
+  const [includeArchived, setIncludeArchived] = useState<boolean>(false)
 
   const loadMoreContainerRef = useRef<HTMLDivElement>(null)
 
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+
+  const includedStates: ProjectStateFilter = {
+    active: includeActive,
+    archived: includeArchived,
+  }
 
   const terminalVersion: V1TerminalVersion | undefined = useMemo(() => {
     if (includeV1 && !includeV1_1) return '1'
@@ -46,7 +98,7 @@ export default function Projects() {
     orderBy,
     pageSize,
     orderDirection: 'desc',
-    filter: selectedTab,
+    states: includedStates,
     terminalVersion,
   })
 
@@ -55,7 +107,7 @@ export default function Projects() {
 
   // When we scroll within 200px of our loadMoreContainerRef, fetch the next page.
   useEffect(() => {
-    if (loadMoreContainerRef.current) {
+    if (loadMoreContainerRef.current && selectedTab !== 'trending') {
       const observer = new IntersectionObserver(
         entries => {
           if (entries.find(e => e.isIntersecting) && hasNextPage) {
@@ -70,7 +122,7 @@ export default function Projects() {
 
       return () => observer.disconnect()
     }
-  }, [fetchNextPage, hasNextPage])
+  }, [selectedTab, fetchNextPage, hasNextPage])
 
   const isLoading = isLoadingProjects || isLoadingSearch
 
@@ -78,44 +130,11 @@ export default function Projects() {
     ? searchPages
     : pages?.pages?.reduce((prev, group) => [...prev, ...group], [])
 
-  const tab = (tab: ProjectState) => {
-    let text: string
-    switch (tab) {
-      case 'active':
-        text = t`Active`
-        break
-      case 'archived':
-        text = t`Archived`
-        break
-    }
-    return (
-      <div
-        style={{
-          textTransform: 'uppercase',
-          cursor: 'pointer',
-          borderBottom: '2px solid transparent',
-          paddingBottom: 6,
-          ...(tab === selectedTab
-            ? {
-                color: colors.text.primary,
-                fontWeight: 500,
-                borderColor: colors.text.primary,
-              }
-            : {
-                color: colors.text.secondary,
-                borderColor: 'transparent',
-              }),
-        }}
-        onClick={() => setSelectedTab(tab)}
-      >
-        {text}
-      </div>
-    )
-  }
+  const filterOnlyArchived = !includeActive && includeArchived
 
   return (
     <div style={{ ...layouts.maxWidth }}>
-      <div style={{ marginBottom: 40 }}>
+      <div style={{ marginBottom: 20 }}>
         <div
           style={{
             display: 'flex',
@@ -127,11 +146,11 @@ export default function Projects() {
             <Trans>Projects on Juicebox</Trans>
           </h1>
 
-          <a href="/#/create">
+          <Link to="/create">
             <Button>
               <Trans>Create project</Trans>
             </Button>
-          </a>
+          </Link>
         </div>
 
         <div>
@@ -141,148 +160,115 @@ export default function Projects() {
               and project configurations can vary widely. There are risks
               associated with interacting with all projects on the protocol.
               Projects built on the protocol are not endorsed or vetted by
-              JuiceboxDAO, so you should do your own research and understand the
-              risks before committing your funds.
+              JuiceboxDAO. Do your own research and understand the risks before
+              committing your funds.
             </Trans>
           </p>
+        </div>
 
+        {!filterOnlyArchived ? (
           <Search
             autoFocus
             style={{ flex: 1, marginBottom: 20, marginRight: 20 }}
             prefix="@"
             placeholder={t`Search projects by handle`}
-            onSearch={val => setSearchText(val)}
+            onSearch={val => {
+              setSearchText(val)
+              history.push(`/projects?tab=all${val ? `&search=${val}` : ''}`)
+            }}
+            defaultValue={searchText}
             allowClear
           />
-        </div>
+        ) : null}
 
         <div
           hidden={!!searchText}
           style={{
             display: 'flex',
             justifyContent: 'space-between',
-            alignItems: 'baseline',
+            alignItems: 'flex-start',
             flexWrap: 'wrap',
             maxWidth: '100vw',
           }}
         >
-          <div style={{ height: 40, marginTop: 10, marginBottom: 10 }}>
-            <Space direction="horizontal" size="large">
-              {tab('active')}
-              {tab('archived')}
-            </Space>
-          </div>
+          <ProjectsTabs selectedTab={selectedTab} />
 
-          <div
-            style={{
-              alignItems: 'baseline',
-              whiteSpace: 'pre',
-              flexWrap: 'wrap',
-              maxWidth: '100vw',
-            }}
-          >
-            <Space
-              direction="horizontal"
-              size="middle"
-              style={{ marginRight: 20, marginTop: 10, marginBottom: 10 }}
-            >
-              <div>
-                <Checkbox
-                  checked={includeV1}
-                  onChange={() => setIncludeV1(!includeV1)}
-                />{' '}
-                <Trans>V1</Trans>
-              </div>
-              <div>
-                <Checkbox
-                  checked={includeV1_1}
-                  onChange={() => setIncludeV1_1(!includeV1_1)}
-                />{' '}
-                <Trans>V1.1</Trans>
-              </div>
-            </Space>
-
-            <Select
-              value={orderBy}
-              onChange={setOrderBy}
-              style={{
-                width: 180,
-                marginTop: 10,
-                marginBottom: 10,
-              }}
-            >
-              <Select.Option value="totalPaid">
-                <Trans>Volume</Trans>
-              </Select.Option>
-              <Select.Option value="createdAt">
-                <Trans>Created</Trans>
-              </Select.Option>
-            </Select>
-          </div>
+          {selectedTab === 'all' && !searchText ? (
+            <ProjectsFilterAndSort
+              includeV1={includeV1}
+              setIncludeV1={setIncludeV1}
+              includeV1_1={includeV1_1}
+              setIncludeV1_1={setIncludeV1_1}
+              includeActive={includeActive}
+              setIncludeActive={setIncludeActive}
+              includeArchived={includeArchived}
+              setIncludeArchived={setIncludeArchived}
+              orderBy={orderBy}
+              setOrderBy={setOrderBy}
+            />
+          ) : null}
         </div>
-
-        {selectedTab === 'archived' && (
-          <p style={{ marginBottom: 40, maxWidth: 800 }}>
-            <Trans>
-              <InfoCircleOutlined /> Archived projects have not been modified or
-              deleted on the blockchain, and can still be interacted with
-              directly through the Juicebox contracts.
-            </Trans>
-            <Tooltip
-              title={t`If you have a project you'd like to archive, let the Juicebox team know in Discord.`}
-            >
-              <span
-                style={{
-                  color: colors.text.action.primary,
-                  fontWeight: 500,
-                  cursor: 'default',
-                }}
-              >
-                {' '}
-                <Trans>How do I archive a project?</Trans>
-              </span>
-            </Tooltip>
-          </p>
-        )}
+        <ArchivedProjectsMessage
+          hidden={!filterOnlyArchived || selectedTab !== 'all'}
+        />
       </div>
 
-      {concatenatedPages && <ProjectsGrid projects={concatenatedPages} />}
-      {(isLoading || isFetchingNextPage) && <Loading />}
+      {selectedTab === 'all' ? (
+        <React.Fragment>
+          {concatenatedPages && (
+            <Grid
+              children={concatenatedPages.map((p, i) => (
+                <ProjectCard key={i} project={p} />
+              ))}
+            />
+          )}
 
-      {/* Place a div below the grid that we can connect to an intersection observer */}
-      <div ref={loadMoreContainerRef} />
+          {(isLoading || isFetchingNextPage) && <Loading />}
 
-      {hasNextPage &&
-      !isFetchingNextPage &&
-      (concatenatedPages?.length || 0) > pageSize ? (
-        <div
-          role="button"
-          style={{
-            textAlign: 'center',
-            color: colors.text.secondary,
-            cursor: 'pointer',
-            padding: 20,
-          }}
-          onClick={() => fetchNextPage()}
-        >
-          <Trans>Load more</Trans>
+          {/* Place a div below the grid that we can connect to an intersection observer */}
+          <div ref={loadMoreContainerRef} />
+
+          {hasNextPage &&
+          !isFetchingNextPage &&
+          (concatenatedPages?.length || 0) > pageSize ? (
+            <div
+              role="button"
+              style={{
+                textAlign: 'center',
+                color: colors.text.secondary,
+                cursor: 'pointer',
+                padding: 20,
+              }}
+              onClick={() => fetchNextPage()}
+            >
+              <Trans>Load more</Trans>
+            </div>
+          ) : (
+            !isLoadingSearch &&
+            !isLoadingProjects && (
+              <div
+                style={{
+                  textAlign: 'center',
+                  color: colors.text.disabled,
+                  padding: 20,
+                }}
+              >
+                {concatenatedPages?.length}{' '}
+                {concatenatedPages?.length === 1 ? t`project` : t`projects`}{' '}
+                {searchText ? t`matching "${searchText}"` : ''}
+              </div>
+            )
+          )}
+        </React.Fragment>
+      ) : selectedTab === 'holdings' ? (
+        <div style={{ paddingBottom: 50 }}>
+          <HoldingsProjects />
         </div>
-      ) : (
-        !isLoadingSearch &&
-        !isLoadingProjects && (
-          <div
-            style={{
-              textAlign: 'center',
-              color: colors.text.disabled,
-              padding: 20,
-            }}
-          >
-            {concatenatedPages?.length}{' '}
-            {concatenatedPages?.length === 1 ? t`project` : t`projects`}{' '}
-            {searchText ? t`matching "${searchText}"` : ''}
-          </div>
-        )
-      )}
+      ) : selectedTab === 'trending' ? (
+        <div style={{ paddingBottom: 50 }}>
+          <TrendingProjects count={12} trendingWindowDays={7} />
+        </div>
+      ) : null}
       <FeedbackFormLink />
     </div>
   )

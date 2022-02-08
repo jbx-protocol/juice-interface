@@ -374,17 +374,17 @@ export default function ReconfigureFCModal({
             ])}
           </div>
 
-          {hasFundingTarget(editingFC) && (
-            <Space size="large">
-              <Statistic
-                title={t`Duration`}
-                value={
-                  editingFC.duration.gt(0)
-                    ? formattedNum(editingFC.duration)
-                    : 'Not set'
-                }
-                suffix={editingFC.duration.gt(0) ? 'days' : ''}
-              />
+          <Space size="large">
+            <Statistic
+              title={t`Duration`}
+              value={
+                editingFC.duration.gt(0)
+                  ? formattedNum(editingFC.duration)
+                  : 'Not set'
+              }
+              suffix={editingFC.duration.gt(0) ? 'days' : ''}
+            />
+            {hasFundingTarget(editingFC) && (
               <Statistic
                 title={t`Amount`}
                 valueRender={() => (
@@ -420,8 +420,8 @@ export default function ReconfigureFCModal({
                   </span>
                 )}
               />
-            </Space>
-          )}
+            )}
+          </Space>
 
           <Space size="large" align="end">
             <Statistic

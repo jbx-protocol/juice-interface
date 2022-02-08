@@ -173,6 +173,10 @@ export default function Create() {
     dispatch(editingProjectActions.setTarget(target))
     dispatch(editingProjectActions.setDuration(duration))
     dispatch(editingProjectActions.setCurrency(currency))
+
+    if (!duration) {
+      dispatch(editingProjectActions.setBallot(constants.AddressZero))
+    }
   }
 
   const onProjectFormSaved = useCallback(() => {

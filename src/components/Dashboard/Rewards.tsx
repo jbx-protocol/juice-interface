@@ -19,7 +19,7 @@ import useReservedTokensOfProject from 'hooks/v1/contractReader/ReservedTokensOf
 import useTotalBalanceOf from 'hooks/v1/contractReader/TotalBalanceOf'
 import useTotalSupplyOfProjectToken from 'hooks/v1/contractReader/TotalSupplyOfProjectToken'
 import useUnclaimedBalanceOfUser from 'hooks/v1/contractReader/UnclaimedBalanceOfUser'
-import { CSSProperties, useContext, useState } from 'react'
+import React, { CSSProperties, useContext, useState } from 'react'
 import { formatPercent, formatWad } from 'utils/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
 
@@ -42,6 +42,7 @@ export default function Rewards() {
     tokenSymbol,
     isPreviewMode,
     currentFC,
+    overflow,
     terminal,
   } = useContext(V1ProjectContext)
 
@@ -140,61 +141,57 @@ export default function Rewards() {
                   </div>
                 }
               />
-              <Descriptions.Item
-                label={t`Your balance`}
-                labelStyle={labelStyle}
-                children={
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexWrap: 'wrap',
-                      gap: 5,
-                      justifyContent: 'space-between',
-                      width: '100%',
-                    }}
-                  >
-                    <div>
-                      {ticketsIssued && (
-                        <div>
-                          {claimedBalance?.gt(0) ? (
-                            <>
-                              {`${formatWad(claimedBalance ?? 0, {
-                                precision: 0,
-                              })} ${tokenSymbol}`}
-                            </>
-                          ) : (
-                            <>0 {tokenSymbol || 'tokens'}</>
-                          )}
-                        </div>
-                      )}
-                      <div>
-                        <Trans>
-                          {formatWad(unclaimedBalance ?? 0, { precision: 0 })}
-                          {ticketsIssued ? <> claimable</> : null}
-                        </Trans>
-                      </div>
-
-                      <div
-                        style={{
-                          cursor: 'default',
-                          fontSize: '0.8rem',
-                          fontWeight: 500,
-                          color: colors.text.tertiary,
-                        }}
-                      >
-                        <Trans>{share || 0}% of supply</Trans>
-                      </div>
-                    </div>
-
-                    <Button
-                      size="small"
-                      onClick={() => setManageTokensModalVisible(true)}
+              {userAddress ? (
+                <Descriptions.Item
+                  label={t`Your balance`}
+                  labelStyle={labelStyle}
+                  children={
+                    <div
+                      style={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        gap: 5,
+                        justifyContent: 'space-between',
+                        width: '100%',
+                      }}
                     >
-                      <Trans>Manage</Trans>
-                    </Button>
-                  </div>
-                }
-              />
+                      <div>
+                        {ticketsIssued && (
+                          <div>
+                            {`${formatWad(claimedBalance ?? 0, {
+                              precision: 0,
+                            })} ${tokenSymbol}`}
+                          </div>
+                        )}
+                        <div>
+                          <Trans>
+                            {formatWad(unclaimedBalance ?? 0, { precision: 0 })}
+                            {ticketsIssued ? <> claimable</> : null}
+                          </Trans>
+                        </div>
+
+                        <div
+                          style={{
+                            cursor: 'default',
+                            fontSize: '0.8rem',
+                            fontWeight: 500,
+                            color: colors.text.tertiary,
+                          }}
+                        >
+                          <Trans>{share || 0}% of supply</Trans>
+                        </div>
+                      </div>
+
+                      <Button
+                        size="small"
+                        onClick={() => setManageTokensModalVisible(true)}
+                      >
+                        <Trans>Manage</Trans>
+                      </Button>
+                    </div>
+                  }
+                />
+              ) : null}
             </Descriptions>
           )}
         />
@@ -212,11 +209,26 @@ export default function Rewards() {
         centered
       >
         <Space direction="vertical" style={{ width: '100%' }}>
-          <Button onClick={() => setRedeemModalVisible(true)} block>
-            <Trans>Return my ETH</Trans>
-          </Button>
+          {overflow?.gt(0) ? (
+            <Button onClick={() => setRedeemModalVisible(true)} block>
+              <Trans>Return my ETH</Trans>
+            </Button>
+          ) : (
+            <React.Fragment>
+              <Tooltip
+                title={t`Cannot redeem tokens for ETH because this project has no overflow.`}
+              >
+                <Button disabled block>
+                  <Trans>Return my ETH</Trans>
+                </Button>
+              </Tooltip>
+              <Button onClick={() => setRedeemModalVisible(true)} block>
+                <Trans>Burn tokens</Trans>
+              </Button>
+            </React.Fragment>
+          )}
           <Button onClick={() => setUnstakeModalVisible(true)} block>
-            <Trans>Claim {tokenSymbol || 'tokens'} as ERC20</Trans>
+            <Trans>Claim {tokenSymbol || t`tokens`} as ERC20</Trans>
           </Button>
           {hasPrintPreminePermission && projectId?.gt(0) && (
             <Tooltip

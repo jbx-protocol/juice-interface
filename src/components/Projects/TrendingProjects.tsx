@@ -19,12 +19,15 @@ export default function TrendingProjects({
   count: number
   trendingWindowDays: number
 }) {
-  const { data: projects } = useTrendingProjects(count, trendingWindowDays)
+  const { data: projects, isLoading } = useTrendingProjects(
+    count,
+    trendingWindowDays,
+  )
 
   return (
     <div>
-      {projects && projects.length ? (
-        <React.Fragment>
+      <React.Fragment>
+        {projects && projects.length > 0 && (
           <Grid gutter={isHomePage ? 10 : undefined}>
             {projects.map((p, i) => (
               <TrendingProjectCard
@@ -36,24 +39,27 @@ export default function TrendingProjects({
               />
             ))}
           </Grid>
-          {!isHomePage ? (
-            <p style={{ marginBottom: 40, marginTop: 20, maxWidth: 800 }}>
-              <InfoCircleOutlined />{' '}
-              <RankingExplanation trendingWindow={trendingWindowDays} />
-            </p>
-          ) : (
-            <Button type="default" style={{ marginBottom: 40, marginTop: 15 }}>
-              <Link to="/projects?tab=trending">
-                <Trans>More trending projects</Trans>
-              </Link>
-            </Button>
-          )}
-        </React.Fragment>
-      ) : (
-        <div style={{ marginTop: 40 }}>
-          <Loading />
-        </div>
-      )}
+        )}
+
+        {(!projects?.length || isLoading) && (
+          <div style={{ marginTop: 40 }}>
+            <Loading />
+          </div>
+        )}
+
+        {!isHomePage ? (
+          <p style={{ marginBottom: 40, marginTop: 40, maxWidth: 800 }}>
+            <InfoCircleOutlined />{' '}
+            <RankingExplanation trendingWindow={trendingWindowDays} />
+          </p>
+        ) : (
+          <Button type="default" style={{ marginBottom: 40, marginTop: 15 }}>
+            <Link to="/projects?tab=trending">
+              <Trans>More trending projects</Trans>
+            </Link>
+          </Button>
+        )}
+      </React.Fragment>
     </div>
   )
 }

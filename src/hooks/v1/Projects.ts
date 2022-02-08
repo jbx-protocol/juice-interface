@@ -137,6 +137,7 @@ export function useProjectsSearch(handle: string | undefined) {
 
 // Returns projects with highest % volume increase in last week
 export function useTrendingProjects(count: number, days: number) {
+  const [loadingPayments, setLoadingPayments] = useState<boolean>()
   const [projectStats, setProjectStats] = useState<
     Record<
       string,
@@ -149,6 +150,8 @@ export function useTrendingProjects(count: number, days: number) {
 
   useEffect(() => {
     const loadPayments = async () => {
+      setLoadingPayments(true)
+
       const daySeconds = days * SECONDS_IN_DAY
       const now = new Date().setUTCHours(0, 0, 0, 0) // get start of day, for determinism
       const nowSeconds = now.valueOf() / 1000
@@ -198,13 +201,15 @@ export function useTrendingProjects(count: number, days: number) {
           >,
         ),
       )
+
+      setLoadingPayments(false)
     }
 
     loadPayments()
   }, [count, days])
 
   // Query project data for all trending project IDs
-  const projects = useSubgraphQuery(
+  const projectsQuery = useSubgraphQuery(
     projectStats
       ? {
           entity: 'project',
@@ -219,9 +224,10 @@ export function useTrendingProjects(count: number, days: number) {
   )
 
   return {
-    ...projects,
+    ...projectsQuery,
+    isLoading: projectsQuery.isLoading || loadingPayments,
     // Return TrendingProjects sorted by `trendingScore`
-    data: projects.data
+    data: projectsQuery.data
       ?.map(p => {
         const stats =
           p.id && projectStats ? projectStats[p.id.toString()] : undefined
@@ -245,12 +251,15 @@ export function useTrendingProjects(count: number, days: number) {
 }
 
 // Query all projects that a wallet has previously made payments to
-export function useContributedProjectsQuery(wallet: string | undefined) {
+export function useHoldingsProjectsQuery(wallet: string | undefined) {
+  const [loadingParticipants, setLoadingParticipants] = useState<boolean>()
   const [projectIds, setProjectIds] = useState<string[]>()
 
   useEffect(() => {
     // Get all participant entities for wallet
     const loadParticipants = async () => {
+      setLoadingParticipants(true)
+
       const participants = await querySubgraphExhaustive(
         wallet
           ? {
@@ -292,12 +301,14 @@ export function useContributedProjectsQuery(wallet: string | undefined) {
           [] as string[],
         ),
       )
+
+      setLoadingParticipants(false)
     }
 
     loadParticipants()
   }, [wallet])
 
-  return useSubgraphQuery(
+  const projectsQuery = useSubgraphQuery(
     projectIds
       ? {
           entity: 'project',
@@ -310,6 +321,11 @@ export function useContributedProjectsQuery(wallet: string | undefined) {
         }
       : null,
   )
+
+  return {
+    ...projectsQuery,
+    isLoading: projectsQuery.isLoading || loadingParticipants,
+  }
 }
 
 export function useInfiniteProjectsQuery(opts: ProjectsOptions) {

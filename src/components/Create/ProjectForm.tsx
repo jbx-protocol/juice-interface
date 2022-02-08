@@ -29,6 +29,12 @@ export default function ProjectForm({
       <h1>
         <Trans>Project details</Trans>
       </h1>
+      <p>
+        <Trans>
+          Changes to these attributes can be made at any time and will be
+          applied to your project immediately.
+        </Trans>
+      </p>
 
       <Form form={form} layout="vertical">
         <FormItems.ProjectName

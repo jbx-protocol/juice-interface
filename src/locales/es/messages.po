@@ -90,6 +90,10 @@ msgstr "Saldo del propietario <0/>"
 msgid "<0/>{0}{1} withdrawn"
 msgstr "<0/>{0}{1} retirar"
 
+#: src/components/modals/RedeemModal.tsx
+msgid "<0><1>This project has no overflow</1>, so you will not receive any ETH for burning tokens.</0>"
+msgstr ""
+
 #: src/components/Create/BudgetForm.tsx
 msgid "<0>Learn more</0> about funding cycle duration."
 msgstr "<0>Aprende más</0> acerca de la duración del ciclo de financiación."
@@ -106,10 +110,6 @@ msgstr "<0>Aprende más</0> acerca del excedente."
 #: src/components/modals/MigrateV1Pt1Modal.tsx
 msgid "<0>NOTE:</0> This project has a balance of 0. Projects cannot be migrated without a balance. To migrate this project, first pay it or use the button below to deposit 1 wei (0.000000000000000001 or 10<1>-18</1> ETH)."
 msgstr "<0>NOTA:</0> Este proyecto tiene un balance de 0. Los proyectos no pueden ser migrados sin un balance. Para migrar un proyecto, primero págalo o usa el botón de abajo para depositar 1 wei (0.000000000000000001 o 10<1>-18</1> ETH)."
-
-#: src/components/Create/ConfirmDeployProject.tsx
-msgid "<0>Note:</0> Funding cycle properties will <1>not</1> be editable immediately within a funding cycle. They can only be changed for <2>upcoming</2> funding cycles."
-msgstr ""
 
 #: src/components/Create/RestrictedActionsForm.tsx
 msgid "<0>Note:</0> These properties will <1>not</1> be editable immediately within a funding cycle. They can only be changed for <2>upcoming</2> funding cycles."
@@ -349,6 +349,26 @@ msgstr "Construido para:"
 msgid "Burn project tokens"
 msgstr "Quemar tokens del proyecto"
 
+#: src/components/Dashboard/Rewards.tsx
+msgid "Burn tokens"
+msgstr ""
+
+#: src/components/modals/RedeemModal.tsx
+msgid "Burn {0} {tokensTextShort}"
+msgstr ""
+
+#: src/components/modals/RedeemModal.tsx
+msgid "Burn {0} {tokensTextShort} for ETH"
+msgstr ""
+
+#: src/components/modals/RedeemModal.tsx
+msgid "Burn {tokensText}"
+msgstr ""
+
+#: src/components/modals/RedeemModal.tsx
+msgid "Burn {tokensText} for ETH"
+msgstr ""
+
 #: src/components/Create/PayModsForm.tsx
 msgid "By default, all unallocated funds can be distributed to the project owner's wallet."
 msgstr "Por defecto, todos los fondos no asignados pueden ser distribuidos a la wallet del dueño del proyecto."
@@ -364,6 +384,14 @@ msgstr "¿Puedo eliminar un proyecto?"
 #: src/components/modals/BalancesModal.tsx
 msgid "Cancel"
 msgstr "Cancelar"
+
+#: src/components/Dashboard/Rewards.tsx
+msgid "Cannot redeem tokens for ETH because this project has no overflow."
+msgstr ""
+
+#: src/components/Create/ProjectForm.tsx
+msgid "Changes to these attributes can be made at any time and will be applied to your project immediately."
+msgstr ""
 
 #: src/components/Landing/index.tsx
 msgid "Changes to your project's funding require a community approval period to take effect. Your supporters don't have to trust you—even though they already do."
@@ -641,6 +669,10 @@ msgstr "El financiamiento puede ser reconfigurado en cualquier momento. Las reco
 msgid "Funding cycle"
 msgstr "Ciclo de financiamiento"
 
+#: src/components/Create/ConfirmDeployProject.tsx
+msgid "Funding cycle details"
+msgstr ""
+
 #: src/components/Create/BudgetForm.tsx
 #: src/components/shared/formItems/ProjectDuration.tsx
 msgid "Funding cycle duration"
@@ -845,6 +877,7 @@ msgstr "Cargar más"
 msgid "Lock until"
 msgstr "Bloquear hasta"
 
+#: src/components/Create/ConfirmDeployProject.tsx
 #: src/components/shared/formItems/ProjectLogoUri.tsx
 msgid "Logo"
 msgstr "Logo"
@@ -895,6 +928,10 @@ msgstr "Nombre"
 
 #: src/components/Projects/TrendingProjectCard.tsx
 msgid "New"
+msgstr ""
+
+#: src/components/Create/ConfirmDeployProject.tsx
+msgid "No"
 msgstr ""
 
 #: src/components/Dashboard/ProjectActivity/ActivityTabContent.tsx
@@ -1072,6 +1109,7 @@ msgstr ""
 msgid "Project description"
 msgstr "Descripción del proyecto"
 
+#: src/components/Create/ConfirmDeployProject.tsx
 #: src/components/Create/ProjectForm.tsx
 #: src/components/Create/index.tsx
 msgid "Project details"
@@ -1219,6 +1257,7 @@ msgid "Restricted actions"
 msgstr "Acciones restringidas"
 
 #: src/components/Dashboard/Rewards.tsx
+#: src/components/Dashboard/Rewards.tsx
 msgid "Return my ETH"
 msgstr "Retorna mi ETH"
 
@@ -1323,6 +1362,10 @@ msgstr "Establece la duración de tus ciclos de financiamiento."
 #: src/components/Landing/index.tsx
 msgid "Should you Juicebox?"
 msgstr "¿Deberías de usar Juicebox?"
+
+#: src/components/Create/ConfirmDeployProject.tsx
+msgid "Since you have not set a funding duration, changes to these settings will be applied immediately."
+msgstr ""
 
 #: src/components/FundingCycle/FundingCyclePreview.tsx
 msgid ""
@@ -1477,6 +1520,14 @@ msgstr "Existen unidades de prueba escritas para cada condición de cada funció
 msgid "There was also a script written for iteratively running the integration tests using a random input generator, prioritizing edge cases. The code has successfully passed over 1 millions test cases through this stress-testing script."
 msgstr "También, existe un script escrito para correr de manera repetitiva las pruebas de integración usando un generador aleatorio de entradas, priorizando casos extremos. El código ha pasado satisfactoriamente por más de 1 millón de casos de prueba a través de este script a prueba de estrés."
 
+#: src/components/Create/ConfirmDeployProject.tsx
+msgid "These attributes can be changed at any time."
+msgstr ""
+
+#: src/components/Create/ConfirmDeployProject.tsx
+msgid "These settings will <0>not</0> be editable immediately within a funding cycle. They can only be changed for <1>upcoming</1> funding cycles."
+msgstr ""
+
 #: src/components/shared/Mod.tsx
 msgid "This address will receive any tokens minted when the recipient project gets paid."
 msgstr "Está dirección recibirá cualquier token acuñado cuando el receptor del proyecto es pagado."
@@ -1496,10 +1547,6 @@ msgstr "Esto significa que cualquiera puede ver el código que ellos están usan
 #: src/components/Dashboard/Pay/index.tsx
 msgid "This project has been archived and cannot be paid."
 msgstr "Este proyecto ha sido archivado y no se puede pagar."
-
-#: src/components/modals/RedeemModal.tsx
-msgid "This project has no overflow, and you will receive no ETH for burning tokens."
-msgstr "Este proyecto no tiene excedente y no recibirás ETH por la quema de tokens."
 
 #: src/components/modals/MigrateV1Pt1Modal.tsx
 msgid "This project is currently using the Juicebox V1 terminal contract. New features introduced in V1.1 allow the project owner to:"
@@ -1549,10 +1596,6 @@ msgstr ""
 msgid "Tokens"
 msgstr "Tokens"
 
-#: src/components/modals/RedeemModal.tsx
-msgid "Tokens are burned when they are redeemed."
-msgstr "Los tokens se queman cuando se canjean."
-
 #: src/components/Create/TicketingForm.tsx
 msgid "Tokens are earned by anyone who pays your project, and can be redeemed for overflow if your project has set a funding target."
 msgstr "Los tokens son obtenidos por alguien que paga tu proyecto, y pueden ser canjeados por excedente si tu proyecto tiene un objetivo de financiamiento establecido."
@@ -1562,8 +1605,8 @@ msgid "Tokens can be redeemed for a portion of a project's overflow, letting you
 msgstr "Los tokens pueden ser canjeados por una porción del excedente de un proyecto, permitiendo que te beneficies de su éxito. Después de todo, tú le ayudaste a llegar ahí."
 
 #: src/components/modals/RedeemModal.tsx
-msgid "Tokens can be redeemed for a portion of this project's ETH overflow, according to the bonding curve rate of the current funding cycle."
-msgstr "Los tokens pueden ser canjeados por una porción del ETH excedente de este proyecto, acorde a la curva de adhesión del ciclo de financiamiento actual."
+msgid "Tokens can be redeemed for a portion of this project's ETH overflow, according to the bonding curve rate of the current funding cycle. <0>Tokens are burned when they are redeemed.</0>"
+msgstr ""
 
 #: src/components/modals/ProjectToolDrawerModal.tsx
 msgid "Tools"
@@ -1757,6 +1800,10 @@ msgstr "Retirar fondos"
 msgid "Workspace"
 msgstr "Espacio de trabajo"
 
+#: src/components/Create/ConfirmDeployProject.tsx
+msgid "Yes"
+msgstr ""
+
 #: src/components/modals/ConfirmUnstakeTokensModal.tsx
 msgid "You can still redeem your {tokenSymbol} tokens for overflow without claiming them, and you can transfer your unclaimed {tokenSymbol} tokens to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
 msgstr "Todavía, puedes canjear tus tokens {tokenSymbol} por el exceso sin reclamarlos y puedes transferir tus tokens {tokenSymbol} sin reclamar a otra dirección desde el menú de Herramientas, el cual puedes encontrar en el icóno de la llave inglesa en la esquina superior derecha de este proyecto."
@@ -1872,6 +1919,10 @@ msgstr "token"
 #: src/components/Dashboard/ReservedTokens.tsx
 #: src/components/Dashboard/ReservedTokens.tsx
 #: src/components/Dashboard/ReservedTokens.tsx
+#: src/components/Dashboard/Rewards.tsx
+#: src/components/modals/RedeemModal.tsx
+#: src/components/modals/RedeemModal.tsx
+#: src/components/modals/RedeemModal.tsx
 msgid "tokens"
 msgstr "tokens"
 

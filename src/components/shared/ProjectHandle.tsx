@@ -3,6 +3,7 @@ import { BigNumberish } from '@ethersproject/bignumber'
 import { Tooltip } from 'antd'
 import useHandleForProjectId from 'hooks/v1/contractReader/HandleForProjectId'
 import { CSSProperties } from 'react'
+import { Link } from 'react-router-dom'
 
 export default function ProjectHandle({
   projectId,
@@ -18,14 +19,14 @@ export default function ProjectHandle({
   return link ? (
     <Tooltip
       title={
-        <a
+        <Link
           style={{ fontWeight: 400 }}
-          href={`/#/${handle}`}
+          to={`/p/${handle}`}
           target="_blank"
           rel="noopener noreferrer"
         >
           @{handle} <LinkOutlined />
-        </a>
+        </Link>
       }
     >
       <span style={{ cursor: 'default', ...style }}>@{handle}</span>

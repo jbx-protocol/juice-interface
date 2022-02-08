@@ -7,6 +7,8 @@ import { useContext, useLayoutEffect, useState } from 'react'
 
 import Navbar from 'components/Navbar'
 
+import useMobile from 'hooks/Mobile'
+
 import { readNetwork } from 'constants/networks'
 
 import Router from './Router'
@@ -17,9 +19,9 @@ function App() {
 
   const { signerNetwork } = useContext(NetworkContext)
 
-  const networkName = readNetwork.name
+  const isMobile = useMobile()
 
-  const isMobile = window.innerWidth <= 900
+  const networkName = readNetwork.name
 
   const supportedNetworks: NetworkName[] = [
     NetworkName.mainnet,

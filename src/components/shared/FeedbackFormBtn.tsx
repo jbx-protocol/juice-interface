@@ -1,5 +1,4 @@
 import React from 'react'
-import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 
 import { Trans } from '@lingui/macro'
@@ -8,27 +7,20 @@ import { MessageOutlined } from '@ant-design/icons'
 
 import { useContext } from 'react'
 
-export default function FeedbackFormLink({
+import { feedbackFormURL } from 'utils/feedbackFormURL'
+import { NetworkContext } from 'contexts/networkContext'
+
+export default function FeedbackFormBtn({
   mobile,
   projectHandle,
 }: {
   mobile?: boolean
   projectHandle?: string
 }) {
-  const { userAddress } = useContext(NetworkContext)
   const { isDarkMode } = useContext(ThemeContext)
+  const { userAddress } = useContext(NetworkContext)
 
-  const formUrl = () => {
-    let url = `https://auditor.typeform.com/to/REMUTIbQ#`
-    if (projectHandle) {
-      url += `project=${projectHandle}&`
-    }
-    if (userAddress) {
-      url += `address=${userAddress}&`
-    }
-    url += `resolution=${window.innerWidth}x${window.innerHeight}`
-    return url
-  }
+  const formUrl = feedbackFormURL('stoned-banny', projectHandle, userAddress)
 
   const iconSize = 16
 
@@ -39,7 +31,7 @@ export default function FeedbackFormLink({
         <a
           style={{ margin: '0 0 2px 12px', fontWeight: 400 }}
           className="quiet"
-          href={formUrl()}
+          href={formUrl}
           target="_blank"
           rel="noreferrer"
         >
@@ -54,7 +46,7 @@ export default function FeedbackFormLink({
       title={
         <a
           className="quiet hover-action"
-          href={formUrl()}
+          href={formUrl}
           target="_blank"
           rel="noreferrer"
         >
@@ -64,7 +56,7 @@ export default function FeedbackFormLink({
     >
       <a
         className={`feedback-button hide-mobile ${isDarkMode ? 'dark' : ''}`}
-        href={formUrl()}
+        href={formUrl}
         target="_blank"
         rel="noreferrer"
       >

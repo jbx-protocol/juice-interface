@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import FeedbackFormLink from 'components/shared/FeedbackFormLink'
+import FeedbackFormBtn from 'components/shared/FeedbackFormBtn'
 
 import {
   V1ProjectContext,
@@ -22,9 +22,11 @@ import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { useProjectsQuery } from 'hooks/v1/Projects'
 import { CurrencyOption } from 'models/currency-option'
-import { useEffect, useMemo } from 'react'
-import { useParams } from 'react-router-dom'
+import { useEffect, useMemo, useState } from 'react'
+import { useLocation, useParams } from 'react-router-dom'
 import { getTerminalName, getTerminalVersion } from 'utils/v1/terminals'
+
+import FeedbackPromptModal from 'components/modals/FeedbackPromptModal'
 
 import { padding } from 'constants/styles/padding'
 import { layouts } from 'constants/styles/layouts'
@@ -37,6 +39,12 @@ import Project from './Project'
 
 export default function Dashboard() {
   const { handle }: { handle?: string } = useParams()
+  // Checks URL to see if user was just directed from project deploy
+  const location = useLocation()
+  const params = new URLSearchParams(location.search)
+  const [feedbackModalVisible, setFeedbackModalVisible] = useState<boolean>(
+    Boolean(params.get('new_deploy')),
+  )
 
   const projectId = useProjectIdForHandle(handle)
   const owner = useOwnerOfProject(projectId)
@@ -156,6 +164,12 @@ export default function Dashboard() {
     terminalAddress,
   ])
 
+  const closeFeedbackModal = () => {
+    // remove search query from URL when modal closes
+    window.history.replaceState({}, document.title, `/#/p/${handle}`)
+    setFeedbackModalVisible(false)
+  }
+
   if (!projectId) return <Loading />
 
   if (projectId?.eq(0)) {
@@ -186,7 +200,14 @@ export default function Dashboard() {
         >
           <Trans>Back to top</Trans>
         </div>
-        <FeedbackFormLink projectHandle={handle} />
+        <FeedbackFormBtn projectHandle={handle} />
+        <FeedbackPromptModal
+          visible={feedbackModalVisible}
+          onOk={closeFeedbackModal}
+          onCancel={closeFeedbackModal}
+          projectHandle={handle}
+          userAddress={owner}
+        />
       </div>
     </V1ProjectContext.Provider>
   )

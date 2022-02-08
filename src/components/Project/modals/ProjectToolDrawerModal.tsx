@@ -75,6 +75,8 @@ export default function ProjectToolDrawerModal({
     )
   }
 
+  const tokenSymbolText = tokenSymbol || t`tokens`
+
   return (
     <Drawer visible={visible} onClose={onClose} width={600}>
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
@@ -119,7 +121,7 @@ export default function ProjectToolDrawerModal({
 
         <section>
           <h3>
-            <Trans>Transfer staked {tokenSymbol || 'tokens'}</Trans>
+            <Trans>Transfer unclaimed {tokenSymbolText}</Trans>
           </h3>
           <p>
             <Trans>
@@ -166,7 +168,7 @@ export default function ProjectToolDrawerModal({
                 size="small"
                 type="primary"
               >
-                <Trans>Transfer {tokenSymbol || 'tokens'}</Trans>
+                <Trans>Transfer {tokenSymbolText}</Trans>
               </Button>
             </Form.Item>
           </Form>
@@ -188,7 +190,7 @@ export default function ProjectToolDrawerModal({
             labelCol={{ span: 4 }}
             wrapperCol={{ span: 20 }}
           >
-            <Form.Item name="amount" label="Amount">
+            <Form.Item name="amount" label={t`Amount`}>
               <FormattedNumberInput
                 placeholder="0"
                 onChange={amount =>

@@ -252,6 +252,7 @@ msgstr "Allowed"
 msgid "Almost definitely."
 msgstr ""
 
+#: src/components/Project/modals/ProjectToolDrawerModal.tsx
 #: src/components/Project/modals/ReconfigureFCModal.tsx
 msgid "Amount"
 msgstr "Amount"
@@ -275,6 +276,10 @@ msgstr ""
 #: src/components/Projects/ProjectsFilterAndSort.tsx
 msgid "Archived"
 msgstr "Archived"
+
+#: src/components/Create/index.tsx
+msgid "Are you sure you want to start over?"
+msgstr "Are you sure you want to start over?"
 
 #: src/components/Project/modals/BalancesModal.tsx
 msgid "Assets"
@@ -416,9 +421,17 @@ msgstr "Commit portions of your funds to the people or projects you want to supp
 msgid "Community funding for people and projects"
 msgstr ""
 
+#: src/components/Project/modals/FeedbackPromptModal.tsx
+msgid "Congrats on creating your project!"
+msgstr "Congrats on creating your project!"
+
 #: src/components/Navbar/Account.tsx
 msgid "Connect"
 msgstr ""
+
+#: src/components/Create/index.tsx
+msgid "Connect wallet to deploy"
+msgstr "Connect wallet to deploy"
 
 #: src/components/shared/forms/RulesForm.tsx
 msgid "Contract address: {0}"
@@ -475,6 +488,14 @@ msgstr ""
 #: src/components/Projects/ProjectsFilterAndSort.tsx
 msgid "Date created"
 msgstr "Date created"
+
+#: src/components/Create/index.tsx
+msgid "Deploy project"
+msgstr "Deploy project"
+
+#: src/components/Create/index.tsx
+msgid "Deploy project on {signerNetwork}"
+msgstr "Deploy project on {signerNetwork}"
 
 #: src/components/Project/modals/MigrateV1Pt1Modal.tsx
 msgid "Deposit 1 wei to @{handle}"
@@ -692,10 +713,15 @@ msgstr "Funding distribution"
 msgid "Funds will be distributed to:"
 msgstr ""
 
-#: src/components/shared/FeedbackFormLink.tsx
-#: src/components/shared/FeedbackFormLink.tsx
+#: src/components/Project/modals/FeedbackPromptModal.tsx
+#: src/components/shared/FeedbackFormBtn.tsx
+#: src/components/shared/FeedbackFormBtn.tsx
 msgid "Give feedback"
 msgstr "Give feedback"
+
+#: src/components/Project/modals/FeedbackPromptModal.tsx
+msgid "Give us your feedback"
+msgstr "Give us your feedback"
 
 #: src/components/shared/EtherscanLink.tsx
 msgid "Go to Etherscan"
@@ -728,6 +754,10 @@ msgstr "Holdings"
 #: src/components/Landing/QAs.tsx
 msgid "How decentralized is Juicebox?"
 msgstr ""
+
+#: src/components/Project/modals/FeedbackPromptModal.tsx
+msgid "How did we do? We'd love to get your feedback so we can make creating Juicebox projects as juicy as possible!"
+msgstr "How did we do? We'd love to get your feedback so we can make creating Juicebox projects as juicy as possible!"
 
 #: src/components/Projects/ArchivedProjectsMessage.tsx
 msgid "How do I archive a project?"
@@ -1208,6 +1238,10 @@ msgstr ""
 msgid "Redistributable surplus"
 msgstr ""
 
+#: src/components/Dashboard/index.tsx
+msgid "Refresh"
+msgstr "Refresh"
+
 #: src/components/shared/forms/TicketingForm.tsx
 msgid "Reserved token allocation (optional)"
 msgstr "Reserved token allocation (optional)"
@@ -1381,6 +1415,7 @@ msgid "Start"
 msgstr ""
 
 #: src/components/Create/index.tsx
+#: src/components/Create/index.tsx
 msgid "Start Over"
 msgstr ""
 
@@ -1547,6 +1582,10 @@ msgstr ""
 msgid "This website (juicebox.money) connects to the Juicebox protocol's smart contracts, deployed on the Ethereum network. (note: anyone else can make a website that also connects to these same smart contracts. For now, don't trust any site other than this one to access the Juicebox protocol.)"
 msgstr ""
 
+#: src/components/Create/index.tsx
+msgid "This will erase of your all changes."
+msgstr "This will erase of your all changes."
+
 #: src/components/Project/modals/ConfirmPayOwnerModal/index.tsx
 msgid "To: <0/>"
 msgstr ""
@@ -1621,12 +1660,12 @@ msgid "Transfer ownership"
 msgstr ""
 
 #: src/components/Project/modals/ProjectToolDrawerModal.tsx
-msgid "Transfer staked {0}"
-msgstr ""
+msgid "Transfer unclaimed {tokenSymbolText}"
+msgstr "Transfer unclaimed {tokenSymbolText}"
 
 #: src/components/Project/modals/ProjectToolDrawerModal.tsx
-msgid "Transfer {0}"
-msgstr ""
+msgid "Transfer {tokenSymbolText}"
+msgstr "Transfer {tokenSymbolText}"
 
 #: src/components/Landing/index.tsx
 msgid "Transparency & accountability"
@@ -1810,6 +1849,10 @@ msgstr ""
 msgid "Your balance: {0}"
 msgstr ""
 
+#: src/components/Project/modals/FeedbackPromptModal.tsx
+msgid "Your feedback will be sent to a <0>public Discord channel </0>for our development team to consider."
+msgstr "Your feedback will be sent to a <0>public Discord channel </0>for our development team to consider."
+
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "Your project cannot receive direct payments while paused."
 msgstr ""
@@ -1902,6 +1945,7 @@ msgstr "token"
 #: src/components/FundingCycle/ReservedTokens.tsx
 #: src/components/Project/Pay/PayInputSubText.tsx
 #: src/components/Project/Rewards/index.tsx
+#: src/components/Project/modals/ProjectToolDrawerModal.tsx
 #: src/components/Project/modals/RedeemModal.tsx
 #: src/components/Project/modals/RedeemModal.tsx
 #: src/components/Project/modals/RedeemModal.tsx
@@ -2016,6 +2060,10 @@ msgstr "{exchangeName} has no market for {tokenSymbol}."
 #: src/components/Dashboard/index.tsx
 msgid "{handle} not found"
 msgstr ""
+
+#: src/components/Dashboard/index.tsx
+msgid "{handle} will be available soon! Try refreshing the page shortly."
+msgstr "{handle} will be available soon! Try refreshing the page shortly."
 
 #: src/components/Projects/FilterCheckboxItem.tsx
 msgid "{label}"

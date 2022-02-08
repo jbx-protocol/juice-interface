@@ -2,7 +2,7 @@ import { InfoCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import Search from 'antd/lib/input/Search'
-import FeedbackFormLink from 'components/shared/FeedbackFormLink'
+import FeedbackFormBtn from 'components/shared/FeedbackFormBtn'
 import Loading from 'components/shared/Loading'
 
 import { ProjectCategory, ProjectStateFilter } from 'models/project-visibility'
@@ -269,7 +269,7 @@ export default function Projects() {
           <TrendingProjects count={12} trendingWindowDays={7} />
         </div>
       ) : null}
-      <FeedbackFormLink />
+      <FeedbackFormBtn />
     </div>
   )
 }

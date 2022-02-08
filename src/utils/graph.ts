@@ -1,9 +1,10 @@
 import axios from 'axios'
+import { parseDeployedERC20EventJson } from 'models/subgraph-entities/deployed-erc20-event'
 import {
   DistributeToPayoutModEvent,
   DistributeToPayoutModEventJson,
   parseDistributeToPayoutModEvent,
-} from 'models/subgraph-entities/distribute-to-payout-mod-event copy'
+} from 'models/subgraph-entities/distribute-to-payout-mod-event'
 import {
   DistributeToTicketModEvent,
   DistributeToTicketModEventJson,
@@ -19,6 +20,7 @@ import {
   PayEvent,
   PayEventJson,
 } from 'models/subgraph-entities/pay-event'
+import { parsePrintPremineEventJson } from 'models/subgraph-entities/print-premine-event'
 import {
   parsePrintReservesEventJson,
   PrintReservesEvent,
@@ -277,6 +279,18 @@ export function formatGraphResponse<E extends EntityKey>(
         return response.printReservesEvents.map(parsePrintReservesEventJson)
       }
       break
+    case 'printPremineEvent':
+      if ('printPremineEvents' in response) {
+        // @ts-ignore
+        return response.printPremineEvent.map(parsePrintPremineEventJson)
+      }
+      break
+    case 'deployedERC20Event':
+      if ('deployedERC20Events' in response) {
+        // @ts-ignore
+        return response.deployedERC20Events.map(parseDeployedERC20EventJson)
+      }
+      break
   }
 
   return []
@@ -294,7 +308,7 @@ export async function querySubgraph<
   if (!opts) return []
 
   const response = await axios.post<{
-    errors?: SubgraphError[]
+    errors?: SubgraphError | SubgraphError[]
     data: SubgraphQueryReturnTypes[E]
   }>(
     subgraphUrl,
@@ -306,7 +320,9 @@ export async function querySubgraph<
 
   if ('errors' in response.data) {
     throw new Error(
-      response.data.errors?.[0]?.message ||
+      (Array.isArray(response.data.errors)
+        ? response.data.errors?.[0]?.message
+        : response.data.errors?.message) ||
         'Something is wrong with this Graph request',
     )
   }

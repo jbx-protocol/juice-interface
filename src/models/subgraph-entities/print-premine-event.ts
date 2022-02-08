@@ -2,32 +2,28 @@ import { BigNumber } from 'ethers'
 
 import { parseProjectJson, Project, ProjectJson } from './project'
 
-export interface RedeemEvent {
+export interface PrintPremineEvent {
   id: string
-  holder: string
-  beneficiary: string
   project: Partial<Project>
+  beneficiary: string
   amount: BigNumber
-  returnAmount: BigNumber
+  memo: string
   caller: string
   timestamp: number
   txHash: string
 }
 
-export type RedeemEventJson = Partial<
-  Record<Exclude<keyof RedeemEvent, 'project'>, string> & {
+export type PrintPremineEventJson = Partial<
+  Record<Exclude<keyof PrintPremineEvent, 'project'>, string> & {
     project: ProjectJson
   }
 >
 
-export const parseRedeemEventJson = (
-  json: RedeemEventJson,
-): Partial<RedeemEvent> => ({
+export const parsePrintPremineEventJson = (
+  json: PrintPremineEventJson,
+): Partial<PrintPremineEvent> => ({
   ...json,
   project: json.project ? parseProjectJson(json.project) : undefined,
   amount: json.amount ? BigNumber.from(json.amount) : undefined,
-  returnAmount: json.returnAmount
-    ? BigNumber.from(json.returnAmount)
-    : undefined,
   timestamp: json.timestamp ? parseInt(json.timestamp) : undefined,
 })

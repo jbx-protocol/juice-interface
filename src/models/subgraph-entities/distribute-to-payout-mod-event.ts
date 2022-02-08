@@ -1,34 +1,39 @@
 import { BigNumber } from 'ethers'
 
+import { parseProjectJson } from 'models/subgraph-entities/project'
+
+import { Project, ProjectJson } from './project'
+
 export interface DistributeToPayoutModEvent {
   id: string
-  project?: BigNumber
-  fundingCycleId?: BigNumber
-  projectId?: BigNumber
+  project: Partial<Project>
+  fundingCycleId: BigNumber
+  projectId: BigNumber
   modBeneficiary: string
   modPreferUnstaked: boolean
-  modProjectId?: BigNumber
+  modProjectId: BigNumber
   modAllocator: string
-  modCut?: BigNumber
+  modCut: BigNumber
   caller: string
   tapEvent: string
-  timestamp?: number
+  timestamp: number
   txHash: string
 }
 
-export type DistributeToPayoutModEventJson = Record<
-  keyof DistributeToPayoutModEvent,
-  string
+export type DistributeToPayoutModEventJson = Partial<
+  Record<Exclude<keyof DistributeToPayoutModEvent, 'project'>, string> & {
+    project: ProjectJson
+  }
 >
 
 export const parseDistributeToPayoutModEvent = (
   json: DistributeToPayoutModEventJson,
-): DistributeToPayoutModEvent => ({
+): Partial<DistributeToPayoutModEvent> => ({
   ...json,
   fundingCycleId: json.fundingCycleId
     ? BigNumber.from(json.fundingCycleId)
     : undefined,
-  project: json.project ? BigNumber.from(json.project) : undefined,
+  project: json.project ? parseProjectJson(json.project) : undefined,
   projectId: json.projectId ? BigNumber.from(json.projectId) : undefined,
   modProjectId: json.modProjectId
     ? BigNumber.from(json.modProjectId)

@@ -17,7 +17,18 @@ import { smallHeaderStyle } from '../styles'
 export default function TapEventElem({
   tapEvent,
 }: {
-  tapEvent: TapEvent | undefined
+  tapEvent:
+    | Pick<
+        TapEvent,
+        | 'id'
+        | 'timestamp'
+        | 'txHash'
+        | 'caller'
+        | 'beneficiary'
+        | 'beneficiaryTransferAmount'
+        | 'netTransferAmount'
+      >
+    | undefined
 }) {
   const {
     theme: { colors },

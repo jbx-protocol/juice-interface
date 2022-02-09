@@ -17,7 +17,7 @@ import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
 import { hasFundingTarget } from 'utils/fundingCycle'
 
-import FundingCycleDetails from '../FundingCycle/FundingCycleDetails'
+import FundingCycleDetails from 'components/FundingCycle/FundingCycleDetails'
 
 export default function FundingHistory({
   startId,

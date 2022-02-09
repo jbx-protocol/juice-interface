@@ -13,7 +13,7 @@ import { fromPermyriad, parsePermyriad } from 'utils/formatNumber'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 
-import ReservedTokenReceiverModal from 'components/modals/ReservedTokenReceiverModal'
+import ReservedTokenReceiverModal from 'components/shared/modals/ReservedTokenReceiverModal'
 import {
   validateEthAddress,
   validatePercentage,

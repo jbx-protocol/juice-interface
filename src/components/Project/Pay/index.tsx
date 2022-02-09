@@ -1,8 +1,8 @@
 import { Button, Tooltip } from 'antd'
 import { t, Trans } from '@lingui/macro'
 
-import ConfirmPayOwnerModal from 'components/modals/ConfirmPayOwnerModal'
-import PayWarningModal from 'components/modals/PayWarningModal'
+import ConfirmPayOwnerModal from 'components/Project/modals/ConfirmPayOwnerModal'
+import PayWarningModal from 'components/Project/modals/PayWarningModal'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { V1ProjectContext } from 'contexts/v1/projectContext'

@@ -1,9 +1,9 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { Button, Descriptions, Modal, Space, Statistic, Tooltip } from 'antd'
-import ConfirmUnstakeTokensModal from 'components/modals/ConfirmUnstakeTokensModal'
-import ParticipantsModal from 'components/modals/ParticipantsModal'
-import RedeemModal from 'components/modals/RedeemModal'
+import ConfirmUnstakeTokensModal from 'components/Project/modals/ConfirmUnstakeTokensModal'
+import ParticipantsModal from 'components/Project/modals/ParticipantsModal'
+import RedeemModal from 'components/Project/modals/RedeemModal'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import { NetworkContext } from 'contexts/networkContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
@@ -25,7 +25,7 @@ import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
 
 import PrintPreminedModal from '../modals/PrintPreminedModal'
 import IssueTickets from './IssueTickets'
-import SectionHeader from './SectionHeader'
+import SectionHeader from '../SectionHeader'
 
 export default function Rewards() {
   const [manageTokensModalVisible, setManageTokensModalVisible] =

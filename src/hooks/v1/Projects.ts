@@ -178,7 +178,7 @@ export function useTrendingProjects(count: number, days: number) {
       setProjectStats(
         (payments ?? []).reduce(
           (acc, curr) => {
-            const projectId = curr.project?.toString()
+            const projectId = curr.project.id?.toString()
 
             return projectId
               ? {
@@ -289,17 +289,14 @@ export function useHoldingsProjectsQuery(wallet: string | undefined) {
 
       // Reduce list of paid project ids
       setProjectIds(
-        participants?.reduce(
-          (acc, curr) => [
+        participants?.reduce((acc, curr) => {
+          const projectId = curr?.project?.id?.toString()
+
+          return [
             ...acc,
-            ...(curr.project
-              ? acc.includes(curr.project.toString())
-                ? []
-                : [curr.project.toString()]
-              : []),
-          ],
-          [] as string[],
-        ),
+            ...(projectId ? (acc.includes(projectId) ? [] : [projectId]) : []),
+          ]
+        }, [] as string[]),
       )
 
       setLoadingParticipants(false)

@@ -14,7 +14,18 @@ import { smallHeaderStyle } from '../styles'
 export default function ReservesEventElem({
   printReservesEvent,
 }: {
-  printReservesEvent: PrintReservesEvent | undefined
+  printReservesEvent:
+    | Pick<
+        PrintReservesEvent,
+        | 'id'
+        | 'timestamp'
+        | 'txHash'
+        | 'caller'
+        | 'beneficiary'
+        | 'beneficiaryTicketAmount'
+        | 'count'
+      >
+    | undefined
 }) {
   const {
     theme: { colors },

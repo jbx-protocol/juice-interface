@@ -13,7 +13,7 @@ import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
 
 import { readNetwork } from 'constants/networks'
 
-import DistributeTokensModal from '../modals/DistributeTokensModal'
+import DistributeTokensModal from './modals/DistributeTokensModal'
 import TicketModsList from '../shared/TicketModsList'
 import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
 

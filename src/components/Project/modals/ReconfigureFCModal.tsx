@@ -6,8 +6,8 @@ import { useForm } from 'antd/lib/form/Form'
 import Modal from 'antd/lib/modal/Modal'
 import RestrictedActionsForm, {
   RestrictedActionsFormFields,
-} from 'components/Create/RestrictedActionsForm'
-import RulesForm from 'components/Create/RulesForm'
+} from 'components/shared/forms/RestrictedActionsForm'
+import RulesForm from 'components/shared/forms/RulesForm'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import PayoutModsList from 'components/shared/PayoutModsList'
 import TicketModsList from 'components/shared/TicketModsList'
@@ -46,10 +46,12 @@ import { serializeFundingCycle } from 'utils/serializers'
 
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 
-import BudgetForm from '../Create/BudgetForm'
-import IncentivesForm from '../Create/IncentivesForm'
-import PayModsForm from '../Create/PayModsForm'
-import TicketingForm, { TicketingFormFields } from '../Create/TicketingForm'
+import BudgetForm from '../../shared/forms/BudgetForm'
+import IncentivesForm from '../../shared/forms/IncentivesForm'
+import PayModsForm from '../../shared/forms/PayModsForm'
+import TicketingForm, {
+  TicketingFormFields,
+} from '../../shared/forms/TicketingForm'
 
 export default function ReconfigureFCModal({
   visible,

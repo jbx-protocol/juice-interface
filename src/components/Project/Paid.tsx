@@ -21,7 +21,7 @@ import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
 import { readNetwork } from 'constants/networks'
 import { CURRENCY_ETH, CURRENCY_USD } from 'constants/currency'
 
-import BalancesModal from '../modals/BalancesModal'
+import BalancesModal from './modals/BalancesModal'
 
 export default function Paid() {
   const [balancesModalVisible, setBalancesModalVisible] = useState<boolean>()

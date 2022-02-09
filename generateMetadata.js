@@ -1,6 +1,7 @@
-const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
-const fs = require('fs').promises;
-require('dotenv').config();
+const fetch = (...args) =>
+  import("node-fetch").then(({ default: fetch }) => fetch(...args));
+const fs = require("fs").promises;
+require("dotenv").config();
 
 const template = `<!DOCTYPE html>
 <html lang="en">
@@ -26,50 +27,64 @@ const template = `<!DOCTYPE html>
     <script>location.replace('/#' + location.pathname)</script>
   </body>
 </html>`;
-const targetDir = './build/p/';
+const targetDir = "./build/p/";
+const TRIES = 3;
 
 (async () => {
-  let loaded = false;
-  let projects;
-  while (!loaded) {
+  let projects = null;
+  let tries = 0;
+  while (tries++ < TRIES) {
     try {
-      process.env.REACT_APP_SUBGRAPH_URL = 'https://gateway.thegraph.com/api/6a7675cd9c288a7b9571d5c9e78d5aff/deployments/id/QmNxBy8UnUsQr3aeBgFvdFyWbTSMiTGpJbkAJzSm5m6vYf';
-      projects = (await (await fetch(process.env.REACT_APP_SUBGRAPH_URL, {
-        method: 'POST',
-        body: '{"query":"{ projects(first: 1000, orderBy: totalPaid, orderDirection: desc, where: { }) { handle, uri } }"}',
-        headers: {'Content-Type': 'application/json'},
-      })).json()).data.projects;
-      loaded = true;
+      projects = (
+        await (
+          await fetch(process.env.REACT_APP_SUBGRAPH_URL, {
+            method: "POST",
+            body: '{"query":"{ projects(first: 1000, orderBy: totalPaid, orderDirection: desc, where: { }) { handle, uri } }"}',
+            headers: { "Content-Type": "application/json" },
+          })
+        ).json()
+      ).data.projects;
+      break; //loaded
     } catch (e) {
-      console.log('Retry loading projects in 1 sec');
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      console.log("Retry " + tries + " loading projects in 1 sec");
+      await new Promise((resolve) => setTimeout(resolve, 1000));
     }
   }
-  console.log(projects.length);
-  try { await mkdir(targetDir, {recursive: true}); } catch(e) {}
-  for (let {handle, uri} of projects) {
-    let loaded = false;
-    let metadata;
-    while (!loaded) {
-      try {
-        metadata = (await (await fetch('https://jbx.mypinata.cloud/ipfs/' + uri)).json());
-        loaded = true;
-      } catch (e) {
-        console.log('Retry loading project ' + handle + ' in 1 sec');
-        await new Promise(resolve => setTimeout(resolve, 1000));
-      }
-    }
-    metadata.handle = handle;
-    let data = template;
-    for (let key in metadata) {
-      data = data.replaceAll('%' + key + '%', metadata[key]);
-    }
+  if (projects !== null) {
+    console.log(projects.length);
     try {
-      console.log('Write ' + handle + ' metadata');
-      await fs.writeFile(targetDir + handle, data);
-    } catch(e) {
-      console.log(e);
-      console.log('Write file ' + handle + ' eror')
+      await fs.mkdir(targetDir, { recursive: true });
+    } catch (e) {}
+    for (let { handle, uri } of projects) {
+      let metadata = null;
+      let tries = 0;
+      while (tries++ < TRIES) {
+        try {
+          metadata = await (
+            await fetch("https://jbx.mypinata.cloud/ipfs/" + uri)
+          ).json();
+          break; //loaded
+        } catch (e) {
+          console.log(
+            "Retry " + tries + " loading project " + handle + " in 1 sec"
+          );
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+        }
+      }
+      if (metadata !== null) {
+        metadata.handle = handle;
+        let data = template;
+        for (let key in metadata) {
+          data = data.replaceAll("%" + key + "%", metadata[key]);
+        }
+        try {
+          console.log("Write " + handle + " metadata");
+          await fs.writeFile(targetDir + handle, data);
+        } catch (e) {
+          console.log(e);
+          console.log("Write file " + handle + " eror");
+        }
+      } else console.log("Can't load project " + handle);
     }
-  }
+  } else console.log("Can't load projects");
 })();

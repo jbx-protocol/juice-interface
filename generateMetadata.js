@@ -52,6 +52,9 @@ const TRIES = 3;
   }
   if (projects !== null) {
     console.log(projects.length);
+    try {
+      await fs.mkdir(targetDir, { recursive: true });
+    } catch (e) {}
     for (let { handle, uri } of projects) {
       let metadata = null;
       let tries = 0;

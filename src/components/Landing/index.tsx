@@ -8,12 +8,18 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useProjectsQuery } from 'hooks/v1/Projects'
 import { CSSProperties, useContext } from 'react'
 
+import Grid from 'components/shared/Grid'
+
+import ProjectCard from 'components/shared/ProjectCard'
+
+import { Link } from 'react-router-dom'
+
 import { ThemeOption } from 'constants/theme/theme-option'
 
-import ProjectsGrid from '../shared/ProjectsGrid'
 import Faq from './Faq'
 import Footer from './Footer'
 import Payments from './Payments'
+import TrendingSection from './TrendingSection'
 
 export default function Landing() {
   const { theme, forThemeOption } = useContext(ThemeContext)
@@ -37,11 +43,11 @@ export default function Landing() {
 
   const { data: previewProjects } = useProjectsQuery({
     pageSize: 4,
-    filter: 'active',
+    states: { active: true, archived: false },
   })
 
   const smallHeader = (text: string) => (
-    <h2 style={{ fontWeight: 600, margin: 0 }}>{text}</h2>
+    <h3 style={{ fontWeight: 600, margin: 0 }}>{text}</h3>
   )
 
   const listData = [
@@ -193,6 +199,8 @@ export default function Landing() {
         </div>
       </section>
 
+      <TrendingSection />
+
       <section
         style={{
           ...section,
@@ -211,17 +219,21 @@ export default function Landing() {
               {smallHeader(t`Projects using Juicebox`)}
               <div style={{ marginTop: 20 }}>
                 {previewProjects ? (
-                  <ProjectsGrid projects={previewProjects} list />
+                  <Grid list>
+                    {previewProjects.map(p => (
+                      <ProjectCard key={p.uri} project={p} />
+                    ))}
+                  </Grid>
                 ) : (
                   <Loading />
                 )}
               </div>
               <div style={{ textAlign: 'center', marginTop: 20 }}>
-                <a href="/#/projects">
+                <Link to="/projects?tab=all">
                   <Button>
                     <Trans>All projects</Trans>
                   </Button>
-                </a>
+                </Link>
               </div>
             </Col>
             <Col xs={24} md={12} style={{ marginBottom: 100 }}>

@@ -4,7 +4,7 @@ import { t, Trans } from '@lingui/macro'
 import { Button, Col, Drawer, DrawerProps, Row, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import Modal from 'antd/lib/modal/Modal'
-import V1Project from 'components/V1Project'
+import V1Project from 'components/v1/V1Project'
 import { NetworkContext } from 'contexts/networkContext'
 import {
   V1ProjectContext,
@@ -41,18 +41,18 @@ import {
 } from 'utils/ipfs'
 import { getTerminalAddress } from 'utils/v1/terminals'
 
-import BudgetForm from '../shared/forms/BudgetForm'
+import BudgetForm from '../../shared/forms/BudgetForm'
 import ConfirmDeployProject from './ConfirmDeployProject'
-import IncentivesForm from '../shared/forms/IncentivesForm'
-import PayModsForm from '../shared/forms/PayModsForm'
+import IncentivesForm from '../../shared/forms/IncentivesForm'
+import PayModsForm from '../../shared/forms/PayModsForm'
 import ProjectForm, { ProjectFormFields } from './ProjectForm'
 import RestrictedActionsForm, {
   RestrictedActionsFormFields,
-} from '../shared/forms/RestrictedActionsForm'
-import RulesForm from '../shared/forms/RulesForm'
+} from '../../shared/forms/RestrictedActionsForm'
+import RulesForm from '../../shared/forms/RulesForm'
 import TicketingForm, {
   TicketingFormFields,
-} from '../shared/forms/TicketingForm'
+} from '../../shared/forms/TicketingForm'
 
 const terminalVersion: V1TerminalVersion = '1.1'
 

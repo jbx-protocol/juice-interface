@@ -13,7 +13,7 @@ import { formatWad } from 'utils/formatNumber'
 import { CURRENCY_ETH } from 'constants/currency'
 
 import ActivityTabContent from './ActivityTabContent'
-import RichNote from '../../shared/RichNote'
+import RichNote from '../../../shared/RichNote'
 import { contentLineHeight, smallHeaderStyle } from './styles'
 
 // Maps a project id to an internal map of payment event overrides.

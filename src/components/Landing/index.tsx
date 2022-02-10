@@ -1,6 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Col, Row, Space } from 'antd'
-import V1Create from 'components/V1Create'
+import V1Create from 'components/v1/V1Create'
 import Loading from 'components/shared/Loading'
 import FeedbackFormLink from 'components/shared/FeedbackFormLink'
 

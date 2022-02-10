@@ -1,6 +1,6 @@
 import { HashRouter, Route, Switch } from 'react-router-dom'
 import { Redirect, useParams } from 'react-router'
-import Dashboard from 'components/V1Dashboard'
+import V1Dashboard from 'components/V1Dashboard'
 import Landing from 'components/Landing'
 import Create from 'components/Create'
 import Projects from 'components/Projects'
@@ -27,7 +27,7 @@ export default function Router() {
           <Projects />
         </Route>
         <Route path="/p/:handle">
-          <Dashboard />
+          <V1Dashboard />
         </Route>
         <Route path="/:route">
           <CatchallRedirect />

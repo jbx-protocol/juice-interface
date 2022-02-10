@@ -4,7 +4,7 @@ import { t, Trans } from '@lingui/macro'
 import { Button, Col, Drawer, DrawerProps, Row, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import Modal from 'antd/lib/modal/Modal'
-import Project from 'components/V1Project'
+import V1Project from 'components/V1Project'
 import { NetworkContext } from 'contexts/networkContext'
 import {
   V1ProjectContext,
@@ -562,7 +562,7 @@ export default function Create() {
               borderLeft: '1px solid ' + colors.stroke.tertiary,
             }}
           >
-            <Project showCurrentDetail column />
+            <V1Project showCurrentDetail column />
           </div>
         </Col>
 

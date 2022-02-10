@@ -2,7 +2,7 @@ import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { BigNumber } from 'ethers'
 import { BallotState } from 'models/ballot-state'
 import { V1ContractName } from 'models/v1/contracts'
-import { FundingCycle } from 'models/funding-cycle'
+import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { useContext, useMemo } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { parseWad } from 'utils/formatNumber'
@@ -16,7 +16,7 @@ export function useRedeemRate({
   fundingCycle,
 }: {
   tokenAmount: string | undefined
-  fundingCycle: FundingCycle | undefined
+  fundingCycle: V1FundingCycle | undefined
 }) {
   const { projectId, terminal } = useContext(V1ProjectContext)
 

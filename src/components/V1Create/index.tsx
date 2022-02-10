@@ -56,7 +56,7 @@ import TicketingForm, {
 
 const terminalVersion: V1TerminalVersion = '1.1'
 
-export default function Create() {
+export default function V1Create() {
   const { signerNetwork, userAddress } = useContext(NetworkContext)
   const { colors, radii } = useContext(ThemeContext).theme
   const [currentStep, setCurrentStep] = useState<number>()

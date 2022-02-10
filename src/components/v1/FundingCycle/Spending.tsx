@@ -2,7 +2,7 @@ import { CrownFilled } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 
 import { Button, Space, Tooltip } from 'antd'
-import WithdrawModal from 'components/FundingCycle/modals/WithdrawModal'
+import WithdrawModal from 'components/v1/FundingCycle/modals/WithdrawModal'
 import Balance from 'components/Navbar/Balance'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import TooltipLabel from 'components/shared/TooltipLabel'
@@ -14,7 +14,7 @@ import { CSSProperties, useContext, useState } from 'react'
 import { formatWad, fromPerbicent } from 'utils/formatNumber'
 import { hasFundingTarget } from 'utils/fundingCycle'
 
-import PayoutModsList from '../shared/PayoutModsList'
+import PayoutModsList from '../../shared/PayoutModsList'
 
 export default function Spending({
   payoutMods,

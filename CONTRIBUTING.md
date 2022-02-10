@@ -72,17 +72,33 @@ Juicebox supports the following web browsers:
 ## Translations
 
 Juicebox uses [Crowdin](https://crowdin.com/project/juicebox-interface) for
-managing translations. This workflow uploads new strings for translation to the
+managing translations. A GitHub workflow uploads new strings for translation to the
 Crowdin project whenever code using the lingui translation macros is merged into
 main.
 
 Every day, translations are synced back down from Crowdin to a pull request to
 `main`. We then merge these PR's into `main` manually.
 
-If you are a developer, please mark any new text that you add in the interface
-for translation with the lingui [macros](https://lingui.js.org/ref/macro.html)
-(`` t`Example text`  `` or `<Trans>Text</Trans>`). Feel free to edit any
-existing text that hasn't yet been marked for translations.
+### Marking strings for translation
+
+Any strings that are added or modified in the source code should be marked for
+translation. Use the `t` macro or the `Trans` component from the `@lingui/macro`
+library. [Learn more](https://lingui.js.org/ref/macro.html).
+
+```js
+const myString = t`Example text`
+```
+
+```html
+<Trans>Example text</Trans>
+```
+
+**You must extract strings in PRs**. If your PR adds or modifies translated
+strings, run the following command to generate new `.po` files:
+
+```bash
+yarn i18n:extract
+```
 
 ### Contributing translations
 

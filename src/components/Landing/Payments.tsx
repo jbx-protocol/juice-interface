@@ -56,7 +56,9 @@ export default function Payments() {
                 <div
                   style={{ color: colors.text.action.primary, fontWeight: 500 }}
                 >
-                  {e.project && <ProjectHandle projectId={e.project} link />}
+                  {e.project?.id && (
+                    <ProjectHandle projectId={e.project.id} link />
+                  )}
                 </div>
                 <div
                   style={{ fontSize: '.7rem', color: colors.text.secondary }}

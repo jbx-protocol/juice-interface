@@ -1,7 +1,6 @@
 import { t } from '@lingui/macro'
 import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
-
-import { FundingCycle } from '../models/funding-cycle'
+import { V1FundingCycle } from 'models/v1/fundingCycle'
 
 export const reservedRateRiskyMin = 90
 
@@ -12,7 +11,7 @@ export type FundingCycleRiskFlags = {
   metadataReservedRate: boolean
 }
 
-export const FUNDING_CYCLE_WARNING_TEXT: (fc: FundingCycle) => {
+export const FUNDING_CYCLE_WARNING_TEXT: (fc: V1FundingCycle) => {
   [k in keyof FundingCycleRiskFlags]: string
 } = fc => {
   const metadata = decodeFundingCycleMetadata(fc.metadata)

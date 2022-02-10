@@ -13,7 +13,7 @@ import {
 } from 'hooks/v1/contractReader/HasPermission'
 import { useSetPayoutModsTx } from 'hooks/v1/transactor/SetPayoutModsTx'
 import { CurrencyOption } from 'models/currency-option'
-import { FundingCycle } from 'models/funding-cycle'
+import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { PayoutMod } from 'models/mods'
 import { useContext, useLayoutEffect, useMemo, useState } from 'react'
 import { formatWad, fromPermyriad, fromWad } from 'utils/formatNumber'
@@ -31,7 +31,7 @@ export default function PayoutModsList({
 }: {
   mods: PayoutMod[] | undefined
   fundingCycle:
-    | Pick<FundingCycle, 'target' | 'currency' | 'configured' | 'fee'>
+    | Pick<V1FundingCycle, 'target' | 'currency' | 'configured' | 'fee'>
     | undefined
   projectId: BigNumber | undefined
   fee: BigNumber | undefined

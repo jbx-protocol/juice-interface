@@ -1,24 +1,32 @@
 import { BigNumber } from 'ethers'
 
+import { parseProjectJson } from 'models/subgraph-entities/project'
+
+import { Project, ProjectJson } from './project'
+
 export interface Participant {
   id: string
   wallet: string
-  totalPaid?: BigNumber
-  project?: BigNumber
-  balance?: BigNumber
-  stakedBalance?: BigNumber
-  unstakedBalance?: BigNumber
-  lastPaidTimestamp?: number
+  totalPaid: BigNumber
+  project: Partial<Project>
+  balance: BigNumber
+  stakedBalance: BigNumber
+  unstakedBalance: BigNumber
+  lastPaidTimestamp: number
 }
 
-export type ParticipantJson = Record<keyof Participant, string> & {
-  project: { id: string }
-}
+export type ParticipantJson = Partial<
+  Record<Exclude<keyof Participant, 'project'>, string> & {
+    project: ProjectJson
+  }
+>
 
-export const parseParticipantJson = (json: ParticipantJson): Participant => ({
+export const parseParticipantJson = (
+  json: ParticipantJson,
+): Partial<Participant> => ({
   ...json,
   totalPaid: json.totalPaid ? BigNumber.from(json.totalPaid) : undefined,
-  project: json.project ? BigNumber.from(json.project.id) : undefined,
+  project: json.project ? parseProjectJson(json.project) : undefined,
   balance: json.balance ? BigNumber.from(json.balance) : undefined,
   stakedBalance: json.stakedBalance
     ? BigNumber.from(json.stakedBalance)

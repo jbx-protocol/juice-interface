@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { FundingCycle } from 'models/funding-cycle'
+import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { PayoutMod, TicketMod } from 'models/mods'
 import { ProjectMetadataV3 } from 'models/project-metadata'
 import { ProjectType } from 'models/project-type'
@@ -15,8 +15,8 @@ export type V1ProjectContextType = {
   metadata: ProjectMetadataV3 | undefined
   owner: string | undefined // owner address
   earned: BigNumber | undefined
-  currentFC: FundingCycle | undefined
-  queuedFC: FundingCycle | undefined
+  currentFC: V1FundingCycle | undefined
+  queuedFC: V1FundingCycle | undefined
   currentPayoutMods: PayoutMod[] | undefined
   currentTicketMods: TicketMod[] | undefined
   queuedPayoutMods: PayoutMod[] | undefined

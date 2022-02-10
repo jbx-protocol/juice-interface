@@ -227,7 +227,11 @@ export default function Rewards() {
               </Button>
             </React.Fragment>
           )}
-          <Button onClick={() => setUnstakeModalVisible(true)} block>
+          <Button
+            type="primary"
+            onClick={() => setUnstakeModalVisible(true)}
+            block
+          >
             <Trans>Claim {tokenSymbol || t`tokens`} as ERC20</Trans>
           </Button>
           {hasPrintPreminePermission && projectId?.gt(0) && (

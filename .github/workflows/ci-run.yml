@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - add-test-runner-github-action
 
   # manual trigger from Github UI - Action tab
   workflow_dispatch:

@@ -33,9 +33,9 @@ import { projectTypes } from 'constants/v1/projectTypes'
 import { archivedProjectIds } from 'constants/v1/archivedProjects'
 
 import Loading from '../shared/Loading'
-import Project from '../V1Project'
+import V1Project from '../V1Project'
 
-export default function Dashboard() {
+export default function V1Dashboard() {
   const { handle }: { handle?: string } = useParams()
 
   const projectId = useProjectIdForHandle(handle)
@@ -179,7 +179,7 @@ export default function Dashboard() {
   return (
     <V1ProjectContext.Provider value={project}>
       <div style={layouts.maxWidth}>
-        <Project />
+        <V1Project />
         <div
           style={{ textAlign: 'center', cursor: 'pointer', padding: 20 }}
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}

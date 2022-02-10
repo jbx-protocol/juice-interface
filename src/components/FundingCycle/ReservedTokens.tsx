@@ -4,7 +4,7 @@ import TooltipLabel from 'components/shared/TooltipLabel'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import useReservedTokensOfProject from 'hooks/v1/contractReader/ReservedTokensOfProject'
-import { FundingCycle } from 'models/funding-cycle'
+import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { TicketMod } from 'models/mods'
 import { NetworkName } from 'models/network-name'
 import { useContext, useState } from 'react'
@@ -22,7 +22,7 @@ export default function ReservedTokens({
   ticketMods,
   hideActions,
 }: {
-  fundingCycle: FundingCycle | undefined
+  fundingCycle: V1FundingCycle | undefined
   ticketMods: TicketMod[] | undefined
   hideActions?: boolean
 }) {

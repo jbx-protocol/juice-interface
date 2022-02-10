@@ -7,7 +7,7 @@ import CurrencySymbol from 'components/shared/CurrencySymbol'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { CurrencyOption } from 'models/currency-option'
-import { FundingCycle } from 'models/funding-cycle'
+import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { useContext } from 'react'
 import { formatDate } from 'utils/formatDate'
 import { formatWad, fromPerbicent, fromPermille } from 'utils/formatNumber'
@@ -27,7 +27,7 @@ import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
 export default function FundingCycleDetails({
   fundingCycle,
 }: {
-  fundingCycle: FundingCycle | undefined
+  fundingCycle: V1FundingCycle | undefined
 }) {
   const {
     theme: { colors },

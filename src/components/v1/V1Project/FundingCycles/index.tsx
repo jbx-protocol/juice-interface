@@ -12,8 +12,8 @@ import { useContext, useState } from 'react'
 
 import { fundingCycleRiskCount } from 'utils/fundingCycle'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
-import CurrentFundingCycle from 'components/FundingCycle/CurrentFundingCycle'
-import QueuedFundingCycle from 'components/FundingCycle/QueuedFundingCycle'
+import CurrentFundingCycle from 'components/v1/FundingCycle/CurrentFundingCycle'
+import QueuedFundingCycle from 'components/v1/FundingCycle/QueuedFundingCycle'
 
 import FundingHistory from './FundingHistory'
 import SectionHeader from '../SectionHeader'

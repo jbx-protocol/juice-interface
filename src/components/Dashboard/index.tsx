@@ -33,7 +33,7 @@ import { projectTypes } from 'constants/v1/projectTypes'
 import { archivedProjectIds } from 'constants/v1/archivedProjects'
 
 import Loading from '../shared/Loading'
-import Project from '../Project'
+import Project from '../V1Project'
 
 export default function Dashboard() {
   const { handle }: { handle?: string } = useParams()

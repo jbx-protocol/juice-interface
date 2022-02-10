@@ -131,7 +131,7 @@ msgid "<0>{tokenSymbol} ERC20 address:</0> <1/>"
 msgstr "<0>{tokenSymbol} ERC20 address:</0> <1/>"
 
 #: src/components/shared/formItems/ProjectTwitter.tsx
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 msgid "@"
 msgstr ""
 
@@ -243,8 +243,8 @@ msgstr "Allocate a portion of your project's reserved tokens to other Ethereum w
 msgid "Allow minting tokens"
 msgstr ""
 
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "Allowed"
 msgstr "Allowed"
 
@@ -323,8 +323,8 @@ msgid "Bonding curve disabled while no funding target is set."
 msgstr ""
 
 #: src/components/shared/formItems/ProjectBondingCurveRate.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Bonding curve rate"
 msgstr ""
@@ -385,7 +385,7 @@ msgstr "Cancel"
 msgid "Cannot redeem tokens for ETH because this project has no overflow."
 msgstr "Cannot redeem tokens for ETH because this project has no overflow."
 
-#: src/components/v1/V1Create/ProjectForm.tsx
+#: src/components/shared/forms/ProjectDetailsForm.tsx
 msgid "Changes to these attributes can be made at any time and will be applied to your project immediately."
 msgstr "Changes to these attributes can be made at any time and will be applied to your project immediately."
 
@@ -490,8 +490,8 @@ msgstr ""
 msgid "Details"
 msgstr ""
 
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "Disabled"
 msgstr "Disabled"
 
@@ -502,13 +502,13 @@ msgstr ""
 
 #: src/components/Navbar/MenuItems.tsx
 #: src/components/shared/formItems/ProjectDiscord.tsx
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 msgid "Discord"
 msgstr ""
 
 #: src/components/shared/formItems/ProjectDiscountRate.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Discount rate"
 msgstr ""
@@ -571,8 +571,8 @@ msgstr "Download CSV of {0} holders"
 msgid "Due to their public nature, any exploits to the contracts may have irreversable consequences, including loss of funds. Please use Juicebox with caution."
 msgstr ""
 
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Duration"
 msgstr ""
@@ -665,7 +665,7 @@ msgstr ""
 msgid "Funding cycle"
 msgstr ""
 
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 msgid "Funding cycle details"
 msgstr "Funding cycle details"
 
@@ -702,7 +702,7 @@ msgstr "Give feedback"
 msgid "Go to Etherscan"
 msgstr ""
 
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 msgid "Handle"
 msgstr ""
 
@@ -876,7 +876,7 @@ msgid "Lock until"
 msgstr "Lock until"
 
 #: src/components/shared/formItems/ProjectLogoUri.tsx
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 msgid "Logo"
 msgstr ""
 
@@ -919,7 +919,7 @@ msgstr ""
 msgid "More trending projects"
 msgstr "More trending projects"
 
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 msgid "Name"
 msgstr ""
 
@@ -927,7 +927,7 @@ msgstr ""
 msgid "New"
 msgstr "New"
 
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 msgid "No"
 msgstr "No"
 
@@ -939,7 +939,7 @@ msgstr ""
 msgid "No duration set."
 msgstr ""
 
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 msgid "No funding target: The project will control how all funds are distributed, and none can be redeemed by token holders."
 msgstr ""
 
@@ -963,8 +963,8 @@ msgstr ""
 msgid "No target set."
 msgstr ""
 
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "Not set"
 msgstr ""
 
@@ -1005,7 +1005,7 @@ msgid "Paused"
 msgstr ""
 
 #: src/components/shared/formItems/ProjectPayButton.tsx
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 #: src/components/v1/V1Project/Pay/index.tsx
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 #: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
@@ -1016,7 +1016,7 @@ msgstr ""
 msgid "Pay amount"
 msgstr ""
 
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 msgid "Pay button"
 msgstr ""
 
@@ -1025,7 +1025,7 @@ msgid "Pay button text"
 msgstr ""
 
 #: src/components/shared/formItems/ProjectPayDisclosure.tsx
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 msgid "Pay disclosure"
 msgstr ""
 
@@ -1053,7 +1053,7 @@ msgstr ""
 msgid "Payments are paused for the current funding cycle."
 msgstr ""
 
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Payments paused"
 msgstr ""
@@ -1106,8 +1106,8 @@ msgstr "Project Token"
 msgid "Project description"
 msgstr ""
 
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
-#: src/components/v1/V1Create/ProjectForm.tsx
+#: src/components/shared/forms/ProjectDetailsForm.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 #: src/components/v1/V1Create/index.tsx
 msgid "Project details"
 msgstr ""
@@ -1117,7 +1117,7 @@ msgstr ""
 msgid "Project handle"
 msgstr ""
 
-#: src/components/v1/V1Create/ProjectForm.tsx
+#: src/components/shared/forms/ProjectDetailsForm.tsx
 msgid "Project handle must be unique."
 msgstr ""
 
@@ -1179,8 +1179,8 @@ msgstr "Receive {receiveText}"
 msgid "Reconfiguration"
 msgstr ""
 
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Reconfiguration strategy"
 msgstr ""
@@ -1213,14 +1213,14 @@ msgstr ""
 msgid "Reserved token allocation (optional)"
 msgstr "Reserved token allocation (optional)"
 
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Reserved token allocations"
 msgstr ""
 
 #: src/components/shared/formItems/ProjectReserved.tsx
 #: src/components/shared/forms/TicketingForm.tsx
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
@@ -1258,7 +1258,7 @@ msgstr ""
 msgid "Review & Deploy"
 msgstr ""
 
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 msgid "Review project"
 msgstr ""
 
@@ -1304,7 +1304,7 @@ msgstr "Save handle"
 msgid "Save payouts"
 msgstr "Save payouts"
 
-#: src/components/v1/V1Create/ProjectForm.tsx
+#: src/components/shared/forms/ProjectDetailsForm.tsx
 msgid "Save project details"
 msgstr ""
 
@@ -1356,7 +1356,7 @@ msgstr ""
 msgid "Should you Juicebox?"
 msgstr ""
 
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 msgid "Since you have not set a funding duration, changes to these settings will be applied immediately."
 msgstr "Since you have not set a funding duration, changes to these settings will be applied immediately."
 
@@ -1368,7 +1368,7 @@ msgstr ""
 "Some funding cycle properties may indicate risk\n"
 "for project contributors."
 
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Spending"
 msgstr ""
@@ -1393,8 +1393,8 @@ msgstr "Sum of percentages cannot exceed 100%"
 msgid "Sum of percentages cannot exceed 100%."
 msgstr "Sum of percentages cannot exceed 100%."
 
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "Target"
 msgstr ""
 
@@ -1402,7 +1402,7 @@ msgstr ""
 msgid "Target is 0."
 msgstr ""
 
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 msgid "Target is 0: All funds will be considered overflow and can be redeemed by burning project tokens."
 msgstr ""
 
@@ -1503,11 +1503,11 @@ msgstr ""
 msgid "There was also a script written for iteratively running the integration tests using a random input generator, prioritizing edge cases. The code has successfully passed over 1 millions test cases through this stress-testing script."
 msgstr ""
 
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 msgid "These attributes can be changed at any time."
 msgstr "These attributes can be changed at any time."
 
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 msgid "These settings will <0>not</0> be editable immediately within a funding cycle. They can only be changed for <1>upcoming</1> funding cycles."
 msgstr "These settings will <0>not</0> be editable immediately within a funding cycle. They can only be changed for <1>upcoming</1> funding cycles."
 
@@ -1556,8 +1556,8 @@ msgstr ""
 msgid "Token address: <0/>"
 msgstr ""
 
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Token minting"
 msgstr ""
@@ -1638,7 +1638,7 @@ msgid "Trending"
 msgstr "Trending"
 
 #: src/components/shared/formItems/ProjectTwitter.tsx
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 msgid "Twitter"
 msgstr ""
 
@@ -1705,7 +1705,7 @@ msgid "Wallet address"
 msgstr "Wallet address"
 
 #: src/components/shared/formItems/ProjectLink.tsx
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 msgid "Website"
 msgstr ""
 
@@ -1783,7 +1783,7 @@ msgstr "Withdraw funds"
 msgid "Workspace"
 msgstr ""
 
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 msgid "Yes"
 msgstr "Yes"
 
@@ -1843,7 +1843,7 @@ msgstr ""
 msgid "characters max"
 msgstr ""
 
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 msgid "days"
 msgstr ""
 
@@ -1918,7 +1918,7 @@ msgstr ""
 msgid "until"
 msgstr ""
 
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "{0} after JBX fee"
 msgstr "{0} after JBX fee"

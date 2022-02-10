@@ -4,10 +4,10 @@
   "private": true,
   "dependencies": {
     "@jbx-protocol/contracts-v1": "^1.1.5",
-    "@lingui/detect-locale": "^3.13.0",
-    "@lingui/react": "^3.13.0",
     "@lingui/cli": "^3.13.0",
+    "@lingui/detect-locale": "^3.13.0",
     "@lingui/macro": "^3.13.0",
+    "@lingui/react": "^3.13.0",
     "@reduxjs/toolkit": "^1.6.2",
     "@sushiswap/sdk": "5.0.0-canary.116",
     "@testing-library/jest-dom": "^5.11.4",

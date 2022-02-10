@@ -41,23 +41,25 @@ import {
 } from 'utils/ipfs'
 import { getTerminalAddress } from 'utils/v1/terminals'
 
-import BudgetForm from '../../shared/forms/BudgetForm'
-import ConfirmDeployProject from './ConfirmDeployProject'
-import IncentivesForm from '../../shared/forms/IncentivesForm'
-import PayModsForm from '../../shared/forms/PayModsForm'
-import ProjectForm, { ProjectFormFields } from './ProjectForm'
+import BudgetForm from 'components/shared/forms/BudgetForm'
+import ConfirmDeployProjectModal from 'components/shared/modals/ConfirmDeployProjectModal'
+import IncentivesForm from 'components/shared/forms/IncentivesForm'
+import PayModsForm from 'components/shared/forms/PayModsForm'
+import ProjectDetailsForm, {
+  ProjectDetailsFormFields,
+} from 'components/shared/forms/ProjectDetailsForm'
 import RestrictedActionsForm, {
   RestrictedActionsFormFields,
-} from '../../shared/forms/RestrictedActionsForm'
-import RulesForm from '../../shared/forms/RulesForm'
+} from 'components/shared/forms/RestrictedActionsForm'
+import RulesForm from 'components/shared/forms/RulesForm'
 import TicketingForm, {
   TicketingFormFields,
-} from '../../shared/forms/TicketingForm'
+} from 'components/shared/forms/TicketingForm'
 
 const terminalVersion: V1TerminalVersion = '1.1'
 
 export default function V1Create() {
-  const { signerNetwork, userAddress } = useContext(NetworkContext)
+  const { userAddress } = useContext(NetworkContext)
   const { colors, radii } = useContext(ThemeContext).theme
   const [currentStep, setCurrentStep] = useState<number>()
   const [viewedSteps, setViewedSteps] = useState<number[]>([])
@@ -81,7 +83,7 @@ export default function V1Create() {
     useState<boolean>(false)
   const [confirmStartOverVisible, setConfirmStartOverVisible] = useState(false)
   const [loadingCreate, setLoadingCreate] = useState<boolean>()
-  const [projectForm] = useForm<ProjectFormFields>()
+  const [projectForm] = useForm<ProjectDetailsFormFields>()
   const [ticketingForm] = useForm<TicketingFormFields>()
   const [restrictedActionsForm] = useForm<RestrictedActionsFormFields>()
   const editingFC = useEditingFundingCycleSelector()
@@ -575,7 +577,7 @@ export default function V1Create() {
             setProjectFormModalVisible(false)
           }}
         >
-          <ProjectForm
+          <ProjectDetailsForm
             form={projectForm}
             onSave={async () => {
               await projectForm.validateFields()
@@ -721,22 +723,13 @@ export default function V1Create() {
           />
         </Drawer>
 
-        <Modal
+        <ConfirmDeployProjectModal
           visible={deployProjectModalVisible}
-          okText={
-            userAddress
-              ? signerNetwork
-                ? 'Deploy project on ' + signerNetwork
-                : 'Deploy project'
-              : 'Connect wallet to deploy'
-          }
           onOk={deployProject}
           confirmLoading={loadingCreate}
-          width={800}
           onCancel={() => setDeployProjectModalVisible(false)}
-        >
-          <ConfirmDeployProject />
-        </Modal>
+          terminalFee={terminalFee}
+        />
 
         <Modal
           visible={confirmStartOverVisible}

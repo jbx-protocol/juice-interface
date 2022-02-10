@@ -16,16 +16,19 @@ import { Link } from 'react-router-dom'
 
 import { SECONDS_IN_DAY } from 'constants/numbers'
 import { CURRENCY_ETH } from 'constants/currency'
+import PausedIndicator from './PausedIndiciator'
 
 export default function TrendingProjectCard({
   project,
   size,
   rank,
+  showPausedState,
   trendingWindowDays,
 }: {
   project: TrendingProject
   size?: 'sm' | 'lg'
   rank: number
+  showPausedState?: boolean
   trendingWindowDays: number
 }) {
   const {
@@ -136,7 +139,13 @@ export default function TrendingProjectCard({
                 fontSize: size === 'sm' ? 16 : 21,
               }}
             >
-              {metadata.name}
+              {metadata.name}{' '}
+              {showPausedState ? (
+                <PausedIndicator
+                  projectId={project.id}
+                  terminalVersion={terminalVersion}
+                />
+              ) : null}
             </h2>
 
             {size === 'sm' ? null : (

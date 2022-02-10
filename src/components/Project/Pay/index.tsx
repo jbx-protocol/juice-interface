@@ -13,13 +13,15 @@ import { useContext, useMemo, useState } from 'react'
 import { currencyName } from 'utils/currency'
 import { formatWad, fromWad } from 'utils/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
+import {
+  paymentsPaused,
+  isV1AndMaxRR,
+  isMoonAndMaxRR,
+} from 'utils/paymentsPaused'
 
-import { disablePayOverrides } from 'constants/v1/overrides'
-import { readNetwork } from 'constants/networks'
 import { CURRENCY_ETH, CURRENCY_USD } from 'constants/currency'
 import CurrencySymbol from '../../shared/CurrencySymbol'
 import PayInputSubText from './PayInputSubText'
-import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
 
 export default function Pay() {
   const [payIn, setPayIn] = useState<CurrencyOption>(0)
@@ -42,10 +44,6 @@ export default function Pay() {
     setPayWarningModalVisible(true)
   }
 
-  const overridePayDisabled =
-    projectId &&
-    disablePayOverrides[readNetwork.name]?.has(projectId.toNumber())
-
   const payButton = useMemo(() => {
     if (!metadata || !currentFC) return null
 
@@ -57,13 +55,16 @@ export default function Pay() {
       ? metadata.payButton
       : t`Pay`
 
-    // v1 projects who still use 100% RR to disable pay
-    const isV1AndMaxRR =
-      terminal?.version === '1' && fcMetadata.reservedRate === 200
+    // Get individual cases of why payments are paused
+    const V1AndMaxRR = isV1AndMaxRR(terminal?.version, fcMetadata?.reservedRate)
+    const MoonAndMaxRR = isMoonAndMaxRR(projectId, fcMetadata)
 
-    // Edge case for MoonDAO, upgraded to v1.1 but can't use payIsPaused for now
-    const isMoonAndMaxRR =
-      projectId?.eq(V1_PROJECT_IDS.MOON_DAO) && fcMetadata.reservedRate === 200
+    // Get paymentsPaused for any reason
+    const projectPaymentsPaused = paymentsPaused(
+      projectId,
+      currentFC,
+      terminal?.version,
+    )
 
     if (isArchived) {
       return (
@@ -76,16 +77,10 @@ export default function Pay() {
           </Button>
         </Tooltip>
       )
-    } else if (
-      fcMetadata.payIsPaused || // v1.1 only
-      overridePayDisabled ||
-      isV1AndMaxRR || // v1 projects who still use 100% RR to disable pay
-      currentFC.configured.eq(0) || // Edge case, see sequoiacapitaldao
-      isMoonAndMaxRR // Edge case for MoonDAO
-    ) {
+    } else if (projectPaymentsPaused) {
       let disabledMessage: string
 
-      if (isV1AndMaxRR || isMoonAndMaxRR) {
+      if (V1AndMaxRR || MoonAndMaxRR) {
         disabledMessage = t`Paying this project is currently disabled, because the token reserved rate is 100% and no tokens will be earned by making a payment.`
       } else if (fcMetadata.payIsPaused) {
         disabledMessage = t`Payments are paused for the current funding cycle.`
@@ -112,15 +107,7 @@ export default function Pay() {
         </Button>
       )
     }
-  }, [
-    metadata,
-    currentFC,
-    isArchived,
-    overridePayDisabled,
-    weiPayAmt,
-    terminal,
-    projectId,
-  ])
+  }, [metadata, currentFC, isArchived, weiPayAmt, terminal, projectId])
 
   if (!currentFC || !projectId || !metadata) return null
 

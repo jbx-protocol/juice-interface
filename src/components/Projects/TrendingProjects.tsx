@@ -13,10 +13,12 @@ import TrendingProjectCard from './TrendingProjectCard'
 export default function TrendingProjects({
   isHomePage,
   count, // number of trending project cards to show
+  showPausedState,
   trendingWindowDays,
 }: {
   isHomePage?: boolean
   count: number
+  showPausedState?: boolean
   trendingWindowDays: number
 }) {
   const { data: projects, isLoading } = useTrendingProjects(
@@ -36,6 +38,7 @@ export default function TrendingProjects({
                 rank={i + 1}
                 key={i}
                 trendingWindowDays={trendingWindowDays}
+                showPausedState={showPausedState}
               />
             ))}
           </Grid>

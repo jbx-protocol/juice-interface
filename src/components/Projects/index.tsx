@@ -25,6 +25,7 @@ import ProjectsTabs from './ProjectsTabs'
 import HoldingsProjects from './HoldingsProjects'
 import ProjectsFilterAndSort from './ProjectsFilterAndSort'
 import ArchivedProjectsMessage from './ArchivedProjectsMessage'
+import FilterCheckboxItem from './FilterCheckboxItem'
 
 type OrderByOption = 'createdAt' | 'totalPaid'
 
@@ -71,6 +72,8 @@ export default function Projects() {
   const [includeV1_1, setIncludeV1_1] = useState<boolean>(true)
   const [includeActive, setIncludeActive] = useState<boolean>(true)
   const [includeArchived, setIncludeArchived] = useState<boolean>(false)
+
+  const [showPausedState, setShowPausedState] = useState<boolean>(false)
 
   const loadMoreContainerRef = useRef<HTMLDivElement>(null)
 
@@ -206,6 +209,12 @@ export default function Projects() {
               orderBy={orderBy}
               setOrderBy={setOrderBy}
             />
+          ) : selectedTab === 'trending' && !searchText ? (
+            <FilterCheckboxItem
+              label={t`Show paused state`}
+              checked={showPausedState}
+              onChange={() => setShowPausedState(!showPausedState)}
+            />
           ) : null}
         </div>
         <ArchivedProjectsMessage
@@ -266,7 +275,11 @@ export default function Projects() {
         </div>
       ) : selectedTab === 'trending' ? (
         <div style={{ paddingBottom: 50 }}>
-          <TrendingProjects count={12} trendingWindowDays={7} />
+          <TrendingProjects
+            count={12}
+            trendingWindowDays={7}
+            showPausedState={showPausedState}
+          />
         </div>
       ) : null}
       <FeedbackFormLink />

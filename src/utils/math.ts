@@ -1,11 +1,11 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { FundingCycle } from 'models/funding-cycle'
+import { V1FundingCycle } from 'models/v1/fundingCycle'
 
 import { fromWad, parsePerbicent } from './formatNumber'
 import { decodeFundingCycleMetadata } from './fundingCycle'
 
 export const weightedRate = (
-  fc: FundingCycle | undefined,
+  fc: V1FundingCycle | undefined,
   wad: BigNumber | undefined,
   output: 'payer' | 'reserved',
 ) => {

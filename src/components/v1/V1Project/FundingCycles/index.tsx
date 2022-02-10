@@ -11,7 +11,7 @@ import {
 import { useContext, useState } from 'react'
 
 import { fundingCycleRiskCount } from 'utils/fundingCycle'
-import { FundingCycle } from 'models/funding-cycle'
+import { V1FundingCycle } from 'models/v1/fundingCycle'
 import CurrentFundingCycle from 'components/FundingCycle/CurrentFundingCycle'
 import QueuedFundingCycle from 'components/FundingCycle/QueuedFundingCycle'
 
@@ -40,7 +40,7 @@ export default function FundingCycles({
     fundingCycle,
   }: {
     text: string
-    fundingCycle: FundingCycle | undefined
+    fundingCycle: V1FundingCycle | undefined
   }) => {
     return fundingCycle && fundingCycleRiskCount(fundingCycle) ? (
       <Tooltip

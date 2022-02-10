@@ -1,8 +1,8 @@
 import { HashRouter, Route, Switch } from 'react-router-dom'
 import { Redirect, useParams } from 'react-router'
-import V1Dashboard from 'components/V1Dashboard'
+import V1Dashboard from 'components/v1/V1Dashboard'
 import Landing from 'components/Landing'
-import V1Create from 'components/V1Create'
+import V1Create from 'components/v1/V1Create'
 import Projects from 'components/Projects'
 
 function CatchallRedirect() {

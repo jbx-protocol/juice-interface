@@ -1,6 +1,6 @@
 import { HashRouter, Route, Switch } from 'react-router-dom'
 import { Redirect, useParams } from 'react-router'
-import Dashboard from 'components/Dashboard'
+import Dashboard from 'components/V1Dashboard'
 import Landing from 'components/Landing'
 import Create from 'components/Create'
 import Projects from 'components/Projects'

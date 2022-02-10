@@ -21,7 +21,7 @@ import { weightedRate } from 'utils/math'
 
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 
-import TooltipLabel from '../shared/TooltipLabel'
+import TooltipLabel from '../../shared/TooltipLabel'
 import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
 
 export default function FundingCycleDetails({

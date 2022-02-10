@@ -136,7 +136,7 @@ msgid "<0>{tokenSymbol} ERC20 address:</0> <1/>"
 msgstr "<0>{tokenSymbol} ERC20 地址：</0> <1/>"
 
 #: src/components/shared/formItems/ProjectTwitter.tsx
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 msgid "@"
 msgstr "@"
 
@@ -248,8 +248,8 @@ msgstr "把您项目的一部分保留代币分发给其他以太坊钱包或其
 msgid "Allow minting tokens"
 msgstr "允许铸造代币"
 
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "Allowed"
 msgstr "允许"
 
@@ -328,8 +328,8 @@ msgid "Bonding curve disabled while no funding target is set."
 msgstr "不设定筹款目标的话，联合曲线比率选项将会禁用。"
 
 #: src/components/shared/formItems/ProjectBondingCurveRate.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Bonding curve rate"
 msgstr "联合曲线比率"
@@ -390,7 +390,7 @@ msgstr "取消"
 msgid "Cannot redeem tokens for ETH because this project has no overflow."
 msgstr ""
 
-#: src/components/v1/V1Create/ProjectForm.tsx
+#: src/components/shared/forms/ProjectDetailsForm.tsx
 msgid "Changes to these attributes can be made at any time and will be applied to your project immediately."
 msgstr ""
 
@@ -495,8 +495,8 @@ msgstr "设计你的项目"
 msgid "Details"
 msgstr "详情"
 
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "Disabled"
 msgstr "已禁用"
 
@@ -507,13 +507,13 @@ msgstr "断开连接"
 
 #: src/components/Navbar/MenuItems.tsx
 #: src/components/shared/formItems/ProjectDiscord.tsx
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 msgid "Discord"
 msgstr "Discord"
 
 #: src/components/shared/formItems/ProjectDiscountRate.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Discount rate"
 msgstr "折扣率"
@@ -576,8 +576,8 @@ msgstr "下载包含 {0} 持有者的 CSV"
 msgid "Due to their public nature, any exploits to the contracts may have irreversable consequences, including loss of funds. Please use Juicebox with caution."
 msgstr "由于其公共性质，任何对合约的恶意利用都可能产生不可逆转的后果，包括资金损失。请谨慎使用 Juicebox。"
 
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Duration"
 msgstr "持续时间"
@@ -670,7 +670,7 @@ msgstr "可以随时更改筹款配置。更改配置将重新开始一个筹款
 msgid "Funding cycle"
 msgstr "筹款周期"
 
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 msgid "Funding cycle details"
 msgstr ""
 
@@ -707,7 +707,7 @@ msgstr "提交反馈"
 msgid "Go to Etherscan"
 msgstr "跳转到 Etherscan"
 
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 msgid "Handle"
 msgstr "标识"
 
@@ -879,7 +879,7 @@ msgid "Lock until"
 msgstr "锁定至"
 
 #: src/components/shared/formItems/ProjectLogoUri.tsx
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 msgid "Logo"
 msgstr "标志"
 
@@ -922,7 +922,7 @@ msgstr "可通过重新配置 v 1.1项目的融资周期来启用或禁止代币
 msgid "More trending projects"
 msgstr ""
 
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 msgid "Name"
 msgstr "名称"
 
@@ -930,7 +930,7 @@ msgstr "名称"
 msgid "New"
 msgstr ""
 
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 msgid "No"
 msgstr ""
 
@@ -942,7 +942,7 @@ msgstr "暂无动态"
 msgid "No duration set."
 msgstr "不设定持续时间。"
 
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 msgid "No funding target: The project will control how all funds are distributed, and none can be redeemed by token holders."
 msgstr "不设定筹款目标：所有的资金如何分发都由此项目决定，代币持有者无法赎回。"
 
@@ -966,8 +966,8 @@ msgstr "没有筹款目标"
 msgid "No target set."
 msgstr "不设定筹款目标。"
 
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "Not set"
 msgstr "未设定"
 
@@ -1010,7 +1010,7 @@ msgid "Paused"
 msgstr "已暂停"
 
 #: src/components/shared/formItems/ProjectPayButton.tsx
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 #: src/components/v1/V1Project/Pay/index.tsx
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 #: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
@@ -1021,7 +1021,7 @@ msgstr "支付"
 msgid "Pay amount"
 msgstr "支付金额"
 
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 msgid "Pay button"
 msgstr "支付按钮"
 
@@ -1030,7 +1030,7 @@ msgid "Pay button text"
 msgstr "支付按钮文本"
 
 #: src/components/shared/formItems/ProjectPayDisclosure.tsx
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 msgid "Pay disclosure"
 msgstr "付款声明"
 
@@ -1058,7 +1058,7 @@ msgstr "支付"
 msgid "Payments are paused for the current funding cycle."
 msgstr "当前筹款周期暂停付款。"
 
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Payments paused"
 msgstr "付款已暂停"
@@ -1111,8 +1111,8 @@ msgstr ""
 msgid "Project description"
 msgstr "项目说明"
 
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
-#: src/components/v1/V1Create/ProjectForm.tsx
+#: src/components/shared/forms/ProjectDetailsForm.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 #: src/components/v1/V1Create/index.tsx
 msgid "Project details"
 msgstr "项目详情"
@@ -1122,7 +1122,7 @@ msgstr "项目详情"
 msgid "Project handle"
 msgstr "项目标识"
 
-#: src/components/v1/V1Create/ProjectForm.tsx
+#: src/components/shared/forms/ProjectDetailsForm.tsx
 msgid "Project handle must be unique."
 msgstr "项目标识必须是唯一的。"
 
@@ -1184,8 +1184,8 @@ msgstr "接收 {receiveText}"
 msgid "Reconfiguration"
 msgstr "重新配置"
 
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Reconfiguration strategy"
 msgstr "重新配置策略"
@@ -1218,14 +1218,14 @@ msgstr "可分派的盈余"
 msgid "Reserved token allocation (optional)"
 msgstr "保留代币的分配方案（可选）"
 
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Reserved token allocations"
 msgstr "保留代币的分配方案"
 
 #: src/components/shared/formItems/ProjectReserved.tsx
 #: src/components/shared/forms/TicketingForm.tsx
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
@@ -1263,7 +1263,7 @@ msgstr "退回我的 ETH"
 msgid "Review & Deploy"
 msgstr "检查并部署"
 
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 msgid "Review project"
 msgstr "检查项目"
 
@@ -1309,7 +1309,7 @@ msgstr "保存标识"
 msgid "Save payouts"
 msgstr "保存开支配置"
 
-#: src/components/v1/V1Create/ProjectForm.tsx
+#: src/components/shared/forms/ProjectDetailsForm.tsx
 msgid "Save project details"
 msgstr "保存项目详情"
 
@@ -1361,7 +1361,7 @@ msgstr "设定您的筹款周期时长。"
 msgid "Should you Juicebox?"
 msgstr "你应该使用Juicebox吗?"
 
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 msgid "Since you have not set a funding duration, changes to these settings will be applied immediately."
 msgstr ""
 
@@ -1371,7 +1371,7 @@ msgid ""
 "for project contributors."
 msgstr "一些筹款周期的配置可能会给项目贡献者们造成一些风险。"
 
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Spending"
 msgstr "资金分配"
@@ -1396,8 +1396,8 @@ msgstr "百分比合计不能超过 100%"
 msgid "Sum of percentages cannot exceed 100%."
 msgstr "百分比合计不能超过 100%."
 
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "Target"
 msgstr "目标"
 
@@ -1405,7 +1405,7 @@ msgstr "目标"
 msgid "Target is 0."
 msgstr "目标为 0"
 
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 msgid "Target is 0: All funds will be considered overflow and can be redeemed by burning project tokens."
 msgstr "目标为 0 ：所有资金将被视为溢出，可以通过燃烧项目代币来赎回。"
 
@@ -1504,11 +1504,11 @@ msgstr "对合约中所有函数的所有条件都写了单元测试，对协议
 msgid "There was also a script written for iteratively running the integration tests using a random input generator, prioritizing edge cases. The code has successfully passed over 1 millions test cases through this stress-testing script."
 msgstr "还有一个脚本，使用随机输入生成器迭代运行集成测试，优先处理边界情况。使用这个压力测试脚本，代码已经成功通过了超过100万个测试用例。"
 
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 msgid "These attributes can be changed at any time."
 msgstr ""
 
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 msgid "These settings will <0>not</0> be editable immediately within a funding cycle. They can only be changed for <1>upcoming</1> funding cycles."
 msgstr ""
 
@@ -1557,8 +1557,8 @@ msgstr "分配给：<0/>"
 msgid "Token address: <0/>"
 msgstr "代币地址：<0/>"
 
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Token minting"
 msgstr "代币铸造"
@@ -1639,7 +1639,7 @@ msgid "Trending"
 msgstr ""
 
 #: src/components/shared/formItems/ProjectTwitter.tsx
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 msgid "Twitter"
 msgstr "Twitter"
 
@@ -1706,7 +1706,7 @@ msgid "Wallet address"
 msgstr "钱包地址"
 
 #: src/components/shared/formItems/ProjectLink.tsx
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 msgid "Website"
 msgstr "网站"
 
@@ -1784,7 +1784,7 @@ msgstr "提取资金"
 msgid "Workspace"
 msgstr "工作空间"
 
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 msgid "Yes"
 msgstr ""
 
@@ -1844,7 +1844,7 @@ msgstr "未经审计，可能容易出 BUG 或者被攻击。所有通过 Juiceb
 msgid "characters max"
 msgstr "最大字符数"
 
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 msgid "days"
 msgstr "天"
 
@@ -1919,7 +1919,7 @@ msgstr "代币已赎回"
 msgid "until"
 msgstr "直到"
 
-#: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/shared/modals/ConfirmDeployProjectModal.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "{0} after JBX fee"
 msgstr "收取 JBX 费用之后 {0}"

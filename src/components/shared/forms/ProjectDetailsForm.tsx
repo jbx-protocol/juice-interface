@@ -5,7 +5,7 @@ import { FormItems } from 'components/shared/formItems'
 import { normalizeHandle } from 'utils/formatHandle'
 import { cidFromUrl, unpinIpfsFileByCid } from 'utils/ipfs'
 
-export type ProjectFormFields = {
+export type ProjectDetailsFormFields = {
   name: string
   description: string
   infoUri: string
@@ -17,11 +17,11 @@ export type ProjectFormFields = {
   payDisclosure: string
 }
 
-export default function ProjectForm({
+export default function ProjectDetailsForm({
   form,
   onSave,
 }: {
-  form: FormInstance<ProjectFormFields>
+  form: FormInstance<ProjectDetailsFormFields>
   onSave: VoidFunction
 }) {
   return (

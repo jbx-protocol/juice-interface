@@ -2,7 +2,7 @@ import { HashRouter, Route, Switch } from 'react-router-dom'
 import { Redirect, useParams } from 'react-router'
 import V1Dashboard from 'components/V1Dashboard'
 import Landing from 'components/Landing'
-import Create from 'components/Create'
+import V1Create from 'components/V1Create'
 import Projects from 'components/Projects'
 
 function CatchallRedirect() {
@@ -18,7 +18,7 @@ export default function Router() {
           <Landing />
         </Route>
         <Route path="/create">
-          <Create />
+          <V1Create />
         </Route>
         <Route path="/projects/:owner">
           <Projects />

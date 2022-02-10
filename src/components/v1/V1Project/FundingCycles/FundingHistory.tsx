@@ -15,7 +15,7 @@ import { useCallback, useContext, useState } from 'react'
 import { deepEqFundingCycles } from 'utils/deepEqFundingCycles'
 import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
-import { hasFundingTarget } from 'utils/fundingCycle'
+import { hasFundingTargetV1 } from 'utils/fundingCycle'
 
 import FundingCycleDetails from 'components/v1/FundingCycle/FundingCycleDetails'
 
@@ -92,7 +92,7 @@ export default function FundingHistory({
                 <CurrencySymbol
                   currency={cycle.currency.toNumber() as V1CurrencyOption}
                 />
-                {hasFundingTarget(cycle) ? (
+                {hasFundingTargetV1(cycle) ? (
                   <>
                     <Trans>
                       {formatWad(cycle.tapped, { precision: 2 })}/

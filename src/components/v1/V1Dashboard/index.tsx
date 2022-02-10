@@ -32,7 +32,7 @@ import { layouts } from 'constants/styles/layouts'
 import { projectTypes } from 'constants/v1/projectTypes'
 import { archivedProjectIds } from 'constants/v1/archivedProjects'
 
-import Loading from '../shared/Loading'
+import Loading from '../../shared/Loading'
 import V1Project from '../V1Project'
 
 export default function V1Dashboard() {

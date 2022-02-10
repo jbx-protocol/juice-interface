@@ -30,7 +30,7 @@ test('format with single where', () => {
     },
   })
 
-  expect(query).toBe('{ projects(where: { id: "1" }) { id creator uri } }')
+  expect(query).toBe('{ projects(where: { id:"1" }) { id creator uri } }')
 })
 
 test('format with multiple where', () => {
@@ -50,7 +50,7 @@ test('format with multiple where', () => {
   })
 
   expect(query).toBe(
-    '{ projects(where: { id: "1", creator: "123" }) { id creator uri } }',
+    '{ projects(where: { id:"1", creator:"123" }) { id creator uri } }',
   )
 })
 

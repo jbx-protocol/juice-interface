@@ -21,7 +21,7 @@ import { useTerminalFee } from 'hooks/v1/TerminalFee'
 import { useDeployProjectTx } from 'hooks/v1/transactor/DeployProjectTx'
 import { V1ContractName } from 'models/v1/contracts'
 import { CurrencyOption } from 'models/currency-option'
-import { FundingCycle } from 'models/funding-cycle'
+import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { PayoutMod, TicketMod } from 'models/mods'
 import { V1TerminalVersion } from 'models/v1/terminals'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
@@ -427,7 +427,7 @@ export default function V1Create() {
     ],
   )
 
-  const fundingCycle: FundingCycle = useMemo(
+  const fundingCycle: V1FundingCycle = useMemo(
     () => ({
       ...editingFC,
       metadata: encodeFundingCycleMetadata(

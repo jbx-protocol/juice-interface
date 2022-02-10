@@ -374,6 +374,7 @@ msgstr "Cancelar"
 msgid "Cannot redeem tokens for ETH because this project has no overflow."
 msgstr "No se pueden canjear tokens por ETH porque este proyecto no tiene excedente."
 
+#: src/components/shared/forms/ProjectDetailsForm.tsx
 #: src/components/v1/V1Create/ProjectForm.tsx
 msgid "Changes to these attributes can be made at any time and will be applied to your project immediately."
 msgstr "Se pueden hacer cambios a estos atributos en cualquier momento y serán aplicados a tu proyecto inmediatamente."
@@ -1138,6 +1139,7 @@ msgstr "Token de proyecto"
 msgid "Project description"
 msgstr "Descripción del proyecto"
 
+#: src/components/shared/forms/ProjectDetailsForm.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Create/ProjectForm.tsx
 #: src/components/v1/V1Create/index.tsx
@@ -1149,6 +1151,7 @@ msgstr "Detalles del proyecto"
 msgid "Project handle"
 msgstr "Usuario del proyecto"
 
+#: src/components/shared/forms/ProjectDetailsForm.tsx
 #: src/components/v1/V1Create/ProjectForm.tsx
 msgid "Project handle must be unique."
 msgstr "El usuario de tu proyecto debe ser único."
@@ -1360,6 +1363,7 @@ msgstr "Guardar usuario"
 msgid "Save payouts"
 msgstr "Guardar pagos"
 
+#: src/components/shared/forms/ProjectDetailsForm.tsx
 #: src/components/v1/V1Create/ProjectForm.tsx
 msgid "Save project details"
 msgstr "Guardar detalles del proyecto"

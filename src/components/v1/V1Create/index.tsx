@@ -47,17 +47,20 @@ import TicketingForm, {
 
 import ReconfigurationStrategyDrawer from 'components/shared/ReconfigurationStrategyDrawer'
 
-import BudgetForm from '../../shared/forms/BudgetForm'
-import IncentivesForm from '../../shared/forms/IncentivesForm'
-import PayModsForm from '../../shared/forms/PayModsForm'
-import ProjectForm, { ProjectFormFields } from './ProjectForm'
-import RestrictedActionsForm, {
-  RestrictedActionsFormFields,
-} from '../../shared/forms/RestrictedActionsForm'
 
-import ConfirmDeployProject from './ConfirmDeployProject'
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 import { Strategy } from 'constants/ballotStrategies/ballotStrategies'
+import BudgetForm from 'components/shared/forms/BudgetForm'
+import IncentivesForm from 'components/shared/forms/IncentivesForm'
+import PayModsForm from 'components/shared/forms/PayModsForm'
+import ProjectDetailsForm, {
+  ProjectDetailsFormFields,
+} from 'components/shared/forms/ProjectDetailsForm'
+import RestrictedActionsForm, {
+  RestrictedActionsFormFields,
+} from 'components/shared/forms/RestrictedActionsForm'
+
+import ConfirmDeployProject from './ConfirmDeployProject'
 
 const terminalVersion: V1TerminalVersion = '1.1'
 
@@ -86,7 +89,7 @@ export default function V1Create() {
     useState<boolean>(false)
   const [confirmStartOverVisible, setConfirmStartOverVisible] = useState(false)
   const [loadingCreate, setLoadingCreate] = useState<boolean>()
-  const [projectForm] = useForm<ProjectFormFields>()
+  const [projectForm] = useForm<ProjectDetailsFormFields>()
   const [ticketingForm] = useForm<TicketingFormFields>()
   const [restrictedActionsForm] = useForm<RestrictedActionsFormFields>()
   const editingFC = useEditingV1FundingCycleSelector()
@@ -583,7 +586,7 @@ export default function V1Create() {
             setProjectFormModalVisible(false)
           }}
         >
-          <ProjectForm
+          <ProjectDetailsForm
             form={projectForm}
             onSave={async () => {
               await projectForm.validateFields()

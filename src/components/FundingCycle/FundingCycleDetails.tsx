@@ -18,12 +18,13 @@ import {
   isRecurring,
 } from 'utils/fundingCycle'
 import { weightedRate } from 'utils/math'
-import { pluralTokenShort } from 'utils/tokenSymbolText'
+import { pluralTokenLong, pluralTokenShort } from 'utils/tokenSymbolText'
 
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 
 import TooltipLabel from '../shared/TooltipLabel'
 import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
+import RedeemRateSlider from './RedeemRateSlider'
 
 export default function FundingCycleDetails({
   fundingCycle,
@@ -34,7 +35,7 @@ export default function FundingCycleDetails({
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const { tokenSymbol } = useContext(V1ProjectContext)
+  const { projectId, tokenSymbol, overflow } = useContext(V1ProjectContext)
 
   if (!fundingCycle) return null
 
@@ -188,21 +189,31 @@ export default function FundingCycleDetails({
             : ''}{' '}
           <Trans>{pluralTokenShort(tokenSymbol)}/ETH</Trans>
         </Descriptions.Item>
-
-        {/* <Descriptions.Item
-          span={2}
-          label={
-            <TooltipLabel
-              label={t`Redeem rate`}
-              tip={t`The amount of ${pluralTokenLong(tokenSymbol)} that must be redeemed in exchange for one ETH of overflow. This can change over time according to the bonding curve of future funding cycles.`}
+        {overflow?.gt(0) ? (
+          <Descriptions.Item
+            style={{ marginTop: 10 }}
+            span={2}
+            label={
+              <TooltipLabel
+                label={t`Redeem rate`}
+                tip={
+                  <Trans>
+                    The amount of ETH you will receive by redeeming a certain
+                    amount of {pluralTokenLong(tokenSymbol)}. This can change
+                    over time according to the bonding curve and the amount of
+                    overflow.
+                  </Trans>
+                }
+              />
+            }
+          >
+            <RedeemRateSlider
+              projectId={projectId}
+              fundingCycle={fundingCycle}
+              tokenSymbol={tokenSymbol}
             />
-          }
-        >
-          {redeemRate && redeemRate?.gt(0)
-            ? formattedNum(parseWad(1).div(redeemRate))
-            : '--'}{' '}
-          {pluralTokenShort(tokenSymbol)}/ETH
-        </Descriptions.Item> */}
+          </Descriptions.Item>
+        ) : null}
 
         <Descriptions.Item
           span={2}

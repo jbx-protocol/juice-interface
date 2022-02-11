@@ -33,7 +33,7 @@ export default function NumberSlider({
     step: step ?? 0.1,
   }
 
-  const decimals = inputConfig.step.toString().split('.')[1].length
+  const decimals = inputConfig.step.toString().split('.')[1]?.length ?? 0
 
   const updateValue = (val?: number) => {
     setValue(val)

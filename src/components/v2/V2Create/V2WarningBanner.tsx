@@ -1,5 +1,6 @@
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
+import { InfoCircleOutlined } from '@ant-design/icons'
 
 export default function V2WarningBanner() {
   const {
@@ -8,12 +9,13 @@ export default function V2WarningBanner() {
   return (
     <div
       style={{
-        background: colors.stroke.failure,
-        padding: '1rem',
+        background: colors.background.brand.primary,
+        padding: '0.5rem',
         textAlign: 'center',
       }}
     >
-      WARNING: your project will be created on the Juicebox V2 contracts.
+      <InfoCircleOutlined /> Your project will be created on the Juicebox V2
+      contracts.
     </div>
   )
 }

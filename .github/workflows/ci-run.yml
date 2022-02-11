@@ -13,7 +13,7 @@ on:
 
 jobs:
   run-yarn-tests:
-    if: github.event.pull_request.draft == true
+    if: github.event.pull_request.draft == false
     name: Run yarn tests
     runs-on: ubuntu-latest
 

@@ -16,6 +16,11 @@ import { useRedeemTokensTx } from 'hooks/v1/transactor/RedeemTokensTx'
 import { CSSProperties, useContext, useState } from 'react'
 import { formattedNum, formatWad, fromWad, parseWad } from 'utils/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
+import {
+  pluralTokenLong,
+  pluralTokenShort,
+  singleTokenShort,
+} from 'utils/tokenSymbolText'
 
 import { CURRENCY_ETH, CURRENCY_USD } from 'constants/currency'
 
@@ -88,21 +93,21 @@ export default function RedeemModal({
     alignItems: 'baseline',
   }
 
-  const tokensText = tokenSymbol ? tokenSymbol + ' ' + t`tokens` : t`tokens`
-  const tokensTextShort = tokenSymbol ?? t`tokens`
+  const tokensTextLong = pluralTokenLong(tokenSymbol)
+  const tokensTextShort = pluralTokenShort(tokenSymbol)
 
   let modalTitle: string
   // Defining whole sentence for translations
   if (overflow?.gt(0)) {
-    modalTitle = t`Burn ${tokensText} for ETH`
+    modalTitle = t`Redeem ${tokensTextLong} for ETH`
   } else {
-    modalTitle = t`Burn ${tokensText}`
+    modalTitle = t`Burn ${tokensTextLong}`
   }
 
   let buttonText: string
   // Defining whole sentence for translations
   if (overflow?.gt(0)) {
-    buttonText = t`Burn ${formattedNum(redeemAmount, {
+    buttonText = t`Redeem ${formattedNum(redeemAmount, {
       precision: 2,
     })} ${tokensTextShort} for ETH`
   } else {
@@ -115,9 +120,9 @@ export default function RedeemModal({
 
   const validateRedeemAmount = () => {
     if (redeemBN.eq(0)) {
-      return Promise.reject('Required')
+      return Promise.reject(t`Required`)
     } else if (redeemBN.gt(totalBalance ?? 0)) {
-      return Promise.reject('Balance exceeded')
+      return Promise.reject(t`Balance exceeded`)
     }
     return Promise.resolve()
   }
@@ -154,10 +159,9 @@ export default function RedeemModal({
             </span>
           </p>
           <p style={statsStyle}>
-            {tokenSymbol ?? 'Token'} balance:{' '}
+            {singleTokenShort(tokenSymbol, true)} balance:{' '}
             <span>
-              {formatWad(totalBalance ?? 0, { precision: 0 })}{' '}
-              {tokenSymbol ?? 'tokens'}
+              {formatWad(totalBalance ?? 0, { precision: 0 })} {tokensTextShort}
             </span>
           </p>
           <p style={statsStyle}>

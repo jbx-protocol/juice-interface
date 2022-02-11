@@ -13,6 +13,7 @@ import { useContext, useState } from 'react'
 import { currencyName } from 'utils/currency'
 import { formattedNum, formatWad } from 'utils/formatNumber'
 import { weightedRate } from 'utils/math'
+import { pluralTokenShort } from 'utils/tokenSymbolText'
 
 import ProjectRiskNotice from './ProjectRiskNotice'
 
@@ -107,7 +108,7 @@ export default function ConfirmPayOwnerModal({
             {currencyName(0)})
           </Descriptions.Item>
           <Descriptions.Item
-            label={t`${tokenSymbol ?? 'Tokens'} for you`}
+            label={t`${pluralTokenShort(tokenSymbol, true)} for you`}
             className="content-right"
           >
             <div>{formatWad(receivedTickets, { precision: 0 })}</div>
@@ -120,7 +121,7 @@ export default function ConfirmPayOwnerModal({
             </div>
           </Descriptions.Item>
           <Descriptions.Item
-            label={t`${tokenSymbol ?? 'Tokens'} reserved`}
+            label={t`${pluralTokenShort(tokenSymbol, true)} reserved`}
             className="content-right"
           >
             {formatWad(ownerTickets, { precision: 0 })}

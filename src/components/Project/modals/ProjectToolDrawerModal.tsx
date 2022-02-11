@@ -11,6 +11,7 @@ import { useSafeTransferFromTx } from 'hooks/v1/transactor/SafeTransferFromTx'
 import { useTransferTokensTx } from 'hooks/v1/transactor/TransferTokensTx'
 import { useContext, useState } from 'react'
 import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
+import { pluralTokenShort } from 'utils/tokenSymbolText'
 
 export default function ProjectToolDrawerModal({
   visible,
@@ -75,7 +76,7 @@ export default function ProjectToolDrawerModal({
     )
   }
 
-  const tokenSymbolText = tokenSymbol || t`tokens`
+  const tokenSymbolShort = pluralTokenShort(tokenSymbol)
 
   return (
     <Drawer visible={visible} onClose={onClose} width={600}>
@@ -121,7 +122,7 @@ export default function ProjectToolDrawerModal({
 
         <section>
           <h3>
-            <Trans>Transfer unclaimed {tokenSymbolText}</Trans>
+            <Trans>Transfer unclaimed {tokenSymbolShort}</Trans>
           </h3>
           <p>
             <Trans>
@@ -168,7 +169,7 @@ export default function ProjectToolDrawerModal({
                 size="small"
                 type="primary"
               >
-                <Trans>Transfer {tokenSymbolText}</Trans>
+                <Trans>Transfer {tokenSymbolShort}</Trans>
               </Button>
             </Form.Item>
           </Form>

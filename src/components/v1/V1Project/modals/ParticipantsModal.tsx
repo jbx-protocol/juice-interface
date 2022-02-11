@@ -20,7 +20,7 @@ import { Participant } from 'models/subgraph-entities/participant'
 import { useContext, useEffect, useMemo, useState } from 'react'
 import { formatPercent, formatWad } from 'utils/formatNumber'
 import { OrderDirection, querySubgraph } from 'utils/graph'
-import { pluralTokenShort, singleTokenShort } from 'utils/tokenSymbolText'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 import { indexedProjectERC20s } from 'constants/v1/indexedProjectERC20s'
 
@@ -133,7 +133,7 @@ export default function ParticipantsModal({
             value={sortPayerReports}
           >
             <Select.Option value="balance">
-              <Trans>{singleTokenShort(tokenSymbol, true)} balance</Trans>
+              <Trans>{tokenSymbolText(tokenSymbol, true)} balance</Trans>
             </Select.Option>
             <Select.Option value="totalPaid">
               <Trans>Amount paid</Trans>
@@ -205,12 +205,14 @@ export default function ParticipantsModal({
                   }}
                 >
                   {formatWad(p.balance, { precision: 0 })}{' '}
-                  {pluralTokenShort(tokenSymbol)} (
+                  {tokenSymbolText(tokenSymbol, false, true)} (
                   {formatPercent(p.balance, totalTokenSupply)}%)
                 </div>
                 <div style={smallHeaderStyle}>
                   {formatWad(p.stakedBalance, { precision: 0 })}{' '}
-                  <Trans>{pluralTokenShort(tokenSymbol)} staked</Trans>
+                  <Trans>
+                    {tokenSymbolText(tokenSymbol, false, true)} staked
+                  </Trans>
                 </div>
               </div>
             </div>
@@ -246,7 +248,7 @@ export default function ParticipantsModal({
     >
       <div>
         <h4>
-          <Trans>{singleTokenShort(tokenSymbol, true)} holders</Trans>
+          <Trans>{tokenSymbolText(tokenSymbol, true)} holders</Trans>
         </h4>
 
         {tokenAddress && tokenAddress !== constants.AddressZero && (

@@ -8,7 +8,7 @@ import { useInfiniteSubgraphQuery } from 'hooks/SubgraphQuery'
 import React, { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
-import { pluralTokenShort } from 'utils/tokenSymbolText'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 import { CURRENCY_ETH } from 'constants/currency'
 
@@ -86,7 +86,7 @@ export function RedeemActivity({ pageSize }: { pageSize: number }) {
                     }}
                   >
                     {formatWad(e.amount, { precision: 0 })}{' '}
-                    {pluralTokenShort(tokenSymbol)}
+                    {tokenSymbolText(tokenSymbol, false, true)}
                   </div>
                 </div>
 

@@ -22,7 +22,7 @@ import useUnclaimedBalanceOfUser from 'hooks/v1/contractReader/UnclaimedBalanceO
 import React, { CSSProperties, useContext, useState } from 'react'
 import { formatPercent, formatWad } from 'utils/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
-import { pluralTokenLong } from 'utils/tokenSymbolText'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 import PrintPreminedModal from '../modals/PrintPreminedModal'
 import IssueTickets from './IssueTickets'
@@ -200,7 +200,7 @@ export default function Rewards() {
       </Space>
 
       <Modal
-        title={t`Manage ${pluralTokenLong(tokenSymbol)}`}
+        title={t`Manage ${tokenSymbolText(tokenSymbol, false, true, true)}`}
         visible={manageTokensModalVisible}
         onCancel={() => setManageTokensModalVisible(false)}
         okButtonProps={{ hidden: true }}

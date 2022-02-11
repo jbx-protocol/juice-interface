@@ -16,11 +16,7 @@ import { useRedeemTokensTx } from 'hooks/v1/transactor/RedeemTokensTx'
 import { CSSProperties, useContext, useState } from 'react'
 import { formattedNum, formatWad, fromWad, parseWad } from 'utils/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
-import {
-  pluralTokenLong,
-  pluralTokenShort,
-  singleTokenShort,
-} from 'utils/tokenSymbolText'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 import { CURRENCY_ETH, CURRENCY_USD } from 'constants/currency'
 
@@ -93,8 +89,8 @@ export default function RedeemModal({
     alignItems: 'baseline',
   }
 
-  const tokensTextLong = pluralTokenLong(tokenSymbol)
-  const tokensTextShort = pluralTokenShort(tokenSymbol)
+  const tokensTextLong = tokenSymbolText(tokenSymbol, false, true, true)
+  const tokensTextShort = tokenSymbolText(tokenSymbol, false, true)
 
   let modalTitle: string
   // Defining whole sentence for translations
@@ -159,7 +155,7 @@ export default function RedeemModal({
             </span>
           </p>
           <p style={statsStyle}>
-            {singleTokenShort(tokenSymbol, true)} balance:{' '}
+            {tokenSymbolText(tokenSymbol, true)} balance:{' '}
             <span>
               {formatWad(totalBalance ?? 0, { precision: 0 })} {tokensTextShort}
             </span>

@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-02-09 01:58\n"
+"PO-Revision-Date: 2022-02-11 01:55\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -255,6 +255,7 @@ msgstr "Permitido"
 msgid "Almost definitely."
 msgstr "Casi de forma definitiva."
 
+#: src/components/Project/modals/ProjectToolDrawerModal.tsx
 #: src/components/Project/modals/ReconfigureFCModal.tsx
 msgid "Amount"
 msgstr "Cantidad"
@@ -798,11 +799,11 @@ msgstr "Emitir token ERC-20"
 #: src/components/Project/Rewards/IssueTickets.tsx
 msgid "Issue an ERC-20 to be used as this project's token. Once\n"
 "issued, anyone can claim their existing token balance in the new token."
-msgstr ""
+msgstr "Emite un ERC-20 para que sea usado como token de este proyecto. Una vez emitido, cualquiera puede reclamar su balance existente de tokens como el nuevo token."
 
 #: src/components/Project/Rewards/IssueTickets.tsx
 msgid "Issue an ERC-20 token for this project. Once issued, anyone can claim their existing token balance in the new token."
-msgstr ""
+msgstr "Emite un token ERC-20 para este proyecto. Una vez emitido, cualquiera puede reclamar su balance existente de tokens como el nuevo token."
 
 #: src/components/FundingCycle/FundingCycleDetails.tsx
 msgid "Issue rate"
@@ -1163,7 +1164,7 @@ msgstr "Bienes y servicios públicos"
 
 #: src/components/Projects/RankingExplanation.tsx
 msgid "Rankings based on number of contributions and volume gained in the last {trendingWindow} days. <0>See code</0>"
-msgstr ""
+msgstr "Clasificaciones basadas en el número de contribuciones y volumen obtenido en los últimos {trendingWindow} días. <0>Ver código</0>"
 
 #: src/components/Project/modals/ConfirmPayOwnerModal/index.tsx
 msgid "Receive ERC20"
@@ -1357,7 +1358,7 @@ msgstr "¿Deberías de usar Juicebox?"
 
 #: src/components/Create/ConfirmDeployProject.tsx
 msgid "Since you have not set a funding duration, changes to these settings will be applied immediately."
-msgstr ""
+msgstr "Como no has establecido una duración de financiamiento, los cambios a estos ajustes serán aplicados de inmediato."
 
 #: src/components/FundingCycle/FundingCyclePreview.tsx
 msgid "Some funding cycle properties may indicate risk\n"
@@ -1499,11 +1500,11 @@ msgstr "También, existe un script escrito para correr de manera repetitiva las 
 
 #: src/components/Create/ConfirmDeployProject.tsx
 msgid "These attributes can be changed at any time."
-msgstr ""
+msgstr "Estos atributos pueden cambiarse en cualquier momento."
 
 #: src/components/Create/ConfirmDeployProject.tsx
 msgid "These settings will <0>not</0> be editable immediately within a funding cycle. They can only be changed for <1>upcoming</1> funding cycles."
-msgstr ""
+msgstr "Estos ajustes <0>no</0> serán editables inmediatamente dentro de un ciclo de financiamiento. Solo pueden ser cambiados para <1>próximos</1> ciclos de financiamiento."
 
 #: src/components/shared/Mod.tsx
 msgid "This address will receive any tokens minted when the recipient project gets paid."
@@ -1616,12 +1617,12 @@ msgid "Transfer ownership"
 msgstr "Transferir propiedad"
 
 #: src/components/Project/modals/ProjectToolDrawerModal.tsx
-msgid "Transfer staked {0}"
-msgstr "Tranferir staked {0}"
+msgid "Transfer unclaimed {tokenSymbolText}"
+msgstr "Transferir {tokenSymbolText} no reclamados"
 
 #: src/components/Project/modals/ProjectToolDrawerModal.tsx
-msgid "Transfer {0}"
-msgstr "Transferir {0}"
+msgid "Transfer {tokenSymbolText}"
+msgstr "Transferir {tokenSymbolText}"
 
 #: src/components/Landing/index.tsx
 msgid "Transparency & accountability"
@@ -1629,7 +1630,7 @@ msgstr "Transparencia y rendición de cuentas"
 
 #: src/components/Projects/ProjectsTabs.tsx
 msgid "Trending"
-msgstr ""
+msgstr "Tendencias"
 
 #: src/components/Create/ConfirmDeployProject.tsx
 #: src/components/shared/formItems/ProjectTwitter.tsx
@@ -1779,7 +1780,7 @@ msgstr "Espacio de trabajo"
 
 #: src/components/Create/ConfirmDeployProject.tsx
 msgid "Yes"
-msgstr ""
+msgstr "Sí"
 
 #: src/components/Project/modals/ConfirmUnstakeTokensModal.tsx
 msgid "You can still redeem your {tokenSymbol} tokens for overflow without claiming them, and you can transfer your unclaimed {tokenSymbol} tokens to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
@@ -1897,6 +1898,7 @@ msgstr "token"
 #: src/components/FundingCycle/ReservedTokens.tsx
 #: src/components/Project/Pay/PayInputSubText.tsx
 #: src/components/Project/Rewards/index.tsx
+#: src/components/Project/modals/ProjectToolDrawerModal.tsx
 #: src/components/Project/modals/RedeemModal.tsx
 #: src/components/Project/modals/RedeemModal.tsx
 #: src/components/Project/modals/RedeemModal.tsx
@@ -2029,5 +2031,7 @@ msgid "{tokensLabel}\n"
 "are distributed to anyone who pays this project. If the project \n"
 "has set a funding target, tokens can be redeemed for a portion \n"
 "of the project's overflow whether or not they have been claimed yet."
-msgstr ""
+msgstr "{tokensLabel}\n"
+"son distribuidos a cualquiera que pague este proyecto. Si el proyecto tiene un objetivo de financiamiento, los tokens pueden ser canjeados por una porción del excedente del proyecto,\n"
+"hayan sido estos reclamados o no."
 

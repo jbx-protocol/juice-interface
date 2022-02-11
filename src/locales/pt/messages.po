@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-02-10 01:52\n"
+"PO-Revision-Date: 2022-02-11 01:55\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -89,7 +89,7 @@ msgstr "<0/>{0}{1} retirado"
 
 #: src/components/Project/modals/RedeemModal.tsx
 msgid "<0><1>This project has no overflow</1>, so you will not receive any ETH for burning tokens.</0>"
-msgstr ""
+msgstr "<0><1> Este projeto não tem overflow</1>, então você não receberá nenhum ETH por queimar tokens.</0>"
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "<0>Learn more</0> about funding cycle duration."
@@ -254,6 +254,7 @@ msgstr "Permitido"
 msgid "Almost definitely."
 msgstr "Definitivamente."
 
+#: src/components/Project/modals/ProjectToolDrawerModal.tsx
 #: src/components/Project/modals/ReconfigureFCModal.tsx
 msgid "Amount"
 msgstr "Quantidade"
@@ -540,7 +541,7 @@ msgstr "Distribuído"
 
 #: src/components/Landing/QAs.tsx
 msgid "Do I have to make my project open source to use Juicebox as its business model?"
-msgstr ""
+msgstr "Tenho que fazer meu projeto de código aberto para usar Juicebox como seu modelo de negócios?"
 
 #: src/components/Navbar/MenuItems.tsx
 msgid "Docs"
@@ -548,7 +549,7 @@ msgstr "Documentos"
 
 #: src/components/Project/modals/MigrateV1Pt1Modal.tsx
 msgid "Documentation on v1.1 contracts"
-msgstr ""
+msgstr "Documentação em v1.1 contratos"
 
 #: src/components/Landing/QAs.tsx
 msgid "Does a project benefit from its own overflow?"
@@ -584,7 +585,7 @@ msgstr "ERC20"
 
 #: src/components/Landing/index.tsx
 msgid "ERC20 community tokens"
-msgstr ""
+msgstr "ERC20 Tokens da comunidade"
 
 #: src/components/Landing/QAs.tsx
 msgid "Each project has its own tokens. Everyone who funds a project gets a newly minted supply of tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are issued by the project owner"
@@ -1324,7 +1325,7 @@ msgstr ""
 
 #: src/components/Projects/index.tsx
 msgid "Search projects by handle"
-msgstr ""
+msgstr "Procurar projetos pelo identificador"
 
 #: src/components/shared/EtherscanLink.tsx
 msgid "See transaction"
@@ -1356,7 +1357,7 @@ msgstr "Você deveria usar o Juicebox?"
 
 #: src/components/Create/ConfirmDeployProject.tsx
 msgid "Since you have not set a funding duration, changes to these settings will be applied immediately."
-msgstr ""
+msgstr "Como você não colocou uma duração de financiamento, as mudanças para essas configurações serão aplicadas imediatamente."
 
 #: src/components/FundingCycle/FundingCyclePreview.tsx
 msgid "Some funding cycle properties may indicate risk\n"
@@ -1411,7 +1412,7 @@ msgstr ""
 
 #: src/components/Create/index.tsx
 msgid "The JBX protocol is unaudited, and projects built on it may be vulnerable to bugs or exploits. Be smart!"
-msgstr ""
+msgstr "O protocolo JBX não é auditado e projetos criados nele podem estar vulneráveis a bugs ou exploits. Seja inteligente!"
 
 #: src/components/shared/forms/RulesForm.tsx
 msgid "The address of any smart contract deployed on {signerNetwork} that implements"
@@ -1614,12 +1615,12 @@ msgid "Transfer ownership"
 msgstr "Transferir propriedade"
 
 #: src/components/Project/modals/ProjectToolDrawerModal.tsx
-msgid "Transfer staked {0}"
-msgstr "Transferência apostada {0}"
+msgid "Transfer unclaimed {tokenSymbolText}"
+msgstr ""
 
 #: src/components/Project/modals/ProjectToolDrawerModal.tsx
-msgid "Transfer {0}"
-msgstr "Transferir {0}"
+msgid "Transfer {tokenSymbolText}"
+msgstr ""
 
 #: src/components/Landing/index.tsx
 msgid "Transparency & accountability"
@@ -1740,7 +1741,7 @@ msgstr ""
 #: src/components/FundingCycle/FundingCycleDetails.tsx
 #: src/components/shared/formItems/ProjectReserved.tsx
 msgid "Whenever someone pays your project, this percentage of tokens will be reserved and the rest will go to the payer. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner. Once tokens are reserved, anyone can \"mint\" them, which distributes them to their intended receivers."
-msgstr ""
+msgstr "Quando alguém paga seu projeto, essa porcentagem de tokens será reservada e o resto irá para quem pagou. Os tokens reservados estão reservados por padrão, mas também podem ser alocados em outros endereços de carteiras pelo proprietário. Uma vez que os tokens estão reservados, qualquer um pode \"cria-los\", que, por sua vez, distribuem-nos para seus receptores esperados."
 
 #: src/components/Landing/QAs.tsx
 msgid "Who funds Juicebox projects?"
@@ -1895,6 +1896,7 @@ msgstr "token"
 #: src/components/FundingCycle/ReservedTokens.tsx
 #: src/components/Project/Pay/PayInputSubText.tsx
 #: src/components/Project/Rewards/index.tsx
+#: src/components/Project/modals/ProjectToolDrawerModal.tsx
 #: src/components/Project/modals/RedeemModal.tsx
 #: src/components/Project/modals/RedeemModal.tsx
 #: src/components/Project/modals/RedeemModal.tsx
@@ -2016,7 +2018,7 @@ msgstr "{label}"
 
 #: src/components/Projects/TrendingProjectCard.tsx
 msgid "{paymentCount, plural, one {# payment} other {# payments}}"
-msgstr ""
+msgstr "{paymentCount, plural, one {# pagamento} other {# pagamentos}}"
 
 #: src/components/shared/AMMPrices/TokenAMMPriceRow.tsx
 msgid "{tokenSymbol}/ETH exchange rate on {exchangeName}."

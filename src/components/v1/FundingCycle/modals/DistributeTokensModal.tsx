@@ -8,6 +8,7 @@ import { useDistributeTokensTx } from 'hooks/v1/transactor/DistributeTokensTx'
 import { useContext, useState } from 'react'
 import { formatWad } from 'utils/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
+import { pluralTokenShort } from 'utils/tokenSymbolText'
 
 export default function DistributeTokensModal({
   visible,
@@ -45,10 +46,10 @@ export default function DistributeTokensModal({
 
   return (
     <Modal
-      title={`Distribute reserved ${tokenSymbol ?? 'tokens'}`}
+      title={`Distribute reserved ${pluralTokenShort(tokenSymbol)}`}
       visible={visible}
       onOk={distribute}
-      okText={`Distribute ${tokenSymbol ?? 'tokens'}`}
+      okText={`Distribute ${pluralTokenShort(tokenSymbol)}`}
       confirmLoading={loading}
       onCancel={onCancel}
       okButtonProps={{ disabled: !reservedTokens?.gt(0) }}
@@ -80,7 +81,7 @@ export default function DistributeTokensModal({
         ) : (
           <p>
             <Trans>
-              All {tokenSymbol ?? 'tokens'} will go to the project owner:
+              All {pluralTokenShort(tokenSymbol)} will go to the project owner:
             </Trans>{' '}
             <FormattedAddress address={owner} />
           </p>

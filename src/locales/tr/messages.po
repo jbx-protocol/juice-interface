@@ -8,7 +8,7 @@ msgstr ""
 "Language: tr\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-02-10 01:52\n"
+"PO-Revision-Date: 2022-02-11 01:55\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -254,6 +254,7 @@ msgstr ""
 msgid "Almost definitely."
 msgstr "Neredeyse kesinlikle."
 
+#: src/components/Project/modals/ProjectToolDrawerModal.tsx
 #: src/components/Project/modals/ReconfigureFCModal.tsx
 msgid "Amount"
 msgstr "Miktar"
@@ -1614,12 +1615,12 @@ msgid "Transfer ownership"
 msgstr "Mülkiyeti aktar"
 
 #: src/components/Project/modals/ProjectToolDrawerModal.tsx
-msgid "Transfer staked {0}"
-msgstr "Stake edilen {0}'ı aktar"
+msgid "Transfer unclaimed {tokenSymbolText}"
+msgstr ""
 
 #: src/components/Project/modals/ProjectToolDrawerModal.tsx
-msgid "Transfer {0}"
-msgstr "{0}'ı aktar"
+msgid "Transfer {tokenSymbolText}"
+msgstr ""
 
 #: src/components/Landing/index.tsx
 msgid "Transparency & accountability"
@@ -1895,6 +1896,7 @@ msgstr "token"
 #: src/components/FundingCycle/ReservedTokens.tsx
 #: src/components/Project/Pay/PayInputSubText.tsx
 #: src/components/Project/Rewards/index.tsx
+#: src/components/Project/modals/ProjectToolDrawerModal.tsx
 #: src/components/Project/modals/RedeemModal.tsx
 #: src/components/Project/modals/RedeemModal.tsx
 #: src/components/Project/modals/RedeemModal.tsx

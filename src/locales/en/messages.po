@@ -252,6 +252,7 @@ msgstr "Allowed"
 msgid "Almost definitely."
 msgstr ""
 
+#: src/components/Project/modals/ProjectToolDrawerModal.tsx
 #: src/components/Project/modals/ReconfigureFCModal.tsx
 msgid "Amount"
 msgstr "Amount"
@@ -1621,12 +1622,12 @@ msgid "Transfer ownership"
 msgstr ""
 
 #: src/components/Project/modals/ProjectToolDrawerModal.tsx
-msgid "Transfer staked {0}"
-msgstr ""
+msgid "Transfer unclaimed {tokenSymbolText}"
+msgstr "Transfer unclaimed {tokenSymbolText}"
 
 #: src/components/Project/modals/ProjectToolDrawerModal.tsx
-msgid "Transfer {0}"
-msgstr ""
+msgid "Transfer {tokenSymbolText}"
+msgstr "Transfer {tokenSymbolText}"
 
 #: src/components/Landing/index.tsx
 msgid "Transparency & accountability"
@@ -1902,6 +1903,7 @@ msgstr "token"
 #: src/components/FundingCycle/ReservedTokens.tsx
 #: src/components/Project/Pay/PayInputSubText.tsx
 #: src/components/Project/Rewards/index.tsx
+#: src/components/Project/modals/ProjectToolDrawerModal.tsx
 #: src/components/Project/modals/RedeemModal.tsx
 #: src/components/Project/modals/RedeemModal.tsx
 #: src/components/Project/modals/RedeemModal.tsx

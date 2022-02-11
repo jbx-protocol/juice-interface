@@ -8,7 +8,7 @@ msgstr ""
 "Language: ru\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-02-09 01:58\n"
+"PO-Revision-Date: 2022-02-11 01:55\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -254,6 +254,7 @@ msgstr ""
 msgid "Almost definitely."
 msgstr "Почти определенно."
 
+#: src/components/Project/modals/ProjectToolDrawerModal.tsx
 #: src/components/Project/modals/ReconfigureFCModal.tsx
 msgid "Amount"
 msgstr ""
@@ -1614,12 +1615,12 @@ msgid "Transfer ownership"
 msgstr "Передача права собственности"
 
 #: src/components/Project/modals/ProjectToolDrawerModal.tsx
-msgid "Transfer staked {0}"
-msgstr "Перевод размещен {0}"
+msgid "Transfer unclaimed {tokenSymbolText}"
+msgstr ""
 
 #: src/components/Project/modals/ProjectToolDrawerModal.tsx
-msgid "Transfer {0}"
-msgstr "Перевод {0}"
+msgid "Transfer {tokenSymbolText}"
+msgstr ""
 
 #: src/components/Landing/index.tsx
 msgid "Transparency & accountability"
@@ -1895,6 +1896,7 @@ msgstr ""
 #: src/components/FundingCycle/ReservedTokens.tsx
 #: src/components/Project/Pay/PayInputSubText.tsx
 #: src/components/Project/Rewards/index.tsx
+#: src/components/Project/modals/ProjectToolDrawerModal.tsx
 #: src/components/Project/modals/RedeemModal.tsx
 #: src/components/Project/modals/RedeemModal.tsx
 #: src/components/Project/modals/RedeemModal.tsx

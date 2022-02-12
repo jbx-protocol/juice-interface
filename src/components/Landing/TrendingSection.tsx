@@ -40,10 +40,18 @@ export default function TrendingSection() {
   return (
     <section style={trendingProjectsStyle}>
       <Row style={{ maxWidth: 1200, margin: 'auto' }}>
-        <Col xs={0} lg={8}>
+        <Col
+          xs={0}
+          lg={8}
+          style={{
+            display: 'flex',
+            alignItems: 'flex-end',
+            justifyContent: 'center',
+          }}
+        >
           <img
             className="hide-mobile hide-tablet"
-            style={{ height: 550, marginTop: 46 }}
+            style={{ height: 550 }}
             src="/assets/green_orange.png"
             alt="Green orange singing"
           />

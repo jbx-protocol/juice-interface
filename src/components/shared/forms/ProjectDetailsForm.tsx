@@ -20,9 +20,11 @@ export type ProjectDetailsFormFields = {
 export default function ProjectDetailsForm({
   form,
   onSave,
+  hideProjectHandle = false,
 }: {
   form: FormInstance<ProjectDetailsFormFields>
   onSave: VoidFunction
+  hideProjectHandle?: boolean
 }) {
   return (
     <Form form={form} layout="vertical">
@@ -37,16 +39,18 @@ export default function ProjectDetailsForm({
           form.setFieldsValue({ handle: val })
         }}
       />
-      <FormItems.ProjectHandleFormItem
-        name="handle"
-        initialValue={form.getFieldValue('handle')}
-        requireState="notExist"
-        formItemProps={{
-          dependencies: ['name'],
-          extra: t`Project handle must be unique.`,
-        }}
-        required
-      />
+      {!hideProjectHandle && (
+        <FormItems.ProjectHandleFormItem
+          name="handle"
+          initialValue={form.getFieldValue('handle')}
+          requireState="notExist"
+          formItemProps={{
+            dependencies: ['name'],
+            extra: t`Project handle must be unique.`,
+          }}
+          required
+        />
+      )}
       <FormItems.ProjectDescription name="description" />
       <FormItems.ProjectLink name="infoUri" />
       <FormItems.ProjectTwitter name="twitter" />

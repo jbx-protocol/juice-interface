@@ -132,6 +132,7 @@ msgstr "<0>{tokenSymbol} ERC20 address:</0> <1/>"
 
 #: src/components/shared/formItems/ProjectTwitter.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "@"
 msgstr ""
 
@@ -297,7 +298,7 @@ msgstr "Available funds are distributed according to the payouts below."
 msgid "Available:"
 msgstr ""
 
-#: src/components/v1/V1Dashboard/index.tsx
+#: src/components/shared/ScrollToTopButton.tsx
 msgid "Back to top"
 msgstr "Back to top"
 
@@ -385,7 +386,7 @@ msgstr "Cancel"
 msgid "Cannot redeem tokens for ETH because this project has no overflow."
 msgstr "Cannot redeem tokens for ETH because this project has no overflow."
 
-#: src/components/shared/forms/ProjectDetailsForm.tsx
+#: src/components/v1/V1Create/index.tsx
 msgid "Changes to these attributes can be made at any time and will be applied to your project immediately."
 msgstr "Changes to these attributes can be made at any time and will be applied to your project immediately."
 
@@ -483,6 +484,7 @@ msgstr "Deposit 1 wei to @{handle}"
 
 #: src/components/Landing/index.tsx
 #: src/components/v1/V1Create/index.tsx
+#: src/components/v2/V2Create/index.tsx
 msgid "Design your project"
 msgstr ""
 
@@ -503,6 +505,7 @@ msgstr ""
 #: src/components/Navbar/MenuItems.tsx
 #: src/components/shared/formItems/ProjectDiscord.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Discord"
 msgstr ""
 
@@ -703,6 +706,7 @@ msgid "Go to Etherscan"
 msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Handle"
 msgstr ""
 
@@ -750,7 +754,7 @@ msgstr ""
 msgid "I understand"
 msgstr ""
 
-#: src/components/v1/V1Project/ProjectHeader.tsx
+#: src/components/v1/V1Project/V1HeaderActions.tsx
 msgid "ID: {0}"
 msgstr "ID: {0}"
 
@@ -877,6 +881,7 @@ msgstr "Lock until"
 
 #: src/components/shared/formItems/ProjectLogoUri.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Logo"
 msgstr ""
 
@@ -920,6 +925,7 @@ msgid "More trending projects"
 msgstr "More trending projects"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Name"
 msgstr ""
 
@@ -1009,6 +1015,7 @@ msgstr ""
 #: src/components/v1/V1Project/Pay/index.tsx
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 #: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Pay"
 msgstr ""
 
@@ -1017,6 +1024,7 @@ msgid "Pay amount"
 msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Pay button"
 msgstr ""
 
@@ -1026,6 +1034,7 @@ msgstr ""
 
 #: src/components/shared/formItems/ProjectPayDisclosure.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Pay disclosure"
 msgstr ""
 
@@ -1106,9 +1115,10 @@ msgstr "Project Token"
 msgid "Project description"
 msgstr ""
 
-#: src/components/shared/forms/ProjectDetailsForm.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Create/index.tsx
+#: src/components/v1/V1Create/index.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Project details"
 msgstr ""
 
@@ -1137,6 +1147,10 @@ msgstr ""
 #: src/components/v1/FundingCycle/Spending.tsx
 msgid "Project owner balance"
 msgstr ""
+
+#: src/components/v2/V2Dashboard/Dashboard404.tsx
+msgid "Project {projectId} not found"
+msgstr "Project {projectId} not found"
 
 #: src/components/Navbar/MenuItems.tsx
 msgid "Projects"
@@ -1255,10 +1269,12 @@ msgid "Return my ETH"
 msgstr ""
 
 #: src/components/v1/V1Create/index.tsx
+#: src/components/v2/V2Create/DeployProjectButton.tsx
 msgid "Review & Deploy"
 msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Review project"
 msgstr ""
 
@@ -1504,6 +1520,7 @@ msgid "There was also a script written for iteratively running the integration t
 msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "These attributes can be changed at any time."
 msgstr "These attributes can be changed at any time."
 
@@ -1639,6 +1656,7 @@ msgstr "Trending"
 
 #: src/components/shared/formItems/ProjectTwitter.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Twitter"
 msgstr ""
 
@@ -1654,7 +1672,7 @@ msgstr ""
 msgid "Unstaked balance"
 msgstr "Unstaked balance"
 
-#: src/components/v1/V1Project/ProjectHeader.tsx
+#: src/components/shared/ProjectHeader/index.tsx
 msgid "Untitled project"
 msgstr ""
 
@@ -1690,7 +1708,7 @@ msgstr ""
 msgid "V1.1"
 msgstr ""
 
-#: src/components/v1/V1Project/ProjectHeader.tsx
+#: src/components/v1/V1Project/V1HeaderActions.tsx
 msgid "Version of the terminal contract used by this project."
 msgstr "Version of the terminal contract used by this project."
 
@@ -1706,6 +1724,7 @@ msgstr "Wallet address"
 
 #: src/components/shared/formItems/ProjectLink.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Website"
 msgstr ""
 

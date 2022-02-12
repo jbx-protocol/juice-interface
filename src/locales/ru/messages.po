@@ -135,6 +135,7 @@ msgstr ""
 
 #: src/components/shared/formItems/ProjectTwitter.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "@"
 msgstr "@"
 
@@ -300,7 +301,7 @@ msgstr ""
 msgid "Available:"
 msgstr "Доступно:"
 
-#: src/components/v1/V1Dashboard/index.tsx
+#: src/components/shared/ScrollToTopButton.tsx
 msgid "Back to top"
 msgstr "Вернуться наверх"
 
@@ -388,7 +389,7 @@ msgstr ""
 msgid "Cannot redeem tokens for ETH because this project has no overflow."
 msgstr ""
 
-#: src/components/shared/forms/ProjectDetailsForm.tsx
+#: src/components/v1/V1Create/index.tsx
 msgid "Changes to these attributes can be made at any time and will be applied to your project immediately."
 msgstr ""
 
@@ -486,6 +487,7 @@ msgstr ""
 
 #: src/components/Landing/index.tsx
 #: src/components/v1/V1Create/index.tsx
+#: src/components/v2/V2Create/index.tsx
 msgid "Design your project"
 msgstr "Создай свой проект"
 
@@ -506,6 +508,7 @@ msgstr "Отключиться"
 #: src/components/Navbar/MenuItems.tsx
 #: src/components/shared/formItems/ProjectDiscord.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Discord"
 msgstr "Дискорд"
 
@@ -706,6 +709,7 @@ msgid "Go to Etherscan"
 msgstr "Перейти к Etherscan"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Handle"
 msgstr "Никнейм"
 
@@ -753,7 +757,7 @@ msgstr "Как ваш проект будет зарабатывать день�
 msgid "I understand"
 msgstr "Я понимаю"
 
-#: src/components/v1/V1Project/ProjectHeader.tsx
+#: src/components/v1/V1Project/V1HeaderActions.tsx
 msgid "ID: {0}"
 msgstr ""
 
@@ -878,6 +882,7 @@ msgstr ""
 
 #: src/components/shared/formItems/ProjectLogoUri.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Logo"
 msgstr "Логотип"
 
@@ -921,6 +926,7 @@ msgid "More trending projects"
 msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Name"
 msgstr "Название"
 
@@ -1010,6 +1016,7 @@ msgstr "Приостановлено"
 #: src/components/v1/V1Project/Pay/index.tsx
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 #: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Pay"
 msgstr "Оплатить"
 
@@ -1018,6 +1025,7 @@ msgid "Pay amount"
 msgstr "Сумма платежа"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Pay button"
 msgstr "Кнопка \"Оплатить\""
 
@@ -1027,6 +1035,7 @@ msgstr "Кнопка оплаты"
 
 #: src/components/shared/formItems/ProjectPayDisclosure.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Pay disclosure"
 msgstr "Раскрытие информации о платеже"
 
@@ -1107,9 +1116,10 @@ msgstr ""
 msgid "Project description"
 msgstr "Описание Проекта"
 
-#: src/components/shared/forms/ProjectDetailsForm.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Create/index.tsx
+#: src/components/v1/V1Create/index.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Project details"
 msgstr "Детали проекта"
 
@@ -1138,6 +1148,10 @@ msgstr "Владелец проекта"
 #: src/components/v1/FundingCycle/Spending.tsx
 msgid "Project owner balance"
 msgstr "Баланс владельца проекта"
+
+#: src/components/v2/V2Dashboard/Dashboard404.tsx
+msgid "Project {projectId} not found"
+msgstr ""
 
 #: src/components/Navbar/MenuItems.tsx
 msgid "Projects"
@@ -1256,10 +1270,12 @@ msgid "Return my ETH"
 msgstr "Вернуть ЕТН"
 
 #: src/components/v1/V1Create/index.tsx
+#: src/components/v2/V2Create/DeployProjectButton.tsx
 msgid "Review & Deploy"
 msgstr "Обзор & Развертывание"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Review project"
 msgstr "Просмотр проекта"
 
@@ -1501,6 +1517,7 @@ msgid "There was also a script written for iteratively running the integration t
 msgstr "Также был написан сценарий для итеративного запуска интеграционных тестов с использованием генератора случайных входных данных с приоритетом крайних случаев. Код успешно прошел более 1 миллиона тестовых случаев с помощью этого сценария стресс-тестирования."
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "These attributes can be changed at any time."
 msgstr ""
 
@@ -1636,6 +1653,7 @@ msgstr ""
 
 #: src/components/shared/formItems/ProjectTwitter.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Twitter"
 msgstr "Твиттер"
 
@@ -1651,7 +1669,7 @@ msgstr "Неизвестный стратегический контракт. У
 msgid "Unstaked balance"
 msgstr ""
 
-#: src/components/v1/V1Project/ProjectHeader.tsx
+#: src/components/shared/ProjectHeader/index.tsx
 msgid "Untitled project"
 msgstr "Безымянный проект"
 
@@ -1687,7 +1705,7 @@ msgstr "V1"
 msgid "V1.1"
 msgstr "V1.1"
 
-#: src/components/v1/V1Project/ProjectHeader.tsx
+#: src/components/v1/V1Project/V1HeaderActions.tsx
 msgid "Version of the terminal contract used by this project."
 msgstr ""
 
@@ -1703,6 +1721,7 @@ msgstr ""
 
 #: src/components/shared/formItems/ProjectLink.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Website"
 msgstr "Веб-сайт"
 

@@ -51,10 +51,6 @@ const loadContract = (
   network: NetworkName,
   signerOrProvider: JsonRpcSigner | JsonRpcProvider,
 ): Contract | undefined => {
-  console.warn('V2 Contract import aborted.')
-
-  return undefined
-
-  // let contract = require(`@jbx-protocol/contracts-v2/deployments/${network}/${contractName}.json`)
-  // return new Contract(contract.address, contract.abi, signerOrProvider)
+  const contract = require(`@jbx-protocol/contracts-v2/deployments/${network}/${contractName}.json`)
+  return new Contract(contract.address, contract.abi, signerOrProvider)
 }

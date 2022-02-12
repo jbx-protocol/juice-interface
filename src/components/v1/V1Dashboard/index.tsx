@@ -31,6 +31,7 @@ import useTerminalOfProject from 'hooks/v1/contractReader/TerminalOfProject'
 import FeedbackPromptModal from 'components/v1/V1Project/modals/FeedbackPromptModal'
 
 import { Button } from 'antd'
+import ScrollToTopButton from 'components/shared/ScrollToTopButton'
 
 import { padding } from 'constants/styles/padding'
 import { layouts } from 'constants/styles/layouts'
@@ -235,11 +236,9 @@ export default function V1Dashboard() {
     <V1ProjectContext.Provider value={project}>
       <div style={layouts.maxWidth}>
         <V1Project />
-        <div
-          style={{ textAlign: 'center', cursor: 'pointer', padding: 20 }}
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        >
-          <Trans>Back to top</Trans>
+
+        <div style={{ textAlign: 'center', padding: 20 }}>
+          <ScrollToTopButton />
         </div>
         <FeedbackFormBtn projectHandle={handle} />
         <FeedbackPromptModal

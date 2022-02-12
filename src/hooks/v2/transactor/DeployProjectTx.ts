@@ -1,18 +1,49 @@
 import { NetworkContext } from 'contexts/networkContext'
 import { V2UserContext } from 'contexts/v2/userContext'
 import { BigNumber } from '@ethersproject/bignumber'
-import * as constants from '@ethersproject/constants'
 import { useContext } from 'react'
 
 import { TransactorInstance } from '../../Transactor'
 
+const METADATA_DOMAIN = 1
+
+type V2FundingCycleData = {
+  duration: number
+  weight: BigNumber
+  discountRate: number
+  ballot: string // hex, contract address
+}
+
+type V2FundingCycleMetadata = {
+  reservedRate: number
+  redemptionRate: number
+  ballotRedemptionRate: number
+  pausePay: number
+  pauseDistributions: number
+  pauseRedeem: number
+  pauseMint: number
+  pauseBurn: number
+  allowTerminalMigration: number
+  allowControllerMigration: number
+  holdFees: number
+  useLocalBalanceForRedemptions: number
+  useDataSourceForPay: number
+  useDataSourceForRedeem: number
+  dataSource: string // hex, contract address
+}
+
 export function useDeployProjectTx(): TransactorInstance<{
-  handle: string
+  projectMetadataCID: string
+  fundingCycleData: V2FundingCycleData
+  fundingCycleMetadata: V2FundingCycleMetadata
 }> {
   const { transactor, contracts } = useContext(V2UserContext)
   const { userAddress } = useContext(NetworkContext)
 
-  return ({}, txOpts) => {
+  return (
+    { projectMetadataCID, fundingCycleData, fundingCycleMetadata },
+    txOpts,
+  ) => {
     if (
       !transactor ||
       !userAddress ||
@@ -23,36 +54,11 @@ export function useDeployProjectTx(): TransactorInstance<{
       return Promise.resolve(false)
     }
 
-    const fundingCycleData = {
-      duration: 0,
-      weight: BigNumber.from('1' + '0'.repeat(18)), // 1,000,000 of your project's tokens will be minted per ETH received
-      discountRate: 0,
-      ballot: constants.AddressZero,
-    }
-
-    const funcingCycleMetadata = {
-      reservedRate: 0,
-      redemptionRate: 0,
-      ballotRedemptionRate: 0,
-      pausePay: 0,
-      pauseDistributions: 0,
-      pauseRedeem: 0,
-      pauseMint: 0,
-      pauseBurn: 0,
-      allowTerminalMigration: 0,
-      allowControllerMigration: 0,
-      holdFees: 0,
-      useLocalBalanceForRedemptions: 0,
-      useDataSourceForPay: 0,
-      useDataSourceForRedeem: 0,
-      dataSource: constants.AddressZero,
-    }
-
     const args = [
       userAddress, // _owner
-      ['', 1234], // _projectMetadata (JBProjectMetadata)
+      [projectMetadataCID, METADATA_DOMAIN], // _projectMetadata (JBProjectMetadata)
       fundingCycleData, // _data (JBFundingCycleData)
-      funcingCycleMetadata, // _metadata (JBFundingCycleMetadata)
+      fundingCycleMetadata, // _metadata (JBFundingCycleMetadata)
       '1', // _mustStartAtOrAfter
       [], // _groupedSplits,
       [], // _fundAccessConstraints,

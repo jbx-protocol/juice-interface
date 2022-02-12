@@ -14,11 +14,11 @@ export default function ProjectDetailsTabContent() {
   const { info: editingV2ProjectInfo } = useAppSelector(
     state => state.editingV2Project,
   )
+
   const onProjectFormSaved = useCallback(() => {
     const fields = projectForm.getFieldsValue(true)
     dispatch(editingV2ProjectActions.setName(fields.name))
     dispatch(editingV2ProjectActions.setInfoUri(fields.infoUri))
-    dispatch(editingV2ProjectActions.setHandle(fields.handle))
     dispatch(editingV2ProjectActions.setLogoUri(fields.logoUri))
     dispatch(editingV2ProjectActions.setDescription(fields.description))
     dispatch(editingV2ProjectActions.setTwitter(fields.twitter))
@@ -30,11 +30,23 @@ export default function ProjectDetailsTabContent() {
   const resetProjectForm = useCallback(() => {
     projectForm.setFieldsValue({
       name: editingV2ProjectInfo?.metadata.name ?? '',
-      handle: editingV2ProjectInfo?.handle ?? '',
+      infoUri: editingV2ProjectInfo?.metadata.infoUri ?? '',
+      logoUri: editingV2ProjectInfo?.metadata.logoUri ?? '',
+      description: editingV2ProjectInfo?.metadata.description ?? '',
+      twitter: editingV2ProjectInfo?.metadata.twitter ?? '',
+      discord: editingV2ProjectInfo?.metadata.discord ?? '',
+      payButton: editingV2ProjectInfo?.metadata.payButton ?? '',
+      payDisclosure: editingV2ProjectInfo?.metadata.payDisclosure ?? '',
     })
   }, [
-    editingV2ProjectInfo.handle,
     editingV2ProjectInfo.metadata.name,
+    editingV2ProjectInfo?.metadata.infoUri,
+    editingV2ProjectInfo?.metadata.logoUri,
+    editingV2ProjectInfo?.metadata.description,
+    editingV2ProjectInfo?.metadata.twitter,
+    editingV2ProjectInfo?.metadata.discord,
+    editingV2ProjectInfo?.metadata.payDisclosure,
+    editingV2ProjectInfo?.metadata.payButton,
     projectForm,
   ])
 
@@ -46,7 +58,11 @@ export default function ProjectDetailsTabContent() {
   return (
     <div>
       <Space direction="vertical" size="large">
-        <ProjectDetailsForm form={projectForm} onSave={onProjectFormSaved} />
+        <ProjectDetailsForm
+          form={projectForm}
+          onSave={onProjectFormSaved}
+          hideProjectHandle
+        />
       </Space>
     </div>
   )

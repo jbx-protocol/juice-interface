@@ -313,8 +313,6 @@ export default function ProjectPayoutMods({
     const percent = parsePermyriad(form.getFieldValue('percent')).toNumber()
     const _lockedUntil = form.getFieldValue('lockedUntil') as moment.Moment
 
-    console.log('asdf form', form.getFieldsValue(true))
-
     const lockedUntil = _lockedUntil
       ? Math.round(_lockedUntil.valueOf() / 1000)
       : undefined
@@ -341,7 +339,7 @@ export default function ProjectPayoutMods({
     }
 
     setEditingModIndex(undefined)
-
+    setEditingPercent(0)
     form.resetFields()
   }
 

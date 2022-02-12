@@ -133,6 +133,7 @@ msgstr "<0>{tokenSymbol} ERC20 地址：</0> <1/>"
 
 #: src/components/shared/formItems/ProjectTwitter.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "@"
 msgstr "@"
 
@@ -290,7 +291,7 @@ msgstr "可用资金会分发给以下支出对象。"
 msgid "Available:"
 msgstr "可用:"
 
-#: src/components/v1/V1Dashboard/index.tsx
+#: src/components/shared/ScrollToTopButton.tsx
 msgid "Back to top"
 msgstr "回到顶部"
 
@@ -374,8 +375,8 @@ msgstr "取消"
 msgid "Cannot redeem tokens for ETH because this project has no overflow."
 msgstr "这个项目的筹款没有溢出，无法用代币赎回 ETH"
 
-#: src/components/shared/forms/ProjectDetailsForm.tsx
 #: src/components/v1/V1Create/ProjectForm.tsx
+#: src/components/v1/V1Create/index.tsx
 msgid "Changes to these attributes can be made at any time and will be applied to your project immediately."
 msgstr "可以随时修改这些属性，并立即应用于你的项目。"
 
@@ -489,6 +490,7 @@ msgstr "存入 1 wei 给 @{handle}"
 
 #: src/components/Landing/index.tsx
 #: src/components/v1/V1Create/index.tsx
+#: src/components/v2/V2Create/index.tsx
 msgid "Design your project"
 msgstr "设计你的项目"
 
@@ -509,6 +511,7 @@ msgstr "断开连接"
 #: src/components/Navbar/MenuItems.tsx
 #: src/components/shared/formItems/ProjectDiscord.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Discord"
 msgstr "Discord"
 
@@ -718,6 +721,7 @@ msgid "Go to Etherscan"
 msgstr "跳转到 Etherscan"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Handle"
 msgstr "标识"
 
@@ -777,7 +781,7 @@ msgstr ""
 msgid "I understand"
 msgstr "我明白了"
 
-#: src/components/v1/V1Project/ProjectHeader.tsx
+#: src/components/v1/V1Project/V1HeaderActions.tsx
 msgid "ID: {0}"
 msgstr "ID: {0}"
 
@@ -905,6 +909,7 @@ msgstr "锁定至"
 
 #: src/components/shared/formItems/ProjectLogoUri.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Logo"
 msgstr "标志"
 
@@ -948,6 +953,7 @@ msgid "More trending projects"
 msgstr "更多热门项目"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Name"
 msgstr "名称"
 
@@ -1039,6 +1045,7 @@ msgstr "已暂停"
 #: src/components/v1/V1Project/Pay/index.tsx
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 #: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Pay"
 msgstr "支付"
 
@@ -1047,6 +1054,7 @@ msgid "Pay amount"
 msgstr "支付金额"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Pay button"
 msgstr "支付按钮"
 
@@ -1056,6 +1064,7 @@ msgstr "支付按钮文本"
 
 #: src/components/shared/formItems/ProjectPayDisclosure.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Pay disclosure"
 msgstr "付款声明"
 
@@ -1140,10 +1149,11 @@ msgstr "项目代币"
 msgid "Project description"
 msgstr "项目说明"
 
-#: src/components/shared/forms/ProjectDetailsForm.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Create/ProjectForm.tsx
 #: src/components/v1/V1Create/index.tsx
+#: src/components/v1/V1Create/index.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Project details"
 msgstr "项目详情"
 
@@ -1176,6 +1186,10 @@ msgstr "项目方余额"
 
 #: src/components/Landing/QAs.tsx
 msgid "Project owners can configure a delay period, meaning reconfigurations to an upcoming funding cycle must be submitted a certain number of days before it starts. For example, a 3-day delay period means reconfigurations must be submitted at least 3 days before the next funding cycle starts. This gives token holders time to react to the decision and reduces the chance of rug-pulls."
+msgstr ""
+
+#: src/components/v2/V2Dashboard/Dashboard404.tsx
+msgid "Project {projectId} not found"
 msgstr ""
 
 #: src/components/Navbar/MenuItems.tsx
@@ -1315,10 +1329,12 @@ msgid "Return my ETH"
 msgstr "退回我的 ETH"
 
 #: src/components/v1/V1Create/index.tsx
+#: src/components/v2/V2Create/DeployProjectButton.tsx
 msgid "Review & Deploy"
 msgstr "检查并部署"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Review project"
 msgstr "检查项目"
 
@@ -1566,6 +1582,7 @@ msgid "There was also a script written to iteratively run the integration tests 
 msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "These attributes can be changed at any time."
 msgstr "任何时候都可以修改这些属性。"
 
@@ -1710,6 +1727,7 @@ msgstr "热门"
 
 #: src/components/shared/formItems/ProjectTwitter.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Twitter"
 msgstr "Twitter"
 
@@ -1725,7 +1743,7 @@ msgstr "未识别的策略合约。请确保这是正确的！"
 msgid "Unstaked balance"
 msgstr "取出的余额"
 
-#: src/components/v1/V1Project/ProjectHeader.tsx
+#: src/components/shared/ProjectHeader/index.tsx
 msgid "Untitled project"
 msgstr "项目未命名"
 
@@ -1761,7 +1779,7 @@ msgstr "V1"
 msgid "V1.1"
 msgstr "V1.1"
 
-#: src/components/v1/V1Project/ProjectHeader.tsx
+#: src/components/v1/V1Project/V1HeaderActions.tsx
 msgid "Version of the terminal contract used by this project."
 msgstr "当前项目所使用的 Terminal 版本。"
 
@@ -1777,6 +1795,7 @@ msgstr "钱包地址"
 
 #: src/components/shared/formItems/ProjectLink.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Website"
 msgstr "网站"
 

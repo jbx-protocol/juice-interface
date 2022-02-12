@@ -1,11 +1,12 @@
 import { HashRouter, Route, Switch } from 'react-router-dom'
 import { Redirect, useParams } from 'react-router'
+import { Suspense, lazy } from 'react'
 import V1Dashboard from 'components/v1/V1Dashboard'
 import Landing from 'components/Landing'
 import V1Create from 'components/v1/V1Create'
-import V2Create from 'components/v2/V2Create'
 import Projects from 'components/Projects'
-import V2UserProvider from 'providers/v2/UserProvider'
+
+const V2Create = lazy(() => import('components/v2/V2Create'))
 
 function CatchallRedirect() {
   const route = useParams<{ route: string }>()['route']
@@ -23,9 +24,9 @@ export default function Router() {
           <V1Create />
         </Route>
         <Route path="/create-v2">
-          <V2UserProvider>
+          <Suspense fallback={<div>Loading...</div>}>
             <V2Create />
-          </V2UserProvider>
+          </Suspense>
         </Route>
         <Route path="/projects/:owner">
           <Projects />

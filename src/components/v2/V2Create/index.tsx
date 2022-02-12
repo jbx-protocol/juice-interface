@@ -1,6 +1,8 @@
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { NetworkName } from 'models/network-name'
 
+import V2UserProvider from 'providers/v2/UserProvider'
+
 import { readNetwork } from 'constants/networks'
 
 import V2WarningBanner from './V2WarningBanner'
@@ -14,19 +16,21 @@ export default function V2Create() {
   }
 
   return (
-    <V2ProjectContext.Provider value={project}>
-      <V2WarningBanner />
+    <V2UserProvider>
+      <V2ProjectContext.Provider value={project}>
+        <V2WarningBanner />
 
-      <div style={{ padding: '1rem', textAlign: 'center' }}>
-        {isMainnet && <V2MainnetWarning />}
+        <div style={{ padding: '1rem', textAlign: 'center' }}>
+          {isMainnet && <V2MainnetWarning />}
 
-        {!isMainnet && (
-          <p>
-            Creating projects on the Juicebox V2 contracts is in development.
-            Come back soon!
-          </p>
-        )}
-      </div>
-    </V2ProjectContext.Provider>
+          {!isMainnet && (
+            <p>
+              Creating projects on the Juicebox V2 contracts is in development.
+              Come back soon!
+            </p>
+          )}
+        </div>
+      </V2ProjectContext.Provider>
+    </V2UserProvider>
   )
 }

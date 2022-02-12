@@ -1,14 +1,20 @@
 import { Contract } from '@ethersproject/contracts'
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
-
 import { NetworkContext } from 'contexts/networkContext'
 import { V1ContractName } from 'models/v1/contracts'
 import { V1Contracts } from 'models/v1/contracts'
 import { NetworkName } from 'models/network-name'
 import { useContext, useEffect, useState } from 'react'
 
+import { CONTRACTS_MAINNET } from './contracts.mainnet'
 import { readProvider } from 'constants/readProvider'
 import { readNetwork } from 'constants/networks'
+import { CONTRACTS_RINKEBY } from './contracts.rinkeby'
+
+const CONTRACTS =
+  process.env.REACT_APP_INFURA_NETWORK === 'mainnet'
+    ? CONTRACTS_MAINNET
+    : CONTRACTS_RINKEBY
 
 export function useContractLoader() {
   const [contracts, setContracts] = useState<V1Contracts>()
@@ -16,18 +22,16 @@ export function useContractLoader() {
   const { signingProvider } = useContext(NetworkContext)
 
   useEffect(() => {
-    async function loadContracts() {
+    function loadContracts() {
       try {
         const network = readNetwork.name
 
         // Contracts can be used read-only without a signer, but require a signer to create transactions.
         const signerOrProvider = signingProvider?.getSigner() ?? readProvider
 
-        const newContracts = await Promise.all(
-          Object.values(V1ContractName).map(contractName => {
-            return loadContract(contractName, network, signerOrProvider)
-          }),
-        )
+        const newContracts = Object.values(V1ContractName).map(contractName => {
+          return loadContract(contractName, network, signerOrProvider)
+        })
 
         const newContractsMap = Object.values(V1ContractName).reduce(
           (accumulator, contractName, idx) => ({
@@ -49,29 +53,11 @@ export function useContractLoader() {
   return contracts
 }
 
-const loadContract = async (
+const loadContract = (
   contractName: keyof typeof V1ContractName,
   network: NetworkName,
   signerOrProvider: JsonRpcSigner | JsonRpcProvider,
-): Promise<Contract | undefined> => {
-  /**
-   * Conditionally load contracts based on configured network.
-   * This prevents ABIs for unused networks being added to our JS bundle.
-   */
-  const _loadContract = () => {
-    if (process.env.REACT_APP_INFURA_NETWORK === 'mainnet') {
-      return async () =>
-        await import(
-          `@jbx-protocol/contracts-v1/deployments/mainnet/${contractName}.json`
-        )
-    } else if (process.env.REACT_APP_INFURA_NETWORK === 'rinkeby') {
-      return async () =>
-        await import(
-          `@jbx-protocol/contracts-v1/deployments/rinkeby/${contractName}.json`
-        )
-    }
-  }
-
-  const contract = await _loadContract()?.()
+): Contract => {
+  const contract = CONTRACTS[contractName]
   return new Contract(contract.address, contract.abi, signerOrProvider)
 }

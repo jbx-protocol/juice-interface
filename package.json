@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@jbx-protocol/contracts-v1": "^1.1.5",
+    "@jbx-protocol/contracts-v2": "^0.0.3",
     "@lingui/cli": "^3.13.0",
     "@lingui/detect-locale": "^3.13.0",
     "@lingui/macro": "^3.13.0",

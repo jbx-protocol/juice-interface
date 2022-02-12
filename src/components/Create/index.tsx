@@ -39,7 +39,7 @@ import {
   metadataNameForHandle,
   uploadProjectMetadata,
 } from 'utils/ipfs'
-import { getTerminalAddress } from 'utils/v1/terminals'
+import { useTerminalAddress } from 'hooks/v1/TerminalVersion'
 
 import BudgetForm from '../shared/forms/BudgetForm'
 import ConfirmDeployProject from './ConfirmDeployProject'
@@ -94,6 +94,7 @@ export default function Create() {
   const deployProjectTx = useDeployProjectTx()
 
   const terminalFee = useTerminalFee(terminalVersion)
+  const terminalAddress = useTerminalAddress(terminalVersion)
 
   useEffect(() => {
     if (terminalFee) {
@@ -468,7 +469,7 @@ export default function Create() {
       terminal: {
         version: terminalVersion,
         name: V1ContractName.TerminalV1_1,
-        address: getTerminalAddress(terminalVersion),
+        address: terminalAddress,
       },
     }),
     [
@@ -478,6 +479,7 @@ export default function Create() {
       editingTicketMods,
       fundingCycle,
       userAddress,
+      terminalAddress,
     ],
   )
 

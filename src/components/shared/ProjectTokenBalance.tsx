@@ -4,9 +4,9 @@ import useSymbolOfERC20 from 'hooks/v1/contractReader/SymbolOfERC20'
 import useTerminalOfProject from 'hooks/v1/contractReader/TerminalOfProject'
 import useTokenAddressOfProject from 'hooks/v1/contractReader/TokenAddressOfProject'
 import useTotalBalanceOf from 'hooks/v1/contractReader/TotalBalanceOf'
+import { useTerminalName } from 'hooks/v1/TerminalVersion'
 import { CSSProperties, useContext } from 'react'
 import { formatWad } from 'utils/formatNumber'
-import { getTerminalName } from 'utils/v1/terminals'
 
 import ProjectHandle from './ProjectHandle'
 
@@ -29,9 +29,7 @@ export default function ProjectTokenBalance({
   const tokenAddress = useTokenAddressOfProject(projectId)
   const symbol = useSymbolOfERC20(tokenAddress)
   const terminalAddress = useTerminalOfProject(projectId)
-  const terminalName = getTerminalName({
-    address: terminalAddress,
-  })
+  const terminalName = useTerminalName(terminalAddress)
   const balance = useTotalBalanceOf(wallet, projectId, terminalName)
 
   return (

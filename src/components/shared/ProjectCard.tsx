@@ -4,15 +4,15 @@ import { BigNumber, constants } from 'ethers'
 import { ThemeContext } from 'contexts/themeContext'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { Project } from 'models/subgraph-entities/project'
-import React, { CSSProperties, useContext } from 'react'
+import { CSSProperties, useContext } from 'react'
 import { formatDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
-
-import { getTerminalVersion } from 'utils/v1/terminals'
 
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 
 import { Link } from 'react-router-dom'
+
+import { useTerminalVersion } from 'hooks/v1/TerminalVersion'
 
 import { CURRENCY_ETH } from 'constants/currency'
 
@@ -75,8 +75,7 @@ export default function ProjectCard({
     _project?.totalPaid?.gt(0) && _project?.totalPaid.lt(constants.WeiPerEther)
       ? 2
       : 0
-
-  const terminalVersion = getTerminalVersion(_project?.terminal)
+  const terminalVersion = useTerminalVersion(_project?.terminal)
 
   return (
     <Link

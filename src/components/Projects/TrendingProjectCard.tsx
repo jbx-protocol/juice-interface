@@ -10,9 +10,10 @@ import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { TrendingProject } from 'models/subgraph-entities/project'
 import { CSSProperties, useContext, useMemo } from 'react'
 import { formatWad } from 'utils/formatNumber'
-import { getTerminalVersion } from 'utils/v1/terminals'
 
 import { Link } from 'react-router-dom'
+
+import { useTerminalVersion } from 'hooks/v1/TerminalVersion'
 
 import { SECONDS_IN_DAY } from 'constants/numbers'
 import { CURRENCY_ETH } from 'constants/currency'
@@ -52,7 +53,7 @@ export default function TrendingProjectCard({
 
   const { data: metadata } = useProjectMetadata(project?.uri)
 
-  const terminalVersion = getTerminalVersion(project?.terminal)
+  const terminalVersion = useTerminalVersion(project?.terminal)
 
   // If the total paid is greater than 0, but less than 10 ETH, show two decimal places.
   const precision =

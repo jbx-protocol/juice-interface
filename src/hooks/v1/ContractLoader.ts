@@ -23,19 +23,21 @@ export function useContractLoader() {
         // Contracts can be used read-only without a signer, but require a signer to create transactions.
         const signerOrProvider = signingProvider?.getSigner() ?? readProvider
 
-        const newContracts = Object.values(V1ContractName).reduce(
-          (accumulator, V1ContractName) => ({
+        const newContracts = await Promise.all(
+          Object.values(V1ContractName).map(contractName => {
+            return loadContract(contractName, network, signerOrProvider)
+          }),
+        )
+
+        const newContractsMap = Object.values(V1ContractName).reduce(
+          (accumulator, contractName, idx) => ({
             ...accumulator,
-            [V1ContractName]: loadContract(
-              V1ContractName,
-              network,
-              signerOrProvider,
-            ),
+            [contractName]: newContracts[idx],
           }),
           {} as V1Contracts,
         )
 
-        setContracts(newContracts)
+        setContracts(newContractsMap)
       } catch (e) {
         console.log('CONTRACT LOADER ERROR:', e)
       }
@@ -47,11 +49,13 @@ export function useContractLoader() {
   return contracts
 }
 
-const loadContract = (
+const loadContract = async (
   contractName: keyof typeof V1ContractName,
   network: NetworkName,
   signerOrProvider: JsonRpcSigner | JsonRpcProvider,
-): Contract => {
-  let contract = require(`@jbx-protocol/contracts-v1/deployments/${network}/${contractName}.json`)
+): Promise<Contract> => {
+  let contract = await import(
+    `@jbx-protocol/contracts-v1/deployments/${network}/${contractName}.json`
+  )
   return new Contract(contract.address, contract.abi, signerOrProvider)
 }

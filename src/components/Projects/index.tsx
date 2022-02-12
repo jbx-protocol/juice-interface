@@ -19,6 +19,8 @@ import { V1TerminalVersion } from 'models/v1/terminals'
 import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 
+import { useTerminalAddress } from 'hooks/v1/TerminalVersion'
+
 import { layouts } from 'constants/styles/layouts'
 import TrendingProjects from './TrendingProjects'
 import ProjectsTabs from './ProjectsTabs'
@@ -38,7 +40,9 @@ export default function Projects() {
   // Checks URL to see if tab has been set
   const location = useLocation()
   const history = useHistory()
-
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
   const { userAddress } = useContext(NetworkContext)
 
   const params = useMemo(
@@ -74,10 +78,6 @@ export default function Projects() {
 
   const loadMoreContainerRef = useRef<HTMLDivElement>(null)
 
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const includedStates: ProjectStateFilter = {
     active: includeActive,
     archived: includeArchived,
@@ -87,6 +87,8 @@ export default function Projects() {
     if (includeV1 && !includeV1_1) return '1'
     if (!includeV1 && includeV1_1) return '1.1'
   }, [includeV1, includeV1_1])
+
+  const terminalAddress = useTerminalAddress(terminalVersion)
 
   const {
     data: pages,
@@ -99,7 +101,7 @@ export default function Projects() {
     pageSize,
     orderDirection: 'desc',
     states: includedStates,
-    terminalVersion,
+    terminalAddress,
   })
 
   const { data: searchPages, isLoading: isLoadingSearch } =

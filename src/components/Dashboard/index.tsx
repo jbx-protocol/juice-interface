@@ -24,8 +24,9 @@ import { useProjectsQuery } from 'hooks/v1/Projects'
 import { CurrencyOption } from 'models/currency-option'
 import { useEffect, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
-import { getTerminalName, getTerminalVersion } from 'utils/v1/terminals'
 import useTerminalOfProject from 'hooks/v1/contractReader/TerminalOfProject'
+
+import { useTerminalName, useTerminalVersion } from 'hooks/v1/TerminalVersion'
 
 import { padding } from 'constants/styles/padding'
 import { layouts } from 'constants/styles/layouts'
@@ -41,10 +42,8 @@ export default function Dashboard() {
   const projectId = useProjectIdForHandle(handle)
   const owner = useOwnerOfProject(projectId)
   const terminalAddress = useTerminalOfProject(projectId)
-  const terminalName = getTerminalName({
-    address: terminalAddress,
-  })
-  const terminalVersion = getTerminalVersion(terminalAddress)
+  const terminalName = useTerminalName(terminalAddress)
+  const terminalVersion = useTerminalVersion(terminalAddress)
   const currentFC = useCurrentFundingCycleOfProject(projectId, terminalName)
   const queuedFC = useQueuedFundingCycleOfProject(projectId)
   const currentPayoutMods = useCurrentPayoutModsOfProject(

@@ -2,14 +2,12 @@ import { BigNumber } from '@ethersproject/bignumber'
 
 import { ProjectStateFilter } from 'models/project-visibility'
 import { Project, TrendingProject } from 'models/subgraph-entities/project'
-import { V1TerminalVersion } from 'models/v1/terminals'
 import {
   EntityKeys,
   GraphQueryOpts,
   InfiniteGraphQueryOpts,
   querySubgraphExhaustive,
 } from 'utils/graph'
-import { getTerminalAddress } from 'utils/v1/terminals'
 
 import { useEffect, useState } from 'react'
 
@@ -50,7 +48,7 @@ interface ProjectsOptions {
   pageSize?: number
   states?: ProjectStateFilter
   keys?: (keyof Project)[]
-  terminalVersion?: V1TerminalVersion
+  terminalAddress?: string
   searchText?: string
 }
 
@@ -74,8 +72,6 @@ const queryOpts = (
   | GraphQueryOpts<'project', EntityKeys<'project'>>
   | InfiniteGraphQueryOpts<'project', EntityKeys<'project'>>
 > => {
-  const terminalAddress = getTerminalAddress(opts.terminalVersion)
-
   return {
     entity: 'project',
     keys: opts.keys ?? keys,
@@ -91,11 +87,11 @@ const queryOpts = (
             },
           ]
         : []),
-      ...(terminalAddress
+      ...(opts.terminalAddress
         ? [
             {
               key: 'terminal' as const,
-              value: terminalAddress,
+              value: opts.terminalAddress,
             },
           ]
         : []),

@@ -27,6 +27,8 @@ import { useParams } from 'react-router-dom'
 import { getTerminalName, getTerminalVersion } from 'utils/v1/terminals'
 import useTerminalOfProject from 'hooks/v1/contractReader/TerminalOfProject'
 
+import ScrollToTopButton from 'components/shared/ScrollToTopButton'
+
 import { padding } from 'constants/styles/padding'
 import { layouts } from 'constants/styles/layouts'
 import { projectTypes } from 'constants/v1/projectTypes'
@@ -180,11 +182,9 @@ export default function V1Dashboard() {
     <V1ProjectContext.Provider value={project}>
       <div style={layouts.maxWidth}>
         <V1Project />
-        <div
-          style={{ textAlign: 'center', cursor: 'pointer', padding: 20 }}
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        >
-          <Trans>Back to top</Trans>
+
+        <div style={{ textAlign: 'center', padding: 20 }}>
+          <ScrollToTopButton />
         </div>
         <FeedbackFormLink projectHandle={handle} />
       </div>

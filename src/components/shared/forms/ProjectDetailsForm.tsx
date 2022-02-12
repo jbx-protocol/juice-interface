@@ -1,4 +1,4 @@
-import { Button, Form, FormInstance, Space } from 'antd'
+import { Button, Form, FormInstance } from 'antd'
 import { t, Trans } from '@lingui/macro'
 
 import { FormItems } from 'components/shared/formItems'
@@ -20,34 +20,26 @@ export type ProjectDetailsFormFields = {
 export default function ProjectDetailsForm({
   form,
   onSave,
+  hideProjectHandle = false,
 }: {
   form: FormInstance<ProjectDetailsFormFields>
   onSave: VoidFunction
+  hideProjectHandle?: boolean
 }) {
   return (
-    <Space direction="vertical" size="large">
-      <h1>
-        <Trans>Project details</Trans>
-      </h1>
-      <p>
-        <Trans>
-          Changes to these attributes can be made at any time and will be
-          applied to your project immediately.
-        </Trans>
-      </p>
-
-      <Form form={form} layout="vertical">
-        <FormItems.ProjectName
-          name="name"
-          formItemProps={{
-            rules: [{ required: true }],
-          }}
-          onChange={name => {
-            const val = name ? normalizeHandle(name) : ''
-            // Use `handle` state to enable ProjectHandle to validate while typing
-            form.setFieldsValue({ handle: val })
-          }}
-        />
+    <Form form={form} layout="vertical">
+      <FormItems.ProjectName
+        name="name"
+        formItemProps={{
+          rules: [{ required: true }],
+        }}
+        onChange={name => {
+          const val = name ? normalizeHandle(name) : ''
+          // Use `handle` state to enable ProjectHandle to validate while typing
+          form.setFieldsValue({ handle: val })
+        }}
+      />
+      {!hideProjectHandle && (
         <FormItems.ProjectHandleFormItem
           name="handle"
           initialValue={form.getFieldValue('handle')}
@@ -58,35 +50,35 @@ export default function ProjectDetailsForm({
           }}
           required
         />
-        <FormItems.ProjectDescription name="description" />
-        <FormItems.ProjectLink name="infoUri" />
-        <FormItems.ProjectTwitter name="twitter" />
-        <FormItems.ProjectDiscord name="discord" />
-        <FormItems.ProjectPayButton name="payButton" />
-        <FormItems.ProjectPayDisclosure name="payDisclosure" />
-        <FormItems.ProjectLogoUri
-          name="logoUri"
-          initialUrl={form.getFieldValue('logoUri')}
-          onSuccess={logoUri => {
-            const prevUrl = form.getFieldValue('logoUri')
-            // Unpin previous file
-            form.setFieldsValue({ logoUri })
-            if (prevUrl) unpinIpfsFileByCid(cidFromUrl(prevUrl))
+      )}
+      <FormItems.ProjectDescription name="description" />
+      <FormItems.ProjectLink name="infoUri" />
+      <FormItems.ProjectTwitter name="twitter" />
+      <FormItems.ProjectDiscord name="discord" />
+      <FormItems.ProjectPayButton name="payButton" />
+      <FormItems.ProjectPayDisclosure name="payDisclosure" />
+      <FormItems.ProjectLogoUri
+        name="logoUri"
+        initialUrl={form.getFieldValue('logoUri')}
+        onSuccess={logoUri => {
+          const prevUrl = form.getFieldValue('logoUri')
+          // Unpin previous file
+          form.setFieldsValue({ logoUri })
+          if (prevUrl) unpinIpfsFileByCid(cidFromUrl(prevUrl))
+        }}
+      />
+      <Form.Item>
+        <Button
+          htmlType="submit"
+          type="primary"
+          onClick={async () => {
+            await form.validateFields()
+            onSave()
           }}
-        />
-        <Form.Item>
-          <Button
-            htmlType="submit"
-            type="primary"
-            onClick={async () => {
-              await form.validateFields()
-              onSave()
-            }}
-          >
-            <Trans>Save project details</Trans>
-          </Button>
-        </Form.Item>
-      </Form>
-    </Space>
+        >
+          <Trans>Save project details</Trans>
+        </Button>
+      </Form.Item>
+    </Form>
   )
 }

@@ -8,7 +8,8 @@ import FundingCycles from './FundingCycles'
 import Paid from './Paid'
 import Pay from './Pay'
 import ProjectActivity from './ProjectActivity'
-import ProjectHeader from './ProjectHeader'
+import ProjectHeader from '../../shared/ProjectHeader'
+import V1HeaderActions from './V1HeaderActions'
 import Rewards from './Rewards'
 
 export default function V1Project({
@@ -20,7 +21,8 @@ export default function V1Project({
   showCurrentDetail?: boolean
   column?: boolean
 }) {
-  const { projectId, currentFC } = useContext(V1ProjectContext)
+  const { currentFC, projectId, handle, metadata, isArchived } =
+    useContext(V1ProjectContext)
 
   const fcMetadata = decodeFundingCycleMetadata(currentFC?.metadata)
 
@@ -30,7 +32,13 @@ export default function V1Project({
 
   return (
     <div style={style}>
-      <ProjectHeader />
+      <ProjectHeader
+        projectId={projectId}
+        metadata={metadata}
+        handle={handle}
+        isArchived={isArchived}
+        actions={<V1HeaderActions />}
+      />
 
       <Row gutter={gutter} align="bottom">
         <Col xs={24} md={column ? 24 : 12} style={{ marginTop: gutter }}>

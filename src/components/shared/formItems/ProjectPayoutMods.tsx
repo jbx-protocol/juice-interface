@@ -71,6 +71,7 @@ export default function ProjectPayoutMods({
   const [modalMode, setModalMode] = useState<ModalMode>() //either 'Add', 'Edit' or undefined
   const [editingModProjectId, setEditingModProjectId] = useState<BigNumber>()
   const [editingModIndex, setEditingModIndex] = useState<number>()
+  const [editingPercent, setEditingPercent] = useState<number>()
   const [settingHandleIndex, setSettingHandleIndex] = useState<number>()
   const [editingModType, setEditingModType] = useState<ModType>('address')
   const [settingHandle, setSettingHandle] = useState<string>()
@@ -142,12 +143,17 @@ export default function ProjectPayoutMods({
               )
               setModalMode('Edit')
               setEditingModIndex(index)
+              setEditingPercent(percent)
               setEditingModProjectId(mod.projectId)
 
               form.setFieldsValue({
                 ...mod,
                 percent,
-                amount: getAmountFromPercent(percent, target, fee),
+                amount: getAmountFromPercent(
+                  editingPercent ?? percent,
+                  target,
+                  fee,
+                ),
                 lockedUntil: mod.lockedUntil
                   ? moment.default(mod.lockedUntil * 1000)
                   : undefined,
@@ -287,6 +293,7 @@ export default function ProjectPayoutMods({
       currency,
       fee,
       form,
+      editingPercent,
       onModsChanged,
     ],
   )
@@ -305,8 +312,6 @@ export default function ProjectPayoutMods({
     const beneficiary = form.getFieldValue('beneficiary')
     const percent = parsePermyriad(form.getFieldValue('percent')).toNumber()
     const _lockedUntil = form.getFieldValue('lockedUntil') as moment.Moment
-
-    console.log('asdf form', form.getFieldsValue(true))
 
     const lockedUntil = _lockedUntil
       ? Math.round(_lockedUntil.valueOf() / 1000)
@@ -334,7 +339,7 @@ export default function ProjectPayoutMods({
     }
 
     setEditingModIndex(undefined)
-
+    setEditingPercent(0)
     form.resetFields()
   }
 
@@ -367,6 +372,7 @@ export default function ProjectPayoutMods({
 
   const onAmountChange = (newAmount: number | undefined) => {
     let newPercent = getPercentFromAmount(newAmount, target, fee)
+    setEditingPercent(newPercent)
     form.setFieldsValue({ amount: newAmount })
     form.setFieldsValue({ percent: newPercent })
   }
@@ -416,6 +422,7 @@ export default function ProjectPayoutMods({
           onClick={() => {
             setModalMode('Add')
             setEditingModIndex(mods.length)
+            setEditingPercent(0)
             setEditingModProjectId(undefined)
             form.resetFields()
           }}
@@ -556,6 +563,7 @@ export default function ProjectPayoutMods({
                     )
                     form.setFieldsValue({ amount: newAmount })
                     form.setFieldsValue({ percent })
+                    setEditingPercent(percent)
                   }}
                   step={0.01}
                   defaultValue={form.getFieldValue('percent') || 0}

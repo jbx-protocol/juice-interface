@@ -1,7 +1,7 @@
 import { BigNumber, BigNumberish } from 'ethers'
 import { V1TerminalName } from 'models/v1/terminals'
 import { useMemo } from 'react'
-import { bigNumbersDiff } from 'utils/bigNumbersDiff'
+import { bigNumbersDiff } from 'utils/bigNumbers'
 
 import useContractReader from './ContractReader'
 

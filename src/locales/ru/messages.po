@@ -133,6 +133,7 @@ msgstr "<0>{tokenSymbol} ERC20 адресс:</0> <1/>"
 
 #: src/components/shared/formItems/ProjectTwitter.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "@"
 msgstr "@"
 
@@ -374,8 +375,8 @@ msgstr "Отменить"
 msgid "Cannot redeem tokens for ETH because this project has no overflow."
 msgstr "Невозможно обменять токены на ETH, так как в этом проекте нет переполнения."
 
-#: src/components/shared/forms/ProjectDetailsForm.tsx
 #: src/components/v1/V1Create/ProjectForm.tsx
+#: src/components/v1/V1Create/index.tsx
 msgid "Changes to these attributes can be made at any time and will be applied to your project immediately."
 msgstr "Изменения этих атрибутов можно внести в любое время, и они будут немедленно применены к вашему проекту."
 
@@ -490,6 +491,7 @@ msgstr "Депозит 1 wei на @{handle}"
 
 #: src/components/Landing/index.tsx
 #: src/components/v1/V1Create/index.tsx
+#: src/components/v2/V2Create/index.tsx
 msgid "Design your project"
 msgstr "Создай свой проект"
 
@@ -510,6 +512,7 @@ msgstr "Отключиться"
 #: src/components/Navbar/MenuItems.tsx
 #: src/components/shared/formItems/ProjectDiscord.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Discord"
 msgstr "Дискорд"
 
@@ -719,6 +722,7 @@ msgid "Go to Etherscan"
 msgstr "Перейти к Etherscan"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Handle"
 msgstr "Никнейм"
 
@@ -776,8 +780,9 @@ msgstr "Однако Juicebox все еще является экспериме�
 
 #: src/components/v1/V1Project/modals/PayWarningModal.tsx
 msgid "I understand"
-msgstr "Я понимаю"
+msgstr "Я понимаю<<<<<<< HEAD"
 
+#: src/components/v1/V1Project/V1HeaderActions.tsx
 #: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 msgid "ID: {0}"
 msgstr "ID: {0}"
@@ -906,6 +911,7 @@ msgstr "Заблокировать до"
 
 #: src/components/shared/formItems/ProjectLogoUri.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Logo"
 msgstr "Логотип"
 
@@ -949,6 +955,7 @@ msgid "More trending projects"
 msgstr "Другие актуальные проекты"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Name"
 msgstr "Название"
 
@@ -1038,6 +1045,7 @@ msgstr "Приостановлено"
 #: src/components/v1/V1Project/Pay/index.tsx
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 #: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Pay"
 msgstr "Оплатить"
 
@@ -1046,6 +1054,7 @@ msgid "Pay amount"
 msgstr "Сумма платежа"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Pay button"
 msgstr "Кнопка \"Оплатить\""
 
@@ -1055,6 +1064,7 @@ msgstr "Кнопка оплаты"
 
 #: src/components/shared/formItems/ProjectPayDisclosure.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Pay disclosure"
 msgstr "Раскрытие информации о платеже"
 
@@ -1139,10 +1149,11 @@ msgstr "Токен проекта"
 msgid "Project description"
 msgstr "Описание Проекта"
 
-#: src/components/shared/forms/ProjectDetailsForm.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Create/ProjectForm.tsx
 #: src/components/v1/V1Create/index.tsx
+#: src/components/v1/V1Create/index.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Project details"
 msgstr "Детали проекта"
 
@@ -1175,6 +1186,10 @@ msgstr "Баланс владельца проекта"
 
 #: src/components/Landing/QAs.tsx
 msgid "Project owners can configure a delay period, meaning reconfigurations to an upcoming funding cycle must be submitted a certain number of days before it starts. For example, a 3-day delay period means reconfigurations must be submitted at least 3 days before the next funding cycle starts. This gives token holders time to react to the decision and reduces the chance of rug-pulls."
+msgstr ""
+
+#: src/components/v2/V2Dashboard/Dashboard404.tsx
+msgid "Project {projectId} not found"
 msgstr ""
 
 #: src/components/Navbar/MenuItems.tsx
@@ -1314,10 +1329,12 @@ msgid "Return my ETH"
 msgstr "Вернуть ЕТН"
 
 #: src/components/v1/V1Create/index.tsx
+#: src/components/v2/V2Create/DeployProjectButton.tsx
 msgid "Review & Deploy"
 msgstr "Обзор & Развертывание"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Review project"
 msgstr "Просмотр проекта"
 
@@ -1565,6 +1582,7 @@ msgid "There was also a script written to iteratively run the integration tests 
 msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "These attributes can be changed at any time."
 msgstr "Эти параметры могут быть изменены в любое время."
 
@@ -1713,6 +1731,7 @@ msgstr ""
 
 #: src/components/shared/formItems/ProjectTwitter.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Twitter"
 msgstr "Твиттер"
 
@@ -1758,8 +1777,9 @@ msgstr "V1"
 
 #: src/components/Projects/ProjectsFilterAndSort.tsx
 msgid "V1.1"
-msgstr "V1.1"
+msgstr "V1.1<<<<<<< HEAD"
 
+#: src/components/v1/V1Project/V1HeaderActions.tsx
 #: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 msgid "Version of the terminal contract used by this project."
 msgstr "Версия терминального контракта, используемая в этом проекте."
@@ -1776,6 +1796,7 @@ msgstr "Адрес кошелька"
 
 #: src/components/shared/formItems/ProjectLink.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Website"
 msgstr "Веб-сайт"
 

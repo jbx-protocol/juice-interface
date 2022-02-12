@@ -53,9 +53,25 @@ const loadContract = async (
   contractName: keyof typeof V1ContractName,
   network: NetworkName,
   signerOrProvider: JsonRpcSigner | JsonRpcProvider,
-): Promise<Contract> => {
-  let contract = await import(
-    `@jbx-protocol/contracts-v1/deployments/${network}/${contractName}.json`
-  )
+): Promise<Contract | undefined> => {
+  /**
+   * Conditionally load contracts based on configured network.
+   * This prevents ABIs for unused networks being added to our JS bundle.
+   */
+  const _loadContract = () => {
+    if (process.env.REACT_APP_INFURA_NETWORK === 'mainnet') {
+      return async () =>
+        await import(
+          `@jbx-protocol/contracts-v1/deployments/mainnet/${contractName}.json`
+        )
+    } else if (process.env.REACT_APP_INFURA_NETWORK === 'rinkeby') {
+      return async () =>
+        await import(
+          `@jbx-protocol/contracts-v1/deployments/rinkeby/${contractName}.json`
+        )
+    }
+  }
+
+  const contract = await _loadContract()?.()
   return new Contract(contract.address, contract.abi, signerOrProvider)
 }

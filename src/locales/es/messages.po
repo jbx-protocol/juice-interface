@@ -137,6 +137,7 @@ msgstr "<0>dirección ERC20 de {tokenSymbol}:</0><1/>"
 
 #: src/components/shared/formItems/ProjectTwitter.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "@"
 msgstr "@"
 
@@ -302,7 +303,7 @@ msgstr "Los fondos disponibles son distribuidos acorde a los pagos a continuaci�
 msgid "Available:"
 msgstr "Disponible:"
 
-#: src/components/v1/V1Dashboard/index.tsx
+#: src/components/shared/ScrollToTopButton.tsx
 msgid "Back to top"
 msgstr "Regresa arriba"
 
@@ -390,7 +391,7 @@ msgstr "Cancelar"
 msgid "Cannot redeem tokens for ETH because this project has no overflow."
 msgstr "No se pueden canjear tokens por ETH porque este proyecto no tiene excedente."
 
-#: src/components/shared/forms/ProjectDetailsForm.tsx
+#: src/components/v1/V1Create/index.tsx
 msgid "Changes to these attributes can be made at any time and will be applied to your project immediately."
 msgstr ""
 
@@ -488,6 +489,7 @@ msgstr "Deposita 1 wei a @{handle}"
 
 #: src/components/Landing/index.tsx
 #: src/components/v1/V1Create/index.tsx
+#: src/components/v2/V2Create/index.tsx
 msgid "Design your project"
 msgstr "Diseña tu proyecto"
 
@@ -508,6 +510,7 @@ msgstr "Desconectar"
 #: src/components/Navbar/MenuItems.tsx
 #: src/components/shared/formItems/ProjectDiscord.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Discord"
 msgstr "Discord"
 
@@ -708,6 +711,7 @@ msgid "Go to Etherscan"
 msgstr "Ve a Etherscan"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Handle"
 msgstr "Usuario"
 
@@ -755,7 +759,7 @@ msgstr "Cómo tu proyecto distribuirá los fondos."
 msgid "I understand"
 msgstr "Entiendo"
 
-#: src/components/v1/V1Project/ProjectHeader.tsx
+#: src/components/v1/V1Project/V1HeaderActions.tsx
 msgid "ID: {0}"
 msgstr "ID: {0}"
 
@@ -880,6 +884,7 @@ msgstr "Bloquear hasta"
 
 #: src/components/shared/formItems/ProjectLogoUri.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Logo"
 msgstr "Logo"
 
@@ -923,6 +928,7 @@ msgid "More trending projects"
 msgstr "Más proyectos en tendencia"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Name"
 msgstr "Nombre"
 
@@ -1012,6 +1018,7 @@ msgstr "Pausado"
 #: src/components/v1/V1Project/Pay/index.tsx
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 #: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Pay"
 msgstr "Pagar"
 
@@ -1020,6 +1027,7 @@ msgid "Pay amount"
 msgstr "Pagar cantidad"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Pay button"
 msgstr "Botón de pago"
 
@@ -1029,6 +1037,7 @@ msgstr "Texto del botón de pago"
 
 #: src/components/shared/formItems/ProjectPayDisclosure.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Pay disclosure"
 msgstr "Declaración por pago"
 
@@ -1109,9 +1118,10 @@ msgstr "Token de proyecto"
 msgid "Project description"
 msgstr "Descripción del proyecto"
 
-#: src/components/shared/forms/ProjectDetailsForm.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Create/index.tsx
+#: src/components/v1/V1Create/index.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Project details"
 msgstr "Detalles del proyecto"
 
@@ -1140,6 +1150,10 @@ msgstr "Dueño del proyecto"
 #: src/components/v1/FundingCycle/Spending.tsx
 msgid "Project owner balance"
 msgstr "Saldo del dueño del proyecto"
+
+#: src/components/v2/V2Dashboard/Dashboard404.tsx
+msgid "Project {projectId} not found"
+msgstr ""
 
 #: src/components/Navbar/MenuItems.tsx
 msgid "Projects"
@@ -1258,10 +1272,12 @@ msgid "Return my ETH"
 msgstr "Retorna mi ETH"
 
 #: src/components/v1/V1Create/index.tsx
+#: src/components/v2/V2Create/DeployProjectButton.tsx
 msgid "Review & Deploy"
 msgstr "Revisa & Despliega"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Review project"
 msgstr "Revisar proyecto"
 
@@ -1505,6 +1521,7 @@ msgid "There was also a script written for iteratively running the integration t
 msgstr "También, existe un script escrito para correr de manera repetitiva las pruebas de integración usando un generador aleatorio de entradas, priorizando casos extremos. El código ha pasado satisfactoriamente por más de 1 millón de casos de prueba a través de este script a prueba de estrés."
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "These attributes can be changed at any time."
 msgstr "Estos atributos pueden cambiarse en cualquier momento."
 
@@ -1640,6 +1657,7 @@ msgstr "Tendencias"
 
 #: src/components/shared/formItems/ProjectTwitter.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Twitter"
 msgstr "Twitter"
 
@@ -1655,7 +1673,7 @@ msgstr "Estrategia de contrato irreconocible. ¡Asegurate de que esté correcto!
 msgid "Unstaked balance"
 msgstr "Balance sin stakear"
 
-#: src/components/v1/V1Project/ProjectHeader.tsx
+#: src/components/shared/ProjectHeader/index.tsx
 msgid "Untitled project"
 msgstr "Proyecto sin título"
 
@@ -1691,7 +1709,7 @@ msgstr "V1"
 msgid "V1.1"
 msgstr "V1.1"
 
-#: src/components/v1/V1Project/ProjectHeader.tsx
+#: src/components/v1/V1Project/V1HeaderActions.tsx
 msgid "Version of the terminal contract used by this project."
 msgstr "Versión del contrato terminal usado por este proyecto."
 
@@ -1707,6 +1725,7 @@ msgstr "Dirección de billetera virtual"
 
 #: src/components/shared/formItems/ProjectLink.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Website"
 msgstr "Sitio web"
 

@@ -135,6 +135,7 @@ msgstr "<0>{tokenSymbol} ERC20 adresi:</0> <1/>"
 
 #: src/components/shared/formItems/ProjectTwitter.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "@"
 msgstr "@"
 
@@ -300,7 +301,7 @@ msgstr ""
 msgid "Available:"
 msgstr "Mevcut:"
 
-#: src/components/v1/V1Dashboard/index.tsx
+#: src/components/shared/ScrollToTopButton.tsx
 msgid "Back to top"
 msgstr "Başa dön"
 
@@ -388,7 +389,7 @@ msgstr "İptal"
 msgid "Cannot redeem tokens for ETH because this project has no overflow."
 msgstr ""
 
-#: src/components/shared/forms/ProjectDetailsForm.tsx
+#: src/components/v1/V1Create/index.tsx
 msgid "Changes to these attributes can be made at any time and will be applied to your project immediately."
 msgstr ""
 
@@ -486,6 +487,7 @@ msgstr "@{handle} hesabına 1 wei yatırın"
 
 #: src/components/Landing/index.tsx
 #: src/components/v1/V1Create/index.tsx
+#: src/components/v2/V2Create/index.tsx
 msgid "Design your project"
 msgstr "Projenizi tasarlayın"
 
@@ -506,6 +508,7 @@ msgstr "Bağlantıyı kes"
 #: src/components/Navbar/MenuItems.tsx
 #: src/components/shared/formItems/ProjectDiscord.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Discord"
 msgstr "Discord"
 
@@ -706,6 +709,7 @@ msgid "Go to Etherscan"
 msgstr "Etherscan'e git"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Handle"
 msgstr "Tanıtıcı"
 
@@ -753,7 +757,7 @@ msgstr "Projenizin fonları nasıl dağıtacağı."
 msgid "I understand"
 msgstr "Anladım"
 
-#: src/components/v1/V1Project/ProjectHeader.tsx
+#: src/components/v1/V1Project/V1HeaderActions.tsx
 msgid "ID: {0}"
 msgstr "Kimlik: {0}"
 
@@ -878,6 +882,7 @@ msgstr ""
 
 #: src/components/shared/formItems/ProjectLogoUri.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Logo"
 msgstr "Logo"
 
@@ -921,6 +926,7 @@ msgid "More trending projects"
 msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Name"
 msgstr "İsim"
 
@@ -1010,6 +1016,7 @@ msgstr "Duraklatıldı"
 #: src/components/v1/V1Project/Pay/index.tsx
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 #: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Pay"
 msgstr "Ödeme"
 
@@ -1018,6 +1025,7 @@ msgid "Pay amount"
 msgstr "Ödeme miktarı"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Pay button"
 msgstr "Ödeme butonu"
 
@@ -1027,6 +1035,7 @@ msgstr "Ödeme butonu metni"
 
 #: src/components/shared/formItems/ProjectPayDisclosure.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Pay disclosure"
 msgstr "Ödeme açıklaması"
 
@@ -1107,9 +1116,10 @@ msgstr ""
 msgid "Project description"
 msgstr "Proje açıklaması"
 
-#: src/components/shared/forms/ProjectDetailsForm.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Create/index.tsx
+#: src/components/v1/V1Create/index.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Project details"
 msgstr "Proje ayrıntıları"
 
@@ -1138,6 +1148,10 @@ msgstr "Proje sahibi"
 #: src/components/v1/FundingCycle/Spending.tsx
 msgid "Project owner balance"
 msgstr "Proje sahibi bakiyesi"
+
+#: src/components/v2/V2Dashboard/Dashboard404.tsx
+msgid "Project {projectId} not found"
+msgstr ""
 
 #: src/components/Navbar/MenuItems.tsx
 msgid "Projects"
@@ -1256,10 +1270,12 @@ msgid "Return my ETH"
 msgstr "ETH'mi iade et"
 
 #: src/components/v1/V1Create/index.tsx
+#: src/components/v2/V2Create/DeployProjectButton.tsx
 msgid "Review & Deploy"
 msgstr "İncele ve Dağıt"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Review project"
 msgstr "Projeyi gözden geçir"
 
@@ -1501,6 +1517,7 @@ msgid "There was also a script written for iteratively running the integration t
 msgstr "Ayrıca, uç vakalara öncelik vererek, rastgele bir girdi oluşturucu kullanarak entegrasyon testlerini yinelemeli olarak çalıştırmak için yazılmış bir komut dosyası da vardı. Kod, bu stres testi komut dosyası aracılığıyla 1 milyondan fazla test senaryosunu başarıyla geçti."
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "These attributes can be changed at any time."
 msgstr ""
 
@@ -1636,6 +1653,7 @@ msgstr ""
 
 #: src/components/shared/formItems/ProjectTwitter.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Twitter"
 msgstr "Twitter"
 
@@ -1651,7 +1669,7 @@ msgstr "Tanınmayan strateji sözleşmesi. Bunun doğru olduğundan emin olun!"
 msgid "Unstaked balance"
 msgstr "Stake'den kaldırılan bakiye"
 
-#: src/components/v1/V1Project/ProjectHeader.tsx
+#: src/components/shared/ProjectHeader/index.tsx
 msgid "Untitled project"
 msgstr "İsimsiz proje"
 
@@ -1687,7 +1705,7 @@ msgstr "V1"
 msgid "V1.1"
 msgstr "V1.1"
 
-#: src/components/v1/V1Project/ProjectHeader.tsx
+#: src/components/v1/V1Project/V1HeaderActions.tsx
 msgid "Version of the terminal contract used by this project."
 msgstr "Bu proje tarafından kullanılan terminal sözleşmesinin sürümü."
 
@@ -1703,6 +1721,7 @@ msgstr "Cüzdan adresi"
 
 #: src/components/shared/formItems/ProjectLink.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Website"
 msgstr "Web sitesi"
 

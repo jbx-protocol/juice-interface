@@ -1,35 +1,13 @@
 import { NetworkContext } from 'contexts/networkContext'
 import { V2UserContext } from 'contexts/v2/userContext'
-import { BigNumber } from '@ethersproject/bignumber'
 import { useContext } from 'react'
+import {
+  V2FundingCycleData,
+  V2FundingCycleMetadata,
+} from 'models/v2/fundingCycle'
 
 import { TransactorInstance } from '../../Transactor'
 import { PEEL_METADATA_DOMAIN } from 'constants/v2/metadataDomain'
-
-type V2FundingCycleData = {
-  duration: number
-  weight: BigNumber
-  discountRate: number
-  ballot: string // hex, contract address
-}
-
-type V2FundingCycleMetadata = {
-  reservedRate: number
-  redemptionRate: number
-  ballotRedemptionRate: number
-  pausePay: number
-  pauseDistributions: number
-  pauseRedeem: number
-  pauseMint: number
-  pauseBurn: number
-  allowTerminalMigration: number
-  allowControllerMigration: number
-  holdFees: number
-  useLocalBalanceForRedemptions: number
-  useDataSourceForPay: number
-  useDataSourceForRedeem: number
-  dataSource: string // hex, contract address
-}
 
 export function useDeployProjectTx(): TransactorInstance<{
   projectMetadataCID: string

@@ -8,7 +8,7 @@ msgstr ""
 "Language: tr\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-02-11 01:55\n"
+"PO-Revision-Date: 2022-02-13 09:34\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -1359,7 +1359,7 @@ msgstr ""
 
 #: src/components/FundingCycle/FundingCyclePreview.tsx
 msgid "Some funding cycle properties may indicate risk for project contributors."
-msgstr "Bazı finansman döngüsü özellikleri projeye katkıda bulunanlar için risk oluşturabilir."
+msgstr ""
 
 #: src/components/Create/ConfirmDeployProject.tsx
 #: src/components/Project/modals/ReconfigureFCModal.tsx
@@ -2023,3 +2023,4 @@ msgstr "{exchangeName} üzerinde {tokenSymbol}/ETH kuru."
 #: src/components/Project/Rewards/index.tsx
 msgid "{tokensLabel} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
 msgstr ""
+

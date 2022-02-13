@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-02-11 01:55\n"
+"PO-Revision-Date: 2022-02-13 09:34\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -28,7 +28,7 @@ msgstr "（可选的）在此链上付款中添加备注"
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "({realTokenAllocationPercent}% of all newly minted tokens)."
-msgstr "（{realTokenAllocationPercent}% 新铸造的代币）。"
+msgstr ""
 
 #: src/components/Project/modals/ReconfigureFCModal.tsx
 msgid "0% fee"
@@ -967,7 +967,8 @@ msgstr "未设定"
 
 #: src/components/Landing/index.tsx
 msgid "Note: Juicebox is new, unaudited, and not guaranteed to work perfectly. Before spending money, do your own research: <0>ask questions</0>, <1>check out the code</1>, and understand the risks!"
-msgstr "注意： Juicebox是一个全新的协议，它未经审计且不保证能完美工作。在花钱之前请先做好您自己的研究：提出疑问，核查代码以及了解所涉及的风险！"
+msgstr "注意： Juicebox是一个全新的协议，它未经审计且不保证能完美工作。\n"
+" 在花钱之前请先做好您自己的研究：提出疑问，核查代码以及了解所涉及的风险！"
 
 #: src/components/Project/modals/ConfirmPayOwnerModal/index.tsx
 msgid "Notice from {0}:"
@@ -1359,7 +1360,7 @@ msgstr ""
 
 #: src/components/FundingCycle/FundingCyclePreview.tsx
 msgid "Some funding cycle properties may indicate risk for project contributors."
-msgstr "一些筹款周期的配置可能会给项目贡献者们造成一些风险。"
+msgstr ""
 
 #: src/components/Create/ConfirmDeployProject.tsx
 #: src/components/Project/modals/ReconfigureFCModal.tsx
@@ -1449,7 +1450,7 @@ msgstr "创造者将引领未来, 而社区会拥有未来."
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "The percent this individual receives of the overall {reservedRate}% reserved token allocation"
-msgstr "这个地址会收到保留代币中的 {reservedRate}%"
+msgstr ""
 
 #: src/constants/fundingWarningText.ts
 msgid "The project owner may mint any supply of tokens at any time, diluting the token share of all existing contributors."
@@ -2023,3 +2024,4 @@ msgstr "在 {exchangeName} 的兑换率为 {tokenSymbol}/ETH"
 #: src/components/Project/Rewards/index.tsx
 msgid "{tokensLabel} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
 msgstr ""
+

@@ -15,7 +15,6 @@ import { useContext } from 'react'
 import { NetworkContext } from 'contexts/networkContext'
 
 export default function ConfirmDeployV2ProjectModal({
-  terminalFee,
   onOk,
   onCancel,
   visible,

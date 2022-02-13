@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
-import ConfirmDeployV2ProjectModal from 'components/shared/modals/ConfirmDeployV2ProjectModal'
+import ConfirmDeployV2ProjectModal from 'components/v2/V2Create/ConfirmDeployV2ProjectModal'
 import { useAppSelector } from 'hooks/AppSelector'
 import { useDeployProjectTx } from 'hooks/v2/transactor/DeployProjectTx'
 import { useCallback, useState } from 'react'
@@ -72,10 +72,7 @@ export default function DeployProjectButton() {
       <Button
         onClick={() => setDeployProjectModalVisible(true)}
         type="primary"
-
-        // disabled={
-        //   !editingProjectInfo?.metadata.name || !editingProjectInfo.handle
-        // }
+        disabled={!editingProjectInfo?.metadata.name}
       >
         <Trans>Review & Deploy</Trans>
       </Button>
@@ -83,7 +80,6 @@ export default function DeployProjectButton() {
         visible={deployProjectModalVisible}
         onOk={deployProject}
         onCancel={() => setDeployProjectModalVisible(false)}
-        // terminalFee={terminalFee}
       />
     </>
   )

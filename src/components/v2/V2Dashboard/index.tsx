@@ -1,18 +1,15 @@
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import useV2ProjectMetadata from 'hooks/v2/ProjectMetadata'
 import { useParams } from 'react-router-dom'
-
 import Loading from 'components/shared/Loading'
-
 import { BigNumber } from '@ethersproject/bignumber'
-
 import useProjectMetadataContent from 'hooks/v2/contractReader/ProjectMetadataContent'
+import ScrollToTopButton from 'components/shared/ScrollToTopButton'
 
 import { layouts } from 'constants/styles/layouts'
 
 import V2Project from '../V2Project'
 import Dashboard404 from './Dashboard404'
-import ScrollToTopButton from '../../shared/ScrollToTopButton'
 
 export default function V2Dashboard() {
   const { projectId: projectIdParameter }: { projectId?: string } = useParams()

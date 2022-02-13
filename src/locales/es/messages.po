@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-02-11 01:55\n"
+"PO-Revision-Date: 2022-02-13 01:55\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -27,11 +27,9 @@ msgid "(Optional) Add a note to this payment on-chain"
 msgstr "(Opcional) Añadir una nota en este pago de forma on-chain"
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
-msgid ""
-"({realTokenAllocationPercent}%\n"
+msgid "({realTokenAllocationPercent}%\n"
 "of all newly minted tokens)."
-msgstr ""
-"({realTokenAllocationPercent}%\n"
+msgstr "({realTokenAllocationPercent}%\n"
 "de todos los tokens recién acuñados)."
 
 #: src/components/Project/modals/ReconfigureFCModal.tsx
@@ -80,7 +78,7 @@ msgstr "<0/> Los proyectos archivados no han sido modificados o eliminados en la
 
 #: src/components/Projects/index.tsx
 msgid "<0/> The Juicebox protocol is open to anyone, and project configurations can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO. Do your own research and understand the risks before committing your funds."
-msgstr ""
+msgstr "<0/> El protocolo Juicebox está abierto para cualquiera, y las configuraciones de proyectos pueden cambiar ampliamente. Existen riesgos asociados con interactuar con todos los proyectos en el protocolo. Los proyectos construidos en el protocolo no son respaldados o investigados por JuiceboxDAO. Haz tu propia investigación y comprende los riesgos antes de comprometer tus fondos."
 
 #: src/components/FundingCycle/Spending.tsx
 msgid "<0/> owner balance"
@@ -392,7 +390,7 @@ msgstr "No se pueden canjear tokens por ETH porque este proyecto no tiene excede
 
 #: src/components/Create/ProjectForm.tsx
 msgid "Changes to these attributes can be made at any time and will be applied to your project immediately."
-msgstr ""
+msgstr "Se pueden hacer cambios a estos atributos en cualquier momento y serán aplicados a tu proyecto inmediatamente."
 
 #: src/components/Landing/index.tsx
 msgid "Changes to your project's funding require a community approval period to take effect. Your supporters don't have to trust you—even though they already do."
@@ -799,8 +797,7 @@ msgid "Issue ERC-20 token"
 msgstr "Emitir token ERC-20"
 
 #: src/components/Project/Rewards/IssueTickets.tsx
-msgid ""
-"Issue an ERC-20 to be used as this project's token. Once\n"
+msgid "Issue an ERC-20 to be used as this project's token. Once\n"
 "issued, anyone can claim their existing token balance in the new token."
 msgstr "Emite un ERC-20 para que sea usado como token de este proyecto. Una vez emitido, cualquiera puede reclamar su balance existente de tokens como el nuevo token."
 
@@ -1364,8 +1361,7 @@ msgid "Since you have not set a funding duration, changes to these settings will
 msgstr "Como no has establecido una duración de financiamiento, los cambios a estos ajustes serán aplicados de inmediato."
 
 #: src/components/FundingCycle/FundingCyclePreview.tsx
-msgid ""
-"Some funding cycle properties may indicate risk\n"
+msgid "Some funding cycle properties may indicate risk\n"
 "for project contributors."
 msgstr "Algunas propiedades de los ciclos de financiamiento pueden indicar riesgo para los contribuyentes de proyectos."
 
@@ -1456,11 +1452,9 @@ msgid "The future will be led by creators, and owned by communities."
 msgstr "El futuro será liderado por creadores y las comunidades serán los dueños."
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
-msgid ""
-"The percent this individual receives of the overall {reservedRate}% \n"
+msgid "The percent this individual receives of the overall {reservedRate}% \n"
 "reserved token allocation"
-msgstr ""
-"El porcentaje que recibe esta persona del {reservedRate}% general\n"
+msgstr "El porcentaje que recibe esta persona del {reservedRate}% general\n"
 "de la asignación de tokens reservados"
 
 #: src/constants/fundingWarningText.ts
@@ -2033,12 +2027,11 @@ msgid "{tokenSymbol}/ETH exchange rate on {exchangeName}."
 msgstr "Tipo de cambio de {tokenSymbol}/ETH en {exchangeName}."
 
 #: src/components/Project/Rewards/index.tsx
-msgid ""
-"{tokensLabel}\n"
+msgid "{tokensLabel}\n"
 "are distributed to anyone who pays this project. If the project \n"
 "has set a funding target, tokens can be redeemed for a portion \n"
 "of the project's overflow whether or not they have been claimed yet."
-msgstr ""
-"{tokensLabel}\n"
+msgstr "{tokensLabel}\n"
 "son distribuidos a cualquiera que pague este proyecto. Si el proyecto tiene un objetivo de financiamiento, los tokens pueden ser canjeados por una porción del excedente del proyecto,\n"
 "hayan sido estos reclamados o no."
+

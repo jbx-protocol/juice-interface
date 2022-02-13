@@ -29,8 +29,7 @@ export default function IssueTickets() {
           <Trans>Issue ERC-20 token</Trans>
         </Button>
         <TooltipIcon
-          tip={t`Issue an ERC-20 to be used as this project's token. Once
-          issued, anyone can claim their existing token balance in the new token.`}
+          tip={t`Issue an ERC-20 to be used as this project's token. Once issued, anyone can claim their existing token balance in the new token.`}
         />
       </Space>
 

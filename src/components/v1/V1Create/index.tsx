@@ -42,7 +42,6 @@ import {
 import { getTerminalAddress } from 'utils/v1/terminals'
 
 import BudgetForm from 'components/shared/forms/BudgetForm'
-import ConfirmDeployProjectModal from 'components/shared/modals/ConfirmDeployProjectModal'
 import IncentivesForm from 'components/shared/forms/IncentivesForm'
 import PayModsForm from 'components/shared/forms/PayModsForm'
 import ProjectDetailsForm, {
@@ -56,10 +55,12 @@ import TicketingForm, {
   TicketingFormFields,
 } from 'components/shared/forms/TicketingForm'
 
+import ConfirmDeployProject from './ConfirmDeployProject'
+
 const terminalVersion: V1TerminalVersion = '1.1'
 
 export default function V1Create() {
-  const { userAddress } = useContext(NetworkContext)
+  const { signerNetwork, userAddress } = useContext(NetworkContext)
   const { colors, radii } = useContext(ThemeContext).theme
   const [currentStep, setCurrentStep] = useState<number>()
   const [viewedSteps, setViewedSteps] = useState<number[]>([])
@@ -723,13 +724,22 @@ export default function V1Create() {
           />
         </Drawer>
 
-        <ConfirmDeployProjectModal
+        <Modal
           visible={deployProjectModalVisible}
+          okText={
+            userAddress
+              ? signerNetwork
+                ? 'Deploy project on ' + signerNetwork
+                : 'Deploy project'
+              : 'Connect wallet to deploy'
+          }
           onOk={deployProject}
           confirmLoading={loadingCreate}
+          width={800}
           onCancel={() => setDeployProjectModalVisible(false)}
-          terminalFee={terminalFee}
-        />
+        >
+          <ConfirmDeployProject />
+        </Modal>
 
         <Modal
           visible={confirmStartOverVisible}

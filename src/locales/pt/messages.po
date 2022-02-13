@@ -27,10 +27,8 @@ msgid "(Optional) Add a note to this payment on-chain"
 msgstr "(Opcional) Adicionar uma nota a esse pagamento em cadeia"
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
-msgid ""
-"({realTokenAllocationPercent}%\n"
-"of all newly minted tokens)."
-msgstr "({realTokenAllocationPercent}% de todos os tokens recentemente criados)."
+msgid "({realTokenAllocationPercent}% of all newly minted tokens)."
+msgstr ""
 
 #: src/components/Project/modals/ReconfigureFCModal.tsx
 msgid "0% fee"

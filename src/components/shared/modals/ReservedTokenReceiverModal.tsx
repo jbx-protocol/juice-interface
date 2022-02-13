@@ -47,8 +47,7 @@ export default function ReservedTokenReceiverModal({
       `${
         realTokenAllocation
           ? ' ' +
-            t`(${realTokenAllocationPercent}%
-          of all newly minted tokens).`
+            t`(${realTokenAllocationPercent}% of all newly minted tokens).`
           : '.'
       }`
     return extra

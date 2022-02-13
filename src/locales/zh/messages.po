@@ -27,12 +27,8 @@ msgid "(Optional) Add a note to this payment on-chain"
 msgstr "（可选的）在此链上付款中添加备注"
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
-msgid ""
-"({realTokenAllocationPercent}%\n"
-"of all newly minted tokens)."
+msgid "({realTokenAllocationPercent}% of all newly minted tokens)."
 msgstr ""
-"（{realTokenAllocationPercent}%\n"
-"新铸造的代币）。"
 
 #: src/components/Project/modals/ReconfigureFCModal.tsx
 msgid "0% fee"

@@ -57,9 +57,8 @@
     "lint:fix": "yarn lint --fix",
     "lint-staged": "lint-staged",
     "prepare": "husky install",
-    "prei18n:extract": "touch src/locales/en-US.po",
-    "i18n:extract": "lingui extract --locale en",
-    "i18n:compile": "yarn i18n:extract && lingui compile",
+    "i18n:extract": "lingui extract --clean",
+    "i18n:compile": "lingui compile",
     "i18n:lint": "./scripts/lint-translations.sh",
     "postinstall": "yarn i18n:compile",
     "analyze": "yarn build && source-map-explorer 'build/static/js/*.js'"

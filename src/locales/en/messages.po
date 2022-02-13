@@ -22,12 +22,8 @@ msgid "(Optional) Add a note to this payment on-chain"
 msgstr ""
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
-msgid ""
-"({realTokenAllocationPercent}%\n"
-"of all newly minted tokens)."
-msgstr ""
-"({realTokenAllocationPercent}%\n"
-"of all newly minted tokens)."
+msgid "({realTokenAllocationPercent}% of all newly minted tokens)."
+msgstr "({realTokenAllocationPercent}% of all newly minted tokens)."
 
 #: src/components/Project/modals/ReconfigureFCModal.tsx
 msgid "0% fee"
@@ -794,12 +790,8 @@ msgid "Issue ERC-20 token"
 msgstr "Issue ERC-20 token"
 
 #: src/components/Project/Rewards/IssueTickets.tsx
-msgid ""
-"Issue an ERC-20 to be used as this project's token. Once\n"
-"issued, anyone can claim their existing token balance in the new token."
-msgstr ""
-"Issue an ERC-20 to be used as this project's token. Once\n"
-"issued, anyone can claim their existing token balance in the new token."
+msgid "Issue an ERC-20 to be used as this project's token. Once issued, anyone can claim their existing token balance in the new token."
+msgstr "Issue an ERC-20 to be used as this project's token. Once issued, anyone can claim their existing token balance in the new token."
 
 #: src/components/Project/Rewards/IssueTickets.tsx
 msgid "Issue an ERC-20 token for this project. Once issued, anyone can claim their existing token balance in the new token."
@@ -1361,12 +1353,8 @@ msgid "Since you have not set a funding duration, changes to these settings will
 msgstr "Since you have not set a funding duration, changes to these settings will be applied immediately."
 
 #: src/components/FundingCycle/FundingCyclePreview.tsx
-msgid ""
-"Some funding cycle properties may indicate risk\n"
-"for project contributors."
-msgstr ""
-"Some funding cycle properties may indicate risk\n"
-"for project contributors."
+msgid "Some funding cycle properties may indicate risk for project contributors."
+msgstr "Some funding cycle properties may indicate risk for project contributors."
 
 #: src/components/Create/ConfirmDeployProject.tsx
 #: src/components/Project/modals/ReconfigureFCModal.tsx
@@ -1455,12 +1443,8 @@ msgid "The future will be led by creators, and owned by communities."
 msgstr ""
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
-msgid ""
-"The percent this individual receives of the overall {reservedRate}% \n"
-"reserved token allocation"
-msgstr ""
-"The percent this individual receives of the overall {reservedRate}% \n"
-"reserved token allocation"
+msgid "The percent this individual receives of the overall {reservedRate}% reserved token allocation"
+msgstr "The percent this individual receives of the overall {reservedRate}% reserved token allocation"
 
 #: src/constants/fundingWarningText.ts
 msgid "The project owner may mint any supply of tokens at any time, diluting the token share of all existing contributors."
@@ -2032,13 +2016,5 @@ msgid "{tokenSymbol}/ETH exchange rate on {exchangeName}."
 msgstr ""
 
 #: src/components/Project/Rewards/index.tsx
-msgid ""
-"{tokensLabel}\n"
-"are distributed to anyone who pays this project. If the project \n"
-"has set a funding target, tokens can be redeemed for a portion \n"
-"of the project's overflow whether or not they have been claimed yet."
-msgstr ""
-"{tokensLabel}\n"
-"are distributed to anyone who pays this project. If the project \n"
-"has set a funding target, tokens can be redeemed for a portion \n"
-"of the project's overflow whether or not they have been claimed yet."
+msgid "{tokensLabel} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
+msgstr "{tokensLabel} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."

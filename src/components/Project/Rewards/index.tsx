@@ -97,10 +97,7 @@ export default function Rewards() {
           title={
             <SectionHeader
               text={tokensLabel}
-              tip={t`${tokensLabel}
-                  are distributed to anyone who pays this project. If the project 
-                  has set a funding target, tokens can be redeemed for a portion 
-                  of the project's overflow whether or not they have been claimed yet.`}
+              tip={t`${tokensLabel} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet.`}
             />
           }
           valueRender={() => (

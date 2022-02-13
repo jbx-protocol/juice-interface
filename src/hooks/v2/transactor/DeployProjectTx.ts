@@ -4,8 +4,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { useContext } from 'react'
 
 import { TransactorInstance } from '../../Transactor'
-
-const METADATA_DOMAIN = 1
+import { PEEL_METADATA_DOMAIN } from 'constants/v2/metadataDomain'
 
 type V2FundingCycleData = {
   duration: number
@@ -56,7 +55,7 @@ export function useDeployProjectTx(): TransactorInstance<{
 
     const args = [
       userAddress, // _owner
-      [projectMetadataCID, METADATA_DOMAIN], // _projectMetadata (JBProjectMetadata)
+      [projectMetadataCID, PEEL_METADATA_DOMAIN], // _projectMetadata (JBProjectMetadata)
       fundingCycleData, // _data (JBFundingCycleData)
       fundingCycleMetadata, // _metadata (JBFundingCycleMetadata)
       '1', // _mustStartAtOrAfter

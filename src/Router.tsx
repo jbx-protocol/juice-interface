@@ -5,8 +5,10 @@ import V1Dashboard from 'components/v1/V1Dashboard'
 import Landing from 'components/Landing'
 import V1Create from 'components/v1/V1Create'
 import Projects from 'components/Projects'
+import V2UserProvider from 'providers/v2/UserProvider'
 
 const V2Create = lazy(() => import('components/v2/V2Create'))
+const V2Dashboard = lazy(() => import('components/v2/V2Dashboard'))
 
 function CatchallRedirect() {
   const route = useParams<{ route: string }>()['route']
@@ -23,11 +25,7 @@ export default function Router() {
         <Route path="/create">
           <V1Create />
         </Route>
-        <Route path="/create-v2">
-          <Suspense fallback={<div>Loading...</div>}>
-            <V2Create />
-          </Suspense>
-        </Route>
+
         <Route path="/projects/:owner">
           <Projects />
         </Route>
@@ -36,6 +34,18 @@ export default function Router() {
         </Route>
         <Route path="/p/:handle">
           <V1Dashboard />
+        </Route>
+        <Route path="/v2/create">
+          <Suspense fallback={<div>Loading...</div>}>
+            <V2Create />
+          </Suspense>
+        </Route>
+        <Route path="/v2/p/:projectId">
+          <Suspense fallback={<div>Loading...</div>}>
+            <V2UserProvider>
+              <V2Dashboard />
+            </V2UserProvider>
+          </Suspense>
         </Route>
         <Route path="/:route">
           <CatchallRedirect />

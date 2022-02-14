@@ -11,7 +11,6 @@ import { ThemeContext } from 'contexts/themeContext'
 
 import { helpPagePath } from 'utils/helpPageHelper'
 
-import { BigNumber } from 'ethers'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 
 import BudgetTargetInput from 'components/shared/inputs/BudgetTargetInput'
@@ -25,27 +24,22 @@ import { V2CurrencyOption } from 'models/v2/currencyOption'
 
 import { toV1Currency } from 'utils/v1/currency'
 
+import { Split } from 'models/v2/splits'
+
+import { BigNumber } from '@ethersproject/bignumber'
+
 import { V1_CURRENCY_ETH } from 'constants/v1/currency'
 import { shadowCard } from 'constants/styles/shadowCard'
 import { toV2Currency, V2_CURRENCY_ETH } from 'constants/v2/currency'
 const { Option } = Select
 
-type JBSplit = {
-  beneficiary?: string // address
-  percent: number
-  preferClaimed?: boolean
-  lockedUntil?: number
-  projectId?: BigNumber
-  allocator?: string
-}
-
 type FundingFormFields = {
   target?: number
   duration?: number
-  splits?: JBSplit[]
+  splits?: Split[]
 }
 
-const transformPayoutMod = (mod: PayoutMod): JBSplit => {
+const transformPayoutMod = (mod: PayoutMod): Split => {
   const {
     beneficiary,
     percent,
@@ -57,9 +51,9 @@ const transformPayoutMod = (mod: PayoutMod): JBSplit => {
 
   return {
     beneficiary,
-    percent,
+    percent: BigNumber.from(percent),
     preferClaimed: preferUnstaked,
-    lockedUntil,
+    lockedUntil: BigNumber.from(lockedUntil),
     projectId,
     allocator,
   }
@@ -67,7 +61,7 @@ const transformPayoutMod = (mod: PayoutMod): JBSplit => {
 
 export default function ProjectDetailsTabContent() {
   const [fundingForm] = useForm<FundingFormFields>()
-  const [splits, setSplits] = useState<JBSplit[]>([])
+  const [mods, setMods] = useState<PayoutMod[]>([])
   const [target, setTarget] = useState<number>()
   const [targetSubFee, setTargetSubFee] = useState<string>()
   const [targetCurrency, setTargetCurrency] =
@@ -85,10 +79,11 @@ export default function ProjectDetailsTabContent() {
 
   const onFundingFormSave = useCallback(
     values => {
+      const splits = mods.map(mod => transformPayoutMod(mod))
       // TODO dispatch things
       console.log(values, { ...fundingForm.getFieldsValue(), splits })
     },
-    [splits, fundingForm],
+    [mods, fundingForm],
   )
 
   const resetProjectForm = useCallback(() => {
@@ -211,12 +206,12 @@ export default function ProjectDetailsTabContent() {
           >
             <h3>Payouts</h3>
             <ProjectPayoutMods
-              mods={splits}
+              mods={mods}
               target={target?.toString() ?? '0'}
               currency={V1_CURRENCY_ETH}
               fee={ETHPaymentTerminalFee}
               onModsChanged={newMods => {
-                setSplits(newMods.map(mod => transformPayoutMod(mod)))
+                setMods(newMods)
               }}
             />
           </div>

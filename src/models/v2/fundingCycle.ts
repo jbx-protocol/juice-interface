@@ -1,26 +1,34 @@
 import { BigNumber } from '@ethersproject/bignumber'
 
 export type V2FundingCycleData = {
-  duration: number
+  duration: BigNumber
   weight: BigNumber
-  discountRate: number
+  discountRate: BigNumber
   ballot: string // hex, contract address
 }
 
 export type V2FundingCycleMetadata = {
-  reservedRate: number
-  redemptionRate: number
-  ballotRedemptionRate: number
-  pausePay: number
-  pauseDistributions: number
-  pauseRedeem: number
-  pauseMint: number
-  pauseBurn: number
-  allowTerminalMigration: number
-  allowControllerMigration: number
-  holdFees: number
-  useLocalBalanceForRedemptions: number
-  useDataSourceForPay: number
-  useDataSourceForRedeem: number
+  reservedRate: BigNumber
+  redemptionRate: BigNumber
+  ballotRedemptionRate: BigNumber
+  pausePay: BigNumber
+  pauseDistributions: BigNumber
+  pauseRedeem: BigNumber
+  pauseMint: BigNumber
+  pauseBurn: BigNumber
+  allowTerminalMigration: BigNumber
+  allowControllerMigration: BigNumber
+  holdFees: BigNumber
+  useLocalBalanceForRedemptions: BigNumber
+  useDataSourceForPay: BigNumber
+  useDataSourceForRedeem: BigNumber
   dataSource: string // hex, contract address
+}
+
+export type V2FundAccessConstraints = {
+  terminal: string // address probably
+  distributionLimit: BigNumber
+  distributionLimitCurrency: BigNumber
+  overflowAllowance: BigNumber
+  overflowAllowanceCurrency: BigNumber
 }

@@ -2,6 +2,7 @@ import { NetworkContext } from 'contexts/networkContext'
 import { V2UserContext } from 'contexts/v2/userContext'
 import { useContext } from 'react'
 import {
+  V2FundAccessConstraints,
   V2FundingCycleData,
   V2FundingCycleMetadata,
 } from 'models/v2/fundingCycle'
@@ -13,12 +14,18 @@ export function useDeployProjectTx(): TransactorInstance<{
   projectMetadataCID: string
   fundingCycleData: V2FundingCycleData
   fundingCycleMetadata: V2FundingCycleMetadata
+  fundAccessConstraints: V2FundAccessConstraints[]
 }> {
   const { transactor, contracts } = useContext(V2UserContext)
   const { userAddress } = useContext(NetworkContext)
 
   return (
-    { projectMetadataCID, fundingCycleData, fundingCycleMetadata },
+    {
+      projectMetadataCID,
+      fundingCycleData,
+      fundingCycleMetadata,
+      fundAccessConstraints,
+    },
     txOpts,
   ) => {
     if (
@@ -38,7 +45,7 @@ export function useDeployProjectTx(): TransactorInstance<{
       fundingCycleMetadata, // _metadata (JBFundingCycleMetadata)
       '1', // _mustStartAtOrAfter
       [], // _groupedSplits,
-      [], // _fundAccessConstraints,
+      fundAccessConstraints, // _fundAccessConstraints,
       [contracts.JBETHPaymentTerminal.address], //  _terminals (contract address of the JBETHPaymentTerminal)
     ]
 

@@ -27,7 +27,9 @@ export default function ConfirmDeployV2ProjectModal({
   confirmLoading?: boolean
 }) {
   const { signerNetwork, userAddress } = useContext(NetworkContext)
-  const editingV2Project = useAppSelector(state => state.editingV2Project.info)
+  const projectMetadata = useAppSelector(
+    state => state.editingV2Project.projectMetadata,
+  )
 
   const isMobile = useMobile()
 
@@ -64,8 +66,8 @@ export default function ConfirmDeployV2ProjectModal({
               <Statistic title={t`Logo`} value={' '} />
               <div style={{ marginTop: -20 }}>
                 <ProjectLogo
-                  uri={editingV2Project?.metadata.logoUri}
-                  name={editingV2Project?.metadata.name}
+                  uri={projectMetadata.logoUri}
+                  name={projectMetadata.name}
                   size={isMobile ? 50 : 80}
                 />
               </div>
@@ -73,22 +75,14 @@ export default function ConfirmDeployV2ProjectModal({
             <Col md={6} xs={24}>
               <Statistic
                 title={t`Name`}
-                value={orEmpty(editingV2Project?.metadata.name)}
-              />
-            </Col>
-            <Col md={6} xs={24}>
-              <Statistic
-                title={t`Handle`}
-                value={t`@` + orEmpty(editingV2Project?.handle)}
+                value={orEmpty(projectMetadata.name)}
               />
             </Col>
             <Col md={7} xs={24}>
               <Statistic
                 title={t`Pay button`}
                 value={
-                  editingV2Project?.metadata.payButton
-                    ? editingV2Project?.metadata.payButton
-                    : t`Pay`
+                  projectMetadata.payButton ? projectMetadata.payButton : t`Pay`
                 }
               />
             </Col>
@@ -98,8 +92,8 @@ export default function ConfirmDeployV2ProjectModal({
               <Statistic
                 title={t`Twitter`}
                 value={
-                  editingV2Project?.metadata.twitter
-                    ? '@' + editingV2Project.metadata.twitter
+                  projectMetadata.twitter
+                    ? '@' + projectMetadata.twitter
                     : orEmpty(undefined)
                 }
               />
@@ -107,13 +101,13 @@ export default function ConfirmDeployV2ProjectModal({
             <Col md={9} xs={24}>
               <Statistic
                 title={t`Discord`}
-                value={orEmpty(editingV2Project?.metadata.discord)}
+                value={orEmpty(projectMetadata.discord)}
               />
             </Col>
             <Col md={9} xs={24}>
               <Statistic
                 title={t`Website`}
-                value={orEmpty(editingV2Project?.metadata.infoUri)}
+                value={orEmpty(projectMetadata.infoUri)}
               />
             </Col>
           </Row>
@@ -122,7 +116,7 @@ export default function ConfirmDeployV2ProjectModal({
             <Col md={24} xs={24}>
               <Statistic
                 title={t`Pay disclosure`}
-                value={orEmpty(editingV2Project?.metadata.payDisclosure)}
+                value={orEmpty(projectMetadata.payDisclosure)}
               />
             </Col>
           </Row>

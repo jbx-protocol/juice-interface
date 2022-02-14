@@ -1,78 +1,72 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { constants } from 'ethers'
-import { V1CurrencyOption } from 'models/v1/currencyOption'
-import { PayoutMod, TicketMod } from 'models/mods'
+import * as constants from '@ethersproject/constants'
 import { ProjectMetadataV3 } from 'models/project-metadata'
 import {
-  fromPerbicent,
-  fromPermille,
-  parsePerbicent,
-  parsePermille,
-} from 'utils/formatNumber'
-import {
-  SerializedFundingCycle,
-  serializeFundingCycle,
-} from 'utils/serializers'
+  V2FundAccessConstraints,
+  V2FundingCycleData,
+  V2FundingCycleMetadata,
+} from 'models/v2/fundingCycle'
 
-interface EditingV2ProjectInfo {
-  metadata: ProjectMetadataV3
-  handle: string
-}
+import { Split } from 'models/v2/splits'
 
 export interface EditingV2ProjectState {
   version: number
-  info: EditingV2ProjectInfo
-  fundingCycle: SerializedFundingCycle
-  payoutMods: PayoutMod[]
-  ticketMods: TicketMod[]
+  projectMetadata: ProjectMetadataV3
+  fundingCycleData: V2FundingCycleData
+  fundingCycleMetadata: V2FundingCycleMetadata
+  fundAccessConstraints: V2FundAccessConstraints[]
+  payoutSplits: Split[]
+  reserveTokenSplits: Split[]
 }
 
-const defaultDiscountRate = parsePermille(0)
-const defaultBondingCurveRate = parsePerbicent(100)
+const defaultProjectMetadataState: ProjectMetadataV3 = {
+  name: '',
+  infoUri: '',
+  logoUri: '',
+  description: '',
+  twitter: '',
+  discord: '',
+  tokens: [],
+  version: 3,
+}
+
+const defaultFundingCycleData: V2FundingCycleData = {
+  duration: BigNumber.from(0),
+  weight: BigNumber.from('1' + '0'.repeat(18)), // 1,000,000 of your project's tokens will be minted per ETH received
+  discountRate: BigNumber.from(0),
+  ballot: constants.AddressZero,
+}
+
+const defaultFundingCycleMetadata: V2FundingCycleMetadata = {
+  reservedRate: BigNumber.from(0),
+  redemptionRate: BigNumber.from(0),
+  ballotRedemptionRate: BigNumber.from(0),
+  pausePay: BigNumber.from(0),
+  pauseDistributions: BigNumber.from(0),
+  pauseRedeem: BigNumber.from(0),
+  pauseMint: BigNumber.from(0),
+  pauseBurn: BigNumber.from(0),
+  allowTerminalMigration: BigNumber.from(0),
+  allowControllerMigration: BigNumber.from(0),
+  holdFees: BigNumber.from(0),
+  useLocalBalanceForRedemptions: BigNumber.from(0),
+  useDataSourceForPay: BigNumber.from(0),
+  useDataSourceForRedeem: BigNumber.from(0),
+  dataSource: constants.AddressZero,
+}
 
 export const defaultProjectState: EditingV2ProjectState = {
   // Increment this version by 1 when making breaking changes.
   // When users return to the site and their local version is less than
   // this number, their state will be reset.
   version: 1,
-  info: {
-    metadata: {
-      name: '',
-      infoUri: '',
-      logoUri: '',
-      description: '',
-      twitter: '',
-      discord: '',
-      tokens: [],
-      version: 3,
-    },
-    handle: '',
-  },
-  fundingCycle: serializeFundingCycle({
-    id: BigNumber.from(1),
-    projectId: BigNumber.from(0),
-    number: BigNumber.from(1),
-    basedOn: BigNumber.from(0),
-    target: constants.MaxUint256,
-    currency: BigNumber.from(1),
-    start: BigNumber.from(Math.floor(new Date().valueOf() / 1000)),
-    duration: BigNumber.from(0),
-    tapped: BigNumber.from(0),
-    weight: constants.WeiPerEther, // 1e24
-    fee: BigNumber.from(0),
-    reserved: parsePerbicent(0),
-    bondingCurveRate: defaultBondingCurveRate,
-    discountRate: defaultDiscountRate,
-    cycleLimit: BigNumber.from(0),
-    configured: BigNumber.from(0),
-    ballot: constants.AddressZero,
-    payIsPaused: false,
-    ticketPrintingIsAllowed: false,
-    treasuryExtension: constants.AddressZero,
-  }),
-  payoutMods: [],
-  ticketMods: [],
+  projectMetadata: { ...defaultProjectMetadataState },
+  fundingCycleData: { ...defaultFundingCycleData },
+  fundingCycleMetadata: { ...defaultFundingCycleMetadata },
+  fundAccessConstraints: [],
+  payoutSplits: [],
+  reserveTokenSplits: [],
 }
 
 export const editingV2ProjectSlice = createSlice({
@@ -82,91 +76,29 @@ export const editingV2ProjectSlice = createSlice({
     setState: (state, action: PayloadAction<EditingV2ProjectState>) =>
       action.payload,
     resetState: () => defaultProjectState,
-    setProjectInfo: (state, action: PayloadAction<EditingV2ProjectInfo>) => {
-      state.info = action.payload
-    },
     setName: (state, action: PayloadAction<string>) => {
-      state.info.metadata.name = action.payload
+      state.projectMetadata.name = action.payload
     },
     setInfoUri: (state, action: PayloadAction<string>) => {
-      state.info.metadata.infoUri = action.payload
+      state.projectMetadata.infoUri = action.payload
     },
     setLogoUri: (state, action: PayloadAction<string>) => {
-      state.info.metadata.logoUri = action.payload
+      state.projectMetadata.logoUri = action.payload
     },
     setTwitter: (state, action: PayloadAction<string>) => {
-      state.info.metadata.twitter = action.payload
+      state.projectMetadata.twitter = action.payload
     },
     setDiscord: (state, action: PayloadAction<string>) => {
-      state.info.metadata.discord = action.payload
+      state.projectMetadata.discord = action.payload
     },
     setPayButton: (state, action: PayloadAction<string>) => {
-      state.info.metadata.payButton = action.payload
+      state.projectMetadata.payButton = action.payload
     },
     setPayDisclosure: (state, action: PayloadAction<string>) => {
-      state.info.metadata.payDisclosure = action.payload
-    },
-    setHandle: (state, action: PayloadAction<string>) => {
-      state.info.handle = action.payload
+      state.projectMetadata.payDisclosure = action.payload
     },
     setDescription: (state, action: PayloadAction<string>) => {
-      state.info.metadata.description = action.payload
-    },
-    setFundingCycle: (state, action: PayloadAction<SerializedFundingCycle>) => {
-      state.fundingCycle = action.payload
-    },
-    setId: (state, action: PayloadAction<string>) => {
-      state.fundingCycle.id = action.payload
-    },
-    setProjectId: (state, action: PayloadAction<string>) => {
-      state.fundingCycle.projectId = action.payload
-    },
-    setNumber: (state, action: PayloadAction<string>) => {
-      state.fundingCycle.number = action.payload
-    },
-    setTarget: (state, action: PayloadAction<string>) => {
-      state.fundingCycle.target = action.payload
-    },
-    setFee: (state, action: PayloadAction<string>) => {
-      state.fundingCycle.fee = action.payload
-    },
-    setDuration: (state, action: PayloadAction<string>) => {
-      state.fundingCycle.duration = action.payload
-    },
-    setReserved: (state, action: PayloadAction<string>) => {
-      state.fundingCycle.reserved = action.payload
-    },
-    setDiscountRate: (state, action: PayloadAction<string>) => {
-      state.fundingCycle.discountRate = action.payload
-    },
-    setBondingCurveRate: (state, action: PayloadAction<string>) => {
-      state.fundingCycle.bondingCurveRate = action.payload
-    },
-    setCurrency: (state, action: PayloadAction<V1CurrencyOption>) => {
-      state.fundingCycle.currency = action.payload.toString()
-    },
-    setBallot: (state, action: PayloadAction<string>) => {
-      state.fundingCycle.ballot = action.payload
-    },
-    setIsRecurring: (state, action: PayloadAction<boolean>) => {
-      state.fundingCycle.discountRate = fromPermille(
-        action.payload ? defaultDiscountRate : '201',
-      )
-      state.fundingCycle.bondingCurveRate = fromPerbicent(
-        action.payload ? defaultBondingCurveRate : 0,
-      )
-    },
-    setPayIsPaused: (state, action: PayloadAction<boolean>) => {
-      state.fundingCycle.payIsPaused = action.payload
-    },
-    setTicketPrintingIsAllowed: (state, action: PayloadAction<boolean>) => {
-      state.fundingCycle.ticketPrintingIsAllowed = action.payload
-    },
-    setPayoutMods: (state, action: PayloadAction<PayoutMod[]>) => {
-      state.payoutMods = action.payload
-    },
-    setTicketMods: (state, action: PayloadAction<TicketMod[]>) => {
-      state.ticketMods = action.payload
+      state.projectMetadata.description = action.payload
     },
   },
 })

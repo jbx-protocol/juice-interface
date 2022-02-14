@@ -11,9 +11,7 @@ import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 export default function ProjectDetailsTabContent() {
   const [projectForm] = useForm<ProjectDetailsFormFields>()
   const dispatch = useAppDispatch()
-  const { info: editingV2ProjectInfo } = useAppSelector(
-    state => state.editingV2Project,
-  )
+  const { projectMetadata } = useAppSelector(state => state.editingV2Project)
 
   const onProjectFormSaved = useCallback(
     (fields: ProjectDetailsFormFields) => {
@@ -31,24 +29,24 @@ export default function ProjectDetailsTabContent() {
 
   const resetProjectForm = useCallback(() => {
     projectForm.setFieldsValue({
-      name: editingV2ProjectInfo?.metadata.name ?? '',
-      infoUri: editingV2ProjectInfo?.metadata.infoUri ?? '',
-      logoUri: editingV2ProjectInfo?.metadata.logoUri ?? '',
-      description: editingV2ProjectInfo?.metadata.description ?? '',
-      twitter: editingV2ProjectInfo?.metadata.twitter ?? '',
-      discord: editingV2ProjectInfo?.metadata.discord ?? '',
-      payButton: editingV2ProjectInfo?.metadata.payButton ?? '',
-      payDisclosure: editingV2ProjectInfo?.metadata.payDisclosure ?? '',
+      name: projectMetadata.name ?? '',
+      infoUri: projectMetadata.infoUri ?? '',
+      logoUri: projectMetadata.logoUri ?? '',
+      description: projectMetadata.description ?? '',
+      twitter: projectMetadata.twitter ?? '',
+      discord: projectMetadata.discord ?? '',
+      payButton: projectMetadata.payButton ?? '',
+      payDisclosure: projectMetadata.payDisclosure ?? '',
     })
   }, [
-    editingV2ProjectInfo.metadata.name,
-    editingV2ProjectInfo?.metadata.infoUri,
-    editingV2ProjectInfo?.metadata.logoUri,
-    editingV2ProjectInfo?.metadata.description,
-    editingV2ProjectInfo?.metadata.twitter,
-    editingV2ProjectInfo?.metadata.discord,
-    editingV2ProjectInfo?.metadata.payDisclosure,
-    editingV2ProjectInfo?.metadata.payButton,
+    projectMetadata.name,
+    projectMetadata.infoUri,
+    projectMetadata.logoUri,
+    projectMetadata.description,
+    projectMetadata.twitter,
+    projectMetadata.discord,
+    projectMetadata.payDisclosure,
+    projectMetadata.payButton,
     projectForm,
   ])
 

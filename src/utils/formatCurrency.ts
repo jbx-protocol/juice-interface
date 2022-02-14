@@ -1,5 +1,5 @@
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
-import { CurrencyOption } from 'models/currency-option'
+import { CurrencyOption } from 'models/v1/currencyOption'
 
 import { parseWad } from './formatNumber'
 

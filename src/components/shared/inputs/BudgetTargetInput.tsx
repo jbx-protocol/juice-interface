@@ -1,6 +1,6 @@
 import { ThemeContext } from 'contexts/themeContext'
 import { BigNumber } from 'ethers'
-import { CurrencyOption } from 'models/currency-option'
+import { CurrencyOption } from 'models/v1/currencyOption'
 import { CSSProperties, useContext, useEffect, useState } from 'react'
 import { currencyName } from 'utils/v1/currency'
 import { fromPerbicent } from 'utils/formatNumber'

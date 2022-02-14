@@ -1,5 +1,5 @@
 import { Form } from 'antd'
-import { CurrencyOption } from 'models/currency-option'
+import { CurrencyOption } from 'models/v1/currencyOption'
 
 import { BigNumber } from 'ethers'
 

@@ -15,7 +15,7 @@ import {
 import useMobile from 'hooks/Mobile'
 
 import { useTerminalFee } from 'hooks/v1/TerminalFee'
-import { CurrencyOption } from 'models/currency-option'
+import { CurrencyOption } from 'models/v1/currencyOption'
 import { useContext } from 'react'
 import {
   formattedNum,

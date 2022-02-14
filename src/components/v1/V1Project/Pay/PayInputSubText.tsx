@@ -6,7 +6,7 @@ import { currencyName } from 'utils/v1/currency'
 import { weightedRate } from 'utils/math'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { Trans } from '@lingui/macro'
-import { CurrencyOption } from 'models/currency-option'
+import { CurrencyOption } from 'models/v1/currencyOption'
 import { useContext, useMemo } from 'react'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'

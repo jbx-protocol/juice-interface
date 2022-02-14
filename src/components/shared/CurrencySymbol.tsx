@@ -1,4 +1,4 @@
-import { CurrencyOption } from 'models/currency-option'
+import { CurrencyOption } from 'models/v1/currencyOption'
 import { CSSProperties } from 'react'
 import { currencyStyle, currencySymbol } from 'utils/v1/currency'
 

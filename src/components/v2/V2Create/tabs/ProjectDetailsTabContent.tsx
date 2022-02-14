@@ -15,17 +15,19 @@ export default function ProjectDetailsTabContent() {
     state => state.editingV2Project,
   )
 
-  const onProjectFormSaved = useCallback(() => {
-    const fields = projectForm.getFieldsValue(true)
-    dispatch(editingV2ProjectActions.setName(fields.name))
-    dispatch(editingV2ProjectActions.setInfoUri(fields.infoUri))
-    dispatch(editingV2ProjectActions.setLogoUri(fields.logoUri))
-    dispatch(editingV2ProjectActions.setDescription(fields.description))
-    dispatch(editingV2ProjectActions.setTwitter(fields.twitter))
-    dispatch(editingV2ProjectActions.setDiscord(fields.discord))
-    dispatch(editingV2ProjectActions.setPayButton(fields.payButton))
-    dispatch(editingV2ProjectActions.setPayDisclosure(fields.payDisclosure))
-  }, [dispatch, projectForm])
+  const onProjectFormSaved = useCallback(
+    (fields: ProjectDetailsFormFields) => {
+      dispatch(editingV2ProjectActions.setName(fields.name))
+      dispatch(editingV2ProjectActions.setInfoUri(fields.infoUri))
+      dispatch(editingV2ProjectActions.setLogoUri(fields.logoUri))
+      dispatch(editingV2ProjectActions.setDescription(fields.description))
+      dispatch(editingV2ProjectActions.setTwitter(fields.twitter))
+      dispatch(editingV2ProjectActions.setDiscord(fields.discord))
+      dispatch(editingV2ProjectActions.setPayButton(fields.payButton))
+      dispatch(editingV2ProjectActions.setPayDisclosure(fields.payDisclosure))
+    },
+    [dispatch],
+  )
 
   const resetProjectForm = useCallback(() => {
     projectForm.setFieldsValue({
@@ -56,14 +58,12 @@ export default function ProjectDetailsTabContent() {
   }, [resetProjectForm])
 
   return (
-    <div>
-      <Space direction="vertical" size="large">
-        <ProjectDetailsForm
-          form={projectForm}
-          onSave={onProjectFormSaved}
-          hideProjectHandle
-        />
-      </Space>
-    </div>
+    <Space direction="vertical" size="large">
+      <ProjectDetailsForm
+        form={projectForm}
+        onSave={onProjectFormSaved}
+        hideProjectHandle
+      />
+    </Space>
   )
 }

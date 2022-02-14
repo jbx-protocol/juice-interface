@@ -23,11 +23,11 @@ export default function ProjectDetailsForm({
   hideProjectHandle = false,
 }: {
   form: FormInstance<ProjectDetailsFormFields>
-  onSave: VoidFunction
+  onSave: (values: ProjectDetailsFormFields) => void
   hideProjectHandle?: boolean
 }) {
   return (
-    <Form form={form} layout="vertical">
+    <Form form={form} layout="vertical" onFinish={onSave}>
       <FormItems.ProjectName
         name="name"
         formItemProps={{
@@ -68,14 +68,7 @@ export default function ProjectDetailsForm({
         }}
       />
       <Form.Item>
-        <Button
-          htmlType="submit"
-          type="primary"
-          onClick={async () => {
-            await form.validateFields()
-            onSave()
-          }}
-        >
+        <Button htmlType="submit" type="primary">
           <Trans>Save project details</Trans>
         </Button>
       </Form.Item>

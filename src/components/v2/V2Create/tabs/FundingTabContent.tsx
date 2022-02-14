@@ -17,6 +17,10 @@ import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import BudgetTargetInput from 'components/shared/inputs/BudgetTargetInput'
 import ProjectPayoutMods from 'components/shared/formItems/ProjectPayoutMods'
 
+import { PayoutMod } from 'models/mods'
+
+import { useETHPaymentTerminalFee } from 'hooks/v2/contractReader/ETHPaymentTerminalFee'
+
 import { CURRENCY_ETH } from 'constants/currency'
 import { shadowCard } from 'constants/styles/shadowCard'
 const { Option } = Select
@@ -36,10 +40,30 @@ type FundingFormFields = {
   splits?: JBSplit[]
 }
 
+const transformPayoutMod = (mod: PayoutMod): JBSplit => {
+  const {
+    beneficiary,
+    percent,
+    preferUnstaked,
+    lockedUntil,
+    projectId,
+    allocator,
+  } = mod
+
+  return {
+    beneficiary,
+    percent,
+    preferClaimed: preferUnstaked,
+    lockedUntil,
+    projectId,
+    allocator,
+  }
+}
+
 export default function ProjectDetailsTabContent() {
   const [fundingForm] = useForm<FundingFormFields>()
   const [splits, setSplits] = useState<JBSplit[]>([])
-  const [, setTarget] = useState<number>()
+  const [target, setTarget] = useState<number>()
   const [isFundingTargetSectionVisible, setFundingTargetSectionVisible] =
     useState<boolean>()
   const [isFundingDurationVisible, setFundingDurationVisible] =
@@ -49,6 +73,7 @@ export default function ProjectDetailsTabContent() {
   // const { info: editingV2ProjectInfo } = useAppSelector(
   //   state => state.editingV2Project,
   // )
+  const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
 
   const onFundingFormSave = useCallback(
     values => {
@@ -152,7 +177,7 @@ export default function ProjectDetailsTabContent() {
                   onCurrencyChange={() => {}}
                   placeholder="0"
                   onChange={val => setTarget(parseInt(val ?? '0', 10))}
-                  fee={BigNumber.from('5')}
+                  fee={ETHPaymentTerminalFee}
                 />
               </Form.Item>
             </div>
@@ -175,32 +200,12 @@ export default function ProjectDetailsTabContent() {
             <h3>Payouts</h3>
             <ProjectPayoutMods
               mods={splits}
-              target={'10000'}
+              target={target?.toString() ?? '0'}
               currency={CURRENCY_ETH}
+              fee={ETHPaymentTerminalFee}
               onModsChanged={newMods => {
-                setSplits(
-                  newMods.map((split): JBSplit => {
-                    const {
-                      beneficiary,
-                      percent,
-                      preferUnstaked,
-                      lockedUntil,
-                      projectId,
-                      allocator,
-                    } = split
-
-                    return {
-                      beneficiary,
-                      percent,
-                      preferClaimed: preferUnstaked,
-                      lockedUntil,
-                      projectId,
-                      allocator,
-                    }
-                  }),
-                )
+                setSplits(newMods.map(mod => transformPayoutMod(mod)))
               }}
-              fee={BigNumber.from('5')}
             />
           </div>
 

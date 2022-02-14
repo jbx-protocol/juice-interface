@@ -7,7 +7,6 @@ import BudgetTargetInput from '../inputs/BudgetTargetInput'
 import { FormItemExt } from './formItemExt'
 
 export default function ProjectTarget({
-  name,
   hideLabel,
   target,
   targetSubFee,
@@ -31,14 +30,13 @@ export default function ProjectTarget({
   return (
     <Form.Item
       extra="The maximum amount of funds that can be distributed from this project in one funding cycle. Funds will be withdrawn in ETH no matter the currency you choose."
-      name={name}
       label={hideLabel ? undefined : 'Funding target'}
       {...formItemProps}
     >
       <BudgetTargetInput
         target={target}
         targetSubFee={targetSubFee}
-        onTargetChange={onTargetChange}
+        onChange={onTargetChange}
         onTargetSubFeeChange={onTargetSubFeeChange}
         currency={currency}
         onCurrencyChange={onCurrencyChange}

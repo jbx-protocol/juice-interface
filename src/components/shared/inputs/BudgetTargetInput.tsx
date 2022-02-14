@@ -12,7 +12,7 @@ export default function BudgetTargetInput({
   currency,
   target,
   targetSubFee,
-  onTargetChange,
+  onChange,
   onTargetSubFeeChange,
   onCurrencyChange,
   disabled,
@@ -22,7 +22,7 @@ export default function BudgetTargetInput({
   currency: CurrencyOption
   target: string | undefined
   targetSubFee: string | undefined
-  onTargetChange: (target?: string) => void
+  onChange?: (target?: string) => void
   onTargetSubFeeChange: (target?: string) => void
   onCurrencyChange?: (currency: CurrencyOption) => void
   disabled?: boolean
@@ -47,7 +47,7 @@ export default function BudgetTargetInput({
 
   if (_currency === undefined) return null
 
-  function renderCurrencySwitch() {
+  function CurrencySwitch() {
     if (onCurrencyChange)
       return (
         <InputAccessoryButton
@@ -75,8 +75,8 @@ export default function BudgetTargetInput({
         value={target}
         placeholder={placeholder}
         disabled={disabled}
-        accessory={renderCurrencySwitch()}
-        onChange={target => onTargetChange(target?.toString())}
+        accessory={<CurrencySwitch />}
+        onChange={target => onChange?.(target?.toString())}
       />
       {fee?.gt(0) && (
         <div style={targetSubFeeStyles}>
@@ -85,7 +85,7 @@ export default function BudgetTargetInput({
               value={targetSubFee}
               placeholder={placeholder}
               disabled={disabled}
-              accessory={renderCurrencySwitch()}
+              accessory={<CurrencySwitch />}
               onChange={newTargetSubFee =>
                 onTargetSubFeeChange(newTargetSubFee?.toString())
               }

@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/macro'
 import { Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import ProjectDetailsForm, {
@@ -58,6 +59,12 @@ export default function ProjectDetailsTabContent() {
   return (
     <div>
       <Space direction="vertical" size="large">
+        <p>
+          <Trans>
+            Changes to these attributes can be made at any time and will be
+            applied to your project immediately.
+          </Trans>
+        </p>
         <ProjectDetailsForm
           form={projectForm}
           onSave={onProjectFormSaved}

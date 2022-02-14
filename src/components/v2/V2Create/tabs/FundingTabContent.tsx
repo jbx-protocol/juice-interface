@@ -1,6 +1,5 @@
-/* eslint-disable */
 import { t, Trans } from '@lingui/macro'
-import { Select, Space, Form, InputNumber, Button } from 'antd'
+import { Select, Space, Form, Button } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 
 // import { useAppDispatch } from 'hooks/AppDispatch'
@@ -12,22 +11,35 @@ import { ThemeContext } from 'contexts/themeContext'
 
 import { helpPagePath } from 'utils/helpPageHelper'
 
-import { shadowCard } from 'constants/styles/shadowCard'
-import ProjectTarget from 'components/shared/formItems/ProjectTarget'
-import { CURRENCY_ETH } from 'constants/currency'
 import { BigNumber } from 'ethers'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
-import { format } from 'path'
+
 import BudgetTargetInput from 'components/shared/inputs/BudgetTargetInput'
+import ProjectPayoutMods from 'components/shared/formItems/ProjectPayoutMods'
+
+import { CURRENCY_ETH } from 'constants/currency'
+import { shadowCard } from 'constants/styles/shadowCard'
 const { Option } = Select
+
+type JBSplit = {
+  beneficiary?: string // address
+  percent: number
+  preferClaimed?: boolean
+  lockedUntil?: number
+  projectId?: BigNumber
+  allocator?: string
+}
 
 type FundingFormFields = {
   target?: number
   duration?: number
+  splits?: JBSplit[]
 }
 
 export default function ProjectDetailsTabContent() {
   const [fundingForm] = useForm<FundingFormFields>()
+  const [splits, setSplits] = useState<JBSplit[]>([])
+  const [, setTarget] = useState<number>()
   const [isFundingTargetSectionVisible, setFundingTargetSectionVisible] =
     useState<boolean>()
   const [isFundingDurationVisible, setFundingDurationVisible] =
@@ -38,14 +50,21 @@ export default function ProjectDetailsTabContent() {
   //   state => state.editingV2Project,
   // )
 
-  const onFundingFormSave = useCallback(values => {
-    // TODO dispatch things
-    console.log(values, fundingForm.getFieldsValue())
-  }, [])
+  const onFundingFormSave = useCallback(
+    values => {
+      // TODO dispatch things
+      console.log(values, { ...fundingForm.getFieldsValue(), splits })
+    },
+    [splits, fundingForm],
+  )
 
   const resetProjectForm = useCallback(() => {
-    // reset form fields
-  }, [])
+    fundingForm.setFieldsValue({
+      splits: [],
+      target: 0,
+      duration: 0,
+    })
+  }, [fundingForm])
 
   // initially fill form with any existing redux state
   useEffect(() => {
@@ -79,7 +98,7 @@ export default function ProjectDetailsTabContent() {
             <div
               style={{
                 padding: '1rem',
-                marginBottom: '1rem',
+                marginBottom: '10px',
                 ...shadowCard(theme),
               }}
             >
@@ -132,6 +151,7 @@ export default function ProjectDetailsTabContent() {
                   onTargetSubFeeChange={() => {}}
                   onCurrencyChange={() => {}}
                   placeholder="0"
+                  onChange={val => setTarget(parseInt(val ?? '0', 10))}
                   fee={BigNumber.from('5')}
                 />
               </Form.Item>
@@ -144,6 +164,45 @@ export default function ProjectDetailsTabContent() {
               </Trans>
             </p>
           )}
+
+          <div
+            style={{
+              padding: '1rem',
+              marginBottom: '1rem',
+              ...shadowCard(theme),
+            }}
+          >
+            <h3>Payouts</h3>
+            <ProjectPayoutMods
+              mods={splits}
+              target={'10000'}
+              currency={CURRENCY_ETH}
+              onModsChanged={newMods => {
+                setSplits(
+                  newMods.map((split): JBSplit => {
+                    const {
+                      beneficiary,
+                      percent,
+                      preferUnstaked,
+                      lockedUntil,
+                      projectId,
+                      allocator,
+                    } = split
+
+                    return {
+                      beneficiary,
+                      percent,
+                      preferClaimed: preferUnstaked,
+                      lockedUntil,
+                      projectId,
+                      allocator,
+                    }
+                  }),
+                )
+              }}
+              fee={BigNumber.from('5')}
+            />
+          </div>
 
           <Form.Item>
             <Button htmlType="submit" type="primary">

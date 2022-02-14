@@ -1,0 +1,34 @@
+.ant-menu-submenu-arrow {
+  color: var(--text-primary) !important;
+}
+
+.ant-menu-item:active,
+.ant-menu-submenu-title:active {
+  background: unset !important;
+}
+
+.ant-menu-submenu-title {
+  color: var(--text-primary) !important;
+  font-weight: 600;
+}
+
+.ant-menu-sub {
+  margin-top: -10px !important;
+}
+
+.ant-menu-inline .ant-menu-item:not(:last-child) {
+  margin-bottom: -4px !important;
+}
+
+.ant-menu-submenu-arrow {
+  position: static;
+  margin-left: 15px;
+}
+
+.nav-dropdown-item:hover {
+  background: unset !important;
+}
+
+.ant-menu-item::after {
+  display: none !important;
+}

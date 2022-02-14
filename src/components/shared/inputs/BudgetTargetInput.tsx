@@ -2,7 +2,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { BigNumber } from 'ethers'
 import { CurrencyOption } from 'models/currency-option'
 import { CSSProperties, useContext, useEffect, useState } from 'react'
-import { currencyName } from 'utils/currency'
+import { currencyName } from 'utils/v1/currency'
 import { fromPerbicent } from 'utils/formatNumber'
 
 import InputAccessoryButton from '../InputAccessoryButton'

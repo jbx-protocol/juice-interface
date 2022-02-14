@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { formatWad } from 'utils/formatNumber'
 import { parseEther } from 'ethers/lib/utils'
 import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
-import { currencyName } from 'utils/currency'
+import { currencyName } from 'utils/v1/currency'
 import { weightedRate } from 'utils/math'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { Trans } from '@lingui/macro'
@@ -16,7 +16,7 @@ import AMMPrices from 'components/shared/AMMPrices'
 
 import TooltipIcon from 'components/shared/TooltipIcon'
 
-import { CURRENCY_ETH } from 'constants/currency'
+import { CURRENCY_ETH } from 'constants/v1/currency'
 
 /**
  * Help text shown below the Pay input field.

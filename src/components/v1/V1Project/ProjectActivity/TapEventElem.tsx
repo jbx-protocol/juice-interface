@@ -10,7 +10,7 @@ import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
 
-import { CURRENCY_ETH } from 'constants/currency'
+import { CURRENCY_ETH } from 'constants/v1/currency'
 
 import { smallHeaderStyle } from '../styles'
 

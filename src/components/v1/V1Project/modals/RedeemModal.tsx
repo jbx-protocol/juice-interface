@@ -18,7 +18,7 @@ import { formattedNum, formatWad, fromWad, parseWad } from 'utils/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
-import { CURRENCY_ETH, CURRENCY_USD } from 'constants/currency'
+import { CURRENCY_ETH, CURRENCY_USD } from 'constants/v1/currency'
 
 // This double as the 'Redeem' and 'Burn' modal depending on if project has overflow
 export default function RedeemModal({

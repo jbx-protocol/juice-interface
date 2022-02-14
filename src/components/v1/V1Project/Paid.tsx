@@ -20,7 +20,7 @@ import { hasFundingTarget } from 'utils/fundingCycle'
 
 import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
 import { readNetwork } from 'constants/networks'
-import { CURRENCY_ETH, CURRENCY_USD } from 'constants/currency'
+import { CURRENCY_ETH, CURRENCY_USD } from 'constants/v1/currency'
 
 import BalancesModal from './modals/BalancesModal'
 

@@ -5,7 +5,7 @@ import { useEthBalanceQuery } from 'hooks/EthBalance'
 import { useContext } from 'react'
 import { formatWad } from 'utils/formatNumber'
 
-import { CURRENCY_ETH } from 'constants/currency'
+import { CURRENCY_ETH } from 'constants/v1/currency'
 
 import CurrencySymbol from '../shared/CurrencySymbol'
 

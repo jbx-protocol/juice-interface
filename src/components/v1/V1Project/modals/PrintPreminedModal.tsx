@@ -9,7 +9,7 @@ import { usePrintTokensTx } from 'hooks/v1/transactor/PrintTokensTx'
 import { useContext, useMemo, useState } from 'react'
 import { parseWad } from 'utils/formatNumber'
 
-import { CURRENCY_ETH } from 'constants/currency'
+import { CURRENCY_ETH } from 'constants/v1/currency'
 
 export default function PrintPreminedModal({
   visible,

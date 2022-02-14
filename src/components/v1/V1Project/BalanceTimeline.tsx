@@ -30,7 +30,7 @@ import { querySubgraph } from 'utils/graph'
 import { readProvider } from 'constants/readProvider'
 
 import SectionHeader from './SectionHeader'
-import { CURRENCY_ETH } from 'constants/currency'
+import { CURRENCY_ETH } from 'constants/v1/currency'
 
 const now = moment.now() - 5 * 60 * 1000 // 5 min ago
 

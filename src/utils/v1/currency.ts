@@ -1,7 +1,7 @@
 import { CurrencyOption } from 'models/currency-option'
 import { CSSProperties } from 'react'
 
-import { CURRENCY_ETH, CURRENCY_USD } from 'constants/currency'
+import { CURRENCY_ETH, CURRENCY_USD } from 'constants/v1/currency'
 
 const currencies: Record<
   CurrencyOption,

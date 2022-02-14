@@ -14,11 +14,11 @@ import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
 import { useTapProjectTx } from 'hooks/v1/transactor/TapProjectTx'
 import { CurrencyOption } from 'models/currency-option'
 import { useContext, useEffect, useState } from 'react'
-import { currencyName } from 'utils/currency'
+import { currencyName } from 'utils/v1/currency'
 import { formatWad, fromPerbicent, fromWad, parseWad } from 'utils/formatNumber'
 import { amountSubFee, feeForAmount } from 'utils/math'
 
-import { CURRENCY_ETH, CURRENCY_USD } from 'constants/currency'
+import { CURRENCY_ETH, CURRENCY_USD } from 'constants/v1/currency'
 
 export default function WithdrawModal({
   visible,

@@ -1,7 +1,6 @@
-import { Form } from 'antd'
-import { t } from '@lingui/macro'
+import { Form, InputNumber, Switch } from 'antd'
+import { t, Trans } from '@lingui/macro'
 
-import NumberSlider from '../inputs/NumberSlider'
 import { FormItemExt } from './formItemExt'
 
 export default function ProjectDiscountRate({
@@ -11,27 +10,39 @@ export default function ProjectDiscountRate({
   value,
   onChange,
   disabled,
+  toggleDisabled,
 }: {
   value: string | undefined
   onChange: (val?: number) => void
+  disabled?: boolean
+  toggleDisabled?: (checked: boolean) => void
 } & FormItemExt) {
   return (
     <Form.Item
       extra={t`The ratio of tokens rewarded per payment amount will decrease by this percentage with each new funding cycle. A higher discount rate will incentivize supporters to pay your project earlier than later.`}
       name={name}
-      label={hideLabel ? undefined : t`Discount rate`}
+      label={
+        hideLabel ? undefined : (
+          <div>
+            <Trans>Discount rate</Trans>{' '}
+            <Switch checked={!disabled} onChange={toggleDisabled} />
+          </div>
+        )
+      }
       {...formItemProps}
     >
-      <NumberSlider
-        max={20}
-        defaultValue={0}
-        sliderValue={parseFloat(value ?? '0')}
-        suffix="%"
-        name={name}
-        onChange={onChange}
-        step={0.1}
-        disabled={disabled}
-      />
+      {!disabled ? (
+        <div>
+          <InputNumber
+            onChange={val => onChange(parseFloat(val))}
+            defaultValue={value ?? '0'}
+            formatter={(val?: string | number | undefined) => {
+              let _val = val?.toString() ?? '0'
+              return `${_val ?? ''}%`
+            }}
+          />
+        </div>
+      ) : null}
     </Form.Item>
   )
 }

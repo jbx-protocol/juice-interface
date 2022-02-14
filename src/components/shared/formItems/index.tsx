@@ -1,5 +1,5 @@
 import EthAddress from './EthAddress'
-import ProjectBondingCurveRate from './ProjectBondingCurveRate'
+import ProjectBondingCurveRate from './BondingCurve/ProjectBondingCurveRate'
 import ProjectDescription from './ProjectDescription'
 import ProjectDiscord from './ProjectDiscord'
 import ProjectDiscountRate from './ProjectDiscountRate'

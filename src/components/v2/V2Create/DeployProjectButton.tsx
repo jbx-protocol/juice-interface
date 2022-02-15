@@ -18,6 +18,17 @@ export default function DeployProjectButton() {
   } = useAppSelector(state => state.editingV2Project)
 
   const deployProject = useCallback(async () => {
+    if (
+      !(
+        projectMetadata &&
+        fundingCycleData &&
+        fundingCycleMetadata &&
+        fundAccessConstraints
+      )
+    ) {
+      throw new Error('Error deploying project.')
+    }
+
     // Upload project metadata
     const uploadedMetadata = await uploadProjectMetadata(projectMetadata)
 
@@ -53,7 +64,7 @@ export default function DeployProjectButton() {
       <Button
         onClick={() => setDeployProjectModalVisible(true)}
         type="primary"
-        disabled={!projectMetadata.name}
+        disabled={!projectMetadata?.name}
       >
         <Trans>Review & Deploy</Trans>
       </Button>

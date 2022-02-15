@@ -12,6 +12,16 @@ import { Split } from 'models/v2/splits'
 
 export interface EditingV2ProjectState {
   version: number
+  projectMetadata?: ProjectMetadataV3
+  fundingCycleData?: V2FundingCycleData
+  fundingCycleMetadata?: V2FundingCycleMetadata
+  fundAccessConstraints?: V2FundAccessConstraints[]
+  payoutSplits?: Split[]
+  reserveTokenSplits?: Split[]
+}
+
+export interface V2ProjectState {
+  version: number
   projectMetadata: ProjectMetadataV3
   fundingCycleData: V2FundingCycleData
   fundingCycleMetadata: V2FundingCycleMetadata
@@ -56,7 +66,7 @@ const defaultFundingCycleMetadata: V2FundingCycleMetadata = {
   dataSource: constants.AddressZero,
 }
 
-export const defaultProjectState: EditingV2ProjectState = {
+export const defaultProjectState: V2ProjectState = {
   // Increment this version by 1 when making breaking changes.
   // When users return to the site and their local version is less than
   // this number, their state will be reset.
@@ -73,8 +83,7 @@ export const editingV2ProjectSlice = createSlice({
   name: 'editingV2Project',
   initialState: defaultProjectState,
   reducers: {
-    setState: (state, action: PayloadAction<EditingV2ProjectState>) =>
-      action.payload,
+    setState: (state, action: PayloadAction<V2ProjectState>) => action.payload,
     resetState: () => defaultProjectState,
     setName: (state, action: PayloadAction<string>) => {
       state.projectMetadata.name = action.payload
@@ -99,6 +108,18 @@ export const editingV2ProjectSlice = createSlice({
     },
     setDescription: (state, action: PayloadAction<string>) => {
       state.projectMetadata.description = action.payload
+    },
+    setDuration: (state, action: PayloadAction<BigNumber>) => {
+      state.fundingCycleData.duration = action.payload
+    },
+    setFundAccessConstraints: (
+      state,
+      action: PayloadAction<V2FundAccessConstraints[]>,
+    ) => {
+      state.fundAccessConstraints = action.payload
+    },
+    setPayoutSplits: (state, action: PayloadAction<Split[]>) => {
+      state.payoutSplits = action.payload
     },
   },
 })

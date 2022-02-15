@@ -66,8 +66,8 @@ export default function ConfirmDeployV2ProjectModal({
               <Statistic title={t`Logo`} value={' '} />
               <div style={{ marginTop: -20 }}>
                 <ProjectLogo
-                  uri={projectMetadata.logoUri}
-                  name={projectMetadata.name}
+                  uri={projectMetadata?.logoUri}
+                  name={projectMetadata?.name}
                   size={isMobile ? 50 : 80}
                 />
               </div>
@@ -75,14 +75,16 @@ export default function ConfirmDeployV2ProjectModal({
             <Col md={6} xs={24}>
               <Statistic
                 title={t`Name`}
-                value={orEmpty(projectMetadata.name)}
+                value={orEmpty(projectMetadata?.name)}
               />
             </Col>
             <Col md={7} xs={24}>
               <Statistic
                 title={t`Pay button`}
                 value={
-                  projectMetadata.payButton ? projectMetadata.payButton : t`Pay`
+                  projectMetadata?.payButton
+                    ? projectMetadata?.payButton
+                    : t`Pay`
                 }
               />
             </Col>
@@ -92,8 +94,8 @@ export default function ConfirmDeployV2ProjectModal({
               <Statistic
                 title={t`Twitter`}
                 value={
-                  projectMetadata.twitter
-                    ? '@' + projectMetadata.twitter
+                  projectMetadata?.twitter
+                    ? '@' + projectMetadata?.twitter
                     : orEmpty(undefined)
                 }
               />
@@ -101,13 +103,13 @@ export default function ConfirmDeployV2ProjectModal({
             <Col md={9} xs={24}>
               <Statistic
                 title={t`Discord`}
-                value={orEmpty(projectMetadata.discord)}
+                value={orEmpty(projectMetadata?.discord)}
               />
             </Col>
             <Col md={9} xs={24}>
               <Statistic
                 title={t`Website`}
-                value={orEmpty(projectMetadata.infoUri)}
+                value={orEmpty(projectMetadata?.infoUri)}
               />
             </Col>
           </Row>
@@ -116,7 +118,7 @@ export default function ConfirmDeployV2ProjectModal({
             <Col md={24} xs={24}>
               <Statistic
                 title={t`Pay disclosure`}
-                value={orEmpty(projectMetadata.payDisclosure)}
+                value={orEmpty(projectMetadata?.payDisclosure)}
               />
             </Col>
           </Row>

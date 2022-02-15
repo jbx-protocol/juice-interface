@@ -29,24 +29,24 @@ export default function ProjectDetailsTabContent() {
 
   const resetProjectForm = useCallback(() => {
     projectForm.setFieldsValue({
-      name: projectMetadata.name ?? '',
-      infoUri: projectMetadata.infoUri ?? '',
-      logoUri: projectMetadata.logoUri ?? '',
-      description: projectMetadata.description ?? '',
-      twitter: projectMetadata.twitter ?? '',
-      discord: projectMetadata.discord ?? '',
-      payButton: projectMetadata.payButton ?? '',
-      payDisclosure: projectMetadata.payDisclosure ?? '',
+      name: projectMetadata?.name ?? '',
+      infoUri: projectMetadata?.infoUri ?? '',
+      logoUri: projectMetadata?.logoUri ?? '',
+      description: projectMetadata?.description ?? '',
+      twitter: projectMetadata?.twitter ?? '',
+      discord: projectMetadata?.discord ?? '',
+      payButton: projectMetadata?.payButton ?? '',
+      payDisclosure: projectMetadata?.payDisclosure ?? '',
     })
   }, [
-    projectMetadata.name,
-    projectMetadata.infoUri,
-    projectMetadata.logoUri,
-    projectMetadata.description,
-    projectMetadata.twitter,
-    projectMetadata.discord,
-    projectMetadata.payDisclosure,
-    projectMetadata.payButton,
+    projectMetadata?.name,
+    projectMetadata?.infoUri,
+    projectMetadata?.logoUri,
+    projectMetadata?.description,
+    projectMetadata?.twitter,
+    projectMetadata?.discord,
+    projectMetadata?.payDisclosure,
+    projectMetadata?.payButton,
     projectForm,
   ])
 

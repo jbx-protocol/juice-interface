@@ -1,6 +1,6 @@
 import { ThemeContext } from 'contexts/themeContext'
 import { BigNumber } from 'ethers'
-import { CurrencyOption } from 'models/v1/currencyOption'
+import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { CSSProperties, useContext, useEffect, useState } from 'react'
 import { currencyName } from 'utils/v1/currency'
 import { fromPerbicent } from 'utils/formatNumber'
@@ -19,12 +19,12 @@ export default function BudgetTargetInput({
   placeholder,
   fee,
 }: {
-  currency: CurrencyOption
+  currency: V1CurrencyOption
   target: string | undefined
   targetSubFee: string | undefined
   onChange?: (target?: string) => void
   onTargetSubFeeChange: (target?: string) => void
-  onCurrencyChange?: (currency: CurrencyOption) => void
+  onCurrencyChange?: (currency: V1CurrencyOption) => void
   disabled?: boolean
   placeholder?: string
   fee: BigNumber | undefined
@@ -41,7 +41,7 @@ export default function BudgetTargetInput({
     alignItems: 'center',
   }
 
-  const [_currency, setCurrency] = useState<CurrencyOption>()
+  const [_currency, setCurrency] = useState<V1CurrencyOption>()
 
   useEffect(() => setCurrency(currency), [currency])
 

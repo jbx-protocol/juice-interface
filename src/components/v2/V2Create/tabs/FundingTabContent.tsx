@@ -21,8 +21,13 @@ import { PayoutMod } from 'models/mods'
 
 import { useETHPaymentTerminalFee } from 'hooks/v2/contractReader/ETHPaymentTerminalFee'
 
-import { CURRENCY_ETH } from 'constants/v1/currency'
+import { V2CurrencyOption } from 'models/v2/currencyOption'
+
+import { toV1Currency } from 'utils/v1/currency'
+
+import { V1_CURRENCY_ETH } from 'constants/v1/currency'
 import { shadowCard } from 'constants/styles/shadowCard'
+import { toV2Currency, V2_CURRENCY_ETH } from 'constants/v2/currency'
 const { Option } = Select
 
 type JBSplit = {
@@ -64,6 +69,9 @@ export default function ProjectDetailsTabContent() {
   const [fundingForm] = useForm<FundingFormFields>()
   const [splits, setSplits] = useState<JBSplit[]>([])
   const [target, setTarget] = useState<number>()
+  const [targetSubFee, setTargetSubFee] = useState<string>()
+  const [targetCurrency, setTargetCurrency] =
+    useState<V2CurrencyOption>(V2_CURRENCY_ETH)
   const [isFundingTargetSectionVisible, setFundingTargetSectionVisible] =
     useState<boolean>()
   const [isFundingDurationVisible, setFundingDurationVisible] =
@@ -168,13 +176,17 @@ export default function ProjectDetailsTabContent() {
                 </Form.Item>
               )}
 
-              <Form.Item name={'target'} label={t`Funding target`} required>
+              <Form.Item name="target" label={t`Funding target`} required>
                 <BudgetTargetInput
                   target={fundingForm.getFieldValue('target')}
-                  targetSubFee={'1000'}
-                  currency={CURRENCY_ETH}
-                  onTargetSubFeeChange={() => {}}
-                  onCurrencyChange={() => {}}
+                  targetSubFee={targetSubFee}
+                  currency={toV1Currency(targetCurrency)}
+                  onTargetSubFeeChange={val => {
+                    setTargetSubFee(val)
+                  }}
+                  onCurrencyChange={val => {
+                    setTargetCurrency(toV2Currency(val))
+                  }}
                   placeholder="0"
                   onChange={val => setTarget(parseInt(val ?? '0', 10))}
                   fee={ETHPaymentTerminalFee}
@@ -201,7 +213,7 @@ export default function ProjectDetailsTabContent() {
             <ProjectPayoutMods
               mods={splits}
               target={target?.toString() ?? '0'}
-              currency={CURRENCY_ETH}
+              currency={V1_CURRENCY_ETH}
               fee={ETHPaymentTerminalFee}
               onModsChanged={newMods => {
                 setSplits(newMods.map(mod => transformPayoutMod(mod)))

@@ -21,7 +21,7 @@ import useUriOfProject from 'hooks/v1/contractReader/UriOfProject'
 import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { useProjectsQuery } from 'hooks/v1/Projects'
-import { CurrencyOption } from 'models/v1/currencyOption'
+import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useEffect, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 import { getTerminalName, getTerminalVersion } from 'utils/v1/terminals'
@@ -74,7 +74,7 @@ export default function V1Dashboard() {
       balance &&
       converter.wadToCurrency(
         balance,
-        currentFC?.currency.toNumber() as CurrencyOption,
+        currentFC?.currency.toNumber() as V1CurrencyOption,
         0,
       ),
     [balance, converter, currentFC],

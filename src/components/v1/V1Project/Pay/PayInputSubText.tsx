@@ -6,7 +6,7 @@ import { currencyName } from 'utils/v1/currency'
 import { weightedRate } from 'utils/math'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { Trans } from '@lingui/macro'
-import { CurrencyOption } from 'models/v1/currencyOption'
+import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useContext, useMemo } from 'react'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
@@ -16,7 +16,7 @@ import AMMPrices from 'components/shared/AMMPrices'
 
 import TooltipIcon from 'components/shared/TooltipIcon'
 
-import { CURRENCY_ETH } from 'constants/v1/currency'
+import { V1_CURRENCY_ETH } from 'constants/v1/currency'
 
 /**
  * Help text shown below the Pay input field.
@@ -30,7 +30,7 @@ export default function PayInputSubText({
   payInCurrrency,
   weiPayAmt,
 }: {
-  payInCurrrency: CurrencyOption
+  payInCurrrency: V1CurrencyOption
   weiPayAmt: BigNumber | undefined
 }) {
   const { currentFC, tokenSymbol, tokenAddress } = useContext(V1ProjectContext)
@@ -56,7 +56,7 @@ export default function PayInputSubText({
     }
 
     const receivedTickets = formatReceivedTickets(
-      (payInCurrrency === CURRENCY_ETH
+      (payInCurrrency === V1_CURRENCY_ETH
         ? parseEther('1')
         : converter.usdToWei('1')) ?? BigNumber.from(0),
     )

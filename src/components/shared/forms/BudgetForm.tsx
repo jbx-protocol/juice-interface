@@ -11,7 +11,7 @@ import { constants } from 'ethers'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useEditingFundingCycleSelector } from 'hooks/AppSelector'
 import { useTerminalFee } from 'hooks/v1/TerminalFee'
-import { CurrencyOption } from 'models/v1/currencyOption'
+import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useContext, useLayoutEffect, useMemo, useState } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
 import { fromWad, parseWad } from 'utils/formatNumber'
@@ -26,16 +26,16 @@ export default function BudgetForm({
   initialDuration,
   onSave,
 }: {
-  initialCurrency: CurrencyOption
+  initialCurrency: V1CurrencyOption
   initialTarget: string
   initialDuration: string
-  onSave: (currency: CurrencyOption, target: string, duration: string) => void
+  onSave: (currency: V1CurrencyOption, target: string, duration: string) => void
 }) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
   // State objects avoid antd form input dependency rerendering issues
-  const [currency, setCurrency] = useState<CurrencyOption>(0)
+  const [currency, setCurrency] = useState<V1CurrencyOption>(0)
   const [target, setTarget] = useState<string>('0')
   const [targetSubFee, setTargetSubFee] = useState<string>('0')
   const [duration, setDuration] = useState<string>('0')

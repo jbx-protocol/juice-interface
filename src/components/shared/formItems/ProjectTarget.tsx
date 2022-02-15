@@ -1,5 +1,5 @@
 import { Form } from 'antd'
-import { CurrencyOption } from 'models/v1/currencyOption'
+import { V1CurrencyOption } from 'models/v1/currencyOption'
 
 import { BigNumber } from 'ethers'
 
@@ -22,8 +22,8 @@ export default function ProjectTarget({
   targetSubFee: string | undefined
   onTargetChange: (val: string | undefined) => void
   onTargetSubFeeChange: (val: string | undefined) => void
-  currency: CurrencyOption
-  onCurrencyChange: (val: CurrencyOption) => void
+  currency: V1CurrencyOption
+  onCurrencyChange: (val: V1CurrencyOption) => void
   disabled?: boolean
   fee?: BigNumber
 } & FormItemExt) {

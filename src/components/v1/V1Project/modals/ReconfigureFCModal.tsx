@@ -19,7 +19,7 @@ import { useAppDispatch } from 'hooks/AppDispatch'
 import { useEditingFundingCycleSelector } from 'hooks/AppSelector'
 import { useTerminalFee } from 'hooks/v1/TerminalFee'
 import { useConfigureProjectTx } from 'hooks/v1/transactor/ConfigureProjectTx'
-import { CurrencyOption } from 'models/v1/currencyOption'
+import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { V1FundingCycleMetadata } from 'models/v1/fundingCycle'
 import { PayoutMod, TicketMod } from 'models/mods'
 import React, {
@@ -117,7 +117,7 @@ export default function ReconfigureFCModal({
   const onPayModsFormSaved = (mods: PayoutMod[]) => setEditingPayoutMods(mods)
 
   const onBudgetFormSaved = (
-    currency: CurrencyOption,
+    currency: V1CurrencyOption,
     target: string,
     duration: string,
   ) => {
@@ -392,7 +392,9 @@ export default function ReconfigureFCModal({
                 valueRender={() => (
                   <span>
                     <CurrencySymbol
-                      currency={editingFC.currency.toNumber() as CurrencyOption}
+                      currency={
+                        editingFC.currency.toNumber() as V1CurrencyOption
+                      }
                     />
                     {formatWad(editingFC.target)}{' '}
                     <span style={{ fontSize: '0.8rem' }}>
@@ -401,7 +403,7 @@ export default function ReconfigureFCModal({
                         <span>
                           <CurrencySymbol
                             currency={
-                              editingFC.currency.toNumber() as CurrencyOption
+                              editingFC.currency.toNumber() as V1CurrencyOption
                             }
                           />
                           <Trans>
@@ -515,7 +517,7 @@ export default function ReconfigureFCModal({
         destroyOnClose
       >
         <BudgetForm
-          initialCurrency={editingFC.currency.toNumber() as CurrencyOption}
+          initialCurrency={editingFC.currency.toNumber() as V1CurrencyOption}
           initialTarget={fromWad(editingFC.target)}
           initialDuration={editingFC.duration.toString()}
           onSave={async (currency, target, duration) => {
@@ -537,7 +539,7 @@ export default function ReconfigureFCModal({
       >
         <PayModsForm
           initialMods={editingPayoutMods}
-          currency={editingFC.currency.toNumber() as CurrencyOption}
+          currency={editingFC.currency.toNumber() as V1CurrencyOption}
           target={editingFC.target}
           fee={terminalFee}
           onSave={async mods => {

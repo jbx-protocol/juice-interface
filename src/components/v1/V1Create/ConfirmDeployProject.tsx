@@ -15,7 +15,7 @@ import {
 import useMobile from 'hooks/Mobile'
 
 import { useTerminalFee } from 'hooks/v1/TerminalFee'
-import { CurrencyOption } from 'models/v1/currencyOption'
+import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useContext } from 'react'
 import {
   formattedNum,
@@ -160,7 +160,7 @@ export default function ConfirmDeployProject() {
                   <span>
                     <CurrencySymbol
                       currency={
-                        editingFC?.currency.toNumber() as CurrencyOption
+                        editingFC?.currency.toNumber() as V1CurrencyOption
                       }
                     />
                     {formatWad(editingFC?.target)}{' '}
@@ -169,7 +169,7 @@ export default function ConfirmDeployProject() {
                         (
                         <CurrencySymbol
                           currency={
-                            editingFC?.currency.toNumber() as CurrencyOption
+                            editingFC?.currency.toNumber() as V1CurrencyOption
                           }
                         />
                         <Trans>

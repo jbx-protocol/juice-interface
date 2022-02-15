@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { constants } from 'ethers'
-import { CurrencyOption } from 'models/v1/currencyOption'
+import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { PayoutMod, TicketMod } from 'models/mods'
 import { ProjectMetadataV3 } from 'models/project-metadata'
 import {
@@ -142,7 +142,7 @@ export const editingV2ProjectSlice = createSlice({
     setBondingCurveRate: (state, action: PayloadAction<string>) => {
       state.fundingCycle.bondingCurveRate = action.payload
     },
-    setCurrency: (state, action: PayloadAction<CurrencyOption>) => {
+    setCurrency: (state, action: PayloadAction<V1CurrencyOption>) => {
       state.fundingCycle.currency = action.payload.toString()
     },
     setBallot: (state, action: PayloadAction<string>) => {

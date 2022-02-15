@@ -108,7 +108,11 @@ export default function ConfirmPayOwnerModal({
             {currencyName(0)})
           </Descriptions.Item>
           <Descriptions.Item
-            label={t`${tokenSymbolText(tokenSymbol, true, true)} for you`}
+            label={t`${tokenSymbolText({
+              tokenSymbol: tokenSymbol,
+              capitalize: true,
+              plural: true,
+            })} for you`}
             className="content-right"
           >
             <div>{formatWad(receivedTickets, { precision: 0 })}</div>
@@ -121,7 +125,11 @@ export default function ConfirmPayOwnerModal({
             </div>
           </Descriptions.Item>
           <Descriptions.Item
-            label={t`${tokenSymbolText(tokenSymbol, true, true)} reserved`}
+            label={t`${tokenSymbolText({
+              tokenSymbol: tokenSymbol,
+              capitalize: true,
+              plural: true,
+            })} reserved`}
             className="content-right"
           >
             {formatWad(ownerTickets, { precision: 0 })}

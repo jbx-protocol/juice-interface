@@ -86,7 +86,11 @@ export function RedeemActivity({ pageSize }: { pageSize: number }) {
                     }}
                   >
                     {formatWad(e.amount, { precision: 0 })}{' '}
-                    {tokenSymbolText(tokenSymbol, false, true)}
+                    {tokenSymbolText({
+                      tokenSymbol: tokenSymbol,
+                      capitalize: false,
+                      plural: true,
+                    })}
                   </div>
                 </div>
 

@@ -76,7 +76,11 @@ export default function ProjectToolDrawerModal({
     )
   }
 
-  const tokenSymbolShort = tokenSymbolText(tokenSymbol, false, true)
+  const tokenSymbolShort = tokenSymbolText({
+    tokenSymbol: tokenSymbol,
+    capitalize: false,
+    plural: true,
+  })
 
   return (
     <Drawer visible={visible} onClose={onClose} width={600}>

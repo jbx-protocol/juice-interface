@@ -39,7 +39,11 @@ export default function PayInputSubText({
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const tokenText = tokenSymbolText(tokenSymbol, false, true)
+  const tokenText = tokenSymbolText({
+    tokenSymbol: tokenSymbol,
+    capitalize: false,
+    plural: true,
+  })
 
   const receiveText = useMemo(() => {
     const formatReceivedTickets = (wei: BigNumber) => {

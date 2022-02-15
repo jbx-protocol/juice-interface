@@ -50,7 +50,12 @@ export default function ReservedTokens({
           label={
             <h4 style={{ display: 'inline-block' }}>
               <Trans>
-                Reserved {tokenSymbolText(tokenSymbol, false, true)}
+                Reserved{' '}
+                {tokenSymbolText({
+                  tokenSymbol: tokenSymbol,
+                  capitalize: false,
+                  plural: true,
+                })}
               </Trans>{' '}
               ({fromPerbicent(metadata?.reservedRate)}%)
             </h4>

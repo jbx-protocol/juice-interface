@@ -133,7 +133,13 @@ export default function ParticipantsModal({
             value={sortPayerReports}
           >
             <Select.Option value="balance">
-              <Trans>{tokenSymbolText(tokenSymbol, true)} balance</Trans>
+              <Trans>
+                {tokenSymbolText({
+                  tokenSymbol: tokenSymbol,
+                  capitalize: true,
+                })}{' '}
+                balance
+              </Trans>
             </Select.Option>
             <Select.Option value="totalPaid">
               <Trans>Amount paid</Trans>
@@ -205,13 +211,22 @@ export default function ParticipantsModal({
                   }}
                 >
                   {formatWad(p.balance, { precision: 0 })}{' '}
-                  {tokenSymbolText(tokenSymbol, false, true)} (
-                  {formatPercent(p.balance, totalTokenSupply)}%)
+                  {tokenSymbolText({
+                    tokenSymbol: tokenSymbol,
+                    capitalize: false,
+                    plural: true,
+                  })}{' '}
+                  ({formatPercent(p.balance, totalTokenSupply)}%)
                 </div>
                 <div style={smallHeaderStyle}>
                   {formatWad(p.stakedBalance, { precision: 0 })}{' '}
                   <Trans>
-                    {tokenSymbolText(tokenSymbol, false, true)} staked
+                    {tokenSymbolText({
+                      tokenSymbol: tokenSymbol,
+                      capitalize: false,
+                      plural: true,
+                    })}{' '}
+                    staked
                   </Trans>
                 </div>
               </div>
@@ -248,7 +263,10 @@ export default function ParticipantsModal({
     >
       <div>
         <h4>
-          <Trans>{tokenSymbolText(tokenSymbol, true)} holders</Trans>
+          <Trans>
+            {tokenSymbolText({ tokenSymbol: tokenSymbol, capitalize: true })}{' '}
+            holders
+          </Trans>
         </h4>
 
         {tokenAddress && tokenAddress !== constants.AddressZero && (

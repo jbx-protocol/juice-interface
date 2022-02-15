@@ -200,7 +200,12 @@ export default function Rewards() {
       </Space>
 
       <Modal
-        title={t`Manage ${tokenSymbolText(tokenSymbol, false, true, true)}`}
+        title={t`Manage ${tokenSymbolText({
+          tokenSymbol: tokenSymbol,
+          capitalize: false,
+          plural: true,
+          includeTokenWord: true,
+        })}`}
         visible={manageTokensModalVisible}
         onCancel={() => setManageTokensModalVisible(false)}
         okButtonProps={{ hidden: true }}

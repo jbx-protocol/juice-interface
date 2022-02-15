@@ -67,7 +67,12 @@ export default function ReservesEventElem({
         }}
       >
         <div style={smallHeaderStyle(colors)}>
-          Distributed reserved {tokenSymbolText(tokenSymbol, false, true)}
+          Distributed reserved{' '}
+          {tokenSymbolText({
+            tokenSymbol: tokenSymbol,
+            capitalize: false,
+            plural: true,
+          })}
         </div>
 
         <div style={{ textAlign: 'right' }}>

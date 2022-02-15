@@ -89,8 +89,17 @@ export default function RedeemModal({
     alignItems: 'baseline',
   }
 
-  const tokensTextLong = tokenSymbolText(tokenSymbol, false, true, true)
-  const tokensTextShort = tokenSymbolText(tokenSymbol, false, true)
+  const tokensTextLong = tokenSymbolText({
+    tokenSymbol: tokenSymbol,
+    capitalize: false,
+    plural: true,
+    includeTokenWord: true,
+  })
+  const tokensTextShort = tokenSymbolText({
+    tokenSymbol: tokenSymbol,
+    capitalize: false,
+    plural: true,
+  })
 
   let modalTitle: string
   // Defining whole sentence for translations
@@ -155,7 +164,8 @@ export default function RedeemModal({
             </span>
           </p>
           <p style={statsStyle}>
-            {tokenSymbolText(tokenSymbol, true)} balance:{' '}
+            {tokenSymbolText({ tokenSymbol: tokenSymbol, capitalize: true })}{' '}
+            balance:{' '}
             <span>
               {formatWad(totalBalance ?? 0, { precision: 0 })} {tokensTextShort}
             </span>

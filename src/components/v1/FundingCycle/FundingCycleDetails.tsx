@@ -148,7 +148,11 @@ export default function FundingCycleDetails({
         <Descriptions.Item
           label={
             <TooltipLabel
-              label={t`Reserved ${tokenSymbolText(tokenSymbol, false, true)}`}
+              label={t`Reserved ${tokenSymbolText({
+                tokenSymbol: tokenSymbol,
+                capitalize: false,
+                plural: true,
+              })}`}
               tip={t`Whenever someone pays your project, this percentage of tokens will be reserved and the 
               rest will go to the payer. Reserve tokens are reserved for the project owner by default, but can also be allocated to other 
               wallet addresses by the owner. Once tokens are reserved, anyone can "mint" them, which distributes them to their intended receivers.`}
@@ -168,11 +172,11 @@ export default function FundingCycleDetails({
           label={
             <TooltipLabel
               label={t`Issue rate`}
-              tip={t`${tokenSymbolText(
-                tokenSymbol,
-                false,
-                true,
-              )} received per ETH 
+              tip={t`${tokenSymbolText({
+                tokenSymbol: tokenSymbol,
+                capitalize: false,
+                plural: true,
+              })} received per ETH 
               paid to the treasury. This can change over time according to the discount rate 
               and reserved tokens amount of future funding cycles.`}
             />
@@ -190,7 +194,14 @@ export default function FundingCycleDetails({
                 },
               )} reserved)`
             : ''}{' '}
-          <Trans>{tokenSymbolText(tokenSymbol, false, true)}/ETH</Trans>
+          <Trans>
+            {tokenSymbolText({
+              tokenSymbol: tokenSymbol,
+              capitalize: false,
+              plural: true,
+            })}
+            /ETH
+          </Trans>
         </Descriptions.Item>
 
         <Descriptions.Item

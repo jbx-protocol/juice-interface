@@ -46,10 +46,18 @@ export default function DistributeTokensModal({
 
   return (
     <Modal
-      title={`Distribute reserved ${tokenSymbolText(tokenSymbol, false, true)}`}
+      title={`Distribute reserved ${tokenSymbolText({
+        tokenSymbol: tokenSymbol,
+        capitalize: false,
+        plural: true,
+      })}`}
       visible={visible}
       onOk={distribute}
-      okText={`Distribute ${tokenSymbolText(tokenSymbol, false, true)}`}
+      okText={`Distribute ${tokenSymbolText({
+        tokenSymbol: tokenSymbol,
+        capitalize: false,
+        plural: true,
+      })}`}
       confirmLoading={loading}
       onCancel={onCancel}
       okButtonProps={{ disabled: !reservedTokens?.gt(0) }}
@@ -81,8 +89,13 @@ export default function DistributeTokensModal({
         ) : (
           <p>
             <Trans>
-              All {tokenSymbolText(tokenSymbol, false, true)} will go to the
-              project owner:
+              All{' '}
+              {tokenSymbolText({
+                tokenSymbol: tokenSymbol,
+                capitalize: false,
+                plural: true,
+              })}{' '}
+              will go to the project owner:
             </Trans>{' '}
             <FormattedAddress address={owner} />
           </p>

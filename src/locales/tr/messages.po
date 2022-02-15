@@ -27,9 +27,7 @@ msgid "(Optional) Add a note to this payment on-chain"
 msgstr "(İsteğe bağlı) Bu ödemeye zincir üstü bir not ekleyin"
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
-msgid ""
-"({realTokenAllocationPercent}%\n"
-"of all newly minted tokens)."
+msgid "({realTokenAllocationPercent}% of all newly minted tokens)."
 msgstr ""
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
@@ -255,8 +253,8 @@ msgstr ""
 msgid "Almost definitely."
 msgstr "Neredeyse kesinlikle."
 
-#: src/components/Project/modals/ProjectToolDrawerModal.tsx
-#: src/components/Project/modals/ReconfigureFCModal.tsx
+#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
+#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Amount"
 msgstr "Miktar"
 
@@ -280,11 +278,11 @@ msgstr "Herkes bu planı geçersiz kılmak için başka bir akıllı yönetişim
 msgid "Archived"
 msgstr ""
 
-#: src/components/Create/index.tsx
+#: src/components/v1/V1Create/index.tsx
 msgid "Are you sure you want to start over?"
 msgstr ""
 
-#: src/components/Project/modals/BalancesModal.tsx
+#: src/components/v1/V1Project/modals/BalancesModal.tsx
 msgid "Assets"
 msgstr "Varlıklar"
 
@@ -420,7 +418,7 @@ msgstr ""
 msgid "Community funding for people and projects"
 msgstr "İnsanlar ve projeler için topluluk finansmanı"
 
-#: src/components/Project/modals/FeedbackPromptModal.tsx
+#: src/components/v1/V1Project/modals/FeedbackPromptModal.tsx
 msgid "Congrats on creating your project!"
 msgstr ""
 
@@ -428,7 +426,7 @@ msgstr ""
 msgid "Connect"
 msgstr "Bağlan"
 
-#: src/components/Create/index.tsx
+#: src/components/v1/V1Create/index.tsx
 msgid "Connect wallet to deploy"
 msgstr ""
 
@@ -488,15 +486,15 @@ msgstr "Koyu tema"
 msgid "Date created"
 msgstr ""
 
-#: src/components/Create/index.tsx
+#: src/components/v1/V1Create/index.tsx
 msgid "Deploy project"
 msgstr ""
 
-#: src/components/Create/index.tsx
+#: src/components/v1/V1Create/index.tsx
 msgid "Deploy project on {signerNetwork}"
 msgstr ""
 
-#: src/components/Project/modals/MigrateV1Pt1Modal.tsx
+#: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "Deposit 1 wei to @{handle}"
 msgstr "@{handle} hesabına 1 wei yatırın"
 
@@ -712,13 +710,13 @@ msgstr ""
 msgid "Funds will be distributed to:"
 msgstr "Fonlar şunlara dağıtılacaktır:"
 
-#: src/components/Project/modals/FeedbackPromptModal.tsx
 #: src/components/shared/FeedbackFormBtn.tsx
 #: src/components/shared/FeedbackFormBtn.tsx
+#: src/components/v1/V1Project/modals/FeedbackPromptModal.tsx
 msgid "Give feedback"
 msgstr "Geribildirim verin"
 
-#: src/components/Project/modals/FeedbackPromptModal.tsx
+#: src/components/v1/V1Project/modals/FeedbackPromptModal.tsx
 msgid "Give us your feedback"
 msgstr ""
 
@@ -754,7 +752,7 @@ msgstr ""
 msgid "How decentralized is Juicebox?"
 msgstr "Juicebox ne kadar merkeziyetsiz?"
 
-#: src/components/Project/modals/FeedbackPromptModal.tsx
+#: src/components/v1/V1Project/modals/FeedbackPromptModal.tsx
 msgid "How did we do? We'd love to get your feedback so we can make creating Juicebox projects as juicy as possible!"
 msgstr ""
 
@@ -821,10 +819,8 @@ msgstr "Bağımsız sanatçılar, geliştiriciler, yaratıcılar"
 msgid "Issue ERC-20 token"
 msgstr ""
 
-#: src/components/Project/Rewards/IssueTickets.tsx
-msgid ""
-"Issue an ERC-20 to be used as this project's token. Once\n"
-"issued, anyone can claim their existing token balance in the new token."
+#: src/components/v1/V1Project/Rewards/IssueTickets.tsx
+msgid "Issue an ERC-20 to be used as this project's token. Once issued, anyone can claim their existing token balance in the new token."
 msgstr ""
 
 #: src/components/v1/V1Project/Rewards/IssueTickets.tsx
@@ -1243,8 +1239,12 @@ msgstr ""
 msgid "Redistributable surplus"
 msgstr "Yeniden dağıtılabilir fazlalık"
 
-#: src/components/Dashboard/index.tsx
+#: src/components/v1/V1Dashboard/index.tsx
 msgid "Refresh"
+msgstr ""
+
+#: src/components/v1/V1Project/modals/RedeemModal.tsx
+msgid "Required"
 msgstr ""
 
 #: src/components/shared/forms/TicketingForm.tsx
@@ -1398,11 +1398,9 @@ msgstr "Juicebox’a katılmalı mısın?"
 msgid "Since you have not set a funding duration, changes to these settings will be applied immediately."
 msgstr ""
 
-#: src/components/FundingCycle/FundingCyclePreview.tsx
-msgid ""
-"Some funding cycle properties may indicate risk\n"
-"for project contributors."
-msgstr "Bazı finansman döngüsü özellikleri projeye katkıda bulunanlar için risk oluşturabilir."
+#: src/components/v1/FundingCycle/FundingCyclePreview.tsx
+msgid "Some funding cycle properties may indicate risk for project contributors."
+msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
@@ -1417,8 +1415,8 @@ msgstr "Stake edilen bakiye"
 msgid "Start"
 msgstr "Başlangıç"
 
-#: src/components/Create/index.tsx
-#: src/components/Create/index.tsx
+#: src/components/v1/V1Create/index.tsx
+#: src/components/v1/V1Create/index.tsx
 msgid "Start Over"
 msgstr "Baştan Başla"
 
@@ -1492,9 +1490,7 @@ msgid "The future will be led by creators, and owned by communities."
 msgstr "Gelecek, içerik üreticileri tarafından yönetilecek ve topluluklara ait olacak."
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
-msgid ""
-"The percent this individual receives of the overall {reservedRate}% \n"
-"reserved token allocation"
+msgid "The percent this individual receives of the overall {reservedRate}% reserved token allocation"
 msgstr ""
 
 #: src/constants/fundingWarningText.ts
@@ -1583,11 +1579,11 @@ msgstr "Bu metin, ödemelerini tamamlamadan önce destekçilerinize gösterilece
 msgid "This website (juicebox.money) connects to the Juicebox protocol's smart contracts, deployed on the Ethereum network. (note: anyone else can make a website that also connects to these same smart contracts. For now, don't trust any site other than this one to access the Juicebox protocol.)"
 msgstr "Bu web sitesi (juicebox.money), Juicebox protokolünün Ethereum ağında konuşlandırılmış akıllı sözleşmelerine bağlanır. (not: başka herkes aynı akıllı sözleşmelere bağlanan bir web sitesi yapabilir. Şimdilik, Juicebox protokolüne erişmek için bu siteden başka hiçbir siteye güvenmeyin.)"
 
-#: src/components/Create/index.tsx
+#: src/components/v1/V1Create/index.tsx
 msgid "This will erase of your all changes."
 msgstr ""
 
-#: src/components/Project/modals/ConfirmPayOwnerModal/index.tsx
+#: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
 msgid "To: <0/>"
 msgstr "Kime: <0/>"
 
@@ -1665,12 +1661,12 @@ msgstr "Toplam: %{0}"
 msgid "Transfer ownership"
 msgstr "Mülkiyeti aktar"
 
-#: src/components/Project/modals/ProjectToolDrawerModal.tsx
-msgid "Transfer unclaimed {tokenSymbolText}"
+#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
+msgid "Transfer unclaimed {tokenSymbolShort}"
 msgstr ""
 
-#: src/components/Project/modals/ProjectToolDrawerModal.tsx
-msgid "Transfer {tokenSymbolText}"
+#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
+msgid "Transfer {tokenSymbolShort}"
 msgstr ""
 
 #: src/components/Landing/index.tsx
@@ -1855,7 +1851,7 @@ msgstr "Bakiyeniz"
 msgid "Your balance: {0}"
 msgstr "Bakiyeniz: {0}"
 
-#: src/components/Project/modals/FeedbackPromptModal.tsx
+#: src/components/v1/V1Project/modals/FeedbackPromptModal.tsx
 msgid "Your feedback will be sent to a <0>public Discord channel </0>for our development team to consider."
 msgstr ""
 
@@ -1947,15 +1943,10 @@ msgstr "bu arayüz"
 msgid "token"
 msgstr "token"
 
-#: src/components/FundingCycle/ReservedTokens.tsx
-#: src/components/FundingCycle/ReservedTokens.tsx
-#: src/components/FundingCycle/ReservedTokens.tsx
-#: src/components/Project/Pay/PayInputSubText.tsx
-#: src/components/Project/Rewards/index.tsx
-#: src/components/Project/modals/ProjectToolDrawerModal.tsx
-#: src/components/Project/modals/RedeemModal.tsx
-#: src/components/Project/modals/RedeemModal.tsx
-#: src/components/Project/modals/RedeemModal.tsx
+#: src/components/v1/FundingCycle/ReservedTokens.tsx
+#: src/components/v1/FundingCycle/ReservedTokens.tsx
+#: src/components/v1/V1Project/Rewards/index.tsx
+#: src/utils/tokenSymbolText.ts
 msgid "tokens"
 msgstr ""
 
@@ -2068,7 +2059,7 @@ msgstr "{exchangeName}, {tokenSymbol} için piyasaya sahip değildir."
 msgid "{handle} not found"
 msgstr "{handle} bulunamadı"
 
-#: src/components/Dashboard/index.tsx
+#: src/components/v1/V1Dashboard/index.tsx
 msgid "{handle} will be available soon! Try refreshing the page shortly."
 msgstr ""
 
@@ -2084,10 +2075,6 @@ msgstr ""
 msgid "{tokenSymbol}/ETH exchange rate on {exchangeName}."
 msgstr "{exchangeName} üzerinde {tokenSymbol}/ETH kuru."
 
-#: src/components/Project/Rewards/index.tsx
-msgid ""
-"{tokensLabel}\n"
-"are distributed to anyone who pays this project. If the project \n"
-"has set a funding target, tokens can be redeemed for a portion \n"
-"of the project's overflow whether or not they have been claimed yet."
+#: src/components/v1/V1Project/Rewards/index.tsx
+msgid "{tokensLabel} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
 msgstr ""

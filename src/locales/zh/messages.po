@@ -1747,14 +1747,8 @@ msgstr "当有人以赞助人或用户的身份向您的项目付款时，他们
 msgid "When token minting is allowed, the owner of this project has permission to mint any number of tokens to any address at their discretion. This has the effect of diluting all current token holders, without increasing the project's treasury balance. The project owner can reconfigure this along with all other properties of the funding cycle."
 msgstr "当铸造代币功能启用时，该项目方可以铸造任意数量的代币并发送给任意地址。这一操作并不会增加项目金库的余额，所以会稀释所有当前代币持有者的份额。和其他属性一样，也可以在每个筹款周期中重新配置这一项。"
 
-#: src/components/v1/FundingCycle/FundingCycleDetails.tsx
-msgid ""
-"Whenever someone pays your project, this percentage of tokens will be reserved and the \n"
-"rest will go to the payer. Reserve tokens are reserved for the project owner by default, but can also be allocated to other \n"
-"wallet addresses by the owner. Once tokens are reserved, anyone can \"mint\" them, which distributes them to their intended receivers."
-msgstr ""
-
 #: src/components/shared/formItems/ProjectReserved.tsx
+#: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 msgid "Whenever someone pays your project, this percentage of tokens will be reserved and the rest will go to the payer. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner. Once tokens are reserved, anyone can \"mint\" them, which distributes them to their intended receivers."
 msgstr "有人对你的项目付款时，这一比例的代币会被保留, 剩余的代币会发送至付款人。在默认情况下, 保留代币会留给项目拥有者, 但是项目拥有者也可以将保留代币分配给其他钱包地址。保留代币产生后，任何人都可以把它们“铸造”出来，亦即把保留代币分发给预先指定的接收人。"
 
@@ -1956,10 +1950,7 @@ msgid "{0} left"
 msgstr "{0} 剩余"
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
-msgid ""
-"{0} received per ETH \n"
-"paid to the treasury. This can change over time according to the discount rate \n"
-"and reserved tokens amount of future funding cycles."
+msgid "{0} received per ETH paid to the treasury. This can change over time according to the discount rate and reserved tokens amount of future funding cycles."
 msgstr ""
 
 #: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx

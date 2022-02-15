@@ -153,9 +153,7 @@ export default function FundingCycleDetails({
                 capitalize: false,
                 plural: true,
               })}`}
-              tip={t`Whenever someone pays your project, this percentage of tokens will be reserved and the 
-              rest will go to the payer. Reserve tokens are reserved for the project owner by default, but can also be allocated to other 
-              wallet addresses by the owner. Once tokens are reserved, anyone can "mint" them, which distributes them to their intended receivers.`}
+              tip={t`Whenever someone pays your project, this percentage of tokens will be reserved and the rest will go to the payer. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner. Once tokens are reserved, anyone can "mint" them, which distributes them to their intended receivers.`}
             />
           }
         >
@@ -176,9 +174,7 @@ export default function FundingCycleDetails({
                 tokenSymbol: tokenSymbol,
                 capitalize: false,
                 plural: true,
-              })} received per ETH 
-              paid to the treasury. This can change over time according to the discount rate 
-              and reserved tokens amount of future funding cycles.`}
+              })} received per ETH paid to the treasury. This can change over time according to the discount rate and reserved tokens amount of future funding cycles.`}
             />
           }
           span={2}

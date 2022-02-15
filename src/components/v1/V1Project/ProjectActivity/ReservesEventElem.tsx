@@ -8,6 +8,7 @@ import { PrintReservesEvent } from 'models/subgraph-entities/print-reserves-even
 import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 import { smallHeaderStyle } from '../styles'
 
@@ -66,7 +67,12 @@ export default function ReservesEventElem({
         }}
       >
         <div style={smallHeaderStyle(colors)}>
-          Distributed reserved {tokenSymbol ?? 'tokens'}
+          Distributed reserved{' '}
+          {tokenSymbolText({
+            tokenSymbol: tokenSymbol,
+            capitalize: false,
+            plural: true,
+          })}
         </div>
 
         <div style={{ textAlign: 'right' }}>

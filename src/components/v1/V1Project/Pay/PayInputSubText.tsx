@@ -4,7 +4,8 @@ import { parseEther } from 'ethers/lib/utils'
 import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
 import { currencyName } from 'utils/currency'
 import { weightedRate } from 'utils/math'
-import { t, Trans } from '@lingui/macro'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
+import { Trans } from '@lingui/macro'
 import { CurrencyOption } from 'models/currency-option'
 import { useContext, useMemo } from 'react'
 
@@ -38,7 +39,11 @@ export default function PayInputSubText({
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const tokenText = tokenSymbol ?? t`tokens`
+  const tokenText = tokenSymbolText({
+    tokenSymbol: tokenSymbol,
+    capitalize: false,
+    plural: true,
+  })
 
   const receiveText = useMemo(() => {
     const formatReceivedTickets = (wei: BigNumber) => {

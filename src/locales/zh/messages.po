@@ -302,6 +302,10 @@ msgstr "可用:"
 msgid "Back to top"
 msgstr "回到顶部"
 
+#: src/components/v1/V1Project/modals/RedeemModal.tsx
+msgid "Balance exceeded"
+msgstr ""
+
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "Beneficiary address"
 msgstr "受益人钱包地址"
@@ -355,15 +359,7 @@ msgid "Burn {0} {tokensTextShort}"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
-msgid "Burn {0} {tokensTextShort} for ETH"
-msgstr ""
-
-#: src/components/v1/V1Project/modals/RedeemModal.tsx
-msgid "Burn {tokensText}"
-msgstr ""
-
-#: src/components/v1/V1Project/modals/RedeemModal.tsx
-msgid "Burn {tokensText} for ETH"
+msgid "Burn {tokensTextLong}"
 msgstr ""
 
 #: src/components/shared/forms/PayModsForm.tsx
@@ -889,8 +885,8 @@ msgid "Manage"
 msgstr "管理代币"
 
 #: src/components/v1/V1Project/Rewards/index.tsx
-msgid "Manage {0}tokens"
-msgstr "管理 {0} 代币"
+msgid "Manage {0}"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
 msgid "Memo"
@@ -1202,9 +1198,21 @@ msgstr "重新配置之后的筹款"
 msgid "Redeem"
 msgstr "赎回"
 
+#: src/components/v1/V1Project/modals/RedeemModal.tsx
+msgid "Redeem {0} {tokensTextShort} for ETH"
+msgstr ""
+
+#: src/components/v1/V1Project/modals/RedeemModal.tsx
+msgid "Redeem {tokensTextLong} for ETH"
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "Redistributable surplus"
 msgstr "可分派的盈余"
+
+#: src/components/v1/V1Project/modals/RedeemModal.tsx
+msgid "Required"
+msgstr ""
 
 #: src/components/shared/forms/TicketingForm.tsx
 msgid "Reserved token allocation (optional)"
@@ -1541,6 +1549,10 @@ msgstr "这个网站（juicebox.money）连接到 Juicebox 协议的智能合约
 msgid "To: <0/>"
 msgstr "分配给：<0/>"
 
+#: src/utils/tokenSymbolText.ts
+msgid "Token"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 msgid "Token address: <0/>"
 msgstr "代币地址：<0/>"
@@ -1565,6 +1577,7 @@ msgstr ""
 
 #: src/components/shared/Mod.tsx
 #: src/components/v1/V1Project/Rewards/index.tsx
+#: src/utils/tokenSymbolText.ts
 msgid "Tokens"
 msgstr "代币"
 
@@ -1611,11 +1624,11 @@ msgid "Transfer ownership"
 msgstr "所有权转移"
 
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
-msgid "Transfer unclaimed {tokenSymbolText}"
+msgid "Transfer unclaimed {tokenSymbolShort}"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
-msgid "Transfer {tokenSymbolText}"
+msgid "Transfer {tokenSymbolShort}"
 msgstr ""
 
 #: src/components/Landing/index.tsx
@@ -1884,18 +1897,14 @@ msgstr "这个界面"
 
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/utils/tokenSymbolText.ts
 msgid "token"
 msgstr "代币"
 
 #: src/components/v1/FundingCycle/ReservedTokens.tsx
 #: src/components/v1/FundingCycle/ReservedTokens.tsx
-#: src/components/v1/FundingCycle/ReservedTokens.tsx
-#: src/components/v1/V1Project/Pay/PayInputSubText.tsx
 #: src/components/v1/V1Project/Rewards/index.tsx
-#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
-#: src/components/v1/V1Project/modals/RedeemModal.tsx
-#: src/components/v1/V1Project/modals/RedeemModal.tsx
-#: src/components/v1/V1Project/modals/RedeemModal.tsx
+#: src/utils/tokenSymbolText.ts
 msgid "tokens"
 msgstr "代币"
 
@@ -1942,7 +1951,7 @@ msgstr "{0} 剩余"
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 msgid "{0} received per ETH paid to the treasury. This can change over time according to the discount rate and reserved tokens amount of future funding cycles."
-msgstr "金库中收到 ETH 付款时对应铸造的 {0} 数量。这个数量会根据之后周期的折扣率和保留率，随着时间而改变。"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
 msgid "{0} reserved"

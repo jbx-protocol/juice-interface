@@ -302,6 +302,10 @@ msgstr "Disponível:"
 msgid "Back to top"
 msgstr "De volta ao início"
 
+#: src/components/v1/V1Project/modals/RedeemModal.tsx
+msgid "Balance exceeded"
+msgstr ""
+
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "Beneficiary address"
 msgstr ""
@@ -355,16 +359,8 @@ msgid "Burn {0} {tokensTextShort}"
 msgstr "Queimar {0} {tokensTextShort}"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
-msgid "Burn {0} {tokensTextShort} for ETH"
-msgstr "Queimar {0} {tokensTextShort} por ETH"
-
-#: src/components/v1/V1Project/modals/RedeemModal.tsx
-msgid "Burn {tokensText}"
-msgstr "Queimar {tokensText}"
-
-#: src/components/v1/V1Project/modals/RedeemModal.tsx
-msgid "Burn {tokensText} for ETH"
-msgstr "Queimar {tokensText} do ETH"
+msgid "Burn {tokensTextLong}"
+msgstr ""
 
 #: src/components/shared/forms/PayModsForm.tsx
 msgid "By default, all unallocated funds can be distributed to the project owner's wallet."
@@ -889,8 +885,8 @@ msgid "Manage"
 msgstr "Administrar"
 
 #: src/components/v1/V1Project/Rewards/index.tsx
-msgid "Manage {0}tokens"
-msgstr "Administrar {0}tokens"
+msgid "Manage {0}"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
 msgid "Memo"
@@ -1202,9 +1198,21 @@ msgstr "Reconfigurar financiamento futuro"
 msgid "Redeem"
 msgstr "Resgatar"
 
+#: src/components/v1/V1Project/modals/RedeemModal.tsx
+msgid "Redeem {0} {tokensTextShort} for ETH"
+msgstr ""
+
+#: src/components/v1/V1Project/modals/RedeemModal.tsx
+msgid "Redeem {tokensTextLong} for ETH"
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "Redistributable surplus"
 msgstr "Excedente redistribuível"
+
+#: src/components/v1/V1Project/modals/RedeemModal.tsx
+msgid "Required"
+msgstr ""
 
 #: src/components/shared/forms/TicketingForm.tsx
 msgid "Reserved token allocation (optional)"
@@ -1541,6 +1549,10 @@ msgstr "Este website (juicebox.money) conecta aos contratos inteligentes do prot
 msgid "To: <0/>"
 msgstr "Para: <0/>"
 
+#: src/utils/tokenSymbolText.ts
+msgid "Token"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 msgid "Token address: <0/>"
 msgstr "Endereço de token: <0/>"
@@ -1565,6 +1577,7 @@ msgstr "O símbolo do token"
 
 #: src/components/shared/Mod.tsx
 #: src/components/v1/V1Project/Rewards/index.tsx
+#: src/utils/tokenSymbolText.ts
 msgid "Tokens"
 msgstr "Tokens"
 
@@ -1611,11 +1624,11 @@ msgid "Transfer ownership"
 msgstr "Transferir propriedade"
 
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
-msgid "Transfer unclaimed {tokenSymbolText}"
+msgid "Transfer unclaimed {tokenSymbolShort}"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
-msgid "Transfer {tokenSymbolText}"
+msgid "Transfer {tokenSymbolShort}"
 msgstr ""
 
 #: src/components/Landing/index.tsx
@@ -1884,18 +1897,14 @@ msgstr "esta interface"
 
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/utils/tokenSymbolText.ts
 msgid "token"
 msgstr "token"
 
 #: src/components/v1/FundingCycle/ReservedTokens.tsx
 #: src/components/v1/FundingCycle/ReservedTokens.tsx
-#: src/components/v1/FundingCycle/ReservedTokens.tsx
-#: src/components/v1/V1Project/Pay/PayInputSubText.tsx
 #: src/components/v1/V1Project/Rewards/index.tsx
-#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
-#: src/components/v1/V1Project/modals/RedeemModal.tsx
-#: src/components/v1/V1Project/modals/RedeemModal.tsx
-#: src/components/v1/V1Project/modals/RedeemModal.tsx
+#: src/utils/tokenSymbolText.ts
 msgid "tokens"
 msgstr "tokens"
 
@@ -1942,7 +1951,7 @@ msgstr "{0} restante"
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 msgid "{0} received per ETH paid to the treasury. This can change over time according to the discount rate and reserved tokens amount of future funding cycles."
-msgstr "{0} recebido por ETH pagos para o tesouro. Isto pode modificar-se através do tempo de acordo com a taxa de desconto e a quantidade de tokens reservados de futuros ciclos de financiamento."
+msgstr ""
 
 #: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
 msgid "{0} reserved"

@@ -13,6 +13,7 @@ import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { TicketMod } from 'models/mods'
 import { useContext, useLayoutEffect, useMemo, useState } from 'react'
 import { formatWad, fromPermyriad } from 'utils/formatNumber'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export default function TicketModsList({
   total,
@@ -88,7 +89,11 @@ export default function TicketModsList({
                     (total
                       ? ` (${formatWad(total?.mul(mod.percent).div(10000), {
                           precision: 0,
-                        })} ${tokenSymbol ?? ' tokens'})`
+                        })} ${tokenSymbolText({
+                          tokenSymbol: tokenSymbol,
+                          capitalize: false,
+                          plural: true,
+                        })})`
                       : '')
                   }
                 />
@@ -105,7 +110,11 @@ export default function TicketModsList({
               {total
                 ? ` (${formatWad(total?.mul(ownerPercent).div(10000), {
                     precision: 0,
-                  })} ${tokenSymbol ?? ' tokens'})`
+                  })} ${tokenSymbolText({
+                    tokenSymbol: tokenSymbol,
+                    capitalize: false,
+                    plural: true,
+                  })})`
                 : ''}
             </span>
           }

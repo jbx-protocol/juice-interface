@@ -18,6 +18,7 @@ import {
   isRecurring,
 } from 'utils/fundingCycle'
 import { weightedRate } from 'utils/math'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 
@@ -147,7 +148,11 @@ export default function FundingCycleDetails({
         <Descriptions.Item
           label={
             <TooltipLabel
-              label={t`Reserved ${tokenSymbol ?? 'tokens'}`}
+              label={t`Reserved ${tokenSymbolText({
+                tokenSymbol: tokenSymbol,
+                capitalize: false,
+                plural: true,
+              })}`}
               tip={t`Whenever someone pays your project, this percentage of tokens will be reserved and the rest will go to the payer. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner. Once tokens are reserved, anyone can "mint" them, which distributes them to their intended receivers.`}
             />
           }
@@ -165,9 +170,11 @@ export default function FundingCycleDetails({
           label={
             <TooltipLabel
               label={t`Issue rate`}
-              tip={t`${
-                tokenSymbol ?? 'Tokens'
-              } received per ETH paid to the treasury. This can change over time according to the discount rate and reserved tokens amount of future funding cycles.`}
+              tip={t`${tokenSymbolText({
+                tokenSymbol: tokenSymbol,
+                capitalize: false,
+                plural: true,
+              })} received per ETH paid to the treasury. This can change over time according to the discount rate and reserved tokens amount of future funding cycles.`}
             />
           }
           span={2}
@@ -183,25 +190,15 @@ export default function FundingCycleDetails({
                 },
               )} reserved)`
             : ''}{' '}
-          <Trans>{tokenSymbol ?? 'tokens'}/ETH</Trans>
+          <Trans>
+            {tokenSymbolText({
+              tokenSymbol: tokenSymbol,
+              capitalize: false,
+              plural: true,
+            })}
+            /ETH
+          </Trans>
         </Descriptions.Item>
-
-        {/* <Descriptions.Item
-          span={2}
-          label={
-            <TooltipLabel
-              label="Burn rate"
-              tip={`The amount of ${
-                tokenSymbol ? tokenSymbol + ' token' : 'token'
-              } that must be burned in exchange for one ETH of overflow. This can change over time according to the bonding curve of future funding cycles.`}
-            />
-          }
-        >
-          {redeemRate && redeemRate?.gt(0)
-            ? formattedNum(parseWad(1).div(redeemRate))
-            : '--'}{' '}
-          {tokenSymbol ?? 'tokens'}/ETH
-        </Descriptions.Item> */}
 
         <Descriptions.Item
           span={2}

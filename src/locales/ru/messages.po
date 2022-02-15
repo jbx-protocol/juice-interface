@@ -302,6 +302,10 @@ msgstr "Доступно:"
 msgid "Back to top"
 msgstr "Вернуться наверх"
 
+#: src/components/v1/V1Project/modals/RedeemModal.tsx
+msgid "Balance exceeded"
+msgstr ""
+
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "Beneficiary address"
 msgstr ""
@@ -355,15 +359,7 @@ msgid "Burn {0} {tokensTextShort}"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
-msgid "Burn {0} {tokensTextShort} for ETH"
-msgstr ""
-
-#: src/components/v1/V1Project/modals/RedeemModal.tsx
-msgid "Burn {tokensText}"
-msgstr ""
-
-#: src/components/v1/V1Project/modals/RedeemModal.tsx
-msgid "Burn {tokensText} for ETH"
+msgid "Burn {tokensTextLong}"
 msgstr ""
 
 #: src/components/shared/forms/PayModsForm.tsx
@@ -889,8 +885,8 @@ msgid "Manage"
 msgstr "Управление"
 
 #: src/components/v1/V1Project/Rewards/index.tsx
-msgid "Manage {0}tokens"
-msgstr "Управление {0}токенами"
+msgid "Manage {0}"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
 msgid "Memo"
@@ -1202,9 +1198,21 @@ msgstr ""
 msgid "Redeem"
 msgstr "Обменять"
 
+#: src/components/v1/V1Project/modals/RedeemModal.tsx
+msgid "Redeem {0} {tokensTextShort} for ETH"
+msgstr ""
+
+#: src/components/v1/V1Project/modals/RedeemModal.tsx
+msgid "Redeem {tokensTextLong} for ETH"
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "Redistributable surplus"
 msgstr "Перераспределяемый излишек"
+
+#: src/components/v1/V1Project/modals/RedeemModal.tsx
+msgid "Required"
+msgstr ""
 
 #: src/components/shared/forms/TicketingForm.tsx
 msgid "Reserved token allocation (optional)"
@@ -1541,6 +1549,10 @@ msgstr "Этот веб-сайт (juicebox.money) подключается к с
 msgid "To: <0/>"
 msgstr "Кому: <0/>"
 
+#: src/utils/tokenSymbolText.ts
+msgid "Token"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 msgid "Token address: <0/>"
 msgstr "Адрес токена: <0/>"
@@ -1565,6 +1577,7 @@ msgstr ""
 
 #: src/components/shared/Mod.tsx
 #: src/components/v1/V1Project/Rewards/index.tsx
+#: src/utils/tokenSymbolText.ts
 msgid "Tokens"
 msgstr "Жетоны"
 
@@ -1611,11 +1624,11 @@ msgid "Transfer ownership"
 msgstr "Передача права собственности"
 
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
-msgid "Transfer unclaimed {tokenSymbolText}"
+msgid "Transfer unclaimed {tokenSymbolShort}"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
-msgid "Transfer {tokenSymbolText}"
+msgid "Transfer {tokenSymbolShort}"
 msgstr ""
 
 #: src/components/Landing/index.tsx
@@ -1884,18 +1897,14 @@ msgstr "этот интерфейс"
 
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/utils/tokenSymbolText.ts
 msgid "token"
 msgstr ""
 
 #: src/components/v1/FundingCycle/ReservedTokens.tsx
 #: src/components/v1/FundingCycle/ReservedTokens.tsx
-#: src/components/v1/FundingCycle/ReservedTokens.tsx
-#: src/components/v1/V1Project/Pay/PayInputSubText.tsx
 #: src/components/v1/V1Project/Rewards/index.tsx
-#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
-#: src/components/v1/V1Project/modals/RedeemModal.tsx
-#: src/components/v1/V1Project/modals/RedeemModal.tsx
-#: src/components/v1/V1Project/modals/RedeemModal.tsx
+#: src/utils/tokenSymbolText.ts
 msgid "tokens"
 msgstr "токены"
 
@@ -1942,7 +1951,7 @@ msgstr "осталось {0}"
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 msgid "{0} received per ETH paid to the treasury. This can change over time according to the discount rate and reserved tokens amount of future funding cycles."
-msgstr "{0} получено за ETH выплаченную казну. Это может меняться со временем в зависимости от ставки скидки и зарезервированного количества токенов будущих циклов финансирования."
+msgstr ""
 
 #: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
 msgid "{0} reserved"

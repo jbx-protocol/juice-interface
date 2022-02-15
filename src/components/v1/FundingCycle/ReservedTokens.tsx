@@ -10,6 +10,7 @@ import { NetworkName } from 'models/network-name'
 import { useContext, useState } from 'react'
 import { formatWad, fromPerbicent } from 'utils/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 import { readNetwork } from 'constants/networks'
 
@@ -48,8 +49,15 @@ export default function ReservedTokens({
         <TooltipLabel
           label={
             <h4 style={{ display: 'inline-block' }}>
-              <Trans>Reserved {tokenSymbol ?? t`tokens`}</Trans> (
-              {fromPerbicent(metadata?.reservedRate)}%)
+              <Trans>
+                Reserved{' '}
+                {tokenSymbolText({
+                  tokenSymbol: tokenSymbol,
+                  capitalize: false,
+                  plural: true,
+                })}
+              </Trans>{' '}
+              ({fromPerbicent(metadata?.reservedRate)}%)
             </h4>
           }
           tip={t`A project can reserve a percentage of tokens minted from every payment it receives. Reserved tokens can be distributed according to the allocation below at any time.`}

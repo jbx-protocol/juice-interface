@@ -1,16 +1,18 @@
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1UserContext } from 'contexts/v1/userContext'
 import { BigNumber, constants } from 'ethers'
-import { FundingCycleMetadata } from 'models/funding-cycle-metadata'
-import { FCProperties } from 'models/funding-cycle-properties'
+import {
+  V1FundingCycleMetadata,
+  V1FundingCycleProperties,
+} from 'models/v1/fundingCycle'
 import { PayoutMod, TicketMod } from 'models/mods'
 import { useContext } from 'react'
 
 import { TransactorInstance } from '../../Transactor'
 
 export function useConfigureProjectTx(): TransactorInstance<{
-  fcProperties: FCProperties
-  fcMetadata: Omit<FundingCycleMetadata, 'version'>
+  fcProperties: V1FundingCycleProperties
+  fcMetadata: Omit<V1FundingCycleMetadata, 'version'>
   payoutMods: PayoutMod[]
   ticketMods: TicketMod[]
 }> {
@@ -28,7 +30,7 @@ export function useConfigureProjectTx(): TransactorInstance<{
       return Promise.resolve(false)
     }
 
-    const properties: Record<keyof FCProperties, string> = {
+    const properties: Record<keyof V1FundingCycleProperties, string> = {
       target: fcProperties.target.toHexString(),
       currency: fcProperties.currency.toHexString(),
       duration: fcProperties.duration.toHexString(),

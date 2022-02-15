@@ -302,6 +302,10 @@ msgstr "Disponible:"
 msgid "Back to top"
 msgstr "Regresa arriba"
 
+#: src/components/v1/V1Project/modals/RedeemModal.tsx
+msgid "Balance exceeded"
+msgstr ""
+
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "Beneficiary address"
 msgstr "Dirección de beneficiario"
@@ -355,16 +359,8 @@ msgid "Burn {0} {tokensTextShort}"
 msgstr "Quemar {0} {tokensTextShort}"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
-msgid "Burn {0} {tokensTextShort} for ETH"
-msgstr "Quemar {0} {tokensTextShort} por ETH"
-
-#: src/components/v1/V1Project/modals/RedeemModal.tsx
-msgid "Burn {tokensText}"
-msgstr "Quemar {tokensText}"
-
-#: src/components/v1/V1Project/modals/RedeemModal.tsx
-msgid "Burn {tokensText} for ETH"
-msgstr "Quemar {tokensText} por ETH"
+msgid "Burn {tokensTextLong}"
+msgstr ""
 
 #: src/components/shared/forms/PayModsForm.tsx
 msgid "By default, all unallocated funds can be distributed to the project owner's wallet."
@@ -889,8 +885,8 @@ msgid "Manage"
 msgstr "Administra"
 
 #: src/components/v1/V1Project/Rewards/index.tsx
-msgid "Manage {0}tokens"
-msgstr "Administra {0}tokens"
+msgid "Manage {0}"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
 msgid "Memo"
@@ -1202,9 +1198,21 @@ msgstr "Reconfigurar financiamientos próximos"
 msgid "Redeem"
 msgstr "Canjear"
 
+#: src/components/v1/V1Project/modals/RedeemModal.tsx
+msgid "Redeem {0} {tokensTextShort} for ETH"
+msgstr ""
+
+#: src/components/v1/V1Project/modals/RedeemModal.tsx
+msgid "Redeem {tokensTextLong} for ETH"
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "Redistributable surplus"
 msgstr "Excedente redistribuible"
+
+#: src/components/v1/V1Project/modals/RedeemModal.tsx
+msgid "Required"
+msgstr ""
 
 #: src/components/shared/forms/TicketingForm.tsx
 msgid "Reserved token allocation (optional)"
@@ -1541,6 +1549,10 @@ msgstr "Este sitio web (juicebox.money) se conecta a los contratos inteligentes 
 msgid "To: <0/>"
 msgstr "Para: <0/>"
 
+#: src/utils/tokenSymbolText.ts
+msgid "Token"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 msgid "Token address: <0/>"
 msgstr "Dirección del token: <0/>"
@@ -1565,6 +1577,7 @@ msgstr "Símbolo del token"
 
 #: src/components/shared/Mod.tsx
 #: src/components/v1/V1Project/Rewards/index.tsx
+#: src/utils/tokenSymbolText.ts
 msgid "Tokens"
 msgstr "Tokens"
 
@@ -1611,12 +1624,12 @@ msgid "Transfer ownership"
 msgstr "Transferir propiedad"
 
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
-msgid "Transfer unclaimed {tokenSymbolText}"
-msgstr "Transferir {tokenSymbolText} no reclamados"
+msgid "Transfer unclaimed {tokenSymbolShort}"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
-msgid "Transfer {tokenSymbolText}"
-msgstr "Transferir {tokenSymbolText}"
+msgid "Transfer {tokenSymbolShort}"
+msgstr ""
 
 #: src/components/Landing/index.tsx
 msgid "Transparency & accountability"
@@ -1734,8 +1747,14 @@ msgstr "Cuando alguien paga tu proyecto como patrocinador o un usuario de tu app
 msgid "When token minting is allowed, the owner of this project has permission to mint any number of tokens to any address at their discretion. This has the effect of diluting all current token holders, without increasing the project's treasury balance. The project owner can reconfigure this along with all other properties of the funding cycle."
 msgstr "Cuando acuñar tokens es permitido, el dueño de este proyecto tiene permiso de acuñar cualquier número de tokens para cualquier dirección a su discreción. Esto tiene el efecto de diluir a todos los poseedores de tokens actuales, sin incrementar el saldo de la tesorería del proyecto. El dueño del proyecto puede reconfigurar esto junto con todas las demás propiedades del ciclo de financiamiento."
 
-#: src/components/shared/formItems/ProjectReserved.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
+msgid ""
+"Whenever someone pays your project, this percentage of tokens will be reserved and the \n"
+"rest will go to the payer. Reserve tokens are reserved for the project owner by default, but can also be allocated to other \n"
+"wallet addresses by the owner. Once tokens are reserved, anyone can \"mint\" them, which distributes them to their intended receivers."
+msgstr ""
+
+#: src/components/shared/formItems/ProjectReserved.tsx
 msgid "Whenever someone pays your project, this percentage of tokens will be reserved and the rest will go to the payer. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner. Once tokens are reserved, anyone can \"mint\" them, which distributes them to their intended receivers."
 msgstr "Cuando alguien paga tu proyecto, ese porcentaje de tokens será reservado y el resto irá al pagador. Los tokens reservados están reservados por defecto para el dueño del proyecto, pero también pueden ser ubicados en otras direcciones de wallets por el dueño. Una vez que los tokens estén reservados, cualquiera puede \"acuñarlos\" lo que nos distribuye a los receptores esperados."
 
@@ -1884,18 +1903,14 @@ msgstr "esta interfaz"
 
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/utils/tokenSymbolText.ts
 msgid "token"
 msgstr "token"
 
 #: src/components/v1/FundingCycle/ReservedTokens.tsx
 #: src/components/v1/FundingCycle/ReservedTokens.tsx
-#: src/components/v1/FundingCycle/ReservedTokens.tsx
-#: src/components/v1/V1Project/Pay/PayInputSubText.tsx
 #: src/components/v1/V1Project/Rewards/index.tsx
-#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
-#: src/components/v1/V1Project/modals/RedeemModal.tsx
-#: src/components/v1/V1Project/modals/RedeemModal.tsx
-#: src/components/v1/V1Project/modals/RedeemModal.tsx
+#: src/utils/tokenSymbolText.ts
 msgid "tokens"
 msgstr "tokens"
 
@@ -1941,8 +1956,11 @@ msgid "{0} left"
 msgstr "{0} restantes"
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
-msgid "{0} received per ETH paid to the treasury. This can change over time according to the discount rate and reserved tokens amount of future funding cycles."
-msgstr "{0} recibido por ETH pagados al tesoro. Esto puede cambiar a través del tiempo de acuerdo con la tasa de descuento y la cantidad de tokens reservados para futuros ciclos de financiamiento."
+msgid ""
+"{0} received per ETH \n"
+"paid to the treasury. This can change over time according to the discount rate \n"
+"and reserved tokens amount of future funding cycles."
+msgstr ""
 
 #: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
 msgid "{0} reserved"

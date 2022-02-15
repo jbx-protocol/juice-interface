@@ -297,6 +297,10 @@ msgstr ""
 msgid "Back to top"
 msgstr "Back to top"
 
+#: src/components/v1/V1Project/modals/RedeemModal.tsx
+msgid "Balance exceeded"
+msgstr "Balance exceeded"
+
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "Beneficiary address"
 msgstr "Beneficiary address"
@@ -350,16 +354,8 @@ msgid "Burn {0} {tokensTextShort}"
 msgstr "Burn {0} {tokensTextShort}"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
-msgid "Burn {0} {tokensTextShort} for ETH"
-msgstr "Burn {0} {tokensTextShort} for ETH"
-
-#: src/components/v1/V1Project/modals/RedeemModal.tsx
-msgid "Burn {tokensText}"
-msgstr "Burn {tokensText}"
-
-#: src/components/v1/V1Project/modals/RedeemModal.tsx
-msgid "Burn {tokensText} for ETH"
-msgstr "Burn {tokensText} for ETH"
+msgid "Burn {tokensTextLong}"
+msgstr "Burn {tokensTextLong}"
 
 #: src/components/shared/forms/PayModsForm.tsx
 msgid "By default, all unallocated funds can be distributed to the project owner's wallet."
@@ -884,8 +880,8 @@ msgid "Manage"
 msgstr ""
 
 #: src/components/v1/V1Project/Rewards/index.tsx
-msgid "Manage {0}tokens"
-msgstr ""
+msgid "Manage {0}"
+msgstr "Manage {0}"
 
 #: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
 msgid "Memo"
@@ -1197,9 +1193,21 @@ msgstr "Reconfigure upcoming funding"
 msgid "Redeem"
 msgstr ""
 
+#: src/components/v1/V1Project/modals/RedeemModal.tsx
+msgid "Redeem {0} {tokensTextShort} for ETH"
+msgstr "Redeem {0} {tokensTextShort} for ETH"
+
+#: src/components/v1/V1Project/modals/RedeemModal.tsx
+msgid "Redeem {tokensTextLong} for ETH"
+msgstr "Redeem {tokensTextLong} for ETH"
+
 #: src/components/Landing/index.tsx
 msgid "Redistributable surplus"
 msgstr ""
+
+#: src/components/v1/V1Project/modals/RedeemModal.tsx
+msgid "Required"
+msgstr "Required"
 
 #: src/components/shared/forms/TicketingForm.tsx
 msgid "Reserved token allocation (optional)"
@@ -1536,6 +1544,10 @@ msgstr ""
 msgid "To: <0/>"
 msgstr ""
 
+#: src/utils/tokenSymbolText.ts
+msgid "Token"
+msgstr "Token"
+
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 msgid "Token address: <0/>"
 msgstr ""
@@ -1560,6 +1572,7 @@ msgstr "Token symbol"
 
 #: src/components/shared/Mod.tsx
 #: src/components/v1/V1Project/Rewards/index.tsx
+#: src/utils/tokenSymbolText.ts
 msgid "Tokens"
 msgstr ""
 
@@ -1606,12 +1619,12 @@ msgid "Transfer ownership"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
-msgid "Transfer unclaimed {tokenSymbolText}"
-msgstr "Transfer unclaimed {tokenSymbolText}"
+msgid "Transfer unclaimed {tokenSymbolShort}"
+msgstr "Transfer unclaimed {tokenSymbolShort}"
 
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
-msgid "Transfer {tokenSymbolText}"
-msgstr "Transfer {tokenSymbolText}"
+msgid "Transfer {tokenSymbolShort}"
+msgstr "Transfer {tokenSymbolShort}"
 
 #: src/components/Landing/index.tsx
 msgid "Transparency & accountability"
@@ -1729,8 +1742,17 @@ msgstr "When someone pays your project as a patron or a user of your app, they e
 msgid "When token minting is allowed, the owner of this project has permission to mint any number of tokens to any address at their discretion. This has the effect of diluting all current token holders, without increasing the project's treasury balance. The project owner can reconfigure this along with all other properties of the funding cycle."
 msgstr ""
 
-#: src/components/shared/formItems/ProjectReserved.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
+msgid ""
+"Whenever someone pays your project, this percentage of tokens will be reserved and the \n"
+"rest will go to the payer. Reserve tokens are reserved for the project owner by default, but can also be allocated to other \n"
+"wallet addresses by the owner. Once tokens are reserved, anyone can \"mint\" them, which distributes them to their intended receivers."
+msgstr ""
+"Whenever someone pays your project, this percentage of tokens will be reserved and the \n"
+"rest will go to the payer. Reserve tokens are reserved for the project owner by default, but can also be allocated to other \n"
+"wallet addresses by the owner. Once tokens are reserved, anyone can \"mint\" them, which distributes them to their intended receivers."
+
+#: src/components/shared/formItems/ProjectReserved.tsx
 msgid "Whenever someone pays your project, this percentage of tokens will be reserved and the rest will go to the payer. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner. Once tokens are reserved, anyone can \"mint\" them, which distributes them to their intended receivers."
 msgstr ""
 
@@ -1879,18 +1901,14 @@ msgstr ""
 
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/utils/tokenSymbolText.ts
 msgid "token"
 msgstr "token"
 
 #: src/components/v1/FundingCycle/ReservedTokens.tsx
 #: src/components/v1/FundingCycle/ReservedTokens.tsx
-#: src/components/v1/FundingCycle/ReservedTokens.tsx
-#: src/components/v1/V1Project/Pay/PayInputSubText.tsx
 #: src/components/v1/V1Project/Rewards/index.tsx
-#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
-#: src/components/v1/V1Project/modals/RedeemModal.tsx
-#: src/components/v1/V1Project/modals/RedeemModal.tsx
-#: src/components/v1/V1Project/modals/RedeemModal.tsx
+#: src/utils/tokenSymbolText.ts
 msgid "tokens"
 msgstr ""
 
@@ -1936,8 +1954,14 @@ msgid "{0} left"
 msgstr ""
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
-msgid "{0} received per ETH paid to the treasury. This can change over time according to the discount rate and reserved tokens amount of future funding cycles."
+msgid ""
+"{0} received per ETH \n"
+"paid to the treasury. This can change over time according to the discount rate \n"
+"and reserved tokens amount of future funding cycles."
 msgstr ""
+"{0} received per ETH \n"
+"paid to the treasury. This can change over time according to the discount rate \n"
+"and reserved tokens amount of future funding cycles."
 
 #: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
 msgid "{0} reserved"

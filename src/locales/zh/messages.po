@@ -27,7 +27,8 @@ msgid "(Optional) Add a note to this payment on-chain"
 msgstr "（可选的）在此链上付款中添加备注"
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
-msgid "({realTokenAllocationPercent}%\n"
+msgid ""
+"({realTokenAllocationPercent}%\n"
 "of all newly minted tokens)."
 msgstr ""
 
@@ -796,7 +797,8 @@ msgid "Issue ERC-20 token"
 msgstr ""
 
 #: src/components/Project/Rewards/IssueTickets.tsx
-msgid "Issue an ERC-20 to be used as this project's token. Once\n"
+msgid ""
+"Issue an ERC-20 to be used as this project's token. Once\n"
 "issued, anyone can claim their existing token balance in the new token."
 msgstr ""
 
@@ -969,7 +971,8 @@ msgstr "未设定"
 
 #: src/components/Landing/index.tsx
 msgid "Note: Juicebox is new, unaudited, and not guaranteed to work perfectly. Before spending money, do your own research: <0>ask questions</0>, <1>check out the code</1>, and understand the risks!"
-msgstr "注意： Juicebox是一个全新的协议，它未经审计且不保证能完美工作。\n"
+msgstr ""
+"注意： Juicebox是一个全新的协议，它未经审计且不保证能完美工作。\n"
 " 在花钱之前请先做好您自己的研究：提出疑问，核查代码以及了解所涉及的风险！"
 
 #: src/components/Project/modals/ConfirmPayOwnerModal/index.tsx
@@ -1361,7 +1364,8 @@ msgid "Since you have not set a funding duration, changes to these settings will
 msgstr ""
 
 #: src/components/FundingCycle/FundingCyclePreview.tsx
-msgid "Some funding cycle properties may indicate risk\n"
+msgid ""
+"Some funding cycle properties may indicate risk\n"
 "for project contributors."
 msgstr ""
 
@@ -1452,7 +1456,8 @@ msgid "The future will be led by creators, and owned by communities."
 msgstr "创造者将引领未来, 而社区会拥有未来."
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
-msgid "The percent this individual receives of the overall {reservedRate}% \n"
+msgid ""
+"The percent this individual receives of the overall {reservedRate}% \n"
 "reserved token allocation"
 msgstr ""
 
@@ -2026,9 +2031,9 @@ msgid "{tokenSymbol}/ETH exchange rate on {exchangeName}."
 msgstr "在 {exchangeName} 的兑换率为 {tokenSymbol}/ETH"
 
 #: src/components/Project/Rewards/index.tsx
-msgid "{tokensLabel}\n"
+msgid ""
+"{tokensLabel}\n"
 "are distributed to anyone who pays this project. If the project \n"
 "has set a funding target, tokens can be redeemed for a portion \n"
 "of the project's overflow whether or not they have been claimed yet."
 msgstr ""
-

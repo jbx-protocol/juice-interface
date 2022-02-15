@@ -75,8 +75,7 @@ export default function FundingCyclePreview({
                     style={{ marginLeft: 10, color: colors.text.secondary }}
                   >
                     <Tooltip
-                      title={t`Some funding cycle properties may indicate risk
-                    for project contributors.`}
+                      title={t`Some funding cycle properties may indicate risk for project contributors.`}
                     >
                       <ExclamationCircleOutlined style={{ marginRight: 2 }} />
                       {fundingCycleRiskCount(fundingCycle)}

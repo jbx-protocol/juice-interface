@@ -4,7 +4,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
 
 import ReservedTokens from './ReservedTokens'
-import PayoutModsList from '../shared/PayoutModsList'
+import PayoutModsList from '../../shared/PayoutModsList'
 import FundingCycleDetails from './FundingCycleDetails'
 
 export default function QueuedFundingCycle() {

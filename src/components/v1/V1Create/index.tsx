@@ -4,7 +4,7 @@ import { t, Trans } from '@lingui/macro'
 import { Button, Col, Drawer, DrawerProps, Row, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import Modal from 'antd/lib/modal/Modal'
-import Project from 'components/Project'
+import V1Project from 'components/v1/V1Project'
 import { NetworkContext } from 'contexts/networkContext'
 import {
   V1ProjectContext,
@@ -21,7 +21,7 @@ import { useTerminalFee } from 'hooks/v1/TerminalFee'
 import { useDeployProjectTx } from 'hooks/v1/transactor/DeployProjectTx'
 import { V1ContractName } from 'models/v1/contracts'
 import { CurrencyOption } from 'models/currency-option'
-import { FundingCycle } from 'models/funding-cycle'
+import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { PayoutMod, TicketMod } from 'models/mods'
 import { V1TerminalVersion } from 'models/v1/terminals'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
@@ -41,22 +41,22 @@ import {
 } from 'utils/ipfs'
 import { getTerminalAddress } from 'utils/v1/terminals'
 
-import BudgetForm from '../shared/forms/BudgetForm'
+import BudgetForm from '../../shared/forms/BudgetForm'
 import ConfirmDeployProject from './ConfirmDeployProject'
-import IncentivesForm from '../shared/forms/IncentivesForm'
-import PayModsForm from '../shared/forms/PayModsForm'
+import IncentivesForm from '../../shared/forms/IncentivesForm'
+import PayModsForm from '../../shared/forms/PayModsForm'
 import ProjectForm, { ProjectFormFields } from './ProjectForm'
 import RestrictedActionsForm, {
   RestrictedActionsFormFields,
-} from '../shared/forms/RestrictedActionsForm'
-import RulesForm from '../shared/forms/RulesForm'
+} from '../../shared/forms/RestrictedActionsForm'
+import RulesForm from '../../shared/forms/RulesForm'
 import TicketingForm, {
   TicketingFormFields,
-} from '../shared/forms/TicketingForm'
+} from '../../shared/forms/TicketingForm'
 
 const terminalVersion: V1TerminalVersion = '1.1'
 
-export default function Create() {
+export default function V1Create() {
   const { signerNetwork, userAddress } = useContext(NetworkContext)
   const { colors, radii } = useContext(ThemeContext).theme
   const [currentStep, setCurrentStep] = useState<number>()
@@ -427,7 +427,7 @@ export default function Create() {
     ],
   )
 
-  const fundingCycle: FundingCycle = useMemo(
+  const fundingCycle: V1FundingCycle = useMemo(
     () => ({
       ...editingFC,
       metadata: encodeFundingCycleMetadata(
@@ -562,7 +562,7 @@ export default function Create() {
               borderLeft: '1px solid ' + colors.stroke.tertiary,
             }}
           >
-            <Project showCurrentDetail column />
+            <V1Project showCurrentDetail column />
           </div>
         </Col>
 

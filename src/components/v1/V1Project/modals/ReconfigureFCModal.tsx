@@ -20,7 +20,7 @@ import { useEditingFundingCycleSelector } from 'hooks/AppSelector'
 import { useTerminalFee } from 'hooks/v1/TerminalFee'
 import { useConfigureProjectTx } from 'hooks/v1/transactor/ConfigureProjectTx'
 import { CurrencyOption } from 'models/currency-option'
-import { FundingCycleMetadata } from 'models/funding-cycle-metadata'
+import { V1FundingCycleMetadata } from 'models/v1/fundingCycle'
 import { PayoutMod, TicketMod } from 'models/mods'
 import React, {
   useCallback,
@@ -46,12 +46,12 @@ import { serializeFundingCycle } from 'utils/serializers'
 
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 
-import BudgetForm from '../../shared/forms/BudgetForm'
-import IncentivesForm from '../../shared/forms/IncentivesForm'
-import PayModsForm from '../../shared/forms/PayModsForm'
+import BudgetForm from '../../../shared/forms/BudgetForm'
+import IncentivesForm from '../../../shared/forms/IncentivesForm'
+import PayModsForm from '../../../shared/forms/PayModsForm'
 import TicketingForm, {
   TicketingFormFields,
-} from '../../shared/forms/TicketingForm'
+} from '../../../shared/forms/TicketingForm'
 
 export default function ReconfigureFCModal({
   visible,
@@ -102,7 +102,7 @@ export default function ReconfigureFCModal({
       reserved: parseFloat(fromPerbicent(editingFC?.reserved)),
     })
 
-  const fcMetadata: FundingCycleMetadata | undefined =
+  const fcMetadata: V1FundingCycleMetadata | undefined =
     decodeFundingCycleMetadata(currentFC?.metadata)
 
   const resetRestrictedActionsForm = () => {

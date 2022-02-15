@@ -11,7 +11,7 @@ import ProjectActivity from './ProjectActivity'
 import ProjectHeader from './ProjectHeader'
 import Rewards from './Rewards'
 
-export default function Project({
+export default function V1Project({
   style,
   showCurrentDetail,
   column,

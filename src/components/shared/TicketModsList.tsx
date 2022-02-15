@@ -9,7 +9,7 @@ import {
   useHasPermission,
 } from 'hooks/v1/contractReader/HasPermission'
 import { useSetTicketModsTx } from 'hooks/v1/transactor/SetTicketModsTx'
-import { FundingCycle } from 'models/funding-cycle'
+import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { TicketMod } from 'models/mods'
 import { useContext, useLayoutEffect, useMemo, useState } from 'react'
 import { formatWad, fromPermyriad } from 'utils/formatNumber'
@@ -23,7 +23,7 @@ export default function TicketModsList({
 }: {
   total?: BigNumber
   mods: TicketMod[] | undefined
-  fundingCycle: FundingCycle | undefined
+  fundingCycle: V1FundingCycle | undefined
   projectId: BigNumber | undefined
   reservedRate: number
 }) {

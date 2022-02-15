@@ -1,6 +1,6 @@
 import { BigNumber, BigNumberish } from 'ethers'
 import { V1ContractName } from 'models/v1/contracts'
-import { FundingCycle } from 'models/funding-cycle'
+import { V1FundingCycle } from 'models/v1/fundingCycle'
 
 import useContractReader from './ContractReader'
 
@@ -8,7 +8,7 @@ import useContractReader from './ContractReader'
 export default function useQueuedFundingCycleOfProject(
   projectId: BigNumberish | undefined,
 ) {
-  return useContractReader<FundingCycle>({
+  return useContractReader<V1FundingCycle>({
     contract: V1ContractName.FundingCycles,
     functionName: 'queuedOf',
     args: projectId ? [BigNumber.from(projectId).toHexString()] : null,

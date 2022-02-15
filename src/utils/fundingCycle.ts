@@ -1,8 +1,7 @@
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 
 import { constants } from 'ethers'
-import { FundingCycle } from 'models/funding-cycle'
-import { FundingCycleMetadata } from 'models/funding-cycle-metadata'
+import { V1FundingCycle, V1FundingCycleMetadata } from 'models/v1/fundingCycle'
 
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 
@@ -28,12 +27,12 @@ const bits1 = 0b1
 
 export const decodeFundingCycleMetadata = (
   metadata?: BigNumber,
-): FundingCycleMetadata | undefined => {
+): V1FundingCycleMetadata | undefined => {
   if (!metadata) return
 
   const version = metadata
     .and(bits8)
-    .toNumber() as FundingCycleMetadata['version']
+    .toNumber() as V1FundingCycleMetadata['version']
 
   return {
     version,
@@ -45,7 +44,7 @@ export const decodeFundingCycleMetadata = (
     ticketPrintingIsAllowed:
       version === 0 ? null : Boolean(metadata.shr(33).and(bits1).toNumber()),
     treasuryExtension: version === 0 ? null : metadata.shr(34).toHexString(),
-  } as FundingCycleMetadata
+  } as V1FundingCycleMetadata
 }
 
 export const encodeFundingCycleMetadata = (
@@ -77,15 +76,16 @@ export const encodeFundingCycleMetadata = (
   return encoded
 }
 
-export const isRecurring = (fundingCycle: FundingCycle | EditingFundingCycle) =>
-  fundingCycle.discountRate.lt(201)
+export const isRecurring = (
+  fundingCycle: V1FundingCycle | EditingFundingCycle,
+) => fundingCycle.discountRate.lt(201)
 
 export const hasFundingTarget = (
-  fundingCycle: Pick<FundingCycle | EditingFundingCycle, 'target'>,
+  fundingCycle: Pick<V1FundingCycle | EditingFundingCycle, 'target'>,
 ) => fundingCycle.target.lt(constants.MaxUint256)
 
 export const hasFundingDuration = (
-  fundingCycle: Pick<FundingCycle | EditingFundingCycle, 'duration'>,
+  fundingCycle: Pick<V1FundingCycle | EditingFundingCycle, 'duration'>,
 ) => fundingCycle.duration && !fundingCycle.duration.eq(constants.AddressZero)
 
 /**
@@ -95,7 +95,7 @@ export const hasFundingDuration = (
  * If a value in the returned object is true, it is potentially unsafe.
  */
 export const getUnsafeFundingCycleProperties = (
-  fundingCycle: FundingCycle,
+  fundingCycle: V1FundingCycle,
 ): FundingCycleRiskFlags => {
   const metadata = decodeFundingCycleMetadata(fundingCycle.metadata)
 
@@ -155,7 +155,7 @@ export const getUnsafeFundingCycleProperties = (
  * Return number of risk indicators for a funding cycle.
  * 0 if we deem a project "safe" to contribute to.
  */
-export const fundingCycleRiskCount = (fundingCycle: FundingCycle): number => {
+export const fundingCycleRiskCount = (fundingCycle: V1FundingCycle): number => {
   return Object.values(getUnsafeFundingCycleProperties(fundingCycle)).filter(
     v => v === true,
   ).length

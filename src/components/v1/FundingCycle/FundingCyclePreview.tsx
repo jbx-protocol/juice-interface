@@ -3,7 +3,7 @@ import { t, Trans } from '@lingui/macro'
 import { Collapse, Tooltip } from 'antd'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import { ThemeContext } from 'contexts/themeContext'
-import { FundingCycle } from 'models/funding-cycle'
+import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { useContext } from 'react'
 import { detailedTimeString } from 'utils/formatTime'
 import { fundingCycleRiskCount, isRecurring } from 'utils/fundingCycle'
@@ -14,7 +14,7 @@ export default function FundingCyclePreview({
   fundingCycle,
   showDetail,
 }: {
-  fundingCycle: FundingCycle | undefined
+  fundingCycle: V1FundingCycle | undefined
   showDetail?: boolean
 }) {
   const {

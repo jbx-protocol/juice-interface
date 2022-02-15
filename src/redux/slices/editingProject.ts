@@ -59,7 +59,7 @@ export const defaultProjectState: EditingProjectState = {
     start: BigNumber.from(Math.floor(new Date().valueOf() / 1000)),
     duration: BigNumber.from(0),
     tapped: BigNumber.from(0),
-    weight: constants.WeiPerEther, // 1e24
+    weight: constants.WeiPerEther.mul(1000000), // 1e24
     fee: BigNumber.from(0),
     reserved: parsePerbicent(0),
     bondingCurveRate: defaultBondingCurveRate,

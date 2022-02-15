@@ -1,6 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Col, Row, Space } from 'antd'
-import Create from 'components/Create'
+import V1Create from 'components/v1/V1Create'
 import Loading from 'components/shared/Loading'
 import FeedbackFormLink from 'components/shared/FeedbackFormLink'
 
@@ -323,7 +323,7 @@ export default function Landing() {
             paddingBottom: 40,
           }}
         >
-          <Create />
+          <V1Create />
         </section>
       )}
 

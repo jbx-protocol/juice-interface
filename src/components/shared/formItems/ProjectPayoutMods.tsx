@@ -108,7 +108,7 @@ export default function ProjectPayoutMods({
 
   const gutter = 10
 
-  const modInput = useCallback(
+  const ModInput = useCallback(
     (mod: EditingPayoutMod, index: number, locked?: boolean) => {
       if (!mods) return
 
@@ -293,8 +293,8 @@ export default function ProjectPayoutMods({
       currency,
       fee,
       form,
-      onModsChanged,
       editingPercent,
+      onModsChanged,
     ],
   )
 
@@ -333,8 +333,13 @@ export default function ProjectPayoutMods({
         : [...mods, newMod],
     )
 
-    setEditingModIndex(undefined)
+    if (handle) {
+      setSettingHandle(handle)
+      setSettingHandleIndex(editingModIndex)
+    }
 
+    setEditingModIndex(undefined)
+    setEditingPercent(0)
     form.resetFields()
   }
 
@@ -372,15 +377,22 @@ export default function ProjectPayoutMods({
     form.setFieldsValue({ percent: newPercent })
   }
   return (
-    <Form.Item {...formItemProps}>
-      <Space direction="vertical" style={{ width: '100%' }} size="large">
+    <Form.Item
+      {...formItemProps}
+      style={{ ...formItemProps?.style, display: 'block' }}
+    >
+      <Space
+        direction="vertical"
+        style={{ width: '100%', minHeight: 0 }}
+        size="large"
+      >
         {lockedMods ? (
           <Space style={{ width: '100%' }} direction="vertical" size="small">
-            {lockedMods.map((v, i) => modInput(v, i, true))}
+            {lockedMods.map((v, i) => ModInput(v, i, true))}
           </Space>
         ) : null}
         <Space style={{ width: '100%' }} direction="vertical" size="small">
-          {mods.map((v, i) => modInput(v, i))}
+          {mods.map((v, i) => ModInput(v, i))}
         </Space>
         <div
           style={{

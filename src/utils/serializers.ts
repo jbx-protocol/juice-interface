@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { FundingCycle } from 'models/funding-cycle'
+import { V1FundingCycle } from 'models/v1/fundingCycle'
 import {
   fromPerbicent,
   fromPermille,
@@ -10,7 +10,7 @@ import {
 } from 'utils/formatNumber'
 
 // Spreads all properties from both v0 or v1 FundingCycleMetadata
-export type EditingFundingCycle = Omit<FundingCycle, 'metadata'> & {
+export type EditingFundingCycle = Omit<V1FundingCycle, 'metadata'> & {
   reserved: BigNumber
   bondingCurveRate: BigNumber
   payIsPaused: boolean | null

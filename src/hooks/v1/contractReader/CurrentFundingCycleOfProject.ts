@@ -1,6 +1,6 @@
 import { BigNumber, BigNumberish } from 'ethers'
 import { V1ContractName } from 'models/v1/contracts'
-import { FundingCycle } from 'models/funding-cycle'
+import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { V1TerminalName } from 'models/v1/terminals'
 import { useCallback, useMemo } from 'react'
 import { deepEqFundingCycles } from 'utils/deepEqFundingCycles'
@@ -12,7 +12,7 @@ export default function useCurrentFundingCycleOfProject(
   projectId: BigNumberish | undefined,
   terminalName: V1TerminalName | undefined,
 ) {
-  return useContractReader<FundingCycle>({
+  return useContractReader<V1FundingCycle>({
     contract: V1ContractName.FundingCycles,
     functionName: 'currentOf',
     args: projectId ? [BigNumber.from(projectId).toHexString()] : null,

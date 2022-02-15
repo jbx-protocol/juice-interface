@@ -10,14 +10,14 @@ import { ThemeContext } from 'contexts/themeContext'
 import useContractReader from 'hooks/v1/contractReader/ContractReader'
 import { V1ContractName } from 'models/v1/contracts'
 import { CurrencyOption } from 'models/currency-option'
-import { FundingCycle } from 'models/funding-cycle'
+import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { useCallback, useContext, useState } from 'react'
 import { deepEqFundingCycles } from 'utils/deepEqFundingCycles'
 import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
 import { hasFundingTarget } from 'utils/fundingCycle'
 
-import FundingCycleDetails from 'components/FundingCycle/FundingCycleDetails'
+import FundingCycleDetails from 'components/v1/FundingCycle/FundingCycleDetails'
 
 export default function FundingHistory({
   startId,
@@ -25,7 +25,7 @@ export default function FundingHistory({
   startId: BigNumber | undefined
 }) {
   const [selectedIndex, setSelectedIndex] = useState<number>()
-  const [fundingCycles, setFundingCycles] = useState<FundingCycle[]>([])
+  const [fundingCycles, setFundingCycles] = useState<V1FundingCycle[]>([])
   const [cycleIds, setCycleIds] = useState<BigNumber[]>([])
   const {
     theme: { colors },
@@ -40,7 +40,7 @@ export default function FundingHistory({
   const selectedFC =
     selectedIndex !== undefined ? fundingCycles[selectedIndex] : undefined
 
-  useContractReader<FundingCycle>({
+  useContractReader<V1FundingCycle>({
     contract: V1ContractName.FundingCycles,
     functionName: 'get',
     args: cycleNumber ? [cycleNumber] : null,

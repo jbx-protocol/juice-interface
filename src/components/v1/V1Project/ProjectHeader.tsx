@@ -7,9 +7,9 @@ import { t, Trans } from '@lingui/macro'
 
 import { Button, Tooltip } from 'antd'
 import Discord from 'components/icons/Discord'
-import EditProjectModal from 'components/Project/modals/EditProjectModal'
-import MigrateV1Pt1Modal from 'components/Project/modals/MigrateV1Pt1Modal'
-import ProjectToolDrawerModal from 'components/Project/modals/ProjectToolDrawerModal'
+import EditProjectModal from 'components/v1/V1Project/modals/EditProjectModal'
+import MigrateV1Pt1Modal from 'components/v1/V1Project/modals/MigrateV1Pt1Modal'
+import ProjectToolDrawerModal from 'components/v1/V1Project/modals/ProjectToolDrawerModal'
 import ProjectLogo from 'components/shared/ProjectLogo'
 import { NetworkContext } from 'contexts/networkContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
@@ -20,7 +20,7 @@ import {
 } from 'hooks/v1/contractReader/HasPermission'
 import { useContext, useState } from 'react'
 
-import Paragraph from '../shared/Paragraph'
+import Paragraph from '../../shared/Paragraph'
 
 export default function ProjectHeader() {
   const [editProjectModalVisible, setEditProjectModalVisible] =

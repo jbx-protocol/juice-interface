@@ -1,6 +1,6 @@
+/* eslint-disable */
 import { t, Trans } from '@lingui/macro'
 import { Select, Space, Form, Button } from 'antd'
-import { useForm } from 'antd/lib/form/Form'
 
 // import { useAppDispatch } from 'hooks/AppDispatch'
 // import { useAppSelector } from 'hooks/AppSelector'
@@ -28,18 +28,29 @@ import { Split } from 'models/v2/splits'
 
 import { BigNumber } from '@ethersproject/bignumber'
 
+import { useAppDispatch } from 'hooks/AppDispatch'
+
+import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
+
+import { V2UserContext } from 'contexts/v2/userContext'
+
+import { useAppSelector } from 'hooks/AppSelector'
+
+import {
+  targetSubFeeToTargetFormatted,
+  targetToTargetSubFeeFormatted,
+} from 'components/shared/formItems/formHelpers'
+
 import { V1_CURRENCY_ETH } from 'constants/v1/currency'
 import { shadowCard } from 'constants/styles/shadowCard'
 import { toV2Currency, V2_CURRENCY_ETH } from 'constants/v2/currency'
 const { Option } = Select
 
 type FundingFormFields = {
-  target?: number
-  duration?: number
-  splits?: Split[]
+  duration?: BigNumber
 }
 
-const transformPayoutMod = (mod: PayoutMod): Split => {
+const toSplit = (mod: PayoutMod): Split => {
   const {
     beneficiary,
     percent,
@@ -49,18 +60,40 @@ const transformPayoutMod = (mod: PayoutMod): Split => {
     allocator,
   } = mod
 
+  console.log(percent, lockedUntil)
+
   return {
     beneficiary,
     percent: BigNumber.from(percent),
     preferClaimed: preferUnstaked,
-    lockedUntil: BigNumber.from(lockedUntil),
+    lockedUntil: lockedUntil ? BigNumber.from(lockedUntil) : undefined,
+    projectId,
+    allocator,
+  }
+}
+
+const toMod = (split: Split): PayoutMod => {
+  const {
+    beneficiary,
+    percent,
+    preferClaimed,
+    lockedUntil,
+    projectId,
+    allocator,
+  } = split
+
+  return {
+    beneficiary,
+    percent: percent.toNumber(),
+    preferUnstaked: preferClaimed,
+    lockedUntil: lockedUntil?.toNumber(),
     projectId,
     allocator,
   }
 }
 
 export default function ProjectDetailsTabContent() {
-  const [fundingForm] = useForm<FundingFormFields>()
+  const [fundingForm] = Form.useForm<FundingFormFields>()
   const [mods, setMods] = useState<PayoutMod[]>([])
   const [target, setTarget] = useState<number>()
   const [targetSubFee, setTargetSubFee] = useState<string>()
@@ -71,28 +104,66 @@ export default function ProjectDetailsTabContent() {
   const [isFundingDurationVisible, setFundingDurationVisible] =
     useState<boolean>()
   const { theme } = useContext(ThemeContext)
-  // const dispatch = useAppDispatch()
-  // const { info: editingV2ProjectInfo } = useAppSelector(
-  //   state => state.editingV2Project,
-  // )
-  const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
+  const dispatch = useAppDispatch()
+  const { contracts } = useContext(V2UserContext)
 
-  const onFundingFormSave = useCallback(
-    values => {
-      const splits = mods.map(mod => transformPayoutMod(mod))
-      // TODO dispatch things
-      console.log(values, { ...fundingForm.getFieldsValue(), splits })
-    },
-    [mods, fundingForm],
-  )
+  const { fundAccessConstraints, fundingCycleData, payoutSplits } =
+    useAppSelector(state => state.editingV2Project)
+
+  const fundAccessConstraint = fundAccessConstraints?.[0]
 
   const resetProjectForm = useCallback(() => {
     fundingForm.setFieldsValue({
-      splits: [],
-      target: 0,
-      duration: 0,
+      duration: fundingCycleData?.duration,
     })
-  }, [fundingForm])
+    setMods(payoutSplits?.map(split => toMod(split)) ?? [])
+    const target = BigNumber.from(
+      fundAccessConstraint.distributionLimit,
+    ).toNumber()
+    setTarget(target)
+    setTargetSubFee(
+      targetToTargetSubFeeFormatted(
+        target.toString() ?? '0',
+        ETHPaymentTerminalFee,
+      ),
+    )
+
+    setTargetCurrency(
+      (BigNumber.from(
+        fundAccessConstraint?.distributionLimitCurrency,
+      ).toNumber() ?? V2_CURRENCY_ETH) as V2CurrencyOption,
+    )
+  }, [fundingForm, fundingCycleData, fundAccessConstraint, payoutSplits])
+
+  const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
+
+  const onFundingFormSave = useCallback(
+    (fields: FundingFormFields) => {
+      if (!contracts) throw new Error('Failed to save funding configuration.')
+
+      const newPayoutSplits = mods.map(mod => toSplit(mod))
+
+      // const fundAccessConstraint = {
+      //   terminal: contracts.JBETHPaymentTerminal.address,
+      //   distributionLimit: BigNumber.from(target),
+      //   distributionLimitCurrency: BigNumber.from(targetCurrency),
+      //   overflowAllowance: BigNumber.from(0),
+      //   overflowAllowanceCurrency: BigNumber.from(0),
+      // }
+
+      // dispatch(
+      //   editingV2ProjectActions.setFundAccessConstraints([
+      //     fundAccessConstraint,
+      //   ]),
+      // )
+      console.log(newPayoutSplits)
+      dispatch(editingV2ProjectActions.setPayoutSplits(newPayoutSplits))
+      // dispatch(
+      //   editingV2ProjectActions.setDuration(BigNumber.from(fields.duration)),
+      // )
+    },
+    [mods, contracts, dispatch, targetCurrency],
+  )
 
   // initially fill form with any existing redux state
   useEffect(() => {
@@ -173,17 +244,33 @@ export default function ProjectDetailsTabContent() {
 
               <Form.Item name="target" label={t`Funding target`} required>
                 <BudgetTargetInput
-                  target={fundingForm.getFieldValue('target')}
+                  target={target?.toString()}
                   targetSubFee={targetSubFee}
                   currency={toV1Currency(targetCurrency)}
+                  onChange={val => {
+                    setTarget(parseInt(val ?? '0', 10))
+                    setTargetSubFee(
+                      targetToTargetSubFeeFormatted(
+                        val?.toString() ?? '0',
+                        ETHPaymentTerminalFee,
+                      ),
+                    )
+                  }}
                   onTargetSubFeeChange={val => {
-                    setTargetSubFee(val)
+                    setTargetSubFee(val ?? '0')
+                    setTarget(
+                      parseInt(
+                        targetSubFeeToTargetFormatted(
+                          val ?? '0',
+                          ETHPaymentTerminalFee,
+                        ),
+                      ),
+                    )
                   }}
                   onCurrencyChange={val => {
                     setTargetCurrency(toV2Currency(val))
                   }}
                   placeholder="0"
-                  onChange={val => setTarget(parseInt(val ?? '0', 10))}
                   fee={ETHPaymentTerminalFee}
                 />
               </Form.Item>

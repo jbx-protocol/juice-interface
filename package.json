@@ -57,7 +57,7 @@
     "lint:fix": "yarn lint --fix",
     "lint-staged": "lint-staged",
     "prepare": "husky install",
-    "i18n:extract": "lingui extract --clean",
+    "i18n:extract": "./scripts/extract-translations.sh",
     "i18n:compile": "lingui compile",
     "i18n:lint": "./scripts/lint-translations.sh",
     "postinstall": "yarn i18n:compile",

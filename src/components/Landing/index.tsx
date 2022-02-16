@@ -43,7 +43,6 @@ export default function Landing() {
 
   const { data: previewProjects } = useProjectsQuery({
     pageSize: 4,
-    states: { active: true, archived: false },
   })
 
   const smallHeader = (text: string) => (

@@ -83,7 +83,7 @@ export default function QAs() {
           </a>
           . Anyone who contributes funds to a project receives that project's
           tokens in return. Token balances will be tracked by the protocol until
-          ERC-20 tokens are optionally issued by the project owner."
+          ERC-20 tokens are optionally issued by the project owner.
         </Trans>,
       ],
     },

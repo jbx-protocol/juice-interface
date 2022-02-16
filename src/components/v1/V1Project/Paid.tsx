@@ -177,7 +177,14 @@ export default function Paid() {
             marginLeft: 10,
           }}
         >
-          <ETHAmount amount={balance} />
+          {currentFC.currency.eq(CURRENCY_USD) ? (
+            <span style={secondaryTextStyle}>
+              <ETHAmount amount={balance} precision={2} padEnd={true} />{' '}
+            </span>
+          ) : (
+            ''
+          )}
+          {formatCurrencyAmount(balanceInCurrency)}
         </div>
       </div>
 

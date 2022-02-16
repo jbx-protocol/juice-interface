@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { t, Trans } from '@lingui/macro'
 import { Select, Space, Form, Button } from 'antd'
 
@@ -26,8 +25,6 @@ import { toV1Currency } from 'utils/v1/currency'
 
 import { Split } from 'models/v2/splits'
 
-import { BigNumber } from '@ethersproject/bignumber'
-
 import { useAppDispatch } from 'hooks/AppDispatch'
 
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
@@ -41,10 +38,11 @@ import {
   targetToTargetSubFeeFormatted,
 } from 'components/shared/formItems/formHelpers'
 
+import { SerializedV2FundAccessConstraint } from 'utils/v2/serializers'
+
 import { V1_CURRENCY_ETH } from 'constants/v1/currency'
 import { shadowCard } from 'constants/styles/shadowCard'
 import { toV2Currency, V2_CURRENCY_ETH } from 'constants/v2/currency'
-import { SerializedV2FundAccessConstraint } from 'utils/v2/serializers'
 const { Option } = Select
 
 type FundingFormFields = {
@@ -61,15 +59,13 @@ const toSplit = (mod: PayoutMod): Split => {
     allocator,
   } = mod
 
-  console.log(percent, lockedUntil)
-
   return {
     beneficiary,
-    percent: BigNumber.from(percent),
-    preferClaimed: preferUnstaked,
-    lockedUntil: lockedUntil ? BigNumber.from(lockedUntil) : undefined,
+    percent,
+    lockedUntil,
     projectId,
     allocator,
+    preferClaimed: preferUnstaked,
   }
 }
 
@@ -85,9 +81,9 @@ const toMod = (split: Split): PayoutMod => {
 
   return {
     beneficiary,
-    percent: percent.toNumber(),
+    percent,
     preferUnstaked: preferClaimed,
-    lockedUntil: lockedUntil?.toNumber(),
+    lockedUntil,
     projectId,
     allocator,
   }
@@ -100,10 +96,7 @@ export default function ProjectDetailsTabContent() {
   const [targetSubFee, setTargetSubFee] = useState<string>()
   const [targetCurrency, setTargetCurrency] =
     useState<V2CurrencyOption>(V2_CURRENCY_ETH)
-  const [isFundingTargetSectionVisible, setFundingTargetSectionVisible] =
-    useState<boolean>()
-  const [isFundingDurationVisible, setFundingDurationVisible] =
-    useState<boolean>()
+  const [fundingType, setFundingType] = useState<string>()
   const { theme } = useContext(ThemeContext)
   const dispatch = useAppDispatch()
   const { contracts } = useContext(V2UserContext)
@@ -115,6 +108,8 @@ export default function ProjectDetailsTabContent() {
     | SerializedV2FundAccessConstraint
     | undefined
 
+  const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
+
   const resetProjectForm = useCallback(() => {
     fundingForm.setFieldsValue({
       duration: fundingCycleData?.duration,
@@ -124,18 +119,25 @@ export default function ProjectDetailsTabContent() {
 
     setTarget(_target ?? '0')
     setTargetSubFee(
-      targetToTargetSubFeeFormatted(
-        target.toString() ?? '0',
-        ETHPaymentTerminalFee,
-      ),
+      targetToTargetSubFeeFormatted(_target ?? '0', ETHPaymentTerminalFee),
     )
+
+    if (fundingCycleData?.duration) {
+      setFundingType('recurring')
+    } else if (_target) {
+      setFundingType('target')
+    }
 
     // setTargetCurrency(
     //   fundAccessConstraint?.distributionLimitCurrency ?? V2_CURRENCY_ETH,
     // )
-  }, [fundingForm, fundingCycleData, fundAccessConstraint, payoutSplits])
-
-  const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
+  }, [
+    fundingForm,
+    fundingCycleData,
+    fundAccessConstraint,
+    payoutSplits,
+    ETHPaymentTerminalFee,
+  ])
 
   const onFundingFormSave = useCallback(
     (fields: FundingFormFields) => {
@@ -159,7 +161,7 @@ export default function ProjectDetailsTabContent() {
       dispatch(editingV2ProjectActions.setPayoutSplits(newPayoutSplits))
       dispatch(editingV2ProjectActions.setDuration(fields.duration || ''))
     },
-    [mods, contracts, dispatch, targetCurrency, target],
+    [mods, contracts, dispatch, target],
   )
 
   // initially fill form with any existing redux state
@@ -168,16 +170,19 @@ export default function ProjectDetailsTabContent() {
   }, [resetProjectForm])
 
   const onFundingTypeChange = useCallback(value => {
-    setFundingTargetSectionVisible(['target', 'recurring'].includes(value))
-    setFundingDurationVisible(value === 'recurring')
+    setFundingType(value)
   }, [])
+
+  const isFundingTargetSectionVisible =
+    fundingType === 'target' || fundingType === 'recurring'
+  const isFundingDurationVisible = fundingType === 'recurring'
 
   return (
     <div>
       <Space direction="vertical" size="large">
         <Form form={fundingForm} layout="vertical" onFinish={onFundingFormSave}>
           <Form.Item label={t`How much do you want to raise?`}>
-            <Select onChange={onFundingTypeChange}>
+            <Select value={fundingType} onChange={onFundingTypeChange}>
               <Option value="target">
                 <Trans>Specific target</Trans>
               </Option>

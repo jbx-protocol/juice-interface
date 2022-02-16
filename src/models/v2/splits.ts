@@ -2,9 +2,9 @@ import { BigNumber } from '@ethersproject/bignumber'
 
 export type Split = {
   beneficiary?: string // address
-  percent: BigNumber
+  percent: number
   preferClaimed?: boolean
-  lockedUntil?: BigNumber
+  lockedUntil?: number
   projectId?: BigNumber
   allocator?: string // address, If an allocator is specified, funds will be sent to the allocator contract along with the projectId, beneficiary, preferClaimed properties.
 }

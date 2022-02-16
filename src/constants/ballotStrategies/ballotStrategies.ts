@@ -2,7 +2,7 @@ import { constants } from 'ethers'
 import { t } from '@lingui/macro'
 
 export type Strategy = {
-  address: string
+  address: string | undefined
   name: string
   description?: string
   unknown?: boolean
@@ -28,9 +28,11 @@ export function ballotStrategies() {
   ]
 }
 
-export const customStrategy = (address: string) => ({
+export const customStrategy = (address: string | undefined) => ({
   address,
   name: t`Custom strategy`,
-  description: t`Unrecognized strategy contract. Make sure this is correct!`,
+  description: t`This address is an unrecognized strategy contract. Make sure it is correct!`,
   unknown: true,
 })
+
+export const threeDayDelayStrategy = ballotStrategies()[2]

@@ -113,7 +113,9 @@ export default function ProjectBondingCurveRate({
         hideLabel ? undefined : (
           <div>
             <Trans>Bonding curve rate</Trans>{' '}
-            <Switch checked={!disabled} onChange={toggleDisabled} />
+            {toggleDisabled ? (
+              <Switch checked={!disabled} onChange={toggleDisabled} />
+            ) : null}
           </div>
         )
       }

@@ -132,6 +132,15 @@ export const editingV2ProjectSlice = createSlice({
     setPayoutSplits: (state, action: PayloadAction<Split[]>) => {
       state.payoutSplits = action.payload
     },
+    setPausePay: (state, action: PayloadAction<boolean>) => {
+      state.fundingCycleMetadata.pausePay = action.payload
+    },
+    setPauseMint: (state, action: PayloadAction<boolean>) => {
+      state.fundingCycleMetadata.pauseMint = action.payload
+    },
+    setBallot: (state, action: PayloadAction<string>) => {
+      state.fundingCycleData.ballot = action.payload
+    },
   },
 })
 

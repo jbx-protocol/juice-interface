@@ -99,6 +99,10 @@ msgstr ""
 msgid "<0>NOTE:</0> This project has a balance of 0. Projects cannot be migrated without a balance. To migrate this project, first pay it or use the button below to deposit 1 wei (0.000000000000000001 or 10<1>-18</1> ETH)."
 msgstr "<0>NOTE:</0> This project has a balance of 0. Projects cannot be migrated without a balance. To migrate this project, first pay it or use the button below to deposit 1 wei (0.000000000000000001 or 10<1>-18</1> ETH)."
 
+#: src/components/v2/V2Create/tabs/OthersTabContent.tsx
+msgid "<0>Note: </0>Updates you make to attributes in this section will <1>not be applied immediately</1> and only take effect in <2>upcoming funding cycles.</2>"
+msgstr "<0>Note: </0>Updates you make to attributes in this section will <1>not be applied immediately</1> and only take effect in <2>upcoming funding cycles.</2>"
+
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "<0>Note:</0> These properties will <1>not</1> be editable immediately within a funding cycle. They can only be changed for <2>upcoming</2> funding cycles."
 msgstr "<0>Note:</0> These properties will <1>not</1> be editable immediately within a funding cycle. They can only be changed for <2>upcoming</2> funding cycles."
@@ -234,6 +238,7 @@ msgstr ""
 msgid "Allocate a portion of your project's reserved tokens to other Ethereum wallets or Juicebox projects."
 msgstr "Allocate a portion of your project's reserved tokens to other Ethereum wallets or Juicebox projects."
 
+#: src/components/shared/forms/OthersForm.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "Allow minting tokens"
 msgstr ""
@@ -417,6 +422,7 @@ msgstr ""
 msgid "Connect wallet to deploy"
 msgstr "Connect wallet to deploy"
 
+#: src/components/shared/ReconfigurationDrawer.tsx
 #: src/components/shared/forms/RulesForm.tsx
 msgid "Contract address: {0}"
 msgstr ""
@@ -457,6 +463,7 @@ msgstr ""
 msgid "Currently worth: <0><1/>{0}</0>"
 msgstr "Currently worth: <0><1/>{0}</0>"
 
+#: src/components/shared/ReconfigurationDrawer.tsx
 #: src/constants/ballotStrategies/ballotStrategies.ts
 msgid "Custom strategy"
 msgstr ""
@@ -616,10 +623,12 @@ msgstr "Edit tracked assets"
 msgid "Enabled"
 msgstr ""
 
+#: src/components/shared/forms/OthersForm.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "Enabling this allows the project owner to manually mint any amount of tokens to any address."
 msgstr ""
 
+#: src/components/shared/forms/OthersForm.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "Enabling tokens to be minted will appear risky to contributors, and should only be used when necessary."
 msgstr "Enabling tokens to be minted will appear risky to contributors, and should only be used when necessary."
@@ -1036,6 +1045,7 @@ msgstr ""
 msgid "Paid as <0/>"
 msgstr ""
 
+#: src/components/shared/forms/OthersForm.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "Pause payments"
 msgstr ""
@@ -1240,6 +1250,7 @@ msgstr ""
 msgid "Receive {receiveText}"
 msgstr "Receive {receiveText}"
 
+#: src/components/shared/formItems/ProjectReconfiguration.tsx
 #: src/components/shared/forms/RulesForm.tsx
 #: src/components/v1/V1Create/index.tsx
 msgid "Reconfiguration"
@@ -1370,10 +1381,12 @@ msgstr ""
 msgid "Rules for how changes can be made to your project."
 msgstr ""
 
+#: src/components/shared/formItems/ProjectReconfiguration.tsx
 #: src/components/shared/forms/RulesForm.tsx
 msgid "Rules for how this project's funding cycles can be reconfigured."
 msgstr ""
 
+#: src/components/shared/ReconfigurationDrawer.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 #: src/components/shared/forms/RulesForm.tsx
 #: src/components/shared/forms/TicketingForm.tsx
@@ -1400,6 +1413,7 @@ msgstr "Save handle"
 msgid "Save payouts"
 msgstr "Save payouts"
 
+#: src/components/shared/forms/OthersForm.tsx
 #: src/components/shared/forms/ProjectDetailsForm.tsx
 #: src/components/v1/V1Create/ProjectForm.tsx
 msgid "Save project details"
@@ -1525,6 +1539,7 @@ msgstr ""
 msgid "The Juicebox protocol is governed by a community of JBX token holders who vote on proposals fortnightly."
 msgstr "The Juicebox protocol is governed by a community of JBX token holders who vote on proposals fortnightly."
 
+#: src/components/shared/ReconfigurationDrawer.tsx
 #: src/components/shared/forms/RulesForm.tsx
 msgid "The address of any smart contract deployed on {signerNetwork} that implements"
 msgstr ""
@@ -1767,10 +1782,6 @@ msgstr ""
 msgid "Unavailable"
 msgstr "Unavailable"
 
-#: src/constants/ballotStrategies/ballotStrategies.ts
-msgid "Unrecognized strategy contract. Make sure this is correct!"
-msgstr ""
-
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 msgid "Unstaked balance"
 msgstr "Unstaked balance"
@@ -1941,6 +1952,7 @@ msgstr ""
 msgid "Your feedback will be sent to a <0>public Discord channel </0>for our development team to consider."
 msgstr "Your feedback will be sent to a <0>public Discord channel </0>for our development team to consider."
 
+#: src/components/shared/forms/OthersForm.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "Your project cannot receive direct payments while paused."
 msgstr ""
@@ -2023,6 +2035,7 @@ msgstr "project owner"
 msgid "projects"
 msgstr "projects"
 
+#: src/components/shared/ReconfigurationDrawer.tsx
 #: src/components/shared/forms/RulesForm.tsx
 msgid "this interface"
 msgstr ""
@@ -2137,6 +2150,10 @@ msgstr "{0}/{1} withdrawn"
 msgid "{0}{1}"
 msgstr ""
 
+#: src/constants/ballotStrategies/ballotStrategies.ts
+msgid "{address} is an unrecognized strategy contract. Make sure this is correct!"
+msgstr "{address} is an unrecognized strategy contract. Make sure this is correct!"
+
 #: src/components/v1/V1Project/ProjectActivity/ActivityTabContent.tsx
 msgid "{count} total"
 msgstr ""
@@ -2168,3 +2185,4 @@ msgstr ""
 #: src/components/v1/V1Project/Rewards/index.tsx
 msgid "{tokensLabel} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
 msgstr "{tokensLabel} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
+

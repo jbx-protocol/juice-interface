@@ -44,10 +44,11 @@ import {
 import { V1_CURRENCY_ETH } from 'constants/v1/currency'
 import { shadowCard } from 'constants/styles/shadowCard'
 import { toV2Currency, V2_CURRENCY_ETH } from 'constants/v2/currency'
+import { SerializedV2FundAccessConstraint } from 'utils/v2/serializers'
 const { Option } = Select
 
 type FundingFormFields = {
-  duration?: BigNumber
+  duration?: string
 }
 
 const toSplit = (mod: PayoutMod): Split => {
@@ -95,7 +96,7 @@ const toMod = (split: Split): PayoutMod => {
 export default function ProjectDetailsTabContent() {
   const [fundingForm] = Form.useForm<FundingFormFields>()
   const [mods, setMods] = useState<PayoutMod[]>([])
-  const [target, setTarget] = useState<number>()
+  const [target, setTarget] = useState<string>('0')
   const [targetSubFee, setTargetSubFee] = useState<string>()
   const [targetCurrency, setTargetCurrency] =
     useState<V2CurrencyOption>(V2_CURRENCY_ETH)
@@ -110,17 +111,18 @@ export default function ProjectDetailsTabContent() {
   const { fundAccessConstraints, fundingCycleData, payoutSplits } =
     useAppSelector(state => state.editingV2Project)
 
-  const fundAccessConstraint = fundAccessConstraints?.[0]
+  const fundAccessConstraint = fundAccessConstraints[0] as
+    | SerializedV2FundAccessConstraint
+    | undefined
 
   const resetProjectForm = useCallback(() => {
     fundingForm.setFieldsValue({
       duration: fundingCycleData?.duration,
     })
     setMods(payoutSplits?.map(split => toMod(split)) ?? [])
-    const target = BigNumber.from(
-      fundAccessConstraint.distributionLimit,
-    ).toNumber()
-    setTarget(target)
+    const _target = fundAccessConstraint?.distributionLimit
+
+    setTarget(_target ?? '0')
     setTargetSubFee(
       targetToTargetSubFeeFormatted(
         target.toString() ?? '0',
@@ -128,11 +130,9 @@ export default function ProjectDetailsTabContent() {
       ),
     )
 
-    setTargetCurrency(
-      (BigNumber.from(
-        fundAccessConstraint?.distributionLimitCurrency,
-      ).toNumber() ?? V2_CURRENCY_ETH) as V2CurrencyOption,
-    )
+    // setTargetCurrency(
+    //   fundAccessConstraint?.distributionLimitCurrency ?? V2_CURRENCY_ETH,
+    // )
   }, [fundingForm, fundingCycleData, fundAccessConstraint, payoutSplits])
 
   const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
@@ -143,26 +143,23 @@ export default function ProjectDetailsTabContent() {
 
       const newPayoutSplits = mods.map(mod => toSplit(mod))
 
-      // const fundAccessConstraint = {
-      //   terminal: contracts.JBETHPaymentTerminal.address,
-      //   distributionLimit: BigNumber.from(target),
-      //   distributionLimitCurrency: BigNumber.from(targetCurrency),
-      //   overflowAllowance: BigNumber.from(0),
-      //   overflowAllowanceCurrency: BigNumber.from(0),
-      // }
+      const fundAccessConstraint = {
+        terminal: contracts.JBETHPaymentTerminal.address,
+        distributionLimit: target,
+        distributionLimitCurrency: '0',
+        overflowAllowance: '0',
+        overflowAllowanceCurrency: '0',
+      }
 
-      // dispatch(
-      //   editingV2ProjectActions.setFundAccessConstraints([
-      //     fundAccessConstraint,
-      //   ]),
-      // )
-      console.log(newPayoutSplits)
+      dispatch(
+        editingV2ProjectActions.setFundAccessConstraints([
+          fundAccessConstraint,
+        ]),
+      )
       dispatch(editingV2ProjectActions.setPayoutSplits(newPayoutSplits))
-      // dispatch(
-      //   editingV2ProjectActions.setDuration(BigNumber.from(fields.duration)),
-      // )
+      dispatch(editingV2ProjectActions.setDuration(fields.duration || ''))
     },
-    [mods, contracts, dispatch, targetCurrency],
+    [mods, contracts, dispatch, targetCurrency, target],
   )
 
   // initially fill form with any existing redux state
@@ -248,7 +245,7 @@ export default function ProjectDetailsTabContent() {
                   targetSubFee={targetSubFee}
                   currency={toV1Currency(targetCurrency)}
                   onChange={val => {
-                    setTarget(parseInt(val ?? '0', 10))
+                    setTarget(val ?? '0')
                     setTargetSubFee(
                       targetToTargetSubFeeFormatted(
                         val?.toString() ?? '0',
@@ -259,11 +256,9 @@ export default function ProjectDetailsTabContent() {
                   onTargetSubFeeChange={val => {
                     setTargetSubFee(val ?? '0')
                     setTarget(
-                      parseInt(
-                        targetSubFeeToTargetFormatted(
-                          val ?? '0',
-                          ETHPaymentTerminalFee,
-                        ),
+                      targetSubFeeToTargetFormatted(
+                        val ?? '0',
+                        ETHPaymentTerminalFee,
                       ),
                     )
                   }}

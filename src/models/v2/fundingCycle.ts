@@ -11,21 +11,21 @@ export type V2FundingCycleMetadata = {
   reservedRate: BigNumber
   redemptionRate: BigNumber
   ballotRedemptionRate: BigNumber
-  pausePay: BigNumber
-  pauseDistributions: BigNumber
-  pauseRedeem: BigNumber
-  pauseMint: BigNumber
-  pauseBurn: BigNumber
-  allowTerminalMigration: BigNumber
-  allowControllerMigration: BigNumber
-  holdFees: BigNumber
-  useLocalBalanceForRedemptions: BigNumber
-  useDataSourceForPay: BigNumber
-  useDataSourceForRedeem: BigNumber
+  pausePay: boolean
+  pauseDistributions: boolean
+  pauseRedeem: boolean
+  pauseMint: boolean
+  pauseBurn: boolean
+  allowTerminalMigration: boolean
+  allowControllerMigration: boolean
+  holdFees: boolean
+  useLocalBalanceForRedemptions: boolean
+  useDataSourceForPay: boolean
+  useDataSourceForRedeem: boolean
   dataSource: string // hex, contract address
 }
 
-export type V2FundAccessConstraints = {
+export type V2FundAccessConstraint = {
   terminal: string // address probably
   distributionLimit: BigNumber
   distributionLimitCurrency: BigNumber

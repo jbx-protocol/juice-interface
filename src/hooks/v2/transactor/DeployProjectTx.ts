@@ -2,7 +2,7 @@ import { NetworkContext } from 'contexts/networkContext'
 import { V2UserContext } from 'contexts/v2/userContext'
 import { useContext } from 'react'
 import {
-  V2FundAccessConstraints,
+  V2FundAccessConstraint,
   V2FundingCycleData,
   V2FundingCycleMetadata,
 } from 'models/v2/fundingCycle'
@@ -14,7 +14,7 @@ export function useDeployProjectTx(): TransactorInstance<{
   projectMetadataCID: string
   fundingCycleData: V2FundingCycleData
   fundingCycleMetadata: V2FundingCycleMetadata
-  fundAccessConstraints: V2FundAccessConstraints[]
+  fundAccessConstraints: V2FundAccessConstraint[]
 }> {
   const { transactor, contracts } = useContext(V2UserContext)
   const { userAddress } = useContext(NetworkContext)

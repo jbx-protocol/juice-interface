@@ -2,20 +2,23 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import * as constants from '@ethersproject/constants'
 import { ProjectMetadataV3 } from 'models/project-metadata'
-import {
-  V2FundAccessConstraints,
-  V2FundingCycleData,
-  V2FundingCycleMetadata,
-} from 'models/v2/fundingCycle'
+import { V2FundAccessConstraint } from 'models/v2/fundingCycle'
 
 import { Split } from 'models/v2/splits'
+import {
+  serializeV2FundingCycleData,
+  serializeV2FundingCycleMetadata,
+  SerializedV2FundingCycleData,
+  SerializedV2FundingCycleMetadata,
+  SerializedV2FundAccessConstraint,
+} from 'utils/v2/serializers'
 
 export interface EditingV2ProjectState {
   version: number
   projectMetadata?: ProjectMetadataV3
-  fundingCycleData?: V2FundingCycleData
-  fundingCycleMetadata?: V2FundingCycleMetadata
-  fundAccessConstraints?: V2FundAccessConstraints[]
+  fundingCycleData?: SerializedV2FundingCycleData
+  fundingCycleMetadata?: SerializedV2FundingCycleMetadata
+  fundAccessConstraints?: V2FundAccessConstraint[]
   payoutSplits?: Split[]
   reserveTokenSplits?: Split[]
 }
@@ -23,9 +26,9 @@ export interface EditingV2ProjectState {
 export interface V2ProjectState {
   version: number
   projectMetadata: ProjectMetadataV3
-  fundingCycleData: V2FundingCycleData
-  fundingCycleMetadata: V2FundingCycleMetadata
-  fundAccessConstraints: V2FundAccessConstraints[]
+  fundingCycleData: SerializedV2FundingCycleData
+  fundingCycleMetadata: SerializedV2FundingCycleMetadata
+  fundAccessConstraints: SerializedV2FundAccessConstraint[]
   payoutSplits: Split[]
   reserveTokenSplits: Split[]
 }
@@ -41,30 +44,32 @@ const defaultProjectMetadataState: ProjectMetadataV3 = {
   version: 3,
 }
 
-const defaultFundingCycleData: V2FundingCycleData = {
-  duration: BigNumber.from(0),
-  weight: BigNumber.from('1' + '0'.repeat(18)), // 1,000,000 of your project's tokens will be minted per ETH received
-  discountRate: BigNumber.from(0),
-  ballot: constants.AddressZero,
-}
+const defaultFundingCycleData: SerializedV2FundingCycleData =
+  serializeV2FundingCycleData({
+    duration: BigNumber.from(0),
+    weight: BigNumber.from('1' + '0'.repeat(18)), // 1,000,000 of your project's tokens will be minted per ETH received
+    discountRate: BigNumber.from(0),
+    ballot: constants.AddressZero,
+  })
 
-const defaultFundingCycleMetadata: V2FundingCycleMetadata = {
-  reservedRate: BigNumber.from(0),
-  redemptionRate: BigNumber.from(0),
-  ballotRedemptionRate: BigNumber.from(0),
-  pausePay: BigNumber.from(0),
-  pauseDistributions: BigNumber.from(0),
-  pauseRedeem: BigNumber.from(0),
-  pauseMint: BigNumber.from(0),
-  pauseBurn: BigNumber.from(0),
-  allowTerminalMigration: BigNumber.from(0),
-  allowControllerMigration: BigNumber.from(0),
-  holdFees: BigNumber.from(0),
-  useLocalBalanceForRedemptions: BigNumber.from(0),
-  useDataSourceForPay: BigNumber.from(0),
-  useDataSourceForRedeem: BigNumber.from(0),
-  dataSource: constants.AddressZero,
-}
+const defaultFundingCycleMetadata: SerializedV2FundingCycleMetadata =
+  serializeV2FundingCycleMetadata({
+    reservedRate: BigNumber.from(0),
+    redemptionRate: BigNumber.from(0),
+    ballotRedemptionRate: BigNumber.from(0),
+    pausePay: false,
+    pauseDistributions: false,
+    pauseRedeem: false,
+    pauseMint: false,
+    pauseBurn: false,
+    allowTerminalMigration: false,
+    allowControllerMigration: false,
+    holdFees: false,
+    useLocalBalanceForRedemptions: false,
+    useDataSourceForPay: false,
+    useDataSourceForRedeem: false,
+    dataSource: constants.AddressZero,
+  })
 
 export const defaultProjectState: V2ProjectState = {
   // Increment this version by 1 when making breaking changes.
@@ -109,12 +114,12 @@ export const editingV2ProjectSlice = createSlice({
     setDescription: (state, action: PayloadAction<string>) => {
       state.projectMetadata.description = action.payload
     },
-    setDuration: (state, action: PayloadAction<BigNumber>) => {
+    setDuration: (state, action: PayloadAction<string>) => {
       state.fundingCycleData.duration = action.payload
     },
     setFundAccessConstraints: (
       state,
-      action: PayloadAction<V2FundAccessConstraints[]>,
+      action: PayloadAction<SerializedV2FundAccessConstraint[]>,
     ) => {
       state.fundAccessConstraints = action.payload
     },

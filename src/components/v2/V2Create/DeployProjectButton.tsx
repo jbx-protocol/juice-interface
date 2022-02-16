@@ -1,7 +1,12 @@
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import ConfirmDeployV2ProjectModal from 'components/v2/V2Create/ConfirmDeployV2ProjectModal'
-import { useAppSelector } from 'hooks/AppSelector'
+import {
+  useAppSelector,
+  useEditingV2FundAccessConstraintsSelector,
+  useEditingV2FundingCycleDataSelector,
+  useEditingV2FundingCycleMetadataSelector,
+} from 'hooks/AppSelector'
 import { useDeployProjectTx } from 'hooks/v2/transactor/DeployProjectTx'
 import { useCallback, useState } from 'react'
 import { uploadProjectMetadata } from 'utils/ipfs'
@@ -10,12 +15,10 @@ export default function DeployProjectButton() {
   const [deployProjectModalVisible, setDeployProjectModalVisible] =
     useState<boolean>(false)
   const deployProjectTx = useDeployProjectTx()
-  const {
-    projectMetadata,
-    fundingCycleData,
-    fundingCycleMetadata,
-    fundAccessConstraints,
-  } = useAppSelector(state => state.editingV2Project)
+  const { projectMetadata } = useAppSelector(state => state.editingV2Project)
+  const fundingCycleMetadata = useEditingV2FundingCycleMetadataSelector()
+  const fundingCycleData = useEditingV2FundingCycleDataSelector()
+  const fundAccessConstraints = useEditingV2FundAccessConstraintsSelector()
 
   const deployProject = useCallback(async () => {
     if (

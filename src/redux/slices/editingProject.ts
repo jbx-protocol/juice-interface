@@ -11,9 +11,9 @@ import {
   parsePermille,
 } from 'utils/formatNumber'
 import {
-  SerializedFundingCycle,
-  serializeFundingCycle,
-} from 'utils/serializers'
+  SerializedV1FundingCycle,
+  serializeV1FundingCycle,
+} from 'utils/v1/serializers'
 
 interface EditingProjectInfo {
   metadata: ProjectMetadataV3
@@ -23,7 +23,7 @@ interface EditingProjectInfo {
 export interface EditingProjectState {
   version: number
   info: EditingProjectInfo
-  fundingCycle: SerializedFundingCycle
+  fundingCycle: SerializedV1FundingCycle
   payoutMods: PayoutMod[]
   ticketMods: TicketMod[]
 }
@@ -49,7 +49,7 @@ export const defaultProjectState: EditingProjectState = {
     },
     handle: '',
   },
-  fundingCycle: serializeFundingCycle({
+  fundingCycle: serializeV1FundingCycle({
     id: BigNumber.from(1),
     projectId: BigNumber.from(0),
     number: BigNumber.from(1),
@@ -112,7 +112,10 @@ export const editingProjectSlice = createSlice({
     setDescription: (state, action: PayloadAction<string>) => {
       state.info.metadata.description = action.payload
     },
-    setFundingCycle: (state, action: PayloadAction<SerializedFundingCycle>) => {
+    setFundingCycle: (
+      state,
+      action: PayloadAction<SerializedV1FundingCycle>,
+    ) => {
       state.fundingCycle = action.payload
     },
     setId: (state, action: PayloadAction<string>) => {

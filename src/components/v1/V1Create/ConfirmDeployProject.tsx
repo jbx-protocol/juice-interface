@@ -10,7 +10,7 @@ import TicketModsList from 'components/shared/TicketModsList'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import {
   useAppSelector,
-  useEditingFundingCycleSelector,
+  useEditingV1FundingCycleSelector,
 } from 'hooks/AppSelector'
 import useMobile from 'hooks/Mobile'
 
@@ -34,7 +34,7 @@ import { orEmpty } from 'utils/orEmpty'
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 
 export default function ConfirmDeployProject() {
-  const editingFC = useEditingFundingCycleSelector()
+  const editingFC = useEditingV1FundingCycleSelector()
   const editingProject = useAppSelector(state => state.editingProject.info)
   const { terminal } = useContext(V1ProjectContext)
   const { payoutMods, ticketMods } = useAppSelector(

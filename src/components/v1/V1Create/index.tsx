@@ -15,7 +15,7 @@ import { constants } from 'ethers'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import {
   useAppSelector,
-  useEditingFundingCycleSelector,
+  useEditingV1FundingCycleSelector,
 } from 'hooks/AppSelector'
 import { useTerminalFee } from 'hooks/v1/TerminalFee'
 import { useDeployProjectTx } from 'hooks/v1/transactor/DeployProjectTx'
@@ -87,7 +87,7 @@ export default function V1Create() {
   const [projectForm] = useForm<ProjectDetailsFormFields>()
   const [ticketingForm] = useForm<TicketingFormFields>()
   const [restrictedActionsForm] = useForm<RestrictedActionsFormFields>()
-  const editingFC = useEditingFundingCycleSelector()
+  const editingFC = useEditingV1FundingCycleSelector()
   const {
     info: editingProjectInfo,
     ticketMods: editingTicketMods,

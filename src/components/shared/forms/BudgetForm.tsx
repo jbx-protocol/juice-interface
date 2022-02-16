@@ -9,7 +9,7 @@ import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { constants } from 'ethers'
 import { useAppDispatch } from 'hooks/AppDispatch'
-import { useEditingFundingCycleSelector } from 'hooks/AppSelector'
+import { useEditingV1FundingCycleSelector } from 'hooks/AppSelector'
 import { useTerminalFee } from 'hooks/v1/TerminalFee'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useContext, useLayoutEffect, useMemo, useState } from 'react'
@@ -43,7 +43,7 @@ export default function BudgetForm({
   // TODO budgetForm should not depend on dispatch
   const dispatch = useAppDispatch()
   const { terminal } = useContext(V1ProjectContext)
-  const editingFC = useEditingFundingCycleSelector()
+  const editingFC = useEditingV1FundingCycleSelector()
 
   const terminalFee = useTerminalFee(terminal?.version)
 

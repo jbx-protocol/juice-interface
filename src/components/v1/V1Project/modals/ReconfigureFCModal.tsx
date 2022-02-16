@@ -16,7 +16,7 @@ import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { constants } from 'ethers'
 import { useAppDispatch } from 'hooks/AppDispatch'
-import { useEditingFundingCycleSelector } from 'hooks/AppSelector'
+import { useEditingV1FundingCycleSelector } from 'hooks/AppSelector'
 import { useTerminalFee } from 'hooks/v1/TerminalFee'
 import { useConfigureProjectTx } from 'hooks/v1/transactor/ConfigureProjectTx'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
@@ -42,7 +42,7 @@ import {
   isRecurring,
 } from 'utils/fundingCycle'
 import { amountSubFee } from 'utils/math'
-import { serializeFundingCycle } from 'utils/serializers'
+import { serializeV1FundingCycle } from 'utils/v1/serializers'
 
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 
@@ -93,7 +93,7 @@ export default function ReconfigureFCModal({
     queuedTicketMods,
     currentTicketMods,
   } = useContext(V1ProjectContext)
-  const editingFC = useEditingFundingCycleSelector()
+  const editingFC = useEditingV1FundingCycleSelector()
   const terminalFee = useTerminalFee(terminal?.version)
   const configureProjectTx = useConfigureProjectTx()
 
@@ -177,7 +177,7 @@ export default function ReconfigureFCModal({
 
     dispatch(
       editingProjectActions.setFundingCycle(
-        serializeFundingCycle({
+        serializeV1FundingCycle({
           ...fundingCycle,
           ...metadata,
           reserved: BigNumber.from(metadata.reservedRate),

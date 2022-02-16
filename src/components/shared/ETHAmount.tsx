@@ -40,5 +40,5 @@ export default function ETHAmount({
       </Tooltip>
     )
   }
-  return <></>
+  return null
 }

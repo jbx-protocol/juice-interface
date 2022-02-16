@@ -827,10 +827,6 @@ msgstr ""
 msgid "JBX Fee ({0}%):"
 msgstr ""
 
-#: src/components/Landing/QAs.tsx
-msgid "Juicebox Discord"
-msgstr "Juicebox Discord"
-
 #: src/components/v1/V1Project/modals/PayWarningModal.tsx
 msgid "Juicebox contracts"
 msgstr ""
@@ -898,13 +894,8 @@ msgid "Manage"
 msgstr ""
 
 #: src/components/v1/V1Project/Rewards/index.tsx
-<<<<<<< HEAD
-msgid "Manage {0}tokens"
-msgstr "Manage {0}tokens"
-=======
 msgid "Manage {0}"
-msgstr "Manage {0}"
->>>>>>> c2848aaf (Make util functions to replace `tokenSymbol ?? "token"` all over the codebase (#517))
+msgstr "Manage {0}token\"` all over the codebase (#517))"
 
 #: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
 msgid "Memo"

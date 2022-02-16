@@ -827,10 +827,6 @@ msgstr "Было бы намного круче, если бы вы это сд�
 msgid "JBX Fee ({0}%):"
 msgstr "Комиссия JBX ({0}%):"
 
-#: src/components/Landing/QAs.tsx
-msgid "Juicebox Discord"
-msgstr ""
-
 #: src/components/v1/V1Project/modals/PayWarningModal.tsx
 msgid "Juicebox contracts"
 msgstr "Контракты на Juicebox"

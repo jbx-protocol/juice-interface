@@ -230,7 +230,7 @@ export default function QAs() {
             target="_blank"
           >
             Peel
-          </a>
+          </a>{' '}
           is the DAO that manages Juicebox's frontend interface. You can reach
           out to Peel either through the{' '}
           <a

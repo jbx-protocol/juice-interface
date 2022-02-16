@@ -827,10 +827,6 @@ msgstr "Yapsan çok kıyak olur"
 msgid "JBX Fee ({0}%):"
 msgstr "JBX Ücreti (%{0}):"
 
-#: src/components/Landing/QAs.tsx
-msgid "Juicebox Discord"
-msgstr ""
-
 #: src/components/v1/V1Project/modals/PayWarningModal.tsx
 msgid "Juicebox contracts"
 msgstr "Juicebox sözleşmeleri"

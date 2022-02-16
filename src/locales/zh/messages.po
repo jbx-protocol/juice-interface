@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-02-14 01:48\n"
+"PO-Revision-Date: 2022-02-15 23:55\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -76,7 +76,7 @@ msgstr "<0/> 被存档的项目在区块链上并没有被修改或删除，用�
 
 #: src/components/Projects/index.tsx
 msgid "<0/> The Juicebox protocol is open to anyone, and project configurations can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO. Do your own research and understand the risks before committing your funds."
-msgstr ""
+msgstr "<0/> Juicebox 协议对任何人开放，不同项目的配置可能会有很大差异。与协议上的项目交互是存在风险的。 协议上部署的项目未经 JuiceboxDAO 认可或审查，所以您应该在付款之前，做好自己的研究并了解清楚风险。"
 
 #: src/components/v1/FundingCycle/Spending.tsx
 msgid "<0/> owner balance"
@@ -88,7 +88,7 @@ msgstr "<0/>{0}{1} 已提取"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "<0><1>This project has no overflow</1>, so you will not receive any ETH for burning tokens.</0>"
-msgstr ""
+msgstr "<0><1>这个项目目前筹集的资金并未溢出</1>，此时燃烧代币将不会收到 ETH。</0>"
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "<0>Learn more</0> about funding cycle duration."
@@ -121,7 +121,7 @@ msgstr "<0>注意：</0> 因为 {tokenSymbol} ERC-20 代币还没被 Juicebox �
 
 #: src/components/Landing/TrendingSection.tsx
 msgid "<0>Trending projects</0><1><2/></1>"
-msgstr ""
+msgstr "<0>热门项目</0><1><2/></1>"
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
 msgid "<0>Your unclaimed {tokenSymbol} tokens:</0> {0}"
@@ -214,7 +214,7 @@ msgstr "调整激励措施，以便鼓励其他人或项目向你的项目付款
 
 #: src/components/Projects/ProjectsTabs.tsx
 msgid "All"
-msgstr ""
+msgstr "全部"
 
 #: src/components/v1/V1Project/Paid.tsx
 msgid "All assets"
@@ -304,7 +304,7 @@ msgstr "回到顶部"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Balance exceeded"
-msgstr ""
+msgstr "超出余额"
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "Beneficiary address"
@@ -352,15 +352,15 @@ msgstr "燃烧项目代币"
 
 #: src/components/v1/V1Project/Rewards/index.tsx
 msgid "Burn tokens"
-msgstr ""
+msgstr "燃烧代币"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Burn {0} {tokensTextShort}"
-msgstr ""
+msgstr "燃烧 {0} {tokensTextShort}"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Burn {tokensTextLong}"
-msgstr ""
+msgstr "燃烧 {tokensTextLong}"
 
 #: src/components/shared/forms/PayModsForm.tsx
 msgid "By default, all unallocated funds can be distributed to the project owner's wallet."
@@ -380,11 +380,11 @@ msgstr "取消"
 
 #: src/components/v1/V1Project/Rewards/index.tsx
 msgid "Cannot redeem tokens for ETH because this project has no overflow."
-msgstr ""
+msgstr "这个项目的筹款没有溢出，无法用代币赎回 ETH"
 
 #: src/components/v1/V1Create/ProjectForm.tsx
 msgid "Changes to these attributes can be made at any time and will be applied to your project immediately."
-msgstr ""
+msgstr "可以随时修改这些属性，并立即应用于你的项目。"
 
 #: src/components/Landing/index.tsx
 msgid "Changes to your project's funding require a community approval period to take effect. Your supporters don't have to trust you—even though they already do."
@@ -472,7 +472,7 @@ msgstr "深色主题"
 
 #: src/components/Projects/ProjectsFilterAndSort.tsx
 msgid "Date created"
-msgstr ""
+msgstr "创建日期"
 
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "Deposit 1 wei to @{handle}"
@@ -664,7 +664,7 @@ msgstr "筹款周期"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "Funding cycle details"
-msgstr ""
+msgstr "筹款周期详情"
 
 #: src/components/shared/formItems/ProjectDuration.tsx
 #: src/components/shared/forms/BudgetForm.tsx
@@ -721,7 +721,7 @@ msgstr "持有这些代币，项目就有资格获得溢出的一部分。"
 
 #: src/components/Projects/ProjectsTabs.tsx
 msgid "Holdings"
-msgstr ""
+msgstr "持有"
 
 #: src/components/Landing/QAs.tsx
 msgid "How decentralized is Juicebox?"
@@ -788,15 +788,15 @@ msgstr "独立艺术家，开发者，创作者"
 #: src/components/v1/V1Project/Rewards/IssueTickets.tsx
 #: src/components/v1/V1Project/Rewards/IssueTickets.tsx
 msgid "Issue ERC-20 token"
-msgstr ""
+msgstr "发行 ERC-20 代币"
 
 #: src/components/v1/V1Project/Rewards/IssueTickets.tsx
 msgid "Issue an ERC-20 to be used as this project's token. Once issued, anyone can claim their existing token balance in the new token."
-msgstr ""
+msgstr "发行 ERC-20 合约作为项目代币。一旦发行，任何人都可以将现存的余额铸造为对应代币。"
 
 #: src/components/v1/V1Project/Rewards/IssueTickets.tsx
 msgid "Issue an ERC-20 token for this project. Once issued, anyone can claim their existing token balance in the new token."
-msgstr ""
+msgstr "为项目发行 ERC-20 合约。一旦发行，任何人都可以将现存的余额铸造为对应代币。"
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 msgid "Issue rate"
@@ -804,7 +804,7 @@ msgstr "发行比率"
 
 #: src/components/v1/V1Project/Rewards/IssueTickets.tsx
 msgid "Issue token"
-msgstr ""
+msgstr "发行代币"
 
 #: src/components/Landing/QAs.tsx
 msgid "It isn't possible to remove a project's data from the blockchain, but we can hide it in the app if you'd like to prevent people from seeing or interacting with it—just let us know in Discord. Keep in mind people will still be able to use your project by interacting directly with the contract."
@@ -886,7 +886,7 @@ msgstr "管理代币"
 
 #: src/components/v1/V1Project/Rewards/index.tsx
 msgid "Manage {0}"
-msgstr ""
+msgstr "管理 {0}"
 
 #: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
 msgid "Memo"
@@ -910,7 +910,7 @@ msgstr "可通过重新配置 v 1.1项目的融资周期来启用或禁止代币
 
 #: src/components/Projects/TrendingProjects.tsx
 msgid "More trending projects"
-msgstr ""
+msgstr "更多热门项目"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "Name"
@@ -918,11 +918,11 @@ msgstr "名称"
 
 #: src/components/Projects/TrendingProjectCard.tsx
 msgid "New"
-msgstr ""
+msgstr "新"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "No"
-msgstr ""
+msgstr "取消"
 
 #: src/components/v1/V1Project/ProjectActivity/ActivityTabContent.tsx
 msgid "No activity yet"
@@ -963,7 +963,8 @@ msgstr "未设定"
 
 #: src/components/Landing/index.tsx
 msgid "Note: Juicebox is new, unaudited, and not guaranteed to work perfectly. Before spending money, do your own research: <0>ask questions</0>, <1>check out the code</1>, and understand the risks!"
-msgstr "注意： Juicebox是一个全新的协议，它未经审计且不保证能完美工作。在花钱之前请先做好您自己的研究：提出疑问，核查代码以及了解所涉及的风险！"
+msgstr "注意： Juicebox是一个全新的协议，它未经审计且不保证能完美工作。\n"
+" 在花钱之前请先做好您自己的研究：提出疑问，核查代码以及了解所涉及的风险！"
 
 #: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
 msgid "Notice from {0}:"
@@ -1093,7 +1094,7 @@ msgstr "项目"
 
 #: src/components/v1/V1Project/Rewards/IssueTickets.tsx
 msgid "Project Token"
-msgstr ""
+msgstr "项目代币"
 
 #: src/components/shared/formItems/ProjectDescription.tsx
 msgid "Project description"
@@ -1157,7 +1158,7 @@ msgstr "公共产品和服务"
 
 #: src/components/Projects/RankingExplanation.tsx
 msgid "Rankings based on number of contributions and volume gained in the last {trendingWindow} days. <0>See code</0>"
-msgstr ""
+msgstr "按最近 {trendingWindow} 天的支付次数与数额排行。<0>查看代币</0>"
 
 #: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
 msgid "Receive ERC20"
@@ -1188,7 +1189,7 @@ msgstr "重新配置筹款"
 
 #: src/components/v1/V1Project/FundingCycles/ReconfigureFundingModalTrigger.tsx
 msgid "Reconfigure upcoming"
-msgstr ""
+msgstr "重新配置之后的筹款"
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Reconfigure upcoming funding"
@@ -1200,11 +1201,11 @@ msgstr "赎回"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Redeem {0} {tokensTextShort} for ETH"
-msgstr ""
+msgstr "燃烧 {0} {tokensTextShort} 来赎回 ETH"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Redeem {tokensTextLong} for ETH"
-msgstr ""
+msgstr "燃烧 {tokensTextLong} 来赎回 ETH"
 
 #: src/components/Landing/index.tsx
 msgid "Redistributable surplus"
@@ -1363,7 +1364,7 @@ msgstr "你应该使用Juicebox吗?"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "Since you have not set a funding duration, changes to these settings will be applied immediately."
-msgstr ""
+msgstr "鉴于你并未设置筹款持续时间，对这些设置的修改将会立即生效。"
 
 #: src/components/v1/FundingCycle/FundingCyclePreview.tsx
 msgid "Some funding cycle properties may indicate risk for project contributors."
@@ -1502,11 +1503,11 @@ msgstr "还有一个脚本，使用随机输入生成器迭代运行集成测试
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "These attributes can be changed at any time."
-msgstr ""
+msgstr "任何时候都可以修改这些属性。"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "These settings will <0>not</0> be editable immediately within a funding cycle. They can only be changed for <1>upcoming</1> funding cycles."
-msgstr ""
+msgstr "这些属性<0>不能</0> 在同一个筹款周期内马上进行修改。 更改的配置只会在 <1>后面的</1> 筹款周期生效。"
 
 #: src/components/shared/Mod.tsx
 msgid "This address will receive any tokens minted when the recipient project gets paid."
@@ -1551,7 +1552,7 @@ msgstr "分配给：<0/>"
 
 #: src/utils/tokenSymbolText.ts
 msgid "Token"
-msgstr ""
+msgstr "代币"
 
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 msgid "Token address: <0/>"
@@ -1565,7 +1566,7 @@ msgstr "代币铸造"
 
 #: src/components/v1/V1Project/Rewards/IssueTickets.tsx
 msgid "Token name"
-msgstr ""
+msgstr "代币名称"
 
 #: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 msgid "Token redeem value"
@@ -1573,7 +1574,7 @@ msgstr "代币赎回价值"
 
 #: src/components/v1/V1Project/Rewards/IssueTickets.tsx
 msgid "Token symbol"
-msgstr ""
+msgstr "代币符号"
 
 #: src/components/shared/Mod.tsx
 #: src/components/v1/V1Project/Rewards/index.tsx
@@ -1591,7 +1592,7 @@ msgstr "代币可以兑换项目溢出的一部分，让您从项目的成功中
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Tokens can be redeemed for a portion of this project's ETH overflow, according to the bonding curve rate of the current funding cycle. <0>Tokens are burned when they are redeemed.</0>"
-msgstr ""
+msgstr "代币可以用于赎回项目溢出的一部分 ETH，基于当前筹款周期的联合曲线率。<0>赎回时代币会被燃烧掉。</0>"
 
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
 msgid "Tools"
@@ -1607,7 +1608,7 @@ msgstr "总资金："
 
 #: src/components/Projects/ProjectsFilterAndSort.tsx
 msgid "Total raised"
-msgstr ""
+msgstr "总筹款"
 
 #: src/components/v1/V1Project/Rewards/index.tsx
 msgid "Total supply"
@@ -1625,11 +1626,11 @@ msgstr "所有权转移"
 
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
 msgid "Transfer unclaimed {tokenSymbolShort}"
-msgstr ""
+msgstr "转账未领取的 {tokenSymbolShort}"
 
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
 msgid "Transfer {tokenSymbolShort}"
-msgstr ""
+msgstr "转账 {tokenSymbolShort}"
 
 #: src/components/Landing/index.tsx
 msgid "Transparency & accountability"
@@ -1637,7 +1638,7 @@ msgstr "透明度&问责制"
 
 #: src/components/Projects/ProjectsTabs.tsx
 msgid "Trending"
-msgstr ""
+msgstr "热门"
 
 #: src/components/shared/formItems/ProjectTwitter.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
@@ -1787,7 +1788,7 @@ msgstr "工作空间"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "Yes"
-msgstr ""
+msgstr "确定"
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
 msgid "You can still redeem your {tokenSymbol} tokens for overflow without claiming them, and you can transfer your unclaimed {tokenSymbol} tokens to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
@@ -1867,7 +1868,7 @@ msgstr "juiceboxETH"
 
 #: src/components/Projects/TrendingProjectCard.tsx
 msgid "last {trendingWindowDays} days"
-msgstr ""
+msgstr "最近 {trendingWindowDays} 天"
 
 #: src/components/Projects/index.tsx
 msgid "matching \"{searchText}\""
@@ -1951,7 +1952,7 @@ msgstr "{0} 剩余"
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 msgid "{0} received per ETH paid to the treasury. This can change over time according to the discount rate and reserved tokens amount of future funding cycles."
-msgstr ""
+msgstr "金库中收到 ETH 付款时对应铸造的 {0} 数量。这个数量会根据之后周期的折扣率和保留率，随着时间而改变。"
 
 #: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
 msgid "{0} reserved"
@@ -2031,4 +2032,5 @@ msgstr "在 {exchangeName} 的兑换率为 {tokenSymbol}/ETH"
 
 #: src/components/v1/V1Project/Rewards/index.tsx
 msgid "{tokensLabel} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
-msgstr ""
+msgstr "{tokensLabel} 会被分配给付款的人。如果项目设置了筹款目标，可以燃烧代币来按比例赎回溢出池中的 ETH。"
+

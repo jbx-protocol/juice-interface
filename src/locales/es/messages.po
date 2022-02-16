@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-02-14 01:48\n"
+"PO-Revision-Date: 2022-02-15 23:55\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -304,7 +304,7 @@ msgstr "Regresa arriba"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Balance exceeded"
-msgstr ""
+msgstr "Balance excedido"
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "Beneficiary address"
@@ -886,7 +886,7 @@ msgstr "Administra"
 
 #: src/components/v1/V1Project/Rewards/index.tsx
 msgid "Manage {0}"
-msgstr ""
+msgstr "Gestionar {0}"
 
 #: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
 msgid "Memo"
@@ -1200,11 +1200,11 @@ msgstr "Canjear"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Redeem {0} {tokensTextShort} for ETH"
-msgstr ""
+msgstr "Canjear {0} {tokensTextShort} por ETH"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Redeem {tokensTextLong} for ETH"
-msgstr ""
+msgstr "Canjear {tokensTextLong} por ETH"
 
 #: src/components/Landing/index.tsx
 msgid "Redistributable surplus"
@@ -1212,7 +1212,7 @@ msgstr "Excedente redistribuible"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Required"
-msgstr ""
+msgstr "Requerido"
 
 #: src/components/shared/forms/TicketingForm.tsx
 msgid "Reserved token allocation (optional)"
@@ -1551,7 +1551,7 @@ msgstr "Para: <0/>"
 
 #: src/utils/tokenSymbolText.ts
 msgid "Token"
-msgstr ""
+msgstr "Token"
 
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 msgid "Token address: <0/>"
@@ -1625,11 +1625,11 @@ msgstr "Transferir propiedad"
 
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
 msgid "Transfer unclaimed {tokenSymbolShort}"
-msgstr ""
+msgstr "Transferir {tokenSymbolShort} no reclamados"
 
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
 msgid "Transfer {tokenSymbolShort}"
-msgstr ""
+msgstr "Transferir {tokenSymbolShort}"
 
 #: src/components/Landing/index.tsx
 msgid "Transparency & accountability"
@@ -1951,7 +1951,7 @@ msgstr "{0} restantes"
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 msgid "{0} received per ETH paid to the treasury. This can change over time according to the discount rate and reserved tokens amount of future funding cycles."
-msgstr ""
+msgstr "{0} recibido por ETH pagados al tesoro. Esto puede cambiar a través del tiempo de acuerdo con la tasa de descuento y la cantidad de tokens reservados para futuros ciclos de financiamiento."
 
 #: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
 msgid "{0} reserved"
@@ -2032,3 +2032,4 @@ msgstr "Tipo de cambio de {tokenSymbol}/ETH en {exchangeName}."
 #: src/components/v1/V1Project/Rewards/index.tsx
 msgid "{tokensLabel} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
 msgstr "{tokensLabel} son distribuidos a cualquiera que pague este proyecto. Si el proyecto tiene un objetivo de financiamiento, los tokens pueden ser canjeados por una porción del excedente del proyecto, hayan sido estos reclamados o no."
+

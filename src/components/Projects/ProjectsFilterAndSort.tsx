@@ -17,10 +17,8 @@ export default function ProjectsFilterAndSort({
   setIncludeV1,
   includeV1_1,
   setIncludeV1_1,
-  includeActive,
-  setIncludeActive,
-  includeArchived,
-  setIncludeArchived,
+  showArchived,
+  setShowArchived,
   orderBy,
   setOrderBy,
 }: {
@@ -28,10 +26,8 @@ export default function ProjectsFilterAndSort({
   setIncludeV1: CheckboxOnChange
   includeV1_1: boolean
   setIncludeV1_1: CheckboxOnChange
-  includeActive: boolean
-  setIncludeActive: CheckboxOnChange
-  includeArchived: boolean
-  setIncludeArchived: CheckboxOnChange
+  showArchived: boolean
+  setShowArchived: CheckboxOnChange
   orderBy: OrderByOption
   setOrderBy: any
 }) {
@@ -47,13 +43,6 @@ export default function ProjectsFilterAndSort({
     marginTop: 0,
     marginBottom: 0,
     marginRight: 15,
-  }
-
-  // If includeArchived is true, we set active back to true
-  // to avoid both being unselected
-  const toggleArchived = () => {
-    setIncludeActive(includeArchived)
-    setIncludeArchived(!includeArchived)
   }
 
   // Close collapse when clicking anywhere in the window except the collapse items
@@ -112,8 +101,8 @@ export default function ProjectsFilterAndSort({
             />
             <FilterCheckboxItem
               label={t`Archived`}
-              checked={includeArchived}
-              onChange={toggleArchived}
+              checked={showArchived}
+              onChange={setShowArchived}
             />
           </div>
         </CollapsePanel>

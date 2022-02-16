@@ -244,12 +244,12 @@ export default function ProjectDetailsTabContent() {
                 </Form.Item>
               )}
 
-              <Form.Item name="target" label={t`Funding target`} required>
+              <Form.Item label={t`Funding target`} required>
                 <BudgetTargetInput
                   target={target?.toString()}
                   targetSubFee={targetSubFee}
                   currency={toV1Currency(targetCurrency)}
-                  onChange={val => {
+                  onTargetChange={val => {
                     setTarget(val ?? '0')
                     setTargetSubFee(
                       targetToTargetSubFeeFormatted(

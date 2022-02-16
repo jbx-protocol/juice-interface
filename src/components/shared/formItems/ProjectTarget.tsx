@@ -36,7 +36,7 @@ export default function ProjectTarget({
       <BudgetTargetInput
         target={target}
         targetSubFee={targetSubFee}
-        onChange={onTargetChange}
+        onTargetChange={onTargetChange}
         onTargetSubFeeChange={onTargetSubFeeChange}
         currency={currency}
         onCurrencyChange={onCurrencyChange}

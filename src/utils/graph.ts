@@ -83,7 +83,7 @@ export type OrderDirection = 'asc' | 'desc'
 
 export type WhereConfig<E extends EntityKey> = {
   key: EntityKeys<E>
-  value: string | number | boolean | string[]
+  value: string | number | boolean | string[] | number[]
   operator?:
     | 'not'
     | 'gt'

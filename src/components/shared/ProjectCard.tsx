@@ -19,6 +19,7 @@ import { CURRENCY_ETH } from 'constants/currency'
 import CurrencySymbol from './CurrencySymbol'
 import Loading from './Loading'
 import ProjectLogo from './ProjectLogo'
+import { archivedProjectIds } from '../../constants/v1/archivedProjects'
 
 type ProjectCardProject = Pick<
   Project,
@@ -36,6 +37,7 @@ export default function ProjectCard({
 
   const cardStyle: CSSProperties = {
     display: 'flex',
+    position: 'relative',
     alignItems: 'center',
     whiteSpace: 'pre',
     overflow: 'hidden',
@@ -77,6 +79,8 @@ export default function ProjectCard({
       : 0
 
   const terminalVersion = getTerminalVersion(_project?.terminal)
+
+  const isArchived = archivedProjectIds.includes(_project.id.toNumber())
 
   return (
     <Link
@@ -161,6 +165,23 @@ export default function ProjectCard({
               </Tooltip>
             )}
           </div>
+
+          {isArchived && (
+            <div
+              style={{
+                position: 'absolute',
+                top: 0,
+                right: 0,
+                padding: '2px 4px',
+                background: colors.background.l1,
+                fontSize: '0.7rem',
+                color: colors.text.tertiary,
+                fontWeight: 500,
+              }}
+            >
+              ARCHIVED
+            </div>
+          )}
         </div>
       ) : (
         <div

@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 
-import { ProjectStateFilter } from 'models/project-visibility'
+import { ProjectState } from 'models/project-visibility'
 import { Project, TrendingProject } from 'models/subgraph-entities/project'
 import { V1TerminalVersion } from 'models/v1/terminals'
 import {
@@ -8,6 +8,7 @@ import {
   GraphQueryOpts,
   InfiniteGraphQueryOpts,
   querySubgraphExhaustive,
+  WhereConfig,
 } from 'utils/graph'
 import { getTerminalAddress } from 'utils/v1/terminals'
 
@@ -18,28 +19,6 @@ import { SECONDS_IN_DAY } from 'constants/numbers'
 import { archivedProjectIds } from '../../constants/v1/archivedProjects'
 import useSubgraphQuery, { useInfiniteSubgraphQuery } from '../SubgraphQuery'
 
-// Take just an object that might contain an ID. That way we can support
-// arbitrary `keys` properties.
-function filterByProjectState<T extends { id?: BigNumber }>(
-  data: T[],
-  filter?: ProjectStateFilter,
-): T[] {
-  if (filter?.active && !filter?.archived) {
-    return data?.filter(
-      project =>
-        project?.id && !archivedProjectIds.includes(project.id.toNumber()),
-    )
-  } else if (!filter?.active && filter?.archived) {
-    return data?.filter(
-      project =>
-        project.id && archivedProjectIds.includes(project.id.toNumber()),
-    )
-  } else {
-    // If both or neither are set, show everything
-    return data
-  }
-}
-
 interface ProjectsOptions {
   pageNumber?: number
   projectId?: BigNumber
@@ -48,7 +27,7 @@ interface ProjectsOptions {
   orderBy?: 'createdAt' | 'currentBalance' | 'totalPaid'
   orderDirection?: 'asc' | 'desc'
   pageSize?: number
-  states?: ProjectStateFilter
+  state?: ProjectState
   keys?: (keyof Project)[]
   terminalVersion?: V1TerminalVersion
   searchText?: string
@@ -74,7 +53,29 @@ const queryOpts = (
   | GraphQueryOpts<'project', EntityKeys<'project'>>
   | InfiniteGraphQueryOpts<'project', EntityKeys<'project'>>
 > => {
+  const where: WhereConfig<'project'>[] = []
+
   const terminalAddress = getTerminalAddress(opts.terminalVersion)
+
+  if (terminalAddress) {
+    where.push({
+      key: 'terminal' as const,
+      value: terminalAddress,
+    })
+  }
+
+  if (opts.state === 'archived') {
+    where.push({
+      key: 'id' as const,
+      value: archivedProjectIds,
+      operator: 'in',
+    })
+  } else if (opts.projectId) {
+    where.push({
+      key: 'id' as const,
+      value: opts.projectId.toString(),
+    })
+  }
 
   return {
     entity: 'project',
@@ -82,24 +83,7 @@ const queryOpts = (
     orderDirection: opts.orderDirection ?? 'desc',
     orderBy: opts.orderBy ?? 'totalPaid',
     pageSize: opts.pageSize,
-    where: [
-      ...(opts.projectId
-        ? [
-            {
-              key: 'id' as const,
-              value: opts.projectId.toString(),
-            },
-          ]
-        : []),
-      ...(terminalAddress
-        ? [
-            {
-              key: 'terminal' as const,
-              value: terminalAddress,
-            },
-          ]
-        : []),
-    ],
+    where,
   }
 }
 
@@ -115,7 +99,6 @@ export function useProjectsQuery(opts: ProjectsOptions) {
     },
     {
       staleTime,
-      select: data => filterByProjectState(data, opts.states),
     },
   )
 }
@@ -328,14 +311,6 @@ export function useHoldingsProjectsQuery(wallet: string | undefined) {
 export function useInfiniteProjectsQuery(opts: ProjectsOptions) {
   return useInfiniteSubgraphQuery(
     queryOpts(opts) as InfiniteGraphQueryOpts<'project', EntityKeys<'project'>>,
-    {
-      staleTime,
-      select: data => ({
-        ...data,
-        pages: data.pages.map(pageData =>
-          filterByProjectState(pageData, opts.states),
-        ),
-      }),
-    },
+    { staleTime },
   )
 }

@@ -1,5 +1,5 @@
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
-import { CurrencyOption } from 'models/currency-option'
+import { V1CurrencyOption } from 'models/v1/currencyOption'
 
 import { parseWad } from './formatNumber'
 
@@ -48,8 +48,8 @@ export class CurrencyUtils {
 
   wadToCurrency = (
     amount: BigNumberish | undefined,
-    targetCurrency: CurrencyOption | undefined,
-    sourceCurrency: CurrencyOption | undefined,
+    targetCurrency: V1CurrencyOption | undefined,
+    sourceCurrency: V1CurrencyOption | undefined,
   ) => {
     if (targetCurrency === undefined || sourceCurrency === undefined) return
     if (targetCurrency === sourceCurrency) return BigNumber.from(amount)

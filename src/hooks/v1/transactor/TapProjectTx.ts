@@ -4,14 +4,14 @@ import { V1UserContext } from 'contexts/v1/userContext'
 import { BigNumber } from 'ethers'
 import { useContext } from 'react'
 
-import { CurrencyOption } from 'models/currency-option'
+import { V1CurrencyOption } from 'models/v1/currencyOption'
 
 import { TransactorInstance } from '../../Transactor'
 
 export function useTapProjectTx(): TransactorInstance<{
   tapAmount: BigNumber
   minAmount: BigNumber
-  currency: CurrencyOption
+  currency: V1CurrencyOption
 }> {
   const { transactor, contracts } = useContext(V1UserContext)
   const { userAddress } = useContext(NetworkContext)

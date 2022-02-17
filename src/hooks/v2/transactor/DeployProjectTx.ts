@@ -1,46 +1,31 @@
 import { NetworkContext } from 'contexts/networkContext'
 import { V2UserContext } from 'contexts/v2/userContext'
-import { BigNumber } from '@ethersproject/bignumber'
 import { useContext } from 'react'
+import {
+  V2FundAccessConstraint,
+  V2FundingCycleData,
+  V2FundingCycleMetadata,
+} from 'models/v2/fundingCycle'
 
 import { TransactorInstance } from '../../Transactor'
 import { PEEL_METADATA_DOMAIN } from 'constants/v2/metadataDomain'
-
-type V2FundingCycleData = {
-  duration: number
-  weight: BigNumber
-  discountRate: number
-  ballot: string // hex, contract address
-}
-
-type V2FundingCycleMetadata = {
-  reservedRate: number
-  redemptionRate: number
-  ballotRedemptionRate: number
-  pausePay: number
-  pauseDistributions: number
-  pauseRedeem: number
-  pauseMint: number
-  pauseBurn: number
-  allowTerminalMigration: number
-  allowControllerMigration: number
-  holdFees: number
-  useLocalBalanceForRedemptions: number
-  useDataSourceForPay: number
-  useDataSourceForRedeem: number
-  dataSource: string // hex, contract address
-}
 
 export function useDeployProjectTx(): TransactorInstance<{
   projectMetadataCID: string
   fundingCycleData: V2FundingCycleData
   fundingCycleMetadata: V2FundingCycleMetadata
+  fundAccessConstraints: V2FundAccessConstraint[]
 }> {
   const { transactor, contracts } = useContext(V2UserContext)
   const { userAddress } = useContext(NetworkContext)
 
   return (
-    { projectMetadataCID, fundingCycleData, fundingCycleMetadata },
+    {
+      projectMetadataCID,
+      fundingCycleData,
+      fundingCycleMetadata,
+      fundAccessConstraints,
+    },
     txOpts,
   ) => {
     if (
@@ -60,7 +45,7 @@ export function useDeployProjectTx(): TransactorInstance<{
       fundingCycleMetadata, // _metadata (JBFundingCycleMetadata)
       '1', // _mustStartAtOrAfter
       [], // _groupedSplits,
-      [], // _fundAccessConstraints,
+      fundAccessConstraints, // _fundAccessConstraints,
       [contracts.JBETHPaymentTerminal.address], //  _terminals (contract address of the JBETHPaymentTerminal)
     ]
 

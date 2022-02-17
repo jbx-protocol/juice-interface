@@ -5,7 +5,7 @@ import { CURRENCY_ETH, CURRENCY_USD } from 'constants/currency'
 
 const currencies: Record<
   CurrencyOption,
-  { name: 'ETH' | 'USD'; symbol: 'Ξ' | '$'; style?: CSSProperties }
+  { name: 'ETH' | 'USD'; symbol: 'Ξ' | 'US$'; style?: CSSProperties }
 > = {
   [CURRENCY_ETH]: {
     name: 'ETH',
@@ -16,7 +16,7 @@ const currencies: Record<
   },
   [CURRENCY_USD]: {
     name: 'USD',
-    symbol: '$',
+    symbol: 'US$',
   },
 }
 

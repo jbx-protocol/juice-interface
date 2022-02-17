@@ -4,7 +4,7 @@ import { BallotState } from 'models/ballot-state'
 import { V1ContractName } from 'models/v1/contracts'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { useContext, useMemo } from 'react'
-import { bigNumbersDiff } from 'utils/bigNumbersDiff'
+import { bigNumbersDiff } from 'utils/bigNumbers'
 import { parseWad } from 'utils/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
 

@@ -18,7 +18,7 @@ import { formattedNum, formatWad, fromWad, parseWad } from 'utils/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
-import { CURRENCY_ETH, CURRENCY_USD } from 'constants/currency'
+import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
 
 // This double as the 'Redeem' and 'Burn' modal depending on if project has overflow
 export default function RedeemModal({
@@ -57,7 +57,7 @@ export default function RedeemModal({
   })
 
   // 0.5% slippage for USD-denominated projects
-  const minAmount = currentFC?.currency.eq(CURRENCY_USD)
+  const minAmount = currentFC?.currency.eq(V1_CURRENCY_USD)
     ? rewardAmount?.mul(1000).div(1005)
     : rewardAmount
 
@@ -174,7 +174,7 @@ export default function RedeemModal({
             <Trans>
               Currently worth:{' '}
               <span>
-                <CurrencySymbol currency={CURRENCY_ETH} />
+                <CurrencySymbol currency={V1_CURRENCY_ETH} />
                 {formatWad(maxClaimable, { precision: 4 })}
               </span>
             </Trans>
@@ -228,7 +228,7 @@ export default function RedeemModal({
             <div style={{ fontWeight: 500, marginTop: 20 }}>
               <Trans>
                 You will receive{' '}
-                {currentFC?.currency.eq(CURRENCY_USD) ? 'minimum ' : ' '}
+                {currentFC?.currency.eq(V1_CURRENCY_USD) ? 'minimum ' : ' '}
                 {formatWad(minAmount, { precision: 8 }) || '--'} ETH
               </Trans>
             </div>

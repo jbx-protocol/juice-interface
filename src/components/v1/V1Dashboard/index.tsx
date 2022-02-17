@@ -21,13 +21,11 @@ import useUriOfProject from 'hooks/v1/contractReader/UriOfProject'
 import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { useProjectsQuery } from 'hooks/v1/Projects'
-import { CurrencyOption } from 'models/currency-option'
 import { useEffect, useMemo, useState } from 'react'
 import { useHistory, useLocation, useParams } from 'react-router-dom'
-
+import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { getTerminalName, getTerminalVersion } from 'utils/v1/terminals'
 import useTerminalOfProject from 'hooks/v1/contractReader/TerminalOfProject'
-
 import FeedbackPromptModal from 'components/v1/V1Project/modals/FeedbackPromptModal'
 
 import { Button } from 'antd'
@@ -86,7 +84,7 @@ export default function V1Dashboard() {
       balance &&
       converter.wadToCurrency(
         balance,
-        currentFC?.currency.toNumber() as CurrencyOption,
+        currentFC?.currency.toNumber() as V1CurrencyOption,
         0,
       ),
     [balance, converter, currentFC],

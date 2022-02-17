@@ -2,14 +2,13 @@ import { Button, Form, FormInstance } from 'antd'
 import { t, Trans } from '@lingui/macro'
 
 import { FormItems } from 'components/shared/formItems'
-import { BigNumber } from 'ethers'
 import { useState } from 'react'
 import { TicketMod } from 'models/mods'
 
 export type TokenFormFields = {
-  discountRate: BigNumber
-  reservedRate: BigNumber
-  bondingCurveRate: BigNumber
+  discountRate: string
+  reservedRate: string
+  bondingCurveRate: string
 }
 
 export default function TokenForm({
@@ -17,7 +16,7 @@ export default function TokenForm({
   onSave,
 }: {
   form: FormInstance<TokenFormFields>
-  onSave: VoidFunction
+  onSave: (fields: TokenFormFields) => void
 }) {
   const [mods, setMods] = useState<TicketMod[]>([])
   const [discountRateDisabled, setDiscountRateDisabled] = useState<boolean>(
@@ -37,15 +36,13 @@ export default function TokenForm({
     form.getFieldValue('reservedRate'),
   )
 
-  console.log('bondingCurveRate: ', form.getFieldValue('bondingCurveRate'))
-
   return (
-    <Form form={form} layout="vertical">
+    <Form form={form} layout="vertical" onFinish={onSave}>
       <FormItems.ProjectDiscountRate
         value={form.getFieldValue('discountRate')}
         name="discountRate"
         onChange={val => {
-          form.setFieldsValue({ discountRate: val })
+          form.setFieldsValue({ discountRate: val?.toString() })
         }}
         disabled={discountRateDisabled}
         toggleDisabled={checked => setDiscountRateDisabled(!checked)}
@@ -55,7 +52,7 @@ export default function TokenForm({
         name="reservedRate"
         onChange={val => {
           setReservedRate(val)
-          form.setFieldsValue({ reservedRate: val })
+          form.setFieldsValue({ reservedRate: val?.toString() })
         }}
         disabled={reservedRateDisabled}
         toggleDisabled={checked => setReservedRateDisabled(!checked)}
@@ -76,20 +73,13 @@ export default function TokenForm({
         name="bondingCurveRate"
         value={form.getFieldValue('bondingCurveRate')}
         onChange={(val?: number) =>
-          form.setFieldsValue({ bondingCurveRate: val })
+          form.setFieldsValue({ bondingCurveRate: val?.toString() })
         }
         disabled={bondingCurveDisabled}
         toggleDisabled={checked => setBondingCurveDisabled(!checked)}
       />
       <Form.Item>
-        <Button
-          htmlType="submit"
-          type="primary"
-          onClick={async () => {
-            await form.validateFields()
-            onSave()
-          }}
-        >
+        <Button htmlType="submit" type="primary">
           <Trans>Save token configuration</Trans>
         </Button>
       </Form.Item>

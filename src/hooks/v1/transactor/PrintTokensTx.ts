@@ -2,14 +2,14 @@ import { Contract } from '@ethersproject/contracts'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1UserContext } from 'contexts/v1/userContext'
 import { BigNumber } from 'ethers'
-import { CurrencyOption } from 'models/currency-option'
+import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useContext } from 'react'
 
 import { TransactorInstance } from '../../Transactor'
 
 export function usePrintTokensTx(): TransactorInstance<{
   value: BigNumber
-  currency: CurrencyOption
+  currency: V1CurrencyOption
   beneficiary: string
   memo: string
   preferUnstaked: boolean

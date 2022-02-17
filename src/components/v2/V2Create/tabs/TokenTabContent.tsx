@@ -9,21 +9,21 @@ import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 export default function TokenTabContent() {
   const [tokenForm] = useForm<TokenFormFields>()
   const dispatch = useAppDispatch()
-  const { fundingCycle: editingV2FundingCycle } = useAppSelector(
-    state => state.editingV2Project,
-  )
+  const { fundingCycleData } = useAppSelector(state => state.editingV2Project)
 
-  const onTokenFormSaved = useCallback(() => {
-    const fields = tokenForm.getFieldsValue(true)
-    dispatch(editingV2ProjectActions.setDiscountRate(fields.discountRate))
-    dispatch(editingV2ProjectActions.setReserved(fields.reservedRate))
-  }, [dispatch, tokenForm])
+  const onTokenFormSaved = useCallback(
+    (fields: TokenFormFields) => {
+      dispatch(editingV2ProjectActions.setDiscountRate(fields.discountRate))
+      dispatch(editingV2ProjectActions.setReservedRate(fields.reservedRate))
+    },
+    [dispatch],
+  )
 
   const resetTokenForm = useCallback(() => {
     tokenForm.setFieldsValue({
-      discountRate: editingV2FundingCycle?.discountRate ?? 0,
+      discountRate: fundingCycleData?.discountRate ?? '0',
     })
-  }, [editingV2FundingCycle?.discountRate, tokenForm])
+  }, [fundingCycleData?.discountRate, tokenForm])
 
   // initially fill form with any existing redux state
   useEffect(() => {

@@ -10,7 +10,7 @@ import {
 } from 'utils/formatNumber'
 
 // Spreads all properties from both v0 or v1 FundingCycleMetadata
-export type EditingFundingCycle = Omit<V1FundingCycle, 'metadata'> & {
+export type EditingV1FundingCycle = Omit<V1FundingCycle, 'metadata'> & {
   reserved: BigNumber
   bondingCurveRate: BigNumber
   payIsPaused: boolean | null
@@ -18,22 +18,25 @@ export type EditingFundingCycle = Omit<V1FundingCycle, 'metadata'> & {
   treasuryExtension: string | null
 }
 
-export type SerializedFundingCycle = Record<
+export type SerializedV1FundingCycle = Record<
   keyof Omit<
-    EditingFundingCycle,
+    EditingV1FundingCycle,
     'payIsPaused' | 'ticketPrintingIsAllowed' | 'treasuryExtension'
   >,
   string
 > &
   Record<
-    keyof Pick<EditingFundingCycle, 'payIsPaused' | 'ticketPrintingIsAllowed'>,
+    keyof Pick<
+      EditingV1FundingCycle,
+      'payIsPaused' | 'ticketPrintingIsAllowed'
+    >,
     null | boolean
   > &
-  Record<keyof Pick<EditingFundingCycle, 'treasuryExtension'>, null | string>
+  Record<keyof Pick<EditingV1FundingCycle, 'treasuryExtension'>, null | string>
 
-export const serializeFundingCycle = (
-  fc: EditingFundingCycle,
-): SerializedFundingCycle => ({
+export const serializeV1FundingCycle = (
+  fc: EditingV1FundingCycle,
+): SerializedV1FundingCycle => ({
   projectId: fc.projectId.toString(),
   id: fc.id.toString(),
   number: fc.number.toString(),
@@ -56,9 +59,9 @@ export const serializeFundingCycle = (
   treasuryExtension: fc.treasuryExtension,
 })
 
-export const deserializeFundingCycle = (
-  fc: SerializedFundingCycle,
-): EditingFundingCycle => ({
+export const deserializeV1FundingCycle = (
+  fc: SerializedV1FundingCycle,
+): EditingV1FundingCycle => ({
   ...fc,
   projectId: BigNumber.from(fc.projectId),
   id: BigNumber.from(fc.id),

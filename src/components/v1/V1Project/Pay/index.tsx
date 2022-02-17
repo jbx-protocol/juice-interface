@@ -8,21 +8,21 @@ import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { parseEther } from 'ethers/lib/utils'
 import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
-import { CurrencyOption } from 'models/currency-option'
+import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useContext, useMemo, useState } from 'react'
-import { currencyName } from 'utils/currency'
+import { currencyName } from 'utils/v1/currency'
 import { formatWad, fromWad } from 'utils/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
 
 import { disablePayOverrides } from 'constants/v1/overrides'
 import { readNetwork } from 'constants/networks'
-import { CURRENCY_ETH, CURRENCY_USD } from 'constants/currency'
+import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
 import CurrencySymbol from '../../../shared/CurrencySymbol'
 import PayInputSubText from './PayInputSubText'
 import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
 
 export default function Pay() {
-  const [payIn, setPayIn] = useState<CurrencyOption>(0)
+  const [payIn, setPayIn] = useState<V1CurrencyOption>(0)
   const [payAmount, setPayAmount] = useState<string>()
   const [payModalVisible, setPayModalVisible] = useState<boolean>(false)
   const [payWarningModalVisible, setPayWarningModalVisible] =
@@ -34,7 +34,7 @@ export default function Pay() {
   const converter = useCurrencyConverter()
 
   const weiPayAmt =
-    payIn === CURRENCY_USD
+    payIn === V1_CURRENCY_USD
       ? converter.usdToWei(payAmount)
       : parseEther(payAmount ?? '0')
 
@@ -152,10 +152,10 @@ export default function Pay() {
 
         <div style={{ textAlign: 'center', minWidth: 150 }}>
           {payButton}
-          {payIn === CURRENCY_USD && (
+          {payIn === V1_CURRENCY_USD && (
             <div style={{ fontSize: '.7rem' }}>
               <Trans>
-                Paid as <CurrencySymbol currency={CURRENCY_ETH} />
+                Paid as <CurrencySymbol currency={V1_CURRENCY_ETH} />
               </Trans>
               {formatWad(weiPayAmt) || '0'}
             </div>

@@ -24,10 +24,8 @@ import { useProjectsQuery } from 'hooks/v1/Projects'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useEffect, useMemo, useState } from 'react'
 import { useHistory, useLocation, useParams } from 'react-router-dom'
-
 import { getTerminalName, getTerminalVersion } from 'utils/v1/terminals'
 import useTerminalOfProject from 'hooks/v1/contractReader/TerminalOfProject'
-
 import FeedbackPromptModal from 'components/v1/V1Project/modals/FeedbackPromptModal'
 
 import { Button } from 'antd'

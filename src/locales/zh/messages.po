@@ -96,6 +96,7 @@ msgstr "<0>进一步了解</0> 筹款周期。"
 
 #: src/components/shared/forms/BudgetForm.tsx
 #: src/components/shared/forms/BudgetForm.tsx
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
 msgid "<0>Learn more</0> about overflow."
 msgstr "<0>进一步了解</0> 溢出。"
 
@@ -133,7 +134,6 @@ msgstr "<0>{tokenSymbol} ERC20 地址：</0> <1/>"
 
 #: src/components/shared/formItems/ProjectTwitter.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
-#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "@"
 msgstr "@"
 
@@ -222,6 +222,7 @@ msgid "All changes will be applied to the <0>upcoming</0> funding cycle."
 msgstr "所有更改会应用于 <0>之后的</0> 筹款周期。"
 
 #: src/components/shared/forms/BudgetForm.tsx
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
 msgid "All funds can be distributed by the project. The project will have no overflow (the same as setting the target to infinity)."
 msgstr "所有资金都可以分配给项目，项目将不再会产生溢出（把筹款目标设为无限也是同样结果）。"
 
@@ -685,6 +686,7 @@ msgstr "筹款周期详情"
 
 #: src/components/shared/formItems/ProjectDuration.tsx
 #: src/components/shared/forms/BudgetForm.tsx
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
 msgid "Funding cycle duration"
 msgstr "筹款周期持续时间"
 
@@ -701,6 +703,10 @@ msgstr "新的筹款周期开始前即可重新配置筹款周期参数，无须
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Funding distribution"
 msgstr "资金分发"
+
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
+msgid "Funding target"
+msgstr ""
 
 #: src/components/v1/FundingCycle/modals/DistributeTokensModal.tsx
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
@@ -722,7 +728,6 @@ msgid "Go to Etherscan"
 msgstr "跳转到 Etherscan"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
-#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Handle"
 msgstr "标识"
 
@@ -770,6 +775,10 @@ msgstr "这些合约是如何被测试的？"
 msgid "How long one funding cycle will last. Funding cycle <0>reconfigurations</0> will only take effect for <1>upcoming</1> funding cycles, i.e. once a current funding cycle has ended."
 msgstr "一个筹款周期的时长是多少。筹款周期 <0>参数设置的更改</0> 只能生效于 <1>后面的</1> 筹款周期，亦即是当前筹款周期终止之后。"
 
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
+msgid "How much do you want to raise?"
+msgstr ""
+
 #: src/components/v1/V1Create/index.tsx
 msgid "How your project will distribute funds."
 msgstr "您的项目将如何分配资金。"
@@ -782,7 +791,6 @@ msgstr "然而，Juicebox仍处于试验阶段。尽管Juicebox的合约团队�
 msgid "I understand"
 msgstr "我明白了<<<<<<< HEAD"
 
-#: src/components/v1/V1Project/V1HeaderActions.tsx
 #: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 msgid "ID: {0}"
 msgstr "ID: {0}"
@@ -995,6 +1003,10 @@ msgstr "暂无策略"
 msgid "No target"
 msgstr "没有筹款目标"
 
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
+msgid "No target (as much as possible)"
+msgstr ""
+
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "No target set."
 msgstr "不设定筹款目标。"
@@ -1021,6 +1033,7 @@ msgid "Other assets in this project's owner's wallet."
 msgstr "项目拥有者钱包内的其他资产"
 
 #: src/components/shared/forms/BudgetForm.tsx
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
 msgid "Overflow is created if your project's balance exceeds your funding cycle target. Overflow can be redeemed by your project's token holders."
 msgstr "如果您项目的资金余额超出您的筹款周期目标，就会产生溢出。项目代币持有人可以赎回溢出部分资金。"
 
@@ -1259,6 +1272,10 @@ msgstr "重新配置之后的筹款"
 msgid "Reconfigure upcoming funding"
 msgstr "重新配置之后的筹款"
 
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
+msgid "Recurring target"
+msgstr ""
+
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 msgid "Redeem"
 msgstr "赎回"
@@ -1376,6 +1393,10 @@ msgstr "保存更改"
 msgid "Save funding configuration"
 msgstr "保存筹款设置"
 
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
+msgid "Save funding details"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/EditProjectModal.tsx
 msgid "Save handle"
 msgstr "保存标识"
@@ -1430,6 +1451,7 @@ msgid "Set a funding target to cover predictable expenses. Any extra funds (<0>o
 msgstr "设定一个筹款目标以保证计划内的开销。对于超出部分的资金(<0>溢出</0>)，您及其他持有项目代币的人都有权去领取。"
 
 #: src/components/shared/forms/BudgetForm.tsx
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
 msgid "Set the amount of funds you'd like to raise each funding cycle. Any funds raised within the funding cycle target can be distributed by the project, and can't be redeemed by your project's token holders."
 msgstr "设定你每个筹款周期想要筹款的金额。筹款周期目标以内的金额会分配给项目，项目代币持有人不能通过赎回取得这部分资金。"
 
@@ -1448,6 +1470,10 @@ msgstr "鉴于你并未设置筹款持续时间，对这些设置的修改将会
 #: src/components/v1/FundingCycle/FundingCyclePreview.tsx
 msgid "Some funding cycle properties may indicate risk for project contributors."
 msgstr "一些筹款周期的配置可能会给项目贡献者们造成一些风险。"
+
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
+msgid "Specific target"
+msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
@@ -1790,7 +1816,6 @@ msgstr "V1"
 msgid "V1.1"
 msgstr "V1.1<<<<<<< HEAD"
 
-#: src/components/v1/V1Project/V1HeaderActions.tsx
 #: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 msgid "Version of the terminal contract used by this project."
 msgstr "当前项目所使用的 Terminal 版本。"

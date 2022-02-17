@@ -753,7 +753,7 @@ export default function V1Create() {
           }}
           onCancel={() => setConfirmStartOverVisible(false)}
         >
-          <Trans>This will erase of your all changes.</Trans>
+          <Trans>This will erase all of your changes.</Trans>
         </Modal>
       </Row>
     </V1ProjectContext.Provider>

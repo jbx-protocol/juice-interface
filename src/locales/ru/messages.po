@@ -96,6 +96,7 @@ msgstr "<0>Подробнее</0> о продолжительности цикл
 
 #: src/components/shared/forms/BudgetForm.tsx
 #: src/components/shared/forms/BudgetForm.tsx
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
 msgid "<0>Learn more</0> about overflow."
 msgstr "<0>Узнайте больше</0> о переполнении."
 
@@ -133,7 +134,6 @@ msgstr ""
 
 #: src/components/shared/formItems/ProjectTwitter.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
-#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "@"
 msgstr "@"
 
@@ -222,6 +222,7 @@ msgid "All changes will be applied to the <0>upcoming</0> funding cycle."
 msgstr "Все изменения будут применены к <0>предстоящему</0> циклу финансирования."
 
 #: src/components/shared/forms/BudgetForm.tsx
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
 msgid "All funds can be distributed by the project. The project will have no overflow (the same as setting the target to infinity)."
 msgstr "все средства могут быть распределены по проекту, и в проекте не будет переполнения. (Это то же самое, что и установка цели на бесконечность)."
 
@@ -667,6 +668,7 @@ msgstr ""
 
 #: src/components/shared/formItems/ProjectDuration.tsx
 #: src/components/shared/forms/BudgetForm.tsx
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
 msgid "Funding cycle duration"
 msgstr "Продолжительность цикла финансирования"
 
@@ -684,6 +686,10 @@ msgstr ""
 msgid "Funding distribution"
 msgstr ""
 
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
+msgid "Funding target"
+msgstr ""
+
 #: src/components/v1/FundingCycle/modals/DistributeTokensModal.tsx
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 msgid "Funds will be distributed to:"
@@ -699,7 +705,6 @@ msgid "Go to Etherscan"
 msgstr "Перейти к Etherscan"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
-#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Handle"
 msgstr "Никнейм"
 
@@ -741,6 +746,10 @@ msgstr "Как проверялись контракты?"
 
 #: src/components/shared/formItems/ProjectDuration.tsx
 msgid "How long one funding cycle will last. Funding cycle <0>reconfigurations</0> will only take effect for <1>upcoming</1> funding cycles, i.e. once a current funding cycle has ended."
+msgstr ""
+
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
+msgid "How much do you want to raise?"
 msgstr ""
 
 #: src/components/v1/V1Create/index.tsx
@@ -970,6 +979,10 @@ msgstr "Нет стратегии/или плана"
 msgid "No target"
 msgstr "Нет цели"
 
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
+msgid "No target (as much as possible)"
+msgstr ""
+
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "No target set."
 msgstr "Цель не установлена."
@@ -996,6 +1009,7 @@ msgid "Other assets in this project's owner's wallet."
 msgstr ""
 
 #: src/components/shared/forms/BudgetForm.tsx
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
 msgid "Overflow is created if your project's balance exceeds your funding cycle target. Overflow can be redeemed by your project's token holders."
 msgstr "Переполнение создается, если остаток вашего проекта превышает цель цикла финансирования. Переполнение может быть использовано владельцами токенов вашего проекта."
 
@@ -1240,6 +1254,10 @@ msgstr ""
 msgid "Reconfigure upcoming funding"
 msgstr ""
 
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
+msgid "Recurring target"
+msgstr ""
+
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 msgid "Redeem"
 msgstr "Обменять"
@@ -1353,6 +1371,10 @@ msgstr ""
 msgid "Save funding configuration"
 msgstr "Сохранить конфигурацию финансирования"
 
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
+msgid "Save funding details"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/EditProjectModal.tsx
 msgid "Save handle"
 msgstr ""
@@ -1407,6 +1429,7 @@ msgid "Set a funding target to cover predictable expenses. Any extra funds (<0/>
 msgstr ""
 
 #: src/components/shared/forms/BudgetForm.tsx
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
 msgid "Set the amount of funds you'd like to raise each funding cycle. Any funds raised within the funding cycle target can be distributed by the project, and can't be redeemed by your project's token holders."
 msgstr "Установите количество средств для каждого цикла финансирования. Любые средства, собранные в рамках цикла финансирования, могут быть распределены по проекту и не могут быть использованы владельцами токенов вашего проекта."
 
@@ -1424,6 +1447,10 @@ msgstr ""
 
 #: src/components/v1/FundingCycle/FundingCyclePreview.tsx
 msgid "Some funding cycle properties may indicate risk for project contributors."
+msgstr ""
+
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
+msgid "Specific target"
 msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx

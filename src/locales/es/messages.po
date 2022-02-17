@@ -96,6 +96,7 @@ msgstr "<0>Aprende más</0> acerca de ciclos de financiación."
 
 #: src/components/shared/forms/BudgetForm.tsx
 #: src/components/shared/forms/BudgetForm.tsx
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
 msgid "<0>Learn more</0> about overflow."
 msgstr "<0>Aprende más</0> acerca del excedente."
 
@@ -133,7 +134,6 @@ msgstr "<0>dirección ERC20 de {tokenSymbol}:</0><1/>"
 
 #: src/components/shared/formItems/ProjectTwitter.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
-#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "@"
 msgstr "@"
 
@@ -222,6 +222,7 @@ msgid "All changes will be applied to the <0>upcoming</0> funding cycle."
 msgstr "Todos los cambios se aplicarán al <0>siguiente </0>ciclo de financiación."
 
 #: src/components/shared/forms/BudgetForm.tsx
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
 msgid "All funds can be distributed by the project. The project will have no overflow (the same as setting the target to infinity)."
 msgstr "Todos los fondos pueden ser distribuidos por el proyecto. El proyecto no tendrá excedente (lo mismo que establecer el objetivo a infinito)."
 
@@ -667,6 +668,7 @@ msgstr "Detalles del ciclo de financiamiento"
 
 #: src/components/shared/formItems/ProjectDuration.tsx
 #: src/components/shared/forms/BudgetForm.tsx
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
 msgid "Funding cycle duration"
 msgstr "Duración del ciclo de financiamiento"
 
@@ -684,6 +686,10 @@ msgstr "Los ciclos de financiamiento pueden ser reconfigurados momentos antes de
 msgid "Funding distribution"
 msgstr "Distribución de fondos"
 
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
+msgid "Funding target"
+msgstr ""
+
 #: src/components/v1/FundingCycle/modals/DistributeTokensModal.tsx
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 msgid "Funds will be distributed to:"
@@ -699,7 +705,6 @@ msgid "Go to Etherscan"
 msgstr "Ve a Etherscan"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
-#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Handle"
 msgstr "Usuario"
 
@@ -742,6 +747,10 @@ msgstr "¿Cómo se han puesto a prueba los contratos?"
 #: src/components/shared/formItems/ProjectDuration.tsx
 msgid "How long one funding cycle will last. Funding cycle <0>reconfigurations</0> will only take effect for <1>upcoming</1> funding cycles, i.e. once a current funding cycle has ended."
 msgstr "Cuanto durará un ciclo de financiamiento. Las <0>reconfiguraciones</0> del ciclo de financiamiento, solo tendrán efecto para los <1>próximos</1> ciclos de financiamiento, p. ej. una vez que el ciclo de financiamiento actual haya terminado."
+
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
+msgid "How much do you want to raise?"
+msgstr ""
 
 #: src/components/v1/V1Create/index.tsx
 msgid "How your project will distribute funds."
@@ -970,6 +979,10 @@ msgstr "Sin estrategia"
 msgid "No target"
 msgstr "Sin meta-objetivo de financiamiento"
 
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
+msgid "No target (as much as possible)"
+msgstr ""
+
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "No target set."
 msgstr "Sin meta-objetivo establecida."
@@ -996,6 +1009,7 @@ msgid "Other assets in this project's owner's wallet."
 msgstr "Otros activos en la billetera del dueño de este proyecto."
 
 #: src/components/shared/forms/BudgetForm.tsx
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
 msgid "Overflow is created if your project's balance exceeds your funding cycle target. Overflow can be redeemed by your project's token holders."
 msgstr "El excedente es creado si el saldo de tu proyecto excede el objetivo de financiamiento. El exceso puede ser canjeado por los poseedores de tokens de tu proyecto."
 
@@ -1240,6 +1254,10 @@ msgstr "Reconfigurar próximos"
 msgid "Reconfigure upcoming funding"
 msgstr "Reconfigurar financiamientos próximos"
 
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
+msgid "Recurring target"
+msgstr ""
+
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 msgid "Redeem"
 msgstr "Canjear"
@@ -1353,6 +1371,10 @@ msgstr "Guardar cambios"
 msgid "Save funding configuration"
 msgstr "Guardar configuración de financiamiento"
 
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
+msgid "Save funding details"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/EditProjectModal.tsx
 msgid "Save handle"
 msgstr "Guardar usuario"
@@ -1407,6 +1429,7 @@ msgid "Set a funding target to cover predictable expenses. Any extra funds (<0/>
 msgstr ""
 
 #: src/components/shared/forms/BudgetForm.tsx
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
 msgid "Set the amount of funds you'd like to raise each funding cycle. Any funds raised within the funding cycle target can be distributed by the project, and can't be redeemed by your project's token holders."
 msgstr "Establece la cantidad de fondos que te gustaría recaudar cada ciclo de financiamiento. Cualquier fondo recaudado dentro del objetivo de financiamiento puede ser distribuido por el proyecto, y no puede ser canjeado por los tenedores de tokens de tu proyecto."
 
@@ -1425,6 +1448,10 @@ msgstr "Como no has establecido una duración de financiamiento, los cambios a e
 #: src/components/v1/FundingCycle/FundingCyclePreview.tsx
 msgid "Some funding cycle properties may indicate risk for project contributors."
 msgstr "Algunas propiedades de los ciclos de financiamiento pueden indicar riesgo para los contribuyentes de proyectos."
+
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
+msgid "Specific target"
+msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx

@@ -3,7 +3,7 @@ import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { BigNumber } from 'ethers'
 import { V1ContractName } from 'models/v1/contracts'
 import { useContext } from 'react'
-import { bigNumbersDiff } from 'utils/bigNumbersDiff'
+import { bigNumbersDiff } from 'utils/bigNumbers'
 
 import useContractReader from './ContractReader'
 import useShouldUpdateTokens from './ShouldUpdateTokens'

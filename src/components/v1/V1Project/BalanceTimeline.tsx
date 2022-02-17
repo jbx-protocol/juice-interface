@@ -529,7 +529,9 @@ export default function BalanceTimeline({ height }: { height: number }) {
               bottom: 20,
             }}
           >
-            <div style={{ color: colors.text.disabled }}>loading...</div>
+            <div style={{ color: colors.text.disabled }}>
+              <Trans>loading</Trans>...
+            </div>
           </div>
         )}
       </div>

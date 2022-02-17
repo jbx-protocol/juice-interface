@@ -5,7 +5,7 @@ import Search from 'antd/lib/input/Search'
 import FeedbackFormLink from 'components/shared/FeedbackFormLink'
 import Loading from 'components/shared/Loading'
 
-import { ProjectCategory, ProjectStateFilter } from 'models/project-visibility'
+import { ProjectCategory } from 'models/project-visibility'
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
 
 import Grid from 'components/shared/Grid'
@@ -69,19 +69,13 @@ export default function Projects() {
   const [orderBy, setOrderBy] = useState<OrderByOption>('totalPaid')
   const [includeV1, setIncludeV1] = useState<boolean>(true)
   const [includeV1_1, setIncludeV1_1] = useState<boolean>(true)
-  const [includeActive, setIncludeActive] = useState<boolean>(true)
-  const [includeArchived, setIncludeArchived] = useState<boolean>(false)
+  const [showArchived, setShowArchived] = useState<boolean>(false)
 
   const loadMoreContainerRef = useRef<HTMLDivElement>(null)
 
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-
-  const includedStates: ProjectStateFilter = {
-    active: includeActive,
-    archived: includeArchived,
-  }
 
   const terminalVersion: V1TerminalVersion | undefined = useMemo(() => {
     if (includeV1 && !includeV1_1) return '1'
@@ -98,7 +92,7 @@ export default function Projects() {
     orderBy,
     pageSize,
     orderDirection: 'desc',
-    states: includedStates,
+    state: showArchived ? 'archived' : 'active',
     terminalVersion,
   })
 
@@ -129,8 +123,6 @@ export default function Projects() {
   const concatenatedPages = searchText?.length
     ? searchPages
     : pages?.pages?.reduce((prev, group) => [...prev, ...group], [])
-
-  const filterOnlyArchived = !includeActive && includeArchived
 
   return (
     <div style={{ ...layouts.maxWidth }}>
@@ -166,20 +158,18 @@ export default function Projects() {
           </p>
         </div>
 
-        {!filterOnlyArchived ? (
-          <Search
-            autoFocus
-            style={{ flex: 1, marginBottom: 20, marginRight: 20 }}
-            prefix="@"
-            placeholder={t`Search projects by handle`}
-            onSearch={val => {
-              setSearchText(val)
-              history.push(`/projects?tab=all${val ? `&search=${val}` : ''}`)
-            }}
-            defaultValue={searchText}
-            allowClear
-          />
-        ) : null}
+        <Search
+          autoFocus
+          style={{ flex: 1, marginBottom: 20, marginRight: 20 }}
+          prefix="@"
+          placeholder={t`Search projects by handle`}
+          onSearch={val => {
+            setSearchText(val)
+            history.push(`/projects?tab=all${val ? `&search=${val}` : ''}`)
+          }}
+          defaultValue={searchText}
+          allowClear
+        />
 
         <div
           hidden={!!searchText}
@@ -199,17 +189,15 @@ export default function Projects() {
               setIncludeV1={setIncludeV1}
               includeV1_1={includeV1_1}
               setIncludeV1_1={setIncludeV1_1}
-              includeActive={includeActive}
-              setIncludeActive={setIncludeActive}
-              includeArchived={includeArchived}
-              setIncludeArchived={setIncludeArchived}
+              showArchived={showArchived}
+              setShowArchived={setShowArchived}
               orderBy={orderBy}
               setOrderBy={setOrderBy}
             />
           ) : null}
         </div>
         <ArchivedProjectsMessage
-          hidden={!filterOnlyArchived || selectedTab !== 'all'}
+          hidden={!showArchived || selectedTab !== 'all'}
         />
       </div>
 

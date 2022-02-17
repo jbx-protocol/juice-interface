@@ -6,6 +6,7 @@ import CurrencySymbol from 'components/shared/CurrencySymbol'
 import EtherscanLink from 'components/shared/EtherscanLink'
 import ProjectTokenBalance from 'components/shared/ProjectTokenBalance'
 import TooltipLabel from 'components/shared/TooltipLabel'
+import ETHAmount from 'components/shared/ETHAmount'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
@@ -14,7 +15,7 @@ import { useEthBalanceQuery } from 'hooks/EthBalance'
 import { CurrencyOption } from 'models/currency-option'
 import { NetworkName } from 'models/network-name'
 import { CSSProperties, useContext, useMemo, useState } from 'react'
-import { formatWad, fracDiv, fromWad, parseWad } from 'utils/formatNumber'
+import { formatWad, fracDiv, fromWad } from 'utils/formatNumber'
 import { hasFundingTarget } from 'utils/fundingCycle'
 
 import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
@@ -147,10 +148,7 @@ export default function Paid() {
                 : colors.text.primary,
             }}
           >
-            <CurrencySymbol currency={CURRENCY_ETH} />
-            {earned?.lt(parseWad('1')) && earned.gt(0)
-              ? '<1'
-              : formatWad(earned, { precision: 0 })}
+            <ETHAmount amount={earned} />
           </span>
         </span>
       </div>
@@ -165,8 +163,8 @@ export default function Paid() {
       >
         <div style={secondaryTextStyle}>
           <TooltipLabel
-            label="In Juicebox"
-            tip="The balance of this project in the Juicebox contract."
+            label={t`In Juicebox`}
+            tip={t`The balance of this project in the Juicebox contract.`}
           />
         </div>
 
@@ -181,8 +179,7 @@ export default function Paid() {
         >
           {currentFC.currency.eq(CURRENCY_USD) ? (
             <span style={secondaryTextStyle}>
-              <CurrencySymbol currency={CURRENCY_ETH} />
-              {formatWad(balance, { precision: 2, padEnd: true })}{' '}
+              <ETHAmount amount={balance} precision={2} padEnd={true} />{' '}
             </span>
           ) : (
             ''
@@ -307,8 +304,7 @@ export default function Paid() {
             +{' '}
           </span>
           <span style={primaryTextStyle}>
-            <CurrencySymbol currency={CURRENCY_ETH} />
-            {formatWad(ownerBalance, { precision: 2, padEnd: true })}
+            <ETHAmount amount={ownerBalance} precision={2} padEnd={true} />
           </span>
         </span>
       </div>

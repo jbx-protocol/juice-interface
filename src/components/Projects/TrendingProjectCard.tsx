@@ -1,6 +1,6 @@
-import CurrencySymbol from 'components/shared/CurrencySymbol'
 import Loading from 'components/shared/Loading'
 import ProjectLogo from 'components/shared/ProjectLogo'
+import ETHAmount from 'components/shared/ETHAmount'
 
 import { t, Trans, Plural } from '@lingui/macro'
 
@@ -9,13 +9,11 @@ import { constants } from 'ethers'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { TrendingProject } from 'models/subgraph-entities/project'
 import { CSSProperties, useContext, useMemo } from 'react'
-import { formatWad } from 'utils/formatNumber'
 import { getTerminalVersion } from 'utils/v1/terminals'
 
 import { Link } from 'react-router-dom'
 
 import { SECONDS_IN_DAY } from 'constants/numbers'
-import { CURRENCY_ETH } from 'constants/currency'
 
 export default function TrendingProjectCard({
   project,
@@ -173,8 +171,10 @@ export default function TrendingProjectCard({
                 }}
               >
                 <span style={{ fontWeight: 600, marginTop: 3 }}>
-                  <CurrencySymbol currency={CURRENCY_ETH} />
-                  {formatWad(project.trendingVolume, { precision })}{' '}
+                  <ETHAmount
+                    amount={project.trendingVolume}
+                    precision={precision}
+                  />{' '}
                 </span>
                 <span style={{ fontWeight: 400, color: colors.text.secondary }}>
                   <Trans>last {trendingWindowDays} days</Trans>{' '}

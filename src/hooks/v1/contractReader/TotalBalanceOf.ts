@@ -1,7 +1,7 @@
 import { BigNumber, BigNumberish } from 'ethers'
 import { V1ContractName } from 'models/v1/contracts'
 import { V1TerminalName } from 'models/v1/terminals'
-import { bigNumbersDiff } from 'utils/bigNumbersDiff'
+import { bigNumbersDiff } from 'utils/bigNumbers'
 
 import useContractReader from './ContractReader'
 import useShouldUpdateTokens from './ShouldUpdateTokens'

@@ -6,7 +6,6 @@ import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { Project } from 'models/subgraph-entities/project'
 import React, { CSSProperties, useContext } from 'react'
 import { formatDate } from 'utils/formatDate'
-import { formatWad } from 'utils/formatNumber'
 
 import { getTerminalVersion } from 'utils/v1/terminals'
 
@@ -14,11 +13,9 @@ import useSubgraphQuery from 'hooks/SubgraphQuery'
 
 import { Link } from 'react-router-dom'
 
-import { CURRENCY_ETH } from 'constants/currency'
-
-import CurrencySymbol from './CurrencySymbol'
 import Loading from './Loading'
 import ProjectLogo from './ProjectLogo'
+import ETHAmount from './ETHAmount'
 import { archivedProjectIds } from '../../constants/v1/archivedProjects'
 
 type ProjectCardProject = Pick<
@@ -139,8 +136,7 @@ export default function ProjectCard({
 
             <div>
               <span style={{ color: colors.text.primary, fontWeight: 500 }}>
-                <CurrencySymbol currency={CURRENCY_ETH} />
-                {formatWad(_project?.totalPaid, { precision })}{' '}
+                <ETHAmount amount={_project?.totalPaid} precision={precision} />{' '}
               </span>
 
               <span style={{ color: colors.text.secondary }}>

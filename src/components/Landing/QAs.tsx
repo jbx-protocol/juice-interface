@@ -94,7 +94,7 @@ export default function QAs() {
           Tokens can be redeemed for a portion of a project's{' '}
           <OverflowVideoLink text={t`overflow`} />, letting you benefit from its
           success. After all, you helped it get there. The token may also give
-          you exclusive member-only priviledges, and allow you to contribute to
+          you exclusive member-only privledges, and allow you to contribute to
           the governance of the community.
         </Trans>,
       ],
@@ -157,7 +157,7 @@ export default function QAs() {
       q: t`Why Ethereum?`,
       a: [
         t`A mechanism like Juicebox where upfront financial commitments should be honored over time is only guaranteed within an ecosystem like Ethereum.`,
-        t`Ethereum provides a public environment where internet apps like Juicebox can run permissionlessly, trustlessly, and unstoppably.`,
+        t`Ethereum provides a public environment where internet apps like Juicebox can run in a permission-less, trustless, and unstoppable fashion.`,
         t`This means that anyone can see the code that they're using, anyone can use the code without asking for permission, and no one can mess with the code or take it down.`,
         t`People using Juicebox are interacting with each other through public infrastructure—not a private, profit-seeking corporate service that brokers the exchange.`,
         t`Juicebox was built to allow people and projects to get paid for creating public art and infrastructure, as much as or more than they would working towards corporate ends. No more shady business.`,
@@ -168,7 +168,7 @@ export default function QAs() {
       a: [
         t`This website (juicebox.money) connects to the Juicebox protocol's smart contracts, deployed on the Ethereum network. (note: anyone else can make a website that also connects to these same smart contracts. For now, don't trust any site other than this one to access the Juicebox protocol).`,
         t`Creating a Juicebox project mints you an NFT (ERC-721) representing ownership over it. Whoever owns this NFT can configure the rules of the game and how payouts are distributed.`,
-        t`The project's tokens that are minted and distributed as a result of a received payment are ERC-20's. The amount of tokens minted and distributed are proportional to the volume of payments recieved, weighted by the project's discount rate over time.`,
+        t`The project's tokens that are minted and distributed as a result of a received payment are ERC-20's. The amount of tokens minted and distributed are proportional to the volume of payments received, weighted by the project's discount rate over time.`,
       ],
     },
     {
@@ -183,7 +183,7 @@ export default function QAs() {
       a: [
         t`Juicebox has handled tens of thousands of ETH through its protocol, and has so far had 0 security mishaps.`,
         t`However, Juicebox is still experimental software. Although the Juicebox contract team have done their part to shape the smart contracts for public use and have tested the code thoroughly, the risk of exploits is never 0%.`,
-        t`Due to their public nature, any exploits to the contracts may have irreversable consequences, including loss of funds. Please use Juicebox with caution.`,
+        t`Due to their public nature, any exploits to the contracts may have irreversible consequences, including loss of funds. Please use Juicebox with caution.`,
       ],
     },
     {
@@ -231,8 +231,8 @@ export default function QAs() {
           >
             Peel
           </a>{' '}
-          is the DAO that manages Juicebox's frontend interface. You can reach
-          out to Peel either through the{' '}
+          is the DAO that manages the juicebox.money frontend interface. You can
+          reach out to Peel either through the{' '}
           <a
             href="https://discord.gg/9NSX7D37"
             rel="noreferrer"

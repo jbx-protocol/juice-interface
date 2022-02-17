@@ -111,8 +111,8 @@ msgid "<0>Notice:</0> These balances will not reflect transfers of claimed token
 msgstr ""
 
 #: src/components/Landing/QAs.tsx
-msgid "<0>Peel</0> is the DAO that manages Juicebox's frontend interface. You can reach out to Peel either through the <1>Peel Discord</1> or <2/>."
-msgstr "<0>Peel</0> is the DAO that manages Juicebox's frontend interface. You can reach out to Peel either through the <1>Peel Discord</1> or <2/>."
+msgid "<0>Peel</0> is the DAO that manages the juicebox.money frontend interface. You can reach out to Peel either through the <1>Peel Discord</1> or <2/>."
+msgstr "<0>Peel</0> is the DAO that manages the juicebox.money frontend interface. You can reach out to Peel either through the <1>Peel Discord</1> or <2/>."
 
 #: src/components/Landing/TrendingSection.tsx
 msgid "<0>Trending projects</0><1><2/></1>"
@@ -552,8 +552,8 @@ msgid "Download CSV of {0} holders"
 msgstr "Download CSV of {0} holders"
 
 #: src/components/Landing/QAs.tsx
-msgid "Due to their public nature, any exploits to the contracts may have irreversable consequences, including loss of funds. Please use Juicebox with caution."
-msgstr ""
+msgid "Due to their public nature, any exploits to the contracts may have irreversible consequences, including loss of funds. Please use Juicebox with caution."
+msgstr "Due to their public nature, any exploits to the contracts may have irreversible consequences, including loss of funds. Please use Juicebox with caution."
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
@@ -611,8 +611,8 @@ msgid "Ethereum protocols and DAOs"
 msgstr ""
 
 #: src/components/Landing/QAs.tsx
-msgid "Ethereum provides a public environment where internet apps like Juicebox can run permissionlessly, trustlessly, and unstoppably."
-msgstr ""
+msgid "Ethereum provides a public environment where internet apps like Juicebox can run in a permission-less, trustless, and unstoppable fashion."
+msgstr "Ethereum provides a public environment where internet apps like Juicebox can run in a permission-less, trustless, and unstoppable fashion."
 
 #: src/components/Navbar/MenuItems.tsx
 msgid "FAQ"
@@ -1514,8 +1514,8 @@ msgid "The project's entire balance will be considered overflow."
 msgstr ""
 
 #: src/components/Landing/QAs.tsx
-msgid "The project's tokens that are minted and distributed as a result of a received payment are ERC-20's. The amount of tokens minted and distributed are proportional to the volume of payments recieved, weighted by the project's discount rate over time."
-msgstr "The project's tokens that are minted and distributed as a result of a received payment are ERC-20's. The amount of tokens minted and distributed are proportional to the volume of payments recieved, weighted by the project's discount rate over time."
+msgid "The project's tokens that are minted and distributed as a result of a received payment are ERC-20's. The amount of tokens minted and distributed are proportional to the volume of payments received, weighted by the project's discount rate over time."
+msgstr "The project's tokens that are minted and distributed as a result of a received payment are ERC-20's. The amount of tokens minted and distributed are proportional to the volume of payments received, weighted by the project's discount rate over time."
 
 #: src/components/shared/formItems/ProjectDiscountRate.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
@@ -1628,8 +1628,8 @@ msgid "Tokens are earned by anyone who pays your project, and can be redeemed fo
 msgstr ""
 
 #: src/components/Landing/QAs.tsx
-msgid "Tokens can be redeemed for a portion of a project's <0/>, letting you benefit from its success. After all, you helped it get there. The token may also give you exclusive member-only priviledges, and allow you to contribute to the governance of the community."
-msgstr "Tokens can be redeemed for a portion of a project's <0/>, letting you benefit from its success. After all, you helped it get there. The token may also give you exclusive member-only priviledges, and allow you to contribute to the governance of the community."
+msgid "Tokens can be redeemed for a portion of a project's <0/>, letting you benefit from its success. After all, you helped it get there. The token may also give you exclusive member-only privledges, and allow you to contribute to the governance of the community."
+msgstr "Tokens can be redeemed for a portion of a project's <0/>, letting you benefit from its success. After all, you helped it get there. The token may also give you exclusive member-only privledges, and allow you to contribute to the governance of the community."
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Tokens can be redeemed for a portion of this project's ETH overflow, according to the bonding curve rate of the current funding cycle. <0>Tokens are burned when they are redeemed.</0>"

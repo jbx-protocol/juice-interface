@@ -116,7 +116,7 @@ msgid "<0>Notice:</0> These balances will not reflect transfers of claimed token
 msgstr "<0>注意：</0> 因为 {tokenSymbol} ERC-20 代币还没被 Juicebox 索引，目前还不会根据已领取代币的转移操作来更新这些余额。"
 
 #: src/components/Landing/QAs.tsx
-msgid "<0>Peel</0> is the DAO that manages Juicebox's frontend interface. You can reach out to Peel either through the <1>Peel Discord</1> or <2/>."
+msgid "<0>Peel</0> is the DAO that manages the juicebox.money frontend interface. You can reach out to Peel either through the <1>Peel Discord</1> or <2/>."
 msgstr ""
 
 #: src/components/Landing/TrendingSection.tsx
@@ -555,8 +555,8 @@ msgid "Download CSV of {0} holders"
 msgstr "下载包含 {0} 持有者的 CSV"
 
 #: src/components/Landing/QAs.tsx
-msgid "Due to their public nature, any exploits to the contracts may have irreversable consequences, including loss of funds. Please use Juicebox with caution."
-msgstr "由于其公共性质，任何对合约的恶意利用都可能产生不可逆转的后果，包括资金损失。请谨慎使用 Juicebox。"
+msgid "Due to their public nature, any exploits to the contracts may have irreversible consequences, including loss of funds. Please use Juicebox with caution."
+msgstr ""
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
@@ -614,8 +614,8 @@ msgid "Ethereum protocols and DAOs"
 msgstr "以太坊协议和 DAO"
 
 #: src/components/Landing/QAs.tsx
-msgid "Ethereum provides a public environment where internet apps like Juicebox can run permissionlessly, trustlessly, and unstoppably."
-msgstr "以太坊提供了一个公共环境，让 Juicebox 这样的互联网应用可以无需许可、无需信任、不可阻挡地在上面运行。"
+msgid "Ethereum provides a public environment where internet apps like Juicebox can run in a permission-less, trustless, and unstoppable fashion."
+msgstr ""
 
 #: src/components/Navbar/MenuItems.tsx
 msgid "FAQ"
@@ -1510,7 +1510,7 @@ msgid "The project's entire balance will be considered overflow."
 msgstr "项目的全部余额将被视为溢出。"
 
 #: src/components/Landing/QAs.tsx
-msgid "The project's tokens that are minted and distributed as a result of a received payment are ERC-20's. The amount of tokens minted and distributed are proportional to the volume of payments recieved, weighted by the project's discount rate over time."
+msgid "The project's tokens that are minted and distributed as a result of a received payment are ERC-20's. The amount of tokens minted and distributed are proportional to the volume of payments received, weighted by the project's discount rate over time."
 msgstr ""
 
 #: src/components/shared/formItems/ProjectDiscountRate.tsx
@@ -1624,7 +1624,7 @@ msgid "Tokens are earned by anyone who pays your project, and can be redeemed fo
 msgstr "当有人对你的项目进行支付时，他们会获得项目代币。在项目设定了筹款目标时, 可以通过赎回项目代币来获得溢出资金。"
 
 #: src/components/Landing/QAs.tsx
-msgid "Tokens can be redeemed for a portion of a project's <0/>, letting you benefit from its success. After all, you helped it get there. The token may also give you exclusive member-only priviledges, and allow you to contribute to the governance of the community."
+msgid "Tokens can be redeemed for a portion of a project's <0/>, letting you benefit from its success. After all, you helped it get there. The token may also give you exclusive member-only privledges, and allow you to contribute to the governance of the community."
 msgstr ""
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx

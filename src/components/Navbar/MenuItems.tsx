@@ -88,7 +88,13 @@ export function DropdownItem({
   onClick?: VoidFunction
 }) {
   return (
-    <a className="nav-dropdown-item" href={route} onClick={onClick}>
+    <a
+      className="nav-dropdown-item"
+      href={route}
+      rel="noreferrer"
+      target="_blank"
+      onClick={onClick}
+    >
       {text}
     </a>
   )
@@ -145,6 +151,12 @@ export const menu = (onClickMenuItems?: VoidFunction) => {
             key="podcast"
             text={t`Podcast`}
             route="https://open.spotify.com/show/4G8ji7vofcOx2acXcjXIa4?si=1e5e6e171ed744e8"
+            onClick={onClickMenuItems}
+          />,
+          <DropdownItem
+            key="peel"
+            text={t`Peel`}
+            route="https://discord.gg/9NSX7D37"
             onClick={onClickMenuItems}
           />,
         ]}

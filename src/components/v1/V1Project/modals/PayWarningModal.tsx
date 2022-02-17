@@ -32,8 +32,8 @@ export default function PayWarningModal({
         </a>{' '}
         <Trans>
           are unaudited, and may be vulnerable to bugs or hacks. All funds moved
-          through Juicebox could be lost or stolen. JuiceboxDAO is not liable
-          for any losses by projects or their supporters.
+          through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not
+          liable for any losses by projects or their supporters.
         </Trans>
       </p>
     </Modal>

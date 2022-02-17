@@ -20,6 +20,7 @@ import Faq from './Faq'
 import Footer from './Footer'
 import Payments from './Payments'
 import TrendingSection from './TrendingSection'
+import { OverflowVideoLink } from './QAs'
 
 export default function Landing() {
   const { theme, forThemeOption } = useContext(ThemeContext)
@@ -276,13 +277,21 @@ export default function Landing() {
                   t`Commit portions of your funds to the people or projects you want to support, or the contributors you want to pay. When you get paid, so do they.`,
                 ])}
                 {fourthCol(t`ERC20 community tokens`, [
-                  t`When someone pays your project as a patron or a user of your app, they earn a portion of your project's token. When you win, your token holders win, so they'll want you to win even more.`,
+                  t`When someone pays your project, they'll receive your project's tokens in return. 
+                  Tokens can be redeemed for a portion of your project's overflow funds; when you win, your community wins with you. 
+                  Leverage your project's token to grant governance rights, community access, or other membership perks.`,
                 ])}
                 {fourthCol(t`Redistributable surplus`, [
-                  t`Set a funding target to cover predictable expenses. Any extra funds can be claimed by anyone holding your project's tokens alongside you.`,
+                  <Trans>
+                    Set a funding target to cover predictable expenses. Any
+                    extra funds (<OverflowVideoLink text={t`overflow`} />) can
+                    be claimed by anyone holding your project's tokens alongside
+                    you.
+                  </Trans>,
                 ])}
                 {fourthCol(t`Transparency & accountability`, [
-                  t`Changes to your project's funding require a community approval period to take effect. Your supporters don't have to trust you—even though they already do.`,
+                  t`Changes to your project's funding configuration require a community-approved period to take effect, which acts as a safeguard against rug pulls. 
+                  Your supporters don't have to trust you — even though they already do.`,
                 ])}
                 <p>
                   <Trans>

@@ -152,8 +152,8 @@ export default function Projects() {
               and project configurations can vary widely. There are risks
               associated with interacting with all projects on the protocol.
               Projects built on the protocol are not endorsed or vetted by
-              JuiceboxDAO. Do your own research and understand the risks before
-              committing your funds.
+              JuiceboxDAO or Peel. Do your own research and understand the risks
+              before committing your funds.
             </Trans>
           </p>
         </div>

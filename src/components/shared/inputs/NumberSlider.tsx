@@ -1,5 +1,5 @@
 import { InputNumber, Slider, Form } from 'antd'
-import { useEffect, useState } from 'react'
+import { CSSProperties, useEffect, useState } from 'react'
 
 import { roundDown } from 'components/shared/formItems/formHelpers'
 
@@ -16,6 +16,7 @@ export default function NumberSlider({
   disabled,
   name, // Without the name prop, the InputNumber will not update according to its parent Form.Item
   formItemProps,
+  style,
 }: {
   min?: number
   max?: number
@@ -24,6 +25,7 @@ export default function NumberSlider({
   suffix?: string
   onChange?: (num: number | undefined) => void
   defaultValue?: number
+  style?: CSSProperties
 } & FormItemExt) {
   const [_value, setValue] = useState<number>()
 
@@ -43,7 +45,7 @@ export default function NumberSlider({
   useEffect(() => setValue(sliderValue), [sliderValue])
 
   return (
-    <div>
+    <div style={style}>
       <div style={{ display: 'flex', alignItems: 'baseline' }}>
         <Slider
           {...inputConfig}

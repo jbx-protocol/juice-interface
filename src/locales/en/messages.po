@@ -229,6 +229,7 @@ msgid "All {0} will go to the project owner:"
 msgstr ""
 
 #: src/components/shared/forms/TicketingForm.tsx
+#: src/components/shared/forms/TokenForm.tsx
 msgid "Allocate a portion of your project's reserved tokens to other Ethereum wallets or Juicebox projects."
 msgstr "Allocate a portion of your project's reserved tokens to other Ethereum wallets or Juicebox projects."
 
@@ -315,7 +316,7 @@ msgstr ""
 msgid "Bonding curve disabled while no funding target is set."
 msgstr ""
 
-#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
+#: src/components/shared/formItems/BondingCurve/ProjectBondingCurveRate.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
@@ -1277,7 +1278,12 @@ msgstr "Refresh"
 msgid "Required"
 msgstr "Required"
 
+#: src/components/shared/formItems/ProjectReserved.tsx
+msgid "Reserved rate"
+msgstr "Reserved rate"
+
 #: src/components/shared/forms/TicketingForm.tsx
+#: src/components/shared/forms/TokenForm.tsx
 msgid "Reserved token allocation (optional)"
 msgstr "Reserved token allocation (optional)"
 
@@ -1286,7 +1292,6 @@ msgstr "Reserved token allocation (optional)"
 msgid "Reserved token allocations"
 msgstr ""
 
-#: src/components/shared/formItems/ProjectReserved.tsx
 #: src/components/shared/forms/TicketingForm.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Create/index.tsx
@@ -1386,6 +1391,10 @@ msgstr ""
 #: src/components/shared/TicketModsList.tsx
 msgid "Save token allocation"
 msgstr "Save token allocation"
+
+#: src/components/shared/forms/TokenForm.tsx
+msgid "Save token configuration"
+msgstr "Save token configuration"
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "Save token receiver"
@@ -1608,10 +1617,13 @@ msgstr ""
 msgid "This project is currently using the Juicebox V1 terminal contract. New features introduced in V1.1 allow the project owner to:"
 msgstr "This project is currently using the Juicebox V1 terminal contract. New features introduced in V1.1 allow the project owner to:"
 
-#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hodl tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
 msgstr ""
+
+#: src/components/shared/formItems/BondingCurve/ProjectBondingCurveRate.tsx
+msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hodl tokens longer than others. The default bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed. Learn more in this <0>short video</0>."
+msgstr "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hodl tokens longer than others. The default bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed. Learn more in this <0>short video</0>."
 
 #: src/components/shared/formItems/ProjectPayDisclosure.tsx
 msgid "This text will be displayed to your supporters before they complete their payment."
@@ -1647,7 +1659,7 @@ msgstr ""
 msgid "Token name"
 msgstr "Token name"
 
-#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
+#: src/components/shared/formItems/BondingCurve/BondingCurveGraph.tsx
 msgid "Token redeem value"
 msgstr ""
 
@@ -2003,7 +2015,7 @@ msgstr "token"
 msgid "tokens"
 msgstr ""
 
-#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
+#: src/components/shared/formItems/BondingCurve/BondingCurveGraph.tsx
 msgid "tokens redeemed"
 msgstr ""
 

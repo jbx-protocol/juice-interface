@@ -9,6 +9,7 @@ import { readNetwork } from 'constants/networks'
 import V2WarningBanner from './V2WarningBanner'
 import V2MainnetWarning from './V2MainnetWarning'
 import ProjectDetailsTabContent from './tabs/ProjectDetailsTabContent'
+import FundingTabContent from './tabs/FundingTabContent'
 import DeployProjectButton from './DeployProjectButton'
 import TokenTabContent from './tabs/TokenTabContent'
 
@@ -40,7 +41,7 @@ export default function V2Create() {
                 <ProjectDetailsTabContent />
               </TabPane>
               <TabPane tab="2. Funding" key="2">
-                {/* TODO */}
+                <FundingTabContent />
               </TabPane>
               <TabPane tab="3. Token" key="3">
                 <TokenTabContent />

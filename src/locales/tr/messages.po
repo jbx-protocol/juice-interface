@@ -96,6 +96,7 @@ msgstr "Finansman döngüleri hakkında <0>daha fazla bilgi edinin</0>."
 
 #: src/components/shared/forms/BudgetForm.tsx
 #: src/components/shared/forms/BudgetForm.tsx
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
 msgid "<0>Learn more</0> about overflow."
 msgstr "Taşma hakkında <0>daha fazla bilgi edinin</0>."
 
@@ -133,7 +134,6 @@ msgstr "<0>{tokenSymbol} ERC20 adresi:</0> <1/>"
 
 #: src/components/shared/formItems/ProjectTwitter.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
-#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "@"
 msgstr "@"
 
@@ -222,6 +222,7 @@ msgid "All changes will be applied to the <0>upcoming</0> funding cycle."
 msgstr "Tüm değişiklikler <0>yaklaşan</0> finansman döngüsüne uygulanacaktır."
 
 #: src/components/shared/forms/BudgetForm.tsx
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
 msgid "All funds can be distributed by the project. The project will have no overflow (the same as setting the target to infinity)."
 msgstr "Tüm fonlar proje tarafından dağıtılabilir ve projede taşma olmaz. (Hedefi sonsuza ayarlamakla aynıdır.)."
 
@@ -686,6 +687,7 @@ msgstr "Finansman döngüsü detayları"
 
 #: src/components/shared/formItems/ProjectDuration.tsx
 #: src/components/shared/forms/BudgetForm.tsx
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
 msgid "Funding cycle duration"
 msgstr "Finansman döngüsü süresi"
 
@@ -702,6 +704,10 @@ msgstr "Finansman döngüleri, katkı sahiplerini bilgilendirmeden, yeni bir dö
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Funding distribution"
 msgstr "Finansman dağılımı"
+
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
+msgid "Funding target"
+msgstr ""
 
 #: src/components/v1/FundingCycle/modals/DistributeTokensModal.tsx
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
@@ -723,7 +729,6 @@ msgid "Go to Etherscan"
 msgstr "Etherscan'e git"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
-#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Handle"
 msgstr "Tanıtıcı"
 
@@ -771,6 +776,10 @@ msgstr "Sözleşmeler nasıl test edildi?"
 msgid "How long one funding cycle will last. Funding cycle <0>reconfigurations</0> will only take effect for <1>upcoming</1> funding cycles, i.e. once a current funding cycle has ended."
 msgstr "Bir finansman döngüsünün ne kadar süreceğini ifade eder. Finansman döngüsü <0>yeniden yapılandırmaları</0> yalnızca <1>yaklaşan</1> finansman döngüleri için, yani mevcut bir finansman döngüsü sona erdikten sonra geçerli olacaktır."
 
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
+msgid "How much do you want to raise?"
+msgstr ""
+
 #: src/components/v1/V1Create/index.tsx
 msgid "How your project will distribute funds."
 msgstr "Projenizin fonları nasıl dağıtacağı."
@@ -783,7 +792,6 @@ msgstr ""
 msgid "I understand"
 msgstr "Anladım<<<<<<< HEAD"
 
-#: src/components/v1/V1Project/V1HeaderActions.tsx
 #: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 msgid "ID: {0}"
 msgstr "Kimlik: {0}"
@@ -996,6 +1004,10 @@ msgstr "Strateji yok"
 msgid "No target"
 msgstr "Hedef yok"
 
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
+msgid "No target (as much as possible)"
+msgstr ""
+
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "No target set."
 msgstr "Hedef belirlenmedi."
@@ -1022,6 +1034,7 @@ msgid "Other assets in this project's owner's wallet."
 msgstr "Bu projenin sahibinin cüzdanındaki diğer varlıklar."
 
 #: src/components/shared/forms/BudgetForm.tsx
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
 msgid "Overflow is created if your project's balance exceeds your funding cycle target. Overflow can be redeemed by your project's token holders."
 msgstr "Projenizin bakiyesi finansman döngüsü hedefinizi aşarsa taşma oluşur. Taşma, projenizin token sahipleri tarafından talep edilerek kullanılabilir."
 
@@ -1260,6 +1273,10 @@ msgstr "Yaklaşanları yeniden yapılandır"
 msgid "Reconfigure upcoming funding"
 msgstr "Yaklaşan finansmanı yeniden yapılandır"
 
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
+msgid "Recurring target"
+msgstr ""
+
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 msgid "Redeem"
 msgstr "Talep edin"
@@ -1377,6 +1394,10 @@ msgstr "Değişiklikleri kaydet"
 msgid "Save funding configuration"
 msgstr "Finansman yapılandırmasını kaydet"
 
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
+msgid "Save funding details"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/EditProjectModal.tsx
 msgid "Save handle"
 msgstr "Tanıtıcıyı kaydet"
@@ -1431,6 +1452,7 @@ msgid "Set a funding target to cover predictable expenses. Any extra funds (<0>o
 msgstr ""
 
 #: src/components/shared/forms/BudgetForm.tsx
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
 msgid "Set the amount of funds you'd like to raise each funding cycle. Any funds raised within the funding cycle target can be distributed by the project, and can't be redeemed by your project's token holders."
 msgstr "Her finansman döngüsünde toplamak istediğiniz fon miktarını belirleyin. Finansman döngüsü hedefi dahilinde toplanan fonlar proje tarafından dağıtılabilir ve projenizin token sahipleri tarafından talep edilemez."
 
@@ -1448,6 +1470,10 @@ msgstr ""
 
 #: src/components/v1/FundingCycle/FundingCyclePreview.tsx
 msgid "Some funding cycle properties may indicate risk for project contributors."
+msgstr ""
+
+#: src/components/v2/V2Create/tabs/FundingTabContent.tsx
+msgid "Specific target"
 msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
@@ -1791,7 +1817,6 @@ msgstr "V1"
 msgid "V1.1"
 msgstr "V1.1<<<<<<< HEAD"
 
-#: src/components/v1/V1Project/V1HeaderActions.tsx
 #: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 msgid "Version of the terminal contract used by this project."
 msgstr "Bu proje tarafından kullanılan terminal sözleşmesinin sürümü."

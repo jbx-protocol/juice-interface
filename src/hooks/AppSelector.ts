@@ -44,8 +44,6 @@ export const useEditingV2FundingCycleDataSelector = () => {
     shallowEqual,
   )
 
-  console.log(serializedFundingCycleData, 'serializedFundingCycleData')
-
   const fundingCycleData = useMemo(
     () => deserializeV2FundingCycleData(serializedFundingCycleData),
     [serializedFundingCycleData],

@@ -117,6 +117,12 @@ export const editingV2ProjectSlice = createSlice({
     setDuration: (state, action: PayloadAction<string>) => {
       state.fundingCycleData.duration = action.payload
     },
+    setDiscountRate: (state, action: PayloadAction<string>) => {
+      state.fundingCycleData.discountRate = action.payload
+    },
+    setReservedRate: (state, action: PayloadAction<string>) => {
+      state.fundingCycleMetadata.reservedRate = action.payload
+    },
     setFundAccessConstraints: (
       state,
       action: PayloadAction<SerializedV2FundAccessConstraint[]>,

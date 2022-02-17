@@ -1,44 +1,28 @@
 import { t, Trans } from '@lingui/macro'
 import { Select, Space, Form, Button } from 'antd'
 
-// import { useAppDispatch } from 'hooks/AppDispatch'
-// import { useAppSelector } from 'hooks/AppSelector'
 import { useCallback, useContext, useEffect, useState } from 'react'
 
-// import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { ThemeContext } from 'contexts/themeContext'
-
 import { helpPagePath } from 'utils/helpPageHelper'
-
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
-
 import BudgetTargetInput from 'components/shared/inputs/BudgetTargetInput'
 import ProjectPayoutMods from 'components/shared/formItems/ProjectPayoutMods'
-
 import { PayoutMod } from 'models/mods'
-
 import { useETHPaymentTerminalFee } from 'hooks/v2/contractReader/ETHPaymentTerminalFee'
-
 import { V2CurrencyOption } from 'models/v2/currencyOption'
-
 import { toV1Currency } from 'utils/v1/currency'
-
-import { Split } from 'models/v2/splits'
-
 import { useAppDispatch } from 'hooks/AppDispatch'
-
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
-
 import { V2UserContext } from 'contexts/v2/userContext'
-
 import { useAppSelector } from 'hooks/AppSelector'
-
 import {
   targetSubFeeToTargetFormatted,
   targetToTargetSubFeeFormatted,
 } from 'components/shared/formItems/formHelpers'
-
 import { SerializedV2FundAccessConstraint } from 'utils/v2/serializers'
+
+import { toMod, toSplit } from 'utils/v2/splits'
 
 import { V1_CURRENCY_ETH } from 'constants/v1/currency'
 import { shadowCard } from 'constants/styles/shadowCard'
@@ -49,61 +33,24 @@ type FundingFormFields = {
   duration?: string
 }
 
-const toSplit = (mod: PayoutMod): Split => {
-  const {
-    beneficiary,
-    percent,
-    preferUnstaked,
-    lockedUntil,
-    projectId,
-    allocator,
-  } = mod
-
-  return {
-    beneficiary,
-    percent,
-    lockedUntil,
-    projectId,
-    allocator,
-    preferClaimed: preferUnstaked,
-  }
-}
-
-const toMod = (split: Split): PayoutMod => {
-  const {
-    beneficiary,
-    percent,
-    preferClaimed,
-    lockedUntil,
-    projectId,
-    allocator,
-  } = split
-
-  return {
-    beneficiary,
-    percent,
-    preferUnstaked: preferClaimed,
-    lockedUntil,
-    projectId,
-    allocator,
-  }
-}
-
 export default function ProjectDetailsTabContent() {
+  const { theme } = useContext(ThemeContext)
+  const { contracts } = useContext(V2UserContext)
+  const dispatch = useAppDispatch()
+
   const [fundingForm] = Form.useForm<FundingFormFields>()
+
   const [mods, setMods] = useState<PayoutMod[]>([])
   const [target, setTarget] = useState<string>('0')
   const [targetSubFee, setTargetSubFee] = useState<string>()
   const [targetCurrency, setTargetCurrency] =
     useState<V2CurrencyOption>(V2_CURRENCY_ETH)
   const [fundingType, setFundingType] = useState<string>()
-  const { theme } = useContext(ThemeContext)
-  const dispatch = useAppDispatch()
-  const { contracts } = useContext(V2UserContext)
 
   const { fundAccessConstraints, fundingCycleData, payoutSplits } =
     useAppSelector(state => state.editingV2Project)
 
+  // Assume the first item is the one of interest.
   const fundAccessConstraint = fundAccessConstraints[0] as
     | SerializedV2FundAccessConstraint
     | undefined
@@ -115,22 +62,22 @@ export default function ProjectDetailsTabContent() {
       duration: fundingCycleData?.duration,
     })
     setMods(payoutSplits?.map(split => toMod(split)) ?? [])
-    const _target = fundAccessConstraint?.distributionLimit
 
-    setTarget(_target ?? '0')
+    const _target = fundAccessConstraint?.distributionLimit ?? '0'
+    const _targetCurrency = parseInt(
+      fundAccessConstraint?.distributionLimitCurrency ?? `${V2_CURRENCY_ETH}`,
+    ) as V2CurrencyOption
+    setTarget(_target)
     setTargetSubFee(
-      targetToTargetSubFeeFormatted(_target ?? '0', ETHPaymentTerminalFee),
+      targetToTargetSubFeeFormatted(_target, ETHPaymentTerminalFee),
     )
+    setTargetCurrency(_targetCurrency)
 
     if (fundingCycleData?.duration) {
       setFundingType('recurring')
     } else if (_target) {
       setFundingType('target')
     }
-
-    // setTargetCurrency(
-    //   fundAccessConstraint?.distributionLimitCurrency ?? V2_CURRENCY_ETH,
-    // )
   }, [
     fundingForm,
     fundingCycleData,
@@ -253,7 +200,7 @@ export default function ProjectDetailsTabContent() {
                     setTarget(val ?? '0')
                     setTargetSubFee(
                       targetToTargetSubFeeFormatted(
-                        val?.toString() ?? '0',
+                        val ?? '0',
                         ETHPaymentTerminalFee,
                       ),
                     )
@@ -294,7 +241,7 @@ export default function ProjectDetailsTabContent() {
             <h3>Payouts</h3>
             <ProjectPayoutMods
               mods={mods}
-              target={target?.toString() ?? '0'}
+              target={target}
               currency={V1_CURRENCY_ETH}
               fee={ETHPaymentTerminalFee}
               onModsChanged={newMods => {

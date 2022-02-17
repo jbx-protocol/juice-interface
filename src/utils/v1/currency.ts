@@ -6,7 +6,7 @@ import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
 import { V2_CURRENCY_ETH, V2_CURRENCY_USD } from 'constants/v2/currency'
 
-const CURRENCY_MAP = {
+const CURRENCY_MAP: { [key in V2CurrencyOption]: V1CurrencyOption } = {
   [V2_CURRENCY_ETH]: V1_CURRENCY_ETH,
   [V2_CURRENCY_USD]: V1_CURRENCY_USD,
 }
@@ -42,5 +42,6 @@ export const currencyStyle = (currency?: V1CurrencyOption) =>
 export const toV1Currency = (
   v2Currency: V2CurrencyOption,
 ): V1CurrencyOption => {
+  console.log('v2Currency', v2Currency)
   return CURRENCY_MAP[v2Currency]
 }

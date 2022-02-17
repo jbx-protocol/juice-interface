@@ -64,6 +64,7 @@ export default function ProjectDetailsTabContent() {
     setMods(payoutSplits?.map(split => toMod(split)) ?? [])
 
     const _target = fundAccessConstraint?.distributionLimit ?? '0'
+    console.log('fundAccessConstraint', fundAccessConstraint)
     const _targetCurrency = parseInt(
       fundAccessConstraint?.distributionLimitCurrency ?? `${V2_CURRENCY_ETH}`,
     ) as V2CurrencyOption
@@ -92,10 +93,10 @@ export default function ProjectDetailsTabContent() {
 
       const newPayoutSplits = mods.map(mod => toSplit(mod))
 
-      const fundAccessConstraint = {
+      const fundAccessConstraint: SerializedV2FundAccessConstraint = {
         terminal: contracts.JBETHPaymentTerminal.address,
         distributionLimit: target,
-        distributionLimitCurrency: '0',
+        distributionLimitCurrency: targetCurrency.toString(),
         overflowAllowance: '0',
         overflowAllowanceCurrency: '0',
       }
@@ -108,7 +109,7 @@ export default function ProjectDetailsTabContent() {
       dispatch(editingV2ProjectActions.setPayoutSplits(newPayoutSplits))
       dispatch(editingV2ProjectActions.setDuration(fields.duration || ''))
     },
-    [mods, contracts, dispatch, target],
+    [mods, contracts, dispatch, target, targetCurrency],
   )
 
   // initially fill form with any existing redux state

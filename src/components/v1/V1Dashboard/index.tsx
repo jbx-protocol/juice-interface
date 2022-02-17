@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import FeedbackFormLink from 'components/shared/FeedbackFormLink'
+import FeedbackFormBtn from 'components/shared/FeedbackFormBtn'
 
 import {
   V1ProjectContext,
@@ -22,10 +22,15 @@ import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { useProjectsQuery } from 'hooks/v1/Projects'
 import { CurrencyOption } from 'models/currency-option'
-import { useEffect, useMemo } from 'react'
-import { useParams } from 'react-router-dom'
+import { useEffect, useMemo, useState } from 'react'
+import { useHistory, useLocation, useParams } from 'react-router-dom'
+
 import { getTerminalName, getTerminalVersion } from 'utils/v1/terminals'
 import useTerminalOfProject from 'hooks/v1/contractReader/TerminalOfProject'
+
+import FeedbackPromptModal from 'components/v1/V1Project/modals/FeedbackPromptModal'
+
+import { Button } from 'antd'
 
 import { padding } from 'constants/styles/padding'
 import { layouts } from 'constants/styles/layouts'
@@ -37,6 +42,14 @@ import V1Project from '../V1Project'
 
 export default function V1Dashboard() {
   const { handle }: { handle?: string } = useParams()
+  let history = useHistory()
+  // Checks URL to see if user was just directed from project deploy
+  const location = useLocation()
+  const params = new URLSearchParams(location.search)
+  const isNewDeploy = Boolean(params.get('newDeploy'))
+  const feedbackModalOpen = Boolean(params.get('feedbackModalOpen'))
+  const [feedbackModalVisible, setFeedbackModalVisible] =
+    useState<boolean>(feedbackModalOpen)
 
   const projectId = useProjectIdForHandle(handle)
   const owner = useOwnerOfProject(projectId)
@@ -156,9 +169,51 @@ export default function V1Dashboard() {
     terminalAddress,
   ])
 
+  // Close feedback modal and search query from URL
+  const closeFeedbackModal = () => {
+    setFeedbackModalVisible(false)
+  }
+
+  // Removes feedbackModalOpen from search query and refreshes page
+  const removeModalSearchQueryAndRefesh = () => {
+    history.push(`/p/${handle}?newDeploy=true`)
+    history.go(0)
+  }
+
   if (!projectId) return <Loading />
 
   if (projectId?.eq(0)) {
+    if (isNewDeploy) {
+      return (
+        <div
+          style={{
+            padding: padding.app,
+            height: '100%',
+            ...layouts.centered,
+            textAlign: 'center',
+          }}
+        >
+          <h2>
+            <Trans>
+              {handle} will be available soon! Try refreshing the page shortly.
+            </Trans>
+            <br />
+            <br />
+            <Button type="primary" onClick={removeModalSearchQueryAndRefesh}>
+              <Trans>Refresh</Trans>
+            </Button>
+            <FeedbackPromptModal
+              visible={feedbackModalVisible}
+              onOk={closeFeedbackModal}
+              // In this case we close without removing search query
+              onCancel={() => setFeedbackModalVisible(false)}
+              projectHandle={handle}
+              userAddress={owner}
+            />
+          </h2>
+        </div>
+      )
+    }
     return (
       <div
         style={{
@@ -186,7 +241,14 @@ export default function V1Dashboard() {
         >
           <Trans>Back to top</Trans>
         </div>
-        <FeedbackFormLink projectHandle={handle} />
+        <FeedbackFormBtn projectHandle={handle} />
+        <FeedbackPromptModal
+          visible={feedbackModalVisible}
+          onOk={closeFeedbackModal}
+          onCancel={closeFeedbackModal}
+          projectHandle={handle}
+          userAddress={owner}
+        />
       </div>
     </V1ProjectContext.Provider>
   )

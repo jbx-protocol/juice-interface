@@ -234,6 +234,7 @@ msgid "All {0} will go to the project owner:"
 msgstr "Все {0} будут направлены владельцу проекта:"
 
 #: src/components/shared/forms/TicketingForm.tsx
+#: src/components/shared/forms/TokenForm.tsx
 msgid "Allocate a portion of your project's reserved tokens to other Ethereum wallets or Juicebox projects."
 msgstr ""
 
@@ -316,7 +317,7 @@ msgstr "Блог"
 msgid "Bonding curve disabled while no funding target is set."
 msgstr "Кривая связи отключена, пока не задана цель финансирования."
 
-#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
+#: src/components/shared/formItems/BondingCurve/ProjectBondingCurveRate.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
@@ -1259,7 +1260,12 @@ msgstr "Перераспределяемый излишек"
 msgid "Required"
 msgstr ""
 
+#: src/components/shared/formItems/ProjectReserved.tsx
+msgid "Reserved rate"
+msgstr ""
+
 #: src/components/shared/forms/TicketingForm.tsx
+#: src/components/shared/forms/TokenForm.tsx
 msgid "Reserved token allocation (optional)"
 msgstr ""
 
@@ -1268,7 +1274,6 @@ msgstr ""
 msgid "Reserved token allocations"
 msgstr "Зарезервированные распределения токенов"
 
-#: src/components/shared/formItems/ProjectReserved.tsx
 #: src/components/shared/forms/TicketingForm.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Create/index.tsx
@@ -1367,6 +1372,10 @@ msgstr "Сохранить перенастройки"
 
 #: src/components/shared/TicketModsList.tsx
 msgid "Save token allocation"
+msgstr ""
+
+#: src/components/shared/forms/TokenForm.tsx
+msgid "Save token configuration"
 msgstr ""
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
@@ -1589,10 +1598,13 @@ msgstr "Этот проект был заархивирован и не може
 msgid "This project is currently using the Juicebox V1 terminal contract. New features introduced in V1.1 allow the project owner to:"
 msgstr ""
 
-#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hodl tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
 msgstr "Эта ставка определяет величину переполнения и денег в излишке, по которой каждый токен может быть погашен в любой момент времени. На более низкой ставке скорости кривой по облигациям, погашение токена увеличивает ценность каждого оставшегося токена, создавая стимул для того, чтобы токены оставались дольше, чем другие. Кривая ставки в 100% означает, что все токены будут иметь одинаковую ценность независимо от того, когда они будут погашены."
+
+#: src/components/shared/formItems/BondingCurve/ProjectBondingCurveRate.tsx
+msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hodl tokens longer than others. The default bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed. Learn more in this <0>short video</0>."
+msgstr ""
 
 #: src/components/shared/formItems/ProjectPayDisclosure.tsx
 msgid "This text will be displayed to your supporters before they complete their payment."
@@ -1624,7 +1636,7 @@ msgstr "Производство токенов"
 msgid "Token name"
 msgstr ""
 
-#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
+#: src/components/shared/formItems/BondingCurve/BondingCurveGraph.tsx
 msgid "Token redeem value"
 msgstr "Стоимость погашения токенов"
 
@@ -1988,7 +2000,7 @@ msgstr ""
 msgid "tokens"
 msgstr "токены"
 
-#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
+#: src/components/shared/formItems/BondingCurve/BondingCurveGraph.tsx
 msgid "tokens redeemed"
 msgstr "погашенных токенов"
 

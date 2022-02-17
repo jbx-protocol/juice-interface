@@ -234,6 +234,7 @@ msgid "All {0} will go to the project owner:"
 msgstr "Tüm {0} proje sahibine gidecek:"
 
 #: src/components/shared/forms/TicketingForm.tsx
+#: src/components/shared/forms/TokenForm.tsx
 msgid "Allocate a portion of your project's reserved tokens to other Ethereum wallets or Juicebox projects."
 msgstr "Projenizin ayrılan token'larının bir kısmını diğer Ethereum cüzdanlarına veya Juicebox projelerine tahsis edin."
 
@@ -320,7 +321,7 @@ msgstr "Blog"
 msgid "Bonding curve disabled while no funding target is set."
 msgstr "Herhangi bir finansman hedefi belirlenmediğinde bağlanma eğrisi devre dışı bırakılır."
 
-#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
+#: src/components/shared/formItems/BondingCurve/ProjectBondingCurveRate.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
@@ -1281,7 +1282,12 @@ msgstr ""
 msgid "Required"
 msgstr ""
 
+#: src/components/shared/formItems/ProjectReserved.tsx
+msgid "Reserved rate"
+msgstr ""
+
 #: src/components/shared/forms/TicketingForm.tsx
+#: src/components/shared/forms/TokenForm.tsx
 msgid "Reserved token allocation (optional)"
 msgstr "Ayrılmış token tahsisi (isteğe bağlı)"
 
@@ -1290,7 +1296,6 @@ msgstr "Ayrılmış token tahsisi (isteğe bağlı)"
 msgid "Reserved token allocations"
 msgstr "Ayrılmış token tahsisleri"
 
-#: src/components/shared/formItems/ProjectReserved.tsx
 #: src/components/shared/forms/TicketingForm.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Create/index.tsx
@@ -1390,6 +1395,10 @@ msgstr "Yeniden yapılandırmayı kaydet"
 #: src/components/shared/TicketModsList.tsx
 msgid "Save token allocation"
 msgstr "Token tahsisini kaydet"
+
+#: src/components/shared/forms/TokenForm.tsx
+msgid "Save token configuration"
+msgstr ""
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "Save token receiver"
@@ -1612,10 +1621,13 @@ msgstr "Bu proje arşivlendi ve ödeme yapılamaz."
 msgid "This project is currently using the Juicebox V1 terminal contract. New features introduced in V1.1 allow the project owner to:"
 msgstr "Bu proje şu anda Juicebox V1 terminal sözleşmesini kullanıyor. V1.1'de tanıtılan yeni özellikler, proje sahibinin şunları yapmasına olanak tanır:"
 
-#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hodl tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
 msgstr "Bu oran, her token'ın herhangi bir zamanda kullanılabilecek taşma miktarını belirler. Daha düşük bir bağlanma eğrisinde, bir token'ı kullanmak, kalan her token'ın değerini artırır ve token'ları diğerlerinden daha uzun süre tutmak için bir teşvik yaratır. %100'lük bir bağlanma eğrisi, ne zaman kullanıldıklarına bakılmaksızın tüm token'ların eşit değere sahip olacağı anlamına gelir."
+
+#: src/components/shared/formItems/BondingCurve/ProjectBondingCurveRate.tsx
+msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hodl tokens longer than others. The default bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed. Learn more in this <0>short video</0>."
+msgstr ""
 
 #: src/components/shared/formItems/ProjectPayDisclosure.tsx
 msgid "This text will be displayed to your supporters before they complete their payment."
@@ -1651,7 +1663,7 @@ msgstr "Token basımı"
 msgid "Token name"
 msgstr "Token adı"
 
-#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
+#: src/components/shared/formItems/BondingCurve/BondingCurveGraph.tsx
 msgid "Token redeem value"
 msgstr "Token kullanma değeri"
 
@@ -2006,7 +2018,7 @@ msgstr "token"
 msgid "tokens"
 msgstr ""
 
-#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
+#: src/components/shared/formItems/BondingCurve/BondingCurveGraph.tsx
 msgid "tokens redeemed"
 msgstr "kullanılan token'lar"
 

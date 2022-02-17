@@ -10,8 +10,11 @@ import V2WarningBanner from './V2WarningBanner'
 import V2MainnetWarning from './V2MainnetWarning'
 import ProjectDetailsTabContent from './tabs/ProjectDetailsTabContent'
 import DeployProjectButton from './DeployProjectButton'
+import TokenTabContent from './tabs/TokenTabContent'
 
 const { TabPane } = Tabs
+
+const createFormMaxWidth = 700
 
 export default function V2Create() {
   const isMainnet = readNetwork.name === NetworkName.mainnet
@@ -31,7 +34,7 @@ export default function V2Create() {
         )}
 
         {!isMainnet && (
-          <div>
+          <div style={{ maxWidth: createFormMaxWidth }}>
             <Tabs tabBarExtraContent={{ right: <DeployProjectButton /> }}>
               <TabPane tab="1. Project details" key="1">
                 <ProjectDetailsTabContent />
@@ -40,7 +43,7 @@ export default function V2Create() {
                 {/* TODO */}
               </TabPane>
               <TabPane tab="3. Token" key="3">
-                {/* TODO */}
+                <TokenTabContent />
               </TabPane>
               <TabPane tab="4. Others" key="4">
                 {/* TODO */}

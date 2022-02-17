@@ -28,7 +28,7 @@ msgstr "（可选的）在此链上付款中添加备注"
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "({realTokenAllocationPercent}% of all newly minted tokens)."
-msgstr "（{realTokenAllocationPercent}% 新铸造的代币）。"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "0% fee"
@@ -270,6 +270,10 @@ msgstr "对之后的筹款周期进行重新配置，更改将在当前周期结
 msgid "Archived"
 msgstr "已存档"
 
+#: src/components/v1/V1Create/index.tsx
+msgid "Are you sure you want to start over?"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/BalancesModal.tsx
 msgid "Assets"
 msgstr "资产"
@@ -404,9 +408,17 @@ msgstr "提前设定把您资金的一部分自动分拨给您想要支持的人
 msgid "Community funding for people and projects"
 msgstr "为个人和项目提供社区资助"
 
+#: src/components/v1/V1Project/modals/FeedbackPromptModal.tsx
+msgid "Congrats on creating your project!"
+msgstr ""
+
 #: src/components/Navbar/Account.tsx
 msgid "Connect"
 msgstr "连接钱包"
+
+#: src/components/v1/V1Create/index.tsx
+msgid "Connect wallet to deploy"
+msgstr ""
 
 #: src/components/shared/forms/RulesForm.tsx
 msgid "Contract address: {0}"
@@ -463,6 +475,14 @@ msgstr "深色主题"
 #: src/components/Projects/ProjectsFilterAndSort.tsx
 msgid "Date created"
 msgstr "创建日期"
+
+#: src/components/v1/V1Create/index.tsx
+msgid "Deploy project"
+msgstr ""
+
+#: src/components/v1/V1Create/index.tsx
+msgid "Deploy project on {signerNetwork}"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "Deposit 1 wei to @{handle}"
@@ -684,10 +704,15 @@ msgstr "资金分发"
 msgid "Funds will be distributed to:"
 msgstr "资金将会分发给："
 
-#: src/components/shared/FeedbackFormLink.tsx
-#: src/components/shared/FeedbackFormLink.tsx
+#: src/components/shared/FeedbackFormBtn.tsx
+#: src/components/shared/FeedbackFormBtn.tsx
+#: src/components/v1/V1Project/modals/FeedbackPromptModal.tsx
 msgid "Give feedback"
 msgstr "提交反馈"
+
+#: src/components/v1/V1Project/modals/FeedbackPromptModal.tsx
+msgid "Give us your feedback"
+msgstr ""
 
 #: src/components/shared/EtherscanLink.tsx
 msgid "Go to Etherscan"
@@ -720,6 +745,10 @@ msgstr "持有"
 #: src/components/Landing/QAs.tsx
 msgid "How decentralized is Juicebox?"
 msgstr "Juicebox 的去中心化程度如何？"
+
+#: src/components/v1/V1Project/modals/FeedbackPromptModal.tsx
+msgid "How did we do? We'd love to get your feedback so we can make creating Juicebox projects as juicy as possible!"
+msgstr ""
 
 #: src/components/Projects/ArchivedProjectsMessage.tsx
 msgid "How do I archive a project?"
@@ -1240,6 +1269,10 @@ msgstr "燃烧 {tokensTextLong} 来赎回 ETH"
 msgid "Redistributable surplus"
 msgstr "可分派的盈余"
 
+#: src/components/v1/V1Dashboard/index.tsx
+msgid "Refresh"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Required"
 msgstr ""
@@ -1397,7 +1430,7 @@ msgstr "鉴于你并未设置筹款持续时间，对这些设置的修改将会
 
 #: src/components/v1/FundingCycle/FundingCyclePreview.tsx
 msgid "Some funding cycle properties may indicate risk for project contributors."
-msgstr "一些筹款周期的配置可能会给项目贡献者们造成一些风险。"
+msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
@@ -1412,6 +1445,7 @@ msgstr "已存入余额"
 msgid "Start"
 msgstr "开始时间"
 
+#: src/components/v1/V1Create/index.tsx
 #: src/components/v1/V1Create/index.tsx
 msgid "Start Over"
 msgstr "重新来过"
@@ -1495,7 +1529,7 @@ msgstr "创造者将引领未来, 而社区会拥有未来."
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "The percent this individual receives of the overall {reservedRate}% reserved token allocation"
-msgstr "这个地址会收到保留代币中的 {reservedRate}%"
+msgstr ""
 
 #: src/constants/fundingWarningText.ts
 msgid "The project owner may mint any supply of tokens at any time, diluting the token share of all existing contributors."
@@ -1581,6 +1615,10 @@ msgstr "以上文本内容会在您的支持者完成付款前向其显示。"
 
 #: src/components/Landing/QAs.tsx
 msgid "This website (juicebox.money) connects to the Juicebox protocol's smart contracts, deployed on the Ethereum network. (note: anyone else can make a website that also connects to these same smart contracts. For now, don't trust any site other than this one to access the Juicebox protocol)."
+msgstr ""
+
+#: src/components/v1/V1Create/index.tsx
+msgid "This will erase of your all changes."
 msgstr ""
 
 #: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
@@ -1858,6 +1896,10 @@ msgstr "你的余额"
 msgid "Your balance: {0}"
 msgstr "你的余额：{0}"
 
+#: src/components/v1/V1Project/modals/FeedbackPromptModal.tsx
+msgid "Your feedback will be sent to a <0>public Discord channel </0>for our development team to consider."
+msgstr ""
+
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "Your project cannot receive direct payments while paused."
 msgstr "暂停期间，你的项目不会再收到直接付款。"
@@ -2075,6 +2117,10 @@ msgstr "{exchangeName} 不存在 {tokenSymbol} 的兑换市场"
 #: src/components/v1/V1Dashboard/index.tsx
 msgid "{handle} not found"
 msgstr "{handle} 没有找到"
+
+#: src/components/v1/V1Dashboard/index.tsx
+msgid "{handle} will be available soon! Try refreshing the page shortly."
+msgstr ""
 
 #: src/components/Projects/FilterCheckboxItem.tsx
 msgid "{label}"

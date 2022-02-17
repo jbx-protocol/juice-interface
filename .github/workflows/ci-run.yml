@@ -20,7 +20,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
@@ -38,23 +37,23 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
-
       - name: Restore cached node_modules
         id: cache-node-modules
         uses: actions/cache@v2
         with:
           path: |
             ./node_modules
-          key: ${{ runner.os }}-${{ steps.nvm.outputs.NVMRC }}-nodemodules-${{ hashFiles('**/yarn.lock') }}
+          key:
+            ${{ runner.os }}-${{ steps.nvm.outputs.NVMRC }}-nodemodules-${{
+            hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-${{ steps.nvm.outputs.NVMRC }}-nodemodules-
-
       - name: Install JS dependencies
         if: |
           steps.cache-yarn-cache.outputs.cache-hit != 'true' ||
           steps.cache-node-modules.outputs.cache-hit != 'true'
         run: yarn install --frozen-lockfile --prefer-offline
-      
+
       - name: Tests with yarn
         run: yarn test
 
@@ -90,7 +89,9 @@ jobs:
         with:
           path: |
             ./node_modules
-          key: ${{ runner.os }}-${{ steps.nvm.outputs.NVMRC }}-nodemodules-${{ hashFiles('**/yarn.lock') }}
+          key:
+            ${{ runner.os }}-${{ steps.nvm.outputs.NVMRC }}-nodemodules-${{
+            hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-${{ steps.nvm.outputs.NVMRC }}-nodemodules-
 

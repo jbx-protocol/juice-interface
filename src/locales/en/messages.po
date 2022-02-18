@@ -1622,8 +1622,8 @@ msgid "This website (juicebox.money) connects to the Juicebox protocol's smart c
 msgstr "This website (juicebox.money) connects to the Juicebox protocol's smart contracts, deployed on the Ethereum network. (note: anyone else can make a website that also connects to these same smart contracts. For now, don't trust any site other than this one to access the Juicebox protocol)."
 
 #: src/components/v1/V1Create/index.tsx
-msgid "This will erase of your all changes."
-msgstr "This will erase of your all changes."
+msgid "This will erase all of your changes."
+msgstr "This will erase all of your changes."
 
 #: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
 msgid "To: <0/>"

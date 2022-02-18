@@ -31,7 +31,7 @@ export default function EtherscanLink({
 
   if (type === 'tx') {
     return (
-      <Tooltip trigger={['hover', 'click']} title={t`See transaction`}>
+      <Tooltip title={t`See transaction`}>
         <ExternalLink {...linkProps}>
           <LinkOutlined />
         </ExternalLink>
@@ -40,7 +40,7 @@ export default function EtherscanLink({
   }
 
   return (
-    <Tooltip trigger={['hover', 'click']} title={t`Go to Etherscan`}>
+    <Tooltip title={t`Go to Etherscan`}>
       <ExternalLink {...linkProps}>{value}</ExternalLink>
     </Tooltip>
   )

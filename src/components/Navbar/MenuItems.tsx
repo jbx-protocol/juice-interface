@@ -156,7 +156,7 @@ export const menu = (onClickMenuItems?: VoidFunction) => {
           <DropdownItem
             key="peel"
             text={t`Peel`}
-            route="https://discord.gg/9NSX7D37"
+            route="https://discord.gg/XvmfY4Hkcz"
             onClick={onClickMenuItems}
           />,
         ]}

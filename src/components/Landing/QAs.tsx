@@ -234,7 +234,7 @@ export default function QAs() {
           is the DAO that manages the juicebox.money frontend interface. You can
           reach out to Peel either through the{' '}
           <a
-            href="https://discord.gg/9NSX7D37"
+            href="https://discord.gg/XvmfY4Hkcz"
             rel="noreferrer"
             target="_blank"
           >

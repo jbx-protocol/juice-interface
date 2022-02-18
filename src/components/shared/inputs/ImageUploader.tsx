@@ -6,6 +6,8 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useContext, useLayoutEffect, useState } from 'react'
 import { ipfsCidUrl, pinFileToIpfs } from 'utils/ipfs'
 
+import ExternalLink from '../ExternalLink'
+
 export default function ImageUploader({
   initialUrl,
   onSuccess,
@@ -104,10 +106,7 @@ export default function ImageUploader({
             }}
           >
             <Trans>
-              Uploaded to:{' '}
-              <a href={url} target="_blank" rel="noopener noreferrer">
-                {url}
-              </a>
+              Uploaded to: <ExternalLink href={url}>{url}</ExternalLink>
             </Trans>
           </span>
         ) : null}

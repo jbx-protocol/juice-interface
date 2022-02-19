@@ -1,5 +1,6 @@
 import { Modal } from 'antd'
 import { t, Trans } from '@lingui/macro'
+import ExternalLink from 'components/shared/ExternalLink'
 
 export default function PayWarningModal({
   visible,
@@ -23,13 +24,9 @@ export default function PayWarningModal({
         <Trans>Heads up</Trans>
       </h2>
       <p style={{ fontWeight: 500 }}>
-        <a
-          href="https://github.com/jbx-protocol/juice-contracts"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <ExternalLink href="https://github.com/jbx-protocol/juice-contracts">
           <Trans>Juicebox contracts</Trans>
-        </a>{' '}
+        </ExternalLink>{' '}
         <Trans>
           are unaudited, and may be vulnerable to bugs or hacks. All funds moved
           through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not

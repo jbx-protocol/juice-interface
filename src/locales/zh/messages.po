@@ -116,7 +116,7 @@ msgid "<0>Notice:</0> These balances will not reflect transfers of claimed token
 msgstr "<0>注意：</0> 因为 {tokenSymbol} ERC-20 代币还没被 Juicebox 索引，目前还不会根据已领取代币的转移操作来更新这些余额。"
 
 #: src/components/Landing/QAs.tsx
-msgid "<0>Peel</0> is the DAO that manages the juicebox.money frontend interface. You can reach out to Peel either through the <1>Peel Discord</1> or <2/>."
+msgid "<0>Peel</0> is the DAO that manages the juicebox.money frontend interface. You can reach out to Peel either through the <1>Peel Discord</1> or the <2>Juicebox Discord</2>."
 msgstr ""
 
 #: src/components/Landing/TrendingSection.tsx
@@ -379,9 +379,7 @@ msgid "Changes to these attributes can be made at any time and will be applied t
 msgstr "可以随时修改这些属性，并立即应用于你的项目。"
 
 #: src/components/Landing/index.tsx
-msgid ""
-"Changes to your project's funding configuration require a community-approved period to take effect, which acts as a safeguard against rug pulls. \n"
-"Your supporters don't have to trust you — even though they already do."
+msgid "Changes to your project's funding configuration require a community-approved period to take effect, which acts as a safeguard against rug pulls. Your supporters don't have to trust you — even though they already do."
 msgstr ""
 
 #: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
@@ -402,7 +400,7 @@ msgstr "关闭"
 
 #: src/components/Landing/index.tsx
 msgid "Commit portions of your funds to the people or projects you want to support, or the contributors you want to pay. When you get paid, so do they."
-msgstr "提前设定把您资金的一部分自动分拨给您想要支持的人或项目，或者您需要支付的贡献者。您获得收入的同时，他们也会收到相应款项。"
+msgstr ""
 
 #: src/components/Landing/index.tsx
 msgid "Community funding for people and projects"
@@ -650,11 +648,11 @@ msgid "For example, with a bonding curve of 70%, redeeming 10% of the token supp
 msgstr "例如：在 70% 的联合曲线配置下，任意时间赎回 10% 的代币供应将能从总溢出中领取到 7% 左右。"
 
 #: src/components/Landing/QAs.tsx
-msgid "For more info, check out this <0/>."
+msgid "For more info, check out this <0>short video</0> on bonding curves."
 msgstr ""
 
 #: src/components/Landing/QAs.tsx
-msgid "For more info, check out this <0>short video</0> on bonding curves."
+msgid "For more info, check out this <0>short video</0>."
 msgstr ""
 
 #: src/components/Landing/QAs.tsx
@@ -791,14 +789,11 @@ msgid "If you have a project you'd like to archive, let the Juicebox team know i
 msgstr "如果你想存档一个项目，可以在在 Discord 上告知 Juicebox 团队。"
 
 #: src/components/Landing/QAs.tsx
-msgid ""
-"If you know how much your project needs to earn over some period of time to be sustainable, you can set a funding target with that amount. \n"
-"If your project earns more than that, the surplus funds are locked in an overflow pool. \n"
-"Anyone holding your project's tokens can claim a portion of the overflow pool in exchange for redeeming their tokens."
+msgid "If you know how much your project needs to earn over some period of time to be sustainable, you can set a funding target with that amount. If your project earns more than that, the surplus funds are locked in an overflow pool. Anyone holding your project's tokens can claim a portion of the overflow pool in exchange for redeeming their tokens."
 msgstr ""
 
 #: src/components/Landing/QAs.tsx
-msgid "If you're interested in creating a project but still confused on how to get started, consider watching this <0>instructional video</0>. Also feel free to reach out through our <1/> where our team will be happy to help bring your project idea to life!"
+msgid "If you're interested in creating a project but still confused on how to get started, consider watching this <0>instructional video</0>. Also feel free to reach out in the <1>Juicebox Discord</1> where our team will be happy to help bring your project idea to life!"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
@@ -846,7 +841,7 @@ msgid "Issue token"
 msgstr "发行代币"
 
 #: src/components/Landing/QAs.tsx
-msgid "It isn't possible to remove a project's data from the blockchain, but we can hide it in the app if you'd like to prevent people from seeing or interacting with it — just let us know in <0/>. Keep in mind people will still be able to use your project by interacting directly with the contract."
+msgid "It isn't possible to remove a project's data from the blockchain, but we can hide it in the app if you'd like to prevent people from seeing or interacting with it — just let us know in <0>Discord</0>. Keep in mind people will still be able to use your project by interacting directly with the contract."
 msgstr ""
 
 #: src/components/Landing/QAs.tsx
@@ -1177,10 +1172,7 @@ msgid "Project owner balance"
 msgstr "项目方余额"
 
 #: src/components/Landing/QAs.tsx
-msgid ""
-"Project owners can configure a delay period, meaning reconfigurations to an upcoming funding cycle must be submitted a certain \n"
-"number of days before it starts. For example, a 3-day delay period means reconfigurations must be submitted at least 3 days \n"
-"before the next funding cycle starts. This gives token holders time to react to the decision and reduces the chance of rug-pulls."
+msgid "Project owners can configure a delay period, meaning reconfigurations to an upcoming funding cycle must be submitted a certain number of days before it starts. For example, a 3-day delay period means reconfigurations must be submitted at least 3 days before the next funding cycle starts. This gives token holders time to react to the decision and reduces the chance of rug-pulls."
 msgstr ""
 
 #: src/components/Navbar/MenuItems.tsx
@@ -1188,14 +1180,11 @@ msgid "Projects"
 msgstr "项目"
 
 #: src/components/Landing/QAs.tsx
-msgid "Projects building on Juicebox pay a 5% JBX membership fee from withdrawn funds into the JuiceboxDAO treasury. Projects can then use their JBX to participate in the governance of JuiceboxDAO and its collective treasury, as well as redeem from its growing <0/>. The fee is also subject to change via JBX member votes."
+msgid "Projects building on Juicebox pay a 5% JBX membership fee from withdrawn funds into the JuiceboxDAO treasury. Projects can then use their JBX to participate in the governance of JuiceboxDAO and its collective treasury, as well as redeem from its growing <0>overflow</0>. The fee is also subject to change via JBX member votes."
 msgstr ""
 
 #: src/components/Landing/QAs.tsx
-msgid ""
-"Projects can be created with an optional discount rate designed to incentivize supporters to contribute earlier rather than later. \n"
-"The amount of tokens rewarded per amount paid to your project will decrease by the discount rate with each new funding cycle. A higher discount rate \n"
-"will incentivize supporters to pay your project earlier rather than later."
+msgid "Projects can be created with an optional discount rate designed to incentivize supporters to contribute earlier rather than later. The amount of tokens rewarded per amount paid to your project will decrease by the discount rate with each new funding cycle. A higher discount rate will incentivize supporters to pay your project earlier rather than later."
 msgstr ""
 
 #: src/components/Projects/index.tsx
@@ -1409,7 +1398,7 @@ msgid "Set a funding cycle target"
 msgstr "设定筹款周期目标"
 
 #: src/components/Landing/index.tsx
-msgid "Set a funding target to cover predictable expenses. Any extra funds (<0/>) can be claimed by anyone holding your project's tokens alongside you."
+msgid "Set a funding target to cover predictable expenses. Any extra funds (<0>overflow</0>) can be claimed by anyone holding your project's tokens alongside you."
 msgstr ""
 
 #: src/components/shared/forms/BudgetForm.tsx
@@ -1512,7 +1501,7 @@ msgid "The balance of this project in the Juicebox contract."
 msgstr ""
 
 #: src/components/Landing/QAs.tsx
-msgid "The code could always use more eyes and more critique to further the community's confidence. Join our <0/> and check out the code on <1>Github</1> to work with us."
+msgid "The code could always use more eyes and more critique to further the community's confidence. Join our <0>Discord</0> and check out the code on <1>GitHub</1> to work with us."
 msgstr ""
 
 #: src/components/Landing/QAs.tsx
@@ -1662,7 +1651,7 @@ msgid "Tokens are earned by anyone who pays your project, and can be redeemed fo
 msgstr "当有人对你的项目进行支付时，他们会获得项目代币。在项目设定了筹款目标时, 可以通过赎回项目代币来获得溢出资金。"
 
 #: src/components/Landing/QAs.tsx
-msgid "Tokens can be redeemed for a portion of a project's <0/>, letting you benefit from its success. After all, you helped it get there. The token may also give you exclusive member-only privledges, and allow you to contribute to the governance of the community."
+msgid "Tokens can be redeemed for a portion of a project's <0>overflow</0>, letting you benefit from its success. After all, you helped it get there. The token may also give you exclusive member-only privledges, and allow you to contribute to the governance of the community."
 msgstr ""
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
@@ -1816,10 +1805,7 @@ msgid "What's going on under the hood?"
 msgstr "里面究竟有什么乾坤？"
 
 #: src/components/Landing/index.tsx
-msgid ""
-"When someone pays your project, they'll receive your project's tokens in return. \n"
-"Tokens can be redeemed for a portion of your project's overflow funds; when you win, your community wins with you. \n"
-"Leverage your project's token to grant governance rights, community access, or other membership perks."
+msgid "When someone pays your project, they'll receive your project's tokens in return. Tokens can be redeemed for a portion of your project's overflow funds; when you win, your community wins with you. Leverage your project's token to grant governance rights, community access, or other membership perks."
 msgstr ""
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
@@ -1968,12 +1954,6 @@ msgstr "满足条件 \"{searchText}\""
 msgid "or <0><1>buy {tokenText} on exchange<2/></1></0>"
 msgstr "或是 <0><1>在交易所购买 {tokenText} <2/></1></0>"
 
-#: src/components/Landing/QAs.tsx
-#: src/components/Landing/QAs.tsx
-#: src/components/Landing/index.tsx
-msgid "overflow"
-msgstr ""
-
 #: src/components/Projects/HoldingsProjects.tsx
 #: src/components/Projects/index.tsx
 msgid "project"
@@ -1987,10 +1967,6 @@ msgstr "项目拥有者"
 #: src/components/Projects/index.tsx
 msgid "projects"
 msgstr "项目"
-
-#: src/components/Landing/QAs.tsx
-msgid "short video"
-msgstr ""
 
 #: src/components/shared/forms/RulesForm.tsx
 msgid "this interface"

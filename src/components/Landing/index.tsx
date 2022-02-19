@@ -14,6 +14,8 @@ import ProjectCard from 'components/shared/ProjectCard'
 
 import { Link } from 'react-router-dom'
 
+import ExternalLink from 'components/shared/ExternalLink'
+
 import { ThemeOption } from 'constants/theme/theme-option'
 
 import Faq from './Faq'
@@ -22,40 +24,52 @@ import Payments from './Payments'
 import TrendingSection from './TrendingSection'
 import { OverflowVideoLink } from './QAs'
 
+const listData = [
+  t`Indie artists, devs, creators`,
+  t`Ethereum protocols and DAOs`,
+  t`Public goods and services`,
+  t`Open source businesses`,
+]
+
+const BigHeader = ({ text }: { text: string }) => (
+  <h1
+    style={{
+      fontSize: '2.4rem',
+      fontWeight: 600,
+      lineHeight: 1.2,
+      margin: 0,
+    }}
+  >
+    {text}
+  </h1>
+)
+
+const SmallHeader = ({ text }: { text: string }) => (
+  <h3 style={{ fontWeight: 600, margin: 0 }}>{text}</h3>
+)
+
+const FourthCol = ({
+  header,
+  children,
+}: React.PropsWithChildren<{ header: string }>) => (
+  <div>
+    <SmallHeader text={header} />
+    <p style={{ marginBottom: 0, marginTop: 5 }}>{children}</p>
+  </div>
+)
+
+function scrollToCreate() {
+  document.getElementById('create')?.scrollIntoView({ behavior: 'smooth' })
+}
+
 export default function Landing() {
   const { theme, forThemeOption } = useContext(ThemeContext)
-
   const colors = theme.colors
-
   const totalMaxWidth = 1080
-
-  const bigHeader = (text: string) => (
-    <h1
-      style={{
-        fontSize: '2.4rem',
-        fontWeight: 600,
-        lineHeight: 1.2,
-        margin: 0,
-      }}
-    >
-      {text}
-    </h1>
-  )
 
   const { data: previewProjects } = useProjectsQuery({
     pageSize: 4,
   })
-
-  const smallHeader = (text: string) => (
-    <h3 style={{ fontWeight: 600, margin: 0 }}>{text}</h3>
-  )
-
-  const listData = [
-    t`Indie artists, devs, creators`,
-    t`Ethereum protocols and DAOs`,
-    t`Public goods and services`,
-    t`Open source businesses`,
-  ]
 
   const section: CSSProperties = {
     paddingLeft: 40,
@@ -68,21 +82,6 @@ export default function Landing() {
     maxWidth: totalMaxWidth,
     margin: '0 auto',
   }
-
-  function scrollToCreate() {
-    document.getElementById('create')?.scrollIntoView({ behavior: 'smooth' })
-  }
-
-  const fourthCol = (header: string, body: (JSX.Element | string)[]) => (
-    <div>
-      {smallHeader(header)}
-      <p style={{ marginBottom: 0, marginTop: 5 }}>
-        {body.map((b, i) => (
-          <span key={i}>{b} </span>
-        ))}
-      </p>
-    </div>
-  )
 
   return (
     <div>
@@ -104,7 +103,9 @@ export default function Landing() {
                   rowGap: 30,
                 }}
               >
-                {bigHeader(t`Community funding for people and projects`)}
+                <BigHeader
+                  text={t`Community funding for people and projects`}
+                />
                 <div
                   style={{
                     fontWeight: 500,
@@ -120,7 +121,7 @@ export default function Landing() {
                   <br />
                   <Trans>
                     Powered by public smart contracts on{' '}
-                    <a
+                    <ExternalLink
                       style={{
                         color: colors.text.primary,
                         fontWeight: 500,
@@ -128,11 +129,9 @@ export default function Landing() {
                           '1px solid ' + colors.stroke.action.primary,
                       }}
                       href="https://ethereum.org/en/what-is-ethereum/"
-                      target="_blank"
-                      rel="noopener noreferrer"
                     >
                       Ethereum
-                    </a>
+                    </ExternalLink>
                     .
                   </Trans>
                 </div>
@@ -216,7 +215,7 @@ export default function Landing() {
         >
           <Row gutter={60}>
             <Col xs={24} md={12} style={{ marginBottom: 100 }}>
-              {smallHeader(t`Projects using Juicebox`)}
+              <SmallHeader text={t`Projects using Juicebox`} />
               <div style={{ marginTop: 20 }}>
                 {previewProjects ? (
                   <Grid list>
@@ -237,7 +236,7 @@ export default function Landing() {
               </div>
             </Col>
             <Col xs={24} md={12} style={{ marginBottom: 100 }}>
-              {smallHeader(t`Latest payments`)}
+              <SmallHeader text={t`Latest payments`} />
               <div style={{ maxHeight: 600, overflow: 'auto' }}>
                 <Payments />
               </div>
@@ -273,45 +272,51 @@ export default function Landing() {
             </Col>
             <Col xs={24} sm={13}>
               <div style={{ display: 'grid', rowGap: 20, marginBottom: 40 }}>
-                {fourthCol(t`Programmable spending`, [
-                  t`Commit portions of your funds to the people or projects you want to support, or the contributors you want to pay. When you get paid, so do they.`,
-                ])}
-                {fourthCol(t`ERC20 community tokens`, [
-                  t`When someone pays your project, they'll receive your project's tokens in return. 
-                  Tokens can be redeemed for a portion of your project's overflow funds; when you win, your community wins with you. 
-                  Leverage your project's token to grant governance rights, community access, or other membership perks.`,
-                ])}
-                {fourthCol(t`Redistributable surplus`, [
+                <FourthCol header={t`Programmable spending`}>
+                  <Trans>
+                    Commit portions of your funds to the people or projects you
+                    want to support, or the contributors you want to pay. When
+                    you get paid, so do they.
+                  </Trans>
+                </FourthCol>
+                <FourthCol header={t`ERC20 community tokens`}>
+                  <Trans>
+                    When someone pays your project, they'll receive your
+                    project's tokens in return. Tokens can be redeemed for a
+                    portion of your project's overflow funds; when you win, your
+                    community wins with you. Leverage your project's token to
+                    grant governance rights, community access, or other
+                    membership perks.
+                  </Trans>
+                </FourthCol>
+                <FourthCol header={t`Redistributable surplus`}>
                   <Trans>
                     Set a funding target to cover predictable expenses. Any
-                    extra funds (<OverflowVideoLink text={t`overflow`} />) can
-                    be claimed by anyone holding your project's tokens alongside
-                    you.
-                  </Trans>,
-                ])}
-                {fourthCol(t`Transparency & accountability`, [
-                  t`Changes to your project's funding configuration require a community-approved period to take effect, which acts as a safeguard against rug pulls. 
-                  Your supporters don't have to trust you — even though they already do.`,
-                ])}
+                    extra funds (<OverflowVideoLink>overflow</OverflowVideoLink>
+                    ) can be claimed by anyone holding your project's tokens
+                    alongside you.
+                  </Trans>
+                </FourthCol>
+                <FourthCol header={t`Transparency & accountability`}>
+                  <Trans>
+                    Changes to your project's funding configuration require a
+                    community-approved period to take effect, which acts as a
+                    safeguard against rug pulls. Your supporters don't have to
+                    trust you — even though they already do.
+                  </Trans>
+                </FourthCol>
+
                 <p>
                   <Trans>
                     Note: Juicebox is new, unaudited, and not guaranteed to work
                     perfectly. Before spending money, do your own research:{' '}
-                    <a
-                      href="https://discord.gg/6jXrJSyDFf"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
+                    <ExternalLink href="https://discord.gg/6jXrJSyDFf">
                       ask questions
-                    </a>
+                    </ExternalLink>
                     ,{' '}
-                    <a
-                      href="https://github.com/jbx-protocol/juice-interface"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
+                    <ExternalLink href="https://github.com/jbx-protocol/juice-interface">
                       check out the code
-                    </a>
+                    </ExternalLink>
                     , and understand the risks!
                   </Trans>
                 </p>
@@ -348,7 +353,7 @@ export default function Landing() {
           <Row align="middle" gutter={40}>
             <Col xs={24} md={14}>
               <div style={{ display: 'grid', rowGap: 20 }}>
-                {bigHeader(t`Should you Juicebox?`)}
+                <BigHeader text={t`Should you Juicebox?`} />
                 <div style={{ color: colors.text.over.brand.secondary }}>
                   <p className="ol">
                     <Trans>Almost definitely.</Trans>
@@ -400,7 +405,7 @@ export default function Landing() {
               paddingRight: 20,
             }}
           >
-            {bigHeader(t`FAQs`)}
+            <BigHeader text={t`FAQs`} />
             <Faq />
           </div>
         </div>

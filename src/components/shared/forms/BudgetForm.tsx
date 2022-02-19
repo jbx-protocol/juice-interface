@@ -18,6 +18,8 @@ import { fromWad, parseWad } from 'utils/formatNumber'
 import { hasFundingTarget, isRecurring } from 'utils/fundingCycle'
 import { helpPagePath } from 'utils/helpPageHelper'
 
+import ExternalLink from '../ExternalLink'
+
 const DEFAULT_TARGET_AFTER_FEE = '10000'
 
 export default function BudgetForm({
@@ -77,13 +79,11 @@ export default function BudgetForm({
           configuration will depend on the kind of project you're starting.
         </Trans>{' '}
         <Trans>
-          <a
+          <ExternalLink
             href={helpPagePath('protocol/learn/topics/funding-cycle')}
-            rel="noopener noreferrer"
-            target="_blank"
           >
             Learn more
-          </a>{' '}
+          </ExternalLink>{' '}
           about funding cycles.
         </Trans>
       </p>
@@ -108,13 +108,11 @@ export default function BudgetForm({
               holders.
             </Trans>{' '}
             <Trans>
-              <a
+              <ExternalLink
                 href={helpPagePath('protocol/learn/topics/overflow')}
-                rel="noopener noreferrer"
-                target="_blank"
               >
                 Learn more
-              </a>{' '}
+              </ExternalLink>{' '}
               about overflow.
             </Trans>
           </p>
@@ -189,13 +187,11 @@ export default function BudgetForm({
               The project's entire balance will be considered overflow.{' '}
             </Trans>
             <Trans>
-              <a
+              <ExternalLink
                 href={helpPagePath('protocol/learn/topics/overflow')}
-                rel="noopener noreferrer"
-                target="_blank"
               >
                 Learn more
-              </a>{' '}
+              </ExternalLink>{' '}
               about overflow.
             </Trans>
           </p>
@@ -215,13 +211,11 @@ export default function BudgetForm({
           <p style={{ color: colors.text.secondary }}>
             <Trans>Set the length of your funding cycles.</Trans>{' '}
             <Trans>
-              <a
+              <ExternalLink
                 href={helpPagePath('protocol/learn/topics/funding-cycle')}
-                rel="noopener noreferrer"
-                target="_blank"
               >
                 Learn more
-              </a>{' '}
+              </ExternalLink>{' '}
               about funding cycle duration.
             </Trans>
           </p>

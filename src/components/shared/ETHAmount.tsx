@@ -6,7 +6,7 @@ import { betweenZeroAndOne } from 'utils/bigNumbers'
 
 import CurrencySymbol from './CurrencySymbol'
 
-import { CURRENCY_ETH } from 'constants/currency'
+import { V1_CURRENCY_ETH } from 'constants/v1/currency'
 
 import ETHToUSD from './ETHToUSD'
 
@@ -35,7 +35,7 @@ export default function ETHAmount({
   if (amount) {
     return (
       <Tooltip title={<ETHToUSD ethAmount={amount} />}>
-        <CurrencySymbol currency={CURRENCY_ETH} />
+        <CurrencySymbol currency={V1_CURRENCY_ETH} />
         {formattedETHAmount}
       </Tooltip>
     )

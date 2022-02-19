@@ -9,7 +9,7 @@ import Loading from 'components/shared/Loading'
 import { ThemeContext } from 'contexts/themeContext'
 import useContractReader from 'hooks/v1/contractReader/ContractReader'
 import { V1ContractName } from 'models/v1/contracts'
-import { CurrencyOption } from 'models/currency-option'
+import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { useCallback, useContext, useState } from 'react'
 import { deepEqFundingCycles } from 'utils/deepEqFundingCycles'
@@ -90,7 +90,7 @@ export default function FundingHistory({
 
               <div style={{ fontSize: '.8rem', marginLeft: 10 }}>
                 <CurrencySymbol
-                  currency={cycle.currency.toNumber() as CurrencyOption}
+                  currency={cycle.currency.toNumber() as V1CurrencyOption}
                 />
                 {hasFundingTarget(cycle) ? (
                   <>

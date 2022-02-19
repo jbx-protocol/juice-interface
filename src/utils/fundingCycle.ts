@@ -7,7 +7,7 @@ import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallot
 
 import { fromPerbicent } from './formatNumber'
 
-import { EditingFundingCycle } from './serializers'
+import { EditingV1FundingCycle } from './v1/serializers'
 import {
   FundingCycleRiskFlags,
   reservedRateRiskyMin,
@@ -77,15 +77,15 @@ export const encodeFundingCycleMetadata = (
 }
 
 export const isRecurring = (
-  fundingCycle: V1FundingCycle | EditingFundingCycle,
+  fundingCycle: V1FundingCycle | EditingV1FundingCycle,
 ) => fundingCycle.discountRate.lt(201)
 
 export const hasFundingTarget = (
-  fundingCycle: Pick<V1FundingCycle | EditingFundingCycle, 'target'>,
+  fundingCycle: Pick<V1FundingCycle | EditingV1FundingCycle, 'target'>,
 ) => fundingCycle.target.lt(constants.MaxUint256)
 
 export const hasFundingDuration = (
-  fundingCycle: Pick<V1FundingCycle | EditingFundingCycle, 'duration'>,
+  fundingCycle: Pick<V1FundingCycle | EditingV1FundingCycle, 'duration'>,
 ) => fundingCycle.duration && !fundingCycle.duration.eq(constants.AddressZero)
 
 /**

@@ -12,14 +12,14 @@ import {
   useHasPermission,
 } from 'hooks/v1/contractReader/HasPermission'
 import { useSetPayoutModsTx } from 'hooks/v1/transactor/SetPayoutModsTx'
-import { CurrencyOption } from 'models/currency-option'
+import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { PayoutMod } from 'models/mods'
 import { useContext, useLayoutEffect, useMemo, useState } from 'react'
 import { formatWad, fromPermyriad, fromWad } from 'utils/formatNumber'
 import { amountSubFee } from 'utils/math'
 
-import { CURRENCY_ETH } from 'constants/currency'
+import { V1_CURRENCY_ETH } from 'constants/v1/currency'
 import ProjectPayoutMods from './formItems/ProjectPayoutMods'
 
 export default function PayoutModsList({
@@ -112,11 +112,11 @@ export default function PayoutModsList({
                           (
                           <CurrencySymbol
                             currency={
-                              fundingCycle.currency.toNumber() as CurrencyOption
+                              fundingCycle.currency.toNumber() as V1CurrencyOption
                             }
                           />
                           {formatWad(baseTotal?.mul(mod.percent).div(10000), {
-                            precision: fundingCycle.currency.eq(CURRENCY_ETH)
+                            precision: fundingCycle.currency.eq(V1_CURRENCY_ETH)
                               ? 4
                               : 0,
                             padEnd: true,
@@ -143,11 +143,13 @@ export default function PayoutModsList({
                   (
                   <CurrencySymbol
                     currency={
-                      fundingCycle.currency.toNumber() as CurrencyOption
+                      fundingCycle.currency.toNumber() as V1CurrencyOption
                     }
                   />
                   {formatWad(baseTotal?.mul(ownerPercent).div(10000), {
-                    precision: fundingCycle.currency.eq(CURRENCY_ETH) ? 4 : 0,
+                    precision: fundingCycle.currency.eq(V1_CURRENCY_ETH)
+                      ? 4
+                      : 0,
                     padEnd: true,
                   })}
                   )
@@ -227,7 +229,7 @@ export default function PayoutModsList({
               lockedMods={lockedMods}
               onModsChanged={setEditingMods}
               target={fromWad(fundingCycle.target)}
-              currency={fundingCycle.currency.toNumber() as CurrencyOption}
+              currency={fundingCycle.currency.toNumber() as V1CurrencyOption}
               fee={fee}
             />
           </Modal>

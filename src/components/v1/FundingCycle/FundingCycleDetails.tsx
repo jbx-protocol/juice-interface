@@ -6,7 +6,7 @@ import CurrencySymbol from 'components/shared/CurrencySymbol'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { CurrencyOption } from 'models/currency-option'
+import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { useContext } from 'react'
 import { formatDate } from 'utils/formatDate'
@@ -84,7 +84,9 @@ export default function FundingCycleDetails({
             {hasFundingTarget(fundingCycle) ? (
               <>
                 <CurrencySymbol
-                  currency={fundingCycle.currency.toNumber() as CurrencyOption}
+                  currency={
+                    fundingCycle.currency.toNumber() as V1CurrencyOption
+                  }
                 />
                 {formatWad(fundingCycle.target)}
               </>

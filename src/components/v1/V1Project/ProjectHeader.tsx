@@ -20,6 +20,8 @@ import {
 } from 'hooks/v1/contractReader/HasPermission'
 import { useContext, useState } from 'react'
 
+import ExternalLink from 'components/shared/ExternalLink'
+
 import Paragraph from '../../shared/Paragraph'
 
 export default function ProjectHeader() {
@@ -208,34 +210,30 @@ export default function ProjectHeader() {
               </span>
             )}
             {metadata?.infoUri && (
-              <a
+              <ExternalLink
                 style={{ fontWeight: 500, marginRight: spacing }}
                 href={linkUrl(metadata.infoUri)}
-                target="_blank"
-                rel="noopener noreferrer"
               >
                 {prettyUrl(metadata.infoUri)}
-              </a>
+              </ExternalLink>
             )}
             {metadata?.twitter && (
-              <a
+              <ExternalLink
                 style={{
                   fontWeight: 500,
                   marginRight: spacing,
                   whiteSpace: 'pre',
                 }}
                 href={'https://twitter.com/' + metadata.twitter}
-                target="_blank"
-                rel="noopener noreferrer"
               >
                 <span style={{ marginRight: 4 }}>
                   <TwitterOutlined />
                 </span>
                 @{prettyUrl(metadata.twitter)}
-              </a>
+              </ExternalLink>
             )}
             {metadata?.discord && (
-              <a
+              <ExternalLink
                 style={{
                   fontWeight: 500,
                   display: 'flex',
@@ -244,14 +242,12 @@ export default function ProjectHeader() {
                   whiteSpace: 'pre',
                 }}
                 href={linkUrl(metadata.discord)}
-                target="_blank"
-                rel="noopener noreferrer"
               >
                 <span style={{ display: 'flex', marginRight: 4 }}>
                   <Discord size={13} />
                 </span>
                 Discord
-              </a>
+              </ExternalLink>
             )}
           </div>
           {metadata?.description && (

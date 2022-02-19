@@ -1,5 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Button, Modal } from 'antd'
+import ExternalLink from 'components/shared/ExternalLink'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { BigNumber } from 'ethers'
 import { useAddToBalanceTx } from 'hooks/v1/transactor/AddToBalanceTx'
@@ -82,13 +83,9 @@ export default function MigrateV1Pt1Modal({
         </li>
       </ul>
       <p>
-        <a
-          href="https://juicebox.notion.site/Migration-plan-1a05f62d80284cb1b8df2a3b53da341a"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <ExternalLink href="https://juicebox.notion.site/Migration-plan-1a05f62d80284cb1b8df2a3b53da341a">
           <Trans>Documentation on v1.1 contracts</Trans>
-        </a>
+        </ExternalLink>
       </p>
 
       {needsBalance && (

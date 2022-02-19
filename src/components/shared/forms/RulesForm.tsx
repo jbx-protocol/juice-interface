@@ -8,6 +8,7 @@ import { constants, utils } from 'ethers'
 import { useContext, useLayoutEffect, useState } from 'react'
 
 import { ballotStrategies } from 'constants/ballotStrategies/ballotStrategies'
+import ExternalLink from '../ExternalLink'
 
 export default function RulesForm({
   initialBallot,
@@ -128,13 +129,9 @@ export default function RulesForm({
                 The address of any smart contract deployed on {signerNetwork}{' '}
                 that implements
               </Trans>{' '}
-              <a
-                href="https://github.com/jbx-protocol/juice-contracts-v1/blob/05828d57e3a27580437fc258fe9041b2401fc044/contracts/FundingCycles.sol"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <ExternalLink href="https://github.com/jbx-protocol/juice-contracts-v1/blob/05828d57e3a27580437fc258fe9041b2401fc044/contracts/FundingCycles.sol">
                 <Trans>this interface</Trans>
-              </a>
+              </ExternalLink>
               .
             </p>
           </div>,

@@ -1,10 +1,11 @@
 import { t } from '@lingui/macro'
 
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 import { Collapse, Space } from 'antd'
 import { DownOutlined, UpOutlined } from '@ant-design/icons'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
+import ExternalLink from 'components/shared/ExternalLink'
 
 export function ItemDropdown({
   heading,
@@ -88,15 +89,9 @@ export function DropdownItem({
   onClick?: VoidFunction
 }) {
   return (
-    <a
-      className="nav-dropdown-item"
-      href={route}
-      rel="noreferrer"
-      target="_blank"
-      onClick={onClick}
-    >
+    <ExternalLink className="nav-dropdown-item" href={route} onClick={onClick}>
       {text}
-    </a>
+    </ExternalLink>
   )
 }
 

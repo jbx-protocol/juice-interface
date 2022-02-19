@@ -24,7 +24,6 @@ import { SerializedV2FundAccessConstraint } from 'utils/v2/serializers'
 
 import { toMod, toSplit } from 'utils/v2/splits'
 
-import { V1_CURRENCY_ETH } from 'constants/v1/currency'
 import { shadowCard } from 'constants/styles/shadowCard'
 import { toV2Currency, V2_CURRENCY_ETH } from 'constants/v2/currency'
 const { Option } = Select
@@ -243,7 +242,7 @@ export default function ProjectDetailsTabContent() {
             <ProjectPayoutMods
               mods={mods}
               target={target}
-              currency={V1_CURRENCY_ETH}
+              currency={toV1Currency(targetCurrency)}
               fee={ETHPaymentTerminalFee}
               onModsChanged={newMods => {
                 setMods(newMods)

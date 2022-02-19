@@ -1,6 +1,8 @@
 import { TwitterOutlined } from '@ant-design/icons'
 import Discord from 'components/icons/Discord'
 
+import ExternalLink from '../ExternalLink'
+
 const prettyUrl = (url: string) => {
   if (url.startsWith('https://')) {
     return url.split('https://')[1]
@@ -29,34 +31,30 @@ export default function SocialLinks({
   return (
     <>
       {infoUri && (
-        <a
+        <ExternalLink
           style={{ fontWeight: 500, marginRight: spacing }}
           href={linkUrl(infoUri)}
-          target="_blank"
-          rel="noopener noreferrer"
         >
           {prettyUrl(infoUri)}
-        </a>
+        </ExternalLink>
       )}
       {twitter && (
-        <a
+        <ExternalLink
           style={{
             fontWeight: 500,
             marginRight: spacing,
             whiteSpace: 'pre',
           }}
           href={'https://twitter.com/' + twitter}
-          target="_blank"
-          rel="noopener noreferrer"
         >
           <span style={{ marginRight: 4 }}>
             <TwitterOutlined />
           </span>
           @{prettyUrl(twitter)}
-        </a>
+        </ExternalLink>
       )}
       {discord && (
-        <a
+        <ExternalLink
           style={{
             fontWeight: 500,
             display: 'flex',
@@ -65,14 +63,12 @@ export default function SocialLinks({
             whiteSpace: 'pre',
           }}
           href={linkUrl(discord)}
-          target="_blank"
-          rel="noopener noreferrer"
         >
           <span style={{ display: 'flex', marginRight: 4 }}>
             <Discord size={13} />
           </span>
           Discord
-        </a>
+        </ExternalLink>
       )}
     </>
   )

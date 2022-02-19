@@ -40,7 +40,7 @@ export default function EthAddress({
           onAddressChange('')
         }
       } catch (e) {
-        console.log('Error getting address for ENS name:', value)
+        console.error('Error getting address for ENS name:', value)
 
         setAddressForENS('')
         onAddressChange('')
@@ -73,7 +73,7 @@ export default function EthAddress({
 
         if (isValid) setAddressForENS(defaultValue)
       } catch (e) {
-        console.log('Error looking up ENS name for address', defaultValue, e)
+        console.error('Error looking up ENS name for address', defaultValue, e)
       }
     }
 

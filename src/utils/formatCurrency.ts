@@ -27,7 +27,7 @@ export class CurrencyUtils {
     try {
       return BigNumber.from(wei).div(this.weiPerUsd)
     } catch (e) {
-      console.log("Couldn't convert wei amount", wei.toString(), 'to USD', e)
+      console.error("Couldn't convert wei amount", wei.toString(), 'to USD', e)
     }
   }
 
@@ -42,7 +42,12 @@ export class CurrencyUtils {
         ).toFixed(precision),
       )
     } catch (e) {
-      console.log("Couldn't convert USD amount", amount.toString(), 'to wei', e)
+      console.error(
+        "Couldn't convert USD amount",
+        amount.toString(),
+        'to wei',
+        e,
+      )
     }
   }
 

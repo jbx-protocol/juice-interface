@@ -8,7 +8,7 @@ msgstr ""
 "Language: tr\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-02-15 23:55\n"
+"PO-Revision-Date: 2022-02-18 01:56\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -379,8 +379,7 @@ msgid "Changes to these attributes can be made at any time and will be applied t
 msgstr "Bu özellikler üzerinde herhangi bir zamanda değişiklik yapılabilir ve projenize hemen uygulanacaktır."
 
 #: src/components/Landing/index.tsx
-msgid ""
-"Changes to your project's funding configuration require a community-approved period to take effect, which acts as a safeguard against rug pulls. \n"
+msgid "Changes to your project's funding configuration require a community-approved period to take effect, which acts as a safeguard against rug pulls. \n"
 "Your supporters don't have to trust you — even though they already do."
 msgstr ""
 
@@ -791,8 +790,7 @@ msgid "If you have a project you'd like to archive, let the Juicebox team know i
 msgstr "Arşivlemek istediğiniz bir proje varsa Discord'da Juicebox ekibine bildirin."
 
 #: src/components/Landing/QAs.tsx
-msgid ""
-"If you know how much your project needs to earn over some period of time to be sustainable, you can set a funding target with that amount. \n"
+msgid "If you know how much your project needs to earn over some period of time to be sustainable, you can set a funding target with that amount. \n"
 "If your project earns more than that, the surplus funds are locked in an overflow pool. \n"
 "Anyone holding your project's tokens can claim a portion of the overflow pool in exchange for redeeming their tokens."
 msgstr ""
@@ -1175,8 +1173,7 @@ msgid "Project owner balance"
 msgstr "Proje sahibi bakiyesi"
 
 #: src/components/Landing/QAs.tsx
-msgid ""
-"Project owners can configure a delay period, meaning reconfigurations to an upcoming funding cycle must be submitted a certain \n"
+msgid "Project owners can configure a delay period, meaning reconfigurations to an upcoming funding cycle must be submitted a certain \n"
 "number of days before it starts. For example, a 3-day delay period means reconfigurations must be submitted at least 3 days \n"
 "before the next funding cycle starts. This gives token holders time to react to the decision and reduces the chance of rug-pulls."
 msgstr ""
@@ -1190,8 +1187,7 @@ msgid "Projects building on Juicebox pay a 5% JBX membership fee from withdrawn 
 msgstr ""
 
 #: src/components/Landing/QAs.tsx
-msgid ""
-"Projects can be created with an optional discount rate designed to incentivize supporters to contribute earlier rather than later. \n"
+msgid "Projects can be created with an optional discount rate designed to incentivize supporters to contribute earlier rather than later. \n"
 "The amount of tokens rewarded per amount paid to your project will decrease by the discount rate with each new funding cycle. A higher discount rate \n"
 "will incentivize supporters to pay your project earlier rather than later."
 msgstr ""
@@ -1814,8 +1810,7 @@ msgid "What's going on under the hood?"
 msgstr "Kaputun altında neler oluyor?"
 
 #: src/components/Landing/index.tsx
-msgid ""
-"When someone pays your project, they'll receive your project's tokens in return. \n"
+msgid "When someone pays your project, they'll receive your project's tokens in return. \n"
 "Tokens can be redeemed for a portion of your project's overflow funds; when you win, your community wins with you. \n"
 "Leverage your project's token to grant governance rights, community access, or other membership perks."
 msgstr ""
@@ -2135,3 +2130,4 @@ msgstr "{exchangeName} üzerinde {tokenSymbol}/ETH kuru."
 #: src/components/v1/V1Project/Rewards/index.tsx
 msgid "{tokensLabel} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
 msgstr ""
+

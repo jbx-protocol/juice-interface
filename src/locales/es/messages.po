@@ -776,7 +776,7 @@ msgstr "Sin embargo, Juicebox es todavía un software experimental. Aunque el eq
 msgid "I understand"
 msgstr "Entiendo"
 
-#: src/components/v1/V1Project/ProjectHeader.tsx
+#: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 msgid "ID: {0}"
 msgstr "ID: {0}"
 
@@ -1719,7 +1719,7 @@ msgstr "Estrategia de contrato irreconocible. ¡Asegurate de que esté correcto!
 msgid "Unstaked balance"
 msgstr "Balance sin stakear"
 
-#: src/components/v1/V1Project/ProjectHeader.tsx
+#: src/components/shared/ProjectHeader/index.tsx
 msgid "Untitled project"
 msgstr "Proyecto sin título"
 
@@ -1755,7 +1755,7 @@ msgstr "V1"
 msgid "V1.1"
 msgstr "V1.1"
 
-#: src/components/v1/V1Project/ProjectHeader.tsx
+#: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 msgid "Version of the terminal contract used by this project."
 msgstr "Versión del contrato terminal usado por este proyecto."
 

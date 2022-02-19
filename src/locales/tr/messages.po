@@ -776,7 +776,7 @@ msgstr ""
 msgid "I understand"
 msgstr "Anladım"
 
-#: src/components/v1/V1Project/ProjectHeader.tsx
+#: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 msgid "ID: {0}"
 msgstr "Kimlik: {0}"
 
@@ -1719,7 +1719,7 @@ msgstr "Tanınmayan strateji sözleşmesi. Bunun doğru olduğundan emin olun!"
 msgid "Unstaked balance"
 msgstr "Stake'den kaldırılan bakiye"
 
-#: src/components/v1/V1Project/ProjectHeader.tsx
+#: src/components/shared/ProjectHeader/index.tsx
 msgid "Untitled project"
 msgstr "İsimsiz proje"
 
@@ -1755,7 +1755,7 @@ msgstr "V1"
 msgid "V1.1"
 msgstr "V1.1"
 
-#: src/components/v1/V1Project/ProjectHeader.tsx
+#: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 msgid "Version of the terminal contract used by this project."
 msgstr "Bu proje tarafından kullanılan terminal sözleşmesinin sürümü."
 

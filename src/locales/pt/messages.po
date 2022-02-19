@@ -776,7 +776,7 @@ msgstr ""
 msgid "I understand"
 msgstr "Eu entendo"
 
-#: src/components/v1/V1Project/ProjectHeader.tsx
+#: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 msgid "ID: {0}"
 msgstr "ID: {0}"
 
@@ -1719,7 +1719,7 @@ msgstr "Contrato de estratégia não reconhecido. Certifique-se de que isso est�
 msgid "Unstaked balance"
 msgstr ""
 
-#: src/components/v1/V1Project/ProjectHeader.tsx
+#: src/components/shared/ProjectHeader/index.tsx
 msgid "Untitled project"
 msgstr "Projeto sem título"
 
@@ -1755,7 +1755,7 @@ msgstr "V1"
 msgid "V1.1"
 msgstr "V1.1"
 
-#: src/components/v1/V1Project/ProjectHeader.tsx
+#: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 msgid "Version of the terminal contract used by this project."
 msgstr "Versão do contrato de terminal utilizado por este projeto."
 

@@ -1,10 +1,11 @@
-import { Form, InputNumber, Switch } from 'antd'
+import { Form, Switch } from 'antd'
 import { t, Trans } from '@lingui/macro'
 
 import React, { CSSProperties, useContext } from 'react'
 import { ThemeContext } from 'contexts/themeContext'
 
 import { FormItemExt } from './formItemExt'
+import NumberSlider from '../inputs/NumberSlider'
 
 export default function ProjectDiscountRate({
   name,
@@ -51,16 +52,16 @@ export default function ProjectDiscountRate({
       {...formItemProps}
     >
       {!disabled ? (
-        <div>
-          <InputNumber
-            onChange={val => onChange(parseFloat(val))}
-            defaultValue={value ?? '0'}
-            formatter={(val?: string | number | undefined) => {
-              let _val = val?.toString() ?? '0'
-              return `${_val ?? ''}%`
-            }}
-          />
-        </div>
+        <NumberSlider
+          max={20}
+          defaultValue={0}
+          sliderValue={parseFloat(value ?? '0')}
+          suffix="%"
+          name={name}
+          onChange={onChange}
+          step={0.1}
+          disabled={disabled}
+        />
       ) : null}
     </Form.Item>
   )

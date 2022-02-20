@@ -104,6 +104,10 @@ msgstr "<0>Узнайте больше</0> о переполнении."
 msgid "<0>NOTE:</0> This project has a balance of 0. Projects cannot be migrated without a balance. To migrate this project, first pay it or use the button below to deposit 1 wei (0.000000000000000001 or 10<1>-18</1> ETH)."
 msgstr ""
 
+#: src/components/v2/V2Create/tabs/OthersTabContent.tsx
+msgid "<0>Note: </0>Updates you make to attributes in this section will <1>not be applied immediately</1> and only take effect in <2>upcoming funding cycles.</2>"
+msgstr ""
+
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "<0>Note:</0> These properties will <1>not</1> be editable immediately within a funding cycle. They can only be changed for <2>upcoming</2> funding cycles."
 msgstr ""
@@ -239,6 +243,7 @@ msgstr "Все {0} будут направлены владельцу проек
 msgid "Allocate a portion of your project's reserved tokens to other Ethereum wallets or Juicebox projects."
 msgstr ""
 
+#: src/components/shared/forms/OthersForm.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "Allow minting tokens"
 msgstr "Разрешить майнинг токенов"
@@ -422,6 +427,7 @@ msgstr "Подключиться"
 msgid "Connect wallet to deploy"
 msgstr ""
 
+#: src/components/shared/ReconfigurationDrawer.tsx
 #: src/components/shared/forms/RulesForm.tsx
 msgid "Contract address: {0}"
 msgstr "Адрес контракта: {0}"
@@ -462,6 +468,7 @@ msgstr "Текущий владелец: {owner}"
 msgid "Currently worth: <0><1/>{0}</0>"
 msgstr ""
 
+#: src/components/shared/ReconfigurationDrawer.tsx
 #: src/constants/ballotStrategies/ballotStrategies.ts
 msgid "Custom strategy"
 msgstr "Индивидуальная стратегия"
@@ -621,10 +628,12 @@ msgstr ""
 msgid "Enabled"
 msgstr "Разрешено"
 
+#: src/components/shared/forms/OthersForm.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "Enabling this allows the project owner to manually mint any amount of tokens to any address."
 msgstr "Включение этой опции позволяет владельцу проекта вручную минтить любое количество токенов на любой адрес."
 
+#: src/components/shared/forms/OthersForm.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "Enabling tokens to be minted will appear risky to contributors, and should only be used when necessary."
 msgstr ""
@@ -1041,6 +1050,7 @@ msgstr "Переполнение создается, если остаток в�
 msgid "Paid as <0/>"
 msgstr "Оплачено как <0/>"
 
+#: src/components/shared/forms/OthersForm.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "Pause payments"
 msgstr "Приостановить платежи"
@@ -1245,6 +1255,7 @@ msgstr "Получить ERC20"
 msgid "Receive {receiveText}"
 msgstr "Получить{receiveText}"
 
+#: src/components/shared/formItems/ProjectReconfiguration.tsx
 #: src/components/shared/forms/RulesForm.tsx
 #: src/components/v1/V1Create/index.tsx
 msgid "Reconfiguration"
@@ -1375,10 +1386,12 @@ msgstr "Правила для определения того, как циклы
 msgid "Rules for how changes can be made to your project."
 msgstr "Правила внесения изменений в ваш проект."
 
+#: src/components/shared/formItems/ProjectReconfiguration.tsx
 #: src/components/shared/forms/RulesForm.tsx
 msgid "Rules for how this project's funding cycles can be reconfigured."
 msgstr "Правила изменения конфигурации циклов финансирования этого проекта."
 
+#: src/components/shared/ReconfigurationDrawer.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 #: src/components/shared/forms/RulesForm.tsx
 #: src/components/shared/forms/TicketingForm.tsx
@@ -1405,6 +1418,7 @@ msgstr ""
 msgid "Save payouts"
 msgstr ""
 
+#: src/components/shared/forms/OthersForm.tsx
 #: src/components/shared/forms/ProjectDetailsForm.tsx
 #: src/components/v1/V1Create/ProjectForm.tsx
 msgid "Save project details"
@@ -1530,6 +1544,7 @@ msgstr "Протокол JBX не прошел аудит, и проекты, п
 msgid "The Juicebox protocol is governed by a community of JBX token holders who vote on proposals fortnightly."
 msgstr ""
 
+#: src/components/shared/ReconfigurationDrawer.tsx
 #: src/components/shared/forms/RulesForm.tsx
 msgid "The address of any smart contract deployed on {signerNetwork} that implements"
 msgstr "Адрес любого смарт-контракта, реализуемого на {signerNetwork},"
@@ -1772,10 +1787,6 @@ msgstr "Твиттер"
 msgid "Unavailable"
 msgstr ""
 
-#: src/constants/ballotStrategies/ballotStrategies.ts
-msgid "Unrecognized strategy contract. Make sure this is correct!"
-msgstr "Неизвестный стратегический контракт. Убедитесь, что это правильно!"
-
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 msgid "Unstaked balance"
 msgstr ""
@@ -1946,6 +1957,7 @@ msgstr "Ваш баланс: {0}"
 msgid "Your feedback will be sent to a <0>public Discord channel </0>for our development team to consider."
 msgstr ""
 
+#: src/components/shared/forms/OthersForm.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "Your project cannot receive direct payments while paused."
 msgstr "Ваш проект не может получать прямые платежи в то время как он приостановлен."
@@ -2028,6 +2040,7 @@ msgstr ""
 msgid "projects"
 msgstr ""
 
+#: src/components/shared/ReconfigurationDrawer.tsx
 #: src/components/shared/forms/RulesForm.tsx
 msgid "this interface"
 msgstr "этот интерфейс"
@@ -2141,6 +2154,10 @@ msgstr ""
 #: src/components/v1/V1Project/Rewards/index.tsx
 msgid "{0}{1}"
 msgstr "{0}{1}"
+
+#: src/constants/ballotStrategies/ballotStrategies.ts
+msgid "{address} is an unrecognized strategy contract. Make sure this is correct!"
+msgstr ""
 
 #: src/components/v1/V1Project/ProjectActivity/ActivityTabContent.tsx
 msgid "{count} total"

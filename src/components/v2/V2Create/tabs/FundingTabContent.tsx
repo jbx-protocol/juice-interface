@@ -63,7 +63,6 @@ export default function ProjectDetailsTabContent() {
     setMods(payoutSplits?.map(split => toMod(split)) ?? [])
 
     const _target = fundAccessConstraint?.distributionLimit ?? '0'
-    console.log('fundAccessConstraint', fundAccessConstraint)
     const _targetCurrency = parseInt(
       fundAccessConstraint?.distributionLimitCurrency ?? `${V2_CURRENCY_ETH}`,
     ) as V2CurrencyOption
@@ -145,7 +144,7 @@ export default function ProjectDetailsTabContent() {
           {isFundingTargetSectionVisible ? (
             <div
               style={{
-                padding: '1rem',
+                padding: '2rem',
                 marginBottom: '10px',
                 ...shadowCard(theme),
               }}
@@ -233,7 +232,7 @@ export default function ProjectDetailsTabContent() {
 
           <div
             style={{
-              padding: '1rem',
+              padding: '2rem',
               marginBottom: '1rem',
               ...shadowCard(theme),
             }}

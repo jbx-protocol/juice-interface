@@ -104,6 +104,10 @@ msgstr "<0>进一步了解</0> 溢出。"
 msgid "<0>NOTE:</0> This project has a balance of 0. Projects cannot be migrated without a balance. To migrate this project, first pay it or use the button below to deposit 1 wei (0.000000000000000001 or 10<1>-18</1> ETH)."
 msgstr "<0>注意：</0> 该项目余额为零，无法迁移。如果要迁移该项目，先直接支付或是通过下方按钮存入 1 wei （0.000000000000000001 or 10<1>-18</1> ETH）。"
 
+#: src/components/v2/V2Create/tabs/OthersTabContent.tsx
+msgid "<0>Note: </0>Updates you make to attributes in this section will <1>not be applied immediately</1> and only take effect in <2>upcoming funding cycles.</2>"
+msgstr ""
+
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "<0>Note:</0> These properties will <1>not</1> be editable immediately within a funding cycle. They can only be changed for <2>upcoming</2> funding cycles."
 msgstr "<0>注意：</0> 这些属性<1>不能</1> 在同一个筹款周期内马上进行修改。 更改配置只能在 <2>后面的</2> 筹款周期内完成。"
@@ -239,6 +243,7 @@ msgstr "所有 {0} 会给到项目拥有者："
 msgid "Allocate a portion of your project's reserved tokens to other Ethereum wallets or Juicebox projects."
 msgstr "把您项目的一部分保留代币分发给其他以太坊钱包或其他Juicebox项目。"
 
+#: src/components/shared/forms/OthersForm.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "Allow minting tokens"
 msgstr "允许铸造代币"
@@ -422,6 +427,7 @@ msgstr "连接钱包"
 msgid "Connect wallet to deploy"
 msgstr "连接钱包以部署"
 
+#: src/components/shared/ReconfigurationDrawer.tsx
 #: src/components/shared/forms/RulesForm.tsx
 msgid "Contract address: {0}"
 msgstr "合约地址：{0}"
@@ -462,6 +468,7 @@ msgstr "当前拥有者：{owner}"
 msgid "Currently worth: <0><1/>{0}</0>"
 msgstr "当前价值： <0><1/>{0}</0>"
 
+#: src/components/shared/ReconfigurationDrawer.tsx
 #: src/constants/ballotStrategies/ballotStrategies.ts
 msgid "Custom strategy"
 msgstr "自定义策略"
@@ -621,10 +628,12 @@ msgstr "编辑监测的资产"
 msgid "Enabled"
 msgstr "已启用"
 
+#: src/components/shared/forms/OthersForm.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "Enabling this allows the project owner to manually mint any amount of tokens to any address."
 msgstr "允许项目所有者手动铸造并发送任何数量的代币。"
 
+#: src/components/shared/forms/OthersForm.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "Enabling tokens to be minted will appear risky to contributors, and should only be used when necessary."
 msgstr "允许铸造代币会让捐款人觉得项目有风险，如必非要，请勿使用这个功能。"
@@ -1041,6 +1050,7 @@ msgstr "如果您项目的资金余额超出您的筹款周期目标，就会产
 msgid "Paid as <0/>"
 msgstr "支付 <0/>"
 
+#: src/components/shared/forms/OthersForm.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "Pause payments"
 msgstr "暂停支付"
@@ -1245,6 +1255,7 @@ msgstr "以 ERC20 形式接收"
 msgid "Receive {receiveText}"
 msgstr "接收 {receiveText}"
 
+#: src/components/shared/formItems/ProjectReconfiguration.tsx
 #: src/components/shared/forms/RulesForm.tsx
 #: src/components/v1/V1Create/index.tsx
 msgid "Reconfiguration"
@@ -1375,10 +1386,12 @@ msgstr "关于如何重新配置该项目筹款周期的规则"
 msgid "Rules for how changes can be made to your project."
 msgstr "项目筹款周期配置的更改规则。"
 
+#: src/components/shared/formItems/ProjectReconfiguration.tsx
 #: src/components/shared/forms/RulesForm.tsx
 msgid "Rules for how this project's funding cycles can be reconfigured."
 msgstr "关于如何重新配置该项目筹款周期的规则"
 
+#: src/components/shared/ReconfigurationDrawer.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 #: src/components/shared/forms/RulesForm.tsx
 #: src/components/shared/forms/TicketingForm.tsx
@@ -1405,6 +1418,7 @@ msgstr "保存标识"
 msgid "Save payouts"
 msgstr "保存开支配置"
 
+#: src/components/shared/forms/OthersForm.tsx
 #: src/components/shared/forms/ProjectDetailsForm.tsx
 #: src/components/v1/V1Create/ProjectForm.tsx
 msgid "Save project details"
@@ -1530,6 +1544,7 @@ msgstr "JBX 协议未经审计，基于它构建的项目可能受到 bug 的影
 msgid "The Juicebox protocol is governed by a community of JBX token holders who vote on proposals fortnightly."
 msgstr "Juicebox协议由JBX代币持有者组成的社区所管理，他们每两周对提案进行投票。"
 
+#: src/components/shared/ReconfigurationDrawer.tsx
 #: src/components/shared/forms/RulesForm.tsx
 msgid "The address of any smart contract deployed on {signerNetwork} that implements"
 msgstr "在 {signerNetwork} 上部署的智能合约地址，该合约实现了"
@@ -1772,10 +1787,6 @@ msgstr "Twitter"
 msgid "Unavailable"
 msgstr "不可用"
 
-#: src/constants/ballotStrategies/ballotStrategies.ts
-msgid "Unrecognized strategy contract. Make sure this is correct!"
-msgstr "未识别的策略合约。请确保这是正确的！"
-
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 msgid "Unstaked balance"
 msgstr "取出的余额"
@@ -1946,6 +1957,7 @@ msgstr "你的余额：{0}"
 msgid "Your feedback will be sent to a <0>public Discord channel </0>for our development team to consider."
 msgstr "您的反馈会被发送至一个 <0>Discord 的公开频道</0>，我们的开发团队可以查看并考量。"
 
+#: src/components/shared/forms/OthersForm.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "Your project cannot receive direct payments while paused."
 msgstr "暂停期间，你的项目不会再收到直接付款。"
@@ -2028,6 +2040,7 @@ msgstr "项目拥有者"
 msgid "projects"
 msgstr "项目"
 
+#: src/components/shared/ReconfigurationDrawer.tsx
 #: src/components/shared/forms/RulesForm.tsx
 msgid "this interface"
 msgstr "这个界面"
@@ -2141,6 +2154,10 @@ msgstr "已提取 {0}/{1}"
 #: src/components/v1/V1Project/Rewards/index.tsx
 msgid "{0}{1}"
 msgstr "{0}{1}"
+
+#: src/constants/ballotStrategies/ballotStrategies.ts
+msgid "{address} is an unrecognized strategy contract. Make sure this is correct!"
+msgstr ""
 
 #: src/components/v1/V1Project/ProjectActivity/ActivityTabContent.tsx
 msgid "{count} total"

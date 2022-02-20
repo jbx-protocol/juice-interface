@@ -42,6 +42,5 @@ export const currencyStyle = (currency?: V1CurrencyOption) =>
 export const toV1Currency = (
   v2Currency: V2CurrencyOption,
 ): V1CurrencyOption => {
-  console.log('v2Currency', v2Currency)
   return CURRENCY_MAP[v2Currency]
 }

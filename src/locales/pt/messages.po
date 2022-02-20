@@ -104,6 +104,10 @@ msgstr "<0>Saiba mais</0> sobre overflow."
 msgid "<0>NOTE:</0> This project has a balance of 0. Projects cannot be migrated without a balance. To migrate this project, first pay it or use the button below to deposit 1 wei (0.000000000000000001 or 10<1>-18</1> ETH)."
 msgstr "<0>NOTA:</0> Este projeto tem um saldo de 0. Os projetos não podem ser migrados sem um saldo. Para migrar um projeto, primeiramente deve pagá-lo ou usar o botão abaixo para depositar 1 Wei (0.000000000000000001 o 10<1>-18</1> ETH)."
 
+#: src/components/v2/V2Create/tabs/OthersTabContent.tsx
+msgid "<0>Note: </0>Updates you make to attributes in this section will <1>not be applied immediately</1> and only take effect in <2>upcoming funding cycles.</2>"
+msgstr ""
+
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "<0>Note:</0> These properties will <1>not</1> be editable immediately within a funding cycle. They can only be changed for <2>upcoming</2> funding cycles."
 msgstr ""
@@ -239,6 +243,7 @@ msgstr "Tudo {0} irá para o proprietário do projeto:"
 msgid "Allocate a portion of your project's reserved tokens to other Ethereum wallets or Juicebox projects."
 msgstr ""
 
+#: src/components/shared/forms/OthersForm.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "Allow minting tokens"
 msgstr "Permitir a produção de tokens"
@@ -422,6 +427,7 @@ msgstr "Conectar"
 msgid "Connect wallet to deploy"
 msgstr ""
 
+#: src/components/shared/ReconfigurationDrawer.tsx
 #: src/components/shared/forms/RulesForm.tsx
 msgid "Contract address: {0}"
 msgstr "Endereço de contato: {0}"
@@ -462,6 +468,7 @@ msgstr "Atual proprietário: {owner}"
 msgid "Currently worth: <0><1/>{0}</0>"
 msgstr "Atualmente vale: <0><1/>{0}</0>"
 
+#: src/components/shared/ReconfigurationDrawer.tsx
 #: src/constants/ballotStrategies/ballotStrategies.ts
 msgid "Custom strategy"
 msgstr "Estratégia personalizada"
@@ -621,10 +628,12 @@ msgstr "Editar ativos rastreados"
 msgid "Enabled"
 msgstr "Ativado"
 
+#: src/components/shared/forms/OthersForm.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "Enabling this allows the project owner to manually mint any amount of tokens to any address."
 msgstr "Ativar isto permite o proprietário do projeto produzir manualmente qualquer quantidade de tokens para qualquer endereço."
 
+#: src/components/shared/forms/OthersForm.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "Enabling tokens to be minted will appear risky to contributors, and should only be used when necessary."
 msgstr ""
@@ -1041,6 +1050,7 @@ msgstr "Overflow é criado se o saldo do seu projeto exceder o meta do seu ciclo
 msgid "Paid as <0/>"
 msgstr "Pago como <0/>"
 
+#: src/components/shared/forms/OthersForm.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "Pause payments"
 msgstr "Pausar pagamentos"
@@ -1245,6 +1255,7 @@ msgstr "Receba ERC20"
 msgid "Receive {receiveText}"
 msgstr "Receba {receiveText}"
 
+#: src/components/shared/formItems/ProjectReconfiguration.tsx
 #: src/components/shared/forms/RulesForm.tsx
 #: src/components/v1/V1Create/index.tsx
 msgid "Reconfiguration"
@@ -1375,10 +1386,12 @@ msgstr "Regras para determinar quantos ciclos de financiamento podem ser reconfi
 msgid "Rules for how changes can be made to your project."
 msgstr "Regras sobre como fazer mudanças no seu projeto."
 
+#: src/components/shared/formItems/ProjectReconfiguration.tsx
 #: src/components/shared/forms/RulesForm.tsx
 msgid "Rules for how this project's funding cycles can be reconfigured."
 msgstr "Regras para como os ciclos de financiamento deste projeto podem ser reconfigurados."
 
+#: src/components/shared/ReconfigurationDrawer.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 #: src/components/shared/forms/RulesForm.tsx
 #: src/components/shared/forms/TicketingForm.tsx
@@ -1405,6 +1418,7 @@ msgstr "Salvar identificador"
 msgid "Save payouts"
 msgstr "Salvar pagamentos"
 
+#: src/components/shared/forms/OthersForm.tsx
 #: src/components/shared/forms/ProjectDetailsForm.tsx
 #: src/components/v1/V1Create/ProjectForm.tsx
 msgid "Save project details"
@@ -1530,6 +1544,7 @@ msgstr "O protocolo JBX não é auditado e projetos criados nele podem estar vul
 msgid "The Juicebox protocol is governed by a community of JBX token holders who vote on proposals fortnightly."
 msgstr ""
 
+#: src/components/shared/ReconfigurationDrawer.tsx
 #: src/components/shared/forms/RulesForm.tsx
 msgid "The address of any smart contract deployed on {signerNetwork} that implements"
 msgstr "O endereço de qualquer contrato inteligente implementado no {signerNetwork} que executa"
@@ -1772,10 +1787,6 @@ msgstr "Twitter"
 msgid "Unavailable"
 msgstr "Indisponível"
 
-#: src/constants/ballotStrategies/ballotStrategies.ts
-msgid "Unrecognized strategy contract. Make sure this is correct!"
-msgstr "Contrato de estratégia não reconhecido. Certifique-se de que isso está correto!"
-
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 msgid "Unstaked balance"
 msgstr ""
@@ -1946,6 +1957,7 @@ msgstr "Seu saldo: {0}"
 msgid "Your feedback will be sent to a <0>public Discord channel </0>for our development team to consider."
 msgstr ""
 
+#: src/components/shared/forms/OthersForm.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "Your project cannot receive direct payments while paused."
 msgstr "O seu projeto não poderá receber pagamentos diretos enquanto se encontrar pausado."
@@ -2028,6 +2040,7 @@ msgstr "proprietário do projeto"
 msgid "projects"
 msgstr "projetos"
 
+#: src/components/shared/ReconfigurationDrawer.tsx
 #: src/components/shared/forms/RulesForm.tsx
 msgid "this interface"
 msgstr "esta interface"
@@ -2141,6 +2154,10 @@ msgstr "{0}/{1} retirado"
 #: src/components/v1/V1Project/Rewards/index.tsx
 msgid "{0}{1}"
 msgstr "{0}{1}"
+
+#: src/constants/ballotStrategies/ballotStrategies.ts
+msgid "{address} is an unrecognized strategy contract. Make sure this is correct!"
+msgstr ""
 
 #: src/components/v1/V1Project/ProjectActivity/ActivityTabContent.tsx
 msgid "{count} total"

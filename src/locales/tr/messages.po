@@ -104,6 +104,10 @@ msgstr "Taşma hakkında <0>daha fazla bilgi edinin</0>."
 msgid "<0>NOTE:</0> This project has a balance of 0. Projects cannot be migrated without a balance. To migrate this project, first pay it or use the button below to deposit 1 wei (0.000000000000000001 or 10<1>-18</1> ETH)."
 msgstr "<0>NOT:</0> Bu projenin bakiyesi 0. Projeler bakiye olmadan taşınamaz. Bu projeyi taşımak için önce ödemesini yapın veya 1 wei (0.00000000000000001 veya 10<1>-18</1> ETH) yatırmak için aşağıdaki butonu kullanın."
 
+#: src/components/v2/V2Create/tabs/OthersTabContent.tsx
+msgid "<0>Note: </0>Updates you make to attributes in this section will <1>not be applied immediately</1> and only take effect in <2>upcoming funding cycles.</2>"
+msgstr ""
+
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "<0>Note:</0> These properties will <1>not</1> be editable immediately within a funding cycle. They can only be changed for <2>upcoming</2> funding cycles."
 msgstr "<0>Not:</0> Bu özellikler, bir finansman döngüsü içinde doğrudan <1>düzenlenemez</1>. Özellikler yalnızca <2>yaklaşan</2> finansman döngüleri için değiştirilebilir."
@@ -239,6 +243,7 @@ msgstr "Tüm {0} proje sahibine gidecek:"
 msgid "Allocate a portion of your project's reserved tokens to other Ethereum wallets or Juicebox projects."
 msgstr "Projenizin ayrılan token'larının bir kısmını diğer Ethereum cüzdanlarına veya Juicebox projelerine tahsis edin."
 
+#: src/components/shared/forms/OthersForm.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "Allow minting tokens"
 msgstr "Token'ların basılmasına izin verin"
@@ -422,6 +427,7 @@ msgstr "Bağlan"
 msgid "Connect wallet to deploy"
 msgstr ""
 
+#: src/components/shared/ReconfigurationDrawer.tsx
 #: src/components/shared/forms/RulesForm.tsx
 msgid "Contract address: {0}"
 msgstr "Sözleşme Adresi: {0}"
@@ -462,6 +468,7 @@ msgstr "Güncel sahibi: {owner}"
 msgid "Currently worth: <0><1/>{0}</0>"
 msgstr "Güncel değeri: <0><1/>{0}</0>"
 
+#: src/components/shared/ReconfigurationDrawer.tsx
 #: src/constants/ballotStrategies/ballotStrategies.ts
 msgid "Custom strategy"
 msgstr "Özel strateji"
@@ -621,10 +628,12 @@ msgstr "İzlenen varlıkları düzenleyin"
 msgid "Enabled"
 msgstr "Etkin"
 
+#: src/components/shared/forms/OthersForm.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "Enabling this allows the project owner to manually mint any amount of tokens to any address."
 msgstr "Bunun etkinleştirilmesi, proje sahibine, herhangi bir miktarda token'ı herhangi bir adrese manuel olarak basma izni verir."
 
+#: src/components/shared/forms/OthersForm.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "Enabling tokens to be minted will appear risky to contributors, and should only be used when necessary."
 msgstr "Token basımını etkinleştirmek katkıda bulunanlar için riskli görünecektir, yalnızca gerektiğinde kullanılmalıdır."
@@ -1041,6 +1050,7 @@ msgstr "Projenizin bakiyesi finansman döngüsü hedefinizi aşarsa taşma oluş
 msgid "Paid as <0/>"
 msgstr "<0/> olarak ödendi"
 
+#: src/components/shared/forms/OthersForm.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "Pause payments"
 msgstr "Ödemeleri duraklat"
@@ -1245,6 +1255,7 @@ msgstr "ER20 alın"
 msgid "Receive {receiveText}"
 msgstr "{receiveText} alın"
 
+#: src/components/shared/formItems/ProjectReconfiguration.tsx
 #: src/components/shared/forms/RulesForm.tsx
 #: src/components/v1/V1Create/index.tsx
 msgid "Reconfiguration"
@@ -1375,10 +1386,12 @@ msgstr "Finansman döngülerinin nasıl yeniden yapılandırılabileceğine ili�
 msgid "Rules for how changes can be made to your project."
 msgstr "Projenizde nasıl değişiklik yapılabileceğine ilişkin kurallar."
 
+#: src/components/shared/formItems/ProjectReconfiguration.tsx
 #: src/components/shared/forms/RulesForm.tsx
 msgid "Rules for how this project's funding cycles can be reconfigured."
 msgstr "Bu projenin finansman döngülerinin nasıl yeniden yapılandırılabileceğine ilişkin kurallar."
 
+#: src/components/shared/ReconfigurationDrawer.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 #: src/components/shared/forms/RulesForm.tsx
 #: src/components/shared/forms/TicketingForm.tsx
@@ -1405,6 +1418,7 @@ msgstr "Tanıtıcıyı kaydet"
 msgid "Save payouts"
 msgstr "Ödemeleri kaydet"
 
+#: src/components/shared/forms/OthersForm.tsx
 #: src/components/shared/forms/ProjectDetailsForm.tsx
 #: src/components/v1/V1Create/ProjectForm.tsx
 msgid "Save project details"
@@ -1530,6 +1544,7 @@ msgstr "JBX protokolü denetlenmez ve bunun üzerine inşa edilen projeler hatal
 msgid "The Juicebox protocol is governed by a community of JBX token holders who vote on proposals fortnightly."
 msgstr ""
 
+#: src/components/shared/ReconfigurationDrawer.tsx
 #: src/components/shared/forms/RulesForm.tsx
 msgid "The address of any smart contract deployed on {signerNetwork} that implements"
 msgstr "Bu arayüzü uygulayan {signerNetwork} üzerinde dağıtılmış herhangi bir akıllı sözleşmenin adresi"
@@ -1772,10 +1787,6 @@ msgstr "Twitter"
 msgid "Unavailable"
 msgstr "Mevcut değil"
 
-#: src/constants/ballotStrategies/ballotStrategies.ts
-msgid "Unrecognized strategy contract. Make sure this is correct!"
-msgstr "Tanınmayan strateji sözleşmesi. Bunun doğru olduğundan emin olun!"
-
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 msgid "Unstaked balance"
 msgstr "Stake'den kaldırılan bakiye"
@@ -1946,6 +1957,7 @@ msgstr "Bakiyeniz: {0}"
 msgid "Your feedback will be sent to a <0>public Discord channel </0>for our development team to consider."
 msgstr ""
 
+#: src/components/shared/forms/OthersForm.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "Your project cannot receive direct payments while paused."
 msgstr "Projeniz duraklatıldığında doğrudan ödeme alamaz."
@@ -2028,6 +2040,7 @@ msgstr ""
 msgid "projects"
 msgstr "projeler"
 
+#: src/components/shared/ReconfigurationDrawer.tsx
 #: src/components/shared/forms/RulesForm.tsx
 msgid "this interface"
 msgstr "bu arayüz"
@@ -2141,6 +2154,10 @@ msgstr "{0}/{1} çekildi"
 #: src/components/v1/V1Project/Rewards/index.tsx
 msgid "{0}{1}"
 msgstr "{0}{1}"
+
+#: src/constants/ballotStrategies/ballotStrategies.ts
+msgid "{address} is an unrecognized strategy contract. Make sure this is correct!"
+msgstr ""
 
 #: src/components/v1/V1Project/ProjectActivity/ActivityTabContent.tsx
 msgid "{count} total"

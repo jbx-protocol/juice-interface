@@ -22,3 +22,15 @@ export const hasFundingTarget = (
 export const hasFundingDuration = (
   fundingCycle: Pick<SerializedV2FundingCycleData, 'duration'>,
 ) => Boolean(fundingCycle?.duration && fundingCycle?.duration !== '0')
+
+/**
+ * Return the default fund access constraint for a project.
+ *
+ * Projects can have multiple access constraints. This frontend creates one for them,
+ * using the default ETH payment terminal.
+ */
+export function getDefaultFundAccessConstraint<T>(
+  fundAccessConstraints: T[],
+): T | undefined {
+  return fundAccessConstraints[0]
+}

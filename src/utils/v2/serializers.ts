@@ -5,8 +5,10 @@ import {
   V2FundAccessConstraint,
 } from 'models/v2/fundingCycle'
 import {
+  fromPerbicent,
   fromPermille,
   fromWad,
+  parsePerbicent,
   parsePermille,
   parseWad,
 } from 'utils/formatNumber'
@@ -40,8 +42,10 @@ export const serializeV2FundingCycleMetadata = (
   fundingCycleMetadata: V2FundingCycleMetadata,
 ): SerializedV2FundingCycleMetadata => ({
   reservedRate: fromPermille(fundingCycleMetadata.reservedRate),
-  redemptionRate: fromWad(fundingCycleMetadata.redemptionRate),
-  ballotRedemptionRate: fromWad(fundingCycleMetadata.ballotRedemptionRate),
+  redemptionRate: fromPerbicent(fundingCycleMetadata.redemptionRate),
+  ballotRedemptionRate: fromPerbicent(
+    fundingCycleMetadata.ballotRedemptionRate,
+  ),
   pausePay: fundingCycleMetadata.pausePay,
   pauseDistributions: fundingCycleMetadata.pauseDistributions,
   pauseRedeem: fundingCycleMetadata.pauseRedeem,
@@ -61,8 +65,8 @@ export const deserializeV2FundingCycleMetadata = (
   serializedFundingCycleMetadata: SerializedV2FundingCycleMetadata,
 ): V2FundingCycleMetadata => ({
   reservedRate: parsePermille(serializedFundingCycleMetadata.reservedRate),
-  redemptionRate: parseWad(serializedFundingCycleMetadata.redemptionRate),
-  ballotRedemptionRate: parseWad(
+  redemptionRate: parsePerbicent(serializedFundingCycleMetadata.redemptionRate),
+  ballotRedemptionRate: parsePerbicent(
     serializedFundingCycleMetadata.ballotRedemptionRate,
   ),
   pausePay: serializedFundingCycleMetadata.pausePay,

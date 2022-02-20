@@ -22,6 +22,15 @@ msgstr ""
 msgid "(+{0} reserved)"
 msgstr "(+{0} reservado)"
 
+#: src/components/shared/formItems/ProjectDiscountRate.tsx
+#: src/components/shared/formItems/ProjectReserved.tsx
+msgid "(0%)"
+msgstr ""
+
+#: src/components/shared/formItems/BondingCurve/ProjectBondingCurveRate.tsx
+msgid "(100%)"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
 msgid "(Optional) Add a note to this payment on-chain"
 msgstr "(Opcional) Añadir una nota en este pago de forma on-chain"
@@ -110,6 +119,10 @@ msgstr ""
 
 #: src/components/v2/V2Create/tabs/OthersTabContent.tsx
 msgid "<0>Note: </0>Once your project is create, updates you make to attributes in this section will <1>not be applied immediately</1> and only take effect in <2>upcoming funding cycles.</2>"
+msgstr ""
+
+#: src/components/v2/V2Create/tabs/TokenTabContent.tsx
+msgid "<0>Note: </0>Updates you make to token attributes will <1>not be applied immediately</1> and only take effect in <2>upcoming funding cycles.</2>"
 msgstr ""
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
@@ -244,6 +257,7 @@ msgstr "Todo {0} irá al dueño del proyecto:"
 
 #: src/components/shared/forms/TicketingForm.tsx
 #: src/components/shared/forms/TokenForm.tsx
+#: src/components/v2/V2Create/tabs/TokenTabContent.tsx
 msgid "Allocate a portion of your project's reserved tokens to other Ethereum wallets or Juicebox projects."
 msgstr "Asigna una porción de los tokens reservados de tu proyecto a otras wallets de Ethereum o proyectos de Juicebox."
 
@@ -535,6 +549,10 @@ msgstr "Discord"
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Discount rate"
 msgstr "Tasa de descuento"
+
+#: src/components/v2/V2Create/tabs/TokenTabContent.tsx
+msgid "Discount rate disabled when funding cycle duration has not been set."
+msgstr ""
 
 #: src/components/v1/V1Create/index.tsx
 msgid "Discount rate disabled while funding cycle duration is 0."
@@ -1302,6 +1320,14 @@ msgstr "Canjear {0} {tokensTextShort} por ETH"
 msgid "Redeem {tokensTextLong} for ETH"
 msgstr "Canjear {tokensTextLong} por ETH"
 
+#: src/components/v2/V2Create/tabs/TokenTabContent.tsx
+msgid "Redemption disabled while no funding target is set."
+msgstr ""
+
+#: src/components/v2/V2Create/tabs/TokenTabContent.tsx
+msgid "Redemption rate"
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "Redistributable surplus"
 msgstr "Excedente redistribuible"
@@ -1320,6 +1346,7 @@ msgstr ""
 
 #: src/components/shared/forms/TicketingForm.tsx
 #: src/components/shared/forms/TokenForm.tsx
+#: src/components/v2/V2Create/tabs/TokenTabContent.tsx
 msgid "Reserved token allocation (optional)"
 msgstr "Asignación de tokens reservados (opcional)"
 
@@ -1435,6 +1462,7 @@ msgid "Save token allocation"
 msgstr "Guardar asignación de tokens"
 
 #: src/components/shared/forms/TokenForm.tsx
+#: src/components/v2/V2Create/tabs/TokenTabContent.tsx
 msgid "Save token configuration"
 msgstr ""
 

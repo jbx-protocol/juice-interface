@@ -16,7 +16,7 @@ import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { NetworkName } from 'models/network-name'
 import { CSSProperties, useContext, useMemo, useState } from 'react'
 import { formatWad, fracDiv, fromWad } from 'utils/formatNumber'
-import { hasFundingTarget } from 'utils/fundingCycle'
+import { hasFundingTargetV1 } from 'utils/fundingCycle'
 
 import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
 import { readNetwork } from 'constants/networks'
@@ -80,7 +80,7 @@ export default function Paid() {
   if (!currentFC) return null
 
   const spacing =
-    hasFundingTarget(currentFC) && currentFC.target.gt(0) ? 15 : 10
+    hasFundingTargetV1(currentFC) && currentFC.target.gt(0) ? 15 : 10
 
   const formatCurrencyAmount = (amt: BigNumber | undefined) =>
     amt ? (
@@ -188,7 +188,7 @@ export default function Paid() {
         </div>
       </div>
 
-      {hasFundingTarget(currentFC) &&
+      {hasFundingTargetV1(currentFC) &&
         (currentFC.target.gt(0) ? (
           <div
             style={{
@@ -228,7 +228,7 @@ export default function Paid() {
           </div>
         ))}
 
-      {hasFundingTarget(currentFC) &&
+      {hasFundingTargetV1(currentFC) &&
         currentFC.target.gt(0) &&
         (overflow?.gt(0) ? (
           <div style={{ display: 'flex', alignItems: 'center' }}>

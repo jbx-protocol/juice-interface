@@ -12,6 +12,9 @@ import {
   SerializedV2FundingCycleMetadata,
   SerializedV2FundAccessConstraint,
 } from 'utils/v2/serializers'
+import { parsePerbicent, parsePermille } from 'utils/formatNumber'
+
+import { threeDayDelayStrategy } from 'constants/ballotStrategies/ballotStrategies'
 
 export interface EditingV2ProjectState {
   version: number
@@ -33,6 +36,10 @@ export interface V2ProjectState {
   reserveTokenSplits: Split[]
 }
 
+const defaultDiscountRate = parsePermille(0)
+const defaultReservedRate = parsePermille(0)
+const defaultRedemptionRate = parsePerbicent(100)
+
 const defaultProjectMetadataState: ProjectMetadataV3 = {
   name: '',
   infoUri: '',
@@ -48,14 +55,14 @@ const defaultFundingCycleData: SerializedV2FundingCycleData =
   serializeV2FundingCycleData({
     duration: BigNumber.from(0),
     weight: BigNumber.from('1' + '0'.repeat(18)), // 1,000,000 of your project's tokens will be minted per ETH received
-    discountRate: BigNumber.from(0),
-    ballot: constants.AddressZero,
+    discountRate: defaultDiscountRate,
+    ballot: threeDayDelayStrategy.address,
   })
 
 const defaultFundingCycleMetadata: SerializedV2FundingCycleMetadata =
   serializeV2FundingCycleMetadata({
-    reservedRate: BigNumber.from(0),
-    redemptionRate: BigNumber.from(0),
+    reservedRate: defaultReservedRate,
+    redemptionRate: defaultRedemptionRate,
     ballotRedemptionRate: BigNumber.from(0),
     pausePay: false,
     pauseDistributions: false,
@@ -123,6 +130,9 @@ export const editingV2ProjectSlice = createSlice({
     setReservedRate: (state, action: PayloadAction<string>) => {
       state.fundingCycleMetadata.reservedRate = action.payload
     },
+    setRedemptionRate: (state, action: PayloadAction<string>) => {
+      state.fundingCycleMetadata.redemptionRate = action.payload
+    },
     setFundAccessConstraints: (
       state,
       action: PayloadAction<SerializedV2FundAccessConstraint[]>,
@@ -140,6 +150,9 @@ export const editingV2ProjectSlice = createSlice({
     },
     setBallot: (state, action: PayloadAction<string>) => {
       state.fundingCycleData.ballot = action.payload
+    },
+    setReserveTokenSplits: (state, action: PayloadAction<Split[]>) => {
+      state.reserveTokenSplits = action.payload
     },
   },
 })

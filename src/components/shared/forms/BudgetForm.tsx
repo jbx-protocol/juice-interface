@@ -15,7 +15,7 @@ import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useContext, useLayoutEffect, useMemo, useState } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
 import { fromWad, parseWad } from 'utils/formatNumber'
-import { hasFundingTarget, isRecurring } from 'utils/fundingCycle'
+import { hasFundingTargetV1, isRecurring } from 'utils/fundingCycle'
 import { helpPagePath } from 'utils/helpPageHelper'
 
 import ExternalLink from '../ExternalLink'
@@ -55,7 +55,7 @@ export default function BudgetForm({
     setTargetSubFee(targetToTargetSubFeeFormatted(initialTarget, terminalFee))
     setDuration(initialDuration)
     setShowFundingFields(
-      hasFundingTarget({
+      hasFundingTargetV1({
         target: parseWad(initialTarget),
       }),
     )

@@ -56,12 +56,10 @@ export default function ProjectDetailsTabContent() {
   }, [resetProjectForm])
 
   return (
-    <Space direction="vertical" size="large">
-      <ProjectDetailsForm
-        form={projectForm}
-        onSave={onProjectFormSaved}
-        hideProjectHandle
-      />
-    </Space>
+    <ProjectDetailsForm
+      form={projectForm}
+      onSave={onProjectFormSaved}
+      hideProjectHandle
+    />
   )
 }

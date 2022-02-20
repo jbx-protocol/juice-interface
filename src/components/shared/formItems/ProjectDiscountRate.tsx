@@ -25,7 +25,9 @@ export default function ProjectDiscountRate({
         hideLabel ? undefined : (
           <div>
             <Trans>Discount rate</Trans>{' '}
-            <Switch checked={!disabled} onChange={toggleDisabled} />
+            {toggleDisabled ? (
+              <Switch checked={!disabled} onChange={toggleDisabled} />
+            ) : null}
           </div>
         )
       }

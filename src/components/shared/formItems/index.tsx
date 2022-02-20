@@ -15,6 +15,7 @@ import ProjectReserved from './ProjectReserved'
 import ProjectTarget from './ProjectTarget'
 import ProjectTicketMods from './ProjectTicketMods'
 import ProjectTwitter from './ProjectTwitter'
+import ProjectReconfiguration from './ProjectReconfiguration'
 import TokenRefs from './TokenRefs'
 
 export const FormItems = {
@@ -33,6 +34,7 @@ export const FormItems = {
   ProjectPayoutMods,
   ProjectReserved,
   ProjectTarget,
+  ProjectReconfiguration,
   ProjectTicketMods,
   ProjectTwitter,
   TokenRefs,

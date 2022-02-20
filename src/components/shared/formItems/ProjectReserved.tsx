@@ -26,7 +26,9 @@ export default function ProjectReserved({
         hideLabel ? undefined : (
           <div>
             <Trans>Reserved rate</Trans>{' '}
-            <Switch checked={!disabled} onChange={toggleDisabled} />
+            {toggleDisabled ? (
+              <Switch checked={!disabled} onChange={toggleDisabled} />
+            ) : null}
           </div>
         )
       }

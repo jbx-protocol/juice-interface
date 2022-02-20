@@ -117,10 +117,6 @@ msgstr "<0>注意：</0> 该项目余额为零，无法迁移。如果要迁移�
 msgid "<0>Note: </0>Enabling tokens to be minted will appear risky to contributors, and should only be used when necessary."
 msgstr ""
 
-#: src/components/v2/V2Create/tabs/OthersTabContent.tsx
-msgid "<0>Note: </0>Once your first funding cycle starts, updates you make to attributes in this section will <1>not be applied immediately</1> and only take effect in <2>upcoming funding cycles.</2>"
-msgstr ""
-
 #: src/components/v2/V2Create/tabs/TokenTabContent.tsx
 msgid "<0>Note: </0>Once your first funding cycle starts, updates you make to token attributes will <1>not be applied immediately</1> and only take effect in <2>upcoming funding cycles.</2>"
 msgstr ""
@@ -256,7 +252,6 @@ msgid "All {0} will go to the project owner:"
 msgstr "所有 {0} 会给到项目拥有者："
 
 #: src/components/shared/forms/TicketingForm.tsx
-#: src/components/shared/forms/TokenForm.tsx
 #: src/components/v2/V2Create/tabs/TokenTabContent.tsx
 msgid "Allocate a portion of your project's reserved tokens to other Ethereum wallets or Juicebox projects."
 msgstr "把您项目的一部分保留代币分发给其他以太坊钱包或其他Juicebox项目。"
@@ -442,6 +437,7 @@ msgid "Connect"
 msgstr "连接钱包"
 
 #: src/components/v1/V1Create/index.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Connect wallet to deploy"
 msgstr "连接钱包以部署"
 
@@ -505,10 +501,12 @@ msgid "Date created"
 msgstr "创建日期"
 
 #: src/components/v1/V1Create/index.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Deploy project"
 msgstr "部署项目"
 
 #: src/components/v1/V1Create/index.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Deploy project on {signerNetwork}"
 msgstr "在{signerNetwork} 上部署项目"
 
@@ -1347,7 +1345,6 @@ msgid "Reserved rate"
 msgstr ""
 
 #: src/components/shared/forms/TicketingForm.tsx
-#: src/components/shared/forms/TokenForm.tsx
 #: src/components/v2/V2Create/tabs/TokenTabContent.tsx
 msgid "Reserved token allocation (optional)"
 msgstr "保留代币的分配方案（可选）"
@@ -1463,7 +1460,6 @@ msgstr "保存新的配置"
 msgid "Save token allocation"
 msgstr "保存代币的分配方案"
 
-#: src/components/shared/forms/TokenForm.tsx
 #: src/components/v2/V2Create/tabs/TokenTabContent.tsx
 msgid "Save token configuration"
 msgstr ""

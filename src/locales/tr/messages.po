@@ -105,7 +105,11 @@ msgid "<0>NOTE:</0> This project has a balance of 0. Projects cannot be migrated
 msgstr "<0>NOT:</0> Bu projenin bakiyesi 0. Projeler bakiye olmadan taşınamaz. Bu projeyi taşımak için önce ödemesini yapın veya 1 wei (0.00000000000000001 veya 10<1>-18</1> ETH) yatırmak için aşağıdaki butonu kullanın."
 
 #: src/components/v2/V2Create/tabs/OthersTabContent.tsx
-msgid "<0>Note: </0>Updates you make to attributes in this section will <1>not be applied immediately</1> and only take effect in <2>upcoming funding cycles.</2>"
+msgid "<0>Note: </0>Enabling tokens to be minted will appear risky to contributors, and should only be used when necessary."
+msgstr ""
+
+#: src/components/v2/V2Create/tabs/OthersTabContent.tsx
+msgid "<0>Note: </0>Once your project is create, updates you make to attributes in this section will <1>not be applied immediately</1> and only take effect in <2>upcoming funding cycles.</2>"
 msgstr ""
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
@@ -243,8 +247,8 @@ msgstr "Tüm {0} proje sahibine gidecek:"
 msgid "Allocate a portion of your project's reserved tokens to other Ethereum wallets or Juicebox projects."
 msgstr "Projenizin ayrılan token'larının bir kısmını diğer Ethereum cüzdanlarına veya Juicebox projelerine tahsis edin."
 
-#: src/components/shared/forms/OthersForm.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
+#: src/components/v2/V2Create/tabs/OthersTabContent.tsx
 msgid "Allow minting tokens"
 msgstr "Token'ların basılmasına izin verin"
 
@@ -428,6 +432,7 @@ msgid "Connect wallet to deploy"
 msgstr ""
 
 #: src/components/shared/ReconfigurationDrawer.tsx
+#: src/components/shared/formItems/ProjectReconfiguration.tsx
 #: src/components/shared/forms/RulesForm.tsx
 msgid "Contract address: {0}"
 msgstr "Sözleşme Adresi: {0}"
@@ -628,12 +633,10 @@ msgstr "İzlenen varlıkları düzenleyin"
 msgid "Enabled"
 msgstr "Etkin"
 
-#: src/components/shared/forms/OthersForm.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "Enabling this allows the project owner to manually mint any amount of tokens to any address."
 msgstr "Bunun etkinleştirilmesi, proje sahibine, herhangi bir miktarda token'ı herhangi bir adrese manuel olarak basma izni verir."
 
-#: src/components/shared/forms/OthersForm.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "Enabling tokens to be minted will appear risky to contributors, and should only be used when necessary."
 msgstr "Token basımını etkinleştirmek katkıda bulunanlar için riskli görünecektir, yalnızca gerektiğinde kullanılmalıdır."
@@ -1050,8 +1053,8 @@ msgstr "Projenizin bakiyesi finansman döngüsü hedefinizi aşarsa taşma oluş
 msgid "Paid as <0/>"
 msgstr "<0/> olarak ödendi"
 
-#: src/components/shared/forms/OthersForm.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
+#: src/components/v2/V2Create/tabs/OthersTabContent.tsx
 msgid "Pause payments"
 msgstr "Ödemeleri duraklat"
 
@@ -1386,7 +1389,6 @@ msgstr "Finansman döngülerinin nasıl yeniden yapılandırılabileceğine ili�
 msgid "Rules for how changes can be made to your project."
 msgstr "Projenizde nasıl değişiklik yapılabileceğine ilişkin kurallar."
 
-#: src/components/shared/formItems/ProjectReconfiguration.tsx
 #: src/components/shared/forms/RulesForm.tsx
 msgid "Rules for how this project's funding cycles can be reconfigured."
 msgstr "Bu projenin finansman döngülerinin nasıl yeniden yapılandırılabileceğine ilişkin kurallar."
@@ -1418,9 +1420,9 @@ msgstr "Tanıtıcıyı kaydet"
 msgid "Save payouts"
 msgstr "Ödemeleri kaydet"
 
-#: src/components/shared/forms/OthersForm.tsx
 #: src/components/shared/forms/ProjectDetailsForm.tsx
 #: src/components/v1/V1Create/ProjectForm.tsx
+#: src/components/v2/V2Create/tabs/OthersTabContent.tsx
 msgid "Save project details"
 msgstr "Proje ayrıntılarını kaydet"
 
@@ -1638,6 +1640,10 @@ msgstr "Bu nitelikler herhangi bir zamanda değiştirilebilir."
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "These settings will <0>not</0> be editable immediately within a funding cycle. They can only be changed for <1>upcoming</1> funding cycles."
 msgstr "Bu ayarlar, bir finansman döngüsü içinde hemen <0>düzenlenemez</0>. Yalnızca <1>yaklaşan</1> finansman döngüleri için değiştirilebilirler."
+
+#: src/constants/ballotStrategies/ballotStrategies.ts
+msgid "This address is an unrecognized strategy contract. Make sure it is correct!"
+msgstr ""
 
 #: src/components/shared/Mod.tsx
 msgid "This address will receive any tokens minted when the recipient project gets paid."
@@ -1875,6 +1881,14 @@ msgstr "İndirim oranı nedir?"
 msgid "What's going on under the hood?"
 msgstr "Kaputun altında neler oluyor?"
 
+#: src/components/v2/V2Create/tabs/OthersTabContent.tsx
+msgid "When Minting Tokens is enabled, the project owner can manually mint any amount of tokens to any address."
+msgstr ""
+
+#: src/components/v2/V2Create/tabs/OthersTabContent.tsx
+msgid "When Pause Payments is enabled, your project cannot receive direct payments."
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "When someone pays your project, they'll receive your project's tokens in return. Tokens can be redeemed for a portion of your project's overflow funds; when you win, your community wins with you. Leverage your project's token to grant governance rights, community access, or other membership perks."
 msgstr ""
@@ -1957,7 +1971,6 @@ msgstr "Bakiyeniz: {0}"
 msgid "Your feedback will be sent to a <0>public Discord channel </0>for our development team to consider."
 msgstr ""
 
-#: src/components/shared/forms/OthersForm.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "Your project cannot receive direct payments while paused."
 msgstr "Projeniz duraklatıldığında doğrudan ödeme alamaz."
@@ -2154,10 +2167,6 @@ msgstr "{0}/{1} çekildi"
 #: src/components/v1/V1Project/Rewards/index.tsx
 msgid "{0}{1}"
 msgstr "{0}{1}"
-
-#: src/constants/ballotStrategies/ballotStrategies.ts
-msgid "{address} is an unrecognized strategy contract. Make sure this is correct!"
-msgstr ""
 
 #: src/components/v1/V1Project/ProjectActivity/ActivityTabContent.tsx
 msgid "{count} total"

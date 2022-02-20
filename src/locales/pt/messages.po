@@ -105,7 +105,11 @@ msgid "<0>NOTE:</0> This project has a balance of 0. Projects cannot be migrated
 msgstr "<0>NOTA:</0> Este projeto tem um saldo de 0. Os projetos não podem ser migrados sem um saldo. Para migrar um projeto, primeiramente deve pagá-lo ou usar o botão abaixo para depositar 1 Wei (0.000000000000000001 o 10<1>-18</1> ETH)."
 
 #: src/components/v2/V2Create/tabs/OthersTabContent.tsx
-msgid "<0>Note: </0>Updates you make to attributes in this section will <1>not be applied immediately</1> and only take effect in <2>upcoming funding cycles.</2>"
+msgid "<0>Note: </0>Enabling tokens to be minted will appear risky to contributors, and should only be used when necessary."
+msgstr ""
+
+#: src/components/v2/V2Create/tabs/OthersTabContent.tsx
+msgid "<0>Note: </0>Once your project is create, updates you make to attributes in this section will <1>not be applied immediately</1> and only take effect in <2>upcoming funding cycles.</2>"
 msgstr ""
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
@@ -243,8 +247,8 @@ msgstr "Tudo {0} irá para o proprietário do projeto:"
 msgid "Allocate a portion of your project's reserved tokens to other Ethereum wallets or Juicebox projects."
 msgstr ""
 
-#: src/components/shared/forms/OthersForm.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
+#: src/components/v2/V2Create/tabs/OthersTabContent.tsx
 msgid "Allow minting tokens"
 msgstr "Permitir a produção de tokens"
 
@@ -428,6 +432,7 @@ msgid "Connect wallet to deploy"
 msgstr ""
 
 #: src/components/shared/ReconfigurationDrawer.tsx
+#: src/components/shared/formItems/ProjectReconfiguration.tsx
 #: src/components/shared/forms/RulesForm.tsx
 msgid "Contract address: {0}"
 msgstr "Endereço de contato: {0}"
@@ -628,12 +633,10 @@ msgstr "Editar ativos rastreados"
 msgid "Enabled"
 msgstr "Ativado"
 
-#: src/components/shared/forms/OthersForm.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "Enabling this allows the project owner to manually mint any amount of tokens to any address."
 msgstr "Ativar isto permite o proprietário do projeto produzir manualmente qualquer quantidade de tokens para qualquer endereço."
 
-#: src/components/shared/forms/OthersForm.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "Enabling tokens to be minted will appear risky to contributors, and should only be used when necessary."
 msgstr ""
@@ -1050,8 +1053,8 @@ msgstr "Overflow é criado se o saldo do seu projeto exceder o meta do seu ciclo
 msgid "Paid as <0/>"
 msgstr "Pago como <0/>"
 
-#: src/components/shared/forms/OthersForm.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
+#: src/components/v2/V2Create/tabs/OthersTabContent.tsx
 msgid "Pause payments"
 msgstr "Pausar pagamentos"
 
@@ -1386,7 +1389,6 @@ msgstr "Regras para determinar quantos ciclos de financiamento podem ser reconfi
 msgid "Rules for how changes can be made to your project."
 msgstr "Regras sobre como fazer mudanças no seu projeto."
 
-#: src/components/shared/formItems/ProjectReconfiguration.tsx
 #: src/components/shared/forms/RulesForm.tsx
 msgid "Rules for how this project's funding cycles can be reconfigured."
 msgstr "Regras para como os ciclos de financiamento deste projeto podem ser reconfigurados."
@@ -1418,9 +1420,9 @@ msgstr "Salvar identificador"
 msgid "Save payouts"
 msgstr "Salvar pagamentos"
 
-#: src/components/shared/forms/OthersForm.tsx
 #: src/components/shared/forms/ProjectDetailsForm.tsx
 #: src/components/v1/V1Create/ProjectForm.tsx
+#: src/components/v2/V2Create/tabs/OthersTabContent.tsx
 msgid "Save project details"
 msgstr "Salvar detalhes do projeto"
 
@@ -1638,6 +1640,10 @@ msgstr "Esses atributos podem ser modificados a qualquer momento."
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "These settings will <0>not</0> be editable immediately within a funding cycle. They can only be changed for <1>upcoming</1> funding cycles."
 msgstr "Essas ferramentas <0>não</0> serão editáveis imediatamente durante um ciclo de financiamento. Elas só poderão ser modificadas para <1>próximos</1> ciclos de financiamento."
+
+#: src/constants/ballotStrategies/ballotStrategies.ts
+msgid "This address is an unrecognized strategy contract. Make sure it is correct!"
+msgstr ""
 
 #: src/components/shared/Mod.tsx
 msgid "This address will receive any tokens minted when the recipient project gets paid."
@@ -1875,6 +1881,14 @@ msgstr "O que é uma taxa de desconto?"
 msgid "What's going on under the hood?"
 msgstr "Como funciona o Juicebox?"
 
+#: src/components/v2/V2Create/tabs/OthersTabContent.tsx
+msgid "When Minting Tokens is enabled, the project owner can manually mint any amount of tokens to any address."
+msgstr ""
+
+#: src/components/v2/V2Create/tabs/OthersTabContent.tsx
+msgid "When Pause Payments is enabled, your project cannot receive direct payments."
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "When someone pays your project, they'll receive your project's tokens in return. Tokens can be redeemed for a portion of your project's overflow funds; when you win, your community wins with you. Leverage your project's token to grant governance rights, community access, or other membership perks."
 msgstr ""
@@ -1957,7 +1971,6 @@ msgstr "Seu saldo: {0}"
 msgid "Your feedback will be sent to a <0>public Discord channel </0>for our development team to consider."
 msgstr ""
 
-#: src/components/shared/forms/OthersForm.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "Your project cannot receive direct payments while paused."
 msgstr "O seu projeto não poderá receber pagamentos diretos enquanto se encontrar pausado."
@@ -2154,10 +2167,6 @@ msgstr "{0}/{1} retirado"
 #: src/components/v1/V1Project/Rewards/index.tsx
 msgid "{0}{1}"
 msgstr "{0}{1}"
-
-#: src/constants/ballotStrategies/ballotStrategies.ts
-msgid "{address} is an unrecognized strategy contract. Make sure this is correct!"
-msgstr ""
 
 #: src/components/v1/V1Project/ProjectActivity/ActivityTabContent.tsx
 msgid "{count} total"

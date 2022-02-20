@@ -16,8 +16,6 @@ import OthersTabContent from './tabs/OthersTabContent'
 
 const { TabPane } = Tabs
 
-const createFormMaxWidth = 700
-
 export default function V2Create() {
   const isMainnet = readNetwork.name === NetworkName.mainnet
 
@@ -36,7 +34,7 @@ export default function V2Create() {
         )}
 
         {!isMainnet && (
-          <div style={{ maxWidth: createFormMaxWidth }}>
+          <div>
             <Tabs tabBarExtraContent={{ right: <DeployProjectButton /> }}>
               <TabPane tab="1. Project details" key="1">
                 <ProjectDetailsTabContent />
@@ -48,7 +46,6 @@ export default function V2Create() {
                 <TokenTabContent />
               </TabPane>
               <TabPane tab="4. Others" key="4">
-                {/* TODO */}
                 <OthersTabContent />
               </TabPane>
             </Tabs>

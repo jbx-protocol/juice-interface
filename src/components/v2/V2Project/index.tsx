@@ -8,7 +8,7 @@ export default function V2Project() {
 
   return (
     <div>
-      <ProjectHeader projectId={projectId} metadata={metadata} />
+      <ProjectHeader metadata={metadata} />
     </div>
   )
 }

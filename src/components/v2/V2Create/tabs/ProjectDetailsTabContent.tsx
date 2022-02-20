@@ -1,8 +1,9 @@
-import { Space } from 'antd'
+import { Col, Row } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import ProjectDetailsForm, {
   ProjectDetailsFormFields,
 } from 'components/shared/forms/ProjectDetailsForm'
+import ProjectHeader from 'components/shared/ProjectHeader'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
 import { useCallback, useEffect } from 'react'
@@ -56,10 +57,17 @@ export default function ProjectDetailsTabContent() {
   }, [resetProjectForm])
 
   return (
-    <ProjectDetailsForm
-      form={projectForm}
-      onSave={onProjectFormSaved}
-      hideProjectHandle
-    />
+    <Row gutter={32}>
+      <Col span={12}>
+        <ProjectDetailsForm
+          form={projectForm}
+          onSave={onProjectFormSaved}
+          hideProjectHandle
+        />
+      </Col>
+      <Col span={12}>
+        <ProjectHeader metadata={projectMetadata} />
+      </Col>
+    </Row>
   )
 }

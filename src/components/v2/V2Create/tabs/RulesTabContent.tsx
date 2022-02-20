@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Button, Form, Space, Switch } from 'antd'
+import { Button, Col, Form, Row, Switch } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 
 import { useAppDispatch } from 'hooks/AppDispatch'
@@ -75,39 +75,46 @@ export default function RulesTabContent() {
   )
 
   return (
-    <Form form={form} layout="vertical" onFinish={onFormSaved}>
-      <Form.Item
-        name="pausePay"
-        label={t`Pause payments`}
-        extra={t`When Pause Payments is enabled, your project cannot receive direct payments.`}
-        valuePropName="checked"
-        style={{ ...shadowCard(theme), padding: '2rem' }}
-      >
-        <Switch />
-      </Form.Item>
-      <Form.Item
-        name="pauseMint"
-        label={t`Allow minting tokens`}
-        extra={tokenMintingExtra}
-        valuePropName="checked"
-        style={{ ...shadowCard(theme), padding: '2rem' }}
-      >
-        <Switch
-          onChange={val => {
-            setShowMintingWarning(val)
-          }}
-        />
-      </Form.Item>
-      <FormItems.ProjectReconfiguration
-        value={form.getFieldValue('ballot') ?? fundingCycleData?.ballot}
-        onChange={(address: string) => form.setFieldsValue({ ballot: address })}
-        style={{ ...shadowCard(theme), padding: '2rem' }}
-      />
-      <Form.Item>
-        <Button htmlType="submit" type="primary">
-          <Trans>Save project details</Trans>
-        </Button>
-      </Form.Item>
-    </Form>
+    <Row gutter={32}>
+      <Col span={12}>
+        <Form form={form} layout="vertical" onFinish={onFormSaved}>
+          <Form.Item
+            name="pausePay"
+            label={t`Pause payments`}
+            extra={t`When Pause Payments is enabled, your project cannot receive direct payments.`}
+            valuePropName="checked"
+            style={{ ...shadowCard(theme), padding: '2rem' }}
+          >
+            <Switch />
+          </Form.Item>
+          <Form.Item
+            name="pauseMint"
+            label={t`Allow minting tokens`}
+            extra={tokenMintingExtra}
+            valuePropName="checked"
+            style={{ ...shadowCard(theme), padding: '2rem' }}
+          >
+            <Switch
+              onChange={val => {
+                setShowMintingWarning(val)
+              }}
+            />
+          </Form.Item>
+          <FormItems.ProjectReconfiguration
+            value={form.getFieldValue('ballot') ?? fundingCycleData?.ballot}
+            onChange={(address: string) =>
+              form.setFieldsValue({ ballot: address })
+            }
+            style={{ ...shadowCard(theme), padding: '2rem' }}
+          />
+          <Form.Item>
+            <Button htmlType="submit" type="primary">
+              <Trans>Save project details</Trans>
+            </Button>
+          </Form.Item>
+        </Form>
+      </Col>
+      <Col span={12}></Col>
+    </Row>
   )
 }

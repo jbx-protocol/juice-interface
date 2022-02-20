@@ -24,7 +24,7 @@ import {
 
 import { shadowCard } from 'constants/styles/shadowCard'
 
-export type TokenFormFields = {
+type TokenFormFields = {
   discountRate: string
   reservedRate: string
   redemptionRate: string
@@ -82,13 +82,17 @@ export default function TokenTabContent() {
 
   const dispatch = useAppDispatch()
 
-  const onTokenFormSaved = useCallback(() => {
-    const fields = tokenForm.getFieldsValue(true)
-    dispatch(editingV2ProjectActions.setDiscountRate(fields.discountRate))
-    dispatch(editingV2ProjectActions.setReservedRate(fields.reservedRate))
-    dispatch(editingV2ProjectActions.setRedemptionRate(fields.redemptionRate))
-    dispatch(editingV2ProjectActions.setReserveTokenSplits(reserveTokenSplits))
-  }, [dispatch, tokenForm, reserveTokenSplits])
+  const onTokenFormSaved = useCallback(
+    (fields: TokenFormFields) => {
+      dispatch(editingV2ProjectActions.setDiscountRate(fields.discountRate))
+      dispatch(editingV2ProjectActions.setReservedRate(fields.reservedRate))
+      dispatch(editingV2ProjectActions.setRedemptionRate(fields.redemptionRate))
+      dispatch(
+        editingV2ProjectActions.setReserveTokenSplits(reserveTokenSplits),
+      )
+    },
+    [dispatch, reserveTokenSplits],
+  )
 
   const resetTokenForm = useCallback(() => {
     // Check form value first in case form has been updated before new redux state saved

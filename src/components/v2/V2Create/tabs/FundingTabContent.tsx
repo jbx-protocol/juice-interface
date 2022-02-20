@@ -11,7 +11,7 @@ import ProjectPayoutMods from 'components/shared/formItems/ProjectPayoutMods'
 import { PayoutMod } from 'models/mods'
 import { useETHPaymentTerminalFee } from 'hooks/v2/contractReader/ETHPaymentTerminalFee'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
-import { toV1Currency } from 'utils/v1/currency'
+
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { V2UserContext } from 'contexts/v2/userContext'
@@ -23,6 +23,8 @@ import {
 import { SerializedV2FundAccessConstraint } from 'utils/v2/serializers'
 
 import { toMod, toSplit } from 'utils/v2/splits'
+
+import { toV1Currency } from 'constants/v1/currency'
 
 import { shadowCard } from 'constants/styles/shadowCard'
 import { toV2Currency, V2_CURRENCY_ETH } from 'constants/v2/currency'
@@ -63,7 +65,6 @@ export default function ProjectDetailsTabContent() {
     setMods(payoutSplits?.map(split => toMod(split)) ?? [])
 
     const _target = fundAccessConstraint?.distributionLimit ?? '0'
-    console.log('fundAccessConstraint', fundAccessConstraint)
     const _targetCurrency = parseInt(
       fundAccessConstraint?.distributionLimitCurrency ?? `${V2_CURRENCY_ETH}`,
     ) as V2CurrencyOption
@@ -145,7 +146,7 @@ export default function ProjectDetailsTabContent() {
           {isFundingTargetSectionVisible ? (
             <div
               style={{
-                padding: '1rem',
+                padding: '2rem',
                 marginBottom: '10px',
                 ...shadowCard(theme),
               }}
@@ -233,7 +234,7 @@ export default function ProjectDetailsTabContent() {
 
           <div
             style={{
-              padding: '1rem',
+              padding: '2rem',
               marginBottom: '1rem',
               ...shadowCard(theme),
             }}

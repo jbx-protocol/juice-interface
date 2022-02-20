@@ -43,6 +43,7 @@ import {
 } from 'utils/v1/fundingCycle'
 import { amountSubFee } from 'utils/math'
 import { serializeV1FundingCycle } from 'utils/v1/serializers'
+import { drawerWidth } from 'utils/drawerWidth'
 
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 
@@ -249,7 +250,7 @@ export default function ReconfigureFCModal({
 
   const drawerStyle: Partial<DrawerProps> = {
     placement: 'right',
-    width: Math.min(640, window.innerWidth * 0.9),
+    width: drawerWidth(),
   }
 
   const buildSteps = useCallback(

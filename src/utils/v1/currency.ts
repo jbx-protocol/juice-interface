@@ -1,7 +1,10 @@
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { CSSProperties } from 'react'
 
+import { V2CurrencyOption } from 'models/v2/currencyOption'
+
 import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
+import { V2_CURRENCY_ETH, V2_CURRENCY_USD } from 'constants/v2/currency'
 
 const currencies: Record<
   V1CurrencyOption,

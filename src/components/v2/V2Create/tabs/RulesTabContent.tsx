@@ -13,16 +13,16 @@ import { ThemeContext } from 'contexts/themeContext'
 import { ballotStrategies } from 'constants/ballotStrategies/ballotStrategies'
 import { shadowCard } from 'constants/styles/shadowCard'
 
-export type OthersFormFields = {
+type RulesFormFields = {
   pausePay: boolean
   pauseMint: boolean
   ballot: string
 }
 
-export default function OthersTabContent() {
+export default function RulesTabContent() {
   const { theme } = useContext(ThemeContext)
 
-  const [othersForm] = useForm<OthersFormFields>()
+  const [form] = useForm<RulesFormFields>()
   const dispatch = useAppDispatch()
   const { fundingCycleMetadata, fundingCycleData } = useAppSelector(
     state => state.editingV2Project,
@@ -30,15 +30,17 @@ export default function OthersTabContent() {
 
   const [showMintingWarning, setShowMintingWarning] = useState<boolean>(false)
 
-  const onOthersFormSaved = useCallback(() => {
-    const fields = othersForm.getFieldsValue(true)
-    dispatch(editingV2ProjectActions.setPausePay(fields.pausePay))
-    dispatch(editingV2ProjectActions.setPauseMint(fields.pauseMint))
-    dispatch(editingV2ProjectActions.setBallot(fields.ballot))
-  }, [dispatch, othersForm])
+  const onFormSaved = useCallback(
+    (fields: RulesFormFields) => {
+      dispatch(editingV2ProjectActions.setPausePay(fields.pausePay))
+      dispatch(editingV2ProjectActions.setPauseMint(fields.pauseMint))
+      dispatch(editingV2ProjectActions.setBallot(fields.ballot))
+    },
+    [dispatch],
+  )
 
-  const resetOthersForm = useCallback(() => {
-    othersForm.setFieldsValue({
+  const resetForm = useCallback(() => {
+    form.setFieldsValue({
       pausePay: fundingCycleMetadata?.pausePay ?? false,
       pauseMint: fundingCycleMetadata?.pauseMint ?? false,
       ballot: fundingCycleData?.ballot ?? ballotStrategies()[2].address, // 3-day delay default
@@ -47,13 +49,13 @@ export default function OthersTabContent() {
     fundingCycleMetadata?.pausePay,
     fundingCycleMetadata?.pauseMint,
     fundingCycleData?.ballot,
-    othersForm,
+    form,
   ])
 
   // initially fill form with any existing redux state
   useEffect(() => {
-    resetOthersForm()
-  }, [resetOthersForm])
+    resetForm()
+  }, [resetForm])
 
   const tokenMintingExtra = (
     <React.Fragment>
@@ -75,7 +77,7 @@ export default function OthersTabContent() {
   return (
     <div>
       <Space direction="vertical" size="large">
-        <Form form={othersForm} layout="vertical" onFinish={onOthersFormSaved}>
+        <Form form={form} layout="vertical" onFinish={onFormSaved}>
           <Form.Item
             name="pausePay"
             label={t`Pause payments`}
@@ -99,11 +101,9 @@ export default function OthersTabContent() {
             />
           </Form.Item>
           <FormItems.ProjectReconfiguration
-            value={
-              othersForm.getFieldValue('ballot') ?? fundingCycleData?.ballot
-            }
+            value={form.getFieldValue('ballot') ?? fundingCycleData?.ballot}
             onChange={(address: string) =>
-              othersForm.setFieldsValue({ ballot: address })
+              form.setFieldsValue({ ballot: address })
             }
             style={{ ...shadowCard(theme), padding: '2rem' }}
           />

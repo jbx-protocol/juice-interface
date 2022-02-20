@@ -12,7 +12,7 @@ import ProjectDetailsTabContent from './tabs/ProjectDetailsTabContent'
 import FundingTabContent from './tabs/FundingTabContent'
 import DeployProjectButton from './DeployProjectButton'
 import TokenTabContent from './tabs/TokenTabContent'
-import OthersTabContent from './tabs/OthersTabContent'
+import OthersTabContent from './tabs/RulesTabContent'
 
 const { TabPane } = Tabs
 
@@ -45,7 +45,7 @@ export default function V2Create() {
               <TabPane tab="3. Token" key="3">
                 <TokenTabContent />
               </TabPane>
-              <TabPane tab="4. Others" key="4">
+              <TabPane tab="4. Rules" key="4">
                 <OthersTabContent />
               </TabPane>
             </Tabs>

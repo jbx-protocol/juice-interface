@@ -24,6 +24,8 @@ import { SerializedV2FundAccessConstraint } from 'utils/v2/serializers'
 
 import { toMod, toSplit } from 'utils/v2/splits'
 
+import { getDefaultFundAccessConstraint } from 'utils/fundingCycleV2'
+
 import { toV1Currency } from 'constants/v1/currency'
 
 import { shadowCard } from 'constants/styles/shadowCard'
@@ -51,10 +53,10 @@ export default function ProjectDetailsTabContent() {
   const { fundAccessConstraints, fundingCycleData, payoutSplits } =
     useAppSelector(state => state.editingV2Project)
 
-  // Assume the first item is the one of interest.
-  const fundAccessConstraint = fundAccessConstraints[0] as
-    | SerializedV2FundAccessConstraint
-    | undefined
+  const fundAccessConstraint =
+    getDefaultFundAccessConstraint<SerializedV2FundAccessConstraint>(
+      fundAccessConstraints,
+    )
 
   const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
 

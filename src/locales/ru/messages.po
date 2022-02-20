@@ -22,6 +22,15 @@ msgstr ""
 msgid "(+{0} reserved)"
 msgstr "(+{0} зарезервировано)"
 
+#: src/components/shared/formItems/ProjectDiscountRate.tsx
+#: src/components/shared/formItems/ProjectReserved.tsx
+msgid "(0%)"
+msgstr ""
+
+#: src/components/shared/formItems/BondingCurve/ProjectBondingCurveRate.tsx
+msgid "(100%)"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
 msgid "(Optional) Add a note to this payment on-chain"
 msgstr "(Необязательно) Добавить примечание к этому платежу в цепочке"
@@ -109,7 +118,11 @@ msgid "<0>Note: </0>Enabling tokens to be minted will appear risky to contributo
 msgstr ""
 
 #: src/components/v2/V2Create/tabs/OthersTabContent.tsx
-msgid "<0>Note: </0>Once your project is create, updates you make to attributes in this section will <1>not be applied immediately</1> and only take effect in <2>upcoming funding cycles.</2>"
+msgid "<0>Note: </0>Once your first funding cycle starts, updates you make to attributes in this section will <1>not be applied immediately</1> and only take effect in <2>upcoming funding cycles.</2>"
+msgstr ""
+
+#: src/components/v2/V2Create/tabs/TokenTabContent.tsx
+msgid "<0>Note: </0>Once your first funding cycle starts, updates you make to token attributes will <1>not be applied immediately</1> and only take effect in <2>upcoming funding cycles.</2>"
 msgstr ""
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
@@ -244,6 +257,7 @@ msgstr "Все {0} будут направлены владельцу проек
 
 #: src/components/shared/forms/TicketingForm.tsx
 #: src/components/shared/forms/TokenForm.tsx
+#: src/components/v2/V2Create/tabs/TokenTabContent.tsx
 msgid "Allocate a portion of your project's reserved tokens to other Ethereum wallets or Juicebox projects."
 msgstr "Выделите часть зарезервированных токенов вашего проекта на другие кошельки Ethereum или проекты Juicebox."
 
@@ -535,6 +549,10 @@ msgstr "Дискорд"
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Discount rate"
 msgstr "Учетная ставка "
+
+#: src/components/v2/V2Create/tabs/TokenTabContent.tsx
+msgid "Discount rate disabled when funding cycle duration has not been set."
+msgstr ""
 
 #: src/components/v1/V1Create/index.tsx
 msgid "Discount rate disabled while funding cycle duration is 0."
@@ -1302,6 +1320,14 @@ msgstr ""
 msgid "Redeem {tokensTextLong} for ETH"
 msgstr ""
 
+#: src/components/v2/V2Create/tabs/TokenTabContent.tsx
+msgid "Redemption disabled while no funding target is set."
+msgstr ""
+
+#: src/components/v2/V2Create/tabs/TokenTabContent.tsx
+msgid "Redemption rate"
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "Redistributable surplus"
 msgstr "Перераспределяемый излишек"
@@ -1320,6 +1346,7 @@ msgstr ""
 
 #: src/components/shared/forms/TicketingForm.tsx
 #: src/components/shared/forms/TokenForm.tsx
+#: src/components/v2/V2Create/tabs/TokenTabContent.tsx
 msgid "Reserved token allocation (optional)"
 msgstr ""
 
@@ -1435,6 +1462,7 @@ msgid "Save token allocation"
 msgstr ""
 
 #: src/components/shared/forms/TokenForm.tsx
+#: src/components/v2/V2Create/tabs/TokenTabContent.tsx
 msgid "Save token configuration"
 msgstr ""
 

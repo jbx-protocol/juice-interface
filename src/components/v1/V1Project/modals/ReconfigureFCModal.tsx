@@ -38,7 +38,7 @@ import {
 } from 'utils/formatNumber'
 import {
   decodeFundingCycleMetadata,
-  hasFundingTarget,
+  hasFundingTargetV1,
   isRecurring,
 } from 'utils/v1/fundingCycle'
 import { amountSubFee } from 'utils/math'
@@ -368,7 +368,7 @@ export default function ReconfigureFCModal({
                     },
                   ]
                 : []),
-              ...(isRecurring(editingFC) && hasFundingTarget(editingFC)
+              ...(isRecurring(editingFC) && hasFundingTargetV1(editingFC)
                 ? [
                     {
                       title: t`Incentives`,
@@ -389,7 +389,7 @@ export default function ReconfigureFCModal({
               }
               suffix={editingFC.duration.gt(0) ? 'days' : ''}
             />
-            {hasFundingTarget(editingFC) && (
+            {hasFundingTargetV1(editingFC) && (
               <Statistic
                 title={t`Amount`}
                 valueRender={() => (
@@ -438,7 +438,7 @@ export default function ReconfigureFCModal({
             />
             {editingFC &&
               isRecurring(editingFC) &&
-              hasFundingTarget(editingFC) && (
+              hasFundingTargetV1(editingFC) && (
                 <Statistic
                   title={t`Discount rate`}
                   value={fromPermille(editingFC.discountRate)}
@@ -447,7 +447,7 @@ export default function ReconfigureFCModal({
               )}
             {editingFC &&
               isRecurring(editingFC) &&
-              hasFundingTarget(editingFC) && (
+              hasFundingTargetV1(editingFC) && (
                 <Statistic
                   title={t`Bonding curve rate`}
                   value={fromPerbicent(editingFC.bondingCurveRate)}
@@ -601,7 +601,7 @@ export default function ReconfigureFCModal({
           initialDiscountRate={fromPermille(editingFC.discountRate)}
           initialBondingCurveRate={fromPerbicent(editingFC.bondingCurveRate)}
           disableBondingCurve={
-            !hasFundingTarget(editingFC)
+            !hasFundingTargetV1(editingFC)
               ? t`Bonding curve disabled while no funding target is set.`
               : undefined
           }

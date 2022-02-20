@@ -12,7 +12,7 @@ import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { PayoutMod } from 'models/mods'
 import { CSSProperties, useContext, useState } from 'react'
 import { formatWad, fromPerbicent } from 'utils/formatNumber'
-import { hasFundingTarget } from 'utils/v1/fundingCycle'
+import { hasFundingTargetV1 } from 'utils/v1/fundingCycle'
 
 import PayoutModsList from '../../shared/PayoutModsList'
 
@@ -92,7 +92,7 @@ export default function Spending({
                   currency={currentFC.currency.toNumber() as V1CurrencyOption}
                 />
                 {formatWad(currentFC.tapped, { precision: 4 }) || '0'}
-                {hasFundingTarget(currentFC) ? (
+                {hasFundingTargetV1(currentFC) ? (
                   <span>/{formatWad(currentFC.target, { precision: 4 })} </span>
                 ) : null}{' '}
                 withdrawn

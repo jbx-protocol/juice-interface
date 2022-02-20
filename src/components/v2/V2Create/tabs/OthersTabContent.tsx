@@ -77,9 +77,10 @@ export default function OthersTabContent() {
       <Space direction="vertical" size="large">
         <p>
           <Trans>
-            <strong>Note: </strong>Once your project is create, updates you make
-            to attributes in this section will <i>not be applied immediately</i>{' '}
-            and only take effect in <i>upcoming funding cycles.</i>
+            <strong>Note: </strong>Once your first funding cycle starts, updates
+            you make to attributes in this section will{' '}
+            <i>not be applied immediately</i> and only take effect in{' '}
+            <i>upcoming funding cycles.</i>
           </Trans>
         </p>
         <Form form={othersForm} layout="vertical" onFinish={onOthersFormSaved}>

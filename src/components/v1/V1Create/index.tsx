@@ -29,8 +29,8 @@ import { editingProjectActions } from 'redux/slices/editingProject'
 import { fromPerbicent, fromPermille, fromWad } from 'utils/formatNumber'
 import {
   encodeFundingCycleMetadata,
-  hasFundingTarget,
-  hasFundingDuration,
+  hasFundingTargetV1,
+  hasFundingDurationV1,
 } from 'utils/v1/fundingCycle'
 import {
   cidFromUrl,
@@ -708,7 +708,7 @@ export default function V1Create() {
                 : undefined
             }
             disableBondingCurve={
-              !hasFundingTarget(editingFC)
+              !hasFundingTargetV1(editingFC)
                 ? t`Bonding curve disabled while no funding target is set.`
                 : undefined
             }
@@ -736,7 +736,7 @@ export default function V1Create() {
               setRestrictedActionsFormModalVisible(false)
               setCurrentStep(undefined)
             }}
-            hasFundingDuration={hasFundingDuration(editingFC)}
+            hasFundingDuration={hasFundingDurationV1(editingFC)}
           />
         </Drawer>
 

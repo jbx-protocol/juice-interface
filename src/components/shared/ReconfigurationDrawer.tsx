@@ -90,6 +90,7 @@ export default function ReconfigurationDrawer({
         {ballotStrategies().map((s: Strategy, i) => (
           <ReconfigurationOption
             title={s.name}
+            key={i}
             content={
               <div>
                 <p>{s.description}</p>

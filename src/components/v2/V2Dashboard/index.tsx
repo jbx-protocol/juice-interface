@@ -6,6 +6,8 @@ import { BigNumber } from '@ethersproject/bignumber'
 import useProjectMetadataContent from 'hooks/v2/contractReader/ProjectMetadataContent'
 import ScrollToTopButton from 'components/shared/ScrollToTopButton'
 
+import useProjectCurrentFundingCycle from 'hooks/v2/contractReader/ProjectCurrentFundingCycle'
+
 import { layouts } from 'constants/styles/layouts'
 
 import V2Project from '../V2Project'
@@ -24,6 +26,12 @@ export default function V2Dashboard() {
     isLoading: metadataLoading,
   } = useV2ProjectMetadata(metadataCID)
 
+  const { data: fundingCycle, loading: fundingCycleLoading } =
+    useProjectCurrentFundingCycle({
+      projectId,
+    })
+
+  console.log('fundingCycle', fundingCycle, fundingCycleLoading)
   if (metadataLoading || metadataURILoading) return <Loading />
 
   if (projectId?.eq(0) || metadataError) {
@@ -33,6 +41,7 @@ export default function V2Dashboard() {
   const project = {
     projectId,
     metadata,
+    fundingCycle,
   }
 
   return (

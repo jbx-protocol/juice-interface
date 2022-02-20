@@ -117,12 +117,8 @@ msgstr "<0>NOTA:</0> Este projeto tem um saldo de 0. Os projetos não podem ser 
 msgid "<0>Note: </0>Enabling tokens to be minted will appear risky to contributors, and should only be used when necessary."
 msgstr ""
 
-#: src/components/v2/V2Create/tabs/OthersTabContent.tsx
-msgid "<0>Note: </0>Once your project is create, updates you make to attributes in this section will <1>not be applied immediately</1> and only take effect in <2>upcoming funding cycles.</2>"
-msgstr ""
-
 #: src/components/v2/V2Create/tabs/TokenTabContent.tsx
-msgid "<0>Note: </0>Updates you make to token attributes will <1>not be applied immediately</1> and only take effect in <2>upcoming funding cycles.</2>"
+msgid "<0>Note: </0>Once your first funding cycle starts, updates you make to token attributes will <1>not be applied immediately</1> and only take effect in <2>upcoming funding cycles.</2>"
 msgstr ""
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
@@ -256,7 +252,6 @@ msgid "All {0} will go to the project owner:"
 msgstr "Tudo {0} irá para o proprietário do projeto:"
 
 #: src/components/shared/forms/TicketingForm.tsx
-#: src/components/shared/forms/TokenForm.tsx
 #: src/components/v2/V2Create/tabs/TokenTabContent.tsx
 msgid "Allocate a portion of your project's reserved tokens to other Ethereum wallets or Juicebox projects."
 msgstr ""
@@ -442,6 +437,7 @@ msgid "Connect"
 msgstr "Conectar"
 
 #: src/components/v1/V1Create/index.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Connect wallet to deploy"
 msgstr ""
 
@@ -505,10 +501,12 @@ msgid "Date created"
 msgstr "Data criada"
 
 #: src/components/v1/V1Create/index.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Deploy project"
 msgstr ""
 
 #: src/components/v1/V1Create/index.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Deploy project on {signerNetwork}"
 msgstr ""
 
@@ -1345,7 +1343,6 @@ msgid "Reserved rate"
 msgstr ""
 
 #: src/components/shared/forms/TicketingForm.tsx
-#: src/components/shared/forms/TokenForm.tsx
 #: src/components/v2/V2Create/tabs/TokenTabContent.tsx
 msgid "Reserved token allocation (optional)"
 msgstr ""
@@ -1461,7 +1458,6 @@ msgstr "Salvar reconfiguração"
 msgid "Save token allocation"
 msgstr "Salvar alocação de token"
 
-#: src/components/shared/forms/TokenForm.tsx
 #: src/components/v2/V2Create/tabs/TokenTabContent.tsx
 msgid "Save token configuration"
 msgstr ""

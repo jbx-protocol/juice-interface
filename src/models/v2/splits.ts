@@ -14,6 +14,6 @@ export type ReserveTokenSplitGroup = 2
 export type SplitGroup = ETHPayoutSplitGroup | ReserveTokenSplitGroup
 
 export type GroupedSplits = {
-  group: BigNumber
+  group: SplitGroup
   splits: Split[]
 }

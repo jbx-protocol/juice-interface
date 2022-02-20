@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-02-15 23:55\n"
+"PO-Revision-Date: 2022-02-20 01:57\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -28,7 +28,7 @@ msgstr "(Opcional) Adicionar uma nota a esse pagamento em cadeia"
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "({realTokenAllocationPercent}% of all newly minted tokens)."
-msgstr ""
+msgstr "({realTokenAllocationPercent}% de todos os tokens recentemente criados)."
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "0% fee"
@@ -296,7 +296,7 @@ msgstr "De volta ao início"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Balance exceeded"
-msgstr ""
+msgstr "Saldo excedido"
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "Beneficiary address"
@@ -400,7 +400,7 @@ msgstr "Fechar"
 
 #: src/components/Landing/index.tsx
 msgid "Commit portions of your funds to the people or projects you want to support, or the contributors you want to pay. When you get paid, so do they."
-msgstr ""
+msgstr "Garanta porções dos seus fundos para pessoas ou projetos que você quer apoiar, ou contribuidores que você quer pagar. Quando você for pago, eles também serão."
 
 #: src/components/Landing/index.tsx
 msgid "Community funding for people and projects"
@@ -424,11 +424,11 @@ msgstr "Endereço de contato: {0}"
 
 #: src/constants/fundingWarningText.ts
 msgid "Contributors will not receive any tokens in exchange for paying this project."
-msgstr ""
+msgstr "Contribuidores não receberão tokens em troca de pagar por este projeto."
 
 #: src/constants/fundingWarningText.ts
 msgid "Contributors will receive a relatively small portion of tokens in exchange for paying this project."
-msgstr ""
+msgstr "Contribuidores receberão uma porção relativamente pequena de tokens em troca de pagar por este projeto."
 
 #: src/components/shared/CopyTextButton.tsx
 msgid "Copied!"
@@ -528,7 +528,7 @@ msgstr "Mostra tokens ERC20 e outros tokens de projetos Juicebox que estão na c
 
 #: src/components/shared/forms/PayModsForm.tsx
 msgid "Distribute available funds to other Ethereum wallets or Juicebox projects as payouts. Use this to pay contributors, charities, Juicebox projects you depend on, or anyone else. Funds are distributed whenever a withdrawal is made from your project."
-msgstr ""
+msgstr "Distribua fundos disponíveis para outras carteiras de Ethereum ou projetos do Juicebox como pagamento. Use isso para pagar contribuidores, caridade, projetos do Juicebox dos quais você depende, ou qualquer outra pessoa. Fundos são distribuídos quando ocorre uma retirada de seu projeto."
 
 #: src/components/v1/FundingCycle/Spending.tsx
 msgid "Distribute funds"
@@ -596,15 +596,15 @@ msgstr ""
 
 #: src/components/shared/TicketModsList.tsx
 msgid "Edit reserved token allocation"
-msgstr ""
+msgstr "Editar a alocação de tokens reservados"
 
 #: src/components/shared/TicketModsList.tsx
 msgid "Edit token allocation"
-msgstr ""
+msgstr "Editar alocação de token"
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "Edit token receiver"
-msgstr ""
+msgstr "Editar destinatário de token"
 
 #: src/components/v1/V1Project/modals/BalancesModal.tsx
 #: src/components/v1/V1Project/modals/BalancesModal.tsx
@@ -874,7 +874,7 @@ msgstr "Juicebox foi construído para permitir que pessoas e projetos sejam pago
 
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 msgid "Last paid"
-msgstr ""
+msgstr "Último pagamento"
 
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 msgid "Last paid timestamp"
@@ -956,7 +956,7 @@ msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "No"
-msgstr ""
+msgstr "Não"
 
 #: src/components/v1/V1Project/ProjectActivity/ActivityTabContent.tsx
 msgid "No activity yet"
@@ -2111,3 +2111,4 @@ msgstr "{tokenSymbol}/ETH taxa de câmbio em {exchangeName}."
 #: src/components/v1/V1Project/Rewards/index.tsx
 msgid "{tokensLabel} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
 msgstr ""
+

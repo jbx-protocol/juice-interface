@@ -15,12 +15,12 @@ import { constants } from 'ethers'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import {
   useAppSelector,
-  useEditingFundingCycleSelector,
+  useEditingV1FundingCycleSelector,
 } from 'hooks/AppSelector'
 import { useTerminalFee } from 'hooks/v1/TerminalFee'
 import { useDeployProjectTx } from 'hooks/v1/transactor/DeployProjectTx'
 import { V1ContractName } from 'models/v1/contracts'
-import { CurrencyOption } from 'models/currency-option'
+import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { PayoutMod, TicketMod } from 'models/mods'
 import { V1TerminalVersion } from 'models/v1/terminals'
@@ -31,7 +31,7 @@ import {
   encodeFundingCycleMetadata,
   hasFundingTarget,
   hasFundingDuration,
-} from 'utils/fundingCycle'
+} from 'utils/v1/fundingCycle'
 import {
   cidFromUrl,
   editMetadataForCid,
@@ -84,7 +84,7 @@ export default function V1Create() {
   const [projectForm] = useForm<ProjectFormFields>()
   const [ticketingForm] = useForm<TicketingFormFields>()
   const [restrictedActionsForm] = useForm<RestrictedActionsFormFields>()
-  const editingFC = useEditingFundingCycleSelector()
+  const editingFC = useEditingV1FundingCycleSelector()
   const {
     info: editingProjectInfo,
     ticketMods: editingTicketMods,
@@ -168,7 +168,7 @@ export default function V1Create() {
     dispatch(editingProjectActions.setPayoutMods(mods))
 
   const onBudgetFormSaved = (
-    currency: CurrencyOption,
+    currency: V1CurrencyOption,
     target: string,
     duration: string,
   ) => {
@@ -599,7 +599,7 @@ export default function V1Create() {
           destroyOnClose
         >
           <BudgetForm
-            initialCurrency={editingFC.currency.toNumber() as CurrencyOption}
+            initialCurrency={editingFC.currency.toNumber() as V1CurrencyOption}
             initialTarget={fromWad(editingFC.target)}
             initialDuration={editingFC.duration.toString()}
             onSave={async (currency, target, duration) => {
@@ -621,7 +621,7 @@ export default function V1Create() {
         >
           <PayModsForm
             initialMods={editingPayoutMods}
-            currency={editingFC.currency.toNumber() as CurrencyOption}
+            currency={editingFC.currency.toNumber() as V1CurrencyOption}
             target={editingFC.target}
             fee={editingFC.fee}
             onSave={async mods => {

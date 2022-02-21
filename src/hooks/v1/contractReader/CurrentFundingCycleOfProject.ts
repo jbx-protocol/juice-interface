@@ -3,7 +3,7 @@ import { V1ContractName } from 'models/v1/contracts'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { V1TerminalName } from 'models/v1/terminals'
 import { useCallback, useMemo } from 'react'
-import { deepEqFundingCycles } from 'utils/deepEqFundingCycles'
+import { deepEqFundingCycles } from 'utils/v1/deepEqFundingCycles'
 
 import useContractReader from './ContractReader'
 

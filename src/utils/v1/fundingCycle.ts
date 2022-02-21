@@ -1,13 +1,13 @@
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 
-import { constants } from 'ethers'
+import * as constants from '@ethersproject/constants'
 import { V1FundingCycle, V1FundingCycleMetadata } from 'models/v1/fundingCycle'
 
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 
-import { fromPerbicent } from './formatNumber'
+import { fromPerbicent } from '../formatNumber'
 
-import { EditingFundingCycle } from './serializers'
+import { EditingV1FundingCycle } from './serializers'
 import {
   FundingCycleRiskFlags,
   reservedRateRiskyMin,
@@ -77,15 +77,15 @@ export const encodeFundingCycleMetadata = (
 }
 
 export const isRecurring = (
-  fundingCycle: V1FundingCycle | EditingFundingCycle,
+  fundingCycle: V1FundingCycle | EditingV1FundingCycle,
 ) => fundingCycle.discountRate.lt(201)
 
 export const hasFundingTarget = (
-  fundingCycle: Pick<V1FundingCycle | EditingFundingCycle, 'target'>,
+  fundingCycle: Pick<V1FundingCycle | EditingV1FundingCycle, 'target'>,
 ) => fundingCycle.target.lt(constants.MaxUint256)
 
 export const hasFundingDuration = (
-  fundingCycle: Pick<V1FundingCycle | EditingFundingCycle, 'duration'>,
+  fundingCycle: Pick<V1FundingCycle | EditingV1FundingCycle, 'duration'>,
 ) => fundingCycle.duration && !fundingCycle.duration.eq(constants.AddressZero)
 
 /**

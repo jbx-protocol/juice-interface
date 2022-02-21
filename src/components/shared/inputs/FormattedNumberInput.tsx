@@ -61,7 +61,7 @@ export default function FormattedNumberInput({
 
   return (
     <div className="formatted-number-input">
-      <Form.Item name={'numberValidator'} {...formItemProps}>
+      <Form.Item {...formItemProps}>
         <div
           style={{
             display: 'flex',

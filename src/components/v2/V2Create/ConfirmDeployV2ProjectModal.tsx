@@ -3,16 +3,29 @@ import { Col, Modal, Row, Space, Statistic } from 'antd'
 import { Gutter } from 'antd/lib/grid/row'
 
 import ProjectLogo from 'components/shared/ProjectLogo'
-
+import V2PayoutSplitsList from 'components/shared/V2PayoutSplitsList'
+import TicketModsList from 'components/shared/TicketModsList'
 import { useAppSelector } from 'hooks/AppSelector'
 import useMobile from 'hooks/Mobile'
+import { useETHPaymentTerminalFee } from 'hooks/v2/contractReader/ETHPaymentTerminalFee'
 
 import { orEmpty } from 'utils/orEmpty'
 
-import { BigNumber } from 'ethers'
-
 import { useContext } from 'react'
 import { NetworkContext } from 'contexts/networkContext'
+import {
+  getDefaultFundAccessConstraint,
+  hasFundingDuration,
+  hasFundingTarget,
+} from 'utils/fundingCycleV2'
+import { SerializedV2FundAccessConstraint } from 'utils/v2/serializers'
+import CurrencySymbol from 'components/shared/CurrencySymbol'
+import { V2CurrencyOption } from 'models/v2/currencyOption'
+import { formattedNum, formatWad, parseWad } from 'utils/formatNumber'
+import { amountSubFee } from 'utils/math'
+import { toV1Currency } from 'utils/v1/currency'
+
+import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 
 export default function ConfirmDeployV2ProjectModal({
   onOk,
@@ -20,21 +33,37 @@ export default function ConfirmDeployV2ProjectModal({
   visible,
   confirmLoading,
 }: {
-  terminalFee?: BigNumber
   onOk?: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void
   onCancel?: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void
   visible?: boolean
   confirmLoading?: boolean
 }) {
   const { signerNetwork, userAddress } = useContext(NetworkContext)
-  const projectMetadata = useAppSelector(
-    state => state.editingV2Project.projectMetadata,
-  )
+  const {
+    fundAccessConstraints,
+    fundingCycleData,
+    fundingCycleMetadata,
+    payoutSplits,
+    projectMetadata,
+    reserveTokenSplits,
+  } = useAppSelector(state => state.editingV2Project)
+
+  const fundAccessConstraint =
+    getDefaultFundAccessConstraint<SerializedV2FundAccessConstraint>(
+      fundAccessConstraints,
+    )
+
+  const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
 
   const isMobile = useMobile()
 
   const rowGutter: [Gutter, Gutter] = [25, 20]
 
+  const fundingCurrency = toV1Currency(
+    parseInt(
+      fundAccessConstraint?.distributionLimitCurrency ?? '1',
+    ) as V2CurrencyOption,
+  )
   return (
     <Modal
       visible={visible}
@@ -50,7 +79,7 @@ export default function ConfirmDeployV2ProjectModal({
       }
       width={800}
     >
-      <Space size="large" direction="vertical">
+      <Space size="large" direction="vertical" style={{ width: '100%' }}>
         <h1 style={{ fontSize: '2rem' }}>
           <Trans>Review project</Trans>
         </h1>
@@ -122,6 +151,162 @@ export default function ConfirmDeployV2ProjectModal({
               />
             </Col>
           </Row>
+        </div>
+        <div style={{ marginTop: 20 }}>
+          <h2 style={{ marginBottom: 0 }}>
+            <Trans>Funding cycle details</Trans>
+          </h2>
+          <p style={{ marginBottom: 15 }}>
+            {hasFundingDuration(fundingCycleData) ? (
+              <Trans>
+                These settings will <strong>not</strong> be editable immediately
+                within a funding cycle. They can only be changed for{' '}
+                <strong>upcoming</strong> funding cycles.
+              </Trans>
+            ) : (
+              <Trans>
+                Since you have not set a funding duration, changes to these
+                settings will be applied immediately.
+              </Trans>
+            )}
+          </p>
+          <Space size="large" direction="vertical" style={{ width: '100%' }}>
+            <Statistic
+              title={t`Target`}
+              valueRender={() =>
+                fundAccessConstraint?.distributionLimit !== undefined ? (
+                  !hasFundingTarget(fundAccessConstraint) ? (
+                    <span>
+                      <Trans>
+                        Target is 0: All funds will be considered overflow and
+                        can be redeemed by burning project tokens.
+                      </Trans>
+                    </span>
+                  ) : (
+                    <span>
+                      <CurrencySymbol currency={fundingCurrency} />
+                      {formattedNum(
+                        fundAccessConstraint.distributionLimit,
+                      )}{' '}
+                      <span style={{ fontSize: '0.8rem' }}>
+                        (
+                        <CurrencySymbol currency={fundingCurrency} />
+                        <Trans>
+                          {formatWad(
+                            amountSubFee(
+                              parseWad(fundAccessConstraint.distributionLimit),
+                              ETHPaymentTerminalFee,
+                            ),
+                            {
+                              precision: 4,
+                            },
+                          )}{' '}
+                          after JBX fee
+                        </Trans>
+                        )
+                      </span>
+                    </span>
+                  )
+                ) : (
+                  <span>
+                    <Trans>
+                      No funding target: The project will control how all funds
+                      are distributed, and none can be redeemed by token
+                      holders.
+                    </Trans>
+                  </span>
+                )
+              }
+            />
+            <Row gutter={rowGutter} style={{ width: '100%' }}>
+              <Col md={8} xs={24}>
+                <Statistic
+                  title={t`Duration`}
+                  value={
+                    hasFundingDuration(fundingCycleData)
+                      ? formattedNum(fundingCycleData.duration)
+                      : t`Not set`
+                  }
+                  suffix={hasFundingDuration(fundingCycleData) ? t`days` : ''}
+                />
+              </Col>
+              <Col md={8} xs={24}>
+                <Statistic
+                  title={t`Payments paused`}
+                  value={fundingCycleMetadata.pausePay ? t`Yes` : t`No`}
+                />
+              </Col>
+              <Col md={8} xs={24}>
+                <Statistic
+                  title={t`Token minting`}
+                  value={
+                    fundingCycleMetadata.pauseMint ? t`Allowed` : t`Disabled`
+                  }
+                />
+              </Col>
+            </Row>
+            <Row gutter={rowGutter} style={{ width: '100%' }}>
+              <Col md={8} xs={24}>
+                <Statistic
+                  title={t`Reserved tokens`}
+                  value={fundingCycleMetadata.reservedRate}
+                  suffix="%"
+                />
+              </Col>
+              {fundingCycleData && hasFundingDuration(fundingCycleData) && (
+                <Col md={8} xs={24}>
+                  <Statistic
+                    title={t`Discount rate`}
+                    value={fundingCycleData?.discountRate}
+                    suffix="%"
+                  />
+                </Col>
+              )}
+              {fundingCycleMetadata && (
+                <Col md={8} xs={24}>
+                  <Statistic
+                    title={t`Redemption rate`}
+                    value={fundingCycleMetadata?.redemptionRate}
+                    suffix="%"
+                  />
+                </Col>
+              )}
+            </Row>
+            {hasFundingDuration(fundingCycleData) && fundingCycleData.ballot && (
+              <Statistic
+                title={t`Reconfiguration rules`}
+                valueRender={() => {
+                  const ballot = getBallotStrategyByAddress(
+                    fundingCycleData.ballot,
+                  )
+                  return (
+                    <div>
+                      {ballot.name}{' '}
+                      <div style={{ fontSize: '0.7rem' }}>{ballot.address}</div>
+                    </div>
+                  )
+                }}
+              />
+            )}
+            <Statistic
+              title={t`Spending`}
+              valueRender={() => (
+                <V2PayoutSplitsList
+                  splits={payoutSplits}
+                  fundAccessConstraint={fundAccessConstraint}
+                />
+              )}
+            />
+            <Statistic
+              title={t`Reserved token allocations`}
+              valueRender={() => (
+                <TicketModsList
+                  mods={reserveTokenSplits}
+                  reservedRate={parseFloat(fundingCycleMetadata.reservedRate)}
+                />
+              )}
+            />
+          </Space>
         </div>
       </Space>
     </Modal>

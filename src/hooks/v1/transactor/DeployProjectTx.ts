@@ -7,7 +7,7 @@ import {
 } from 'models/v1/fundingCycle'
 import { PayoutMod, TicketMod } from 'models/mods'
 import { useContext } from 'react'
-import { hasFundingTargetV1 } from 'utils/v1/fundingCycle'
+import { hasFundingTarget } from 'utils/v1/fundingCycle'
 
 import { TransactorInstance } from '../../Transactor'
 
@@ -41,7 +41,7 @@ export function useDeployProjectTx(): TransactorInstance<{
     const _properties: Record<keyof V1FundingCycleProperties, string | number> =
       {
         target: properties.target.toHexString(),
-        currency: hasFundingTargetV1({ target: properties.target })
+        currency: hasFundingTarget({ target: properties.target })
           ? properties.currency.toNumber()
           : 0,
         duration: properties.duration.toNumber(),

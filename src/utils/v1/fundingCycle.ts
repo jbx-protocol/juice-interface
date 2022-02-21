@@ -80,11 +80,11 @@ export const isRecurring = (
   fundingCycle: V1FundingCycle | EditingV1FundingCycle,
 ) => fundingCycle.discountRate.lt(201)
 
-export const hasFundingTargetV1 = (
+export const hasFundingTarget = (
   fundingCycle: Pick<V1FundingCycle | EditingV1FundingCycle, 'target'>,
 ) => fundingCycle.target.lt(constants.MaxUint256)
 
-export const hasFundingDurationV1 = (
+export const hasFundingDuration = (
   fundingCycle: Pick<V1FundingCycle | EditingV1FundingCycle, 'duration'>,
 ) => fundingCycle.duration && !fundingCycle.duration.eq(constants.AddressZero)
 
@@ -123,7 +123,7 @@ export const getUnsafeFundingCycleProperties = (
   /**
    * Duration not set. Reconfigurations can be made at any point without notice.
    */
-  if (!hasFundingDurationV1(fundingCycle)) {
+  if (!hasFundingDuration(fundingCycle)) {
     configFlags.duration = true
   }
 

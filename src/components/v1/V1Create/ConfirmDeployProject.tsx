@@ -24,8 +24,8 @@ import {
   fromPermille,
 } from 'utils/formatNumber'
 import {
-  hasFundingDurationV1,
-  hasFundingTargetV1,
+  hasFundingDuration,
+  hasFundingTarget,
   isRecurring,
 } from 'utils/v1/fundingCycle'
 import { amountSubFee } from 'utils/math'
@@ -131,7 +131,7 @@ export default function ConfirmDeployProject() {
           <Trans>Funding cycle details</Trans>
         </h2>
         <p style={{ marginBottom: 15 }}>
-          {hasFundingDurationV1(editingFC) ? (
+          {hasFundingDuration(editingFC) ? (
             <Trans>
               These settings will <strong>not</strong> be editable immediately
               within a funding cycle. They can only be changed for{' '}
@@ -148,7 +148,7 @@ export default function ConfirmDeployProject() {
           <Statistic
             title={t`Target`}
             valueRender={() =>
-              hasFundingTargetV1(editingFC) ? (
+              hasFundingTarget(editingFC) ? (
                 editingFC.target.eq(0) ? (
                   <span>
                     <Trans>
@@ -242,7 +242,7 @@ export default function ConfirmDeployProject() {
             )}
             {editingFC &&
               isRecurring(editingFC) &&
-              hasFundingTargetV1(editingFC) && (
+              hasFundingTarget(editingFC) && (
                 <Col md={8} xs={24}>
                   <Statistic
                     title={t`Bonding curve rate`}

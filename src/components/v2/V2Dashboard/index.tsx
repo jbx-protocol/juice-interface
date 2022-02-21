@@ -21,7 +21,7 @@ export default function V2Dashboard() {
     useProjectMetadataContent(projectId)
 
   const {
-    data: metadata,
+    data: projectMetadata,
     error: metadataError,
     isLoading: metadataLoading,
   } = useV2ProjectMetadata(metadataCID)
@@ -31,7 +31,6 @@ export default function V2Dashboard() {
       projectId,
     })
 
-  console.log('fundingCycle', fundingCycle, fundingCycleLoading)
   if (metadataLoading || metadataURILoading) return <Loading />
 
   if (projectId?.eq(0) || metadataError) {
@@ -40,7 +39,7 @@ export default function V2Dashboard() {
 
   const project = {
     projectId,
-    metadata,
+    projectMetadata,
     fundingCycle,
   }
 

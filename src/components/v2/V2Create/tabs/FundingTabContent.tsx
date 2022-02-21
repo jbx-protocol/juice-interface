@@ -183,13 +183,13 @@ export default function ProjectDetailsTabContent() {
 
               {isFundingDurationVisible && (
                 <Form.Item
-                  name={'duration'}
+                  name="duration"
                   label={t`Funding cycle duration`}
                   required
                 >
                   <FormattedNumberInput
-                    placeholder="30"
-                    suffix="days"
+                    placeholder="86400"
+                    suffix="seconds"
                     min={1}
                   />
                 </Form.Item>

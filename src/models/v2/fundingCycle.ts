@@ -32,3 +32,11 @@ export type V2FundAccessConstraint = {
   overflowAllowance: BigNumber
   overflowAllowanceCurrency: BigNumber
 }
+
+export type V2FundingCycle = V2FundingCycleData & {
+  number: BigNumber
+  configuration: BigNumber
+  basedOn: BigNumber
+  start: BigNumber
+  metadata: BigNumber // encoded FundingCycleData
+}

@@ -12,10 +12,10 @@ import { V1ContractName } from 'models/v1/contracts'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { useCallback, useContext, useState } from 'react'
-import { deepEqFundingCycles } from 'utils/deepEqFundingCycles'
+import { deepEqFundingCycles } from 'utils/v1/deepEqFundingCycles'
 import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
-import { hasFundingTarget } from 'utils/fundingCycle'
+import { hasFundingTarget } from 'utils/v1/fundingCycle'
 
 import FundingCycleDetails from 'components/v1/FundingCycle/FundingCycleDetails'
 

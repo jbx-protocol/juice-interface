@@ -12,7 +12,7 @@ import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { PayoutMod } from 'models/mods'
 import { CSSProperties, useContext, useState } from 'react'
 import { formatWad, fromPerbicent } from 'utils/formatNumber'
-import { hasFundingTarget } from 'utils/fundingCycle'
+import { hasFundingTarget } from 'utils/v1/fundingCycle'
 
 import PayoutModsList from '../../shared/PayoutModsList'
 

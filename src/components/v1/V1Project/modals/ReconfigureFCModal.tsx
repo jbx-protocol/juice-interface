@@ -40,7 +40,7 @@ import {
   decodeFundingCycleMetadata,
   hasFundingTarget,
   isRecurring,
-} from 'utils/fundingCycle'
+} from 'utils/v1/fundingCycle'
 import { amountSubFee } from 'utils/math'
 import { serializeV1FundingCycle } from 'utils/v1/serializers'
 

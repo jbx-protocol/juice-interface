@@ -16,7 +16,7 @@ import {
   getUnsafeFundingCycleProperties,
   hasFundingTarget,
   isRecurring,
-} from 'utils/fundingCycle'
+} from 'utils/v1/fundingCycle'
 import { weightedRate } from 'utils/math'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 

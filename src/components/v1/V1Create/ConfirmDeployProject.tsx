@@ -27,7 +27,7 @@ import {
   hasFundingDuration,
   hasFundingTarget,
   isRecurring,
-} from 'utils/fundingCycle'
+} from 'utils/v1/fundingCycle'
 import { amountSubFee } from 'utils/math'
 import { orEmpty } from 'utils/orEmpty'
 

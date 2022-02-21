@@ -21,7 +21,7 @@ import useTotalSupplyOfProjectToken from 'hooks/v1/contractReader/TotalSupplyOfP
 import useUnclaimedBalanceOfUser from 'hooks/v1/contractReader/UnclaimedBalanceOfUser'
 import React, { CSSProperties, useContext, useState } from 'react'
 import { formatPercent, formatWad } from 'utils/formatNumber'
-import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
+import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 import PrintPreminedModal from '../modals/PrintPreminedModal'

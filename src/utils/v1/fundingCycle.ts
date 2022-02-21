@@ -1,13 +1,13 @@
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 
-import { constants } from 'ethers'
+import * as constants from '@ethersproject/constants'
 import { V1FundingCycle, V1FundingCycleMetadata } from 'models/v1/fundingCycle'
 
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 
-import { fromPerbicent } from './formatNumber'
+import { fromPerbicent } from '../formatNumber'
 
-import { EditingV1FundingCycle } from './v1/serializers'
+import { EditingV1FundingCycle } from './serializers'
 import {
   FundingCycleRiskFlags,
   reservedRateRiskyMin,

@@ -31,7 +31,7 @@ import {
   encodeFundingCycleMetadata,
   hasFundingTarget,
   hasFundingDuration,
-} from 'utils/fundingCycle'
+} from 'utils/v1/fundingCycle'
 import {
   cidFromUrl,
   editMetadataForCid,

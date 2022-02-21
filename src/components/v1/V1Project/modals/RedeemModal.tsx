@@ -15,7 +15,7 @@ import useTotalBalanceOf from 'hooks/v1/contractReader/TotalBalanceOf'
 import { useRedeemTokensTx } from 'hooks/v1/transactor/RedeemTokensTx'
 import { CSSProperties, useContext, useState } from 'react'
 import { formattedNum, formatWad, fromWad, parseWad } from 'utils/formatNumber'
-import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
+import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'

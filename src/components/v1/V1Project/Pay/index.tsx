@@ -12,7 +12,7 @@ import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useContext, useMemo, useState } from 'react'
 import { currencyName } from 'utils/v1/currency'
 import { formatWad, fromWad } from 'utils/formatNumber'
-import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
+import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 
 import { disablePayOverrides } from 'constants/v1/overrides'
 import { readNetwork } from 'constants/networks'

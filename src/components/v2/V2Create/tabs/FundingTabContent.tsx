@@ -24,12 +24,13 @@ import { SerializedV2FundAccessConstraint } from 'utils/v2/serializers'
 
 import { toMod, toSplit } from 'utils/v2/splits'
 
-import { getDefaultFundAccessConstraint } from 'utils/fundingCycleV2'
+import { getDefaultFundAccessConstraint } from 'utils/v2/fundingCycle'
 
-import { toV1Currency } from 'constants/v1/currency'
+import { toV1Currency } from 'utils/v1/currency'
+import { toV2Currency } from 'utils/v2/currency'
 
 import { shadowCard } from 'constants/styles/shadowCard'
-import { toV2Currency, V2_CURRENCY_ETH } from 'constants/v2/currency'
+import { V2_CURRENCY_ETH } from 'constants/v2/currency'
 const { Option } = Select
 
 type FundingFormFields = {

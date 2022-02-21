@@ -1,5 +1,5 @@
 import { Form } from 'antd'
-import { CurrencyOption } from 'models/currency-option'
+import { V1CurrencyOption } from 'models/v1/currencyOption'
 
 import { BigNumber } from 'ethers'
 
@@ -7,7 +7,6 @@ import BudgetTargetInput from '../inputs/BudgetTargetInput'
 import { FormItemExt } from './formItemExt'
 
 export default function ProjectTarget({
-  name,
   hideLabel,
   target,
   targetSubFee,
@@ -23,15 +22,14 @@ export default function ProjectTarget({
   targetSubFee: string | undefined
   onTargetChange: (val: string | undefined) => void
   onTargetSubFeeChange: (val: string | undefined) => void
-  currency: CurrencyOption
-  onCurrencyChange: (val: CurrencyOption) => void
+  currency: V1CurrencyOption
+  onCurrencyChange: (val: V1CurrencyOption) => void
   disabled?: boolean
   fee?: BigNumber
 } & FormItemExt) {
   return (
     <Form.Item
       extra="The maximum amount of funds that can be distributed from this project in one funding cycle. Funds will be withdrawn in ETH no matter the currency you choose."
-      name={name}
       label={hideLabel ? undefined : 'Funding target'}
       {...formItemProps}
     >

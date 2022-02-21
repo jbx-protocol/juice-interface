@@ -30,7 +30,7 @@ import { querySubgraph } from 'utils/graph'
 import { readProvider } from 'constants/readProvider'
 
 import SectionHeader from './SectionHeader'
-import { CURRENCY_ETH } from 'constants/currency'
+import { V1_CURRENCY_ETH } from 'constants/v1/currency'
 
 const now = moment.now() - 5 * 60 * 1000 // 5 min ago
 
@@ -490,7 +490,7 @@ export default function BalanceTimeline({ height }: { height: number }) {
                     </div>
                     {payload[0].payload.tapped ? (
                       <div>
-                        -<CurrencySymbol currency={CURRENCY_ETH} />
+                        -<CurrencySymbol currency={V1_CURRENCY_ETH} />
                         {payload[0].payload.tapped}
                         <div
                           style={{
@@ -504,7 +504,7 @@ export default function BalanceTimeline({ height }: { height: number }) {
                       </div>
                     ) : (
                       <div>
-                        <CurrencySymbol currency={CURRENCY_ETH} />
+                        <CurrencySymbol currency={V1_CURRENCY_ETH} />
                         {payload[0].payload.value}
                       </div>
                     )}

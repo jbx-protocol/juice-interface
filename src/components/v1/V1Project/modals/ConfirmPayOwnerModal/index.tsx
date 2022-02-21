@@ -10,12 +10,13 @@ import { constants } from 'ethers'
 import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
 import { usePayProjectTx } from 'hooks/v1/transactor/PayProjectTx'
 import { useContext, useState } from 'react'
-import { currencyName } from 'utils/currency'
+import { currencyName } from 'utils/v1/currency'
 import { formattedNum, formatWad } from 'utils/formatNumber'
 import { weightedRate } from 'utils/math'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 import ProjectRiskNotice from './ProjectRiskNotice'
+import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
 
 export default function ConfirmPayOwnerModal({
   visible,
@@ -104,8 +105,8 @@ export default function ConfirmPayOwnerModal({
 
         <Descriptions column={1} bordered>
           <Descriptions.Item label={t`Pay amount`} className="content-right">
-            {formattedNum(usdAmount)} {currencyName(1)} ({formatWad(weiAmount)}{' '}
-            {currencyName(0)})
+            {formattedNum(usdAmount)} {currencyName(V1_CURRENCY_USD)} (
+            {formatWad(weiAmount)} {currencyName(V1_CURRENCY_ETH)})
           </Descriptions.Item>
           <Descriptions.Item
             label={t`${tokenSymbolText({

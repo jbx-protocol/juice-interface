@@ -9,7 +9,7 @@ import { usePrintTokensTx } from 'hooks/v1/transactor/PrintTokensTx'
 import { useContext, useMemo, useState } from 'react'
 import { parseWad } from 'utils/formatNumber'
 
-import { CURRENCY_ETH } from 'constants/currency'
+import { V1_CURRENCY_ETH } from 'constants/v1/currency'
 
 export default function PrintPreminedModal({
   visible,
@@ -40,7 +40,7 @@ export default function PrintPreminedModal({
     printTokensTx(
       {
         value: parseWad(value),
-        currency: CURRENCY_ETH,
+        currency: V1_CURRENCY_ETH,
         beneficiary,
         memo: form.getFieldValue('memo'),
         preferUnstaked: form.getFieldValue('preferUnstaked'),

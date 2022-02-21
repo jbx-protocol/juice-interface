@@ -12,13 +12,13 @@ import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
 import { useTapProjectTx } from 'hooks/v1/transactor/TapProjectTx'
-import { CurrencyOption } from 'models/currency-option'
+import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useContext, useEffect, useState } from 'react'
-import { currencyName } from 'utils/currency'
+import { currencyName } from 'utils/v1/currency'
 import { formatWad, fromPerbicent, fromWad, parseWad } from 'utils/formatNumber'
 import { amountSubFee, feeForAmount } from 'utils/math'
 
-import { CURRENCY_ETH, CURRENCY_USD } from 'constants/currency'
+import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
 
 export default function WithdrawModal({
   visible,
@@ -63,7 +63,7 @@ export default function WithdrawModal({
     if (!currentFC || !tapAmount) return
 
     const minAmount = (
-      currentFC.currency.eq(CURRENCY_USD)
+      currentFC.currency.eq(V1_CURRENCY_USD)
         ? converter.usdToWei(tapAmount)
         : parseWad(tapAmount)
     )?.sub(1e12) // Arbitrary value subtracted
@@ -75,7 +75,7 @@ export default function WithdrawModal({
     tapProjectTx(
       {
         tapAmount: parseWad(tapAmount),
-        currency: currentFC.currency.toNumber() as CurrencyOption,
+        currency: currentFC.currency.toNumber() as V1CurrencyOption,
         minAmount,
       },
       {
@@ -107,7 +107,7 @@ export default function WithdrawModal({
             <Trans>Total funds:</Trans>{' '}
             <div>
               <CurrencySymbol
-                currency={currentFC.currency.toNumber() as CurrencyOption}
+                currency={currentFC.currency.toNumber() as V1CurrencyOption}
               />
               {formatWad(withdrawable, { precision: 4 })}
             </div>
@@ -119,7 +119,7 @@ export default function WithdrawModal({
             <div>
               -{' '}
               <CurrencySymbol
-                currency={currentFC.currency.toNumber() as CurrencyOption}
+                currency={currentFC.currency.toNumber() as V1CurrencyOption}
               />
               {formatWad(feeForAmount(withdrawable, currentFC.fee) ?? 0, {
                 precision: 4,
@@ -138,7 +138,7 @@ export default function WithdrawModal({
             </div>
             <div>
               <CurrencySymbol
-                currency={currentFC.currency.toNumber() as CurrencyOption}
+                currency={currentFC.currency.toNumber() as V1CurrencyOption}
               />
               {formatWad(amountSubFee(withdrawable, currentFC.fee) ?? 0, {
                 precision: 4,
@@ -165,7 +165,7 @@ export default function WithdrawModal({
                   }}
                 >
                   {currencyName(
-                    currentFC.currency.toNumber() as CurrencyOption,
+                    currentFC.currency.toNumber() as V1CurrencyOption,
                   )}
                 </span>
                 <InputAccessoryButton
@@ -178,10 +178,10 @@ export default function WithdrawModal({
 
           <div style={{ color: colors.text.primary, marginBottom: 10 }}>
             <span style={{ fontWeight: 500 }}>
-              <CurrencySymbol currency={CURRENCY_ETH} />
+              <CurrencySymbol currency={V1_CURRENCY_ETH} />
               {formatWad(
                 amountSubFee(
-                  currentFC.currency.eq(CURRENCY_USD)
+                  currentFC.currency.eq(V1_CURRENCY_USD)
                     ? converter.usdToWei(tapAmount)
                     : parseWad(tapAmount),
                   currentFC.fee,
@@ -210,11 +210,11 @@ export default function WithdrawModal({
           </div>
         ) : (
           <p>
-            <CurrencySymbol currency={CURRENCY_ETH} />
+            <CurrencySymbol currency={V1_CURRENCY_ETH} />
             <Trans>
               {formatWad(
                 amountSubFee(
-                  currentFC.currency.eq(CURRENCY_USD)
+                  currentFC.currency.eq(V1_CURRENCY_USD)
                     ? converter.usdToWei(tapAmount)
                     : parseWad(tapAmount),
                   currentFC.fee,

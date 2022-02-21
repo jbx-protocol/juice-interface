@@ -7,7 +7,7 @@ import {
 } from 'models/v1/fundingCycle'
 import { PayoutMod, TicketMod } from 'models/mods'
 import { useContext } from 'react'
-import { hasFundingTarget } from 'utils/fundingCycle'
+import { hasFundingTarget } from 'utils/v1/fundingCycle'
 
 import { TransactorInstance } from '../../Transactor'
 

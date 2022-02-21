@@ -4,7 +4,7 @@ import { ExclamationCircleOutlined } from '@ant-design/icons'
 import {
   fundingCycleRiskCount,
   getUnsafeFundingCycleProperties,
-} from 'utils/fundingCycle'
+} from 'utils/v1/fundingCycle'
 
 import { ThemeContext } from 'contexts/themeContext'
 

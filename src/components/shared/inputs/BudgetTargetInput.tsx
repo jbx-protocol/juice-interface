@@ -1,8 +1,8 @@
 import { ThemeContext } from 'contexts/themeContext'
 import { BigNumber } from 'ethers'
-import { CurrencyOption } from 'models/currency-option'
+import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { CSSProperties, useContext, useEffect, useState } from 'react'
-import { currencyName } from 'utils/currency'
+import { currencyName } from 'utils/v1/currency'
 import { fromPerbicent } from 'utils/formatNumber'
 
 import InputAccessoryButton from '../InputAccessoryButton'
@@ -19,12 +19,12 @@ export default function BudgetTargetInput({
   placeholder,
   fee,
 }: {
-  currency: CurrencyOption
+  currency: V1CurrencyOption
   target: string | undefined
   targetSubFee: string | undefined
   onTargetChange: (target?: string) => void
   onTargetSubFeeChange: (target?: string) => void
-  onCurrencyChange?: (currency: CurrencyOption) => void
+  onCurrencyChange?: (currency: V1CurrencyOption) => void
   disabled?: boolean
   placeholder?: string
   fee: BigNumber | undefined
@@ -41,13 +41,13 @@ export default function BudgetTargetInput({
     alignItems: 'center',
   }
 
-  const [_currency, setCurrency] = useState<CurrencyOption>()
+  const [_currency, setCurrency] = useState<V1CurrencyOption>()
 
   useEffect(() => setCurrency(currency), [currency])
 
   if (_currency === undefined) return null
 
-  function renderCurrencySwitch() {
+  function CurrencySwitch() {
     if (onCurrencyChange)
       return (
         <InputAccessoryButton
@@ -75,7 +75,7 @@ export default function BudgetTargetInput({
         value={target}
         placeholder={placeholder}
         disabled={disabled}
-        accessory={renderCurrencySwitch()}
+        accessory={<CurrencySwitch />}
         onChange={target => onTargetChange(target?.toString())}
       />
       {fee?.gt(0) && (
@@ -85,7 +85,7 @@ export default function BudgetTargetInput({
               value={targetSubFee}
               placeholder={placeholder}
               disabled={disabled}
-              accessory={renderCurrencySwitch()}
+              accessory={<CurrencySwitch />}
               onChange={newTargetSubFee =>
                 onTargetSubFeeChange(newTargetSubFee?.toString())
               }

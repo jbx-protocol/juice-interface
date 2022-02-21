@@ -6,7 +6,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { useContext } from 'react'
 import { detailedTimeString } from 'utils/formatTime'
-import { fundingCycleRiskCount, isRecurring } from 'utils/fundingCycle'
+import { fundingCycleRiskCount, isRecurring } from 'utils/v1/fundingCycle'
 
 import FundingCycleDetails from './FundingCycleDetails'
 

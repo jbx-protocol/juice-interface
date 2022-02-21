@@ -10,7 +10,7 @@ export default function V1UserProvider({
 }: {
   children: React.ReactNode
 }) {
-  const contracts = useContractLoader()
+  const contracts = useV1ContractLoader()
 
   const { data: gasPrice } = useGasPriceQuery('average')
 

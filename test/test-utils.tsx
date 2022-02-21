@@ -6,14 +6,12 @@ import { Provider } from 'react-redux'
 
 import { i18n } from '@lingui/core'
 
-import { I18nProvider } from '@lingui/react'
-
+import ReactQueryProvider from '../src/providers/ReactQueryProvider'
 import store from '../src/redux/store'
-import { LanguageProvider } from '../src/i18n'
-import Theme from '../src/Theme'
-import Network from '../src/Network'
-import User from '../src/User'
-import ProvideReactQuery from '../src/ReactQuery'
+import LanguageProvider from '../src/providers/LanguageProvider'
+import ThemeProvider from '../src/providers/ThemeProvider'
+import NetworkProvider from '../src/providers/NetworkProvider'
+import V1UserProvider from '../src/providers/v1/UserProvider'
 import { Language } from '../src/constants/languages/language-options'
 
 export const MOCK_TEST_UUID = '1234-56768-123-4567'
@@ -87,17 +85,19 @@ const customRender = (
 
   if (!wrapper) {
     wrapper = ({ children }) => (
-      <ProvideReactQuery>
+      <ReactQueryProvider>
         <Provider store={store}>
-          <I18nProvider i18n={i18n}>
-            <Theme>
-              <Network>
-                <User>{children}</User>
-              </Network>
-            </Theme>
-          </I18nProvider>
+          <LanguageProvider>
+            <ThemeProvider>
+              <NetworkProvider>
+                <V1UserProvider>
+                  {children}
+                </V1UserProvider>
+              </NetworkProvider>
+            </ThemeProvider>
+          </LanguageProvider>
         </Provider>
-      </ProvideReactQuery>
+      </ReactQueryProvider>
     )
   }
 

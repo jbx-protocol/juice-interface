@@ -9,7 +9,7 @@ import { TicketMod } from 'models/mods'
 import { NetworkName } from 'models/network-name'
 import { useContext, useState } from 'react'
 import { formatWad, fromPerbicent } from 'utils/formatNumber'
-import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
+import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 import { readNetwork } from 'constants/networks'

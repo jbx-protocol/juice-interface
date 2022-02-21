@@ -1,5 +1,5 @@
 import { t } from '@lingui/macro'
-import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
+import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
 
 export const reservedRateRiskyMin = 90

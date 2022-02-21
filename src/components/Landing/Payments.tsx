@@ -10,7 +10,7 @@ import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
 
-import { CURRENCY_ETH } from 'constants/currency'
+import { V1_CURRENCY_ETH } from 'constants/v1/currency'
 
 export default function Payments() {
   const {
@@ -74,7 +74,7 @@ export default function Payments() {
                 }}
               >
                 <span style={{ fontSize: '1rem', fontWeight: 500 }}>
-                  <CurrencySymbol currency={CURRENCY_ETH} />
+                  <CurrencySymbol currency={V1_CURRENCY_ETH} />
                   {formatWad(e.amount, { precision: 4 })}
                 </span>
                 <span>

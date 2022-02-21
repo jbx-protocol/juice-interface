@@ -16,7 +16,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { BigNumber, constants, utils } from 'ethers'
 import useContractReader from 'hooks/v1/contractReader/ContractReader'
 import { V1ContractName } from 'models/v1/contracts'
-import { CurrencyOption } from 'models/currency-option'
+import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { PayoutMod } from 'models/mods'
 import * as moment from 'moment'
 import { useCallback, useContext, useState } from 'react'
@@ -29,7 +29,7 @@ import {
   fromWad,
 } from 'utils/formatNumber'
 import { amountSubFee } from 'utils/math'
-import { currencyName } from 'utils/currency'
+import { currencyName } from 'utils/v1/currency'
 
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
@@ -55,7 +55,7 @@ export default function ProjectPayoutMods({
   formItemProps,
 }: {
   target: string
-  currency: CurrencyOption
+  currency: V1CurrencyOption
   fee: BigNumber | undefined
   lockedMods?: EditingPayoutMod[]
   mods: EditingPayoutMod[] | undefined

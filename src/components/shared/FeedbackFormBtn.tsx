@@ -10,6 +10,8 @@ import { useContext } from 'react'
 import { feedbackFormURL } from 'utils/feedbackFormURL'
 import { NetworkContext } from 'contexts/networkContext'
 
+import ExternalLink from './ExternalLink'
+
 export default function FeedbackFormBtn({
   mobile,
   projectHandle,
@@ -32,15 +34,13 @@ export default function FeedbackFormBtn({
     return (
       <div style={{ height: 30 }}>
         <MessageOutlined size={iconSize} />
-        <a
+        <ExternalLink
           style={{ margin: '0 0 2px 12px', fontWeight: 400 }}
           className="quiet"
           href={formUrl}
-          target="_blank"
-          rel="noreferrer"
         >
           <Trans>Give feedback</Trans>
-        </a>
+        </ExternalLink>
       </div>
     )
   }
@@ -48,24 +48,17 @@ export default function FeedbackFormBtn({
   return (
     <Tooltip
       title={
-        <a
-          className="quiet hover-action"
-          href={formUrl}
-          target="_blank"
-          rel="noreferrer"
-        >
+        <ExternalLink className="quiet hover-action" href={formUrl}>
           <Trans>Give feedback</Trans>
-        </a>
+        </ExternalLink>
       }
     >
-      <a
+      <ExternalLink
         className={`feedback-button hide-mobile ${isDarkMode ? 'dark' : ''}`}
         href={formUrl}
-        target="_blank"
-        rel="noreferrer"
       >
         <img src="/assets/stoned_banny.png" alt="Stoned banny" />
-      </a>
+      </ExternalLink>
     </Tooltip>
   )
 }

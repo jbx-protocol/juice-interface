@@ -8,11 +8,11 @@ import CurrencySymbol from 'components/shared/CurrencySymbol'
 import TooltipLabel from 'components/shared/TooltipLabel'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { CurrencyOption } from 'models/currency-option'
+import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { PayoutMod } from 'models/mods'
 import { CSSProperties, useContext, useState } from 'react'
 import { formatWad, fromPerbicent } from 'utils/formatNumber'
-import { hasFundingTarget } from 'utils/fundingCycle'
+import { hasFundingTarget } from 'utils/v1/fundingCycle'
 
 import PayoutModsList from '../../shared/PayoutModsList'
 
@@ -64,7 +64,7 @@ export default function Spending({
                 }}
               >
                 <CurrencySymbol
-                  currency={currentFC.currency.toNumber() as CurrencyOption}
+                  currency={currentFC.currency.toNumber() as V1CurrencyOption}
                 />
                 {formatWad(withdrawable, { precision: 4 }) || '0'}{' '}
               </span>
@@ -89,7 +89,7 @@ export default function Spending({
             <div>
               <Trans>
                 <CurrencySymbol
-                  currency={currentFC.currency.toNumber() as CurrencyOption}
+                  currency={currentFC.currency.toNumber() as V1CurrencyOption}
                 />
                 {formatWad(currentFC.tapped, { precision: 4 }) || '0'}
                 {hasFundingTarget(currentFC) ? (

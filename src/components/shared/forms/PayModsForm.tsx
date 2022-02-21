@@ -5,7 +5,7 @@ import { FormItems } from 'components/shared/formItems'
 import { ThemeContext } from 'contexts/themeContext'
 import { BigNumber } from 'ethers'
 import { useForm } from 'antd/lib/form/Form'
-import { CurrencyOption } from 'models/currency-option'
+import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { PayoutMod } from 'models/mods'
 import { useContext, useLayoutEffect, useState } from 'react'
 import { fromWad } from 'utils/formatNumber'
@@ -20,7 +20,7 @@ export default function PayModsForm({
   onSave,
 }: {
   initialMods: PayoutMod[]
-  currency: CurrencyOption
+  currency: V1CurrencyOption
   target: BigNumber
   fee: BigNumber | undefined
   onSave: (mods: PayoutMod[]) => void

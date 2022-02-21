@@ -7,16 +7,19 @@ import {
 } from 'components/shared/formItems/formHelpers'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { constants } from 'ethers'
+import * as constants from '@ethersproject/constants'
 import { useAppDispatch } from 'hooks/AppDispatch'
-import { useEditingFundingCycleSelector } from 'hooks/AppSelector'
+import { useEditingV1FundingCycleSelector } from 'hooks/AppSelector'
 import { useTerminalFee } from 'hooks/v1/TerminalFee'
-import { CurrencyOption } from 'models/currency-option'
+import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useContext, useLayoutEffect, useMemo, useState } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
 import { fromWad, parseWad } from 'utils/formatNumber'
-import { hasFundingTarget, isRecurring } from 'utils/fundingCycle'
+import { hasFundingTarget, isRecurring } from 'utils/v1/fundingCycle'
 import { helpPagePath } from 'utils/helpPageHelper'
+
+import ExternalLink from '../ExternalLink'
+import { V1_CURRENCY_ETH } from 'constants/v1/currency'
 
 const DEFAULT_TARGET_AFTER_FEE = '10000'
 
@@ -26,16 +29,16 @@ export default function BudgetForm({
   initialDuration,
   onSave,
 }: {
-  initialCurrency: CurrencyOption
+  initialCurrency: V1CurrencyOption
   initialTarget: string
   initialDuration: string
-  onSave: (currency: CurrencyOption, target: string, duration: string) => void
+  onSave: (currency: V1CurrencyOption, target: string, duration: string) => void
 }) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
   // State objects avoid antd form input dependency rerendering issues
-  const [currency, setCurrency] = useState<CurrencyOption>(0)
+  const [currency, setCurrency] = useState<V1CurrencyOption>(V1_CURRENCY_ETH)
   const [target, setTarget] = useState<string>('0')
   const [targetSubFee, setTargetSubFee] = useState<string>('0')
   const [duration, setDuration] = useState<string>('0')
@@ -43,7 +46,7 @@ export default function BudgetForm({
   // TODO budgetForm should not depend on dispatch
   const dispatch = useAppDispatch()
   const { terminal } = useContext(V1ProjectContext)
-  const editingFC = useEditingFundingCycleSelector()
+  const editingFC = useEditingV1FundingCycleSelector()
 
   const terminalFee = useTerminalFee(terminal?.version)
 
@@ -77,13 +80,11 @@ export default function BudgetForm({
           configuration will depend on the kind of project you're starting.
         </Trans>{' '}
         <Trans>
-          <a
+          <ExternalLink
             href={helpPagePath('protocol/learn/topics/funding-cycle')}
-            rel="noopener noreferrer"
-            target="_blank"
           >
             Learn more
-          </a>{' '}
+          </ExternalLink>{' '}
           about funding cycles.
         </Trans>
       </p>
@@ -108,13 +109,11 @@ export default function BudgetForm({
               holders.
             </Trans>{' '}
             <Trans>
-              <a
+              <ExternalLink
                 href={helpPagePath('protocol/learn/topics/overflow')}
-                rel="noopener noreferrer"
-                target="_blank"
               >
                 Learn more
-              </a>{' '}
+              </ExternalLink>{' '}
               about overflow.
             </Trans>
           </p>
@@ -189,13 +188,11 @@ export default function BudgetForm({
               The project's entire balance will be considered overflow.{' '}
             </Trans>
             <Trans>
-              <a
+              <ExternalLink
                 href={helpPagePath('protocol/learn/topics/overflow')}
-                rel="noopener noreferrer"
-                target="_blank"
               >
                 Learn more
-              </a>{' '}
+              </ExternalLink>{' '}
               about overflow.
             </Trans>
           </p>
@@ -215,13 +212,11 @@ export default function BudgetForm({
           <p style={{ color: colors.text.secondary }}>
             <Trans>Set the length of your funding cycles.</Trans>{' '}
             <Trans>
-              <a
+              <ExternalLink
                 href={helpPagePath('protocol/learn/topics/funding-cycle')}
-                rel="noopener noreferrer"
-                target="_blank"
               >
                 Learn more
-              </a>{' '}
+              </ExternalLink>{' '}
               about funding cycle duration.
             </Trans>
           </p>

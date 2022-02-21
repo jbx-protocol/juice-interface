@@ -297,7 +297,7 @@ export const uploadProjectMetadata = (
 export const unpinFileByName = (name: string) =>
   getPinnedByName(name).then(res => {
     if (!res.data.count) {
-      console.log('No pinned items found with name', name)
+      console.error('No pinned items found with name', name)
       return
     }
 

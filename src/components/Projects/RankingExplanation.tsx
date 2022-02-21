@@ -1,4 +1,5 @@
 import { Trans } from '@lingui/macro'
+import ExternalLink from 'components/shared/ExternalLink'
 
 // Explains how trending projects rankings are calculated
 export default function RankingExplanation({
@@ -12,13 +13,9 @@ export default function RankingExplanation({
     <Trans>
       Rankings based on number of contributions and volume gained in the last{' '}
       {trendingWindow} days.{' '}
-      <a
-        href={trendingRankingExplanationCodeURL}
-        target="_blank"
-        rel="noreferrer"
-      >
+      <ExternalLink href={trendingRankingExplanationCodeURL}>
         See code
-      </a>
+      </ExternalLink>
     </Trans>
   )
 }

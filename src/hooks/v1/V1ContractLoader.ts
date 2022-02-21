@@ -10,7 +10,7 @@ import { useContext, useEffect, useState } from 'react'
 import { readProvider } from 'constants/readProvider'
 import { readNetwork } from 'constants/networks'
 
-export function useContractLoader() {
+export function useV1ContractLoader() {
   const [contracts, setContracts] = useState<V1Contracts>()
 
   const { signingProvider } = useContext(NetworkContext)
@@ -37,7 +37,7 @@ export function useContractLoader() {
 
         setContracts(newContracts)
       } catch (e) {
-        console.log('CONTRACT LOADER ERROR:', e)
+        console.error('CONTRACT LOADER ERROR:', e)
       }
     }
 

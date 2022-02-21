@@ -6,6 +6,8 @@ import UniswapLogo from 'components/icons/Uniswap'
 import { CSSProperties } from 'react'
 import { formattedNum } from 'utils/formatNumber'
 
+import ExternalLink from '../ExternalLink'
+
 import TooltipIcon from '../TooltipIcon'
 
 type ExchangeName = 'Uniswap' | 'Sushiswap'
@@ -79,15 +81,10 @@ export default function TokenAMMPriceRow({
             title={t`${tokenSymbol}/ETH exchange rate on ${exchangeName}.`}
             overlayInnerStyle={{ ...fontStyle }}
           >
-            <a
-              href={exchangeLink}
-              rel="noopener noreferrer"
-              target="_blank"
-              style={{ fontWeight: 400 }}
-            >
+            <ExternalLink href={exchangeLink} style={{ fontWeight: 400 }}>
               {`${formattedNum(WETHPrice)} ${tokenSymbol}/ETH`}
               <LinkOutlined style={{ marginLeft: '0.2rem' }} />
-            </a>
+            </ExternalLink>
           </Tooltip>
         ) : (
           <NotAvailableText />

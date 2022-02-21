@@ -776,7 +776,7 @@ msgstr "然而，Juicebox仍处于试验阶段。尽管Juicebox的合约团队�
 msgid "I understand"
 msgstr "我明白了"
 
-#: src/components/v1/V1Project/ProjectHeader.tsx
+#: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 msgid "ID: {0}"
 msgstr "ID: {0}"
 
@@ -1719,7 +1719,7 @@ msgstr "未识别的策略合约。请确保这是正确的！"
 msgid "Unstaked balance"
 msgstr "取出的余额"
 
-#: src/components/v1/V1Project/ProjectHeader.tsx
+#: src/components/shared/ProjectHeader/index.tsx
 msgid "Untitled project"
 msgstr "项目未命名"
 
@@ -1755,7 +1755,7 @@ msgstr "V1"
 msgid "V1.1"
 msgstr "V1.1"
 
-#: src/components/v1/V1Project/ProjectHeader.tsx
+#: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 msgid "Version of the terminal contract used by this project."
 msgstr "当前项目所使用的 Terminal 版本。"
 

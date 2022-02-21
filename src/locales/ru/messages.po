@@ -778,7 +778,7 @@ msgstr "Однако Juicebox все еще является экспериме�
 msgid "I understand"
 msgstr "Я понимаю"
 
-#: src/components/v1/V1Project/ProjectHeader.tsx
+#: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 msgid "ID: {0}"
 msgstr "ID: {0}"
 
@@ -1721,7 +1721,7 @@ msgstr "Неизвестный стратегический контракт. У
 msgid "Unstaked balance"
 msgstr "Неучтенный баланс"
 
-#: src/components/v1/V1Project/ProjectHeader.tsx
+#: src/components/shared/ProjectHeader/index.tsx
 msgid "Untitled project"
 msgstr "Безымянный проект"
 
@@ -1757,7 +1757,7 @@ msgstr "V1"
 msgid "V1.1"
 msgstr "V1.1"
 
-#: src/components/v1/V1Project/ProjectHeader.tsx
+#: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 msgid "Version of the terminal contract used by this project."
 msgstr "Версия терминального контракта, используемая в этом проекте."
 

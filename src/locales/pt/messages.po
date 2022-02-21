@@ -113,7 +113,7 @@ msgstr "<0>Saiba mais</0> sobre overflow."
 msgid "<0>NOTE:</0> This project has a balance of 0. Projects cannot be migrated without a balance. To migrate this project, first pay it or use the button below to deposit 1 wei (0.000000000000000001 or 10<1>-18</1> ETH)."
 msgstr "<0>NOTA:</0> Este projeto tem um saldo de 0. Os projetos não podem ser migrados sem um saldo. Para migrar um projeto, primeiramente deve pagá-lo ou usar o botão abaixo para depositar 1 Wei (0.000000000000000001 o 10<1>-18</1> ETH)."
 
-#: src/components/v2/V2Create/tabs/OthersTabContent.tsx
+#: src/components/v2/V2Create/tabs/RulesTabContent.tsx
 msgid "<0>Note: </0>Enabling tokens to be minted will appear risky to contributors, and should only be used when necessary."
 msgstr ""
 
@@ -257,7 +257,7 @@ msgid "Allocate a portion of your project's reserved tokens to other Ethereum wa
 msgstr ""
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
-#: src/components/v2/V2Create/tabs/OthersTabContent.tsx
+#: src/components/v2/V2Create/tabs/RulesTabContent.tsx
 msgid "Allow minting tokens"
 msgstr "Permitir a produção de tokens"
 
@@ -1070,7 +1070,7 @@ msgid "Paid as <0/>"
 msgstr "Pago como <0/>"
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
-#: src/components/v2/V2Create/tabs/OthersTabContent.tsx
+#: src/components/v2/V2Create/tabs/RulesTabContent.tsx
 msgid "Pause payments"
 msgstr "Pausar pagamentos"
 
@@ -1446,7 +1446,7 @@ msgstr "Salvar pagamentos"
 
 #: src/components/shared/forms/ProjectDetailsForm.tsx
 #: src/components/v1/V1Create/ProjectForm.tsx
-#: src/components/v2/V2Create/tabs/OthersTabContent.tsx
+#: src/components/v2/V2Create/tabs/RulesTabContent.tsx
 msgid "Save project details"
 msgstr "Salvar detalhes do projeto"
 
@@ -1905,11 +1905,11 @@ msgstr "O que é uma taxa de desconto?"
 msgid "What's going on under the hood?"
 msgstr "Como funciona o Juicebox?"
 
-#: src/components/v2/V2Create/tabs/OthersTabContent.tsx
+#: src/components/v2/V2Create/tabs/RulesTabContent.tsx
 msgid "When Minting Tokens is enabled, the project owner can manually mint any amount of tokens to any address."
 msgstr ""
 
-#: src/components/v2/V2Create/tabs/OthersTabContent.tsx
+#: src/components/v2/V2Create/tabs/RulesTabContent.tsx
 msgid "When Pause Payments is enabled, your project cannot receive direct payments."
 msgstr ""
 

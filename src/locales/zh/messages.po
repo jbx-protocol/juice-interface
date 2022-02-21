@@ -113,7 +113,7 @@ msgstr "<0>进一步了解</0> 溢出。"
 msgid "<0>NOTE:</0> This project has a balance of 0. Projects cannot be migrated without a balance. To migrate this project, first pay it or use the button below to deposit 1 wei (0.000000000000000001 or 10<1>-18</1> ETH)."
 msgstr "<0>注意：</0> 该项目余额为零，无法迁移。如果要迁移该项目，先直接支付或是通过下方按钮存入 1 wei （0.000000000000000001 or 10<1>-18</1> ETH）。"
 
-#: src/components/v2/V2Create/tabs/OthersTabContent.tsx
+#: src/components/v2/V2Create/tabs/RulesTabContent.tsx
 msgid "<0>Note: </0>Enabling tokens to be minted will appear risky to contributors, and should only be used when necessary."
 msgstr ""
 
@@ -257,7 +257,7 @@ msgid "Allocate a portion of your project's reserved tokens to other Ethereum wa
 msgstr "把您项目的一部分保留代币分发给其他以太坊钱包或其他Juicebox项目。"
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
-#: src/components/v2/V2Create/tabs/OthersTabContent.tsx
+#: src/components/v2/V2Create/tabs/RulesTabContent.tsx
 msgid "Allow minting tokens"
 msgstr "允许铸造代币"
 
@@ -1072,7 +1072,7 @@ msgid "Paid as <0/>"
 msgstr "支付 <0/>"
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
-#: src/components/v2/V2Create/tabs/OthersTabContent.tsx
+#: src/components/v2/V2Create/tabs/RulesTabContent.tsx
 msgid "Pause payments"
 msgstr "暂停支付"
 
@@ -1448,7 +1448,7 @@ msgstr "保存开支配置"
 
 #: src/components/shared/forms/ProjectDetailsForm.tsx
 #: src/components/v1/V1Create/ProjectForm.tsx
-#: src/components/v2/V2Create/tabs/OthersTabContent.tsx
+#: src/components/v2/V2Create/tabs/RulesTabContent.tsx
 msgid "Save project details"
 msgstr "保存项目详情"
 
@@ -1907,11 +1907,11 @@ msgstr "什么是折扣率？"
 msgid "What's going on under the hood?"
 msgstr "里面究竟有什么乾坤？"
 
-#: src/components/v2/V2Create/tabs/OthersTabContent.tsx
+#: src/components/v2/V2Create/tabs/RulesTabContent.tsx
 msgid "When Minting Tokens is enabled, the project owner can manually mint any amount of tokens to any address."
 msgstr ""
 
-#: src/components/v2/V2Create/tabs/OthersTabContent.tsx
+#: src/components/v2/V2Create/tabs/RulesTabContent.tsx
 msgid "When Pause Payments is enabled, your project cannot receive direct payments."
 msgstr ""
 

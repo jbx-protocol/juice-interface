@@ -33,7 +33,6 @@ export default function V1Project({
   return (
     <div style={style}>
       <ProjectHeader
-        projectId={projectId}
         metadata={metadata}
         handle={handle}
         isArchived={isArchived}

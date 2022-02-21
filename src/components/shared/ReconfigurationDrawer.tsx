@@ -122,7 +122,7 @@ export default function ReconfigurationDrawer({
           index={-1}
           strategy={customStrategy(customStrategyAddress)}
           selected={selectedStrategyIndex === -1}
-          onSelectBallot={(strategy: Strategy) =>
+          onSelectBallot={() =>
             setSelectedStrategy(customStrategy(customStrategyAddress))
           }
         />

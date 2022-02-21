@@ -5,8 +5,6 @@ import { ThemeContext } from 'contexts/themeContext'
 
 import { useContext } from 'react'
 
-import { BigNumber } from 'ethers'
-
 import { ProjectMetadataV3 } from 'models/project-metadata'
 
 import Paragraph from 'components/shared/Paragraph'
@@ -14,13 +12,11 @@ import Paragraph from 'components/shared/Paragraph'
 import SocialLinks from './SocialLinks'
 
 export default function ProjectHeader({
-  projectId,
   handle,
   metadata,
   isArchived,
   actions,
 }: {
-  projectId: BigNumber
   metadata?: ProjectMetadataV3
   isArchived?: boolean
   handle?: string
@@ -32,8 +28,6 @@ export default function ProjectHeader({
 
   const headerHeight = 120
   const spacing = 20
-
-  if (!projectId) return null
 
   return (
     <div>

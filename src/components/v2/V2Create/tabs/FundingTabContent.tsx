@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Select, Space, Form, Button } from 'antd'
+import { Select, Form, Button, Row, Col } from 'antd'
 
 import { useCallback, useContext, useEffect, useState } from 'react'
 
@@ -126,130 +126,139 @@ export default function ProjectDetailsTabContent() {
   const isFundingDurationVisible = fundingType === 'recurring'
 
   return (
-    <Form form={fundingForm} layout="vertical" onFinish={onFundingFormSave}>
-      <Form.Item label={t`How much do you want to raise?`}>
-        <Select value={fundingType} onChange={onFundingTypeChange}>
-          <Option value="target">
-            <Trans>Specific target</Trans>
-          </Option>
-          <Option value="no_target">
-            <Trans>No target (as much as possible)</Trans>
-          </Option>
-          <Option value="recurring">
-            <Trans>Recurring target</Trans>
-          </Option>
-        </Select>
-      </Form.Item>
+    <Row gutter={32}>
+      <Col span={12}>
+        <Form form={fundingForm} layout="vertical" onFinish={onFundingFormSave}>
+          <Form.Item label={t`How much do you want to raise?`}>
+            <Select value={fundingType} onChange={onFundingTypeChange}>
+              <Option value="target">
+                <Trans>Specific target</Trans>
+              </Option>
+              <Option value="no_target">
+                <Trans>No target (as much as possible)</Trans>
+              </Option>
+              <Option value="recurring">
+                <Trans>Recurring target</Trans>
+              </Option>
+            </Select>
+          </Form.Item>
 
-      {isFundingTargetSectionVisible ? (
-        <div
-          style={{
-            padding: '2rem',
-            marginBottom: '10px',
-            ...shadowCard(theme),
-          }}
-        >
-          <h3>Funding target</h3>
-          <p>
-            <Trans>
-              Set the amount of funds you'd like to raise each funding cycle.
-              Any funds raised within the funding cycle target can be
-              distributed by the project, and can't be redeemed by your
-              project's token holders.
-            </Trans>
-          </p>
-          <p>
-            <Trans>
-              Overflow is created if your project's balance exceeds your funding
-              cycle target. Overflow can be redeemed by your project's token
-              holders.
-            </Trans>{' '}
-            <Trans>
-              <a
-                href={helpPagePath('protocol/learn/topics/overflow')}
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                Learn more
-              </a>{' '}
-              about overflow.
-            </Trans>
-          </p>
-
-          {isFundingDurationVisible && (
-            <Form.Item
-              name={'duration'}
-              label={t`Funding cycle duration`}
-              required
+          {isFundingTargetSectionVisible ? (
+            <div
+              style={{
+                padding: '2rem',
+                marginBottom: '10px',
+                ...shadowCard(theme),
+              }}
             >
-              <FormattedNumberInput placeholder="30" suffix="days" min={1} />
-            </Form.Item>
+              <h3>Funding target</h3>
+              <p>
+                <Trans>
+                  Set the amount of funds you'd like to raise each funding
+                  cycle. Any funds raised within the funding cycle target can be
+                  distributed by the project, and can't be redeemed by your
+                  project's token holders.
+                </Trans>
+              </p>
+              <p>
+                <Trans>
+                  Overflow is created if your project's balance exceeds your
+                  funding cycle target. Overflow can be redeemed by your
+                  project's token holders.
+                </Trans>{' '}
+                <Trans>
+                  <a
+                    href={helpPagePath('protocol/learn/topics/overflow')}
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    Learn more
+                  </a>{' '}
+                  about overflow.
+                </Trans>
+              </p>
+
+              {isFundingDurationVisible && (
+                <Form.Item
+                  name={'duration'}
+                  label={t`Funding cycle duration`}
+                  required
+                >
+                  <FormattedNumberInput
+                    placeholder="30"
+                    suffix="days"
+                    min={1}
+                  />
+                </Form.Item>
+              )}
+
+              <Form.Item label={t`Funding target`} required>
+                <BudgetTargetInput
+                  target={target?.toString()}
+                  targetSubFee={targetSubFee}
+                  currency={toV1Currency(targetCurrency)}
+                  onTargetChange={val => {
+                    setTarget(val ?? '0')
+                    setTargetSubFee(
+                      targetToTargetSubFeeFormatted(
+                        val ?? '0',
+                        ETHPaymentTerminalFee,
+                      ),
+                    )
+                  }}
+                  onTargetSubFeeChange={val => {
+                    setTargetSubFee(val ?? '0')
+                    setTarget(
+                      targetSubFeeToTargetFormatted(
+                        val ?? '0',
+                        ETHPaymentTerminalFee,
+                      ),
+                    )
+                  }}
+                  onCurrencyChange={val => {
+                    setTargetCurrency(toV2Currency(val))
+                  }}
+                  placeholder="0"
+                  fee={ETHPaymentTerminalFee}
+                />
+              </Form.Item>
+            </div>
+          ) : (
+            <p>
+              <Trans>
+                All funds can be distributed by the project. The project will
+                have no overflow (the same as setting the target to infinity).
+              </Trans>
+            </p>
           )}
 
-          <Form.Item label={t`Funding target`} required>
-            <BudgetTargetInput
-              target={target?.toString()}
-              targetSubFee={targetSubFee}
+          <div
+            style={{
+              padding: '2rem',
+              marginBottom: '1rem',
+              ...shadowCard(theme),
+            }}
+          >
+            <h3>Payouts</h3>
+            <ProjectPayoutMods
+              mods={mods}
+              target={target}
               currency={toV1Currency(targetCurrency)}
-              onTargetChange={val => {
-                setTarget(val ?? '0')
-                setTargetSubFee(
-                  targetToTargetSubFeeFormatted(
-                    val ?? '0',
-                    ETHPaymentTerminalFee,
-                  ),
-                )
-              }}
-              onTargetSubFeeChange={val => {
-                setTargetSubFee(val ?? '0')
-                setTarget(
-                  targetSubFeeToTargetFormatted(
-                    val ?? '0',
-                    ETHPaymentTerminalFee,
-                  ),
-                )
-              }}
-              onCurrencyChange={val => {
-                setTargetCurrency(toV2Currency(val))
-              }}
-              placeholder="0"
               fee={ETHPaymentTerminalFee}
+              onModsChanged={newMods => {
+                setMods(newMods)
+              }}
             />
+          </div>
+
+          <Form.Item>
+            <Button htmlType="submit" type="primary">
+              <Trans>Save funding details</Trans>
+            </Button>
           </Form.Item>
-        </div>
-      ) : (
-        <p>
-          <Trans>
-            All funds can be distributed by the project. The project will have
-            no overflow (the same as setting the target to infinity).
-          </Trans>
-        </p>
-      )}
-
-      <div
-        style={{
-          padding: '2rem',
-          marginBottom: '1rem',
-          ...shadowCard(theme),
-        }}
-      >
-        <h3>Payouts</h3>
-        <ProjectPayoutMods
-          mods={mods}
-          target={target}
-          currency={toV1Currency(targetCurrency)}
-          fee={ETHPaymentTerminalFee}
-          onModsChanged={newMods => {
-            setMods(newMods)
-          }}
-        />
-      </div>
-
-      <Form.Item>
-        <Button htmlType="submit" type="primary">
-          <Trans>Save funding details</Trans>
-        </Button>
-      </Form.Item>
-    </Form>
+        </Form>
+      </Col>
+      <Col span={12}></Col>
+    </Row>
   )
 }

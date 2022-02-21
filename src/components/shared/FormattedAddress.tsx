@@ -70,7 +70,7 @@ export default function FormattedAddress({
           newRecord.name = name
         }
       } catch (e) {
-        console.log('Error looking up ENS name for address', address, e)
+        console.error('Error looking up ENS name for address', address, e)
       }
 
       window.localStorage?.setItem(

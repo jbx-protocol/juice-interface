@@ -5,7 +5,7 @@
   "rules": {
     "react-hooks/exhaustive-deps": "error",
     "@typescript-eslint/no-redeclare": "error",
-    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/no-unused-vars": "warn",
     "@typescript-eslint/naming-convention": [
       "error",
       {
@@ -14,10 +14,22 @@
       }
     ],
     "import/order": [
-      "error",
+      "warn",
       {
         "groups": ["external", "internal"],
         "newlines-between": "always-and-inside-groups"
+      }
+    ],
+    "no-console": ["warn", { "allow": ["warn", "error", "info"] }],
+    "no-restricted-imports": [
+      "warn",
+      {
+        "paths": [
+          {
+            "name": "ethers",
+            "message": "Please import from '@ethersproject/module' directly to support tree-shaking."
+          }
+        ]
       }
     ]
   }

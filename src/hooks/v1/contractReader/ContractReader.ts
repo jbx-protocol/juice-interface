@@ -54,14 +54,14 @@ export default function useContractReader<V>({
       if (!readContract || !functionName || args === null) return
 
       try {
-        console.log('📚 Read >', functionName)
+        console.info('📚 Read >', functionName)
 
         const result = await readContract[functionName](...(args ?? []))
 
         const newValue = _formatter(result)
 
         if (_valueDidChange(value, newValue)) {
-          console.log(
+          console.info(
             '📗 New >',
             functionName,
             { args },
@@ -72,7 +72,7 @@ export default function useContractReader<V>({
           _callback(newValue)
         }
       } catch (err) {
-        console.log(
+        console.error(
           '📕 Read error >',
           functionName,
           { args },
@@ -110,7 +110,7 @@ export default function useContractReader<V>({
           })
         })
       } catch (error) {
-        console.log('Read contract >', {
+        console.info('Read contract >', {
           functionName,
           error,
         })

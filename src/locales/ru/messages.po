@@ -28,7 +28,8 @@ msgstr "(Необязательно) Добавить примечание к э
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "({realTokenAllocationPercent}% of all newly minted tokens)."
-msgstr "({realTokenAllocationPercent}%\n"
+msgstr ""
+"({realTokenAllocationPercent}%\n"
 "всех вновь выпущенных токенов)."
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx

@@ -88,7 +88,7 @@ export function useTransactor({
         networkId: network.chainId,
         darkMode: isDarkMode,
         transactionHandler: txInformation => {
-          console.log('HANDLE TX', txInformation)
+          console.info('HANDLE TX', txInformation)
           if (options && txInformation.transaction.status === 'confirmed') {
             options.onConfirmed && options.onConfirmed(txInformation, signer)
             options.onDone && options.onDone()
@@ -125,7 +125,7 @@ export function useTransactor({
           {},
         )
 
-      console.log(
+      console.info(
         '🧃 Calling ' + functionName + '() with args:',
         reportArgs,
         tx,
@@ -135,10 +135,10 @@ export function useTransactor({
         let result
 
         if (tx instanceof Promise) {
-          console.log('AWAITING TX', tx)
+          console.info('AWAITING TX', tx)
           result = await tx
         } else {
-          console.log('RUNNING TX', tx)
+          console.info('RUNNING TX', tx)
 
           if (!tx.gasPrice) tx.gasPrice = gasPrice ?? parseUnits('4.1', 'gwei')
 
@@ -147,7 +147,7 @@ export function useTransactor({
           result = await signer.sendTransaction(tx)
           await result.wait()
         }
-        console.log('RESULT:', result)
+        console.info('RESULT:', result)
 
         // if it is a valid Notify.js network, use that, if not, just send a default notification
         const isNotifyNetwork =
@@ -159,7 +159,7 @@ export function useTransactor({
             onclick: () => window.open(etherscanTxUrl + transaction.hash),
           }))
         } else {
-          console.log('LOCAL TX SENT', result.hash)
+          console.info('LOCAL TX SENT', result.hash)
           if (result.confirmations) {
             options?.onConfirmed && options.onConfirmed(result, signer)
           } else {
@@ -173,7 +173,7 @@ export function useTransactor({
       } catch (e) {
         const message = (e as Error).message
 
-        console.log('Transaction Error:', message)
+        console.error('Transaction Error:', message)
 
         let description: string
 

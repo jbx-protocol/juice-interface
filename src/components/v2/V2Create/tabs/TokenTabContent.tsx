@@ -20,7 +20,7 @@ import {
   getDefaultFundAccessConstraint,
   hasFundingDuration,
   hasFundingTarget,
-} from 'utils/fundingCycleV2'
+} from 'utils/v2/fundingCycle'
 
 import { shadowCard } from 'constants/styles/shadowCard'
 

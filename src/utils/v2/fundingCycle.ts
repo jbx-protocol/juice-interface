@@ -1,11 +1,11 @@
-import { constants } from 'ethers'
+import * as constants from '@ethersproject/constants'
 
-import { parseWad } from './formatNumber'
+import { parseWad } from '../formatNumber'
 
 import {
   SerializedV2FundAccessConstraint,
   SerializedV2FundingCycleData,
-} from './v2/serializers'
+} from './serializers'
 
 export const hasFundingTarget = (
   fundAccessConstraint: SerializedV2FundAccessConstraint | undefined,

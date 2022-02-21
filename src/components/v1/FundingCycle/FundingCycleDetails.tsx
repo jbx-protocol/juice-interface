@@ -14,7 +14,7 @@ import { formatWad, fromPerbicent, fromPermille } from 'utils/formatNumber'
 import {
   decodeFundingCycleMetadata,
   getUnsafeFundingCycleProperties,
-  hasFundingTargetV1,
+  hasFundingTarget,
   isRecurring,
 } from 'utils/v1/fundingCycle'
 import { weightedRate } from 'utils/math'
@@ -81,7 +81,7 @@ export default function FundingCycleDetails({
       >
         {
           <Descriptions.Item label={t`Target`}>
-            {hasFundingTargetV1(fundingCycle) ? (
+            {hasFundingTarget(fundingCycle) ? (
               <>
                 <CurrencySymbol
                   currency={

@@ -8,7 +8,7 @@ msgstr ""
 "Language: id\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-02-20 01:57\n"
+"PO-Revision-Date: 2022-02-21 04:07\n"
 "Last-Translator: \n"
 "Language-Team: Indonesian\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -776,7 +776,7 @@ msgstr ""
 msgid "I understand"
 msgstr ""
 
-#: src/components/v1/V1Project/ProjectHeader.tsx
+#: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 msgid "ID: {0}"
 msgstr ""
 
@@ -1719,7 +1719,7 @@ msgstr ""
 msgid "Unstaked balance"
 msgstr ""
 
-#: src/components/v1/V1Project/ProjectHeader.tsx
+#: src/components/shared/ProjectHeader/index.tsx
 msgid "Untitled project"
 msgstr ""
 
@@ -1755,7 +1755,7 @@ msgstr ""
 msgid "V1.1"
 msgstr ""
 
-#: src/components/v1/V1Project/ProjectHeader.tsx
+#: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 msgid "Version of the terminal contract used by this project."
 msgstr ""
 

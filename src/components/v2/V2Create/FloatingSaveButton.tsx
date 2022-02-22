@@ -3,7 +3,7 @@ import { Button, Col, Form } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
 
-import { floatingSaveContainerHeight } from '.'
+import { floatingSaveContainerHeight } from './constants'
 
 import DeployProjectButton from './DeployProjectButton'
 
@@ -32,7 +32,7 @@ export default function FloatingSaveButton({
         boxShadow: '0px -5px 17px 0px ' + colors.background.l1,
       }}
     >
-      <Col xs={24} md={12} style={{ textAlign: 'center' }}>
+      <Col xs={24} md={12} style={{ marginLeft: '3rem' }}>
         <Form.Item style={{ marginBottom: 0 }}>
           {/* If no text given, can assume it’s the last tab 
           in which case we want to show the review and deploy button */}

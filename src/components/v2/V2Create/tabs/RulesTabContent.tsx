@@ -6,12 +6,11 @@ import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
-
 import { FormItems } from 'components/shared/formItems'
 import { ThemeContext } from 'contexts/themeContext'
 
-import { threeDayDelayStrategy } from 'constants/ballotStrategies/ballotStrategies'
 import { shadowCard } from 'constants/styles/shadowCard'
+import { DEFAULT_BALLOT_STRATEGY } from 'constants/ballotStrategies/ballotStrategies'
 
 type RulesFormFields = {
   pausePay: boolean
@@ -34,7 +33,6 @@ export default function RulesTabContent() {
     (fields: RulesFormFields) => {
       dispatch(editingV2ProjectActions.setPausePay(fields.pausePay))
       dispatch(editingV2ProjectActions.setPauseMint(fields.pauseMint))
-      dispatch(editingV2ProjectActions.setBallot(fields.ballot))
     },
     [dispatch],
   )
@@ -43,7 +41,7 @@ export default function RulesTabContent() {
     form.setFieldsValue({
       pausePay: fundingCycleMetadata?.pausePay ?? false,
       pauseMint: fundingCycleMetadata?.pauseMint ?? false,
-      ballot: fundingCycleData?.ballot ?? threeDayDelayStrategy.address, // 3-day delay default
+      ballot: fundingCycleData?.ballot ?? DEFAULT_BALLOT_STRATEGY.address,
     })
   }, [
     fundingCycleMetadata?.pausePay,
@@ -100,13 +98,13 @@ export default function RulesTabContent() {
               }}
             />
           </Form.Item>
-          <FormItems.ProjectReconfiguration
+          {/* <FormItems.ProjectReconfiguration
             value={form.getFieldValue('ballot') ?? fundingCycleData?.ballot}
             onChange={(address: string) =>
               form.setFieldsValue({ ballot: address })
             }
             style={{ ...shadowCard(theme), padding: '2rem' }}
-          />
+          /> */}
           <Form.Item>
             <Button htmlType="submit" type="primary">
               <Trans>Save rules</Trans>

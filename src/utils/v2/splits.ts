@@ -1,3 +1,5 @@
+import { BigNumber } from '@ethersproject/bignumber'
+import * as constants from '@ethersproject/constants'
 import { PayoutMod } from 'models/mods'
 import { Split } from 'models/v2/splits'
 
@@ -15,7 +17,7 @@ export const toSplit = (mod: PayoutMod): Split => {
     beneficiary,
     percent,
     lockedUntil,
-    projectId,
+    projectId: projectId?.toString(),
     allocator,
     preferClaimed: preferUnstaked,
   }
@@ -36,7 +38,18 @@ export const toMod = (split: Split): PayoutMod => {
     percent,
     preferUnstaked: preferClaimed,
     lockedUntil,
-    projectId,
+    projectId: BigNumber.from(projectId),
     allocator,
+  }
+}
+
+export const sanitizeSplit = (split: Split): Split => {
+  return {
+    preferClaimed: false,
+    percent: split.percent,
+    lockedUntil: split.lockedUntil ?? 0,
+    beneficiary: split.beneficiary ?? constants.AddressZero,
+    projectId: split.projectId ?? BigNumber.from(0).toHexString(),
+    allocator: constants.AddressZero,
   }
 }

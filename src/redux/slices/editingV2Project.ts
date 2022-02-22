@@ -4,7 +4,11 @@ import * as constants from '@ethersproject/constants'
 import { ProjectMetadataV3 } from 'models/project-metadata'
 import { V2FundAccessConstraint } from 'models/v2/fundingCycle'
 
-import { Split } from 'models/v2/splits'
+import {
+  ETHPayoutGroupedSplits,
+  ReserveTokenGroupedSplits,
+  Split,
+} from 'models/v2/splits'
 import {
   serializeV2FundingCycleData,
   serializeV2FundingCycleMetadata,
@@ -14,16 +18,14 @@ import {
 } from 'utils/v2/serializers'
 import { parsePerbicent, parsePermille } from 'utils/formatNumber'
 
-import { threeDayDelayStrategy } from 'constants/ballotStrategies/ballotStrategies'
-
 export interface EditingV2ProjectState {
   version: number
   projectMetadata?: ProjectMetadataV3
   fundingCycleData?: SerializedV2FundingCycleData
   fundingCycleMetadata?: SerializedV2FundingCycleMetadata
   fundAccessConstraints?: V2FundAccessConstraint[]
-  payoutSplits?: Split[]
-  reserveTokenSplits?: Split[]
+  payoutSplits?: ETHPayoutGroupedSplits[]
+  reserveTokenSplits?: ReserveTokenGroupedSplits[]
 }
 
 export interface V2ProjectState {
@@ -32,8 +34,8 @@ export interface V2ProjectState {
   fundingCycleData: SerializedV2FundingCycleData
   fundingCycleMetadata: SerializedV2FundingCycleMetadata
   fundAccessConstraints: SerializedV2FundAccessConstraint[]
-  payoutSplits: Split[]
-  reserveTokenSplits: Split[]
+  payoutGroupedSplits: ETHPayoutGroupedSplits
+  reserveTokenGroupedSplits: ReserveTokenGroupedSplits
 }
 
 const defaultDiscountRate = parsePermille(0)
@@ -56,7 +58,7 @@ const defaultFundingCycleData: SerializedV2FundingCycleData =
     duration: BigNumber.from(0),
     weight: BigNumber.from('1' + '0'.repeat(18)), // 1,000,000 of your project's tokens will be minted per ETH received
     discountRate: defaultDiscountRate,
-    ballot: threeDayDelayStrategy.address,
+    ballot: constants.AddressZero,
   })
 
 const defaultFundingCycleMetadata: SerializedV2FundingCycleMetadata =
@@ -87,8 +89,14 @@ export const defaultProjectState: V2ProjectState = {
   fundingCycleData: { ...defaultFundingCycleData },
   fundingCycleMetadata: { ...defaultFundingCycleMetadata },
   fundAccessConstraints: [],
-  payoutSplits: [],
-  reserveTokenSplits: [],
+  payoutGroupedSplits: {
+    group: 1,
+    splits: [],
+  },
+  reserveTokenGroupedSplits: {
+    group: 2,
+    splits: [],
+  },
 }
 
 export const editingV2ProjectSlice = createSlice({
@@ -140,7 +148,10 @@ export const editingV2ProjectSlice = createSlice({
       state.fundAccessConstraints = action.payload
     },
     setPayoutSplits: (state, action: PayloadAction<Split[]>) => {
-      state.payoutSplits = action.payload
+      state.payoutGroupedSplits.splits = action.payload
+    },
+    setReserveTokenSplits: (state, action: PayloadAction<Split[]>) => {
+      state.reserveTokenGroupedSplits.splits = action.payload
     },
     setPausePay: (state, action: PayloadAction<boolean>) => {
       state.fundingCycleMetadata.pausePay = action.payload
@@ -150,9 +161,6 @@ export const editingV2ProjectSlice = createSlice({
     },
     setBallot: (state, action: PayloadAction<string>) => {
       state.fundingCycleData.ballot = action.payload
-    },
-    setReserveTokenSplits: (state, action: PayloadAction<Split[]>) => {
-      state.reserveTokenSplits = action.payload
     },
   },
 })

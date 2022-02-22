@@ -15,7 +15,8 @@ export default function DeployProjectButton() {
   const [deployProjectModalVisible, setDeployProjectModalVisible] =
     useState<boolean>(false)
   const deployProjectTx = useDeployProjectTx()
-  const { projectMetadata } = useAppSelector(state => state.editingV2Project)
+  const { projectMetadata, reserveTokenGroupedSplits, payoutGroupedSplits } =
+    useAppSelector(state => state.editingV2Project)
   const fundingCycleMetadata = useEditingV2FundingCycleMetadataSelector()
   const fundingCycleData = useEditingV2FundingCycleDataSelector()
   const fundAccessConstraints = useEditingV2FundAccessConstraintsSelector()
@@ -40,23 +41,30 @@ export default function DeployProjectButton() {
       return
     }
 
+    const groupedSplits = [payoutGroupedSplits, reserveTokenGroupedSplits]
+    console.log(groupedSplits)
     deployProjectTx(
       {
         projectMetadataCID: uploadedMetadata.cid,
         fundingCycleData,
         fundingCycleMetadata,
         fundAccessConstraints,
+        groupedSplits,
       },
       {
-        // onDone: () => setLoadingCreate(false),
-        onConfirmed: () => {
-          console.log('done!!!')
+        onDone: () => {
+          console.info('Transaction executed. Awaiting confirmation...')
+        },
+        onConfirmed: e => {
+          console.info('Transaction confirmed:', e)
         },
       },
     )
   }, [
     deployProjectTx,
     projectMetadata,
+    payoutGroupedSplits,
+    reserveTokenGroupedSplits,
     fundingCycleData,
     fundingCycleMetadata,
     fundAccessConstraints,

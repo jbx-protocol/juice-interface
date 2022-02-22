@@ -41,9 +41,9 @@ export default function ConfirmDeployV2ProjectModal({
     fundAccessConstraints,
     fundingCycleData,
     fundingCycleMetadata,
-    payoutSplits,
+    payoutGroupedSplits,
     projectMetadata,
-    reserveTokenSplits,
+    reserveTokenGroupedSplits,
   } = useAppSelector(state => state.editingV2Project)
 
   const fundAccessConstraint =
@@ -225,7 +225,9 @@ export default function ConfirmDeployV2ProjectModal({
                       ? formattedNum(fundingCycleData.duration)
                       : t`Not set`
                   }
-                  suffix={hasFundingDuration(fundingCycleData) ? t`days` : ''}
+                  suffix={
+                    hasFundingDuration(fundingCycleData) ? t`seconds` : ''
+                  }
                 />
               </Col>
               <Col md={8} xs={24}>
@@ -290,7 +292,7 @@ export default function ConfirmDeployV2ProjectModal({
               title={t`Spending`}
               valueRender={() => (
                 <PayoutSplitsList
-                  splits={payoutSplits}
+                  splits={payoutGroupedSplits.splits}
                   fundAccessConstraint={fundAccessConstraint}
                 />
               )}
@@ -299,7 +301,7 @@ export default function ConfirmDeployV2ProjectModal({
               title={t`Reserved token allocations`}
               valueRender={() => (
                 <TicketModsList
-                  mods={reserveTokenSplits}
+                  mods={reserveTokenGroupedSplits.splits}
                   reservedRate={parseFloat(fundingCycleMetadata.reservedRate)}
                 />
               )}

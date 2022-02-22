@@ -2,6 +2,7 @@ import { t, Trans } from '@lingui/macro'
 import { Select, Form, Button, Row, Col } from 'antd'
 
 import { useCallback, useContext, useEffect, useState } from 'react'
+import * as constants from '@ethersproject/constants'
 
 import { ThemeContext } from 'contexts/themeContext'
 import { helpPagePath } from 'utils/helpPageHelper'
@@ -22,15 +23,16 @@ import {
 } from 'components/shared/formItems/formHelpers'
 import { SerializedV2FundAccessConstraint } from 'utils/v2/serializers'
 
-import { toMod, toSplit } from 'utils/v2/splits'
+import { sanitizeSplit, toMod, toSplit } from 'utils/v2/splits'
 
 import { getDefaultFundAccessConstraint } from 'utils/v2/fundingCycle'
 
 import { toV1Currency } from 'utils/v1/currency'
 import { toV2Currency } from 'utils/v2/currency'
 
-import { shadowCard } from 'constants/styles/shadowCard'
 import { V2_CURRENCY_ETH } from 'constants/v2/currency'
+import { shadowCard } from 'constants/styles/shadowCard'
+
 const { Option } = Select
 
 type FundingFormFields = {
@@ -51,7 +53,7 @@ export default function ProjectDetailsTabContent() {
     useState<V2CurrencyOption>(V2_CURRENCY_ETH)
   const [fundingType, setFundingType] = useState<string>()
 
-  const { fundAccessConstraints, fundingCycleData, payoutSplits } =
+  const { fundAccessConstraints, fundingCycleData, payoutGroupedSplits } =
     useAppSelector(state => state.editingV2Project)
 
   const fundAccessConstraint =
@@ -65,7 +67,7 @@ export default function ProjectDetailsTabContent() {
     fundingForm.setFieldsValue({
       duration: fundingCycleData?.duration,
     })
-    setMods(payoutSplits?.map(split => toMod(split)) ?? [])
+    setMods(payoutGroupedSplits?.splits.map(split => toMod(split)) ?? [])
 
     const _target = fundAccessConstraint?.distributionLimit ?? '0'
     const _targetCurrency = parseInt(
@@ -86,7 +88,7 @@ export default function ProjectDetailsTabContent() {
     fundingForm,
     fundingCycleData,
     fundAccessConstraint,
-    payoutSplits,
+    payoutGroupedSplits,
     ETHPaymentTerminalFee,
   ])
 
@@ -94,13 +96,13 @@ export default function ProjectDetailsTabContent() {
     (fields: FundingFormFields) => {
       if (!contracts) throw new Error('Failed to save funding configuration.')
 
-      const newPayoutSplits = mods.map(mod => toSplit(mod))
+      const newPayoutSplits = mods.map(mod => sanitizeSplit(toSplit(mod)))
 
       const fundAccessConstraint: SerializedV2FundAccessConstraint = {
         terminal: contracts.JBETHPaymentTerminal.address,
         distributionLimit: target,
         distributionLimitCurrency: targetCurrency.toString(),
-        overflowAllowance: '0',
+        overflowAllowance: '0', // nothing for the time being.
         overflowAllowanceCurrency: '0',
       }
 

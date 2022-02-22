@@ -10,15 +10,12 @@ import { readNetwork } from 'constants/networks'
 import V2WarningBanner from './V2WarningBanner'
 import V2MainnetWarning from './V2MainnetWarning'
 import ProjectDetailsTabContent from './tabs/ProjectDetailsTabContent'
-import FundingTabContent from './tabs/FundingTabContent'
+import FundingTabContent from './tabs/FundingTab/FundingTabContent'
 import DeployProjectButton from './DeployProjectButton'
 import TokenTabContent from './tabs/TokenTab/TokenTabContent'
 import RulesTabContent from './tabs/RulesTabContent'
 
 const { TabPane } = Tabs
-
-export const floatingSaveContainerHeight = 60
-export const formBottomMargin = floatingSaveContainerHeight + 20
 
 export default function V2Create() {
   const isMainnet = readNetwork.name === NetworkName.mainnet

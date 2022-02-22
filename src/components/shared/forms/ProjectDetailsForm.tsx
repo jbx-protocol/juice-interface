@@ -6,7 +6,7 @@ import { normalizeHandle } from 'utils/formatHandle'
 import { cidFromUrl, unpinIpfsFileByCid } from 'utils/ipfs'
 
 import FloatingSaveButton from 'components/v2/V2Create/FloatingSaveButton'
-import { formBottomMargin } from 'components/v2/V2Create'
+import { formBottomMargin } from 'components/v2/V2Create/constants'
 
 export type ProjectDetailsFormFields = {
   name: string

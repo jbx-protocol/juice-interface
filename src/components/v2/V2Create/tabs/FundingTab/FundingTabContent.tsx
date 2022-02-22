@@ -1,12 +1,12 @@
 import { t, Trans } from '@lingui/macro'
-import { Select, Form, Row, Col } from 'antd'
+
+import { Form, Row, Col } from 'antd'
 
 import { useCallback, useContext, useEffect, useState } from 'react'
 
 import { ThemeContext } from 'contexts/themeContext'
 import { helpPagePath } from 'utils/helpPageHelper'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
-import BudgetTargetInput from 'components/shared/inputs/BudgetTargetInput'
 import ProjectPayoutMods from 'components/shared/formItems/ProjectPayoutMods'
 import { PayoutMod } from 'models/mods'
 import { useETHPaymentTerminalFee } from 'hooks/v2/contractReader/ETHPaymentTerminalFee'
@@ -16,10 +16,6 @@ import { useAppDispatch } from 'hooks/AppDispatch'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { V2UserContext } from 'contexts/v2/userContext'
 import { useAppSelector } from 'hooks/AppSelector'
-import {
-  targetSubFeeToTargetFormatted,
-  targetToTargetSubFeeFormatted,
-} from 'components/shared/formItems/formHelpers'
 import { SerializedV2FundAccessConstraint } from 'utils/v2/serializers'
 
 import { sanitizeSplit, toMod, toSplit } from 'utils/v2/splits'
@@ -27,14 +23,14 @@ import { sanitizeSplit, toMod, toSplit } from 'utils/v2/splits'
 import { getDefaultFundAccessConstraint } from 'utils/v2/fundingCycle'
 
 import { toV1Currency } from 'utils/v1/currency'
-import { toV2Currency } from 'utils/v2/currency'
 
 import { V2_CURRENCY_ETH } from 'constants/v2/currency'
 import { shadowCard } from 'constants/styles/shadowCard'
-import FloatingSaveButton from '../FloatingSaveButton'
-import { formBottomMargin } from '..'
+import FloatingSaveButton from '../../FloatingSaveButton'
+import { formBottomMargin } from '../../constants'
 
-const { Option } = Select
+import FundingTypeSelect, { FundingType } from './FundingTypeSelect'
+import FundingTargetInput from './FundingTargetInput'
 
 type FundingFormFields = {
   duration?: string
@@ -52,11 +48,10 @@ export default function FundingTabContent({
   const [fundingForm] = Form.useForm<FundingFormFields>()
 
   const [mods, setMods] = useState<PayoutMod[]>([])
-  const [target, setTarget] = useState<string>('0')
-  const [targetSubFee, setTargetSubFee] = useState<string>()
+  const [target, setTarget] = useState<string | undefined>()
   const [targetCurrency, setTargetCurrency] =
     useState<V2CurrencyOption>(V2_CURRENCY_ETH)
-  const [fundingType, setFundingType] = useState<string>()
+  const [fundingType, setFundingType] = useState<FundingType>('recurring')
 
   const { fundAccessConstraints, fundingCycleData, payoutGroupedSplits } =
     useAppSelector(state => state.editingV2Project)
@@ -69,33 +64,26 @@ export default function FundingTabContent({
   const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
 
   const resetProjectForm = useCallback(() => {
-    fundingForm.setFieldsValue({
-      duration: fundingCycleData?.duration,
-    })
-    setMods(payoutGroupedSplits?.splits.map(split => toMod(split)) ?? [])
-
-    const _target = fundAccessConstraint?.distributionLimit ?? '0'
+    const _target = fundAccessConstraint?.distributionLimit
     const _targetCurrency = parseInt(
       fundAccessConstraint?.distributionLimitCurrency ?? `${V2_CURRENCY_ETH}`,
     ) as V2CurrencyOption
-    setTarget(_target)
-    setTargetSubFee(
-      targetToTargetSubFeeFormatted(_target, ETHPaymentTerminalFee),
-    )
-    setTargetCurrency(_targetCurrency)
 
-    if (fundingCycleData?.duration) {
+    fundingForm.setFieldsValue({
+      duration: fundingCycleData?.duration,
+    })
+    setTarget(_target)
+    setTargetCurrency(_targetCurrency)
+    setMods(payoutGroupedSplits?.splits.map(split => toMod(split)) ?? [])
+
+    if (parseInt(fundingCycleData?.duration ?? 0) > 0) {
       setFundingType('recurring')
-    } else if (_target) {
+    } else if (parseInt(_target ?? '0') > 0) {
       setFundingType('target')
+    } else {
+      setFundingType('no_target')
     }
-  }, [
-    fundingForm,
-    fundingCycleData,
-    fundAccessConstraint,
-    payoutGroupedSplits,
-    ETHPaymentTerminalFee,
-  ])
+  }, [fundingForm, fundingCycleData, fundAccessConstraint, payoutGroupedSplits])
 
   const onFundingFormSave = useCallback(
     (fields: FundingFormFields) => {
@@ -103,33 +91,42 @@ export default function FundingTabContent({
 
       const newPayoutSplits = mods.map(mod => sanitizeSplit(toSplit(mod)))
 
-      const fundAccessConstraint: SerializedV2FundAccessConstraint = {
-        terminal: contracts.JBETHPaymentTerminal.address,
-        distributionLimit: target,
-        distributionLimitCurrency: targetCurrency.toString(),
-        overflowAllowance: '0', // nothing for the time being.
-        overflowAllowanceCurrency: '0',
+      let fundAccessConstraint: SerializedV2FundAccessConstraint | undefined =
+        undefined
+      if (target) {
+        fundAccessConstraint = {
+          terminal: contracts.JBETHPaymentTerminal.address,
+          distributionLimit: target,
+          distributionLimitCurrency: targetCurrency.toString(),
+          overflowAllowance: '0', // nothing for the time being.
+          overflowAllowanceCurrency: '0',
+        }
       }
 
       dispatch(
-        editingV2ProjectActions.setFundAccessConstraints([
-          fundAccessConstraint,
-        ]),
+        editingV2ProjectActions.setFundAccessConstraints(
+          fundAccessConstraint ? [fundAccessConstraint] : [],
+        ),
       )
       dispatch(editingV2ProjectActions.setPayoutSplits(newPayoutSplits))
-      dispatch(editingV2ProjectActions.setDuration(fields.duration || ''))
+      dispatch(editingV2ProjectActions.setDuration(fields.duration ?? '0'))
     },
     [mods, contracts, dispatch, target, targetCurrency],
   )
+
+  const onFundingTypeSelect = (newFundingType: FundingType) => {
+    // reset fields if "no target" is selected
+    if (newFundingType === 'no_target') {
+      setTarget(undefined)
+      fundingForm.setFieldsValue({ duration: '0' })
+    }
+    setFundingType(newFundingType)
+  }
 
   // initially fill form with any existing redux state
   useEffect(() => {
     resetProjectForm()
   }, [resetProjectForm])
-
-  const onFundingTypeChange = useCallback(value => {
-    setFundingType(value)
-  }, [])
 
   const isFundingTargetSectionVisible =
     fundingType === 'target' || fundingType === 'recurring'
@@ -140,17 +137,10 @@ export default function FundingTabContent({
       <Col span={12}>
         <Form form={fundingForm} layout="vertical" onFinish={onFundingFormSave}>
           <Form.Item label={t`How much do you want to raise?`}>
-            <Select value={fundingType} onChange={onFundingTypeChange}>
-              <Option value="target">
-                <Trans>Specific target</Trans>
-              </Option>
-              <Option value="no_target">
-                <Trans>No target (as much as possible)</Trans>
-              </Option>
-              <Option value="recurring">
-                <Trans>Recurring target</Trans>
-              </Option>
-            </Select>
+            <FundingTypeSelect
+              value={fundingType}
+              onChange={onFundingTypeSelect}
+            />
           </Form.Item>
 
           {isFundingTargetSectionVisible ? (
@@ -203,32 +193,11 @@ export default function FundingTabContent({
               )}
 
               <Form.Item label={t`Funding target`} required>
-                <BudgetTargetInput
-                  target={target?.toString()}
-                  targetSubFee={targetSubFee}
-                  currency={toV1Currency(targetCurrency)}
-                  onTargetChange={val => {
-                    setTarget(val ?? '0')
-                    setTargetSubFee(
-                      targetToTargetSubFeeFormatted(
-                        val ?? '0',
-                        ETHPaymentTerminalFee,
-                      ),
-                    )
-                  }}
-                  onTargetSubFeeChange={val => {
-                    setTargetSubFee(val ?? '0')
-                    setTarget(
-                      targetSubFeeToTargetFormatted(
-                        val ?? '0',
-                        ETHPaymentTerminalFee,
-                      ),
-                    )
-                  }}
-                  onCurrencyChange={val => {
-                    setTargetCurrency(toV2Currency(val))
-                  }}
-                  placeholder="0"
+                <FundingTargetInput
+                  target={target?.toString() ?? '0'}
+                  targetCurrency={targetCurrency}
+                  onTargetChange={setTarget}
+                  onTargetCurrencyChange={setTargetCurrency}
                   fee={ETHPaymentTerminalFee}
                 />
               </Form.Item>
@@ -252,7 +221,7 @@ export default function FundingTabContent({
             <h3>Payouts</h3>
             <ProjectPayoutMods
               mods={mods}
-              target={target}
+              target={target ?? '0'}
               currency={toV1Currency(targetCurrency)}
               fee={ETHPaymentTerminalFee}
               onModsChanged={newMods => {

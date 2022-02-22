@@ -6,6 +6,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
 import { TicketMod } from 'models/mods'
+import V2ProjectReserved from 'components/v2/V2Create/tabs/TokenTab/V2ProjectReserved'
 
 import {
   CSSProperties,
@@ -26,7 +27,7 @@ import { sanitizeSplit, toMod, toSplit } from 'utils/v2/splits'
 
 import { shadowCard } from 'constants/styles/shadowCard'
 import FloatingSaveButton from '../../FloatingSaveButton'
-import { formBottomMargin } from '../..'
+import { formBottomMargin } from '../../constants'
 
 type TokenFormFields = {
   discountRate: string
@@ -152,7 +153,7 @@ export default function TokenTabContent({
             </p>
           ) : null}
 
-          <FormItems.V2ProjectReserved
+          <V2ProjectReserved
             value={tokenForm.getFieldValue('reservedRate') ?? reduxReservedRate}
             onChange={val => {
               tokenForm.setFieldsValue({ reservedRate: val?.toString() })

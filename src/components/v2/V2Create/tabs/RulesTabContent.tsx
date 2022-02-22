@@ -12,7 +12,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { shadowCard } from 'constants/styles/shadowCard'
 import { DEFAULT_BALLOT_STRATEGY } from 'constants/ballotStrategies/ballotStrategies'
 import FloatingSaveButton from '../FloatingSaveButton'
-import { formBottomMargin } from '..'
+import { formBottomMargin } from '../constants'
 
 type RulesFormFields = {
   pausePay: boolean

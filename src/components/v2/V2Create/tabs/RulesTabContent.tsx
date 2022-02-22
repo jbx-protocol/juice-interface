@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Button, Col, Form, Row, Switch } from 'antd'
+import { Col, Form, Row, Switch } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 
 import { useAppDispatch } from 'hooks/AppDispatch'
@@ -11,6 +11,8 @@ import { ThemeContext } from 'contexts/themeContext'
 
 import { shadowCard } from 'constants/styles/shadowCard'
 import { DEFAULT_BALLOT_STRATEGY } from 'constants/ballotStrategies/ballotStrategies'
+import FloatingSaveButton from '../FloatingSaveButton'
+import { formBottomMargin } from '..'
 
 type RulesFormFields = {
   pausePay: boolean
@@ -33,6 +35,7 @@ export default function RulesTabContent() {
     (fields: RulesFormFields) => {
       dispatch(editingV2ProjectActions.setPausePay(fields.pausePay))
       dispatch(editingV2ProjectActions.setPauseMint(fields.pauseMint))
+      dispatch(editingV2ProjectActions.setBallot(fields.ballot))
     },
     [dispatch],
   )
@@ -75,7 +78,12 @@ export default function RulesTabContent() {
   return (
     <Row gutter={32}>
       <Col span={12}>
-        <Form form={form} layout="vertical" onFinish={onFormSaved}>
+        <Form
+          form={form}
+          layout="vertical"
+          onFinish={() => onFormSaved(form.getFieldsValue(true))}
+          style={{ marginBottom: formBottomMargin }}
+        >
           <Form.Item
             name="pausePay"
             label={t`Pause payments`}
@@ -98,18 +106,14 @@ export default function RulesTabContent() {
               }}
             />
           </Form.Item>
-          {/* <FormItems.ProjectReconfiguration
+          <FormItems.ProjectReconfiguration
             value={form.getFieldValue('ballot') ?? fundingCycleData?.ballot}
             onChange={(address: string) =>
               form.setFieldsValue({ ballot: address })
             }
             style={{ ...shadowCard(theme), padding: '2rem' }}
-          /> */}
-          <Form.Item>
-            <Button htmlType="submit" type="primary">
-              <Trans>Save rules</Trans>
-            </Button>
-          </Form.Item>
+          />
+          <FloatingSaveButton />
         </Form>
       </Col>
       <Col span={12}></Col>

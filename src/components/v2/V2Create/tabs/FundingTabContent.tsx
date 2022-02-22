@@ -1,8 +1,7 @@
 import { t, Trans } from '@lingui/macro'
-import { Select, Form, Button, Row, Col } from 'antd'
+import { Select, Form, Row, Col } from 'antd'
 
 import { useCallback, useContext, useEffect, useState } from 'react'
-import * as constants from '@ethersproject/constants'
 
 import { ThemeContext } from 'contexts/themeContext'
 import { helpPagePath } from 'utils/helpPageHelper'
@@ -32,6 +31,8 @@ import { toV2Currency } from 'utils/v2/currency'
 
 import { V2_CURRENCY_ETH } from 'constants/v2/currency'
 import { shadowCard } from 'constants/styles/shadowCard'
+import FloatingSaveButton from '../FloatingSaveButton'
+import { formBottomMargin } from '..'
 
 const { Option } = Select
 
@@ -39,7 +40,11 @@ type FundingFormFields = {
   duration?: string
 }
 
-export default function ProjectDetailsTabContent() {
+export default function FundingTabContent({
+  openNextTab,
+}: {
+  openNextTab: VoidFunction
+}) {
   const { theme } = useContext(ThemeContext)
   const { contracts } = useContext(V2UserContext)
   const dispatch = useAppDispatch()
@@ -131,7 +136,7 @@ export default function ProjectDetailsTabContent() {
   const isFundingDurationVisible = fundingType === 'recurring'
 
   return (
-    <Row gutter={32}>
+    <Row gutter={32} style={{ marginBottom: formBottomMargin }}>
       <Col span={12}>
         <Form form={fundingForm} layout="vertical" onFinish={onFundingFormSave}>
           <Form.Item label={t`How much do you want to raise?`}>
@@ -255,12 +260,7 @@ export default function ProjectDetailsTabContent() {
               }}
             />
           </div>
-
-          <Form.Item>
-            <Button htmlType="submit" type="primary">
-              <Trans>Save funding details</Trans>
-            </Button>
-          </Form.Item>
+          <FloatingSaveButton text={t`Next: Token`} onClick={openNextTab} />
         </Form>
       </Col>
       <Col span={12}></Col>

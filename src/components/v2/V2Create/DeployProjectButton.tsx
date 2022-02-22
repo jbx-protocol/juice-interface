@@ -15,6 +15,9 @@ export default function DeployProjectButton() {
   const [deployProjectModalVisible, setDeployProjectModalVisible] =
     useState<boolean>(false)
   const deployProjectTx = useDeployProjectTx()
+
+  const [loadingDeploy, setLoadingDeploy] = useState<boolean>()
+
   const { projectMetadata, reserveTokenGroupedSplits, payoutGroupedSplits } =
     useAppSelector(state => state.editingV2Project)
   const fundingCycleMetadata = useEditingV2FundingCycleMetadataSelector()
@@ -22,6 +25,7 @@ export default function DeployProjectButton() {
   const fundAccessConstraints = useEditingV2FundAccessConstraintsSelector()
 
   const deployProject = useCallback(async () => {
+    setLoadingDeploy(true)
     if (
       !(
         projectMetadata &&
@@ -38,6 +42,7 @@ export default function DeployProjectButton() {
 
     if (!uploadedMetadata.success) {
       console.error('Failed to upload project metadata.')
+      setLoadingDeploy(false)
       return
     }
 
@@ -57,6 +62,7 @@ export default function DeployProjectButton() {
         },
         onConfirmed: e => {
           console.info('Transaction confirmed:', e)
+          window.location.hash = '/projects?tab=all'
         },
       },
     )
@@ -75,6 +81,7 @@ export default function DeployProjectButton() {
       <Button
         onClick={() => setDeployProjectModalVisible(true)}
         type="primary"
+        htmlType="submit"
         disabled={!projectMetadata?.name}
       >
         <Trans>Review & Deploy</Trans>
@@ -83,6 +90,7 @@ export default function DeployProjectButton() {
         visible={deployProjectModalVisible}
         onOk={deployProject}
         onCancel={() => setDeployProjectModalVisible(false)}
+        confirmLoading={loadingDeploy}
       />
     </>
   )

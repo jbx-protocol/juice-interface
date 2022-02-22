@@ -9,7 +9,11 @@ import { useAppSelector } from 'hooks/AppSelector'
 import { useCallback, useEffect } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 
-export default function ProjectDetailsTabContent() {
+export default function ProjectDetailsTabContent({
+  openNextTab,
+}: {
+  openNextTab?: VoidFunction
+}) {
   const [projectForm] = useForm<ProjectDetailsFormFields>()
   const dispatch = useAppDispatch()
   const { projectMetadata } = useAppSelector(state => state.editingV2Project)
@@ -63,6 +67,7 @@ export default function ProjectDetailsTabContent() {
           form={projectForm}
           onSave={onProjectFormSaved}
           hideProjectHandle
+          openNextTab={openNextTab}
         />
       </Col>
       <Col span={12}>

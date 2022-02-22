@@ -1,5 +1,6 @@
 import { NetworkName } from 'models/network-name'
 import { Tabs } from 'antd'
+import { useState } from 'react'
 
 import V2UserProvider from 'providers/v2/UserProvider'
 
@@ -11,13 +12,18 @@ import V2MainnetWarning from './V2MainnetWarning'
 import ProjectDetailsTabContent from './tabs/ProjectDetailsTabContent'
 import FundingTabContent from './tabs/FundingTabContent'
 import DeployProjectButton from './DeployProjectButton'
-import TokenTabContent from './tabs/TokenTabContent'
+import TokenTabContent from './tabs/TokenTab/TokenTabContent'
 import RulesTabContent from './tabs/RulesTabContent'
 
 const { TabPane } = Tabs
 
+export const floatingSaveContainerHeight = 60
+export const formBottomMargin = floatingSaveContainerHeight + 20
+
 export default function V2Create() {
   const isMainnet = readNetwork.name === NetworkName.mainnet
+
+  const [activeTab, setActiveTab] = useState<string>('1')
 
   return (
     <V2UserProvider>
@@ -35,15 +41,21 @@ export default function V2Create() {
 
         {!isMainnet && (
           <div>
-            <Tabs tabBarExtraContent={{ right: <DeployProjectButton /> }}>
+            <Tabs
+              activeKey={activeTab}
+              tabBarExtraContent={{ right: <DeployProjectButton /> }}
+              onChange={setActiveTab}
+            >
               <TabPane tab="1. Project details" key="1">
-                <ProjectDetailsTabContent />
+                <ProjectDetailsTabContent
+                  openNextTab={() => setActiveTab('2')}
+                />
               </TabPane>
               <TabPane tab="2. Funding" key="2">
-                <FundingTabContent />
+                <FundingTabContent openNextTab={() => setActiveTab('3')} />
               </TabPane>
               <TabPane tab="3. Token" key="3">
-                <TokenTabContent />
+                <TokenTabContent openNextTab={() => setActiveTab('4')} />
               </TabPane>
               <TabPane tab="4. Rules" key="4">
                 <RulesTabContent />

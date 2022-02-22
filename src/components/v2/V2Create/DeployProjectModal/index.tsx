@@ -288,24 +288,29 @@ export default function ConfirmDeployV2ProjectModal({
                 }}
               />
             )}
-            <Statistic
-              title={t`Spending`}
-              valueRender={() => (
-                <PayoutSplitsList
-                  splits={payoutGroupedSplits.splits}
-                  fundAccessConstraint={fundAccessConstraint}
-                />
-              )}
-            />
-            <Statistic
-              title={t`Reserved token allocations`}
-              valueRender={() => (
-                <TicketModsList
-                  mods={reserveTokenGroupedSplits.splits}
-                  reservedRate={parseFloat(fundingCycleMetadata.reservedRate)}
-                />
-              )}
-            />
+            {payoutGroupedSplits.splits.length ? (
+              <Statistic
+                title={t`Spending`}
+                valueRender={() => (
+                  <PayoutSplitsList
+                    splits={payoutGroupedSplits.splits}
+                    fundAccessConstraint={fundAccessConstraint}
+                  />
+                )}
+              />
+            ) : null}
+            {fundingCycleMetadata.reservedRate &&
+            fundingCycleMetadata.reservedRate !== '0' ? (
+              <Statistic
+                title={t`Reserved token allocations`}
+                valueRender={() => (
+                  <TicketModsList
+                    mods={reserveTokenGroupedSplits.splits}
+                    reservedRate={parseFloat(fundingCycleMetadata.reservedRate)}
+                  />
+                )}
+              />
+            ) : null}
           </Space>
         </div>
       </Space>

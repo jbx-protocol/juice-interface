@@ -263,6 +263,7 @@ msgstr "允许铸造代币"
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Allowed"
 msgstr "允许"
 
@@ -526,6 +527,7 @@ msgstr "详情"
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Disabled"
 msgstr "已禁用"
 
@@ -545,6 +547,7 @@ msgstr "Discord"
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Discount rate"
 msgstr "折扣率"
 
@@ -613,6 +616,7 @@ msgstr "由于其公共性质，任何对合约的恶意利用都可能产生不
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Duration"
 msgstr "持续时间"
 
@@ -709,6 +713,7 @@ msgid "Funding cycle"
 msgstr "筹款周期"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Funding cycle details"
 msgstr "筹款周期详情"
 
@@ -1000,6 +1005,7 @@ msgid "New"
 msgstr "新"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "No"
 msgstr "取消"
 
@@ -1012,6 +1018,7 @@ msgid "No duration set."
 msgstr "不设定持续时间。"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "No funding target: The project will control how all funds are distributed, and none can be redeemed by token holders."
 msgstr "不设定筹款目标：所有的资金如何分发都由此项目决定，代币持有者无法赎回。"
 
@@ -1041,6 +1048,7 @@ msgstr "不设定筹款目标。"
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Not set"
 msgstr "未设定"
 
@@ -1138,6 +1146,7 @@ msgstr "当前筹款周期暂停付款。"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Payments paused"
 msgstr "付款已暂停"
 
@@ -1282,6 +1291,10 @@ msgstr "接收 {receiveText}"
 msgid "Reconfiguration"
 msgstr "重新配置"
 
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
+msgid "Reconfiguration rules"
+msgstr ""
+
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
@@ -1324,6 +1337,7 @@ msgstr "燃烧 {tokensTextLong} 来赎回 ETH"
 msgid "Redemption disabled while no funding target is set."
 msgstr ""
 
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 #: src/components/v2/V2Create/tabs/TokenTabContent.tsx
 msgid "Redemption rate"
 msgstr ""
@@ -1351,6 +1365,7 @@ msgstr "保留代币的分配方案（可选）"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Reserved token allocations"
 msgstr "保留代币的分配方案"
 
@@ -1359,6 +1374,7 @@ msgstr "保留代币的分配方案"
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Reserved tokens"
 msgstr "保留代币"
 
@@ -1448,13 +1464,16 @@ msgstr "保存开支配置"
 
 #: src/components/shared/forms/ProjectDetailsForm.tsx
 #: src/components/v1/V1Create/ProjectForm.tsx
-#: src/components/v2/V2Create/tabs/RulesTabContent.tsx
 msgid "Save project details"
 msgstr "保存项目详情"
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Save reconfiguration"
 msgstr "保存新的配置"
+
+#: src/components/v2/V2Create/tabs/RulesTabContent.tsx
+msgid "Save rules"
+msgstr ""
 
 #: src/components/shared/TicketModsList.tsx
 msgid "Save token allocation"
@@ -1506,6 +1525,7 @@ msgid "Should you Juicebox?"
 msgstr "你应该使用Juicebox吗?"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Since you have not set a funding duration, changes to these settings will be applied immediately."
 msgstr "鉴于你并未设置筹款持续时间，对这些设置的修改将会立即生效。"
 
@@ -1519,6 +1539,7 @@ msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Spending"
 msgstr "资金分配"
 
@@ -1545,6 +1566,7 @@ msgstr "百分比合计不能超过 100%."
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Target"
 msgstr "目标"
 
@@ -1553,6 +1575,7 @@ msgid "Target is 0."
 msgstr "目标为 0"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Target is 0: All funds will be considered overflow and can be redeemed by burning project tokens."
 msgstr "目标为 0 ：所有资金将被视为溢出，可以通过燃烧项目代币来赎回。"
 
@@ -1664,6 +1687,7 @@ msgid "These attributes can be changed at any time."
 msgstr "任何时候都可以修改这些属性。"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "These settings will <0>not</0> be editable immediately within a funding cycle. They can only be changed for <1>upcoming</1> funding cycles."
 msgstr "这些属性<0>不能</0> 在同一个筹款周期内马上进行修改。 更改的配置只会在 <1>后面的</1> 筹款周期生效。"
 
@@ -1730,6 +1754,7 @@ msgstr "代币地址：<0/>"
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Token minting"
 msgstr "代币铸造"
 
@@ -1966,6 +1991,7 @@ msgid "Workspace"
 msgstr "工作空间"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Yes"
 msgstr "确定"
 
@@ -2030,6 +2056,7 @@ msgid "characters max"
 msgstr "最大字符数"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "days"
 msgstr "天"
 
@@ -2107,6 +2134,7 @@ msgstr "直到"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "{0} after JBX fee"
 msgstr "收取 JBX 费用之后 {0}"
 

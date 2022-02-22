@@ -10,7 +10,7 @@ import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { FormItems } from 'components/shared/formItems'
 import { ThemeContext } from 'contexts/themeContext'
 
-import { ballotStrategies } from 'constants/ballotStrategies/ballotStrategies'
+import { threeDayDelayStrategy } from 'constants/ballotStrategies/ballotStrategies'
 import { shadowCard } from 'constants/styles/shadowCard'
 
 type RulesFormFields = {
@@ -43,7 +43,7 @@ export default function RulesTabContent() {
     form.setFieldsValue({
       pausePay: fundingCycleMetadata?.pausePay ?? false,
       pauseMint: fundingCycleMetadata?.pauseMint ?? false,
-      ballot: fundingCycleData?.ballot ?? ballotStrategies()[2].address, // 3-day delay default
+      ballot: fundingCycleData?.ballot ?? threeDayDelayStrategy.address, // 3-day delay default
     })
   }, [
     fundingCycleMetadata?.pausePay,
@@ -109,7 +109,7 @@ export default function RulesTabContent() {
           />
           <Form.Item>
             <Button htmlType="submit" type="primary">
-              <Trans>Save project details</Trans>
+              <Trans>Save rules</Trans>
             </Button>
           </Form.Item>
         </Form>

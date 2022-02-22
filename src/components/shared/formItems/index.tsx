@@ -1,3 +1,5 @@
+import V2ProjectReserved from 'components/v2/V2Create/tabs/TokenTab/V2ProjectReserved'
+
 import EthAddress from './EthAddress'
 import ProjectBondingCurveRate from './BondingCurve/ProjectBondingCurveRate'
 import ProjectDescription from './ProjectDescription'
@@ -33,6 +35,7 @@ export const FormItems = {
   ProjectPayDisclosure,
   ProjectPayoutMods,
   ProjectReserved,
+  V2ProjectReserved,
   ProjectTarget,
   ProjectReconfiguration,
   ProjectTicketMods,

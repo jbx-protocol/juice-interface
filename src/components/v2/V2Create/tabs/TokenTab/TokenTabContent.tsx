@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Button, Col, Form, Row } from 'antd'
+import { Col, Form, Row } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { FormItems } from 'components/shared/formItems'
 import { ThemeContext } from 'contexts/themeContext'
@@ -25,6 +25,8 @@ import {
 import { sanitizeSplit, toMod, toSplit } from 'utils/v2/splits'
 
 import { shadowCard } from 'constants/styles/shadowCard'
+import FloatingSaveButton from '../../FloatingSaveButton'
+import { formBottomMargin } from '../..'
 
 type TokenFormFields = {
   discountRate: string
@@ -32,7 +34,11 @@ type TokenFormFields = {
   redemptionRate: string
 }
 
-export default function TokenTabContent() {
+export default function TokenTabContent({
+  openNextTab,
+}: {
+  openNextTab: VoidFunction
+}) {
   const [tokenForm] = useForm<TokenFormFields>()
   const {
     theme: { colors },
@@ -56,7 +62,7 @@ export default function TokenTabContent() {
       fundAccessConstraints,
     )
 
-  const [reserveTokenMods, setReserveTokenMods] = useState<TicketMod[]>(
+  const [reserveTokenSplits, setReserveTokenSplits] = useState<TicketMod[]>(
     reduxReserveTokenGroupedSplits?.splits.map(s => toMod(s)) ?? [],
   )
 
@@ -75,19 +81,12 @@ export default function TokenTabContent() {
       reduxRedemptionRate === '100' ||
       !hasFundingTarget(fundAccessConstraint),
   )
-
-  // Using a state here because relying on the form does not
-  // pass through updated reservedRate to ProjectTicketMods
-  const [reservedRate, setReservedRate] = useState<number | undefined>(
-    parseFloat(reduxReservedRate),
-  )
-
   const dispatch = useAppDispatch()
 
   const onTokenFormSaved = useCallback(
     (fields: TokenFormFields) => {
-      const newReserveTokenSplits = reserveTokenMods.map(mod =>
-        sanitizeSplit(toSplit(mod)),
+      const newReserveTokenSplits = reserveTokenSplits.map(split =>
+        sanitizeSplit(toSplit(split)),
       )
 
       dispatch(editingV2ProjectActions.setDiscountRate(fields.discountRate))
@@ -97,7 +96,7 @@ export default function TokenTabContent() {
         editingV2ProjectActions.setReserveTokenSplits(newReserveTokenSplits),
       )
     },
-    [dispatch, reserveTokenMods],
+    [dispatch, reserveTokenSplits],
   )
 
   const resetTokenForm = useCallback(() => {
@@ -112,12 +111,12 @@ export default function TokenTabContent() {
         reduxRedemptionRate ??
         '100',
     })
-    setReserveTokenMods(reserveTokenMods)
+    setReserveTokenSplits(reserveTokenSplits)
   }, [
     reduxDiscountRate,
     reduxReservedRate,
     reduxRedemptionRate,
-    reserveTokenMods,
+    reserveTokenSplits,
     tokenForm,
   ])
 
@@ -136,9 +135,14 @@ export default function TokenTabContent() {
   return (
     <Row gutter={32}>
       <Col span={12}>
-        <Form form={tokenForm} layout="vertical" onFinish={onTokenFormSaved}>
+        <Form
+          form={tokenForm}
+          layout="vertical"
+          onFinish={() => onTokenFormSaved(tokenForm.getFieldsValue(true))}
+          style={{ marginBottom: formBottomMargin }}
+        >
           {hasFundingDuration(fundingCycleData) ? (
-            <p>
+            <p style={{ color: colors.text.primary }}>
               <Trans>
                 <strong>Note: </strong>Once your first funding cycle starts,
                 updates you make to token attributes will{' '}
@@ -148,10 +152,9 @@ export default function TokenTabContent() {
             </p>
           ) : null}
 
-          <FormItems.ProjectReserved
+          <FormItems.V2ProjectReserved
             value={tokenForm.getFieldValue('reservedRate') ?? reduxReservedRate}
             onChange={val => {
-              setReservedRate(val)
               tokenForm.setFieldsValue({ reservedRate: val?.toString() })
             }}
             style={{ ...shadowCard(theme), padding: 25 }}
@@ -164,21 +167,9 @@ export default function TokenTabContent() {
               }
               setReservedRateDisabled(!checked)
             }}
+            reserveTokenSplits={reserveTokenSplits}
+            setReserveTokenSplits={setReserveTokenSplits}
           />
-          {!reservedRateDisabled ? (
-            <FormItems.ProjectTicketMods
-              mods={reserveTokenMods}
-              onModsChanged={mods => {
-                setReserveTokenMods(mods)
-              }}
-              style={{ ...shadowCard(theme), padding: 25 }}
-              formItemProps={{
-                label: t`Reserved token allocation (optional)`,
-                extra: t`Allocate a portion of your project's reserved tokens to other Ethereum wallets or Juicebox projects.`,
-              }}
-              reservedRate={reservedRate ?? 0}
-            />
-          ) : null}
           <br />
           {!hasFundingDuration(fundingCycleData) && (
             <div style={{ ...disableTextStyle }}>
@@ -236,11 +227,7 @@ export default function TokenTabContent() {
                 : undefined
             }
           />
-          <Form.Item>
-            <Button htmlType="submit" type="primary">
-              <Trans>Save token configuration</Trans>
-            </Button>
-          </Form.Item>
+          <FloatingSaveButton text={t`Next: Rules`} onClick={openNextTab} />
         </Form>
       </Col>
       <Col span={12}></Col>

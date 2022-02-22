@@ -1,9 +1,12 @@
-import { Button, Form, FormInstance } from 'antd'
-import { t, Trans } from '@lingui/macro'
+import { Form, FormInstance } from 'antd'
+import { t } from '@lingui/macro'
 
 import { FormItems } from 'components/shared/formItems'
 import { normalizeHandle } from 'utils/formatHandle'
 import { cidFromUrl, unpinIpfsFileByCid } from 'utils/ipfs'
+
+import FloatingSaveButton from 'components/v2/V2Create/FloatingSaveButton'
+import { formBottomMargin } from 'components/v2/V2Create'
 
 export type ProjectDetailsFormFields = {
   name: string
@@ -21,13 +24,20 @@ export default function ProjectDetailsForm({
   form,
   onSave,
   hideProjectHandle = false,
+  openNextTab,
 }: {
   form: FormInstance<ProjectDetailsFormFields>
   onSave: (values: ProjectDetailsFormFields) => void
   hideProjectHandle?: boolean
+  openNextTab?: VoidFunction
 }) {
   return (
-    <Form form={form} layout="vertical" onFinish={onSave}>
+    <Form
+      form={form}
+      layout="vertical"
+      onFinish={onSave}
+      style={{ marginBottom: formBottomMargin }}
+    >
       <FormItems.ProjectName
         name="name"
         formItemProps={{
@@ -67,11 +77,7 @@ export default function ProjectDetailsForm({
           if (prevUrl) unpinIpfsFileByCid(cidFromUrl(prevUrl))
         }}
       />
-      <Form.Item>
-        <Button htmlType="submit" type="primary">
-          <Trans>Save project details</Trans>
-        </Button>
-      </Form.Item>
+      <FloatingSaveButton text={t`Next: Funding`} onClick={openNextTab} />
     </Form>
   )
 }

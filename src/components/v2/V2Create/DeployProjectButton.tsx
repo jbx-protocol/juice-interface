@@ -75,6 +75,7 @@ export default function DeployProjectButton() {
       <Button
         onClick={() => setDeployProjectModalVisible(true)}
         type="primary"
+        htmlType="submit"
         disabled={!projectMetadata?.name}
       >
         <Trans>Review & Deploy</Trans>

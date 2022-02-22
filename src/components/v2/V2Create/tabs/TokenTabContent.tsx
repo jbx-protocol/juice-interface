@@ -130,11 +130,7 @@ export default function TokenTabContent() {
   return (
     <Row gutter={32}>
       <Col span={12}>
-        <Form
-          form={tokenForm}
-          layout="vertical"
-          onFinish={() => onTokenFormSaved(tokenForm.getFieldsValue(true))}
-        >
+        <Form form={tokenForm} layout="vertical" onFinish={onTokenFormSaved}>
           {hasFundingDuration(fundingCycleData) ? (
             <p>
               <Trans>

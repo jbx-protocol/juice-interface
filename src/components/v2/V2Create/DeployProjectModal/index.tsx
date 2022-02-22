@@ -1,29 +1,27 @@
 import { t, Trans } from '@lingui/macro'
 import { Col, Modal, Row, Space, Statistic } from 'antd'
 import { Gutter } from 'antd/lib/grid/row'
-
 import ProjectLogo from 'components/shared/ProjectLogo'
-import V2PayoutSplitsList from 'components/shared/V2PayoutSplitsList'
 import TicketModsList from 'components/shared/TicketModsList'
 import { useAppSelector } from 'hooks/AppSelector'
 import useMobile from 'hooks/Mobile'
 import { useETHPaymentTerminalFee } from 'hooks/v2/contractReader/ETHPaymentTerminalFee'
-
 import { orEmpty } from 'utils/orEmpty'
-
 import { useContext } from 'react'
 import { NetworkContext } from 'contexts/networkContext'
 import {
   getDefaultFundAccessConstraint,
   hasFundingDuration,
   hasFundingTarget,
-} from 'utils/fundingCycleV2'
+} from 'utils/v2/fundingCycle'
 import { SerializedV2FundAccessConstraint } from 'utils/v2/serializers'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { formattedNum, formatWad, parseWad } from 'utils/formatNumber'
 import { amountSubFee } from 'utils/math'
 import { toV1Currency } from 'utils/v1/currency'
+
+import PayoutSplitsList from './PayoutSplitsList'
 
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 
@@ -291,7 +289,7 @@ export default function ConfirmDeployV2ProjectModal({
             <Statistic
               title={t`Spending`}
               valueRender={() => (
-                <V2PayoutSplitsList
+                <PayoutSplitsList
                   splits={payoutSplits}
                   fundAccessConstraint={fundAccessConstraint}
                 />

@@ -77,11 +77,7 @@ export default function RulesTabContent() {
   return (
     <Row gutter={32}>
       <Col span={12}>
-        <Form
-          form={form}
-          layout="vertical"
-          onFinish={() => onFormSaved(form.getFieldsValue(true))}
-        >
+        <Form form={form} layout="vertical" onFinish={onFormSaved}>
           <Form.Item
             name="pausePay"
             label={t`Pause payments`}

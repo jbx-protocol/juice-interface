@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
-import ConfirmDeployV2ProjectModal from 'components/v2/V2Create/ConfirmDeployV2ProjectModal'
+import ConfirmDeployV2ProjectModal from 'components/v2/V2Create/DeployProjectModal'
 import {
   useAppSelector,
   useEditingV2FundAccessConstraintsSelector,

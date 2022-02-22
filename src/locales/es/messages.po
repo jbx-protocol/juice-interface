@@ -263,6 +263,7 @@ msgstr "Permitir tokens creados"
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Allowed"
 msgstr "Permitido"
 
@@ -526,6 +527,7 @@ msgstr "Detalles"
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Disabled"
 msgstr "Desactivado"
 
@@ -545,6 +547,7 @@ msgstr "Discord"
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Discount rate"
 msgstr "Tasa de descuento"
 
@@ -613,6 +616,7 @@ msgstr "Debido a su naturaleza pública, cualquier explotación a los contratos 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Duration"
 msgstr "Duración"
 
@@ -709,6 +713,7 @@ msgid "Funding cycle"
 msgstr "Ciclo de financiamiento"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Funding cycle details"
 msgstr "Detalles del ciclo de financiamiento"
 
@@ -1000,6 +1005,7 @@ msgid "New"
 msgstr "Nuevo"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "No"
 msgstr "No"
 
@@ -1012,6 +1018,7 @@ msgid "No duration set."
 msgstr "Sin duración establecida."
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "No funding target: The project will control how all funds are distributed, and none can be redeemed by token holders."
 msgstr "Sin meta-objetivo de financiamiento: Este proyecto va a controlar cómo serán distribuidos todos los fondos, y ninguno podrá ser canjeado por los tenedores de los tokens."
 
@@ -1041,6 +1048,7 @@ msgstr "Sin meta-objetivo establecida."
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Not set"
 msgstr "No establecido"
 
@@ -1136,6 +1144,7 @@ msgstr "Los pagos están pausados para el ciclo de financiamiento en curso."
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Payments paused"
 msgstr "Pagos pausados"
 
@@ -1280,6 +1289,10 @@ msgstr "Recibe {receiveText}"
 msgid "Reconfiguration"
 msgstr "Reconfiguración"
 
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
+msgid "Reconfiguration rules"
+msgstr ""
+
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
@@ -1322,6 +1335,7 @@ msgstr "Canjear {tokensTextLong} por ETH"
 msgid "Redemption disabled while no funding target is set."
 msgstr ""
 
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 #: src/components/v2/V2Create/tabs/TokenTabContent.tsx
 msgid "Redemption rate"
 msgstr ""
@@ -1349,6 +1363,7 @@ msgstr "Asignación de tokens reservados (opcional)"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Reserved token allocations"
 msgstr "Colocación de tokens reservados"
 
@@ -1357,6 +1372,7 @@ msgstr "Colocación de tokens reservados"
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Reserved tokens"
 msgstr "Tokens reservados"
 
@@ -1446,13 +1462,16 @@ msgstr "Guardar pagos"
 
 #: src/components/shared/forms/ProjectDetailsForm.tsx
 #: src/components/v1/V1Create/ProjectForm.tsx
-#: src/components/v2/V2Create/tabs/RulesTabContent.tsx
 msgid "Save project details"
 msgstr "Guardar detalles del proyecto"
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Save reconfiguration"
 msgstr "Guardar reconfiguración"
+
+#: src/components/v2/V2Create/tabs/RulesTabContent.tsx
+msgid "Save rules"
+msgstr ""
 
 #: src/components/shared/TicketModsList.tsx
 msgid "Save token allocation"
@@ -1504,6 +1523,7 @@ msgid "Should you Juicebox?"
 msgstr "¿Deberías de usar Juicebox?"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Since you have not set a funding duration, changes to these settings will be applied immediately."
 msgstr "Como no has establecido una duración de financiamiento, los cambios a estos ajustes serán aplicados de inmediato."
 
@@ -1517,6 +1537,7 @@ msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Spending"
 msgstr "Gasto"
 
@@ -1543,6 +1564,7 @@ msgstr "La suma de los porcentajes no puede exceder 100%."
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Target"
 msgstr "Objetivo"
 
@@ -1551,6 +1573,7 @@ msgid "Target is 0."
 msgstr "El objetivo es 0."
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Target is 0: All funds will be considered overflow and can be redeemed by burning project tokens."
 msgstr "La meta-ojetivo es 0: Todos los fondos serán considerados excedente y pueden ser canjeados al quemar tokens del proyecto."
 
@@ -1662,6 +1685,7 @@ msgid "These attributes can be changed at any time."
 msgstr "Estos atributos pueden cambiarse en cualquier momento."
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "These settings will <0>not</0> be editable immediately within a funding cycle. They can only be changed for <1>upcoming</1> funding cycles."
 msgstr "Estos ajustes <0>no</0> serán editables inmediatamente dentro de un ciclo de financiamiento. Solo pueden ser cambiados para <1>próximos</1> ciclos de financiamiento."
 
@@ -1728,6 +1752,7 @@ msgstr "Dirección del token: <0/>"
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Token minting"
 msgstr "Acuñación del token"
 
@@ -1964,6 +1989,7 @@ msgid "Workspace"
 msgstr "Espacio de trabajo"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Yes"
 msgstr "Sí"
 
@@ -2028,6 +2054,7 @@ msgid "characters max"
 msgstr "máximo número de carácteres"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "days"
 msgstr "días"
 
@@ -2105,6 +2132,7 @@ msgstr "hasta"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "{0} after JBX fee"
 msgstr "{0} después de la comisión de JBX"
 

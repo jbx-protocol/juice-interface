@@ -263,6 +263,7 @@ msgstr "Token'ların basılmasına izin verin"
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Allowed"
 msgstr ""
 
@@ -526,6 +527,7 @@ msgstr "Detaylar"
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Disabled"
 msgstr "Devre dışı"
 
@@ -545,6 +547,7 @@ msgstr "Discord"
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Discount rate"
 msgstr "İndirim oranı"
 
@@ -613,6 +616,7 @@ msgstr ""
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Duration"
 msgstr "Süre"
 
@@ -709,6 +713,7 @@ msgid "Funding cycle"
 msgstr "Finansman döngüsü"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Funding cycle details"
 msgstr "Finansman döngüsü detayları"
 
@@ -1000,6 +1005,7 @@ msgid "New"
 msgstr "Yeni"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "No"
 msgstr "Hayır"
 
@@ -1012,6 +1018,7 @@ msgid "No duration set."
 msgstr "Süre ayarlanmadı."
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "No funding target: The project will control how all funds are distributed, and none can be redeemed by token holders."
 msgstr "Finansman hedefi yok: Proje, tüm fonların nasıl dağıtılacağını kontrol eder ve hiçbiri token sahipleri tarafından talep edilemez."
 
@@ -1041,6 +1048,7 @@ msgstr "Hedef belirlenmedi."
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Not set"
 msgstr "Ayarlanmadı"
 
@@ -1136,6 +1144,7 @@ msgstr "Mevcut finansman döngüsü için ödemeler duraklatıldı."
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Payments paused"
 msgstr "Ödemeler duraklatıldı"
 
@@ -1280,6 +1289,10 @@ msgstr "{receiveText} alın"
 msgid "Reconfiguration"
 msgstr "Yeniden yapılandırma"
 
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
+msgid "Reconfiguration rules"
+msgstr ""
+
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
@@ -1322,6 +1335,7 @@ msgstr ""
 msgid "Redemption disabled while no funding target is set."
 msgstr ""
 
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 #: src/components/v2/V2Create/tabs/TokenTabContent.tsx
 msgid "Redemption rate"
 msgstr ""
@@ -1349,6 +1363,7 @@ msgstr "Ayrılmış token tahsisi (isteğe bağlı)"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Reserved token allocations"
 msgstr "Ayrılmış token tahsisleri"
 
@@ -1357,6 +1372,7 @@ msgstr "Ayrılmış token tahsisleri"
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Reserved tokens"
 msgstr "Ayrılmış token'lar"
 
@@ -1446,13 +1462,16 @@ msgstr "Ödemeleri kaydet"
 
 #: src/components/shared/forms/ProjectDetailsForm.tsx
 #: src/components/v1/V1Create/ProjectForm.tsx
-#: src/components/v2/V2Create/tabs/RulesTabContent.tsx
 msgid "Save project details"
 msgstr "Proje ayrıntılarını kaydet"
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Save reconfiguration"
 msgstr "Yeniden yapılandırmayı kaydet"
+
+#: src/components/v2/V2Create/tabs/RulesTabContent.tsx
+msgid "Save rules"
+msgstr ""
 
 #: src/components/shared/TicketModsList.tsx
 msgid "Save token allocation"
@@ -1504,6 +1523,7 @@ msgid "Should you Juicebox?"
 msgstr "Juicebox’a katılmalı mısın?"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Since you have not set a funding duration, changes to these settings will be applied immediately."
 msgstr ""
 
@@ -1517,6 +1537,7 @@ msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Spending"
 msgstr "Harcama"
 
@@ -1543,6 +1564,7 @@ msgstr "Yüzdelerin toplamı %100'ü aşamaz."
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Target"
 msgstr "Hedef"
 
@@ -1551,6 +1573,7 @@ msgid "Target is 0."
 msgstr "Hedef 0."
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Target is 0: All funds will be considered overflow and can be redeemed by burning project tokens."
 msgstr "Hedef 0: Tüm fonlar taşma olarak kabul edilecek ve proje token'ları yakılarak kullanılabilecektir."
 
@@ -1662,6 +1685,7 @@ msgid "These attributes can be changed at any time."
 msgstr "Bu nitelikler herhangi bir zamanda değiştirilebilir."
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "These settings will <0>not</0> be editable immediately within a funding cycle. They can only be changed for <1>upcoming</1> funding cycles."
 msgstr "Bu ayarlar, bir finansman döngüsü içinde hemen <0>düzenlenemez</0>. Yalnızca <1>yaklaşan</1> finansman döngüleri için değiştirilebilirler."
 
@@ -1728,6 +1752,7 @@ msgstr "Token adresi: <0/>"
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Token minting"
 msgstr "Token basımı"
 
@@ -1964,6 +1989,7 @@ msgid "Workspace"
 msgstr "Çalışma Alan"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "Yes"
 msgstr "Evet"
 
@@ -2028,6 +2054,7 @@ msgid "characters max"
 msgstr "maks karakter"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "days"
 msgstr "gün"
 
@@ -2105,6 +2132,7 @@ msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Create/ConfirmDeployV2ProjectModal.tsx
 msgid "{0} after JBX fee"
 msgstr ""
 

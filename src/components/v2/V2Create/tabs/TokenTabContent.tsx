@@ -22,6 +22,8 @@ import {
   hasFundingTarget,
 } from 'utils/v2/fundingCycle'
 
+import { sanitizeSplit, toMod, toSplit } from 'utils/v2/splits'
+
 import { shadowCard } from 'constants/styles/shadowCard'
 
 type TokenFormFields = {
@@ -41,7 +43,7 @@ export default function TokenTabContent() {
     fundingCycleMetadata,
     fundingCycleData,
     fundAccessConstraints,
-    reserveTokenSplits: reduxReserveTokenSplits,
+    reserveTokenGroupedSplits: reduxReserveTokenGroupedSplits,
   } = useAppSelector(state => state.editingV2Project)
 
   const reduxDiscountRate = fundingCycleData?.discountRate
@@ -54,8 +56,8 @@ export default function TokenTabContent() {
       fundAccessConstraints,
     )
 
-  const [reserveTokenSplits, setReserveTokenSplits] = useState<TicketMod[]>(
-    reduxReserveTokenSplits ?? [],
+  const [reserveTokenMods, setReserveTokenMods] = useState<TicketMod[]>(
+    reduxReserveTokenGroupedSplits?.splits.map(s => toMod(s)) ?? [],
   )
 
   const [discountRateDisabled, setDiscountRateDisabled] = useState<boolean>(
@@ -84,14 +86,18 @@ export default function TokenTabContent() {
 
   const onTokenFormSaved = useCallback(
     (fields: TokenFormFields) => {
+      const newReserveTokenSplits = reserveTokenMods.map(mod =>
+        sanitizeSplit(toSplit(mod)),
+      )
+
       dispatch(editingV2ProjectActions.setDiscountRate(fields.discountRate))
       dispatch(editingV2ProjectActions.setReservedRate(fields.reservedRate))
       dispatch(editingV2ProjectActions.setRedemptionRate(fields.redemptionRate))
       dispatch(
-        editingV2ProjectActions.setReserveTokenSplits(reserveTokenSplits),
+        editingV2ProjectActions.setReserveTokenSplits(newReserveTokenSplits),
       )
     },
-    [dispatch, reserveTokenSplits],
+    [dispatch, reserveTokenMods],
   )
 
   const resetTokenForm = useCallback(() => {
@@ -106,12 +112,12 @@ export default function TokenTabContent() {
         reduxRedemptionRate ??
         '100',
     })
-    setReserveTokenSplits(reserveTokenSplits)
+    setReserveTokenMods(reserveTokenMods)
   }, [
     reduxDiscountRate,
     reduxReservedRate,
     reduxRedemptionRate,
-    reserveTokenSplits,
+    reserveTokenMods,
     tokenForm,
   ])
 
@@ -161,9 +167,9 @@ export default function TokenTabContent() {
           />
           {!reservedRateDisabled ? (
             <FormItems.ProjectTicketMods
-              mods={reserveTokenSplits}
-              onModsChanged={(splits: TicketMod[]) => {
-                setReserveTokenSplits(splits)
+              mods={reserveTokenMods}
+              onModsChanged={mods => {
+                setReserveTokenMods(mods)
               }}
               style={{ ...shadowCard(theme), padding: 25 }}
               formItemProps={{

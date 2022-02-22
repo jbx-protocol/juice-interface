@@ -4,7 +4,7 @@ import { CSSProperties, useContext, useState } from 'react'
 import { ThemeContext } from 'contexts/themeContext'
 
 import {
-  threeDayDelayStrategy,
+  DEFAULT_BALLOT_STRATEGY,
   Strategy,
 } from 'constants/ballotStrategies/ballotStrategies'
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
@@ -54,7 +54,7 @@ export default function ProjectReconfiguration({
         initialSelectedStrategy={selectedStrategy}
         onSave={(strategy: Strategy) => {
           setSelectedStrategy(strategy)
-          onChange(strategy.address ?? threeDayDelayStrategy.address) // default to 3-day
+          onChange(strategy.address ?? DEFAULT_BALLOT_STRATEGY.address) // default to 3-day
         }}
       />
       <div style={{ color: colors.text.secondary, marginTop: 10 }}>

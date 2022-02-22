@@ -35,4 +35,4 @@ export const customStrategy = (address: string | undefined) => ({
   unknown: true,
 })
 
-export const threeDayDelayStrategy = ballotStrategies()[2]
+export const DEFAULT_BALLOT_STRATEGY = ballotStrategies()[2]

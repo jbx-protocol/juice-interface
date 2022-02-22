@@ -30,8 +30,8 @@ export interface EditingV2ProjectState {
   fundingCycleData?: SerializedV2FundingCycleData
   fundingCycleMetadata?: SerializedV2FundingCycleMetadata
   fundAccessConstraints?: V2FundAccessConstraint[]
-  payoutSplits?: ETHPayoutGroupedSplits[]
-  reserveTokenSplits?: ReserveTokenGroupedSplits[]
+  payoutSplits?: ETHPayoutGroupedSplits
+  reserveTokenSplits?: ReserveTokenGroupedSplits
 }
 
 export interface V2ProjectState {

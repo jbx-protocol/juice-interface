@@ -10,13 +10,14 @@ import useProjectCurrentFundingCycle from 'hooks/v2/contractReader/ProjectCurren
 
 import useProjectSplits from 'hooks/v2/contractReader/ProjectSplits'
 
-import { ETHPayoutGroupedSplits } from 'models/v2/splits'
-
 import { layouts } from 'constants/styles/layouts'
 
 import V2Project from '../V2Project'
 import Dashboard404 from './Dashboard404'
-import { ETH_PAYOUT_SPLIT_GROUP } from 'constants/v2/splits'
+import {
+  ETH_PAYOUT_SPLIT_GROUP,
+  RESERVE_TOKEN_SPLIT_GROUP,
+} from 'constants/v2/splits'
 
 export default function V2Dashboard() {
   const { projectId: projectIdParameter }: { projectId?: string } = useParams()
@@ -36,13 +37,20 @@ export default function V2Dashboard() {
       projectId,
     })
 
-  const { data: payoutSplits, loading: payoutSplitsLoading } =
-    useProjectSplits<ETHPayoutGroupedSplits>({
+  const { data: payoutSplits, loading: payoutSplitsLoading } = useProjectSplits(
+    {
       projectId,
       splitGroup: ETH_PAYOUT_SPLIT_GROUP,
-    })
+      domain: fundingCycle?.configuration?.toString(),
+    },
+  )
 
-  console.log(payoutSplits)
+  const { data: reserveTokenSplits, loading: reserveTokenSplitsLoading } =
+    useProjectSplits({
+      projectId,
+      splitGroup: RESERVE_TOKEN_SPLIT_GROUP,
+      domain: fundingCycle?.configuration?.toString(),
+    })
 
   if (metadataLoading || metadataURILoading) return <Loading />
 
@@ -55,6 +63,7 @@ export default function V2Dashboard() {
     projectMetadata,
     fundingCycle,
     payoutSplits,
+    reserveTokenSplits,
   }
 
   return (

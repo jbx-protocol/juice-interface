@@ -4,8 +4,13 @@ import { useContext } from 'react'
 import { fromPermille } from 'utils/formatNumber'
 
 export default function V2Project() {
-  const { projectId, projectMetadata, fundingCycle } =
-    useContext(V2ProjectContext)
+  const {
+    projectId,
+    projectMetadata,
+    fundingCycle,
+    payoutSplits,
+    reserveTokenSplits,
+  } = useContext(V2ProjectContext)
   if (!projectId) return null
 
   const start = fundingCycle?.start
@@ -35,7 +40,18 @@ export default function V2Project() {
           </ul>
 
           <h3>ETH payouts</h3>
-          <ul></ul>
+          <ul>
+            {payoutSplits?.map(split => (
+              <li>{split.beneficiary}</li>
+            ))}
+          </ul>
+
+          <h3>Reserve token allocation</h3>
+          <ul>
+            {reserveTokenSplits?.map(split => (
+              <li>{split.beneficiary}</li>
+            ))}
+          </ul>
         </div>
       )}
     </div>

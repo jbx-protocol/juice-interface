@@ -8,10 +8,15 @@ import ScrollToTopButton from 'components/shared/ScrollToTopButton'
 
 import useProjectCurrentFundingCycle from 'hooks/v2/contractReader/ProjectCurrentFundingCycle'
 
+import useProjectSplits from 'hooks/v2/contractReader/ProjectSplits'
+
+import { ETHPayoutGroupedSplits } from 'models/v2/splits'
+
 import { layouts } from 'constants/styles/layouts'
 
 import V2Project from '../V2Project'
 import Dashboard404 from './Dashboard404'
+import { ETH_PAYOUT_SPLIT_GROUP } from 'constants/v2/splits'
 
 export default function V2Dashboard() {
   const { projectId: projectIdParameter }: { projectId?: string } = useParams()
@@ -31,6 +36,14 @@ export default function V2Dashboard() {
       projectId,
     })
 
+  const { data: payoutSplits, loading: payoutSplitsLoading } =
+    useProjectSplits<ETHPayoutGroupedSplits>({
+      projectId,
+      splitGroup: ETH_PAYOUT_SPLIT_GROUP,
+    })
+
+  console.log(payoutSplits)
+
   if (metadataLoading || metadataURILoading) return <Loading />
 
   if (projectId?.eq(0) || metadataError) {
@@ -41,6 +54,7 @@ export default function V2Dashboard() {
     projectId,
     projectMetadata,
     fundingCycle,
+    payoutSplits,
   }
 
   return (

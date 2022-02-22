@@ -24,6 +24,7 @@ export default function V2Project() {
       <ProjectHeader metadata={projectMetadata} />
       {fundingCycle && (
         <div>
+          <h2>Funding Cycle details</h2>
           <ul>
             <li>FC#{fundingCycle?.number.toNumber()}</li>
             <li>Discount rate: {fromPermille(fundingCycle.discountRate)}%</li>
@@ -32,6 +33,9 @@ export default function V2Project() {
             <li>Weight: {fundingCycle.weight.toString()}</li>
             <li>Metadata: {fundingCycle?.metadata.toString()}</li>
           </ul>
+
+          <h3>ETH payouts</h3>
+          <ul></ul>
         </div>
       )}
     </div>

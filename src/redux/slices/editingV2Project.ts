@@ -18,6 +18,12 @@ import {
 } from 'utils/v2/serializers'
 import { parsePerbicent, parsePermille } from 'utils/formatNumber'
 
+import {
+  ETH_PAYOUT_SPLIT_GROUP,
+  RESERVE_TOKEN_SPLIT_GROUP,
+} from 'constants/v2/splits'
+import { DEFAULT_BALLOT_STRATEGY } from 'constants/ballotStrategies/ballotStrategies'
+
 export interface EditingV2ProjectState {
   version: number
   projectMetadata?: ProjectMetadataV3
@@ -58,7 +64,7 @@ const defaultFundingCycleData: SerializedV2FundingCycleData =
     duration: BigNumber.from(0),
     weight: BigNumber.from('1' + '0'.repeat(18)), // 1,000,000 of your project's tokens will be minted per ETH received
     discountRate: defaultDiscountRate,
-    ballot: constants.AddressZero,
+    ballot: DEFAULT_BALLOT_STRATEGY.address,
   })
 
 const defaultFundingCycleMetadata: SerializedV2FundingCycleMetadata =
@@ -90,11 +96,11 @@ export const defaultProjectState: V2ProjectState = {
   fundingCycleMetadata: { ...defaultFundingCycleMetadata },
   fundAccessConstraints: [],
   payoutGroupedSplits: {
-    group: 1,
+    group: ETH_PAYOUT_SPLIT_GROUP,
     splits: [],
   },
   reserveTokenGroupedSplits: {
-    group: 2,
+    group: RESERVE_TOKEN_SPLIT_GROUP,
     splits: [],
   },
 }

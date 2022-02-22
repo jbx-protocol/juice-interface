@@ -42,7 +42,7 @@ export default function DeployProjectButton() {
     }
 
     const groupedSplits = [payoutGroupedSplits, reserveTokenGroupedSplits]
-    console.log(groupedSplits)
+
     deployProjectTx(
       {
         projectMetadataCID: uploadedMetadata.cid,

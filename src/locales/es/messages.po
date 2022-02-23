@@ -22,6 +22,10 @@ msgstr ""
 msgid "(+{0} reserved)"
 msgstr "(+{0} reservado)"
 
+#: src/components/shared/formItems/BondingCurve/ProjectBondingCurveRate.tsx
+msgid "(100%)"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
 msgid "(Optional) Add a note to this payment on-chain"
 msgstr "(Opcional) Añadir una nota en este pago de forma on-chain"
@@ -319,7 +323,7 @@ msgstr "Blog"
 msgid "Bonding curve disabled while no funding target is set."
 msgstr "Curva de adhesión deshabilitada mientras no se establezca una meta de financiación."
 
-#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
+#: src/components/shared/formItems/BondingCurve/ProjectBondingCurveRate.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
@@ -887,6 +891,10 @@ msgstr "Último"
 #: src/components/Landing/index.tsx
 msgid "Latest payments"
 msgstr "Últimos pagos"
+
+#: src/components/shared/formItems/BondingCurve/ProjectBondingCurveRate.tsx
+msgid "Learn more in this <0>short video</0>."
+msgstr ""
 
 #: src/components/Navbar/ThemePicker.tsx
 msgid "Light theme"
@@ -1591,7 +1599,7 @@ msgstr "Este proyecto ha sido archivado y no se puede pagar."
 msgid "This project is currently using the Juicebox V1 terminal contract. New features introduced in V1.1 allow the project owner to:"
 msgstr "Este proyecto está usando actualmente el contrato terminal de Juicebox V1. Nuevas utilidades introducidas en V1.1 permiten al dueño del proyecto:"
 
-#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
+#: src/components/shared/formItems/BondingCurve/ProjectBondingCurveRate.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hodl tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
 msgstr "Esta proporción determina el monto de excedente por el que cada token puede ser redimido en cualquier momento. En una curva de adhesión más baja, redimir un token incrementa el valor de cada token restante, creando un incentivo para sostener tokens más tiempo que otros. Una curva de adhesión de 100% significa que todos los tokens tendrán el mismo valor, sin importar cuando sean redimidos."
@@ -1630,7 +1638,7 @@ msgstr "Acuñación del token"
 msgid "Token name"
 msgstr "Nombre del token"
 
-#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
+#: src/components/shared/formItems/BondingCurve/BondingCurveGraph.tsx
 msgid "Token redeem value"
 msgstr "Valor de canje del token"
 
@@ -1983,7 +1991,7 @@ msgstr "token"
 msgid "tokens"
 msgstr "tokens"
 
-#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
+#: src/components/shared/formItems/BondingCurve/BondingCurveGraph.tsx
 msgid "tokens redeemed"
 msgstr "tokens canjeados"
 

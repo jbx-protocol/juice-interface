@@ -22,6 +22,10 @@ msgstr ""
 msgid "(+{0} reserved)"
 msgstr "(+{0} зарезервировано)"
 
+#: src/components/shared/formItems/BondingCurve/ProjectBondingCurveRate.tsx
+msgid "(100%)"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
 msgid "(Optional) Add a note to this payment on-chain"
 msgstr "(Необязательно) Добавить примечание к этому платежу в цепочке"
@@ -319,7 +323,7 @@ msgstr "Блог"
 msgid "Bonding curve disabled while no funding target is set."
 msgstr "Кривая связи отключена, пока не задана цель финансирования."
 
-#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
+#: src/components/shared/formItems/BondingCurve/ProjectBondingCurveRate.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
@@ -887,6 +891,10 @@ msgstr "Последние"
 #: src/components/Landing/index.tsx
 msgid "Latest payments"
 msgstr "Последние платежи"
+
+#: src/components/shared/formItems/BondingCurve/ProjectBondingCurveRate.tsx
+msgid "Learn more in this <0>short video</0>."
+msgstr ""
 
 #: src/components/Navbar/ThemePicker.tsx
 msgid "Light theme"
@@ -1591,7 +1599,7 @@ msgstr "Этот проект был заархивирован и не може
 msgid "This project is currently using the Juicebox V1 terminal contract. New features introduced in V1.1 allow the project owner to:"
 msgstr "Этот проект в настоящее время использует терминальный контракт Juicebox V1. Новые функции, представленные в версии 1.1, позволяют владельцу проекта:"
 
-#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
+#: src/components/shared/formItems/BondingCurve/ProjectBondingCurveRate.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hodl tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
 msgstr "Эта ставка определяет величину переполнения и денег в излишке, по которой каждый токен может быть погашен в любой момент времени. На более низкой ставке скорости кривой по облигациям, погашение токена увеличивает ценность каждого оставшегося токена, создавая стимул для того, чтобы токены оставались дольше, чем другие. Кривая ставки в 100% означает, что все токены будут иметь одинаковую ценность независимо от того, когда они будут погашены."
@@ -1630,7 +1638,7 @@ msgstr "Производство токенов"
 msgid "Token name"
 msgstr ""
 
-#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
+#: src/components/shared/formItems/BondingCurve/BondingCurveGraph.tsx
 msgid "Token redeem value"
 msgstr "Стоимость погашения токенов"
 
@@ -1983,7 +1991,7 @@ msgstr "токен"
 msgid "tokens"
 msgstr "токены"
 
-#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
+#: src/components/shared/formItems/BondingCurve/BondingCurveGraph.tsx
 msgid "tokens redeemed"
 msgstr "погашенных токенов"
 

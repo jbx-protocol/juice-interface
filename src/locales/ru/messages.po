@@ -509,7 +509,7 @@ msgstr "Отключиться"
 #: src/components/shared/formItems/ProjectDiscord.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "Discord"
-msgstr "Дискорд"
+msgstr "Discord"
 
 #: src/components/shared/formItems/ProjectDiscountRate.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
@@ -1882,7 +1882,7 @@ msgstr "Ваш баланс: {0}"
 
 #: src/components/v1/V1Project/modals/FeedbackPromptModal.tsx
 msgid "Your feedback will be sent to a <0>public Discord channel </0>for our development team to consider."
-msgstr "Ваши отзывы будут отправлены <0> на публичный Дискорд канал </0> для рассмотрения нашей командой разработчиков."
+msgstr "Ваши отзывы будут отправлены в <0>публичный Discord канал</0> для рассмотрения нашей командой разработчиков."
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "Your project cannot receive direct payments while paused."
@@ -1998,7 +1998,7 @@ msgstr "{0} после комиссии JBX"
 
 #: src/utils/formatDate.tsx
 msgid "{0} ago"
-msgstr "{0} лет назад"
+msgstr "{0} назад"
 
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 msgid "{0} balance"

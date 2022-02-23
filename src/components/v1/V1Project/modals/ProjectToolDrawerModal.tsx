@@ -4,13 +4,17 @@ import { useForm } from 'antd/lib/form/Form'
 import { FormItems } from 'components/shared/formItems'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
+import { readNetwork } from 'constants/networks'
+import { octokit } from 'constants/octokit'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import useUnclaimedBalanceOfUser from 'hooks/v1/contractReader/UnclaimedBalanceOfUser'
 import { useAddToBalanceTx } from 'hooks/v1/transactor/AddToBalanceTx'
 import { useSafeTransferFromTx } from 'hooks/v1/transactor/SafeTransferFromTx'
+import { useSetProjectUriTx } from 'hooks/v1/transactor/SetProjectUriTx'
 import { useTransferTokensTx } from 'hooks/v1/transactor/TransferTokensTx'
 import { useContext, useState } from 'react'
 import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
+import { uploadProjectMetadata } from 'utils/ipfs'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export default function ProjectToolDrawerModal({
@@ -20,15 +24,18 @@ export default function ProjectToolDrawerModal({
   visible?: boolean
   onClose?: VoidFunction
 }) {
-  const { tokenSymbol, owner } = useContext(V1ProjectContext)
+  const { tokenSymbol, owner, terminal, metadata, projectId, handle } =
+    useContext(V1ProjectContext)
   const safeTransferFromTx = useSafeTransferFromTx()
   const transferTokensTx = useTransferTokensTx()
   const addToBalanceTx = useAddToBalanceTx()
+  const setUriTx = useSetProjectUriTx()
 
   const [loadingAddToBalance, setLoadingAddToBalance] = useState<boolean>()
   const [loadingTransferTokens, setLoadingTransferTokens] = useState<boolean>()
   const [loadingTransferOwnership, setLoadingTransferOwnership] =
     useState<boolean>()
+  const [loadingArchive, setLoadingArchive] = useState<boolean>()
   const [transferTokensForm] = useForm<{ amount: string; to: string }>()
   const [addToBalanceForm] = useForm<{ amount: string }>()
   const [transferOwnershipForm] = useForm<{ to: string }>()
@@ -72,6 +79,40 @@ export default function ProjectToolDrawerModal({
       {
         onDone: () => setLoadingAddToBalance(false),
         onConfirmed: () => addToBalanceForm.resetFields(),
+      },
+    )
+  }
+
+  async function setArchived(archived: boolean) {
+    const newMetadata = {
+      ...metadata,
+      archived,
+    }
+    setLoadingArchive(true)
+
+    const uploadedMetadata = await uploadProjectMetadata(newMetadata)
+
+    if (!uploadedMetadata.success) {
+      setLoadingArchive(false)
+      return
+    }
+
+    setUriTx(
+      { cid: uploadedMetadata.cid },
+      {
+        onDone: () => setLoadingArchive(false),
+        onConfirmed: () => {
+          // Create github issue when archive is requested
+          // https://docs.github.com/en/rest/reference/issues#create-an-issue
+          octokit.request('POST /repos/jbx-protocol/juice-interface/issues', {
+            title: `[${archived ? 'ARCHIVE' : 'UNARCHIVE'}] Project: "${
+              metadata?.name
+            }"`,
+            body: `<b>Chain:</b> ${
+              readNetwork.name
+            } \n <b>Handle:</b> ${handle} \n <b>Id:</b> ${projectId?.toString()}`,
+          })
+        },
       },
     )
   }
@@ -218,6 +259,62 @@ export default function ProjectToolDrawerModal({
             </Form.Item>
           </Form>
         </section>
+
+        <Divider />
+
+        {metadata?.archived ? (
+          <section>
+            <h3>
+              <Trans>Unarchive project</Trans>
+            </h3>
+            <p>
+              <Trans>
+                Your project will immediately appear active on the
+                juicebox.money app. Please allow a few days for it to appear in
+                the "active" projects list on the Projects page.
+              </Trans>
+            </p>
+            <Button
+              onClick={() => setArchived(false)}
+              loading={loadingArchive}
+              size="small"
+              type="primary"
+            >
+              <Trans>Unarchive project</Trans>
+            </Button>
+          </section>
+        ) : (
+          <section>
+            <h3>
+              <Trans>Archive project</Trans>
+            </h3>
+            <p>
+              <Trans>
+                Your project will appear archived, and will not be able to
+                receive payments through the juicebox.money app. You can
+                unarchive a project at any time. Please allow a few days for
+                your project to appear under the "archived" filter on the
+                Projects page.
+              </Trans>
+            </p>
+            <p>
+              <Trans>
+                <strong>Note:</strong>{' '}
+                {terminal?.version === '1.1'
+                  ? 'Unless payments are paused in your funding cycle settings, your project will still be able to receive payments directly through the jbx protocol contracts.'
+                  : 'Your project will still be able to receive payments directly through the jbx protocol contracts.'}
+              </Trans>
+            </p>
+            <Button
+              onClick={() => setArchived(true)}
+              loading={loadingArchive}
+              size="small"
+              type="primary"
+            >
+              <Trans>Archive project</Trans>
+            </Button>
+          </section>
+        )}
       </Space>
     </Drawer>
   )

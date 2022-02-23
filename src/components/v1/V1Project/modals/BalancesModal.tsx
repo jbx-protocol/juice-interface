@@ -10,7 +10,7 @@ import {
   useHasPermission,
 } from 'hooks/v1/contractReader/HasPermission'
 import { useSetProjectUriTx } from 'hooks/v1/transactor/SetProjectUriTx'
-import { ProjectMetadataV3 } from 'models/project-metadata'
+import { ProjectMetadataV4 } from 'models/project-metadata'
 import { TokenRef } from 'models/token-ref'
 import { useContext, useEffect, useState } from 'react'
 import { uploadProjectMetadata } from 'utils/ipfs'
@@ -32,7 +32,7 @@ export default function BalancesModal({
 
   useEffect(() => {
     setEditingTokenRefs(
-      (metadata as ProjectMetadataV3)?.tokens ?? [{ type: 'erc20', value: '' }],
+      (metadata as ProjectMetadataV4)?.tokens ?? [{ type: 'erc20', value: '' }],
     )
   }, [metadata])
 
@@ -110,7 +110,7 @@ export default function BalancesModal({
             wallet={owner}
             projectId={BigNumber.from('0x01')}
           />
-          {(metadata as ProjectMetadataV3)?.tokens?.map(t =>
+          {(metadata as ProjectMetadataV4)?.tokens?.map(t =>
             t.type === 'erc20' ? (
               <ERC20TokenBalance
                 key={t.value}

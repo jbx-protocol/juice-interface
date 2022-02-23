@@ -44,14 +44,14 @@ import {
 import { amountSubFee } from 'utils/math'
 import { serializeV1FundingCycle } from 'utils/v1/serializers'
 
-import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
+import { getBallotStrategyByAddress } from 'utils/ballotStrategies'
 
-import BudgetForm from '../../../shared/forms/BudgetForm'
-import IncentivesForm from '../../../shared/forms/IncentivesForm'
-import PayModsForm from '../../../shared/forms/PayModsForm'
+import BudgetForm from 'components/shared/forms/BudgetForm'
+import IncentivesForm from 'components/shared/forms/IncentivesForm'
+import PayModsForm from 'components/shared/forms/PayModsForm'
 import TicketingForm, {
   TicketingFormFields,
-} from '../../../shared/forms/TicketingForm'
+} from 'components/shared/forms/TicketingForm'
 
 export default function ReconfigureFCModal({
   visible,

@@ -14,7 +14,7 @@ import { CSSProperties, useContext, useState } from 'react'
 import { formatWad, fromPerbicent } from 'utils/formatNumber'
 import { hasFundingTarget } from 'utils/v1/fundingCycle'
 
-import PayoutModsList from '../../shared/PayoutModsList'
+import PayoutModsList from 'components/shared/PayoutModsList'
 
 export default function Spending({
   payoutMods,

@@ -31,7 +31,7 @@ import {
 import { amountSubFee } from 'utils/math'
 import { orEmpty } from 'utils/orEmpty'
 
-import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
+import { getBallotStrategyByAddress } from 'utils/ballotStrategies'
 
 export default function ConfirmDeployProject() {
   const editingFC = useEditingV1FundingCycleSelector()

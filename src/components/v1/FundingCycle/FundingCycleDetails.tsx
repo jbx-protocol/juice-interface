@@ -20,9 +20,10 @@ import {
 import { weightedRate } from 'utils/math'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
-import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
+import { getBallotStrategyByAddress } from 'utils/ballotStrategies'
 
-import TooltipLabel from '../../shared/TooltipLabel'
+import TooltipLabel from 'components/shared/TooltipLabel'
+
 import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
 
 export default function FundingCycleDetails({

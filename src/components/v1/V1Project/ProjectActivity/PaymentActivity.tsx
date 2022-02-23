@@ -9,8 +9,9 @@ import { PayEvent } from 'models/subgraph-entities/pay-event'
 import React, { useCallback, useContext } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 
+import RichNote from 'components/shared/RichNote'
+
 import ActivityTabContent from './ActivityTabContent'
-import RichNote from '../../../shared/RichNote'
 import { contentLineHeight, smallHeaderStyle } from './styles'
 
 // Maps a project id to an internal map of payment event overrides.

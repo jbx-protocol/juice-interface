@@ -3,8 +3,9 @@ import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
 
+import PayoutModsList from 'components/shared/PayoutModsList'
+
 import ReservedTokens from './ReservedTokens'
-import PayoutModsList from '../../shared/PayoutModsList'
 import FundingCycleDetails from './FundingCycleDetails'
 
 export default function QueuedFundingCycle() {

@@ -14,10 +14,11 @@ import { currencyName } from 'utils/v1/currency'
 import { formatWad, fromWad } from 'utils/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 
+import CurrencySymbol from 'components/shared/CurrencySymbol'
+
 import { disablePayOverrides } from 'constants/v1/overrides'
 import { readNetwork } from 'constants/networks'
 import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
-import CurrencySymbol from '../../../shared/CurrencySymbol'
 import PayInputSubText from './PayInputSubText'
 import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
 

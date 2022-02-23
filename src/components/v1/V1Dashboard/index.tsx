@@ -29,15 +29,14 @@ import { getTerminalName, getTerminalVersion } from 'utils/v1/terminals'
 import useTerminalOfProject from 'hooks/v1/contractReader/TerminalOfProject'
 
 import FeedbackPromptModal from 'components/v1/V1Project/modals/FeedbackPromptModal'
-
 import { Button } from 'antd'
+import Loading from 'components/shared/Loading'
 
 import { padding } from 'constants/styles/padding'
 import { layouts } from 'constants/styles/layouts'
 import { projectTypes } from 'constants/v1/projectTypes'
 import { archivedProjectIds } from 'constants/v1/archivedProjects'
 
-import Loading from '../../shared/Loading'
 import V1Project from '../V1Project'
 
 export default function V1Dashboard() {

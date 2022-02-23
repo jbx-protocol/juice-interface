@@ -46,7 +46,7 @@ msgstr "100% превышение"
 msgid "24 hours"
 msgstr "24 часа"
 
-#: src/constants/ballotStrategies/ballotStrategies.ts
+#: src/constants/ballotStrategies.ts
 msgid "3-day delay"
 msgstr "3-дневная задержка"
 
@@ -58,7 +58,7 @@ msgstr "30 дней"
 msgid "7 days"
 msgstr "7 дней"
 
-#: src/constants/ballotStrategies/ballotStrategies.ts
+#: src/constants/ballotStrategies.ts
 msgid "7-day delay"
 msgstr "7-дневная задержка"
 
@@ -156,11 +156,11 @@ msgstr "Проект может резервировать процент вып
 msgid "A project's lifetime is defined in funding cycles. If a funding target is set, the project can withdraw no more than the target for the duration of the cycle."
 msgstr "Срок действия проекта определен в циклах финансирования. Если установлен целевой показатель финансирования, проект может вывести не более целевого показателя на период действия цикла."
 
-#: src/constants/ballotStrategies/ballotStrategies.ts
+#: src/constants/ballotStrategies.ts
 msgid "A reconfiguration to an upcoming funding cycle must be submitted at least 3 days before it starts."
 msgstr "Реконфигурацию/план изменений для предстоящего цикла финансирования необходимо отправить не менее чем за 7 дней до его начала."
 
-#: src/constants/ballotStrategies/ballotStrategies.ts
+#: src/constants/ballotStrategies.ts
 msgid "A reconfiguration to an upcoming funding cycle must be submitted at least 7 days before it starts."
 msgstr "Реконфигурацию/план изменений для предстоящего цикла финансирования необходимо отправить не менее чем за 3 дня до его начала."
 
@@ -262,7 +262,7 @@ msgstr "Оплаченная сумма"
 msgid "An invite link to your project's Discord server."
 msgstr "Ссылка для приглашения на сервер Discord вашего проекта."
 
-#: src/constants/ballotStrategies/ballotStrategies.ts
+#: src/constants/ballotStrategies.ts
 msgid "Any reconfiguration to an upcoming funding cycle will take effect once the current cycle ends. A project with no strategy may be vulnerable to being rug-pulled by its owner."
 msgstr "Любая перенастройка на предстоящий цикл финансирования вступит в силу после завершения текущего цикла. Проект, не имеющий стратегии или плана, может быть уязвим для владельца."
 
@@ -458,7 +458,7 @@ msgstr "Текущий владелец: {owner}"
 msgid "Currently worth: <0><1/>{0}</0>"
 msgstr "На данный момент стоит: <0><1/>{0}</0>"
 
-#: src/constants/ballotStrategies/ballotStrategies.ts
+#: src/utils/ballotStrategies.ts
 msgid "Custom strategy"
 msgstr "Индивидуальная стратегия"
 
@@ -978,7 +978,7 @@ msgstr "Не более одного целевого показателя ци�
 msgid "No past funding cycles"
 msgstr "Нет прошлых циклов финансирования"
 
-#: src/constants/ballotStrategies/ballotStrategies.ts
+#: src/constants/ballotStrategies.ts
 msgid "No strategy"
 msgstr "Нет стратегии/или плана"
 
@@ -1567,6 +1567,10 @@ msgstr "Эти параметры могут быть изменены в люб
 msgid "These settings will <0>not</0> be editable immediately within a funding cycle. They can only be changed for <1>upcoming</1> funding cycles."
 msgstr "Эти настройки <0> не <0> будут доступны для редактирования немедленно в течение цикла финансирования. Они могут быть изменены только для <1> предстоящих <1> циклов финансирования."
 
+#: src/utils/ballotStrategies.ts
+msgid "This address is an unrecognized strategy contract. Make sure it is correct!"
+msgstr ""
+
 #: src/components/shared/Mod.tsx
 msgid "This address will receive any tokens minted when the recipient project gets paid."
 msgstr "Этот адрес будет получать все токены, сделанные при оплате проекта получателя."
@@ -1710,10 +1714,6 @@ msgstr "Твиттер"
 #: src/components/shared/AMMPrices/TokenAMMPriceRow.tsx
 msgid "Unavailable"
 msgstr "Недоступно"
-
-#: src/constants/ballotStrategies/ballotStrategies.ts
-msgid "Unrecognized strategy contract. Make sure this is correct!"
-msgstr "Неизвестный стратегический контракт. Убедитесь, что это правильно!"
 
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 msgid "Unstaked balance"

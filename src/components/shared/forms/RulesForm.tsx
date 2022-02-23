@@ -1,13 +1,13 @@
 import { CheckCircleFilled } from '@ant-design/icons'
 import { Button, Input, Space } from 'antd'
 import { Trans } from '@lingui/macro'
-
 import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { constants, utils } from 'ethers'
+import * as constants from '@ethersproject/constants'
+import { isAddress } from '@ethersproject/address'
 import { useContext, useLayoutEffect, useState } from 'react'
 
-import { ballotStrategies } from 'constants/ballotStrategies/ballotStrategies'
+import { BALLOT_STRATEGIES } from 'constants/ballotStrategies'
 import ExternalLink from '../ExternalLink'
 
 export default function RulesForm({
@@ -22,12 +22,15 @@ export default function RulesForm({
   const [customStrategyAddress, setCustomStrategyAddress] = useState<string>()
 
   useLayoutEffect(() => {
-    const index = ballotStrategies().findIndex(
+    const index = BALLOT_STRATEGIES.findIndex(
       s => s.address.toLowerCase() === initialBallot.toLowerCase(),
     )
-    if (index > -1) setSelectedIndex(index)
-    else {
-      setSelectedIndex(ballotStrategies().length)
+
+    if (index > -1) {
+      setSelectedIndex(index)
+    } else {
+      // if hard-coded ballot strategy not found, the custom one must be selected.
+      setSelectedIndex(BALLOT_STRATEGIES.length)
       setCustomStrategyAddress(initialBallot)
     }
   }, [initialBallot])
@@ -89,7 +92,7 @@ export default function RulesForm({
           </Trans>
         </p>
 
-        {ballotStrategies()[selectedIndex ?? 0].address ===
+        {BALLOT_STRATEGIES[selectedIndex ?? 0]?.address ===
           constants.AddressZero && (
           <p style={{ color: colors.text.warn }}>
             <Trans>
@@ -101,7 +104,7 @@ export default function RulesForm({
       </div>
 
       <Space direction="vertical">
-        {ballotStrategies().map((s, i) =>
+        {BALLOT_STRATEGIES.map((s, i) =>
           buildOption(
             s.name,
             <div>
@@ -135,7 +138,7 @@ export default function RulesForm({
               .
             </p>
           </div>,
-          ballotStrategies().length,
+          BALLOT_STRATEGIES.length,
         )}
       </Space>
 
@@ -144,14 +147,14 @@ export default function RulesForm({
         type="primary"
         disabled={
           selectedIndex === undefined ||
-          (selectedIndex === ballotStrategies().length &&
-            (!customStrategyAddress || !utils.isAddress(customStrategyAddress)))
+          (selectedIndex === BALLOT_STRATEGIES.length &&
+            (!customStrategyAddress || !isAddress(customStrategyAddress)))
         }
         onClick={() => {
           onSave(
             selectedIndex !== undefined &&
-              selectedIndex < ballotStrategies().length
-              ? ballotStrategies()[selectedIndex].address
+              selectedIndex < BALLOT_STRATEGIES.length
+              ? BALLOT_STRATEGIES[selectedIndex].address
               : customStrategyAddress ?? constants.AddressZero,
           )
         }}

@@ -2,6 +2,8 @@ import { notification } from 'antd'
 import Axios, { AxiosResponse } from 'axios'
 import { ProjectMetadataV3 } from 'models/project-metadata'
 
+import { IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
+
 const pinata_api_key = process.env.REACT_APP_PINATA_PINNER_KEY
 const pinata_secret_api_key = process.env.REACT_APP_PINATA_PINNER_SECRET
 
@@ -161,7 +163,7 @@ export const metadataNameForHandle = (handle: string) =>
   `juicebox-@${handle}-metadata`
 
 export const ipfsCidUrl = (hash: string) =>
-  'https://jbx.mypinata.cloud/ipfs/' + hash
+  `https://${IPFS_GATEWAY_HOSTNAME}/ipfs/${hash}`
 
 export const cidFromUrl = (url: string | undefined) => url?.split('/').pop()
 

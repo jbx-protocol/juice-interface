@@ -63,7 +63,8 @@ Next, copy the following fields into your `.env` file:
   `REACT_APP_INFURA_ID` variable.
 - **Endpoint**. This is the Ethereum network that will be used for testing. If
   you don't know which endpoint to use, select **mainnet**. In the `.env` file,
-  copy the network name (e.g. 'mainnet', not the url) into the `REACT_APP_INFURA_NETWORK` variable.
+  copy the network name (e.g. 'mainnet', not the url) into the
+  `REACT_APP_INFURA_NETWORK` variable.
 
 #### Piñata
 
@@ -77,11 +78,12 @@ Take the following steps to set up Piñata for local development:
 1. Create a Piñata API key
    ([learn more](https://docs.pinata.cloud/#your-api-keys)).
    - Enable the **Admin** toggle in the **Admin** field.
-1. Copy the following fields into your `.env` file
+1. Copy the following fields into your `.env` file:
    - **API Key**. In the `.env` file, copy the **API Key** into the
      `REACT_APP_PINATA_PINNER_KEY` variable.
    - **API Secret**. In the `.env` file, copy the **API Secret** into the
      `REACT_APP_PINATA_PINNER_SECRET` variable.
+1. Set `IPFS_GATEWAY_HOSTNAME` to `gateway.pinata.cloud` in your `.env` file.
 
 #### Blocknative
 

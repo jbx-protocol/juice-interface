@@ -1,0 +1,4 @@
+const JBX_PINATA_GATEWAY = 'jbx.mypinata.cloud'
+
+export const IPFS_GATEWAY_HOSTNAME =
+  process.env.REACT_APP_PINATA_GATEWAY_HOSTNAME || JBX_PINATA_GATEWAY

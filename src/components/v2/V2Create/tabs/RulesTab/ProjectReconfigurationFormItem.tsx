@@ -3,16 +3,16 @@ import { Form } from 'antd'
 import { CSSProperties, useContext, useState } from 'react'
 import { ThemeContext } from 'contexts/themeContext'
 
+import ReconfigurationDrawer from 'components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer'
+import ReconfigurationOption from 'components/v2/V2Create/tabs/RulesTab/ReconfigurationOption'
+
 import {
   DEFAULT_BALLOT_STRATEGY,
   Strategy,
 } from 'constants/ballotStrategies/ballotStrategies'
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 
-import ReconfigurationDrawer from '../ReconfigurationDrawer'
-import ReconfigurationOption from '../ReconfigurationOption'
-
-export default function ProjectReconfiguration({
+export default function ProjectReconfigurationFormItem({
   value,
   onChange,
   style = {},

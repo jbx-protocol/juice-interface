@@ -6,13 +6,13 @@ import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
-import { FormItems } from 'components/shared/formItems'
 import { ThemeContext } from 'contexts/themeContext'
 
 import { shadowCard } from 'constants/styles/shadowCard'
 import { DEFAULT_BALLOT_STRATEGY } from 'constants/ballotStrategies/ballotStrategies'
-import FloatingSaveButton from '../FloatingSaveButton'
-import { formBottomMargin } from '../constants'
+import FloatingSaveButton from '../../FloatingSaveButton'
+import { formBottomMargin } from '../../constants'
+import ProjectReconfigurationFormItem from './ProjectReconfigurationFormItem'
 
 type RulesFormFields = {
   pausePay: boolean
@@ -106,7 +106,7 @@ export default function RulesTabContent() {
               }}
             />
           </Form.Item>
-          <FormItems.ProjectReconfiguration
+          <ProjectReconfigurationFormItem
             value={form.getFieldValue('ballot') ?? fundingCycleData?.ballot}
             onChange={(address: string) =>
               form.setFieldsValue({ ballot: address })

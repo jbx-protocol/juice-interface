@@ -13,7 +13,7 @@ import ProjectDetailsTabContent from './tabs/ProjectDetailsTabContent'
 import FundingTabContent from './tabs/FundingTab/FundingTabContent'
 import DeployProjectButton from './DeployProjectButton'
 import TokenTabContent from './tabs/TokenTab/TokenTabContent'
-import RulesTabContent from './tabs/RulesTabContent'
+import RulesTabContent from './tabs/RulesTab/RulesTabContent'
 
 const { TabPane } = Tabs
 

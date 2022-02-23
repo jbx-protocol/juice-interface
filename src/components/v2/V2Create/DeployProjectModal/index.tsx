@@ -307,6 +307,8 @@ export default function ConfirmDeployV2ProjectModal({
                   <TicketModsList
                     mods={reserveTokenGroupedSplits.splits}
                     reservedRate={parseFloat(fundingCycleMetadata.reservedRate)}
+                    projectId={undefined}
+                    fundingCycle={undefined}
                   />
                 )}
               />

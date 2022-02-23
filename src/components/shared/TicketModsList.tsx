@@ -23,9 +23,9 @@ export default function TicketModsList({
   reservedRate,
 }: {
   total?: BigNumber
-  mods?: TicketMod[]
-  fundingCycle?: V1FundingCycle
-  projectId?: BigNumber
+  mods: TicketMod[] | undefined
+  fundingCycle: V1FundingCycle | undefined
+  projectId: BigNumber | undefined
   reservedRate: number
 }) {
   const [modalVisible, setModalVisible] = useState<boolean>(false)

@@ -6,13 +6,13 @@ import { useContext, useState } from 'react'
 import { ThemeContext } from 'contexts/themeContext'
 import { drawerWidth } from 'utils/drawerWidth'
 
+import ReconfigurationOption from 'components/v2/V2Create/tabs/RulesTab/ReconfigurationOption'
+
 import {
   ballotStrategies,
   customStrategy,
   Strategy,
 } from 'constants/ballotStrategies/ballotStrategies'
-
-import ReconfigurationOption from './ReconfigurationOption'
 
 function CustomStrategyForm({
   address,

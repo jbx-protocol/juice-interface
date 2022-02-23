@@ -290,7 +290,7 @@ msgstr "Доступные средства распределяются в со
 msgid "Available:"
 msgstr "Доступно:"
 
-#: src/components/v1/V1Dashboard/index.tsx
+#: src/components/shared/ScrollToTopButton.tsx
 msgid "Back to top"
 msgstr "Вернуться наверх"
 

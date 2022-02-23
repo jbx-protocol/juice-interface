@@ -290,7 +290,7 @@ msgstr ""
 msgid "Available:"
 msgstr "Disponível:"
 
-#: src/components/v1/V1Dashboard/index.tsx
+#: src/components/shared/ScrollToTopButton.tsx
 msgid "Back to top"
 msgstr "De volta ao início"
 

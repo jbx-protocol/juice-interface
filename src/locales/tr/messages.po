@@ -111,10 +111,6 @@ msgstr "<0>Not:</0> Bu özellikler, bir finansman döngüsü içinde doğrudan <
 msgid "<0>Note:</0> Tokens cannot be claimed because no ERC20 token has been issued for this project. ERC20 tokens must be issued by the project owner."
 msgstr "<0>Not:</0> Bu proje için herhangi bir ERC20 token'ı çıkarılmadığından token'lar talep edilemez. ERC20 token'ları proje sahibi tarafından çıkarılmalıdır."
 
-#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
-msgid "<0>Note:</0> {0}"
-msgstr ""
-
 #: src/components/shared/UntrackedErc20Notice.tsx
 msgid "<0>Notice:</0> These balances will not reflect transfers of claimed tokens because the {tokenSymbol} ERC-20 token has not yet been indexed by Juicebox."
 msgstr "<0>Uyarı:</0> {tokenSymbol} ERC-20 token'ı henüz Juicebox tarafından dizine eklenmediğinden, bu bakiyeler talep edilen token'ların transferlerini yansıtmaz."
@@ -1005,6 +1001,10 @@ msgstr "Hedef belirlenmedi."
 msgid "Not set"
 msgstr "Ayarlanmadı"
 
+#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
+msgid "Note:"
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "Note: Juicebox is new, unaudited, and not guaranteed to work perfectly. Before spending money, do your own research: <0>ask questions</0>, <1>check out the code</1>, and understand the risks!"
 msgstr "Not: Juicebox yenidir, denetlenmemiştir ve kusursuz çalışması garanti edilmez. Para harcamadan önce kendi araştırmanızı yapın: sorular sorun, kodu inceleyin ve riskleri anlayın!"
@@ -1730,6 +1730,14 @@ msgstr ""
 msgid "Unavailable"
 msgstr "Mevcut değil"
 
+#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
+msgid "Unless payments are paused in your funding cycle settings, your project will still be able to receive payments directly through the Juicebox protocol contracts."
+msgstr ""
+
+#: src/constants/ballotStrategies/ballotStrategies.ts
+msgid "Unrecognized strategy contract. Make sure this is correct!"
+msgstr "Tanınmayan strateji sözleşmesi. Bunun doğru olduğundan emin olun!"
+
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 msgid "Unstaked balance"
 msgstr "Stake'den kaldırılan bakiye"
@@ -1913,6 +1921,10 @@ msgstr ""
 
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
 msgid "Your project will immediately appear active on the juicebox.money app. Please allow a few days for it to appear in the \"active\" projects list on the Projects page."
+msgstr ""
+
+#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
+msgid "Your project will still be able to receive payments directly through the Juicebox protocol contracts."
 msgstr ""
 
 #: src/components/shared/formItems/ProjectTwitter.tsx

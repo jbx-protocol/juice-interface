@@ -298,12 +298,21 @@ export default function ProjectToolDrawerModal({
               </Trans>
             </p>
             <p>
-              <Trans>
-                <strong>Note:</strong>{' '}
-                {terminal?.version === '1.1'
-                  ? 'Unless payments are paused in your funding cycle settings, your project will still be able to receive payments directly through the jbx protocol contracts.'
-                  : 'Your project will still be able to receive payments directly through the jbx protocol contracts.'}
-              </Trans>
+              <strong>
+                <Trans>Note:</Trans>
+              </strong>{' '}
+              {terminal?.version === '1.1' ? (
+                <Trans>
+                  Unless payments are paused in your funding cycle settings,
+                  your project will still be able to receive payments directly
+                  through the Juicebox protocol contracts.
+                </Trans>
+              ) : (
+                <Trans>
+                  Your project will still be able to receive payments directly
+                  through the Juicebox protocol contracts.
+                </Trans>
+              )}
             </p>
             <Button
               onClick={() => setArchived(true)}

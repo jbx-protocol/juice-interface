@@ -106,10 +106,6 @@ msgstr "<0>Note:</0> These properties will <1>not</1> be editable immediately wi
 msgid "<0>Note:</0> Tokens cannot be claimed because no ERC20 token has been issued for this project. ERC20 tokens must be issued by the project owner."
 msgstr "<0>Note:</0> Tokens cannot be claimed because no ERC20 token has been issued for this project. ERC20 tokens must be issued by the project owner."
 
-#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
-msgid "<0>Note:</0> {0}"
-msgstr "<0>Note:</0> {0}"
-
 #: src/components/shared/UntrackedErc20Notice.tsx
 msgid "<0>Notice:</0> These balances will not reflect transfers of claimed tokens because the {tokenSymbol} ERC-20 token has not yet been indexed by Juicebox."
 msgstr ""
@@ -1000,6 +996,10 @@ msgstr ""
 msgid "Not set"
 msgstr ""
 
+#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
+msgid "Note:"
+msgstr "Note:"
+
 #: src/components/Landing/index.tsx
 msgid "Note: Juicebox is new, unaudited, and not guaranteed to work perfectly. Before spending money, do your own research: <0>ask questions</0>, <1>check out the code</1>, and understand the risks!"
 msgstr ""
@@ -1725,6 +1725,14 @@ msgstr "Unarchive project"
 msgid "Unavailable"
 msgstr "Unavailable"
 
+#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
+msgid "Unless payments are paused in your funding cycle settings, your project will still be able to receive payments directly through the Juicebox protocol contracts."
+msgstr "Unless payments are paused in your funding cycle settings, your project will still be able to receive payments directly through the Juicebox protocol contracts."
+
+#: src/constants/ballotStrategies/ballotStrategies.ts
+msgid "Unrecognized strategy contract. Make sure this is correct!"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 msgid "Unstaked balance"
 msgstr "Unstaked balance"
@@ -1909,6 +1917,10 @@ msgstr "Your project will appear archived, and will not be able to receive payme
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
 msgid "Your project will immediately appear active on the juicebox.money app. Please allow a few days for it to appear in the \"active\" projects list on the Projects page."
 msgstr "Your project will immediately appear active on the juicebox.money app. Please allow a few days for it to appear in the \"active\" projects list on the Projects page."
+
+#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
+msgid "Your project will still be able to receive payments directly through the Juicebox protocol contracts."
+msgstr "Your project will still be able to receive payments directly through the Juicebox protocol contracts."
 
 #: src/components/shared/formItems/ProjectTwitter.tsx
 msgid "Your project's Twitter handle."

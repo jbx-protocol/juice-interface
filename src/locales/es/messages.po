@@ -111,10 +111,6 @@ msgstr "<0>Nota:</0> Estas propiedades <1>no</1> se podrán editar inmediatament
 msgid "<0>Note:</0> Tokens cannot be claimed because no ERC20 token has been issued for this project. ERC20 tokens must be issued by the project owner."
 msgstr "<0>Nota:</0> Los tokens no pueden ser reclamados porque ningún token ERC20 ha sido emitido para este proyecto. Los tokens ERC20 deben ser emitidos por el dueño del proyecto."
 
-#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
-msgid "<0>Note:</0> {0}"
-msgstr ""
-
 #: src/components/shared/UntrackedErc20Notice.tsx
 msgid "<0>Notice:</0> These balances will not reflect transfers of claimed tokens because the {tokenSymbol} ERC-20 token has not yet been indexed by Juicebox."
 msgstr "<0>Aviso:</0> Estos balances no reflejarán las transferencias de tokens reclamados porque Juicebox aún no ha indexado el token ERC-20 {tokenSymbol}."
@@ -1005,6 +1001,10 @@ msgstr "Sin meta-objetivo establecida."
 msgid "Not set"
 msgstr "No establecido"
 
+#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
+msgid "Note:"
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "Note: Juicebox is new, unaudited, and not guaranteed to work perfectly. Before spending money, do your own research: <0>ask questions</0>, <1>check out the code</1>, and understand the risks!"
 msgstr "Nota: Juicebox es nuevo, inauditado y no está garantizado para trabajar a la perfección. Antes de gastar tu dinero, haz tu propia investigación: ¡<0>realiza preguntas</0>, <1>revisa el código</1> y entiende los reisgos asociados!"
@@ -1730,6 +1730,14 @@ msgstr ""
 msgid "Unavailable"
 msgstr "No disponible"
 
+#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
+msgid "Unless payments are paused in your funding cycle settings, your project will still be able to receive payments directly through the Juicebox protocol contracts."
+msgstr ""
+
+#: src/constants/ballotStrategies/ballotStrategies.ts
+msgid "Unrecognized strategy contract. Make sure this is correct!"
+msgstr "Estrategia de contrato irreconocible. ¡Asegurate de que esté correcto!"
+
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 msgid "Unstaked balance"
 msgstr "Balance sin stakear"
@@ -1913,6 +1921,10 @@ msgstr ""
 
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
 msgid "Your project will immediately appear active on the juicebox.money app. Please allow a few days for it to appear in the \"active\" projects list on the Projects page."
+msgstr ""
+
+#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
+msgid "Your project will still be able to receive payments directly through the Juicebox protocol contracts."
 msgstr ""
 
 #: src/components/shared/formItems/ProjectTwitter.tsx

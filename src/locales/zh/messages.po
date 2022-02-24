@@ -111,10 +111,6 @@ msgstr "<0>注意：</0> 这些属性<1>不能</1> 在同一个筹款周期内�
 msgid "<0>Note:</0> Tokens cannot be claimed because no ERC20 token has been issued for this project. ERC20 tokens must be issued by the project owner."
 msgstr "<0>注意：</0> 该项目还未部署 ERC20 合约，暂时无法领取代币。必须由项目方来部署这个合约。"
 
-#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
-msgid "<0>Note:</0> {0}"
-msgstr ""
-
 #: src/components/shared/UntrackedErc20Notice.tsx
 msgid "<0>Notice:</0> These balances will not reflect transfers of claimed tokens because the {tokenSymbol} ERC-20 token has not yet been indexed by Juicebox."
 msgstr "<0>注意：</0> 因为 {tokenSymbol} ERC-20 代币还没被 Juicebox 索引，目前还不会根据已领取代币的转移操作来更新这些余额。"
@@ -1005,6 +1001,10 @@ msgstr "不设定筹款目标。"
 msgid "Not set"
 msgstr "未设定"
 
+#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
+msgid "Note:"
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "Note: Juicebox is new, unaudited, and not guaranteed to work perfectly. Before spending money, do your own research: <0>ask questions</0>, <1>check out the code</1>, and understand the risks!"
 msgstr "注意： Juicebox是一个全新的协议，它未经审计且不保证能完美工作。 在花钱之前请先做好您自己的研究：提出疑问，核查代码以及了解所涉及的风险！"
@@ -1730,6 +1730,14 @@ msgstr ""
 msgid "Unavailable"
 msgstr "不可用"
 
+#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
+msgid "Unless payments are paused in your funding cycle settings, your project will still be able to receive payments directly through the Juicebox protocol contracts."
+msgstr ""
+
+#: src/constants/ballotStrategies/ballotStrategies.ts
+msgid "Unrecognized strategy contract. Make sure this is correct!"
+msgstr "未识别的策略合约。请确保这是正确的！"
+
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 msgid "Unstaked balance"
 msgstr "取出的余额"
@@ -1913,6 +1921,10 @@ msgstr ""
 
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
 msgid "Your project will immediately appear active on the juicebox.money app. Please allow a few days for it to appear in the \"active\" projects list on the Projects page."
+msgstr ""
+
+#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
+msgid "Your project will still be able to receive payments directly through the Juicebox protocol contracts."
 msgstr ""
 
 #: src/components/shared/formItems/ProjectTwitter.tsx

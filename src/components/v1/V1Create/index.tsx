@@ -24,7 +24,14 @@ import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { PayoutMod, TicketMod } from 'models/mods'
 import { V1TerminalVersion } from 'models/v1/terminals'
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useState,
+} from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
 import { fromPerbicent, fromPermille, fromWad } from 'utils/formatNumber'
 import {
@@ -43,7 +50,9 @@ import { getTerminalAddress } from 'utils/v1/terminals'
 
 import BudgetForm from '../../shared/forms/BudgetForm'
 import ConfirmDeployProject from './ConfirmDeployProject'
-import IncentivesForm from '../../shared/forms/IncentivesForm'
+import IncentivesForm, {
+  IncentivesFormFields,
+} from '../../shared/forms/IncentivesForm'
 import PayModsForm from '../../shared/forms/PayModsForm'
 import ProjectForm, { ProjectFormFields } from './ProjectForm'
 import RestrictedActionsForm, {
@@ -84,6 +93,7 @@ export default function V1Create() {
   const [projectForm] = useForm<ProjectFormFields>()
   const [ticketingForm] = useForm<TicketingFormFields>()
   const [restrictedActionsForm] = useForm<RestrictedActionsFormFields>()
+  const [incentivesForm] = useForm<IncentivesFormFields>()
   const editingFC = useEditingV1FundingCycleSelector()
   const {
     info: editingProjectInfo,
@@ -136,6 +146,15 @@ export default function V1Create() {
     [editingFC?.reserved, ticketingForm],
   )
 
+  const resetIncentiveForm = useCallback(
+    () =>
+      incentivesForm.setFieldsValue({
+        discountRate: fromPermille(editingFC?.discountRate),
+        bondingCurveRate: fromPerbicent(editingFC?.bondingCurveRate),
+      }),
+    [editingFC?.discountRate, editingFC?.bondingCurveRate, incentivesForm],
+  )
+
   const resetRestrictedActionsForm = useCallback(() => {
     if (
       editingFC?.payIsPaused !== null &&
@@ -152,6 +171,7 @@ export default function V1Create() {
     restrictedActionsForm,
   ])
 
+  // The following useEffect's set the initial values of all the forms' fields from redux
   useEffect(() => {
     resetProjectForm()
   }, [resetProjectForm])
@@ -159,6 +179,10 @@ export default function V1Create() {
   useEffect(() => {
     resetTicketingForm()
   }, [resetTicketingForm])
+
+  useEffect(() => {
+    resetIncentiveForm()
+  }, [resetIncentiveForm])
 
   useEffect(() => {
     resetRestrictedActionsForm()
@@ -680,12 +704,7 @@ export default function V1Create() {
           }}
         >
           <IncentivesForm
-            initialDiscountRate={
-              editingFC.duration.eq(0)
-                ? '0'
-                : fromPermille(editingFC.discountRate)
-            }
-            initialBondingCurveRate={fromPerbicent(editingFC.bondingCurveRate)}
+            form={incentivesForm}
             disableDiscountRate={
               editingFC.duration.eq(0)
                 ? t`Discount rate disabled while funding cycle duration is 0.`
@@ -698,7 +717,7 @@ export default function V1Create() {
             }
             onSave={async (discountRate: string, bondingCurveRate: string) => {
               viewedCurrentStep()
-              await ticketingForm.validateFields()
+              await incentivesForm.validateFields()
               onIncentivesFormSaved(discountRate, bondingCurveRate)
               setIncentivesFormModalVisible(false)
             }}

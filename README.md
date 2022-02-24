@@ -83,7 +83,6 @@ Take the following steps to set up Piñata for local development:
      `REACT_APP_PINATA_PINNER_KEY` variable.
    - **API Secret**. In the `.env` file, copy the **API Secret** into the
      `REACT_APP_PINATA_PINNER_SECRET` variable.
-1. Set `IPFS_GATEWAY_HOSTNAME` to `gateway.pinata.cloud` in your `.env` file.
 
 #### Blocknative
 

@@ -75,12 +75,8 @@ export default function ImageUploader({
               }}
               customRequest={async req => {
                 setLoadingUpload(true)
-
-                await pinFileToIpfs(req.file, {
-                  pinataMetadata: metadata,
-                }).then(res => {
-                  setValue(res.IpfsHash)
-                })
+                const res = await pinFileToIpfs(req.file, metadata)
+                setValue(res.IpfsHash)
                 setLoadingUpload(false)
               }}
             >

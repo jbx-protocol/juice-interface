@@ -1,10 +1,10 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import pinataClient, { PinataMetadata, PinataPinOptions } from '@pinata/sdk'
-import { ProjectMetadataV3 } from 'models/project-metadata'
-import { TrendingProject } from 'models/subgraph-entities/project'
-
+import pinataClient, { PinataMetadata, PinataPinResponse } from '@pinata/sdk'
+import axios from 'axios'
 import { IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
 import { readNetwork } from 'constants/networks'
+import { ProjectMetadataV3 } from 'models/project-metadata'
+import { TrendingProject } from 'models/subgraph-entities/project'
 
 const pinata_api_key = process.env.REACT_APP_PINATA_PINNER_KEY
 const pinata_secret_api_key = process.env.REACT_APP_PINATA_PINNER_SECRET
@@ -62,8 +62,33 @@ export const cidFromUrl = (url: string | undefined) => url?.split('/').pop()
 
 export const pinFileToIpfs = (
   file: File | Blob | string,
-  options: PinataPinOptions,
-) => pinata.pinFileToIPFS(file, options)
+  metadata?: PinataMetadata,
+) => {
+  let data = new FormData()
+
+  data.append('file', file)
+
+  if (metadata) {
+    data.append(
+      'pinataMetadata',
+      JSON.stringify({
+        keyvalues: metadata,
+      }),
+    )
+  }
+
+  // We use axios here because using `pinata.pinFileToIPFS()` leads to this issue: https://github.com/PinataCloud/Pinata-SDK/issues/84
+  return axios
+    .post('https://api.pinata.cloud/pinning/pinFileToIPFS', data, {
+      maxContentLength: Infinity, //this is needed to prevent axios from erroring out with large files
+      headers: {
+        'Content-Type': `multipart/form-data;`,
+        pinata_api_key,
+        pinata_secret_api_key,
+      },
+    })
+    .then(res => res.data as PinataPinResponse)
+}
 
 export const unpinIpfsFileByCid = (cid: string | undefined) =>
   cid
@@ -78,6 +103,7 @@ export const unpinIpfsFileByCid = (cid: string | undefined) =>
 
 export const uploadProjectMetadata = (
   metadata: Omit<ProjectMetadataV3, 'version'>,
+  handle: string,
 ) =>
   pinata.pinJSONToIPFS(
     {
@@ -89,7 +115,7 @@ export const uploadProjectMetadata = (
         keyvalues: {
           tag: IPFS_TAGS.METADATA,
         } as any,
-        name: 'juicebox-project-metadata.json',
+        name: metadataNameForHandle(handle),
       },
     },
   )

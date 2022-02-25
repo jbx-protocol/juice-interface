@@ -76,17 +76,20 @@ export default function EditProjectModal({
 
     const fields = projectInfoForm.getFieldsValue(true)
 
-    const uploadedMetadata = await uploadProjectMetadata({
-      name: fields.name,
-      description: fields.description,
-      logoUri: fields.logoUri,
-      infoUri: fields.infoUri,
-      twitter: fields.twitter,
-      discord: fields.discord,
-      payButton: fields.payButton,
-      payDisclosure: fields.payDisclosure,
-      tokens: metadata?.tokens ?? [],
-    })
+    const uploadedMetadata = await uploadProjectMetadata(
+      {
+        name: fields.name,
+        description: fields.description,
+        logoUri: fields.logoUri,
+        infoUri: fields.infoUri,
+        twitter: fields.twitter,
+        discord: fields.discord,
+        payButton: fields.payButton,
+        payDisclosure: fields.payDisclosure,
+        tokens: metadata?.tokens ?? [],
+      },
+      handle,
+    )
 
     if (!uploadedMetadata.IpfsHash) {
       setLoadingSetURI(false)

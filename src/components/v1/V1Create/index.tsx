@@ -48,8 +48,6 @@ import TicketingForm, {
 import ReconfigurationStrategyDrawer from 'components/shared/ReconfigurationStrategyDrawer'
 
 
-import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
-import { Strategy } from 'constants/ballotStrategies/ballotStrategies'
 import BudgetForm from 'components/shared/forms/BudgetForm'
 import IncentivesForm from 'components/shared/forms/IncentivesForm'
 import PayModsForm from 'components/shared/forms/PayModsForm'
@@ -59,8 +57,12 @@ import ProjectDetailsForm, {
 import RestrictedActionsForm, {
   RestrictedActionsFormFields,
 } from 'components/shared/forms/RestrictedActionsForm'
+import ReconfigurationDrawer from 'components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer'
 
 import ConfirmDeployProject from './ConfirmDeployProject'
+
+import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
+import { Strategy } from 'constants/ballotStrategies/ballotStrategies'
 
 const terminalVersion: V1TerminalVersion = '1.1'
 

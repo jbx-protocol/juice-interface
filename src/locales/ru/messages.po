@@ -114,7 +114,7 @@ msgstr "<0>Узнайте больше</0> о переполнении."
 msgid "<0>NOTE:</0> This project has a balance of 0. Projects cannot be migrated without a balance. To migrate this project, first pay it or use the button below to deposit 1 wei (0.000000000000000001 or 10<1>-18</1> ETH)."
 msgstr "<0>ПРИМЕЧАНИЕ:</0>Этот проект имеет баланс 0. Проекты не могут быть перенесены без баланса. Чтобы перенести этот проект, сначала оплатите его или используйте кнопку ниже, чтобы внести 1 wei (0.000000000000000001 or 10<1>-18</1> ETH)."
 
-#: src/components/v2/V2Create/tabs/RulesTabContent.tsx
+#: src/components/v2/V2Create/tabs/RulesTab/RulesTabContent.tsx
 msgid "<0>Note: </0>Enabling tokens to be minted will appear risky to contributors, and should only be used when necessary."
 msgstr ""
 
@@ -258,7 +258,7 @@ msgid "Allocate a portion of your project's reserved tokens to other Ethereum wa
 msgstr "Выделите часть зарезервированных токенов вашего проекта на другие кошельки Ethereum или проекты Juicebox."
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
-#: src/components/v2/V2Create/tabs/RulesTabContent.tsx
+#: src/components/v2/V2Create/tabs/RulesTab/RulesTabContent.tsx
 msgid "Allow minting tokens"
 msgstr "Разрешить майнинг токенов"
 
@@ -443,9 +443,9 @@ msgstr "Подключиться"
 msgid "Connect wallet to deploy"
 msgstr "Подключите кошелёк для развертывания"
 
-#: src/components/shared/ReconfigurationDrawer.tsx
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
-#: src/components/shared/formItems/ProjectReconfiguration.tsx
+#: src/components/v2/V2Create/tabs/RulesTab/ProjectReconfigurationFormItem.tsx
+#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 msgid "Contract address: {0}"
 msgstr "Адрес контракта: {0}"
 
@@ -485,8 +485,8 @@ msgstr "Текущий владелец: {owner}"
 msgid "Currently worth: <0><1/>{0}</0>"
 msgstr "На данный момент стоит: <0><1/>{0}</0>"
 
-#: src/components/shared/ReconfigurationDrawer.tsx
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
+#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 #: src/constants/ballotStrategies/ballotStrategies.ts
 msgid "Custom strategy"
 msgstr "Индивидуальная стратегия"
@@ -1092,7 +1092,7 @@ msgid "Paid as <0/>"
 msgstr "Оплачено как <0/>"
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
-#: src/components/v2/V2Create/tabs/RulesTabContent.tsx
+#: src/components/v2/V2Create/tabs/RulesTab/RulesTabContent.tsx
 msgid "Pause payments"
 msgstr "Приостановить платежи"
 
@@ -1298,8 +1298,9 @@ msgid "Receive {receiveText}"
 msgstr "Получить{receiveText}"
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
-#: src/components/shared/formItems/ProjectReconfiguration.tsx
 #: src/components/v1/V1Create/index.tsx
+#: src/components/v2/V2Create/tabs/RulesTab/ProjectReconfigurationFormItem.tsx
+#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 msgid "Reconfiguration"
 msgstr "Реконфигурация"
 
@@ -1445,13 +1446,15 @@ msgid "Rules for how changes can be made to your project."
 msgstr "Правила внесения изменений в ваш проект."
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
+#: src/components/v2/V2Create/tabs/RulesTab/ProjectReconfigurationFormItem.tsx
+#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 msgid "Rules for how this project's funding cycles can be reconfigured."
 msgstr "Правила изменения конфигурации циклов финансирования этого проекта."
 
-#: src/components/shared/ReconfigurationDrawer.tsx
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 #: src/components/shared/forms/TicketingForm.tsx
+#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 msgid "Save"
 msgstr "Сохранить"
 
@@ -1595,8 +1598,8 @@ msgstr "Протокол JBX не прошел аудит, и проекты, п
 msgid "The Juicebox protocol is governed by a community of JBX token holders who vote on proposals fortnightly."
 msgstr ""
 
-#: src/components/shared/ReconfigurationDrawer.tsx
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
+#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 msgid "The address of any smart contract deployed on {signerNetwork} that implements"
 msgstr "Адрес любого смарт-контракта, реализуемого на {signerNetwork},"
 
@@ -1762,7 +1765,7 @@ msgstr "Производство токенов"
 msgid "Token name"
 msgstr ""
 
-#: src/components/shared/formItems/BondingCurve/BondingCurveGraph.tsx
+#: src/components/shared/formItems/BondingCurve/ProjectBondingCurveRate.tsx
 msgid "Token redeem value"
 msgstr "Стоимость погашения токенов"
 
@@ -1873,6 +1876,7 @@ msgid "Using a duration is recommended. Allowing funding cycles to be reconfigur
 msgstr "Рекомендуется использовать продолжительность. Предоставление возможности изменения конфигурации циклов финансирования в любое время покажется вкладчикам рискованным."
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
+#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 msgid "Using a reconfiguration strategy is recommended. Projects with no strategy will appear risky to contributors."
 msgstr "Рекомендуется использовать стратегию реконфигурации. Проекты без стратегии покажутся участникам рискованными."
 
@@ -1932,11 +1936,11 @@ msgstr "Что такое дисконтная ставка?"
 msgid "What's going on under the hood?"
 msgstr "Что творится под капотом?"
 
-#: src/components/v2/V2Create/tabs/RulesTabContent.tsx
+#: src/components/v2/V2Create/tabs/RulesTab/RulesTabContent.tsx
 msgid "When Minting Tokens is enabled, the project owner can manually mint any amount of tokens to any address."
 msgstr ""
 
-#: src/components/v2/V2Create/tabs/RulesTabContent.tsx
+#: src/components/v2/V2Create/tabs/RulesTab/RulesTabContent.tsx
 msgid "When Pause Payments is enabled, your project cannot receive direct payments."
 msgstr ""
 
@@ -2110,7 +2114,7 @@ msgstr "проекты"
 msgid "seconds"
 msgstr ""
 
-#: src/components/shared/ReconfigurationDrawer.tsx
+#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 msgid "this interface"
 msgstr "этот интерфейс"
 
@@ -2127,7 +2131,7 @@ msgstr "токен"
 msgid "tokens"
 msgstr "токены"
 
-#: src/components/shared/formItems/BondingCurve/BondingCurveGraph.tsx
+#: src/components/shared/formItems/BondingCurve/ProjectBondingCurveRate.tsx
 msgid "tokens redeemed"
 msgstr "погашенных токенов"
 
@@ -2260,5 +2264,4 @@ msgstr "Обменный курс {tokenSymbol}/ETH на {exchangeName}."
 #: src/components/v1/V1Project/Rewards/index.tsx
 msgid "{tokensLabel} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
 msgstr ""
-
 

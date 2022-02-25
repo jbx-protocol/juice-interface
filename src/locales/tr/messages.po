@@ -114,7 +114,7 @@ msgstr "Taşma hakkında <0>daha fazla bilgi edinin</0>."
 msgid "<0>NOTE:</0> This project has a balance of 0. Projects cannot be migrated without a balance. To migrate this project, first pay it or use the button below to deposit 1 wei (0.000000000000000001 or 10<1>-18</1> ETH)."
 msgstr "<0>NOT:</0> Bu projenin bakiyesi 0. Projeler bakiye olmadan taşınamaz. Bu projeyi taşımak için önce ödemesini yapın veya 1 wei (0.00000000000000001 veya 10<1>-18</1> ETH) yatırmak için aşağıdaki butonu kullanın."
 
-#: src/components/v2/V2Create/tabs/RulesTabContent.tsx
+#: src/components/v2/V2Create/tabs/RulesTab/RulesTabContent.tsx
 msgid "<0>Note: </0>Enabling tokens to be minted will appear risky to contributors, and should only be used when necessary."
 msgstr ""
 
@@ -258,7 +258,7 @@ msgid "Allocate a portion of your project's reserved tokens to other Ethereum wa
 msgstr "Projenizin ayrılan token'larının bir kısmını diğer Ethereum cüzdanlarına veya Juicebox projelerine tahsis edin."
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
-#: src/components/v2/V2Create/tabs/RulesTabContent.tsx
+#: src/components/v2/V2Create/tabs/RulesTab/RulesTabContent.tsx
 msgid "Allow minting tokens"
 msgstr "Token'ların basılmasına izin verin"
 
@@ -443,9 +443,9 @@ msgstr "Bağlan"
 msgid "Connect wallet to deploy"
 msgstr ""
 
-#: src/components/shared/ReconfigurationDrawer.tsx
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
-#: src/components/shared/formItems/ProjectReconfiguration.tsx
+#: src/components/v2/V2Create/tabs/RulesTab/ProjectReconfigurationFormItem.tsx
+#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 msgid "Contract address: {0}"
 msgstr "Sözleşme Adresi: {0}"
 
@@ -485,8 +485,8 @@ msgstr "Güncel sahibi: {owner}"
 msgid "Currently worth: <0><1/>{0}</0>"
 msgstr "Güncel değeri: <0><1/>{0}</0>"
 
-#: src/components/shared/ReconfigurationDrawer.tsx
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
+#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 #: src/constants/ballotStrategies/ballotStrategies.ts
 msgid "Custom strategy"
 msgstr "Özel strateji"
@@ -1092,7 +1092,7 @@ msgid "Paid as <0/>"
 msgstr "<0/> olarak ödendi"
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
-#: src/components/v2/V2Create/tabs/RulesTabContent.tsx
+#: src/components/v2/V2Create/tabs/RulesTab/RulesTabContent.tsx
 msgid "Pause payments"
 msgstr "Ödemeleri duraklat"
 
@@ -1298,8 +1298,9 @@ msgid "Receive {receiveText}"
 msgstr "{receiveText} alın"
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
-#: src/components/shared/formItems/ProjectReconfiguration.tsx
 #: src/components/v1/V1Create/index.tsx
+#: src/components/v2/V2Create/tabs/RulesTab/ProjectReconfigurationFormItem.tsx
+#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 msgid "Reconfiguration"
 msgstr "Yeniden yapılandırma"
 
@@ -1445,13 +1446,15 @@ msgid "Rules for how changes can be made to your project."
 msgstr "Projenizde nasıl değişiklik yapılabileceğine ilişkin kurallar."
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
+#: src/components/v2/V2Create/tabs/RulesTab/ProjectReconfigurationFormItem.tsx
+#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 msgid "Rules for how this project's funding cycles can be reconfigured."
 msgstr "Bu projenin finansman döngülerinin nasıl yeniden yapılandırılabileceğine ilişkin kurallar."
 
-#: src/components/shared/ReconfigurationDrawer.tsx
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 #: src/components/shared/forms/TicketingForm.tsx
+#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 msgid "Save"
 msgstr "Kaydet"
 
@@ -1595,8 +1598,8 @@ msgstr "JBX protokolü denetlenmez ve bunun üzerine inşa edilen projeler hatal
 msgid "The Juicebox protocol is governed by a community of JBX token holders who vote on proposals fortnightly."
 msgstr ""
 
-#: src/components/shared/ReconfigurationDrawer.tsx
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
+#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 msgid "The address of any smart contract deployed on {signerNetwork} that implements"
 msgstr "Bu arayüzü uygulayan {signerNetwork} üzerinde dağıtılmış herhangi bir akıllı sözleşmenin adresi"
 
@@ -1762,7 +1765,7 @@ msgstr "Token basımı"
 msgid "Token name"
 msgstr "Token adı"
 
-#: src/components/shared/formItems/BondingCurve/BondingCurveGraph.tsx
+#: src/components/shared/formItems/BondingCurve/ProjectBondingCurveRate.tsx
 msgid "Token redeem value"
 msgstr "Token kullanma değeri"
 
@@ -1873,6 +1876,7 @@ msgid "Using a duration is recommended. Allowing funding cycles to be reconfigur
 msgstr "Bir süre kullanılması önerilir. Finansman döngülerinin herhangi bir zamanda yeniden yapılandırılmasına izin vermek, katkıda bulunanlar açısından riskli görünecektir."
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
+#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 msgid "Using a reconfiguration strategy is recommended. Projects with no strategy will appear risky to contributors."
 msgstr "Yeniden yapılandırma stratejisi kullanılması önerilir. Stratejisi olmayan projeler, katkıda bulunanlar açısından riskli görünecektir."
 
@@ -1932,11 +1936,11 @@ msgstr "İndirim oranı nedir?"
 msgid "What's going on under the hood?"
 msgstr "Kaputun altında neler oluyor?"
 
-#: src/components/v2/V2Create/tabs/RulesTabContent.tsx
+#: src/components/v2/V2Create/tabs/RulesTab/RulesTabContent.tsx
 msgid "When Minting Tokens is enabled, the project owner can manually mint any amount of tokens to any address."
 msgstr ""
 
-#: src/components/v2/V2Create/tabs/RulesTabContent.tsx
+#: src/components/v2/V2Create/tabs/RulesTab/RulesTabContent.tsx
 msgid "When Pause Payments is enabled, your project cannot receive direct payments."
 msgstr ""
 
@@ -2110,7 +2114,7 @@ msgstr "projeler"
 msgid "seconds"
 msgstr ""
 
-#: src/components/shared/ReconfigurationDrawer.tsx
+#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 msgid "this interface"
 msgstr "bu arayüz"
 
@@ -2127,7 +2131,7 @@ msgstr "token"
 msgid "tokens"
 msgstr ""
 
-#: src/components/shared/formItems/BondingCurve/BondingCurveGraph.tsx
+#: src/components/shared/formItems/BondingCurve/ProjectBondingCurveRate.tsx
 msgid "tokens redeemed"
 msgstr "kullanılan token'lar"
 
@@ -2260,5 +2264,4 @@ msgstr "{exchangeName} üzerinde {tokenSymbol}/ETH kuru."
 #: src/components/v1/V1Project/Rewards/index.tsx
 msgid "{tokensLabel} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
 msgstr ""
-
 

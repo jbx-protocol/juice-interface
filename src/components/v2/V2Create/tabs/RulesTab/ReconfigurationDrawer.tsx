@@ -10,7 +10,7 @@ import ReconfigurationOption from 'components/v2/V2Create/tabs/RulesTab/Reconfig
 
 import {
   ballotStrategies,
-  customStrategy,
+  createCustomStrategy,
   Strategy,
 } from 'constants/ballotStrategies/ballotStrategies'
 
@@ -26,7 +26,7 @@ function CustomStrategyForm({
     <div>
       <Input
         style={{ width: 400 }}
-        value={address}
+        value={address ?? ''}
         placeholder={constants.AddressZero}
         onChange={e => setAddress(e.target.value.toLowerCase())}
       />
@@ -50,12 +50,12 @@ function CustomStrategyForm({
 
 export default function ReconfigurationDrawer({
   visible,
-  setVisible,
+  onClose,
   initialSelectedStrategy,
   onSave,
 }: {
   visible: boolean
-  setVisible: (checked: boolean) => void
+  onClose: () => void
   initialSelectedStrategy: Strategy
   onSave: Function
 }) {
@@ -66,12 +66,10 @@ export default function ReconfigurationDrawer({
   )
 
   const selectedStrategyIndex = ballotStrategies().findIndex(s => {
-    return s.address.toLowerCase() === selectedStrategy.address?.toLowerCase()
+    return s.address?.toLowerCase() === selectedStrategy.address?.toLowerCase()
   })
 
-  const [customStrategyAddress, setCustomStrategyAddress] = useState<
-    string | undefined
-  >(
+  const [customStrategyAddress, setCustomStrategyAddress] = useState<string>(
     selectedStrategyIndex === -1 ? initialSelectedStrategy.address : '', // only set if selected strategy is custom
   )
 
@@ -81,12 +79,29 @@ export default function ReconfigurationDrawer({
   }
 
   return (
-    <Drawer
-      visible={visible}
-      {...drawerStyle}
-      onClose={() => setVisible(false)}
-    >
+    <Drawer visible={visible} {...drawerStyle} onClose={onClose}>
       <Space direction="vertical">
+        <h1>
+          <Trans>Reconfiguration</Trans>
+        </h1>
+
+        <div>
+          <p style={{ color: colors.text.secondary }}>
+            <Trans>
+              Rules for how this project's funding cycles can be reconfigured.
+            </Trans>
+          </p>
+
+          {ballotStrategies()[selectedStrategyIndex]?.address ===
+            ballotStrategies()[0].address && (
+            <p style={{ color: colors.text.warn }}>
+              <Trans>
+                Using a reconfiguration strategy is recommended. Projects with
+                no strategy will appear risky to contributors.
+              </Trans>
+            </p>
+          )}
+        </div>
         {ballotStrategies().map((s: Strategy, i) => (
           <ReconfigurationOption
             title={s.name}
@@ -112,18 +127,18 @@ export default function ReconfigurationDrawer({
               address={customStrategyAddress}
               setAddress={(address: string) => {
                 setCustomStrategyAddress(address)
+                // Ensure custom strategy is selected
                 if (selectedStrategyIndex === -1) {
-                  // in case custom strategy isn't actually selected
-                  setSelectedStrategy(customStrategy(address))
+                  setSelectedStrategy(createCustomStrategy(address))
                 }
               }}
             />
           }
           index={-1}
-          strategy={customStrategy(customStrategyAddress)}
+          strategy={createCustomStrategy(customStrategyAddress)}
           selected={selectedStrategyIndex === -1}
           onSelectBallot={() =>
-            setSelectedStrategy(customStrategy(customStrategyAddress))
+            setSelectedStrategy(createCustomStrategy(customStrategyAddress))
           }
         />
         <Button
@@ -137,7 +152,6 @@ export default function ReconfigurationDrawer({
           }
           onClick={() => {
             onSave(selectedStrategy)
-            setVisible(false)
           }}
         >
           <Trans>Save</Trans>

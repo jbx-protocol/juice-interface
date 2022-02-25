@@ -50,15 +50,18 @@ export default function ProjectReconfigurationFormItem({
       />
       <ReconfigurationDrawer
         visible={drawerVisible}
-        setVisible={setDrawerVisible}
+        onClose={() => setDrawerVisible(false)}
         initialSelectedStrategy={selectedStrategy}
         onSave={(strategy: Strategy) => {
           setSelectedStrategy(strategy)
+          setDrawerVisible(false)
           onChange(strategy.address ?? DEFAULT_BALLOT_STRATEGY.address) // default to 3-day
         }}
       />
       <div style={{ color: colors.text.secondary, marginTop: 10 }}>
-        Rules for how this project's funding cycles can be reconfigured.
+        <Trans>
+          Rules for how this project's funding cycles can be reconfigured.
+        </Trans>
       </div>
     </Form.Item>
   )

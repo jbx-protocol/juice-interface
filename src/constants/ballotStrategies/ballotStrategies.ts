@@ -2,7 +2,7 @@ import * as constants from '@ethersproject/constants'
 import { t } from '@lingui/macro'
 
 export type Strategy = {
-  address: string | undefined
+  address: string
   name: string
   description?: string
   unknown?: boolean

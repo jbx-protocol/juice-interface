@@ -4,6 +4,7 @@ import { ProjectMetadataV3 } from 'models/project-metadata'
 import { TrendingProject } from 'models/subgraph-entities/project'
 
 import { IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
+import { readNetwork } from 'constants/networks'
 
 const pinata_api_key = process.env.REACT_APP_PINATA_PINNER_KEY
 const pinata_secret_api_key = process.env.REACT_APP_PINATA_PINNER_SECRET
@@ -16,9 +17,9 @@ const pinata = pinataClient(pinata_api_key, pinata_secret_api_key)
 
 export const IPFS_TAGS = {
   TRENDING_CACHE:
-    process.env.NODE_ENV === 'production'
-      ? 'trending_projects'
-      : 'DEV_trending_projects',
+    (process.env.NODE_ENV === 'production'
+      ? 'trending_projects_'
+      : 'DEV_trending_projects_') + readNetwork.name,
   METADATA:
     process.env.NODE_ENV === 'production'
       ? 'juicebox_project_metadata'
@@ -110,7 +111,7 @@ export const uploadTrendingProjectsCache = (projects: TrendingProject[]) =>
         keyvalues: {
           tag: IPFS_TAGS.TRENDING_CACHE,
         } as any,
-        name: 'juicebox-trending-projects.json',
+        name: IPFS_TAGS.TRENDING_CACHE + '.json',
       },
     },
   )

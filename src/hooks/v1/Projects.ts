@@ -192,6 +192,11 @@ export function useTrendingProjects(count: number, days: number) {
 
   const shouldRefreshCache = cache === null
 
+  console.log(
+    shouldRefreshCache ? 'Trending cache expired' : 'Using trending cache',
+    cache,
+  )
+
   useEffect(() => {
     const loadPayments = async () => {
       setLoadingPayments(true)
@@ -294,11 +299,13 @@ export function useTrendingProjects(count: number, days: number) {
   }
 
   if (result.data?.length && shouldRefreshCache) {
-    console.log('asdf Uploading new cache', result.data)
-    uploadTrendingProjectsCache(result.data)
+    console.log('Uploading new trending cache', result.data)
+    uploadTrendingProjectsCache(result.data).then(() =>
+      console.log('Uploaded new trending cache'),
+    )
   }
 
-  return cache?.length ? { isLoading: false, data: cache } : result
+  return shouldRefreshCache ? result : { isLoading: false, data: cache }
 }
 
 // Query all projects that a wallet has previously made payments to

@@ -290,7 +290,7 @@ msgstr "Mevcut fonlar aşağıdaki ödemelere göre dağıtılır."
 msgid "Available:"
 msgstr "Mevcut:"
 
-#: src/components/v1/V1Dashboard/index.tsx
+#: src/components/shared/ScrollToTopButton.tsx
 msgid "Back to top"
 msgstr "Başa dön"
 

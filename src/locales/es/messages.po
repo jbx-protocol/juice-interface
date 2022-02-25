@@ -290,7 +290,7 @@ msgstr "Los fondos disponibles son distribuidos acorde a los pagos a continuaci√
 msgid "Available:"
 msgstr "Disponible:"
 
-#: src/components/v1/V1Dashboard/index.tsx
+#: src/components/shared/ScrollToTopButton.tsx
 msgid "Back to top"
 msgstr "Regresa arriba"
 

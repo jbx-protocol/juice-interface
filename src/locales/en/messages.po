@@ -285,7 +285,7 @@ msgstr "Available funds are distributed according to the payouts below."
 msgid "Available:"
 msgstr ""
 
-#: src/components/v1/V1Dashboard/index.tsx
+#: src/components/shared/ScrollToTopButton.tsx
 msgid "Back to top"
 msgstr "Back to top"
 

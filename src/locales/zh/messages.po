@@ -290,7 +290,7 @@ msgstr "可用资金会分发给以下支出对象。"
 msgid "Available:"
 msgstr "可用:"
 
-#: src/components/v1/V1Dashboard/index.tsx
+#: src/components/shared/ScrollToTopButton.tsx
 msgid "Back to top"
 msgstr "回到顶部"
 

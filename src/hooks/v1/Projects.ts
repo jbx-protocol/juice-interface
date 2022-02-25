@@ -127,6 +127,7 @@ export function useProjectsSearch(handle: string | undefined) {
 }
 
 export function useTrendingProjectsCache() {
+  // Use `null` value to indicate missing or expired cache
   const [cache, setCache] = useState<TrendingProject[] | null>()
 
   useEffect(() => {
@@ -139,7 +140,7 @@ export function useTrendingProjectsCache() {
       // Most recent cache file is returned first in array
       const latest = res.rows[0]
 
-      // Cache expires every 12 min, will update 5 times an hour. Arbitrary
+      // Cache expires every 12 min, will update 5 times an hour. (Arbitrary)
       const isExpired = moment(latest.date_pinned).isBefore(
         moment().subtract({ minutes: 12 }),
       )
@@ -188,12 +189,15 @@ export function useTrendingProjects(count: number, days: number) {
     >
   >()
 
+  // First check if remote cache exists
   const cache = useTrendingProjectsCache()
 
-  const shouldRefreshCache = cache === null
-
+  // Cache === null indicates cache is missing or expired
+  const shouldUpdateCache = cache === null
   console.log(
-    shouldRefreshCache ? 'Trending cache expired' : 'Using trending cache',
+    shouldUpdateCache
+      ? 'Trending cache missing or expired'
+      : 'Using valid trending cache',
     cache,
   )
 
@@ -254,12 +258,13 @@ export function useTrendingProjects(count: number, days: number) {
       setLoadingPayments(false)
     }
 
-    if (shouldRefreshCache) loadPayments()
-  }, [count, days, shouldRefreshCache])
+    if (shouldUpdateCache) loadPayments()
+  }, [count, days, shouldUpdateCache])
 
   // Query project data for all trending project IDs
+  // Only query if cache needs updating
   const projectsQuery = useSubgraphQuery(
-    projectStats && shouldRefreshCache
+    projectStats && shouldUpdateCache
       ? {
           entity: 'project',
           keys,
@@ -299,18 +304,18 @@ export function useTrendingProjects(count: number, days: number) {
       .slice(0, count),
   }
 
-  if (trendingProjectsQuery.data?.length && shouldRefreshCache) {
-    console.log('Uploading new trending cache', trendingProjectsQuery.data)
+  if (trendingProjectsQuery.data?.length && shouldUpdateCache) {
+    // Update cache with new queried data
     uploadTrendingProjectsCache(trendingProjectsQuery.data).then(() =>
       console.log('Uploaded new trending cache'),
     )
   }
 
-  return shouldRefreshCache
+  return shouldUpdateCache
     ? trendingProjectsQuery
     : {
         data: cache,
-        isLoading: false,
+        isLoading: cache === undefined,
       }
 }
 

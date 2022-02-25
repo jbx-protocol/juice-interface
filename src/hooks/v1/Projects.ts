@@ -139,9 +139,9 @@ export function useTrendingProjectsCache() {
       // Most recent cache file is returned first in array
       const latest = res.rows[0]
 
-      // Cache expires after 10 min
+      // Cache expires every 12 min, will update 5 times an hour. Arbitrary
       const isExpired = moment(latest.date_pinned).isBefore(
-        moment().subtract({ minutes: 10 }),
+        moment().subtract({ minutes: 12 }),
       )
 
       if (isExpired) {
@@ -272,7 +272,7 @@ export function useTrendingProjects(count: number, days: number) {
       : null,
   )
 
-  const result = {
+  const trendingProjectsQuery = {
     ...projectsQuery,
     isLoading:
       projectsQuery.isLoading || loadingPayments || cache === undefined,
@@ -299,14 +299,19 @@ export function useTrendingProjects(count: number, days: number) {
       .slice(0, count),
   }
 
-  if (result.data?.length && shouldRefreshCache) {
-    console.log('Uploading new trending cache', result.data)
-    uploadTrendingProjectsCache(result.data).then(() =>
+  if (trendingProjectsQuery.data?.length && shouldRefreshCache) {
+    console.log('Uploading new trending cache', trendingProjectsQuery.data)
+    uploadTrendingProjectsCache(trendingProjectsQuery.data).then(() =>
       console.log('Uploaded new trending cache'),
     )
   }
 
-  return shouldRefreshCache ? result : { data: cache }
+  return shouldRefreshCache
+    ? trendingProjectsQuery
+    : {
+        data: cache,
+        isLoading: false,
+      }
 }
 
 // Query all projects that a wallet has previously made payments to

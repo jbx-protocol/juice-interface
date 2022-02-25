@@ -274,7 +274,8 @@ export function useTrendingProjects(count: number, days: number) {
 
   const result = {
     ...projectsQuery,
-    isLoading: projectsQuery.isLoading || loadingPayments,
+    isLoading:
+      projectsQuery.isLoading || loadingPayments || cache === undefined,
     // Return TrendingProjects sorted by `trendingScore`
     data: projectsQuery.data
       ?.map(p => {
@@ -305,7 +306,7 @@ export function useTrendingProjects(count: number, days: number) {
     )
   }
 
-  return shouldRefreshCache ? result : { isLoading: false, data: cache }
+  return shouldRefreshCache ? result : { data: cache }
 }
 
 // Query all projects that a wallet has previously made payments to

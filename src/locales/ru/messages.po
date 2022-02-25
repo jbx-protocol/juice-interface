@@ -418,7 +418,7 @@ msgstr "Подключиться"
 msgid "Connect wallet to deploy"
 msgstr "Подключите кошелёк для развертывания"
 
-#: src/components/shared/forms/RulesForm.tsx
+#: src/components/shared/ReconfigurationStrategyDrawer.tsx
 msgid "Contract address: {0}"
 msgstr "Адрес контракта: {0}"
 
@@ -458,6 +458,7 @@ msgstr "Текущий владелец: {owner}"
 msgid "Currently worth: <0><1/>{0}</0>"
 msgstr "На данный момент стоит: <0><1/>{0}</0>"
 
+#: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/constants/ballotStrategies/ballotStrategies.ts
 msgid "Custom strategy"
 msgstr "Индивидуальная стратегия"
@@ -1213,7 +1214,7 @@ msgstr "Получить ERC20"
 msgid "Receive {receiveText}"
 msgstr "Получить{receiveText}"
 
-#: src/components/shared/forms/RulesForm.tsx
+#: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/v1/V1Create/index.tsx
 msgid "Reconfiguration"
 msgstr "Реконфигурация"
@@ -1333,12 +1334,12 @@ msgstr "Правила для определения того, как циклы
 msgid "Rules for how changes can be made to your project."
 msgstr "Правила внесения изменений в ваш проект."
 
-#: src/components/shared/forms/RulesForm.tsx
+#: src/components/shared/ReconfigurationStrategyDrawer.tsx
 msgid "Rules for how this project's funding cycles can be reconfigured."
 msgstr "Правила изменения конфигурации циклов финансирования этого проекта."
 
+#: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
-#: src/components/shared/forms/RulesForm.tsx
 #: src/components/shared/forms/TicketingForm.tsx
 msgid "Save"
 msgstr "Сохранить"
@@ -1474,7 +1475,7 @@ msgstr "Протокол JBX не прошел аудит, и проекты, п
 msgid "The Juicebox protocol is governed by a community of JBX token holders who vote on proposals fortnightly."
 msgstr ""
 
-#: src/components/shared/forms/RulesForm.tsx
+#: src/components/shared/ReconfigurationStrategyDrawer.tsx
 msgid "The address of any smart contract deployed on {signerNetwork} that implements"
 msgstr "Адрес любого смарт-контракта, реализуемого на {signerNetwork},"
 
@@ -1566,6 +1567,10 @@ msgstr "Эти параметры могут быть изменены в люб
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "These settings will <0>not</0> be editable immediately within a funding cycle. They can only be changed for <1>upcoming</1> funding cycles."
 msgstr "Эти настройки <0> не <0> будут доступны для редактирования немедленно в течение цикла финансирования. Они могут быть изменены только для <1> предстоящих <1> циклов финансирования."
+
+#: src/constants/ballotStrategies/ballotStrategies.ts
+msgid "This address is an unrecognized strategy contract. Make sure it is correct!"
+msgstr ""
 
 #: src/components/shared/Mod.tsx
 msgid "This address will receive any tokens minted when the recipient project gets paid."
@@ -1711,10 +1716,6 @@ msgstr "Твиттер"
 msgid "Unavailable"
 msgstr "Недоступно"
 
-#: src/constants/ballotStrategies/ballotStrategies.ts
-msgid "Unrecognized strategy contract. Make sure this is correct!"
-msgstr "Неизвестный стратегический контракт. Убедитесь, что это правильно!"
-
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 msgid "Unstaked balance"
 msgstr "Неучтенный баланс"
@@ -1743,7 +1744,7 @@ msgstr "Пользователи финансируют ваш проект, п�
 msgid "Using a duration is recommended. Allowing funding cycles to be reconfigured at any time will appear risky to contributors."
 msgstr "Рекомендуется использовать продолжительность. Предоставление возможности изменения конфигурации циклов финансирования в любое время покажется вкладчикам рискованным."
 
-#: src/components/shared/forms/RulesForm.tsx
+#: src/components/shared/ReconfigurationStrategyDrawer.tsx
 msgid "Using a reconfiguration strategy is recommended. Projects with no strategy will appear risky to contributors."
 msgstr "Рекомендуется использовать стратегию реконфигурации. Проекты без стратегии покажутся участникам рискованными."
 
@@ -1965,10 +1966,6 @@ msgstr "владелец проекта"
 #: src/components/Projects/index.tsx
 msgid "projects"
 msgstr "проекты"
-
-#: src/components/shared/forms/RulesForm.tsx
-msgid "this interface"
-msgstr "этот интерфейс"
 
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx

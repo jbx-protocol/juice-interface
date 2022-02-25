@@ -31,6 +31,6 @@ export function ballotStrategies() {
 export const customStrategy = (address: string) => ({
   address,
   name: t`Custom strategy`,
-  description: t`Unrecognized strategy contract. Make sure this is correct!`,
+  description: t`This address is an unrecognized strategy contract. Make sure it is correct!`,
   unknown: true,
 })

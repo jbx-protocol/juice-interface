@@ -88,20 +88,20 @@ export default function EditProjectModal({
       tokens: metadata?.tokens ?? [],
     })
 
-    if (!uploadedMetadata?.success) {
+    if (!uploadedMetadata.IpfsHash) {
       setLoadingSetURI(false)
       return
     }
 
     setProjectUriTx(
-      { cid: uploadedMetadata.cid },
+      { cid: uploadedMetadata.IpfsHash },
       {
         onDone: () => setLoadingSetURI(false),
         onConfirmed: () => {
           if (onSuccess) onSuccess()
 
           // Set name for new metadata file
-          editMetadataForCid(uploadedMetadata.cid, {
+          editMetadataForCid(uploadedMetadata.IpfsHash, {
             name: metadataNameForHandle(handle),
           })
 

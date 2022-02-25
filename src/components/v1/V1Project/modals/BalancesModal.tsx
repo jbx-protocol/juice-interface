@@ -46,13 +46,13 @@ export default function BalancesModal({
       tokens: editingTokenRefs.filter(t => t.type),
     })
 
-    if (!uploadedMetadata?.success) {
+    if (!uploadedMetadata.IpfsHash) {
       setLoading(false)
       return
     }
 
     setProjectUriTx(
-      { cid: uploadedMetadata.cid },
+      { cid: uploadedMetadata.IpfsHash },
       {
         onDone: () => {
           setLoading(false)

@@ -18,6 +18,14 @@ import { SECONDS_IN_DAY } from 'constants/numbers'
 
 import { archivedProjectIds } from '../../constants/v1/archivedProjects'
 import useSubgraphQuery, { useInfiniteSubgraphQuery } from '../SubgraphQuery'
+import {
+  uploadTrendingProjectsCache,
+  getTrendingProjectsCache,
+  unpinIpfsFileByCid,
+  ipfsCidUrl,
+} from '../../utils/ipfs'
+import axios from 'axios'
+import moment from 'moment'
 
 interface ProjectsOptions {
   pageNumber?: number
@@ -118,6 +126,55 @@ export function useProjectsSearch(handle: string | undefined) {
   )
 }
 
+export function useTrendingProjectsCache() {
+  const [cache, setCache] = useState<TrendingProject[] | null>()
+
+  useEffect(() => {
+    getTrendingProjectsCache().then(async res => {
+      if (!res.count) {
+        setCache(null)
+        return
+      }
+
+      // Most recent cache file is returned first in array
+      const latest = res.rows[0]
+
+      // Cache expires after 10 min
+      const isExpired = moment(latest.date_pinned).isBefore(
+        moment().subtract({ minutes: 10 }),
+      )
+
+      if (isExpired) {
+        setCache(null)
+      } else {
+        // Get data from latest cache if not expired
+        axios.get(ipfsCidUrl(latest.ipfs_pin_hash)).then(cache => {
+          setCache(
+            cache.data.projects.map((p: any) => ({
+              ...p,
+              id: BigNumber.from(p.id),
+              currentBalance: BigNumber.from(p.currentBalance),
+              totalPaid: BigNumber.from(p.totalPaid),
+              trendingScore: BigNumber.from(p.trendingScore),
+              trendingVolume: BigNumber.from(p.trendingVolume),
+              totalRedeemed: BigNumber.from(p.totalRedeemed),
+            })) ?? [],
+          )
+        })
+      }
+
+      // Unpin any remaining cache files. If latest is not expired don't unpin it
+      // There should never be more than one cache file, but simultaneous page views may result in multiple
+      for (let i = isExpired ? 0 : 1; i < res.count; i++) {
+        // We use await here to help avoid simultaenous requests being rate limited
+        await unpinIpfsFileByCid(res.rows[i].ipfs_pin_hash)
+      }
+    })
+  }, [])
+
+  return cache
+}
+
 // Returns projects with highest % volume increase in last week
 export function useTrendingProjects(count: number, days: number) {
   const [loadingPayments, setLoadingPayments] = useState<boolean>()
@@ -130,6 +187,10 @@ export function useTrendingProjects(count: number, days: number) {
       }
     >
   >()
+
+  const cache = useTrendingProjectsCache()
+
+  const shouldRefreshCache = cache === null
 
   useEffect(() => {
     const loadPayments = async () => {
@@ -188,12 +249,12 @@ export function useTrendingProjects(count: number, days: number) {
       setLoadingPayments(false)
     }
 
-    loadPayments()
-  }, [count, days])
+    if (shouldRefreshCache) loadPayments()
+  }, [count, days, shouldRefreshCache])
 
   // Query project data for all trending project IDs
   const projectsQuery = useSubgraphQuery(
-    projectStats
+    projectStats && shouldRefreshCache
       ? {
           entity: 'project',
           keys,
@@ -206,7 +267,7 @@ export function useTrendingProjects(count: number, days: number) {
       : null,
   )
 
-  return {
+  const result = {
     ...projectsQuery,
     isLoading: projectsQuery.isLoading || loadingPayments,
     // Return TrendingProjects sorted by `trendingScore`
@@ -216,7 +277,7 @@ export function useTrendingProjects(count: number, days: number) {
           p.id && projectStats ? projectStats[p.id.toString()] : undefined
 
         // Algorithm to rank trending projects:
-        //   -  trendingScore = (volume gained in x days) * (number of payments made in x days)^2
+        // trendingScore = volume * (number of payments)^2
         const trendingScore = stats?.trendingVolume.mul(
           BigNumber.from(stats.paymentsCount).pow(2),
         )
@@ -231,6 +292,13 @@ export function useTrendingProjects(count: number, days: number) {
       .sort((a, b) => (a.trendingScore?.gt(b.trendingScore ?? 0) ? -1 : 1))
       .slice(0, count),
   }
+
+  if (result.data?.length && shouldRefreshCache) {
+    console.log('asdf Uploading new cache', result.data)
+    uploadTrendingProjectsCache(result.data)
+  }
+
+  return cache?.length ? { isLoading: false, data: cache } : result
 }
 
 // Query all projects that a wallet has previously made payments to

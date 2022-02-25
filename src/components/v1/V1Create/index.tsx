@@ -235,7 +235,7 @@ export default function V1Create() {
       editingProjectInfo.metadata,
     )
 
-    if (!uploadedMetadata.success) {
+    if (!uploadedMetadata.IpfsHash) {
       setLoadingCreate(false)
       return
     }
@@ -243,7 +243,7 @@ export default function V1Create() {
     deployProjectTx(
       {
         handle: editingProjectInfo.handle,
-        projectMetadataCid: uploadedMetadata.cid,
+        projectMetadataCid: uploadedMetadata.IpfsHash,
         properties: {
           target: editingFC.target,
           currency: editingFC.currency,
@@ -270,7 +270,7 @@ export default function V1Create() {
           setDeployProjectModalVisible(false)
 
           // Add project dependency to metadata and logo files
-          editMetadataForCid(uploadedMetadata.cid, {
+          editMetadataForCid(uploadedMetadata.IpfsHash, {
             name: metadataNameForHandle(editingProjectInfo.handle),
           })
           editMetadataForCid(cidFromUrl(editingProjectInfo.metadata.logoUri), {

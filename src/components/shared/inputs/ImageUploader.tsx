@@ -73,20 +73,16 @@ export default function ImageUploader({
                   return Upload.LIST_IGNORE
                 }
               }}
-              customRequest={req =>
-                pinFileToIpfs(req.file, {
-                  metadata,
-                  beforeUpload: () => setLoadingUpload(true),
-                  onSuccess: cid => {
-                    setValue(cid)
-                    setLoadingUpload(false)
-                  },
+              customRequest={async req => {
+                setLoadingUpload(true)
+
+                await pinFileToIpfs(req.file, {
+                  pinataMetadata: metadata,
                 }).then(res => {
-                  if (res.success) {
-                    req.onSuccess && req.onSuccess(req.data, res.res as any)
-                  } else req.onError && req.onError(res.err as any, req.data)
+                  setValue(res.IpfsHash)
                 })
-              }
+                setLoadingUpload(false)
+              }}
             >
               <Button loading={loadingUpload} type="text">
                 <FileImageOutlined /> {text ?? null}

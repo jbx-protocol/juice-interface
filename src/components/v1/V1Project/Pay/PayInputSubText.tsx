@@ -13,8 +13,9 @@ import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { Tooltip } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import AMMPrices from 'components/shared/AMMPrices'
-
 import TooltipIcon from 'components/shared/TooltipIcon'
+
+import V1AmountToWei from 'utils/v1/V1AmountToWei'
 
 import { V1_CURRENCY_ETH } from 'constants/v1/currency'
 
@@ -27,11 +28,11 @@ import { V1_CURRENCY_ETH } from 'constants/v1/currency'
  * Else, display the exchange rate of the user selected currency to project token.
  */
 export default function PayInputSubText({
-  payInCurrrency,
-  weiPayAmt,
+  payInCurrency,
+  amount,
 }: {
-  payInCurrrency: V1CurrencyOption
-  weiPayAmt: BigNumber | undefined
+  payInCurrency: V1CurrencyOption
+  amount: string | undefined
 }) {
   const { currentFC, tokenSymbol, tokenAddress } = useContext(V1ProjectContext)
   const converter = useCurrencyConverter()
@@ -45,6 +46,8 @@ export default function PayInputSubText({
     plural: true,
   })
 
+  const weiPayAmt = V1AmountToWei({ currency: payInCurrency, amount: amount })
+
   const receiveText = useMemo(() => {
     const formatReceivedTickets = (wei: BigNumber) => {
       const exchangeRate = weightedRate(currentFC, wei, 'payer')
@@ -56,7 +59,7 @@ export default function PayInputSubText({
     }
 
     const receivedTickets = formatReceivedTickets(
-      (payInCurrrency === V1_CURRENCY_ETH
+      (payInCurrency === V1_CURRENCY_ETH
         ? parseEther('1')
         : converter.usdToWei('1')) ?? BigNumber.from(0),
     )

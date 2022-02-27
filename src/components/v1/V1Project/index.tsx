@@ -2,16 +2,18 @@ import { Col, Row } from 'antd'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { CSSProperties, useContext } from 'react'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
+import { useForm } from 'antd/lib/form/Form'
 
 import ProjectHeader from 'components/shared/ProjectHeader'
+import PayInput, { PayFormFields } from 'components/shared/inputs/PayInput'
 
 import BalanceTimeline from './BalanceTimeline'
 import FundingCycles from './FundingCycles'
 import Paid from './Paid'
-import Pay from './Pay'
 import ProjectActivity from './ProjectActivity'
 import V1ProjectHeaderActions from './V1ProjectHeaderActions'
 import Rewards from './Rewards'
+import V1PayButton from './Pay/V1PayButton'
 
 export default function V1Project({
   style,
@@ -22,6 +24,7 @@ export default function V1Project({
   showCurrentDetail?: boolean
   column?: boolean
 }) {
+  const [payForm] = useForm<PayFormFields>()
   const { currentFC, projectId, handle, metadata, isArchived } =
     useContext(V1ProjectContext)
 
@@ -46,7 +49,7 @@ export default function V1Project({
         </Col>
 
         <Col xs={24} md={column ? 24 : 12} style={{ marginTop: gutter }}>
-          <Pay />
+          <PayInput form={payForm} payButton={<V1PayButton form={payForm} />} />
         </Col>
       </Row>
 

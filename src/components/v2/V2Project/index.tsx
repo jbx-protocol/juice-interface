@@ -1,9 +1,14 @@
+import { useForm } from 'antd/lib/form/Form'
+import PayInput, { PayFormFields } from 'components/shared/inputs/PayInput'
 import ProjectHeader from 'components/shared/ProjectHeader'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useContext } from 'react'
 import { fromPermille } from 'utils/formatNumber'
+import V2PayButton from './Pay/V2PayButton'
 
 export default function V2Project() {
+  const [payForm] = useForm<PayFormFields>()
+
   const {
     projectId,
     projectMetadata,
@@ -11,6 +16,7 @@ export default function V2Project() {
     payoutSplits,
     reserveTokenSplits,
   } = useContext(V2ProjectContext)
+
   if (!projectId) return null
 
   const start = fundingCycle?.start
@@ -54,6 +60,7 @@ export default function V2Project() {
           </ul>
         </div>
       )}
+      <PayInput form={payForm} payButton={<V2PayButton />} />
     </div>
   )
 }

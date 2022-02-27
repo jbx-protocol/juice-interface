@@ -418,7 +418,7 @@ msgstr "Conectar"
 msgid "Connect wallet to deploy"
 msgstr "Conecta tu billetera para desplegar"
 
-#: src/components/shared/forms/RulesForm.tsx
+#: src/components/shared/ReconfigurationStrategyDrawer.tsx
 msgid "Contract address: {0}"
 msgstr "Dirección de contrato: {0}"
 
@@ -458,6 +458,7 @@ msgstr "Dueño actual: {owner}"
 msgid "Currently worth: <0><1/>{0}</0>"
 msgstr "Actualmente vale: <0><1/>{0}</0>"
 
+#: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/constants/ballotStrategies/ballotStrategies.ts
 msgid "Custom strategy"
 msgstr "Estrategia personalizada"
@@ -1213,7 +1214,7 @@ msgstr "Recibe tokens ERC20"
 msgid "Receive {receiveText}"
 msgstr "Recibe {receiveText}"
 
-#: src/components/shared/forms/RulesForm.tsx
+#: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/v1/V1Create/index.tsx
 msgid "Reconfiguration"
 msgstr "Reconfiguración"
@@ -1333,12 +1334,12 @@ msgstr "Reglar para determinar cómo los ciclos de financiamiento pueden ser rec
 msgid "Rules for how changes can be made to your project."
 msgstr "Reglas para cómo pueden realizarse cambios a tu proyecto."
 
-#: src/components/shared/forms/RulesForm.tsx
+#: src/components/shared/ReconfigurationStrategyDrawer.tsx
 msgid "Rules for how this project's funding cycles can be reconfigured."
 msgstr "Reglas para cómo pueden ser reconfigurados los ciclos de financiamiento de este proyecto."
 
+#: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
-#: src/components/shared/forms/RulesForm.tsx
 #: src/components/shared/forms/TicketingForm.tsx
 msgid "Save"
 msgstr "Guardar"
@@ -1474,7 +1475,7 @@ msgstr "El protocolo JBX está inauditado, y los proyectos contruidos sobre este
 msgid "The Juicebox protocol is governed by a community of JBX token holders who vote on proposals fortnightly."
 msgstr "El protocolo JuiceBox es gobernado por una comunidad de tenedores de tokens JBX quienes votan las propuestas quincenalmente."
 
-#: src/components/shared/forms/RulesForm.tsx
+#: src/components/shared/ReconfigurationStrategyDrawer.tsx
 msgid "The address of any smart contract deployed on {signerNetwork} that implements"
 msgstr "La dirección de cualquier contrato inteligente desplegado en {signerNetwork} que implementa"
 
@@ -1566,6 +1567,10 @@ msgstr "Estos atributos pueden cambiarse en cualquier momento."
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "These settings will <0>not</0> be editable immediately within a funding cycle. They can only be changed for <1>upcoming</1> funding cycles."
 msgstr "Estos ajustes <0>no</0> serán editables inmediatamente dentro de un ciclo de financiamiento. Solo pueden ser cambiados para <1>próximos</1> ciclos de financiamiento."
+
+#: src/constants/ballotStrategies/ballotStrategies.ts
+msgid "This address is an unrecognized strategy contract. Make sure it is correct!"
+msgstr ""
 
 #: src/components/shared/Mod.tsx
 msgid "This address will receive any tokens minted when the recipient project gets paid."
@@ -1711,10 +1716,6 @@ msgstr "Twitter"
 msgid "Unavailable"
 msgstr "No disponible"
 
-#: src/constants/ballotStrategies/ballotStrategies.ts
-msgid "Unrecognized strategy contract. Make sure this is correct!"
-msgstr "Estrategia de contrato irreconocible. ¡Asegurate de que esté correcto!"
-
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 msgid "Unstaked balance"
 msgstr "Balance sin stakear"
@@ -1743,7 +1744,7 @@ msgstr "Los usuarios financian tu proyecto al pagar para usar tu app o servicio,
 msgid "Using a duration is recommended. Allowing funding cycles to be reconfigured at any time will appear risky to contributors."
 msgstr "Se recomienda usar una duración. Permitir que los ciclos de financiación sean reconfigurados en cualquier momento les parecerá arriesgado a los colaboradores."
 
-#: src/components/shared/forms/RulesForm.tsx
+#: src/components/shared/ReconfigurationStrategyDrawer.tsx
 msgid "Using a reconfiguration strategy is recommended. Projects with no strategy will appear risky to contributors."
 msgstr "Se recomienda usar una estrategia de reconfiguración. Los proyectos sin estrategia les parecerán arriesgados a los colaboradores."
 
@@ -1965,10 +1966,6 @@ msgstr "dueño del proyecto"
 #: src/components/Projects/index.tsx
 msgid "projects"
 msgstr "proyectos"
-
-#: src/components/shared/forms/RulesForm.tsx
-msgid "this interface"
-msgstr "esta interfaz"
 
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx

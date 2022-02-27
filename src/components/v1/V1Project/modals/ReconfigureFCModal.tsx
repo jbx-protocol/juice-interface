@@ -7,10 +7,10 @@ import Modal from 'antd/lib/modal/Modal'
 import RestrictedActionsForm, {
   RestrictedActionsFormFields,
 } from 'components/shared/forms/RestrictedActionsForm'
-import RulesForm from 'components/shared/forms/RulesForm'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import PayoutModsList from 'components/shared/PayoutModsList'
 import TicketModsList from 'components/shared/TicketModsList'
+import ReconfigurationStrategyDrawer from 'components/shared/ReconfigurationStrategyDrawer'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
@@ -52,6 +52,8 @@ import PayModsForm from '../../../shared/forms/PayModsForm'
 import TicketingForm, {
   TicketingFormFields,
 } from '../../../shared/forms/TicketingForm'
+
+import { Strategy } from 'constants/ballotStrategies/ballotStrategies'
 
 export default function ReconfigureFCModal({
   visible,
@@ -571,19 +573,20 @@ export default function ReconfigureFCModal({
         />
       </Drawer>
 
-      <Drawer
+      <ReconfigurationStrategyDrawer
         visible={rulesFormModalVisible}
-        {...drawerStyle}
-        onClose={() => setRulesFormModalVisible(false)}
-      >
-        <RulesForm
-          initialBallot={editingFC.ballot}
-          onSave={(ballot: string) => {
-            onRulesFormSaved(ballot)
-            setRulesFormModalVisible(false)
-          }}
-        />
-      </Drawer>
+        style={drawerStyle}
+        onClose={() => {
+          setCurrentStep(undefined)
+          setRulesFormModalVisible(false)
+        }}
+        initialSelectedStrategy={getBallotStrategyByAddress(editingFC.ballot)}
+        onSave={(strategy: Strategy) => {
+          onRulesFormSaved(strategy.address)
+          setCurrentStep(undefined)
+          setRulesFormModalVisible(false)
+        }}
+      />
 
       <Drawer
         visible={incentivesFormModalVisible}

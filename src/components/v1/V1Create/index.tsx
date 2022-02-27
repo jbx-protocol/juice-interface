@@ -41,18 +41,23 @@ import {
 } from 'utils/ipfs'
 import { getTerminalAddress } from 'utils/v1/terminals'
 
+import TicketingForm, {
+  TicketingFormFields,
+} from 'components/shared/forms/TicketingForm'
+
+import ReconfigurationStrategyDrawer from 'components/shared/ReconfigurationStrategyDrawer'
+
 import BudgetForm from '../../shared/forms/BudgetForm'
-import ConfirmDeployProject from './ConfirmDeployProject'
 import IncentivesForm from '../../shared/forms/IncentivesForm'
 import PayModsForm from '../../shared/forms/PayModsForm'
 import ProjectForm, { ProjectFormFields } from './ProjectForm'
 import RestrictedActionsForm, {
   RestrictedActionsFormFields,
 } from '../../shared/forms/RestrictedActionsForm'
-import RulesForm from '../../shared/forms/RulesForm'
-import TicketingForm, {
-  TicketingFormFields,
-} from '../../shared/forms/TicketingForm'
+
+import ConfirmDeployProject from './ConfirmDeployProject'
+import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
+import { Strategy } from 'constants/ballotStrategies/ballotStrategies'
 
 const terminalVersion: V1TerminalVersion = '1.1'
 
@@ -653,23 +658,20 @@ export default function V1Create() {
           />
         </Drawer>
 
-        <Drawer
+        <ReconfigurationStrategyDrawer
           visible={rulesFormModalVisible}
-          {...drawerStyle}
+          initialSelectedStrategy={getBallotStrategyByAddress(editingFC.ballot)}
+          style={drawerStyle}
+          onSave={(strategy: Strategy) => {
+            viewedCurrentStep()
+            setRulesFormModalVisible(false)
+            onRulesFormSaved(strategy.address ?? editingFC.ballot)
+          }}
           onClose={() => {
             viewedCurrentStep()
             setRulesFormModalVisible(false)
           }}
-        >
-          <RulesForm
-            initialBallot={editingFC.ballot}
-            onSave={(ballot: string) => {
-              viewedCurrentStep()
-              onRulesFormSaved(ballot)
-              setRulesFormModalVisible(false)
-            }}
-          />
-        </Drawer>
+        />
 
         <Drawer
           visible={incentivesFormModalVisible}

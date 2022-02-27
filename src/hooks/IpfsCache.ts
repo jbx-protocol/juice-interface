@@ -5,12 +5,12 @@ import moment from 'moment'
 import { useEffect, useState } from 'react'
 import { getPinnedListByTag, ipfsCidUrl, unpinIpfsFileByCid } from 'utils/ipfs'
 
-export type IpfsCacheOpts<T extends IpfsCacheName = IpfsCacheName> = {
+export type IpfsCacheOpts<T extends IpfsCacheName> = {
   ttlMin: number
   deserialize?: (x: IpfsCacheJsonData[T]) => IpfsCacheData[T]
 }
 
-export function useIpfsCache<T extends IpfsCacheName = IpfsCacheName>(
+export function useIpfsCache<T extends IpfsCacheName>(
   tag: T,
   opts: IpfsCacheOpts<T>,
 ) {

@@ -14,6 +14,7 @@ import ProjectActivity from './ProjectActivity'
 import V1ProjectHeaderActions from './V1ProjectHeaderActions'
 import Rewards from './Rewards'
 import V1PayButton from './Pay/V1PayButton'
+import V1PayInputSubText from './Pay/V1PayInputSubText'
 
 export default function V1Project({
   style,
@@ -25,6 +26,9 @@ export default function V1Project({
   column?: boolean
 }) {
   const [payForm] = useForm<PayFormFields>()
+  const payAmount: string = payForm.getFieldValue('amount')
+  const payInCurrency = payForm.getFieldValue('payInCurrency')
+
   const { currentFC, projectId, handle, metadata, isArchived } =
     useContext(V1ProjectContext)
 
@@ -49,7 +53,16 @@ export default function V1Project({
         </Col>
 
         <Col xs={24} md={column ? 24 : 12} style={{ marginTop: gutter }}>
-          <PayInput form={payForm} payButton={<V1PayButton form={payForm} />} />
+          <PayInput
+            form={payForm}
+            payButton={<V1PayButton form={payForm} />}
+            inputSubText={
+              <V1PayInputSubText
+                payInCurrency={payInCurrency}
+                amount={payAmount}
+              />
+            }
+          />
         </Col>
       </Row>
 

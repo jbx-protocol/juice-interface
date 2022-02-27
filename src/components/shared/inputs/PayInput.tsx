@@ -2,19 +2,8 @@ import { Form, FormInstance } from 'antd'
 
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
-import PayInputSubText from 'components/v1/V1Project/Pay/PayInputSubText'
 
-import { V1ProjectContext } from 'contexts/v1/projectContext'
-import { parseEther } from 'ethers/lib/utils'
-import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
-import { V1CurrencyOption } from 'models/v1/currencyOption'
-import { useContext, useState } from 'react'
 import { currencyName } from 'utils/v1/currency'
-import { formatWad } from 'utils/formatNumber'
-
-import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
-
-import CurrencySymbol from '../CurrencySymbol'
 
 export type PayFormFields = {
   amount?: string
@@ -23,9 +12,11 @@ export type PayFormFields = {
 
 export default function PayInput({
   payButton,
+  inputSubText,
   form,
 }: {
   payButton: JSX.Element
+  inputSubText?: JSX.Element
   form: FormInstance<PayFormFields>
 }) {
   const payAmount: string = form.getFieldValue('amount')
@@ -57,7 +48,7 @@ export default function PayInput({
               />
             }
           />
-          <PayInputSubText payInCurrency={payInCurrency} amount={payAmount} />
+          {inputSubText}
         </div>
 
         <div style={{ textAlign: 'center', minWidth: 150 }}>{payButton}</div>

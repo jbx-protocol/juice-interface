@@ -27,7 +27,7 @@ import { V1_CURRENCY_ETH } from 'constants/v1/currency'
  *
  * Else, display the exchange rate of the user selected currency to project token.
  */
-export default function PayInputSubText({
+export default function V1PayInputSubText({
   payInCurrency,
   amount,
 }: {

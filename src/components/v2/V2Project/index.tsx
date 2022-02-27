@@ -4,6 +4,7 @@ import ProjectHeader from 'components/shared/ProjectHeader'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useContext } from 'react'
 import { fromPermille } from 'utils/formatNumber'
+
 import V2PayButton from './Pay/V2PayButton'
 
 export default function V2Project() {

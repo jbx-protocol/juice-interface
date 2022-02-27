@@ -141,7 +141,7 @@ export function useTrendingProjects(count: number, days: number) {
     IpfsCacheName.trending,
     useMemo(
       () => ({
-        ttlMin: 12,
+        ttl: { minutes: 12 },
         deserialize: data => data.map(parseTrendingProjectJson),
       }),
       [],

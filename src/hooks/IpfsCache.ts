@@ -1,12 +1,12 @@
 import axios from 'axios'
 import { IpfsCacheData, IpfsCacheJsonData } from 'models/ipfs-cache/cache-data'
 import { IpfsCacheName } from 'models/ipfs-cache/cache-name'
-import moment from 'moment'
+import moment, { DurationInputArg1 } from 'moment'
 import { useEffect, useState } from 'react'
 import { getPinnedListByTag, ipfsCidUrl, unpinIpfsFileByCid } from 'utils/ipfs'
 
 export type IpfsCacheOpts<T extends IpfsCacheName> = {
-  ttlMin: number
+  ttl: DurationInputArg1
   deserialize?: (x: IpfsCacheJsonData[T]) => IpfsCacheData[T]
 }
 
@@ -33,7 +33,7 @@ export function useIpfsCache<T extends IpfsCacheName>(
 
         // Cache expires every 12 min, will update 5 times an hour. (Arbitrary)
         const isExpired = moment(latest.date_pinned).isBefore(
-          moment().subtract({ minutes: opts.ttlMin }),
+          moment().subtract(opts.ttl),
         )
 
         if (isExpired) {

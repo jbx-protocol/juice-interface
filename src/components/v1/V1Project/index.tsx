@@ -4,14 +4,15 @@ import { CSSProperties, useContext } from 'react'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 
 import ProjectHeader from 'components/shared/ProjectHeader'
+import PayInput from 'components/shared/inputs/Pay/PayInput'
 
 import BalanceTimeline from './BalanceTimeline'
 import FundingCycles from './FundingCycles'
 import Paid from './Paid'
-import Pay from './Pay'
 import ProjectActivity from './ProjectActivity'
 import V1ProjectHeaderActions from './V1ProjectHeaderActions'
 import Rewards from './Rewards'
+import V1PayButton from './Pay/V1PayButton'
 
 export default function V1Project({
   style,
@@ -26,6 +27,7 @@ export default function V1Project({
     useContext(V1ProjectContext)
 
   const fcMetadata = decodeFundingCycleMetadata(currentFC?.metadata)
+  const reservedRate = fcMetadata?.reservedRate
 
   const gutter = 40
 
@@ -46,7 +48,11 @@ export default function V1Project({
         </Col>
 
         <Col xs={24} md={column ? 24 : 12} style={{ marginTop: gutter }}>
-          <Pay />
+          <PayInput
+            PayButton={V1PayButton}
+            reservedRate={reservedRate}
+            weight={currentFC?.weight}
+          />
         </Col>
       </Row>
 

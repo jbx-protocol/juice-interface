@@ -2,21 +2,21 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { formatWad } from 'utils/formatNumber'
 import { parseEther } from 'ethers/lib/utils'
 import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
-import { V1CurrencyName } from 'utils/v1/currency'
 import { weightedRate } from 'utils/math'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { Trans } from '@lingui/macro'
-import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useContext, useMemo } from 'react'
 
+import { CurrencyContext } from 'contexts/currencyContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
+
 import { Tooltip } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import AMMPrices from 'components/shared/AMMPrices'
-
 import TooltipIcon from 'components/shared/TooltipIcon'
 
-import { V1_CURRENCY_ETH } from 'constants/v1/currency'
+import AmountToWei from 'utils/AmountToWei'
+import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 
 /**
  * Help text shown below the Pay input field.
@@ -27,27 +27,38 @@ import { V1_CURRENCY_ETH } from 'constants/v1/currency'
  * Else, display the exchange rate of the user selected currency to project token.
  */
 export default function PayInputSubText({
-  payInCurrrency,
-  weiPayAmt,
+  payInCurrency,
+  amount,
+  reservedRate,
+  weight,
 }: {
-  payInCurrrency: V1CurrencyOption
-  weiPayAmt: BigNumber | undefined
+  payInCurrency: number // todo currencyOption = 0 | 1 | 2
+  amount: string | undefined
+  reservedRate: number | undefined
+  weight: BigNumber | undefined
 }) {
-  const { currentFC, tokenSymbol, tokenAddress } = useContext(V1ProjectContext)
+  // TODO need to pass in tokenSymbol and tokenAddress for v2 projects
+  const { tokenSymbol, tokenAddress } = useContext(V1ProjectContext)
   const converter = useCurrencyConverter()
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+
+  const {
+    currencyMetadata,
+    currencies: { currencyETH },
+  } = useContext(CurrencyContext)
 
   const tokenText = tokenSymbolText({
     tokenSymbol: tokenSymbol,
     capitalize: false,
     plural: true,
   })
+  const weiPayAmt = AmountToWei({ currency: payInCurrency, amount: amount })
 
   const receiveText = useMemo(() => {
     const formatReceivedTickets = (wei: BigNumber) => {
-      const exchangeRate = weightedRate(currentFC, wei, 'payer')
+      const exchangeRate = weightedRate(weight, reservedRate, wei, 'payer')
       return formatWad(exchangeRate, { precision: 0 })
     }
 
@@ -56,12 +67,21 @@ export default function PayInputSubText({
     }
 
     const receivedTickets = formatReceivedTickets(
-      (payInCurrrency === V1_CURRENCY_ETH
+      (payInCurrency === currencyETH
         ? parseEther('1')
         : converter.usdToWei('1')) ?? BigNumber.from(0),
     )
-    return `${receivedTickets} ${tokenText}/${V1CurrencyName(payInCurrrency)}`
-  }, [converter, payInCurrrency, tokenText, weiPayAmt, currentFC])
+    return `${receivedTickets} ${tokenText}/${currencyMetadata[payInCurrency]?.name}`
+  }, [
+    converter,
+    payInCurrency,
+    tokenText,
+    weiPayAmt,
+    weight,
+    currencyMetadata,
+    currencyETH,
+    reservedRate,
+  ])
 
   return (
     <div style={{ fontSize: '.7rem' }}>

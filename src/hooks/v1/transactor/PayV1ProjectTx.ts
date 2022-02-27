@@ -1,12 +1,14 @@
 import { NetworkContext } from 'contexts/networkContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1UserContext } from 'contexts/v1/userContext'
-import { BigNumber } from 'ethers'
+
 import { useContext } from 'react'
+
+import { BigNumber } from 'ethers'
 
 import { TransactorInstance } from '../../Transactor'
 
-export function usePayProjectTx(): TransactorInstance<{
+export function usePayV1ProjectTx(): TransactorInstance<{
   note: string
   preferUnstaked: boolean
   value: BigNumber

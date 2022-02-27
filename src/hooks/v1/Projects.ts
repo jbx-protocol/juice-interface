@@ -1,8 +1,11 @@
 import { BigNumber } from '@ethersproject/bignumber'
-
+import { SECONDS_IN_DAY } from 'constants/numbers'
+import { useIpfsCache } from 'hooks/IpfsCache'
+import { SerializedTrendingProject } from 'models/ipfs-cache-entities/trending-project'
 import { ProjectState } from 'models/project-visibility'
 import { Project, TrendingProject } from 'models/subgraph-entities/project'
 import { V1TerminalVersion } from 'models/v1/terminals'
+import { useEffect, useMemo, useState } from 'react'
 import {
   EntityKeys,
   GraphQueryOpts,
@@ -12,20 +15,9 @@ import {
 } from 'utils/graph'
 import { getTerminalAddress } from 'utils/v1/terminals'
 
-import { useEffect, useState } from 'react'
-
-import { SECONDS_IN_DAY } from 'constants/numbers'
-
 import { archivedProjectIds } from '../../constants/v1/archivedProjects'
+import { IpfsCache, uploadIpfsJsonCache } from '../../utils/ipfs'
 import useSubgraphQuery, { useInfiniteSubgraphQuery } from '../SubgraphQuery'
-import {
-  uploadTrendingProjectsCache,
-  getTrendingProjectsCache,
-  unpinIpfsFileByCid,
-  ipfsCidUrl,
-} from '../../utils/ipfs'
-import axios from 'axios'
-import moment from 'moment'
 
 interface ProjectsOptions {
   pageNumber?: number
@@ -126,56 +118,6 @@ export function useProjectsSearch(handle: string | undefined) {
   )
 }
 
-export function useTrendingProjectsCache() {
-  // Use `null` value to indicate missing or expired cache
-  const [cache, setCache] = useState<TrendingProject[] | null>()
-
-  useEffect(() => {
-    getTrendingProjectsCache().then(async res => {
-      if (!res.count) {
-        setCache(null)
-        return
-      }
-
-      // Most recent cache file is returned first in array
-      const latest = res.rows[0]
-
-      // Cache expires every 12 min, will update 5 times an hour. (Arbitrary)
-      const isExpired = moment(latest.date_pinned).isBefore(
-        moment().subtract({ minutes: 12 }),
-      )
-
-      if (isExpired) {
-        setCache(null)
-      } else {
-        // Get data from latest cache if not expired
-        axios.get(ipfsCidUrl(latest.ipfs_pin_hash)).then(cache => {
-          setCache(
-            cache.data.projects.map((p: any) => ({
-              ...p,
-              id: BigNumber.from(p.id),
-              currentBalance: BigNumber.from(p.currentBalance),
-              totalPaid: BigNumber.from(p.totalPaid),
-              trendingScore: BigNumber.from(p.trendingScore),
-              trendingVolume: BigNumber.from(p.trendingVolume),
-              totalRedeemed: BigNumber.from(p.totalRedeemed),
-            })) ?? [],
-          )
-        })
-      }
-
-      // Unpin any remaining cache files. If latest is not expired don't unpin it
-      // There should never be more than one cache file, but simultaneous page views may result in multiple
-      for (let i = isExpired ? 0 : 1; i < res.count; i++) {
-        // We use await here to help avoid simultaenous requests being rate limited
-        await unpinIpfsFileByCid(res.rows[i].ipfs_pin_hash)
-      }
-    })
-  }, [])
-
-  return cache
-}
-
 // Returns projects with highest % volume increase in last week
 export function useTrendingProjects(count: number, days: number) {
   const [loadingPayments, setLoadingPayments] = useState<boolean>()
@@ -189,17 +131,35 @@ export function useTrendingProjects(count: number, days: number) {
     >
   >()
 
-  // First check if remote cache exists
-  const cache = useTrendingProjectsCache()
+  // Check if remote cache exists
+  const cache = useIpfsCache(
+    IpfsCache.trending,
+    useMemo(
+      () => ({
+        ttlMin: 12,
+        deserialize: data =>
+          data.map(p => ({
+            ...p,
+            id: BigNumber.from(p.id),
+            totalPaid: BigNumber.from(p.totalPaid),
+            trendingScore: BigNumber.from(p.trendingScore),
+            trendingVolume: BigNumber.from(p.trendingVolume),
+          })),
+      }),
+      [],
+    ),
+  )
 
   // Cache === null indicates cache is missing or expired
   const shouldUpdateCache = cache === null
-  console.log(
-    shouldUpdateCache
-      ? 'Trending cache missing or expired'
-      : 'Using valid trending cache',
-    cache,
-  )
+
+  if (shouldUpdateCache) {
+    console.info('Trending cache missing or expired')
+  } else if (cache === undefined) {
+    console.info('Loading trending cache')
+  } else {
+    console.info('Using trending cache')
+  }
 
   useEffect(() => {
     const loadPayments = async () => {
@@ -306,9 +266,19 @@ export function useTrendingProjects(count: number, days: number) {
 
   if (trendingProjectsQuery.data?.length && shouldUpdateCache) {
     // Update cache with new queried data
-    uploadTrendingProjectsCache(trendingProjectsQuery.data).then(() =>
-      console.log('Uploaded new trending cache'),
-    )
+    uploadIpfsJsonCache(
+      IpfsCache.trending,
+      trendingProjectsQuery.data.map(p =>
+        Object.entries(p).reduce(
+          (acc, [key, val]) => ({
+            ...acc,
+            // Serialize all BigNumbers to strings
+            [key]: BigNumber.isBigNumber(val) ? val.toString() : val,
+          }),
+          {} as SerializedTrendingProject,
+        ),
+      ),
+    ).then(() => console.info('Uploaded new trending cache'))
   }
 
   return shouldUpdateCache

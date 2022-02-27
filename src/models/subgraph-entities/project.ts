@@ -60,7 +60,10 @@ export interface Project {
   deployedERC20Events: Partial<DeployedERC20Event>[]
 }
 
-export type TrendingProject = Project & {
+export type TrendingProject = Pick<
+  Project,
+  'id' | 'createdAt' | 'uri' | 'terminal' | 'totalPaid' | 'handle'
+> & {
   trendingVolume: BigNumber
   trendingScore: BigNumber
   trendingPaymentsCount: number

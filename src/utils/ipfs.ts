@@ -1,22 +1,27 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import pinataClient, { PinataMetadata, PinataPinResponse } from '@pinata/sdk'
 import axios from 'axios'
 import { IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
 import { readNetwork } from 'constants/networks'
+import { IpfsCacheSerialData } from 'models/ipfs-cache-entities/cache-data-types'
 import { ProjectMetadataV3 } from 'models/project-metadata'
-import { TrendingProject } from 'models/subgraph-entities/project'
 
 const pinata_api_key = process.env.REACT_APP_PINATA_PINNER_KEY
 const pinata_secret_api_key = process.env.REACT_APP_PINATA_PINNER_SECRET
 
 if (!pinata_api_key || !pinata_secret_api_key) {
-  throw 'Missing .env vars REACT_APP_PINATA_PINNER_KEY or REACT_APP_PINATA_PINNER_SECRET'
+  throw new Error(
+    'Missing .env vars REACT_APP_PINATA_PINNER_KEY or REACT_APP_PINATA_PINNER_SECRET',
+  )
 }
 
-const pinata = pinataClient(pinata_api_key, pinata_secret_api_key)
+export const pinata = pinataClient(pinata_api_key, pinata_secret_api_key)
+
+export enum IpfsCache {
+  trending,
+}
 
 export const IPFS_TAGS = {
-  TRENDING_CACHE:
+  [IpfsCache.trending]:
     (process.env.NODE_ENV === 'production'
       ? 'trending_projects_'
       : 'DEV_trending_projects_') + readNetwork.name,
@@ -29,20 +34,6 @@ export const IPFS_TAGS = {
       ? 'juicebox_project_logo'
       : 'DEV_juicebox_project_logo',
 }
-
-export const getTrendingProjectsCache = () =>
-  pinata.pinList({
-    pageLimit: 1000,
-    status: 'pinned',
-    metadata: {
-      keyvalues: {
-        tag: {
-          value: IPFS_TAGS.TRENDING_CACHE,
-          op: 'eq',
-        },
-      },
-    },
-  })
 
 // keyvalues will be upserted to existing metadata. A null value will remove an existing keyvalue
 export const editMetadataForCid = (
@@ -120,24 +111,15 @@ export const uploadProjectMetadata = (
     },
   )
 
-const serializeTrendingProject = (project: TrendingProject) =>
-  Object.entries(project).reduce(
-    (acc, [key, val]) => ({
-      ...acc,
-      [key]: BigNumber.isBigNumber(val) ? val.toString() : val,
-    }),
-    {},
-  )
-
-export const uploadTrendingProjectsCache = (projects: TrendingProject[]) =>
-  pinata.pinJSONToIPFS(
-    { projects: projects.map(p => serializeTrendingProject(p)) },
-    {
-      pinataMetadata: {
-        keyvalues: {
-          tag: IPFS_TAGS.TRENDING_CACHE,
-        } as any,
-        name: IPFS_TAGS.TRENDING_CACHE + '.json',
-      },
+export const uploadIpfsJsonCache = <T extends IpfsCache>(
+  tag: T,
+  data: IpfsCacheSerialData[T],
+) =>
+  pinata.pinJSONToIPFS(data, {
+    pinataMetadata: {
+      keyvalues: {
+        tag: IPFS_TAGS[tag],
+      } as any,
+      name: IPFS_TAGS[tag] + '.json',
     },
-  )
+  })

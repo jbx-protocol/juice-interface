@@ -90,6 +90,14 @@ msgstr ""
 msgid "<0><1>This project has no overflow</1>, so you will not receive any ETH for burning tokens.</0>"
 msgstr "<0><1>This project has no overflow</1>, so you will not receive any ETH for burning tokens.</0>"
 
+#: src/components/shared/formItems/BondingCurve/ProjectBondingCurveRate.tsx
+msgid "<0>Disabled when funding target has not been set.</0>"
+msgstr "<0>Disabled when funding target has not been set.</0>"
+
+#: src/components/shared/formItems/ProjectDiscountRate.tsx
+msgid "<0>Discount rate disabled when funding cycle duration has not been set.</0>"
+msgstr "<0>Discount rate disabled when funding cycle duration has not been set.</0>"
+
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "<0>Learn more</0> about funding cycle duration."
 msgstr ""
@@ -544,10 +552,6 @@ msgstr ""
 msgid "Discount rate"
 msgstr ""
 
-#: src/components/v2/V2Create/tabs/TokenTab/TokenTabContent.tsx
-msgid "Discount rate disabled when funding cycle duration has not been set."
-msgstr "Discount rate disabled when funding cycle duration has not been set."
-
 #: src/components/v1/V1Create/index.tsx
 msgid "Discount rate disabled while funding cycle duration is 0."
 msgstr ""
@@ -997,6 +1001,18 @@ msgstr ""
 msgid "New"
 msgstr "New"
 
+#: src/components/v2/V2Create/tabs/ProjectDetailsTabContent.tsx
+msgid "Next: Funding"
+msgstr "Next: Funding"
+
+#: src/components/v2/V2Create/tabs/TokenTab/TokenTabContent.tsx
+msgid "Next: Rules"
+msgstr "Next: Rules"
+
+#: src/components/v2/V2Create/tabs/FundingTab/FundingTabContent.tsx
+msgid "Next: Token"
+msgstr "Next: Token"
+
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
 msgid "No"
@@ -1322,10 +1338,6 @@ msgstr "Redeem {0} {tokensTextShort} for ETH"
 msgid "Redeem {tokensTextLong} for ETH"
 msgstr "Redeem {tokensTextLong} for ETH"
 
-#: src/components/v2/V2Create/tabs/TokenTab/TokenTabContent.tsx
-msgid "Redemption disabled while no funding target is set."
-msgstr "Redemption disabled while no funding target is set."
-
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
 #: src/components/v2/V2Create/tabs/TokenTab/TokenTabContent.tsx
 msgid "Redemption rate"
@@ -1431,9 +1443,7 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: src/components/v2/V2Create/tabs/FundingTab/FundingTabContent.tsx
 #: src/components/v2/V2Create/tabs/ProjectDetailsTabContent.tsx
-#: src/components/v2/V2Create/tabs/TokenTab/TokenTabContent.tsx
 msgid "Save and continue"
 msgstr "Save and continue"
 

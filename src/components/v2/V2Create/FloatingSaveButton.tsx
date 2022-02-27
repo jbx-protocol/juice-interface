@@ -29,6 +29,7 @@ export default function FloatingSaveButton({
         background: colors.background.l0,
         display: 'flex',
         alignItems: 'center',
+        zIndex: 1,
         boxShadow: '0px -5px 17px 0px ' + colors.background.l1,
       }}
     >
@@ -37,16 +38,20 @@ export default function FloatingSaveButton({
           {/* If no text given, can assume it’s the last tab 
           in which case we want to show the review and deploy button */}
           {text ? (
-            <Button
-              htmlType="submit"
-              type="primary"
-              onClick={() => {
-                if (onClick) onClick()
-                window.scrollTo(0, 0)
-              }}
-            >
-              <Trans>{text}</Trans>
-            </Button>
+            <div>
+              <Button
+                htmlType="submit"
+                type="primary"
+                onClick={() => {
+                  if (onClick) onClick()
+                  window.scrollTo(0, 0)
+                }}
+                style={{ marginRight: '1rem' }}
+              >
+                <Trans>{text}</Trans>
+              </Button>
+              <DeployProjectButton type="default" />
+            </div>
           ) : (
             <DeployProjectButton />
           )}

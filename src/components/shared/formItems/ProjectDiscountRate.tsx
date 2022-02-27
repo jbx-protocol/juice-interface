@@ -7,6 +7,32 @@ import { ThemeContext } from 'contexts/themeContext'
 import { FormItemExt } from './formItemExt'
 import NumberSlider from '../inputs/NumberSlider'
 
+function DiscountRateExtra({ disabled }: { disabled?: boolean }) {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
+
+  return (
+    <div>
+      {disabled && (
+        <p>
+          <Trans>
+            <i style={{ color: colors.text.warn }}>
+              Discount rate disabled when funding cycle duration has not been
+              set.
+            </i>
+          </Trans>
+        </p>
+      )}
+      <Trans>
+        The ratio of tokens rewarded per payment amount will decrease by this
+        percentage with each new funding cycle. A higher discount rate will
+        incentivize supporters to pay your project earlier than later.
+      </Trans>
+    </div>
+  )
+}
+
 export default function ProjectDiscountRate({
   name,
   hideLabel,
@@ -27,14 +53,19 @@ export default function ProjectDiscountRate({
     theme: { colors },
   } = useContext(ThemeContext)
 
+  // When toggle is disabled and can't be changed, the whole item is unavailable
+  const unavailable = !Boolean(toggleDisabled) && disabled
+
   return (
     <Form.Item
-      extra={t`The ratio of tokens rewarded per payment amount will decrease by this percentage with each new funding cycle. A higher discount rate will incentivize supporters to pay your project earlier than later.`}
+      extra={<DiscountRateExtra disabled={unavailable} />}
       name={name}
       label={
         hideLabel ? undefined : (
           <div>
-            <Trans>Discount rate</Trans>{' '}
+            <h3 style={{ display: 'inline-block', marginRight: '1rem' }}>
+              <Trans>Discount rate</Trans>{' '}
+            </h3>
             {toggleDisabled ? (
               <React.Fragment>
                 <Switch checked={!disabled} onChange={toggleDisabled} />{' '}

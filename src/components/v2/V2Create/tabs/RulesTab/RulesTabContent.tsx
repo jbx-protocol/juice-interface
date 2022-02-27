@@ -77,7 +77,7 @@ export default function RulesTabContent() {
 
   return (
     <Row gutter={32}>
-      <Col span={12}>
+      <Col span={10}>
         <Form
           form={form}
           layout="vertical"

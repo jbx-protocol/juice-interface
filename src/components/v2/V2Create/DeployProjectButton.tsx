@@ -1,6 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import ConfirmDeployV2ProjectModal from 'components/v2/V2Create/DeployProjectModal'
+import { ThemeContext } from 'contexts/themeContext'
 import {
   useAppSelector,
   useEditingV2FundAccessConstraintsSelector,
@@ -11,7 +12,11 @@ import { useDeployProjectTx } from 'hooks/v2/transactor/DeployProjectTx'
 import { useCallback, useState } from 'react'
 import { uploadProjectMetadata } from 'utils/ipfs'
 
-export default function DeployProjectButton() {
+export default function DeployProjectButton({
+  type = 'primary',
+}: {
+  type?: 'default' | 'primary'
+}) {
   const [deployProjectModalVisible, setDeployProjectModalVisible] =
     useState<boolean>(false)
   const deployProjectTx = useDeployProjectTx()
@@ -80,7 +85,7 @@ export default function DeployProjectButton() {
     <>
       <Button
         onClick={() => setDeployProjectModalVisible(true)}
-        type="primary"
+        type={type}
         htmlType="submit"
         disabled={!projectMetadata?.name}
       >

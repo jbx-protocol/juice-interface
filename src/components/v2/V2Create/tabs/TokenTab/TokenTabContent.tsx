@@ -136,7 +136,7 @@ export default function TokenTabContent({
 
   return (
     <Row gutter={32}>
-      <Col span={12}>
+      <Col span={10}>
         <Form
           form={tokenForm}
           layout="vertical"
@@ -173,14 +173,6 @@ export default function TokenTabContent({
             onReserveTokenSplitsChange={setReserveTokenSplits}
           />
           <br />
-          {!hasFundingDuration(fundingCycleData) && (
-            <div style={{ ...disableTextStyle }}>
-              <Trans>
-                Discount rate disabled when funding cycle duration has not been
-                set.
-              </Trans>
-            </div>
-          )}
           <FormItems.ProjectDiscountRate
             value={tokenForm.getFieldValue('discountRate') ?? reduxDiscountRate} // use redux if form hasn't loaded yet
             name="discountRate"
@@ -201,11 +193,6 @@ export default function TokenTabContent({
             }
           />
           <br />
-          {!hasFundingTarget(fundAccessConstraint) && (
-            <div style={{ ...disableTextStyle }}>
-              <Trans>Redemption disabled while no funding target is set.</Trans>
-            </div>
-          )}
           <FormItems.ProjectBondingCurveRate
             value={
               tokenForm.getFieldValue('redemptionRate') ?? reduxRedemptionRate
@@ -229,10 +216,7 @@ export default function TokenTabContent({
                 : undefined
             }
           />
-          <FloatingSaveButton
-            text={t`Save and continue`}
-            onClick={openNextTab}
-          />
+          <FloatingSaveButton text={t`Next: Rules`} onClick={openNextTab} />
         </Form>
       </Col>
       <Col span={12}></Col>

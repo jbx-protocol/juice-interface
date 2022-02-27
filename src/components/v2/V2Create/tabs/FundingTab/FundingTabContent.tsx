@@ -134,7 +134,7 @@ export default function FundingTabContent({
 
   return (
     <Row gutter={32} style={{ marginBottom: formBottomMargin }}>
-      <Col span={12}>
+      <Col span={10}>
         <Form form={fundingForm} layout="vertical" onFinish={onFundingFormSave}>
           <Form.Item label={t`How much do you want to raise?`}>
             <FundingTypeSelect
@@ -149,6 +149,7 @@ export default function FundingTabContent({
                 padding: '2rem',
                 marginBottom: '10px',
                 ...shadowCard(theme),
+                color: theme.colors.text.primary,
               }}
             >
               <h3>Funding target</h3>
@@ -203,7 +204,7 @@ export default function FundingTabContent({
               </Form.Item>
             </div>
           ) : (
-            <p>
+            <p style={{ color: theme.colors.text.primary }}>
               <Trans>
                 All funds can be distributed by the project. The project will
                 have no overflow (the same as setting the target to infinity).
@@ -229,10 +230,7 @@ export default function FundingTabContent({
               }}
             />
           </div>
-          <FloatingSaveButton
-            text={t`Save and continue`}
-            onClick={openNextTab}
-          />
+          <FloatingSaveButton text={t`Next: Token`} onClick={openNextTab} />
         </Form>
       </Col>
       <Col span={12}></Col>

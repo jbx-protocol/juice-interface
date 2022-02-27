@@ -94,10 +94,10 @@ export default function ProjectTicketMods({
             }}
           >
             <Row gutter={gutter} style={{ width: '100%' }} align="middle">
-              <Col span={5}>
+              <Col span={7}>
                 <label>Address</label>{' '}
               </Col>
-              <Col span={19}>
+              <Col span={17}>
                 <div
                   style={{
                     display: 'flex',
@@ -113,10 +113,10 @@ export default function ProjectTicketMods({
             </Row>
 
             <Row gutter={gutter} style={{ width: '100%' }} align="middle">
-              <Col span={5}>
+              <Col span={7}>
                 <label>Percentage</label>
               </Col>
-              <Col span={19}>
+              <Col span={17}>
                 <div
                   style={{
                     display: 'flex',
@@ -140,10 +140,10 @@ export default function ProjectTicketMods({
 
             {mod.lockedUntil ? (
               <Row gutter={gutter} style={{ width: '100%' }} align="middle">
-                <Col span={5}>
+                <Col span={7}>
                   <label>Locked</label>
                 </Col>
-                <Col span={19}>
+                <Col span={17}>
                   until {formatDate(mod.lockedUntil * 1000, 'MM-DD-yyyy')}
                 </Col>
               </Row>

@@ -12,7 +12,7 @@ export default function FundingTypeSelect({
   onChange: (value: FundingType) => void
 }) {
   return (
-    <Select value={value} onChange={onChange}>
+    <Select value={value} onChange={onChange} style={{ fontSize: 17 }}>
       <Option value="target">
         <Trans>Specific target</Trans>
       </Option>

@@ -184,10 +184,10 @@ export default function ProjectPayoutMods({
               </Row>
             ) : (
               <Row gutter={gutter} style={{ width: '100%' }} align="middle">
-                <Col span={5}>
+                <Col span={7}>
                   <label>Address:</label>{' '}
                 </Col>
-                <Col span={19}>
+                <Col span={17}>
                   <div
                     style={{
                       display: 'flex',
@@ -205,10 +205,10 @@ export default function ProjectPayoutMods({
 
             {mod.projectId?.gt(0) ? (
               <Row>
-                <Col span={5}>
+                <Col span={7}>
                   <label>Beneficiary:</label>
                 </Col>
-                <Col span={19}>
+                <Col span={17}>
                   <span style={{ cursor: 'pointer' }}>
                     <FormattedAddress address={mod.beneficiary} />
                   </span>
@@ -217,10 +217,10 @@ export default function ProjectPayoutMods({
             ) : null}
 
             <Row gutter={gutter} style={{ width: '100%' }} align="middle">
-              <Col span={5}>
+              <Col span={7}>
                 <label>Percentage:</label>
               </Col>
-              <Col span={19}>
+              <Col span={17}>
                 <div
                   style={{
                     display: 'flex',
@@ -257,10 +257,10 @@ export default function ProjectPayoutMods({
 
             {mod.lockedUntil ? (
               <Row gutter={gutter} style={{ width: '100%' }} align="middle">
-                <Col span={5}>
+                <Col span={7}>
                   <label>Locked</label>
                 </Col>
-                <Col span={19}>
+                <Col span={17}>
                   until {formatDate(mod.lockedUntil * 1000, 'MM-DD-yyyy')}
                 </Col>
               </Row>

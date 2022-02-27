@@ -6,7 +6,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
 import { TicketMod } from 'models/mods'
-import V2ProjectReserved from 'components/v2/V2Create/tabs/TokenTab/V2ProjectReserved'
+import ReservedTokensFormItem from 'components/v2/V2Create/tabs/TokenTab/ReservedTokensFormItem'
 
 import {
   CSSProperties,
@@ -24,6 +24,8 @@ import {
 } from 'utils/v2/fundingCycle'
 
 import { sanitizeSplit, toMod, toSplit } from 'utils/v2/splits'
+
+import { Split } from 'models/v2/splits'
 
 import { shadowCard } from 'constants/styles/shadowCard'
 import FloatingSaveButton from '../../FloatingSaveButton'
@@ -63,8 +65,8 @@ export default function TokenTabContent({
       fundAccessConstraints,
     )
 
-  const [reserveTokenSplits, setReserveTokenSplits] = useState<TicketMod[]>(
-    reduxReserveTokenGroupedSplits?.splits.map(s => toMod(s)) ?? [],
+  const [reserveTokenSplits, setReserveTokenSplits] = useState<Split[]>(
+    reduxReserveTokenGroupedSplits?.splits ?? [],
   )
 
   const [discountRateDisabled, setDiscountRateDisabled] = useState<boolean>(
@@ -87,7 +89,7 @@ export default function TokenTabContent({
   const onTokenFormSaved = useCallback(
     (fields: TokenFormFields) => {
       const newReserveTokenSplits = reserveTokenSplits.map(split =>
-        sanitizeSplit(toSplit(split)),
+        sanitizeSplit(split),
       )
 
       dispatch(editingV2ProjectActions.setDiscountRate(fields.discountRate))
@@ -153,7 +155,7 @@ export default function TokenTabContent({
             </p>
           ) : null}
 
-          <V2ProjectReserved
+          <ReservedTokensFormItem
             value={tokenForm.getFieldValue('reservedRate') ?? reduxReservedRate}
             onChange={val => {
               tokenForm.setFieldsValue({ reservedRate: val?.toString() })
@@ -169,7 +171,7 @@ export default function TokenTabContent({
               setReservedRateDisabled(!checked)
             }}
             reserveTokenSplits={reserveTokenSplits}
-            setReserveTokenSplits={setReserveTokenSplits}
+            onReserveTokenSplitsChange={setReserveTokenSplits}
           />
           <br />
           {!hasFundingDuration(fundingCycleData) && (

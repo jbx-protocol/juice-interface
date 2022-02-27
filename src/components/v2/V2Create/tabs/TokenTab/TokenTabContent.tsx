@@ -230,7 +230,10 @@ export default function TokenTabContent({
                 : undefined
             }
           />
-          <FloatingSaveButton text={t`Next: Rules`} onClick={openNextTab} />
+          <FloatingSaveButton
+            text={t`Save and continue`}
+            onClick={openNextTab}
+          />
         </Form>
       </Col>
       <Col span={12}></Col>

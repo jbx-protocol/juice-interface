@@ -77,7 +77,7 @@ export default function ProjectDetailsForm({
           if (prevUrl) unpinIpfsFileByCid(cidFromUrl(prevUrl))
         }}
       />
-      <FloatingSaveButton text={t`Next: Funding`} onClick={openNextTab} />
+      <FloatingSaveButton text={t`Save and continue`} onClick={openNextTab} />
     </Form>
   )
 }

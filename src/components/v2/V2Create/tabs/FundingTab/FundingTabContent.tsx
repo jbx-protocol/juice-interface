@@ -229,7 +229,10 @@ export default function FundingTabContent({
               }}
             />
           </div>
-          <FloatingSaveButton text={t`Next: Token`} onClick={openNextTab} />
+          <FloatingSaveButton
+            text={t`Save and continue`}
+            onClick={openNextTab}
+          />
         </Form>
       </Col>
       <Col span={12}></Col>

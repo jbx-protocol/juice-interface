@@ -5,6 +5,7 @@ import { FormItemExt } from 'components/shared/formItems/formItemExt'
 import { FormItems } from 'components/shared/formItems'
 import { toMod, toSplit } from 'utils/v2/splits'
 import { Split } from 'models/v2/splits'
+import Form from 'antd/lib/form/Form'
 
 export default function ReservedTokensFormItem({
   name,
@@ -30,14 +31,13 @@ export default function ReservedTokensFormItem({
   const [reservedRate, setReservedRate] = useState<number | undefined>(value)
 
   return (
-    <>
+    <div style={style}>
       <FormItems.ProjectReserved
         value={value}
         onChange={val => {
           setReservedRate(val)
           onChange(val)
         }}
-        style={style}
         disabled={disabled}
         toggleDisabled={toggleDisabled}
         hideLabel={hideLabel}
@@ -58,6 +58,6 @@ export default function ReservedTokensFormItem({
           reservedRate={reservedRate ?? 0}
         />
       ) : null}
-    </>
+    </div>
   )
 }

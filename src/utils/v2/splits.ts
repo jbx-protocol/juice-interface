@@ -38,7 +38,7 @@ export const toMod = (split: Split): PayoutMod => {
     percent,
     preferUnstaked: preferClaimed,
     lockedUntil,
-    projectId: BigNumber.from(projectId),
+    projectId: projectId ? BigNumber.from(projectId) : undefined,
     allocator,
   }
 }

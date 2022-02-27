@@ -6,10 +6,9 @@ import {
 import moment from 'moment'
 import { useEffect, useState } from 'react'
 import {
+  getPinnedListByTag,
   IpfsCache,
   ipfsCidUrl,
-  IPFS_TAGS,
-  pinata,
   unpinIpfsFileByCid,
 } from 'utils/ipfs'
 
@@ -29,18 +28,7 @@ export function useIpfsCache<T extends IpfsCache = IpfsCache>(
     async function load() {
       try {
         // Load pinned items by tag
-        const list = await pinata.pinList({
-          pageLimit: 1000,
-          status: 'pinned',
-          metadata: {
-            keyvalues: {
-              tag: {
-                value: IPFS_TAGS[tag],
-                op: 'eq',
-              },
-            },
-          },
-        })
+        const list = await getPinnedListByTag(IpfsCache.trending)
 
         if (!list.count) {
           setCache(null)

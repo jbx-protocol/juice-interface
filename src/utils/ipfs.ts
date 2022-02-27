@@ -14,7 +14,7 @@ if (!pinata_api_key || !pinata_secret_api_key) {
   )
 }
 
-export const pinata = pinataClient(pinata_api_key, pinata_secret_api_key)
+const pinata = pinataClient(pinata_api_key, pinata_secret_api_key)
 
 export enum IpfsCache {
   trending,
@@ -121,5 +121,19 @@ export const uploadIpfsJsonCache = <T extends IpfsCache>(
         tag: IPFS_TAGS[tag],
       } as any,
       name: IPFS_TAGS[tag] + '.json',
+    },
+  })
+
+export const getPinnedListByTag = (tag: keyof typeof IPFS_TAGS) =>
+  pinata.pinList({
+    pageLimit: 1000,
+    status: 'pinned',
+    metadata: {
+      keyvalues: {
+        tag: {
+          value: IPFS_TAGS[tag],
+          op: 'eq',
+        },
+      },
     },
   })

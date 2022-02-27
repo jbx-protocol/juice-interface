@@ -163,9 +163,6 @@ export const logoNameForHandle = (handle: string) => `juicebox-@${handle}-logo`
 export const metadataNameForHandle = (handle: string) =>
   `juicebox-@${handle}-metadata`
 
-export const metadataNameForProjectId = (id: string) =>
-  `juicebox-project-${id}-metadata`
-
 export const ipfsCidUrl = (hash: string) =>
   `https://${IPFS_GATEWAY_HOSTNAME}/ipfs/${hash}`
 

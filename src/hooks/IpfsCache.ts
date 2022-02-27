@@ -1,23 +1,16 @@
 import axios from 'axios'
-import {
-  IpfsCacheData,
-  IpfsCacheSerialData,
-} from 'models/ipfs-cache-entities/cache-data-types'
+import { IpfsCacheData, IpfsCacheJsonData } from 'models/ipfs-cache/cache-data'
+import { IpfsCacheName } from 'models/ipfs-cache/cache-name'
 import moment from 'moment'
 import { useEffect, useState } from 'react'
-import {
-  getPinnedListByTag,
-  IpfsCache,
-  ipfsCidUrl,
-  unpinIpfsFileByCid,
-} from 'utils/ipfs'
+import { getPinnedListByTag, ipfsCidUrl, unpinIpfsFileByCid } from 'utils/ipfs'
 
-export type IpfsCacheOpts<T extends IpfsCache = IpfsCache> = {
+export type IpfsCacheOpts<T extends IpfsCacheName = IpfsCacheName> = {
   ttlMin: number
-  deserialize?: (x: IpfsCacheSerialData[T]) => IpfsCacheData[T]
+  deserialize?: (x: IpfsCacheJsonData[T]) => IpfsCacheData[T]
 }
 
-export function useIpfsCache<T extends IpfsCache = IpfsCache>(
+export function useIpfsCache<T extends IpfsCacheName = IpfsCacheName>(
   tag: T,
   opts: IpfsCacheOpts<T>,
 ) {
@@ -28,7 +21,7 @@ export function useIpfsCache<T extends IpfsCache = IpfsCache>(
     async function load() {
       try {
         // Load pinned items by tag
-        const list = await getPinnedListByTag(IpfsCache.trending)
+        const list = await getPinnedListByTag(IpfsCacheName.trending)
 
         if (!list.count) {
           setCache(null)
@@ -47,7 +40,7 @@ export function useIpfsCache<T extends IpfsCache = IpfsCache>(
           setCache(null)
         } else {
           // Get data from latest cache if not expired
-          const data: { data: IpfsCacheSerialData[T] } = await axios.get(
+          const data: { data: IpfsCacheJsonData[T] } = await axios.get(
             ipfsCidUrl(latest.ipfs_pin_hash),
           )
 

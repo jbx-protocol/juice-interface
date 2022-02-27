@@ -2,7 +2,8 @@ import pinataClient, { PinataMetadata, PinataPinResponse } from '@pinata/sdk'
 import axios from 'axios'
 import { IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
 import { readNetwork } from 'constants/networks'
-import { IpfsCacheSerialData } from 'models/ipfs-cache-entities/cache-data-types'
+import { IpfsCacheJsonData } from 'models/ipfs-cache/cache-data'
+import { IpfsCacheName } from 'models/ipfs-cache/cache-name'
 import { ProjectMetadataV3 } from 'models/project-metadata'
 
 const pinata_api_key = process.env.REACT_APP_PINATA_PINNER_KEY
@@ -16,12 +17,8 @@ if (!pinata_api_key || !pinata_secret_api_key) {
 
 const pinata = pinataClient(pinata_api_key, pinata_secret_api_key)
 
-export enum IpfsCache {
-  trending,
-}
-
 export const IPFS_TAGS = {
-  [IpfsCache.trending]:
+  [IpfsCacheName.trending]:
     (process.env.NODE_ENV === 'production'
       ? 'trending_projects_'
       : 'DEV_trending_projects_') + readNetwork.name,
@@ -111,9 +108,9 @@ export const uploadProjectMetadata = (
     },
   )
 
-export const uploadIpfsJsonCache = <T extends IpfsCache>(
+export const uploadIpfsJsonCache = <T extends IpfsCacheName>(
   tag: T,
-  data: IpfsCacheSerialData[T],
+  data: IpfsCacheJsonData[T],
 ) =>
   pinata.pinJSONToIPFS(data, {
     pinataMetadata: {

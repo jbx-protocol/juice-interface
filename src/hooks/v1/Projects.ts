@@ -1,9 +1,14 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { SECONDS_IN_DAY } from 'constants/numbers'
 import { useIpfsCache } from 'hooks/IpfsCache'
-import { SerializedTrendingProject } from 'models/ipfs-cache-entities/trending-project'
+import { IpfsCacheName } from 'models/ipfs-cache/cache-name'
 import { ProjectState } from 'models/project-visibility'
-import { Project, TrendingProject } from 'models/subgraph-entities/project'
+import {
+  parseTrendingProjectJson,
+  Project,
+  TrendingProject,
+  TrendingProjectJson,
+} from 'models/subgraph-entities/project'
 import { V1TerminalVersion } from 'models/v1/terminals'
 import { useEffect, useMemo, useState } from 'react'
 import {
@@ -16,7 +21,7 @@ import {
 import { getTerminalAddress } from 'utils/v1/terminals'
 
 import { archivedProjectIds } from '../../constants/v1/archivedProjects'
-import { IpfsCache, uploadIpfsJsonCache } from '../../utils/ipfs'
+import { uploadIpfsJsonCache } from '../../utils/ipfs'
 import useSubgraphQuery, { useInfiniteSubgraphQuery } from '../SubgraphQuery'
 
 interface ProjectsOptions {
@@ -133,18 +138,11 @@ export function useTrendingProjects(count: number, days: number) {
 
   // Check if remote cache exists
   const cache = useIpfsCache(
-    IpfsCache.trending,
+    IpfsCacheName.trending,
     useMemo(
       () => ({
         ttlMin: 12,
-        deserialize: data =>
-          data.map(p => ({
-            ...p,
-            id: BigNumber.from(p.id),
-            totalPaid: BigNumber.from(p.totalPaid),
-            trendingScore: BigNumber.from(p.trendingScore),
-            trendingVolume: BigNumber.from(p.trendingVolume),
-          })),
+        deserialize: data => data.map(parseTrendingProjectJson),
       }),
       [],
     ),
@@ -267,7 +265,7 @@ export function useTrendingProjects(count: number, days: number) {
   if (trendingProjectsQuery.data?.length && shouldUpdateCache) {
     // Update cache with new queried data
     uploadIpfsJsonCache(
-      IpfsCache.trending,
+      IpfsCacheName.trending,
       trendingProjectsQuery.data.map(p =>
         Object.entries(p).reduce(
           (acc, [key, val]) => ({
@@ -275,7 +273,7 @@ export function useTrendingProjects(count: number, days: number) {
             // Serialize all BigNumbers to strings
             [key]: BigNumber.isBigNumber(val) ? val.toString() : val,
           }),
-          {} as SerializedTrendingProject,
+          {} as TrendingProjectJson,
         ),
       ),
     ).then(() => console.info('Uploaded new trending cache'))

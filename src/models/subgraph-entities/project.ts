@@ -69,6 +69,16 @@ export type TrendingProject = Pick<
   trendingPaymentsCount: number
 }
 
+export type TrendingProjectJson = Pick<
+  TrendingProject,
+  'createdAt' | 'trendingPaymentsCount' | 'handle' | 'uri' | 'terminal'
+> & {
+  id: string
+  trendingVolume: string
+  trendingScore: string
+  totalPaid: string
+}
+
 export type ProjectJson = Partial<
   Record<
     Exclude<
@@ -124,4 +134,14 @@ export const parseProjectJson = (project: ProjectJson): Partial<Project> => ({
   distributeToTicketModEvents:
     project.distributeToTicketModEvents?.map(parseDistributeToTicketModEvent) ??
     undefined,
+})
+
+export const parseTrendingProjectJson = (
+  project: TrendingProjectJson,
+): TrendingProject => ({
+  ...project,
+  id: BigNumber.from(project.id),
+  totalPaid: BigNumber.from(project.totalPaid),
+  trendingScore: BigNumber.from(project.trendingScore),
+  trendingVolume: BigNumber.from(project.trendingVolume),
 })

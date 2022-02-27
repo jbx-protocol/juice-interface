@@ -1,6 +1,7 @@
 import { t, Trans } from '@lingui/macro'
-import { Button, Drawer, DrawerProps, Form, Input, Space } from 'antd'
-import { constants, utils } from 'ethers'
+import { Button, Drawer, DrawerProps, Input, Space } from 'antd'
+import * as constants from '@ethersproject/constants'
+import { isAddress } from '@ethersproject/address'
 import { NetworkContext } from 'contexts/networkContext'
 import { useContext, useState } from 'react'
 import { ThemeContext } from 'contexts/themeContext'
@@ -9,10 +10,12 @@ import ReconfigurationStrategyOption from 'components/shared/ReconfigurationStra
 
 import {
   ballotStrategies,
-  customStrategy,
+  createCustomStrategy,
   Strategy,
 } from 'constants/ballotStrategies/ballotStrategies'
 import ExternalLink from './ExternalLink'
+
+const CUSTOM_STRATEGY_INDEX = -1
 
 function CustomStrategyInput({
   address,
@@ -67,13 +70,13 @@ export default function ReconfigurationStrategyDrawer({
     return s.address?.toLowerCase() === selectedStrategy.address?.toLowerCase()
   })
 
-  const selectedIsCustom = selectedStrategyIndex === -1 // selected strategy is the custom strat
+  const selectedIsCustom = selectedStrategyIndex === CUSTOM_STRATEGY_INDEX // selected strategy is the custom strat
 
   const [customStrategyAddress, setCustomStrategyAddress] = useState<string>(
     selectedIsCustom ? initialSelectedStrategy.address : '', // only set if selected strategy is custom
   )
 
-  const customStrategyObj = customStrategy(customStrategyAddress)
+  const customStrategy = createCustomStrategy(customStrategyAddress)
 
   return (
     <Drawer visible={visible} {...style} onClose={onClose}>
@@ -126,15 +129,15 @@ export default function ReconfigurationStrategyDrawer({
                 setCustomStrategyAddress(address)
                 // Ensure custom strategy is selected
                 if (selectedIsCustom) {
-                  setSelectedStrategy(customStrategy(address))
+                  setSelectedStrategy(createCustomStrategy(address))
                 }
               }}
             />
           }
-          index={-1}
-          strategy={customStrategyObj}
+          index={CUSTOM_STRATEGY_INDEX}
+          strategy={customStrategy}
           selected={selectedIsCustom}
-          onSelectBallot={() => setSelectedStrategy(customStrategyObj)}
+          onSelectBallot={() => setSelectedStrategy(customStrategy)}
         />
         <Button
           htmlType="submit"
@@ -142,8 +145,7 @@ export default function ReconfigurationStrategyDrawer({
           disabled={
             selectedStrategy === undefined ||
             (selectedIsCustom &&
-              (!customStrategyAddress ||
-                !utils.isAddress(customStrategyAddress)))
+              (!customStrategyAddress || !isAddress(customStrategyAddress)))
           }
           onClick={() => {
             onSave(selectedStrategy)

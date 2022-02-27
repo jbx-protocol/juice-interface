@@ -1,4 +1,5 @@
 import { V2ProjectContext } from 'contexts/v2/projectContext'
+
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { useParams } from 'react-router-dom'
 import Loading from 'components/shared/Loading'
@@ -9,6 +10,8 @@ import ScrollToTopButton from 'components/shared/ScrollToTopButton'
 import useProjectCurrentFundingCycle from 'hooks/v2/contractReader/ProjectCurrentFundingCycle'
 
 import useProjectSplits from 'hooks/v2/contractReader/ProjectSplits'
+import useProjectTerminals from 'hooks/v2/contractReader/ProjectTerminals'
+import { useETHPaymentTerminalBalance } from 'hooks/v2/contractReader/ETHPaymentTerminalBalance'
 
 import { layouts } from 'constants/styles/layouts'
 
@@ -18,6 +21,7 @@ import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVE_TOKEN_SPLIT_GROUP,
 } from 'constants/v2/splits'
+import useProjectToken from 'hooks/v2/contractReader/ProjectToken'
 
 export default function V2Dashboard() {
   const { projectId: projectIdParameter }: { projectId?: string } = useParams()
@@ -45,12 +49,25 @@ export default function V2Dashboard() {
     },
   )
 
+  const { data: terminals, loading: terminalsLoading } = useProjectTerminals({
+    projectId,
+  })
+
   const { data: reserveTokenSplits, loading: reserveTokenSplitsLoading } =
     useProjectSplits({
       projectId,
       splitGroup: RESERVE_TOKEN_SPLIT_GROUP,
       domain: fundingCycle?.configuration?.toString(),
     })
+
+  const { data: ETHBalance, loading: ETHBalanceLoading } =
+    useETHPaymentTerminalBalance({
+      projectId,
+    })
+
+  const { data: tokenAddress, loading: tokenAddressLoading } = useProjectToken({
+    projectId,
+  })
 
   if (metadataLoading || metadataURILoading) return <Loading />
 
@@ -64,6 +81,9 @@ export default function V2Dashboard() {
     fundingCycle,
     payoutSplits,
     reserveTokenSplits,
+    tokenAddress,
+    terminals,
+    ETHBalance,
   }
 
   return (

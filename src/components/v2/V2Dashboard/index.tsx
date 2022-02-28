@@ -1,5 +1,5 @@
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import useV2ProjectMetadata from 'hooks/v2/ProjectMetadata'
+import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { useParams } from 'react-router-dom'
 import Loading from 'components/shared/Loading'
 import { BigNumber } from '@ethersproject/bignumber'
@@ -30,7 +30,7 @@ export default function V2Dashboard() {
     data: projectMetadata,
     error: metadataError,
     isLoading: metadataLoading,
-  } = useV2ProjectMetadata(metadataCID)
+  } = useProjectMetadata(metadataCID)
 
   const { data: fundingCycle, loading: fundingCycleLoading } =
     useProjectCurrentFundingCycle({

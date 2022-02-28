@@ -24,16 +24,6 @@ import {
 } from 'constants/v2/splits'
 import { DEFAULT_BALLOT_STRATEGY } from 'constants/ballotStrategies/ballotStrategies'
 
-export interface EditingV2ProjectState {
-  version: number
-  projectMetadata?: ProjectMetadataV3
-  fundingCycleData?: SerializedV2FundingCycleData
-  fundingCycleMetadata?: SerializedV2FundingCycleMetadata
-  fundAccessConstraints?: V2FundAccessConstraint[]
-  payoutSplits?: ETHPayoutGroupedSplits
-  reserveTokenSplits?: ReserveTokenGroupedSplits
-}
-
 export interface V2ProjectState {
   version: number
   projectMetadata: ProjectMetadataV3

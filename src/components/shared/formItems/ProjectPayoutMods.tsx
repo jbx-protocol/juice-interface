@@ -13,7 +13,10 @@ import {
 import { useForm } from 'antd/lib/form/Form'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { BigNumber, constants, utils } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
+import * as constants from '@ethersproject/constants'
+import { isAddress } from '@ethersproject/address'
+import { formatBytes32String } from '@ethersproject/strings'
 import useContractReader from 'hooks/v1/contractReader/ContractReader'
 import { V1ContractName } from 'models/v1/contracts'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
@@ -29,7 +32,7 @@ import {
   fromWad,
 } from 'utils/formatNumber'
 import { amountSubFee } from 'utils/math'
-import { currencyName } from 'utils/v1/currency'
+import { V1CurrencyName } from 'utils/v1/currency'
 
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
@@ -81,7 +84,7 @@ export default function ProjectPayoutMods({
   useContractReader<BigNumber>({
     contract: V1ContractName.Projects,
     functionName: 'projectFor',
-    args: settingHandle ? [utils.formatBytes32String(settingHandle)] : null,
+    args: settingHandle ? [formatBytes32String(settingHandle)] : null,
     callback: useCallback(
       (projectId?: BigNumber) => {
         if (!mods) return
@@ -496,7 +499,7 @@ export default function ProjectPayoutMods({
                   {
                     validator: (rule: any, value: any) => {
                       const address = form.getFieldValue('beneficiary')
-                      if (!address || !utils.isAddress(address))
+                      if (!address || !isAddress(address))
                         return Promise.reject('Address is required')
                       else if (address === constants.AddressZero)
                         return Promise.reject('Cannot use zero address.')
@@ -544,7 +547,7 @@ export default function ProjectPayoutMods({
                     rules: [{ validator: validatePayout }],
                   }}
                   accessory={
-                    <InputAccessoryButton content={currencyName(currency)} />
+                    <InputAccessoryButton content={V1CurrencyName(currency)} />
                   }
                 />
               </div>

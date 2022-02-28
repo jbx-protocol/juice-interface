@@ -1,6 +1,6 @@
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { CSSProperties } from 'react'
-import { currencyStyle, currencySymbol } from 'utils/v1/currency'
+import { V1CurrencyStyle, V1CurrencySymbol } from 'utils/v1/currency'
 
 export default function CurrencySymbol({
   currency,
@@ -13,10 +13,10 @@ export default function CurrencySymbol({
     <span
       style={{
         ...style,
-        ...currencyStyle(currency),
+        ...V1CurrencyStyle(currency),
       }}
     >
-      {currencySymbol(currency)}
+      {V1CurrencySymbol(currency)}
     </span>
   )
 }

@@ -374,7 +374,7 @@ msgstr "取消"
 msgid "Cannot redeem tokens for ETH because this project has no overflow."
 msgstr "这个项目的筹款没有溢出，无法用代币赎回 ETH"
 
-#: src/components/v1/V1Create/ProjectForm.tsx
+#: src/components/v1/V1Create/index.tsx
 msgid "Changes to these attributes can be made at any time and will be applied to your project immediately."
 msgstr "可以随时修改这些属性，并立即应用于你的项目。"
 
@@ -1139,7 +1139,7 @@ msgid "Project description"
 msgstr "项目说明"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
-#: src/components/v1/V1Create/ProjectForm.tsx
+#: src/components/v1/V1Create/index.tsx
 #: src/components/v1/V1Create/index.tsx
 msgid "Project details"
 msgstr "项目详情"
@@ -1149,7 +1149,7 @@ msgstr "项目详情"
 msgid "Project handle"
 msgstr "项目标识"
 
-#: src/components/v1/V1Create/ProjectForm.tsx
+#: src/components/shared/forms/ProjectDetailsForm.tsx
 msgid "Project handle must be unique."
 msgstr "项目标识必须是唯一的。"
 
@@ -1360,7 +1360,7 @@ msgstr "保存标识"
 msgid "Save payouts"
 msgstr "保存开支配置"
 
-#: src/components/v1/V1Create/ProjectForm.tsx
+#: src/components/shared/forms/ProjectDetailsForm.tsx
 msgid "Save project details"
 msgstr "保存项目详情"
 

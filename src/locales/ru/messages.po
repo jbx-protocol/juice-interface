@@ -374,7 +374,7 @@ msgstr "Отменить"
 msgid "Cannot redeem tokens for ETH because this project has no overflow."
 msgstr "Невозможно обменять токены на ETH, так как в этом проекте нет переполнения."
 
-#: src/components/v1/V1Create/ProjectForm.tsx
+#: src/components/v1/V1Create/index.tsx
 msgid "Changes to these attributes can be made at any time and will be applied to your project immediately."
 msgstr "Изменения этих атрибутов можно внести в любое время, и они будут немедленно применены к вашему проекту."
 
@@ -1139,7 +1139,7 @@ msgid "Project description"
 msgstr "Описание Проекта"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
-#: src/components/v1/V1Create/ProjectForm.tsx
+#: src/components/v1/V1Create/index.tsx
 #: src/components/v1/V1Create/index.tsx
 msgid "Project details"
 msgstr "Детали проекта"
@@ -1149,7 +1149,7 @@ msgstr "Детали проекта"
 msgid "Project handle"
 msgstr "Никнейм проекта"
 
-#: src/components/v1/V1Create/ProjectForm.tsx
+#: src/components/shared/forms/ProjectDetailsForm.tsx
 msgid "Project handle must be unique."
 msgstr "Никнейм проекта должен быть уникальным."
 
@@ -1360,7 +1360,7 @@ msgstr ""
 msgid "Save payouts"
 msgstr ""
 
-#: src/components/v1/V1Create/ProjectForm.tsx
+#: src/components/shared/forms/ProjectDetailsForm.tsx
 msgid "Save project details"
 msgstr "Сохранить детали проекта"
 

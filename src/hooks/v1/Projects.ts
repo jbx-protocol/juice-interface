@@ -141,6 +141,7 @@ export function useTrendingProjects(count: number, days: number) {
     IpfsCacheName.trending,
     useMemo(
       () => ({
+        // Cache expires every 12 min, will update 5 times an hour. (Arbitrary)
         ttl: { minutes: 12 },
         deserialize: data => data.map(parseTrendingProjectJson),
       }),

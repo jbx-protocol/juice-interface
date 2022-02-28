@@ -31,7 +31,6 @@ export function useIpfsCache<T extends IpfsCacheName>(
         // Most recent cache file is returned first in array
         const latest = list.rows[0]
 
-        // Cache expires every 12 min, will update 5 times an hour. (Arbitrary)
         const isExpired = moment(latest.date_pinned).isBefore(
           moment().subtract(opts.ttl),
         )
@@ -52,9 +51,9 @@ export function useIpfsCache<T extends IpfsCacheName>(
         }
 
         // Unpin cache files, including latest if expired
-        // There should never be more than one cache file, but simultaneous page views may result in multiple
+        // There should never be more than one cache file to unpin. But during high traffic it may be possible for multiple unique cache files to be uploaded by different users simultaneously
         list.rows.splice(0, isExpired ? 1 : 0).reduce(async (_, row) => {
-          // Use sequential requests as simultaenous requests may be rate limited
+          // Await sequential requests, as simultaenous requests may be rate limited by Pinata api endpoint
           await unpinIpfsFileByCid(row.ipfs_pin_hash)
         }, Promise.resolve())
       } catch (e) {

@@ -374,7 +374,7 @@ msgstr "İptal"
 msgid "Cannot redeem tokens for ETH because this project has no overflow."
 msgstr "Bu projede taşma bulunmadığından ETH için token talep edilemez."
 
-#: src/components/v1/V1Create/ProjectForm.tsx
+#: src/components/v1/V1Create/index.tsx
 msgid "Changes to these attributes can be made at any time and will be applied to your project immediately."
 msgstr "Bu özellikler üzerinde herhangi bir zamanda değişiklik yapılabilir ve projenize hemen uygulanacaktır."
 
@@ -1139,7 +1139,7 @@ msgid "Project description"
 msgstr "Proje açıklaması"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
-#: src/components/v1/V1Create/ProjectForm.tsx
+#: src/components/v1/V1Create/index.tsx
 #: src/components/v1/V1Create/index.tsx
 msgid "Project details"
 msgstr "Proje ayrıntıları"
@@ -1149,7 +1149,7 @@ msgstr "Proje ayrıntıları"
 msgid "Project handle"
 msgstr "Proje tanıtıcısı"
 
-#: src/components/v1/V1Create/ProjectForm.tsx
+#: src/components/shared/forms/ProjectDetailsForm.tsx
 msgid "Project handle must be unique."
 msgstr "Proje tanıtıcısı eşsiz olmalıdır."
 
@@ -1360,7 +1360,7 @@ msgstr "Tanıtıcıyı kaydet"
 msgid "Save payouts"
 msgstr "Ödemeleri kaydet"
 
-#: src/components/v1/V1Create/ProjectForm.tsx
+#: src/components/shared/forms/ProjectDetailsForm.tsx
 msgid "Save project details"
 msgstr "Proje ayrıntılarını kaydet"
 

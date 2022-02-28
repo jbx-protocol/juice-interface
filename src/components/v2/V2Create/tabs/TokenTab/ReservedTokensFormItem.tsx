@@ -5,7 +5,6 @@ import { FormItemExt } from 'components/shared/formItems/formItemExt'
 import { FormItems } from 'components/shared/formItems'
 import { toMod, toSplit } from 'utils/v2/splits'
 import { Split } from 'models/v2/splits'
-import Form from 'antd/lib/form/Form'
 
 export default function ReservedTokensFormItem({
   name,

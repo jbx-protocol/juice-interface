@@ -2,7 +2,7 @@ import { Form, Switch } from 'antd'
 import { t, Trans } from '@lingui/macro'
 
 import { ThemeContext } from 'contexts/themeContext'
-import React, {
+import {
   CSSProperties,
   useCallback,
   useContext,

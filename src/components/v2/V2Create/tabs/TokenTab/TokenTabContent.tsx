@@ -5,7 +5,6 @@ import { FormItems } from 'components/shared/formItems'
 import { ThemeContext } from 'contexts/themeContext'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
-import { TicketMod } from 'models/mods'
 import ReservedTokensFormItem from 'components/v2/V2Create/tabs/TokenTab/ReservedTokensFormItem'
 
 import {
@@ -23,7 +22,7 @@ import {
   hasFundingTarget,
 } from 'utils/v2/fundingCycle'
 
-import { sanitizeSplit, toMod, toSplit } from 'utils/v2/splits'
+import { sanitizeSplit } from 'utils/v2/splits'
 
 import { Split } from 'models/v2/splits'
 

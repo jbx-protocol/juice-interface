@@ -24,7 +24,6 @@ msgstr "(+{0} ayrılmış)"
 
 #: src/components/shared/formItems/ProjectDiscountRate.tsx
 #: src/components/shared/formItems/ProjectReserved.tsx
-#: src/components/v2/V2Create/tabs/TokenTab/V2ProjectReserved.tsx
 msgid "(0%)"
 msgstr ""
 
@@ -253,7 +252,7 @@ msgid "All {0} will go to the project owner:"
 msgstr "Tüm {0} proje sahibine gidecek:"
 
 #: src/components/shared/forms/TicketingForm.tsx
-#: src/components/v2/V2Create/tabs/TokenTab/V2ProjectReserved.tsx
+#: src/components/v2/V2Create/tabs/TokenTab/ReservedTokensFormItem.tsx
 msgid "Allocate a portion of your project's reserved tokens to other Ethereum wallets or Juicebox projects."
 msgstr "Projenizin ayrılan token'larının bir kısmını diğer Ethereum cüzdanlarına veya Juicebox projelerine tahsis edin."
 
@@ -445,7 +444,6 @@ msgstr ""
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/v2/V2Create/tabs/RulesTab/ProjectReconfigurationFormItem.tsx
-#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 msgid "Contract address: {0}"
 msgstr "Sözleşme Adresi: {0}"
 
@@ -486,7 +484,6 @@ msgid "Currently worth: <0><1/>{0}</0>"
 msgstr "Güncel değeri: <0><1/>{0}</0>"
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
-#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 #: src/constants/ballotStrategies/ballotStrategies.ts
 msgid "Custom strategy"
 msgstr "Özel strateji"
@@ -1006,18 +1003,6 @@ msgstr "İsim"
 msgid "New"
 msgstr "Yeni"
 
-#: src/components/shared/forms/ProjectDetailsForm.tsx
-msgid "Next: Funding"
-msgstr ""
-
-#: src/components/v2/V2Create/tabs/TokenTab/TokenTabContent.tsx
-msgid "Next: Rules"
-msgstr ""
-
-#: src/components/v2/V2Create/tabs/FundingTab/FundingTabContent.tsx
-msgid "Next: Token"
-msgstr ""
-
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
 msgid "No"
@@ -1300,7 +1285,6 @@ msgstr "{receiveText} alın"
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/tabs/RulesTab/ProjectReconfigurationFormItem.tsx
-#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 msgid "Reconfiguration"
 msgstr "Yeniden yapılandırma"
 
@@ -1368,12 +1352,11 @@ msgid "Required"
 msgstr ""
 
 #: src/components/shared/formItems/ProjectReserved.tsx
-#: src/components/v2/V2Create/tabs/TokenTab/V2ProjectReserved.tsx
 msgid "Reserved rate"
 msgstr ""
 
 #: src/components/shared/forms/TicketingForm.tsx
-#: src/components/v2/V2Create/tabs/TokenTab/V2ProjectReserved.tsx
+#: src/components/v2/V2Create/tabs/TokenTab/ReservedTokensFormItem.tsx
 msgid "Reserved token allocation (optional)"
 msgstr "Ayrılmış token tahsisi (isteğe bağlı)"
 
@@ -1447,16 +1430,20 @@ msgstr "Projenizde nasıl değişiklik yapılabileceğine ilişkin kurallar."
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/v2/V2Create/tabs/RulesTab/ProjectReconfigurationFormItem.tsx
-#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 msgid "Rules for how this project's funding cycles can be reconfigured."
 msgstr "Bu projenin finansman döngülerinin nasıl yeniden yapılandırılabileceğine ilişkin kurallar."
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 #: src/components/shared/forms/TicketingForm.tsx
-#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 msgid "Save"
 msgstr "Kaydet"
+
+#: src/components/shared/forms/ProjectDetailsForm.tsx
+#: src/components/v2/V2Create/tabs/FundingTab/FundingTabContent.tsx
+#: src/components/v2/V2Create/tabs/TokenTab/TokenTabContent.tsx
+msgid "Save and continue"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/EditProjectModal.tsx
 msgid "Save changes"
@@ -1599,7 +1586,6 @@ msgid "The Juicebox protocol is governed by a community of JBX token holders who
 msgstr ""
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
-#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 msgid "The address of any smart contract deployed on {signerNetwork} that implements"
 msgstr "Bu arayüzü uygulayan {signerNetwork} üzerinde dağıtılmış herhangi bir akıllı sözleşmenin adresi"
 
@@ -1876,7 +1862,6 @@ msgid "Using a duration is recommended. Allowing funding cycles to be reconfigur
 msgstr "Bir süre kullanılması önerilir. Finansman döngülerinin herhangi bir zamanda yeniden yapılandırılmasına izin vermek, katkıda bulunanlar açısından riskli görünecektir."
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
-#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 msgid "Using a reconfiguration strategy is recommended. Projects with no strategy will appear risky to contributors."
 msgstr "Yeniden yapılandırma stratejisi kullanılması önerilir. Stratejisi olmayan projeler, katkıda bulunanlar açısından riskli görünecektir."
 
@@ -1954,7 +1939,6 @@ msgstr "Token basımına izin verildiğinde bu projenin sahibi, kararı kendisin
 
 #: src/components/shared/formItems/ProjectReserved.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
-#: src/components/v2/V2Create/tabs/TokenTab/V2ProjectReserved.tsx
 msgid "Whenever someone pays your project, this percentage of tokens will be reserved and the rest will go to the payer. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner. Once tokens are reserved, anyone can \"mint\" them, which distributes them to their intended receivers."
 msgstr "Birisi projenize ödeme yaptığında bu token yüzdesi ayrılacak ve geri kalanı ödeme yapan kişiye gidecektir. Ayrılmış token'lar, varsayılan olarak proje sahibi için ayrılır ancak proje sahibi tarafından diğer cüzdan adreslerine de tahsis edilebilir. Token'lar ayrıldıktan sonra herkes onları \"basabilir\" ve bu işlem, onları amaçlanan alıcılarına dağıtır."
 
@@ -2113,10 +2097,6 @@ msgstr "projeler"
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
 msgid "seconds"
 msgstr ""
-
-#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
-msgid "this interface"
-msgstr "bu arayüz"
 
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx

@@ -24,7 +24,6 @@ msgstr "(+{0} reservado)"
 
 #: src/components/shared/formItems/ProjectDiscountRate.tsx
 #: src/components/shared/formItems/ProjectReserved.tsx
-#: src/components/v2/V2Create/tabs/TokenTab/V2ProjectReserved.tsx
 msgid "(0%)"
 msgstr ""
 
@@ -253,7 +252,7 @@ msgid "All {0} will go to the project owner:"
 msgstr "Tudo {0} irá para o proprietário do projeto:"
 
 #: src/components/shared/forms/TicketingForm.tsx
-#: src/components/v2/V2Create/tabs/TokenTab/V2ProjectReserved.tsx
+#: src/components/v2/V2Create/tabs/TokenTab/ReservedTokensFormItem.tsx
 msgid "Allocate a portion of your project's reserved tokens to other Ethereum wallets or Juicebox projects."
 msgstr ""
 
@@ -445,7 +444,6 @@ msgstr "<<<<<<< HEAD"
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/v2/V2Create/tabs/RulesTab/ProjectReconfigurationFormItem.tsx
-#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 msgid "Contract address: {0}"
 msgstr "Endereço de contato: {0}"
 
@@ -486,7 +484,6 @@ msgid "Currently worth: <0><1/>{0}</0>"
 msgstr "Atualmente vale: <0><1/>{0}</0><<<<<<< HEAD"
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
-#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 #: src/constants/ballotStrategies/ballotStrategies.ts
 msgid "Custom strategy"
 msgstr "Estratégia personalizada"
@@ -1006,18 +1003,6 @@ msgstr "Nome"
 msgid "New"
 msgstr ""
 
-#: src/components/shared/forms/ProjectDetailsForm.tsx
-msgid "Next: Funding"
-msgstr ""
-
-#: src/components/v2/V2Create/tabs/TokenTab/TokenTabContent.tsx
-msgid "Next: Rules"
-msgstr ""
-
-#: src/components/v2/V2Create/tabs/FundingTab/FundingTabContent.tsx
-msgid "Next: Token"
-msgstr ""
-
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
 msgid "No"
@@ -1300,7 +1285,6 @@ msgstr "Receba {receiveText}<<<<<<< HEAD"
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/tabs/RulesTab/ProjectReconfigurationFormItem.tsx
-#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 msgid "Reconfiguration"
 msgstr "Reconfiguração"
 
@@ -1368,12 +1352,11 @@ msgid "Required"
 msgstr ""
 
 #: src/components/shared/formItems/ProjectReserved.tsx
-#: src/components/v2/V2Create/tabs/TokenTab/V2ProjectReserved.tsx
 msgid "Reserved rate"
 msgstr ""
 
 #: src/components/shared/forms/TicketingForm.tsx
-#: src/components/v2/V2Create/tabs/TokenTab/V2ProjectReserved.tsx
+#: src/components/v2/V2Create/tabs/TokenTab/ReservedTokensFormItem.tsx
 msgid "Reserved token allocation (optional)"
 msgstr ""
 
@@ -1447,16 +1430,20 @@ msgstr "Regras sobre como fazer mudanças no seu projeto."
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/v2/V2Create/tabs/RulesTab/ProjectReconfigurationFormItem.tsx
-#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 msgid "Rules for how this project's funding cycles can be reconfigured."
 msgstr "Regras para como os ciclos de financiamento deste projeto podem ser reconfigurados.<<<<<<< HEAD"
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 #: src/components/shared/forms/TicketingForm.tsx
-#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 msgid "Save"
 msgstr "Salvar"
+
+#: src/components/shared/forms/ProjectDetailsForm.tsx
+#: src/components/v2/V2Create/tabs/FundingTab/FundingTabContent.tsx
+#: src/components/v2/V2Create/tabs/TokenTab/TokenTabContent.tsx
+msgid "Save and continue"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/EditProjectModal.tsx
 msgid "Save changes"
@@ -1599,7 +1586,6 @@ msgid "The Juicebox protocol is governed by a community of JBX token holders who
 msgstr "<<<<<<< HEAD"
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
-#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 msgid "The address of any smart contract deployed on {signerNetwork} that implements"
 msgstr "O endereço de qualquer contrato inteligente implementado no {signerNetwork} que executa"
 
@@ -1876,7 +1862,6 @@ msgid "Using a duration is recommended. Allowing funding cycles to be reconfigur
 msgstr "Usar uma duração é recomendado. Permitir a reconfiguração de ciclos de financiamento a qualquer momento aparentará ser arriscado para os contribuidores."
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
-#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 msgid "Using a reconfiguration strategy is recommended. Projects with no strategy will appear risky to contributors."
 msgstr "Usar uma estratégia de reconfiguração é recomendado. Projetos sem estratégia aparentarão ser de alto risco para os contribuidores."
 
@@ -1954,7 +1939,6 @@ msgstr ""
 
 #: src/components/shared/formItems/ProjectReserved.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
-#: src/components/v2/V2Create/tabs/TokenTab/V2ProjectReserved.tsx
 msgid "Whenever someone pays your project, this percentage of tokens will be reserved and the rest will go to the payer. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner. Once tokens are reserved, anyone can \"mint\" them, which distributes them to their intended receivers."
 msgstr "Quando alguém paga seu projeto, essa porcentagem de tokens será reservada e o resto irá para quem pagou. Os tokens reservados estão reservados por padrão, mas também podem ser alocados em outros endereços de carteiras pelo proprietário. Uma vez que os tokens estão reservados, qualquer um pode \"cria-los\", que, por sua vez, distribuem-nos para seus receptores esperados."
 
@@ -2113,10 +2097,6 @@ msgstr "projetos<<<<<<< HEAD======="
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
 msgid "seconds"
 msgstr ""
-
-#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
-msgid "this interface"
-msgstr "esta interface>>>>>>> 2f8e37fa (add others tab to v2 create (#558))"
 
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx

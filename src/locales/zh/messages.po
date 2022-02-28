@@ -24,7 +24,6 @@ msgstr "(+{0} 保留)"
 
 #: src/components/shared/formItems/ProjectDiscountRate.tsx
 #: src/components/shared/formItems/ProjectReserved.tsx
-#: src/components/v2/V2Create/tabs/TokenTab/V2ProjectReserved.tsx
 msgid "(0%)"
 msgstr ""
 
@@ -253,7 +252,7 @@ msgid "All {0} will go to the project owner:"
 msgstr "所有 {0} 会给到项目拥有者："
 
 #: src/components/shared/forms/TicketingForm.tsx
-#: src/components/v2/V2Create/tabs/TokenTab/V2ProjectReserved.tsx
+#: src/components/v2/V2Create/tabs/TokenTab/ReservedTokensFormItem.tsx
 msgid "Allocate a portion of your project's reserved tokens to other Ethereum wallets or Juicebox projects."
 msgstr "把您项目的一部分保留代币分发给其他以太坊钱包或其他Juicebox项目。"
 
@@ -445,7 +444,6 @@ msgstr "连接钱包以部署"
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/v2/V2Create/tabs/RulesTab/ProjectReconfigurationFormItem.tsx
-#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 msgid "Contract address: {0}"
 msgstr "合约地址：{0}"
 
@@ -486,7 +484,6 @@ msgid "Currently worth: <0><1/>{0}</0>"
 msgstr "当前价值： <0><1/>{0}</0>"
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
-#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 #: src/constants/ballotStrategies/ballotStrategies.ts
 msgid "Custom strategy"
 msgstr "自定义策略"
@@ -1006,18 +1003,6 @@ msgstr "名称"
 msgid "New"
 msgstr "新"
 
-#: src/components/shared/forms/ProjectDetailsForm.tsx
-msgid "Next: Funding"
-msgstr ""
-
-#: src/components/v2/V2Create/tabs/TokenTab/TokenTabContent.tsx
-msgid "Next: Rules"
-msgstr ""
-
-#: src/components/v2/V2Create/tabs/FundingTab/FundingTabContent.tsx
-msgid "Next: Token"
-msgstr ""
-
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
 msgid "No"
@@ -1302,7 +1287,6 @@ msgstr "接收 {receiveText}"
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/tabs/RulesTab/ProjectReconfigurationFormItem.tsx
-#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 msgid "Reconfiguration"
 msgstr "重新配置"
 
@@ -1370,12 +1354,11 @@ msgid "Required"
 msgstr "必需"
 
 #: src/components/shared/formItems/ProjectReserved.tsx
-#: src/components/v2/V2Create/tabs/TokenTab/V2ProjectReserved.tsx
 msgid "Reserved rate"
 msgstr ""
 
 #: src/components/shared/forms/TicketingForm.tsx
-#: src/components/v2/V2Create/tabs/TokenTab/V2ProjectReserved.tsx
+#: src/components/v2/V2Create/tabs/TokenTab/ReservedTokensFormItem.tsx
 msgid "Reserved token allocation (optional)"
 msgstr "保留代币的分配方案（可选）"
 
@@ -1449,16 +1432,20 @@ msgstr "项目筹款周期配置的更改规则。"
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/v2/V2Create/tabs/RulesTab/ProjectReconfigurationFormItem.tsx
-#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 msgid "Rules for how this project's funding cycles can be reconfigured."
 msgstr "关于如何重新配置该项目筹款周期的规则"
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 #: src/components/shared/forms/TicketingForm.tsx
-#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 msgid "Save"
 msgstr "保存"
+
+#: src/components/shared/forms/ProjectDetailsForm.tsx
+#: src/components/v2/V2Create/tabs/FundingTab/FundingTabContent.tsx
+#: src/components/v2/V2Create/tabs/TokenTab/TokenTabContent.tsx
+msgid "Save and continue"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/EditProjectModal.tsx
 msgid "Save changes"
@@ -1601,7 +1588,6 @@ msgid "The Juicebox protocol is governed by a community of JBX token holders who
 msgstr "Juicebox协议由JBX代币持有者组成的社区所管理，他们每两周对提案进行投票。"
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
-#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 msgid "The address of any smart contract deployed on {signerNetwork} that implements"
 msgstr "在 {signerNetwork} 上部署的智能合约地址，该合约实现了"
 
@@ -1878,7 +1864,6 @@ msgid "Using a duration is recommended. Allowing funding cycles to be reconfigur
 msgstr "推荐设置一个持续时间。对于贡献者来说，可以随时修改配置的筹款周期是具有风险的。"
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
-#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 msgid "Using a reconfiguration strategy is recommended. Projects with no strategy will appear risky to contributors."
 msgstr "推荐设置一个修改配置的策略（延迟生效）。对于贡献者来说，没有策略的项目是具有风险的。"
 
@@ -1956,7 +1941,6 @@ msgstr "当铸造代币功能启用时，该项目方可以铸造任意数量的
 
 #: src/components/shared/formItems/ProjectReserved.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
-#: src/components/v2/V2Create/tabs/TokenTab/V2ProjectReserved.tsx
 msgid "Whenever someone pays your project, this percentage of tokens will be reserved and the rest will go to the payer. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner. Once tokens are reserved, anyone can \"mint\" them, which distributes them to their intended receivers."
 msgstr "有人对你的项目付款时，这一比例的代币会被保留, 剩余的代币会发送至付款人。在默认情况下, 保留代币会留给项目拥有者, 但是项目拥有者也可以将保留代币分配给其他钱包地址。保留代币产生后，任何人都可以把它们“铸造”出来，亦即把保留代币分发给预先指定的接收人。"
 
@@ -2115,10 +2099,6 @@ msgstr "项目"
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
 msgid "seconds"
 msgstr ""
-
-#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
-msgid "this interface"
-msgstr "这个界面"
 
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx

@@ -3,14 +3,15 @@ import { Form } from 'antd'
 import { CSSProperties, useContext, useState } from 'react'
 import { ThemeContext } from 'contexts/themeContext'
 
-import ReconfigurationDrawer from 'components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer'
-import ReconfigurationOption from 'components/v2/V2Create/tabs/RulesTab/ReconfigurationOption'
+import ReconfigurationStrategyOption from 'components/shared/ReconfigurationStrategyOption'
+import ReconfigurationStrategyDrawer from 'components/shared/ReconfigurationStrategyDrawer'
 
 import {
   DEFAULT_BALLOT_STRATEGY,
   Strategy,
 } from 'constants/ballotStrategies/ballotStrategies'
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
+import { drawerStyle } from 'constants/styles/drawerStyle'
 
 export default function ProjectReconfigurationFormItem({
   value,
@@ -33,7 +34,7 @@ export default function ProjectReconfigurationFormItem({
 
   return (
     <Form.Item label={t`Reconfiguration`} style={style}>
-      <ReconfigurationOption
+      <ReconfigurationStrategyOption
         title={selectedStrategy.name}
         index={0}
         content={
@@ -48,7 +49,7 @@ export default function ProjectReconfigurationFormItem({
         strategy={selectedStrategy}
         onSelectBallot={() => setDrawerVisible(true)}
       />
-      <ReconfigurationDrawer
+      <ReconfigurationStrategyDrawer
         visible={drawerVisible}
         onClose={() => setDrawerVisible(false)}
         initialSelectedStrategy={selectedStrategy}
@@ -57,6 +58,7 @@ export default function ProjectReconfigurationFormItem({
           setDrawerVisible(false)
           onChange(strategy.address ?? DEFAULT_BALLOT_STRATEGY.address) // default to 3-day
         }}
+        style={drawerStyle}
       />
       <div style={{ color: colors.text.secondary, marginTop: 10 }}>
         <Trans>

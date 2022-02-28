@@ -24,7 +24,6 @@ msgstr "(+{0} reservado)"
 
 #: src/components/shared/formItems/ProjectDiscountRate.tsx
 #: src/components/shared/formItems/ProjectReserved.tsx
-#: src/components/v2/V2Create/tabs/TokenTab/V2ProjectReserved.tsx
 msgid "(0%)"
 msgstr ""
 
@@ -253,7 +252,7 @@ msgid "All {0} will go to the project owner:"
 msgstr "Todo {0} irá al dueño del proyecto:"
 
 #: src/components/shared/forms/TicketingForm.tsx
-#: src/components/v2/V2Create/tabs/TokenTab/V2ProjectReserved.tsx
+#: src/components/v2/V2Create/tabs/TokenTab/ReservedTokensFormItem.tsx
 msgid "Allocate a portion of your project's reserved tokens to other Ethereum wallets or Juicebox projects."
 msgstr "Asigna una porción de los tokens reservados de tu proyecto a otras wallets de Ethereum o proyectos de Juicebox."
 
@@ -445,7 +444,6 @@ msgstr "Conecta tu billetera para desplegar<<<<<<< HEAD"
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/v2/V2Create/tabs/RulesTab/ProjectReconfigurationFormItem.tsx
-#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 msgid "Contract address: {0}"
 msgstr "Dirección de contrato: {0}"
 
@@ -486,7 +484,6 @@ msgid "Currently worth: <0><1/>{0}</0>"
 msgstr "Actualmente vale: <0><1/>{0}</0><<<<<<< HEAD"
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
-#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 #: src/constants/ballotStrategies/ballotStrategies.ts
 msgid "Custom strategy"
 msgstr "Estrategia personalizada"
@@ -1006,18 +1003,6 @@ msgstr "Nombre"
 msgid "New"
 msgstr "Nuevo"
 
-#: src/components/shared/forms/ProjectDetailsForm.tsx
-msgid "Next: Funding"
-msgstr ""
-
-#: src/components/v2/V2Create/tabs/TokenTab/TokenTabContent.tsx
-msgid "Next: Rules"
-msgstr ""
-
-#: src/components/v2/V2Create/tabs/FundingTab/FundingTabContent.tsx
-msgid "Next: Token"
-msgstr ""
-
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
 msgid "No"
@@ -1300,7 +1285,6 @@ msgstr "Recibe {receiveText}<<<<<<< HEAD"
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/tabs/RulesTab/ProjectReconfigurationFormItem.tsx
-#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 msgid "Reconfiguration"
 msgstr "Reconfiguración"
 
@@ -1368,12 +1352,11 @@ msgid "Required"
 msgstr "Requerido"
 
 #: src/components/shared/formItems/ProjectReserved.tsx
-#: src/components/v2/V2Create/tabs/TokenTab/V2ProjectReserved.tsx
 msgid "Reserved rate"
 msgstr ""
 
 #: src/components/shared/forms/TicketingForm.tsx
-#: src/components/v2/V2Create/tabs/TokenTab/V2ProjectReserved.tsx
+#: src/components/v2/V2Create/tabs/TokenTab/ReservedTokensFormItem.tsx
 msgid "Reserved token allocation (optional)"
 msgstr "Asignación de tokens reservados (opcional)"
 
@@ -1447,16 +1430,20 @@ msgstr "Reglas para cómo pueden realizarse cambios a tu proyecto."
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/v2/V2Create/tabs/RulesTab/ProjectReconfigurationFormItem.tsx
-#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 msgid "Rules for how this project's funding cycles can be reconfigured."
 msgstr "Reglas para cómo pueden ser reconfigurados los ciclos de financiamiento de este proyecto.<<<<<<< HEAD"
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 #: src/components/shared/forms/TicketingForm.tsx
-#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 msgid "Save"
 msgstr "Guardar"
+
+#: src/components/shared/forms/ProjectDetailsForm.tsx
+#: src/components/v2/V2Create/tabs/FundingTab/FundingTabContent.tsx
+#: src/components/v2/V2Create/tabs/TokenTab/TokenTabContent.tsx
+msgid "Save and continue"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/EditProjectModal.tsx
 msgid "Save changes"
@@ -1599,7 +1586,6 @@ msgid "The Juicebox protocol is governed by a community of JBX token holders who
 msgstr "El protocolo JuiceBox es gobernado por una comunidad de tenedores de tokens JBX quienes votan las propuestas quincenalmente.<<<<<<< HEAD"
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
-#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 msgid "The address of any smart contract deployed on {signerNetwork} that implements"
 msgstr "La dirección de cualquier contrato inteligente desplegado en {signerNetwork} que implementa"
 
@@ -1876,7 +1862,6 @@ msgid "Using a duration is recommended. Allowing funding cycles to be reconfigur
 msgstr "Se recomienda usar una duración. Permitir que los ciclos de financiación sean reconfigurados en cualquier momento les parecerá arriesgado a los colaboradores."
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
-#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
 msgid "Using a reconfiguration strategy is recommended. Projects with no strategy will appear risky to contributors."
 msgstr "Se recomienda usar una estrategia de reconfiguración. Los proyectos sin estrategia les parecerán arriesgados a los colaboradores."
 
@@ -1954,7 +1939,6 @@ msgstr "Cuando acuñar tokens es permitido, el dueño de este proyecto tiene per
 
 #: src/components/shared/formItems/ProjectReserved.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
-#: src/components/v2/V2Create/tabs/TokenTab/V2ProjectReserved.tsx
 msgid "Whenever someone pays your project, this percentage of tokens will be reserved and the rest will go to the payer. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner. Once tokens are reserved, anyone can \"mint\" them, which distributes them to their intended receivers."
 msgstr "Cuando alguien paga tu proyecto, ese porcentaje de tokens será reservado y el resto irá al pagador. Los tokens reservados están reservados por defecto para el dueño del proyecto, pero también pueden ser ubicados en otras direcciones de wallets por el dueño. Una vez que los tokens estén reservados, cualquiera puede \"acuñarlos\" lo que nos distribuye a los receptores esperados."
 
@@ -2113,10 +2097,6 @@ msgstr "proyectos<<<<<<< HEAD======="
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
 msgid "seconds"
 msgstr ""
-
-#: src/components/v2/V2Create/tabs/RulesTab/ReconfigurationDrawer.tsx
-msgid "this interface"
-msgstr "esta interfaz>>>>>>> 2f8e37fa (add others tab to v2 create (#558))"
 
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx

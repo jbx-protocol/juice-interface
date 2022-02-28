@@ -1,3 +1,4 @@
+import { t } from '@lingui/macro'
 import { Col, Row } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import ProjectDetailsForm, {
@@ -8,6 +9,9 @@ import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
 import { useCallback, useEffect } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
+
+import { formBottomMargin } from '../constants'
+import FloatingSaveButton from '../FloatingSaveButton'
 
 export default function ProjectDetailsTabContent({
   openNextTab,
@@ -28,8 +32,10 @@ export default function ProjectDetailsTabContent({
       dispatch(editingV2ProjectActions.setDiscord(fields.discord))
       dispatch(editingV2ProjectActions.setPayButton(fields.payButton))
       dispatch(editingV2ProjectActions.setPayDisclosure(fields.payDisclosure))
+
+      openNextTab?.()
     },
-    [dispatch],
+    [dispatch, openNextTab],
   )
 
   const resetProjectForm = useCallback(() => {
@@ -65,9 +71,10 @@ export default function ProjectDetailsTabContent({
       <Col span={12}>
         <ProjectDetailsForm
           form={projectForm}
-          onSave={onProjectFormSaved}
+          onFinish={onProjectFormSaved}
           hideProjectHandle
-          openNextTab={openNextTab}
+          saveButton={<FloatingSaveButton text={t`Save and continue`} />}
+          style={{ marginBottom: formBottomMargin }}
         />
       </Col>
       <Col span={12}>

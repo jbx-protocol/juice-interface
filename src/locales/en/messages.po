@@ -1432,6 +1432,7 @@ msgid "Save"
 msgstr ""
 
 #: src/components/v2/V2Create/tabs/FundingTab/FundingTabContent.tsx
+#: src/components/v2/V2Create/tabs/ProjectDetailsTabContent.tsx
 #: src/components/v2/V2Create/tabs/TokenTab/TokenTabContent.tsx
 msgid "Save and continue"
 msgstr "Save and continue"

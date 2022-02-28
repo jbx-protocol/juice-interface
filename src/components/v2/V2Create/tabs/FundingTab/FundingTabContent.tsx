@@ -31,6 +31,7 @@ import { formBottomMargin } from '../../constants'
 
 import FundingTypeSelect, { FundingType } from './FundingTypeSelect'
 import FundingTargetInput from './FundingTargetInput'
+import V2FormItemLabel from '../../V2FormItemLabel'
 
 type FundingFormFields = {
   duration?: string
@@ -134,7 +135,7 @@ export default function FundingTabContent({
 
   return (
     <Row gutter={32} style={{ marginBottom: formBottomMargin }}>
-      <Col span={10}>
+      <Col md={10} xs={24}>
         <Form form={fundingForm} layout="vertical" onFinish={onFundingFormSave}>
           <Form.Item label={t`How much do you want to raise?`}>
             <FundingTypeSelect
@@ -219,7 +220,7 @@ export default function FundingTabContent({
               ...shadowCard(theme),
             }}
           >
-            <h3>Payouts</h3>
+            <V2FormItemLabel label={t`Payouts`} />
             <ProjectPayoutMods
               mods={mods}
               target={target ?? '0'}
@@ -233,7 +234,7 @@ export default function FundingTabContent({
           <FloatingSaveButton text={t`Next: Token`} onClick={openNextTab} />
         </Form>
       </Col>
-      <Col span={12}></Col>
+      <Col md={12} xs={0}></Col>
     </Row>
   )
 }

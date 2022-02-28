@@ -265,9 +265,12 @@ msgid "Allocate a portion of your project's reserved tokens to other Ethereum wa
 msgstr "Defina uma porção dos tokens reservados por seu projeto para outras carteiras de Ethereum ou projetos do Juicebox."
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
-#: src/components/v2/V2Create/tabs/RulesTab/RulesTabContent.tsx
 msgid "Allow minting tokens"
 msgstr "Permitir a produção de tokens"
+
+#: src/components/v2/V2Create/tabs/RulesTab/RulesTabContent.tsx
+msgid "Allow token minting"
+msgstr ""
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
@@ -1161,6 +1164,10 @@ msgstr "Os pagamentos estão pausados para para o atual ciclo de financiamento."
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
 msgid "Payments paused"
 msgstr "Pagamentos pausados"
+
+#: src/components/v2/V2Create/tabs/FundingTab/FundingTabContent.tsx
+msgid "Payouts"
+msgstr ""
 
 #: src/components/shared/forms/PayModsForm.tsx
 msgid "Payouts (optional)"

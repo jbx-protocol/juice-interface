@@ -68,7 +68,7 @@ export default function ProjectDetailsTabContent({
 
   return (
     <Row gutter={32}>
-      <Col span={10}>
+      <Col md={10} xs={24}>
         <ProjectDetailsForm
           form={projectForm}
           onFinish={onProjectFormSaved}
@@ -77,7 +77,7 @@ export default function ProjectDetailsTabContent({
           style={{ marginBottom: formBottomMargin }}
         />
       </Col>
-      <Col span={12}>
+      <Col md={10} xs={24}>
         <ProjectHeader metadata={projectMetadata} />
       </Col>
       <FloatingSaveButton text={t`Next: Funding`} onClick={openNextTab} />

@@ -265,9 +265,12 @@ msgid "Allocate a portion of your project's reserved tokens to other Ethereum wa
 msgstr "把您项目的一部分保留代币分发给其他以太坊钱包或其他Juicebox项目。"
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
-#: src/components/v2/V2Create/tabs/RulesTab/RulesTabContent.tsx
 msgid "Allow minting tokens"
 msgstr "允许铸造代币"
+
+#: src/components/v2/V2Create/tabs/RulesTab/RulesTabContent.tsx
+msgid "Allow token minting"
+msgstr ""
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
@@ -1163,6 +1166,10 @@ msgstr "当前筹款周期暂停付款。"
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
 msgid "Payments paused"
 msgstr "付款已暂停"
+
+#: src/components/v2/V2Create/tabs/FundingTab/FundingTabContent.tsx
+msgid "Payouts"
+msgstr ""
 
 #: src/components/shared/forms/PayModsForm.tsx
 msgid "Payouts (optional)"

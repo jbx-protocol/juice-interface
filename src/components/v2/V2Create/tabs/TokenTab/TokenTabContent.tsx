@@ -136,7 +136,7 @@ export default function TokenTabContent({
 
   return (
     <Row gutter={32}>
-      <Col span={10}>
+      <Col md={10} xs={24}>
         <Form
           form={tokenForm}
           layout="vertical"
@@ -219,7 +219,7 @@ export default function TokenTabContent({
           <FloatingSaveButton text={t`Next: Rules`} onClick={openNextTab} />
         </Form>
       </Col>
-      <Col span={12}></Col>
+      <Col md={12} xs={0}></Col>
     </Row>
   )
 }

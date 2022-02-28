@@ -12,6 +12,7 @@ import {
 } from 'constants/ballotStrategies/ballotStrategies'
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 import { drawerStyle } from 'constants/styles/drawerStyle'
+import V2FormItemLabel from '../../V2FormItemLabel'
 
 export default function ProjectReconfigurationFormItem({
   value,
@@ -33,7 +34,10 @@ export default function ProjectReconfigurationFormItem({
   )
 
   return (
-    <Form.Item label={t`Reconfiguration`} style={style}>
+    <Form.Item
+      label={<V2FormItemLabel label={t`Reconfiguration`} />}
+      style={style}
+    >
       <ReconfigurationStrategyOption
         title={selectedStrategy.name}
         index={0}

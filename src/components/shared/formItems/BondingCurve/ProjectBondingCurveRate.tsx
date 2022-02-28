@@ -10,6 +10,7 @@ import {
   useLayoutEffect,
   useState,
 } from 'react'
+import V2FormItemLabel from 'components/v2/V2Create/V2FormItemLabel'
 
 import ExternalLink from 'components/shared/ExternalLink'
 
@@ -222,15 +223,13 @@ export default function ProjectBondingCurveRate({
       name={name}
       label={
         hideLabel ? undefined : (
-          <div>
-            <h3 style={{ display: 'inline-block', marginRight: '1rem' }}>
-              <span>{label ? label : t`Bonding curve rate`}</span>{' '}
-            </h3>
+          <div style={{ display: 'flex' }}>
+            <V2FormItemLabel label={label ? label : t`Bonding curve rate`} />
             {toggleDisabled ? (
               <>
                 <Switch checked={!disabled} onChange={toggleDisabled} />{' '}
                 {disabled ? (
-                  <span style={{ color: colors.text.tertiary }}>
+                  <span style={{ color: colors.text.tertiary, marginLeft: 10 }}>
                     <Trans>(100%)</Trans>
                   </span>
                 ) : null}

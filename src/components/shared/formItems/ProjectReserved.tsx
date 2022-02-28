@@ -2,6 +2,7 @@ import { Form, Switch } from 'antd'
 import { t, Trans } from '@lingui/macro'
 import { ThemeContext } from 'contexts/themeContext'
 import React, { CSSProperties, useContext } from 'react'
+import V2FormItemLabel from 'components/v2/V2Create/V2FormItemLabel'
 
 import NumberSlider from '../inputs/NumberSlider'
 import { FormItemExt } from './formItemExt'
@@ -32,15 +33,13 @@ export default function ProjectReserved({
       name={name}
       label={
         hideLabel ? undefined : (
-          <div>
-            <span>
-              <Trans>Reserved rate</Trans>{' '}
-            </span>
+          <div style={{ display: 'flex' }}>
+            <V2FormItemLabel label={t`Reserved rate`} />
             {toggleDisabled ? (
               <React.Fragment>
                 <Switch checked={!disabled} onChange={toggleDisabled} />{' '}
                 {disabled ? (
-                  <span style={{ color: colors.text.tertiary }}>
+                  <span style={{ color: colors.text.tertiary, marginLeft: 10 }}>
                     <Trans>(0%)</Trans>
                   </span>
                 ) : null}

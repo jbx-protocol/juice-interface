@@ -3,6 +3,7 @@ import { t, Trans } from '@lingui/macro'
 
 import React, { CSSProperties, useContext } from 'react'
 import { ThemeContext } from 'contexts/themeContext'
+import V2FormItemLabel from 'components/v2/V2Create/V2FormItemLabel'
 
 import { FormItemExt } from './formItemExt'
 import NumberSlider from '../inputs/NumberSlider'
@@ -62,15 +63,13 @@ export default function ProjectDiscountRate({
       name={name}
       label={
         hideLabel ? undefined : (
-          <div>
-            <h3 style={{ display: 'inline-block', marginRight: '1rem' }}>
-              <Trans>Discount rate</Trans>{' '}
-            </h3>
+          <div style={{ display: 'flex' }}>
+            <V2FormItemLabel label={t`Discount rate`} />
             {toggleDisabled ? (
               <React.Fragment>
                 <Switch checked={!disabled} onChange={toggleDisabled} />{' '}
                 {disabled ? (
-                  <span style={{ color: colors.text.tertiary }}>
+                  <span style={{ color: colors.text.tertiary, marginLeft: 10 }}>
                     <Trans>(0%)</Trans>
                   </span>
                 ) : null}

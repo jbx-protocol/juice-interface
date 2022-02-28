@@ -1,11 +1,11 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Divider, Drawer, Form, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
+import axios from 'axios'
 import { FormItems } from 'components/shared/formItems'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { readNetwork } from 'constants/networks'
-import { octokit } from 'constants/octokit'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import useUnclaimedBalanceOfUser from 'hooks/v1/contractReader/UnclaimedBalanceOfUser'
 import { useAddToBalanceTx } from 'hooks/v1/transactor/AddToBalanceTx'
@@ -97,23 +97,29 @@ export default function ProjectToolDrawerModal({
       return
     }
 
-    setUriTx(
-      { cid: uploadedMetadata.cid },
+    // Create github issue when archive is requested
+    // https://docs.github.com/en/rest/reference/issues#create-an-issue
+    // Do this first, in case the user closes the page before the on-chain tx completes
+    axios.post(
+      'https://api.github.com/repos/jbx-protocol/juice-interface/issues',
       {
-        onDone: () => setLoadingArchive(false),
-        onConfirmed: () => {
-          // Create github issue when archive is requested
-          // https://docs.github.com/en/rest/reference/issues#create-an-issue
-          octokit.request('POST /repos/jbx-protocol/juice-interface/issues', {
-            title: `[${archived ? 'ARCHIVE' : 'UNARCHIVE'}] Project: "${
-              metadata?.name
-            }"`,
-            body: `<b>Chain:</b> ${
-              readNetwork.name
-            } \n <b>Handle:</b> ${handle} \n <b>Id:</b> ${projectId?.toString()}`,
-          })
+        title: `[${archived ? 'ARCHIVE' : 'UNARCHIVE'}] Project: "${
+          metadata?.name
+        }"`,
+        body: `<b>Chain:</b> ${
+          readNetwork.name
+        } \n <b>Handle:</b> ${handle} \n <b>Id:</b> ${projectId?.toString()}`,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.REACT_APP_GITHUB_ACCESS_TOKEN}`,
         },
       },
+    )
+
+    setUriTx(
+      { cid: uploadedMetadata.cid },
+      { onDone: () => setLoadingArchive(false) },
     )
   }
 

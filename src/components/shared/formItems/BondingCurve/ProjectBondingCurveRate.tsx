@@ -11,6 +11,8 @@ import React, {
   useState,
 } from 'react'
 
+import ExternalLink from 'components/shared/ExternalLink'
+
 import NumberSlider from '../../inputs/NumberSlider'
 import { FormItemExt } from '../formItemExt'
 
@@ -206,13 +208,9 @@ export default function ProjectBondingCurveRate({
               creating an incentive to hodl tokens longer than others. The
               default bonding curve of 100% means all tokens will have equal
               value regardless of when they are redeemed. Learn more in this{' '}
-              <a
-                href="https://www.youtube.com/watch?v=dxqc3yMqi5M&ab_channel=JuiceboxDAO"
-                rel="noreferrer"
-                target="_blank"
-              >
+              <ExternalLink href="https://youtu.be/dxqc3yMqi5M">
                 short video
-              </a>
+              </ExternalLink>
               .
             </Trans>
           </p>

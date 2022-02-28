@@ -11,7 +11,7 @@ import {
   V1ProjectContextType,
 } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { constants } from 'ethers'
+import * as constants from '@ethersproject/constants'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import {
   useAppSelector,
@@ -44,15 +44,14 @@ import { getTerminalAddress } from 'utils/v1/terminals'
 import TicketingForm, {
   TicketingFormFields,
 } from 'components/shared/forms/TicketingForm'
-
 import ReconfigurationStrategyDrawer from 'components/shared/ReconfigurationStrategyDrawer'
+import ProjectDetailsForm, {
+  ProjectDetailsFormFields,
+} from 'components/shared/forms/ProjectDetailsForm'
 
 import BudgetForm from 'components/shared/forms/BudgetForm'
 import IncentivesForm from 'components/shared/forms/IncentivesForm'
 import PayModsForm from 'components/shared/forms/PayModsForm'
-import ProjectDetailsForm, {
-  ProjectDetailsFormFields,
-} from 'components/shared/forms/ProjectDetailsForm'
 import RestrictedActionsForm, {
   RestrictedActionsFormFields,
 } from 'components/shared/forms/RestrictedActionsForm'
@@ -339,10 +338,11 @@ export default function V1Create() {
                 color: viewed
                   ? colors.text.primary
                   : colors.text.action.primary,
-                border: viewed
-                  ? '1px solid ' + colors.stroke.secondary
-                  : '1px solid' + colors.stroke.action.primary,
-                borderLeftWidth: active ? 10 : 1,
+                borderColor: viewed
+                  ? colors.stroke.secondary
+                  : colors.stroke.action.primary,
+                borderStyle: 'solid',
+                borderWidth: `1px 1px 1px ${active ? '10px' : '1px'}`,
               }}
               onClick={() => {
                 if (currentStep !== undefined) return
@@ -596,8 +596,7 @@ export default function V1Create() {
             </p>
             <ProjectDetailsForm
               form={projectForm}
-              onSave={async () => {
-                await projectForm.validateFields()
+              onFinish={() => {
                 viewedCurrentStep()
                 onProjectFormSaved()
                 setProjectFormModalVisible(false)

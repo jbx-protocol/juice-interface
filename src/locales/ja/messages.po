@@ -8,7 +8,7 @@ msgstr ""
 "Language: ja\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-02-21 04:07\n"
+"PO-Revision-Date: 2022-02-27 01:57\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -290,7 +290,7 @@ msgstr ""
 msgid "Available:"
 msgstr ""
 
-#: src/components/v1/V1Dashboard/index.tsx
+#: src/components/shared/ScrollToTopButton.tsx
 msgid "Back to top"
 msgstr ""
 
@@ -418,7 +418,7 @@ msgstr ""
 msgid "Connect wallet to deploy"
 msgstr ""
 
-#: src/components/shared/forms/RulesForm.tsx
+#: src/components/shared/ReconfigurationStrategyDrawer.tsx
 msgid "Contract address: {0}"
 msgstr ""
 
@@ -458,6 +458,7 @@ msgstr ""
 msgid "Currently worth: <0><1/>{0}</0>"
 msgstr ""
 
+#: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/constants/ballotStrategies/ballotStrategies.ts
 msgid "Custom strategy"
 msgstr ""
@@ -1213,7 +1214,7 @@ msgstr ""
 msgid "Receive {receiveText}"
 msgstr ""
 
-#: src/components/shared/forms/RulesForm.tsx
+#: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/v1/V1Create/index.tsx
 msgid "Reconfiguration"
 msgstr ""
@@ -1333,12 +1334,12 @@ msgstr ""
 msgid "Rules for how changes can be made to your project."
 msgstr ""
 
-#: src/components/shared/forms/RulesForm.tsx
+#: src/components/shared/ReconfigurationStrategyDrawer.tsx
 msgid "Rules for how this project's funding cycles can be reconfigured."
 msgstr ""
 
+#: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
-#: src/components/shared/forms/RulesForm.tsx
 #: src/components/shared/forms/TicketingForm.tsx
 msgid "Save"
 msgstr ""
@@ -1474,7 +1475,7 @@ msgstr ""
 msgid "The Juicebox protocol is governed by a community of JBX token holders who vote on proposals fortnightly."
 msgstr ""
 
-#: src/components/shared/forms/RulesForm.tsx
+#: src/components/shared/ReconfigurationStrategyDrawer.tsx
 msgid "The address of any smart contract deployed on {signerNetwork} that implements"
 msgstr ""
 
@@ -1565,6 +1566,10 @@ msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "These settings will <0>not</0> be editable immediately within a funding cycle. They can only be changed for <1>upcoming</1> funding cycles."
+msgstr ""
+
+#: src/constants/ballotStrategies/ballotStrategies.ts
+msgid "This address is an unrecognized strategy contract. Make sure it is correct!"
 msgstr ""
 
 #: src/components/shared/Mod.tsx
@@ -1711,10 +1716,6 @@ msgstr ""
 msgid "Unavailable"
 msgstr ""
 
-#: src/constants/ballotStrategies/ballotStrategies.ts
-msgid "Unrecognized strategy contract. Make sure this is correct!"
-msgstr ""
-
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 msgid "Unstaked balance"
 msgstr ""
@@ -1743,7 +1744,7 @@ msgstr ""
 msgid "Using a duration is recommended. Allowing funding cycles to be reconfigured at any time will appear risky to contributors."
 msgstr ""
 
-#: src/components/shared/forms/RulesForm.tsx
+#: src/components/shared/ReconfigurationStrategyDrawer.tsx
 msgid "Using a reconfiguration strategy is recommended. Projects with no strategy will appear risky to contributors."
 msgstr ""
 
@@ -1964,10 +1965,6 @@ msgstr ""
 #: src/components/Projects/HoldingsProjects.tsx
 #: src/components/Projects/index.tsx
 msgid "projects"
-msgstr ""
-
-#: src/components/shared/forms/RulesForm.tsx
-msgid "this interface"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx

@@ -29,7 +29,7 @@ export default function ProjectTicketMods({
   lockedMods,
   mods,
   reservedRate,
-  style,
+  style = {},
   onModsChanged,
   formItemProps,
 }: {
@@ -248,7 +248,7 @@ export default function ProjectTicketMods({
           },
         },
       ]}
-      style={style ? style : {}}
+      style={style}
     >
       <Space direction="vertical" style={{ width: '100%' }} size="large">
         {lockedMods ? (

@@ -1,4 +1,4 @@
-import { t, Trans } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import { Form } from 'antd'
 import { CSSProperties, useContext, useState } from 'react'
 import { ThemeContext } from 'contexts/themeContext'
@@ -12,7 +12,7 @@ import {
 } from 'constants/ballotStrategies/ballotStrategies'
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 import { drawerStyle } from 'constants/styles/drawerStyle'
-import V2FormItemLabel from '../../V2FormItemLabel'
+import FormItemLabel from '../../FormItemLabel'
 
 export default function ProjectReconfigurationFormItem({
   value,
@@ -35,7 +35,11 @@ export default function ProjectReconfigurationFormItem({
 
   return (
     <Form.Item
-      label={<V2FormItemLabel label={t`Reconfiguration`} />}
+      label={
+        <FormItemLabel>
+          <Trans>Reconfiguration</Trans>
+        </FormItemLabel>
+      }
       style={style}
     >
       <ReconfigurationStrategyOption

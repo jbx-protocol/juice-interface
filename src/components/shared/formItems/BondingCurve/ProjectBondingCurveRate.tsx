@@ -1,5 +1,5 @@
 import { Form, Switch } from 'antd'
-import { t, Trans } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 
 import { ThemeContext } from 'contexts/themeContext'
 import {
@@ -10,7 +10,7 @@ import {
   useLayoutEffect,
   useState,
 } from 'react'
-import V2FormItemLabel from 'components/v2/V2Create/V2FormItemLabel'
+import FormItemLabel from 'components/v2/V2Create/FormItemLabel'
 
 import ExternalLink from 'components/shared/ExternalLink'
 
@@ -224,7 +224,9 @@ export default function ProjectBondingCurveRate({
       label={
         hideLabel ? undefined : (
           <div style={{ display: 'flex' }}>
-            <V2FormItemLabel label={label ? label : t`Bonding curve rate`} />
+            <FormItemLabel>
+              {label ?? <Trans>Bonding curve rate</Trans>}
+            </FormItemLabel>
             {toggleDisabled ? (
               <>
                 <Switch checked={!disabled} onChange={toggleDisabled} />{' '}

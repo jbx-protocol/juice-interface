@@ -33,7 +33,7 @@ import { formBottomMargin } from '../../constants'
 
 import FundingTypeSelect, { FundingType } from './FundingTypeSelect'
 import FundingTargetInput from './FundingTargetInput'
-import V2FormItemLabel from '../../V2FormItemLabel'
+import FormItemLabel from '../../FormItemLabel'
 import { TabContentProps } from '../../models'
 
 type FundingFormFields = {
@@ -219,7 +219,9 @@ export default function FundingTabContent({ onFinish }: TabContentProps) {
               ...shadowCard(theme),
             }}
           >
-            <V2FormItemLabel label={t`Payouts`} />
+            <FormItemLabel>
+              <Trans>Payouts</Trans>
+            </FormItemLabel>
             <ProjectPayoutMods
               mods={mods}
               target={target ?? '0'}

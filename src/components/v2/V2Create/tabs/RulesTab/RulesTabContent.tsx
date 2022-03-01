@@ -13,8 +13,7 @@ import { DEFAULT_BALLOT_STRATEGY } from 'constants/ballotStrategies/ballotStrate
 import FormActionbar from '../../FormActionBar'
 import { formBottomMargin } from '../../constants'
 import ProjectReconfigurationFormItem from './ProjectReconfigurationFormItem'
-import V2FormItemLabel from '../../V2FormItemLabel'
-import DeployProjectButton from '../../DeployProjectButton'
+import FormItemLabel from '../../FormItemLabel'
 
 type RulesFormFields = {
   pausePay: boolean
@@ -93,7 +92,9 @@ export default function RulesTabContent() {
             style={{ ...shadowCard(theme), padding: '2rem' }}
           >
             <div style={{ display: 'flex' }}>
-              <V2FormItemLabel label={t`Pause payments`} />
+              <FormItemLabel>
+                <Trans>Pause payments</Trans>
+              </FormItemLabel>
               <Switch
                 onChange={val => form.setFieldsValue({ pausePay: val })}
               />
@@ -106,7 +107,9 @@ export default function RulesTabContent() {
             style={{ ...shadowCard(theme), padding: '2rem' }}
           >
             <div style={{ display: 'flex' }}>
-              <V2FormItemLabel label={t`Allow token minting`} />
+              <FormItemLabel>
+                <Trans>Allow token minting</Trans>
+              </FormItemLabel>
               <Switch
                 onChange={val => {
                   form.setFieldsValue({ pauseMint: val })

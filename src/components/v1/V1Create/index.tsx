@@ -78,6 +78,7 @@ export default function V1Create() {
     useState<boolean>(false)
   const [incentivesFormModalVisible, setIncentivesFormModalVisible] =
     useState<boolean>(false)
+  const [incentivesFormState, setIncentivesFormState] = useState<number>(0)
   const [ticketingFormModalVisible, setTicketingFormModalVisible] =
     useState<boolean>(false)
   const [rulesFormModalVisible, setRulesFormModalVisible] =
@@ -700,11 +701,14 @@ export default function V1Create() {
           {...drawerStyle}
           onClose={() => {
             viewedCurrentStep()
+            resetIncentiveForm()
             setIncentivesFormModalVisible(false)
+            setIncentivesFormState(incentivesFormState + 1)
           }}
         >
           <IncentivesForm
             form={incentivesForm}
+            formState={incentivesFormState}
             disableDiscountRate={
               editingFC.duration.eq(0)
                 ? t`Discount rate disabled while funding cycle duration is 0.`

@@ -20,10 +20,12 @@ export default function ProjectBondingCurveRate({
   value,
   formItemProps,
   onChange,
+  formState,
   disabled,
 }: {
   value: string | undefined
   onChange: (val?: number) => void
+  formState?: number
 } & FormItemExt) {
   const { colors } = useContext(ThemeContext).theme
   const [calculator, setCalculator] = useState<any>()
@@ -196,6 +198,7 @@ export default function ProjectBondingCurveRate({
         step={0.5}
         name={name}
         defaultValue={100}
+        formState={formState}
         sliderValue={parseFloat(value ?? '100')}
         disabled={disabled}
         onChange={(val: number | undefined) => {

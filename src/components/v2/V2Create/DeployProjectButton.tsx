@@ -9,7 +9,7 @@ import {
 } from 'hooks/AppSelector'
 import { useDeployProjectTx } from 'hooks/v2/transactor/DeployProjectTx'
 import { useCallback, useState } from 'react'
-import { uploadProjectMetadata } from 'utils/ipfs'
+import { metadataNameForProjectName, uploadProjectMetadata } from 'utils/ipfs'
 
 export default function DeployProjectButton({
   type = 'default',
@@ -32,7 +32,7 @@ export default function DeployProjectButton({
     setLoadingDeploy(true)
     if (
       !(
-        projectMetadata &&
+        projectMetadata?.name &&
         fundingCycleData &&
         fundingCycleMetadata &&
         fundAccessConstraints
@@ -42,9 +42,12 @@ export default function DeployProjectButton({
     }
 
     // Upload project metadata
-    const uploadedMetadata = await uploadProjectMetadata(projectMetadata)
+    const uploadedMetadata = await uploadProjectMetadata(
+      projectMetadata,
+      metadataNameForProjectName(projectMetadata.name),
+    )
 
-    if (!uploadedMetadata.success) {
+    if (!uploadedMetadata.IpfsHash) {
       console.error('Failed to upload project metadata.')
       setLoadingDeploy(false)
       return
@@ -54,7 +57,7 @@ export default function DeployProjectButton({
 
     deployProjectTx(
       {
-        projectMetadataCID: uploadedMetadata.cid,
+        projectMetadataCID: uploadedMetadata.IpfsHash,
         fundingCycleData,
         fundingCycleMetadata,
         fundAccessConstraints,

@@ -45,6 +45,9 @@ export const logoNameForHandle = (handle: string) => `juicebox-@${handle}-logo`
 export const metadataNameForHandle = (handle: string) =>
   `juicebox-@${handle}-metadata`
 
+export const metadataNameForProjectName = (projectName: string) =>
+  `juicebox-${projectName.replaceAll(' ', '-')}-metadata`
+
 export const ipfsCidUrl = (hash: string) =>
   `https://${IPFS_GATEWAY_HOSTNAME}/ipfs/${hash}`
 
@@ -93,7 +96,7 @@ export const unpinIpfsFileByCid = (cid: string | undefined) =>
 
 export const uploadProjectMetadata = (
   metadata: Omit<ProjectMetadataV3, 'version'>,
-  handle: string,
+  name: string,
 ) =>
   pinata.pinJSONToIPFS(
     {
@@ -105,7 +108,7 @@ export const uploadProjectMetadata = (
         keyvalues: {
           tag: IPFS_TAGS.METADATA,
         } as any,
-        name: metadataNameForHandle(handle),
+        name,
       },
     },
   )

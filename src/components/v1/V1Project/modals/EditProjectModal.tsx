@@ -88,7 +88,7 @@ export default function EditProjectModal({
         payDisclosure: fields.payDisclosure,
         tokens: metadata?.tokens ?? [],
       },
-      handle,
+      metadataNameForHandle(handle),
     )
 
     if (!uploadedMetadata.IpfsHash) {

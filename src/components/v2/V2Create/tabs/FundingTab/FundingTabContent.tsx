@@ -24,24 +24,23 @@ import { getDefaultFundAccessConstraint } from 'utils/v2/fundingCycle'
 
 import { toV1Currency } from 'utils/v1/currency'
 
+import ExternalLink from 'components/shared/ExternalLink'
+
 import { V2_CURRENCY_ETH } from 'constants/v2/currency'
 import { shadowCard } from 'constants/styles/shadowCard'
-import FloatingSaveButton from '../../FloatingSaveButton'
+import FormActionbar from '../../FormActionBar'
 import { formBottomMargin } from '../../constants'
 
 import FundingTypeSelect, { FundingType } from './FundingTypeSelect'
 import FundingTargetInput from './FundingTargetInput'
 import V2FormItemLabel from '../../V2FormItemLabel'
+import { TabContentProps } from '../../models'
 
 type FundingFormFields = {
   duration?: string
 }
 
-export default function FundingTabContent({
-  openNextTab,
-}: {
-  openNextTab: VoidFunction
-}) {
+export default function FundingTabContent({ onFinish }: TabContentProps) {
   const { theme } = useContext(ThemeContext)
   const { contracts } = useContext(V2UserContext)
   const dispatch = useAppDispatch()
@@ -111,8 +110,10 @@ export default function FundingTabContent({
       )
       dispatch(editingV2ProjectActions.setPayoutSplits(newPayoutSplits))
       dispatch(editingV2ProjectActions.setDuration(fields.duration ?? '0'))
+
+      onFinish?.()
     },
-    [mods, contracts, dispatch, target, targetCurrency],
+    [mods, contracts, dispatch, target, targetCurrency, onFinish],
   )
 
   const onFundingTypeSelect = (newFundingType: FundingType) => {
@@ -169,13 +170,11 @@ export default function FundingTabContent({
                   project's token holders.
                 </Trans>{' '}
                 <Trans>
-                  <a
+                  <ExternalLink
                     href={helpPagePath('protocol/learn/topics/overflow')}
-                    rel="noopener noreferrer"
-                    target="_blank"
                   >
                     Learn more
-                  </a>{' '}
+                  </ExternalLink>{' '}
                   about overflow.
                 </Trans>
               </p>
@@ -231,7 +230,7 @@ export default function FundingTabContent({
               }}
             />
           </div>
-          <FloatingSaveButton text={t`Next: Token`} onClick={openNextTab} />
+          <FormActionbar />
         </Form>
       </Col>
       <Col md={12} xs={0}></Col>

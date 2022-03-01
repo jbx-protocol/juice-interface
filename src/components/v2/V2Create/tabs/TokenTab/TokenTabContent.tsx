@@ -7,13 +7,7 @@ import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
 import ReservedTokensFormItem from 'components/v2/V2Create/tabs/TokenTab/ReservedTokensFormItem'
 
-import {
-  CSSProperties,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { SerializedV2FundAccessConstraint } from 'utils/v2/serializers'
 import {
@@ -27,8 +21,9 @@ import { sanitizeSplit } from 'utils/v2/splits'
 import { Split } from 'models/v2/splits'
 
 import { shadowCard } from 'constants/styles/shadowCard'
-import FloatingSaveButton from '../../FloatingSaveButton'
+import FormActionbar from '../../FormActionBar'
 import { formBottomMargin } from '../../constants'
+import { TabContentProps } from '../../models'
 
 type TokenFormFields = {
   discountRate: string
@@ -36,11 +31,7 @@ type TokenFormFields = {
   redemptionRate: string
 }
 
-export default function TokenTabContent({
-  openNextTab,
-}: {
-  openNextTab: VoidFunction
-}) {
+export default function TokenTabContent({ onFinish }: TabContentProps) {
   const [tokenForm] = useForm<TokenFormFields>()
   const {
     theme: { colors },
@@ -97,8 +88,10 @@ export default function TokenTabContent({
       dispatch(
         editingV2ProjectActions.setReserveTokenSplits(newReserveTokenSplits),
       )
+
+      onFinish?.()
     },
-    [dispatch, reserveTokenSplits],
+    [dispatch, reserveTokenSplits, onFinish],
   )
 
   const resetTokenForm = useCallback(() => {
@@ -121,13 +114,6 @@ export default function TokenTabContent({
     reserveTokenSplits,
     tokenForm,
   ])
-
-  const disableTextStyle: CSSProperties = {
-    color: colors.text.primary,
-    fontStyle: 'italic',
-    fontWeight: 500,
-    marginBottom: 10,
-  }
 
   // initially fill form with any existing redux state
   useEffect(() => {
@@ -216,7 +202,7 @@ export default function TokenTabContent({
                 : undefined
             }
           />
-          <FloatingSaveButton text={t`Next: Rules`} onClick={openNextTab} />
+          <FormActionbar />
         </Form>
       </Col>
       <Col md={12} xs={0}></Col>

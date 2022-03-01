@@ -10,10 +10,11 @@ import { ThemeContext } from 'contexts/themeContext'
 
 import { shadowCard } from 'constants/styles/shadowCard'
 import { DEFAULT_BALLOT_STRATEGY } from 'constants/ballotStrategies/ballotStrategies'
-import FloatingSaveButton from '../../FloatingSaveButton'
+import FormActionbar from '../../FormActionBar'
 import { formBottomMargin } from '../../constants'
 import ProjectReconfigurationFormItem from './ProjectReconfigurationFormItem'
 import V2FormItemLabel from '../../V2FormItemLabel'
+import DeployProjectButton from '../../DeployProjectButton'
 
 type RulesFormFields = {
   pausePay: boolean
@@ -121,7 +122,8 @@ export default function RulesTabContent() {
             }
             style={{ ...shadowCard(theme), padding: '2rem' }}
           />
-          <FloatingSaveButton />
+
+          <FormActionbar isLastTab />
         </Form>
       </Col>
       <Col md={12} xs={0}></Col>

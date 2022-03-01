@@ -42,9 +42,17 @@ msgstr "0% fee"
 msgid "1 year"
 msgstr "1 year"
 
+#: src/components/v2/V2Create/index.tsx
+msgid "1. Project details"
+msgstr "1. Project details"
+
 #: src/components/v1/V1Project/Paid.tsx
 msgid "100% overflow"
 msgstr ""
+
+#: src/components/v2/V2Create/index.tsx
+msgid "2. Funding"
+msgstr "2. Funding"
 
 #: src/components/v1/V1Project/BalanceTimeline.tsx
 msgid "24 hours"
@@ -54,9 +62,17 @@ msgstr "24 hours"
 msgid "3-day delay"
 msgstr ""
 
+#: src/components/v2/V2Create/index.tsx
+msgid "3. Token"
+msgstr "3. Token"
+
 #: src/components/v1/V1Project/BalanceTimeline.tsx
 msgid "30 days"
 msgstr "30 days"
+
+#: src/components/v2/V2Create/index.tsx
+msgid "4. Rules"
+msgstr "4. Rules"
 
 #: src/components/v1/V1Project/BalanceTimeline.tsx
 msgid "7 days"
@@ -764,6 +780,10 @@ msgstr ""
 msgid "Handle"
 msgstr ""
 
+#: src/components/v2/V2Create/V2MainnetWarning.tsx
+msgid "Head to <0>rinkeby.juicebox.money</0> to create a project using the Juicebox V2 contracts on Rinkeby."
+msgstr "Head to <0>rinkeby.juicebox.money</0> to create a project using the Juicebox V2 contracts on Rinkeby."
+
 #: src/components/v1/V1Project/modals/PayWarningModal.tsx
 msgid "Heads up"
 msgstr ""
@@ -1003,18 +1023,6 @@ msgstr ""
 #: src/components/Projects/TrendingProjectCard.tsx
 msgid "New"
 msgstr "New"
-
-#: src/components/v2/V2Create/tabs/ProjectDetailsTabContent.tsx
-msgid "Next: Funding"
-msgstr "Next: Funding"
-
-#: src/components/v2/V2Create/tabs/TokenTab/TokenTabContent.tsx
-msgid "Next: Rules"
-msgstr "Next: Rules"
-
-#: src/components/v2/V2Create/tabs/FundingTab/FundingTabContent.tsx
-msgid "Next: Token"
-msgstr "Next: Token"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
@@ -1451,6 +1459,10 @@ msgid "Save"
 msgstr ""
 
 #: src/components/v2/V2Create/tabs/ProjectDetailsTabContent.tsx
+msgid "Save and Continue"
+msgstr "Save and Continue"
+
+#: src/components/v2/V2Create/FormActionBar.tsx
 msgid "Save and continue"
 msgstr "Save and continue"
 
@@ -1589,6 +1601,10 @@ msgstr ""
 #: src/components/v1/V1Create/index.tsx
 msgid "The JBX protocol is unaudited, and projects built on it may be vulnerable to bugs or exploits. Be smart!"
 msgstr ""
+
+#: src/components/v2/V2Create/V2MainnetWarning.tsx
+msgid "The Juicebox V2 contracts aren't available on mainnet."
+msgstr "The Juicebox V2 contracts aren't available on mainnet."
 
 #: src/components/Landing/QAs.tsx
 msgid "The Juicebox protocol is governed by a community of JBX token holders who vote on proposals fortnightly."
@@ -2029,6 +2045,10 @@ msgstr ""
 msgid "Your project is funded across funding cycles. A funding cycle has a funding target and a duration. Your project's funding cycle configuration will depend on the kind of project you're starting."
 msgstr ""
 
+#: src/components/v2/V2Create/V2WarningBanner.tsx
+msgid "Your project will be created on the Juicebox V2 contracts."
+msgstr "Your project will be created on the Juicebox V2 contracts."
+
 #: src/components/shared/formItems/ProjectTwitter.tsx
 msgid "Your project's Twitter handle."
 msgstr ""
@@ -2241,10 +2261,6 @@ msgstr "{label}"
 #: src/components/Projects/TrendingProjectCard.tsx
 msgid "{paymentCount, plural, one {# payment} other {# payments}}"
 msgstr "{paymentCount, plural, one {# payment} other {# payments}}"
-
-#: src/components/v2/V2Create/FloatingSaveButton.tsx
-msgid "{text}"
-msgstr "{text}"
 
 #: src/components/shared/AMMPrices/TokenAMMPriceRow.tsx
 msgid "{tokenSymbol}/ETH exchange rate on {exchangeName}."

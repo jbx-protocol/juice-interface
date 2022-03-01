@@ -1,2 +1,2 @@
-export const floatingSaveContainerHeight = 60
-export const formBottomMargin = floatingSaveContainerHeight + 20
+export const formActionBarContainerHeight = 60
+export const formBottomMargin = formActionBarContainerHeight + 20

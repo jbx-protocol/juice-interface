@@ -1,7 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import ConfirmDeployV2ProjectModal from 'components/v2/V2Create/DeployProjectModal'
-import { ThemeContext } from 'contexts/themeContext'
 import {
   useAppSelector,
   useEditingV2FundAccessConstraintsSelector,
@@ -13,7 +12,7 @@ import { useCallback, useState } from 'react'
 import { uploadProjectMetadata } from 'utils/ipfs'
 
 export default function DeployProjectButton({
-  type = 'primary',
+  type = 'default',
 }: {
   type?: 'default' | 'primary'
 }) {

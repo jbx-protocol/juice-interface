@@ -14,8 +14,8 @@ import FormItemLabel from 'components/v2/V2Create/FormItemLabel'
 
 import ExternalLink from 'components/shared/ExternalLink'
 
-import NumberSlider from '../../inputs/NumberSlider'
-import { FormItemExt } from '../formItemExt'
+import NumberSlider from '../inputs/NumberSlider'
+import { FormItemExt } from './formItemExt'
 
 const GRAPH_CONTAINER_ID = 'graph-container'
 

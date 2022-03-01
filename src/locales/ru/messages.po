@@ -27,7 +27,7 @@ msgstr "(+{0} зарезервировано)"
 msgid "(0%)"
 msgstr ""
 
-#: src/components/shared/formItems/BondingCurve/ProjectBondingCurveRate.tsx
+#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 msgid "(100%)"
 msgstr ""
 
@@ -111,7 +111,7 @@ msgstr "<0/>{0}{1} снято"
 msgid "<0><1>This project has no overflow</1>, so you will not receive any ETH for burning tokens.</0>"
 msgstr "<0><1>В этом проекте нет переполнения</1>, поэтому вы не получите ETH за сжигание токенов..</0>"
 
-#: src/components/shared/formItems/BondingCurve/ProjectBondingCurveRate.tsx
+#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 msgid "<0>Disabled when funding target has not been set.</0>"
 msgstr ""
 
@@ -368,7 +368,7 @@ msgstr "Блог"
 msgid "Bonding curve disabled while no funding target is set."
 msgstr "Кривая связи отключена, пока не задана цель финансирования."
 
-#: src/components/shared/formItems/BondingCurve/ProjectBondingCurveRate.tsx
+#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
@@ -1742,7 +1742,7 @@ msgstr "Этот проект в настоящее время использу�
 msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hodl tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
 msgstr "Эта ставка определяет величину переполнения и денег в излишке, по которой каждый токен может быть погашен в любой момент времени. На более низкой ставке скорости кривой по облигациям, погашение токена увеличивает ценность каждого оставшегося токена, создавая стимул для того, чтобы токены оставались дольше, чем другие. Кривая ставки в 100% означает, что все токены будут иметь одинаковую ценность независимо от того, когда они будут погашены."
 
-#: src/components/shared/formItems/BondingCurve/ProjectBondingCurveRate.tsx
+#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hodl tokens longer than others. The default bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed. Learn more in this <0>short video</0>."
 msgstr ""
 
@@ -1781,7 +1781,7 @@ msgstr "Производство токенов"
 msgid "Token name"
 msgstr "Название токена"
 
-#: src/components/shared/formItems/BondingCurve/ProjectBondingCurveRate.tsx
+#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 msgid "Token redeem value"
 msgstr "Стоимость погашения токенов"
 
@@ -2145,7 +2145,7 @@ msgstr "токен"
 msgid "tokens"
 msgstr "токены"
 
-#: src/components/shared/formItems/BondingCurve/ProjectBondingCurveRate.tsx
+#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 msgid "tokens redeemed"
 msgstr "погашенных токенов"
 

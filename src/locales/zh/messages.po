@@ -27,7 +27,7 @@ msgstr "(+{0} 保留)"
 msgid "(0%)"
 msgstr ""
 
-#: src/components/shared/formItems/BondingCurve/ProjectBondingCurveRate.tsx
+#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 msgid "(100%)"
 msgstr ""
 
@@ -111,7 +111,7 @@ msgstr "<0/>{0}{1} 已提取"
 msgid "<0><1>This project has no overflow</1>, so you will not receive any ETH for burning tokens.</0>"
 msgstr "<0><1>这个项目目前筹集的资金并未溢出</1>，此时燃烧代币将不会收到 ETH。</0>"
 
-#: src/components/shared/formItems/BondingCurve/ProjectBondingCurveRate.tsx
+#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 msgid "<0>Disabled when funding target has not been set.</0>"
 msgstr ""
 
@@ -368,7 +368,7 @@ msgstr "博客"
 msgid "Bonding curve disabled while no funding target is set."
 msgstr "不设定筹款目标的话，联合曲线比率选项将会禁用。"
 
-#: src/components/shared/formItems/BondingCurve/ProjectBondingCurveRate.tsx
+#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
@@ -1744,7 +1744,7 @@ msgstr "这个项目正在使用 Juicebox V1 Terminal 合约。V1.1 的新特性
 msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hodl tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
 msgstr "这一比率决定了任何特定时间内每赎回一个代币可以获得的溢出金额。联合曲线比率较低的情况下，每赎回一个代币都会相应地提升所有剩余代币的赎回价值，这样就会形成一个代币长期持有的激励机制。联合曲线比率为 100% 时，则意味着无论什么时候赎回代币，每个代币获得的价值都将是相同的。"
 
-#: src/components/shared/formItems/BondingCurve/ProjectBondingCurveRate.tsx
+#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hodl tokens longer than others. The default bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed. Learn more in this <0>short video</0>."
 msgstr ""
 
@@ -1783,7 +1783,7 @@ msgstr "代币铸造"
 msgid "Token name"
 msgstr "代币名称"
 
-#: src/components/shared/formItems/BondingCurve/ProjectBondingCurveRate.tsx
+#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 msgid "Token redeem value"
 msgstr "代币赎回价值"
 
@@ -2147,7 +2147,7 @@ msgstr "代币"
 msgid "tokens"
 msgstr "代币"
 
-#: src/components/shared/formItems/BondingCurve/ProjectBondingCurveRate.tsx
+#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 msgid "tokens redeemed"
 msgstr "代币已赎回"
 

@@ -1,19 +1,17 @@
 import { Trans } from '@lingui/macro'
 import { Button, Col, Form } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
-import { useContext } from 'react'
+import { PropsWithChildren, useContext } from 'react'
 
-import { floatingSaveContainerHeight } from './constants'
-
+import { formActionBarContainerHeight } from './constants'
 import DeployProjectButton from './DeployProjectButton'
 
-export default function FloatingSaveButton({
-  text,
-  onClick,
-}: {
-  text?: string
-  onClick?: VoidFunction
-}) {
+export default function FormActionbar({
+  children,
+  isLastTab = false,
+}: PropsWithChildren<{
+  isLastTab?: boolean
+}>) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -25,31 +23,27 @@ export default function FloatingSaveButton({
         bottom: 0,
         left: 0,
         width: '100vw',
-        height: floatingSaveContainerHeight,
+        height: formActionBarContainerHeight,
         background: colors.background.l0,
         display: 'flex',
         alignItems: 'center',
+        zIndex: 1,
         boxShadow: '0px -5px 17px 0px ' + colors.background.l1,
       }}
     >
-      <Col xs={24} md={12} style={{ marginLeft: '3rem' }}>
+      <Col xs={24} md={12} style={{ marginLeft: '4rem' }}>
         <Form.Item style={{ marginBottom: 0 }}>
-          {/* If no text given, can assume it’s the last tab 
-          in which case we want to show the review and deploy button */}
-          {text ? (
+          {!isLastTab && (
             <Button
               htmlType="submit"
               type="primary"
-              onClick={() => {
-                if (onClick) onClick()
-                window.scrollTo(0, 0)
-              }}
+              style={{ marginRight: '1rem' }}
             >
-              <Trans>{text}</Trans>
+              {children ?? <Trans>Save and continue</Trans>}
             </Button>
-          ) : (
-            <DeployProjectButton />
           )}
+
+          <DeployProjectButton type={isLastTab ? 'primary' : 'default'} />
         </Form.Item>
       </Col>
     </div>

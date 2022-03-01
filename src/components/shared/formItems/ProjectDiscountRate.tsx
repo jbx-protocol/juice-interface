@@ -1,11 +1,38 @@
 import { Form, Switch } from 'antd'
-import { t, Trans } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 
 import React, { CSSProperties, useContext } from 'react'
 import { ThemeContext } from 'contexts/themeContext'
+import FormItemLabel from 'components/v2/V2Create/FormItemLabel'
 
 import { FormItemExt } from './formItemExt'
 import NumberSlider from '../inputs/NumberSlider'
+
+function DiscountRateExtra({ disabled }: { disabled?: boolean }) {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
+
+  return (
+    <div>
+      {disabled && (
+        <p>
+          <Trans>
+            <i style={{ color: colors.text.warn }}>
+              Discount rate disabled when funding cycle duration has not been
+              set.
+            </i>
+          </Trans>
+        </p>
+      )}
+      <Trans>
+        The ratio of tokens rewarded per payment amount will decrease by this
+        percentage with each new funding cycle. A higher discount rate will
+        incentivize supporters to pay your project earlier than later.
+      </Trans>
+    </div>
+  )
+}
 
 export default function ProjectDiscountRate({
   name,
@@ -27,19 +54,24 @@ export default function ProjectDiscountRate({
     theme: { colors },
   } = useContext(ThemeContext)
 
+  // When toggle is disabled and can't be changed, the whole item is unavailable
+  const unavailable = !Boolean(toggleDisabled) && disabled
+
   return (
     <Form.Item
-      extra={t`The ratio of tokens rewarded per payment amount will decrease by this percentage with each new funding cycle. A higher discount rate will incentivize supporters to pay your project earlier than later.`}
+      extra={<DiscountRateExtra disabled={unavailable} />}
       name={name}
       label={
         hideLabel ? undefined : (
-          <div>
-            <Trans>Discount rate</Trans>{' '}
+          <div style={{ display: 'flex' }}>
+            <FormItemLabel>
+              <Trans>Discount rate</Trans>
+            </FormItemLabel>
             {toggleDisabled ? (
               <React.Fragment>
                 <Switch checked={!disabled} onChange={toggleDisabled} />{' '}
                 {disabled ? (
-                  <span style={{ color: colors.text.tertiary }}>
+                  <span style={{ color: colors.text.tertiary, marginLeft: 10 }}>
                     <Trans>(0%)</Trans>
                   </span>
                 ) : null}

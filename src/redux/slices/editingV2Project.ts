@@ -2,7 +2,6 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import * as constants from '@ethersproject/constants'
 import { ProjectMetadataV3 } from 'models/project-metadata'
-import { V2FundAccessConstraint } from 'models/v2/fundingCycle'
 
 import {
   ETHPayoutGroupedSplits,

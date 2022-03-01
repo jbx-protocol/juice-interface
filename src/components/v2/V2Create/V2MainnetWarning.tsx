@@ -1,11 +1,26 @@
+import { Trans } from '@lingui/macro'
+import ExternalLink from 'components/shared/ExternalLink'
+
 export default function V2MainnetWarning() {
   return (
-    <>
-      <p>The Juicebox V2 contracts aren't available on mainnet.</p>
+    <div>
+      <img
+        style={{ maxWidth: 200, marginBottom: '2rem' }}
+        src="/assets/blueberry-ol.png"
+        alt="Sexy blueberry with bright pink lipstick spraying a can of spraypaint"
+      />
+      <h3>
+        <Trans>The Juicebox V2 contracts aren't available on mainnet.</Trans>
+      </h3>
       <p>
-        Select the Rinkeby network to create a project using the Juicebox V2
-        contracts.
+        <Trans>
+          Head to{' '}
+          <ExternalLink href="https://rinkeby.juicebox.money">
+            rinkeby.juicebox.money
+          </ExternalLink>{' '}
+          to create a project using the Juicebox V2 contracts on Rinkeby.
+        </Trans>
       </p>
-    </>
+    </div>
   )
 }

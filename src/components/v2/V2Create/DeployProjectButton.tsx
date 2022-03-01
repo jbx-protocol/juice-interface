@@ -11,7 +11,11 @@ import { useDeployProjectTx } from 'hooks/v2/transactor/DeployProjectTx'
 import { useCallback, useState } from 'react'
 import { uploadProjectMetadata } from 'utils/ipfs'
 
-export default function DeployProjectButton() {
+export default function DeployProjectButton({
+  type = 'default',
+}: {
+  type?: 'default' | 'primary'
+}) {
   const [deployProjectModalVisible, setDeployProjectModalVisible] =
     useState<boolean>(false)
   const deployProjectTx = useDeployProjectTx()
@@ -80,7 +84,7 @@ export default function DeployProjectButton() {
     <>
       <Button
         onClick={() => setDeployProjectModalVisible(true)}
-        type="primary"
+        type={type}
         htmlType="submit"
         disabled={!projectMetadata?.name}
       >

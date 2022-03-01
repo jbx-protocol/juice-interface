@@ -47,9 +47,17 @@ msgstr "0% de taxa"
 msgid "1 year"
 msgstr "1 ano"
 
+#: src/components/v2/V2Create/index.tsx
+msgid "1. Project details"
+msgstr ""
+
 #: src/components/v1/V1Project/Paid.tsx
 msgid "100% overflow"
 msgstr "100% overflow"
+
+#: src/components/v2/V2Create/index.tsx
+msgid "2. Funding"
+msgstr ""
 
 #: src/components/v1/V1Project/BalanceTimeline.tsx
 msgid "24 hours"
@@ -59,9 +67,17 @@ msgstr "24 horas"
 msgid "3-day delay"
 msgstr "3 dias de atraso"
 
+#: src/components/v2/V2Create/index.tsx
+msgid "3. Token"
+msgstr ""
+
 #: src/components/v1/V1Project/BalanceTimeline.tsx
 msgid "30 days"
 msgstr "30 dias"
+
+#: src/components/v2/V2Create/index.tsx
+msgid "4. Rules"
+msgstr ""
 
 #: src/components/v1/V1Project/BalanceTimeline.tsx
 msgid "7 days"
@@ -94,6 +110,14 @@ msgstr "<0/>{0}{1} retirado"
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "<0><1>This project has no overflow</1>, so you will not receive any ETH for burning tokens.</0>"
 msgstr "<0><1> Este projeto não tem overflow</1>, então você não receberá nenhum ETH por queimar tokens.</0>"
+
+#: src/components/shared/formItems/BondingCurve/ProjectBondingCurveRate.tsx
+msgid "<0>Disabled when funding target has not been set.</0>"
+msgstr ""
+
+#: src/components/shared/formItems/ProjectDiscountRate.tsx
+msgid "<0>Discount rate disabled when funding cycle duration has not been set.</0>"
+msgstr ""
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "<0>Learn more</0> about funding cycle duration."
@@ -257,9 +281,12 @@ msgid "Allocate a portion of your project's reserved tokens to other Ethereum wa
 msgstr "Defina uma porção dos tokens reservados por seu projeto para outras carteiras de Ethereum ou projetos do Juicebox."
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
-#: src/components/v2/V2Create/tabs/RulesTab/RulesTabContent.tsx
 msgid "Allow minting tokens"
 msgstr "Permitir a produção de tokens"
+
+#: src/components/v2/V2Create/tabs/RulesTab/RulesTabContent.tsx
+msgid "Allow token minting"
+msgstr ""
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
@@ -549,10 +576,6 @@ msgstr "Discord"
 msgid "Discount rate"
 msgstr "Taxa de desconto"
 
-#: src/components/v2/V2Create/tabs/TokenTab/TokenTabContent.tsx
-msgid "Discount rate disabled when funding cycle duration has not been set."
-msgstr ""
-
 #: src/components/v1/V1Create/index.tsx
 msgid "Discount rate disabled while funding cycle duration is 0."
 msgstr "Taxa de desconto desativada enquanto a duração do ciclo de financiamento for 0."
@@ -760,6 +783,10 @@ msgstr "Vá para Etherscan"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "Handle"
+msgstr ""
+
+#: src/components/v2/V2Create/V2MainnetWarning.tsx
+msgid "Head to <0>rinkeby.juicebox.money</0> to create a project using the Juicebox V2 contracts on Rinkeby."
 msgstr ""
 
 #: src/components/v1/V1Project/modals/PayWarningModal.tsx
@@ -1146,6 +1173,10 @@ msgstr "Os pagamentos estão pausados para para o atual ciclo de financiamento."
 msgid "Payments paused"
 msgstr "Pagamentos pausados"
 
+#: src/components/v2/V2Create/tabs/FundingTab/FundingTabContent.tsx
+msgid "Payouts"
+msgstr ""
+
 #: src/components/shared/forms/PayModsForm.tsx
 msgid "Payouts (optional)"
 msgstr "Pagamentos (opcional)"
@@ -1327,10 +1358,6 @@ msgstr "Resgatar {0} {tokensTextShort} por ETH"
 msgid "Redeem {tokensTextLong} for ETH"
 msgstr "Resgatar {tokensTextLong} por ETH"
 
-#: src/components/v2/V2Create/tabs/TokenTab/TokenTabContent.tsx
-msgid "Redemption disabled while no funding target is set."
-msgstr ""
-
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
 #: src/components/v2/V2Create/tabs/TokenTab/TokenTabContent.tsx
 msgid "Redemption rate"
@@ -1436,9 +1463,11 @@ msgstr "Regras para como os ciclos de financiamento deste projeto podem ser reco
 msgid "Save"
 msgstr "Salvar"
 
-#: src/components/v2/V2Create/tabs/FundingTab/FundingTabContent.tsx
 #: src/components/v2/V2Create/tabs/ProjectDetailsTabContent.tsx
-#: src/components/v2/V2Create/tabs/TokenTab/TokenTabContent.tsx
+msgid "Save and Continue"
+msgstr ""
+
+#: src/components/v2/V2Create/FormActionBar.tsx
 msgid "Save and continue"
 msgstr ""
 
@@ -1577,6 +1606,10 @@ msgstr "Esse é o plano, mas os principais contratos do Juicebox primeiramente s
 #: src/components/v1/V1Create/index.tsx
 msgid "The JBX protocol is unaudited, and projects built on it may be vulnerable to bugs or exploits. Be smart!"
 msgstr "O protocolo JBX não é auditado e projetos criados nele podem estar vulneráveis a bugs ou exploits. Seja inteligente!"
+
+#: src/components/v2/V2Create/V2MainnetWarning.tsx
+msgid "The Juicebox V2 contracts aren't available on mainnet."
+msgstr ""
 
 #: src/components/Landing/QAs.tsx
 msgid "The Juicebox protocol is governed by a community of JBX token holders who vote on proposals fortnightly."
@@ -2017,6 +2050,10 @@ msgstr "O seu projeto não poderá receber pagamentos diretos enquanto se encont
 msgid "Your project is funded across funding cycles. A funding cycle has a funding target and a duration. Your project's funding cycle configuration will depend on the kind of project you're starting."
 msgstr "O seu projeto é financiado através dos ciclos de financiamento. Um ciclo de financiamento tem um objetivo e uma duração. A configuração do ciclo de financiamento de seu projeto dependerá do tipo de projeto que você esteja iniciando."
 
+#: src/components/v2/V2Create/V2WarningBanner.tsx
+msgid "Your project will be created on the Juicebox V2 contracts."
+msgstr ""
+
 #: src/components/shared/formItems/ProjectTwitter.tsx
 msgid "Your project's Twitter handle."
 msgstr "O usuário do Twitter de seu projeto."
@@ -2229,10 +2266,6 @@ msgstr "{label}"
 #: src/components/Projects/TrendingProjectCard.tsx
 msgid "{paymentCount, plural, one {# payment} other {# payments}}"
 msgstr "{paymentCount, plural, one {# pagamento} other {# pagamentos}}"
-
-#: src/components/v2/V2Create/FloatingSaveButton.tsx
-msgid "{text}"
-msgstr ""
 
 #: src/components/shared/AMMPrices/TokenAMMPriceRow.tsx
 msgid "{tokenSymbol}/ETH exchange rate on {exchangeName}."

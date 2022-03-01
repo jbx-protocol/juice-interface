@@ -47,9 +47,17 @@ msgstr "0% комиссия"
 msgid "1 year"
 msgstr "1 год"
 
+#: src/components/v2/V2Create/index.tsx
+msgid "1. Project details"
+msgstr ""
+
 #: src/components/v1/V1Project/Paid.tsx
 msgid "100% overflow"
 msgstr "100% превышение"
+
+#: src/components/v2/V2Create/index.tsx
+msgid "2. Funding"
+msgstr ""
 
 #: src/components/v1/V1Project/BalanceTimeline.tsx
 msgid "24 hours"
@@ -59,9 +67,17 @@ msgstr "24 часа"
 msgid "3-day delay"
 msgstr "3-дневная задержка"
 
+#: src/components/v2/V2Create/index.tsx
+msgid "3. Token"
+msgstr ""
+
 #: src/components/v1/V1Project/BalanceTimeline.tsx
 msgid "30 days"
 msgstr "30 дней"
+
+#: src/components/v2/V2Create/index.tsx
+msgid "4. Rules"
+msgstr ""
 
 #: src/components/v1/V1Project/BalanceTimeline.tsx
 msgid "7 days"
@@ -94,6 +110,14 @@ msgstr "<0/>{0}{1} снято"
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "<0><1>This project has no overflow</1>, so you will not receive any ETH for burning tokens.</0>"
 msgstr "<0><1>В этом проекте нет переполнения</1>, поэтому вы не получите ETH за сжигание токенов..</0>"
+
+#: src/components/shared/formItems/BondingCurve/ProjectBondingCurveRate.tsx
+msgid "<0>Disabled when funding target has not been set.</0>"
+msgstr ""
+
+#: src/components/shared/formItems/ProjectDiscountRate.tsx
+msgid "<0>Discount rate disabled when funding cycle duration has not been set.</0>"
+msgstr ""
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "<0>Learn more</0> about funding cycle duration."
@@ -257,9 +281,12 @@ msgid "Allocate a portion of your project's reserved tokens to other Ethereum wa
 msgstr "Выделите часть зарезервированных токенов вашего проекта на другие кошельки Ethereum или проекты Juicebox."
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
-#: src/components/v2/V2Create/tabs/RulesTab/RulesTabContent.tsx
 msgid "Allow minting tokens"
 msgstr "Разрешить майнинг токенов"
+
+#: src/components/v2/V2Create/tabs/RulesTab/RulesTabContent.tsx
+msgid "Allow token minting"
+msgstr ""
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
@@ -549,10 +576,6 @@ msgstr "Дискорд"
 msgid "Discount rate"
 msgstr "Учетная ставка "
 
-#: src/components/v2/V2Create/tabs/TokenTab/TokenTabContent.tsx
-msgid "Discount rate disabled when funding cycle duration has not been set."
-msgstr ""
-
 #: src/components/v1/V1Create/index.tsx
 msgid "Discount rate disabled while funding cycle duration is 0."
 msgstr "Учетная ставка отключена, пока продолжительность цикла финансирования равна 0."
@@ -761,6 +784,10 @@ msgstr "Перейти к Etherscan"
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "Handle"
 msgstr "Никнейм"
+
+#: src/components/v2/V2Create/V2MainnetWarning.tsx
+msgid "Head to <0>rinkeby.juicebox.money</0> to create a project using the Juicebox V2 contracts on Rinkeby."
+msgstr ""
 
 #: src/components/v1/V1Project/modals/PayWarningModal.tsx
 msgid "Heads up"
@@ -1146,6 +1173,10 @@ msgstr "Платежи приостановлены для текущего ци
 msgid "Payments paused"
 msgstr "Платежи приостановлены"
 
+#: src/components/v2/V2Create/tabs/FundingTab/FundingTabContent.tsx
+msgid "Payouts"
+msgstr ""
+
 #: src/components/shared/forms/PayModsForm.tsx
 msgid "Payouts (optional)"
 msgstr "Выплаты (необязательно)"
@@ -1327,10 +1358,6 @@ msgstr "Обменять {0} {tokensTextShort} за ETH"
 msgid "Redeem {tokensTextLong} for ETH"
 msgstr "Обменять {tokensTextLong} за ETH"
 
-#: src/components/v2/V2Create/tabs/TokenTab/TokenTabContent.tsx
-msgid "Redemption disabled while no funding target is set."
-msgstr ""
-
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
 #: src/components/v2/V2Create/tabs/TokenTab/TokenTabContent.tsx
 msgid "Redemption rate"
@@ -1436,9 +1463,11 @@ msgstr "Правила изменения конфигурации циклов 
 msgid "Save"
 msgstr "Сохранить"
 
-#: src/components/v2/V2Create/tabs/FundingTab/FundingTabContent.tsx
 #: src/components/v2/V2Create/tabs/ProjectDetailsTabContent.tsx
-#: src/components/v2/V2Create/tabs/TokenTab/TokenTabContent.tsx
+msgid "Save and Continue"
+msgstr ""
+
+#: src/components/v2/V2Create/FormActionBar.tsx
 msgid "Save and continue"
 msgstr ""
 
@@ -1577,6 +1606,10 @@ msgstr "Это план, но основные контракты Juicebox сн�
 #: src/components/v1/V1Create/index.tsx
 msgid "The JBX protocol is unaudited, and projects built on it may be vulnerable to bugs or exploits. Be smart!"
 msgstr "Протокол JBX не прошел аудит, и проекты, построенные на нем, могут быть уязвимы для ошибок или эксплойтов. "
+
+#: src/components/v2/V2Create/V2MainnetWarning.tsx
+msgid "The Juicebox V2 contracts aren't available on mainnet."
+msgstr ""
 
 #: src/components/Landing/QAs.tsx
 msgid "The Juicebox protocol is governed by a community of JBX token holders who vote on proposals fortnightly."
@@ -2017,6 +2050,10 @@ msgstr "Ваш проект не может получать прямые пла
 msgid "Your project is funded across funding cycles. A funding cycle has a funding target and a duration. Your project's funding cycle configuration will depend on the kind of project you're starting."
 msgstr "Ваш проект финансируется через циклы финансирования. Цикл финансирования имеет цель финансирования и продолжительность. Конфигурация цикла финансирования вашего проекта будет зависеть от типа проекта, который вы начинаете."
 
+#: src/components/v2/V2Create/V2WarningBanner.tsx
+msgid "Your project will be created on the Juicebox V2 contracts."
+msgstr ""
+
 #: src/components/shared/formItems/ProjectTwitter.tsx
 msgid "Your project's Twitter handle."
 msgstr "Описание вашего проекта в Твиттере."
@@ -2228,10 +2265,6 @@ msgstr "{название}"
 
 #: src/components/Projects/TrendingProjectCard.tsx
 msgid "{paymentCount, plural, one {# payment} other {# payments}}"
-msgstr ""
-
-#: src/components/v2/V2Create/FloatingSaveButton.tsx
-msgid "{text}"
 msgstr ""
 
 #: src/components/shared/AMMPrices/TokenAMMPriceRow.tsx

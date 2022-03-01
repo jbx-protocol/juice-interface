@@ -1,4 +1,4 @@
-import { t } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import { Col, Row } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import ProjectDetailsForm, {
@@ -11,12 +11,12 @@ import { useCallback, useEffect } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 
 import { formBottomMargin } from '../constants'
-import FloatingSaveButton from '../FloatingSaveButton'
+import FormActionbar from '../FormActionBar'
 
 export default function ProjectDetailsTabContent({
-  openNextTab,
+  onFinish,
 }: {
-  openNextTab?: VoidFunction
+  onFinish?: VoidFunction
 }) {
   const [projectForm] = useForm<ProjectDetailsFormFields>()
   const dispatch = useAppDispatch()
@@ -33,9 +33,9 @@ export default function ProjectDetailsTabContent({
       dispatch(editingV2ProjectActions.setPayButton(fields.payButton))
       dispatch(editingV2ProjectActions.setPayDisclosure(fields.payDisclosure))
 
-      openNextTab?.()
+      onFinish?.()
     },
-    [dispatch, openNextTab],
+    [dispatch, onFinish],
   )
 
   const resetProjectForm = useCallback(() => {
@@ -68,16 +68,20 @@ export default function ProjectDetailsTabContent({
 
   return (
     <Row gutter={32}>
-      <Col span={12}>
+      <Col md={10} xs={24}>
         <ProjectDetailsForm
           form={projectForm}
           onFinish={onProjectFormSaved}
           hideProjectHandle
-          saveButton={<FloatingSaveButton text={t`Save and continue`} />}
+          saveButton={
+            <FormActionbar>
+              <Trans>Save and Continue</Trans>
+            </FormActionbar>
+          }
           style={{ marginBottom: formBottomMargin }}
         />
       </Col>
-      <Col span={12}>
+      <Col md={10} xs={24}>
         <ProjectHeader metadata={projectMetadata} />
       </Col>
     </Row>

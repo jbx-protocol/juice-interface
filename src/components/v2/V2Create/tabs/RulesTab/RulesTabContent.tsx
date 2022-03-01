@@ -10,9 +10,10 @@ import { ThemeContext } from 'contexts/themeContext'
 
 import { shadowCard } from 'constants/styles/shadowCard'
 import { DEFAULT_BALLOT_STRATEGY } from 'constants/ballotStrategies/ballotStrategies'
-import FloatingSaveButton from '../../FloatingSaveButton'
+import FormActionbar from '../../FormActionBar'
 import { formBottomMargin } from '../../constants'
 import ProjectReconfigurationFormItem from './ProjectReconfigurationFormItem'
+import FormItemLabel from '../../FormItemLabel'
 
 type RulesFormFields = {
   pausePay: boolean
@@ -77,7 +78,7 @@ export default function RulesTabContent() {
 
   return (
     <Row gutter={32}>
-      <Col span={12}>
+      <Col md={12} xs={24}>
         <Form
           form={form}
           layout="vertical"
@@ -86,25 +87,36 @@ export default function RulesTabContent() {
         >
           <Form.Item
             name="pausePay"
-            label={t`Pause payments`}
             extra={t`When Pause Payments is enabled, your project cannot receive direct payments.`}
             valuePropName="checked"
             style={{ ...shadowCard(theme), padding: '2rem' }}
           >
-            <Switch />
+            <div style={{ display: 'flex' }}>
+              <FormItemLabel>
+                <Trans>Pause payments</Trans>
+              </FormItemLabel>
+              <Switch
+                onChange={val => form.setFieldsValue({ pausePay: val })}
+              />
+            </div>
           </Form.Item>
           <Form.Item
             name="pauseMint"
-            label={t`Allow minting tokens`}
             extra={tokenMintingExtra}
             valuePropName="checked"
             style={{ ...shadowCard(theme), padding: '2rem' }}
           >
-            <Switch
-              onChange={val => {
-                setShowMintingWarning(val)
-              }}
-            />
+            <div style={{ display: 'flex' }}>
+              <FormItemLabel>
+                <Trans>Allow token minting</Trans>
+              </FormItemLabel>
+              <Switch
+                onChange={val => {
+                  form.setFieldsValue({ pauseMint: val })
+                  setShowMintingWarning(val)
+                }}
+              />
+            </div>
           </Form.Item>
           <ProjectReconfigurationFormItem
             value={form.getFieldValue('ballot') ?? fundingCycleData?.ballot}
@@ -113,10 +125,11 @@ export default function RulesTabContent() {
             }
             style={{ ...shadowCard(theme), padding: '2rem' }}
           />
-          <FloatingSaveButton />
+
+          <FormActionbar isLastTab />
         </Form>
       </Col>
-      <Col span={12}></Col>
+      <Col md={12} xs={0}></Col>
     </Row>
   )
 }

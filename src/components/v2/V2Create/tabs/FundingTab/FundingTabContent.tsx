@@ -24,23 +24,23 @@ import { getDefaultFundAccessConstraint } from 'utils/v2/fundingCycle'
 
 import { toV1Currency } from 'utils/v1/currency'
 
+import ExternalLink from 'components/shared/ExternalLink'
+
 import { V2_CURRENCY_ETH } from 'constants/v2/currency'
 import { shadowCard } from 'constants/styles/shadowCard'
-import FloatingSaveButton from '../../FloatingSaveButton'
+import FormActionbar from '../../FormActionBar'
 import { formBottomMargin } from '../../constants'
 
 import FundingTypeSelect, { FundingType } from './FundingTypeSelect'
 import FundingTargetInput from './FundingTargetInput'
+import FormItemLabel from '../../FormItemLabel'
+import { TabContentProps } from '../../models'
 
 type FundingFormFields = {
   duration?: string
 }
 
-export default function FundingTabContent({
-  openNextTab,
-}: {
-  openNextTab: VoidFunction
-}) {
+export default function FundingTabContent({ onFinish }: TabContentProps) {
   const { theme } = useContext(ThemeContext)
   const { contracts } = useContext(V2UserContext)
   const dispatch = useAppDispatch()
@@ -110,8 +110,10 @@ export default function FundingTabContent({
       )
       dispatch(editingV2ProjectActions.setPayoutSplits(newPayoutSplits))
       dispatch(editingV2ProjectActions.setDuration(fields.duration ?? '0'))
+
+      onFinish?.()
     },
-    [mods, contracts, dispatch, target, targetCurrency],
+    [mods, contracts, dispatch, target, targetCurrency, onFinish],
   )
 
   const onFundingTypeSelect = (newFundingType: FundingType) => {
@@ -134,7 +136,7 @@ export default function FundingTabContent({
 
   return (
     <Row gutter={32} style={{ marginBottom: formBottomMargin }}>
-      <Col span={12}>
+      <Col md={10} xs={24}>
         <Form form={fundingForm} layout="vertical" onFinish={onFundingFormSave}>
           <Form.Item label={t`How much do you want to raise?`}>
             <FundingTypeSelect
@@ -149,6 +151,7 @@ export default function FundingTabContent({
                 padding: '2rem',
                 marginBottom: '10px',
                 ...shadowCard(theme),
+                color: theme.colors.text.primary,
               }}
             >
               <h3>Funding target</h3>
@@ -167,13 +170,11 @@ export default function FundingTabContent({
                   project's token holders.
                 </Trans>{' '}
                 <Trans>
-                  <a
+                  <ExternalLink
                     href={helpPagePath('protocol/learn/topics/overflow')}
-                    rel="noopener noreferrer"
-                    target="_blank"
                   >
                     Learn more
-                  </a>{' '}
+                  </ExternalLink>{' '}
                   about overflow.
                 </Trans>
               </p>
@@ -203,7 +204,7 @@ export default function FundingTabContent({
               </Form.Item>
             </div>
           ) : (
-            <p>
+            <p style={{ color: theme.colors.text.primary }}>
               <Trans>
                 All funds can be distributed by the project. The project will
                 have no overflow (the same as setting the target to infinity).
@@ -218,7 +219,9 @@ export default function FundingTabContent({
               ...shadowCard(theme),
             }}
           >
-            <h3>Payouts</h3>
+            <FormItemLabel>
+              <Trans>Payouts</Trans>
+            </FormItemLabel>
             <ProjectPayoutMods
               mods={mods}
               target={target ?? '0'}
@@ -229,13 +232,10 @@ export default function FundingTabContent({
               }}
             />
           </div>
-          <FloatingSaveButton
-            text={t`Save and continue`}
-            onClick={openNextTab}
-          />
+          <FormActionbar />
         </Form>
       </Col>
-      <Col span={12}></Col>
+      <Col md={12} xs={0}></Col>
     </Row>
   )
 }

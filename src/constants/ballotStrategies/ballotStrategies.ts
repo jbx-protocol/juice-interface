@@ -1,4 +1,4 @@
-import { constants } from 'ethers'
+import * as constants from '@ethersproject/constants'
 import { t } from '@lingui/macro'
 
 export type Strategy = {
@@ -28,9 +28,9 @@ export function ballotStrategies() {
   ]
 }
 
-export const customStrategy = (address: string) => ({
+export const createCustomStrategy = (address: string): Strategy => ({
   address,
   name: t`Custom strategy`,
-  description: t`Unrecognized strategy contract. Make sure this is correct!`,
+  description: t`This address is an unrecognized strategy contract. Make sure it is correct!`,
   unknown: true,
 })

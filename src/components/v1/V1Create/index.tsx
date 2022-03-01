@@ -11,7 +11,7 @@ import {
   V1ProjectContextType,
 } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { constants } from 'ethers'
+import * as constants from '@ethersproject/constants'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import {
   useAppSelector,
@@ -41,20 +41,26 @@ import {
 } from 'utils/ipfs'
 import { getTerminalAddress } from 'utils/v1/terminals'
 
-import BudgetForm from '../../shared/forms/BudgetForm'
-import ConfirmDeployProject from './ConfirmDeployProject'
-import IncentivesForm, {
-  IncentivesFormFields,
-} from '../../shared/forms/IncentivesForm'
-import PayModsForm from '../../shared/forms/PayModsForm'
-import ProjectForm, { ProjectFormFields } from './ProjectForm'
-import RestrictedActionsForm, {
-  RestrictedActionsFormFields,
-} from '../../shared/forms/RestrictedActionsForm'
-import RulesForm from '../../shared/forms/RulesForm'
 import TicketingForm, {
   TicketingFormFields,
-} from '../../shared/forms/TicketingForm'
+} from 'components/shared/forms/TicketingForm'
+import ReconfigurationStrategyDrawer from 'components/shared/ReconfigurationStrategyDrawer'
+import ProjectDetailsForm, {
+  ProjectDetailsFormFields,
+} from 'components/shared/forms/ProjectDetailsForm'
+
+import BudgetForm from 'components/shared/forms/BudgetForm'
+import IncentivesForm, {
+  IncentivesFormFields,
+} from 'components/shared/forms/IncentivesForm'
+import PayModsForm from 'components/shared/forms/PayModsForm'
+import RestrictedActionsForm, {
+  RestrictedActionsFormFields,
+} from 'components/shared/forms/RestrictedActionsForm'
+
+import ConfirmDeployProject from './ConfirmDeployProject'
+import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
+import { Strategy } from 'constants/ballotStrategies/ballotStrategies'
 
 const terminalVersion: V1TerminalVersion = '1.1'
 
@@ -84,7 +90,7 @@ export default function V1Create() {
     useState<boolean>(false)
   const [confirmStartOverVisible, setConfirmStartOverVisible] = useState(false)
   const [loadingCreate, setLoadingCreate] = useState<boolean>()
-  const [projectForm] = useForm<ProjectFormFields>()
+  const [projectForm] = useForm<ProjectDetailsFormFields>()
   const [ticketingForm] = useForm<TicketingFormFields>()
   const [restrictedActionsForm] = useForm<RestrictedActionsFormFields>()
   const [incentivesForm] = useForm<IncentivesFormFields>()
@@ -351,10 +357,11 @@ export default function V1Create() {
                 color: viewed
                   ? colors.text.primary
                   : colors.text.action.primary,
-                border: viewed
-                  ? '1px solid ' + colors.stroke.secondary
-                  : '1px solid' + colors.stroke.action.primary,
-                borderLeftWidth: active ? 10 : 1,
+                borderColor: viewed
+                  ? colors.stroke.secondary
+                  : colors.stroke.action.primary,
+                borderStyle: 'solid',
+                borderWidth: `1px 1px 1px ${active ? '10px' : '1px'}`,
               }}
               onClick={() => {
                 if (currentStep !== undefined) return
@@ -596,15 +603,25 @@ export default function V1Create() {
             setProjectFormModalVisible(false)
           }}
         >
-          <ProjectForm
-            form={projectForm}
-            onSave={async () => {
-              await projectForm.validateFields()
-              viewedCurrentStep()
-              onProjectFormSaved()
-              setProjectFormModalVisible(false)
-            }}
-          />
+          <Space direction="vertical" size="large">
+            <h1>
+              <Trans>Project details</Trans>
+            </h1>
+            <p>
+              <Trans>
+                Changes to these attributes can be made at any time and will be
+                applied to your project immediately.
+              </Trans>
+            </p>
+            <ProjectDetailsForm
+              form={projectForm}
+              onFinish={() => {
+                viewedCurrentStep()
+                onProjectFormSaved()
+                setProjectFormModalVisible(false)
+              }}
+            />
+          </Space>
         </Drawer>
 
         <Drawer
@@ -671,23 +688,20 @@ export default function V1Create() {
           />
         </Drawer>
 
-        <Drawer
+        <ReconfigurationStrategyDrawer
           visible={rulesFormModalVisible}
-          {...drawerStyle}
+          initialSelectedStrategy={getBallotStrategyByAddress(editingFC.ballot)}
+          style={drawerStyle}
+          onSave={(strategy: Strategy) => {
+            viewedCurrentStep()
+            setRulesFormModalVisible(false)
+            onRulesFormSaved(strategy.address ?? editingFC.ballot)
+          }}
           onClose={() => {
             viewedCurrentStep()
             setRulesFormModalVisible(false)
           }}
-        >
-          <RulesForm
-            initialBallot={editingFC.ballot}
-            onSave={(ballot: string) => {
-              viewedCurrentStep()
-              onRulesFormSaved(ballot)
-              setRulesFormModalVisible(false)
-            }}
-          />
-        </Drawer>
+        />
 
         <Drawer
           visible={incentivesFormModalVisible}

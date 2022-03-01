@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-02-21 04:07\n"
+"PO-Revision-Date: 2022-02-27 01:57\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -154,7 +154,7 @@ msgstr "项目每收到一笔付款都会铸造代币，其中某个百分比的
 
 #: src/components/v1/V1Project/FundingCycles/index.tsx
 msgid "A project's lifetime is defined in funding cycles. If a funding target is set, the project can withdraw no more than the target for the duration of the cycle."
-msgstr "一个项目的生命周期是以资助周期来定义的。如果设定了资助目标，那么在周期内，项目提款不能超过资助目标。"
+msgstr "一个项目的寿命是以筹款周期来定义的。如果设定了筹款目标，那么在周期内，项目的提款不能超过目标。"
 
 #: src/constants/ballotStrategies/ballotStrategies.ts
 msgid "A reconfiguration to an upcoming funding cycle must be submitted at least 3 days before it starts."
@@ -290,7 +290,7 @@ msgstr "可用资金会分发给以下支出对象。"
 msgid "Available:"
 msgstr "可用:"
 
-#: src/components/v1/V1Dashboard/index.tsx
+#: src/components/shared/ScrollToTopButton.tsx
 msgid "Back to top"
 msgstr "回到顶部"
 
@@ -374,7 +374,7 @@ msgstr "取消"
 msgid "Cannot redeem tokens for ETH because this project has no overflow."
 msgstr "这个项目的筹款没有溢出，无法用代币赎回 ETH"
 
-#: src/components/v1/V1Create/ProjectForm.tsx
+#: src/components/v1/V1Create/index.tsx
 msgid "Changes to these attributes can be made at any time and will be applied to your project immediately."
 msgstr "可以随时修改这些属性，并立即应用于你的项目。"
 
@@ -418,7 +418,7 @@ msgstr "连接钱包"
 msgid "Connect wallet to deploy"
 msgstr "连接钱包以部署"
 
-#: src/components/shared/forms/RulesForm.tsx
+#: src/components/shared/ReconfigurationStrategyDrawer.tsx
 msgid "Contract address: {0}"
 msgstr "合约地址：{0}"
 
@@ -458,6 +458,7 @@ msgstr "当前拥有者：{owner}"
 msgid "Currently worth: <0><1/>{0}</0>"
 msgstr "当前价值： <0><1/>{0}</0>"
 
+#: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/constants/ballotStrategies/ballotStrategies.ts
 msgid "Custom strategy"
 msgstr "自定义策略"
@@ -1138,7 +1139,7 @@ msgid "Project description"
 msgstr "项目说明"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
-#: src/components/v1/V1Create/ProjectForm.tsx
+#: src/components/v1/V1Create/index.tsx
 #: src/components/v1/V1Create/index.tsx
 msgid "Project details"
 msgstr "项目详情"
@@ -1148,7 +1149,7 @@ msgstr "项目详情"
 msgid "Project handle"
 msgstr "项目标识"
 
-#: src/components/v1/V1Create/ProjectForm.tsx
+#: src/components/shared/forms/ProjectDetailsForm.tsx
 msgid "Project handle must be unique."
 msgstr "项目标识必须是唯一的。"
 
@@ -1213,7 +1214,7 @@ msgstr "以 ERC20 形式接收"
 msgid "Receive {receiveText}"
 msgstr "接收 {receiveText}"
 
-#: src/components/shared/forms/RulesForm.tsx
+#: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/v1/V1Create/index.tsx
 msgid "Reconfiguration"
 msgstr "重新配置"
@@ -1333,12 +1334,12 @@ msgstr "关于如何重新配置该项目筹款周期的规则"
 msgid "Rules for how changes can be made to your project."
 msgstr "项目筹款周期配置的更改规则。"
 
-#: src/components/shared/forms/RulesForm.tsx
+#: src/components/shared/ReconfigurationStrategyDrawer.tsx
 msgid "Rules for how this project's funding cycles can be reconfigured."
 msgstr "关于如何重新配置该项目筹款周期的规则"
 
+#: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
-#: src/components/shared/forms/RulesForm.tsx
 #: src/components/shared/forms/TicketingForm.tsx
 msgid "Save"
 msgstr "保存"
@@ -1359,7 +1360,7 @@ msgstr "保存标识"
 msgid "Save payouts"
 msgstr "保存开支配置"
 
-#: src/components/v1/V1Create/ProjectForm.tsx
+#: src/components/shared/forms/ProjectDetailsForm.tsx
 msgid "Save project details"
 msgstr "保存项目详情"
 
@@ -1474,7 +1475,7 @@ msgstr "JBX 协议未经审计，基于它构建的项目可能受到 bug 的影
 msgid "The Juicebox protocol is governed by a community of JBX token holders who vote on proposals fortnightly."
 msgstr "Juicebox协议由JBX代币持有者组成的社区所管理，他们每两周对提案进行投票。"
 
-#: src/components/shared/forms/RulesForm.tsx
+#: src/components/shared/ReconfigurationStrategyDrawer.tsx
 msgid "The address of any smart contract deployed on {signerNetwork} that implements"
 msgstr "在 {signerNetwork} 上部署的智能合约地址，该合约实现了"
 
@@ -1508,7 +1509,7 @@ msgstr "合约开发团队将很快开始为 Juicebox 上的项目提供 L2层�
 
 #: src/components/v1/FundingCycle/Spending.tsx
 msgid "The funds available to withdraw for this funding cycle after the {0}% JBX fee is subtracted. This number won't roll over to the next funding cycle, so funds should be withdrawn before it ends."
-msgstr "在减去 {0} 的 JBX 费用后，当前筹款周期可提取的资金。这一数额并不会流转到下一周期，因此最好在本周期结束前提取。"
+msgstr "在减去 {0} 的 JBX 费用后，当前筹款周期可提取的资金。这一数额并不会流转到下个周期，因此最好在本周期结束前提取。"
 
 #: src/components/Landing/index.tsx
 msgid "The future will be led by creators, and owned by communities."
@@ -1566,6 +1567,10 @@ msgstr "任何时候都可以修改这些属性。"
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "These settings will <0>not</0> be editable immediately within a funding cycle. They can only be changed for <1>upcoming</1> funding cycles."
 msgstr "这些属性<0>不能</0> 在同一个筹款周期内马上进行修改。 更改的配置只会在 <1>后面的</1> 筹款周期生效。"
+
+#: src/constants/ballotStrategies/ballotStrategies.ts
+msgid "This address is an unrecognized strategy contract. Make sure it is correct!"
+msgstr ""
 
 #: src/components/shared/Mod.tsx
 msgid "This address will receive any tokens minted when the recipient project gets paid."
@@ -1711,10 +1716,6 @@ msgstr "Twitter"
 msgid "Unavailable"
 msgstr "不可用"
 
-#: src/constants/ballotStrategies/ballotStrategies.ts
-msgid "Unrecognized strategy contract. Make sure this is correct!"
-msgstr "未识别的策略合约。请确保这是正确的！"
-
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 msgid "Unstaked balance"
 msgstr "取出的余额"
@@ -1743,7 +1744,7 @@ msgstr "用户可以通过付费使用你的应用程序或服务来资助你的
 msgid "Using a duration is recommended. Allowing funding cycles to be reconfigured at any time will appear risky to contributors."
 msgstr "推荐设置一个持续时间。对于贡献者来说，可以随时修改配置的筹款周期是具有风险的。"
 
-#: src/components/shared/forms/RulesForm.tsx
+#: src/components/shared/ReconfigurationStrategyDrawer.tsx
 msgid "Using a reconfiguration strategy is recommended. Projects with no strategy will appear risky to contributors."
 msgstr "推荐设置一个修改配置的策略（延迟生效）。对于贡献者来说，没有策略的项目是具有风险的。"
 
@@ -1965,10 +1966,6 @@ msgstr "项目拥有者"
 #: src/components/Projects/index.tsx
 msgid "projects"
 msgstr "项目"
-
-#: src/components/shared/forms/RulesForm.tsx
-msgid "this interface"
-msgstr "这个界面"
 
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx

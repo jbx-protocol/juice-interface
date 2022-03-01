@@ -282,7 +282,7 @@ export function useTrendingProjects(count: number, days: number) {
 
   return cache && cache.length >= count && !shouldUpdateCache
     ? {
-        data: cache,
+        data: cache.slice(0, count),
         isLoading: cache === undefined,
       }
     : trendingProjectsQuery

@@ -280,12 +280,12 @@ export function useTrendingProjects(count: number, days: number) {
     ).then(() => console.info('Uploaded new trending cache'))
   }
 
-  return shouldUpdateCache
-    ? trendingProjectsQuery
-    : {
+  return cache && cache.length >= count && !shouldUpdateCache
+    ? {
         data: cache,
         isLoading: cache === undefined,
       }
+    : trendingProjectsQuery
 }
 
 // Query all projects that a wallet has previously made payments to

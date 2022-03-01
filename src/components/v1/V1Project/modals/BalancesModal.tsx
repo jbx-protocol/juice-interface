@@ -27,7 +27,7 @@ export default function BalancesModal({
   const [editModalVisible, setEditModalVisible] = useState<boolean>()
   const [loading, setLoading] = useState<boolean>()
   const [editingTokenRefs, setEditingTokenRefs] = useState<TokenRef[]>([])
-  const { owner, metadata } = useContext(V1ProjectContext)
+  const { owner, metadata, handle } = useContext(V1ProjectContext)
   const setProjectUriTx = useSetProjectUriTx()
 
   useEffect(() => {
@@ -39,20 +39,25 @@ export default function BalancesModal({
   const hasEditPermission = useHasPermission([OperatorPermission.SetUri])
 
   async function updateTokenRefs() {
+    if (!handle) return
+
     setLoading(true)
 
-    const uploadedMetadata = await uploadProjectMetadata({
-      ...metadata,
-      tokens: editingTokenRefs.filter(t => t.type),
-    })
+    const uploadedMetadata = await uploadProjectMetadata(
+      {
+        ...metadata,
+        tokens: editingTokenRefs.filter(t => t.type),
+      },
+      handle,
+    )
 
-    if (!uploadedMetadata?.success) {
+    if (!uploadedMetadata.IpfsHash) {
       setLoading(false)
       return
     }
 
     setProjectUriTx(
-      { cid: uploadedMetadata.cid },
+      { cid: uploadedMetadata.IpfsHash },
       {
         onDone: () => {
           setLoading(false)

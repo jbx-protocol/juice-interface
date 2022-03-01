@@ -1,8 +1,16 @@
 import { BigNumber } from '@ethersproject/bignumber'
-
+import { SECONDS_IN_DAY } from 'constants/numbers'
+import { useIpfsCache } from 'hooks/IpfsCache'
+import { IpfsCacheName } from 'models/ipfs-cache/cache-name'
 import { ProjectState } from 'models/project-visibility'
-import { Project, TrendingProject } from 'models/subgraph-entities/project'
+import {
+  parseTrendingProjectJson,
+  Project,
+  TrendingProject,
+  TrendingProjectJson,
+} from 'models/subgraph-entities/project'
 import { V1TerminalVersion } from 'models/v1/terminals'
+import { useEffect, useMemo, useState } from 'react'
 import {
   EntityKeys,
   GraphQueryOpts,
@@ -12,11 +20,8 @@ import {
 } from 'utils/graph'
 import { getTerminalAddress } from 'utils/v1/terminals'
 
-import { useEffect, useState } from 'react'
-
-import { SECONDS_IN_DAY } from 'constants/numbers'
-
 import { archivedProjectIds } from '../../constants/v1/archivedProjects'
+import { uploadIpfsJsonCache } from '../../utils/ipfs'
 import useSubgraphQuery, { useInfiniteSubgraphQuery } from '../SubgraphQuery'
 
 interface ProjectsOptions {
@@ -131,6 +136,30 @@ export function useTrendingProjects(count: number, days: number) {
     >
   >()
 
+  // Check if remote cache exists
+  const cache = useIpfsCache(
+    IpfsCacheName.trending,
+    useMemo(
+      () => ({
+        // Cache expires every 12 min, will update 5 times an hour. (Arbitrary)
+        ttl: { minutes: 12 },
+        deserialize: data => data.map(parseTrendingProjectJson),
+      }),
+      [],
+    ),
+  )
+
+  // Cache === null indicates cache is missing or expired
+  const shouldUpdateCache = cache === null
+
+  if (shouldUpdateCache) {
+    console.info('Trending cache missing or expired')
+  } else if (cache === undefined) {
+    console.info('Loading trending cache')
+  } else {
+    console.info('Using trending cache')
+  }
+
   useEffect(() => {
     const loadPayments = async () => {
       setLoadingPayments(true)
@@ -188,12 +217,13 @@ export function useTrendingProjects(count: number, days: number) {
       setLoadingPayments(false)
     }
 
-    loadPayments()
-  }, [count, days])
+    if (shouldUpdateCache) loadPayments()
+  }, [count, days, shouldUpdateCache])
 
   // Query project data for all trending project IDs
+  // Only query if cache needs updating
   const projectsQuery = useSubgraphQuery(
-    projectStats
+    projectStats && shouldUpdateCache
       ? {
           entity: 'project',
           keys,
@@ -206,9 +236,10 @@ export function useTrendingProjects(count: number, days: number) {
       : null,
   )
 
-  return {
+  const trendingProjectsQuery = {
     ...projectsQuery,
-    isLoading: projectsQuery.isLoading || loadingPayments,
+    isLoading:
+      projectsQuery.isLoading || loadingPayments || cache === undefined,
     // Return TrendingProjects sorted by `trendingScore`
     data: projectsQuery.data
       ?.map(p => {
@@ -216,7 +247,7 @@ export function useTrendingProjects(count: number, days: number) {
           p.id && projectStats ? projectStats[p.id.toString()] : undefined
 
         // Algorithm to rank trending projects:
-        //   -  trendingScore = (volume gained in x days) * (number of payments made in x days)^2
+        // trendingScore = volume * (number of payments)^2
         const trendingScore = stats?.trendingVolume.mul(
           BigNumber.from(stats.paymentsCount).pow(2),
         )
@@ -231,6 +262,30 @@ export function useTrendingProjects(count: number, days: number) {
       .sort((a, b) => (a.trendingScore?.gt(b.trendingScore ?? 0) ? -1 : 1))
       .slice(0, count),
   }
+
+  if (trendingProjectsQuery.data?.length && shouldUpdateCache) {
+    // Update cache with new queried data
+    uploadIpfsJsonCache(
+      IpfsCacheName.trending,
+      trendingProjectsQuery.data.map(p =>
+        Object.entries(p).reduce(
+          (acc, [key, val]) => ({
+            ...acc,
+            // Serialize all BigNumbers to strings
+            [key]: BigNumber.isBigNumber(val) ? val.toString() : val,
+          }),
+          {} as TrendingProjectJson,
+        ),
+      ),
+    ).then(() => console.info('Uploaded new trending cache'))
+  }
+
+  return shouldUpdateCache
+    ? trendingProjectsQuery
+    : {
+        data: cache,
+        isLoading: cache === undefined,
+      }
 }
 
 // Query all projects that a wallet has previously made payments to

@@ -150,7 +150,7 @@ export function useTrendingProjects(count: number, days: number) {
   )
 
   // Cache === null indicates cache is missing or expired
-  const shouldUpdateCache = cache === null
+  const shouldUpdateCache = cache === null || (cache && cache?.length < count)
 
   if (shouldUpdateCache) {
     console.info('Trending cache missing or expired')
@@ -218,7 +218,7 @@ export function useTrendingProjects(count: number, days: number) {
     }
 
     if (shouldUpdateCache) loadPayments()
-  }, [count, days, shouldUpdateCache])
+  }, [days, shouldUpdateCache])
 
   // Query project data for all trending project IDs
   // Only query if cache needs updating
@@ -280,12 +280,12 @@ export function useTrendingProjects(count: number, days: number) {
     ).then(() => console.info('Uploaded new trending cache'))
   }
 
-  return cache && cache.length >= count && !shouldUpdateCache
-    ? {
-        data: cache.slice(0, count),
+  return shouldUpdateCache
+    ? trendingProjectsQuery
+    : {
+        data: cache,
         isLoading: cache === undefined,
       }
-    : trendingProjectsQuery
 }
 
 // Query all projects that a wallet has previously made payments to

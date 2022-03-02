@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import * as constants from '@ethersproject/constants'
-import { ProjectMetadataV3 } from 'models/project-metadata'
+import { ProjectMetadataV4 } from 'models/project-metadata'
 
 import {
   ETHPayoutGroupedSplits,
@@ -25,7 +25,7 @@ import { DEFAULT_BALLOT_STRATEGY } from 'constants/ballotStrategies/ballotStrate
 
 export interface V2ProjectState {
   version: number
-  projectMetadata: ProjectMetadataV3
+  projectMetadata: ProjectMetadataV4
   fundingCycleData: SerializedV2FundingCycleData
   fundingCycleMetadata: SerializedV2FundingCycleMetadata
   fundAccessConstraints: SerializedV2FundAccessConstraint[]
@@ -37,7 +37,7 @@ const defaultDiscountRate = parsePermille(0)
 const defaultReservedRate = parsePermille(0)
 const defaultRedemptionRate = parsePerbicent(100)
 
-const defaultProjectMetadataState: ProjectMetadataV3 = {
+const defaultProjectMetadataState: ProjectMetadataV4 = {
   name: '',
   infoUri: '',
   logoUri: '',
@@ -45,7 +45,7 @@ const defaultProjectMetadataState: ProjectMetadataV3 = {
   twitter: '',
   discord: '',
   tokens: [],
-  version: 3,
+  version: 4,
 }
 
 const defaultFundingCycleData: SerializedV2FundingCycleData =

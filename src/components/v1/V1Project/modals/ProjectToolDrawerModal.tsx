@@ -1,11 +1,12 @@
 import { t, Trans } from '@lingui/macro'
-import { Button, Divider, Drawer, Form, Space } from 'antd'
+import { Button, Divider, Drawer, Form, notification, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import axios from 'axios'
 import { FormItems } from 'components/shared/formItems'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { readNetwork } from 'constants/networks'
+import { NetworkContext } from 'contexts/networkContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import useUnclaimedBalanceOfUser from 'hooks/v1/contractReader/UnclaimedBalanceOfUser'
 import { useAddToBalanceTx } from 'hooks/v1/transactor/AddToBalanceTx'
@@ -26,6 +27,7 @@ export default function ProjectToolDrawerModal({
 }) {
   const { tokenSymbol, owner, terminal, metadata, projectId, handle } =
     useContext(V1ProjectContext)
+  const { userAddress } = useContext(NetworkContext)
   const safeTransferFromTx = useSafeTransferFromTx()
   const transferTokensTx = useTransferTokensTx()
   const addToBalanceTx = useAddToBalanceTx()
@@ -84,15 +86,29 @@ export default function ProjectToolDrawerModal({
   }
 
   async function setArchived(archived: boolean) {
-    const newMetadata = {
-      ...metadata,
-      archived,
+    // Manual check to help avoid creating axios request when onchain tx would fail
+    if (!userAddress || userAddress.toLowerCase() !== owner?.toLowerCase()) {
+      notification.error({
+        key: new Date().valueOf().toString(),
+        message: 'Connected wallet not authorized',
+        duration: 0,
+      })
+      return
     }
+
     setLoadingArchive(true)
 
-    const uploadedMetadata = await uploadProjectMetadata(newMetadata)
+    const uploadedMetadata = await uploadProjectMetadata({
+      ...metadata,
+      archived,
+    })
 
     if (!uploadedMetadata.IpfsHash) {
+      notification.error({
+        key: new Date().valueOf().toString(),
+        message: 'Failed to update project metadata',
+        duration: 0,
+      })
       setLoadingArchive(false)
       return
     }

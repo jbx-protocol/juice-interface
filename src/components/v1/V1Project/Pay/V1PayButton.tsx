@@ -18,19 +18,14 @@ import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
 
 export default function V1PayButton({
   form,
+  onClick,
 }: {
   form: FormInstance<PayFormFields>
+  onClick: () => void
 }) {
-  const [payModalVisible, setPayModalVisible] = useState<boolean>(false)
-  const [payWarningModalVisible, setPayWarningModalVisible] =
-    useState<boolean>(false)
   const { projectId, currentFC, metadata, isArchived, terminal } =
     useContext(V1ProjectContext)
   if (!metadata || !currentFC) return null
-
-  const initiatePay = () => {
-    setPayModalVisible(true)
-  }
 
   const payAmount: string = form.getFieldValue('amount')
   const payInCurrency = form.getFieldValue('payInCurrency')
@@ -102,7 +97,7 @@ export default function V1PayButton({
         <Button
           style={{ width: '100%' }}
           type="primary"
-          onClick={parseFloat(fromWad(weiPayAmt)) ? initiatePay : undefined}
+          onClick={parseFloat(fromWad(weiPayAmt)) ? onClick : undefined}
         >
           {payButtonText}
         </Button>
@@ -115,20 +110,6 @@ export default function V1PayButton({
           </div>
         )}
       </Form.Item>
-      <PayWarningModal
-        visible={payWarningModalVisible}
-        onOk={() => {
-          setPayWarningModalVisible(false)
-          setPayModalVisible(true)
-        }}
-        onCancel={() => setPayWarningModalVisible(false)}
-      />
-      <ConfirmPayOwnerModal
-        visible={payModalVisible}
-        onSuccess={() => setPayModalVisible(false)}
-        onCancel={() => setPayModalVisible(false)}
-        weiAmount={weiPayAmt}
-      />
     </>
   )
 }

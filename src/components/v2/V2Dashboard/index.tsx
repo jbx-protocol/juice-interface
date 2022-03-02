@@ -1,4 +1,5 @@
 import { V2ProjectContext } from 'contexts/v2/projectContext'
+
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { useParams } from 'react-router-dom'
 import Loading from 'components/shared/Loading'

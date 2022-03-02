@@ -234,7 +234,6 @@ export default function V1Dashboard() {
     <V1ProjectContext.Provider value={project}>
       <div style={layouts.maxWidth}>
         <V1Project />
-
         <div style={{ textAlign: 'center', padding: 20 }}>
           <ScrollToTopButton />
         </div>

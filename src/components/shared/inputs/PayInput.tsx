@@ -2,8 +2,9 @@ import { Form, FormInstance } from 'antd'
 
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
-
-import { currencyName } from 'utils/v1/currency'
+import { CURRENCY_METADATA } from 'constants/currency'
+import { CurrencyContext } from 'contexts/currencyContext'
+import { useContext } from 'react'
 
 export type PayFormFields = {
   amount?: string
@@ -22,8 +23,13 @@ export default function PayInput({
   const payAmount: string = form.getFieldValue('amount')
   const payInCurrency = form.getFieldValue('payInCurrency')
 
+  const { currencyMetadata, currencyETH, currencyUSD } =
+    useContext(CurrencyContext)
+
   const togglePayInCurrency = () => {
-    form.setFieldsValue({ payInCurrency: payInCurrency === 0 ? 1 : 0 })
+    form.setFieldsValue({
+      payInCurrency: payInCurrency === currencyETH ? currencyUSD : currencyETH,
+    })
   }
 
   return (
@@ -43,7 +49,9 @@ export default function PayInput({
             accessory={
               <InputAccessoryButton
                 withArrow={true}
-                content={currencyName(payInCurrency)}
+                content={
+                  currencyMetadata ? currencyMetadata[payInCurrency].name : ''
+                }
                 onClick={togglePayInCurrency}
               />
             }

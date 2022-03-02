@@ -63,8 +63,8 @@ export default function V1PayInputSubText({
         ? parseEther('1')
         : converter.usdToWei('1')) ?? BigNumber.from(0),
     )
-    return `${receivedTickets} ${tokenText}/${V1CurrencyName(payInCurrrency)}`
-  }, [converter, payInCurrrency, tokenText, weiPayAmt, currentFC])
+    return `${receivedTickets} ${tokenText}/${V1CurrencyName(payInCurrency)}`
+  }, [converter, payInCurrency, tokenText, weiPayAmt, currentFC])
 
   return (
     <div style={{ fontSize: '.7rem' }}>

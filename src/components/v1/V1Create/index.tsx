@@ -235,7 +235,7 @@ export default function V1Create() {
 
     const uploadedMetadata = await uploadProjectMetadata(
       editingProjectInfo.metadata,
-      metadataNameForHandle(editingProjectInfo.handle),
+      editingProjectInfo.handle,
     )
 
     if (!uploadedMetadata.IpfsHash) {

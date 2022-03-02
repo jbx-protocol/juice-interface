@@ -9,7 +9,7 @@ import {
 } from 'hooks/AppSelector'
 import { useDeployProjectTx } from 'hooks/v2/transactor/DeployProjectTx'
 import { useCallback, useState } from 'react'
-import { metadataNameForProjectName, uploadProjectMetadata } from 'utils/ipfs'
+import { uploadProjectMetadata } from 'utils/ipfs'
 
 export default function DeployProjectButton({
   type = 'default',
@@ -42,10 +42,7 @@ export default function DeployProjectButton({
     }
 
     // Upload project metadata
-    const uploadedMetadata = await uploadProjectMetadata(
-      projectMetadata,
-      metadataNameForProjectName(projectMetadata.name),
-    )
+    const uploadedMetadata = await uploadProjectMetadata(projectMetadata)
 
     if (!uploadedMetadata.IpfsHash) {
       console.error('Failed to upload project metadata.')

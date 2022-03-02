@@ -3,7 +3,7 @@ import axios from 'axios'
 
 import { IpfsCacheJsonData } from 'models/ipfs-cache/cache-data'
 import { IpfsCacheName } from 'models/ipfs-cache/cache-name'
-import { ProjectMetadataV3 } from 'models/project-metadata'
+import { consolidateMetadata, ProjectMetadataV4 } from 'models/project-metadata'
 
 import { readNetwork } from 'constants/networks'
 import { IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
@@ -44,9 +44,6 @@ export const logoNameForHandle = (handle: string) => `juicebox-@${handle}-logo`
 
 export const metadataNameForHandle = (handle: string) =>
   `juicebox-@${handle}-metadata`
-
-export const metadataNameForProjectName = (projectName: string) =>
-  `juicebox-${projectName.replaceAll(' ', '-')}-metadata`
 
 export const ipfsCidUrl = (hash: string) =>
   `https://${IPFS_GATEWAY_HOSTNAME}/ipfs/${hash}`
@@ -95,23 +92,19 @@ export const unpinIpfsFileByCid = (cid: string | undefined) =>
     : Promise.resolve(false)
 
 export const uploadProjectMetadata = (
-  metadata: Omit<ProjectMetadataV3, 'version'>,
-  name: string,
+  metadata: Omit<ProjectMetadataV4, 'version'>,
+  handle?: string,
 ) =>
-  pinata.pinJSONToIPFS(
-    {
-      ...metadata,
-      version: 3,
+  pinata.pinJSONToIPFS(consolidateMetadata(metadata), {
+    pinataMetadata: {
+      keyvalues: {
+        tag: IPFS_TAGS.METADATA,
+      } as any,
+      name: handle
+        ? metadataNameForHandle(handle)
+        : 'juicebox-project-metadata.json',
     },
-    {
-      pinataMetadata: {
-        keyvalues: {
-          tag: IPFS_TAGS.METADATA,
-        } as any,
-        name,
-      },
-    },
-  )
+  })
 
 export const uploadIpfsJsonCache = <T extends IpfsCacheName>(
   tag: T,

@@ -92,7 +92,7 @@ export default function ProjectToolDrawerModal({
 
     const uploadedMetadata = await uploadProjectMetadata(newMetadata)
 
-    if (!uploadedMetadata.success) {
+    if (!uploadedMetadata.IpfsHash) {
       setLoadingArchive(false)
       return
     }
@@ -118,7 +118,7 @@ export default function ProjectToolDrawerModal({
     )
 
     setUriTx(
-      { cid: uploadedMetadata.cid },
+      { cid: uploadedMetadata.IpfsHash },
       { onDone: () => setLoadingArchive(false) },
     )
   }

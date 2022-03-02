@@ -1,10 +1,10 @@
-import pinataClient, { PinataMetadata, PinataPinResponse } from '@pinata/sdk';
-import axios from 'axios';
-import { IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs';
-import { readNetwork } from 'constants/networks';
-import { IpfsCacheJsonData } from 'models/ipfs-cache/cache-data';
-import { IpfsCacheName } from 'models/ipfs-cache/cache-name';
-import { consolidateMetadata, ProjectMetadataV4 } from 'models/project-metadata';
+import pinataClient, { PinataMetadata, PinataPinResponse } from '@pinata/sdk'
+import axios from 'axios'
+import { IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
+import { readNetwork } from 'constants/networks'
+import { IpfsCacheJsonData } from 'models/ipfs-cache/cache-data'
+import { IpfsCacheName } from 'models/ipfs-cache/cache-name'
+import { consolidateMetadata, ProjectMetadataV4 } from 'models/project-metadata'
 
 const pinata_api_key = process.env.REACT_APP_PINATA_PINNER_KEY
 const pinata_secret_api_key = process.env.REACT_APP_PINATA_PINNER_SECRET
@@ -91,19 +91,18 @@ export const unpinIpfsFileByCid = (cid: string | undefined) =>
 
 export const uploadProjectMetadata = (
   metadata: Omit<ProjectMetadataV4, 'version'>,
-  handle: string,
+  handle?: string,
 ) =>
-  pinata.pinJSONToIPFS(
-    consolidateMetadata(metadata),
-    {
-      pinataMetadata: {
-        keyvalues: {
-          tag: IPFS_TAGS.METADATA,
-        } as any,
-        name: metadataNameForHandle(handle),
-      },
+  pinata.pinJSONToIPFS(consolidateMetadata(metadata), {
+    pinataMetadata: {
+      keyvalues: {
+        tag: IPFS_TAGS.METADATA,
+      } as any,
+      name: handle
+        ? metadataNameForHandle(handle)
+        : 'juicebox-project-metadata.json',
     },
-  )
+  })
 
 export const uploadIpfsJsonCache = <T extends IpfsCacheName>(
   tag: T,

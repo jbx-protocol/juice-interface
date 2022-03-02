@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { constants } from 'ethers'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { PayoutMod, TicketMod } from 'models/mods'
-import { ProjectMetadataV3 } from 'models/project-metadata'
+import { ProjectMetadataV4 } from 'models/project-metadata'
 import {
   fromPerbicent,
   fromPermille,
@@ -16,7 +16,7 @@ import {
 } from 'utils/v1/serializers'
 
 interface EditingProjectInfo {
-  metadata: ProjectMetadataV3
+  metadata: ProjectMetadataV4
   handle: string
 }
 
@@ -45,7 +45,8 @@ export const defaultProjectState: EditingProjectState = {
       twitter: '',
       discord: '',
       tokens: [],
-      version: 3,
+      version: 4,
+      archived: false,
     },
     handle: '',
   },

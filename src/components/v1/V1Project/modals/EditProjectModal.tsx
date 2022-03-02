@@ -4,7 +4,7 @@ import { useForm } from 'antd/lib/form/Form'
 import { FormItems } from 'components/shared/formItems'
 import { useSetProjectHandleTx } from 'hooks/v1/transactor/SetProjectHandleTx'
 import { useSetProjectUriTx } from 'hooks/v1/transactor/SetProjectUriTx'
-import { ProjectMetadataV3 } from 'models/project-metadata'
+import { ProjectMetadataV4 } from 'models/project-metadata'
 import { useEffect, useState } from 'react'
 import {
   cidFromUrl,
@@ -38,7 +38,7 @@ export default function EditProjectModal({
   onCancel,
 }: {
   handle: string | undefined
-  metadata: ProjectMetadataV3 | undefined
+  metadata: ProjectMetadataV4 | undefined
   visible?: boolean
   onSuccess?: VoidFunction
   onCancel?: VoidFunction

@@ -77,7 +77,8 @@ export default function ProjectCard({
 
   const terminalVersion = getTerminalVersion(_project?.terminal)
 
-  const isArchived = archivedProjectIds.includes(_project.id.toNumber())
+  const isArchived =
+    archivedProjectIds.includes(_project.id.toNumber()) || metadata?.archived
 
   return (
     <Link

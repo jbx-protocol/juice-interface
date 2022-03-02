@@ -139,6 +139,10 @@ msgstr ""
 msgid "A mechanism like Juicebox where upfront financial commitments should be honored over time is only guaranteed within an ecosystem like Ethereum."
 msgstr ""
 
+#: src/components/Projects/ArchivedProjectsMessage.tsx
+msgid "A project can be archived by its owner from the tools menu on the project page."
+msgstr "A project can be archived by its owner from the tools menu on the project page."
+
 #: src/components/Landing/QAs.tsx
 msgid "A project can choose to reserve a percentage of tokens for itself. Instead of being distributed to paying users, this percentage of tokens is instead minted for the project."
 msgstr ""
@@ -260,6 +264,11 @@ msgstr ""
 #: src/constants/ballotStrategies/ballotStrategies.ts
 msgid "Any reconfiguration to an upcoming funding cycle will take effect once the current cycle ends. A project with no strategy may be vulnerable to being rug-pulled by its owner."
 msgstr ""
+
+#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
+#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
+msgid "Archive project"
+msgstr "Archive project"
 
 #: src/components/Projects/ProjectsFilterAndSort.tsx
 msgid "Archived"
@@ -780,10 +789,6 @@ msgstr "ID: {0}"
 msgid "If locked, this can't be edited or removed until the lock expires or the funding cycle is reconfigured."
 msgstr "If locked, this can't be edited or removed until the lock expires or the funding cycle is reconfigured."
 
-#: src/components/Projects/ArchivedProjectsMessage.tsx
-msgid "If you have a project you'd like to archive, let the Juicebox team know in Discord."
-msgstr ""
-
 #: src/components/Landing/QAs.tsx
 msgid "If you know how much your project needs to earn over some period of time to be sustainable, you can set a funding target with that amount. If your project earns more than that, the surplus funds are locked in an overflow pool. Anyone holding your project's tokens can claim a portion of the overflow pool in exchange for redeeming their tokens."
 msgstr "If you know how much your project needs to earn over some period of time to be sustainable, you can set a funding target with that amount. If your project earns more than that, the surplus funds are locked in an overflow pool. Anyone holding your project's tokens can claim a portion of the overflow pool in exchange for redeeming their tokens."
@@ -990,6 +995,10 @@ msgstr ""
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "Not set"
 msgstr ""
+
+#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
+msgid "Note:"
+msgstr "Note:"
 
 #: src/components/Landing/index.tsx
 msgid "Note: Juicebox is new, unaudited, and not guaranteed to work perfectly. Before spending money, do your own research: <0>ask questions</0>, <1>check out the code</1>, and understand the risks!"
@@ -1707,9 +1716,18 @@ msgstr "Trending"
 msgid "Twitter"
 msgstr ""
 
+#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
+#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
+msgid "Unarchive project"
+msgstr "Unarchive project"
+
 #: src/components/shared/AMMPrices/TokenAMMPriceRow.tsx
 msgid "Unavailable"
 msgstr "Unavailable"
+
+#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
+msgid "Unless payments are paused in your funding cycle settings, your project will still be able to receive payments directly through the Juicebox protocol contracts."
+msgstr "Unless payments are paused in your funding cycle settings, your project will still be able to receive payments directly through the Juicebox protocol contracts."
 
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 msgid "Unstaked balance"
@@ -1887,6 +1905,18 @@ msgstr ""
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "Your project is funded across funding cycles. A funding cycle has a funding target and a duration. Your project's funding cycle configuration will depend on the kind of project you're starting."
 msgstr ""
+
+#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
+msgid "Your project will appear archived, and will not be able to receive payments through the juicebox.money app. You can unarchive a project at any time. Please allow a few days for your project to appear under the \"archived\" filter on the Projects page."
+msgstr "Your project will appear archived, and will not be able to receive payments through the juicebox.money app. You can unarchive a project at any time. Please allow a few days for your project to appear under the \"archived\" filter on the Projects page."
+
+#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
+msgid "Your project will immediately appear active on the juicebox.money app. Please allow a few days for it to appear in the \"active\" projects list on the Projects page."
+msgstr "Your project will immediately appear active on the juicebox.money app. Please allow a few days for it to appear in the \"active\" projects list on the Projects page."
+
+#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
+msgid "Your project will still be able to receive payments directly through the Juicebox protocol contracts."
+msgstr "Your project will still be able to receive payments directly through the Juicebox protocol contracts."
 
 #: src/components/shared/formItems/ProjectTwitter.tsx
 msgid "Your project's Twitter handle."

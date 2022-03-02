@@ -22,7 +22,7 @@ export default function ArchivedProjectsMessage({
           through the Juicebox contracts.
         </Trans>
         <Tooltip
-          title={t`If you have a project you'd like to archive, let the Juicebox team know in Discord.`}
+          title={t`A project can be archived by its owner from the tools menu on the project page.`}
         >
           <span
             style={{

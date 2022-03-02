@@ -115,7 +115,7 @@ export default function V1Dashboard() {
       : 'standard'
     const isPreviewMode = false
     const isArchived = projectId
-      ? archivedProjectIds.includes(projectId.toNumber())
+      ? archivedProjectIds.includes(projectId.toNumber()) || metadata?.archived
       : false
 
     return {

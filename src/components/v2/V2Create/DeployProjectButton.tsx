@@ -52,7 +52,7 @@ export default function DeployProjectButton({
 
     const groupedSplits = [payoutGroupedSplits, reserveTokenGroupedSplits]
 
-    deployProjectTx(
+    const projectId = await deployProjectTx(
       {
         projectMetadataCID: uploadedMetadata.IpfsHash,
         fundingCycleData,
@@ -70,6 +70,8 @@ export default function DeployProjectButton({
         },
       },
     )
+
+    console.log('asdf projectId', projectId)
   }, [
     deployProjectTx,
     projectMetadata,

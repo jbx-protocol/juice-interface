@@ -22,17 +22,17 @@ export type TransactorOptions = {
   onCancelled?: TransactorCallback
 }
 
-export type Transactor = (
+export type Transactor<R> = (
   contract: Contract,
   functionName: string,
   args: any[],
   options?: TransactorOptions,
-) => Promise<boolean>
+) => Promise<R | void>
 
-export type TransactorInstance<T> = (
+export type TransactorInstance<T, R = never> = (
   args: T,
   txOpts?: Omit<TransactorOptions, 'value'>,
-) => ReturnType<Transactor>
+) => ReturnType<Transactor<R>>
 
 // Check user has their wallet connected. If not, show select wallet prompt
 const checkWalletConnected = (
@@ -46,11 +46,11 @@ const checkWalletConnected = (
 
 // wrapper around BlockNative's Notify.js
 // https://docs.blocknative.com/notify
-export function useTransactor({
+export function useTransactor<R>({
   gasPrice,
 }: {
   gasPrice?: BigNumber
-}): Transactor | undefined {
+}): Transactor<R> | undefined {
   const {
     signingProvider: provider,
     onSelectWallet,
@@ -66,17 +66,17 @@ export function useTransactor({
       args: any[],
       options?: TransactorOptions,
     ) => {
-      if (!onSelectWallet) return false
+      if (!onSelectWallet) return
 
       if (!provider) {
         onSelectWallet()
         if (options?.onDone) options.onDone()
-        return false
+        return
       }
 
       checkWalletConnected(onSelectWallet, userAddress)
 
-      if (!provider) return false
+      if (!provider) return
 
       const signer = provider.getSigner()
 
@@ -169,7 +169,7 @@ export function useTransactor({
 
         options?.onDone && options.onDone()
 
-        return true
+        return result.value as R
       } catch (e) {
         const message = (e as Error).message
 
@@ -194,7 +194,7 @@ export function useTransactor({
 
         options?.onDone && options.onDone()
 
-        return false
+        return
       }
     },
     [onSelectWallet, provider, isDarkMode, gasPrice, userAddress],

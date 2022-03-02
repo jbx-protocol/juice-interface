@@ -11,17 +11,21 @@ import { GroupedSplits, SplitGroup } from 'models/v2/splits'
 
 import { TransactorInstance } from '../../Transactor'
 import { PEEL_METADATA_DOMAIN } from 'constants/v2/metadataDomain'
+import { BigNumber } from '@ethersproject/bignumber'
 
 const DEFAULT_MUST_START_AT_OR_AFTER = '1' // start immediately
 
-export function useDeployProjectTx(): TransactorInstance<{
-  projectMetadataCID: string
-  fundingCycleData: V2FundingCycleData
-  fundingCycleMetadata: V2FundingCycleMetadata
-  fundAccessConstraints: V2FundAccessConstraint[]
-  groupedSplits?: GroupedSplits<SplitGroup>[]
-  mustStartAtOrAfter?: string // epoch seconds. anything less than "now" will start immediately.
-}> {
+export function useDeployProjectTx(): TransactorInstance<
+  {
+    projectMetadataCID: string
+    fundingCycleData: V2FundingCycleData
+    fundingCycleMetadata: V2FundingCycleMetadata
+    fundAccessConstraints: V2FundAccessConstraint[]
+    groupedSplits?: GroupedSplits<SplitGroup>[]
+    mustStartAtOrAfter?: string // epoch seconds. anything less than "now" will start immediately.
+  },
+  BigNumber
+> {
   const { transactor, contracts } = useContext(V2UserContext)
   const { userAddress } = useContext(NetworkContext)
 

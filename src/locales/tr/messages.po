@@ -144,6 +144,10 @@ msgstr "Bağlanma eğrisi, tokenlerinizi taşma amaçlı kullanmak için daha uz
 msgid "A mechanism like Juicebox where upfront financial commitments should be honored over time is only guaranteed within an ecosystem like Ethereum."
 msgstr "Juicebox gibi, önceden yapılan finansal taahhütlerin zaman içinde yerine getirilmesi gereken bir mekanizma, yalnızca Ethereum gibi bir ekosistemde garanti edilir."
 
+#: src/components/Projects/ArchivedProjectsMessage.tsx
+msgid "A project can be archived by its owner from the tools menu on the project page."
+msgstr ""
+
 #: src/components/Landing/QAs.tsx
 msgid "A project can choose to reserve a percentage of tokens for itself. Instead of being distributed to paying users, this percentage of tokens is instead minted for the project."
 msgstr "Bir proje, kendisi için tokenlerin bir yüzdesini ayırmayı seçebilir. Bu token yüzdesi, ödeme yapan kullanıcılara dağıtılmak yerine proje için kullanılabilir."
@@ -789,10 +793,6 @@ msgstr "Kimlik: {0}"
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "If locked, this can't be edited or removed until the lock expires or the funding cycle is reconfigured."
 msgstr "Kilitliyse kilidin süresi dolana veya finansman döngüsü yeniden yapılandırılana kadar düzenlenemez veya kaldırılamaz."
-
-#: src/components/Projects/ArchivedProjectsMessage.tsx
-msgid "If you have a project you'd like to archive, let the Juicebox team know in Discord."
-msgstr "Arşivlemek istediğiniz bir proje varsa Discord'da Juicebox ekibine bildirin."
 
 #: src/components/Landing/QAs.tsx
 msgid "If you know how much your project needs to earn over some period of time to be sustainable, you can set a funding target with that amount. If your project earns more than that, the surplus funds are locked in an overflow pool. Anyone holding your project's tokens can claim a portion of the overflow pool in exchange for redeeming their tokens."

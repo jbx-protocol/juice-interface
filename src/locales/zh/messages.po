@@ -144,6 +144,10 @@ msgstr "联合曲线奖励那些等待更长时间才去赎回代币的人。"
 msgid "A mechanism like Juicebox where upfront financial commitments should be honored over time is only guaranteed within an ecosystem like Ethereum."
 msgstr "像 Juicebox 这样的机制，前期的财务承诺应该随着时间的推移得到兑现，只有在以太坊这样的生态系统中才能得到保证。"
 
+#: src/components/Projects/ArchivedProjectsMessage.tsx
+msgid "A project can be archived by its owner from the tools menu on the project page."
+msgstr ""
+
 #: src/components/Landing/QAs.tsx
 msgid "A project can choose to reserve a percentage of tokens for itself. Instead of being distributed to paying users, this percentage of tokens is instead minted for the project."
 msgstr "项目可以选择为自己保留一定比例的代币。这些代币不是分发给付费的用户，而是给到项目方。"
@@ -789,10 +793,6 @@ msgstr "ID: {0}"
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "If locked, this can't be edited or removed until the lock expires or the funding cycle is reconfigured."
 msgstr "如果锁定了，这一项就不能编辑或删除，除非锁定失效或重新配置筹款周期。"
-
-#: src/components/Projects/ArchivedProjectsMessage.tsx
-msgid "If you have a project you'd like to archive, let the Juicebox team know in Discord."
-msgstr "如果你想存档一个项目，可以在在 Discord 上告知 Juicebox 团队。"
 
 #: src/components/Landing/QAs.tsx
 msgid "If you know how much your project needs to earn over some period of time to be sustainable, you can set a funding target with that amount. If your project earns more than that, the surplus funds are locked in an overflow pool. Anyone holding your project's tokens can claim a portion of the overflow pool in exchange for redeeming their tokens."

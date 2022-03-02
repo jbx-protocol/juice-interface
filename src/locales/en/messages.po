@@ -139,6 +139,10 @@ msgstr ""
 msgid "A mechanism like Juicebox where upfront financial commitments should be honored over time is only guaranteed within an ecosystem like Ethereum."
 msgstr ""
 
+#: src/components/Projects/ArchivedProjectsMessage.tsx
+msgid "A project can be archived by its owner from the tools menu on the project page."
+msgstr "A project can be archived by its owner from the tools menu on the project page."
+
 #: src/components/Landing/QAs.tsx
 msgid "A project can choose to reserve a percentage of tokens for itself. Instead of being distributed to paying users, this percentage of tokens is instead minted for the project."
 msgstr ""
@@ -784,10 +788,6 @@ msgstr "ID: {0}"
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "If locked, this can't be edited or removed until the lock expires or the funding cycle is reconfigured."
 msgstr "If locked, this can't be edited or removed until the lock expires or the funding cycle is reconfigured."
-
-#: src/components/Projects/ArchivedProjectsMessage.tsx
-msgid "If you have a project you'd like to archive, let the Juicebox team know in Discord."
-msgstr ""
 
 #: src/components/Landing/QAs.tsx
 msgid "If you know how much your project needs to earn over some period of time to be sustainable, you can set a funding target with that amount. If your project earns more than that, the surplus funds are locked in an overflow pool. Anyone holding your project's tokens can claim a portion of the overflow pool in exchange for redeeming their tokens."

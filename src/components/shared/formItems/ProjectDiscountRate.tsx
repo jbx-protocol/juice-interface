@@ -9,12 +9,10 @@ export default function ProjectDiscountRate({
   hideLabel,
   formItemProps,
   value,
-  formState,
   onChange,
   disabled,
 }: {
   value: string | undefined
-  formState?: number
   onChange: (val?: number) => void
 } & FormItemExt) {
   return (
@@ -30,7 +28,6 @@ export default function ProjectDiscountRate({
         sliderValue={parseFloat(value ?? '0')}
         suffix="%"
         name={name}
-        formState={formState}
         onChange={onChange}
         step={0.1}
         disabled={disabled}

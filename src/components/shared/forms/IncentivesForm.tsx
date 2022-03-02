@@ -11,13 +11,11 @@ export type IncentivesFormFields = {
 
 export default function IncentivesForm({
   form,
-  formState,
   disableBondingCurve,
   disableDiscountRate,
   onSave,
 }: {
   form: FormInstance<IncentivesFormFields>
-  formState?: number
   disableBondingCurve?: string
   disableDiscountRate?: string
   onSave: (discountRate: string, bondingCurveRate: string) => void
@@ -67,7 +65,6 @@ export default function IncentivesForm({
         <FormItems.ProjectDiscountRate
           name="discountRate"
           value={discountRate}
-          formState={formState}
           onChange={(val?: number) => {
             form.setFieldsValue({ discountRate: val?.toString() })
           }}
@@ -81,7 +78,6 @@ export default function IncentivesForm({
         <FormItems.ProjectBondingCurveRate
           name="bondingCurveRate"
           value={form.getFieldValue('bondingCurveRate')}
-          formState={formState}
           onChange={(val?: number) =>
             form.setFieldsValue({ bondingCurveRate: val?.toString() })
           }

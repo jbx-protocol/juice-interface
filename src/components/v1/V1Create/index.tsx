@@ -77,7 +77,6 @@ export default function V1Create() {
     useState<boolean>(false)
   const [incentivesFormModalVisible, setIncentivesFormModalVisible] =
     useState<boolean>(false)
-  const [incentivesFormState, setIncentivesFormState] = useState<number>(0)
   const [ticketingFormModalVisible, setTicketingFormModalVisible] =
     useState<boolean>(false)
   const [rulesFormModalVisible, setRulesFormModalVisible] =
@@ -710,29 +709,32 @@ export default function V1Create() {
             viewedCurrentStep()
             resetIncentiveForm()
             setIncentivesFormModalVisible(false)
-            setIncentivesFormState(incentivesFormState + 1)
           }}
         >
-          <IncentivesForm
-            form={incentivesForm}
-            formState={incentivesFormState}
-            disableDiscountRate={
-              editingFC.duration.eq(0)
-                ? t`Discount rate disabled while funding cycle duration is 0.`
-                : undefined
-            }
-            disableBondingCurve={
-              !hasFundingTarget(editingFC)
-                ? t`Bonding curve disabled while no funding target is set.`
-                : undefined
-            }
-            onSave={async (discountRate: string, bondingCurveRate: string) => {
-              viewedCurrentStep()
-              await incentivesForm.validateFields()
-              onIncentivesFormSaved(discountRate, bondingCurveRate)
-              setIncentivesFormModalVisible(false)
-            }}
-          />
+          {incentivesFormModalVisible && (
+            <IncentivesForm
+              form={incentivesForm}
+              disableDiscountRate={
+                editingFC.duration.eq(0)
+                  ? t`Discount rate disabled while funding cycle duration is 0.`
+                  : undefined
+              }
+              disableBondingCurve={
+                !hasFundingTarget(editingFC)
+                  ? t`Bonding curve disabled while no funding target is set.`
+                  : undefined
+              }
+              onSave={async (
+                discountRate: string,
+                bondingCurveRate: string,
+              ) => {
+                viewedCurrentStep()
+                await incentivesForm.validateFields()
+                onIncentivesFormSaved(discountRate, bondingCurveRate)
+                setIncentivesFormModalVisible(false)
+              }}
+            />
+          )}
         </Drawer>
 
         <Drawer

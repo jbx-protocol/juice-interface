@@ -15,7 +15,6 @@ export default function NumberSlider({
   defaultValue,
   disabled,
   name, // Name is required for form validation
-  formState,
   formItemProps,
 }: {
   min?: number
@@ -24,7 +23,6 @@ export default function NumberSlider({
   sliderValue?: number
   suffix?: string
   onChange?: (num: number | undefined) => void
-  formState?: number
   defaultValue?: number
 } & FormItemExt) {
   const [_value, setValue] = useState<number | undefined>(
@@ -46,7 +44,7 @@ export default function NumberSlider({
 
   useEffect(() => {
     setValue(sliderValue)
-  }, [sliderValue, formState])
+  }, [sliderValue])
 
   return (
     <div>

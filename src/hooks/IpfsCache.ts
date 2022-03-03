@@ -52,10 +52,12 @@ export function useIpfsCache<T extends IpfsCacheName>(
 
         // Unpin cache files, including latest if expired
         // There should never be more than one cache file to unpin. But during high traffic it may be possible for multiple unique cache files to be uploaded by different users simultaneously
-        list.rows.splice(0, isExpired ? 1 : 0).reduce(async (_, row) => {
-          // Await sequential requests, as simultaenous requests may be rate limited by Pinata api endpoint
-          await unpinIpfsFileByCid(row.ipfs_pin_hash)
-        }, Promise.resolve())
+        list.rows.slice(isExpired ? 0 : 1).reduce(
+          async (_, row) =>
+            // Await sequential requests, as simultaenous requests may be rate limited by Pinata api endpoint
+            await unpinIpfsFileByCid(row.ipfs_pin_hash),
+          Promise.resolve(),
+        )
       } catch (e) {
         console.error('Error loading IPFS cache', tag, e)
       }

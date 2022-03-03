@@ -1,6 +1,7 @@
 import PayInput from 'components/shared/inputs/Pay/PayInput'
 import ProjectHeader from 'components/shared/ProjectHeader'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { useV1PayProjectTx } from 'hooks/v1/transactor/PayProjectTx'
 import { useContext } from 'react'
 import { fromPermille } from 'utils/formatNumber'
 
@@ -14,6 +15,8 @@ export default function V2Project() {
     payoutSplits,
     reserveTokenSplits,
   } = useContext(V2ProjectContext)
+
+  const payProjectTx = useV1PayProjectTx() // TODO: make this V2
 
   if (!projectId) return null
 
@@ -58,7 +61,7 @@ export default function V2Project() {
           </ul>
         </div>
       )}
-      <PayInput PayButton={V2PayButton} />
+      <PayInput PayButton={V2PayButton} payProjectTx={payProjectTx} />
     </div>
   )
 }

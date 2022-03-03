@@ -3,6 +3,8 @@ import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { CSSProperties, useContext } from 'react'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 
+import { useV1PayProjectTx } from 'hooks/v1/transactor/PayProjectTx'
+
 import ProjectHeader from 'components/shared/ProjectHeader'
 import PayInput from 'components/shared/inputs/Pay/PayInput'
 
@@ -26,6 +28,8 @@ export default function V1Project({
   const { currentFC, projectId, handle, metadata, isArchived } =
     useContext(V1ProjectContext)
 
+  const payProjectTx = useV1PayProjectTx()
+
   const fcMetadata = decodeFundingCycleMetadata(currentFC?.metadata)
 
   const gutter = 40
@@ -47,7 +51,7 @@ export default function V1Project({
         </Col>
 
         <Col xs={24} md={column ? 24 : 12} style={{ marginTop: gutter }}>
-          <PayInput PayButton={V1PayButton} />
+          <PayInput PayButton={V1PayButton} payProjectTx={payProjectTx} />
         </Col>
       </Row>
 

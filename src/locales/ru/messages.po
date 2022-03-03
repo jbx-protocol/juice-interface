@@ -856,7 +856,7 @@ msgstr "Однако Juicebox все еще является экспериме�
 
 #: src/components/v1/V1Project/modals/PayWarningModal.tsx
 msgid "I understand"
-msgstr "Я понимаю<<<<<<< HEAD"
+msgstr "Я понимаю"
 
 #: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 msgid "ID: {0}"
@@ -1919,7 +1919,7 @@ msgstr "V1"
 
 #: src/components/Projects/ProjectsFilterAndSort.tsx
 msgid "V1.1"
-msgstr "V1.1<<<<<<< HEAD"
+msgstr "V1.1"
 
 #: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 msgid "Version of the terminal contract used by this project."

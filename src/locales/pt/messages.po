@@ -516,7 +516,7 @@ msgstr "Atual proprietário: {owner}"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Currently worth: <0><1/>{0}</0>"
-msgstr "Atualmente vale: <0><1/>{0}</0><<<<<<< HEAD"
+msgstr "Atualmente vale: <0><1/>{0}</0>"
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/constants/ballotStrategies/ballotStrategies.ts
@@ -856,7 +856,7 @@ msgstr "Contudo, Juicebox é ainda um software experimental. Embora a equipe de 
 
 #: src/components/v1/V1Project/modals/PayWarningModal.tsx
 msgid "I understand"
-msgstr "Eu entendo<<<<<<< HEAD"
+msgstr "Eu entendo"
 
 #: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 msgid "ID: {0}"
@@ -1317,7 +1317,7 @@ msgstr "Receba ERC20"
 
 #: src/components/v1/V1Project/Pay/PayInputSubText.tsx
 msgid "Receive {receiveText}"
-msgstr "Receba {receiveText}<<<<<<< HEAD"
+msgstr "Receba {receiveText}"
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/v1/V1Create/index.tsx
@@ -1464,7 +1464,7 @@ msgstr "Regras sobre como fazer mudanças no seu projeto."
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/v2/V2Create/tabs/RulesTab/ProjectReconfigurationFormItem.tsx
 msgid "Rules for how this project's funding cycles can be reconfigured."
-msgstr "Regras para como os ciclos de financiamento deste projeto podem ser reconfigurados.<<<<<<< HEAD"
+msgstr "Regras para como os ciclos de financiamento deste projeto podem ser reconfigurados."
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
@@ -1919,7 +1919,7 @@ msgstr "V1"
 
 #: src/components/Projects/ProjectsFilterAndSort.tsx
 msgid "V1.1"
-msgstr "V1.1<<<<<<< HEAD"
+msgstr "V1.1"
 
 #: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 msgid "Version of the terminal contract used by this project."
@@ -2156,7 +2156,7 @@ msgstr "proprietário do projeto"
 #: src/components/Projects/HoldingsProjects.tsx
 #: src/components/Projects/index.tsx
 msgid "projects"
-msgstr "projetos<<<<<<< HEAD======="
+msgstr "projetos"
 
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
 msgid "seconds"

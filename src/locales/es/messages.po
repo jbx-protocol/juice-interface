@@ -475,7 +475,7 @@ msgstr "Conectar"
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
 msgid "Connect wallet to deploy"
-msgstr "Conecta tu billetera para desplegar<<<<<<< HEAD"
+msgstr "Conecta tu billetera para desplegar"
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/v2/V2Create/tabs/RulesTab/ProjectReconfigurationFormItem.tsx
@@ -516,7 +516,7 @@ msgstr "Dueño actual: {owner}"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Currently worth: <0><1/>{0}</0>"
-msgstr "Actualmente vale: <0><1/>{0}</0><<<<<<< HEAD"
+msgstr "Actualmente vale: <0><1/>{0}</0>"
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/constants/ballotStrategies/ballotStrategies.ts
@@ -856,7 +856,7 @@ msgstr "Sin embargo, Juicebox es todavía un software experimental. Aunque el eq
 
 #: src/components/v1/V1Project/modals/PayWarningModal.tsx
 msgid "I understand"
-msgstr "Entiendo<<<<<<< HEAD"
+msgstr "Entiendo"
 
 #: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 msgid "ID: {0}"
@@ -1317,7 +1317,7 @@ msgstr "Recibe tokens ERC20"
 
 #: src/components/v1/V1Project/Pay/PayInputSubText.tsx
 msgid "Receive {receiveText}"
-msgstr "Recibe {receiveText}<<<<<<< HEAD"
+msgstr "Recibe {receiveText}"
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/v1/V1Create/index.tsx
@@ -1464,7 +1464,7 @@ msgstr "Reglas para cómo pueden realizarse cambios a tu proyecto."
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/v2/V2Create/tabs/RulesTab/ProjectReconfigurationFormItem.tsx
 msgid "Rules for how this project's funding cycles can be reconfigured."
-msgstr "Reglas para cómo pueden ser reconfigurados los ciclos de financiamiento de este proyecto.<<<<<<< HEAD"
+msgstr "Reglas para cómo pueden ser reconfigurados los ciclos de financiamiento de este proyecto."
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
@@ -1622,7 +1622,7 @@ msgstr ""
 
 #: src/components/Landing/QAs.tsx
 msgid "The Juicebox protocol is governed by a community of JBX token holders who vote on proposals fortnightly."
-msgstr "El protocolo JuiceBox es gobernado por una comunidad de tenedores de tokens JBX quienes votan las propuestas quincenalmente.<<<<<<< HEAD"
+msgstr "El protocolo JuiceBox es gobernado por una comunidad de tenedores de tokens JBX quienes votan las propuestas quincenalmente."
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 msgid "The address of any smart contract deployed on {signerNetwork} that implements"
@@ -1919,7 +1919,7 @@ msgstr "V1"
 
 #: src/components/Projects/ProjectsFilterAndSort.tsx
 msgid "V1.1"
-msgstr "V1.1<<<<<<< HEAD"
+msgstr "V1.1"
 
 #: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 msgid "Version of the terminal contract used by this project."
@@ -2156,7 +2156,7 @@ msgstr "dueño del proyecto"
 #: src/components/Projects/HoldingsProjects.tsx
 #: src/components/Projects/index.tsx
 msgid "projects"
-msgstr "proyectos<<<<<<< HEAD======="
+msgstr "proyectos"
 
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
 msgid "seconds"

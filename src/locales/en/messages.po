@@ -851,7 +851,7 @@ msgstr "However, Juicebox is still experimental software. Although the Juicebox 
 
 #: src/components/v1/V1Project/modals/PayWarningModal.tsx
 msgid "I understand"
-msgstr "<<<<<<< HEAD"
+msgstr ""
 
 #: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 msgid "ID: {0}"
@@ -1914,7 +1914,7 @@ msgstr ""
 
 #: src/components/Projects/ProjectsFilterAndSort.tsx
 msgid "V1.1"
-msgstr "<<<<<<< HEAD"
+msgstr ""
 
 #: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 msgid "Version of the terminal contract used by this project."

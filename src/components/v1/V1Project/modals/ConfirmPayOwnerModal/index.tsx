@@ -6,11 +6,11 @@ import FormattedAddress from 'components/shared/FormattedAddress'
 import ImageUploader from 'components/shared/inputs/ImageUploader'
 import { NetworkContext } from 'contexts/networkContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
-import { constants } from 'ethers'
+import * as constants from '@ethersproject/constants'
 import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
 import { usePayProjectTx } from 'hooks/v1/transactor/PayProjectTx'
 import { useContext, useState } from 'react'
-import { currencyName } from 'utils/v1/currency'
+import { V1CurrencyName } from 'utils/v1/currency'
 import { formattedNum, formatWad } from 'utils/formatNumber'
 import { weightedRate } from 'utils/math'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -105,8 +105,8 @@ export default function ConfirmPayOwnerModal({
 
         <Descriptions column={1} bordered>
           <Descriptions.Item label={t`Pay amount`} className="content-right">
-            {formattedNum(usdAmount)} {currencyName(V1_CURRENCY_USD)} (
-            {formatWad(weiAmount)} {currencyName(V1_CURRENCY_ETH)})
+            {formattedNum(usdAmount)} {V1CurrencyName(V1_CURRENCY_USD)} (
+            {formatWad(weiAmount)} {V1CurrencyName(V1_CURRENCY_ETH)})
           </Descriptions.Item>
           <Descriptions.Item
             label={t`${tokenSymbolText({

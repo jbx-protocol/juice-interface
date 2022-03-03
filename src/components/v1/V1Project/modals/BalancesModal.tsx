@@ -13,7 +13,7 @@ import { useSetProjectUriTx } from 'hooks/v1/transactor/SetProjectUriTx'
 import { ProjectMetadataV4 } from 'models/project-metadata'
 import { TokenRef } from 'models/token-ref'
 import { useContext, useEffect, useState } from 'react'
-import { uploadProjectMetadata } from 'utils/ipfs'
+import { metadataNameForHandle, uploadProjectMetadata } from 'utils/ipfs'
 
 import { t, Trans } from '@lingui/macro'
 

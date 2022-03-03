@@ -34,3 +34,5 @@ export const createCustomStrategy = (address: string): Strategy => ({
   description: t`This address is an unrecognized strategy contract. Make sure it is correct!`,
   unknown: true,
 })
+
+export const DEFAULT_BALLOT_STRATEGY = ballotStrategies()[2]

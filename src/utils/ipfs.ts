@@ -1,10 +1,12 @@
 import pinataClient, { PinataMetadata, PinataPinResponse } from '@pinata/sdk'
 import axios from 'axios'
-import { IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
-import { readNetwork } from 'constants/networks'
+
 import { IpfsCacheJsonData } from 'models/ipfs-cache/cache-data'
 import { IpfsCacheName } from 'models/ipfs-cache/cache-name'
 import { consolidateMetadata, ProjectMetadataV4 } from 'models/project-metadata'
+
+import { readNetwork } from 'constants/networks'
+import { IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
 
 const pinata_api_key = process.env.REACT_APP_PINATA_PINNER_KEY
 const pinata_secret_api_key = process.env.REACT_APP_PINATA_PINNER_SECRET

@@ -4,6 +4,7 @@ import { t, Trans } from '@lingui/macro'
 import { FormItems } from 'components/shared/formItems'
 import { normalizeHandle } from 'utils/formatHandle'
 import { cidFromUrl, unpinIpfsFileByCid } from 'utils/ipfs'
+import { CSSProperties } from 'react'
 
 export type ProjectDetailsFormFields = {
   name: string
@@ -21,13 +22,17 @@ export default function ProjectDetailsForm({
   form,
   onFinish,
   hideProjectHandle = false,
+  saveButton,
+  style,
 }: {
   form: FormInstance<ProjectDetailsFormFields>
   onFinish: (values: ProjectDetailsFormFields) => void
   hideProjectHandle?: boolean
+  saveButton?: JSX.Element
+  style?: CSSProperties
 }) {
   return (
-    <Form form={form} layout="vertical" onFinish={onFinish}>
+    <Form form={form} layout="vertical" onFinish={onFinish} style={style}>
       <FormItems.ProjectName
         name="name"
         formItemProps={{
@@ -68,9 +73,11 @@ export default function ProjectDetailsForm({
         }}
       />
       <Form.Item>
-        <Button htmlType="submit" type="primary">
-          <Trans>Save project details</Trans>
-        </Button>
+        {saveButton ?? (
+          <Button htmlType="submit" type="primary">
+            <Trans>Save project details</Trans>
+          </Button>
+        )}
       </Form.Item>
     </Form>
   )

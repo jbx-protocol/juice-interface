@@ -14,7 +14,7 @@ import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
 import { useTapProjectTx } from 'hooks/v1/transactor/TapProjectTx'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useContext, useEffect, useState } from 'react'
-import { currencyName } from 'utils/v1/currency'
+import { V1CurrencyName } from 'utils/v1/currency'
 import { formatWad, fromPerbicent, fromWad, parseWad } from 'utils/formatNumber'
 import { amountSubFee, feeForAmount } from 'utils/math'
 
@@ -164,7 +164,7 @@ export default function WithdrawModal({
                     color: colors.text.primary,
                   }}
                 >
-                  {currencyName(
+                  {V1CurrencyName(
                     currentFC.currency.toNumber() as V1CurrencyOption,
                   )}
                 </span>

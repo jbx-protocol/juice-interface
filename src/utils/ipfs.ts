@@ -80,14 +80,10 @@ export const pinFileToIpfs = (
 
 export const unpinIpfsFileByCid = (cid: string | undefined) =>
   cid
-    ? pinata
-        .unpin(cid)
-        .then(() => true)
-        .catch(err => {
-          console.error('Failed to unpin file ', cid, err)
-          return false
-        })
-    : Promise.resolve(false)
+    ? pinata.unpin(cid).catch(err => {
+        console.error('Failed to unpin file ', cid, err)
+      })
+    : Promise.reject()
 
 export const uploadProjectMetadata = (
   metadata: Omit<ProjectMetadataV4, 'version'>,

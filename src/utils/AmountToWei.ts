@@ -1,9 +1,10 @@
 import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
 import { parseEther } from 'ethers/lib/utils'
 
-import { V1_CURRENCY_USD } from 'constants/v1/currency'
+import { useContext } from 'react'
+import { CurrencyContext } from 'contexts/currencyContext'
 
-export default function V1AmountToWei({
+export default function AmountToWei({
   currency,
   amount,
 }: {
@@ -11,7 +12,10 @@ export default function V1AmountToWei({
   amount?: string
 }) {
   const converter = useCurrencyConverter()
-  if (currency === V1_CURRENCY_USD) {
+  const {
+    currencies: { currencyUSD },
+  } = useContext(CurrencyContext)
+  if (currency === currencyUSD) {
     return converter.usdToWei(amount)
   }
 

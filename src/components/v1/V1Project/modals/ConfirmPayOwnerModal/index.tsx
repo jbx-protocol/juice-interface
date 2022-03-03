@@ -43,7 +43,6 @@ export default function ConfirmPayOwnerModal({
 
   async function pay() {
     if (!weiAmount) return
-
     await form.validateFields()
 
     if (userAddress) {
@@ -86,7 +85,7 @@ export default function ConfirmPayOwnerModal({
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
         <p>
           <Trans>
-            Paying {metadata.name} is not an investment—it's a way to support
+            Paying {metadata.name} is not an investment — it's a way to support
             the project. Any value or utility of the tokens you receive is
             determined by {metadata.name}.
           </Trans>

@@ -1,15 +1,12 @@
 import { t, Trans } from '@lingui/macro'
-import { Button, Form, FormInstance, Tooltip } from 'antd'
-import { PayFormFields } from 'components/shared/inputs/PayInput'
-import ConfirmPayOwnerModal from 'components/v1/V1Project/modals/ConfirmPayOwnerModal'
-import PayWarningModal from 'components/v1/V1Project/modals/PayWarningModal'
+import { Button, Form, Tooltip } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { formatWad, fromWad } from 'utils/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
-import V1AmountToWei from 'utils/v1/V1AmountToWei'
+import AmountToWei from 'utils/AmountToWei'
 
 import { readNetwork } from 'constants/networks'
 import { disablePayOverrides } from 'constants/v1/overrides'
@@ -17,20 +14,19 @@ import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
 import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
 
 export default function V1PayButton({
-  form,
+  payAmount,
+  payInCurrency,
   onClick,
 }: {
-  form: FormInstance<PayFormFields>
+  payAmount: string
+  payInCurrency: number
   onClick: () => void
 }) {
   const { projectId, currentFC, metadata, isArchived, terminal } =
     useContext(V1ProjectContext)
   if (!metadata || !currentFC) return null
 
-  const payAmount: string = form.getFieldValue('amount')
-  const payInCurrency = form.getFieldValue('payInCurrency')
-
-  const weiPayAmt = V1AmountToWei({
+  const weiPayAmt = AmountToWei({
     currency: payInCurrency,
     amount: payAmount,
   })
@@ -92,24 +88,22 @@ export default function V1PayButton({
 
   // Pay enabled
   return (
-    <>
-      <Form.Item>
-        <Button
-          style={{ width: '100%' }}
-          type="primary"
-          onClick={parseFloat(fromWad(weiPayAmt)) ? onClick : undefined}
-        >
-          {payButtonText}
-        </Button>
-        {payInCurrency === V1_CURRENCY_USD && (
-          <div style={{ fontSize: '.7rem' }}>
-            <Trans>
-              Paid as <CurrencySymbol currency={V1_CURRENCY_ETH} />
-            </Trans>
-            {formatWad(weiPayAmt) || '0'}
-          </div>
-        )}
-      </Form.Item>
-    </>
+    <Form.Item>
+      <Button
+        style={{ width: '100%' }}
+        type="primary"
+        onClick={parseFloat(fromWad(weiPayAmt)) ? onClick : undefined}
+      >
+        {payButtonText}
+      </Button>
+      {payInCurrency === V1_CURRENCY_USD && (
+        <div style={{ fontSize: '.7rem' }}>
+          <Trans>
+            Paid as <CurrencySymbol currency={V1_CURRENCY_ETH} />
+          </Trans>
+          {formatWad(weiPayAmt) || '0'}
+        </div>
+      )}
+    </Form.Item>
   )
 }

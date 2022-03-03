@@ -851,7 +851,7 @@ msgstr "However, Juicebox is still experimental software. Although the Juicebox 
 
 #: src/components/v1/V1Project/modals/PayWarningModal.tsx
 msgid "I understand"
-msgstr ""
+msgstr "I understand"
 
 #: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 msgid "ID: {0}"

@@ -41,7 +41,7 @@ import V1Project from '../V1Project'
 
 export default function V1Dashboard() {
   const { handle }: { handle?: string } = useParams()
-  let history = useHistory()
+  const history = useHistory()
   // Checks URL to see if user was just directed from project deploy
   const location = useLocation()
   const params = new URLSearchParams(location.search)

@@ -10,6 +10,26 @@ import {
 import { useDeployProjectTx } from 'hooks/v2/transactor/DeployProjectTx'
 import { useCallback, useState } from 'react'
 import { uploadProjectMetadata } from 'utils/ipfs'
+import { TransactionReceipt } from 'ethers/node_modules/@ethersproject/providers'
+import { useHistory } from 'react-router-dom'
+import { BigNumber } from '@ethersproject/bignumber'
+
+import { readProvider } from 'constants/readProvider'
+
+const CREATE_EVENT_IDX = 0
+const PROJECT_ID_TOPIC_IDX = 3
+
+/**
+ * Return the project ID created from a `launchProjectFor` transaction.
+ * @param txReceipt receipt of `launchProjectFor` transaction
+ */
+const getProjectIdFromReceipt = (txReceipt: TransactionReceipt): number => {
+  const projectIdHex =
+    txReceipt.logs[CREATE_EVENT_IDX]?.topics?.[PROJECT_ID_TOPIC_IDX]
+  const projectId = BigNumber.from(projectIdHex).toNumber()
+
+  return projectId
+}
 
 export default function DeployProjectButton({
   type = 'default',
@@ -19,6 +39,7 @@ export default function DeployProjectButton({
   const [deployProjectModalVisible, setDeployProjectModalVisible] =
     useState<boolean>(false)
   const deployProjectTx = useDeployProjectTx()
+  const history = useHistory()
 
   const [loadingDeploy, setLoadingDeploy] = useState<boolean>()
 
@@ -61,12 +82,22 @@ export default function DeployProjectButton({
         groupedSplits,
       },
       {
-        onDone: () => {
+        onDone() {
           console.info('Transaction executed. Awaiting confirmation...')
         },
-        onConfirmed: e => {
-          console.info('Transaction confirmed:', e)
-          window.location.hash = '/projects?tab=all'
+        async onConfirmed(result) {
+          const txHash = result?.transaction?.hash
+          if (!txHash) {
+            return
+          }
+
+          const txReceipt = await readProvider.getTransactionReceipt(txHash)
+          const projectId = getProjectIdFromReceipt(txReceipt)
+          if (projectId === undefined) {
+            return
+          }
+
+          history.push(`/v2/p/${projectId}`)
         },
       },
     )
@@ -78,6 +109,7 @@ export default function DeployProjectButton({
     fundingCycleData,
     fundingCycleMetadata,
     fundAccessConstraints,
+    history,
   ])
 
   return (

@@ -57,7 +57,7 @@ export default function ReconfigurationStrategyDrawer({
   visible: boolean
   onClose: () => void
   initialSelectedStrategy: Strategy
-  style: Partial<DrawerProps>
+  style?: Partial<DrawerProps>
   onSave: (strategy: Strategy) => void
 }) {
   const { colors } = useContext(ThemeContext).theme

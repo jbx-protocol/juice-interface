@@ -2,7 +2,11 @@
 .ant-tabs-bottom > .ant-tabs-nav::before,
 .ant-tabs-top > div > .ant-tabs-nav::before,
 .ant-tabs-bottom > div > .ant-tabs-nav::before {
-  border-bottom: none;
+  border-bottom: 1px solid var(--text-tertiary);
+}
+
+.ant-tabs-nav {
+  margin-bottom: 2rem !important;
 }
 
 .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn,
@@ -11,10 +15,16 @@
   color: var(--text-brand-primary);
 }
 
-.ant-tabs-ink-bar {
-  background: var(--text-brand-primary);
+.ant-tabs-tab.ant-tabs-tab-active {
+  font-weight: 700;
 }
 
-.ant-tabs {
+.ant-tabs-tab-btn,
+.ant-tabs-tab .ant-tabs-tab-btn {
   color: var(--text-primary);
+}
+
+.ant-tabs-ink-bar {
+  background: var(--text-brand-primary);
+  height: 1px !important;
 }

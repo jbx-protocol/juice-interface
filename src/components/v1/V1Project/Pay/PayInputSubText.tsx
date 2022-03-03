@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { formatWad } from 'utils/formatNumber'
 import { parseEther } from 'ethers/lib/utils'
 import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
-import { currencyName } from 'utils/v1/currency'
+import { V1CurrencyName } from 'utils/v1/currency'
 import { weightedRate } from 'utils/math'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { Trans } from '@lingui/macro'
@@ -60,7 +60,7 @@ export default function PayInputSubText({
         ? parseEther('1')
         : converter.usdToWei('1')) ?? BigNumber.from(0),
     )
-    return `${receivedTickets} ${tokenText}/${currencyName(payInCurrrency)}`
+    return `${receivedTickets} ${tokenText}/${V1CurrencyName(payInCurrrency)}`
   }, [converter, payInCurrrency, tokenText, weiPayAmt, currentFC])
 
   return (

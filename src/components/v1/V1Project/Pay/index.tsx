@@ -10,7 +10,7 @@ import { parseEther } from 'ethers/lib/utils'
 import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useContext, useMemo, useState } from 'react'
-import { currencyName } from 'utils/v1/currency'
+import { V1CurrencyName } from 'utils/v1/currency'
 import { formatWad, fromWad } from 'utils/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 
@@ -142,7 +142,7 @@ export default function Pay() {
             accessory={
               <InputAccessoryButton
                 withArrow={true}
-                content={currencyName(payIn)}
+                content={V1CurrencyName(payIn)}
                 onClick={() => setPayIn(payIn === 0 ? 1 : 0)}
               />
             }

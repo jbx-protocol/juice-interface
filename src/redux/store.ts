@@ -1,12 +1,14 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 
 import editingProjectReducer from './slices/editingProject'
+import editingV2ProjectReducer from './slices/editingV2Project'
 import getLocalStoragePreloadedState from './localStoragePreload'
 
 export const REDUX_STATE_LOCALSTORAGE_KEY = 'jb_redux_preloadedState'
 
 const rootReducer = combineReducers({
   editingProject: editingProjectReducer,
+  editingV2Project: editingV2ProjectReducer,
 })
 
 export function createStore() {

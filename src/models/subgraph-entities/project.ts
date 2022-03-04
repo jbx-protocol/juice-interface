@@ -148,6 +148,7 @@ export const parseTrendingProjectJson = (
 
 type BaseProjectVx = {
   id: string
+  projectId: number
   creator: string
   createdAt: number
   totalPaid: BigNumber
@@ -165,7 +166,6 @@ type BaseProjectVx = {
 }
 
 export type ProjectV1 = {
-  projectId: number
   cv: 1 // contracts version
   terminal: string
   metadataUri: string
@@ -174,7 +174,6 @@ export type ProjectV1 = {
 } & BaseProjectVx
 
 export type ProjectV2 = {
-  projectId: number
   cv: 2 // contracts version
   terminal: null
   metadataUri: string

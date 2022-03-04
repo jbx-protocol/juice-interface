@@ -6,6 +6,7 @@ import { ProjectState } from 'models/project-visibility'
 import {
   parseTrendingProjectJson,
   Project,
+  ProjectVx,
   TrendingProject,
   TrendingProjectJson,
 } from 'models/subgraph-entities/project'
@@ -29,15 +30,24 @@ import useSubgraphQuery, { useInfiniteSubgraphQuery } from '../SubgraphQuery'
 interface ProjectsOptions {
   pageNumber?: number
   projectId?: BigNumber
-  handle?: string
-  uri?: string
   orderBy?: 'createdAt' | 'currentBalance' | 'totalPaid'
   orderDirection?: 'asc' | 'desc'
   pageSize?: number
   state?: ProjectState
   keys?: (keyof Project)[]
   terminalVersion?: V1TerminalVersion
-  searchText?: string
+}
+
+interface ProjectsVxOptions {
+  pageNumber?: number
+  projectId?: number
+  orderBy?: 'createdAt' | 'currentBalance' | 'totalPaid'
+  orderDirection?: 'asc' | 'desc'
+  pageSize?: number
+  state?: ProjectState
+  keys?: (keyof ProjectVx)[]
+  terminalVersion?: V1TerminalVersion
+  cv?: ProjectVx['cv']
 }
 
 const staleTime = 60 * 1000 // 60 seconds
@@ -66,20 +76,20 @@ const queryOpts = (
 
   if (terminalAddress) {
     where.push({
-      key: 'terminal' as const,
+      key: 'terminal',
       value: terminalAddress,
     })
   }
 
   if (opts.state === 'archived') {
     where.push({
-      key: 'id' as const,
+      key: 'id',
       value: archivedProjectIds,
       operator: 'in',
     })
   } else if (opts.projectId) {
     where.push({
-      key: 'id' as const,
+      key: 'id',
       value: opts.projectId.toString(),
     })
   }
@@ -87,6 +97,65 @@ const queryOpts = (
   return {
     entity: 'project',
     keys: opts.keys ?? keys,
+    orderDirection: opts.orderDirection ?? 'desc',
+    orderBy: opts.orderBy ?? 'totalPaid',
+    pageSize: opts.pageSize,
+    where,
+  }
+}
+
+const queryOptsVx = (
+  opts: ProjectsVxOptions,
+): Partial<
+  | GraphQueryOpts<'projectVx', EntityKeys<'projectVx'>>
+  | InfiniteGraphQueryOpts<'projectVx', EntityKeys<'projectVx'>>
+> => {
+  const where: WhereConfig<'projectVx'>[] = []
+
+  const terminalAddress = getTerminalAddress(opts.terminalVersion)
+
+  if (terminalAddress) {
+    where.push({
+      key: 'terminal',
+      value: terminalAddress,
+    })
+  }
+
+  if (opts.cv) {
+    where.push({
+      key: 'cv',
+      value: opts.cv,
+    })
+  }
+
+  if (opts.state === 'archived') {
+    where.push({
+      key: 'id',
+      value: archivedProjectIds,
+      operator: 'in',
+    })
+  } else if (opts.projectId) {
+    where.push({
+      key: 'projectId',
+      value: opts.projectId.toString(),
+    })
+  }
+
+  return {
+    entity: 'projectVx',
+    keys: opts.keys ?? [
+      'id',
+      'projectId',
+      'handle',
+      'creator',
+      'createdAt',
+      'metadataUri',
+      'metadataDomain',
+      'currentBalance',
+      'totalPaid',
+      'totalRedeemed',
+      'terminal',
+    ],
     orderDirection: opts.orderDirection ?? 'desc',
     orderBy: opts.orderBy ?? 'totalPaid',
     pageSize: opts.pageSize,
@@ -389,5 +458,25 @@ export function useInfiniteProjectsQuery(opts: ProjectsOptions) {
   return useInfiniteSubgraphQuery(
     queryOpts(opts) as InfiniteGraphQueryOpts<'project', EntityKeys<'project'>>,
     { staleTime },
+  )
+}
+
+export function useProjectsVxQuery(opts: ProjectsVxOptions) {
+  return useSubgraphQuery(
+    {
+      ...(queryOptsVx(opts) as GraphQueryOpts<
+        'projectVx',
+        EntityKeys<'projectVx'>
+      >),
+      first: opts.pageSize,
+      skip:
+        opts.pageNumber && opts.pageSize
+          ? opts.pageNumber * opts.pageSize
+          : undefined,
+      url: 'https://api.studio.thegraph.com/query/2231/juicebox-dev-rinkeby/0.1.8',
+    },
+    {
+      staleTime,
+    },
   )
 }

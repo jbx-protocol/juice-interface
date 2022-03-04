@@ -10,6 +10,7 @@ import V1CurrencyProvider from 'providers/v1/V1CurrencyProvider'
 import V2EntryGuard from 'components/v2/V2EntryGuard'
 import { featureFlagEnabled, FEATURE_FLAGS } from 'utils/featureFlags'
 import PrivacyPolicy from 'components/PrivacyPolicy'
+import V2Projects from 'components/v2/V2Projects'
 
 const V1Create = lazy(() => import('components/v1/V1Create'))
 const V2Create = lazy(() => import('components/v2/V2Create'))

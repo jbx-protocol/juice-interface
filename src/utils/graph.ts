@@ -28,8 +28,10 @@ import {
 } from 'models/subgraph-entities/print-reserves-event'
 import {
   parseProjectJson,
+  parseProjectVxJson,
   Project,
   ProjectJson,
+  ProjectVx,
 } from 'models/subgraph-entities/project'
 import {
   parseRedeemEventJson,
@@ -45,6 +47,7 @@ import {
 export interface SubgraphEntities {
   project: Project
   projectSearch: Project
+  projectVx: ProjectVx
   payEvent: PayEvent
   redeemEvent: RedeemEvent
   participant: Participant
@@ -57,6 +60,7 @@ export interface SubgraphEntities {
 export interface SubgraphQueryReturnTypes {
   project: { projects: ProjectJson[] }
   projectSearch: { projectSearch: ProjectJson[] }
+  projectVx: { projects: ProjectJson[] }
   payEvent: { payEvents: PayEventJson[] }
   redeemEvent: { redeemEvents: RedeemEventJson[] }
   participant: { participants: ParticipantJson[] }
@@ -157,7 +161,11 @@ export const formatGraphQuery = <E extends EntityKey, K extends EntityKeys<E>>(
   const formatWhere = (where: WhereConfig<E>) =>
     `${where.key}${where.operator ? '_' + where.operator : ''}:` +
     (Array.isArray(where.value)
-      ? `[${where.value.map(v => `"${v}"`).join(',')}]`
+      ? `[${where.value
+          .map(v => (typeof v === 'string' ? `"${v}"` : v))
+          .join(',')}]`
+      : typeof where.value === 'number'
+      ? where.value
       : `"${where.value}"`)
 
   addArg('text', opts.text ? `"${opts.text}"` : undefined)
@@ -181,7 +189,15 @@ export const formatGraphQuery = <E extends EntityKey, K extends EntityKeys<E>>(
       : undefined,
   )
 
-  return `{ ${opts.entity}${isPluralQuery(opts.entity) ? 's' : ''}${
+  let overrideEntity: string = opts.entity
+
+  switch (opts.entity) {
+    case 'projectVx':
+      overrideEntity = 'project'
+      break
+  }
+
+  return `{ ${overrideEntity}${isPluralQuery(opts.entity) ? 's' : ''}${
     args ? `(${args})` : ''
   } {${opts.keys.reduce(
     (acc, key) =>
@@ -225,6 +241,12 @@ export function formatGraphResponse<E extends EntityKey>(
       if ('projects' in response) {
         // @ts-ignore
         return response.projects.map(parseProjectJson)
+      }
+      break
+    case 'projectVx':
+      if ('projects' in response) {
+        // @ts-ignore
+        return response.projects.map(parseProjectVxJson)
       }
       break
     case 'projectSearch':
@@ -311,7 +333,7 @@ export async function querySubgraph<
     errors?: SubgraphError | SubgraphError[]
     data: SubgraphQueryReturnTypes[E]
   }>(
-    subgraphUrl,
+    opts.url ?? subgraphUrl,
     {
       query: formatGraphQuery(opts),
     },

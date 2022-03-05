@@ -15,7 +15,7 @@ import {
   SerializedV2FundingCycleMetadata,
   SerializedV2FundAccessConstraint,
 } from 'utils/v2/serializers'
-import { parsePerbicent, parsePermille } from 'utils/formatNumber'
+import { parsePermille, parsePermyriad } from 'utils/formatNumber'
 
 import {
   ETH_PAYOUT_SPLIT_GROUP,
@@ -34,8 +34,8 @@ export interface V2ProjectState {
 }
 
 const defaultDiscountRate = parsePermille(0)
-const defaultReservedRate = parsePermille(0)
-const defaultRedemptionRate = parsePerbicent(100)
+const defaultReservedRate = parsePermyriad(0)
+const defaultRedemptionRate = parsePermyriad(100)
 
 const defaultProjectMetadataState: ProjectMetadataV4 = {
   name: '',
@@ -66,6 +66,7 @@ const defaultFundingCycleMetadata: SerializedV2FundingCycleMetadata =
     pauseRedeem: false,
     pauseMint: false,
     pauseBurn: false,
+    allowChangeToken: false,
     allowTerminalMigration: false,
     allowControllerMigration: false,
     holdFees: false,

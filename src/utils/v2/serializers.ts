@@ -5,18 +5,22 @@ import {
   V2FundAccessConstraint,
 } from 'models/v2/fundingCycle'
 import {
-  fromPerbicent,
   fromPermille,
+  fromPermyriad,
   fromWad,
-  parsePerbicent,
   parsePermille,
+  parsePermyriad,
   parseWad,
 } from 'utils/formatNumber'
 
 export type SerializedV2FundingCycleMetadata = Record<
   keyof Omit<
     V2FundingCycleMetadata,
-    'reservedRate' | 'redemptionRate' | 'ballotRedemptionRate' | 'dataSource'
+    | 'reservedRate'
+    | 'redemptionRate'
+    | 'ballotRedemptionRate'
+    | 'dataSource'
+    | 'version'
   >,
   boolean
 > &
@@ -41,9 +45,9 @@ export type SerializedV2FundAccessConstraint = Record<
 export const serializeV2FundingCycleMetadata = (
   fundingCycleMetadata: V2FundingCycleMetadata,
 ): SerializedV2FundingCycleMetadata => ({
-  reservedRate: fromPermille(fundingCycleMetadata.reservedRate),
-  redemptionRate: fromPerbicent(fundingCycleMetadata.redemptionRate),
-  ballotRedemptionRate: fromPerbicent(
+  reservedRate: fromPermyriad(fundingCycleMetadata.reservedRate),
+  redemptionRate: fromPermyriad(fundingCycleMetadata.redemptionRate),
+  ballotRedemptionRate: fromPermyriad(
     fundingCycleMetadata.ballotRedemptionRate,
   ),
   pausePay: fundingCycleMetadata.pausePay,
@@ -51,6 +55,7 @@ export const serializeV2FundingCycleMetadata = (
   pauseRedeem: fundingCycleMetadata.pauseRedeem,
   pauseMint: fundingCycleMetadata.pauseMint,
   pauseBurn: fundingCycleMetadata.pauseBurn,
+  allowChangeToken: fundingCycleMetadata.allowChangeToken,
   allowTerminalMigration: fundingCycleMetadata.allowTerminalMigration,
   allowControllerMigration: fundingCycleMetadata.allowControllerMigration,
   holdFees: fundingCycleMetadata.holdFees,
@@ -63,10 +68,10 @@ export const serializeV2FundingCycleMetadata = (
 
 export const deserializeV2FundingCycleMetadata = (
   serializedFundingCycleMetadata: SerializedV2FundingCycleMetadata,
-): V2FundingCycleMetadata => ({
-  reservedRate: parsePermille(serializedFundingCycleMetadata.reservedRate),
-  redemptionRate: parsePerbicent(serializedFundingCycleMetadata.redemptionRate),
-  ballotRedemptionRate: parsePerbicent(
+): Omit<V2FundingCycleMetadata, 'version'> => ({
+  reservedRate: parsePermyriad(serializedFundingCycleMetadata.reservedRate),
+  redemptionRate: parsePermyriad(serializedFundingCycleMetadata.redemptionRate),
+  ballotRedemptionRate: parsePermyriad(
     serializedFundingCycleMetadata.ballotRedemptionRate,
   ),
   pausePay: serializedFundingCycleMetadata.pausePay,
@@ -74,6 +79,7 @@ export const deserializeV2FundingCycleMetadata = (
   pauseRedeem: serializedFundingCycleMetadata.pauseRedeem,
   pauseMint: serializedFundingCycleMetadata.pauseMint,
   pauseBurn: serializedFundingCycleMetadata.pauseBurn,
+  allowChangeToken: serializedFundingCycleMetadata.allowChangeToken,
   allowTerminalMigration: serializedFundingCycleMetadata.allowTerminalMigration,
   allowControllerMigration:
     serializedFundingCycleMetadata.allowControllerMigration,

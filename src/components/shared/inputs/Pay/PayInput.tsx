@@ -5,29 +5,21 @@ import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { CurrencyContext } from 'contexts/currencyContext'
 
-import ConfirmPayOwnerModal from 'components/v1/V1Project/modals/ConfirmPayOwnerModal'
-import PayWarningModal from 'components/v1/V1Project/modals/PayWarningModal'
-import AmountToWei from 'utils/AmountToWei'
-import { TransactorInstance } from 'hooks/Transactor'
-
 import PayInputSubText from './PayInputSubText'
 
 export type PayButtonProps = {
   payAmount: string
   payInCurrency: number
-  onClick: () => void
 }
 
 export default function PayInput({
   PayButton,
-  payProjectTx,
+  reservedRate,
+  weight,
 }: {
   PayButton: (props: PayButtonProps) => JSX.Element | null
-  payProjectTx: TransactorInstance<{
-    note: string
-    preferUnstaked: boolean
-    value: BigNumber
-  }> // TODO: make type
+  reservedRate?: number
+  weight?: BigNumber
 }) {
   const {
     currencyMetadata,
@@ -36,9 +28,6 @@ export default function PayInput({
 
   const [payAmount, setPayAmount] = useState<string>('0')
   const [payInCurrency, setPayInCurrency] = useState<number>(currencyETH)
-  const [payModalVisible, setPayModalVisible] = useState<boolean>(false)
-  const [payWarningModalVisible, setPayWarningModalVisible] =
-    useState<boolean>(false)
 
   const togglePayInCurrency = () => {
     const newPayInCurrency =
@@ -72,31 +61,14 @@ export default function PayInput({
         <PayInputSubText
           payInCurrency={payInCurrency ?? currencyETH}
           amount={payAmount}
+          reservedRate={reservedRate}
+          weight={weight}
         />
       </div>
 
       <div style={{ textAlign: 'center', minWidth: 150 }}>
-        <PayButton
-          onClick={() => setPayWarningModalVisible(true)}
-          payAmount={payAmount}
-          payInCurrency={payInCurrency}
-        />
+        <PayButton payAmount={payAmount} payInCurrency={payInCurrency} />
       </div>
-      <PayWarningModal
-        visible={payWarningModalVisible}
-        onOk={() => {
-          setPayWarningModalVisible(false)
-          setPayModalVisible(true)
-        }}
-        onCancel={() => setPayWarningModalVisible(false)}
-      />
-      <ConfirmPayOwnerModal
-        visible={payModalVisible}
-        onSuccess={() => setPayModalVisible(false)}
-        onCancel={() => setPayModalVisible(false)}
-        weiAmount={AmountToWei({ currency: payInCurrency, amount: payAmount })}
-        payProjectTx={payProjectTx}
-      />
     </div>
   )
 }

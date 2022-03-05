@@ -10,6 +10,8 @@ export type V2ProjectContextType = {
   fundingCycle: V2FundingCycle | undefined
   payoutSplits: Split[] | undefined
   reserveTokenSplits: Split[] | undefined
+  terminals: number[] | undefined
+  ETHBalance: BigNumber | undefined
 }
 
 export const V2ProjectContext = createContext<V2ProjectContextType>({
@@ -18,4 +20,6 @@ export const V2ProjectContext = createContext<V2ProjectContextType>({
   fundingCycle: undefined,
   payoutSplits: undefined,
   reserveTokenSplits: undefined,
+  terminals: undefined,
+  ETHBalance: undefined,
 })

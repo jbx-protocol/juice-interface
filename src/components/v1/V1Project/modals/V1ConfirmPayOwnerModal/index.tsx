@@ -15,11 +15,12 @@ import { formattedNum, formatWad } from 'utils/formatNumber'
 import { weightedRate } from 'utils/math'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { TransactorInstance } from 'hooks/Transactor'
+import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 
-import ProjectRiskNotice from './ProjectRiskNotice'
+import V1ProjectRiskNotice from './V1ProjectRiskNotice'
 import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
 
-export default function ConfirmPayOwnerModal({
+export default function V1ConfirmPayOwnerModal({
   visible,
   weiAmount,
   onSuccess,
@@ -69,8 +70,22 @@ export default function ConfirmPayOwnerModal({
     )
   }
 
-  const receivedTickets = weightedRate(currentFC, weiAmount, 'payer')
-  const ownerTickets = weightedRate(currentFC, weiAmount, 'reserved')
+  const fcReservedRate = decodeFundingCycleMetadata(
+    currentFC?.metadata,
+  )?.reservedRate
+
+  const receivedTickets = weightedRate(
+    currentFC?.weight,
+    fcReservedRate,
+    weiAmount,
+    'payer',
+  )
+  const ownerTickets = weightedRate(
+    currentFC?.weight,
+    fcReservedRate,
+    weiAmount,
+    'reserved',
+  )
 
   const hasIssuedTokens = tokenAddress && tokenAddress !== constants.AddressZero
 
@@ -105,7 +120,7 @@ export default function ConfirmPayOwnerModal({
           </div>
         )}
 
-        <ProjectRiskNotice />
+        <V1ProjectRiskNotice />
 
         <Descriptions column={1} bordered>
           <Descriptions.Item label={t`Pay amount`} className="content-right">

@@ -8,7 +8,7 @@ import { BigNumber } from 'ethers'
 
 import { TransactorInstance } from '../../Transactor'
 
-export function useV1PayProjectTx(): TransactorInstance<{
+export function usePayV1ProjectTx(): TransactorInstance<{
   note: string
   preferUnstaked: boolean
   value: BigNumber

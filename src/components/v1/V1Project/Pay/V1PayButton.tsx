@@ -1,29 +1,38 @@
 import { t, Trans } from '@lingui/macro'
-import { Button, Form, Tooltip } from 'antd'
+import { Button, Tooltip } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { formatWad, fromWad } from 'utils/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 import AmountToWei from 'utils/AmountToWei'
+import { usePayV1ProjectTx } from 'hooks/v1/transactor/PayV1ProjectTx'
+
+import PayWarningModal from 'components/shared/PayWarningModal'
 
 import { readNetwork } from 'constants/networks'
 import { disablePayOverrides } from 'constants/v1/overrides'
 import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
 import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
 
+import V1ConfirmPayOwnerModal from '../modals/V1ConfirmPayOwnerModal'
+
 export default function V1PayButton({
   payAmount,
   payInCurrency,
-  onClick,
 }: {
   payAmount: string
   payInCurrency: number
-  onClick: () => void
 }) {
   const { projectId, currentFC, metadata, isArchived, terminal } =
     useContext(V1ProjectContext)
+  const payProjectTx = usePayV1ProjectTx()
+
+  const [payModalVisible, setPayModalVisible] = useState<boolean>(false)
+  const [payWarningModalVisible, setPayWarningModalVisible] =
+    useState<boolean>(false)
+
   if (!metadata || !currentFC) return null
 
   const weiPayAmt = AmountToWei({
@@ -88,11 +97,15 @@ export default function V1PayButton({
 
   // Pay enabled
   return (
-    <Form.Item>
+    <>
       <Button
         style={{ width: '100%' }}
         type="primary"
-        onClick={parseFloat(fromWad(weiPayAmt)) ? onClick : undefined}
+        onClick={
+          parseFloat(fromWad(weiPayAmt))
+            ? () => setPayWarningModalVisible(true)
+            : undefined
+        }
       >
         {payButtonText}
       </Button>
@@ -104,6 +117,21 @@ export default function V1PayButton({
           {formatWad(weiPayAmt) || '0'}
         </div>
       )}
-    </Form.Item>
+      <PayWarningModal
+        visible={payWarningModalVisible}
+        onOk={() => {
+          setPayWarningModalVisible(false)
+          setPayModalVisible(true)
+        }}
+        onCancel={() => setPayWarningModalVisible(false)}
+      />
+      <V1ConfirmPayOwnerModal
+        visible={payModalVisible}
+        onSuccess={() => setPayModalVisible(false)}
+        onCancel={() => setPayModalVisible(false)}
+        weiAmount={AmountToWei({ currency: payInCurrency, amount: payAmount })}
+        payProjectTx={payProjectTx}
+      />
+    </>
   )
 }

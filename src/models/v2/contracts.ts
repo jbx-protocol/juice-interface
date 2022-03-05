@@ -4,6 +4,7 @@ export enum V2ContractName {
   JBController = 'JBController',
   JBDirectory = 'JBDirectory',
   JBETHPaymentTerminal = 'JBETHPaymentTerminal',
+  JBETHPaymentTerminalStore = 'JBETHPaymentTerminalStore',
   JBFundingCycleStore = 'JBFundingCycleStore',
   JBOperatorStore = 'JBOperatorStore',
   JBPrices = 'JBPrices',

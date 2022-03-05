@@ -13,7 +13,7 @@ import {
   FUNDING_CYCLE_WARNING_TEXT,
 } from 'constants/fundingWarningText'
 
-export default function ProjectRiskNotice() {
+export default function V1ProjectRiskNotice() {
   const {
     theme: { colors },
   } = useContext(ThemeContext)

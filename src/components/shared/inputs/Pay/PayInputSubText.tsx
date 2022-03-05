@@ -2,11 +2,9 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { formatWad } from 'utils/formatNumber'
 import { parseEther } from 'ethers/lib/utils'
 import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
-import { V1CurrencyName } from 'utils/v1/currency'
 import { weightedRate } from 'utils/math'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { Trans } from '@lingui/macro'
-import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useContext, useMemo } from 'react'
 
 import { CurrencyContext } from 'contexts/currencyContext'
@@ -18,6 +16,7 @@ import AMMPrices from 'components/shared/AMMPrices'
 import TooltipIcon from 'components/shared/TooltipIcon'
 
 import AmountToWei from 'utils/AmountToWei'
+import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 
 /**
  * Help text shown below the Pay input field.
@@ -30,11 +29,16 @@ import AmountToWei from 'utils/AmountToWei'
 export default function PayInputSubText({
   payInCurrency,
   amount,
+  reservedRate,
+  weight,
 }: {
   payInCurrency: number // todo currencyOption = 0 | 1 | 2
   amount: string | undefined
+  reservedRate: number | undefined
+  weight: BigNumber | undefined
 }) {
-  const { currentFC, tokenSymbol, tokenAddress } = useContext(V1ProjectContext)
+  // TODO need to pass in tokenSymbol and tokenAddress for v2 projects
+  const { tokenSymbol, tokenAddress } = useContext(V1ProjectContext)
   const converter = useCurrencyConverter()
   const {
     theme: { colors },
@@ -54,7 +58,7 @@ export default function PayInputSubText({
 
   const receiveText = useMemo(() => {
     const formatReceivedTickets = (wei: BigNumber) => {
-      const exchangeRate = weightedRate(currentFC, wei, 'payer')
+      const exchangeRate = weightedRate(weight, reservedRate, wei, 'payer')
       return formatWad(exchangeRate, { precision: 0 })
     }
 
@@ -73,9 +77,10 @@ export default function PayInputSubText({
     payInCurrency,
     tokenText,
     weiPayAmt,
-    currentFC,
+    weight,
     currencyMetadata,
     currencyETH,
+    reservedRate,
   ])
 
   return (

@@ -16,11 +16,9 @@ export type PayV2ProjectTxType = TransactorInstance<{
 export function usePayV2ProjectTx(): PayV2ProjectTxType {
   const { transactor, contracts } = useContext(V2UserContext)
   const { projectId } = useContext(V2ProjectContext)
-
-  const minReturnedTokens = BigNumber.from(1) // TODO will need a field for this in V2ConfirmPayOwnerModal
+  const minReturnedTokens = 0 // TODO will need a field for this in V2ConfirmPayOwnerModal
 
   return ({ memo, preferClaimedTokens, beneficiary, value }, txOpts) => {
-    console.log('value: ', value)
     if (
       !transactor ||
       !projectId ||
@@ -35,16 +33,16 @@ export function usePayV2ProjectTx(): PayV2ProjectTxType {
       contracts?.JBETHPaymentTerminal,
       'pay',
       [
-        projectId.toHexString(),
+        projectId,
         beneficiary,
         minReturnedTokens,
         preferClaimedTokens,
         memo || '',
-        // delegateMetadata
+        ethers.utils.randomBytes(1), //delegateMetadata
       ],
       {
         ...txOpts,
-        value: value.toHexString(),
+        value: value,
       },
     )
   }

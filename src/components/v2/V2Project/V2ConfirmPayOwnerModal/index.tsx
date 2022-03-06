@@ -12,19 +12,17 @@ import React, { useContext, useState } from 'react'
 import { formattedNum, formatWad, fromWad } from 'utils/formatNumber'
 
 import { tokenSymbolText } from 'utils/tokenSymbolText'
-import { TransactorInstance } from 'hooks/Transactor'
-
-import V2ProjectRiskNotice from './V2ProjectRiskNotice'
 import {
   V2CurrencyName,
   V2_CURRENCY_ETH,
   V2_CURRENCY_USD,
 } from 'utils/v2/currency'
-import EthAddress from 'components/shared/formItems/EthAddress'
 import { FormItems } from 'components/shared/formItems'
 import { PayV2ProjectTxType } from 'hooks/v2/transactor/PayV2ProjectTx'
-import { utils } from 'ethers'
+import { ethers, utils } from 'ethers'
 import { weightedRate } from 'utils/math'
+
+import V2ProjectRiskNotice from './V2ProjectRiskNotice'
 
 export default function V2ConfirmPayOwnerModal({
   visible,
@@ -68,7 +66,7 @@ export default function V2ConfirmPayOwnerModal({
         memo: form.getFieldValue('memo'),
         preferClaimedTokens: preferClaimed,
         beneficiary: beneficiary,
-        value: weiAmount,
+        value: weiAmount, //'0.001'),//BigNumber.from(0.01)//weiAmount,
       },
       {
         onConfirmed: () => {
@@ -88,7 +86,7 @@ export default function V2ConfirmPayOwnerModal({
     return Promise.resolve()
   }
 
-  // TODO:
+  // TODO: reserved rate hardcoded to 0
   const receivedTickets = weightedRate(
     fundingCycle?.weight,
     0,
@@ -194,42 +192,32 @@ export default function V2ConfirmPayOwnerModal({
               }}
             />
           </Form.Item>
-          <Form.Item
-          // extra={t`Would you like someone else to receive the tokens minted as a result of you paying this project?`}
-          // label={
-          //     <div style={{ display: 'flex' }}>
-          //       <Trans>Custom token beneficiary</Trans>
-          //       <Switch checked={customBeneficiaryEnabled} onChange={setCustomBeneficiaryEnabled} style={{marginLeft: 10}}/>
-          //     </div>
-          //   }
-          >
-            <FormItems.EthAddress
-              defaultValue={''}
-              name={'beneficiary'}
-              onAddressChange={beneficiary => {
-                setBeneficiary(beneficiary)
-              }}
-              disabled={!customBeneficiaryEnabled}
-              formItemProps={{
-                extra: t`Mint the new tokens to another address?`,
-                label: (
-                  <div style={{ display: 'flex' }}>
-                    <Trans>Custom token beneficiary</Trans>
-                    <Switch
-                      checked={customBeneficiaryEnabled}
-                      onChange={setCustomBeneficiaryEnabled}
-                      style={{ marginLeft: 10 }}
-                    />
-                  </div>
-                ),
-                rules: [
-                  {
-                    validator: validateCustomBeneficiary,
-                  },
-                ],
-              }}
-            />
-          </Form.Item>
+          <FormItems.EthAddress
+            defaultValue={''}
+            name={'beneficiary'}
+            onAddressChange={beneficiary => {
+              setBeneficiary(beneficiary)
+            }}
+            disabled={!customBeneficiaryEnabled}
+            formItemProps={{
+              extra: t`Mint the new tokens to another address?`,
+              label: (
+                <div style={{ display: 'flex' }}>
+                  <Trans>Custom token beneficiary</Trans>
+                  <Switch
+                    checked={customBeneficiaryEnabled}
+                    onChange={setCustomBeneficiaryEnabled}
+                    style={{ marginLeft: 10 }}
+                  />
+                </div>
+              ),
+              rules: [
+                {
+                  validator: validateCustomBeneficiary,
+                },
+              ],
+            }}
+          />
           {hasIssuedTokens && (
             <Form.Item label={t`Receive ERC20`}>
               <Space align="start">

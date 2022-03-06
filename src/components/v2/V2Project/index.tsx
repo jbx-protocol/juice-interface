@@ -44,7 +44,7 @@ export default function V2Project() {
       </Row>
       <Row>
         <Col md={12} xs={24}>
-          <h2>Volume: {ETHBalance?.toNumber()}</h2>
+          <h2>Volume: {fromWad(ETHBalance)}</h2>
 
           {fundingCycle && (
             <div>

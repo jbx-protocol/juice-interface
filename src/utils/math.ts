@@ -1,26 +1,25 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { V1FundingCycle } from 'models/v1/fundingCycle'
 
 import { fromWad, percentToPerbicent } from './formatNumber'
 import { decodeFundingCycleMetadata } from './v1/fundingCycle'
 
 export const weightedRate = (
-  fc: V1FundingCycle | undefined,
+  weight: BigNumber | undefined,
+  reservedRate: number | undefined,
   wad: BigNumber | undefined,
   output: 'payer' | 'reserved',
 ) => {
-  if (!fc || !wad) return
-  const reserved = decodeFundingCycleMetadata(fc.metadata)?.reservedRate
+  if (!weight || !wad) return
 
-  if (reserved === undefined) return
+  if (reservedRate === undefined) return
 
   return fromWad(
-    fc.weight
+    weight
       .mul(wad)
       .mul(
         output === 'reserved'
-          ? reserved
-          : percentToPerbicent(100).sub(reserved),
+          ? reservedRate
+          : percentToPerbicent(100).sub(reservedRate),
       )
       .div(200),
   )

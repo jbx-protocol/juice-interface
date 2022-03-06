@@ -16,7 +16,7 @@ import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { PayoutMod } from 'models/mods'
 import { useContext, useLayoutEffect, useMemo, useState } from 'react'
-import { formatWad, fromPermyriad, fromWad } from 'utils/formatNumber'
+import { formatWad, permyriadToPercent, fromWad } from 'utils/formatNumber'
 import { amountSubFee } from 'utils/math'
 
 import { V1_CURRENCY_ETH } from 'constants/v1/currency'
@@ -105,7 +105,7 @@ export default function PayoutModsList({
                   mod={mod}
                   value={
                     <span style={{ fontWeight: 400 }}>
-                      {fromPermyriad(mod.percent)}%
+                      {permyriadToPercent(mod.percent)}%
                       {!fundingCycle.target.eq(constants.MaxUint256) && (
                         <>
                           {' '}
@@ -136,7 +136,7 @@ export default function PayoutModsList({
           mod={{ beneficiary: owner, percent: ownerPercent }}
           value={
             <div style={{ fontWeight: 400 }}>
-              {fromPermyriad(ownerPercent)}%
+              {permyriadToPercent(ownerPercent)}%
               {!fundingCycle.target.eq(constants.MaxUint256) && (
                 <>
                   {' '}

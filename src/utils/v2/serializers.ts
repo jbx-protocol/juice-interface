@@ -5,11 +5,11 @@ import {
   V2FundAccessConstraint,
 } from 'models/v2/fundingCycle'
 import {
-  fromPermille,
-  fromPermyriad,
+  permilleToPercent,
+  permyriadToPercent,
   fromWad,
-  parsePermille,
-  parsePermyriad,
+  percentToPermille,
+  percentToPermyriad,
   parseWad,
 } from 'utils/formatNumber'
 
@@ -45,9 +45,9 @@ export type SerializedV2FundAccessConstraint = Record<
 export const serializeV2FundingCycleMetadata = (
   fundingCycleMetadata: V2FundingCycleMetadata,
 ): SerializedV2FundingCycleMetadata => ({
-  reservedRate: fromPermyriad(fundingCycleMetadata.reservedRate),
-  redemptionRate: fromPermyriad(fundingCycleMetadata.redemptionRate),
-  ballotRedemptionRate: fromPermyriad(
+  reservedRate: permyriadToPercent(fundingCycleMetadata.reservedRate),
+  redemptionRate: permyriadToPercent(fundingCycleMetadata.redemptionRate),
+  ballotRedemptionRate: permyriadToPercent(
     fundingCycleMetadata.ballotRedemptionRate,
   ),
   pausePay: fundingCycleMetadata.pausePay,
@@ -69,9 +69,11 @@ export const serializeV2FundingCycleMetadata = (
 export const deserializeV2FundingCycleMetadata = (
   serializedFundingCycleMetadata: SerializedV2FundingCycleMetadata,
 ): Omit<V2FundingCycleMetadata, 'version'> => ({
-  reservedRate: parsePermyriad(serializedFundingCycleMetadata.reservedRate),
-  redemptionRate: parsePermyriad(serializedFundingCycleMetadata.redemptionRate),
-  ballotRedemptionRate: parsePermyriad(
+  reservedRate: percentToPermyriad(serializedFundingCycleMetadata.reservedRate),
+  redemptionRate: percentToPermyriad(
+    serializedFundingCycleMetadata.redemptionRate,
+  ),
+  ballotRedemptionRate: percentToPermyriad(
     serializedFundingCycleMetadata.ballotRedemptionRate,
   ),
   pausePay: serializedFundingCycleMetadata.pausePay,
@@ -96,7 +98,7 @@ export const serializeV2FundingCycleData = (
 ): SerializedV2FundingCycleData => ({
   duration: fundingCycleData.duration.toString(),
   weight: fromWad(fundingCycleData.weight),
-  discountRate: fromPermille(fundingCycleData.discountRate),
+  discountRate: permilleToPercent(fundingCycleData.discountRate),
   ballot: fundingCycleData.ballot, // hex, contract address
 })
 
@@ -105,7 +107,7 @@ export const deserializeV2FundingCycleData = (
 ): V2FundingCycleData => ({
   duration: BigNumber.from(serializedFundingCycleData.duration || '0'),
   weight: parseWad(serializedFundingCycleData.weight),
-  discountRate: parsePermille(serializedFundingCycleData.discountRate),
+  discountRate: percentToPermille(serializedFundingCycleData.discountRate),
   ballot: serializedFundingCycleData.ballot, // hex, contract address
 })
 

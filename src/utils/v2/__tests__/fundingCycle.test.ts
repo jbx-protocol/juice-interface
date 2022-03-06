@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 
 import { V2FundingCycleMetadata } from 'models/v2/fundingCycle'
 
-import { parsePermyriad } from 'utils/formatNumber'
+import { percentToPermyriad } from 'utils/formatNumber'
 
 import { Wallet } from '@ethersproject/wallet'
 
@@ -105,9 +105,9 @@ describe('fundingCycle', () => {
       'decodes metadata correctly when flagsEnabled is $flagsEnabled',
       ({ flagsEnabled }) => {
         const metadata = createMetadata({
-          reservedRate: parsePermyriad(100),
-          redemptionRate: parsePermyriad(100),
-          ballotRedemptionRate: parsePermyriad(100),
+          reservedRate: percentToPermyriad(100),
+          redemptionRate: percentToPermyriad(100),
+          ballotRedemptionRate: percentToPermyriad(100),
           flagsEnabled,
         })
 

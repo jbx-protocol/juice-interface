@@ -11,7 +11,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { PayoutMod } from 'models/mods'
 import { CSSProperties, useContext, useState } from 'react'
-import { formatWad, fromPerbicent } from 'utils/formatNumber'
+import { formatWad, perbicentToPercent } from 'utils/formatNumber'
 import { hasFundingTarget } from 'utils/v1/fundingCycle'
 
 import PayoutModsList from '../../shared/PayoutModsList'
@@ -71,7 +71,7 @@ export default function Spending({
               <TooltipLabel
                 style={smallHeaderStyle}
                 label={t`AVAILABLE`}
-                tip={t`The funds available to withdraw for this funding cycle after the ${fromPerbicent(
+                tip={t`The funds available to withdraw for this funding cycle after the ${perbicentToPercent(
                   currentFC.fee,
                 )}% JBX fee is subtracted. This number won't roll over to the next funding cycle, so funds should be withdrawn before it ends.`}
               />

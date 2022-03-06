@@ -10,7 +10,11 @@ import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { useContext } from 'react'
 import { formatDate } from 'utils/formatDate'
-import { formatWad, fromPerbicent, fromPermille } from 'utils/formatNumber'
+import {
+  formatWad,
+  perbicentToPercent,
+  permilleToPercent,
+} from 'utils/formatNumber'
 import {
   decodeFundingCycleMetadata,
   getUnsafeFundingCycleProperties,
@@ -129,7 +133,7 @@ export default function FundingCycleDetails({
               />
             }
           >
-            {fromPermille(fundingCycle.discountRate)}%
+            {permilleToPercent(fundingCycle.discountRate)}%
           </Descriptions.Item>
         )}
 
@@ -143,7 +147,7 @@ export default function FundingCycleDetails({
               />
             }
           >
-            {fromPerbicent(metadata?.bondingCurveRate)}%
+            {perbicentToPercent(metadata?.bondingCurveRate)}%
           </Descriptions.Item>
         )}
 
@@ -161,7 +165,7 @@ export default function FundingCycleDetails({
         >
           <WarningText
             showWarning={unsafeFundingCycleProperties.metadataReservedRate}
-            text={`${fromPerbicent(metadata?.reservedRate)}%`}
+            text={`${perbicentToPercent(metadata?.reservedRate)}%`}
             tooltipTitle={
               FUNDING_CYCLE_WARNING_TEXT(fundingCycle).metadataReservedRate
             }

@@ -15,7 +15,7 @@ import {
   SerializedV2FundingCycleMetadata,
   SerializedV2FundAccessConstraint,
 } from 'utils/v2/serializers'
-import { parsePermille, parsePermyriad } from 'utils/formatNumber'
+import { percentToPermyriad } from 'utils/formatNumber'
 
 import {
   ETH_PAYOUT_SPLIT_GROUP,
@@ -33,10 +33,6 @@ export interface V2ProjectState {
   reserveTokenGroupedSplits: ReserveTokenGroupedSplits
 }
 
-const defaultDiscountRate = parsePermille(0)
-const defaultReservedRate = parsePermyriad(0)
-const defaultRedemptionRate = parsePermyriad(100)
-
 const defaultProjectMetadataState: ProjectMetadataV4 = {
   name: '',
   infoUri: '',
@@ -51,16 +47,16 @@ const defaultProjectMetadataState: ProjectMetadataV4 = {
 const defaultFundingCycleData: SerializedV2FundingCycleData =
   serializeV2FundingCycleData({
     duration: BigNumber.from(0),
-    weight: BigNumber.from('1' + '0'.repeat(18)), // 1,000,000 of your project's tokens will be minted per ETH received
-    discountRate: defaultDiscountRate,
+    weight: constants.WeiPerEther.mul(1000000), // 1e24
+    discountRate: BigNumber.from(0), // A number from 0-1,000,000,000
     ballot: DEFAULT_BALLOT_STRATEGY.address,
   })
 
 const defaultFundingCycleMetadata: SerializedV2FundingCycleMetadata =
   serializeV2FundingCycleMetadata({
-    reservedRate: defaultReservedRate,
-    redemptionRate: defaultRedemptionRate,
-    ballotRedemptionRate: BigNumber.from(0),
+    reservedRate: BigNumber.from(0), // A number from 0-10,000
+    redemptionRate: percentToPermyriad(100), // A number from 0-10,000
+    ballotRedemptionRate: BigNumber.from(0), // A number from 0-10,000
     pausePay: false,
     pauseDistributions: false,
     pauseRedeem: false,

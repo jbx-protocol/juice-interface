@@ -9,7 +9,7 @@ import { TicketMod } from 'models/mods'
 import * as moment from 'moment'
 import { CSSProperties, useCallback, useContext, useState } from 'react'
 import { formatDate } from 'utils/formatDate'
-import { fromPermyriad, parsePermyriad } from 'utils/formatNumber'
+import { permyriadToPercent, percentToPermyriad } from 'utils/formatNumber'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 
@@ -80,7 +80,7 @@ export default function ProjectTicketMods({
             onClick={() => {
               if (locked) return
 
-              const percent = parseFloat(fromPermyriad(mod.percent))
+              const percent = parseFloat(permyriadToPercent(mod.percent))
 
               form.setFieldsValue({
                 ...mod,
@@ -132,7 +132,7 @@ export default function ProjectTicketMods({
                       maxWidth: 100,
                     }}
                   >
-                    {fromPermyriad(mod.percent)}%
+                    {permyriadToPercent(mod.percent)}%
                   </span>
                 </div>
               </Col>
@@ -183,7 +183,7 @@ export default function ProjectTicketMods({
   if (!mods) return null
 
   const total = mods.reduce(
-    (acc, curr) => acc + parseFloat(fromPermyriad(curr.percent ?? '0')),
+    (acc, curr) => acc + parseFloat(permyriadToPercent(curr.percent ?? '0')),
     0,
   )
 
@@ -191,7 +191,7 @@ export default function ProjectTicketMods({
     await form.validateFields()
 
     const beneficiary = form.getFieldValue('beneficiary')
-    const percent = parsePermyriad(form.getFieldValue('percent')).toNumber()
+    const percent = percentToPermyriad(form.getFieldValue('percent')).toNumber()
     const _lockedUntil = form.getFieldValue('lockedUntil') as moment.Moment
 
     const lockedUntil = _lockedUntil

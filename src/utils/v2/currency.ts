@@ -1,8 +1,11 @@
 import { V1CurrencyOption } from 'models/v1/currencyOption'
-import { V2CurrencyOption } from 'models/v2/currencyOption'
+import {
+  V2CurrencyETH,
+  V2CurrencyOption,
+  V2CurrencyUSD,
+} from 'models/v2/currencyOption'
 
 import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
-import { V2_CURRENCY_ETH, V2_CURRENCY_USD } from 'constants/v2/currency'
 import {
   CurrencyMetadata,
   CurrencyName,
@@ -10,10 +13,14 @@ import {
   CURRENCY_METADATA,
 } from 'constants/currency'
 
-const V2_CURRENCY_METADATA: Record<V2CurrencyOption, CurrencyMetadata> = {
-  [V2_CURRENCY_ETH]: CURRENCY_METADATA.ETH,
-  [V2_CURRENCY_USD]: CURRENCY_METADATA.USD,
-}
+export const V2_CURRENCY_ETH: V2CurrencyETH = 1
+export const V2_CURRENCY_USD: V2CurrencyUSD = 2
+
+export const V2_CURRENCY_METADATA: Record<V2CurrencyOption, CurrencyMetadata> =
+  {
+    [V2_CURRENCY_ETH]: CURRENCY_METADATA.ETH,
+    [V2_CURRENCY_USD]: CURRENCY_METADATA.USD,
+  }
 
 const CURRENCY_MAP: { [key in V1CurrencyOption]: V2CurrencyOption } = {
   [V1_CURRENCY_ETH]: V2_CURRENCY_ETH,

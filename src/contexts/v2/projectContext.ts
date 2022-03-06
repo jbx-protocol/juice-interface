@@ -6,16 +6,24 @@ import { createContext } from 'react'
 
 export type V2ProjectContextType = {
   projectId: BigNumber | undefined
+  owner: string | undefined
   projectMetadata: ProjectMetadataV4 | undefined
   fundingCycle: V2FundingCycle | undefined
   payoutSplits: Split[] | undefined
   reserveTokenSplits: Split[] | undefined
+  tokenAddress: string | undefined
+  terminals: number[] | undefined
+  ETHBalance: BigNumber | undefined
 }
 
 export const V2ProjectContext = createContext<V2ProjectContextType>({
   projectId: undefined,
+  owner: undefined,
   projectMetadata: undefined,
   fundingCycle: undefined,
   payoutSplits: undefined,
   reserveTokenSplits: undefined,
+  tokenAddress: undefined,
+  terminals: undefined,
+  ETHBalance: undefined,
 })

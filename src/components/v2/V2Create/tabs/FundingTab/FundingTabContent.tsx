@@ -21,12 +21,11 @@ import { SerializedV2FundAccessConstraint } from 'utils/v2/serializers'
 import { sanitizeSplit, toMod, toSplit } from 'utils/v2/splits'
 
 import { getDefaultFundAccessConstraint } from 'utils/v2/fundingCycle'
-
 import { toV1Currency } from 'utils/v1/currency'
+import { V2_CURRENCY_ETH, V2_CURRENCY_USD } from 'utils/v2/currency'
 
 import ExternalLink from 'components/shared/ExternalLink'
 
-import { V2_CURRENCY_ETH } from 'constants/v2/currency'
 import { shadowCard } from 'constants/styles/shadowCard'
 import FormActionbar from '../../FormActionBar'
 import { formBottomMargin } from '../../constants'
@@ -40,7 +39,10 @@ type FundingFormFields = {
   duration?: string
 }
 
-export default function FundingTabContent({ onFinish }: TabContentProps) {
+export default function FundingTabContent({
+  onFinish,
+  hidePreview,
+}: TabContentProps) {
   const { theme } = useContext(ThemeContext)
   const { contracts } = useContext(V2UserContext)
   const dispatch = useAppDispatch()
@@ -136,7 +138,7 @@ export default function FundingTabContent({ onFinish }: TabContentProps) {
 
   return (
     <Row gutter={32} style={{ marginBottom: formBottomMargin }}>
-      <Col md={10} xs={24}>
+      <Col md={!hidePreview ? 10 : 24} xs={24}>
         <Form form={fundingForm} layout="vertical" onFinish={onFundingFormSave}>
           <Form.Item label={t`How much do you want to raise?`}>
             <FundingTypeSelect
@@ -235,7 +237,11 @@ export default function FundingTabContent({ onFinish }: TabContentProps) {
           <FormActionbar />
         </Form>
       </Col>
-      <Col md={12} xs={0}></Col>
+      {hidePreview && (
+        <Col md={12} xs={0}>
+          {/* TODO: preview on all create project tabs */}
+        </Col>
+      )}
     </Row>
   )
 }

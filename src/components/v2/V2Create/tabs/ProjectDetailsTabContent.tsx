@@ -15,8 +15,10 @@ import FormActionbar from '../FormActionBar'
 
 export default function ProjectDetailsTabContent({
   onFinish,
+  hidePreview,
 }: {
   onFinish?: VoidFunction
+  hidePreview?: boolean
 }) {
   const [projectForm] = useForm<ProjectDetailsFormFields>()
   const dispatch = useAppDispatch()
@@ -68,7 +70,7 @@ export default function ProjectDetailsTabContent({
 
   return (
     <Row gutter={32}>
-      <Col md={10} xs={24}>
+      <Col md={!hidePreview ? 10 : 24} xs={24}>
         <ProjectDetailsForm
           form={projectForm}
           onFinish={onProjectFormSaved}
@@ -81,9 +83,11 @@ export default function ProjectDetailsTabContent({
           style={{ marginBottom: formBottomMargin }}
         />
       </Col>
-      <Col md={10} xs={24}>
-        <ProjectHeader metadata={projectMetadata} />
-      </Col>
+      {!hidePreview && (
+        <Col md={10} xs={24}>
+          <ProjectHeader metadata={projectMetadata} />
+        </Col>
+      )}
     </Row>
   )
 }

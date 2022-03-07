@@ -50,7 +50,9 @@ import ProjectDetailsForm, {
 } from 'components/shared/forms/ProjectDetailsForm'
 
 import BudgetForm from 'components/shared/forms/BudgetForm'
-import IncentivesForm from 'components/shared/forms/IncentivesForm'
+import IncentivesForm, {
+  IncentivesFormFields,
+} from 'components/shared/forms/IncentivesForm'
 import PayModsForm from 'components/shared/forms/PayModsForm'
 import RestrictedActionsForm, {
   RestrictedActionsFormFields,
@@ -92,6 +94,7 @@ export default function V1Create() {
   const [projectForm] = useForm<ProjectDetailsFormFields>()
   const [ticketingForm] = useForm<TicketingFormFields>()
   const [restrictedActionsForm] = useForm<RestrictedActionsFormFields>()
+  const [incentivesForm] = useForm<IncentivesFormFields>()
   const editingFC = useEditingV1FundingCycleSelector()
   const {
     info: editingProjectInfo,
@@ -144,6 +147,15 @@ export default function V1Create() {
     [editingFC?.reserved, ticketingForm],
   )
 
+  const resetIncentiveForm = useCallback(
+    () =>
+      incentivesForm.setFieldsValue({
+        discountRate: fromPermille(editingFC?.discountRate),
+        bondingCurveRate: fromPerbicent(editingFC?.bondingCurveRate),
+      }),
+    [editingFC?.discountRate, editingFC?.bondingCurveRate, incentivesForm],
+  )
+
   const resetRestrictedActionsForm = useCallback(() => {
     if (
       editingFC?.payIsPaused !== null &&
@@ -160,6 +172,7 @@ export default function V1Create() {
     restrictedActionsForm,
   ])
 
+  // The following useEffect's set the initial values of all the forms' fields from redux
   useEffect(() => {
     resetProjectForm()
   }, [resetProjectForm])
@@ -167,6 +180,10 @@ export default function V1Create() {
   useEffect(() => {
     resetTicketingForm()
   }, [resetTicketingForm])
+
+  useEffect(() => {
+    resetIncentiveForm()
+  }, [resetIncentiveForm])
 
   useEffect(() => {
     resetRestrictedActionsForm()
@@ -690,33 +707,34 @@ export default function V1Create() {
           {...memoizedDrawerStyle}
           onClose={() => {
             viewedCurrentStep()
+            resetIncentiveForm()
             setIncentivesFormModalVisible(false)
           }}
         >
-          <IncentivesForm
-            initialDiscountRate={
-              editingFC.duration.eq(0)
-                ? '0'
-                : fromPermille(editingFC.discountRate)
-            }
-            initialBondingCurveRate={fromPerbicent(editingFC.bondingCurveRate)}
-            disableDiscountRate={
-              editingFC.duration.eq(0)
-                ? t`Discount rate disabled while funding cycle duration is 0.`
-                : undefined
-            }
-            disableBondingCurve={
-              !hasFundingTarget(editingFC)
-                ? t`Bonding curve disabled while no funding target is set.`
-                : undefined
-            }
-            onSave={async (discountRate: string, bondingCurveRate: string) => {
-              viewedCurrentStep()
-              await ticketingForm.validateFields()
-              onIncentivesFormSaved(discountRate, bondingCurveRate)
-              setIncentivesFormModalVisible(false)
-            }}
-          />
+          {incentivesFormModalVisible && (
+            <IncentivesForm
+              form={incentivesForm}
+              disableDiscountRate={
+                editingFC.duration.eq(0)
+                  ? t`Discount rate disabled while funding cycle duration is 0.`
+                  : undefined
+              }
+              disableBondingCurve={
+                !hasFundingTarget(editingFC)
+                  ? t`Bonding curve disabled while no funding target is set.`
+                  : undefined
+              }
+              onSave={async (
+                discountRate: string,
+                bondingCurveRate: string,
+              ) => {
+                viewedCurrentStep()
+                await incentivesForm.validateFields()
+                onIncentivesFormSaved(discountRate, bondingCurveRate)
+                setIncentivesFormModalVisible(false)
+              }}
+            />
+          )}
         </Drawer>
 
         <Drawer

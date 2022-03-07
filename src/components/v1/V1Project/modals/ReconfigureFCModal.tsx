@@ -48,7 +48,9 @@ import { drawerWidth } from 'utils/drawerWidth'
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 
 import BudgetForm from '../../../shared/forms/BudgetForm'
-import IncentivesForm from '../../../shared/forms/IncentivesForm'
+import IncentivesForm, {
+  IncentivesFormFields,
+} from '../../../shared/forms/IncentivesForm'
 import PayModsForm from '../../../shared/forms/PayModsForm'
 import TicketingForm, {
   TicketingFormFields,
@@ -82,6 +84,7 @@ export default function ReconfigureFCModal({
   useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>()
   const [ticketingForm] = useForm<TicketingFormFields>()
+  const [incentivesForm] = useForm<IncentivesFormFields>()
   const [restrictedActionsForm] = useForm<RestrictedActionsFormFields>()
   const [editingPayoutMods, setEditingPayoutMods] = useState<PayoutMod[]>([])
   const [editingTicketMods, setEditingTicketMods] = useState<TicketMod[]>([])
@@ -193,6 +196,10 @@ export default function ReconfigureFCModal({
     ticketingForm.setFieldsValue({
       reserved: parseFloat(fromPerbicent(metadata.reservedRate)),
     })
+    incentivesForm.setFieldsValue({
+      discountRate: fromPermille(fundingCycle.discountRate),
+      bondingCurveRate: fromPerbicent(metadata.bondingCurveRate),
+    })
 
     if (metadata.version === 1) {
       restrictedActionsForm.setFieldsValue({
@@ -209,6 +216,7 @@ export default function ReconfigureFCModal({
     queuedTicketMods,
     dispatch,
     ticketingForm,
+    incentivesForm,
     restrictedActionsForm,
     isPreviewMode,
     visible,
@@ -598,15 +606,14 @@ export default function ReconfigureFCModal({
         }}
       >
         <IncentivesForm
-          initialDiscountRate={fromPermille(editingFC.discountRate)}
-          initialBondingCurveRate={fromPerbicent(editingFC.bondingCurveRate)}
+          form={incentivesForm}
           disableBondingCurve={
             !hasFundingTarget(editingFC)
               ? t`Bonding curve disabled while no funding target is set.`
               : undefined
           }
           onSave={async (discountRate: string, bondingCurveRate: string) => {
-            await ticketingForm.validateFields()
+            await incentivesForm.validateFields()
             onIncentivesFormSaved(discountRate, bondingCurveRate)
             setIncentivesFormModalVisible(false)
             setCurrentStep(undefined)

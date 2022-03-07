@@ -1,8 +1,8 @@
-import { Button, Form, Space } from 'antd'
+import { Button, Form, FormInstance, Space } from 'antd'
 import { Trans } from '@lingui/macro'
 import { FormItems } from 'components/shared/formItems'
 import { ThemeContext } from 'contexts/themeContext'
-import { CSSProperties, useContext, useLayoutEffect, useState } from 'react'
+import { CSSProperties, useContext } from 'react'
 
 export type IncentivesFormFields = {
   discountRate: string
@@ -10,28 +10,22 @@ export type IncentivesFormFields = {
 }
 
 export default function IncentivesForm({
-  initialDiscountRate,
-  initialBondingCurveRate,
+  form,
   disableBondingCurve,
   disableDiscountRate,
   onSave,
 }: {
-  initialDiscountRate: string
-  initialBondingCurveRate: string
+  form: FormInstance<IncentivesFormFields>
   disableBondingCurve?: string
   disableDiscountRate?: string
   onSave: (discountRate: string, bondingCurveRate: string) => void
 }) {
-  const [discountRate, setDiscountRate] = useState<string>()
-  const [bondingCurveRate, setBondingCurveRate] = useState<string>()
   const {
     theme: { colors },
   } = useContext(ThemeContext)
 
-  useLayoutEffect(() => {
-    setDiscountRate(initialDiscountRate)
-    setBondingCurveRate(initialBondingCurveRate)
-  }, [initialBondingCurveRate, initialDiscountRate])
+  const discountRate = form.getFieldValue('discountRate')
+  const bondingCurveRate = form.getFieldValue('bondingCurveRate')
 
   const saveButton = (
     <Form.Item>
@@ -41,7 +35,10 @@ export default function IncentivesForm({
         onClick={() => {
           if (discountRate === undefined || bondingCurveRate === undefined)
             return
-          onSave(discountRate, bondingCurveRate)
+          onSave(
+            form.getFieldValue('discountRate'),
+            form.getFieldValue('bondingCurveRate'),
+          )
         }}
       >
         Save
@@ -61,14 +58,16 @@ export default function IncentivesForm({
         <Trans>Incentives</Trans>
       </h1>
 
-      <Form layout="vertical">
+      <Form form={form} layout="vertical">
         {disableDiscountRate && (
           <p style={disableTextStyle}>{disableDiscountRate}</p>
         )}
         <FormItems.ProjectDiscountRate
           name="discountRate"
-          value={discountRate?.toString() ?? '0'}
-          onChange={(val?: number) => setDiscountRate(val?.toString())}
+          value={discountRate}
+          onChange={(val?: number) => {
+            form.setFieldsValue({ discountRate: val?.toString() })
+          }}
           disabled={!!disableDiscountRate}
         />
         {disableBondingCurve && (
@@ -78,8 +77,10 @@ export default function IncentivesForm({
         )}
         <FormItems.ProjectBondingCurveRate
           name="bondingCurveRate"
-          value={bondingCurveRate?.toString() ?? '100'}
-          onChange={(val?: number) => setBondingCurveRate(val?.toString())}
+          value={form.getFieldValue('bondingCurveRate')}
+          onChange={(val?: number) =>
+            form.setFieldsValue({ bondingCurveRate: val?.toString() })
+          }
           disabled={!!disableBondingCurve}
         />
         {saveButton}

@@ -14,7 +14,7 @@ export default function NumberSlider({
   onChange,
   defaultValue,
   disabled,
-  name, // Without the name prop, the InputNumber will not update according to its parent Form.Item
+  name, // Name is required for form validation
   formItemProps,
   style,
 }: {
@@ -27,7 +27,9 @@ export default function NumberSlider({
   defaultValue?: number
   style?: CSSProperties
 } & FormItemExt) {
-  const [_value, setValue] = useState<number>()
+  const [_value, setValue] = useState<number | undefined>(
+    sliderValue ?? defaultValue,
+  )
 
   const inputConfig = {
     min: min ?? 0,
@@ -42,7 +44,9 @@ export default function NumberSlider({
     if (onChange) onChange(val)
   }
 
-  useEffect(() => setValue(sliderValue), [sliderValue])
+  useEffect(() => {
+    setValue(sliderValue)
+  }, [sliderValue])
 
   return (
     <div style={style}>

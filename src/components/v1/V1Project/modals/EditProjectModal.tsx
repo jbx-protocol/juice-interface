@@ -4,7 +4,7 @@ import { useForm } from 'antd/lib/form/Form'
 import { FormItems } from 'components/shared/formItems'
 import { useSetProjectHandleTx } from 'hooks/v1/transactor/SetProjectHandleTx'
 import { useSetProjectUriTx } from 'hooks/v1/transactor/SetProjectUriTx'
-import { ProjectMetadataV3 } from 'models/project-metadata'
+import { ProjectMetadataV4 } from 'models/project-metadata'
 import { useEffect, useState } from 'react'
 import {
   cidFromUrl,
@@ -38,7 +38,7 @@ export default function EditProjectModal({
   onCancel,
 }: {
   handle: string | undefined
-  metadata: ProjectMetadataV3 | undefined
+  metadata: ProjectMetadataV4 | undefined
   visible?: boolean
   onSuccess?: VoidFunction
   onCancel?: VoidFunction
@@ -76,32 +76,35 @@ export default function EditProjectModal({
 
     const fields = projectInfoForm.getFieldsValue(true)
 
-    const uploadedMetadata = await uploadProjectMetadata({
-      name: fields.name,
-      description: fields.description,
-      logoUri: fields.logoUri,
-      infoUri: fields.infoUri,
-      twitter: fields.twitter,
-      discord: fields.discord,
-      payButton: fields.payButton,
-      payDisclosure: fields.payDisclosure,
-      tokens: metadata?.tokens ?? [],
-    })
+    const uploadedMetadata = await uploadProjectMetadata(
+      {
+        name: fields.name,
+        description: fields.description,
+        logoUri: fields.logoUri,
+        infoUri: fields.infoUri,
+        twitter: fields.twitter,
+        discord: fields.discord,
+        payButton: fields.payButton,
+        payDisclosure: fields.payDisclosure,
+        tokens: metadata?.tokens ?? [],
+      },
+      handle,
+    )
 
-    if (!uploadedMetadata?.success) {
+    if (!uploadedMetadata.IpfsHash) {
       setLoadingSetURI(false)
       return
     }
 
     setProjectUriTx(
-      { cid: uploadedMetadata.cid },
+      { cid: uploadedMetadata.IpfsHash },
       {
         onDone: () => setLoadingSetURI(false),
         onConfirmed: () => {
           if (onSuccess) onSuccess()
 
           // Set name for new metadata file
-          editMetadataForCid(uploadedMetadata.cid, {
+          editMetadataForCid(uploadedMetadata.IpfsHash, {
             name: metadataNameForHandle(handle),
           })
 

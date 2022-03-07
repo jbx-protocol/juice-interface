@@ -7,7 +7,7 @@ import { useForm } from 'antd/lib/form/Form'
 import { ThemeContext } from 'contexts/themeContext'
 import { TicketMod } from 'models/mods'
 import * as moment from 'moment'
-import { useCallback, useContext, useState } from 'react'
+import { CSSProperties, useCallback, useContext, useState } from 'react'
 import { formatDate } from 'utils/formatDate'
 import { fromPermyriad, parsePermyriad } from 'utils/formatNumber'
 
@@ -29,12 +29,14 @@ export default function ProjectTicketMods({
   lockedMods,
   mods,
   reservedRate,
+  style = {},
   onModsChanged,
   formItemProps,
 }: {
   lockedMods?: TicketMod[]
   mods: TicketMod[] | undefined
   reservedRate: number
+  style?: CSSProperties
   onModsChanged: (mods: TicketMod[]) => void
 } & FormItemExt) {
   const [form] = useForm<{
@@ -92,10 +94,10 @@ export default function ProjectTicketMods({
             }}
           >
             <Row gutter={gutter} style={{ width: '100%' }} align="middle">
-              <Col span={5}>
+              <Col span={7}>
                 <label>Address</label>{' '}
               </Col>
-              <Col span={19}>
+              <Col span={17}>
                 <div
                   style={{
                     display: 'flex',
@@ -111,10 +113,10 @@ export default function ProjectTicketMods({
             </Row>
 
             <Row gutter={gutter} style={{ width: '100%' }} align="middle">
-              <Col span={5}>
+              <Col span={7}>
                 <label>Percentage</label>
               </Col>
-              <Col span={19}>
+              <Col span={17}>
                 <div
                   style={{
                     display: 'flex',
@@ -138,10 +140,10 @@ export default function ProjectTicketMods({
 
             {mod.lockedUntil ? (
               <Row gutter={gutter} style={{ width: '100%' }} align="middle">
-                <Col span={5}>
+                <Col span={7}>
                   <label>Locked</label>
                 </Col>
-                <Col span={19}>
+                <Col span={17}>
                   until {formatDate(mod.lockedUntil * 1000, 'MM-DD-yyyy')}
                 </Col>
               </Row>
@@ -246,6 +248,7 @@ export default function ProjectTicketMods({
           },
         },
       ]}
+      style={style}
     >
       <Space direction="vertical" style={{ width: '100%' }} size="large">
         {lockedMods ? (

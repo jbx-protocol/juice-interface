@@ -2,7 +2,7 @@ import { t } from '@lingui/macro'
 import ProjectLogo from 'components/shared/ProjectLogo'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
-import { ProjectMetadataV3 } from 'models/project-metadata'
+import { ProjectMetadataV4 } from 'models/project-metadata'
 import Paragraph from 'components/shared/Paragraph'
 
 import SocialLinks from './SocialLinks'
@@ -13,7 +13,7 @@ export default function ProjectHeader({
   isArchived,
   actions,
 }: {
-  metadata?: ProjectMetadataV3
+  metadata?: ProjectMetadataV4
   isArchived?: boolean
   handle?: string
   actions?: JSX.Element

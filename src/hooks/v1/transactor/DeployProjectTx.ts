@@ -1,6 +1,8 @@
 import { NetworkContext } from 'contexts/networkContext'
 import { V1UserContext } from 'contexts/v1/userContext'
-import { BigNumber, constants, utils } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
+import * as constants from '@ethersproject/constants'
+import { formatBytes32String } from '@ethersproject/strings'
 import {
   V1FundingCycleMetadata,
   V1FundingCycleProperties,
@@ -57,7 +59,7 @@ export function useDeployProjectTx(): TransactorInstance<{
       'deploy',
       [
         userAddress,
-        utils.formatBytes32String(handle),
+        formatBytes32String(handle),
         projectMetadataCid,
         _properties,
         fundingCycleMetadata,

@@ -1,8 +1,8 @@
 import { ThemeContext } from 'contexts/themeContext'
-import { BigNumber } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { CSSProperties, useContext, useEffect, useState } from 'react'
-import { currencyName } from 'utils/v1/currency'
+import { V1CurrencyName } from 'utils/v1/currency'
 import { fromPerbicent } from 'utils/formatNumber'
 
 import InputAccessoryButton from '../InputAccessoryButton'
@@ -56,14 +56,14 @@ export default function BudgetTargetInput({
             setCurrency(newCurrency)
             onCurrencyChange(newCurrency)
           }}
-          content={currencyName(_currency)}
+          content={V1CurrencyName(_currency)}
           withArrow={true}
           placement="suffix"
         />
       )
     return (
       <InputAccessoryButton
-        content={currencyName(_currency)}
+        content={V1CurrencyName(_currency)}
         placement="suffix"
       />
     )

@@ -4,6 +4,7 @@ export type ProjectMetadata =
   | ProjectMetadataV1
   | ProjectMetadataV2
   | ProjectMetadataV3
+  | ProjectMetadataV4
 
 export type ProjectMetadataV1 = Partial<{
   name: string
@@ -14,6 +15,7 @@ export type ProjectMetadataV1 = Partial<{
   version: 1
 }>
 
+// add `tokens`
 export type ProjectMetadataV2 = Partial<
   Omit<ProjectMetadataV1, 'version'> & {
     version: 2
@@ -21,6 +23,7 @@ export type ProjectMetadataV2 = Partial<
   }
 >
 
+// `payText` -> `payButton`
 export type ProjectMetadataV3 = Partial<
   Omit<ProjectMetadataV2, 'version' | 'payText'> & {
     version: 3
@@ -31,15 +34,23 @@ export type ProjectMetadataV3 = Partial<
   }
 >
 
+// add `archived`
+export type ProjectMetadataV4 = Partial<
+  Omit<ProjectMetadataV3, 'version'> & {
+    version: 4
+    archived: boolean
+  }
+>
+
 // Converts metadata of any version to latest version
 export const consolidateMetadata = (
   metadata: ProjectMetadata,
-): ProjectMetadataV3 => {
+): ProjectMetadataV4 => {
   return {
     ...metadata,
     payButton:
       (metadata as ProjectMetadataV3).payButton ??
       (metadata as ProjectMetadataV2).payText,
-    version: 3,
+    version: 4,
   }
 }

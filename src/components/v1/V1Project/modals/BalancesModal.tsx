@@ -10,10 +10,10 @@ import {
   useHasPermission,
 } from 'hooks/v1/contractReader/HasPermission'
 import { useSetProjectUriTx } from 'hooks/v1/transactor/SetProjectUriTx'
-import { ProjectMetadataV3 } from 'models/project-metadata'
+import { ProjectMetadataV4 } from 'models/project-metadata'
 import { TokenRef } from 'models/token-ref'
 import { useContext, useEffect, useState } from 'react'
-import { uploadProjectMetadata } from 'utils/ipfs'
+import { metadataNameForHandle, uploadProjectMetadata } from 'utils/ipfs'
 
 import { t, Trans } from '@lingui/macro'
 
@@ -27,32 +27,37 @@ export default function BalancesModal({
   const [editModalVisible, setEditModalVisible] = useState<boolean>()
   const [loading, setLoading] = useState<boolean>()
   const [editingTokenRefs, setEditingTokenRefs] = useState<TokenRef[]>([])
-  const { owner, metadata } = useContext(V1ProjectContext)
+  const { owner, metadata, handle } = useContext(V1ProjectContext)
   const setProjectUriTx = useSetProjectUriTx()
 
   useEffect(() => {
     setEditingTokenRefs(
-      (metadata as ProjectMetadataV3)?.tokens ?? [{ type: 'erc20', value: '' }],
+      (metadata as ProjectMetadataV4)?.tokens ?? [{ type: 'erc20', value: '' }],
     )
   }, [metadata])
 
   const hasEditPermission = useHasPermission([OperatorPermission.SetUri])
 
   async function updateTokenRefs() {
+    if (!handle) return
+
     setLoading(true)
 
-    const uploadedMetadata = await uploadProjectMetadata({
-      ...metadata,
-      tokens: editingTokenRefs.filter(t => t.type),
-    })
+    const uploadedMetadata = await uploadProjectMetadata(
+      {
+        ...metadata,
+        tokens: editingTokenRefs.filter(t => t.type),
+      },
+      handle,
+    )
 
-    if (!uploadedMetadata?.success) {
+    if (!uploadedMetadata.IpfsHash) {
       setLoading(false)
       return
     }
 
     setProjectUriTx(
-      { cid: uploadedMetadata.cid },
+      { cid: uploadedMetadata.IpfsHash },
       {
         onDone: () => {
           setLoading(false)
@@ -105,7 +110,7 @@ export default function BalancesModal({
             wallet={owner}
             projectId={BigNumber.from('0x01')}
           />
-          {(metadata as ProjectMetadataV3)?.tokens?.map(t =>
+          {(metadata as ProjectMetadataV4)?.tokens?.map(t =>
             t.type === 'erc20' ? (
               <ERC20TokenBalance
                 key={t.value}

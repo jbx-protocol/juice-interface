@@ -59,8 +59,10 @@ import RestrictedActionsForm, {
 } from 'components/shared/forms/RestrictedActionsForm'
 
 import ConfirmDeployProject from './ConfirmDeployProject'
+
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 import { Strategy } from 'constants/ballotStrategies/ballotStrategies'
+import { drawerStyle } from 'constants/styles/drawerStyle'
 
 const terminalVersion: V1TerminalVersion = '1.1'
 
@@ -250,9 +252,10 @@ export default function V1Create() {
 
     const uploadedMetadata = await uploadProjectMetadata(
       editingProjectInfo.metadata,
+      editingProjectInfo.handle,
     )
 
-    if (!uploadedMetadata.success) {
+    if (!uploadedMetadata.IpfsHash) {
       setLoadingCreate(false)
       return
     }
@@ -260,7 +263,7 @@ export default function V1Create() {
     deployProjectTx(
       {
         handle: editingProjectInfo.handle,
-        projectMetadataCid: uploadedMetadata.cid,
+        projectMetadataCid: uploadedMetadata.IpfsHash,
         properties: {
           target: editingFC.target,
           currency: editingFC.currency,
@@ -287,7 +290,7 @@ export default function V1Create() {
           setDeployProjectModalVisible(false)
 
           // Add project dependency to metadata and logo files
-          editMetadataForCid(uploadedMetadata.cid, {
+          editMetadataForCid(uploadedMetadata.IpfsHash, {
             name: metadataNameForHandle(editingProjectInfo.handle),
           })
           editMetadataForCid(cidFromUrl(editingProjectInfo.metadata.logoUri), {
@@ -322,11 +325,8 @@ export default function V1Create() {
     setCurrentStep(undefined)
   }, [currentStep, viewedSteps])
 
-  const drawerStyle: Partial<DrawerProps> = useMemo(
-    () => ({
-      placement: 'right',
-      width: Math.min(640, window.innerWidth * 0.9),
-    }),
+  const memoizedDrawerStyle: Partial<DrawerProps> = useMemo(
+    () => drawerStyle,
     [],
   )
 
@@ -594,7 +594,7 @@ export default function V1Create() {
         </Col>
 
         <Drawer
-          {...drawerStyle}
+          {...memoizedDrawerStyle}
           visible={projectFormModalVisible}
           onClose={() => {
             setCurrentStep(undefined)
@@ -625,7 +625,7 @@ export default function V1Create() {
 
         <Drawer
           visible={budgetFormModalVisible}
-          {...drawerStyle}
+          {...memoizedDrawerStyle}
           onClose={() => {
             viewedCurrentStep()
             setBudgetFormModalVisible(false)
@@ -646,7 +646,7 @@ export default function V1Create() {
 
         <Drawer
           visible={payModsModalVisible}
-          {...drawerStyle}
+          {...memoizedDrawerStyle}
           onClose={() => {
             viewedCurrentStep()
             setPayModsFormModalVisible(false)
@@ -668,7 +668,7 @@ export default function V1Create() {
 
         <Drawer
           visible={ticketingFormModalVisible}
-          {...drawerStyle}
+          {...memoizedDrawerStyle}
           onClose={() => {
             viewedCurrentStep()
             resetTicketingForm()
@@ -690,7 +690,7 @@ export default function V1Create() {
         <ReconfigurationStrategyDrawer
           visible={rulesFormModalVisible}
           initialSelectedStrategy={getBallotStrategyByAddress(editingFC.ballot)}
-          style={drawerStyle}
+          style={memoizedDrawerStyle}
           onSave={(strategy: Strategy) => {
             viewedCurrentStep()
             setRulesFormModalVisible(false)
@@ -704,7 +704,7 @@ export default function V1Create() {
 
         <Drawer
           visible={incentivesFormModalVisible}
-          {...drawerStyle}
+          {...memoizedDrawerStyle}
           onClose={() => {
             viewedCurrentStep()
             resetIncentiveForm()
@@ -739,7 +739,7 @@ export default function V1Create() {
 
         <Drawer
           visible={restrictedActionsFormModalVisible}
-          {...drawerStyle}
+          {...memoizedDrawerStyle}
           onClose={() => {
             setRestrictedActionsFormModalVisible(false)
             setCurrentStep(undefined)

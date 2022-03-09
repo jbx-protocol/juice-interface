@@ -1425,11 +1425,6 @@ msgstr "Restrict payments and printing tokens."
 msgid "Restricted actions"
 msgstr ""
 
-#: src/components/v1/V1Project/Rewards/index.tsx
-#: src/components/v1/V1Project/Rewards/index.tsx
-msgid "Return my ETH"
-msgstr ""
-
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/DeployProjectButton.tsx
 msgid "Review & Deploy"
@@ -2291,6 +2286,11 @@ msgstr "{label}"
 #: src/components/Projects/TrendingProjectCard.tsx
 msgid "{paymentCount, plural, one {# payment} other {# payments}}"
 msgstr "{paymentCount, plural, one {# payment} other {# payments}}"
+
+#: src/components/v1/V1Project/Rewards/index.tsx
+#: src/components/v1/V1Project/Rewards/index.tsx
+msgid "{redeemButtonText}"
+msgstr "{redeemButtonText}"
 
 #: src/components/shared/AMMPrices/TokenAMMPriceRow.tsx
 msgid "{tokenSymbol}/ETH exchange rate on {exchangeName}."

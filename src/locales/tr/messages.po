@@ -1430,11 +1430,6 @@ msgstr "Ödemeleri ve token basımını kısıtlayın."
 msgid "Restricted actions"
 msgstr "Kısıtlanmış eylemler"
 
-#: src/components/v1/V1Project/Rewards/index.tsx
-#: src/components/v1/V1Project/Rewards/index.tsx
-msgid "Return my ETH"
-msgstr "ETH'mi iade et"
-
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/DeployProjectButton.tsx
 msgid "Review & Deploy"
@@ -2295,6 +2290,11 @@ msgstr ""
 
 #: src/components/Projects/TrendingProjectCard.tsx
 msgid "{paymentCount, plural, one {# payment} other {# payments}}"
+msgstr ""
+
+#: src/components/v1/V1Project/Rewards/index.tsx
+#: src/components/v1/V1Project/Rewards/index.tsx
+msgid "{redeemButtonText}"
 msgstr ""
 
 #: src/components/shared/AMMPrices/TokenAMMPriceRow.tsx

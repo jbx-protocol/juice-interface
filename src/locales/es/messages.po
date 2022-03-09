@@ -1430,11 +1430,6 @@ msgstr "Restringir pagos y emisión de tokens."
 msgid "Restricted actions"
 msgstr "Acciones restringidas"
 
-#: src/components/v1/V1Project/Rewards/index.tsx
-#: src/components/v1/V1Project/Rewards/index.tsx
-msgid "Return my ETH"
-msgstr "Retorna mi ETH"
-
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/DeployProjectButton.tsx
 msgid "Review & Deploy"
@@ -2296,6 +2291,11 @@ msgstr "{label}"
 #: src/components/Projects/TrendingProjectCard.tsx
 msgid "{paymentCount, plural, one {# payment} other {# payments}}"
 msgstr "{paymentCount, plural, one {# pago} other {# pagos}}"
+
+#: src/components/v1/V1Project/Rewards/index.tsx
+#: src/components/v1/V1Project/Rewards/index.tsx
+msgid "{redeemButtonText}"
+msgstr ""
 
 #: src/components/shared/AMMPrices/TokenAMMPriceRow.tsx
 msgid "{tokenSymbol}/ETH exchange rate on {exchangeName}."

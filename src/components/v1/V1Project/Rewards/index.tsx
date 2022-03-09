@@ -91,6 +91,12 @@ export default function Rewards() {
 
   const tokensLabel = tokenSymbol ? tokenSymbol + ' ' + t`ERC20` : t`Tokens`
 
+  const redeemButtonText = `Redeem ${tokenSymbolText({
+    tokenSymbol: tokenSymbol,
+    capitalize: false,
+    plural: true,
+  })} for ETH`
+
   return (
     <div>
       <Space direction="vertical" size="large">
@@ -214,7 +220,7 @@ export default function Rewards() {
         <Space direction="vertical" style={{ width: '100%' }}>
           {overflow?.gt(0) ? (
             <Button onClick={() => setRedeemModalVisible(true)} block>
-              <Trans>Return my ETH</Trans>
+              <Trans>{redeemButtonText}</Trans>
             </Button>
           ) : (
             <React.Fragment>
@@ -222,7 +228,7 @@ export default function Rewards() {
                 title={t`Cannot redeem tokens for ETH because this project has no overflow.`}
               >
                 <Button disabled block>
-                  <Trans>Return my ETH</Trans>
+                  <Trans>{redeemButtonText}</Trans>
                 </Button>
               </Tooltip>
               <Button onClick={() => setRedeemModalVisible(true)} block>

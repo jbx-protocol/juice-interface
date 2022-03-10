@@ -1284,8 +1284,8 @@ msgid "Projects"
 msgstr "Proyectos"
 
 #: src/components/Landing/QAs.tsx
-msgid "Projects building on Juicebox pay a 5% JBX membership fee from withdrawn funds into the JuiceboxDAO treasury. Projects can then use their JBX to participate in the governance of JuiceboxDAO and its collective treasury, as well as redeem from its growing <0>overflow</0>. The fee is also subject to change via JBX member votes."
-msgstr "Los proyectos que se construyen en Juicebox pagan una cuota de membresía JBX del 5% de los fondos retirados en la tesorería de JuiceboxDAO. Los proyectos pueden usar su JBX para participar en la gobernanza de JuiceboxDAO y su tesorería colectiva, así como canjear de su creciente <0>excedente</0>. La cuota también está sujeta a cambios a través de los votos de los miembros de JBX."
+msgid "Projects building on Juicebox pay a {JB_FEE}% JBX membership fee from withdrawn funds into the JuiceboxDAO treasury. Projects can then use their JBX to participate in the governance of JuiceboxDAO and its collective treasury, as well as redeem from its growing <0>overflow</0>. The fee is also subject to change via JBX member votes."
+msgstr ""
 
 #: src/components/Landing/QAs.tsx
 msgid "Projects can be created with an optional discount rate designed to incentivize supporters to contribute earlier rather than later. The amount of tokens rewarded per amount paid to your project will decrease by the discount rate with each new funding cycle. A higher discount rate will incentivize supporters to pay your project earlier rather than later."

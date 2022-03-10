@@ -1,9 +1,10 @@
-import { Col, Row } from 'antd'
+import { Trans } from '@lingui/macro'
+import { Button, Col, Row } from 'antd'
 import PayInput from 'components/shared/inputs/Pay/PayInput'
 import ProjectHeader from 'components/shared/ProjectHeader'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { BigNumber } from 'ethers'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { fromPermille, fromWad } from 'utils/formatNumber'
 import {
   deserializeV2FundingCycleMetadata,
@@ -11,8 +12,11 @@ import {
 } from 'utils/v2/serializers'
 
 import V2PayButton from './Pay/V2PayButton'
+import V2ReconfigureModal from './V2ReconfigureModal'
 
 export default function V2Project() {
+  const [reconfigureModalVisible, setReconfigureModalVisible] =
+    useState<boolean>(false)
   const {
     projectId,
     projectMetadata,
@@ -75,6 +79,13 @@ export default function V2Project() {
               </ul>
             </div>
           )}
+          <Button onClick={() => setReconfigureModalVisible(true)}>
+            <Trans>Reconfigure project</Trans>
+          </Button>
+          <V2ReconfigureModal
+            visible={reconfigureModalVisible}
+            onOk={() => setReconfigureModalVisible(false)}
+          />
         </Col>
         <Col md={12} xs={24}>
           <PayInput

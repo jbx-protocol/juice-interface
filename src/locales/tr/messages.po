@@ -8,7 +8,7 @@ msgstr ""
 "Language: tr\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-02-27 01:57\n"
+"PO-Revision-Date: 2022-03-09 02:05\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -65,7 +65,7 @@ msgstr "24 saat"
 
 #: src/constants/ballotStrategies/ballotStrategies.ts
 msgid "3-day delay"
-msgstr ""
+msgstr "3 günlük vade"
 
 #: src/components/v2/V2Create/index.tsx
 msgid "3. Token"
@@ -85,7 +85,7 @@ msgstr "7 gün"
 
 #: src/constants/ballotStrategies/ballotStrategies.ts
 msgid "7-day delay"
-msgstr ""
+msgstr "7 günlük vade"
 
 #: src/components/v1/V1Project/BalanceTimeline.tsx
 msgid "90 days"
@@ -1552,7 +1552,7 @@ msgstr "Juicebox’a katılmalı mısın?"
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
 msgid "Since you have not set a funding duration, changes to these settings will be applied immediately."
-msgstr ""
+msgstr "Bir finansman süresi belirlemediğiniz için bu ayarlarda yapılan değişiklikler hemen uygulanacaktır."
 
 #: src/components/v1/FundingCycle/FundingCyclePreview.tsx
 msgid "Some funding cycle properties may indicate risk for project contributors."
@@ -1814,7 +1814,7 @@ msgstr ""
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Tokens can be redeemed for a portion of this project's ETH overflow, according to the bonding curve rate of the current funding cycle. <0>Tokens are burned when they are redeemed.</0>"
-msgstr ""
+msgstr "Token'lar, mevcut finansman döngüsünün bağlanma eğrisi oranına göre bu projenin ETH taşmasının bir kısmı için kullanılabilir. <0>Token'lar, kullanıldıklarında yakılır.</0>"
 
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
 msgid "Tools"
@@ -2017,7 +2017,7 @@ msgstr "Juicebox ile projeler, motive olmuş punklar tarafından şeffaf bir şe
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 msgid "Withdraw"
-msgstr ""
+msgstr "Çek"
 
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 msgid "Withdraw funds"
@@ -2291,11 +2291,11 @@ msgstr ""
 
 #: src/components/Projects/FilterCheckboxItem.tsx
 msgid "{label}"
-msgstr ""
+msgstr "{label}"
 
 #: src/components/Projects/TrendingProjectCard.tsx
 msgid "{paymentCount, plural, one {# payment} other {# payments}}"
-msgstr ""
+msgstr "{paymentCount, plural, one {# ödeme} other {# ödeme}}"
 
 #: src/components/shared/AMMPrices/TokenAMMPriceRow.tsx
 msgid "{tokenSymbol}/ETH exchange rate on {exchangeName}."

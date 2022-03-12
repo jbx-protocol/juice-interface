@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-02-27 01:57\n"
+"PO-Revision-Date: 2022-03-08 02:02\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -844,7 +844,7 @@ msgstr "一个筹款周期的时长是多少。筹款周期 <0>参数设置的�
 
 #: src/components/v2/V2Create/tabs/FundingTab/FundingTabContent.tsx
 msgid "How much do you want to raise?"
-msgstr ""
+msgstr "您想筹集多少资金？"
 
 #: src/components/v1/V1Create/index.tsx
 msgid "How your project will distribute funds."

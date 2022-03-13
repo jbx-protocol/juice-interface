@@ -1,13 +1,12 @@
 import { HashRouter, Route, Switch } from 'react-router-dom'
 import { Redirect, useParams } from 'react-router'
 import { Suspense, lazy } from 'react'
+import V1Dashboard from 'components/v1/V1Dashboard'
+import Landing from 'components/Landing'
+import V1Create from 'components/v1/V1Create'
+import Projects from 'components/Projects'
 import V2UserProvider from 'providers/v2/UserProvider'
 import Loading from 'components/shared/Loading'
-
-import Landing from 'components/Landing'
-import Projects from 'components/Projects'
-import V1Create from 'components/v1/V1Create'
-import V1Dashboard from 'components/v1/V1Dashboard'
 
 const V2Create = lazy(() => import('components/v2/V2Create'))
 const V2Dashboard = lazy(() => import('components/v2/V2Dashboard'))
@@ -32,9 +31,7 @@ export default function Router() {
           <Projects />
         </Route>
         <Route path="/projects">
-          <Suspense fallback={<Loading />}>
-            <Projects />
-          </Suspense>
+          <Projects />
         </Route>
         <Route path="/p/:handle">
           <V1Dashboard />

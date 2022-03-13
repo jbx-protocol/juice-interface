@@ -1,7 +1,8 @@
 import { NetworkContext } from 'contexts/networkContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1UserContext } from 'contexts/v1/userContext'
-import { BigNumber, constants } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
+import * as constants from '@ethersproject/constants'
 import { PayoutMod } from 'models/mods'
 import { useContext } from 'react'
 

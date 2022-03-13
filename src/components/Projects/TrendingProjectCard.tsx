@@ -5,7 +5,7 @@ import ETHAmount from 'components/shared/ETHAmount'
 import { t, Trans, Plural } from '@lingui/macro'
 
 import { ThemeContext } from 'contexts/themeContext'
-import { constants } from 'ethers'
+import * as constants from '@ethersproject/constants'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { TrendingProject } from 'models/subgraph-entities/project'
 import { CSSProperties, useContext, useMemo } from 'react'

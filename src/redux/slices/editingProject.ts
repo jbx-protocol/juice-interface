@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { constants } from 'ethers'
+import * as constants from '@ethersproject/constants'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { PayoutMod, TicketMod } from 'models/mods'
 import { ProjectMetadataV4 } from 'models/project-metadata'

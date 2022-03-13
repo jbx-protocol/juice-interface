@@ -37,36 +37,31 @@ export default function V2Dashboard() {
     isLoading: metadataLoading,
   } = useProjectMetadata(metadataCID)
 
-  const { data: fundingCycle, loading: fundingCycleLoading } =
-    useProjectCurrentFundingCycle({
-      projectId,
-    })
-
-  const { data: payoutSplits, loading: payoutSplitsLoading } = useProjectSplits(
-    {
-      projectId,
-      splitGroup: ETH_PAYOUT_SPLIT_GROUP,
-      domain: fundingCycle?.configuration?.toString(),
-    },
-  )
-
-  const { data: terminals, loading: terminalsLoading } = useProjectTerminals({
+  const { data: fundingCycle } = useProjectCurrentFundingCycle({
     projectId,
   })
 
-  const { data: reserveTokenSplits, loading: reserveTokenSplitsLoading } =
-    useProjectSplits({
-      projectId,
-      splitGroup: RESERVE_TOKEN_SPLIT_GROUP,
-      domain: fundingCycle?.configuration?.toString(),
-    })
+  const { data: payoutSplits } = useProjectSplits({
+    projectId,
+    splitGroup: ETH_PAYOUT_SPLIT_GROUP,
+    domain: fundingCycle?.configuration?.toString(),
+  })
 
-  const { data: ETHBalance, loading: ETHBalanceLoading } =
-    useETHPaymentTerminalBalance({
-      projectId,
-    })
+  const { data: terminals } = useProjectTerminals({
+    projectId,
+  })
 
-  const { data: tokenAddress, loading: tokenAddressLoading } = useProjectToken({
+  const { data: reserveTokenSplits } = useProjectSplits({
+    projectId,
+    splitGroup: RESERVE_TOKEN_SPLIT_GROUP,
+    domain: fundingCycle?.configuration?.toString(),
+  })
+
+  const { data: ETHBalance } = useETHPaymentTerminalBalance({
+    projectId,
+  })
+
+  const { data: tokenAddress } = useProjectToken({
     projectId,
   })
 

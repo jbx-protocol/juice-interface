@@ -2,7 +2,9 @@ import { CheckCircleFilled } from '@ant-design/icons'
 import { Form, Input } from 'antd'
 
 import { ThemeContext } from 'contexts/themeContext'
-import { constants, utils } from 'ethers'
+import * as constants from '@ethersproject/constants'
+import { isAddress } from '@ethersproject/address'
+
 import { useCallback, useContext, useLayoutEffect, useState } from 'react'
 
 import { readProvider } from 'constants/readProvider'
@@ -32,7 +34,7 @@ export default function EthAddress({
       try {
         const resolved = await readProvider.resolveName(value)
 
-        if (typeof resolved === 'string' && utils.isAddress(resolved)) {
+        if (typeof resolved === 'string' && isAddress(resolved)) {
           setAddressForENS(resolved)
           onAddressChange(resolved)
         } else {
@@ -51,7 +53,7 @@ export default function EthAddress({
 
   useLayoutEffect(() => {
     const readENSName = async () => {
-      if (!defaultValue || !utils.isAddress(defaultValue)) {
+      if (!defaultValue || !isAddress(defaultValue)) {
         setDisplayValue(defaultValue)
         return
       }

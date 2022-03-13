@@ -1,6 +1,7 @@
 import { Tooltip } from 'antd'
 
-import { BigNumber, constants } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
+import * as constants from '@ethersproject/constants'
 import { ThemeContext } from 'contexts/themeContext'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { Project } from 'models/subgraph-entities/project'

@@ -3,7 +3,7 @@ import { Button, Modal } from 'antd'
 import ProjectTicketMods from 'components/shared/formItems/ProjectTicketMods'
 import Mod from 'components/shared/Mod'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
-import { BigNumber } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
 import {
   OperatorPermission,
   useHasPermission,

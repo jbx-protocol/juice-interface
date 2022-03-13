@@ -6,11 +6,6 @@ import { useContext } from 'react'
 
 import { permilleToPercent } from 'utils/formatNumber'
 import { fromWad } from 'utils/formatNumber'
-import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
-import {
-  deserializeV2FundingCycleMetadata,
-  serializeV2FundingCycleMetadata,
-} from 'utils/v2/serializers'
 
 import V2PayButton from './V2PayButton'
 

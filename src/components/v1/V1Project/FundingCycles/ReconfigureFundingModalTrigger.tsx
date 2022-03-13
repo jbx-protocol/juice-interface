@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import store, { createStore } from 'redux/store'
 import { Trans } from '@lingui/macro'
 
-import { BigNumber } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
 
 import ReconfigureFCModal from '../modals/ReconfigureFCModal'
 

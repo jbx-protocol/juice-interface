@@ -1,6 +1,8 @@
 import { PayoutMod } from 'models/mods'
 import { permyriadToPercent } from 'utils/formatNumber'
-import { constants, utils } from 'ethers'
+import * as constants from '@ethersproject/constants'
+import { isAddress } from '@ethersproject/address'
+
 import { BigNumber } from '@ethersproject/bignumber'
 
 import {
@@ -47,7 +49,7 @@ export function validateEthAddress(
     address === mods[editingModIndex ?? 0]?.beneficiary
   )
     return Promise.resolve()
-  else if (!address || !utils.isAddress(address))
+  else if (!address || !isAddress(address))
     return Promise.reject('Address is required')
   else if (address === constants.AddressZero)
     return Promise.reject('Cannot use zero address')

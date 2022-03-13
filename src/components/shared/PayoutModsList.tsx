@@ -6,7 +6,8 @@ import { getTotalPercentage } from 'components/shared/formItems/formHelpers'
 import Mod from 'components/shared/Mod'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
-import { BigNumber, constants } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
+import * as constants from '@ethersproject/constants'
 import {
   OperatorPermission,
   useHasPermission,

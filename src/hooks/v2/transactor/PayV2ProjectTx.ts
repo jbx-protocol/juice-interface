@@ -2,7 +2,8 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { V2UserContext } from 'contexts/v2/userContext'
 import { useContext } from 'react'
 
-import { BigNumber, ethers } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
+import { randomBytes } from '@ethersproject/random'
 
 import { TransactorInstance } from '../../Transactor'
 
@@ -38,7 +39,7 @@ export function usePayV2ProjectTx(): PayV2ProjectTxType {
         minReturnedTokens,
         preferClaimedTokens,
         memo || '',
-        ethers.utils.randomBytes(1), //delegateMetadata
+        randomBytes(1), //delegateMetadata
       ],
       {
         ...txOpts,

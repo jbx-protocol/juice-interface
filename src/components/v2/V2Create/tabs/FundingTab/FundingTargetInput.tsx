@@ -3,7 +3,7 @@ import {
   targetToTargetSubFeeFormatted,
 } from 'components/shared/formItems/formHelpers'
 import BudgetTargetInput from 'components/shared/inputs/BudgetTargetInput'
-import { BigNumber } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { useState } from 'react'
 import { toV1Currency } from 'utils/v1/currency'

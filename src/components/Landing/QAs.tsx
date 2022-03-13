@@ -7,6 +7,8 @@ export const OverflowVideoLink = ({ children }: PropsWithChildren<{}>) => (
   <ExternalLink href="https://youtu.be/9Mq5oDh0aBY">{children}</ExternalLink>
 )
 
+const JB_FEE = 2.5
+
 const JBDiscordLink = ({ children }: PropsWithChildren<{}>) => (
   <ExternalLink href="https://discord.gg/6jXrJSyDFf">{children}</ExternalLink>
 )
@@ -46,7 +48,7 @@ export default function QAs() {
           .
         </Trans>,
         <Trans>
-          Projects building on Juicebox pay a 5% JBX membership fee from
+          Projects building on Juicebox pay a {JB_FEE}% JBX membership fee from
           withdrawn funds into the JuiceboxDAO treasury. Projects can then use
           their JBX to participate in the governance of JuiceboxDAO and its
           collective treasury, as well as redeem from its growing{' '}

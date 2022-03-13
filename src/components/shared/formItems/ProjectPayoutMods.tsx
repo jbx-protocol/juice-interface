@@ -26,8 +26,8 @@ import { useCallback, useContext, useState } from 'react'
 import { formatDate } from 'utils/formatDate'
 import {
   formatWad,
-  fromPermyriad,
-  parsePermyriad,
+  permyriadToPercent,
+  percentToPermyriad,
   parseWad,
   fromWad,
 } from 'utils/formatNumber'
@@ -137,7 +137,7 @@ export default function ProjectPayoutMods({
             onClick={() => {
               if (locked) return
 
-              const percent = parseFloat(fromPermyriad(mod.percent))
+              const percent = parseFloat(permyriadToPercent(mod.percent))
 
               setEditingModType(
                 BigNumber.from(mod.projectId || '0').gt(0)
@@ -237,7 +237,7 @@ export default function ProjectPayoutMods({
                     }}
                   >
                     <Space size="large">
-                      <span>{fromPermyriad(mod.percent)}%</span>
+                      <span>{permyriadToPercent(mod.percent)}%</span>
                       {parseWad(target).lt(constants.MaxUint256) && (
                         <span>
                           <CurrencySymbol currency={currency} />
@@ -304,7 +304,7 @@ export default function ProjectPayoutMods({
   if (!mods) return null
 
   const total = mods.reduce(
-    (acc, curr) => acc + parseFloat(fromPermyriad(curr.percent ?? '0')),
+    (acc, curr) => acc + parseFloat(permyriadToPercent(curr.percent ?? '0')),
     0,
   )
 
@@ -313,7 +313,7 @@ export default function ProjectPayoutMods({
 
     const handle = form.getFieldValue('handle')
     const beneficiary = form.getFieldValue('beneficiary')
-    const percent = parsePermyriad(form.getFieldValue('percent')).toNumber()
+    const percent = percentToPermyriad(form.getFieldValue('percent')).toNumber()
     const _lockedUntil = form.getFieldValue('lockedUntil') as moment.Moment
 
     const lockedUntil = _lockedUntil

@@ -8,6 +8,7 @@ export type V2FundingCycleData = {
 }
 
 export type V2FundingCycleMetadata = {
+  version?: number
   reservedRate: BigNumber
   redemptionRate: BigNumber
   ballotRedemptionRate: BigNumber
@@ -16,6 +17,7 @@ export type V2FundingCycleMetadata = {
   pauseRedeem: boolean
   pauseMint: boolean
   pauseBurn: boolean
+  allowChangeToken: boolean
   allowTerminalMigration: boolean
   allowControllerMigration: boolean
   holdFees: boolean

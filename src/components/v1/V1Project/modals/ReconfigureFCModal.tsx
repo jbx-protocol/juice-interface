@@ -32,8 +32,8 @@ import { editingProjectActions } from 'redux/slices/editingProject'
 import {
   formattedNum,
   formatWad,
-  fromPerbicent,
-  fromPermille,
+  perbicentToPercent,
+  permilleToPercent,
   fromWad,
 } from 'utils/formatNumber'
 import {
@@ -105,7 +105,7 @@ export default function ReconfigureFCModal({
 
   const resetTicketingForm = () =>
     ticketingForm.setFieldsValue({
-      reserved: parseFloat(fromPerbicent(editingFC?.reserved)),
+      reserved: parseFloat(perbicentToPercent(editingFC?.reserved)),
     })
 
   const fcMetadata: V1FundingCycleMetadata | undefined =
@@ -194,11 +194,11 @@ export default function ReconfigureFCModal({
     setEditingTicketMods(ticketMods)
     setEditingPayoutMods(payoutMods)
     ticketingForm.setFieldsValue({
-      reserved: parseFloat(fromPerbicent(metadata.reservedRate)),
+      reserved: parseFloat(perbicentToPercent(metadata.reservedRate)),
     })
     incentivesForm.setFieldsValue({
-      discountRate: fromPermille(fundingCycle.discountRate),
-      bondingCurveRate: fromPerbicent(metadata.bondingCurveRate),
+      discountRate: permilleToPercent(fundingCycle.discountRate),
+      bondingCurveRate: perbicentToPercent(metadata.bondingCurveRate),
     })
 
     if (metadata.version === 1) {
@@ -441,7 +441,7 @@ export default function ReconfigureFCModal({
           <Space size="large" align="end">
             <Statistic
               title={t`Reserved tokens`}
-              value={fromPerbicent(editingFC.reserved)}
+              value={perbicentToPercent(editingFC.reserved)}
               suffix="%"
             />
             {editingFC &&
@@ -449,7 +449,7 @@ export default function ReconfigureFCModal({
               hasFundingTarget(editingFC) && (
                 <Statistic
                   title={t`Discount rate`}
-                  value={fromPermille(editingFC.discountRate)}
+                  value={permilleToPercent(editingFC.discountRate)}
                   suffix="%"
                 />
               )}
@@ -458,7 +458,7 @@ export default function ReconfigureFCModal({
               hasFundingTarget(editingFC) && (
                 <Statistic
                   title={t`Bonding curve rate`}
-                  value={fromPerbicent(editingFC.bondingCurveRate)}
+                  value={perbicentToPercent(editingFC.bondingCurveRate)}
                   suffix="%"
                 />
               )}
@@ -512,7 +512,9 @@ export default function ReconfigureFCModal({
               mods={editingTicketMods}
               projectId={undefined}
               fundingCycle={undefined}
-              reservedRate={parseFloat(fromPerbicent(fcMetadata?.reservedRate))}
+              reservedRate={parseFloat(
+                perbicentToPercent(fcMetadata?.reservedRate),
+              )}
             />
           </div>
         </Space>

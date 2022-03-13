@@ -20,8 +20,8 @@ import { useContext } from 'react'
 import {
   formattedNum,
   formatWad,
-  fromPerbicent,
-  fromPermille,
+  perbicentToPercent,
+  permilleToPercent,
 } from 'utils/formatNumber'
 import {
   hasFundingDuration,
@@ -227,7 +227,7 @@ export default function ConfirmDeployProject() {
             <Col md={8} xs={24}>
               <Statistic
                 title={t`Reserved tokens`}
-                value={fromPerbicent(editingFC?.reserved)}
+                value={perbicentToPercent(editingFC?.reserved)}
                 suffix="%"
               />
             </Col>
@@ -235,7 +235,7 @@ export default function ConfirmDeployProject() {
               <Col md={8} xs={24}>
                 <Statistic
                   title={t`Discount rate`}
-                  value={fromPermille(editingFC?.discountRate)}
+                  value={permilleToPercent(editingFC?.discountRate)}
                   suffix="%"
                 />
               </Col>
@@ -246,7 +246,7 @@ export default function ConfirmDeployProject() {
                 <Col md={8} xs={24}>
                   <Statistic
                     title={t`Bonding curve rate`}
-                    value={fromPerbicent(editingFC?.bondingCurveRate)}
+                    value={perbicentToPercent(editingFC?.bondingCurveRate)}
                     suffix="%"
                   />
                 </Col>
@@ -284,7 +284,9 @@ export default function ConfirmDeployProject() {
                 mods={ticketMods}
                 projectId={undefined}
                 fundingCycle={undefined}
-                reservedRate={parseFloat(fromPerbicent(editingFC?.reserved))}
+                reservedRate={parseFloat(
+                  perbicentToPercent(editingFC?.reserved),
+                )}
               />
             )}
           />

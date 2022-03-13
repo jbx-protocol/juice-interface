@@ -8,7 +8,7 @@ import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { TicketMod } from 'models/mods'
 import { NetworkName } from 'models/network-name'
 import { useContext, useState } from 'react'
-import { formatWad, fromPerbicent } from 'utils/formatNumber'
+import { formatWad, perbicentToPercent } from 'utils/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
@@ -57,7 +57,7 @@ export default function ReservedTokens({
                   plural: true,
                 })}
               </Trans>{' '}
-              ({fromPerbicent(metadata?.reservedRate)}%)
+              ({perbicentToPercent(metadata?.reservedRate)}%)
             </h4>
           }
           tip={t`A project can reserve a percentage of tokens minted from every payment it receives. Reserved tokens can be distributed according to the allocation below at any time.`}
@@ -69,7 +69,7 @@ export default function ReservedTokens({
           mods={ticketMods}
           fundingCycle={fundingCycle}
           projectId={projectId}
-          reservedRate={parseFloat(fromPerbicent(metadata?.reservedRate))}
+          reservedRate={parseFloat(perbicentToPercent(metadata?.reservedRate))}
         />
       ) : null}
 
@@ -99,7 +99,9 @@ export default function ReservedTokens({
 
           <DistributeTokensModal
             visible={modalIsVisible}
-            reservedRate={parseFloat(fromPerbicent(metadata?.reservedRate))}
+            reservedRate={parseFloat(
+              perbicentToPercent(metadata?.reservedRate),
+            )}
             onCancel={() => setModalIsVisible(false)}
             onConfirmed={() => setModalIsVisible(false)}
           />

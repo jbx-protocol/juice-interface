@@ -1,25 +1,24 @@
 import { RightOutlined } from '@ant-design/icons'
 import { ThemeContext } from 'contexts/themeContext'
-import { CSSProperties, useContext } from 'react'
+import { ComponentPropsWithoutRef, CSSProperties, useContext } from 'react'
 
 export default function RichButton({
-  title,
+  heading,
   description,
-  onClick,
   disabled,
+  ...props
 }: {
-  title: JSX.Element | string
+  heading: JSX.Element | string
   description: JSX.Element | string
-  onClick?: React.MouseEventHandler<HTMLDivElement>
   disabled?: boolean
-}) {
+} & ComponentPropsWithoutRef<'div'>) {
   const { colors, radii } = useContext(ThemeContext).theme
 
   const cardStyles: CSSProperties = {
     display: 'flex',
     justifyContent: 'space-between',
     borderRadius: radii.md,
-    cursor: 'pointer',
+    cursor: disabled ? 'not-allowed' : 'pointer',
     border:
       '1px solid ' +
       (disabled ? colors.stroke.disabled : colors.stroke.action.primary),
@@ -30,10 +29,11 @@ export default function RichButton({
     <div
       className="clickable-border"
       style={cardStyles}
-      role="button"
+      {...props}
       onClick={e => {
         if (disabled) return
-        onClick?.(e)
+
+        props?.onClick?.(e)
       }}
     >
       <div style={{ padding: '1rem 0 1rem 1rem' }}>
@@ -42,7 +42,7 @@ export default function RichButton({
             color: disabled ? colors.text.disabled : colors.text.action.primary,
           }}
         >
-          {title}
+          {heading}
         </h4>
         <p
           style={{

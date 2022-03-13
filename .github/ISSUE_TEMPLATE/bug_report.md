@@ -1,7 +1,7 @@
 ---
 name: Bug report
 about: I can't use the app because something is broken or too confusing
-title: '[BUG] '
+title: ''
 labels: bug
 assignees: ''
 ---

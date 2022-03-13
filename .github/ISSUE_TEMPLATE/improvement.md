@@ -1,7 +1,7 @@
 ---
 name: Improvement
 about: Not quite a bug, but something could be better
-title: '[BUGish]'
+title: ''
 labels: bugish
 assignees: ''
 ---

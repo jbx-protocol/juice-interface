@@ -26,7 +26,11 @@ import { PayoutMod, TicketMod } from 'models/mods'
 import { V1TerminalVersion } from 'models/v1/terminals'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
-import { fromPerbicent, fromPermille, fromWad } from 'utils/formatNumber'
+import {
+  perbicentToPercent,
+  permilleToPercent,
+  fromWad,
+} from 'utils/formatNumber'
 import {
   encodeFundingCycleMetadata,
   hasFundingTarget,
@@ -109,7 +113,9 @@ export default function V1Create() {
   useEffect(() => {
     if (terminalFee) {
       dispatch(
-        editingProjectActions.setFee(fromPerbicent(terminalFee).toString()),
+        editingProjectActions.setFee(
+          perbicentToPercent(terminalFee).toString(),
+        ),
       )
     }
   }, [terminalFee, dispatch])
@@ -142,7 +148,7 @@ export default function V1Create() {
   const resetTicketingForm = useCallback(
     () =>
       ticketingForm.setFieldsValue({
-        reserved: parseFloat(fromPerbicent(editingFC?.reserved)),
+        reserved: parseFloat(perbicentToPercent(editingFC?.reserved)),
       }),
     [editingFC?.reserved, ticketingForm],
   )
@@ -150,8 +156,8 @@ export default function V1Create() {
   const resetIncentiveForm = useCallback(
     () =>
       incentivesForm.setFieldsValue({
-        discountRate: fromPermille(editingFC?.discountRate),
-        bondingCurveRate: fromPerbicent(editingFC?.bondingCurveRate),
+        discountRate: permilleToPercent(editingFC?.discountRate),
+        bondingCurveRate: perbicentToPercent(editingFC?.bondingCurveRate),
       }),
     [editingFC?.discountRate, editingFC?.bondingCurveRate, incentivesForm],
   )

@@ -12,7 +12,7 @@ import { useSetTicketModsTx } from 'hooks/v1/transactor/SetTicketModsTx'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { TicketMod } from 'models/mods'
 import { useContext, useLayoutEffect, useMemo, useState } from 'react'
-import { formatWad, fromPermyriad } from 'utils/formatNumber'
+import { formatWad, permyriadToPercent } from 'utils/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export default function TicketModsList({
@@ -84,7 +84,7 @@ export default function TicketModsList({
                 <Mod
                   mod={mod}
                   value={
-                    fromPermyriad(mod.percent) +
+                    permyriadToPercent(mod.percent) +
                     '%' +
                     (total
                       ? ` (${formatWad(total?.mul(mod.percent).div(10000), {
@@ -106,7 +106,7 @@ export default function TicketModsList({
           mod={{ beneficiary: owner, percent: ownerPercent }}
           value={
             <span style={{ fontWeight: 400 }}>
-              {fromPermyriad(ownerPercent)}%
+              {permyriadToPercent(ownerPercent)}%
               {total
                 ? ` (${formatWad(total?.mul(ownerPercent).div(10000), {
                     precision: 0,

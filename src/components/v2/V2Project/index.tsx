@@ -1,7 +1,7 @@
 import ProjectHeader from 'components/shared/ProjectHeader'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useContext } from 'react'
-import { fromPermille } from 'utils/formatNumber'
+import { permilleToPercent } from 'utils/formatNumber'
 
 export default function V2Project() {
   const {
@@ -32,7 +32,9 @@ export default function V2Project() {
           <h2>Funding Cycle details</h2>
           <ul>
             <li>FC#{fundingCycle?.number.toNumber()}</li>
-            <li>Discount rate: {fromPermille(fundingCycle.discountRate)}%</li>
+            <li>
+              Discount rate: {permilleToPercent(fundingCycle.discountRate)}%
+            </li>
             <li>Start: {start?.toISOString()}</li>
             <li>End: {end?.toISOString()}</li>
             <li>Weight: {fundingCycle.weight.toString()}</li>

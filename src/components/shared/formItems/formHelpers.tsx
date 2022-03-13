@@ -1,5 +1,5 @@
 import { PayoutMod } from 'models/mods'
-import { fromPermyriad } from 'utils/formatNumber'
+import { permyriadToPercent } from 'utils/formatNumber'
 import { constants, utils } from 'ethers'
 import { BigNumber } from '@ethersproject/bignumber'
 
@@ -8,7 +8,7 @@ import {
   formatWad,
   parseWad,
   fromWad,
-  parsePermyriad,
+  percentToPermyriad,
 } from 'utils/formatNumber'
 import { amountSubFee, amountAddFee } from 'utils/math'
 
@@ -18,7 +18,7 @@ export type ModalMode = 'Add' | 'Edit' | undefined
 export function getTotalPercentage(mods: PayoutMod[] | undefined) {
   return (
     mods?.reduce(
-      (acc, curr) => acc + parseFloat(fromPermyriad(curr.percent ?? '0')),
+      (acc, curr) => acc + parseFloat(permyriadToPercent(curr.percent ?? '0')),
       0,
     ) ?? 0
   )
@@ -116,5 +116,5 @@ export function countDecimalPlaces(value: number | undefined) {
 // Rounds a value down to a certain number of decimal places if given, else takes floor
 export function roundDown(value: number, decimalPlaces: number | undefined) {
   if (!decimalPlaces) return Math.floor(value)
-  return parsePermyriad(value).toNumber() / 100
+  return percentToPermyriad(value).toNumber() / 100
 }

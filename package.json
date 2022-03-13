@@ -53,7 +53,7 @@
     "start": "yarn compile-styles && react-scripts start",
     "build": "react-scripts build",
     "prebuild": "yarn compile-styles && yarn i18n:compile",
-    "test": "yarn compile-styles && react-scripts test",
+    "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./",
     "lint:fix": "yarn lint --fix",

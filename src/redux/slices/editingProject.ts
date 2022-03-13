@@ -5,10 +5,10 @@ import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { PayoutMod, TicketMod } from 'models/mods'
 import { ProjectMetadataV4 } from 'models/project-metadata'
 import {
-  fromPerbicent,
-  fromPermille,
-  parsePerbicent,
-  parsePermille,
+  perbicentToPercent,
+  permilleToPercent,
+  percentToPerbicent,
+  percentToPermille,
 } from 'utils/formatNumber'
 import {
   SerializedV1FundingCycle,
@@ -28,8 +28,8 @@ export interface EditingProjectState {
   ticketMods: TicketMod[]
 }
 
-const defaultDiscountRate = parsePermille(0)
-const defaultBondingCurveRate = parsePerbicent(100)
+const defaultDiscountRate = percentToPermille(0)
+const defaultBondingCurveRate = percentToPerbicent(100)
 
 export const defaultProjectState: EditingProjectState = {
   // Increment this version by 1 when making breaking changes.
@@ -62,7 +62,7 @@ export const defaultProjectState: EditingProjectState = {
     tapped: BigNumber.from(0),
     weight: constants.WeiPerEther.mul(1000000), // 1e24
     fee: BigNumber.from(0),
-    reserved: parsePerbicent(0),
+    reserved: percentToPerbicent(0),
     bondingCurveRate: defaultBondingCurveRate,
     discountRate: defaultDiscountRate,
     cycleLimit: BigNumber.from(0),
@@ -153,10 +153,10 @@ export const editingProjectSlice = createSlice({
       state.fundingCycle.ballot = action.payload
     },
     setIsRecurring: (state, action: PayloadAction<boolean>) => {
-      state.fundingCycle.discountRate = fromPermille(
+      state.fundingCycle.discountRate = permilleToPercent(
         action.payload ? defaultDiscountRate : '201',
       )
-      state.fundingCycle.bondingCurveRate = fromPerbicent(
+      state.fundingCycle.bondingCurveRate = perbicentToPercent(
         action.payload ? defaultBondingCurveRate : 0,
       )
     },

@@ -2,7 +2,7 @@ import CurrencySymbol from 'components/shared/CurrencySymbol'
 import Mod from 'components/shared/Mod'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { Split } from 'models/v2/splits'
-import { formatWad, fromPermyriad, parseWad } from 'utils/formatNumber'
+import { formatWad, permyriadToPercent, parseWad } from 'utils/formatNumber'
 import { SerializedV2FundAccessConstraint } from 'utils/v2/serializers'
 import { hasFundingTarget } from 'utils/v2/fundingCycle'
 import { toV1Currency } from 'utils/v1/currency'
@@ -24,7 +24,7 @@ function SplitItem({
   const mod = toMod(split)
   const modValue = (
     <span style={{ fontWeight: 400 }}>
-      {fromPermyriad(split.percent)}%
+      {permyriadToPercent(split.percent)}%
       {hasFundingTarget(fundAccessConstraint) && (
         <>
           {' '}

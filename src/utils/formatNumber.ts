@@ -15,53 +15,136 @@ type FormatConfig = {
 const decimalSeparator = '.'
 const thousandsSeparator = ','
 
-// Wad: 1e-18
-export const parseWad = (amt?: BigNumberish) =>
-  parseUnits(amt?.toString() || '0', WAD_DECIMALS)
+/**
+ * Returns a Wad representation of a given [value], parsed with 18 digits.
+ *
+ * A wad is a decimal number with 18 digits of precision.
+ * Wad: 1e-18
+ * Ref: https://github.com/dapphub/ds-math
+ *
+ * @example
+ * // returns 1000000000000000000
+ * parseWad(1);
+ *
+ */
+export const parseWad = (value?: BigNumberish) =>
+  parseUnits(value?.toString() || '0', WAD_DECIMALS)
 
+/**
+ * Returns a string representation of a given [wadValue] with [decimials] digits.
+ *
+ * A wad is a decimal number with 18 digits of precision.
+ * Wad: 1e-18
+ * Ref: https://github.com/dapphub/ds-math
+ *
+ * @example
+ * // returns 1
+ * fromWad(1000000000000000000);
+ *
+ */
 export const fromWad = (
-  amt?: BigNumberish,
+  wadValue?: BigNumberish,
   decimals: number = WAD_DECIMALS,
 ) => {
-  const result = formatUnits(amt ?? '0', decimals)
+  const result = formatUnits(wadValue ?? '0', decimals)
   return result.substring(result.length - 2) === '.0'
     ? result.substring(0, result.length - 2)
     : result
 }
 
-export const formatWad = (amt?: BigNumberish, config?: FormatConfig) => {
-  if (amt === undefined && amt === null && amt === '') return
+/**
+ * Returns a formatted string of given [wadValue], formatted according to the given [formatConfig].
+ *
+ * A wad is a decimal number with 18 digits of precision.
+ * Wad: 1e-18
+ * Ref: https://github.com/dapphub/ds-math
+ *
+ * @example
+ * // returns 1,000
+ * fromWad(1000000000000000000000, { thousandsSeparator: ',' });
+ *
+ */
+export const formatWad = (
+  wadValue?: BigNumberish,
+  formatConfig?: FormatConfig,
+) => {
+  if (wadValue === undefined && wadValue === null && wadValue === '') return
 
-  let _amt = amt
-  if (_amt?.toString().includes('.')) {
-    _amt = _amt.toString().split('.')[0]
+  let _wadValue = wadValue
+  if (_wadValue?.toString().includes('.')) {
+    _wadValue = _wadValue.toString().split('.')[0]
   }
 
-  return formattedNum(fromWad(_amt, config?.decimals), config)
+  return formattedNum(fromWad(_wadValue, formatConfig?.decimals), formatConfig)
 }
 
-// Strips string of all commas
-export const stripCommas = (string: string) => {
-  return string.replace(/,/g, '')
-}
+/**
+ * Scale a given [percentValue] to the permyriad unit by multiplying it by 100.
+ *
+ * Permyriad: x/10000
+ *
+ * Ref: https://math.fandom.com/wiki/Permyriad
+ */
+export const percentToPermyriad = (percentValue?: string | number) =>
+  BigNumber.from(
+    percentValue ? Math.floor(parseFloat(percentValue.toString()) * 100) : 0,
+  )
 
-// Permyriad: x/10000
-export const parsePermyriad = (amt?: string | number) =>
-  BigNumber.from(amt ? Math.floor(parseFloat(amt.toString()) * 100) : 0)
-export const fromPermyriad = (amt?: BigNumberish) =>
-  amt ? (BigNumber.from(amt).toNumber() / 100).toString() : '0'
+/**
+ * Scale a given [permyriadValue] to the percent unit by dividing it by 100.
+ *
+ * Permyriad: x/10000
+ *
+ * Ref: https://math.fandom.com/wiki/Permyriad
+ */
+export const permyriadToPercent = (permyriadValue?: BigNumberish) =>
+  permyriadValue
+    ? (BigNumber.from(permyriadValue).toNumber() / 100).toString()
+    : '0'
 
-// Permille: x/1000
-export const parsePermille = (amt?: string | number) =>
-  BigNumber.from(amt ? Math.floor(parseFloat(amt.toString()) * 10) : 0)
-export const fromPermille = (amt?: BigNumberish) =>
-  amt ? (BigNumber.from(amt).toNumber() / 10).toString() : '0'
+/**
+ * Scale a given [percentValue] to the permille unit by multiplying it by 10.
+ *
+ * Permille: x/1000
+ *
+ * Ref: https://math.fandom.com/wiki/Permille
+ */
+export const percentToPermille = (percentValue?: string | number) =>
+  BigNumber.from(
+    percentValue ? Math.floor(parseFloat(percentValue.toString()) * 10) : 0,
+  )
 
-// Perbicent: x/200
-export const parsePerbicent = (amt?: string | number) =>
-  BigNumber.from(amt ? Math.floor(parseFloat(amt.toString()) * 2) : 0)
-export const fromPerbicent = (amt?: BigNumberish) =>
-  amt ? (BigNumber.from(amt).toNumber() / 2).toString() : '0'
+/**
+ * Scale a given [permilleValue] to the percent unit by dividing it by 10.
+ *
+ * Permille: x/1000
+ *
+ * Ref: https://math.fandom.com/wiki/Permille
+ */
+export const permilleToPercent = (permilleValue?: BigNumberish) =>
+  permilleValue
+    ? (BigNumber.from(permilleValue).toNumber() / 10).toString()
+    : '0'
+
+/**
+ * Scale a given [percentValue] to the perbicent unit by multiplying it by 2.
+ *
+ * Perbicent: x/200
+ */
+export const percentToPerbicent = (percentValue?: string | number) =>
+  BigNumber.from(
+    percentValue ? Math.floor(parseFloat(percentValue.toString()) * 2) : 0,
+  )
+
+/**
+ * Scale a given [perbicentValue] to the percent unit by dividing it by 2.
+ *
+ * Perbicent: x/200
+ */
+export const perbicentToPercent = (perbicentValue?: BigNumberish) =>
+  perbicentValue
+    ? (BigNumber.from(perbicentValue).toNumber() / 2).toString()
+    : '0'
 
 export const fracDiv = (quotient: string, dividend: string) => {
   return parseFloat(quotient) / parseFloat(dividend)
@@ -71,6 +154,11 @@ const separateThousands = (str?: string, separator = thousandsSeparator) => {
   if (!str?.trim().length) return
 
   return str.replace(/\B(?=(\d{3})+(?!\d))/g, separator)
+}
+
+// Strips string of all commas
+export const stripCommas = (string: string) => {
+  return string.replace(/,/g, '')
 }
 
 export const formattedNum = (

@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
 
-import { fromWad, parsePerbicent } from './formatNumber'
+import { fromWad, percentToPerbicent } from './formatNumber'
 import { decodeFundingCycleMetadata } from './v1/fundingCycle'
 
 export const weightedRate = (
@@ -17,7 +17,11 @@ export const weightedRate = (
   return fromWad(
     fc.weight
       .mul(wad)
-      .mul(output === 'reserved' ? reserved : parsePerbicent(100).sub(reserved))
+      .mul(
+        output === 'reserved'
+          ? reserved
+          : percentToPerbicent(100).sub(reserved),
+      )
       .div(200),
   )
 }

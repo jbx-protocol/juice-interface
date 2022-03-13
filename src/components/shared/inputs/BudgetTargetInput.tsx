@@ -3,7 +3,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { CSSProperties, useContext, useEffect, useState } from 'react'
 import { V1CurrencyName } from 'utils/v1/currency'
-import { fromPerbicent } from 'utils/formatNumber'
+import { perbicentToPercent } from 'utils/formatNumber'
 
 import InputAccessoryButton from '../InputAccessoryButton'
 import FormattedNumberInput from './FormattedNumberInput'
@@ -91,7 +91,7 @@ export default function BudgetTargetInput({
               }
             />
           </div>
-          <div>after {fromPerbicent(fee?.toString())}% JBX fee</div>
+          <div>after {perbicentToPercent(fee?.toString())}% JBX fee</div>
         </div>
       )}
     </div>

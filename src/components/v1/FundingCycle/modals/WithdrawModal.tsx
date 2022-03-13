@@ -15,7 +15,12 @@ import { useTapProjectTx } from 'hooks/v1/transactor/TapProjectTx'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useContext, useEffect, useState } from 'react'
 import { V1CurrencyName } from 'utils/v1/currency'
-import { formatWad, fromPerbicent, fromWad, parseWad } from 'utils/formatNumber'
+import {
+  formatWad,
+  perbicentToPercent,
+  fromWad,
+  parseWad,
+} from 'utils/formatNumber'
 import { amountSubFee, feeForAmount } from 'utils/math'
 
 import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
@@ -114,7 +119,7 @@ export default function WithdrawModal({
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <div>
-              <Trans>JBX Fee ({fromPerbicent(currentFC.fee)}%):</Trans>
+              <Trans>JBX Fee ({perbicentToPercent(currentFC.fee)}%):</Trans>
             </div>
             <div>
               -{' '}
@@ -190,7 +195,7 @@ export default function WithdrawModal({
               )}
             </span>{' '}
             <Trans>
-              after {fromPerbicent(currentFC.fee?.toString())}% JBX fee
+              after {perbicentToPercent(currentFC.fee?.toString())}% JBX fee
             </Trans>
           </div>
         </div>

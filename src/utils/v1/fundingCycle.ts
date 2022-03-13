@@ -5,7 +5,7 @@ import { V1FundingCycle, V1FundingCycleMetadata } from 'models/v1/fundingCycle'
 
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 
-import { fromPerbicent } from '../formatNumber'
+import { perbicentToPercent } from '../formatNumber'
 
 import { EditingV1FundingCycle } from './serializers'
 import {
@@ -142,7 +142,7 @@ export const getUnsafeFundingCycleProperties = (
    * Note: max reserve rate is 200.
    */
   if (
-    parseInt(fromPerbicent(metadata?.reservedRate ?? 0), 10) >=
+    parseInt(perbicentToPercent(metadata?.reservedRate ?? 0), 10) >=
     reservedRateRiskyMin
   ) {
     configFlags.metadataReservedRate = true

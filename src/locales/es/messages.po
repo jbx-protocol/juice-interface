@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-02-28 01:58\n"
+"PO-Revision-Date: 2022-03-13 01:28\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -25,11 +25,11 @@ msgstr "(+{0} reservado)"
 #: src/components/shared/formItems/ProjectDiscountRate.tsx
 #: src/components/shared/formItems/ProjectReserved.tsx
 msgid "(0%)"
-msgstr ""
+msgstr "(0%)"
 
 #: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 msgid "(100%)"
-msgstr ""
+msgstr "(100%)"
 
 #: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
 msgid "(Optional) Add a note to this payment on-chain"
@@ -49,7 +49,7 @@ msgstr "1 año"
 
 #: src/components/v2/V2Create/index.tsx
 msgid "1. Project details"
-msgstr ""
+msgstr "1. Detalles del proyecto"
 
 #: src/components/v1/V1Project/Paid.tsx
 msgid "100% overflow"
@@ -57,7 +57,7 @@ msgstr "100% de excedente"
 
 #: src/components/v2/V2Create/index.tsx
 msgid "2. Funding"
-msgstr ""
+msgstr "2. Financiamiento"
 
 #: src/components/v1/V1Project/BalanceTimeline.tsx
 msgid "24 hours"
@@ -69,7 +69,7 @@ msgstr "Espera de 3 días"
 
 #: src/components/v2/V2Create/index.tsx
 msgid "3. Token"
-msgstr ""
+msgstr "3. Token"
 
 #: src/components/v1/V1Project/BalanceTimeline.tsx
 msgid "30 days"
@@ -77,7 +77,7 @@ msgstr "30 días"
 
 #: src/components/v2/V2Create/index.tsx
 msgid "4. Rules"
-msgstr ""
+msgstr "4. Reglas"
 
 #: src/components/v1/V1Project/BalanceTimeline.tsx
 msgid "7 days"
@@ -97,7 +97,7 @@ msgstr "<0/> Los proyectos archivados no han sido modificados o eliminados en la
 
 #: src/components/Projects/index.tsx
 msgid "<0/> The Juicebox protocol is open to anyone, and project configurations can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO or Peel. Do your own research and understand the risks before committing your funds."
-msgstr ""
+msgstr "<0/> El protocolo Juicebox está abierto para cualquiera, y las configuraciones de proyectos pueden cambiar ampliamente. Existen riesgos asociados con interactuar con todos los proyectos en el protocolo. Los proyectos construidos en el protocolo no son respaldados o investigados por JuiceboxDAO o Peel. Haz tu propia investigación y comprende los riesgos antes de comprometer tus fondos."
 
 #: src/components/v1/FundingCycle/Spending.tsx
 msgid "<0/> owner balance"
@@ -113,11 +113,11 @@ msgstr "<0><1>Este proyecto no tiene excedente</1>, así que no recibirás ETH p
 
 #: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 msgid "<0>Disabled when funding target has not been set.</0>"
-msgstr ""
+msgstr "<0>Deshabilitado cuando el objetivo de financiamiento no ha sido establecido.</0>"
 
 #: src/components/shared/formItems/ProjectDiscountRate.tsx
 msgid "<0>Discount rate disabled when funding cycle duration has not been set.</0>"
-msgstr ""
+msgstr "<0>Tasa de descuento deshabilitada cuando la duración del ciclo de financiamiento no ha sido establecida.</0>"
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "<0>Learn more</0> about funding cycle duration."
@@ -139,11 +139,11 @@ msgstr "<0>NOTA:</0> Este proyecto tiene un balance de 0. Los proyectos no puede
 
 #: src/components/v2/V2Create/tabs/RulesTab/RulesTabContent.tsx
 msgid "<0>Note: </0>Enabling tokens to be minted will appear risky to contributors, and should only be used when necessary."
-msgstr ""
+msgstr "<0>Nota:</0>Habilitar tokens para ser acuñadas puede parecer riesgoso para los contribuidores y solo debe ser usado cuando sea necesario."
 
 #: src/components/v2/V2Create/tabs/TokenTab/TokenTabContent.tsx
 msgid "<0>Note: </0>Once your first funding cycle starts, updates you make to token attributes will <1>not be applied immediately</1> and only take effect in <2>upcoming funding cycles.</2>"
-msgstr ""
+msgstr "<0>Nota: </0> Una vez que tu primer ciclo de financiamiento empieza, las actualizaciones que hagas a los atributos del token <1>no serán aplicadas de inmediato</1> y solo surtirán efecto en <2>próximos ciclos de financiamiento.</2>"
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "<0>Note:</0> These properties will <1>not</1> be editable immediately within a funding cycle. They can only be changed for <2>upcoming</2> funding cycles."
@@ -188,7 +188,7 @@ msgstr "Un mecanismo como Juicebox en el que los compromisos financieros inicial
 
 #: src/components/Projects/ArchivedProjectsMessage.tsx
 msgid "A project can be archived by its owner from the tools menu on the project page."
-msgstr ""
+msgstr "Un proyecto puede ser archivado por su propietario desde el menú de herramientas en la página del proyecto."
 
 #: src/components/Landing/QAs.tsx
 msgid "A project can choose to reserve a percentage of tokens for itself. Instead of being distributed to paying users, this percentage of tokens is instead minted for the project."
@@ -290,7 +290,7 @@ msgstr "Permitir tokens creados"
 
 #: src/components/v2/V2Create/tabs/RulesTab/RulesTabContent.tsx
 msgid "Allow token minting"
-msgstr ""
+msgstr "Permitir acuñación de tokens"
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
@@ -322,7 +322,7 @@ msgstr "Cualquier reconfiguración de un próximo ciclo de financiación surtir�
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
 msgid "Archive project"
-msgstr ""
+msgstr "Archivar proyecto"
 
 #: src/components/Projects/ProjectsFilterAndSort.tsx
 msgid "Archived"
@@ -769,7 +769,7 @@ msgstr "Distribución de fondos"
 
 #: src/components/v2/V2Create/tabs/FundingTab/FundingTabContent.tsx
 msgid "Funding target"
-msgstr ""
+msgstr "Objetivo de financiamiento"
 
 #: src/components/v1/FundingCycle/modals/DistributeTokensModal.tsx
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
@@ -796,7 +796,7 @@ msgstr "Usuario"
 
 #: src/components/v2/V2Create/V2MainnetWarning.tsx
 msgid "Head to <0>rinkeby.juicebox.money</0> to create a project using the Juicebox V2 contracts on Rinkeby."
-msgstr ""
+msgstr "Dirígete a <0>rinkeby.juicebox.money</0> para crear un proyecto usando los contratos de Juicebox V2 en Rinkeby."
 
 #: src/components/v1/V1Project/modals/PayWarningModal.tsx
 msgid "Heads up"
@@ -844,7 +844,7 @@ msgstr "Cuanto durará un ciclo de financiamiento. Las <0>reconfiguraciones</0> 
 
 #: src/components/v2/V2Create/tabs/FundingTab/FundingTabContent.tsx
 msgid "How much do you want to raise?"
-msgstr ""
+msgstr "¿Cuánto deseas recaudar?"
 
 #: src/components/v1/V1Create/index.tsx
 msgid "How your project will distribute funds."
@@ -1070,7 +1070,7 @@ msgstr "Sin meta-objetivo de financiamiento"
 
 #: src/components/v2/V2Create/tabs/FundingTab/FundingTypeSelect.tsx
 msgid "No target (as much as possible)"
-msgstr ""
+msgstr "Sin objetivo (lo más que se pueda)"
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "No target set."
@@ -1084,7 +1084,7 @@ msgstr "No establecido"
 
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
 msgid "Note:"
-msgstr ""
+msgstr "Nota:"
 
 #: src/components/Landing/index.tsx
 msgid "Note: Juicebox is new, unaudited, and not guaranteed to work perfectly. Before spending money, do your own research: <0>ask questions</0>, <1>check out the code</1>, and understand the risks!"
@@ -1184,7 +1184,7 @@ msgstr "Pagos pausados"
 
 #: src/components/v2/V2Create/tabs/FundingTab/FundingTabContent.tsx
 msgid "Payouts"
-msgstr ""
+msgstr "Pagos"
 
 #: src/components/shared/forms/PayModsForm.tsx
 msgid "Payouts (optional)"
@@ -1277,7 +1277,7 @@ msgstr "Los propietarios de proyectos pueden configurar un período de demora, l
 
 #: src/components/v2/V2Dashboard/Dashboard404.tsx
 msgid "Project {projectId} not found"
-msgstr ""
+msgstr "Proyecto {projectId} no encontrado"
 
 #: src/components/Navbar/MenuItems.tsx
 msgid "Projects"
@@ -1327,7 +1327,7 @@ msgstr "Reconfiguración"
 
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
 msgid "Reconfiguration rules"
-msgstr ""
+msgstr "Reglas de reconfiguración"
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
@@ -1353,7 +1353,7 @@ msgstr "Reconfigurar financiamientos próximos"
 
 #: src/components/v2/V2Create/tabs/FundingTab/FundingTypeSelect.tsx
 msgid "Recurring target"
-msgstr ""
+msgstr "Objetivo recurrente"
 
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 msgid "Redeem"
@@ -1370,7 +1370,7 @@ msgstr "Canjear {tokensTextLong} por ETH"
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
 #: src/components/v2/V2Create/tabs/TokenTab/TokenTabContent.tsx
 msgid "Redemption rate"
-msgstr ""
+msgstr "Porcentaje de canje"
 
 #: src/components/Landing/index.tsx
 msgid "Redistributable surplus"
@@ -1386,7 +1386,7 @@ msgstr "Requerido"
 
 #: src/components/shared/formItems/ProjectReserved.tsx
 msgid "Reserved rate"
-msgstr ""
+msgstr "Cuota reservada"
 
 #: src/components/shared/forms/TicketingForm.tsx
 #: src/components/v2/V2Create/tabs/TokenTab/ReservedTokensFormItem.tsx
@@ -1474,11 +1474,11 @@ msgstr "Guardar"
 
 #: src/components/v2/V2Create/tabs/ProjectDetailsTabContent.tsx
 msgid "Save and Continue"
-msgstr ""
+msgstr "Guardar y Continuar"
 
 #: src/components/v2/V2Create/FormActionBar.tsx
 msgid "Save and continue"
-msgstr ""
+msgstr "Guardar y continuar"
 
 #: src/components/v1/V1Project/modals/EditProjectModal.tsx
 msgid "Save changes"
@@ -1560,7 +1560,7 @@ msgstr "Algunas propiedades de los ciclos de financiamiento pueden indicar riesg
 
 #: src/components/v2/V2Create/tabs/FundingTab/FundingTypeSelect.tsx
 msgid "Specific target"
-msgstr ""
+msgstr "Objetivo específico"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
@@ -1618,7 +1618,7 @@ msgstr "El protocolo JBX está inauditado, y los proyectos contruidos sobre este
 
 #: src/components/v2/V2Create/V2MainnetWarning.tsx
 msgid "The Juicebox V2 contracts aren't available on mainnet."
-msgstr ""
+msgstr "Los contratos de Juicebox V2 no están disponibles en mainnet."
 
 #: src/components/Landing/QAs.tsx
 msgid "The Juicebox protocol is governed by a community of JBX token holders who vote on proposals fortnightly."
@@ -1682,7 +1682,7 @@ msgstr "El saldo completo del proyecto se considerará excedente."
 
 #: src/components/Landing/QAs.tsx
 msgid "The project's tokens that are minted and distributed as a result of a received payment are ERC-20's. The amount of tokens minted and distributed are proportional to the volume of payments received, weighted by the project's discount rate over time."
-msgstr ""
+msgstr "Los tokens de proyectos que sean acuñados y distribuidos como resultado de un pago recibido son ERC-20. La cantidad de tokens acuñados y distribuidos es proporcional a los pagos recibidos, ponderado por la tasa de descuento del proyecto a lo largo del tiempo."
 
 #: src/components/shared/formItems/ProjectDiscountRate.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
@@ -1721,7 +1721,7 @@ msgstr "Estos ajustes <0>no</0> serán editables inmediatamente dentro de un cic
 
 #: src/constants/ballotStrategies/ballotStrategies.ts
 msgid "This address is an unrecognized strategy contract. Make sure it is correct!"
-msgstr ""
+msgstr "Esta dirección es un contrato de estrategia no reconocida. ¡Asegúrate de que esté correcta!"
 
 #: src/components/shared/Mod.tsx
 msgid "This address will receive any tokens minted when the recipient project gets paid."
@@ -1753,7 +1753,7 @@ msgstr "Esta proporción determina el monto de excedente por el que cada token p
 
 #: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hodl tokens longer than others. The default bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed. Learn more in this <0>short video</0>."
-msgstr ""
+msgstr "Este porcentaje determina el monto de excedente por el cual cada token puede ser canjeado en cualquier momento. En una curva de adhesión menor, canjear tokens incrementa el valor de cada token restante, creando un incentivo para holdear tokens por más tiempo que otros. El estándar de la curva de adhesión del 100% significa que todos los tokens tendrán un valor equitativo a pesar de que hayan sido canjeados. Aprende más en este <0>corto video</0>."
 
 #: src/components/shared/formItems/ProjectPayDisclosure.tsx
 msgid "This text will be displayed to your supporters before they complete their payment."
@@ -1765,7 +1765,7 @@ msgstr "Este sitio web (juicebox.money) se conecta a los contratos inteligentes 
 
 #: src/components/v1/V1Create/index.tsx
 msgid "This will erase all of your changes."
-msgstr ""
+msgstr "Esto borrará todos tus cambios."
 
 #: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
 msgid "To: <0/>"
@@ -1871,7 +1871,7 @@ msgstr "Twitter"
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
 msgid "Unarchive project"
-msgstr ""
+msgstr "Desarchivar proyecto"
 
 #: src/components/shared/AMMPrices/TokenAMMPriceRow.tsx
 msgid "Unavailable"
@@ -1879,7 +1879,7 @@ msgstr "No disponible"
 
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
 msgid "Unless payments are paused in your funding cycle settings, your project will still be able to receive payments directly through the Juicebox protocol contracts."
-msgstr ""
+msgstr "A menos que los pagos sean pausados en los ajustes de tu ciclo de financiamiento, tu proyecto aún podrá recibir pagos directamente a través de los contratos del protocolo Juicebox."
 
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 msgid "Unstaked balance"
@@ -1971,11 +1971,11 @@ msgstr "¿Qué está sucediendo detrás de escena?"
 
 #: src/components/v2/V2Create/tabs/RulesTab/RulesTabContent.tsx
 msgid "When Minting Tokens is enabled, the project owner can manually mint any amount of tokens to any address."
-msgstr ""
+msgstr "Cuando Acuñar Tokens está activado, el dueño del proyecto puede acuñar manualmente cualquier monto de tokens a cualquier dirección."
 
 #: src/components/v2/V2Create/tabs/RulesTab/RulesTabContent.tsx
 msgid "When Pause Payments is enabled, your project cannot receive direct payments."
-msgstr ""
+msgstr "Cuando Pausar Pagos está activado, tus proyectos no pueden recibir pagos directos."
 
 #: src/components/Landing/index.tsx
 msgid "When someone pays your project, they'll receive your project's tokens in return. Tokens can be redeemed for a portion of your project's overflow funds; when you win, your community wins with you. Leverage your project's token to grant governance rights, community access, or other membership perks."
@@ -2070,19 +2070,19 @@ msgstr "Tu proyecto está financiado a través de los ciclos de financiamiento. 
 
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
 msgid "Your project will appear archived, and will not be able to receive payments through the juicebox.money app. You can unarchive a project at any time. Please allow a few days for your project to appear under the \"archived\" filter on the Projects page."
-msgstr ""
+msgstr "Tu proyecto aparecerá archivado, y no podrá recibir pagos a través de la app juicebox.money. Puedes desarchivar un proyecto en cualquier momento. Por favor da unos días para que tu proyecto aparezca debajo del filtro \"archivado\" en la Página de Proyectos."
 
 #: src/components/v2/V2Create/V2WarningBanner.tsx
 msgid "Your project will be created on the Juicebox V2 contracts."
-msgstr ""
+msgstr "Tu proyecto será creado en los contratos de Juicebox V2."
 
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
 msgid "Your project will immediately appear active on the juicebox.money app. Please allow a few days for it to appear in the \"active\" projects list on the Projects page."
-msgstr ""
+msgstr "Tu proyecto inmediatamente aparecerá activo en la app juicebox.money. Por favor da unos días para que aparezca en la lista de proyectos \"activos\" en la Página de Proyectos."
 
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
 msgid "Your project will still be able to receive payments directly through the Juicebox protocol contracts."
-msgstr ""
+msgstr "Tu proyecto aún podrá recibir pagos directamente a través de los contratos del protocolo Juicebox."
 
 #: src/components/shared/formItems/ProjectTwitter.tsx
 msgid "Your project's Twitter handle."
@@ -2160,7 +2160,7 @@ msgstr "proyectos"
 
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
 msgid "seconds"
-msgstr ""
+msgstr "segundos"
 
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx

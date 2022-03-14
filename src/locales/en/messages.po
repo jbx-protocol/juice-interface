@@ -26,7 +26,7 @@ msgstr "(0%)"
 msgid "(100%)"
 msgstr "(100%)"
 
-#: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 msgid "(Optional) Add a note to this payment on-chain"
 msgstr ""
 
@@ -113,6 +113,10 @@ msgstr "<0>Disabled when funding target has not been set.</0>"
 #: src/components/shared/formItems/ProjectDiscountRate.tsx
 msgid "<0>Discount rate disabled when funding cycle duration has not been set.</0>"
 msgstr "<0>Discount rate disabled when funding cycle duration has not been set.</0>"
+
+#: src/components/shared/PayWarningModal.tsx
+msgid "<0>Juicebox contracts</0> are unaudited, and may be vulnerable to bugs or hacks. All funds moved through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable for any losses by projects or their supporters."
+msgstr "<0>Juicebox contracts</0> are unaudited, and may be vulnerable to bugs or hacks. All funds moved through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable for any losses by projects or their supporters."
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "<0>Learn more</0> about funding cycle duration."
@@ -221,7 +225,7 @@ msgstr ""
 msgid "Add funds to this project's balance without minting tokens."
 msgstr ""
 
-#: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 msgid "Add image"
 msgstr ""
 
@@ -435,7 +439,7 @@ msgstr "Changes to these attributes can be made at any time and will be applied 
 msgid "Changes to your project's funding configuration require a community-approved period to take effect, which acts as a safeguard against rug pulls. Your supporters don't have to trust you — even though they already do."
 msgstr "Changes to your project's funding configuration require a community-approved period to take effect, which acts as a safeguard against rug pulls. Your supporters don't have to trust you — even though they already do."
 
-#: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 msgid "Check this to mint {tokenSymbol} ERC20 to your wallet. Leave unchecked to have your token balance tracked by Juicebox, saving gas on this transaction. You can always claim your ERC20 tokens later."
 msgstr ""
 
@@ -793,6 +797,7 @@ msgstr ""
 msgid "Head to <0>rinkeby.juicebox.money</0> to create a project using the Juicebox V2 contracts on Rinkeby."
 msgstr "Head to <0>rinkeby.juicebox.money</0> to create a project using the Juicebox V2 contracts on Rinkeby."
 
+#: src/components/shared/PayWarningModal.tsx
 #: src/components/v1/V1Project/modals/PayWarningModal.tsx
 msgid "Heads up"
 msgstr ""
@@ -849,6 +854,7 @@ msgstr ""
 msgid "However, Juicebox is still experimental software. Although the Juicebox contract team have done their part to shape the smart contracts for public use and have tested the code thoroughly, the risk of exploits is never 0%."
 msgstr "However, Juicebox is still experimental software. Although the Juicebox contract team have done their part to shape the smart contracts for public use and have tested the code thoroughly, the risk of exploits is never 0%."
 
+#: src/components/shared/PayWarningModal.tsx
 #: src/components/v1/V1Project/modals/PayWarningModal.tsx
 msgid "I understand"
 msgstr ""
@@ -996,7 +1002,7 @@ msgstr ""
 msgid "Manage {0}"
 msgstr "Manage {0}"
 
-#: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 msgid "Memo"
 msgstr "Memo"
 
@@ -1085,7 +1091,7 @@ msgstr "Note:"
 msgid "Note: Juicebox is new, unaudited, and not guaranteed to work perfectly. Before spending money, do your own research: <0>ask questions</0>, <1>check out the code</1>, and understand the risks!"
 msgstr ""
 
-#: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 msgid "Notice from {0}:"
 msgstr ""
 
@@ -1102,7 +1108,7 @@ msgstr "Other assets in this project's owner's wallet."
 msgid "Overflow is created if your project's balance exceeds your funding cycle target. Overflow can be redeemed by your project's token holders."
 msgstr ""
 
-#: src/components/v1/V1Project/Pay/index.tsx
+#: src/components/v1/V1Project/V1PayButton.tsx
 msgid "Paid as <0/>"
 msgstr ""
 
@@ -1121,14 +1127,14 @@ msgstr ""
 
 #: src/components/shared/formItems/ProjectPayButton.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
-#: src/components/v1/V1Project/Pay/index.tsx
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
-#: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
+#: src/components/v1/V1Project/V1PayButton.tsx
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
 msgid "Pay"
 msgstr ""
 
-#: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 msgid "Pay amount"
 msgstr ""
 
@@ -1147,27 +1153,27 @@ msgstr ""
 msgid "Pay disclosure"
 msgstr ""
 
-#: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 msgid "Pay {0}"
 msgstr ""
 
-#: src/components/v1/V1Project/Pay/index.tsx
+#: src/components/v1/V1Project/V1PayButton.tsx
 msgid "Paying this project is currently disabled, because the token reserved rate is 100% and no tokens will be earned by making a payment."
 msgstr ""
 
-#: src/components/v1/V1Project/Pay/index.tsx
+#: src/components/v1/V1Project/V1PayButton.tsx
 msgid "Paying this project is currently disabled."
 msgstr ""
 
-#: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
-msgid "Paying {0} is not an investment—it's a way to support the project. Any value or utility of the tokens you receive is determined by {1}."
-msgstr ""
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+msgid "Paying {0} is not an investment — it's a way to support the project. Any value or utility of the tokens you receive is determined by {1}."
+msgstr "Paying {0} is not an investment — it's a way to support the project. Any value or utility of the tokens you receive is determined by {1}."
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 msgid "Payments"
 msgstr ""
 
-#: src/components/v1/V1Project/Pay/index.tsx
+#: src/components/v1/V1Project/V1PayButton.tsx
 msgid "Payments are paused for the current funding cycle."
 msgstr ""
 
@@ -1306,11 +1312,11 @@ msgstr ""
 msgid "Rankings based on number of contributions and volume gained in the last {trendingWindow} days. <0>See code</0>"
 msgstr "Rankings based on number of contributions and volume gained in the last {trendingWindow} days. <0>See code</0>"
 
-#: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 msgid "Receive ERC20"
 msgstr ""
 
-#: src/components/v1/V1Project/Pay/PayInputSubText.tsx
+#: src/components/shared/inputs/Pay/PayInputSubText.tsx
 msgid "Receive {receiveText}"
 msgstr "Receive {receiveText}"
 
@@ -1734,7 +1740,7 @@ msgstr ""
 msgid "This means that anyone can see the code that they're using, anyone can use the code without asking for permission, and no one can mess with the code or take it down."
 msgstr ""
 
-#: src/components/v1/V1Project/Pay/index.tsx
+#: src/components/v1/V1Project/V1PayButton.tsx
 msgid "This project has been archived and cannot be paid."
 msgstr ""
 
@@ -1762,7 +1768,7 @@ msgstr "This website (juicebox.money) connects to the Juicebox protocol's smart 
 msgid "This will erase all of your changes."
 msgstr "This will erase all of your changes."
 
-#: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 msgid "To: <0/>"
 msgstr ""
 
@@ -2135,7 +2141,7 @@ msgstr "loading"
 msgid "matching \"{searchText}\""
 msgstr "matching \"{searchText}\""
 
-#: src/components/v1/V1Project/Pay/PayInputSubText.tsx
+#: src/components/shared/inputs/Pay/PayInputSubText.tsx
 msgid "or <0><1>buy {tokenText} on exchange<2/></1></0>"
 msgstr "or <0><1>buy {tokenText} on exchange<2/></1></0>"
 
@@ -2200,7 +2206,7 @@ msgstr ""
 msgid "{0} days"
 msgstr ""
 
-#: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 msgid "{0} for you"
 msgstr ""
 
@@ -2216,7 +2222,7 @@ msgstr ""
 msgid "{0} received per ETH paid to the treasury. This can change over time according to the discount rate and reserved tokens amount of future funding cycles."
 msgstr "{0} received per ETH paid to the treasury. This can change over time according to the discount rate and reserved tokens amount of future funding cycles."
 
-#: src/components/v1/V1Project/modals/ConfirmPayOwnerModal/index.tsx
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 msgid "{0} reserved"
 msgstr ""
 

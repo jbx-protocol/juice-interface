@@ -8,26 +8,34 @@ import { NetworkContext } from 'contexts/networkContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import * as constants from '@ethersproject/constants'
 import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
-import { usePayProjectTx } from 'hooks/v1/transactor/PayProjectTx'
+
 import { useContext, useState } from 'react'
 import { V1CurrencyName } from 'utils/v1/currency'
 import { formattedNum, formatWad } from 'utils/formatNumber'
 import { weightedRate } from 'utils/math'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
+import { TransactorInstance } from 'hooks/Transactor'
+import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 
-import ProjectRiskNotice from './ProjectRiskNotice'
+import V1ProjectRiskNotice from './V1ProjectRiskNotice'
 import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
 
-export default function ConfirmPayOwnerModal({
+export default function V1ConfirmPayOwnerModal({
   visible,
   weiAmount,
   onSuccess,
   onCancel,
+  payProjectTx,
 }: {
   visible?: boolean
   weiAmount: BigNumber | undefined
   onSuccess?: VoidFunction
   onCancel?: VoidFunction
+  payProjectTx: TransactorInstance<{
+    note: string
+    preferUnstaked: boolean
+    value: BigNumber
+  }>
 }) {
   const [loading, setLoading] = useState<boolean>()
   const [preferUnstaked, setPreferUnstaked] = useState<boolean>(false)
@@ -35,15 +43,12 @@ export default function ConfirmPayOwnerModal({
   const { userAddress } = useContext(NetworkContext)
   const { tokenSymbol, tokenAddress, currentFC, metadata } =
     useContext(V1ProjectContext)
-  const payProjectTx = usePayProjectTx()
-
   const converter = useCurrencyConverter()
 
   const usdAmount = converter.weiToUsd(weiAmount)
 
   async function pay() {
     if (!weiAmount) return
-
     await form.validateFields()
 
     if (userAddress) {
@@ -65,8 +70,22 @@ export default function ConfirmPayOwnerModal({
     )
   }
 
-  const receivedTickets = weightedRate(currentFC, weiAmount, 'payer')
-  const ownerTickets = weightedRate(currentFC, weiAmount, 'reserved')
+  const fcReservedRate = decodeFundingCycleMetadata(
+    currentFC?.metadata,
+  )?.reservedRate
+
+  const receivedTickets = weightedRate(
+    currentFC?.weight,
+    fcReservedRate,
+    weiAmount,
+    'payer',
+  )
+  const ownerTickets = weightedRate(
+    currentFC?.weight,
+    fcReservedRate,
+    weiAmount,
+    'reserved',
+  )
 
   const hasIssuedTokens = tokenAddress && tokenAddress !== constants.AddressZero
 
@@ -86,7 +105,7 @@ export default function ConfirmPayOwnerModal({
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
         <p>
           <Trans>
-            Paying {metadata.name} is not an investment—it's a way to support
+            Paying {metadata.name} is not an investment — it's a way to support
             the project. Any value or utility of the tokens you receive is
             determined by {metadata.name}.
           </Trans>
@@ -101,7 +120,7 @@ export default function ConfirmPayOwnerModal({
           </div>
         )}
 
-        <ProjectRiskNotice />
+        <V1ProjectRiskNotice />
 
         <Descriptions column={1} bordered>
           <Descriptions.Item label={t`Pay amount`} className="content-right">

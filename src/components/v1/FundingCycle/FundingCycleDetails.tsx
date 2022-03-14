@@ -51,6 +51,8 @@ export default function FundingCycleDetails({
   )
 
   const metadata = decodeFundingCycleMetadata(fundingCycle.metadata)
+  const fcReservedRate = metadata?.reservedRate
+
   const ballotStrategy = getBallotStrategyByAddress(fundingCycle.ballot)
   const unsafeFundingCycleProperties =
     getUnsafeFundingCycleProperties(fundingCycle)
@@ -185,12 +187,25 @@ export default function FundingCycleDetails({
           }
           span={2}
         >
-          {formatWad(weightedRate(fundingCycle, parseEther('1'), 'payer'), {
-            precision: 0,
-          })}{' '}
+          {formatWad(
+            weightedRate(
+              fundingCycle?.weight,
+              fcReservedRate,
+              parseEther('1'),
+              'payer',
+            ),
+            {
+              precision: 0,
+            },
+          )}{' '}
           {metadata?.reservedRate
             ? t`(+${formatWad(
-                weightedRate(fundingCycle, parseEther('1'), 'reserved'),
+                weightedRate(
+                  fundingCycle?.weight,
+                  fcReservedRate,
+                  parseEther('1'),
+                  'reserved',
+                ),
                 {
                   precision: 0,
                 },

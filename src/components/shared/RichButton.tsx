@@ -1,4 +1,4 @@
-import { RightOutlined } from '@ant-design/icons'
+import { CaretRightFilled } from '@ant-design/icons'
 import { ThemeContext } from 'contexts/themeContext'
 import { ComponentPropsWithoutRef, CSSProperties, useContext } from 'react'
 
@@ -62,7 +62,7 @@ export default function RichButton({
           padding: 5,
         }}
       >
-        <RightOutlined
+        <CaretRightFilled
           style={{
             color: disabled
               ? colors.text.disabled

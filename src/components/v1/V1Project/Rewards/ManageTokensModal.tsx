@@ -41,9 +41,9 @@ export default function ManageTokensModal({
       ? canPrintPreminedV1Tickets
       : metadata.ticketPrintingIsAllowed)
 
-  const tokensLabelLowercase = tokenSymbolText({
+  const tokensLabel = tokenSymbolText({
     tokenSymbol: tokenSymbol,
-    capitalize: true,
+    capitalize: false,
     plural: true,
   })
 
@@ -65,11 +65,9 @@ export default function ManageTokensModal({
       >
         <Space direction="vertical" style={{ width: '100%' }}>
           <RichButton
-            heading={<Trans>Redeem {tokensLabelLowercase} for ETH</Trans>}
+            heading={<Trans>Redeem {tokensLabel} for ETH</Trans>}
             description={
-              <Trans>
-                Burn your {tokensLabelLowercase} in exchange for ETH.
-              </Trans>
+              <Trans>Burn your {tokensLabel} in exchange for ETH.</Trans>
             }
             onClick={() => setRedeemModalVisible(true)}
             disabled={redeemDisabled}
@@ -77,11 +75,11 @@ export default function ManageTokensModal({
 
           {redeemDisabled && (
             <RichButton
-              heading={<Trans>Burn {tokensLabelLowercase}</Trans>}
+              heading={<Trans>Burn {tokensLabel}</Trans>}
               description={
                 <Trans>
-                  Burn your {tokensLabelLowercase}. You won't receive ETH
-                  because this project has no overflow.
+                  Burn your {tokensLabel}. You won't receive ETH because this
+                  project has no overflow.
                 </Trans>
               }
               onClick={() => setRedeemModalVisible(true)}
@@ -89,43 +87,40 @@ export default function ManageTokensModal({
           )}
 
           <RichButton
-            heading={<Trans>Claim {tokensLabelLowercase} as ERC20</Trans>}
+            heading={<Trans>Claim {tokensLabel} as ERC20</Trans>}
             description={
               <Trans>
-                Move your {tokensLabelLowercase} from the Juicebox contract to
-                your wallet.
+                Move your {tokensLabel} from the Juicebox contract to your
+                wallet.
               </Trans>
             }
             onClick={() => setUnstakeModalVisible(true)}
           />
 
-          {!hasPrintPreminePermission && projectId?.gt(0) && (
-            <div style={{ marginTop: '1rem' }}>
-              <h3>Privileged actions</h3>
-              <Tooltip
-                title={
+          {hasPrintPreminePermission && projectId?.gt(0) && (
+            <Tooltip
+              title={
+                <Trans>
+                  Token minting is only available for V1.1 projects. Token
+                  minting can be enabled or disabled by reconfiguring the
+                  project's funding cycle.
+                </Trans>
+              }
+              placement="right"
+            >
+              <RichButton
+                heading={<Trans>Mint {tokensLabel}</Trans>}
+                description={
                   <Trans>
-                    Token minting is only available for V1.1 projects. Token
-                    minting can be enabled or disabled by reconfiguring the
-                    project's funding cycle.
+                    Mint new {tokensLabel} into an account. Only a project's
+                    owner, a designated operator, or one of its terminal's
+                    delegates can mint its tokens.
                   </Trans>
                 }
-                placement="right"
-              >
-                <RichButton
-                  heading={<Trans>Mint {tokensLabelLowercase}</Trans>}
-                  description={
-                    <Trans>
-                      Mint new {tokensLabelLowercase} into an account. Only a
-                      project's owner, a designated operator, or one of its
-                      terminal's delegates can mint its tokens.
-                    </Trans>
-                  }
-                  onClick={() => setMintModalVisible(true)}
-                  disabled={!mintingTokensIsAllowed}
-                />
-              </Tooltip>
-            </div>
+                onClick={() => setMintModalVisible(true)}
+                disabled={!mintingTokensIsAllowed}
+              />
+            </Tooltip>
           )}
         </Space>
       </Modal>

@@ -375,6 +375,7 @@ export default function V1Create() {
                 borderStyle: 'solid',
                 borderWidth: `1px 1px 1px ${active ? '10px' : '1px'}`,
               }}
+              role="button"
               onClick={() => {
                 if (currentStep !== undefined) return
                 setCurrentStep(i)

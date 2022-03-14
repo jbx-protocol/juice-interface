@@ -8,8 +8,8 @@ import { formatWad, fromWad } from 'utils/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 import { usePayV1ProjectTx } from 'hooks/v1/transactor/PayV1ProjectTx'
 import useWeiConverter from 'hooks/WeiConverter'
-
 import PayWarningModal from 'components/shared/PayWarningModal'
+import { CurrencyOption } from 'models/currencyOption'
 
 import { readNetwork } from 'constants/networks'
 import { disablePayOverrides } from 'constants/v1/overrides'
@@ -23,7 +23,7 @@ export default function V1PayButton({
   payInCurrency,
 }: {
   payAmount: string
-  payInCurrency: number
+  payInCurrency: CurrencyOption
 }) {
   const { projectId, currentFC, metadata, isArchived, terminal } =
     useContext(V1ProjectContext)

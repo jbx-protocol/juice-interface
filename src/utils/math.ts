@@ -1,7 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 
 import { fromWad, percentToPerbicent } from './formatNumber'
-import { decodeFundingCycleMetadata } from './v1/fundingCycle'
 
 export const weightedRate = (
   weight: BigNumber | undefined,

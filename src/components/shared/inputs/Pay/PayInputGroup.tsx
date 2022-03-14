@@ -5,11 +5,13 @@ import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { CurrencyContext } from 'contexts/currencyContext'
 
+import { CurrencyOption } from 'models/currencyOption'
+
 import PayInputSubText from './PayInputSubText'
 
 export type PayButtonProps = {
   payAmount: string
-  payInCurrency: number
+  payInCurrency: CurrencyOption
 }
 
 export default function PayInputGroup({
@@ -31,7 +33,8 @@ export default function PayInputGroup({
   } = useContext(CurrencyContext)
 
   const [payAmount, setPayAmount] = useState<string>('0')
-  const [payInCurrency, setPayInCurrency] = useState<number>(currencyETH)
+  const [payInCurrency, setPayInCurrency] =
+    useState<CurrencyOption>(currencyETH)
 
   const togglePayInCurrency = () => {
     const newPayInCurrency =

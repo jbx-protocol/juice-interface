@@ -5,13 +5,16 @@ import {
   V2_CURRENCY_METADATA,
 } from 'utils/v2/currency'
 
+import { CurrencyOption } from 'models/currencyOption'
+
 import { CurrencyMetadata } from 'constants/currency'
 
+// TODO make this CurrencyOption instead of number
 export type CurrencyMetadataType = Record<number, CurrencyMetadata>
 
 export type CurrencyContextType = {
   currencyMetadata: CurrencyMetadataType
-  currencies: Record<string, number>
+  currencies: Record<string, CurrencyOption>
 }
 
 // Defaults to V2

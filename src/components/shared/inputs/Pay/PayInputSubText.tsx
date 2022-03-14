@@ -15,6 +15,7 @@ import AMMPrices from 'components/shared/AMMPrices'
 import TooltipIcon from 'components/shared/TooltipIcon'
 
 import useWeiConverter from 'hooks/WeiConverter'
+import { CurrencyOption } from 'models/currencyOption'
 
 /**
  * Help text shown below the Pay input field.
@@ -32,7 +33,7 @@ export default function PayInputSubText({
   tokenSymbol,
   tokenAddress,
 }: {
-  payInCurrency: number
+  payInCurrency: CurrencyOption
   amount: string | undefined
   reservedRate: number | undefined
   weight: BigNumber | undefined

@@ -24,8 +24,8 @@ export default function PayInputGroup({
   PayButton: (props: PayButtonProps) => JSX.Element | null
   reservedRate?: number
   weight?: BigNumber
-  tokenSymbol: string | undefined
-  tokenAddress: string | undefined
+  tokenSymbol?: string
+  tokenAddress?: string
 }) {
   const {
     currencyMetadata,

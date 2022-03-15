@@ -21,7 +21,7 @@ import { CurrencyOption } from 'models/currencyOption'
  * Help text shown below the Pay input field.
  *
  * If the user has entered an amount, display
- * the amount of project tokens they will recieve.
+ * the amount of project tokens they will receive.
  *
  * Else, display the exchange rate of the user selected currency to project token.
  */
@@ -50,15 +50,15 @@ export default function PayInputSubText({
     currencies: { currencyETH },
   } = useContext(CurrencyContext)
 
+  const weiPayAmt = useWeiConverter({
+    currency: payInCurrency,
+    amount: amount,
+  })
+
   const tokenText = tokenSymbolText({
     tokenSymbol: tokenSymbol,
     capitalize: false,
     plural: true,
-  })
-
-  const weiPayAmt = useWeiConverter({
-    currency: payInCurrency,
-    amount: amount,
   })
 
   const receiveText = useMemo(() => {
@@ -68,7 +68,14 @@ export default function PayInputSubText({
     }
 
     if (weiPayAmt?.gt(0)) {
-      return `${formatReceivedTickets(weiPayAmt)} ${tokenText}`
+      const receivedTickets = formatReceivedTickets(weiPayAmt)
+      const tokenReceiveText = tokenSymbolText({
+        tokenSymbol: tokenSymbol,
+        capitalize: false,
+        plural: receivedTickets !== '1',
+      })
+
+      return `${receivedTickets} ${tokenReceiveText}`
     }
 
     const receivedTickets = formatReceivedTickets(
@@ -76,16 +83,23 @@ export default function PayInputSubText({
         ? parseEther('1')
         : converter.usdToWei('1')) ?? BigNumber.from(0),
     )
-    return `${receivedTickets} ${tokenText}/${currencyMetadata[payInCurrency]?.name}`
+
+    const tokenReceiveText = tokenSymbolText({
+      tokenSymbol: tokenSymbol,
+      capitalize: false,
+      plural: receivedTickets !== '1',
+    })
+
+    return `${receivedTickets} ${tokenReceiveText}/${currencyMetadata[payInCurrency]?.name}`
   }, [
     converter,
     payInCurrency,
-    tokenText,
     weiPayAmt,
     weight,
     currencyMetadata,
     currencyETH,
     reservedRate,
+    tokenSymbol,
   ])
 
   return (

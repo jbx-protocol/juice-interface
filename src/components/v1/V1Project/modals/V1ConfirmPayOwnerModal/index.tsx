@@ -14,8 +14,8 @@ import { V1CurrencyName } from 'utils/v1/currency'
 import { formattedNum, formatWad } from 'utils/formatNumber'
 import { weightedRate } from 'utils/math'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
-import { TransactorInstance } from 'hooks/Transactor'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
+import { usePayV1ProjectTx } from 'hooks/v1/transactor/PayV1ProjectTx'
 
 import V1ProjectRiskNotice from './V1ProjectRiskNotice'
 import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
@@ -25,25 +25,21 @@ export default function V1ConfirmPayOwnerModal({
   weiAmount,
   onSuccess,
   onCancel,
-  payProjectTx,
 }: {
   visible?: boolean
   weiAmount: BigNumber | undefined
   onSuccess?: VoidFunction
   onCancel?: VoidFunction
-  payProjectTx: TransactorInstance<{
-    note: string
-    preferUnstaked: boolean
-    value: BigNumber
-  }>
 }) {
   const [loading, setLoading] = useState<boolean>()
   const [preferUnstaked, setPreferUnstaked] = useState<boolean>(false)
   const [form] = useForm<{ note: string }>()
-  const { userAddress } = useContext(NetworkContext)
+  const { userAddress, onSelectWallet } = useContext(NetworkContext)
   const { tokenSymbol, tokenAddress, currentFC, metadata } =
     useContext(V1ProjectContext)
   const converter = useCurrencyConverter()
+
+  const payProjectTx = usePayV1ProjectTx()
 
   const usdAmount = converter.weiToUsd(weiAmount)
 
@@ -51,9 +47,11 @@ export default function V1ConfirmPayOwnerModal({
     if (!weiAmount) return
     await form.validateFields()
 
-    if (userAddress) {
-      setLoading(true)
+    // Prompt wallet connect if no wallet connected
+    if (!userAddress && onSelectWallet) {
+      onSelectWallet()
     }
+    setLoading(true)
 
     payProjectTx(
       {
@@ -105,9 +103,10 @@ export default function V1ConfirmPayOwnerModal({
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
         <p>
           <Trans>
-            Paying {metadata.name} is not an investment — it's a way to support
-            the project. Any value or utility of the tokens you receive is
-            determined by {metadata.name}.
+            Paying <span style={{ fontWeight: 'bold' }}>{metadata.name}</span>{' '}
+            is not an investment — it's a way to support the project. Any value
+            or utility of the tokens you receive is determined by{' '}
+            {metadata.name}.
           </Trans>
         </p>
 

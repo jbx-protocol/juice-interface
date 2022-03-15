@@ -8,7 +8,7 @@ import { hasFundingTarget } from 'utils/v2/fundingCycle'
 import { toV1Currency } from 'utils/v1/currency'
 import { toMod } from 'utils/v2/splits'
 
-import { V2_CURRENCY_ETH } from 'constants/v2/currency'
+import { V2_CURRENCY_ETH } from 'utils/v2/currency'
 
 function SplitItem({
   split,

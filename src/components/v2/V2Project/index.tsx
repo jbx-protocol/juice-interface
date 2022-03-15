@@ -6,6 +6,7 @@ import { useContext } from 'react'
 
 import { permilleToPercent } from 'utils/formatNumber'
 import { fromWad } from 'utils/formatNumber'
+import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 import {
   deserializeV2FundingCycleMetadata,
   serializeV2FundingCycleMetadata,
@@ -40,16 +41,14 @@ export default function V2Project() {
   const weight = fundingCycle?.weight
   return (
     <>
-      <Row>
-        <ProjectHeader metadata={projectMetadata} />
-      </Row>
+      <ProjectHeader metadata={projectMetadata} />
       <Row>
         <Col md={12} xs={24}>
-          <h2>In Juicebox: {fromWad(ETHBalance)}</h2>
+          <h2>In Juicebox: Ξ{fromWad(ETHBalance)}</h2>
 
           {fundingCycle && (
             <div>
-              <h2>Funding Cycle details</h2>
+              <h2>Funding cycle details</h2>
               <ul>
                 <li>FC#{fundingCycle?.number.toNumber()}</li>
                 <li>
@@ -58,7 +57,6 @@ export default function V2Project() {
                 <li>Start: {start?.toISOString()}</li>
                 <li>End: {end?.toISOString()}</li>
                 <li>Weight: {fundingCycle.weight.toString()}</li>
-                <li>Metadata: {fundingCycle?.metadata.toString()}</li>
               </ul>
 
               <h3>ETH payouts</h3>
@@ -73,6 +71,11 @@ export default function V2Project() {
                 {reserveTokenSplits?.map(split => (
                   <li>{split.beneficiary}</li>
                 ))}
+              </ul>
+
+              <h3>Funding cycle metadata</h3>
+              <ul>
+                <li>Reserve rate: {reservedRate}</li>
               </ul>
             </div>
           )}

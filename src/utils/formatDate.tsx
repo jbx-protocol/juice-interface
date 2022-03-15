@@ -15,3 +15,12 @@ export function formatHistoricalDate(dateMillis: BigNumberish) {
     </Tooltip>
   )
 }
+
+/**
+ * Convert a date to Epoch time in seconds.
+ * @param date
+ * @returns Epoch time in seconds
+ */
+export const toDateSeconds = (date: Date) => {
+  return Math.floor(date.valueOf() / 1000)
+}

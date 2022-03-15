@@ -36,7 +36,7 @@ export default function RichNote({
 
   if (!note) return null
 
-  const _note =
+  const sanitizedNote =
     mediaLink &&
     (contentType === 'image/jpeg' ||
       contentType === 'image/jpg' ||
@@ -55,13 +55,13 @@ export default function RichNote({
           paddingRight: '0.5rem',
         }}
         dangerouslySetInnerHTML={{
-          __html: Autolinker.link(_note, {
+          __html: Autolinker.link(sanitizedNote, {
             sanitizeHtml: true,
             truncate: {
               length: 30,
               location: 'smart',
             },
-          }),
+          }).replaceAll('\n', '<br>'),
         }}
       ></span>
 

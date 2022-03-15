@@ -62,6 +62,8 @@ import RestrictedActionsForm, {
   RestrictedActionsFormFields,
 } from 'components/shared/forms/RestrictedActionsForm'
 
+import { toDateSeconds } from 'utils/formatDate'
+
 import ConfirmDeployProject from './ConfirmDeployProject'
 
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
@@ -205,6 +207,11 @@ export default function V1Create() {
   ) => {
     dispatch(editingProjectActions.setTarget(target))
     dispatch(editingProjectActions.setDuration(duration))
+    dispatch(
+      editingProjectActions.setFundingCycleStart(
+        `${toDateSeconds(new Date())}`,
+      ),
+    )
     dispatch(editingProjectActions.setCurrency(currency))
 
     if (!duration) {

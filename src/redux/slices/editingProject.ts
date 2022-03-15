@@ -14,6 +14,7 @@ import {
   SerializedV1FundingCycle,
   serializeV1FundingCycle,
 } from 'utils/v1/serializers'
+import { toDateSeconds } from 'utils/formatDate'
 
 interface EditingProjectInfo {
   metadata: ProjectMetadataV4
@@ -57,7 +58,7 @@ export const defaultProjectState: EditingProjectState = {
     basedOn: BigNumber.from(0),
     target: constants.MaxUint256,
     currency: BigNumber.from(1),
-    start: BigNumber.from(Math.floor(new Date().valueOf() / 1000)),
+    start: BigNumber.from(toDateSeconds(new Date())),
     duration: BigNumber.from(0),
     tapped: BigNumber.from(0),
     weight: constants.WeiPerEther.mul(1000000), // 1e24
@@ -136,6 +137,9 @@ export const editingProjectSlice = createSlice({
     },
     setDuration: (state, action: PayloadAction<string>) => {
       state.fundingCycle.duration = action.payload
+    },
+    setFundingCycleStart: (state, action: PayloadAction<string>) => {
+      state.fundingCycle.start = action.payload
     },
     setReserved: (state, action: PayloadAction<string>) => {
       state.fundingCycle.reserved = action.payload

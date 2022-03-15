@@ -26,6 +26,10 @@ msgstr "(0%)"
 msgid "(100%)"
 msgstr "(100%)"
 
+#: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
+msgid "(Optional) Add a memo to this payment on-chain"
+msgstr "(Optional) Add a memo to this payment on-chain"
+
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 msgid "(Optional) Add a note to this payment on-chain"
 msgstr ""
@@ -226,6 +230,7 @@ msgid "Add funds to this project's balance without minting tokens."
 msgstr ""
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
 msgid "Add image"
 msgstr ""
 
@@ -439,6 +444,10 @@ msgstr "Changes to these attributes can be made at any time and will be applied 
 msgid "Changes to your project's funding configuration require a community-approved period to take effect, which acts as a safeguard against rug pulls. Your supporters don't have to trust you — even though they already do."
 msgstr "Changes to your project's funding configuration require a community-approved period to take effect, which acts as a safeguard against rug pulls. Your supporters don't have to trust you — even though they already do."
 
+#: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
+msgid "Check this to mint this project's ERC20 tokens to your wallet. Leave unchecked to have your token balance tracked by Juicebox, saving gas on this transaction. You can always claim your ERC20 tokens later."
+msgstr "Check this to mint this project's ERC20 tokens to your wallet. Leave unchecked to have your token balance tracked by Juicebox, saving gas on this transaction. You can always claim your ERC20 tokens later."
+
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 msgid "Check this to mint {tokenSymbol} ERC20 to your wallet. Leave unchecked to have your token balance tracked by Juicebox, saving gas on this transaction. You can always claim your ERC20 tokens later."
 msgstr ""
@@ -521,6 +530,10 @@ msgstr "Currently worth: <0><1/>{0}</0>"
 #: src/constants/ballotStrategies/ballotStrategies.ts
 msgid "Custom strategy"
 msgstr ""
+
+#: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
+msgid "Custom token beneficiary"
+msgstr "Custom token beneficiary"
 
 #: src/components/v1/FundingCycle/FundingCyclePreview.tsx
 msgid "Cycle #{0}"
@@ -798,7 +811,6 @@ msgid "Head to <0>rinkeby.juicebox.money</0> to create a project using the Juice
 msgstr "Head to <0>rinkeby.juicebox.money</0> to create a project using the Juicebox V2 contracts on Rinkeby."
 
 #: src/components/shared/PayWarningModal.tsx
-#: src/components/v1/V1Project/modals/PayWarningModal.tsx
 msgid "Heads up"
 msgstr ""
 
@@ -855,9 +867,8 @@ msgid "However, Juicebox is still experimental software. Although the Juicebox c
 msgstr "However, Juicebox is still experimental software. Although the Juicebox contract team have done their part to shape the smart contracts for public use and have tested the code thoroughly, the risk of exploits is never 0%."
 
 #: src/components/shared/PayWarningModal.tsx
-#: src/components/v1/V1Project/modals/PayWarningModal.tsx
 msgid "I understand"
-msgstr ""
+msgstr "I understand"
 
 #: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 msgid "ID: {0}"
@@ -931,10 +942,6 @@ msgstr ""
 msgid "JBX Fee ({0}%):"
 msgstr ""
 
-#: src/components/v1/V1Project/modals/PayWarningModal.tsx
-msgid "Juicebox contracts"
-msgstr ""
-
 #: src/components/Landing/QAs.tsx
 msgid "Juicebox has handled tens of thousands of ETH through its protocol, and has so far had 0 security mishaps."
 msgstr "Juicebox has handled tens of thousands of ETH through its protocol, and has so far had 0 security mishaps."
@@ -1003,6 +1010,7 @@ msgid "Manage {0}"
 msgstr "Manage {0}"
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
 msgid "Memo"
 msgstr "Memo"
 
@@ -1013,6 +1021,10 @@ msgstr "Migrate to Juicebox V1.1"
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "Mint project tokens on demand"
 msgstr "Mint project tokens on demand"
+
+#: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
+msgid "Mint tokens to a custom address."
+msgstr "Mint tokens to a custom address."
 
 #: src/components/v1/V1Project/Rewards/index.tsx
 msgid "Mint {0}tokens"
@@ -1092,6 +1104,7 @@ msgid "Note: Juicebox is new, unaudited, and not guaranteed to work perfectly. B
 msgstr ""
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
 msgid "Notice from {0}:"
 msgstr ""
 
@@ -1109,6 +1122,7 @@ msgid "Overflow is created if your project's balance exceeds your funding cycle 
 msgstr ""
 
 #: src/components/v1/V1Project/V1PayButton.tsx
+#: src/components/v2/V2Project/V2PayButton.tsx
 msgid "Paid as <0/>"
 msgstr ""
 
@@ -1131,10 +1145,13 @@ msgstr ""
 #: src/components/v1/V1Project/V1PayButton.tsx
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
+#: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
+#: src/components/v2/V2Project/V2PayButton.tsx
 msgid "Pay"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
 msgid "Pay amount"
 msgstr ""
 
@@ -1154,8 +1171,14 @@ msgid "Pay disclosure"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
 msgid "Pay {0}"
 msgstr ""
+
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
+msgid "Paying <0>{0}</0> is not an investment — it's a way to support the project. Any value or utility of the tokens you receive is determined by {1}."
+msgstr "Paying <0>{0}</0> is not an investment — it's a way to support the project. Any value or utility of the tokens you receive is determined by {1}."
 
 #: src/components/v1/V1Project/V1PayButton.tsx
 msgid "Paying this project is currently disabled, because the token reserved rate is 100% and no tokens will be earned by making a payment."
@@ -1164,10 +1187,6 @@ msgstr ""
 #: src/components/v1/V1Project/V1PayButton.tsx
 msgid "Paying this project is currently disabled."
 msgstr ""
-
-#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
-msgid "Paying {0} is not an investment — it's a way to support the project. Any value or utility of the tokens you receive is determined by {1}."
-msgstr "Paying {0} is not an investment — it's a way to support the project. Any value or utility of the tokens you receive is determined by {1}."
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 msgid "Payments"
@@ -1313,6 +1332,7 @@ msgid "Rankings based on number of contributions and volume gained in the last {
 msgstr "Rankings based on number of contributions and volume gained in the last {trendingWindow} days. <0>See code</0>"
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
 msgid "Receive ERC20"
 msgstr ""
 
@@ -1769,6 +1789,7 @@ msgid "This will erase all of your changes."
 msgstr "This will erase all of your changes."
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
 msgid "To: <0/>"
 msgstr ""
 
@@ -2101,10 +2122,6 @@ msgstr ""
 msgid "after {0}% JBX fee"
 msgstr ""
 
-#: src/components/v1/V1Project/modals/PayWarningModal.tsx
-msgid "are unaudited, and may be vulnerable to bugs or hacks. All funds moved through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable for any losses by projects or their supporters."
-msgstr "are unaudited, and may be vulnerable to bugs or hacks. All funds moved through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable for any losses by projects or their supporters."
-
 #: src/components/shared/formItems/ProjectDescription.tsx
 msgid "characters max"
 msgstr ""
@@ -2207,6 +2224,7 @@ msgid "{0} days"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
 msgid "{0} for you"
 msgstr ""
 

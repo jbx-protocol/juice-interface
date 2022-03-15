@@ -31,6 +31,10 @@ msgstr ""
 msgid "(100%)"
 msgstr ""
 
+#: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
+msgid "(Optional) Add a memo to this payment on-chain"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 msgid "(Optional) Add a note to this payment on-chain"
 msgstr "(İsteğe bağlı) Bu ödemeye zincir üstü bir not ekleyin"
@@ -231,6 +235,7 @@ msgid "Add funds to this project's balance without minting tokens."
 msgstr "Bu projenin bakiyesine token basmadan fon ekleyin."
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
 msgid "Add image"
 msgstr "Resim ekle"
 
@@ -444,6 +449,10 @@ msgstr "Bu özellikler üzerinde herhangi bir zamanda değişiklik yapılabilir 
 msgid "Changes to your project's funding configuration require a community-approved period to take effect, which acts as a safeguard against rug pulls. Your supporters don't have to trust you — even though they already do."
 msgstr ""
 
+#: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
+msgid "Check this to mint this project's ERC20 tokens to your wallet. Leave unchecked to have your token balance tracked by Juicebox, saving gas on this transaction. You can always claim your ERC20 tokens later."
+msgstr ""
+
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 msgid "Check this to mint {tokenSymbol} ERC20 to your wallet. Leave unchecked to have your token balance tracked by Juicebox, saving gas on this transaction. You can always claim your ERC20 tokens later."
 msgstr "Cüzdanınıza {tokenSymbol} ERC20 basmak için burayı işaretleyin. Token bakiyenizin Juicebox tarafından takip edilmesini sağlamak için işaretlemeden bırakın ve bu işlemde gazdan tasarruf edin. ERC20 token'larınızı daha sonra her zaman talep edebilirsiniz."
@@ -526,6 +535,10 @@ msgstr "Güncel değeri: <0><1/>{0}</0>"
 #: src/constants/ballotStrategies/ballotStrategies.ts
 msgid "Custom strategy"
 msgstr "Özel strateji"
+
+#: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
+msgid "Custom token beneficiary"
+msgstr ""
 
 #: src/components/v1/FundingCycle/FundingCyclePreview.tsx
 msgid "Cycle #{0}"
@@ -803,7 +816,6 @@ msgid "Head to <0>rinkeby.juicebox.money</0> to create a project using the Juice
 msgstr ""
 
 #: src/components/shared/PayWarningModal.tsx
-#: src/components/v1/V1Project/modals/PayWarningModal.tsx
 msgid "Heads up"
 msgstr "Dikkat"
 
@@ -860,7 +872,6 @@ msgid "However, Juicebox is still experimental software. Although the Juicebox c
 msgstr ""
 
 #: src/components/shared/PayWarningModal.tsx
-#: src/components/v1/V1Project/modals/PayWarningModal.tsx
 msgid "I understand"
 msgstr "Anladım"
 
@@ -936,10 +947,6 @@ msgstr "Yapsan çok kıyak olur"
 msgid "JBX Fee ({0}%):"
 msgstr "JBX Ücreti (%{0}):"
 
-#: src/components/v1/V1Project/modals/PayWarningModal.tsx
-msgid "Juicebox contracts"
-msgstr "Juicebox sözleşmeleri"
-
 #: src/components/Landing/QAs.tsx
 msgid "Juicebox has handled tens of thousands of ETH through its protocol, and has so far had 0 security mishaps."
 msgstr ""
@@ -1008,6 +1015,7 @@ msgid "Manage {0}"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
 msgid "Memo"
 msgstr "Not"
 
@@ -1017,6 +1025,10 @@ msgstr "Juicebox V1.1'e geçiş yapın"
 
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "Mint project tokens on demand"
+msgstr ""
+
+#: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
+msgid "Mint tokens to a custom address."
 msgstr ""
 
 #: src/components/v1/V1Project/Rewards/index.tsx
@@ -1097,6 +1109,7 @@ msgid "Note: Juicebox is new, unaudited, and not guaranteed to work perfectly. B
 msgstr "Not: Juicebox yenidir, denetlenmemiştir ve kusursuz çalışması garanti edilmez. Para harcamadan önce kendi araştırmanızı yapın: sorular sorun, kodu inceleyin ve riskleri anlayın!"
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
 msgid "Notice from {0}:"
 msgstr "{0} tarafından yapılan bildirim:"
 
@@ -1114,6 +1127,7 @@ msgid "Overflow is created if your project's balance exceeds your funding cycle 
 msgstr "Projenizin bakiyesi finansman döngüsü hedefinizi aşarsa taşma oluşur. Taşma, projenizin token sahipleri tarafından talep edilerek kullanılabilir."
 
 #: src/components/v1/V1Project/V1PayButton.tsx
+#: src/components/v2/V2Project/V2PayButton.tsx
 msgid "Paid as <0/>"
 msgstr "<0/> olarak ödendi"
 
@@ -1136,10 +1150,13 @@ msgstr "Duraklatıldı"
 #: src/components/v1/V1Project/V1PayButton.tsx
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
+#: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
+#: src/components/v2/V2Project/V2PayButton.tsx
 msgid "Pay"
 msgstr "Ödeme"
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
 msgid "Pay amount"
 msgstr "Ödeme miktarı"
 
@@ -1159,7 +1176,13 @@ msgid "Pay disclosure"
 msgstr "Ödeme açıklaması"
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
 msgid "Pay {0}"
+msgstr ""
+
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
+msgid "Paying <0>{0}</0> is not an investment — it's a way to support the project. Any value or utility of the tokens you receive is determined by {1}."
 msgstr ""
 
 #: src/components/v1/V1Project/V1PayButton.tsx
@@ -1169,10 +1192,6 @@ msgstr "Bu projeye ödeme şu anda devredışı çünkü ayrılmış token oran�
 #: src/components/v1/V1Project/V1PayButton.tsx
 msgid "Paying this project is currently disabled."
 msgstr "Bu projeye ödeme şu anda devredışı."
-
-#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
-msgid "Paying {0} is not an investment — it's a way to support the project. Any value or utility of the tokens you receive is determined by {1}."
-msgstr ""
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 msgid "Payments"
@@ -1318,6 +1337,7 @@ msgid "Rankings based on number of contributions and volume gained in the last {
 msgstr "Katkı sayısına ve son {trendingWindow} gün içinde kazanılan hacme dayalı sıralamalar. <0>Kodu gör</0>"
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
 msgid "Receive ERC20"
 msgstr "ER20 alın"
 
@@ -1774,6 +1794,7 @@ msgid "This will erase all of your changes."
 msgstr ""
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
 msgid "To: <0/>"
 msgstr "Kime: <0/>"
 
@@ -2106,10 +2127,6 @@ msgstr "Projenizin web sitesi."
 msgid "after {0}% JBX fee"
 msgstr "%{0} JBX ücretinden sonra"
 
-#: src/components/v1/V1Project/modals/PayWarningModal.tsx
-msgid "are unaudited, and may be vulnerable to bugs or hacks. All funds moved through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable for any losses by projects or their supporters."
-msgstr ""
-
 #: src/components/shared/formItems/ProjectDescription.tsx
 msgid "characters max"
 msgstr "maks karakter"
@@ -2212,6 +2229,7 @@ msgid "{0} days"
 msgstr "{0} gün"
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
 msgid "{0} for you"
 msgstr "Size ait {0}"
 

@@ -1,6 +1,6 @@
 import { NetworkContext } from 'contexts/networkContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
-import { BigNumber } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
 import { useContext, useMemo } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbers'
 

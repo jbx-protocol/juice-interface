@@ -1,4 +1,4 @@
-import { BigNumber } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
 import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
 import { formatWad } from 'utils/formatNumber'
 import { LoadingOutlined } from '@ant-design/icons'

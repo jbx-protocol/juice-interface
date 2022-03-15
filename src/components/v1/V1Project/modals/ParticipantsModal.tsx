@@ -13,7 +13,7 @@ import UntrackedErc20Notice from 'components/shared/UntrackedErc20Notice'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { constants } from 'ethers'
+import * as constants from '@ethersproject/constants'
 import useTotalSupplyOfProjectToken from 'hooks/v1/contractReader/TotalSupplyOfProjectToken'
 import { NetworkName } from 'models/network-name'
 import { Participant } from 'models/subgraph-entities/participant'

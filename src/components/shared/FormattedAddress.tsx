@@ -1,4 +1,4 @@
-import { utils } from 'ethers'
+import { isAddress } from '@ethersproject/address'
 
 import { Tooltip } from 'antd'
 
@@ -41,7 +41,7 @@ export default function FormattedAddress({
   const now = new Date().valueOf()
 
   useEffect(() => {
-    if (!address || !utils.isAddress(address)) return
+    if (!address || !isAddress(address)) return
 
     const _address = address.toLowerCase()
 

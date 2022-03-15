@@ -1,4 +1,4 @@
-import { BigNumber, BigNumberish } from 'ethers'
+import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 import { useErc20Contract } from 'hooks/Erc20Contract'
 import { V1TerminalName } from 'models/v1/terminals'
 import { bigNumbersDiff } from 'utils/bigNumbers'

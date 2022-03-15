@@ -1,4 +1,6 @@
-import { BigNumber, utils } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
+import { formatBytes32String } from '@ethersproject/strings'
+
 import { V1ContractName } from 'models/v1/contracts'
 import { normalizeHandle } from 'utils/formatHandle'
 
@@ -9,6 +11,6 @@ export default function useProjectIdForHandle(handle: string | undefined) {
   return useContractReader<BigNumber>({
     contract: V1ContractName.Projects,
     functionName: 'projectFor',
-    args: handle ? [utils.formatBytes32String(normalizeHandle(handle))] : null,
+    args: handle ? [formatBytes32String(normalizeHandle(handle))] : null,
   })
 }

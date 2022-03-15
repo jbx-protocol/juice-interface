@@ -1,6 +1,7 @@
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1UserContext } from 'contexts/v1/userContext'
-import { BigNumber, constants } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
+import * as constants from '@ethersproject/constants'
 import {
   V1FundingCycleMetadata,
   V1FundingCycleProperties,

@@ -6,7 +6,7 @@ import { V1UserContext } from 'contexts/v1/userContext'
 import { normalizeHandle } from 'utils/formatHandle'
 import { BigNumber } from '@ethersproject/bignumber'
 import { isBigNumberish } from '@ethersproject/bignumber/lib/bignumber'
-import { utils } from 'ethers'
+import { parseBytes32String } from '@ethersproject/strings'
 
 type ProjectHandleInputValue = string | undefined
 export type ProjectHandleInitialValue = string | BigNumber | undefined
@@ -52,7 +52,7 @@ export function ProjectHandleInput({
       contracts?.Projects.functions
         .handleOf(BigNumber.from(initialValue).toHexString())
         .then(res => {
-          const handle = utils.parseBytes32String(res[0])
+          const handle = parseBytes32String(res[0])
           setInputContents(handle)
           triggerChange(handle)
         })

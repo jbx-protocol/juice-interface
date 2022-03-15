@@ -6,7 +6,7 @@ import { Contract } from '@ethersproject/contracts'
 import { abi as IUniswapV3PoolABI } from '@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Pool.sol/IUniswapV3Pool.json'
 import { abi as IUniswapV3FactoryABI } from '@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Factory.sol/IUniswapV3Factory.json'
 import { FACTORY_ADDRESS as UNISWAP_V3_FACTORY_ADDRESS } from '@uniswap/v3-sdk'
-import { constants as ethersConstants } from 'ethers'
+import * as ethersConstants from '@ethersproject/constants'
 
 import { readProvider } from 'constants/readProvider'
 import { readNetwork } from 'constants/networks'

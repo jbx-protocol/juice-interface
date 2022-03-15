@@ -1,7 +1,7 @@
 import { Form } from 'antd'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 
-import { BigNumber } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
 
 import BudgetTargetInput from '../inputs/BudgetTargetInput'
 import { FormItemExt } from './formItemExt'

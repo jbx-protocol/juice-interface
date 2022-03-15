@@ -4,7 +4,8 @@ import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
-import { constants, utils } from 'ethers'
+import * as constants from '@ethersproject/constants'
+import { isAddress } from '@ethersproject/address'
 import { usePrintTokensTx } from 'hooks/v1/transactor/PrintTokensTx'
 import { useContext, useMemo, useState } from 'react'
 import { parseWad } from 'utils/formatNumber'
@@ -31,7 +32,7 @@ export default function PrintPreminedModal({
 
   async function mint() {
     const beneficiary = form.getFieldValue('beneficary')
-    if (!utils.isAddress(beneficiary)) return
+    if (!isAddress(beneficiary)) return
 
     setLoading(true)
 
@@ -101,7 +102,7 @@ export default function PrintPreminedModal({
             {
               required: true,
               validator: (rule, value) => {
-                if (!value || !utils.isAddress(value))
+                if (!value || !isAddress(value))
                   return Promise.reject('Not a valid ETH address')
                 else return Promise.resolve()
               },

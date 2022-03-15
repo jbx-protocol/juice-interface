@@ -135,12 +135,15 @@ export const decodeV2FundingCycleMetadata = (
         .and(bits1)
         .toNumber(),
     ),
-    dataSource: getAddress(
-      packedMetadata
-        .shr(8 + 16 + 16 + 16 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1)
-        .toHexString(),
-    ), // hex, contract address
+    dataSource: packedMetadata
+      .shr(8 + 16 + 16 + 16 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1)
+      .toHexString(), // hex, contract address
   }
+
+  metadata.dataSource =
+    metadata.dataSource === BigNumber.from('0').toHexString()
+      ? constants.AddressZero
+      : getAddress(metadata.dataSource)
 
   return metadata
 }

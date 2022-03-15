@@ -62,6 +62,7 @@ export interface SubgraphEntities {
   protocolLog: ProtocolLog
   projectEvent: ProjectEvent
   projectCreateEvent: ProjectCreateEvent
+  deployedERC20Event: DeployedERC20Event
   project: Project
   projectSearch: Project
   payEvent: PayEvent
@@ -71,16 +72,15 @@ export interface SubgraphEntities {
   distributeToPayoutModEvent: DistributeToPayoutModEvent
   distributeToTicketModEvent: DistributeToTicketModEvent
   printReservesEvent: PrintReservesEvent
-  deployedERC20Event: DeployedERC20Event
 }
 
 export interface SubgraphQueryReturnTypes {
   protocolLog: { protocolLogs: ProtocolLogJson[] }
   projectEvent: { projectEvents: ProjectEventJson[] }
   projectCreateEvent: { projectCreateEvents: ProjectCreateEvent[] }
+  deployedERC20Event: { deployedERC20Events: DeployedERC20EventJson[] }
   project: { projects: ProjectJson[] }
   projectSearch: { projectSearch: ProjectJson[] }
-  projectVx: { projects: ProjectJson[] }
   payEvent: { payEvents: PayEventJson[] }
   redeemEvent: { redeemEvents: RedeemEventJson[] }
   participant: { participants: ParticipantJson[] }
@@ -94,7 +94,6 @@ export interface SubgraphQueryReturnTypes {
   printReservesEvent: {
     printReservesEvents: PrintReservesEventJson[]
   }
-  deployedERC20Event: { deployedERC20Events: DeployedERC20EventJson[] }
 }
 
 export type EntityKey = keyof SubgraphEntities
@@ -211,12 +210,6 @@ export const formatGraphQuery = <E extends EntityKey, K extends EntityKeys<E>>(
   )
 
   let overrideEntity: string = opts.entity
-
-  switch (opts.entity) {
-    case 'projectVx':
-      overrideEntity = 'project'
-      break
-  }
 
   return `{ ${overrideEntity}${isPluralQuery(opts.entity) ? 's' : ''}${
     args ? `(${args})` : ''

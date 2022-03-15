@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Button, Modal, Space, Tooltip } from 'antd'
+import { Modal, Space, Tooltip } from 'antd'
 import RichButton from 'components/shared/RichButton'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import useCanPrintPreminedTokens from 'hooks/v1/contractReader/CanPrintPreminedTokens'
@@ -8,12 +8,34 @@ import {
   useHasPermission,
 } from 'hooks/v1/contractReader/HasPermission'
 import { V1FundingCycleMetadata } from 'models/v1/fundingCycle'
-import { useContext, useState } from 'react'
+import { PropsWithChildren, useContext, useState } from 'react'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 import ConfirmUnstakeTokensModal from '../modals/ConfirmUnstakeTokensModal'
 import PrintPreminedModal from '../modals/PrintPreminedModal'
 import RedeemModal from '../modals/RedeemModal'
+
+const RedeemButtonTooltip = ({
+  buttonDisabled,
+  children,
+}: PropsWithChildren<{
+  buttonDisabled: boolean
+}>) => {
+  if (!buttonDisabled) return <>{children}</>
+
+  return (
+    <Tooltip
+      title={
+        <Trans>
+          Cannot redeem tokens for ETH because this project has no overflow.
+        </Trans>
+      }
+      placement="right"
+    >
+      {children}
+    </Tooltip>
+  )
+}
 
 export default function ManageTokensModal({
   metadata,
@@ -64,14 +86,16 @@ export default function ManageTokensModal({
         centered
       >
         <Space direction="vertical" style={{ width: '100%' }}>
-          <RichButton
-            heading={<Trans>Redeem {tokensLabel} for ETH</Trans>}
-            description={
-              <Trans>Burn your {tokensLabel} in exchange for ETH.</Trans>
-            }
-            onClick={() => setRedeemModalVisible(true)}
-            disabled={redeemDisabled}
-          />
+          <RedeemButtonTooltip buttonDisabled={redeemDisabled}>
+            <RichButton
+              heading={<Trans>Redeem {tokensLabel} for ETH</Trans>}
+              description={
+                <Trans>Burn your {tokensLabel} in exchange for ETH.</Trans>
+              }
+              onClick={() => setRedeemModalVisible(true)}
+              disabled={redeemDisabled}
+            />
+          </RedeemButtonTooltip>
 
           {redeemDisabled && (
             <RichButton

@@ -11,7 +11,7 @@ export type V2ProjectContextType = {
   payoutSplits: Split[] | undefined
   reserveTokenSplits: Split[] | undefined
   tokenAddress: string | undefined
-  terminals: number[] | undefined
+  terminals: string[] | undefined // array of terminal addresses, 0xABC...
   ETHBalance: BigNumber | undefined
 }
 

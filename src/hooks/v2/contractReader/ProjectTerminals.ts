@@ -8,7 +8,7 @@ export default function useProjectTerminals({
 }: {
   projectId?: BigNumber
 }) {
-  return useV2ContractReader<any[]>({
+  return useV2ContractReader<string[]>({
     contract: V2ContractName.JBDirectory,
     functionName: 'terminalsOf',
     args: projectId ? [projectId.toHexString()] : null,

@@ -13,6 +13,8 @@ import useProjectSplits from 'hooks/v2/contractReader/ProjectSplits'
 import useProjectTerminals from 'hooks/v2/contractReader/ProjectTerminals'
 import { useETHPaymentTerminalBalance } from 'hooks/v2/contractReader/ETHPaymentTerminalBalance'
 
+import useProjectToken from 'hooks/v2/contractReader/ProjectToken'
+
 import { layouts } from 'constants/styles/layouts'
 
 import V2Project from '../V2Project'
@@ -21,7 +23,6 @@ import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVE_TOKEN_SPLIT_GROUP,
 } from 'constants/v2/splits'
-import useProjectToken from 'hooks/v2/contractReader/ProjectToken'
 
 export default function V2Dashboard() {
   const { projectId: projectIdParameter }: { projectId?: string } = useParams()

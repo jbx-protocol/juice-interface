@@ -27,6 +27,8 @@ import { constants, utils } from 'ethers'
 
 import { weightedRate } from 'utils/math'
 
+import { ThemeContext } from 'contexts/themeContext'
+
 import V2ProjectRiskNotice from './V2ProjectRiskNotice'
 
 export default function V2ConfirmPayOwnerModal({
@@ -58,6 +60,9 @@ export default function V2ConfirmPayOwnerModal({
   const usdAmount = converter.weiToUsd(weiAmount)
   const { fundingCycle, projectMetadata, projectId, tokenAddress } =
     useContext(V2ProjectContext)
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
 
   if (!fundingCycle || !projectId || !projectMetadata) return null
 
@@ -128,9 +133,11 @@ export default function V2ConfirmPayOwnerModal({
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
         <p>
           <Trans>
-            Paying {projectMetadata.name} is not an investment — it's a way to
-            support the project. Any value or utility of the tokens you receive
-            is determined by {projectMetadata.name}.
+            Paying{' '}
+            <span style={{ fontWeight: 'bold' }}>{projectMetadata.name}</span>{' '}
+            is not an investment — it's a way to support the project. Any value
+            or utility of the tokens you receive is determined by{' '}
+            {projectMetadata.name}.
           </Trans>
         </p>
 
@@ -202,32 +209,38 @@ export default function V2ConfirmPayOwnerModal({
               }}
             />
           </Form.Item>
-          <FormItems.EthAddress
-            defaultValue={''}
-            name={'beneficiary'}
-            onAddressChange={beneficiary => {
-              setBeneficiary(beneficiary)
-            }}
-            hideInput={!customBeneficiaryEnabled}
-            formItemProps={{
-              extra: t`Mint the new tokens to another address?`,
-              label: (
-                <div style={{ display: 'flex' }}>
-                  <Trans>Custom token beneficiary</Trans>
-                  <Switch
-                    checked={customBeneficiaryEnabled}
-                    onChange={setCustomBeneficiaryEnabled}
-                    style={{ marginLeft: 10 }}
-                  />
-                </div>
-              ),
-              rules: [
-                {
-                  validator: validateCustomBeneficiary,
-                },
-              ],
-            }}
+          <Form.Item
+            label={
+              <>
+                <Trans>Custom token beneficiary</Trans>
+                <Switch
+                  checked={customBeneficiaryEnabled}
+                  onChange={setCustomBeneficiaryEnabled}
+                  style={{ marginLeft: 10 }}
+                />
+              </>
+            }
+            extra={<Trans>Mint tokens to a custom address.</Trans>}
+            style={{ marginBottom: '1rem' }}
           />
+
+          {customBeneficiaryEnabled && (
+            <FormItems.EthAddress
+              defaultValue={''}
+              name={'beneficiary'}
+              onAddressChange={beneficiary => {
+                setBeneficiary(beneficiary)
+              }}
+              formItemProps={{
+                rules: [
+                  {
+                    validator: validateCustomBeneficiary,
+                  },
+                ],
+              }}
+            />
+          )}
+
           {hasIssuedTokens && (
             <Form.Item label={t`Receive ERC20`}>
               <Space align="start">

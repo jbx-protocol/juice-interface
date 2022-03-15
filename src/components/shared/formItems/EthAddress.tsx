@@ -12,11 +12,9 @@ import { FormItemExt } from './formItemExt'
 export default function EthAddress({
   name,
   formItemProps,
-  hideInput,
   onAddressChange,
   defaultValue,
 }: FormItemExt & {
-  hideInput?: boolean
   onAddressChange: (address: string) => void
   defaultValue: string | undefined
 }) {
@@ -94,30 +92,26 @@ export default function EthAddress({
           : ''
       }
     >
-      {!hideInput && (
-        <>
-          <Input
-            placeholder={'juicebox.eth / ' + constants.AddressZero}
-            type="string"
-            autoComplete="off"
-            onChange={e => onInputChange(e.target.value)}
-            value={displayValue}
-          />
-          {addressForENS?.length ? (
-            <div style={{ fontSize: '0.7rem', color: colors.text.secondary }}>
-              <CheckCircleFilled /> {addressForENS}
-            </div>
-          ) : null}
-          <Form.Item
-            name={name}
-            style={{ height: 0, maxHeight: 0, margin: 0 }}
-            rules={formItemProps?.rules ?? []} // rules weren't being applied to inner FormItem
-          >
-            {/* Hidden input allows for address value to be used in form, while visible input can display ENS name */}
-            <Input hidden type="string" autoComplete="off" />
-          </Form.Item>
-        </>
-      )}
+      <Input
+        placeholder={'juicebox.eth / ' + constants.AddressZero}
+        type="string"
+        autoComplete="off"
+        onChange={e => onInputChange(e.target.value)}
+        value={displayValue}
+      />
+      {addressForENS?.length ? (
+        <div style={{ fontSize: '0.7rem', color: colors.text.secondary }}>
+          <CheckCircleFilled /> {addressForENS}
+        </div>
+      ) : null}
+      <Form.Item
+        name={name}
+        style={{ height: 0, maxHeight: 0, margin: 0 }}
+        rules={formItemProps?.rules ?? []} // rules weren't being applied to inner FormItem
+      >
+        {/* Hidden input allows for address value to be used in form, while visible input can display ENS name */}
+        <Input hidden type="string" autoComplete="off" />
+      </Form.Item>
     </Form.Item>
   )
 }

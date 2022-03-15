@@ -1028,7 +1028,7 @@ msgid "Mint project tokens on demand"
 msgstr "Crea tokens del proyecto a demanda"
 
 #: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
-msgid "Mint the new tokens to another address?"
+msgid "Mint tokens to a custom address."
 msgstr ""
 
 #: src/components/v1/V1Project/Rewards/index.tsx
@@ -1180,6 +1180,11 @@ msgstr "Declaración por pago"
 msgid "Pay {0}"
 msgstr "Pagar {0}"
 
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
+msgid "Paying <0>{0}</0> is not an investment — it's a way to support the project. Any value or utility of the tokens you receive is determined by {1}."
+msgstr ""
+
 #: src/components/v1/V1Project/V1PayButton.tsx
 msgid "Paying this project is currently disabled, because the token reserved rate is 100% and no tokens will be earned by making a payment."
 msgstr "Actúalmente, los pagos a este proyecto se encuentran desactivados dado que la tasa de reservación es del 100% y ningún token será ganado al hacer un pago."
@@ -1187,11 +1192,6 @@ msgstr "Actúalmente, los pagos a este proyecto se encuentran desactivados dado 
 #: src/components/v1/V1Project/V1PayButton.tsx
 msgid "Paying this project is currently disabled."
 msgstr "Actúalmente, los pagos a este proyecto se encuentran desactivados."
-
-#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
-#: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
-msgid "Paying {0} is not an investment — it's a way to support the project. Any value or utility of the tokens you receive is determined by {1}."
-msgstr ""
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 msgid "Payments"

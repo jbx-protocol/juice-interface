@@ -37,6 +37,7 @@ import {
   ProjectEventJson,
 } from 'models/subgraph-entities/project-event'
 import {
+  parseProtocolLogJson,
   ProtocolLog,
   ProtocolLogJson,
 } from 'models/subgraph-entities/protocol-log'
@@ -251,6 +252,12 @@ export function formatGraphResponse<E extends EntityKey>(
   // in favor of the main SubgraphEntities type. I tried it, though, to no avail.
 
   switch (entity) {
+    case 'protocolLog':
+      if ('protocolLogs' in response) {
+        // @ts-ignore
+        return response.protocolLogs.map(parseProtocolLogJson)
+      }
+      break
     case 'project':
       if ('projects' in response) {
         // @ts-ignore

@@ -25,6 +25,9 @@ import Footer from './Footer'
 import Payments from './Payments'
 import TrendingSection from './TrendingSection'
 import { OverflowVideoLink } from './QAs'
+import useSubgraphQuery from 'hooks/SubgraphQuery'
+import { formatWad } from 'utils/formatNumber'
+import CurrencySymbol from 'components/shared/CurrencySymbol'
 
 const BigHeader = ({ text }: { text: string }) => (
   <h1
@@ -79,6 +82,13 @@ export default function Landing() {
     maxWidth: totalMaxWidth,
     margin: '0 auto',
   }
+
+  const { data: protocolLogs } = useSubgraphQuery({
+    entity: 'protocolLog',
+    keys: ['erc20Count', 'paymentsCount', 'projectsCount', 'volumePaid'],
+  })
+
+  const stats = protocolLogs?.[0]
 
   return (
     <div>
@@ -213,6 +223,30 @@ export default function Landing() {
               />
             </Col>
           </Row>
+        </div>
+      </section>
+
+      <section
+        style={{
+          ...section,
+          marginTop: 80,
+          paddingTop: 20,
+          paddingBottom: 60,
+        }}
+      >
+        <div
+          style={{
+            ...wrapper,
+          }}
+        >
+          <SmallHeader text={t`Protocol stats`} />
+          <div>{stats?.projectsCount} projects</div>
+          <div>{stats?.paymentsCount} payments</div>
+          <div>
+            <CurrencySymbol currency={0} />
+            {formatWad(stats?.volumePaid, { precision: 0 })} volume
+          </div>
+          <div>{stats?.erc20Count} ERC20s deployed</div>
         </div>
       </section>
 

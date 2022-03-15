@@ -16,13 +16,16 @@ export function useETHPaymentTerminalBalance({
     setLoading(true)
     async function fetchData() {
       if (!projectId) return
+
       const res =
         await contracts?.JBETHPaymentTerminalStore.functions.balanceOf(
           projectId,
         )
-      if (!res) return
-      setBalance(res[0])
+
       setLoading(false)
+      if (!res) return
+
+      setBalance(res[0])
     }
     fetchData()
   }, [contracts, projectId])

@@ -8,7 +8,7 @@ import FormattedAddress from 'components/shared/FormattedAddress'
 import { NetworkContext } from 'contexts/networkContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { constants } from 'ethers'
+import * as constants from '@ethersproject/constants'
 import useCanPrintPreminedTokens from 'hooks/v1/contractReader/CanPrintPreminedTokens'
 import useERC20BalanceOf from 'hooks/v1/contractReader/ERC20BalanceOf'
 import {

@@ -1,6 +1,6 @@
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1UserContext } from 'contexts/v1/userContext'
-import { utils } from 'ethers'
+import { formatBytes32String } from '@ethersproject/strings'
 import { useContext } from 'react'
 
 import { TransactorInstance } from '../../Transactor'
@@ -20,7 +20,7 @@ export function useSetProjectHandleTx(): TransactorInstance<{
     return transactor(
       contracts.Projects,
       'setHandle',
-      [projectId.toHexString(), utils.formatBytes32String(handle)],
+      [projectId.toHexString(), formatBytes32String(handle)],
       txOpts,
     )
   }

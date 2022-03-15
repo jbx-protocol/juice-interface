@@ -5,7 +5,7 @@ import axios from 'axios'
 import { FormItems } from 'components/shared/formItems'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
-import { readNetwork } from 'constants/networks'
+
 import { NetworkContext } from 'contexts/networkContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import useUnclaimedBalanceOfUser from 'hooks/v1/contractReader/UnclaimedBalanceOfUser'
@@ -17,6 +17,8 @@ import { useContext, useState } from 'react'
 import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
 import { uploadProjectMetadata } from 'utils/ipfs'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
+
+import { readNetwork } from 'constants/networks'
 
 export default function ProjectToolDrawerModal({
   visible,

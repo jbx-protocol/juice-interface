@@ -3,7 +3,7 @@ import { Contract } from '@ethersproject/contracts'
 
 import { NetworkContext } from 'contexts/networkContext'
 import erc20Abi from 'erc-20-abi'
-import { constants } from 'ethers'
+import * as constants from '@ethersproject/constants'
 import { useContext, useEffect, useState } from 'react'
 
 import { readProvider } from 'constants/readProvider'

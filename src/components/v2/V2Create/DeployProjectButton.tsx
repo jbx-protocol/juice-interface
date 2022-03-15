@@ -10,7 +10,7 @@ import {
 import { useDeployProjectTx } from 'hooks/v2/transactor/DeployProjectTx'
 import { useCallback, useState } from 'react'
 import { uploadProjectMetadata } from 'utils/ipfs'
-import { TransactionReceipt } from 'ethers/node_modules/@ethersproject/providers'
+import { TransactionReceipt } from '@ethersproject/providers'
 import { useHistory } from 'react-router-dom'
 import { BigNumber } from '@ethersproject/bignumber'
 

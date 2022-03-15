@@ -1,4 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { isAddress } from '@ethersproject/address'
 import { t, Trans } from '@lingui/macro'
 import { Checkbox, Descriptions, Form, Input, Modal, Space, Switch } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
@@ -6,10 +7,9 @@ import FormattedAddress from 'components/shared/FormattedAddress'
 import ImageUploader from 'components/shared/inputs/ImageUploader'
 import { NetworkContext } from 'contexts/networkContext'
 import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
-import useProjectToken from 'hooks/v2/contractReader/ProjectToken'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 
-import React, { useContext, useState } from 'react'
+import { useContext, useState } from 'react'
 import { formattedNum, formatWad } from 'utils/formatNumber'
 
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -18,16 +18,13 @@ import {
   V2_CURRENCY_ETH,
   V2_CURRENCY_USD,
 } from 'utils/v2/currency'
-import { decodeV2FundingCycleMetadata } from 'utils/v2/fundingCycle'
 import { usePayV2ProjectTx } from 'hooks/v2/transactor/PayV2ProjectTx'
 
 import { FormItems } from 'components/shared/formItems'
 
-import { constants, utils } from 'ethers'
+import * as constants from '@ethersproject/constants'
 
 import { weightedRate } from 'utils/math'
-
-import { ThemeContext } from 'contexts/themeContext'
 
 import V2ProjectRiskNotice from './V2ProjectRiskNotice'
 
@@ -60,9 +57,6 @@ export default function V2ConfirmPayOwnerModal({
   const usdAmount = converter.weiToUsd(weiAmount)
   const { fundingCycle, projectMetadata, projectId, tokenAddress } =
     useContext(V2ProjectContext)
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
 
   if (!fundingCycle || !projectId || !projectMetadata) return null
 
@@ -113,7 +107,7 @@ export default function V2ConfirmPayOwnerModal({
   const validateCustomBeneficiary = () => {
     if (!beneficiary) {
       return Promise.reject('Address required')
-    } else if (!utils.isAddress(beneficiary)) {
+    } else if (!isAddress(beneficiary)) {
       return Promise.reject('Invalid address')
     }
     return Promise.resolve()

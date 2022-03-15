@@ -14,7 +14,7 @@ import ReconfigurationStrategyDrawer from 'components/shared/ReconfigurationStra
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { constants } from 'ethers'
+import * as constants from '@ethersproject/constants'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useEditingV1FundingCycleSelector } from 'hooks/AppSelector'
 import { useTerminalFee } from 'hooks/v1/TerminalFee'

@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { SECONDS_IN_DAY } from 'constants/numbers'
+
 import { useIpfsCache } from 'hooks/IpfsCache'
 import { IpfsCacheName } from 'models/ipfs-cache/cache-name'
 import { ProjectState } from 'models/project-visibility'
@@ -19,6 +19,8 @@ import {
   WhereConfig,
 } from 'utils/graph'
 import { getTerminalAddress } from 'utils/v1/terminals'
+
+import { SECONDS_IN_DAY } from 'constants/numbers'
 
 import { archivedProjectIds } from '../../constants/v1/archivedProjects'
 import { uploadIpfsJsonCache } from '../../utils/ipfs'

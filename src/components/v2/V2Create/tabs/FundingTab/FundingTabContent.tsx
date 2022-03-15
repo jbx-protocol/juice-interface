@@ -22,7 +22,7 @@ import { sanitizeSplit, toMod, toSplit } from 'utils/v2/splits'
 
 import { getDefaultFundAccessConstraint } from 'utils/v2/fundingCycle'
 import { toV1Currency } from 'utils/v1/currency'
-import { V2_CURRENCY_ETH, V2_CURRENCY_USD } from 'utils/v2/currency'
+import { V2_CURRENCY_ETH } from 'utils/v2/currency'
 
 import ExternalLink from 'components/shared/ExternalLink'
 

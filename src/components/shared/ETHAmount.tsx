@@ -1,6 +1,6 @@
 import { Tooltip } from 'antd'
 
-import { BigNumber } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
 import { formatWad, parseWad } from 'utils/formatNumber'
 import { betweenZeroAndOne } from 'utils/bigNumbers'
 

@@ -1,12 +1,10 @@
-/* eslint-disable */
 import { t } from '@lingui/macro'
 import { CheckCircleOutlined, LoadingOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Form } from 'antd'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
-
+import { formatBytes32String } from '@ethersproject/strings'
 import { ThemeContext } from 'contexts/themeContext'
-import { utils } from 'ethers'
 import useContractReader from 'hooks/v1/contractReader/ContractReader'
 import { V1ContractName } from 'models/v1/contracts'
 import { normalizeHandle } from 'utils/formatHandle'
@@ -55,7 +53,7 @@ export default function ProjectHandleFormItem({
     if (!inputContents) return
 
     try {
-      return utils.formatBytes32String(normalizeHandle(inputContents))
+      return formatBytes32String(normalizeHandle(inputContents))
     } catch (e) {
       console.error('Error formatting handle', inputContents, e)
     }

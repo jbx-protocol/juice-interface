@@ -62,14 +62,7 @@ export default function PayEventElem({
   if (!event) return null
 
   return (
-    <div
-      key={event.id}
-      style={{
-        marginBottom: 20,
-        paddingBottom: 20,
-        borderBottom: '1px solid ' + colors.stroke.tertiary,
-      }}
-    >
+    <div>
       <div
         style={{
           display: 'flex',

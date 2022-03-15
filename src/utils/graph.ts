@@ -1,5 +1,8 @@
 import axios from 'axios'
-import { parseDeployedERC20EventJson } from 'models/subgraph-entities/deployed-erc20-event'
+import {
+  DeployedERC20EventJson,
+  parseDeployedERC20EventJson,
+} from 'models/subgraph-entities/deployed-erc20-event'
 import {
   DistributeToPayoutModEvent,
   DistributeToPayoutModEventJson,
@@ -53,6 +56,7 @@ import {
 } from 'models/subgraph-entities/tap-event'
 
 import { parseProjectEventJson } from '../models/subgraph-entities/project-event'
+import { DeployedERC20Event } from '../models/subgraph-entities/deployed-erc20-event'
 
 export interface SubgraphEntities {
   protocolLog: ProtocolLog
@@ -67,6 +71,7 @@ export interface SubgraphEntities {
   distributeToPayoutModEvent: DistributeToPayoutModEvent
   distributeToTicketModEvent: DistributeToTicketModEvent
   printReservesEvent: PrintReservesEvent
+  deployedERC20Event: DeployedERC20Event
 }
 
 export interface SubgraphQueryReturnTypes {
@@ -89,6 +94,7 @@ export interface SubgraphQueryReturnTypes {
   printReservesEvent: {
     printReservesEvents: PrintReservesEventJson[]
   }
+  deployedERC20Event: { deployedERC20Events: DeployedERC20EventJson[] }
 }
 
 export type EntityKey = keyof SubgraphEntities

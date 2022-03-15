@@ -35,14 +35,7 @@ export default function RedeemEventElem({
   if (!event) return null
 
   return (
-    <div
-      style={{
-        marginBottom: 20,
-        paddingBottom: 20,
-        borderBottom: '1px solid ' + colors.stroke.tertiary,
-      }}
-      key={event.id}
-    >
+    <div>
       <div
         style={{
           display: 'flex',

@@ -55,13 +55,7 @@ export default function TapEventElem({
   if (!event) return null
 
   return (
-    <div
-      style={{
-        marginBottom: 20,
-        paddingBottom: 20,
-        borderBottom: '1px solid ' + colors.stroke.tertiary,
-      }}
-    >
+    <div>
       <div
         style={{
           display: 'flex',

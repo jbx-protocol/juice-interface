@@ -243,7 +243,7 @@ export default function Landing() {
           <div>{stats?.projectsCount} projects</div>
           <div>{stats?.paymentsCount} payments</div>
           <div>
-            <CurrencySymbol currency={0} />
+            <CurrencySymbol currency={'ETH'} />
             {formatWad(stats?.volumePaid, { precision: 0 })} volume
           </div>
           <div>{stats?.erc20Count} ERC20s deployed</div>

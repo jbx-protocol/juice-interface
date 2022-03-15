@@ -31,6 +31,7 @@ import {
   Project,
   ProjectJson,
 } from 'models/subgraph-entities/project'
+import { ProjectCreateEvent } from 'models/subgraph-entities/project-create-event'
 import {
   ProjectEvent,
   ProjectEventJson,
@@ -55,6 +56,7 @@ import { parseProjectEventJson } from '../models/subgraph-entities/project-event
 export interface SubgraphEntities {
   protocolLog: ProtocolLog
   projectEvent: ProjectEvent
+  projectCreateEvent: ProjectCreateEvent
   project: Project
   projectSearch: Project
   payEvent: PayEvent
@@ -69,6 +71,7 @@ export interface SubgraphEntities {
 export interface SubgraphQueryReturnTypes {
   protocolLog: { protocolLogs: ProtocolLogJson[] }
   projectEvent: { projectEvents: ProjectEventJson[] }
+  projectCreateEvent: { projectCreateEvents: ProjectCreateEvent[] }
   project: { projects: ProjectJson[] }
   projectSearch: { projectSearch: ProjectJson[] }
   projectVx: { projects: ProjectJson[] }
@@ -258,6 +261,12 @@ export function formatGraphResponse<E extends EntityKey>(
       if ('projectEvents' in response) {
         // @ts-ignore
         return response.projectEvents.map(parseProjectEventJson)
+      }
+      break
+    case 'projectCreateEvent':
+      if ('projectCreateEvents' in response) {
+        // @ts-ignore
+        return response.projectCreateEvents
       }
       break
     case 'projectSearch':

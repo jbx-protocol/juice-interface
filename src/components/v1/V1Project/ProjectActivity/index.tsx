@@ -6,12 +6,14 @@ import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useInfiniteSubgraphQuery } from 'hooks/SubgraphQuery'
 import { PayEvent } from 'models/subgraph-entities/pay-event'
 import { PrintReservesEvent } from 'models/subgraph-entities/print-reserves-event'
+import { ProjectCreateEvent } from 'models/subgraph-entities/project-create-event'
 import { RedeemEvent } from 'models/subgraph-entities/redeem-event'
 import { TapEvent } from 'models/subgraph-entities/tap-event'
 import { useContext, useState } from 'react'
 
 import ActivityTabContent from './ActivityTabContent'
 import PayEventElem from './items/PayEventElem'
+import ProjectCreateEventElem from './items/ProjectCreateEventElem'
 import RedeemEventElem from './items/RedeemEventElem'
 import ReservesEventElem from './items/ReservesEventElem'
 import TapEventElem from './items/TapEventElem'
@@ -75,6 +77,10 @@ export default function ProjectActivity() {
           'returnAmount',
         ],
       },
+      {
+        entity: 'projectCreateEvent',
+        keys: ['id', 'txHash', 'timestamp', 'caller'],
+      },
     ],
     orderDirection: 'desc',
     orderBy: 'timestamp',
@@ -134,6 +140,12 @@ export default function ProjectActivity() {
               return (
                 <ReservesEventElem
                   event={e.printReservesEvent as PrintReservesEvent}
+                />
+              )
+            if (e.projectCreateEvent)
+              return (
+                <ProjectCreateEventElem
+                  event={e.projectCreateEvent as ProjectCreateEvent}
                 />
               )
           }),

@@ -4,13 +4,12 @@ import {
   ParticipantJson,
 } from 'models/subgraph-entities/participant'
 
+import { CV } from './cv'
 import {
   DeployedERC20Event,
   DeployedERC20EventJson,
   parseDeployedERC20EventJson,
 } from './deployed-erc20-event'
-
-import { Participant } from './participant'
 import {
   DistributeToPayoutModEvent,
   DistributeToPayoutModEventJson,
@@ -21,23 +20,24 @@ import {
   DistributeToTicketModEventJson,
   parseDistributeToTicketModEvent,
 } from './distribute-to-ticket-mod-event'
+import { Participant } from './participant'
 import { parsePayEventJson, PayEvent, PayEventJson } from './pay-event'
 import {
   parsePrintPremineEventJson,
   PrintPremineEvent,
   PrintPremineEventJson,
 } from './print-premine-event'
-import { parseTapEventJson, TapEvent, TapEventJson } from './tap-event'
-import {
-  parseRedeemEventJson,
-  RedeemEvent,
-  RedeemEventJson,
-} from './redeem-event'
 import {
   parsePrintReservesEventJson,
   PrintReservesEvent,
   PrintReservesEventJson,
 } from './print-reserves-event'
+import {
+  parseRedeemEventJson,
+  RedeemEvent,
+  RedeemEventJson,
+} from './redeem-event'
+import { parseTapEventJson, TapEvent, TapEventJson } from './tap-event'
 
 type BaseProject = {
   id: string
@@ -59,7 +59,7 @@ type BaseProject = {
 }
 
 export type ProjectV1 = {
-  cv: 1 // contracts version
+  cv: CV
   terminal: string
   metadataUri: string
   metadataDomain: null
@@ -67,7 +67,7 @@ export type ProjectV1 = {
 } & BaseProject
 
 export type ProjectV2 = {
-  cv: 2 // contracts version
+  cv: CV
   terminal: null
   metadataUri: string
   metadataDomain: BigNumber

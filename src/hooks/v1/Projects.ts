@@ -272,12 +272,6 @@ export function useTrendingProjects(count: number, days: number) {
           BigNumber.from(stats.paymentsCount).pow(2),
         )
 
-        console.log('asdf', {
-          trendingScore,
-          trendingVolume: stats?.trendingVolume,
-          trendingPaymentsCount: stats?.paymentsCount,
-        })
-
         return {
           ...p,
           trendingScore,

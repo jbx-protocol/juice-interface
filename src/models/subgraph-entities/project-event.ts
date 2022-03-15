@@ -1,24 +1,15 @@
-import { parsePayEventJson, PayEvent, PayEventJson } from './pay-event'
 import {
-  TapEvent,
-  TapEventJson,
-  parseTapEventJson,
-} from 'models/subgraph-entities/tap-event'
-import {
-  parsePrintPremineEventJson,
-  PrintPremineEvent,
-  PrintPremineEventJson,
-} from './print-premine-event'
-import {
+  parsePrintReservesEventJson,
   PrintReservesEvent,
   PrintReservesEventJson,
-  parsePrintReservesEventJson,
 } from 'models/subgraph-entities/print-reserves-event'
 import {
-  parseRedeemEventJson,
-  RedeemEvent,
-  RedeemEventJson,
-} from './redeem-event'
+  parseTapEventJson,
+  TapEvent,
+  TapEventJson,
+} from 'models/subgraph-entities/tap-event'
+
+import { CV } from './cv'
 import {
   DeployedERC20Event,
   DeployedERC20EventJson,
@@ -34,12 +25,24 @@ import {
   DistributeToTicketModEventJson,
   parseDistributeToTicketModEvent,
 } from './distribute-to-ticket-mod-event'
+import { parsePayEventJson, PayEvent, PayEventJson } from './pay-event'
+import {
+  parsePrintPremineEventJson,
+  PrintPremineEvent,
+  PrintPremineEventJson,
+} from './print-premine-event'
+import { ProjectCreateEvent } from './project-create-event'
+import {
+  parseRedeemEventJson,
+  RedeemEvent,
+  RedeemEventJson,
+} from './redeem-event'
 
 export type ProjectEvent = {
   id: string
   timestamp: number
   projectId: number
-  cv: 1 | 2
+  cv: CV
 
   payEvent: Partial<PayEvent> | null
   tapEvent: Partial<TapEvent> | null
@@ -49,11 +52,12 @@ export type ProjectEvent = {
   deployedERC20Event: Partial<DeployedERC20Event> | null
   distributeToPayoutModEvent: Partial<DistributeToPayoutModEvent> | null
   distributeToTicketModEvent: Partial<DistributeToTicketModEvent> | null
+  projectCreateEvent: Partial<ProjectCreateEvent> | null
 }
 
 export type ProjectEventJson = Pick<ProjectEvent, 'id' | 'timestamp'> & {
   projectId: number
-  cv: 1 | 2
+  cv: CV
   payEvent: PayEventJson | null
   tapEvent: TapEventJson | null
   printPremineEvent: PrintPremineEventJson | null
@@ -62,6 +66,7 @@ export type ProjectEventJson = Pick<ProjectEvent, 'id' | 'timestamp'> & {
   deployedERC20Event: DeployedERC20EventJson | null
   distributeToPayoutModEvent: DistributeToPayoutModEventJson | null
   distributeToTicketModEvent: DistributeToTicketModEventJson | null
+  projectCreateEvent: ProjectCreateEvent | null
 }
 
 export const parseProjectEventJson = (

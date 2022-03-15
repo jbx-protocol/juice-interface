@@ -7,6 +7,8 @@ import { CurrencyContext } from 'contexts/currencyContext'
 
 import { CurrencyOption } from 'models/currencyOption'
 
+import { WeightFunction } from 'utils/math'
+
 import PayInputSubText from './PayInputSubText'
 
 export type PayButtonProps = {
@@ -20,12 +22,14 @@ export default function PayInputGroup({
   weight,
   tokenSymbol,
   tokenAddress,
+  weightingFn,
 }: {
   PayButton: (props: PayButtonProps) => JSX.Element | null
   reservedRate?: number
   weight?: BigNumber
   tokenSymbol?: string
   tokenAddress?: string
+  weightingFn: WeightFunction
 }) {
   const {
     currencyMetadata,
@@ -72,6 +76,7 @@ export default function PayInputGroup({
           weight={weight}
           tokenSymbol={tokenSymbol}
           tokenAddress={tokenAddress}
+          weightingFn={weightingFn}
         />
       </div>
 

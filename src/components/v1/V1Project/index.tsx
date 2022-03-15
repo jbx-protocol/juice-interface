@@ -10,6 +10,8 @@ import PayInputGroup from 'components/shared/inputs/Pay/PayInputGroup'
 
 import { Suspense, lazy } from 'react'
 
+import { weightedRate } from 'utils/math'
+
 import FundingCycles from './FundingCycles'
 import Paid from './Paid'
 import ProjectActivity from './ProjectActivity'
@@ -66,6 +68,7 @@ export default function V1Project({
             weight={currentFC?.weight}
             tokenSymbol={tokenSymbol}
             tokenAddress={tokenAddress}
+            weightingFn={weightedRate}
           />
         </Col>
       </Row>

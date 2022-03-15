@@ -7,6 +7,7 @@ import { useContext } from 'react'
 import { permilleToPercent, permyriadToPercent } from 'utils/formatNumber'
 import { fromWad } from 'utils/formatNumber'
 import { decodeV2FundingCycleMetadata } from 'utils/v2/fundingCycle'
+import { weightedAmount } from 'utils/math'
 
 import V2PayButton from './V2PayButton'
 
@@ -94,6 +95,7 @@ export default function V2Project() {
             PayButton={V2PayButton}
             reservedRate={reservedRatePercent}
             weight={weight}
+            weightingFn={weightedAmount}
           />
         </Col>
       </Row>

@@ -10,12 +10,12 @@ import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
-import { smallHeaderStyle } from '../styles'
+import { smallHeaderStyle } from '../../styles'
 
 export default function ReservesEventElem({
-  printReservesEvent,
+  event,
 }: {
-  printReservesEvent:
+  event:
     | Pick<
         PrintReservesEvent,
         | 'id'
@@ -39,21 +39,21 @@ export default function ReservesEventElem({
       keys: ['id', 'timestamp', 'txHash', 'modBeneficiary', 'modCut'],
       orderDirection: 'desc',
       orderBy: 'modCut',
-      where: printReservesEvent?.id
+      where: event?.id
         ? {
             key: 'printReservesEvent',
-            value: printReservesEvent.id,
+            value: event.id,
           }
         : undefined,
     },
     {},
   )
 
-  if (!printReservesEvent) return null
+  if (!event) return null
 
   return (
     <div
-      key={printReservesEvent.id}
+      key={event.id}
       style={{
         marginBottom: 20,
         paddingBottom: 20,
@@ -77,15 +77,13 @@ export default function ReservesEventElem({
 
         <div style={{ textAlign: 'right' }}>
           <div style={smallHeaderStyle(colors)}>
-            {printReservesEvent.timestamp && (
-              <span>
-                {formatHistoricalDate(printReservesEvent.timestamp * 1000)}
-              </span>
+            {event.timestamp && (
+              <span>{formatHistoricalDate(event.timestamp * 1000)}</span>
             )}{' '}
-            <EtherscanLink value={printReservesEvent.txHash} type="tx" />
+            <EtherscanLink value={event.txHash} type="tx" />
           </div>
           <div style={smallHeaderStyle(colors)}>
-            called by <FormattedAddress address={printReservesEvent.caller} />
+            called by <FormattedAddress address={event.caller} />
           </div>
         </div>
       </div>
@@ -116,7 +114,7 @@ export default function ReservesEventElem({
           </div>
         ))}
 
-        {printReservesEvent.beneficiaryTicketAmount?.gt(0) && (
+        {event.beneficiaryTicketAmount?.gt(0) && (
           <div
             style={{
               display: 'flex',
@@ -125,10 +123,10 @@ export default function ReservesEventElem({
             }}
           >
             <div style={{ fontWeight: 500 }}>
-              <FormattedAddress address={printReservesEvent.beneficiary} />:
+              <FormattedAddress address={event.beneficiary} />:
             </div>
             <div style={{ color: colors.text.secondary }}>
-              {formatWad(printReservesEvent.beneficiaryTicketAmount, {
+              {formatWad(event.beneficiaryTicketAmount, {
                 precision: 0,
               })}
             </div>
@@ -144,7 +142,7 @@ export default function ReservesEventElem({
             textAlign: 'right',
           }}
         >
-          {formatWad(printReservesEvent.count, { precision: 0 })}
+          {formatWad(event.count, { precision: 0 })}
         </div>
       ) : null}
     </div>

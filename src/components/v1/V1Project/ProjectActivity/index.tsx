@@ -1,106 +1,96 @@
 import { Button, Space } from 'antd'
 import { DownloadOutlined } from '@ant-design/icons'
 import { t } from '@lingui/macro'
-
+import Loading from 'components/shared/Loading'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
-import { ThemeContext } from 'contexts/themeContext'
-import { useContext, useLayoutEffect, useMemo, useState } from 'react'
+import { useInfiniteSubgraphQuery } from 'hooks/SubgraphQuery'
+import { PayEvent } from 'models/subgraph-entities/pay-event'
+import { PrintReservesEvent } from 'models/subgraph-entities/print-reserves-event'
+import { RedeemEvent } from 'models/subgraph-entities/redeem-event'
+import { TapEvent } from 'models/subgraph-entities/tap-event'
+import { useContext, useState } from 'react'
 
-import SectionHeader from '../../../shared/SectionHeader'
-import { PaymentActivity } from './PaymentActivity'
-import { RedeemActivity } from './RedeemActivity'
-import { ReservesActivity } from './ReservesActivity'
-import { TapActivity } from './TapActivity'
+import ActivityTabContent from './ActivityTabContent'
+import PayEventElem from './items/PayEventElem'
+import RedeemEventElem from './items/RedeemEventElem'
+import ReservesEventElem from './items/ReservesEventElem'
+import TapEventElem from './items/TapEventElem'
 import DownloadActivityModal from '../modals/DownloadActivityModal'
-
-type TabOption = 'pay' | 'redeem' | 'tap' | 'reserves'
+import SectionHeader from 'components/shared/SectionHeader'
 
 export default function ProjectActivity() {
-  const { colors } = useContext(ThemeContext).theme
-  const [initialized, setInitialized] = useState<boolean>()
   const [downloadModalVisible, setDownloadModalVisible] = useState<boolean>()
-  const [tabOption, setTabOption] = useState<TabOption>()
 
   const { projectId, isPreviewMode } = useContext(V1ProjectContext)
 
   const pageSize = 50
 
-  useLayoutEffect(() => {
-    if (initialized) return
-
-    setInitialized(true)
-
-    setTabOption('pay')
-  }, [initialized, setInitialized, setTabOption, projectId])
-
-  const content = useMemo(() => {
-    let content: JSX.Element | null = null
-
-    switch (tabOption) {
-      case 'pay':
-        content = <PaymentActivity pageSize={pageSize} />
-        break
-      case 'redeem':
-        content = <RedeemActivity pageSize={pageSize} />
-        break
-      case 'tap':
-        content = <TapActivity pageSize={pageSize} />
-        break
-      case 'reserves':
-        content = <ReservesActivity pageSize={pageSize} />
-        break
-    }
-
-    return content
-  }, [tabOption, pageSize])
-
-  const tab = (tab: TabOption) => {
-    const selected = tab === tabOption
-
-    let text: string
-    switch (tab) {
-      case 'pay':
-        text = t`Pay`
-        break
-      case 'redeem':
-        text = t`Redeem`
-        break
-      case 'tap':
-        text = t`Withdraw`
-        break
-      case 'reserves':
-        text = t`Reserves`
-        break
-    }
-
-    return (
-      <div
-        style={{
-          textTransform: 'uppercase',
-          fontSize: '0.8rem',
-          fontWeight: selected ? 600 : 400,
-          color: selected ? colors.text.secondary : colors.text.tertiary,
-          cursor: 'pointer',
-        }}
-        onClick={() => {
-          setTabOption(tab)
-        }}
-      >
-        {text}
-      </div>
-    )
-  }
-
-  const tabs = (
-    <div style={{ marginBottom: 20, maxWidth: '100%', overflow: 'auto' }}>
-      <Space size="middle">
-        {tab('pay')}
-        {tab('redeem')}
-        {tab('tap')}
-        {tab('reserves')}
-      </Space>
-    </div>
-  )
+  const {
+    data: projectEvents,
+    fetchNextPage,
+    hasNextPage,
+    isLoading,
+    isFetchingNextPage,
+  } = useInfiniteSubgraphQuery({
+    pageSize,
+    entity: 'projectEvent',
+    keys: [
+      'id',
+      {
+        entity: 'payEvent',
+        keys: ['amount', 'timestamp', 'beneficiary', 'note', 'id', 'txHash'],
+      },
+      {
+        entity: 'tapEvent',
+        keys: [
+          'id',
+          'timestamp',
+          'txHash',
+          'caller',
+          'beneficiary',
+          'beneficiaryTransferAmount',
+          'netTransferAmount',
+        ],
+      },
+      {
+        entity: 'printReservesEvent',
+        keys: [
+          'id',
+          'timestamp',
+          'txHash',
+          'caller',
+          'beneficiary',
+          'beneficiaryTicketAmount',
+          'count',
+        ],
+      },
+      {
+        entity: 'redeemEvent',
+        keys: [
+          'id',
+          'amount',
+          'beneficiary',
+          'txHash',
+          'timestamp',
+          'returnAmount',
+        ],
+      },
+    ],
+    orderDirection: 'desc',
+    orderBy: 'timestamp',
+    where: projectId
+      ? [
+          {
+            key: 'projectId',
+            value: projectId.toNumber(),
+          },
+          {
+            key: 'cv',
+            value: 1,
+          },
+        ]
+      : undefined,
+  })
 
   return (
     <div>
@@ -121,10 +111,36 @@ export default function ProjectActivity() {
             />
           ) : null}
         </Space>
-        {tabs}
       </div>
 
-      {content}
+      <ActivityTabContent
+        count={
+          projectEvents?.pages?.reduce((prev, cur) => prev + cur.length, 0) ?? 0
+        }
+        hasNextPage={hasNextPage}
+        isLoading={isLoading}
+        isLoadingNextPage={isFetchingNextPage}
+        onLoadMore={fetchNextPage}
+      >
+        {projectEvents?.pages.map(group =>
+          group.map(e => {
+            if (e.payEvent)
+              return <PayEventElem event={e.payEvent as PayEvent} />
+            if (e.tapEvent)
+              return <TapEventElem event={e.tapEvent as TapEvent} />
+            if (e.redeemEvent)
+              return <RedeemEventElem event={e.redeemEvent as RedeemEvent} />
+            if (e.printReservesEvent)
+              return (
+                <ReservesEventElem
+                  event={e.printReservesEvent as PrintReservesEvent}
+                />
+              )
+          }),
+        )}
+      </ActivityTabContent>
+
+      {isLoading || (isFetchingNextPage && <Loading />)}
 
       <DownloadActivityModal
         visible={downloadModalVisible}

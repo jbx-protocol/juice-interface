@@ -103,7 +103,7 @@ export default function V1Dashboard() {
   }, [metadata])
 
   const { data: projects } = useProjectsQuery({
-    projectId,
+    projectId: projectId?.toNumber(),
     keys: ['createdAt', 'totalPaid'],
   })
 

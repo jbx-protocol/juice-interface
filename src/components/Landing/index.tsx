@@ -238,7 +238,7 @@ export default function Landing() {
                 {previewProjects ? (
                   <Grid list>
                     {previewProjects.map(p => (
-                      <ProjectCard key={p.uri} project={p} />
+                      <ProjectCard key={p.metadataUri} project={p} />
                     ))}
                   </Grid>
                 ) : (

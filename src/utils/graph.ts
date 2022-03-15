@@ -28,11 +28,17 @@ import {
 } from 'models/subgraph-entities/print-reserves-event'
 import {
   parseProjectJson,
-  parseProjectVxJson,
   Project,
   ProjectJson,
-  ProjectVx,
 } from 'models/subgraph-entities/project'
+import {
+  ProjectEvent,
+  ProjectEventJson,
+} from 'models/subgraph-entities/project-event'
+import {
+  ProtocolLog,
+  ProtocolLogJson,
+} from 'models/subgraph-entities/protocol-log'
 import {
   parseRedeemEventJson,
   RedeemEvent,
@@ -44,10 +50,13 @@ import {
   TapEventJson,
 } from 'models/subgraph-entities/tap-event'
 
+import { parseProjectEventJson } from '../models/subgraph-entities/project-event'
+
 export interface SubgraphEntities {
+  protocolLog: ProtocolLog
+  projectEvent: ProjectEvent
   project: Project
   projectSearch: Project
-  projectVx: ProjectVx
   payEvent: PayEvent
   redeemEvent: RedeemEvent
   participant: Participant
@@ -58,6 +67,8 @@ export interface SubgraphEntities {
 }
 
 export interface SubgraphQueryReturnTypes {
+  protocolLog: { protocolLogs: ProtocolLogJson[] }
+  projectEvent: { projectEvents: ProjectEventJson[] }
   project: { projects: ProjectJson[] }
   projectSearch: { projectSearch: ProjectJson[] }
   projectVx: { projects: ProjectJson[] }
@@ -243,10 +254,10 @@ export function formatGraphResponse<E extends EntityKey>(
         return response.projects.map(parseProjectJson)
       }
       break
-    case 'projectVx':
-      if ('projects' in response) {
+    case 'projectEvent':
+      if ('projectEvents' in response) {
         // @ts-ignore
-        return response.projects.map(parseProjectVxJson)
+        return response.projectEvents.map(parseProjectEventJson)
       }
       break
     case 'projectSearch':

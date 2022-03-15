@@ -22,7 +22,12 @@ import Loading from './Loading'
 
 type ProjectCardProject = Pick<
   Project,
-  'handle' | 'uri' | 'totalPaid' | 'createdAt' | 'terminal' | 'id'
+  | 'handle'
+  | 'metadataUri'
+  | 'totalPaid'
+  | 'createdAt'
+  | 'terminal'
+  | 'projectId'
 >
 
 export default function ProjectCard({
@@ -48,9 +53,16 @@ export default function ProjectCard({
     BigNumber.isBigNumber(project)
       ? {
           entity: 'project',
-          keys: ['handle', 'uri', 'totalPaid', 'createdAt', 'terminal', 'id'],
+          keys: [
+            'handle',
+            'metadataUri',
+            'totalPaid',
+            'createdAt',
+            'terminal',
+            'projectId',
+          ],
           where: {
-            key: 'id',
+            key: 'projectId',
             value: project.toString(),
           },
         }
@@ -70,7 +82,7 @@ export default function ProjectCard({
     _project = projectObj
   }
 
-  const { data: metadata } = useProjectMetadata(_project?.uri)
+  const { data: metadata } = useProjectMetadata(_project?.metadataUri)
   // If the total paid is greater than 0, but less than 10 ETH, show two decimal places.
   const precision =
     _project?.totalPaid?.gt(0) && _project?.totalPaid.lt(constants.WeiPerEther)
@@ -80,7 +92,7 @@ export default function ProjectCard({
   const terminalVersion = getTerminalVersion(_project?.terminal)
 
   const isArchived =
-    archivedProjectIds.includes(_project.id.toNumber()) || metadata?.archived
+    archivedProjectIds.includes(_project.projectId) || metadata?.archived
 
   return (
     <Link

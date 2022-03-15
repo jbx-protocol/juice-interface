@@ -9,6 +9,7 @@ import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 
 import ETHAmount from 'components/shared/currency/ETHAmount'
+import { BigNumber } from '@ethersproject/bignumber'
 
 export default function Payments() {
   const {
@@ -55,7 +56,9 @@ export default function Payments() {
                   style={{ color: colors.text.action.primary, fontWeight: 500 }}
                 >
                   {e.project?.id && (
-                    <V1ProjectHandle projectId={e.project.id} />
+                    <V1ProjectHandle
+                      projectId={BigNumber.from(e.project.projectId)}
+                    />
                   )}
                 </div>
                 <div

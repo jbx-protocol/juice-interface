@@ -48,7 +48,7 @@ export default function TrendingProjectCard({
     textAlign: 'center',
   }
 
-  const { data: metadata } = useProjectMetadata(project?.uri)
+  const { data: metadata } = useProjectMetadata(project?.metadataUri)
 
   const terminalVersion = getTerminalVersion(project?.terminal)
 

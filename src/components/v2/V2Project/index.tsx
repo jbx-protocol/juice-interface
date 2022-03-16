@@ -1,13 +1,23 @@
-import { Col, Row } from 'antd'
+import { Trans } from '@lingui/macro'
+import { Button, Col, Row } from 'antd'
 import PayInputGroup from 'components/shared/inputs/Pay/PayInputGroup'
 import ProjectHeader from 'components/shared/ProjectHeader'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { useContext } from 'react'
+import {
+  V2OperatorPermission,
+  useHasPermission,
+} from 'hooks/v2/contractReader/HasPermission'
+import { useContext, useState } from 'react'
 
 import { permilleToPercent } from 'utils/formatNumber'
 import { fromWad } from 'utils/formatNumber'
+import {
+  deserializeV2FundingCycleMetadata,
+  serializeV2FundingCycleMetadata,
+} from 'utils/v2/serializers'
 
 import V2PayButton from './V2PayButton'
+import V2ReconfigureFundingModalTrigger from './V2ProjectReconfigureModal/V2ReconfigureModalTrigger'
 
 export default function V2Project() {
   const {
@@ -18,6 +28,8 @@ export default function V2Project() {
     reserveTokenSplits,
     ETHBalance,
   } = useContext(V2ProjectContext)
+
+  const canReconfigure = useHasPermission(V2OperatorPermission.Configure)
 
   if (!projectId) return null
 
@@ -36,14 +48,16 @@ export default function V2Project() {
   const weight = fundingCycle?.weight
   return (
     <>
-      <ProjectHeader metadata={projectMetadata} />
+      <Row>
+        <ProjectHeader metadata={projectMetadata} />
+      </Row>
       <Row>
         <Col md={12} xs={24}>
-          <h2>In Juicebox: Ξ{fromWad(ETHBalance)}</h2>
+          <h2>In Juicebox: {fromWad(ETHBalance)}</h2>
 
           {fundingCycle && (
             <div>
-              <h2>Funding cycle details</h2>
+              <h2>Funding Cycle details</h2>
               <ul>
                 <li>FC#{fundingCycle?.number.toNumber()}</li>
                 <li>
@@ -52,6 +66,7 @@ export default function V2Project() {
                 <li>Start: {start?.toISOString()}</li>
                 <li>End: {end?.toISOString()}</li>
                 <li>Weight: {fundingCycle.weight.toString()}</li>
+                <li>Metadata: {fundingCycle?.metadata.toString()}</li>
               </ul>
 
               <h3>ETH payouts</h3>
@@ -67,12 +82,12 @@ export default function V2Project() {
                   <li>{split.beneficiary}</li>
                 ))}
               </ul>
-
-              <h3>Funding cycle metadata</h3>
-              <ul>
-                <li>Reserve rate: {reservedRate}</li>
-              </ul>
             </div>
+          )}
+          {canReconfigure && (
+            <V2ReconfigureFundingModalTrigger
+              fundingDuration={fundingCycle?.duration}
+            />
           )}
         </Col>
         <Col md={12} xs={24}>

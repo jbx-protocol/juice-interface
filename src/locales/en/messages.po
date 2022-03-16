@@ -377,6 +377,7 @@ msgid "Block number"
 msgstr "Block number"
 
 #: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/Mobile/ResourcesDropdownMobile.tsx
 msgid "Blog"
 msgstr ""
 
@@ -547,7 +548,7 @@ msgstr "Custom token beneficiary"
 msgid "Cycle #{0}"
 msgstr ""
 
-#: src/components/Navbar/ThemePicker.tsx
+#: src/components/Navbar/Mobile/ThemePickerMobile.tsx
 msgid "Dark theme"
 msgstr ""
 
@@ -585,8 +586,8 @@ msgstr ""
 msgid "Disabled"
 msgstr "Disabled"
 
-#: src/components/Navbar/MobileCollapse.tsx
-#: src/components/Navbar/OptionsCollapse.tsx
+#: src/components/Navbar/Mobile/MobileCollapse.tsx
+#: src/components/Navbar/Wallet.tsx
 msgid "Disconnect"
 msgstr ""
 
@@ -634,6 +635,7 @@ msgid "Do I have to make my project open source to use Juicebox as its business 
 msgstr ""
 
 #: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/Mobile/ResourcesDropdownMobile.tsx
 msgid "Docs"
 msgstr ""
 
@@ -978,7 +980,7 @@ msgstr "Latest"
 msgid "Latest payments"
 msgstr ""
 
-#: src/components/Navbar/ThemePicker.tsx
+#: src/components/Navbar/Mobile/ThemePickerMobile.tsx
 msgid "Light theme"
 msgstr ""
 
@@ -1223,6 +1225,7 @@ msgid "Peach's Juicebox Stand"
 msgstr ""
 
 #: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/Mobile/ResourcesDropdownMobile.tsx
 msgid "Peel"
 msgstr "Peel"
 
@@ -1239,6 +1242,7 @@ msgid "Percentages must add up to 100% or less"
 msgstr "Percentages must add up to 100% or less"
 
 #: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/Mobile/ResourcesDropdownMobile.tsx
 msgid "Podcast"
 msgstr ""
 
@@ -1455,6 +1459,7 @@ msgid "Reserves"
 msgstr ""
 
 #: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/Mobile/ResourcesDropdownMobile.tsx
 msgid "Resources"
 msgstr "Resources"
 
@@ -2060,6 +2065,7 @@ msgid "Withdraw funds"
 msgstr "Withdraw funds"
 
 #: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/Mobile/ResourcesDropdownMobile.tsx
 msgid "Workspace"
 msgstr ""
 

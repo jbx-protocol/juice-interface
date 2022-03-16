@@ -22,7 +22,6 @@ export default function NavLanguageSelector({
     justifyContent: 'space-evenly',
     cursor: 'pointer',
     height: 30,
-    width: mobile ? 100 : 61,
     fontWeight: 500,
   }
 
@@ -89,6 +88,7 @@ export default function NavLanguageSelector({
         onChange={newLanguage => {
           setLanguage(newLanguage)
         }}
+        dropdownMatchSelectWidth={false}
       >
         {Object.keys(Languages).map(renderLanguageOption)}
       </Select>

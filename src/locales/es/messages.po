@@ -382,6 +382,7 @@ msgid "Block number"
 msgstr "Número de bloque"
 
 #: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/Mobile/ResourcesDropdownMobile.tsx
 msgid "Blog"
 msgstr "Blog"
 
@@ -552,7 +553,7 @@ msgstr "Beneficiario de token personalizado"
 msgid "Cycle #{0}"
 msgstr "Ciclo #{0}"
 
-#: src/components/Navbar/ThemePicker.tsx
+#: src/components/Navbar/Mobile/ThemePickerMobile.tsx
 msgid "Dark theme"
 msgstr "Tema oscuro"
 
@@ -590,8 +591,8 @@ msgstr "Detalles"
 msgid "Disabled"
 msgstr "Desactivado"
 
-#: src/components/Navbar/MobileCollapse.tsx
-#: src/components/Navbar/OptionsCollapse.tsx
+#: src/components/Navbar/Mobile/MobileCollapse.tsx
+#: src/components/Navbar/Wallet.tsx
 msgid "Disconnect"
 msgstr "Desconectar"
 
@@ -639,6 +640,7 @@ msgid "Do I have to make my project open source to use Juicebox as its business 
 msgstr "¿Tengo que volver mi proyecto de código abierto para usar Juicebox como modelo de negocio?"
 
 #: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/Mobile/ResourcesDropdownMobile.tsx
 msgid "Docs"
 msgstr "Documentos"
 
@@ -983,7 +985,7 @@ msgstr "Último"
 msgid "Latest payments"
 msgstr "Últimos pagos"
 
-#: src/components/Navbar/ThemePicker.tsx
+#: src/components/Navbar/Mobile/ThemePickerMobile.tsx
 msgid "Light theme"
 msgstr "Tema luminoso"
 
@@ -1228,6 +1230,7 @@ msgid "Peach's Juicebox Stand"
 msgstr "El puesto de Frutas del Sr. Melocotón"
 
 #: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/Mobile/ResourcesDropdownMobile.tsx
 msgid "Peel"
 msgstr "Peel"
 
@@ -1244,6 +1247,7 @@ msgid "Percentages must add up to 100% or less"
 msgstr "Los porcentajes deben sumar 100% o menos"
 
 #: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/Mobile/ResourcesDropdownMobile.tsx
 msgid "Podcast"
 msgstr "Podcast"
 
@@ -1460,6 +1464,7 @@ msgid "Reserves"
 msgstr "Reservas"
 
 #: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/Mobile/ResourcesDropdownMobile.tsx
 msgid "Resources"
 msgstr "Recursos"
 
@@ -2065,6 +2070,7 @@ msgid "Withdraw funds"
 msgstr "Retirar fondos"
 
 #: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/Mobile/ResourcesDropdownMobile.tsx
 msgid "Workspace"
 msgstr "Espacio de trabajo"
 

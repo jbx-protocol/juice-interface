@@ -33,7 +33,7 @@ export default function ThemePicker({ mobile }: { mobile?: boolean }) {
     justifyContent: 'space-evenly',
     cursor: 'pointer',
     width: iconSize * 2 + padding * 4,
-    marginRight: 38,
+    marginRight: 10,
     height,
     borderRadius: height / 2,
   }
@@ -42,6 +42,8 @@ export default function ThemePicker({ mobile }: { mobile?: boolean }) {
     <div
       className="clickable-border"
       style={switchStyle}
+      role="switch"
+      aria-checked={themeOption === ThemeOption.dark}
       onClick={() =>
         setThemeOption(
           themeOption === ThemeOption.dark

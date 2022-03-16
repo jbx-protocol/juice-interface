@@ -10,8 +10,6 @@ export const topNavStyles: CSSProperties = {
 export const topRightNavStyles: CSSProperties = {
   display: 'flex',
   alignItems: 'center',
-  right: 50,
-  marginRight: 10,
 }
 
 export const topLeftNavStyles: CSSProperties = {

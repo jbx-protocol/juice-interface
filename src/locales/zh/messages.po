@@ -382,6 +382,7 @@ msgid "Block number"
 msgstr "区块数"
 
 #: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/Mobile/ResourcesDropdownMobile.tsx
 msgid "Blog"
 msgstr "博客"
 
@@ -552,7 +553,7 @@ msgstr ""
 msgid "Cycle #{0}"
 msgstr "周期 #{0}"
 
-#: src/components/Navbar/ThemePicker.tsx
+#: src/components/Navbar/Mobile/ThemePickerMobile.tsx
 msgid "Dark theme"
 msgstr "深色主题"
 
@@ -590,8 +591,8 @@ msgstr "详情"
 msgid "Disabled"
 msgstr "已禁用"
 
-#: src/components/Navbar/MobileCollapse.tsx
-#: src/components/Navbar/OptionsCollapse.tsx
+#: src/components/Navbar/Mobile/MobileCollapse.tsx
+#: src/components/Navbar/Wallet.tsx
 msgid "Disconnect"
 msgstr "断开连接"
 
@@ -639,6 +640,7 @@ msgid "Do I have to make my project open source to use Juicebox as its business 
 msgstr "要把 Juicebox 用作项目的商业模式的话，我必须把项目进行开源吗？"
 
 #: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/Mobile/ResourcesDropdownMobile.tsx
 msgid "Docs"
 msgstr "文档"
 
@@ -983,7 +985,7 @@ msgstr "最近"
 msgid "Latest payments"
 msgstr "最近付款"
 
-#: src/components/Navbar/ThemePicker.tsx
+#: src/components/Navbar/Mobile/ThemePickerMobile.tsx
 msgid "Light theme"
 msgstr "浅色主题"
 
@@ -1228,6 +1230,7 @@ msgid "Peach's Juicebox Stand"
 msgstr "桃子的果汁摊"
 
 #: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/Mobile/ResourcesDropdownMobile.tsx
 msgid "Peel"
 msgstr "Peel"
 
@@ -1244,6 +1247,7 @@ msgid "Percentages must add up to 100% or less"
 msgstr "百分比总数相加必须少于或等于100%"
 
 #: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/Mobile/ResourcesDropdownMobile.tsx
 msgid "Podcast"
 msgstr "播客"
 
@@ -1460,6 +1464,7 @@ msgid "Reserves"
 msgstr "保留"
 
 #: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/Mobile/ResourcesDropdownMobile.tsx
 msgid "Resources"
 msgstr "相关资料"
 
@@ -2065,6 +2070,7 @@ msgid "Withdraw funds"
 msgstr "提取资金"
 
 #: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/Mobile/ResourcesDropdownMobile.tsx
 msgid "Workspace"
 msgstr "工作空间"
 

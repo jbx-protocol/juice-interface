@@ -27,6 +27,7 @@ import * as constants from '@ethersproject/constants'
 import { weightedRate } from 'utils/math'
 
 import V2ProjectRiskNotice from './V2ProjectRiskNotice'
+import Paragraph from 'components/shared/Paragraph'
 
 export default function V2ConfirmPayOwnerModal({
   visible,
@@ -140,7 +141,7 @@ export default function V2ConfirmPayOwnerModal({
             <h4>
               <Trans>Notice from {projectMetadata.name}:</Trans>
             </h4>
-            <p>{projectMetadata.payDisclosure}</p>
+            <Paragraph description={projectMetadata.payDisclosure} />
           </div>
         )}
 

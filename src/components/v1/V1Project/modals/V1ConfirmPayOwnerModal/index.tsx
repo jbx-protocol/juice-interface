@@ -19,6 +19,7 @@ import { usePayV1ProjectTx } from 'hooks/v1/transactor/PayV1ProjectTx'
 
 import V1ProjectRiskNotice from './V1ProjectRiskNotice'
 import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
+import Paragraph from 'components/shared/Paragraph'
 
 export default function V1ConfirmPayOwnerModal({
   visible,
@@ -115,7 +116,7 @@ export default function V1ConfirmPayOwnerModal({
             <h4>
               <Trans>Notice from {metadata.name}:</Trans>
             </h4>
-            <p>{metadata.payDisclosure}</p>
+            <Paragraph description={metadata.payDisclosure} />
           </div>
         )}
 

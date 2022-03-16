@@ -127,6 +127,10 @@ msgstr ""
 msgid "<0>Juicebox contracts</0> are unaudited, and may be vulnerable to bugs or hacks. All funds moved through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable for any losses by projects or their supporters."
 msgstr ""
 
+#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+msgid "<0>Learn more</0> about burning tokens."
+msgstr ""
+
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "<0>Learn more</0> about funding cycle duration."
 msgstr "Finansman döngü süresi hakkında <0>daha fazla bilgi edinin</0>."
@@ -409,13 +413,17 @@ msgstr "Şunlar için üretildi:"
 msgid "Burn project tokens"
 msgstr "Proje token'larını yakın"
 
-#: src/components/v1/V1Project/Rewards/index.tsx
-msgid "Burn tokens"
-msgstr "Token'ları yak"
+#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+msgid "Burn your {tokensLabel}. You won't receive ETH in return because this project has no overflow."
+msgstr ""
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Burn {0} {tokensTextShort}"
 msgstr "{0} adet {tokensTextShort} token'ını yak"
+
+#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+msgid "Burn {tokensLabel}"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Burn {tokensTextLong}"
@@ -437,9 +445,9 @@ msgstr "Bir projeyi silebilir miyim?"
 msgid "Cancel"
 msgstr "İptal"
 
-#: src/components/v1/V1Project/Rewards/index.tsx
+#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
 msgid "Cannot redeem tokens for ETH because this project has no overflow."
-msgstr "Bu projede taşma bulunmadığından ETH için token talep edilemez."
+msgstr ""
 
 #: src/components/v1/V1Create/index.tsx
 msgid "Changes to these attributes can be made at any time and will be applied to your project immediately."
@@ -457,9 +465,9 @@ msgstr ""
 msgid "Check this to mint {tokenSymbol} ERC20 to your wallet. Leave unchecked to have your token balance tracked by Juicebox, saving gas on this transaction. You can always claim your ERC20 tokens later."
 msgstr "Cüzdanınıza {tokenSymbol} ERC20 basmak için burayı işaretleyin. Token bakiyenizin Juicebox tarafından takip edilmesini sağlamak için işaretlemeden bırakın ve bu işlemde gazdan tasarruf edin. ERC20 token'larınızı daha sonra her zaman talep edebilirsiniz."
 
-#: src/components/v1/V1Project/Rewards/index.tsx
-msgid "Claim {0} as ERC20"
-msgstr "{0} talebini ERC20 olarak al"
+#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+msgid "Claim {tokensLabel} as ERC20"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
 msgid "Claiming {tokenSymbol} tokens will convert your {tokenSymbol} balance to ERC20 tokens and mint them to your wallet."
@@ -666,10 +674,6 @@ msgstr ""
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
 msgid "Duration"
 msgstr "Süre"
-
-#: src/components/v1/V1Project/Rewards/index.tsx
-msgid "ERC20"
-msgstr "ERC20"
 
 #: src/components/Landing/index.tsx
 msgid "ERC20 community tokens"
@@ -1010,7 +1014,7 @@ msgstr "MAKS"
 msgid "Manage"
 msgstr "Yönet"
 
-#: src/components/v1/V1Project/Rewards/index.tsx
+#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
 msgid "Manage {0}"
 msgstr ""
 
@@ -1023,6 +1027,10 @@ msgstr "Not"
 msgid "Migrate to Juicebox V1.1"
 msgstr "Juicebox V1.1'e geçiş yapın"
 
+#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+msgid "Mint new {tokensLabel} into an account. Only a project's owner, a designated operator, or one of its terminal's delegates can mint its tokens."
+msgstr ""
+
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "Mint project tokens on demand"
 msgstr ""
@@ -1031,17 +1039,17 @@ msgstr ""
 msgid "Mint tokens to a custom address."
 msgstr ""
 
-#: src/components/v1/V1Project/Rewards/index.tsx
-msgid "Mint {0}tokens"
-msgstr "{0}token'ı bas"
-
-#: src/components/v1/V1Project/Rewards/index.tsx
-msgid "Minting tokens can be enabled or disabled by reconfiguring a v1.1 project's funding cycle. Tokens can only be minted by the project owner."
-msgstr "Token basımı bir v1.1 projesinin finansman döngüsü yeniden yapılandırılarak etkinleştirilebilir veya devre dışı bırakılabilir. Token'lar yalnızca proje sahibi tarafından basılabilir."
+#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+msgid "Mint {tokensLabel}"
+msgstr ""
 
 #: src/components/Projects/TrendingProjects.tsx
 msgid "More trending projects"
 msgstr "Daha fazla ilgi gören proje"
+
+#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+msgid "Move your {tokensLabel} from the Juicebox contract to your wallet."
+msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
@@ -1385,8 +1393,16 @@ msgstr ""
 msgid "Redeem"
 msgstr "Talep edin"
 
+#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+msgid "Redeem your {tokensLabel} for a portion of the project's overflow. Any {tokensLabel} you redeem will be burned."
+msgstr ""
+
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Redeem {0} {tokensTextShort} for ETH"
+msgstr ""
+
+#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+msgid "Redeem {tokensLabel} for ETH"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
@@ -1455,11 +1471,6 @@ msgstr "Ödemeleri ve token basımını kısıtlayın."
 #: src/components/v1/V1Create/index.tsx
 msgid "Restricted actions"
 msgstr "Kısıtlanmış eylemler"
-
-#: src/components/v1/V1Project/Rewards/index.tsx
-#: src/components/v1/V1Project/Rewards/index.tsx
-msgid "Return my ETH"
-msgstr "ETH'mi iade et"
 
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/DeployProjectButton.tsx
@@ -1813,6 +1824,10 @@ msgstr "Token adresi: <0/>"
 msgid "Token minting"
 msgstr "Token basımı"
 
+#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+msgid "Token minting is only available for V1.1 projects. Token minting can be enabled or disabled by reconfiguring the project's funding cycle."
+msgstr ""
+
 #: src/components/v1/V1Project/Rewards/IssueTickets.tsx
 msgid "Token name"
 msgstr "Token adı"
@@ -1826,7 +1841,6 @@ msgid "Token symbol"
 msgstr "Token sembolü"
 
 #: src/components/shared/Mod.tsx
-#: src/components/v1/V1Project/Rewards/index.tsx
 #: src/utils/tokenSymbolText.ts
 msgid "Tokens"
 msgstr "Token'lar"
@@ -2193,7 +2207,6 @@ msgstr "token"
 
 #: src/components/v1/FundingCycle/ReservedTokens.tsx
 #: src/components/v1/FundingCycle/ReservedTokens.tsx
-#: src/components/v1/V1Project/Rewards/index.tsx
 #: src/utils/tokenSymbolText.ts
 msgid "tokens"
 msgstr ""

@@ -127,6 +127,10 @@ msgstr "<0>A taxa de desconto desativada enquanto a duração do ciclo de financ
 msgid "<0>Juicebox contracts</0> are unaudited, and may be vulnerable to bugs or hacks. All funds moved through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable for any losses by projects or their supporters."
 msgstr "<0>Os contratos Juicebox</0> não são auditados e podem estar vulneráveis para bugs, erros ou hackers. Todos os fundos movidos através do Juicebox podem ser perdidos ou roubados. O JuiceboxDAO e Peel não são responsáveis por qualquer perda de projetos ou seus apoiadores."
 
+#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+msgid "<0>Learn more</0> about burning tokens."
+msgstr ""
+
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "<0>Learn more</0> about funding cycle duration."
 msgstr "<0>Saiba mais</0> sobre a duração do ciclo de financiamento."
@@ -409,13 +413,17 @@ msgstr "Construído para:"
 msgid "Burn project tokens"
 msgstr "Queimar os tokens do projeto"
 
-#: src/components/v1/V1Project/Rewards/index.tsx
-msgid "Burn tokens"
-msgstr "Queimar tokens"
+#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+msgid "Burn your {tokensLabel}. You won't receive ETH in return because this project has no overflow."
+msgstr ""
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Burn {0} {tokensTextShort}"
 msgstr "Queimar {0} {tokensTextShort}"
+
+#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+msgid "Burn {tokensLabel}"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Burn {tokensTextLong}"
@@ -437,9 +445,9 @@ msgstr "Posso excluir um projeto?"
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: src/components/v1/V1Project/Rewards/index.tsx
+#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
 msgid "Cannot redeem tokens for ETH because this project has no overflow."
-msgstr "Não é possível reivindicar tokens por ETH, porque este projeto não tem overflow."
+msgstr ""
 
 #: src/components/v1/V1Create/index.tsx
 msgid "Changes to these attributes can be made at any time and will be applied to your project immediately."
@@ -457,9 +465,9 @@ msgstr "Verifique isto para inserir ERC20 tokens do projeto em sua carteira. Dei
 msgid "Check this to mint {tokenSymbol} ERC20 to your wallet. Leave unchecked to have your token balance tracked by Juicebox, saving gas on this transaction. You can always claim your ERC20 tokens later."
 msgstr "Verifique isso para inserir {tokenSymbol} ERC20 em sua carteira. Deixe desmarcado para que seu saldo de tokens seja acompanhado pelo Juicebok, economizando gás em sua transação. Você poderá reivindicar sempre seus tokens ERC20 mais tarde."
 
-#: src/components/v1/V1Project/Rewards/index.tsx
-msgid "Claim {0} as ERC20"
-msgstr "Reivindicar {0} como ERC20"
+#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+msgid "Claim {tokensLabel} as ERC20"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
 msgid "Claiming {tokenSymbol} tokens will convert your {tokenSymbol} balance to ERC20 tokens and mint them to your wallet."
@@ -666,10 +674,6 @@ msgstr "Devido à sua natureza pública, qualquer vulnerabilidade dos contratos 
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
 msgid "Duration"
 msgstr "Duração"
-
-#: src/components/v1/V1Project/Rewards/index.tsx
-msgid "ERC20"
-msgstr "ERC20"
 
 #: src/components/Landing/index.tsx
 msgid "ERC20 community tokens"
@@ -1010,7 +1014,7 @@ msgstr "MÁX"
 msgid "Manage"
 msgstr "Administrar"
 
-#: src/components/v1/V1Project/Rewards/index.tsx
+#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
 msgid "Manage {0}"
 msgstr "Administre {0}"
 
@@ -1023,6 +1027,10 @@ msgstr "Memo"
 msgid "Migrate to Juicebox V1.1"
 msgstr "Migrar para Juicebox V1.1"
 
+#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+msgid "Mint new {tokensLabel} into an account. Only a project's owner, a designated operator, or one of its terminal's delegates can mint its tokens."
+msgstr ""
+
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "Mint project tokens on demand"
 msgstr "Crie tokens do projeto sob demanda"
@@ -1031,17 +1039,17 @@ msgstr "Crie tokens do projeto sob demanda"
 msgid "Mint tokens to a custom address."
 msgstr "Crie tokens para um endereço personalizado."
 
-#: src/components/v1/V1Project/Rewards/index.tsx
-msgid "Mint {0}tokens"
-msgstr "Cunhar {0}tokens"
-
-#: src/components/v1/V1Project/Rewards/index.tsx
-msgid "Minting tokens can be enabled or disabled by reconfiguring a v1.1 project's funding cycle. Tokens can only be minted by the project owner."
-msgstr "Cunhar tokens pode ser habilitado ou desabilitado reconfigurando um ciclo de financiamento do projeto v1.1. Os tokens podem apenas ser produzidos pelo proprietário do projeto."
+#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+msgid "Mint {tokensLabel}"
+msgstr ""
 
 #: src/components/Projects/TrendingProjects.tsx
 msgid "More trending projects"
 msgstr "Mais projetos populares"
+
+#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+msgid "Move your {tokensLabel} from the Juicebox contract to your wallet."
+msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
@@ -1385,9 +1393,17 @@ msgstr "Objetivo recorrente"
 msgid "Redeem"
 msgstr "Resgatar"
 
+#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+msgid "Redeem your {tokensLabel} for a portion of the project's overflow. Any {tokensLabel} you redeem will be burned."
+msgstr ""
+
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Redeem {0} {tokensTextShort} for ETH"
 msgstr "Resgatar {0} {tokensTextShort} por ETH"
+
+#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+msgid "Redeem {tokensLabel} for ETH"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Redeem {tokensTextLong} for ETH"
@@ -1455,11 +1471,6 @@ msgstr "Restringir pagamentos e impressão de tokens."
 #: src/components/v1/V1Create/index.tsx
 msgid "Restricted actions"
 msgstr "Ações restritas"
-
-#: src/components/v1/V1Project/Rewards/index.tsx
-#: src/components/v1/V1Project/Rewards/index.tsx
-msgid "Return my ETH"
-msgstr "Devolver meu ETH"
 
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/DeployProjectButton.tsx
@@ -1813,6 +1824,10 @@ msgstr "Endereço de token: <0/>"
 msgid "Token minting"
 msgstr "Criação de tokens"
 
+#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+msgid "Token minting is only available for V1.1 projects. Token minting can be enabled or disabled by reconfiguring the project's funding cycle."
+msgstr ""
+
 #: src/components/v1/V1Project/Rewards/IssueTickets.tsx
 msgid "Token name"
 msgstr "O nome do token"
@@ -1826,7 +1841,6 @@ msgid "Token symbol"
 msgstr "O símbolo do token"
 
 #: src/components/shared/Mod.tsx
-#: src/components/v1/V1Project/Rewards/index.tsx
 #: src/utils/tokenSymbolText.ts
 msgid "Tokens"
 msgstr "Tokens"
@@ -2193,7 +2207,6 @@ msgstr "token"
 
 #: src/components/v1/FundingCycle/ReservedTokens.tsx
 #: src/components/v1/FundingCycle/ReservedTokens.tsx
-#: src/components/v1/V1Project/Rewards/index.tsx
 #: src/utils/tokenSymbolText.ts
 msgid "tokens"
 msgstr "tokens"

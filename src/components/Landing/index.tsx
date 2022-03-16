@@ -2,7 +2,7 @@ import { t, Trans } from '@lingui/macro'
 import { Button, Col, Row, Space } from 'antd'
 import V1Create from 'components/v1/V1Create'
 import Loading from 'components/shared/Loading'
-import FeedbackFormBtn from 'components/shared/FeedbackFormBtn'
+import FeedbackFormButton from 'components/shared/FeedbackFormButton'
 
 import { ThemeContext } from 'contexts/themeContext'
 import { useProjectsQuery } from 'hooks/v1/Projects'
@@ -451,7 +451,7 @@ export default function Landing() {
           </Trans>
         </h3>
       </div>
-      <FeedbackFormBtn />
+      <FeedbackFormButton />
       <Footer />
     </div>
   )

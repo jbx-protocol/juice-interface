@@ -11,15 +11,15 @@ import { MenuOutlined } from '@ant-design/icons'
 import { ThemeContext } from 'contexts/themeContext'
 import { NetworkContext } from 'contexts/networkContext'
 
-import FeedbackFormBtn from 'components/shared/FeedbackFormBtn'
+import FeedbackFormButton from 'components/shared/FeedbackFormButton'
 
 import Logo from '../Logo'
 import Account from '../Account'
 import NavLanguageSelector from '../NavLanguageSelector'
 import { TopLeftNavItems } from '../MenuItems'
 import ThemePickerMobile from './ThemePickerMobile'
+import { topNavStyles } from '../navStyles'
 import ResourcesDropdownMobile from './ResourcesDropdownMobile'
-import { mobileNavSubsectionStyles, topNavStyles } from '../navStyles'
 
 export default function MobileCollapse() {
   const [activeKey, setActiveKey] = useState<0 | undefined>()
@@ -83,31 +83,33 @@ export default function MobileCollapse() {
               mobile
               onClickMenuItems={() => setActiveKey(isNavOpen ? undefined : 0)}
             />
+
             <ResourcesDropdownMobile />
-            <div
-              className="nav-subsection"
-              style={{ ...mobileNavSubsectionStyles }}
-            >
+
+            <Menu.Item key="language-selector">
               <NavLanguageSelector mobile />
+            </Menu.Item>
+            <Menu.Item key="theme-picker">
               <ThemePickerMobile />
-              <FeedbackFormBtn mobile />
-            </div>
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                marginTop: 30,
-              }}
-            >
-              <Account mobile />
-              {signingProvider ? (
-                <Button onClick={onLogOut} style={{ marginTop: 10 }}>
-                  <Trans>Disconnect</Trans>
-                </Button>
-              ) : null}
-            </div>
+            </Menu.Item>
+            <Menu.Item key="feedback">
+              <FeedbackFormButton mobile />
+            </Menu.Item>
           </Menu>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <Account mobile />
+            {signingProvider ? (
+              <Button onClick={onLogOut} style={{ marginTop: 10 }}>
+                <Trans>Disconnect</Trans>
+              </Button>
+            ) : null}
+          </div>
         </CollapsePanel>
       </Collapse>
     </Header>

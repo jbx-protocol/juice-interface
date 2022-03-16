@@ -24,14 +24,6 @@ export const navMenuItemStyles: CSSProperties = {
   color: 'var(--text-primary)',
 }
 
-export const mobileNavSubsectionStyles: CSSProperties = {
-  paddingLeft: 15,
-  height: 110,
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'space-between',
-}
-
 export const navDropdownItem: CSSProperties = {
   color: 'var(--text-primary)',
   fontWeight: 500,

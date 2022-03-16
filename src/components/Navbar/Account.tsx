@@ -12,7 +12,6 @@ export default function Account({ mobile }: { mobile?: boolean }) {
 
   const mobileStyles: CSSProperties = {
     marginLeft: 'auto',
-    marginTop: -3,
     width: '100%',
     textAlign: 'center',
   }

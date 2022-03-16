@@ -12,7 +12,7 @@ export default function ThemePickerMobile() {
 
   return (
     <div
-      style={{ display: 'flex', cursor: 'pointer' }}
+      style={{ display: 'flex', cursor: 'pointer', alignItems: 'center' }}
       onClick={() =>
         setThemeOption(
           themeOption === ThemeOption.dark

@@ -1,31 +1,13 @@
 import { t } from '@lingui/macro'
 import { Menu } from 'antd'
 import ExternalLink from 'components/shared/ExternalLink'
-import { PropsWithChildren, useContext } from 'react'
+import { useContext } from 'react'
 import { ThemeContext } from 'contexts/themeContext'
 
 import { navMenuItemStyles } from '../navStyles'
 import { resourcesMenuItems } from '../constants'
 
 const { SubMenu } = Menu
-
-function ResourcesItem({
-  href,
-  children,
-}: PropsWithChildren<{
-  href?: string
-  onClick?: VoidFunction
-}>) {
-  return (
-    <ExternalLink
-      className="nav-dropdown-item"
-      href={href}
-      style={{ ...navMenuItemStyles, fontWeight: 400, marginTop: 0 }}
-    >
-      {children}
-    </ExternalLink>
-  )
-}
 
 export default function ResourcesDropdownMobile() {
   const { colors } = useContext(ThemeContext).theme
@@ -42,7 +24,13 @@ export default function ResourcesDropdownMobile() {
     >
       {resourcesMenuItems().map(r => (
         <Menu.Item key={r.key}>
-          <ResourcesItem href={r.link}>{r.text}</ResourcesItem>
+          <ExternalLink
+            className="nav-dropdown-item"
+            href={r.link}
+            style={{ ...navMenuItemStyles, fontWeight: 400, marginTop: 0 }}
+          >
+            {r.text}
+          </ExternalLink>
         </Menu.Item>
       ))}
     </SubMenu>

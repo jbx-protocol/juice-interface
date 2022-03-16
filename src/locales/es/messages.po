@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-03-15 02:08\n"
+"PO-Revision-Date: 2022-03-16 02:13\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -33,7 +33,7 @@ msgstr "(100%)"
 
 #: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
 msgid "(Optional) Add a memo to this payment on-chain"
-msgstr ""
+msgstr "(Opcional) Añade un memo a este pago en cadena"
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 msgid "(Optional) Add a note to this payment on-chain"
@@ -451,7 +451,7 @@ msgstr "Los cambios a las configuraciones de financiamiento de tu proyecto requi
 
 #: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
 msgid "Check this to mint this project's ERC20 tokens to your wallet. Leave unchecked to have your token balance tracked by Juicebox, saving gas on this transaction. You can always claim your ERC20 tokens later."
-msgstr ""
+msgstr "Marca aquí para acuñar tokens ERC-20 de este proyecto a tu billetera. Deja desmarcado para que tu balance de tokens sea rastreado por Juicebox, ahorrando gas en esta transacción. Siempre puedes reclamar tus tokens ERC-20 después."
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 msgid "Check this to mint {tokenSymbol} ERC20 to your wallet. Leave unchecked to have your token balance tracked by Juicebox, saving gas on this transaction. You can always claim your ERC20 tokens later."
@@ -538,7 +538,7 @@ msgstr "Estrategia personalizada"
 
 #: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
 msgid "Custom token beneficiary"
-msgstr ""
+msgstr "Beneficiario de token personalizado"
 
 #: src/components/v1/FundingCycle/FundingCyclePreview.tsx
 msgid "Cycle #{0}"
@@ -1029,7 +1029,7 @@ msgstr "Crea tokens del proyecto a demanda"
 
 #: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
 msgid "Mint tokens to a custom address."
-msgstr ""
+msgstr "Acuña tokens a una dirección personalizada."
 
 #: src/components/v1/V1Project/Rewards/index.tsx
 msgid "Mint {0}tokens"
@@ -1183,7 +1183,7 @@ msgstr "Pagar {0}"
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 #: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
 msgid "Paying <0>{0}</0> is not an investment — it's a way to support the project. Any value or utility of the tokens you receive is determined by {1}."
-msgstr ""
+msgstr "Pagar <0>{0}</0> no es una inversión; es una manera de apoyar el proyecto. Cualquier valor o utilidad de los tokens que recibas es determinada por {1}."
 
 #: src/components/v1/V1Project/V1PayButton.tsx
 msgid "Paying this project is currently disabled, because the token reserved rate is 100% and no tokens will be earned by making a payment."
@@ -1310,7 +1310,7 @@ msgstr "Proyectos"
 
 #: src/components/Landing/QAs.tsx
 msgid "Projects building on Juicebox pay a {JB_FEE}% JBX membership fee from withdrawn funds into the JuiceboxDAO treasury. Projects can then use their JBX to participate in the governance of JuiceboxDAO and its collective treasury, as well as redeem from its growing <0>overflow</0>. The fee is also subject to change via JBX member votes."
-msgstr ""
+msgstr "Los proyectos que se construyen en Juicebox pagan una tarifa de membresía JBX del {JB_FEE}% de los fondos retirados hacía la tesorería de JuiceboxDAO. Luego, los proyectos pueden usar su JBX para participar en la gobernanza de JuiceboxDAO y su tesorería colectiva, así como para canjear su creciente <0>excedente</0>. La tarifa también está sujeta a cambios a través de los votos de los miembros de JBX."
 
 #: src/components/Landing/QAs.tsx
 msgid "Projects can be created with an optional discount rate designed to incentivize supporters to contribute earlier rather than later. The amount of tokens rewarded per amount paid to your project will decrease by the discount rate with each new funding cycle. A higher discount rate will incentivize supporters to pay your project earlier rather than later."

@@ -127,6 +127,10 @@ msgstr "<0>A taxa de desconto desativada enquanto a duração do ciclo de financ
 msgid "<0>Juicebox contracts</0> are unaudited, and may be vulnerable to bugs or hacks. All funds moved through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable for any losses by projects or their supporters."
 msgstr "<0>Os contratos Juicebox</0> não são auditados e podem estar vulneráveis para bugs, erros ou hackers. Todos os fundos movidos através do Juicebox podem ser perdidos ou roubados. O JuiceboxDAO e Peel não são responsáveis por qualquer perda de projetos ou seus apoiadores."
 
+#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+msgid "<0>Learn more</0> about burning tokens."
+msgstr ""
+
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "<0>Learn more</0> about funding cycle duration."
 msgstr "<0>Saiba mais</0> sobre a duração do ciclo de financiamento."
@@ -410,11 +414,7 @@ msgid "Burn project tokens"
 msgstr "Queimar os tokens do projeto"
 
 #: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
-msgid "Burn your {tokensLabel} in exchange for ETH."
-msgstr ""
-
-#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
-msgid "Burn your {tokensLabel}. You won't receive ETH because this project has no overflow."
+msgid "Burn your {tokensLabel}. You won't receive ETH in return because this project has no overflow."
 msgstr ""
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
@@ -1392,6 +1392,10 @@ msgstr "Objetivo recorrente"
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 msgid "Redeem"
 msgstr "Resgatar"
+
+#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+msgid "Redeem your {tokensLabel} for a portion of the project's overflow. Any {tokensLabel} you redeem will be burned."
+msgstr ""
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Redeem {0} {tokensTextShort} for ETH"

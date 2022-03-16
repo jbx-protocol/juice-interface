@@ -1,5 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { Modal, Space, Tooltip } from 'antd'
+import ExternalLink from 'components/shared/ExternalLink'
 import RichButton from 'components/shared/RichButton'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import useCanPrintPreminedTokens from 'hooks/v1/contractReader/CanPrintPreminedTokens'
@@ -15,20 +16,34 @@ import ConfirmUnstakeTokensModal from '../modals/ConfirmUnstakeTokensModal'
 import PrintPreminedModal from '../modals/PrintPreminedModal'
 import RedeemModal from '../modals/RedeemModal'
 
+const BURN_DEFINITION_LINK =
+  'https://www.investopedia.com/tech/cryptocurrency-burning-can-it-manage-inflation/'
+
+const BurnTokensHelp = () => {
+  return (
+    <Trans>
+      <ExternalLink href={BURN_DEFINITION_LINK}>Learn more</ExternalLink> about
+      burning tokens.
+    </Trans>
+  )
+}
+
 const RedeemButtonTooltip = ({
   buttonDisabled,
   children,
 }: PropsWithChildren<{
   buttonDisabled: boolean
 }>) => {
-  if (!buttonDisabled) return <>{children}</>
-
   return (
     <Tooltip
       title={
-        <Trans>
-          Cannot redeem tokens for ETH because this project has no overflow.
-        </Trans>
+        buttonDisabled ? (
+          <Trans>
+            Cannot redeem tokens for ETH because this project has no overflow.
+          </Trans>
+        ) : (
+          <BurnTokensHelp />
+        )
       }
       placement="right"
     >
@@ -90,7 +105,10 @@ export default function ManageTokensModal({
             <RichButton
               heading={<Trans>Redeem {tokensLabel} for ETH</Trans>}
               description={
-                <Trans>Burn your {tokensLabel} in exchange for ETH.</Trans>
+                <Trans>
+                  Redeem your {tokensLabel} for a portion of the project's
+                  overflow. Any {tokensLabel} you redeem will be burned.
+                </Trans>
               }
               onClick={() => setRedeemModalVisible(true)}
               disabled={redeemDisabled}
@@ -98,16 +116,18 @@ export default function ManageTokensModal({
           </RedeemButtonTooltip>
 
           {redeemDisabled && (
-            <RichButton
-              heading={<Trans>Burn {tokensLabel}</Trans>}
-              description={
-                <Trans>
-                  Burn your {tokensLabel}. You won't receive ETH because this
-                  project has no overflow.
-                </Trans>
-              }
-              onClick={() => setRedeemModalVisible(true)}
-            />
+            <Tooltip title={<BurnTokensHelp />} placement="right">
+              <RichButton
+                heading={<Trans>Burn {tokensLabel}</Trans>}
+                description={
+                  <Trans>
+                    Burn your {tokensLabel}. You won't receive ETH in return
+                    because this project has no overflow.
+                  </Trans>
+                }
+                onClick={() => setRedeemModalVisible(true)}
+              />
+            </Tooltip>
           )}
 
           <RichButton

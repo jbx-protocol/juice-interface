@@ -122,6 +122,10 @@ msgstr "<0>Discount rate disabled when funding cycle duration has not been set.<
 msgid "<0>Juicebox contracts</0> are unaudited, and may be vulnerable to bugs or hacks. All funds moved through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable for any losses by projects or their supporters."
 msgstr "<0>Juicebox contracts</0> are unaudited, and may be vulnerable to bugs or hacks. All funds moved through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable for any losses by projects or their supporters."
 
+#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+msgid "<0>Learn more</0> about burning tokens."
+msgstr "<0>Learn more</0> about burning tokens."
+
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "<0>Learn more</0> about funding cycle duration."
 msgstr ""
@@ -405,12 +409,8 @@ msgid "Burn project tokens"
 msgstr "Burn project tokens"
 
 #: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
-msgid "Burn your {tokensLabel} in exchange for ETH."
-msgstr "Burn your {tokensLabel} in exchange for ETH."
-
-#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
-msgid "Burn your {tokensLabel}. You won't receive ETH because this project has no overflow."
-msgstr "Burn your {tokensLabel}. You won't receive ETH because this project has no overflow."
+msgid "Burn your {tokensLabel}. You won't receive ETH in return because this project has no overflow."
+msgstr "Burn your {tokensLabel}. You won't receive ETH in return because this project has no overflow."
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Burn {0} {tokensTextShort}"
@@ -1387,6 +1387,10 @@ msgstr "Recurring target"
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 msgid "Redeem"
 msgstr ""
+
+#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+msgid "Redeem your {tokensLabel} for a portion of the project's overflow. Any {tokensLabel} you redeem will be burned."
+msgstr "Redeem your {tokensLabel} for a portion of the project's overflow. Any {tokensLabel} you redeem will be burned."
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Redeem {0} {tokensTextShort} for ETH"

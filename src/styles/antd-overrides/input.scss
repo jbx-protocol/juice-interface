@@ -170,6 +170,7 @@ input:-webkit-autofill-selected {
 }
 
 .ant-select-dropdown {
+  padding: 0;
   background-color: var(--background-l0);
 
   .ant-select-item-option {
@@ -216,12 +217,6 @@ input:-webkit-autofill-selected {
 .language-selector .ant-select-focused .ant-select-selector {
   border: none !important;
   box-shadow: none !important;
-}
-
-.top-nav-mobile {
-  .language-selector {
-    width: 150px;
-  }
 }
 
 .ant-upload-list,

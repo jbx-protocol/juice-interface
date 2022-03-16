@@ -1,4 +1,3 @@
-import React from 'react'
 import { ThemeContext } from 'contexts/themeContext'
 
 import { Trans } from '@lingui/macro'
@@ -12,7 +11,7 @@ import { NetworkContext } from 'contexts/networkContext'
 
 import ExternalLink from './ExternalLink'
 
-export default function FeedbackFormBtn({
+export default function FeedbackFormButton({
   mobile,
   projectHandle,
 }: {
@@ -32,7 +31,7 @@ export default function FeedbackFormBtn({
 
   if (mobile) {
     return (
-      <div style={{ height: 30 }}>
+      <div>
         <MessageOutlined size={iconSize} />
         <ExternalLink
           style={{ margin: '0 0 2px 12px', fontWeight: 400 }}

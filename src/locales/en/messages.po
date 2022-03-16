@@ -376,7 +376,7 @@ msgstr ""
 msgid "Block number"
 msgstr "Block number"
 
-#: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/constants.ts
 msgid "Blog"
 msgstr ""
 
@@ -547,7 +547,7 @@ msgstr "Custom token beneficiary"
 msgid "Cycle #{0}"
 msgstr ""
 
-#: src/components/Navbar/ThemePicker.tsx
+#: src/components/Navbar/Mobile/ThemePickerMobile.tsx
 msgid "Dark theme"
 msgstr ""
 
@@ -585,8 +585,8 @@ msgstr ""
 msgid "Disabled"
 msgstr "Disabled"
 
-#: src/components/Navbar/MobileCollapse.tsx
-#: src/components/Navbar/OptionsCollapse.tsx
+#: src/components/Navbar/Mobile/MobileCollapse.tsx
+#: src/components/Navbar/Wallet.tsx
 msgid "Disconnect"
 msgstr ""
 
@@ -633,7 +633,7 @@ msgstr ""
 msgid "Do I have to make my project open source to use Juicebox as its business model?"
 msgstr ""
 
-#: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/constants.ts
 msgid "Docs"
 msgstr ""
 
@@ -792,8 +792,8 @@ msgstr "Funding target"
 msgid "Funds will be distributed to:"
 msgstr ""
 
-#: src/components/shared/FeedbackFormBtn.tsx
-#: src/components/shared/FeedbackFormBtn.tsx
+#: src/components/shared/FeedbackFormButton.tsx
+#: src/components/shared/FeedbackFormButton.tsx
 #: src/components/v1/V1Project/modals/FeedbackPromptModal.tsx
 msgid "Give feedback"
 msgstr "Give feedback"
@@ -978,7 +978,7 @@ msgstr "Latest"
 msgid "Latest payments"
 msgstr ""
 
-#: src/components/Navbar/ThemePicker.tsx
+#: src/components/Navbar/Mobile/ThemePickerMobile.tsx
 msgid "Light theme"
 msgstr ""
 
@@ -1222,7 +1222,7 @@ msgstr "Payouts (optional)"
 msgid "Peach's Juicebox Stand"
 msgstr ""
 
-#: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/constants.ts
 msgid "Peel"
 msgstr "Peel"
 
@@ -1238,7 +1238,7 @@ msgstr "Percent allocation"
 msgid "Percentages must add up to 100% or less"
 msgstr "Percentages must add up to 100% or less"
 
-#: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/constants.ts
 msgid "Podcast"
 msgstr ""
 
@@ -1455,6 +1455,7 @@ msgid "Reserves"
 msgstr ""
 
 #: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/Mobile/ResourcesDropdownMobile.tsx
 msgid "Resources"
 msgstr "Resources"
 
@@ -2059,7 +2060,7 @@ msgstr ""
 msgid "Withdraw funds"
 msgstr "Withdraw funds"
 
-#: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/constants.ts
 msgid "Workspace"
 msgstr ""
 

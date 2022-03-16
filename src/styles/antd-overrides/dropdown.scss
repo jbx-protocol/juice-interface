@@ -1,0 +1,25 @@
+.ant-dropdown-menu-title-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ant-dropdown-menu-item:hover {
+  background-color: var(--background-l1);
+}
+
+.ant-dropdown-menu {
+  padding: 0;
+  border-radius: 1px;
+  background-color: var(--background-l0);
+  border: 1px solid var(--stroke-tertiary);
+  box-shadow: 0px 8px 12px var(--boxShadow-primary);
+}
+
+.ant-dropdown-menu-item {
+  padding: 10px 15px;
+}
+
+.nav-dropdown-item:hover {
+  background-color: var(--background-l1);
+}

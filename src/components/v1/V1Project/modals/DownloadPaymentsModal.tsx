@@ -2,19 +2,13 @@ import { t, Trans } from '@lingui/macro'
 import { Modal } from 'antd'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
-import UntrackedErc20Notice from 'components/shared/UntrackedErc20Notice'
-
-import { ThemeContext } from 'contexts/themeContext'
+import { readProvider } from 'constants/readProvider'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
-import { NetworkName } from 'models/network-name'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { fromWad } from 'utils/formatNumber'
 import { querySubgraphExhaustive } from 'utils/graph'
 
-import { readProvider } from 'constants/readProvider'
-import { indexedProjectERC20s } from 'constants/v1/indexedProjectERC20s'
-
-export default function DownloadParticipantsModal({
+export default function DownloadPaymentsModal({
   visible,
   onCancel,
 }: {
@@ -25,9 +19,6 @@ export default function DownloadParticipantsModal({
   const [blockNumber, setBlockNumber] = useState<number>()
   const [loading, setLoading] = useState<boolean>()
   const { projectId, tokenSymbol, handle } = useContext(V1ProjectContext)
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
 
   useEffect(() => {
     readProvider.getBlockNumber().then(val => {
@@ -42,28 +33,14 @@ export default function DownloadParticipantsModal({
     setLoading(true)
 
     const rows = [
-      [
-        t`Wallet address`,
-        `Total ${tokenSymbol ?? t`token`} balance`,
-        t`Staked balance`,
-        t`Unstaked balance`,
-        t`Total ETH paid`,
-        t`Last paid timestamp`,
-      ], // CSV header row
+      [t`Amount paid`, t`Date`, t`Payer`, t`Beneficiary`, t`Note`], // CSV header row
     ]
 
     try {
-      const participants = await querySubgraphExhaustive({
-        entity: 'participant',
-        keys: [
-          'wallet',
-          'totalPaid',
-          'balance',
-          'stakedBalance',
-          'unstakedBalance',
-          'lastPaidTimestamp',
-        ],
-        orderBy: 'balance',
+      const payments = await querySubgraphExhaustive({
+        entity: 'payEvent',
+        keys: ['caller', 'beneficiary', 'amount', 'timestamp', 'note'],
+        orderBy: 'timestamp',
         orderDirection: 'desc',
         block: {
           number: blockNumber,
@@ -74,21 +51,14 @@ export default function DownloadParticipantsModal({
         },
       })
 
-      if (!participants) throw new Error('No data.')
+      if (!payments) throw new Error('No data.')
 
-      participants.forEach(p => {
-        let date = new Date((p.lastPaidTimestamp ?? 0) * 1000).toUTCString()
+      payments.forEach(p => {
+        let date = new Date((p.timestamp ?? 0) * 1000).toUTCString()
 
         if (date.includes(',')) date = date.split(',')[1]
 
-        rows.push([
-          p.wallet ?? '--',
-          fromWad(p.balance),
-          fromWad(p.stakedBalance),
-          fromWad(p.unstakedBalance),
-          fromWad(p.totalPaid),
-          date,
-        ])
+        rows.push([fromWad(p.amount), date, p.caller, p.beneficiary, p.note])
       })
 
       const csvContent =
@@ -98,7 +68,7 @@ export default function DownloadParticipantsModal({
       link.setAttribute('href', encodedUri)
       link.setAttribute(
         'download',
-        `@${handle}_holders-block${blockNumber}.csv`,
+        `@${handle}_payments-block${blockNumber}.csv`,
       )
       document.body.appendChild(link)
 
@@ -106,17 +76,10 @@ export default function DownloadParticipantsModal({
 
       setLoading(false)
     } catch (e) {
-      console.error('Error downloading participants', e)
+      console.error('Error downloading payments', e)
       setLoading(false)
     }
-  }, [projectId, setLoading, blockNumber, handle, tokenSymbol])
-
-  const erc20IsUntracked =
-    tokenSymbol &&
-    projectId &&
-    !indexedProjectERC20s[
-      process.env.REACT_APP_INFURA_NETWORK as NetworkName
-    ]?.includes(projectId?.toNumber())
+  }, [projectId, setLoading, blockNumber, handle])
 
   return (
     <Modal
@@ -131,15 +94,8 @@ export default function DownloadParticipantsModal({
     >
       <div>
         <h4>
-          <Trans>Download CSV of {tokenSymbol || t`token`} holders</Trans>
+          <Trans>Download CSV of payments</Trans>
         </h4>
-
-        {erc20IsUntracked && (
-          <p style={{ padding: 10, background: colors.background.l1 }}>
-            (
-            <UntrackedErc20Notice tokenSymbol={tokenSymbol} />
-          </p>
-        )}
 
         <label style={{ display: 'block', marginTop: 20, marginBottom: 5 }}>
           <Trans>Block number</Trans>

@@ -381,7 +381,7 @@ msgstr "依托于以太坊社区精心打造的基础设施和经济生态，Jui
 msgid "Block number"
 msgstr "区块数"
 
-#: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/constants.ts
 msgid "Blog"
 msgstr "博客"
 
@@ -552,7 +552,7 @@ msgstr ""
 msgid "Cycle #{0}"
 msgstr "周期 #{0}"
 
-#: src/components/Navbar/ThemePicker.tsx
+#: src/components/Navbar/Mobile/ThemePickerMobile.tsx
 msgid "Dark theme"
 msgstr "深色主题"
 
@@ -590,8 +590,8 @@ msgstr "详情"
 msgid "Disabled"
 msgstr "已禁用"
 
-#: src/components/Navbar/MobileCollapse.tsx
-#: src/components/Navbar/OptionsCollapse.tsx
+#: src/components/Navbar/Mobile/MobileCollapse.tsx
+#: src/components/Navbar/Wallet.tsx
 msgid "Disconnect"
 msgstr "断开连接"
 
@@ -638,7 +638,7 @@ msgstr "已分发"
 msgid "Do I have to make my project open source to use Juicebox as its business model?"
 msgstr "要把 Juicebox 用作项目的商业模式的话，我必须把项目进行开源吗？"
 
-#: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/constants.ts
 msgid "Docs"
 msgstr "文档"
 
@@ -797,8 +797,8 @@ msgstr ""
 msgid "Funds will be distributed to:"
 msgstr "资金将会分发给："
 
-#: src/components/shared/FeedbackFormBtn.tsx
-#: src/components/shared/FeedbackFormBtn.tsx
+#: src/components/shared/FeedbackFormButton.tsx
+#: src/components/shared/FeedbackFormButton.tsx
 #: src/components/v1/V1Project/modals/FeedbackPromptModal.tsx
 msgid "Give feedback"
 msgstr "提交反馈"
@@ -983,7 +983,7 @@ msgstr "最近"
 msgid "Latest payments"
 msgstr "最近付款"
 
-#: src/components/Navbar/ThemePicker.tsx
+#: src/components/Navbar/Mobile/ThemePickerMobile.tsx
 msgid "Light theme"
 msgstr "浅色主题"
 
@@ -1227,7 +1227,7 @@ msgstr "支出 (可选)"
 msgid "Peach's Juicebox Stand"
 msgstr "桃子的果汁摊"
 
-#: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/constants.ts
 msgid "Peel"
 msgstr "Peel"
 
@@ -1243,7 +1243,7 @@ msgstr "分配百分比"
 msgid "Percentages must add up to 100% or less"
 msgstr "百分比总数相加必须少于或等于100%"
 
-#: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/constants.ts
 msgid "Podcast"
 msgstr "播客"
 
@@ -1460,6 +1460,7 @@ msgid "Reserves"
 msgstr "保留"
 
 #: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/Mobile/ResourcesDropdownMobile.tsx
 msgid "Resources"
 msgstr "相关资料"
 
@@ -2064,7 +2065,7 @@ msgstr "提取"
 msgid "Withdraw funds"
 msgstr "提取资金"
 
-#: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/constants.ts
 msgid "Workspace"
 msgstr "工作空间"
 

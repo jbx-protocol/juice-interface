@@ -41,16 +41,6 @@
 // Top Nav Select
 // Right side of the top nav
 .top-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: var(--background-l0);
-
-  .nav-menu-item {
-    font-weight: 600;
-    color: var(--text-primary) !important;
-  }
-
   // Resources dropdown and options (dotdotdot) menu
   .ant-collapse-header {
     color: var(--text-primary) !important;
@@ -69,39 +59,22 @@
     border-radius: 2px;
   }
   .ant-collapse-content-box {
-    border: 1px solid var(--stroke-secondary);
-    box-shadow: none !important;
+    border: 1px solid var(--stroke-tertiary);
     padding: 0;
     width: 100%;
     background-color: var(--background-l0);
   }
+
   .ant-select-arrow {
     display: none;
   }
-  .nav-dropdown-item {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    border: none;
-    padding-left: 10px;
-    width: 100%;
-    height: 40px;
-    color: var(--text-primary);
-    font-weight: 400;
-    cursor: pointer;
-  }
-  .ant-collapse-content-inactive {
-    display: none;
-  }
-  .nav-dropdown-item:hover {
-    background-color: var(--background-l1);
-  }
+}
+
+.ant-collapse-content-inactive {
+  display: none;
 }
 
 .top-nav-mobile {
-  padding: 16px 8px;
-  width: 100%;
-  position: fixed;
   .ant-collapse {
     width: 100%;
     margin-bottom: 4px;
@@ -125,94 +98,12 @@
   .nav-menu-item {
     padding: 10px 15px;
   }
-  .resources-dropdown {
-    position: static;
-    margin-left: 3px;
-    .ant-collapse-content {
-      padding-top: 5px;
-    }
-    .ant-collapse-content-box {
-      padding: 0 6px;
-      margin-left: 25px;
-      border: none;
-    }
-  }
+
   .nav-subsection {
-    padding-left: 15px;
-    margin-top: 10px;
-    height: 110px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     > div {
       display: flex;
       align-items: center;
     }
-  }
-  .theme-picker {
-    justify-content: flex-start;
-  }
-  .account-badge {
-    margin: auto !important;
-    margin-top: 22px !important;
-  }
-}
-
-// Logo and links
-.top-left-nav {
-  flex: 1;
-  position: absolute;
-}
-
-// Specific to the resources dropdown in the top nav
-.resources-dropdown {
-  position: absolute;
-  top: 9px;
-  margin-left: -8px;
-  width: 100%;
-  .ant-collapse-header {
-    font-weight: 600 !important;
-    color: var(--text-primary) !important;
-  }
-  .ant-collapse-content {
-    float: left;
-    min-width: 120px;
-  }
-  .nav-dropdown-item {
-    padding-right: 10px;
-  }
-  .ant-select-arrow {
-    display: block;
-  }
-}
-
-// Dotdotdot menu and wallet/balance
-.top-right-nav {
-  display: flex;
-  align-items: flex-start;
-  position: absolute;
-  top: 10px;
-  right: 50px;
-  margin-right: 10px;
-}
-
-.theme-picker {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  justify-content: 'space-evenly';
-}
-
-// Dotdotdot menu in top right
-.top-nav-options {
-  .ant-collapse {
-    width: 110px;
-    text-align: right;
-    margin-right: -10px;
-  }
-  .ant-collapse-content {
-    width: 170px;
-    margin-right: -22px;
   }
 }
 
@@ -221,7 +112,7 @@
   z-index: 999;
   background-color: var(--background-l0);
   width: 180px;
-  box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 8px 12px var(--boxShadow-primary);
 
   .ant-collapse-content-box {
     padding-top: 8px;
@@ -231,7 +122,6 @@
 
 .projects-filter-collapse.dark .ant-collapse-content {
   background-color: var(--background-l1);
-  box-shadow: 0px 8px 12px #000000;
 }
 
 // Trending window days selector on trending projects section of homepage
@@ -250,7 +140,7 @@
     background: var(--background-l0);
     z-index: 999;
     margin-left: 10px;
-    box-shadow: 0px 8px 12px rgb(0 0 0 / 10%);
+    box-shadow: 0px 8px 12px var(--boxShadow-primary);
     width: 114px;
   }
   .ant-collapse-content-box {
@@ -262,4 +152,8 @@
     padding: 10px 15px;
     cursor: pointer;
   }
+}
+
+.ant-collapse-content-hidden {
+  display: none !important;
 }

@@ -381,7 +381,7 @@ msgstr "Dar las gracias a la comunidad Ethereum por fabricar la infraestructura 
 msgid "Block number"
 msgstr "Número de bloque"
 
-#: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/constants.ts
 msgid "Blog"
 msgstr "Blog"
 
@@ -552,7 +552,7 @@ msgstr "Beneficiario de token personalizado"
 msgid "Cycle #{0}"
 msgstr "Ciclo #{0}"
 
-#: src/components/Navbar/ThemePicker.tsx
+#: src/components/Navbar/Mobile/ThemePickerMobile.tsx
 msgid "Dark theme"
 msgstr "Tema oscuro"
 
@@ -590,8 +590,8 @@ msgstr "Detalles"
 msgid "Disabled"
 msgstr "Desactivado"
 
-#: src/components/Navbar/MobileCollapse.tsx
-#: src/components/Navbar/OptionsCollapse.tsx
+#: src/components/Navbar/Mobile/MobileCollapse.tsx
+#: src/components/Navbar/Wallet.tsx
 msgid "Disconnect"
 msgstr "Desconectar"
 
@@ -638,7 +638,7 @@ msgstr "Distribuido"
 msgid "Do I have to make my project open source to use Juicebox as its business model?"
 msgstr "¿Tengo que volver mi proyecto de código abierto para usar Juicebox como modelo de negocio?"
 
-#: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/constants.ts
 msgid "Docs"
 msgstr "Documentos"
 
@@ -797,8 +797,8 @@ msgstr "Objetivo de financiamiento"
 msgid "Funds will be distributed to:"
 msgstr "Los fondos serán distribuidos a:"
 
-#: src/components/shared/FeedbackFormBtn.tsx
-#: src/components/shared/FeedbackFormBtn.tsx
+#: src/components/shared/FeedbackFormButton.tsx
+#: src/components/shared/FeedbackFormButton.tsx
 #: src/components/v1/V1Project/modals/FeedbackPromptModal.tsx
 msgid "Give feedback"
 msgstr "Da retroalimentación"
@@ -983,7 +983,7 @@ msgstr "Último"
 msgid "Latest payments"
 msgstr "Últimos pagos"
 
-#: src/components/Navbar/ThemePicker.tsx
+#: src/components/Navbar/Mobile/ThemePickerMobile.tsx
 msgid "Light theme"
 msgstr "Tema luminoso"
 
@@ -1227,7 +1227,7 @@ msgstr "Pagos (opcional)"
 msgid "Peach's Juicebox Stand"
 msgstr "El puesto de Frutas del Sr. Melocotón"
 
-#: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/constants.ts
 msgid "Peel"
 msgstr "Peel"
 
@@ -1243,7 +1243,7 @@ msgstr "Asignación porcentual"
 msgid "Percentages must add up to 100% or less"
 msgstr "Los porcentajes deben sumar 100% o menos"
 
-#: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/constants.ts
 msgid "Podcast"
 msgstr "Podcast"
 
@@ -1460,6 +1460,7 @@ msgid "Reserves"
 msgstr "Reservas"
 
 #: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/Mobile/ResourcesDropdownMobile.tsx
 msgid "Resources"
 msgstr "Recursos"
 
@@ -2064,7 +2065,7 @@ msgstr "Retirar"
 msgid "Withdraw funds"
 msgstr "Retirar fondos"
 
-#: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/constants.ts
 msgid "Workspace"
 msgstr "Espacio de trabajo"
 

@@ -381,7 +381,7 @@ msgstr "Juicebox'ı mümkün kılan altyapı ve ekonomiyi hazırladığı için 
 msgid "Block number"
 msgstr "Blok numarası"
 
-#: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/constants.ts
 msgid "Blog"
 msgstr "Blog"
 
@@ -552,7 +552,7 @@ msgstr ""
 msgid "Cycle #{0}"
 msgstr "Döngü #{0}"
 
-#: src/components/Navbar/ThemePicker.tsx
+#: src/components/Navbar/Mobile/ThemePickerMobile.tsx
 msgid "Dark theme"
 msgstr "Koyu tema"
 
@@ -590,8 +590,8 @@ msgstr "Detaylar"
 msgid "Disabled"
 msgstr "Devre dışı"
 
-#: src/components/Navbar/MobileCollapse.tsx
-#: src/components/Navbar/OptionsCollapse.tsx
+#: src/components/Navbar/Mobile/MobileCollapse.tsx
+#: src/components/Navbar/Wallet.tsx
 msgid "Disconnect"
 msgstr "Bağlantıyı kes"
 
@@ -638,7 +638,7 @@ msgstr "Dağıtıldı"
 msgid "Do I have to make my project open source to use Juicebox as its business model?"
 msgstr "Juicebox'ı iş modeli olarak kullanmak için projemi açık kaynak yapmak zorunda mıyım?"
 
-#: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/constants.ts
 msgid "Docs"
 msgstr "Dokümanlar"
 
@@ -797,8 +797,8 @@ msgstr ""
 msgid "Funds will be distributed to:"
 msgstr "Fonlar şunlara dağıtılacaktır:"
 
-#: src/components/shared/FeedbackFormBtn.tsx
-#: src/components/shared/FeedbackFormBtn.tsx
+#: src/components/shared/FeedbackFormButton.tsx
+#: src/components/shared/FeedbackFormButton.tsx
 #: src/components/v1/V1Project/modals/FeedbackPromptModal.tsx
 msgid "Give feedback"
 msgstr "Geribildirim verin"
@@ -983,7 +983,7 @@ msgstr "En son"
 msgid "Latest payments"
 msgstr "Son ödemeler"
 
-#: src/components/Navbar/ThemePicker.tsx
+#: src/components/Navbar/Mobile/ThemePickerMobile.tsx
 msgid "Light theme"
 msgstr "Aydınlık tema"
 
@@ -1227,7 +1227,7 @@ msgstr "Ödemeler (isteğe bağlı)"
 msgid "Peach's Juicebox Stand"
 msgstr "Peach'in Juicebox standı"
 
-#: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/constants.ts
 msgid "Peel"
 msgstr ""
 
@@ -1243,7 +1243,7 @@ msgstr "Yüzde tahsisi"
 msgid "Percentages must add up to 100% or less"
 msgstr "Yüzdelerin toplamı %100 veya daha az olmalıdır"
 
-#: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/constants.ts
 msgid "Podcast"
 msgstr "Podcast"
 
@@ -1460,6 +1460,7 @@ msgid "Reserves"
 msgstr "Ayrılanlar"
 
 #: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/Mobile/ResourcesDropdownMobile.tsx
 msgid "Resources"
 msgstr "Kaynaklar"
 
@@ -2064,7 +2065,7 @@ msgstr "Çek"
 msgid "Withdraw funds"
 msgstr "Fonları çek"
 
-#: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/constants.ts
 msgid "Workspace"
 msgstr "Çalışma Alan"
 

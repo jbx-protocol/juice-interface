@@ -1,24 +1,23 @@
 import { Space } from 'antd'
 import { Header } from 'antd/lib/layout/layout'
+import useMobile from 'hooks/Mobile'
 
 import Account from './Account'
-import MobileCollapse from './MobileCollapse'
-import Logo from './Logo'
-import OptionsCollapse from './OptionsCollapse'
-import { menu } from './MenuItems'
+import MobileCollapse from './Mobile/MobileCollapse'
+import { TopLeftNavItems } from './MenuItems'
+import NavLanguageSelector from './NavLanguageSelector'
+import ThemePicker from './ThemePicker'
+import { topNavStyles, topRightNavStyles } from './navStyles'
 
 export default function Navbar() {
-  return window.innerWidth > 900 ? (
-    <Header className="top-nav">
-      <Space className="top-left-nav" size="large">
-        <a href="/" style={{ display: 'inline-block' }}>
-          {<Logo />}
-        </a>
-        {menu()}
-      </Space>
+  const isMobile = useMobile()
+  return !isMobile ? (
+    <Header className="top-nav" style={{ ...topNavStyles }}>
+      <TopLeftNavItems />
 
-      <Space className="top-right-nav" size="middle">
-        <OptionsCollapse />
+      <Space size="middle" style={{ ...topRightNavStyles }}>
+        <NavLanguageSelector />
+        <ThemePicker />
         <Account />
       </Space>
     </Header>

@@ -1,18 +1,16 @@
 import { t, Trans } from '@lingui/macro'
-
 import { CSSProperties, useEffect, useState } from 'react'
-
 import { Dropdown, Menu, Space } from 'antd'
 import { DownOutlined, UpOutlined } from '@ant-design/icons'
 import ExternalLink from 'components/shared/ExternalLink'
 
 import Logo from './Logo'
-
 import {
   navDropdownItem,
   navMenuItemStyles,
   topLeftNavStyles,
 } from './navStyles'
+import { resourcesMenuItems } from './constants'
 
 export function NavMenuItem({
   text,
@@ -42,58 +40,19 @@ export function NavMenuItem({
   )
 }
 
-export function DropdownItem({
-  text,
-  route,
-  onClick,
-  key,
-}: {
-  text: string
-  route?: string
-  onClick?: VoidFunction
-  key: string
-}) {
-  return (
-    <Menu.Item key={key}>
-      <ExternalLink
-        className="nav-dropdown-item"
-        href={route}
-        onClick={onClick}
-        style={navDropdownItem}
-      >
-        {text}
-      </ExternalLink>
-    </Menu.Item>
-  )
-}
-
 const resourcesMenu = (
   <Menu style={{ marginTop: -16, marginLeft: -6 }}>
-    <DropdownItem
-      key="docs"
-      text={t`Docs`}
-      route="https://docs.juicebox.money"
-    />
-    <DropdownItem
-      key="blog"
-      text={t`Blog`}
-      route="https://blog.juicebox.money"
-    />
-    <DropdownItem
-      key="workspace"
-      text={t`Workspace`}
-      route="https://juicebox.notion.site/"
-    />
-    <DropdownItem
-      key="podcast"
-      text={t`Podcast`}
-      route="https://open.spotify.com/show/4G8ji7vofcOx2acXcjXIa4?si=1e5e6e171ed744e8"
-    />
-    <DropdownItem
-      key="peel"
-      text={t`Peel`}
-      route="https://discord.gg/XvmfY4Hkcz"
-    />
+    {resourcesMenuItems().map(r => (
+      <Menu.Item key={r.key}>
+        <ExternalLink
+          className="nav-dropdown-item"
+          href={r.link}
+          style={navDropdownItem}
+        >
+          {r.text}
+        </ExternalLink>
+      </Menu.Item>
+    ))}
   </Menu>
 )
 

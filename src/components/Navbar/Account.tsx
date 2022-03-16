@@ -1,50 +1,24 @@
-import { Row, Button } from 'antd'
+import { Button } from 'antd'
 import { NetworkContext } from 'contexts/networkContext'
 
-import React, { CSSProperties, useContext } from 'react'
+import { useContext } from 'react'
 import { Trans } from '@lingui/macro'
 
 import Wallet from './Wallet'
 
-export default function Account({ mobile }: { mobile?: boolean }) {
+export default function Account() {
   const { userAddress, signingProvider, onSelectWallet } =
     useContext(NetworkContext)
 
-  const mobileStyles: CSSProperties = {
-    marginLeft: 'auto',
-    width: '100%',
-    textAlign: 'center',
+  if (!signingProvider) {
+    return (
+      <Button onClick={onSelectWallet}>
+        <Trans>Connect</Trans>
+      </Button>
+    )
   }
 
-  const desktopStyles: CSSProperties = {
-    marginLeft: 10,
-    marginTop: 0,
-  }
+  if (!userAddress) return null
 
-  return (
-    <Row
-      gutter={10}
-      align="middle"
-      style={
-        mobile
-          ? {
-              margin: 'auto',
-              marginTop: 22,
-            }
-          : {}
-      }
-    >
-      {!signingProvider ? (
-        <div style={mobile ? mobileStyles : desktopStyles}>
-          <Button onClick={onSelectWallet}>
-            <Trans>Connect</Trans>
-          </Button>
-        </div>
-      ) : (
-        <React.Fragment>
-          {userAddress && <Wallet userAddress={userAddress} />}
-        </React.Fragment>
-      )}
-    </Row>
-  )
+  return <Wallet userAddress={userAddress} />
 }

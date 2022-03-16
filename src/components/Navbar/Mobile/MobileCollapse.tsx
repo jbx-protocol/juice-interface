@@ -103,7 +103,7 @@ export default function MobileCollapse() {
               alignItems: 'center',
             }}
           >
-            <Account mobile />
+            <Account />
             {signingProvider ? (
               <Button onClick={onLogOut} style={{ marginTop: 10 }}>
                 <Trans>Disconnect</Trans>

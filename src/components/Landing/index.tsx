@@ -24,13 +24,6 @@ import Payments from './Payments'
 import TrendingSection from './TrendingSection'
 import { OverflowVideoLink } from './QAs'
 
-const listData = [
-  t`Indie artists, devs, creators`,
-  t`Ethereum protocols and DAOs`,
-  t`Public goods and services`,
-  t`Open source businesses`,
-]
-
 const BigHeader = ({ text }: { text: string }) => (
   <h1
     style={{
@@ -147,7 +140,12 @@ export default function Landing() {
                   <p style={{ color: colors.text.brand.primary, opacity: 1 }}>
                     <Trans>Built for:</Trans>
                   </p>
-                  {listData.map((data, i) => (
+                  {[
+                    t`Indie artists, devs, creators`,
+                    t`Ethereum protocols and DAOs`,
+                    t`Public goods and services`,
+                    t`Open source businesses`,
+                  ].map((data, i) => (
                     <Space
                       style={{ fontStyle: 'italic', paddingLeft: 8 }}
                       key={i}

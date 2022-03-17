@@ -880,6 +880,7 @@ msgid "I understand"
 msgstr "我明白了"
 
 #: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
+#: src/components/v2/V2ProjectHeaderActions.tsx
 msgid "ID: {0}"
 msgstr "ID: {0}"
 
@@ -1784,6 +1785,10 @@ msgstr "此项目已存档，无法支付。"
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "This project is currently using the Juicebox V1 terminal contract. New features introduced in V1.1 allow the project owner to:"
 msgstr "这个项目正在使用 Juicebox V1 Terminal 合约。V1.1 的新特性使得项目拥有者可以："
+
+#: src/components/v2/V2ProjectHeaderActions.tsx
+msgid "This project uses the V2 version of the Juicebox contracts."
+msgstr ""
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hodl tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."

@@ -28,8 +28,9 @@ import { weightedAmount } from 'utils/math'
 
 import { decodeV2FundingCycleMetadata } from 'utils/v2/fundingCycle'
 
-import V2ProjectRiskNotice from './V2ProjectRiskNotice'
 import Paragraph from 'components/shared/Paragraph'
+
+import V2ProjectRiskNotice from './V2ProjectRiskNotice'
 
 export default function V2ConfirmPayOwnerModal({
   visible,

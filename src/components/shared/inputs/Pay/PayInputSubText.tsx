@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { formatWad } from 'utils/formatNumber'
 import { parseEther } from '@ethersproject/units'
 import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
-import { weightedRate } from 'utils/math'
+import { WeightFunction } from 'utils/math'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { Trans } from '@lingui/macro'
 import { useContext, useMemo } from 'react'
@@ -32,6 +32,7 @@ export default function PayInputSubText({
   weight,
   tokenSymbol,
   tokenAddress,
+  weightingFn,
 }: {
   payInCurrency: CurrencyOption
   amount: string | undefined
@@ -39,6 +40,7 @@ export default function PayInputSubText({
   weight: BigNumber | undefined
   tokenSymbol: string | undefined
   tokenAddress: string | undefined
+  weightingFn: WeightFunction
 }) {
   const converter = useCurrencyConverter()
   const {
@@ -63,7 +65,7 @@ export default function PayInputSubText({
 
   const receiveText = useMemo(() => {
     const formatReceivedTickets = (wei: BigNumber) => {
-      const exchangeRate = weightedRate(weight, reservedRate, wei, 'payer')
+      const exchangeRate = weightingFn(weight, reservedRate, wei, 'payer')
       return formatWad(exchangeRate, { precision: 0 })
     }
 
@@ -100,6 +102,7 @@ export default function PayInputSubText({
     currencyETH,
     reservedRate,
     tokenSymbol,
+    weightingFn,
   ])
 
   return (

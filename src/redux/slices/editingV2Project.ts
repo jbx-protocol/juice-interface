@@ -47,7 +47,7 @@ const defaultProjectMetadataState: ProjectMetadataV4 = {
 const defaultFundingCycleData: SerializedV2FundingCycleData =
   serializeV2FundingCycleData({
     duration: BigNumber.from(0),
-    weight: constants.WeiPerEther.mul(1000000), // 1e24
+    weight: constants.WeiPerEther.mul(1000000), // 1e24, resulting in 1,000,000 tokens per ETH
     discountRate: BigNumber.from(0), // A number from 0-1,000,000,000
     ballot: DEFAULT_BALLOT_STRATEGY.address,
   })

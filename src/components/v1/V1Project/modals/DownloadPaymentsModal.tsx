@@ -53,7 +53,7 @@ export default function DownloadPaymentsModal({
 
       if (!payments) {
         notification.error({
-          message: 'Error loading payments',
+          message: t`Error loading payments`,
         })
         throw new Error('No data.')
       }

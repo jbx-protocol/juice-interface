@@ -745,6 +745,14 @@ msgstr "Token basımını etkinleştirmek katkıda bulunanlar için riskli gör�
 msgid "End"
 msgstr "Son"
 
+#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+msgid "Error loading holders"
+msgstr ""
+
+#: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
+msgid "Error loading payments"
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "Ethereum protocols and DAOs"
 msgstr "Ethereum protokolleri ve DAO'lar"

@@ -740,6 +740,14 @@ msgstr "Enabling tokens to be minted will appear risky to contributors, and shou
 msgid "End"
 msgstr ""
 
+#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+msgid "Error loading holders"
+msgstr "Error loading holders"
+
+#: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
+msgid "Error loading payments"
+msgstr "Error loading payments"
+
 #: src/components/Landing/index.tsx
 msgid "Ethereum protocols and DAOs"
 msgstr ""

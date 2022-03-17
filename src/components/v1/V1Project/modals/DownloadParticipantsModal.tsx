@@ -76,7 +76,7 @@ export default function DownloadParticipantsModal({
 
       if (!participants) {
         notification.error({
-          message: 'Error loading holders',
+          message: t`Error loading holders`,
         })
         throw new Error('No data.')
       }

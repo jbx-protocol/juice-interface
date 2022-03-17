@@ -745,6 +745,14 @@ msgstr "允许铸造代币会让捐款人觉得项目有风险，如必非要，
 msgid "End"
 msgstr "结束时间"
 
+#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+msgid "Error loading holders"
+msgstr ""
+
+#: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
+msgid "Error loading payments"
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "Ethereum protocols and DAOs"
 msgstr "以太坊协议和 DAO"

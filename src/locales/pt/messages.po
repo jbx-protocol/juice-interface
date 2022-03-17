@@ -745,6 +745,14 @@ msgstr "Permitir a criação de tokens vai aparentar arriscado para os contribui
 msgid "End"
 msgstr "Fim"
 
+#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+msgid "Error loading holders"
+msgstr ""
+
+#: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
+msgid "Error loading payments"
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "Ethereum protocols and DAOs"
 msgstr "Protocolos Ethereum e DAOs"

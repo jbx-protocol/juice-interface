@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-03-16 02:13\n"
+"PO-Revision-Date: 2022-03-17 02:08\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -129,7 +129,7 @@ msgstr "<0>Os contratos Juicebox</0> não são auditados e podem estar vulneráv
 
 #: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
 msgid "<0>Learn more</0> about burning tokens."
-msgstr ""
+msgstr "<0>Aprender mais</0> sobre queima de tokens."
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "<0>Learn more</0> about funding cycle duration."
@@ -415,7 +415,7 @@ msgstr "Queimar os tokens do projeto"
 
 #: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
 msgid "Burn your {tokensLabel}. You won't receive ETH in return because this project has no overflow."
-msgstr ""
+msgstr "Queime seus {tokensLabel}. Você não receberá ETH em retorno porque este projeto não tem overflow."
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Burn {0} {tokensTextShort}"
@@ -423,7 +423,7 @@ msgstr "Queimar {0} {tokensTextShort}"
 
 #: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
 msgid "Burn {tokensLabel}"
-msgstr ""
+msgstr "Queimar {tokensLabel}"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Burn {tokensTextLong}"
@@ -447,7 +447,7 @@ msgstr "Cancelar"
 
 #: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
 msgid "Cannot redeem tokens for ETH because this project has no overflow."
-msgstr ""
+msgstr "Não é possível reivindicar tokens por ETH, porque este projeto não tem overflow."
 
 #: src/components/v1/V1Create/index.tsx
 msgid "Changes to these attributes can be made at any time and will be applied to your project immediately."
@@ -467,7 +467,7 @@ msgstr "Verifique isso para inserir {tokenSymbol} ERC20 em sua carteira. Deixe d
 
 #: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
 msgid "Claim {tokensLabel} as ERC20"
-msgstr ""
+msgstr "Reivindicar {tokensLabel} como ERC20"
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
 msgid "Claiming {tokenSymbol} tokens will convert your {tokenSymbol} balance to ERC20 tokens and mint them to your wallet."
@@ -1041,7 +1041,7 @@ msgstr "Crie tokens para um endereço personalizado."
 
 #: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
 msgid "Mint {tokensLabel}"
-msgstr ""
+msgstr "Criar {tokensLabel}"
 
 #: src/components/Projects/TrendingProjects.tsx
 msgid "More trending projects"
@@ -1049,7 +1049,7 @@ msgstr "Mais projetos populares"
 
 #: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
 msgid "Move your {tokensLabel} from the Juicebox contract to your wallet."
-msgstr ""
+msgstr "Mova seus {tokensLabel} do contrato do Juicebox para sua carteira."
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
@@ -1395,7 +1395,7 @@ msgstr "Resgatar"
 
 #: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
 msgid "Redeem your {tokensLabel} for a portion of the project's overflow. Any {tokensLabel} you redeem will be burned."
-msgstr ""
+msgstr "Resgate seus {tokensLabel} por uma porção do overflow do projeto. Qualquer {tokensLabel} que você resgatar será queimado."
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Redeem {0} {tokensTextShort} for ETH"
@@ -1403,7 +1403,7 @@ msgstr "Resgatar {0} {tokensTextShort} por ETH"
 
 #: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
 msgid "Redeem {tokensLabel} for ETH"
-msgstr ""
+msgstr "Resgatar {tokensLabel} para ETH"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Redeem {tokensTextLong} for ETH"
@@ -1827,7 +1827,7 @@ msgstr "Criação de tokens"
 
 #: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
 msgid "Token minting is only available for V1.1 projects. Token minting can be enabled or disabled by reconfiguring the project's funding cycle."
-msgstr ""
+msgstr "A criação de token está disponível apenas para projetos V1.1. A criação de token pode ser habilitada ou desabilitada pela reconfiguração do ciclo de financiamento do projeto."
 
 #: src/components/v1/V1Project/Rewards/IssueTickets.tsx
 msgid "Token name"

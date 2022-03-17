@@ -63,7 +63,7 @@ export default function V2Project() {
                 </li>
                 <li>Start: {start?.toISOString()}</li>
                 <li>End: {end?.toISOString()}</li>
-                <li>Weight: {fundingCycle.weight.toString()}</li>
+                <li>Weight: {fromWad(fundingCycle.weight)}</li>
               </ul>
 
               <h3>ETH payouts</h3>

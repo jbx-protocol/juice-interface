@@ -10,6 +10,7 @@ import { decodeV2FundingCycleMetadata } from 'utils/v2/fundingCycle'
 import { weightedAmount } from 'utils/math'
 
 import V2PayButton from './V2PayButton'
+import V2ProjectHeaderActions from '../V2ProjectHeaderActions'
 
 export default function V2Project() {
   const {
@@ -48,7 +49,10 @@ export default function V2Project() {
   const weight = fundingCycle?.weight
   return (
     <>
-      <ProjectHeader metadata={projectMetadata} />
+      <ProjectHeader
+        metadata={projectMetadata}
+        actions={<V2ProjectHeaderActions />}
+      />
       <Row>
         <Col md={12} xs={24}>
           <h2>In Juicebox: Ξ{fromWad(ETHBalance)}</h2>

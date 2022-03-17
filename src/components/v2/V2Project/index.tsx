@@ -4,8 +4,10 @@ import ProjectHeader from 'components/shared/ProjectHeader'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useContext } from 'react'
 
-import { permilleToPercent } from 'utils/formatNumber'
+import { permilleToPercent, permyriadToPercent } from 'utils/formatNumber'
 import { fromWad } from 'utils/formatNumber'
+import { decodeV2FundingCycleMetadata } from 'utils/v2/fundingCycle'
+import { weightedAmount } from 'utils/math'
 
 import V2PayButton from './V2PayButton'
 
@@ -32,7 +34,17 @@ export default function V2Project() {
         )
       : null
 
-  const reservedRate = 0 // todo get this from v2fundingcyclemetadata
+  const fundingCycleMetadata = fundingCycle
+    ? decodeV2FundingCycleMetadata(fundingCycle?.metadata)
+    : undefined
+
+  const reservedRatePercent = parseFloat(
+    permyriadToPercent(fundingCycleMetadata?.reservedRate),
+  )
+  const redemptionRatePercent = parseFloat(
+    permyriadToPercent(fundingCycleMetadata?.redemptionRate),
+  )
+
   const weight = fundingCycle?.weight
   return (
     <>
@@ -51,7 +63,7 @@ export default function V2Project() {
                 </li>
                 <li>Start: {start?.toISOString()}</li>
                 <li>End: {end?.toISOString()}</li>
-                <li>Weight: {fundingCycle.weight.toString()}</li>
+                <li>Weight: {fromWad(fundingCycle.weight)}</li>
               </ul>
 
               <h3>ETH payouts</h3>
@@ -70,7 +82,10 @@ export default function V2Project() {
 
               <h3>Funding cycle metadata</h3>
               <ul>
-                <li>Reserve rate: {reservedRate}</li>
+                <li>Reserve rate: {reservedRatePercent}%</li>
+              </ul>
+              <ul>
+                <li>Redemption rate: {redemptionRatePercent}%</li>
               </ul>
             </div>
           )}
@@ -78,8 +93,9 @@ export default function V2Project() {
         <Col md={12} xs={24}>
           <PayInputGroup
             PayButton={V2PayButton}
-            reservedRate={reservedRate}
+            reservedRate={reservedRatePercent}
             weight={weight}
+            weightingFn={weightedAmount}
           />
         </Col>
       </Row>

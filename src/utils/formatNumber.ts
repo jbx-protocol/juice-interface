@@ -61,7 +61,7 @@ export const fromWad = (
  *
  * @example
  * // returns 1,000
- * fromWad(1000000000000000000000, { thousandsSeparator: ',' });
+ * formatWad(1000000000000000000000, { thousandsSeparator: ',' });
  *
  */
 export const formatWad = (

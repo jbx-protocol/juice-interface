@@ -46,7 +46,7 @@ const resourcesMenu = (
       <Menu.Item key={r.key}>
         <ExternalLink
           className="nav-dropdown-item"
-          href={r.link}
+          href={r.href}
           style={navDropdownItem}
         >
           {r.text}

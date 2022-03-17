@@ -5,12 +5,12 @@ export const resourcesMenuItems = () => {
     {
       text: t`Docs`,
       key: 'docs',
-      link: 'https://docs.juicebox.money',
+      href: 'https://docs.juicebox.money',
     },
     {
       text: t`Blog`,
       key: 'blog',
-      link: 'https://docs.juicebox.money',
+      href: 'https://blog.juicebox.money',
     },
     {
       key: 'workspace',

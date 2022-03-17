@@ -20,7 +20,7 @@ export default function ResourcesDropdownMobile() {
         <Menu.Item key={r.key}>
           <ExternalLink
             className="nav-dropdown-item"
-            href={r.link}
+            href={r.href}
             style={{ ...navMenuItemStyles, fontWeight: 400 }}
           >
             {r.text}

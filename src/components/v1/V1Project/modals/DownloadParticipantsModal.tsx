@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Modal } from 'antd'
+import { Modal, notification } from 'antd'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import UntrackedErc20Notice from 'components/shared/UntrackedErc20Notice'
@@ -74,7 +74,12 @@ export default function DownloadParticipantsModal({
         },
       })
 
-      if (!participants) throw new Error('No data.')
+      if (!participants) {
+        notification.error({
+          message: 'Error loading holders',
+        })
+        throw new Error('No data.')
+      }
 
       participants.forEach(p => {
         let date = new Date((p.lastPaidTimestamp ?? 0) * 1000).toUTCString()

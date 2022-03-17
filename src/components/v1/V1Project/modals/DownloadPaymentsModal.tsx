@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Modal } from 'antd'
+import { Modal, notification } from 'antd'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { readProvider } from 'constants/readProvider'
@@ -51,7 +51,12 @@ export default function DownloadPaymentsModal({
         },
       })
 
-      if (!payments) throw new Error('No data.')
+      if (!payments) {
+        notification.error({
+          message: 'Error loading payments',
+        })
+        throw new Error('No data.')
+      }
 
       payments.forEach(p => {
         let date = new Date((p.timestamp ?? 0) * 1000).toUTCString()

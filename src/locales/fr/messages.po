@@ -8,7 +8,7 @@ msgstr ""
 "Language: fr\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-03-17 02:08\n"
+"PO-Revision-Date: 2022-03-18 02:13\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -880,6 +880,7 @@ msgid "I understand"
 msgstr ""
 
 #: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
+#: src/components/v2/V2ProjectHeaderActions.tsx
 msgid "ID: {0}"
 msgstr ""
 
@@ -1783,6 +1784,10 @@ msgstr ""
 
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "This project is currently using the Juicebox V1 terminal contract. New features introduced in V1.1 allow the project owner to:"
+msgstr ""
+
+#: src/components/v2/V2ProjectHeaderActions.tsx
+msgid "This project uses the V2 version of the Juicebox contracts."
 msgstr ""
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx

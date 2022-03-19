@@ -11,6 +11,10 @@ import { V2_CURRENCY_ETH, V2_CURRENCY_USD } from 'utils/v2/currency'
 import PayWarningModal from 'components/shared/PayWarningModal'
 import useWeiConverter from 'hooks/WeiConverter'
 
+import { CurrencyOption } from 'models/currencyOption'
+
+import { V2CurrencyOption } from 'models/v2/currencyOption'
+
 import V2ConfirmPayOwnerModal from './V2ConfirmPayOwnerModal'
 
 export default function V2PayButton({
@@ -18,7 +22,7 @@ export default function V2PayButton({
   payInCurrency,
 }: {
   payAmount: string
-  payInCurrency: number
+  payInCurrency: CurrencyOption // TODO make the V2CurrencyOption
 }) {
   const { fundingCycle, projectMetadata } = useContext(V2ProjectContext)
   // if (!projectMetadata || !fundingCycle) return null
@@ -27,8 +31,8 @@ export default function V2PayButton({
   const [payWarningModalVisible, setPayWarningModalVisible] =
     useState<boolean>(false)
 
-  const weiPayAmt = useWeiConverter({
-    currency: payInCurrency,
+  const weiPayAmt = useWeiConverter<V2CurrencyOption>({
+    currency: payInCurrency as V2CurrencyOption,
     amount: payAmount,
   })
 

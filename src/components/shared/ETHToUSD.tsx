@@ -14,7 +14,7 @@ export default function ETHToUSD({
   ethAmount: BigNumber | string
 }) {
   const converter = useCurrencyConverter()
-  const usdAmount = converter.wadToCurrency(ethAmount, 1, 0)
+  const usdAmount = converter.wadToCurrency(ethAmount, 'USD', 'ETH')
   const usdAmountFormatted = formatWad(usdAmount, {
     precision: 2,
     padEnd: true,

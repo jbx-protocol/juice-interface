@@ -18,6 +18,8 @@ import { CSSProperties, useContext, useMemo, useState } from 'react'
 import { formatWad, fracDiv, fromWad } from 'utils/formatNumber'
 import { hasFundingTarget } from 'utils/v1/fundingCycle'
 
+import { CurrencyContext } from 'contexts/currencyContext'
+
 import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
 import { readNetwork } from 'constants/networks'
 import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
@@ -29,7 +31,6 @@ export default function Paid() {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-
   const {
     projectId,
     currentFC,
@@ -39,15 +40,16 @@ export default function Paid() {
     earned,
     overflow,
   } = useContext(V1ProjectContext)
+  const { currencyMetadata } = useContext(CurrencyContext)
 
   const converter = useCurrencyConverter()
+  const { data: ownerBalance } = useEthBalanceQuery(owner)
+
   const overflowInCurrency = converter.wadToCurrency(
     overflow ?? 0,
-    currentFC?.currency.toNumber() as V1CurrencyOption,
-    0,
+    currencyMetadata[currentFC?.currency.toNumber() as V1CurrencyOption].name,
+    'ETH',
   )
-
-  const { data: ownerBalance } = useEthBalanceQuery(owner)
 
   const percentPaid = useMemo(
     () =>
@@ -135,7 +137,7 @@ export default function Paid() {
           {isConstitutionDAO && (
             <span style={secondaryTextStyle}>
               <CurrencySymbol currency={V1_CURRENCY_USD} />
-              {formatWad(converter.wadToCurrency(earned, 1, 0), {
+              {formatWad(converter.wadToCurrency(earned, 'USD', 'ETH'), {
                 precision: 2,
                 padEnd: true,
               })}{' '}

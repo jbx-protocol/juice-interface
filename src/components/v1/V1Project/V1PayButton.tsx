@@ -10,6 +10,8 @@ import useWeiConverter from 'hooks/WeiConverter'
 import PayWarningModal from 'components/shared/PayWarningModal'
 import { CurrencyOption } from 'models/currencyOption'
 
+import { V1CurrencyOption } from 'models/v1/currencyOption'
+
 import { readNetwork } from 'constants/networks'
 import { disablePayOverrides } from 'constants/v1/overrides'
 import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
@@ -22,7 +24,7 @@ export default function V1PayButton({
   payInCurrency,
 }: {
   payAmount: string
-  payInCurrency: CurrencyOption
+  payInCurrency: CurrencyOption // TODO make the V1CurrencyOption
 }) {
   const { projectId, currentFC, metadata, isArchived, terminal } =
     useContext(V1ProjectContext)
@@ -31,8 +33,8 @@ export default function V1PayButton({
   const [payWarningModalVisible, setPayWarningModalVisible] =
     useState<boolean>(false)
 
-  const weiPayAmt = useWeiConverter({
-    currency: payInCurrency,
+  const weiPayAmt = useWeiConverter<V1CurrencyOption>({
+    currency: payInCurrency as V1CurrencyOption,
     amount: payAmount,
   })
 

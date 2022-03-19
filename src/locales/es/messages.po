@@ -153,6 +153,10 @@ msgstr "<0>Nota:</0>Habilitar tokens para ser acuñadas puede parecer riesgoso p
 msgid "<0>Note: </0>Once your first funding cycle starts, updates you make to token attributes will <1>not be applied immediately</1> and only take effect in <2>upcoming funding cycles.</2>"
 msgstr "<0>Nota: </0> Una vez que tu primer ciclo de financiamiento empieza, las actualizaciones que hagas a los atributos del token <1>no serán aplicadas de inmediato</1> y solo surtirán efecto en <2>próximos ciclos de financiamiento.</2>"
 
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureModalTrigger.tsx
+msgid "<0>Note:</0> The current funding cycle cannot be edited."
+msgstr ""
+
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "<0>Note:</0> These properties will <1>not</1> be editable immediately within a funding cycle. They can only be changed for <2>upcoming</2> funding cycles."
 msgstr "<0>Nota:</0> Estas propiedades <1>no</1> se podrán editar inmediatamente dentro de un ciclo de financiamiento. Solo pueden ser cambiadas para <2>próximos</2> ciclos de financiamiento."
@@ -477,6 +481,10 @@ msgstr "Asigna porciones de tus fondos para la gente o proyectos que quieres apo
 msgid "Community funding for people and projects"
 msgstr "Financiamiento comunitario para personas y proyectos"
 
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Confirm funding changes"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/FeedbackPromptModal.tsx
 msgid "Congrats on creating your project!"
 msgstr "¡Felicidades por crear tu proyecto!"
@@ -679,6 +687,10 @@ msgstr "Tokens de la comunidad ERC20"
 msgid "Each project has its own <0>ERC-20 tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
 msgstr "Cada proyecto tiene sus propios <0>tokens ERC-20</0>. Todo el que financia un proyecto obtiene los tokens del proyecto a cambio. Los balances de tokens se registrarán por el protocolo hasta que los tokens ERC-20 sean emitidos por el dueño del proyecto."
 
+#: src/components/v1/V1Project/modals/EditProjectModal.tsx
+msgid "Edit project"
+msgstr ""
+
 #: src/components/shared/TicketModsList.tsx
 msgid "Edit reserved token allocation"
 msgstr "Editar la asignación de tokens reservados"
@@ -787,6 +799,10 @@ msgstr "Distribución de fondos"
 #: src/components/v2/V2Create/tabs/FundingTab/FundingTabContent.tsx
 msgid "Funding target"
 msgstr "Objetivo de financiamiento"
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Funding target/duration"
+msgstr ""
 
 #: src/components/v1/FundingCycle/modals/DistributeTokensModal.tsx
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
@@ -1113,6 +1129,10 @@ msgstr "Nota: Juicebox es nuevo, inauditado y no está garantizado para trabajar
 msgid "Notice from {0}:"
 msgstr "Aviso de {0}:"
 
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "OK"
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "Open source businesses"
 msgstr "Negocios de código abierto"
@@ -1267,8 +1287,13 @@ msgstr "Descripción del proyecto"
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Project details"
 msgstr "Detalles del proyecto"
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectDetailsDrawer.tsx
+msgid "Project details reconfigurations will create a separate transaction."
+msgstr ""
 
 #: src/components/shared/formItems/ProjectHandle/ProjectHandleFormItem.tsx
 #: src/components/shared/formItems/ProjectPayoutMods.tsx
@@ -1348,6 +1373,7 @@ msgstr "Recibe {receiveText}"
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/tabs/RulesTab/ProjectReconfigurationFormItem.tsx
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfiguration"
 msgstr "Reconfiguración"
 
@@ -1362,12 +1388,27 @@ msgid "Reconfiguration strategy"
 msgstr "Estrategia de reconfiguración"
 
 #: src/components/v1/V1Project/FundingCycles/ReconfigureFundingModalTrigger.tsx
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureModalTrigger.tsx
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureModalTrigger.tsx
 msgid "Reconfigure"
 msgstr "Reconfigurar"
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Reconfigure funding"
 msgstr "Reconfigurar financiamiento"
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Reconfigure funding details"
+msgstr ""
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureFundingDrawer.tsx
+msgid "Reconfigure funding target/duration"
+msgstr ""
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectDetailsDrawer.tsx
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Reconfigure project details"
+msgstr ""
 
 #: src/components/v1/V1Project/FundingCycles/ReconfigureFundingModalTrigger.tsx
 msgid "Reconfigure upcoming"
@@ -1476,6 +1517,7 @@ msgid "Reward specific community members with tokens."
 msgstr "Recompensar a miembros específicos de la comunidad con tokens."
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Rules"
 msgstr "Reglas"
 
@@ -1492,6 +1534,7 @@ msgstr "Reglas para cómo pueden realizarse cambios a tu proyecto."
 msgid "Rules for how this project's funding cycles can be reconfigured."
 msgstr "Reglas para cómo pueden ser reconfigurados los ciclos de financiamiento de este proyecto."
 
+#: src/components/StandardSaveButton.tsx
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 #: src/components/shared/forms/TicketingForm.tsx
@@ -1798,6 +1841,7 @@ msgstr "Esto borrará todos tus cambios."
 msgid "To: <0/>"
 msgstr "Para: <0/>"
 
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 #: src/utils/tokenSymbolText.ts
 msgid "Token"
 msgstr "Token"

@@ -5,14 +5,23 @@ import ProjectDetailsForm, {
   ProjectDetailsFormFields,
 } from 'components/shared/forms/ProjectDetailsForm'
 import { ThemeContext } from 'contexts/themeContext'
+import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
-import { useCallback, useContext, useEffect } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
+import StandardSaveButton from 'components/StandardSaveButton'
 
 import { drawerStyle } from 'constants/styles/drawerStyle'
-import StandardSaveButton from 'components/StandardSaveButton'
+import {
+  cidFromUrl,
+  editMetadataForCid,
+  logoNameForHandle,
+  metadataNameForHandle,
+  uploadProjectMetadata,
+} from 'utils/ipfs'
+import { useEditV2ProjectDetailsTx } from 'hooks/v2/transactor/EditV2ProjectDetailsTx'
 
 export function V2ReconfigureProjectDetailsDrawer({
   visible,
@@ -23,24 +32,53 @@ export function V2ReconfigureProjectDetailsDrawer({
 }) {
   const [projectForm] = useForm<ProjectDetailsFormFields>()
   const dispatch = useAppDispatch()
-  const { projectMetadata } = useAppSelector(state => state.editingV2Project)
+  const [loadingSaveChanges, setLoadingSaveChanges] = useState<boolean>()
+  const { projectMetadata } = useContext(V2ProjectContext)
+  // const { projectMetadata } = useAppSelector(state => state.editingV2Project)
 
   const { colors } = useContext(ThemeContext).theme
 
-  const onProjectFormSaved = useCallback(
-    (fields: ProjectDetailsFormFields) => {
-      dispatch(editingV2ProjectActions.setName(fields.name))
-      dispatch(editingV2ProjectActions.setInfoUri(fields.infoUri))
-      dispatch(editingV2ProjectActions.setLogoUri(fields.logoUri))
-      dispatch(editingV2ProjectActions.setDescription(fields.description))
-      dispatch(editingV2ProjectActions.setTwitter(fields.twitter))
-      dispatch(editingV2ProjectActions.setDiscord(fields.discord))
-      dispatch(editingV2ProjectActions.setPayButton(fields.payButton))
-      dispatch(editingV2ProjectActions.setPayDisclosure(fields.payDisclosure))
-      onFinish?.()
-    },
-    [dispatch, onFinish],
-  )
+  const EditV2ProjectDetailsTx = useEditV2ProjectDetailsTx()
+
+  async function onProjectFormSaved() {
+    // if (!handle) return
+    console.log('saving')
+
+    setLoadingSaveChanges(true)
+
+    const fields = projectForm.getFieldsValue(true)
+
+    const uploadedMetadata = await uploadProjectMetadata(
+      {
+        name: fields.name,
+        description: fields.description,
+        logoUri: fields.logoUri,
+        infoUri: fields.infoUri,
+        twitter: fields.twitter,
+        discord: fields.discord,
+        payButton: fields.payButton,
+        payDisclosure: fields.payDisclosure,
+        // tokens: metadata?.tokens ?? [],
+      },
+      // handle,
+    )
+
+    if (!uploadedMetadata.IpfsHash) {
+      setLoadingSaveChanges(false)
+      return
+    }
+
+    EditV2ProjectDetailsTx(
+      { cid: uploadedMetadata.IpfsHash },
+      {
+        onDone: () => setLoadingSaveChanges(false),
+        onConfirmed: () => {
+          if (onFinish) onFinish()
+          projectForm.resetFields()
+        },
+      },
+    )
+  }
 
   const resetProjectForm = useCallback(() => {
     projectForm.setFieldsValue({
@@ -84,7 +122,11 @@ export function V2ReconfigureProjectDetailsDrawer({
       <ProjectDetailsForm
         form={projectForm}
         onFinish={onProjectFormSaved}
-        saveButton={<StandardSaveButton />}
+        hideProjectHandle
+        loading={loadingSaveChanges}
+        // saveButton={
+        //   <StandardSaveButton />
+        // }
       />
     </Drawer>
   )

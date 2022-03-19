@@ -93,17 +93,6 @@ export default function V2ProjectReconfigureModal({
         <h4 style={{ marginBottom: 0, marginTop: 20 }}>
           <Trans>Reconfigure funding details</Trans>
         </h4>
-        <i
-          style={{
-            color: colors.text.secondary,
-            fontSize: 13,
-          }}
-        >
-          <Trans>
-            Changes to these sections will require a separate transaction to{' '}
-            <b>Project details</b>.
-          </Trans>
-        </i>
         <ReconfigureButton
           title={t`Funding target/duration`}
           onClick={() => setFundingDrawerVisible(true)}

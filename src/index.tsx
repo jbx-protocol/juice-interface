@@ -14,6 +14,9 @@ import ReactQueryProvier from 'providers/ReactQueryProvider'
 
 import store from './redux/store'
 import reportWebVitals from './utils/reportWebVitals'
+import initSentry from './lib/sentry'
+
+initSentry()
 
 ReactDOM.render(
   <React.StrictMode>

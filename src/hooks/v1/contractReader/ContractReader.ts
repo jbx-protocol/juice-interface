@@ -4,6 +4,7 @@ import { V1ContractName } from 'models/v1/contracts'
 import { V1Contracts } from 'models/v1/contracts'
 import { useCallback, useContext, useState } from 'react'
 import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect'
+import * as Sentry from '@sentry/browser'
 
 export type ContractUpdateOn = {
   contract?: ContractConfig
@@ -80,6 +81,14 @@ export default function useContractReader<V>({
           { contract: readContract.address },
           contracts,
         )
+
+        Sentry.captureException(err, {
+          tags: {
+            contract: typeof contract === 'string' ? contract : undefined,
+            contract_function: functionName,
+          },
+        })
+
         setValue(_formatter(undefined))
         _callback(_formatter(undefined))
       }

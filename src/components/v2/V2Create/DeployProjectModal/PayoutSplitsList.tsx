@@ -5,10 +5,9 @@ import { Split } from 'models/v2/splits'
 import { formatWad, permyriadToPercent, parseWad } from 'utils/formatNumber'
 import { SerializedV2FundAccessConstraint } from 'utils/v2/serializers'
 import { hasFundingTarget } from 'utils/v2/fundingCycle'
-import { toV1Currency } from 'utils/v1/currency'
 import { toMod } from 'utils/v2/splits'
 
-import { V2_CURRENCY_ETH } from 'utils/v2/currency'
+import { V2CurrencyName, V2_CURRENCY_ETH } from 'utils/v2/currency'
 
 function SplitItem({
   split,
@@ -29,7 +28,7 @@ function SplitItem({
         <>
           {' '}
           (
-          <CurrencySymbol currency={toV1Currency(distributionCurrency)} />
+          <CurrencySymbol currency={V2CurrencyName(distributionCurrency)} />
           {formatWad(
             parseWad(fundAccessConstraint?.distributionLimit)
               ?.mul(split.percent)

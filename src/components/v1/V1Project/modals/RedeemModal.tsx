@@ -18,7 +18,7 @@ import { formattedNum, formatWad, fromWad, parseWad } from 'utils/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
-import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
+import { V1_CURRENCY_USD } from 'constants/v1/currency'
 
 // This double as the 'Redeem' and 'Burn' modal depending on if project has overflow
 export default function RedeemModal({
@@ -174,7 +174,7 @@ export default function RedeemModal({
             <Trans>
               Currently worth:{' '}
               <span>
-                <CurrencySymbol currency={V1_CURRENCY_ETH} />
+                <CurrencySymbol currency="ETH" />
                 {formatWad(maxClaimable, { precision: 4 })}
               </span>
             </Trans>

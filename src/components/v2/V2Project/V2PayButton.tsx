@@ -7,7 +7,7 @@ import { formatWad, fromWad } from 'utils/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { V2_CURRENCY_ETH, V2_CURRENCY_USD } from 'utils/v2/currency'
+import { V2_CURRENCY_USD } from 'utils/v2/currency'
 import PayWarningModal from 'components/shared/PayWarningModal'
 import useWeiConverter from 'hooks/WeiConverter'
 
@@ -63,7 +63,7 @@ export default function V2PayButton({
       {payInCurrency === V2_CURRENCY_USD && (
         <div style={{ fontSize: '.7rem' }}>
           <Trans>
-            Paid as <CurrencySymbol currency={V2_CURRENCY_ETH} />
+            Paid as <CurrencySymbol currency="ETH" />
           </Trans>
           {formatWad(weiPayAmt) || '0'}
         </div>

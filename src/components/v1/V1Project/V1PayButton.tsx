@@ -15,7 +15,7 @@ import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { readNetwork } from 'constants/networks'
 import { disablePayOverrides } from 'constants/v1/overrides'
 import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
-import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
+import { V1_CURRENCY_USD } from 'constants/v1/currency'
 
 import V1ConfirmPayOwnerModal from './modals/V1ConfirmPayOwnerModal'
 
@@ -112,7 +112,7 @@ export default function V1PayButton({
       {payInCurrency === V1_CURRENCY_USD && (
         <div style={{ fontSize: '.7rem' }}>
           <Trans>
-            Paid as <CurrencySymbol currency={V1_CURRENCY_ETH} />
+            Paid as <CurrencySymbol currency="ETH" />
           </Trans>
           {formatWad(weiPayAmt) || '0'}
         </div>

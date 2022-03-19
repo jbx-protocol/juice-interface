@@ -1,17 +1,17 @@
-import { CurrencyContext } from 'contexts/currencyContext'
-import { CSSProperties, useContext } from 'react'
+import { CSSProperties } from 'react'
 
-import { CurrencyOption } from 'models/currencyOption'
+import { CurrencyName, CURRENCY_METADATA } from 'constants/currency'
 
 export default function CurrencySymbol({
   currency,
   style,
 }: {
-  currency: CurrencyOption
+  currency?: CurrencyName
   style?: CSSProperties
 }) {
-  const { currencyMetadata } = useContext(CurrencyContext)
-  const metadata = currencyMetadata[currency]
+  if (!currency) return null
+
+  const metadata = CURRENCY_METADATA[currency]
 
   return (
     <span

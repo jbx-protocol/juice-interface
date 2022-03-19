@@ -18,11 +18,11 @@ import { CSSProperties, useContext, useMemo, useState } from 'react'
 import { formatWad, fracDiv, fromWad } from 'utils/formatNumber'
 import { hasFundingTarget } from 'utils/v1/fundingCycle'
 
-import { CurrencyContext } from 'contexts/currencyContext'
+import { V1CurrencyName } from 'utils/v1/currency'
 
 import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
 import { readNetwork } from 'constants/networks'
-import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
+import { V1_CURRENCY_USD } from 'constants/v1/currency'
 
 import BalancesModal from './modals/BalancesModal'
 
@@ -31,6 +31,7 @@ export default function Paid() {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+
   const {
     projectId,
     currentFC,
@@ -40,14 +41,13 @@ export default function Paid() {
     earned,
     overflow,
   } = useContext(V1ProjectContext)
-  const { currencyMetadata } = useContext(CurrencyContext)
 
   const converter = useCurrencyConverter()
   const { data: ownerBalance } = useEthBalanceQuery(owner)
 
   const overflowInCurrency = converter.wadToCurrency(
     overflow ?? 0,
-    currencyMetadata[currentFC?.currency.toNumber() as V1CurrencyOption].name,
+    V1CurrencyName(currentFC?.currency.toNumber() as V1CurrencyOption),
     'ETH',
   )
 
@@ -92,7 +92,7 @@ export default function Paid() {
             <Tooltip
               title={
                 <span>
-                  <CurrencySymbol currency={V1_CURRENCY_ETH} />
+                  <CurrencySymbol currency="ETH" />
                   {formatWad(converter.usdToWei(fromWad(amt)), {
                     precision: 2,
                     padEnd: true,
@@ -100,13 +100,13 @@ export default function Paid() {
                 </span>
               }
             >
-              <CurrencySymbol currency={V1_CURRENCY_USD} />
+              <CurrencySymbol currency="USD" />
               {formatWad(amt, { precision: 2, padEnd: true })}
             </Tooltip>
           </span>
         ) : (
           <span>
-            <CurrencySymbol currency={V1_CURRENCY_ETH} />
+            <CurrencySymbol currency="ETH" />
             {formatWad(amt, { precision: 2, padEnd: true })}
           </span>
         )}
@@ -136,7 +136,7 @@ export default function Paid() {
         <span style={primaryTextStyle}>
           {isConstitutionDAO && (
             <span style={secondaryTextStyle}>
-              <CurrencySymbol currency={V1_CURRENCY_USD} />
+              <CurrencySymbol currency="USD" />
               {formatWad(converter.wadToCurrency(earned, 'USD', 'ETH'), {
                 precision: 2,
                 padEnd: true,

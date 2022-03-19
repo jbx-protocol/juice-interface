@@ -9,6 +9,7 @@ import Notify, { InitOptions, TransactionEvent } from 'bnc-notify'
 import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { useCallback, useContext } from 'react'
+import * as Sentry from '@sentry/browser'
 
 export type TransactorCallback = (
   e?: TransactionEvent,
@@ -174,6 +175,11 @@ export function useTransactor({
         const message = (e as Error).message
 
         console.error('Transaction Error:', message)
+        Sentry.captureException(e, {
+          tags: {
+            contract_function: functionName,
+          },
+        })
 
         let description: string
 

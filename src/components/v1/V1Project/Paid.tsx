@@ -177,7 +177,6 @@ export default function Paid() {
             {formatCurrencyAmount(balanceInCurrency)}
           </div>
         }
-        style={{ marginBottom: spacing }}
       />
 
       {hasFundingTarget(currentFC) &&

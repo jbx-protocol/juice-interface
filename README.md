@@ -105,13 +105,10 @@ using a GraphQL API.
 
 Take the following steps to set up Juicebox's subgraph for local development:
 
-1. Go to the
-   [Juicebox subgraph](https://thegraph.com/explorer/subgraph?id=FVmuv3TndQDNd2BWARV8Y27yuKKukryKXPzvAS5E7htC&view=Overview)
-   on [The Graph](https://thegraph.com).
-1. Click the query button.
-1. Click the `copy query URL` button from the slide-out information panel.
-1. Copy the query URL into the `REACT_APP_SUBGRAPH_URL` variable of the `.env`
-   file.
+1. Go to
+   [Peel's discord server dev channel](https://discord.com/channels/939317843059679252/939705688563810304)
+   and inquire about mainnet and rinkeby subgraph URLs.
+1. Copy the URL into the `REACT_APP_SUBGRAPH_URL` variable of the `.env` file.
 
 ### Usage
 

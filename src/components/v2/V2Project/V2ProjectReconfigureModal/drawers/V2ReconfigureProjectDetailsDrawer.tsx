@@ -41,27 +41,20 @@ export function V2ReconfigureProjectDetailsDrawer({
   const EditV2ProjectDetailsTx = useEditV2ProjectDetailsTx()
 
   async function onProjectFormSaved() {
-    // if (!handle) return
-    console.log('saving')
-
     setLoadingSaveChanges(true)
 
     const fields = projectForm.getFieldsValue(true)
 
-    const uploadedMetadata = await uploadProjectMetadata(
-      {
-        name: fields.name,
-        description: fields.description,
-        logoUri: fields.logoUri,
-        infoUri: fields.infoUri,
-        twitter: fields.twitter,
-        discord: fields.discord,
-        payButton: fields.payButton,
-        payDisclosure: fields.payDisclosure,
-        // tokens: metadata?.tokens ?? [],
-      },
-      // handle,
-    )
+    const uploadedMetadata = await uploadProjectMetadata({
+      name: fields.name,
+      description: fields.description,
+      logoUri: fields.logoUri,
+      infoUri: fields.infoUri,
+      twitter: fields.twitter,
+      discord: fields.discord,
+      payButton: fields.payButton,
+      payDisclosure: fields.payDisclosure,
+    })
 
     if (!uploadedMetadata.IpfsHash) {
       setLoadingSaveChanges(false)

@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import { Button, Drawer } from 'antd'
+import { Drawer } from 'antd'
 import StandardSaveButton from 'components/StandardSaveButton'
 import FundingTabContent from 'components/v2/V2Create/tabs/FundingTab/FundingTabContent'
 

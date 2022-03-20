@@ -12,10 +12,6 @@ export function useEditV2ProjectDetailsTx(): TransactorInstance<{
   const { projectId } = useContext(V2ProjectContext)
 
   return ({ cid }, txOpts) => {
-    console.log('projectId: ', projectId)
-    console.log('cid: ', cid)
-    const METADATA_CID_2 = 'ipfs://randommetadatacidipsaddress'
-    const METADATA_DOMAIN_2 = 23435
     if (!transactor || !projectId || !contracts?.JBProjects) {
       txOpts?.onDone?.()
       return Promise.resolve(false)
@@ -25,7 +21,6 @@ export function useEditV2ProjectDetailsTx(): TransactorInstance<{
       contracts.JBProjects,
       'setMetadataOf',
       [projectId.toHexString(), [cid, PEEL_METADATA_DOMAIN]],
-      // [1, [METADATA_CID_2, METADATA_DOMAIN_2]],
       txOpts,
     )
   }

@@ -485,6 +485,10 @@ msgstr "提前设定把您资金的一部分自动分拨给您想要支持的人
 msgid "Community funding for people and projects"
 msgstr "为个人和项目提供社区资助"
 
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Confirm funding changes"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/FeedbackPromptModal.tsx
 msgid "Congrats on creating your project!"
 msgstr "恭喜你创建了自己的项目！"
@@ -683,6 +687,10 @@ msgstr "ERC20 社区代币"
 msgid "Each project has its own <0>ERC-20 tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
 msgstr "每个项目都有自己的<0>ERC-20代币</0>。每个资助项目的人都会获得项目代币作为回报。在项目方发行 ERC-20 代币之前，代币余额会由协议来记录。"
 
+#: src/components/v1/V1Project/modals/EditProjectModal.tsx
+msgid "Edit project"
+msgstr ""
+
 #: src/components/shared/TicketModsList.tsx
 msgid "Edit reserved token allocation"
 msgstr "保留代币的分配方案"
@@ -791,6 +799,10 @@ msgstr "资金分发"
 #: src/components/v2/V2Create/tabs/FundingTab/FundingTabContent.tsx
 msgid "Funding target"
 msgstr "筹款目标"
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Funding target/duration"
+msgstr ""
 
 #: src/components/v1/FundingCycle/modals/DistributeTokensModal.tsx
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
@@ -1122,6 +1134,10 @@ msgstr "注意： Juicebox是一个全新的协议，它未经审计且不保证
 msgid "Notice from {0}:"
 msgstr "通知自{0}:"
 
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "OK"
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "Open source businesses"
 msgstr "开源业务"
@@ -1276,8 +1292,13 @@ msgstr "项目说明"
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Project details"
 msgstr "项目详情"
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectDetailsDrawer.tsx
+msgid "Project details reconfigurations will create a separate transaction."
+msgstr ""
 
 #: src/components/shared/formItems/ProjectHandle/ProjectHandleFormItem.tsx
 #: src/components/shared/formItems/ProjectPayoutMods.tsx
@@ -1357,6 +1378,7 @@ msgstr "接收 {receiveText}"
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/tabs/RulesTab/ProjectReconfigurationFormItem.tsx
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfiguration"
 msgstr "重新配置"
 
@@ -1377,6 +1399,15 @@ msgstr "重新配置"
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Reconfigure funding"
 msgstr "重新配置筹款"
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Reconfigure funding details"
+msgstr ""
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectDetailsDrawer.tsx
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Reconfigure project details"
+msgstr ""
 
 #: src/components/v1/V1Project/FundingCycles/ReconfigureFundingModalTrigger.tsx
 msgid "Reconfigure upcoming"
@@ -1489,6 +1520,7 @@ msgid "Reward specific community members with tokens."
 msgstr "用代币奖励特定的社区成员。"
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Rules"
 msgstr "规则"
 
@@ -1815,6 +1847,7 @@ msgstr "这将删除你所有的更改。"
 msgid "To: <0/>"
 msgstr "分配给：<0/>"
 
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 #: src/utils/tokenSymbolText.ts
 msgid "Token"
 msgstr "代币"

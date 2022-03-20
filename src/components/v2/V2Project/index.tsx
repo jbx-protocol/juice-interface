@@ -1,8 +1,13 @@
-import { Col, Row } from 'antd'
+import { Trans } from '@lingui/macro'
+import { Button, Col, Row } from 'antd'
 import PayInputGroup from 'components/shared/inputs/Pay/PayInputGroup'
 import ProjectHeader from 'components/shared/ProjectHeader'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { useContext } from 'react'
+import {
+  V2OperatorPermission,
+  useHasPermission,
+} from 'hooks/v2/contractReader/HasPermission'
+import { useContext, useState } from 'react'
 
 import { permilleToPercent, permyriadToPercent } from 'utils/formatNumber'
 import { fromWad } from 'utils/formatNumber'
@@ -55,11 +60,11 @@ export default function V2Project() {
       />
       <Row>
         <Col md={12} xs={24}>
-          <h2>In Juicebox: Ξ{fromWad(ETHBalance)}</h2>
+          <h2>In Juicebox: {fromWad(ETHBalance)}</h2>
 
           {fundingCycle && (
             <div>
-              <h2>Funding cycle details</h2>
+              <h2>Funding Cycle details</h2>
               <ul>
                 <li>FC#{fundingCycle?.number.toNumber()}</li>
                 <li>
@@ -67,7 +72,8 @@ export default function V2Project() {
                 </li>
                 <li>Start: {start?.toISOString()}</li>
                 <li>End: {end?.toISOString()}</li>
-                <li>Weight: {fromWad(fundingCycle.weight)}</li>
+                <li>Weight: {fundingCycle.weight.toString()}</li>
+                <li>Metadata: {fundingCycle?.metadata.toString()}</li>
               </ul>
 
               <h3>ETH payouts</h3>

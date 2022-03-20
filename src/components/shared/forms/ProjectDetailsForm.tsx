@@ -24,12 +24,14 @@ export default function ProjectDetailsForm({
   hideProjectHandle = false,
   saveButton,
   style,
+  loading,
 }: {
   form: FormInstance<ProjectDetailsFormFields>
   onFinish: (values: ProjectDetailsFormFields) => void
   hideProjectHandle?: boolean
   saveButton?: JSX.Element
   style?: CSSProperties
+  loading?: boolean
 }) {
   return (
     <Form form={form} layout="vertical" onFinish={onFinish} style={style}>
@@ -74,7 +76,7 @@ export default function ProjectDetailsForm({
       />
       <Form.Item>
         {saveButton ?? (
-          <Button htmlType="submit" type="primary">
+          <Button htmlType="submit" loading={loading} type="primary">
             <Trans>Save project details</Trans>
           </Button>
         )}

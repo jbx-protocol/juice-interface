@@ -110,6 +110,7 @@ export default function V2ProjectReconfigureModal({
         visible={projectDetailsDrawerVisible}
         onFinish={() => setProjectDetailsDrawerVisible(false)}
       />
+      {/*  */}
       <V2ReconfigureFundingDrawer
         visible={fundingDrawerVisible}
         onFinish={() => setFundingDrawerVisible(false)}

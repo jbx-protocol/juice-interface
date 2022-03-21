@@ -480,6 +480,10 @@ msgstr "Commit portions of your funds to the people or projects you want to supp
 msgid "Community funding for people and projects"
 msgstr ""
 
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Confirm funding changes"
+msgstr "Confirm funding changes"
+
 #: src/components/v1/V1Project/modals/FeedbackPromptModal.tsx
 msgid "Congrats on creating your project!"
 msgstr "Congrats on creating your project!"
@@ -678,6 +682,10 @@ msgstr ""
 msgid "Each project has its own <0>ERC-20 tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
 msgstr "Each project has its own <0>ERC-20 tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
 
+#: src/components/v1/V1Project/modals/EditProjectModal.tsx
+msgid "Edit project"
+msgstr "Edit project"
+
 #: src/components/shared/TicketModsList.tsx
 msgid "Edit reserved token allocation"
 msgstr "Edit reserved token allocation"
@@ -786,6 +794,10 @@ msgstr "Funding distribution"
 #: src/components/v2/V2Create/tabs/FundingTab/FundingTabContent.tsx
 msgid "Funding target"
 msgstr "Funding target"
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Funding target/duration"
+msgstr "Funding target/duration"
 
 #: src/components/v1/FundingCycle/modals/DistributeTokensModal.tsx
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
@@ -1117,6 +1129,10 @@ msgstr ""
 msgid "Notice from {0}:"
 msgstr ""
 
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "OK"
+msgstr "OK"
+
 #: src/components/Landing/index.tsx
 msgid "Open source businesses"
 msgstr ""
@@ -1271,8 +1287,13 @@ msgstr ""
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Project details"
 msgstr ""
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectDetailsDrawer.tsx
+msgid "Project details reconfigurations will create a separate transaction."
+msgstr "Project details reconfigurations will create a separate transaction."
 
 #: src/components/shared/formItems/ProjectHandle/ProjectHandleFormItem.tsx
 #: src/components/shared/formItems/ProjectPayoutMods.tsx
@@ -1352,6 +1373,7 @@ msgstr "Receive {receiveText}"
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/tabs/RulesTab/ProjectReconfigurationFormItem.tsx
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfiguration"
 msgstr ""
 
@@ -1372,6 +1394,15 @@ msgstr "Reconfigure"
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Reconfigure funding"
 msgstr "Reconfigure funding"
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Reconfigure funding details"
+msgstr "Reconfigure funding details"
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectDetailsDrawer.tsx
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Reconfigure project details"
+msgstr "Reconfigure project details"
 
 #: src/components/v1/V1Project/FundingCycles/ReconfigureFundingModalTrigger.tsx
 msgid "Reconfigure upcoming"
@@ -1484,6 +1515,7 @@ msgid "Reward specific community members with tokens."
 msgstr ""
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Rules"
 msgstr ""
 
@@ -1810,6 +1842,7 @@ msgstr "This will erase all of your changes."
 msgid "To: <0/>"
 msgstr ""
 
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 #: src/utils/tokenSymbolText.ts
 msgid "Token"
 msgstr "Token"

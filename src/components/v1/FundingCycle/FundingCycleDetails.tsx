@@ -24,6 +24,8 @@ import {
 import { weightedRate } from 'utils/math'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
+import { V1CurrencyName } from 'utils/v1/currency'
+
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 
 import TooltipLabel from '../../shared/TooltipLabel'
@@ -90,9 +92,9 @@ export default function FundingCycleDetails({
             {hasFundingTarget(fundingCycle) ? (
               <>
                 <CurrencySymbol
-                  currency={
-                    fundingCycle.currency.toNumber() as V1CurrencyOption
-                  }
+                  currency={V1CurrencyName(
+                    fundingCycle.currency.toNumber() as V1CurrencyOption,
+                  )}
                 />
                 {formatWad(fundingCycle.target)}
               </>

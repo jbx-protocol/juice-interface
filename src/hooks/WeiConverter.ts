@@ -3,20 +3,21 @@ import { parseEther } from 'ethers/lib/utils'
 
 import { useContext } from 'react'
 import { CurrencyContext } from 'contexts/currencyContext'
+import { CurrencyOption } from 'models/currencyOption'
 
 // Converts an amount (ETH or USD) to WEIw
-export default function useWeiConverter({
+export default function useWeiConverter<C extends CurrencyOption>({
   currency,
   amount,
 }: {
-  currency?: number
+  currency?: C
   amount?: string
 }) {
   const converter = useCurrencyConverter()
   const {
-    currencies: { currencyUSD },
+    currencies: { USD },
   } = useContext(CurrencyContext)
-  if (currency === currencyUSD) {
+  if (currency === USD) {
     return converter.usdToWei(amount)
   }
 

@@ -6,7 +6,8 @@ import V2UserProvider from 'providers/v2/UserProvider'
 
 import { t, Trans } from '@lingui/macro'
 import { ThemeContext } from 'contexts/themeContext'
-import { CurrencyContext } from 'contexts/currencyContext'
+
+import V2CurrencyProvider from 'providers/v2/V2CurrencyProvider'
 
 import { readNetwork } from 'constants/networks'
 import V2WarningBanner from './V2WarningBanner'
@@ -16,8 +17,6 @@ import FundingTabContent from './tabs/FundingTab/FundingTabContent'
 import TokenTabContent from './tabs/TokenTab/TokenTabContent'
 import RulesTabContent from './tabs/RulesTab/RulesTabContent'
 import { TabContentProps } from './models'
-
-import { V2_CURRENCY_CONTEXT } from 'constants/v2/currency'
 
 const { TabPane } = Tabs
 
@@ -56,7 +55,7 @@ export default function V2Create() {
 
   return (
     <V2UserProvider>
-      <CurrencyContext.Provider value={V2_CURRENCY_CONTEXT}>
+      <V2CurrencyProvider>
         {isRinkeby ? <V2WarningBanner /> : null}
         <div style={{ margin: '4rem', marginBottom: 0 }}>
           {!isRinkeby && (
@@ -100,7 +99,7 @@ export default function V2Create() {
             </div>
           )}
         </div>
-      </CurrencyContext.Provider>
+      </V2CurrencyProvider>
     </V2UserProvider>
   )
 }

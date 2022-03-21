@@ -20,6 +20,8 @@ import { useContext, useLayoutEffect, useMemo, useState } from 'react'
 import { formatWad, permyriadToPercent, fromWad } from 'utils/formatNumber'
 import { amountSubFee } from 'utils/math'
 
+import { V1CurrencyName } from 'utils/v1/currency'
+
 import { V1_CURRENCY_ETH } from 'constants/v1/currency'
 import ProjectPayoutMods from './formItems/ProjectPayoutMods'
 
@@ -46,6 +48,10 @@ export default function PayoutModsList({
   const [editingMods, setEditingMods] = useState<PayoutMod[]>()
   const { owner } = useContext(V1ProjectContext)
   const setPayoutModsTx = useSetPayoutModsTx()
+
+  const fundingCycleCurrency = V1CurrencyName(
+    fundingCycle?.currency.toNumber() as V1CurrencyOption,
+  )
 
   const { editableMods, lockedMods } = useMemo(() => {
     const now = new Date().valueOf() / 1000
@@ -111,11 +117,7 @@ export default function PayoutModsList({
                         <>
                           {' '}
                           (
-                          <CurrencySymbol
-                            currency={
-                              fundingCycle.currency.toNumber() as V1CurrencyOption
-                            }
-                          />
+                          <CurrencySymbol currency={fundingCycleCurrency} />
                           {formatWad(baseTotal?.mul(mod.percent).div(10000), {
                             precision: fundingCycle.currency.eq(V1_CURRENCY_ETH)
                               ? 4
@@ -142,11 +144,7 @@ export default function PayoutModsList({
                 <>
                   {' '}
                   (
-                  <CurrencySymbol
-                    currency={
-                      fundingCycle.currency.toNumber() as V1CurrencyOption
-                    }
-                  />
+                  <CurrencySymbol currency={fundingCycleCurrency} />
                   {formatWad(baseTotal?.mul(ownerPercent).div(10000), {
                     precision: fundingCycle.currency.eq(V1_CURRENCY_ETH)
                       ? 4

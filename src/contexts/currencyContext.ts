@@ -7,18 +7,18 @@ import {
 
 import { CurrencyOption } from 'models/currencyOption'
 
-import { CurrencyMetadata } from 'constants/currency'
+import { CurrencyMetadata, CurrencyName } from 'constants/currency'
 
 // TODO make this CurrencyOption instead of number
 export type CurrencyMetadataType = Record<number, CurrencyMetadata>
 
 export type CurrencyContextType = {
   currencyMetadata: CurrencyMetadataType
-  currencies: Record<string, CurrencyOption>
+  currencies: Record<CurrencyName, CurrencyOption>
 }
 
 // Defaults to V2
 export const CurrencyContext = createContext<CurrencyContextType>({
   currencyMetadata: V2_CURRENCY_METADATA,
-  currencies: { currencyETH: V2_CURRENCY_ETH, currencyUSD: V2_CURRENCY_USD },
+  currencies: { ETH: V2_CURRENCY_ETH, USD: V2_CURRENCY_USD },
 })

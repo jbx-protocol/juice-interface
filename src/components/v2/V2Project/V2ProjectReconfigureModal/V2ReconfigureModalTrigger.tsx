@@ -1,5 +1,5 @@
 import { Button } from 'antd'
-import React, { useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { Provider } from 'react-redux'
 import store, { createStore } from 'redux/store'
 

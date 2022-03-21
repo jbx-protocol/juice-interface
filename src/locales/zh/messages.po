@@ -1402,11 +1402,11 @@ msgstr "重新配置筹款"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure funding details"
-msgstr "<<<<<<< HEAD"
+msgstr ""
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureFundingDrawer.tsx
 msgid "Reconfigure funding target/duration"
-msgstr "=======>>>>>>> eb9bfcff1ad5fae21402a642671277b7680aa2c0"
+msgstr ">>>>>>> 153425ca10bdac391883ab7d76d70851622055c9"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectDetailsDrawer.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
@@ -2385,4 +2385,5 @@ msgstr "在 {exchangeName} 的兑换率为 {tokenSymbol}/ETH"
 #: src/components/v1/V1Project/Rewards/index.tsx
 msgid "{tokensLabel} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
 msgstr "{tokensLabel} 会被分配给付款的人。如果项目设置了筹款目标，可以燃烧代币来按比例赎回溢出池中的 ETH。"
+
 

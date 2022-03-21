@@ -1397,11 +1397,11 @@ msgstr "Reconfigure funding"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure funding details"
-msgstr "Reconfigure funding details<<<<<<< HEAD"
+msgstr "Reconfigure funding details"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureFundingDrawer.tsx
 msgid "Reconfigure funding target/duration"
-msgstr "Reconfigure funding target/duration=======>>>>>>> eb9bfcff1ad5fae21402a642671277b7680aa2c0"
+msgstr "Reconfigure funding details>>>>>>> 153425ca10bdac391883ab7d76d70851622055c9"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectDetailsDrawer.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
@@ -2380,4 +2380,5 @@ msgstr ""
 #: src/components/v1/V1Project/Rewards/index.tsx
 msgid "{tokensLabel} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
 msgstr "{tokensLabel} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
+
 

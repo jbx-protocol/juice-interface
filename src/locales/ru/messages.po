@@ -8,7 +8,7 @@ msgstr ""
 "Language: ru\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-03-18 02:13\n"
+"PO-Revision-Date: 2022-03-21 02:19\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -459,7 +459,7 @@ msgstr "Изменения в конфигурации финансирован�
 
 #: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
 msgid "Check this to mint this project's ERC20 tokens to your wallet. Leave unchecked to have your token balance tracked by Juicebox, saving gas on this transaction. You can always claim your ERC20 tokens later."
-msgstr ""
+msgstr "Установите этот флажок, чтобы зачислить токены ERC20 этого проекта на свой кошелек. Оставьте флажок не отмеченным, чтобы ваш баланс токенов отслеживался Juicebox, экономя бензин на этой транзакции. Вы всегда сможете получить свои токены ERC20 позже."
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 msgid "Check this to mint {tokenSymbol} ERC20 to your wallet. Leave unchecked to have your token balance tracked by Juicebox, saving gas on this transaction. You can always claim your ERC20 tokens later."
@@ -1038,7 +1038,7 @@ msgstr "Создание токенов проекта по требованию
 
 #: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
 msgid "Mint tokens to a custom address."
-msgstr ""
+msgstr "Чеканка жетонов на пользовательский адрес."
 
 #: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
 msgid "Mint {tokensLabel}"
@@ -1218,7 +1218,7 @@ msgstr "Платежи приостановлены"
 
 #: src/components/v2/V2Create/tabs/FundingTab/FundingTabContent.tsx
 msgid "Payouts"
-msgstr ""
+msgstr "Выплаты"
 
 #: src/components/shared/forms/PayModsForm.tsx
 msgid "Payouts (optional)"
@@ -1918,7 +1918,7 @@ msgstr "Твиттер"
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
 msgid "Unarchive project"
-msgstr ""
+msgstr "Разархивировать проект"
 
 #: src/components/shared/AMMPrices/TokenAMMPriceRow.tsx
 msgid "Unavailable"

@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-03-18 02:13\n"
+"PO-Revision-Date: 2022-03-21 02:19\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -129,7 +129,7 @@ msgstr ""
 
 #: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
 msgid "<0>Learn more</0> about burning tokens."
-msgstr ""
+msgstr "<0>Aprende más</0> acerca de quemar tokens."
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "<0>Learn more</0> about funding cycle duration."
@@ -415,7 +415,7 @@ msgstr "Quemar tokens del proyecto"
 
 #: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
 msgid "Burn your {tokensLabel}. You won't receive ETH in return because this project has no overflow."
-msgstr ""
+msgstr "Quema tus {tokensLabel}. No recibirás ETH de regreso porque este proyecto no tiene excedente."
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Burn {0} {tokensTextShort}"
@@ -423,7 +423,7 @@ msgstr "Quemar {0} {tokensTextShort}"
 
 #: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
 msgid "Burn {tokensLabel}"
-msgstr ""
+msgstr "Quemar {tokensLabel}"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Burn {tokensTextLong}"
@@ -467,7 +467,7 @@ msgstr "Marca aquí para acuñar un {tokenSymbol} ERC20 a tu billetera. Deja sin
 
 #: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
 msgid "Claim {tokensLabel} as ERC20"
-msgstr ""
+msgstr "Reclamar {tokensLabel} como ERC20"
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
 msgid "Claiming {tokenSymbol} tokens will convert your {tokenSymbol} balance to ERC20 tokens and mint them to your wallet."
@@ -1030,7 +1030,7 @@ msgstr "Migrar a Juicebox V1.1"
 
 #: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
 msgid "Mint new {tokensLabel} into an account. Only a project's owner, a designated operator, or one of its terminal's delegates can mint its tokens."
-msgstr ""
+msgstr "Acuña nuevos {tokensLabel} a una cuenta. Solo el propietario de un proyecto, un operador designado, o uno de los delegados de su terminal puede acuñar sus tokens."
 
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "Mint project tokens on demand"
@@ -1042,7 +1042,7 @@ msgstr "Acuña tokens a una dirección personalizada."
 
 #: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
 msgid "Mint {tokensLabel}"
-msgstr ""
+msgstr "Acuñar {tokensLabel}"
 
 #: src/components/Projects/TrendingProjects.tsx
 msgid "More trending projects"
@@ -1050,7 +1050,7 @@ msgstr "Más proyectos en tendencia"
 
 #: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
 msgid "Move your {tokensLabel} from the Juicebox contract to your wallet."
-msgstr ""
+msgstr "Mueve tus {tokensLabel} del contrato de Juicebox a tu billetera."
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
@@ -1396,7 +1396,7 @@ msgstr "Canjear"
 
 #: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
 msgid "Redeem your {tokensLabel} for a portion of the project's overflow. Any {tokensLabel} you redeem will be burned."
-msgstr ""
+msgstr "Canjea tus {tokensLabel} por una porción del excedente del proyecto. Cualquier {tokensLabel} que canjees será quemado."
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Redeem {0} {tokensTextShort} for ETH"
@@ -1404,7 +1404,7 @@ msgstr "Canjear {0} {tokensTextShort} por ETH"
 
 #: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
 msgid "Redeem {tokensLabel} for ETH"
-msgstr ""
+msgstr "Canjea {tokensLabel} por ETH"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Redeem {tokensTextLong} for ETH"
@@ -1788,7 +1788,7 @@ msgstr "Este proyecto está usando actualmente el contrato terminal de Juicebox 
 
 #: src/components/v2/V2ProjectHeaderActions.tsx
 msgid "This project uses the V2 version of the Juicebox contracts."
-msgstr ""
+msgstr "Este proyecto usa la versión V2 de los contratos de Juicebox."
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hodl tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
@@ -1832,7 +1832,7 @@ msgstr "Acuñación del token"
 
 #: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
 msgid "Token minting is only available for V1.1 projects. Token minting can be enabled or disabled by reconfiguring the project's funding cycle."
-msgstr ""
+msgstr "La acuñación de tokens solo está disponible para proyectos V1.1. La acuñación de tokens puede ser activada o desactivada al reconfigurar el ciclo de financiamiento del proyecto."
 
 #: src/components/v1/V1Project/Rewards/IssueTickets.tsx
 msgid "Token name"

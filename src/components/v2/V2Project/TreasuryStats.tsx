@@ -1,15 +1,12 @@
 import { Trans } from '@lingui/macro'
-import { Tooltip } from 'antd'
-import CurrencySymbol from 'components/shared/CurrencySymbol'
-import ETHAmount from 'components/shared/ETHAmount'
+import ETHAmount from 'components/shared/currency/ETHAmount'
 import StatLine from 'components/shared/Project/StatLine'
 import { ThemeContext } from 'contexts/themeContext'
 import { BigNumber } from '@ethersproject/bignumber'
-import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
 import { CSSProperties, useContext } from 'react'
-import { formatWad, fromWad } from 'utils/formatNumber'
 import { V2_CURRENCY_ETH, V2_CURRENCY_USD } from 'utils/v2/currency'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
+import USDAmount from 'components/shared/currency/USDAmount'
 
 export default function TreasuryStats() {
   const {
@@ -20,7 +17,6 @@ export default function TreasuryStats() {
     balanceInDistributionLimitCurrency,
     distributionLimitCurrency,
   } = useContext(V2ProjectContext)
-  const converter = useCurrencyConverter()
 
   const spacing = 10
 
@@ -44,22 +40,7 @@ export default function TreasuryStats() {
     }
 
     if (distributionLimitCurrency?.eq(V2_CURRENCY_USD)) {
-      return (
-        <Tooltip
-          title={
-            <span>
-              <CurrencySymbol currency="ETH" />
-              {formatWad(converter.usdToWei(fromWad(amt)), {
-                precision: 2,
-                padEnd: true,
-              })}
-            </span>
-          }
-        >
-          <CurrencySymbol currency="USD" />
-          {formatWad(amt, { precision: 2, padEnd: true })}
-        </Tooltip>
-      )
+      return <USDAmount amount={amt} precision={2} padEnd />
     }
 
     return null

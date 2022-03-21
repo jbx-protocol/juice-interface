@@ -8,7 +8,7 @@ import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 
-import ETHAmount from 'components/shared/ETHAmount'
+import ETHAmount from 'components/shared/currency/ETHAmount'
 
 export default function Payments() {
   const {

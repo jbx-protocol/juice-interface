@@ -55,11 +55,11 @@ export default function V2Project() {
       />
       <Row>
         <Col md={12} xs={24}>
-          <h2>In Juicebox: Ξ{fromWad(ETHBalance)}</h2>
+          <h2>In Juicebox: {fromWad(ETHBalance)}</h2>
 
           {fundingCycle && (
             <div>
-              <h2>Funding cycle details</h2>
+              <h2>Funding Cycle details</h2>
               <ul>
                 <li>FC#{fundingCycle?.number.toNumber()}</li>
                 <li>
@@ -67,7 +67,8 @@ export default function V2Project() {
                 </li>
                 <li>Start: {start?.toISOString()}</li>
                 <li>End: {end?.toISOString()}</li>
-                <li>Weight: {fromWad(fundingCycle.weight)}</li>
+                <li>Weight: {fundingCycle.weight.toString()}</li>
+                <li>Metadata: {fundingCycle?.metadata.toString()}</li>
               </ul>
 
               <h3>ETH payouts</h3>

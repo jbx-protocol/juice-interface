@@ -1,12 +1,12 @@
 import { RightCircleOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
-import { Progress, Tooltip } from 'antd'
+import { Progress } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import EtherscanLink from 'components/shared/EtherscanLink'
 import ProjectTokenBalance from 'components/shared/ProjectTokenBalance'
 import TooltipLabel from 'components/shared/TooltipLabel'
-import ETHAmount from 'components/shared/ETHAmount'
+import ETHAmount from 'components/shared/currency/ETHAmount'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
@@ -15,15 +15,17 @@ import { useEthBalanceQuery } from 'hooks/EthBalance'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { NetworkName } from 'models/network-name'
 import { CSSProperties, useContext, useMemo, useState } from 'react'
-import { formatWad, fracDiv, fromWad } from 'utils/formatNumber'
+import { formatWad, fracDiv } from 'utils/formatNumber'
 import { hasFundingTarget } from 'utils/v1/fundingCycle'
 
 import { V1CurrencyName } from 'utils/v1/currency'
 import StatLine from 'components/shared/Project/StatLine'
 
+import USDAmount from 'components/shared/currency/USDAmount'
+
 import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
 import { readNetwork } from 'constants/networks'
-import { V1_CURRENCY_USD } from 'constants/v1/currency'
+import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
 
 import BalancesModal from './modals/BalancesModal'
 
@@ -88,29 +90,15 @@ export default function Paid() {
   const formatCurrencyAmount = (amt: BigNumber | undefined) => {
     if (!amt) return null
 
-    return currentFC.currency.eq(V1_CURRENCY_USD) ? (
-      <span>
-        <Tooltip
-          title={
-            <span>
-              <CurrencySymbol currency="ETH" />
-              {formatWad(converter.usdToWei(fromWad(amt)), {
-                precision: 2,
-                padEnd: true,
-              })}
-            </span>
-          }
-        >
-          <CurrencySymbol currency="USD" />
-          {formatWad(amt, { precision: 2, padEnd: true })}
-        </Tooltip>
-      </span>
-    ) : (
-      <span>
-        <CurrencySymbol currency="ETH" />
-        {formatWad(amt, { precision: 2, padEnd: true })}
-      </span>
-    )
+    if (currentFC.currency.eq(V1_CURRENCY_ETH)) {
+      return <ETHAmount amount={amt} precision={2} padEnd />
+    }
+
+    if (currentFC.currency.eq(V1_CURRENCY_USD)) {
+      return <USDAmount amount={amt} precision={2} padEnd />
+    }
+
+    return null
   }
 
   const isConstitutionDAO =

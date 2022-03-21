@@ -3,7 +3,7 @@ import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
 import { formatWad } from 'utils/formatNumber'
 import { LoadingOutlined } from '@ant-design/icons'
 
-import CurrencySymbol from './CurrencySymbol'
+import CurrencySymbol from '../CurrencySymbol'
 
 // Takes an ETH amount and returns equiv in USD
 export default function ETHToUSD({
@@ -17,6 +17,7 @@ export default function ETHToUSD({
     precision: 2,
     padEnd: true,
   })
+
   if (usdAmount?.gt(0)) {
     return (
       <span>

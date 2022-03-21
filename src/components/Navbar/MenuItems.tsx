@@ -1,58 +1,18 @@
-import { t } from '@lingui/macro'
-
-import { useState } from 'react'
-
-import { Collapse, Space } from 'antd'
+import { t, Trans } from '@lingui/macro'
+import { CSSProperties, useEffect, useState } from 'react'
+import { Dropdown, Menu, Space } from 'antd'
 import { DownOutlined, UpOutlined } from '@ant-design/icons'
-import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import ExternalLink from 'components/shared/ExternalLink'
 
-export function ItemDropdown({
-  heading,
-  dropdownItems,
-}: {
-  heading: string
-  dropdownItems: JSX.Element[]
-}) {
-  const [activeKey, setActiveKey] = useState<0 | undefined>()
-  const iconSize = 12
+import Logo from './Logo'
+import {
+  navDropdownItem,
+  navMenuItemStyles,
+  topLeftNavStyles,
+} from './navStyles'
+import { resourcesMenuItems } from './constants'
 
-  // Close dropdown when clicking anywhere in the window
-  window.addEventListener('click', () => setActiveKey(undefined), false)
-
-  return (
-    <div className="resources-dropdown">
-      <Collapse style={{ border: 'none' }} activeKey={activeKey}>
-        <CollapsePanel
-          style={{
-            border: 'none',
-          }}
-          key={0}
-          showArrow={false}
-          header={
-            <Space
-              onClick={e => {
-                setActiveKey(activeKey === 0 ? undefined : 0)
-                e.stopPropagation()
-              }}
-            >
-              {heading}
-              {activeKey === 0 ? (
-                <UpOutlined style={{ fontSize: iconSize }} />
-              ) : (
-                <DownOutlined style={{ fontSize: iconSize }} />
-              )}
-            </Space>
-          }
-        >
-          {dropdownItems}
-        </CollapsePanel>
-      </Collapse>
-    </div>
-  )
-}
-
-export function MenuItem({
+export function NavMenuItem({
   text,
   route,
   onClick,
@@ -73,37 +33,69 @@ export function MenuItem({
             rel: 'noreferrer',
           }
         : {})}
+      style={navMenuItemStyles}
     >
       {text}
     </a>
   )
 }
 
-export function DropdownItem({
-  text,
-  route,
-  onClick,
-}: {
-  text: string
-  route?: string
-  onClick?: VoidFunction
-}) {
-  return (
-    <ExternalLink className="nav-dropdown-item" href={route} onClick={onClick}>
-      {text}
-    </ExternalLink>
-  )
-}
+const resourcesMenu = (
+  <Menu style={{ marginTop: -16, marginLeft: -6 }}>
+    {resourcesMenuItems().map(r => (
+      <Menu.Item key={r.key}>
+        <ExternalLink
+          className="nav-dropdown-item"
+          href={r.link}
+          style={navDropdownItem}
+        >
+          {r.text}
+        </ExternalLink>
+      </Menu.Item>
+    ))}
+  </Menu>
+)
 
-export const menu = (onClickMenuItems?: VoidFunction) => {
+export function TopLeftNavItems({
+  mobile,
+  onClickMenuItems,
+}: {
+  mobile?: boolean
+  onClickMenuItems?: VoidFunction
+}) {
+  const [resourcesOpen, setResourcesOpen] = useState<boolean>(false)
+  const dropdownIconStyle: CSSProperties = {
+    fontSize: 13,
+    marginLeft: 7,
+  }
+
+  // Close resources dropdown when clicking anywhere in the window except the dropdown items
+  useEffect(() => {
+    function handleClick() {
+      setResourcesOpen(false)
+    }
+    window.addEventListener('click', handleClick)
+    return () => window.removeEventListener('click', handleClick)
+  }, [])
+
   return (
-    <>
-      <MenuItem
+    <Space
+      size={mobile ? 0 : 'large'}
+      className="top-left-nav"
+      style={{ ...topLeftNavStyles }}
+      direction={mobile ? 'vertical' : 'horizontal'}
+    >
+      {!mobile && (
+        <a href="/" style={{ display: 'inline-block' }}>
+          {<Logo />}
+        </a>
+      )}
+      <NavMenuItem
         text={t`Projects`}
-        route="/#/projects"
         onClick={onClickMenuItems}
+        route="/#/projects"
       />
-      <MenuItem
+      <NavMenuItem
         text={t`FAQ`}
         route={undefined}
         onClick={() => {
@@ -116,46 +108,35 @@ export const menu = (onClickMenuItems?: VoidFunction) => {
           }, 0)
         }}
       />
-      <MenuItem
+      <NavMenuItem
         text={t`Discord`}
-        route="https://discord.gg/6jXrJSyDFf"
         onClick={onClickMenuItems}
+        route="https://discord.gg/6jXrJSyDFf"
       />
 
-      <ItemDropdown
-        heading={t`Resources`}
-        dropdownItems={[
-          <DropdownItem
-            key="docs"
-            text={t`Docs`}
-            route="https://docs.juicebox.money"
-            onClick={onClickMenuItems}
-          />,
-          <DropdownItem
-            key="blog"
-            text={t`Blog`}
-            route="https://blog.juicebox.money"
-            onClick={onClickMenuItems}
-          />,
-          <DropdownItem
-            key="workspace"
-            text={t`Workspace`}
-            route="https://juicebox.notion.site/"
-          />,
-          <DropdownItem
-            key="podcast"
-            text={t`Podcast`}
-            route="https://open.spotify.com/show/4G8ji7vofcOx2acXcjXIa4?si=1e5e6e171ed744e8"
-            onClick={onClickMenuItems}
-          />,
-          <DropdownItem
-            key="peel"
-            text={t`Peel`}
-            route="https://discord.gg/XvmfY4Hkcz"
-            onClick={onClickMenuItems}
-          />,
-        ]}
-      />
-    </>
+      {!mobile && (
+        <Dropdown
+          overlay={resourcesMenu}
+          overlayStyle={{ padding: 0 }}
+          visible={resourcesOpen}
+        >
+          <div
+            className="nav-menu-item hover-opacity"
+            onClick={e => {
+              setResourcesOpen(!resourcesOpen)
+              e.stopPropagation()
+            }}
+            style={{ ...navMenuItemStyles }}
+          >
+            <Trans>Resources</Trans>
+            {resourcesOpen ? (
+              <UpOutlined style={dropdownIconStyle} />
+            ) : (
+              <DownOutlined style={dropdownIconStyle} />
+            )}
+          </div>
+        </Dropdown>
+      )}
+    </Space>
   )
 }

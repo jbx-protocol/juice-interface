@@ -122,6 +122,10 @@ msgstr "<0>Discount rate disabled when funding cycle duration has not been set.<
 msgid "<0>Juicebox contracts</0> are unaudited, and may be vulnerable to bugs or hacks. All funds moved through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable for any losses by projects or their supporters."
 msgstr "<0>Juicebox contracts</0> are unaudited, and may be vulnerable to bugs or hacks. All funds moved through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable for any losses by projects or their supporters."
 
+#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+msgid "<0>Learn more</0> about burning tokens."
+msgstr "<0>Learn more</0> about burning tokens."
+
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "<0>Learn more</0> about funding cycle duration."
 msgstr ""
@@ -147,10 +151,6 @@ msgstr "<0>Note: </0>Enabling tokens to be minted will appear risky to contribut
 #: src/components/v2/V2Create/tabs/TokenTab/TokenTabContent.tsx
 msgid "<0>Note: </0>Once your first funding cycle starts, updates you make to token attributes will <1>not be applied immediately</1> and only take effect in <2>upcoming funding cycles.</2>"
 msgstr "<0>Note: </0>Once your first funding cycle starts, updates you make to token attributes will <1>not be applied immediately</1> and only take effect in <2>upcoming funding cycles.</2>"
-
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureModalTrigger.tsx
-msgid "<0>Note:</0> The current funding cycle cannot be edited."
-msgstr "<0>Note:</0> The current funding cycle cannot be edited."
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "<0>Note:</0> These properties will <1>not</1> be editable immediately within a funding cycle. They can only be changed for <2>upcoming</2> funding cycles."
@@ -376,7 +376,7 @@ msgstr ""
 msgid "Block number"
 msgstr "Block number"
 
-#: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/constants.ts
 msgid "Blog"
 msgstr ""
 
@@ -408,13 +408,17 @@ msgstr ""
 msgid "Burn project tokens"
 msgstr "Burn project tokens"
 
-#: src/components/v1/V1Project/Rewards/index.tsx
-msgid "Burn tokens"
-msgstr "Burn tokens"
+#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+msgid "Burn your {tokensLabel}. You won't receive ETH in return because this project has no overflow."
+msgstr "Burn your {tokensLabel}. You won't receive ETH in return because this project has no overflow."
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Burn {0} {tokensTextShort}"
 msgstr "Burn {0} {tokensTextShort}"
+
+#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+msgid "Burn {tokensLabel}"
+msgstr "Burn {tokensLabel}"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Burn {tokensTextLong}"
@@ -436,7 +440,7 @@ msgstr ""
 msgid "Cancel"
 msgstr "Cancel"
 
-#: src/components/v1/V1Project/Rewards/index.tsx
+#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
 msgid "Cannot redeem tokens for ETH because this project has no overflow."
 msgstr "Cannot redeem tokens for ETH because this project has no overflow."
 
@@ -456,9 +460,9 @@ msgstr "Check this to mint this project's ERC20 tokens to your wallet. Leave unc
 msgid "Check this to mint {tokenSymbol} ERC20 to your wallet. Leave unchecked to have your token balance tracked by Juicebox, saving gas on this transaction. You can always claim your ERC20 tokens later."
 msgstr ""
 
-#: src/components/v1/V1Project/Rewards/index.tsx
-msgid "Claim {0} as ERC20"
-msgstr ""
+#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+msgid "Claim {tokensLabel} as ERC20"
+msgstr "Claim {tokensLabel} as ERC20"
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
 msgid "Claiming {tokenSymbol} tokens will convert your {tokenSymbol} balance to ERC20 tokens and mint them to your wallet."
@@ -547,7 +551,7 @@ msgstr "Custom token beneficiary"
 msgid "Cycle #{0}"
 msgstr ""
 
-#: src/components/Navbar/ThemePicker.tsx
+#: src/components/Navbar/Mobile/ThemePickerMobile.tsx
 msgid "Dark theme"
 msgstr ""
 
@@ -585,8 +589,8 @@ msgstr ""
 msgid "Disabled"
 msgstr "Disabled"
 
-#: src/components/Navbar/MobileCollapse.tsx
-#: src/components/Navbar/OptionsCollapse.tsx
+#: src/components/Navbar/Mobile/MobileCollapse.tsx
+#: src/components/Navbar/Wallet.tsx
 msgid "Disconnect"
 msgstr ""
 
@@ -633,7 +637,7 @@ msgstr ""
 msgid "Do I have to make my project open source to use Juicebox as its business model?"
 msgstr ""
 
-#: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/constants.ts
 msgid "Docs"
 msgstr ""
 
@@ -668,10 +672,6 @@ msgstr "Due to their public nature, any exploits to the contracts may have irrev
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
 msgid "Duration"
-msgstr ""
-
-#: src/components/v1/V1Project/Rewards/index.tsx
-msgid "ERC20"
 msgstr ""
 
 #: src/components/Landing/index.tsx
@@ -804,8 +804,8 @@ msgstr "Funding target/duration"
 msgid "Funds will be distributed to:"
 msgstr ""
 
-#: src/components/shared/FeedbackFormBtn.tsx
-#: src/components/shared/FeedbackFormBtn.tsx
+#: src/components/shared/FeedbackFormButton.tsx
+#: src/components/shared/FeedbackFormButton.tsx
 #: src/components/v1/V1Project/modals/FeedbackPromptModal.tsx
 msgid "Give feedback"
 msgstr "Give feedback"
@@ -887,6 +887,7 @@ msgid "I understand"
 msgstr "I understand"
 
 #: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
+#: src/components/v2/V2ProjectHeaderActions.tsx
 msgid "ID: {0}"
 msgstr "ID: {0}"
 
@@ -990,7 +991,7 @@ msgstr "Latest"
 msgid "Latest payments"
 msgstr ""
 
-#: src/components/Navbar/ThemePicker.tsx
+#: src/components/Navbar/Mobile/ThemePickerMobile.tsx
 msgid "Light theme"
 msgstr ""
 
@@ -1021,7 +1022,7 @@ msgstr "MAX"
 msgid "Manage"
 msgstr ""
 
-#: src/components/v1/V1Project/Rewards/index.tsx
+#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
 msgid "Manage {0}"
 msgstr "Manage {0}"
 
@@ -1034,6 +1035,10 @@ msgstr "Memo"
 msgid "Migrate to Juicebox V1.1"
 msgstr "Migrate to Juicebox V1.1"
 
+#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+msgid "Mint new {tokensLabel} into an account. Only a project's owner, a designated operator, or one of its terminal's delegates can mint its tokens."
+msgstr "Mint new {tokensLabel} into an account. Only a project's owner, a designated operator, or one of its terminal's delegates can mint its tokens."
+
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "Mint project tokens on demand"
 msgstr "Mint project tokens on demand"
@@ -1042,17 +1047,17 @@ msgstr "Mint project tokens on demand"
 msgid "Mint tokens to a custom address."
 msgstr "Mint tokens to a custom address."
 
-#: src/components/v1/V1Project/Rewards/index.tsx
-msgid "Mint {0}tokens"
-msgstr ""
-
-#: src/components/v1/V1Project/Rewards/index.tsx
-msgid "Minting tokens can be enabled or disabled by reconfiguring a v1.1 project's funding cycle. Tokens can only be minted by the project owner."
-msgstr ""
+#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+msgid "Mint {tokensLabel}"
+msgstr "Mint {tokensLabel}"
 
 #: src/components/Projects/TrendingProjects.tsx
 msgid "More trending projects"
 msgstr "More trending projects"
+
+#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+msgid "Move your {tokensLabel} from the Juicebox contract to your wallet."
+msgstr "Move your {tokensLabel} from the Juicebox contract to your wallet."
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
@@ -1234,7 +1239,7 @@ msgstr "Payouts (optional)"
 msgid "Peach's Juicebox Stand"
 msgstr ""
 
-#: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/constants.ts
 msgid "Peel"
 msgstr "Peel"
 
@@ -1250,7 +1255,7 @@ msgstr "Percent allocation"
 msgid "Percentages must add up to 100% or less"
 msgstr "Percentages must add up to 100% or less"
 
-#: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/constants.ts
 msgid "Podcast"
 msgstr ""
 
@@ -1383,8 +1388,6 @@ msgid "Reconfiguration strategy"
 msgstr ""
 
 #: src/components/v1/V1Project/FundingCycles/ReconfigureFundingModalTrigger.tsx
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureModalTrigger.tsx
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureModalTrigger.tsx
 msgid "Reconfigure"
 msgstr "Reconfigure"
 
@@ -1394,11 +1397,11 @@ msgstr "Reconfigure funding"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure funding details"
-msgstr "Reconfigure funding details"
+msgstr "Reconfigure funding details<<<<<<< HEAD"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureFundingDrawer.tsx
 msgid "Reconfigure funding target/duration"
-msgstr "Reconfigure funding target/duration"
+msgstr "Reconfigure funding target/duration=======>>>>>>> eb9bfcff1ad5fae21402a642671277b7680aa2c0"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectDetailsDrawer.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
@@ -1421,9 +1424,17 @@ msgstr "Recurring target"
 msgid "Redeem"
 msgstr ""
 
+#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+msgid "Redeem your {tokensLabel} for a portion of the project's overflow. Any {tokensLabel} you redeem will be burned."
+msgstr "Redeem your {tokensLabel} for a portion of the project's overflow. Any {tokensLabel} you redeem will be burned."
+
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Redeem {0} {tokensTextShort} for ETH"
 msgstr "Redeem {0} {tokensTextShort} for ETH"
+
+#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+msgid "Redeem {tokensLabel} for ETH"
+msgstr "Redeem {tokensLabel} for ETH"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Redeem {tokensTextLong} for ETH"
@@ -1480,6 +1491,7 @@ msgid "Reserves"
 msgstr ""
 
 #: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/Mobile/ResourcesDropdownMobile.tsx
 msgid "Resources"
 msgstr "Resources"
 
@@ -1490,11 +1502,6 @@ msgstr "Restrict payments and printing tokens."
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 #: src/components/v1/V1Create/index.tsx
 msgid "Restricted actions"
-msgstr ""
-
-#: src/components/v1/V1Project/Rewards/index.tsx
-#: src/components/v1/V1Project/Rewards/index.tsx
-msgid "Return my ETH"
 msgstr ""
 
 #: src/components/v1/V1Create/index.tsx
@@ -1811,6 +1818,10 @@ msgstr ""
 msgid "This project is currently using the Juicebox V1 terminal contract. New features introduced in V1.1 allow the project owner to:"
 msgstr "This project is currently using the Juicebox V1 terminal contract. New features introduced in V1.1 allow the project owner to:"
 
+#: src/components/v2/V2ProjectHeaderActions.tsx
+msgid "This project uses the V2 version of the Juicebox contracts."
+msgstr "This project uses the V2 version of the Juicebox contracts."
+
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hodl tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
 msgstr ""
@@ -1852,6 +1863,10 @@ msgstr ""
 msgid "Token minting"
 msgstr ""
 
+#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+msgid "Token minting is only available for V1.1 projects. Token minting can be enabled or disabled by reconfiguring the project's funding cycle."
+msgstr "Token minting is only available for V1.1 projects. Token minting can be enabled or disabled by reconfiguring the project's funding cycle."
+
 #: src/components/v1/V1Project/Rewards/IssueTickets.tsx
 msgid "Token name"
 msgstr "Token name"
@@ -1865,7 +1880,6 @@ msgid "Token symbol"
 msgstr "Token symbol"
 
 #: src/components/shared/Mod.tsx
-#: src/components/v1/V1Project/Rewards/index.tsx
 #: src/utils/tokenSymbolText.ts
 msgid "Tokens"
 msgstr ""
@@ -2089,7 +2103,7 @@ msgstr ""
 msgid "Withdraw funds"
 msgstr "Withdraw funds"
 
-#: src/components/Navbar/MenuItems.tsx
+#: src/components/Navbar/constants.ts
 msgid "Workspace"
 msgstr ""
 
@@ -2232,7 +2246,6 @@ msgstr "token"
 
 #: src/components/v1/FundingCycle/ReservedTokens.tsx
 #: src/components/v1/FundingCycle/ReservedTokens.tsx
-#: src/components/v1/V1Project/Rewards/index.tsx
 #: src/utils/tokenSymbolText.ts
 msgid "tokens"
 msgstr ""
@@ -2367,4 +2380,5 @@ msgstr ""
 #: src/components/v1/V1Project/Rewards/index.tsx
 msgid "{tokensLabel} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
 msgstr "{tokensLabel} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
+
 

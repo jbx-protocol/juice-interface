@@ -1,26 +1,78 @@
 import { BigNumber } from '@ethersproject/bignumber'
 
-import { fromWad, percentToPerbicent } from './formatNumber'
+import { invertPermyriad } from './bigNumbers'
 
-export const weightedRate = (
+import { fromWad, percentToPerbicent, percentToPermyriad } from './formatNumber'
+
+export type WeightFunction = (
   weight: BigNumber | undefined,
-  reservedRate: number | undefined,
-  wad: BigNumber | undefined,
-  output: 'payer' | 'reserved',
-) => {
-  if (!weight || !wad) return
+  reservedRatePerbicent: number | undefined,
+  wadAmount: BigNumber | undefined,
+  outputType: 'payer' | 'reserved',
+) => string | undefined
 
-  if (reservedRate === undefined) return
+/**
+ * Return a given [amountWad] weighted by a given [weight] and [reservedRatePerbicent].
+ *
+ * Typically only used by Juicebox V1 projects.
+ *
+ * @param weight - scalar value for weighting. Typically funding cycle weight.
+ * @param reservedRatePerbicent - reserve rate, as a perbicent (x/200)
+ * @param amountWad - amount to weight, as a wad.
+ * @param outputType
+ */
+export const weightedRate: WeightFunction = (
+  weight: BigNumber | undefined,
+  reservedRatePerbicent: number | undefined,
+  wadAmount: BigNumber | undefined,
+  outputType: 'payer' | 'reserved',
+) => {
+  if (!weight || !wadAmount) return
+
+  if (reservedRatePerbicent === undefined) return
 
   return fromWad(
     weight
-      .mul(wad)
+      .mul(wadAmount)
       .mul(
-        output === 'reserved'
-          ? reservedRate
-          : percentToPerbicent(100).sub(reservedRate),
+        outputType === 'reserved'
+          ? reservedRatePerbicent
+          : percentToPerbicent(100).sub(reservedRatePerbicent),
       )
-      .div(200),
+      .div(percentToPerbicent(100)),
+  )
+}
+
+/**
+ * Return a given [amountWad] weighted by a given [weight] and [reservedRatePermyriad].
+ *
+ * Typically only used by Juicebox V2 projects.
+ *
+ * @param weight - scalar value for weighting. Typically funding cycle weight.
+ * @param reservedRatePermyriad - reserve rate, as a permyriad (x/10,000)
+ * @param amountWad - amount to weight, as a wad.
+ * @param outputType
+ * @returns
+ */
+export const weightedAmount: WeightFunction = (
+  weight: BigNumber | undefined,
+  reservedRatePermyriad: number | undefined,
+  amountWad: BigNumber | undefined,
+  outputType: 'payer' | 'reserved',
+) => {
+  if (!weight || !amountWad) return
+
+  if (reservedRatePermyriad === undefined) return
+
+  return fromWad(
+    amountWad
+      .mul(weight)
+      .mul(
+        outputType === 'reserved'
+          ? reservedRatePermyriad
+          : invertPermyriad(BigNumber.from(reservedRatePermyriad)),
+      )
+      .div(percentToPermyriad(100)),
   )
 }
 

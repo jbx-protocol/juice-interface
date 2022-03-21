@@ -1,9 +1,6 @@
 import { Tooltip } from 'antd'
-
 import { t } from '@lingui/macro'
-
 import { NetworkName } from 'models/network-name'
-
 import { LinkOutlined } from '@ant-design/icons'
 
 import { readNetwork } from 'constants/networks'
@@ -12,17 +9,24 @@ import ExternalLink from './ExternalLink'
 export default function EtherscanLink({
   value,
   type,
+  truncated,
 }: {
   value: string | undefined
   type: 'tx' | 'address'
+  truncated?: boolean
 }) {
   if (!value) return null
+  let truncatedValue: string | undefined
+  // Return first and last 4 chars of ETH address only
+  if (truncated) {
+    truncatedValue =
+      value.substring(0, 6) + '...' + value.substring(value.length - 4)
+  }
 
   let subdomain = ''
   if (readNetwork.name !== NetworkName.mainnet) {
     subdomain = readNetwork.name + '.'
   }
-
   const linkProps = {
     className: 'hover-action',
     style: { fontWeight: 400 },
@@ -41,7 +45,7 @@ export default function EtherscanLink({
 
   return (
     <Tooltip title={t`Go to Etherscan`}>
-      <ExternalLink {...linkProps}>{value}</ExternalLink>
+      <ExternalLink {...linkProps}>{truncatedValue ?? value}</ExternalLink>
     </Tooltip>
   )
 }

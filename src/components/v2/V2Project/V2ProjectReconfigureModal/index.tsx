@@ -4,17 +4,13 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useContext, useLayoutEffect, useRef, useState } from 'react'
 import { CaretRightFilled } from '@ant-design/icons'
 
-import { V2ReconfigureProjectDetailsDrawer } from './drawers/V2ReconfigureProjectDetailsDrawer'
-import { V2ReconfigureFundingDrawer } from './drawers/V2ReconfigureFundingDrawer'
-import { Provider } from 'react-redux'
 import store from 'redux/store'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import {
-  SerializedV2FundAccessConstraint,
-  serializeFundAccessConstraint,
-  serializeV2FundingCycleData,
-} from 'utils/v2/serializers'
+
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
+
+import { V2ReconfigureProjectDetailsDrawer } from './drawers/V2ReconfigureProjectDetailsDrawer'
+import { V2ReconfigureFundingDrawer } from './drawers/V2ReconfigureFundingDrawer'
 
 function ReconfigureButton({
   title,
@@ -157,9 +153,6 @@ export default function V2ProjectReconfigureModal({
         // If changes made to any funding tab, change this text to 'Confirm funding changes' or something
         fundingChanged ? t`Confirm funding changes` : t`OK`
       }
-      // okButtonProps={{
-      //   disabled: !redeemAmount || parseInt(redeemAmount) === 0,
-      // }}
       width={540}
       centered
     >

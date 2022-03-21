@@ -11,17 +11,11 @@ import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
-import StandardSaveButton from 'components/StandardSaveButton'
+
+import { uploadProjectMetadata } from 'utils/ipfs'
+import { useEditV2ProjectDetailsTx } from 'hooks/v2/transactor/EditV2ProjectDetailsTx'
 
 import { drawerStyle } from 'constants/styles/drawerStyle'
-import {
-  cidFromUrl,
-  editMetadataForCid,
-  logoNameForHandle,
-  metadataNameForHandle,
-  uploadProjectMetadata,
-} from 'utils/ipfs'
-import { useEditV2ProjectDetailsTx } from 'hooks/v2/transactor/EditV2ProjectDetailsTx'
 
 export function V2ReconfigureProjectDetailsDrawer({
   visible,
@@ -117,9 +111,6 @@ export function V2ReconfigureProjectDetailsDrawer({
         onFinish={onProjectFormSaved}
         hideProjectHandle
         loading={loadingSaveChanges}
-        // saveButton={
-        //   <StandardSaveButton />
-        // }
       />
     </Drawer>
   )

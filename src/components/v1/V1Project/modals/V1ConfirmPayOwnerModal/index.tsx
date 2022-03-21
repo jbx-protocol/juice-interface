@@ -17,6 +17,8 @@ import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 import { usePayV1ProjectTx } from 'hooks/v1/transactor/PayV1ProjectTx'
 
+import Paragraph from 'components/shared/Paragraph'
+
 import V1ProjectRiskNotice from './V1ProjectRiskNotice'
 import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
 
@@ -115,7 +117,7 @@ export default function V1ConfirmPayOwnerModal({
             <h4>
               <Trans>Notice from {metadata.name}:</Trans>
             </h4>
-            <p>{metadata.payDisclosure}</p>
+            <Paragraph description={metadata.payDisclosure} />
           </div>
         )}
 

@@ -1,10 +1,11 @@
-import { Button, Tooltip } from 'antd'
+import { Button } from 'antd'
 import React, { useRef, useState } from 'react'
 import { Provider } from 'react-redux'
 import store, { createStore } from 'redux/store'
-import { Trans } from '@lingui/macro'
 
 import { BigNumber } from '@ethersproject/bignumber'
+
+import { SettingOutlined } from '@ant-design/icons'
 
 import V2ProjectReconfigureModal from './index'
 
@@ -30,7 +31,7 @@ export default function V2ReconfigureFundingModalTrigger({
 
   return (
     <div style={{ textAlign: 'right' }}>
-      {fundingDuration?.gt(0) ? (
+      {/* {fundingDuration?.gt(0) ? (
         <Tooltip
           title={
             <span>
@@ -40,15 +41,24 @@ export default function V2ReconfigureFundingModalTrigger({
             </span>
           }
         >
-          <Button onClick={handleModalOpen} size="large">
+          <Button
+            onClick={handleModalOpen}
+            size="large"
+            disabled={isPreviewMode}
+          >
             <Trans>Reconfigure</Trans>
           </Button>
         </Tooltip>
       ) : (
-        <Button onClick={handleModalOpen} size="small">
+        <Button onClick={handleModalOpen} size="small" disabled={isPreviewMode}>
           <Trans>Reconfigure</Trans>
         </Button>
-      )}
+      )} */}
+      <Button
+        onClick={handleModalOpen}
+        icon={<SettingOutlined />}
+        type="text"
+      />
       {/* Make button and drawer instance for funding drawer */}
       {localStoreRef.current && (
         <Provider store={localStoreRef.current}>

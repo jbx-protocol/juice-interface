@@ -10,14 +10,17 @@ import NetworkProvider from 'providers/NetworkProvider'
 import ThemeProvider from 'providers/ThemeProvider'
 import V1UserProvider from 'providers/v1/UserProvider'
 import LanguageProvider from 'providers/LanguageProvider'
-import ReactQueryProvier from 'providers/ReactQueryProvider'
+import ReactQueryProvider from 'providers/ReactQueryProvider'
 
 import store from './redux/store'
 import reportWebVitals from './utils/reportWebVitals'
+import initSentry from './lib/sentry'
+
+initSentry()
 
 ReactDOM.render(
   <React.StrictMode>
-    <ReactQueryProvier>
+    <ReactQueryProvider>
       <Provider store={store}>
         <LanguageProvider>
           <ThemeProvider>
@@ -29,7 +32,7 @@ ReactDOM.render(
           </ThemeProvider>
         </LanguageProvider>
       </Provider>
-    </ReactQueryProvier>
+    </ReactQueryProvider>
   </React.StrictMode>,
   document.getElementById('root'),
 )

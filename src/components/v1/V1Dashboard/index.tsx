@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import FeedbackFormBtn from 'components/shared/FeedbackFormBtn'
+import FeedbackFormButton from 'components/shared/FeedbackFormButton'
 
 import {
   V1ProjectContext,
@@ -241,7 +241,7 @@ export default function V1Dashboard() {
           <div style={{ textAlign: 'center', padding: 20 }}>
             <ScrollToTopButton />
           </div>
-          <FeedbackFormBtn projectHandle={handle} />
+          <FeedbackFormButton projectHandle={handle} />
           <FeedbackPromptModal
             visible={feedbackModalVisible}
             onOk={closeFeedbackModal}

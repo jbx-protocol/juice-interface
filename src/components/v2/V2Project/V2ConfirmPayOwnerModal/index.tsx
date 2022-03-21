@@ -24,7 +24,11 @@ import { FormItems } from 'components/shared/formItems'
 
 import * as constants from '@ethersproject/constants'
 
-import { weightedRate } from 'utils/math'
+import { weightedAmount } from 'utils/math'
+
+import { decodeV2FundingCycleMetadata } from 'utils/v2/fundingCycle'
+
+import Paragraph from 'components/shared/Paragraph'
 
 import V2ProjectRiskNotice from './V2ProjectRiskNotice'
 
@@ -60,16 +64,18 @@ export default function V2ConfirmPayOwnerModal({
 
   if (!fundingCycle || !projectId || !projectMetadata) return null
 
-  //TODO: get reservedRate from decodeV2FundingCycleMetadata (which is erroring)
-  const reservedRate = 0 //decodeV2FundingCycleMetadata(fundingCycle.metadata).reservedRate?.toNumber()
+  const fundingCycleMetadata = decodeV2FundingCycleMetadata(
+    fundingCycle.metadata,
+  )
+  const reservedRate = fundingCycleMetadata.reservedRate?.toNumber()
 
-  const receivedTickets = weightedRate(
+  const receivedTickets = weightedAmount(
     fundingCycle?.weight,
     reservedRate,
     weiAmount,
     'payer',
   )
-  const ownerTickets = weightedRate(
+  const ownerTickets = weightedAmount(
     fundingCycle?.weight,
     reservedRate,
     weiAmount,
@@ -140,7 +146,7 @@ export default function V2ConfirmPayOwnerModal({
             <h4>
               <Trans>Notice from {projectMetadata.name}:</Trans>
             </h4>
-            <p>{projectMetadata.payDisclosure}</p>
+            <Paragraph description={projectMetadata.payDisclosure} />
           </div>
         )}
 

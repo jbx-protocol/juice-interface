@@ -7,17 +7,16 @@ import {
   V2OperatorPermission,
   useHasPermission,
 } from 'hooks/v2/contractReader/HasPermission'
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 
-import { permilleToPercent } from 'utils/formatNumber'
+import { permilleToPercent, permyriadToPercent } from 'utils/formatNumber'
 import { fromWad } from 'utils/formatNumber'
-import {
-  deserializeV2FundingCycleMetadata,
-  serializeV2FundingCycleMetadata,
-} from 'utils/v2/serializers'
+
+import { decodeV2FundingCycleMetadata } from 'utils/v2/fundingCycle'
+import { weightedAmount } from 'utils/math'
 
 import V2PayButton from './V2PayButton'
-import V2ReconfigureFundingModalTrigger from './V2ProjectReconfigureModal/V2ReconfigureModalTrigger'
+import V2ProjectHeaderActions from '../V2ProjectHeaderActions'
 
 export default function V2Project() {
   const {
@@ -44,13 +43,24 @@ export default function V2Project() {
         )
       : null
 
-  const reservedRate = 0 // todo get this from v2fundingcyclemetadata
+  const fundingCycleMetadata = fundingCycle
+    ? decodeV2FundingCycleMetadata(fundingCycle?.metadata)
+    : undefined
+
+  const reservedRatePercent = parseFloat(
+    permyriadToPercent(fundingCycleMetadata?.reservedRate),
+  )
+  const redemptionRatePercent = parseFloat(
+    permyriadToPercent(fundingCycleMetadata?.redemptionRate),
+  )
+
   const weight = fundingCycle?.weight
   return (
     <>
-      <Row>
-        <ProjectHeader metadata={projectMetadata} />
-      </Row>
+      <ProjectHeader
+        metadata={projectMetadata}
+        actions={<V2ProjectHeaderActions />}
+      />
       <Row>
         <Col md={12} xs={24}>
           <h2>In Juicebox: {fromWad(ETHBalance)}</h2>
@@ -82,19 +92,23 @@ export default function V2Project() {
                   <li>{split.beneficiary}</li>
                 ))}
               </ul>
+
+              <h3>Funding cycle metadata</h3>
+              <ul>
+                <li>Reserve rate: {reservedRatePercent}%</li>
+              </ul>
+              <ul>
+                <li>Redemption rate: {redemptionRatePercent}%</li>
+              </ul>
             </div>
-          )}
-          {canReconfigure && (
-            <V2ReconfigureFundingModalTrigger
-              fundingDuration={fundingCycle?.duration}
-            />
           )}
         </Col>
         <Col md={12} xs={24}>
           <PayInputGroup
             PayButton={V2PayButton}
-            reservedRate={reservedRate}
+            reservedRate={reservedRatePercent}
             weight={weight}
+            weightingFn={weightedAmount}
           />
         </Col>
       </Row>

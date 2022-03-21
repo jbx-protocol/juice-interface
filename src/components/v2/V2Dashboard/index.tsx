@@ -91,7 +91,7 @@ export default function V2Dashboard() {
 
   if (metadataLoading || metadataURILoading) return <Loading />
 
-  if (projectId?.eq(0) || metadataError) {
+  if (projectId?.eq(0) || metadataError || !metadataCID) {
     return <Dashboard404 projectId={projectId} />
   }
 

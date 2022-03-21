@@ -66,6 +66,7 @@ export default function ParticipantsModal({
         'lastPaidTimestamp',
         'balance',
         'stakedBalance',
+        'id',
       ],
       first: pageSize,
       skip: pageNumber * pageSize,

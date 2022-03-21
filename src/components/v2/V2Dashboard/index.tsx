@@ -14,6 +14,7 @@ import useProjectTerminals from 'hooks/v2/contractReader/ProjectTerminals'
 import { useETHPaymentTerminalBalance } from 'hooks/v2/contractReader/ETHPaymentTerminalBalance'
 
 import useProjectToken from 'hooks/v2/contractReader/ProjectToken'
+import useProjectQueuedFundingCycle from 'hooks/v2/contractReader/ProjectQueuedFundingCycle'
 
 import { layouts } from 'constants/styles/layouts'
 
@@ -23,6 +24,7 @@ import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVE_TOKEN_SPLIT_GROUP,
 } from 'constants/v2/splits'
+import useProjectDistributionLimit from 'hooks/v2/contractReader/ProjectDistributionLimit'
 
 export default function V2Dashboard() {
   const { projectId: projectIdParameter }: { projectId?: string } = useParams()
@@ -41,14 +43,36 @@ export default function V2Dashboard() {
     projectId,
   })
 
+  const { data: queuedFundingCycle } = useProjectQueuedFundingCycle({
+    projectId,
+  })
+
   const { data: payoutSplits } = useProjectSplits({
     projectId,
     splitGroup: ETH_PAYOUT_SPLIT_GROUP,
     domain: fundingCycle?.configuration?.toString(),
   })
-
   const { data: terminals } = useProjectTerminals({
+    // useMemo here
     projectId,
+  })
+
+  const { data: distributionLimit } = useProjectDistributionLimit({
+    projectId,
+    domain: fundingCycle?.configuration?.toString(),
+    terminal: terminals ? terminals[0] : undefined, //TODO: make primaryTerminalOf hook and use it
+  })
+
+  const { data: queuedDistributionLimit } = useProjectDistributionLimit({
+    projectId,
+    domain: queuedFundingCycle?.configuration?.toString(),
+    terminal: terminals ? terminals[0] : '',
+  })
+
+  const { data: queuedPayoutSplits } = useProjectSplits({
+    projectId,
+    splitGroup: ETH_PAYOUT_SPLIT_GROUP,
+    domain: queuedFundingCycle?.configuration?.toString(),
   })
 
   const { data: reserveTokenSplits } = useProjectSplits({
@@ -75,7 +99,11 @@ export default function V2Dashboard() {
     projectId,
     projectMetadata,
     fundingCycle,
+    queuedFundingCycle,
+    distributionLimit,
+    queuedDistributionLimit,
     payoutSplits,
+    queuedPayoutSplits,
     reserveTokenSplits,
     tokenAddress,
     terminals,

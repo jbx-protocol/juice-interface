@@ -22,6 +22,7 @@ import {
   RESERVE_TOKEN_SPLIT_GROUP,
 } from 'constants/v2/splits'
 import { DEFAULT_BALLOT_STRATEGY } from 'constants/ballotStrategies/ballotStrategies'
+import { getDefaultFundAccessConstraint } from 'utils/v2/fundingCycle'
 
 export interface V2ProjectState {
   version: number
@@ -138,6 +139,9 @@ export const editingV2ProjectSlice = createSlice({
       action: PayloadAction<SerializedV2FundAccessConstraint[]>,
     ) => {
       state.fundAccessConstraints = action.payload
+    },
+    setDistributionLimit: (state, action: PayloadAction<string>) => {
+      state.fundAccessConstraints[0].distributionLimit = action.payload
     },
     setPayoutSplits: (state, action: PayloadAction<Split[]>) => {
       state.payoutGroupedSplits.splits = action.payload

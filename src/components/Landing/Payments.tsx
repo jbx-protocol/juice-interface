@@ -1,5 +1,4 @@
 import RichNote from 'components/shared/RichNote'
-import CurrencySymbol from 'components/shared/CurrencySymbol'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import Loading from 'components/shared/Loading'
 import ProjectHandle from 'components/shared/ProjectHandle'
@@ -8,9 +7,8 @@ import { ThemeContext } from 'contexts/themeContext'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
-import { formatWad } from 'utils/formatNumber'
 
-import { V1_CURRENCY_ETH } from 'constants/v1/currency'
+import ETHAmount from 'components/shared/ETHAmount'
 
 export default function Payments() {
   const {
@@ -74,8 +72,7 @@ export default function Payments() {
                 }}
               >
                 <span style={{ fontSize: '1rem', fontWeight: 500 }}>
-                  <CurrencySymbol currency={V1_CURRENCY_ETH} />
-                  {formatWad(e.amount, { precision: 4 })}
+                  <ETHAmount amount={e.amount} precision={4} />
                 </span>
                 <span>
                   <FormattedAddress address={e.beneficiary} />

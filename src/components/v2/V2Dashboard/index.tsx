@@ -15,6 +15,7 @@ import { useETHPaymentTerminalBalance } from 'hooks/v2/contractReader/ETHPayment
 
 import useProjectToken from 'hooks/v2/contractReader/ProjectToken'
 import useProjectQueuedFundingCycle from 'hooks/v2/contractReader/ProjectQueuedFundingCycle'
+import useProjectDistributionLimit from 'hooks/v2/contractReader/ProjectDistributionLimit'
 
 import { layouts } from 'constants/styles/layouts'
 
@@ -24,7 +25,6 @@ import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVE_TOKEN_SPLIT_GROUP,
 } from 'constants/v2/splits'
-import useProjectDistributionLimit from 'hooks/v2/contractReader/ProjectDistributionLimit'
 
 export default function V2Dashboard() {
   const { projectId: projectIdParameter }: { projectId?: string } = useParams()

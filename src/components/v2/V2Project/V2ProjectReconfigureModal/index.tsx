@@ -1,16 +1,21 @@
 import { t, Trans } from '@lingui/macro'
 import { Modal, Space } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
-import { useContext, useLayoutEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { CaretRightFilled } from '@ant-design/icons'
 
 import store from 'redux/store'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
+import { fromWad, parseWad } from 'utils/formatNumber'
+import { useAppDispatch } from 'hooks/AppDispatch'
 
 import { V2ReconfigureProjectDetailsDrawer } from './drawers/V2ReconfigureProjectDetailsDrawer'
 import { V2ReconfigureFundingDrawer } from './drawers/V2ReconfigureFundingDrawer'
+import { useAppSelector } from 'hooks/AppSelector'
+import { getDefaultFundAccessConstraint } from 'utils/v2/fundingCycle'
+import { SerializedV2FundAccessConstraint } from 'utils/v2/serializers'
 
 function ReconfigureButton({
   title,
@@ -67,6 +72,14 @@ export default function V2ProjectReconfigureModal({
     projectMetadata,
   } = useContext(V2ProjectContext)
 
+  const dispatch = useAppDispatch()
+
+  const {
+    fundAccessConstraints: editingFundAccessConstraints,
+    fundingCycleData: editingFundingCycleData,
+    payoutGroupedSplits: editingPayoutGroupedSplits,
+  } = useAppSelector(state => state.editingV2Project)
+
   const [projectDetailsDrawerVisible, setProjectDetailsDrawerVisible] =
     useState<boolean>(false)
   const [fundingDrawerVisible, setFundingDrawerVisible] =
@@ -74,70 +87,70 @@ export default function V2ProjectReconfigureModal({
   const [tokenDrawerVisible, setTokenDrawerVisible] = useState<boolean>(false)
   const [rulesDrawerVisible, setRulesDrawerVisible] = useState<boolean>(false)
 
-  const [fundingChanged, setFundingChanged] = useState<boolean>(false)
+  const [fundingHasChanged, setFundingHasChanged] = useState<boolean>(false)
 
   const localStoreRef = useRef<typeof store>()
 
-  useLayoutEffect(() => {
-    const effectiveFundingCycle = queuedFundingCycle?.number.gt(0)
-      ? queuedFundingCycle
-      : fundingCycle
-    const effectivePayoutSplits = queuedFundingCycle?.number.gt(0)
-      ? queuedPayoutSplits
-      : payoutSplits
+  const effectiveFundingCycle = queuedFundingCycle?.number.gt(0)
+    ? queuedFundingCycle
+    : fundingCycle
 
+  const effectivePayoutSplits = queuedFundingCycle?.number.gt(0)
+    ? queuedPayoutSplits
+    : payoutSplits
+
+  const effectiveDistributionLimit = queuedDistributionLimit?.length
+    ? queuedDistributionLimit
+    : distributionLimit
+
+  useLayoutEffect(() => {
     if (!visible || !effectiveFundingCycle || !effectivePayoutSplits) return
 
-    // set editing funding target
-    const effectiveDistributionLimit = queuedDistributionLimit?.length
-      ? queuedDistributionLimit
-      : distributionLimit
-
-    editingV2ProjectActions.setDistributionLimit(
-      effectiveDistributionLimit ?? '',
+    dispatch(
+      editingV2ProjectActions.setDistributionLimit(
+        fromWad(effectiveDistributionLimit) ?? '',
+      ),
     )
-    console.log('distributionLimit: ', distributionLimit)
-    console.log('effectiveDistributionLimit: ', effectiveDistributionLimit)
 
-    // TODO: set editing funding duration
+    // Set editing funding duration
+    dispatch(
+      editingV2ProjectActions.setDuration(
+        fundingCycle?.duration.toString() ?? '',
+      ),
+    )
 
-    // TODO: set editing payouts
-
-    // dispatch(
-    //   editingV2ProjectActions.setFundAccessConstraints(
-    //     serializeFundAccessConstraint({
-    //       ...effectiveFundingCycle,
-    //       ...metadata,
-    //       reserved: BigNumber.from(metadata.reservedRate),
-    //       bondingCurveRate: BigNumber.from(metadata.bondingCurveRate),
-    //     }),
-    //   ),
-    // )
-    // setEditingTicketMods(ticketMods)
-    // setEditingPayoutMods(payoutMods)
-    // ticketingForm.setFieldsValue({
-    //   reserved: parseFloat(perbicentToPercent(metadata.reservedRate)),
-    // })
-    // incentivesForm.setFieldsValue({
-    //   discountRate: permilleToPercent(fundingCycle.discountRate),
-    //   bondingCurveRate: perbicentToPercent(metadata.bondingCurveRate),
-    // })
-
-    // if (metadata.version === 1) {
-    //   restrictedActionsForm.setFieldsValue({
-    //     payIsPaused: metadata.payIsPaused,
-    //     ticketPrintingIsAllowed: metadata.ticketPrintingIsAllowed,
-    //   })
-    // }
+    // Set editing payouts
+    dispatch(editingV2ProjectActions.setPayoutSplits(effectivePayoutSplits))
   }, [
-    queuedFundingCycle,
+    effectiveFundingCycle,
+    effectivePayoutSplits,
+    effectiveDistributionLimit,
     fundingCycle,
-    queuedDistributionLimit,
-    distributionLimit,
-    payoutSplits,
-    queuedPayoutSplits,
     visible,
+    dispatch,
   ])
+
+  // These 'useEffects' check if any funding value has changed in the redux state, and
+  // enables the 'Confirm funding changes' button and tx if any changes have been made
+
+  // Compare original V2ProjectContext distributionLimit and editingV2Project distributionLimit
+  useEffect(() => {
+    setFundingHasChanged(
+      fromWad(effectiveDistributionLimit) !==
+        getDefaultFundAccessConstraint(editingFundAccessConstraints)
+          ?.distributionLimit,
+    )
+  }, [editingFundAccessConstraints, effectiveDistributionLimit])
+
+  // Compare original V2ProjectContext duration and editingV2Project duration
+  useEffect(() => {
+    setFundingHasChanged(
+      effectiveFundingCycle?.duration.toString() !==
+        editingFundingCycleData?.duration,
+    )
+  }, [effectiveFundingCycle, editingFundingCycleData])
+
+  // TODO: Compare original V2ProjectContext payoutSplits and editingV2Project payoutSplits
 
   return (
     <Modal
@@ -146,12 +159,15 @@ export default function V2ProjectReconfigureModal({
       // confirmLoading={loading}
       onOk={() => {
         // If changes made to any funding tab, call another function internally to make that transaction
+        if (fundingHasChanged) {
+          console.log('TODO: Execute tx to change upcoming FC')
+        }
         onOk()
       }}
       onCancel={onOk}
       okText={
         // If changes made to any funding tab, change this text to 'Confirm funding changes' or something
-        fundingChanged ? t`Confirm funding changes` : t`OK`
+        fundingHasChanged ? t`Confirm funding changes` : t`OK`
       }
       width={540}
       centered
@@ -186,7 +202,9 @@ export default function V2ProjectReconfigureModal({
       />
       <V2ReconfigureFundingDrawer
         visible={fundingDrawerVisible}
-        onFinish={() => setFundingDrawerVisible(false)}
+        onFinish={() => {
+          setFundingDrawerVisible(false)
+        }}
       />
     </Modal>
   )

@@ -3,10 +3,7 @@ import { Button, Col, Row } from 'antd'
 import PayInputGroup from 'components/shared/inputs/Pay/PayInputGroup'
 import ProjectHeader from 'components/shared/ProjectHeader'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import {
-  V2OperatorPermission,
-  useHasPermission,
-} from 'hooks/v2/contractReader/HasPermission'
+
 import { useContext } from 'react'
 
 import { permilleToPercent, permyriadToPercent } from 'utils/formatNumber'
@@ -26,9 +23,8 @@ export default function V2Project() {
     payoutSplits,
     reserveTokenSplits,
     ETHBalance,
+    distributionLimit,
   } = useContext(V2ProjectContext)
-
-  const canReconfigure = useHasPermission(V2OperatorPermission.Configure)
 
   if (!projectId) return null
 
@@ -77,6 +73,8 @@ export default function V2Project() {
                 <li>End: {end?.toISOString()}</li>
                 <li>Weight: {fundingCycle.weight.toString()}</li>
                 <li>Metadata: {fundingCycle?.metadata.toString()}</li>
+                <li>Distribution limit: {fromWad(distributionLimit)}</li>
+                <li>Funding duration: {fundingCycle?.duration.toNumber()}</li>
               </ul>
 
               <h3>ETH payouts</h3>

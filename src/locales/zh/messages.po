@@ -2386,4 +2386,3 @@ msgstr "在 {exchangeName} 的兑换率为 {tokenSymbol}/ETH"
 msgid "{tokensLabel} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
 msgstr "{tokensLabel} 会被分配给付款的人。如果项目设置了筹款目标，可以燃烧代币来按比例赎回溢出池中的 ETH。"
 
-

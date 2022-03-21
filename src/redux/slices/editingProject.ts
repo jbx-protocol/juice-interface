@@ -16,6 +16,8 @@ import {
 } from 'utils/v1/serializers'
 import { toDateSeconds } from 'utils/formatDate'
 
+import { V1_CURRENCY_USD } from 'constants/v1/currency'
+
 interface EditingProjectInfo {
   metadata: ProjectMetadataV4
   handle: string
@@ -57,7 +59,7 @@ export const defaultProjectState: EditingProjectState = {
     number: BigNumber.from(1),
     basedOn: BigNumber.from(0),
     target: constants.MaxUint256,
-    currency: BigNumber.from(1),
+    currency: BigNumber.from(V1_CURRENCY_USD),
     start: BigNumber.from(toDateSeconds(new Date())),
     duration: BigNumber.from(0),
     tapped: BigNumber.from(0),

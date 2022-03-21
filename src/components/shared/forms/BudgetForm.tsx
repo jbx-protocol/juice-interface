@@ -19,7 +19,7 @@ import { hasFundingTarget, isRecurring } from 'utils/v1/fundingCycle'
 import { helpPagePath } from 'utils/helpPageHelper'
 
 import ExternalLink from '../ExternalLink'
-import { V1_CURRENCY_ETH } from 'constants/v1/currency'
+import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
 
 const DEFAULT_TARGET_AFTER_FEE = '10000'
 
@@ -131,7 +131,7 @@ export default function BudgetForm({
                 setTarget(
                   targetSubFeeToTargetFormatted(targetSubFee, terminalFee),
                 )
-                setCurrency(1)
+                setCurrency(V1_CURRENCY_USD)
                 setShowFundingFields(checked)
               }}
             />

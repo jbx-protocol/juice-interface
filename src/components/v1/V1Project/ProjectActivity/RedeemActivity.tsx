@@ -10,8 +10,6 @@ import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
-import { V1_CURRENCY_ETH } from 'constants/v1/currency'
-
 import ActivityTabContent from './ActivityTabContent'
 import { contentLineHeight, smallHeaderStyle } from './styles'
 
@@ -119,7 +117,7 @@ export function RedeemActivity({ pageSize }: { pageSize: number }) {
               </div>
 
               <div style={{ color: colors.text.secondary }}>
-                <CurrencySymbol currency={V1_CURRENCY_ETH} />
+                <CurrencySymbol currency="ETH" />
                 {formatWad(e.returnAmount, { precision: 4 })} overflow received
               </div>
             </div>

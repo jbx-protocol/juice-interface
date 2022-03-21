@@ -19,7 +19,8 @@ import CurrencySymbol from 'components/shared/CurrencySymbol'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { formattedNum, formatWad, parseWad } from 'utils/formatNumber'
 import { amountSubFee } from 'utils/math'
-import { toV1Currency } from 'utils/v1/currency'
+
+import { V2CurrencyName } from 'utils/v2/currency'
 
 import PayoutSplitsList from './PayoutSplitsList'
 
@@ -57,7 +58,7 @@ export default function ConfirmDeployV2ProjectModal({
 
   const rowGutter: [Gutter, Gutter] = [25, 20]
 
-  const fundingCurrency = toV1Currency(
+  const fundingCurrency = V2CurrencyName(
     parseInt(
       fundAccessConstraint?.distributionLimitCurrency ?? '1',
     ) as V2CurrencyOption,

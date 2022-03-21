@@ -1,7 +1,8 @@
-import { PEEL_METADATA_DOMAIN } from 'constants/v2/metadataDomain'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { V2UserContext } from 'contexts/v2/userContext'
 import { useContext } from 'react'
+
+import { PEEL_METADATA_DOMAIN } from 'constants/v2/metadataDomain'
 
 import { TransactorInstance } from '../../Transactor'
 

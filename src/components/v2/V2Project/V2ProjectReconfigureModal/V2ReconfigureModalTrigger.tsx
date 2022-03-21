@@ -1,9 +1,7 @@
-import { Button, Tooltip } from 'antd'
-import { V1ProjectContext } from 'contexts/v1/projectContext'
-import React, { useContext, useRef, useState } from 'react'
+import { Button } from 'antd'
+import { useRef, useState } from 'react'
 import { Provider } from 'react-redux'
 import store, { createStore } from 'redux/store'
-import { Trans } from '@lingui/macro'
 
 import { BigNumber } from '@ethersproject/bignumber'
 
@@ -21,8 +19,6 @@ export default function V2ReconfigureFundingModalTrigger({
 }: {
   fundingDuration?: BigNumber
 }) {
-  const { isPreviewMode } = useContext(V1ProjectContext)
-
   const localStoreRef = useRef<typeof store>()
 
   const [reconfigureModalVisible, setReconfigureModalVisible] =

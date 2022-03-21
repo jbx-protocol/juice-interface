@@ -1,13 +1,8 @@
-import { Trans } from '@lingui/macro'
-import { Button, Col, Row } from 'antd'
+import { Col, Row } from 'antd'
 import PayInputGroup from 'components/shared/inputs/Pay/PayInputGroup'
 import ProjectHeader from 'components/shared/ProjectHeader'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import {
-  V2OperatorPermission,
-  useHasPermission,
-} from 'hooks/v2/contractReader/HasPermission'
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 
 import { permilleToPercent, permyriadToPercent } from 'utils/formatNumber'
 import { fromWad } from 'utils/formatNumber'

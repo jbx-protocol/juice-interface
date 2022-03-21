@@ -50,26 +50,19 @@ export default function V2ProjectReconfigureModal({
   visible: boolean
   onOk: () => void
 }) {
-  const { colors } = useContext(ThemeContext).theme
-
   const [projectDetailsDrawerVisible, setProjectDetailsDrawerVisible] =
     useState<boolean>(false)
-  const [fundingDrawerVisible, setFundingDrawerVisible] =
-    useState<boolean>(false)
-  const [tokenDrawerVisible, setTokenDrawerVisible] = useState<boolean>(false)
-  const [rulesDrawerVisible, setRulesDrawerVisible] = useState<boolean>(false)
+  const [, setFundingDrawerVisible] = useState<boolean>(false)
+  const [, setTokenDrawerVisible] = useState<boolean>(false)
+  const [, setRulesDrawerVisible] = useState<boolean>(false)
 
-  const [fundingChanged, setFundingChanged] = useState<boolean>(false)
+  const [fundingChanged] = useState<boolean>(false)
 
   return (
     <Modal
       title={t`Reconfiguration`}
       visible={visible}
-      // confirmLoading={loading}
-      onOk={() => {
-        // If changes made to any funding tab, call another function internally to make that transaction
-        onOk()
-      }}
+      onOk={onOk}
       onCancel={onOk}
       okText={
         // If changes made to any funding tab, change this text to 'Confirm funding changes' or something

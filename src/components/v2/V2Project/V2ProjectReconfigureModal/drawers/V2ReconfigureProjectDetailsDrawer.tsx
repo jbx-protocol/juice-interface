@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import { Button, Drawer } from 'antd'
+import { Drawer } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import ProjectDetailsForm, {
   ProjectDetailsFormFields,
@@ -7,20 +7,12 @@ import ProjectDetailsForm, {
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 
-import { useAppDispatch } from 'hooks/AppDispatch'
-import { useAppSelector } from 'hooks/AppSelector'
 import { useCallback, useContext, useEffect, useState } from 'react'
-import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
+
+import { uploadProjectMetadata } from 'utils/ipfs'
+import { useEditV2ProjectDetailsTx } from 'hooks/v2/transactor/EditV2ProjectDetailsTx'
 
 import { drawerStyle } from 'constants/styles/drawerStyle'
-import {
-  cidFromUrl,
-  editMetadataForCid,
-  logoNameForHandle,
-  metadataNameForHandle,
-  uploadProjectMetadata,
-} from 'utils/ipfs'
-import { useEditV2ProjectDetailsTx } from 'hooks/v2/transactor/EditV2ProjectDetailsTx'
 
 export function V2ReconfigureProjectDetailsDrawer({
   visible,
@@ -30,7 +22,6 @@ export function V2ReconfigureProjectDetailsDrawer({
   onFinish?: () => void
 }) {
   const [projectForm] = useForm<ProjectDetailsFormFields>()
-  const dispatch = useAppDispatch()
   const [loadingSaveChanges, setLoadingSaveChanges] = useState<boolean>()
   const { projectMetadata } = useContext(V2ProjectContext)
   // const { projectMetadata } = useAppSelector(state => state.editingV2Project)

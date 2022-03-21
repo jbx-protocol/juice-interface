@@ -801,7 +801,7 @@ msgid "Funding target"
 msgstr "筹款目标"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
-msgid "Funding target/duration"
+msgid "Funding target, duration and payouts"
 msgstr ""
 
 #: src/components/v1/FundingCycle/modals/DistributeTokensModal.tsx
@@ -1133,10 +1133,6 @@ msgstr "注意： Juicebox是一个全新的协议，它未经审计且不保证
 #: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
 msgid "Notice from {0}:"
 msgstr "通知自{0}:"
-
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
-msgid "OK"
-msgstr ""
 
 #: src/components/Landing/index.tsx
 msgid "Open source businesses"
@@ -1524,7 +1520,6 @@ msgid "Reward specific community members with tokens."
 msgstr "用代币奖励特定的社区成员。"
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Rules"
 msgstr "规则"
 
@@ -1852,7 +1847,6 @@ msgstr "这将删除你所有的更改。"
 msgid "To: <0/>"
 msgstr "分配给：<0/>"
 
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 #: src/utils/tokenSymbolText.ts
 msgid "Token"
 msgstr "代币"
@@ -1977,6 +1971,10 @@ msgstr "项目未命名"
 #: src/components/v1/V1Project/FundingCycles/index.tsx
 msgid "Upcoming"
 msgstr "未来"
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Updates you make to this section will only be applied to <0>upcoming</0> funding cycles."
+msgstr ""
 
 #: src/components/shared/formItems/ProjectLogoUri.tsx
 msgid "Upload"
@@ -2385,5 +2383,4 @@ msgstr "在 {exchangeName} 的兑换率为 {tokenSymbol}/ETH"
 #: src/components/v1/V1Project/Rewards/index.tsx
 msgid "{tokensLabel} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
 msgstr "{tokensLabel} 会被分配给付款的人。如果项目设置了筹款目标，可以燃烧代币来按比例赎回溢出池中的 ETH。"
-
 

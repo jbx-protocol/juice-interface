@@ -1,21 +1,25 @@
 import { t, Trans } from '@lingui/macro'
 import { Modal, Space } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
-import { useContext, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useCallback, useContext, useLayoutEffect, useState } from 'react'
 import { CaretRightFilled } from '@ant-design/icons'
 
-import store from 'redux/store'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
-import { fromWad, parseWad } from 'utils/formatNumber'
+import { fromWad } from 'utils/formatNumber'
 import { useAppDispatch } from 'hooks/AppDispatch'
+
+import {
+  useAppSelector,
+  useEditingV2FundAccessConstraintsSelector,
+  useEditingV2FundingCycleDataSelector,
+  useEditingV2FundingCycleMetadataSelector,
+} from 'hooks/AppSelector'
+import { useReconfigureV2FundingCycleTx } from 'hooks/v2/transactor/ReconfigureV2FundingCycleTx'
 
 import { V2ReconfigureProjectDetailsDrawer } from './drawers/V2ReconfigureProjectDetailsDrawer'
 import { V2ReconfigureFundingDrawer } from './drawers/V2ReconfigureFundingDrawer'
-import { useAppSelector } from 'hooks/AppSelector'
-import { getDefaultFundAccessConstraint } from 'utils/v2/fundingCycle'
-import { SerializedV2FundAccessConstraint } from 'utils/v2/serializers'
 
 function ReconfigureButton({
   title,
@@ -49,8 +53,10 @@ function ReconfigureButton({
 
 export const FundingDrawersSubtitles = (
   <p>
-    Updates you make to this section will only be applied to <i>upcoming</i>{' '}
-    funding cycles.
+    <Trans>
+      Updates you make to this section will only be applied to <i>upcoming</i>{' '}
+      funding cycles.
+    </Trans>
   </p>
 )
 
@@ -61,7 +67,6 @@ export default function V2ProjectReconfigureModal({
   visible: boolean
   onOk: () => void
 }) {
-  const { colors } = useContext(ThemeContext).theme
   const {
     queuedFundingCycle,
     fundingCycle,
@@ -69,27 +74,19 @@ export default function V2ProjectReconfigureModal({
     queuedPayoutSplits,
     distributionLimit,
     queuedDistributionLimit,
-    projectMetadata,
   } = useContext(V2ProjectContext)
 
   const dispatch = useAppDispatch()
-
-  const {
-    fundAccessConstraints: editingFundAccessConstraints,
-    fundingCycleData: editingFundingCycleData,
-    payoutGroupedSplits: editingPayoutGroupedSplits,
-  } = useAppSelector(state => state.editingV2Project)
 
   const [projectDetailsDrawerVisible, setProjectDetailsDrawerVisible] =
     useState<boolean>(false)
   const [fundingDrawerVisible, setFundingDrawerVisible] =
     useState<boolean>(false)
-  const [tokenDrawerVisible, setTokenDrawerVisible] = useState<boolean>(false)
-  const [rulesDrawerVisible, setRulesDrawerVisible] = useState<boolean>(false)
 
-  const [fundingHasChanged, setFundingHasChanged] = useState<boolean>(false)
-
-  const localStoreRef = useRef<typeof store>()
+  const [fundingHasSavedChanges, setFundingHasSavedChanges] =
+    useState<boolean>(false)
+  const [reconfigureTxLoading, setReconfigureTxLoading] =
+    useState<boolean>(false)
 
   const effectiveFundingCycle = queuedFundingCycle?.number.gt(0)
     ? queuedFundingCycle
@@ -130,45 +127,66 @@ export default function V2ProjectReconfigureModal({
     dispatch,
   ])
 
-  // These 'useEffects' check if any funding value has changed in the redux state, and
-  // enables the 'Confirm funding changes' button and tx if any changes have been made
+  // Load local reconfig modal redux state
+  const { payoutGroupedSplits: editingPayoutGroupedSplits } = useAppSelector(
+    state => state.editingV2Project,
+  )
+  const editingFundingCycleMetadata = useEditingV2FundingCycleMetadataSelector()
+  const editingFundingCycleData = useEditingV2FundingCycleDataSelector()
+  const editingFundAccessConstraints =
+    useEditingV2FundAccessConstraintsSelector()
 
-  // Compare original V2ProjectContext distributionLimit and editingV2Project distributionLimit
-  useEffect(() => {
-    setFundingHasChanged(
-      fromWad(effectiveDistributionLimit) !==
-        getDefaultFundAccessConstraint(editingFundAccessConstraints)
-          ?.distributionLimit,
+  const reconfigureV2FundingCycleTx = useReconfigureV2FundingCycleTx()
+
+  const reconfigureFundingCycle = useCallback(async () => {
+    setReconfigureTxLoading(true)
+    if (
+      !(
+        editingFundingCycleData &&
+        editingFundingCycleMetadata &&
+        editingFundAccessConstraints
+      )
+    ) {
+      throw new Error('Error deploying project.')
+    }
+
+    reconfigureV2FundingCycleTx(
+      {
+        fundingCycleData: editingFundingCycleData,
+        fundingCycleMetadata: editingFundingCycleMetadata,
+        fundAccessConstraints: editingFundAccessConstraints,
+        groupedSplits: [editingPayoutGroupedSplits], // TODO: this will include reserveGroupedSplits when it's ready
+      },
+      {
+        onDone() {
+          console.info(
+            'Reconfigure transaction executed. Awaiting confirmation...',
+          )
+        },
+        onConfirmed() {
+          setReconfigureTxLoading(false)
+          onOk()
+        },
+      },
     )
-  }, [editingFundAccessConstraints, effectiveDistributionLimit])
-
-  // Compare original V2ProjectContext duration and editingV2Project duration
-  useEffect(() => {
-    setFundingHasChanged(
-      effectiveFundingCycle?.duration.toString() !==
-        editingFundingCycleData?.duration,
-    )
-  }, [effectiveFundingCycle, editingFundingCycleData])
-
-  // TODO: Compare original V2ProjectContext payoutSplits and editingV2Project payoutSplits
+  }, [
+    editingFundAccessConstraints,
+    editingFundingCycleMetadata,
+    editingFundingCycleData,
+    reconfigureV2FundingCycleTx,
+    editingPayoutGroupedSplits,
+    onOk,
+  ])
 
   return (
     <Modal
       title={t`Reconfiguration`}
       visible={visible}
-      // confirmLoading={loading}
-      onOk={() => {
-        // If changes made to any funding tab, call another function internally to make that transaction
-        if (fundingHasChanged) {
-          console.log('TODO: Execute tx to change upcoming FC')
-        }
-        onOk()
-      }}
+      onOk={reconfigureFundingCycle}
       onCancel={onOk}
-      okText={
-        // If changes made to any funding tab, change this text to 'Confirm funding changes' or something
-        fundingHasChanged ? t`Confirm funding changes` : t`OK`
-      }
+      okText={t`Confirm funding changes`}
+      okButtonProps={{ disabled: !fundingHasSavedChanges }}
+      confirmLoading={reconfigureTxLoading}
       width={540}
       centered
     >
@@ -184,16 +202,8 @@ export default function V2ProjectReconfigureModal({
           <Trans>Reconfigure funding details</Trans>
         </h4>
         <ReconfigureButton
-          title={t`Funding target/duration`}
+          title={t`Funding target, duration and payouts`}
           onClick={() => setFundingDrawerVisible(true)}
-        />
-        <ReconfigureButton
-          title={t`Token`}
-          onClick={() => setTokenDrawerVisible(true)}
-        />
-        <ReconfigureButton
-          title={t`Rules`}
-          onClick={() => setRulesDrawerVisible(true)}
         />
       </Space>
       <V2ReconfigureProjectDetailsDrawer
@@ -202,7 +212,11 @@ export default function V2ProjectReconfigureModal({
       />
       <V2ReconfigureFundingDrawer
         visible={fundingDrawerVisible}
-        onFinish={() => {
+        onSave={() => {
+          setFundingHasSavedChanges(true)
+          setFundingDrawerVisible(false)
+        }}
+        onClose={() => {
           setFundingDrawerVisible(false)
         }}
       />

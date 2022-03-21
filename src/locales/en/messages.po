@@ -796,8 +796,8 @@ msgid "Funding target"
 msgstr "Funding target"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
-msgid "Funding target/duration"
-msgstr "Funding target/duration"
+msgid "Funding target, duration and payouts"
+msgstr "Funding target, duration and payouts"
 
 #: src/components/v1/FundingCycle/modals/DistributeTokensModal.tsx
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
@@ -1128,10 +1128,6 @@ msgstr ""
 #: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
 msgid "Notice from {0}:"
 msgstr ""
-
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
-msgid "OK"
-msgstr "OK"
 
 #: src/components/Landing/index.tsx
 msgid "Open source businesses"
@@ -1519,7 +1515,6 @@ msgid "Reward specific community members with tokens."
 msgstr ""
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Rules"
 msgstr ""
 
@@ -1847,7 +1842,6 @@ msgstr "This will erase all of your changes."
 msgid "To: <0/>"
 msgstr ""
 
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 #: src/utils/tokenSymbolText.ts
 msgid "Token"
 msgstr "Token"
@@ -1972,6 +1966,10 @@ msgstr ""
 #: src/components/v1/V1Project/FundingCycles/index.tsx
 msgid "Upcoming"
 msgstr ""
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Updates you make to this section will only be applied to <0>upcoming</0> funding cycles."
+msgstr "Updates you make to this section will only be applied to <0>upcoming</0> funding cycles."
 
 #: src/components/shared/formItems/ProjectLogoUri.tsx
 msgid "Upload"
@@ -2380,5 +2378,4 @@ msgstr ""
 #: src/components/v1/V1Project/Rewards/index.tsx
 msgid "{tokensLabel} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
 msgstr "{tokensLabel} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
-
 

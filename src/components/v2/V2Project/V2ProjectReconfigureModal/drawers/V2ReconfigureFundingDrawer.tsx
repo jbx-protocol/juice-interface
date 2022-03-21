@@ -8,20 +8,22 @@ import { FundingDrawersSubtitles } from '..'
 
 export function V2ReconfigureFundingDrawer({
   visible,
-  onFinish,
+  onSave,
+  onClose,
 }: {
   visible: boolean
-  onFinish: VoidFunction
+  onSave: VoidFunction
+  onClose: VoidFunction
 }) {
   return (
-    <Drawer visible={visible} {...drawerStyle} onClose={onFinish}>
+    <Drawer visible={visible} {...drawerStyle} onClose={onClose}>
       <h3>
         <Trans>Reconfigure funding target/duration</Trans>
       </h3>
       {FundingDrawersSubtitles}
       <br />
       <FundingTabContent
-        onFinish={onFinish}
+        onFinish={onSave}
         hidePreview
         saveButton={<StandardSaveButton />}
       />

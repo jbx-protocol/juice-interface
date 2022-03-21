@@ -801,7 +801,7 @@ msgid "Funding target"
 msgstr "Objetivo de financiamento"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
-msgid "Funding target/duration"
+msgid "Funding target, duration and payouts"
 msgstr ""
 
 #: src/components/v1/FundingCycle/modals/DistributeTokensModal.tsx
@@ -1133,10 +1133,6 @@ msgstr "Nota: o Juicebox é novo, não auditado e sem garantia de funcionar perf
 #: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
 msgid "Notice from {0}:"
 msgstr "Aviso de {0}:"
-
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
-msgid "OK"
-msgstr ""
 
 #: src/components/Landing/index.tsx
 msgid "Open source businesses"
@@ -1524,7 +1520,6 @@ msgid "Reward specific community members with tokens."
 msgstr "Recompense membros específicos da comunidade com tokens."
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Rules"
 msgstr "Regras"
 
@@ -1852,7 +1847,6 @@ msgstr "Isso vai apagar todas as suas mudanças."
 msgid "To: <0/>"
 msgstr "Para: <0/>"
 
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 #: src/utils/tokenSymbolText.ts
 msgid "Token"
 msgstr "Token"
@@ -1977,6 +1971,10 @@ msgstr "Projeto sem título"
 #: src/components/v1/V1Project/FundingCycles/index.tsx
 msgid "Upcoming"
 msgstr "Futuro"
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Updates you make to this section will only be applied to <0>upcoming</0> funding cycles."
+msgstr ""
 
 #: src/components/shared/formItems/ProjectLogoUri.tsx
 msgid "Upload"
@@ -2385,5 +2383,4 @@ msgstr "{tokenSymbol}/ETH taxa de câmbio em {exchangeName}."
 #: src/components/v1/V1Project/Rewards/index.tsx
 msgid "{tokensLabel} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
 msgstr "{tokensLabel} são distribuídos para qualquer pessoa que pague este projeto. Se o projeto já definiu o objetivo de financiamento, os tokens podem ser resgatados por uma porção de overflow do projeto caso eles tenham ou não sido reivindicados ainda."
-
 

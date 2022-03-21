@@ -801,7 +801,7 @@ msgid "Funding target"
 msgstr "Цель финансирования"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
-msgid "Funding target/duration"
+msgid "Funding target, duration and payouts"
 msgstr ""
 
 #: src/components/v1/FundingCycle/modals/DistributeTokensModal.tsx
@@ -1133,10 +1133,6 @@ msgstr "Примечание: Juicebox является новым проект�
 #: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
 msgid "Notice from {0}:"
 msgstr "Уведомление от {0}:"
-
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
-msgid "OK"
-msgstr ""
 
 #: src/components/Landing/index.tsx
 msgid "Open source businesses"
@@ -1524,7 +1520,6 @@ msgid "Reward specific community members with tokens."
 msgstr "Награждайте определенных членов сообщества токенами."
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Rules"
 msgstr "Правила"
 
@@ -1852,7 +1847,6 @@ msgstr "Это удалит все ваши изменения."
 msgid "To: <0/>"
 msgstr "Кому: <0/>"
 
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 #: src/utils/tokenSymbolText.ts
 msgid "Token"
 msgstr "Токен"
@@ -1977,6 +1971,10 @@ msgstr "Безымянный проект"
 #: src/components/v1/V1Project/FundingCycles/index.tsx
 msgid "Upcoming"
 msgstr "Предстоящие"
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Updates you make to this section will only be applied to <0>upcoming</0> funding cycles."
+msgstr ""
 
 #: src/components/shared/formItems/ProjectLogoUri.tsx
 msgid "Upload"
@@ -2385,5 +2383,4 @@ msgstr "Обменный курс {tokenSymbol}/ETH на {exchangeName}."
 #: src/components/v1/V1Project/Rewards/index.tsx
 msgid "{tokensLabel} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
 msgstr "{tokensLabel} распространяются среди всех, кто оплачивает этот проект. Если проектустановил целевой показатель финансирования, токены могут быть выкуплены для частипереполнения проекта независимо от того, были ли они еще востребованы или нет."
-
 

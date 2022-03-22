@@ -914,6 +914,7 @@ msgstr "Caso tenha dúvidas se precisa reinvidicar seus tokens, você provavelme
 
 #: src/components/v1/V1Project/BalanceTimeline.tsx
 #: src/components/v1/V1Project/Paid.tsx
+#: src/components/v2/V2Project/TreasuryStats.tsx
 msgid "In Juicebox"
 msgstr "No Juicebox"
 
@@ -1716,6 +1717,7 @@ msgid "The balance of the wallet that owns this Juicebox project."
 msgstr "O saldo da carteira do proprietário desse projeto no Juicebox."
 
 #: src/components/v1/V1Project/Paid.tsx
+#: src/components/v2/V2Project/TreasuryStats.tsx
 msgid "The balance of this project in the Juicebox contract."
 msgstr "O saldo deste projeto no contrato do Juicebox."
 

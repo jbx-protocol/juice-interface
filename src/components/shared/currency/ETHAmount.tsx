@@ -4,13 +4,13 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { formatWad, parseWad } from 'utils/formatNumber'
 import { betweenZeroAndOne } from 'utils/bigNumbers'
 
-import CurrencySymbol from './CurrencySymbol'
-
-import { V1_CURRENCY_ETH } from 'constants/v1/currency'
+import CurrencySymbol from '../CurrencySymbol'
 
 import ETHToUSD from './ETHToUSD'
 
-// Eth amount which displays the equiv USD amount in a tooltip on hover
+/**
+ * Render a given amount formatted as ETH. Displays USD amount in a tooltip on hover.
+ */
 export default function ETHAmount({
   amount,
   precision,
@@ -35,10 +35,11 @@ export default function ETHAmount({
   if (amount) {
     return (
       <Tooltip title={<ETHToUSD ethAmount={amount} />}>
-        <CurrencySymbol currency={V1_CURRENCY_ETH} />
+        <CurrencySymbol currency="ETH" />
         {formattedETHAmount}
       </Tooltip>
     )
   }
+
   return null
 }

@@ -5,7 +5,6 @@ import {
   V1ProjectContext,
   V1ProjectContextType,
 } from 'contexts/v1/projectContext'
-import { CurrencyContext } from 'contexts/currencyContext'
 
 import useBalanceOfProject from 'hooks/v1/contractReader/BalanceOfProject'
 import useCurrentFundingCycleOfProject from 'hooks/v1/contractReader/CurrentFundingCycleOfProject'
@@ -33,6 +32,10 @@ import FeedbackPromptModal from 'components/v1/V1Project/modals/FeedbackPromptMo
 import { Button } from 'antd'
 import ScrollToTopButton from 'components/shared/ScrollToTopButton'
 
+import V1CurrencyProvider from 'providers/v1/V1CurrencyProvider'
+
+import { V1CurrencyName } from 'utils/v1/currency'
+
 import { padding } from 'constants/styles/padding'
 import { layouts } from 'constants/styles/layouts'
 import { projectTypes } from 'constants/v1/projectTypes'
@@ -40,7 +43,6 @@ import { archivedProjectIds } from 'constants/v1/archivedProjects'
 
 import Loading from '../../shared/Loading'
 import V1Project from '../V1Project'
-import { V1_CURRENCY_CONTEXT } from 'constants/v1/currency'
 
 export default function V1Dashboard() {
   const { handle }: { handle?: string } = useParams()
@@ -87,8 +89,8 @@ export default function V1Dashboard() {
       balance &&
       converter.wadToCurrency(
         balance,
-        currentFC?.currency.toNumber() as V1CurrencyOption,
-        0,
+        V1CurrencyName(currentFC?.currency.toNumber() as V1CurrencyOption),
+        'ETH',
       ),
     [balance, converter, currentFC],
   )
@@ -235,7 +237,7 @@ export default function V1Dashboard() {
 
   return (
     <V1ProjectContext.Provider value={project}>
-      <CurrencyContext.Provider value={V1_CURRENCY_CONTEXT}>
+      <V1CurrencyProvider>
         <div style={layouts.maxWidth}>
           <V1Project />
           <div style={{ textAlign: 'center', padding: 20 }}>
@@ -250,7 +252,7 @@ export default function V1Dashboard() {
             userAddress={owner}
           />
         </div>
-      </CurrencyContext.Provider>
+      </V1CurrencyProvider>
     </V1ProjectContext.Provider>
   )
 }

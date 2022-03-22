@@ -6,5 +6,5 @@ import {
 
 export const V2_CURRENCY_CONTEXT = {
   currencyMetadata: V2_CURRENCY_METADATA,
-  currencies: { currencyETH: V2_CURRENCY_ETH, currencyUSD: V2_CURRENCY_USD },
+  currencies: { ETH: V2_CURRENCY_ETH, USD: V2_CURRENCY_USD },
 }

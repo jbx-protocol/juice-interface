@@ -45,6 +45,8 @@ import { amountSubFee } from 'utils/math'
 import { serializeV1FundingCycle } from 'utils/v1/serializers'
 import { drawerWidth } from 'utils/drawerWidth'
 
+import { V1CurrencyName } from 'utils/v1/currency'
+
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 
 import BudgetForm from '../../../shared/forms/BudgetForm'
@@ -99,6 +101,7 @@ export default function ReconfigureFCModal({
     queuedTicketMods,
     currentTicketMods,
   } = useContext(V1ProjectContext)
+
   const editingFC = useEditingV1FundingCycleSelector()
   const terminalFee = useTerminalFee(terminal?.version)
   const configureProjectTx = useConfigureProjectTx()
@@ -110,6 +113,10 @@ export default function ReconfigureFCModal({
 
   const fcMetadata: V1FundingCycleMetadata | undefined =
     decodeFundingCycleMetadata(currentFC?.metadata)
+
+  const editingFCCurrency = V1CurrencyName(
+    editingFC.currency.toNumber() as V1CurrencyOption,
+  )
 
   const resetRestrictedActionsForm = () => {
     if (fcMetadata?.version === 1) {
@@ -402,21 +409,13 @@ export default function ReconfigureFCModal({
                 title={t`Amount`}
                 valueRender={() => (
                   <span>
-                    <CurrencySymbol
-                      currency={
-                        editingFC.currency.toNumber() as V1CurrencyOption
-                      }
-                    />
+                    <CurrencySymbol currency={editingFCCurrency} />
                     {formatWad(editingFC.target)}{' '}
                     <span style={{ fontSize: '0.8rem' }}>
                       (
                       {terminalFee?.gt(0) ? (
                         <span>
-                          <CurrencySymbol
-                            currency={
-                              editingFC.currency.toNumber() as V1CurrencyOption
-                            }
-                          />
+                          <CurrencySymbol currency={editingFCCurrency} />
                           <Trans>
                             {formatWad(
                               amountSubFee(editingFC.target, terminalFee),

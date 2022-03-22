@@ -1,5 +1,4 @@
-import { Trans } from '@lingui/macro'
-import { Button, Col, Row } from 'antd'
+import { Col, Row } from 'antd'
 import PayInputGroup from 'components/shared/inputs/Pay/PayInputGroup'
 import ProjectHeader from 'components/shared/ProjectHeader'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
@@ -14,6 +13,7 @@ import { weightedAmount } from 'utils/math'
 
 import V2PayButton from './V2PayButton'
 import V2ProjectHeaderActions from '../V2ProjectHeaderActions'
+import TreasuryStats from './TreasuryStats'
 
 export default function V2Project() {
   const {
@@ -22,7 +22,6 @@ export default function V2Project() {
     fundingCycle,
     payoutSplits,
     reserveTokenSplits,
-    ETHBalance,
     distributionLimit,
   } = useContext(V2ProjectContext)
 
@@ -57,9 +56,9 @@ export default function V2Project() {
         metadata={projectMetadata}
         actions={<V2ProjectHeaderActions />}
       />
-      <Row>
+      <Row gutter={40}>
         <Col md={12} xs={24}>
-          <h2>In Juicebox: {fromWad(ETHBalance)}</h2>
+          <TreasuryStats />
 
           {fundingCycle && (
             <div>

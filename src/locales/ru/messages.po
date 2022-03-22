@@ -914,6 +914,7 @@ msgstr "Если вы не уверены, нужно ли вам предъяв
 
 #: src/components/v1/V1Project/BalanceTimeline.tsx
 #: src/components/v1/V1Project/Paid.tsx
+#: src/components/v2/V2Project/TreasuryStats.tsx
 msgid "In Juicebox"
 msgstr "В Juicebox"
 
@@ -1716,6 +1717,7 @@ msgid "The balance of the wallet that owns this Juicebox project."
 msgstr "Баланс кошелька, которому принадлежит этот проект Juicebox."
 
 #: src/components/v1/V1Project/Paid.tsx
+#: src/components/v2/V2Project/TreasuryStats.tsx
 msgid "The balance of this project in the Juicebox contract."
 msgstr "Баланс этого проекта в контракте Juicebox."
 

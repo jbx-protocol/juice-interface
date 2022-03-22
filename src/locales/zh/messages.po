@@ -914,6 +914,7 @@ msgstr "如果你不确定你是否需要领取，那么你或许不需要。"
 
 #: src/components/v1/V1Project/BalanceTimeline.tsx
 #: src/components/v1/V1Project/Paid.tsx
+#: src/components/v2/V2Project/TreasuryStats.tsx
 msgid "In Juicebox"
 msgstr "项目金库余额"
 
@@ -1716,6 +1717,7 @@ msgid "The balance of the wallet that owns this Juicebox project."
 msgstr "这个 Juicebox 项目拥有者的钱包余额"
 
 #: src/components/v1/V1Project/Paid.tsx
+#: src/components/v2/V2Project/TreasuryStats.tsx
 msgid "The balance of this project in the Juicebox contract."
 msgstr "该项目在Juicebox合约中的余额。"
 

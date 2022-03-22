@@ -198,7 +198,7 @@ export default function ParticipantsModal({
                   <FormattedAddress address={p.wallet} />
                 </div>
                 <div style={smallHeaderStyle}>
-                  <CurrencySymbol currency={0} />
+                  <CurrencySymbol currency="ETH" />
                   <Trans>
                     {formatWad(p.totalPaid, { precision: 6 })} contributed
                   </Trans>

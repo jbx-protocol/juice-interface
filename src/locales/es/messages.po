@@ -914,6 +914,7 @@ msgstr "Si dudas de si necesitas reclamar tus tokens, probablemente no deberías
 
 #: src/components/v1/V1Project/BalanceTimeline.tsx
 #: src/components/v1/V1Project/Paid.tsx
+#: src/components/v2/V2Project/TreasuryStats.tsx
 msgid "In Juicebox"
 msgstr "En Juicebox"
 
@@ -1716,6 +1717,7 @@ msgid "The balance of the wallet that owns this Juicebox project."
 msgstr "El saldo de la wallet que posee este proyecto Juicebox."
 
 #: src/components/v1/V1Project/Paid.tsx
+#: src/components/v2/V2Project/TreasuryStats.tsx
 msgid "The balance of this project in the Juicebox contract."
 msgstr "El balance de este proyecto en el contrato de Juicebox."
 

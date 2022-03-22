@@ -14,6 +14,8 @@ import { CSSProperties, useContext, useState } from 'react'
 import { formatWad, perbicentToPercent } from 'utils/formatNumber'
 import { hasFundingTarget } from 'utils/v1/fundingCycle'
 
+import { V1CurrencyName } from 'utils/v1/currency'
+
 import PayoutModsList from '../../shared/PayoutModsList'
 
 export default function Spending({
@@ -31,6 +33,10 @@ export default function Spending({
   const [withdrawModalVisible, setWithdrawModalVisible] = useState<boolean>()
 
   if (!currentFC) return null
+
+  const currentFCCurrency = V1CurrencyName(
+    currentFC.currency.toNumber() as V1CurrencyOption,
+  )
 
   const untapped = currentFC.target.sub(currentFC.tapped)
 
@@ -63,9 +69,7 @@ export default function Spending({
                   fontWeight: 500,
                 }}
               >
-                <CurrencySymbol
-                  currency={currentFC.currency.toNumber() as V1CurrencyOption}
-                />
+                <CurrencySymbol currency={currentFCCurrency} />
                 {formatWad(withdrawable, { precision: 4 }) || '0'}{' '}
               </span>
               <TooltipLabel
@@ -88,9 +92,7 @@ export default function Spending({
           <div style={{ ...smallHeaderStyle, color: colors.text.tertiary }}>
             <div>
               <Trans>
-                <CurrencySymbol
-                  currency={currentFC.currency.toNumber() as V1CurrencyOption}
-                />
+                <CurrencySymbol currency={currentFCCurrency} />
                 {formatWad(currentFC.tapped, { precision: 4 }) || '0'}
                 {hasFundingTarget(currentFC) ? (
                   <span>/{formatWad(currentFC.target, { precision: 4 })} </span>

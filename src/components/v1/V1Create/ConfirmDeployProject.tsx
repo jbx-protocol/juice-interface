@@ -31,18 +31,25 @@ import {
 import { amountSubFee } from 'utils/math'
 import { orEmpty } from 'utils/orEmpty'
 
+import { V1CurrencyName } from 'utils/v1/currency'
+
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 
 export default function ConfirmDeployProject() {
   const editingFC = useEditingV1FundingCycleSelector()
   const editingProject = useAppSelector(state => state.editingProject.info)
   const { terminal } = useContext(V1ProjectContext)
+
   const { payoutMods, ticketMods } = useAppSelector(
     state => state.editingProject,
   )
   const terminalFee = useTerminalFee(terminal?.version)
 
   const isMobile = useMobile()
+
+  const editingFCCurrency = V1CurrencyName(
+    editingFC?.currency.toNumber() as V1CurrencyOption,
+  )
 
   const rowGutter: [Gutter, Gutter] = [25, 20]
 
@@ -158,20 +165,12 @@ export default function ConfirmDeployProject() {
                   </span>
                 ) : (
                   <span>
-                    <CurrencySymbol
-                      currency={
-                        editingFC?.currency.toNumber() as V1CurrencyOption
-                      }
-                    />
+                    <CurrencySymbol currency={editingFCCurrency} />
                     {formatWad(editingFC?.target)}{' '}
                     {editingFC.fee?.gt(0) && (
                       <span style={{ fontSize: '0.8rem' }}>
                         (
-                        <CurrencySymbol
-                          currency={
-                            editingFC?.currency.toNumber() as V1CurrencyOption
-                          }
-                        />
+                        <CurrencySymbol currency={editingFCCurrency} />
                         <Trans>
                           {formatWad(
                             amountSubFee(editingFC.target, terminalFee),

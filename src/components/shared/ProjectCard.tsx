@@ -16,7 +16,7 @@ import { Link } from 'react-router-dom'
 
 import Loading from './Loading'
 import ProjectLogo from './ProjectLogo'
-import ETHAmount from './ETHAmount'
+import ETHAmount from './currency/ETHAmount'
 import { archivedProjectIds } from '../../constants/v1/archivedProjects'
 
 type ProjectCardProject = Pick<

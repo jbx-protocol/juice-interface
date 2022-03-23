@@ -166,10 +166,10 @@ export default function ProjectPayoutMods({
           >
             {mod.projectId?.gt(0) ? (
               <Row gutter={gutter} style={{ width: '100%' }} align="middle">
-                <Col span={5}>
+                <Col span={7}>
                   <label>Project:</label>{' '}
                 </Col>
-                <Col span={19}>
+                <Col span={17}>
                   <div
                     style={{
                       display: 'flex',

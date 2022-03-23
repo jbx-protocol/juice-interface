@@ -69,7 +69,7 @@ export default function V2Dashboard() {
   const { data: queuedDistributionLimit } = useProjectDistributionLimit({
     projectId,
     domain: queuedFundingCycle?.configuration?.toString(),
-    terminal: terminals ? terminals[0] : '',
+    terminal: terminals?.[0],
   })
 
   const { data: queuedPayoutSplits } = useProjectSplits({

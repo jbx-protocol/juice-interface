@@ -1,6 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import * as constants from '@ethersproject/constants'
+
 import { ProjectMetadataV4 } from 'models/project-metadata'
 
 import {
@@ -22,7 +23,6 @@ import {
   RESERVE_TOKEN_SPLIT_GROUP,
 } from 'constants/v2/splits'
 import { DEFAULT_BALLOT_STRATEGY } from 'constants/ballotStrategies/ballotStrategies'
-import { getDefaultFundAccessConstraint } from 'utils/v2/fundingCycle'
 
 export interface V2ProjectState {
   version: number

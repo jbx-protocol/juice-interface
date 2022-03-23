@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-03-20 02:06\n"
+"PO-Revision-Date: 2022-03-23 02:22\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -1732,7 +1732,7 @@ msgstr "合约开发团队将很快开始为 Juicebox 上的项目提供 L2层�
 
 #: src/components/v1/FundingCycle/Spending.tsx
 msgid "The funds available to withdraw for this funding cycle after the {0}% JBX fee is subtracted. This number won't roll over to the next funding cycle, so funds should be withdrawn before it ends."
-msgstr "在减去 {0} 的 JBX 费用后，当前筹款周期可提取的资金。这一数额并不会流转到下个周期，因此最好在本周期结束前提取。"
+msgstr "在减去 {0}% 的 JBX 费用后，当前筹款周期可提取的资金。这一数额并不会流转到下个周期，因此最好在本周期结束前提取。"
 
 #: src/components/Landing/index.tsx
 msgid "The future will be led by creators, and owned by communities."

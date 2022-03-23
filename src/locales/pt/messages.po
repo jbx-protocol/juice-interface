@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-03-18 02:13\n"
+"PO-Revision-Date: 2022-03-23 02:22\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -485,6 +485,10 @@ msgstr "Garanta porções dos seus fundos para pessoas ou projetos que você que
 msgid "Community funding for people and projects"
 msgstr "Financiamento comunitário para pessoas e projetos"
 
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Confirm funding changes"
+msgstr "Confirmar mudanças de financiamento"
+
 #: src/components/v1/V1Project/modals/FeedbackPromptModal.tsx
 msgid "Congrats on creating your project!"
 msgstr "Parabéns por criar seu projeto!"
@@ -546,7 +550,7 @@ msgstr "Estratégia personalizada"
 
 #: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
 msgid "Custom token beneficiary"
-msgstr ""
+msgstr "Titular de token personalizado"
 
 #: src/components/v1/FundingCycle/FundingCyclePreview.tsx
 msgid "Cycle #{0}"
@@ -683,6 +687,10 @@ msgstr "ERC20 Tokens da comunidade"
 msgid "Each project has its own <0>ERC-20 tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
 msgstr "Cada projeto possui seus próprios <0>ERC-20 tokens</0>. Qualquer um que contribua com fundos para um projeto recebe, em troca, tokens de projeto. Os saldos dos tokens serão rastreados pelo protocolo até que os tokens ERC-20 sejam opcionalmente emitidos pelo proprietário do projeto."
 
+#: src/components/v1/V1Project/modals/EditProjectModal.tsx
+msgid "Edit project"
+msgstr "Editar projeto"
+
 #: src/components/shared/TicketModsList.tsx
 msgid "Edit reserved token allocation"
 msgstr "Editar a alocação de tokens reservados"
@@ -788,9 +796,14 @@ msgstr "Ciclos de financiamento podem ser reconfigurados momentos antes de um no
 msgid "Funding distribution"
 msgstr "Distribuição de fundos"
 
+#: src/components/shared/formItems/ProjectTarget.tsx
 #: src/components/v2/V2Create/tabs/FundingTab/FundingTabContent.tsx
 msgid "Funding target"
 msgstr "Objetivo de financiamento"
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Funding target/duration"
+msgstr ""
 
 #: src/components/v1/FundingCycle/modals/DistributeTokensModal.tsx
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
@@ -902,6 +915,7 @@ msgstr "Caso tenha dúvidas se precisa reinvidicar seus tokens, você provavelme
 
 #: src/components/v1/V1Project/BalanceTimeline.tsx
 #: src/components/v1/V1Project/Paid.tsx
+#: src/components/v2/V2Project/TreasuryStats.tsx
 msgid "In Juicebox"
 msgstr "No Juicebox"
 
@@ -1030,7 +1044,7 @@ msgstr "Migrar para Juicebox V1.1"
 
 #: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
 msgid "Mint new {tokensLabel} into an account. Only a project's owner, a designated operator, or one of its terminal's delegates can mint its tokens."
-msgstr ""
+msgstr "Criar novos {tokensLabel} dentro de uma conta. Só o proprietário do projeto, um operador designado, ou um dos delegados do seu terminal podem criar seus tokens."
 
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "Mint project tokens on demand"
@@ -1121,6 +1135,10 @@ msgstr "Nota: o Juicebox é novo, não auditado e sem garantia de funcionar perf
 #: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
 msgid "Notice from {0}:"
 msgstr "Aviso de {0}:"
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "OK"
+msgstr "OK"
 
 #: src/components/Landing/index.tsx
 msgid "Open source businesses"
@@ -1276,8 +1294,13 @@ msgstr "Descrição do projeto"
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Project details"
 msgstr "Detalhes do projeto"
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectDetailsDrawer.tsx
+msgid "Project details reconfigurations will create a separate transaction."
+msgstr ""
 
 #: src/components/shared/formItems/ProjectHandle/ProjectHandleFormItem.tsx
 #: src/components/shared/formItems/ProjectPayoutMods.tsx
@@ -1357,6 +1380,7 @@ msgstr "Receba {receiveText}"
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/tabs/RulesTab/ProjectReconfigurationFormItem.tsx
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfiguration"
 msgstr "Reconfiguração"
 
@@ -1377,6 +1401,15 @@ msgstr "Reconfigurar"
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Reconfigure funding"
 msgstr "Reconfigurar financiamento"
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Reconfigure funding details"
+msgstr "Reconfigurar detalhes de financiamento"
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectDetailsDrawer.tsx
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Reconfigure project details"
+msgstr "Reconfigurar detalhes do projeto"
 
 #: src/components/v1/V1Project/FundingCycles/ReconfigureFundingModalTrigger.tsx
 msgid "Reconfigure upcoming"
@@ -1489,6 +1522,7 @@ msgid "Reward specific community members with tokens."
 msgstr "Recompense membros específicos da comunidade com tokens."
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Rules"
 msgstr "Regras"
 
@@ -1684,6 +1718,7 @@ msgid "The balance of the wallet that owns this Juicebox project."
 msgstr "O saldo da carteira do proprietário desse projeto no Juicebox."
 
 #: src/components/v1/V1Project/Paid.tsx
+#: src/components/v2/V2Project/TreasuryStats.tsx
 msgid "The balance of this project in the Juicebox contract."
 msgstr "O saldo deste projeto no contrato do Juicebox."
 
@@ -1702,6 +1737,10 @@ msgstr "Os fundos disponíveis para saque para este ciclo de financiamento após
 #: src/components/Landing/index.tsx
 msgid "The future will be led by creators, and owned by communities."
 msgstr "O futuro será liderado pelos criadores, e pertencente às comunidades."
+
+#: src/components/shared/formItems/ProjectTarget.tsx
+msgid "The maximum amount of funds that can be distributed from this project in one funding cycle. Funds will be withdrawn in ETH no matter the currency you choose."
+msgstr ""
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "The percent this individual receives of the overall {reservedRate}% reserved token allocation"
@@ -1815,6 +1854,7 @@ msgstr "Isso vai apagar todas as suas mudanças."
 msgid "To: <0/>"
 msgstr "Para: <0/>"
 
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 #: src/utils/tokenSymbolText.ts
 msgid "Token"
 msgstr "Token"
@@ -2143,6 +2183,7 @@ msgstr "Objetivo e duração do ciclo de financiamento do seu projeto."
 msgid "Your project's website."
 msgstr "Site do seu projeto."
 
+#: src/components/shared/inputs/BudgetTargetInput.tsx
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 msgid "after {0}% JBX fee"
 msgstr "depois da taxa de {0}% de JBX"

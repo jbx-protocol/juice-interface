@@ -23,7 +23,7 @@ import {
 } from 'utils/formatNumber'
 import { amountSubFee, feeForAmount } from 'utils/math'
 
-import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
+import { V1_CURRENCY_USD } from 'constants/v1/currency'
 
 export default function WithdrawModal({
   visible,
@@ -41,6 +41,7 @@ export default function WithdrawModal({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+
   const tapProjectTx = useTapProjectTx()
 
   const converter = useCurrencyConverter()
@@ -58,6 +59,9 @@ export default function WithdrawModal({
 
   if (!currentFC) return null
 
+  const currentFCCurrency = V1CurrencyName(
+    currentFC.currency.toNumber() as V1CurrencyOption,
+  )
   const untapped = currentFC.target.sub(currentFC.tapped)
 
   const withdrawable = balanceInCurrency?.gt(untapped)
@@ -111,9 +115,7 @@ export default function WithdrawModal({
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <Trans>Total funds:</Trans>{' '}
             <div>
-              <CurrencySymbol
-                currency={currentFC.currency.toNumber() as V1CurrencyOption}
-              />
+              <CurrencySymbol currency={currentFCCurrency} />
               {formatWad(withdrawable, { precision: 4 })}
             </div>
           </div>
@@ -122,10 +124,7 @@ export default function WithdrawModal({
               <Trans>JBX Fee ({perbicentToPercent(currentFC.fee)}%):</Trans>
             </div>
             <div>
-              -{' '}
-              <CurrencySymbol
-                currency={currentFC.currency.toNumber() as V1CurrencyOption}
-              />
+              - <CurrencySymbol currency={currentFCCurrency} />
               {formatWad(feeForAmount(withdrawable, currentFC.fee) ?? 0, {
                 precision: 4,
               })}
@@ -142,9 +141,7 @@ export default function WithdrawModal({
               <Trans>Available after fee:</Trans>
             </div>
             <div>
-              <CurrencySymbol
-                currency={currentFC.currency.toNumber() as V1CurrencyOption}
-              />
+              <CurrencySymbol currency={currentFCCurrency} />
               {formatWad(amountSubFee(withdrawable, currentFC.fee) ?? 0, {
                 precision: 4,
               })}
@@ -183,7 +180,7 @@ export default function WithdrawModal({
 
           <div style={{ color: colors.text.primary, marginBottom: 10 }}>
             <span style={{ fontWeight: 500 }}>
-              <CurrencySymbol currency={V1_CURRENCY_ETH} />
+              <CurrencySymbol currency="ETH" />
               {formatWad(
                 amountSubFee(
                   currentFC.currency.eq(V1_CURRENCY_USD)
@@ -215,7 +212,7 @@ export default function WithdrawModal({
           </div>
         ) : (
           <p>
-            <CurrencySymbol currency={V1_CURRENCY_ETH} />
+            <CurrencySymbol currency="ETH" />
             <Trans>
               {formatWad(
                 amountSubFee(

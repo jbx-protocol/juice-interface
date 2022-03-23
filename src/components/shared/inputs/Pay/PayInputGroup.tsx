@@ -33,16 +33,14 @@ export default function PayInputGroup({
 }) {
   const {
     currencyMetadata,
-    currencies: { currencyUSD, currencyETH },
+    currencies: { USD, ETH },
   } = useContext(CurrencyContext)
 
   const [payAmount, setPayAmount] = useState<string>('0')
-  const [payInCurrency, setPayInCurrency] =
-    useState<CurrencyOption>(currencyETH)
+  const [payInCurrency, setPayInCurrency] = useState<CurrencyOption>(ETH)
 
   const togglePayInCurrency = () => {
-    const newPayInCurrency =
-      payInCurrency === currencyETH ? currencyUSD : currencyETH
+    const newPayInCurrency = payInCurrency === ETH ? USD : ETH
     setPayInCurrency(newPayInCurrency)
   }
 
@@ -64,13 +62,13 @@ export default function PayInputGroup({
           accessory={
             <InputAccessoryButton
               withArrow={true}
-              content={currencyMetadata[payInCurrency ?? currencyETH].name}
+              content={currencyMetadata[payInCurrency ?? ETH].name}
               onClick={togglePayInCurrency}
             />
           }
         />
         <PayInputSubText
-          payInCurrency={payInCurrency ?? currencyETH}
+          payInCurrency={payInCurrency ?? ETH}
           amount={payAmount}
           reservedRate={reservedRate}
           weight={weight}

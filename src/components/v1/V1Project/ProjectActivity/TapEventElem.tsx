@@ -10,8 +10,6 @@ import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
 
-import { V1_CURRENCY_ETH } from 'constants/v1/currency'
-
 import { smallHeaderStyle } from '../styles'
 
 export default function TapEventElem({
@@ -112,7 +110,7 @@ export default function TapEventElem({
             </div>
 
             <div style={{ color: colors.text.secondary }}>
-              <CurrencySymbol currency={V1_CURRENCY_ETH} />
+              <CurrencySymbol currency="ETH" />
               {formatWad(e.modCut, { precision: 4 })}
             </div>
           </div>
@@ -140,7 +138,7 @@ export default function TapEventElem({
                   : { fontWeight: 500 }
               }
             >
-              <CurrencySymbol currency={V1_CURRENCY_ETH} />
+              <CurrencySymbol currency="ETH" />
               {formatWad(tapEvent.beneficiaryTransferAmount, { precision: 4 })}
             </div>
           </div>
@@ -155,7 +153,7 @@ export default function TapEventElem({
             textAlign: 'right',
           }}
         >
-          <CurrencySymbol currency={V1_CURRENCY_ETH} />
+          <CurrencySymbol currency="ETH" />
           {formatWad(tapEvent.netTransferAmount, { precision: 4 })}
         </div>
       ) : null}

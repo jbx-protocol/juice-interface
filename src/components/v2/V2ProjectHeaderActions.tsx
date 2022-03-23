@@ -2,14 +2,22 @@ import { t, Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
+import {
+  useHasPermission,
+  V2OperatorPermission,
+} from 'hooks/v2/contractReader/HasPermission'
 import { useContext } from 'react'
 
+import V2ReconfigureFundingModalTrigger from './V2Project/V2ProjectReconfigureModal/V2ReconfigureModalTrigger'
+
 export default function V2ProjectHeaderActions() {
-  const { projectId } = useContext(V2ProjectContext)
+  const { projectId, fundingCycle } = useContext(V2ProjectContext)
 
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+
+  const canReconfigure = useHasPermission(V2OperatorPermission.RECONFIGURE)
 
   return (
     <div
@@ -38,6 +46,11 @@ export default function V2ProjectHeaderActions() {
           </span>
         </Tooltip>
       </span>
+      {canReconfigure && (
+        <V2ReconfigureFundingModalTrigger
+          fundingDuration={fundingCycle?.duration}
+        />
+      )}
     </div>
   )
 }

@@ -320,6 +320,7 @@ msgstr "答案是肯定的."
 msgid "Amount"
 msgstr "数量"
 
+#: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 msgid "Amount paid"
 msgstr "支付数额"
@@ -369,6 +370,10 @@ msgstr "回到顶部"
 msgid "Balance exceeded"
 msgstr "超出余额"
 
+#: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
+msgid "Beneficiary"
+msgstr ""
+
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "Beneficiary address"
 msgstr "受益人钱包地址"
@@ -378,6 +383,7 @@ msgid "Big ups to the Ethereum community for crafting the infrastructure and eco
 msgstr "依托于以太坊社区精心打造的基础设施和经济生态，Juicebox 才得以实现。"
 
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
 msgid "Block number"
 msgstr "区块数"
 
@@ -473,7 +479,9 @@ msgstr "以 ERC20 的形式领取 {tokensLabel}"
 msgid "Claiming {tokenSymbol} tokens will convert your {tokenSymbol} balance to ERC20 tokens and mint them to your wallet."
 msgstr "领取 {tokenSymbol} 代币时，你的代币余额会被铸造为 ERC20 并发送到钱包。"
 
+#: src/components/v1/V1Project/modals/DownloadActivityModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
 msgid "Close"
 msgstr "关闭"
 
@@ -559,6 +567,10 @@ msgstr "周期 #{0}"
 #: src/components/Navbar/Mobile/ThemePickerMobile.tsx
 msgid "Dark theme"
 msgstr "深色主题"
+
+#: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
+msgid "Date"
+msgstr ""
 
 #: src/components/Projects/ProjectsFilterAndSort.tsx
 msgid "Date created"
@@ -661,8 +673,17 @@ msgid "Done"
 msgstr "完成"
 
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
 msgid "Download CSV"
 msgstr "下载 CSV"
+
+#: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
+msgid "Download CSV of payments"
+msgstr ""
+
+#: src/components/v1/V1Project/modals/DownloadActivityModal.tsx
+msgid "Download CSV of project activity"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 msgid "Download CSV of {0} holders"
@@ -723,6 +744,14 @@ msgstr "允许铸造代币会让捐款人觉得项目有风险，如必非要，
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 msgid "End"
 msgstr "结束时间"
+
+#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+msgid "Error loading holders"
+msgstr ""
+
+#: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
+msgid "Error loading payments"
+msgstr ""
 
 #: src/components/Landing/index.tsx
 msgid "Ethereum protocols and DAOs"
@@ -991,6 +1020,7 @@ msgid "Last paid timestamp"
 msgstr "上次支付的时间戳"
 
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
 msgid "Latest"
 msgstr "最近"
 
@@ -1123,6 +1153,10 @@ msgstr "不设定筹款目标。"
 msgid "Not set"
 msgstr "未设定"
 
+#: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
+msgid "Note"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
 msgid "Note:"
 msgstr "请注意："
@@ -1206,6 +1240,10 @@ msgstr "付款声明"
 #: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
 msgid "Pay {0}"
 msgstr "支付 {0}"
+
+#: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
+msgid "Payer"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 #: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx

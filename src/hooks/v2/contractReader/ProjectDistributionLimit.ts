@@ -8,9 +8,9 @@ export default function useProjectDistributionLimit({
   domain,
   terminal,
 }: {
-  projectId?: BigNumber
-  domain?: string
-  terminal?: string
+  projectId: BigNumber | undefined
+  domain: string | undefined
+  terminal: string | undefined
 }) {
   return useV2ContractReader<string>({
     contract: V2ContractName.JBController,

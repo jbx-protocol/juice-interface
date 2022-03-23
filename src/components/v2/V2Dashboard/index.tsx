@@ -56,19 +56,20 @@ export default function V2Dashboard() {
     domain: fundingCycle?.configuration?.toString(),
   })
   const { data: terminals } = useProjectTerminals({
-    // useMemo here
     projectId,
   })
 
   const { data: distributionLimit } = useProjectDistributionLimit({
     projectId,
     domain: fundingCycle?.configuration?.toString(),
-    terminal: terminals ? terminals[0] : undefined, //TODO: make primaryTerminalOf hook and use it
+    // terminal: terminals ? terminals[0] : undefined,
+    terminal: terminals?.[0], //TODO: make primaryTerminalOf hook and use it
   })
 
   const { data: queuedDistributionLimit } = useProjectDistributionLimit({
     projectId,
     domain: queuedFundingCycle?.configuration?.toString(),
+    // terminal: terminals ? terminals[0] : '',
     terminal: terminals?.[0],
   })
 
@@ -99,6 +100,13 @@ export default function V2Dashboard() {
     fundingCycleConfiguration: fundingCycle?.configuration,
     terminal: contracts?.JBETHPaymentTerminal.address,
   })
+
+  const { data: queuedDistributionLimitCurrency } =
+    useDistributionLimitCurrency({
+      projectId,
+      fundingCycleConfiguration: queuedFundingCycle?.configuration,
+      terminal: contracts?.JBETHPaymentTerminal.address,
+    })
 
   const balanceInDistributionLimitCurrency = useMemo(
     () =>
@@ -134,6 +142,7 @@ export default function V2Dashboard() {
     terminals,
     ETHBalance,
     distributionLimitCurrency,
+    queuedDistributionLimitCurrency,
     balanceInDistributionLimitCurrency,
   }
 

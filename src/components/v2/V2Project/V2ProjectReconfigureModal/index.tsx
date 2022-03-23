@@ -5,9 +5,11 @@ import { useCallback, useContext, useLayoutEffect, useState } from 'react'
 import { CaretRightFilled } from '@ant-design/icons'
 
 import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { V2UserContext } from 'contexts/v2/userContext'
 
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { fromWad } from 'utils/formatNumber'
+import { SerializedV2FundAccessConstraint } from 'utils/v2/serializers'
 import { useAppDispatch } from 'hooks/AppDispatch'
 
 import {
@@ -74,7 +76,11 @@ export default function V2ProjectReconfigureModal({
     queuedPayoutSplits,
     distributionLimit,
     queuedDistributionLimit,
+    distributionLimitCurrency,
+    queuedDistributionLimitCurrency,
   } = useContext(V2ProjectContext)
+
+  const { contracts } = useContext(V2UserContext)
 
   const dispatch = useAppDispatch()
 
@@ -100,12 +106,29 @@ export default function V2ProjectReconfigureModal({
     ? queuedDistributionLimit
     : distributionLimit
 
+  const effectiveDistributionLimitCurrency =
+    queuedDistributionLimitCurrency ?? distributionLimitCurrency
+
+  // Creates the local redux state from V2ProjectContext values
   useLayoutEffect(() => {
     if (!visible || !effectiveFundingCycle || !effectivePayoutSplits) return
 
+    // Build fundAccessConstraint
+    let fundAccessConstraint: SerializedV2FundAccessConstraint | undefined =
+      undefined
+    if (effectiveDistributionLimit) {
+      fundAccessConstraint = {
+        terminal: contracts?.JBETHPaymentTerminal.address ?? '',
+        distributionLimit: fromWad(effectiveDistributionLimit),
+        distributionLimitCurrency:
+          effectiveDistributionLimitCurrency?.toString() ?? 'ETH',
+        overflowAllowance: '0', // nothing for the time being.
+        overflowAllowanceCurrency: '0',
+      }
+    }
     dispatch(
-      editingV2ProjectActions.setDistributionLimit(
-        fromWad(effectiveDistributionLimit) ?? '',
+      editingV2ProjectActions.setFundAccessConstraints(
+        fundAccessConstraint ? [fundAccessConstraint] : [],
       ),
     )
 
@@ -119,15 +142,17 @@ export default function V2ProjectReconfigureModal({
     // Set editing payouts
     dispatch(editingV2ProjectActions.setPayoutSplits(effectivePayoutSplits))
   }, [
+    contracts,
     effectiveFundingCycle,
     effectivePayoutSplits,
     effectiveDistributionLimit,
+    effectiveDistributionLimitCurrency,
     fundingCycle,
     visible,
     dispatch,
   ])
 
-  // Load local reconfig modal redux state
+  // Gets values from the redux state to be used in the modal drawer fields
   const { payoutGroupedSplits: editingPayoutGroupedSplits } = useAppSelector(
     state => state.editingV2Project,
   )

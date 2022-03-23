@@ -3,6 +3,8 @@ import { V1CurrencyOption } from 'models/v1/currencyOption'
 
 import { BigNumber } from '@ethersproject/bignumber'
 
+import { Trans } from '@lingui/macro'
+
 import BudgetTargetInput from '../inputs/BudgetTargetInput'
 import { FormItemExt } from './formItemExt'
 
@@ -29,8 +31,14 @@ export default function ProjectTarget({
 } & FormItemExt) {
   return (
     <Form.Item
-      extra="The maximum amount of funds that can be distributed from this project in one funding cycle. Funds will be withdrawn in ETH no matter the currency you choose."
-      label={hideLabel ? undefined : 'Funding target'}
+      extra={
+        <Trans>
+          The maximum amount of funds that can be distributed from this project
+          in one funding cycle. Funds will be withdrawn in ETH no matter the
+          currency you choose.
+        </Trans>
+      }
+      label={hideLabel ? undefined : <Trans>Funding target</Trans>}
       {...formItemProps}
     >
       <BudgetTargetInput

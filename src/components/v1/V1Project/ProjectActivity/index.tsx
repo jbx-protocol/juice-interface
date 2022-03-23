@@ -1,4 +1,5 @@
-import { Space } from 'antd'
+import { Button, Space } from 'antd'
+import { DownloadOutlined } from '@ant-design/icons'
 import { t } from '@lingui/macro'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
@@ -10,12 +11,14 @@ import { PaymentActivity } from './PaymentActivity'
 import { RedeemActivity } from './RedeemActivity'
 import { ReservesActivity } from './ReservesActivity'
 import { TapActivity } from './TapActivity'
+import DownloadActivityModal from '../modals/DownloadActivityModal'
 
 type TabOption = 'pay' | 'redeem' | 'tap' | 'reserves'
 
 export default function ProjectActivity() {
   const { colors } = useContext(ThemeContext).theme
   const [initialized, setInitialized] = useState<boolean>()
+  const [downloadModalVisible, setDownloadModalVisible] = useState<boolean>()
   const [tabOption, setTabOption] = useState<TabOption>()
 
   const { projectId } = useContext(V1ProjectContext)
@@ -108,11 +111,23 @@ export default function ProjectActivity() {
           alignItems: 'baseline',
         }}
       >
-        <SectionHeader text={t`Activity`} />
+        <Space direction="horizontal" align="center" size="small">
+          <SectionHeader text={t`Activity`} style={{ margin: 0 }} />
+          <Button
+            type="text"
+            icon={<DownloadOutlined />}
+            onClick={() => setDownloadModalVisible(true)}
+          />
+        </Space>
         {tabs}
       </div>
 
       {content}
+
+      <DownloadActivityModal
+        visible={downloadModalVisible}
+        onCancel={() => setDownloadModalVisible(false)}
+      />
     </div>
   )
 }

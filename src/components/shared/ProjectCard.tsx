@@ -57,7 +57,7 @@ export default function ProjectCard({
   ).data
 
   // Must use any to convert (ProjectCardProject | bigNumber) to ProjectCardProject
-  const projectObj: any = project
+  const projectObj: any = project // eslint-disable-line @typescript-eslint/no-explicit-any
   let _project: ProjectCardProject
 
   // If we were given projectId (BN) and therefore projectQuery returned something,

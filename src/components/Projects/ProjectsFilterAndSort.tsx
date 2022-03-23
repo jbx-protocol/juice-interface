@@ -29,7 +29,7 @@ export default function ProjectsFilterAndSort({
   showArchived: boolean
   setShowArchived: CheckboxOnChange
   orderBy: OrderByOption
-  setOrderBy: any
+  setOrderBy: any // eslint-disable-line @typescript-eslint/no-explicit-any
 }) {
   const {
     theme: { colors },

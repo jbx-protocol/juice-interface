@@ -1,7 +1,6 @@
 import { RightCircleOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
-import { Progress } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import EtherscanLink from 'components/shared/EtherscanLink'
 import ProjectTokenBalance from 'components/shared/ProjectTokenBalance'
@@ -14,14 +13,16 @@ import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
 import { useEthBalanceQuery } from 'hooks/EthBalance'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { NetworkName } from 'models/network-name'
-import { CSSProperties, useContext, useMemo, useState } from 'react'
-import { formatWad, fracDiv } from 'utils/formatNumber'
+import { CSSProperties, useContext, useState } from 'react'
+import { formatWad } from 'utils/formatNumber'
 import { hasFundingTarget } from 'utils/v1/fundingCycle'
 
 import { V1CurrencyName } from 'utils/v1/currency'
 import StatLine from 'components/shared/Project/StatLine'
 
 import USDAmount from 'components/shared/currency/USDAmount'
+
+import FundingProgressBar from 'components/shared/Project/FundingProgressBar'
 
 import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
 import { readNetwork } from 'constants/networks'
@@ -52,21 +53,6 @@ export default function Paid() {
     overflow ?? 0,
     V1CurrencyName(currentFC?.currency.toNumber() as V1CurrencyOption),
     'ETH',
-  )
-
-  const percentPaid = useMemo(
-    () =>
-      balanceInCurrency && currentFC?.target
-        ? fracDiv(balanceInCurrency.toString(), currentFC.target.toString()) *
-          100
-        : 0,
-    [balanceInCurrency, currentFC],
-  )
-
-  // Percent overflow of target
-  const percentOverflow = fracDiv(
-    (overflowInCurrency?.sub(currentFC?.target ?? 0) ?? 0).toString(),
-    (currentFC?.target ?? 0).toString(),
   )
 
   const primaryTextStyle: CSSProperties = {
@@ -212,47 +198,13 @@ export default function Paid() {
           </div>
         ))}
 
-      {hasFundingTarget(currentFC) &&
-        currentFC.target.gt(0) &&
-        (overflow?.gt(0) ? (
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <Progress
-              style={{
-                width: (1 - percentOverflow) * 100 + '%',
-                minWidth: 10,
-              }}
-              percent={100}
-              showInfo={false}
-              strokeColor={colors.text.brand.primary}
-            />
-            <div
-              style={{
-                minWidth: 4,
-                height: 15,
-                borderRadius: 2,
-                background: colors.text.primary,
-                marginLeft: 5,
-                marginRight: 5,
-                marginTop: 3,
-              }}
-            ></div>
-            <Progress
-              style={{
-                width: percentOverflow * 100 + '%',
-                minWidth: 10,
-              }}
-              percent={100}
-              showInfo={false}
-              strokeColor={colors.text.brand.primary}
-            />
-          </div>
-        ) : (
-          <Progress
-            percent={percentPaid ? Math.max(percentPaid, 1) : 0}
-            showInfo={false}
-            strokeColor={colors.text.brand.primary}
-          />
-        ))}
+      {hasFundingTarget(currentFC) && currentFC.target.gt(0) && (
+        <FundingProgressBar
+          targetAmount={currentFC.target}
+          overflowAmountInTargetCurrency={overflowInCurrency}
+          balanceInTargetCurrency={balanceInCurrency}
+        />
+      )}
 
       <StatLine
         statLabel={<Trans>In wallet</Trans>}

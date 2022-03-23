@@ -1,4 +1,4 @@
-import ETHAmount from 'components/shared/ETHAmount'
+import ETHAmount from 'components/shared/currency/ETHAmount'
 import EtherscanLink from 'components/shared/EtherscanLink'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import RichNote from 'components/shared/RichNote'
@@ -7,7 +7,8 @@ import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { PayEvent } from 'models/subgraph-entities/pay-event'
 import { useCallback, useContext } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
-import { contentLineHeight, smallHeaderStyle } from '../styles'
+
+import { contentLineHeight, smallHeaderStyle } from './styles'
 
 // Maps a project id to an internal map of payment event overrides.
 let payEventOverrides = new Map<string, Map<string, string>>([

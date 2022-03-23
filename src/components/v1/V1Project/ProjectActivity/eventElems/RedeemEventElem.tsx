@@ -1,7 +1,6 @@
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import EtherscanLink from 'components/shared/EtherscanLink'
 import FormattedAddress from 'components/shared/FormattedAddress'
-import { V1_CURRENCY_ETH } from 'constants/v1/currency'
 import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { RedeemEvent } from 'models/subgraph-entities/redeem-event'
@@ -10,7 +9,7 @@ import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
-import { contentLineHeight, smallHeaderStyle } from '../styles'
+import { contentLineHeight, smallHeaderStyle } from './styles'
 
 export default function RedeemEventElem({
   event,
@@ -85,7 +84,7 @@ export default function RedeemEventElem({
       </div>
 
       <div style={{ color: colors.text.secondary }}>
-        <CurrencySymbol currency={V1_CURRENCY_ETH} />
+        <CurrencySymbol currency="ETH" />
         {formatWad(event.returnAmount, { precision: 4 })} overflow received
       </div>
     </div>

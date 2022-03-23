@@ -10,7 +10,7 @@ import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
-import { smallHeaderStyle } from '../../styles'
+import { smallHeaderStyle } from './styles'
 
 export default function ReservesEventElem({
   event,

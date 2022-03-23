@@ -10,7 +10,7 @@ import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
 
-import { smallHeaderStyle } from '../styles'
+import { smallHeaderStyle } from './styles'
 
 export default function TapEventElem({
   event,
@@ -62,7 +62,7 @@ export default function TapEventElem({
           justifyContent: 'space-between',
         }}
       >
-        <div style={smallHeaderStyle(colors)}>Withdrawn</div>
+        <div style={smallHeaderStyle(colors)}>Distributed funds</div>
 
         <div
           style={{

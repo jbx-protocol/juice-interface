@@ -1,22 +1,20 @@
 import EtherscanLink from 'components/shared/EtherscanLink'
+import FormattedAddress from 'components/shared/FormattedAddress'
 import { ThemeContext } from 'contexts/themeContext'
-import { DeployedERC20Event } from 'models/subgraph-entities/deployed-erc20-event'
+import { ProjectCreateEvent } from 'models/subgraph-entities/project-create-event'
 import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
-import { contentLineHeight, smallHeaderStyle } from '../styles'
 
-export default function DeployedERC20EventElem({
+import { contentLineHeight, smallHeaderStyle } from './styles'
+
+export default function ProjectCreateEventElem({
   event,
 }: {
-  event:
-    | Pick<DeployedERC20Event, 'symbol' | 'id' | 'timestamp' | 'txHash'>
-    | undefined
+  event: Pick<ProjectCreateEvent, 'id' | 'caller' | 'timestamp' | 'txHash'>
 }) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-
-  if (!event) return null
 
   return (
     <div
@@ -27,14 +25,13 @@ export default function DeployedERC20EventElem({
       }}
     >
       <div>
-        <div style={smallHeaderStyle(colors)}>Deployed ERC20 token</div>
+        <div style={smallHeaderStyle(colors)}>Created</div>
         <div
           style={{
             lineHeight: contentLineHeight,
-            fontSize: '1rem',
           }}
         >
-          {event.symbol}
+          Project created by <FormattedAddress address={event.caller} />
         </div>
       </div>
 

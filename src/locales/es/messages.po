@@ -316,6 +316,12 @@ msgid "All changes will be applied to the <0>upcoming</0> funding cycle."
 msgstr "Todos los cambios se aplicarán al <0>siguiente </0>ciclo de financiación."
 
 #: src/components/v1/shared/BudgetForm.tsx
+#: src/components/v1/V1Project/ProjectActivity/index.tsx
+msgid "All events"
+msgstr ""
+
+#: src/components/shared/forms/BudgetForm.tsx
+#: src/components/v2/V2Create/forms/FundingForm/index.tsx
 msgid "All funds can be distributed by the project. The project will have no overflow (the same as setting the target to infinity)."
 msgstr "Todos los fondos pueden ser distribuidos por el proyecto. El proyecto no tendrá excedente (lo mismo que establecer el objetivo a infinito)."
 
@@ -880,6 +886,13 @@ msgstr ""
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Distribution limit, duration and payouts"
 msgstr "Límite de distribución, duración y pagos"
+#: src/components/v1/V1Project/ProjectActivity/index.tsx
+msgid "Distributed Funds"
+msgstr ""
+
+#: src/components/v1/V1Project/ProjectActivity/index.tsx
+msgid "Distributed Reserves"
+msgstr ""
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
@@ -943,6 +956,10 @@ msgstr "Debido a su naturaleza pública, cualquier explotación a los contratos 
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Duration"
 msgstr "Duración"
+
+#: src/components/v1/V1Project/ProjectActivity/index.tsx
+msgid "ERC20 Deployed"
+msgstr ""
 
 #: src/components/Landing/index.tsx
 msgid "ERC-20 community tokens"
@@ -1388,7 +1405,7 @@ msgid "Light theme"
 msgstr "Tema luminoso"
 
 #: src/components/Projects/index.tsx
-#: src/components/v1/V1Project/ProjectActivity/ActivityTabContent.tsx
+#: src/components/v1/V1Project/ProjectActivity/index.tsx
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 msgid "Load more"
 msgstr "Cargar más"
@@ -1512,7 +1529,7 @@ msgstr "Siguiente: Revisar y desplegar"
 msgid "No"
 msgstr "No"
 
-#: src/components/v1/V1Project/ProjectActivity/ActivityTabContent.tsx
+#: src/components/v1/V1Project/ProjectActivity/index.tsx
 msgid "No activity yet"
 msgstr "Sin actividad, todavía"
 
@@ -1594,6 +1611,11 @@ msgstr ""
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Owner is not allowed to mint tokens."
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+msgid "Owner can mint tokens"
+msgstr "El propietario puede acuñar tokens"
+#: src/components/v1/V1Project/ProjectActivity/index.tsx
+msgid "Paid"
 msgstr ""
 
 #: src/components/v1/V1Project/V1PayButton.tsx
@@ -1617,7 +1639,6 @@ msgstr "Pausado"
 
 #: src/components/shared/formItems/ProjectPayButton.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
-#: src/components/v1/V1Project/ProjectActivity/index.tsx
 #: src/components/v1/V1Project/V1PayButton.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
@@ -1797,6 +1818,12 @@ msgid "Project ID:"
 msgstr ""
 
 #: src/components/shared/modals/IssueTokenModal.tsx
+#: src/components/shared/IssueTicketsButton.tsx
+#: src/components/v1/V1Project/ProjectActivity/index.tsx
+msgid "Project Created"
+msgstr ""
+
+#: src/components/v1/V1Project/Rewards/IssueTickets.tsx
 msgid "Project Token"
 msgstr "Token de proyecto"
 
@@ -1913,6 +1940,10 @@ msgid "Projects using a reserved rate of {reservedRateRiskyMin}% or more will ap
 msgstr "Los proyectos que usan una tarifa reservada {reservedRateRiskyMin}% o más parecerán arriesgados para los colaboradores, como un número relativamente pequeño de tokens serán recibidos a cambio de pagar por tu proyecto."
 
 #: src/components/Landing/index.tsx
+msgid "Protocol stats"
+msgstr ""
+
+#: src/components/Landing/index.tsx
 msgid "Public goods and services"
 msgstr "Bienes y servicios públicos"
 
@@ -1996,6 +2027,7 @@ msgid "Redeem"
 msgstr "Canjear"
 
 #: src/components/shared/ManageTokensModal.tsx
+#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
 msgid "Redeem your {tokensLabel} for a portion of the project's overflow. Any {tokensLabel} you redeem will be burned."
 msgstr "Canjea tus {tokensLabel} por una porción del excedente del proyecto. Cualquier {tokensLabel} que canjees será quemado."
 
@@ -2015,6 +2047,12 @@ msgstr "Canjear {tokensTextLong} por ETH"
 #: src/components/v2/V2Create/forms/TokenForm/index.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+#: src/components/v1/V1Project/ProjectActivity/index.tsx
+msgid "Redeemed"
+msgstr ""
+
+#: src/components/v2/V2Create/DeployProjectModal/index.tsx
+#: src/components/v2/V2Create/tabs/TokenTab/TokenTabContent.tsx
 msgid "Redemption rate"
 msgstr "Porcentaje de canje"
 
@@ -2839,7 +2877,6 @@ msgid "With an infinite distribution limit, all funds can be distributed by the 
 msgstr ""
 
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
-#: src/components/v1/V1Project/ProjectActivity/index.tsx
 msgid "Withdraw"
 msgstr "Retirar"
 
@@ -3165,7 +3202,7 @@ msgstr "{0}/{1} retirado"
 msgid "{0}{1}"
 msgstr "{0}{1}"
 
-#: src/components/v1/V1Project/ProjectActivity/ActivityTabContent.tsx
+#: src/components/v1/V1Project/ProjectActivity/index.tsx
 msgid "{count} total"
 msgstr "{count} total"
 

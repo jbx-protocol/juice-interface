@@ -791,6 +791,7 @@ msgstr "Funding cycles can be reconfigured moments before a new cycle begins, wi
 msgid "Funding distribution"
 msgstr "Funding distribution"
 
+#: src/components/shared/formItems/ProjectTarget.tsx
 #: src/components/v2/V2Create/tabs/FundingTab/FundingTabContent.tsx
 msgid "Funding target"
 msgstr "Funding target"
@@ -1732,6 +1733,10 @@ msgstr "The funds available to withdraw for this funding cycle after the {0}% JB
 msgid "The future will be led by creators, and owned by communities."
 msgstr ""
 
+#: src/components/shared/formItems/ProjectTarget.tsx
+msgid "The maximum amount of funds that can be distributed from this project in one funding cycle. Funds will be withdrawn in ETH no matter the currency you choose."
+msgstr "The maximum amount of funds that can be distributed from this project in one funding cycle. Funds will be withdrawn in ETH no matter the currency you choose."
+
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "The percent this individual receives of the overall {reservedRate}% reserved token allocation"
 msgstr "The percent this individual receives of the overall {reservedRate}% reserved token allocation"
@@ -2173,6 +2178,7 @@ msgstr ""
 msgid "Your project's website."
 msgstr ""
 
+#: src/components/shared/inputs/BudgetTargetInput.tsx
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 msgid "after {0}% JBX fee"
 msgstr ""

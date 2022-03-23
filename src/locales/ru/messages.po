@@ -796,6 +796,7 @@ msgstr "Циклы финансирования можно изменить за
 msgid "Funding distribution"
 msgstr "Распределение финансирования"
 
+#: src/components/shared/formItems/ProjectTarget.tsx
 #: src/components/v2/V2Create/tabs/FundingTab/FundingTabContent.tsx
 msgid "Funding target"
 msgstr "Цель финансирования"
@@ -1737,6 +1738,10 @@ msgstr "Средства, доступные для вывода в течени
 msgid "The future will be led by creators, and owned by communities."
 msgstr "Будущее будет возглавляться создателями и принадлежать сообществам."
 
+#: src/components/shared/formItems/ProjectTarget.tsx
+msgid "The maximum amount of funds that can be distributed from this project in one funding cycle. Funds will be withdrawn in ETH no matter the currency you choose."
+msgstr ""
+
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "The percent this individual receives of the overall {reservedRate}% reserved token allocation"
 msgstr "Процент, который получает это лицо от общего количества {reservedRate}%зарезервированное распределение токенов"
@@ -2178,6 +2183,7 @@ msgstr "Цель и продолжительность цикла финанси
 msgid "Your project's website."
 msgstr "Сайт вашего проекта."
 
+#: src/components/shared/inputs/BudgetTargetInput.tsx
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 msgid "after {0}% JBX fee"
 msgstr "после  {0}% комиссии JBX"

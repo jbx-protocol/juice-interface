@@ -320,6 +320,7 @@ msgstr "Casi de forma definitiva."
 msgid "Amount"
 msgstr "Cantidad"
 
+#: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 msgid "Amount paid"
 msgstr "Monto pagado"
@@ -369,6 +370,10 @@ msgstr "Regresa arriba"
 msgid "Balance exceeded"
 msgstr "Balance excedido"
 
+#: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
+msgid "Beneficiary"
+msgstr ""
+
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "Beneficiary address"
 msgstr "Dirección de beneficiario"
@@ -378,6 +383,7 @@ msgid "Big ups to the Ethereum community for crafting the infrastructure and eco
 msgstr "Dar las gracias a la comunidad Ethereum por fabricar la infraestructura y la economía para hacer posible Juicebox."
 
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
 msgid "Block number"
 msgstr "Número de bloque"
 
@@ -473,7 +479,9 @@ msgstr "Reclamar {tokensLabel} como ERC20"
 msgid "Claiming {tokenSymbol} tokens will convert your {tokenSymbol} balance to ERC20 tokens and mint them to your wallet."
 msgstr "Reclamar los tokens {tokenSymbol} va a convertir tu balance de {tokenSymbol} a tokens ERC20 y acuñarlos en tu billetera."
 
+#: src/components/v1/V1Project/modals/DownloadActivityModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
 msgid "Close"
 msgstr "Cerrar"
 
@@ -559,6 +567,10 @@ msgstr "Ciclo #{0}"
 #: src/components/Navbar/Mobile/ThemePickerMobile.tsx
 msgid "Dark theme"
 msgstr "Tema oscuro"
+
+#: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
+msgid "Date"
+msgstr ""
 
 #: src/components/Projects/ProjectsFilterAndSort.tsx
 msgid "Date created"
@@ -661,8 +673,17 @@ msgid "Done"
 msgstr "Hecho"
 
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
 msgid "Download CSV"
 msgstr "Descargar CSV"
+
+#: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
+msgid "Download CSV of payments"
+msgstr ""
+
+#: src/components/v1/V1Project/modals/DownloadActivityModal.tsx
+msgid "Download CSV of project activity"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 msgid "Download CSV of {0} holders"
@@ -723,6 +744,14 @@ msgstr "Permitir que los tokens sean minteados/acuñados les parecerá arriesgad
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 msgid "End"
 msgstr "Fin"
+
+#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+msgid "Error loading holders"
+msgstr ""
+
+#: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
+msgid "Error loading payments"
+msgstr ""
 
 #: src/components/Landing/index.tsx
 msgid "Ethereum protocols and DAOs"
@@ -991,6 +1020,7 @@ msgid "Last paid timestamp"
 msgstr "Última marca de tiempo pagada"
 
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
 msgid "Latest"
 msgstr "Último"
 
@@ -1123,6 +1153,10 @@ msgstr "Sin meta-objetivo establecida."
 msgid "Not set"
 msgstr "No establecido"
 
+#: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
+msgid "Note"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
 msgid "Note:"
 msgstr "Nota:"
@@ -1206,6 +1240,10 @@ msgstr "Declaración por pago"
 #: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
 msgid "Pay {0}"
 msgstr "Pagar {0}"
+
+#: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
+msgid "Payer"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 #: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx

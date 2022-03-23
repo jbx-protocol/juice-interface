@@ -5,8 +5,11 @@ import { CSSProperties, useContext, useEffect, useState } from 'react'
 import { V1CurrencyName } from 'utils/v1/currency'
 import { perbicentToPercent } from 'utils/formatNumber'
 
+import { Trans } from '@lingui/macro'
+
 import InputAccessoryButton from '../InputAccessoryButton'
 import FormattedNumberInput from './FormattedNumberInput'
+import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
 
 export default function BudgetTargetInput({
   currency,
@@ -47,17 +50,18 @@ export default function BudgetTargetInput({
 
   if (_currency === undefined) return null
 
-  function CurrencySwitch() {
+  const CurrencySwitch = () => {
     if (onCurrencyChange)
       return (
         <InputAccessoryButton
           onClick={() => {
-            const newCurrency = _currency === 1 ? 0 : 1
+            const newCurrency =
+              _currency === V1_CURRENCY_USD ? V1_CURRENCY_ETH : V1_CURRENCY_USD
             setCurrency(newCurrency)
             onCurrencyChange(newCurrency)
           }}
           content={V1CurrencyName(_currency)}
-          withArrow={true}
+          withArrow
           placement="suffix"
         />
       )
@@ -91,7 +95,9 @@ export default function BudgetTargetInput({
               }
             />
           </div>
-          <div>after {perbicentToPercent(fee?.toString())}% JBX fee</div>
+          <div>
+            <Trans>after {perbicentToPercent(fee?.toString())}% JBX fee</Trans>
+          </div>
         </div>
       )}
     </div>

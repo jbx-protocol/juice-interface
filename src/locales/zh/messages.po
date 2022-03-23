@@ -796,6 +796,7 @@ msgstr "新的筹款周期开始前即可重新配置筹款周期参数，无须
 msgid "Funding distribution"
 msgstr "资金分发"
 
+#: src/components/shared/formItems/ProjectTarget.tsx
 #: src/components/v2/V2Create/tabs/FundingTab/FundingTabContent.tsx
 msgid "Funding target"
 msgstr "筹款目标"
@@ -1737,6 +1738,10 @@ msgstr "在减去 {0} 的 JBX 费用后，当前筹款周期可提取的资金�
 msgid "The future will be led by creators, and owned by communities."
 msgstr "创造者将引领未来, 而社区会拥有未来."
 
+#: src/components/shared/formItems/ProjectTarget.tsx
+msgid "The maximum amount of funds that can be distributed from this project in one funding cycle. Funds will be withdrawn in ETH no matter the currency you choose."
+msgstr ""
+
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "The percent this individual receives of the overall {reservedRate}% reserved token allocation"
 msgstr "这个地址会收到保留代币中的 {reservedRate}%"
@@ -2178,6 +2183,7 @@ msgstr "项目筹款周期的目标与持续时间。"
 msgid "Your project's website."
 msgstr "你项目的网站。"
 
+#: src/components/shared/inputs/BudgetTargetInput.tsx
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 msgid "after {0}% JBX fee"
 msgstr "计算 {0}% JBX 费用之后"

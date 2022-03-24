@@ -1444,6 +1444,10 @@ msgstr "Reconfigure funding details>>>>>>> 153425ca10bdac391883ab7d76d7085162205
 msgid "Reconfigure project details"
 msgstr "Reconfigure project details"
 
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureTokenDrawer.tsx
+msgid "Reconfigure token"
+msgstr "Reconfigure token"
+
 #: src/components/v1/V1Project/FundingCycles/ReconfigureFundingModalTrigger.tsx
 msgid "Reconfigure upcoming"
 msgstr "Reconfigure upcoming"
@@ -1887,6 +1891,7 @@ msgstr "This will erase all of your changes."
 msgid "To: <0/>"
 msgstr ""
 
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 #: src/utils/tokenSymbolText.ts
 msgid "Token"
 msgstr "Token"

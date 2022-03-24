@@ -109,10 +109,6 @@ export default function V2ProjectReconfigureModal({
     ? queuedFundingCycle
     : fundingCycle
 
-  const effectiveFundingCycleMetadata = decodeV2FundingCycleMetadata(
-    effectiveFundingCycle?.metadata,
-  )
-
   const effectivePayoutSplits = queuedFundingCycle?.number.gt(0)
     ? queuedPayoutSplits
     : payoutSplits
@@ -130,8 +126,7 @@ export default function V2ProjectReconfigureModal({
 
   // Creates the local redux state from V2ProjectContext values
   useLayoutEffect(() => {
-    if (!visible || !effectiveFundingCycle || !effectiveFundingCycleMetadata)
-      return
+    if (!visible || !effectiveFundingCycle) return
 
     // Build fundAccessConstraint
     let fundAccessConstraint: SerializedV2FundAccessConstraint | undefined =
@@ -160,11 +155,15 @@ export default function V2ProjectReconfigureModal({
     )
 
     // Set editing funding metadata
-    dispatch(
-      editingV2ProjectActions.setFundingCycleMetadata(
-        serializeV2FundingCycleMetadata(effectiveFundingCycleMetadata),
-      ),
-    )
+    if (effectiveFundingCycle?.metadata) {
+      dispatch(
+        editingV2ProjectActions.setFundingCycleMetadata(
+          serializeV2FundingCycleMetadata(
+            decodeV2FundingCycleMetadata(effectiveFundingCycle.metadata),
+          ),
+        ),
+      )
+    }
 
     // Set editing payout splits
     dispatch(
@@ -180,7 +179,6 @@ export default function V2ProjectReconfigureModal({
   }, [
     contracts,
     effectiveFundingCycle,
-    effectiveFundingCycleMetadata,
     effectivePayoutSplits,
     effectiveReserveTokenSplits,
     effectiveDistributionLimit,
@@ -272,6 +270,10 @@ export default function V2ProjectReconfigureModal({
         <ReconfigureButton
           title={t`Funding target, duration and payouts`}
           onClick={() => setFundingDrawerVisible(true)}
+        />
+        <ReconfigureButton
+          title={t`Token`}
+          onClick={() => setTokenDrawerVisible(true)}
         />
       </Space>
       <V2ReconfigureProjectDetailsDrawer

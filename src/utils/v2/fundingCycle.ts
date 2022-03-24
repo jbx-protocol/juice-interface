@@ -50,9 +50,8 @@ const bits8 = 0b11111111
 const bits1 = 0b1
 
 export const decodeV2FundingCycleMetadata = (
-  packedMetadata: BigNumber | undefined,
-): V2FundingCycleMetadata | undefined => {
-  if (!packedMetadata) return
+  packedMetadata: BigNumber,
+): V2FundingCycleMetadata => {
   const version = packedMetadata
     .and(bits8)
     .toNumber() as V2FundingCycleMetadata['version']

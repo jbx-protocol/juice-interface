@@ -831,7 +831,7 @@ msgid "Funding target"
 msgstr "Цель финансирования"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
-msgid "Funding target/duration"
+msgid "Funding target, duration and payouts"
 msgstr ""
 
 #: src/components/v1/FundingCycle/modals/DistributeTokensModal.tsx
@@ -1170,10 +1170,6 @@ msgstr "Примечание: Juicebox является новым проект�
 msgid "Notice from {0}:"
 msgstr "Уведомление от {0}:"
 
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
-msgid "OK"
-msgstr ""
-
 #: src/components/Landing/index.tsx
 msgid "Open source businesses"
 msgstr "Бизнес с открытым исходным кодом"
@@ -1444,6 +1440,10 @@ msgstr "Перенастроить финансирование"
 msgid "Reconfigure funding details"
 msgstr ""
 
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureFundingDrawer.tsx
+msgid "Reconfigure funding target/duration"
+msgstr ">>>>>>> 153425ca10bdac391883ab7d76d70851622055c9"
+
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectDetailsDrawer.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure project details"
@@ -1560,7 +1560,6 @@ msgid "Reward specific community members with tokens."
 msgstr "Награждайте определенных членов сообщества токенами."
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Rules"
 msgstr "Правила"
 
@@ -1577,6 +1576,7 @@ msgstr "Правила внесения изменений в ваш проек�
 msgid "Rules for how this project's funding cycles can be reconfigured."
 msgstr "Правила изменения конфигурации циклов финансирования этого проекта."
 
+#: src/components/StandardSaveButton.tsx
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 #: src/components/shared/forms/TicketingForm.tsx
@@ -1892,7 +1892,6 @@ msgstr "Это удалит все ваши изменения."
 msgid "To: <0/>"
 msgstr "Кому: <0/>"
 
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 #: src/utils/tokenSymbolText.ts
 msgid "Token"
 msgstr "Токен"
@@ -2017,6 +2016,10 @@ msgstr "Безымянный проект"
 #: src/components/v1/V1Project/FundingCycles/index.tsx
 msgid "Upcoming"
 msgstr "Предстоящие"
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Updates you make to this section will only be applied to <0>upcoming</0> funding cycles."
+msgstr ""
 
 #: src/components/shared/formItems/ProjectLogoUri.tsx
 msgid "Upload"

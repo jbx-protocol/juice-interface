@@ -831,7 +831,7 @@ msgid "Funding target"
 msgstr "筹款目标"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
-msgid "Funding target/duration"
+msgid "Funding target, duration and payouts"
 msgstr ""
 
 #: src/components/v1/FundingCycle/modals/DistributeTokensModal.tsx
@@ -1170,10 +1170,6 @@ msgstr "注意： Juicebox是一个全新的协议，它未经审计且不保证
 msgid "Notice from {0}:"
 msgstr "通知自{0}:"
 
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
-msgid "OK"
-msgstr ""
-
 #: src/components/Landing/index.tsx
 msgid "Open source businesses"
 msgstr "开源业务"
@@ -1444,6 +1440,10 @@ msgstr "重新配置筹款"
 msgid "Reconfigure funding details"
 msgstr ""
 
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureFundingDrawer.tsx
+msgid "Reconfigure funding target/duration"
+msgstr ">>>>>>> 153425ca10bdac391883ab7d76d70851622055c9"
+
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectDetailsDrawer.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure project details"
@@ -1560,7 +1560,6 @@ msgid "Reward specific community members with tokens."
 msgstr "用代币奖励特定的社区成员。"
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Rules"
 msgstr "规则"
 
@@ -1577,6 +1576,7 @@ msgstr "项目筹款周期配置的更改规则。"
 msgid "Rules for how this project's funding cycles can be reconfigured."
 msgstr "关于如何重新配置该项目筹款周期的规则"
 
+#: src/components/StandardSaveButton.tsx
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 #: src/components/shared/forms/TicketingForm.tsx
@@ -1892,7 +1892,6 @@ msgstr "这将删除你所有的更改。"
 msgid "To: <0/>"
 msgstr "分配给：<0/>"
 
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 #: src/utils/tokenSymbolText.ts
 msgid "Token"
 msgstr "代币"
@@ -2017,6 +2016,10 @@ msgstr "项目未命名"
 #: src/components/v1/V1Project/FundingCycles/index.tsx
 msgid "Upcoming"
 msgstr "未来"
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Updates you make to this section will only be applied to <0>upcoming</0> funding cycles."
+msgstr ""
 
 #: src/components/shared/formItems/ProjectLogoUri.tsx
 msgid "Upload"

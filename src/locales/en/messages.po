@@ -826,8 +826,8 @@ msgid "Funding target"
 msgstr "Funding target"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
-msgid "Funding target/duration"
-msgstr "Funding target/duration"
+msgid "Funding target, duration and payouts"
+msgstr "Funding target, duration and payouts"
 
 #: src/components/v1/FundingCycle/modals/DistributeTokensModal.tsx
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
@@ -1165,10 +1165,6 @@ msgstr ""
 msgid "Notice from {0}:"
 msgstr ""
 
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
-msgid "OK"
-msgstr "OK"
-
 #: src/components/Landing/index.tsx
 msgid "Open source businesses"
 msgstr ""
@@ -1439,6 +1435,10 @@ msgstr "Reconfigure funding"
 msgid "Reconfigure funding details"
 msgstr "Reconfigure funding details"
 
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureFundingDrawer.tsx
+msgid "Reconfigure funding target/duration"
+msgstr "Reconfigure funding details>>>>>>> 153425ca10bdac391883ab7d76d70851622055c9"
+
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectDetailsDrawer.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure project details"
@@ -1555,7 +1555,6 @@ msgid "Reward specific community members with tokens."
 msgstr ""
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Rules"
 msgstr ""
 
@@ -1572,6 +1571,7 @@ msgstr ""
 msgid "Rules for how this project's funding cycles can be reconfigured."
 msgstr ""
 
+#: src/components/StandardSaveButton.tsx
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 #: src/components/shared/forms/TicketingForm.tsx
@@ -1887,7 +1887,6 @@ msgstr "This will erase all of your changes."
 msgid "To: <0/>"
 msgstr ""
 
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 #: src/utils/tokenSymbolText.ts
 msgid "Token"
 msgstr "Token"
@@ -2012,6 +2011,10 @@ msgstr ""
 #: src/components/v1/V1Project/FundingCycles/index.tsx
 msgid "Upcoming"
 msgstr ""
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Updates you make to this section will only be applied to <0>upcoming</0> funding cycles."
+msgstr "Updates you make to this section will only be applied to <0>upcoming</0> funding cycles."
 
 #: src/components/shared/formItems/ProjectLogoUri.tsx
 msgid "Upload"

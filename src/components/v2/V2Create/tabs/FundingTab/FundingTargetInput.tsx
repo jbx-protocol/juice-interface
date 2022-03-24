@@ -5,7 +5,7 @@ import {
 import BudgetTargetInput from 'components/shared/inputs/BudgetTargetInput'
 import { BigNumber } from '@ethersproject/bignumber'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toV1Currency } from 'utils/v1/currency'
 import { toV2Currency } from 'utils/v2/currency'
 
@@ -23,6 +23,10 @@ export default function FundingTargetInput({
   onTargetCurrencyChange: (targetCurrency: V2CurrencyOption) => void
 }) {
   const [targetSubFee, setTargetSubFee] = useState<string>()
+
+  useEffect(() => {
+    setTargetSubFee(targetToTargetSubFeeFormatted(target ?? '0', fee))
+  }, [target, fee])
 
   return (
     <BudgetTargetInput

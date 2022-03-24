@@ -236,7 +236,7 @@ export default function FundingTabContent({
             />
           </div>
           {/* Default to floating save button if custom one not given */}
-          {saveButton ? saveButton : <FormActionbar />}
+          {saveButton ?? <FormActionbar />}
         </Form>
       </Col>
       {!hidePreview && <Col md={12} xs={0}></Col>}

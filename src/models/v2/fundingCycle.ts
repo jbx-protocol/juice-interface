@@ -40,5 +40,5 @@ export type V2FundingCycle = V2FundingCycleData & {
   configuration: BigNumber
   basedOn: BigNumber
   start: BigNumber
-  metadata: BigNumber // encoded FundingCycleData
+  metadata: BigNumber // encoded FundingCycleMetadata
 }

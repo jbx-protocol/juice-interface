@@ -122,6 +122,18 @@ export const editingV2ProjectSlice = createSlice({
     setDescription: (state, action: PayloadAction<string>) => {
       state.projectMetadata.description = action.payload
     },
+    setFundingCycleData: (
+      state,
+      action: PayloadAction<SerializedV2FundingCycleData>,
+    ) => {
+      state.fundingCycleData = action.payload
+    },
+    setFundingCycleMetadata: (
+      state,
+      action: PayloadAction<SerializedV2FundingCycleMetadata>,
+    ) => {
+      state.fundingCycleMetadata = action.payload
+    },
     setDuration: (state, action: PayloadAction<string>) => {
       state.fundingCycleData.duration = action.payload
     },

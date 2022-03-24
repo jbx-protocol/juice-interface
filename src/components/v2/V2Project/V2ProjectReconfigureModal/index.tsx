@@ -9,7 +9,11 @@ import { V2UserContext } from 'contexts/v2/userContext'
 
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { fromWad } from 'utils/formatNumber'
-import { SerializedV2FundAccessConstraint } from 'utils/v2/serializers'
+import {
+  SerializedV2FundAccessConstraint,
+  serializeV2FundingCycleData,
+  serializeV2FundingCycleMetadata,
+} from 'utils/v2/serializers'
 import { useAppDispatch } from 'hooks/AppDispatch'
 
 import {
@@ -19,9 +23,11 @@ import {
   useEditingV2FundingCycleMetadataSelector,
 } from 'hooks/AppSelector'
 import { useReconfigureV2FundingCycleTx } from 'hooks/v2/transactor/ReconfigureV2FundingCycleTx'
+import { decodeV2FundingCycleMetadata } from 'utils/v2/fundingCycle'
 
 import { V2ReconfigureProjectDetailsDrawer } from './drawers/V2ReconfigureProjectDetailsDrawer'
 import { V2ReconfigureFundingDrawer } from './drawers/V2ReconfigureFundingDrawer'
+import { V2ReconfigureTokenDrawer } from './drawers/V2ReconfigureTokenDrawer'
 
 function ReconfigureButton({
   title,
@@ -74,6 +80,8 @@ export default function V2ProjectReconfigureModal({
     fundingCycle,
     payoutSplits,
     queuedPayoutSplits,
+    reserveTokenSplits,
+    queuedReserveTokenSplits,
     distributionLimit,
     queuedDistributionLimit,
     distributionLimitCurrency,
@@ -88,9 +96,12 @@ export default function V2ProjectReconfigureModal({
     useState<boolean>(false)
   const [fundingDrawerVisible, setFundingDrawerVisible] =
     useState<boolean>(false)
+  const [tokenDrawerVisible, setTokenDrawerVisible] = useState<boolean>(false)
 
+  // This becomes true when user clicks 'Save' in either 'Funding', 'Token' or 'Rules'
   const [fundingHasSavedChanges, setFundingHasSavedChanges] =
     useState<boolean>(false)
+
   const [reconfigureTxLoading, setReconfigureTxLoading] =
     useState<boolean>(false)
 
@@ -98,9 +109,17 @@ export default function V2ProjectReconfigureModal({
     ? queuedFundingCycle
     : fundingCycle
 
+  const effectiveFundingCycleMetadata = decodeV2FundingCycleMetadata(
+    effectiveFundingCycle?.metadata,
+  )
+
   const effectivePayoutSplits = queuedFundingCycle?.number.gt(0)
     ? queuedPayoutSplits
     : payoutSplits
+
+  const effectiveReserveTokenSplits = queuedFundingCycle?.number.gt(0)
+    ? queuedReserveTokenSplits
+    : reserveTokenSplits
 
   const effectiveDistributionLimit = queuedDistributionLimit?.length
     ? queuedDistributionLimit
@@ -111,7 +130,8 @@ export default function V2ProjectReconfigureModal({
 
   // Creates the local redux state from V2ProjectContext values
   useLayoutEffect(() => {
-    if (!visible || !effectiveFundingCycle || !effectivePayoutSplits) return
+    if (!visible || !effectiveFundingCycle || !effectiveFundingCycleMetadata)
+      return
 
     // Build fundAccessConstraint
     let fundAccessConstraint: SerializedV2FundAccessConstraint | undefined =
@@ -132,19 +152,37 @@ export default function V2ProjectReconfigureModal({
       ),
     )
 
-    // Set editing funding duration
+    // Set editing funding cycle
     dispatch(
-      editingV2ProjectActions.setDuration(
-        fundingCycle?.duration.toString() ?? '',
+      editingV2ProjectActions.setFundingCycleData(
+        serializeV2FundingCycleData(effectiveFundingCycle),
       ),
     )
 
-    // Set editing payouts
-    dispatch(editingV2ProjectActions.setPayoutSplits(effectivePayoutSplits))
+    // Set editing funding metadata
+    dispatch(
+      editingV2ProjectActions.setFundingCycleMetadata(
+        serializeV2FundingCycleMetadata(effectiveFundingCycleMetadata),
+      ),
+    )
+
+    // Set editing payout splits
+    dispatch(
+      editingV2ProjectActions.setPayoutSplits(effectivePayoutSplits ?? []),
+    )
+
+    // Set reserve token splits
+    dispatch(
+      editingV2ProjectActions.setReserveTokenSplits(
+        effectiveReserveTokenSplits ?? [],
+      ),
+    )
   }, [
     contracts,
     effectiveFundingCycle,
+    effectiveFundingCycleMetadata,
     effectivePayoutSplits,
+    effectiveReserveTokenSplits,
     effectiveDistributionLimit,
     effectiveDistributionLimitCurrency,
     fundingCycle,
@@ -153,9 +191,10 @@ export default function V2ProjectReconfigureModal({
   ])
 
   // Gets values from the redux state to be used in the modal drawer fields
-  const { payoutGroupedSplits: editingPayoutGroupedSplits } = useAppSelector(
-    state => state.editingV2Project,
-  )
+  const {
+    payoutGroupedSplits: editingPayoutGroupedSplits,
+    reserveTokenGroupedSplits: editingReserveTokenGroupedSplits,
+  } = useAppSelector(state => state.editingV2Project)
   const editingFundingCycleMetadata = useEditingV2FundingCycleMetadataSelector()
   const editingFundingCycleData = useEditingV2FundingCycleDataSelector()
   const editingFundAccessConstraints =
@@ -180,7 +219,10 @@ export default function V2ProjectReconfigureModal({
         fundingCycleData: editingFundingCycleData,
         fundingCycleMetadata: editingFundingCycleMetadata,
         fundAccessConstraints: editingFundAccessConstraints,
-        groupedSplits: [editingPayoutGroupedSplits], // TODO: this will include reserveGroupedSplits when it's ready
+        groupedSplits: [
+          editingPayoutGroupedSplits,
+          editingReserveTokenGroupedSplits,
+        ],
       },
       {
         onDone() {
@@ -200,6 +242,7 @@ export default function V2ProjectReconfigureModal({
     editingFundingCycleData,
     reconfigureV2FundingCycleTx,
     editingPayoutGroupedSplits,
+    editingReserveTokenGroupedSplits,
     onOk,
   ])
 
@@ -243,6 +286,16 @@ export default function V2ProjectReconfigureModal({
         }}
         onClose={() => {
           setFundingDrawerVisible(false)
+        }}
+      />
+      <V2ReconfigureTokenDrawer
+        visible={tokenDrawerVisible}
+        onSave={() => {
+          setFundingHasSavedChanges(true)
+          setTokenDrawerVisible(false)
+        }}
+        onClose={() => {
+          setTokenDrawerVisible(false)
         }}
       />
     </Modal>

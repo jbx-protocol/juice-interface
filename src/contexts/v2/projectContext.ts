@@ -14,6 +14,7 @@ export type V2ProjectContextType = {
   payoutSplits: Split[] | undefined
   queuedPayoutSplits: Split[] | undefined
   reserveTokenSplits: Split[] | undefined
+  queuedReserveTokenSplits: Split[] | undefined
   tokenAddress: string | undefined
   terminals: string[] | undefined // array of terminal addresses, 0xABC...
   ETHBalance: BigNumber | undefined
@@ -32,6 +33,7 @@ export const V2ProjectContext = createContext<V2ProjectContextType>({
   payoutSplits: undefined,
   queuedPayoutSplits: undefined,
   reserveTokenSplits: undefined,
+  queuedReserveTokenSplits: undefined,
   tokenAddress: undefined,
   terminals: undefined,
   ETHBalance: undefined,

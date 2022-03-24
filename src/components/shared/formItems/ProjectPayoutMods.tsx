@@ -498,7 +498,7 @@ export default function ProjectPayoutMods({
                 extra: t`The address that should receive the tokens minted from paying this project.`,
                 rules: [
                   {
-                    validator: (rule: any, value: any) => {
+                    validator: () => {
                       const address = form.getFieldValue('beneficiary')
                       if (!address || !isAddress(address))
                         return Promise.reject('Address is required')

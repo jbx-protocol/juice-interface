@@ -95,7 +95,7 @@ export const uploadProjectMetadata = (
     pinataMetadata: {
       keyvalues: {
         tag: IPFS_TAGS.METADATA,
-      } as any,
+      } as any, // eslint-disable-line @typescript-eslint/no-explicit-any
       name: handle
         ? metadataNameForHandle(handle)
         : 'juicebox-project-metadata.json',
@@ -110,7 +110,7 @@ export const uploadIpfsJsonCache = <T extends IpfsCacheName>(
     pinataMetadata: {
       keyvalues: {
         tag: IPFS_TAGS[tag],
-      } as any,
+      } as any, // eslint-disable-line @typescript-eslint/no-explicit-any
       name: IPFS_TAGS[tag] + '.json',
     },
   })

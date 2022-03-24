@@ -25,7 +25,7 @@ export function usePrintTokensTx(): TransactorInstance<{
 
     let terminalContract: Contract
     let functionName: string
-    let args: any[]
+    let args: any[] // eslint-disable-line @typescript-eslint/no-explicit-any
 
     switch (terminal.version) {
       case '1':

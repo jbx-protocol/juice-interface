@@ -210,7 +210,7 @@ msgstr "Un proyecto puede elegir reservar un porcentaje de tokens para sí mismo
 msgid "A project can reserve a percentage of tokens minted from every payment it receives. Reserved tokens can be distributed according to the allocation below at any time."
 msgstr "Un proyecto puede reservar un porcentaje de tokens acuñados de cada pago que reciba. Los tokens reservados pueden ser distribuidos de acorde a la asignación que está debajo en cualquier momento."
 
-#: src/components/v1/V1Project/FundingCycles/index.tsx
+#: src/components/shared/Project/FundingCycleSection.tsx
 msgid "A project's lifetime is defined in funding cycles. If a funding target is set, the project can withdraw no more than the target for the duration of the cycle."
 msgstr "El tiempo de vida de un proyecto se define en ciclos de financiación. Si se establece un objetivo de financiación, el proyecto no podrá retirar más de ese objetivo durante la duración del ciclo."
 
@@ -560,7 +560,7 @@ msgstr "Estrategia personalizada"
 msgid "Custom token beneficiary"
 msgstr "Beneficiario de token personalizado"
 
-#: src/components/v1/FundingCycle/FundingCyclePreview.tsx
+#: src/components/shared/Project/FundingCycleDetailsCard.tsx
 msgid "Cycle #{0}"
 msgstr "Ciclo #{0}"
 
@@ -596,7 +596,7 @@ msgstr "Deposita 1 wei a @{handle}"
 msgid "Design your project"
 msgstr "Diseña tu proyecto"
 
-#: src/components/v1/FundingCycle/FundingCyclePreview.tsx
+#: src/components/shared/Project/FundingCycleDetailsCard.tsx
 msgid "Details"
 msgstr "Detalles"
 
@@ -793,9 +793,9 @@ msgstr "Distribución de fondos"
 msgid "Funding can be reconfigured at any time. Reconfigurations will start a new funding cycle."
 msgstr "El financiamiento puede ser reconfigurado en cualquier momento. Las reconfiguraciones empiezan un nuevo ciclo de financiamiento."
 
+#: src/components/shared/Project/FundingCycleSection.tsx
 #: src/components/shared/forms/BudgetForm.tsx
 #: src/components/v1/V1Create/index.tsx
-#: src/components/v1/V1Project/FundingCycles/index.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Funding cycle"
 msgstr "Ciclo de financiamiento"
@@ -831,7 +831,7 @@ msgid "Funding target"
 msgstr "Objetivo de financiamiento"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
-msgid "Funding target/duration"
+msgid "Funding target, duration and payouts"
 msgstr ""
 
 #: src/components/v1/FundingCycle/modals/DistributeTokensModal.tsx
@@ -1170,10 +1170,6 @@ msgstr "Nota: Juicebox es nuevo, inauditado y no está garantizado para trabajar
 msgid "Notice from {0}:"
 msgstr "Aviso de {0}:"
 
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
-msgid "OK"
-msgstr ""
-
 #: src/components/Landing/index.tsx
 msgid "Open source businesses"
 msgstr "Negocios de código abierto"
@@ -1444,6 +1440,10 @@ msgstr "Reconfigurar financiamiento"
 msgid "Reconfigure funding details"
 msgstr ""
 
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureFundingDrawer.tsx
+msgid "Reconfigure funding target/duration"
+msgstr ">>>>>>> 153425ca10bdac391883ab7d76d70851622055c9"
+
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectDetailsDrawer.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure project details"
@@ -1560,7 +1560,6 @@ msgid "Reward specific community members with tokens."
 msgstr "Recompensar a miembros específicos de la comunidad con tokens."
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Rules"
 msgstr "Reglas"
 
@@ -1577,6 +1576,7 @@ msgstr "Reglas para cómo pueden realizarse cambios a tu proyecto."
 msgid "Rules for how this project's funding cycles can be reconfigured."
 msgstr "Reglas para cómo pueden ser reconfigurados los ciclos de financiamiento de este proyecto."
 
+#: src/components/StandardSaveButton.tsx
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 #: src/components/shared/forms/TicketingForm.tsx
@@ -1665,7 +1665,7 @@ msgstr "¿Deberías de usar Juicebox?"
 msgid "Since you have not set a funding duration, changes to these settings will be applied immediately."
 msgstr "Como no has establecido una duración de financiamiento, los cambios a estos ajustes serán aplicados de inmediato."
 
-#: src/components/v1/FundingCycle/FundingCyclePreview.tsx
+#: src/components/shared/Project/FundingCycleDetailsCard.tsx
 msgid "Some funding cycle properties may indicate risk for project contributors."
 msgstr "Algunas propiedades de los ciclos de financiamiento pueden indicar riesgo para los contribuyentes de proyectos."
 
@@ -1892,7 +1892,6 @@ msgstr "Esto borrará todos tus cambios."
 msgid "To: <0/>"
 msgstr "Para: <0/>"
 
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 #: src/utils/tokenSymbolText.ts
 msgid "Token"
 msgstr "Token"
@@ -2017,6 +2016,10 @@ msgstr "Proyecto sin título"
 #: src/components/v1/V1Project/FundingCycles/index.tsx
 msgid "Upcoming"
 msgstr "Próximos"
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Updates you make to this section will only be applied to <0>upcoming</0> funding cycles."
+msgstr ""
 
 #: src/components/shared/formItems/ProjectLogoUri.tsx
 msgid "Upload"
@@ -2335,7 +2338,7 @@ msgstr "{0} para ti"
 msgid "{0} holders"
 msgstr "{0} holders"
 
-#: src/components/v1/FundingCycle/FundingCyclePreview.tsx
+#: src/components/shared/Project/FundingCycleDetailsCard.tsx
 msgid "{0} left"
 msgstr "{0} restantes"
 
@@ -2355,9 +2358,9 @@ msgstr "{0} staked"
 msgid "{0} total"
 msgstr "{0} en total"
 
-#: src/components/v1/FundingCycle/FundingCyclePreview.tsx
+#: src/components/shared/Project/FundingCycleDetailsCard.tsx
 msgid "{0} until #{1}"
-msgstr "{0} hasta #{1}"
+msgstr ""
 
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 msgid "{0} will go to the project owner: <0/>"

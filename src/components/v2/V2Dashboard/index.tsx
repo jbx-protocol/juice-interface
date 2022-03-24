@@ -10,6 +10,8 @@ import useProjectSplits from 'hooks/v2/contractReader/ProjectSplits'
 import useProjectTerminals from 'hooks/v2/contractReader/ProjectTerminals'
 import { useETHPaymentTerminalBalance } from 'hooks/v2/contractReader/ETHPaymentTerminalBalance'
 import useProjectToken from 'hooks/v2/contractReader/ProjectToken'
+import useProjectQueuedFundingCycle from 'hooks/v2/contractReader/ProjectQueuedFundingCycle'
+import useProjectDistributionLimit from 'hooks/v2/contractReader/ProjectDistributionLimit'
 import { useContext, useMemo } from 'react'
 import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
 import { useDistributionLimitCurrency } from 'hooks/v2/contractReader/DistributionLimitCurrency'
@@ -44,14 +46,37 @@ export default function V2Dashboard() {
     projectId,
   })
 
+  const { data: queuedFundingCycle } = useProjectQueuedFundingCycle({
+    projectId,
+  })
+
   const { data: payoutSplits } = useProjectSplits({
     projectId,
     splitGroup: ETH_PAYOUT_SPLIT_GROUP,
     domain: fundingCycle?.configuration?.toString(),
   })
-
   const { data: terminals } = useProjectTerminals({
     projectId,
+  })
+
+  const { data: distributionLimit } = useProjectDistributionLimit({
+    projectId,
+    domain: fundingCycle?.configuration?.toString(),
+    // terminal: terminals ? terminals[0] : undefined,
+    terminal: terminals?.[0], //TODO: make primaryTerminalOf hook and use it
+  })
+
+  const { data: queuedDistributionLimit } = useProjectDistributionLimit({
+    projectId,
+    domain: queuedFundingCycle?.configuration?.toString(),
+    // terminal: terminals ? terminals[0] : '',
+    terminal: terminals?.[0],
+  })
+
+  const { data: queuedPayoutSplits } = useProjectSplits({
+    projectId,
+    splitGroup: ETH_PAYOUT_SPLIT_GROUP,
+    domain: queuedFundingCycle?.configuration?.toString(),
   })
 
   const { data: reserveTokenSplits } = useProjectSplits({
@@ -75,6 +100,13 @@ export default function V2Dashboard() {
     fundingCycleConfiguration: fundingCycle?.configuration,
     terminal: contracts?.JBETHPaymentTerminal.address,
   })
+
+  const { data: queuedDistributionLimitCurrency } =
+    useDistributionLimitCurrency({
+      projectId,
+      fundingCycleConfiguration: queuedFundingCycle?.configuration,
+      terminal: contracts?.JBETHPaymentTerminal.address,
+    })
 
   const balanceInDistributionLimitCurrency = useMemo(
     () =>
@@ -100,12 +132,17 @@ export default function V2Dashboard() {
     projectId,
     projectMetadata,
     fundingCycle,
+    queuedFundingCycle,
+    distributionLimit,
+    queuedDistributionLimit,
     payoutSplits,
+    queuedPayoutSplits,
     reserveTokenSplits,
     tokenAddress,
     terminals,
     ETHBalance,
     distributionLimitCurrency,
+    queuedDistributionLimitCurrency,
     balanceInDistributionLimitCurrency,
   }
 

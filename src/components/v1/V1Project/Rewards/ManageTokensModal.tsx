@@ -57,7 +57,7 @@ export default function ManageTokensModal({
   onCancel,
   visible,
 }: {
-  metadata?: V1FundingCycleMetadata
+  metadata: V1FundingCycleMetadata | undefined
   onCancel?: VoidFunction
   visible?: boolean
 }) {

@@ -39,7 +39,11 @@ type FundingFormFields = {
   duration?: string
 }
 
-export default function FundingTabContent({ onFinish }: TabContentProps) {
+export default function FundingTabContent({
+  onFinish,
+  hidePreview,
+  saveButton,
+}: TabContentProps) {
   const { theme } = useContext(ThemeContext)
   const { contracts } = useContext(V2UserContext)
   const dispatch = useAppDispatch()
@@ -135,7 +139,7 @@ export default function FundingTabContent({ onFinish }: TabContentProps) {
 
   return (
     <Row gutter={32} style={{ marginBottom: formBottomMargin }}>
-      <Col md={10} xs={24}>
+      <Col md={!hidePreview ? 10 : 24} xs={24}>
         <Form form={fundingForm} layout="vertical" onFinish={onFundingFormSave}>
           <Form.Item label={t`How much do you want to raise?`}>
             <FundingTypeSelect
@@ -231,10 +235,11 @@ export default function FundingTabContent({ onFinish }: TabContentProps) {
               }}
             />
           </div>
-          <FormActionbar />
+          {/* Default to floating save button if custom one not given */}
+          {saveButton ? saveButton : <FormActionbar />}
         </Form>
       </Col>
-      <Col md={12} xs={0}></Col>
+      {!hidePreview && <Col md={12} xs={0}></Col>}
     </Row>
   )
 }

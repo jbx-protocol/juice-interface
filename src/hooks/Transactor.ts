@@ -26,7 +26,7 @@ export type TransactorOptions = {
 export type Transactor = (
   contract: Contract,
   functionName: string,
-  args: any[],
+  args: any[], // eslint-disable-line @typescript-eslint/no-explicit-any
   options?: TransactorOptions,
 ) => Promise<boolean>
 
@@ -64,7 +64,7 @@ export function useTransactor({
     async (
       contract: Contract,
       functionName: string,
-      args: any[],
+      args: any[], // eslint-disable-line @typescript-eslint/no-explicit-any
       options?: TransactorOptions,
     ) => {
       if (!onSelectWallet) return false

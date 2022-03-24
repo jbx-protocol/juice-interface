@@ -16,7 +16,7 @@ export default function ImageUploader({
   text,
 }: {
   initialUrl?: string
-  metadata?: Record<string | number, any>
+  metadata?: Record<string | number, any> // eslint-disable-line @typescript-eslint/no-explicit-any
   onSuccess?: (url?: string) => void
   maxSize?: number // KB
   text?: string

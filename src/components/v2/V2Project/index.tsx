@@ -2,9 +2,12 @@ import { Col, Row } from 'antd'
 import PayInputGroup from 'components/shared/inputs/Pay/PayInputGroup'
 import ProjectHeader from 'components/shared/ProjectHeader'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
+
 import { useContext } from 'react'
 
 import { permilleToPercent, permyriadToPercent } from 'utils/formatNumber'
+import { fromWad } from 'utils/formatNumber'
+
 import { decodeV2FundingCycleMetadata } from 'utils/v2/fundingCycle'
 import { weightedAmount } from 'utils/math'
 
@@ -19,6 +22,7 @@ export default function V2Project() {
     fundingCycle,
     payoutSplits,
     reserveTokenSplits,
+    distributionLimit,
   } = useContext(V2ProjectContext)
 
   if (!projectId) return null
@@ -68,6 +72,8 @@ export default function V2Project() {
                 <li>End: {end?.toISOString()}</li>
                 <li>Weight: {fundingCycle.weight.toString()}</li>
                 <li>Metadata: {fundingCycle?.metadata.toString()}</li>
+                <li>Distribution limit: {fromWad(distributionLimit)}</li>
+                <li>Funding duration: {fundingCycle?.duration.toNumber()}</li>
               </ul>
 
               <h3>ETH payouts</h3>

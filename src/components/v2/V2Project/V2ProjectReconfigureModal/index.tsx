@@ -25,9 +25,13 @@ import {
 import { useReconfigureV2FundingCycleTx } from 'hooks/v2/transactor/ReconfigureV2FundingCycleTx'
 import { decodeV2FundingCycleMetadata } from 'utils/v2/fundingCycle'
 
-import { V2ReconfigureProjectDetailsDrawer } from './drawers/V2ReconfigureProjectDetailsDrawer'
+import FundingTabContent from 'components/v2/V2Create/tabs/FundingTab/FundingTabContent'
+import StandardSaveButton from 'components/StandardSaveButton'
+import TokenTabContent from 'components/v2/V2Create/tabs/TokenTab/TokenTabContent'
+import RulesTabContent from 'components/v2/V2Create/tabs/RulesTab/RulesTabContent'
+
 import { V2ReconfigureFundingDrawer } from './drawers/V2ReconfigureFundingDrawer'
-import { V2ReconfigureTokenDrawer } from './drawers/V2ReconfigureTokenDrawer'
+import { V2ReconfigureProjectDetailsDrawer } from './drawers/V2ReconfigureProjectDetailsDrawer'
 
 function ReconfigureButton({
   title,
@@ -97,8 +101,9 @@ export default function V2ProjectReconfigureModal({
   const [fundingDrawerVisible, setFundingDrawerVisible] =
     useState<boolean>(false)
   const [tokenDrawerVisible, setTokenDrawerVisible] = useState<boolean>(false)
+  const [rulesDrawerVisible, setRulesDrawerVisible] = useState<boolean>(false)
 
-  // This becomes true when user clicks 'Save' in either 'Funding', 'Token' or 'Rules'
+  // This becomes true when user clicks 'Save' in either 'Funding', 'Token' or 'Rules' drawers
   const [fundingHasSavedChanges, setFundingHasSavedChanges] =
     useState<boolean>(false)
 
@@ -117,9 +122,8 @@ export default function V2ProjectReconfigureModal({
     ? queuedReserveTokenSplits
     : reserveTokenSplits
 
-  const effectiveDistributionLimit = queuedDistributionLimit?.length
-    ? queuedDistributionLimit
-    : distributionLimit
+  const effectiveDistributionLimit =
+    queuedDistributionLimit ?? distributionLimit
 
   const effectiveDistributionLimitCurrency =
     queuedDistributionLimitCurrency ?? distributionLimitCurrency
@@ -244,6 +248,21 @@ export default function V2ProjectReconfigureModal({
     onOk,
   ])
 
+  const saveFundingTab = () => {
+    setFundingHasSavedChanges(true)
+    setFundingDrawerVisible(false)
+  }
+
+  const saveTokenTab = () => {
+    setFundingHasSavedChanges(true)
+    setTokenDrawerVisible(false)
+  }
+
+  const saveRulesTab = () => {
+    setFundingHasSavedChanges(true)
+    setRulesDrawerVisible(false)
+  }
+
   return (
     <Modal
       title={t`Reconfiguration`}
@@ -275,6 +294,10 @@ export default function V2ProjectReconfigureModal({
           title={t`Token`}
           onClick={() => setTokenDrawerVisible(true)}
         />
+        <ReconfigureButton
+          title={t`Rules`}
+          onClick={() => setRulesDrawerVisible(true)}
+        />
       </Space>
       <V2ReconfigureProjectDetailsDrawer
         visible={projectDetailsDrawerVisible}
@@ -282,23 +305,45 @@ export default function V2ProjectReconfigureModal({
       />
       <V2ReconfigureFundingDrawer
         visible={fundingDrawerVisible}
-        onSave={() => {
-          setFundingHasSavedChanges(true)
-          setFundingDrawerVisible(false)
-        }}
         onClose={() => {
           setFundingDrawerVisible(false)
         }}
+        title={<Trans>Reconfigure funding target/duration/payouts</Trans>}
+        content={
+          <FundingTabContent
+            onFinish={saveFundingTab}
+            hidePreview
+            saveButton={<StandardSaveButton />}
+          />
+        }
       />
-      <V2ReconfigureTokenDrawer
+      <V2ReconfigureFundingDrawer
         visible={tokenDrawerVisible}
-        onSave={() => {
-          setFundingHasSavedChanges(true)
-          setTokenDrawerVisible(false)
-        }}
         onClose={() => {
           setTokenDrawerVisible(false)
         }}
+        title={<Trans>Reconfigure token</Trans>}
+        content={
+          <TokenTabContent
+            onFinish={saveTokenTab}
+            hidePreview
+            saveButton={<StandardSaveButton />}
+          />
+        }
+      />
+      <V2ReconfigureFundingDrawer
+        visible={rulesDrawerVisible}
+        onClose={() => {
+          setRulesDrawerVisible(false)
+        }}
+        title={<Trans>Reconfigure rules</Trans>}
+        content={
+          <RulesTabContent
+            onFinish={saveRulesTab}
+            hidePreview
+            saveButton={<StandardSaveButton />}
+          />
+        }
       />
     </Modal>
   )

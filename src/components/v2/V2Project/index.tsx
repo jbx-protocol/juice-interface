@@ -54,9 +54,10 @@ export default function V2Project() {
   )
 
   const distributionLimitCurrencySymbol =
-    currencyMetadata[distributionLimitCurrency?.toNumber() ?? 1].symbol
+    currencyMetadata[distributionLimitCurrency?.toNumber() ?? 1]?.symbol
 
   const weight = fundingCycle?.weight
+
   return (
     <>
       <ProjectHeader
@@ -108,6 +109,14 @@ export default function V2Project() {
               </ul>
               <ul>
                 <li>Redemption rate: {redemptionRatePercent}%</li>
+              </ul>
+              <ul>
+                <li>Pause pay: {fundingCycleMetadata?.pausePay.toString()}</li>
+              </ul>
+              <ul>
+                <li>
+                  Pause mint: {fundingCycleMetadata?.pauseMint.toString()}
+                </li>
               </ul>
             </div>
           )}

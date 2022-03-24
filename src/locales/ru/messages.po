@@ -210,7 +210,7 @@ msgstr "Проект может зарезервировать для себя �
 msgid "A project can reserve a percentage of tokens minted from every payment it receives. Reserved tokens can be distributed according to the allocation below at any time."
 msgstr "Проект может резервировать процент выпущенных токенов с каждого платежа, который он получает. Зарезервированные токены могут быть распределены в соответствии с приведенным ниже распределением в любое время."
 
-#: src/components/v1/V1Project/FundingCycles/index.tsx
+#: src/components/shared/Project/FundingCycleSection.tsx
 msgid "A project's lifetime is defined in funding cycles. If a funding target is set, the project can withdraw no more than the target for the duration of the cycle."
 msgstr "Срок действия проекта определен в циклах финансирования. Если установлен целевой показатель финансирования, проект может вывести не более целевого показателя на период действия цикла."
 
@@ -560,7 +560,7 @@ msgstr "Индивидуальная стратегия"
 msgid "Custom token beneficiary"
 msgstr ""
 
-#: src/components/v1/FundingCycle/FundingCyclePreview.tsx
+#: src/components/shared/Project/FundingCycleDetailsCard.tsx
 msgid "Cycle #{0}"
 msgstr "Цикл #{0}"
 
@@ -596,7 +596,7 @@ msgstr "Депозит 1 wei на @{handle}"
 msgid "Design your project"
 msgstr "Создай свой проект"
 
-#: src/components/v1/FundingCycle/FundingCyclePreview.tsx
+#: src/components/shared/Project/FundingCycleDetailsCard.tsx
 msgid "Details"
 msgstr "Подробности"
 
@@ -793,9 +793,9 @@ msgstr "Распределение финансирования"
 msgid "Funding can be reconfigured at any time. Reconfigurations will start a new funding cycle."
 msgstr " финансирование можно изменить в любой момент, что приведет к началу нового цикла финансирования."
 
+#: src/components/shared/Project/FundingCycleSection.tsx
 #: src/components/shared/forms/BudgetForm.tsx
 #: src/components/v1/V1Create/index.tsx
-#: src/components/v1/V1Project/FundingCycles/index.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Funding cycle"
 msgstr "Цикл финансирования"
@@ -1665,7 +1665,7 @@ msgstr "Следует ли вам заниматься Juicebox?"
 msgid "Since you have not set a funding duration, changes to these settings will be applied immediately."
 msgstr "Поскольку вы не установили срок финансирования, изменения в этих настройках будут применены немедленно."
 
-#: src/components/v1/FundingCycle/FundingCyclePreview.tsx
+#: src/components/shared/Project/FundingCycleDetailsCard.tsx
 msgid "Some funding cycle properties may indicate risk for project contributors."
 msgstr "Некоторые свойства цикла финансирования могут указывать на риск для участников проекта."
 
@@ -2338,7 +2338,7 @@ msgstr "{0} для вас"
 msgid "{0} holders"
 msgstr "{0} держатели"
 
-#: src/components/v1/FundingCycle/FundingCyclePreview.tsx
+#: src/components/shared/Project/FundingCycleDetailsCard.tsx
 msgid "{0} left"
 msgstr "осталось {0}"
 
@@ -2358,9 +2358,9 @@ msgstr "{0} размещено"
 msgid "{0} total"
 msgstr "{0} всего"
 
-#: src/components/v1/FundingCycle/FundingCyclePreview.tsx
+#: src/components/shared/Project/FundingCycleDetailsCard.tsx
 msgid "{0} until #{1}"
-msgstr "{0} до #{1}"
+msgstr ""
 
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 msgid "{0} will go to the project owner: <0/>"

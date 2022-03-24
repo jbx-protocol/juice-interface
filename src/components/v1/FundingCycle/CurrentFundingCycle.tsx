@@ -1,6 +1,5 @@
 import { CardSection } from 'components/shared/CardSection'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
-import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
 
 import FundingCyclePreview from './FundingCyclePreview'
@@ -14,10 +13,6 @@ export default function CurrentFundingCycle({
 }) {
   const { projectId, currentFC, currentPayoutMods, currentTicketMods } =
     useContext(V1ProjectContext)
-
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
 
   if (!projectId) return null
 
@@ -38,17 +33,6 @@ export default function CurrentFundingCycle({
           ticketMods={currentTicketMods}
         />
       </CardSection>
-      <div
-        style={{
-          position: 'absolute',
-          zIndex: -1,
-          left: 10,
-          right: -10,
-          top: 10,
-          bottom: 0,
-          background: colors.background.l1,
-        }}
-      ></div>
     </div>
   )
 }

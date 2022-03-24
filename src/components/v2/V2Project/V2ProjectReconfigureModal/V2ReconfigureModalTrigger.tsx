@@ -31,29 +31,6 @@ export default function V2ReconfigureFundingModalTrigger({
 
   return (
     <div style={{ textAlign: 'right' }}>
-      {/* {fundingDuration?.gt(0) ? (
-        <Tooltip
-          title={
-            <span>
-              <Trans>
-                <b>Note:</b> The current funding cycle cannot be edited.
-              </Trans>
-            </span>
-          }
-        >
-          <Button
-            onClick={handleModalOpen}
-            size="large"
-            disabled={isPreviewMode}
-          >
-            <Trans>Reconfigure</Trans>
-          </Button>
-        </Tooltip>
-      ) : (
-        <Button onClick={handleModalOpen} size="small" disabled={isPreviewMode}>
-          <Trans>Reconfigure</Trans>
-        </Button>
-      )} */}
       <Button
         onClick={handleModalOpen}
         icon={<SettingOutlined />}

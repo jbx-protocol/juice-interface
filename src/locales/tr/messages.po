@@ -831,7 +831,7 @@ msgid "Funding target"
 msgstr ""
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
-msgid "Funding target/duration"
+msgid "Funding target, duration and payouts"
 msgstr ""
 
 #: src/components/v1/FundingCycle/modals/DistributeTokensModal.tsx
@@ -1170,10 +1170,6 @@ msgstr "Not: Juicebox yenidir, denetlenmemiştir ve kusursuz çalışması garan
 msgid "Notice from {0}:"
 msgstr "{0} tarafından yapılan bildirim:"
 
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
-msgid "OK"
-msgstr ""
-
 #: src/components/Landing/index.tsx
 msgid "Open source businesses"
 msgstr "Açık kaynak işletmeleri"
@@ -1444,6 +1440,10 @@ msgstr "Finansmanı yeniden yapılandır"
 msgid "Reconfigure funding details"
 msgstr ""
 
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureFundingDrawer.tsx
+msgid "Reconfigure funding target/duration"
+msgstr ">>>>>>> 153425ca10bdac391883ab7d76d70851622055c9"
+
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectDetailsDrawer.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure project details"
@@ -1560,7 +1560,6 @@ msgid "Reward specific community members with tokens."
 msgstr "Belirli topluluk üyelerini token'larla ödüllendirin."
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Rules"
 msgstr "Kurallar"
 
@@ -1577,6 +1576,7 @@ msgstr "Projenizde nasıl değişiklik yapılabileceğine ilişkin kurallar."
 msgid "Rules for how this project's funding cycles can be reconfigured."
 msgstr "Bu projenin finansman döngülerinin nasıl yeniden yapılandırılabileceğine ilişkin kurallar."
 
+#: src/components/StandardSaveButton.tsx
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 #: src/components/shared/forms/TicketingForm.tsx
@@ -1892,7 +1892,6 @@ msgstr ""
 msgid "To: <0/>"
 msgstr "Kime: <0/>"
 
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 #: src/utils/tokenSymbolText.ts
 msgid "Token"
 msgstr ""
@@ -2017,6 +2016,10 @@ msgstr "İsimsiz proje"
 #: src/components/v1/V1Project/FundingCycles/index.tsx
 msgid "Upcoming"
 msgstr "Yaklaşan"
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Updates you make to this section will only be applied to <0>upcoming</0> funding cycles."
+msgstr ""
 
 #: src/components/shared/formItems/ProjectLogoUri.tsx
 msgid "Upload"

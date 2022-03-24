@@ -22,6 +22,7 @@ export function V2ReconfigureProjectDetailsDrawer({
   onFinish?: () => void
 }) {
   const [projectForm] = useForm<ProjectDetailsFormFields>()
+
   const [loadingSaveChanges, setLoadingSaveChanges] = useState<boolean>()
   const { projectMetadata } = useContext(V2ProjectContext)
   // const { projectMetadata } = useAppSelector(state => state.editingV2Project)

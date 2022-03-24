@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-03-23 02:22\n"
+"PO-Revision-Date: 2022-03-24 02:17\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -385,7 +385,7 @@ msgstr "Grandes aplausos à comunidade Ethereum por criar a infraestrutura e eco
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
 msgid "Block number"
-msgstr ""
+msgstr "Número de Blockchain"
 
 #: src/components/Navbar/constants.ts
 msgid "Blog"
@@ -1235,7 +1235,7 @@ msgstr "Pagar divulgação"
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 #: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
 msgid "Pay {0}"
-msgstr ""
+msgstr "Pagar {0}"
 
 #: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
 msgid "Payer"
@@ -1334,7 +1334,7 @@ msgstr "Detalhes do projeto"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectDetailsDrawer.tsx
 msgid "Project details reconfigurations will create a separate transaction."
-msgstr ""
+msgstr "As reconfiguracões dos detalhes do projeto irão criar uma transação separada."
 
 #: src/components/shared/formItems/ProjectHandle/ProjectHandleFormItem.tsx
 #: src/components/shared/formItems/ProjectPayoutMods.tsx
@@ -1869,7 +1869,7 @@ msgstr "Este projeto está atualmente usando o contrato de terminal do Juicebox 
 
 #: src/components/v2/V2ProjectHeaderActions.tsx
 msgid "This project uses the V2 version of the Juicebox contracts."
-msgstr ""
+msgstr "Este projeto usa a versão V2 dos contratos do Juicebox."
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hodl tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."

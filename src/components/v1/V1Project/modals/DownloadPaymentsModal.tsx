@@ -2,11 +2,13 @@ import { t, Trans } from '@lingui/macro'
 import { Modal, notification } from 'antd'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
-import { readProvider } from 'constants/readProvider'
+
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { fromWad } from 'utils/formatNumber'
 import { querySubgraphExhaustive } from 'utils/graph'
+
+import { readProvider } from 'constants/readProvider'
 
 export default function DownloadPaymentsModal({
   visible,
@@ -18,7 +20,7 @@ export default function DownloadPaymentsModal({
   const [latestBlockNumber, setLatestBlockNumber] = useState<number>()
   const [blockNumber, setBlockNumber] = useState<number>()
   const [loading, setLoading] = useState<boolean>()
-  const { projectId, tokenSymbol, handle } = useContext(V1ProjectContext)
+  const { projectId, handle } = useContext(V1ProjectContext)
 
   useEffect(() => {
     readProvider.getBlockNumber().then(val => {

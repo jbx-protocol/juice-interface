@@ -25,7 +25,6 @@ export default function V2PayButton({
   payInCurrency: CurrencyOption // TODO make the V2CurrencyOption
 }) {
   const { fundingCycle, projectMetadata } = useContext(V2ProjectContext)
-  // if (!projectMetadata || !fundingCycle) return null
 
   const [payModalVisible, setPayModalVisible] = useState<boolean>(false)
   const [payWarningModalVisible, setPayWarningModalVisible] =

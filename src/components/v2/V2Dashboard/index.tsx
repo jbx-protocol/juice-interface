@@ -62,14 +62,12 @@ export default function V2Dashboard() {
   const { data: distributionLimit } = useProjectDistributionLimit({
     projectId,
     domain: fundingCycle?.configuration?.toString(),
-    // terminal: terminals ? terminals[0] : undefined,
     terminal: terminals?.[0], //TODO: make primaryTerminalOf hook and use it
   })
 
   const { data: queuedDistributionLimit } = useProjectDistributionLimit({
     projectId,
     domain: queuedFundingCycle?.configuration?.toString(),
-    // terminal: terminals ? terminals[0] : '',
     terminal: terminals?.[0],
   })
 
@@ -83,6 +81,12 @@ export default function V2Dashboard() {
     projectId,
     splitGroup: RESERVE_TOKEN_SPLIT_GROUP,
     domain: fundingCycle?.configuration?.toString(),
+  })
+
+  const { data: queuedReserveTokenSplits } = useProjectSplits({
+    projectId,
+    splitGroup: RESERVE_TOKEN_SPLIT_GROUP,
+    domain: queuedFundingCycle?.configuration?.toString(),
   })
 
   const { data: ETHBalance } = useETHPaymentTerminalBalance({
@@ -138,6 +142,7 @@ export default function V2Dashboard() {
     payoutSplits,
     queuedPayoutSplits,
     reserveTokenSplits,
+    queuedReserveTokenSplits,
     tokenAddress,
     terminals,
     ETHBalance,

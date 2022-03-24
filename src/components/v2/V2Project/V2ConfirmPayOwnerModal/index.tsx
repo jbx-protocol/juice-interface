@@ -67,7 +67,7 @@ export default function V2ConfirmPayOwnerModal({
   const fundingCycleMetadata = decodeV2FundingCycleMetadata(
     fundingCycle.metadata,
   )
-  const reservedRate = fundingCycleMetadata.reservedRate?.toNumber()
+  const reservedRate = fundingCycleMetadata?.reservedRate?.toNumber()
 
   const receivedTickets = weightedAmount(
     fundingCycle?.weight,

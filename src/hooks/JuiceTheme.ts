@@ -6,7 +6,7 @@ import { juiceTheme } from 'constants/theme'
 import { ThemeOption } from 'constants/theme/theme-option'
 
 const flattenNestedObject = (
-  nestedObj: Record<string, any>,
+  nestedObj: Record<string, any>, // eslint-disable-line @typescript-eslint/no-explicit-any
   prefix?: string,
 ): Record<string, string> =>
   Object.keys(nestedObj).reduce((acc, key) => {

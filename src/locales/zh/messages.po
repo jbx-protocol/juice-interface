@@ -210,7 +210,7 @@ msgstr "项目可以选择为自己保留一定比例的代币。这些代币不
 msgid "A project can reserve a percentage of tokens minted from every payment it receives. Reserved tokens can be distributed according to the allocation below at any time."
 msgstr "项目每收到一笔付款都会铸造代币，其中某个百分比的代币会保留在项目内。保留代币可随时按以下分配方案进行分发。"
 
-#: src/components/v1/V1Project/FundingCycles/index.tsx
+#: src/components/shared/Project/FundingCycleSection.tsx
 msgid "A project's lifetime is defined in funding cycles. If a funding target is set, the project can withdraw no more than the target for the duration of the cycle."
 msgstr "一个项目的寿命是以筹款周期来定义的。如果设定了筹款目标，那么在周期内，项目的提款不能超过目标。"
 
@@ -560,7 +560,7 @@ msgstr "自定义策略"
 msgid "Custom token beneficiary"
 msgstr "自定义代币受益人"
 
-#: src/components/v1/FundingCycle/FundingCyclePreview.tsx
+#: src/components/shared/Project/FundingCycleDetailsCard.tsx
 msgid "Cycle #{0}"
 msgstr "周期 #{0}"
 
@@ -596,7 +596,7 @@ msgstr "存入 1 wei 给 @{handle}"
 msgid "Design your project"
 msgstr "设计你的项目"
 
-#: src/components/v1/FundingCycle/FundingCyclePreview.tsx
+#: src/components/shared/Project/FundingCycleDetailsCard.tsx
 msgid "Details"
 msgstr "详情"
 
@@ -793,9 +793,9 @@ msgstr "资金分发"
 msgid "Funding can be reconfigured at any time. Reconfigurations will start a new funding cycle."
 msgstr "可以随时更改筹款配置。更改配置将重新开始一个筹款周期。"
 
+#: src/components/shared/Project/FundingCycleSection.tsx
 #: src/components/shared/forms/BudgetForm.tsx
 #: src/components/v1/V1Create/index.tsx
-#: src/components/v1/V1Project/FundingCycles/index.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Funding cycle"
 msgstr "筹款周期"
@@ -1665,7 +1665,7 @@ msgstr "你应该使用Juicebox吗?"
 msgid "Since you have not set a funding duration, changes to these settings will be applied immediately."
 msgstr "鉴于你并未设置筹款持续时间，对这些设置的修改将会立即生效。"
 
-#: src/components/v1/FundingCycle/FundingCyclePreview.tsx
+#: src/components/shared/Project/FundingCycleDetailsCard.tsx
 msgid "Some funding cycle properties may indicate risk for project contributors."
 msgstr "一些筹款周期的配置可能会给项目贡献者们造成一些风险。"
 
@@ -2338,7 +2338,7 @@ msgstr "给到你的 {0}"
 msgid "{0} holders"
 msgstr "{0} 持有者"
 
-#: src/components/v1/FundingCycle/FundingCyclePreview.tsx
+#: src/components/shared/Project/FundingCycleDetailsCard.tsx
 msgid "{0} left"
 msgstr "{0} 剩余"
 
@@ -2358,9 +2358,9 @@ msgstr "{0} 已存入"
 msgid "{0} total"
 msgstr "{0} 总共"
 
-#: src/components/v1/FundingCycle/FundingCyclePreview.tsx
+#: src/components/shared/Project/FundingCycleDetailsCard.tsx
 msgid "{0} until #{1}"
-msgstr "{0} 直到 #{1}"
+msgstr ""
 
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 msgid "{0} will go to the project owner: <0/>"

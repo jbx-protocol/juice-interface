@@ -1,7 +1,7 @@
 import * as constants from '@ethersproject/constants'
 import { BigNumber } from '@ethersproject/bignumber'
 import { getAddress } from '@ethersproject/address'
-import { V2FundingCycleMetadata } from 'models/v2/fundingCycle'
+import { V2FundingCycle, V2FundingCycleMetadata } from 'models/v2/fundingCycle'
 
 import { invertPermyriad } from 'utils/bigNumbers'
 
@@ -11,6 +11,7 @@ import {
   SerializedV2FundAccessConstraint,
   SerializedV2FundingCycleData,
 } from './serializers'
+import { V2FundingCycleRiskFlags } from 'constants/v2/fundingWarningText'
 
 export const hasFundingTarget = (
   fundAccessConstraint: SerializedV2FundAccessConstraint | undefined,
@@ -146,4 +147,39 @@ export const decodeV2FundingCycleMetadata = (
       : getAddress(metadata.dataSource)
 
   return metadata
+}
+
+/**
+ * Mark various funding cycle properties as "unsafe",
+ * based on a subjective interpretation.
+ *
+ * If a value in the returned object is true, it is potentially unsafe.
+ */
+export const getUnsafeFundingCycleProperties = (
+  fundingCycle: V2FundingCycle,
+): V2FundingCycleRiskFlags => {
+  // const metadata = decodeV2FundingCycleMetadata(fundingCycle.metadata)
+
+  // when we set one of these values to true, we're saying it's potentially unsafe.
+  // This object is based on type FundingCycle
+  const configFlags = {
+    duration: false,
+    ballot: false,
+    metadataTicketPrintingIsAllowed: false,
+    metadataReservedRate: false,
+  }
+
+  return configFlags
+}
+
+/**
+ * Return number of risk indicators for a funding cycle.
+ * 0 if we deem a project "safe" to contribute to.
+ */
+export const V2FundingCycleRiskCount = (
+  fundingCycle: V2FundingCycle,
+): number => {
+  return Object.values(getUnsafeFundingCycleProperties(fundingCycle)).filter(
+    v => v === true,
+  ).length
 }

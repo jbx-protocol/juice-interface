@@ -11,7 +11,7 @@ import { EditingV1FundingCycle } from './serializers'
 import {
   FundingCycleRiskFlags,
   reservedRateRiskyMin,
-} from 'constants/fundingWarningText'
+} from 'constants/v1/fundingWarningText'
 
 // packed `metadata` format: 0btTPRRRRRRRRBBBBBBBBrrrrrrrrVVVVVVVV
 // V: version (bits 0-7)

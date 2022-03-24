@@ -5,7 +5,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { TicketMod } from 'models/mods'
 import { useContext, useLayoutEffect, useState } from 'react'
 
-import { reservedRateRiskyMin } from 'constants/fundingWarningText'
+import { reservedRateRiskyMin } from 'constants/v1/fundingWarningText'
 
 export type TicketingFormFields = {
   reserved: number

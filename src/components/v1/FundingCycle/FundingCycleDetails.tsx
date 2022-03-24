@@ -29,7 +29,7 @@ import { V1CurrencyName } from 'utils/v1/currency'
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 
 import TooltipLabel from '../../shared/TooltipLabel'
-import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
+import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/v1/fundingWarningText'
 
 export default function FundingCycleDetails({
   fundingCycle,

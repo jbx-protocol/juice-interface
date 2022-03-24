@@ -92,9 +92,12 @@ export default function FundingCycles({
   return (
     <FundingCycleSection
       tabs={tabs}
-      canReconfigure={canReconfigure}
       reconfigureButton={
-        <ReconfigureFundingModalTrigger fundingDuration={currentFC?.duration} />
+        canReconfigure ? (
+          <ReconfigureFundingModalTrigger
+            fundingDuration={currentFC?.duration}
+          />
+        ) : null
       }
     />
   )

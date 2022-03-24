@@ -187,6 +187,7 @@ export default function Rewards() {
       <ManageTokensModal
         visible={manageTokensModalVisible}
         onCancel={() => setManageTokensModalVisible(false)}
+        metadata={metadata}
       />
       <ParticipantsModal
         visible={participantsModalVisible}

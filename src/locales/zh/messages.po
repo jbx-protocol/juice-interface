@@ -1449,6 +1449,10 @@ msgstr ">>>>>>> 153425ca10bdac391883ab7d76d70851622055c9"
 msgid "Reconfigure project details"
 msgstr ""
 
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureTokenDrawer.tsx
+msgid "Reconfigure token"
+msgstr ""
+
 #: src/components/v1/V1Project/FundingCycles/ReconfigureFundingModalTrigger.tsx
 msgid "Reconfigure upcoming"
 msgstr "重新配置之后的筹款"
@@ -1892,6 +1896,7 @@ msgstr "这将删除你所有的更改。"
 msgid "To: <0/>"
 msgstr "分配给：<0/>"
 
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 #: src/utils/tokenSymbolText.ts
 msgid "Token"
 msgstr "代币"

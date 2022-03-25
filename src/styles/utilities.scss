@@ -1,6 +1,6 @@
 .hover-text-secondary {
   &:hover {
     color: var(--text-secondary) !important;
-    transition: 250ms;
+    transition: color 250ms;
   }
 }

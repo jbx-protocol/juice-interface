@@ -3,61 +3,60 @@ import { Trans } from '@lingui/macro'
 import { Descriptions } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 
-import { V1ProjectContext } from 'contexts/v1/projectContext'
+import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { V1CurrencyOption } from 'models/v1/currencyOption'
-import { V1FundingCycle } from 'models/v1/fundingCycle'
+import { V2CurrencyOption } from 'models/v2/currencyOption'
+import { V2FundingCycle } from 'models/v2/fundingCycle'
 import { useContext } from 'react'
 import { formatDate } from 'utils/formatDate'
 import {
   formatWad,
-  perbicentToPercent,
   permilleToPercent,
+  permyriadToPercent,
 } from 'utils/formatNumber'
-import {
-  decodeFundingCycleMetadata,
-  getUnsafeFundingCycleProperties,
-  hasFundingTarget,
-  isRecurring,
-} from 'utils/v1/fundingCycle'
+import { decodeV2FundingCycleMetadata } from 'utils/v2/fundingCycle'
 import { weightedRate } from 'utils/math'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
-import { V1CurrencyName } from 'utils/v1/currency'
-
+import { V2CurrencyName } from 'utils/v2/currency'
+import { weightedAmount } from 'utils/math'
 import TooltipLabel from 'components/shared/TooltipLabel'
 
 import FundingCycleDetailWarning from 'components/shared/Project/FundingCycleDetailWarning'
 
+import { getUnsafeV2FundingCycleProperties } from 'utils/v2/fundingCycle'
+
+import { detailedTimeString } from 'utils/formatTime'
+
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
-import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/v1/fundingWarningText'
-import { SECONDS_IN_DAY } from 'constants/numbers'
+import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/v2/fundingWarningText'
 
 export default function FundingCycleDetails({
   fundingCycle,
 }: {
-  fundingCycle: V1FundingCycle | undefined
+  fundingCycle: V2FundingCycle | undefined
 }) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const { tokenSymbol } = useContext(V1ProjectContext)
+  const { tokenSymbol, distributionLimit, distributionLimitCurrency } =
+    useContext(V2ProjectContext)
 
   if (!fundingCycle) return null
 
+  const formattedDuration = detailedTimeString(fundingCycle.duration.toNumber())
   const formattedStartTime = formatDate(fundingCycle.start.mul(1000))
-
   const formattedEndTime = formatDate(
-    fundingCycle.start.add(fundingCycle.duration.mul(SECONDS_IN_DAY)).mul(1000),
+    fundingCycle.start.add(fundingCycle.duration).mul(1000),
   )
 
-  const metadata = decodeFundingCycleMetadata(fundingCycle.metadata)
+  const metadata = decodeV2FundingCycleMetadata(fundingCycle.metadata)
   const fcReservedRate = metadata?.reservedRate
 
   const ballotStrategy = getBallotStrategyByAddress(fundingCycle.ballot)
   const unsafeFundingCycleProperties =
-    getUnsafeFundingCycleProperties(fundingCycle)
+    getUnsafeV2FundingCycleProperties(fundingCycle)
 
   const tokenSymbolPlural = tokenSymbolText({
     tokenSymbol,
@@ -67,9 +66,9 @@ export default function FundingCycleDetails({
 
   const ReservedRateText = () => {
     const payerRate = formatWad(
-      weightedRate(
+      weightedAmount(
         fundingCycle?.weight,
-        fcReservedRate,
+        fcReservedRate.toNumber(),
         parseEther('1'),
         'payer',
       ),
@@ -81,7 +80,7 @@ export default function FundingCycleDetails({
     const reservedRate = formatWad(
       weightedRate(
         fundingCycle?.weight,
-        fcReservedRate,
+        fcReservedRate.toNumber(),
         parseEther('1'),
         'reserved',
       ),
@@ -102,7 +101,9 @@ export default function FundingCycleDetails({
     )
 
     return (
-      <span>{fcReservedRate ? withReservedRate : withoutReservedRate}</span>
+      <span>
+        {fcReservedRate.gt(0) ? withReservedRate : withoutReservedRate}
+      </span>
     )
   }
 
@@ -114,14 +115,16 @@ export default function FundingCycleDetails({
         column={{ xs: 1, sm: 1, md: 1, lg: 1, xl: 1, xxl: 2 }}
       >
         <Descriptions.Item label={<Trans>Target</Trans>}>
-          {hasFundingTarget(fundingCycle) ? (
+          {distributionLimit ? (
             <>
               <CurrencySymbol
-                currency={V1CurrencyName(
-                  fundingCycle.currency.toNumber() as V1CurrencyOption,
+                currency={V2CurrencyName(
+                  distributionLimitCurrency?.toNumber() as
+                    | V2CurrencyOption
+                    | undefined,
                 )}
               />
-              {formatWad(fundingCycle.target)}
+              {formatWad(distributionLimit)}
             </>
           ) : (
             <Trans>No target</Trans>
@@ -130,7 +133,7 @@ export default function FundingCycleDetails({
 
         <Descriptions.Item label={<Trans>Duration</Trans>}>
           {fundingCycle.duration.gt(0) ? (
-            <Trans>{fundingCycle.duration.toString()} days</Trans>
+            formattedDuration
           ) : (
             <FundingCycleDetailWarning
               showWarning={true}
@@ -153,48 +156,44 @@ export default function FundingCycleDetails({
           </Descriptions.Item>
         )}
 
-        {isRecurring(fundingCycle) && (
-          <Descriptions.Item
-            label={
-              <TooltipLabel
-                label={<Trans>Discount rate</Trans>}
-                tip={
-                  <Trans>
-                    The ratio of tokens rewarded per payment amount will
-                    decrease by this percentage with each new funding cycle. A
-                    higher discount rate will incentivize supporters to pay your
-                    project earlier than later.
-                  </Trans>
-                }
-              />
-            }
-          >
-            {permilleToPercent(fundingCycle.discountRate)}%
-          </Descriptions.Item>
-        )}
+        <Descriptions.Item
+          label={
+            <TooltipLabel
+              label={<Trans>Discount rate</Trans>}
+              tip={
+                <Trans>
+                  The ratio of tokens rewarded per payment amount will decrease
+                  by this percentage with each new funding cycle. A higher
+                  discount rate will incentivize supporters to pay your project
+                  earlier than later.
+                </Trans>
+              }
+            />
+          }
+        >
+          {permilleToPercent(fundingCycle.discountRate)}%
+        </Descriptions.Item>
 
-        {isRecurring(fundingCycle) && (
-          <Descriptions.Item
-            span={2}
-            label={
-              <TooltipLabel
-                label={<Trans>Bonding curve rate</Trans>}
-                tip={
-                  <Trans>
-                    This rate determines the amount of overflow that each token
-                    can be redeemed for at any given time. On a lower bonding
-                    curve, redeeming a token increases the value of each
-                    remaining token, creating an incentive to hodl tokens longer
-                    than others. A bonding curve of 100% means all tokens will
-                    have equal value regardless of when they are redeemed.
-                  </Trans>
-                }
-              />
-            }
-          >
-            {perbicentToPercent(metadata?.bondingCurveRate)}%
-          </Descriptions.Item>
-        )}
+        <Descriptions.Item
+          span={2}
+          label={
+            <TooltipLabel
+              label={<Trans>Bonding curve rate</Trans>}
+              tip={
+                <Trans>
+                  This rate determines the amount of overflow that each token
+                  can be redeemed for at any given time. On a lower bonding
+                  curve, redeeming a token increases the value of each remaining
+                  token, creating an incentive to hodl tokens longer than
+                  others. A bonding curve of 100% means all tokens will have
+                  equal value regardless of when they are redeemed.
+                </Trans>
+              }
+            />
+          }
+        >
+          {permyriadToPercent(metadata?.redemptionRate)}%
+        </Descriptions.Item>
 
         <Descriptions.Item
           label={
@@ -219,7 +218,7 @@ export default function FundingCycleDetails({
               FUNDING_CYCLE_WARNING_TEXT(fundingCycle).metadataReservedRate
             }
           >
-            {perbicentToPercent(metadata?.reservedRate)}%
+            {permyriadToPercent(metadata?.reservedRate)}%
           </FundingCycleDetailWarning>
         </Descriptions.Item>
 
@@ -244,46 +243,9 @@ export default function FundingCycleDetails({
 
         <Descriptions.Item
           span={2}
-          label={
-            <TooltipLabel
-              label={<Trans>Token minting</Trans>}
-              tip={
-                <Trans>
-                  When token minting is allowed, the owner of this project has
-                  permission to mint any number of tokens to any address at
-                  their discretion. This has the effect of diluting all current
-                  token holders, without increasing the project's treasury
-                  balance. The project owner can reconfigure this along with all
-                  other properties of the funding cycle.
-                </Trans>
-              }
-            />
-          }
-        >
-          {metadata?.ticketPrintingIsAllowed ? (
-            <FundingCycleDetailWarning
-              showWarning={true}
-              tooltipTitle={
-                FUNDING_CYCLE_WARNING_TEXT(fundingCycle)
-                  .metadataTicketPrintingIsAllowed
-              }
-            >
-              <Trans>Allowed</Trans>
-            </FundingCycleDetailWarning>
-          ) : (
-            <Trans>Disabled</Trans>
-          )}
-        </Descriptions.Item>
-
-        <Descriptions.Item
-          span={2}
           label={<TooltipLabel label={<Trans>Payments</Trans>} />}
         >
-          {metadata?.payIsPaused ? (
-            <Trans>Paused</Trans>
-          ) : (
-            <Trans>Enabled</Trans>
-          )}
+          {metadata?.pausePay ? <Trans>Paused</Trans> : <Trans>Enabled</Trans>}
         </Descriptions.Item>
       </Descriptions>
 

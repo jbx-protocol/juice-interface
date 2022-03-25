@@ -144,7 +144,7 @@ export default function ProjectCard({
               <span style={{ color: colors.text.secondary }}>
                 since{' '}
                 {!!_project?.createdAt &&
-                  formatDate(_project?.createdAt * 1000, 'MM-DD-YY')}
+                  formatDate(_project?.createdAt * 1000, 'yyyy-MM-DD')}
               </span>
             </div>
 

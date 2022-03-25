@@ -14,12 +14,10 @@ type TabType = {
 
 export default function FundingCycleSection({
   tabs,
-  canReconfigure,
   reconfigureButton,
 }: {
   tabs: TabType[]
-  canReconfigure?: boolean
-  reconfigureButton: JSX.Element
+  reconfigureButton: JSX.Element | null
 }) {
   const {
     theme: { colors },
@@ -54,7 +52,7 @@ export default function FundingCycleSection({
           }}
         />
 
-        {(canReconfigure && reconfigureButton) ?? null}
+        {reconfigureButton}
       </div>
 
       <Space style={{ fontSize: '.8rem', marginBottom: 12 }} size="middle">

@@ -8,7 +8,7 @@ msgstr ""
 "Language: fr\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-03-24 02:17\n"
+"PO-Revision-Date: 2022-03-25 03:04\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -210,7 +210,7 @@ msgstr ""
 msgid "A project can reserve a percentage of tokens minted from every payment it receives. Reserved tokens can be distributed according to the allocation below at any time."
 msgstr ""
 
-#: src/components/v1/V1Project/FundingCycles/index.tsx
+#: src/components/shared/Project/FundingCycleSection.tsx
 msgid "A project's lifetime is defined in funding cycles. If a funding target is set, the project can withdraw no more than the target for the duration of the cycle."
 msgstr ""
 
@@ -560,7 +560,7 @@ msgstr ""
 msgid "Custom token beneficiary"
 msgstr ""
 
-#: src/components/v1/FundingCycle/FundingCyclePreview.tsx
+#: src/components/shared/Project/FundingCycleDetailsCard.tsx
 msgid "Cycle #{0}"
 msgstr ""
 
@@ -596,7 +596,7 @@ msgstr ""
 msgid "Design your project"
 msgstr ""
 
-#: src/components/v1/FundingCycle/FundingCyclePreview.tsx
+#: src/components/shared/Project/FundingCycleDetailsCard.tsx
 msgid "Details"
 msgstr ""
 
@@ -793,9 +793,9 @@ msgstr ""
 msgid "Funding can be reconfigured at any time. Reconfigurations will start a new funding cycle."
 msgstr ""
 
+#: src/components/shared/Project/FundingCycleSection.tsx
 #: src/components/shared/forms/BudgetForm.tsx
 #: src/components/v1/V1Create/index.tsx
-#: src/components/v1/V1Project/FundingCycles/index.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Funding cycle"
 msgstr ""
@@ -831,7 +831,7 @@ msgid "Funding target"
 msgstr ""
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
-msgid "Funding target/duration"
+msgid "Funding target, duration and payouts"
 msgstr ""
 
 #: src/components/v1/FundingCycle/modals/DistributeTokensModal.tsx
@@ -1170,10 +1170,6 @@ msgstr ""
 msgid "Notice from {0}:"
 msgstr ""
 
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
-msgid "OK"
-msgstr ""
-
 #: src/components/Landing/index.tsx
 msgid "Open source businesses"
 msgstr ""
@@ -1444,9 +1440,17 @@ msgstr ""
 msgid "Reconfigure funding details"
 msgstr ""
 
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureFundingDrawer.tsx
+msgid "Reconfigure funding target/duration"
+msgstr ""
+
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectDetailsDrawer.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure project details"
+msgstr ""
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureTokenDrawer.tsx
+msgid "Reconfigure token"
 msgstr ""
 
 #: src/components/v1/V1Project/FundingCycles/ReconfigureFundingModalTrigger.tsx
@@ -1560,7 +1564,6 @@ msgid "Reward specific community members with tokens."
 msgstr ""
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Rules"
 msgstr ""
 
@@ -1577,6 +1580,7 @@ msgstr ""
 msgid "Rules for how this project's funding cycles can be reconfigured."
 msgstr ""
 
+#: src/components/StandardSaveButton.tsx
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 #: src/components/shared/forms/TicketingForm.tsx
@@ -1665,7 +1669,7 @@ msgstr ""
 msgid "Since you have not set a funding duration, changes to these settings will be applied immediately."
 msgstr ""
 
-#: src/components/v1/FundingCycle/FundingCyclePreview.tsx
+#: src/components/shared/Project/FundingCycleDetailsCard.tsx
 msgid "Some funding cycle properties may indicate risk for project contributors."
 msgstr ""
 
@@ -2018,6 +2022,10 @@ msgstr ""
 msgid "Upcoming"
 msgstr ""
 
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Updates you make to this section will only be applied to <0>upcoming</0> funding cycles."
+msgstr ""
+
 #: src/components/shared/formItems/ProjectLogoUri.tsx
 msgid "Upload"
 msgstr ""
@@ -2335,7 +2343,7 @@ msgstr ""
 msgid "{0} holders"
 msgstr ""
 
-#: src/components/v1/FundingCycle/FundingCyclePreview.tsx
+#: src/components/shared/Project/FundingCycleDetailsCard.tsx
 msgid "{0} left"
 msgstr ""
 
@@ -2355,7 +2363,7 @@ msgstr ""
 msgid "{0} total"
 msgstr ""
 
-#: src/components/v1/FundingCycle/FundingCyclePreview.tsx
+#: src/components/shared/Project/FundingCycleDetailsCard.tsx
 msgid "{0} until #{1}"
 msgstr ""
 

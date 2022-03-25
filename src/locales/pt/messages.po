@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-03-24 02:17\n"
+"PO-Revision-Date: 2022-03-25 03:04\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -2365,7 +2365,7 @@ msgstr "{0} total"
 
 #: src/components/shared/Project/FundingCycleDetailsCard.tsx
 msgid "{0} until #{1}"
-msgstr ""
+msgstr "{0} até #{1}"
 
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 msgid "{0} will go to the project owner: <0/>"

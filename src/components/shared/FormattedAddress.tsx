@@ -8,6 +8,7 @@ import EtherscanLink from 'components/shared/EtherscanLink'
 import CopyTextButton from 'components/shared/CopyTextButton'
 
 import { readProvider } from 'constants/readProvider'
+import { SECONDS_IN_DAY } from 'constants/numbers'
 
 type EnsRecord = {
   name: string | null
@@ -55,7 +56,7 @@ export default function FormattedAddress({
 
       let newRecord = {
         name: null,
-        expires: now + 24 * 60 * 60 * 1000, // Expires in one day
+        expires: now + SECONDS_IN_DAY * 1000, // Expires in one day
       } as EnsRecord
 
       try {

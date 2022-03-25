@@ -6,7 +6,7 @@ import { fromWad, percentToPerbicent, percentToPermyriad } from './formatNumber'
 
 export type WeightFunction = (
   weight: BigNumber | undefined,
-  reservedRatePerbicent: number | undefined,
+  reservedRate: number | undefined,
   wadAmount: BigNumber | undefined,
   outputType: 'payer' | 'reserved',
 ) => string | undefined

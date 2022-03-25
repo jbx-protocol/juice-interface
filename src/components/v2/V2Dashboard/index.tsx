@@ -19,6 +19,10 @@ import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { V2_CURRENCY_ETH } from 'utils/v2/currency'
 import { V2UserContext } from 'contexts/v2/userContext'
 
+import { decodeV2FundingCycleMetadata } from 'utils/v2/fundingCycle'
+
+import useSymbolOfERC20 from 'hooks/v1/contractReader/SymbolOfERC20' // this is version-agnostic, we chillin
+
 import { layouts } from 'constants/styles/layouts'
 
 import V2Project from '../V2Project'
@@ -45,6 +49,10 @@ export default function V2Dashboard() {
   const { data: fundingCycle } = useProjectCurrentFundingCycle({
     projectId,
   })
+
+  const fundingCycleMetadata = fundingCycle
+    ? decodeV2FundingCycleMetadata(fundingCycle?.metadata)
+    : undefined
 
   const { data: queuedFundingCycle } = useProjectQueuedFundingCycle({
     projectId,
@@ -105,6 +113,8 @@ export default function V2Dashboard() {
     terminal: contracts?.JBETHPaymentTerminal.address,
   })
 
+  const tokenSymbol = useSymbolOfERC20(tokenAddress)
+
   const { data: queuedDistributionLimitCurrency } =
     useDistributionLimitCurrency({
       projectId,
@@ -136,6 +146,7 @@ export default function V2Dashboard() {
     projectId,
     projectMetadata,
     fundingCycle,
+    fundingCycleMetadata,
     queuedFundingCycle,
     distributionLimit,
     queuedDistributionLimit,
@@ -149,6 +160,7 @@ export default function V2Dashboard() {
     distributionLimitCurrency,
     queuedDistributionLimitCurrency,
     balanceInDistributionLimitCurrency,
+    tokenSymbol,
   }
 
   return (

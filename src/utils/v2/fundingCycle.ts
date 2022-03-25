@@ -33,9 +33,6 @@ export const hasFundingDuration = (
   fundingCycle: Pick<SerializedV2FundingCycleData, 'duration'>,
 ) => Boolean(fundingCycle?.duration && fundingCycle?.duration !== '0')
 
-export const isRecurring = (fundingCycle: V2FundingCycle) =>
-  fundingCycle.discountRate.lt(201)
-
 /**
  * Return the default fund access constraint for a project.
  *

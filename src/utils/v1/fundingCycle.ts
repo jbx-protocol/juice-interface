@@ -13,6 +13,8 @@ import {
   RESERVED_RATE_WARNING_THRESHOLD_PERCENT,
 } from 'constants/v1/fundingWarningText'
 
+const DISCOUNT_RATE_NON_RECURRING = 201
+
 // packed `metadata` format: 0btTPRRRRRRRRBBBBBBBBrrrrrrrrVVVVVVVV
 // V: version (bits 0-7)
 // r: reserved (bits 8-15)
@@ -76,9 +78,13 @@ export const encodeFundingCycleMetadata = (
   return encoded
 }
 
+/**
+ * From the FundingCycles.sol contract:
+ *    If discountRate is 201, an non-recurring funding cycle will get made.
+ */
 export const isRecurring = (
   fundingCycle: V1FundingCycle | EditingV1FundingCycle,
-) => fundingCycle.discountRate.lt(201)
+) => fundingCycle.discountRate.lt(DISCOUNT_RATE_NON_RECURRING)
 
 export const hasFundingTarget = (
   fundingCycle: Pick<V1FundingCycle | EditingV1FundingCycle, 'target'>,

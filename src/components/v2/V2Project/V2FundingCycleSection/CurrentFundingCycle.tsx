@@ -30,6 +30,7 @@ export default function CurrentFundingCycle({
           fundingCycleStartTime={fundingCycle.start}
           isFundingCycleRecurring={true}
           fundingCycleRiskCount={V2FundingCycleRiskCount(fundingCycle)}
+          showDetail={showCurrentDetail}
         />
       </CardSection>
 

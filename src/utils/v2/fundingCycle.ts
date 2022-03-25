@@ -155,7 +155,7 @@ export const decodeV2FundingCycleMetadata = (
  *
  * If a value in the returned object is true, it is potentially unsafe.
  */
-export const getUnsafeFundingCycleProperties = (
+export const getUnsafeV2FundingCycleProperties = (
   fundingCycle: V2FundingCycle,
 ): V2FundingCycleRiskFlags => {
   // const metadata = decodeV2FundingCycleMetadata(fundingCycle.metadata)
@@ -179,7 +179,7 @@ export const getUnsafeFundingCycleProperties = (
 export const V2FundingCycleRiskCount = (
   fundingCycle: V2FundingCycle,
 ): number => {
-  return Object.values(getUnsafeFundingCycleProperties(fundingCycle)).filter(
+  return Object.values(getUnsafeV2FundingCycleProperties(fundingCycle)).filter(
     v => v === true,
   ).length
 }

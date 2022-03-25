@@ -30,7 +30,7 @@ export default function CurrentFundingCycle({
           fundingCycleDetails={
             <FundingCycleDetails fundingCycle={fundingCycle} />
           }
-          fundingCycleDuration={fundingCycle.duration}
+          fundingCycleDurationSeconds={fundingCycle.duration}
           fundingCycleStartTime={fundingCycle.start}
           isFundingCycleRecurring={true}
           fundingCycleRiskCount={V2FundingCycleRiskCount(fundingCycle)}

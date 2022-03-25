@@ -30,10 +30,11 @@ import { querySubgraph } from 'utils/graph'
 import { readProvider } from 'constants/readProvider'
 
 import SectionHeader from './SectionHeader'
+import { SECONDS_IN_DAY } from 'constants/numbers'
 
 const now = moment.now() - 5 * 60 * 1000 // 5 min ago
 
-const daysToMillis = (days: number) => days * 24 * 60 * 60 * 1000
+const daysToMillis = (days: number) => days * SECONDS_IN_DAY * 1000
 
 type Duration = 1 | 7 | 30 | 90 | 365
 type EventRef = {

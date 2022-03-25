@@ -2359,7 +2359,6 @@ msgid "{0} contributed"
 msgstr ""
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "{0} days"
 msgstr "{0} gün"
 
@@ -2372,10 +2371,6 @@ msgstr "Size ait {0}"
 msgid "{0} holders"
 msgstr "{0} sahipleri"
 
-#: src/components/shared/Project/FundingCycleDetailsCard.tsx
-msgid "{0} left"
-msgstr "{0} kaldı"
-
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 msgid "{0} reserved"
 msgstr "Ayrılan {0}"
@@ -2387,10 +2382,6 @@ msgstr "stake edilen {0}"
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 msgid "{0} total"
 msgstr "Toplam {0}"
-
-#: src/components/shared/Project/FundingCycleDetailsCard.tsx
-msgid "{0} until #{1}"
-msgstr ""
 
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 msgid "{0} will go to the project owner: <0/>"
@@ -2431,6 +2422,14 @@ msgstr "toplam {count}"
 #: src/components/shared/AMMPrices/TokenAMMPriceRow.tsx
 msgid "{exchangeName} has no market for {tokenSymbol}."
 msgstr "{exchangeName}, {tokenSymbol} için piyasaya sahip değildir."
+
+#: src/components/shared/Project/FundingCycleDetailsCard.tsx
+msgid "{formattedTimeLeft} left"
+msgstr ""
+
+#: src/components/shared/Project/FundingCycleDetailsCard.tsx
+msgid "{formattedTimeLeft} until #{0}"
+msgstr ""
 
 #: src/components/v1/V1Dashboard/index.tsx
 msgid "{handle} not found"

@@ -26,10 +26,10 @@ import FundingCycleDetailWarning from 'components/shared/Project/FundingCycleDet
 
 import { getUnsafeV2FundingCycleProperties } from 'utils/v2/fundingCycle'
 
+import { detailedTimeString } from 'utils/formatTime'
+
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/v2/fundingWarningText'
-
-const secondsInDay = 24 * 60 * 60
 
 export default function FundingCycleDetails({
   fundingCycle,
@@ -45,10 +45,10 @@ export default function FundingCycleDetails({
 
   if (!fundingCycle) return null
 
+  const formattedDuration = detailedTimeString(fundingCycle.duration.toNumber())
   const formattedStartTime = formatDate(fundingCycle.start.mul(1000))
-
   const formattedEndTime = formatDate(
-    fundingCycle.start.add(fundingCycle.duration.mul(secondsInDay)).mul(1000),
+    fundingCycle.start.add(fundingCycle.duration).mul(1000),
   )
 
   const metadata = decodeV2FundingCycleMetadata(fundingCycle.metadata)
@@ -101,7 +101,9 @@ export default function FundingCycleDetails({
     )
 
     return (
-      <span>{fcReservedRate ? withReservedRate : withoutReservedRate}</span>
+      <span>
+        {fcReservedRate.gt(0) ? withReservedRate : withoutReservedRate}
+      </span>
     )
   }
 
@@ -131,7 +133,7 @@ export default function FundingCycleDetails({
 
         <Descriptions.Item label={<Trans>Duration</Trans>}>
           {fundingCycle.duration.gt(0) ? (
-            <Trans>{fundingCycle.duration.toString()} days</Trans>
+            formattedDuration
           ) : (
             <FundingCycleDetailWarning
               showWarning={true}

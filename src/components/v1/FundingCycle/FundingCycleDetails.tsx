@@ -31,8 +31,7 @@ import FundingCycleDetailWarning from 'components/shared/Project/FundingCycleDet
 
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/v1/fundingWarningText'
-
-const secondsInDay = 24 * 60 * 60
+import { SECONDS_IN_DAY } from 'constants/numbers'
 
 export default function FundingCycleDetails({
   fundingCycle,
@@ -50,7 +49,7 @@ export default function FundingCycleDetails({
   const formattedStartTime = formatDate(fundingCycle.start.mul(1000))
 
   const formattedEndTime = formatDate(
-    fundingCycle.start.add(fundingCycle.duration.mul(secondsInDay)).mul(1000),
+    fundingCycle.start.add(fundingCycle.duration.mul(SECONDS_IN_DAY)).mul(1000),
   )
 
   const metadata = decodeFundingCycleMetadata(fundingCycle.metadata)

@@ -10,7 +10,7 @@ import { perbicentToPercent } from '../formatNumber'
 import { EditingV1FundingCycle } from './serializers'
 import {
   FundingCycleRiskFlags,
-  reservedRateRiskyMin,
+  RESERVED_RATE_WARNING_THRESHOLD_PERCENT,
 } from 'constants/v1/fundingWarningText'
 
 // packed `metadata` format: 0btTPRRRRRRRRBBBBBBBBrrrrrrrrVVVVVVVV
@@ -143,7 +143,7 @@ export const getUnsafeFundingCycleProperties = (
    */
   if (
     parseInt(perbicentToPercent(metadata?.reservedRate ?? 0), 10) >=
-    reservedRateRiskyMin
+    RESERVED_RATE_WARNING_THRESHOLD_PERCENT
   ) {
     configFlags.metadataReservedRate = true
   }

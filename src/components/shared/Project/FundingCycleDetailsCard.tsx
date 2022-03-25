@@ -45,66 +45,62 @@ export default function FundingCycleDetailsCard({
   }
 
   return (
-    <div>
-      <Collapse
-        style={{
-          background: 'transparent',
-          border: 'none',
-        }}
-        className="minimal"
-        defaultActiveKey={showDetail ? COLLAPSE_PANEL_KEY : undefined}
-      >
-        <CollapsePanel
-          key={COLLAPSE_PANEL_KEY}
-          style={{ border: 'none' }}
-          header={
-            <div
-              style={{
-                display: 'flex',
-                width: '100%',
-                justifyContent: 'space-between',
-                cursor: 'pointer',
-              }}
-            >
-              <div>
-                <span>
-                  {fundingCycleDuration.gt(0) ? (
-                    <Trans>Cycle #{fundingCycleNumber.toString()}</Trans>
-                  ) : (
-                    <Trans>Details</Trans>
-                  )}
-                </span>
-
-                {fundingCycleRiskCount > 0 && (
-                  <span
-                    style={{ marginLeft: 10, color: colors.text.secondary }}
-                  >
-                    <Tooltip
-                      title={
-                        <Trans>
-                          Some funding cycle properties may indicate risk for
-                          project contributors.
-                        </Trans>
-                      }
-                    >
-                      <ExclamationCircleOutlined style={{ marginRight: 2 }} />
-                      {fundingCycleRiskCount}
-                    </Tooltip>
-                  </span>
+    <Collapse
+      style={{
+        background: 'transparent',
+        border: 'none',
+      }}
+      className="minimal"
+      defaultActiveKey={showDetail ? COLLAPSE_PANEL_KEY : undefined}
+    >
+      <CollapsePanel
+        key={COLLAPSE_PANEL_KEY}
+        style={{ border: 'none' }}
+        header={
+          <div
+            style={{
+              display: 'flex',
+              width: '100%',
+              justifyContent: 'space-between',
+              cursor: 'pointer',
+            }}
+          >
+            <div>
+              <span>
+                {fundingCycleDuration.gt(0) ? (
+                  <Trans>Cycle #{fundingCycleNumber.toString()}</Trans>
+                ) : (
+                  <Trans>Details</Trans>
                 )}
-              </div>
+              </span>
 
-              {headerText.length > 0 && (
-                <span style={{ color: colors.text.secondary, marginLeft: 10 }}>
-                  {headerText}
+              {fundingCycleRiskCount > 0 && (
+                <span style={{ marginLeft: 10, color: colors.text.secondary }}>
+                  <Tooltip
+                    title={
+                      <Trans>
+                        Some funding cycle properties may indicate risk for
+                        project contributors.
+                      </Trans>
+                    }
+                  >
+                    <ExclamationCircleOutlined style={{ marginRight: 2 }} />
+                    {fundingCycleRiskCount}
+                  </Tooltip>
                 </span>
               )}
             </div>
-          }
-        >
-          {fundingCycleDetails}
-        </CollapsePanel>
-      </Collapse>
-    </div>
+
+            {headerText.length > 0 && (
+              <span style={{ color: colors.text.secondary, marginLeft: 10 }}>
+                {headerText}
+              </span>
+            )}
+          </div>
+        }
+      >
+        {fundingCycleDetails}
+      </CollapsePanel>
+    </Collapse>
   )
 }

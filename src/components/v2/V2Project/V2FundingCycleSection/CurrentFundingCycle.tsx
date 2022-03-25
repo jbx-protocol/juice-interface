@@ -6,6 +6,8 @@ import { useContext } from 'react'
 import { V2FundingCycleRiskCount } from 'utils/v2/fundingCycle'
 import { permyriadToPercent } from 'utils/formatNumber'
 
+import FundingCycleDetails from './FundingCycleDetails'
+
 export default function CurrentFundingCycle({
   showCurrentDetail,
 }: {
@@ -25,7 +27,9 @@ export default function CurrentFundingCycle({
       <CardSection>
         <FundingCycleDetailsCard
           fundingCycleNumber={fundingCycle.number}
-          fundingCycleDetails={<h1>details</h1>}
+          fundingCycleDetails={
+            <FundingCycleDetails fundingCycle={fundingCycle} />
+          }
           fundingCycleDuration={fundingCycle.duration}
           fundingCycleStartTime={fundingCycle.start}
           isFundingCycleRecurring={true}

@@ -3,7 +3,7 @@ import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { percentToPerbicent } from 'utils/formatNumber'
 
-export const reservedRateRiskyMin = 90
+export const RESERVED_RATE_WARNING_THRESHOLD_PERCENT = 90
 
 export type FundingCycleRiskFlags = {
   duration: boolean

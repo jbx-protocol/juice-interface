@@ -154,7 +154,7 @@ export default function V2ProjectReconfigureModal({
       ),
     )
 
-    // Set editing funding metadata
+    // Set editing funding cycle metadata
     if (effectiveFundingCycle?.metadata) {
       dispatch(
         editingV2ProjectActions.setFundingCycleMetadata(

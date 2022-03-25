@@ -94,7 +94,7 @@ export default function Mod({
           <div style={{ fontSize: '.8rem', color: colors.text.secondary }}>
             <LockOutlined /> <Trans>until</Trans>{' '}
             {mod.lockedUntil
-              ? formatDate(mod.lockedUntil * 1000, 'MM-DD-yyyy')
+              ? formatDate(mod.lockedUntil * 1000, 'yyyy-MM-DD')
               : null}
           </div>
         ) : null}{' '}

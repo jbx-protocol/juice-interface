@@ -1442,7 +1442,7 @@ msgstr ""
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureFundingDrawer.tsx
 msgid "Reconfigure funding target/duration"
-msgstr ">>>>>>> 153425ca10bdac391883ab7d76d70851622055c9"
+msgstr ""
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectDetailsDrawer.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx

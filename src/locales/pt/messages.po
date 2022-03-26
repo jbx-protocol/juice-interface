@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-03-23 02:22\n"
+"PO-Revision-Date: 2022-03-25 03:04\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -385,7 +385,7 @@ msgstr "Grandes aplausos à comunidade Ethereum por criar a infraestrutura e eco
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
 msgid "Block number"
-msgstr ""
+msgstr "Número de Blockchain"
 
 #: src/components/Navbar/constants.ts
 msgid "Blog"
@@ -495,7 +495,7 @@ msgstr "Financiamento comunitário para pessoas e projetos"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Confirm funding changes"
-msgstr "Confirmar mudanças de financiamento"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/FeedbackPromptModal.tsx
 msgid "Congrats on creating your project!"
@@ -1235,7 +1235,7 @@ msgstr "Pagar divulgação"
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 #: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
 msgid "Pay {0}"
-msgstr ""
+msgstr "Pagar {0}"
 
 #: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
 msgid "Payer"
@@ -1334,7 +1334,7 @@ msgstr "Detalhes do projeto"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectDetailsDrawer.tsx
 msgid "Project details reconfigurations will create a separate transaction."
-msgstr ""
+msgstr "As reconfiguracões dos detalhes do projeto irão criar uma transação separada."
 
 #: src/components/shared/formItems/ProjectHandle/ProjectHandleFormItem.tsx
 #: src/components/shared/formItems/ProjectPayoutMods.tsx
@@ -1438,7 +1438,7 @@ msgstr "Reconfigurar financiamento"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure funding details"
-msgstr "Reconfigurar detalhes de financiamento"
+msgstr ""
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure funding target/duration/payouts"
@@ -1447,12 +1447,13 @@ msgstr ""
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectDetailsDrawer.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure project details"
-msgstr "Reconfigurar detalhes do projeto"
+msgstr "Reconfigurar detalhes do projeto<<<<<<< HEAD"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure rules"
 msgstr ""
 
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureTokenDrawer.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure token"
 msgstr ""
@@ -1874,7 +1875,7 @@ msgstr "Este projeto está atualmente usando o contrato de terminal do Juicebox 
 
 #: src/components/v2/V2ProjectHeaderActions.tsx
 msgid "This project uses the V2 version of the Juicebox contracts."
-msgstr ""
+msgstr "Este projeto usa a versão V2 dos contratos do Juicebox."
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hodl tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
@@ -2370,7 +2371,7 @@ msgstr "{0} total"
 
 #: src/components/shared/Project/FundingCycleDetailsCard.tsx
 msgid "{0} until #{1}"
-msgstr ""
+msgstr "{0} até #{1}"
 
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 msgid "{0} will go to the project owner: <0/>"

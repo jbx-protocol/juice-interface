@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-03-23 02:22\n"
+"PO-Revision-Date: 2022-03-25 03:04\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -125,7 +125,7 @@ msgstr "<0>Tasa de descuento deshabilitada cuando la duración del ciclo de fina
 
 #: src/components/shared/PayWarningModal.tsx
 msgid "<0>Juicebox contracts</0> are unaudited, and may be vulnerable to bugs or hacks. All funds moved through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable for any losses by projects or their supporters."
-msgstr ""
+msgstr "<0>Los contratos de Juicebox</0> no están auditados, y pueden ser vulnerables a errores o hackeos. Todos los fondos movidos a través de Juicebox pueden perderse o ser robados. JuiceboxDAO y Peel no son responsables de las pérdidas de los proyectos o sus patrocinadores."
 
 #: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
 msgid "<0>Learn more</0> about burning tokens."
@@ -372,7 +372,7 @@ msgstr "Balance excedido"
 
 #: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
 msgid "Beneficiary"
-msgstr ""
+msgstr "Beneficiario"
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "Beneficiary address"
@@ -570,7 +570,7 @@ msgstr "Tema oscuro"
 
 #: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
 msgid "Date"
-msgstr ""
+msgstr "Fecha"
 
 #: src/components/Projects/ProjectsFilterAndSort.tsx
 msgid "Date created"
@@ -679,11 +679,11 @@ msgstr "Descargar CSV"
 
 #: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
 msgid "Download CSV of payments"
-msgstr ""
+msgstr "Descargar CSV de pagos"
 
 #: src/components/v1/V1Project/modals/DownloadActivityModal.tsx
 msgid "Download CSV of project activity"
-msgstr ""
+msgstr "Descargar CSV de la actividad del proyecto"
 
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 msgid "Download CSV of {0} holders"
@@ -710,7 +710,7 @@ msgstr "Cada proyecto tiene sus propios <0>tokens ERC-20</0>. Todo el que financ
 
 #: src/components/v1/V1Project/modals/EditProjectModal.tsx
 msgid "Edit project"
-msgstr ""
+msgstr "Editar proyecto"
 
 #: src/components/shared/TicketModsList.tsx
 msgid "Edit reserved token allocation"
@@ -747,11 +747,11 @@ msgstr "Fin"
 
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 msgid "Error loading holders"
-msgstr ""
+msgstr "Error al cargar holders"
 
 #: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
 msgid "Error loading payments"
-msgstr ""
+msgstr "Error al cargar pagos"
 
 #: src/components/Landing/index.tsx
 msgid "Ethereum protocols and DAOs"
@@ -1155,7 +1155,7 @@ msgstr "No establecido"
 
 #: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
 msgid "Note"
-msgstr ""
+msgstr "Nota"
 
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
 msgid "Note:"
@@ -1239,7 +1239,7 @@ msgstr "Pagar {0}"
 
 #: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
 msgid "Payer"
-msgstr ""
+msgstr "Pagador"
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 #: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
@@ -1334,7 +1334,7 @@ msgstr "Detalles del proyecto"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectDetailsDrawer.tsx
 msgid "Project details reconfigurations will create a separate transaction."
-msgstr ""
+msgstr "Las reconfiguraciones de los detalles del proyecto, crearán una transacción separada."
 
 #: src/components/shared/formItems/ProjectHandle/ProjectHandleFormItem.tsx
 #: src/components/shared/formItems/ProjectPayoutMods.tsx
@@ -1447,12 +1447,13 @@ msgstr ""
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectDetailsDrawer.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure project details"
-msgstr ""
+msgstr "Reconfigura los detalles del proyecto"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure rules"
 msgstr ""
 
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureTokenDrawer.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure token"
 msgstr ""
@@ -2370,7 +2371,7 @@ msgstr "{0} en total"
 
 #: src/components/shared/Project/FundingCycleDetailsCard.tsx
 msgid "{0} until #{1}"
-msgstr ""
+msgstr "{0} hasta #{1}"
 
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 msgid "{0} will go to the project owner: <0/>"

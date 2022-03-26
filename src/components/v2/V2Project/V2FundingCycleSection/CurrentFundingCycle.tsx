@@ -4,7 +4,10 @@ import { LoadingOutlined } from '@ant-design/icons'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useContext } from 'react'
 import { V2FundingCycleRiskCount } from 'utils/v2/fundingCycle'
-import { permyriadToPercent } from 'utils/formatNumber'
+
+import SplitList from 'components/v2/shared/SplitList'
+
+import { formatReservedRate } from 'utils/v2/math'
 
 import FundingCycleDetails from './FundingCycleDetails'
 
@@ -40,17 +43,13 @@ export default function CurrentFundingCycle({
 
       <CardSection>
         <h4>Funding distribution</h4>
-        <ul>
-          {payoutSplits?.map(split => (
-            <li>{split.beneficiary}</li>
-          ))}
-        </ul>
+        {payoutSplits ? <SplitList splits={payoutSplits} /> : null}
       </CardSection>
       <CardSection>
         <h4>Reserved tokens</h4>
         <span>
           Reserved rate:{' '}
-          {permyriadToPercent(fundingCycleMetadata?.reservedRate)}%
+          {formatReservedRate(fundingCycleMetadata?.reservedRate)}%
         </span>
         <ul>
           {reserveTokenSplits?.map(split => (

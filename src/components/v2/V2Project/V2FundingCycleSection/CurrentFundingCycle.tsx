@@ -9,6 +9,10 @@ import SplitList from 'components/v2/shared/SplitList'
 
 import { formatReservedRate } from 'utils/v2/math'
 
+import { Trans } from '@lingui/macro'
+import TooltipLabel from 'components/shared/TooltipLabel'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
+
 import FundingCycleDetails from './FundingCycleDetails'
 
 export default function CurrentFundingCycle({
@@ -21,6 +25,7 @@ export default function CurrentFundingCycle({
     payoutSplits,
     reserveTokenSplits,
     fundingCycleMetadata,
+    tokenSymbol,
   } = useContext(V2ProjectContext)
 
   if (!fundingCycle) return <LoadingOutlined />
@@ -42,20 +47,49 @@ export default function CurrentFundingCycle({
       </CardSection>
 
       <CardSection>
-        <h4>Funding distribution</h4>
+        <TooltipLabel
+          label={
+            <h4 style={{ display: 'inline-block' }}>
+              <Trans>Funding Distribution</Trans>
+            </h4>
+          }
+          tip={
+            <Trans>
+              Available funds are distributed according to the payouts below.
+            </Trans>
+          }
+        />
         {payoutSplits ? <SplitList splits={payoutSplits} /> : null}
       </CardSection>
+
       <CardSection>
-        <h4>Reserved tokens</h4>
-        <span>
-          Reserved rate:{' '}
-          {formatReservedRate(fundingCycleMetadata?.reservedRate)}%
-        </span>
-        <ul>
-          {reserveTokenSplits?.map(split => (
-            <li>{split.beneficiary}</li>
-          ))}
-        </ul>
+        <div>
+          <TooltipLabel
+            label={
+              <h4 style={{ display: 'inline-block' }}>
+                <Trans>
+                  Reserved{' '}
+                  {tokenSymbolText({
+                    tokenSymbol,
+                    capitalize: false,
+                    plural: true,
+                  })}
+                </Trans>{' '}
+                ({formatReservedRate(fundingCycleMetadata?.reservedRate)}%)
+              </h4>
+            }
+            tip={
+              <Trans>
+                A project can reserve a percentage of tokens minted from every
+                payment it receives. Reserved tokens can be distributed
+                according to the allocation below at any time.
+              </Trans>
+            }
+          />
+        </div>
+        {reserveTokenSplits ? (
+          <SplitList splits={reserveTokenSplits} hideSplitValues />
+        ) : null}
       </CardSection>
     </div>
   )

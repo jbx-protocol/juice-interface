@@ -8,7 +8,6 @@ import { formatDate } from 'utils/formatDate'
 import { Split } from 'models/v2/splits'
 import TooltipLabel from 'components/shared/TooltipLabel'
 import FormattedAddress from 'components/shared/FormattedAddress'
-import ProjectHandle from 'components/shared/ProjectHandle'
 import { formatWad } from 'utils/formatNumber'
 import { BigNumber } from '@ethersproject/bignumber'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
@@ -17,7 +16,13 @@ import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { V2CurrencyName } from 'utils/v2/currency'
 import { formatSplitPercent, SPLITS_TOTAL_PERCENT } from 'utils/v2/math'
 
-export default function SplitItem({ split }: { split: Split }) {
+export default function SplitItem({
+  split,
+  hideValue,
+}: {
+  split: Split
+  hideValue: boolean
+}) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -25,6 +30,7 @@ export default function SplitItem({ split }: { split: Split }) {
     useContext(V2ProjectContext)
 
   const isProjectOwner = projectOwnerAddress === split.beneficiary
+  const isJuiceboxProject = BigNumber.from(split.projectId).gt(0)
 
   const LockedText = ({ lockedUntil }: { lockedUntil: number }) => {
     const lockedUntilFormatted = formatDate(lockedUntil * 1000, 'yyyy-MM-DD')
@@ -39,15 +45,8 @@ export default function SplitItem({ split }: { split: Split }) {
   const JuiceboxProjectBeneficiary = () => {
     return (
       <div>
-        <div style={{ fontWeight: 500 }}>
-          {split.projectId ? (
-            <ProjectHandle link projectId={split.projectId} />
-          ) : (
-            '--'
-          )}
-          :
-        </div>
-
+        {/* TODO figure out project "handles" with ENS resolution */}
+        <div style={{ fontWeight: 500 }}>@{split.projectId}:</div>
         <div
           style={{
             fontSize: '.8rem',
@@ -118,8 +117,6 @@ export default function SplitItem({ split }: { split: Split }) {
     )
   }
 
-  const isJuiceboxProject = Boolean(split.projectId)
-
   return (
     <div
       style={{
@@ -144,7 +141,7 @@ export default function SplitItem({ split }: { split: Split }) {
       </div>
       <div>
         <span>{formatSplitPercent(BigNumber.from(split.percent))}%</span>
-        {distributionLimit?.gt(0) ? (
+        {distributionLimit?.gt(0) && !hideValue ? (
           <span style={{ marginLeft: '0.2rem' }}>
             <SplitValue />
           </span>

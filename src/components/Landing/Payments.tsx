@@ -1,7 +1,7 @@
 import RichNote from 'components/shared/RichNote'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import Loading from 'components/shared/Loading'
-import ProjectHandle from 'components/shared/ProjectHandle'
+import V1ProjectHandle from 'components/v1/shared/V1ProjectHandle'
 
 import { ThemeContext } from 'contexts/themeContext'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
@@ -55,7 +55,7 @@ export default function Payments() {
                   style={{ color: colors.text.action.primary, fontWeight: 500 }}
                 >
                   {e.project?.id && (
-                    <ProjectHandle projectId={e.project.id} link />
+                    <V1ProjectHandle projectId={e.project.id} link />
                   )}
                 </div>
                 <div

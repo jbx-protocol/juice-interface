@@ -27,11 +27,13 @@ export default function V1ConfirmPayOwnerModal({
   weiAmount,
   onSuccess,
   onCancel,
+  payButtonText,
 }: {
   visible?: boolean
   weiAmount: BigNumber | undefined
   onSuccess?: VoidFunction
   onCancel?: VoidFunction
+  payButtonText: string
 }) {
   const [loading, setLoading] = useState<boolean>()
   const [preferUnstaked, setPreferUnstaked] = useState<boolean>(false)
@@ -96,7 +98,11 @@ export default function V1ConfirmPayOwnerModal({
       title={t`Pay ${metadata.name}`}
       visible={visible}
       onOk={pay}
-      okText={t`Pay`}
+      okText={
+        userAddress
+          ? payButtonText
+          : t`Connect wallet to ${payButtonText?.toLowerCase()}`
+      }
       onCancel={onCancel}
       confirmLoading={loading}
       width={640}

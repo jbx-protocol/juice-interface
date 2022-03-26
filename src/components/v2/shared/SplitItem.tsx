@@ -26,11 +26,8 @@ export default function SplitItem({ split }: { split: Split }) {
 
   const isProjectOwner = projectOwnerAddress === split.beneficiary
 
-  const LockedText = ({ lockedUntil }: { lockedUntil: BigNumber }) => {
-    const lockedUntilFormatted = formatDate(
-      lockedUntil.mul(1000).toNumber(),
-      'yyyy-MM-DD',
-    )
+  const LockedText = ({ lockedUntil }: { lockedUntil: number }) => {
+    const lockedUntilFormatted = formatDate(lockedUntil * 1000, 'yyyy-MM-DD')
 
     return (
       <div style={{ fontSize: '.8rem', color: colors.text.secondary }}>
@@ -43,7 +40,7 @@ export default function SplitItem({ split }: { split: Split }) {
     return (
       <div>
         <div style={{ fontWeight: 500 }}>
-          {split.projectId?.gt(0) ? (
+          {split.projectId ? (
             <ProjectHandle link projectId={split.projectId} />
           ) : (
             '--'
@@ -121,7 +118,7 @@ export default function SplitItem({ split }: { split: Split }) {
     )
   }
 
-  const isJuiceboxProject = Boolean(split.projectId?.gt(0))
+  const isJuiceboxProject = Boolean(split.projectId)
 
   return (
     <div
@@ -141,12 +138,12 @@ export default function SplitItem({ split }: { split: Split }) {
           )}
         </div>
 
-        {split.lockedUntil?.gt(0) ? (
+        {split.lockedUntil ? (
           <LockedText lockedUntil={split.lockedUntil} />
         ) : null}
       </div>
       <div>
-        <span>{formatSplitPercent(split.percent)}%</span>
+        <span>{formatSplitPercent(BigNumber.from(split.percent))}%</span>
         {distributionLimit?.gt(0) ? (
           <span style={{ marginLeft: '0.2rem' }}>
             <SplitValue />

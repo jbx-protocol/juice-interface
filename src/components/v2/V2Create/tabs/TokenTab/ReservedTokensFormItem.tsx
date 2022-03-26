@@ -1,4 +1,4 @@
-import { t } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import { CSSProperties, useState } from 'react'
 
 import { FormItemExt } from 'components/shared/formItems/formItemExt'
@@ -51,8 +51,13 @@ export default function ReservedTokensFormItem({
             onReserveTokenSplitsChange(splits)
           }}
           formItemProps={{
-            label: t`Reserved token allocation (optional)`,
-            extra: t`Allocate a portion of your project's reserved tokens to other Ethereum wallets or Juicebox projects.`,
+            label: <Trans>Reserved token allocation (optional)</Trans>,
+            extra: (
+              <Trans>
+                Allocate a portion of your project's reserved tokens to other
+                Ethereum wallets or Juicebox projects.
+              </Trans>
+            ),
           }}
           reservedRate={reservedRate ?? 0}
         />

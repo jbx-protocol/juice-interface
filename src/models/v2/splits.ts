@@ -1,11 +1,9 @@
-import { BigNumber } from '@ethersproject/bignumber'
-
 export type Split = {
   beneficiary: string | undefined // address
-  percent: BigNumber
+  percent: number
   preferClaimed: boolean | undefined
-  lockedUntil: BigNumber | undefined
-  projectId: BigNumber | undefined
+  lockedUntil: number | undefined
+  projectId: string | undefined
   allocator: string | undefined // address, If an allocator is specified, funds will be sent to the allocator contract along with the projectId, beneficiary, preferClaimed properties.
 }
 

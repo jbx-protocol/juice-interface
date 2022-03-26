@@ -2,7 +2,6 @@ import { t, Trans } from '@lingui/macro'
 import { Col, Modal, Row, Space, Statistic } from 'antd'
 import { Gutter } from 'antd/lib/grid/row'
 import ProjectLogo from 'components/shared/ProjectLogo'
-import TicketModsList from 'components/shared/TicketModsList'
 import { useAppSelector } from 'hooks/AppSelector'
 import useMobile from 'hooks/Mobile'
 import { useETHPaymentTerminalFee } from 'hooks/v2/contractReader/ETHPaymentTerminalFee'
@@ -22,8 +21,6 @@ import { amountSubFee } from 'utils/math'
 
 import { V2CurrencyName } from 'utils/v2/currency'
 
-import PayoutSplitsList from './PayoutSplitsList'
-
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 
 export default function ConfirmDeployV2ProjectModal({
@@ -42,9 +39,7 @@ export default function ConfirmDeployV2ProjectModal({
     fundAccessConstraints,
     fundingCycleData,
     fundingCycleMetadata,
-    payoutGroupedSplits,
     projectMetadata,
-    reserveTokenGroupedSplits,
   } = useAppSelector(state => state.editingV2Project)
 
   const fundAccessConstraint =
@@ -289,31 +284,6 @@ export default function ConfirmDeployV2ProjectModal({
                 }}
               />
             )}
-            {payoutGroupedSplits.splits.length ? (
-              <Statistic
-                title={t`Spending`}
-                valueRender={() => (
-                  <PayoutSplitsList
-                    splits={payoutGroupedSplits.splits}
-                    fundAccessConstraint={fundAccessConstraint}
-                  />
-                )}
-              />
-            ) : null}
-            {fundingCycleMetadata.reservedRate &&
-            fundingCycleMetadata.reservedRate !== '0' ? (
-              <Statistic
-                title={t`Reserved token allocations`}
-                valueRender={() => (
-                  <TicketModsList
-                    mods={reserveTokenGroupedSplits.splits}
-                    reservedRate={parseFloat(fundingCycleMetadata.reservedRate)}
-                    projectId={undefined}
-                    fundingCycle={undefined}
-                  />
-                )}
-              />
-            ) : null}
           </Space>
         </div>
       </Space>

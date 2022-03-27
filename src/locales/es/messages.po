@@ -1117,6 +1117,7 @@ msgstr "Nuevo"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "No"
 msgstr "No"
 
@@ -1194,6 +1195,10 @@ msgstr "Otros activos en la billetera del dueño de este proyecto."
 #: src/components/v2/V2Create/tabs/FundingTab/FundingTabContent.tsx
 msgid "Overflow is created if your project's balance exceeds your funding cycle target. Overflow can be redeemed by your project's token holders."
 msgstr "El excedente es creado si el saldo de tu proyecto excede el objetivo de financiamiento. El exceso puede ser canjeado por los poseedores de tokens de tu proyecto."
+
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+msgid "Owner can mint tokens"
+msgstr ""
 
 #: src/components/v1/V1Project/V1PayButton.tsx
 #: src/components/v2/V2Project/V2PayButton.tsx
@@ -1474,10 +1479,12 @@ msgid "Reconfigure token"
 msgstr ""
 
 #: src/components/v1/V1Project/FundingCycles/ReconfigureFundingModalTrigger.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/index.tsx
 msgid "Reconfigure upcoming"
 msgstr "Reconfigurar próximos"
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure upcoming funding"
 msgstr "Reconfigurar financiamientos próximos"
 
@@ -2196,6 +2203,7 @@ msgstr "Espacio de trabajo"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Yes"
 msgstr "Sí"
 

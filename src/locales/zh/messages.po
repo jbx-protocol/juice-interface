@@ -1117,6 +1117,7 @@ msgstr "新"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "No"
 msgstr "取消"
 
@@ -1194,6 +1195,10 @@ msgstr "项目拥有者钱包内的其他资产"
 #: src/components/v2/V2Create/tabs/FundingTab/FundingTabContent.tsx
 msgid "Overflow is created if your project's balance exceeds your funding cycle target. Overflow can be redeemed by your project's token holders."
 msgstr "如果您项目的资金余额超出您的筹款周期目标，就会产生溢出。项目代币持有人可以赎回溢出部分资金。"
+
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+msgid "Owner can mint tokens"
+msgstr ""
 
 #: src/components/v1/V1Project/V1PayButton.tsx
 #: src/components/v2/V2Project/V2PayButton.tsx
@@ -1474,10 +1479,12 @@ msgid "Reconfigure token"
 msgstr ""
 
 #: src/components/v1/V1Project/FundingCycles/ReconfigureFundingModalTrigger.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/index.tsx
 msgid "Reconfigure upcoming"
 msgstr "重新配置之后的筹款"
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure upcoming funding"
 msgstr "重新配置之后的筹款"
 
@@ -2196,6 +2203,7 @@ msgstr "工作空间"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Yes"
 msgstr "确定"
 

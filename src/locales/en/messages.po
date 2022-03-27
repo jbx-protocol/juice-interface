@@ -1115,6 +1115,7 @@ msgstr "New"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "No"
 msgstr "No"
 
@@ -1192,6 +1193,10 @@ msgstr "Other assets in this project's owner's wallet."
 #: src/components/v2/V2Create/tabs/FundingTab/FundingTabContent.tsx
 msgid "Overflow is created if your project's balance exceeds your funding cycle target. Overflow can be redeemed by your project's token holders."
 msgstr ""
+
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+msgid "Owner can mint tokens"
+msgstr "Owner can mint tokens"
 
 #: src/components/v1/V1Project/V1PayButton.tsx
 #: src/components/v2/V2Project/V2PayButton.tsx
@@ -1456,24 +1461,31 @@ msgstr "Reconfigure funding"
 msgid "Reconfigure funding details"
 msgstr "Reconfigure funding details"
 
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureFundingDrawer.tsx
-msgid "Reconfigure funding target/duration"
-msgstr "Reconfigure funding target/duration"
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Reconfigure funding target/duration/payouts"
+msgstr "Reconfigure funding target/duration/payouts"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectDetailsDrawer.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure project details"
 msgstr "Reconfigure project details"
 
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Reconfigure rules"
+msgstr "Reconfigure rules"
+
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureTokenDrawer.tsx
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure token"
 msgstr "Reconfigure token"
 
 #: src/components/v1/V1Project/FundingCycles/ReconfigureFundingModalTrigger.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/index.tsx
 msgid "Reconfigure upcoming"
 msgstr "Reconfigure upcoming"
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure upcoming funding"
 msgstr "Reconfigure upcoming funding"
 
@@ -1585,6 +1597,7 @@ msgid "Reward specific community members with tokens."
 msgstr ""
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Rules"
 msgstr ""
 
@@ -2196,6 +2209,7 @@ msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Yes"
 msgstr "Yes"
 

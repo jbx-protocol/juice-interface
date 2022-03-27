@@ -498,7 +498,7 @@ msgstr "Financiamiento comunitario para personas y proyectos"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Confirm funding changes"
-msgstr "Confirmar los cambios de financiamiento"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/FeedbackPromptModal.tsx
 msgid "Congrats on creating your project!"
@@ -844,7 +844,7 @@ msgstr "Objetivo de financiamiento"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Funding target, duration and payouts"
-msgstr "Objetivo de financiamiento, duración y pagos"
+msgstr ""
 
 #: src/components/v1/FundingCycle/modals/DistributeTokensModal.tsx
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
@@ -1120,6 +1120,7 @@ msgstr "Nuevo"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "No"
 msgstr "No"
 
@@ -1197,6 +1198,10 @@ msgstr "Otros activos en la billetera del dueño de este proyecto."
 #: src/components/v2/V2Create/tabs/FundingTab/FundingTabContent.tsx
 msgid "Overflow is created if your project's balance exceeds your funding cycle target. Overflow can be redeemed by your project's token holders."
 msgstr "El excedente es creado si el saldo de tu proyecto excede el objetivo de financiamiento. El exceso puede ser canjeado por los poseedores de tokens de tu proyecto."
+
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+msgid "Owner can mint tokens"
+msgstr ""
 
 #: src/components/v1/V1Project/V1PayButton.tsx
 #: src/components/v2/V2Project/V2PayButton.tsx
@@ -1459,26 +1464,33 @@ msgstr "Reconfigurar financiamiento"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure funding details"
-msgstr "Reconfigurar detalles de financiamiento"
+msgstr ""
 
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureFundingDrawer.tsx
-msgid "Reconfigure funding target/duration"
-msgstr "Reconfigurar objetivo/duración de financiamiento"
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Reconfigure funding target/duration/payouts"
+msgstr ""
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectDetailsDrawer.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure project details"
 msgstr "Reconfigura los detalles del proyecto"
 
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Reconfigure rules"
+msgstr ""
+
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureTokenDrawer.tsx
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure token"
 msgstr "Reconfigurar token"
 
 #: src/components/v1/V1Project/FundingCycles/ReconfigureFundingModalTrigger.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/index.tsx
 msgid "Reconfigure upcoming"
 msgstr "Reconfigurar próximos"
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure upcoming funding"
 msgstr "Reconfigurar financiamientos próximos"
 
@@ -1590,6 +1602,7 @@ msgid "Reward specific community members with tokens."
 msgstr "Recompensar a miembros específicos de la comunidad con tokens."
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Rules"
 msgstr "Reglas"
 
@@ -2062,7 +2075,7 @@ msgstr "Próximos"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Updates you make to this section will only be applied to <0>upcoming</0> funding cycles."
-msgstr "Las actualizaciones que hagas en esta sección solo serán aplicadas a los <0>próximos</0> ciclos de financiamiento."
+msgstr ""
 
 #: src/components/shared/formItems/ProjectLogoUri.tsx
 msgid "Upload"
@@ -2201,6 +2214,7 @@ msgstr "Espacio de trabajo"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Yes"
 msgstr "Sí"
 

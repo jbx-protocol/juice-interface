@@ -14,14 +14,20 @@ import FormActionbar from '../../FormActionBar'
 import { formBottomMargin } from '../../constants'
 import ProjectReconfigurationFormItem from './ProjectReconfigurationFormItem'
 import FormItemLabel from '../../FormItemLabel'
+import { TabContentProps } from '../../models'
+import ProjectConfigurationFieldsContainer from '../ProjectConfigurationFieldsContainer'
 
 type RulesFormFields = {
   pausePay: boolean
-  pauseMint: boolean
+  allowMint: boolean
   ballot: string
 }
 
-export default function RulesTabContent() {
+export default function RulesTabContent({
+  onFinish,
+  hidePreview,
+  saveButton,
+}: TabContentProps) {
   const { theme } = useContext(ThemeContext)
 
   const [form] = useForm<RulesFormFields>()
@@ -35,24 +41,23 @@ export default function RulesTabContent() {
   const onFormSaved = useCallback(
     (fields: RulesFormFields) => {
       dispatch(editingV2ProjectActions.setPausePay(fields.pausePay))
-      dispatch(editingV2ProjectActions.setPauseMint(fields.pauseMint))
+      dispatch(editingV2ProjectActions.setPauseMint(!fields.allowMint))
       dispatch(editingV2ProjectActions.setBallot(fields.ballot))
+      onFinish?.()
     },
-    [dispatch],
+    [dispatch, onFinish],
   )
 
   const resetForm = useCallback(() => {
     form.setFieldsValue({
-      pausePay: fundingCycleMetadata?.pausePay ?? false,
-      pauseMint: fundingCycleMetadata?.pauseMint ?? false,
+      pausePay: fundingCycleMetadata?.pausePay,
+      allowMint: !fundingCycleMetadata?.pauseMint,
       ballot: fundingCycleData?.ballot ?? DEFAULT_BALLOT_STRATEGY.address,
     })
-  }, [
-    fundingCycleMetadata?.pausePay,
-    fundingCycleMetadata?.pauseMint,
-    fundingCycleData?.ballot,
-    form,
-  ])
+    if (fundingCycleMetadata?.pauseMint) {
+      setShowMintingWarning(true)
+    }
+  }, [fundingCycleData, fundingCycleMetadata, form])
 
   // initially fill form with any existing redux state
   useEffect(() => {
@@ -75,10 +80,9 @@ export default function RulesTabContent() {
       )}
     </React.Fragment>
   )
-
   return (
     <Row gutter={32}>
-      <Col md={12} xs={24}>
+      <ProjectConfigurationFieldsContainer hidePreview={hidePreview}>
         <Form
           form={form}
           layout="vertical"
@@ -87,36 +91,29 @@ export default function RulesTabContent() {
         >
           <Form.Item
             name="pausePay"
+            label={
+              <FormItemLabel style={{ marginBottom: 0 }}>
+                <Trans>Pause payments</Trans>
+              </FormItemLabel>
+            }
             extra={t`When Pause Payments is enabled, your project cannot receive direct payments.`}
             valuePropName="checked"
             style={{ ...shadowCard(theme), padding: '2rem' }}
           >
-            <div style={{ display: 'flex' }}>
-              <FormItemLabel>
-                <Trans>Pause payments</Trans>
-              </FormItemLabel>
-              <Switch
-                onChange={val => form.setFieldsValue({ pausePay: val })}
-              />
-            </div>
+            <Switch />
           </Form.Item>
           <Form.Item
-            name="pauseMint"
+            name="allowMint"
+            label={
+              <FormItemLabel style={{ marginBottom: 0 }}>
+                <Trans>Allow token minting</Trans>
+              </FormItemLabel>
+            }
             extra={tokenMintingExtra}
             valuePropName="checked"
             style={{ ...shadowCard(theme), padding: '2rem' }}
           >
-            <div style={{ display: 'flex' }}>
-              <FormItemLabel>
-                <Trans>Allow token minting</Trans>
-              </FormItemLabel>
-              <Switch
-                onChange={val => {
-                  form.setFieldsValue({ pauseMint: val })
-                  setShowMintingWarning(val)
-                }}
-              />
-            </div>
+            <Switch onChange={val => setShowMintingWarning(val)} />
           </Form.Item>
           <ProjectReconfigurationFormItem
             value={form.getFieldValue('ballot') ?? fundingCycleData?.ballot}
@@ -126,10 +123,11 @@ export default function RulesTabContent() {
             style={{ ...shadowCard(theme), padding: '2rem' }}
           />
 
-          <FormActionbar isLastTab />
+          {/* Default to floating save button if custom one not given */}
+          {saveButton ?? <FormActionbar isLastTab />}
         </Form>
-      </Col>
-      <Col md={12} xs={0}></Col>
+      </ProjectConfigurationFieldsContainer>
+      {!hidePreview && <Col md={12} xs={0}></Col>}
     </Row>
   )
 }

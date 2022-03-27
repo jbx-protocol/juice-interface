@@ -23,6 +23,8 @@ import { decodeV2FundingCycleMetadata } from 'utils/v2/fundingCycle'
 
 import useSymbolOfERC20 from 'hooks/v1/contractReader/SymbolOfERC20' // this is version-agnostic, we chillin
 
+import useProjectOwner from 'hooks/v2/contractReader/ProjectOwner'
+
 import { layouts } from 'constants/styles/layouts'
 
 import V2Project from '../V2Project'
@@ -136,6 +138,8 @@ export default function V2Dashboard() {
     [ETHBalance, converter, distributionLimitCurrency],
   )
 
+  const { data: projectOwnerAddress } = useProjectOwner(projectId)
+
   if (metadataLoading || metadataURILoading) return <Loading />
 
   if (projectId?.eq(0) || metadataError || !metadataCID) {
@@ -161,6 +165,7 @@ export default function V2Dashboard() {
     queuedDistributionLimitCurrency,
     balanceInDistributionLimitCurrency,
     tokenSymbol,
+    projectOwnerAddress,
   }
 
   return (

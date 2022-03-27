@@ -1,6 +1,6 @@
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import FormattedAddress from 'components/shared/FormattedAddress'
-import ProjectHandle from 'components/shared/ProjectHandle'
+import V1ProjectHandle from 'components/v1/shared/V1ProjectHandle'
 import EtherscanLink from 'components/shared/EtherscanLink'
 
 import { ThemeContext } from 'contexts/themeContext'
@@ -101,7 +101,7 @@ export default function TapEventElem({
             <div style={{ fontWeight: 500 }}>
               {e.modProjectId?.gt(0) ? (
                 <span>
-                  <ProjectHandle link projectId={e.modProjectId} />
+                  <V1ProjectHandle link projectId={e.modProjectId} />
                 </span>
               ) : (
                 <FormattedAddress address={e.modBeneficiary} />

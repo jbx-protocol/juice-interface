@@ -117,7 +117,7 @@ export default function V2ProjectReconfigureModal({
     ? queuedReserveTokenSplits
     : reserveTokenSplits
 
-  const effectiveDistributionLimit = queuedDistributionLimit?.length
+  const effectiveDistributionLimit = queuedDistributionLimit
     ? queuedDistributionLimit
     : distributionLimit
 

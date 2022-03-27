@@ -11,7 +11,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import {
   FundingCycleRiskFlags,
   FUNDING_CYCLE_WARNING_TEXT,
-} from 'constants/fundingWarningText'
+} from 'constants/v1/fundingWarningText'
 
 export default function V1ProjectRiskNotice() {
   const {

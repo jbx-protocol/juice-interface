@@ -5,8 +5,10 @@ import { Tooltip } from 'antd'
 
 import moment from 'moment'
 
-export const formatDate = (dateMillis: BigNumberish, format = 'M-D-YY h:mma') =>
-  moment(BigNumber.from(dateMillis).toNumber()).format(format)
+export const formatDate = (
+  dateMillis: BigNumberish,
+  format = 'YYYY-MM-DD h:mma',
+) => moment(BigNumber.from(dateMillis).toNumber()).format(format)
 
 export function formatHistoricalDate(dateMillis: BigNumberish) {
   return (

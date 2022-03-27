@@ -140,7 +140,7 @@ export default function FundingTabContent({
 
   return (
     <Row gutter={32} style={{ marginBottom: formBottomMargin }}>
-      <ProjectConfigurationFieldsContainer hidePreview>
+      <ProjectConfigurationFieldsContainer hidePreview={hidePreview}>
         <Form form={fundingForm} layout="vertical" onFinish={onFundingFormSave}>
           <Form.Item label={t`How much do you want to raise?`}>
             <FundingTypeSelect

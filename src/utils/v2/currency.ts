@@ -30,15 +30,15 @@ const CURRENCY_MAP: { [key in V1CurrencyOption]: V2CurrencyOption } = {
 export const V2CurrencyName = (
   currency?: V2CurrencyOption,
 ): CurrencyName | undefined =>
-  currency !== undefined ? V2_CURRENCY_METADATA[currency].name : undefined
+  currency !== undefined ? V2_CURRENCY_METADATA[currency]?.name : undefined
 
 export const V2CurrencySymbol = (
   currency?: V2CurrencyOption,
 ): CurrencySymbol | undefined =>
-  currency !== undefined ? V2_CURRENCY_METADATA[currency].symbol : undefined
+  currency !== undefined ? V2_CURRENCY_METADATA[currency]?.symbol : undefined
 
 export const V2CurrencyStyle = (currency?: V2CurrencyOption) =>
-  currency !== undefined ? V2_CURRENCY_METADATA[currency].style : undefined
+  currency !== undefined ? V2_CURRENCY_METADATA[currency]?.style : undefined
 
 export const toV2Currency = (
   v1Currency: V1CurrencyOption,

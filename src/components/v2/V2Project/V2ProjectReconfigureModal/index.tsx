@@ -75,9 +75,11 @@ export const FundingDrawersSubtitles = (
 export default function V2ProjectReconfigureModal({
   visible,
   onOk,
+  hideProjectDetails,
 }: {
   visible: boolean
   onOk: () => void
+  hideProjectDetails?: boolean
 }) {
   const {
     queuedFundingCycle,
@@ -265,7 +267,11 @@ export default function V2ProjectReconfigureModal({
 
   return (
     <Modal
-      title={t`Reconfiguration`}
+      title={
+        hideProjectDetails
+          ? t`Reconfigure upcoming funding`
+          : t`Reconfiguration`
+      }
       visible={visible}
       onOk={reconfigureFundingCycle}
       onCancel={onOk}
@@ -276,16 +282,20 @@ export default function V2ProjectReconfigureModal({
       centered
     >
       <Space direction="vertical" size="middle" style={{ width: '100%' }}>
-        <h4 style={{ marginBottom: 0 }}>
-          <Trans>Reconfigure project details</Trans>
-        </h4>
-        <ReconfigureButton
-          title={t`Project details`}
-          onClick={() => setProjectDetailsDrawerVisible(true)}
-        />
-        <h4 style={{ marginBottom: 0, marginTop: 20 }}>
-          <Trans>Reconfigure funding details</Trans>
-        </h4>
+        {hideProjectDetails ? null : (
+          <>
+            <h4 style={{ marginBottom: 0 }}>
+              <Trans>Reconfigure project details</Trans>
+            </h4>
+            <ReconfigureButton
+              title={t`Project details`}
+              onClick={() => setProjectDetailsDrawerVisible(true)}
+            />
+            <h4 style={{ marginBottom: 0, marginTop: 20 }}>
+              <Trans>Reconfigure funding details</Trans>
+            </h4>
+          </>
+        )}
         <ReconfigureButton
           title={t`Funding target, duration and payouts`}
           onClick={() => setFundingDrawerVisible(true)}
@@ -299,10 +309,12 @@ export default function V2ProjectReconfigureModal({
           onClick={() => setRulesDrawerVisible(true)}
         />
       </Space>
-      <V2ReconfigureProjectDetailsDrawer
-        visible={projectDetailsDrawerVisible}
-        onFinish={() => setProjectDetailsDrawerVisible(false)}
-      />
+      {hideProjectDetails ? null : (
+        <V2ReconfigureProjectDetailsDrawer
+          visible={projectDetailsDrawerVisible}
+          onFinish={() => setProjectDetailsDrawerVisible(false)}
+        />
+      )}
       <V2ReconfigureFundingDrawer
         visible={fundingDrawerVisible}
         onClose={() => {

@@ -262,7 +262,7 @@ export default function ProjectPayoutMods({
                   <label>Locked</label>
                 </Col>
                 <Col span={17}>
-                  until {formatDate(mod.lockedUntil * 1000, 'MM-DD-yyyy')}
+                  until {formatDate(mod.lockedUntil * 1000, 'yyyy-MM-DD')}
                 </Col>
               </Row>
             ) : null}

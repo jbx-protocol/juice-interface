@@ -127,7 +127,7 @@ export default function TokenTabContent({
 
   return (
     <Row gutter={32}>
-      <ProjectConfigurationFieldsContainer hidePreview>
+      <ProjectConfigurationFieldsContainer hidePreview={hidePreview}>
         <Form
           form={tokenForm}
           layout="vertical"

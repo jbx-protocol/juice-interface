@@ -19,7 +19,7 @@ import ProjectConfigurationFieldsContainer from '../ProjectConfigurationFieldsCo
 
 type RulesFormFields = {
   pausePay: boolean
-  pauseMint: boolean
+  allowMint: boolean
   ballot: string
 }
 
@@ -41,7 +41,7 @@ export default function RulesTabContent({
   const onFormSaved = useCallback(
     (fields: RulesFormFields) => {
       dispatch(editingV2ProjectActions.setPausePay(fields.pausePay))
-      dispatch(editingV2ProjectActions.setPauseMint(fields.pauseMint))
+      dispatch(editingV2ProjectActions.setPauseMint(!fields.allowMint))
       dispatch(editingV2ProjectActions.setBallot(fields.ballot))
       onFinish?.()
     },
@@ -51,7 +51,7 @@ export default function RulesTabContent({
   const resetForm = useCallback(() => {
     form.setFieldsValue({
       pausePay: fundingCycleMetadata?.pausePay,
-      pauseMint: fundingCycleMetadata?.pauseMint,
+      allowMint: !fundingCycleMetadata?.pauseMint,
       ballot: fundingCycleData?.ballot ?? DEFAULT_BALLOT_STRATEGY.address,
     })
     if (fundingCycleMetadata?.pauseMint) {
@@ -82,7 +82,7 @@ export default function RulesTabContent({
   )
   return (
     <Row gutter={32}>
-      <ProjectConfigurationFieldsContainer hidePreview>
+      <ProjectConfigurationFieldsContainer hidePreview={hidePreview}>
         <Form
           form={form}
           layout="vertical"
@@ -103,7 +103,7 @@ export default function RulesTabContent({
             <Switch />
           </Form.Item>
           <Form.Item
-            name="pauseMint"
+            name="allowMint"
             label={
               <FormItemLabel style={{ marginBottom: 0 }}>
                 <Trans>Allow token minting</Trans>

@@ -16,8 +16,12 @@ import V2ProjectReconfigureModal from './index'
 // are independent.
 export default function V2ReconfigureFundingModalTrigger({
   fundingDuration,
+  hideProjectDetails,
+  triggerButton,
 }: {
   fundingDuration?: BigNumber
+  hideProjectDetails?: boolean
+  triggerButton?: (onClick: VoidFunction) => JSX.Element
 }) {
   const localStoreRef = useRef<typeof store>()
 
@@ -31,17 +35,22 @@ export default function V2ReconfigureFundingModalTrigger({
 
   return (
     <div style={{ textAlign: 'right' }}>
-      <Button
-        onClick={handleModalOpen}
-        icon={<SettingOutlined />}
-        type="text"
-      />
+      {triggerButton ? (
+        triggerButton(handleModalOpen)
+      ) : (
+        <Button
+          onClick={handleModalOpen}
+          icon={<SettingOutlined />}
+          type="text"
+        />
+      )}
       {/* Make button and drawer instance for funding drawer */}
       {localStoreRef.current && (
         <Provider store={localStoreRef.current}>
           <V2ProjectReconfigureModal
             visible={reconfigureModalVisible}
             onOk={() => setReconfigureModalVisible(false)}
+            hideProjectDetails={hideProjectDetails}
           />
         </Provider>
       )}

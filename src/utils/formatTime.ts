@@ -1,20 +1,31 @@
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 
-export function detailedTimeString(endTime?: BigNumberish) {
-  const secondsLeft =
-    BigNumber.from(endTime).sub(Math.floor(Date.now().valueOf())).toNumber() /
-    1000
+import { SECONDS_IN_DAY } from 'constants/numbers'
 
-  const days = secondsLeft / 60 / 60 / 24
-  const hours = (secondsLeft / 60 / 60) % 24
-  const minutes = (secondsLeft / 60) % 60
-  const seconds = secondsLeft % 60
+export function detailedTimeString(timeSeconds?: BigNumberish) {
+  const timeSecondsNumber = BigNumber.from(timeSeconds).toNumber()
 
-  return (
-    `${days && days > 1 ? Math.floor(days).toString() + 'd ' : ''}${
-      hours && hours >= 1 ? Math.floor(hours) + 'h ' : ''
-    }
-      ${days < 1 && minutes >= 1 ? Math.floor(minutes) + 'm ' : ''}
-      ${minutes < 1 ? Math.floor(seconds) + 's' : ''}` || '--'
-  )
+  const days = Math.floor(timeSecondsNumber / 60 / 60 / 24)
+  const hours = (timeSecondsNumber / 60 / 60) % 24
+  const minutes = (timeSecondsNumber / 60) % 60
+  const seconds = timeSecondsNumber % 60
+
+  const daysText = `${days && days > 0 ? days.toString() + 'd ' : ''}`
+  const hoursText = `${hours && hours >= 1 ? Math.floor(hours) + 'h ' : ''}`
+  const minutesText = `${
+    minutes < 1 && seconds > 0 ? Math.floor(seconds) + 's' : ''
+  }`
+
+  return `${daysText}${hoursText}${minutesText}` || '--'
 }
+
+export function detailedTimeUntil(endTimeSeconds?: BigNumberish) {
+  const nowSeconds = Math.floor(Date.now().valueOf() / 1000)
+  const secondsLeft = Math.floor(
+    BigNumber.from(endTimeSeconds).sub(Math.floor(nowSeconds)).toNumber(),
+  )
+
+  return detailedTimeString(secondsLeft)
+}
+
+export const secondsToDays = (seconds: number) => seconds / SECONDS_IN_DAY

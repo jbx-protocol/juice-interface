@@ -2433,10 +2433,6 @@ msgstr "{label}"
 msgid "{paymentCount, plural, one {# payment} other {# payments}}"
 msgstr "{paymentCount, plural, one {# pago} other {# pagos}}"
 
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureFundingDrawer.tsx
-msgid "{title}"
-msgstr ""
-
 #: src/components/shared/AMMPrices/TokenAMMPriceRow.tsx
 msgid "{tokenSymbol}/ETH exchange rate on {exchangeName}."
 msgstr "Tipo de cambio de {tokenSymbol}/ETH en {exchangeName}."

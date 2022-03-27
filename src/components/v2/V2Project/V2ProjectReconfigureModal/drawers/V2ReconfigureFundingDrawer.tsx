@@ -1,4 +1,3 @@
-import { Trans } from '@lingui/macro'
 import { Drawer } from 'antd'
 
 import { drawerStyle } from 'constants/styles/drawerStyle'
@@ -17,9 +16,7 @@ export function V2ReconfigureFundingDrawer({
 }) {
   return (
     <Drawer visible={visible} {...drawerStyle} onClose={onClose}>
-      <h3>
-        <Trans>{title}</Trans>
-      </h3>
+      <h3>{title}</h3>
       {FundingDrawersSubtitles}
       <br />
       {content}

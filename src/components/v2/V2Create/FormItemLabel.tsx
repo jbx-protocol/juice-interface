@@ -1,14 +1,10 @@
 import { ThemeContext } from 'contexts/themeContext'
-import { ChildElems } from 'models/child-elems'
-import { CSSProperties, useContext } from 'react'
+import { CSSProperties, PropsWithChildren, useContext } from 'react'
 
 export default function FormItemLabel({
   children,
   style,
-}: {
-  children: ChildElems | string
-  style?: CSSProperties
-}) {
+}: PropsWithChildren<{ style?: CSSProperties }>) {
   const { colors } = useContext(ThemeContext).theme
 
   return (

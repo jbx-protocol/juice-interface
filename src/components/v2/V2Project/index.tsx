@@ -2,7 +2,6 @@ import { Col, Row } from 'antd'
 import PayInputGroup from 'components/shared/inputs/Pay/PayInputGroup'
 import ProjectHeader from 'components/shared/ProjectHeader'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { CurrencyContext } from 'contexts/currencyContext'
 
 import { useContext } from 'react'
 
@@ -11,6 +10,8 @@ import { fromWad } from 'utils/formatNumber'
 
 import { decodeV2FundingCycleMetadata } from 'utils/v2/fundingCycle'
 import { weightedAmount } from 'utils/math'
+import { V2CurrencySymbol } from 'utils/v2/currency'
+import { V2CurrencyOption } from 'models/v2/currencyOption'
 
 import V2PayButton from './V2PayButton'
 import V2ProjectHeaderActions from '../V2ProjectHeaderActions'
@@ -26,8 +27,6 @@ export default function V2Project() {
     distributionLimit,
     distributionLimitCurrency,
   } = useContext(V2ProjectContext)
-
-  const { currencyMetadata } = useContext(CurrencyContext)
 
   if (!projectId) return null
 
@@ -53,8 +52,9 @@ export default function V2Project() {
     permyriadToPercent(fundingCycleMetadata?.redemptionRate),
   )
 
-  const distributionLimitCurrencySymbol =
-    currencyMetadata[distributionLimitCurrency?.toNumber() ?? 1]?.symbol
+  const distributionLimitCurrencySymbol = V2CurrencySymbol(
+    distributionLimitCurrency?.toNumber() as V2CurrencyOption,
+  )
 
   const weight = fundingCycle?.weight
 

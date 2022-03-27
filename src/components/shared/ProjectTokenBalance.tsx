@@ -8,7 +8,7 @@ import { CSSProperties, useContext } from 'react'
 import { formatWad } from 'utils/formatNumber'
 import { getTerminalName } from 'utils/v1/terminals'
 
-import ProjectHandle from './ProjectHandle'
+import V1ProjectHandle from '../v1/shared/V1ProjectHandle'
 
 export default function ProjectTokenBalance({
   projectId,
@@ -48,7 +48,7 @@ export default function ProjectTokenBalance({
       </span>
 
       {!hideHandle && (
-        <ProjectHandle
+        <V1ProjectHandle
           style={{ color: colors.text.tertiary }}
           link={true}
           projectId={projectId}

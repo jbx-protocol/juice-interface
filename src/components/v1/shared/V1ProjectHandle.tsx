@@ -5,7 +5,7 @@ import useHandleForProjectId from 'hooks/v1/contractReader/HandleForProjectId'
 import { CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
 
-export default function ProjectHandle({
+export default function V1ProjectHandle({
   projectId,
   style,
   link,

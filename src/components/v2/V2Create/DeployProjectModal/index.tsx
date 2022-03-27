@@ -2,7 +2,6 @@ import { t, Trans } from '@lingui/macro'
 import { Col, Modal, Row, Space, Statistic } from 'antd'
 import { Gutter } from 'antd/lib/grid/row'
 import ProjectLogo from 'components/shared/ProjectLogo'
-import TicketModsList from 'components/shared/TicketModsList'
 import { useAppSelector } from 'hooks/AppSelector'
 import useMobile from 'hooks/Mobile'
 import { useETHPaymentTerminalFee } from 'hooks/v2/contractReader/ETHPaymentTerminalFee'
@@ -22,7 +21,9 @@ import { amountSubFee } from 'utils/math'
 
 import { V2CurrencyName } from 'utils/v2/currency'
 
-import PayoutSplitsList from './PayoutSplitsList'
+import SplitList from 'components/v2/shared/SplitList'
+
+import { BigNumber } from '@ethersproject/bignumber'
 
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 
@@ -43,8 +44,8 @@ export default function ConfirmDeployV2ProjectModal({
     fundingCycleData,
     fundingCycleMetadata,
     payoutGroupedSplits,
-    projectMetadata,
     reserveTokenGroupedSplits,
+    projectMetadata,
   } = useAppSelector(state => state.editingV2Project)
 
   const fundAccessConstraint =
@@ -289,27 +290,43 @@ export default function ConfirmDeployV2ProjectModal({
                 }}
               />
             )}
+
             {payoutGroupedSplits.splits.length ? (
               <Statistic
-                title={t`Spending`}
+                title={t`Payouts`}
                 valueRender={() => (
-                  <PayoutSplitsList
+                  <SplitList
                     splits={payoutGroupedSplits.splits}
-                    fundAccessConstraint={fundAccessConstraint}
+                    distributionLimitCurrency={BigNumber.from(
+                      fundAccessConstraint?.distributionLimitCurrency,
+                    )}
+                    distributionLimit={amountSubFee(
+                      parseWad(fundAccessConstraint?.distributionLimit),
+                      ETHPaymentTerminalFee,
+                    )}
+                    projectOwnerAddress={userAddress}
+                    showSplitValues
                   />
                 )}
               />
             ) : null}
+
             {fundingCycleMetadata.reservedRate &&
-            fundingCycleMetadata.reservedRate !== '0' ? (
+            fundingCycleMetadata.reservedRate !== '0' &&
+            reserveTokenGroupedSplits.splits.length ? (
               <Statistic
                 title={t`Reserved token allocations`}
                 valueRender={() => (
-                  <TicketModsList
-                    mods={reserveTokenGroupedSplits.splits}
-                    reservedRate={parseFloat(fundingCycleMetadata.reservedRate)}
-                    projectId={undefined}
-                    fundingCycle={undefined}
+                  <SplitList
+                    splits={reserveTokenGroupedSplits.splits}
+                    distributionLimitCurrency={BigNumber.from(
+                      fundAccessConstraint?.distributionLimitCurrency,
+                    )}
+                    distributionLimit={amountSubFee(
+                      parseWad(fundAccessConstraint?.distributionLimit),
+                      ETHPaymentTerminalFee,
+                    )}
+                    projectOwnerAddress={userAddress}
                   />
                 )}
               />

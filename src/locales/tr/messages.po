@@ -203,6 +203,7 @@ msgid "A project can choose to reserve a percentage of tokens for itself. Instea
 msgstr "Bir proje, kendisi için tokenlerin bir yüzdesini ayırmayı seçebilir. Bu token yüzdesi, ödeme yapan kullanıcılara dağıtılmak yerine proje için kullanılabilir."
 
 #: src/components/v1/FundingCycle/ReservedTokens.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/CurrentFundingCycle.tsx
 msgid "A project can reserve a percentage of tokens minted from every payment it receives. Reserved tokens can be distributed according to the allocation below at any time."
 msgstr "Bir proje, aldığı her ödemeden basılan token'ların belirli bir yüzdesini ayırabilir. Ayrılan token'lar, herhangi bir zamanda aşağıdaki tahsise göre dağıtılabilir."
 
@@ -355,6 +356,7 @@ msgid "Available after fee:"
 msgstr "Ücretten sonra kullanılabilir:"
 
 #: src/components/v1/FundingCycle/Spending.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/CurrentFundingCycle.tsx
 msgid "Available funds are distributed according to the payouts below."
 msgstr "Mevcut fonlar aşağıdaki ödemelere göre dağıtılır."
 
@@ -794,6 +796,7 @@ msgid "For users paying through your app, you should route those funds through t
 msgstr ""
 
 #: src/components/v1/FundingCycle/Spending.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/CurrentFundingCycle.tsx
 msgid "Funding Distribution"
 msgstr "Finansman Dağılımı"
 
@@ -1282,6 +1285,7 @@ msgstr "Mevcut finansman döngüsü için ödemeler duraklatıldı."
 msgid "Payments paused"
 msgstr "Ödemeler duraklatıldı"
 
+#: src/components/v2/V2Create/DeployProjectModal/index.tsx
 #: src/components/v2/V2Create/tabs/FundingTab/FundingTabContent.tsx
 msgid "Payouts"
 msgstr ""
@@ -1369,6 +1373,8 @@ msgstr "Proje adı, tanıtıcı, bağlantılar ve diğer ayrıntılar."
 
 #: src/components/shared/Mod.tsx
 #: src/components/shared/Mod.tsx
+#: src/components/v2/shared/SplitItem.tsx
+#: src/components/v2/shared/SplitItem.tsx
 msgid "Project owner"
 msgstr "Proje sahibi"
 
@@ -1542,6 +1548,7 @@ msgid "Reserved tokens"
 msgstr "Ayrılmış token'lar"
 
 #: src/components/v1/FundingCycle/ReservedTokens.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/CurrentFundingCycle.tsx
 msgid "Reserved {0}"
 msgstr "Ayrılmış {0}"
 
@@ -1699,7 +1706,6 @@ msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
-#: src/components/v2/V2Create/DeployProjectModal/index.tsx
 msgid "Spending"
 msgstr "Harcama"
 
@@ -1869,6 +1875,7 @@ msgid "This address is an unrecognized strategy contract. Make sure it is correc
 msgstr ""
 
 #: src/components/shared/Mod.tsx
+#: src/components/v2/shared/SplitItem.tsx
 msgid "This address will receive any tokens minted when the recipient project gets paid."
 msgstr "Bu adres, alıcı projeye ödeme yapıldığında basılan tüm token'ları alacaktır."
 
@@ -1971,6 +1978,10 @@ msgstr ""
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Tokens can be redeemed for a portion of this project's ETH overflow, according to the bonding curve rate of the current funding cycle. <0>Tokens are burned when they are redeemed.</0>"
 msgstr "Token'lar, mevcut finansman döngüsünün bağlanma eğrisi oranına göre bu projenin ETH taşmasının bir kısmı için kullanılabilir. <0>Token'lar, kullanıldıklarında yakılır.</0>"
+
+#: src/components/v2/shared/SplitItem.tsx
+msgid "Tokens:"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
 msgid "Tools"
@@ -2292,6 +2303,10 @@ msgstr ""
 
 #: src/components/v1/V1Project/BalanceTimeline.tsx
 msgid "loading"
+msgstr ""
+
+#: src/components/v2/shared/SplitItem.tsx
+msgid "locked until {lockedUntilFormatted}"
 msgstr ""
 
 #: src/components/Projects/index.tsx

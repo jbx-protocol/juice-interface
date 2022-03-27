@@ -12,7 +12,7 @@ export default function useProjectDistributionLimit({
   domain: string | undefined
   terminal: string | undefined
 }) {
-  return useV2ContractReader<string>({
+  return useV2ContractReader<BigNumber>({
     contract: V2ContractName.JBController,
     functionName: 'distributionLimitOf',
     args:

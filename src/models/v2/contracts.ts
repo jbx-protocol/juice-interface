@@ -10,7 +10,6 @@ export enum V2ContractName {
   JBPrices = 'JBPrices',
   JBProjects = 'JBProjects',
   JBSplitsStore = 'JBSplitsStore',
-  // JBToken = 'JBToken', // not deployed on rinkeby yet
   JBTokenStore = 'JBTokenStore',
 }
 

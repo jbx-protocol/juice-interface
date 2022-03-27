@@ -21,6 +21,7 @@ export type TransactorOptions = {
   onDone?: VoidFunction
   onConfirmed?: TransactorCallback
   onCancelled?: TransactorCallback
+  onError?: TransactorCallback
 }
 
 export type Transactor = (
@@ -189,6 +190,7 @@ export function useTransactor({
           description = JSON.parse(json).message || message
         } catch (_) {
           description = message
+          options?.onError && options?.onError()
         }
 
         notification.error({

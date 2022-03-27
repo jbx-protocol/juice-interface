@@ -27,11 +27,13 @@ export default function V1ConfirmPayOwnerModal({
   weiAmount,
   onSuccess,
   onCancel,
+  onError,
 }: {
   visible?: boolean
   weiAmount: BigNumber | undefined
   onSuccess?: VoidFunction
   onCancel?: VoidFunction
+  onError?: VoidFunction
 }) {
   const [loading, setLoading] = useState<boolean>()
   const [preferUnstaked, setPreferUnstaked] = useState<boolean>(false)
@@ -66,6 +68,9 @@ export default function V1ConfirmPayOwnerModal({
           if (onSuccess) onSuccess()
         },
         onDone: () => setLoading(false),
+        onError: () => {
+          if (onError) onError()
+        },
       },
     )
   }

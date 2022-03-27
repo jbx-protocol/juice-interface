@@ -8,7 +8,6 @@ import { ThemeContext } from 'contexts/themeContext'
 import { helpPagePath } from 'utils/helpPageHelper'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import ProjectPayoutMods from 'components/shared/formItems/ProjectPayoutMods'
-import { PayoutMod } from 'models/mods'
 import { useETHPaymentTerminalFee } from 'hooks/v2/contractReader/ETHPaymentTerminalFee'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 
@@ -25,6 +24,8 @@ import { toV1Currency } from 'utils/v1/currency'
 import { V2_CURRENCY_ETH } from 'utils/v2/currency'
 
 import ExternalLink from 'components/shared/ExternalLink'
+
+import { Split } from 'models/v2/splits'
 
 import { shadowCard } from 'constants/styles/shadowCard'
 import FormActionbar from '../../FormActionBar'
@@ -50,7 +51,7 @@ export default function FundingTabContent({
 
   const [fundingForm] = Form.useForm<FundingFormFields>()
 
-  const [mods, setMods] = useState<PayoutMod[]>([])
+  const [splits, setSplits] = useState<Split[]>([])
   const [target, setTarget] = useState<string | undefined>()
   const [targetCurrency, setTargetCurrency] =
     useState<V2CurrencyOption>(V2_CURRENCY_ETH)
@@ -77,7 +78,7 @@ export default function FundingTabContent({
     })
     setTarget(_target)
     setTargetCurrency(_targetCurrency)
-    setMods(payoutGroupedSplits?.splits.map(split => toMod(split)) ?? [])
+    setSplits(payoutGroupedSplits?.splits || [])
 
     if (parseInt(fundingCycleData?.duration ?? 0) > 0) {
       setFundingType('recurring')
@@ -91,8 +92,6 @@ export default function FundingTabContent({
   const onFundingFormSave = useCallback(
     (fields: FundingFormFields) => {
       if (!contracts) throw new Error('Failed to save funding configuration.')
-
-      const newPayoutSplits = mods.map(mod => sanitizeSplit(toSplit(mod)))
 
       let fundAccessConstraint: SerializedV2FundAccessConstraint | undefined =
         undefined
@@ -111,12 +110,14 @@ export default function FundingTabContent({
           fundAccessConstraint ? [fundAccessConstraint] : [],
         ),
       )
-      dispatch(editingV2ProjectActions.setPayoutSplits(newPayoutSplits))
+      dispatch(
+        editingV2ProjectActions.setPayoutSplits(splits.map(sanitizeSplit)),
+      )
       dispatch(editingV2ProjectActions.setDuration(fields.duration ?? '0'))
 
       onFinish?.()
     },
-    [mods, contracts, dispatch, target, targetCurrency, onFinish],
+    [splits, contracts, dispatch, target, targetCurrency, onFinish],
   )
 
   const onFundingTypeSelect = (newFundingType: FundingType) => {
@@ -226,12 +227,12 @@ export default function FundingTabContent({
               <Trans>Payouts</Trans>
             </FormItemLabel>
             <ProjectPayoutMods
-              mods={mods}
+              mods={splits.map(toMod)}
               target={target ?? '0'}
               currency={toV1Currency(targetCurrency)}
               fee={ETHPaymentTerminalFee}
               onModsChanged={newMods => {
-                setMods(newMods)
+                setSplits(newMods.map(toSplit))
               }}
             />
           </div>

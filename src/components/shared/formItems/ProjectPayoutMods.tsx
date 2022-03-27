@@ -41,7 +41,7 @@ import { FormItems } from '.'
 import CurrencySymbol from '../CurrencySymbol'
 import FormattedAddress from '../FormattedAddress'
 import NumberSlider from '../inputs/NumberSlider'
-import ProjectHandle from '../ProjectHandle'
+import V1ProjectHandle from '../../v1/shared/V1ProjectHandle'
 import { FormItemExt } from './formItemExt'
 
 type ModType = 'project' | 'address'
@@ -178,7 +178,7 @@ export default function ProjectPayoutMods({
                     }}
                   >
                     <span style={{ cursor: 'pointer' }}>
-                      <ProjectHandle link projectId={mod.projectId} />
+                      <V1ProjectHandle link projectId={mod.projectId} />
                     </span>
                   </div>
                 </Col>

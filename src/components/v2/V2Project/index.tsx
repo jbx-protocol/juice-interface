@@ -5,8 +5,6 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import { useContext } from 'react'
 
-import { permyriadToPercent } from 'utils/formatNumber'
-
 import { decodeV2FundingCycleMetadata } from 'utils/v2/fundingCycle'
 import { weightedAmount } from 'utils/math'
 
@@ -25,11 +23,6 @@ export default function V2Project() {
     ? decodeV2FundingCycleMetadata(fundingCycle?.metadata)
     : undefined
 
-  const reservedRatePercent = parseFloat(
-    permyriadToPercent(fundingCycleMetadata?.reservedRate),
-  )
-
-  const weight = fundingCycle?.weight
   return (
     <>
       <ProjectHeader
@@ -46,8 +39,8 @@ export default function V2Project() {
         <Col md={12} xs={24}>
           <PayInputGroup
             PayButton={V2PayButton}
-            reservedRate={reservedRatePercent}
-            weight={weight}
+            reservedRate={fundingCycleMetadata?.reservedRate.toNumber()}
+            weight={fundingCycle?.weight}
             weightingFn={weightedAmount}
           />
         </Col>

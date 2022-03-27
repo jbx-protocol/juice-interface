@@ -35,6 +35,7 @@ import FundingTypeSelect, { FundingType } from './FundingTypeSelect'
 import FundingTargetInput from './FundingTargetInput'
 import FormItemLabel from '../../FormItemLabel'
 import { TabContentProps } from '../../models'
+import ProjectConfigurationFieldsContainer from '../ProjectConfigurationFieldsContainer'
 
 type FundingFormFields = {
   duration?: string
@@ -140,7 +141,7 @@ export default function FundingTabContent({
 
   return (
     <Row gutter={32} style={{ marginBottom: formBottomMargin }}>
-      <Col md={!hidePreview ? 10 : 24} xs={24}>
+      <ProjectConfigurationFieldsContainer hidePreview={hidePreview}>
         <Form form={fundingForm} layout="vertical" onFinish={onFundingFormSave}>
           <Form.Item label={t`How much do you want to raise?`}>
             <FundingTypeSelect
@@ -239,7 +240,7 @@ export default function FundingTabContent({
           {/* Default to floating save button if custom one not given */}
           {saveButton ?? <FormActionbar />}
         </Form>
-      </Col>
+      </ProjectConfigurationFieldsContainer>
       {!hidePreview && <Col md={12} xs={0}></Col>}
     </Row>
   )

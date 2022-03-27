@@ -14,6 +14,7 @@ import FundingCycleSection from 'components/shared/Project/FundingCycleSection'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import CurrentFundingCycle from './CurrentFundingCycle'
+import V2ReconfigureFundingModalTrigger from '../V2ProjectReconfigureModal/V2ReconfigureModalTrigger'
 
 export default function V2FundingCycleSection({
   showCurrentDetail,
@@ -67,7 +68,17 @@ export default function V2FundingCycleSection({
     <FundingCycleSection
       tabs={tabs}
       reconfigureButton={
-        canReconfigure ? <Button size="small">TODO</Button> : null
+        canReconfigure ? (
+          <V2ReconfigureFundingModalTrigger
+            fundingDuration={fundingCycle?.duration}
+            hideProjectDetails
+            triggerButton={(onClick: VoidFunction) => (
+              <Button size="small" onClick={onClick}>
+                <Trans>Reconfigure upcoming</Trans>
+              </Button>
+            )}
+          />
+        ) : null
       }
     />
   )

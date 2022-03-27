@@ -797,7 +797,7 @@ msgstr "Funding Distribution"
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "Funding can be reconfigured at any time. Reconfigurations will start a new funding cycle."
-msgstr "Funding can be reconfigured at any time. Reconfigurations will start a new funding cycle."
+msgstr ""
 
 #: src/components/shared/Project/FundingCycleSection.tsx
 #: src/components/shared/forms/BudgetForm.tsx
@@ -1124,7 +1124,7 @@ msgstr ""
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "No duration set."
-msgstr "No duration set."
+msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
@@ -1133,7 +1133,7 @@ msgstr ""
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "No more than the funding cycle target can be distributed by the project in a single funding cycle."
-msgstr "No more than the funding cycle target can be distributed by the project in a single funding cycle."
+msgstr ""
 
 #: src/components/v1/V1Project/FundingCycles/FundingHistory.tsx
 msgid "No past funding cycles"
@@ -1154,7 +1154,7 @@ msgstr "No target (as much as possible)"
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "No target set."
-msgstr "No target set."
+msgstr ""
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
@@ -1735,7 +1735,7 @@ msgstr ""
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "Target is 0."
-msgstr "Target is 0."
+msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
@@ -1823,7 +1823,7 @@ msgstr "The project owner may reconfigure this funding cycle at any time, withou
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "The project's entire balance will be considered overflow."
-msgstr "The project's entire balance will be considered overflow."
+msgstr ""
 
 #: src/components/Landing/QAs.tsx
 msgid "The project's tokens that are minted and distributed as a result of a received payment are ERC-20's. The amount of tokens minted and distributed are proportional to the volume of payments received, weighted by the project's discount rate over time."
@@ -2205,7 +2205,7 @@ msgstr "You can still redeem your {tokenSymbol} tokens for overflow without clai
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "You have set a funding cycle target."
-msgstr "You have set a funding cycle target."
+msgstr ""
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "You will receive {0}{1} ETH"

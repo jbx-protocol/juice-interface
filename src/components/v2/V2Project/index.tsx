@@ -8,8 +8,6 @@ import { useContext } from 'react'
 import { decodeV2FundingCycleMetadata } from 'utils/v2/fundingCycle'
 import { weightedAmount } from 'utils/math'
 
-import { formatReservedRate } from 'utils/v2/math'
-
 import V2PayButton from './V2PayButton'
 import V2ProjectHeaderActions from '../V2ProjectHeaderActions'
 import TreasuryStats from './TreasuryStats'
@@ -24,10 +22,6 @@ export default function V2Project() {
   const fundingCycleMetadata = fundingCycle
     ? decodeV2FundingCycleMetadata(fundingCycle?.metadata)
     : undefined
-
-  const reservedRatePercent = parseFloat(
-    formatReservedRate(fundingCycleMetadata?.reservedRate),
-  )
 
   return (
     <>
@@ -45,7 +39,7 @@ export default function V2Project() {
         <Col md={12} xs={24}>
           <PayInputGroup
             PayButton={V2PayButton}
-            reservedRate={reservedRatePercent}
+            reservedRate={fundingCycleMetadata?.reservedRate.toNumber()}
             weight={fundingCycle?.weight}
             weightingFn={weightedAmount}
           />

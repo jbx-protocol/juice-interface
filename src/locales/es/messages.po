@@ -802,7 +802,7 @@ msgstr "Distribución de fondos"
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "Funding can be reconfigured at any time. Reconfigurations will start a new funding cycle."
-msgstr ""
+msgstr "El financiamiento puede ser reconfigurado en cualquier momento. Las reconfiguraciones empiezan un nuevo ciclo de financiamiento."
 
 #: src/components/shared/Project/FundingCycleSection.tsx
 #: src/components/shared/forms/BudgetForm.tsx
@@ -1129,7 +1129,7 @@ msgstr "Sin actividad, todavía"
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "No duration set."
-msgstr ""
+msgstr "Sin duración establecida."
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
@@ -1138,7 +1138,7 @@ msgstr "Sin meta-objetivo de financiamiento: Este proyecto va a controlar cómo 
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "No more than the funding cycle target can be distributed by the project in a single funding cycle."
-msgstr ""
+msgstr "No más que el objetivo del ciclo de financiación puede ser distribuido por el proyecto en un solo ciclo de financiación."
 
 #: src/components/v1/V1Project/FundingCycles/FundingHistory.tsx
 msgid "No past funding cycles"
@@ -1159,7 +1159,7 @@ msgstr "Sin objetivo (lo más que se pueda)"
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "No target set."
-msgstr ""
+msgstr "Sin meta-objetivo establecida."
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
@@ -1740,7 +1740,7 @@ msgstr "Objetivo"
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "Target is 0."
-msgstr ""
+msgstr "El objetivo es 0."
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
@@ -1828,7 +1828,7 @@ msgstr "El dueño del proyecto puede reconfigurar este ciclo de financiamiento e
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "The project's entire balance will be considered overflow."
-msgstr ""
+msgstr "El saldo completo del proyecto se considerará excedente."
 
 #: src/components/Landing/QAs.tsx
 msgid "The project's tokens that are minted and distributed as a result of a received payment are ERC-20's. The amount of tokens minted and distributed are proportional to the volume of payments received, weighted by the project's discount rate over time."
@@ -2078,7 +2078,7 @@ msgstr "Los usuarios financian tu proyecto al pagar para usar tu app o servicio,
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "Using a duration is recommended. Allowing funding cycles to be reconfigured at any time will appear risky to contributors."
-msgstr ""
+msgstr "Se recomienda usar una duración. Permitir que los ciclos de financiación sean reconfigurados en cualquier momento les parecerá arriesgado a los colaboradores."
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 msgid "Using a reconfiguration strategy is recommended. Projects with no strategy will appear risky to contributors."
@@ -2210,7 +2210,7 @@ msgstr "Todavía, puedes canjear tus tokens {tokenSymbol} por el exceso sin recl
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "You have set a funding cycle target."
-msgstr ""
+msgstr "Has establecido un objetivo del ciclo de financiamiento."
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "You will receive {0}{1} ETH"

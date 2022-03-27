@@ -802,7 +802,7 @@ msgstr "Finansman Dağılımı"
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "Funding can be reconfigured at any time. Reconfigurations will start a new funding cycle."
-msgstr ""
+msgstr "Finansman herhangi bir zamanda yeniden yapılandırılabilir. Yeniden yapılandırmalar yeni bir finansman döngüsü başlatacaktır."
 
 #: src/components/shared/Project/FundingCycleSection.tsx
 #: src/components/shared/forms/BudgetForm.tsx
@@ -1129,7 +1129,7 @@ msgstr "Henüz etkinlik yok"
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "No duration set."
-msgstr ""
+msgstr "Süre ayarlanmadı."
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
@@ -1138,7 +1138,7 @@ msgstr "Finansman hedefi yok: Proje, tüm fonların nasıl dağıtılacağını 
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "No more than the funding cycle target can be distributed by the project in a single funding cycle."
-msgstr ""
+msgstr "Tek bir finansman döngüsünde proje, finansman döngüsü hedefinden daha fazlasını dağıtamaz."
 
 #: src/components/v1/V1Project/FundingCycles/FundingHistory.tsx
 msgid "No past funding cycles"
@@ -1159,7 +1159,7 @@ msgstr ""
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "No target set."
-msgstr ""
+msgstr "Hedef belirlenmedi."
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
@@ -1740,7 +1740,7 @@ msgstr "Hedef"
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "Target is 0."
-msgstr ""
+msgstr "Hedef 0."
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
@@ -1828,7 +1828,7 @@ msgstr "Proje sahibi, bu finansman döngüsünü, herhangi bir zamanda, bildirim
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "The project's entire balance will be considered overflow."
-msgstr ""
+msgstr "Projenin tüm bakiyesi taşma olarak kabul edilecektir."
 
 #: src/components/Landing/QAs.tsx
 msgid "The project's tokens that are minted and distributed as a result of a received payment are ERC-20's. The amount of tokens minted and distributed are proportional to the volume of payments received, weighted by the project's discount rate over time."
@@ -2078,7 +2078,7 @@ msgstr "Kullanıcılar, uygulamanızı veya hizmetinizi kullanmak için ödeme y
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "Using a duration is recommended. Allowing funding cycles to be reconfigured at any time will appear risky to contributors."
-msgstr ""
+msgstr "Bir süre kullanılması önerilir. Finansman döngülerinin herhangi bir zamanda yeniden yapılandırılmasına izin vermek, katkıda bulunanlar açısından riskli görünecektir."
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 msgid "Using a reconfiguration strategy is recommended. Projects with no strategy will appear risky to contributors."
@@ -2210,7 +2210,7 @@ msgstr "{tokenSymbol} token'larınızı taşma için talep etmeden de kullanabil
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "You have set a funding cycle target."
-msgstr ""
+msgstr "Bir finansman döngüsü hedefi belirlediniz."
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "You will receive {0}{1} ETH"

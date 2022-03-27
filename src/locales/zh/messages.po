@@ -802,7 +802,7 @@ msgstr "资金分发"
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "Funding can be reconfigured at any time. Reconfigurations will start a new funding cycle."
-msgstr "可以随时更改筹款配置。更改配置将重新开始一个筹款周期。"
+msgstr ""
 
 #: src/components/shared/Project/FundingCycleSection.tsx
 #: src/components/shared/forms/BudgetForm.tsx
@@ -1129,7 +1129,7 @@ msgstr "暂无动态"
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "No duration set."
-msgstr "不设定持续时间。"
+msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
@@ -1138,7 +1138,7 @@ msgstr "不设定筹款目标：所有的资金如何分发都由此项目决定
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "No more than the funding cycle target can be distributed by the project in a single funding cycle."
-msgstr "在单个筹款周期中，项目无法提取超出筹款目标的资金。"
+msgstr ""
 
 #: src/components/v1/V1Project/FundingCycles/FundingHistory.tsx
 msgid "No past funding cycles"
@@ -1159,7 +1159,7 @@ msgstr "无目标（尽可能多）"
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "No target set."
-msgstr "不设定筹款目标。"
+msgstr ""
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
@@ -1285,6 +1285,7 @@ msgstr "当前筹款周期暂停付款。"
 msgid "Payments paused"
 msgstr "付款已暂停"
 
+#: src/components/v2/V2Create/DeployProjectModal/index.tsx
 #: src/components/v2/V2Create/tabs/FundingTab/FundingTabContent.tsx
 msgid "Payouts"
 msgstr "支出"
@@ -1533,6 +1534,7 @@ msgstr "保留代币的分配方案（可选）"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Create/DeployProjectModal/index.tsx
 msgid "Reserved token allocations"
 msgstr "保留代币的分配方案"
 
@@ -1738,7 +1740,7 @@ msgstr "目标"
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "Target is 0."
-msgstr "目标为 0"
+msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
@@ -1826,7 +1828,7 @@ msgstr "项目方可以随时修改当前筹款周期的配置，不需要事先
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "The project's entire balance will be considered overflow."
-msgstr "项目的全部余额将被视为溢出。"
+msgstr ""
 
 #: src/components/Landing/QAs.tsx
 msgid "The project's tokens that are minted and distributed as a result of a received payment are ERC-20's. The amount of tokens minted and distributed are proportional to the volume of payments received, weighted by the project's discount rate over time."
@@ -2076,7 +2078,7 @@ msgstr "用户可以通过付费使用你的应用程序或服务来资助你的
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "Using a duration is recommended. Allowing funding cycles to be reconfigured at any time will appear risky to contributors."
-msgstr "推荐设置一个持续时间。对于贡献者来说，可以随时修改配置的筹款周期是具有风险的。"
+msgstr ""
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 msgid "Using a reconfiguration strategy is recommended. Projects with no strategy will appear risky to contributors."
@@ -2208,7 +2210,7 @@ msgstr "未领取的 {tokenSymbol} 代币，依然可以用来赎回溢出池中
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "You have set a funding cycle target."
-msgstr "您设定了一个筹款周期目标。"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "You will receive {0}{1} ETH"

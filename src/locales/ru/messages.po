@@ -802,7 +802,7 @@ msgstr "Распределение финансирования"
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "Funding can be reconfigured at any time. Reconfigurations will start a new funding cycle."
-msgstr " финансирование можно изменить в любой момент, что приведет к началу нового цикла финансирования."
+msgstr ""
 
 #: src/components/shared/Project/FundingCycleSection.tsx
 #: src/components/shared/forms/BudgetForm.tsx
@@ -1129,7 +1129,7 @@ msgstr "Нет активности"
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "No duration set."
-msgstr "Продолжительность не указана."
+msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
@@ -1138,7 +1138,7 @@ msgstr "Нет цели финансирования: проект будет к
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "No more than the funding cycle target can be distributed by the project in a single funding cycle."
-msgstr "Не более одного целевого показателя цикла финансирования можно распределить по проекту в рамках одного цикла финансирования."
+msgstr ""
 
 #: src/components/v1/V1Project/FundingCycles/FundingHistory.tsx
 msgid "No past funding cycles"
@@ -1159,7 +1159,7 @@ msgstr "Отсутствие цели (насколько это возможн�
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "No target set."
-msgstr "Цель не установлена."
+msgstr ""
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
@@ -1285,6 +1285,7 @@ msgstr "Платежи приостановлены для текущего ци
 msgid "Payments paused"
 msgstr "Платежи приостановлены"
 
+#: src/components/v2/V2Create/DeployProjectModal/index.tsx
 #: src/components/v2/V2Create/tabs/FundingTab/FundingTabContent.tsx
 msgid "Payouts"
 msgstr "Выплаты"
@@ -1533,6 +1534,7 @@ msgstr "Зарезервированные распределения токен
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Create/DeployProjectModal/index.tsx
 msgid "Reserved token allocations"
 msgstr "Зарезервированные распределения токенов"
 
@@ -1738,7 +1740,7 @@ msgstr "Цель"
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "Target is 0."
-msgstr "Целевой показатель 0."
+msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
@@ -1826,7 +1828,7 @@ msgstr "Владелец проекта может изменить конфиг
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "The project's entire balance will be considered overflow."
-msgstr "Весь баланс проекта будет считаться переполненным."
+msgstr ""
 
 #: src/components/Landing/QAs.tsx
 msgid "The project's tokens that are minted and distributed as a result of a received payment are ERC-20's. The amount of tokens minted and distributed are proportional to the volume of payments received, weighted by the project's discount rate over time."
@@ -2076,7 +2078,7 @@ msgstr "Пользователи финансируют ваш проект, п�
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "Using a duration is recommended. Allowing funding cycles to be reconfigured at any time will appear risky to contributors."
-msgstr "Рекомендуется использовать продолжительность. Предоставление возможности изменения конфигурации циклов финансирования в любое время покажется вкладчикам рискованным."
+msgstr ""
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 msgid "Using a reconfiguration strategy is recommended. Projects with no strategy will appear risky to contributors."
@@ -2208,7 +2210,7 @@ msgstr "Вы по-прежнему можете выкупить свои {token
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "You have set a funding cycle target."
-msgstr "Вы установили цель цикла финансирования."
+msgstr ""
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "You will receive {0}{1} ETH"

@@ -10,7 +10,9 @@ export const toSplit = (mod: PayoutMod): Split => {
   return {
     // mod.percent is a parts-per-ten thousand (permyriad),
     // split.percent is a parts-per-billion
-    percent: splitPercentFrom(permyriadToPercent(mod.percent)).toNumber(),
+    percent: splitPercentFrom(
+      parseFloat(permyriadToPercent(mod.percent)),
+    ).toNumber(),
     lockedUntil: mod.lockedUntil,
     beneficiary: mod.beneficiary,
     projectId: mod.projectId?.toHexString(),
@@ -28,7 +30,7 @@ export const toMod = (split: Split): PayoutMod => {
     ).toNumber(),
     lockedUntil: split.lockedUntil,
     beneficiary: split.beneficiary,
-    projectId: BigNumber.from(split.projectId),
+    projectId: split.projectId ? BigNumber.from(split.projectId) : undefined,
     allocator: split.allocator,
     preferUnstaked: split.preferClaimed,
   }

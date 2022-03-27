@@ -44,9 +44,9 @@ export const formatSplitPercent = (splitPercent: BigNumber) => {
  * @param percentage - value as a percentage.
  * @returns {BigNumber} percentage expressed as parts-per-billion.
  */
-export const splitPercentFrom = (percentage: string) => {
+export const splitPercentFrom = (percentage: number) => {
   return percentage
-    ? BigNumber.from(percentage).mul(SPLITS_TOTAL_PERCENT / 100)
+    ? BigNumber.from((percentage * SPLITS_TOTAL_PERCENT) / 100)
     : BigNumber.from(0)
 }
 

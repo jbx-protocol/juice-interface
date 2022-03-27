@@ -60,13 +60,7 @@ export default function ReservedTokens({
               ({perbicentToPercent(metadata?.reservedRate)}%)
             </h4>
           }
-          tip={
-            <Trans>
-              A project can reserve a percentage of tokens minted from every
-              payment it receives. Reserved tokens can be distributed according
-              to the allocation below at any time.
-            </Trans>
-          }
+          tip={t`A project can reserve a percentage of tokens minted from every payment it receives. Reserved tokens can be distributed according to the allocation below at any time.`}
         />
       </div>
 

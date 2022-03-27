@@ -802,7 +802,7 @@ msgstr "Distribuição de financiamento"
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "Funding can be reconfigured at any time. Reconfigurations will start a new funding cycle."
-msgstr "O financiamento pode ser reconfigurado a qualquer momento. As reconfigurações iniciarão um novo ciclo de financiamento."
+msgstr ""
 
 #: src/components/shared/Project/FundingCycleSection.tsx
 #: src/components/shared/forms/BudgetForm.tsx
@@ -1129,7 +1129,7 @@ msgstr "Nenhuma atividade ainda"
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "No duration set."
-msgstr "Sem duração definida."
+msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
@@ -1138,7 +1138,7 @@ msgstr "Sem meta de financiamento: Este projeto irá controlar como serão distr
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "No more than the funding cycle target can be distributed by the project in a single funding cycle."
-msgstr "Apenas o objetivo do ciclo de financiamento pode ser distribuído pelo projeto em um único ciclo de financiamento."
+msgstr ""
 
 #: src/components/v1/V1Project/FundingCycles/FundingHistory.tsx
 msgid "No past funding cycles"
@@ -1159,7 +1159,7 @@ msgstr "Sem objetivo (na medida do possível)"
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "No target set."
-msgstr "Sem meta definida."
+msgstr ""
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
@@ -1285,6 +1285,7 @@ msgstr "Os pagamentos estão pausados para para o atual ciclo de financiamento."
 msgid "Payments paused"
 msgstr "Pagamentos pausados"
 
+#: src/components/v2/V2Create/DeployProjectModal/index.tsx
 #: src/components/v2/V2Create/tabs/FundingTab/FundingTabContent.tsx
 msgid "Payouts"
 msgstr "Pagamentos"
@@ -1533,6 +1534,7 @@ msgstr "Alocação de tokens reservados (opcional)"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Create/DeployProjectModal/index.tsx
 msgid "Reserved token allocations"
 msgstr "Alocações de token reservado"
 
@@ -1738,7 +1740,7 @@ msgstr "Objetivo"
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "Target is 0."
-msgstr "A meta é 0."
+msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
@@ -1826,7 +1828,7 @@ msgstr "O dono deste projeto pode reconfigurar o ciclo de financiamento a qualqu
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "The project's entire balance will be considered overflow."
-msgstr "Todo o saldo do projeto será considerado overflow."
+msgstr ""
 
 #: src/components/Landing/QAs.tsx
 msgid "The project's tokens that are minted and distributed as a result of a received payment are ERC-20's. The amount of tokens minted and distributed are proportional to the volume of payments received, weighted by the project's discount rate over time."
@@ -2076,7 +2078,7 @@ msgstr "Usuários financiam seu projeto pagando para usar o seu aplicativo ou se
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "Using a duration is recommended. Allowing funding cycles to be reconfigured at any time will appear risky to contributors."
-msgstr "Usar uma duração é recomendado. Permitir a reconfiguração de ciclos de financiamento a qualquer momento aparentará ser arriscado para os contribuidores."
+msgstr ""
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 msgid "Using a reconfiguration strategy is recommended. Projects with no strategy will appear risky to contributors."
@@ -2208,7 +2210,7 @@ msgstr "Você ainda pode resgatar seus tokens {tokenSymbol} para overflow sem re
 
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "You have set a funding cycle target."
-msgstr "Você definiu a meta do ciclo de financiamento."
+msgstr ""
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "You will receive {0}{1} ETH"

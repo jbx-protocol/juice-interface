@@ -21,6 +21,10 @@ import { amountSubFee } from 'utils/math'
 
 import { V2CurrencyName } from 'utils/v2/currency'
 
+import SplitList from 'components/v2/shared/SplitList'
+
+import { BigNumber } from '@ethersproject/bignumber'
+
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 
 export default function ConfirmDeployV2ProjectModal({
@@ -39,6 +43,8 @@ export default function ConfirmDeployV2ProjectModal({
     fundAccessConstraints,
     fundingCycleData,
     fundingCycleMetadata,
+    payoutGroupedSplits,
+    reserveTokenGroupedSplits,
     projectMetadata,
   } = useAppSelector(state => state.editingV2Project)
 
@@ -284,6 +290,47 @@ export default function ConfirmDeployV2ProjectModal({
                 }}
               />
             )}
+
+            {payoutGroupedSplits.splits.length ? (
+              <Statistic
+                title={t`Payouts`}
+                valueRender={() => (
+                  <SplitList
+                    splits={payoutGroupedSplits.splits}
+                    distributionLimitCurrency={BigNumber.from(
+                      fundAccessConstraint?.distributionLimitCurrency,
+                    )}
+                    distributionLimit={amountSubFee(
+                      parseWad(fundAccessConstraint?.distributionLimit),
+                      ETHPaymentTerminalFee,
+                    )}
+                    projectOwnerAddress={userAddress}
+                    showSplitValues
+                  />
+                )}
+              />
+            ) : null}
+
+            {fundingCycleMetadata.reservedRate &&
+            fundingCycleMetadata.reservedRate !== '0' &&
+            reserveTokenGroupedSplits.splits.length ? (
+              <Statistic
+                title={t`Reserved token allocations`}
+                valueRender={() => (
+                  <SplitList
+                    splits={reserveTokenGroupedSplits.splits}
+                    distributionLimitCurrency={BigNumber.from(
+                      fundAccessConstraint?.distributionLimitCurrency,
+                    )}
+                    distributionLimit={amountSubFee(
+                      parseWad(fundAccessConstraint?.distributionLimit),
+                      ETHPaymentTerminalFee,
+                    )}
+                    projectOwnerAddress={userAddress}
+                  />
+                )}
+              />
+            ) : null}
           </Space>
         </div>
       </Space>

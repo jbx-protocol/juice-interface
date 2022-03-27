@@ -26,6 +26,9 @@ export default function CurrentFundingCycle({
     reserveTokenSplits,
     fundingCycleMetadata,
     tokenSymbol,
+    distributionLimitCurrency,
+    distributionLimit,
+    projectOwnerAddress,
   } = useContext(V2ProjectContext)
 
   if (!fundingCycle) return <LoadingOutlined />
@@ -59,7 +62,15 @@ export default function CurrentFundingCycle({
             </Trans>
           }
         />
-        {payoutSplits ? <SplitList splits={payoutSplits} /> : null}
+        {payoutSplits ? (
+          <SplitList
+            splits={payoutSplits}
+            distributionLimitCurrency={distributionLimitCurrency}
+            distributionLimit={distributionLimit}
+            projectOwnerAddress={projectOwnerAddress}
+            showSplitValues
+          />
+        ) : null}
       </CardSection>
 
       <CardSection>
@@ -88,7 +99,12 @@ export default function CurrentFundingCycle({
           />
         </div>
         {reserveTokenSplits ? (
-          <SplitList splits={reserveTokenSplits} hideSplitValues />
+          <SplitList
+            splits={reserveTokenSplits}
+            distributionLimitCurrency={distributionLimitCurrency}
+            distributionLimit={distributionLimit}
+            projectOwnerAddress={projectOwnerAddress}
+          />
         ) : null}
       </CardSection>
     </div>

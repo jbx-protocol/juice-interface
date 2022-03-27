@@ -11,7 +11,6 @@ import { useContext } from 'react'
 import { formatDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
 import { decodeV2FundingCycleMetadata } from 'utils/v2/fundingCycle'
-import { weightedRate } from 'utils/math'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 import { V2CurrencyName } from 'utils/v2/currency'
@@ -80,7 +79,7 @@ export default function FundingCycleDetails({
     )
 
     const reservedRate = formatWad(
-      weightedRate(
+      weightedAmount(
         fundingCycle?.weight,
         fcReservedRate.toNumber(),
         parseEther('1'),

@@ -11,23 +11,26 @@ import FormattedAddress from 'components/shared/FormattedAddress'
 import { formatWad } from 'utils/formatNumber'
 import { BigNumber } from '@ethersproject/bignumber'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { V2CurrencyName } from 'utils/v2/currency'
 import { formatSplitPercent, SPLITS_TOTAL_PERCENT } from 'utils/v2/math'
 
 export default function SplitItem({
   split,
-  hideValue,
+  showValue,
+  distributionLimitCurrency,
+  distributionLimit,
+  projectOwnerAddress,
 }: {
   split: Split
-  hideValue: boolean
+  distributionLimitCurrency: BigNumber | undefined
+  distributionLimit: BigNumber | undefined
+  projectOwnerAddress: string | undefined
+  showValue: boolean
 }) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const { distributionLimitCurrency, distributionLimit, projectOwnerAddress } =
-    useContext(V2ProjectContext)
 
   const isProjectOwner = projectOwnerAddress === split.beneficiary
   const isJuiceboxProject = BigNumber.from(split.projectId).gt(0)
@@ -141,7 +144,7 @@ export default function SplitItem({
       </div>
       <div>
         <span>{formatSplitPercent(BigNumber.from(split.percent))}%</span>
-        {distributionLimit?.gt(0) && !hideValue ? (
+        {distributionLimit?.gt(0) && showValue ? (
           <span style={{ marginLeft: '0.2rem' }}>
             <SplitValue />
           </span>

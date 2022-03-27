@@ -10,8 +10,8 @@ export type V2ProjectContextType = {
   fundingCycleMetadata: V2FundingCycleMetadata | undefined
   fundingCycle: V2FundingCycle | undefined
   queuedFundingCycle: V2FundingCycle | undefined
-  distributionLimit: string | undefined
-  queuedDistributionLimit: string | undefined
+  distributionLimit: BigNumber | undefined
+  queuedDistributionLimit: BigNumber | undefined
   payoutSplits: Split[] | undefined
   queuedPayoutSplits: Split[] | undefined
   reserveTokenSplits: Split[] | undefined
@@ -23,6 +23,7 @@ export type V2ProjectContextType = {
   distributionLimitCurrency: BigNumber | undefined
   queuedDistributionLimitCurrency: BigNumber | undefined
   balanceInDistributionLimitCurrency: BigNumber | undefined
+  projectOwnerAddress: string | undefined
 }
 
 export const V2ProjectContext = createContext<V2ProjectContextType>({
@@ -44,4 +45,5 @@ export const V2ProjectContext = createContext<V2ProjectContextType>({
   distributionLimitCurrency: undefined,
   queuedDistributionLimitCurrency: undefined,
   balanceInDistributionLimitCurrency: undefined,
+  projectOwnerAddress: undefined,
 })

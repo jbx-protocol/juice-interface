@@ -9,13 +9,8 @@ import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { V2FundingCycle } from 'models/v2/fundingCycle'
 import { useContext } from 'react'
 import { formatDate } from 'utils/formatDate'
-import {
-  formatWad,
-  permilleToPercent,
-  permyriadToPercent,
-} from 'utils/formatNumber'
+import { formatWad } from 'utils/formatNumber'
 import { decodeV2FundingCycleMetadata } from 'utils/v2/fundingCycle'
-import { weightedRate } from 'utils/math'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 import { V2CurrencyName } from 'utils/v2/currency'
@@ -27,6 +22,12 @@ import FundingCycleDetailWarning from 'components/shared/Project/FundingCycleDet
 import { getUnsafeV2FundingCycleProperties } from 'utils/v2/fundingCycle'
 
 import { detailedTimeString } from 'utils/formatTime'
+
+import {
+  formatDiscountRate,
+  formatRedemptionRate,
+  formatReservedRate,
+} from 'utils/v2/math'
 
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/v2/fundingWarningText'
@@ -78,7 +79,7 @@ export default function FundingCycleDetails({
     )
 
     const reservedRate = formatWad(
-      weightedRate(
+      weightedAmount(
         fundingCycle?.weight,
         fcReservedRate.toNumber(),
         parseEther('1'),
@@ -171,7 +172,7 @@ export default function FundingCycleDetails({
             />
           }
         >
-          {permilleToPercent(fundingCycle.discountRate)}%
+          {formatDiscountRate(fundingCycle.discountRate)}%
         </Descriptions.Item>
 
         <Descriptions.Item
@@ -192,7 +193,7 @@ export default function FundingCycleDetails({
             />
           }
         >
-          {permyriadToPercent(metadata?.redemptionRate)}%
+          {formatRedemptionRate(metadata?.redemptionRate)}%
         </Descriptions.Item>
 
         <Descriptions.Item
@@ -218,7 +219,7 @@ export default function FundingCycleDetails({
               FUNDING_CYCLE_WARNING_TEXT(fundingCycle).metadataReservedRate
             }
           >
-            {permyriadToPercent(metadata?.reservedRate)}%
+            {formatReservedRate(metadata?.reservedRate)}%
           </FundingCycleDetailWarning>
         </Descriptions.Item>
 

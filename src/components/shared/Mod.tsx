@@ -9,7 +9,7 @@ import { useContext } from 'react'
 import { formatDate } from 'utils/formatDate'
 
 import FormattedAddress from './FormattedAddress'
-import ProjectHandle from './ProjectHandle'
+import V1ProjectHandle from '../v1/shared/V1ProjectHandle'
 import TooltipLabel from './TooltipLabel'
 
 export default function Mod({
@@ -42,7 +42,7 @@ export default function Mod({
             <div>
               <div style={{ fontWeight: 500 }}>
                 {(mod as PayoutMod).projectId ? (
-                  <ProjectHandle
+                  <V1ProjectHandle
                     link
                     projectId={(mod as PayoutMod).projectId as BigNumber}
                   />

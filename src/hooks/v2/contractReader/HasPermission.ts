@@ -4,7 +4,7 @@ import { useContext } from 'react'
 import { V2ContractName } from 'models/v2/contracts'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 
-import useOwnerOfProject from './OwnerOfProject'
+import useProjectOwner from './ProjectOwner'
 import useContractReader from './V2ContractReader'
 
 export enum V2OperatorPermission {
@@ -34,7 +34,7 @@ export function useHasPermission(
   const { userAddress } = useContext(NetworkContext)
   const { projectId } = useContext(V2ProjectContext)
 
-  const owner = useOwnerOfProject(projectId).data
+  const { data: owner } = useProjectOwner(projectId)
 
   const hasOperatorPermission = useContractReader<boolean>({
     contract: V2ContractName.JBOperatorStore,

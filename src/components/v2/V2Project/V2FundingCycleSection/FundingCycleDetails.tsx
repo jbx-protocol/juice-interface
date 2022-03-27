@@ -248,6 +248,12 @@ export default function FundingCycleDetails({
         >
           {metadata?.pausePay ? <Trans>Paused</Trans> : <Trans>Enabled</Trans>}
         </Descriptions.Item>
+        <Descriptions.Item
+          span={2}
+          label={<TooltipLabel label={<Trans>Owner can mint tokens</Trans>} />}
+        >
+          {metadata?.pauseMint ? <Trans>No</Trans> : <Trans>Yes</Trans>}
+        </Descriptions.Item>
       </Descriptions>
 
       <div>

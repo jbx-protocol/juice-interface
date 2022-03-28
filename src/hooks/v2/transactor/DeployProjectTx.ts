@@ -13,6 +13,7 @@ import { TransactorInstance } from '../../Transactor'
 import { PEEL_METADATA_DOMAIN } from 'constants/v2/metadataDomain'
 
 const DEFAULT_MUST_START_AT_OR_AFTER = '1' // start immediately
+const DEFAULT_MEMO = ''
 
 export function useDeployProjectTx(): TransactorInstance<{
   projectMetadataCID: string
@@ -55,6 +56,7 @@ export function useDeployProjectTx(): TransactorInstance<{
       groupedSplits, // _groupedSplits,
       fundAccessConstraints, // _fundAccessConstraints,
       [contracts.JBETHPaymentTerminal.address], //  _terminals (contract address of the JBETHPaymentTerminal)
+      DEFAULT_MEMO,
     ]
 
     return transactor(contracts.JBController, 'launchProjectFor', args, txOpts)

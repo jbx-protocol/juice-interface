@@ -12,10 +12,12 @@ export default function useProjectDistributionLimit({
   domain: string | undefined
   terminal: string | undefined
 }) {
-  return useV2ContractReader<BigNumber>({
+  return useV2ContractReader<BigNumber[]>({
     contract: V2ContractName.JBController,
     functionName: 'distributionLimitOf',
     args:
-      projectId && domain ? [projectId.toHexString(), domain, terminal] : null,
+      projectId && domain && terminal
+        ? [projectId.toHexString(), domain, terminal]
+        : null,
   })
 }

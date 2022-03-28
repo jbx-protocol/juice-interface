@@ -12,12 +12,10 @@ import { useETHPaymentTerminalBalance } from 'hooks/v2/contractReader/ETHPayment
 import useProjectToken from 'hooks/v2/contractReader/ProjectToken'
 import useProjectQueuedFundingCycle from 'hooks/v2/contractReader/ProjectQueuedFundingCycle'
 import useProjectDistributionLimit from 'hooks/v2/contractReader/ProjectDistributionLimit'
-import { useContext, useMemo } from 'react'
+import { useMemo } from 'react'
 import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
-import { useDistributionLimitCurrency } from 'hooks/v2/contractReader/DistributionLimitCurrency'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { V2_CURRENCY_ETH } from 'utils/v2/currency'
-import { V2UserContext } from 'contexts/v2/userContext'
 
 import { decodeV2FundingCycleMetadata } from 'utils/v2/fundingCycle'
 
@@ -37,7 +35,6 @@ import {
 export default function V2Dashboard() {
   const { projectId: projectIdParameter }: { projectId?: string } = useParams()
   const projectId = BigNumber.from(projectIdParameter)
-  const { contracts } = useContext(V2UserContext)
 
   const { data: metadataCID, loading: metadataURILoading } =
     useProjectMetadataContent(projectId)
@@ -65,21 +62,18 @@ export default function V2Dashboard() {
     splitGroup: ETH_PAYOUT_SPLIT_GROUP,
     domain: fundingCycle?.configuration?.toString(),
   })
+
   const { data: terminals } = useProjectTerminals({
     projectId,
   })
 
-  const { data: distributionLimit } = useProjectDistributionLimit({
+  const { data: distributionLimitData } = useProjectDistributionLimit({
     projectId,
     domain: fundingCycle?.configuration?.toString(),
     terminal: terminals?.[0], //TODO: make primaryTerminalOf hook and use it
   })
-
-  const { data: queuedDistributionLimit } = useProjectDistributionLimit({
-    projectId,
-    domain: queuedFundingCycle?.configuration?.toString(),
-    terminal: terminals?.[0],
-  })
+  const [distributionLimit, distributionLimitCurrency] =
+    distributionLimitData ?? []
 
   const { data: queuedPayoutSplits } = useProjectSplits({
     projectId,
@@ -107,23 +101,17 @@ export default function V2Dashboard() {
     projectId,
   })
 
-  const converter = useCurrencyConverter()
-
-  const { data: distributionLimitCurrency } = useDistributionLimitCurrency({
-    projectId,
-    fundingCycleConfiguration: fundingCycle?.configuration,
-    terminal: contracts?.JBETHPaymentTerminal.address,
-  })
-
   const tokenSymbol = useSymbolOfERC20(tokenAddress)
 
-  const { data: queuedDistributionLimitCurrency } =
-    useDistributionLimitCurrency({
-      projectId,
-      fundingCycleConfiguration: queuedFundingCycle?.configuration,
-      terminal: contracts?.JBETHPaymentTerminal.address,
-    })
+  const { data: queuedDistributionLimitData } = useProjectDistributionLimit({
+    projectId,
+    domain: queuedFundingCycle?.configuration.toString(),
+    terminal: terminals?.[0], //TODO: make primaryTerminalOf hook and use it
+  })
+  const [queuedDistributionLimit, queuedDistributionLimitCurrency] =
+    queuedDistributionLimitData ?? []
 
+  const converter = useCurrencyConverter()
   const balanceInDistributionLimitCurrency = useMemo(
     () =>
       ETHBalance &&

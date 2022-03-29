@@ -8,7 +8,7 @@ msgstr ""
 "Language: ru\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-03-26 02:13\n"
+"PO-Revision-Date: 2022-03-29 02:25\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -424,7 +424,7 @@ msgstr "Сжечь токены проекта"
 
 #: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
 msgid "Burn your {tokensLabel}. You won't receive ETH in return because this project has no overflow."
-msgstr ""
+msgstr "Сожгите свой {tokensLabel}. Вы не получите ETH взамен, потому что у этого проекта нет перетока."
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Burn {0} {tokensTextShort}"
@@ -432,7 +432,7 @@ msgstr "Сжечь {0} {tokensTextShort}"
 
 #: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
 msgid "Burn {tokensLabel}"
-msgstr ""
+msgstr "Сжечь {tokensLabel}"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Burn {tokensTextLong}"
@@ -476,7 +476,7 @@ msgstr "Проверьте это, чтобы минтить {tokenSymbol} ERC20
 
 #: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
 msgid "Claim {tokensLabel} as ERC20"
-msgstr ""
+msgstr "Получить {tokensLabel} как ERC20"
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
 msgid "Claiming {tokenSymbol} tokens will convert your {tokenSymbol} balance to ERC20 tokens and mint them to your wallet."
@@ -718,7 +718,7 @@ msgstr "Каждый проект имеет свои собственные <0>
 
 #: src/components/v1/V1Project/modals/EditProjectModal.tsx
 msgid "Edit project"
-msgstr ""
+msgstr "Редактировать проект"
 
 #: src/components/shared/TicketModsList.tsx
 msgid "Edit reserved token allocation"
@@ -1171,7 +1171,7 @@ msgstr "Не установлено"
 
 #: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
 msgid "Note"
-msgstr ""
+msgstr "Примечание"
 
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
 msgid "Note:"
@@ -1401,7 +1401,7 @@ msgstr "Проекты"
 
 #: src/components/Landing/QAs.tsx
 msgid "Projects building on Juicebox pay a {JB_FEE}% JBX membership fee from withdrawn funds into the JuiceboxDAO treasury. Projects can then use their JBX to participate in the governance of JuiceboxDAO and its collective treasury, as well as redeem from its growing <0>overflow</0>. The fee is also subject to change via JBX member votes."
-msgstr ""
+msgstr "Проекты, построенные на Juicebox, платят {JB_FEE}% членского взноса JBX от выведенных средств в казну JuiceboxDAO. Затем проекты могут использовать свои JBX для участия в управлении JuiceboxDAO и его коллективной казной, а также получать средства из растущего <0>переполнения</0>. Плата также может быть изменена путем голосования членов JBX."
 
 #: src/components/Landing/QAs.tsx
 msgid "Projects can be created with an optional discount rate designed to incentivize supporters to contribute earlier rather than later. The amount of tokens rewarded per amount paid to your project will decrease by the discount rate with each new funding cycle. A higher discount rate will incentivize supporters to pay your project earlier rather than later."
@@ -1464,7 +1464,7 @@ msgstr "Перенастроить финансирование"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure funding details"
-msgstr ""
+msgstr "Перенастроить детали финансирования"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure funding target/duration/payouts"
@@ -1473,7 +1473,7 @@ msgstr ""
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectDetailsDrawer.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure project details"
-msgstr ""
+msgstr "Перенастроить детали проекта"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure rules"
@@ -1482,12 +1482,12 @@ msgstr ""
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureTokenDrawer.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure token"
-msgstr ""
+msgstr "Перенастроить токен"
 
 #: src/components/v1/V1Project/FundingCycles/ReconfigureFundingModalTrigger.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/index.tsx
 msgid "Reconfigure upcoming"
-msgstr ""
+msgstr "Перенастроить предстоящие "
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
@@ -1512,7 +1512,7 @@ msgstr "Обменять {0} {tokensTextShort} за ETH"
 
 #: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
 msgid "Redeem {tokensLabel} for ETH"
-msgstr ""
+msgstr "Обменять {tokensLabel} за ETH"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Redeem {tokensTextLong} for ETH"
@@ -1915,7 +1915,7 @@ msgstr "Этот проект в настоящее время использу�
 
 #: src/components/v2/V2ProjectHeaderActions.tsx
 msgid "This project uses the V2 version of the Juicebox contracts."
-msgstr ""
+msgstr "В этом проекте используется версия V2 контрактов Juicebox."
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx

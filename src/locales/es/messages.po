@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-03-26 02:13\n"
+"PO-Revision-Date: 2022-03-29 02:25\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -262,7 +262,7 @@ msgstr "Dirección"
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Address: {0}"
-msgstr ""
+msgstr "Dirección: {0}"
 
 #: src/components/v1/V1Create/index.tsx
 msgid "Adjust incentives for paying your project."
@@ -498,7 +498,7 @@ msgstr "Financiamiento comunitario para personas y proyectos"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Confirm funding changes"
-msgstr ""
+msgstr "Confirmar los cambios de financiamiento"
 
 #: src/components/v1/V1Project/modals/FeedbackPromptModal.tsx
 msgid "Congrats on creating your project!"
@@ -844,7 +844,7 @@ msgstr "Objetivo de financiamiento"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Funding target, duration and payouts"
-msgstr ""
+msgstr "Objetivo de financiamiento, duración y pagos"
 
 #: src/components/v1/FundingCycle/modals/DistributeTokensModal.tsx
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
@@ -1201,7 +1201,7 @@ msgstr "El excedente es creado si el saldo de tu proyecto excede el objetivo de 
 
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Owner can mint tokens"
-msgstr ""
+msgstr "El propietario puede acuñar tokens"
 
 #: src/components/v1/V1Project/V1PayButton.tsx
 #: src/components/v2/V2Project/V2PayButton.tsx
@@ -1464,11 +1464,11 @@ msgstr "Reconfigurar financiamiento"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure funding details"
-msgstr ""
+msgstr "Reconfigurar detalles de financiamiento"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure funding target/duration/payouts"
-msgstr ""
+msgstr "Reconfigurar objetivo/duración/pagos del financiamiento"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectDetailsDrawer.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
@@ -1477,7 +1477,7 @@ msgstr "Reconfigura los detalles del proyecto"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure rules"
-msgstr ""
+msgstr "Reconfigurar reglas"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureTokenDrawer.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
@@ -1609,7 +1609,7 @@ msgstr "Reglas"
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Rules for determining how funding cycles can be reconfigured"
-msgstr ""
+msgstr "Reglas para determinar cómo se pueden reconfigurar los ciclos de financiamiento"
 
 #: src/components/v1/V1Create/index.tsx
 msgid "Rules for how changes can be made to your project."
@@ -1994,7 +1994,7 @@ msgstr "Los tokens pueden ser canjeados por una porción del ETH excedente de es
 
 #: src/components/v2/shared/SplitItem.tsx
 msgid "Tokens:"
-msgstr ""
+msgstr "Tokens:"
 
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
 msgid "Tools"
@@ -2075,7 +2075,7 @@ msgstr "Próximos"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Updates you make to this section will only be applied to <0>upcoming</0> funding cycles."
-msgstr ""
+msgstr "Las actualizaciones que hagas en esta sección solo serán aplicadas a los <0>próximos</0> ciclos de financiamiento."
 
 #: src/components/shared/formItems/ProjectLogoUri.tsx
 msgid "Upload"
@@ -2321,7 +2321,7 @@ msgstr "cargando"
 
 #: src/components/v2/shared/SplitItem.tsx
 msgid "locked until {lockedUntilFormatted}"
-msgstr ""
+msgstr "bloqueado hasta {lockedUntilFormatted}"
 
 #: src/components/Projects/index.tsx
 msgid "matching \"{searchText}\""
@@ -2454,11 +2454,11 @@ msgstr "{exchangeName} no tiene mercado para el token {tokenSymbol}."
 
 #: src/components/shared/Project/FundingCycleDetailsCard.tsx
 msgid "{formattedTimeLeft} left"
-msgstr ""
+msgstr "{formattedTimeLeft} restante"
 
 #: src/components/shared/Project/FundingCycleDetailsCard.tsx
 msgid "{formattedTimeLeft} until #{0}"
-msgstr ""
+msgstr "{formattedTimeLeft} hasta #{0}"
 
 #: src/components/v1/V1Dashboard/index.tsx
 msgid "{handle} not found"
@@ -2475,12 +2475,12 @@ msgstr "{label}"
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "{payerRate} (+ {reservedRate} reserved) {tokenSymbolPlural}/ETH"
-msgstr ""
+msgstr "{payerRate} (+ {reservedRate} reservada) {tokenSymbolPlural}/ETH"
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "{payerRate} {tokenSymbolPlural}/ETH"
-msgstr ""
+msgstr "{payerRate} {tokenSymbolPlural}/ETH"
 
 #: src/components/Projects/TrendingProjectCard.tsx
 msgid "{paymentCount, plural, one {# payment} other {# payments}}"
@@ -2489,7 +2489,7 @@ msgstr "{paymentCount, plural, one {# pago} other {# pagos}}"
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "{tokenSymbolPlural} received per ETH paid to the treasury. This can change over time according to the discount rate and reserved tokens amount of future funding cycles."
-msgstr ""
+msgstr "{tokenSymbolPlural} recibidos por ETH pagado al tesoro. Esto puede cambiar con el tiempo de acuerdo a la tarifa de descuento y al monto de tokens reservados de los ciclos de financiamiento futuros."
 
 #: src/components/shared/AMMPrices/TokenAMMPriceRow.tsx
 msgid "{tokenSymbol}/ETH exchange rate on {exchangeName}."

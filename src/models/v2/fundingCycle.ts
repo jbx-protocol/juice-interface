@@ -20,8 +20,10 @@ export type V2FundingCycleMetadata = {
   allowChangeToken: boolean
   allowTerminalMigration: boolean
   allowControllerMigration: boolean
+  allowSetTerminals: boolean
+  allowSetController: boolean
   holdFees: boolean
-  useLocalBalanceForRedemptions: boolean
+  useTotalOverflowForRedemptions: boolean
   useDataSourceForPay: boolean
   useDataSourceForRedeem: boolean
   dataSource: string // hex, contract address

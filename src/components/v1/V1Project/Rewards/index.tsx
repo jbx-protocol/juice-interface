@@ -22,7 +22,7 @@ import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 import IssueTickets from './IssueTickets'
-import SectionHeader from '../SectionHeader'
+import SectionHeader from '../../../shared/SectionHeader'
 import ManageTokensModal from './ManageTokensModal'
 import ParticipantsModal from '../modals/ParticipantsModal'
 

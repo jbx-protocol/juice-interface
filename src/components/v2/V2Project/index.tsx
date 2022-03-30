@@ -12,6 +12,7 @@ import V2PayButton from './V2PayButton'
 import V2ProjectHeaderActions from '../V2ProjectHeaderActions'
 import TreasuryStats from './TreasuryStats'
 import V2FundingCycleSection from './V2FundingCycleSection'
+import V2ManageTokensSection from './V2ManageTokensSection'
 
 export default function V2Project() {
   const { projectId, projectMetadata, fundingCycle } =
@@ -33,7 +34,7 @@ export default function V2Project() {
         <Col md={12} xs={24}>
           <TreasuryStats />
           {/* TODO volume chart */}
-          {/* TODO token section */}
+          <V2ManageTokensSection />
           <V2FundingCycleSection />
         </Col>
         <Col md={12} xs={24}>

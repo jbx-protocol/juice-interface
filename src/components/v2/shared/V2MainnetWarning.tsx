@@ -10,7 +10,7 @@ export default function V2MainnetWarning() {
         alt="Sexy blueberry with bright pink lipstick spraying a can of spraypaint"
       />
       <h3>
-        <Trans>The Juicebox V2 contracts aren't available on mainnet.</Trans>
+        <Trans>Juicebox V2 on mainnet isn't supported.</Trans>
       </h3>
       <p>
         <Trans>

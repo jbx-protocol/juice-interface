@@ -3,32 +3,43 @@ import { Space, Tooltip } from 'antd'
 import Balance from 'components/Navbar/Balance'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import TooltipLabel from 'components/shared/TooltipLabel'
-import { formatWad, perbicentToPercent } from 'utils/formatNumber'
+import { formatWad } from 'utils/formatNumber'
 import { CrownFilled } from '@ant-design/icons'
-import { hasFundingTarget } from 'utils/v1/fundingCycle'
 import { CSSProperties, useContext } from 'react'
 import { ThemeContext } from 'contexts/themeContext'
-import { V1ProjectContext } from 'contexts/v1/projectContext'
-import { V1CurrencyName } from 'utils/v1/currency'
-import { V1CurrencyOption } from 'models/v1/currencyOption'
 
-export default function SpendingStats() {
+import { BigNumber } from '@ethersproject/bignumber'
+
+import { CurrencyName } from 'constants/currency'
+
+export default function SpendingStats({
+  currency,
+  targetAmount,
+  withdrawnAmount,
+  projectBalanceInCurrency,
+  ownerAddress,
+  feePercentage,
+  hasFundingTarget,
+}: {
+  currency: CurrencyName | undefined
+  targetAmount: BigNumber | undefined
+  withdrawnAmount: BigNumber | undefined
+  projectBalanceInCurrency: BigNumber | undefined
+  ownerAddress: string | undefined
+  feePercentage: string | undefined
+  hasFundingTarget: boolean | undefined
+}) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const { balanceInCurrency, owner, currentFC } = useContext(V1ProjectContext)
 
-  if (!currentFC) return null
+  if (!targetAmount || !withdrawnAmount) return <span>Loading...</span>
 
-  const currentFCCurrency = V1CurrencyName(
-    currentFC.currency.toNumber() as V1CurrencyOption,
-  )
+  const untapped = targetAmount.sub(withdrawnAmount)
 
-  const untapped = currentFC.target.sub(currentFC.tapped)
-
-  const withdrawable = balanceInCurrency?.gt(untapped)
+  const withdrawable = projectBalanceInCurrency?.gt(untapped)
     ? untapped
-    : balanceInCurrency
+    : projectBalanceInCurrency
 
   const smallHeaderStyle: CSSProperties = {
     fontSize: '.7rem',
@@ -46,7 +57,7 @@ export default function SpendingStats() {
             fontWeight: 500,
           }}
         >
-          <CurrencySymbol currency={currentFCCurrency} />
+          <CurrencySymbol currency={currency} />
           {formatWad(withdrawable, { precision: 4 }) || '0'}{' '}
         </span>
         <TooltipLabel
@@ -55,9 +66,9 @@ export default function SpendingStats() {
           tip={
             <Trans>
               The funds available to withdraw for this funding cycle after the $
-              {perbicentToPercent(currentFC.fee)}% JBX fee is subtracted. This
-              number won't roll over to the next funding cycle, so funds should
-              be withdrawn before it ends.
+              {feePercentage}% JBX fee is subtracted. This number won't roll
+              over to the next funding cycle, so funds should be withdrawn
+              before it ends.
             </Trans>
           }
         />
@@ -66,10 +77,10 @@ export default function SpendingStats() {
       <div style={{ ...smallHeaderStyle, color: colors.text.tertiary }}>
         <div>
           <Trans>
-            <CurrencySymbol currency={currentFCCurrency} />
-            {formatWad(currentFC.tapped, { precision: 4 }) || '0'}
-            {hasFundingTarget(currentFC) ? (
-              <span>/{formatWad(currentFC.target, { precision: 4 })} </span>
+            <CurrencySymbol currency={currency} />
+            {formatWad(withdrawnAmount, { precision: 4 }) || '0'}
+            {hasFundingTarget ? (
+              <span>/{formatWad(targetAmount, { precision: 4 })} </span>
             ) : null}{' '}
             withdrawn
           </Trans>
@@ -80,7 +91,7 @@ export default function SpendingStats() {
             title={<Trans>Balance of the project owner's wallet.</Trans>}
           >
             <Space>
-              <Balance address={owner} />
+              <Balance address={ownerAddress} />
               <Trans>
                 <CrownFilled /> owner balance
               </Trans>

@@ -7,6 +7,12 @@ import { PayoutMod } from 'models/mods'
 import { useContext, useState } from 'react'
 import PayoutModsList from 'components/shared/PayoutModsList'
 
+import { hasFundingTarget } from 'utils/v1/fundingCycle'
+import { V1CurrencyName } from 'utils/v1/currency'
+
+import { V1CurrencyOption } from 'models/v1/currencyOption'
+import { perbicentToPercent } from 'utils/formatNumber'
+
 import SpendingStats from './SpendingStats'
 
 export default function Spending({
@@ -14,7 +20,8 @@ export default function Spending({
 }: {
   payoutMods: PayoutMod[] | undefined
 }) {
-  const { projectId, currentFC, isPreviewMode } = useContext(V1ProjectContext)
+  const { projectId, currentFC, isPreviewMode, balanceInCurrency, owner } =
+    useContext(V1ProjectContext)
 
   const [withdrawModalVisible, setWithdrawModalVisible] = useState<boolean>()
 
@@ -30,7 +37,17 @@ export default function Spending({
             alignItems: 'baseline',
           }}
         >
-          <SpendingStats />
+          <SpendingStats
+            hasFundingTarget={hasFundingTarget(currentFC)}
+            currency={V1CurrencyName(
+              currentFC.currency.toNumber() as V1CurrencyOption,
+            )}
+            projectBalanceInCurrency={balanceInCurrency}
+            targetAmount={currentFC.target}
+            withdrawnAmount={currentFC.tapped}
+            feePercentage={perbicentToPercent(currentFC.fee)}
+            ownerAddress={owner}
+          />
 
           <Button
             type="ghost"

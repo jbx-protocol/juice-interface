@@ -23,6 +23,8 @@ import useSymbolOfERC20 from 'hooks/v1/contractReader/SymbolOfERC20' // this is 
 
 import useProjectOwner from 'hooks/v2/contractReader/ProjectOwner'
 
+import useUsedDistributionLimit from 'hooks/v2/contractReader/UsedDistributionLimit'
+
 import { layouts } from 'constants/styles/layouts'
 
 import V2Project from '../V2Project'
@@ -66,12 +68,20 @@ export default function V2Dashboard() {
   const { data: terminals } = useProjectTerminals({
     projectId,
   })
+  const primaryTerminal = terminals?.[0]
 
   const { data: distributionLimitData } = useProjectDistributionLimit({
     projectId,
     domain: fundingCycle?.configuration?.toString(),
-    terminal: terminals?.[0], //TODO: make primaryTerminalOf hook and use it
+    terminal: primaryTerminal, //TODO: make primaryTerminalOf hook and use it
   })
+
+  const { data: usedDistributionLimit } = useUsedDistributionLimit({
+    projectId,
+    terminal: primaryTerminal,
+    fundingCycleNumber: fundingCycle?.number,
+  })
+
   const [distributionLimit, distributionLimitCurrency] =
     distributionLimitData ?? []
 
@@ -106,7 +116,7 @@ export default function V2Dashboard() {
   const { data: queuedDistributionLimitData } = useProjectDistributionLimit({
     projectId,
     domain: queuedFundingCycle?.configuration.toString(),
-    terminal: terminals?.[0], //TODO: make primaryTerminalOf hook and use it
+    terminal: primaryTerminal, //TODO: make primaryTerminalOf hook and use it
   })
   const [queuedDistributionLimit, queuedDistributionLimitCurrency] =
     queuedDistributionLimitData ?? []
@@ -141,6 +151,7 @@ export default function V2Dashboard() {
     fundingCycleMetadata,
     queuedFundingCycle,
     distributionLimit,
+    usedDistributionLimit,
     queuedDistributionLimit,
     payoutSplits,
     queuedPayoutSplits,

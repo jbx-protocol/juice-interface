@@ -34,6 +34,7 @@ export default function V2Project() {
           <TreasuryStats />
           {/* TODO volume chart */}
           {/* TODO token section */}
+          <br />
           <V2FundingCycleSection />
         </Col>
         <Col md={12} xs={24}>

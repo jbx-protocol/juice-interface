@@ -98,6 +98,18 @@ Take the following steps to set up Blocknative for local development:
 1. Copy the API key into the `REACT_APP_BLOCKNATIVE_API_KEY` variable of the
    `.env` file.
 
+#### The Graph
+
+Juicebox uses [The Graph](https://thegraph.com) to query the Ethereum network
+using a GraphQL API.
+
+Take the following steps to set up Juicebox's subgraph for local development:
+
+1. Go to
+   [Peel's discord server dev channel](https://discord.com/channels/939317843059679252/939705688563810304)
+   and inquire about mainnet and rinkeby subgraph URLs.
+1. Copy the URL into the `REACT_APP_SUBGRAPH_URL` variable of the `.env` file.
+
 ### Usage
 
 1. Start the app.

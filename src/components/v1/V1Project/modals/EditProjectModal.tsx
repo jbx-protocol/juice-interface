@@ -1,4 +1,4 @@
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Button, Divider, Form, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { FormItems } from 'components/shared/formItems'
@@ -136,7 +136,7 @@ export default function EditProjectModal({
 
   return (
     <Modal
-      title="Edit project"
+      title={t`Edit project`}
       visible={visible}
       onCancel={onCancel}
       cancelButtonProps={{ hidden: true }}

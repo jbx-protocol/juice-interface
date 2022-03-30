@@ -1,22 +1,26 @@
-import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { CSSProperties } from 'react'
-import { V1CurrencyStyle, V1CurrencySymbol } from 'utils/v1/currency'
+
+import { CurrencyName, CURRENCY_METADATA } from 'constants/currency'
 
 export default function CurrencySymbol({
   currency,
   style,
 }: {
-  currency: V1CurrencyOption
+  currency?: CurrencyName
   style?: CSSProperties
 }) {
+  if (!currency) return null
+
+  const metadata = CURRENCY_METADATA[currency]
+
   return (
     <span
       style={{
         ...style,
-        ...V1CurrencyStyle(currency),
+        ...metadata.style,
       }}
     >
-      {V1CurrencySymbol(currency)}
+      {metadata.symbol}
     </span>
   )
 }

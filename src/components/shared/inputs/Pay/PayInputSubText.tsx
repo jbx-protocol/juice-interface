@@ -49,10 +49,10 @@ export default function PayInputSubText({
 
   const {
     currencyMetadata,
-    currencies: { currencyETH },
+    currencies: { ETH },
   } = useContext(CurrencyContext)
 
-  const weiPayAmt = useWeiConverter({
+  const weiPayAmt = useWeiConverter<CurrencyOption>({
     currency: payInCurrency,
     amount: amount,
   })
@@ -81,9 +81,8 @@ export default function PayInputSubText({
     }
 
     const receivedTickets = formatReceivedTickets(
-      (payInCurrency === currencyETH
-        ? parseEther('1')
-        : converter.usdToWei('1')) ?? BigNumber.from(0),
+      (payInCurrency === ETH ? parseEther('1') : converter.usdToWei('1')) ??
+        BigNumber.from(0),
     )
 
     const tokenReceiveText = tokenSymbolText({
@@ -99,7 +98,7 @@ export default function PayInputSubText({
     weiPayAmt,
     weight,
     currencyMetadata,
-    currencyETH,
+    ETH,
     reservedRate,
     tokenSymbol,
     weightingFn,

@@ -1,6 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import * as constants from '@ethersproject/constants'
+
 import { ProjectMetadataV4 } from 'models/project-metadata'
 
 import {
@@ -121,6 +122,18 @@ export const editingV2ProjectSlice = createSlice({
     setDescription: (state, action: PayloadAction<string>) => {
       state.projectMetadata.description = action.payload
     },
+    setFundingCycleData: (
+      state,
+      action: PayloadAction<SerializedV2FundingCycleData>,
+    ) => {
+      state.fundingCycleData = action.payload
+    },
+    setFundingCycleMetadata: (
+      state,
+      action: PayloadAction<SerializedV2FundingCycleMetadata>,
+    ) => {
+      state.fundingCycleMetadata = action.payload
+    },
     setDuration: (state, action: PayloadAction<string>) => {
       state.fundingCycleData.duration = action.payload
     },
@@ -138,6 +151,11 @@ export const editingV2ProjectSlice = createSlice({
       action: PayloadAction<SerializedV2FundAccessConstraint[]>,
     ) => {
       state.fundAccessConstraints = action.payload
+    },
+    setDistributionLimit: (state, action: PayloadAction<string>) => {
+      if (state.fundAccessConstraints.length) {
+        state.fundAccessConstraints[0].distributionLimit = action.payload
+      }
     },
     setPayoutSplits: (state, action: PayloadAction<Split[]>) => {
       state.payoutGroupedSplits.splits = action.payload

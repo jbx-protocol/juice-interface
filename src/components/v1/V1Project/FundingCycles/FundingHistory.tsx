@@ -18,6 +18,7 @@ import { formatWad } from 'utils/formatNumber'
 import { hasFundingTarget } from 'utils/v1/fundingCycle'
 
 import FundingCycleDetails from 'components/v1/FundingCycle/FundingCycleDetails'
+import { V1CurrencyName } from 'utils/v1/currency'
 
 export default function FundingHistory({
   startId,
@@ -90,7 +91,9 @@ export default function FundingHistory({
 
               <div style={{ fontSize: '.8rem', marginLeft: 10 }}>
                 <CurrencySymbol
-                  currency={cycle.currency.toNumber() as V1CurrencyOption}
+                  currency={V1CurrencyName(
+                    cycle.currency.toNumber() as V1CurrencyOption,
+                  )}
                 />
                 {hasFundingTarget(cycle) ? (
                   <>

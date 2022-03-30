@@ -1,7 +1,6 @@
-import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { parseEther } from '@ethersproject/units'
-import { t, Trans } from '@lingui/macro'
-import { Descriptions, Tooltip } from 'antd'
+import { Trans } from '@lingui/macro'
+import { Descriptions } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
@@ -24,10 +23,15 @@ import {
 import { weightedRate } from 'utils/math'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
-import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
+import { V1CurrencyName } from 'utils/v1/currency'
 
-import TooltipLabel from '../../shared/TooltipLabel'
-import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
+import TooltipLabel from 'components/shared/TooltipLabel'
+
+import FundingCycleDetailWarning from 'components/shared/Project/FundingCycleDetailWarning'
+
+import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
+import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/v1/fundingWarningText'
+import { SECONDS_IN_DAY } from 'constants/numbers'
 
 export default function FundingCycleDetails({
   fundingCycle,
@@ -44,10 +48,8 @@ export default function FundingCycleDetails({
 
   const formattedStartTime = formatDate(fundingCycle.start.mul(1000))
 
-  const secondsInDay = 24 * 60 * 60
-
   const formattedEndTime = formatDate(
-    fundingCycle.start.add(fundingCycle.duration.mul(secondsInDay)).mul(1000),
+    fundingCycle.start.add(fundingCycle.duration.mul(SECONDS_IN_DAY)).mul(1000),
   )
 
   const metadata = decodeFundingCycleMetadata(fundingCycle.metadata)
@@ -57,24 +59,50 @@ export default function FundingCycleDetails({
   const unsafeFundingCycleProperties =
     getUnsafeFundingCycleProperties(fundingCycle)
 
-  const WarningText = ({
-    text,
-    tooltipTitle,
-    showWarning,
-  }: {
-    text: string
-    tooltipTitle?: string
-    showWarning?: boolean
-  }) => {
-    return showWarning ? (
-      <Tooltip title={tooltipTitle}>
-        <span style={{ fontWeight: 500 }}>{text} </span>
-        <span style={{ color: colors.text.warn }}>
-          <ExclamationCircleOutlined />
-        </span>
-      </Tooltip>
-    ) : (
-      <span>{text}</span>
+  const tokenSymbolPlural = tokenSymbolText({
+    tokenSymbol,
+    capitalize: false,
+    plural: true,
+  })
+
+  const ReservedRateText = () => {
+    const payerRate = formatWad(
+      weightedRate(
+        fundingCycle?.weight,
+        fcReservedRate,
+        parseEther('1'),
+        'payer',
+      ),
+      {
+        precision: 0,
+      },
+    )
+
+    const reservedRate = formatWad(
+      weightedRate(
+        fundingCycle?.weight,
+        fcReservedRate,
+        parseEther('1'),
+        'reserved',
+      ),
+      {
+        precision: 0,
+      },
+    )
+
+    const withReservedRate = (
+      <Trans>
+        {payerRate} (+ {reservedRate} reserved) {tokenSymbolPlural}/ETH
+      </Trans>
+    )
+    const withoutReservedRate = (
+      <Trans>
+        {payerRate} {tokenSymbolPlural}/ETH
+      </Trans>
+    )
+
+    return (
+      <span>{fcReservedRate ? withReservedRate : withoutReservedRate}</span>
     )
   }
 
@@ -85,43 +113,42 @@ export default function FundingCycleDetails({
         size="small"
         column={{ xs: 1, sm: 1, md: 1, lg: 1, xl: 1, xxl: 2 }}
       >
-        {
-          <Descriptions.Item label={t`Target`}>
-            {hasFundingTarget(fundingCycle) ? (
-              <>
-                <CurrencySymbol
-                  currency={
-                    fundingCycle.currency.toNumber() as V1CurrencyOption
-                  }
-                />
-                {formatWad(fundingCycle.target)}
-              </>
-            ) : (
-              t`No target`
-            )}
-          </Descriptions.Item>
-        }
-
-        <Descriptions.Item label={t`Duration`}>
-          {fundingCycle.duration.gt(0) ? (
-            t`${fundingCycle.duration.toString()} days`
+        <Descriptions.Item label={<Trans>Target</Trans>}>
+          {hasFundingTarget(fundingCycle) ? (
+            <>
+              <CurrencySymbol
+                currency={V1CurrencyName(
+                  fundingCycle.currency.toNumber() as V1CurrencyOption,
+                )}
+              />
+              {formatWad(fundingCycle.target)}
+            </>
           ) : (
-            <WarningText
+            <Trans>No target</Trans>
+          )}
+        </Descriptions.Item>
+
+        <Descriptions.Item label={<Trans>Duration</Trans>}>
+          {fundingCycle.duration.gt(0) ? (
+            <Trans>{fundingCycle.duration.toString()} days</Trans>
+          ) : (
+            <FundingCycleDetailWarning
               showWarning={true}
-              text={t`Not set`}
               tooltipTitle={FUNDING_CYCLE_WARNING_TEXT(fundingCycle).duration}
-            />
+            >
+              <Trans>Not set</Trans>
+            </FundingCycleDetailWarning>
           )}
         </Descriptions.Item>
 
         {fundingCycle.duration.gt(0) && (
-          <Descriptions.Item label={t`Start`}>
+          <Descriptions.Item label={<Trans>Start</Trans>}>
             {formattedStartTime}
           </Descriptions.Item>
         )}
 
         {fundingCycle.duration.gt(0) && (
-          <Descriptions.Item label={t`End`}>
+          <Descriptions.Item label={<Trans>End</Trans>}>
             {formattedEndTime}
           </Descriptions.Item>
         )}
@@ -130,8 +157,15 @@ export default function FundingCycleDetails({
           <Descriptions.Item
             label={
               <TooltipLabel
-                label={t`Discount rate`}
-                tip={t`The ratio of tokens rewarded per payment amount will decrease by this percentage with each new funding cycle. A higher discount rate will incentivize supporters to pay your project earlier than later.`}
+                label={<Trans>Discount rate</Trans>}
+                tip={
+                  <Trans>
+                    The ratio of tokens rewarded per payment amount will
+                    decrease by this percentage with each new funding cycle. A
+                    higher discount rate will incentivize supporters to pay your
+                    project earlier than later.
+                  </Trans>
+                }
               />
             }
           >
@@ -144,8 +178,17 @@ export default function FundingCycleDetails({
             span={2}
             label={
               <TooltipLabel
-                label={t`Bonding curve rate`}
-                tip={t`This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hodl tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed.`}
+                label={<Trans>Bonding curve rate</Trans>}
+                tip={
+                  <Trans>
+                    This rate determines the amount of overflow that each token
+                    can be redeemed for at any given time. On a lower bonding
+                    curve, redeeming a token increases the value of each
+                    remaining token, creating an incentive to hodl tokens longer
+                    than others. A bonding curve of 100% means all tokens will
+                    have equal value regardless of when they are redeemed.
+                  </Trans>
+                }
               />
             }
           >
@@ -156,118 +199,115 @@ export default function FundingCycleDetails({
         <Descriptions.Item
           label={
             <TooltipLabel
-              label={t`Reserved ${tokenSymbolText({
-                tokenSymbol: tokenSymbol,
-                capitalize: false,
-                plural: true,
-              })}`}
-              tip={t`Whenever someone pays your project, this percentage of tokens will be reserved and the rest will go to the payer. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner. Once tokens are reserved, anyone can "mint" them, which distributes them to their intended receivers.`}
+              label={<Trans>Reserved {tokenSymbolPlural}</Trans>}
+              tip={
+                <Trans>
+                  Whenever someone pays your project, this percentage of tokens
+                  will be reserved and the rest will go to the payer. Reserve
+                  tokens are reserved for the project owner by default, but can
+                  also be allocated to other wallet addresses by the owner. Once
+                  tokens are reserved, anyone can "mint" them, which distributes
+                  them to their intended receivers.
+                </Trans>
+              }
             />
           }
         >
-          <WarningText
+          <FundingCycleDetailWarning
             showWarning={unsafeFundingCycleProperties.metadataReservedRate}
-            text={`${perbicentToPercent(metadata?.reservedRate)}%`}
             tooltipTitle={
               FUNDING_CYCLE_WARNING_TEXT(fundingCycle).metadataReservedRate
             }
-          />
+          >
+            {perbicentToPercent(metadata?.reservedRate)}%
+          </FundingCycleDetailWarning>
         </Descriptions.Item>
 
         <Descriptions.Item
           label={
             <TooltipLabel
-              label={t`Issue rate`}
-              tip={t`${tokenSymbolText({
-                tokenSymbol: tokenSymbol,
-                capitalize: false,
-                plural: true,
-              })} received per ETH paid to the treasury. This can change over time according to the discount rate and reserved tokens amount of future funding cycles.`}
+              label={<Trans>Issue rate</Trans>}
+              tip={
+                <Trans>
+                  {tokenSymbolPlural} received per ETH paid to the treasury.
+                  This can change over time according to the discount rate and
+                  reserved tokens amount of future funding cycles.
+                </Trans>
+              }
             />
           }
           span={2}
+          contentStyle={{ minWidth: '10em' }}
         >
-          {formatWad(
-            weightedRate(
-              fundingCycle?.weight,
-              fcReservedRate,
-              parseEther('1'),
-              'payer',
-            ),
-            {
-              precision: 0,
-            },
-          )}{' '}
-          {metadata?.reservedRate
-            ? t`(+${formatWad(
-                weightedRate(
-                  fundingCycle?.weight,
-                  fcReservedRate,
-                  parseEther('1'),
-                  'reserved',
-                ),
-                {
-                  precision: 0,
-                },
-              )} reserved)`
-            : ''}{' '}
-          <Trans>
-            {tokenSymbolText({
-              tokenSymbol: tokenSymbol,
-              capitalize: false,
-              plural: true,
-            })}
-            /ETH
-          </Trans>
+          <ReservedRateText />
         </Descriptions.Item>
 
         <Descriptions.Item
           span={2}
           label={
             <TooltipLabel
-              label={t`Token minting`}
-              tip={t`When token minting is allowed, the owner of this project has permission to mint any number of tokens to any address at their discretion. This has the effect of diluting all current token holders, without increasing the project's treasury balance. The project owner can reconfigure this along with all other properties of the funding cycle.`}
+              label={<Trans>Token minting</Trans>}
+              tip={
+                <Trans>
+                  When token minting is allowed, the owner of this project has
+                  permission to mint any number of tokens to any address at
+                  their discretion. This has the effect of diluting all current
+                  token holders, without increasing the project's treasury
+                  balance. The project owner can reconfigure this along with all
+                  other properties of the funding cycle.
+                </Trans>
+              }
             />
           }
         >
           {metadata?.ticketPrintingIsAllowed ? (
-            <WarningText
+            <FundingCycleDetailWarning
               showWarning={true}
-              text={t`Allowed`}
               tooltipTitle={
                 FUNDING_CYCLE_WARNING_TEXT(fundingCycle)
                   .metadataTicketPrintingIsAllowed
               }
-            />
+            >
+              <Trans>Allowed</Trans>
+            </FundingCycleDetailWarning>
           ) : (
-            t`Disabled`
+            <Trans>Disabled</Trans>
           )}
         </Descriptions.Item>
 
         <Descriptions.Item
           span={2}
-          label={<TooltipLabel label={t`Payments`} />}
+          label={<TooltipLabel label={<Trans>Payments</Trans>} />}
         >
-          {metadata?.payIsPaused ? t`Paused` : t`Enabled`}
+          {metadata?.payIsPaused ? (
+            <Trans>Paused</Trans>
+          ) : (
+            <Trans>Enabled</Trans>
+          )}
         </Descriptions.Item>
       </Descriptions>
 
       <div>
         <span style={{ fontWeight: 600, color: colors.text.secondary }}>
           <TooltipLabel
-            label={t`Reconfiguration strategy`}
-            tip={t`Rules for determining how funding cycles can be reconfigured.`}
+            label={<Trans>Reconfiguration strategy</Trans>}
+            tip={
+              <Trans>
+                Rules for determining how funding cycles can be reconfigured
+              </Trans>
+            }
           />
           :
         </span>{' '}
-        <WarningText
+        <FundingCycleDetailWarning
           showWarning={unsafeFundingCycleProperties.ballot}
-          text={ballotStrategy.name}
           tooltipTitle={FUNDING_CYCLE_WARNING_TEXT(fundingCycle).ballot}
-        />
+        >
+          {ballotStrategy.name}
+        </FundingCycleDetailWarning>
         <div style={{ color: colors.text.secondary }}>
           <div style={{ fontSize: '0.7rem' }}>
-            <Trans>Address</Trans>: {ballotStrategy.address}
+            <Trans>Address: {ballotStrategy.address}</Trans>
             <br />
             {ballotStrategy.description}
           </div>

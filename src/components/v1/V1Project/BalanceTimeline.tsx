@@ -30,11 +30,11 @@ import { querySubgraph } from 'utils/graph'
 import { readProvider } from 'constants/readProvider'
 
 import SectionHeader from './SectionHeader'
-import { V1_CURRENCY_ETH } from 'constants/v1/currency'
+import { SECONDS_IN_DAY } from 'constants/numbers'
 
 const now = moment.now() - 5 * 60 * 1000 // 5 min ago
 
-const daysToMillis = (days: number) => days * 24 * 60 * 60 * 1000
+const daysToMillis = (days: number) => days * SECONDS_IN_DAY * 1000
 
 type Duration = 1 | 7 | 30 | 90 | 365
 type EventRef = {
@@ -490,7 +490,7 @@ export default function BalanceTimeline({ height }: { height: number }) {
                     </div>
                     {payload[0].payload.tapped ? (
                       <div>
-                        -<CurrencySymbol currency={V1_CURRENCY_ETH} />
+                        -<CurrencySymbol currency="ETH" />
                         {payload[0].payload.tapped}
                         <div
                           style={{
@@ -504,7 +504,7 @@ export default function BalanceTimeline({ height }: { height: number }) {
                       </div>
                     ) : (
                       <div>
-                        <CurrencySymbol currency={V1_CURRENCY_ETH} />
+                        <CurrencySymbol currency="ETH" />
                         {payload[0].payload.value}
                       </div>
                     )}

@@ -1,6 +1,6 @@
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import FormattedAddress from 'components/shared/FormattedAddress'
-import ProjectHandle from 'components/shared/ProjectHandle'
+import V1ProjectHandle from 'components/v1/shared/V1ProjectHandle'
 import EtherscanLink from 'components/shared/EtherscanLink'
 
 import { ThemeContext } from 'contexts/themeContext'
@@ -9,8 +9,6 @@ import { TapEvent } from 'models/subgraph-entities/tap-event'
 import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
-
-import { V1_CURRENCY_ETH } from 'constants/v1/currency'
 
 import { smallHeaderStyle } from '../styles'
 
@@ -103,7 +101,7 @@ export default function TapEventElem({
             <div style={{ fontWeight: 500 }}>
               {e.modProjectId?.gt(0) ? (
                 <span>
-                  <ProjectHandle link projectId={e.modProjectId} />
+                  <V1ProjectHandle link projectId={e.modProjectId} />
                 </span>
               ) : (
                 <FormattedAddress address={e.modBeneficiary} />
@@ -112,7 +110,7 @@ export default function TapEventElem({
             </div>
 
             <div style={{ color: colors.text.secondary }}>
-              <CurrencySymbol currency={V1_CURRENCY_ETH} />
+              <CurrencySymbol currency="ETH" />
               {formatWad(e.modCut, { precision: 4 })}
             </div>
           </div>
@@ -140,7 +138,7 @@ export default function TapEventElem({
                   : { fontWeight: 500 }
               }
             >
-              <CurrencySymbol currency={V1_CURRENCY_ETH} />
+              <CurrencySymbol currency="ETH" />
               {formatWad(tapEvent.beneficiaryTransferAmount, { precision: 4 })}
             </div>
           </div>
@@ -155,7 +153,7 @@ export default function TapEventElem({
             textAlign: 'right',
           }}
         >
-          <CurrencySymbol currency={V1_CURRENCY_ETH} />
+          <CurrencySymbol currency="ETH" />
           {formatWad(tapEvent.netTransferAmount, { precision: 4 })}
         </div>
       ) : null}

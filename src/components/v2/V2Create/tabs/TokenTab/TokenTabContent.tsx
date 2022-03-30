@@ -24,6 +24,7 @@ import { shadowCard } from 'constants/styles/shadowCard'
 import FormActionbar from '../../FormActionBar'
 import { formBottomMargin } from '../../constants'
 import { TabContentProps } from '../../models'
+import ProjectConfigurationFieldsContainer from '../ProjectConfigurationFieldsContainer'
 
 type TokenFormFields = {
   discountRate: string
@@ -31,7 +32,11 @@ type TokenFormFields = {
   redemptionRate: string
 }
 
-export default function TokenTabContent({ onFinish }: TabContentProps) {
+export default function TokenTabContent({
+  onFinish,
+  hidePreview,
+  saveButton,
+}: TabContentProps) {
   const [tokenForm] = useForm<TokenFormFields>()
   const {
     theme: { colors },
@@ -122,7 +127,7 @@ export default function TokenTabContent({ onFinish }: TabContentProps) {
 
   return (
     <Row gutter={32}>
-      <Col md={10} xs={24}>
+      <ProjectConfigurationFieldsContainer hidePreview={hidePreview}>
         <Form
           form={tokenForm}
           layout="vertical"
@@ -202,10 +207,11 @@ export default function TokenTabContent({ onFinish }: TabContentProps) {
                 : undefined
             }
           />
-          <FormActionbar />
+          {/* Default to floating save button if custom one not given */}
+          {saveButton ?? <FormActionbar />}
         </Form>
-      </Col>
-      <Col md={12} xs={0}></Col>
+      </ProjectConfigurationFieldsContainer>
+      {!hidePreview && <Col md={12} xs={0}></Col>}
     </Row>
   )
 }

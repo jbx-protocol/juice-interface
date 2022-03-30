@@ -138,7 +138,7 @@ export default function ProjectBondingCurveRate({
   toggleDisabled?: (checked: boolean) => void
 } & FormItemExt) {
   const { colors } = useContext(ThemeContext).theme
-  const [calculator, setCalculator] = useState<any>()
+  const [calculator, setCalculator] = useState<any>() // eslint-disable-line @typescript-eslint/no-explicit-any
 
   const bondingCurveId = 'bonding-curve'
   const baseCurveId = 'base-curve'

@@ -41,7 +41,7 @@ import { FormItems } from '.'
 import CurrencySymbol from '../CurrencySymbol'
 import FormattedAddress from '../FormattedAddress'
 import NumberSlider from '../inputs/NumberSlider'
-import ProjectHandle from '../ProjectHandle'
+import V1ProjectHandle from '../../v1/shared/V1ProjectHandle'
 import { FormItemExt } from './formItemExt'
 
 type ModType = 'project' | 'address'
@@ -80,6 +80,7 @@ export default function ProjectPayoutMods({
   const [settingHandle, setSettingHandle] = useState<string>()
 
   const { owner } = useContext(V1ProjectContext)
+  const currencyName = V1CurrencyName(currency)
 
   useContractReader<BigNumber>({
     contract: V1ContractName.Projects,
@@ -177,7 +178,7 @@ export default function ProjectPayoutMods({
                     }}
                   >
                     <span style={{ cursor: 'pointer' }}>
-                      <ProjectHandle link projectId={mod.projectId} />
+                      <V1ProjectHandle link projectId={mod.projectId} />
                     </span>
                   </div>
                 </Col>
@@ -240,7 +241,7 @@ export default function ProjectPayoutMods({
                       <span>{permyriadToPercent(mod.percent)}%</span>
                       {parseWad(target).lt(constants.MaxUint256) && (
                         <span>
-                          <CurrencySymbol currency={currency} />
+                          <CurrencySymbol currency={currencyName} />
                           {formatWad(
                             amountSubFee(parseWad(target), fee)
                               ?.mul(mod.percent)
@@ -261,7 +262,7 @@ export default function ProjectPayoutMods({
                   <label>Locked</label>
                 </Col>
                 <Col span={17}>
-                  until {formatDate(mod.lockedUntil * 1000, 'MM-DD-yyyy')}
+                  until {formatDate(mod.lockedUntil * 1000, 'yyyy-MM-DD')}
                 </Col>
               </Row>
             ) : null}
@@ -293,11 +294,11 @@ export default function ProjectPayoutMods({
       colors.icon.disabled,
       radii.md,
       target,
-      currency,
       fee,
       form,
       editingPercent,
       onModsChanged,
+      currencyName,
     ],
   )
 
@@ -497,7 +498,7 @@ export default function ProjectPayoutMods({
                 extra: t`The address that should receive the tokens minted from paying this project.`,
                 rules: [
                   {
-                    validator: (rule: any, value: any) => {
+                    validator: () => {
                       const address = form.getFieldValue('beneficiary')
                       if (!address || !isAddress(address))
                         return Promise.reject('Address is required')
@@ -526,7 +527,8 @@ export default function ProjectPayoutMods({
                 isPercentBeingRounded() &&
                 !(form.getFieldValue('percent') > 100) ? (
                   <div>
-                    Will be rounded to <CurrencySymbol currency={currency} />
+                    Will be rounded to{' '}
+                    <CurrencySymbol currency={currencyName} />
                     {roundedDownAmount()}
                   </div>
                 ) : null

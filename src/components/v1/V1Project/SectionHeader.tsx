@@ -10,8 +10,8 @@ export default function SectionHeader({
   tip,
   style,
 }: {
-  text: string | undefined
-  tip?: string
+  text: string | JSX.Element | undefined
+  tip?: string | JSX.Element
   style?: CSSProperties
 }) {
   const {

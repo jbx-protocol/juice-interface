@@ -1,6 +1,6 @@
 import FormattedAddress from 'components/shared/FormattedAddress'
 import EtherscanLink from 'components/shared/EtherscanLink'
-import ETHAmount from 'components/shared/ETHAmount'
+import ETHAmount from 'components/shared/currency/ETHAmount'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'

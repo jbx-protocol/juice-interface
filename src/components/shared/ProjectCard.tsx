@@ -5,7 +5,7 @@ import * as constants from '@ethersproject/constants'
 import { ThemeContext } from 'contexts/themeContext'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { Project } from 'models/subgraph-entities/project'
-import React, { CSSProperties, useContext } from 'react'
+import { CSSProperties, useContext } from 'react'
 import { formatDate } from 'utils/formatDate'
 
 import { getTerminalVersion } from 'utils/v1/terminals'
@@ -16,7 +16,7 @@ import { Link } from 'react-router-dom'
 
 import Loading from './Loading'
 import ProjectLogo from './ProjectLogo'
-import ETHAmount from './ETHAmount'
+import ETHAmount from './currency/ETHAmount'
 import { archivedProjectIds } from '../../constants/v1/archivedProjects'
 
 type ProjectCardProject = Pick<
@@ -57,7 +57,7 @@ export default function ProjectCard({
   ).data
 
   // Must use any to convert (ProjectCardProject | bigNumber) to ProjectCardProject
-  const projectObj: any = project
+  const projectObj: any = project // eslint-disable-line @typescript-eslint/no-explicit-any
   let _project: ProjectCardProject
 
   // If we were given projectId (BN) and therefore projectQuery returned something,
@@ -144,7 +144,7 @@ export default function ProjectCard({
               <span style={{ color: colors.text.secondary }}>
                 since{' '}
                 {!!_project?.createdAt &&
-                  formatDate(_project?.createdAt * 1000, 'MM-DD-YY')}
+                  formatDate(_project?.createdAt * 1000, 'yyyy-MM-DD')}
               </span>
             </div>
 

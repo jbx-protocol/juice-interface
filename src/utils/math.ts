@@ -6,7 +6,7 @@ import { fromWad, percentToPerbicent, percentToPermyriad } from './formatNumber'
 
 export type WeightFunction = (
   weight: BigNumber | undefined,
-  reservedRatePerbicent: number | undefined,
+  reservedRate: number | undefined,
   wadAmount: BigNumber | undefined,
   outputType: 'payer' | 'reserved',
 ) => string | undefined
@@ -89,7 +89,16 @@ export const amountSubFee = (amount?: BigNumber, feePercent?: BigNumber) => {
   return amount.sub(feeForAmount(amount, feePercent) ?? 0)
 }
 
-export const amountAddFee = (amount?: BigNumber, feePercent?: BigNumber) => {
-  if (!feePercent || !amount) return
-  return amount.add(amount.mul(100).div(feePercent.mul(200)))
+/**
+ * new amount = old amount / (1 - fee)
+ */
+export const amountAddFee = (amount?: string, feePerbicent?: BigNumber) => {
+  if (!feePerbicent || !amount) return
+
+  const inverseFeePerbicent = percentToPerbicent(100).sub(feePerbicent)
+  const amountPerbicent = BigNumber.from(amount).mul(percentToPerbicent(100))
+  // new amount is in regular decimal units
+  const newAmount = amountPerbicent.div(inverseFeePerbicent)
+
+  return newAmount.toString()
 }

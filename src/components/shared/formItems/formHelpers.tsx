@@ -73,12 +73,12 @@ export const targetToTargetSubFeeFormatted = (
 export const targetSubFeeToTargetFormatted = (
   targetSubFee: string,
   fee: BigNumber | undefined,
-) => {
+): string => {
   if (targetSubFee === fromWad(constants.MaxUint256)) {
     return fromWad(constants.MaxUint256)
   }
-  const newTarget = amountAddFee(parseWad(targetSubFee ?? '0'), fee)
-  return fromWad(newTarget)
+  const newTarget = amountAddFee(targetSubFee ?? '0', fee)
+  return newTarget ?? '0'
 }
 
 // Returns amount from a given percentage of the

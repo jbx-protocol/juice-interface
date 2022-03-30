@@ -4,13 +4,11 @@ export enum V2ContractName {
   JBController = 'JBController',
   JBDirectory = 'JBDirectory',
   JBETHPaymentTerminal = 'JBETHPaymentTerminal',
-  JBETHPaymentTerminalStore = 'JBETHPaymentTerminalStore',
   JBFundingCycleStore = 'JBFundingCycleStore',
   JBOperatorStore = 'JBOperatorStore',
   JBPrices = 'JBPrices',
   JBProjects = 'JBProjects',
   JBSplitsStore = 'JBSplitsStore',
-  // JBToken = 'JBToken', // not deployed on rinkeby yet
   JBTokenStore = 'JBTokenStore',
 }
 

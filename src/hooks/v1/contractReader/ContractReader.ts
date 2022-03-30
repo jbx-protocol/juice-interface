@@ -4,6 +4,7 @@ import { V1ContractName } from 'models/v1/contracts'
 import { V1Contracts } from 'models/v1/contracts'
 import { useCallback, useContext, useState } from 'react'
 import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect'
+import * as Sentry from '@sentry/browser'
 
 export type ContractUpdateOn = {
   contract?: ContractConfig
@@ -26,7 +27,7 @@ export default function useContractReader<V>({
   functionName?: string
   args?: unknown[] | null
   updateOn?: ContractUpdateOn
-  formatter?: (val?: any) => V | undefined
+  formatter?: (val?: any) => V | undefined // eslint-disable-line @typescript-eslint/no-explicit-any
   callback?: (val?: V) => void
   valueDidChange?: (oldVal?: V, newVal?: V) => boolean
 }): V | undefined {
@@ -35,15 +36,15 @@ export default function useContractReader<V>({
   const { contracts } = useContext(V1UserContext)
 
   const _formatter = useCallback(
-    (val: any) => (formatter ? formatter(val) : val),
+    (val: any) => (formatter ? formatter(val) : val), // eslint-disable-line @typescript-eslint/no-explicit-any
     [formatter],
   )
   const _callback = useCallback(
-    (val: any) => (callback ? callback(val) : val),
+    (val: any) => (callback ? callback(val) : val), // eslint-disable-line @typescript-eslint/no-explicit-any
     [callback],
   )
   const _valueDidChange = useCallback(
-    (a?: any, b?: any) => (valueDidChange ? valueDidChange(a, b) : a !== b),
+    (a?: any, b?: any) => (valueDidChange ? valueDidChange(a, b) : a !== b), // eslint-disable-line @typescript-eslint/no-explicit-any
     [valueDidChange],
   )
 
@@ -80,6 +81,14 @@ export default function useContractReader<V>({
           { contract: readContract.address },
           contracts,
         )
+
+        Sentry.captureException(err, {
+          tags: {
+            contract: typeof contract === 'string' ? contract : undefined,
+            contract_function: functionName,
+          },
+        })
+
         setValue(_formatter(undefined))
         _callback(_formatter(undefined))
       }
@@ -87,7 +96,7 @@ export default function useContractReader<V>({
 
     getValue()
 
-    const listener = (x: any) => getValue()
+    const listener = (x: any) => getValue() // eslint-disable-line @typescript-eslint/no-explicit-any
 
     let subscriptions: {
       contract: Contract

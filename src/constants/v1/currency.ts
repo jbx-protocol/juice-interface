@@ -17,5 +17,5 @@ export const V1_CURRENCY_METADATA: Record<V1CurrencyOption, CurrencyMetadata> =
 
 export const V1_CURRENCY_CONTEXT = {
   currencyMetadata: V1_CURRENCY_METADATA,
-  currencies: { currencyETH: V1_CURRENCY_ETH, currencyUSD: V1_CURRENCY_USD },
+  currencies: { ETH: V1_CURRENCY_ETH, USD: V1_CURRENCY_USD },
 }

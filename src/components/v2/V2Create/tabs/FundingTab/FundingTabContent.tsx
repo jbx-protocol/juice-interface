@@ -8,7 +8,6 @@ import { ThemeContext } from 'contexts/themeContext'
 import { helpPagePath } from 'utils/helpPageHelper'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import ProjectPayoutMods from 'components/shared/formItems/ProjectPayoutMods'
-import { PayoutMod } from 'models/mods'
 import { useETHPaymentTerminalFee } from 'hooks/v2/contractReader/ETHPaymentTerminalFee'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 
@@ -26,6 +25,8 @@ import { V2_CURRENCY_ETH } from 'utils/v2/currency'
 
 import ExternalLink from 'components/shared/ExternalLink'
 
+import { Split } from 'models/v2/splits'
+
 import { shadowCard } from 'constants/styles/shadowCard'
 import FormActionbar from '../../FormActionBar'
 import { formBottomMargin } from '../../constants'
@@ -34,19 +35,24 @@ import FundingTypeSelect, { FundingType } from './FundingTypeSelect'
 import FundingTargetInput from './FundingTargetInput'
 import FormItemLabel from '../../FormItemLabel'
 import { TabContentProps } from '../../models'
+import ProjectConfigurationFieldsContainer from '../ProjectConfigurationFieldsContainer'
 
 type FundingFormFields = {
   duration?: string
 }
 
-export default function FundingTabContent({ onFinish }: TabContentProps) {
+export default function FundingTabContent({
+  onFinish,
+  hidePreview,
+  saveButton,
+}: TabContentProps) {
   const { theme } = useContext(ThemeContext)
   const { contracts } = useContext(V2UserContext)
   const dispatch = useAppDispatch()
 
   const [fundingForm] = Form.useForm<FundingFormFields>()
 
-  const [mods, setMods] = useState<PayoutMod[]>([])
+  const [splits, setSplits] = useState<Split[]>([])
   const [target, setTarget] = useState<string | undefined>()
   const [targetCurrency, setTargetCurrency] =
     useState<V2CurrencyOption>(V2_CURRENCY_ETH)
@@ -73,7 +79,7 @@ export default function FundingTabContent({ onFinish }: TabContentProps) {
     })
     setTarget(_target)
     setTargetCurrency(_targetCurrency)
-    setMods(payoutGroupedSplits?.splits.map(split => toMod(split)) ?? [])
+    setSplits(payoutGroupedSplits?.splits || [])
 
     if (parseInt(fundingCycleData?.duration ?? 0) > 0) {
       setFundingType('recurring')
@@ -87,8 +93,6 @@ export default function FundingTabContent({ onFinish }: TabContentProps) {
   const onFundingFormSave = useCallback(
     (fields: FundingFormFields) => {
       if (!contracts) throw new Error('Failed to save funding configuration.')
-
-      const newPayoutSplits = mods.map(mod => sanitizeSplit(toSplit(mod)))
 
       let fundAccessConstraint: SerializedV2FundAccessConstraint | undefined =
         undefined
@@ -107,12 +111,14 @@ export default function FundingTabContent({ onFinish }: TabContentProps) {
           fundAccessConstraint ? [fundAccessConstraint] : [],
         ),
       )
-      dispatch(editingV2ProjectActions.setPayoutSplits(newPayoutSplits))
+      dispatch(
+        editingV2ProjectActions.setPayoutSplits(splits.map(sanitizeSplit)),
+      )
       dispatch(editingV2ProjectActions.setDuration(fields.duration ?? '0'))
 
       onFinish?.()
     },
-    [mods, contracts, dispatch, target, targetCurrency, onFinish],
+    [splits, contracts, dispatch, target, targetCurrency, onFinish],
   )
 
   const onFundingTypeSelect = (newFundingType: FundingType) => {
@@ -135,7 +141,7 @@ export default function FundingTabContent({ onFinish }: TabContentProps) {
 
   return (
     <Row gutter={32} style={{ marginBottom: formBottomMargin }}>
-      <Col md={10} xs={24}>
+      <ProjectConfigurationFieldsContainer hidePreview={hidePreview}>
         <Form form={fundingForm} layout="vertical" onFinish={onFundingFormSave}>
           <Form.Item label={t`How much do you want to raise?`}>
             <FundingTypeSelect
@@ -222,19 +228,20 @@ export default function FundingTabContent({ onFinish }: TabContentProps) {
               <Trans>Payouts</Trans>
             </FormItemLabel>
             <ProjectPayoutMods
-              mods={mods}
+              mods={splits.map(toMod)}
               target={target ?? '0'}
               currency={toV1Currency(targetCurrency)}
               fee={ETHPaymentTerminalFee}
               onModsChanged={newMods => {
-                setMods(newMods)
+                setSplits(newMods.map(toSplit))
               }}
             />
           </div>
-          <FormActionbar />
+          {/* Default to floating save button if custom one not given */}
+          {saveButton ?? <FormActionbar />}
         </Form>
-      </Col>
-      <Col md={12} xs={0}></Col>
+      </ProjectConfigurationFieldsContainer>
+      {!hidePreview && <Col md={12} xs={0}></Col>}
     </Row>
   )
 }

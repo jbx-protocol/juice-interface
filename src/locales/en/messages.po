@@ -508,6 +508,10 @@ msgstr ""
 msgid "Connect wallet to deploy"
 msgstr "Connect wallet to deploy"
 
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+msgid "Connect wallet to {0}"
+msgstr "Connect wallet to {0}"
+
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/v2/V2Create/tabs/RulesTab/ProjectReconfigurationFormItem.tsx
 msgid "Contract address: {0}"
@@ -1221,7 +1225,6 @@ msgstr ""
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 #: src/components/v1/V1Project/V1PayButton.tsx
-#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
 #: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
 #: src/components/v2/V2Project/V2PayButton.tsx

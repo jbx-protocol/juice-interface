@@ -44,6 +44,10 @@ export default function V2ConfirmPayOwnerModal({
   onCancel?: VoidFunction
 }) {
   const { userAddress, onSelectWallet } = useContext(NetworkContext)
+  const { fundingCycle, projectMetadata, projectId, tokenAddress } =
+    useContext(V2ProjectContext)
+  const converter = useCurrencyConverter()
+  const payProjectTx = usePayV2ProjectTx()
 
   const [loading, setLoading] = useState<boolean>()
   const [preferClaimed, setPreferClaimed] = useState<boolean>(false)
@@ -55,12 +59,7 @@ export default function V2ConfirmPayOwnerModal({
 
   const [form] = useForm<{ memo: string; beneficiary: string }>()
 
-  const converter = useCurrencyConverter()
-  const payProjectTx = usePayV2ProjectTx()
-
   const usdAmount = converter.weiToUsd(weiAmount)
-  const { fundingCycle, projectMetadata, projectId, tokenAddress } =
-    useContext(V2ProjectContext)
 
   if (!fundingCycle || !projectId || !projectMetadata) return null
 

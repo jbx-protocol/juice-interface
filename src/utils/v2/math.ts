@@ -7,6 +7,7 @@ export const MAX_RESERVED_RATE = TEN_THOUSAND
 export const MAX_REDEMPTION_RATE = TEN_THOUSAND
 export const MAX_DISCOUNT_RATE = ONE_BILLION
 export const SPLITS_TOTAL_PERCENT = ONE_BILLION
+export const MAX_FEE = ONE_BILLION
 
 /**
  * Express a given discount rate (parts-per-billion) as a percentage.
@@ -88,4 +89,22 @@ export const formatRedemptionRate = (redemptionRate: BigNumber) => {
  */
 export const redemptionRateFrom = (percentage: string) => {
   return BigNumber.from(percentage).mul(MAX_REDEMPTION_RATE / 100)
+}
+
+/**
+ * Express a given fee (parts-per-ten thousand) as a percentage.
+ * @param fee - fee as parts-per-thousand.
+ * @returns {string} fee expressed as a percentage.
+ */
+export const formatFee = (fee: BigNumber) => {
+  return fee.div(MAX_FEE / 100).toString()
+}
+
+/**
+ * Express a given [percentage] as a fee (parts-per-ten thousand).
+ * @param percentage - value as a percentage.
+ * @returns {BigNumber} percentage expressed as parts-per-thousand.
+ */
+export const feeFrom = (percentage: string) => {
+  return BigNumber.from(percentage).mul(MAX_FEE / 100)
 }

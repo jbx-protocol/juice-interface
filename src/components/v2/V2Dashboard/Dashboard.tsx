@@ -8,7 +8,7 @@ import ScrollToTopButton from 'components/shared/ScrollToTopButton'
 import useProjectCurrentFundingCycle from 'hooks/v2/contractReader/ProjectCurrentFundingCycle'
 import useProjectSplits from 'hooks/v2/contractReader/ProjectSplits'
 import useProjectTerminals from 'hooks/v2/contractReader/ProjectTerminals'
-import { useETHPaymentTerminalBalance } from 'hooks/v2/contractReader/ETHPaymentTerminalBalance'
+import { usePaymentTerminalBalance } from 'hooks/v2/contractReader/PaymentTerminalBalance'
 import useProjectToken from 'hooks/v2/contractReader/ProjectToken'
 import useProjectQueuedFundingCycle from 'hooks/v2/contractReader/ProjectQueuedFundingCycle'
 import useProjectDistributionLimit from 'hooks/v2/contractReader/ProjectDistributionLimit'
@@ -103,7 +103,8 @@ export default function V2Dashboard() {
     domain: queuedFundingCycle?.configuration?.toString(),
   })
 
-  const { data: ETHBalance } = useETHPaymentTerminalBalance({
+  const { data: ETHBalance } = usePaymentTerminalBalance({
+    terminal: primaryTerminal,
     projectId,
   })
 

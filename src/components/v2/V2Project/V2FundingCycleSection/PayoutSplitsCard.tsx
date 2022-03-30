@@ -10,6 +10,8 @@ import { useContext, useState } from 'react'
 
 import { V2CurrencyName } from 'utils/v2/currency'
 
+import WithdrawModal from './modals/WithdrawModal'
+
 export default function PayoutSplitsCard() {
   const {
     payoutSplits,
@@ -19,7 +21,7 @@ export default function PayoutSplitsCard() {
     projectOwnerAddress,
     balanceInDistributionLimitCurrency,
   } = useContext(V2ProjectContext)
-  const [, setWithdrawModalVisible] = useState<boolean>()
+  const [withdrawModalVisible, setWithdrawModalVisible] = useState<boolean>()
 
   return (
     <CardSection>
@@ -69,6 +71,11 @@ export default function PayoutSplitsCard() {
           ) : null}
         </div>
       </Space>
+
+      <WithdrawModal
+        visible={withdrawModalVisible}
+        onCancel={() => setWithdrawModalVisible(false)}
+      />
     </CardSection>
   )
 }

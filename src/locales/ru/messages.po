@@ -2503,4 +2503,3 @@ msgstr "Обменный курс {tokenSymbol}/ETH на {exchangeName}."
 msgid "{tokensLabel} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
 msgstr "{tokensLabel} распространяются среди всех, кто оплачивает этот проект. Если проектустановил целевой показатель финансирования, токены могут быть выкуплены для частипереполнения проекта независимо от того, были ли они еще востребованы или нет."
 
-

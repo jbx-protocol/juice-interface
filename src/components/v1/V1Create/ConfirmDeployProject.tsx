@@ -59,10 +59,8 @@ export default function ConfirmDeployProject() {
   const unsafeFundingCycleProperties = getUnsafeFundingCycleProperties(
     currentFC as V1FundingCycle,
   )
-  console.warn(unsafeFundingCycleProperties)
 
   const rowGutter: [Gutter, Gutter] = [25, 20]
-  console.warn('currentFC', currentFC)
   return (
     <Space size="large" direction="vertical">
       <h1 style={{ fontSize: '2rem' }}>

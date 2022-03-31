@@ -100,13 +100,13 @@ msgstr "<0/> Los proyectos archivados no han sido modificados o eliminados en la
 msgid "<0/> The Juicebox protocol is open to anyone, and project configurations can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO or Peel. Do your own research and understand the risks before committing your funds."
 msgstr "<0/> El protocolo Juicebox está abierto para cualquiera, y las configuraciones de proyectos pueden cambiar ampliamente. Existen riesgos asociados con interactuar con todos los proyectos en el protocolo. Los proyectos construidos en el protocolo no son respaldados o investigados por JuiceboxDAO o Peel. Haz tu propia investigación y comprende los riesgos antes de comprometer tus fondos."
 
-#: src/components/v1/FundingCycle/Spending/SpendingStats.tsx
+#: src/components/shared/Project/SpendingStats.tsx
 msgid "<0/> owner balance"
 msgstr "Saldo del propietario <0/>"
 
-#: src/components/v1/FundingCycle/Spending/SpendingStats.tsx
-msgid "<0/>{0}{1} withdrawn"
-msgstr "<0/>{0}{1} retirar"
+#: src/components/shared/Project/SpendingStats.tsx
+msgid "<0/>{0}{1} distributed"
+msgstr ""
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/WithdrawModal.tsx
 msgid "<0><1/>{0}</0> after {feePercent}% JBX fee"
@@ -224,7 +224,7 @@ msgstr "Una reconfiguración para el siguiente ciclo de financiación debe ser p
 msgid "A reconfiguration to an upcoming funding cycle must be submitted at least 7 days before it starts."
 msgstr "Una reconfiguración para el siguiente ciclo de financiación debe ser presentada al menos 7 días antes de que empiece."
 
-#: src/components/v1/FundingCycle/Spending/SpendingStats.tsx
+#: src/components/shared/Project/SpendingStats.tsx
 msgid "AVAILABLE"
 msgstr "DISPONIBLE"
 
@@ -378,7 +378,7 @@ msgstr "Regresa arriba"
 msgid "Balance exceeded"
 msgstr "Balance excedido"
 
-#: src/components/v1/FundingCycle/Spending/SpendingStats.tsx
+#: src/components/shared/Project/SpendingStats.tsx
 msgid "Balance of the project owner's wallet."
 msgstr ""
 
@@ -657,6 +657,7 @@ msgstr "Distribuye fondos disponibles a otras wallets de Ethereum o proyectos de
 
 #: src/components/v1/FundingCycle/Spending/index.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/WithdrawModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/WithdrawModal.tsx
 msgid "Distribute funds"
 msgstr "Distribuir fondos"
@@ -1832,7 +1833,7 @@ msgstr "El código siempre podrá usar más ojos y más críticas para acrecenta
 msgid "The contract team will soon start working on L2 payment terminals for Juicebox projects."
 msgstr "El equipo de contratos va a estar trabajando pronto en terminales de pago L2 para los proyectos en Juicebox."
 
-#: src/components/v1/FundingCycle/Spending/SpendingStats.tsx
+#: src/components/shared/Project/SpendingStats.tsx
 msgid "The funds available to withdraw for this funding cycle after the ${feePercentage}% JBX fee is subtracted. This number won't roll over to the next funding cycle, so funds should be withdrawn before it ends."
 msgstr ""
 
@@ -2222,7 +2223,6 @@ msgstr "Con Juicebox, los proyectos están construidos y mantenidos por punks mo
 
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/modals/WithdrawModal.tsx
 msgid "Withdraw"
 msgstr "Retirar"
 

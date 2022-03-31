@@ -13,7 +13,7 @@ import { V1CurrencyName } from 'utils/v1/currency'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { perbicentToPercent } from 'utils/formatNumber'
 
-import SpendingStats from './SpendingStats'
+import SpendingStats from '../../../shared/Project/SpendingStats'
 
 export default function Spending({
   payoutMods,

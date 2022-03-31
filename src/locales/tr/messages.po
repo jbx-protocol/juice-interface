@@ -100,12 +100,12 @@ msgstr "<0/> Arşivlenen projeler blok zincirinde değiştirilmemiştir veya sil
 msgid "<0/> The Juicebox protocol is open to anyone, and project configurations can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO or Peel. Do your own research and understand the risks before committing your funds."
 msgstr ""
 
-#: src/components/v1/FundingCycle/Spending/SpendingStats.tsx
+#: src/components/shared/Project/SpendingStats.tsx
 msgid "<0/> owner balance"
 msgstr "<0/> sahip bakiyesi"
 
-#: src/components/v1/FundingCycle/Spending/SpendingStats.tsx
-msgid "<0/>{0}{1} withdrawn"
+#: src/components/shared/Project/SpendingStats.tsx
+msgid "<0/>{0}{1} distributed"
 msgstr ""
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/WithdrawModal.tsx
@@ -224,7 +224,7 @@ msgstr "Yaklaşan bir finansman döngüsü için yeniden yapılandırma, döngü
 msgid "A reconfiguration to an upcoming funding cycle must be submitted at least 7 days before it starts."
 msgstr "Yaklaşan bir finansman döngüsü için yeniden yapılandırma, döngü başlamadan en az 7 gün önce sunulmalıdır."
 
-#: src/components/v1/FundingCycle/Spending/SpendingStats.tsx
+#: src/components/shared/Project/SpendingStats.tsx
 msgid "AVAILABLE"
 msgstr "MEVCUT"
 
@@ -378,7 +378,7 @@ msgstr "Başa dön"
 msgid "Balance exceeded"
 msgstr ""
 
-#: src/components/v1/FundingCycle/Spending/SpendingStats.tsx
+#: src/components/shared/Project/SpendingStats.tsx
 msgid "Balance of the project owner's wallet."
 msgstr ""
 
@@ -657,6 +657,7 @@ msgstr "Uygun fonları diğer Ethereum cüzdanlarına veya Juicebox projelerine 
 
 #: src/components/v1/FundingCycle/Spending/index.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/WithdrawModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/WithdrawModal.tsx
 msgid "Distribute funds"
 msgstr "Fonları dağıt"
@@ -1832,7 +1833,7 @@ msgstr ""
 msgid "The contract team will soon start working on L2 payment terminals for Juicebox projects."
 msgstr ""
 
-#: src/components/v1/FundingCycle/Spending/SpendingStats.tsx
+#: src/components/shared/Project/SpendingStats.tsx
 msgid "The funds available to withdraw for this funding cycle after the ${feePercentage}% JBX fee is subtracted. This number won't roll over to the next funding cycle, so funds should be withdrawn before it ends."
 msgstr ""
 
@@ -2222,7 +2223,6 @@ msgstr "Juicebox ile projeler, motive olmuş punklar tarafından şeffaf bir şe
 
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/modals/WithdrawModal.tsx
 msgid "Withdraw"
 msgstr "Çek"
 

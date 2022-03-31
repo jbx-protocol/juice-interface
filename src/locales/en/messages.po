@@ -356,7 +356,7 @@ msgstr "Assets"
 msgid "Available after fee:"
 msgstr ""
 
-#: src/components/v1/FundingCycle/Spending/index.tsx
+#: src/components/v1/FundingCycle/Spending.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
 msgid "Available funds are distributed according to the payouts below."
 msgstr "Available funds are distributed according to the payouts below."
@@ -650,7 +650,7 @@ msgstr "Display ERC20 tokens and other Juicebox project tokens that are in this 
 msgid "Distribute available funds to other Ethereum wallets or Juicebox projects as payouts. Use this to pay contributors, charities, Juicebox projects you depend on, or anyone else. Funds are distributed whenever a withdrawal is made from your project."
 msgstr "Distribute available funds to other Ethereum wallets or Juicebox projects as payouts. Use this to pay contributors, charities, Juicebox projects you depend on, or anyone else. Funds are distributed whenever a withdrawal is made from your project."
 
-#: src/components/v1/FundingCycle/Spending/index.tsx
+#: src/components/v1/FundingCycle/Spending.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/WithdrawModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/WithdrawModal.tsx
@@ -804,7 +804,7 @@ msgstr "For more info, check out this <0>short video</0>."
 msgid "For users paying through your app, you should route those funds through the Juicebox smart contracts so they receive tokens in return."
 msgstr "For users paying through your app, you should route those funds through the Juicebox smart contracts so they receive tokens in return."
 
-#: src/components/v1/FundingCycle/Spending/index.tsx
+#: src/components/v1/FundingCycle/Spending.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
 msgid "Funding Distribution"
 msgstr "Funding Distribution"

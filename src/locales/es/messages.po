@@ -361,7 +361,7 @@ msgstr "Activos"
 msgid "Available after fee:"
 msgstr "Disponible tras comisión:"
 
-#: src/components/v1/FundingCycle/Spending/index.tsx
+#: src/components/v1/FundingCycle/Spending.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
 msgid "Available funds are distributed according to the payouts below."
 msgstr "Los fondos disponibles son distribuidos acorde a los pagos a continuación."
@@ -655,7 +655,7 @@ msgstr "Muestra tokens ERC20 y otros tokens de proyectos Juicebox que están en 
 msgid "Distribute available funds to other Ethereum wallets or Juicebox projects as payouts. Use this to pay contributors, charities, Juicebox projects you depend on, or anyone else. Funds are distributed whenever a withdrawal is made from your project."
 msgstr "Distribuye fondos disponibles a otras wallets de Ethereum o proyectos de Juicebox como pagos. Usa esto para pagarle a colaboradores, caridades, proyectos de Juicebox de los que dependas, o a cualquier otro. Los fondos son distribuidos cuando un retiro se hace desde tu proyecto."
 
-#: src/components/v1/FundingCycle/Spending/index.tsx
+#: src/components/v1/FundingCycle/Spending.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/WithdrawModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/WithdrawModal.tsx
@@ -809,7 +809,7 @@ msgstr "Para más información, mira este <0>video corto</0>."
 msgid "For users paying through your app, you should route those funds through the Juicebox smart contracts so they receive tokens in return."
 msgstr "Para los usuarios que paguen a través de tu aplicación, deberás dirigir esos fondos a través de los contratos inteligentes de Juicebox para que reciban tokens a cambio."
 
-#: src/components/v1/FundingCycle/Spending/index.tsx
+#: src/components/v1/FundingCycle/Spending.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
 msgid "Funding Distribution"
 msgstr "Distribución de fondos"

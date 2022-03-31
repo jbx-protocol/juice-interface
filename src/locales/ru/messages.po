@@ -361,7 +361,7 @@ msgstr "Активы"
 msgid "Available after fee:"
 msgstr "Доступно после комиссии:"
 
-#: src/components/v1/FundingCycle/Spending/index.tsx
+#: src/components/v1/FundingCycle/Spending.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
 msgid "Available funds are distributed according to the payouts below."
 msgstr "Доступные средства распределяются в соответствии с приведенными ниже выплатами."
@@ -655,7 +655,7 @@ msgstr "Отображение токенов ERC20 и других токено
 msgid "Distribute available funds to other Ethereum wallets or Juicebox projects as payouts. Use this to pay contributors, charities, Juicebox projects you depend on, or anyone else. Funds are distributed whenever a withdrawal is made from your project."
 msgstr "Распределяйте доступные средства на другие кошельки Ethereum или проекты Juicebox в качестве выплат. Используйте это, чтобы платить вкладчикам, благотворительным организациям, проектам Juicebox, от которых вы зависите, или кому-либо еще. Средства распределяются всякий раз, когда производится вывод средств из вашего проекта."
 
-#: src/components/v1/FundingCycle/Spending/index.tsx
+#: src/components/v1/FundingCycle/Spending.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/WithdrawModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/WithdrawModal.tsx
@@ -809,7 +809,7 @@ msgstr "Для получения дополнительной информац�
 msgid "For users paying through your app, you should route those funds through the Juicebox smart contracts so they receive tokens in return."
 msgstr "Если пользователи платят через ваше приложение, вы должны направить эти средства через смарт-контракты Juicebox, чтобы они получили токены взамен."
 
-#: src/components/v1/FundingCycle/Spending/index.tsx
+#: src/components/v1/FundingCycle/Spending.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
 msgid "Funding Distribution"
 msgstr "Распределение финансирования"

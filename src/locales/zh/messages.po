@@ -361,7 +361,7 @@ msgstr "资产"
 msgid "Available after fee:"
 msgstr "扣除手续费后可用"
 
-#: src/components/v1/FundingCycle/Spending/index.tsx
+#: src/components/v1/FundingCycle/Spending.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
 msgid "Available funds are distributed according to the payouts below."
 msgstr "可用资金会分发给以下支出对象。"
@@ -655,7 +655,7 @@ msgstr "展示项目方钱包中的 ERC20 代币以及其他 Juicebox 项目代�
 msgid "Distribute available funds to other Ethereum wallets or Juicebox projects as payouts. Use this to pay contributors, charities, Juicebox projects you depend on, or anyone else. Funds are distributed whenever a withdrawal is made from your project."
 msgstr "把可用资金分发给其他以太坊钱包或者其他Juicebox项目。使用这项功能付款给项目的贡献者、慈善机构、其他帮助你的Juicebox项目、或是任何其他人。无论什么时候从您项目提款，资金都会自动进行发放。"
 
-#: src/components/v1/FundingCycle/Spending/index.tsx
+#: src/components/v1/FundingCycle/Spending.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/WithdrawModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/WithdrawModal.tsx
@@ -809,7 +809,7 @@ msgstr "了解更多信息，请查看 <0>短片</0>。"
 msgid "For users paying through your app, you should route those funds through the Juicebox smart contracts so they receive tokens in return."
 msgstr "对于通过你的应用程序进行支付的用户，你应该将资金再导向 Juicebox 智能合约，这样他们才能收到作为回报的代币。"
 
-#: src/components/v1/FundingCycle/Spending/index.tsx
+#: src/components/v1/FundingCycle/Spending.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
 msgid "Funding Distribution"
 msgstr "资金分发"

@@ -361,7 +361,7 @@ msgstr "Varlıklar"
 msgid "Available after fee:"
 msgstr "Ücretten sonra kullanılabilir:"
 
-#: src/components/v1/FundingCycle/Spending/index.tsx
+#: src/components/v1/FundingCycle/Spending.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
 msgid "Available funds are distributed according to the payouts below."
 msgstr "Mevcut fonlar aşağıdaki ödemelere göre dağıtılır."
@@ -655,7 +655,7 @@ msgstr "Bu proje sahibinin cüzdanında bulunan ERC20 token'larını ve diğer J
 msgid "Distribute available funds to other Ethereum wallets or Juicebox projects as payouts. Use this to pay contributors, charities, Juicebox projects you depend on, or anyone else. Funds are distributed whenever a withdrawal is made from your project."
 msgstr "Uygun fonları diğer Ethereum cüzdanlarına veya Juicebox projelerine ödeme olarak dağıtın. Bunu katılımcılara, yardım kuruluşlarına, bağlı olduğunuz Juicebox projelerine veya başkalarına ödeme yapmak için kullanın. Projelerinizden para çekildiğinde fonlar dağıtılır."
 
-#: src/components/v1/FundingCycle/Spending/index.tsx
+#: src/components/v1/FundingCycle/Spending.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/WithdrawModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/WithdrawModal.tsx
@@ -809,7 +809,7 @@ msgstr ""
 msgid "For users paying through your app, you should route those funds through the Juicebox smart contracts so they receive tokens in return."
 msgstr ""
 
-#: src/components/v1/FundingCycle/Spending/index.tsx
+#: src/components/v1/FundingCycle/Spending.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
 msgid "Funding Distribution"
 msgstr "Finansman Dağılımı"

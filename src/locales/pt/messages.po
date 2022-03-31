@@ -361,7 +361,7 @@ msgstr "Ativos"
 msgid "Available after fee:"
 msgstr "Disponível após a taxa:"
 
-#: src/components/v1/FundingCycle/Spending/index.tsx
+#: src/components/v1/FundingCycle/Spending.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
 msgid "Available funds are distributed according to the payouts below."
 msgstr "Fundos disponíveis são distribuídos conforme os pagamentos abaixo."
@@ -655,7 +655,7 @@ msgstr "Mostra tokens ERC20 e outros tokens de projetos Juicebox que estão na c
 msgid "Distribute available funds to other Ethereum wallets or Juicebox projects as payouts. Use this to pay contributors, charities, Juicebox projects you depend on, or anyone else. Funds are distributed whenever a withdrawal is made from your project."
 msgstr "Distribua fundos disponíveis para outras carteiras de Ethereum ou projetos do Juicebox como pagamento. Use isso para pagar contribuidores, caridade, projetos do Juicebox dos quais você depende, ou qualquer outra pessoa. Fundos são distribuídos quando ocorre uma retirada de seu projeto."
 
-#: src/components/v1/FundingCycle/Spending/index.tsx
+#: src/components/v1/FundingCycle/Spending.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/WithdrawModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/WithdrawModal.tsx
@@ -809,7 +809,7 @@ msgstr "Para mais informações, veja esse <0> vídeo curto</0>."
 msgid "For users paying through your app, you should route those funds through the Juicebox smart contracts so they receive tokens in return."
 msgstr "Para usuários pagando através de seu app, você deveria direcionar esses fundos através dos contratos inteligentes do Juicebox, para eles receberem tokens em troca."
 
-#: src/components/v1/FundingCycle/Spending/index.tsx
+#: src/components/v1/FundingCycle/Spending.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
 msgid "Funding Distribution"
 msgstr "Distribuição de financiamento"

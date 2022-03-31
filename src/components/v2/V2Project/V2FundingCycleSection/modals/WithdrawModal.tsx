@@ -47,7 +47,6 @@ export default function WithdrawModal({
   const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
 
   const converter = useCurrencyConverter()
-
   useEffect(() => {
     if (!distributionLimit) return
 
@@ -83,14 +82,10 @@ export default function WithdrawModal({
     )?.sub(1e12) // Arbitrary value subtracted
     if (!minAmount) return
 
-    const amount = distributionLimitCurrency.eq(V2_CURRENCY_USD)
-      ? converter.usdToWei(distributionAmount)
-      : parseWad(distributionAmount)
-
     setLoading(true)
     distributePayoutsTx(
       {
-        amount,
+        amount: parseWad(distributionAmount),
         currency: distributionLimitCurrency.toNumber() as V2CurrencyOption,
       },
       {

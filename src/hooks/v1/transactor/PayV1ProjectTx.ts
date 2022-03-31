@@ -23,6 +23,9 @@ export function usePayV1ProjectTx(): TransactorInstance<{
       !contracts?.TicketBooth ||
       !terminal?.version
     ) {
+      if (transactor) {
+        txOpts?.onError?.()
+      }
       txOpts?.onDone?.()
       return Promise.resolve(false)
     }

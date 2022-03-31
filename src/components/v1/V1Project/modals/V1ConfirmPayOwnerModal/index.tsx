@@ -57,7 +57,7 @@ export default function V1ConfirmPayOwnerModal({
     }
     setLoading(true)
 
-    payProjectTx(
+    await payProjectTx(
       {
         note: form.getFieldValue('note'),
         preferUnstaked,

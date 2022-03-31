@@ -8,7 +8,8 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-03-29 02:25\n"
+"PO-Revision-Date: 2022-03-31 02:21\n"
+"PO-Revision-Date: 2022-03-31 02:21\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -873,7 +874,7 @@ msgstr "跳转到 Etherscan"
 msgid "Handle"
 msgstr "标识"
 
-#: src/components/v2/V2Create/V2MainnetWarning.tsx
+#: src/components/v2/shared/V2MainnetWarning.tsx
 msgid "Head to <0>rinkeby.juicebox.money</0> to create a project using the Juicebox V2 contracts on Rinkeby."
 msgstr "前往<0>rinkeby.juicebox.money</0>以使用 Rinkeby 上的 Juicebox V2 合约创建一个项目。"
 
@@ -1011,6 +1012,10 @@ msgstr "如果你这么做了会更好"
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 msgid "JBX Fee ({0}%):"
 msgstr "JBX 费率（{0}%）："
+
+#: src/components/v2/shared/V2MainnetWarning.tsx
+msgid "Juicebox V2 on mainnet isn't supported."
+msgstr ""
 
 #: src/components/Landing/QAs.tsx
 msgid "Juicebox has handled tens of thousands of ETH through its protocol, and has so far had 0 security mishaps."
@@ -1775,10 +1780,6 @@ msgstr "有这一个这是计划，但核心的 Juicebox 合约将首先部署�
 msgid "The JBX protocol is unaudited, and projects built on it may be vulnerable to bugs or exploits. Be smart!"
 msgstr "JBX 协议未经审计，基于它构建的项目可能受到 bug 的影响或漏洞被恶意利用。使用风险请自行承担！"
 
-#: src/components/v2/V2Create/V2MainnetWarning.tsx
-msgid "The Juicebox V2 contracts aren't available on mainnet."
-msgstr "Juicebox V2 合约在主网中不可用。"
-
 #: src/components/Landing/QAs.tsx
 msgid "The Juicebox protocol is governed by a community of JBX token holders who vote on proposals fortnightly."
 msgstr "Juicebox协议由JBX代币持有者组成的社区所管理，他们每两周对提案进行投票。"
@@ -2501,4 +2502,5 @@ msgstr "在 {exchangeName} 的兑换率为 {tokenSymbol}/ETH"
 #: src/components/v1/V1Project/Rewards/index.tsx
 msgid "{tokensLabel} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
 msgstr "{tokensLabel} 会被分配给付款的人。如果项目设置了筹款目标，可以燃烧代币来按比例赎回溢出池中的 ETH。"
+
 

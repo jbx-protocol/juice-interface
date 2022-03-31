@@ -11,7 +11,7 @@ import V2CurrencyProvider from 'providers/v2/V2CurrencyProvider'
 
 import { readNetwork } from 'constants/networks'
 import V2WarningBanner from './V2WarningBanner'
-import V2MainnetWarning from './V2MainnetWarning'
+import V2MainnetWarning from '../shared/V2MainnetWarning'
 import ProjectDetailsTabContent from './tabs/ProjectDetailsTabContent'
 import FundingTabContent from './tabs/FundingTab/FundingTabContent'
 import TokenTabContent from './tabs/TokenTab/TokenTabContent'

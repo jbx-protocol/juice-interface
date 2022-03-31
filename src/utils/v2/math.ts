@@ -146,12 +146,13 @@ export const feeForAmount = (
   feePerBillion: BigNumber | undefined,
 ) => {
   if (!feePerBillion || !amount) return
-  return amount.mul(ONE_BILLION).div(feePerBillion)
+  return amount.mul(feePerBillion).div(ONE_BILLION)
 }
 
 export const amountSubFee = (amount?: BigNumber, feePerBillion?: BigNumber) => {
   if (!feePerBillion || !amount) return
-  return amount.sub(feeForAmount(amount, feePerBillion) ?? 0)
+  const feeAmount = feeForAmount(amount, feePerBillion) ?? 0
+  return amount.sub(feeAmount)
 }
 
 /**

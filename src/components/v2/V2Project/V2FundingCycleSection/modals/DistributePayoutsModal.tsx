@@ -1,4 +1,5 @@
-import { Form, Space } from 'antd'
+import { CrownFilled } from '@ant-design/icons'
+import { Form, Space, Tooltip } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import { Trans } from '@lingui/macro'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
@@ -107,20 +108,17 @@ export default function DistributePayoutsModal({
       precision: 4,
     },
   )
-  const netAvailableAmount = formatWad(
-    amountSubFee(distributable, ETHPaymentTerminalFee) ?? 0,
-    {
-      precision: 4,
-    },
-  )
-  const netAvailableAmountETH = formatWad(
-    amountSubFee(
-      distributionLimitCurrency?.eq(V2_CURRENCY_USD)
-        ? converter.usdToWei(distributionAmount)
-        : parseWad(distributionAmount),
-      ETHPaymentTerminalFee,
-    ),
-    { precision: 4 },
+  const netAvailableAmount =
+    amountSubFee(distributable, ETHPaymentTerminalFee) ?? BigNumber.from(0)
+
+  const netAvailableAmountFormatted = formatWad(netAvailableAmount, {
+    precision: 4,
+  })
+  const netAvailableAmountWad = amountSubFee(
+    distributionLimitCurrency?.eq(V2_CURRENCY_USD)
+      ? converter.usdToWei(distributionAmount)
+      : parseWad(distributionAmount),
+    ETHPaymentTerminalFee,
   )
 
   return (
@@ -172,7 +170,7 @@ export default function DistributePayoutsModal({
             </div>
             <div>
               <CurrencySymbol currency={distributionCurrencyName} />
-              {netAvailableAmount}
+              {netAvailableAmountFormatted}
             </div>
           </div>
         </div>
@@ -180,11 +178,12 @@ export default function DistributePayoutsModal({
         <Form layout="vertical">
           <Form.Item
             label={<Trans>Amount to distribute</Trans>}
+            style={{ marginBottom: 0 }}
             extra={
               <div style={{ color: colors.text.primary, marginBottom: 10 }}>
                 <Trans>
                   <span style={{ fontWeight: 500 }}>
-                    <ETHAmount amount={netAvailableAmountETH} />
+                    <ETHAmount amount={netAvailableAmountWad} precision={4} />
                   </span>{' '}
                   after {feePercentage}% JBX fee
                 </Trans>
@@ -224,28 +223,39 @@ export default function DistributePayoutsModal({
           </Form.Item>
         </Form>
 
-        {payoutSplits?.length ? (
-          <div>
-            <h4>
-              <Trans>Payout recipients</Trans>
-            </h4>
+        <div>
+          <h4>
+            <Trans>Payout recipients</Trans>
+          </h4>
+
+          {payoutSplits?.length ? (
             <SplitList
-              distributionLimit={distributionLimit}
+              distributionLimit={netAvailableAmount}
               distributionLimitCurrency={distributionLimitCurrency}
               splits={payoutSplits}
               projectOwnerAddress={projectOwnerAddress}
               showSplitValues
             />
-          </div>
-        ) : (
-          <p>
-            <Trans>
-              <ETHAmount amount={netAvailableAmountETH} />
-              will go to the project owner:{' '}
-              <FormattedAddress address={projectOwnerAddress} />
-            </Trans>
-          </p>
-        )}
+          ) : (
+            <div>
+              <p>
+                <Trans>
+                  There are no payouts defined for this project. The project
+                  owner will recieve all distributed funds.
+                </Trans>
+              </p>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <div>
+                  <FormattedAddress address={projectOwnerAddress} />{' '}
+                  <Tooltip title={<Trans>Project owner</Trans>}>
+                    <CrownFilled />
+                  </Tooltip>
+                </div>
+                <ETHAmount amount={netAvailableAmountWad} precision={4} />
+              </div>
+            </div>
+          )}
+        </div>
       </Space>
     </Modal>
   )

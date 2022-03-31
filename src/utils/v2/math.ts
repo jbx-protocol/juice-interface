@@ -1,4 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { invertPermyriad } from 'utils/bigNumbers'
+import { fromWad, percentToPermyriad } from 'utils/formatNumber'
+import { WeightFunction } from 'utils/math'
 
 const TEN_THOUSAND = 10000
 const ONE_BILLION = 1000000000
@@ -92,19 +95,75 @@ export const redemptionRateFrom = (percentage: string) => {
 }
 
 /**
- * Express a given fee (parts-per-ten thousand) as a percentage.
- * @param fee - fee as parts-per-thousand.
+ * Express a given fee (parts-per-billion) as a percentage.
+ * @param feePerBillion - fee as parts-per-billion.
  * @returns {string} fee expressed as a percentage.
  */
-export const formatFee = (fee: BigNumber) => {
-  return fee.div(MAX_FEE / 100).toString()
+export const formatFee = (feePerBillion: BigNumber) => {
+  return (
+    feePerBillion
+      .mul(ONE_BILLION * 100)
+      .div(MAX_FEE)
+      .toNumber() / ONE_BILLION
+  ).toString()
 }
 
 /**
- * Express a given [percentage] as a fee (parts-per-ten thousand).
- * @param percentage - value as a percentage.
- * @returns {BigNumber} percentage expressed as parts-per-thousand.
+ * Return a given [amountWad] weighted by a given [weight] and [reservedRatePermyriad].
+ *
+ * Typically only used by Juicebox V2 projects.
+ *
+ * @param weight - scalar value for weighting. Typically funding cycle weight.
+ * @param reservedRatePermyriad - reserve rate, as a permyriad (x/10,000)
+ * @param amountWad - amount to weight, as a wad.
+ * @param outputType
+ * @returns
  */
-export const feeFrom = (percentage: string) => {
-  return BigNumber.from(percentage).mul(MAX_FEE / 100)
+export const weightedAmount: WeightFunction = (
+  weight: BigNumber | undefined,
+  reservedRatePermyriad: number | undefined,
+  amountWad: BigNumber | undefined,
+  outputType: 'payer' | 'reserved',
+) => {
+  if (!weight || !amountWad) return
+
+  if (reservedRatePermyriad === undefined) return
+
+  return fromWad(
+    amountWad
+      .mul(weight)
+      .mul(
+        outputType === 'reserved'
+          ? reservedRatePermyriad
+          : invertPermyriad(BigNumber.from(reservedRatePermyriad)),
+      )
+      .div(percentToPermyriad(100)),
+  )
+}
+
+export const feeForAmount = (
+  amount: BigNumber | undefined,
+  feePerBillion: BigNumber | undefined,
+) => {
+  if (!feePerBillion || !amount) return
+  return amount.mul(ONE_BILLION).div(feePerBillion)
+}
+
+export const amountSubFee = (amount?: BigNumber, feePerBillion?: BigNumber) => {
+  if (!feePerBillion || !amount) return
+  return amount.sub(feeForAmount(amount, feePerBillion) ?? 0)
+}
+
+/**
+ * new amount = old amount / (1 - fee)
+ */
+export const amountAddFee = (amount?: string, feePerBillion?: BigNumber) => {
+  if (!feePerBillion || !amount) return
+
+  const inverseFeePerbillion = BigNumber.from(ONE_BILLION).sub(feePerBillion)
+  const amountPerbillion = BigNumber.from(amount).mul(ONE_BILLION)
+  // new amount is in regular decimal units
+  const newAmount = amountPerbillion.div(inverseFeePerbillion)
+
+  return newAmount.toString()
 }

@@ -24,11 +24,11 @@ import { FormItems } from 'components/shared/formItems'
 
 import * as constants from '@ethersproject/constants'
 
-import { weightedAmount } from 'utils/math'
-
 import { decodeV2FundingCycleMetadata } from 'utils/v2/fundingCycle'
 
 import Paragraph from 'components/shared/Paragraph'
+
+import { weightedAmount } from 'utils/v2/math'
 
 import V2ProjectRiskNotice from './V2ProjectRiskNotice'
 

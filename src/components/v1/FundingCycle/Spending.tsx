@@ -77,7 +77,7 @@ export default function Spending({
               mods={payoutMods}
               fundingCycle={currentFC}
               projectId={projectId}
-              fee={currentFC.fee}
+              feePerbicent={currentFC.fee}
             />
           </div>
         )}

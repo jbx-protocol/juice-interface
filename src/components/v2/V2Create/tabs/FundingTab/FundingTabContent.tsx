@@ -231,7 +231,7 @@ export default function FundingTabContent({
               mods={splits.map(toMod)}
               target={target ?? '0'}
               currency={toV1Currency(targetCurrency)}
-              fee={ETHPaymentTerminalFee}
+              feePerbicent={ETHPaymentTerminalFee}
               onModsChanged={newMods => {
                 setSplits(newMods.map(toSplit))
               }}

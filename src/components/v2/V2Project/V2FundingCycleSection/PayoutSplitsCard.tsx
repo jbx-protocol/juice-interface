@@ -10,7 +10,7 @@ import { useContext, useState } from 'react'
 
 import { V2CurrencyName } from 'utils/v2/currency'
 
-import WithdrawModal from './modals/WithdrawModal'
+import DistributePayoutsModal from './modals/DistributePayoutsModal'
 
 export default function PayoutSplitsCard() {
   const {
@@ -21,7 +21,8 @@ export default function PayoutSplitsCard() {
     projectOwnerAddress,
     balanceInDistributionLimitCurrency,
   } = useContext(V2ProjectContext)
-  const [withdrawModalVisible, setWithdrawModalVisible] = useState<boolean>()
+  const [distributePayoutsModalVisible, setDistributePayoutsModalVisible] =
+    useState<boolean>()
 
   return (
     <CardSection>
@@ -41,7 +42,7 @@ export default function PayoutSplitsCard() {
           <Button
             type="ghost"
             size="small"
-            onClick={() => setWithdrawModalVisible(true)}
+            onClick={() => setDistributePayoutsModalVisible(true)}
           >
             <Trans>Distribute funds</Trans>
           </Button>
@@ -72,9 +73,9 @@ export default function PayoutSplitsCard() {
         </div>
       </Space>
 
-      <WithdrawModal
-        visible={withdrawModalVisible}
-        onCancel={() => setWithdrawModalVisible(false)}
+      <DistributePayoutsModal
+        visible={distributePayoutsModalVisible}
+        onCancel={() => setDistributePayoutsModalVisible(false)}
       />
     </CardSection>
   )

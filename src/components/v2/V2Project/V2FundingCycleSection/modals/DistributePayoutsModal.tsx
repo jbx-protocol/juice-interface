@@ -1,4 +1,4 @@
-import { Space } from 'antd'
+import { Form, Space } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import { Trans } from '@lingui/macro'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
@@ -9,7 +9,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
 import { useContext, useEffect, useState } from 'react'
 import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
-import { amountSubFee, feeForAmount } from 'utils/math'
+import { amountSubFee, feeForAmount } from 'utils/v2/math'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import SplitList from 'components/v2/shared/SplitList'
 import { V2CurrencyName, V2_CURRENCY_USD } from 'utils/v2/currency'
@@ -19,8 +19,9 @@ import { useETHPaymentTerminalFee } from 'hooks/v2/contractReader/ETHPaymentTerm
 import { BigNumber } from '@ethersproject/bignumber'
 
 import { formatFee } from 'utils/v2/math'
+import ETHAmount from 'components/shared/currency/ETHAmount'
 
-export default function WithdrawModal({
+export default function DistributePayoutsModal({
   visible,
   onCancel,
   onConfirmed,
@@ -45,32 +46,22 @@ export default function WithdrawModal({
 
   const distributePayoutsTx = useDistributePayoutsTx()
   const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
-
   const converter = useCurrencyConverter()
+
   useEffect(() => {
     if (!distributionLimit) return
 
-    const untapped = distributionLimit?.sub(usedDistributionLimit ?? 0) ?? 0
-    const withdrawable = balanceInDistributionLimitCurrency?.gt(untapped)
-      ? untapped
+    const unusedFunds = distributionLimit?.sub(usedDistributionLimit ?? 0) ?? 0
+    const distributable = balanceInDistributionLimitCurrency?.gt(unusedFunds)
+      ? unusedFunds
       : balanceInDistributionLimitCurrency
 
-    setDistributionAmount(fromWad(withdrawable))
+    setDistributionAmount(fromWad(distributable))
   }, [
     balanceInDistributionLimitCurrency,
     distributionLimit,
     usedDistributionLimit,
   ])
-
-  const currentFCCurrency = V2CurrencyName(
-    distributionLimitCurrency?.toNumber() as V2CurrencyOption,
-  )
-  const untapped =
-    distributionLimit?.sub(usedDistributionLimit ?? 0) ?? BigNumber.from(0)
-
-  const withdrawable = balanceInDistributionLimitCurrency?.gt(untapped)
-    ? untapped
-    : balanceInDistributionLimitCurrency
 
   function executeDistributePayoutsTx() {
     if (!distributionLimitCurrency || !distributionAmount) return
@@ -97,7 +88,40 @@ export default function WithdrawModal({
 
   if (!ETHPaymentTerminalFee) return null
 
-  const feePercent = formatFee(ETHPaymentTerminalFee)
+  const distributionCurrencyName = V2CurrencyName(
+    distributionLimitCurrency?.toNumber() as V2CurrencyOption,
+  )
+
+  const unusedFunds =
+    distributionLimit?.sub(usedDistributionLimit ?? 0) ?? BigNumber.from(0)
+
+  const distributable = balanceInDistributionLimitCurrency?.gt(unusedFunds)
+    ? unusedFunds
+    : balanceInDistributionLimitCurrency
+
+  const feePercentage = formatFee(ETHPaymentTerminalFee)
+  const grossAvailableAmount = formatWad(distributable, { precision: 4 })
+  const feeAmount = formatWad(
+    feeForAmount(distributable, ETHPaymentTerminalFee) ?? 0,
+    {
+      precision: 4,
+    },
+  )
+  const netAvailableAmount = formatWad(
+    amountSubFee(distributable, ETHPaymentTerminalFee) ?? 0,
+    {
+      precision: 4,
+    },
+  )
+  const netAvailableAmountETH = formatWad(
+    amountSubFee(
+      distributionLimitCurrency?.eq(V2_CURRENCY_USD)
+        ? converter.usdToWei(distributionAmount)
+        : parseWad(distributionAmount),
+      ETHPaymentTerminalFee,
+    ),
+    { precision: 4 },
+  )
 
   return (
     <Modal
@@ -120,23 +144,18 @@ export default function WithdrawModal({
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <Trans>Total funds:</Trans>{' '}
             <div>
-              <CurrencySymbol currency={currentFCCurrency} />
-              {formatWad(withdrawable, { precision: 4 })}
+              <CurrencySymbol currency={distributionCurrencyName} />
+              {grossAvailableAmount}
             </div>
           </div>
 
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <div>
-              <Trans>JBX Fee ({feePercent}%):</Trans>
+              <Trans>JBX Fee ({feePercentage}%):</Trans>
             </div>
             <div>
-              - <CurrencySymbol currency={currentFCCurrency} />
-              {formatWad(
-                feeForAmount(withdrawable, BigNumber.from(feePercent)) ?? 0,
-                {
-                  precision: 4,
-                },
-              )}
+              - <CurrencySymbol currency={distributionCurrencyName} />
+              {feeAmount}
             </div>
           </div>
 
@@ -145,70 +164,65 @@ export default function WithdrawModal({
               display: 'flex',
               justifyContent: 'space-between',
               fontWeight: 500,
+              borderTop: `1px solid ${colors.stroke.tertiary}`,
             }}
           >
             <div>
               <Trans>Available after fee:</Trans>
             </div>
             <div>
-              <CurrencySymbol currency={currentFCCurrency} />
-              {formatWad(
-                amountSubFee(withdrawable, BigNumber.from(feePercent)) ?? 0,
-                {
-                  precision: 4,
-                },
-              )}
+              <CurrencySymbol currency={distributionCurrencyName} />
+              {netAvailableAmount}
             </div>
           </div>
         </div>
-        <div>
-          <FormattedNumberInput
-            placeholder="0"
-            value={distributionAmount}
-            onChange={value => setDistributionAmount(value)}
-            accessory={
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-              >
-                <span
-                  style={{
-                    marginRight: 8,
-                    color: colors.text.primary,
-                  }}
-                >
-                  {V2CurrencyName(
-                    distributionLimitCurrency?.toNumber() as V2CurrencyOption,
-                  )}
-                </span>
-                <InputAccessoryButton
-                  content={<Trans>MAX</Trans>}
-                  onClick={() => setDistributionAmount(fromWad(withdrawable))}
-                />
+
+        <Form layout="vertical">
+          <Form.Item
+            label={<Trans>Amount to distribute</Trans>}
+            extra={
+              <div style={{ color: colors.text.primary, marginBottom: 10 }}>
+                <Trans>
+                  <span style={{ fontWeight: 500 }}>
+                    <ETHAmount amount={netAvailableAmountETH} />
+                  </span>{' '}
+                  after {feePercentage}% JBX fee
+                </Trans>
               </div>
             }
-          />
-
-          <div style={{ color: colors.text.primary, marginBottom: 10 }}>
-            <Trans>
-              <span style={{ fontWeight: 500 }}>
-                <CurrencySymbol currency="ETH" />
-                {formatWad(
-                  amountSubFee(
-                    distributionLimitCurrency?.eq(V2_CURRENCY_USD)
-                      ? converter.usdToWei(distributionAmount)
-                      : parseWad(distributionAmount),
-                    BigNumber.from(feePercent),
-                  ),
-                  { precision: 4 },
-                )}
-              </span>{' '}
-              after {feePercent}% JBX fee
-            </Trans>
-          </div>
-        </div>
+          >
+            <FormattedNumberInput
+              placeholder="0"
+              value={distributionAmount}
+              onChange={value => setDistributionAmount(value)}
+              accessory={
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                >
+                  <span
+                    style={{
+                      marginRight: 8,
+                      color: colors.text.primary,
+                    }}
+                  >
+                    {V2CurrencyName(
+                      distributionLimitCurrency?.toNumber() as V2CurrencyOption,
+                    )}
+                  </span>
+                  <InputAccessoryButton
+                    content={<Trans>MAX</Trans>}
+                    onClick={() =>
+                      setDistributionAmount(fromWad(distributable))
+                    }
+                  />
+                </div>
+              }
+            />
+          </Form.Item>
+        </Form>
 
         {payoutSplits?.length ? (
           <div>
@@ -225,17 +239,8 @@ export default function WithdrawModal({
           </div>
         ) : (
           <p>
-            <CurrencySymbol currency="ETH" />
             <Trans>
-              {formatWad(
-                amountSubFee(
-                  distributionLimitCurrency?.eq(V2_CURRENCY_USD)
-                    ? converter.usdToWei(distributionAmount)
-                    : parseWad(distributionAmount),
-                  BigNumber.from(feePercent),
-                ),
-                { precision: 4 },
-              )}{' '}
+              <ETHAmount amount={netAvailableAmountETH} />
               will go to the project owner:{' '}
               <FormattedAddress address={projectOwnerAddress} />
             </Trans>

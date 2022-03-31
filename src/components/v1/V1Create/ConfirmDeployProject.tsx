@@ -207,12 +207,7 @@ export default function ConfirmDeployProject() {
             <Col md={8} xs={24}>
               <Statistic
                 title={t`Duration`}
-                value={
-                  editingFC.duration.gt(0)
-                    ? formattedNum(editingFC.duration)
-                    : t`Not set`
-                }
-                suffix={
+                valueRender={() => (
                   <FundingCycleDetailWarning
                     showWarning={unsafeFundingCycleProperties.duration}
                     tooltipTitle={
@@ -220,9 +215,12 @@ export default function ConfirmDeployProject() {
                         .duration
                     }
                   >
+                    {editingFC.duration.gt(0)
+                      ? formattedNum(editingFC.duration)
+                      : t`Not set`}
                     {editingFC.duration.gt(0) ? t`days` : ''}
                   </FundingCycleDetailWarning>
-                }
+                )}
               />
             </Col>
             <Col md={8} xs={24}>
@@ -234,10 +232,7 @@ export default function ConfirmDeployProject() {
             <Col md={8} xs={24}>
               <Statistic
                 title={t`Token minting`}
-                value={
-                  editingFC.ticketPrintingIsAllowed ? t`Allowed` : t`Disabled`
-                }
-                suffix={
+                valueRender={() => (
                   <FundingCycleDetailWarning
                     showWarning={
                       unsafeFundingCycleProperties.metadataTicketPrintingIsAllowed
@@ -246,8 +241,13 @@ export default function ConfirmDeployProject() {
                       FUNDING_CYCLE_WARNING_TEXT(currentFC as V1FundingCycle)
                         .metadataTicketPrintingIsAllowed
                     }
-                  />
-                }
+                  >
+                    {editingFC.ticketPrintingIsAllowed
+                      ? t`Allowed`
+                      : t`Disabled`}
+                    {` `}
+                  </FundingCycleDetailWarning>
+                )}
               />
             </Col>
           </Row>

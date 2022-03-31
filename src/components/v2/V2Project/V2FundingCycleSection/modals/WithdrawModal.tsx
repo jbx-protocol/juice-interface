@@ -85,7 +85,7 @@ export default function WithdrawModal({
     setLoading(true)
     distributePayoutsTx(
       {
-        amount: parseWad(distributionAmount),
+        amount: parseWad(distributionAmount), // TODO use terminal.decimals() to parse amount
         currency: distributionLimitCurrency.toNumber() as V2CurrencyOption,
       },
       {

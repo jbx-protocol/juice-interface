@@ -8,6 +8,7 @@ import ProjectLogo from 'components/shared/ProjectLogo'
 import TicketModsList from 'components/shared/TicketModsList'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
+import { V1FundingCycle } from 'models/v1/fundingCycle'
 import {
   useAppSelector,
   useEditingV1FundingCycleSelector,
@@ -24,6 +25,7 @@ import {
   permilleToPercent,
 } from 'utils/formatNumber'
 import {
+  getUnsafeFundingCycleProperties,
   hasFundingDuration,
   hasFundingTarget,
   isRecurring,
@@ -33,12 +35,15 @@ import { orEmpty } from 'utils/orEmpty'
 
 import { V1CurrencyName } from 'utils/v1/currency'
 
+import FundingCycleDetailWarning from 'components/shared/Project/FundingCycleDetailWarning'
+
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
+import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/v1/fundingWarningText'
 
 export default function ConfirmDeployProject() {
   const editingFC = useEditingV1FundingCycleSelector()
   const editingProject = useAppSelector(state => state.editingProject.info)
-  const { terminal } = useContext(V1ProjectContext)
+  const { terminal, currentFC } = useContext(V1ProjectContext)
 
   const { payoutMods, ticketMods } = useAppSelector(
     state => state.editingProject,
@@ -51,8 +56,13 @@ export default function ConfirmDeployProject() {
     editingFC?.currency.toNumber() as V1CurrencyOption,
   )
 
-  const rowGutter: [Gutter, Gutter] = [25, 20]
+  const unsafeFundingCycleProperties = getUnsafeFundingCycleProperties(
+    currentFC as V1FundingCycle,
+  )
+  console.warn(unsafeFundingCycleProperties)
 
+  const rowGutter: [Gutter, Gutter] = [25, 20]
+  console.warn('currentFC', currentFC)
   return (
     <Space size="large" direction="vertical">
       <h1 style={{ fontSize: '2rem' }}>
@@ -204,7 +214,17 @@ export default function ConfirmDeployProject() {
                     ? formattedNum(editingFC.duration)
                     : t`Not set`
                 }
-                suffix={editingFC.duration.gt(0) ? t`days` : ''}
+                suffix={
+                  <FundingCycleDetailWarning
+                    showWarning={unsafeFundingCycleProperties.duration}
+                    tooltipTitle={
+                      FUNDING_CYCLE_WARNING_TEXT(currentFC as V1FundingCycle)
+                        .duration
+                    }
+                  >
+                    {editingFC.duration.gt(0) ? t`days` : ''}
+                  </FundingCycleDetailWarning>
+                }
               />
             </Col>
             <Col md={8} xs={24}>
@@ -219,6 +239,17 @@ export default function ConfirmDeployProject() {
                 value={
                   editingFC.ticketPrintingIsAllowed ? t`Allowed` : t`Disabled`
                 }
+                suffix={
+                  <FundingCycleDetailWarning
+                    showWarning={
+                      unsafeFundingCycleProperties.metadataTicketPrintingIsAllowed
+                    }
+                    tooltipTitle={
+                      FUNDING_CYCLE_WARNING_TEXT(currentFC as V1FundingCycle)
+                        .metadataTicketPrintingIsAllowed
+                    }
+                  />
+                }
               />
             </Col>
           </Row>
@@ -227,7 +258,19 @@ export default function ConfirmDeployProject() {
               <Statistic
                 title={t`Reserved tokens`}
                 value={perbicentToPercent(editingFC?.reserved)}
-                suffix="%"
+                suffix={
+                  <FundingCycleDetailWarning
+                    showWarning={
+                      unsafeFundingCycleProperties.metadataReservedRate
+                    }
+                    tooltipTitle={
+                      FUNDING_CYCLE_WARNING_TEXT(currentFC as V1FundingCycle)
+                        .metadataReservedRate
+                    }
+                  >
+                    %
+                  </FundingCycleDetailWarning>
+                }
               />
             </Col>
             {editingFC && isRecurring(editingFC) && (

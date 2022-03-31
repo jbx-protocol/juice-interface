@@ -34,8 +34,8 @@ export default function PayoutSplitsCard() {
             )}
             projectBalanceInCurrency={balanceInDistributionLimitCurrency}
             targetAmount={distributionLimit}
-            withdrawnAmount={usedDistributionLimit}
-            feePercentage={'2.5'}
+            distributedAmount={usedDistributionLimit}
+            feePercentage={'2.5'} // TODO
             ownerAddress={projectOwnerAddress}
           />
           <Button

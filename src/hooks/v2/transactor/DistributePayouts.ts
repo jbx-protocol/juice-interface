@@ -10,8 +10,8 @@ import { TransactorInstance } from '../../Transactor'
 
 export type PayV2ProjectTxType = TransactorInstance<{
   memo?: string
-  amount: BigNumber
-  currency: V2CurrencyOption
+  amount: BigNumber | undefined
+  currency: V2CurrencyOption | undefined
 }>
 
 const minReturnedTokens = 0 // TODO will need a field for this in WithdrawModal for v2
@@ -33,7 +33,7 @@ export function useDistributePayoutsTx(): PayV2ProjectTxType {
     }
 
     return transactor(
-      contracts.JBPaymentTerminalStore,
+      contracts.JBETHPaymentTerminal,
       'distributePayoutsOf',
       [projectId, amount, currency, minReturnedTokens, memo],
       txOpts,

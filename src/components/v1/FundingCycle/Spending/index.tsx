@@ -44,7 +44,7 @@ export default function Spending({
             )}
             projectBalanceInCurrency={balanceInCurrency}
             targetAmount={currentFC.target}
-            withdrawnAmount={currentFC.tapped}
+            distributedAmount={currentFC.tapped}
             feePercentage={perbicentToPercent(currentFC.fee)}
             ownerAddress={owner}
           />

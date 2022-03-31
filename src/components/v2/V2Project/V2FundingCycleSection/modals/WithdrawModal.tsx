@@ -20,8 +20,6 @@ import { BigNumber } from '@ethersproject/bignumber'
 
 import { formatFee } from 'utils/v2/math'
 
-import { V1_CURRENCY_USD } from 'constants/v1/currency'
-
 export default function WithdrawModal({
   visible,
   onCancel,
@@ -32,7 +30,7 @@ export default function WithdrawModal({
   onConfirmed?: VoidFunction
 }) {
   const [loading, setLoading] = useState<boolean>()
-  const [tapAmount, setTapAmount] = useState<string>()
+  const [distributionAmount, setDistributionAmount] = useState<string>()
   const {
     balanceInDistributionLimitCurrency,
     distributionLimit,
@@ -58,7 +56,7 @@ export default function WithdrawModal({
       ? untapped
       : balanceInDistributionLimitCurrency
 
-    setTapAmount(fromWad(withdrawable))
+    setDistributionAmount(fromWad(withdrawable))
   }, [
     balanceInDistributionLimitCurrency,
     distributionLimit,
@@ -75,27 +73,29 @@ export default function WithdrawModal({
     ? untapped
     : balanceInDistributionLimitCurrency
 
-  function tap() {
-    if (!distributionLimitCurrency || !tapAmount) return
+  function executeDistributePayoutsTx() {
+    if (!distributionLimitCurrency || !distributionAmount) return
 
     const minAmount = (
-      distributionLimitCurrency.eq(V1_CURRENCY_USD)
-        ? converter.usdToWei(tapAmount)
-        : parseWad(tapAmount)
+      distributionLimitCurrency.eq(V2_CURRENCY_USD)
+        ? converter.usdToWei(distributionAmount)
+        : parseWad(distributionAmount)
     )?.sub(1e12) // Arbitrary value subtracted
-
     if (!minAmount) return
 
-    setLoading(true)
+    const amount = distributionLimitCurrency.eq(V2_CURRENCY_USD)
+      ? converter.usdToWei(distributionAmount)
+      : parseWad(distributionAmount)
 
+    setLoading(true)
     distributePayoutsTx(
       {
-        amount: parseWad(tapAmount),
+        amount,
         currency: distributionLimitCurrency.toNumber() as V2CurrencyOption,
       },
       {
         onDone: () => setLoading(false),
-        onConfirmed: () => onConfirmed && onConfirmed(),
+        onConfirmed,
       },
     )
   }
@@ -108,16 +108,16 @@ export default function WithdrawModal({
     <Modal
       title={<Trans>Distribute funds</Trans>}
       visible={visible}
-      onOk={tap}
+      onOk={executeDistributePayoutsTx}
       onCancel={() => {
-        setTapAmount(undefined)
-        onCancel && onCancel()
+        setDistributionAmount(undefined)
+        onCancel?.()
       }}
       okButtonProps={{
-        disabled: !tapAmount || tapAmount === '0',
+        disabled: !distributionAmount || distributionAmount === '0',
       }}
       confirmLoading={loading}
-      okText={<Trans>Withdraw</Trans>}
+      okText={<Trans>Distribute funds</Trans>}
       width={640}
     >
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
@@ -169,8 +169,8 @@ export default function WithdrawModal({
         <div>
           <FormattedNumberInput
             placeholder="0"
-            value={tapAmount}
-            onChange={value => setTapAmount(value)}
+            value={distributionAmount}
+            onChange={value => setDistributionAmount(value)}
             accessory={
               <div
                 style={{
@@ -190,7 +190,7 @@ export default function WithdrawModal({
                 </span>
                 <InputAccessoryButton
                   content={<Trans>MAX</Trans>}
-                  onClick={() => setTapAmount(fromWad(withdrawable))}
+                  onClick={() => setDistributionAmount(fromWad(withdrawable))}
                 />
               </div>
             }
@@ -202,9 +202,9 @@ export default function WithdrawModal({
                 <CurrencySymbol currency="ETH" />
                 {formatWad(
                   amountSubFee(
-                    distributionLimitCurrency?.eq(V1_CURRENCY_USD)
-                      ? converter.usdToWei(tapAmount)
-                      : parseWad(tapAmount),
+                    distributionLimitCurrency?.eq(V2_CURRENCY_USD)
+                      ? converter.usdToWei(distributionAmount)
+                      : parseWad(distributionAmount),
                     BigNumber.from(feePercent),
                   ),
                   { precision: 4 },
@@ -235,8 +235,8 @@ export default function WithdrawModal({
               {formatWad(
                 amountSubFee(
                   distributionLimitCurrency?.eq(V2_CURRENCY_USD)
-                    ? converter.usdToWei(tapAmount)
-                    : parseWad(tapAmount),
+                    ? converter.usdToWei(distributionAmount)
+                    : parseWad(distributionAmount),
                   BigNumber.from(feePercent),
                 ),
                 { precision: 4 },

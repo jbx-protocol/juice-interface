@@ -15,7 +15,7 @@ import { CurrencyName } from 'constants/currency'
 export default function SpendingStats({
   currency,
   targetAmount,
-  withdrawnAmount,
+  distributedAmount,
   projectBalanceInCurrency,
   ownerAddress,
   feePercentage,
@@ -23,7 +23,7 @@ export default function SpendingStats({
 }: {
   currency: CurrencyName | undefined
   targetAmount: BigNumber | undefined
-  withdrawnAmount: BigNumber | undefined
+  distributedAmount: BigNumber | undefined
   projectBalanceInCurrency: BigNumber | undefined
   ownerAddress: string | undefined
   feePercentage: string | undefined
@@ -33,11 +33,11 @@ export default function SpendingStats({
     theme: { colors },
   } = useContext(ThemeContext)
 
-  if (!targetAmount || !withdrawnAmount) return <span>Loading...</span>
+  if (!targetAmount || !distributedAmount) return <span>Loading...</span>
 
-  const untapped = targetAmount.sub(withdrawnAmount)
+  const untapped = targetAmount.sub(distributedAmount)
 
-  const withdrawable = projectBalanceInCurrency?.gt(untapped)
+  const distributableAmount = projectBalanceInCurrency?.gt(untapped)
     ? untapped
     : projectBalanceInCurrency
 
@@ -58,7 +58,7 @@ export default function SpendingStats({
           }}
         >
           <CurrencySymbol currency={currency} />
-          {formatWad(withdrawable, { precision: 4 }) || '0'}{' '}
+          {formatWad(distributableAmount, { precision: 4 }) || '0'}{' '}
         </span>
         <TooltipLabel
           style={smallHeaderStyle}
@@ -78,11 +78,11 @@ export default function SpendingStats({
         <div>
           <Trans>
             <CurrencySymbol currency={currency} />
-            {formatWad(withdrawnAmount, { precision: 4 }) || '0'}
+            {formatWad(distributedAmount, { precision: 4 }) || '0'}
             {hasFundingTarget ? (
               <span>/{formatWad(targetAmount, { precision: 4 })} </span>
             ) : null}{' '}
-            withdrawn
+            distributed
           </Trans>
         </div>
 

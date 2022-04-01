@@ -14,19 +14,19 @@ export default function FundingTargetInput({
   targetCurrency,
   onTargetChange,
   onTargetCurrencyChange,
-  fee,
+  feePerbicent,
 }: {
   target: string
   targetCurrency: V2CurrencyOption
-  fee: BigNumber | undefined
+  feePerbicent: BigNumber | undefined
   onTargetChange: (target: string) => void
   onTargetCurrencyChange: (targetCurrency: V2CurrencyOption) => void
 }) {
   const [targetSubFee, setTargetSubFee] = useState<string>()
 
   useEffect(() => {
-    setTargetSubFee(targetToTargetSubFeeFormatted(target ?? '0', fee))
-  }, [target, fee])
+    setTargetSubFee(targetToTargetSubFeeFormatted(target ?? '0', feePerbicent))
+  }, [target, feePerbicent])
 
   return (
     <BudgetTargetInput
@@ -35,17 +35,17 @@ export default function FundingTargetInput({
       currency={toV1Currency(targetCurrency)}
       onTargetChange={val => {
         onTargetChange(val ?? '0')
-        setTargetSubFee(targetToTargetSubFeeFormatted(val ?? '0', fee))
+        setTargetSubFee(targetToTargetSubFeeFormatted(val ?? '0', feePerbicent))
       }}
       onTargetSubFeeChange={val => {
         setTargetSubFee(val ?? '0')
-        onTargetChange(targetSubFeeToTargetFormatted(val ?? '0', fee))
+        onTargetChange(targetSubFeeToTargetFormatted(val ?? '0', feePerbicent))
       }}
       onCurrencyChange={val => {
         onTargetCurrencyChange(toV2Currency(val))
       }}
       placeholder="0"
-      fee={fee}
+      feePerbicent={feePerbicent}
     />
   )
 }

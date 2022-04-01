@@ -6,7 +6,8 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useContext } from 'react'
 
 import { decodeV2FundingCycleMetadata } from 'utils/v2/fundingCycle'
-import { weightedAmount } from 'utils/math'
+
+import { weightedAmount } from 'utils/v2/math'
 
 import V2PayButton from './V2PayButton'
 import V2ProjectHeaderActions from '../V2ProjectHeaderActions'
@@ -34,6 +35,7 @@ export default function V2Project() {
           <TreasuryStats />
           {/* TODO volume chart */}
           {/* TODO token section */}
+          <br />
           <V2FundingCycleSection />
         </Col>
         <Col md={12} xs={24}>

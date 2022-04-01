@@ -17,7 +17,7 @@ import { SerializedV2FundAccessConstraint } from 'utils/v2/serializers'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { formattedNum, formatWad, parseWad } from 'utils/formatNumber'
-import { amountSubFee } from 'utils/math'
+import { amountSubFee } from 'utils/v2/math'
 
 import { V2CurrencyName } from 'utils/v2/currency'
 

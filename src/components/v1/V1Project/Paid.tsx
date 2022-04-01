@@ -119,7 +119,7 @@ export default function Paid() {
                   : colors.text.primary,
               }}
             >
-              <ETHAmount amount={earned} />
+              <ETHAmount amount={earned} precision={4} />
             </span>
           </span>
         }

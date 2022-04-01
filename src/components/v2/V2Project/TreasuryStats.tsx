@@ -7,6 +7,7 @@ import { CSSProperties, useContext } from 'react'
 import { V2_CURRENCY_ETH, V2_CURRENCY_USD } from 'utils/v2/currency'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import USDAmount from 'components/shared/currency/USDAmount'
+import TooltipLabel from 'components/shared/TooltipLabel'
 
 export default function TreasuryStats() {
   const {
@@ -16,6 +17,8 @@ export default function TreasuryStats() {
     ETHBalance,
     balanceInDistributionLimitCurrency,
     distributionLimitCurrency,
+    distributionLimit,
+    usedDistributionLimit,
   } = useContext(V2ProjectContext)
 
   const spacing = 10
@@ -47,30 +50,78 @@ export default function TreasuryStats() {
   }
 
   return (
-    <StatLine
-      statLabel={<Trans>In Juicebox</Trans>}
-      statLabelTip={
-        <Trans>The balance of this project in the Juicebox contract.</Trans>
-      }
-      statValue={
+    <>
+      <StatLine
+        statLabel={<Trans>In Juicebox</Trans>}
+        statLabelTip={
+          <Trans>The balance of this project in the Juicebox contract.</Trans>
+        }
+        statValue={
+          <div
+            style={{
+              ...primaryTextStyle,
+              color: colors.text.brand.primary,
+              marginLeft: 10,
+            }}
+          >
+            {distributionLimitCurrency?.eq(V2_CURRENCY_USD) ? (
+              <span style={secondaryTextStyle}>
+                <ETHAmount amount={ETHBalance} precision={4} padEnd={true} />{' '}
+              </span>
+            ) : (
+              ''
+            )}
+            {formatCurrencyAmount(
+              balanceInDistributionLimitCurrency ?? BigNumber.from(0),
+            )}
+          </div>
+        }
+        style={{ marginBottom: spacing }}
+      />
+
+      {distributionLimit?.gt(0) ? (
+        <StatLine
+          statLabel={<Trans>Distributed</Trans>}
+          statLabelTip={
+            <Trans>
+              The amount that has been distributed from the Juicebox balance in
+              this funding cycle, out of the current funding target. No more
+              than the funding target can be distributed in a single funding
+              cycle—any remaining ETH in Juicebox is overflow, until the next
+              cycle begins.
+            </Trans>
+          }
+          statValue={
+            <div
+              style={{
+                ...secondaryTextStyle,
+                color: colors.text.primary,
+              }}
+            >
+              {formatCurrencyAmount(usedDistributionLimit)} /{' '}
+              {formatCurrencyAmount(distributionLimit)}
+            </div>
+          }
+        />
+      ) : (
         <div
           style={{
-            ...primaryTextStyle,
-            color: colors.text.brand.primary,
-            marginLeft: 10,
+            ...secondaryTextStyle,
+            textAlign: 'right',
           }}
         >
-          {distributionLimitCurrency?.eq(V2_CURRENCY_USD) ? (
-            <span style={secondaryTextStyle}>
-              <ETHAmount amount={ETHBalance} precision={2} padEnd={true} />{' '}
-            </span>
-          ) : (
-            ''
-          )}
-          {formatCurrencyAmount(balanceInDistributionLimitCurrency)}
+          <TooltipLabel
+            tip={
+              <Trans>
+                The target for this funding cycle is 0, meaning all funds in
+                Juicebox are currently considered overflow. Overflow can be
+                redeemed by token holders, but not distributed.
+              </Trans>
+            }
+            label={<Trans>100% overflow</Trans>}
+          />
         </div>
-      }
-      style={{ marginBottom: spacing }}
-    />
+      )}
+    </>
   )
 }

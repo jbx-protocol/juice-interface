@@ -30,14 +30,14 @@ export default function PayoutModsList({
   fundingCycle,
   projectId,
   total,
-  fee,
+  feePerbicent,
 }: {
   mods: PayoutMod[] | undefined
   fundingCycle:
     | Pick<V1FundingCycle, 'target' | 'currency' | 'configured' | 'fee'>
     | undefined
   projectId: BigNumber | undefined
-  fee: BigNumber | undefined
+  feePerbicent: BigNumber | undefined
   total?: BigNumber
 }) {
   const [form] = useForm<{
@@ -90,7 +90,7 @@ export default function PayoutModsList({
   const modsTotal = mods?.reduce((acc, curr) => acc + curr.percent, 0)
   const ownerPercent = 10000 - (modsTotal ?? 0)
 
-  const baseTotal = total ?? amountSubFee(fundingCycle?.target, fee)
+  const baseTotal = total ?? amountSubFee(fundingCycle?.target, feePerbicent)
 
   const hasEditPermission = useHasPermission(OperatorPermission.SetPayoutMods)
 
@@ -229,7 +229,7 @@ export default function PayoutModsList({
               onModsChanged={setEditingMods}
               target={fromWad(fundingCycle.target)}
               currency={fundingCycle.currency.toNumber() as V1CurrencyOption}
-              fee={fee}
+              feePerbicent={feePerbicent}
             />
           </Modal>
         </Form>

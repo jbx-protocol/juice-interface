@@ -14,6 +14,7 @@ import TooltipLabel from 'components/shared/TooltipLabel'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 import FundingCycleDetails from './FundingCycleDetails'
+import PayoutSplitsCard from './PayoutSplitsCard'
 
 export default function CurrentFundingCycle({
   showCurrentDetail,
@@ -22,7 +23,6 @@ export default function CurrentFundingCycle({
 }) {
   const {
     fundingCycle,
-    payoutSplits,
     reserveTokenSplits,
     fundingCycleMetadata,
     tokenSymbol,
@@ -49,29 +49,7 @@ export default function CurrentFundingCycle({
         />
       </CardSection>
 
-      <CardSection>
-        <TooltipLabel
-          label={
-            <h4 style={{ display: 'inline-block' }}>
-              <Trans>Funding Distribution</Trans>
-            </h4>
-          }
-          tip={
-            <Trans>
-              Available funds are distributed according to the payouts below.
-            </Trans>
-          }
-        />
-        {payoutSplits ? (
-          <SplitList
-            splits={payoutSplits}
-            distributionLimitCurrency={distributionLimitCurrency}
-            distributionLimit={distributionLimit}
-            projectOwnerAddress={projectOwnerAddress}
-            showSplitValues
-          />
-        ) : null}
-      </CardSection>
+      <PayoutSplitsCard />
 
       <CardSection>
         <div>

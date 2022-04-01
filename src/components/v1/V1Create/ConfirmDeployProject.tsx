@@ -272,7 +272,7 @@ export default function ConfirmDeployProject() {
                 mods={payoutMods}
                 projectId={undefined}
                 fundingCycle={editingFC}
-                fee={terminalFee}
+                feePerbicent={terminalFee}
               />
             )}
           />

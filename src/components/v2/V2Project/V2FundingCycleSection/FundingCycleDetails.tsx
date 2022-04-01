@@ -14,7 +14,6 @@ import { decodeV2FundingCycleMetadata } from 'utils/v2/fundingCycle'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 import { V2CurrencyName } from 'utils/v2/currency'
-import { weightedAmount } from 'utils/math'
 import TooltipLabel from 'components/shared/TooltipLabel'
 
 import FundingCycleDetailWarning from 'components/shared/Project/FundingCycleDetailWarning'
@@ -27,6 +26,7 @@ import {
   formatDiscountRate,
   formatRedemptionRate,
   formatReservedRate,
+  weightedAmount,
 } from 'utils/v2/math'
 
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'

@@ -8,7 +8,7 @@ import ScrollToTopButton from 'components/shared/ScrollToTopButton'
 import useProjectCurrentFundingCycle from 'hooks/v2/contractReader/ProjectCurrentFundingCycle'
 import useProjectSplits from 'hooks/v2/contractReader/ProjectSplits'
 import useProjectTerminals from 'hooks/v2/contractReader/ProjectTerminals'
-import { useETHPaymentTerminalBalance } from 'hooks/v2/contractReader/ETHPaymentTerminalBalance'
+import { usePaymentTerminalBalance } from 'hooks/v2/contractReader/PaymentTerminalBalance'
 import useProjectToken from 'hooks/v2/contractReader/ProjectToken'
 import useProjectQueuedFundingCycle from 'hooks/v2/contractReader/ProjectQueuedFundingCycle'
 import useProjectDistributionLimit from 'hooks/v2/contractReader/ProjectDistributionLimit'
@@ -22,6 +22,8 @@ import { decodeV2FundingCycleMetadata } from 'utils/v2/fundingCycle'
 import useSymbolOfERC20 from 'hooks/v1/contractReader/SymbolOfERC20' // this is version-agnostic, we chillin
 
 import useProjectOwner from 'hooks/v2/contractReader/ProjectOwner'
+
+import useUsedDistributionLimit from 'hooks/v2/contractReader/UsedDistributionLimit'
 
 import { layouts } from 'constants/styles/layouts'
 
@@ -66,12 +68,20 @@ export default function V2Dashboard() {
   const { data: terminals } = useProjectTerminals({
     projectId,
   })
+  const primaryTerminal = terminals?.[0]
 
   const { data: distributionLimitData } = useProjectDistributionLimit({
     projectId,
     domain: fundingCycle?.configuration?.toString(),
-    terminal: terminals?.[0], //TODO: make primaryTerminalOf hook and use it
+    terminal: primaryTerminal, //TODO: make primaryTerminalOf hook and use it
   })
+
+  const { data: usedDistributionLimit } = useUsedDistributionLimit({
+    projectId,
+    terminal: primaryTerminal,
+    fundingCycleNumber: fundingCycle?.number,
+  })
+
   const [distributionLimit, distributionLimitCurrency] =
     distributionLimitData ?? []
 
@@ -93,7 +103,8 @@ export default function V2Dashboard() {
     domain: queuedFundingCycle?.configuration?.toString(),
   })
 
-  const { data: ETHBalance } = useETHPaymentTerminalBalance({
+  const { data: ETHBalance } = usePaymentTerminalBalance({
+    terminal: primaryTerminal,
     projectId,
   })
 
@@ -106,7 +117,7 @@ export default function V2Dashboard() {
   const { data: queuedDistributionLimitData } = useProjectDistributionLimit({
     projectId,
     domain: queuedFundingCycle?.configuration.toString(),
-    terminal: terminals?.[0], //TODO: make primaryTerminalOf hook and use it
+    terminal: primaryTerminal, //TODO: make primaryTerminalOf hook and use it
   })
   const [queuedDistributionLimit, queuedDistributionLimitCurrency] =
     queuedDistributionLimitData ?? []
@@ -141,6 +152,7 @@ export default function V2Dashboard() {
     fundingCycleMetadata,
     queuedFundingCycle,
     distributionLimit,
+    usedDistributionLimit,
     queuedDistributionLimit,
     payoutSplits,
     queuedPayoutSplits,

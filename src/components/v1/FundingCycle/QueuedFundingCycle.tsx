@@ -29,7 +29,7 @@ export default function QueuedFundingCycle() {
               mods={queuedPayoutMods}
               fundingCycle={queuedFC}
               projectId={projectId}
-              fee={queuedFC.fee}
+              feePerbicent={queuedFC.fee}
             />
           </CardSection>
           <CardSection>

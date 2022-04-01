@@ -52,6 +52,7 @@ msgid "1. Project details"
 msgstr "1. Детали проекта"
 
 #: src/components/v1/V1Project/Paid.tsx
+#: src/components/v2/V2Project/TreasuryStats.tsx
 msgid "100% overflow"
 msgstr "100% превышение"
 
@@ -99,13 +100,17 @@ msgstr "<0/> Архивные проекты не были изменены ил
 msgid "<0/> The Juicebox protocol is open to anyone, and project configurations can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO or Peel. Do your own research and understand the risks before committing your funds."
 msgstr "<0/> Протокол Juicebox открыт для всех, и конфигурации проектов могут сильно различаться. Взаимодействие со всеми проектами протокола связано с определенными рисками. Проекты, созданные на основе протокола, не поддерживаются и не проверяются JuiceboxDAO или Peel. Прежде чем вкладывать средства, проведите собственное исследование и осознайте риски."
 
-#: src/components/v1/FundingCycle/Spending.tsx
+#: src/components/shared/Project/SpendingStats.tsx
 msgid "<0/> owner balance"
 msgstr "<0/> баланс владельца"
 
-#: src/components/v1/FundingCycle/Spending.tsx
-msgid "<0/>{0}{1} withdrawn"
-msgstr "<0/>{0}{1} снято"
+#: src/components/shared/Project/SpendingStats.tsx
+msgid "<0/>{0}{1} distributed"
+msgstr ""
+
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
+msgid "<0><1/>{netDistributionAmount}</0> after {feePercentage}% JBX fee"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "<0><1>This project has no overflow</1>, so you will not receive any ETH for burning tokens.</0>"
@@ -219,7 +224,7 @@ msgstr "Реконфигурацию/план изменений для пред
 msgid "A reconfiguration to an upcoming funding cycle must be submitted at least 7 days before it starts."
 msgstr "Реконфигурацию/план изменений для предстоящего цикла финансирования необходимо отправить не менее чем за 3 дня до его начала."
 
-#: src/components/v1/FundingCycle/Spending.tsx
+#: src/components/shared/Project/SpendingStats.tsx
 msgid "AVAILABLE"
 msgstr "ДОСТУПНО"
 
@@ -326,6 +331,10 @@ msgstr "Количество"
 msgid "Amount paid"
 msgstr "Оплаченная сумма"
 
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
+msgid "Amount to distribute"
+msgstr ""
+
 #: src/components/shared/formItems/ProjectDiscord.tsx
 msgid "An invite link to your project's Discord server."
 msgstr "Ссылка для приглашения на сервер Discord вашего проекта."
@@ -352,11 +361,12 @@ msgid "Assets"
 msgstr "Активы"
 
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Available after fee:"
 msgstr "Доступно после комиссии:"
 
 #: src/components/v1/FundingCycle/Spending.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/CurrentFundingCycle.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
 msgid "Available funds are distributed according to the payouts below."
 msgstr "Доступные средства распределяются в соответствии с приведенными ниже выплатами."
 
@@ -371,6 +381,10 @@ msgstr "Вернуться наверх"
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Balance exceeded"
 msgstr "Баланс превышен"
+
+#: src/components/shared/Project/SpendingStats.tsx
+msgid "Balance of the project owner's wallet."
+msgstr ""
 
 #: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
 msgid "Beneficiary"
@@ -646,6 +660,9 @@ msgid "Distribute available funds to other Ethereum wallets or Juicebox projects
 msgstr "Распределяйте доступные средства на другие кошельки Ethereum или проекты Juicebox в качестве выплат. Используйте это, чтобы платить вкладчикам, благотворительным организациям, проектам Juicebox, от которых вы зависите, или кому-либо еще. Средства распределяются всякий раз, когда производится вывод средств из вашего проекта."
 
 #: src/components/v1/FundingCycle/Spending.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Distribute funds"
 msgstr "Распределить средства"
 
@@ -654,6 +671,7 @@ msgid "Distribute {0}"
 msgstr "Распределение"
 
 #: src/components/v1/V1Project/Paid.tsx
+#: src/components/v2/V2Project/TreasuryStats.tsx
 msgid "Distributed"
 msgstr "Распределено"
 
@@ -796,7 +814,7 @@ msgid "For users paying through your app, you should route those funds through t
 msgstr "Если пользователи платят через ваше приложение, вы должны направить эти средства через смарт-контракты Juicebox, чтобы они получили токены взамен."
 
 #: src/components/v1/FundingCycle/Spending.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/CurrentFundingCycle.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
 msgid "Funding Distribution"
 msgstr "Распределение финансирования"
 
@@ -1008,6 +1026,10 @@ msgstr "Было бы намного круче, если бы вы это сд�
 msgid "JBX Fee ({0}%):"
 msgstr "Комиссия JBX ({0}%):"
 
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
+msgid "JBX Fee ({feePercentage}%):"
+msgstr ""
+
 #: src/components/v2/shared/V2MainnetWarning.tsx
 msgid "Juicebox V2 on mainnet isn't supported."
 msgstr ""
@@ -1069,6 +1091,7 @@ msgstr "Логотип"
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "MAX"
 msgstr "Максимум"
 
@@ -1294,6 +1317,10 @@ msgstr "Платежи приостановлены для текущего ци
 msgid "Payments paused"
 msgstr "Платежи приостановлены"
 
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
+msgid "Payout recipients"
+msgstr ""
+
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
 #: src/components/v2/V2Create/tabs/FundingTab/FundingTabContent.tsx
 msgid "Payouts"
@@ -1387,10 +1414,6 @@ msgstr "Название проекта, описание, ссылки и др�
 msgid "Project owner"
 msgstr "Владелец проекта"
 
-#: src/components/v1/FundingCycle/Spending.tsx
-msgid "Project owner balance"
-msgstr "Баланс владельца проекта"
-
 #: src/components/Landing/QAs.tsx
 msgid "Project owners can configure a delay period, meaning reconfigurations to an upcoming funding cycle must be submitted a certain number of days before it starts. For example, a 3-day delay period means reconfigurations must be submitted at least 3 days before the next funding cycle starts. This gives token holders time to react to the decision and reduces the chance of rug-pulls."
 msgstr "Владельцы проектов могут настроить период задержки, что означает, что изменения в конфигурации предстоящего цикла финансирования должны быть представлены за определенное определенное количество дней до его начала. Например, период задержки в 3 дня означает, что изменения конфигурации должны быть представлены не позднее чем за 3 дня до начала следующего цикла финансирования. Это дает держателям токенов время отреагировать на принятое решение и снижает вероятность rug-pulls."
@@ -1439,6 +1462,10 @@ msgstr "Получить ERC20"
 #: src/components/shared/inputs/Pay/PayInputSubText.tsx
 msgid "Receive {receiveText}"
 msgstr "Получить{receiveText}"
+
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
+msgid "Recipients will receive payouts in ETH."
+msgstr ""
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/v1/V1Create/index.tsx
@@ -1793,6 +1820,7 @@ msgid "The address that should receive the tokens."
 msgstr "Адрес, который должен получить токены."
 
 #: src/components/v1/V1Project/Paid.tsx
+#: src/components/v2/V2Project/TreasuryStats.tsx
 msgid "The amount that has been distributed from the Juicebox balance in this funding cycle, out of the current funding target. No more than the funding target can be distributed in a single funding cycle—any remaining ETH in Juicebox is overflow, until the next cycle begins."
 msgstr "Сумма, которая была распределена из баланса Juicebox в этом цикле финансирования, из текущего целевого показателя финансирования. Объем средств не превышает целевого показателя финансирования в рамках одного цикла финансирования: любой оставшийся ETH в Juicebox переполнен, до начала следующего цикла."
 
@@ -1813,9 +1841,9 @@ msgstr "Коду всегда не помешает больше глаз и б�
 msgid "The contract team will soon start working on L2 payment terminals for Juicebox projects."
 msgstr "В ближайшее время контрактная команда начнет работу над платежными терминалами L2 для проектов Juicebox."
 
-#: src/components/v1/FundingCycle/Spending.tsx
-msgid "The funds available to withdraw for this funding cycle after the {0}% JBX fee is subtracted. This number won't roll over to the next funding cycle, so funds should be withdrawn before it ends."
-msgstr "Средства, доступные для вывода в течение этого цикла финансирования после вычета комиссии {0}% JBX Это число не будет перенесено на следующий цикл финансирования, поэтому средства должны быть сняты до его окончания."
+#: src/components/shared/Project/SpendingStats.tsx
+msgid "The funds available to withdraw for this funding cycle before the {feePercentage}% JBX fee is subtracted. This number won't roll over to the next funding cycle, so funds should be withdrawn before it ends."
+msgstr ""
 
 #: src/components/Landing/index.tsx
 msgid "The future will be led by creators, and owned by communities."
@@ -1858,12 +1886,17 @@ msgid "The rest is left to share between token hodlers."
 msgstr "Остальное остается разделить между хранителями токенов."
 
 #: src/components/v1/V1Project/Paid.tsx
+#: src/components/v2/V2Project/TreasuryStats.tsx
 msgid "The target for this funding cycle is 0, meaning all funds in Juicebox are currently considered overflow. Overflow can be redeemed by token holders, but not distributed."
 msgstr "Целью данного цикла финансирования является 0, то есть все средства в Juicebox в настоящее время считаются переполнением. Переполнение может быть использовано держателями токенов, но не распределено."
 
 #: src/components/v1/V1Project/Paid.tsx
 msgid "The total amount received by this project through Juicebox since it was created."
 msgstr "Общая сумма, полученная этим проектом через Juicebox с момента его создания."
+
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
+msgid "There are no payouts defined for this project. The project owner will recieve all distributed funds."
+msgstr ""
 
 #: src/components/Landing/QAs.tsx
 msgid "There are unit tests written for every condition of every function in the contracts, and integration tests for every workflow that the protocol supports."
@@ -2005,6 +2038,7 @@ msgid "Total ETH paid"
 msgstr "Общий платёж ETH"
 
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Total funds:"
 msgstr "Всего средств:"
 

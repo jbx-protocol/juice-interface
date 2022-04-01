@@ -20,7 +20,7 @@ export default function BudgetTargetInput({
   onCurrencyChange,
   disabled,
   placeholder,
-  fee,
+  feePerbicent,
 }: {
   currency: V1CurrencyOption
   target: string | undefined
@@ -30,7 +30,7 @@ export default function BudgetTargetInput({
   onCurrencyChange?: (currency: V1CurrencyOption) => void
   disabled?: boolean
   placeholder?: string
-  fee: BigNumber | undefined
+  feePerbicent: BigNumber | undefined
 }) {
   const {
     theme: { colors },
@@ -82,7 +82,7 @@ export default function BudgetTargetInput({
         accessory={<CurrencySwitch />}
         onChange={target => onTargetChange(target?.toString())}
       />
-      {fee?.gt(0) && (
+      {feePerbicent?.gt(0) && (
         <div style={targetSubFeeStyles}>
           <div style={{ fontWeight: 500, flexGrow: 1, marginRight: 8 }}>
             <FormattedNumberInput
@@ -96,7 +96,9 @@ export default function BudgetTargetInput({
             />
           </div>
           <div>
-            <Trans>after {perbicentToPercent(fee?.toString())}% JBX fee</Trans>
+            <Trans>
+              after {perbicentToPercent(feePerbicent?.toString())}% JBX fee
+            </Trans>
           </div>
         </div>
       )}

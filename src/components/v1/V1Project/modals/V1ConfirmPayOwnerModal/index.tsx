@@ -98,11 +98,7 @@ export default function V1ConfirmPayOwnerModal({
       title={t`Pay ${metadata.name}`}
       visible={visible}
       onOk={pay}
-      okText={
-        userAddress
-          ? payButtonText
-          : t`Connect wallet to ${payButtonText?.toLowerCase()}`
-      }
+      okText={userAddress ? payButtonText : t`Connect wallet to pay`}
       onCancel={onCancel}
       confirmLoading={loading}
       width={640}

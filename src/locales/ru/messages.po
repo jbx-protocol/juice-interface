@@ -529,7 +529,7 @@ msgid "Connect wallet to deploy"
 msgstr "Подключите кошелёк для развертывания"
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
-msgid "Connect wallet to {0}"
+msgid "Connect wallet to pay"
 msgstr ""
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx

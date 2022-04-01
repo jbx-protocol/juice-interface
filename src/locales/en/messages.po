@@ -523,8 +523,8 @@ msgid "Connect wallet to deploy"
 msgstr "Connect wallet to deploy"
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
-msgid "Connect wallet to {0}"
-msgstr "Connect wallet to {0}"
+msgid "Connect wallet to pay"
+msgstr "Connect wallet to pay"
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/v2/V2Create/tabs/RulesTab/ProjectReconfigurationFormItem.tsx

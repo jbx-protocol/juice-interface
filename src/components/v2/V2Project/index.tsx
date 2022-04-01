@@ -14,6 +14,8 @@ import V2ProjectHeaderActions from '../V2ProjectHeaderActions'
 import TreasuryStats from './TreasuryStats'
 import V2FundingCycleSection from './V2FundingCycleSection'
 
+const GUTTER_PX = 40
+
 export default function V2Project() {
   const { projectId, projectMetadata, fundingCycle } =
     useContext(V2ProjectContext)
@@ -30,21 +32,24 @@ export default function V2Project() {
         metadata={projectMetadata}
         actions={<V2ProjectHeaderActions />}
       />
-      <Row gutter={40}>
-        <Col md={12} xs={24}>
+      <Row gutter={GUTTER_PX} align="bottom">
+        <Col md={12} xs={24} style={{ marginTop: GUTTER_PX }}>
           <TreasuryStats />
-          {/* TODO volume chart */}
-          {/* TODO token section */}
-          <br />
-          <V2FundingCycleSection />
         </Col>
-        <Col md={12} xs={24}>
+        <Col md={12} xs={24} style={{ marginTop: GUTTER_PX }}>
           <PayInputGroup
             PayButton={V2PayButton}
             reservedRate={fundingCycleMetadata?.reservedRate.toNumber()}
             weight={fundingCycle?.weight}
             weightingFn={weightedAmount}
           />
+        </Col>
+      </Row>
+      <Row gutter={GUTTER_PX}>
+        <Col md={12} xs={24}>
+          {/* TODO volume chart */}
+          {/* TODO token section */}
+          <V2FundingCycleSection />
         </Col>
       </Row>
     </>

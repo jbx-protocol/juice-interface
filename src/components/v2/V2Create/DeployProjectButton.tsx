@@ -59,6 +59,7 @@ export default function DeployProjectButton({
         fundAccessConstraints
       )
     ) {
+      setLoadingDeploy(false)
       throw new Error('Error deploying project.')
     }
 
@@ -73,7 +74,7 @@ export default function DeployProjectButton({
 
     const groupedSplits = [payoutGroupedSplits, reserveTokenGroupedSplits]
 
-    deployProjectTx(
+    const didTxExecute = await deployProjectTx(
       {
         projectMetadataCID: uploadedMetadata.IpfsHash,
         fundingCycleData,
@@ -99,8 +100,15 @@ export default function DeployProjectButton({
 
           history.push(`/v2/p/${projectId}`)
         },
+        onCancelled() {
+          setLoadingDeploy(false)
+        },
       },
     )
+
+    if (!didTxExecute) {
+      setLoadingDeploy(false)
+    }
   }, [
     deployProjectTx,
     projectMetadata,

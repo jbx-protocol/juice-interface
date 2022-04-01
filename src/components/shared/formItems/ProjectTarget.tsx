@@ -18,7 +18,7 @@ export default function ProjectTarget({
   onCurrencyChange,
   disabled,
   formItemProps,
-  fee,
+  feePerbicent,
 }: {
   target: string | undefined
   targetSubFee: string | undefined
@@ -27,7 +27,7 @@ export default function ProjectTarget({
   currency: V1CurrencyOption
   onCurrencyChange: (val: V1CurrencyOption) => void
   disabled?: boolean
-  fee?: BigNumber
+  feePerbicent?: BigNumber
 } & FormItemExt) {
   return (
     <Form.Item
@@ -50,7 +50,7 @@ export default function ProjectTarget({
         onCurrencyChange={onCurrencyChange}
         disabled={disabled}
         placeholder="0"
-        fee={fee}
+        feePerbicent={feePerbicent}
       />
     </Form.Item>
   )

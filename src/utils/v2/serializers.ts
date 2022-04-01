@@ -58,9 +58,11 @@ export const serializeV2FundingCycleMetadata = (
   allowChangeToken: fundingCycleMetadata.allowChangeToken,
   allowTerminalMigration: fundingCycleMetadata.allowTerminalMigration,
   allowControllerMigration: fundingCycleMetadata.allowControllerMigration,
+  allowSetTerminals: fundingCycleMetadata.allowSetTerminals,
+  allowSetController: fundingCycleMetadata.allowSetController,
   holdFees: fundingCycleMetadata.holdFees,
-  useLocalBalanceForRedemptions:
-    fundingCycleMetadata.useLocalBalanceForRedemptions,
+  useTotalOverflowForRedemptions:
+    fundingCycleMetadata.useTotalOverflowForRedemptions,
   useDataSourceForPay: fundingCycleMetadata.useDataSourceForPay,
   useDataSourceForRedeem: fundingCycleMetadata.useDataSourceForRedeem,
   dataSource: fundingCycleMetadata.dataSource, // hex, contract address
@@ -85,9 +87,11 @@ export const deserializeV2FundingCycleMetadata = (
   allowTerminalMigration: serializedFundingCycleMetadata.allowTerminalMigration,
   allowControllerMigration:
     serializedFundingCycleMetadata.allowControllerMigration,
+  allowSetTerminals: serializedFundingCycleMetadata.allowSetTerminals,
+  allowSetController: serializedFundingCycleMetadata.allowSetController,
   holdFees: serializedFundingCycleMetadata.holdFees,
-  useLocalBalanceForRedemptions:
-    serializedFundingCycleMetadata.useLocalBalanceForRedemptions,
+  useTotalOverflowForRedemptions:
+    serializedFundingCycleMetadata.useTotalOverflowForRedemptions,
   useDataSourceForPay: serializedFundingCycleMetadata.useDataSourceForPay,
   useDataSourceForRedeem: serializedFundingCycleMetadata.useDataSourceForRedeem,
   dataSource: serializedFundingCycleMetadata.dataSource, // hex, contract address

@@ -104,7 +104,7 @@ export default function PayModsForm({
               totalPercent: calculateTotalPercentage(new_mods),
             })
           }}
-          fee={fee}
+          feePerbicent={fee}
           formItemProps={{
             label: t`Payouts (optional)`,
           }}

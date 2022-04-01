@@ -51,7 +51,7 @@ type EditingPayoutMod = PayoutMod & { handle?: string }
 export default function ProjectPayoutMods({
   target,
   currency,
-  fee,
+  feePerbicent,
   lockedMods,
   mods,
   onModsChanged,
@@ -59,7 +59,7 @@ export default function ProjectPayoutMods({
 }: {
   target: string
   currency: V1CurrencyOption
-  fee: BigNumber | undefined
+  feePerbicent: BigNumber | undefined
   lockedMods?: EditingPayoutMod[]
   mods: EditingPayoutMod[] | undefined
   onModsChanged: (mods: EditingPayoutMod[]) => void
@@ -156,7 +156,7 @@ export default function ProjectPayoutMods({
                 amount: getAmountFromPercent(
                   editingPercent ?? percent,
                   target,
-                  fee,
+                  feePerbicent,
                 ),
                 lockedUntil: mod.lockedUntil
                   ? moment.default(mod.lockedUntil * 1000)
@@ -243,7 +243,7 @@ export default function ProjectPayoutMods({
                         <span>
                           <CurrencySymbol currency={currencyName} />
                           {formatWad(
-                            amountSubFee(parseWad(target), fee)
+                            amountSubFee(parseWad(target), feePerbicent)
                               ?.mul(mod.percent)
                               .div(10000),
                             { precision: 4, padEnd: true },
@@ -294,7 +294,7 @@ export default function ProjectPayoutMods({
       colors.icon.disabled,
       radii.md,
       target,
-      fee,
+      feePerbicent,
       form,
       editingPercent,
       onModsChanged,
@@ -369,13 +369,13 @@ export default function ProjectPayoutMods({
   const roundedDownAmount = () => {
     const percent = roundDown(form.getFieldValue('percent'), 2)
     const targetSubFee = parseFloat(
-      fromWad(amountSubFee(parseWad(target), fee)),
+      fromWad(amountSubFee(parseWad(target), feePerbicent)),
     )
     return parseFloat(((percent * targetSubFee) / 100).toFixed(4))
   }
 
   const onAmountChange = (newAmount: number | undefined) => {
-    let newPercent = getPercentFromAmount(newAmount, target, fee)
+    let newPercent = getPercentFromAmount(newAmount, target, feePerbicent)
     setEditingPercent(newPercent)
     form.setFieldsValue({ amount: newAmount })
     form.setFieldsValue({ percent: newPercent })
@@ -564,7 +564,7 @@ export default function ProjectPayoutMods({
                     let newAmount = getAmountFromPercent(
                       percent ?? 0,
                       target,
-                      fee,
+                      feePerbicent,
                     )
                     form.setFieldsValue({ amount: newAmount })
                     form.setFieldsValue({ percent })

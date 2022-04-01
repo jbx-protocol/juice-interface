@@ -142,27 +142,30 @@ export const weightedAmount: WeightFunction = (
 }
 
 export const feeForAmount = (
-  amount: BigNumber | undefined,
+  amountWad: BigNumber | undefined,
   feePerBillion: BigNumber | undefined,
 ) => {
-  if (!feePerBillion || !amount) return
-  return amount.mul(feePerBillion).div(ONE_BILLION)
+  if (!feePerBillion || !amountWad) return
+  return amountWad.mul(feePerBillion).div(ONE_BILLION)
 }
 
-export const amountSubFee = (amount?: BigNumber, feePerBillion?: BigNumber) => {
-  if (!feePerBillion || !amount) return
-  const feeAmount = feeForAmount(amount, feePerBillion) ?? 0
-  return amount.sub(feeAmount)
+export const amountSubFee = (
+  amountWad?: BigNumber,
+  feePerBillion?: BigNumber,
+) => {
+  if (!feePerBillion || !amountWad) return
+  const feeAmount = feeForAmount(amountWad, feePerBillion) ?? 0
+  return amountWad.sub(feeAmount)
 }
 
 /**
  * new amount = old amount / (1 - fee)
  */
-export const amountAddFee = (amount?: string, feePerBillion?: BigNumber) => {
-  if (!feePerBillion || !amount) return
+export const amountAddFee = (amountWad?: string, feePerBillion?: BigNumber) => {
+  if (!feePerBillion || !amountWad) return
 
   const inverseFeePerbillion = BigNumber.from(ONE_BILLION).sub(feePerBillion)
-  const amountPerbillion = BigNumber.from(amount).mul(ONE_BILLION)
+  const amountPerbillion = BigNumber.from(amountWad).mul(ONE_BILLION)
   // new amount is in regular decimal units
   const newAmount = amountPerbillion.div(inverseFeePerbillion)
 

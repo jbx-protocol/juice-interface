@@ -19,7 +19,6 @@ import { useETHPaymentTerminalFee } from 'hooks/v2/contractReader/ETHPaymentTerm
 import { BigNumber } from '@ethersproject/bignumber'
 
 import { formatFee } from 'utils/v2/math'
-import ETHAmount from 'components/shared/currency/ETHAmount'
 
 export default function DistributePayoutsModal({
   visible,
@@ -113,11 +112,10 @@ export default function DistributePayoutsModal({
   const netAvailableAmountFormatted = formatWad(netAvailableAmount, {
     precision: 4,
   })
-  const netAvailableAmountWad = amountSubFee(
-    distributionLimitCurrency?.eq(V2_CURRENCY_USD)
-      ? converter.usdToWei(distributionAmount)
-      : parseWad(distributionAmount),
-    ETHPaymentTerminalFee,
+  const netDistributionAmount = formatWad(
+    distributionAmount
+      ? amountSubFee(parseWad(distributionAmount), ETHPaymentTerminalFee)
+      : BigNumber.from(0),
   )
 
   return (
@@ -181,7 +179,8 @@ export default function DistributePayoutsModal({
               <div style={{ color: colors.text.primary, marginBottom: 10 }}>
                 <Trans>
                   <span style={{ fontWeight: 500 }}>
-                    <ETHAmount amount={netAvailableAmountWad} precision={4} />
+                    <CurrencySymbol currency={distributionCurrencyName} />
+                    {netDistributionAmount}
                   </span>{' '}
                   after {feePercentage}% JBX fee
                 </Trans>

@@ -104,8 +104,8 @@ msgid "<0/>{0}{1} distributed"
 msgstr "<0/>{0}{1} distributed"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
-msgid "<0><1/></0> after {feePercentage}% JBX fee"
-msgstr "<0><1/></0> after {feePercentage}% JBX fee"
+msgid "<0><1/>{netDistributionAmount}</0> after {feePercentage}% JBX fee"
+msgstr "<0><1/>{netDistributionAmount}</0> after {feePercentage}% JBX fee"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "<0><1>This project has no overflow</1>, so you will not receive any ETH for burning tokens.</0>"

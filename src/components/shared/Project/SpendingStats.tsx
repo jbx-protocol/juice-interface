@@ -41,10 +41,6 @@ export default function SpendingStats({
     ? untapped
     : projectBalanceInCurrency
 
-  const amountSubFee = distributableAmount
-    ?.mul(100)
-    .div(BigNumber.from(Math.round(parseFloat(feePercentage ?? '0') * 100)))
-
   const smallHeaderStyle: CSSProperties = {
     fontSize: '.7rem',
     fontWeight: 500,
@@ -62,7 +58,7 @@ export default function SpendingStats({
           }}
         >
           <CurrencySymbol currency={currency} />
-          {formatWad(amountSubFee, { precision: 4 }) || '0'}{' '}
+          {formatWad(distributableAmount, { precision: 4 }) || '0'}{' '}
         </span>
         <TooltipLabel
           style={smallHeaderStyle}

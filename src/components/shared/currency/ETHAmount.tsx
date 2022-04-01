@@ -1,7 +1,8 @@
 import { Tooltip } from 'antd'
 
 import { BigNumber } from '@ethersproject/bignumber'
-import { formatWad } from 'utils/formatNumber'
+import { formatWad, parseWad } from 'utils/formatNumber'
+import { betweenZeroAndOne } from 'utils/bigNumbers'
 
 import CurrencySymbol from '../CurrencySymbol'
 
@@ -15,12 +16,19 @@ export default function ETHAmount({
   precision = 0,
   padEnd = false,
 }: {
-  amount: BigNumber | string | undefined
+  amount?: BigNumber | string
   precision?: number
   padEnd?: boolean
 }) {
+  // Account for being passed a string amount or a BigNumber amount
+  const isBetweenZeroAndOne =
+    (BigNumber.isBigNumber(amount) && betweenZeroAndOne(amount)) ||
+    betweenZeroAndOne(parseWad(amount))
+
+  const precisionAdjusted = isBetweenZeroAndOne ? 4 : precision
+
   const formattedETHAmount = formatWad(amount, {
-    precision,
+    precision: precisionAdjusted,
     padEnd,
   })
 

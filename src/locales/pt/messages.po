@@ -109,7 +109,7 @@ msgid "<0/>{0}{1} distributed"
 msgstr ""
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
-msgid "<0><1/></0> after {feePercentage}% JBX fee"
+msgid "<0><1/>{netDistributionAmount}</0> after {feePercentage}% JBX fee"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx

@@ -1,5 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Split } from 'models/v2/splits'
+import { SPLITS_TOTAL_PERCENT } from 'utils/v2/math'
 
 import SplitItem from './SplitItem'
 
@@ -16,6 +17,10 @@ export default function SplitList({
   projectOwnerAddress: string | undefined
   showSplitValues?: boolean
 }) {
+  const totalSplitPercentage =
+    splits?.reduce((sum, split) => sum + split.percent, 0) ?? 0
+  const ownerPercentage = SPLITS_TOTAL_PERCENT - totalSplitPercentage
+
   return (
     <div>
       {[...splits]
@@ -34,6 +39,22 @@ export default function SplitList({
             />
           </div>
         ))}
+      {ownerPercentage ? (
+        <SplitItem
+          split={{
+            beneficiary: projectOwnerAddress,
+            percent: ownerPercentage,
+            preferClaimed: undefined,
+            lockedUntil: undefined,
+            projectId: undefined,
+            allocator: undefined,
+          }}
+          showValue={showSplitValues}
+          distributionLimitCurrency={distributionLimitCurrency}
+          distributionLimit={distributionLimit}
+          projectOwnerAddress={projectOwnerAddress}
+        />
+      ) : null}
     </div>
   )
 }

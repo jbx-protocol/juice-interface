@@ -103,9 +103,9 @@ msgstr ""
 msgid "<0/>{0}{1} distributed"
 msgstr "<0/>{0}{1} distributed"
 
-#: src/components/v2/V2Project/V2FundingCycleSection/modals/WithdrawModal.tsx
-msgid "<0><1/>{0}</0> after {feePercent}% JBX fee"
-msgstr "<0><1/>{0}</0> after {feePercent}% JBX fee"
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
+msgid "<0><1/></0> after {feePercentage}% JBX fee"
+msgstr "<0><1/></0> after {feePercentage}% JBX fee"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "<0><1>This project has no overflow</1>, so you will not receive any ETH for burning tokens.</0>"
@@ -326,6 +326,10 @@ msgstr "Amount"
 msgid "Amount paid"
 msgstr ""
 
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
+msgid "Amount to distribute"
+msgstr "Amount to distribute"
+
 #: src/components/shared/formItems/ProjectDiscord.tsx
 msgid "An invite link to your project's Discord server."
 msgstr ""
@@ -352,7 +356,7 @@ msgid "Assets"
 msgstr "Assets"
 
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/modals/WithdrawModal.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Available after fee:"
 msgstr ""
 
@@ -652,8 +656,8 @@ msgstr "Distribute available funds to other Ethereum wallets or Juicebox project
 
 #: src/components/v1/FundingCycle/Spending.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/modals/WithdrawModal.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/modals/WithdrawModal.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Distribute funds"
 msgstr "Distribute funds"
 
@@ -1017,9 +1021,9 @@ msgstr ""
 msgid "JBX Fee ({0}%):"
 msgstr ""
 
-#: src/components/v2/V2Project/V2FundingCycleSection/modals/WithdrawModal.tsx
-msgid "JBX Fee ({feePercent}%):"
-msgstr "JBX Fee ({feePercent}%):"
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
+msgid "JBX Fee ({feePercentage}%):"
+msgstr "JBX Fee ({feePercentage}%):"
 
 #: src/components/v2/shared/V2MainnetWarning.tsx
 msgid "Juicebox V2 on mainnet isn't supported."
@@ -1082,7 +1086,7 @@ msgstr ""
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/modals/WithdrawModal.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "MAX"
 msgstr "MAX"
 
@@ -1308,7 +1312,7 @@ msgstr ""
 msgid "Payments paused"
 msgstr ""
 
-#: src/components/v2/V2Project/V2FundingCycleSection/modals/WithdrawModal.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Payout recipients"
 msgstr "Payout recipients"
 
@@ -1453,6 +1457,10 @@ msgstr ""
 #: src/components/shared/inputs/Pay/PayInputSubText.tsx
 msgid "Receive {receiveText}"
 msgstr "Receive {receiveText}"
+
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
+msgid "Recipients will receive payouts in ETH."
+msgstr "Recipients will receive payouts in ETH."
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/v1/V1Create/index.tsx
@@ -1829,8 +1837,8 @@ msgid "The contract team will soon start working on L2 payment terminals for Jui
 msgstr "The contract team will soon start working on L2 payment terminals for Juicebox projects."
 
 #: src/components/shared/Project/SpendingStats.tsx
-msgid "The funds available to withdraw for this funding cycle after the ${feePercentage}% JBX fee is subtracted. This number won't roll over to the next funding cycle, so funds should be withdrawn before it ends."
-msgstr "The funds available to withdraw for this funding cycle after the ${feePercentage}% JBX fee is subtracted. This number won't roll over to the next funding cycle, so funds should be withdrawn before it ends."
+msgid "The funds available to withdraw for this funding cycle before the {feePercentage}% JBX fee is subtracted. This number won't roll over to the next funding cycle, so funds should be withdrawn before it ends."
+msgstr "The funds available to withdraw for this funding cycle before the {feePercentage}% JBX fee is subtracted. This number won't roll over to the next funding cycle, so funds should be withdrawn before it ends."
 
 #: src/components/Landing/index.tsx
 msgid "The future will be led by creators, and owned by communities."
@@ -1880,6 +1888,10 @@ msgstr ""
 #: src/components/v1/V1Project/Paid.tsx
 msgid "The total amount received by this project through Juicebox since it was created."
 msgstr ""
+
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
+msgid "There are no payouts defined for this project. The project owner will recieve all distributed funds."
+msgstr "There are no payouts defined for this project. The project owner will recieve all distributed funds."
 
 #: src/components/Landing/QAs.tsx
 msgid "There are unit tests written for every condition of every function in the contracts, and integration tests for every workflow that the protocol supports."
@@ -2021,7 +2033,7 @@ msgid "Total ETH paid"
 msgstr "Total ETH paid"
 
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/modals/WithdrawModal.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Total funds:"
 msgstr ""
 
@@ -2430,7 +2442,6 @@ msgid "{0} total"
 msgstr ""
 
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/modals/WithdrawModal.tsx
 msgid "{0} will go to the project owner: <0/>"
 msgstr ""
 

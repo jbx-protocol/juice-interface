@@ -41,6 +41,10 @@ export default function SpendingStats({
     ? untapped
     : projectBalanceInCurrency
 
+  const amountSubFee = distributableAmount
+    ?.mul(100)
+    .div(BigNumber.from(Math.round(parseFloat(feePercentage ?? '0') * 100)))
+
   const smallHeaderStyle: CSSProperties = {
     fontSize: '.7rem',
     fontWeight: 500,
@@ -58,14 +62,14 @@ export default function SpendingStats({
           }}
         >
           <CurrencySymbol currency={currency} />
-          {formatWad(distributableAmount, { precision: 4 }) || '0'}{' '}
+          {formatWad(amountSubFee, { precision: 4 }) || '0'}{' '}
         </span>
         <TooltipLabel
           style={smallHeaderStyle}
           label={<Trans>AVAILABLE</Trans>}
           tip={
             <Trans>
-              The funds available to withdraw for this funding cycle after the $
+              The funds available to withdraw for this funding cycle before the{' '}
               {feePercentage}% JBX fee is subtracted. This number won't roll
               over to the next funding cycle, so funds should be withdrawn
               before it ends.

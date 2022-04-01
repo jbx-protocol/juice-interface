@@ -66,7 +66,7 @@ export default function TreasuryStats() {
           >
             {distributionLimitCurrency?.eq(V2_CURRENCY_USD) ? (
               <span style={secondaryTextStyle}>
-                <ETHAmount amount={ETHBalance} precision={2} padEnd={true} />{' '}
+                <ETHAmount amount={ETHBalance} precision={4} padEnd={true} />{' '}
               </span>
             ) : (
               ''

@@ -33,7 +33,9 @@ export default function SplitItem({
   } = useContext(ThemeContext)
 
   const isProjectOwner = projectOwnerAddress === split.beneficiary
-  const isJuiceboxProject = BigNumber.from(split.projectId).gt(0)
+  const isJuiceboxProject = split.projectId
+    ? BigNumber.from(split.projectId).gt(0)
+    : false
 
   const LockedText = ({ lockedUntil }: { lockedUntil: number }) => {
     const lockedUntilFormatted = formatDate(lockedUntil * 1000, 'yyyy-MM-DD')

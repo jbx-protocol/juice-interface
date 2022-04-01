@@ -1,9 +1,8 @@
-import { CrownFilled } from '@ant-design/icons'
-import { Form, Space, Tooltip } from 'antd'
+import { ExclamationCircleOutlined } from '@ant-design/icons'
+import { Form, Space } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import { Trans } from '@lingui/macro'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
-import FormattedAddress from 'components/shared/FormattedAddress'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { ThemeContext } from 'contexts/themeContext'
@@ -174,7 +173,6 @@ export default function DistributePayoutsModal({
             </div>
           </div>
         </div>
-
         <Form layout="vertical">
           <Form.Item
             label={<Trans>Amount to distribute</Trans>}
@@ -222,40 +220,32 @@ export default function DistributePayoutsModal({
             />
           </Form.Item>
         </Form>
-
         <div>
           <h4>
             <Trans>Payout recipients</Trans>
           </h4>
 
-          {payoutSplits?.length ? (
-            <SplitList
-              distributionLimit={netAvailableAmount}
-              distributionLimitCurrency={distributionLimitCurrency}
-              splits={payoutSplits}
-              projectOwnerAddress={projectOwnerAddress}
-              showSplitValues
-            />
-          ) : (
-            <div>
-              <p>
-                <Trans>
-                  There are no payouts defined for this project. The project
-                  owner will recieve all distributed funds.
-                </Trans>
-              </p>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <div>
-                  <FormattedAddress address={projectOwnerAddress} />{' '}
-                  <Tooltip title={<Trans>Project owner</Trans>}>
-                    <CrownFilled />
-                  </Tooltip>
-                </div>
-                <ETHAmount amount={netAvailableAmountWad} precision={4} />
-              </div>
-            </div>
-          )}
+          {payoutSplits?.length === 0 ? (
+            <p>
+              <Trans>
+                There are no payouts defined for this project. The project owner
+                will recieve all distributed funds.
+              </Trans>
+            </p>
+          ) : null}
+
+          <SplitList
+            distributionLimit={netAvailableAmount}
+            distributionLimitCurrency={distributionLimitCurrency}
+            splits={payoutSplits ?? []}
+            projectOwnerAddress={projectOwnerAddress}
+            showSplitValues
+          />
         </div>
+        <p style={{ fontSize: '0.8rem' }}>
+          <ExclamationCircleOutlined />{' '}
+          <Trans>Recipients will receive payouts in ETH.</Trans>
+        </p>
       </Space>
     </Modal>
   )

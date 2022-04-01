@@ -10,6 +10,10 @@ import { useContext, useState } from 'react'
 
 import { V2CurrencyName } from 'utils/v2/currency'
 
+import { formatFee } from 'utils/v2/math'
+
+import { useETHPaymentTerminalFee } from 'hooks/v2/contractReader/ETHPaymentTerminalFee'
+
 import DistributePayoutsModal from './modals/DistributePayoutsModal'
 
 export default function PayoutSplitsCard() {
@@ -21,6 +25,8 @@ export default function PayoutSplitsCard() {
     projectOwnerAddress,
     balanceInDistributionLimitCurrency,
   } = useContext(V2ProjectContext)
+  const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
+
   const [distributePayoutsModalVisible, setDistributePayoutsModalVisible] =
     useState<boolean>()
 
@@ -28,17 +34,19 @@ export default function PayoutSplitsCard() {
     <CardSection>
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <SpendingStats
-            hasFundingTarget={distributionLimit?.gt(0)}
-            currency={V2CurrencyName(
-              distributionLimitCurrency?.toNumber() as V2CurrencyOption,
-            )}
-            projectBalanceInCurrency={balanceInDistributionLimitCurrency}
-            targetAmount={distributionLimit}
-            distributedAmount={usedDistributionLimit}
-            feePercentage={'2.5'} // TODO
-            ownerAddress={projectOwnerAddress}
-          />
+          {ETHPaymentTerminalFee ? (
+            <SpendingStats
+              hasFundingTarget={distributionLimit?.gt(0)}
+              currency={V2CurrencyName(
+                distributionLimitCurrency?.toNumber() as V2CurrencyOption,
+              )}
+              projectBalanceInCurrency={balanceInDistributionLimitCurrency}
+              targetAmount={distributionLimit}
+              distributedAmount={usedDistributionLimit}
+              feePercentage={formatFee(ETHPaymentTerminalFee)} // TODO
+              ownerAddress={projectOwnerAddress}
+            />
+          ) : null}
           <Button
             type="ghost"
             size="small"

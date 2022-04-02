@@ -4,9 +4,18 @@ import SectionHeader from 'components/shared/SectionHeader'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import * as constants from '@ethersproject/constants'
 import { NetworkContext } from 'contexts/networkContext'
+import useERC20BalanceOf from 'hooks/v2/contractReader/ERC20BalanceOf'
 
 import { CSSProperties, useContext, useState } from 'react'
 import FormattedAddress from 'components/shared/FormattedAddress'
+import { formatWad } from 'utils/formatNumber'
+
+import IssueTickets from 'components/v1/V1Project/Rewards/IssueTickets'
+import {
+  useHasPermission,
+  V2OperatorPermission,
+} from 'hooks/v2/contractReader/HasPermission'
+import { useIssueTokensTx } from 'hooks/v2/transactor/IssueTokensTx'
 
 import V2ManageTokensModal from './V2ManageTokensModal'
 
@@ -17,9 +26,8 @@ export default function V2ManageTokensSection() {
   const { tokenAddress } = useContext(V2ProjectContext)
   const { userAddress } = useContext(NetworkContext)
 
-  // TODO:
-  // const claimedBalance = useERC20BalanceOf(tokenAddress, userAddress)
-  // const unclaimedBalance = useUnclaimedBalanceOfUser()
+  const claimedBalance = useERC20BalanceOf(tokenAddress, userAddress).data
+  // TODO: const unclaimedBalance = useUnclaimedBalanceOfUser()
 
   const labelStyle: CSSProperties = {
     width: 128,
@@ -28,6 +36,8 @@ export default function V2ManageTokensSection() {
   const ticketsIssued = tokenAddress
     ? tokenAddress !== constants.AddressZero
     : false
+
+  const hasIssueTicketsPermission = useHasPermission(V2OperatorPermission.ISSUE)
 
   return (
     <div>
@@ -67,13 +77,13 @@ export default function V2ManageTokensSection() {
                       }}
                     >
                       <div>
-                        {ticketsIssued &&
-                          // <div>
-                          //   {`${formatWad(claimedBalance ?? 0, {
-                          //     precision: 0,
-                          //   })} ${tokenSymbol}`}
-                          // </div>
-                          'TODO: claimed balance'}
+                        {ticketsIssued && (
+                          <div>
+                            {`${formatWad(claimedBalance ?? 0, {
+                              precision: 0,
+                            })} `}
+                          </div>
+                        )}
                         <div>
                           {/* <Trans>
                             {formatWad(unclaimedBalance ?? 0, { precision: 0 })}
@@ -90,6 +100,10 @@ export default function V2ManageTokensSection() {
                       >
                         <Trans>Manage</Trans>
                       </Button>
+                      {/* TODO: 'Holders modal button */}
+                      {!ticketsIssued && hasIssueTicketsPermission && (
+                        <IssueTickets useIssueTokensTx={useIssueTokensTx} />
+                      )}
                     </div>
                   }
                 />

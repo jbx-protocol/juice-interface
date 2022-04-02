@@ -2,13 +2,21 @@ import { Button, Form, Input, Modal, Space } from 'antd'
 import { t, Trans } from '@lingui/macro'
 import { useForm } from 'antd/lib/form/Form'
 import TooltipIcon from 'components/shared/TooltipIcon'
-import { useIssueTokensTx } from 'hooks/v1/transactor/IssueTokensTx'
 import { useState } from 'react'
+import { TransactorInstance } from 'hooks/Transactor'
 
-export default function IssueTickets() {
+export default function IssueTickets({
+  useIssueTokensTx,
+}: {
+  useIssueTokensTx: () => TransactorInstance<{
+    name: string
+    symbol: string
+  }>
+}) {
   const [modalVisible, setModalVisible] = useState<boolean>()
   const [loading, setLoading] = useState<boolean>()
   const [form] = useForm<{ name: string; symbol: string }>()
+
   const issueTokensTx = useIssueTokensTx()
 
   function issue() {
@@ -18,7 +26,10 @@ export default function IssueTickets() {
 
     issueTokensTx(
       { name: fields.name, symbol: fields.symbol },
-      { onDone: () => setModalVisible(false) },
+      {
+        onDone: () => setModalVisible(false),
+        onConfirmed: () => setLoading(false),
+      },
     )
   }
 

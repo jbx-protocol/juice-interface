@@ -8,6 +8,7 @@ import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import * as constants from '@ethersproject/constants'
 import useERC20BalanceOf from 'hooks/v1/contractReader/ERC20BalanceOf'
+import { useIssueTokensTx } from 'hooks/v1/transactor/IssueTokensTx'
 import {
   OperatorPermission,
   useHasPermission,
@@ -180,7 +181,7 @@ export default function Rewards() {
         />
 
         {!ticketsIssued && hasIssueTicketsPermission && !isPreviewMode && (
-          <IssueTickets />
+          <IssueTickets useIssueTokensTx={useIssueTokensTx} />
         )}
       </Space>
 

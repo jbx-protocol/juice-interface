@@ -22,8 +22,8 @@ export default function SpendingStats({
   hasFundingTarget,
 }: {
   currency: CurrencyName | undefined
-  targetAmount: BigNumber | undefined
-  distributedAmount: BigNumber | undefined
+  targetAmount: BigNumber
+  distributedAmount: BigNumber
   projectBalanceInCurrency: BigNumber | undefined
   ownerAddress: string | undefined
   feePercentage: string | undefined
@@ -32,8 +32,6 @@ export default function SpendingStats({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-
-  if (!targetAmount || !distributedAmount) return <span>Loading...</span>
 
   const untapped = targetAmount.sub(distributedAmount)
 

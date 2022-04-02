@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import { Button, Space } from 'antd'
+import { Button, Skeleton, Space } from 'antd'
 import { CardSection } from 'components/shared/CardSection'
 import TooltipLabel from 'components/shared/TooltipLabel'
 import SpendingStats from 'components/shared/Project/SpendingStats'
@@ -34,7 +34,9 @@ export default function PayoutSplitsCard() {
     <CardSection>
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          {ETHPaymentTerminalFee ? (
+          {ETHPaymentTerminalFee &&
+          distributionLimit &&
+          usedDistributionLimit ? (
             <SpendingStats
               hasFundingTarget={distributionLimit?.gt(0)}
               currency={V2CurrencyName(
@@ -46,7 +48,14 @@ export default function PayoutSplitsCard() {
               feePercentage={formatFee(ETHPaymentTerminalFee)} // TODO
               ownerAddress={projectOwnerAddress}
             />
-          ) : null}
+          ) : (
+            <Skeleton
+              active
+              title={false}
+              paragraph={{ rows: 2, width: ['60%', '60%'] }}
+            />
+          )}
+
           <Button
             type="ghost"
             size="small"

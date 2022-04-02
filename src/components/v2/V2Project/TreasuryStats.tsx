@@ -77,21 +77,22 @@ export default function TreasuryStats() {
           </div>
         }
         style={{ marginBottom: spacing }}
+        loading={!Boolean(balanceInDistributionLimitCurrency)}
       />
 
-      {distributionLimit?.gt(0) ? (
-        <StatLine
-          statLabel={<Trans>Distributed</Trans>}
-          statLabelTip={
-            <Trans>
-              The amount that has been distributed from the Juicebox balance in
-              this funding cycle, out of the current funding target. No more
-              than the funding target can be distributed in a single funding
-              cycle—any remaining ETH in Juicebox is overflow, until the next
-              cycle begins.
-            </Trans>
-          }
-          statValue={
+      <StatLine
+        loading={!Boolean(distributionLimit)}
+        statLabel={<Trans>Distributed</Trans>}
+        statLabelTip={
+          <Trans>
+            The amount that has been distributed from the Juicebox balance in
+            this funding cycle, out of the current funding target. No more than
+            the funding target can be distributed in a single funding cycle—any
+            remaining ETH in Juicebox is overflow, until the next cycle begins.
+          </Trans>
+        }
+        statValue={
+          distributionLimit?.gt(0) ? (
             <div
               style={{
                 ...secondaryTextStyle,
@@ -101,27 +102,27 @@ export default function TreasuryStats() {
               {formatCurrencyAmount(usedDistributionLimit)} /{' '}
               {formatCurrencyAmount(distributionLimit)}
             </div>
-          }
-        />
-      ) : (
-        <div
-          style={{
-            ...secondaryTextStyle,
-            textAlign: 'right',
-          }}
-        >
-          <TooltipLabel
-            tip={
-              <Trans>
-                The target for this funding cycle is 0, meaning all funds in
-                Juicebox are currently considered overflow. Overflow can be
-                redeemed by token holders, but not distributed.
-              </Trans>
-            }
-            label={<Trans>100% overflow</Trans>}
-          />
-        </div>
-      )}
+          ) : (
+            <div
+              style={{
+                ...secondaryTextStyle,
+                textAlign: 'right',
+              }}
+            >
+              <TooltipLabel
+                tip={
+                  <Trans>
+                    The target for this funding cycle is 0, meaning all funds in
+                    Juicebox are currently considered overflow. Overflow can be
+                    redeemed by token holders, but not distributed.
+                  </Trans>
+                }
+                label={<Trans>100% overflow</Trans>}
+              />
+            </div>
+          )
+        }
+      />
     </>
   )
 }

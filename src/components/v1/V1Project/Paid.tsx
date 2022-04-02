@@ -29,12 +29,12 @@ import { readNetwork } from 'constants/networks'
 import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
 
 import BalancesModal from './modals/BalancesModal'
+import { textSecondary } from 'constants/styles/text'
 
 export default function Paid() {
   const [balancesModalVisible, setBalancesModalVisible] = useState<boolean>()
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
+  const { theme } = useContext(ThemeContext)
+  const { colors } = theme
 
   const {
     projectId,
@@ -61,12 +61,7 @@ export default function Paid() {
     lineHeight: 1,
   }
 
-  const secondaryTextStyle: CSSProperties = {
-    textTransform: 'uppercase',
-    color: colors.text.tertiary,
-    fontSize: '0.8rem',
-    fontWeight: 500,
-  }
+  const secondaryTextStyle = textSecondary(theme)
 
   if (!currentFC) return null
 

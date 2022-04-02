@@ -9,10 +9,11 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 import USDAmount from 'components/shared/currency/USDAmount'
 import TooltipLabel from 'components/shared/TooltipLabel'
 
+import { textSecondary } from 'constants/styles/text'
+
 export default function TreasuryStats() {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
+  const { theme } = useContext(ThemeContext)
+  const { colors } = theme
   const {
     ETHBalance,
     balanceInDistributionLimitCurrency,
@@ -28,12 +29,8 @@ export default function TreasuryStats() {
     fontSize: '1.1rem',
     lineHeight: 1,
   }
-  const secondaryTextStyle: CSSProperties = {
-    textTransform: 'uppercase',
-    color: colors.text.tertiary,
-    fontSize: '0.8rem',
-    fontWeight: 500,
-  }
+
+  const secondaryTextStyle = textSecondary(theme)
 
   const formatCurrencyAmount = (amt: BigNumber | undefined) => {
     if (!amt) return null

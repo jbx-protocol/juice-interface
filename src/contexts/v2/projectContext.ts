@@ -24,6 +24,7 @@ export type V2ProjectContextType = {
   queuedDistributionLimitCurrency: BigNumber | undefined
   balanceInDistributionLimitCurrency: BigNumber | undefined
   projectOwnerAddress: string | undefined
+  usedDistributionLimit: BigNumber | undefined
 }
 
 export const V2ProjectContext = createContext<V2ProjectContextType>({
@@ -46,4 +47,5 @@ export const V2ProjectContext = createContext<V2ProjectContextType>({
   queuedDistributionLimitCurrency: undefined,
   balanceInDistributionLimitCurrency: undefined,
   projectOwnerAddress: undefined,
+  usedDistributionLimit: undefined,
 })

@@ -207,7 +207,7 @@ export default function WithdrawModal({
               mods={currentPayoutMods}
               fundingCycle={currentFC}
               projectId={projectId}
-              fee={currentFC.fee}
+              feePerbicent={currentFC.fee}
             />
           </div>
         ) : (

@@ -13,8 +13,8 @@ import ETHToUSD from './ETHToUSD'
  */
 export default function ETHAmount({
   amount,
-  precision,
-  padEnd,
+  precision = 0,
+  padEnd = false,
 }: {
   amount?: BigNumber | string
   precision?: number
@@ -25,11 +25,11 @@ export default function ETHAmount({
     (BigNumber.isBigNumber(amount) && betweenZeroAndOne(amount)) ||
     betweenZeroAndOne(parseWad(amount))
 
-  const precisionAdjusted = isBetweenZeroAndOne ? 2 : precision
+  const precisionAdjusted = isBetweenZeroAndOne ? 4 : precision
 
   const formattedETHAmount = formatWad(amount, {
-    precision: precisionAdjusted ?? 0,
-    padEnd: padEnd ?? false,
+    precision: precisionAdjusted,
+    padEnd,
   })
 
   if (amount) {

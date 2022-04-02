@@ -8,11 +8,12 @@ import {
   useEditingV2FundingCycleMetadataSelector,
 } from 'hooks/AppSelector'
 import { useDeployProjectTx } from 'hooks/v2/transactor/DeployProjectTx'
-import { useCallback, useState } from 'react'
+import { useCallback, useContext, useState } from 'react'
 import { uploadProjectMetadata } from 'utils/ipfs'
 import { TransactionReceipt } from '@ethersproject/providers'
 import { useHistory } from 'react-router-dom'
 import { BigNumber } from '@ethersproject/bignumber'
+import { NetworkContext } from 'contexts/networkContext'
 
 import { readProvider } from 'constants/readProvider'
 
@@ -41,6 +42,8 @@ export default function DeployProjectButton({
   const deployProjectTx = useDeployProjectTx()
   const history = useHistory()
 
+  const { userAddress, onSelectWallet } = useContext(NetworkContext)
+
   const [loadingDeploy, setLoadingDeploy] = useState<boolean>()
 
   const { projectMetadata, reserveTokenGroupedSplits, payoutGroupedSplits } =
@@ -59,6 +62,7 @@ export default function DeployProjectButton({
         fundAccessConstraints
       )
     ) {
+      setLoadingDeploy(false)
       throw new Error('Error deploying project.')
     }
 
@@ -73,7 +77,7 @@ export default function DeployProjectButton({
 
     const groupedSplits = [payoutGroupedSplits, reserveTokenGroupedSplits]
 
-    deployProjectTx(
+    const didTxExecute = await deployProjectTx(
       {
         projectMetadataCID: uploadedMetadata.IpfsHash,
         fundingCycleData,
@@ -99,8 +103,15 @@ export default function DeployProjectButton({
 
           history.push(`/v2/p/${projectId}`)
         },
+        onCancelled() {
+          setLoadingDeploy(false)
+        },
       },
     )
+
+    if (!didTxExecute) {
+      setLoadingDeploy(false)
+    }
   }, [
     deployProjectTx,
     projectMetadata,
@@ -124,7 +135,7 @@ export default function DeployProjectButton({
       </Button>
       <ConfirmDeployV2ProjectModal
         visible={deployProjectModalVisible}
-        onOk={deployProject}
+        onOk={userAddress ? deployProject : onSelectWallet}
         onCancel={() => setDeployProjectModalVisible(false)}
         confirmLoading={loadingDeploy}
       />

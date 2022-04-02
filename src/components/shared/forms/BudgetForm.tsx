@@ -175,7 +175,7 @@ export default function BudgetForm({
             }}
             currency={currency}
             onCurrencyChange={setCurrency}
-            fee={terminalFee}
+            feePerbicent={terminalFee}
           />
         )}
 

@@ -34,6 +34,7 @@ export function usePayV2ProjectTx(): PayV2ProjectTxType {
       contracts?.JBETHPaymentTerminal,
       'pay',
       [
+        value,
         projectId,
         beneficiary,
         minReturnedTokens,

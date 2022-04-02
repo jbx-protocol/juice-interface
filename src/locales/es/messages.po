@@ -8,8 +8,9 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-03-31 02:21\n"
-"PO-Revision-Date: 2022-03-31 02:21\n"
+"PO-Revision-Date: 2022-04-01 02:48\n"
+"PO-Revision-Date: 2022-04-01 02:48\n"
+"PO-Revision-Date: 2022-04-01 02:48\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -2536,4 +2537,5 @@ msgstr "Tipo de cambio de {tokenSymbol}/ETH en {exchangeName}."
 #: src/components/v1/V1Project/Rewards/index.tsx
 msgid "{tokensLabel} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
 msgstr "{tokensLabel} son distribuidos a cualquiera que pague este proyecto. Si el proyecto tiene un objetivo de financiamiento, los tokens pueden ser canjeados por una porción del excedente del proyecto, hayan sido estos reclamados o no."
+
 

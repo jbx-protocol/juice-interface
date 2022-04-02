@@ -47,7 +47,7 @@ export default function TokenTabContent({
     fundingCycleMetadata,
     fundingCycleData,
     fundAccessConstraints,
-    reserveTokenGroupedSplits: reduxReserveTokenGroupedSplits,
+    reservedTokensGroupedSplits: reduxReservedTokensGroupedSplits,
   } = useAppSelector(state => state.editingV2Project)
 
   const reduxDiscountRate = fundingCycleData?.discountRate
@@ -60,8 +60,8 @@ export default function TokenTabContent({
       fundAccessConstraints,
     )
 
-  const [reserveTokenSplits, setReserveTokenSplits] = useState<Split[]>(
-    reduxReserveTokenGroupedSplits?.splits ?? [],
+  const [reservedTokensSplits, setReservedTokensSplits] = useState<Split[]>(
+    reduxReservedTokensGroupedSplits?.splits ?? [],
   )
 
   const [discountRateDisabled, setDiscountRateDisabled] = useState<boolean>(
@@ -83,7 +83,7 @@ export default function TokenTabContent({
 
   const onTokenFormSaved = useCallback(
     (fields: TokenFormFields) => {
-      const newReserveTokenSplits = reserveTokenSplits.map(split =>
+      const newReservedTokensSplits = reservedTokensSplits.map(split =>
         sanitizeSplit(split),
       )
 
@@ -91,12 +91,14 @@ export default function TokenTabContent({
       dispatch(editingV2ProjectActions.setReservedRate(fields.reservedRate))
       dispatch(editingV2ProjectActions.setRedemptionRate(fields.redemptionRate))
       dispatch(
-        editingV2ProjectActions.setReserveTokenSplits(newReserveTokenSplits),
+        editingV2ProjectActions.setReservedTokensSplits(
+          newReservedTokensSplits,
+        ),
       )
 
       onFinish?.()
     },
-    [dispatch, reserveTokenSplits, onFinish],
+    [dispatch, reservedTokensSplits, onFinish],
   )
 
   const resetTokenForm = useCallback(() => {
@@ -111,12 +113,12 @@ export default function TokenTabContent({
         reduxRedemptionRate ??
         '100',
     })
-    setReserveTokenSplits(reserveTokenSplits)
+    setReservedTokensSplits(reservedTokensSplits)
   }, [
     reduxDiscountRate,
     reduxReservedRate,
     reduxRedemptionRate,
-    reserveTokenSplits,
+    reservedTokensSplits,
     tokenForm,
   ])
 
@@ -160,8 +162,8 @@ export default function TokenTabContent({
               }
               setReservedRateDisabled(!checked)
             }}
-            reserveTokenSplits={reserveTokenSplits}
-            onReserveTokenSplitsChange={setReserveTokenSplits}
+            reservedTokensSplits={reservedTokensSplits}
+            onReservedTokensSplitsChange={setReservedTokensSplits}
           />
           <br />
           <FormItems.ProjectDiscountRate

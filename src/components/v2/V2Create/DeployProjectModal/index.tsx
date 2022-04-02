@@ -44,7 +44,7 @@ export default function ConfirmDeployV2ProjectModal({
     fundingCycleData,
     fundingCycleMetadata,
     payoutGroupedSplits,
-    reserveTokenGroupedSplits,
+    reservedTokensGroupedSplits,
     projectMetadata,
   } = useAppSelector(state => state.editingV2Project)
 
@@ -313,12 +313,12 @@ export default function ConfirmDeployV2ProjectModal({
 
             {fundingCycleMetadata.reservedRate &&
             fundingCycleMetadata.reservedRate !== '0' &&
-            reserveTokenGroupedSplits.splits.length ? (
+            reservedTokensGroupedSplits.splits.length ? (
               <Statistic
                 title={t`Reserved token allocations`}
                 valueRender={() => (
                   <SplitList
-                    splits={reserveTokenGroupedSplits.splits}
+                    splits={reservedTokensGroupedSplits.splits}
                     distributionLimitCurrency={BigNumber.from(
                       fundAccessConstraint?.distributionLimitCurrency,
                     )}

@@ -86,8 +86,8 @@ export default function V2ProjectReconfigureModal({
     fundingCycle,
     payoutSplits,
     queuedPayoutSplits,
-    reserveTokenSplits,
-    queuedReserveTokenSplits,
+    reservedTokensSplits,
+    queuedReservedTokensSplits,
     distributionLimit,
     queuedDistributionLimit,
     distributionLimitCurrency,
@@ -120,9 +120,9 @@ export default function V2ProjectReconfigureModal({
     ? queuedPayoutSplits
     : payoutSplits
 
-  const effectiveReserveTokenSplits = queuedFundingCycle?.number.gt(0)
-    ? queuedReserveTokenSplits
-    : reserveTokenSplits
+  const effectiveReservedTokensSplits = queuedFundingCycle?.number.gt(0)
+    ? queuedReservedTokensSplits
+    : reservedTokensSplits
 
   const effectiveDistributionLimit =
     queuedDistributionLimit ?? distributionLimit
@@ -178,15 +178,15 @@ export default function V2ProjectReconfigureModal({
 
     // Set reserve token splits
     dispatch(
-      editingV2ProjectActions.setReserveTokenSplits(
-        effectiveReserveTokenSplits ?? [],
+      editingV2ProjectActions.setReservedTokensSplits(
+        effectiveReservedTokensSplits ?? [],
       ),
     )
   }, [
     contracts,
     effectiveFundingCycle,
     effectivePayoutSplits,
-    effectiveReserveTokenSplits,
+    effectiveReservedTokensSplits,
     effectiveDistributionLimit,
     effectiveDistributionLimitCurrency,
     fundingCycle,
@@ -197,7 +197,7 @@ export default function V2ProjectReconfigureModal({
   // Gets values from the redux state to be used in the modal drawer fields
   const {
     payoutGroupedSplits: editingPayoutGroupedSplits,
-    reserveTokenGroupedSplits: editingReserveTokenGroupedSplits,
+    reservedTokensGroupedSplits: editingReservedTokensGroupedSplits,
   } = useAppSelector(state => state.editingV2Project)
   const editingFundingCycleMetadata = useEditingV2FundingCycleMetadataSelector()
   const editingFundingCycleData = useEditingV2FundingCycleDataSelector()
@@ -225,7 +225,7 @@ export default function V2ProjectReconfigureModal({
         fundAccessConstraints: editingFundAccessConstraints,
         groupedSplits: [
           editingPayoutGroupedSplits,
-          editingReserveTokenGroupedSplits,
+          editingReservedTokensGroupedSplits,
         ],
       },
       {
@@ -246,7 +246,7 @@ export default function V2ProjectReconfigureModal({
     editingFundingCycleData,
     reconfigureV2FundingCycleTx,
     editingPayoutGroupedSplits,
-    editingReserveTokenGroupedSplits,
+    editingReservedTokensGroupedSplits,
     onOk,
   ])
 

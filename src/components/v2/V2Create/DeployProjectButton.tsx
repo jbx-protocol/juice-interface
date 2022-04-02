@@ -46,7 +46,7 @@ export default function DeployProjectButton({
 
   const [loadingDeploy, setLoadingDeploy] = useState<boolean>()
 
-  const { projectMetadata, reserveTokenGroupedSplits, payoutGroupedSplits } =
+  const { projectMetadata, reservedTokensGroupedSplits, payoutGroupedSplits } =
     useAppSelector(state => state.editingV2Project)
   const fundingCycleMetadata = useEditingV2FundingCycleMetadataSelector()
   const fundingCycleData = useEditingV2FundingCycleDataSelector()
@@ -75,7 +75,7 @@ export default function DeployProjectButton({
       return
     }
 
-    const groupedSplits = [payoutGroupedSplits, reserveTokenGroupedSplits]
+    const groupedSplits = [payoutGroupedSplits, reservedTokensGroupedSplits]
 
     const didTxExecute = await deployProjectTx(
       {
@@ -116,7 +116,7 @@ export default function DeployProjectButton({
     deployProjectTx,
     projectMetadata,
     payoutGroupedSplits,
-    reserveTokenGroupedSplits,
+    reservedTokensGroupedSplits,
     fundingCycleData,
     fundingCycleMetadata,
     fundAccessConstraints,

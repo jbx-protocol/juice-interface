@@ -23,7 +23,7 @@ export default function CurrentFundingCycle({
 }) {
   const {
     fundingCycle,
-    reserveTokenSplits,
+    reservedTokensSplits,
     fundingCycleMetadata,
     tokenSymbol,
     distributionLimitCurrency,
@@ -76,9 +76,9 @@ export default function CurrentFundingCycle({
             }
           />
         </div>
-        {reserveTokenSplits ? (
+        {reservedTokensSplits ? (
           <SplitList
-            splits={reserveTokenSplits}
+            splits={reservedTokensSplits}
             distributionLimitCurrency={distributionLimitCurrency}
             distributionLimit={distributionLimit}
             projectOwnerAddress={projectOwnerAddress}

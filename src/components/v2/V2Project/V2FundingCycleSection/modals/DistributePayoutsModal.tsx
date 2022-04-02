@@ -227,15 +227,15 @@ export default function DistributePayoutsModal({
           {payoutSplits?.length === 0 ? (
             <p>
               <Trans>
-                There are no payouts defined for this project. The project owner
-                will recieve all distributed funds.
+                There are no payouts defined for this funding cycle. The project
+                owner will recieve all available funds.
               </Trans>
             </p>
           ) : null}
 
           <SplitList
-            distributionLimit={netAvailableAmount}
-            distributionLimitCurrency={distributionLimitCurrency}
+            totalValue={netAvailableAmount}
+            currency={distributionLimitCurrency}
             splits={payoutSplits ?? []}
             projectOwnerAddress={projectOwnerAddress}
             showSplitValues

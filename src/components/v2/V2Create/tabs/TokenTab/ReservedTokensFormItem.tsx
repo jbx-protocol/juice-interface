@@ -10,16 +10,16 @@ export default function ReservedTokensFormItem({
   name,
   hideLabel,
   value,
-  reserveTokenSplits,
-  onReserveTokenSplitsChange,
+  reservedTokensSplits,
+  onReservedTokensSplitsChange,
   style = {},
   onChange,
   disabled,
   toggleDisabled,
 }: {
   value: number | undefined
-  reserveTokenSplits: Split[]
-  onReserveTokenSplitsChange: (splits: Split[]) => void
+  reservedTokensSplits: Split[]
+  onReservedTokensSplitsChange: (splits: Split[]) => void
   style?: CSSProperties
   onChange: (val?: number) => void
   disabled?: boolean
@@ -45,10 +45,10 @@ export default function ReservedTokensFormItem({
 
       {!disabled ? (
         <FormItems.ProjectTicketMods
-          mods={reserveTokenSplits.map(split => toMod(split))}
+          mods={reservedTokensSplits.map(split => toMod(split))}
           onModsChanged={mods => {
             const splits = mods.map(mod => toSplit(mod))
-            onReserveTokenSplitsChange(splits)
+            onReservedTokensSplitsChange(splits)
           }}
           formItemProps={{
             label: <Trans>Reserved token allocation (optional)</Trans>,

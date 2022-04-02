@@ -97,6 +97,7 @@ export default function DistributeReservedTokensModal({
             totalValue={reservedTokens}
             valueSuffix={tokenTextPlural}
             showSplitValues
+            valueFormatProps={{ precision: 0 }}
           />
         </div>
       </Space>

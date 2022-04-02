@@ -73,7 +73,8 @@ import { drawerStyle } from 'constants/styles/drawerStyle'
 const terminalVersion: V1TerminalVersion = '1.1'
 
 export default function V1Create() {
-  const { signerNetwork, userAddress } = useContext(NetworkContext)
+  const { signerNetwork, userAddress, onSelectWallet } =
+    useContext(NetworkContext)
   const { colors, radii } = useContext(ThemeContext).theme
   const [currentStep, setCurrentStep] = useState<number>()
   const [viewedSteps, setViewedSteps] = useState<number[]>([])
@@ -779,7 +780,7 @@ export default function V1Create() {
                 : t`Deploy project`
               : t`Connect wallet to deploy`
           }
-          onOk={deployProject}
+          onOk={userAddress ? deployProject : onSelectWallet}
           confirmLoading={loadingCreate}
           width={800}
           onCancel={() => setDeployProjectModalVisible(false)}

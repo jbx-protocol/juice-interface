@@ -1,3 +1,4 @@
+import { Skeleton } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { CSSProperties, useContext } from 'react'
 
@@ -8,11 +9,13 @@ export default function StatLine({
   statLabelTip,
   statValue,
   style = {},
+  loading = false,
 }: {
   statLabel: JSX.Element
   statLabelTip: JSX.Element
   statValue: JSX.Element
   style?: CSSProperties
+  loading?: boolean
 }) {
   const {
     theme: { colors },
@@ -39,13 +42,23 @@ export default function StatLine({
         <TooltipLabel label={statLabel} tip={statLabelTip} />
       </div>
 
-      <div
-        style={{
-          marginLeft: 10,
-        }}
-      >
-        {statValue}
-      </div>
+      {loading ? (
+        <div style={{ width: 60, height: 16 }}>
+          <Skeleton
+            paragraph={{ rows: 1, width: '100%' }}
+            title={false}
+            active
+          />
+        </div>
+      ) : (
+        <div
+          style={{
+            marginLeft: 10,
+          }}
+        >
+          {statValue}
+        </div>
+      )}
     </div>
   )
 }

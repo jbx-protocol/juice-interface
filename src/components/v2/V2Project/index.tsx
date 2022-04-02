@@ -49,6 +49,7 @@ export default function V2Project() {
         <Col md={12} xs={24}>
           {/* TODO volume chart */}
           {/* TODO token section */}
+          <br />
           <V2FundingCycleSection />
         </Col>
       </Row>

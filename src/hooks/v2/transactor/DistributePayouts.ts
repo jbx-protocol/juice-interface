@@ -8,7 +8,7 @@ import { V2CurrencyOption } from 'models/v2/currencyOption'
 
 import { TransactorInstance } from '../../Transactor'
 
-export type PayV2ProjectTxType = TransactorInstance<{
+export type DistributePayoutsTx = TransactorInstance<{
   memo?: string
   amount: BigNumber | undefined
   currency: V2CurrencyOption | undefined
@@ -16,7 +16,7 @@ export type PayV2ProjectTxType = TransactorInstance<{
 
 const minReturnedTokens = 0 // TODO will need a field for this in WithdrawModal for v2
 
-export function useDistributePayoutsTx(): PayV2ProjectTxType {
+export function useDistributePayoutsTx(): DistributePayoutsTx {
   const { transactor, contracts } = useContext(V2UserContext)
   const { projectId } = useContext(V2ProjectContext)
 

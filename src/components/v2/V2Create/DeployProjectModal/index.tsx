@@ -44,7 +44,7 @@ export default function ConfirmDeployV2ProjectModal({
     fundingCycleData,
     fundingCycleMetadata,
     payoutGroupedSplits,
-    reserveTokenGroupedSplits,
+    reservedTokensGroupedSplits,
     projectMetadata,
   } = useAppSelector(state => state.editingV2Project)
 
@@ -293,14 +293,14 @@ export default function ConfirmDeployV2ProjectModal({
 
             {payoutGroupedSplits.splits.length ? (
               <Statistic
-                title={t`Payouts`}
+                title={<Trans>Payouts</Trans>}
                 valueRender={() => (
                   <SplitList
                     splits={payoutGroupedSplits.splits}
-                    distributionLimitCurrency={BigNumber.from(
+                    currency={BigNumber.from(
                       fundAccessConstraint?.distributionLimitCurrency,
                     )}
-                    distributionLimit={amountSubFee(
+                    totalValue={amountSubFee(
                       parseWad(fundAccessConstraint?.distributionLimit),
                       ETHPaymentTerminalFee,
                     )}
@@ -313,16 +313,16 @@ export default function ConfirmDeployV2ProjectModal({
 
             {fundingCycleMetadata.reservedRate &&
             fundingCycleMetadata.reservedRate !== '0' &&
-            reserveTokenGroupedSplits.splits.length ? (
+            reservedTokensGroupedSplits.splits.length ? (
               <Statistic
                 title={t`Reserved token allocations`}
                 valueRender={() => (
                   <SplitList
-                    splits={reserveTokenGroupedSplits.splits}
-                    distributionLimitCurrency={BigNumber.from(
+                    splits={reservedTokensGroupedSplits.splits}
+                    currency={BigNumber.from(
                       fundAccessConstraint?.distributionLimitCurrency,
                     )}
-                    distributionLimit={amountSubFee(
+                    totalValue={amountSubFee(
                       parseWad(fundAccessConstraint?.distributionLimit),
                       ETHPaymentTerminalFee,
                     )}

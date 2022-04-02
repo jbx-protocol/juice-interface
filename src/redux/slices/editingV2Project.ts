@@ -6,7 +6,7 @@ import { ProjectMetadataV4 } from 'models/project-metadata'
 
 import {
   ETHPayoutGroupedSplits,
-  ReserveTokenGroupedSplits,
+  ReservedTokensGroupedSplits,
   Split,
 } from 'models/v2/splits'
 import {
@@ -31,7 +31,7 @@ export interface V2ProjectState {
   fundingCycleMetadata: SerializedV2FundingCycleMetadata
   fundAccessConstraints: SerializedV2FundAccessConstraint[]
   payoutGroupedSplits: ETHPayoutGroupedSplits
-  reserveTokenGroupedSplits: ReserveTokenGroupedSplits
+  reservedTokensGroupedSplits: ReservedTokensGroupedSplits
 }
 
 const defaultProjectMetadataState: ProjectMetadataV4 = {
@@ -88,7 +88,7 @@ export const defaultProjectState: V2ProjectState = {
     group: ETH_PAYOUT_SPLIT_GROUP,
     splits: [],
   },
-  reserveTokenGroupedSplits: {
+  reservedTokensGroupedSplits: {
     group: RESERVE_TOKEN_SPLIT_GROUP,
     splits: [],
   },
@@ -162,8 +162,8 @@ export const editingV2ProjectSlice = createSlice({
     setPayoutSplits: (state, action: PayloadAction<Split[]>) => {
       state.payoutGroupedSplits.splits = action.payload
     },
-    setReserveTokenSplits: (state, action: PayloadAction<Split[]>) => {
-      state.reserveTokenGroupedSplits.splits = action.payload
+    setReservedTokensSplits: (state, action: PayloadAction<Split[]>) => {
+      state.reservedTokensGroupedSplits.splits = action.payload
     },
     setPausePay: (state, action: PayloadAction<boolean>) => {
       state.fundingCycleMetadata.pausePay = action.payload

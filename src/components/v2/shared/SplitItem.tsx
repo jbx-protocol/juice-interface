@@ -17,16 +17,18 @@ import { formatSplitPercent, SPLITS_TOTAL_PERCENT } from 'utils/v2/math'
 
 export default function SplitItem({
   split,
-  showValue,
-  distributionLimitCurrency,
-  distributionLimit,
+  showSplitValue,
+  currency,
+  totalValue,
   projectOwnerAddress,
+  valueSuffix,
 }: {
   split: Split
-  distributionLimitCurrency: BigNumber | undefined
-  distributionLimit: BigNumber | undefined
+  currency?: BigNumber
+  totalValue: BigNumber | undefined
   projectOwnerAddress: string | undefined
-  showValue: boolean
+  showSplitValue: boolean
+  valueSuffix?: string | JSX.Element
 }) {
   const {
     theme: { colors },
@@ -102,9 +104,7 @@ export default function SplitItem({
   }
 
   const SplitValue = () => {
-    const splitValue = distributionLimit
-      ?.mul(split.percent)
-      .div(SPLITS_TOTAL_PERCENT)
+    const splitValue = totalValue?.mul(split.percent).div(SPLITS_TOTAL_PERCENT)
     const splitValueFormatted = formatWad(splitValue)
 
     return (
@@ -112,12 +112,11 @@ export default function SplitItem({
         (
         <CurrencySymbol
           currency={V2CurrencyName(
-            distributionLimitCurrency?.toNumber() as
-              | V2CurrencyOption
-              | undefined,
+            currency?.toNumber() as V2CurrencyOption | undefined,
           )}
         />
-        {splitValueFormatted})
+        {splitValueFormatted}
+        {valueSuffix ? <span> {valueSuffix}</span> : null})
       </>
     )
   }
@@ -146,8 +145,9 @@ export default function SplitItem({
       </div>
       <div>
         <span>{formatSplitPercent(BigNumber.from(split.percent))}%</span>
-        {distributionLimit?.gt(0) && showValue ? (
+        {totalValue?.gt(0) && showSplitValue ? (
           <span style={{ marginLeft: '0.2rem' }}>
+            {' '}
             <SplitValue />
           </span>
         ) : null}

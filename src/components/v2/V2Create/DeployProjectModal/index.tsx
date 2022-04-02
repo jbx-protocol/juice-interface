@@ -293,14 +293,14 @@ export default function ConfirmDeployV2ProjectModal({
 
             {payoutGroupedSplits.splits.length ? (
               <Statistic
-                title={t`Payouts`}
+                title={<Trans>Payouts</Trans>}
                 valueRender={() => (
                   <SplitList
                     splits={payoutGroupedSplits.splits}
-                    distributionLimitCurrency={BigNumber.from(
+                    currency={BigNumber.from(
                       fundAccessConstraint?.distributionLimitCurrency,
                     )}
-                    distributionLimit={amountSubFee(
+                    totalValue={amountSubFee(
                       parseWad(fundAccessConstraint?.distributionLimit),
                       ETHPaymentTerminalFee,
                     )}
@@ -319,10 +319,10 @@ export default function ConfirmDeployV2ProjectModal({
                 valueRender={() => (
                   <SplitList
                     splits={reservedTokensGroupedSplits.splits}
-                    distributionLimitCurrency={BigNumber.from(
+                    currency={BigNumber.from(
                       fundAccessConstraint?.distributionLimitCurrency,
                     )}
-                    distributionLimit={amountSubFee(
+                    totalValue={amountSubFee(
                       parseWad(fundAccessConstraint?.distributionLimit),
                       ETHPaymentTerminalFee,
                     )}

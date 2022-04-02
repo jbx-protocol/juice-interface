@@ -81,8 +81,8 @@ export default function PayoutSplitsCard() {
           {payoutSplits ? (
             <SplitList
               splits={payoutSplits}
-              distributionLimitCurrency={distributionLimitCurrency}
-              distributionLimit={distributionLimit}
+              currency={distributionLimitCurrency}
+              totalValue={distributionLimit}
               projectOwnerAddress={projectOwnerAddress}
               showSplitValues
             />

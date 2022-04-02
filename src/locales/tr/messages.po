@@ -9,6 +9,8 @@ msgstr ""
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
 "PO-Revision-Date: 2022-04-01 02:48\n"
+"PO-Revision-Date: 2022-04-01 02:48\n"
+"PO-Revision-Date: 2022-04-01 02:48\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -525,6 +527,10 @@ msgstr "Bağlan"
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
 msgid "Connect wallet to deploy"
+msgstr ""
+
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+msgid "Connect wallet to pay"
 msgstr ""
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
@@ -1253,7 +1259,6 @@ msgstr "Duraklatıldı"
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 #: src/components/v1/V1Project/V1PayButton.tsx
-#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
 #: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
 #: src/components/v2/V2Project/V2PayButton.tsx

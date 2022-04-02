@@ -9,6 +9,8 @@ msgstr ""
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
 "PO-Revision-Date: 2022-04-02 02:21\n"
+"PO-Revision-Date: 2022-04-02 02:21\n"
+"PO-Revision-Date: 2022-04-02 02:21\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -267,7 +269,7 @@ msgstr "Адрес"
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Address: {0}"
-msgstr "Адрес: {0}"
+msgstr ""
 
 #: src/components/v1/V1Create/index.tsx
 msgid "Adjust incentives for paying your project."
@@ -526,6 +528,10 @@ msgstr "Подключиться"
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
 msgid "Connect wallet to deploy"
 msgstr "Подключите кошелёк для развертывания"
+
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+msgid "Connect wallet to pay"
+msgstr ""
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/v2/V2Create/tabs/RulesTab/ProjectReconfigurationFormItem.tsx
@@ -1228,7 +1234,7 @@ msgstr "Переполнение создается, если остаток в�
 
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Owner can mint tokens"
-msgstr "Владелец может чеканить токены"
+msgstr ""
 
 #: src/components/v1/V1Project/V1PayButton.tsx
 #: src/components/v2/V2Project/V2PayButton.tsx
@@ -1253,7 +1259,6 @@ msgstr "Приостановлено"
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 #: src/components/v1/V1Project/V1PayButton.tsx
-#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
 #: src/components/v2/V2Project/V2ConfirmPayOwnerModal/index.tsx
 #: src/components/v2/V2Project/V2PayButton.tsx
@@ -1598,7 +1603,7 @@ msgstr "Зарезервировано {0}"
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Reserved {tokenSymbolPlural}"
-msgstr "Зарезервировано {tokenSymbolPlural}"
+msgstr ""
 
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 msgid "Reserves"
@@ -1640,7 +1645,7 @@ msgstr "Правила"
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Rules for determining how funding cycles can be reconfigured"
-msgstr "Правила определения того, как можно изменить конфигурацию циклов финансирования"
+msgstr ""
 
 #: src/components/v1/V1Create/index.tsx
 msgid "Rules for how changes can be made to your project."
@@ -2027,7 +2032,7 @@ msgstr "Токены могут быть выкуплены за часть пе
 
 #: src/components/v2/shared/SplitItem.tsx
 msgid "Tokens:"
-msgstr "Токены:"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
 msgid "Tools"
@@ -2355,7 +2360,7 @@ msgstr "загрузка"
 
 #: src/components/v2/shared/SplitItem.tsx
 msgid "locked until {lockedUntilFormatted}"
-msgstr "заблокировано до {lockedUntilFormatted}"
+msgstr ""
 
 #: src/components/Projects/index.tsx
 msgid "matching \"{searchText}\""

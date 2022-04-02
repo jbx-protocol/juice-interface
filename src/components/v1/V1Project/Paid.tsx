@@ -211,9 +211,7 @@ export default function Paid() {
         statLabelTip={
           <>
             <p>
-              <Trans>
-                The balance of the wallet that owns this Juicebox project.
-              </Trans>
+              <Trans>The balance of the project owner's wallet.</Trans>
             </p>{' '}
             <EtherscanLink value={owner} type="address" />
           </>
@@ -227,7 +225,7 @@ export default function Paid() {
               <ProjectTokenBalance
                 style={{ display: 'inline-block' }}
                 wallet={owner}
-                projectId={BigNumber.from('0x01')}
+                projectId={BigNumber.from(V1_PROJECT_IDS.JUICEBOX_DAO)}
                 hideHandle
               />{' '}
               +{' '}

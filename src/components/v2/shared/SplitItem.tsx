@@ -22,6 +22,7 @@ export default function SplitItem({
   totalValue,
   projectOwnerAddress,
   valueSuffix,
+  valueFormatProps,
 }: {
   split: Split
   currency?: BigNumber
@@ -29,6 +30,7 @@ export default function SplitItem({
   projectOwnerAddress: string | undefined
   showSplitValue: boolean
   valueSuffix?: string | JSX.Element
+  valueFormatProps?: { precision?: number }
 }) {
   const {
     theme: { colors },
@@ -105,7 +107,7 @@ export default function SplitItem({
 
   const SplitValue = () => {
     const splitValue = totalValue?.mul(split.percent).div(SPLITS_TOTAL_PERCENT)
-    const splitValueFormatted = formatWad(splitValue)
+    const splitValueFormatted = formatWad(splitValue, { ...valueFormatProps })
 
     return (
       <>

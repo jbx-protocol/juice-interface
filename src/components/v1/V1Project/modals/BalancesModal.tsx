@@ -17,6 +17,8 @@ import { uploadProjectMetadata } from 'utils/ipfs'
 
 import { t, Trans } from '@lingui/macro'
 
+import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
+
 export default function BalancesModal({
   visible,
   onCancel,
@@ -108,7 +110,7 @@ export default function BalancesModal({
         <Space direction="vertical" style={{ width: '100%', marginTop: 20 }}>
           <ProjectTokenBalance
             wallet={owner}
-            projectId={BigNumber.from('0x01')}
+            projectId={BigNumber.from(V1_PROJECT_IDS.JUICEBOX_DAO)}
           />
           {(metadata as ProjectMetadataV4)?.tokens?.map(t =>
             t.type === 'erc20' ? (

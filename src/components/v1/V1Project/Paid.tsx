@@ -29,12 +29,12 @@ import { readNetwork } from 'constants/networks'
 import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
 
 import BalancesModal from './modals/BalancesModal'
+import { textSecondary } from 'constants/styles/text'
 
 export default function Paid() {
   const [balancesModalVisible, setBalancesModalVisible] = useState<boolean>()
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
+  const { theme } = useContext(ThemeContext)
+  const { colors } = theme
 
   const {
     projectId,
@@ -61,12 +61,7 @@ export default function Paid() {
     lineHeight: 1,
   }
 
-  const secondaryTextStyle: CSSProperties = {
-    textTransform: 'uppercase',
-    color: colors.text.tertiary,
-    fontSize: '0.8rem',
-    fontWeight: 500,
-  }
+  const secondaryTextStyle = textSecondary(theme)
 
   if (!currentFC) return null
 
@@ -211,9 +206,7 @@ export default function Paid() {
         statLabelTip={
           <>
             <p>
-              <Trans>
-                The balance of the wallet that owns this Juicebox project.
-              </Trans>
+              <Trans>The balance of the project owner's wallet.</Trans>
             </p>{' '}
             <EtherscanLink value={owner} type="address" />
           </>
@@ -227,7 +220,7 @@ export default function Paid() {
               <ProjectTokenBalance
                 style={{ display: 'inline-block' }}
                 wallet={owner}
-                projectId={BigNumber.from('0x01')}
+                projectId={BigNumber.from(V1_PROJECT_IDS.JUICEBOX_DAO)}
                 hideHandle
               />{' '}
               +{' '}

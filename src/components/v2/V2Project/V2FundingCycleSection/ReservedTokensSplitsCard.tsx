@@ -74,7 +74,7 @@ export default function ReservedTokensSplitsCard() {
                 fontWeight: 500,
               }}
             >
-              {formatWad(reservedTokens)}
+              {formatWad(reservedTokens, { precision: 0 })}
             </span>{' '}
             <TooltipLabel
               style={{

@@ -215,6 +215,7 @@ export default function V2ProjectReconfigureModal({
         editingFundAccessConstraints
       )
     ) {
+      setReconfigureTxLoading(false)
       throw new Error('Error deploying project.')
     }
 
@@ -267,15 +268,11 @@ export default function V2ProjectReconfigureModal({
 
   return (
     <Modal
-      title={
-        hideProjectDetails
-          ? t`Reconfigure upcoming funding`
-          : t`Reconfiguration`
-      }
+      title={<Trans>Project configuration</Trans>}
       visible={visible}
       onOk={reconfigureFundingCycle}
       onCancel={onOk}
-      okText={t`Confirm funding changes`}
+      okText={t`Deploy new project configuration`}
       okButtonProps={{ disabled: !fundingHasSavedChanges }}
       confirmLoading={reconfigureTxLoading}
       width={540}
@@ -283,19 +280,31 @@ export default function V2ProjectReconfigureModal({
     >
       <Space direction="vertical" size="middle" style={{ width: '100%' }}>
         {hideProjectDetails ? null : (
-          <>
+          <div style={{ marginBottom: 20 }}>
             <h4 style={{ marginBottom: 0 }}>
-              <Trans>Reconfigure project details</Trans>
+              <Trans>Edit project details</Trans>
             </h4>
+            <p>
+              <Trans>
+                Changes to project details will take effect immediately.
+              </Trans>
+            </p>
             <ReconfigureButton
               title={t`Project details`}
               onClick={() => setProjectDetailsDrawerVisible(true)}
             />
-            <h4 style={{ marginBottom: 0, marginTop: 20 }}>
-              <Trans>Reconfigure funding details</Trans>
-            </h4>
-          </>
+          </div>
         )}
+
+        <h4 style={{ marginBottom: 0 }}>
+          <Trans>Reconfigure upcoming funding cycles</Trans>
+        </h4>
+        <p>
+          <Trans>
+            Any changes will take effect in the next funding cycle. The current
+            funding cycle won't be altered.
+          </Trans>
+        </p>
         <ReconfigureButton
           title={t`Funding target, duration and payouts`}
           onClick={() => setFundingDrawerVisible(true)}
@@ -320,7 +329,7 @@ export default function V2ProjectReconfigureModal({
         onClose={() => {
           setFundingDrawerVisible(false)
         }}
-        title={<Trans>Reconfigure funding target/duration/payouts</Trans>}
+        title={<Trans>Reconfigure funding</Trans>}
         content={
           <FundingTabContent
             onFinish={saveFundingTab}

@@ -8,9 +8,7 @@ msgstr ""
 "Language: tr\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-04-01 02:48\n"
-"PO-Revision-Date: 2022-04-01 02:48\n"
-"PO-Revision-Date: 2022-04-01 02:48\n"
+"PO-Revision-Date: 2022-04-03 02:22\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -263,6 +261,7 @@ msgstr "Token alıcısı ekle"
 
 #: src/components/shared/formItems/ProjectPayoutMods.tsx
 #: src/components/v1/V1Project/Rewards/index.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "Address"
 msgstr "Adres"
 
@@ -1010,16 +1009,16 @@ msgstr "Teşvikler"
 msgid "Indie artists, devs, creators"
 msgstr "Bağımsız sanatçılar, geliştiriciler, yaratıcılar"
 
-#: src/components/v1/V1Project/Rewards/IssueTickets.tsx
-#: src/components/v1/V1Project/Rewards/IssueTickets.tsx
+#: src/components/shared/IssueTickets.tsx
+#: src/components/shared/IssueTickets.tsx
 msgid "Issue ERC-20 token"
 msgstr "ERC-20 token'ı çıkart"
 
-#: src/components/v1/V1Project/Rewards/IssueTickets.tsx
+#: src/components/shared/IssueTickets.tsx
 msgid "Issue an ERC-20 to be used as this project's token. Once issued, anyone can claim their existing token balance in the new token."
 msgstr ""
 
-#: src/components/v1/V1Project/Rewards/IssueTickets.tsx
+#: src/components/shared/IssueTickets.tsx
 msgid "Issue an ERC-20 token for this project. Once issued, anyone can claim their existing token balance in the new token."
 msgstr "Bu proje için bir ERC-20 token'ı çıkarın. Bir kere çıkarıldıktan sonra, herkes mevcut token bakiyesini yeni token cinsinden talep edebilir."
 
@@ -1028,7 +1027,7 @@ msgstr "Bu proje için bir ERC-20 token'ı çıkarın. Bir kere çıkarıldıkta
 msgid "Issue rate"
 msgstr "Çıkarma oranı"
 
-#: src/components/v1/V1Project/Rewards/IssueTickets.tsx
+#: src/components/shared/IssueTickets.tsx
 msgid "Issue token"
 msgstr "Token çıkar"
 
@@ -1114,8 +1113,13 @@ msgid "MAX"
 msgstr "MAKS"
 
 #: src/components/v1/V1Project/Rewards/index.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "Manage"
 msgstr "Yönet"
+
+#: src/components/v2/V2Project/V2ManageTokensSection/V2ManageTokensModal.tsx
+msgid "Manage tokens"
+msgstr ""
 
 #: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
 msgid "Manage {0}"
@@ -1387,7 +1391,7 @@ msgstr "Programlanabilir harcama"
 msgid "Project"
 msgstr "Proje"
 
-#: src/components/v1/V1Project/Rewards/IssueTickets.tsx
+#: src/components/shared/IssueTickets.tsx
 msgid "Project Token"
 msgstr "Proje Token'ı"
 
@@ -2028,7 +2032,7 @@ msgstr "Token basımı"
 msgid "Token minting is only available for V1.1 projects. Token minting can be enabled or disabled by reconfiguring the project's funding cycle."
 msgstr ""
 
-#: src/components/v1/V1Project/Rewards/IssueTickets.tsx
+#: src/components/shared/IssueTickets.tsx
 msgid "Token name"
 msgstr "Token adı"
 
@@ -2036,7 +2040,7 @@ msgstr "Token adı"
 msgid "Token redeem value"
 msgstr "Token kullanma değeri"
 
-#: src/components/v1/V1Project/Rewards/IssueTickets.tsx
+#: src/components/shared/IssueTickets.tsx
 msgid "Token symbol"
 msgstr "Token sembolü"
 
@@ -2301,6 +2305,7 @@ msgid "You'll be able to issue ERC-20 tokens once your project contract has been
 msgstr "Proje sözleşmeniz dağıtıldıktan sonra ERC-20 token'larını çıkarabileceksiniz. O zamana kadar protokol, token bakiyelerini takip ederek destekçilerinizin bu arada token kazanmasına ve onları taşma için kullanmasına izin verecektir."
 
 #: src/components/v1/V1Project/Rewards/index.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "Your balance"
 msgstr "Bakiyeniz"
 
@@ -2563,6 +2568,10 @@ msgstr "{exchangeName} üzerinde {tokenSymbol}/ETH kuru."
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributeReservedTokensModal.tsx
 msgid "{tokenTextSingular} recipients"
+msgstr ""
+
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
+msgid "{tokenText} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
 msgstr ""
 
 #: src/components/v1/V1Project/Rewards/index.tsx

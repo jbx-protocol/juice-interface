@@ -8,9 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-04-01 02:48\n"
-"PO-Revision-Date: 2022-04-01 02:48\n"
-"PO-Revision-Date: 2022-04-01 02:48\n"
+"PO-Revision-Date: 2022-04-03 02:22\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -263,6 +261,7 @@ msgstr "Adicionar um receptor de token"
 
 #: src/components/shared/formItems/ProjectPayoutMods.tsx
 #: src/components/v1/V1Project/Rewards/index.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "Address"
 msgstr "Endereço"
 
@@ -1010,16 +1009,16 @@ msgstr "Incentivos"
 msgid "Indie artists, devs, creators"
 msgstr "Artistas indie, desenvolvedores, criadores"
 
-#: src/components/v1/V1Project/Rewards/IssueTickets.tsx
-#: src/components/v1/V1Project/Rewards/IssueTickets.tsx
+#: src/components/shared/IssueTickets.tsx
+#: src/components/shared/IssueTickets.tsx
 msgid "Issue ERC-20 token"
 msgstr "Emitir token ERC-20"
 
-#: src/components/v1/V1Project/Rewards/IssueTickets.tsx
+#: src/components/shared/IssueTickets.tsx
 msgid "Issue an ERC-20 to be used as this project's token. Once issued, anyone can claim their existing token balance in the new token."
 msgstr "Emita um token ERC-20 como token deste projeto. Uma vez emitido, qualquer pessoa pode reivindicar seu saldo de tokens existentes no novo token."
 
-#: src/components/v1/V1Project/Rewards/IssueTickets.tsx
+#: src/components/shared/IssueTickets.tsx
 msgid "Issue an ERC-20 token for this project. Once issued, anyone can claim their existing token balance in the new token."
 msgstr "Emita um token ERC-20 para este projeto. Uma vez emitido, qualquer pessoa pode reivindicar seu saldo de tokens existentes no novo token."
 
@@ -1028,7 +1027,7 @@ msgstr "Emita um token ERC-20 para este projeto. Uma vez emitido, qualquer pesso
 msgid "Issue rate"
 msgstr "Taxa de emissão"
 
-#: src/components/v1/V1Project/Rewards/IssueTickets.tsx
+#: src/components/shared/IssueTickets.tsx
 msgid "Issue token"
 msgstr "Emitir token"
 
@@ -1114,8 +1113,13 @@ msgid "MAX"
 msgstr "MÁX"
 
 #: src/components/v1/V1Project/Rewards/index.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "Manage"
 msgstr "Administrar"
+
+#: src/components/v2/V2Project/V2ManageTokensSection/V2ManageTokensModal.tsx
+msgid "Manage tokens"
+msgstr ""
 
 #: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
 msgid "Manage {0}"
@@ -1387,7 +1391,7 @@ msgstr "Gastos programáveis"
 msgid "Project"
 msgstr "Projeto"
 
-#: src/components/v1/V1Project/Rewards/IssueTickets.tsx
+#: src/components/shared/IssueTickets.tsx
 msgid "Project Token"
 msgstr "Token do Projeto"
 
@@ -2028,7 +2032,7 @@ msgstr "Criação de tokens"
 msgid "Token minting is only available for V1.1 projects. Token minting can be enabled or disabled by reconfiguring the project's funding cycle."
 msgstr "A criação de token está disponível apenas para projetos V1.1. A criação de token pode ser habilitada ou desabilitada pela reconfiguração do ciclo de financiamento do projeto."
 
-#: src/components/v1/V1Project/Rewards/IssueTickets.tsx
+#: src/components/shared/IssueTickets.tsx
 msgid "Token name"
 msgstr "O nome do token"
 
@@ -2036,7 +2040,7 @@ msgstr "O nome do token"
 msgid "Token redeem value"
 msgstr "Valor de resgate do token"
 
-#: src/components/v1/V1Project/Rewards/IssueTickets.tsx
+#: src/components/shared/IssueTickets.tsx
 msgid "Token symbol"
 msgstr "O símbolo do token"
 
@@ -2301,6 +2305,7 @@ msgid "You'll be able to issue ERC-20 tokens once your project contract has been
 msgstr "Você poderá emitir tokens ERC-20 uma vez que o contrato de seu projeto tenha sido lançado. Até lá, o protocolo rastreará os saldos de tokens, permitindo, enquanto isso, que os seus apoiadores ganhem tokens e os resgatem por overflow."
 
 #: src/components/v1/V1Project/Rewards/index.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "Your balance"
 msgstr "Seu saldo"
 
@@ -2563,6 +2568,10 @@ msgstr "{tokenSymbol}/ETH taxa de câmbio em {exchangeName}."
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributeReservedTokensModal.tsx
 msgid "{tokenTextSingular} recipients"
+msgstr ""
+
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
+msgid "{tokenText} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
 msgstr ""
 
 #: src/components/v1/V1Project/Rewards/index.tsx

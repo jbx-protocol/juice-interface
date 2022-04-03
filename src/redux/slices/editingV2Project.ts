@@ -75,6 +75,16 @@ const defaultFundingCycleMetadata: SerializedV2FundingCycleMetadata =
     dataSource: constants.AddressZero,
   })
 
+export const EMPTY_PAYOUT_GROUPED_SPLITS = {
+  group: ETH_PAYOUT_SPLIT_GROUP,
+  splits: [],
+}
+
+export const EMPTY_RESERVE_TOKENS_GROUPED_SPLITS = {
+  group: RESERVE_TOKEN_SPLIT_GROUP,
+  splits: [],
+}
+
 export const defaultProjectState: V2ProjectState = {
   // Increment this version by 1 when making breaking changes.
   // When users return to the site and their local version is less than
@@ -84,14 +94,8 @@ export const defaultProjectState: V2ProjectState = {
   fundingCycleData: { ...defaultFundingCycleData },
   fundingCycleMetadata: { ...defaultFundingCycleMetadata },
   fundAccessConstraints: [],
-  payoutGroupedSplits: {
-    group: ETH_PAYOUT_SPLIT_GROUP,
-    splits: [],
-  },
-  reservedTokensGroupedSplits: {
-    group: RESERVE_TOKEN_SPLIT_GROUP,
-    splits: [],
-  },
+  payoutGroupedSplits: EMPTY_PAYOUT_GROUPED_SPLITS,
+  reservedTokensGroupedSplits: EMPTY_RESERVE_TOKENS_GROUPED_SPLITS,
 }
 
 export const editingV2ProjectSlice = createSlice({
@@ -160,10 +164,24 @@ export const editingV2ProjectSlice = createSlice({
       }
     },
     setPayoutSplits: (state, action: PayloadAction<Split[]>) => {
-      state.payoutGroupedSplits.splits = action.payload
+      if (state.payoutGroupedSplits) {
+        state.payoutGroupedSplits.splits = action.payload
+      } else {
+        state.payoutGroupedSplits = {
+          group: ETH_PAYOUT_SPLIT_GROUP,
+          splits: action.payload,
+        }
+      }
     },
     setReservedTokensSplits: (state, action: PayloadAction<Split[]>) => {
-      state.reservedTokensGroupedSplits.splits = action.payload
+      if (state.reservedTokensGroupedSplits) {
+        state.reservedTokensGroupedSplits.splits = action.payload
+      } else {
+        state.reservedTokensGroupedSplits = {
+          group: RESERVE_TOKEN_SPLIT_GROUP,
+          splits: action.payload,
+        }
+      }
     },
     setPausePay: (state, action: PayloadAction<boolean>) => {
       state.fundingCycleMetadata.pausePay = action.payload

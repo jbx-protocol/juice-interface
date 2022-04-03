@@ -10,7 +10,7 @@ import { CSSProperties, useContext, useState } from 'react'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import { formatWad } from 'utils/formatNumber'
 
-import IssueTickets from 'components/v1/V1Project/Rewards/IssueTickets'
+import IssueTickets from 'components/shared/IssueTickets'
 import {
   useHasPermission,
   V2OperatorPermission,
@@ -57,65 +57,69 @@ export default function V2ManageTokensSection() {
             />
           }
           valueRender={() => (
-            <Descriptions layout="horizontal" column={1}>
-              {ticketsIssued && (
-                <Descriptions.Item
-                  label={t`Address`}
-                  labelStyle={labelStyle}
-                  children={
-                    <div style={{ width: '100%' }}>
-                      <FormattedAddress address={tokenAddress} />
-                    </div>
-                  }
-                />
-              )}
-              {userAddress ? (
-                <Descriptions.Item
-                  label={t`Your balance`}
-                  labelStyle={labelStyle}
-                  children={
-                    <div
-                      style={{
-                        display: 'flex',
-                        flexWrap: 'wrap',
-                        gap: 5,
-                        justifyContent: 'space-between',
-                        width: '100%',
-                      }}
-                    >
-                      <div>
-                        {ticketsIssued && (
-                          <div>
-                            {`${formatWad(claimedBalance ?? 0, {
-                              precision: 0,
-                            })} `}
-                          </div>
-                        )}
+            <>
+              <Descriptions layout="horizontal" column={1}>
+                {ticketsIssued && (
+                  <Descriptions.Item
+                    label={t`Address`}
+                    labelStyle={labelStyle}
+                    children={
+                      <div style={{ width: '100%' }}>
+                        <FormattedAddress address={tokenAddress} />
+                      </div>
+                    }
+                  />
+                )}
+                {userAddress ? (
+                  <Descriptions.Item
+                    label={t`Your balance`}
+                    labelStyle={labelStyle}
+                    children={
+                      <div
+                        style={{
+                          display: 'flex',
+                          flexWrap: 'wrap',
+                          gap: 5,
+                          justifyContent: 'space-between',
+                          width: '100%',
+                        }}
+                      >
                         <div>
-                          {/* <Trans>
+                          {ticketsIssued ? (
+                            <div>
+                              {`${formatWad(claimedBalance ?? 0, {
+                                precision: 0,
+                              })} `}
+                            </div>
+                          ) : (
+                            0
+                          )}
+                          <div>
+                            {/* <Trans>
                             {formatWad(unclaimedBalance ?? 0, { precision: 0 })}
                             {ticketsIssued ? <> claimable</> : null}
                           </Trans> */}
-                          'TODO: unclaimed balance'
+                            {/* 'TODO: unclaimed balance' */}
+                          </div>
+                          {/* TODO: % of total supply */}
                         </div>
-                        {/* TODO: % of total supply */}
-                      </div>
 
-                      <Button
-                        size="small"
-                        onClick={() => setManageTokensModalVisible(true)}
-                      >
-                        <Trans>Manage</Trans>
-                      </Button>
-                      {/* TODO: 'Holders modal button */}
-                      {!ticketsIssued && hasIssueTicketsPermission && (
-                        <IssueTickets useIssueTokensTx={useIssueTokensTx} />
-                      )}
-                    </div>
-                  }
-                />
-              ) : null}
-            </Descriptions>
+                        <Button
+                          size="small"
+                          onClick={() => setManageTokensModalVisible(true)}
+                        >
+                          <Trans>Manage</Trans>
+                        </Button>
+                      </div>
+                    }
+                  />
+                ) : null}
+              </Descriptions>
+              {/* TODO: 'Holders modal button */}
+              {!ticketsIssued && hasIssueTicketsPermission && (
+                <IssueTickets useIssueTokensTx={useIssueTokensTx} />
+              )}
+            </>
           )}
         />
       </Space>

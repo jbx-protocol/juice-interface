@@ -4,6 +4,7 @@ import { useForm } from 'antd/lib/form/Form'
 import TooltipIcon from 'components/shared/TooltipIcon'
 import { useState } from 'react'
 import { TransactorInstance } from 'hooks/Transactor'
+import { useHistory } from 'react-router-dom'
 
 export default function IssueTickets({
   useIssueTokensTx,
@@ -17,6 +18,8 @@ export default function IssueTickets({
   const [loading, setLoading] = useState<boolean>()
   const [form] = useForm<{ name: string; symbol: string }>()
 
+  const history = useHistory()
+
   const issueTokensTx = useIssueTokensTx()
 
   function issue() {
@@ -28,7 +31,10 @@ export default function IssueTickets({
       { name: fields.name, symbol: fields.symbol },
       {
         onDone: () => setModalVisible(false),
-        onConfirmed: () => setLoading(false),
+        onConfirmed: () => {
+          history.go(0)
+          setLoading(false)
+        },
       },
     )
   }

@@ -8,9 +8,7 @@ msgstr ""
 "Language: ru\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-04-02 02:21\n"
-"PO-Revision-Date: 2022-04-02 02:21\n"
-"PO-Revision-Date: 2022-04-02 02:21\n"
+"PO-Revision-Date: 2022-04-03 02:22\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -263,13 +261,14 @@ msgstr "Добавить получателя токена"
 
 #: src/components/shared/formItems/ProjectPayoutMods.tsx
 #: src/components/v1/V1Project/Rewards/index.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "Address"
 msgstr "Адрес"
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Address: {0}"
-msgstr ""
+msgstr "Адрес: {0}"
 
 #: src/components/v1/V1Create/index.tsx
 msgid "Adjust incentives for paying your project."
@@ -1010,16 +1009,16 @@ msgstr "Поощрения"
 msgid "Indie artists, devs, creators"
 msgstr "Инди артистов, музыкантов, разработчиков, и создателей."
 
-#: src/components/v1/V1Project/Rewards/IssueTickets.tsx
-#: src/components/v1/V1Project/Rewards/IssueTickets.tsx
+#: src/components/shared/IssueTickets.tsx
+#: src/components/shared/IssueTickets.tsx
 msgid "Issue ERC-20 token"
 msgstr "Выпуск токенов ERC-20"
 
-#: src/components/v1/V1Project/Rewards/IssueTickets.tsx
+#: src/components/shared/IssueTickets.tsx
 msgid "Issue an ERC-20 to be used as this project's token. Once issued, anyone can claim their existing token balance in the new token."
 msgstr "Выпустите токен ERC-20, который будет использоваться в качестве токена этого проекта. После выпуска любой желающий может заявить о своем существующем балансе токенов в новом токене."
 
-#: src/components/v1/V1Project/Rewards/IssueTickets.tsx
+#: src/components/shared/IssueTickets.tsx
 msgid "Issue an ERC-20 token for this project. Once issued, anyone can claim their existing token balance in the new token."
 msgstr "Выдайте токен ERC-20 для этого проекта. После выпуска любой желающий может получить свой существующий баланс токена в новом токене."
 
@@ -1028,7 +1027,7 @@ msgstr "Выдайте токен ERC-20 для этого проекта. По�
 msgid "Issue rate"
 msgstr "Коэффициент выдачи"
 
-#: src/components/v1/V1Project/Rewards/IssueTickets.tsx
+#: src/components/shared/IssueTickets.tsx
 msgid "Issue token"
 msgstr "Выдача токенов"
 
@@ -1114,8 +1113,13 @@ msgid "MAX"
 msgstr "Максимум"
 
 #: src/components/v1/V1Project/Rewards/index.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "Manage"
 msgstr "Управление"
+
+#: src/components/v2/V2Project/V2ManageTokensSection/V2ManageTokensModal.tsx
+msgid "Manage tokens"
+msgstr ""
 
 #: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
 msgid "Manage {0}"
@@ -1246,7 +1250,7 @@ msgstr "Переполнение создается, если остаток в�
 
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Owner can mint tokens"
-msgstr ""
+msgstr "Владелец может чеканить токены"
 
 #: src/components/v1/V1Project/V1PayButton.tsx
 #: src/components/v2/V2Project/V2PayButton.tsx
@@ -1387,7 +1391,7 @@ msgstr "Планируемые расходы"
 msgid "Project"
 msgstr "Проект"
 
-#: src/components/v1/V1Project/Rewards/IssueTickets.tsx
+#: src/components/shared/IssueTickets.tsx
 msgid "Project Token"
 msgstr "Токен проекта"
 
@@ -1614,7 +1618,7 @@ msgstr "Зарезервировано {0}"
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Reserved {tokenSymbolPlural}"
-msgstr ""
+msgstr "Зарезервировано {tokenSymbolPlural}"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributeReservedTokensModal.tsx
 msgid "Reserved {tokenTextPlural}: <0>{reservedTokensFormatted} {tokenTextPlural}</0>"
@@ -1664,7 +1668,7 @@ msgstr "Правила"
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Rules for determining how funding cycles can be reconfigured"
-msgstr ""
+msgstr "Правила определения того, как можно изменить конфигурацию циклов финансирования"
 
 #: src/components/v1/V1Create/index.tsx
 msgid "Rules for how changes can be made to your project."
@@ -2028,7 +2032,7 @@ msgstr "Производство токенов"
 msgid "Token minting is only available for V1.1 projects. Token minting can be enabled or disabled by reconfiguring the project's funding cycle."
 msgstr "Создание токенов доступно только для проектов версии 1.1. Возможность создания токенов может быть включена или отключена путем изменения конфигурации цикла финансирования проекта."
 
-#: src/components/v1/V1Project/Rewards/IssueTickets.tsx
+#: src/components/shared/IssueTickets.tsx
 msgid "Token name"
 msgstr "Название токена"
 
@@ -2036,7 +2040,7 @@ msgstr "Название токена"
 msgid "Token redeem value"
 msgstr "Стоимость погашения токенов"
 
-#: src/components/v1/V1Project/Rewards/IssueTickets.tsx
+#: src/components/shared/IssueTickets.tsx
 msgid "Token symbol"
 msgstr "Символ токена"
 
@@ -2059,7 +2063,7 @@ msgstr "Токены могут быть выкуплены за часть пе
 
 #: src/components/v2/shared/SplitItem.tsx
 msgid "Tokens:"
-msgstr ""
+msgstr "Токены:"
 
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
 msgid "Tools"
@@ -2301,6 +2305,7 @@ msgid "You'll be able to issue ERC-20 tokens once your project contract has been
 msgstr "Вы сможете выпускать ERC-20 токены после того, как ваш контракт по проекту будет установлен. До тех пор протокол будет отслеживать балансы токенов, позволяя вашим сторонникам заработать токены и использовать их для переполнения."
 
 #: src/components/v1/V1Project/Rewards/index.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "Your balance"
 msgstr "Ваш баланс"
 
@@ -2387,7 +2392,7 @@ msgstr "загрузка"
 
 #: src/components/v2/shared/SplitItem.tsx
 msgid "locked until {lockedUntilFormatted}"
-msgstr ""
+msgstr "заблокировано до {lockedUntilFormatted}"
 
 #: src/components/Projects/index.tsx
 msgid "matching \"{searchText}\""
@@ -2563,6 +2568,10 @@ msgstr "Обменный курс {tokenSymbol}/ETH на {exchangeName}."
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributeReservedTokensModal.tsx
 msgid "{tokenTextSingular} recipients"
+msgstr ""
+
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
+msgid "{tokenText} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
 msgstr ""
 
 #: src/components/v1/V1Project/Rewards/index.tsx

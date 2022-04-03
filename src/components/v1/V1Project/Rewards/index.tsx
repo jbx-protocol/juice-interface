@@ -22,7 +22,7 @@ import { formatPercent, formatWad } from 'utils/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
-import IssueTickets from './IssueTickets'
+import IssueTickets from '../../../shared/IssueTickets'
 import SectionHeader from '../../../shared/SectionHeader'
 import ManageTokensModal from './ManageTokensModal'
 import ParticipantsModal from '../modals/ParticipantsModal'

@@ -8,9 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-04-01 02:48\n"
-"PO-Revision-Date: 2022-04-01 02:48\n"
-"PO-Revision-Date: 2022-04-01 02:48\n"
+"PO-Revision-Date: 2022-04-03 02:21\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -263,6 +261,7 @@ msgstr "添加代币接收者"
 
 #: src/components/shared/formItems/ProjectPayoutMods.tsx
 #: src/components/v1/V1Project/Rewards/index.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "Address"
 msgstr "地址"
 
@@ -1010,16 +1009,16 @@ msgstr "激励措施"
 msgid "Indie artists, devs, creators"
 msgstr "独立艺术家，开发者，创作者"
 
-#: src/components/v1/V1Project/Rewards/IssueTickets.tsx
-#: src/components/v1/V1Project/Rewards/IssueTickets.tsx
+#: src/components/shared/IssueTickets.tsx
+#: src/components/shared/IssueTickets.tsx
 msgid "Issue ERC-20 token"
 msgstr "发行 ERC-20 代币"
 
-#: src/components/v1/V1Project/Rewards/IssueTickets.tsx
+#: src/components/shared/IssueTickets.tsx
 msgid "Issue an ERC-20 to be used as this project's token. Once issued, anyone can claim their existing token balance in the new token."
 msgstr "发行 ERC-20 合约作为项目代币。一旦发行，任何人都可以将现存的余额铸造为对应代币。"
 
-#: src/components/v1/V1Project/Rewards/IssueTickets.tsx
+#: src/components/shared/IssueTickets.tsx
 msgid "Issue an ERC-20 token for this project. Once issued, anyone can claim their existing token balance in the new token."
 msgstr "为项目发行 ERC-20 合约。一旦发行，任何人都可以将现存的余额铸造为对应代币。"
 
@@ -1028,7 +1027,7 @@ msgstr "为项目发行 ERC-20 合约。一旦发行，任何人都可以将现�
 msgid "Issue rate"
 msgstr "发行比率"
 
-#: src/components/v1/V1Project/Rewards/IssueTickets.tsx
+#: src/components/shared/IssueTickets.tsx
 msgid "Issue token"
 msgstr "发行代币"
 
@@ -1114,8 +1113,13 @@ msgid "MAX"
 msgstr "最大值"
 
 #: src/components/v1/V1Project/Rewards/index.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "Manage"
 msgstr "管理代币"
+
+#: src/components/v2/V2Project/V2ManageTokensSection/V2ManageTokensModal.tsx
+msgid "Manage tokens"
+msgstr ""
 
 #: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
 msgid "Manage {0}"
@@ -1387,7 +1391,7 @@ msgstr "可编程的开支"
 msgid "Project"
 msgstr "项目"
 
-#: src/components/v1/V1Project/Rewards/IssueTickets.tsx
+#: src/components/shared/IssueTickets.tsx
 msgid "Project Token"
 msgstr "项目代币"
 
@@ -2028,7 +2032,7 @@ msgstr "代币铸造"
 msgid "Token minting is only available for V1.1 projects. Token minting can be enabled or disabled by reconfiguring the project's funding cycle."
 msgstr "代币铸造功能只在 V1.1 项目中可用。可以通过重新配置项目的筹款周期来启用或禁用这一功能。"
 
-#: src/components/v1/V1Project/Rewards/IssueTickets.tsx
+#: src/components/shared/IssueTickets.tsx
 msgid "Token name"
 msgstr "代币名称"
 
@@ -2036,7 +2040,7 @@ msgstr "代币名称"
 msgid "Token redeem value"
 msgstr "代币赎回价值"
 
-#: src/components/v1/V1Project/Rewards/IssueTickets.tsx
+#: src/components/shared/IssueTickets.tsx
 msgid "Token symbol"
 msgstr "代币符号"
 
@@ -2301,6 +2305,7 @@ msgid "You'll be able to issue ERC-20 tokens once your project contract has been
 msgstr "项目合约部署上线后，你就可以铸造ERC-20代币了。在此之后，协议就会开始追踪代币余额，同时允许你的支持者获得代币以及赎回代币取得项目溢出资金。"
 
 #: src/components/v1/V1Project/Rewards/index.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "Your balance"
 msgstr "你的余额"
 
@@ -2563,6 +2568,10 @@ msgstr "在 {exchangeName} 的兑换率为 {tokenSymbol}/ETH"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributeReservedTokensModal.tsx
 msgid "{tokenTextSingular} recipients"
+msgstr ""
+
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
+msgid "{tokenText} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
 msgstr ""
 
 #: src/components/v1/V1Project/Rewards/index.tsx

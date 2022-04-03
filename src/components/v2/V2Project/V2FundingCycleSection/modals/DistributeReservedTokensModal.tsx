@@ -1,4 +1,4 @@
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Modal, Space } from 'antd'
 import { useDistributeReservedTokens } from 'hooks/v2/transactor/DistributeReservedTokensTx'
 import { useContext, useState } from 'react'
@@ -61,7 +61,7 @@ export default function DistributeReservedTokensModal({
       title={<Trans>Distribute reserved {tokenTextPlural}</Trans>}
       visible={visible}
       onOk={distributeReservedTokens}
-      okText={<Trans>Distribute {tokenTextPlural}</Trans>}
+      okText={t`Distribute ${tokenTextPlural}`}
       confirmLoading={loading}
       onCancel={onCancel}
       okButtonProps={{ disabled: !reservedTokens?.gt(0) }}

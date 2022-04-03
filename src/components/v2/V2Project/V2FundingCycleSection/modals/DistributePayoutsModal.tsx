@@ -1,7 +1,7 @@
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { Form, Space } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
@@ -131,7 +131,7 @@ export default function DistributePayoutsModal({
         disabled: !distributionAmount || distributionAmount === '0',
       }}
       confirmLoading={loading}
-      okText={<Trans>Distribute funds</Trans>}
+      okText={t`Distribute funds`}
       width={640}
     >
       <Space direction="vertical" size="large" style={{ width: '100%' }}>

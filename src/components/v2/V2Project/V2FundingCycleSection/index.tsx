@@ -1,4 +1,6 @@
 import { Button, Tooltip } from 'antd'
+import { SettingOutlined } from '@ant-design/icons'
+
 import { t, Trans } from '@lingui/macro'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { ThemeContext } from 'contexts/themeContext'
@@ -73,8 +75,10 @@ export default function V2FundingCycleSection({
             fundingDuration={fundingCycle?.duration}
             hideProjectDetails
             triggerButton={(onClick: VoidFunction) => (
-              <Button size="small" onClick={onClick}>
-                <Trans>Reconfigure upcoming</Trans>
+              <Button size="small" onClick={onClick} icon={<SettingOutlined />}>
+                <span>
+                  <Trans>Reconfigure upcoming</Trans>
+                </span>
               </Button>
             )}
           />

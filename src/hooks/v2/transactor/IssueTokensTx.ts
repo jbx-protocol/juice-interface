@@ -18,8 +18,8 @@ export function useIssueTokensTx(): TransactorInstance<{
     }
 
     return transactor(
-      contracts.JBTokenStore,
-      'issueFor',
+      contracts.JBController,
+      'issueTokenFor',
       [projectId.toHexString(), name, symbol],
       txOpts,
     )

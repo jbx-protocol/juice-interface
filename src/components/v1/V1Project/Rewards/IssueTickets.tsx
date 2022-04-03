@@ -50,6 +50,7 @@ export default function IssueTickets({
         okText={t`Issue token`}
         onOk={issue}
         onCancel={() => setModalVisible(false)}
+        confirmLoading={loading}
       >
         <p>
           <Trans>

@@ -16,6 +16,7 @@ import {
   V2OperatorPermission,
 } from 'hooks/v2/contractReader/HasPermission'
 import { useIssueTokensTx } from 'hooks/v2/transactor/IssueTokensTx'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 import V2ManageTokensModal from './V2ManageTokensModal'
 
@@ -23,7 +24,7 @@ export default function V2ManageTokensSection() {
   const [manageTokensModalVisible, setManageTokensModalVisible] =
     useState<boolean>(false)
 
-  const { tokenAddress } = useContext(V2ProjectContext)
+  const { tokenAddress, tokenSymbol } = useContext(V2ProjectContext)
   const { userAddress } = useContext(NetworkContext)
 
   const claimedBalance = useERC20BalanceOf(tokenAddress, userAddress).data
@@ -39,14 +40,20 @@ export default function V2ManageTokensSection() {
 
   const hasIssueTicketsPermission = useHasPermission(V2OperatorPermission.ISSUE)
 
+  const tokenText = tokenSymbolText({
+    tokenSymbol: tokenSymbol,
+    capitalize: true,
+    plural: true,
+  })
+
   return (
     <div>
       <Space direction="vertical" size="large">
         <Statistic
           title={
             <SectionHeader
-              text={t`Tokens`}
-              tip={t`Tokens are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet.`}
+              text={tokenText}
+              tip={t`${tokenText} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet.`}
             />
           }
           valueRender={() => (

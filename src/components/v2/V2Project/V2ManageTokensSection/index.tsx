@@ -96,7 +96,7 @@ export default function V2ManageTokensSection() {
                             {formatWad(unclaimedBalance ?? 0, { precision: 0 })}
                             {ticketsIssued ? <> claimable</> : null}
                           </Trans> */}
-                          'TODO: unclaimed balance'
+                          {/* 'TODO: unclaimed balance' */}
                         </div>
                         {/* TODO: % of total supply */}
                       </div>

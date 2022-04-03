@@ -28,7 +28,7 @@ const BurnTokensHelp = () => {
   )
 }
 
-const RedeemButtonTooltip = ({
+export const RedeemButtonTooltip = ({
   buttonDisabled,
   children,
 }: PropsWithChildren<{

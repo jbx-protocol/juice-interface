@@ -8,9 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-04-01 02:48\n"
-"PO-Revision-Date: 2022-04-01 02:48\n"
-"PO-Revision-Date: 2022-04-01 02:48\n"
+"PO-Revision-Date: 2022-04-03 02:22\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -108,11 +106,11 @@ msgstr "Saldo del propietario <0/>"
 
 #: src/components/shared/Project/SpendingStats.tsx
 msgid "<0/>{0}{1} distributed"
-msgstr ""
+msgstr "<0/>{0}{1} distribuidos"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "<0><1/>{netDistributionAmount}</0> after {feePercentage}% JBX fee"
-msgstr ""
+msgstr "<0><1/>{netDistributionAmount}</0> después de la tarifa JBX de {feePercentage}%"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "<0><1>This project has no overflow</1>, so you will not receive any ETH for burning tokens.</0>"
@@ -335,7 +333,7 @@ msgstr "Monto pagado"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Amount to distribute"
-msgstr ""
+msgstr "Monto a distribuir"
 
 #: src/components/shared/formItems/ProjectDiscord.tsx
 msgid "An invite link to your project's Discord server."
@@ -386,7 +384,7 @@ msgstr "Balance excedido"
 
 #: src/components/shared/Project/SpendingStats.tsx
 msgid "Balance of the project owner's wallet."
-msgstr ""
+msgstr "Balance en la cartera del dueño del proyecto."
 
 #: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
 msgid "Beneficiary"
@@ -531,7 +529,7 @@ msgstr "Conecta tu billetera para desplegar"
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 msgid "Connect wallet to pay"
-msgstr ""
+msgstr "Conecta tu cartera para pagar"
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/v2/V2Create/tabs/RulesTab/ProjectReconfigurationFormItem.tsx
@@ -674,7 +672,7 @@ msgstr "Distribuir fondos"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributeReservedTokensModal.tsx
 msgid "Distribute reserved {tokenTextPlural}"
-msgstr ""
+msgstr "Distribuir los {tokenTextPlural} reservados"
 
 #: src/components/v1/FundingCycle/ReservedTokens.tsx
 msgid "Distribute {0}"
@@ -682,11 +680,11 @@ msgstr "Distribuir {0}"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributeReservedTokensModal.tsx
 msgid "Distribute {tokenTextPlural}"
-msgstr ""
+msgstr "Distribuir {tokenTextPlural}"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/ReservedTokensSplitsCard.tsx
 msgid "Distribute {tokensText}"
-msgstr ""
+msgstr "Distribuir {tokensText}"
 
 #: src/components/v1/V1Project/Paid.tsx
 #: src/components/v2/V2Project/TreasuryStats/DistributedRatio.tsx
@@ -1050,7 +1048,7 @@ msgstr ""
 
 #: src/components/v2/shared/V2MainnetWarning.tsx
 msgid "Juicebox V2 on mainnet isn't supported."
-msgstr ""
+msgstr "Juicebox V2 no es compatible en mainnet."
 
 #: src/components/Landing/QAs.tsx
 msgid "Juicebox has handled tens of thousands of ETH through its protocol, and has so far had 0 security mishaps."
@@ -1336,7 +1334,7 @@ msgstr "Pagos pausados"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Payout recipients"
-msgstr ""
+msgstr "Beneficiarios del pago"
 
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx
 #: src/components/v2/V2Create/tabs/FundingTab/FundingTabContent.tsx
@@ -1482,7 +1480,7 @@ msgstr "Recibe {receiveText}"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Recipients will receive payouts in ETH."
-msgstr ""
+msgstr "Los beneficiarios recibirán los pagos en ETH."
 
 #: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/v1/V1Create/index.tsx
@@ -1618,11 +1616,11 @@ msgstr ""
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributeReservedTokensModal.tsx
 msgid "Reserved {tokenTextPlural}: <0>{reservedTokensFormatted} {tokenTextPlural}</0>"
-msgstr ""
+msgstr "{tokenTextPlural}<0>{reservedTokensFormatted}{tokenTextPlural}</0> reservados"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/ReservedTokensSplitsCard.tsx
 msgid "Reserved {tokensText}"
-msgstr ""
+msgstr "{tokensText} reservados"
 
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 msgid "Reserves"
@@ -1845,7 +1843,7 @@ msgstr "La dirección que debería recibir los tokens."
 
 #: src/components/v2/V2Project/V2FundingCycleSection/ReservedTokensSplitsCard.tsx
 msgid "The amount of tokens reserved for this project. These tokens can be distributed to reserved token beneficiaries."
-msgstr ""
+msgstr "La cantidad de tokens reservados para este proyecto. Éstos tokens pueden ser distribuidos a los beneficiarios de los tokens reservados."
 
 #: src/components/v1/V1Project/Paid.tsx
 #: src/components/v2/V2Project/TreasuryStats/DistributedRatio.tsx
@@ -1871,7 +1869,7 @@ msgstr "El equipo de contratos va a estar trabajando pronto en terminales de pag
 
 #: src/components/shared/Project/SpendingStats.tsx
 msgid "The funds available to withdraw for this funding cycle before the {feePercentage}% JBX fee is subtracted. This number won't roll over to the next funding cycle, so funds should be withdrawn before it ends."
-msgstr ""
+msgstr "Los fondos disponibles para retirar para este ciclo de financiamiento antes de que la tarifa de JBX del {feePercentage}% sea sustraída. Este número no se pasará al siguiente ciclo de financiamiento, así que los fondos deberían ser retirados antes de que termine."
 
 #: src/components/Landing/index.tsx
 msgid "The future will be led by creators, and owned by communities."
@@ -1879,7 +1877,7 @@ msgstr "El futuro será liderado por creadores y las comunidades serán los due�
 
 #: src/components/shared/formItems/ProjectTarget.tsx
 msgid "The maximum amount of funds that can be distributed from this project in one funding cycle. Funds will be withdrawn in ETH no matter the currency you choose."
-msgstr ""
+msgstr "El monto máximo de fondos que puede ser distribuido desde este proyecto en un ciclo de financiamiento. Los fondos serán retirados en ETH sin importar la moneda que tú escojas."
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "The percent this individual receives of the overall {reservedRate}% reserved token allocation"
@@ -1924,11 +1922,11 @@ msgstr "El monto total recibido por este proyecto a través de Juicebox desde qu
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "There are no payouts defined for this funding cycle. The project owner will recieve all available funds."
-msgstr ""
+msgstr "No hay pago definidos para este ciclo de financiamiento. El dueño del proyecto recibirá todos los fondos disponibles."
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributeReservedTokensModal.tsx
 msgid "There are no reserved token recipients defined for this funding cycle. The project owner will recieve all available tokens."
-msgstr ""
+msgstr "No hay beneficiarios de tokens reservados definidos para este ciclo de financiamiento. El dueño del proyecto recibirá todos los tokens disponibles."
 
 #: src/components/Landing/QAs.tsx
 msgid "There are unit tests written for every condition of every function in the contracts, and integration tests for every workflow that the protocol supports."
@@ -2563,7 +2561,7 @@ msgstr "Tipo de cambio de {tokenSymbol}/ETH en {exchangeName}."
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributeReservedTokensModal.tsx
 msgid "{tokenTextSingular} recipients"
-msgstr ""
+msgstr "{tokenTextSingular} beneficiarios"
 
 #: src/components/v1/V1Project/Rewards/index.tsx
 msgid "{tokensLabel} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
@@ -2571,5 +2569,5 @@ msgstr "{tokensLabel} son distribuidos a cualquiera que pague este proyecto. Si 
 
 #: src/components/v2/V2Project/V2FundingCycleSection/ReservedTokensSplitsCard.tsx
 msgid "{tokensText} reserved"
-msgstr ""
+msgstr "{tokensText} reservados"
 

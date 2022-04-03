@@ -990,6 +990,7 @@ msgid "In Juicebox"
 msgstr ""
 
 #: src/components/v1/V1Project/Paid.tsx
+#: src/components/v2/V2Project/TreasuryStats/OwnerBalance.tsx
 msgid "In wallet"
 msgstr ""
 
@@ -1846,6 +1847,7 @@ msgid "The amount that has been distributed from the Juicebox balance in this fu
 msgstr ""
 
 #: src/components/v1/V1Project/Paid.tsx
+#: src/components/v2/V2Project/TreasuryStats/OwnerBalance.tsx
 msgid "The balance of the project owner's wallet."
 msgstr "The balance of the project owner's wallet."
 

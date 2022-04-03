@@ -995,6 +995,7 @@ msgid "In Juicebox"
 msgstr "В Juicebox"
 
 #: src/components/v1/V1Project/Paid.tsx
+#: src/components/v2/V2Project/TreasuryStats/OwnerBalance.tsx
 msgid "In wallet"
 msgstr "В кошельке"
 
@@ -1851,6 +1852,7 @@ msgid "The amount that has been distributed from the Juicebox balance in this fu
 msgstr "Сумма, которая была распределена из баланса Juicebox в этом цикле финансирования, из текущего целевого показателя финансирования. Объем средств не превышает целевого показателя финансирования в рамках одного цикла финансирования: любой оставшийся ETH в Juicebox переполнен, до начала следующего цикла."
 
 #: src/components/v1/V1Project/Paid.tsx
+#: src/components/v2/V2Project/TreasuryStats/OwnerBalance.tsx
 msgid "The balance of the project owner's wallet."
 msgstr ""
 

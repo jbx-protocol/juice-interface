@@ -1,13 +1,15 @@
+import { Space } from 'antd'
+
 import ProjectBalance from './ProjectBalance'
 import DistributedRatio from './DistributedRatio'
+import OwnerBalance from './OwnerBalance'
 
 export default function TreasuryStats() {
-  const spacing = 10
-
   return (
-    <>
-      <ProjectBalance style={{ marginBottom: spacing }} />
-      <DistributedRatio style={{ marginBottom: spacing }} />
-    </>
+    <Space direction="vertical" style={{ display: 'flex' }}>
+      <ProjectBalance />
+      <DistributedRatio />
+      <OwnerBalance />
+    </Space>
   )
 }

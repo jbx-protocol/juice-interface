@@ -9,13 +9,7 @@ import ETHAmount from 'components/shared/currency/ETHAmount'
 
 import V2CurrencyAmount from 'components/v2/shared/V2CurrencyAmount'
 
-import { textSecondary } from 'constants/styles/text'
-
-const primaryTextStyle: CSSProperties = {
-  fontWeight: 500,
-  fontSize: '1.1rem',
-  lineHeight: 1,
-}
+import { textPrimary, textSecondary } from 'constants/styles/text'
 
 export default function ProjectBalance({ style }: { style?: CSSProperties }) {
   const { theme } = useContext(ThemeContext)
@@ -36,7 +30,7 @@ export default function ProjectBalance({ style }: { style?: CSSProperties }) {
       statValue={
         <div
           style={{
-            ...primaryTextStyle,
+            ...textPrimary,
             color: colors.text.brand.primary,
             marginLeft: 10,
           }}

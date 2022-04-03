@@ -13,7 +13,7 @@ import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
 import { useEthBalanceQuery } from 'hooks/EthBalance'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { NetworkName } from 'models/network-name'
-import { CSSProperties, useContext, useState } from 'react'
+import { useContext, useState } from 'react'
 import { formatWad } from 'utils/formatNumber'
 import { hasFundingTarget } from 'utils/v1/fundingCycle'
 
@@ -29,7 +29,7 @@ import { readNetwork } from 'constants/networks'
 import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
 
 import BalancesModal from './modals/BalancesModal'
-import { textSecondary } from 'constants/styles/text'
+import { textPrimary, textSecondary } from 'constants/styles/text'
 
 export default function Paid() {
   const [balancesModalVisible, setBalancesModalVisible] = useState<boolean>()
@@ -54,12 +54,6 @@ export default function Paid() {
     V1CurrencyName(currentFC?.currency.toNumber() as V1CurrencyOption),
     'ETH',
   )
-
-  const primaryTextStyle: CSSProperties = {
-    fontWeight: 500,
-    fontSize: '1.1rem',
-    lineHeight: 1,
-  }
 
   const secondaryTextStyle = textSecondary(theme)
 
@@ -97,7 +91,7 @@ export default function Paid() {
           </Trans>
         }
         statValue={
-          <span style={primaryTextStyle}>
+          <span style={textPrimary}>
             {isConstitutionDAO && (
               <span style={secondaryTextStyle}>
                 <CurrencySymbol currency="USD" />
@@ -129,7 +123,7 @@ export default function Paid() {
         statValue={
           <div
             style={{
-              ...primaryTextStyle,
+              ...textPrimary,
               color: isConstitutionDAO
                 ? colors.text.primary
                 : colors.text.brand.primary,
@@ -225,7 +219,7 @@ export default function Paid() {
               />{' '}
               +{' '}
             </span>
-            <span style={primaryTextStyle}>
+            <span style={textPrimary}>
               <ETHAmount amount={ownerBalance} precision={2} padEnd={true} />
             </span>
           </span>

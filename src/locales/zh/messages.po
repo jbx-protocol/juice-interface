@@ -995,6 +995,7 @@ msgid "In Juicebox"
 msgstr "项目金库余额"
 
 #: src/components/v1/V1Project/Paid.tsx
+#: src/components/v2/V2Project/TreasuryStats/OwnerBalance.tsx
 msgid "In wallet"
 msgstr "项目钱包余额"
 
@@ -1851,6 +1852,7 @@ msgid "The amount that has been distributed from the Juicebox balance in this fu
 msgstr "当前筹款周期中，从筹款目标中已提取的金额。单个筹款周期中，超出目标的资金不能被分发——Juicebox 中剩余的 ETH 都记为溢出，直到下个周期开始。"
 
 #: src/components/v1/V1Project/Paid.tsx
+#: src/components/v2/V2Project/TreasuryStats/OwnerBalance.tsx
 msgid "The balance of the project owner's wallet."
 msgstr ""
 

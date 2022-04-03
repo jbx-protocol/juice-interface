@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Col, Modal, Row, Space, Statistic } from 'antd'
+import { Col, Row, Space, Statistic } from 'antd'
 import { Gutter } from 'antd/lib/grid/row'
 import ProjectLogo from 'components/shared/ProjectLogo'
 import { useAppSelector } from 'hooks/AppSelector'
@@ -24,6 +24,8 @@ import { V2CurrencyName } from 'utils/v2/currency'
 import SplitList from 'components/v2/shared/SplitList'
 
 import { BigNumber } from '@ethersproject/bignumber'
+
+import TransactionModal from 'components/shared/TransactionModal'
 
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 
@@ -64,8 +66,10 @@ export default function ConfirmDeployV2ProjectModal({
       fundAccessConstraint?.distributionLimitCurrency ?? '1',
     ) as V2CurrencyOption,
   )
+
   return (
-    <Modal
+    <TransactionModal
+      transactionPending
       visible={visible}
       onOk={onOk}
       confirmLoading={confirmLoading}
@@ -334,6 +338,6 @@ export default function ConfirmDeployV2ProjectModal({
           </Space>
         </div>
       </Space>
-    </Modal>
+    </TransactionModal>
   )
 }

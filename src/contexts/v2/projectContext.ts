@@ -7,45 +7,53 @@ import { createContext } from 'react'
 export type V2ProjectContextType = {
   projectId: BigNumber | undefined
   projectMetadata: ProjectMetadataV4 | undefined
-  fundingCycleMetadata: V2FundingCycleMetadata | undefined
-  fundingCycle: V2FundingCycle | undefined
-  queuedFundingCycle: V2FundingCycle | undefined
-  distributionLimit: BigNumber | undefined
-  queuedDistributionLimit: BigNumber | undefined
-  payoutSplits: Split[] | undefined
-  queuedPayoutSplits: Split[] | undefined
-  reservedTokensSplits: Split[] | undefined
-  queuedReservedTokensSplits: Split[] | undefined
   tokenAddress: string | undefined
   tokenSymbol: string | undefined
   terminals: string[] | undefined // array of terminal addresses, 0xABC...
   ETHBalance: BigNumber | undefined
-  distributionLimitCurrency: BigNumber | undefined
-  queuedDistributionLimitCurrency: BigNumber | undefined
-  balanceInDistributionLimitCurrency: BigNumber | undefined
   projectOwnerAddress: string | undefined
+  balanceInDistributionLimitCurrency: BigNumber | undefined
   usedDistributionLimit: BigNumber | undefined
+
+  fundingCycleMetadata: V2FundingCycleMetadata | undefined
+  fundingCycle: V2FundingCycle | undefined
+  queuedFundingCycle: V2FundingCycle | undefined
+
+  distributionLimit: BigNumber | undefined
+  distributionLimitCurrency: BigNumber | undefined
+  queuedDistributionLimit: BigNumber | undefined
+  queuedDistributionLimitCurrency: BigNumber | undefined
+
+  payoutSplits: Split[] | undefined
+  queuedPayoutSplits: Split[] | undefined
+
+  reservedTokensSplits: Split[] | undefined
+  queuedReservedTokensSplits: Split[] | undefined
 }
 
 export const V2ProjectContext = createContext<V2ProjectContextType>({
   projectId: undefined,
   projectMetadata: undefined,
-  fundingCycleMetadata: undefined,
-  fundingCycle: undefined,
-  queuedFundingCycle: undefined,
-  distributionLimit: undefined,
-  queuedDistributionLimit: undefined,
-  payoutSplits: undefined,
-  queuedPayoutSplits: undefined,
-  reservedTokensSplits: undefined,
-  queuedReservedTokensSplits: undefined,
   tokenAddress: undefined,
   tokenSymbol: undefined,
   terminals: undefined,
   ETHBalance: undefined,
-  distributionLimitCurrency: undefined,
-  queuedDistributionLimitCurrency: undefined,
-  balanceInDistributionLimitCurrency: undefined,
   projectOwnerAddress: undefined,
+  balanceInDistributionLimitCurrency: undefined,
   usedDistributionLimit: undefined,
+
+  fundingCycleMetadata: undefined,
+  fundingCycle: undefined,
+  queuedFundingCycle: undefined,
+
+  distributionLimit: undefined,
+  distributionLimitCurrency: undefined,
+  queuedDistributionLimit: undefined,
+  queuedDistributionLimitCurrency: undefined,
+
+  payoutSplits: undefined,
+  queuedPayoutSplits: undefined,
+
+  reservedTokensSplits: undefined,
+  queuedReservedTokensSplits: undefined,
 })

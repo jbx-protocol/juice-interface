@@ -14,8 +14,8 @@ export type V2ProjectContextType = {
   queuedDistributionLimit: BigNumber | undefined
   payoutSplits: Split[] | undefined
   queuedPayoutSplits: Split[] | undefined
-  reserveTokenSplits: Split[] | undefined
-  queuedReserveTokenSplits: Split[] | undefined
+  reservedTokensSplits: Split[] | undefined
+  queuedReservedTokensSplits: Split[] | undefined
   tokenAddress: string | undefined
   tokenSymbol: string | undefined
   terminals: string[] | undefined // array of terminal addresses, 0xABC...
@@ -24,6 +24,7 @@ export type V2ProjectContextType = {
   queuedDistributionLimitCurrency: BigNumber | undefined
   balanceInDistributionLimitCurrency: BigNumber | undefined
   projectOwnerAddress: string | undefined
+  usedDistributionLimit: BigNumber | undefined
 }
 
 export const V2ProjectContext = createContext<V2ProjectContextType>({
@@ -36,8 +37,8 @@ export const V2ProjectContext = createContext<V2ProjectContextType>({
   queuedDistributionLimit: undefined,
   payoutSplits: undefined,
   queuedPayoutSplits: undefined,
-  reserveTokenSplits: undefined,
-  queuedReserveTokenSplits: undefined,
+  reservedTokensSplits: undefined,
+  queuedReservedTokensSplits: undefined,
   tokenAddress: undefined,
   tokenSymbol: undefined,
   terminals: undefined,
@@ -46,4 +47,5 @@ export const V2ProjectContext = createContext<V2ProjectContextType>({
   queuedDistributionLimitCurrency: undefined,
   balanceInDistributionLimitCurrency: undefined,
   projectOwnerAddress: undefined,
+  usedDistributionLimit: undefined,
 })

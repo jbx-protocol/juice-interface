@@ -27,6 +27,10 @@ import ExternalLink from 'components/shared/ExternalLink'
 
 import { Split } from 'models/v2/splits'
 
+import { percentToPerbicent } from 'utils/formatNumber'
+
+import { formatFee } from 'utils/v2/math'
+
 import { shadowCard } from 'constants/styles/shadowCard'
 import FormActionbar from '../../FormActionBar'
 import { formBottomMargin } from '../../constants'
@@ -67,6 +71,9 @@ export default function FundingTabContent({
     )
 
   const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
+  const feePerbicent = ETHPaymentTerminalFee
+    ? percentToPerbicent(formatFee(ETHPaymentTerminalFee))
+    : undefined
 
   const resetProjectForm = useCallback(() => {
     const _target = fundAccessConstraint?.distributionLimit
@@ -204,7 +211,7 @@ export default function FundingTabContent({
                   targetCurrency={targetCurrency}
                   onTargetChange={setTarget}
                   onTargetCurrencyChange={setTargetCurrency}
-                  fee={ETHPaymentTerminalFee}
+                  feePerbicent={feePerbicent}
                 />
               </Form.Item>
             </div>
@@ -231,7 +238,7 @@ export default function FundingTabContent({
               mods={splits.map(toMod)}
               target={target ?? '0'}
               currency={toV1Currency(targetCurrency)}
-              fee={ETHPaymentTerminalFee}
+              feePerbicent={ETHPaymentTerminalFee}
               onModsChanged={newMods => {
                 setSplits(newMods.map(toSplit))
               }}

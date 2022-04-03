@@ -1,8 +1,8 @@
-import { t } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Modal, ModalProps } from 'antd'
-import { PropsWithChildren } from 'react'
 
-import ExternalLink from './ExternalLink'
+import { ThemeContext } from 'contexts/themeContext'
+import { PropsWithChildren, useContext } from 'react'
 
 type TransactionModalProps = PropsWithChildren<
   ModalProps & {
@@ -11,6 +11,10 @@ type TransactionModalProps = PropsWithChildren<
 >
 
 const PendingTransactionModalBody = () => {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
+
   return (
     <div
       style={{
@@ -25,23 +29,36 @@ const PendingTransactionModalBody = () => {
       <div style={{ textAlign: 'center', maxWidth: '50%' }}>
         <img
           src="/assets/quint.gif"
-          alt="Juicebox loading animation"
+          alt={t`Juicebox loading animation`}
           style={{ maxWidth: 100, marginBottom: '1rem' }}
         />
-        <h3>Transaction pending...</h3>
-        <p>Your transaction has been submitted and is awaiting confirmation.</p>
-        <ExternalLink href="">View transaction on Etherscan</ExternalLink>
+        <h2 style={{ color: colors.text.primary }}>
+          <Trans>Transaction pending...</Trans>
+        </h2>
+        <p>
+          <Trans>
+            Your transaction has been submitted and is awaiting confirmation.
+          </Trans>
+        </p>
       </div>
     </div>
   )
 }
 
+/**
+ * A thin wrapper around antd Modal for ETH transactions.
+ * When transactionPending prop is true, the Modal children
+ * are replaced with a juicy loading state.
+ */
 export default function TransactionModal(props: TransactionModalProps) {
   const modalProps = {
     ...props,
-    ...{ confirmLoading: props.transactionPending, cancelText: t`Close` },
+    ...{
+      confirmLoading: props.transactionPending || props.confirmLoading,
+      cancelText: t`Close`,
+    },
   }
-  delete modalProps.transactionPending
+
   if (props.transactionPending) {
   }
 

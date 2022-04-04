@@ -2,13 +2,25 @@ import { Button, Form, Input, Modal, Space } from 'antd'
 import { t, Trans } from '@lingui/macro'
 import { useForm } from 'antd/lib/form/Form'
 import TooltipIcon from 'components/shared/TooltipIcon'
-import { useIssueTokensTx } from 'hooks/v1/transactor/IssueTokensTx'
 import { useState } from 'react'
+import { TransactorInstance } from 'hooks/Transactor'
+import { useHistory } from 'react-router-dom'
+import { SettingOutlined } from '@ant-design/icons'
 
-export default function IssueTickets() {
+export default function IssueTicketsButton({
+  useIssueTokensTx,
+}: {
+  useIssueTokensTx: () => TransactorInstance<{
+    name: string
+    symbol: string
+  }>
+}) {
   const [modalVisible, setModalVisible] = useState<boolean>()
   const [loading, setLoading] = useState<boolean>()
   const [form] = useForm<{ name: string; symbol: string }>()
+
+  const history = useHistory()
+
   const issueTokensTx = useIssueTokensTx()
 
   function issue() {
@@ -18,18 +30,37 @@ export default function IssueTickets() {
 
     issueTokensTx(
       { name: fields.name, symbol: fields.symbol },
-      { onDone: () => setModalVisible(false) },
+      {
+        onDone: () => setModalVisible(false),
+        onConfirmed: () => {
+          history.go(0)
+          setLoading(false)
+        },
+      },
     )
   }
 
   return (
     <div>
       <Space>
-        <Button loading={loading} onClick={() => setModalVisible(true)}>
-          <Trans>Issue ERC-20 token</Trans>
+        <Button
+          size="small"
+          icon={<SettingOutlined />}
+          loading={loading}
+          onClick={() => setModalVisible(true)}
+        >
+          <span>
+            <Trans>Issue ERC-20 token</Trans>
+          </span>
         </Button>
         <TooltipIcon
-          tip={t`Issue an ERC-20 to be used as this project's token. Once issued, anyone can claim their existing token balance in the new token.`}
+          iconStyle={{ fontSize: '.8rem' }}
+          tip={
+            <Trans>
+              Issue an ERC-20 to be used as this project's token. Once issued,
+              anyone can claim their existing token balance in the new token.
+            </Trans>
+          }
         />
       </Space>
 
@@ -39,6 +70,7 @@ export default function IssueTickets() {
         okText={t`Issue token`}
         onOk={issue}
         onCancel={() => setModalVisible(false)}
+        confirmLoading={loading}
       >
         <p>
           <Trans>

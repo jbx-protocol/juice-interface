@@ -16,6 +16,7 @@ import ProjectReconfigurationFormItem from './ProjectReconfigurationFormItem'
 import FormItemLabel from '../../FormItemLabel'
 import { TabContentProps } from '../../models'
 import ProjectConfigurationFieldsContainer from '../ProjectConfigurationFieldsContainer'
+import FundingCycleExplainer from '../../FundingCycleExplainer'
 
 type RulesFormFields = {
   pausePay: boolean
@@ -83,49 +84,51 @@ export default function RulesTabContent({
   return (
     <Row gutter={32}>
       <ProjectConfigurationFieldsContainer hidePreview={hidePreview}>
-        <Form
-          form={form}
-          layout="vertical"
-          onFinish={() => onFormSaved(form.getFieldsValue(true))}
-          style={{ marginBottom: formBottomMargin }}
-        >
-          <Form.Item
-            name="pausePay"
-            label={
-              <FormItemLabel style={{ marginBottom: 0 }}>
-                <Trans>Pause payments</Trans>
-              </FormItemLabel>
-            }
-            extra={t`When Pause Payments is enabled, your project cannot receive direct payments.`}
-            valuePropName="checked"
-            style={{ ...shadowCard(theme), padding: '2rem' }}
+        <>
+          <FundingCycleExplainer />
+          <Form
+            form={form}
+            layout="vertical"
+            onFinish={() => onFormSaved(form.getFieldsValue(true))}
+            style={{ marginBottom: formBottomMargin }}
           >
-            <Switch />
-          </Form.Item>
-          <Form.Item
-            name="allowMint"
-            label={
-              <FormItemLabel style={{ marginBottom: 0 }}>
-                <Trans>Allow token minting</Trans>
-              </FormItemLabel>
-            }
-            extra={tokenMintingExtra}
-            valuePropName="checked"
-            style={{ ...shadowCard(theme), padding: '2rem' }}
-          >
-            <Switch onChange={val => setShowMintingWarning(val)} />
-          </Form.Item>
-          <ProjectReconfigurationFormItem
-            value={form.getFieldValue('ballot') ?? fundingCycleData?.ballot}
-            onChange={(address: string) =>
-              form.setFieldsValue({ ballot: address })
-            }
-            style={{ ...shadowCard(theme), padding: '2rem' }}
-          />
-
-          {/* Default to floating save button if custom one not given */}
-          {saveButton ?? <FormActionbar isLastTab />}
-        </Form>
+            <Form.Item
+              name="pausePay"
+              label={
+                <FormItemLabel style={{ marginBottom: 0 }}>
+                  <Trans>Pause payments</Trans>
+                </FormItemLabel>
+              }
+              extra={t`When Pause Payments is enabled, your project cannot receive direct payments.`}
+              valuePropName="checked"
+              style={{ ...shadowCard(theme), padding: '2rem' }}
+            >
+              <Switch />
+            </Form.Item>
+            <Form.Item
+              name="allowMint"
+              label={
+                <FormItemLabel style={{ marginBottom: 0 }}>
+                  <Trans>Allow token minting</Trans>
+                </FormItemLabel>
+              }
+              extra={tokenMintingExtra}
+              valuePropName="checked"
+              style={{ ...shadowCard(theme), padding: '2rem' }}
+            >
+              <Switch onChange={val => setShowMintingWarning(val)} />
+            </Form.Item>
+            <ProjectReconfigurationFormItem
+              value={form.getFieldValue('ballot') ?? fundingCycleData?.ballot}
+              onChange={(address: string) =>
+                form.setFieldsValue({ ballot: address })
+              }
+              style={{ ...shadowCard(theme), padding: '2rem' }}
+            />
+            {/* Default to floating save button if custom one not given */}
+            {saveButton ?? <FormActionbar isLastTab />}
+          </Form>
+        </>
       </ProjectConfigurationFieldsContainer>
       {!hidePreview && <Col md={12} xs={0}></Col>}
     </Row>

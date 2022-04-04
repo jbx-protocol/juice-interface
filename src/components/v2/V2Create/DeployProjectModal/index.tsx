@@ -248,7 +248,7 @@ export default function ConfirmDeployV2ProjectModal({
                 <Statistic
                   title={t`Token minting`}
                   value={
-                    fundingCycleMetadata.pauseMint ? t`Allowed` : t`Disabled`
+                    !fundingCycleMetadata.pauseMint ? t`Allowed` : t`Disabled`
                   }
                 />
               </Col>
@@ -297,12 +297,12 @@ export default function ConfirmDeployV2ProjectModal({
               />
             )}
 
-            {payoutGroupedSplits.splits.length ? (
+            {payoutGroupedSplits?.splits?.length ? (
               <Statistic
                 title={<Trans>Payouts</Trans>}
                 valueRender={() => (
                   <SplitList
-                    splits={payoutGroupedSplits.splits}
+                    splits={payoutGroupedSplits?.splits ?? []}
                     currency={BigNumber.from(
                       fundAccessConstraint?.distributionLimitCurrency,
                     )}
@@ -319,12 +319,12 @@ export default function ConfirmDeployV2ProjectModal({
 
             {fundingCycleMetadata.reservedRate &&
             fundingCycleMetadata.reservedRate !== '0' &&
-            reservedTokensGroupedSplits.splits.length ? (
+            reservedTokensGroupedSplits?.splits?.length ? (
               <Statistic
                 title={t`Reserved token allocations`}
                 valueRender={() => (
                   <SplitList
-                    splits={reservedTokensGroupedSplits.splits}
+                    splits={reservedTokensGroupedSplits?.splits ?? []}
                     currency={BigNumber.from(
                       fundAccessConstraint?.distributionLimitCurrency,
                     )}

@@ -1,10 +1,9 @@
 import { t, Trans } from '@lingui/macro'
-import { Button } from 'antd'
+import { Button, Tooltip } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 
 import { useContext, useState } from 'react'
-import { formatWad, fromWad } from 'utils/formatNumber'
-import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
+import { formatWad } from 'utils/formatNumber'
 
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { V2_CURRENCY_USD } from 'utils/v2/currency'
@@ -15,7 +14,7 @@ import { CurrencyOption } from 'models/currencyOption'
 
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 
-import V2ConfirmPayOwnerModal from './V2ConfirmPayOwnerModal'
+import V2ConfirmPayModal from './V2ConfirmPayModal'
 
 export default function V2PayButton({
   payAmount,
@@ -24,7 +23,7 @@ export default function V2PayButton({
   payAmount: string
   payInCurrency: CurrencyOption // TODO make the V2CurrencyOption
 }) {
-  const { fundingCycle, projectMetadata } = useContext(V2ProjectContext)
+  const { projectMetadata, fundingCycleMetadata } = useContext(V2ProjectContext)
 
   const [payModalVisible, setPayModalVisible] = useState<boolean>(false)
   const [payWarningModalVisible, setPayWarningModalVisible] =
@@ -35,9 +34,7 @@ export default function V2PayButton({
     amount: payAmount,
   })
 
-  const fcMetadata = decodeFundingCycleMetadata(fundingCycle?.metadata)
-
-  if (!fcMetadata) return null
+  if (!fundingCycleMetadata) return null
 
   const payButtonText = projectMetadata?.payButton?.length
     ? projectMetadata.payButton
@@ -45,20 +42,32 @@ export default function V2PayButton({
 
   //TODO: archived states, other reasons for pay being disabled
 
-  // Pay enabled
+  let disabledMessage: string | undefined
+  if (fundingCycleMetadata.pausePay) {
+    disabledMessage = t`Payments are paused for the current funding cycle.`
+  }
+
+  const isPayDisabled = Boolean(disabledMessage)
+
   return (
     <>
-      <Button
-        style={{ width: '100%' }}
-        type="primary"
-        onClick={
-          parseFloat(fromWad(weiPayAmt))
-            ? () => setPayWarningModalVisible(true)
-            : undefined
-        }
+      <Tooltip
+        visible={isPayDisabled ? undefined : false}
+        title={disabledMessage}
+        className="block"
       >
-        {payButtonText}
-      </Button>
+        <Button
+          style={{ width: '100%' }}
+          type="primary"
+          onClick={() => {
+            if (weiPayAmt?.eq(0)) return
+            setPayWarningModalVisible(true)
+          }}
+          disabled={isPayDisabled}
+        >
+          {payButtonText}
+        </Button>
+      </Tooltip>
       {payInCurrency === V2_CURRENCY_USD && (
         <div style={{ fontSize: '.7rem' }}>
           <Trans>
@@ -67,6 +76,7 @@ export default function V2PayButton({
           {formatWad(weiPayAmt) || '0'}
         </div>
       )}
+
       <PayWarningModal
         visible={payWarningModalVisible}
         onOk={() => {
@@ -75,7 +85,7 @@ export default function V2PayButton({
         }}
         onCancel={() => setPayWarningModalVisible(false)}
       />
-      <V2ConfirmPayOwnerModal
+      <V2ConfirmPayModal
         visible={payModalVisible}
         onSuccess={() => setPayModalVisible(false)}
         onCancel={() => setPayModalVisible(false)}

@@ -25,7 +25,6 @@ export function V2ReconfigureProjectDetailsDrawer({
 
   const [loadingSaveChanges, setLoadingSaveChanges] = useState<boolean>()
   const { projectMetadata } = useContext(V2ProjectContext)
-  // const { projectMetadata } = useAppSelector(state => state.editingV2Project)
 
   const { colors } = useContext(ThemeContext).theme
 

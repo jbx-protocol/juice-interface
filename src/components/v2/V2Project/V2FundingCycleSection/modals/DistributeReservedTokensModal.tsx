@@ -1,5 +1,5 @@
-import { Trans } from '@lingui/macro'
-import { Modal, Space } from 'antd'
+import { t, Trans } from '@lingui/macro'
+import { Space } from 'antd'
 import { useDistributeReservedTokens } from 'hooks/v2/transactor/DistributeReservedTokensTx'
 import { useContext, useState } from 'react'
 import { formatWad } from 'utils/formatNumber'
@@ -7,6 +7,7 @@ import { tokenSymbolText } from 'utils/tokenSymbolText'
 import SplitList from 'components/v2/shared/SplitList'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import useProjectReservedTokens from 'hooks/v2/contractReader/ProjectReservedTokens'
+import TransactionModal from 'components/shared/TransactionModal'
 
 export default function DistributeReservedTokensModal({
   visible,
@@ -17,7 +18,6 @@ export default function DistributeReservedTokensModal({
   onCancel?: VoidFunction
   onConfirmed?: VoidFunction
 }) {
-  const [loading, setLoading] = useState<boolean>()
   const {
     tokenSymbol,
     reservedTokensSplits,
@@ -25,22 +25,37 @@ export default function DistributeReservedTokensModal({
     fundingCycleMetadata,
     projectId,
   } = useContext(V2ProjectContext)
+
+  const [loading, setLoading] = useState<boolean>()
+  const [transactionPending, setTransactionPending] = useState<boolean>()
+
   const distributeReservedTokensTx = useDistributeReservedTokens()
   const { data: reservedTokens } = useProjectReservedTokens({
     projectId,
     reservedRate: fundingCycleMetadata?.reservedRate,
   })
 
-  function distributeReservedTokens() {
+  async function distributeReservedTokens() {
     setLoading(true)
 
-    distributeReservedTokensTx(
+    const txSuccessful = await distributeReservedTokensTx(
       {},
       {
-        onDone: () => setLoading(false),
-        onConfirmed: () => onConfirmed?.(),
+        onDone: () => {
+          setTransactionPending(true)
+        },
+        onConfirmed: () => {
+          setLoading(false)
+          setTransactionPending(false)
+          onConfirmed?.()
+        },
       },
     )
+
+    if (!txSuccessful) {
+      setLoading(false)
+      setTransactionPending(false)
+    }
   }
 
   const reservedTokensFormatted = formatWad(reservedTokens, { precision: 0 })
@@ -57,12 +72,13 @@ export default function DistributeReservedTokensModal({
   })
 
   return (
-    <Modal
+    <TransactionModal
       title={<Trans>Distribute reserved {tokenTextPlural}</Trans>}
       visible={visible}
-      onOk={distributeReservedTokens}
-      okText={<Trans>Distribute {tokenTextPlural}</Trans>}
+      onOk={() => distributeReservedTokens()}
+      okText={t`Distribute ${tokenTextPlural}`}
       confirmLoading={loading}
+      transactionPending={transactionPending}
       onCancel={onCancel}
       okButtonProps={{ disabled: !reservedTokens?.gt(0) }}
       width={640}
@@ -101,6 +117,6 @@ export default function DistributeReservedTokensModal({
           />
         </div>
       </Space>
-    </Modal>
+    </TransactionModal>
   )
 }

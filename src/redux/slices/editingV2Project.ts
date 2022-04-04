@@ -20,7 +20,7 @@ import { percentToPermyriad } from 'utils/formatNumber'
 
 import {
   ETH_PAYOUT_SPLIT_GROUP,
-  RESERVE_TOKEN_SPLIT_GROUP,
+  RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/v2/splits'
 import { DEFAULT_BALLOT_STRATEGY } from 'constants/ballotStrategies/ballotStrategies'
 
@@ -80,8 +80,8 @@ export const EMPTY_PAYOUT_GROUPED_SPLITS = {
   splits: [],
 }
 
-export const EMPTY_RESERVE_TOKENS_GROUPED_SPLITS = {
-  group: RESERVE_TOKEN_SPLIT_GROUP,
+export const EMPTY_RESERVED_TOKENS_GROUPED_SPLITS = {
+  group: RESERVED_TOKEN_SPLIT_GROUP,
   splits: [],
 }
 
@@ -95,7 +95,7 @@ export const defaultProjectState: V2ProjectState = {
   fundingCycleMetadata: { ...defaultFundingCycleMetadata },
   fundAccessConstraints: [],
   payoutGroupedSplits: EMPTY_PAYOUT_GROUPED_SPLITS,
-  reservedTokensGroupedSplits: EMPTY_RESERVE_TOKENS_GROUPED_SPLITS,
+  reservedTokensGroupedSplits: EMPTY_RESERVED_TOKENS_GROUPED_SPLITS,
 }
 
 export const editingV2ProjectSlice = createSlice({
@@ -164,23 +164,15 @@ export const editingV2ProjectSlice = createSlice({
       }
     },
     setPayoutSplits: (state, action: PayloadAction<Split[]>) => {
-      if (state.payoutGroupedSplits) {
-        state.payoutGroupedSplits.splits = action.payload
-      } else {
-        state.payoutGroupedSplits = {
-          group: ETH_PAYOUT_SPLIT_GROUP,
-          splits: action.payload,
-        }
+      state.payoutGroupedSplits = {
+        ...EMPTY_PAYOUT_GROUPED_SPLITS,
+        splits: action.payload,
       }
     },
     setReservedTokensSplits: (state, action: PayloadAction<Split[]>) => {
-      if (state.reservedTokensGroupedSplits) {
-        state.reservedTokensGroupedSplits.splits = action.payload
-      } else {
-        state.reservedTokensGroupedSplits = {
-          group: RESERVE_TOKEN_SPLIT_GROUP,
-          splits: action.payload,
-        }
+      state.reservedTokensGroupedSplits = {
+        ...EMPTY_RESERVED_TOKENS_GROUPED_SPLITS,
+        splits: action.payload,
       }
     },
     setPausePay: (state, action: PayloadAction<boolean>) => {

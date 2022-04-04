@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Col, Modal, Row, Space, Statistic } from 'antd'
+import { Col, Row, Space, Statistic } from 'antd'
 import { Gutter } from 'antd/lib/grid/row'
 import ProjectLogo from 'components/shared/ProjectLogo'
 import { useAppSelector } from 'hooks/AppSelector'
@@ -19,11 +19,13 @@ import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { formattedNum, formatWad, parseWad } from 'utils/formatNumber'
 import { amountSubFee } from 'utils/v2/math'
 
-import { V2CurrencyName } from 'utils/v2/currency'
+import { V2CurrencyName, V2_CURRENCY_ETH } from 'utils/v2/currency'
 
 import SplitList from 'components/v2/shared/SplitList'
 
 import { BigNumber } from '@ethersproject/bignumber'
+
+import TransactionModal from 'components/shared/TransactionModal'
 
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 
@@ -32,11 +34,13 @@ export default function ConfirmDeployV2ProjectModal({
   onCancel,
   visible,
   confirmLoading,
+  transactionPending,
 }: {
   onOk?: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void
   onCancel?: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void
   visible?: boolean
   confirmLoading?: boolean
+  transactionPending?: boolean
 }) {
   const { signerNetwork, userAddress } = useContext(NetworkContext)
   const {
@@ -60,15 +64,17 @@ export default function ConfirmDeployV2ProjectModal({
   const rowGutter: [Gutter, Gutter] = [25, 20]
 
   const fundingCurrency = V2CurrencyName(
-    parseInt(
-      fundAccessConstraint?.distributionLimitCurrency ?? '1',
-    ) as V2CurrencyOption,
+    (fundAccessConstraint?.distributionLimitCurrency !== undefined
+      ? parseInt(fundAccessConstraint.distributionLimitCurrency)
+      : V2_CURRENCY_ETH) as V2CurrencyOption,
   )
+
   return (
-    <Modal
+    <TransactionModal
       visible={visible}
       onOk={onOk}
       confirmLoading={confirmLoading}
+      transactionPending={transactionPending}
       onCancel={onCancel}
       okText={
         userAddress
@@ -334,6 +340,6 @@ export default function ConfirmDeployV2ProjectModal({
           </Space>
         </div>
       </Space>
-    </Modal>
+    </TransactionModal>
   )
 }

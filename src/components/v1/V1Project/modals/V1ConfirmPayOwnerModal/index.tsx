@@ -180,7 +180,7 @@ export default function V1ConfirmPayOwnerModal({
             />
           </Form.Item>
           {hasIssuedTokens && (
-            <Form.Item label={t`Receive ERC20`}>
+            <Form.Item label={t`Receive ERC-20`}>
               <Space align="start">
                 <Checkbox
                   style={{ padding: 20 }}
@@ -189,10 +189,10 @@ export default function V1ConfirmPayOwnerModal({
                 />
                 <label htmlFor="preferUnstaked">
                   <Trans>
-                    Check this to mint {tokenSymbol} ERC20 to your wallet. Leave
-                    unchecked to have your token balance tracked by Juicebox,
-                    saving gas on this transaction. You can always claim your
-                    ERC20 tokens later.
+                    Check this to mint {tokenSymbol} ERC-20 to your wallet.
+                    Leave unchecked to have your token balance tracked by
+                    Juicebox, saving gas on this transaction. You can always
+                    claim your ERC-20 tokens later.
                   </Trans>
                 </label>
               </Space>

@@ -10,7 +10,7 @@ import { CSSProperties, useContext, useState } from 'react'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import { formatWad } from 'utils/formatNumber'
 
-import IssueTickets from 'components/shared/IssueTickets'
+import IssueTicketsButton from 'components/shared/IssueTicketsButton'
 import {
   useHasPermission,
   V2OperatorPermission,
@@ -46,15 +46,26 @@ export default function V2ManageTokensSection() {
     plural: true,
   })
 
+  const showIssueTokensButton = !ticketsIssued && hasIssueTicketsPermission
+
   return (
-    <div>
+    <>
       <Space direction="vertical" size="large">
         <Statistic
           title={
-            <SectionHeader
-              text={tokenText}
-              tip={t`${tokenText} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet.`}
-            />
+            <div>
+              <SectionHeader
+                text={tokenText}
+                tip={
+                  <Trans>
+                    {tokenText} are distributed to anyone who pays this project.
+                    If the project has set a funding target, tokens can be
+                    redeemed for a portion of the project's overflow whether or
+                    not they have been claimed yet.
+                  </Trans>
+                }
+              />
+            </div>
           }
           valueRender={() => (
             <>
@@ -74,6 +85,7 @@ export default function V2ManageTokensSection() {
                   <Descriptions.Item
                     label={t`Your balance`}
                     labelStyle={labelStyle}
+                    style={{ paddingBottom: '0.5rem' }}
                     children={
                       <div
                         style={{
@@ -116,8 +128,8 @@ export default function V2ManageTokensSection() {
                 ) : null}
               </Descriptions>
               {/* TODO: 'Holders modal button */}
-              {!ticketsIssued && hasIssueTicketsPermission && (
-                <IssueTickets useIssueTokensTx={useIssueTokensTx} />
+              {showIssueTokensButton && (
+                <IssueTicketsButton useIssueTokensTx={useIssueTokensTx} />
               )}
             </>
           )}
@@ -129,6 +141,6 @@ export default function V2ManageTokensSection() {
         onCancel={() => setManageTokensModalVisible(false)}
       />
       {/* TODO: 'Holders modal */}
-    </div>
+    </>
   )
 }

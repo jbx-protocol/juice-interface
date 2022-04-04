@@ -255,7 +255,7 @@ export default function V2ConfirmPayModal({
           )}
 
           {hasIssuedTokens && (
-            <Form.Item label={t`Receive ERC20`}>
+            <Form.Item label={t`Receive ERC-20`}>
               <Space align="start">
                 <Checkbox
                   style={{ padding: 20 }}
@@ -264,10 +264,10 @@ export default function V2ConfirmPayModal({
                 />
                 <label htmlFor="preferClaimed">
                   <Trans>
-                    Check this to mint this project's ERC20 tokens to your
+                    Check this to mint this project's ERC-20 tokens to your
                     wallet. Leave unchecked to have your token balance tracked
                     by Juicebox, saving gas on this transaction. You can always
-                    claim your ERC20 tokens later.
+                    claim your ERC-20 tokens later.
                   </Trans>
                 </label>
               </Space>

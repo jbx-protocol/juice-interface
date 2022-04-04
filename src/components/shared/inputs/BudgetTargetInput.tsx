@@ -21,6 +21,7 @@ export default function BudgetTargetInput({
   disabled,
   placeholder,
   feePerbicent,
+  showTargetSubFeeInput = false,
 }: {
   currency: V1CurrencyOption
   target: string | undefined
@@ -31,6 +32,7 @@ export default function BudgetTargetInput({
   disabled?: boolean
   placeholder?: string
   feePerbicent: BigNumber | undefined
+  showTargetSubFeeInput?: boolean
 }) {
   const {
     theme: { colors },
@@ -82,7 +84,7 @@ export default function BudgetTargetInput({
         accessory={<CurrencySwitch />}
         onChange={target => onTargetChange(target?.toString())}
       />
-      {feePerbicent?.gt(0) && (
+      {feePerbicent?.gt(0) && showTargetSubFeeInput && (
         <div style={targetSubFeeStyles}>
           <div style={{ fontWeight: 500, flexGrow: 1, marginRight: 8 }}>
             <FormattedNumberInput

@@ -21,23 +21,21 @@ import { sanitizeSplit, toMod, toSplit } from 'utils/v2/splits'
 
 import { getDefaultFundAccessConstraint } from 'utils/v2/fundingCycle'
 import { toV1Currency } from 'utils/v1/currency'
-import { V2_CURRENCY_ETH } from 'utils/v2/currency'
+import { toV2Currency, V2_CURRENCY_ETH } from 'utils/v2/currency'
 
 import ExternalLink from 'components/shared/ExternalLink'
 
 import { Split } from 'models/v2/splits'
 
-import { percentToPerbicent } from 'utils/formatNumber'
-
 import { formatFee } from 'utils/v2/math'
+
+import BudgetTargetInput from 'components/shared/inputs/BudgetTargetInput'
 
 import { shadowCard } from 'constants/styles/shadowCard'
 import FormActionbar from '../../FormActionBar'
 import { formBottomMargin } from '../../constants'
 
 import FundingTypeSelect, { FundingType } from './FundingTypeSelect'
-import FundingTargetInput from './FundingTargetInput'
-import FormItemLabel from '../../FormItemLabel'
 import { TabContentProps } from '../../models'
 import ProjectConfigurationFieldsContainer from '../ProjectConfigurationFieldsContainer'
 
@@ -71,8 +69,8 @@ export default function FundingTabContent({
     )
 
   const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
-  const feePerbicent = ETHPaymentTerminalFee
-    ? percentToPerbicent(formatFee(ETHPaymentTerminalFee))
+  const feeFormatted = ETHPaymentTerminalFee
+    ? formatFee(ETHPaymentTerminalFee)
     : undefined
 
   const resetProjectForm = useCallback(() => {
@@ -86,7 +84,7 @@ export default function FundingTabContent({
     })
     setTarget(_target)
     setTargetCurrency(_targetCurrency)
-    setSplits(payoutGroupedSplits?.splits || [])
+    setSplits(payoutGroupedSplits.splits)
 
     if (parseInt(fundingCycleData?.duration ?? 0) > 0) {
       setFundingType('recurring')
@@ -194,7 +192,7 @@ export default function FundingTabContent({
               {isFundingDurationVisible && (
                 <Form.Item
                   name="duration"
-                  label={t`Funding cycle duration`}
+                  label="Funding cycle duration (seconds)"
                   required
                 >
                   <FormattedNumberInput
@@ -206,12 +204,17 @@ export default function FundingTabContent({
               )}
 
               <Form.Item label={t`Funding target`} required>
-                <FundingTargetInput
-                  target={target?.toString() ?? '0'}
-                  targetCurrency={targetCurrency}
+                <BudgetTargetInput
+                  target={target?.toString()}
+                  targetSubFee={undefined}
+                  currency={toV1Currency(targetCurrency)}
                   onTargetChange={setTarget}
-                  onTargetCurrencyChange={setTargetCurrency}
-                  feePerbicent={feePerbicent}
+                  onTargetSubFeeChange={() => {}}
+                  onCurrencyChange={v1Currency =>
+                    setTargetCurrency(toV2Currency(v1Currency))
+                  }
+                  showTargetSubFeeInput={false}
+                  feePerbicent={undefined}
                 />
               </Form.Item>
             </div>
@@ -231,9 +234,14 @@ export default function FundingTabContent({
               ...shadowCard(theme),
             }}
           >
-            <FormItemLabel>
+            <h3>
               <Trans>Payouts</Trans>
-            </FormItemLabel>
+            </h3>
+            <p style={{ color: theme.colors.text.primary }}>
+              Distributing payouts to non-Juicebox projects incurs{' '}
+              {feeFormatted}% fee. Your project will recieve an equivalent
+              amount of JBX tokens in return, giving you ownership of network.
+            </p>
             <ProjectPayoutMods
               mods={splits.map(toMod)}
               target={target ?? '0'}
@@ -244,6 +252,7 @@ export default function FundingTabContent({
               }}
             />
           </div>
+
           {/* Default to floating save button if custom one not given */}
           {saveButton ?? <FormActionbar />}
         </Form>

@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { isAddress } from '@ethersproject/address'
 import { t, Trans } from '@lingui/macro'
-import { Checkbox, Descriptions, Form, Input, Modal, Space, Switch } from 'antd'
+import { Checkbox, Descriptions, Form, Input, Space, Switch } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import ImageUploader from 'components/shared/inputs/ImageUploader'
@@ -30,9 +30,11 @@ import Paragraph from 'components/shared/Paragraph'
 
 import { weightedAmount } from 'utils/v2/math'
 
+import TransactionModal from 'components/shared/TransactionModal'
+
 import V2ProjectRiskNotice from './V2ProjectRiskNotice'
 
-export default function V2ConfirmPayOwnerModal({
+export default function V2ConfirmPayModal({
   visible,
   weiAmount,
   onSuccess,
@@ -56,6 +58,7 @@ export default function V2ConfirmPayOwnerModal({
   const [beneficiary, setBeneficiary] = useState<string | undefined>(
     userAddress,
   )
+  const [transactionPending, setTransactionPending] = useState<boolean>()
 
   const [form] = useForm<{ memo: string; beneficiary: string }>()
 
@@ -93,7 +96,7 @@ export default function V2ConfirmPayOwnerModal({
     }
     setLoading(true)
 
-    payProjectTx(
+    const txSuccess = await payProjectTx(
       {
         memo: form.getFieldValue('memo'),
         preferClaimedTokens: preferClaimed,
@@ -101,12 +104,22 @@ export default function V2ConfirmPayOwnerModal({
         value: weiAmount,
       },
       {
-        onConfirmed: () => {
-          if (onSuccess) onSuccess()
+        onConfirmed() {
+          setLoading(false)
+          setTransactionPending(false)
+
+          onSuccess?.()
         },
-        onDone: () => setLoading(false),
+        onDone() {
+          setTransactionPending(true)
+        },
       },
     )
+
+    if (!txSuccess) {
+      setLoading(false)
+      setTransactionPending(false)
+    }
   }
 
   const validateCustomBeneficiary = () => {
@@ -119,7 +132,8 @@ export default function V2ConfirmPayOwnerModal({
   }
 
   return (
-    <Modal
+    <TransactionModal
+      transactionPending={transactionPending}
       title={t`Pay ${projectMetadata.name}`}
       visible={visible}
       onOk={pay}
@@ -261,6 +275,6 @@ export default function V2ConfirmPayOwnerModal({
           )}
         </Form>
       </Space>
-    </Modal>
+    </TransactionModal>
   )
 }

@@ -7,3 +7,9 @@ export const textSecondary = (theme: SemanticTheme): CSSProperties => ({
   fontSize: '0.8rem',
   fontWeight: 500,
 })
+
+export const textPrimary: CSSProperties = {
+  fontWeight: 500,
+  fontSize: '1.1rem',
+  lineHeight: 1,
+}

@@ -1,7 +1,6 @@
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { Form, Space } from 'antd'
-import Modal from 'antd/lib/modal/Modal'
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
@@ -19,6 +18,7 @@ import { useETHPaymentTerminalFee } from 'hooks/v2/contractReader/ETHPaymentTerm
 import { BigNumber } from '@ethersproject/bignumber'
 
 import { formatFee } from 'utils/v2/math'
+import TransactionModal from 'components/shared/TransactionModal'
 
 export default function DistributePayoutsModal({
   visible,
@@ -42,6 +42,7 @@ export default function DistributePayoutsModal({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+  const [transactionPending, setTransactionPending] = useState<boolean>()
 
   const distributePayoutsTx = useDistributePayoutsTx()
   const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
@@ -62,7 +63,7 @@ export default function DistributePayoutsModal({
     usedDistributionLimit,
   ])
 
-  function executeDistributePayoutsTx() {
+  async function executeDistributePayoutsTx() {
     if (!distributionLimitCurrency || !distributionAmount) return
 
     const minAmount = (
@@ -73,16 +74,28 @@ export default function DistributePayoutsModal({
     if (!minAmount) return
 
     setLoading(true)
-    distributePayoutsTx(
+
+    const txSuccessful = await distributePayoutsTx(
       {
         amount: parseWad(distributionAmount), // TODO use terminal.decimals() to parse amount
         currency: distributionLimitCurrency.toNumber() as V2CurrencyOption,
       },
       {
-        onDone: () => setLoading(false),
-        onConfirmed,
+        onDone: () => {
+          setTransactionPending(true)
+        },
+        onConfirmed: () => {
+          setLoading(false)
+          setTransactionPending(false)
+          onConfirmed?.()
+        },
       },
     )
+
+    if (!txSuccessful) {
+      setLoading(false)
+      setTransactionPending(false)
+    }
   }
 
   if (!ETHPaymentTerminalFee) return null
@@ -119,7 +132,7 @@ export default function DistributePayoutsModal({
   )
 
   return (
-    <Modal
+    <TransactionModal
       title={<Trans>Distribute funds</Trans>}
       visible={visible}
       onOk={executeDistributePayoutsTx}
@@ -131,7 +144,8 @@ export default function DistributePayoutsModal({
         disabled: !distributionAmount || distributionAmount === '0',
       }}
       confirmLoading={loading}
-      okText={<Trans>Distribute funds</Trans>}
+      transactionPending={transactionPending}
+      okText={t`Distribute funds`}
       width={640}
     >
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
@@ -246,6 +260,6 @@ export default function DistributePayoutsModal({
           <Trans>Recipients will receive payouts in ETH.</Trans>
         </p>
       </Space>
-    </Modal>
+    </TransactionModal>
   )
 }

@@ -149,10 +149,6 @@ msgstr "<0>NOTE:</0> This project has a balance of 0. Projects cannot be migrate
 msgid "<0>Note: </0>Enabling tokens to be minted will appear risky to contributors, and should only be used when necessary."
 msgstr "<0>Note: </0>Enabling tokens to be minted will appear risky to contributors, and should only be used when necessary."
 
-#: src/components/v2/V2Create/tabs/TokenTab/TokenTabContent.tsx
-msgid "<0>Note: </0>Once your first funding cycle starts, updates you make to token attributes will <1>not be applied immediately</1> and only take effect in <2>upcoming funding cycles.</2>"
-msgstr "<0>Note: </0>Once your first funding cycle starts, updates you make to token attributes will <1>not be applied immediately</1> and only take effect in <2>upcoming funding cycles.</2>"
-
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "<0>Note:</0> These properties will <1>not</1> be editable immediately within a funding cycle. They can only be changed for <2>upcoming</2> funding cycles."
 msgstr "<0>Note:</0> These properties will <1>not</1> be editable immediately within a funding cycle. They can only be changed for <2>upcoming</2> funding cycles."
@@ -865,7 +861,6 @@ msgstr "Funding cycle details"
 
 #: src/components/shared/formItems/ProjectDuration.tsx
 #: src/components/shared/forms/BudgetForm.tsx
-#: src/components/v2/V2Create/tabs/FundingTab/FundingTabContent.tsx
 msgid "Funding cycle duration"
 msgstr ""
 

@@ -12,6 +12,7 @@ import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 
 import { formBottomMargin } from '../constants'
 import FormActionbar from '../FormActionBar'
+import TabDescription from '../TabDescription'
 
 export default function ProjectDetailsTabContent({
   onFinish,
@@ -69,6 +70,9 @@ export default function ProjectDetailsTabContent({
   return (
     <Row gutter={32}>
       <Col md={10} xs={24}>
+        <TabDescription>
+          You can edit your project details later on at any time.
+        </TabDescription>
         <ProjectDetailsForm
           form={projectForm}
           onFinish={onProjectFormSaved}

@@ -154,10 +154,6 @@ msgstr "<0>注意：</0> 该项目余额为零，无法迁移。如果要迁移�
 msgid "<0>Note: </0>Enabling tokens to be minted will appear risky to contributors, and should only be used when necessary."
 msgstr "<0>请注意：</0>允许铸造代币会让捐款者觉得项目有风险，如非必要，请勿使用这个功能。"
 
-#: src/components/v2/V2Create/tabs/TokenTab/TokenTabContent.tsx
-msgid "<0>Note: </0>Once your first funding cycle starts, updates you make to token attributes will <1>not be applied immediately</1> and only take effect in <2>upcoming funding cycles.</2>"
-msgstr "<0>请注意：</0>一旦您的第一个筹款周期开始，您对代币属性所作的更新将<1>不会立即生效</1>而且只会生效于<2>接下来的筹款周期</2>"
-
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "<0>Note:</0> These properties will <1>not</1> be editable immediately within a funding cycle. They can only be changed for <2>upcoming</2> funding cycles."
 msgstr "<0>注意：</0> 这些属性<1>不能</1> 在同一个筹款周期内马上进行修改。 更改配置只能在 <2>后面的</2> 筹款周期内完成。"
@@ -870,7 +866,6 @@ msgstr "筹款周期详情"
 
 #: src/components/shared/formItems/ProjectDuration.tsx
 #: src/components/shared/forms/BudgetForm.tsx
-#: src/components/v2/V2Create/tabs/FundingTab/FundingTabContent.tsx
 msgid "Funding cycle duration"
 msgstr "筹款周期持续时间"
 

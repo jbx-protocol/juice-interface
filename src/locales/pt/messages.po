@@ -154,10 +154,6 @@ msgstr "<0>NOTA:</0> Este projeto tem um saldo de 0. Os projetos não podem ser 
 msgid "<0>Note: </0>Enabling tokens to be minted will appear risky to contributors, and should only be used when necessary."
 msgstr "<0>Nota: </0>Permitir a criação de tokens vai aparentar arriscado para os contribuidores e só deve ser utilizado quando necessário."
 
-#: src/components/v2/V2Create/tabs/TokenTab/TokenTabContent.tsx
-msgid "<0>Note: </0>Once your first funding cycle starts, updates you make to token attributes will <1>not be applied immediately</1> and only take effect in <2>upcoming funding cycles.</2>"
-msgstr "<0>Nota: </0> Uma vez iniciado seu ciclo de financiamiento, as atualizações que você faz para os atributos de token <1>não serão imediatamente aplicadas</1> e somente surtirão efeito nos <2>próximos ciclos de financiamento.</2>"
-
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "<0>Note:</0> These properties will <1>not</1> be editable immediately within a funding cycle. They can only be changed for <2>upcoming</2> funding cycles."
 msgstr "<0>Nota:</0>Essas propriedades <1>não</1> serão editáveis imediatamente durante um um ciclo de financiamento. Elas só poderão ser alteradas para <2>próximos</2> ciclos de financiamento."
@@ -870,7 +866,6 @@ msgstr "Detalhes do ciclo de financiamento"
 
 #: src/components/shared/formItems/ProjectDuration.tsx
 #: src/components/shared/forms/BudgetForm.tsx
-#: src/components/v2/V2Create/tabs/FundingTab/FundingTabContent.tsx
 msgid "Funding cycle duration"
 msgstr "Duração do ciclo de financiamento"
 

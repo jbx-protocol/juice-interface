@@ -1,4 +1,4 @@
-import { Col, Row } from 'antd'
+import { Col, Row, Space } from 'antd'
 import PayInputGroup from 'components/shared/inputs/Pay/PayInputGroup'
 import ProjectHeader from 'components/shared/ProjectHeader'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
@@ -28,16 +28,16 @@ export default function V2Project() {
     : undefined
 
   return (
-    <>
+    <Space direction="vertical" size={GUTTER_PX}>
       <ProjectHeader
         metadata={projectMetadata}
         actions={<V2ProjectHeaderActions />}
       />
       <Row gutter={GUTTER_PX} align="bottom">
-        <Col md={12} xs={24} style={{ marginTop: GUTTER_PX }}>
+        <Col md={12} xs={24}>
           <TreasuryStats />
         </Col>
-        <Col md={12} xs={24} style={{ marginTop: GUTTER_PX }}>
+        <Col md={12} xs={24}>
           <PayInputGroup
             PayButton={V2PayButton}
             reservedRate={fundingCycleMetadata?.reservedRate.toNumber()}
@@ -48,12 +48,13 @@ export default function V2Project() {
       </Row>
       <Row gutter={GUTTER_PX}>
         <Col md={12} xs={24}>
-          {/* TODO volume chart */}
-          <V2ManageTokensSection />
-          <br />
-          <V2FundingCycleSection />
+          <Space direction="vertical" size={GUTTER_PX}>
+            {/* TODO volume chart */}
+            <V2ManageTokensSection />
+            <V2FundingCycleSection />
+          </Space>
         </Col>
       </Row>
-    </>
+    </Space>
   )
 }

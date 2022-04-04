@@ -24,6 +24,7 @@ import useSymbolOfERC20 from 'hooks/v1/contractReader/SymbolOfERC20' // this is 
 import useProjectOwner from 'hooks/v2/contractReader/ProjectOwner'
 
 import useUsedDistributionLimit from 'hooks/v2/contractReader/UsedDistributionLimit'
+import useOverflowOfV2Project from 'hooks/v2/contractReader/OverflowOfV2Project'
 
 import { layouts } from 'constants/styles/layouts'
 
@@ -31,7 +32,7 @@ import V2Project from '../V2Project'
 import Dashboard404 from './Dashboard404'
 import {
   ETH_PAYOUT_SPLIT_GROUP,
-  RESERVE_TOKEN_SPLIT_GROUP,
+  RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/v2/splits'
 
 export default function V2Dashboard() {
@@ -68,6 +69,7 @@ export default function V2Dashboard() {
   const { data: terminals } = useProjectTerminals({
     projectId,
   })
+
   const primaryTerminal = terminals?.[0]
 
   const { data: distributionLimitData } = useProjectDistributionLimit({
@@ -93,13 +95,13 @@ export default function V2Dashboard() {
 
   const { data: reservedTokensSplits } = useProjectSplits({
     projectId,
-    splitGroup: RESERVE_TOKEN_SPLIT_GROUP,
+    splitGroup: RESERVED_TOKEN_SPLIT_GROUP,
     domain: fundingCycle?.configuration?.toString(),
   })
 
   const { data: queuedReservedTokensSplits } = useProjectSplits({
     projectId,
-    splitGroup: RESERVE_TOKEN_SPLIT_GROUP,
+    splitGroup: RESERVED_TOKEN_SPLIT_GROUP,
     domain: queuedFundingCycle?.configuration?.toString(),
   })
 
@@ -121,6 +123,8 @@ export default function V2Dashboard() {
   })
   const [queuedDistributionLimit, queuedDistributionLimitCurrency] =
     queuedDistributionLimitData ?? []
+
+  const { data: overflow } = useOverflowOfV2Project(projectId, primaryTerminal)
 
   const converter = useCurrencyConverter()
   const balanceInDistributionLimitCurrency = useMemo(
@@ -166,6 +170,7 @@ export default function V2Dashboard() {
     balanceInDistributionLimitCurrency,
     tokenSymbol,
     projectOwnerAddress,
+    overflow,
   }
 
   return (

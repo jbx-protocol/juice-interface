@@ -4,8 +4,10 @@ import { useForm } from 'antd/lib/form/Form'
 import TooltipIcon from 'components/shared/TooltipIcon'
 import { useState } from 'react'
 import { TransactorInstance } from 'hooks/Transactor'
+import { useHistory } from 'react-router-dom'
+import { SettingOutlined } from '@ant-design/icons'
 
-export default function IssueTickets({
+export default function IssueTicketsButton({
   useIssueTokensTx,
 }: {
   useIssueTokensTx: () => TransactorInstance<{
@@ -16,6 +18,8 @@ export default function IssueTickets({
   const [modalVisible, setModalVisible] = useState<boolean>()
   const [loading, setLoading] = useState<boolean>()
   const [form] = useForm<{ name: string; symbol: string }>()
+
+  const history = useHistory()
 
   const issueTokensTx = useIssueTokensTx()
 
@@ -28,7 +32,10 @@ export default function IssueTickets({
       { name: fields.name, symbol: fields.symbol },
       {
         onDone: () => setModalVisible(false),
-        onConfirmed: () => setLoading(false),
+        onConfirmed: () => {
+          history.go(0)
+          setLoading(false)
+        },
       },
     )
   }
@@ -36,11 +43,24 @@ export default function IssueTickets({
   return (
     <div>
       <Space>
-        <Button loading={loading} onClick={() => setModalVisible(true)}>
-          <Trans>Issue ERC-20 token</Trans>
+        <Button
+          size="small"
+          icon={<SettingOutlined />}
+          loading={loading}
+          onClick={() => setModalVisible(true)}
+        >
+          <span>
+            <Trans>Issue ERC-20 token</Trans>
+          </span>
         </Button>
         <TooltipIcon
-          tip={t`Issue an ERC-20 to be used as this project's token. Once issued, anyone can claim their existing token balance in the new token.`}
+          iconStyle={{ fontSize: '.8rem' }}
+          tip={
+            <Trans>
+              Issue an ERC-20 to be used as this project's token. Once issued,
+              anyone can claim their existing token balance in the new token.
+            </Trans>
+          }
         />
       </Space>
 

@@ -141,8 +141,8 @@ export default function BalancesModal({
         >
           <p style={{ marginBottom: 40 }}>
             <Trans>
-              Display ERC20 tokens and other Juicebox project tokens that are in
-              this project's owner's wallet.
+              Display ERC-20 tokens and other Juicebox project tokens that are
+              in this project's owner's wallet.
             </Trans>
           </p>
           <FormItems.TokenRefs

@@ -20,7 +20,7 @@ import { percentToPermyriad } from 'utils/formatNumber'
 
 import {
   ETH_PAYOUT_SPLIT_GROUP,
-  RESERVE_TOKEN_SPLIT_GROUP,
+  RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/v2/splits'
 import { DEFAULT_BALLOT_STRATEGY } from 'constants/ballotStrategies/ballotStrategies'
 
@@ -75,6 +75,16 @@ const defaultFundingCycleMetadata: SerializedV2FundingCycleMetadata =
     dataSource: constants.AddressZero,
   })
 
+export const EMPTY_PAYOUT_GROUPED_SPLITS = {
+  group: ETH_PAYOUT_SPLIT_GROUP,
+  splits: [],
+}
+
+export const EMPTY_RESERVED_TOKENS_GROUPED_SPLITS = {
+  group: RESERVED_TOKEN_SPLIT_GROUP,
+  splits: [],
+}
+
 export const defaultProjectState: V2ProjectState = {
   // Increment this version by 1 when making breaking changes.
   // When users return to the site and their local version is less than
@@ -84,14 +94,8 @@ export const defaultProjectState: V2ProjectState = {
   fundingCycleData: { ...defaultFundingCycleData },
   fundingCycleMetadata: { ...defaultFundingCycleMetadata },
   fundAccessConstraints: [],
-  payoutGroupedSplits: {
-    group: ETH_PAYOUT_SPLIT_GROUP,
-    splits: [],
-  },
-  reservedTokensGroupedSplits: {
-    group: RESERVE_TOKEN_SPLIT_GROUP,
-    splits: [],
-  },
+  payoutGroupedSplits: EMPTY_PAYOUT_GROUPED_SPLITS,
+  reservedTokensGroupedSplits: EMPTY_RESERVED_TOKENS_GROUPED_SPLITS,
 }
 
 export const editingV2ProjectSlice = createSlice({
@@ -160,10 +164,16 @@ export const editingV2ProjectSlice = createSlice({
       }
     },
     setPayoutSplits: (state, action: PayloadAction<Split[]>) => {
-      state.payoutGroupedSplits.splits = action.payload
+      state.payoutGroupedSplits = {
+        ...EMPTY_PAYOUT_GROUPED_SPLITS,
+        splits: action.payload,
+      }
     },
     setReservedTokensSplits: (state, action: PayloadAction<Split[]>) => {
-      state.reservedTokensGroupedSplits.splits = action.payload
+      state.reservedTokensGroupedSplits = {
+        ...EMPTY_RESERVED_TOKENS_GROUPED_SPLITS,
+        splits: action.payload,
+      }
     },
     setPausePay: (state, action: PayloadAction<boolean>) => {
       state.fundingCycleMetadata.pausePay = action.payload

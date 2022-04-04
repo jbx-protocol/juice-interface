@@ -15,16 +15,15 @@ export default function V2ManageTokensModal({
   visible: boolean
   onCancel: VoidFunction
 }) {
-  const { tokenSymbol } = useContext(V2ProjectContext)
+  const { tokenSymbol, overflow } = useContext(V2ProjectContext)
   const tokensLabel = tokenSymbolText({
     tokenSymbol: tokenSymbol,
     capitalize: false,
-    plural: true,
   })
 
   const [redeemModalVisible, setRedeemModalVisible] = useState<boolean>(false)
 
-  const redeemDisabled = false // TODO: true when overflow == 0
+  const redeemDisabled = !Boolean(overflow?.gt(0))
 
   return (
     <>

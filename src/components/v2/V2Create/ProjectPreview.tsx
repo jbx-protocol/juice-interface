@@ -78,7 +78,7 @@ export default function ProjectPreview() {
       >
         <Trans>Preview</Trans>:
       </h3>
-      <V2Project />
+      <V2Project singleColumnLayout />
     </V2ProjectContext.Provider>
   )
 }

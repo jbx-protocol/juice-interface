@@ -1,8 +1,7 @@
 import { LinkOutlined } from '@ant-design/icons'
 import { BigNumberish } from '@ethersproject/bignumber'
-import { Tooltip } from 'antd'
 import useHandleForProjectId from 'hooks/v1/contractReader/HandleForProjectId'
-import { CSSProperties } from 'react'
+import { CSSProperties, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 export default function V1ProjectHandle({
@@ -14,24 +13,21 @@ export default function V1ProjectHandle({
   style?: CSSProperties
   link?: boolean
 }) {
+  const [hover, setHover] = useState(false)
   const handle = useHandleForProjectId(projectId)
 
-  return link ? (
-    <Tooltip
-      title={
-        <Link
-          style={{ fontWeight: 400 }}
-          to={`/p/${handle}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          @{handle} <LinkOutlined />
-        </Link>
-      }
+  return (
+    <Link
+      onMouseEnter={() => {
+        setHover(true)
+      }}
+      onMouseLeave={() => {
+        setHover(false)
+      }}
+      style={{ fontWeight: 400, textDecoration: hover ? 'underline' : 'none' }}
+      to={`/p/${handle}`}
     >
-      <span style={{ cursor: 'default', ...style }}>@{handle}</span>
-    </Tooltip>
-  ) : (
-    <span style={style}>{handle}</span>
+      @{handle} <LinkOutlined />
+    </Link>
   )
 }

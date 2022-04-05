@@ -17,9 +17,17 @@ import V2ManageTokensSection from './V2ManageTokensSection'
 
 const GUTTER_PX = 40
 
-export default function V2Project() {
+export default function V2Project({
+  singleColumnLayout,
+  expandFundingCycleCard,
+}: {
+  singleColumnLayout?: boolean
+  expandFundingCycleCard?: boolean
+}) {
   const { projectId, projectMetadata, fundingCycle } =
     useContext(V2ProjectContext)
+
+  const colSizeMd = singleColumnLayout ? 24 : 12
 
   if (!projectId) return null
 
@@ -34,10 +42,10 @@ export default function V2Project() {
         actions={<V2ProjectHeaderActions />}
       />
       <Row gutter={GUTTER_PX} align="bottom">
-        <Col md={12} xs={24}>
+        <Col md={colSizeMd} xs={24}>
           <TreasuryStats />
         </Col>
-        <Col md={12} xs={24}>
+        <Col md={colSizeMd} xs={24} style={{ marginTop: GUTTER_PX }}>
           <PayInputGroup
             PayButton={V2PayButton}
             reservedRate={fundingCycleMetadata?.reservedRate.toNumber()}
@@ -47,11 +55,11 @@ export default function V2Project() {
         </Col>
       </Row>
       <Row gutter={GUTTER_PX}>
-        <Col md={12} xs={24}>
+        <Col md={colSizeMd} xs={24}>
           <Space direction="vertical" size={GUTTER_PX}>
             {/* TODO volume chart */}
             <V2ManageTokensSection />
-            <V2FundingCycleSection />
+            <V2FundingCycleSection expandCard={expandFundingCycleCard} />
           </Space>
         </Col>
       </Row>

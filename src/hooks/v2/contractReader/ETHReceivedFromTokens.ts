@@ -32,7 +32,6 @@ export function useETHReceivedFromTokens({
     undistributedReservedTokens ?? BigNumber.from(0),
   )
 
-  // return useMemo(() => {
   if (!fundingCycleMetadata || !realTotalTokenSupply?.gt(0))
     return BigNumber.from(0)
 
@@ -57,5 +56,4 @@ export function useETHReceivedFromTokens({
 
   // Formula: https://www.desmos.com/calculator/sp9ru6zbpk
   return base.mul(numerator).div(denominator)
-  // }, [realTotalTokenSupply, overflow, ballotState, fundingCycleMetadata, tokenAmount])
 }

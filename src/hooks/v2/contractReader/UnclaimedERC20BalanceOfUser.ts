@@ -22,6 +22,6 @@ export default function useUnclaimedERC20BalanceOfUser() {
         ? [userAddress, BigNumber.from(projectId).toHexString()]
         : null,
     valueDidChange: bigNumbersDiff,
-    // updateOn: useShouldUpdateTokens(projectId, terminal?.name, userAddress),
+    // updateOn: TODO: useShouldUpdateTokens(projectId, terminal?.name, userAddress),
   })
 }

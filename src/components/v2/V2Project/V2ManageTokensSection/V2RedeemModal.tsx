@@ -38,7 +38,6 @@ export default function V2RedeemModal({
 }) {
   const [redeemAmount, setRedeemAmount] = useState<string>()
   const [loading, setLoading] = useState<boolean>()
-  // const redeemTokensTx = useRedeemTokensTx()
 
   const [form] = useForm<{
     redeemAmount: string

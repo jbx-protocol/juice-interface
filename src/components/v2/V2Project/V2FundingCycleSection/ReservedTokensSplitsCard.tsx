@@ -30,6 +30,7 @@ export default function ReservedTokensSplitsCard() {
     tokenAddress,
     projectOwnerAddress,
     projectId,
+    isPreviewMode,
   } = useContext(V2ProjectContext)
   const {
     theme: { colors },
@@ -104,6 +105,7 @@ export default function ReservedTokensSplitsCard() {
             type="ghost"
             size="small"
             onClick={() => setDistributeReservedTokensModalVisible(true)}
+            disabled={isPreviewMode}
           >
             <Trans>Distribute {tokensText}</Trans>
           </Button>

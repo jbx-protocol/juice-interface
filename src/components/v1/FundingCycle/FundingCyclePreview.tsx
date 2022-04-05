@@ -10,10 +10,10 @@ import FundingCycleDetails from './FundingCycleDetails'
 
 export default function FundingCyclePreview({
   fundingCycle,
-  showDetail,
+  expand,
 }: {
   fundingCycle: V1FundingCycle | undefined
-  showDetail?: boolean
+  expand?: boolean
 }) {
   if (!fundingCycle) return null
 
@@ -25,7 +25,7 @@ export default function FundingCyclePreview({
       fundingCycleStartTime={fundingCycle.start}
       isFundingCycleRecurring={isRecurring(fundingCycle)}
       fundingCycleRiskCount={fundingCycleRiskCount(fundingCycle)}
-      showDetail={showDetail}
+      expand={expand}
     />
   )
 }

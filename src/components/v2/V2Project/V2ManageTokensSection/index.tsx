@@ -30,8 +30,14 @@ export default function V2ManageTokensSection() {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const { tokenAddress, tokenSymbol, totalTokenSupply, projectId } =
-    useContext(V2ProjectContext)
+  const {
+    tokenAddress,
+    tokenSymbol,
+    isPreviewMode,
+    totalTokenSupply,
+    projectId,
+  } = useContext(V2ProjectContext)
+
   const { userAddress } = useContext(NetworkContext)
 
   const { data: claimedBalance } = useERC20BalanceOf(tokenAddress, userAddress)
@@ -57,7 +63,8 @@ export default function V2ManageTokensSection() {
 
   const share = formatPercent(totalBalance, totalTokenSupply)
 
-  const showIssueTokensButton = !ticketsIssued && hasIssueTicketsPermission
+  const showIssueTokensButton =
+    !ticketsIssued && hasIssueTicketsPermission && !isPreviewMode
 
   return (
     <>

@@ -6,6 +6,8 @@ import { Split } from 'models/v2/splits'
 import { createContext } from 'react'
 
 export type V2ProjectContextType = {
+  isPreviewMode?: boolean
+
   projectId: BigNumber | undefined
   projectMetadata: ProjectMetadataV4 | undefined
   tokenAddress: string | undefined
@@ -37,6 +39,8 @@ export type V2ProjectContextType = {
 }
 
 export const V2ProjectContext = createContext<V2ProjectContextType>({
+  isPreviewMode: false,
+
   projectId: undefined,
   projectMetadata: undefined,
   tokenAddress: undefined,

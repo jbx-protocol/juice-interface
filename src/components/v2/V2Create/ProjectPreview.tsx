@@ -66,6 +66,9 @@ export default function ProjectPreview() {
     balanceInDistributionLimitCurrency: BigNumber.from(0),
     tokenSymbol: undefined,
     projectOwnerAddress: userAddress,
+    ballotState: undefined,
+    overflow: undefined,
+    totalTokenSupply: undefined,
     isPreviewMode: true,
   }
 

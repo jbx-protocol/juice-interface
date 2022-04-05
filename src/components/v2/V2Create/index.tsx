@@ -57,7 +57,7 @@ export default function V2Create() {
     <V2UserProvider>
       <V2CurrencyProvider>
         {isRinkeby ? <V2WarningBanner /> : null}
-        <div style={{ margin: '4rem', marginBottom: 0 }}>
+        <div style={{ margin: '2rem 4rem', marginBottom: 0 }}>
           {!isRinkeby && (
             <div style={{ padding: '1rem', textAlign: 'center' }}>
               <V2MainnetWarning />
@@ -68,7 +68,6 @@ export default function V2Create() {
             <div>
               <h1
                 style={{
-                  marginBottom: '2rem',
                   color: colors.text.primary,
                   fontSize: 28,
                 }}

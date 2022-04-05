@@ -22,11 +22,7 @@ export function V2ReconfigureTokenDrawer({
       </h3>
       {FundingDrawersSubtitles}
       <br />
-      <TokenTabContent
-        onFinish={onSave}
-        hidePreview
-        saveButton={<StandardSaveButton />}
-      />
+      <TokenTabContent onFinish={onSave} saveButton={<StandardSaveButton />} />
     </Drawer>
   )
 }

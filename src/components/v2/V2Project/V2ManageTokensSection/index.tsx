@@ -24,7 +24,8 @@ export default function V2ManageTokensSection() {
   const [manageTokensModalVisible, setManageTokensModalVisible] =
     useState<boolean>(false)
 
-  const { tokenAddress, tokenSymbol } = useContext(V2ProjectContext)
+  const { tokenAddress, tokenSymbol, isPreviewMode } =
+    useContext(V2ProjectContext)
   const { userAddress } = useContext(NetworkContext)
 
   const claimedBalance = useERC20BalanceOf(tokenAddress, userAddress).data
@@ -46,7 +47,8 @@ export default function V2ManageTokensSection() {
     plural: true,
   })
 
-  const showIssueTokensButton = !ticketsIssued && hasIssueTicketsPermission
+  const showIssueTokensButton =
+    !ticketsIssued && hasIssueTicketsPermission && !isPreviewMode
 
   return (
     <>

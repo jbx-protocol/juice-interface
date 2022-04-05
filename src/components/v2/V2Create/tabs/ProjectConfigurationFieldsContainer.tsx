@@ -1,13 +1,25 @@
-import { Col } from 'antd'
+import { Col, Row } from 'antd'
 import { PropsWithChildren } from 'react'
 
+import ProjectPreview from '../ProjectPreview'
+
+const FULL_WIDTH_PX = 24
+
 export default function ProjectConfigurationFieldsContainer({
-  hidePreview,
+  showPreview,
+  previewContent,
   children,
-}: PropsWithChildren<{ hidePreview?: boolean }>) {
+}: PropsWithChildren<{ showPreview?: boolean; previewContent?: JSX.Element }>) {
+  if (!showPreview) return <>{children}</>
+
   return (
-    <Col md={!hidePreview ? 10 : 24} xs={24}>
-      {children}
-    </Col>
+    <Row gutter={40}>
+      <Col md={12} xs={FULL_WIDTH_PX}>
+        {children}
+      </Col>
+      <Col md={12} xs={FULL_WIDTH_PX}>
+        {previewContent ?? <ProjectPreview />}
+      </Col>
+    </Row>
   )
 }

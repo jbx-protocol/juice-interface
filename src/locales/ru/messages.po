@@ -1398,8 +1398,9 @@ msgid "Powered by public smart contracts on <0>Ethereum</0>."
 msgstr "Управляется и работает на общественных смарт-контрактах на Ethereum."
 
 #: src/components/v1/V1Create/index.tsx
-msgid "Preview"
-msgstr "Предварительный просмотр"
+#: src/components/v2/V2Create/ProjectPreview.tsx
+msgid "Preview:"
+msgstr ""
 
 #: src/components/Landing/index.tsx
 msgid "Programmable spending"
@@ -1702,7 +1703,7 @@ msgstr "Правила изменения конфигурации циклов 
 msgid "Save"
 msgstr "Сохранить"
 
-#: src/components/v2/V2Create/tabs/ProjectDetailsTabContent.tsx
+#: src/components/v2/V2Create/tabs/ProjectDetailsTab/ProjectDetailsTabContent.tsx
 msgid "Save and Continue"
 msgstr "Сохранить и продолжить"
 
@@ -2261,6 +2262,9 @@ msgid "When token minting is allowed, the owner of this project has permission t
 msgstr "Когда допускается обработка токенов, владелец этого проекта имеет разрешение на удаление любого количества токенов на любой адрес по своему усмотрению. Это влечет за собой размытие всех текущих владельцев токенов без увеличения казначейского баланса проекта. Владелец проекта может перенастроить это вместе со всеми остальными свойствами цикла финансирования."
 
 #: src/components/shared/formItems/ProjectReserved.tsx
+msgid "Whenever someone pays your project, this percentage of tokens will be reserved and the rest will go to the payer. By default, these tokens are reserved for the project owner, but you can also allocate portions to other wallet addresses. Anyone can submit the transaction to distribute reserved tokens according to the allocation."
+msgstr ""
+
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Whenever someone pays your project, this percentage of tokens will be reserved and the rest will go to the payer. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner. Once tokens are reserved, anyone can \"mint\" them, which distributes them to their intended receivers."

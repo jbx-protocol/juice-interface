@@ -594,7 +594,7 @@ export default function V1Create() {
               paddingRight: spacing,
             }}
           >
-            <Trans>Preview</Trans>:
+            <Trans>Preview:</Trans>
           </h3>
 
           <div

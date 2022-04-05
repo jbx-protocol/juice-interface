@@ -19,14 +19,14 @@ import CurrentFundingCycle from './CurrentFundingCycle'
 import V2ReconfigureFundingModalTrigger from '../V2ProjectReconfigureModal/V2ReconfigureModalTrigger'
 
 export default function V2FundingCycleSection({
-  showCurrentDetail,
+  expandCard,
 }: {
-  showCurrentDetail?: boolean
+  expandCard?: boolean
 }) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const { fundingCycle } = useContext(V2ProjectContext)
+  const { fundingCycle, isPreviewMode } = useContext(V2ProjectContext)
 
   const tabText = ({ text }: { text: string }) => {
     const hasRisks = fundingCycle && V2FundingCycleRiskCount(fundingCycle)
@@ -60,17 +60,17 @@ export default function V2FundingCycleSection({
     {
       key: 'current',
       label: tabText({ text: t`Current` }),
-      content: <CurrentFundingCycle showCurrentDetail={showCurrentDetail} />,
+      content: <CurrentFundingCycle expandCard={expandCard} />,
     },
   ]
 
   const canReconfigure = useHasPermission(V2OperatorPermission.RECONFIGURE)
-
+  const showReconfigureButton = canReconfigure && !isPreviewMode
   return (
     <FundingCycleSection
       tabs={tabs}
       reconfigureButton={
-        canReconfigure ? (
+        showReconfigureButton ? (
           <V2ReconfigureFundingModalTrigger
             fundingDuration={fundingCycle?.duration}
             hideProjectDetails

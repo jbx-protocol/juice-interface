@@ -6,7 +6,7 @@ import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext, useLayoutEffect, useMemo, useState } from 'react'
 
-import SectionHeader from '../SectionHeader'
+import SectionHeader from '../../../shared/SectionHeader'
 import { PaymentActivity } from './PaymentActivity'
 import { RedeemActivity } from './RedeemActivity'
 import { ReservesActivity } from './ReservesActivity'

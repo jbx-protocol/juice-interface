@@ -1,5 +1,5 @@
 import { Form, Switch } from 'antd'
-import { t, Trans } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import { ThemeContext } from 'contexts/themeContext'
 import React, { CSSProperties, useContext } from 'react'
 import FormItemLabel from 'components/v2/V2Create/FormItemLabel'
@@ -29,7 +29,15 @@ export default function ProjectReserved({
 
   return (
     <Form.Item
-      extra={t`Whenever someone pays your project, this percentage of tokens will be reserved and the rest will go to the payer. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner. Once tokens are reserved, anyone can "mint" them, which distributes them to their intended receivers.`}
+      extra={
+        <Trans>
+          Whenever someone pays your project, this percentage of tokens will be
+          reserved and the rest will go to the payer. By default, these tokens
+          are reserved for the project owner, but you can also allocate portions
+          to other wallet addresses. Anyone can submit the transaction to
+          distribute reserved tokens according to the allocation.
+        </Trans>
+      }
       name={name}
       label={
         hideLabel ? undefined : (

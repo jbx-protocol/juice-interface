@@ -4,7 +4,7 @@ import { ThemeContext } from 'contexts/themeContext'
 
 import { useContext, useState } from 'react'
 
-import SectionHeader from 'components/v1/V1Project/SectionHeader'
+import SectionHeader from 'components/shared/SectionHeader'
 
 type TabType = {
   key: string

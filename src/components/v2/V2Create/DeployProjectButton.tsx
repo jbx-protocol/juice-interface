@@ -44,16 +44,17 @@ export default function DeployProjectButton({
 
   const { userAddress, onSelectWallet } = useContext(NetworkContext)
 
-  const [loadingDeploy, setLoadingDeploy] = useState<boolean>()
+  const [deployLoading, setDeployLoading] = useState<boolean>()
+  const [transactionPending, setTransactionPending] = useState<boolean>()
 
-  const { projectMetadata, reserveTokenGroupedSplits, payoutGroupedSplits } =
+  const { projectMetadata, reservedTokensGroupedSplits, payoutGroupedSplits } =
     useAppSelector(state => state.editingV2Project)
   const fundingCycleMetadata = useEditingV2FundingCycleMetadataSelector()
   const fundingCycleData = useEditingV2FundingCycleDataSelector()
   const fundAccessConstraints = useEditingV2FundAccessConstraintsSelector()
 
   const deployProject = useCallback(async () => {
-    setLoadingDeploy(true)
+    setDeployLoading(true)
     if (
       !(
         projectMetadata?.name &&
@@ -62,7 +63,7 @@ export default function DeployProjectButton({
         fundAccessConstraints
       )
     ) {
-      setLoadingDeploy(false)
+      setDeployLoading(false)
       throw new Error('Error deploying project.')
     }
 
@@ -71,13 +72,13 @@ export default function DeployProjectButton({
 
     if (!uploadedMetadata.IpfsHash) {
       console.error('Failed to upload project metadata.')
-      setLoadingDeploy(false)
+      setDeployLoading(false)
       return
     }
 
-    const groupedSplits = [payoutGroupedSplits, reserveTokenGroupedSplits]
+    const groupedSplits = [payoutGroupedSplits, reservedTokensGroupedSplits]
 
-    const didTxExecute = await deployProjectTx(
+    const txSuccessful = await deployProjectTx(
       {
         projectMetadataCID: uploadedMetadata.IpfsHash,
         fundingCycleData,
@@ -88,6 +89,7 @@ export default function DeployProjectButton({
       {
         onDone() {
           console.info('Transaction executed. Awaiting confirmation...')
+          setTransactionPending(true)
         },
         async onConfirmed(result) {
           const txHash = result?.transaction?.hash
@@ -104,19 +106,21 @@ export default function DeployProjectButton({
           history.push(`/v2/p/${projectId}`)
         },
         onCancelled() {
-          setLoadingDeploy(false)
+          setDeployLoading(false)
+          setTransactionPending(false)
         },
       },
     )
 
-    if (!didTxExecute) {
-      setLoadingDeploy(false)
+    if (!txSuccessful) {
+      setDeployLoading(false)
+      setTransactionPending(false)
     }
   }, [
     deployProjectTx,
     projectMetadata,
     payoutGroupedSplits,
-    reserveTokenGroupedSplits,
+    reservedTokensGroupedSplits,
     fundingCycleData,
     fundingCycleMetadata,
     fundAccessConstraints,
@@ -137,7 +141,8 @@ export default function DeployProjectButton({
         visible={deployProjectModalVisible}
         onOk={userAddress ? deployProject : onSelectWallet}
         onCancel={() => setDeployProjectModalVisible(false)}
-        confirmLoading={loadingDeploy}
+        confirmLoading={deployLoading}
+        transactionPending={transactionPending}
       />
     </>
   )

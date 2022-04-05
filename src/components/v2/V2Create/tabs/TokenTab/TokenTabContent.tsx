@@ -1,5 +1,5 @@
-import { t, Trans } from '@lingui/macro'
-import { Col, Form, Row } from 'antd'
+import { t } from '@lingui/macro'
+import { Form } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { FormItems } from 'components/shared/formItems'
 import { ThemeContext } from 'contexts/themeContext'
@@ -25,6 +25,7 @@ import FormActionbar from '../../FormActionBar'
 import { formBottomMargin } from '../../constants'
 import { TabContentProps } from '../../models'
 import ProjectConfigurationFieldsContainer from '../ProjectConfigurationFieldsContainer'
+import FundingCycleExplainer from '../../FundingCycleExplainer'
 
 type TokenFormFields = {
   discountRate: string
@@ -34,20 +35,17 @@ type TokenFormFields = {
 
 export default function TokenTabContent({
   onFinish,
-  hidePreview,
+  showPreview,
   saveButton,
 }: TabContentProps) {
   const [tokenForm] = useForm<TokenFormFields>()
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   const { theme } = useContext(ThemeContext)
 
   const {
     fundingCycleMetadata,
     fundingCycleData,
     fundAccessConstraints,
-    reserveTokenGroupedSplits: reduxReserveTokenGroupedSplits,
+    reservedTokensGroupedSplits: reduxReservedTokensGroupedSplits,
   } = useAppSelector(state => state.editingV2Project)
 
   const reduxDiscountRate = fundingCycleData?.discountRate
@@ -60,8 +58,8 @@ export default function TokenTabContent({
       fundAccessConstraints,
     )
 
-  const [reserveTokenSplits, setReserveTokenSplits] = useState<Split[]>(
-    reduxReserveTokenGroupedSplits?.splits ?? [],
+  const [reservedTokensSplits, setReservedTokensSplits] = useState<Split[]>(
+    reduxReservedTokensGroupedSplits?.splits ?? [],
   )
 
   const [discountRateDisabled, setDiscountRateDisabled] = useState<boolean>(
@@ -83,7 +81,7 @@ export default function TokenTabContent({
 
   const onTokenFormSaved = useCallback(
     (fields: TokenFormFields) => {
-      const newReserveTokenSplits = reserveTokenSplits.map(split =>
+      const newReservedTokensSplits = reservedTokensSplits.map(split =>
         sanitizeSplit(split),
       )
 
@@ -91,12 +89,14 @@ export default function TokenTabContent({
       dispatch(editingV2ProjectActions.setReservedRate(fields.reservedRate))
       dispatch(editingV2ProjectActions.setRedemptionRate(fields.redemptionRate))
       dispatch(
-        editingV2ProjectActions.setReserveTokenSplits(newReserveTokenSplits),
+        editingV2ProjectActions.setReservedTokensSplits(
+          newReservedTokensSplits,
+        ),
       )
 
       onFinish?.()
     },
-    [dispatch, reserveTokenSplits, onFinish],
+    [dispatch, reservedTokensSplits, onFinish],
   )
 
   const resetTokenForm = useCallback(() => {
@@ -111,12 +111,12 @@ export default function TokenTabContent({
         reduxRedemptionRate ??
         '100',
     })
-    setReserveTokenSplits(reserveTokenSplits)
+    setReservedTokensSplits(reservedTokensSplits)
   }, [
     reduxDiscountRate,
     reduxReservedRate,
     reduxRedemptionRate,
-    reserveTokenSplits,
+    reservedTokensSplits,
     tokenForm,
   ])
 
@@ -126,92 +126,79 @@ export default function TokenTabContent({
   }, [resetTokenForm])
 
   return (
-    <Row gutter={32}>
-      <ProjectConfigurationFieldsContainer hidePreview={hidePreview}>
-        <Form
-          form={tokenForm}
-          layout="vertical"
-          onFinish={() => onTokenFormSaved(tokenForm.getFieldsValue(true))}
-          style={{ marginBottom: formBottomMargin }}
-        >
-          {hasFundingDuration(fundingCycleData) ? (
-            <p style={{ color: colors.text.primary }}>
-              <Trans>
-                <strong>Note: </strong>Once your first funding cycle starts,
-                updates you make to token attributes will{' '}
-                <i>not be applied immediately</i> and only take effect in{' '}
-                <i>upcoming funding cycles.</i>
-              </Trans>
-            </p>
-          ) : null}
-
-          <ReservedTokensFormItem
-            value={tokenForm.getFieldValue('reservedRate') ?? reduxReservedRate}
-            onChange={val => {
-              tokenForm.setFieldsValue({ reservedRate: val?.toString() })
-            }}
-            style={{ ...shadowCard(theme), padding: 25 }}
-            disabled={reservedRateDisabled}
-            toggleDisabled={(checked: boolean) => {
-              if (!checked) {
-                tokenForm.setFieldsValue({ reservedRate: '0' })
-              } else {
-                tokenForm.setFieldsValue({ reservedRate: '50' })
-              }
-              setReservedRateDisabled(!checked)
-            }}
-            reserveTokenSplits={reserveTokenSplits}
-            onReserveTokenSplitsChange={setReserveTokenSplits}
-          />
-          <br />
-          <FormItems.ProjectDiscountRate
-            value={tokenForm.getFieldValue('discountRate') ?? reduxDiscountRate} // use redux if form hasn't loaded yet
-            name="discountRate"
-            onChange={val => {
-              tokenForm.setFieldsValue({ discountRate: val?.toString() })
-            }}
-            style={{ ...shadowCard(theme), padding: 25 }}
-            disabled={discountRateDisabled}
-            toggleDisabled={
-              hasFundingDuration(fundingCycleData)
-                ? (checked: boolean) => {
-                    tokenForm.setFieldsValue({
-                      discountRate: !checked ? '0' : '10',
-                    })
-                    setDiscountRateDisabled(!checked)
+    <ProjectConfigurationFieldsContainer showPreview={showPreview}>
+      <FundingCycleExplainer />
+      <Form
+        form={tokenForm}
+        layout="vertical"
+        onFinish={() => onTokenFormSaved(tokenForm.getFieldsValue(true))}
+        style={{ marginBottom: formBottomMargin }}
+      >
+        <ReservedTokensFormItem
+          value={tokenForm.getFieldValue('reservedRate') ?? reduxReservedRate}
+          onChange={val => {
+            tokenForm.setFieldsValue({ reservedRate: val?.toString() })
+          }}
+          style={{ ...shadowCard(theme), padding: 25 }}
+          disabled={reservedRateDisabled}
+          toggleDisabled={(checked: boolean) => {
+            if (!checked) {
+              tokenForm.setFieldsValue({ reservedRate: '0' })
+            } else {
+              tokenForm.setFieldsValue({ reservedRate: '50' })
+            }
+            setReservedRateDisabled(!checked)
+          }}
+          reservedTokensSplits={reservedTokensSplits}
+          onReservedTokensSplitsChange={setReservedTokensSplits}
+        />
+        <br />
+        <FormItems.ProjectDiscountRate
+          value={tokenForm.getFieldValue('discountRate') ?? reduxDiscountRate} // use redux if form hasn't loaded yet
+          name="discountRate"
+          onChange={val => {
+            tokenForm.setFieldsValue({ discountRate: val?.toString() })
+          }}
+          style={{ ...shadowCard(theme), padding: 25 }}
+          disabled={discountRateDisabled}
+          toggleDisabled={
+            hasFundingDuration(fundingCycleData)
+              ? (checked: boolean) => {
+                  tokenForm.setFieldsValue({
+                    discountRate: !checked ? '0' : '10',
+                  })
+                  setDiscountRateDisabled(!checked)
+                }
+              : undefined
+          }
+        />
+        <br />
+        <FormItems.ProjectBondingCurveRate
+          value={
+            tokenForm.getFieldValue('redemptionRate') ?? reduxRedemptionRate
+          }
+          onChange={(val?: number) =>
+            tokenForm.setFieldsValue({ redemptionRate: val?.toString() })
+          }
+          style={{ ...shadowCard(theme), padding: 25 }}
+          label={t`Redemption rate`}
+          disabled={redemptionRateDisabled}
+          toggleDisabled={
+            hasFundingTarget(fundAccessConstraint)
+              ? (checked: boolean) => {
+                  if (checked) {
+                    tokenForm.setFieldsValue({ redemptionRate: '50' })
+                  } else {
+                    tokenForm.setFieldsValue({ redemptionRate: '100' })
                   }
-                : undefined
-            }
-          />
-          <br />
-          <FormItems.ProjectBondingCurveRate
-            value={
-              tokenForm.getFieldValue('redemptionRate') ?? reduxRedemptionRate
-            }
-            onChange={(val?: number) =>
-              tokenForm.setFieldsValue({ redemptionRate: val?.toString() })
-            }
-            style={{ ...shadowCard(theme), padding: 25 }}
-            label={t`Redemption rate`}
-            disabled={redemptionRateDisabled}
-            toggleDisabled={
-              hasFundingTarget(fundAccessConstraint)
-                ? (checked: boolean) => {
-                    if (checked) {
-                      tokenForm.setFieldsValue({ redemptionRate: '50' })
-                    } else {
-                      tokenForm.setFieldsValue({ redemptionRate: '100' })
-                    }
-                    setRedemptionRateDisabled(!checked)
-                  }
-                : undefined
-            }
-          />
-          {/* Default to floating save button if custom one not given */}
-          {saveButton ?? <FormActionbar />}
-        </Form>
-      </ProjectConfigurationFieldsContainer>
-      {!hidePreview && <Col md={12} xs={0}></Col>}
-    </Row>
+                  setRedemptionRateDisabled(!checked)
+                }
+              : undefined
+          }
+        />
+        {/* Default to floating save button if custom one not given */}
+        {saveButton ?? <FormActionbar />}
+      </Form>
+    </ProjectConfigurationFieldsContainer>
   )
 }

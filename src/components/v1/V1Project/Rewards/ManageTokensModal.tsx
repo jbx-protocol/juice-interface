@@ -131,7 +131,7 @@ export default function ManageTokensModal({
           )}
 
           <RichButton
-            heading={<Trans>Claim {tokensLabel} as ERC20</Trans>}
+            heading={<Trans>Claim {tokensLabel} as ERC-20</Trans>}
             description={
               <Trans>
                 Move your {tokensLabel} from the Juicebox contract to your

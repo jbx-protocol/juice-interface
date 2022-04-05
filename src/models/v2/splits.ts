@@ -8,8 +8,8 @@ export type Split = {
 }
 
 export type ETHPayoutSplitGroup = 1
-export type ReserveTokenSplitGroup = 2
-export type SplitGroup = ETHPayoutSplitGroup | ReserveTokenSplitGroup
+export type ReservedTokensSplitGroup = 2
+export type SplitGroup = ETHPayoutSplitGroup | ReservedTokensSplitGroup
 
 export interface GroupedSplits<G> {
   group: G
@@ -17,4 +17,5 @@ export interface GroupedSplits<G> {
 }
 
 export type ETHPayoutGroupedSplits = GroupedSplits<ETHPayoutSplitGroup>
-export type ReserveTokenGroupedSplits = GroupedSplits<ReserveTokenSplitGroup>
+export type ReservedTokensGroupedSplits =
+  GroupedSplits<ReservedTokensSplitGroup>

@@ -31,7 +31,7 @@ import V2Project from '../V2Project'
 import Dashboard404 from './Dashboard404'
 import {
   ETH_PAYOUT_SPLIT_GROUP,
-  RESERVE_TOKEN_SPLIT_GROUP,
+  RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/v2/splits'
 
 export default function V2Dashboard() {
@@ -91,15 +91,15 @@ export default function V2Dashboard() {
     domain: queuedFundingCycle?.configuration?.toString(),
   })
 
-  const { data: reserveTokenSplits } = useProjectSplits({
+  const { data: reservedTokensSplits } = useProjectSplits({
     projectId,
-    splitGroup: RESERVE_TOKEN_SPLIT_GROUP,
+    splitGroup: RESERVED_TOKEN_SPLIT_GROUP,
     domain: fundingCycle?.configuration?.toString(),
   })
 
-  const { data: queuedReserveTokenSplits } = useProjectSplits({
+  const { data: queuedReservedTokensSplits } = useProjectSplits({
     projectId,
-    splitGroup: RESERVE_TOKEN_SPLIT_GROUP,
+    splitGroup: RESERVED_TOKEN_SPLIT_GROUP,
     domain: queuedFundingCycle?.configuration?.toString(),
   })
 
@@ -156,8 +156,8 @@ export default function V2Dashboard() {
     queuedDistributionLimit,
     payoutSplits,
     queuedPayoutSplits,
-    reserveTokenSplits,
-    queuedReserveTokenSplits,
+    reservedTokensSplits,
+    queuedReservedTokensSplits,
     tokenAddress,
     terminals,
     ETHBalance,

@@ -7,15 +7,19 @@ import SplitItem from './SplitItem'
 export default function SplitList({
   splits,
   showSplitValues = false,
-  distributionLimitCurrency,
-  distributionLimit,
+  currency,
+  totalValue,
   projectOwnerAddress,
+  valueSuffix,
+  valueFormatProps,
 }: {
   splits: Split[]
-  distributionLimitCurrency: BigNumber | undefined
-  distributionLimit: BigNumber | undefined
+  currency?: BigNumber
+  totalValue: BigNumber | undefined
   projectOwnerAddress: string | undefined
   showSplitValues?: boolean
+  valueSuffix?: string | JSX.Element
+  valueFormatProps?: { precision?: number }
 }) {
   const totalSplitPercentage =
     splits?.reduce((sum, split) => sum + split.percent, 0) ?? 0
@@ -32,10 +36,12 @@ export default function SplitList({
           >
             <SplitItem
               split={split}
-              showValue={showSplitValues}
-              distributionLimitCurrency={distributionLimitCurrency}
-              distributionLimit={distributionLimit}
+              showSplitValue={showSplitValues}
+              currency={currency}
+              totalValue={totalValue}
               projectOwnerAddress={projectOwnerAddress}
+              valueSuffix={valueSuffix}
+              valueFormatProps={valueFormatProps}
             />
           </div>
         ))}
@@ -49,10 +55,12 @@ export default function SplitList({
             projectId: undefined,
             allocator: undefined,
           }}
-          showValue={showSplitValues}
-          distributionLimitCurrency={distributionLimitCurrency}
-          distributionLimit={distributionLimit}
+          showSplitValue={showSplitValues}
+          currency={currency}
+          totalValue={totalValue}
           projectOwnerAddress={projectOwnerAddress}
+          valueSuffix={valueSuffix}
+          valueFormatProps={valueFormatProps}
         />
       ) : null}
     </div>

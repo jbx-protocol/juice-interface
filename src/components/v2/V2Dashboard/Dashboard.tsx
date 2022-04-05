@@ -25,6 +25,8 @@ import useProjectOwner from 'hooks/v2/contractReader/ProjectOwner'
 
 import useUsedDistributionLimit from 'hooks/v2/contractReader/UsedDistributionLimit'
 import useOverflowOfV2Project from 'hooks/v2/contractReader/OverflowOfV2Project'
+import { useBallotState } from 'hooks/v2/contractReader/BallotState'
+import useTotalSupplyOfV2ProjectToken from 'hooks/v2/contractReader/TotalSupplyOfV2ProjectToken'
 
 import { layouts } from 'constants/styles/layouts'
 
@@ -143,6 +145,10 @@ export default function V2Dashboard() {
 
   const { data: projectOwnerAddress } = useProjectOwner(projectId)
 
+  const { data: totalTokenSupply } = useTotalSupplyOfV2ProjectToken(projectId)
+
+  const { data: ballotState } = useBallotState(projectId)
+
   if (metadataLoading || metadataURILoading) return <Loading />
 
   if (projectId?.eq(0) || metadataError || !metadataCID) {
@@ -171,6 +177,8 @@ export default function V2Dashboard() {
     tokenSymbol,
     projectOwnerAddress,
     overflow,
+    totalTokenSupply,
+    ballotState,
   }
 
   return (

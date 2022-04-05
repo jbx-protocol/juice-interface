@@ -6,7 +6,13 @@ import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 
 import { CSSProperties, useContext, useState } from 'react'
-import { formattedNum, formatWad, fromWad, parseWad } from 'utils/formatNumber'
+import {
+  formatPercent,
+  formattedNum,
+  formatWad,
+  fromWad,
+  parseWad,
+} from 'utils/formatNumber'
 
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -15,8 +21,10 @@ import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { decodeV2FundingCycleMetadata } from 'utils/v2/fundingCycle'
 import { formatRedemptionRate } from 'utils/v2/math'
-import useReclaimableOverflowOf from 'hooks/v2/contractReader/ReclaimableOverflowOf'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
+import { useETHReceivedFromTokens } from 'hooks/v2/contractReader/ETHReceivedFromTokens'
+import { V2_CURRENCY_USD } from 'utils/v2/currency'
+import { useRedeemTokensTx } from 'hooks/v2/transactor/RedeemTokensTx'
 
 // This double as the 'Redeem' and 'Burn' modal depending on if project has overflow
 export default function V2RedeemModal({
@@ -40,46 +48,55 @@ export default function V2RedeemModal({
     theme: { colors },
   } = useContext(ThemeContext)
   const { userAddress } = useContext(NetworkContext)
-  const { tokenSymbol, fundingCycle, overflow, projectId } =
-    useContext(V2ProjectContext)
+  const {
+    tokenSymbol,
+    fundingCycle,
+    overflow,
+    projectId,
+    totalTokenSupply,
+    distributionLimitCurrency,
+  } = useContext(V2ProjectContext)
 
   const { data: totalBalance } = useTotalBalanceOf(userAddress, projectId)
-  const { data: maxClaimable } = useReclaimableOverflowOf()
+
+  const maxClaimable = useETHReceivedFromTokens({
+    tokenAmount: fromWad(totalBalance),
+  })
+  const rewardAmount = useETHReceivedFromTokens({ tokenAmount: redeemAmount })
+
+  const redeemTokensTx = useRedeemTokensTx()
 
   if (!fundingCycle) return null
 
+  const share = formatPercent(totalBalance, totalTokenSupply)
+
   const fcMetadata = decodeV2FundingCycleMetadata(fundingCycle.metadata)
 
-  // const rewardAmount = useRedeemRate({
-  //   tokenAmount: redeemAmount,
-  //   fundingCycle: fundingCycle,
-  // })
-
   // 0.5% slippage for USD-denominated projects
-  // const minAmount = currentFC?.currency.eq(V1_CURRENCY_USD)
-  //   ? rewardAmount?.mul(1000).div(1005)
-  //   : rewardAmount
+  const minAmount = distributionLimitCurrency?.eq(V2_CURRENCY_USD)
+    ? rewardAmount?.mul(1000).div(1005)
+    : rewardAmount
 
   async function redeem() {
     await form.validateFields()
-    // if (!minAmount) return
+    if (!minAmount) return
 
     setLoading(true)
 
-    // redeemV2TokensTx(
-    //   {
-    //     redeemAmount: parseWad(redeemAmount),
-    //     minAmount,
-    //     preferConverted: false, // TODO support in UI
-    //   },
-    //   {
-    //     onConfirmed: () => setRedeemAmount(undefined),
-    //     onDone: () => {
-    //       setLoading(false)
-    //       onOk?.()
-    //     },
-    //   },
-    // )
+    redeemTokensTx(
+      {
+        redeemAmount: parseWad(redeemAmount),
+        minAmount,
+        preferConverted: false, // TODO support in UI
+      },
+      {
+        onConfirmed: () => setRedeemAmount(undefined),
+        onDone: () => {
+          setLoading(false)
+          onOk?.()
+        },
+      },
+    )
   }
 
   const statsStyle: CSSProperties = {
@@ -160,9 +177,28 @@ export default function V2RedeemModal({
           <p style={statsStyle}>
             {tokenSymbolText({ tokenSymbol: tokenSymbol, capitalize: true })}{' '}
             balance:{' '}
-            <span>
-              {formatWad(totalBalance ?? 0, { precision: 0 })} {tokensTextShort}
-            </span>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'flex-end',
+              }}
+            >
+              <div>
+                {formatWad(totalBalance ?? 0, { precision: 0 })}{' '}
+                {tokensTextShort}
+              </div>
+              <div
+                style={{
+                  cursor: 'default',
+                  fontSize: '0.8rem',
+                  fontWeight: 500,
+                  color: colors.text.tertiary,
+                }}
+              >
+                ({share}% of supply)
+              </div>
+            </div>
           </p>
           <p style={statsStyle}>
             <Trans>
@@ -220,11 +256,13 @@ export default function V2RedeemModal({
           </Form>
           {overflow?.gt(0) ? (
             <div style={{ fontWeight: 500, marginTop: 20 }}>
-              {/* <Trans>
+              <Trans>
                 You will receive{' '}
-                {fundingCycle?.currency.eq(V1_CURRENCY_USD) ? 'minimum ' : ' '}
+                {distributionLimitCurrency?.eq(V2_CURRENCY_USD)
+                  ? 'minimum '
+                  : ' '}
                 {formatWad(minAmount, { precision: 8 }) || '--'} ETH
-              </Trans> */}
+              </Trans>
             </div>
           ) : null}
         </div>

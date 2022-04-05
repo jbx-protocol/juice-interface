@@ -8,7 +8,7 @@ import useERC20BalanceOf from 'hooks/v2/contractReader/ERC20BalanceOf'
 
 import { CSSProperties, useContext, useState } from 'react'
 import FormattedAddress from 'components/shared/FormattedAddress'
-import { formatWad } from 'utils/formatNumber'
+import { formatPercent, formatWad } from 'utils/formatNumber'
 
 import IssueTicketsButton from 'components/shared/IssueTicketsButton'
 import {
@@ -17,6 +17,9 @@ import {
 } from 'hooks/v2/contractReader/HasPermission'
 import { useIssueTokensTx } from 'hooks/v2/transactor/IssueTokensTx'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
+import useTotalBalanceOf from 'hooks/v2/contractReader/TotalBalanceOf'
+import { ThemeContext } from 'contexts/themeContext'
+import useUnclaimedERC20BalanceOfUser from 'hooks/v2/contractReader/UnclaimedERC20BalanceOfUser'
 
 import V2ManageTokensModal from './V2ManageTokensModal'
 
@@ -24,11 +27,15 @@ export default function V2ManageTokensSection() {
   const [manageTokensModalVisible, setManageTokensModalVisible] =
     useState<boolean>(false)
 
-  const { tokenAddress, tokenSymbol } = useContext(V2ProjectContext)
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
+  const { tokenAddress, tokenSymbol, totalTokenSupply, projectId } =
+    useContext(V2ProjectContext)
   const { userAddress } = useContext(NetworkContext)
 
-  const claimedBalance = useERC20BalanceOf(tokenAddress, userAddress).data
-  // TODO: const unclaimedBalance = useUnclaimedBalanceOfUser()
+  const { data: claimedBalance } = useERC20BalanceOf(tokenAddress, userAddress)
+  const { data: unclaimedBalance } = useUnclaimedERC20BalanceOfUser()
 
   const labelStyle: CSSProperties = {
     width: 128,
@@ -45,6 +52,10 @@ export default function V2ManageTokensSection() {
     capitalize: true,
     plural: true,
   })
+
+  const { data: totalBalance } = useTotalBalanceOf(userAddress, projectId)
+
+  const share = formatPercent(totalBalance, totalTokenSupply)
 
   const showIssueTokensButton = !ticketsIssued && hasIssueTicketsPermission
 
@@ -81,6 +92,25 @@ export default function V2ManageTokensSection() {
                     }
                   />
                 )}
+                <Descriptions.Item
+                  label={t`Total supply`}
+                  labelStyle={labelStyle}
+                  children={
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'baseline',
+                        width: '100%',
+                        gap: 5,
+                        flexWrap: 'wrap',
+                      }}
+                    >
+                      {formatWad(totalTokenSupply, { precision: 0 })}
+                      {/* TODO: Holders modal button */}
+                    </div>
+                  }
+                />
                 {userAddress ? (
                   <Descriptions.Item
                     label={t`Your balance`}
@@ -97,23 +127,31 @@ export default function V2ManageTokensSection() {
                         }}
                       >
                         <div>
-                          {ticketsIssued ? (
+                          {ticketsIssued && (
                             <div>
                               {`${formatWad(claimedBalance ?? 0, {
                                 precision: 0,
                               })} `}
                             </div>
-                          ) : (
-                            0
                           )}
                           <div>
-                            {/* <Trans>
-                            {formatWad(unclaimedBalance ?? 0, { precision: 0 })}
-                            {ticketsIssued ? <> claimable</> : null}
-                          </Trans> */}
-                            {/* 'TODO: unclaimed balance' */}
+                            <Trans>
+                              {formatWad(unclaimedBalance ?? 0, {
+                                precision: 0,
+                              })}
+                              {ticketsIssued ? <> claimable</> : null}
+                            </Trans>
                           </div>
-                          {/* TODO: % of total supply */}
+                          <div
+                            style={{
+                              cursor: 'default',
+                              fontSize: '0.8rem',
+                              fontWeight: 500,
+                              color: colors.text.tertiary,
+                            }}
+                          >
+                            <Trans>{share || 0}% of supply</Trans>
+                          </div>
                         </div>
 
                         <Button
@@ -127,7 +165,6 @@ export default function V2ManageTokensSection() {
                   />
                 ) : null}
               </Descriptions>
-              {/* TODO: 'Holders modal button */}
               {showIssueTokensButton && (
                 <IssueTicketsButton useIssueTokensTx={useIssueTokensTx} />
               )}

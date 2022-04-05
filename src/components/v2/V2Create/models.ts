@@ -1,5 +1,5 @@
 export type TabContentProps = {
   onFinish: VoidFunction
-  hidePreview?: boolean
+  showPreview?: boolean
   saveButton?: JSX.Element
 }

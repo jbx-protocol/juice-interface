@@ -21,7 +21,7 @@ export default function CurrentFundingCycle({
       <CardSection>
         <FundingCyclePreview
           fundingCycle={currentFC}
-          showDetail={showCurrentDetail}
+          expand={showCurrentDetail}
         />
       </CardSection>
       <CardSection>

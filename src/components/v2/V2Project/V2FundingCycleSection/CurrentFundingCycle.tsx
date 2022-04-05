@@ -10,9 +10,9 @@ import PayoutSplitsCard from './PayoutSplitsCard'
 import ReservedTokensSplitsCard from './ReservedTokensSplitsCard'
 
 export default function CurrentFundingCycle({
-  showCurrentDetail,
+  expandCard,
 }: {
-  showCurrentDetail?: boolean
+  expandCard?: boolean
 }) {
   const { fundingCycle } = useContext(V2ProjectContext)
 
@@ -30,7 +30,7 @@ export default function CurrentFundingCycle({
           fundingCycleStartTime={fundingCycle.start}
           isFundingCycleRecurring={true}
           fundingCycleRiskCount={V2FundingCycleRiskCount(fundingCycle)}
-          showDetail={showCurrentDetail}
+          expand={expandCard}
         />
       </CardSection>
 

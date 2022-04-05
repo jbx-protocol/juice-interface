@@ -12,7 +12,7 @@ import V2CurrencyProvider from 'providers/v2/V2CurrencyProvider'
 import { readNetwork } from 'constants/networks'
 import V2WarningBanner from './V2WarningBanner'
 import V2MainnetWarning from '../shared/V2MainnetWarning'
-import ProjectDetailsTabContent from './tabs/ProjectDetailsTabContent'
+import ProjectDetailsTabContent from './tabs/ProjectDetailsTab/ProjectDetailsTabContent'
 import FundingTabContent from './tabs/FundingTab/FundingTabContent'
 import TokenTabContent from './tabs/TokenTab/TokenTabContent'
 import RulesTabContent from './tabs/RulesTab/RulesTabContent'
@@ -57,7 +57,13 @@ export default function V2Create() {
     <V2UserProvider>
       <V2CurrencyProvider>
         {isRinkeby ? <V2WarningBanner /> : null}
-        <div style={{ margin: '4rem', marginBottom: 0 }}>
+        <div
+          style={{
+            maxWidth: 1500,
+            margin: '0 auto',
+            padding: '2rem 4rem',
+          }}
+        >
           {!isRinkeby && (
             <div style={{ padding: '1rem', textAlign: 'center' }}>
               <V2MainnetWarning />
@@ -68,7 +74,6 @@ export default function V2Create() {
             <div>
               <h1
                 style={{
-                  marginBottom: '2rem',
                   color: colors.text.primary,
                   fontSize: 28,
                 }}
@@ -85,6 +90,7 @@ export default function V2Create() {
                 {TABS.map((tab, idx) => (
                   <TabPane tab={<TabText>{tab.title}</TabText>} key={`${idx}`}>
                     <tab.component
+                      showPreview
                       onFinish={() => {
                         // bail if on last tab.
                         if (idx === TABS.length - 1) return

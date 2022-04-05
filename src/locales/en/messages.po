@@ -1393,8 +1393,9 @@ msgid "Powered by public smart contracts on <0>Ethereum</0>."
 msgstr ""
 
 #: src/components/v1/V1Create/index.tsx
-msgid "Preview"
-msgstr ""
+#: src/components/v2/V2Create/ProjectPreview.tsx
+msgid "Preview:"
+msgstr "Preview:"
 
 #: src/components/Landing/index.tsx
 msgid "Programmable spending"
@@ -1697,7 +1698,7 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: src/components/v2/V2Create/tabs/ProjectDetailsTabContent.tsx
+#: src/components/v2/V2Create/tabs/ProjectDetailsTab/ProjectDetailsTabContent.tsx
 msgid "Save and Continue"
 msgstr "Save and Continue"
 
@@ -2256,6 +2257,9 @@ msgid "When token minting is allowed, the owner of this project has permission t
 msgstr ""
 
 #: src/components/shared/formItems/ProjectReserved.tsx
+msgid "Whenever someone pays your project, this percentage of tokens will be reserved and the rest will go to the payer. By default, these tokens are reserved for the project owner, but you can also allocate portions to other wallet addresses. Anyone can submit the transaction to distribute reserved tokens according to the allocation."
+msgstr "Whenever someone pays your project, this percentage of tokens will be reserved and the rest will go to the payer. By default, these tokens are reserved for the project owner, but you can also allocate portions to other wallet addresses. Anyone can submit the transaction to distribute reserved tokens according to the allocation."
+
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Whenever someone pays your project, this percentage of tokens will be reserved and the rest will go to the payer. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner. Once tokens are reserved, anyone can \"mint\" them, which distributes them to their intended receivers."

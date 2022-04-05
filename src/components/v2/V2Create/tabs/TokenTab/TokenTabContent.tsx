@@ -1,5 +1,5 @@
 import { t } from '@lingui/macro'
-import { Col, Form, Row } from 'antd'
+import { Form } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { FormItems } from 'components/shared/formItems'
 import { ThemeContext } from 'contexts/themeContext'
@@ -35,7 +35,7 @@ type TokenFormFields = {
 
 export default function TokenTabContent({
   onFinish,
-  hidePreview,
+  showPreview,
   saveButton,
 }: TabContentProps) {
   const [tokenForm] = useForm<TokenFormFields>()
@@ -126,88 +126,79 @@ export default function TokenTabContent({
   }, [resetTokenForm])
 
   return (
-    <Row gutter={32}>
-      <ProjectConfigurationFieldsContainer hidePreview={hidePreview}>
-        <>
-          <FundingCycleExplainer />
-          <Form
-            form={tokenForm}
-            layout="vertical"
-            onFinish={() => onTokenFormSaved(tokenForm.getFieldsValue(true))}
-            style={{ marginBottom: formBottomMargin }}
-          >
-            <ReservedTokensFormItem
-              value={
-                tokenForm.getFieldValue('reservedRate') ?? reduxReservedRate
-              }
-              onChange={val => {
-                tokenForm.setFieldsValue({ reservedRate: val?.toString() })
-              }}
-              style={{ ...shadowCard(theme), padding: 25 }}
-              disabled={reservedRateDisabled}
-              toggleDisabled={(checked: boolean) => {
-                if (!checked) {
-                  tokenForm.setFieldsValue({ reservedRate: '0' })
-                } else {
-                  tokenForm.setFieldsValue({ reservedRate: '50' })
+    <ProjectConfigurationFieldsContainer showPreview={showPreview}>
+      <FundingCycleExplainer />
+      <Form
+        form={tokenForm}
+        layout="vertical"
+        onFinish={() => onTokenFormSaved(tokenForm.getFieldsValue(true))}
+        style={{ marginBottom: formBottomMargin }}
+      >
+        <ReservedTokensFormItem
+          value={tokenForm.getFieldValue('reservedRate') ?? reduxReservedRate}
+          onChange={val => {
+            tokenForm.setFieldsValue({ reservedRate: val?.toString() })
+          }}
+          style={{ ...shadowCard(theme), padding: 25 }}
+          disabled={reservedRateDisabled}
+          toggleDisabled={(checked: boolean) => {
+            if (!checked) {
+              tokenForm.setFieldsValue({ reservedRate: '0' })
+            } else {
+              tokenForm.setFieldsValue({ reservedRate: '50' })
+            }
+            setReservedRateDisabled(!checked)
+          }}
+          reservedTokensSplits={reservedTokensSplits}
+          onReservedTokensSplitsChange={setReservedTokensSplits}
+        />
+        <br />
+        <FormItems.ProjectDiscountRate
+          value={tokenForm.getFieldValue('discountRate') ?? reduxDiscountRate} // use redux if form hasn't loaded yet
+          name="discountRate"
+          onChange={val => {
+            tokenForm.setFieldsValue({ discountRate: val?.toString() })
+          }}
+          style={{ ...shadowCard(theme), padding: 25 }}
+          disabled={discountRateDisabled}
+          toggleDisabled={
+            hasFundingDuration(fundingCycleData)
+              ? (checked: boolean) => {
+                  tokenForm.setFieldsValue({
+                    discountRate: !checked ? '0' : '10',
+                  })
+                  setDiscountRateDisabled(!checked)
                 }
-                setReservedRateDisabled(!checked)
-              }}
-              reservedTokensSplits={reservedTokensSplits}
-              onReservedTokensSplitsChange={setReservedTokensSplits}
-            />
-            <br />
-            <FormItems.ProjectDiscountRate
-              value={
-                tokenForm.getFieldValue('discountRate') ?? reduxDiscountRate
-              } // use redux if form hasn't loaded yet
-              name="discountRate"
-              onChange={val => {
-                tokenForm.setFieldsValue({ discountRate: val?.toString() })
-              }}
-              style={{ ...shadowCard(theme), padding: 25 }}
-              disabled={discountRateDisabled}
-              toggleDisabled={
-                hasFundingDuration(fundingCycleData)
-                  ? (checked: boolean) => {
-                      tokenForm.setFieldsValue({
-                        discountRate: !checked ? '0' : '10',
-                      })
-                      setDiscountRateDisabled(!checked)
-                    }
-                  : undefined
-              }
-            />
-            <br />
-            <FormItems.ProjectBondingCurveRate
-              value={
-                tokenForm.getFieldValue('redemptionRate') ?? reduxRedemptionRate
-              }
-              onChange={(val?: number) =>
-                tokenForm.setFieldsValue({ redemptionRate: val?.toString() })
-              }
-              style={{ ...shadowCard(theme), padding: 25 }}
-              label={t`Redemption rate`}
-              disabled={redemptionRateDisabled}
-              toggleDisabled={
-                hasFundingTarget(fundAccessConstraint)
-                  ? (checked: boolean) => {
-                      if (checked) {
-                        tokenForm.setFieldsValue({ redemptionRate: '50' })
-                      } else {
-                        tokenForm.setFieldsValue({ redemptionRate: '100' })
-                      }
-                      setRedemptionRateDisabled(!checked)
-                    }
-                  : undefined
-              }
-            />
-            {/* Default to floating save button if custom one not given */}
-            {saveButton ?? <FormActionbar />}
-          </Form>
-        </>
-      </ProjectConfigurationFieldsContainer>
-      {!hidePreview && <Col md={12} xs={0}></Col>}
-    </Row>
+              : undefined
+          }
+        />
+        <br />
+        <FormItems.ProjectBondingCurveRate
+          value={
+            tokenForm.getFieldValue('redemptionRate') ?? reduxRedemptionRate
+          }
+          onChange={(val?: number) =>
+            tokenForm.setFieldsValue({ redemptionRate: val?.toString() })
+          }
+          style={{ ...shadowCard(theme), padding: 25 }}
+          label={t`Redemption rate`}
+          disabled={redemptionRateDisabled}
+          toggleDisabled={
+            hasFundingTarget(fundAccessConstraint)
+              ? (checked: boolean) => {
+                  if (checked) {
+                    tokenForm.setFieldsValue({ redemptionRate: '50' })
+                  } else {
+                    tokenForm.setFieldsValue({ redemptionRate: '100' })
+                  }
+                  setRedemptionRateDisabled(!checked)
+                }
+              : undefined
+          }
+        />
+        {/* Default to floating save button if custom one not given */}
+        {saveButton ?? <FormActionbar />}
+      </Form>
+    </ProjectConfigurationFieldsContainer>
   )
 }

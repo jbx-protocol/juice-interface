@@ -113,6 +113,7 @@ msgid "<0><1/>{netDistributionAmount}</0> after {feePercentage}% JBX fee"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "<0><1>This project has no overflow</1>, so you will not receive any ETH for burning tokens.</0>"
 msgstr "<0><1>这个项目目前筹集的资金并未溢出</1>，此时燃烧代币将不会收到 ETH。</0>"
 
@@ -384,6 +385,7 @@ msgid "Back to top"
 msgstr "回到顶部"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Balance exceeded"
 msgstr "超出余额"
 
@@ -446,6 +448,7 @@ msgid "Burn your {tokensLabel}. You won't receive ETH in return because this pro
 msgstr "燃烧你的 {tokensLabel}。你不会收到 ETH 作为回报，因为这个项目没有溢出的资金。"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Burn {0} {tokensTextShort}"
 msgstr "燃烧 {0} {tokensTextShort}"
 
@@ -454,6 +457,7 @@ msgid "Burn {tokensLabel}"
 msgstr "燃烧 {tokensLabel}"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Burn {tokensTextLong}"
 msgstr "燃烧 {tokensTextLong}"
 
@@ -578,6 +582,7 @@ msgid "Current owner: {owner}"
 msgstr "当前拥有者：{owner}"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Currently worth: <0><1/>{0}</0>"
 msgstr "当前价值： <0><1/>{0}</0>"
 
@@ -1126,6 +1131,7 @@ msgstr "标志"
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "MAX"
 msgstr "最大值"
 
@@ -1134,11 +1140,8 @@ msgstr "最大值"
 msgid "Manage"
 msgstr "管理代币"
 
-#: src/components/v2/V2Project/V2ManageTokensSection/V2ManageTokensModal.tsx
-msgid "Manage tokens"
-msgstr ""
-
 #: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2ManageTokensModal.tsx
 msgid "Manage {0}"
 msgstr "管理 {0}"
 
@@ -1572,18 +1575,22 @@ msgid "Redeem"
 msgstr "赎回"
 
 #: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2ManageTokensModal.tsx
 msgid "Redeem your {tokensLabel} for a portion of the project's overflow. Any {tokensLabel} you redeem will be burned."
 msgstr "赎回你的 {tokensLabel} 来获取一部分项目的溢出资金。用于赎回的 {tokensLabel} 将会被燃烧掉。"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Redeem {0} {tokensTextShort} for ETH"
 msgstr "燃烧 {0} {tokensTextShort} 来赎回 ETH"
 
 #: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2ManageTokensModal.tsx
 msgid "Redeem {tokensLabel} for ETH"
 msgstr "燃烧 {tokensLabel} 来赎回 ETH"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Redeem {tokensTextLong} for ETH"
 msgstr "燃烧 {tokensTextLong} 来赎回 ETH"
 
@@ -1591,6 +1598,10 @@ msgstr "燃烧 {tokensTextLong} 来赎回 ETH"
 #: src/components/v2/V2Create/tabs/TokenTab/TokenTabContent.tsx
 msgid "Redemption rate"
 msgstr "赎回率"
+
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
+msgid "Redemption rate:"
+msgstr ""
 
 #: src/components/Landing/index.tsx
 msgid "Redistributable surplus"
@@ -1601,6 +1612,7 @@ msgid "Refresh"
 msgstr "刷新"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Required"
 msgstr "必需"
 
@@ -2076,6 +2088,7 @@ msgid "Tokens can be redeemed for a portion of a project's <0>overflow</0>, lett
 msgstr "代币可以用来赎回一部分项目的 <0>溢出资金</0>，让你从项目的成功中受益。毕竟，是你帮助它实现的。代币还可以提供专属于成员的特权，并允许你为社区的治理做出贡献。"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Tokens can be redeemed for a portion of this project's ETH overflow, according to the bonding curve rate of the current funding cycle. <0>Tokens are burned when they are redeemed.</0>"
 msgstr "代币可以用于赎回项目溢出的一部分 ETH，基于当前筹款周期的联合曲线率。<0>赎回时代币会被燃烧掉。</0>"
 
@@ -2101,6 +2114,7 @@ msgid "Total raised"
 msgstr "总筹款"
 
 #: src/components/v1/V1Project/Rewards/index.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "Total supply"
 msgstr "总供应量"
 
@@ -2322,6 +2336,7 @@ msgid "You have set a funding cycle target."
 msgstr "您设定了一个筹款周期目标。"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "You will receive {0}{1} ETH"
 msgstr "你会收到 {0}{1} ETH"
 
@@ -2525,6 +2540,7 @@ msgid "{0} {1} reserved"
 msgstr "{0}{1} 保留"
 
 #: src/components/v1/V1Project/Rewards/index.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "{0}% of supply"
 msgstr "占比 {0}%"
 
@@ -2541,6 +2557,7 @@ msgid "{0}/{1} withdrawn"
 msgstr "已提取 {0}/{1}"
 
 #: src/components/v1/V1Project/Rewards/index.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "{0}{1}"
 msgstr "{0}{1}"
 

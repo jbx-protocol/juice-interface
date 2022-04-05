@@ -113,6 +113,7 @@ msgid "<0><1/>{netDistributionAmount}</0> after {feePercentage}% JBX fee"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "<0><1>This project has no overflow</1>, so you will not receive any ETH for burning tokens.</0>"
 msgstr "<0><1> Este projeto não tem overflow</1>, então você não receberá nenhum ETH por queimar tokens.</0>"
 
@@ -384,6 +385,7 @@ msgid "Back to top"
 msgstr "De volta ao início"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Balance exceeded"
 msgstr "Saldo excedido"
 
@@ -446,6 +448,7 @@ msgid "Burn your {tokensLabel}. You won't receive ETH in return because this pro
 msgstr "Queime seus {tokensLabel}. Você não receberá ETH em retorno porque este projeto não tem overflow."
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Burn {0} {tokensTextShort}"
 msgstr "Queimar {0} {tokensTextShort}"
 
@@ -454,6 +457,7 @@ msgid "Burn {tokensLabel}"
 msgstr "Queimar {tokensLabel}"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Burn {tokensTextLong}"
 msgstr "Queimar {tokensTextLong}"
 
@@ -578,6 +582,7 @@ msgid "Current owner: {owner}"
 msgstr "Atual proprietário: {owner}"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Currently worth: <0><1/>{0}</0>"
 msgstr "Atualmente vale: <0><1/>{0}</0>"
 
@@ -1126,6 +1131,7 @@ msgstr "Logotipo"
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "MAX"
 msgstr "MÁX"
 
@@ -1134,11 +1140,8 @@ msgstr "MÁX"
 msgid "Manage"
 msgstr "Administrar"
 
-#: src/components/v2/V2Project/V2ManageTokensSection/V2ManageTokensModal.tsx
-msgid "Manage tokens"
-msgstr ""
-
 #: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2ManageTokensModal.tsx
 msgid "Manage {0}"
 msgstr "Administre {0}"
 
@@ -1572,18 +1575,22 @@ msgid "Redeem"
 msgstr "Resgatar"
 
 #: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2ManageTokensModal.tsx
 msgid "Redeem your {tokensLabel} for a portion of the project's overflow. Any {tokensLabel} you redeem will be burned."
 msgstr "Resgate seus {tokensLabel} por uma porção do overflow do projeto. Qualquer {tokensLabel} que você resgatar será queimado."
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Redeem {0} {tokensTextShort} for ETH"
 msgstr "Resgatar {0} {tokensTextShort} por ETH"
 
 #: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2ManageTokensModal.tsx
 msgid "Redeem {tokensLabel} for ETH"
 msgstr "Resgatar {tokensLabel} para ETH"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Redeem {tokensTextLong} for ETH"
 msgstr "Resgatar {tokensTextLong} por ETH"
 
@@ -1591,6 +1598,10 @@ msgstr "Resgatar {tokensTextLong} por ETH"
 #: src/components/v2/V2Create/tabs/TokenTab/TokenTabContent.tsx
 msgid "Redemption rate"
 msgstr "Taxa de resgate"
+
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
+msgid "Redemption rate:"
+msgstr ""
 
 #: src/components/Landing/index.tsx
 msgid "Redistributable surplus"
@@ -1601,6 +1612,7 @@ msgid "Refresh"
 msgstr "Atualizar"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Required"
 msgstr "Necessário"
 
@@ -2076,6 +2088,7 @@ msgid "Tokens can be redeemed for a portion of a project's <0>overflow</0>, lett
 msgstr "Os tokens podem ser resgatados por uma porção <0>overflow</0> de um projeto, lhe permitindo beneficiar de seu existo. Afinal, você ajudou a chegar até aqui. O token poderia lhe dar privilégios únicos e exclusivos para membros, além de contribuir com a administração da comunidade."
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Tokens can be redeemed for a portion of this project's ETH overflow, according to the bonding curve rate of the current funding cycle. <0>Tokens are burned when they are redeemed.</0>"
 msgstr "Tokens podem ser resgatados por uma porção do overflow em ETH deste projeto, conforme a taxa de curva de ligação atual. <0>Tokens são queimados ao serem resgatados.</0>"
 
@@ -2101,6 +2114,7 @@ msgid "Total raised"
 msgstr "Total arrecadado"
 
 #: src/components/v1/V1Project/Rewards/index.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "Total supply"
 msgstr "Fornecimento total"
 
@@ -2322,6 +2336,7 @@ msgid "You have set a funding cycle target."
 msgstr "Você definiu a meta do ciclo de financiamento."
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "You will receive {0}{1} ETH"
 msgstr "Você receberá {0}{1} ETH"
 
@@ -2525,6 +2540,7 @@ msgid "{0} {1} reserved"
 msgstr "{0} {1} reservados"
 
 #: src/components/v1/V1Project/Rewards/index.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "{0}% of supply"
 msgstr "{0}% do fornecimento"
 
@@ -2541,6 +2557,7 @@ msgid "{0}/{1} withdrawn"
 msgstr "{0}/{1} retirado"
 
 #: src/components/v1/V1Project/Rewards/index.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "{0}{1}"
 msgstr "{0}{1}"
 

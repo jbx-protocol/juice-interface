@@ -113,6 +113,7 @@ msgid "<0><1/>{netDistributionAmount}</0> after {feePercentage}% JBX fee"
 msgstr "<0><1/>{netDistributionAmount}</0> después de la tarifa JBX de {feePercentage}%"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "<0><1>This project has no overflow</1>, so you will not receive any ETH for burning tokens.</0>"
 msgstr "<0><1>Este proyecto no tiene excedente</1>, así que no recibirás ETH por quemar tokens.</0>"
 
@@ -384,6 +385,7 @@ msgid "Back to top"
 msgstr "Regresa arriba"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Balance exceeded"
 msgstr "Balance excedido"
 
@@ -446,6 +448,7 @@ msgid "Burn your {tokensLabel}. You won't receive ETH in return because this pro
 msgstr "Quema tus {tokensLabel}. No recibirás ETH de regreso porque este proyecto no tiene excedente."
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Burn {0} {tokensTextShort}"
 msgstr "Quemar {0} {tokensTextShort}"
 
@@ -454,6 +457,7 @@ msgid "Burn {tokensLabel}"
 msgstr "Quemar {tokensLabel}"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Burn {tokensTextLong}"
 msgstr "Quemar {tokensTextLong}"
 
@@ -578,6 +582,7 @@ msgid "Current owner: {owner}"
 msgstr "Dueño actual: {owner}"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Currently worth: <0><1/>{0}</0>"
 msgstr "Actualmente vale: <0><1/>{0}</0>"
 
@@ -1126,6 +1131,7 @@ msgstr "Logo"
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "MAX"
 msgstr "MÁXIMO"
 
@@ -1134,11 +1140,8 @@ msgstr "MÁXIMO"
 msgid "Manage"
 msgstr "Administra"
 
-#: src/components/v2/V2Project/V2ManageTokensSection/V2ManageTokensModal.tsx
-msgid "Manage tokens"
-msgstr ""
-
 #: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2ManageTokensModal.tsx
 msgid "Manage {0}"
 msgstr "Gestionar {0}"
 
@@ -1572,18 +1575,22 @@ msgid "Redeem"
 msgstr "Canjear"
 
 #: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2ManageTokensModal.tsx
 msgid "Redeem your {tokensLabel} for a portion of the project's overflow. Any {tokensLabel} you redeem will be burned."
 msgstr "Canjea tus {tokensLabel} por una porción del excedente del proyecto. Cualquier {tokensLabel} que canjees será quemado."
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Redeem {0} {tokensTextShort} for ETH"
 msgstr "Canjear {0} {tokensTextShort} por ETH"
 
 #: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2ManageTokensModal.tsx
 msgid "Redeem {tokensLabel} for ETH"
 msgstr "Canjea {tokensLabel} por ETH"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Redeem {tokensTextLong} for ETH"
 msgstr "Canjear {tokensTextLong} por ETH"
 
@@ -1591,6 +1598,10 @@ msgstr "Canjear {tokensTextLong} por ETH"
 #: src/components/v2/V2Create/tabs/TokenTab/TokenTabContent.tsx
 msgid "Redemption rate"
 msgstr "Porcentaje de canje"
+
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
+msgid "Redemption rate:"
+msgstr ""
 
 #: src/components/Landing/index.tsx
 msgid "Redistributable surplus"
@@ -1601,6 +1612,7 @@ msgid "Refresh"
 msgstr "Actualizar"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Required"
 msgstr "Requerido"
 
@@ -2076,6 +2088,7 @@ msgid "Tokens can be redeemed for a portion of a project's <0>overflow</0>, lett
 msgstr "Los tokens pueden canjearse por una porción del <0>excedente</0> de un proyecto, permitiéndote beneficiarte de su éxito. Después de todo, tú le ayudaste a llegar ahí. El token podría también darte privilegios únicos exclusivos para miembros, y permitirte contribuir a la gobernanza de la comunidad."
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Tokens can be redeemed for a portion of this project's ETH overflow, according to the bonding curve rate of the current funding cycle. <0>Tokens are burned when they are redeemed.</0>"
 msgstr "Los tokens pueden ser canjeados por una porción del ETH excedente de este proyecto, de acuerdo con la tasa de curva de adhesión del presente ciclo de financiamiento. <0>Los tokens son quemados cuando se canjean.</0>"
 
@@ -2101,6 +2114,7 @@ msgid "Total raised"
 msgstr "Total recaudado"
 
 #: src/components/v1/V1Project/Rewards/index.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "Total supply"
 msgstr "Suministro total"
 
@@ -2322,6 +2336,7 @@ msgid "You have set a funding cycle target."
 msgstr "Has establecido un objetivo del ciclo de financiamiento."
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "You will receive {0}{1} ETH"
 msgstr "Vas a recibir {0}{1} ETH"
 
@@ -2525,6 +2540,7 @@ msgid "{0} {1} reserved"
 msgstr "{0} {1} reservados"
 
 #: src/components/v1/V1Project/Rewards/index.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "{0}% of supply"
 msgstr "{0}% del suministro"
 
@@ -2541,6 +2557,7 @@ msgid "{0}/{1} withdrawn"
 msgstr "{0}/{1} retirado"
 
 #: src/components/v1/V1Project/Rewards/index.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "{0}{1}"
 msgstr "{0}{1}"
 

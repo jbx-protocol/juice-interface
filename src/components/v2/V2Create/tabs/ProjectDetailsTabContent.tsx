@@ -4,7 +4,7 @@ import { useForm } from 'antd/lib/form/Form'
 import ProjectDetailsForm, {
   ProjectDetailsFormFields,
 } from 'components/shared/forms/ProjectDetailsForm'
-import ProjectHeader from 'components/shared/ProjectHeader'
+
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
 import { useCallback, useEffect } from 'react'
@@ -12,6 +12,7 @@ import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 
 import { formBottomMargin } from '../constants'
 import FormActionbar from '../FormActionBar'
+import ProjectPreview from '../ProjectPreview'
 import TabDescription from '../TabDescription'
 
 export default function ProjectDetailsTabContent({
@@ -86,7 +87,7 @@ export default function ProjectDetailsTabContent({
         />
       </Col>
       <Col md={10} xs={24}>
-        <ProjectHeader metadata={projectMetadata} />
+        <ProjectPreview />
       </Col>
     </Row>
   )

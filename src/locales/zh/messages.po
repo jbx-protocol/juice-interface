@@ -1398,8 +1398,9 @@ msgid "Powered by public smart contracts on <0>Ethereum</0>."
 msgstr "由<0>以太坊</0>公共智能合约提供支持。"
 
 #: src/components/v1/V1Create/index.tsx
-msgid "Preview"
-msgstr "预览"
+#: src/components/v2/V2Create/ProjectPreview.tsx
+msgid "Preview:"
+msgstr ""
 
 #: src/components/Landing/index.tsx
 msgid "Programmable spending"
@@ -1702,7 +1703,7 @@ msgstr "关于如何重新配置该项目筹款周期的规则"
 msgid "Save"
 msgstr "保存"
 
-#: src/components/v2/V2Create/tabs/ProjectDetailsTabContent.tsx
+#: src/components/v2/V2Create/tabs/ProjectDetailsTab/ProjectDetailsTabContent.tsx
 msgid "Save and Continue"
 msgstr "保存并继续"
 
@@ -2261,6 +2262,9 @@ msgid "When token minting is allowed, the owner of this project has permission t
 msgstr "当铸造代币功能启用时，该项目方可以铸造任意数量的代币并发送给任意地址。这一操作并不会增加项目金库的余额，所以会稀释所有当前代币持有者的份额。和其他属性一样，也可以在每个筹款周期中重新配置这一项。"
 
 #: src/components/shared/formItems/ProjectReserved.tsx
+msgid "Whenever someone pays your project, this percentage of tokens will be reserved and the rest will go to the payer. By default, these tokens are reserved for the project owner, but you can also allocate portions to other wallet addresses. Anyone can submit the transaction to distribute reserved tokens according to the allocation."
+msgstr ""
+
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Whenever someone pays your project, this percentage of tokens will be reserved and the rest will go to the payer. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner. Once tokens are reserved, anyone can \"mint\" them, which distributes them to their intended receivers."

@@ -1398,8 +1398,9 @@ msgid "Powered by public smart contracts on <0>Ethereum</0>."
 msgstr "Alimentado por contratos inteligentes públicos no <0>Ethereum</0>."
 
 #: src/components/v1/V1Create/index.tsx
-msgid "Preview"
-msgstr "Pré-visualizar"
+#: src/components/v2/V2Create/ProjectPreview.tsx
+msgid "Preview:"
+msgstr ""
 
 #: src/components/Landing/index.tsx
 msgid "Programmable spending"
@@ -1702,7 +1703,7 @@ msgstr "Regras para como os ciclos de financiamento deste projeto podem ser reco
 msgid "Save"
 msgstr "Salvar"
 
-#: src/components/v2/V2Create/tabs/ProjectDetailsTabContent.tsx
+#: src/components/v2/V2Create/tabs/ProjectDetailsTab/ProjectDetailsTabContent.tsx
 msgid "Save and Continue"
 msgstr "Salvar e Continuar"
 
@@ -2261,6 +2262,9 @@ msgid "When token minting is allowed, the owner of this project has permission t
 msgstr "Quando a criação de tokens é permitida, o dono deste projeto tem permissão de criar qualquer número de tokens para qualquer endereço à seu critério. Isso tem o efeito de diluir os detentores de token, sem aumentar o saldo do projeto. O dono do projeto pode reconfigurar isso junto de todas as outras propriedades do ciclo de financiamento."
 
 #: src/components/shared/formItems/ProjectReserved.tsx
+msgid "Whenever someone pays your project, this percentage of tokens will be reserved and the rest will go to the payer. By default, these tokens are reserved for the project owner, but you can also allocate portions to other wallet addresses. Anyone can submit the transaction to distribute reserved tokens according to the allocation."
+msgstr ""
+
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Whenever someone pays your project, this percentage of tokens will be reserved and the rest will go to the payer. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner. Once tokens are reserved, anyone can \"mint\" them, which distributes them to their intended receivers."

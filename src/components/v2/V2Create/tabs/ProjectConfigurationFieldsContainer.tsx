@@ -14,7 +14,7 @@ export default function ProjectConfigurationFieldsContainer({
 
   return (
     <Row gutter={40}>
-      <Col md={10} xs={FULL_WIDTH_PX}>
+      <Col md={12} xs={FULL_WIDTH_PX}>
         {children}
       </Col>
       <Col md={12} xs={FULL_WIDTH_PX}>

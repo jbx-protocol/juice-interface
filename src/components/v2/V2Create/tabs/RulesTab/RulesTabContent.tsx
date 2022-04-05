@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Col, Form, Row, Switch } from 'antd'
+import { Form, Switch } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 
 import { useAppDispatch } from 'hooks/AppDispatch'
@@ -26,7 +26,7 @@ type RulesFormFields = {
 
 export default function RulesTabContent({
   onFinish,
-  hidePreview,
+  showPreview,
   saveButton,
 }: TabContentProps) {
   const { theme } = useContext(ThemeContext)
@@ -82,55 +82,50 @@ export default function RulesTabContent({
     </React.Fragment>
   )
   return (
-    <Row gutter={32}>
-      <ProjectConfigurationFieldsContainer hidePreview={hidePreview}>
-        <>
-          <FundingCycleExplainer />
-          <Form
-            form={form}
-            layout="vertical"
-            onFinish={() => onFormSaved(form.getFieldsValue(true))}
-            style={{ marginBottom: formBottomMargin }}
-          >
-            <Form.Item
-              name="pausePay"
-              label={
-                <FormItemLabel style={{ marginBottom: 0 }}>
-                  <Trans>Pause payments</Trans>
-                </FormItemLabel>
-              }
-              extra={t`When Pause Payments is enabled, your project cannot receive direct payments.`}
-              valuePropName="checked"
-              style={{ ...shadowCard(theme), padding: '2rem' }}
-            >
-              <Switch />
-            </Form.Item>
-            <Form.Item
-              name="allowMint"
-              label={
-                <FormItemLabel style={{ marginBottom: 0 }}>
-                  <Trans>Allow token minting</Trans>
-                </FormItemLabel>
-              }
-              extra={tokenMintingExtra}
-              valuePropName="checked"
-              style={{ ...shadowCard(theme), padding: '2rem' }}
-            >
-              <Switch onChange={val => setShowMintingWarning(val)} />
-            </Form.Item>
-            <ProjectReconfigurationFormItem
-              value={form.getFieldValue('ballot') ?? fundingCycleData?.ballot}
-              onChange={(address: string) =>
-                form.setFieldsValue({ ballot: address })
-              }
-              style={{ ...shadowCard(theme), padding: '2rem' }}
-            />
-            {/* Default to floating save button if custom one not given */}
-            {saveButton ?? <FormActionbar isLastTab />}
-          </Form>
-        </>
-      </ProjectConfigurationFieldsContainer>
-      {!hidePreview && <Col md={12} xs={0}></Col>}
-    </Row>
+    <ProjectConfigurationFieldsContainer showPreview={showPreview}>
+      <FundingCycleExplainer />
+      <Form
+        form={form}
+        layout="vertical"
+        onFinish={() => onFormSaved(form.getFieldsValue(true))}
+        style={{ marginBottom: formBottomMargin }}
+      >
+        <Form.Item
+          name="pausePay"
+          label={
+            <FormItemLabel style={{ marginBottom: 0 }}>
+              <Trans>Pause payments</Trans>
+            </FormItemLabel>
+          }
+          extra={t`When Pause Payments is enabled, your project cannot receive direct payments.`}
+          valuePropName="checked"
+          style={{ ...shadowCard(theme), padding: '2rem' }}
+        >
+          <Switch />
+        </Form.Item>
+        <Form.Item
+          name="allowMint"
+          label={
+            <FormItemLabel style={{ marginBottom: 0 }}>
+              <Trans>Allow token minting</Trans>
+            </FormItemLabel>
+          }
+          extra={tokenMintingExtra}
+          valuePropName="checked"
+          style={{ ...shadowCard(theme), padding: '2rem' }}
+        >
+          <Switch onChange={val => setShowMintingWarning(val)} />
+        </Form.Item>
+        <ProjectReconfigurationFormItem
+          value={form.getFieldValue('ballot') ?? fundingCycleData?.ballot}
+          onChange={(address: string) =>
+            form.setFieldsValue({ ballot: address })
+          }
+          style={{ ...shadowCard(theme), padding: '2rem' }}
+        />
+        {/* Default to floating save button if custom one not given */}
+        {saveButton ?? <FormActionbar isLastTab />}
+      </Form>
+    </ProjectConfigurationFieldsContainer>
   )
 }

@@ -37,7 +37,7 @@ export default function ProjectPreview() {
     number: BigNumber.from(1),
     configuration: BigNumber.from(0),
     basedOn: BigNumber.from(0),
-    start: BigNumber.from(Date.now() * 1000),
+    start: BigNumber.from(Date.now()),
     metadata: BigNumber.from(0),
   }
 
@@ -66,19 +66,22 @@ export default function ProjectPreview() {
     balanceInDistributionLimitCurrency: BigNumber.from(0),
     tokenSymbol: undefined,
     projectOwnerAddress: userAddress,
+    isPreviewMode: true,
   }
 
   return (
     <V2ProjectContext.Provider value={project}>
-      <h3
-        style={{
-          marginTop: 5,
-          color: colors.text.secondary,
-        }}
-      >
-        <Trans>Preview</Trans>:
-      </h3>
-      <V2Project singleColumnLayout />
+      <div style={{ marginBottom: '6rem' }}>
+        <h3
+          style={{
+            marginTop: 5,
+            color: colors.text.secondary,
+          }}
+        >
+          <Trans>Preview:</Trans>
+        </h3>
+        <V2Project singleColumnLayout expandFundingCycleCard />
+      </div>
     </V2ProjectContext.Provider>
   )
 }

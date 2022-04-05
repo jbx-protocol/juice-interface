@@ -24,6 +24,7 @@ export default function PayoutSplitsCard() {
     usedDistributionLimit,
     projectOwnerAddress,
     balanceInDistributionLimitCurrency,
+    isPreviewMode,
   } = useContext(V2ProjectContext)
   const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
 
@@ -60,6 +61,7 @@ export default function PayoutSplitsCard() {
             type="ghost"
             size="small"
             onClick={() => setDistributePayoutsModalVisible(true)}
+            disabled={isPreviewMode}
           >
             <Trans>Distribute funds</Trans>
           </Button>

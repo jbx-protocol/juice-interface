@@ -19,8 +19,10 @@ const GUTTER_PX = 40
 
 export default function V2Project({
   singleColumnLayout,
+  expandFundingCycleCard,
 }: {
   singleColumnLayout?: boolean
+  expandFundingCycleCard?: boolean
 }) {
   const { projectId, projectMetadata, fundingCycle } =
     useContext(V2ProjectContext)
@@ -57,7 +59,7 @@ export default function V2Project({
           <Space direction="vertical" size={GUTTER_PX}>
             {/* TODO volume chart */}
             <V2ManageTokensSection />
-            <V2FundingCycleSection />
+            <V2FundingCycleSection expandCard={expandFundingCycleCard} />
           </Space>
         </Col>
       </Row>

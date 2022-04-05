@@ -333,7 +333,6 @@ export default function V2ProjectReconfigureModal({
         content={
           <FundingTabContent
             onFinish={saveFundingTab}
-            hidePreview
             saveButton={<StandardSaveButton />}
           />
         }
@@ -347,7 +346,6 @@ export default function V2ProjectReconfigureModal({
         content={
           <TokenTabContent
             onFinish={saveTokenTab}
-            hidePreview
             saveButton={<StandardSaveButton />}
           />
         }
@@ -361,7 +359,6 @@ export default function V2ProjectReconfigureModal({
         content={
           <RulesTabContent
             onFinish={saveRulesTab}
-            hidePreview
             saveButton={<StandardSaveButton />}
           />
         }

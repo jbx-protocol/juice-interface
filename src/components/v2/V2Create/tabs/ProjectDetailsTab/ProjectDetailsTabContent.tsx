@@ -1,5 +1,4 @@
 import { Trans } from '@lingui/macro'
-import { Col, Row } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import ProjectDetailsForm, {
   ProjectDetailsFormFields,
@@ -10,10 +9,10 @@ import { useAppSelector } from 'hooks/AppSelector'
 import { useCallback, useEffect } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 
-import { formBottomMargin } from '../constants'
-import FormActionbar from '../FormActionBar'
-import ProjectPreview from '../ProjectPreview'
-import TabDescription from '../TabDescription'
+import { formBottomMargin } from '../../constants'
+import FormActionbar from '../../FormActionBar'
+import TabDescription from '../../TabDescription'
+import ProjectConfigurationFieldsContainer from '../ProjectConfigurationFieldsContainer'
 
 export default function ProjectDetailsTabContent({
   onFinish,
@@ -69,26 +68,21 @@ export default function ProjectDetailsTabContent({
   }, [resetProjectForm])
 
   return (
-    <Row gutter={32}>
-      <Col md={10} xs={24}>
-        <TabDescription>
-          You can edit your project details later on at any time.
-        </TabDescription>
-        <ProjectDetailsForm
-          form={projectForm}
-          onFinish={onProjectFormSaved}
-          hideProjectHandle
-          saveButton={
-            <FormActionbar>
-              <Trans>Save and Continue</Trans>
-            </FormActionbar>
-          }
-          style={{ marginBottom: formBottomMargin }}
-        />
-      </Col>
-      <Col md={10} xs={24}>
-        <ProjectPreview />
-      </Col>
-    </Row>
+    <ProjectConfigurationFieldsContainer showPreview>
+      <TabDescription>
+        You can edit your project details later on at any time.
+      </TabDescription>
+      <ProjectDetailsForm
+        form={projectForm}
+        onFinish={onProjectFormSaved}
+        hideProjectHandle
+        saveButton={
+          <FormActionbar>
+            <Trans>Save and Continue</Trans>
+          </FormActionbar>
+        }
+        style={{ marginBottom: formBottomMargin }}
+      />
+    </ProjectConfigurationFieldsContainer>
   )
 }

@@ -45,7 +45,7 @@ export default function V2Project({
         <Col md={colSizeMd} xs={24}>
           <TreasuryStats />
         </Col>
-        <Col md={colSizeMd} xs={24}>
+        <Col md={colSizeMd} xs={24} style={{ marginTop: GUTTER_PX }}>
           <PayInputGroup
             PayButton={V2PayButton}
             reservedRate={fundingCycleMetadata?.reservedRate.toNumber()}

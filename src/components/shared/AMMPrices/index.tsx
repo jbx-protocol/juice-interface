@@ -1,6 +1,7 @@
 import { useUniswapPriceQuery } from 'hooks/ERC20UniswapPrice'
 import { useSushiswapPriceQuery } from 'hooks/ERC20SushiswapPrice'
 import { CSSProperties } from 'react'
+import { Trans } from '@lingui/macro'
 
 import TokenAMMPriceRow from './TokenAMMPriceRow'
 
@@ -30,13 +31,11 @@ export default function AMMPrices({
       tokenAddress,
     })
 
-  const tokenAMMPricingLabel = document.createElement('label')
-  tokenAMMPricingLabel.innerHTML = 'Current 3rd Party Exchange Rates'
-  document.body.appendChild(tokenAMMPricingLabel)
-
   return (
     <div style={{ ...style }}>
-      <p>Current 3rd Party Exchange Rates</p>
+      <p>
+        <Trans>Current 3rd Party Exchange Rates</Trans>
+      </p>
       <TokenAMMPriceRow
         exchangeName="Uniswap"
         tokenSymbol={tokenSymbol}

@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { BallotState } from 'models/ballot-state'
 import { useContext } from 'react'
-import { parseWad } from 'utils/formatNumber'
+import { parseWad, permyriadToPercent } from 'utils/formatNumber'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import useProjectReservedTokens from './ProjectReservedTokens'
@@ -37,22 +37,24 @@ export function useETHReceivedFromTokens({
 
   const redemptionRate =
     ballotState === BallotState.Active
-      ? fundingCycleMetadata.ballotRedemptionRate
-      : fundingCycleMetadata.redemptionRate
+      ? permyriadToPercent(fundingCycleMetadata.ballotRedemptionRate)
+      : permyriadToPercent(fundingCycleMetadata.redemptionRate)
+
+  const redemptionRateBN = BigNumber.from(redemptionRate)
 
   const base =
     realTotalTokenSupply && overflow && tokenAmount
-      ? overflow.mul(parseWad(tokenAmount)).div(realTotalTokenSupply)
+      ? overflow.mul(parseWad(tokenAmount ?? 0)).div(realTotalTokenSupply)
       : BigNumber.from(0)
 
   if (!redemptionRate || !base || !overflow) return BigNumber.from(0)
 
-  const numerator = redemptionRate.add(
+  const numerator = redemptionRateBN.add(
     parseWad(tokenAmount ?? 0)
-      .mul(BigNumber.from(200).sub(redemptionRate))
+      .mul(BigNumber.from(100).sub(redemptionRateBN))
       .div(realTotalTokenSupply),
   )
-  const denominator = 200
+  const denominator = 100
 
   // Formula: https://www.desmos.com/calculator/sp9ru6zbpk
   return base.mul(numerator).div(denominator)

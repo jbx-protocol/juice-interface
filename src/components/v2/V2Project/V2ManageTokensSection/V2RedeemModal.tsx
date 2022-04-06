@@ -74,7 +74,8 @@ export default function V2RedeemModal({
   // 0.5% slippage for USD-denominated projects
   const minAmount = distributionLimitCurrency?.eq(V2_CURRENCY_USD)
     ? rewardAmount?.mul(1000).div(1005)
-    : rewardAmount
+    : // ? rewardAmount?.mul(100).div(101)
+      rewardAmount
 
   async function redeem() {
     await form.validateFields()
@@ -212,8 +213,8 @@ export default function V2RedeemModal({
           {overflow?.gt(0) ? (
             <Trans>
               Tokens can be redeemed for a portion of this project's ETH
-              overflow, according to the bonding curve rate of the current
-              funding cycle.{' '}
+              overflow, according to the redemption rate of the current funding
+              cycle.{' '}
               <span style={{ fontWeight: 500, color: colors.text.warn }}>
                 Tokens are burned when they are redeemed.
               </span>

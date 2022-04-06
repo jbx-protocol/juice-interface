@@ -30,8 +30,13 @@ export default function AMMPrices({
       tokenAddress,
     })
 
+  const tokenAMMPricingLabel = document.createElement('label')
+  tokenAMMPricingLabel.innerHTML = 'Current 3rd Party Exchange Rates'
+  document.body.appendChild(tokenAMMPricingLabel)
+
   return (
     <div style={{ ...style }}>
+      <p>Current 3rd Party Exchange Rates</p>
       <TokenAMMPriceRow
         exchangeName="Uniswap"
         tokenSymbol={tokenSymbol}

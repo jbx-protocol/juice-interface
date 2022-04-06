@@ -2,7 +2,7 @@ import { Skeleton, Space } from 'antd'
 import FundingProgressBar from 'components/shared/Project/FundingProgressBar'
 import { useContext } from 'react'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import useProjectTerminalOverflow from 'hooks/v2/contractReader/ProjectTerminalOverflow'
+import useTerminalCurrentOverflow from 'hooks/v2/contractReader/TerminalCurrentOverflow'
 
 import ProjectBalance from './ProjectBalance'
 import DistributedRatio from './DistributedRatio'
@@ -17,7 +17,7 @@ export default function TreasuryStats() {
   } = useContext(V2ProjectContext)
 
   const { data: overflow, loading: overflowLoading } =
-    useProjectTerminalOverflow({
+    useTerminalCurrentOverflow({
       terminal: terminals?.[0],
       projectId,
     })

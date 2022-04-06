@@ -15,7 +15,7 @@ import useProjectDistributionLimit from 'hooks/v2/contractReader/ProjectDistribu
 import { useMemo } from 'react'
 import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
-import { V2_CURRENCY_ETH } from 'utils/v2/currency'
+import { V2CurrencyName, V2_CURRENCY_ETH } from 'utils/v2/currency'
 
 import { decodeV2FundingCycleMetadata } from 'utils/v2/fundingCycle'
 
@@ -24,9 +24,9 @@ import useSymbolOfERC20 from 'hooks/v1/contractReader/SymbolOfERC20' // this is 
 import useProjectOwner from 'hooks/v2/contractReader/ProjectOwner'
 
 import useUsedDistributionLimit from 'hooks/v2/contractReader/UsedDistributionLimit'
-import useOverflowOfV2Project from 'hooks/v2/contractReader/OverflowOfV2Project'
+import useTerminalCurrentOverflow from 'hooks/v2/contractReader/TerminalCurrentOverflow'
 import { useBallotState } from 'hooks/v2/contractReader/BallotState'
-import useTotalSupplyOfV2ProjectToken from 'hooks/v2/contractReader/TotalSupplyOfV2ProjectToken'
+import useProjectTokenTotalSupply from 'hooks/v2/contractReader/ProjectTokenTotalSupply'
 
 import { layouts } from 'constants/styles/layouts'
 
@@ -72,12 +72,12 @@ export default function V2Dashboard() {
     projectId,
   })
 
-  const primaryTerminal = terminals?.[0]
+  const primaryTerminal = terminals?.[0] // TODO: make primaryTerminalOf hook and use it
 
   const { data: distributionLimitData } = useProjectDistributionLimit({
     projectId,
     domain: fundingCycle?.configuration?.toString(),
-    terminal: primaryTerminal, //TODO: make primaryTerminalOf hook and use it
+    terminal: primaryTerminal,
   })
 
   const { data: usedDistributionLimit } = useUsedDistributionLimit({
@@ -121,12 +121,15 @@ export default function V2Dashboard() {
   const { data: queuedDistributionLimitData } = useProjectDistributionLimit({
     projectId,
     domain: queuedFundingCycle?.configuration.toString(),
-    terminal: primaryTerminal, //TODO: make primaryTerminalOf hook and use it
+    terminal: primaryTerminal,
   })
   const [queuedDistributionLimit, queuedDistributionLimitCurrency] =
     queuedDistributionLimitData ?? []
 
-  const { data: overflow } = useOverflowOfV2Project(projectId, primaryTerminal)
+  const { data: overflow } = useTerminalCurrentOverflow({
+    projectId,
+    terminal: primaryTerminal,
+  })
 
   const converter = useCurrencyConverter()
   const balanceInDistributionLimitCurrency = useMemo(
@@ -134,18 +137,17 @@ export default function V2Dashboard() {
       ETHBalance &&
       converter.wadToCurrency(
         ETHBalance,
-        (distributionLimitCurrency?.toNumber() as V2CurrencyOption) ===
-          V2_CURRENCY_ETH
-          ? 'ETH'
-          : 'USD',
-        'ETH',
+        V2CurrencyName(
+          distributionLimitCurrency?.toNumber() as V2CurrencyOption,
+        ),
+        V2CurrencyName(V2_CURRENCY_ETH),
       ),
     [ETHBalance, converter, distributionLimitCurrency],
   )
 
   const { data: projectOwnerAddress } = useProjectOwner(projectId)
 
-  const { data: totalTokenSupply } = useTotalSupplyOfV2ProjectToken(projectId)
+  const { data: totalTokenSupply } = useProjectTokenTotalSupply(projectId)
 
   const { data: ballotState } = useBallotState(projectId)
 

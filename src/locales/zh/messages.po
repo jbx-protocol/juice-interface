@@ -258,7 +258,6 @@ msgstr "添加代币接收者"
 
 #: src/components/shared/formItems/ProjectPayoutMods.tsx
 #: src/components/v1/V1Project/Rewards/index.tsx
-#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "Address"
 msgstr "地址"
 
@@ -1136,7 +1135,6 @@ msgid "MAX"
 msgstr "最大值"
 
 #: src/components/v1/V1Project/Rewards/index.tsx
-#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "Manage"
 msgstr "管理代币"
 
@@ -1144,6 +1142,10 @@ msgstr "管理代币"
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ManageTokensModal.tsx
 msgid "Manage {0}"
 msgstr "管理 {0}"
+
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
+msgid "Manage {tokenText}"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
@@ -1464,6 +1466,10 @@ msgstr "项目拥有者"
 #: src/components/Landing/QAs.tsx
 msgid "Project owners can configure a delay period, meaning reconfigurations to an upcoming funding cycle must be submitted a certain number of days before it starts. For example, a 3-day delay period means reconfigurations must be submitted at least 3 days before the next funding cycle starts. This gives token holders time to react to the decision and reduces the chance of rug-pulls."
 msgstr "项目方可以配置一个延迟期，这意味着对即将到来的筹款周期的重新配置必须在某个时间段内提交。例如，3天的延迟期意味着重新配置必须至少在下一个筹款周期开始前的3天内提交。这给了代币持有者对决策做出反应的时间，并减少了项目方跑路的机会。"
+
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
+msgid "Project token"
+msgstr ""
 
 #: src/components/v2/V2Dashboard/Dashboard404.tsx
 msgid "Project {projectId} not found"
@@ -2075,6 +2081,7 @@ msgid "Token symbol"
 msgstr "代币符号"
 
 #: src/components/shared/Mod.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 #: src/utils/tokenSymbolText.ts
 msgid "Tokens"
 msgstr "代币"
@@ -2494,6 +2501,10 @@ msgstr "收取 JBX 费用之后 {0}"
 msgid "{0} ago"
 msgstr "{0} 之前"
 
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
+msgid "{0} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
+msgstr ""
+
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 msgid "{0} balance"
 msgstr "{0} 余额"
@@ -2540,7 +2551,6 @@ msgid "{0} {1} reserved"
 msgstr "{0}{1} 保留"
 
 #: src/components/v1/V1Project/Rewards/index.tsx
-#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "{0}% of supply"
 msgstr "占比 {0}%"
 
@@ -2557,7 +2567,6 @@ msgid "{0}/{1} withdrawn"
 msgstr "已提取 {0}/{1}"
 
 #: src/components/v1/V1Project/Rewards/index.tsx
-#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "{0}{1}"
 msgstr "{0}{1}"
 
@@ -2616,15 +2625,19 @@ msgstr "在 {exchangeName} 的兑换率为 {tokenSymbol}/ETH"
 msgid "{tokenTextSingular} recipients"
 msgstr ""
 
-#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
-msgid "{tokenText} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
-msgstr ""
-
 #: src/components/v1/V1Project/Rewards/index.tsx
 msgid "{tokensLabel} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
 msgstr "{tokensLabel} 会被分配给付款的人。如果项目设置了筹款目标，可以燃烧代币来按比例赎回溢出池中的 ETH。"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/ReservedTokensSplitsCard.tsx
 msgid "{tokensText} reserved"
+msgstr ""
+
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
+msgid "{unclaimedBalanceFormatted} {tokenText} claimable"
+msgstr ""
+
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
+msgid "{userOwnershipPercentage}% of total supply"
 msgstr ""
 

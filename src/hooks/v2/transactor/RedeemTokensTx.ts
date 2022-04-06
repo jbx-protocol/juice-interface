@@ -11,13 +11,12 @@ import { TransactorInstance } from '../../Transactor'
 export function useRedeemTokensTx(): TransactorInstance<{
   redeemAmount: BigNumber
   minAmount: BigNumber
-  preferConverted: boolean
 }> {
   const { transactor, contracts } = useContext(V2UserContext)
   const { userAddress } = useContext(NetworkContext)
   const { projectId } = useContext(V2ProjectContext)
 
-  return ({ redeemAmount, minAmount, preferConverted }, txOpts) => {
+  return ({ redeemAmount, minAmount }, txOpts) => {
     if (
       !transactor ||
       !userAddress ||
@@ -35,9 +34,9 @@ export function useRedeemTokensTx(): TransactorInstance<{
       'redeemTokensOf',
       [
         userAddress,
-        projectId.toHexString(),
-        redeemAmount.toHexString(), // tokens to redeem
-        minAmount.toHexString(), // min amount of ETH to receive
+        projectId,
+        redeemAmount, // tokens to redeem
+        minAmount, // min amount of ETH to receive
         userAddress, // beneficiary
         memo,
         randomBytes(1), // TODO: metadata

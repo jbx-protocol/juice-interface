@@ -258,7 +258,6 @@ msgstr "Добавить получателя токена"
 
 #: src/components/shared/formItems/ProjectPayoutMods.tsx
 #: src/components/v1/V1Project/Rewards/index.tsx
-#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "Address"
 msgstr "Адрес"
 
@@ -1136,7 +1135,6 @@ msgid "MAX"
 msgstr "Максимум"
 
 #: src/components/v1/V1Project/Rewards/index.tsx
-#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "Manage"
 msgstr "Управление"
 
@@ -1144,6 +1142,10 @@ msgstr "Управление"
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ManageTokensModal.tsx
 msgid "Manage {0}"
 msgstr "Управлять {0}"
+
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
+msgid "Manage {tokenText}"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
@@ -1464,6 +1466,10 @@ msgstr "Владелец проекта"
 #: src/components/Landing/QAs.tsx
 msgid "Project owners can configure a delay period, meaning reconfigurations to an upcoming funding cycle must be submitted a certain number of days before it starts. For example, a 3-day delay period means reconfigurations must be submitted at least 3 days before the next funding cycle starts. This gives token holders time to react to the decision and reduces the chance of rug-pulls."
 msgstr "Владельцы проектов могут настроить период задержки, что означает, что изменения в конфигурации предстоящего цикла финансирования должны быть представлены за определенное определенное количество дней до его начала. Например, период задержки в 3 дня означает, что изменения конфигурации должны быть представлены не позднее чем за 3 дня до начала следующего цикла финансирования. Это дает держателям токенов время отреагировать на принятое решение и снижает вероятность rug-pulls."
+
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
+msgid "Project token"
+msgstr ""
 
 #: src/components/v2/V2Dashboard/Dashboard404.tsx
 msgid "Project {projectId} not found"
@@ -2075,6 +2081,7 @@ msgid "Token symbol"
 msgstr "Символ токена"
 
 #: src/components/shared/Mod.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 #: src/utils/tokenSymbolText.ts
 msgid "Tokens"
 msgstr "Жетоны"
@@ -2494,6 +2501,10 @@ msgstr "{0} после комиссии JBX"
 msgid "{0} ago"
 msgstr "{0} лет назад"
 
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
+msgid "{0} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
+msgstr ""
+
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 msgid "{0} balance"
 msgstr "{0} баланс"
@@ -2540,7 +2551,6 @@ msgid "{0} {1} reserved"
 msgstr "{0} {1} зарезервировано"
 
 #: src/components/v1/V1Project/Rewards/index.tsx
-#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "{0}% of supply"
 msgstr "{0}% от поставки"
 
@@ -2557,7 +2567,6 @@ msgid "{0}/{1} withdrawn"
 msgstr "{0}{1} снято"
 
 #: src/components/v1/V1Project/Rewards/index.tsx
-#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "{0}{1}"
 msgstr "{0}{1}"
 
@@ -2616,15 +2625,19 @@ msgstr "Обменный курс {tokenSymbol}/ETH на {exchangeName}."
 msgid "{tokenTextSingular} recipients"
 msgstr ""
 
-#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
-msgid "{tokenText} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
-msgstr ""
-
 #: src/components/v1/V1Project/Rewards/index.tsx
 msgid "{tokensLabel} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
 msgstr "{tokensLabel} распространяются среди всех, кто оплачивает этот проект. Если проектустановил целевой показатель финансирования, токены могут быть выкуплены для частипереполнения проекта независимо от того, были ли они еще востребованы или нет."
 
 #: src/components/v2/V2Project/V2FundingCycleSection/ReservedTokensSplitsCard.tsx
 msgid "{tokensText} reserved"
+msgstr ""
+
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
+msgid "{unclaimedBalanceFormatted} {tokenText} claimable"
+msgstr ""
+
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
+msgid "{userOwnershipPercentage}% of total supply"
 msgstr ""
 

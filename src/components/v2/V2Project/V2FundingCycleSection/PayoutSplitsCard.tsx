@@ -95,6 +95,7 @@ export default function PayoutSplitsCard() {
       <DistributePayoutsModal
         visible={distributePayoutsModalVisible}
         onCancel={() => setDistributePayoutsModalVisible(false)}
+        onConfirmed={() => setDistributePayoutsModalVisible(false)}
       />
     </CardSection>
   )

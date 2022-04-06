@@ -19,7 +19,7 @@ import { useIssueTokensTx } from 'hooks/v2/transactor/IssueTokensTx'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import useTotalBalanceOf from 'hooks/v2/contractReader/TotalBalanceOf'
 import { ThemeContext } from 'contexts/themeContext'
-import useUnclaimedERC20BalanceOfUser from 'hooks/v2/contractReader/UnclaimedERC20BalanceOfUser'
+import useUserUnclaimedTokenBalance from 'hooks/v2/contractReader/UserUnclaimedTokenBalance'
 
 import V2ManageTokensModal from './V2ManageTokensModal'
 
@@ -41,63 +41,82 @@ export default function V2ManageTokensSection() {
   const { userAddress } = useContext(NetworkContext)
 
   const { data: claimedBalance } = useERC20BalanceOf(tokenAddress, userAddress)
-  const { data: unclaimedBalance } = useUnclaimedERC20BalanceOfUser()
+  const { data: unclaimedBalance } = useUserUnclaimedTokenBalance()
 
   const labelStyle: CSSProperties = {
     width: 128,
   }
 
-  const ticketsIssued = tokenAddress
-    ? tokenAddress !== constants.AddressZero
-    : false
+  const hasIssuedERC20 = tokenAddress !== constants.AddressZero
 
   const hasIssueTicketsPermission = useHasPermission(V2OperatorPermission.ISSUE)
 
   const tokenText = tokenSymbolText({
     tokenSymbol: tokenSymbol,
-    capitalize: true,
+    capitalize: false,
     plural: true,
   })
 
   const { data: totalBalance } = useTotalBalanceOf(userAddress, projectId)
 
-  const share = formatPercent(totalBalance, totalTokenSupply)
+  // %age of tokens the user owns.
+  const userOwnershipPercentage =
+    formatPercent(totalBalance, totalTokenSupply) || '0'
 
   const showIssueTokensButton =
-    !ticketsIssued && hasIssueTicketsPermission && !isPreviewMode
+    !hasIssuedERC20 && hasIssueTicketsPermission && !isPreviewMode
+
+  const claimedBalanceFormatted = formatWad(claimedBalance ?? 0, {
+    precision: 0,
+  })
+  const unclaimedBalanceFormatted = formatWad(unclaimedBalance ?? 0, {
+    precision: 0,
+  })
 
   return (
     <>
       <Space direction="vertical" size="large">
         <Statistic
           title={
-            <div>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
               <SectionHeader
-                text={tokenText}
+                text={<Trans>Tokens</Trans>}
                 tip={
                   <Trans>
-                    {tokenText} are distributed to anyone who pays this project.
-                    If the project has set a funding target, tokens can be
-                    redeemed for a portion of the project's overflow whether or
-                    not they have been claimed yet.
+                    {tokenSymbolText({
+                      tokenSymbol: tokenSymbol,
+                      capitalize: true,
+                      plural: true,
+                      includeTokenWord: true,
+                    })}{' '}
+                    are distributed to anyone who pays this project. If the
+                    project has set a funding target, tokens can be redeemed for
+                    a portion of the project's overflow whether or not they have
+                    been claimed yet.
                   </Trans>
                 }
               />
+              {showIssueTokensButton && (
+                <IssueTicketsButton useIssueTokensTx={useIssueTokensTx} />
+              )}
             </div>
           }
           valueRender={() => (
             <>
-              <Descriptions layout="horizontal" column={1}>
-                {ticketsIssued && (
-                  <Descriptions.Item
-                    label={t`Address`}
-                    labelStyle={labelStyle}
-                    children={
-                      <div style={{ width: '100%' }}>
-                        <FormattedAddress address={tokenAddress} />
-                      </div>
-                    }
-                  />
+              <Descriptions layout="horizontal" column={1} size="small">
+                {hasIssuedERC20 && tokenSymbol && (
+                  <>
+                    <Descriptions.Item
+                      label={t`Project token`}
+                      labelStyle={labelStyle}
+                      children={
+                        <div style={{ width: '100%' }}>
+                          ${tokenSymbol} (
+                          <FormattedAddress address={tokenAddress} />)
+                        </div>
+                      }
+                    />
+                  </>
                 )}
                 <Descriptions.Item
                   label={t`Total supply`}
@@ -113,7 +132,8 @@ export default function V2ManageTokensSection() {
                         flexWrap: 'wrap',
                       }}
                     >
-                      {formatWad(totalTokenSupply, { precision: 0 })}
+                      {formatWad(totalTokenSupply, { precision: 0 })}{' '}
+                      {tokenText}
                       {/* TODO: Holders modal button */}
                     </div>
                   }
@@ -134,20 +154,22 @@ export default function V2ManageTokensSection() {
                         }}
                       >
                         <div>
-                          {ticketsIssued && (
+                          {hasIssuedERC20 && (
                             <div>
-                              {`${formatWad(claimedBalance ?? 0, {
-                                precision: 0,
-                              })} `}
+                              {claimedBalanceFormatted} {tokenText}
                             </div>
                           )}
                           <div>
-                            <Trans>
-                              {formatWad(unclaimedBalance ?? 0, {
-                                precision: 0,
-                              })}
-                              {ticketsIssued ? <> claimable</> : null}
-                            </Trans>
+                            {hasIssuedERC20 ? (
+                              <Trans>
+                                {unclaimedBalanceFormatted} {tokenText}{' '}
+                                claimable
+                              </Trans>
+                            ) : (
+                              <>
+                                {unclaimedBalanceFormatted} {tokenText}
+                              </>
+                            )}
                           </div>
                           <div
                             style={{
@@ -157,7 +179,9 @@ export default function V2ManageTokensSection() {
                               color: colors.text.tertiary,
                             }}
                           >
-                            <Trans>{share || 0}% of supply</Trans>
+                            <Trans>
+                              {userOwnershipPercentage}% of total supply
+                            </Trans>
                           </div>
                         </div>
 
@@ -165,16 +189,13 @@ export default function V2ManageTokensSection() {
                           size="small"
                           onClick={() => setManageTokensModalVisible(true)}
                         >
-                          <Trans>Manage</Trans>
+                          <Trans>Manage {tokenText}</Trans>
                         </Button>
                       </div>
                     }
                   />
                 ) : null}
               </Descriptions>
-              {showIssueTokensButton && (
-                <IssueTicketsButton useIssueTokensTx={useIssueTokensTx} />
-              )}
             </>
           )}
         />

@@ -3,34 +3,36 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { BigNumber } from '@ethersproject/bignumber'
 import { useContext } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbers'
-import { V2UserContext } from 'contexts/v2/userContext'
+
+import { V2ContractName } from 'models/v2/contracts'
 
 import useContractReader from './V2ContractReader'
 import useTotalBalanceOf from './TotalBalanceOf'
 
 /** Returns claimable amount of project tokens for user with address `userAddress` and balance `totalBalance`. */
-export default function useReclaimableOverflowOf() {
-  const { terminals, projectId } = useContext(V2ProjectContext)
+export default function useTerminalCurrentReclaimableOverflow({
+  terminal,
+}: {
+  terminal: string | undefined
+}) {
+  const { projectId } = useContext(V2ProjectContext)
   const { userAddress } = useContext(NetworkContext)
-  const { contracts } = useContext(V2UserContext)
 
-  const { data: totalBalance } = useTotalBalanceOf(userAddress, projectId)
-
-  const _projectId = projectId
-    ? BigNumber.from(projectId).toHexString()
-    : undefined
-
-  const primaryTerminal = terminals?.[0]
+  const { data: totalBalance, loading: totalBalanceLoading } =
+    useTotalBalanceOf(userAddress, projectId)
 
   return useContractReader<BigNumber>({
-    contract: contracts?.JBPaymentTerminalStore,
+    contract: V2ContractName.JBPaymentTerminalStore,
     functionName: 'currentReclaimableOverflowOf',
     args:
-      userAddress && _projectId
+      !totalBalanceLoading &&
+      totalBalance !== undefined &&
+      terminal &&
+      projectId
         ? [
-            primaryTerminal,
-            _projectId,
-            totalBalance?.toHexString(),
+            terminal,
+            projectId,
+            totalBalance,
             false, // _useTotalOverflow (just using 1 terminal for now)
           ]
         : null,

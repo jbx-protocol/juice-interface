@@ -258,7 +258,6 @@ msgstr "Token alıcısı ekle"
 
 #: src/components/shared/formItems/ProjectPayoutMods.tsx
 #: src/components/v1/V1Project/Rewards/index.tsx
-#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "Address"
 msgstr "Adres"
 
@@ -1136,13 +1135,16 @@ msgid "MAX"
 msgstr "MAKS"
 
 #: src/components/v1/V1Project/Rewards/index.tsx
-#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "Manage"
 msgstr "Yönet"
 
 #: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ManageTokensModal.tsx
 msgid "Manage {0}"
+msgstr ""
+
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
+msgid "Manage {tokenText}"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
@@ -1463,6 +1465,10 @@ msgstr "Proje sahibi"
 
 #: src/components/Landing/QAs.tsx
 msgid "Project owners can configure a delay period, meaning reconfigurations to an upcoming funding cycle must be submitted a certain number of days before it starts. For example, a 3-day delay period means reconfigurations must be submitted at least 3 days before the next funding cycle starts. This gives token holders time to react to the decision and reduces the chance of rug-pulls."
+msgstr ""
+
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
+msgid "Project token"
 msgstr ""
 
 #: src/components/v2/V2Dashboard/Dashboard404.tsx
@@ -2075,6 +2081,7 @@ msgid "Token symbol"
 msgstr "Token sembolü"
 
 #: src/components/shared/Mod.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 #: src/utils/tokenSymbolText.ts
 msgid "Tokens"
 msgstr "Token'lar"
@@ -2494,6 +2501,10 @@ msgstr ""
 msgid "{0} ago"
 msgstr "{0} önce"
 
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
+msgid "{0} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
+msgstr ""
+
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 msgid "{0} balance"
 msgstr "{0} bakiyesi"
@@ -2540,7 +2551,6 @@ msgid "{0} {1} reserved"
 msgstr ""
 
 #: src/components/v1/V1Project/Rewards/index.tsx
-#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "{0}% of supply"
 msgstr "%{0} arz"
 
@@ -2557,7 +2567,6 @@ msgid "{0}/{1} withdrawn"
 msgstr "{0}/{1} çekildi"
 
 #: src/components/v1/V1Project/Rewards/index.tsx
-#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "{0}{1}"
 msgstr "{0}{1}"
 
@@ -2616,15 +2625,19 @@ msgstr "{exchangeName} üzerinde {tokenSymbol}/ETH kuru."
 msgid "{tokenTextSingular} recipients"
 msgstr ""
 
-#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
-msgid "{tokenText} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
-msgstr ""
-
 #: src/components/v1/V1Project/Rewards/index.tsx
 msgid "{tokensLabel} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
 msgstr ""
 
 #: src/components/v2/V2Project/V2FundingCycleSection/ReservedTokensSplitsCard.tsx
 msgid "{tokensText} reserved"
+msgstr ""
+
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
+msgid "{unclaimedBalanceFormatted} {tokenText} claimable"
+msgstr ""
+
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
+msgid "{userOwnershipPercentage}% of total supply"
 msgstr ""
 

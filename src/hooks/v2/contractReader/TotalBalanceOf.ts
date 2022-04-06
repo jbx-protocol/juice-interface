@@ -1,6 +1,5 @@
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
-import { V2UserContext } from 'contexts/v2/userContext'
-import { useContext } from 'react'
+import { V2ContractName } from 'models/v2/contracts'
 import { bigNumbersDiff } from 'utils/bigNumbers'
 
 import useContractReader from './V2ContractReader'
@@ -10,10 +9,8 @@ export default function useTotalBalanceOf(
   userAddress: string | undefined,
   projectId: BigNumberish | undefined,
 ) {
-  const { contracts } = useContext(V2UserContext)
-
   return useContractReader<BigNumber>({
-    contract: contracts?.JBTokenStore,
+    contract: V2ContractName.JBTokenStore,
     functionName: 'balanceOf',
     args:
       userAddress && projectId

@@ -86,7 +86,6 @@ export default function V2RedeemModal({
       {
         redeemAmount: parseWad(redeemAmount),
         minAmount,
-        preferConverted: false, // TODO support in UI
       },
       {
         onConfirmed: () => setRedeemAmount(undefined),

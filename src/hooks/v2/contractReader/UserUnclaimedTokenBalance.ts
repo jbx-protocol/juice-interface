@@ -4,18 +4,18 @@ import { useContext } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbers'
 
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { V2UserContext } from 'contexts/v2/userContext'
+
+import { V2ContractName } from 'models/v2/contracts'
 
 import useContractReader from './V2ContractReader'
 
 /** Returns unclaimed balance of user with `userAddress`. */
-export default function useUnclaimedERC20BalanceOfUser() {
+export default function useUserUnclaimedTokenBalance() {
   const { userAddress } = useContext(NetworkContext)
   const { projectId } = useContext(V2ProjectContext)
-  const { contracts } = useContext(V2UserContext)
 
   return useContractReader<BigNumber>({
-    contract: contracts?.JBTokenStore,
+    contract: V2ContractName.JBTokenStore,
     functionName: 'unclaimedBalanceOf',
     args:
       userAddress && projectId

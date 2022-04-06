@@ -253,7 +253,6 @@ msgstr ""
 
 #: src/components/shared/formItems/ProjectPayoutMods.tsx
 #: src/components/v1/V1Project/Rewards/index.tsx
-#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "Address"
 msgstr ""
 
@@ -1131,7 +1130,6 @@ msgid "MAX"
 msgstr "MAX"
 
 #: src/components/v1/V1Project/Rewards/index.tsx
-#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "Manage"
 msgstr ""
 
@@ -1139,6 +1137,10 @@ msgstr ""
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ManageTokensModal.tsx
 msgid "Manage {0}"
 msgstr "Manage {0}"
+
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
+msgid "Manage {tokenText}"
+msgstr "Manage {tokenText}"
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
@@ -1459,6 +1461,10 @@ msgstr ""
 #: src/components/Landing/QAs.tsx
 msgid "Project owners can configure a delay period, meaning reconfigurations to an upcoming funding cycle must be submitted a certain number of days before it starts. For example, a 3-day delay period means reconfigurations must be submitted at least 3 days before the next funding cycle starts. This gives token holders time to react to the decision and reduces the chance of rug-pulls."
 msgstr "Project owners can configure a delay period, meaning reconfigurations to an upcoming funding cycle must be submitted a certain number of days before it starts. For example, a 3-day delay period means reconfigurations must be submitted at least 3 days before the next funding cycle starts. This gives token holders time to react to the decision and reduces the chance of rug-pulls."
+
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
+msgid "Project token"
+msgstr "Project token"
 
 #: src/components/v2/V2Dashboard/Dashboard404.tsx
 msgid "Project {projectId} not found"
@@ -2070,6 +2076,7 @@ msgid "Token symbol"
 msgstr "Token symbol"
 
 #: src/components/shared/Mod.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 #: src/utils/tokenSymbolText.ts
 msgid "Tokens"
 msgstr ""
@@ -2489,6 +2496,10 @@ msgstr "{0} after JBX fee"
 msgid "{0} ago"
 msgstr ""
 
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
+msgid "{0} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
+msgstr "{0} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
+
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 msgid "{0} balance"
 msgstr ""
@@ -2535,7 +2546,6 @@ msgid "{0} {1} reserved"
 msgstr "{0} {1} reserved"
 
 #: src/components/v1/V1Project/Rewards/index.tsx
-#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "{0}% of supply"
 msgstr ""
 
@@ -2552,7 +2562,6 @@ msgid "{0}/{1} withdrawn"
 msgstr "{0}/{1} withdrawn"
 
 #: src/components/v1/V1Project/Rewards/index.tsx
-#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "{0}{1}"
 msgstr ""
 
@@ -2611,10 +2620,6 @@ msgstr ""
 msgid "{tokenTextSingular} recipients"
 msgstr "{tokenTextSingular} recipients"
 
-#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
-msgid "{tokenText} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
-msgstr "{tokenText} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
-
 #: src/components/v1/V1Project/Rewards/index.tsx
 msgid "{tokensLabel} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
 msgstr "{tokensLabel} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
@@ -2622,4 +2627,12 @@ msgstr "{tokensLabel} are distributed to anyone who pays this project. If the pr
 #: src/components/v2/V2Project/V2FundingCycleSection/ReservedTokensSplitsCard.tsx
 msgid "{tokensText} reserved"
 msgstr "{tokensText} reserved"
+
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
+msgid "{unclaimedBalanceFormatted} {tokenText} claimable"
+msgstr "{unclaimedBalanceFormatted} {tokenText} claimable"
+
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
+msgid "{userOwnershipPercentage}% of total supply"
+msgstr "{userOwnershipPercentage}% of total supply"
 

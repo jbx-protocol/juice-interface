@@ -1,4 +1,3 @@
-import { LinkOutlined } from '@ant-design/icons'
 import { BigNumberish } from '@ethersproject/bignumber'
 import useHandleForProjectId from 'hooks/v1/contractReader/HandleForProjectId'
 import { CSSProperties, useState } from 'react'
@@ -27,7 +26,7 @@ export default function V1ProjectHandle({
       style={{ fontWeight: 400, textDecoration: hover ? 'underline' : 'none' }}
       to={`/p/${handle}`}
     >
-      @{handle} <LinkOutlined />
+      @{handle}
     </Link>
   )
 }

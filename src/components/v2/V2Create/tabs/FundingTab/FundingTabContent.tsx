@@ -84,7 +84,7 @@ export default function FundingTabContent({
     })
     setTarget(_target)
     setTargetCurrency(_targetCurrency)
-    setSplits(payoutGroupedSplits.splits)
+    setSplits(payoutGroupedSplits?.splits)
 
     if (parseInt(fundingCycleData?.duration ?? 0) > 0) {
       setFundingType('recurring')

@@ -1,4 +1,7 @@
-import { V2ProjectContext } from 'contexts/v2/projectContext'
+import {
+  V2ProjectContext,
+  V2ProjectContextType,
+} from 'contexts/v2/projectContext'
 import { BigNumber } from '@ethersproject/bignumber'
 import { useContext } from 'react'
 
@@ -45,7 +48,7 @@ export default function ProjectPreview() {
     fundAccessConstraints,
   )
 
-  const project = {
+  const project: V2ProjectContextType = {
     projectId: BigNumber.from(0),
     projectMetadata,
     fundingCycle,
@@ -54,9 +57,9 @@ export default function ProjectPreview() {
     distributionLimit: fundAccessConstraint?.distributionLimit,
     usedDistributionLimit: BigNumber.from(0),
     queuedDistributionLimit: undefined,
-    payoutSplits: payoutGroupedSplits.splits,
+    payoutSplits: payoutGroupedSplits?.splits,
     queuedPayoutSplits: undefined,
-    reservedTokensSplits: reservedTokensGroupedSplits.splits,
+    reservedTokensSplits: reservedTokensGroupedSplits?.splits,
     queuedReservedTokensSplits: undefined,
     tokenAddress: undefined,
     terminals: [],
@@ -66,6 +69,9 @@ export default function ProjectPreview() {
     balanceInDistributionLimitCurrency: BigNumber.from(0),
     tokenSymbol: undefined,
     projectOwnerAddress: userAddress,
+    ballotState: undefined,
+    primaryTerminalCurrentOverflow: undefined,
+    totalTokenSupply: undefined,
     isPreviewMode: true,
   }
 

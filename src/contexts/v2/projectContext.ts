@@ -1,4 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { BallotState } from 'models/ballot-state'
 import { ProjectMetadataV4 } from 'models/project-metadata'
 import { V2FundingCycle, V2FundingCycleMetadata } from 'models/v2/fundingCycle'
 import { Split } from 'models/v2/splits'
@@ -20,6 +21,7 @@ export type V2ProjectContextType = {
   fundingCycleMetadata: V2FundingCycleMetadata | undefined
   fundingCycle: V2FundingCycle | undefined
   queuedFundingCycle: V2FundingCycle | undefined
+  ballotState: BallotState | undefined
 
   distributionLimit: BigNumber | undefined
   distributionLimitCurrency: BigNumber | undefined
@@ -31,6 +33,9 @@ export type V2ProjectContextType = {
 
   reservedTokensSplits: Split[] | undefined
   queuedReservedTokensSplits: Split[] | undefined
+
+  primaryTerminalCurrentOverflow: BigNumber | undefined
+  totalTokenSupply: BigNumber | undefined
 }
 
 export const V2ProjectContext = createContext<V2ProjectContextType>({
@@ -49,6 +54,7 @@ export const V2ProjectContext = createContext<V2ProjectContextType>({
   fundingCycleMetadata: undefined,
   fundingCycle: undefined,
   queuedFundingCycle: undefined,
+  ballotState: undefined,
 
   distributionLimit: undefined,
   distributionLimitCurrency: undefined,
@@ -60,4 +66,7 @@ export const V2ProjectContext = createContext<V2ProjectContextType>({
 
   reservedTokensSplits: undefined,
   queuedReservedTokensSplits: undefined,
+
+  primaryTerminalCurrentOverflow: undefined,
+  totalTokenSupply: undefined,
 })

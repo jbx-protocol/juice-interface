@@ -23,10 +23,10 @@ const PendingTransactionModalBody = () => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        margin: '5rem 0',
+        margin: '2rem 0',
       }}
     >
-      <div style={{ textAlign: 'center', maxWidth: '50%' }}>
+      <div style={{ textAlign: 'center', maxWidth: 400 }}>
         <img
           src="/assets/quint.gif"
           alt={t`Juicebox loading animation`}

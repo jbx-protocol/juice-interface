@@ -1,4 +1,4 @@
-import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
+import { BigNumber } from '@ethersproject/bignumber'
 import { useErc20Contract } from 'hooks/Erc20Contract'
 import { bigNumbersDiff } from 'utils/bigNumbers'
 
@@ -8,7 +8,6 @@ import useContractReader from './V2ContractReader'
 export default function useERC20BalanceOf(
   tokenAddress: string | undefined,
   walletAddress: string | undefined,
-  projectId?: BigNumberish,
 ) {
   return useContractReader<BigNumber>({
     contract: useErc20Contract(tokenAddress),

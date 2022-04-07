@@ -24,8 +24,12 @@ import { tokenSymbolText } from 'utils/tokenSymbolText'
 import IssueTicketsButton from 'components/shared/IssueTicketsButton'
 import SectionHeader from 'components/shared/SectionHeader'
 
-import ManageTokensModal from './ManageTokensModal'
+import ManageTokensModal from 'components/shared/modals/ManageTokensModal'
+
 import ParticipantsModal from '../modals/ParticipantsModal'
+import RedeemTokensModalTrigger from './RedeemTokensModalTrigger'
+import { ClaimUnclaimedTokensModalTrigger } from './ClaimUnclaimedTokensModalTrigger'
+import MintTokensModalTrigger from './MintTokensModalTrigger'
 
 export default function Rewards() {
   const [manageTokensModalVisible, setManageTokensModalVisible] =
@@ -188,7 +192,10 @@ export default function Rewards() {
       <ManageTokensModal
         visible={manageTokensModalVisible}
         onCancel={() => setManageTokensModalVisible(false)}
-        metadata={metadata}
+        tokenSymbol={tokenSymbol}
+        redeemTokensModalTrigger={<RedeemTokensModalTrigger />}
+        claimUnclaimedTokensModalTrigger={<ClaimUnclaimedTokensModalTrigger />}
+        mintTokensModalTrigger={<MintTokensModalTrigger />}
       />
       <ParticipantsModal
         visible={participantsModalVisible}

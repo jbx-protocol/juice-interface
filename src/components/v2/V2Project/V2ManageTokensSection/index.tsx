@@ -20,8 +20,10 @@ import { tokenSymbolText } from 'utils/tokenSymbolText'
 import useTotalBalanceOf from 'hooks/v2/contractReader/TotalBalanceOf'
 import { ThemeContext } from 'contexts/themeContext'
 import useUserUnclaimedTokenBalance from 'hooks/v2/contractReader/UserUnclaimedTokenBalance'
+import ManageTokensModal from 'components/shared/modals/ManageTokensModal'
 
-import V2ManageTokensModal from './V2ManageTokensModal'
+import RedeemTokensModalTrigger from './RedeemTokensModalTrigger'
+import ClaimUnclaimedTokensModalTrigger from './ClaimUnclaimedTokensModalTrigger'
 
 export default function V2ManageTokensSection() {
   const [manageTokensModalVisible, setManageTokensModalVisible] =
@@ -201,9 +203,13 @@ export default function V2ManageTokensSection() {
         />
       </Space>
 
-      <V2ManageTokensModal
+      <ManageTokensModal
         visible={manageTokensModalVisible}
         onCancel={() => setManageTokensModalVisible(false)}
+        tokenSymbol={tokenSymbol}
+        redeemTokensModalTrigger={<RedeemTokensModalTrigger />}
+        claimUnclaimedTokensModalTrigger={<ClaimUnclaimedTokensModalTrigger />}
+        // TODO: mintTokensModalTrigger
       />
       {/* TODO: 'Holders modal */}
     </>

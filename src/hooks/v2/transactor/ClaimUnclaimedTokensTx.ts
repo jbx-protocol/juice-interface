@@ -1,27 +1,27 @@
 import { NetworkContext } from 'contexts/networkContext'
-import { V1ProjectContext } from 'contexts/v1/projectContext'
-import { V1UserContext } from 'contexts/v1/userContext'
 import { BigNumber } from '@ethersproject/bignumber'
 import { useContext } from 'react'
+import { V2UserContext } from 'contexts/v2/userContext'
+import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import { TransactorInstance } from '../../Transactor'
 
-export function useUnstakeTokensTx(): TransactorInstance<{
+export function useClaimUnclaimedTokensTx(): TransactorInstance<{
   claimAmount: BigNumber
 }> {
-  const { transactor, contracts } = useContext(V1UserContext)
+  const { transactor, contracts } = useContext(V2UserContext)
   const { userAddress } = useContext(NetworkContext)
-  const { projectId } = useContext(V1ProjectContext)
+  const { projectId } = useContext(V2ProjectContext)
 
   return ({ claimAmount }, txOpts) => {
-    if (!transactor || !userAddress || !projectId || !contracts?.TicketBooth) {
+    if (!transactor || !userAddress || !projectId || !contracts?.JBTokenStore) {
       txOpts?.onDone?.()
       return Promise.resolve(false)
     }
 
     return transactor(
-      contracts.TicketBooth,
-      'unstake',
+      contracts?.JBTokenStore,
+      'claimFor',
       [userAddress, projectId.toHexString(), claimAmount.toHexString()],
       txOpts,
     )

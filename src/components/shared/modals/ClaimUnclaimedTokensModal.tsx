@@ -1,51 +1,61 @@
 import { t, Trans } from '@lingui/macro'
-import { Form, Modal, Space } from 'antd'
+import { Form, Space } from 'antd'
+import { BigNumber } from '@ethersproject/bignumber'
+
 import FormattedAddress from 'components/shared/FormattedAddress'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import * as constants from '@ethersproject/constants'
-import useUnclaimedBalanceOfUser from 'hooks/v1/contractReader/UnclaimedBalanceOfUser'
-import { useUnstakeTokensTx } from 'hooks/v1/transactor/UnstakeTokensTx'
 import { useContext, useLayoutEffect, useState } from 'react'
 import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
+import { TransactorInstance } from 'hooks/Transactor'
 
-export default function ConfirmUnstakeTokensModal({
+import TransactionModal from '../TransactionModal'
+
+export default function ClaimUnclaimedTokensModal({
   visible,
+  onOk,
   onCancel,
+  unclaimedBalance,
+  useClaimUnclaimedTokensTx,
 }: {
   visible?: boolean
+  onOk?: VoidFunction
   onCancel?: VoidFunction
+  unclaimedBalance: BigNumber | undefined
+  useClaimUnclaimedTokensTx: () => TransactorInstance<{
+    claimAmount: BigNumber
+  }>
 }) {
   const [loading, setLoading] = useState<boolean>()
-  const [unstakeAmount, setUnstakeAmount] = useState<string>()
+  const [claimAmount, setClaimAmount] = useState<string>()
   const {
     theme: { colors },
   } = useContext(ThemeContext)
   const { tokenSymbol, tokenAddress } = useContext(V1ProjectContext)
-  const unstakeTokensTx = useUnstakeTokensTx()
-
-  const unclaimedBalance = useUnclaimedBalanceOfUser()
 
   useLayoutEffect(() => {
-    setUnstakeAmount(fromWad(unclaimedBalance))
+    setClaimAmount(fromWad(unclaimedBalance))
   }, [unclaimedBalance])
+
+  const claimUnclaimedTokensTx = useClaimUnclaimedTokensTx()
 
   function unstake() {
     if (
-      !unstakeAmount ||
-      parseWad(unstakeAmount).eq(0) // Disable claiming 0 tokens
+      !claimAmount ||
+      parseWad(claimAmount).eq(0) // Disable claiming 0 tokens
     )
       return
 
     setLoading(true)
 
-    unstakeTokensTx(
-      { unstakeAmount: parseWad(unstakeAmount) },
+    claimUnclaimedTokensTx(
+      { claimAmount: parseWad(claimAmount) },
       {
         onDone: () => setLoading(false),
-        onConfirmed: onCancel ? () => onCancel() : undefined,
+        onConfirmed: onOk ? () => onOk() : undefined,
       },
     )
   }
@@ -55,13 +65,13 @@ export default function ConfirmUnstakeTokensModal({
     : false
 
   return (
-    <Modal
+    <TransactionModal
       title={`Claim ${tokenSymbol ?? 'tokens'} as ERC-20 tokens`}
       visible={visible}
       onOk={unstake}
-      okText={`Claim ${unstakeAmount} ERC-20 tokens`}
+      okText={`Claim ${claimAmount} ERC-20 tokens`}
       confirmLoading={loading}
-      okButtonProps={{ disabled: parseWad(unstakeAmount).eq(0) }}
+      okButtonProps={{ disabled: parseWad(claimAmount).eq(0) }}
       onCancel={onCancel}
       width={600}
       centered
@@ -124,18 +134,18 @@ export default function ConfirmUnstakeTokensModal({
               max={parseFloat(fromWad(unclaimedBalance))}
               disabled={!ticketsIssued}
               placeholder="0"
-              value={unstakeAmount}
+              value={claimAmount}
               accessory={
                 <InputAccessoryButton
                   content={t`MAX`}
-                  onClick={() => setUnstakeAmount(fromWad(unclaimedBalance))}
+                  onClick={() => setClaimAmount(fromWad(unclaimedBalance))}
                 />
               }
-              onChange={val => setUnstakeAmount(val)}
+              onChange={val => setClaimAmount(val)}
             />
           </Form.Item>
         </Form>
       </Space>
-    </Modal>
+    </TransactionModal>
   )
 }

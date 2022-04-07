@@ -178,14 +178,14 @@ export default function ConfirmDeployV2ProjectModal({
           </p>
           <Space size="large" direction="vertical" style={{ width: '100%' }}>
             <Statistic
-              title={t`Target`}
+              title={t`Distribution limit`}
               valueRender={() =>
                 fundAccessConstraint?.distributionLimit !== undefined ? (
                   !hasFundingTarget(fundAccessConstraint) ? (
                     <span>
                       <Trans>
-                        Target is 0: All funds will be considered overflow and
-                        can be redeemed by burning project tokens.
+                        Distribution limit is 0: All funds will be considered
+                        overflow and can be redeemed by burning project tokens.
                       </Trans>
                     </span>
                   ) : (
@@ -216,8 +216,8 @@ export default function ConfirmDeployV2ProjectModal({
                 ) : (
                   <span>
                     <Trans>
-                      No funding target: The project will control how all funds
-                      are distributed, and none can be redeemed by token
+                      No distribution limit: The project will control how all
+                      funds are distributed, and none can be redeemed by token
                       holders.
                     </Trans>
                   </span>

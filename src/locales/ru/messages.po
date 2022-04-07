@@ -113,7 +113,6 @@ msgid "<0><1/>{netDistributionAmount}</0> after {feePercentage}% JBX fee"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
-#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "<0><1>This project has no overflow</1>, so you will not receive any ETH for burning tokens.</0>"
 msgstr "<0><1>В этом проекте нет переполнения</1>, поэтому вы не получите ETH за сжигание токенов..</0>"
 
@@ -170,6 +169,10 @@ msgstr "<0>Внимание:</0> Эти балансы не будут отра�
 #: src/components/Landing/QAs.tsx
 msgid "<0>Peel</0> is the DAO that manages the juicebox.money frontend interface. You can reach out to Peel either through the <1>Peel Discord</1> or the <2>Juicebox Discord</2>."
 msgstr "<0>Peel</0> - это DAO, управляющее интерфейсом фронтенда juicebox.money. Вы можете связаться с Peel либо через <1>Peel Discord</1>, либо через <2>Juicebox Discord</2>."
+
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
+msgid "<0>This project has no overflow</0>, so you will not receive any ETH for burning tokens."
+msgstr ""
 
 #: src/components/Landing/TrendingSection.tsx
 msgid "<0>Trending projects</0><1><2/></1>"
@@ -446,7 +449,6 @@ msgid "Burn your {tokensLabel}. You won't receive ETH in return because this pro
 msgstr "Сожгите свой {tokensLabel}. Вы не получите ETH взамен, потому что у этого проекта нет перетока."
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
-#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Burn {0} {tokensTextShort}"
 msgstr "Сжечь {0} {tokensTextShort}"
 
@@ -1600,7 +1602,6 @@ msgid "Redeem your {tokensLabel} for a portion of the project's overflow. Any {t
 msgstr ""
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
-#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Redeem {0} {tokensTextShort} for ETH"
 msgstr "Обменять {0} {tokensTextShort} за ETH"
 
@@ -1621,7 +1622,7 @@ msgid "Redemption rate"
 msgstr "Коэффициент выкупа"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
-msgid "Redemption rate:"
+msgid "Redemption rate: <0>{0}%</0>"
 msgstr ""
 
 #: src/components/Landing/index.tsx
@@ -2364,9 +2365,16 @@ msgid "You have set a funding cycle target."
 msgstr "Вы установили цель цикла финансирования."
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
-#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "You will receive {0}{1} ETH"
 msgstr "Вы получите {0}{1} ETH"
+
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
+msgid "You will recieve minimum {minReturnedTokensFormatted} ETH"
+msgstr ""
+
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
+msgid "You will recieve {minReturnedTokensFormatted} ETH"
+msgstr ""
 
 #: src/components/shared/forms/TicketingForm.tsx
 msgid "You'll be able to issue ERC-20 tokens once your project contract has been deployed. Until then, the protocol will track token balances, allowing your supporters to earn tokens and redeem for overflow in the meantime."
@@ -2529,6 +2537,10 @@ msgstr ""
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 msgid "{0} balance"
 msgstr "{0} баланс"
+
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
+msgid "{0} balance: <0><1>{1} {tokensTextShort}</1><2>({share}% of supply)</2></0>"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 msgid "{0} contributed"

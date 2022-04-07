@@ -1,4 +1,7 @@
-import { V2ProjectContext } from 'contexts/v2/projectContext'
+import {
+  V2ProjectContext,
+  V2ProjectContextType,
+} from 'contexts/v2/projectContext'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { useParams } from 'react-router-dom'
 import Loading from 'components/shared/Loading'
@@ -126,7 +129,7 @@ export default function V2Dashboard() {
   const [queuedDistributionLimit, queuedDistributionLimitCurrency] =
     queuedDistributionLimitData ?? []
 
-  const { data: overflow } = useTerminalCurrentOverflow({
+  const { data: primaryTerminalCurrentOverflow } = useTerminalCurrentOverflow({
     projectId,
     terminal: primaryTerminal,
   })
@@ -157,7 +160,7 @@ export default function V2Dashboard() {
     return <Dashboard404 projectId={projectId} />
   }
 
-  const project = {
+  const project: V2ProjectContextType = {
     projectId,
     projectMetadata,
     fundingCycle,
@@ -178,7 +181,7 @@ export default function V2Dashboard() {
     balanceInDistributionLimitCurrency,
     tokenSymbol,
     projectOwnerAddress,
-    overflow,
+    primaryTerminalCurrentOverflow,
     totalTokenSupply,
     ballotState,
   }

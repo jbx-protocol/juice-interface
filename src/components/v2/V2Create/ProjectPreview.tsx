@@ -1,4 +1,7 @@
-import { V2ProjectContext } from 'contexts/v2/projectContext'
+import {
+  V2ProjectContext,
+  V2ProjectContextType,
+} from 'contexts/v2/projectContext'
 import { BigNumber } from '@ethersproject/bignumber'
 import { useContext } from 'react'
 
@@ -45,7 +48,7 @@ export default function ProjectPreview() {
     fundAccessConstraints,
   )
 
-  const project = {
+  const project: V2ProjectContextType = {
     projectId: BigNumber.from(0),
     projectMetadata,
     fundingCycle,
@@ -67,7 +70,7 @@ export default function ProjectPreview() {
     tokenSymbol: undefined,
     projectOwnerAddress: userAddress,
     ballotState: undefined,
-    overflow: undefined,
+    primaryTerminalCurrentOverflow: undefined,
     totalTokenSupply: undefined,
     isPreviewMode: true,
   }

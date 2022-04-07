@@ -34,7 +34,7 @@ export type V2ProjectContextType = {
   reservedTokensSplits: Split[] | undefined
   queuedReservedTokensSplits: Split[] | undefined
 
-  overflow: BigNumber | undefined
+  primaryTerminalCurrentOverflow: BigNumber | undefined
   totalTokenSupply: BigNumber | undefined
 }
 
@@ -67,6 +67,6 @@ export const V2ProjectContext = createContext<V2ProjectContextType>({
   reservedTokensSplits: undefined,
   queuedReservedTokensSplits: undefined,
 
-  overflow: undefined,
+  primaryTerminalCurrentOverflow: undefined,
   totalTokenSupply: undefined,
 })

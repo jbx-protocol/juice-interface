@@ -1,32 +1,32 @@
 import { t, Trans } from '@lingui/macro'
-import { Modal, Form, Space } from 'antd'
+import { Form, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 
 import { CSSProperties, useContext, useState } from 'react'
-import {
-  formatPercent,
-  formattedNum,
-  formatWad,
-  fromWad,
-  parseWad,
-} from 'utils/formatNumber'
+import { formatPercent, formatWad, fromWad, parseWad } from 'utils/formatNumber'
 
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import useTotalBalanceOf from 'hooks/v2/contractReader/TotalBalanceOf'
 import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { decodeV2FundingCycleMetadata } from 'utils/v2/fundingCycle'
 import { formatRedemptionRate } from 'utils/v2/math'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import { useETHReceivedFromTokens } from 'hooks/v2/contractReader/ETHReceivedFromTokens'
 import { V2_CURRENCY_USD } from 'utils/v2/currency'
 import { useRedeemTokensTx } from 'hooks/v2/transactor/RedeemTokensTx'
+import TransactionModal from 'components/shared/TransactionModal'
 
-// This double as the 'Redeem' and 'Burn' modal depending on if project has overflow
+const statsStyle: CSSProperties = {
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'baseline',
+}
+
+// This doubles as the 'Redeem' and 'Burn' modal depending on if project has overflow
 export default function V2RedeemModal({
   visible,
   onOk,
@@ -36,13 +36,6 @@ export default function V2RedeemModal({
   onOk: VoidFunction | undefined
   onCancel: VoidFunction | undefined
 }) {
-  const [redeemAmount, setRedeemAmount] = useState<string>()
-  const [loading, setLoading] = useState<boolean>()
-
-  const [form] = useForm<{
-    redeemAmount: string
-  }>()
-
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -50,59 +43,37 @@ export default function V2RedeemModal({
   const {
     tokenSymbol,
     fundingCycle,
-    overflow,
+    primaryTerminalCurrentOverflow,
     projectId,
     totalTokenSupply,
     distributionLimitCurrency,
+    fundingCycleMetadata,
   } = useContext(V2ProjectContext)
 
-  const { data: totalBalance } = useTotalBalanceOf(userAddress, projectId)
+  const [redeemAmount, setRedeemAmount] = useState<string>()
+  const [loading, setLoading] = useState<boolean>()
+  const [transactionPending, setTransactionPending] = useState<boolean>()
 
+  const [form] = useForm<{
+    redeemAmount: string
+  }>()
+
+  const { data: totalBalance } = useTotalBalanceOf(userAddress, projectId)
   const maxClaimable = useETHReceivedFromTokens({
     tokenAmount: fromWad(totalBalance),
   })
   const rewardAmount = useETHReceivedFromTokens({ tokenAmount: redeemAmount })
-
   const redeemTokensTx = useRedeemTokensTx()
 
-  if (!fundingCycle) return null
+  if (!fundingCycle || !fundingCycleMetadata) return null
 
   const share = formatPercent(totalBalance, totalTokenSupply)
 
-  const fcMetadata = decodeV2FundingCycleMetadata(fundingCycle.metadata)
-
   // 0.5% slippage for USD-denominated projects
-  const minAmount = distributionLimitCurrency?.eq(V2_CURRENCY_USD)
+  const minReturnedTokens = distributionLimitCurrency?.eq(V2_CURRENCY_USD)
     ? rewardAmount?.mul(1000).div(1005)
     : // ? rewardAmount?.mul(100).div(101)
       rewardAmount
-
-  async function redeem() {
-    await form.validateFields()
-    if (!minAmount) return
-
-    setLoading(true)
-
-    redeemTokensTx(
-      {
-        redeemAmount: parseWad(redeemAmount),
-        minAmount,
-      },
-      {
-        onConfirmed: () => setRedeemAmount(undefined),
-        onDone: () => {
-          setLoading(false)
-          onOk?.()
-        },
-      },
-    )
-  }
-
-  const statsStyle: CSSProperties = {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'baseline',
-  }
 
   const tokensTextLong = tokenSymbolText({
     tokenSymbol: tokenSymbol,
@@ -118,27 +89,18 @@ export default function V2RedeemModal({
 
   let modalTitle: string
   // Defining whole sentence for translations
-  if (overflow?.gt(0)) {
+  if (primaryTerminalCurrentOverflow?.gt(0)) {
     modalTitle = t`Redeem ${tokensTextLong} for ETH`
   } else {
     modalTitle = t`Burn ${tokensTextLong}`
   }
 
-  let buttonText: string
-  // Defining whole sentence for translations
-  if (overflow?.gt(0)) {
-    buttonText = t`Redeem ${formattedNum(redeemAmount, {
-      precision: 2,
-    })} ${tokensTextShort} for ETH`
-  } else {
-    buttonText = t`Burn ${formattedNum(redeemAmount, {
-      precision: 2,
-    })} ${tokensTextShort}`
-  }
-
-  const redeemBN = parseWad(redeemAmount ?? 0)
+  const minReturnedTokensFormatted =
+    formatWad(minReturnedTokens, { precision: 8 }) || '--'
 
   const validateRedeemAmount = () => {
+    const redeemBN = parseWad(redeemAmount ?? 0)
+
     if (redeemBN.eq(0)) {
       return Promise.reject(t`Required`)
     } else if (redeemBN.gt(totalBalance ?? 0)) {
@@ -147,20 +109,48 @@ export default function V2RedeemModal({
     return Promise.resolve()
   }
 
+  const exectuteRedeemTransaction = async () => {
+    await form.validateFields()
+    if (!minReturnedTokens) return
+
+    setLoading(true)
+
+    redeemTokensTx(
+      {
+        redeemAmount: parseWad(redeemAmount),
+        minReturnedTokens,
+      },
+      {
+        // step 1
+        onDone: () => {
+          setTransactionPending(true)
+          setRedeemAmount(undefined)
+        },
+        // step 2
+        onConfirmed: () => {
+          setTransactionPending(false)
+          setLoading(false)
+          onOk?.()
+        },
+      },
+    )
+  }
+
   return (
-    <Modal
+    <TransactionModal
+      transactionPending={transactionPending}
       title={modalTitle}
       visible={visible}
       confirmLoading={loading}
       onOk={() => {
-        redeem()
+        exectuteRedeemTransaction()
       }}
       onCancel={() => {
         setRedeemAmount(undefined)
 
-        if (onCancel) onCancel()
+        onCancel?.()
       }}
-      okText={buttonText}
+      okText={modalTitle}
       okButtonProps={{
         disabled: !redeemAmount || parseInt(redeemAmount) === 0,
       }}
@@ -170,34 +160,40 @@ export default function V2RedeemModal({
       <Space direction="vertical" style={{ width: '100%' }}>
         <div>
           <p style={statsStyle}>
-            <Trans>Redemption rate:</Trans>{' '}
-            <span>{formatRedemptionRate(fcMetadata?.redemptionRate)}%</span>
+            <Trans>
+              Redemption rate:{' '}
+              <span>
+                {formatRedemptionRate(fundingCycleMetadata.redemptionRate)}%
+              </span>
+            </Trans>
           </p>
           <p style={statsStyle}>
-            {tokenSymbolText({ tokenSymbol: tokenSymbol, capitalize: true })}{' '}
-            balance:{' '}
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'flex-end',
-              }}
-            >
-              <div>
-                {formatWad(totalBalance ?? 0, { precision: 0 })}{' '}
-                {tokensTextShort}
-              </div>
+            <Trans>
+              {tokenSymbolText({ tokenSymbol: tokenSymbol, capitalize: true })}{' '}
+              balance:{' '}
               <div
                 style={{
-                  cursor: 'default',
-                  fontSize: '0.8rem',
-                  fontWeight: 500,
-                  color: colors.text.tertiary,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'flex-end',
                 }}
               >
-                ({share}% of supply)
+                <div>
+                  {formatWad(totalBalance ?? 0, { precision: 0 })}{' '}
+                  {tokensTextShort}
+                </div>
+                <div
+                  style={{
+                    cursor: 'default',
+                    fontSize: '0.8rem',
+                    fontWeight: 500,
+                    color: colors.text.tertiary,
+                  }}
+                >
+                  ({share}% of supply)
+                </div>
               </div>
-            </div>
+            </Trans>
           </p>
           <p style={statsStyle}>
             <Trans>
@@ -210,7 +206,7 @@ export default function V2RedeemModal({
           </p>
         </div>
         <p>
-          {overflow?.gt(0) ? (
+          {primaryTerminalCurrentOverflow?.gt(0) ? (
             <Trans>
               Tokens can be redeemed for a portion of this project's ETH
               overflow, according to the redemption rate of the current funding
@@ -220,21 +216,16 @@ export default function V2RedeemModal({
               </span>
             </Trans>
           ) : (
-            <Trans>
-              <span style={{ fontWeight: 500, color: colors.text.warn }}>
+            <span style={{ fontWeight: 500, color: colors.text.warn }}>
+              <Trans>
                 <strong>This project has no overflow</strong>, so you will not
                 receive any ETH for burning tokens.
-              </span>
-            </Trans>
+              </Trans>
+            </span>
           )}
         </p>
         <div>
-          <Form
-            form={form}
-            onKeyDown={e => {
-              if (e.key === 'Enter') redeem()
-            }}
-          >
+          <Form form={form}>
             <FormattedNumberInput
               min={0}
               step={0.001}
@@ -253,19 +244,19 @@ export default function V2RedeemModal({
               onChange={val => setRedeemAmount(val)}
             />
           </Form>
-          {overflow?.gt(0) ? (
+          {primaryTerminalCurrentOverflow?.gt(0) ? (
             <div style={{ fontWeight: 500, marginTop: 20 }}>
-              <Trans>
-                You will receive{' '}
-                {distributionLimitCurrency?.eq(V2_CURRENCY_USD)
-                  ? 'minimum '
-                  : ' '}
-                {formatWad(minAmount, { precision: 8 }) || '--'} ETH
-              </Trans>
+              {distributionLimitCurrency?.eq(V2_CURRENCY_USD) ? (
+                <Trans>
+                  You will recieve minimum {minReturnedTokensFormatted} ETH
+                </Trans>
+              ) : (
+                <Trans>You will recieve {minReturnedTokensFormatted} ETH</Trans>
+              )}
             </div>
           ) : null}
         </div>
       </Space>
-    </Modal>
+    </TransactionModal>
   )
 }

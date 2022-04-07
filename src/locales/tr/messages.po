@@ -113,7 +113,6 @@ msgid "<0><1/>{netDistributionAmount}</0> after {feePercentage}% JBX fee"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
-#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "<0><1>This project has no overflow</1>, so you will not receive any ETH for burning tokens.</0>"
 msgstr "<0><1>Bu projede taşma bulunmadığından</1> token'ları yakma karşılığında ETH almayacaksınız.</0>"
 
@@ -169,6 +168,10 @@ msgstr "<0>Uyarı:</0> {tokenSymbol} ERC-20 token'ı henüz Juicebox tarafından
 
 #: src/components/Landing/QAs.tsx
 msgid "<0>Peel</0> is the DAO that manages the juicebox.money frontend interface. You can reach out to Peel either through the <1>Peel Discord</1> or the <2>Juicebox Discord</2>."
+msgstr ""
+
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
+msgid "<0>This project has no overflow</0>, so you will not receive any ETH for burning tokens."
 msgstr ""
 
 #: src/components/Landing/TrendingSection.tsx
@@ -446,7 +449,6 @@ msgid "Burn your {tokensLabel}. You won't receive ETH in return because this pro
 msgstr ""
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
-#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Burn {0} {tokensTextShort}"
 msgstr "{0} adet {tokensTextShort} token'ını yak"
 
@@ -1600,7 +1602,6 @@ msgid "Redeem your {tokensLabel} for a portion of the project's overflow. Any {t
 msgstr ""
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
-#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Redeem {0} {tokensTextShort} for ETH"
 msgstr ""
 
@@ -1621,7 +1622,7 @@ msgid "Redemption rate"
 msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
-msgid "Redemption rate:"
+msgid "Redemption rate: <0>{0}%</0>"
 msgstr ""
 
 #: src/components/Landing/index.tsx
@@ -2364,9 +2365,16 @@ msgid "You have set a funding cycle target."
 msgstr "Bir finansman döngüsü hedefi belirlediniz."
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
-#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "You will receive {0}{1} ETH"
 msgstr "{0}{1} ETH alacaksınız"
+
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
+msgid "You will recieve minimum {minReturnedTokensFormatted} ETH"
+msgstr ""
+
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
+msgid "You will recieve {minReturnedTokensFormatted} ETH"
+msgstr ""
 
 #: src/components/shared/forms/TicketingForm.tsx
 msgid "You'll be able to issue ERC-20 tokens once your project contract has been deployed. Until then, the protocol will track token balances, allowing your supporters to earn tokens and redeem for overflow in the meantime."
@@ -2529,6 +2537,10 @@ msgstr ""
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 msgid "{0} balance"
 msgstr "{0} bakiyesi"
+
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
+msgid "{0} balance: <0><1>{1} {tokensTextShort}</1><2>({share}% of supply)</2></0>"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 msgid "{0} contributed"

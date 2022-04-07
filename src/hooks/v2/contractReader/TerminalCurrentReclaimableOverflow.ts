@@ -6,7 +6,7 @@ import { bigNumbersDiff } from 'utils/bigNumbers'
 
 import { V2ContractName } from 'models/v2/contracts'
 
-import useContractReader from './V2ContractReader'
+import useV2ContractReader from './V2ContractReader'
 import useTotalBalanceOf from './TotalBalanceOf'
 
 /** Returns claimable amount of project tokens for user with address `userAddress` and balance `totalBalance`. */
@@ -21,7 +21,7 @@ export default function useTerminalCurrentReclaimableOverflow({
   const { data: totalBalance, loading: totalBalanceLoading } =
     useTotalBalanceOf(userAddress, projectId)
 
-  return useContractReader<BigNumber>({
+  return useV2ContractReader<BigNumber>({
     contract: V2ContractName.JBPaymentTerminalStore,
     functionName: 'currentReclaimableOverflowOf',
     args:

@@ -1,5 +1,5 @@
-import { t, Trans } from '@lingui/macro'
-import { Form, Switch } from 'antd'
+import { Trans } from '@lingui/macro'
+import { Button, Form, Space, Switch } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 
 import { useAppDispatch } from 'hooks/AppDispatch'
@@ -10,13 +10,7 @@ import { ThemeContext } from 'contexts/themeContext'
 
 import { shadowCard } from 'constants/styles/shadowCard'
 import { DEFAULT_BALLOT_STRATEGY } from 'constants/ballotStrategies/ballotStrategies'
-import FormActionbar from '../../FormActionBar'
-import { formBottomMargin } from '../../constants'
 import ProjectReconfigurationFormItem from './ProjectReconfigurationFormItem'
-import FormItemLabel from '../../FormItemLabel'
-import { TabContentProps } from '../../models'
-import ProjectConfigurationFieldsContainer from '../ProjectConfigurationFieldsContainer'
-import FundingCycleExplainer from '../../FundingCycleExplainer'
 
 type RulesFormFields = {
   pausePay: boolean
@@ -24,11 +18,7 @@ type RulesFormFields = {
   ballot: string
 }
 
-export default function RulesTabContent({
-  onFinish,
-  showPreview,
-  saveButton,
-}: TabContentProps) {
+export default function RulesForm({ onFinish }: { onFinish: VoidFunction }) {
   const { theme } = useContext(ThemeContext)
 
   const [form] = useForm<RulesFormFields>()
@@ -65,6 +55,12 @@ export default function RulesTabContent({
     resetForm()
   }, [resetForm])
 
+  const switchContainerStyle = {
+    display: 'flex',
+    color: theme.colors.text.primary,
+    fontWeight: 500,
+  }
+
   const tokenMintingExtra = (
     <React.Fragment>
       <Trans>
@@ -82,40 +78,51 @@ export default function RulesTabContent({
     </React.Fragment>
   )
   return (
-    <ProjectConfigurationFieldsContainer showPreview={showPreview}>
-      <FundingCycleExplainer />
-      <Form
-        form={form}
-        layout="vertical"
-        onFinish={() => onFormSaved(form.getFieldsValue(true))}
-        style={{ marginBottom: formBottomMargin }}
-      >
-        <Form.Item
-          name="pausePay"
-          label={
-            <FormItemLabel style={{ marginBottom: 0 }}>
+    <Form
+      form={form}
+      layout="vertical"
+      onFinish={() => onFormSaved(form.getFieldsValue(true))}
+    >
+      <Space direction="vertical" size="large">
+        <div style={{ ...shadowCard(theme), padding: '2rem' }}>
+          <Form.Item
+            name="pausePay"
+            extra={
+              <Trans>
+                When Pause Payments is enabled, your project cannot receive
+                direct payments.
+              </Trans>
+            }
+            valuePropName="checked"
+          >
+            <div
+              style={{
+                ...switchContainerStyle,
+              }}
+            >
+              <Switch style={{ marginRight: '0.5rem' }} />
               <Trans>Pause payments</Trans>
-            </FormItemLabel>
-          }
-          extra={t`When Pause Payments is enabled, your project cannot receive direct payments.`}
-          valuePropName="checked"
-          style={{ ...shadowCard(theme), padding: '2rem' }}
-        >
-          <Switch />
-        </Form.Item>
-        <Form.Item
-          name="allowMint"
-          label={
-            <FormItemLabel style={{ marginBottom: 0 }}>
+            </div>
+          </Form.Item>
+          <Form.Item
+            name="allowMint"
+            extra={tokenMintingExtra}
+            valuePropName="checked"
+          >
+            <div
+              style={{
+                ...switchContainerStyle,
+              }}
+            >
+              <Switch
+                onChange={val => setShowMintingWarning(val)}
+                style={{ marginRight: '0.5rem' }}
+              />
               <Trans>Allow token minting</Trans>
-            </FormItemLabel>
-          }
-          extra={tokenMintingExtra}
-          valuePropName="checked"
-          style={{ ...shadowCard(theme), padding: '2rem' }}
-        >
-          <Switch onChange={val => setShowMintingWarning(val)} />
-        </Form.Item>
+            </div>
+          </Form.Item>
+        </div>
+
         <ProjectReconfigurationFormItem
           value={form.getFieldValue('ballot') ?? fundingCycleData?.ballot}
           onChange={(address: string) =>
@@ -123,9 +130,13 @@ export default function RulesTabContent({
           }
           style={{ ...shadowCard(theme), padding: '2rem' }}
         />
-        {/* Default to floating save button if custom one not given */}
-        {saveButton ?? <FormActionbar isLastTab />}
-      </Form>
-    </ProjectConfigurationFieldsContainer>
+
+        <Form.Item>
+          <Button htmlType="submit" type="primary">
+            <Trans>Save rules</Trans>
+          </Button>
+        </Form.Item>
+      </Space>
+    </Form>
   )
 }

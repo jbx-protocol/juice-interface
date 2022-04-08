@@ -1,6 +1,5 @@
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
-import ConfirmDeployV2ProjectModal from 'components/v2/V2Create/DeployProjectModal'
 import {
   useAppSelector,
   useEditingV2FundAccessConstraintsSelector,
@@ -15,7 +14,10 @@ import { useHistory } from 'react-router-dom'
 import { BigNumber } from '@ethersproject/bignumber'
 import { NetworkContext } from 'contexts/networkContext'
 
+import TransactionModal from 'components/shared/TransactionModal'
+
 import { readProvider } from 'constants/readProvider'
+import { readNetwork } from 'constants/networks'
 
 const CREATE_EVENT_IDX = 0
 const PROJECT_ID_TOPIC_IDX = 3
@@ -32,13 +34,7 @@ const getProjectIdFromReceipt = (txReceipt: TransactionReceipt): number => {
   return projectId
 }
 
-export default function DeployProjectButton({
-  type = 'default',
-}: {
-  type?: 'default' | 'primary'
-}) {
-  const [deployProjectModalVisible, setDeployProjectModalVisible] =
-    useState<boolean>(false)
+export default function DeployProjectButton() {
   const deployProjectTx = useDeployProjectTx()
   const history = useHistory()
 
@@ -130,19 +126,24 @@ export default function DeployProjectButton({
   return (
     <>
       <Button
-        onClick={() => setDeployProjectModalVisible(true)}
-        type={type}
+        onClick={userAddress ? deployProject : onSelectWallet}
+        type="primary"
         htmlType="submit"
+        size="large"
         disabled={!projectMetadata?.name}
+        loading={deployLoading}
       >
-        <Trans>Review & Deploy</Trans>
+        <span>
+          {userAddress ? (
+            <Trans>Deploy project to {readNetwork.name}</Trans>
+          ) : (
+            <Trans>Connect wallet to deploy</Trans>
+          )}
+        </span>
       </Button>
-      <ConfirmDeployV2ProjectModal
-        visible={deployProjectModalVisible}
-        onOk={userAddress ? deployProject : onSelectWallet}
-        onCancel={() => setDeployProjectModalVisible(false)}
-        confirmLoading={deployLoading}
+      <TransactionModal
         transactionPending={transactionPending}
+        visible={transactionPending}
       />
     </>
   )

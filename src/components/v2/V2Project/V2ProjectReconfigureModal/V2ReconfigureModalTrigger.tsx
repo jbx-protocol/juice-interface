@@ -3,8 +3,6 @@ import { useRef, useState } from 'react'
 import { Provider } from 'react-redux'
 import store, { createStore } from 'redux/store'
 
-import { BigNumber } from '@ethersproject/bignumber'
-
 import { SettingOutlined } from '@ant-design/icons'
 
 import V2ProjectReconfigureModal from './index'
@@ -15,11 +13,9 @@ import V2ProjectReconfigureModal from './index'
 // persisted Redux state and the Reconfigure Funding modal
 // are independent.
 export default function V2ReconfigureFundingModalTrigger({
-  fundingDuration,
   hideProjectDetails,
   triggerButton,
 }: {
-  fundingDuration?: BigNumber
   hideProjectDetails?: boolean
   triggerButton?: (onClick: VoidFunction) => JSX.Element
 }) {

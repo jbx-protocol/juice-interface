@@ -115,7 +115,7 @@ export default function FundingCycleDetails({
         size="small"
         column={{ xs: 1, sm: 1, md: 1, lg: 1, xl: 1, xxl: 2 }}
       >
-        <Descriptions.Item label={<Trans>Target</Trans>}>
+        <Descriptions.Item label={<Trans>Distribution limit</Trans>}>
           {distributionLimit ? (
             <>
               <CurrencySymbol
@@ -128,7 +128,7 @@ export default function FundingCycleDetails({
               {formatWad(distributionLimit)}
             </>
           ) : (
-            <Trans>No target</Trans>
+            <Trans>No distribution limit</Trans>
           )}
         </Descriptions.Item>
 
@@ -179,14 +179,14 @@ export default function FundingCycleDetails({
           span={2}
           label={
             <TooltipLabel
-              label={<Trans>Bonding curve rate</Trans>}
+              label={<Trans>Redemption rate</Trans>}
               tip={
                 <Trans>
                   This rate determines the amount of overflow that each token
                   can be redeemed for at any given time. On a lower bonding
                   curve, redeeming a token increases the value of each remaining
                   token, creating an incentive to hodl tokens longer than
-                  others. A bonding curve of 100% means all tokens will have
+                  others. A redemption rate of 100% means all tokens will have
                   equal value regardless of when they are redeemed.
                 </Trans>
               }

@@ -306,7 +306,7 @@ export default function V2ProjectReconfigureModal({
           </Trans>
         </p>
         <ReconfigureButton
-          title={t`Funding target, duration and payouts`}
+          title={t`Distribution limit, duration and payouts`}
           onClick={() => setFundingDrawerVisible(true)}
         />
         <ReconfigureButton

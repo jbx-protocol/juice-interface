@@ -1,7 +1,6 @@
-import { Button, Form, Input, Modal, Space } from 'antd'
+import { Button, Form, Input, Modal, Space, Tooltip } from 'antd'
 import { t, Trans } from '@lingui/macro'
 import { useForm } from 'antd/lib/form/Form'
-import TooltipIcon from 'components/shared/TooltipIcon'
 import { useState } from 'react'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useHistory } from 'react-router-dom'
@@ -33,8 +32,9 @@ export default function IssueTicketsButton({
       {
         onDone: () => setModalVisible(false),
         onConfirmed: () => {
-          history.go(0)
           setLoading(false)
+          // refresh page
+          history.go(0)
         },
       },
     )
@@ -43,25 +43,25 @@ export default function IssueTicketsButton({
   return (
     <div>
       <Space>
-        <Button
-          size="small"
-          icon={<SettingOutlined />}
-          loading={loading}
-          onClick={() => setModalVisible(true)}
-        >
-          <span>
-            <Trans>Issue ERC-20 token</Trans>
-          </span>
-        </Button>
-        <TooltipIcon
-          iconStyle={{ fontSize: '.8rem' }}
-          tip={
+        <Tooltip
+          title={
             <Trans>
               Issue an ERC-20 to be used as this project's token. Once issued,
               anyone can claim their existing token balance in the new token.
             </Trans>
           }
-        />
+        >
+          <Button
+            size="small"
+            icon={<SettingOutlined />}
+            loading={loading}
+            onClick={() => setModalVisible(true)}
+          >
+            <span>
+              <Trans>Issue ERC-20 token</Trans>
+            </span>
+          </Button>
+        </Tooltip>
       </Space>
 
       <Modal

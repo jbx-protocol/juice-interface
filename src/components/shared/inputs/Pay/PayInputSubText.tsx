@@ -91,7 +91,7 @@ export default function PayInputSubText({
       plural: receivedTickets !== '1',
     })
 
-    return `${receivedTickets} ${tokenReceiveText}/${currencyMetadata[payInCurrency]?.name}`
+    return `${receivedTickets} ${tokenReceiveText}/1 ${currencyMetadata[payInCurrency]?.name}`
   }, [
     converter,
     payInCurrency,

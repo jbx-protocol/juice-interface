@@ -572,6 +572,10 @@ msgstr ""
 msgid "Current"
 msgstr ""
 
+#: src/components/shared/AMMPrices/index.tsx
+msgid "Current 3rd Party Exchange Rates"
+msgstr "Current 3rd Party Exchange Rates"
+
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
 msgid "Current owner: {owner}"
 msgstr ""

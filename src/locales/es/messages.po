@@ -577,6 +577,10 @@ msgstr "Crear un proyecto en Juicebox te acuña un NFT (ERC-721) que representa 
 msgid "Current"
 msgstr "Actual"
 
+#: src/components/shared/AMMPrices/index.tsx
+msgid "Current 3rd Party Exchange Rates"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
 msgid "Current owner: {owner}"
 msgstr "Dueño actual: {owner}"

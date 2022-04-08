@@ -82,7 +82,7 @@ export default function TokenAMMPriceRow({
             overlayInnerStyle={{ ...fontStyle }}
           >
             <ExternalLink href={exchangeLink} style={{ fontWeight: 400 }}>
-              {`${formattedNum(WETHPrice)} ${tokenSymbol}/ETH`}
+              {`${formattedNum(WETHPrice)} ${tokenSymbol}/1 ETH`}
               <LinkOutlined style={{ marginLeft: '0.2rem' }} />
             </ExternalLink>
           </Tooltip>

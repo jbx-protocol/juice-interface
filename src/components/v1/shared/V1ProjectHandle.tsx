@@ -6,16 +6,18 @@ import { Link } from 'react-router-dom'
 export default function V1ProjectHandle({
   projectId,
   style,
-  link,
 }: {
   projectId: BigNumberish
   style?: CSSProperties
-  link?: boolean
 }) {
   const handle = useHandleForProjectId(projectId)
 
   return (
-    <Link to={`/p/${handle}`} className="hover-action">
+    <Link
+      to={`/p/${handle}`}
+      style={{ fontWeight: 500, ...style }}
+      className="text-primary hover-text-action-primary hover-text-decoration-underline"
+    >
       @{handle}
     </Link>
   )

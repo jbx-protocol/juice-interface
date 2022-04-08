@@ -101,7 +101,7 @@ export default function TapEventElem({
             <div style={{ fontWeight: 500 }}>
               {e.modProjectId?.gt(0) ? (
                 <span>
-                  <V1ProjectHandle link projectId={e.modProjectId} />
+                  <V1ProjectHandle projectId={e.modProjectId} />
                 </span>
               ) : (
                 <FormattedAddress address={e.modBeneficiary} />

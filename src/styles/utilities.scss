@@ -1,6 +1,26 @@
+.text-primary {
+  color: var(--text-primary);
+}
+
 .hover-text-secondary {
   &:hover {
     color: var(--text-secondary) !important;
     transition: color 250ms;
+  }
+}
+
+hover-text-action-primary {
+  transition: unset;
+
+  &:hover {
+    color: var(--text-action-primary);
+  }
+}
+
+.hover-text-decoration-underline {
+  transition: unset;
+
+  &:hover {
+    text-decoration: underline;
   }
 }

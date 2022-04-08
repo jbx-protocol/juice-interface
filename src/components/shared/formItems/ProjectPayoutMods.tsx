@@ -178,7 +178,7 @@ export default function ProjectPayoutMods({
                     }}
                   >
                     <span style={{ cursor: 'pointer' }}>
-                      <V1ProjectHandle link projectId={mod.projectId} />
+                      <V1ProjectHandle projectId={mod.projectId} />
                     </span>
                   </div>
                 </Col>

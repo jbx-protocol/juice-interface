@@ -577,6 +577,10 @@ msgstr "创建一个 Juicebox 项目时，你会得到一个代表项目所有�
 msgid "Current"
 msgstr "当前"
 
+#: src/components/shared/AMMPrices/index.tsx
+msgid "Current 3rd Party Exchange Rates"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
 msgid "Current owner: {owner}"
 msgstr "当前拥有者：{owner}"

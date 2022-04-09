@@ -23,9 +23,13 @@ import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import IssueTicketsButton from 'components/shared/IssueTicketsButton'
 import SectionHeader from 'components/shared/SectionHeader'
+import useCanPrintPreminedTokens from 'hooks/v1/contractReader/CanPrintPreminedTokens'
 
-import ManageTokensModal from './ManageTokensModal'
+import ManageTokensModal from '../../../shared/ManageTokensModal'
 import ParticipantsModal from '../modals/ParticipantsModal'
+import RedeemModal from '../modals/RedeemModal'
+import ConfirmUnstakeTokensModal from '../modals/ConfirmUnstakeTokensModal'
+import PrintPreminedModal from '../modals/PrintPreminedModal'
 
 export default function Rewards() {
   const [manageTokensModalVisible, setManageTokensModalVisible] =
@@ -41,6 +45,7 @@ export default function Rewards() {
     isPreviewMode,
     currentFC,
     terminal,
+    overflow,
   } = useContext(V1ProjectContext)
   const {
     theme: { colors },
@@ -76,6 +81,20 @@ export default function Rewards() {
     capitalize: true,
     plural: true,
   })
+
+  const canPrintPreminedV1Tickets = Boolean(useCanPrintPreminedTokens())
+  const userHasMintPermission = useHasPermission(
+    OperatorPermission.PrintTickets,
+  )
+
+  const projectAllowsMint = Boolean(
+    metadata &&
+      (metadata.version === 0
+        ? canPrintPreminedV1Tickets
+        : metadata.ticketPrintingIsAllowed),
+  )
+
+  const hasOverflow = Boolean(overflow?.gt(0))
 
   return (
     <div>
@@ -188,7 +207,13 @@ export default function Rewards() {
       <ManageTokensModal
         visible={manageTokensModalVisible}
         onCancel={() => setManageTokensModalVisible(false)}
-        metadata={metadata}
+        projectAllowsMint={projectAllowsMint}
+        userHasMintPermission={userHasMintPermission}
+        hasOverflow={hasOverflow}
+        tokenSymbol={tokenSymbol}
+        RedeemModal={RedeemModal}
+        ClaimTokensModal={ConfirmUnstakeTokensModal}
+        MintModal={PrintPreminedModal}
       />
       <ParticipantsModal
         visible={participantsModalVisible}

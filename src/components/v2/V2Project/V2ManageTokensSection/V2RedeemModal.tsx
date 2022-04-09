@@ -33,8 +33,8 @@ export default function V2RedeemModal({
   onCancel,
 }: {
   visible?: boolean
-  onOk: VoidFunction | undefined
-  onCancel: VoidFunction | undefined
+  onOk?: VoidFunction
+  onCancel?: VoidFunction
 }) {
   const {
     theme: { colors },

@@ -20,6 +20,7 @@ import { tokenSymbolText } from 'utils/tokenSymbolText'
 import useTotalBalanceOf from 'hooks/v2/contractReader/TotalBalanceOf'
 import { ThemeContext } from 'contexts/themeContext'
 import useUserUnclaimedTokenBalance from 'hooks/v2/contractReader/UserUnclaimedTokenBalance'
+import { useLocation } from 'react-router-dom'
 import ManageTokensModal from 'components/shared/ManageTokensModal'
 
 import V2RedeemModal from './V2RedeemModal'
@@ -42,6 +43,11 @@ export default function V2ManageTokensSection() {
     projectId,
     primaryTerminalCurrentOverflow,
   } = useContext(V2ProjectContext)
+
+  // Checks URL to see if user was just directed from project deploy
+  const location = useLocation()
+  const params = new URLSearchParams(location.search)
+  const isNewDeploy = Boolean(params.get('newDeploy'))
 
   const { userAddress } = useContext(NetworkContext)
 
@@ -78,6 +84,13 @@ export default function V2ManageTokensSection() {
     precision: 0,
   })
 
+  const manageTokensRowStyle: CSSProperties = {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: 5,
+    justifyContent: 'space-between',
+    width: '100%',
+  }
   const hasOverflow = Boolean(primaryTerminalCurrentOverflow?.gt(0))
 
   const userHasMintPermission = Boolean(
@@ -90,7 +103,13 @@ export default function V2ManageTokensSection() {
       <Space direction="vertical" size="large">
         <Statistic
           title={
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                height: 40,
+              }}
+            >
               <SectionHeader
                 text={<Trans>Tokens</Trans>}
                 tip={
@@ -109,7 +128,10 @@ export default function V2ManageTokensSection() {
                 }
               />
               {showIssueTokensButton && (
-                <IssueTicketsButton useIssueTokensTx={useIssueTokensTx} />
+                <IssueTicketsButton
+                  isNewDeploy={isNewDeploy}
+                  useIssueTokensTx={useIssueTokensTx}
+                />
               )}
             </div>
           }
@@ -122,9 +144,11 @@ export default function V2ManageTokensSection() {
                       label={t`Project token`}
                       labelStyle={labelStyle}
                       children={
-                        <div style={{ width: '100%' }}>
-                          ${tokenSymbol} (
-                          <FormattedAddress address={tokenAddress} />)
+                        <div style={manageTokensRowStyle}>
+                          <div>
+                            {tokenSymbol} (
+                            <FormattedAddress address={tokenAddress} />)
+                          </div>
                         </div>
                       }
                     />
@@ -156,15 +180,7 @@ export default function V2ManageTokensSection() {
                     labelStyle={labelStyle}
                     style={{ paddingBottom: '0.5rem' }}
                     children={
-                      <div
-                        style={{
-                          display: 'flex',
-                          flexWrap: 'wrap',
-                          gap: 5,
-                          justifyContent: 'space-between',
-                          width: '100%',
-                        }}
-                      >
+                      <div style={manageTokensRowStyle}>
                         <div>
                           {hasIssuedERC20 && (
                             <div>
@@ -222,7 +238,7 @@ export default function V2ManageTokensSection() {
         tokenSymbol={tokenSymbol}
         RedeemModal={V2RedeemModal}
         ClaimTokensModal={V2ClaimTokensModal}
-        MintModal={V2MintModal} //TODO
+        MintModal={V2MintModal}
       />
       {/* TODO: 'Holders modal */}
     </>

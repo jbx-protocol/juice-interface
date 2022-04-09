@@ -1,4 +1,4 @@
-import { Button, Form, Input, Modal, Space, Tooltip } from 'antd'
+import { Button, Form, Input, Space, Tooltip } from 'antd'
 import { t, Trans } from '@lingui/macro'
 import { useForm } from 'antd/lib/form/Form'
 import { useState } from 'react'
@@ -6,15 +6,22 @@ import { TransactorInstance } from 'hooks/Transactor'
 import { useHistory } from 'react-router-dom'
 import { SettingOutlined } from '@ant-design/icons'
 
+import TransactionModal from './TransactionModal'
+
 export default function IssueTicketsButton({
   useIssueTokensTx,
+  isNewDeploy,
 }: {
   useIssueTokensTx: () => TransactorInstance<{
     name: string
     symbol: string
   }>
+  isNewDeploy?: boolean
 }) {
-  const [modalVisible, setModalVisible] = useState<boolean>()
+  const [modalVisible, setModalVisible] = useState<boolean>(
+    Boolean(isNewDeploy),
+  )
+  const [transactionPending, setTransactionPending] = useState<boolean>()
   const [loading, setLoading] = useState<boolean>()
   const [form] = useForm<{ name: string; symbol: string }>()
 
@@ -30,8 +37,12 @@ export default function IssueTicketsButton({
     issueTokensTx(
       { name: fields.name, symbol: fields.symbol },
       {
-        onDone: () => setModalVisible(false),
+        onDone: () => {
+          setTransactionPending(true)
+        },
         onConfirmed: () => {
+          setModalVisible(false)
+          setTransactionPending(false)
           setLoading(false)
           // refresh page
           history.go(0)
@@ -40,43 +51,57 @@ export default function IssueTicketsButton({
     )
   }
 
+  function IssueTokensButton() {
+    return (
+      <Tooltip
+        title={
+          <Trans>
+            Issue an ERC-20 to be used as this project's token. Once issued,
+            anyone can claim their existing token balance in the new token.
+          </Trans>
+        }
+      >
+        <Button
+          size="small"
+          icon={<SettingOutlined />}
+          loading={loading}
+          onClick={() => setModalVisible(true)}
+        >
+          <span>
+            <Trans>Issue ERC-20</Trans>
+          </span>
+        </Button>
+      </Tooltip>
+    )
+  }
+
   return (
     <div>
       <Space>
-        <Tooltip
-          title={
-            <Trans>
-              Issue an ERC-20 to be used as this project's token. Once issued,
-              anyone can claim their existing token balance in the new token.
-            </Trans>
-          }
-        >
-          <Button
-            size="small"
-            icon={<SettingOutlined />}
-            loading={loading}
-            onClick={() => setModalVisible(true)}
-          >
-            <span>
-              <Trans>Issue ERC-20 token</Trans>
-            </span>
-          </Button>
-        </Tooltip>
+        <IssueTokensButton />
       </Space>
 
-      <Modal
+      <TransactionModal
         visible={modalVisible}
         title={t`Issue ERC-20 token`}
         okText={t`Issue token`}
         onOk={issue}
         onCancel={() => setModalVisible(false)}
         confirmLoading={loading}
+        transactionPending={transactionPending}
       >
         <p>
-          <Trans>
-            Issue an ERC-20 token for this project. Once issued, anyone can
-            claim their existing token balance in the new token.
-          </Trans>
+          {!Boolean(isNewDeploy) ? (
+            <Trans>
+              Issue an ERC-20 to be used as this project's token. Once issued,
+              anyone can claim their existing token balance in the new token.
+            </Trans>
+          ) : (
+            <Trans>
+              Would you to issue an ERC-20 token to be used as this project's
+              token?
+            </Trans>
+          )}
         </p>
         <Form form={form} layout="vertical">
           <Form.Item name="name" label={t`Token name`}>
@@ -91,7 +116,7 @@ export default function IssueTicketsButton({
             />
           </Form.Item>
         </Form>
-      </Modal>
+      </TransactionModal>
     </div>
   )
 }

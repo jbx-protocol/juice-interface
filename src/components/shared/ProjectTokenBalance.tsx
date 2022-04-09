@@ -50,7 +50,6 @@ export default function ProjectTokenBalance({
       {!hideHandle && (
         <V1ProjectHandle
           style={{ color: colors.text.tertiary }}
-          link={true}
           projectId={projectId}
         />
       )}

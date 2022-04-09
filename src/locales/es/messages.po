@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-04-08 01:41\n"
+"PO-Revision-Date: 2022-04-09 02:16\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -1891,7 +1891,7 @@ msgstr "Empezar"
 msgid "Start Over"
 msgstr "Empezar de Nuevo"
 
-#: src/components/shared/PayoutModsList.tsx
+#: src/components/v1/PayoutModsList.tsx
 msgid "Sum of percentages cannot exceed 100%"
 msgstr "La suma de los porcentajes no puede exceder 100%"
 

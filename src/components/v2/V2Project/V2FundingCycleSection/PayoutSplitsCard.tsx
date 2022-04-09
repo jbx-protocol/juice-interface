@@ -46,7 +46,11 @@ export default function PayoutSplitsCard() {
               projectBalanceInCurrency={balanceInDistributionLimitCurrency}
               targetAmount={distributionLimit}
               distributedAmount={usedDistributionLimit}
-              feePercentage={formatFee(ETHPaymentTerminalFee)} // TODO
+              feePercentage={
+                ETHPaymentTerminalFee
+                  ? formatFee(ETHPaymentTerminalFee)
+                  : undefined
+              }
               ownerAddress={projectOwnerAddress}
             />
           ) : (

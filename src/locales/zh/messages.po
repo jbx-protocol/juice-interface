@@ -1850,7 +1850,7 @@ msgstr "开始时间"
 msgid "Start Over"
 msgstr "重新来过"
 
-#: src/components/shared/PayoutModsList.tsx
+#: src/components/v1/PayoutModsList.tsx
 msgid "Sum of percentages cannot exceed 100%"
 msgstr "百分比合计不能超过 100%"
 

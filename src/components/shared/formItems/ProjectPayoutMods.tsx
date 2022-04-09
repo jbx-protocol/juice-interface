@@ -19,7 +19,6 @@ import { isAddress } from '@ethersproject/address'
 import { formatBytes32String } from '@ethersproject/strings'
 import useContractReader from 'hooks/v1/contractReader/ContractReader'
 import { V1ContractName } from 'models/v1/contracts'
-import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { PayoutMod } from 'models/mods'
 import * as moment from 'moment'
 import { useCallback, useContext, useState } from 'react'
@@ -30,9 +29,9 @@ import {
   percentToPermyriad,
   parseWad,
   fromWad,
+  percentToPerbicent,
 } from 'utils/formatNumber'
 import { amountSubFee } from 'utils/math'
-import { V1CurrencyName } from 'utils/v1/currency'
 
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
@@ -43,6 +42,7 @@ import FormattedAddress from '../FormattedAddress'
 import NumberSlider from '../inputs/NumberSlider'
 import V1ProjectHandle from '../../v1/shared/V1ProjectHandle'
 import { FormItemExt } from './formItemExt'
+import { CurrencyName } from 'constants/currency'
 
 type ModType = 'project' | 'address'
 
@@ -50,16 +50,16 @@ type EditingPayoutMod = PayoutMod & { handle?: string }
 
 export default function ProjectPayoutMods({
   target,
-  currency,
-  feePerbicent,
+  currencyName,
+  feePercentage,
   lockedMods,
   mods,
   onModsChanged,
   formItemProps,
 }: {
   target: string
-  currency: V1CurrencyOption
-  feePerbicent: BigNumber | undefined
+  currencyName: CurrencyName | undefined
+  feePercentage: string | undefined
   lockedMods?: EditingPayoutMod[]
   mods: EditingPayoutMod[] | undefined
   onModsChanged: (mods: EditingPayoutMod[]) => void
@@ -80,7 +80,6 @@ export default function ProjectPayoutMods({
   const [settingHandle, setSettingHandle] = useState<string>()
 
   const { owner } = useContext(V1ProjectContext)
-  const currencyName = V1CurrencyName(currency)
 
   useContractReader<BigNumber>({
     contract: V1ContractName.Projects,
@@ -111,6 +110,8 @@ export default function ProjectPayoutMods({
   } = useContext(ThemeContext)
 
   const gutter = 10
+
+  const feePerbicent = percentToPerbicent(feePercentage)
 
   const ModInput = useCallback(
     (mod: EditingPayoutMod, index: number, locked?: boolean) => {
@@ -156,7 +157,7 @@ export default function ProjectPayoutMods({
                 amount: getAmountFromPercent(
                   editingPercent ?? percent,
                   target,
-                  feePerbicent,
+                  feePercentage,
                 ),
                 lockedUntil: mod.lockedUntil
                   ? moment.default(mod.lockedUntil * 1000)
@@ -294,6 +295,7 @@ export default function ProjectPayoutMods({
       colors.icon.disabled,
       radii.md,
       target,
+      feePercentage,
       feePerbicent,
       form,
       editingPercent,
@@ -375,7 +377,7 @@ export default function ProjectPayoutMods({
   }
 
   const onAmountChange = (newAmount: number | undefined) => {
-    let newPercent = getPercentFromAmount(newAmount, target, feePerbicent)
+    let newPercent = getPercentFromAmount(newAmount, target, feePercentage)
     setEditingPercent(newPercent)
     form.setFieldsValue({ amount: newAmount })
     form.setFieldsValue({ percent: newPercent })
@@ -548,9 +550,7 @@ export default function ProjectPayoutMods({
                   formItemProps={{
                     rules: [{ validator: validatePayout }],
                   }}
-                  accessory={
-                    <InputAccessoryButton content={V1CurrencyName(currency)} />
-                  }
+                  accessory={<InputAccessoryButton content={currencyName} />}
                 />
               </div>
             </Form.Item>
@@ -564,7 +564,7 @@ export default function ProjectPayoutMods({
                     let newAmount = getAmountFromPercent(
                       percent ?? 0,
                       target,
-                      feePerbicent,
+                      feePercentage,
                     )
                     form.setFieldsValue({ amount: newAmount })
                     form.setFieldsValue({ percent })

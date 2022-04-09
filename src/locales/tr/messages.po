@@ -8,7 +8,7 @@ msgstr ""
 "Language: tr\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-04-08 01:41\n"
+"PO-Revision-Date: 2022-04-09 02:16\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -172,7 +172,7 @@ msgstr "<0>Peel</0>, juicebox.money kullanıcı arayüzünü yöneten DAO'dur. P
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "<0>This project has no overflow</0>, so you will not receive any ETH for burning tokens."
-msgstr ""
+msgstr "<0>Bu projede taşma bulunmadığından</0> token'ları yakma karşılığında ETH almayacaksınız."
 
 #: src/components/Landing/TrendingSection.tsx
 msgid "<0>Trending projects</0><1><2/></1>"
@@ -389,7 +389,7 @@ msgstr "Başa dön"
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Balance exceeded"
-msgstr ""
+msgstr "Bakiye aşıldı"
 
 #: src/components/shared/Project/SpendingStats.tsx
 msgid "Balance of the project owner's wallet."

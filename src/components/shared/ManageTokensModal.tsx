@@ -50,16 +50,16 @@ type ModalProps = {
 export default function ManageTokensModal({
   onCancel,
   visible,
-  mintingTokensIsAllowed,
-  hasPrintPreminePermission,
+  projectAllowsMint,
+  userHasMintPermission,
   hasOverflow,
   tokenSymbol,
   RedeemModal,
   ClaimTokensModal,
   MintModal,
 }: {
-  hasPrintPreminePermission: boolean
-  mintingTokensIsAllowed: boolean
+  userHasMintPermission: boolean
+  projectAllowsMint: boolean
   onCancel?: VoidFunction
   visible?: boolean
   hasOverflow: boolean | undefined
@@ -136,7 +136,7 @@ export default function ManageTokensModal({
             onClick={() => setUnstakeModalVisible(true)}
           />
 
-          {hasPrintPreminePermission && (
+          {userHasMintPermission && projectAllowsMint && (
             <Tooltip
               title={
                 <Trans>
@@ -157,7 +157,7 @@ export default function ManageTokensModal({
                   </Trans>
                 }
                 onClick={() => setMintModalVisible(true)}
-                disabled={!mintingTokensIsAllowed}
+                disabled={!projectAllowsMint}
               />
             </Tooltip>
           )}

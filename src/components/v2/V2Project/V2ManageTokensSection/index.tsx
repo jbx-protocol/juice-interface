@@ -24,6 +24,7 @@ import ManageTokensModal from 'components/shared/ManageTokensModal'
 
 import V2RedeemModal from './V2RedeemModal'
 import V2ClaimTokensModal from './V2ClaimTokensModal'
+import V2MintModal from './V2MintModal'
 
 export default function V2ManageTokensSection() {
   const [manageTokensModalVisible, setManageTokensModalVisible] =
@@ -37,6 +38,7 @@ export default function V2ManageTokensSection() {
     tokenSymbol,
     isPreviewMode,
     totalTokenSupply,
+    fundingCycleMetadata,
     projectId,
     primaryTerminalCurrentOverflow,
   } = useContext(V2ProjectContext)
@@ -78,10 +80,10 @@ export default function V2ManageTokensSection() {
 
   const hasOverflow = Boolean(primaryTerminalCurrentOverflow?.gt(0))
 
-  const mintingTokensIsAllowed = Boolean(
+  const userHasMintPermission = Boolean(
     useHasPermission(V2OperatorPermission.MINT),
   )
-  const hasPrintPreminePermission = true //TODO
+  const projectAllowsMint = !fundingCycleMetadata?.pauseMint //TODO
 
   return (
     <>
@@ -214,13 +216,13 @@ export default function V2ManageTokensSection() {
       <ManageTokensModal
         visible={manageTokensModalVisible}
         onCancel={() => setManageTokensModalVisible(false)}
-        mintingTokensIsAllowed={mintingTokensIsAllowed}
-        hasPrintPreminePermission={hasPrintPreminePermission}
+        projectAllowsMint={projectAllowsMint}
+        userHasMintPermission={userHasMintPermission}
         hasOverflow={hasOverflow}
         tokenSymbol={tokenSymbol}
         RedeemModal={V2RedeemModal}
         ClaimTokensModal={V2ClaimTokensModal}
-        MintModal={() => null} //TODO
+        MintModal={V2MintModal} //TODO
       />
       {/* TODO: 'Holders modal */}
     </>

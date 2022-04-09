@@ -83,11 +83,11 @@ export default function Rewards() {
   })
 
   const canPrintPreminedV1Tickets = Boolean(useCanPrintPreminedTokens())
-  const hasPrintPreminePermission = useHasPermission(
+  const userHasMintPermission = useHasPermission(
     OperatorPermission.PrintTickets,
   )
 
-  const mintingTokensIsAllowed = Boolean(
+  const projectAllowsMint = Boolean(
     metadata &&
       (metadata.version === 0
         ? canPrintPreminedV1Tickets
@@ -207,8 +207,8 @@ export default function Rewards() {
       <ManageTokensModal
         visible={manageTokensModalVisible}
         onCancel={() => setManageTokensModalVisible(false)}
-        mintingTokensIsAllowed={mintingTokensIsAllowed}
-        hasPrintPreminePermission={hasPrintPreminePermission}
+        projectAllowsMint={projectAllowsMint}
+        userHasMintPermission={userHasMintPermission}
         hasOverflow={hasOverflow}
         tokenSymbol={tokenSymbol}
         RedeemModal={RedeemModal}

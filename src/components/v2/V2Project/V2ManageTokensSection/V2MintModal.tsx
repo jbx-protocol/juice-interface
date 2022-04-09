@@ -1,34 +1,36 @@
-import { Form, Input, Modal, Switch } from 'antd'
+import { Form, Input, Switch } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 
-import { V1ProjectContext } from 'contexts/v1/projectContext'
 import * as constants from '@ethersproject/constants'
 import { isAddress } from '@ethersproject/address'
-import { usePrintTokensTx } from 'hooks/v1/transactor/PrintTokensTx'
-import { useContext, useMemo, useState } from 'react'
+import { useContext, useState } from 'react'
 import { parseWad } from 'utils/formatNumber'
 
-import { V1_CURRENCY_ETH } from 'constants/v1/currency'
+import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { useMintTokensTx } from 'hooks/v2/transactor/MintTokensTx'
+import TransactionModal from 'components/shared/TransactionModal'
+import { t, Trans } from '@lingui/macro'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
 
-export default function PrintPreminedModal({
+export default function V2MintModal({
   visible,
   onCancel,
 }: {
   visible?: boolean
   onCancel?: VoidFunction
 }) {
-  const { tokenSymbol, tokenAddress, terminal } = useContext(V1ProjectContext)
-  const printTokensTx = usePrintTokensTx()
+  const { tokenSymbol, tokenAddress } = useContext(V2ProjectContext)
+  const mintTokensTx = useMintTokensTx()
   const [form] = useForm<{
     beneficary: string
-    preferUnstaked: boolean
+    preferClaimed: boolean
     memo: string
   }>()
 
   const [value, setValue] = useState<string>('0')
   const [loading, setLoading] = useState<boolean>()
+  const [transactionPending, setTransactionPending] = useState<boolean>()
 
   async function mint() {
     const beneficiary = form.getFieldValue('beneficary')
@@ -38,65 +40,64 @@ export default function PrintPreminedModal({
 
     await form.validateFields()
 
-    printTokensTx(
+    mintTokensTx(
       {
         value: parseWad(value),
-        currency: V1_CURRENCY_ETH,
         beneficiary,
+        preferClaimed: form.getFieldValue('preferClaimed'),
         memo: form.getFieldValue('memo'),
-        preferUnstaked: form.getFieldValue('preferUnstaked'),
       },
       {
         onConfirmed: () => {
           form.resetFields()
           setValue('0')
           if (onCancel) onCancel()
+          setTransactionPending(false)
         },
         onDone: () => {
           setLoading(false)
+          setTransactionPending(true)
         },
       },
     )
   }
 
-  const formItemProps: { label: string; extra: string } | undefined =
-    useMemo(() => {
-      if (!terminal?.version) return
-
-      switch (terminal.version) {
-        case '1':
-          return {
-            label: 'Payment equivalent',
-            extra:
-              'The amount of tokens minted to the receiver will be calculated based on if they had paid this amount to the project in the current funding cycle.',
-          }
-        case '1.1':
-          return {
-            label: 'Token amount',
-            extra: 'The amount of tokens to mint to the receiver.',
-          }
-      }
-    }, [terminal?.version])
-
   const erc20Issued =
     tokenSymbol && tokenAddress && tokenAddress !== constants.AddressZero
 
+  const tokensTokenLower = tokenSymbolText({
+    tokenSymbol: tokenSymbol,
+    capitalize: false,
+    plural: true,
+  })
+
+  const tokensTokenUpper = tokenSymbolText({
+    tokenSymbol: tokenSymbol,
+    capitalize: true,
+    plural: false,
+  })
+
   return (
-    <Modal
+    <TransactionModal
       visible={visible}
+      title={t`Mint ${tokensTokenLower}`}
       onOk={mint}
       confirmLoading={loading}
+      transactionPending={transactionPending}
       onCancel={onCancel}
-      okText="Mint tokens"
+      okText={t`Mint ${tokensTokenLower}`}
     >
       <div style={{ marginBottom: 20 }}>
-        Note: Tokens can be minted manually when allowed in the current funding
-        cycle. This can be changed by the project owner for upcoming cycles.
+        <Trans>
+          Note: Tokens can be minted manually when allowed in the current
+          funding cycle. This can be changed by the project owner for upcoming
+          cycles.
+        </Trans>
       </div>
 
       <Form layout="vertical" form={form}>
         <Form.Item
-          label="Tokens receiver"
+          label={t`Tokens receiver`}
           name="beneficary"
           rules={[
             {
@@ -112,33 +113,32 @@ export default function PrintPreminedModal({
           <Input placeholder={constants.AddressZero} />
         </Form.Item>
         <FormattedNumberInput
-          formItemProps={formItemProps}
+          formItemProps={{
+            label: t`${tokensTokenUpper} amount`,
+            extra: t`The amount of tokens to mint to the receiver.`,
+            rules: [{ required: true }],
+          }}
           value={value}
           onChange={val => setValue(val ?? '0')}
-          accessory={
-            terminal?.version === '1' ? (
-              <InputAccessoryButton content="ETH" />
-            ) : undefined
-          }
         />
         <br />
         <Form.Item label="Memo" name="memo">
           <Input placeholder="Memo included on-chain (optional)" />
         </Form.Item>
         <Form.Item
-          name="preferUnstaked"
-          label="Mint as ERC-20"
+          name="preferClaimed"
+          label={t`Mint as ERC-20`}
           valuePropName="checked"
           extra={
             erc20Issued
-              ? `Enabling this will mint ${tokenSymbol} ERC-20 tokens. Otherwise staked ${tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver.`
-              : 'ERC-20 tokens can only be minted once an ERC-20 token has been issued for this project.'
+              ? t`Enabling this will mint ${tokenSymbol} ERC-20 tokens. Otherwise staked ${tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver.`
+              : t`ERC-20 tokens can only be minted once an ERC-20 token has been issued for this project.`
           }
           initialValue={false}
         >
           <Switch disabled={!erc20Issued} />
         </Form.Item>
       </Form>
-    </Modal>
+    </TransactionModal>
   )
 }

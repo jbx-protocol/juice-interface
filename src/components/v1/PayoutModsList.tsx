@@ -17,13 +17,18 @@ import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { PayoutMod } from 'models/mods'
 import { useContext, useLayoutEffect, useMemo, useState } from 'react'
-import { formatWad, permyriadToPercent, fromWad } from 'utils/formatNumber'
+import {
+  formatWad,
+  permyriadToPercent,
+  fromWad,
+  perbicentToPercent,
+} from 'utils/formatNumber'
 import { amountSubFee } from 'utils/math'
 
 import { V1CurrencyName } from 'utils/v1/currency'
 
 import { V1_CURRENCY_ETH } from 'constants/v1/currency'
-import ProjectPayoutMods from './formItems/ProjectPayoutMods'
+import ProjectPayoutMods from '../shared/formItems/ProjectPayoutMods'
 
 export default function PayoutModsList({
   mods,
@@ -228,8 +233,8 @@ export default function PayoutModsList({
               lockedMods={lockedMods}
               onModsChanged={setEditingMods}
               target={fromWad(fundingCycle.target)}
-              currency={fundingCycle.currency.toNumber() as V1CurrencyOption}
-              feePerbicent={feePerbicent}
+              currencyName={fundingCycleCurrency}
+              feePercentage={perbicentToPercent(feePerbicent)}
             />
           </Modal>
         </Form>

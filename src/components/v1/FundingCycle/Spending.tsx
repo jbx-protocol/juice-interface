@@ -5,7 +5,7 @@ import TooltipLabel from 'components/shared/TooltipLabel'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { PayoutMod } from 'models/mods'
 import { useContext, useState } from 'react'
-import PayoutModsList from 'components/shared/PayoutModsList'
+import PayoutModsList from 'components/v1/PayoutModsList'
 
 import { hasFundingTarget } from 'utils/v1/fundingCycle'
 import { V1CurrencyName } from 'utils/v1/currency'

@@ -70,15 +70,21 @@ export default function V2ManageTokensSection() {
     formatPercent(totalBalance, totalTokenSupply) || '0'
 
   const showIssueTokensButton =
-    (!hasIssuedERC20 && hasIssueTicketsPermission && !isPreviewMode) ||
-    isNewDeploy
-
+    !hasIssuedERC20 && hasIssueTicketsPermission && !isPreviewMode
   const claimedBalanceFormatted = formatWad(claimedBalance ?? 0, {
     precision: 0,
   })
   const unclaimedBalanceFormatted = formatWad(unclaimedBalance ?? 0, {
     precision: 0,
   })
+
+  const manageTokensRowStyle: CSSProperties = {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: 5,
+    justifyContent: 'space-between',
+    width: '100%',
+  }
 
   return (
     <>
@@ -103,12 +109,6 @@ export default function V2ManageTokensSection() {
                   </Trans>
                 }
               />
-              {showIssueTokensButton && (
-                <IssueTicketsButton
-                  isNewDeploy={isNewDeploy}
-                  useIssueTokensTx={useIssueTokensTx}
-                />
-              )}
             </div>
           }
           valueRender={() => (
@@ -120,9 +120,17 @@ export default function V2ManageTokensSection() {
                       label={t`Project token`}
                       labelStyle={labelStyle}
                       children={
-                        <div style={{ width: '100%' }}>
-                          ${tokenSymbol} (
-                          <FormattedAddress address={tokenAddress} />)
+                        <div style={manageTokensRowStyle}>
+                          <div>
+                            ${tokenSymbol} (
+                            <FormattedAddress address={tokenAddress} />)
+                          </div>
+                          {showIssueTokensButton && (
+                            <IssueTicketsButton
+                              isNewDeploy={isNewDeploy}
+                              useIssueTokensTx={useIssueTokensTx}
+                            />
+                          )}
                         </div>
                       }
                     />
@@ -154,15 +162,7 @@ export default function V2ManageTokensSection() {
                     labelStyle={labelStyle}
                     style={{ paddingBottom: '0.5rem' }}
                     children={
-                      <div
-                        style={{
-                          display: 'flex',
-                          flexWrap: 'wrap',
-                          gap: 5,
-                          justifyContent: 'space-between',
-                          width: '100%',
-                        }}
-                      >
+                      <div style={manageTokensRowStyle}>
                         <div>
                           {hasIssuedERC20 && (
                             <div>

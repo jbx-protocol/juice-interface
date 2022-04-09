@@ -4,7 +4,6 @@ import { useForm } from 'antd/lib/form/Form'
 import { useState } from 'react'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useHistory } from 'react-router-dom'
-import { SettingOutlined } from '@ant-design/icons'
 
 export default function IssueTicketsButton({
   useIssueTokensTx,
@@ -44,28 +43,33 @@ export default function IssueTicketsButton({
     )
   }
 
+  function IssueTokensButton() {
+    return (
+      <Tooltip
+        title={
+          <Trans>
+            Issue an ERC-20 to be used as this project's token. Once issued,
+            anyone can claim their existing token balance in the new token.
+          </Trans>
+        }
+      >
+        <Button
+          size="small"
+          loading={loading}
+          onClick={() => setModalVisible(true)}
+        >
+          <span>
+            <Trans>Issue ERC-20</Trans>
+          </span>
+        </Button>
+      </Tooltip>
+    )
+  }
+
   return (
     <div>
       <Space>
-        <Tooltip
-          title={
-            <Trans>
-              Issue an ERC-20 to be used as this project's token. Once issued,
-              anyone can claim their existing token balance in the new token.
-            </Trans>
-          }
-        >
-          <Button
-            size="small"
-            icon={<SettingOutlined />}
-            loading={loading}
-            onClick={() => setModalVisible(true)}
-          >
-            <span>
-              <Trans>Issue ERC-20 token</Trans>
-            </span>
-          </Button>
-        </Tooltip>
+        <IssueTokensButton />
       </Space>
 
       <Modal

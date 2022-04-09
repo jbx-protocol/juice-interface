@@ -1041,6 +1041,9 @@ msgid "Indie artists, devs, creators"
 msgstr "独立艺术家，开发者，创作者"
 
 #: src/components/shared/IssueTicketsButton.tsx
+msgid "Issue ERC-20"
+msgstr ""
+
 #: src/components/shared/IssueTicketsButton.tsx
 msgid "Issue ERC-20 token"
 msgstr "发行 ERC-20 代币"

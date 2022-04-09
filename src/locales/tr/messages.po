@@ -1041,6 +1041,9 @@ msgid "Indie artists, devs, creators"
 msgstr "Bağımsız sanatçılar, geliştiriciler, yaratıcılar"
 
 #: src/components/shared/IssueTicketsButton.tsx
+msgid "Issue ERC-20"
+msgstr ""
+
 #: src/components/shared/IssueTicketsButton.tsx
 msgid "Issue ERC-20 token"
 msgstr "ERC-20 token'ı çıkart"

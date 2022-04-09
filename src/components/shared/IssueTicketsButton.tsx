@@ -38,12 +38,12 @@ export default function IssueTicketsButton({
       { name: fields.name, symbol: fields.symbol },
       {
         onDone: () => {
-          setLoading(false)
           setTransactionPending(true)
         },
         onConfirmed: () => {
           setModalVisible(false)
           setTransactionPending(false)
+          setLoading(false)
           // refresh page
           history.go(0)
         },

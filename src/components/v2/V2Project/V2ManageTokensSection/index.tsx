@@ -20,8 +20,10 @@ import { tokenSymbolText } from 'utils/tokenSymbolText'
 import useTotalBalanceOf from 'hooks/v2/contractReader/TotalBalanceOf'
 import { ThemeContext } from 'contexts/themeContext'
 import useUserUnclaimedTokenBalance from 'hooks/v2/contractReader/UserUnclaimedTokenBalance'
+import ManageTokensModal from 'components/shared/ManageTokensModal'
 
-import V2ManageTokensModal from './V2ManageTokensModal'
+import V2RedeemModal from './V2RedeemModal'
+import V2ClaimTokensModal from './V2ClaimTokensModal'
 
 export default function V2ManageTokensSection() {
   const [manageTokensModalVisible, setManageTokensModalVisible] =
@@ -36,6 +38,7 @@ export default function V2ManageTokensSection() {
     isPreviewMode,
     totalTokenSupply,
     projectId,
+    primaryTerminalCurrentOverflow,
   } = useContext(V2ProjectContext)
 
   const { userAddress } = useContext(NetworkContext)
@@ -72,6 +75,13 @@ export default function V2ManageTokensSection() {
   const unclaimedBalanceFormatted = formatWad(unclaimedBalance ?? 0, {
     precision: 0,
   })
+
+  const hasOverflow = Boolean(primaryTerminalCurrentOverflow?.gt(0))
+
+  const mintingTokensIsAllowed = Boolean(
+    useHasPermission(V2OperatorPermission.MINT),
+  )
+  const hasPrintPreminePermission = true //TODO
 
   return (
     <>
@@ -201,9 +211,16 @@ export default function V2ManageTokensSection() {
         />
       </Space>
 
-      <V2ManageTokensModal
+      <ManageTokensModal
         visible={manageTokensModalVisible}
         onCancel={() => setManageTokensModalVisible(false)}
+        mintingTokensIsAllowed={mintingTokensIsAllowed}
+        hasPrintPreminePermission={hasPrintPreminePermission}
+        hasOverflow={hasOverflow}
+        tokenSymbol={tokenSymbol}
+        RedeemModal={V2RedeemModal}
+        ClaimTokensModal={V2ClaimTokensModal}
+        MintModal={() => null} //TODO
       />
       {/* TODO: 'Holders modal */}
     </>

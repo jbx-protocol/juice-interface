@@ -123,7 +123,7 @@ msgstr "<0>Discount rate disabled when funding cycle duration has not been set.<
 msgid "<0>Juicebox contracts</0> are unaudited, and may be vulnerable to bugs or hacks. All funds moved through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable for any losses by projects or their supporters."
 msgstr "<0>Juicebox contracts</0> are unaudited, and may be vulnerable to bugs or hacks. All funds moved through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable for any losses by projects or their supporters."
 
-#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+#: src/components/shared/ManageTokensModal.tsx
 msgid "<0>Learn more</0> about burning tokens."
 msgstr "<0>Learn more</0> about burning tokens."
 
@@ -154,6 +154,7 @@ msgid "<0>Note:</0> These properties will <1>not</1> be editable immediately wit
 msgstr "<0>Note:</0> These properties will <1>not</1> be editable immediately within a funding cycle. They can only be changed for <2>upcoming</2> funding cycles."
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "<0>Note:</0> Tokens cannot be claimed because no ERC-20 token has been issued for this project. ERC-20 tokens must be issued by the project owner."
 msgstr "<0>Note:</0> Tokens cannot be claimed because no ERC-20 token has been issued for this project. ERC-20 tokens must be issued by the project owner."
 
@@ -174,10 +175,12 @@ msgid "<0>Trending projects</0><1><2/></1>"
 msgstr "<0>Trending projects</0><1><2/></1>"
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "<0>Your unclaimed {tokenSymbol} tokens:</0> {0}"
 msgstr "<0>Your unclaimed {tokenSymbol} tokens:</0> {0}"
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "<0>{tokenSymbol} ERC-20 address:</0> <1/>"
 msgstr "<0>{tokenSymbol} ERC-20 address:</0> <1/>"
 
@@ -322,6 +325,7 @@ msgid "Amount"
 msgstr "Amount"
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "Amount of ERC-20 tokens to claim"
 msgstr "Amount of ERC-20 tokens to claim"
 
@@ -439,7 +443,7 @@ msgstr ""
 msgid "Burn project tokens"
 msgstr "Burn project tokens"
 
-#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+#: src/components/shared/ManageTokensModal.tsx
 msgid "Burn your {tokensLabel}. You won't receive ETH in return because this project has no overflow."
 msgstr "Burn your {tokensLabel}. You won't receive ETH in return because this project has no overflow."
 
@@ -447,7 +451,7 @@ msgstr "Burn your {tokensLabel}. You won't receive ETH in return because this pr
 msgid "Burn {0} {tokensTextShort}"
 msgstr "Burn {0} {tokensTextShort}"
 
-#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+#: src/components/shared/ManageTokensModal.tsx
 msgid "Burn {tokensLabel}"
 msgstr "Burn {tokensLabel}"
 
@@ -472,7 +476,7 @@ msgstr ""
 msgid "Cancel"
 msgstr "Cancel"
 
-#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+#: src/components/shared/ManageTokensModal.tsx
 msgid "Cannot redeem tokens for ETH because this project has no overflow."
 msgstr "Cannot redeem tokens for ETH because this project has no overflow."
 
@@ -496,11 +500,12 @@ msgstr "Check this to mint this project's ERC-20 tokens to your wallet. Leave un
 msgid "Check this to mint {tokenSymbol} ERC-20 to your wallet. Leave unchecked to have your token balance tracked by Juicebox, saving gas on this transaction. You can always claim your ERC-20 tokens later."
 msgstr "Check this to mint {tokenSymbol} ERC-20 to your wallet. Leave unchecked to have your token balance tracked by Juicebox, saving gas on this transaction. You can always claim your ERC-20 tokens later."
 
-#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+#: src/components/shared/ManageTokensModal.tsx
 msgid "Claim {tokensLabel} as ERC-20"
 msgstr "Claim {tokensLabel} as ERC-20"
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "Claiming {tokenSymbol} tokens will convert your {tokenSymbol} balance to ERC-20 tokens and mint them to your wallet."
 msgstr "Claiming {tokenSymbol} tokens will convert your {tokenSymbol} balance to ERC-20 tokens and mint them to your wallet."
 
@@ -1011,6 +1016,7 @@ msgid "If you're interested in creating a project but still confused on how to g
 msgstr "If you're interested in creating a project but still confused on how to get started, consider watching this <0>instructional video</0>. Also feel free to reach out in the <1>Juicebox Discord</1> where our team will be happy to help bring your project idea to life!"
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "If you're unsure if you need to claim, you probably don't."
 msgstr "If you're unsure if you need to claim, you probably don't."
 
@@ -1139,6 +1145,7 @@ msgstr ""
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "MAX"
 msgstr "MAX"
@@ -1147,8 +1154,7 @@ msgstr "MAX"
 msgid "Manage"
 msgstr ""
 
-#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
-#: src/components/v2/V2Project/V2ManageTokensSection/V2ManageTokensModal.tsx
+#: src/components/shared/ManageTokensModal.tsx
 msgid "Manage {0}"
 msgstr "Manage {0}"
 
@@ -1165,7 +1171,7 @@ msgstr "Memo"
 msgid "Migrate to Juicebox V1.1"
 msgstr "Migrate to Juicebox V1.1"
 
-#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+#: src/components/shared/ManageTokensModal.tsx
 msgid "Mint new {tokensLabel} into an account. Only a project's owner, a designated operator, or one of its terminal's delegates can mint its tokens."
 msgstr "Mint new {tokensLabel} into an account. Only a project's owner, a designated operator, or one of its terminal's delegates can mint its tokens."
 
@@ -1177,7 +1183,7 @@ msgstr "Mint project tokens on demand"
 msgid "Mint tokens to a custom address."
 msgstr "Mint tokens to a custom address."
 
-#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+#: src/components/shared/ManageTokensModal.tsx
 msgid "Mint {tokensLabel}"
 msgstr "Mint {tokensLabel}"
 
@@ -1185,7 +1191,7 @@ msgstr "Mint {tokensLabel}"
 msgid "More trending projects"
 msgstr "More trending projects"
 
-#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+#: src/components/shared/ManageTokensModal.tsx
 msgid "Move your {tokensLabel} from the Juicebox contract to your wallet."
 msgstr "Move your {tokensLabel} from the Juicebox contract to your wallet."
 
@@ -1595,8 +1601,7 @@ msgstr "Recurring target"
 msgid "Redeem"
 msgstr ""
 
-#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
-#: src/components/v2/V2Project/V2ManageTokensSection/V2ManageTokensModal.tsx
+#: src/components/shared/ManageTokensModal.tsx
 msgid "Redeem your {tokensLabel} for a portion of the project's overflow. Any {tokensLabel} you redeem will be burned."
 msgstr "Redeem your {tokensLabel} for a portion of the project's overflow. Any {tokensLabel} you redeem will be burned."
 
@@ -1604,8 +1609,7 @@ msgstr "Redeem your {tokensLabel} for a portion of the project's overflow. Any {
 msgid "Redeem {0} {tokensTextShort} for ETH"
 msgstr "Redeem {0} {tokensTextShort} for ETH"
 
-#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
-#: src/components/v2/V2Project/V2ManageTokensSection/V2ManageTokensModal.tsx
+#: src/components/shared/ManageTokensModal.tsx
 msgid "Redeem {tokensLabel} for ETH"
 msgstr "Redeem {tokensLabel} for ETH"
 
@@ -2082,7 +2086,7 @@ msgstr ""
 msgid "Token minting"
 msgstr ""
 
-#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+#: src/components/shared/ManageTokensModal.tsx
 msgid "Token minting is only available for V1.1 projects. Token minting can be enabled or disabled by reconfiguring the project's funding cycle."
 msgstr "Token minting is only available for V1.1 projects. Token minting can be enabled or disabled by reconfiguring the project's funding cycle."
 
@@ -2356,6 +2360,7 @@ msgid "Yes"
 msgstr "Yes"
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "You can still redeem your {tokenSymbol} tokens for overflow without claiming them, and you can transfer your unclaimed {tokenSymbol} tokens to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
 msgstr "You can still redeem your {tokenSymbol} tokens for overflow without claiming them, and you can transfer your unclaimed {tokenSymbol} tokens to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
 

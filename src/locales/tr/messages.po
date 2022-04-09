@@ -1071,17 +1071,17 @@ msgid "Indie artists, devs, creators"
 msgstr "Bağımsız sanatçılar, geliştiriciler, yaratıcılar"
 
 #: src/components/shared/IssueTicketsButton.tsx
+msgid "Issue ERC-20"
+msgstr ""
+
 #: src/components/shared/IssueTicketsButton.tsx
 msgid "Issue ERC-20 token"
 msgstr "ERC-20 token'ı çıkart"
 
 #: src/components/shared/IssueTicketsButton.tsx
+#: src/components/shared/IssueTicketsButton.tsx
 msgid "Issue an ERC-20 to be used as this project's token. Once issued, anyone can claim their existing token balance in the new token."
 msgstr ""
-
-#: src/components/shared/IssueTicketsButton.tsx
-msgid "Issue an ERC-20 token for this project. Once issued, anyone can claim their existing token balance in the new token."
-msgstr "Bu proje için bir ERC-20 token'ı çıkarın. Bir kere çıkarıldıktan sonra, herkes mevcut token bakiyesini yeni token cinsinden talep edebilir."
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
@@ -2406,6 +2406,10 @@ msgstr "Fonları çek"
 #: src/components/Navbar/constants.ts
 msgid "Workspace"
 msgstr "Çalışma Alan"
+
+#: src/components/shared/IssueTicketsButton.tsx
+msgid "Would you to issue an ERC-20 token to be used as this project's token?"
+msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx

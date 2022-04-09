@@ -103,7 +103,7 @@ export default function DeployProjectButton({
             return
           }
 
-          history.push(`/v2/p/${projectId}`)
+          history.push(`/v2/p/${projectId}?newDeploy=true`)
         },
         onCancelled() {
           setDeployLoading(false)

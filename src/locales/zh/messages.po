@@ -1071,17 +1071,17 @@ msgid "Indie artists, devs, creators"
 msgstr "独立艺术家，开发者，创作者"
 
 #: src/components/shared/IssueTicketsButton.tsx
+msgid "Issue ERC-20"
+msgstr ""
+
 #: src/components/shared/IssueTicketsButton.tsx
 msgid "Issue ERC-20 token"
 msgstr "发行 ERC-20 代币"
 
 #: src/components/shared/IssueTicketsButton.tsx
+#: src/components/shared/IssueTicketsButton.tsx
 msgid "Issue an ERC-20 to be used as this project's token. Once issued, anyone can claim their existing token balance in the new token."
 msgstr "发行 ERC-20 合约作为项目代币。一旦发行，任何人都可以将现存的余额铸造为对应代币。"
-
-#: src/components/shared/IssueTicketsButton.tsx
-msgid "Issue an ERC-20 token for this project. Once issued, anyone can claim their existing token balance in the new token."
-msgstr "为项目发行 ERC-20 合约。一旦发行，任何人都可以将现存的余额铸造为对应代币。"
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
@@ -2406,6 +2406,10 @@ msgstr "提取资金"
 #: src/components/Navbar/constants.ts
 msgid "Workspace"
 msgstr "工作空间"
+
+#: src/components/shared/IssueTicketsButton.tsx
+msgid "Would you to issue an ERC-20 token to be used as this project's token?"
+msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/DeployProjectModal/index.tsx

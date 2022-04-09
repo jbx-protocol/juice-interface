@@ -21,8 +21,11 @@ import useTotalBalanceOf from 'hooks/v2/contractReader/TotalBalanceOf'
 import { ThemeContext } from 'contexts/themeContext'
 import useUserUnclaimedTokenBalance from 'hooks/v2/contractReader/UserUnclaimedTokenBalance'
 import { useLocation } from 'react-router-dom'
+import ManageTokensModal from 'components/shared/ManageTokensModal'
 
-import V2ManageTokensModal from './V2ManageTokensModal'
+import V2RedeemModal from './V2RedeemModal'
+import V2ClaimTokensModal from './V2ClaimTokensModal'
+import V2MintModal from './V2MintModal'
 
 export default function V2ManageTokensSection() {
   const [manageTokensModalVisible, setManageTokensModalVisible] =
@@ -36,7 +39,9 @@ export default function V2ManageTokensSection() {
     tokenSymbol,
     isPreviewMode,
     totalTokenSupply,
+    fundingCycleMetadata,
     projectId,
+    primaryTerminalCurrentOverflow,
   } = useContext(V2ProjectContext)
 
   // Checks URL to see if user was just directed from project deploy
@@ -71,6 +76,7 @@ export default function V2ManageTokensSection() {
 
   const showIssueTokensButton =
     !hasIssuedERC20 && hasIssueTicketsPermission && !isPreviewMode
+
   const claimedBalanceFormatted = formatWad(claimedBalance ?? 0, {
     precision: 0,
   })
@@ -85,13 +91,25 @@ export default function V2ManageTokensSection() {
     justifyContent: 'space-between',
     width: '100%',
   }
+  const hasOverflow = Boolean(primaryTerminalCurrentOverflow?.gt(0))
+
+  const userHasMintPermission = Boolean(
+    useHasPermission(V2OperatorPermission.MINT),
+  )
+  const projectAllowsMint = !fundingCycleMetadata?.pauseMint //TODO
 
   return (
     <>
       <Space direction="vertical" size="large">
         <Statistic
           title={
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                height: 40,
+              }}
+            >
               <SectionHeader
                 text={<Trans>Tokens</Trans>}
                 tip={
@@ -109,6 +127,12 @@ export default function V2ManageTokensSection() {
                   </Trans>
                 }
               />
+              {showIssueTokensButton && (
+                <IssueTicketsButton
+                  isNewDeploy={isNewDeploy}
+                  useIssueTokensTx={useIssueTokensTx}
+                />
+              )}
             </div>
           }
           valueRender={() => (
@@ -122,15 +146,9 @@ export default function V2ManageTokensSection() {
                       children={
                         <div style={manageTokensRowStyle}>
                           <div>
-                            ${tokenSymbol} (
+                            {tokenSymbol} (
                             <FormattedAddress address={tokenAddress} />)
                           </div>
-                          {showIssueTokensButton && (
-                            <IssueTicketsButton
-                              isNewDeploy={isNewDeploy}
-                              useIssueTokensTx={useIssueTokensTx}
-                            />
-                          )}
                         </div>
                       }
                     />
@@ -211,9 +229,16 @@ export default function V2ManageTokensSection() {
         />
       </Space>
 
-      <V2ManageTokensModal
+      <ManageTokensModal
         visible={manageTokensModalVisible}
         onCancel={() => setManageTokensModalVisible(false)}
+        projectAllowsMint={projectAllowsMint}
+        userHasMintPermission={userHasMintPermission}
+        hasOverflow={hasOverflow}
+        tokenSymbol={tokenSymbol}
+        RedeemModal={V2RedeemModal}
+        ClaimTokensModal={V2ClaimTokensModal}
+        MintModal={V2MintModal}
       />
       {/* TODO: 'Holders modal */}
     </>

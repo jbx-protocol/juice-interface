@@ -56,10 +56,10 @@ export default function ConfirmUnstakeTokensModal({
 
   return (
     <Modal
-      title={`Claim ${tokenSymbol ?? 'tokens'} as ERC-20 tokens`}
+      title={t`Claim ${tokenSymbol ?? 'tokens'} as ERC-20 tokens`}
       visible={visible}
       onOk={unstake}
-      okText={`Claim ${unstakeAmount} ERC-20 tokens`}
+      okText={t`Claim ${tokenSymbol ?? 'tokens'}`}
       confirmLoading={loading}
       okButtonProps={{ disabled: parseWad(unstakeAmount).eq(0) }}
       onCancel={onCancel}

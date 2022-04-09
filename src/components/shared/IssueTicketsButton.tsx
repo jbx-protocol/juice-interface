@@ -1,9 +1,12 @@
-import { Button, Form, Input, Modal, Space, Tooltip } from 'antd'
+import { Button, Form, Input, Space, Tooltip } from 'antd'
 import { t, Trans } from '@lingui/macro'
 import { useForm } from 'antd/lib/form/Form'
 import { useState } from 'react'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useHistory } from 'react-router-dom'
+import { SettingOutlined } from '@ant-design/icons'
+
+import TransactionModal from './TransactionModal'
 
 export default function IssueTicketsButton({
   useIssueTokensTx,
@@ -18,6 +21,7 @@ export default function IssueTicketsButton({
   const [modalVisible, setModalVisible] = useState<boolean>(
     Boolean(isNewDeploy),
   )
+  const [transactionPending, setTransactionPending] = useState<boolean>()
   const [loading, setLoading] = useState<boolean>()
   const [form] = useForm<{ name: string; symbol: string }>()
 
@@ -33,9 +37,13 @@ export default function IssueTicketsButton({
     issueTokensTx(
       { name: fields.name, symbol: fields.symbol },
       {
-        onDone: () => setModalVisible(false),
-        onConfirmed: () => {
+        onDone: () => {
           setLoading(false)
+          setTransactionPending(true)
+        },
+        onConfirmed: () => {
+          setModalVisible(false)
+          setTransactionPending(false)
           // refresh page
           history.go(0)
         },
@@ -55,6 +63,7 @@ export default function IssueTicketsButton({
       >
         <Button
           size="small"
+          icon={<SettingOutlined />}
           loading={loading}
           onClick={() => setModalVisible(true)}
         >
@@ -72,13 +81,14 @@ export default function IssueTicketsButton({
         <IssueTokensButton />
       </Space>
 
-      <Modal
+      <TransactionModal
         visible={modalVisible}
         title={t`Issue ERC-20 token`}
         okText={t`Issue token`}
         onOk={issue}
         onCancel={() => setModalVisible(false)}
         confirmLoading={loading}
+        transactionPending={transactionPending}
       >
         <p>
           {!Boolean(isNewDeploy) ? (
@@ -106,7 +116,7 @@ export default function IssueTicketsButton({
             />
           </Form.Item>
         </Form>
-      </Modal>
+      </TransactionModal>
     </div>
   )
 }

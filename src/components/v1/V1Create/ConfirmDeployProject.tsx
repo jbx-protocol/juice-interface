@@ -3,7 +3,7 @@ import { Col, Row, Space, Statistic } from 'antd'
 import { Gutter } from 'antd/lib/grid/row'
 
 import CurrencySymbol from 'components/shared/CurrencySymbol'
-import PayoutModsList from 'components/shared/PayoutModsList'
+import PayoutModsList from 'components/v1/PayoutModsList'
 import ProjectLogo from 'components/shared/ProjectLogo'
 import TicketModsList from 'components/shared/TicketModsList'
 

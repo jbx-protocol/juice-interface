@@ -17,7 +17,7 @@ export default function PrintPreminedModal({
   onCancel,
 }: {
   visible: boolean | undefined
-  onCancel: VoidFunction
+  onCancel: VoidFunction | undefined
 }) {
   const { tokenSymbol, tokenAddress, terminal } = useContext(V1ProjectContext)
   const printTokensTx = usePrintTokensTx()

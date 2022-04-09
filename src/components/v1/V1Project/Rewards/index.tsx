@@ -24,8 +24,13 @@ import { tokenSymbolText } from 'utils/tokenSymbolText'
 import IssueTicketsButton from 'components/shared/IssueTicketsButton'
 import SectionHeader from 'components/shared/SectionHeader'
 
+import useCanPrintPreminedTokens from 'hooks/v1/contractReader/CanPrintPreminedTokens'
+
 import ManageTokensModal from './ManageTokensModal'
 import ParticipantsModal from '../modals/ParticipantsModal'
+import RedeemModal from '../modals/RedeemModal'
+import PrintPreminedModal from '../modals/PrintPreminedModal'
+import ConfirmUnstakeTokensModal from '../modals/ConfirmUnstakeTokensModal'
 
 export default function Rewards() {
   const [manageTokensModalVisible, setManageTokensModalVisible] =
@@ -41,6 +46,7 @@ export default function Rewards() {
     isPreviewMode,
     currentFC,
     terminal,
+    overflow,
   } = useContext(V1ProjectContext)
   const {
     theme: { colors },
@@ -76,6 +82,18 @@ export default function Rewards() {
     capitalize: true,
     plural: true,
   })
+
+  const canPrintPreminedV1Tickets = useCanPrintPreminedTokens()
+  const hasPrintPreminePermission = useHasPermission(
+    OperatorPermission.PrintTickets,
+  )
+
+  const mintingTokensIsAllowed = Boolean(
+    metadata &&
+      (metadata.version === 0
+        ? canPrintPreminedV1Tickets
+        : metadata.ticketPrintingIsAllowed),
+  )
 
   return (
     <div>
@@ -188,7 +206,13 @@ export default function Rewards() {
       <ManageTokensModal
         visible={manageTokensModalVisible}
         onCancel={() => setManageTokensModalVisible(false)}
-        metadata={metadata}
+        RedeemModal={RedeemModal}
+        PrintPreminedModal={PrintPreminedModal}
+        ConfirmUnstakeTokensModal={ConfirmUnstakeTokensModal}
+        hasOverflow={overflow?.gt(0)}
+        tokenSymbol={tokenSymbol}
+        mintingTokensIsAllowed={mintingTokensIsAllowed}
+        hasPrintPreminePermission={hasPrintPreminePermission}
       />
       <ParticipantsModal
         visible={participantsModalVisible}

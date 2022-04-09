@@ -2,19 +2,8 @@ import { t, Trans } from '@lingui/macro'
 import { Modal, Space, Tooltip } from 'antd'
 import ExternalLink from 'components/shared/ExternalLink'
 import RichButton from 'components/shared/RichButton'
-import { V1ProjectContext } from 'contexts/v1/projectContext'
-import useCanPrintPreminedTokens from 'hooks/v1/contractReader/CanPrintPreminedTokens'
-import {
-  OperatorPermission,
-  useHasPermission,
-} from 'hooks/v1/contractReader/HasPermission'
-import { V1FundingCycleMetadata } from 'models/v1/fundingCycle'
-import { PropsWithChildren, useContext, useState } from 'react'
+import { PropsWithChildren, useState } from 'react'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
-
-import ConfirmUnstakeTokensModal from '../modals/ConfirmUnstakeTokensModal'
-import PrintPreminedModal from '../modals/PrintPreminedModal'
-import RedeemModal from '../modals/RedeemModal'
 
 const BURN_DEFINITION_LINK =
   'https://www.investopedia.com/tech/cryptocurrency-burning-can-it-manage-inflation/'
@@ -52,31 +41,37 @@ export const RedeemButtonTooltip = ({
   )
 }
 
+type ModalProps = {
+  visible: boolean | undefined
+  onOk: VoidFunction | undefined
+  onCancel: VoidFunction | undefined
+}
+
 export default function ManageTokensModal({
-  metadata,
   onCancel,
   visible,
+  mintingTokensIsAllowed,
+  hasPrintPreminePermission,
+  hasOverflow,
+  tokenSymbol,
+  RedeemModal,
+  ConfirmUnstakeTokensModal,
+  PrintPreminedModal,
 }: {
-  metadata: V1FundingCycleMetadata | undefined
+  hasPrintPreminePermission: boolean
+  mintingTokensIsAllowed: boolean
   onCancel?: VoidFunction
   visible?: boolean
-}) {
-  const { projectId, tokenSymbol, overflow } = useContext(V1ProjectContext)
+  hasOverflow: boolean | undefined
+  tokenSymbol: string | undefined
 
+  RedeemModal: (props: ModalProps) => JSX.Element
+  PrintPreminedModal: (props: ModalProps) => JSX.Element
+  ConfirmUnstakeTokensModal: (props: ModalProps) => JSX.Element
+}) {
   const [redeemModalVisible, setRedeemModalVisible] = useState<boolean>(false)
   const [unstakeModalVisible, setUnstakeModalVisible] = useState<boolean>()
   const [mintModalVisible, setMintModalVisible] = useState<boolean>()
-
-  const canPrintPreminedV1Tickets = useCanPrintPreminedTokens()
-  const hasPrintPreminePermission = useHasPermission(
-    OperatorPermission.PrintTickets,
-  )
-
-  const mintingTokensIsAllowed =
-    metadata &&
-    (metadata.version === 0
-      ? canPrintPreminedV1Tickets
-      : metadata.ticketPrintingIsAllowed)
 
   const tokensLabel = tokenSymbolText({
     tokenSymbol: tokenSymbol,
@@ -84,7 +79,7 @@ export default function ManageTokensModal({
     plural: true,
   })
 
-  const redeemDisabled = !Boolean(overflow?.gt(0))
+  const redeemDisabled = !Boolean(hasOverflow)
 
   return (
     <>
@@ -141,7 +136,7 @@ export default function ManageTokensModal({
             onClick={() => setUnstakeModalVisible(true)}
           />
 
-          {hasPrintPreminePermission && projectId?.gt(0) && (
+          {hasPrintPreminePermission && (
             <Tooltip
               title={
                 <Trans>
@@ -181,10 +176,12 @@ export default function ManageTokensModal({
       <ConfirmUnstakeTokensModal
         visible={unstakeModalVisible}
         onCancel={() => setUnstakeModalVisible(false)}
+        onOk={() => setUnstakeModalVisible(false)}
       />
       <PrintPreminedModal
         visible={mintModalVisible}
         onCancel={() => setMintModalVisible(false)}
+        onOk={() => setMintModalVisible(false)}
       />
     </>
   )

@@ -27,8 +27,8 @@ export default function RedeemModal({
   onCancel,
 }: {
   visible?: boolean
-  onOk: VoidFunction | undefined
-  onCancel: VoidFunction | undefined
+  onOk?: VoidFunction
+  onCancel?: VoidFunction
 }) {
   const [redeemAmount, setRedeemAmount] = useState<string>()
   const [loading, setLoading] = useState<boolean>()

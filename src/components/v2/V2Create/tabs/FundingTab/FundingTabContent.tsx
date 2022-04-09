@@ -30,6 +30,7 @@ import { Split } from 'models/v2/splits'
 import { formatFee } from 'utils/v2/math'
 
 import BudgetTargetInput from 'components/shared/inputs/BudgetTargetInput'
+import { CurrencyContext } from 'contexts/currencyContext'
 
 import { shadowCard } from 'constants/styles/shadowCard'
 import FormActionbar from '../../FormActionBar'
@@ -50,6 +51,10 @@ export default function FundingTabContent({
 }: TabContentProps) {
   const { theme } = useContext(ThemeContext)
   const { contracts } = useContext(V2UserContext)
+  const {
+    currencies: { ETH },
+  } = useContext(CurrencyContext)
+
   const dispatch = useAppDispatch()
 
   const [fundingForm] = Form.useForm<FundingFormFields>()
@@ -245,8 +250,12 @@ export default function FundingTabContent({
           <ProjectPayoutMods
             mods={splits.map(toMod)}
             target={target ?? '0'}
-            currency={toV1Currency(targetCurrency)}
-            feePerbicent={ETHPaymentTerminalFee}
+            currencyName={targetCurrency === ETH ? 'ETH' : 'USD'}
+            feePercentage={
+              ETHPaymentTerminalFee
+                ? formatFee(ETHPaymentTerminalFee)
+                : undefined
+            }
             onModsChanged={newMods => {
               setSplits(newMods.map(toSplit))
             }}

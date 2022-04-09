@@ -1845,7 +1845,7 @@ msgstr ""
 msgid "Start Over"
 msgstr ""
 
-#: src/components/shared/PayoutModsList.tsx
+#: src/components/v1/PayoutModsList.tsx
 msgid "Sum of percentages cannot exceed 100%"
 msgstr "Sum of percentages cannot exceed 100%"
 

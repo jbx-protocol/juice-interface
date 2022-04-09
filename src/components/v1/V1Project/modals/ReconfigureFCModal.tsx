@@ -8,7 +8,7 @@ import RestrictedActionsForm, {
   RestrictedActionsFormFields,
 } from 'components/shared/forms/RestrictedActionsForm'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
-import PayoutModsList from 'components/shared/PayoutModsList'
+import PayoutModsList from 'components/v1/PayoutModsList'
 import TicketModsList from 'components/shared/TicketModsList'
 import ReconfigurationStrategyDrawer from 'components/shared/ReconfigurationStrategyDrawer'
 

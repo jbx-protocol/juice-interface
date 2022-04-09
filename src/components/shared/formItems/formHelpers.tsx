@@ -1,5 +1,5 @@
 import { PayoutMod } from 'models/mods'
-import { permyriadToPercent } from 'utils/formatNumber'
+import { percentToPerbicent, permyriadToPercent } from 'utils/formatNumber'
 import * as constants from '@ethersproject/constants'
 import { isAddress } from '@ethersproject/address'
 
@@ -86,10 +86,13 @@ export const targetSubFeeToTargetFormatted = (
 export function getAmountFromPercent(
   percent: number,
   target: string,
-  fee: BigNumber | undefined,
+  feePercentage: string | undefined,
 ) {
   const amount = fromWad(
-    amountSubFee(parseWad(stripCommas(target)), fee)
+    amountSubFee(
+      parseWad(stripCommas(target)),
+      percentToPerbicent(feePercentage),
+    )
       ?.mul(Math.floor((percent ?? 0) * 100))
       .div(10000),
   )
@@ -101,9 +104,12 @@ export function getAmountFromPercent(
 export function getPercentFromAmount(
   amount: number | undefined,
   target: string,
-  fee: BigNumber | undefined,
+  feePercentage: string | undefined,
 ) {
-  const targetSubFeeBN = amountSubFee(parseWad(stripCommas(target)), fee)
+  const targetSubFeeBN = amountSubFee(
+    parseWad(stripCommas(target)),
+    percentToPerbicent(feePercentage),
+  )
   const targetSubFee = stripCommas(formatWad(targetSubFeeBN) ?? '0')
   const percent = (((amount ?? 0) * 1.0) / parseFloat(targetSubFee)) * 100
   return parseFloat(percent.toFixed(8))

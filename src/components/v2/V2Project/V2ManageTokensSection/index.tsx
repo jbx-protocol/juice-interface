@@ -20,6 +20,7 @@ import { tokenSymbolText } from 'utils/tokenSymbolText'
 import useTotalBalanceOf from 'hooks/v2/contractReader/TotalBalanceOf'
 import { ThemeContext } from 'contexts/themeContext'
 import useUserUnclaimedTokenBalance from 'hooks/v2/contractReader/UserUnclaimedTokenBalance'
+import { useLocation } from 'react-router-dom'
 
 import V2ManageTokensModal from './V2ManageTokensModal'
 
@@ -37,6 +38,11 @@ export default function V2ManageTokensSection() {
     totalTokenSupply,
     projectId,
   } = useContext(V2ProjectContext)
+
+  // Checks URL to see if user was just directed from project deploy
+  const location = useLocation()
+  const params = new URLSearchParams(location.search)
+  const isNewDeploy = Boolean(params.get('newDeploy'))
 
   const { userAddress } = useContext(NetworkContext)
 
@@ -64,7 +70,8 @@ export default function V2ManageTokensSection() {
     formatPercent(totalBalance, totalTokenSupply) || '0'
 
   const showIssueTokensButton =
-    !hasIssuedERC20 && hasIssueTicketsPermission && !isPreviewMode
+    (!hasIssuedERC20 && hasIssueTicketsPermission && !isPreviewMode) ||
+    isNewDeploy
 
   const claimedBalanceFormatted = formatWad(claimedBalance ?? 0, {
     precision: 0,
@@ -97,7 +104,10 @@ export default function V2ManageTokensSection() {
                 }
               />
               {showIssueTokensButton && (
-                <IssueTicketsButton useIssueTokensTx={useIssueTokensTx} />
+                <IssueTicketsButton
+                  isNewDeploy={isNewDeploy}
+                  useIssueTokensTx={useIssueTokensTx}
+                />
               )}
             </div>
           }

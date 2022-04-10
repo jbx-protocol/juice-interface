@@ -9,7 +9,6 @@ import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 
 import ETHAmount from 'components/shared/currency/ETHAmount'
-import { BigNumber } from '@ethersproject/bignumber'
 
 export default function Payments() {
   const {
@@ -17,15 +16,9 @@ export default function Payments() {
   } = useContext(ThemeContext)
 
   const { data: events, isLoading } = useSubgraphQuery({
-    entity: 'payEvent',
-    keys: [
-      'amount',
-      'beneficiary',
-      'note',
-      'timestamp',
-      'id',
-      { entity: 'project', keys: ['id'] },
-    ],
+    entity: 'projectEvent',
+    keys: ['payEvent', 'timestamp', 'id', { entity: 'project', keys: ['id'] }],
+    where: { key: 'cv', value: 1 },
     first: 20,
     orderDirection: 'desc',
     orderBy: 'timestamp',
@@ -55,10 +48,8 @@ export default function Payments() {
                 <div
                   style={{ color: colors.text.action.primary, fontWeight: 500 }}
                 >
-                  {e.project?.id && (
-                    <V1ProjectHandle
-                      projectId={BigNumber.from(e.project.projectId)}
-                    />
+                  {e.payEvent?.project?.projectId && (
+                    <V1ProjectHandle projectId={e.payEvent.project.projectId} />
                   )}
                 </div>
                 <div
@@ -75,14 +66,14 @@ export default function Payments() {
                 }}
               >
                 <span style={{ fontSize: '1rem', fontWeight: 500 }}>
-                  <ETHAmount amount={e.amount} precision={4} />
+                  <ETHAmount amount={e.payEvent?.amount} precision={4} />
                 </span>
                 <span>
-                  <FormattedAddress address={e.beneficiary} />
+                  <FormattedAddress address={e.payEvent?.beneficiary} />
                 </span>
               </div>
               <div>
-                <RichNote note={e.note} />
+                <RichNote note={e.payEvent?.note} />
               </div>
             </div>
           ))}

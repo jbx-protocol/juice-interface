@@ -24,7 +24,7 @@ export default function V2Project({
   singleColumnLayout?: boolean
   expandFundingCycleCard?: boolean
 }) {
-  const { projectId, projectMetadata, fundingCycle } =
+  const { projectId, projectMetadata, fundingCycle, isPreviewMode } =
     useContext(V2ProjectContext)
 
   const colSizeMd = singleColumnLayout ? 24 : 12
@@ -39,7 +39,7 @@ export default function V2Project({
     <Space direction="vertical" size={GUTTER_PX}>
       <ProjectHeader
         metadata={projectMetadata}
-        actions={<V2ProjectHeaderActions />}
+        actions={!isPreviewMode ? <V2ProjectHeaderActions /> : undefined}
       />
       <Row gutter={GUTTER_PX} align="bottom">
         <Col md={colSizeMd} xs={24}>

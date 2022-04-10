@@ -18,16 +18,13 @@ import { V2FundingCycle } from 'models/v2/fundingCycle'
 
 import { getDefaultFundAccessConstraint } from 'utils/v2/fundingCycle'
 
-import { Trans } from '@lingui/macro'
-
-import { ThemeContext } from 'contexts/themeContext'
-
 import V2Project from '../V2Project'
 
-export default function ProjectPreview() {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
+export default function ProjectPreview({
+  singleColumnLayout,
+}: {
+  singleColumnLayout?: boolean
+}) {
   const { projectMetadata, payoutGroupedSplits, reservedTokensGroupedSplits } =
     useAppSelector(state => state.editingV2Project)
   const fundingCycleMetadata = useEditingV2FundingCycleMetadataSelector()
@@ -77,16 +74,11 @@ export default function ProjectPreview() {
 
   return (
     <V2ProjectContext.Provider value={project}>
-      <div style={{ marginBottom: '6rem' }}>
-        <h3
-          style={{
-            marginTop: 5,
-            color: colors.text.secondary,
-          }}
-        >
-          <Trans>Preview:</Trans>
-        </h3>
-        <V2Project singleColumnLayout expandFundingCycleCard />
+      <div>
+        <V2Project
+          singleColumnLayout={singleColumnLayout}
+          expandFundingCycleCard
+        />
       </div>
     </V2ProjectContext.Provider>
   )

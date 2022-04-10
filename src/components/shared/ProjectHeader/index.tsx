@@ -77,7 +77,6 @@ export default function ProjectHeader({
           <div
             style={{
               display: 'flex',
-              alignItems: 'baseline',
               flexWrap: 'wrap',
               paddingTop: 8,
               paddingBottom: 4,

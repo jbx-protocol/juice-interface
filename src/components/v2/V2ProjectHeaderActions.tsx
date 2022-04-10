@@ -11,8 +11,7 @@ import { useContext } from 'react'
 import V2ReconfigureFundingModalTrigger from './V2Project/V2ProjectReconfigureModal/V2ReconfigureModalTrigger'
 
 export default function V2ProjectHeaderActions() {
-  const { projectId, fundingCycle, isPreviewMode } =
-    useContext(V2ProjectContext)
+  const { projectId } = useContext(V2ProjectContext)
 
   const {
     theme: { colors },
@@ -20,7 +19,7 @@ export default function V2ProjectHeaderActions() {
 
   const canReconfigure = useHasPermission(V2OperatorPermission.RECONFIGURE)
 
-  const showReconfigureButton = canReconfigure && !isPreviewMode
+  const showReconfigureButton = canReconfigure
 
   return (
     <div
@@ -35,9 +34,7 @@ export default function V2ProjectHeaderActions() {
           paddingRight: 10,
         }}
       >
-        {projectId && !isPreviewMode && (
-          <Trans>ID: {projectId.toNumber()}</Trans>
-        )}{' '}
+        {projectId && <Trans>ID: {projectId.toNumber()}</Trans>}{' '}
         <Tooltip
           title={t`This project uses the V2 version of the Juicebox contracts.`}
         >
@@ -51,11 +48,7 @@ export default function V2ProjectHeaderActions() {
           </span>
         </Tooltip>
       </span>
-      {showReconfigureButton && (
-        <V2ReconfigureFundingModalTrigger
-          fundingDuration={fundingCycle?.duration}
-        />
-      )}
+      {showReconfigureButton && <V2ReconfigureFundingModalTrigger />}
     </div>
   )
 }

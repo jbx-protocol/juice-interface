@@ -1,4 +1,5 @@
 import { Trans } from '@lingui/macro'
+import { Button } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import ProjectDetailsForm, {
   ProjectDetailsFormFields,
@@ -9,12 +10,11 @@ import { useAppSelector } from 'hooks/AppSelector'
 import { useCallback, useEffect } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 
-import { formBottomMargin } from '../../constants'
-import FormActionbar from '../../FormActionBar'
-import TabDescription from '../../TabDescription'
-import ProjectConfigurationFieldsContainer from '../ProjectConfigurationFieldsContainer'
+import ProjectConfigurationFieldsContainer from '../../ProjectConfigurationFieldsContainer'
 
-export default function ProjectDetailsTabContent({
+import TabDescription from '../../TabDescription'
+
+export default function ProjectDetailsDrawerContent({
   onFinish,
 }: {
   onFinish?: VoidFunction
@@ -23,21 +23,22 @@ export default function ProjectDetailsTabContent({
   const dispatch = useAppDispatch()
   const { projectMetadata } = useAppSelector(state => state.editingV2Project)
 
-  const onProjectFormSaved = useCallback(
-    (fields: ProjectDetailsFormFields) => {
-      dispatch(editingV2ProjectActions.setName(fields.name))
-      dispatch(editingV2ProjectActions.setInfoUri(fields.infoUri))
-      dispatch(editingV2ProjectActions.setLogoUri(fields.logoUri))
-      dispatch(editingV2ProjectActions.setDescription(fields.description))
-      dispatch(editingV2ProjectActions.setTwitter(fields.twitter))
-      dispatch(editingV2ProjectActions.setDiscord(fields.discord))
-      dispatch(editingV2ProjectActions.setPayButton(fields.payButton))
-      dispatch(editingV2ProjectActions.setPayDisclosure(fields.payDisclosure))
+  const dispatchFormData = useCallback(() => {
+    const fields = projectForm.getFieldsValue()
+    dispatch(editingV2ProjectActions.setName(fields.name))
+    dispatch(editingV2ProjectActions.setInfoUri(fields.infoUri))
+    dispatch(editingV2ProjectActions.setLogoUri(fields.logoUri))
+    dispatch(editingV2ProjectActions.setDescription(fields.description))
+    dispatch(editingV2ProjectActions.setTwitter(fields.twitter))
+    dispatch(editingV2ProjectActions.setDiscord(fields.discord))
+    dispatch(editingV2ProjectActions.setPayButton(fields.payButton))
+    dispatch(editingV2ProjectActions.setPayDisclosure(fields.payDisclosure))
+  }, [dispatch, projectForm])
 
-      onFinish?.()
-    },
-    [dispatch, onFinish],
-  )
+  const onProjectFormSaved = useCallback(() => {
+    dispatchFormData()
+    onFinish?.()
+  }, [dispatchFormData, onFinish])
 
   const resetProjectForm = useCallback(() => {
     projectForm.setFieldsValue({
@@ -76,12 +77,16 @@ export default function ProjectDetailsTabContent({
         form={projectForm}
         onFinish={onProjectFormSaved}
         hideProjectHandle
+        onValuesChange={() => dispatchFormData()}
         saveButton={
-          <FormActionbar>
-            <Trans>Save and Continue</Trans>
-          </FormActionbar>
+          <Button
+            type="primary"
+            onClick={() => onProjectFormSaved()}
+            size="large"
+          >
+            <Trans>Next: Funding cycle</Trans>
+          </Button>
         }
-        style={{ marginBottom: formBottomMargin }}
       />
     </ProjectConfigurationFieldsContainer>
   )

@@ -96,8 +96,9 @@ export default function ReconfigurationStrategyDrawer({
             ballotStrategies()[0].address && (
             <p style={{ color: colors.text.warn }}>
               <Trans>
-                Using a reconfiguration strategy is recommended. Projects with
-                no strategy will appear risky to contributors.
+                <strong>Note:</strong> Using a reconfiguration strategy is
+                recommended. Projects with no strategy will appear risky to
+                contributors.
               </Trans>
             </p>
           )}

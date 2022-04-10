@@ -30,7 +30,7 @@ import {
 } from 'utils/v2/math'
 
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
-import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/v2/fundingWarningText'
+import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
 
 export default function FundingCycleDetails({
   fundingCycle,
@@ -108,6 +108,8 @@ export default function FundingCycleDetails({
     )
   }
 
+  const riskWarningText = FUNDING_CYCLE_WARNING_TEXT()
+
   return (
     <div>
       <Descriptions
@@ -138,7 +140,7 @@ export default function FundingCycleDetails({
           ) : (
             <FundingCycleDetailWarning
               showWarning={true}
-              tooltipTitle={FUNDING_CYCLE_WARNING_TEXT(fundingCycle).duration}
+              tooltipTitle={riskWarningText.duration}
             >
               <Trans>Not set</Trans>
             </FundingCycleDetailWarning>
@@ -215,9 +217,7 @@ export default function FundingCycleDetails({
         >
           <FundingCycleDetailWarning
             showWarning={unsafeFundingCycleProperties.metadataReservedRate}
-            tooltipTitle={
-              FUNDING_CYCLE_WARNING_TEXT(fundingCycle).metadataReservedRate
-            }
+            tooltipTitle={riskWarningText.metadataReservedRate}
           >
             {formatReservedRate(metadata?.reservedRate)}%
           </FundingCycleDetailWarning>
@@ -252,7 +252,12 @@ export default function FundingCycleDetails({
           span={2}
           label={<TooltipLabel label={<Trans>Owner can mint tokens</Trans>} />}
         >
-          {metadata?.pauseMint ? <Trans>No</Trans> : <Trans>Yes</Trans>}
+          <FundingCycleDetailWarning
+            showWarning={!metadata?.pauseMint}
+            tooltipTitle={FUNDING_CYCLE_WARNING_TEXT().allowMint}
+          >
+            {metadata?.pauseMint ? <Trans>No</Trans> : <Trans>Yes</Trans>}
+          </FundingCycleDetailWarning>
         </Descriptions.Item>
       </Descriptions>
 
@@ -270,7 +275,7 @@ export default function FundingCycleDetails({
         </span>{' '}
         <FundingCycleDetailWarning
           showWarning={unsafeFundingCycleProperties.ballot}
-          tooltipTitle={FUNDING_CYCLE_WARNING_TEXT(fundingCycle).ballot}
+          tooltipTitle={riskWarningText.ballot}
         >
           {ballotStrategy.name}
         </FundingCycleDetailWarning>

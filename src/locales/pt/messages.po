@@ -150,6 +150,10 @@ msgstr "<0>NOTA:</0> Este projeto tem um saldo de 0. Os projetos não podem ser 
 msgid "<0>Note: </0>Enabling tokens to be minted will appear risky to contributors, and should only be used when necessary."
 msgstr "<0>Nota: </0>Permitir a criação de tokens vai aparentar arriscado para os contribuidores e só deve ser utilizado quando necessário."
 
+#: src/components/shared/formItems/ProjectReserved.tsx
+msgid "<0>Note:</0> Having a reserve rate of more than 90% will appear risky to contributors, as they are receiving so few tokens for their contribution."
+msgstr ""
+
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "<0>Note:</0> These properties will <1>not</1> be editable immediately within a funding cycle. They can only be changed for <2>upcoming</2> funding cycles."
 msgstr "<0>Nota:</0>Essas propriedades <1>não</1> serão editáveis imediatamente durante um um ciclo de financiamento. Elas só poderão ser alteradas para <2>próximos</2> ciclos de financiamento."
@@ -157,6 +161,10 @@ msgstr "<0>Nota:</0>Essas propriedades <1>não</1> serão editáveis imediatamen
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
 msgid "<0>Note:</0> Tokens cannot be claimed because no ERC-20 token has been issued for this project. ERC-20 tokens must be issued by the project owner."
 msgstr "<0>Nota:</0> Tokens não podem ser reivindicados, pois nenhum token ERC-20 foi emitido para este projeto. Tokens ERC-20 devem ser emitidos pelo dono do projeto."
+
+#: src/components/shared/ReconfigurationStrategyDrawer.tsx
+msgid "<0>Note:</0> Using a reconfiguration strategy is recommended. Projects with no strategy will appear risky to contributors."
+msgstr ""
 
 #: src/components/shared/UntrackedErc20Notice.tsx
 msgid "<0>Notice:</0> These balances will not reflect transfers of claimed tokens because the {tokenSymbol} ERC-20 token has not yet been indexed by Juicebox."
@@ -578,13 +586,11 @@ msgstr "Conecte uma carteira para pagar"
 msgid "Contract address: {0}"
 msgstr "Endereço de contato: {0}"
 
-#: src/constants/v1/fundingWarningText.ts
-#: src/constants/v2/fundingWarningText.ts
+#: src/constants/fundingWarningText.ts
 msgid "Contributors will not receive any tokens in exchange for paying this project."
 msgstr "Contribuidores não receberão tokens em troca de pagar por este projeto."
 
-#: src/constants/v1/fundingWarningText.ts
-#: src/constants/v2/fundingWarningText.ts
+#: src/constants/fundingWarningText.ts
 msgid "Contributors will receive a relatively small portion of tokens in exchange for paying this project."
 msgstr "Contribuidores receberão uma porção relativamente pequena de tokens em troca de pagar por este projeto."
 
@@ -933,8 +939,7 @@ msgstr "Duração do ciclo de financiamento"
 msgid "Funding cycle target"
 msgstr "Objetivo do ciclo de financiamento"
 
-#: src/constants/v1/fundingWarningText.ts
-#: src/constants/v2/fundingWarningText.ts
+#: src/constants/fundingWarningText.ts
 msgid "Funding cycles can be reconfigured moments before a new cycle begins, without notifying contributors."
 msgstr "Ciclos de financiamento podem ser reconfigurados momentos antes de um novo ciclo começar, sem notificar os contribuidores."
 
@@ -1465,6 +1470,10 @@ msgstr "Porcentagens devem atingir 100% ou menos"
 msgid "Podcast"
 msgstr "Podcast"
 
+#: src/components/shared/ProjectRiskNotice.tsx
+msgid "Potential risks"
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "Powered by public smart contracts on <0>Ethereum</0>."
 msgstr "Alimentado por contratos inteligentes públicos no <0>Ethereum</0>."
@@ -1867,6 +1876,10 @@ msgstr "Como você não colocou uma duração de financiamento, as mudanças par
 msgid "Some funding cycle properties may indicate risk for project contributors."
 msgstr "Algumas propriedades do ciclo de financiamento podem indicar risco para os contribuidores do projeto."
 
+#: src/components/shared/ProjectRiskNotice.tsx
+msgid "Some properties of the project's current funding cycle may indicate risk for contributors."
+msgstr ""
+
 #: src/components/v2/V2Create/forms/FundingForm/FundingTypeSelect.tsx
 msgid "Specific target"
 msgstr "Objetivo específico"
@@ -1989,13 +2002,11 @@ msgstr "A quantidade máxima de fundos que pode ser distribuída deste projeto e
 msgid "The percent this individual receives of the overall {reservedRate}% reserved token allocation"
 msgstr "O percentual que esse individuo recebe do todo de {reservedRate}% de token alocados como reservados"
 
-#: src/constants/v1/fundingWarningText.ts
-#: src/constants/v2/fundingWarningText.ts
+#: src/constants/fundingWarningText.ts
 msgid "The project owner may mint any supply of tokens at any time, diluting the token share of all existing contributors."
 msgstr "O dono do projeto pode criar qualquer quantidade de tokens a qualquer momento, diluindo o valor dos tokens de todos os contribuidores."
 
-#: src/constants/v1/fundingWarningText.ts
-#: src/constants/v2/fundingWarningText.ts
+#: src/constants/fundingWarningText.ts
 msgid "The project owner may reconfigure this funding cycle at any time, without notice."
 msgstr "O dono deste projeto pode reconfigurar o ciclo de financiamento a qualquer momento, sem aviso prévio."
 
@@ -2281,10 +2292,6 @@ msgstr "Usuários financiam seu projeto pagando para usar o seu aplicativo ou se
 #: src/components/shared/forms/BudgetForm.tsx
 msgid "Using a duration is recommended. Allowing funding cycles to be reconfigured at any time will appear risky to contributors."
 msgstr "Usar uma duração é recomendado. Permitir a reconfiguração de ciclos de financiamento a qualquer momento aparentará ser arriscado para os contribuidores."
-
-#: src/components/shared/ReconfigurationStrategyDrawer.tsx
-msgid "Using a reconfiguration strategy is recommended. Projects with no strategy will appear risky to contributors."
-msgstr "Usar uma estratégia de reconfiguração é recomendado. Projetos sem estratégia aparentarão ser de alto risco para os contribuidores."
 
 #: src/components/Projects/ProjectsFilterAndSort.tsx
 msgid "V1"

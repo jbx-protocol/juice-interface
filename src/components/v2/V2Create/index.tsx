@@ -13,10 +13,9 @@ import { readNetwork } from 'constants/networks'
 import V2WarningBanner from './V2WarningBanner'
 import V2MainnetWarning from '../shared/V2MainnetWarning'
 import ProjectDetailsTabContent from './tabs/ProjectDetailsTab/ProjectDetailsTabContent'
-import FundingTabContent from './tabs/FundingTab/FundingTabContent'
-import TokenTabContent from './tabs/TokenTab/TokenTabContent'
-import RulesTabContent from './tabs/RulesTab/RulesTabContent'
+import FundingCycleTabContent from './tabs/FundingCycleTab/FundingCycleTabContent'
 import { TabContentProps } from './models'
+import ReviewDeployTab from './tabs/ReviewDeployTab'
 
 const { TabPane } = Tabs
 
@@ -35,16 +34,12 @@ const TABS: TabConfig[] = [
     component: ProjectDetailsTabContent,
   },
   {
-    title: t`2. Funding`,
-    component: FundingTabContent,
+    title: t`2. Funding cycle`,
+    component: FundingCycleTabContent,
   },
   {
-    title: t`3. Token`,
-    component: TokenTabContent,
-  },
-  {
-    title: t`4. Rules`,
-    component: RulesTabContent,
+    title: t`3. Review and deploy`,
+    component: ReviewDeployTab,
   },
 ]
 
@@ -59,7 +54,7 @@ export default function V2Create() {
         {isRinkeby ? <V2WarningBanner /> : null}
         <div
           style={{
-            maxWidth: 1500,
+            maxWidth: 1300,
             margin: '0 auto',
             padding: '2rem 4rem',
           }}
@@ -90,7 +85,6 @@ export default function V2Create() {
                 {TABS.map((tab, idx) => (
                   <TabPane tab={<TabText>{tab.title}</TabText>} key={`${idx}`}>
                     <tab.component
-                      showPreview
                       onFinish={() => {
                         // bail if on last tab.
                         if (idx === TABS.length - 1) return

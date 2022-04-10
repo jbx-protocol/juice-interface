@@ -25,10 +25,9 @@ import {
 import { useReconfigureV2FundingCycleTx } from 'hooks/v2/transactor/ReconfigureV2FundingCycleTx'
 import { decodeV2FundingCycleMetadata } from 'utils/v2/fundingCycle'
 
-import FundingTabContent from 'components/v2/V2Create/tabs/FundingTab/FundingTabContent'
-import StandardSaveButton from 'components/StandardSaveButton'
-import TokenTabContent from 'components/v2/V2Create/tabs/TokenTab/TokenTabContent'
-import RulesTabContent from 'components/v2/V2Create/tabs/RulesTab/RulesTabContent'
+import FundingTabContent from 'components/v2/V2Create/forms/FundingForm'
+import TokenTabContent from 'components/v2/V2Create/forms/TokenForm'
+import RulesTabContent from 'components/v2/V2Create/forms/RulesForm'
 
 import { V2ReconfigureFundingDrawer } from './drawers/V2ReconfigureFundingDrawer'
 import { V2ReconfigureProjectDetailsDrawer } from './drawers/V2ReconfigureProjectDetailsDrawer'
@@ -330,12 +329,7 @@ export default function V2ProjectReconfigureModal({
           setFundingDrawerVisible(false)
         }}
         title={<Trans>Reconfigure funding</Trans>}
-        content={
-          <FundingTabContent
-            onFinish={saveFundingTab}
-            saveButton={<StandardSaveButton />}
-          />
-        }
+        content={<FundingTabContent onFinish={saveFundingTab} />}
       />
       <V2ReconfigureFundingDrawer
         visible={tokenDrawerVisible}
@@ -343,12 +337,7 @@ export default function V2ProjectReconfigureModal({
           setTokenDrawerVisible(false)
         }}
         title={<Trans>Reconfigure token</Trans>}
-        content={
-          <TokenTabContent
-            onFinish={saveTokenTab}
-            saveButton={<StandardSaveButton />}
-          />
-        }
+        content={<TokenTabContent onFinish={saveTokenTab} />}
       />
       <V2ReconfigureFundingDrawer
         visible={rulesDrawerVisible}
@@ -356,12 +345,7 @@ export default function V2ProjectReconfigureModal({
           setRulesDrawerVisible(false)
         }}
         title={<Trans>Reconfigure rules</Trans>}
-        content={
-          <RulesTabContent
-            onFinish={saveRulesTab}
-            saveButton={<StandardSaveButton />}
-          />
-        }
+        content={<RulesTabContent onFinish={saveRulesTab} />}
       />
     </Modal>
   )

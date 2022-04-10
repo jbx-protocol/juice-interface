@@ -1,6 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 
-import { Form } from 'antd'
+import { Button, Form } from 'antd'
 
 import { useCallback, useContext, useEffect, useState } from 'react'
 
@@ -33,22 +33,14 @@ import BudgetTargetInput from 'components/shared/inputs/BudgetTargetInput'
 import { CurrencyContext } from 'contexts/currencyContext'
 
 import { shadowCard } from 'constants/styles/shadowCard'
-import FormActionbar from '../../FormActionBar'
 
 import FundingTypeSelect, { FundingType } from './FundingTypeSelect'
-import { TabContentProps } from '../../models'
-import ProjectConfigurationFieldsContainer from '../ProjectConfigurationFieldsContainer'
-import FundingCycleExplainer from '../../FundingCycleExplainer'
 
 type FundingFormFields = {
   duration?: string
 }
 
-export default function FundingTabContent({
-  onFinish,
-  showPreview,
-  saveButton,
-}: TabContentProps) {
+export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
   const { theme } = useContext(ThemeContext)
   const { contracts } = useContext(V2UserContext)
   const {
@@ -150,121 +142,116 @@ export default function FundingTabContent({
   const isFundingDurationVisible = fundingType === 'recurring'
 
   return (
-    <ProjectConfigurationFieldsContainer showPreview={showPreview}>
-      <FundingCycleExplainer />
-      <Form form={fundingForm} layout="vertical" onFinish={onFundingFormSave}>
-        <Form.Item label={t`How much do you want to raise?`}>
-          <FundingTypeSelect
-            value={fundingType}
-            onChange={onFundingTypeSelect}
-          />
-        </Form.Item>
+    <Form form={fundingForm} layout="vertical" onFinish={onFundingFormSave}>
+      <Form.Item label={t`How much do you want to raise?`}>
+        <FundingTypeSelect value={fundingType} onChange={onFundingTypeSelect} />
+      </Form.Item>
 
-        {isFundingTargetSectionVisible ? (
-          <div
-            style={{
-              padding: '2rem',
-              marginBottom: '10px',
-              ...shadowCard(theme),
-              color: theme.colors.text.primary,
-            }}
-          >
-            <h3>Funding target</h3>
-            <p>
-              <Trans>
-                Set the amount of funds you'd like to raise each funding cycle.
-                Any funds raised within the funding cycle target can be
-                distributed by the project, and can't be redeemed by your
-                project's token holders.
-              </Trans>
-            </p>
-            <p>
-              <Trans>
-                Overflow is created if your project's balance exceeds your
-                funding cycle target. Overflow can be redeemed by your project's
-                token holders.
-              </Trans>{' '}
-              <Trans>
-                <ExternalLink
-                  href={helpPagePath('protocol/learn/topics/overflow')}
-                >
-                  Learn more
-                </ExternalLink>{' '}
-                about overflow.
-              </Trans>
-            </p>
-
-            {isFundingDurationVisible && (
-              <Form.Item
-                name="duration"
-                label="Funding cycle duration (seconds)"
-                required
-              >
-                <FormattedNumberInput
-                  placeholder="86400"
-                  suffix="seconds"
-                  min={1}
-                />
-              </Form.Item>
-            )}
-
-            <Form.Item label={t`Funding target`} required>
-              <BudgetTargetInput
-                target={target?.toString()}
-                targetSubFee={undefined}
-                currency={toV1Currency(targetCurrency)}
-                onTargetChange={setTarget}
-                onTargetSubFeeChange={() => {}}
-                onCurrencyChange={v1Currency =>
-                  setTargetCurrency(toV2Currency(v1Currency))
-                }
-                showTargetSubFeeInput={false}
-                feePerbicent={undefined}
-              />
-            </Form.Item>
-          </div>
-        ) : (
-          <p style={{ color: theme.colors.text.primary }}>
-            <Trans>
-              All funds can be distributed by the project. The project will have
-              no overflow (the same as setting the target to infinity).
-            </Trans>
-          </p>
-        )}
-
+      {isFundingTargetSectionVisible ? (
         <div
           style={{
             padding: '2rem',
-            marginBottom: '1rem',
+            marginBottom: '10px',
             ...shadowCard(theme),
+            color: theme.colors.text.primary,
           }}
         >
-          <h3>
-            <Trans>Payouts</Trans>
-          </h3>
-          <p style={{ color: theme.colors.text.primary }}>
-            Distributing payouts to non-Juicebox projects incurs {feeFormatted}%
-            fee. Your project will recieve an equivalent amount of JBX tokens in
-            return, giving you ownership of network.
+          <h3>Funding target</h3>
+          <p>
+            <Trans>
+              Set the amount of funds you'd like to raise each funding cycle.
+              Any funds raised within the funding cycle target can be
+              distributed by the project, and can't be redeemed by your
+              project's token holders.
+            </Trans>
           </p>
-          <ProjectPayoutMods
-            mods={splits.map(toMod)}
-            target={target ?? '0'}
-            currencyName={targetCurrency === ETH ? 'ETH' : 'USD'}
-            feePercentage={
-              ETHPaymentTerminalFee
-                ? formatFee(ETHPaymentTerminalFee)
-                : undefined
-            }
-            onModsChanged={newMods => {
-              setSplits(newMods.map(toSplit))
-            }}
-          />
-        </div>
+          <p>
+            <Trans>
+              Overflow is created if your project's balance exceeds your funding
+              cycle target. Overflow can be redeemed by your project's token
+              holders.
+            </Trans>{' '}
+            <Trans>
+              <ExternalLink
+                href={helpPagePath('protocol/learn/topics/overflow')}
+              >
+                Learn more
+              </ExternalLink>{' '}
+              about overflow.
+            </Trans>
+          </p>
 
-        {/* Default to floating save button if custom one not given */}
-        {saveButton ?? <FormActionbar />}
-      </Form>
-    </ProjectConfigurationFieldsContainer>
+          {isFundingDurationVisible && (
+            <Form.Item
+              name="duration"
+              label="Funding cycle duration (seconds)"
+              required
+            >
+              <FormattedNumberInput
+                placeholder="86400"
+                suffix="seconds"
+                min={1}
+              />
+            </Form.Item>
+          )}
+
+          <Form.Item label={t`Funding target`} required>
+            <BudgetTargetInput
+              target={target?.toString()}
+              targetSubFee={undefined}
+              currency={toV1Currency(targetCurrency)}
+              onTargetChange={setTarget}
+              onTargetSubFeeChange={() => {}}
+              onCurrencyChange={v1Currency =>
+                setTargetCurrency(toV2Currency(v1Currency))
+              }
+              showTargetSubFeeInput={false}
+              feePerbicent={undefined}
+            />
+          </Form.Item>
+        </div>
+      ) : (
+        <p style={{ color: theme.colors.text.primary }}>
+          <Trans>
+            All funds can be distributed by the project. The project will have
+            no overflow (the same as setting the target to infinity).
+          </Trans>
+        </p>
+      )}
+
+      <div
+        style={{
+          padding: '2rem',
+          marginBottom: '1rem',
+          ...shadowCard(theme),
+        }}
+      >
+        <h3>
+          <Trans>Payouts</Trans>
+        </h3>
+        <p style={{ color: theme.colors.text.primary }}>
+          Distributing payouts to non-Juicebox projects incurs {feeFormatted}%
+          fee. Your project will recieve an equivalent amount of JBX tokens in
+          return, giving you ownership of network.
+        </p>
+        <ProjectPayoutMods
+          mods={splits.map(toMod)}
+          target={target ?? '0'}
+          currencyName={targetCurrency === ETH ? 'ETH' : 'USD'}
+          feePercentage={
+            ETHPaymentTerminalFee ? formatFee(ETHPaymentTerminalFee) : undefined
+          }
+          onModsChanged={newMods => {
+            setSplits(newMods.map(toSplit))
+          }}
+        />
+      </div>
+
+      <Form.Item style={{ marginTop: '2rem' }}>
+        <Button htmlType="submit" type="primary">
+          <Trans>Save funding configuration</Trans>
+        </Button>
+      </Form.Item>
+    </Form>
   )
 }

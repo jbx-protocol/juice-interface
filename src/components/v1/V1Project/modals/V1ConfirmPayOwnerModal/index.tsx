@@ -1,5 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
+
+import { notification } from 'antd'
 import { Checkbox, Descriptions, Form, Input, Modal, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import FormattedAddress from 'components/shared/FormattedAddress'
@@ -68,6 +70,15 @@ export default function V1ConfirmPayOwnerModal({
           if (onSuccess) onSuccess()
         },
         onDone: () => setLoading(false),
+        onError: (error: Error) => {
+          setLoading(false)
+          notification.error({
+            key: new Date().valueOf().toString(),
+            message: 'Transaction failed',
+            description: error.message,
+            duration: 0,
+          })
+        },
       },
     )
   }

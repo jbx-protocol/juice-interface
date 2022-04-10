@@ -23,7 +23,21 @@ export function usePayV1ProjectTx(): TransactorInstance<{
       !contracts?.TicketBooth ||
       !terminal?.version
     ) {
-      txOpts?.onDone?.()
+      let missingParam = !transactor
+        ? 'transactor'
+        : !projectId
+        ? 'projectId'
+        : !contracts?.TicketBooth
+        ? 'contracts.TicketBooth'
+        : !terminal?.version
+        ? 'terminal.version'
+        : null
+
+      txOpts?.onError?.(
+        new DOMException(
+          `Missing ${missingParam ?? 'parameter not found'} in v1 transactor`,
+        ),
+      )
       return Promise.resolve(false)
     }
 

@@ -30,7 +30,7 @@ export function useMintTokensTx(): TransactorInstance<{
       projectId.toHexString(),
       value.toHexString(),
       beneficiary,
-      memo,
+      memo ?? '',
       preferClaimed,
       reservedRate,
     ]

@@ -22,7 +22,11 @@ import * as constants from '@ethersproject/constants'
 
 import DistributeReservedTokensModal from './modals/DistributeReservedTokensModal'
 
-export default function ReservedTokensSplitsCard() {
+export default function ReservedTokensSplitsCard({
+  hideDistributeBtn,
+}: {
+  hideDistributeBtn?: boolean
+}) {
   const {
     reservedTokensSplits,
     fundingCycleMetadata,
@@ -67,49 +71,51 @@ export default function ReservedTokensSplitsCard() {
   return (
     <CardSection>
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <div style={{ marginRight: '3rem' }}>
-            <span
-              style={{
-                fontSize: '1rem',
-                fontWeight: 500,
-              }}
+        {hideDistributeBtn ? null : (
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <div style={{ marginRight: '3rem' }}>
+              <span
+                style={{
+                  fontSize: '1rem',
+                  fontWeight: 500,
+                }}
+              >
+                {formatWad(reservedTokens, { precision: 0 })}
+              </span>{' '}
+              <TooltipLabel
+                style={{
+                  ...smallHeaderStyle,
+                  whiteSpace: 'nowrap',
+                }}
+                label={
+                  <span style={{ textTransform: 'uppercase' }}>
+                    <Trans>{tokensText} reserved</Trans>
+                  </span>
+                }
+                tip={
+                  <Trans>
+                    The amount of tokens reserved for this project. These tokens
+                    can be distributed to reserved token beneficiaries.
+                  </Trans>
+                }
+              />
+              {tokenAddress && tokenAddress !== constants.AddressZero ? (
+                <div style={smallHeaderStyle}>
+                  {tokensTextSingular} contract address:{' '}
+                  <FormattedAddress address={tokenAddress} />
+                </div>
+              ) : null}
+            </div>
+            <Button
+              type="ghost"
+              size="small"
+              onClick={() => setDistributeReservedTokensModalVisible(true)}
+              disabled={isPreviewMode}
             >
-              {formatWad(reservedTokens, { precision: 0 })}
-            </span>{' '}
-            <TooltipLabel
-              style={{
-                ...smallHeaderStyle,
-                whiteSpace: 'nowrap',
-              }}
-              label={
-                <span style={{ textTransform: 'uppercase' }}>
-                  <Trans>{tokensText} reserved</Trans>
-                </span>
-              }
-              tip={
-                <Trans>
-                  The amount of tokens reserved for this project. These tokens
-                  can be distributed to reserved token beneficiaries.
-                </Trans>
-              }
-            />
-            {tokenAddress && tokenAddress !== constants.AddressZero ? (
-              <div style={smallHeaderStyle}>
-                {tokensTextSingular} contract address:{' '}
-                <FormattedAddress address={tokenAddress} />
-              </div>
-            ) : null}
+              <Trans>Distribute {tokensText}</Trans>
+            </Button>
           </div>
-          <Button
-            type="ghost"
-            size="small"
-            onClick={() => setDistributeReservedTokensModalVisible(true)}
-            disabled={isPreviewMode}
-          >
-            <Trans>Distribute {tokensText}</Trans>
-          </Button>
-        </div>
+        )}
 
         <div>
           <TooltipLabel

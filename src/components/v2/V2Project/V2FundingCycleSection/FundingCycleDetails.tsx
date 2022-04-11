@@ -252,7 +252,7 @@ export default function FundingCycleDetails({
           span={2}
           label={<TooltipLabel label={<Trans>Owner can mint tokens</Trans>} />}
         >
-          {metadata?.pauseMint ? <Trans>No</Trans> : <Trans>Yes</Trans>}
+          {metadata?.allowMinting ? <Trans>Yes</Trans> : <Trans>No</Trans>}
         </Descriptions.Item>
       </Descriptions>
 

@@ -53,6 +53,7 @@ export default function V2Dashboard() {
     isLoading: metadataLoading,
   } = useProjectMetadata(metadataCID)
 
+  // Calls JBFundingCycleStore.currentOf
   const { data: fundingCycle } = useProjectCurrentFundingCycle({
     projectId,
   })

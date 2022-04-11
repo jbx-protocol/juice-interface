@@ -14,7 +14,7 @@ import ProjectReconfigurationFormItem from './ProjectReconfigurationFormItem'
 
 type RulesFormFields = {
   pausePay: boolean
-  allowMint: boolean
+  allowMinting: boolean
   ballot: string
 }
 
@@ -32,7 +32,7 @@ export default function RulesForm({ onFinish }: { onFinish: VoidFunction }) {
   const onFormSaved = useCallback(
     (fields: RulesFormFields) => {
       dispatch(editingV2ProjectActions.setPausePay(fields.pausePay))
-      dispatch(editingV2ProjectActions.setPauseMint(!fields.allowMint))
+      dispatch(editingV2ProjectActions.setAllowMinting(fields.allowMinting))
       dispatch(editingV2ProjectActions.setBallot(fields.ballot))
       onFinish?.()
     },
@@ -42,10 +42,10 @@ export default function RulesForm({ onFinish }: { onFinish: VoidFunction }) {
   const resetForm = useCallback(() => {
     form.setFieldsValue({
       pausePay: fundingCycleMetadata?.pausePay,
-      allowMint: !fundingCycleMetadata?.pauseMint,
+      allowMinting: fundingCycleMetadata?.allowMinting,
       ballot: fundingCycleData?.ballot ?? DEFAULT_BALLOT_STRATEGY.address,
     })
-    if (fundingCycleMetadata?.pauseMint) {
+    if (fundingCycleMetadata?.allowMinting) {
       setShowMintingWarning(true)
     }
   }, [fundingCycleData, fundingCycleMetadata, form])
@@ -100,12 +100,17 @@ export default function RulesForm({ onFinish }: { onFinish: VoidFunction }) {
                 ...switchContainerStyle,
               }}
             >
-              <Switch style={{ marginRight: '0.5rem' }} />
+              <Switch
+                onChange={val => {
+                  form.setFieldsValue({ pausePay: val })
+                }}
+                style={{ marginRight: '0.5rem' }}
+              />
               <Trans>Pause payments</Trans>
             </div>
           </Form.Item>
           <Form.Item
-            name="allowMint"
+            name="allowMinting"
             extra={tokenMintingExtra}
             valuePropName="checked"
           >
@@ -115,7 +120,10 @@ export default function RulesForm({ onFinish }: { onFinish: VoidFunction }) {
               }}
             >
               <Switch
-                onChange={val => setShowMintingWarning(val)}
+                onChange={val => {
+                  setShowMintingWarning(val)
+                  form.setFieldsValue({ allowMinting: val })
+                }}
                 style={{ marginRight: '0.5rem' }}
               />
               <Trans>Allow token minting</Trans>

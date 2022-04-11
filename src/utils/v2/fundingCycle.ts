@@ -77,7 +77,7 @@ const parameters: {
     parser: bigNumberToBoolean,
   },
   { name: 'pauseRedeem', bits: 1, parser: bigNumberToBoolean },
-  { name: 'pauseMint', bits: 1, parser: bigNumberToBoolean },
+  { name: 'allowMinting', bits: 1, parser: bigNumberToBoolean },
   { name: 'pauseBurn', bits: 1, parser: bigNumberToBoolean },
   { name: 'allowChangeToken', bits: 1, parser: bigNumberToBoolean },
   {

@@ -146,10 +146,6 @@ msgstr "<0>Aprende más</0> acerca del excedente."
 msgid "<0>NOTE:</0> This project has a balance of 0. Projects cannot be migrated without a balance. To migrate this project, first pay it or use the button below to deposit 1 wei (0.000000000000000001 or 10<1>-18</1> ETH)."
 msgstr "<0>NOTA:</0> Este proyecto tiene un balance de 0. Los proyectos no pueden ser migrados sin un balance. Para migrar un proyecto, primero págalo o usa el botón de abajo para depositar 1 wei (0.000000000000000001 o 10<1>-18</1> ETH)."
 
-#: src/components/v2/V2Create/forms/RulesForm/index.tsx
-msgid "<0>Note: </0>Enabling tokens to be minted will appear risky to contributors, and should only be used when necessary."
-msgstr "<0>Nota:</0>Habilitar tokens para ser acuñadas puede parecer riesgoso para los contribuidores y solo debe ser usado cuando sea necesario."
-
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "<0>Note:</0> These properties will <1>not</1> be editable immediately within a funding cycle. They can only be changed for <2>upcoming</2> funding cycles."
 msgstr "<0>Nota:</0> Estas propiedades <1>no</1> se podrán editar inmediatamente dentro de un ciclo de financiamiento. Solo pueden ser cambiadas para <2>próximos</2> ciclos de financiamiento."
@@ -573,8 +569,7 @@ msgstr "Conecta tu billetera para desplegar"
 msgid "Connect wallet to pay"
 msgstr "Conecta tu cartera para pagar"
 
-#: src/components/shared/ReconfigurationStrategyDrawer.tsx
-#: src/components/v2/V2Create/forms/RulesForm/ProjectReconfigurationFormItem.tsx
+#: src/components/shared/ReconfigurationStrategy/ReconfigurationStrategySelector.tsx
 msgid "Contract address: {0}"
 msgstr "Dirección de contrato: {0}"
 
@@ -622,7 +617,7 @@ msgstr "Dueño actual: {owner}"
 msgid "Currently worth: <0><1/>{0}</0>"
 msgstr "Actualmente vale: <0><1/>{0}</0>"
 
-#: src/components/shared/ReconfigurationStrategyDrawer.tsx
+#: src/components/shared/ReconfigurationStrategy/ReconfigurationStrategySelector.tsx
 #: src/constants/ballotStrategies/ballotStrategies.ts
 msgid "Custom strategy"
 msgstr "Estrategia personalizada"
@@ -850,8 +845,9 @@ msgid "Enabling this will mint {tokenSymbol} ERC-20 tokens. Otherwise staked {to
 msgstr "Activar esto acuñará tokens ERC-20 {tokenSymbol}. En caso contrario, los tokens {tokenSymbol} serán acuñados, que podrán ser reclamados como ERC-20 por el beneficiario."
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
-msgid "Enabling tokens to be minted will appear risky to contributors, and should only be used when necessary."
-msgstr "Permitir que los tokens sean minteados/acuñados les parecerá arriesgado a los colaboradores, y solo debería usarse cuando sea necesario."
+#: src/components/v2/V2Create/forms/RulesForm/index.tsx
+msgid "Enabling token minting will appear risky to contributors. Only enable this when necessary."
+msgstr ""
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
@@ -1342,10 +1338,6 @@ msgstr "Otros activos en la billetera del dueño de este proyecto."
 msgid "Overflow is created if your project's balance exceeds your funding cycle target. Overflow can be redeemed by your project's token holders."
 msgstr "El excedente es creado si el saldo de tu proyecto excede el objetivo de financiamiento. El exceso puede ser canjeado por los poseedores de tokens de tu proyecto."
 
-#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
-msgid "Owner can mint tokens"
-msgstr "El propietario puede acuñar tokens"
-
 #: src/components/v1/V1Project/V1PayButton.tsx
 #: src/components/v2/V2Project/V2PayButton/index.tsx
 msgid "Paid as <0/>"
@@ -1586,11 +1578,14 @@ msgstr "Recibe {receiveText}"
 msgid "Recipients will receive payouts in ETH."
 msgstr "Los beneficiarios recibirán los pagos en ETH."
 
-#: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/v1/V1Create/index.tsx
-#: src/components/v2/V2Create/forms/RulesForm/ProjectReconfigurationFormItem.tsx
+#: src/components/v2/V2Create/forms/RulesForm/index.tsx
 msgid "Reconfiguration"
 msgstr "Reconfiguración"
+
+#: src/components/shared/ReconfigurationStrategy/ReconfigurationStrategyDrawer.tsx
+msgid "Reconfiguration rules"
+msgstr ""
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
@@ -1770,12 +1765,10 @@ msgstr "Reglas para determinar cómo se pueden reconfigurar los ciclos de financ
 msgid "Rules for how changes can be made to your project."
 msgstr "Reglas para cómo pueden realizarse cambios a tu proyecto."
 
-#: src/components/shared/ReconfigurationStrategyDrawer.tsx
-#: src/components/v2/V2Create/forms/RulesForm/ProjectReconfigurationFormItem.tsx
+#: src/components/shared/ReconfigurationStrategy/ReconfigurationStrategyDrawer.tsx
 msgid "Rules for how this project's funding cycles can be reconfigured."
 msgstr "Reglas para cómo pueden ser reconfigurados los ciclos de financiamiento de este proyecto."
 
-#: src/components/shared/ReconfigurationStrategyDrawer.tsx
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 #: src/components/shared/forms/TicketingForm.tsx
 msgid "Save"
@@ -1806,6 +1799,7 @@ msgstr "Guardar detalles del proyecto"
 msgid "Save reconfiguration"
 msgstr "Guardar reconfiguración"
 
+#: src/components/shared/ReconfigurationStrategy/ReconfigurationStrategyDrawer.tsx
 #: src/components/v2/V2Create/forms/RulesForm/index.tsx
 msgid "Save rules"
 msgstr "Guardar las reglas"
@@ -1927,7 +1921,7 @@ msgstr "El protocolo JBX está inauditado, y los proyectos contruidos sobre este
 msgid "The Juicebox protocol is governed by a community of JBX token holders who vote on proposals fortnightly."
 msgstr "El protocolo JuiceBox es gobernado por una comunidad de tenedores de tokens JBX quienes votan las propuestas quincenalmente."
 
-#: src/components/shared/ReconfigurationStrategyDrawer.tsx
+#: src/components/shared/ReconfigurationStrategy/ReconfigurationStrategySelector.tsx
 msgid "The address of any smart contract deployed on {signerNetwork} that implements"
 msgstr "La dirección de cualquier contrato inteligente desplegado en {signerNetwork} que implementa"
 
@@ -2127,8 +2121,13 @@ msgstr "Dirección del token: <0/>"
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Token minting"
 msgstr "Acuñación del token"
+
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+msgid "Token minting allows the project owner to mint project tokens at any time."
+msgstr ""
 
 #: src/components/shared/ManageTokensModal.tsx
 msgid "Token minting is only available for V1.1 projects. Token minting can be enabled or disabled by reconfiguring the project's funding cycle."
@@ -2282,7 +2281,7 @@ msgstr "Los usuarios financian tu proyecto al pagar para usar tu app o servicio,
 msgid "Using a duration is recommended. Allowing funding cycles to be reconfigured at any time will appear risky to contributors."
 msgstr "Se recomienda usar una duración. Permitir que los ciclos de financiación sean reconfigurados en cualquier momento les parecerá arriesgado a los colaboradores."
 
-#: src/components/shared/ReconfigurationStrategyDrawer.tsx
+#: src/components/shared/ReconfigurationStrategy/ReconfigurationStrategySelector.tsx
 msgid "Using a reconfiguration strategy is recommended. Projects with no strategy will appear risky to contributors."
 msgstr "Se recomienda usar una estrategia de reconfiguración. Los proyectos sin estrategia les parecerán arriesgados a los colaboradores."
 
@@ -2342,12 +2341,12 @@ msgid "What's going on under the hood?"
 msgstr "¿Qué está sucediendo detrás de escena?"
 
 #: src/components/v2/V2Create/forms/RulesForm/index.tsx
-msgid "When Minting Tokens is enabled, the project owner can manually mint any amount of tokens to any address."
-msgstr "Cuando Acuñar Tokens está activado, el dueño del proyecto puede acuñar manualmente cualquier monto de tokens a cualquier dirección."
+msgid "When enabled, the project owner can manually mint any amount of tokens to any address."
+msgstr ""
 
 #: src/components/v2/V2Create/forms/RulesForm/index.tsx
-msgid "When Pause Payments is enabled, your project cannot receive direct payments."
-msgstr "Cuando Pausar Pagos está activado, tus proyectos no pueden recibir pagos directos."
+msgid "When enabled, your project cannot receive direct payments."
+msgstr ""
 
 #: src/components/Landing/index.tsx
 msgid "When someone pays your project, they'll receive your project's tokens in return. Tokens can be redeemed for a portion of your project's overflow funds; when you win, your community wins with you. Leverage your project's token to grant governance rights, community access, or other membership perks."

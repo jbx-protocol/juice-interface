@@ -262,7 +262,17 @@ export default function FundingCycleDetails({
         </Descriptions.Item>
         <Descriptions.Item
           span={2}
-          label={<TooltipLabel label={<Trans>Owner can mint tokens</Trans>} />}
+          label={
+            <TooltipLabel
+              label={<Trans>Token minting</Trans>}
+              tip={
+                <Trans>
+                  Token minting allows the project owner to mint project tokens
+                  at any time.
+                </Trans>
+              }
+            />
+          }
         >
           {fundingCycleMetadata?.pauseMint ? (
             <Trans>No</Trans>

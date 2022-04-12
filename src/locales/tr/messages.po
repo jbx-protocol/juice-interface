@@ -232,7 +232,7 @@ msgstr "Etkinlik"
 msgid "Add a payout"
 msgstr "Ödeme ekle"
 
-#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal.tsx
 msgid "Add funds to this project's balance without minting tokens."
 msgstr "Bu projenin bakiyesine token basmadan fon ekleyin."
 
@@ -241,11 +241,11 @@ msgstr "Bu projenin bakiyesine token basmadan fon ekleyin."
 msgid "Add image"
 msgstr "Resim ekle"
 
-#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal.tsx
 msgid "Add to Balance"
 msgstr "Bakiyeye Ekle"
 
-#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal.tsx
 msgid "Add to balance"
 msgstr "Bakiyeye ekle"
 
@@ -320,7 +320,7 @@ msgstr "İzin verildi"
 msgid "Almost definitely."
 msgstr "Neredeyse kesinlikle."
 
-#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Amount"
 msgstr "Miktar"
@@ -351,8 +351,9 @@ msgstr "Tüm değişiklikler bir sonraki finansman döngüsünde etkili olacakt�
 msgid "Any reconfiguration to an upcoming funding cycle will take effect once the current cycle ends. A project with no strategy may be vulnerable to being rug-pulled by its owner."
 msgstr "Yaklaşan bir finansman döngüsüne yönelik herhangi bir yeniden yapılandırma, mevcut döngü sona erdiğinde yürürlüğe girecektir. Stratejisi olmayan bir proje, sahibi tarafından e-dolanrıcılığa karşı savunmasız olabilir."
 
-#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
-#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/v1/V1Project/ArchiveV1Project.tsx
+#: src/components/v1/V1Project/ArchiveV1Project.tsx
 msgid "Archive project"
 msgstr "Projeyi arşivle"
 
@@ -614,9 +615,9 @@ msgstr "Güncel"
 msgid "Current 3rd Party Exchange Rates"
 msgstr "Güncel 3. Taraf Kripto Kurları"
 
-#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
-msgid "Current owner: {owner}"
-msgstr "Güncel sahibi: {owner}"
+#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+msgid "Current owner: {ownerAddress}"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
@@ -1182,9 +1183,9 @@ msgstr ""
 msgid "Logo"
 msgstr "Logo"
 
+#: src/components/shared/modals/ProjectToolDrawerModal.tsx
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
-#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
@@ -1317,7 +1318,7 @@ msgstr "Ayarlanmadı"
 msgid "Note"
 msgstr "Not"
 
-#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
+#: src/components/v1/V1Project/ArchiveV1Project.tsx
 msgid "Note:"
 msgstr "Not:"
 
@@ -1461,6 +1462,10 @@ msgstr "Yüzde tahsisi"
 #: src/components/shared/formItems/ProjectTicketMods.tsx
 msgid "Percentages must add up to 100% or less"
 msgstr "Yüzdelerin toplamı %100 veya daha az olmalıdır"
+
+#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+msgid "Please contact the Juicebox dev team through our <0>Discord</0> to have your project archived."
+msgstr ""
 
 #: src/components/Navbar/constants.ts
 msgid "Podcast"
@@ -2194,7 +2199,7 @@ msgstr ""
 msgid "Tokens:"
 msgstr "Token'lar:"
 
-#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal.tsx
 msgid "Tools"
 msgstr "Araçlar"
 
@@ -2225,16 +2230,16 @@ msgstr "Toplam: %{0}"
 msgid "Transaction pending..."
 msgstr "İşlem beklemede..."
 
-#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
-#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal.tsx
 msgid "Transfer ownership"
 msgstr "Mülkiyeti aktar"
 
-#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal.tsx
 msgid "Transfer unclaimed {tokenSymbolShort}"
 msgstr "Talep edilmemiş {tokenSymbolShort} token'larını aktar"
 
-#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal.tsx
 msgid "Transfer {tokenSymbolShort}"
 msgstr "{tokenSymbolShort} token'larını aktar"
 
@@ -2251,8 +2256,8 @@ msgstr ""
 msgid "Twitter"
 msgstr "Twitter"
 
-#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
-#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
+#: src/components/v1/V1Project/ArchiveV1Project.tsx
+#: src/components/v1/V1Project/ArchiveV1Project.tsx
 msgid "Unarchive project"
 msgstr "Projeyi arşivden kaldır"
 
@@ -2260,7 +2265,7 @@ msgstr "Projeyi arşivden kaldır"
 msgid "Unavailable"
 msgstr "Mevcut değil"
 
-#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
+#: src/components/v1/V1Project/ArchiveV1Project.tsx
 msgid "Unless payments are paused in your funding cycle settings, your project will still be able to receive payments directly through the Juicebox protocol contracts."
 msgstr "Ödemeler finansman döngüsü ayarlarınızdan duraklatılmadıkça projeniz, doğrudan Juicebox protokolü sözleşmeleri aracılığıyla ödeme almaya devam edebilecektir."
 
@@ -2460,7 +2465,7 @@ msgstr "Proje sözleşmeniz dağıtıldıktan sonra ERC-20 token'larını çıka
 msgid "Your balance"
 msgstr "Bakiyeniz"
 
-#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal.tsx
 msgid "Your balance: {0}"
 msgstr "Bakiyeniz: {0}"
 
@@ -2476,7 +2481,7 @@ msgstr "Projeniz duraklatıldığında doğrudan ödeme alamaz."
 msgid "Your project is funded across funding cycles. A funding cycle has a funding target and a duration. Your project's funding cycle configuration will depend on the kind of project you're starting."
 msgstr "Projeniz finansman döngüleri boyunca finanse edilir. Bir finansman döngüsü, bir finansman hedefine ve süreye sahiptir. Projenizin finansman döngüsü yapılandırması, başlattığınız projenin türüne bağlı olacaktır."
 
-#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
+#: src/components/v1/V1Project/ArchiveV1Project.tsx
 msgid "Your project will appear archived, and will not be able to receive payments through the juicebox.money app. You can unarchive a project at any time. Please allow a few days for your project to appear under the \"archived\" filter on the Projects page."
 msgstr ""
 
@@ -2484,11 +2489,11 @@ msgstr ""
 msgid "Your project will be created on the Juicebox V2 contracts."
 msgstr "Projeniz Juicebox V2 sözleşmeleri üzerinde oluşturulacaktır."
 
-#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
+#: src/components/v1/V1Project/ArchiveV1Project.tsx
 msgid "Your project will immediately appear active on the juicebox.money app. Please allow a few days for it to appear in the \"active\" projects list on the Projects page."
 msgstr "Projeniz juicebox.money uygulamasında hemen aktif olarak görünecektir. Projenizin projeler sayfasında, \"aktif projeler\" listesinde görünmesi için lütfen birkaç gün bekleyin."
 
-#: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
+#: src/components/v1/V1Project/ArchiveV1Project.tsx
 msgid "Your project will still be able to receive payments directly through the Juicebox protocol contracts."
 msgstr ""
 

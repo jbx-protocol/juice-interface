@@ -10,6 +10,8 @@ import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
+import { Trans } from '@lingui/macro'
+
 import { smallHeaderStyle } from './styles'
 
 export default function ReservesEventElem({
@@ -60,7 +62,7 @@ export default function ReservesEventElem({
         }}
       >
         <div style={smallHeaderStyle(colors)}>
-          Distributed reserved{' '}
+          <Trans>Distributed reserved</Trans>{' '}
           {tokenSymbolText({
             tokenSymbol: tokenSymbol,
             capitalize: false,
@@ -76,7 +78,7 @@ export default function ReservesEventElem({
             <EtherscanLink value={event.txHash} type="tx" />
           </div>
           <div style={smallHeaderStyle(colors)}>
-            called by <FormattedAddress address={event.caller} />
+            <Trans>called by</Trans> <FormattedAddress address={event.caller} />
           </div>
         </div>
       </div>

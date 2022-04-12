@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/macro'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import EtherscanLink from 'components/shared/EtherscanLink'
 import FormattedAddress from 'components/shared/FormattedAddress'
@@ -43,7 +44,9 @@ export default function RedeemEventElem({
         }}
       >
         <div>
-          <div style={smallHeaderStyle(colors)}>Redeemed</div>
+          <div style={smallHeaderStyle(colors)}>
+            <Trans>Redeemed</Trans>
+          </div>
           <div
             style={{
               lineHeight: contentLineHeight,

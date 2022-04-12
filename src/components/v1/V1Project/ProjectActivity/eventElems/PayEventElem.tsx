@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/macro'
 import ETHAmount from 'components/shared/currency/ETHAmount'
 import EtherscanLink from 'components/shared/EtherscanLink'
 import FormattedAddress from 'components/shared/FormattedAddress'
@@ -72,7 +73,9 @@ export default function PayEventElem({
         }}
       >
         <div>
-          <div style={smallHeaderStyle(colors)}>Paid</div>
+          <div style={smallHeaderStyle(colors)}>
+            <Trans>Paid</Trans>
+          </div>
           <div
             style={{
               lineHeight: contentLineHeight,

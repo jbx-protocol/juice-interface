@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/macro'
 import EtherscanLink from 'components/shared/EtherscanLink'
 import { ThemeContext } from 'contexts/themeContext'
 import { DeployedERC20Event } from 'models/subgraph-entities/deployed-erc20-event'
@@ -28,7 +29,9 @@ export default function DeployedERC20EventElem({
       }}
     >
       <div>
-        <div style={smallHeaderStyle(colors)}>Deployed ERC20 token</div>
+        <div style={smallHeaderStyle(colors)}>
+          <Trans>Deployed ERC20 token</Trans>
+        </div>
         <div
           style={{
             lineHeight: contentLineHeight,

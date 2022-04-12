@@ -772,6 +772,10 @@ msgstr ""
 msgid "Deploy project to {0}"
 msgstr ""
 
+#: src/components/v1/V1Project/ProjectActivity/eventElems/DeployedERC20EventElem.tsx
+msgid "Deployed ERC20 token"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "Deposit 1 wei to @{handle}"
 msgstr "Депозит 1 wei на @{handle}"
@@ -896,6 +900,16 @@ msgstr ""
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
 msgid "Distribution splits"
+#: src/components/v1/V1Project/ProjectActivity/eventElems/ReservesEventElem.tsx
+msgid "Distributed reserved"
+msgstr ""
+
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+msgid "Distribution limit"
+msgstr ""
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Distribution limit, duration and payouts"
 msgstr ""
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
@@ -956,16 +970,16 @@ msgstr "В связи с публичным характером, любые э�
 msgid "Duration"
 msgstr "Продолжительность"
 
-#: src/components/v1/V1Project/ProjectActivity/index.tsx
-msgid "ERC20 Deployed"
-msgstr ""
-
 #: src/components/Landing/index.tsx
 msgid "ERC-20 community tokens"
 msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "ERC-20 tokens can only be minted once an ERC-20 token has been issued for this project."
+msgstr ""
+
+#: src/components/v1/V1Project/ProjectActivity/index.tsx
+msgid "ERC20 Deployed"
 msgstr ""
 
 #: src/components/Landing/QAs.tsx
@@ -1613,6 +1627,8 @@ msgid "Owner is not allowed to mint tokens."
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Owner can mint tokens"
 msgstr "Владелец может чеканить токены"
+
+#: src/components/v1/V1Project/ProjectActivity/eventElems/PayEventElem.tsx
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 msgid "Paid"
 msgstr ""
@@ -1822,12 +1838,16 @@ msgstr ""
 msgid "Project Created"
 msgstr ""
 
-#: src/components/v1/V1Project/Rewards/IssueTickets.tsx
+#: src/components/shared/IssueTicketsButton.tsx
 msgid "Project Token"
 msgstr "Токен проекта"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Project configuration"
+msgstr ""
+
+#: src/components/v1/V1Project/ProjectActivity/eventElems/ProjectCreateEventElem.tsx
+msgid "Project created by"
 msgstr ""
 
 #: src/components/shared/formItems/ProjectDescription.tsx
@@ -2021,12 +2041,17 @@ msgstr "Перенастроить предстоящие финансирова
 msgid "Reconfigure upcoming funding cycles"
 msgstr ""
 
+#: src/components/v2/V2Create/forms/FundingForm/FundingTypeSelect.tsx
+#: src/components/shared/ManageTokensModal.tsx
+#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
+msgid "Recurring target"
+msgstr "Повторяющаяся цель"
+
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 msgid "Redeem"
 msgstr "Обменять"
 
 #: src/components/shared/ManageTokensModal.tsx
-#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
 msgid "Redeem your {tokensLabel} for a portion of the project's overflow. Any {tokensLabel} you redeem will be burned."
 msgstr ""
 
@@ -2046,12 +2071,13 @@ msgstr "Обменять {tokensTextLong} за ETH"
 #: src/components/v2/V2Create/forms/TokenForm/index.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+#: src/components/v1/V1Project/ProjectActivity/eventElems/RedeemEventElem.tsx
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 msgid "Redeemed"
 msgstr ""
 
-#: src/components/v2/V2Create/DeployProjectModal/index.tsx
-#: src/components/v2/V2Create/tabs/TokenTab/TokenTabContent.tsx
+#: src/components/v2/V2Create/forms/TokenForm/index.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Redemption rate"
 msgstr "Коэффициент выкупа"
 
@@ -2120,10 +2146,6 @@ msgstr ""
 #: src/components/v2/V2Project/V2FundingCycleSection/ReservedTokensSplitsCard.tsx
 msgid "Reserved {tokensText}"
 msgstr ""
-
-#: src/components/v1/V1Project/ProjectActivity/index.tsx
-msgid "Reserves"
-msgstr "Резервирование"
 
 #: src/components/Navbar/MenuItems.tsx
 #: src/components/Navbar/Mobile/ResourcesDropdownMobile.tsx
@@ -3021,6 +3043,11 @@ msgstr ""
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 msgid "after {0}% JBX fee"
 msgstr "после  {0}% комиссии JBX"
+
+#: src/components/v1/V1Project/ProjectActivity/eventElems/ReservesEventElem.tsx
+#: src/components/v1/V1Project/ProjectActivity/eventElems/TapEventElem.tsx
+msgid "called by"
+msgstr ""
 
 #: src/components/shared/formItems/ProjectDescription.tsx
 msgid "characters max"

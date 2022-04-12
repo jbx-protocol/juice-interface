@@ -5,6 +5,8 @@ import { ProjectCreateEvent } from 'models/subgraph-entities/project-create-even
 import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 
+import { Trans } from '@lingui/macro'
+
 import { contentLineHeight, smallHeaderStyle } from './styles'
 
 export default function ProjectCreateEventElem({
@@ -31,7 +33,8 @@ export default function ProjectCreateEventElem({
             lineHeight: contentLineHeight,
           }}
         >
-          Project created by <FormattedAddress address={event.caller} />
+          <Trans>Project created by</Trans>{' '}
+          <FormattedAddress address={event.caller} />
         </div>
       </div>
 

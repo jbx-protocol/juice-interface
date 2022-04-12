@@ -772,6 +772,10 @@ msgstr ""
 msgid "Deploy project to {0}"
 msgstr ""
 
+#: src/components/v1/V1Project/ProjectActivity/eventElems/DeployedERC20EventElem.tsx
+msgid "Deployed ERC20 token"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "Deposit 1 wei to @{handle}"
 msgstr "@{handle} hesabına 1 wei yatırın"
@@ -900,6 +904,16 @@ msgstr ""
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Distributions to other Juicebox project do not incur any fee."
+#: src/components/v1/V1Project/ProjectActivity/eventElems/ReservesEventElem.tsx
+msgid "Distributed reserved"
+msgstr ""
+
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+msgid "Distribution limit"
+msgstr ""
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Distribution limit, duration and payouts"
 msgstr ""
 
 #: src/components/Landing/QAs.tsx
@@ -956,16 +970,16 @@ msgstr "Kamuya açık olmaları nedeniyle, sözleşmelere yönelik herhangi bir 
 msgid "Duration"
 msgstr "Süre"
 
-#: src/components/v1/V1Project/ProjectActivity/index.tsx
-msgid "ERC20 Deployed"
-msgstr ""
-
 #: src/components/Landing/index.tsx
 msgid "ERC-20 community tokens"
 msgstr "ERC-20 topluluk token'ları"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "ERC-20 tokens can only be minted once an ERC-20 token has been issued for this project."
+msgstr ""
+
+#: src/components/v1/V1Project/ProjectActivity/index.tsx
+msgid "ERC20 Deployed"
 msgstr ""
 
 #: src/components/Landing/QAs.tsx
@@ -1614,6 +1628,7 @@ msgid "Owner is not allowed to mint tokens."
 msgid "Owner can mint tokens"
 msgstr "Sahip token basabilir"
 
+#: src/components/v1/V1Project/ProjectActivity/eventElems/PayEventElem.tsx
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 msgid "Paid"
 msgstr ""
@@ -1823,13 +1838,17 @@ msgstr ""
 msgid "Project Created"
 msgstr ""
 
-#: src/components/v1/V1Project/Rewards/IssueTickets.tsx
+#: src/components/shared/IssueTicketsButton.tsx
 msgid "Project Token"
 msgstr "Proje Token'ı"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Project configuration"
 msgstr "Proje proje yapılandırması"
+
+#: src/components/v1/V1Project/ProjectActivity/eventElems/ProjectCreateEventElem.tsx
+msgid "Project created by"
+msgstr ""
 
 #: src/components/shared/formItems/ProjectDescription.tsx
 msgid "Project description"
@@ -2025,9 +2044,11 @@ msgstr ""
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 msgid "Redeem"
 msgstr "Talep edin"
+#: src/components/v2/V2Create/forms/FundingForm/FundingTypeSelect.tsx
+msgid "Recurring target"
+msgstr ""
 
 #: src/components/shared/ManageTokensModal.tsx
-#: src/components/v1/V1Project/Rewards/ManageTokensModal.tsx
 msgid "Redeem your {tokensLabel} for a portion of the project's overflow. Any {tokensLabel} you redeem will be burned."
 msgstr ""
 
@@ -2047,12 +2068,13 @@ msgstr ""
 #: src/components/v2/V2Create/forms/TokenForm/index.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+#: src/components/v1/V1Project/ProjectActivity/eventElems/RedeemEventElem.tsx
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 msgid "Redeemed"
 msgstr ""
 
-#: src/components/v2/V2Create/DeployProjectModal/index.tsx
-#: src/components/v2/V2Create/tabs/TokenTab/TokenTabContent.tsx
+#: src/components/v2/V2Create/forms/TokenForm/index.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Redemption rate"
 msgstr "Kullanım oranı"
 
@@ -2119,10 +2141,6 @@ msgstr "Ayrılmış {tokenTextPlural}: <0>{reservedTokensFormatted} {tokenTextPl
 #: src/components/v2/V2Project/V2FundingCycleSection/ReservedTokensSplitsCard.tsx
 msgid "Reserved {tokensText}"
 msgstr "Ayrılmış {tokensText}"
-
-#: src/components/v1/V1Project/ProjectActivity/index.tsx
-msgid "Reserves"
-msgstr "Ayrılanlar"
 
 #: src/components/Navbar/MenuItems.tsx
 #: src/components/Navbar/Mobile/ResourcesDropdownMobile.tsx
@@ -3020,6 +3038,11 @@ msgstr ""
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 msgid "after {0}% JBX fee"
 msgstr "%{0} JBX ücretinden sonra"
+
+#: src/components/v1/V1Project/ProjectActivity/eventElems/ReservesEventElem.tsx
+#: src/components/v1/V1Project/ProjectActivity/eventElems/TapEventElem.tsx
+msgid "called by"
+msgstr ""
 
 #: src/components/shared/formItems/ProjectDescription.tsx
 msgid "characters max"

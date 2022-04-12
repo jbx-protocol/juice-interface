@@ -10,6 +10,8 @@ import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
 
+import { Trans } from '@lingui/macro'
+
 import { smallHeaderStyle } from './styles'
 
 export default function TapEventElem({
@@ -76,7 +78,7 @@ export default function TapEventElem({
             <EtherscanLink value={event.txHash} type="tx" />
           </div>
           <div style={smallHeaderStyle(colors)}>
-            called by <FormattedAddress address={event.caller} />
+            <Trans>called by</Trans> <FormattedAddress address={event.caller} />
           </div>
         </div>
       </div>

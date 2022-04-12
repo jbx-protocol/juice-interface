@@ -107,7 +107,6 @@ export default function V2ManageTokensSection() {
               style={{
                 display: 'flex',
                 justifyContent: 'space-between',
-                height: 40,
               }}
             >
               <SectionHeader
@@ -128,10 +127,12 @@ export default function V2ManageTokensSection() {
                 }
               />
               {showIssueTokensButton && (
-                <IssueTicketsButton
-                  isNewDeploy={isNewDeploy}
-                  useIssueTokensTx={useIssueTokensTx}
-                />
+                <div style={{ marginBottom: 20 }}>
+                  <IssueTicketsButton
+                    isNewDeploy={isNewDeploy}
+                    useIssueTokensTx={useIssueTokensTx}
+                  />
+                </div>
               )}
             </div>
           }
@@ -216,6 +217,7 @@ export default function V2ManageTokensSection() {
                         <Button
                           size="small"
                           onClick={() => setManageTokensModalVisible(true)}
+                          disabled={isPreviewMode}
                         >
                           <Trans>Manage {tokenText}</Trans>
                         </Button>

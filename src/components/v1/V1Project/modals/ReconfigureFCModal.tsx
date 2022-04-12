@@ -10,7 +10,7 @@ import RestrictedActionsForm, {
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import PayoutModsList from 'components/v1/PayoutModsList'
 import TicketModsList from 'components/shared/TicketModsList'
-import ReconfigurationStrategyDrawer from 'components/shared/ReconfigurationStrategyDrawer'
+import ReconfigurationStrategyDrawer from 'components/shared/ReconfigurationStrategy/ReconfigurationStrategyDrawer'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'

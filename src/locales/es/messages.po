@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-04-09 02:16\n"
+"PO-Revision-Date: 2022-04-11 02:39\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -58,7 +58,7 @@ msgstr "100% de excedente"
 
 #: src/components/v2/V2Create/index.tsx
 msgid "2. Funding cycle"
-msgstr ""
+msgstr "2. Ciclo de financiamiento"
 
 #: src/components/v1/V1Project/BalanceTimeline.tsx
 msgid "24 hours"
@@ -70,7 +70,7 @@ msgstr "Espera de 3 días"
 
 #: src/components/v2/V2Create/index.tsx
 msgid "3. Review and deploy"
-msgstr ""
+msgstr "3. Revisar y desplegar"
 
 #: src/components/v1/V1Project/BalanceTimeline.tsx
 msgid "30 days"
@@ -463,7 +463,7 @@ msgstr "Por defecto, todos los fondos no asignados pueden ser distribuidos a la 
 
 #: src/components/v2/V2Create/forms/TokenForm/index.tsx
 msgid "By default, the issuance rate for your project's token is 1,000,000 tokens / 1 ETH. For example, 1 ETH contribution to your project will return 1,000,000 tokens. You can manipulate the issuance rate with the following configurations."
-msgstr ""
+msgstr "Por defecto, la relación de emisión para el token de Tú proyecto es 1,000,000 de tokens/1 ETH. Por ejemplo, una contribución de 1 ETH a Tú proyecto retornará 1,000,000 de tokens. Tú puedes manipular la relación de emisión con las configuraciones siguientes."
 
 #: src/components/Landing/QAs.tsx
 msgid "Can I change my project's contract after it's been created?"
@@ -503,19 +503,19 @@ msgstr "Marca esto para acuñar {tokenSymbol} ERC-20 a tu cartera. Deja desmarca
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
 msgid "Claim {0}"
-msgstr ""
+msgstr "Reclamar {0}"
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
 msgid "Claim {0} as ERC-20 tokens"
-msgstr ""
+msgstr "Reclamar {0} como tokens ERC-20"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "Claim {tokenTextShort}"
-msgstr ""
+msgstr "Reclamar {tokenTextShort}"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "Claim {tokenTextShort} as ERC-20 tokens"
-msgstr ""
+msgstr "Reclamar {tokenTextShort} como tokens ERC-20"
 
 #: src/components/shared/ManageTokensModal.tsx
 msgid "Claim {tokensLabel} as ERC-20"
@@ -527,7 +527,7 @@ msgstr "Reclamar tokens {tokenSymbol} convertirá tu balance de {tokenSymbol} a 
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "Claiming {tokenTextLong} will convert your {tokenTextShort} balance to ERC-20 tokens and mint them to your wallet."
-msgstr ""
+msgstr "Reclamar {tokenTextLong} convertirá tu balance de {tokenTextShort} a tokens ERC-20 y las acuñará a tu cartera."
 
 #: src/components/shared/TransactionModal.tsx
 #: src/components/v1/V1Project/modals/DownloadActivityModal.tsx
@@ -550,11 +550,11 @@ msgstr ""
 
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 msgid "Configure restrictions for your funding cycles."
-msgstr ""
+msgstr "Configura restricciones para tus ciclos de financiamiento."
 
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 msgid "Configure the dynamics of your project's token."
-msgstr ""
+msgstr "Configura la dinámica del token de tu proyecto."
 
 #: src/components/v1/V1Project/modals/FeedbackPromptModal.tsx
 msgid "Congrats on creating your project!"
@@ -611,7 +611,7 @@ msgstr "Actual"
 
 #: src/components/shared/AMMPrices/index.tsx
 msgid "Current 3rd Party Exchange Rates"
-msgstr ""
+msgstr "Tasas de cambio de terceras partes actuales"
 
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
 msgid "Current owner: {owner}"
@@ -661,7 +661,7 @@ msgstr "Desplegar proyecto en {signerNetwork}"
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/DeployProjectButton.tsx
 msgid "Deploy project to {0}"
-msgstr ""
+msgstr "Desplegar proyecto a {0}"
 
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "Deposit 1 wei to @{handle}"
@@ -805,7 +805,7 @@ msgstr "Tokens ERC-20 de la comunidad"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "ERC-20 tokens can only be minted once an ERC-20 token has been issued for this project."
-msgstr ""
+msgstr "Los tokens ERC-20 solo se pueden acuñar una vez que se ha emitido un token ERC-20 para este proyecto."
 
 #: src/components/Landing/QAs.tsx
 msgid "Each project has its own <0>ERC-20 tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
@@ -847,7 +847,7 @@ msgstr "Activar esto permite al dueño del proyecto acuñar manualmente cualquie
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "Enabling this will mint {tokenSymbol} ERC-20 tokens. Otherwise staked {tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver."
-msgstr ""
+msgstr "Activar esto acuñará tokens ERC-20 {tokenSymbol}. En caso contrario, los tokens {tokenSymbol} serán acuñados, que podrán ser reclamados como ERC-20 por el beneficiario."
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "Enabling tokens to be minted will appear risky to contributors, and should only be used when necessary."
@@ -902,7 +902,7 @@ msgstr "Para los usuarios que paguen a través de tu aplicación, deberás dirig
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 msgid "Funding"
-msgstr ""
+msgstr "Financiamiento"
 
 #: src/components/v1/FundingCycle/Spending.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
@@ -1081,7 +1081,7 @@ msgstr "Artistas indis, desarrolladores, creadores"
 
 #: src/components/shared/IssueTicketsButton.tsx
 msgid "Issue ERC-20"
-msgstr ""
+msgstr "Emitir ERC-20"
 
 #: src/components/shared/IssueTicketsButton.tsx
 msgid "Issue ERC-20 token"
@@ -1210,7 +1210,7 @@ msgstr "Migrar a Juicebox V1.1"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "Mint as ERC-20"
-msgstr ""
+msgstr "Acuñar como ERC-20"
 
 #: src/components/shared/ManageTokensModal.tsx
 msgid "Mint new {tokensLabel} into an account. Only a project's owner, a designated operator, or one of its terminal's delegates can mint its tokens."
@@ -1231,7 +1231,7 @@ msgstr "Acuñar {tokensLabel}"
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "Mint {tokensTokenLower}"
-msgstr ""
+msgstr "Acuñar {tokensTokenLower}"
 
 #: src/components/Projects/TrendingProjects.tsx
 msgid "More trending projects"
@@ -1251,11 +1251,11 @@ msgstr "Nuevo"
 
 #: src/components/v2/V2Create/tabs/ProjectDetailsTab/ProjectDetailsTabContent.tsx
 msgid "Next: Funding cycle"
-msgstr ""
+msgstr "Siguiente: Ciclo de financiamiento"
 
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 msgid "Next: Review and deploy"
-msgstr ""
+msgstr "Siguiente: Revisar y desplegar"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
@@ -1322,7 +1322,7 @@ msgstr "Nota: Juicebox es nuevo, inauditado y no está garantizado para trabajar
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "Note: Tokens can be minted manually when allowed in the current funding cycle. This can be changed by the project owner for upcoming cycles."
-msgstr ""
+msgstr "Nota: los tokens pueden ser acuñados manualmente cuando se permita en el ciclo de financiamiento actual. Esto puede ser cambiado por dueño del proyecto para ciclos próximos."
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
@@ -1748,7 +1748,7 @@ msgstr "Revisar proyecto"
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/index.tsx
 msgid "Review project configuration"
-msgstr ""
+msgstr "Revisar configuración de proyecto"
 
 #: src/components/v1/V1Create/index.tsx
 msgid "Reward specific community members with tokens."
@@ -1808,7 +1808,7 @@ msgstr "Guardar reconfiguración"
 
 #: src/components/v2/V2Create/forms/RulesForm/index.tsx
 msgid "Save rules"
-msgstr ""
+msgstr "Guardar las reglas"
 
 #: src/components/shared/TicketModsList.tsx
 msgid "Save token allocation"
@@ -1816,7 +1816,7 @@ msgstr "Guardar asignación de tokens"
 
 #: src/components/v2/V2Create/forms/TokenForm/index.tsx
 msgid "Save token configuration"
-msgstr ""
+msgstr "Guardar configuración de los tokens"
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "Save token receiver"
@@ -1945,11 +1945,11 @@ msgstr "La cantidad de tokens reservados para este proyecto. Éstos tokens puede
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "The amount of tokens to mint to the receiver."
-msgstr ""
+msgstr "La cantidad de tokens a acuñar al receptor."
 
 #: src/components/v2/V2Project/TreasuryStats/DistributedRatio.tsx
 msgid "The amount that has been distributed from the Juicebox balance in this funding cycle, out of the current distribution limit. No more than the distribution limit can be distributed in a single funding cycle—any remaining ETH in Juicebox is overflow, until the next cycle begins."
-msgstr ""
+msgstr "La cantidad que ha sido distribuida desde el balance de Juicebox en este ciclo de financiamiento, fuera del límite actual de distribución. No se puede distribuir más del límite de distribución en un solo ciclo de financiación; cualquier ETH restante en Juicebox es excedente, hasta que comience el siguiente ciclo."
 
 #: src/components/v1/V1Project/Paid.tsx
 msgid "The amount that has been distributed from the Juicebox balance in this funding cycle, out of the current funding target. No more than the funding target can be distributed in a single funding cycle—any remaining ETH in Juicebox is overflow, until the next cycle begins."
@@ -1958,7 +1958,7 @@ msgstr "El monto que ha sido distribuido desde el saldo Juicebox en este ciclo d
 #: src/components/v1/V1Project/Paid.tsx
 #: src/components/v2/V2Project/TreasuryStats/OwnerBalance.tsx
 msgid "The balance of the project owner's wallet."
-msgstr ""
+msgstr "El balance de la cartera del dueño del proyecto."
 
 #: src/components/v1/V1Project/Paid.tsx
 #: src/components/v2/V2Project/TreasuryStats/ProjectBalance.tsx
@@ -2090,7 +2090,7 @@ msgstr "Esta proporción determina el monto de excedente por el que cada token p
 
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hodl tokens longer than others. A redemption rate of 100% means all tokens will have equal value regardless of when they are redeemed."
-msgstr ""
+msgstr "Esta tasa determina la cantidad de excedente por el que cada token se puede canjear en cualquier momento. En una curva de adhesión más baja, canjear un token incrementa el valor de cada token restante, creando un incentivo para hodlear tokens más tiempo que otros. Una tasa de redención del 100% significa que todos los tokens tendrán un valor igual, sin importar cuando sean canjeados."
 
 #: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hodl tokens longer than others. The default bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed. Learn more in this <0>short video</0>."
@@ -2166,15 +2166,15 @@ msgstr "Los tokens pueden ser canjeados por una porción del ETH excedente de es
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Tokens can be redeemed for a portion of this project's ETH overflow, according to the redemption rate of the current funding cycle. <0>Tokens are burned when they are redeemed.</0>"
-msgstr ""
+msgstr "Los tokens se pueden canjear por una porción del excedente de ETH, de acuerdo con la tasa de redención del ciclo de financiamiento actual. <0>Los tokens son quemados cuando son canjeados.</0>"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "Tokens cannot be claimed because no ERC-20 token has been issued for this project. ERC-20 tokens must be issued by the project owner."
-msgstr ""
+msgstr "Los tokens no pueden ser reclamados porque no se ha emitido un token ERC-20 para este proyecto. Los tokens ERC-20 deben ser emitidos por el dueño del proyecto."
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "Tokens receiver"
-msgstr ""
+msgstr "Beneficiario de los token"
 
 #: src/components/v2/shared/SplitItem.tsx
 msgid "Tokens:"
@@ -2209,7 +2209,7 @@ msgstr "Total: {0}%"
 
 #: src/components/shared/TransactionModal.tsx
 msgid "Transaction pending..."
-msgstr ""
+msgstr "Transacción pendiente..."
 
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
 #: src/components/v1/V1Project/modals/ProjectToolDrawerModal.tsx
@@ -2359,7 +2359,7 @@ msgstr "Cuando acuñar tokens es permitido, el dueño de este proyecto tiene per
 
 #: src/components/shared/formItems/ProjectReserved.tsx
 msgid "Whenever someone pays your project, this percentage of tokens will be reserved and the rest will go to the payer. By default, these tokens are reserved for the project owner, but you can also allocate portions to other wallet addresses. Anyone can submit the transaction to distribute reserved tokens according to the allocation."
-msgstr ""
+msgstr "Cuando alguien paga tu proyecto, este porcentaje de tokens será reservado, y el resto irá al pagador. Por defecto, estos tokens están reservados para el dueño del proyecto, pero también tú puedes asignar porciones a otras direcciones de carteras. Cualquiera puede enviar la transacción para distribuir tokens reservados de acuerdo con la asignación."
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
@@ -2405,7 +2405,7 @@ msgstr "Espacio de trabajo"
 
 #: src/components/shared/IssueTicketsButton.tsx
 msgid "Would you to issue an ERC-20 token to be used as this project's token?"
-msgstr ""
+msgstr "¿Deseas emitir un token ERC-20 para ser usado como token del proyecto?"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
@@ -2414,7 +2414,7 @@ msgstr "Sí"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "You can redeem your {tokenTextLong} for overflow without claiming them. You can transfer your unclaimed {tokenTextLong} to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
-msgstr ""
+msgstr "Puedes canjear tus {tokenTextLong} por excedente sin reclamarlos. Puedes transferir tus {tokenTextLong} no reclamados a otra dirección del menú de Herramientas, que puede ser accesado desde el ícono de la herramienta en la esquina superior derecha de este proyecto."
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
 msgid "You can still redeem your {tokenSymbol} tokens for overflow without claiming them, and you can transfer your unclaimed {tokenSymbol} tokens to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
@@ -2430,11 +2430,11 @@ msgstr "Vas a recibir {0}{1} ETH"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "You will recieve minimum {minReturnedTokensFormatted} ETH"
-msgstr ""
+msgstr "Recibirás al menos {minReturnedTokensFormatted} ETH"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "You will recieve {minReturnedTokensFormatted} ETH"
-msgstr ""
+msgstr "Recibirás {minReturnedTokensFormatted} ETH"
 
 #: src/components/shared/forms/TicketingForm.tsx
 msgid "You'll be able to issue ERC-20 tokens once your project contract has been deployed. Until then, the protocol will track token balances, allowing your supporters to earn tokens and redeem for overflow in the meantime."
@@ -2491,11 +2491,11 @@ msgstr "El sitio web de tu proyecto."
 
 #: src/components/shared/TransactionModal.tsx
 msgid "Your transaction has been submitted and is awaiting confirmation."
-msgstr ""
+msgstr "Tu transacción ha sido presentada y está esperando confirmación."
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "Your unclaimed {tokenTextLong}"
-msgstr ""
+msgstr "Tus {tokenTextLong} no reclamados"
 
 #: src/components/shared/inputs/BudgetTargetInput.tsx
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
@@ -2591,7 +2591,7 @@ msgstr "{0} atrás"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "{0} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
-msgstr ""
+msgstr "{0} se distribuyen a cualquiera que pague este proyecto. Si el proyecto ha establecido un objetivo de financiamiento, los tokens pueden ser canjeados por una porción del excedente del proyecto, sea que ya hayan sido reclamados o no."
 
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 msgid "{0} balance"
@@ -2599,7 +2599,7 @@ msgstr "{0} de balance"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "{0} balance: <0><1>{1} {tokensTextShort}</1><2>({share}% of supply)</2></0>"
-msgstr ""
+msgstr "{0} balance: <0><1>{1}{tokensTextShort}</1><2>({share}% de suministro)</2></0>"
 
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 msgid "{0} contributed"
@@ -2711,7 +2711,7 @@ msgstr "{tokenSymbolPlural} recibidos por ETH pagado al tesoro. Esto puede cambi
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "{tokenSymbol} ERC-20 address"
-msgstr ""
+msgstr "{tokenSymbol} dirección ERC-20"
 
 #: src/components/shared/AMMPrices/TokenAMMPriceRow.tsx
 msgid "{tokenSymbol}/ETH exchange rate on {exchangeName}."
@@ -2731,13 +2731,13 @@ msgstr "{tokensText} reservados"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "{tokensTokenUpper} amount"
-msgstr ""
+msgstr "cantidad de {tokensTokenUpper}"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "{unclaimedBalanceFormatted} {tokenText} claimable"
-msgstr ""
+msgstr "{unclaimedBalanceFormatted}{tokenText} reclamables"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "{userOwnershipPercentage}% of total supply"
-msgstr ""
+msgstr "{userOwnershipPercentage} % de suministro total"
 

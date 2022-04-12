@@ -151,7 +151,7 @@ msgid "<0>Note: </0>Enabling tokens to be minted will appear risky to contributo
 msgstr "<0>Not: </0>Token'ların basılmasını etkinleştirmek, katkıda bulunanlar açısından riskli görüneceği için yalnızca gerektiğinde kullanılmalıdır."
 
 #: src/components/shared/formItems/ProjectReserved.tsx
-msgid "<0>Note:</0> Having a reserve rate of more than 90% will appear risky to contributors, as they are receiving so few tokens for their contribution."
+msgid "<0>Note:</0> A reserved rate of more than 90% is risky for contributors. Contributors won't receive many tokens for their contribution."
 msgstr ""
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx

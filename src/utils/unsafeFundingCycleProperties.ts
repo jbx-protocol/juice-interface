@@ -4,12 +4,12 @@ import { RESERVED_RATE_WARNING_THRESHOLD_PERCENT } from 'constants/fundingWarnin
 
 export default function unsafeFundingCycleProperties({
   ballotAddress,
-  reservedRate,
+  reservedRatePercentage,
   hasFundingDuration,
   allowMint,
 }: {
   ballotAddress: string | undefined
-  reservedRate: number | undefined
+  reservedRatePercentage: number | undefined
   hasFundingDuration: boolean | undefined
   allowMint: boolean | undefined
 }) {
@@ -51,7 +51,7 @@ export default function unsafeFundingCycleProperties({
    * Reserved rate is very high.
    * Contributors will receive a relatively small portion of tokens in exchange for paying the project.
    */
-  if (reservedRate ?? 0 > RESERVED_RATE_WARNING_THRESHOLD_PERCENT) {
+  if (reservedRatePercentage ?? 0 > RESERVED_RATE_WARNING_THRESHOLD_PERCENT) {
     configFlags.metadataReservedRate = true
   }
 
@@ -59,7 +59,7 @@ export default function unsafeFundingCycleProperties({
    * Reserved rate is maximum (100%).
    * Contributors will receive no tokens in exchange for paying the project.
    */
-  if (reservedRate === 100) {
+  if (reservedRatePercentage === 100) {
     configFlags.metadataReservedRate = false
     configFlags.metadataMaxReservedRate = true
   }

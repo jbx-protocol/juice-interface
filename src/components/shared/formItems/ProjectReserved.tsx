@@ -32,14 +32,16 @@ export default function ProjectReserved({
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const [showRiskWarning, setShowRiskWarning] = useState<boolean>(false)
+  const [showRiskWarning, setShowRiskWarning] = useState<boolean>(
+    (value ?? 0) > RESERVED_RATE_WARNING_THRESHOLD_PERCENT,
+  )
 
   const riskNotice = (
     <p style={{ color: colors.text.warn }}>
       <Trans>
-        <strong>Note:</strong> Having a reserve rate of more than 90% will
-        appear risky to contributors, as they are receiving so few tokens for
-        their contribution.
+        <strong>Note:</strong> A reserved rate of more than 90% is risky for
+        contributors. Contributors won't receive many tokens for their
+        contribution.
       </Trans>
     </p>
   )

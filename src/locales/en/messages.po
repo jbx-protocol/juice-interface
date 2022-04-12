@@ -2253,6 +2253,7 @@ msgid "Untitled project"
 msgstr ""
 
 #: src/components/v1/V1Project/FundingCycles/index.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/index.tsx
 msgid "Upcoming"
 msgstr ""
 

@@ -3,6 +3,7 @@ import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { V1FundingCycle, V1FundingCycleMetadata } from 'models/v1/fundingCycle'
 import unsafeFundingCycleProperties from 'utils/unsafeFundingCycleProperties'
+import { perbicentToPercent } from 'utils/formatNumber'
 
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 
@@ -101,7 +102,9 @@ export const getUnsafeV1FundingCycleProperties = (
 ): FundingCycleRiskFlags => {
   const metadata = decodeFundingCycleMetadata(fundingCycle.metadata)
   const ballotAddress = getBallotStrategyByAddress(fundingCycle.ballot).address
-  const reservedRatePercentage = metadata?.reservedRate
+  const reservedRatePercentage = parseFloat(
+    perbicentToPercent(metadata?.reservedRate),
+  )
   const allowMint = Boolean(metadata?.ticketPrintingIsAllowed)
 
   return unsafeFundingCycleProperties({

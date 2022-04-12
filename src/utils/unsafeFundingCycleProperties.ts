@@ -51,7 +51,7 @@ export default function unsafeFundingCycleProperties({
    * Reserved rate is very high.
    * Contributors will receive a relatively small portion of tokens in exchange for paying the project.
    */
-  if (reservedRatePercentage ?? 0 > RESERVED_RATE_WARNING_THRESHOLD_PERCENT) {
+  if ((reservedRatePercentage ?? 0) > RESERVED_RATE_WARNING_THRESHOLD_PERCENT) {
     configFlags.metadataReservedRate = true
   }
 

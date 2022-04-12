@@ -14,9 +14,18 @@ export default function CurrentFundingCycle({
 }: {
   expandCard?: boolean
 }) {
-  const { fundingCycle } = useContext(V2ProjectContext)
+  const {
+    fundingCycle,
+    payoutSplits,
+    distributionLimitCurrency,
+    distributionLimit,
+    reservedTokensSplits,
+    fundingCycleMetadata,
+  } = useContext(V2ProjectContext)
 
   if (!fundingCycle) return <LoadingOutlined />
+
+  const reservedRate = fundingCycleMetadata?.reservedRate
 
   return (
     <div>
@@ -34,8 +43,15 @@ export default function CurrentFundingCycle({
         />
       </CardSection>
 
-      <PayoutSplitsCard />
-      <ReservedTokensSplitsCard />
+      <PayoutSplitsCard
+        payoutSplits={payoutSplits}
+        distributionLimitCurrency={distributionLimitCurrency}
+        distributionLimit={distributionLimit}
+      />
+      <ReservedTokensSplitsCard
+        reservedTokensSplits={reservedTokensSplits}
+        reservedRate={reservedRate}
+      />
     </div>
   )
 }

@@ -17,6 +17,7 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import CurrentFundingCycle from './CurrentFundingCycle'
 import V2ReconfigureFundingModalTrigger from '../V2ProjectReconfigureModal/V2ReconfigureModalTrigger'
+import UpcomingFundingCycle from './UpcomingFundingCycle'
 
 export default function V2FundingCycleSection({
   expandCard,
@@ -61,6 +62,11 @@ export default function V2FundingCycleSection({
       key: 'current',
       label: tabText({ text: t`Current` }),
       content: <CurrentFundingCycle expandCard={expandCard} />,
+    },
+    {
+      key: 'upcoming',
+      label: tabText({ text: t`Upcoming` }),
+      content: <UpcomingFundingCycle expandCard={expandCard} />,
     },
   ]
 

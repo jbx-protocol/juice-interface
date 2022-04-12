@@ -31,7 +31,7 @@ export default function ProjectToolDrawerModal({
   tokenSymbol: string | undefined
   ownerAddress: string | undefined
   useTransferProjectOwnershipTx: () => TransactorInstance<{
-    to: string
+    newOwnerAddress: string
   }>
   useTransferUnclaimedTokensTx: () => TransactorInstance<{
     to: string
@@ -65,7 +65,7 @@ export default function ProjectToolDrawerModal({
     setLoadingTransferOwnership(true)
 
     transferProjectOwnershipTx(
-      { to: transferTokensForm.getFieldValue('to') },
+      { newOwnerAddress: transferTokensForm.getFieldValue('to') },
       {
         onConfirmed: () => {
           setLoadingTransferOwnership(false)
@@ -148,7 +148,9 @@ export default function ProjectToolDrawerModal({
                 size="small"
                 type="primary"
               >
-                <Trans>Transfer ownership</Trans>
+                <span>
+                  <Trans>Transfer ownership</Trans>
+                </span>
               </Button>
             </Form.Item>
           </Form>
@@ -205,7 +207,9 @@ export default function ProjectToolDrawerModal({
                 size="small"
                 type="primary"
               >
-                <Trans>Transfer {tokenSymbolShort}</Trans>
+                <span>
+                  <Trans>Transfer {tokenSymbolShort}</Trans>
+                </span>
               </Button>
             </Form.Item>
           </Form>
@@ -245,7 +249,9 @@ export default function ProjectToolDrawerModal({
                 size="small"
                 type="primary"
               >
-                <Trans>Add to balance</Trans>
+                <span>
+                  <Trans>Add to balance</Trans>
+                </span>
               </Button>
             </Form.Item>
           </Form>

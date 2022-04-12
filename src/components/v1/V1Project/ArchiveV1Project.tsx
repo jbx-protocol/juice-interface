@@ -98,7 +98,9 @@ export default function ArchiveV1Project({
             size="small"
             type="primary"
           >
-            <Trans>Unarchive project</Trans>
+            <span>
+              <Trans>Unarchive project</Trans>
+            </span>
           </Button>
         </section>
       ) : (
@@ -137,7 +139,9 @@ export default function ArchiveV1Project({
             size="small"
             type="primary"
           >
-            <Trans>Archive project</Trans>
+            <span>
+              <Trans>Archive project</Trans>
+            </span>
           </Button>
         </section>
       )}

@@ -49,8 +49,13 @@ export default function V2ConfirmPayModal({
   onCancel?: VoidFunction
 }) {
   const { userAddress, onSelectWallet } = useContext(NetworkContext)
-  const { fundingCycle, projectMetadata, projectId, tokenAddress } =
-    useContext(V2ProjectContext)
+  const {
+    fundingCycle,
+    projectMetadata,
+    projectId,
+    tokenAddress,
+    tokenSymbol,
+  } = useContext(V2ProjectContext)
   const converter = useCurrencyConverter()
   const payProjectTx = usePayV2ProjectTx()
 
@@ -131,9 +136,9 @@ export default function V2ConfirmPayModal({
 
   const validateCustomBeneficiary = () => {
     if (!beneficiary) {
-      return Promise.reject('Address required')
+      return Promise.reject(t`Address required`)
     } else if (!isAddress(beneficiary)) {
-      return Promise.reject('Invalid address')
+      return Promise.reject(t`Invalid address`)
     }
     return Promise.resolve()
   }
@@ -189,7 +194,6 @@ export default function V2ConfirmPayModal({
             className="content-right"
           >
             <div>{formatWad(receivedTickets, { precision: 0 })}</div>
-            {/* TODO # receieved tokens */}
             <div>
               {userAddress ? (
                 <Trans>
@@ -200,16 +204,14 @@ export default function V2ConfirmPayModal({
           </Descriptions.Item>
           {/* Need ownerTickets: */}
           <Descriptions.Item
-            // label={t`${tokenSymbolText({
-            //   // tokenSymbol: tokenSymbol,
-            //   capitalize: true,
-            //   plural: true,
-            // })} reserved`}
-            label={'Tokens reserved'}
+            label={t`${tokenSymbolText({
+              tokenSymbol: tokenSymbol,
+              capitalize: true,
+              plural: true,
+            })} reserved`}
             className="content-right"
           >
-            {/* TODO # owner tokens */}
-            {formatWad(ownerTickets, { precision: 0 })} (Hardcoded to 0)
+            {formatWad(ownerTickets, { precision: 0 })}
           </Descriptions.Item>
         </Descriptions>
         <Form form={form} layout="vertical">

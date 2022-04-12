@@ -234,8 +234,8 @@ export default function ConfirmDeployProject() {
                 title={t`Token minting`}
                 valueRender={() => (
                   <FundingCycleDetailWarning
-                    showWarning={unsafeFundingCycleProperties.allowMint}
-                    tooltipTitle={riskWarningText.allowMint}
+                    showWarning={unsafeFundingCycleProperties.allowMinting}
+                    tooltipTitle={riskWarningText.allowMinting}
                   >
                     {editingFC.ticketPrintingIsAllowed
                       ? t`Allowed`

@@ -31,7 +31,7 @@ export function packFundingCycleMetadata(
     pausePay, // boolean
     pauseDistributions, // boolean
     pauseRedeem, // boolean
-    pauseMint, // boolean
+    allowMinting, // boolean
     pauseBurn, // boolean
     allowChangeToken, // boolean
     allowTerminalMigration, // boolean
@@ -52,8 +52,8 @@ export function packFundingCycleMetadata(
   if (pausePay) packed = packed.or(one.shl(56))
   if (pauseDistributions) packed = packed.or(one.shl(57))
   if (pauseRedeem) packed = packed.or(one.shl(58))
-  if (pauseMint) packed = packed.or(one.shl(59))
   if (pauseBurn) packed = packed.or(one.shl(60))
+  if (allowMinting) packed = packed.or(one.shl(59))
   if (allowChangeToken) packed = packed.or(one.shl(61))
   if (allowTerminalMigration) packed = packed.or(one.shl(62))
   if (allowControllerMigration) packed = packed.or(one.shl(63))
@@ -86,8 +86,8 @@ const createMetadata = ({
     pausePay: flagsEnabled,
     pauseDistributions: flagsEnabled,
     pauseRedeem: flagsEnabled,
-    pauseMint: flagsEnabled,
     pauseBurn: flagsEnabled,
+    allowMinting: flagsEnabled,
     allowChangeToken: flagsEnabled,
     allowTerminalMigration: flagsEnabled,
     allowControllerMigration: flagsEnabled,

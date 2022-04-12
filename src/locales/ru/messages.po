@@ -260,6 +260,10 @@ msgstr "Добавить получателя токена"
 msgid "Address"
 msgstr "Адрес"
 
+#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
+msgid "Address required"
+msgstr ""
+
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Address: {0}"
@@ -1075,6 +1079,10 @@ msgstr "Поощрения"
 #: src/components/Landing/index.tsx
 msgid "Indie artists, devs, creators"
 msgstr "Инди артистов, музыкантов, разработчиков, и создателей."
+
+#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
+msgid "Invalid address"
+msgstr ""
 
 #: src/components/shared/IssueTicketsButton.tsx
 msgid "Issue ERC-20"
@@ -2626,6 +2634,7 @@ msgid "{0} holders"
 msgstr "{0} держатели"
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "{0} reserved"
 msgstr "{0} зарезервировано"
 

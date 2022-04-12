@@ -263,7 +263,7 @@ export default function FundingCycleDetails({
           {metadata?.ticketPrintingIsAllowed ? (
             <FundingCycleDetailWarning
               showWarning={true}
-              tooltipTitle={riskWarningText.allowMint}
+              tooltipTitle={riskWarningText.allowMinting}
             >
               <Trans>Allowed</Trans>
             </FundingCycleDetailWarning>

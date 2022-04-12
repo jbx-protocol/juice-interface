@@ -4,17 +4,15 @@ import { getAddress } from '@ethersproject/address'
 import { V2FundingCycle, V2FundingCycleMetadata } from 'models/v2/fundingCycle'
 
 import { invertPermyriad } from 'utils/bigNumbers'
+import unsafeFundingCycleProperties from 'utils/unsafeFundingCycleProperties'
 
-import { parseWad, permyriadToPercent } from '../formatNumber'
+import { fromWad, parseWad } from '../formatNumber'
 
 import {
   SerializedV2FundAccessConstraint,
   SerializedV2FundingCycleData,
 } from './serializers'
-import {
-  RESERVED_RATE_WARNING_THRESHOLD_PERCENT,
-  V2FundingCycleRiskFlags,
-} from 'constants/v2/fundingWarningText'
+import { FundingCycleRiskFlags } from 'constants/fundingWarningText'
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 
 export const hasFundingTarget = (
@@ -170,49 +168,18 @@ export const decodeV2FundingCycleMetadata = (
  */
 export const getUnsafeV2FundingCycleProperties = (
   fundingCycle: V2FundingCycle,
-): V2FundingCycleRiskFlags => {
+): FundingCycleRiskFlags => {
   const metadata = decodeV2FundingCycleMetadata(fundingCycle.metadata)
+  const ballotAddress = getBallotStrategyByAddress(fundingCycle.ballot).address
+  const reservedRatePercentage = parseFloat(fromWad(metadata?.reservedRate))
+  const allowMint = Boolean(!metadata?.pauseMint)
 
-  // when we set one of these values to true, we're saying it's potentially unsafe.
-  // This object is based on type FundingCycle
-  const configFlags = {
-    duration: false,
-    ballot: false,
-    metadataTicketPrintingIsAllowed: false,
-    metadataReservedRate: false,
-  }
-
-  /**
-   * Ballot address is 0x0000.
-   * Funding cycle reconfigurations can be created moments before a new cycle begins,
-   * giving project owners an opportunity to take advantage of contributors, for example by withdrawing overflow.
-   */
-  if (
-    getBallotStrategyByAddress(fundingCycle.ballot).address ===
-    constants.AddressZero
-  ) {
-    configFlags.ballot = true
-  }
-
-  /**
-   * Duration not set. Reconfigurations can be made at any point without notice.
-   */
-  if (!hasFundingDuration({ duration: fundingCycle.duration.toString() })) {
-    configFlags.duration = true
-  }
-
-  /**
-   * Reserved rate is very high.
-   * Contributors will receive a relatively small portion of tokens (if any) in exchange for paying the project.
-   */
-  if (
-    parseInt(permyriadToPercent(metadata?.reservedRate ?? 0), 10) >=
-    RESERVED_RATE_WARNING_THRESHOLD_PERCENT
-  ) {
-    configFlags.metadataReservedRate = true
-  }
-
-  return configFlags
+  return unsafeFundingCycleProperties({
+    ballotAddress,
+    reservedRatePercentage,
+    hasFundingDuration: fundingCycle.duration?.gt(0),
+    allowMint,
+  })
 }
 
 /**

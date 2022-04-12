@@ -141,6 +141,10 @@ msgstr ""
 msgid "<0>NOTE:</0> This project has a balance of 0. Projects cannot be migrated without a balance. To migrate this project, first pay it or use the button below to deposit 1 wei (0.000000000000000001 or 10<1>-18</1> ETH)."
 msgstr "<0>NOTE:</0> This project has a balance of 0. Projects cannot be migrated without a balance. To migrate this project, first pay it or use the button below to deposit 1 wei (0.000000000000000001 or 10<1>-18</1> ETH)."
 
+#: src/components/shared/formItems/ProjectReserved.tsx
+msgid "<0>Note:</0> A reserved rate of more than 90% is risky for contributors. Contributors won't receive many tokens for their contribution."
+msgstr "<0>Note:</0> A reserved rate of more than 90% is risky for contributors. Contributors won't receive many tokens for their contribution."
+
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "<0>Note:</0> These properties will <1>not</1> be editable immediately within a funding cycle. They can only be changed for <2>upcoming</2> funding cycles."
 msgstr "<0>Note:</0> These properties will <1>not</1> be editable immediately within a funding cycle. They can only be changed for <2>upcoming</2> funding cycles."
@@ -568,13 +572,11 @@ msgstr "Connect wallet to pay"
 msgid "Contract address: {0}"
 msgstr ""
 
-#: src/constants/v1/fundingWarningText.ts
-#: src/constants/v2/fundingWarningText.ts
+#: src/constants/fundingWarningText.ts
 msgid "Contributors will not receive any tokens in exchange for paying this project."
 msgstr "Contributors will not receive any tokens in exchange for paying this project."
 
-#: src/constants/v1/fundingWarningText.ts
-#: src/constants/v2/fundingWarningText.ts
+#: src/constants/fundingWarningText.ts
 msgid "Contributors will receive a relatively small portion of tokens in exchange for paying this project."
 msgstr "Contributors will receive a relatively small portion of tokens in exchange for paying this project."
 
@@ -924,8 +926,7 @@ msgstr ""
 msgid "Funding cycle target"
 msgstr ""
 
-#: src/constants/v1/fundingWarningText.ts
-#: src/constants/v2/fundingWarningText.ts
+#: src/constants/fundingWarningText.ts
 msgid "Funding cycles can be reconfigured moments before a new cycle begins, without notifying contributors."
 msgstr "Funding cycles can be reconfigured moments before a new cycle begins, without notifying contributors."
 
@@ -1452,6 +1453,10 @@ msgstr "Percentages must add up to 100% or less"
 msgid "Podcast"
 msgstr ""
 
+#: src/components/shared/ProjectRiskNotice.tsx
+msgid "Potential risks"
+msgstr "Potential risks"
+
 #: src/components/Landing/index.tsx
 msgid "Powered by public smart contracts on <0>Ethereum</0>."
 msgstr ""
@@ -1856,6 +1861,10 @@ msgstr "Since you have not set a funding duration, changes to these settings wil
 msgid "Some funding cycle properties may indicate risk for project contributors."
 msgstr "Some funding cycle properties may indicate risk for project contributors."
 
+#: src/components/shared/ProjectRiskNotice.tsx
+msgid "Some properties of the project's current funding cycle may indicate risk for contributors."
+msgstr "Some properties of the project's current funding cycle may indicate risk for contributors."
+
 #: src/components/v2/V2Create/forms/FundingForm/FundingTypeSelect.tsx
 msgid "Specific target"
 msgstr "Specific target"
@@ -1978,13 +1987,11 @@ msgstr "The maximum amount of funds that can be distributed from this project in
 msgid "The percent this individual receives of the overall {reservedRate}% reserved token allocation"
 msgstr "The percent this individual receives of the overall {reservedRate}% reserved token allocation"
 
-#: src/constants/v1/fundingWarningText.ts
-#: src/constants/v2/fundingWarningText.ts
+#: src/constants/fundingWarningText.ts
 msgid "The project owner may mint any supply of tokens at any time, diluting the token share of all existing contributors."
 msgstr "The project owner may mint any supply of tokens at any time, diluting the token share of all existing contributors."
 
-#: src/constants/v1/fundingWarningText.ts
-#: src/constants/v2/fundingWarningText.ts
+#: src/constants/fundingWarningText.ts
 msgid "The project owner may reconfigure this funding cycle at any time, without notice."
 msgstr "The project owner may reconfigure this funding cycle at any time, without notice."
 

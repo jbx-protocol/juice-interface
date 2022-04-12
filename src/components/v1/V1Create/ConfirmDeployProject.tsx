@@ -25,7 +25,7 @@ import {
   permilleToPercent,
 } from 'utils/formatNumber'
 import {
-  getUnsafeFundingCycleProperties,
+  getUnsafeV1FundingCycleProperties,
   hasFundingDuration,
   hasFundingTarget,
   isRecurring,
@@ -38,7 +38,7 @@ import { V1CurrencyName } from 'utils/v1/currency'
 import FundingCycleDetailWarning from 'components/shared/Project/FundingCycleDetailWarning'
 
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
-import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/v1/fundingWarningText'
+import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
 
 export default function ConfirmDeployProject() {
   const editingFC = useEditingV1FundingCycleSelector()
@@ -56,11 +56,14 @@ export default function ConfirmDeployProject() {
     editingFC?.currency.toNumber() as V1CurrencyOption,
   )
 
-  const unsafeFundingCycleProperties = getUnsafeFundingCycleProperties(
+  const unsafeFundingCycleProperties = getUnsafeV1FundingCycleProperties(
     currentFC as V1FundingCycle,
   )
 
   const rowGutter: [Gutter, Gutter] = [25, 20]
+
+  const riskWarningText = FUNDING_CYCLE_WARNING_TEXT()
+
   return (
     <Space size="large" direction="vertical">
       <h1 style={{ fontSize: '2rem' }}>
@@ -210,10 +213,7 @@ export default function ConfirmDeployProject() {
                 valueRender={() => (
                   <FundingCycleDetailWarning
                     showWarning={unsafeFundingCycleProperties.duration}
-                    tooltipTitle={
-                      FUNDING_CYCLE_WARNING_TEXT(currentFC as V1FundingCycle)
-                        .duration
-                    }
+                    tooltipTitle={riskWarningText.duration}
                   >
                     {editingFC.duration.gt(0)
                       ? formattedNum(editingFC.duration)
@@ -234,13 +234,8 @@ export default function ConfirmDeployProject() {
                 title={t`Token minting`}
                 valueRender={() => (
                   <FundingCycleDetailWarning
-                    showWarning={
-                      unsafeFundingCycleProperties.metadataTicketPrintingIsAllowed
-                    }
-                    tooltipTitle={
-                      FUNDING_CYCLE_WARNING_TEXT(currentFC as V1FundingCycle)
-                        .metadataTicketPrintingIsAllowed
-                    }
+                    showWarning={unsafeFundingCycleProperties.allowMint}
+                    tooltipTitle={riskWarningText.allowMint}
                   >
                     {editingFC.ticketPrintingIsAllowed
                       ? t`Allowed`
@@ -261,10 +256,7 @@ export default function ConfirmDeployProject() {
                     showWarning={
                       unsafeFundingCycleProperties.metadataReservedRate
                     }
-                    tooltipTitle={
-                      FUNDING_CYCLE_WARNING_TEXT(currentFC as V1FundingCycle)
-                        .metadataReservedRate
-                    }
+                    tooltipTitle={riskWarningText.metadataReservedRate}
                   >
                     %
                   </FundingCycleDetailWarning>

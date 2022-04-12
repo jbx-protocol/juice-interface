@@ -9,7 +9,7 @@ export const OverflowVideoLink = ({ children }: PropsWithChildren<{}>) => (
 
 const JB_FEE = 2.5
 
-const JBDiscordLink = ({ children }: PropsWithChildren<{}>) => (
+export const JBDiscordLink = ({ children }: PropsWithChildren<{}>) => (
   <ExternalLink href="https://discord.gg/6jXrJSyDFf">{children}</ExternalLink>
 )
 

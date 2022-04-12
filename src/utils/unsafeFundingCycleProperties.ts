@@ -6,19 +6,19 @@ export default function unsafeFundingCycleProperties({
   ballotAddress,
   reservedRatePercentage,
   hasFundingDuration,
-  allowMint,
+  allowMinting,
 }: {
   ballotAddress: string | undefined
   reservedRatePercentage: number | undefined
   hasFundingDuration: boolean | undefined
-  allowMint: boolean | undefined
+  allowMinting: boolean | undefined
 }) {
   // when we set one of these values to true, we're saying it's potentially unsafe.
   // This object is based on type FundingCycle
   const configFlags = {
     duration: false,
     ballot: false,
-    allowMint: false,
+    allowMinting: false,
     metadataReservedRate: false,
     metadataMaxReservedRate: false,
   }
@@ -43,8 +43,8 @@ export default function unsafeFundingCycleProperties({
    * Token minting is enabled.
    * Any supply of tokens could be minted at any time by the project owners, diluting the token share of all existing contributors.
    */
-  if (allowMint) {
-    configFlags.allowMint = true
+  if (allowMinting) {
+    configFlags.allowMinting = true
   }
 
   /**

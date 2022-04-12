@@ -275,13 +275,13 @@ export default function FundingCycleDetails({
           }
         >
           <FundingCycleDetailWarning
-            showWarning={!fundingCycleMetadata?.pauseMint}
-            tooltipTitle={FUNDING_CYCLE_WARNING_TEXT().allowMint}
+            showWarning={fundingCycleMetadata?.allowMinting}
+            tooltipTitle={FUNDING_CYCLE_WARNING_TEXT().allowMinting}
           >
-            {fundingCycleMetadata?.pauseMint ? (
-              <Trans>No</Trans>
-            ) : (
+            {fundingCycleMetadata?.allowMinting ? (
               <Trans>Yes</Trans>
+            ) : (
+              <Trans>No</Trans>
             )}
           </FundingCycleDetailWarning>
         </Descriptions.Item>

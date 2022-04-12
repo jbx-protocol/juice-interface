@@ -65,6 +65,10 @@ export default function V2Dashboard() {
     projectId,
   })
 
+  const queuedFundingCycleMetadata = queuedFundingCycle
+    ? decodeV2FundingCycleMetadata(queuedFundingCycle?.metadata)
+    : undefined
+
   const { data: payoutSplits } = useProjectSplits({
     projectId,
     splitGroup: ETH_PAYOUT_SPLIT_GROUP,
@@ -166,6 +170,7 @@ export default function V2Dashboard() {
     fundingCycle,
     fundingCycleMetadata,
     queuedFundingCycle,
+    queuedFundingCycleMetadata,
     distributionLimit,
     usedDistributionLimit,
     queuedDistributionLimit,

@@ -51,6 +51,7 @@ export default function ProjectPreview({
     fundingCycle,
     fundingCycleMetadata,
     queuedFundingCycle: undefined,
+    queuedFundingCycleMetadata: undefined,
     distributionLimit: fundAccessConstraint?.distributionLimit,
     usedDistributionLimit: BigNumber.from(0),
     queuedDistributionLimit: undefined,

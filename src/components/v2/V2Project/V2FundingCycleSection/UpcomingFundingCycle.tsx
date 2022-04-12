@@ -14,9 +14,18 @@ export default function UpcomingFundingCycle({
 }: {
   expandCard?: boolean
 }) {
-  const { queuedFundingCycle } = useContext(V2ProjectContext)
+  const {
+    queuedFundingCycle,
+    queuedPayoutSplits,
+    queuedDistributionLimitCurrency,
+    queuedDistributionLimit,
+    queuedReservedTokensSplits,
+    queuedFundingCycleMetadata,
+  } = useContext(V2ProjectContext)
 
   if (!queuedFundingCycle) return <LoadingOutlined />
+
+  const queuedReservedRate = queuedFundingCycleMetadata?.reservedRate
 
   return (
     <div>
@@ -34,8 +43,17 @@ export default function UpcomingFundingCycle({
         />
       </CardSection>
 
-      <PayoutSplitsCard hideDistributeBtn />
-      <ReservedTokensSplitsCard hideDistributeBtn />
+      <PayoutSplitsCard
+        payoutSplits={queuedPayoutSplits}
+        distributionLimitCurrency={queuedDistributionLimitCurrency}
+        distributionLimit={queuedDistributionLimit}
+        hideDistributeButton
+      />
+      <ReservedTokensSplitsCard
+        reservedTokensSplits={queuedReservedTokensSplits}
+        reservedRate={queuedReservedRate}
+        hideDistributeButton
+      />
     </div>
   )
 }

@@ -13,18 +13,23 @@ import { V2CurrencyName } from 'utils/v2/currency'
 import { formatFee } from 'utils/v2/math'
 
 import { useETHPaymentTerminalFee } from 'hooks/v2/contractReader/ETHPaymentTerminalFee'
+import { Split } from 'models/v2/splits'
+import { BigNumber } from '@ethersproject/bignumber'
 
 import DistributePayoutsModal from './modals/DistributePayoutsModal'
 
 export default function PayoutSplitsCard({
-  hideDistributeBtn,
+  hideDistributeButton,
+  payoutSplits,
+  distributionLimitCurrency,
+  distributionLimit,
 }: {
-  hideDistributeBtn?: boolean
+  hideDistributeButton?: boolean
+  payoutSplits: Split[] | undefined
+  distributionLimitCurrency: BigNumber | undefined
+  distributionLimit: BigNumber | undefined
 }) {
   const {
-    payoutSplits,
-    distributionLimitCurrency,
-    distributionLimit,
     usedDistributionLimit,
     projectOwnerAddress,
     balanceInDistributionLimitCurrency,
@@ -38,7 +43,7 @@ export default function PayoutSplitsCard({
   return (
     <CardSection>
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
-        {hideDistributeBtn ? null : (
+        {hideDistributeButton ? null : (
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             {ETHPaymentTerminalFee &&
             distributionLimit &&

@@ -19,17 +19,21 @@ import { formatWad } from 'utils/formatNumber'
 import FormattedAddress from 'components/shared/FormattedAddress'
 
 import * as constants from '@ethersproject/constants'
+import { Split } from 'models/v2/splits'
+import { BigNumber } from '@ethersproject/bignumber'
 
 import DistributeReservedTokensModal from './modals/DistributeReservedTokensModal'
 
 export default function ReservedTokensSplitsCard({
-  hideDistributeBtn,
+  hideDistributeButton,
+  reservedTokensSplits,
+  reservedRate,
 }: {
-  hideDistributeBtn?: boolean
+  hideDistributeButton?: boolean
+  reservedTokensSplits: Split[] | undefined
+  reservedRate: BigNumber | undefined
 }) {
   const {
-    reservedTokensSplits,
-    fundingCycleMetadata,
     tokenSymbol,
     tokenAddress,
     projectOwnerAddress,
@@ -46,7 +50,7 @@ export default function ReservedTokensSplitsCard({
   ] = useState<boolean>()
   const { data: reservedTokens } = useProjectReservedTokens({
     projectId,
-    reservedRate: fundingCycleMetadata?.reservedRate,
+    reservedRate: reservedRate,
   })
 
   const smallHeaderStyle: CSSProperties = {
@@ -71,7 +75,7 @@ export default function ReservedTokensSplitsCard({
   return (
     <CardSection>
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
-        {hideDistributeBtn ? null : (
+        {hideDistributeButton ? null : (
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <div style={{ marginRight: '3rem' }}>
               <span
@@ -122,7 +126,7 @@ export default function ReservedTokensSplitsCard({
             label={
               <h4 style={{ display: 'inline-block' }}>
                 <Trans>Reserved {tokensText}</Trans> (
-                {formatReservedRate(fundingCycleMetadata?.reservedRate)}%)
+                {formatReservedRate(reservedRate)}%)
               </h4>
             }
             tip={

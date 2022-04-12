@@ -13,14 +13,23 @@ import { V2CurrencyName } from 'utils/v2/currency'
 import { formatFee } from 'utils/v2/math'
 
 import { useETHPaymentTerminalFee } from 'hooks/v2/contractReader/ETHPaymentTerminalFee'
+import { Split } from 'models/v2/splits'
+import { BigNumber } from '@ethersproject/bignumber'
 
 import DistributePayoutsModal from './modals/DistributePayoutsModal'
 
-export default function PayoutSplitsCard() {
+export default function PayoutSplitsCard({
+  hideDistributeButton,
+  payoutSplits,
+  distributionLimitCurrency,
+  distributionLimit,
+}: {
+  hideDistributeButton?: boolean
+  payoutSplits: Split[] | undefined
+  distributionLimitCurrency: BigNumber | undefined
+  distributionLimit: BigNumber | undefined
+}) {
   const {
-    payoutSplits,
-    distributionLimitCurrency,
-    distributionLimit,
     usedDistributionLimit,
     projectOwnerAddress,
     balanceInDistributionLimitCurrency,
@@ -34,42 +43,44 @@ export default function PayoutSplitsCard() {
   return (
     <CardSection>
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          {ETHPaymentTerminalFee &&
-          distributionLimit &&
-          usedDistributionLimit ? (
-            <SpendingStats
-              hasFundingTarget={distributionLimit?.gt(0)}
-              currency={V2CurrencyName(
-                distributionLimitCurrency?.toNumber() as V2CurrencyOption,
-              )}
-              projectBalanceInCurrency={balanceInDistributionLimitCurrency}
-              targetAmount={distributionLimit}
-              distributedAmount={usedDistributionLimit}
-              feePercentage={
-                ETHPaymentTerminalFee
-                  ? formatFee(ETHPaymentTerminalFee)
-                  : undefined
-              }
-              ownerAddress={projectOwnerAddress}
-            />
-          ) : (
-            <Skeleton
-              active
-              title={false}
-              paragraph={{ rows: 2, width: ['60%', '60%'] }}
-            />
-          )}
+        {hideDistributeButton ? null : (
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            {ETHPaymentTerminalFee &&
+            distributionLimit &&
+            usedDistributionLimit ? (
+              <SpendingStats
+                hasFundingTarget={distributionLimit?.gt(0)}
+                currency={V2CurrencyName(
+                  distributionLimitCurrency?.toNumber() as V2CurrencyOption,
+                )}
+                projectBalanceInCurrency={balanceInDistributionLimitCurrency}
+                targetAmount={distributionLimit}
+                distributedAmount={usedDistributionLimit}
+                feePercentage={
+                  ETHPaymentTerminalFee
+                    ? formatFee(ETHPaymentTerminalFee)
+                    : undefined
+                }
+                ownerAddress={projectOwnerAddress}
+              />
+            ) : (
+              <Skeleton
+                active
+                title={false}
+                paragraph={{ rows: 2, width: ['60%', '60%'] }}
+              />
+            )}
 
-          <Button
-            type="ghost"
-            size="small"
-            onClick={() => setDistributePayoutsModalVisible(true)}
-            disabled={isPreviewMode}
-          >
-            <Trans>Distribute funds</Trans>
-          </Button>
-        </div>
+            <Button
+              type="ghost"
+              size="small"
+              onClick={() => setDistributePayoutsModalVisible(true)}
+              disabled={isPreviewMode}
+            >
+              <Trans>Distribute funds</Trans>
+            </Button>
+          </div>
+        )}
 
         <div>
           <TooltipLabel

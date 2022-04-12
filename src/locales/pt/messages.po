@@ -2748,4 +2748,3 @@ msgstr ""
 msgid "{userOwnershipPercentage}% of total supply"
 msgstr ""
 
-

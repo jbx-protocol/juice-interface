@@ -2748,4 +2748,3 @@ msgstr "talep edilebilir {unclaimedBalanceFormatted} {tokenText}"
 msgid "{userOwnershipPercentage}% of total supply"
 msgstr "Toplam arzın %{userOwnershipPercentage} kadarı"
 
-

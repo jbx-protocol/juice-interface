@@ -71,8 +71,8 @@ export default function RestrictedActionsForm({
           <Form.Item>
             <p style={{ color: colors.text.warn }}>
               <Trans>
-                Enabling tokens to be minted will appear risky to contributors,
-                and should only be used when necessary.
+                Enabling token minting will appear risky to contributors. Only
+                enable this when necessary.
               </Trans>
             </p>
           </Form.Item>

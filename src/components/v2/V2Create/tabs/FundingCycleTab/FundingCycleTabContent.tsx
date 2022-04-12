@@ -27,9 +27,9 @@ export default function FundingCycleTabContent({
   const [tokenDrawerVisible, setTokenDrawerVisible] = useState<boolean>()
   const [rulesDrawerVisible, setRulesDrawerVisible] = useState<boolean>()
 
-  const fundingDrawerSeen = fundingDrawerVisible === false
-  const tokenDrawerSeen = tokenDrawerVisible === false
-  const rulesDrawerSeen = rulesDrawerVisible === false
+  const fundingDrawerSeen = fundingDrawerVisible !== undefined
+  const tokenDrawerSeen = tokenDrawerVisible !== undefined
+  const rulesDrawerSeen = rulesDrawerVisible !== undefined
 
   const seenColor = colors.text.tertiary
 

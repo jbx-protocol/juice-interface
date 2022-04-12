@@ -37,7 +37,7 @@ export default function ProjectPreview({
     number: BigNumber.from(1),
     configuration: BigNumber.from(0),
     basedOn: BigNumber.from(0),
-    start: BigNumber.from(Date.now()),
+    start: BigNumber.from(Date.now()).div(1000),
     metadata: BigNumber.from(0),
   }
 
@@ -46,30 +46,34 @@ export default function ProjectPreview({
   )
 
   const project: V2ProjectContextType = {
+    isPreviewMode: true,
+
     projectId: BigNumber.from(0),
     projectMetadata,
     fundingCycle,
     fundingCycleMetadata,
-    queuedFundingCycle: undefined,
     distributionLimit: fundAccessConstraint?.distributionLimit,
-    usedDistributionLimit: BigNumber.from(0),
-    queuedDistributionLimit: undefined,
     payoutSplits: payoutGroupedSplits?.splits,
-    queuedPayoutSplits: undefined,
     reservedTokensSplits: reservedTokensGroupedSplits?.splits,
+    distributionLimitCurrency: fundAccessConstraint?.distributionLimitCurrency,
+
+    usedDistributionLimit: BigNumber.from(0),
+    ETHBalance: BigNumber.from(0),
+    balanceInDistributionLimitCurrency: BigNumber.from(0),
+
+    queuedFundingCycle: undefined,
+    queuedDistributionLimit: undefined,
+    queuedDistributionLimitCurrency: undefined,
+    queuedPayoutSplits: undefined,
     queuedReservedTokensSplits: undefined,
+
     tokenAddress: undefined,
     terminals: [],
-    ETHBalance: BigNumber.from(0),
-    distributionLimitCurrency: fundAccessConstraint?.distributionLimitCurrency,
-    queuedDistributionLimitCurrency: undefined,
-    balanceInDistributionLimitCurrency: BigNumber.from(0),
     tokenSymbol: undefined,
     projectOwnerAddress: userAddress,
     ballotState: undefined,
     primaryTerminalCurrentOverflow: undefined,
     totalTokenSupply: undefined,
-    isPreviewMode: true,
   }
 
   return (

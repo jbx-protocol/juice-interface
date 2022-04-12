@@ -14,10 +14,12 @@ import { V2FundingCycleRiskCount } from 'utils/v2/fundingCycle'
 
 import FundingCycleSection from 'components/shared/Project/FundingCycleSection'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { CardSection } from 'components/shared/CardSection'
 
 import CurrentFundingCycle from './CurrentFundingCycle'
 import V2ReconfigureFundingModalTrigger from '../V2ProjectReconfigureModal/V2ReconfigureModalTrigger'
 import UpcomingFundingCycle from './UpcomingFundingCycle'
+import FundingCycleHistory from './FundingCycleHistory'
 
 export default function V2FundingCycleSection({
   expandCard,
@@ -57,6 +59,8 @@ export default function V2FundingCycleSection({
     )
   }
 
+  console.info('currentFC: ', fundingCycle)
+
   const tabs = [
     {
       key: 'current',
@@ -67,6 +71,15 @@ export default function V2FundingCycleSection({
       key: 'upcoming',
       label: tabText({ text: t`Upcoming` }),
       content: <UpcomingFundingCycle expandCard={expandCard} />,
+    },
+    {
+      key: 'history',
+      label: tabText({ text: t`History` }),
+      content: (
+        <CardSection>
+          <FundingCycleHistory startId={fundingCycle?.number.sub(1)} />
+        </CardSection>
+      ),
     },
   ]
 

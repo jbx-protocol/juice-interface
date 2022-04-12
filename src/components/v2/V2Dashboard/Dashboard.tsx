@@ -57,6 +57,8 @@ export default function V2Dashboard() {
     projectId,
   })
 
+  console.info('fundingCycle.basedOn:: ', fundingCycle?.basedOn)
+
   const fundingCycleMetadata = fundingCycle
     ? decodeV2FundingCycleMetadata(fundingCycle?.metadata)
     : undefined
@@ -180,6 +182,7 @@ export default function V2Dashboard() {
     queuedReservedTokensSplits,
     tokenAddress,
     terminals,
+    primaryTerminal,
     ETHBalance,
     distributionLimitCurrency,
     queuedDistributionLimitCurrency,

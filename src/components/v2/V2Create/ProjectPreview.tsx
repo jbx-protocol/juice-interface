@@ -70,6 +70,7 @@ export default function ProjectPreview({
 
     tokenAddress: undefined,
     terminals: [],
+    primaryTerminal: undefined,
     tokenSymbol: undefined,
     projectOwnerAddress: userAddress,
     ballotState: undefined,

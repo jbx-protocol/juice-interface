@@ -13,6 +13,7 @@ export type V2ProjectContextType = {
   tokenAddress: string | undefined
   tokenSymbol: string | undefined
   terminals: string[] | undefined // array of terminal addresses, 0xABC...
+  primaryTerminal: string | undefined
   ETHBalance: BigNumber | undefined
   projectOwnerAddress: string | undefined
   balanceInDistributionLimitCurrency: BigNumber | undefined
@@ -47,6 +48,7 @@ export const V2ProjectContext = createContext<V2ProjectContextType>({
   tokenAddress: undefined,
   tokenSymbol: undefined,
   terminals: undefined,
+  primaryTerminal: undefined,
   ETHBalance: undefined,
   projectOwnerAddress: undefined,
   balanceInDistributionLimitCurrency: undefined,

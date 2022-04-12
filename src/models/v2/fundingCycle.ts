@@ -15,7 +15,7 @@ export type V2FundingCycleMetadata = {
   pausePay: boolean
   pauseDistributions: boolean
   pauseRedeem: boolean
-  pauseMint: boolean
+  allowMinting: boolean
   pauseBurn: boolean
   allowChangeToken: boolean
   allowTerminalMigration: boolean

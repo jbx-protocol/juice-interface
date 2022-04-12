@@ -75,8 +75,8 @@ const parameters: {
     parser: bigNumberToBoolean,
   },
   { name: 'pauseRedeem', bits: 1, parser: bigNumberToBoolean },
-  { name: 'pauseMint', bits: 1, parser: bigNumberToBoolean },
   { name: 'pauseBurn', bits: 1, parser: bigNumberToBoolean },
+  { name: 'allowMinting', bits: 1, parser: bigNumberToBoolean },
   { name: 'allowChangeToken', bits: 1, parser: bigNumberToBoolean },
   {
     name: 'allowTerminalMigration',
@@ -172,13 +172,13 @@ export const getUnsafeV2FundingCycleProperties = (
   const metadata = decodeV2FundingCycleMetadata(fundingCycle.metadata)
   const ballotAddress = getBallotStrategyByAddress(fundingCycle.ballot).address
   const reservedRatePercentage = parseFloat(fromWad(metadata?.reservedRate))
-  const allowMint = Boolean(!metadata?.pauseMint)
+  const allowMinting = Boolean(metadata?.allowMinting)
 
   return unsafeFundingCycleProperties({
     ballotAddress,
     reservedRatePercentage,
     hasFundingDuration: fundingCycle.duration?.gt(0),
-    allowMint,
+    allowMinting,
   })
 }
 

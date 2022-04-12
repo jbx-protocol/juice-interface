@@ -105,13 +105,13 @@ export const getUnsafeV1FundingCycleProperties = (
   const reservedRatePercentage = parseFloat(
     perbicentToPercent(metadata?.reservedRate),
   )
-  const allowMint = Boolean(metadata?.ticketPrintingIsAllowed)
+  const allowMinting = Boolean(metadata?.ticketPrintingIsAllowed)
 
   return unsafeFundingCycleProperties({
     ballotAddress,
     reservedRatePercentage,
     hasFundingDuration: hasFundingDuration(fundingCycle),
-    allowMint,
+    allowMinting,
   })
 }
 

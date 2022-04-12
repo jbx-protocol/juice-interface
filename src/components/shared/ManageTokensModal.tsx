@@ -81,8 +81,6 @@ export default function ManageTokensModal({
 
   const redeemDisabled = !Boolean(hasOverflow)
 
-  console.info('Owner can mint tokens:, ', projectAllowsMint)
-
   return (
     <>
       <Modal

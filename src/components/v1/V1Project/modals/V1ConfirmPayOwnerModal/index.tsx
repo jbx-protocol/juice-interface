@@ -14,12 +14,16 @@ import { V1CurrencyName } from 'utils/v1/currency'
 import { formattedNum, formatWad } from 'utils/formatNumber'
 import { weightedRate } from 'utils/math'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
-import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
+import {
+  decodeFundingCycleMetadata,
+  fundingCycleRiskCount,
+  getUnsafeV1FundingCycleProperties,
+} from 'utils/v1/fundingCycle'
 import { usePayV1ProjectTx } from 'hooks/v1/transactor/PayV1ProjectTx'
 
 import Paragraph from 'components/shared/Paragraph'
+import ProjectRiskNotice from 'components/shared/ProjectRiskNotice'
 
-import V1ProjectRiskNotice from './V1ProjectRiskNotice'
 import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
 
 export default function V1ConfirmPayOwnerModal({
@@ -93,6 +97,8 @@ export default function V1ConfirmPayOwnerModal({
 
   if (!metadata) return null
 
+  const riskCount = currentFC ? fundingCycleRiskCount(currentFC) : undefined
+
   return (
     <Modal
       title={t`Pay ${metadata.name}`}
@@ -122,9 +128,11 @@ export default function V1ConfirmPayOwnerModal({
             <Paragraph description={metadata.payDisclosure} />
           </div>
         )}
-
-        <V1ProjectRiskNotice />
-
+        {riskCount && currentFC && (
+          <ProjectRiskNotice
+            unsafeProperties={getUnsafeV1FundingCycleProperties(currentFC)}
+          />
+        )}
         <Descriptions column={1} bordered>
           <Descriptions.Item label={t`Pay amount`} className="content-right">
             {formattedNum(usdAmount)} {V1CurrencyName(V1_CURRENCY_USD)} (

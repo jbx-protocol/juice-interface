@@ -146,6 +146,10 @@ msgstr "<0>进一步了解</0> 溢出。"
 msgid "<0>NOTE:</0> This project has a balance of 0. Projects cannot be migrated without a balance. To migrate this project, first pay it or use the button below to deposit 1 wei (0.000000000000000001 or 10<1>-18</1> ETH)."
 msgstr "<0>注意：</0> 该项目余额为零，无法迁移。如果要迁移该项目，先直接支付或是通过下方按钮存入 1 wei （0.000000000000000001 or 10<1>-18</1> ETH）。"
 
+#: src/components/shared/formItems/ProjectReserved.tsx
+msgid "<0>Note:</0> A reserved rate of more than 90% is risky for contributors. Contributors won't receive many tokens for their contribution."
+msgstr ""
+
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "<0>Note:</0> These properties will <1>not</1> be editable immediately within a funding cycle. They can only be changed for <2>upcoming</2> funding cycles."
 msgstr "<0>注意：</0> 这些属性<1>不能</1> 在同一个筹款周期内马上进行修改。 更改配置只能在 <2>后面的</2> 筹款周期内完成。"
@@ -573,13 +577,11 @@ msgstr ""
 msgid "Contract address: {0}"
 msgstr "合约地址：{0}"
 
-#: src/constants/v1/fundingWarningText.ts
-#: src/constants/v2/fundingWarningText.ts
+#: src/constants/fundingWarningText.ts
 msgid "Contributors will not receive any tokens in exchange for paying this project."
 msgstr "捐献者给项目付款将不会获得任何代币。"
 
-#: src/constants/v1/fundingWarningText.ts
-#: src/constants/v2/fundingWarningText.ts
+#: src/constants/fundingWarningText.ts
 msgid "Contributors will receive a relatively small portion of tokens in exchange for paying this project."
 msgstr "捐款者给项目付款将获得相对较低比例的代币。"
 
@@ -929,8 +931,7 @@ msgstr "筹款周期持续时间"
 msgid "Funding cycle target"
 msgstr "筹款周期目标"
 
-#: src/constants/v1/fundingWarningText.ts
-#: src/constants/v2/fundingWarningText.ts
+#: src/constants/fundingWarningText.ts
 msgid "Funding cycles can be reconfigured moments before a new cycle begins, without notifying contributors."
 msgstr "新的筹款周期开始前即可重新配置筹款周期参数，无须通知捐款者。"
 
@@ -1457,6 +1458,10 @@ msgstr "百分比总数相加必须少于或等于100%"
 msgid "Podcast"
 msgstr "播客"
 
+#: src/components/shared/ProjectRiskNotice.tsx
+msgid "Potential risks"
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "Powered by public smart contracts on <0>Ethereum</0>."
 msgstr "由<0>以太坊</0>公共智能合约提供支持。"
@@ -1861,6 +1866,10 @@ msgstr "鉴于你并未设置筹款持续时间，对这些设置的修改将会
 msgid "Some funding cycle properties may indicate risk for project contributors."
 msgstr "一些筹款周期的配置可能会给项目贡献者们造成一些风险。"
 
+#: src/components/shared/ProjectRiskNotice.tsx
+msgid "Some properties of the project's current funding cycle may indicate risk for contributors."
+msgstr ""
+
 #: src/components/v2/V2Create/forms/FundingForm/FundingTypeSelect.tsx
 msgid "Specific target"
 msgstr "具体目标"
@@ -1983,13 +1992,11 @@ msgstr ""
 msgid "The percent this individual receives of the overall {reservedRate}% reserved token allocation"
 msgstr "这个地址会收到保留代币中的 {reservedRate}%"
 
-#: src/constants/v1/fundingWarningText.ts
-#: src/constants/v2/fundingWarningText.ts
+#: src/constants/fundingWarningText.ts
 msgid "The project owner may mint any supply of tokens at any time, diluting the token share of all existing contributors."
 msgstr "项目方可以随时铸造任意数量的代币，这会稀释所有代币持有者的份额。"
 
-#: src/constants/v1/fundingWarningText.ts
-#: src/constants/v2/fundingWarningText.ts
+#: src/constants/fundingWarningText.ts
 msgid "The project owner may reconfigure this funding cycle at any time, without notice."
 msgstr "项目方可以随时修改当前筹款周期的配置，不需要事先通知。"
 

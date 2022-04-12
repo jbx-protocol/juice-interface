@@ -24,15 +24,18 @@ import { FormItems } from 'components/shared/formItems'
 
 import * as constants from '@ethersproject/constants'
 
-import { decodeV2FundingCycleMetadata } from 'utils/v2/fundingCycle'
+import {
+  decodeV2FundingCycleMetadata,
+  getUnsafeV2FundingCycleProperties,
+  V2FundingCycleRiskCount,
+} from 'utils/v2/fundingCycle'
 
 import Paragraph from 'components/shared/Paragraph'
 
 import { weightedAmount } from 'utils/v2/math'
 
 import TransactionModal from 'components/shared/TransactionModal'
-
-import V2ProjectRiskNotice from './V2ProjectRiskNotice'
+import ProjectRiskNotice from 'components/shared/ProjectRiskNotice'
 
 export default function V2ConfirmPayModal({
   visible,
@@ -83,6 +86,10 @@ export default function V2ConfirmPayModal({
     weiAmount,
     'reserved',
   )
+
+  const riskCount = fundingCycle
+    ? V2FundingCycleRiskCount(fundingCycle)
+    : undefined
 
   const hasIssuedTokens = tokenAddress && tokenAddress !== constants.AddressZero
 
@@ -163,7 +170,11 @@ export default function V2ConfirmPayModal({
           </div>
         )}
 
-        <V2ProjectRiskNotice />
+        {riskCount && fundingCycle && (
+          <ProjectRiskNotice
+            unsafeProperties={getUnsafeV2FundingCycleProperties(fundingCycle)}
+          />
+        )}
 
         <Descriptions column={1} bordered>
           <Descriptions.Item label={t`Pay amount`} className="content-right">

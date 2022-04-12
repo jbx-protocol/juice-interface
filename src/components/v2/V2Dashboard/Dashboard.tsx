@@ -53,6 +53,7 @@ export default function V2Dashboard() {
     isLoading: metadataLoading,
   } = useProjectMetadata(metadataCID)
 
+  // Calls JBFundingCycleStore.currentOf
   const { data: fundingCycle } = useProjectCurrentFundingCycle({
     projectId,
   })
@@ -64,6 +65,10 @@ export default function V2Dashboard() {
   const { data: queuedFundingCycle } = useProjectQueuedFundingCycle({
     projectId,
   })
+
+  const queuedFundingCycleMetadata = queuedFundingCycle
+    ? decodeV2FundingCycleMetadata(queuedFundingCycle?.metadata)
+    : undefined
 
   const { data: payoutSplits } = useProjectSplits({
     projectId,
@@ -166,6 +171,7 @@ export default function V2Dashboard() {
     fundingCycle,
     fundingCycleMetadata,
     queuedFundingCycle,
+    queuedFundingCycleMetadata,
     distributionLimit,
     usedDistributionLimit,
     queuedDistributionLimit,

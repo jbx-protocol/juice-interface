@@ -5,7 +5,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { TicketMod } from 'models/mods'
 import { useContext, useLayoutEffect, useState } from 'react'
 
-import { RESERVED_RATE_WARNING_THRESHOLD_PERCENT as reservedRateRiskyMin } from 'constants/v1/fundingWarningText'
+import { RESERVED_RATE_WARNING_THRESHOLD_PERCENT as reservedRateRiskyMin } from 'constants/fundingWarningText'
 
 export type TicketingFormFields = {
   reserved: number

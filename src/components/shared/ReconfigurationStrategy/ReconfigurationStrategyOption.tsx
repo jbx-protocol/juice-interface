@@ -4,7 +4,6 @@ import { CSSProperties, useContext } from 'react'
 
 import { Strategy } from 'constants/ballotStrategies/ballotStrategies'
 
-// This component is either the selected option which opens the drawer of all options, or is an option within that drawer.
 export default function ReconfigurationStrategyOption({
   title,
   content,

@@ -57,11 +57,11 @@ const defaultFundingCycleMetadata: SerializedV2FundingCycleMetadata =
   serializeV2FundingCycleMetadata({
     reservedRate: BigNumber.from(0), // A number from 0-10,000
     redemptionRate: percentToPermyriad(100), // A number from 0-10,000
-    ballotRedemptionRate: BigNumber.from(0), // A number from 0-10,000
+    ballotRedemptionRate: percentToPermyriad(100), // A number from 0-10,000
     pausePay: false,
     pauseDistributions: false,
     pauseRedeem: false,
-    pauseMint: false,
+    allowMinting: false,
     pauseBurn: false,
     allowChangeToken: false,
     allowTerminalMigration: false,
@@ -178,8 +178,8 @@ export const editingV2ProjectSlice = createSlice({
     setPausePay: (state, action: PayloadAction<boolean>) => {
       state.fundingCycleMetadata.pausePay = action.payload
     },
-    setPauseMint: (state, action: PayloadAction<boolean>) => {
-      state.fundingCycleMetadata.pauseMint = action.payload
+    setAllowMinting: (state, action: PayloadAction<boolean>) => {
+      state.fundingCycleMetadata.allowMinting = action.payload
     },
     setBallot: (state, action: PayloadAction<string>) => {
       state.fundingCycleData.ballot = action.payload

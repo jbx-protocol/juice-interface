@@ -16,14 +16,15 @@ export type V2ProjectContextType = {
   ETHBalance: BigNumber | undefined
   projectOwnerAddress: string | undefined
   balanceInDistributionLimitCurrency: BigNumber | undefined
-  usedDistributionLimit: BigNumber | undefined
+  usedDistributionLimit: BigNumber | undefined // how much has been distributed
 
   fundingCycleMetadata: V2FundingCycleMetadata | undefined
+  queuedFundingCycleMetadata: V2FundingCycleMetadata | undefined
   fundingCycle: V2FundingCycle | undefined
   queuedFundingCycle: V2FundingCycle | undefined
   ballotState: BallotState | undefined
 
-  distributionLimit: BigNumber | undefined
+  distributionLimit: BigNumber | undefined // previously funding target
   distributionLimitCurrency: BigNumber | undefined
   queuedDistributionLimit: BigNumber | undefined
   queuedDistributionLimitCurrency: BigNumber | undefined
@@ -52,6 +53,7 @@ export const V2ProjectContext = createContext<V2ProjectContextType>({
   usedDistributionLimit: undefined,
 
   fundingCycleMetadata: undefined,
+  queuedFundingCycleMetadata: undefined,
   fundingCycle: undefined,
   queuedFundingCycle: undefined,
   ballotState: undefined,

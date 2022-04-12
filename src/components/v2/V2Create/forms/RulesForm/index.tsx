@@ -1,20 +1,28 @@
 import { Trans } from '@lingui/macro'
 import { Button, Form, Space, Switch } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
+import { InfoCircleOutlined } from '@ant-design/icons'
 
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { ThemeContext } from 'contexts/themeContext'
 
+import { isAddress } from '@ethersproject/address'
+
+import ReconfigurationStrategySelector from 'components/shared/ReconfigurationStrategy/ReconfigurationStrategySelector'
+
 import { shadowCard } from 'constants/styles/shadowCard'
-import { DEFAULT_BALLOT_STRATEGY } from 'constants/ballotStrategies/ballotStrategies'
-import ProjectReconfigurationFormItem from './ProjectReconfigurationFormItem'
+import {
+  DEFAULT_BALLOT_STRATEGY,
+  Strategy,
+} from 'constants/ballotStrategies/ballotStrategies'
+import FormItemLabel from '../../FormItemLabel'
 
 type RulesFormFields = {
   pausePay: boolean
-  allowMint: boolean
+  allowMinting: boolean
   ballot: string
 }
 
@@ -28,24 +36,27 @@ export default function RulesForm({ onFinish }: { onFinish: VoidFunction }) {
   )
 
   const [showMintingWarning, setShowMintingWarning] = useState<boolean>(false)
+  const [ballotStrategy, setBallotStrategy] = useState<Strategy>(
+    DEFAULT_BALLOT_STRATEGY,
+  )
 
   const onFormSaved = useCallback(
     (fields: RulesFormFields) => {
       dispatch(editingV2ProjectActions.setPausePay(fields.pausePay))
-      dispatch(editingV2ProjectActions.setPauseMint(!fields.allowMint))
-      dispatch(editingV2ProjectActions.setBallot(fields.ballot))
+      dispatch(editingV2ProjectActions.setAllowMinting(fields.allowMinting))
+      dispatch(editingV2ProjectActions.setBallot(ballotStrategy.address))
       onFinish?.()
     },
-    [dispatch, onFinish],
+    [dispatch, onFinish, ballotStrategy],
   )
 
   const resetForm = useCallback(() => {
     form.setFieldsValue({
       pausePay: fundingCycleMetadata?.pausePay,
-      allowMint: !fundingCycleMetadata?.pauseMint,
+      allowMinting: fundingCycleMetadata?.allowMinting,
       ballot: fundingCycleData?.ballot ?? DEFAULT_BALLOT_STRATEGY.address,
     })
-    if (fundingCycleMetadata?.pauseMint) {
+    if (fundingCycleMetadata?.allowMinting) {
       setShowMintingWarning(true)
     }
   }, [fundingCycleData, fundingCycleMetadata, form])
@@ -62,21 +73,26 @@ export default function RulesForm({ onFinish }: { onFinish: VoidFunction }) {
   }
 
   const tokenMintingExtra = (
-    <React.Fragment>
+    <>
       <Trans>
-        When Minting Tokens is enabled, the project owner can manually mint any
-        amount of tokens to any address.
+        When enabled, the project owner can manually mint any amount of tokens
+        to any address.
       </Trans>
       {showMintingWarning && (
         <div style={{ color: theme.colors.text.warn, marginTop: 10 }}>
+          <InfoCircleOutlined />{' '}
           <Trans>
-            <strong>Note: </strong>Enabling tokens to be minted will appear
-            risky to contributors, and should only be used when necessary.
+            Enabling token minting will appear risky to contributors. Only
+            enable this when necessary.
           </Trans>
         </div>
       )}
-    </React.Fragment>
+    </>
   )
+
+  const disableSaveButton =
+    !ballotStrategy || !isAddress(ballotStrategy.address)
+
   return (
     <Form
       form={form}
@@ -89,8 +105,7 @@ export default function RulesForm({ onFinish }: { onFinish: VoidFunction }) {
             name="pausePay"
             extra={
               <Trans>
-                When Pause Payments is enabled, your project cannot receive
-                direct payments.
+                When enabled, your project cannot receive direct payments.
               </Trans>
             }
             valuePropName="checked"
@@ -100,12 +115,17 @@ export default function RulesForm({ onFinish }: { onFinish: VoidFunction }) {
                 ...switchContainerStyle,
               }}
             >
-              <Switch style={{ marginRight: '0.5rem' }} />
+              <Switch
+                onChange={val => {
+                  form.setFieldsValue({ pausePay: val })
+                }}
+                style={{ marginRight: '0.5rem' }}
+              />
               <Trans>Pause payments</Trans>
             </div>
           </Form.Item>
           <Form.Item
-            name="allowMint"
+            name="allowMinting"
             extra={tokenMintingExtra}
             valuePropName="checked"
           >
@@ -115,7 +135,10 @@ export default function RulesForm({ onFinish }: { onFinish: VoidFunction }) {
               }}
             >
               <Switch
-                onChange={val => setShowMintingWarning(val)}
+                onChange={val => {
+                  setShowMintingWarning(val)
+                  form.setFieldsValue({ allowMinting: val })
+                }}
                 style={{ marginRight: '0.5rem' }}
               />
               <Trans>Allow token minting</Trans>
@@ -123,16 +146,24 @@ export default function RulesForm({ onFinish }: { onFinish: VoidFunction }) {
           </Form.Item>
         </div>
 
-        <ProjectReconfigurationFormItem
-          value={form.getFieldValue('ballot') ?? fundingCycleData?.ballot}
-          onChange={(address: string) =>
-            form.setFieldsValue({ ballot: address })
-          }
+        <Form.Item
           style={{ ...shadowCard(theme), padding: '2rem' }}
-        />
+          label={
+            <FormItemLabel>
+              <Trans>Reconfiguration</Trans>
+            </FormItemLabel>
+          }
+        >
+          <ReconfigurationStrategySelector
+            selectedStrategy={ballotStrategy}
+            onChange={(strategy: Strategy) => {
+              setBallotStrategy(strategy)
+            }}
+          />
+        </Form.Item>
 
         <Form.Item>
-          <Button htmlType="submit" type="primary">
+          <Button htmlType="submit" type="primary" disabled={disableSaveButton}>
             <Trans>Save rules</Trans>
           </Button>
         </Form.Item>

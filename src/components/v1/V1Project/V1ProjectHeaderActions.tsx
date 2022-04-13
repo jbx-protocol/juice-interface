@@ -10,14 +10,27 @@ import {
 import { useContext, useState } from 'react'
 import { SettingOutlined, ToolOutlined } from '@ant-design/icons'
 
+import { useSafeTransferFromTx } from 'hooks/v1/transactor/SafeTransferFromTx'
+import { useTransferTokensTx } from 'hooks/v1/transactor/TransferTokensTx'
+import { useAddToBalanceTx } from 'hooks/v1/transactor/AddToBalanceTx'
+import { useSetProjectUriTx } from 'hooks/v1/transactor/SetProjectUriTx'
+import useUnclaimedBalanceOfUser from 'hooks/v1/contractReader/UnclaimedBalanceOfUser'
+
 import EditProjectModal from './modals/EditProjectModal'
 
 import MigrateV1Pt1Modal from './modals/MigrateV1Pt1Modal'
-import ProjectToolDrawerModal from './modals/ProjectToolDrawerModal'
+import ProjectToolDrawerModal from '../../shared/modals/ProjectToolDrawerModal'
 
 export default function V1ProjectHeaderActions() {
-  const { projectId, handle, metadata, isPreviewMode, terminal, owner } =
-    useContext(V1ProjectContext)
+  const {
+    projectId,
+    handle,
+    metadata,
+    isPreviewMode,
+    terminal,
+    owner,
+    tokenSymbol,
+  } = useContext(V1ProjectContext)
   const { userAddress } = useContext(NetworkContext)
 
   const [migrateDrawerVisible, setMigrateDrawerVisible] =
@@ -30,6 +43,8 @@ export default function V1ProjectHeaderActions() {
     OperatorPermission.SetHandle,
     OperatorPermission.SetUri,
   ])
+
+  const unclaimedTokenBalance = useUnclaimedBalanceOfUser()
 
   const allowMigrate =
     terminal?.version === '1' &&
@@ -99,6 +114,13 @@ export default function V1ProjectHeaderActions() {
       <ProjectToolDrawerModal
         visible={toolDrawerVisible}
         onClose={() => setToolDrawerVisible(false)}
+        unclaimedTokenBalance={unclaimedTokenBalance}
+        tokenSymbol={tokenSymbol}
+        ownerAddress={owner}
+        useTransferProjectOwnershipTx={useSafeTransferFromTx}
+        useTransferUnclaimedTokensTx={useTransferTokensTx}
+        useAddToBalanceTx={useAddToBalanceTx}
+        useSetProjectUriTx={useSetProjectUriTx}
       />
       <EditProjectModal
         visible={editProjectModalVisible}

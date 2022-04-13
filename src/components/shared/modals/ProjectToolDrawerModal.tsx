@@ -1,59 +1,76 @@
 import { t, Trans } from '@lingui/macro'
-import { Button, Divider, Drawer, Form, notification, Space } from 'antd'
+import { Button, Divider, Drawer, Form, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import axios from 'axios'
 import { FormItems } from 'components/shared/formItems'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
+import { BigNumber } from '@ethersproject/bignumber'
 
-import { NetworkContext } from 'contexts/networkContext'
-import { V1ProjectContext } from 'contexts/v1/projectContext'
-import useUnclaimedBalanceOfUser from 'hooks/v1/contractReader/UnclaimedBalanceOfUser'
-import { useAddToBalanceTx } from 'hooks/v1/transactor/AddToBalanceTx'
-import { useSafeTransferFromTx } from 'hooks/v1/transactor/SafeTransferFromTx'
-import { useSetProjectUriTx } from 'hooks/v1/transactor/SetProjectUriTx'
-import { useTransferTokensTx } from 'hooks/v1/transactor/TransferTokensTx'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
-import { uploadProjectMetadata } from 'utils/ipfs'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
+import { TransactorInstance } from 'hooks/Transactor'
+import { JBDiscordLink } from 'components/Landing/QAs'
 
-import { readNetwork } from 'constants/networks'
+import ArchiveV1Project from 'components/v1/V1Project/ArchiveV1Project'
 
 export default function ProjectToolDrawerModal({
   visible,
   onClose,
+  unclaimedTokenBalance,
+  tokenSymbol,
+  ownerAddress,
+  useTransferProjectOwnershipTx,
+  useTransferUnclaimedTokensTx,
+  useAddToBalanceTx,
+  useSetProjectUriTx,
 }: {
   visible?: boolean
   onClose?: VoidFunction
+  unclaimedTokenBalance: BigNumber | undefined
+  tokenSymbol: string | undefined
+  ownerAddress: string | undefined
+  useTransferProjectOwnershipTx: () => TransactorInstance<{
+    newOwnerAddress: string
+  }>
+  useTransferUnclaimedTokensTx: () => TransactorInstance<{
+    to: string
+    amount: BigNumber
+  }>
+  useAddToBalanceTx: () => TransactorInstance<{
+    value: BigNumber
+  }>
+  useSetProjectUriTx: () =>
+    | TransactorInstance<{
+        cid: string
+      }>
+    | undefined // Currently undefined for v2
 }) {
-  const { tokenSymbol, owner, terminal, metadata, projectId, handle } =
-    useContext(V1ProjectContext)
-  const { userAddress } = useContext(NetworkContext)
-  const safeTransferFromTx = useSafeTransferFromTx()
-  const transferTokensTx = useTransferTokensTx()
+  const transferProjectOwnershipTx = useTransferProjectOwnershipTx()
+  const transferUnclaimedTokensTx = useTransferUnclaimedTokensTx()
   const addToBalanceTx = useAddToBalanceTx()
+
   const setUriTx = useSetProjectUriTx()
 
   const [loadingAddToBalance, setLoadingAddToBalance] = useState<boolean>()
   const [loadingTransferTokens, setLoadingTransferTokens] = useState<boolean>()
   const [loadingTransferOwnership, setLoadingTransferOwnership] =
     useState<boolean>()
-  const [loadingArchive, setLoadingArchive] = useState<boolean>()
+
   const [transferTokensForm] = useForm<{ amount: string; to: string }>()
   const [addToBalanceForm] = useForm<{ amount: string }>()
   const [transferOwnershipForm] = useForm<{ to: string }>()
 
-  const stakedTokenBalance = useUnclaimedBalanceOfUser()
-
   function transferOwnership() {
     setLoadingTransferOwnership(true)
 
-    safeTransferFromTx(
-      { to: transferTokensForm.getFieldValue('to') },
+    transferProjectOwnershipTx(
+      { newOwnerAddress: transferTokensForm.getFieldValue('to') },
       {
-        onDone: () => setLoadingTransferOwnership(false),
-        onConfirmed: () => transferOwnershipForm.resetFields(),
+        onConfirmed: () => {
+          setLoadingTransferOwnership(false)
+          transferOwnershipForm.resetFields()
+        },
       },
     )
   }
@@ -63,14 +80,16 @@ export default function ProjectToolDrawerModal({
 
     const fields = transferTokensForm.getFieldsValue(true)
 
-    transferTokensTx(
+    transferUnclaimedTokensTx(
       {
         to: fields.to,
         amount: parseWad(fields.amount),
       },
       {
-        onDone: () => setLoadingTransferTokens(false),
-        onConfirmed: () => transferTokensForm.resetFields(),
+        onConfirmed: () => {
+          transferTokensForm.resetFields()
+          setLoadingTransferTokens(false)
+        },
       },
     )
   }
@@ -81,63 +100,11 @@ export default function ProjectToolDrawerModal({
     addToBalanceTx(
       { value: parseWad(addToBalanceForm.getFieldValue('amount')) },
       {
-        onDone: () => setLoadingAddToBalance(false),
-        onConfirmed: () => addToBalanceForm.resetFields(),
-      },
-    )
-  }
-
-  async function setArchived(archived: boolean) {
-    // Manual check to help avoid creating axios request when onchain tx would fail
-    if (!userAddress || userAddress.toLowerCase() !== owner?.toLowerCase()) {
-      notification.error({
-        key: new Date().valueOf().toString(),
-        message: 'Connected wallet not authorized',
-        duration: 0,
-      })
-      return
-    }
-
-    setLoadingArchive(true)
-
-    const uploadedMetadata = await uploadProjectMetadata({
-      ...metadata,
-      archived,
-    })
-
-    if (!uploadedMetadata.IpfsHash) {
-      notification.error({
-        key: new Date().valueOf().toString(),
-        message: 'Failed to update project metadata',
-        duration: 0,
-      })
-      setLoadingArchive(false)
-      return
-    }
-
-    // Create github issue when archive is requested
-    // https://docs.github.com/en/rest/reference/issues#create-an-issue
-    // Do this first, in case the user closes the page before the on-chain tx completes
-    axios.post(
-      'https://api.github.com/repos/jbx-protocol/juice-interface/issues',
-      {
-        title: `[${archived ? 'ARCHIVE' : 'UNARCHIVE'}] Project: "${
-          metadata?.name
-        }"`,
-        body: `<b>Chain:</b> ${
-          readNetwork.name
-        } \n <b>Handle:</b> ${handle} \n <b>Id:</b> ${projectId?.toString()}`,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.REACT_APP_GITHUB_ACCESS_TOKEN}`,
+        onConfirmed: () => {
+          setLoadingAddToBalance(false)
+          addToBalanceForm.resetFields()
         },
       },
-    )
-
-    setUriTx(
-      { cid: uploadedMetadata.IpfsHash },
-      { onDone: () => setLoadingArchive(false) },
     )
   }
 
@@ -159,7 +126,7 @@ export default function ProjectToolDrawerModal({
             <Trans>Transfer ownership</Trans>
           </h3>
           <p>
-            <Trans>Current owner: {owner}</Trans>
+            <Trans>Current owner: {ownerAddress}</Trans>
           </p>
           <Form
             form={transferOwnershipForm}
@@ -181,7 +148,9 @@ export default function ProjectToolDrawerModal({
                 size="small"
                 type="primary"
               >
-                <Trans>Transfer ownership</Trans>
+                <span>
+                  <Trans>Transfer ownership</Trans>
+                </span>
               </Button>
             </Form.Item>
           </Form>
@@ -195,7 +164,7 @@ export default function ProjectToolDrawerModal({
           </h3>
           <p>
             <Trans>
-              Your balance: {formatWad(stakedTokenBalance, { precision: 0 })}
+              Your balance: {formatWad(unclaimedTokenBalance, { precision: 0 })}
             </Trans>
           </p>
           <Form
@@ -216,7 +185,7 @@ export default function ProjectToolDrawerModal({
                     content={t`MAX`}
                     onClick={() =>
                       transferTokensForm.setFieldsValue({
-                        amount: fromWad(stakedTokenBalance),
+                        amount: fromWad(unclaimedTokenBalance),
                       })
                     }
                   />
@@ -238,7 +207,9 @@ export default function ProjectToolDrawerModal({
                 size="small"
                 type="primary"
               >
-                <Trans>Transfer {tokenSymbolShort}</Trans>
+                <span>
+                  <Trans>Transfer {tokenSymbolShort}</Trans>
+                </span>
               </Button>
             </Form.Item>
           </Form>
@@ -278,7 +249,9 @@ export default function ProjectToolDrawerModal({
                 size="small"
                 type="primary"
               >
-                <Trans>Add to balance</Trans>
+                <span>
+                  <Trans>Add to balance</Trans>
+                </span>
               </Button>
             </Form.Item>
           </Form>
@@ -286,27 +259,8 @@ export default function ProjectToolDrawerModal({
 
         <Divider />
 
-        {metadata?.archived ? (
-          <section>
-            <h3>
-              <Trans>Unarchive project</Trans>
-            </h3>
-            <p>
-              <Trans>
-                Your project will immediately appear active on the
-                juicebox.money app. Please allow a few days for it to appear in
-                the "active" projects list on the Projects page.
-              </Trans>
-            </p>
-            <Button
-              onClick={() => setArchived(false)}
-              loading={loadingArchive}
-              size="small"
-              type="primary"
-            >
-              <Trans>Unarchive project</Trans>
-            </Button>
-          </section>
+        {setUriTx ? (
+          <ArchiveV1Project setUriTx={setUriTx} />
         ) : (
           <section>
             <h3>
@@ -314,40 +268,14 @@ export default function ProjectToolDrawerModal({
             </h3>
             <p>
               <Trans>
-                Your project will appear archived, and will not be able to
-                receive payments through the juicebox.money app. You can
-                unarchive a project at any time. Please allow a few days for
-                your project to appear under the "archived" filter on the
-                Projects page.
+                Please contact the Juicebox dev team through our{' '}
+                <JBDiscordLink>Discord</JBDiscordLink> to have your project
+                archived.
               </Trans>
             </p>
-            <p>
-              <strong>
-                <Trans>Note:</Trans>
-              </strong>{' '}
-              {terminal?.version === '1.1' ? (
-                <Trans>
-                  Unless payments are paused in your funding cycle settings,
-                  your project will still be able to receive payments directly
-                  through the Juicebox protocol contracts.
-                </Trans>
-              ) : (
-                <Trans>
-                  Your project will still be able to receive payments directly
-                  through the Juicebox protocol contracts.
-                </Trans>
-              )}
-            </p>
-            <Button
-              onClick={() => setArchived(true)}
-              loading={loadingArchive}
-              size="small"
-              type="primary"
-            >
-              <Trans>Archive project</Trans>
-            </Button>
           </section>
         )}
+        <br />
       </Space>
     </Drawer>
   )

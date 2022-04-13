@@ -6,7 +6,7 @@ import { useContext, useState } from 'react'
 
 import SectionHeader from 'components/shared/SectionHeader'
 
-type TabType = {
+export type TabType = {
   key: string
   label: string | JSX.Element
   content: JSX.Element

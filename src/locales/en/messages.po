@@ -1766,8 +1766,8 @@ msgid "Resources"
 msgstr "Resources"
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "Restrict how the owner can reconfigure upcoming funding cycles to mitigate abuse of power. <0>Learn more.</0>"
-msgstr "Restrict how the owner can reconfigure upcoming funding cycles to mitigate abuse of power. <0>Learn more.</0>"
+msgid "Restrict how the owner can reconfigure upcoming funding cycles to mitigate abuse of power.<0>Learn more.</0>"
+msgstr "Restrict how the owner can reconfigure upcoming funding cycles to mitigate abuse of power.<0>Learn more.</0>"
 
 #: src/components/v1/V1Create/index.tsx
 msgid "Restrict payments and printing tokens."

@@ -26,6 +26,7 @@ export function useAddToBalanceTx(): TransactorInstance<{
       [projectId.toHexString(), value, ETH_TOKEN_ADDRESS, DEFAULT_MEMO],
       {
         ...txOpts,
+        value,
       },
     )
   }

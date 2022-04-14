@@ -37,12 +37,8 @@ function BondingCurveRateExtra({ disabled }: { disabled?: boolean }) {
   return (
     <div>
       {disabled && (
-        <p>
-          <Trans>
-            <i style={{ color: colors.text.warn }}>
-              Disabled when funding target has not been set.
-            </i>
-          </Trans>
+        <p style={{ color: colors.text.warn }}>
+          <Trans>Disabled when no funding target is set.</Trans>
         </p>
       )}
       <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -128,14 +124,15 @@ export default function ProjectBondingCurveRate({
   label,
   formItemProps,
   onChange,
-  disabled,
-  toggleDisabled,
+  checked,
+  onToggled,
 }: {
   value: string | undefined
   style?: CSSProperties
   label?: string
   onChange: (val?: number) => void
-  toggleDisabled?: (checked: boolean) => void
+  checked?: boolean
+  onToggled?: (checked: boolean) => void
 } & FormItemExt) {
   const { colors } = useContext(ThemeContext).theme
   const [calculator, setCalculator] = useState<any>() // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -216,7 +213,7 @@ export default function ProjectBondingCurveRate({
   )
 
   // When toggle is disabled and can't be changed, the whole item is unavailable
-  const unavailable = !Boolean(toggleDisabled) && disabled
+  const unavailable = !Boolean(onToggled) && !checked
 
   return (
     <Form.Item
@@ -227,10 +224,10 @@ export default function ProjectBondingCurveRate({
             <FormItemLabel>
               {label ?? <Trans>Bonding curve rate</Trans>}
             </FormItemLabel>
-            {toggleDisabled ? (
+            {onToggled ? (
               <>
-                <Switch checked={!disabled} onChange={toggleDisabled} />{' '}
-                {disabled ? (
+                <Switch checked={checked} onChange={onToggled} />{' '}
+                {!checked ? (
                   <span style={{ color: colors.text.tertiary, marginLeft: 10 }}>
                     <Trans>(100%)</Trans>
                   </span>
@@ -244,25 +241,23 @@ export default function ProjectBondingCurveRate({
       extra={<BondingCurveRateExtra disabled={unavailable} />}
       {...formItemProps}
     >
-      {!disabled ? (
-        <div style={{ display: 'flex', alignItems: 'center', marginTop: 10 }}>
-          <NumberSlider
-            min={0}
-            max={100}
-            step={0.5}
-            name={name}
-            defaultValue={100}
-            sliderValue={parseFloat(value ?? '100')}
-            disabled={disabled}
-            onChange={(val: number | undefined) => {
-              graphCurve(val)
-              onChange(val)
-            }}
-            suffix="%"
-            style={{ flexGrow: 1 }}
-          />
-        </div>
-      ) : null}
+      <div style={{ display: 'flex', alignItems: 'center', marginTop: 10 }}>
+        <NumberSlider
+          min={0}
+          max={100}
+          step={0.5}
+          name={name}
+          defaultValue={100}
+          sliderValue={parseFloat(value ?? '100')}
+          disabled={!checked}
+          onChange={(val: number | undefined) => {
+            graphCurve(val)
+            onChange(val)
+          }}
+          suffix="%"
+          style={{ flexGrow: 1 }}
+        />
+      </div>
     </Form.Item>
   )
 }

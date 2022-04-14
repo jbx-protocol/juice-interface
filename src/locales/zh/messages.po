@@ -64,7 +64,8 @@ msgstr ""
 msgid "24 hours"
 msgstr "24 小时"
 
-#: src/constants/ballotStrategies/ballotStrategies.ts
+#: src/constants/v1/ballotStrategies/index.ts
+#: src/constants/v2/ballotStrategies/index.ts
 msgid "3-day delay"
 msgstr "延迟三天生效"
 
@@ -80,7 +81,8 @@ msgstr "30 天"
 msgid "7 days"
 msgstr "7 天"
 
-#: src/constants/ballotStrategies/ballotStrategies.ts
+#: src/constants/v1/ballotStrategies/index.ts
+#: src/constants/v2/ballotStrategies/index.ts
 msgid "7-day delay"
 msgstr "延迟七天生效"
 
@@ -211,11 +213,13 @@ msgstr "项目每收到一笔付款都会铸造代币，其中某个百分比的
 msgid "A project's lifetime is defined in funding cycles. If a funding target is set, the project can withdraw no more than the target for the duration of the cycle."
 msgstr "一个项目的寿命是以筹款周期来定义的。如果设定了筹款目标，那么在周期内，项目的提款不能超过目标。"
 
-#: src/constants/ballotStrategies/ballotStrategies.ts
+#: src/constants/v1/ballotStrategies/index.ts
+#: src/constants/v2/ballotStrategies/index.ts
 msgid "A reconfiguration to an upcoming funding cycle must be submitted at least 3 days before it starts."
 msgstr "对之后筹款周期的重新配置，至少得提前三天提交。"
 
-#: src/constants/ballotStrategies/ballotStrategies.ts
+#: src/constants/v1/ballotStrategies/index.ts
+#: src/constants/v2/ballotStrategies/index.ts
 msgid "A reconfiguration to an upcoming funding cycle must be submitted at least 7 days before it starts."
 msgstr "对之后筹款周期的重新配置，至少得提前七天提交。"
 
@@ -350,7 +354,8 @@ msgstr "项目 Discord 的邀请链接。"
 msgid "Any changes will take effect in the next funding cycle. The current funding cycle won't be altered."
 msgstr ""
 
-#: src/constants/ballotStrategies/ballotStrategies.ts
+#: src/constants/v1/ballotStrategies/index.ts
+#: src/constants/v2/ballotStrategies/index.ts
 msgid "Any reconfiguration to an upcoming funding cycle will take effect once the current cycle ends. A project with no strategy may be vulnerable to being rug-pulled by its owner."
 msgstr "对之后的筹款周期进行重新配置，更改将在当前周期结束后生效。 没有策略的项目会有项目方跑路的风险。"
 
@@ -632,7 +637,7 @@ msgid "Currently worth: <0><1/>{0}</0>"
 msgstr "当前价值： <0><1/>{0}</0>"
 
 #: src/components/shared/ReconfigurationStrategy/ReconfigurationStrategySelector.tsx
-#: src/constants/ballotStrategies/ballotStrategies.ts
+#: src/utils/ballot.ts
 msgid "Custom strategy"
 msgstr "自定义策略"
 
@@ -1329,7 +1334,8 @@ msgstr "在单个筹款周期中，项目无法提取超出筹款目标的资金
 msgid "No past funding cycles"
 msgstr "没有历史筹款周期"
 
-#: src/constants/ballotStrategies/ballotStrategies.ts
+#: src/constants/v1/ballotStrategies/index.ts
+#: src/constants/v2/ballotStrategies/index.ts
 msgid "No strategy"
 msgstr "暂无策略"
 
@@ -1633,7 +1639,7 @@ msgstr ""
 msgid "Reconfiguration"
 msgstr "重新配置"
 
-#: src/components/shared/ReconfigurationStrategy/ReconfigurationStrategyDrawer.tsx
+#: src/components/v1/ReconfigurationStrategyDrawer.tsx
 msgid "Reconfiguration rules"
 msgstr ""
 
@@ -1815,7 +1821,7 @@ msgstr ""
 msgid "Rules for how changes can be made to your project."
 msgstr "项目筹款周期配置的更改规则。"
 
-#: src/components/shared/ReconfigurationStrategy/ReconfigurationStrategyDrawer.tsx
+#: src/components/v1/ReconfigurationStrategyDrawer.tsx
 msgid "Rules for how this project's funding cycles can be reconfigured."
 msgstr "关于如何重新配置该项目筹款周期的规则"
 
@@ -1849,7 +1855,7 @@ msgstr "保存项目详情"
 msgid "Save reconfiguration"
 msgstr "保存新的配置"
 
-#: src/components/shared/ReconfigurationStrategy/ReconfigurationStrategyDrawer.tsx
+#: src/components/v1/ReconfigurationStrategyDrawer.tsx
 #: src/components/v2/V2Create/forms/RulesForm/index.tsx
 msgid "Save rules"
 msgstr ""
@@ -2111,7 +2117,7 @@ msgstr "任何时候都可以修改这些属性。"
 msgid "These settings will <0>not</0> be editable immediately within a funding cycle. They can only be changed for <1>upcoming</1> funding cycles."
 msgstr "这些属性<0>不能</0> 在同一个筹款周期内马上进行修改。 更改的配置只会在 <1>后面的</1> 筹款周期生效。"
 
-#: src/constants/ballotStrategies/ballotStrategies.ts
+#: src/utils/ballot.ts
 msgid "This address is an unrecognized strategy contract. Make sure it is correct!"
 msgstr "此地址是一个未识别的策略合约。请确保这个地址是对的。"
 

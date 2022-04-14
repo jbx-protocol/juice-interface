@@ -2,10 +2,12 @@ import { Trans } from '@lingui/macro'
 import { Button, Drawer, DrawerProps } from 'antd'
 
 import { ThemeContext } from 'contexts/themeContext'
+import { BallotStrategy } from 'models/ballot'
 import { useContext, useState } from 'react'
 
-import { Strategy } from 'constants/ballotStrategies/ballotStrategies'
-import ReconfigurationStrategySelector from './ReconfigurationStrategySelector'
+import { ballotStrategies } from 'constants/v1/ballotStrategies'
+
+import ReconfigurationStrategySelector from '../shared/ReconfigurationStrategy/ReconfigurationStrategySelector'
 
 export default function ReconfigurationStrategyDrawer({
   visible,
@@ -16,15 +18,17 @@ export default function ReconfigurationStrategyDrawer({
 }: {
   visible: boolean
   onClose: () => void
-  initialSelectedStrategy: Strategy
+  initialSelectedStrategy: BallotStrategy
   style?: Partial<DrawerProps>
-  onSave: (strategy: Strategy) => void
+  onSave: (strategy: BallotStrategy) => void
 }) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const [strategy, setStrategy] = useState<Strategy>(initialSelectedStrategy)
+  const [strategy, setStrategy] = useState<BallotStrategy>(
+    initialSelectedStrategy,
+  )
 
   return (
     <Drawer visible={visible} {...style} onClose={onClose}>
@@ -38,6 +42,7 @@ export default function ReconfigurationStrategyDrawer({
       </p>
 
       <ReconfigurationStrategySelector
+        ballotStrategies={ballotStrategies()}
         selectedStrategy={strategy}
         onChange={strategy => setStrategy(strategy)}
       />

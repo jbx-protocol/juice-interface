@@ -13,7 +13,8 @@ import {
   SerializedV2FundingCycleData,
 } from './serializers'
 import { FundingCycleRiskFlags } from 'constants/fundingWarningText'
-import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
+import { getBallotStrategyByAddress } from 'constants/v2/ballotStrategies/getBallotStrategiesByAddress'
+import { MAX_DISTRIBUTION_LIMIT } from './math'
 
 export const hasDistributionLimit = (
   fundAccessConstraint: SerializedV2FundAccessConstraint | undefined,
@@ -21,7 +22,7 @@ export const hasDistributionLimit = (
   return Boolean(
     fundAccessConstraint?.distributionLimit &&
       !parseWad(fundAccessConstraint.distributionLimit).eq(
-        constants.MaxUint256,
+        MAX_DISTRIBUTION_LIMIT,
       ) &&
       fundAccessConstraint.distributionLimit !== '0',
   )

@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { BallotState } from 'models/ballot-state'
+import { BallotState } from 'models/ballot'
 
 import { V2ContractName } from 'models/v2/contracts'
 

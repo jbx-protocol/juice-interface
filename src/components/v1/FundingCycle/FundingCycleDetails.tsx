@@ -29,7 +29,7 @@ import TooltipLabel from 'components/shared/TooltipLabel'
 
 import FundingCycleDetailWarning from 'components/shared/Project/FundingCycleDetailWarning'
 
-import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
+import { getBallotStrategyByAddress } from 'constants/v1/ballotStrategies/getBallotStrategiesByAddress'
 import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
 import { SECONDS_IN_DAY } from 'constants/numbers'
 

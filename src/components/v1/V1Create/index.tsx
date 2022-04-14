@@ -48,7 +48,7 @@ import { getTerminalAddress } from 'utils/v1/terminals'
 import TicketingForm, {
   TicketingFormFields,
 } from 'components/shared/forms/TicketingForm'
-import ReconfigurationStrategyDrawer from 'components/shared/ReconfigurationStrategy/ReconfigurationStrategyDrawer'
+import ReconfigurationStrategyDrawer from 'components/v1/ReconfigurationStrategyDrawer'
 import ProjectDetailsForm, {
   ProjectDetailsFormFields,
 } from 'components/shared/forms/ProjectDetailsForm'
@@ -64,10 +64,11 @@ import RestrictedActionsForm, {
 
 import { toDateSeconds } from 'utils/formatDate'
 
+import { BallotStrategy } from 'models/ballot'
+
 import ConfirmDeployProject from './ConfirmDeployProject'
 
-import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
-import { Strategy } from 'constants/ballotStrategies/ballotStrategies'
+import { getBallotStrategyByAddress } from 'constants/v1/ballotStrategies/getBallotStrategiesByAddress'
 import { drawerStyle } from 'constants/styles/drawerStyle'
 
 const terminalVersion: V1TerminalVersion = '1.1'
@@ -706,7 +707,7 @@ export default function V1Create() {
           visible={rulesFormModalVisible}
           initialSelectedStrategy={getBallotStrategyByAddress(editingFC.ballot)}
           style={memoizedDrawerStyle}
-          onSave={(strategy: Strategy) => {
+          onSave={(strategy: BallotStrategy) => {
             viewedCurrentStep()
             setRulesFormModalVisible(false)
             onRulesFormSaved(strategy.address ?? editingFC.ballot)

@@ -118,6 +118,7 @@ export default function FundingCycleDetails({
         labelStyle={{ fontWeight: 600 }}
         size="small"
         column={{ xs: 1, sm: 1, md: 1, lg: 1, xl: 1, xxl: 2 }}
+        contentStyle={{ marginRight: '0.5rem' }}
       >
         <Descriptions.Item label={<Trans>Distribution limit</Trans>}>
           <span style={{ whiteSpace: 'nowrap' }}>

@@ -18,6 +18,7 @@ import NumberSlider from '../inputs/NumberSlider'
 import { FormItemExt } from './formItemExt'
 
 const GRAPH_CONTAINER_ID = 'graph-container'
+const DEFAULT_BONDING_CURVE_RATE_PERCENTAGE = '100'
 
 function BondingCurveRateExtra({ disabled }: { disabled?: boolean }) {
   const {
@@ -208,7 +209,8 @@ export default function ProjectBondingCurveRate({
   )
 
   useEffect(
-    () => graphCurve(parseFloat(value ?? '100')),
+    () =>
+      graphCurve(parseFloat(value ?? DEFAULT_BONDING_CURVE_RATE_PERCENTAGE)),
     [calculator, graphCurve, value],
   )
 
@@ -247,8 +249,10 @@ export default function ProjectBondingCurveRate({
           max={100}
           step={0.5}
           name={name}
-          defaultValue={100}
-          sliderValue={parseFloat(value ?? '100')}
+          defaultValue={parseInt(DEFAULT_BONDING_CURVE_RATE_PERCENTAGE)}
+          sliderValue={parseFloat(
+            value ?? DEFAULT_BONDING_CURVE_RATE_PERCENTAGE,
+          )}
           disabled={!checked}
           onChange={(val: number | undefined) => {
             graphCurve(val)

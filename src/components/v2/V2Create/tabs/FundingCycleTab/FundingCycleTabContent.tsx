@@ -124,6 +124,7 @@ export default function FundingCycleTabContent({
         onClose={() => {
           setTokenDrawerVisible(false)
         }}
+        getContainer={false}
       >
         <h1>
           <Trans>Token</Trans>
@@ -133,7 +134,6 @@ export default function FundingCycleTabContent({
             setTokenDrawerVisible(false)
           }}
         />
-        getContainer={false}
       </Drawer>
       <Drawer
         {...drawerStyle}

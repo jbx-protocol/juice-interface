@@ -16,7 +16,8 @@ import {
   SerializedV2FundingCycleMetadata,
   SerializedV2FundAccessConstraint,
 } from 'utils/v2/serializers'
-import { percentToPermyriad } from 'utils/formatNumber'
+
+import { redemptionRateFrom } from 'utils/v2/math'
 
 import {
   ETH_PAYOUT_SPLIT_GROUP,
@@ -61,8 +62,8 @@ const defaultFundingCycleData: SerializedV2FundingCycleData =
 const defaultFundingCycleMetadata: SerializedV2FundingCycleMetadata =
   serializeV2FundingCycleMetadata({
     reservedRate: BigNumber.from(0), // A number from 0-10,000
-    redemptionRate: percentToPermyriad(100), // A number from 0-10,000
-    ballotRedemptionRate: percentToPermyriad(100), // A number from 0-10,000
+    redemptionRate: redemptionRateFrom('100'), // A number from 0-10,000
+    ballotRedemptionRate: redemptionRateFrom('100'), // A number from 0-10,000
     pausePay: false,
     pauseDistributions: false,
     pauseRedeem: false,

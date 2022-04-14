@@ -13,7 +13,7 @@ import {
   SerializedV2FundingCycleData,
 } from './serializers'
 import { FundingCycleRiskFlags } from 'constants/fundingWarningText'
-import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
+import { getBallotStrategyByAddress } from 'constants/v2/ballotStrategies/getBallotStrategiesByAddress'
 
 export const hasDistributionLimit = (
   fundAccessConstraint: SerializedV2FundAccessConstraint | undefined,

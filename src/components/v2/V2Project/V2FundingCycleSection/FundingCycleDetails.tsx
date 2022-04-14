@@ -28,7 +28,7 @@ import {
   weightedAmount,
 } from 'utils/v2/math'
 
-import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
+import { getBallotStrategyByAddress } from 'constants/v2/ballotStrategies/getBallotStrategiesByAddress'
 import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
 
 export default function FundingCycleDetails({
@@ -54,7 +54,6 @@ export default function FundingCycleDetails({
   const formattedEndTime = formatDate(
     fundingCycle.start.add(fundingCycle.duration).mul(1000),
   )
-
   const ballotStrategy = getBallotStrategyByAddress(fundingCycle.ballot)
   const unsafeFundingCycleProperties =
     getUnsafeV2FundingCycleProperties(fundingCycle)

@@ -107,14 +107,6 @@ msgstr "<0><1/>{netDistributionAmount}</0> after {feePercentage}% JBX fee"
 msgid "<0><1>This project has no overflow</1>, so you will not receive any ETH for burning tokens.</0>"
 msgstr "<0><1>This project has no overflow</1>, so you will not receive any ETH for burning tokens.</0>"
 
-#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
-msgid "<0>Disabled when funding target has not been set.</0>"
-msgstr "<0>Disabled when funding target has not been set.</0>"
-
-#: src/components/shared/formItems/ProjectDiscountRate.tsx
-msgid "<0>Discount rate disabled when funding cycle duration has not been set.</0>"
-msgstr "<0>Discount rate disabled when funding cycle duration has not been set.</0>"
-
 #: src/components/shared/PayWarningModal.tsx
 msgid "<0>Juicebox contracts</0> are unaudited, and may be vulnerable to bugs or hacks. All funds moved through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable for any losses by projects or their supporters."
 msgstr "<0>Juicebox contracts</0> are unaudited, and may be vulnerable to bugs or hacks. All funds moved through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable for any losses by projects or their supporters."
@@ -462,8 +454,8 @@ msgid "By default, all unallocated funds can be distributed to the project owner
 msgstr "By default, all unallocated funds can be distributed to the project owner's wallet."
 
 #: src/components/v2/V2Create/forms/TokenForm/index.tsx
-msgid "By default, the issuance rate for your project's token is 1,000,000 tokens / 1 ETH. For example, 1 ETH contribution to your project will return 1,000,000 tokens. You can manipulate the issuance rate with the following configurations."
-msgstr "By default, the issuance rate for your project's token is 1,000,000 tokens / 1 ETH. For example, 1 ETH contribution to your project will return 1,000,000 tokens. You can manipulate the issuance rate with the following configurations."
+msgid "By default, the issuance rate for your project's token is 1,000,000 tokens / 1 ETH. For example, a 1 ETH contribution to your project will return 1,000,000 tokens. You can manipulate the issuance rate with the following configurations."
+msgstr "By default, the issuance rate for your project's token is 1,000,000 tokens / 1 ETH. For example, a 1 ETH contribution to your project will return 1,000,000 tokens. You can manipulate the issuance rate with the following configurations."
 
 #: src/components/Landing/QAs.tsx
 msgid "Can I change my project's contract after it's been created?"
@@ -678,6 +670,14 @@ msgstr ""
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "Disabled"
 msgstr "Disabled"
+
+#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
+msgid "Disabled when project has no funding target."
+msgstr "Disabled when project has no funding target."
+
+#: src/components/shared/formItems/ProjectDiscountRate.tsx
+msgid "Disabled when your project's funding cycle has no duration."
+msgstr "Disabled when your project's funding cycle has no duration."
 
 #: src/components/Navbar/Mobile/MobileCollapse.tsx
 #: src/components/Navbar/Wallet.tsx
@@ -896,7 +896,6 @@ msgstr "For more info, check out this <0>short video</0>."
 msgid "For users paying through your app, you should route those funds through the Juicebox smart contracts so they receive tokens in return."
 msgstr "For users paying through your app, you should route those funds through the Juicebox smart contracts so they receive tokens in return."
 
-#: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 msgid "Funding"
@@ -1534,6 +1533,10 @@ msgstr ""
 msgid "Project owner"
 msgstr ""
 
+#: src/components/v2/shared/SplitItem.tsx
+msgid "Project owner (you)"
+msgstr "Project owner (you)"
+
 #: src/components/Landing/QAs.tsx
 msgid "Project owners can configure a delay period, meaning reconfigurations to an upcoming funding cycle must be submitted a certain number of days before it starts. For example, a 3-day delay period means reconfigurations must be submitted at least 3 days before the next funding cycle starts. This gives token holders time to react to the decision and reduces the chance of rug-pulls."
 msgstr "Project owners can configure a delay period, meaning reconfigurations to an upcoming funding cycle must be submitted a certain number of days before it starts. For example, a 3-day delay period means reconfigurations must be submitted at least 3 days before the next funding cycle starts. This gives token holders time to react to the decision and reduces the chance of rug-pulls."
@@ -1951,8 +1954,8 @@ msgid "The address that should receive the tokens."
 msgstr "The address that should receive the tokens."
 
 #: src/components/v2/V2Project/V2FundingCycleSection/ReservedTokensSplitsCard.tsx
-msgid "The amount of tokens reserved for this project. These tokens can be distributed to reserved token beneficiaries."
-msgstr "The amount of tokens reserved for this project. These tokens can be distributed to reserved token beneficiaries."
+msgid "The amount of tokens this project has reserved. These tokens can be distributed to reserved token beneficiaries."
+msgstr "The amount of tokens this project has reserved. These tokens can be distributed to reserved token beneficiaries."
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "The amount of tokens to mint to the receiver."
@@ -1985,8 +1988,8 @@ msgid "The contract team will soon start working on L2 payment terminals for Jui
 msgstr "The contract team will soon start working on L2 payment terminals for Juicebox projects."
 
 #: src/components/shared/Project/SpendingStats.tsx
-msgid "The funds available to withdraw for this funding cycle before the {feePercentage}% JBX fee is subtracted. This number won't roll over to the next funding cycle, so funds should be withdrawn before it ends."
-msgstr "The funds available to withdraw for this funding cycle before the {feePercentage}% JBX fee is subtracted. This number won't roll over to the next funding cycle, so funds should be withdrawn before it ends."
+msgid "The funds available to distribution for this funding cycle (before the {feePercentage}% JBX fee is subtracted). This number won't roll over to the next funding cycle, so funds should be distributed before this funding cycle ends."
+msgstr "The funds available to distribution for this funding cycle (before the {feePercentage}% JBX fee is subtracted). This number won't roll over to the next funding cycle, so funds should be distributed before this funding cycle ends."
 
 #: src/components/Landing/index.tsx
 msgid "The future will be led by creators, and owned by communities."
@@ -2023,8 +2026,8 @@ msgid "The ratio of tokens rewarded per payment amount will decrease by this per
 msgstr ""
 
 #: src/components/Landing/QAs.tsx
-msgid "The rest is left to share between token hodlers."
-msgstr ""
+msgid "The rest is left to share between token holders."
+msgstr "The rest is left to share between token holders."
 
 #: src/components/v1/V1Project/Paid.tsx
 #: src/components/v2/V2Project/TreasuryStats/DistributedRatio.tsx
@@ -2094,16 +2097,16 @@ msgid "This project uses the V2 version of the Juicebox contracts."
 msgstr "This project uses the V2 version of the Juicebox contracts."
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
-msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hodl tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
-msgstr ""
+msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
+msgstr "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
 
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
-msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hodl tokens longer than others. A redemption rate of 100% means all tokens will have equal value regardless of when they are redeemed."
-msgstr "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hodl tokens longer than others. A redemption rate of 100% means all tokens will have equal value regardless of when they are redeemed."
+msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than others. A redemption rate of 100% means all tokens will have equal value regardless of when they are redeemed."
+msgstr "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than others. A redemption rate of 100% means all tokens will have equal value regardless of when they are redeemed."
 
 #: src/components/shared/formItems/ProjectBondingCurveRate.tsx
-msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hodl tokens longer than others. The default bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed. Learn more in this <0>short video</0>."
-msgstr "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hodl tokens longer than others. The default bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed. Learn more in this <0>short video</0>."
+msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than others. The default bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed. Learn more in this <0>short video</0>."
+msgstr "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than others. The default bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed. Learn more in this <0>short video</0>."
 
 #: src/components/shared/formItems/ProjectPayDisclosure.tsx
 msgid "This text will be displayed to your supporters before they complete their payment."

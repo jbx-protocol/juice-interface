@@ -112,14 +112,6 @@ msgstr ""
 msgid "<0><1>This project has no overflow</1>, so you will not receive any ETH for burning tokens.</0>"
 msgstr "<0><1>这个项目目前筹集的资金并未溢出</1>，此时燃烧代币将不会收到 ETH。</0>"
 
-#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
-msgid "<0>Disabled when funding target has not been set.</0>"
-msgstr "<0>在未设置筹款目标时禁用。</0>"
-
-#: src/components/shared/formItems/ProjectDiscountRate.tsx
-msgid "<0>Discount rate disabled when funding cycle duration has not been set.</0>"
-msgstr "<0>在未设置筹款周期持续期限时禁用折扣率。</0>"
-
 #: src/components/shared/PayWarningModal.tsx
 msgid "<0>Juicebox contracts</0> are unaudited, and may be vulnerable to bugs or hacks. All funds moved through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable for any losses by projects or their supporters."
 msgstr "<0>Juicebox 合约</0>未经审计，可能容易出 BUG 或者被攻击。所有通过 Juicebox 转移的资金都可能丢失或被盗。JuiceboxDAO 不对项目或其支持者造成的任何损失负责。"
@@ -467,7 +459,7 @@ msgid "By default, all unallocated funds can be distributed to the project owner
 msgstr "默认的情况下，所有未分配资金可被分发给项目拥有者的钱包。"
 
 #: src/components/v2/V2Create/forms/TokenForm/index.tsx
-msgid "By default, the issuance rate for your project's token is 1,000,000 tokens / 1 ETH. For example, 1 ETH contribution to your project will return 1,000,000 tokens. You can manipulate the issuance rate with the following configurations."
+msgid "By default, the issuance rate for your project's token is 1,000,000 tokens / 1 ETH. For example, a 1 ETH contribution to your project will return 1,000,000 tokens. You can manipulate the issuance rate with the following configurations."
 msgstr ""
 
 #: src/components/Landing/QAs.tsx
@@ -683,6 +675,14 @@ msgstr "详情"
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "Disabled"
 msgstr "已禁用"
+
+#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
+msgid "Disabled when project has no funding target."
+msgstr ""
+
+#: src/components/shared/formItems/ProjectDiscountRate.tsx
+msgid "Disabled when your project's funding cycle has no duration."
+msgstr ""
 
 #: src/components/Navbar/Mobile/MobileCollapse.tsx
 #: src/components/Navbar/Wallet.tsx
@@ -901,7 +901,6 @@ msgstr "了解更多信息，请查看 <0>短片</0>。"
 msgid "For users paying through your app, you should route those funds through the Juicebox smart contracts so they receive tokens in return."
 msgstr "对于通过你的应用程序进行支付的用户，你应该将资金再导向 Juicebox 智能合约，这样他们才能收到作为回报的代币。"
 
-#: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 msgid "Funding"
@@ -1539,6 +1538,10 @@ msgstr "项目名称，标识，链接以及其他详细信息。"
 msgid "Project owner"
 msgstr "项目拥有者"
 
+#: src/components/v2/shared/SplitItem.tsx
+msgid "Project owner (you)"
+msgstr ""
+
 #: src/components/Landing/QAs.tsx
 msgid "Project owners can configure a delay period, meaning reconfigurations to an upcoming funding cycle must be submitted a certain number of days before it starts. For example, a 3-day delay period means reconfigurations must be submitted at least 3 days before the next funding cycle starts. This gives token holders time to react to the decision and reduces the chance of rug-pulls."
 msgstr "项目方可以配置一个延迟期，这意味着对即将到来的筹款周期的重新配置必须在某个时间段内提交。例如，3天的延迟期意味着重新配置必须至少在下一个筹款周期开始前的3天内提交。这给了代币持有者对决策做出反应的时间，并减少了项目方跑路的机会。"
@@ -1956,7 +1959,7 @@ msgid "The address that should receive the tokens."
 msgstr "应该收到代币的地址。"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/ReservedTokensSplitsCard.tsx
-msgid "The amount of tokens reserved for this project. These tokens can be distributed to reserved token beneficiaries."
+msgid "The amount of tokens this project has reserved. These tokens can be distributed to reserved token beneficiaries."
 msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
@@ -1990,7 +1993,7 @@ msgid "The contract team will soon start working on L2 payment terminals for Jui
 msgstr "合约开发团队将很快开始为 Juicebox 上的项目提供 L2层支付终端。"
 
 #: src/components/shared/Project/SpendingStats.tsx
-msgid "The funds available to withdraw for this funding cycle before the {feePercentage}% JBX fee is subtracted. This number won't roll over to the next funding cycle, so funds should be withdrawn before it ends."
+msgid "The funds available to distribution for this funding cycle (before the {feePercentage}% JBX fee is subtracted). This number won't roll over to the next funding cycle, so funds should be distributed before this funding cycle ends."
 msgstr ""
 
 #: src/components/Landing/index.tsx
@@ -2028,8 +2031,8 @@ msgid "The ratio of tokens rewarded per payment amount will decrease by this per
 msgstr "按付款金额奖励项目代币的比例，会随着进入新的筹款周期不断按这个比率递进减少。较高的折扣率会鼓励您的支持者更早一点给您的项目捐款。"
 
 #: src/components/Landing/QAs.tsx
-msgid "The rest is left to share between token hodlers."
-msgstr "剩下的留给代币持有者共享。"
+msgid "The rest is left to share between token holders."
+msgstr ""
 
 #: src/components/v1/V1Project/Paid.tsx
 #: src/components/v2/V2Project/TreasuryStats/DistributedRatio.tsx
@@ -2099,16 +2102,16 @@ msgid "This project uses the V2 version of the Juicebox contracts."
 msgstr ""
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
-msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hodl tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
-msgstr "这一比率决定了任何特定时间内每赎回一个代币可以获得的溢出金额。联合曲线比率较低的情况下，每赎回一个代币都会相应地提升所有剩余代币的赎回价值，这样就会形成一个代币长期持有的激励机制。联合曲线比率为 100% 时，则意味着无论什么时候赎回代币，每个代币获得的价值都将是相同的。"
+msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
+msgstr ""
 
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
-msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hodl tokens longer than others. A redemption rate of 100% means all tokens will have equal value regardless of when they are redeemed."
+msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than others. A redemption rate of 100% means all tokens will have equal value regardless of when they are redeemed."
 msgstr ""
 
 #: src/components/shared/formItems/ProjectBondingCurveRate.tsx
-msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hodl tokens longer than others. The default bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed. Learn more in this <0>short video</0>."
-msgstr "这一比率决定了在任何特定时间内每赎回一个代币可以获得的溢出金额。在联合曲线比率较低的情况下，每赎回一个代币都会相应地提升所有剩余代币的赎回价值，这样就会形成一个代币长期持有的激励机制。当联合曲线比率为 100% 时，则意味着无论什么时候赎回代币，每个代币获得的价值都将是相同的。更多详细信息，请观看<0>短片</0>。"
+msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than others. The default bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed. Learn more in this <0>short video</0>."
+msgstr ""
 
 #: src/components/shared/formItems/ProjectPayDisclosure.tsx
 msgid "This text will be displayed to your supporters before they complete their payment."

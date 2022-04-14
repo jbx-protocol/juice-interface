@@ -1,5 +1,5 @@
 import { Button, Form, FormInstance, Space } from 'antd'
-import { t, Trans } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import { FormItems } from 'components/shared/formItems'
 import { ThemeContext } from 'contexts/themeContext'
 import { TicketMod } from 'models/mods'
@@ -68,7 +68,9 @@ export default function TicketingForm({
           onChange={(val?: number) => {
             setReservedRate(val ?? 0)
             form.setFieldsValue({ reserved: val })
-            setShowReservedRateWarning(!!(val && val >= reservedRateRiskyMin))
+            setShowReservedRateWarning(
+              Boolean(val && val >= reservedRateRiskyMin),
+            )
           }}
         />
         {showReservedRateWarning && (
@@ -88,8 +90,13 @@ export default function TicketingForm({
           mods={mods}
           onModsChanged={setMods}
           formItemProps={{
-            label: t`Reserved token allocation (optional)`,
-            extra: t`Allocate a portion of your project's reserved tokens to other Ethereum wallets or Juicebox projects.`,
+            label: <Trans>Reserved token allocation (optional)</Trans>,
+            extra: (
+              <Trans>
+                Allocate a portion of your project's reserved tokens to other
+                Ethereum wallets or Juicebox projects.
+              </Trans>
+            ),
           }}
           reservedRate={reservedRate}
         />

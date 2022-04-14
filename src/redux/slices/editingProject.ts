@@ -85,8 +85,6 @@ export const editingProjectSlice = createSlice({
   name: 'editingProject',
   initialState: defaultProjectState,
   reducers: {
-    setState: (state, action: PayloadAction<EditingProjectState>) =>
-      action.payload,
     resetState: () => defaultProjectState,
     setProjectInfo: (state, action: PayloadAction<EditingProjectInfo>) => {
       state.info = action.payload

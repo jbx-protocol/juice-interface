@@ -103,7 +103,7 @@ function BondingCurveRateExtra({ disabled }: { disabled?: boolean }) {
             This rate determines the amount of overflow that each token can be
             redeemed for at any given time. On a lower bonding curve, redeeming
             a token increases the value of each remaining token, creating an
-            incentive to hodl tokens longer than others. The default bonding
+            incentive to hold tokens longer than others. The default bonding
             curve of 100% means all tokens will have equal value regardless of
             when they are redeemed. Learn more in this{' '}
             <ExternalLink href="https://youtu.be/dxqc3yMqi5M">
@@ -127,13 +127,15 @@ export default function ProjectBondingCurveRate({
   onChange,
   checked,
   onToggled,
+  disabled,
 }: {
   value: string | undefined
   style?: CSSProperties
-  label?: string
+  label?: string | JSX.Element
   onChange: (val?: number) => void
   checked?: boolean
   onToggled?: (checked: boolean) => void
+  disabled?: boolean
 } & FormItemExt) {
   const { colors } = useContext(ThemeContext).theme
   const [calculator, setCalculator] = useState<any>() // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -253,7 +255,7 @@ export default function ProjectBondingCurveRate({
           sliderValue={parseFloat(
             value ?? DEFAULT_BONDING_CURVE_RATE_PERCENTAGE,
           )}
-          disabled={!checked}
+          disabled={disabled}
           onChange={(val: number | undefined) => {
             graphCurve(val)
             onChange(val)

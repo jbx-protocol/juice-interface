@@ -15,7 +15,7 @@ import {
 import { FundingCycleRiskFlags } from 'constants/fundingWarningText'
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 
-export const hasFundingTarget = (
+export const hasDistributionLimit = (
   fundAccessConstraint: SerializedV2FundAccessConstraint | undefined,
 ): boolean => {
   return Boolean(

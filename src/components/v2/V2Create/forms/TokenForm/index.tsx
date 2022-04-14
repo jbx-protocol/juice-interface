@@ -1,4 +1,4 @@
-import { t, Trans } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import { Button, Form, Space } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { useAppDispatch } from 'hooks/AppDispatch'
@@ -6,7 +6,11 @@ import { useAppSelector } from 'hooks/AppSelector'
 import ReservedTokensFormItem from 'components/v2/V2Create/forms/TokenForm/ReservedTokensFormItem'
 
 import { useCallback, useContext, useState } from 'react'
-import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
+import {
+  defaultFundingCycleData,
+  defaultFundingCycleMetadata,
+  editingV2ProjectActions,
+} from 'redux/slices/editingV2Project'
 
 import { sanitizeSplit } from 'utils/v2/splits'
 
@@ -25,6 +29,13 @@ import { BigNumber } from '@ethersproject/bignumber'
 
 import { FormItems } from 'components/shared/formItems'
 
+import {
+  getDefaultFundAccessConstraint,
+  hasDistributionLimit,
+} from 'utils/v2/fundingCycle'
+
+import { SerializedV2FundAccessConstraint } from 'utils/v2/serializers'
+
 import { shadowCard } from 'constants/styles/shadowCard'
 import TabDescription from '../../TabDescription'
 
@@ -42,7 +53,13 @@ export default function TokenForm({ onFinish }: { onFinish: VoidFunction }) {
     fundingCycleMetadata,
     fundingCycleData,
     reservedTokensGroupedSplits,
+    fundAccessConstraints,
   } = useAppSelector(state => state.editingV2Project)
+
+  const fundAccessConstraint =
+    getDefaultFundAccessConstraint<SerializedV2FundAccessConstraint>(
+      fundAccessConstraints,
+    )
 
   const [reservedTokensSplits, setReservedTokensSplits] = useState<Split[]>(
     reservedTokensGroupedSplits?.splits,
@@ -80,6 +97,8 @@ export default function TokenForm({ onFinish }: { onFinish: VoidFunction }) {
     onFinish?.()
   }, [dispatch, reservedTokensSplits, onFinish, tokenForm])
 
+  const canSetRedemptionRate = hasDistributionLimit(fundAccessConstraint)
+
   /**
    * NOTE: these values will all be in their 'native' units,
    * e.g. permyriads, parts-per-billion etc.
@@ -88,9 +107,14 @@ export default function TokenForm({ onFinish }: { onFinish: VoidFunction }) {
    * props later on.
    */
   const initialValues = {
-    reservedRate: fundingCycleMetadata?.reservedRate ?? 0,
-    discountRate: fundingCycleData?.discountRate ?? 0,
-    redemptionRate: fundingCycleMetadata.redemptionRate ?? 0,
+    reservedRate:
+      fundingCycleMetadata?.reservedRate ??
+      defaultFundingCycleMetadata.reservedRate,
+    discountRate:
+      fundingCycleData?.discountRate ?? defaultFundingCycleData.discountRate,
+    redemptionRate:
+      (canSetRedemptionRate && fundingCycleMetadata?.redemptionRate) ||
+      defaultFundingCycleMetadata.redemptionRate,
   }
 
   return (
@@ -142,7 +166,7 @@ export default function TokenForm({ onFinish }: { onFinish: VoidFunction }) {
           />
 
           <FormItems.ProjectBondingCurveRate
-            label={t`Redemption rate`}
+            label={<Trans>Redemption rate</Trans>}
             value={formatRedemptionRate(
               BigNumber.from(initialValues.redemptionRate),
             )}
@@ -154,6 +178,7 @@ export default function TokenForm({ onFinish }: { onFinish: VoidFunction }) {
               })
             }
             style={{ ...shadowCard(theme), padding: 25, marginBottom: 10 }}
+            disabled={!canSetRedemptionRate}
           />
         </div>
 

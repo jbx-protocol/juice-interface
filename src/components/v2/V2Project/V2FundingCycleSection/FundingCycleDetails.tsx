@@ -192,7 +192,7 @@ export default function FundingCycleDetails({
                   This rate determines the amount of overflow that each token
                   can be redeemed for at any given time. On a lower bonding
                   curve, redeeming a token increases the value of each remaining
-                  token, creating an incentive to hodl tokens longer than
+                  token, creating an incentive to hold tokens longer than
                   others. A redemption rate of 100% means all tokens will have
                   equal value regardless of when they are redeemed.
                 </Trans>

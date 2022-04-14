@@ -256,7 +256,7 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
         <p>
           <Trans>
             <i>Overflow</i> is created if your project's balance exceeds your{' '}
-            <i>funding target</i>.<i>Overflow</i> can be redeemed by your
+            <i>funding target</i>. <i>Overflow</i> can be redeemed by your
             project's token holders.
           </Trans>{' '}
           <Trans>

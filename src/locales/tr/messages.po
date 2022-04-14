@@ -112,10 +112,6 @@ msgstr "%{feePercentage} JBX ücretinden sonra dağıtılan net <0><1/>{netDistr
 msgid "<0><1>This project has no overflow</1>, so you will not receive any ETH for burning tokens.</0>"
 msgstr "<0><1>Bu projede taşma bulunmadığından</1> token'ları yakma karşılığında ETH almayacaksınız.</0>"
 
-#: src/components/shared/formItems/ProjectDiscountRate.tsx
-msgid "<0>Discount rate disabled when funding cycle duration has not been set.</0>"
-msgstr "<0>Finansman döngüsü süresi ayarlanmadığında indirim oranı devre dışı bırakılır.</0>"
-
 #: src/components/shared/PayWarningModal.tsx
 msgid "<0>Juicebox contracts</0> are unaudited, and may be vulnerable to bugs or hacks. All funds moved through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable for any losses by projects or their supporters."
 msgstr "<0>Juicebox sözleşmeleri</0> denetlenmemiştir ve hatalara ve hack'lenmelere karşı savunmasız olabilir. Juicebox vasıtasıyla taşınan tüm fonlar kaybolabilir veya çalınabilir. JuiceboxDAO ve Peel, projelerin veya onların destekçilerinin kayıplarından sorumlu değildir."
@@ -702,6 +698,10 @@ msgstr "Discord"
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Discount rate"
 msgstr "İndirim oranı"
+
+#: src/components/shared/formItems/ProjectDiscountRate.tsx
+msgid "Discount rate disabled when funding cycle duration has not been set."
+msgstr ""
 
 #: src/components/v1/V1Create/index.tsx
 msgid "Discount rate disabled while funding cycle duration is 0."

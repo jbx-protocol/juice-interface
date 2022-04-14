@@ -112,10 +112,6 @@ msgstr ""
 msgid "<0><1>This project has no overflow</1>, so you will not receive any ETH for burning tokens.</0>"
 msgstr "<0><1>В этом проекте нет переполнения</1>, поэтому вы не получите ETH за сжигание токенов..</0>"
 
-#: src/components/shared/formItems/ProjectDiscountRate.tsx
-msgid "<0>Discount rate disabled when funding cycle duration has not been set.</0>"
-msgstr "<0> Ставка скидки отключена, если продолжительность цикла финансирования не установлена.</0>"
-
 #: src/components/shared/PayWarningModal.tsx
 msgid "<0>Juicebox contracts</0> are unaudited, and may be vulnerable to bugs or hacks. All funds moved through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable for any losses by projects or their supporters."
 msgstr "<0>Контракты Juicebox</0> не проверяются и могут быть уязвимы к ошибкам или взломам. Все средства, перемещаемые через Juicebox, могут быть потеряны или украдены. JuiceboxDAO и Peel не несут ответственности за любые потери проектов или их сторонников."
@@ -702,6 +698,10 @@ msgstr "Дискорд"
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Discount rate"
 msgstr "Учетная ставка "
+
+#: src/components/shared/formItems/ProjectDiscountRate.tsx
+msgid "Discount rate disabled when funding cycle duration has not been set."
+msgstr ""
 
 #: src/components/v1/V1Create/index.tsx
 msgid "Discount rate disabled while funding cycle duration is 0."

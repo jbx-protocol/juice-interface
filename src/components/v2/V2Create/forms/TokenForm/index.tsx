@@ -32,6 +32,7 @@ import { FormItems } from 'components/shared/formItems'
 import {
   getDefaultFundAccessConstraint,
   hasDistributionLimit,
+  hasFundingDuration,
 } from 'utils/v2/fundingCycle'
 
 import { SerializedV2FundAccessConstraint } from 'utils/v2/serializers'
@@ -98,6 +99,7 @@ export default function TokenForm({ onFinish }: { onFinish: VoidFunction }) {
   }, [dispatch, reservedTokensSplits, onFinish, tokenForm])
 
   const canSetRedemptionRate = hasDistributionLimit(fundAccessConstraint)
+  const canSetDiscountRate = hasFundingDuration(fundingCycleData)
 
   /**
    * NOTE: these values will all be in their 'native' units,
@@ -163,6 +165,7 @@ export default function TokenForm({ onFinish }: { onFinish: VoidFunction }) {
               })
             }}
             style={{ ...shadowCard(theme), padding: 25, marginBottom: 10 }}
+            disabled={!canSetDiscountRate}
           />
 
           <FormItems.ProjectBondingCurveRate

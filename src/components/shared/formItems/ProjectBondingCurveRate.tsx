@@ -216,9 +216,6 @@ export default function ProjectBondingCurveRate({
     [calculator, graphCurve, value],
   )
 
-  // When toggle is disabled and can't be changed, the whole item is unavailable
-  const unavailable = !Boolean(onToggled) && !checked
-
   return (
     <Form.Item
       name={name}
@@ -242,7 +239,7 @@ export default function ProjectBondingCurveRate({
         )
       }
       style={style}
-      extra={<BondingCurveRateExtra disabled={unavailable} />}
+      extra={<BondingCurveRateExtra disabled={disabled} />}
       {...formItemProps}
     >
       <div style={{ display: 'flex', alignItems: 'center', marginTop: 10 }}>

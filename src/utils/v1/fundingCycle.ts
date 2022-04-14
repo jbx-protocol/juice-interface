@@ -5,7 +5,7 @@ import { V1FundingCycle, V1FundingCycleMetadata } from 'models/v1/fundingCycle'
 import unsafeFundingCycleProperties from 'utils/unsafeFundingCycleProperties'
 import { perbicentToPercent } from 'utils/formatNumber'
 
-import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
+import { getBallotStrategyByAddress } from 'constants/v1/ballotStrategies/getBallotStrategiesByAddress'
 
 import { EditingV1FundingCycle } from './serializers'
 import { FundingCycleRiskFlags } from 'constants/fundingWarningText'

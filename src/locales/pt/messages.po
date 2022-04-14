@@ -64,7 +64,8 @@ msgstr ""
 msgid "24 hours"
 msgstr "24 horas"
 
-#: src/constants/ballotStrategies/ballotStrategies.ts
+#: src/constants/v1/ballotStrategies/index.ts
+#: src/constants/v2/ballotStrategies/index.ts
 msgid "3-day delay"
 msgstr "3 dias de atraso"
 
@@ -80,7 +81,8 @@ msgstr "30 dias"
 msgid "7 days"
 msgstr "7 dias"
 
-#: src/constants/ballotStrategies/ballotStrategies.ts
+#: src/constants/v1/ballotStrategies/index.ts
+#: src/constants/v2/ballotStrategies/index.ts
 msgid "7-day delay"
 msgstr "7 dias de atraso"
 
@@ -211,11 +213,13 @@ msgstr "Um projeto pode reservar uma porcentagem de tokens gerados por cada paga
 msgid "A project's lifetime is defined in funding cycles. If a funding target is set, the project can withdraw no more than the target for the duration of the cycle."
 msgstr "O tempo de vida de um projeto é definido em ciclos de financiamento. Se for definida uma meta de financiamento, o projeto não poderá retirar mais do que a meta para a duração do ciclo."
 
-#: src/constants/ballotStrategies/ballotStrategies.ts
+#: src/constants/v1/ballotStrategies/index.ts
+#: src/constants/v2/ballotStrategies/index.ts
 msgid "A reconfiguration to an upcoming funding cycle must be submitted at least 3 days before it starts."
 msgstr "Uma reconfiguração de um ciclo de financiamento que se aproxima deve ser submetida pelo menos 3 dias antes do seu início."
 
-#: src/constants/ballotStrategies/ballotStrategies.ts
+#: src/constants/v1/ballotStrategies/index.ts
+#: src/constants/v2/ballotStrategies/index.ts
 msgid "A reconfiguration to an upcoming funding cycle must be submitted at least 7 days before it starts."
 msgstr "Uma reconfiguração de um ciclo de financiamento deve ser submetida pelo menos 7 dias antes do seu início."
 
@@ -350,7 +354,8 @@ msgstr "Um link de convite para o servidor do Discord do seu projeto."
 msgid "Any changes will take effect in the next funding cycle. The current funding cycle won't be altered."
 msgstr "Qualquer mudança terá efeito no próximo ciclo de financiamento. O ciclo atual de financiamento não será alterado."
 
-#: src/constants/ballotStrategies/ballotStrategies.ts
+#: src/constants/v1/ballotStrategies/index.ts
+#: src/constants/v2/ballotStrategies/index.ts
 msgid "Any reconfiguration to an upcoming funding cycle will take effect once the current cycle ends. A project with no strategy may be vulnerable to being rug-pulled by its owner."
 msgstr "Qualquer reconfiguração de um ciclo de financiamento próximo terá efeito assim que o ciclo atual termine. Um projeto sem estratégia pode ser vulnerável e acabar sofrendo um golpe (rug-pull, por exemplo) pelo dono."
 
@@ -632,7 +637,7 @@ msgid "Currently worth: <0><1/>{0}</0>"
 msgstr "Atualmente vale: <0><1/>{0}</0>"
 
 #: src/components/shared/ReconfigurationStrategy/ReconfigurationStrategySelector.tsx
-#: src/constants/ballotStrategies/ballotStrategies.ts
+#: src/utils/ballot.ts
 msgid "Custom strategy"
 msgstr "Estratégia personalizada"
 
@@ -1329,7 +1334,8 @@ msgstr "Apenas o objetivo do ciclo de financiamento pode ser distribuído pelo p
 msgid "No past funding cycles"
 msgstr "Nenhum ciclo de financiamento passado"
 
-#: src/constants/ballotStrategies/ballotStrategies.ts
+#: src/constants/v1/ballotStrategies/index.ts
+#: src/constants/v2/ballotStrategies/index.ts
 msgid "No strategy"
 msgstr "Sem estratégia"
 
@@ -1633,7 +1639,7 @@ msgstr "Recipientes receberão os pagamentos em ETH."
 msgid "Reconfiguration"
 msgstr "Reconfiguração"
 
-#: src/components/shared/ReconfigurationStrategy/ReconfigurationStrategyDrawer.tsx
+#: src/components/v1/ReconfigurationStrategyDrawer.tsx
 msgid "Reconfiguration rules"
 msgstr ""
 
@@ -1815,7 +1821,7 @@ msgstr "Regras para determinar quantos ciclos de financiamento podem ser reconfi
 msgid "Rules for how changes can be made to your project."
 msgstr "Regras sobre como fazer mudanças no seu projeto."
 
-#: src/components/shared/ReconfigurationStrategy/ReconfigurationStrategyDrawer.tsx
+#: src/components/v1/ReconfigurationStrategyDrawer.tsx
 msgid "Rules for how this project's funding cycles can be reconfigured."
 msgstr "Regras para como os ciclos de financiamento deste projeto podem ser reconfigurados."
 
@@ -1849,7 +1855,7 @@ msgstr "Salvar detalhes do projeto"
 msgid "Save reconfiguration"
 msgstr "Salvar reconfiguração"
 
-#: src/components/shared/ReconfigurationStrategy/ReconfigurationStrategyDrawer.tsx
+#: src/components/v1/ReconfigurationStrategyDrawer.tsx
 #: src/components/v2/V2Create/forms/RulesForm/index.tsx
 msgid "Save rules"
 msgstr ""
@@ -2111,7 +2117,7 @@ msgstr "Esses atributos podem ser modificados a qualquer momento."
 msgid "These settings will <0>not</0> be editable immediately within a funding cycle. They can only be changed for <1>upcoming</1> funding cycles."
 msgstr "Essas ferramentas <0>não</0> serão editáveis imediatamente durante um ciclo de financiamento. Elas só poderão ser modificadas para <1>próximos</1> ciclos de financiamento."
 
-#: src/constants/ballotStrategies/ballotStrategies.ts
+#: src/utils/ballot.ts
 msgid "This address is an unrecognized strategy contract. Make sure it is correct!"
 msgstr "Este endereço é um contrato de estratégia não reconhecido. Tenha certeza que está correto!"
 

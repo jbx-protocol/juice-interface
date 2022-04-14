@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { BallotState } from 'models/ballot-state'
+import { BallotState } from 'models/ballot'
 import { useContext } from 'react'
 import { parseWad } from 'utils/formatNumber'
 import { V2ProjectContext } from 'contexts/v2/projectContext'

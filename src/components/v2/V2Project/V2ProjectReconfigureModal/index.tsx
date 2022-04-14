@@ -31,6 +31,7 @@ import RulesTabContent from 'components/v2/V2Create/forms/RulesForm'
 
 import { V2ReconfigureFundingDrawer } from './drawers/V2ReconfigureFundingDrawer'
 import { V2ReconfigureProjectDetailsDrawer } from './drawers/V2ReconfigureProjectDetailsDrawer'
+import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
 
 function ReconfigureButton({
   title,
@@ -139,6 +140,7 @@ export default function V2ProjectReconfigureModal({
     if (effectiveDistributionLimit) {
       fundAccessConstraint = {
         terminal: contracts?.JBETHPaymentTerminal.address ?? '',
+        token: ETH_TOKEN_ADDRESS,
         distributionLimit: fromWad(effectiveDistributionLimit),
         distributionLimitCurrency:
           effectiveDistributionLimitCurrency?.toString() ?? 'ETH',

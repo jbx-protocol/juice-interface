@@ -12,11 +12,13 @@ import { isAddress } from '@ethersproject/address'
 
 import ReconfigurationStrategySelector from 'components/shared/ReconfigurationStrategy/ReconfigurationStrategySelector'
 
+import { BallotStrategy } from 'models/ballot'
+
 import { shadowCard } from 'constants/styles/shadowCard'
 import {
+  ballotStrategies,
   DEFAULT_BALLOT_STRATEGY,
-  Strategy,
-} from 'constants/ballotStrategies/ballotStrategies'
+} from 'constants/v2/ballotStrategies'
 import FormItemLabel from '../../FormItemLabel'
 
 type RulesFormFields = {
@@ -35,7 +37,7 @@ export default function RulesForm({ onFinish }: { onFinish: VoidFunction }) {
   )
 
   const [showMintingWarning, setShowMintingWarning] = useState<boolean>(false)
-  const [ballotStrategy, setBallotStrategy] = useState<Strategy>(
+  const [ballotStrategy, setBallotStrategy] = useState<BallotStrategy>(
     DEFAULT_BALLOT_STRATEGY,
   )
 
@@ -154,8 +156,9 @@ export default function RulesForm({ onFinish }: { onFinish: VoidFunction }) {
           }
         >
           <ReconfigurationStrategySelector
+            ballotStrategies={ballotStrategies()}
             selectedStrategy={ballotStrategy}
-            onChange={(strategy: Strategy) => {
+            onChange={(strategy: BallotStrategy) => {
               setBallotStrategy(strategy)
             }}
           />

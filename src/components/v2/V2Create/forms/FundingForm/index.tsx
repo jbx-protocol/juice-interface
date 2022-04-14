@@ -32,7 +32,7 @@ import ExternalLink from 'components/shared/ExternalLink'
 
 import { Split } from 'models/v2/splits'
 
-import { formatFee } from 'utils/v2/math'
+import { formatFee, MAX_DISTRIBUTION_LIMIT } from 'utils/v2/math'
 
 import { CurrencyContext } from 'contexts/currencyContext'
 import {
@@ -44,6 +44,8 @@ import * as constants from '@ethersproject/constants'
 import { fromWad, parseWad } from 'utils/formatNumber'
 import BudgetTargetInput from 'components/shared/inputs/BudgetTargetInput'
 import { Link } from 'react-router-dom'
+
+import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
 
 import { shadowCard } from 'constants/styles/shadowCard'
 import TargetTypeSelect, { TargetType } from './TargetTypeSelect'
@@ -123,16 +125,15 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
     (fields: FundingFormFields) => {
       if (!contracts) throw new Error('Failed to save funding configuration.')
 
-      let fundAccessConstraint: SerializedV2FundAccessConstraint | undefined =
-        undefined
-
-      fundAccessConstraint = {
-        terminal: contracts.JBETHPaymentTerminal.address,
-        distributionLimit: target ?? fromWad(constants.MaxUint256),
-        distributionLimitCurrency: targetCurrency.toString(),
-        overflowAllowance: '0', // nothing for the time being.
-        overflowAllowanceCurrency: '0',
-      }
+      const fundAccessConstraint: SerializedV2FundAccessConstraint | undefined =
+        {
+          terminal: contracts.JBETHPaymentTerminal.address,
+          token: ETH_TOKEN_ADDRESS,
+          distributionLimit: target ?? fromWad(MAX_DISTRIBUTION_LIMIT),
+          distributionLimitCurrency: targetCurrency.toString(),
+          overflowAllowance: '0', // nothing for the time being.
+          overflowAllowanceCurrency: '0',
+        }
 
       const duration = fields?.duration ? parseInt(fields?.duration) : 0
       const durationUnit = fields?.durationUnit ?? 'days'

@@ -11,7 +11,6 @@ import { useContext } from 'react'
 import { formatDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
-import * as constants from '@ethersproject/constants'
 import { V2CurrencyName } from 'utils/v2/currency'
 import TooltipLabel from 'components/shared/TooltipLabel'
 
@@ -25,10 +24,11 @@ import {
   formatDiscountRate,
   formatRedemptionRate,
   formatReservedRate,
+  MAX_DISTRIBUTION_LIMIT,
   weightedAmount,
 } from 'utils/v2/math'
 
-import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
+import { getBallotStrategyByAddress } from 'constants/v2/ballotStrategies/getBallotStrategiesByAddress'
 import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
 
 export default function FundingCycleDetails({
@@ -54,7 +54,6 @@ export default function FundingCycleDetails({
   const formattedEndTime = formatDate(
     fundingCycle.start.add(fundingCycle.duration).mul(1000),
   )
-
   const ballotStrategy = getBallotStrategyByAddress(fundingCycle.ballot)
   const unsafeFundingCycleProperties =
     getUnsafeV2FundingCycleProperties(fundingCycle)
@@ -113,7 +112,7 @@ export default function FundingCycleDetails({
   const riskWarningText = FUNDING_CYCLE_WARNING_TEXT()
 
   const distributionLimitIsInfinite =
-    !distributionLimit || distributionLimit?.eq(constants.MaxUint256)
+    !distributionLimit || distributionLimit?.eq(MAX_DISTRIBUTION_LIMIT)
   const distributionLimitIsZero = distributionLimit?.eq(0)
 
   return (

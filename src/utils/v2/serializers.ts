@@ -109,6 +109,7 @@ export const serializeFundAccessConstraint = (
 ): SerializedV2FundAccessConstraint => {
   return {
     terminal: fundAccessConstraint.terminal,
+    token: fundAccessConstraint.token,
     distributionLimit: fromWad(fundAccessConstraint.distributionLimit),
     distributionLimitCurrency:
       fundAccessConstraint.distributionLimitCurrency.toString(),
@@ -123,6 +124,7 @@ export const deserializeFundAccessConstraint = (
 ): V2FundAccessConstraint => {
   return {
     terminal: fundAccessConstraint.terminal,
+    token: fundAccessConstraint.token,
     distributionLimit: parseWad(fundAccessConstraint.distributionLimit),
     distributionLimitCurrency: BigNumber.from(
       fundAccessConstraint.distributionLimitCurrency,

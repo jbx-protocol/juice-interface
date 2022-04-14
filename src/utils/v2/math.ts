@@ -1,4 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import * as constants from '@ethersproject/constants'
 import { invertPermyriad } from 'utils/bigNumbers'
 import { fromWad, percentToPermyriad } from 'utils/formatNumber'
 import { WeightFunction } from 'utils/math'
@@ -11,6 +12,7 @@ export const MAX_REDEMPTION_RATE = TEN_THOUSAND
 export const MAX_DISCOUNT_RATE = ONE_BILLION
 export const SPLITS_TOTAL_PERCENT = ONE_BILLION
 export const MAX_FEE = ONE_BILLION
+export const MAX_DISTRIBUTION_LIMIT = constants.MaxUint256
 
 /**
  * Express a given discount rate (parts-per-billion) as a percentage.

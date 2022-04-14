@@ -106,6 +106,7 @@ export default function FundingCycleTabContent({
         onClose={() => {
           setFundingDrawerVisible(false)
         }}
+        getContainer={false}
       >
         <h1>
           <Trans>Funding</Trans>
@@ -119,25 +120,6 @@ export default function FundingCycleTabContent({
       </Drawer>
       <Drawer
         {...drawerStyle}
-        visible={fundingDrawerVisible}
-        onClose={() => {
-          setFundingDrawerVisible(false)
-        }}
-      >
-        <Space direction="vertical" size="large">
-          <h1>
-            <Trans>Funding</Trans>
-          </h1>
-
-          <FundingForm
-            onFinish={() => {
-              setFundingDrawerVisible(false)
-            }}
-          />
-        </Space>
-      </Drawer>
-      <Drawer
-        {...drawerStyle}
         visible={tokenDrawerVisible}
         onClose={() => {
           setTokenDrawerVisible(false)
@@ -146,20 +128,20 @@ export default function FundingCycleTabContent({
         <h1>
           <Trans>Token</Trans>
         </h1>
-
         <TokenForm
           onFinish={() => {
             setTokenDrawerVisible(false)
           }}
         />
+        getContainer={false}
       </Drawer>
-
       <Drawer
         {...drawerStyle}
         visible={rulesDrawerVisible}
         onClose={() => {
           setRulesDrawerVisible(false)
         }}
+        getContainer={false}
       >
         <h1>
           <Trans>Rules</Trans>

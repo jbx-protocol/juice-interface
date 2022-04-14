@@ -1879,7 +1879,7 @@ msgid "Set a funding target to cover predictable expenses. Any extra funds (<0>o
 msgstr "Установите цель финансирования для покрытия предсказуемых расходов. Любые дополнительные средства (<0>overflow</0>) могут быть затребованы любым, кто держит токены вашего проекта вместе с вами."
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "Set the amount of funds you'd like to distribute from your treasury each funding cycle. At any time, treasury funds within the distribution limit can be paid out to destinations that you'll pre-program, and treasury funds in excess of the distribution limit – your project's overflow –  can be reclaimed by your project's token holders by redeeming their tokens. <0>Learn more</0> about reclaiming overflow."
+msgid "Set the amount of funds you'd like to distribute from your treasury each funding cycle. At any time, treasury funds within the distribution limit can be paid out to destinations that you'll pre-program, and treasury funds in excess of the distribution limit – your project's overflow – can be reclaimed by your project's token holders by redeeming their tokens.<0>Learn more</0> about reclaiming overflow."
 msgstr ""
 
 #: src/components/v1/shared/BudgetForm.tsx

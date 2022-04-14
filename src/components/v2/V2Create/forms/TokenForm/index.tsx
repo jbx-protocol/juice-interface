@@ -136,7 +136,7 @@ export default function TokenForm({ onFinish }: { onFinish: VoidFunction }) {
 
         <div>
           <ReservedTokensFormItem
-            value={parseFloat(
+            initialValue={parseFloat(
               formatReservedRate(BigNumber.from(initialValues.reservedRate)),
             )}
             onChange={newReservedRatePercentage => {

@@ -1,7 +1,7 @@
 import { Form, Switch } from 'antd'
 import { Trans } from '@lingui/macro'
 import { ThemeContext } from 'contexts/themeContext'
-import React, { CSSProperties, useContext, useState } from 'react'
+import { CSSProperties, useContext, useState } from 'react'
 import FormItemLabel from 'components/v2/V2Create/FormItemLabel'
 
 import NumberSlider from '../inputs/NumberSlider'
@@ -66,7 +66,7 @@ export default function ProjectReserved({
                 <Trans>Reserved rate</Trans>
               </FormItemLabel>
               {onToggled ? (
-                <React.Fragment>
+                <>
                   <Switch checked={checked} onChange={onToggled} />{' '}
                   {!checked ? (
                     <span
@@ -75,7 +75,7 @@ export default function ProjectReserved({
                       <Trans>(0%)</Trans>
                     </span>
                   ) : null}
-                </React.Fragment>
+                </>
               ) : null}
             </div>
             <div style={{ paddingBottom: 11, paddingLeft: 14 }}>

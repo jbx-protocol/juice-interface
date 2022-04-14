@@ -5,16 +5,17 @@ import { FormItemExt } from 'components/shared/formItems/formItemExt'
 import { FormItems } from 'components/shared/formItems'
 import { toMod, toSplit } from 'utils/v2/splits'
 import { Split } from 'models/v2/splits'
+import { defaultFundingCycleMetadata } from 'redux/slices/editingV2Project'
 
 export default function ReservedTokensFormItem({
   hideLabel,
-  value,
+  initialValue,
   reservedTokensSplits,
   onReservedTokensSplitsChange,
   style = {},
   onChange,
 }: {
-  value: number | undefined
+  initialValue: number | undefined
   reservedTokensSplits: Split[]
   onReservedTokensSplitsChange: (splits: Split[]) => void
   onChange: (val?: number) => void
@@ -22,15 +23,22 @@ export default function ReservedTokensFormItem({
 } & FormItemExt) {
   // Using a state here because relying on the form does not
   // pass through updated reservedRate to ProjectTicketMods
-  const [reservedRate, setReservedRate] = useState<number | undefined>(value)
-  const [reservedRateChecked, setReservedRateChecked] = useState<boolean>(
-    value !== undefined,
+  const [reservedRate, setReservedRate] = useState<number | undefined>(
+    initialValue,
   )
+
+  const hasReservedRate = !(
+    reservedRate === undefined ||
+    reservedRate.toString() === defaultFundingCycleMetadata.reservedRate
+  )
+
+  const [reservedRateChecked, setReservedRateChecked] =
+    useState<boolean>(hasReservedRate)
 
   return (
     <div style={style}>
       <FormItems.ProjectReserved
-        value={value}
+        value={reservedRate}
         onChange={val => {
           setReservedRate(val)
           onChange(val)
@@ -44,7 +52,7 @@ export default function ReservedTokensFormItem({
         hideLabel={hideLabel}
       />
 
-      {reservedRateChecked ? (
+      {hasReservedRate ? (
         <FormItems.ProjectTicketMods
           mods={reservedTokensSplits.map(split => toMod(split))}
           onModsChanged={mods => {

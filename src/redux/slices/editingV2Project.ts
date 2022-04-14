@@ -34,6 +34,11 @@ export interface V2ProjectState {
   reservedTokensGroupedSplits: ReservedTokensGroupedSplits
 }
 
+// Increment this version by 1 when making breaking changes.
+// When users return to the site and their local version is less than
+// this number, their state will be reset.
+export const REDUX_STORE_V2_PROJECT_VERSION = 2
+
 const defaultProjectMetadataState: ProjectMetadataV4 = {
   name: '',
   infoUri: '',
@@ -86,10 +91,7 @@ export const EMPTY_RESERVED_TOKENS_GROUPED_SPLITS = {
 }
 
 export const defaultProjectState: V2ProjectState = {
-  // Increment this version by 1 when making breaking changes.
-  // When users return to the site and their local version is less than
-  // this number, their state will be reset.
-  version: 1,
+  version: REDUX_STORE_V2_PROJECT_VERSION,
   projectMetadata: { ...defaultProjectMetadataState },
   fundingCycleData: { ...defaultFundingCycleData },
   fundingCycleMetadata: { ...defaultFundingCycleMetadata },

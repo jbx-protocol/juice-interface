@@ -25,6 +25,7 @@ import {
 } from 'constants/v2/splits'
 import { DEFAULT_BALLOT_STRATEGY } from 'constants/ballotStrategies/ballotStrategies'
 
+export type DurationUnitsOption = 'days' | 'hrs' | 'mins' | 'secs'
 export interface V2ProjectState {
   version: number
   projectMetadata: ProjectMetadataV4

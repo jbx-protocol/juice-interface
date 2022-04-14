@@ -20,6 +20,11 @@ export const V1CurrencyName = (
 ): CurrencyName | undefined =>
   currency !== undefined ? V1_CURRENCY_METADATA[currency].name : undefined
 
+export const getV1CurrencyOption = (
+  currencyName: CurrencyName,
+): V1CurrencyOption =>
+  currencyName === 'ETH' ? V1_CURRENCY_ETH : V1_CURRENCY_USD
+
 export const V1CurrencySymbol = (
   currency?: V1CurrencyOption,
 ): CurrencySymbol | undefined =>

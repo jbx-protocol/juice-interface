@@ -12,7 +12,9 @@ import { useContext } from 'react'
 
 import { V2FundingCycleRiskCount } from 'utils/v2/fundingCycle'
 
-import FundingCycleSection from 'components/shared/Project/FundingCycleSection'
+import FundingCycleSection, {
+  TabType,
+} from 'components/shared/Project/FundingCycleSection'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import CurrentFundingCycle from './CurrentFundingCycle'
@@ -63,12 +65,12 @@ export default function V2FundingCycleSection({
       label: tabText({ text: t`Current` }),
       content: <CurrentFundingCycle expandCard={expandCard} />,
     },
-    {
+    !isPreviewMode && {
       key: 'upcoming',
       label: tabText({ text: t`Upcoming` }),
       content: <UpcomingFundingCycle expandCard={expandCard} />,
     },
-  ]
+  ].filter(Boolean) as TabType[]
 
   const canReconfigure = useHasPermission(V2OperatorPermission.RECONFIGURE)
   const showReconfigureButton = canReconfigure && !isPreviewMode

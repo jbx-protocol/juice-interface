@@ -1,7 +1,7 @@
 import { Form, Switch } from 'antd'
 import { Trans } from '@lingui/macro'
 import { ThemeContext } from 'contexts/themeContext'
-import React, { CSSProperties, useContext, useState } from 'react'
+import { CSSProperties, useContext, useState } from 'react'
 import FormItemLabel from 'components/v2/V2Create/FormItemLabel'
 
 import NumberSlider from '../inputs/NumberSlider'
@@ -19,14 +19,14 @@ export default function ProjectReserved({
   value,
   style = {},
   onChange,
-  disabled,
-  toggleDisabled,
+  checked,
+  onToggled,
 }: {
   value: number | undefined
   style?: CSSProperties
   onChange: (val?: number) => void
-  disabled?: boolean
-  toggleDisabled?: (checked: boolean) => void
+  checked?: boolean
+  onToggled?: (checked: boolean) => void
 } & FormItemExt) {
   const {
     theme: { colors },
@@ -65,17 +65,17 @@ export default function ProjectReserved({
               <FormItemLabel>
                 <Trans>Reserved rate</Trans>
               </FormItemLabel>
-              {toggleDisabled ? (
-                <React.Fragment>
-                  <Switch checked={!disabled} onChange={toggleDisabled} />{' '}
-                  {disabled ? (
+              {onToggled ? (
+                <>
+                  <Switch checked={checked} onChange={onToggled} />{' '}
+                  {!checked ? (
                     <span
                       style={{ color: colors.text.tertiary, marginLeft: 10 }}
                     >
                       <Trans>(0%)</Trans>
                     </span>
                   ) : null}
-                </React.Fragment>
+                </>
               ) : null}
             </div>
             <div style={{ paddingBottom: 11, paddingLeft: 14 }}>
@@ -90,7 +90,7 @@ export default function ProjectReserved({
       style={style}
       {...formItemProps}
     >
-      {!disabled ? (
+      {checked ? (
         <NumberSlider
           sliderValue={value}
           defaultValue={value ?? 0}

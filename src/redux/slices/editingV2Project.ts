@@ -16,7 +16,8 @@ import {
   SerializedV2FundingCycleMetadata,
   SerializedV2FundAccessConstraint,
 } from 'utils/v2/serializers'
-import { percentToPermyriad } from 'utils/formatNumber'
+
+import { redemptionRateFrom } from 'utils/v2/math'
 
 import {
   ETH_PAYOUT_SPLIT_GROUP,
@@ -34,6 +35,11 @@ export interface V2ProjectState {
   reservedTokensGroupedSplits: ReservedTokensGroupedSplits
 }
 
+// Increment this version by 1 when making breaking changes.
+// When users return to the site and their local version is less than
+// this number, their state will be reset.
+export const REDUX_STORE_V2_PROJECT_VERSION = 2
+
 const defaultProjectMetadataState: ProjectMetadataV4 = {
   name: '',
   infoUri: '',
@@ -45,7 +51,7 @@ const defaultProjectMetadataState: ProjectMetadataV4 = {
   version: 4,
 }
 
-const defaultFundingCycleData: SerializedV2FundingCycleData =
+export const defaultFundingCycleData: SerializedV2FundingCycleData =
   serializeV2FundingCycleData({
     duration: BigNumber.from(0),
     weight: constants.WeiPerEther.mul(1000000), // 1e24, resulting in 1,000,000 tokens per ETH
@@ -53,11 +59,11 @@ const defaultFundingCycleData: SerializedV2FundingCycleData =
     ballot: DEFAULT_BALLOT_STRATEGY.address,
   })
 
-const defaultFundingCycleMetadata: SerializedV2FundingCycleMetadata =
+export const defaultFundingCycleMetadata: SerializedV2FundingCycleMetadata =
   serializeV2FundingCycleMetadata({
     reservedRate: BigNumber.from(0), // A number from 0-10,000
-    redemptionRate: percentToPermyriad(100), // A number from 0-10,000
-    ballotRedemptionRate: percentToPermyriad(100), // A number from 0-10,000
+    redemptionRate: redemptionRateFrom('100'), // A number from 0-10,000
+    ballotRedemptionRate: redemptionRateFrom('100'), // A number from 0-10,000
     pausePay: false,
     pauseDistributions: false,
     pauseRedeem: false,
@@ -86,10 +92,7 @@ export const EMPTY_RESERVED_TOKENS_GROUPED_SPLITS = {
 }
 
 export const defaultProjectState: V2ProjectState = {
-  // Increment this version by 1 when making breaking changes.
-  // When users return to the site and their local version is less than
-  // this number, their state will be reset.
-  version: 1,
+  version: REDUX_STORE_V2_PROJECT_VERSION,
   projectMetadata: { ...defaultProjectMetadataState },
   fundingCycleData: { ...defaultFundingCycleData },
   fundingCycleMetadata: { ...defaultFundingCycleMetadata },
@@ -102,7 +105,6 @@ export const editingV2ProjectSlice = createSlice({
   name: 'editingV2Project',
   initialState: defaultProjectState,
   reducers: {
-    setState: (state, action: PayloadAction<V2ProjectState>) => action.payload,
     resetState: () => defaultProjectState,
     setName: (state, action: PayloadAction<string>) => {
       state.projectMetadata.name = action.payload

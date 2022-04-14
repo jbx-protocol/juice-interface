@@ -49,7 +49,7 @@ import { V1CurrencyName } from 'utils/v1/currency'
 
 import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
 
-import BudgetForm from '../../../shared/forms/BudgetForm'
+import BudgetForm from '../../shared/BudgetForm'
 import IncentivesForm, {
   IncentivesFormFields,
 } from '../../../shared/forms/IncentivesForm'

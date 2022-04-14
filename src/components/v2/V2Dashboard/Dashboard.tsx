@@ -84,7 +84,7 @@ export default function V2Dashboard() {
 
   const { data: distributionLimitData } = useProjectDistributionLimit({
     projectId,
-    domain: fundingCycle?.configuration?.toString(),
+    configuration: fundingCycle?.configuration?.toString(),
     terminal: primaryTerminal,
   })
 
@@ -128,7 +128,7 @@ export default function V2Dashboard() {
 
   const { data: queuedDistributionLimitData } = useProjectDistributionLimit({
     projectId,
-    domain: queuedFundingCycle?.configuration.toString(),
+    configuration: queuedFundingCycle?.configuration.toString(),
     terminal: primaryTerminal,
   })
   const [queuedDistributionLimit, queuedDistributionLimitCurrency] =

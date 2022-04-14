@@ -4,6 +4,7 @@ import { V2UserContext } from 'contexts/v2/userContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import { TransactorInstance } from '../../Transactor'
+import { ETH } from 'constants/juiceboxTokens'
 
 export function useAddToBalanceTx(): TransactorInstance<{
   value: BigNumber
@@ -22,7 +23,7 @@ export function useAddToBalanceTx(): TransactorInstance<{
     return transactor(
       contracts?.JBETHPaymentTerminal,
       'addToBalanceOf',
-      [projectId.toHexString(), value, DEFAULT_MEMO],
+      [projectId.toHexString(), value, ETH, DEFAULT_MEMO],
       {
         ...txOpts,
       },

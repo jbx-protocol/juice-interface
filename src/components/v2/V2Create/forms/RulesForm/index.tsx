@@ -1,6 +1,5 @@
 import { Trans } from '@lingui/macro'
 import { Button, Form, Space, Switch } from 'antd'
-import { useForm } from 'antd/lib/form/Form'
 import { InfoCircleOutlined } from '@ant-design/icons'
 
 import { useAppDispatch } from 'hooks/AppDispatch'
@@ -29,7 +28,7 @@ type RulesFormFields = {
 export default function RulesForm({ onFinish }: { onFinish: VoidFunction }) {
   const { theme } = useContext(ThemeContext)
 
-  const [form] = useForm<RulesFormFields>()
+  const [form] = Form.useForm<RulesFormFields>()
   const dispatch = useAppDispatch()
   const { fundingCycleMetadata, fundingCycleData } = useAppSelector(
     state => state.editingV2Project,

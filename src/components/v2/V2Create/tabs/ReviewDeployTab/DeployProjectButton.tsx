@@ -16,6 +16,10 @@ import { NetworkContext } from 'contexts/networkContext'
 
 import TransactionModal from 'components/shared/TransactionModal'
 
+import { useAppDispatch } from 'hooks/AppDispatch'
+
+import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
+
 import { readProvider } from 'constants/readProvider'
 import { readNetwork } from 'constants/networks'
 
@@ -48,6 +52,7 @@ export default function DeployProjectButton() {
   const fundingCycleMetadata = useEditingV2FundingCycleMetadataSelector()
   const fundingCycleData = useEditingV2FundingCycleDataSelector()
   const fundAccessConstraints = useEditingV2FundAccessConstraintsSelector()
+  const dispatch = useAppDispatch()
 
   const deployProject = useCallback(async () => {
     setDeployLoading(true)
@@ -99,6 +104,9 @@ export default function DeployProjectButton() {
             return
           }
 
+          // Reset Redux state/localstorage after deploying
+          dispatch(editingV2ProjectActions.resetState())
+
           history.push(`/v2/p/${projectId}?newDeploy=true`)
         },
         onCancelled() {
@@ -121,6 +129,7 @@ export default function DeployProjectButton() {
     fundingCycleMetadata,
     fundAccessConstraints,
     history,
+    dispatch,
   ])
 
   return (

@@ -17,13 +17,13 @@ import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallot
 
 export const hasFundingTarget = (
   fundAccessConstraint: SerializedV2FundAccessConstraint | undefined,
-) => {
-  return (
+): boolean => {
+  return Boolean(
     fundAccessConstraint?.distributionLimit &&
-    !parseWad(fundAccessConstraint.distributionLimit).eq(
-      constants.MaxUint256,
-    ) &&
-    fundAccessConstraint.distributionLimit !== '0'
+      !parseWad(fundAccessConstraint.distributionLimit).eq(
+        constants.MaxUint256,
+      ) &&
+      fundAccessConstraint.distributionLimit !== '0',
   )
 }
 

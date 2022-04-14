@@ -18,7 +18,12 @@ export const MAX_FEE = ONE_BILLION
  * @returns {string} discount rate expressed as a percentage.
  */
 export const formatDiscountRate = (discountRate: BigNumber): string => {
-  return ((discountRate.toNumber() / MAX_DISCOUNT_RATE) * 100).toString()
+  return (
+    discountRate
+      .mul(100)
+      .div(MAX_DISCOUNT_RATE / 100)
+      .toNumber() / 100
+  ).toString()
 }
 
 /**
@@ -40,7 +45,12 @@ export const discountRateFrom = (percentage: string): BigNumber => {
  * @returns {string} split expressed as a percentage.
  */
 export const formatSplitPercent = (splitPercent: BigNumber): string => {
-  return ((splitPercent.toNumber() / SPLITS_TOTAL_PERCENT) * 100).toString()
+  return (
+    splitPercent
+      .mul(100)
+      .div(SPLITS_TOTAL_PERCENT / 100)
+      .toNumber() / 100
+  ).toString()
 }
 
 /**
@@ -65,7 +75,12 @@ export const formatReservedRate = (
   reservedRate: BigNumber | undefined,
 ): string => {
   return reservedRate
-    ? ((reservedRate.toNumber() / MAX_RESERVED_RATE) * 100).toString()
+    ? (
+        reservedRate
+          .mul(100)
+          .div(MAX_RESERVED_RATE / 100)
+          .toNumber() / 100
+      ).toString()
     : '0'
 }
 
@@ -86,7 +101,12 @@ export const reservedRateFrom = (percentage: string): BigNumber => {
  * @returns {string} redemption rate expressed as a percentage.
  */
 export const formatRedemptionRate = (redemptionRate: BigNumber): string => {
-  return ((redemptionRate.toNumber() / MAX_REDEMPTION_RATE) * 100).toString()
+  return (
+    redemptionRate
+      .mul(100)
+      .div(MAX_REDEMPTION_RATE / 100)
+      .toNumber() / 100
+  ).toString()
 }
 
 /**

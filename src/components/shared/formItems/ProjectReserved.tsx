@@ -19,14 +19,14 @@ export default function ProjectReserved({
   value,
   style = {},
   onChange,
-  disabled,
-  toggleDisabled,
+  checked,
+  onToggled,
 }: {
   value: number | undefined
   style?: CSSProperties
   onChange: (val?: number) => void
-  disabled?: boolean
-  toggleDisabled?: (checked: boolean) => void
+  checked?: boolean
+  onToggled?: (checked: boolean) => void
 } & FormItemExt) {
   const {
     theme: { colors },
@@ -65,10 +65,10 @@ export default function ProjectReserved({
               <FormItemLabel>
                 <Trans>Reserved rate</Trans>
               </FormItemLabel>
-              {toggleDisabled ? (
+              {onToggled ? (
                 <React.Fragment>
-                  <Switch checked={!disabled} onChange={toggleDisabled} />{' '}
-                  {disabled ? (
+                  <Switch checked={checked} onChange={onToggled} />{' '}
+                  {!checked ? (
                     <span
                       style={{ color: colors.text.tertiary, marginLeft: 10 }}
                     >
@@ -90,7 +90,7 @@ export default function ProjectReserved({
       style={style}
       {...formItemProps}
     >
-      {!disabled ? (
+      {checked ? (
         <NumberSlider
           sliderValue={value}
           defaultValue={value ?? 0}

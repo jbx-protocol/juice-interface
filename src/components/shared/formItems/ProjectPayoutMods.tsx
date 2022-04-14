@@ -437,15 +437,15 @@ export default function ProjectPayoutMods({
           }}
           block
         >
-          <Trans>Add a payout</Trans>
+          <Trans>Add a split</Trans>
         </Button>
       </Space>
 
       <Modal
-        title={modalMode === 'Edit' ? t`Edit existing payout` : t`Add a payout`}
+        title={modalMode === 'Edit' ? t`Edit existing split` : t`Add a split`}
         visible={editingModIndex !== undefined}
         onOk={setReceiver}
-        okText={modalMode === 'Edit' ? t`Save payout` : t`Add payout`}
+        okText={modalMode === 'Edit' ? t`Save split` : t`Add split`}
         onCancel={() => {
           form.resetFields()
           setEditingModIndex(undefined)

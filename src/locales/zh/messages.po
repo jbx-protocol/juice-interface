@@ -229,8 +229,8 @@ msgstr "最近动态"
 
 #: src/components/shared/formItems/ProjectPayoutMods.tsx
 #: src/components/shared/formItems/ProjectPayoutMods.tsx
-msgid "Add a payout"
-msgstr "添加支出对象"
+msgid "Add a split"
+msgstr ""
 
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
 msgid "Add funds to this project's balance without minting tokens."
@@ -242,7 +242,7 @@ msgid "Add image"
 msgstr "添加图片"
 
 #: src/components/shared/formItems/ProjectPayoutMods.tsx
-msgid "Add payout"
+msgid "Add split"
 msgstr ""
 
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
@@ -838,7 +838,7 @@ msgid "Each project has its own <0>ERC-20 tokens</0>. Anyone who contributes fun
 msgstr "每个项目都有自己的<0>ERC-20代币</0>。每个资助项目的人都会获得项目代币作为回报。在项目方发行 ERC-20 代币之前，代币余额会由协议来记录。"
 
 #: src/components/shared/formItems/ProjectPayoutMods.tsx
-msgid "Edit existing payout"
+msgid "Edit existing split"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/EditProjectModal.tsx
@@ -1105,6 +1105,10 @@ msgstr "激励措施"
 #: src/components/Landing/index.tsx
 msgid "Indie artists, devs, creators"
 msgstr "独立艺术家，开发者，创作者"
+
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+msgid "Infinite"
+msgstr ""
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Invalid address"
@@ -1767,7 +1771,7 @@ msgid "Resources"
 msgstr "相关资料"
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "Restrict how the owner can reconfigure upcoming funding cycles to mitigate abuse of power."
+msgid "Restrict how the owner can reconfigure upcoming funding cycles to mitigate abuse of power. <0>Learn more.</0>"
 msgstr ""
 
 #: src/components/v1/V1Create/index.tsx
@@ -1833,10 +1837,6 @@ msgstr "保存筹款设置"
 msgid "Save handle"
 msgstr "保存标识"
 
-#: src/components/shared/formItems/ProjectPayoutMods.tsx
-msgid "Save payout"
-msgstr ""
-
 #: src/components/shared/forms/PayModsForm.tsx
 msgid "Save payouts"
 msgstr "保存开支配置"
@@ -1852,6 +1852,10 @@ msgstr "保存新的配置"
 #: src/components/shared/ReconfigurationStrategy/ReconfigurationStrategyDrawer.tsx
 #: src/components/v2/V2Create/forms/RulesForm/index.tsx
 msgid "Save rules"
+msgstr ""
+
+#: src/components/shared/formItems/ProjectPayoutMods.tsx
+msgid "Save split"
 msgstr ""
 
 #: src/components/shared/TicketModsList.tsx
@@ -1895,7 +1899,7 @@ msgid "Set a funding target to cover predictable expenses. Any extra funds (<0>o
 msgstr "设定一个筹款目标以保证计划内的开销。对于超出部分的资金(<0>溢出</0>)，您及其他持有项目代币的人都有权去领取。"
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "Set the amount of funds you'd like to distribute from your treasury each funding cycle. At any time, treasury funds within the distribution limit can be paid out to destinations that you'll pre-program, and treasury funds in excess of the distribution limit – your project's overflow – can be reclaimed by your project's token holders by redeeming their tokens.<0>Learn more</0> about reclaiming overflow."
+msgid "Set the amount of funds you'd like to distribute from your treasury each funding cycle. At any time, treasury funds within the distribution limit can be paid out to destinations that you'll pre-program. Your project's token holders can reclaim treasury funds in excess of the distribution limit – your project's overflow – holders by redeeming their tokens. <0>Learn more</0> about reclaiming overflow."
 msgstr ""
 
 #: src/components/v1/shared/BudgetForm.tsx
@@ -2459,7 +2463,7 @@ msgid "With a distribution limit of Zero, no funds can be distributed by the pro
 msgstr ""
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "With no distribution limit, all funds can be distributed by the project. The project will have <0>no overflow</0> because the <1>distribution limit is infinite</1>. Token holders will <2>not</2> be able to redeem their tokens for ETH in this case."
+msgid "With no distribution limit, all funds can be distributed by the project. The project will have <0>no overflow</0> because the <1>distribution limit is infinite</1>. Token holders will <2>not</2> be able to redeem their tokens for treasury funds in this case."
 msgstr ""
 
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx

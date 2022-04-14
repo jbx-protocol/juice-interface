@@ -43,6 +43,7 @@ import {
 import * as constants from '@ethersproject/constants'
 import { fromWad, parseWad } from 'utils/formatNumber'
 import BudgetTargetInput from 'components/shared/inputs/BudgetTargetInput'
+import { Link } from 'react-router-dom'
 
 import { shadowCard } from 'constants/styles/shadowCard'
 import TargetTypeSelect, { TargetType } from './TargetTypeSelect'
@@ -172,7 +173,7 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
         setTarget('0')
         break
       case 'specific':
-        setTarget('10')
+        setTarget('0')
         break
     }
   }
@@ -222,6 +223,11 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
             <Trans>
               Restrict how the owner can reconfigure upcoming funding cycles to
               mitigate abuse of power.
+              <ExternalLink
+                href={'https://info.juicebox.money/docs/learn/risks'}
+              >
+                Learn more.
+              </ExternalLink>
             </Trans>
           </li>
         </ol>
@@ -249,9 +255,9 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
             Set the amount of funds you'd like to distribute from your treasury
             each funding cycle. At any time, treasury funds within the
             distribution limit can be paid out to destinations that you'll
-            pre-program, and treasury funds in excess of the distribution limit
-            – your project's overflow – can be reclaimed by your project's token
-            holders by redeeming their tokens.
+            pre-program. Your project's token holders can reclaim treasury funds
+            in excess of the distribution limit – your project's overflow –
+            holders by redeeming their tokens.{' '}
             <ExternalLink href={helpPagePath('protocol/learn/topics/overflow')}>
               Learn more
             </ExternalLink>{' '}
@@ -290,7 +296,7 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
               project. The project will have <strong>no overflow</strong>{' '}
               because the <strong>distribution limit is infinite</strong>. Token
               holders will <strong>not</strong> be able to redeem their tokens
-              for ETH in this case.
+              for treasury funds in this case.
             </Trans>
           </p>
         ) : (
@@ -318,14 +324,8 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
             <p style={{ color: theme.colors.text.primary }}>
               Distributing payouts to addresses outside the Juicebox contracts
               incurs a {feeFormatted}% JBX membership fee. The ETH from the fee
-              will go to the{' '}
-              <a target="_blank" href="/#/p/juicebox">
-                JuiceboxDAO treasury
-              </a>
-              , and the resulting JBX will go to the project's owner.
-              {/* You may ask for the fee back but it may also get 
-              <a href="https://snapshot.org/#/jbdao.eth/proposal/0xb9157d41fc529723c8d4fa260c17ce4a43c5b17703b1bb50c2cf69785014b6d7">shut the fuck down.</a>
-              */}
+              will go to the <Link to="/p/juicebox">JuiceboxDAO treasury</Link>,
+              and the resulting JBX will go to the project's owner.
             </p>
 
             <ProjectPayoutMods

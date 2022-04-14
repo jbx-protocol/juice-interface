@@ -224,8 +224,8 @@ msgstr ""
 
 #: src/components/shared/formItems/ProjectPayoutMods.tsx
 #: src/components/shared/formItems/ProjectPayoutMods.tsx
-msgid "Add a payout"
-msgstr ""
+msgid "Add a split"
+msgstr "Add a split"
 
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
 msgid "Add funds to this project's balance without minting tokens."
@@ -237,8 +237,8 @@ msgid "Add image"
 msgstr ""
 
 #: src/components/shared/formItems/ProjectPayoutMods.tsx
-msgid "Add payout"
-msgstr "Add payout"
+msgid "Add split"
+msgstr "Add split"
 
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
 msgid "Add to Balance"
@@ -833,8 +833,8 @@ msgid "Each project has its own <0>ERC-20 tokens</0>. Anyone who contributes fun
 msgstr "Each project has its own <0>ERC-20 tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
 
 #: src/components/shared/formItems/ProjectPayoutMods.tsx
-msgid "Edit existing payout"
-msgstr "Edit existing payout"
+msgid "Edit existing split"
+msgstr "Edit existing split"
 
 #: src/components/v1/V1Project/modals/EditProjectModal.tsx
 msgid "Edit project"
@@ -1100,6 +1100,10 @@ msgstr ""
 #: src/components/Landing/index.tsx
 msgid "Indie artists, devs, creators"
 msgstr ""
+
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+msgid "Infinite"
+msgstr "Infinite"
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Invalid address"
@@ -1762,8 +1766,8 @@ msgid "Resources"
 msgstr "Resources"
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "Restrict how the owner can reconfigure upcoming funding cycles to mitigate abuse of power."
-msgstr "Restrict how the owner can reconfigure upcoming funding cycles to mitigate abuse of power."
+msgid "Restrict how the owner can reconfigure upcoming funding cycles to mitigate abuse of power. <0>Learn more.</0>"
+msgstr "Restrict how the owner can reconfigure upcoming funding cycles to mitigate abuse of power. <0>Learn more.</0>"
 
 #: src/components/v1/V1Create/index.tsx
 msgid "Restrict payments and printing tokens."
@@ -1828,10 +1832,6 @@ msgstr ""
 msgid "Save handle"
 msgstr "Save handle"
 
-#: src/components/shared/formItems/ProjectPayoutMods.tsx
-msgid "Save payout"
-msgstr "Save payout"
-
 #: src/components/shared/forms/PayModsForm.tsx
 msgid "Save payouts"
 msgstr "Save payouts"
@@ -1848,6 +1848,10 @@ msgstr ""
 #: src/components/v2/V2Create/forms/RulesForm/index.tsx
 msgid "Save rules"
 msgstr "Save rules"
+
+#: src/components/shared/formItems/ProjectPayoutMods.tsx
+msgid "Save split"
+msgstr "Save split"
 
 #: src/components/shared/TicketModsList.tsx
 msgid "Save token allocation"
@@ -1890,8 +1894,8 @@ msgid "Set a funding target to cover predictable expenses. Any extra funds (<0>o
 msgstr "Set a funding target to cover predictable expenses. Any extra funds (<0>overflow</0>) can be claimed by anyone holding your project's tokens alongside you."
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "Set the amount of funds you'd like to distribute from your treasury each funding cycle. At any time, treasury funds within the distribution limit can be paid out to destinations that you'll pre-program, and treasury funds in excess of the distribution limit – your project's overflow – can be reclaimed by your project's token holders by redeeming their tokens.<0>Learn more</0> about reclaiming overflow."
-msgstr "Set the amount of funds you'd like to distribute from your treasury each funding cycle. At any time, treasury funds within the distribution limit can be paid out to destinations that you'll pre-program, and treasury funds in excess of the distribution limit – your project's overflow – can be reclaimed by your project's token holders by redeeming their tokens.<0>Learn more</0> about reclaiming overflow."
+msgid "Set the amount of funds you'd like to distribute from your treasury each funding cycle. At any time, treasury funds within the distribution limit can be paid out to destinations that you'll pre-program. Your project's token holders can reclaim treasury funds in excess of the distribution limit – your project's overflow – holders by redeeming their tokens. <0>Learn more</0> about reclaiming overflow."
+msgstr "Set the amount of funds you'd like to distribute from your treasury each funding cycle. At any time, treasury funds within the distribution limit can be paid out to destinations that you'll pre-program. Your project's token holders can reclaim treasury funds in excess of the distribution limit – your project's overflow – holders by redeeming their tokens. <0>Learn more</0> about reclaiming overflow."
 
 #: src/components/v1/shared/BudgetForm.tsx
 msgid "Set the amount of funds you'd like to raise each funding cycle. Any funds raised within the funding cycle target can be distributed by the project, and can't be redeemed by your project's token holders."
@@ -2454,8 +2458,8 @@ msgid "With a distribution limit of Zero, no funds can be distributed by the pro
 msgstr "With a distribution limit of Zero, no funds can be distributed by the project. All funds belong to token holders as overflow."
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "With no distribution limit, all funds can be distributed by the project. The project will have <0>no overflow</0> because the <1>distribution limit is infinite</1>. Token holders will <2>not</2> be able to redeem their tokens for ETH in this case."
-msgstr "With no distribution limit, all funds can be distributed by the project. The project will have <0>no overflow</0> because the <1>distribution limit is infinite</1>. Token holders will <2>not</2> be able to redeem their tokens for ETH in this case."
+msgid "With no distribution limit, all funds can be distributed by the project. The project will have <0>no overflow</0> because the <1>distribution limit is infinite</1>. Token holders will <2>not</2> be able to redeem their tokens for treasury funds in this case."
+msgstr "With no distribution limit, all funds can be distributed by the project. The project will have <0>no overflow</0> because the <1>distribution limit is infinite</1>. Token holders will <2>not</2> be able to redeem their tokens for treasury funds in this case."
 
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 #: src/components/v1/V1Project/ProjectActivity/index.tsx

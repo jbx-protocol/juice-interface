@@ -127,7 +127,7 @@ export default function FundingCycleDetails({
         <Descriptions.Item label={<Trans>Distribution limit</Trans>}>
           <span style={{ whiteSpace: 'nowrap' }}>
             {distributionLimitIsInfinite ? (
-              <>∞</>
+              <Trans>Infinite</Trans>
             ) : distributionLimitIsZero ? (
               <>0</>
             ) : (

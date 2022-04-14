@@ -32,6 +32,11 @@ export const V2CurrencyName = (
 ): CurrencyName | undefined =>
   currency !== undefined ? V2_CURRENCY_METADATA[currency]?.name : undefined
 
+export const getV2CurrencyOption = (
+  currencyName: CurrencyName,
+): V2CurrencyOption =>
+  currencyName === 'ETH' ? V2_CURRENCY_ETH : V2_CURRENCY_USD
+
 export const V2CurrencySymbol = (
   currency?: V2CurrencyOption,
 ): CurrencySymbol | undefined =>

@@ -113,7 +113,8 @@ export default function TokenForm({ onFinish }: { onFinish: VoidFunction }) {
       fundingCycleMetadata?.reservedRate ??
       defaultFundingCycleMetadata.reservedRate,
     discountRate:
-      fundingCycleData?.discountRate ?? defaultFundingCycleData.discountRate,
+      (canSetDiscountRate && fundingCycleData?.discountRate) ||
+      defaultFundingCycleData.discountRate,
     redemptionRate:
       (canSetRedemptionRate && fundingCycleMetadata?.redemptionRate) ||
       defaultFundingCycleMetadata.redemptionRate,

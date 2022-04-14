@@ -18,7 +18,7 @@ function DiscountRateExtra({ disabled }: { disabled?: boolean }) {
       {disabled && (
         <p style={{ color: colors.text.warn }}>
           <Trans>
-            Discount rate disabled when funding cycle duration has not been set.
+            Disabled when your project's funding cycle has no duration.
           </Trans>
         </p>
       )}

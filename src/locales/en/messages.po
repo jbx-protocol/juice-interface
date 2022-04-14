@@ -672,8 +672,12 @@ msgid "Disabled"
 msgstr "Disabled"
 
 #: src/components/shared/formItems/ProjectBondingCurveRate.tsx
-msgid "Disabled when no funding target is set."
-msgstr "Disabled when no funding target is set."
+msgid "Disabled when project has no funding target."
+msgstr "Disabled when project has no funding target."
+
+#: src/components/shared/formItems/ProjectDiscountRate.tsx
+msgid "Disabled when your project's funding cycle has no duration."
+msgstr "Disabled when your project's funding cycle has no duration."
 
 #: src/components/Navbar/Mobile/MobileCollapse.tsx
 #: src/components/Navbar/Wallet.tsx
@@ -693,10 +697,6 @@ msgstr ""
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Discount rate"
 msgstr ""
-
-#: src/components/shared/formItems/ProjectDiscountRate.tsx
-msgid "Discount rate disabled when funding cycle duration has not been set."
-msgstr "Discount rate disabled when funding cycle duration has not been set."
 
 #: src/components/v1/V1Create/index.tsx
 msgid "Discount rate disabled while funding cycle duration is 0."

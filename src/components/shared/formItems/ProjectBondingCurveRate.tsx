@@ -39,7 +39,7 @@ function BondingCurveRateExtra({ disabled }: { disabled?: boolean }) {
     <div>
       {disabled && (
         <p style={{ color: colors.text.warn }}>
-          <Trans>Disabled when no funding target is set.</Trans>
+          <Trans>Disabled when project has no funding target.</Trans>
         </p>
       )}
       <div style={{ display: 'flex', alignItems: 'center' }}>

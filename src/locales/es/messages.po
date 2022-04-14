@@ -656,6 +656,10 @@ msgstr "Fecha"
 msgid "Date created"
 msgstr "Fecha de creación"
 
+#: src/constants/time.ts
+msgid "Days"
+msgstr ""
+
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Deploy new project configuration"
 msgstr "Desplegar nueva configuración de proyecto"
@@ -1019,6 +1023,10 @@ msgstr "Holdear estos tokens titula a un proyecto una porción de su propio exce
 msgid "Holdings"
 msgstr "Tenencias"
 
+#: src/constants/time.ts
+msgid "Hours"
+msgstr ""
+
 #: src/components/Landing/QAs.tsx
 msgid "How decentralized is Juicebox?"
 msgstr "¿Qué tan descentralizado es Juicebox?"
@@ -1259,6 +1267,10 @@ msgstr "Acuñar {tokensLabel}"
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "Mint {tokensTokenLower}"
 msgstr "Acuñar {tokensTokenLower}"
+
+#: src/constants/time.ts
+msgid "Minutes"
+msgstr ""
 
 #: src/components/Projects/TrendingProjects.tsx
 msgid "More trending projects"
@@ -1861,6 +1873,10 @@ msgstr "Guardar activos en seguimiento"
 #: src/components/Projects/index.tsx
 msgid "Search projects by handle"
 msgstr "Buscar proyectos por usuario"
+
+#: src/constants/time.ts
+msgid "Seconds"
+msgstr ""
 
 #: src/components/shared/EtherscanLink.tsx
 msgid "See transaction"

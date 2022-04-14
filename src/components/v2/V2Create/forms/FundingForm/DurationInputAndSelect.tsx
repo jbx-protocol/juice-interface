@@ -1,7 +1,11 @@
 import { Form, Select } from 'antd'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 
-import { DurationUnitsOption, DURATION_UNIT_OPTIONS } from 'constants/time'
+import {
+  DurationUnitsOption,
+  durationUnitText,
+  DURATION_UNIT_OPTIONS,
+} from 'constants/time'
 
 export default function DurationInputAndSelect({
   value,
@@ -28,7 +32,7 @@ export default function DurationInputAndSelect({
         >
           {DURATION_UNIT_OPTIONS.map((value, i) => (
             <Select.Option key={i} value={value}>
-              {DURATION_UNIT_OPTIONS[i]}
+              {durationUnitText(value)}
             </Select.Option>
           ))}
         </Select>

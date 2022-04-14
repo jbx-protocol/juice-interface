@@ -656,6 +656,10 @@ msgstr "Tarih"
 msgid "Date created"
 msgstr "Oluşturma tarihi"
 
+#: src/constants/time.ts
+msgid "Days"
+msgstr ""
+
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Deploy new project configuration"
 msgstr "Yeni proje yapılandırmasını devreye alın"
@@ -1019,6 +1023,10 @@ msgstr "Holding these tokens grants a project access to some of its own overflow
 msgid "Holdings"
 msgstr "Token'larınız"
 
+#: src/constants/time.ts
+msgid "Hours"
+msgstr ""
+
 #: src/components/Landing/QAs.tsx
 msgid "How decentralized is Juicebox?"
 msgstr "Juicebox ne kadar merkeziyetsiz?"
@@ -1258,6 +1266,10 @@ msgstr ""
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "Mint {tokensTokenLower}"
+msgstr ""
+
+#: src/constants/time.ts
+msgid "Minutes"
 msgstr ""
 
 #: src/components/Projects/TrendingProjects.tsx
@@ -1861,6 +1873,10 @@ msgstr "İzlenen varlıkları kaydet"
 #: src/components/Projects/index.tsx
 msgid "Search projects by handle"
 msgstr "Tanıtıcıya göre proje ara"
+
+#: src/constants/time.ts
+msgid "Seconds"
+msgstr ""
 
 #: src/components/shared/EtherscanLink.tsx
 msgid "See transaction"

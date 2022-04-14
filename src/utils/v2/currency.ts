@@ -34,7 +34,8 @@ export const V2CurrencyName = (
 
 export const getV2CurrencyOption = (
   currencyName: CurrencyName,
-): V2CurrencyOption => (currencyName === 'ETH' ? 1 : 2)
+): V2CurrencyOption =>
+  currencyName === 'ETH' ? V2_CURRENCY_ETH : V2_CURRENCY_USD
 
 export const V2CurrencySymbol = (
   currency?: V2CurrencyOption,

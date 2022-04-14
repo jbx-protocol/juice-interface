@@ -1,3 +1,5 @@
+import { t } from '@lingui/macro'
+
 export type DurationUnitsOption = 'days' | 'hrs' | 'mins' | 'secs'
 
 export const DURATION_UNIT_OPTIONS: DurationUnitsOption[] = [
@@ -10,12 +12,12 @@ export const DURATION_UNIT_OPTIONS: DurationUnitsOption[] = [
 export const durationUnitText = (unit: DurationUnitsOption) => {
   switch (unit) {
     case 'secs':
-      return `seconds` //TODO: Make translations when text confirmed
+      return t`Seconds`
     case 'hrs':
-      return `hours`
+      return t`Hours`
     case 'mins':
-      return `minutes`
+      return t`Minutes`
     default:
-      return `days`
+      return t`Days`
   }
 }

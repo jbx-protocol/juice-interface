@@ -11,7 +11,7 @@ import { useContext } from 'react'
 import { formatDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
-
+import * as constants from '@ethersproject/constants'
 import { V2CurrencyName } from 'utils/v2/currency'
 import TooltipLabel from 'components/shared/TooltipLabel'
 
@@ -112,6 +112,10 @@ export default function FundingCycleDetails({
 
   const riskWarningText = FUNDING_CYCLE_WARNING_TEXT()
 
+  const distributionLimitIsInfinite =
+    !distributionLimit || distributionLimit?.eq(constants.MaxUint256)
+  const distributionLimitIsZero = distributionLimit?.eq(0)
+
   return (
     <div>
       <Descriptions
@@ -122,7 +126,11 @@ export default function FundingCycleDetails({
       >
         <Descriptions.Item label={<Trans>Distribution limit</Trans>}>
           <span style={{ whiteSpace: 'nowrap' }}>
-            {distributionLimit ? (
+            {distributionLimitIsInfinite ? (
+              <Trans>Infinite</Trans>
+            ) : distributionLimitIsZero ? (
+              <>0</>
+            ) : (
               <>
                 <CurrencySymbol
                   currency={V2CurrencyName(
@@ -133,8 +141,6 @@ export default function FundingCycleDetails({
                 />
                 {formatWad(distributionLimit)}
               </>
-            ) : (
-              <Trans>No distribution limit</Trans>
             )}
           </span>
         </Descriptions.Item>

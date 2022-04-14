@@ -1,15 +1,13 @@
 import { ThemeContext } from 'contexts/themeContext'
 import { BigNumber } from '@ethersproject/bignumber'
-import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { CSSProperties, useContext, useEffect, useState } from 'react'
-import { V1CurrencyName } from 'utils/v1/currency'
 import { perbicentToPercent } from 'utils/formatNumber'
 
 import { Trans } from '@lingui/macro'
 
 import InputAccessoryButton from '../InputAccessoryButton'
 import FormattedNumberInput from './FormattedNumberInput'
-import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
+import { CurrencyName } from 'constants/currency'
 
 export default function BudgetTargetInput({
   currency,
@@ -21,14 +19,14 @@ export default function BudgetTargetInput({
   disabled,
   placeholder,
   feePerbicent,
-  showTargetSubFeeInput = false,
+  showTargetSubFeeInput = true,
 }: {
-  currency: V1CurrencyOption
+  currency: CurrencyName
   target: string | undefined
   targetSubFee: string | undefined
   onTargetChange: (target?: string) => void
   onTargetSubFeeChange: (target?: string) => void
-  onCurrencyChange?: (currency: V1CurrencyOption) => void
+  onCurrencyChange?: (currency: CurrencyName) => void
   disabled?: boolean
   placeholder?: string
   feePerbicent: BigNumber | undefined
@@ -46,7 +44,7 @@ export default function BudgetTargetInput({
     alignItems: 'center',
   }
 
-  const [_currency, setCurrency] = useState<V1CurrencyOption>()
+  const [_currency, setCurrency] = useState<CurrencyName>()
 
   useEffect(() => setCurrency(currency), [currency])
 
@@ -57,22 +55,16 @@ export default function BudgetTargetInput({
       return (
         <InputAccessoryButton
           onClick={() => {
-            const newCurrency =
-              _currency === V1_CURRENCY_USD ? V1_CURRENCY_ETH : V1_CURRENCY_USD
+            const newCurrency = _currency === 'USD' ? 'ETH' : 'USD'
             setCurrency(newCurrency)
             onCurrencyChange(newCurrency)
           }}
-          content={V1CurrencyName(_currency)}
+          content={_currency}
           withArrow
           placement="suffix"
         />
       )
-    return (
-      <InputAccessoryButton
-        content={V1CurrencyName(_currency)}
-        placement="suffix"
-      />
-    )
+    return <InputAccessoryButton content={_currency} placement="suffix" />
   }
 
   return (

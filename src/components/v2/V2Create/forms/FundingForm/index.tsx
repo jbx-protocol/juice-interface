@@ -1,4 +1,4 @@
-import { t, Trans } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 
 import { Button, Form, Switch } from 'antd'
 
@@ -168,6 +168,7 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
         setTarget(undefined)
         break
       case 'none':
+        setSplits([])
         setTarget('0')
         break
       case 'specific':
@@ -207,23 +208,20 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
         <ol>
           <li>
             <Trans>
-              <strong>Recurring funding cycles</strong> (e.g. raise $30,000
-              every 30 days).
+              <strong>Recurring funding cycles</strong> (e.g. distribute $30,000
+              from the project's treasury every 30 days).
             </Trans>
           </li>
           <li>
             <Trans>
-              A <strong>discount rate</strong> to be applied to the issue rate
-              of your project's token (tokens/ETH) at the start of each new
-              funding cycle.
-              <ExternalLink href="/#">Learn more.</ExternalLink>
+              A <strong>discount rate</strong> to automatically reduce the issue
+              rate of your project's token (tokens/ETH) each new funding cycle.{' '}
             </Trans>
           </li>
           <li>
             <Trans>
-              Restrict how the owner can <strong>reconfigure funding</strong>
-              parametres to prevent rug pulls.{' '}
-              <ExternalLink href="/#">Learn more.</ExternalLink>
+              Restrict how the owner can reconfigure upcoming funding cycles to
+              mitigate abuse of power.
             </Trans>
           </li>
         </ol>
@@ -245,33 +243,33 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
           color: theme.colors.text.primary,
         }}
       >
-        <h3>Funding target</h3>
+        <h3>Distribution</h3>
         <p>
           <Trans>
-            Set the amount of funds you'd like to raise each funding cycle. Any
-            funds raised within the <i>funding target</i> can be distributed by
-            the project, and can't be redeemed by your project's token holders.
-          </Trans>
-        </p>
-        <p>
-          <Trans>
-            <i>Overflow</i> is created if your project's balance exceeds your{' '}
-            <i>funding target</i>. <i>Overflow</i> can be redeemed by your
-            project's token holders.
-          </Trans>{' '}
-          <Trans>
+            Set the amount of funds you'd like to distribute from your treasury
+            each funding cycle. At any time, treasury funds within the
+            distribution limit can be paid out to destinations that you'll
+            pre-program, and treasury funds in excess of the distribution limit
+            – your project's overflow – can be reclaimed by your project's token
+            holders by redeeming their tokens.
             <ExternalLink href={helpPagePath('protocol/learn/topics/overflow')}>
               Learn more
             </ExternalLink>{' '}
-            about <i>overflow</i>.
+            about reclaiming overflow.
           </Trans>
         </p>
-        <h4>Target</h4>
+        <p>
+          <Trans>
+            Anyone can send the transaction to distribute funds within a funding
+            cycle's distribution limit.
+          </Trans>
+        </p>
+        <h4>Limit</h4>
         <TargetTypeSelect value={targetType} onChange={onTargetTypeSelect} />
         <br />
         <br />
         {targetType === 'specific' ? (
-          <Form.Item label={t`Funding target`} required>
+          <Form.Item required>
             <BudgetTargetInput
               target={target?.toString()}
               targetSubFee={undefined}
@@ -288,9 +286,9 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
         ) : targetType === 'infinite' ? (
           <p style={{ color: theme.colors.text.warn }}>
             <Trans>
-              <strong>Note:</strong> All funds can be distributed by the
+              With no distribution limit, all funds can be distributed by the
               project. The project will have <strong>no overflow</strong>{' '}
-              because the <strong>funding target is infinite</strong>. Token
+              because the <strong>distribution limit is infinite</strong>. Token
               holders will <strong>not</strong> be able to redeem their tokens
               for ETH in this case.
             </Trans>
@@ -298,8 +296,8 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
         ) : (
           <p style={{ color: theme.colors.text.warn }}>
             <Trans>
-              <strong>Note:</strong> No funds can be distributed by the project.
-              All funds belong to token holders as overflow.
+              With a distribution limit of Zero, no funds can be distributed by
+              the project. All funds belong to token holders as overflow.
             </Trans>
           </p>
         )}
@@ -313,24 +311,44 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
         }}
       >
         <h3>
-          <Trans>Payouts</Trans>
+          <Trans>Distribution splits</Trans>
         </h3>
-        <p style={{ color: theme.colors.text.primary }}>
-          Distributing payouts to non-Juicebox projects incurs {feeFormatted}%
-          fee. Your project will recieve an equivalent amount of JBX tokens in
-          return, giving you ownership of network.
-        </p>
-        <ProjectPayoutMods
-          mods={splits.map(toMod)}
-          target={target ?? '0'}
-          currencyName={targetCurrency === ETH ? 'ETH' : 'USD'}
-          feePercentage={
-            ETHPaymentTerminalFee ? formatFee(ETHPaymentTerminalFee) : undefined
-          }
-          onModsChanged={newMods => {
-            setSplits(newMods.map(toSplit))
-          }}
-        />
+        {targetType !== 'none' ? (
+          <>
+            <p style={{ color: theme.colors.text.primary }}>
+              Distributing payouts to addresses outside the Juicebox contracts
+              incurs a {feeFormatted}% JBX membership fee. The ETH from the fee
+              will go to the{' '}
+              <a target="_blank" href="/#/p/juicebox">
+                JuiceboxDAO treasury
+              </a>
+              , and the resulting JBX will go to the project's owner.
+              {/* You may ask for the fee back but it may also get 
+              <a href="https://snapshot.org/#/jbdao.eth/proposal/0xb9157d41fc529723c8d4fa260c17ce4a43c5b17703b1bb50c2cf69785014b6d7">shut the fuck down.</a>
+              */}
+            </p>
+
+            <ProjectPayoutMods
+              mods={splits.map(toMod)}
+              target={target ?? '0'}
+              currencyName={targetCurrency === ETH ? 'ETH' : 'USD'}
+              feePercentage={
+                ETHPaymentTerminalFee
+                  ? formatFee(ETHPaymentTerminalFee)
+                  : undefined
+              }
+              onModsChanged={newMods => {
+                setSplits(newMods.map(toSplit))
+              }}
+              targetIsInfinite={targetType === 'infinite'}
+            />
+          </>
+        ) : (
+          <p style={{ color: theme.colors.text.primary }}>
+            Distributions can't be scheduled when the distribution limit is set
+            to Zero.
+          </p>
+        )}
       </div>
 
       <Form.Item style={{ marginTop: '2rem' }}>

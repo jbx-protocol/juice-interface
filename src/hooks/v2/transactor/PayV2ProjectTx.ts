@@ -6,7 +6,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { randomBytes } from '@ethersproject/random'
 
 import { TransactorInstance } from '../../Transactor'
-import { ETH } from 'constants/juiceboxTokens'
+import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
 
 export type PayV2ProjectTx = TransactorInstance<{
   memo: string
@@ -37,7 +37,7 @@ export function usePayV2ProjectTx(): PayV2ProjectTx {
       [
         projectId,
         value,
-        ETH,
+        ETH_TOKEN_ADDRESS,
         beneficiary,
         minReturnedTokens,
         preferClaimedTokens,

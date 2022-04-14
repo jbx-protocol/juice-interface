@@ -32,6 +32,8 @@ import { formatFee } from 'utils/v2/math'
 import BudgetTargetInput from 'components/shared/inputs/BudgetTargetInput'
 import { CurrencyContext } from 'contexts/currencyContext'
 
+import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
+
 import { shadowCard } from 'constants/styles/shadowCard'
 
 import FundingTypeSelect, { FundingType } from './FundingTypeSelect'
@@ -101,6 +103,7 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
       if (target) {
         fundAccessConstraint = {
           terminal: contracts.JBETHPaymentTerminal.address,
+          token: ETH_TOKEN_ADDRESS,
           distributionLimit: target,
           distributionLimitCurrency: targetCurrency.toString(),
           overflowAllowance: '0', // nothing for the time being.

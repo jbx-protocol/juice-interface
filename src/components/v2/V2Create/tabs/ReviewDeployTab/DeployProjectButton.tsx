@@ -6,7 +6,7 @@ import {
   useEditingV2FundingCycleDataSelector,
   useEditingV2FundingCycleMetadataSelector,
 } from 'hooks/AppSelector'
-import { useDeployProjectTx } from 'hooks/v2/transactor/DeployProjectTx'
+import { useLaunchProjectTx } from 'hooks/v2/transactor/LaunchProjectTx'
 import { useCallback, useContext, useState } from 'react'
 import { uploadProjectMetadata } from 'utils/ipfs'
 import { TransactionReceipt } from '@ethersproject/providers'
@@ -39,7 +39,7 @@ const getProjectIdFromReceipt = (txReceipt: TransactionReceipt): number => {
 }
 
 export default function DeployProjectButton() {
-  const deployProjectTx = useDeployProjectTx()
+  const launchProjectTx = useLaunchProjectTx()
   const history = useHistory()
 
   const { userAddress, onSelectWallet } = useContext(NetworkContext)
@@ -79,7 +79,7 @@ export default function DeployProjectButton() {
 
     const groupedSplits = [payoutGroupedSplits, reservedTokensGroupedSplits]
 
-    const txSuccessful = await deployProjectTx(
+    const txSuccessful = await launchProjectTx(
       {
         projectMetadataCID: uploadedMetadata.IpfsHash,
         fundingCycleData,
@@ -121,7 +121,7 @@ export default function DeployProjectButton() {
       setTransactionPending(false)
     }
   }, [
-    deployProjectTx,
+    launchProjectTx,
     projectMetadata,
     payoutGroupedSplits,
     reservedTokensGroupedSplits,

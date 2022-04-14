@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 
 import { V2ContractName } from 'models/v2/contracts'
 
-import { ETH } from 'constants/juiceboxTokens'
+import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
 
 import useV2ContractReader from './V2ContractReader'
 
@@ -20,7 +20,7 @@ export default function useProjectDistributionLimit({
     functionName: 'distributionLimitOf',
     args:
       projectId && configuration && terminal
-        ? [projectId.toHexString(), configuration, terminal, ETH]
+        ? [projectId.toHexString(), configuration, terminal, ETH_TOKEN_ADDRESS]
         : null,
   })
 }

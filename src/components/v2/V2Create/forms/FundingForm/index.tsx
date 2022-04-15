@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 
-import { Button, Form, Space, Switch } from 'antd'
+import { Button, Form, Space } from 'antd'
 
 import { useCallback, useContext, useLayoutEffect, useState } from 'react'
 
@@ -43,6 +43,8 @@ import BudgetTargetInput from 'components/shared/inputs/BudgetTargetInput'
 import { Link } from 'react-router-dom'
 
 import FormItemWarningText from 'components/shared/FormItemWarningText'
+
+import SwitchHeading from 'components/shared/SwitchHeading'
 
 import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
 
@@ -188,22 +190,19 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
           color: theme.colors.text.primary,
         }}
       >
-        <div style={{ display: 'flex' }}>
-          <Switch
-            checked={durationEnabled}
-            onChange={checked => {
-              setDurationEnabled(checked)
-              if (!checked) {
-                fundingForm.setFieldsValue({ duration: '0' })
-              }
-              fundingForm.setFieldsValue({ duration: '30' })
-            }}
-            style={{ marginRight: 10 }}
-          />
-          <h3>
-            <Trans>Funding cycles</Trans>
-          </h3>
-        </div>
+        <SwitchHeading
+          checked={durationEnabled}
+          onChange={checked => {
+            setDurationEnabled(checked)
+
+            if (!checked) {
+              fundingForm.setFieldsValue({ duration: '0' })
+            }
+            fundingForm.setFieldsValue({ duration: '30' })
+          }}
+        >
+          <Trans>Funding cycles</Trans>
+        </SwitchHeading>
 
         <Space size="middle" direction="vertical">
           <div>
@@ -224,7 +223,7 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
                 <Trans>
                   A <strong>discount rate</strong> to automatically reduce the
                   issue rate of your project's token (tokens/ETH) each new
-                  funding cycle.{' '}
+                  funding cycle.
                 </Trans>
               </li>
               <li>

@@ -1,7 +1,6 @@
-import { Form, Switch } from 'antd'
+import { Form } from 'antd'
 import { Trans } from '@lingui/macro'
-import { ThemeContext } from 'contexts/themeContext'
-import { CSSProperties, useContext, useState } from 'react'
+import { CSSProperties, useState } from 'react'
 import FormItemLabel from 'components/v2/V2Create/FormItemLabel'
 
 import NumberSlider from '../inputs/NumberSlider'
@@ -12,6 +11,7 @@ import {
 } from 'constants/fundingWarningText'
 import FundingCycleDetailWarning from '../Project/FundingCycleDetailWarning'
 import FormItemWarningText from '../FormItemWarningText'
+import SwitchHeading from '../SwitchHeading'
 
 export default function ProjectReserved({
   name,
@@ -29,9 +29,7 @@ export default function ProjectReserved({
   checked?: boolean
   onToggled?: (checked: boolean) => void
 } & FormItemExt) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
+  const shouldRenderToggle = Boolean(onToggled)
 
   const [showRiskWarning, setShowRiskWarning] = useState<boolean>(
     (value ?? 0) > RESERVED_RATE_WARNING_THRESHOLD_PERCENT,
@@ -49,35 +47,34 @@ export default function ProjectReserved({
   return (
     <Form.Item
       extra={
-        <Trans>
-          Whenever someone pays your project, this percentage of tokens will be
-          reserved and the rest will go to the payer. By default, these tokens
-          are reserved for the project owner, but you can also allocate portions
-          to other wallet addresses. Anyone can submit the transaction to
-          distribute reserved tokens according to the allocation.
-        </Trans>
+        <>
+          <p>
+            <Trans>
+              Whenever someone pays your project, this percentage of tokens will
+              be reserved and the rest will go to the payer.
+            </Trans>
+          </p>
+          <p style={{ margin: 0 }}>
+            <Trans>
+              By default, these tokens are reserved for the project owner, but
+              you can also allocate portions to other wallet addresses.
+            </Trans>
+          </p>
+        </>
       }
       name={name}
       label={
         hideLabel ? undefined : (
           <>
-            <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+            {shouldRenderToggle ? (
+              <SwitchHeading checked={Boolean(checked)} onChange={onToggled}>
+                <Trans>Reserved rate</Trans>
+              </SwitchHeading>
+            ) : (
               <FormItemLabel>
                 <Trans>Reserved rate</Trans>
               </FormItemLabel>
-              {onToggled ? (
-                <>
-                  <Switch checked={checked} onChange={onToggled} />{' '}
-                  {!checked ? (
-                    <span
-                      style={{ color: colors.text.tertiary, marginLeft: 10 }}
-                    >
-                      <Trans>(0%)</Trans>
-                    </span>
-                  ) : null}
-                </>
-              ) : null}
-            </div>
+            )}
             <div style={{ paddingBottom: 11, paddingLeft: 14 }}>
               <FundingCycleDetailWarning
                 showWarning={showRiskWarning}
@@ -90,22 +87,21 @@ export default function ProjectReserved({
       style={style}
       {...formItemProps}
     >
-      {checked ? (
-        <NumberSlider
-          sliderValue={value}
-          defaultValue={value ?? 0}
-          suffix="%"
-          onChange={value => {
-            setShowRiskWarning(
-              (value ?? 0) > RESERVED_RATE_WARNING_THRESHOLD_PERCENT,
-            )
-            onChange(value)
-          }}
-          name={name}
-          step={0.5}
-          formItemProps={showRiskWarning ? { extra: riskNotice } : {}}
-        />
-      ) : null}
+      <NumberSlider
+        sliderValue={value}
+        defaultValue={value ?? 0}
+        suffix="%"
+        onChange={value => {
+          setShowRiskWarning(
+            (value ?? 0) > RESERVED_RATE_WARNING_THRESHOLD_PERCENT,
+          )
+          onChange(value)
+        }}
+        name={name}
+        step={0.5}
+        formItemProps={showRiskWarning ? { extra: riskNotice } : {}}
+        disabled={!checked}
+      />
     </Form.Item>
   )
 }

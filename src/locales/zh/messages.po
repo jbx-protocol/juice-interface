@@ -19,7 +19,6 @@ msgstr ""
 "X-Crowdin-File-ID: 9\n"
 
 #: src/components/shared/formItems/ProjectDiscountRate.tsx
-#: src/components/shared/formItems/ProjectReserved.tsx
 msgid "(0%)"
 msgstr "(0%)"
 
@@ -324,6 +323,7 @@ msgstr "允许铸造代币"
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Allowed"
 msgstr "允许"
 
@@ -488,6 +488,10 @@ msgstr "默认的情况下，所有未分配资金可被分发给项目拥有者
 
 #: src/components/v2/V2Create/forms/TokenForm/index.tsx
 msgid "By default, the issuance rate for your project's token is 1,000,000 tokens / 1 ETH. For example, a 1 ETH contribution to your project will return 1,000,000 tokens. You can manipulate the issuance rate with the following configurations."
+msgstr ""
+
+#: src/components/shared/formItems/ProjectReserved.tsx
+msgid "By default, these tokens are reserved for the project owner, but you can also allocate portions to other wallet addresses."
 msgstr ""
 
 #: src/components/Landing/QAs.tsx
@@ -705,6 +709,7 @@ msgstr "详情"
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Disabled"
 msgstr "已禁用"
 
@@ -1319,7 +1324,6 @@ msgid "Next: Review and deploy"
 msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "No"
 msgstr "取消"
 
@@ -1745,6 +1749,7 @@ msgstr "刷新"
 msgid "Required"
 msgstr "必需"
 
+#: src/components/shared/formItems/ProjectReserved.tsx
 #: src/components/shared/formItems/ProjectReserved.tsx
 msgid "Reserved rate"
 msgstr "保留率"
@@ -2449,7 +2454,7 @@ msgid "When token minting is allowed, the owner of this project has permission t
 msgstr "当铸造代币功能启用时，该项目方可以铸造任意数量的代币并发送给任意地址。这一操作并不会增加项目金库的余额，所以会稀释所有当前代币持有者的份额。和其他属性一样，也可以在每个筹款周期中重新配置这一项。"
 
 #: src/components/shared/formItems/ProjectReserved.tsx
-msgid "Whenever someone pays your project, this percentage of tokens will be reserved and the rest will go to the payer. By default, these tokens are reserved for the project owner, but you can also allocate portions to other wallet addresses. Anyone can submit the transaction to distribute reserved tokens according to the allocation."
+msgid "Whenever someone pays your project, this percentage of tokens will be reserved and the rest will go to the payer."
 msgstr ""
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
@@ -2507,7 +2512,6 @@ msgid "Would you to issue an ERC-20 token to be used as this project's token?"
 msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Yes"
 msgstr "确定"
 

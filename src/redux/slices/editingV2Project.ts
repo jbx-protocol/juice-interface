@@ -24,6 +24,7 @@ import {
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/v2/splits'
 import { DEFAULT_BALLOT_STRATEGY } from 'constants/v2/ballotStrategies'
+
 export interface V2ProjectState {
   version: number
   projectMetadata: ProjectMetadataV4

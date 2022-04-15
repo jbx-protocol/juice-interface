@@ -14,7 +14,6 @@ msgstr ""
 "Plural-Forms: \n"
 
 #: src/components/shared/formItems/ProjectDiscountRate.tsx
-#: src/components/shared/formItems/ProjectReserved.tsx
 msgid "(0%)"
 msgstr "(0%)"
 
@@ -319,6 +318,7 @@ msgstr "Allow token minting"
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Allowed"
 msgstr "Allowed"
 
@@ -484,6 +484,10 @@ msgstr "By default, all unallocated funds can be distributed to the project owne
 #: src/components/v2/V2Create/forms/TokenForm/index.tsx
 msgid "By default, the issuance rate for your project's token is 1,000,000 tokens / 1 ETH. For example, a 1 ETH contribution to your project will return 1,000,000 tokens. You can manipulate the issuance rate with the following configurations."
 msgstr "By default, the issuance rate for your project's token is 1,000,000 tokens / 1 ETH. For example, a 1 ETH contribution to your project will return 1,000,000 tokens. You can manipulate the issuance rate with the following configurations."
+
+#: src/components/shared/formItems/ProjectReserved.tsx
+msgid "By default, these tokens are reserved for the project owner, but you can also allocate portions to other wallet addresses."
+msgstr "By default, these tokens are reserved for the project owner, but you can also allocate portions to other wallet addresses."
 
 #: src/components/Landing/QAs.tsx
 msgid "Can I change my project's contract after it's been created?"
@@ -700,6 +704,7 @@ msgstr ""
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Disabled"
 msgstr "Disabled"
 
@@ -1314,7 +1319,6 @@ msgid "Next: Review and deploy"
 msgstr "Next: Review and deploy"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "No"
 msgstr "No"
 
@@ -1740,6 +1744,7 @@ msgstr "Refresh"
 msgid "Required"
 msgstr "Required"
 
+#: src/components/shared/formItems/ProjectReserved.tsx
 #: src/components/shared/formItems/ProjectReserved.tsx
 msgid "Reserved rate"
 msgstr "Reserved rate"
@@ -2444,8 +2449,8 @@ msgid "When token minting is allowed, the owner of this project has permission t
 msgstr ""
 
 #: src/components/shared/formItems/ProjectReserved.tsx
-msgid "Whenever someone pays your project, this percentage of tokens will be reserved and the rest will go to the payer. By default, these tokens are reserved for the project owner, but you can also allocate portions to other wallet addresses. Anyone can submit the transaction to distribute reserved tokens according to the allocation."
-msgstr "Whenever someone pays your project, this percentage of tokens will be reserved and the rest will go to the payer. By default, these tokens are reserved for the project owner, but you can also allocate portions to other wallet addresses. Anyone can submit the transaction to distribute reserved tokens according to the allocation."
+msgid "Whenever someone pays your project, this percentage of tokens will be reserved and the rest will go to the payer."
+msgstr "Whenever someone pays your project, this percentage of tokens will be reserved and the rest will go to the payer."
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
@@ -2502,7 +2507,6 @@ msgid "Would you to issue an ERC-20 token to be used as this project's token?"
 msgstr "Would you to issue an ERC-20 token to be used as this project's token?"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Yes"
 msgstr "Yes"
 

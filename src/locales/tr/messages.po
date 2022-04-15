@@ -19,7 +19,6 @@ msgstr ""
 "X-Crowdin-File-ID: 9\n"
 
 #: src/components/shared/formItems/ProjectDiscountRate.tsx
-#: src/components/shared/formItems/ProjectReserved.tsx
 msgid "(0%)"
 msgstr "(%0)"
 
@@ -324,6 +323,7 @@ msgstr "Token basmaya izin ver"
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Allowed"
 msgstr "İzin verildi"
 
@@ -488,6 +488,10 @@ msgstr "Aksi istenmediği takdirde, tahsis edilmemiş bütün fonlar proje sahib
 
 #: src/components/v2/V2Create/forms/TokenForm/index.tsx
 msgid "By default, the issuance rate for your project's token is 1,000,000 tokens / 1 ETH. For example, a 1 ETH contribution to your project will return 1,000,000 tokens. You can manipulate the issuance rate with the following configurations."
+msgstr ""
+
+#: src/components/shared/formItems/ProjectReserved.tsx
+msgid "By default, these tokens are reserved for the project owner, but you can also allocate portions to other wallet addresses."
 msgstr ""
 
 #: src/components/Landing/QAs.tsx
@@ -705,6 +709,7 @@ msgstr "Detaylar"
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Disabled"
 msgstr "Devre dışı"
 
@@ -1319,7 +1324,6 @@ msgid "Next: Review and deploy"
 msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "No"
 msgstr "Hayır"
 
@@ -1745,6 +1749,7 @@ msgstr "Yenile"
 msgid "Required"
 msgstr "Gerekli"
 
+#: src/components/shared/formItems/ProjectReserved.tsx
 #: src/components/shared/formItems/ProjectReserved.tsx
 msgid "Reserved rate"
 msgstr "Ayrılmış oran"
@@ -2449,8 +2454,8 @@ msgid "When token minting is allowed, the owner of this project has permission t
 msgstr "Token basımına izin verildiğinde bu projenin sahibi, kararı kendisine ait olmak üzere, herhangi bir adrese, herhangi bir sayıda token basma iznine sahip olacaktır. Bu, projenin hazine bakiyesini artırmadan tüm mevcut token sahiplerinin etkisini azaltabilir. Proje sahibi bunu, finansman döngüsünün diğer tüm özellikleriyle birlikte yapılandırabilir."
 
 #: src/components/shared/formItems/ProjectReserved.tsx
-msgid "Whenever someone pays your project, this percentage of tokens will be reserved and the rest will go to the payer. By default, these tokens are reserved for the project owner, but you can also allocate portions to other wallet addresses. Anyone can submit the transaction to distribute reserved tokens according to the allocation."
-msgstr "Birisi projenize ödeme yaptığında bu token yüzdesi ayrılacak ve geri kalanı ödeme yapan kişiye gidecektir. Ayrılmış token'lar, varsayılan olarak proje sahibi için ayrılır ancak proje sahibi tarafından diğer cüzdan adreslerine de tahsis edilebilir. Bu işlemi herkes başlatabilir ve ayrılmış token'ları oranlarına göre dağıtabilir."
+msgid "Whenever someone pays your project, this percentage of tokens will be reserved and the rest will go to the payer."
+msgstr ""
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
@@ -2507,7 +2512,6 @@ msgid "Would you to issue an ERC-20 token to be used as this project's token?"
 msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Yes"
 msgstr "Evet"
 

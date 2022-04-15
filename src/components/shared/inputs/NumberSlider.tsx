@@ -50,7 +50,9 @@ export default function NumberSlider({
 
   return (
     <div style={style}>
-      <div style={{ display: 'flex', alignItems: 'baseline' }}>
+      <div
+        style={{ display: 'flex', alignItems: 'baseline', marginBottom: 15 }}
+      >
         <Slider
           {...inputConfig}
           tooltipVisible={false}

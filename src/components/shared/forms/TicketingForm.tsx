@@ -73,6 +73,7 @@ export default function TicketingForm({
               Boolean(val && val >= reservedRateRiskyMin),
             )
           }}
+          checked
         />
         {showReservedRateWarning && (
           <Form.Item>

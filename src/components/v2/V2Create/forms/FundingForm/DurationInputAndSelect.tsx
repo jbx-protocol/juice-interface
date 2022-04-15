@@ -18,12 +18,13 @@ export default function DurationInputAndSelect({
       <Form.Item
         name="duration"
         label={<Trans>Funding cycle duration</Trans>}
+        style={{ width: '100%' }}
         required
       >
         <FormattedNumberInput
           placeholder="30"
           min={1}
-          style={{ paddingRight: 15, width: '100%' }}
+          style={{ paddingRight: 15 }}
         />
       </Form.Item>
       <Form.Item name="durationUnit" label={<span></span>}>

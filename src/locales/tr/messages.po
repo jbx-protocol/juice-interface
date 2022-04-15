@@ -160,7 +160,7 @@ msgid "<0>Peel</0> is the DAO that manages the juicebox.money frontend interface
 msgstr "<0>Peel</0>, juicebox.money kullanıcı arayüzünü yöneten DAO'dur. Peel'e <1>Peel Discord</1> veya <2>Juicebox Discord</2> aracılığıyla ulaşabilirsiniz."
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "<0>Recurring funding cycles</0> (e.g. distribute $30,000 from the project's treasury every 30 days)."
+msgid "<0>Recurring funding cycles</0> (for example, distribute $30,000 from your project's treasury every 30 days)."
 msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
@@ -364,7 +364,11 @@ msgid "Any reconfiguration to an upcoming funding cycle will take effect once th
 msgstr "Yaklaşan bir finansman döngüsüne yönelik herhangi bir yeniden yapılandırma, mevcut döngü sona erdiğinde yürürlüğe girecektir. Stratejisi olmayan bir proje, sahibi tarafından e-dolanrıcılığa karşı savunmasız olabilir."
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "Anyone can send the transaction to distribute funds within a funding cycle's distribution limit."
+msgid "Any treasury funds in excess of the distribution limit is called <0>overflow</0>. Overflow can be claimed by your project's token holders by redeeming their tokens. <1>Learn more</1> about overflow."
+msgstr ""
+
+#: src/components/v2/V2Create/forms/FundingForm/index.tsx
+msgid "Any treasury funds within the distribution limit can be paid out to destinations that you can define as <0>splits</0>. <1>Learn more</1> about payout splits."
 msgstr ""
 
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
@@ -784,13 +788,8 @@ msgstr "Dağıtım sınırı"
 msgid "Distribution limit, duration and payouts"
 msgstr "Dağıtım sınırı, süre ve ödemeler"
 
-#: src/components/v2/V2Create/forms/FundingForm/index.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
 msgid "Distribution splits"
-msgstr ""
-
-#: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "Distributions can't be scheduled when the distribution limit is set to Zero."
 msgstr ""
 
 #: src/components/Landing/QAs.tsx
@@ -969,12 +968,17 @@ msgstr "Finansman döngüsü detayları"
 
 #: src/components/shared/formItems/ProjectDuration.tsx
 #: src/components/v1/shared/BudgetForm.tsx
+#: src/components/v2/V2Create/forms/FundingForm/DurationInputAndSelect.tsx
 msgid "Funding cycle duration"
 msgstr "Finansman döngüsü süresi"
 
 #: src/components/v1/shared/BudgetForm.tsx
 msgid "Funding cycle target"
 msgstr "Finansman döngüsü hedefi"
+
+#: src/components/v2/V2Create/forms/FundingForm/index.tsx
+msgid "Funding cycles"
+msgstr ""
 
 #: src/constants/fundingWarningText.ts
 msgid "Funding cycles can be reconfigured moments before a new cycle begins, without notifying contributors."
@@ -1328,7 +1332,7 @@ msgid "No funding target: The project will control how all funds are distributed
 msgstr "Finansman hedefi yok: Proje, tüm fonların nasıl dağıtılacağını kontrol eder ve hiçbiri token sahipleri tarafından talep edilemez."
 
 #: src/components/v2/V2Create/forms/FundingForm/TargetTypeSelect.tsx
-msgid "No limit"
+msgid "No limit (infinite)"
 msgstr ""
 
 #: src/components/v1/shared/BudgetForm.tsx
@@ -1477,6 +1481,14 @@ msgstr "Ödemeler duraklatıldı"
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Payout recipients"
 msgstr "Ödeme alıcıları"
+
+#: src/components/v2/V2Create/forms/FundingForm/index.tsx
+msgid "Payout splits"
+msgstr ""
+
+#: src/components/v2/V2Create/forms/FundingForm/index.tsx
+msgid "Payout splits can't be scheduled when the distribution limit is Zero."
+msgstr ""
 
 #: src/components/shared/forms/PayModsForm.tsx
 msgid "Payouts (optional)"
@@ -1910,7 +1922,7 @@ msgid "Set a funding target to cover predictable expenses. Any extra funds (<0>o
 msgstr "Öngörülebilir masrafları karşılamak için bir finansman hedefi belirleyin. Tüm ekstra fonlar (<0>taşma</0>), sizinle beraber projenizin token'larını tutan herhangi biri tarafından talep edilebilir."
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "Set the amount of funds you'd like to distribute from your treasury each funding cycle. At any time, treasury funds within the distribution limit can be paid out to destinations that you'll pre-program. Your project's token holders can reclaim treasury funds in excess of the distribution limit – your project's overflow – holders by redeeming their tokens. <0>Learn more</0> about reclaiming overflow."
+msgid "Set the amount of funds you'd like to distribute from your treasury each funding cycle."
 msgstr ""
 
 #: src/components/v1/shared/BudgetForm.tsx
@@ -2474,7 +2486,7 @@ msgid "With a distribution limit of Zero, no funds can be distributed by the pro
 msgstr ""
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "With no distribution limit, all funds can be distributed by the project. The project will have <0>no overflow</0> because the <1>distribution limit is infinite</1>. Token holders will <2>not</2> be able to redeem their tokens for treasury funds in this case."
+msgid "With an infinite distribution limit, all funds can be distributed by the project. The project will have no overflow, meaning token holders won't be able to redeem their tokens for treasury funds."
 msgstr ""
 
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx

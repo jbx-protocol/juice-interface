@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/macro'
 import { Form, Select } from 'antd'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 
@@ -8,27 +9,31 @@ import {
 } from 'constants/time'
 
 export default function DurationInputAndSelect({
-  value,
+  defaultDurationUnit,
 }: {
-  value: DurationUnitsOption | undefined
+  defaultDurationUnit: DurationUnitsOption | undefined
 }) {
   return (
-    <>
+    <div style={{ display: 'flex' }}>
       <Form.Item
         name="duration"
+        label={<Trans>Funding cycle duration</Trans>}
         required
-        style={{ width: '100%', paddingRight: 15 }}
       >
-        <FormattedNumberInput placeholder="30" min={1} />
+        <FormattedNumberInput
+          placeholder="30"
+          min={1}
+          style={{ paddingRight: 15, width: '100%' }}
+        />
       </Form.Item>
-      <Form.Item name="durationUnit">
+      <Form.Item name="durationUnit" label={<span></span>}>
         <Select
           className="medium"
           style={{
-            minWidth: '100px',
-            height: '32px',
+            minWidth: 125,
+            height: 32,
           }}
-          defaultValue={value}
+          defaultValue={defaultDurationUnit}
         >
           {DURATION_UNIT_OPTIONS.map((value, i) => (
             <Select.Option key={i} value={value}>
@@ -37,6 +42,6 @@ export default function DurationInputAndSelect({
           ))}
         </Select>
       </Form.Item>
-    </>
+    </div>
   )
 }

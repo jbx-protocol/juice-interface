@@ -45,6 +45,8 @@ import { fromWad, parseWad } from 'utils/formatNumber'
 import BudgetTargetInput from 'components/shared/inputs/BudgetTargetInput'
 import { Link } from 'react-router-dom'
 
+import FormItemWarningText from 'components/shared/FormItemWarningText'
+
 import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
 
 import { shadowCard } from 'constants/styles/shadowCard'
@@ -223,7 +225,7 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
           <li>
             <Trans>
               Restrict how the owner can reconfigure upcoming funding cycles to
-              mitigate abuse of power.
+              mitigate abuse of power.{' '}
               <ExternalLink
                 href={'https://info.juicebox.money/docs/learn/risks'}
               >
@@ -250,7 +252,9 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
           color: theme.colors.text.primary,
         }}
       >
-        <h3>Distribution</h3>
+        <h3>
+          <Trans>Distribution</Trans>
+        </h3>
         <p>
           <Trans>
             Set the amount of funds you'd like to distribute from your treasury
@@ -271,10 +275,11 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
             cycle's distribution limit.
           </Trans>
         </p>
-        <h4>Limit</h4>
-        <TargetTypeSelect value={targetType} onChange={onTargetTypeSelect} />
-        <br />
-        <br />
+
+        <Form.Item label={<Trans>Distribution limit</Trans>}>
+          <TargetTypeSelect value={targetType} onChange={onTargetTypeSelect} />
+        </Form.Item>
+
         {targetType === 'specific' ? (
           <Form.Item required>
             <BudgetTargetInput
@@ -291,7 +296,7 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
             />
           </Form.Item>
         ) : targetType === 'infinite' ? (
-          <p style={{ color: theme.colors.text.warn }}>
+          <FormItemWarningText>
             <Trans>
               With no distribution limit, all funds can be distributed by the
               project. The project will have <strong>no overflow</strong>{' '}
@@ -299,14 +304,14 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
               holders will <strong>not</strong> be able to redeem their tokens
               for treasury funds in this case.
             </Trans>
-          </p>
+          </FormItemWarningText>
         ) : (
-          <p style={{ color: theme.colors.text.warn }}>
+          <FormItemWarningText>
             <Trans>
               With a distribution limit of Zero, no funds can be distributed by
               the project. All funds belong to token holders as overflow.
             </Trans>
-          </p>
+          </FormItemWarningText>
         )}
       </div>
 
@@ -345,10 +350,12 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
             />
           </>
         ) : (
-          <p style={{ color: theme.colors.text.primary }}>
-            Distributions can't be scheduled when the distribution limit is set
-            to Zero.
-          </p>
+          <FormItemWarningText>
+            <Trans>
+              Distributions can't be scheduled when the distribution limit is
+              set to Zero.
+            </Trans>
+          </FormItemWarningText>
         )}
       </div>
 

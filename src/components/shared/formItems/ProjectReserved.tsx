@@ -11,6 +11,7 @@ import {
   RESERVED_RATE_WARNING_THRESHOLD_PERCENT,
 } from 'constants/fundingWarningText'
 import FundingCycleDetailWarning from '../Project/FundingCycleDetailWarning'
+import FormItemWarningText from '../FormItemWarningText'
 
 export default function ProjectReserved({
   name,
@@ -37,13 +38,12 @@ export default function ProjectReserved({
   )
 
   const riskNotice = (
-    <p style={{ color: colors.text.warn }}>
+    <FormItemWarningText>
       <Trans>
-        <strong>Note:</strong> A reserved rate of more than 90% is risky for
-        contributors. Contributors won't receive many tokens for their
-        contribution.
+        A reserved rate of more than 90% is risky for contributors. Contributors
+        won't receive many tokens for their contribution.
       </Trans>
-    </p>
+    </FormItemWarningText>
   )
 
   return (

@@ -139,8 +139,8 @@ msgstr "<0>Aprende más</0> acerca del excedente."
 msgid "<0>NOTE:</0> This project has a balance of 0. Projects cannot be migrated without a balance. To migrate this project, first pay it or use the button below to deposit 1 wei (0.000000000000000001 or 10<1>-18</1> ETH)."
 msgstr "<0>NOTA:</0> Este proyecto tiene un balance de 0. Los proyectos no pueden ser migrados sin un balance. Para migrar un proyecto, primero págalo o usa el botón de abajo para depositar 1 wei (0.000000000000000001 o 10<1>-18</1> ETH)."
 
-#: src/components/shared/formItems/ProjectReserved.tsx
-msgid "<0>Note:</0> A reserved rate of more than 90% is risky for contributors. Contributors won't receive many tokens for their contribution."
+#: src/components/v1/shared/BudgetForm.tsx
+msgid "<0>No duration set.</0>Funding can be reconfigured at any time. Reconfigurations will start a new funding cycle."
 msgstr ""
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
@@ -222,6 +222,10 @@ msgstr "Una reconfiguración para el siguiente ciclo de financiación debe ser p
 #: src/constants/v2/ballotStrategies/index.ts
 msgid "A reconfiguration to an upcoming funding cycle must be submitted at least 7 days before it starts."
 msgstr "Una reconfiguración para el siguiente ciclo de financiación debe ser presentada al menos 7 días antes de que empiece."
+
+#: src/components/shared/formItems/ProjectReserved.tsx
+msgid "A reserved rate of more than 90% is risky for contributors. Contributors won't receive many tokens for their contribution."
+msgstr ""
 
 #: src/components/shared/Project/SpendingStats.tsx
 msgid "AVAILABLE"
@@ -701,7 +705,7 @@ msgid "Disabled"
 msgstr "Desactivado"
 
 #: src/components/shared/formItems/ProjectBondingCurveRate.tsx
-msgid "Disabled when project has no funding target."
+msgid "Disabled when project's funding cycle has no distribution limit."
 msgstr ""
 
 #: src/components/shared/formItems/ProjectDiscountRate.tsx
@@ -767,6 +771,11 @@ msgstr "Distribuir {tokensText}"
 msgid "Distributed"
 msgstr "Distribuido"
 
+#: src/components/v2/V2Create/forms/FundingForm/index.tsx
+msgid "Distribution"
+msgstr ""
+
+#: src/components/v2/V2Create/forms/FundingForm/index.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Distribution limit"
 msgstr "Límite de distribución"
@@ -778,6 +787,10 @@ msgstr "Límite de distribución, duración y pagos"
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
 msgid "Distribution splits"
+msgstr ""
+
+#: src/components/v2/V2Create/forms/FundingForm/index.tsx
+msgid "Distributions can't be scheduled when the distribution limit is set to Zero."
 msgstr ""
 
 #: src/components/Landing/QAs.tsx
@@ -942,10 +955,6 @@ msgstr "Financiamiento"
 #: src/components/v1/FundingCycle/Spending.tsx
 msgid "Funding Distribution"
 msgstr "Distribución de fondos"
-
-#: src/components/v1/shared/BudgetForm.tsx
-msgid "Funding can be reconfigured at any time. Reconfigurations will start a new funding cycle."
-msgstr "El financiamiento puede ser reconfigurado en cualquier momento. Las reconfiguraciones empiezan un nuevo ciclo de financiamiento."
 
 #: src/components/shared/Project/FundingCycleSection.tsx
 #: src/components/v1/V1Create/index.tsx
@@ -1313,10 +1322,6 @@ msgstr "No"
 #: src/components/v1/V1Project/ProjectActivity/ActivityTabContent.tsx
 msgid "No activity yet"
 msgstr "Sin actividad, todavía"
-
-#: src/components/v1/shared/BudgetForm.tsx
-msgid "No duration set."
-msgstr "Sin duración establecida."
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "No funding target: The project will control how all funds are distributed, and none can be redeemed by token holders."
@@ -1777,7 +1782,7 @@ msgid "Resources"
 msgstr "Recursos"
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "Restrict how the owner can reconfigure upcoming funding cycles to mitigate abuse of power.<0>Learn more.</0>"
+msgid "Restrict how the owner can reconfigure upcoming funding cycles to mitigate abuse of power. <0>Learn more.</0>"
 msgstr ""
 
 #: src/components/v1/V1Create/index.tsx

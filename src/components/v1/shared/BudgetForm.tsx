@@ -19,6 +19,8 @@ import { hasFundingTarget, isRecurring } from 'utils/v1/fundingCycle'
 import { helpPagePath } from 'utils/helpPageHelper'
 import { getV1CurrencyOption, V1CurrencyName } from 'utils/v1/currency'
 
+import FormItemWarningText from 'components/shared/FormItemWarningText'
+
 import ExternalLink from '../../shared/ExternalLink'
 import { CurrencyName } from 'constants/currency'
 
@@ -251,19 +253,17 @@ export default function BudgetForm({
 
         {duration === '0' && (
           <p style={{ color: colors.text.primary, marginTop: 20 }}>
-            <span style={{ fontWeight: 600 }}>
-              <Trans>No duration set.</Trans>{' '}
-            </span>
             <Trans>
+              <span style={{ fontWeight: 600 }}>No duration set.</span>
               Funding can be reconfigured at any time. Reconfigurations will
               start a new funding cycle.
-            </Trans>{' '}
-            <span style={{ color: colors.text.warn }}>
+            </Trans>
+            <FormItemWarningText>
               <Trans>
                 Using a duration is recommended. Allowing funding cycles to be
                 reconfigured at any time will appear risky to contributors.
               </Trans>
-            </span>
+            </FormItemWarningText>
           </p>
         )}
 

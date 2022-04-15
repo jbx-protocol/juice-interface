@@ -134,9 +134,9 @@ msgstr ""
 msgid "<0>NOTE:</0> This project has a balance of 0. Projects cannot be migrated without a balance. To migrate this project, first pay it or use the button below to deposit 1 wei (0.000000000000000001 or 10<1>-18</1> ETH)."
 msgstr "<0>NOTE:</0> This project has a balance of 0. Projects cannot be migrated without a balance. To migrate this project, first pay it or use the button below to deposit 1 wei (0.000000000000000001 or 10<1>-18</1> ETH)."
 
-#: src/components/shared/formItems/ProjectReserved.tsx
-msgid "<0>Note:</0> A reserved rate of more than 90% is risky for contributors. Contributors won't receive many tokens for their contribution."
-msgstr "<0>Note:</0> A reserved rate of more than 90% is risky for contributors. Contributors won't receive many tokens for their contribution."
+#: src/components/v1/shared/BudgetForm.tsx
+msgid "<0>No duration set.</0>Funding can be reconfigured at any time. Reconfigurations will start a new funding cycle."
+msgstr "<0>No duration set.</0>Funding can be reconfigured at any time. Reconfigurations will start a new funding cycle."
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "<0>Note:</0> These properties will <1>not</1> be editable immediately within a funding cycle. They can only be changed for <2>upcoming</2> funding cycles."
@@ -217,6 +217,10 @@ msgstr ""
 #: src/constants/v2/ballotStrategies/index.ts
 msgid "A reconfiguration to an upcoming funding cycle must be submitted at least 7 days before it starts."
 msgstr ""
+
+#: src/components/shared/formItems/ProjectReserved.tsx
+msgid "A reserved rate of more than 90% is risky for contributors. Contributors won't receive many tokens for their contribution."
+msgstr "A reserved rate of more than 90% is risky for contributors. Contributors won't receive many tokens for their contribution."
 
 #: src/components/shared/Project/SpendingStats.tsx
 msgid "AVAILABLE"
@@ -696,8 +700,8 @@ msgid "Disabled"
 msgstr "Disabled"
 
 #: src/components/shared/formItems/ProjectBondingCurveRate.tsx
-msgid "Disabled when project has no funding target."
-msgstr "Disabled when project has no funding target."
+msgid "Disabled when project's funding cycle has no distribution limit."
+msgstr "Disabled when project's funding cycle has no distribution limit."
 
 #: src/components/shared/formItems/ProjectDiscountRate.tsx
 msgid "Disabled when your project's funding cycle has no duration."
@@ -762,6 +766,11 @@ msgstr "Distribute {tokensText}"
 msgid "Distributed"
 msgstr ""
 
+#: src/components/v2/V2Create/forms/FundingForm/index.tsx
+msgid "Distribution"
+msgstr "Distribution"
+
+#: src/components/v2/V2Create/forms/FundingForm/index.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Distribution limit"
 msgstr "Distribution limit"
@@ -774,6 +783,10 @@ msgstr "Distribution limit, duration and payouts"
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
 msgid "Distribution splits"
 msgstr "Distribution splits"
+
+#: src/components/v2/V2Create/forms/FundingForm/index.tsx
+msgid "Distributions can't be scheduled when the distribution limit is set to Zero."
+msgstr "Distributions can't be scheduled when the distribution limit is set to Zero."
 
 #: src/components/Landing/QAs.tsx
 msgid "Do I have to make my project open source to use Juicebox as its business model?"
@@ -937,10 +950,6 @@ msgstr "Funding"
 #: src/components/v1/FundingCycle/Spending.tsx
 msgid "Funding Distribution"
 msgstr "Funding Distribution"
-
-#: src/components/v1/shared/BudgetForm.tsx
-msgid "Funding can be reconfigured at any time. Reconfigurations will start a new funding cycle."
-msgstr ""
 
 #: src/components/shared/Project/FundingCycleSection.tsx
 #: src/components/v1/V1Create/index.tsx
@@ -1307,10 +1316,6 @@ msgstr "No"
 
 #: src/components/v1/V1Project/ProjectActivity/ActivityTabContent.tsx
 msgid "No activity yet"
-msgstr ""
-
-#: src/components/v1/shared/BudgetForm.tsx
-msgid "No duration set."
 msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
@@ -1772,8 +1777,8 @@ msgid "Resources"
 msgstr "Resources"
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "Restrict how the owner can reconfigure upcoming funding cycles to mitigate abuse of power.<0>Learn more.</0>"
-msgstr "Restrict how the owner can reconfigure upcoming funding cycles to mitigate abuse of power.<0>Learn more.</0>"
+msgid "Restrict how the owner can reconfigure upcoming funding cycles to mitigate abuse of power. <0>Learn more.</0>"
+msgstr "Restrict how the owner can reconfigure upcoming funding cycles to mitigate abuse of power. <0>Learn more.</0>"
 
 #: src/components/v1/V1Create/index.tsx
 msgid "Restrict payments and printing tokens."

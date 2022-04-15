@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 
-import { Button, Form, Switch } from 'antd'
+import { Button, Form, Space, Switch } from 'antd'
 
 import { useCallback, useContext, useLayoutEffect, useState } from 'react'
 
@@ -11,10 +11,7 @@ import { useETHPaymentTerminalFee } from 'hooks/v2/contractReader/ETHPaymentTerm
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 
 import { useAppDispatch } from 'hooks/AppDispatch'
-import {
-  DurationUnitsOption,
-  editingV2ProjectActions,
-} from 'redux/slices/editingV2Project'
+import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { V2UserContext } from 'contexts/v2/userContext'
 import { useAppSelector } from 'hooks/AppSelector'
 import { SerializedV2FundAccessConstraint } from 'utils/v2/serializers'
@@ -45,11 +42,14 @@ import { fromWad, parseWad } from 'utils/formatNumber'
 import BudgetTargetInput from 'components/shared/inputs/BudgetTargetInput'
 import { Link } from 'react-router-dom'
 
+import FormItemWarningText from 'components/shared/FormItemWarningText'
+
 import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
 
 import { shadowCard } from 'constants/styles/shadowCard'
 import TargetTypeSelect, { TargetType } from './TargetTypeSelect'
 import DurationInputAndSelect from './DurationInputAndSelect'
+import { DurationUnitsOption } from 'constants/time'
 
 type FundingFormFields = {
   duration?: string
@@ -200,46 +200,53 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
             }}
             style={{ marginRight: 10 }}
           />
-          <h3>Funding cycles</h3>
+          <h3>
+            <Trans>Funding cycles</Trans>
+          </h3>
         </div>
-        <p>
-          <Trans>
-            Set the length of your funding cycles, which can enable:
-          </Trans>
-        </p>
-        <ol>
-          <li>
-            <Trans>
-              <strong>Recurring funding cycles</strong> (e.g. distribute $30,000
-              from the project's treasury every 30 days).
-            </Trans>
-          </li>
-          <li>
-            <Trans>
-              A <strong>discount rate</strong> to automatically reduce the issue
-              rate of your project's token (tokens/ETH) each new funding cycle.{' '}
-            </Trans>
-          </li>
-          <li>
-            <Trans>
-              Restrict how the owner can reconfigure upcoming funding cycles to
-              mitigate abuse of power.
-              <ExternalLink
-                href={'https://info.juicebox.money/docs/learn/risks'}
-              >
-                Learn more.
-              </ExternalLink>
-            </Trans>
-          </li>
-        </ol>
-        <br />
-        <div style={{ display: 'flex' }}>
+
+        <Space size="middle" direction="vertical">
+          <div>
+            <p>
+              <Trans>
+                Set the length of your funding cycles, which can enable:
+              </Trans>
+            </p>
+            <ol style={{ marginBottom: 0 }}>
+              <li>
+                <Trans>
+                  <strong>Recurring funding cycles</strong> (for example,
+                  distribute $30,000 from your project's treasury every 30
+                  days).
+                </Trans>
+              </li>
+              <li>
+                <Trans>
+                  A <strong>discount rate</strong> to automatically reduce the
+                  issue rate of your project's token (tokens/ETH) each new
+                  funding cycle.{' '}
+                </Trans>
+              </li>
+              <li>
+                <Trans>
+                  Restrict how the owner can reconfigure upcoming funding cycles
+                  to mitigate abuse of power.{' '}
+                  <ExternalLink
+                    href={'https://info.juicebox.money/docs/learn/risks'}
+                  >
+                    Learn more.
+                  </ExternalLink>
+                </Trans>
+              </li>
+            </ol>
+          </div>
+
           {durationEnabled && (
             <DurationInputAndSelect
-              value={fundingForm.getFieldValue('durationUnit')}
+              defaultDurationUnit={fundingForm.getFieldValue('durationUnit')}
             />
           )}
-        </div>
+        </Space>
       </div>
 
       <div
@@ -250,31 +257,43 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
           color: theme.colors.text.primary,
         }}
       >
-        <h3>Distribution</h3>
+        <h3>
+          <Trans>Distribution</Trans>
+        </h3>
         <p>
           <Trans>
             Set the amount of funds you'd like to distribute from your treasury
-            each funding cycle. At any time, treasury funds within the
-            distribution limit can be paid out to destinations that you'll
-            pre-program. Your project's token holders can reclaim treasury funds
-            in excess of the distribution limit – your project's overflow –
-            holders by redeeming their tokens.{' '}
-            <ExternalLink href={helpPagePath('protocol/learn/topics/overflow')}>
-              Learn more
-            </ExternalLink>{' '}
-            about reclaiming overflow.
+            each funding cycle.
           </Trans>
         </p>
         <p>
           <Trans>
-            Anyone can send the transaction to distribute funds within a funding
-            cycle's distribution limit.
+            Any treasury funds within the distribution limit can be paid out to
+            destinations that you can define as <strong>splits</strong>.{' '}
+            <ExternalLink
+              href={'https://info.juicebox.money/docs/learn/glossary/splits'}
+            >
+              Learn more
+            </ExternalLink>{' '}
+            about payout splits.
           </Trans>
         </p>
-        <h4>Limit</h4>
-        <TargetTypeSelect value={targetType} onChange={onTargetTypeSelect} />
-        <br />
-        <br />
+        <p>
+          <Trans>
+            Any treasury funds in excess of the distribution limit is called{' '}
+            <strong>overflow</strong>. Overflow can be claimed by your project's
+            token holders by redeeming their tokens.{' '}
+            <ExternalLink href={helpPagePath('protocol/learn/topics/overflow')}>
+              Learn more
+            </ExternalLink>{' '}
+            about overflow.
+          </Trans>
+        </p>
+
+        <Form.Item label={<Trans>Distribution limit</Trans>}>
+          <TargetTypeSelect value={targetType} onChange={onTargetTypeSelect} />
+        </Form.Item>
+
         {targetType === 'specific' ? (
           <Form.Item required>
             <BudgetTargetInput
@@ -291,22 +310,20 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
             />
           </Form.Item>
         ) : targetType === 'infinite' ? (
-          <p style={{ color: theme.colors.text.warn }}>
+          <FormItemWarningText>
             <Trans>
-              With no distribution limit, all funds can be distributed by the
-              project. The project will have <strong>no overflow</strong>{' '}
-              because the <strong>distribution limit is infinite</strong>. Token
-              holders will <strong>not</strong> be able to redeem their tokens
-              for treasury funds in this case.
+              With an infinite distribution limit, all funds can be distributed
+              by the project. The project will have no overflow, meaning token
+              holders won't be able to redeem their tokens for treasury funds.
             </Trans>
-          </p>
+          </FormItemWarningText>
         ) : (
-          <p style={{ color: theme.colors.text.warn }}>
+          <FormItemWarningText>
             <Trans>
               With a distribution limit of Zero, no funds can be distributed by
               the project. All funds belong to token holders as overflow.
             </Trans>
-          </p>
+          </FormItemWarningText>
         )}
       </div>
 
@@ -318,7 +335,7 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
         }}
       >
         <h3>
-          <Trans>Distribution splits</Trans>
+          <Trans>Payout splits</Trans>
         </h3>
         {targetType !== 'none' ? (
           <>
@@ -345,10 +362,12 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
             />
           </>
         ) : (
-          <p style={{ color: theme.colors.text.primary }}>
-            Distributions can't be scheduled when the distribution limit is set
-            to Zero.
-          </p>
+          <FormItemWarningText>
+            <Trans>
+              Payout splits can't be scheduled when the distribution limit is
+              Zero.
+            </Trans>
+          </FormItemWarningText>
         )}
       </div>
 

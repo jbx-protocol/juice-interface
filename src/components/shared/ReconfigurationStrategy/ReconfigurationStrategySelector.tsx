@@ -12,6 +12,7 @@ import { BallotStrategy } from 'models/ballot'
 import { createCustomStrategy } from 'utils/ballot'
 
 import ExternalLink from '../ExternalLink'
+import FormItemWarningText from '../FormItemWarningText'
 
 const CUSTOM_STRATEGY_INDEX = -1
 
@@ -71,12 +72,12 @@ export default function ReconfigurationStrategySelector({
     <Space direction="vertical">
       {ballotStrategies[selectedStrategyIndex]?.address ===
         ballotStrategies[0].address && (
-        <p style={{ color: colors.text.warn }}>
+        <FormItemWarningText>
           <Trans>
             Using a reconfiguration strategy is recommended. Projects with no
             strategy will appear risky to contributors.
           </Trans>
-        </p>
+        </FormItemWarningText>
       )}
       {ballotStrategies.map((strategy: BallotStrategy, idx) => (
         <ReconfigurationStrategyOption

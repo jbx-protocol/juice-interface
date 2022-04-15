@@ -7,20 +7,17 @@ import FormItemLabel from 'components/v2/V2Create/FormItemLabel'
 
 import { FormItemExt } from './formItemExt'
 import NumberSlider from '../inputs/NumberSlider'
+import FormItemWarningText from '../FormItemWarningText'
 
 function DiscountRateExtra({ disabled }: { disabled?: boolean }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   return (
     <div>
       {disabled && (
-        <p style={{ color: colors.text.warn }}>
+        <FormItemWarningText>
           <Trans>
             Disabled when your project's funding cycle has no duration.
           </Trans>
-        </p>
+        </FormItemWarningText>
       )}
       <Trans>
         The ratio of tokens rewarded per payment amount will decrease by this

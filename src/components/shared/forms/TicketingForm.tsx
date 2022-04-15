@@ -6,6 +6,7 @@ import { TicketMod } from 'models/mods'
 import { useContext, useLayoutEffect, useState } from 'react'
 
 import { RESERVED_RATE_WARNING_THRESHOLD_PERCENT as reservedRateRiskyMin } from 'constants/fundingWarningText'
+import FormItemWarningText from '../FormItemWarningText'
 
 export type TicketingFormFields = {
   reserved: number
@@ -75,14 +76,14 @@ export default function TicketingForm({
         />
         {showReservedRateWarning && (
           <Form.Item>
-            <p style={{ color: colors.text.warn }}>
+            <FormItemWarningText>
               <Trans>
                 Projects using a reserved rate of {reservedRateRiskyMin}% or
                 more will appear risky to contributors, as a relatively small
                 number of tokens will be received in exchange for paying your
                 project.
               </Trans>
-            </p>
+            </FormItemWarningText>
           </Form.Item>
         )}
         <FormItems.ProjectTicketMods

@@ -139,8 +139,8 @@ msgstr "<0>Узнайте больше</0> о переполнении."
 msgid "<0>NOTE:</0> This project has a balance of 0. Projects cannot be migrated without a balance. To migrate this project, first pay it or use the button below to deposit 1 wei (0.000000000000000001 or 10<1>-18</1> ETH)."
 msgstr "<0>ПРИМЕЧАНИЕ:</0>Этот проект имеет баланс 0. Проекты не могут быть перенесены без баланса. Чтобы перенести этот проект, сначала оплатите его или используйте кнопку ниже, чтобы внести 1 wei (0.000000000000000001 or 10<1>-18</1> ETH)."
 
-#: src/components/shared/formItems/ProjectReserved.tsx
-msgid "<0>Note:</0> A reserved rate of more than 90% is risky for contributors. Contributors won't receive many tokens for their contribution."
+#: src/components/v1/shared/BudgetForm.tsx
+msgid "<0>No duration set.</0>Funding can be reconfigured at any time. Reconfigurations will start a new funding cycle."
 msgstr ""
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
@@ -160,7 +160,7 @@ msgid "<0>Peel</0> is the DAO that manages the juicebox.money frontend interface
 msgstr "<0>Peel</0> - это DAO, управляющее интерфейсом фронтенда juicebox.money. Вы можете связаться с Peel либо через <1>Peel Discord</1>, либо через <2>Juicebox Discord</2>."
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "<0>Recurring funding cycles</0> (e.g. distribute $30,000 from the project's treasury every 30 days)."
+msgid "<0>Recurring funding cycles</0> (for example, distribute $30,000 from your project's treasury every 30 days)."
 msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
@@ -222,6 +222,10 @@ msgstr "Реконфигурацию/план изменений для пред
 #: src/constants/v2/ballotStrategies/index.ts
 msgid "A reconfiguration to an upcoming funding cycle must be submitted at least 7 days before it starts."
 msgstr "Реконфигурацию/план изменений для предстоящего цикла финансирования необходимо отправить не менее чем за 3 дня до его начала."
+
+#: src/components/shared/formItems/ProjectReserved.tsx
+msgid "A reserved rate of more than 90% is risky for contributors. Contributors won't receive many tokens for their contribution."
+msgstr ""
 
 #: src/components/shared/Project/SpendingStats.tsx
 msgid "AVAILABLE"
@@ -360,7 +364,11 @@ msgid "Any reconfiguration to an upcoming funding cycle will take effect once th
 msgstr "Любая перенастройка на предстоящий цикл финансирования вступит в силу после завершения текущего цикла. Проект, не имеющий стратегии или плана, может быть уязвим для владельца."
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "Anyone can send the transaction to distribute funds within a funding cycle's distribution limit."
+msgid "Any treasury funds in excess of the distribution limit is called <0>overflow</0>. Overflow can be claimed by your project's token holders by redeeming their tokens. <1>Learn more</1> about overflow."
+msgstr ""
+
+#: src/components/v2/V2Create/forms/FundingForm/index.tsx
+msgid "Any treasury funds within the distribution limit can be paid out to destinations that you can define as <0>splits</0>. <1>Learn more</1> about payout splits."
 msgstr ""
 
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
@@ -701,7 +709,7 @@ msgid "Disabled"
 msgstr "Отключен"
 
 #: src/components/shared/formItems/ProjectBondingCurveRate.tsx
-msgid "Disabled when project has no funding target."
+msgid "Disabled when project's funding cycle has no distribution limit."
 msgstr ""
 
 #: src/components/shared/formItems/ProjectDiscountRate.tsx
@@ -767,6 +775,11 @@ msgstr ""
 msgid "Distributed"
 msgstr "Распределено"
 
+#: src/components/v2/V2Create/forms/FundingForm/index.tsx
+msgid "Distribution"
+msgstr ""
+
+#: src/components/v2/V2Create/forms/FundingForm/index.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Distribution limit"
 msgstr ""
@@ -775,7 +788,6 @@ msgstr ""
 msgid "Distribution limit, duration and payouts"
 msgstr ""
 
-#: src/components/v2/V2Create/forms/FundingForm/index.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
 msgid "Distribution splits"
 msgstr ""
@@ -943,10 +955,6 @@ msgstr ""
 msgid "Funding Distribution"
 msgstr "Распределение финансирования"
 
-#: src/components/v1/shared/BudgetForm.tsx
-msgid "Funding can be reconfigured at any time. Reconfigurations will start a new funding cycle."
-msgstr " финансирование можно изменить в любой момент, что приведет к началу нового цикла финансирования."
-
 #: src/components/shared/Project/FundingCycleSection.tsx
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
@@ -960,12 +968,17 @@ msgstr "Детали цикла финансирования"
 
 #: src/components/shared/formItems/ProjectDuration.tsx
 #: src/components/v1/shared/BudgetForm.tsx
+#: src/components/v2/V2Create/forms/FundingForm/DurationInputAndSelect.tsx
 msgid "Funding cycle duration"
 msgstr "Продолжительность цикла финансирования"
 
 #: src/components/v1/shared/BudgetForm.tsx
 msgid "Funding cycle target"
 msgstr "Цель цикла финансирования"
+
+#: src/components/v2/V2Create/forms/FundingForm/index.tsx
+msgid "Funding cycles"
+msgstr ""
 
 #: src/constants/fundingWarningText.ts
 msgid "Funding cycles can be reconfigured moments before a new cycle begins, without notifying contributors."
@@ -1314,16 +1327,12 @@ msgstr "Нет"
 msgid "No activity yet"
 msgstr "Нет активности"
 
-#: src/components/v1/shared/BudgetForm.tsx
-msgid "No duration set."
-msgstr "Продолжительность не указана."
-
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "No funding target: The project will control how all funds are distributed, and none can be redeemed by token holders."
 msgstr "Нет цели финансирования: проект будет контролировать, как распределяются все средства, и ничего не может быть обменяно владельцами токенов."
 
 #: src/components/v2/V2Create/forms/FundingForm/TargetTypeSelect.tsx
-msgid "No limit"
+msgid "No limit (infinite)"
 msgstr ""
 
 #: src/components/v1/shared/BudgetForm.tsx
@@ -1471,6 +1480,14 @@ msgstr "Платежи приостановлены"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Payout recipients"
+msgstr ""
+
+#: src/components/v2/V2Create/forms/FundingForm/index.tsx
+msgid "Payout splits"
+msgstr ""
+
+#: src/components/v2/V2Create/forms/FundingForm/index.tsx
+msgid "Payout splits can't be scheduled when the distribution limit is Zero."
 msgstr ""
 
 #: src/components/shared/forms/PayModsForm.tsx
@@ -1777,7 +1794,7 @@ msgid "Resources"
 msgstr "Pесурсы"
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "Restrict how the owner can reconfigure upcoming funding cycles to mitigate abuse of power.<0>Learn more.</0>"
+msgid "Restrict how the owner can reconfigure upcoming funding cycles to mitigate abuse of power. <0>Learn more.</0>"
 msgstr ""
 
 #: src/components/v1/V1Create/index.tsx
@@ -1905,7 +1922,7 @@ msgid "Set a funding target to cover predictable expenses. Any extra funds (<0>o
 msgstr "Установите цель финансирования для покрытия предсказуемых расходов. Любые дополнительные средства (<0>overflow</0>) могут быть затребованы любым, кто держит токены вашего проекта вместе с вами."
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "Set the amount of funds you'd like to distribute from your treasury each funding cycle. At any time, treasury funds within the distribution limit can be paid out to destinations that you'll pre-program. Your project's token holders can reclaim treasury funds in excess of the distribution limit – your project's overflow – holders by redeeming their tokens. <0>Learn more</0> about reclaiming overflow."
+msgid "Set the amount of funds you'd like to distribute from your treasury each funding cycle."
 msgstr ""
 
 #: src/components/v1/shared/BudgetForm.tsx
@@ -2469,7 +2486,7 @@ msgid "With a distribution limit of Zero, no funds can be distributed by the pro
 msgstr ""
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "With no distribution limit, all funds can be distributed by the project. The project will have <0>no overflow</0> because the <1>distribution limit is infinite</1>. Token holders will <2>not</2> be able to redeem their tokens for treasury funds in this case."
+msgid "With an infinite distribution limit, all funds can be distributed by the project. The project will have no overflow, meaning token holders won't be able to redeem their tokens for treasury funds."
 msgstr ""
 
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx

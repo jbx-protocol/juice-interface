@@ -17,7 +17,7 @@ export default function TargetTypeSelect({
         <Trans>Specific target</Trans>
       </Option>
       <Option value="infinite">
-        <Trans>No limit</Trans>
+        <Trans>No limit (infinite)</Trans>
       </Option>
       <Option value="none">
         <Trans>Zero, no funds can be distributed</Trans>

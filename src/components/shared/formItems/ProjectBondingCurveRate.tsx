@@ -16,6 +16,7 @@ import ExternalLink from 'components/shared/ExternalLink'
 
 import NumberSlider from '../inputs/NumberSlider'
 import { FormItemExt } from './formItemExt'
+import FormItemWarningText from '../FormItemWarningText'
 
 const GRAPH_CONTAINER_ID = 'graph-container'
 const DEFAULT_BONDING_CURVE_RATE_PERCENTAGE = '100'
@@ -38,9 +39,11 @@ function BondingCurveRateExtra({ disabled }: { disabled?: boolean }) {
   return (
     <div>
       {disabled && (
-        <p style={{ color: colors.text.warn }}>
-          <Trans>Disabled when project has no funding target.</Trans>
-        </p>
+        <FormItemWarningText>
+          <Trans>
+            Disabled when project's funding cycle has no distribution limit.
+          </Trans>
+        </FormItemWarningText>
       )}
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <div style={{ position: 'relative' }}>

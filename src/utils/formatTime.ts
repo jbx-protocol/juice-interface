@@ -41,9 +41,9 @@ export const otherUnitToSeconds = ({
   switch (unit) {
     case 'days':
       return duration * SECONDS_IN_DAY
-    case 'hrs':
+    case 'hours':
       return duration * SECONDS_IN_HOUR
-    case 'mins':
+    case 'minutes':
       return duration * 60
     default:
       return duration
@@ -60,9 +60,9 @@ export const secondsToOtherUnit = ({
   switch (unit) {
     case 'days':
       return duration / SECONDS_IN_DAY
-    case 'hrs':
+    case 'hours':
       return duration / SECONDS_IN_HOUR
-    case 'mins':
+    case 'minutes':
       return duration / 60
     default:
       return duration
@@ -83,17 +83,19 @@ export const convertTime = ({
   return secondsToOtherUnit({ duration: durationInSeconds, unit: toUnit })
 }
 
-export const deriveDurationUnit = (durationSeconds: number | undefined) => {
+export const deriveDurationUnit = (
+  durationSeconds: number | undefined,
+): DurationUnitsOption => {
   // Default to days
   if (!durationSeconds || durationSeconds === 0) return 'days'
 
   // Less that 1 min
   if (durationSeconds < 60) {
-    return 'secs'
+    return 'seconds'
   } else if (durationSeconds < SECONDS_IN_HOUR) {
-    return 'mins'
+    return 'minutes'
   } else if (durationSeconds < SECONDS_IN_DAY * 3) {
-    return 'hrs'
+    return 'hours'
   }
   return 'days'
 }

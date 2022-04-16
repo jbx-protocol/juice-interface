@@ -17,8 +17,6 @@ import { sanitizeSplit } from 'utils/v2/splits'
 import { Split } from 'models/v2/splits'
 
 import {
-  discountRateFrom,
-  formatDiscountRate,
   formatRedemptionRate,
   formatReservedRate,
   redemptionRateFrom,
@@ -37,6 +35,12 @@ import {
 
 import { SerializedV2FundAccessConstraint } from 'utils/v2/serializers'
 
+import SwitchHeading from 'components/shared/SwitchHeading'
+
+import NumberSlider from 'components/shared/inputs/NumberSlider'
+
+import FormItemWarningText from 'components/shared/FormItemWarningText'
+
 import { shadowCard } from 'constants/styles/shadowCard'
 import TabDescription from '../../TabDescription'
 
@@ -44,6 +48,27 @@ type TokenFormFields = {
   discountRate: string
   reservedRate: string
   redemptionRate: string
+}
+
+const MAX_DISCOUNT_RATE = 20 // this is an opinionated limit
+
+function DiscountRateExtra({ hasDuration }: { hasDuration?: boolean }) {
+  return (
+    <div>
+      {!hasDuration && (
+        <FormItemWarningText>
+          <Trans>
+            Disabled when your project's funding cycle has no duration.
+          </Trans>
+        </FormItemWarningText>
+      )}
+      <Trans>
+        The ratio of tokens rewarded per payment amount will decrease by this
+        percentage with each new funding cycle. A higher discount rate will
+        incentivize supporters to pay your project earlier than later.
+      </Trans>
+    </div>
+  )
 }
 
 export default function TokenForm({ onFinish }: { onFinish: VoidFunction }) {
@@ -56,7 +81,6 @@ export default function TokenForm({ onFinish }: { onFinish: VoidFunction }) {
     reservedTokensGroupedSplits,
     fundAccessConstraints,
   } = useAppSelector(state => state.editingV2Project)
-
   const fundAccessConstraint =
     getDefaultFundAccessConstraint<SerializedV2FundAccessConstraint>(
       fundAccessConstraints,
@@ -64,6 +88,17 @@ export default function TokenForm({ onFinish }: { onFinish: VoidFunction }) {
 
   const [reservedTokensSplits, setReservedTokensSplits] = useState<Split[]>(
     reservedTokensGroupedSplits?.splits,
+  )
+
+  const canSetDiscountRate = hasFundingDuration(fundingCycleData)
+
+  const [discountRate, setDiscountRate] = useState<string>(
+    (canSetDiscountRate && fundingCycleData?.discountRate) ||
+      defaultFundingCycleData.discountRate,
+  )
+
+  const [discountRateChecked, setDiscountRateChecked] = useState<boolean>(
+    fundingCycleData?.discountRate !== '0',
   )
 
   /**
@@ -99,7 +134,6 @@ export default function TokenForm({ onFinish }: { onFinish: VoidFunction }) {
   }, [dispatch, reservedTokensSplits, onFinish, tokenForm])
 
   const canSetRedemptionRate = hasDistributionLimit(fundAccessConstraint)
-  const canSetDiscountRate = hasFundingDuration(fundingCycleData)
 
   /**
    * NOTE: these values will all be in their 'native' units,
@@ -112,9 +146,6 @@ export default function TokenForm({ onFinish }: { onFinish: VoidFunction }) {
     reservedRate:
       fundingCycleMetadata?.reservedRate ??
       defaultFundingCycleMetadata.reservedRate,
-    discountRate:
-      (canSetDiscountRate && fundingCycleData?.discountRate) ||
-      defaultFundingCycleData.discountRate,
     redemptionRate:
       (canSetRedemptionRate && fundingCycleMetadata?.redemptionRate) ||
       defaultFundingCycleMetadata.redemptionRate,
@@ -154,20 +185,38 @@ export default function TokenForm({ onFinish }: { onFinish: VoidFunction }) {
             onReservedTokensSplitsChange={setReservedTokensSplits}
           />
 
-          <FormItems.ProjectDiscountRate
-            value={formatDiscountRate(
-              BigNumber.from(initialValues.discountRate),
-            )}
-            onChange={newDiscountRatePercentage => {
-              tokenForm.setFieldsValue({
-                discountRate: discountRateFrom(
-                  newDiscountRatePercentage?.toString() ?? '0',
-                ).toString(),
-              })
-            }}
+          <Form.Item
+            extra={<DiscountRateExtra hasDuration={canSetDiscountRate} />}
+            label={
+              <SwitchHeading
+                onChange={checked => {
+                  setDiscountRateChecked(checked)
+                  if (!checked) {
+                    setDiscountRate(defaultFundingCycleData.discountRate)
+                  }
+                }}
+                checked={discountRateChecked}
+                disabled={!canSetDiscountRate}
+              >
+                <Trans>Discount rate</Trans>
+              </SwitchHeading>
+            }
             style={{ ...shadowCard(theme), padding: 25, marginBottom: 10 }}
-            disabled={!canSetDiscountRate}
-          />
+          >
+            <NumberSlider
+              max={MAX_DISCOUNT_RATE}
+              defaultValue={0}
+              sliderValue={parseFloat(discountRate)}
+              suffix="%"
+              onChange={value =>
+                setDiscountRate(
+                  value?.toString() ?? defaultFundingCycleData.discountRate,
+                )
+              }
+              step={0.1}
+              disabled={!canSetDiscountRate || !discountRateChecked}
+            />
+          </Form.Item>
 
           <FormItems.ProjectBondingCurveRate
             label={<Trans>Redemption rate</Trans>}

@@ -11,7 +11,10 @@ import { useETHPaymentTerminalFee } from 'hooks/v2/contractReader/ETHPaymentTerm
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 
 import { useAppDispatch } from 'hooks/AppDispatch'
-import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
+import {
+  defaultFundingCycleData,
+  editingV2ProjectActions,
+} from 'redux/slices/editingV2Project'
 import { V2UserContext } from 'contexts/v2/userContext'
 import { useAppSelector } from 'hooks/AppSelector'
 import { SerializedV2FundAccessConstraint } from 'utils/v2/serializers'
@@ -154,6 +157,13 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
         editingV2ProjectActions.setPayoutSplits(splits.map(sanitizeSplit)),
       )
       dispatch(editingV2ProjectActions.setDuration(durationInSeconds ?? '0'))
+      if (!durationInSeconds || durationInSeconds === '0') {
+        dispatch(
+          editingV2ProjectActions.setDiscountRate(
+            defaultFundingCycleData.discountRate,
+          ),
+        )
+      }
 
       onFinish?.()
     },

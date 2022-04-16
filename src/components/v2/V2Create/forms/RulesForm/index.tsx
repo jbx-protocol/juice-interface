@@ -4,7 +4,7 @@ import { InfoCircleOutlined } from '@ant-design/icons'
 
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useState } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { ThemeContext } from 'contexts/themeContext'
 
@@ -20,17 +20,11 @@ import {
   DEFAULT_BALLOT_STRATEGY,
 } from 'constants/v2/ballotStrategies'
 import FormItemLabel from '../../FormItemLabel'
-
-type RulesFormFields = {
-  pausePay: boolean
-  allowMinting: boolean
-  ballot: string
-}
+import { getBallotStrategyByAddress } from 'constants/v2/ballotStrategies/getBallotStrategiesByAddress'
 
 export default function RulesForm({ onFinish }: { onFinish: VoidFunction }) {
   const { theme } = useContext(ThemeContext)
 
-  const [form] = Form.useForm<RulesFormFields>()
   const dispatch = useAppDispatch()
   const { fundingCycleMetadata, fundingCycleData } = useAppSelector(
     state => state.editingV2Project,
@@ -38,34 +32,23 @@ export default function RulesForm({ onFinish }: { onFinish: VoidFunction }) {
 
   const [showMintingWarning, setShowMintingWarning] = useState<boolean>(false)
   const [ballotStrategy, setBallotStrategy] = useState<BallotStrategy>(
-    DEFAULT_BALLOT_STRATEGY,
+    getBallotStrategyByAddress(
+      fundingCycleData?.ballot ?? DEFAULT_BALLOT_STRATEGY.address,
+    ),
+  )
+  const [pausePay, setPausePay] = useState<boolean>(
+    fundingCycleMetadata?.pausePay,
+  )
+  const [allowMinting, setAllowMinting] = useState<boolean>(
+    fundingCycleMetadata?.allowMinting,
   )
 
-  const onFormSaved = useCallback(
-    (fields: RulesFormFields) => {
-      dispatch(editingV2ProjectActions.setPausePay(fields.pausePay))
-      dispatch(editingV2ProjectActions.setAllowMinting(fields.allowMinting))
-      dispatch(editingV2ProjectActions.setBallot(ballotStrategy.address))
-      onFinish?.()
-    },
-    [dispatch, onFinish, ballotStrategy],
-  )
-
-  const resetForm = useCallback(() => {
-    form.setFieldsValue({
-      pausePay: fundingCycleMetadata?.pausePay,
-      allowMinting: fundingCycleMetadata?.allowMinting,
-      ballot: fundingCycleData?.ballot ?? DEFAULT_BALLOT_STRATEGY.address,
-    })
-    if (fundingCycleMetadata?.allowMinting) {
-      setShowMintingWarning(true)
-    }
-  }, [fundingCycleData, fundingCycleMetadata, form])
-
-  // initially fill form with any existing redux state
-  useEffect(() => {
-    resetForm()
-  }, [resetForm])
+  const onFormSaved = useCallback(() => {
+    dispatch(editingV2ProjectActions.setPausePay(pausePay))
+    dispatch(editingV2ProjectActions.setAllowMinting(allowMinting))
+    dispatch(editingV2ProjectActions.setBallot(ballotStrategy.address))
+    onFinish?.()
+  }, [dispatch, onFinish, ballotStrategy, pausePay, allowMinting])
 
   const switchContainerStyle = {
     display: 'flex',
@@ -95,21 +78,15 @@ export default function RulesForm({ onFinish }: { onFinish: VoidFunction }) {
     !ballotStrategy || !isAddress(ballotStrategy.address)
 
   return (
-    <Form
-      form={form}
-      layout="vertical"
-      onFinish={() => onFormSaved(form.getFieldsValue(true))}
-    >
+    <Form layout="vertical" onFinish={onFormSaved}>
       <Space direction="vertical" size="large">
         <div style={{ ...shadowCard(theme), padding: '2rem' }}>
           <Form.Item
-            name="pausePay"
             extra={
               <Trans>
                 When enabled, your project cannot receive direct payments.
               </Trans>
             }
-            valuePropName="checked"
           >
             <div
               style={{
@@ -117,30 +94,28 @@ export default function RulesForm({ onFinish }: { onFinish: VoidFunction }) {
               }}
             >
               <Switch
-                onChange={val => {
-                  form.setFieldsValue({ pausePay: val })
+                onChange={checked => {
+                  setPausePay(checked)
                 }}
                 style={{ marginRight: '0.5rem' }}
+                checked={pausePay}
               />
               <Trans>Pause payments</Trans>
             </div>
           </Form.Item>
-          <Form.Item
-            name="allowMinting"
-            extra={tokenMintingExtra}
-            valuePropName="checked"
-          >
+          <Form.Item extra={tokenMintingExtra}>
             <div
               style={{
                 ...switchContainerStyle,
               }}
             >
               <Switch
-                onChange={val => {
-                  setShowMintingWarning(val)
-                  form.setFieldsValue({ allowMinting: val })
+                onChange={checked => {
+                  setShowMintingWarning(checked)
+                  setAllowMinting(checked)
                 }}
                 style={{ marginRight: '0.5rem' }}
+                checked={allowMinting}
               />
               <Trans>Allow token minting</Trans>
             </div>

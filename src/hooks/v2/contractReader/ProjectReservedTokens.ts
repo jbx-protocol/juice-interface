@@ -14,8 +14,8 @@ export default function useProjectReservedTokens({
     contract: V2ContractName.JBController,
     functionName: 'reservedTokenBalanceOf',
     args:
-      projectId && reservedRate
-        ? [BigNumber.from(projectId).toHexString(), reservedRate]
+      projectId && reservedRate && !projectId.eq(0)
+        ? [projectId, reservedRate]
         : null,
   })
 }

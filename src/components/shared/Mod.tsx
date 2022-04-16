@@ -43,7 +43,6 @@ export default function Mod({
               <div style={{ fontWeight: 500 }}>
                 {(mod as PayoutMod).projectId ? (
                   <V1ProjectHandle
-                    link
                     projectId={(mod as PayoutMod).projectId as BigNumber}
                   />
                 ) : (

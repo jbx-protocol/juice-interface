@@ -277,7 +277,7 @@ export default function Landing() {
                     you get paid, so do they.
                   </Trans>
                 </FourthCol>
-                <FourthCol header={t`ERC20 community tokens`}>
+                <FourthCol header={t`ERC-20 community tokens`}>
                   <Trans>
                     When someone pays your project, they'll receive your
                     project's tokens in return. Tokens can be redeemed for a

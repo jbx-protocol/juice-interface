@@ -3,11 +3,12 @@ import { Col, Row, Space, Statistic } from 'antd'
 import { Gutter } from 'antd/lib/grid/row'
 
 import CurrencySymbol from 'components/shared/CurrencySymbol'
-import PayoutModsList from 'components/shared/PayoutModsList'
+import PayoutModsList from 'components/v1/PayoutModsList'
 import ProjectLogo from 'components/shared/ProjectLogo'
 import TicketModsList from 'components/shared/TicketModsList'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
+import { V1FundingCycle } from 'models/v1/fundingCycle'
 import {
   useAppSelector,
   useEditingV1FundingCycleSelector,
@@ -24,6 +25,7 @@ import {
   permilleToPercent,
 } from 'utils/formatNumber'
 import {
+  getUnsafeV1FundingCycleProperties,
   hasFundingDuration,
   hasFundingTarget,
   isRecurring,
@@ -33,12 +35,15 @@ import { orEmpty } from 'utils/orEmpty'
 
 import { V1CurrencyName } from 'utils/v1/currency'
 
-import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
+import FundingCycleDetailWarning from 'components/shared/Project/FundingCycleDetailWarning'
+
+import { getBallotStrategyByAddress } from 'constants/v1/ballotStrategies/getBallotStrategiesByAddress'
+import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
 
 export default function ConfirmDeployProject() {
   const editingFC = useEditingV1FundingCycleSelector()
   const editingProject = useAppSelector(state => state.editingProject.info)
-  const { terminal } = useContext(V1ProjectContext)
+  const { terminal, currentFC } = useContext(V1ProjectContext)
 
   const { payoutMods, ticketMods } = useAppSelector(
     state => state.editingProject,
@@ -51,7 +56,13 @@ export default function ConfirmDeployProject() {
     editingFC?.currency.toNumber() as V1CurrencyOption,
   )
 
+  const unsafeFundingCycleProperties = getUnsafeV1FundingCycleProperties(
+    currentFC as V1FundingCycle,
+  )
+
   const rowGutter: [Gutter, Gutter] = [25, 20]
+
+  const riskWarningText = FUNDING_CYCLE_WARNING_TEXT()
 
   return (
     <Space size="large" direction="vertical">
@@ -199,12 +210,17 @@ export default function ConfirmDeployProject() {
             <Col md={8} xs={24}>
               <Statistic
                 title={t`Duration`}
-                value={
-                  editingFC.duration.gt(0)
-                    ? formattedNum(editingFC.duration)
-                    : t`Not set`
-                }
-                suffix={editingFC.duration.gt(0) ? t`days` : ''}
+                valueRender={() => (
+                  <FundingCycleDetailWarning
+                    showWarning={unsafeFundingCycleProperties.duration}
+                    tooltipTitle={riskWarningText.duration}
+                  >
+                    {editingFC.duration.gt(0)
+                      ? formattedNum(editingFC.duration)
+                      : t`Not set`}
+                    {editingFC.duration.gt(0) ? t`days` : ''}
+                  </FundingCycleDetailWarning>
+                )}
               />
             </Col>
             <Col md={8} xs={24}>
@@ -216,9 +232,17 @@ export default function ConfirmDeployProject() {
             <Col md={8} xs={24}>
               <Statistic
                 title={t`Token minting`}
-                value={
-                  editingFC.ticketPrintingIsAllowed ? t`Allowed` : t`Disabled`
-                }
+                valueRender={() => (
+                  <FundingCycleDetailWarning
+                    showWarning={unsafeFundingCycleProperties.allowMinting}
+                    tooltipTitle={riskWarningText.allowMinting}
+                  >
+                    {editingFC.ticketPrintingIsAllowed
+                      ? t`Allowed`
+                      : t`Disabled`}
+                    {` `}
+                  </FundingCycleDetailWarning>
+                )}
               />
             </Col>
           </Row>
@@ -227,7 +251,16 @@ export default function ConfirmDeployProject() {
               <Statistic
                 title={t`Reserved tokens`}
                 value={perbicentToPercent(editingFC?.reserved)}
-                suffix="%"
+                suffix={
+                  <FundingCycleDetailWarning
+                    showWarning={
+                      unsafeFundingCycleProperties.metadataReservedRate
+                    }
+                    tooltipTitle={riskWarningText.metadataReservedRate}
+                  >
+                    %
+                  </FundingCycleDetailWarning>
+                }
               />
             </Col>
             {editingFC && isRecurring(editingFC) && (
@@ -272,7 +305,7 @@ export default function ConfirmDeployProject() {
                 mods={payoutMods}
                 projectId={undefined}
                 fundingCycle={editingFC}
-                fee={terminalFee}
+                feePerbicent={terminalFee}
               />
             )}
           />

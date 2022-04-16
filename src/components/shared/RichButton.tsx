@@ -4,15 +4,23 @@ import { ComponentPropsWithoutRef, CSSProperties, useContext } from 'react'
 
 export default function RichButton({
   heading,
+  prefix,
   description,
   disabled,
+  icon,
+  primaryColor,
   ...props
 }: {
   heading: JSX.Element | string
   description: JSX.Element | string
   disabled?: boolean
+  prefix?: JSX.Element | string
+  icon?: JSX.Element
+  primaryColor?: string
 } & ComponentPropsWithoutRef<'div'>) {
-  const { colors, radii } = useContext(ThemeContext).theme
+  const {
+    theme: { colors, radii },
+  } = useContext(ThemeContext)
 
   const cardStyles: CSSProperties = {
     display: 'flex',
@@ -25,50 +33,78 @@ export default function RichButton({
     background: colors.background.l0,
   }
 
+  const headingColor = disabled
+    ? colors.text.disabled
+    : primaryColor ?? colors.text.action.primary
+
+  const subheadingColor = disabled
+    ? colors.text.disabled
+    : primaryColor ?? colors.text.primary
+
   return (
     <div
       className="clickable-border"
-      style={cardStyles}
+      style={{
+        ...cardStyles,
+        padding: '1rem 0 1rem 1rem',
+        borderColor: headingColor,
+      }}
       {...props}
+      role="button"
       onClick={e => {
         if (disabled) return
 
         props?.onClick?.(e)
       }}
     >
-      <div style={{ padding: '1rem 0 1rem 1rem' }}>
-        <h4
-          style={{
-            color: disabled ? colors.text.disabled : colors.text.action.primary,
-          }}
-        >
-          {heading}
-        </h4>
-        <p
-          style={{
-            color: disabled ? colors.text.disabled : colors.text.primary,
-            margin: 0,
-            fontSize: 12,
-          }}
-        >
-          {description}
-        </p>
+      <div style={{ display: 'flex' }}>
+        {prefix ? (
+          <h4
+            style={{
+              color: headingColor,
+              marginRight: '1rem',
+            }}
+          >
+            {prefix}
+          </h4>
+        ) : null}
+
+        <div>
+          <h4
+            style={{
+              color: headingColor,
+            }}
+          >
+            {heading}
+          </h4>
+          <p
+            style={{
+              color: subheadingColor,
+              margin: 0,
+              fontSize: 12,
+            }}
+          >
+            {description}
+          </p>
+        </div>
       </div>
+
       <div
         style={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           padding: 5,
+          marginRight: '0.5rem',
         }}
       >
-        <CaretRightFilled
-          style={{
-            color: disabled
-              ? colors.text.disabled
-              : colors.stroke.action.primary,
-          }}
-        />
+        {icon ?? (
+          <CaretRightFilled
+            style={{
+              color: headingColor,
+            }}
+          />
+        )}
       </div>
     </div>
   )

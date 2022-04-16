@@ -1,4 +1,6 @@
 import { Button, Tooltip } from 'antd'
+import { SettingOutlined } from '@ant-design/icons'
+
 import { t, Trans } from '@lingui/macro'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { ThemeContext } from 'contexts/themeContext'
@@ -10,21 +12,24 @@ import { useContext } from 'react'
 
 import { V2FundingCycleRiskCount } from 'utils/v2/fundingCycle'
 
-import FundingCycleSection from 'components/shared/Project/FundingCycleSection'
+import FundingCycleSection, {
+  TabType,
+} from 'components/shared/Project/FundingCycleSection'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import CurrentFundingCycle from './CurrentFundingCycle'
 import V2ReconfigureFundingModalTrigger from '../V2ProjectReconfigureModal/V2ReconfigureModalTrigger'
+import UpcomingFundingCycle from './UpcomingFundingCycle'
 
 export default function V2FundingCycleSection({
-  showCurrentDetail,
+  expandCard,
 }: {
-  showCurrentDetail?: boolean
+  expandCard?: boolean
 }) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const { fundingCycle } = useContext(V2ProjectContext)
+  const { fundingCycle, isPreviewMode } = useContext(V2ProjectContext)
 
   const tabText = ({ text }: { text: string }) => {
     const hasRisks = fundingCycle && V2FundingCycleRiskCount(fundingCycle)
@@ -58,23 +63,30 @@ export default function V2FundingCycleSection({
     {
       key: 'current',
       label: tabText({ text: t`Current` }),
-      content: <CurrentFundingCycle showCurrentDetail={showCurrentDetail} />,
+      content: <CurrentFundingCycle expandCard={expandCard} />,
     },
-  ]
+    !isPreviewMode && {
+      key: 'upcoming',
+      label: tabText({ text: t`Upcoming` }),
+      content: <UpcomingFundingCycle expandCard={expandCard} />,
+    },
+  ].filter(Boolean) as TabType[]
 
   const canReconfigure = useHasPermission(V2OperatorPermission.RECONFIGURE)
+  const showReconfigureButton = canReconfigure && !isPreviewMode
 
   return (
     <FundingCycleSection
       tabs={tabs}
       reconfigureButton={
-        canReconfigure ? (
+        showReconfigureButton ? (
           <V2ReconfigureFundingModalTrigger
-            fundingDuration={fundingCycle?.duration}
             hideProjectDetails
             triggerButton={(onClick: VoidFunction) => (
-              <Button size="small" onClick={onClick}>
-                <Trans>Reconfigure upcoming</Trans>
+              <Button size="small" onClick={onClick} icon={<SettingOutlined />}>
+                <span>
+                  <Trans>Reconfigure upcoming</Trans>
+                </span>
               </Button>
             )}
           />

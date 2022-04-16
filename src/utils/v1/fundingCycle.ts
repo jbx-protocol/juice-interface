@@ -2,16 +2,13 @@ import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 
 import * as constants from '@ethersproject/constants'
 import { V1FundingCycle, V1FundingCycleMetadata } from 'models/v1/fundingCycle'
+import unsafeFundingCycleProperties from 'utils/unsafeFundingCycleProperties'
+import { perbicentToPercent } from 'utils/formatNumber'
 
-import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
-
-import { perbicentToPercent } from '../formatNumber'
+import { getBallotStrategyByAddress } from 'constants/v1/ballotStrategies/getBallotStrategiesByAddress'
 
 import { EditingV1FundingCycle } from './serializers'
-import {
-  FundingCycleRiskFlags,
-  RESERVED_RATE_WARNING_THRESHOLD_PERCENT,
-} from 'constants/v1/fundingWarningText'
+import { FundingCycleRiskFlags } from 'constants/fundingWarningText'
 
 const DISCOUNT_RATE_NON_RECURRING = 201
 
@@ -100,61 +97,22 @@ export const hasFundingDuration = (
  *
  * If a value in the returned object is true, it is potentially unsafe.
  */
-export const getUnsafeFundingCycleProperties = (
+export const getUnsafeV1FundingCycleProperties = (
   fundingCycle: V1FundingCycle,
 ): FundingCycleRiskFlags => {
   const metadata = decodeFundingCycleMetadata(fundingCycle.metadata)
+  const ballotAddress = getBallotStrategyByAddress(fundingCycle.ballot).address
+  const reservedRatePercentage = parseFloat(
+    perbicentToPercent(metadata?.reservedRate),
+  )
+  const allowMinting = Boolean(metadata?.ticketPrintingIsAllowed)
 
-  // when we set one of these values to true, we're saying it's potentially unsafe.
-  // This object is based on type FundingCycle
-  const configFlags = {
-    duration: false,
-    ballot: false,
-    metadataTicketPrintingIsAllowed: false,
-    metadataReservedRate: false,
-  }
-
-  /**
-   * Ballot address is 0x0000.
-   * Funding cycle reconfigurations can be created moments before a new cycle begins,
-   * giving project owners an opportunity to take advantage of contributors, for example by withdrawing overflow.
-   */
-  if (
-    getBallotStrategyByAddress(fundingCycle.ballot).address ===
-    constants.AddressZero
-  ) {
-    configFlags.ballot = true
-  }
-
-  /**
-   * Duration not set. Reconfigurations can be made at any point without notice.
-   */
-  if (!hasFundingDuration(fundingCycle)) {
-    configFlags.duration = true
-  }
-
-  /**
-   * Token minting is enabled (v1.1).
-   * Any supply of tokens could be minted at any time by the project owners, diluting the token share of all existing contributors.
-   */
-  if (metadata?.ticketPrintingIsAllowed) {
-    configFlags.metadataTicketPrintingIsAllowed = true
-  }
-
-  /**
-   * Reserved rate is very high.
-   * Contributors will receive a relatively small portion of tokens (if any) in exchange for paying the project.
-   *
-   * Note: max reserve rate is 200.
-   */
-  if (
-    parseInt(perbicentToPercent(metadata?.reservedRate ?? 0), 10) >=
-    RESERVED_RATE_WARNING_THRESHOLD_PERCENT
-  ) {
-    configFlags.metadataReservedRate = true
-  }
-
-  return configFlags
+  return unsafeFundingCycleProperties({
+    ballotAddress,
+    reservedRatePercentage,
+    hasFundingDuration: hasFundingDuration(fundingCycle),
+    allowMinting,
+  })
 }
 
 /**
@@ -162,7 +120,7 @@ export const getUnsafeFundingCycleProperties = (
  * 0 if we deem a project "safe" to contribute to.
  */
 export const fundingCycleRiskCount = (fundingCycle: V1FundingCycle): number => {
-  return Object.values(getUnsafeFundingCycleProperties(fundingCycle)).filter(
+  return Object.values(getUnsafeV1FundingCycleProperties(fundingCycle)).filter(
     v => v === true,
   ).length
 }

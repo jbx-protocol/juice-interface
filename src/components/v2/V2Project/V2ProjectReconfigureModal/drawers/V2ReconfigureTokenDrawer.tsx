@@ -1,7 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Drawer } from 'antd'
-import StandardSaveButton from 'components/StandardSaveButton'
-import TokenTabContent from 'components/v2/V2Create/tabs/TokenTab/TokenTabContent'
+import TokenTabContent from 'components/v2/V2Create/forms/TokenForm'
 
 import { drawerStyle } from 'constants/styles/drawerStyle'
 import { FundingDrawersSubtitles } from '..'
@@ -22,11 +21,7 @@ export function V2ReconfigureTokenDrawer({
       </h3>
       {FundingDrawersSubtitles}
       <br />
-      <TokenTabContent
-        onFinish={onSave}
-        hidePreview
-        saveButton={<StandardSaveButton />}
-      />
+      <TokenTabContent onFinish={onSave} />
     </Drawer>
   )
 }

@@ -21,6 +21,7 @@ export type TransactorOptions = {
   onDone?: VoidFunction
   onConfirmed?: TransactorCallback
   onCancelled?: TransactorCallback
+  onError?: ErrorCallback
 }
 
 export type Transactor = (
@@ -91,11 +92,11 @@ export function useTransactor({
         transactionHandler: txInformation => {
           console.info('HANDLE TX', txInformation)
           if (options && txInformation.transaction.status === 'confirmed') {
-            options.onConfirmed && options.onConfirmed(txInformation, signer)
-            options.onDone && options.onDone()
+            options?.onConfirmed?.(txInformation, signer)
+            options?.onDone?.()
           }
           if (options && txInformation.transaction.status === 'cancelled') {
-            options.onCancelled && options.onCancelled(txInformation, signer)
+            options?.onCancelled?.(txInformation, signer)
           }
         },
       }
@@ -162,13 +163,13 @@ export function useTransactor({
         } else {
           console.info('LOCAL TX SENT', result.hash)
           if (result.confirmations) {
-            options?.onConfirmed && options.onConfirmed(result, signer)
+            options?.onConfirmed?.(result, signer)
           } else {
-            options?.onCancelled && options.onCancelled(result, signer)
+            options?.onCancelled?.(result, signer)
           }
         }
 
-        options?.onDone && options.onDone()
+        options?.onDone?.()
 
         return true
       } catch (e) {
@@ -198,7 +199,7 @@ export function useTransactor({
           duration: 0,
         })
 
-        options?.onDone && options.onDone()
+        options?.onDone?.()
 
         return false
       }

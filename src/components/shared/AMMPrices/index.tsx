@@ -1,6 +1,7 @@
 import { useUniswapPriceQuery } from 'hooks/ERC20UniswapPrice'
 import { useSushiswapPriceQuery } from 'hooks/ERC20SushiswapPrice'
 import { CSSProperties } from 'react'
+import { Trans } from '@lingui/macro'
 
 import TokenAMMPriceRow from './TokenAMMPriceRow'
 
@@ -32,6 +33,9 @@ export default function AMMPrices({
 
   return (
     <div style={{ ...style }}>
+      <p style={{ fontSize: '0.7rem' }}>
+        <Trans>Current 3rd Party Exchange Rates</Trans>
+      </p>
       <TokenAMMPriceRow
         exchangeName="Uniswap"
         tokenSymbol={tokenSymbol}

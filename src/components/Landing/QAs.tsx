@@ -9,7 +9,7 @@ export const OverflowVideoLink = ({ children }: PropsWithChildren<{}>) => (
 
 const JB_FEE = 2.5
 
-const JBDiscordLink = ({ children }: PropsWithChildren<{}>) => (
+export const JBDiscordLink = ({ children }: PropsWithChildren<{}>) => (
   <ExternalLink href="https://discord.gg/6jXrJSyDFf">{children}</ExternalLink>
 )
 
@@ -123,7 +123,7 @@ export default function QAs() {
           For example, with a bonding curve of 70%, redeeming 10% of the token
           supply at any given time will claim around 7% of the total overflow.
         </Trans>,
-        <Trans>The rest is left to share between token hodlers.</Trans>,
+        <Trans>The rest is left to share between token holders.</Trans>,
         <Trans>
           For more info, check out this{' '}
           <ExternalLink href="https://youtu.be/dxqc3yMqi5M">

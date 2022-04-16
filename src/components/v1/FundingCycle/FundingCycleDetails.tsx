@@ -16,7 +16,7 @@ import {
 } from 'utils/formatNumber'
 import {
   decodeFundingCycleMetadata,
-  getUnsafeFundingCycleProperties,
+  getUnsafeV1FundingCycleProperties,
   hasFundingTarget,
   isRecurring,
 } from 'utils/v1/fundingCycle'
@@ -29,8 +29,8 @@ import TooltipLabel from 'components/shared/TooltipLabel'
 
 import FundingCycleDetailWarning from 'components/shared/Project/FundingCycleDetailWarning'
 
-import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
-import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/v1/fundingWarningText'
+import { getBallotStrategyByAddress } from 'constants/v1/ballotStrategies/getBallotStrategiesByAddress'
+import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
 import { SECONDS_IN_DAY } from 'constants/numbers'
 
 export default function FundingCycleDetails({
@@ -57,7 +57,7 @@ export default function FundingCycleDetails({
 
   const ballotStrategy = getBallotStrategyByAddress(fundingCycle.ballot)
   const unsafeFundingCycleProperties =
-    getUnsafeFundingCycleProperties(fundingCycle)
+    getUnsafeV1FundingCycleProperties(fundingCycle)
 
   const tokenSymbolPlural = tokenSymbolText({
     tokenSymbol,
@@ -106,6 +106,8 @@ export default function FundingCycleDetails({
     )
   }
 
+  const riskWarningText = FUNDING_CYCLE_WARNING_TEXT()
+
   return (
     <div>
       <Descriptions
@@ -134,7 +136,7 @@ export default function FundingCycleDetails({
           ) : (
             <FundingCycleDetailWarning
               showWarning={true}
-              tooltipTitle={FUNDING_CYCLE_WARNING_TEXT(fundingCycle).duration}
+              tooltipTitle={riskWarningText.duration}
             >
               <Trans>Not set</Trans>
             </FundingCycleDetailWarning>
@@ -184,7 +186,7 @@ export default function FundingCycleDetails({
                     This rate determines the amount of overflow that each token
                     can be redeemed for at any given time. On a lower bonding
                     curve, redeeming a token increases the value of each
-                    remaining token, creating an incentive to hodl tokens longer
+                    remaining token, creating an incentive to hold tokens longer
                     than others. A bonding curve of 100% means all tokens will
                     have equal value regardless of when they are redeemed.
                   </Trans>
@@ -215,9 +217,7 @@ export default function FundingCycleDetails({
         >
           <FundingCycleDetailWarning
             showWarning={unsafeFundingCycleProperties.metadataReservedRate}
-            tooltipTitle={
-              FUNDING_CYCLE_WARNING_TEXT(fundingCycle).metadataReservedRate
-            }
+            tooltipTitle={riskWarningText.metadataReservedRate}
           >
             {perbicentToPercent(metadata?.reservedRate)}%
           </FundingCycleDetailWarning>
@@ -263,10 +263,7 @@ export default function FundingCycleDetails({
           {metadata?.ticketPrintingIsAllowed ? (
             <FundingCycleDetailWarning
               showWarning={true}
-              tooltipTitle={
-                FUNDING_CYCLE_WARNING_TEXT(fundingCycle)
-                  .metadataTicketPrintingIsAllowed
-              }
+              tooltipTitle={riskWarningText.allowMinting}
             >
               <Trans>Allowed</Trans>
             </FundingCycleDetailWarning>
@@ -301,7 +298,7 @@ export default function FundingCycleDetails({
         </span>{' '}
         <FundingCycleDetailWarning
           showWarning={unsafeFundingCycleProperties.ballot}
-          tooltipTitle={FUNDING_CYCLE_WARNING_TEXT(fundingCycle).ballot}
+          tooltipTitle={riskWarningText.ballot}
         >
           {ballotStrategy.name}
         </FundingCycleDetailWarning>

@@ -11,12 +11,11 @@ import V2CurrencyProvider from 'providers/v2/V2CurrencyProvider'
 
 import { readNetwork } from 'constants/networks'
 import V2WarningBanner from './V2WarningBanner'
-import V2MainnetWarning from './V2MainnetWarning'
-import ProjectDetailsTabContent from './tabs/ProjectDetailsTabContent'
-import FundingTabContent from './tabs/FundingTab/FundingTabContent'
-import TokenTabContent from './tabs/TokenTab/TokenTabContent'
-import RulesTabContent from './tabs/RulesTab/RulesTabContent'
+import V2MainnetWarning from '../shared/V2MainnetWarning'
+import ProjectDetailsTabContent from './tabs/ProjectDetailsTab/ProjectDetailsTabContent'
+import FundingCycleTabContent from './tabs/FundingCycleTab/FundingCycleTabContent'
 import { TabContentProps } from './models'
+import ReviewDeployTab from './tabs/ReviewDeployTab'
 
 const { TabPane } = Tabs
 
@@ -35,16 +34,12 @@ const TABS: TabConfig[] = [
     component: ProjectDetailsTabContent,
   },
   {
-    title: t`2. Funding`,
-    component: FundingTabContent,
+    title: t`2. Funding cycle`,
+    component: FundingCycleTabContent,
   },
   {
-    title: t`3. Token`,
-    component: TokenTabContent,
-  },
-  {
-    title: t`4. Rules`,
-    component: RulesTabContent,
+    title: t`3. Review and deploy`,
+    component: ReviewDeployTab,
   },
 ]
 
@@ -57,7 +52,13 @@ export default function V2Create() {
     <V2UserProvider>
       <V2CurrencyProvider>
         {isRinkeby ? <V2WarningBanner /> : null}
-        <div style={{ margin: '4rem', marginBottom: 0 }}>
+        <div
+          style={{
+            maxWidth: 1300,
+            margin: '0 auto',
+            padding: '2rem 4rem',
+          }}
+        >
           {!isRinkeby && (
             <div style={{ padding: '1rem', textAlign: 'center' }}>
               <V2MainnetWarning />
@@ -68,7 +69,6 @@ export default function V2Create() {
             <div>
               <h1
                 style={{
-                  marginBottom: '2rem',
                   color: colors.text.primary,
                   fontSize: 28,
                 }}

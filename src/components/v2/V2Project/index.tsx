@@ -1,4 +1,4 @@
-import { Col, Row } from 'antd'
+import { Col, Row, Space } from 'antd'
 import PayInputGroup from 'components/shared/inputs/Pay/PayInputGroup'
 import ProjectHeader from 'components/shared/ProjectHeader'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
@@ -6,16 +6,28 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useContext } from 'react'
 
 import { decodeV2FundingCycleMetadata } from 'utils/v2/fundingCycle'
-import { weightedAmount } from 'utils/math'
+
+import { weightedAmount } from 'utils/v2/math'
 
 import V2PayButton from './V2PayButton'
 import V2ProjectHeaderActions from '../V2ProjectHeaderActions'
 import TreasuryStats from './TreasuryStats'
 import V2FundingCycleSection from './V2FundingCycleSection'
+import V2ManageTokensSection from './V2ManageTokensSection'
 
-export default function V2Project() {
-  const { projectId, projectMetadata, fundingCycle } =
+const GUTTER_PX = 40
+
+export default function V2Project({
+  singleColumnLayout,
+  expandFundingCycleCard,
+}: {
+  singleColumnLayout?: boolean
+  expandFundingCycleCard?: boolean
+}) {
+  const { projectId, projectMetadata, fundingCycle, isPreviewMode } =
     useContext(V2ProjectContext)
+
+  const colSizeMd = singleColumnLayout ? 24 : 12
 
   if (!projectId) return null
 
@@ -24,19 +36,16 @@ export default function V2Project() {
     : undefined
 
   return (
-    <>
+    <Space direction="vertical" size={GUTTER_PX}>
       <ProjectHeader
         metadata={projectMetadata}
-        actions={<V2ProjectHeaderActions />}
+        actions={!isPreviewMode ? <V2ProjectHeaderActions /> : undefined}
       />
-      <Row gutter={40}>
-        <Col md={12} xs={24}>
+      <Row gutter={GUTTER_PX} align="bottom">
+        <Col md={colSizeMd} xs={24}>
           <TreasuryStats />
-          {/* TODO volume chart */}
-          {/* TODO token section */}
-          <V2FundingCycleSection />
         </Col>
-        <Col md={12} xs={24}>
+        <Col md={colSizeMd} xs={24} style={{ marginTop: GUTTER_PX }}>
           <PayInputGroup
             PayButton={V2PayButton}
             reservedRate={fundingCycleMetadata?.reservedRate.toNumber()}
@@ -45,6 +54,15 @@ export default function V2Project() {
           />
         </Col>
       </Row>
-    </>
+      <Row gutter={GUTTER_PX}>
+        <Col md={colSizeMd} xs={24}>
+          <Space direction="vertical" size={GUTTER_PX}>
+            {/* TODO volume chart */}
+            <V2ManageTokensSection />
+            <V2FundingCycleSection expandCard={expandFundingCycleCard} />
+          </Space>
+        </Col>
+      </Row>
+    </Space>
   )
 }

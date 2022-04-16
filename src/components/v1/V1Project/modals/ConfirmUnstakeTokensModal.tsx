@@ -56,10 +56,10 @@ export default function ConfirmUnstakeTokensModal({
 
   return (
     <Modal
-      title={`Claim ${tokenSymbol ?? 'tokens'} as ERC20 tokens`}
+      title={t`Claim ${tokenSymbol ?? 'tokens'} as ERC-20 tokens`}
       visible={visible}
       onOk={unstake}
-      okText={`Claim ${unstakeAmount} ERC20 tokens`}
+      okText={t`Claim ${tokenSymbol ?? 'tokens'}`}
       confirmLoading={loading}
       okButtonProps={{ disabled: parseWad(unstakeAmount).eq(0) }}
       onCancel={onCancel}
@@ -70,8 +70,8 @@ export default function ConfirmUnstakeTokensModal({
         {!ticketsIssued && (
           <div style={{ padding: 10, background: colors.background.l1 }}>
             <Trans>
-              <b>Note:</b> Tokens cannot be claimed because no ERC20 token has
-              been issued for this project. ERC20 tokens must be issued by the
+              <b>Note:</b> Tokens cannot be claimed because no ERC-20 token has
+              been issued for this project. ERC-20 tokens must be issued by the
               project owner.
             </Trans>
           </div>
@@ -81,7 +81,7 @@ export default function ConfirmUnstakeTokensModal({
           <p>
             <Trans>
               Claiming {tokenSymbol} tokens will convert your {tokenSymbol}{' '}
-              balance to ERC20 tokens and mint them to your wallet.
+              balance to ERC-20 tokens and mint them to your wallet.
             </Trans>
           </p>
           <p style={{ fontWeight: 600 }}>
@@ -110,7 +110,7 @@ export default function ConfirmUnstakeTokensModal({
           {ticketsIssued && (
             <div>
               <Trans>
-                <label>{tokenSymbol} ERC20 address:</label>{' '}
+                <label>{tokenSymbol} ERC-20 address:</label>{' '}
                 <FormattedAddress address={tokenAddress} />
               </Trans>
             </div>
@@ -118,7 +118,7 @@ export default function ConfirmUnstakeTokensModal({
         </div>
 
         <Form layout="vertical">
-          <Form.Item label="Amount of ERC20 tokens to claim">
+          <Form.Item label={t`Amount of ERC-20 tokens to claim`}>
             <FormattedNumberInput
               min={0}
               max={parseFloat(fromWad(unclaimedBalance))}

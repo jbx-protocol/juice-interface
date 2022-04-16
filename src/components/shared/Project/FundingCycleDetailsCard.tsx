@@ -16,7 +16,7 @@ export default function FundingCycleDetailsCard({
   fundingCycleRiskCount,
   isFundingCycleRecurring,
   fundingCycleDetails,
-  showDetail,
+  expand,
 }: {
   fundingCycleNumber: BigNumber
   fundingCycleStartTime: BigNumber
@@ -24,7 +24,7 @@ export default function FundingCycleDetailsCard({
   fundingCycleRiskCount: number
   fundingCycleDetails: JSX.Element
   isFundingCycleRecurring: boolean
-  showDetail?: boolean
+  expand?: boolean
 }) {
   const {
     theme: { colors },
@@ -58,7 +58,7 @@ export default function FundingCycleDetailsCard({
         border: 'none',
       }}
       className="minimal"
-      defaultActiveKey={showDetail ? COLLAPSE_PANEL_KEY : undefined}
+      defaultActiveKey={expand ? COLLAPSE_PANEL_KEY : undefined}
     >
       <CollapsePanel
         key={COLLAPSE_PANEL_KEY}

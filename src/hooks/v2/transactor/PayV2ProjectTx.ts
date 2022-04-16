@@ -6,15 +6,16 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { randomBytes } from '@ethersproject/random'
 
 import { TransactorInstance } from '../../Transactor'
+import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
 
-export type PayV2ProjectTxType = TransactorInstance<{
+export type PayV2ProjectTx = TransactorInstance<{
   memo: string
   preferClaimedTokens: boolean
   beneficiary?: string
   value: BigNumber
 }>
 
-export function usePayV2ProjectTx(): PayV2ProjectTxType {
+export function usePayV2ProjectTx(): PayV2ProjectTx {
   const { transactor, contracts } = useContext(V2UserContext)
   const { projectId } = useContext(V2ProjectContext)
   const minReturnedTokens = 0 // TODO will need a field for this in V2ConfirmPayOwnerModal
@@ -35,6 +36,8 @@ export function usePayV2ProjectTx(): PayV2ProjectTxType {
       'pay',
       [
         projectId,
+        value,
+        ETH_TOKEN_ADDRESS,
         beneficiary,
         minReturnedTokens,
         preferClaimedTokens,

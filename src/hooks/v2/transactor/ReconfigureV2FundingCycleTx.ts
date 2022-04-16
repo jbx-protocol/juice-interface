@@ -11,6 +11,7 @@ import { V2UserContext } from 'contexts/v2/userContext'
 import { TransactorInstance } from 'hooks/Transactor'
 
 const DEFAULT_MUST_START_AT_OR_AFTER = '1'
+const DEFAULT_MEMO = ''
 
 export function useReconfigureV2FundingCycleTx(): TransactorInstance<{
   fundingCycleData: V2FundingCycleData
@@ -47,6 +48,7 @@ export function useReconfigureV2FundingCycleTx(): TransactorInstance<{
         mustStartAtOrAfter,
         groupedSplits,
         fundAccessConstraints,
+        DEFAULT_MEMO,
       ],
       txOpts,
     )

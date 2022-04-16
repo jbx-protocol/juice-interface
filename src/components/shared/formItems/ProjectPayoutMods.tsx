@@ -19,7 +19,6 @@ import { isAddress } from '@ethersproject/address'
 import { formatBytes32String } from '@ethersproject/strings'
 import useContractReader from 'hooks/v1/contractReader/ContractReader'
 import { V1ContractName } from 'models/v1/contracts'
-import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { PayoutMod } from 'models/mods'
 import * as moment from 'moment'
 import { useCallback, useContext, useState } from 'react'
@@ -30,9 +29,9 @@ import {
   percentToPermyriad,
   parseWad,
   fromWad,
+  percentToPerbicent,
 } from 'utils/formatNumber'
 import { amountSubFee } from 'utils/math'
-import { V1CurrencyName } from 'utils/v1/currency'
 
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
@@ -43,6 +42,7 @@ import FormattedAddress from '../FormattedAddress'
 import NumberSlider from '../inputs/NumberSlider'
 import V1ProjectHandle from '../../v1/shared/V1ProjectHandle'
 import { FormItemExt } from './formItemExt'
+import { CurrencyName } from 'constants/currency'
 
 type ModType = 'project' | 'address'
 
@@ -50,19 +50,21 @@ type EditingPayoutMod = PayoutMod & { handle?: string }
 
 export default function ProjectPayoutMods({
   target,
-  currency,
-  fee,
+  currencyName,
+  feePercentage,
   lockedMods,
   mods,
   onModsChanged,
+  targetIsInfinite,
   formItemProps,
 }: {
   target: string
-  currency: V1CurrencyOption
-  fee: BigNumber | undefined
+  currencyName: CurrencyName | undefined
+  feePercentage: string | undefined
   lockedMods?: EditingPayoutMod[]
   mods: EditingPayoutMod[] | undefined
   onModsChanged: (mods: EditingPayoutMod[]) => void
+  targetIsInfinite?: boolean
 } & FormItemExt) {
   const [form] = useForm<{
     handle: string
@@ -80,7 +82,6 @@ export default function ProjectPayoutMods({
   const [settingHandle, setSettingHandle] = useState<string>()
 
   const { owner } = useContext(V1ProjectContext)
-  const currencyName = V1CurrencyName(currency)
 
   useContractReader<BigNumber>({
     contract: V1ContractName.Projects,
@@ -111,6 +112,8 @@ export default function ProjectPayoutMods({
   } = useContext(ThemeContext)
 
   const gutter = 10
+
+  const feePerbicent = percentToPerbicent(feePercentage)
 
   const ModInput = useCallback(
     (mod: EditingPayoutMod, index: number, locked?: boolean) => {
@@ -156,7 +159,7 @@ export default function ProjectPayoutMods({
                 amount: getAmountFromPercent(
                   editingPercent ?? percent,
                   target,
-                  fee,
+                  feePercentage,
                 ),
                 lockedUntil: mod.lockedUntil
                   ? moment.default(mod.lockedUntil * 1000)
@@ -178,7 +181,7 @@ export default function ProjectPayoutMods({
                     }}
                   >
                     <span style={{ cursor: 'pointer' }}>
-                      <V1ProjectHandle link projectId={mod.projectId} />
+                      <V1ProjectHandle projectId={mod.projectId} />
                     </span>
                   </div>
                 </Col>
@@ -239,11 +242,11 @@ export default function ProjectPayoutMods({
                   >
                     <Space size="large">
                       <span>{permyriadToPercent(mod.percent)}%</span>
-                      {parseWad(target).lt(constants.MaxUint256) && (
+                      {!targetIsInfinite && (
                         <span>
                           <CurrencySymbol currency={currencyName} />
                           {formatWad(
-                            amountSubFee(parseWad(target), fee)
+                            amountSubFee(parseWad(target), feePerbicent)
                               ?.mul(mod.percent)
                               .div(10000),
                             { precision: 4, padEnd: true },
@@ -294,11 +297,13 @@ export default function ProjectPayoutMods({
       colors.icon.disabled,
       radii.md,
       target,
-      fee,
+      feePercentage,
+      feePerbicent,
       form,
       editingPercent,
       onModsChanged,
       currencyName,
+      targetIsInfinite,
     ],
   )
 
@@ -369,13 +374,13 @@ export default function ProjectPayoutMods({
   const roundedDownAmount = () => {
     const percent = roundDown(form.getFieldValue('percent'), 2)
     const targetSubFee = parseFloat(
-      fromWad(amountSubFee(parseWad(target), fee)),
+      fromWad(amountSubFee(parseWad(target), feePerbicent)),
     )
     return parseFloat(((percent * targetSubFee) / 100).toFixed(4))
   }
 
   const onAmountChange = (newAmount: number | undefined) => {
-    let newPercent = getPercentFromAmount(newAmount, target, fee)
+    let newPercent = getPercentFromAmount(newAmount, target, feePercentage)
     setEditingPercent(newPercent)
     form.setFieldsValue({ amount: newAmount })
     form.setFieldsValue({ percent: newPercent })
@@ -432,15 +437,15 @@ export default function ProjectPayoutMods({
           }}
           block
         >
-          <Trans>Add a payout</Trans>
+          <Trans>Add a split</Trans>
         </Button>
       </Space>
 
       <Modal
-        title={modalMode === 'Edit' ? 'Edit existing payout' : 'Add a payout'}
+        title={modalMode === 'Edit' ? t`Edit existing split` : t`Add a split`}
         visible={editingModIndex !== undefined}
         onOk={setReceiver}
-        okText={modalMode === 'Edit' ? 'Save payout' : 'Add payout'}
+        okText={modalMode === 'Edit' ? t`Save split` : t`Add split`}
         onCancel={() => {
           form.resetFields()
           setEditingModIndex(undefined)
@@ -457,8 +462,12 @@ export default function ProjectPayoutMods({
         >
           <Form.Item>
             <Select value={editingModType} onChange={setEditingModType}>
-              <Select.Option value="address">Wallet address</Select.Option>
-              <Select.Option value="project">Juicebox project</Select.Option>
+              <Select.Option value="address">
+                <Trans>Wallet address</Trans>
+              </Select.Option>
+              <Select.Option value="project">
+                <Trans>Juicebox project</Trans>
+              </Select.Option>
             </Select>
           </Form.Item>
 
@@ -516,7 +525,8 @@ export default function ProjectPayoutMods({
           ) : null}
 
           {/* Only show amount input if project has a funding target */}
-          {parseWad(target).lt(constants.MaxUint256) ? ( // Target = MaxUint256 when unset
+          {/* {parseWad(target).lt(constants.MaxUint256) ? ( // Target = MaxUint256 when unset */}
+          {!targetIsInfinite ? (
             <Form.Item
               label="Amount"
               // Display message to user if the amount they inputted
@@ -548,9 +558,7 @@ export default function ProjectPayoutMods({
                   formItemProps={{
                     rules: [{ validator: validatePayout }],
                   }}
-                  accessory={
-                    <InputAccessoryButton content={V1CurrencyName(currency)} />
-                  }
+                  accessory={<InputAccessoryButton content={currencyName} />}
                 />
               </div>
             </Form.Item>
@@ -564,7 +572,7 @@ export default function ProjectPayoutMods({
                     let newAmount = getAmountFromPercent(
                       percent ?? 0,
                       target,
-                      fee,
+                      feePercentage,
                     )
                     form.setFieldsValue({ amount: newAmount })
                     form.setFieldsValue({ percent })

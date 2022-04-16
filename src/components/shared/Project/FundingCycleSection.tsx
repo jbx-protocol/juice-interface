@@ -4,9 +4,9 @@ import { ThemeContext } from 'contexts/themeContext'
 
 import { useContext, useState } from 'react'
 
-import SectionHeader from 'components/v1/V1Project/SectionHeader'
+import SectionHeader from 'components/shared/SectionHeader'
 
-type TabType = {
+export type TabType = {
   key: string
   label: string | JSX.Element
   content: JSX.Element

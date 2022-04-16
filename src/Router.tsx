@@ -7,6 +7,7 @@ import V1Create from 'components/v1/V1Create'
 import Projects from 'components/Projects'
 import V2UserProvider from 'providers/v2/UserProvider'
 import Loading from 'components/shared/Loading'
+import V1CurrencyProvider from 'providers/v1/V1CurrencyProvider'
 
 const V2Create = lazy(() => import('components/v2/V2Create'))
 const V2Dashboard = lazy(() => import('components/v2/V2Dashboard'))
@@ -21,10 +22,14 @@ export default function Router() {
     <HashRouter>
       <Switch>
         <Route exact path="/">
-          <Landing />
+          <V1CurrencyProvider>
+            <Landing />
+          </V1CurrencyProvider>
         </Route>
         <Route path="/create">
-          <V1Create />
+          <V1CurrencyProvider>
+            <V1Create />
+          </V1CurrencyProvider>
         </Route>
 
         <Route path="/projects/:owner">

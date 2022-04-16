@@ -16,8 +16,8 @@ export default function PrintPreminedModal({
   visible,
   onCancel,
 }: {
-  visible: boolean | undefined
-  onCancel: VoidFunction
+  visible?: boolean
+  onCancel?: VoidFunction
 }) {
   const { tokenSymbol, tokenAddress, terminal } = useContext(V1ProjectContext)
   const printTokensTx = usePrintTokensTx()
@@ -121,6 +121,7 @@ export default function PrintPreminedModal({
             ) : undefined
           }
         />
+        <br />
         <Form.Item label="Memo" name="memo">
           <Input placeholder="Memo included on-chain (optional)" />
         </Form.Item>

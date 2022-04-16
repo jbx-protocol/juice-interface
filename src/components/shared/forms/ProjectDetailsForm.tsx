@@ -25,6 +25,7 @@ export default function ProjectDetailsForm({
   saveButton,
   style,
   loading,
+  onValuesChange,
 }: {
   form: FormInstance<ProjectDetailsFormFields>
   onFinish: (values: ProjectDetailsFormFields) => void
@@ -32,9 +33,16 @@ export default function ProjectDetailsForm({
   saveButton?: JSX.Element
   style?: CSSProperties
   loading?: boolean
+  onValuesChange?: VoidFunction
 }) {
   return (
-    <Form form={form} layout="vertical" onFinish={onFinish} style={style}>
+    <Form
+      form={form}
+      layout="vertical"
+      onFinish={onFinish}
+      style={style}
+      onValuesChange={() => onValuesChange?.()}
+    >
       <FormItems.ProjectName
         name="name"
         formItemProps={{

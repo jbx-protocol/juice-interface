@@ -25,13 +25,13 @@ import {
 import { useReconfigureV2FundingCycleTx } from 'hooks/v2/transactor/ReconfigureV2FundingCycleTx'
 import { decodeV2FundingCycleMetadata } from 'utils/v2/fundingCycle'
 
-import FundingTabContent from 'components/v2/V2Create/tabs/FundingTab/FundingTabContent'
-import StandardSaveButton from 'components/StandardSaveButton'
-import TokenTabContent from 'components/v2/V2Create/tabs/TokenTab/TokenTabContent'
-import RulesTabContent from 'components/v2/V2Create/tabs/RulesTab/RulesTabContent'
+import FundingTabContent from 'components/v2/V2Create/forms/FundingForm'
+import TokenTabContent from 'components/v2/V2Create/forms/TokenForm'
+import RulesTabContent from 'components/v2/V2Create/forms/RulesForm'
 
 import { V2ReconfigureFundingDrawer } from './drawers/V2ReconfigureFundingDrawer'
 import { V2ReconfigureProjectDetailsDrawer } from './drawers/V2ReconfigureProjectDetailsDrawer'
+import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
 
 function ReconfigureButton({
   title,
@@ -86,8 +86,8 @@ export default function V2ProjectReconfigureModal({
     fundingCycle,
     payoutSplits,
     queuedPayoutSplits,
-    reserveTokenSplits,
-    queuedReserveTokenSplits,
+    reservedTokensSplits,
+    queuedReservedTokensSplits,
     distributionLimit,
     queuedDistributionLimit,
     distributionLimitCurrency,
@@ -120,9 +120,9 @@ export default function V2ProjectReconfigureModal({
     ? queuedPayoutSplits
     : payoutSplits
 
-  const effectiveReserveTokenSplits = queuedFundingCycle?.number.gt(0)
-    ? queuedReserveTokenSplits
-    : reserveTokenSplits
+  const effectiveReservedTokensSplits = queuedFundingCycle?.number.gt(0)
+    ? queuedReservedTokensSplits
+    : reservedTokensSplits
 
   const effectiveDistributionLimit =
     queuedDistributionLimit ?? distributionLimit
@@ -140,6 +140,7 @@ export default function V2ProjectReconfigureModal({
     if (effectiveDistributionLimit) {
       fundAccessConstraint = {
         terminal: contracts?.JBETHPaymentTerminal.address ?? '',
+        token: ETH_TOKEN_ADDRESS,
         distributionLimit: fromWad(effectiveDistributionLimit),
         distributionLimitCurrency:
           effectiveDistributionLimitCurrency?.toString() ?? 'ETH',
@@ -178,15 +179,15 @@ export default function V2ProjectReconfigureModal({
 
     // Set reserve token splits
     dispatch(
-      editingV2ProjectActions.setReserveTokenSplits(
-        effectiveReserveTokenSplits ?? [],
+      editingV2ProjectActions.setReservedTokensSplits(
+        effectiveReservedTokensSplits ?? [],
       ),
     )
   }, [
     contracts,
     effectiveFundingCycle,
     effectivePayoutSplits,
-    effectiveReserveTokenSplits,
+    effectiveReservedTokensSplits,
     effectiveDistributionLimit,
     effectiveDistributionLimitCurrency,
     fundingCycle,
@@ -197,7 +198,7 @@ export default function V2ProjectReconfigureModal({
   // Gets values from the redux state to be used in the modal drawer fields
   const {
     payoutGroupedSplits: editingPayoutGroupedSplits,
-    reserveTokenGroupedSplits: editingReserveTokenGroupedSplits,
+    reservedTokensGroupedSplits: editingReservedTokensGroupedSplits,
   } = useAppSelector(state => state.editingV2Project)
   const editingFundingCycleMetadata = useEditingV2FundingCycleMetadataSelector()
   const editingFundingCycleData = useEditingV2FundingCycleDataSelector()
@@ -215,6 +216,7 @@ export default function V2ProjectReconfigureModal({
         editingFundAccessConstraints
       )
     ) {
+      setReconfigureTxLoading(false)
       throw new Error('Error deploying project.')
     }
 
@@ -225,7 +227,7 @@ export default function V2ProjectReconfigureModal({
         fundAccessConstraints: editingFundAccessConstraints,
         groupedSplits: [
           editingPayoutGroupedSplits,
-          editingReserveTokenGroupedSplits,
+          editingReservedTokensGroupedSplits,
         ],
       },
       {
@@ -246,7 +248,7 @@ export default function V2ProjectReconfigureModal({
     editingFundingCycleData,
     reconfigureV2FundingCycleTx,
     editingPayoutGroupedSplits,
-    editingReserveTokenGroupedSplits,
+    editingReservedTokensGroupedSplits,
     onOk,
   ])
 
@@ -267,15 +269,11 @@ export default function V2ProjectReconfigureModal({
 
   return (
     <Modal
-      title={
-        hideProjectDetails
-          ? t`Reconfigure upcoming funding`
-          : t`Reconfiguration`
-      }
+      title={<Trans>Project configuration</Trans>}
       visible={visible}
       onOk={reconfigureFundingCycle}
       onCancel={onOk}
-      okText={t`Confirm funding changes`}
+      okText={t`Deploy new project configuration`}
       okButtonProps={{ disabled: !fundingHasSavedChanges }}
       confirmLoading={reconfigureTxLoading}
       width={540}
@@ -283,21 +281,33 @@ export default function V2ProjectReconfigureModal({
     >
       <Space direction="vertical" size="middle" style={{ width: '100%' }}>
         {hideProjectDetails ? null : (
-          <>
+          <div style={{ marginBottom: 20 }}>
             <h4 style={{ marginBottom: 0 }}>
-              <Trans>Reconfigure project details</Trans>
+              <Trans>Edit project details</Trans>
             </h4>
+            <p>
+              <Trans>
+                Changes to project details will take effect immediately.
+              </Trans>
+            </p>
             <ReconfigureButton
               title={t`Project details`}
               onClick={() => setProjectDetailsDrawerVisible(true)}
             />
-            <h4 style={{ marginBottom: 0, marginTop: 20 }}>
-              <Trans>Reconfigure funding details</Trans>
-            </h4>
-          </>
+          </div>
         )}
+
+        <h4 style={{ marginBottom: 0 }}>
+          <Trans>Reconfigure upcoming funding cycles</Trans>
+        </h4>
+        <p>
+          <Trans>
+            Any changes will take effect in the next funding cycle. The current
+            funding cycle won't be altered.
+          </Trans>
+        </p>
         <ReconfigureButton
-          title={t`Funding target, duration and payouts`}
+          title={t`Distribution limit, duration and payouts`}
           onClick={() => setFundingDrawerVisible(true)}
         />
         <ReconfigureButton
@@ -320,14 +330,8 @@ export default function V2ProjectReconfigureModal({
         onClose={() => {
           setFundingDrawerVisible(false)
         }}
-        title={<Trans>Reconfigure funding target/duration/payouts</Trans>}
-        content={
-          <FundingTabContent
-            onFinish={saveFundingTab}
-            hidePreview
-            saveButton={<StandardSaveButton />}
-          />
-        }
+        title={<Trans>Reconfigure funding</Trans>}
+        content={<FundingTabContent onFinish={saveFundingTab} />}
       />
       <V2ReconfigureFundingDrawer
         visible={tokenDrawerVisible}
@@ -335,13 +339,7 @@ export default function V2ProjectReconfigureModal({
           setTokenDrawerVisible(false)
         }}
         title={<Trans>Reconfigure token</Trans>}
-        content={
-          <TokenTabContent
-            onFinish={saveTokenTab}
-            hidePreview
-            saveButton={<StandardSaveButton />}
-          />
-        }
+        content={<TokenTabContent onFinish={saveTokenTab} />}
       />
       <V2ReconfigureFundingDrawer
         visible={rulesDrawerVisible}
@@ -349,13 +347,7 @@ export default function V2ProjectReconfigureModal({
           setRulesDrawerVisible(false)
         }}
         title={<Trans>Reconfigure rules</Trans>}
-        content={
-          <RulesTabContent
-            onFinish={saveRulesTab}
-            hidePreview
-            saveButton={<StandardSaveButton />}
-          />
-        }
+        content={<RulesTabContent onFinish={saveRulesTab} />}
       />
     </Modal>
   )

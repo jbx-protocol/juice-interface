@@ -13,7 +13,7 @@ import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
 import { useEthBalanceQuery } from 'hooks/EthBalance'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { NetworkName } from 'models/network-name'
-import { CSSProperties, useContext, useState } from 'react'
+import { useContext, useState } from 'react'
 import { formatWad } from 'utils/formatNumber'
 import { hasFundingTarget } from 'utils/v1/fundingCycle'
 
@@ -29,12 +29,12 @@ import { readNetwork } from 'constants/networks'
 import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
 
 import BalancesModal from './modals/BalancesModal'
+import { textPrimary, textSecondary } from 'constants/styles/text'
 
 export default function Paid() {
   const [balancesModalVisible, setBalancesModalVisible] = useState<boolean>()
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
+  const { theme } = useContext(ThemeContext)
+  const { colors } = theme
 
   const {
     projectId,
@@ -55,18 +55,7 @@ export default function Paid() {
     'ETH',
   )
 
-  const primaryTextStyle: CSSProperties = {
-    fontWeight: 500,
-    fontSize: '1.1rem',
-    lineHeight: 1,
-  }
-
-  const secondaryTextStyle: CSSProperties = {
-    textTransform: 'uppercase',
-    color: colors.text.tertiary,
-    fontSize: '0.8rem',
-    fontWeight: 500,
-  }
+  const secondaryTextStyle = textSecondary(theme)
 
   if (!currentFC) return null
 
@@ -102,7 +91,7 @@ export default function Paid() {
           </Trans>
         }
         statValue={
-          <span style={primaryTextStyle}>
+          <span style={textPrimary}>
             {isConstitutionDAO && (
               <span style={secondaryTextStyle}>
                 <CurrencySymbol currency="USD" />
@@ -119,7 +108,7 @@ export default function Paid() {
                   : colors.text.primary,
               }}
             >
-              <ETHAmount amount={earned} />
+              <ETHAmount amount={earned} precision={4} />
             </span>
           </span>
         }
@@ -134,7 +123,7 @@ export default function Paid() {
         statValue={
           <div
             style={{
-              ...primaryTextStyle,
+              ...textPrimary,
               color: isConstitutionDAO
                 ? colors.text.primary
                 : colors.text.brand.primary,
@@ -211,9 +200,7 @@ export default function Paid() {
         statLabelTip={
           <>
             <p>
-              <Trans>
-                The balance of the wallet that owns this Juicebox project.
-              </Trans>
+              <Trans>The balance of the project owner's wallet.</Trans>
             </p>{' '}
             <EtherscanLink value={owner} type="address" />
           </>
@@ -227,12 +214,12 @@ export default function Paid() {
               <ProjectTokenBalance
                 style={{ display: 'inline-block' }}
                 wallet={owner}
-                projectId={BigNumber.from('0x01')}
+                projectId={BigNumber.from(V1_PROJECT_IDS.JUICEBOX_DAO)}
                 hideHandle
               />{' '}
               +{' '}
             </span>
-            <span style={primaryTextStyle}>
+            <span style={textPrimary}>
               <ETHAmount amount={ownerBalance} precision={2} padEnd={true} />
             </span>
           </span>

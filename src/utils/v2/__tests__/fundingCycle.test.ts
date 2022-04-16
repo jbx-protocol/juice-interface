@@ -31,13 +31,15 @@ export function packFundingCycleMetadata(
     pausePay, // boolean
     pauseDistributions, // boolean
     pauseRedeem, // boolean
-    pauseMint, // boolean
+    allowMinting, // boolean
     pauseBurn, // boolean
     allowChangeToken, // boolean
     allowTerminalMigration, // boolean
     allowControllerMigration, // boolean
+    allowSetTerminals, // boolean
+    allowSetController, // boolean
     holdFees, // boolean
-    useLocalBalanceForRedemptions, // boolean
+    useTotalOverflowForRedemptions, // boolean
     useDataSourceForPay, // boolean
     useDataSourceForRedeem, // boolean
     dataSource, // address
@@ -50,16 +52,18 @@ export function packFundingCycleMetadata(
   if (pausePay) packed = packed.or(one.shl(56))
   if (pauseDistributions) packed = packed.or(one.shl(57))
   if (pauseRedeem) packed = packed.or(one.shl(58))
-  if (pauseMint) packed = packed.or(one.shl(59))
   if (pauseBurn) packed = packed.or(one.shl(60))
+  if (allowMinting) packed = packed.or(one.shl(59))
   if (allowChangeToken) packed = packed.or(one.shl(61))
   if (allowTerminalMigration) packed = packed.or(one.shl(62))
   if (allowControllerMigration) packed = packed.or(one.shl(63))
-  if (holdFees) packed = packed.or(one.shl(64))
-  if (useLocalBalanceForRedemptions) packed = packed.or(one.shl(65))
-  if (useDataSourceForPay) packed = packed.or(one.shl(66))
-  if (useDataSourceForRedeem) packed = packed.or(one.shl(67))
-  return packed.or(BigNumber.from(dataSource).shl(68))
+  if (allowSetTerminals) packed = packed.or(one.shl(64))
+  if (allowSetController) packed = packed.or(one.shl(65))
+  if (holdFees) packed = packed.or(one.shl(66))
+  if (useTotalOverflowForRedemptions) packed = packed.or(one.shl(67))
+  if (useDataSourceForPay) packed = packed.or(one.shl(68))
+  if (useDataSourceForRedeem) packed = packed.or(one.shl(69))
+  return packed.or(BigNumber.from(dataSource).shl(70))
 }
 
 const createMetadata = ({
@@ -82,13 +86,15 @@ const createMetadata = ({
     pausePay: flagsEnabled,
     pauseDistributions: flagsEnabled,
     pauseRedeem: flagsEnabled,
-    pauseMint: flagsEnabled,
     pauseBurn: flagsEnabled,
+    allowMinting: flagsEnabled,
     allowChangeToken: flagsEnabled,
     allowTerminalMigration: flagsEnabled,
     allowControllerMigration: flagsEnabled,
+    allowSetTerminals: flagsEnabled,
+    allowSetController: flagsEnabled,
     holdFees: flagsEnabled,
-    useLocalBalanceForRedemptions: flagsEnabled,
+    useTotalOverflowForRedemptions: flagsEnabled,
     useDataSourceForPay: flagsEnabled,
     useDataSourceForRedeem: flagsEnabled,
     dataSource: dataSource.address, // hex, contract address

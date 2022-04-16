@@ -10,11 +10,8 @@ import { V2FundingCycle } from 'models/v2/fundingCycle'
 import { useContext } from 'react'
 import { formatDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
-import { decodeV2FundingCycleMetadata } from 'utils/v2/fundingCycle'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
-
 import { V2CurrencyName } from 'utils/v2/currency'
-import { weightedAmount } from 'utils/math'
 import TooltipLabel from 'components/shared/TooltipLabel'
 
 import FundingCycleDetailWarning from 'components/shared/Project/FundingCycleDetailWarning'
@@ -27,10 +24,12 @@ import {
   formatDiscountRate,
   formatRedemptionRate,
   formatReservedRate,
+  MAX_DISTRIBUTION_LIMIT,
+  weightedAmount,
 } from 'utils/v2/math'
 
-import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
-import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/v2/fundingWarningText'
+import { getBallotStrategyByAddress } from 'constants/v2/ballotStrategies/getBallotStrategiesByAddress'
+import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
 
 export default function FundingCycleDetails({
   fundingCycle,
@@ -41,8 +40,12 @@ export default function FundingCycleDetails({
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const { tokenSymbol, distributionLimit, distributionLimitCurrency } =
-    useContext(V2ProjectContext)
+  const {
+    tokenSymbol,
+    distributionLimit,
+    distributionLimitCurrency,
+    fundingCycleMetadata,
+  } = useContext(V2ProjectContext)
 
   if (!fundingCycle) return null
 
@@ -51,10 +54,6 @@ export default function FundingCycleDetails({
   const formattedEndTime = formatDate(
     fundingCycle.start.add(fundingCycle.duration).mul(1000),
   )
-
-  const metadata = decodeV2FundingCycleMetadata(fundingCycle.metadata)
-  const fcReservedRate = metadata?.reservedRate
-
   const ballotStrategy = getBallotStrategyByAddress(fundingCycle.ballot)
   const unsafeFundingCycleProperties =
     getUnsafeV2FundingCycleProperties(fundingCycle)
@@ -69,7 +68,7 @@ export default function FundingCycleDetails({
     const payerRate = formatWad(
       weightedAmount(
         fundingCycle?.weight,
-        fcReservedRate.toNumber(),
+        fundingCycleMetadata?.reservedRate.toNumber(),
         parseEther('1'),
         'payer',
       ),
@@ -81,7 +80,7 @@ export default function FundingCycleDetails({
     const reservedRate = formatWad(
       weightedAmount(
         fundingCycle?.weight,
-        fcReservedRate.toNumber(),
+        fundingCycleMetadata?.reservedRate.toNumber(),
         parseEther('1'),
         'reserved',
       ),
@@ -103,10 +102,18 @@ export default function FundingCycleDetails({
 
     return (
       <span>
-        {fcReservedRate.gt(0) ? withReservedRate : withoutReservedRate}
+        {fundingCycleMetadata?.reservedRate.gt(0)
+          ? withReservedRate
+          : withoutReservedRate}
       </span>
     )
   }
+
+  const riskWarningText = FUNDING_CYCLE_WARNING_TEXT()
+
+  const distributionLimitIsInfinite =
+    !distributionLimit || distributionLimit?.eq(MAX_DISTRIBUTION_LIMIT)
+  const distributionLimitIsZero = distributionLimit?.eq(0)
 
   return (
     <div>
@@ -114,22 +121,27 @@ export default function FundingCycleDetails({
         labelStyle={{ fontWeight: 600 }}
         size="small"
         column={{ xs: 1, sm: 1, md: 1, lg: 1, xl: 1, xxl: 2 }}
+        contentStyle={{ marginRight: '0.5rem' }}
       >
-        <Descriptions.Item label={<Trans>Target</Trans>}>
-          {distributionLimit ? (
-            <>
-              <CurrencySymbol
-                currency={V2CurrencyName(
-                  distributionLimitCurrency?.toNumber() as
-                    | V2CurrencyOption
-                    | undefined,
-                )}
-              />
-              {formatWad(distributionLimit)}
-            </>
-          ) : (
-            <Trans>No target</Trans>
-          )}
+        <Descriptions.Item label={<Trans>Distribution limit</Trans>}>
+          <span style={{ whiteSpace: 'nowrap' }}>
+            {distributionLimitIsInfinite ? (
+              <Trans>Infinite</Trans>
+            ) : distributionLimitIsZero ? (
+              <>0</>
+            ) : (
+              <>
+                <CurrencySymbol
+                  currency={V2CurrencyName(
+                    distributionLimitCurrency?.toNumber() as
+                      | V2CurrencyOption
+                      | undefined,
+                  )}
+                />
+                {formatWad(distributionLimit)}
+              </>
+            )}
+          </span>
         </Descriptions.Item>
 
         <Descriptions.Item label={<Trans>Duration</Trans>}>
@@ -138,7 +150,7 @@ export default function FundingCycleDetails({
           ) : (
             <FundingCycleDetailWarning
               showWarning={true}
-              tooltipTitle={FUNDING_CYCLE_WARNING_TEXT(fundingCycle).duration}
+              tooltipTitle={riskWarningText.duration}
             >
               <Trans>Not set</Trans>
             </FundingCycleDetailWarning>
@@ -179,21 +191,25 @@ export default function FundingCycleDetails({
           span={2}
           label={
             <TooltipLabel
-              label={<Trans>Bonding curve rate</Trans>}
+              label={<Trans>Redemption rate</Trans>}
               tip={
                 <Trans>
                   This rate determines the amount of overflow that each token
                   can be redeemed for at any given time. On a lower bonding
                   curve, redeeming a token increases the value of each remaining
-                  token, creating an incentive to hodl tokens longer than
-                  others. A bonding curve of 100% means all tokens will have
+                  token, creating an incentive to hold tokens longer than
+                  others. A redemption rate of 100% means all tokens will have
                   equal value regardless of when they are redeemed.
                 </Trans>
               }
             />
           }
         >
-          {formatRedemptionRate(metadata?.redemptionRate)}%
+          {fundingCycleMetadata?.redemptionRate ? (
+            <span>
+              {formatRedemptionRate(fundingCycleMetadata?.redemptionRate)}%
+            </span>
+          ) : null}
         </Descriptions.Item>
 
         <Descriptions.Item
@@ -215,11 +231,9 @@ export default function FundingCycleDetails({
         >
           <FundingCycleDetailWarning
             showWarning={unsafeFundingCycleProperties.metadataReservedRate}
-            tooltipTitle={
-              FUNDING_CYCLE_WARNING_TEXT(fundingCycle).metadataReservedRate
-            }
+            tooltipTitle={riskWarningText.metadataReservedRate}
           >
-            {formatReservedRate(metadata?.reservedRate)}%
+            {formatReservedRate(fundingCycleMetadata?.reservedRate)}%
           </FundingCycleDetailWarning>
         </Descriptions.Item>
 
@@ -246,13 +260,36 @@ export default function FundingCycleDetails({
           span={2}
           label={<TooltipLabel label={<Trans>Payments</Trans>} />}
         >
-          {metadata?.pausePay ? <Trans>Paused</Trans> : <Trans>Enabled</Trans>}
+          {fundingCycleMetadata?.pausePay ? (
+            <Trans>Paused</Trans>
+          ) : (
+            <Trans>Enabled</Trans>
+          )}
         </Descriptions.Item>
         <Descriptions.Item
           span={2}
-          label={<TooltipLabel label={<Trans>Owner can mint tokens</Trans>} />}
+          label={
+            <TooltipLabel
+              label={<Trans>Token minting</Trans>}
+              tip={
+                <Trans>
+                  Token minting allows the project owner to mint project tokens
+                  at any time.
+                </Trans>
+              }
+            />
+          }
         >
-          {metadata?.pauseMint ? <Trans>No</Trans> : <Trans>Yes</Trans>}
+          <FundingCycleDetailWarning
+            showWarning={fundingCycleMetadata?.allowMinting}
+            tooltipTitle={FUNDING_CYCLE_WARNING_TEXT().allowMinting}
+          >
+            {fundingCycleMetadata?.allowMinting ? (
+              <Trans>Yes</Trans>
+            ) : (
+              <Trans>No</Trans>
+            )}
+          </FundingCycleDetailWarning>
         </Descriptions.Item>
       </Descriptions>
 
@@ -270,7 +307,7 @@ export default function FundingCycleDetails({
         </span>{' '}
         <FundingCycleDetailWarning
           showWarning={unsafeFundingCycleProperties.ballot}
-          tooltipTitle={FUNDING_CYCLE_WARNING_TEXT(fundingCycle).ballot}
+          tooltipTitle={riskWarningText.ballot}
         >
           {ballotStrategy.name}
         </FundingCycleDetailWarning>

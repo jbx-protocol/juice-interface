@@ -4,7 +4,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
 
 import ReservedTokens from './ReservedTokens'
-import PayoutModsList from '../../shared/PayoutModsList'
+import PayoutModsList from '../PayoutModsList'
 import FundingCycleDetails from './FundingCycleDetails'
 
 export default function QueuedFundingCycle() {
@@ -29,7 +29,7 @@ export default function QueuedFundingCycle() {
               mods={queuedPayoutMods}
               fundingCycle={queuedFC}
               projectId={projectId}
-              fee={queuedFC.fee}
+              feePerbicent={queuedFC.fee}
             />
           </CardSection>
           <CardSection>

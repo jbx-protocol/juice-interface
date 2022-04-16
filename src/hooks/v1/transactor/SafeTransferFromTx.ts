@@ -5,12 +5,12 @@ import { useContext } from 'react'
 import { TransactorInstance } from '../../Transactor'
 
 export function useSafeTransferFromTx(): TransactorInstance<{
-  to: string
+  newOwnerAddress: string
 }> {
   const { transactor, contracts } = useContext(V1UserContext)
   const { projectId, owner } = useContext(V1ProjectContext)
 
-  return ({ to }, txOpts) => {
+  return ({ newOwnerAddress }, txOpts) => {
     if (!transactor || !projectId || !contracts?.Projects) {
       txOpts?.onDone?.()
       return Promise.resolve(false)
@@ -19,7 +19,7 @@ export function useSafeTransferFromTx(): TransactorInstance<{
     return transactor(
       contracts.Projects,
       'safeTransferFrom(address,address,uint256)',
-      [owner, to, projectId.toHexString()],
+      [owner, newOwnerAddress, projectId.toHexString()],
       txOpts,
     )
   }

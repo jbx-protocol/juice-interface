@@ -8,9 +8,9 @@ import RestrictedActionsForm, {
   RestrictedActionsFormFields,
 } from 'components/shared/forms/RestrictedActionsForm'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
-import PayoutModsList from 'components/shared/PayoutModsList'
+import PayoutModsList from 'components/v1/PayoutModsList'
 import TicketModsList from 'components/shared/TicketModsList'
-import ReconfigurationStrategyDrawer from 'components/shared/ReconfigurationStrategyDrawer'
+import ReconfigurationStrategyDrawer from 'components/v1/ReconfigurationStrategyDrawer'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
@@ -47,18 +47,19 @@ import { drawerWidth } from 'utils/drawerWidth'
 
 import { V1CurrencyName } from 'utils/v1/currency'
 
-import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
+import BudgetForm from 'components/v1/shared/BudgetForm'
 
-import BudgetForm from '../../../shared/forms/BudgetForm'
 import IncentivesForm, {
   IncentivesFormFields,
-} from '../../../shared/forms/IncentivesForm'
-import PayModsForm from '../../../shared/forms/PayModsForm'
+} from 'components/shared/forms/IncentivesForm'
+import PayModsForm from 'components/shared/forms/PayModsForm'
 import TicketingForm, {
   TicketingFormFields,
-} from '../../../shared/forms/TicketingForm'
+} from 'components/shared/forms/TicketingForm'
 
-import { Strategy } from 'constants/ballotStrategies/ballotStrategies'
+import { BallotStrategy } from 'models/ballot'
+
+import { getBallotStrategyByAddress } from 'constants/v1/ballotStrategies/getBallotStrategiesByAddress'
 
 export default function ReconfigureFCModal({
   visible,
@@ -499,7 +500,7 @@ export default function ReconfigureFCModal({
               mods={editingPayoutMods}
               projectId={undefined}
               fundingCycle={editingFC}
-              fee={terminalFee}
+              feePerbicent={terminalFee}
             />
           </div>
 
@@ -591,7 +592,7 @@ export default function ReconfigureFCModal({
           setRulesFormModalVisible(false)
         }}
         initialSelectedStrategy={getBallotStrategyByAddress(editingFC.ballot)}
-        onSave={(strategy: Strategy) => {
+        onSave={(strategy: BallotStrategy) => {
           onRulesFormSaved(strategy.address)
           setCurrentStep(undefined)
           setRulesFormModalVisible(false)

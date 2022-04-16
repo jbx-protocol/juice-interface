@@ -32,7 +32,7 @@ export function useHasPermission(
   permission: V2OperatorPermission | V2OperatorPermission[],
 ) {
   const { userAddress } = useContext(NetworkContext)
-  const { projectId } = useContext(V2ProjectContext)
+  const { projectId, isPreviewMode } = useContext(V2ProjectContext)
 
   const { data: owner } = useProjectOwner(projectId)
 
@@ -40,7 +40,7 @@ export function useHasPermission(
     contract: V2ContractName.JBOperatorStore,
     functionName: 'hasPermissions',
     args:
-      userAddress && owner && projectId
+      userAddress && owner && projectId && !isPreviewMode
         ? [
             userAddress,
             owner,
@@ -54,6 +54,8 @@ export function useHasPermission(
     userAddress && owner && userAddress.toLowerCase() === owner.toLowerCase()
 
   return (
-    isOwner || hasOperatorPermission || process.env.NODE_ENV === 'development'
+    isOwner ||
+    hasOperatorPermission.data ||
+    process.env.NODE_ENV === 'development'
   )
 }

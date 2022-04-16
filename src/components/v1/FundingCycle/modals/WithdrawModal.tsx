@@ -6,7 +6,7 @@ import CurrencySymbol from 'components/shared/CurrencySymbol'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
-import PayoutModsList from 'components/shared/PayoutModsList'
+import PayoutModsList from 'components/v1/PayoutModsList'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
@@ -207,7 +207,7 @@ export default function WithdrawModal({
               mods={currentPayoutMods}
               fundingCycle={currentFC}
               projectId={projectId}
-              fee={currentFC.fee}
+              feePerbicent={currentFC.fee}
             />
           </div>
         ) : (

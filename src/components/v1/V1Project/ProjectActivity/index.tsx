@@ -6,7 +6,7 @@ import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext, useLayoutEffect, useMemo, useState } from 'react'
 
-import SectionHeader from '../SectionHeader'
+import SectionHeader from '../../../shared/SectionHeader'
 import { PaymentActivity } from './PaymentActivity'
 import { RedeemActivity } from './RedeemActivity'
 import { ReservesActivity } from './ReservesActivity'
@@ -21,7 +21,7 @@ export default function ProjectActivity() {
   const [downloadModalVisible, setDownloadModalVisible] = useState<boolean>()
   const [tabOption, setTabOption] = useState<TabOption>()
 
-  const { projectId } = useContext(V1ProjectContext)
+  const { projectId, isPreviewMode } = useContext(V1ProjectContext)
 
   const pageSize = 50
 
@@ -113,11 +113,13 @@ export default function ProjectActivity() {
       >
         <Space direction="horizontal" align="center" size="small">
           <SectionHeader text={t`Activity`} style={{ margin: 0 }} />
-          <Button
-            type="text"
-            icon={<DownloadOutlined />}
-            onClick={() => setDownloadModalVisible(true)}
-          />
+          {!isPreviewMode ? (
+            <Button
+              type="text"
+              icon={<DownloadOutlined />}
+              onClick={() => setDownloadModalVisible(true)}
+            />
+          ) : null}
         </Space>
         {tabs}
       </div>

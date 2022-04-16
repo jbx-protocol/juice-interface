@@ -50,7 +50,9 @@ export default function NumberSlider({
 
   return (
     <div style={style}>
-      <div style={{ display: 'flex', alignItems: 'baseline' }}>
+      <div
+        style={{ display: 'flex', alignItems: 'baseline', marginBottom: 15 }}
+      >
         <Slider
           {...inputConfig}
           tooltipVisible={false}
@@ -60,7 +62,11 @@ export default function NumberSlider({
           defaultValue={defaultValue}
           disabled={disabled}
         />
-        <Form.Item name={name} rules={formItemProps?.rules ?? []}>
+        <Form.Item
+          name={name}
+          rules={formItemProps?.rules ?? []}
+          style={{ marginBottom: 0 }}
+        >
           <InputNumber
             {...inputConfig}
             value={_value}

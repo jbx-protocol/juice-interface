@@ -55,7 +55,7 @@ export default function Payments() {
                   style={{ color: colors.text.action.primary, fontWeight: 500 }}
                 >
                   {e.project?.id && (
-                    <V1ProjectHandle projectId={e.project.id} link />
+                    <V1ProjectHandle projectId={e.project.id} />
                   )}
                 </div>
                 <div

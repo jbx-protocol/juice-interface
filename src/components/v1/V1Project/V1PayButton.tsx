@@ -130,6 +130,7 @@ export default function V1PayButton({
         onSuccess={() => setPayModalVisible(false)}
         onCancel={() => setPayModalVisible(false)}
         weiAmount={weiPayAmt}
+        payButtonText={payButtonText}
       />
     </>
   )

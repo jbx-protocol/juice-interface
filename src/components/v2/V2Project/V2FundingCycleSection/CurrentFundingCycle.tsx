@@ -5,33 +5,27 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useContext } from 'react'
 import { V2FundingCycleRiskCount } from 'utils/v2/fundingCycle'
 
-import SplitList from 'components/v2/shared/SplitList'
-
-import { formatReservedRate } from 'utils/v2/math'
-
-import { Trans } from '@lingui/macro'
-import TooltipLabel from 'components/shared/TooltipLabel'
-import { tokenSymbolText } from 'utils/tokenSymbolText'
-
 import FundingCycleDetails from './FundingCycleDetails'
+import PayoutSplitsCard from './PayoutSplitsCard'
+import ReservedTokensSplitsCard from './ReservedTokensSplitsCard'
 
 export default function CurrentFundingCycle({
-  showCurrentDetail,
+  expandCard,
 }: {
-  showCurrentDetail?: boolean
+  expandCard?: boolean
 }) {
   const {
     fundingCycle,
     payoutSplits,
-    reserveTokenSplits,
-    fundingCycleMetadata,
-    tokenSymbol,
     distributionLimitCurrency,
     distributionLimit,
-    projectOwnerAddress,
+    reservedTokensSplits,
+    fundingCycleMetadata,
   } = useContext(V2ProjectContext)
 
   if (!fundingCycle) return <LoadingOutlined />
+
+  const reservedRate = fundingCycleMetadata?.reservedRate
 
   return (
     <div>
@@ -45,68 +39,19 @@ export default function CurrentFundingCycle({
           fundingCycleStartTime={fundingCycle.start}
           isFundingCycleRecurring={true}
           fundingCycleRiskCount={V2FundingCycleRiskCount(fundingCycle)}
-          showDetail={showCurrentDetail}
+          expand={expandCard}
         />
       </CardSection>
 
-      <CardSection>
-        <TooltipLabel
-          label={
-            <h4 style={{ display: 'inline-block' }}>
-              <Trans>Funding Distribution</Trans>
-            </h4>
-          }
-          tip={
-            <Trans>
-              Available funds are distributed according to the payouts below.
-            </Trans>
-          }
-        />
-        {payoutSplits ? (
-          <SplitList
-            splits={payoutSplits}
-            distributionLimitCurrency={distributionLimitCurrency}
-            distributionLimit={distributionLimit}
-            projectOwnerAddress={projectOwnerAddress}
-            showSplitValues
-          />
-        ) : null}
-      </CardSection>
-
-      <CardSection>
-        <div>
-          <TooltipLabel
-            label={
-              <h4 style={{ display: 'inline-block' }}>
-                <Trans>
-                  Reserved{' '}
-                  {tokenSymbolText({
-                    tokenSymbol,
-                    capitalize: false,
-                    plural: true,
-                  })}
-                </Trans>{' '}
-                ({formatReservedRate(fundingCycleMetadata?.reservedRate)}%)
-              </h4>
-            }
-            tip={
-              <Trans>
-                A project can reserve a percentage of tokens minted from every
-                payment it receives. Reserved tokens can be distributed
-                according to the allocation below at any time.
-              </Trans>
-            }
-          />
-        </div>
-        {reserveTokenSplits ? (
-          <SplitList
-            splits={reserveTokenSplits}
-            distributionLimitCurrency={distributionLimitCurrency}
-            distributionLimit={distributionLimit}
-            projectOwnerAddress={projectOwnerAddress}
-          />
-        ) : null}
-      </CardSection>
+      <PayoutSplitsCard
+        payoutSplits={payoutSplits}
+        distributionLimitCurrency={distributionLimitCurrency}
+        distributionLimit={distributionLimit}
+      />
+      <ReservedTokensSplitsCard
+        reservedTokensSplits={reservedTokensSplits}
+        reservedRate={reservedRate}
+      />
     </div>
   )
 }

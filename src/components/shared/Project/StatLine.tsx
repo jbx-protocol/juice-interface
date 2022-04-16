@@ -1,5 +1,8 @@
+import { Skeleton } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { CSSProperties, useContext } from 'react'
+
+import { textSecondary } from 'constants/styles/text'
 
 import TooltipLabel from '../TooltipLabel'
 
@@ -8,22 +11,15 @@ export default function StatLine({
   statLabelTip,
   statValue,
   style = {},
+  loading = false,
 }: {
   statLabel: JSX.Element
   statLabelTip: JSX.Element
   statValue: JSX.Element
   style?: CSSProperties
+  loading?: boolean
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
-  const secondaryTextStyle: CSSProperties = {
-    textTransform: 'uppercase',
-    color: colors.text.tertiary,
-    fontSize: '0.8rem',
-    fontWeight: 500,
-  }
+  const { theme } = useContext(ThemeContext)
 
   return (
     <div
@@ -35,17 +31,27 @@ export default function StatLine({
         ...style,
       }}
     >
-      <div style={secondaryTextStyle}>
+      <div style={textSecondary(theme)}>
         <TooltipLabel label={statLabel} tip={statLabelTip} />
       </div>
 
-      <div
-        style={{
-          marginLeft: 10,
-        }}
-      >
-        {statValue}
-      </div>
+      {loading ? (
+        <div style={{ width: 60, height: 16 }}>
+          <Skeleton
+            paragraph={{ rows: 1, width: '100%' }}
+            title={false}
+            active
+          />
+        </div>
+      ) : (
+        <div
+          style={{
+            marginLeft: 10,
+          }}
+        >
+          {statValue}
+        </div>
+      )}
     </div>
   )
 }

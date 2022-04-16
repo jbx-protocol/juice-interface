@@ -8,9 +8,10 @@ import { useForm } from 'antd/lib/form/Form'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { PayoutMod } from 'models/mods'
 import { useContext, useLayoutEffect, useState } from 'react'
-import { fromWad } from 'utils/formatNumber'
+import { fromWad, perbicentToPercent } from 'utils/formatNumber'
 
 import { getTotalPercentage } from 'components/shared/formItems/formHelpers'
+import { CurrencyContext } from 'contexts/currencyContext'
 
 export default function PayModsForm({
   initialMods,
@@ -35,6 +36,10 @@ export default function PayModsForm({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+
+  const {
+    currencies: { ETH },
+  } = useContext(CurrencyContext)
 
   // Calculates sum of percentages of given payouts
   function calculateTotalPercentage(newMods: PayoutMod[] | undefined) {
@@ -97,14 +102,14 @@ export default function PayModsForm({
         <FormItems.ProjectPayoutMods
           mods={mods}
           target={fromWad(target)}
-          currency={currency}
+          currencyName={currency === ETH ? 'ETH' : 'USD'}
           onModsChanged={new_mods => {
             setMods(new_mods)
             form.setFieldsValue({
               totalPercent: calculateTotalPercentage(new_mods),
             })
           }}
-          fee={fee}
+          feePercentage={perbicentToPercent(fee)}
           formItemProps={{
             label: t`Payouts (optional)`,
           }}

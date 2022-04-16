@@ -1,8 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 
-import { invertPermyriad } from './bigNumbers'
-
-import { fromWad, percentToPerbicent, percentToPermyriad } from './formatNumber'
+import { fromWad, percentToPerbicent } from './formatNumber'
 
 export type WeightFunction = (
   weight: BigNumber | undefined,
@@ -43,50 +41,17 @@ export const weightedRate: WeightFunction = (
   )
 }
 
-/**
- * Return a given [amountWad] weighted by a given [weight] and [reservedRatePermyriad].
- *
- * Typically only used by Juicebox V2 projects.
- *
- * @param weight - scalar value for weighting. Typically funding cycle weight.
- * @param reservedRatePermyriad - reserve rate, as a permyriad (x/10,000)
- * @param amountWad - amount to weight, as a wad.
- * @param outputType
- * @returns
- */
-export const weightedAmount: WeightFunction = (
-  weight: BigNumber | undefined,
-  reservedRatePermyriad: number | undefined,
-  amountWad: BigNumber | undefined,
-  outputType: 'payer' | 'reserved',
-) => {
-  if (!weight || !amountWad) return
-
-  if (reservedRatePermyriad === undefined) return
-
-  return fromWad(
-    amountWad
-      .mul(weight)
-      .mul(
-        outputType === 'reserved'
-          ? reservedRatePermyriad
-          : invertPermyriad(BigNumber.from(reservedRatePermyriad)),
-      )
-      .div(percentToPermyriad(100)),
-  )
-}
-
 export const feeForAmount = (
   amount: BigNumber | undefined,
-  feePercent: BigNumber | undefined,
+  feePerbicent: BigNumber | undefined,
 ) => {
-  if (!feePercent || !amount) return
-  return amount.sub(amount.mul(200).div(feePercent.add(200)))
+  if (!feePerbicent || !amount) return
+  return amount.sub(amount.mul(200).div(feePerbicent.add(200)))
 }
 
-export const amountSubFee = (amount?: BigNumber, feePercent?: BigNumber) => {
-  if (!feePercent || !amount) return
-  return amount.sub(feeForAmount(amount, feePercent) ?? 0)
+export const amountSubFee = (amount?: BigNumber, feePerbicent?: BigNumber) => {
+  if (!feePerbicent || !amount) return
+  return amount.sub(feeForAmount(amount, feePerbicent) ?? 0)
 }
 
 /**

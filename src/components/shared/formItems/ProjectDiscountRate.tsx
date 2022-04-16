@@ -1,29 +1,23 @@
 import { Form, Switch } from 'antd'
 import { Trans } from '@lingui/macro'
 
-import React, { CSSProperties, useContext } from 'react'
+import { CSSProperties, useContext } from 'react'
 import { ThemeContext } from 'contexts/themeContext'
 import FormItemLabel from 'components/v2/V2Create/FormItemLabel'
 
 import { FormItemExt } from './formItemExt'
 import NumberSlider from '../inputs/NumberSlider'
+import FormItemWarningText from '../FormItemWarningText'
 
 function DiscountRateExtra({ disabled }: { disabled?: boolean }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   return (
     <div>
       {disabled && (
-        <p>
+        <FormItemWarningText>
           <Trans>
-            <i style={{ color: colors.text.warn }}>
-              Discount rate disabled when funding cycle duration has not been
-              set.
-            </i>
+            Disabled when your project's funding cycle has no duration.
           </Trans>
-        </p>
+        </FormItemWarningText>
       )}
       <Trans>
         The ratio of tokens rewarded per payment amount will decrease by this
@@ -41,25 +35,24 @@ export default function ProjectDiscountRate({
   value,
   style = {},
   onChange,
+  checked,
   disabled,
-  toggleDisabled,
+  onToggle,
 }: {
   value: string | undefined
   style?: CSSProperties
   onChange: (val?: number) => void
+  checked?: boolean
   disabled?: boolean
-  toggleDisabled?: (checked: boolean) => void
+  onToggle?: (checked: boolean) => void
 } & FormItemExt) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
 
-  // When toggle is disabled and can't be changed, the whole item is unavailable
-  const unavailable = !Boolean(toggleDisabled) && disabled
-
   return (
     <Form.Item
-      extra={<DiscountRateExtra disabled={unavailable} />}
+      extra={<DiscountRateExtra disabled={disabled} />}
       name={name}
       label={
         hideLabel ? undefined : (
@@ -67,15 +60,15 @@ export default function ProjectDiscountRate({
             <FormItemLabel>
               <Trans>Discount rate</Trans>
             </FormItemLabel>
-            {toggleDisabled ? (
-              <React.Fragment>
-                <Switch checked={!disabled} onChange={toggleDisabled} />{' '}
-                {disabled ? (
+            {onToggle ? (
+              <>
+                <Switch checked={checked} onChange={onToggle} />{' '}
+                {!checked ? (
                   <span style={{ color: colors.text.tertiary, marginLeft: 10 }}>
                     <Trans>(0%)</Trans>
                   </span>
                 ) : null}
-              </React.Fragment>
+              </>
             ) : null}
           </div>
         )
@@ -83,18 +76,16 @@ export default function ProjectDiscountRate({
       style={style}
       {...formItemProps}
     >
-      {!disabled ? (
-        <NumberSlider
-          max={20}
-          defaultValue={0}
-          sliderValue={parseFloat(value ?? '0')}
-          suffix="%"
-          name={name}
-          onChange={onChange}
-          step={0.1}
-          disabled={disabled}
-        />
-      ) : null}
+      <NumberSlider
+        max={20}
+        defaultValue={0}
+        sliderValue={parseFloat(value ?? '0')}
+        suffix="%"
+        name={name}
+        onChange={onChange}
+        step={0.1}
+        disabled={disabled}
+      />
     </Form.Item>
   )
 }

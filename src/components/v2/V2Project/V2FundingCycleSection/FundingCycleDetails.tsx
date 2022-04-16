@@ -285,9 +285,9 @@ export default function FundingCycleDetails({
             tooltipTitle={FUNDING_CYCLE_WARNING_TEXT().allowMinting}
           >
             {fundingCycleMetadata?.allowMinting ? (
-              <Trans>Yes</Trans>
+              <Trans>Allowed</Trans>
             ) : (
-              <Trans>No</Trans>
+              <Trans>Disabled</Trans>
             )}
           </FundingCycleDetailWarning>
         </Descriptions.Item>

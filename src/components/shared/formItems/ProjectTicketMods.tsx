@@ -250,7 +250,11 @@ export default function ProjectTicketMods({
       ]}
       style={style}
     >
-      <Space direction="vertical" style={{ width: '100%' }} size="large">
+      <Space
+        direction="vertical"
+        style={{ width: '100%', marginBottom: 10 }}
+        size="large"
+      >
         {lockedMods ? (
           <Space style={{ width: '100%' }} direction="vertical" size="small">
             {lockedMods.map((v, i) => modInput(v, i, true))}

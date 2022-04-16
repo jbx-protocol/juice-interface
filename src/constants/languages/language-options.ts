@@ -8,4 +8,5 @@ export const Languages: Language = {
   tr: { code: 'tr', name: 'turkish', short: 'TR', long: 'Türkçe' },
   pt: { code: 'pt', name: 'portuguese', short: 'PT', long: 'Português' },
   es: { code: 'es', name: 'spanish', short: 'ES', long: 'Español' },
+  fr: { code: 'fr', name: 'french', short: 'FR', long: 'Français' },
 }

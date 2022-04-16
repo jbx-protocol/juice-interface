@@ -15,7 +15,7 @@ function DiscountRateExtra({ disabled }: { disabled?: boolean }) {
       {disabled && (
         <FormItemWarningText>
           <Trans>
-            Disabled when your project's funding cycle has no duration.
+            Disabled when your project's funding cycle duration is 0.
           </Trans>
         </FormItemWarningText>
       )}

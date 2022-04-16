@@ -126,7 +126,6 @@ msgid "<0>Learn more</0> about funding cycles."
 msgstr "<0>进一步了解</0> 筹款周期。"
 
 #: src/components/v1/shared/BudgetForm.tsx
-#: src/components/v1/shared/BudgetForm.tsx
 msgid "<0>Learn more</0> about overflow."
 msgstr "<0>进一步了解</0> 溢出。"
 
@@ -156,6 +155,10 @@ msgstr "<0>Peel</0>是一个 DAO，负责管理 juicebox.money 的前端页面�
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
 msgid "<0>Recurring funding cycles</0> (for example, distribute $30,000 from your project's treasury every 30 days)."
+msgstr ""
+
+#: src/components/v1/shared/BudgetForm.tsx
+msgid "<0>Target is 0.</0> The project's entire balance will be considered overflow. <1>Learn more</1> about overflow."
 msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
@@ -433,11 +436,6 @@ msgstr "区块数"
 msgid "Blog"
 msgstr "博客"
 
-#: src/components/v1/V1Create/index.tsx
-#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
-msgid "Bonding curve disabled while no funding target is set."
-msgstr "不设定筹款目标的话，联合曲线比率选项将会禁用。"
-
 #: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 #: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
@@ -710,13 +708,16 @@ msgstr "详情"
 msgid "Disabled"
 msgstr "已禁用"
 
-#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
-msgid "Disabled when your project's funding cycle has no distribution limit."
+#: src/components/shared/formItems/ProjectDiscountRate.tsx
+msgid "Disabled when your project's funding cycle duration is 0."
 msgstr ""
 
-#: src/components/shared/formItems/ProjectDiscountRate.tsx
 #: src/components/v2/V2Create/forms/TokenForm/index.tsx
 msgid "Disabled when your project's funding cycle has no duration."
+msgstr ""
+
+#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
+msgid "Disabled when your project's funding cycle has no funding target."
 msgstr ""
 
 #: src/components/Navbar/Mobile/MobileCollapse.tsx
@@ -738,10 +739,6 @@ msgstr "Discord"
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Discount rate"
 msgstr "折扣率"
-
-#: src/components/v1/V1Create/index.tsx
-msgid "Discount rate disabled while funding cycle duration is 0."
-msgstr "筹款周期持续时间设置为 0 时，折扣率选项将会禁用。"
 
 #: src/components/v1/V1Project/modals/BalancesModal.tsx
 msgid "Display ERC-20 tokens and other Juicebox project tokens that are in this project's owner's wallet."
@@ -1993,10 +1990,6 @@ msgstr "百分比合计不能超过 100%."
 msgid "Target"
 msgstr "目标"
 
-#: src/components/v1/shared/BudgetForm.tsx
-msgid "Target is 0."
-msgstr "目标为 0"
-
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "Target is 0: All funds will be considered overflow and can be redeemed by burning project tokens."
 msgstr "目标为 0 ：所有资金将被视为溢出，可以通过燃烧项目代币来赎回。"
@@ -2086,10 +2079,6 @@ msgstr "项目方可以随时铸造任意数量的代币，这会稀释所有代
 #: src/constants/fundingWarningText.ts
 msgid "The project owner may reconfigure this funding cycle at any time, without notice."
 msgstr "项目方可以随时修改当前筹款周期的配置，不需要事先通知。"
-
-#: src/components/v1/shared/BudgetForm.tsx
-msgid "The project's entire balance will be considered overflow."
-msgstr "项目的全部余额将被视为溢出。"
 
 #: src/components/Landing/QAs.tsx
 msgid "The project's tokens that are minted and distributed as a result of a received payment are ERC-20's. The amount of tokens minted and distributed are proportional to the volume of payments received, weighted by the project's discount rate over time."

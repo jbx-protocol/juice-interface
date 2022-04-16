@@ -42,8 +42,7 @@ function BondingCurveRateExtra({ disabled }: { disabled?: boolean }) {
       {disabled && (
         <FormItemWarningText>
           <Trans>
-            Disabled when your project's funding cycle has no distribution
-            limit.
+            Disabled when your project's funding cycle has no funding target.
           </Trans>
         </FormItemWarningText>
       )}
@@ -259,7 +258,7 @@ export default function ProjectBondingCurveRate({
         name={name}
         defaultValue={parseInt(DEFAULT_BONDING_CURVE_RATE_PERCENTAGE)}
         sliderValue={parseFloat(value ?? DEFAULT_BONDING_CURVE_RATE_PERCENTAGE)}
-        disabled={disabled || !checked}
+        disabled={disabled || (onToggled && !checked)}
         onChange={(val: number | undefined) => {
           graphCurve(val)
           onChange(val)

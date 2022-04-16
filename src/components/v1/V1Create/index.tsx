@@ -730,16 +730,8 @@ export default function V1Create() {
           {incentivesFormModalVisible && (
             <IncentivesForm
               form={incentivesForm}
-              disableDiscountRate={
-                editingFC.duration.eq(0)
-                  ? t`Discount rate disabled while funding cycle duration is 0.`
-                  : undefined
-              }
-              disableBondingCurve={
-                !hasFundingTarget(editingFC)
-                  ? t`Bonding curve disabled while no funding target is set.`
-                  : undefined
-              }
+              disableDiscountRate={editingFC.duration.eq(0)}
+              disableBondingCurve={!hasFundingTarget(editingFC)}
               onSave={async (
                 discountRate: string,
                 bondingCurveRate: string,

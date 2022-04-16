@@ -609,11 +609,7 @@ export default function ReconfigureFCModal({
       >
         <IncentivesForm
           form={incentivesForm}
-          disableBondingCurve={
-            !hasFundingTarget(editingFC)
-              ? t`Bonding curve disabled while no funding target is set.`
-              : undefined
-          }
+          disableBondingCurve={!hasFundingTarget(editingFC)}
           onSave={async (discountRate: string, bondingCurveRate: string) => {
             await incentivesForm.validateFields()
             onIncentivesFormSaved(discountRate, bondingCurveRate)

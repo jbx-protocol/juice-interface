@@ -13,6 +13,7 @@ import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import {
   defaultFundingCycleData,
+  defaultFundingCycleMetadata,
   editingV2ProjectActions,
 } from 'redux/slices/editingV2Project'
 import { V2UserContext } from 'contexts/v2/userContext'
@@ -157,10 +158,21 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
         editingV2ProjectActions.setPayoutSplits(splits.map(sanitizeSplit)),
       )
       dispatch(editingV2ProjectActions.setDuration(durationInSeconds ?? '0'))
+
+      // reset discount rate if duration is 0
       if (!durationInSeconds || durationInSeconds === '0') {
         dispatch(
           editingV2ProjectActions.setDiscountRate(
             defaultFundingCycleData.discountRate,
+          ),
+        )
+      }
+
+      // reset redemption rate if target is 0
+      if (!target || target === '0') {
+        dispatch(
+          editingV2ProjectActions.setRedemptionRate(
+            defaultFundingCycleMetadata.redemptionRate,
           ),
         )
       }

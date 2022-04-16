@@ -1,4 +1,4 @@
-import { Form, Switch } from 'antd'
+import { Form } from 'antd'
 import { Trans } from '@lingui/macro'
 
 import { ThemeContext } from 'contexts/themeContext'
@@ -17,6 +17,7 @@ import ExternalLink from 'components/shared/ExternalLink'
 import NumberSlider from '../inputs/NumberSlider'
 import { FormItemExt } from './formItemExt'
 import FormItemWarningText from '../FormItemWarningText'
+import SwitchHeading from '../SwitchHeading'
 
 const GRAPH_CONTAINER_ID = 'graph-container'
 const DEFAULT_BONDING_CURVE_RATE_PERCENTAGE = '100'
@@ -41,7 +42,8 @@ function BondingCurveRateExtra({ disabled }: { disabled?: boolean }) {
       {disabled && (
         <FormItemWarningText>
           <Trans>
-            Disabled when project's funding cycle has no distribution limit.
+            Disabled when your project's funding cycle has no distribution
+            limit.
           </Trans>
         </FormItemWarningText>
       )}
@@ -225,19 +227,24 @@ export default function ProjectBondingCurveRate({
       label={
         hideLabel ? undefined : (
           <div style={{ display: 'flex' }}>
-            <FormItemLabel>
-              {label ?? <Trans>Bonding curve rate</Trans>}
-            </FormItemLabel>
             {onToggled ? (
-              <>
-                <Switch checked={checked} onChange={onToggled} />{' '}
-                {!checked ? (
-                  <span style={{ color: colors.text.tertiary, marginLeft: 10 }}>
-                    <Trans>(100%)</Trans>
-                  </span>
-                ) : null}
-              </>
-            ) : null}
+              <SwitchHeading
+                checked={Boolean(checked)}
+                onChange={checked => {
+                  onToggled(checked)
+                  if (!checked) {
+                    onChange(100)
+                  }
+                }}
+                disabled={disabled}
+              >
+                {label ?? <Trans>Bonding curve rate</Trans>}
+              </SwitchHeading>
+            ) : (
+              <FormItemLabel>
+                {label ?? <Trans>Bonding curve rate</Trans>}
+              </FormItemLabel>
+            )}
           </div>
         )
       }
@@ -245,25 +252,21 @@ export default function ProjectBondingCurveRate({
       extra={<BondingCurveRateExtra disabled={disabled} />}
       {...formItemProps}
     >
-      <div style={{ display: 'flex', alignItems: 'center', marginTop: 10 }}>
-        <NumberSlider
-          min={0}
-          max={100}
-          step={0.5}
-          name={name}
-          defaultValue={parseInt(DEFAULT_BONDING_CURVE_RATE_PERCENTAGE)}
-          sliderValue={parseFloat(
-            value ?? DEFAULT_BONDING_CURVE_RATE_PERCENTAGE,
-          )}
-          disabled={disabled}
-          onChange={(val: number | undefined) => {
-            graphCurve(val)
-            onChange(val)
-          }}
-          suffix="%"
-          style={{ flexGrow: 1 }}
-        />
-      </div>
+      <NumberSlider
+        min={0}
+        max={100}
+        step={0.5}
+        name={name}
+        defaultValue={parseInt(DEFAULT_BONDING_CURVE_RATE_PERCENTAGE)}
+        sliderValue={parseFloat(value ?? DEFAULT_BONDING_CURVE_RATE_PERCENTAGE)}
+        disabled={disabled || !checked}
+        onChange={(val: number | undefined) => {
+          graphCurve(val)
+          onChange(val)
+        }}
+        suffix="%"
+        style={{ flexGrow: 1 }}
+      />
     </Form.Item>
   )
 }

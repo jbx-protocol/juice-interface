@@ -3,10 +3,7 @@ import FundingCycleDetailsCard from 'components/shared/Project/FundingCycleDetai
 import { LoadingOutlined } from '@ant-design/icons'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useContext } from 'react'
-import {
-  decodeV2FundingCycleMetadata,
-  V2FundingCycleRiskCount,
-} from 'utils/v2/fundingCycle'
+import { V2FundingCycleRiskCount } from 'utils/v2/fundingCycle'
 
 import useProjectDistributionLimit from 'hooks/v2/contractReader/ProjectDistributionLimit'
 
@@ -29,10 +26,16 @@ export default function UpcomingFundingCycle({
 }) {
   const { projectId, primaryTerminal } = useContext(V2ProjectContext)
 
-  const { data: queuedFundingCycle, loading: queuedFundingCycleLoading } =
-    useProjectQueuedFundingCycle({
-      projectId,
-    })
+  const {
+    data: queuedFundingCycleResponse,
+    loading: queuedFundingCycleLoading,
+  } = useProjectQueuedFundingCycle({
+    projectId,
+  })
+
+  const [queuedFundingCycle, queuedFundingCycleMetadata] =
+    queuedFundingCycleResponse || []
+
   const { data: queuedPayoutSplits } = useProjectSplits({
     projectId,
     splitGroup: ETH_PAYOUT_SPLIT_GROUP,
@@ -52,9 +55,6 @@ export default function UpcomingFundingCycle({
   })
   const [queuedDistributionLimit, queuedDistributionLimitCurrency] =
     queuedDistributionLimitData ?? []
-  const queuedFundingCycleMetadata = queuedFundingCycle
-    ? decodeV2FundingCycleMetadata(queuedFundingCycle?.metadata)
-    : undefined
 
   if (queuedFundingCycleLoading || !queuedFundingCycle)
     return <LoadingOutlined />

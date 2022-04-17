@@ -101,9 +101,11 @@ export default function V2ProjectReconfigureModal({
 
   const { projectId, primaryTerminal } = useContext(V2ProjectContext)
 
-  const { data: queuedFundingCycle } = useProjectQueuedFundingCycle({
+  const { data: queuedFundingCycleResponse } = useProjectQueuedFundingCycle({
     projectId,
   })
+
+  const [queuedFundingCycle] = queuedFundingCycleResponse || []
   const { data: queuedPayoutSplits } = useProjectSplits({
     projectId,
     splitGroup: ETH_PAYOUT_SPLIT_GROUP,

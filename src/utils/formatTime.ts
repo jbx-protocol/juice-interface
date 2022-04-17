@@ -26,7 +26,7 @@ export function detailedTimeString({
     seconds && seconds > 0 && !roundToMinutes ? Math.floor(seconds) + 's' : ''
   }`
 
-  return `${daysText}${hoursText}${minutesText}${secondsText}` || '--'
+  return `${daysText}${hoursText}${minutesText}${secondsText}`.trimEnd() || '--'
 }
 
 export function detailedTimeUntil(endTimeSeconds?: BigNumberish) {

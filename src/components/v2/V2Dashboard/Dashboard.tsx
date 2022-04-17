@@ -73,11 +73,12 @@ export default function V2Dashboard() {
 
   const primaryTerminal = terminals?.[0] // TODO: make primaryTerminalOf hook and use it
 
-  const { data: distributionLimitData } = useProjectDistributionLimit({
-    projectId,
-    configuration: fundingCycle?.configuration?.toString(),
-    terminal: primaryTerminal,
-  })
+  const { data: distributionLimitData, loading: distributionLimitLoading } =
+    useProjectDistributionLimit({
+      projectId,
+      configuration: fundingCycle?.configuration?.toString(),
+      terminal: primaryTerminal,
+    })
 
   const { data: usedDistributionLimit } = useUsedDistributionLimit({
     projectId,
@@ -166,6 +167,7 @@ export default function V2Dashboard() {
     loading: {
       ETHBalanceLoading,
       balanceInDistributionLimitCurrencyLoading,
+      distributionLimitLoading,
     },
   }
 

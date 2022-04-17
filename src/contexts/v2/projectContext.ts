@@ -8,6 +8,7 @@ import { createContext } from 'react'
 type V2ProjectLoadingStates = {
   ETHBalanceLoading: boolean
   balanceInDistributionLimitCurrencyLoading: boolean
+  distributionLimitLoading: boolean
 }
 
 export type V2ProjectContextType = {
@@ -70,5 +71,6 @@ export const V2ProjectContext = createContext<V2ProjectContextType>({
   loading: {
     ETHBalanceLoading: false,
     balanceInDistributionLimitCurrencyLoading: false,
+    distributionLimitLoading: false,
   },
 })

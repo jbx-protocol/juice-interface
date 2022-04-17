@@ -17,6 +17,7 @@ export default function DistributedRatio({ style }: { style?: CSSProperties }) {
     distributionLimit,
     usedDistributionLimit,
     distributionLimitCurrency,
+    loading: { distributionLimitLoading },
   } = useContext(V2ProjectContext)
 
   const secondaryTextStyle = textSecondary(theme)
@@ -24,7 +25,7 @@ export default function DistributedRatio({ style }: { style?: CSSProperties }) {
   return (
     <StatLine
       style={style}
-      loading={!Boolean(distributionLimit)}
+      loading={distributionLimitLoading}
       statLabel={<Trans>Distributed</Trans>}
       statLabelTip={
         <Trans>

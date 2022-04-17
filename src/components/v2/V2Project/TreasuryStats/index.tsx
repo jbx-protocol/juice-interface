@@ -14,6 +14,7 @@ export default function TreasuryStats() {
     distributionLimit,
     terminals,
     projectId,
+    loading: { distributionLimitLoading },
   } = useContext(V2ProjectContext)
 
   const { data: overflow, loading: overflowLoading } =
@@ -22,7 +23,7 @@ export default function TreasuryStats() {
       projectId,
     })
 
-  const fundingProgressBarLoading = overflowLoading || !distributionLimit
+  const fundingProgressBarLoading = overflowLoading || distributionLimitLoading
 
   return (
     <Space direction="vertical" style={{ display: 'flex' }}>
@@ -34,7 +35,7 @@ export default function TreasuryStats() {
         paragraph={{ rows: 1, width: ['100%'] }}
         active
       >
-        {!fundingProgressBarLoading ? (
+        {!fundingProgressBarLoading && distributionLimit ? (
           <FundingProgressBar
             targetAmount={distributionLimit}
             balanceInTargetCurrency={balanceInDistributionLimitCurrency}

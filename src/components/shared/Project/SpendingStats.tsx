@@ -1,4 +1,4 @@
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Space, Tooltip } from 'antd'
 import Balance from 'components/Navbar/Balance'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
@@ -7,6 +7,7 @@ import { formatWad } from 'utils/formatNumber'
 import { CrownFilled } from '@ant-design/icons'
 import { CSSProperties, useContext } from 'react'
 import { ThemeContext } from 'contexts/themeContext'
+import * as constants from '@ethersproject/constants'
 
 import { BigNumber } from '@ethersproject/bignumber'
 
@@ -46,6 +47,10 @@ export default function SpendingStats({
     color: colors.text.secondary,
   }
 
+  const formattedDistributionLimit = !targetAmount.eq(constants.MaxUint256)
+    ? formatWad(targetAmount, { precision: 4 })
+    : t`NO LIMIT`
+
   return (
     <div>
       <div>
@@ -78,7 +83,7 @@ export default function SpendingStats({
             <CurrencySymbol currency={currency} />
             {formatWad(distributedAmount, { precision: 4 }) || '0'}
             {hasFundingTarget ? (
-              <span>/{formatWad(targetAmount, { precision: 4 })} </span>
+              <span>/{formattedDistributionLimit} </span>
             ) : null}{' '}
             distributed
           </Trans>

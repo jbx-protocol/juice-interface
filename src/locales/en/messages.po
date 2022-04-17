@@ -779,6 +779,10 @@ msgstr "Distribution"
 msgid "Distribution limit"
 msgstr "Distribution limit"
 
+#: src/components/shared/currency/ETHAmount.tsx
+msgid "Distribution limit infinite"
+msgstr "Distribution limit infinite"
+
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Distribution limit, duration and payouts"
 msgstr "Distribution limit, duration and payouts"
@@ -1297,6 +1301,10 @@ msgstr "More trending projects"
 msgid "Move your {tokensLabel} from the Juicebox contract to your wallet."
 msgstr "Move your {tokensLabel} from the Juicebox contract to your wallet."
 
+#: src/components/shared/Project/SpendingStats.tsx
+msgid "NO LIMIT"
+msgstr "NO LIMIT"
+
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "Name"
 msgstr ""
@@ -1325,6 +1333,10 @@ msgstr ""
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "No funding target: The project will control how all funds are distributed, and none can be redeemed by token holders."
 msgstr ""
+
+#: src/components/shared/currency/ETHAmount.tsx
+msgid "No limit"
+msgstr "No limit"
 
 #: src/components/v2/V2Create/forms/FundingForm/TargetTypeSelect.tsx
 msgid "No limit (infinite)"

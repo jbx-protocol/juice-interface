@@ -525,7 +525,6 @@ export default function ProjectPayoutMods({
           ) : null}
 
           {/* Only show amount input if project has a funding target */}
-          {/* {parseWad(target).lt(constants.MaxUint256) ? ( // Target = MaxUint256 when unset */}
           {!targetIsInfinite ? (
             <Form.Item
               label="Amount"

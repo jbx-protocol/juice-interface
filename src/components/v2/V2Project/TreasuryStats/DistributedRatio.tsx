@@ -24,7 +24,7 @@ export default function DistributedRatio({ style }: { style?: CSSProperties }) {
   return (
     <StatLine
       style={style}
-      loading={!Boolean(distributionLimit)}
+      loading={!distributionLimit}
       statLabel={<Trans>Distributed</Trans>}
       statLabelTip={
         <Trans>

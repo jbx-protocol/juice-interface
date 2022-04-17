@@ -41,7 +41,6 @@ import {
   secondsToOtherUnit,
   otherUnitToSeconds,
 } from 'utils/formatTime'
-import * as constants from '@ethersproject/constants'
 import { fromWad, parseWad } from 'utils/formatNumber'
 import BudgetTargetInput from 'components/shared/inputs/BudgetTargetInput'
 import { Link } from 'react-router-dom'
@@ -98,7 +97,7 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
     : undefined
 
   const resetProjectForm = useCallback(() => {
-    const _target = fundAccessConstraint?.distributionLimit
+    const _target = fundAccessConstraint?.distributionLimit ?? '0'
     const _targetCurrency = parseInt(
       fundAccessConstraint?.distributionLimitCurrency ?? `${V2_CURRENCY_ETH}`,
     ) as V2CurrencyOption
@@ -120,7 +119,7 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
 
     if (parseInt(_target ?? '0') === 0) {
       setTargetType('none')
-    } else if (parseWad(_target).eq(constants.MaxUint256)) {
+    } else if (parseWad(_target).eq(MAX_DISTRIBUTION_LIMIT)) {
       setTargetType('infinite')
     } else {
       setTargetType('specific')

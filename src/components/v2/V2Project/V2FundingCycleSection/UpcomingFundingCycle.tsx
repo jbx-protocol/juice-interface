@@ -3,25 +3,57 @@ import FundingCycleDetailsCard from 'components/shared/Project/FundingCycleDetai
 import { LoadingOutlined } from '@ant-design/icons'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useContext } from 'react'
-import { V2FundingCycleRiskCount } from 'utils/v2/fundingCycle'
+import {
+  decodeV2FundingCycleMetadata,
+  V2FundingCycleRiskCount,
+} from 'utils/v2/fundingCycle'
+
+import useProjectDistributionLimit from 'hooks/v2/contractReader/ProjectDistributionLimit'
+
+import useProjectSplits from 'hooks/v2/contractReader/ProjectSplits'
+
+import useProjectQueuedFundingCycle from 'hooks/v2/contractReader/ProjectQueuedFundingCycle'
 
 import FundingCycleDetails from './FundingCycleDetails'
 import PayoutSplitsCard from './PayoutSplitsCard'
 import ReservedTokensSplitsCard from './ReservedTokensSplitsCard'
+import {
+  ETH_PAYOUT_SPLIT_GROUP,
+  RESERVED_TOKEN_SPLIT_GROUP,
+} from 'constants/v2/splits'
 
 export default function UpcomingFundingCycle({
   expandCard,
 }: {
   expandCard?: boolean
 }) {
-  const {
-    queuedFundingCycle,
-    queuedPayoutSplits,
-    queuedDistributionLimitCurrency,
-    queuedDistributionLimit,
-    queuedReservedTokensSplits,
-    queuedFundingCycleMetadata,
-  } = useContext(V2ProjectContext)
+  const { projectId, primaryTerminal } = useContext(V2ProjectContext)
+
+  const { data: queuedFundingCycle } = useProjectQueuedFundingCycle({
+    projectId,
+  })
+  const { data: queuedPayoutSplits } = useProjectSplits({
+    projectId,
+    splitGroup: ETH_PAYOUT_SPLIT_GROUP,
+    domain: queuedFundingCycle?.configuration?.toString(),
+  })
+
+  const { data: queuedReservedTokensSplits } = useProjectSplits({
+    projectId,
+    splitGroup: RESERVED_TOKEN_SPLIT_GROUP,
+    domain: queuedFundingCycle?.configuration?.toString(),
+  })
+
+  const { data: queuedDistributionLimitData } = useProjectDistributionLimit({
+    projectId,
+    configuration: queuedFundingCycle?.configuration.toString(),
+    terminal: primaryTerminal,
+  })
+  const [queuedDistributionLimit, queuedDistributionLimitCurrency] =
+    queuedDistributionLimitData ?? []
+  const queuedFundingCycleMetadata = queuedFundingCycle
+    ? decodeV2FundingCycleMetadata(queuedFundingCycle?.metadata)
+    : undefined
 
   if (!queuedFundingCycle) return <LoadingOutlined />
 

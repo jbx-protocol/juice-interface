@@ -29,9 +29,19 @@ import FundingTabContent from 'components/v2/V2Create/forms/FundingForm'
 import TokenTabContent from 'components/v2/V2Create/forms/TokenForm'
 import RulesTabContent from 'components/v2/V2Create/forms/RulesForm'
 
+import useProjectSplits from 'hooks/v2/contractReader/ProjectSplits'
+
+import useProjectQueuedFundingCycle from 'hooks/v2/contractReader/ProjectQueuedFundingCycle'
+
+import useProjectDistributionLimit from 'hooks/v2/contractReader/ProjectDistributionLimit'
+
 import { V2ReconfigureFundingDrawer } from './drawers/V2ReconfigureFundingDrawer'
 import { V2ReconfigureProjectDetailsDrawer } from './drawers/V2ReconfigureProjectDetailsDrawer'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
+import {
+  ETH_PAYOUT_SPLIT_GROUP,
+  RESERVED_TOKEN_SPLIT_GROUP,
+} from 'constants/v2/splits'
 
 function ReconfigureButton({
   title,
@@ -82,17 +92,38 @@ export default function V2ProjectReconfigureModal({
   hideProjectDetails?: boolean
 }) {
   const {
-    queuedFundingCycle,
     fundingCycle,
     payoutSplits,
-    queuedPayoutSplits,
     reservedTokensSplits,
-    queuedReservedTokensSplits,
     distributionLimit,
-    queuedDistributionLimit,
     distributionLimitCurrency,
-    queuedDistributionLimitCurrency,
   } = useContext(V2ProjectContext)
+
+  const { projectId, primaryTerminal } = useContext(V2ProjectContext)
+
+  const { data: queuedFundingCycle } = useProjectQueuedFundingCycle({
+    projectId,
+  })
+  const { data: queuedPayoutSplits } = useProjectSplits({
+    projectId,
+    splitGroup: ETH_PAYOUT_SPLIT_GROUP,
+    domain: queuedFundingCycle?.configuration?.toString(),
+  })
+
+  const { data: queuedReservedTokensSplits } = useProjectSplits({
+    projectId,
+    splitGroup: RESERVED_TOKEN_SPLIT_GROUP,
+    domain: queuedFundingCycle?.configuration?.toString(),
+  })
+
+  const { data: queuedDistributionLimitData } = useProjectDistributionLimit({
+    projectId,
+    configuration: queuedFundingCycle?.configuration.toString(),
+    terminal: primaryTerminal,
+  })
+
+  const [queuedDistributionLimit, queuedDistributionLimitCurrency] =
+    queuedDistributionLimitData ?? []
 
   const { contracts } = useContext(V2UserContext)
 

@@ -10,7 +10,7 @@ export enum V2ContractName {
   JBProjects = 'JBProjects',
   JBSplitsStore = 'JBSplitsStore',
   JBTokenStore = 'JBTokenStore',
-  JBPaymentTerminalStore = 'JBPaymentTerminalStore',
+  JBSingleTokenPaymentTerminalStore = 'JBSingleTokenPaymentTerminalStore',
 }
 
 export type V2Contracts = Record<V2ContractName, Contract>

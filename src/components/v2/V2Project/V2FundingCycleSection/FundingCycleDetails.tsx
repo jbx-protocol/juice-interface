@@ -49,7 +49,9 @@ export default function FundingCycleDetails({
 
   if (!fundingCycle) return null
 
-  const formattedDuration = detailedTimeString(fundingCycle.duration.toNumber())
+  const formattedDuration = detailedTimeString({
+    timeSeconds: fundingCycle.duration.toNumber(),
+  })
   const formattedStartTime = formatDate(fundingCycle.start.mul(1000))
   const formattedEndTime = formatDate(
     fundingCycle.start.add(fundingCycle.duration).mul(1000),
@@ -111,9 +113,10 @@ export default function FundingCycleDetails({
 
   const riskWarningText = FUNDING_CYCLE_WARNING_TEXT()
 
-  const distributionLimitIsInfinite =
-    !distributionLimit || distributionLimit?.eq(MAX_DISTRIBUTION_LIMIT)
-  const distributionLimitIsZero = distributionLimit?.eq(0)
+  const distributionLimitIsInfinite = distributionLimit?.eq(
+    MAX_DISTRIBUTION_LIMIT,
+  )
+  const distributionLimitIsZero = !distributionLimit || distributionLimit?.eq(0)
 
   return (
     <div>
@@ -128,7 +131,7 @@ export default function FundingCycleDetails({
             {distributionLimitIsInfinite ? (
               <Trans>Infinite</Trans>
             ) : distributionLimitIsZero ? (
-              <>0</>
+              <>Zero</>
             ) : (
               <>
                 <CurrencySymbol

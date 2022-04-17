@@ -7,9 +7,9 @@ import { formatWad } from 'utils/formatNumber'
 import { CrownFilled } from '@ant-design/icons'
 import { CSSProperties, useContext } from 'react'
 import { ThemeContext } from 'contexts/themeContext'
-import * as constants from '@ethersproject/constants'
 
 import { BigNumber } from '@ethersproject/bignumber'
+import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2/math'
 
 import { CurrencyName } from 'constants/currency'
 
@@ -47,7 +47,7 @@ export default function SpendingStats({
     color: colors.text.secondary,
   }
 
-  const formattedDistributionLimit = !targetAmount.eq(constants.MaxUint256)
+  const formattedDistributionLimit = !targetAmount.eq(MAX_DISTRIBUTION_LIMIT)
     ? formatWad(targetAmount, { precision: 4 })
     : t`NO LIMIT`
 

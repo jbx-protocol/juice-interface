@@ -113,9 +113,10 @@ export default function FundingCycleDetails({
 
   const riskWarningText = FUNDING_CYCLE_WARNING_TEXT()
 
-  const distributionLimitIsInfinite =
-    !distributionLimit || distributionLimit?.eq(MAX_DISTRIBUTION_LIMIT)
-  const distributionLimitIsZero = distributionLimit?.eq(0)
+  const distributionLimitIsInfinite = distributionLimit?.eq(
+    MAX_DISTRIBUTION_LIMIT,
+  )
+  const distributionLimitIsZero = !distributionLimit || distributionLimit?.eq(0)
 
   return (
     <div>
@@ -130,7 +131,7 @@ export default function FundingCycleDetails({
             {distributionLimitIsInfinite ? (
               <Trans>Infinite</Trans>
             ) : distributionLimitIsZero ? (
-              <>0</>
+              <>Zero</>
             ) : (
               <>
                 <CurrencySymbol

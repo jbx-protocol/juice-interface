@@ -6,6 +6,7 @@ import { betweenZeroAndOne } from 'utils/bigNumbers'
 import { t, Trans } from '@lingui/macro'
 
 import * as constants from '@ethersproject/constants'
+import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2/math'
 
 import CurrencySymbol from '../CurrencySymbol'
 
@@ -24,7 +25,8 @@ export default function ETHAmount({
   padEnd?: boolean
 }) {
   const isMaxUint =
-    BigNumber.isBigNumber(amount) && amount.eq(constants.MaxUint256)
+    BigNumber.isBigNumber(amount) &&
+    (amount.eq(constants.MaxUint256) || amount.eq(MAX_DISTRIBUTION_LIMIT))
 
   if (isMaxUint) {
     return (

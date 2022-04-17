@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { BallotState } from 'models/ballot'
+import { V2BallotState } from 'models/ballot'
 import { useContext } from 'react'
 import { parseWad } from 'utils/formatNumber'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
@@ -54,7 +54,7 @@ export function useETHReceivedFromTokens({
     return BigNumber.from(0)
 
   const redemptionRate =
-    ballotState === BallotState.Active
+    ballotState === V2BallotState.Active
       ? fundingCycleMetadata.ballotRedemptionRate
       : fundingCycleMetadata.redemptionRate
 

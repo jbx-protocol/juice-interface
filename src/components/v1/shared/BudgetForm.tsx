@@ -184,13 +184,9 @@ export default function BudgetForm({
 
         {showFundingFields && target === '0' && (
           <p style={{ color: colors.text.primary }}>
-            <span style={{ fontWeight: 600 }}>
-              <Trans>Target is 0.</Trans>
-            </span>
             <Trans>
-              The project's entire balance will be considered overflow.{' '}
-            </Trans>
-            <Trans>
+              <span style={{ fontWeight: 600 }}>Target is 0.</span> The
+              project's entire balance will be considered overflow.{' '}
               <ExternalLink
                 href={helpPagePath('protocol/learn/topics/overflow')}
               >

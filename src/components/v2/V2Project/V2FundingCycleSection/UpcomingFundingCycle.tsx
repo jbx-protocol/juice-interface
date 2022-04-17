@@ -29,9 +29,10 @@ export default function UpcomingFundingCycle({
 }) {
   const { projectId, primaryTerminal } = useContext(V2ProjectContext)
 
-  const { data: queuedFundingCycle } = useProjectQueuedFundingCycle({
-    projectId,
-  })
+  const { data: queuedFundingCycle, loading: queuedFundingCycleLoading } =
+    useProjectQueuedFundingCycle({
+      projectId,
+    })
   const { data: queuedPayoutSplits } = useProjectSplits({
     projectId,
     splitGroup: ETH_PAYOUT_SPLIT_GROUP,
@@ -55,7 +56,8 @@ export default function UpcomingFundingCycle({
     ? decodeV2FundingCycleMetadata(queuedFundingCycle?.metadata)
     : undefined
 
-  if (!queuedFundingCycle) return <LoadingOutlined />
+  if (queuedFundingCycleLoading || !queuedFundingCycle)
+    return <LoadingOutlined />
 
   const queuedReservedRate = queuedFundingCycleMetadata?.reservedRate
 
@@ -69,7 +71,7 @@ export default function UpcomingFundingCycle({
           }
           fundingCycleDurationSeconds={queuedFundingCycle.duration}
           fundingCycleStartTime={queuedFundingCycle.start}
-          isFundingCycleRecurring={true}
+          isFundingCycleRecurring
           fundingCycleRiskCount={V2FundingCycleRiskCount(queuedFundingCycle)}
           expand={expandCard}
         />

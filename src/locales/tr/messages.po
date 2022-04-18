@@ -1680,6 +1680,7 @@ msgid "Reconfiguration strategy"
 msgstr "Yeniden yapılandırma stratejisi"
 
 #: src/components/v1/V1Project/FundingCycles/ReconfigureFundingModalTrigger.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/index.tsx
 msgid "Reconfigure"
 msgstr "Yeniden yapılandır"
 
@@ -2121,8 +2122,8 @@ msgid "There are no payouts defined for this funding cycle. The project owner wi
 msgstr "Bu finansman döngüsü için tanımlı ödeme yok. Mevcut tüm fonları proje sahibi alacak."
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributeReservedTokensModal.tsx
-msgid "There are no reserved token recipients defined for this funding cycle. The project owner will recieve all available tokens."
-msgstr "Bu finansman döngüsü için tanımlı ayrılmış token yok. Mevcut tüm token'ları proje sahibi alacak."
+msgid "There are no reserved token recipients defined for this funding cycle. The project owner will receive all available tokens."
+msgstr ""
 
 #: src/components/Landing/QAs.tsx
 msgid "There are unit tests written for every condition of every function in the contracts, and integration tests for every workflow that the protocol supports."
@@ -2528,16 +2529,16 @@ msgstr "{tokenSymbol} token'larınızı taşma için talep etmeden de kullanabil
 msgid "You have set a funding cycle target."
 msgstr "Bir finansman döngüsü hedefi belirlediniz."
 
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
+msgid "You will receive minimum {minReturnedTokensFormatted} ETH"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "You will receive {0}{1} ETH"
 msgstr "{0}{1} ETH alacaksınız"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
-msgid "You will recieve minimum {minReturnedTokensFormatted} ETH"
-msgstr ""
-
-#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
-msgid "You will recieve {minReturnedTokensFormatted} ETH"
+msgid "You will receive {minReturnedTokensFormatted} ETH"
 msgstr ""
 
 #: src/components/shared/forms/TicketingForm.tsx

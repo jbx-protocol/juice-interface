@@ -165,6 +165,12 @@ export const editingV2ProjectSlice = createSlice({
         state.fundAccessConstraints[0].distributionLimit = action.payload
       }
     },
+    setDistributionLimitCurrency: (state, action: PayloadAction<string>) => {
+      if (state.fundAccessConstraints.length) {
+        state.fundAccessConstraints[0].distributionLimitCurrency =
+          action.payload
+      }
+    },
     setPayoutSplits: (state, action: PayloadAction<Split[]>) => {
       state.payoutGroupedSplits = {
         ...EMPTY_PAYOUT_GROUPED_SPLITS,

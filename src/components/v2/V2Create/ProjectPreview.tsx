@@ -17,6 +17,7 @@ import { NetworkContext } from 'contexts/networkContext'
 import { V2FundingCycle } from 'models/v2/fundingCycle'
 
 import { getDefaultFundAccessConstraint } from 'utils/v2/fundingCycle'
+import { V2_CURRENCY_ETH } from 'utils/v2/currency'
 
 import V2Project from '../V2Project'
 
@@ -55,7 +56,10 @@ export default function ProjectPreview({
     fundingCycleMetadata,
 
     distributionLimit: fundAccessConstraint?.distributionLimit,
-    distributionLimitCurrency: fundAccessConstraint?.distributionLimitCurrency,
+    distributionLimitCurrency:
+      fundAccessConstraint?.distributionLimitCurrency.eq(0)
+        ? BigNumber.from(V2_CURRENCY_ETH)
+        : fundAccessConstraint?.distributionLimitCurrency,
 
     payoutSplits: payoutGroupedSplits?.splits,
     reservedTokensSplits: reservedTokensGroupedSplits?.splits,

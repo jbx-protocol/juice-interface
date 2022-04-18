@@ -10,7 +10,12 @@ import {
 } from 'hooks/v2/contractReader/HasPermission'
 import { useContext } from 'react'
 
-import { V2FundingCycleRiskCount } from 'utils/v2/fundingCycle'
+import {
+  hasFundingDuration,
+  V2FundingCycleRiskCount,
+} from 'utils/v2/fundingCycle'
+import { serializeV2FundingCycleData } from 'utils/v2/serializers'
+import Loading from 'components/shared/Loading'
 
 import FundingCycleSection, {
   TabType,
@@ -30,6 +35,13 @@ export default function V2FundingCycleSection({
     theme: { colors },
   } = useContext(ThemeContext)
   const { fundingCycle, isPreviewMode } = useContext(V2ProjectContext)
+
+  const canReconfigure = useHasPermission(V2OperatorPermission.RECONFIGURE)
+  const showReconfigureButton = canReconfigure && !isPreviewMode
+
+  if (!fundingCycle) {
+    return <Loading />
+  }
 
   const tabText = ({ text }: { text: string }) => {
     const hasRisks = fundingCycle && V2FundingCycleRiskCount(fundingCycle)
@@ -59,21 +71,22 @@ export default function V2FundingCycleSection({
     )
   }
 
+  const fundingCycleData = serializeV2FundingCycleData(fundingCycle)
+
   const tabs = [
     {
       key: 'current',
       label: tabText({ text: t`Current` }),
       content: <CurrentFundingCycle expandCard={expandCard} />,
     },
-    !isPreviewMode && {
-      key: 'upcoming',
-      label: tabText({ text: t`Upcoming` }),
-      content: <UpcomingFundingCycle expandCard={expandCard} />,
-    },
+    !isPreviewMode &&
+      fundingCycle &&
+      hasFundingDuration(fundingCycleData) && {
+        key: 'upcoming',
+        label: tabText({ text: t`Upcoming` }),
+        content: <UpcomingFundingCycle expandCard={expandCard} />,
+      },
   ].filter(Boolean) as TabType[]
-
-  const canReconfigure = useHasPermission(V2OperatorPermission.RECONFIGURE)
-  const showReconfigureButton = canReconfigure && !isPreviewMode
 
   return (
     <FundingCycleSection
@@ -85,7 +98,11 @@ export default function V2FundingCycleSection({
             triggerButton={(onClick: VoidFunction) => (
               <Button size="small" onClick={onClick} icon={<SettingOutlined />}>
                 <span>
-                  <Trans>Reconfigure upcoming</Trans>
+                  {hasFundingDuration(fundingCycleData) ? (
+                    <Trans>Reconfigure upcoming</Trans>
+                  ) : (
+                    <Trans>Reconfigure</Trans>
+                  )}
                 </span>
               </Button>
             )}

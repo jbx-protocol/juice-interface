@@ -9,6 +9,7 @@ type V2ProjectLoadingStates = {
   ETHBalanceLoading: boolean
   balanceInDistributionLimitCurrencyLoading: boolean
   distributionLimitLoading: boolean
+  fundingCycleLoading: boolean
 }
 
 export type V2ProjectContextType = {
@@ -72,5 +73,6 @@ export const V2ProjectContext = createContext<V2ProjectContextType>({
     ETHBalanceLoading: false,
     balanceInDistributionLimitCurrencyLoading: false,
     distributionLimitLoading: false,
+    fundingCycleLoading: false,
   },
 })

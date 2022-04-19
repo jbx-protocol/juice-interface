@@ -1680,6 +1680,7 @@ msgid "Reconfiguration strategy"
 msgstr "Estratégia de configuração"
 
 #: src/components/v1/V1Project/FundingCycles/ReconfigureFundingModalTrigger.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/index.tsx
 msgid "Reconfigure"
 msgstr "Reconfigurar"
 
@@ -2121,8 +2122,8 @@ msgid "There are no payouts defined for this funding cycle. The project owner wi
 msgstr "Não há pagamentos definidos para este ciclo de financiamento. O dono do projeto receberá todos os fundos disponíveis."
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributeReservedTokensModal.tsx
-msgid "There are no reserved token recipients defined for this funding cycle. The project owner will recieve all available tokens."
-msgstr "Não há recipientes de tokens reservados definidos para este ciclo de financiamento. O dono do projeto receberá todos os fundos disponíveis."
+msgid "There are no reserved token recipients defined for this funding cycle. The project owner will receive all available tokens."
+msgstr ""
 
 #: src/components/Landing/QAs.tsx
 msgid "There are unit tests written for every condition of every function in the contracts, and integration tests for every workflow that the protocol supports."
@@ -2528,16 +2529,16 @@ msgstr "Você ainda pode resgatar seus tokens {tokenSymbol} para overflow sem re
 msgid "You have set a funding cycle target."
 msgstr "Você definiu a meta do ciclo de financiamento."
 
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
+msgid "You will receive minimum {minReturnedTokensFormatted} ETH"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "You will receive {0}{1} ETH"
 msgstr "Você receberá {0}{1} ETH"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
-msgid "You will recieve minimum {minReturnedTokensFormatted} ETH"
-msgstr ""
-
-#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
-msgid "You will recieve {minReturnedTokensFormatted} ETH"
+msgid "You will receive {minReturnedTokensFormatted} ETH"
 msgstr ""
 
 #: src/components/shared/forms/TicketingForm.tsx

@@ -248,10 +248,10 @@ export default function V2RedeemModal({
             <div style={{ fontWeight: 500, marginTop: 20 }}>
               {distributionLimitCurrency?.eq(V2_CURRENCY_USD) ? (
                 <Trans>
-                  You will recieve minimum {minReturnedTokensFormatted} ETH
+                  You will receive minimum {minReturnedTokensFormatted} ETH
                 </Trans>
               ) : (
-                <Trans>You will recieve {minReturnedTokensFormatted} ETH</Trans>
+                <Trans>You will receive {minReturnedTokensFormatted} ETH</Trans>
               )}
             </div>
           ) : null}

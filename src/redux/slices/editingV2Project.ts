@@ -24,7 +24,6 @@ import {
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/v2/splits'
 import { DEFAULT_BALLOT_STRATEGY } from 'constants/v2/ballotStrategies'
-
 export interface V2ProjectState {
   version: number
   projectMetadata: ProjectMetadataV4
@@ -163,6 +162,12 @@ export const editingV2ProjectSlice = createSlice({
     setDistributionLimit: (state, action: PayloadAction<string>) => {
       if (state.fundAccessConstraints.length) {
         state.fundAccessConstraints[0].distributionLimit = action.payload
+      }
+    },
+    setDistributionLimitCurrency: (state, action: PayloadAction<string>) => {
+      if (state.fundAccessConstraints.length) {
+        state.fundAccessConstraints[0].distributionLimitCurrency =
+          action.payload
       }
     },
     setPayoutSplits: (state, action: PayloadAction<Split[]>) => {

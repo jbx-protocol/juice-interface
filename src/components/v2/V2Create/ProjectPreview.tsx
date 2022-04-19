@@ -77,6 +77,7 @@ export default function ProjectPreview({
       ETHBalanceLoading: false,
       balanceInDistributionLimitCurrencyLoading: false,
       distributionLimitLoading: false,
+      fundingCycleLoading: false,
     },
   }
 

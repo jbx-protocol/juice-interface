@@ -53,9 +53,10 @@ export default function V2Dashboard() {
   } = useProjectMetadata(metadataCID)
 
   // Calls JBFundingCycleStore.currentOf
-  const { data: fundingCycle } = useProjectCurrentFundingCycle({
-    projectId,
-  })
+  const { data: fundingCycle, loading: fundingCycleLoading } =
+    useProjectCurrentFundingCycle({
+      projectId,
+    })
 
   const fundingCycleMetadata = fundingCycle
     ? decodeV2FundingCycleMetadata(fundingCycle?.metadata)
@@ -168,6 +169,7 @@ export default function V2Dashboard() {
       ETHBalanceLoading,
       balanceInDistributionLimitCurrencyLoading,
       distributionLimitLoading,
+      fundingCycleLoading,
     },
   }
 

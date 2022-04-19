@@ -34,7 +34,6 @@ import ExternalLink from 'components/shared/ExternalLink'
 import { Split } from 'models/v2/splits'
 
 import { formatFee, MAX_DISTRIBUTION_LIMIT } from 'utils/v2/math'
-
 import { CurrencyContext } from 'contexts/currencyContext'
 import {
   deriveDurationUnit,
@@ -65,6 +64,7 @@ type FundingFormFields = {
 export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
   const { theme } = useContext(ThemeContext)
   const { contracts } = useContext(V2UserContext)
+
   const {
     currencies: { ETH },
   } = useContext(CurrencyContext)
@@ -78,31 +78,33 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
 
   const [targetCurrency, setTargetCurrency] =
     useState<V2CurrencyOption>(V2_CURRENCY_ETH)
-  const { fundAccessConstraints, fundingCycleData, payoutGroupedSplits } =
-    useAppSelector(state => state.editingV2Project)
-
-  const [durationEnabled, setDurationEnabled] = useState<boolean>(
-    parseInt(fundingCycleData?.duration ?? '0') > 0,
-  )
+  const [durationEnabled, setDurationEnabled] = useState<boolean>(false)
   const [targetType, setTargetType] = useState<TargetType>('specific')
-
-  const fundAccessConstraint =
-    getDefaultFundAccessConstraint<SerializedV2FundAccessConstraint>(
-      fundAccessConstraints,
-    )
 
   const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
   const feeFormatted = ETHPaymentTerminalFee
     ? formatFee(ETHPaymentTerminalFee)
     : undefined
 
+  // Load redux state (will be empty in create flow)
+  const { fundAccessConstraints, fundingCycleData, payoutGroupedSplits } =
+    useAppSelector(state => state.editingV2Project)
+  const fundAccessConstraint =
+    getDefaultFundAccessConstraint<SerializedV2FundAccessConstraint>(
+      fundAccessConstraints,
+    )
+
+  // Loads redux state into form
   const resetProjectForm = useCallback(() => {
     const _target = fundAccessConstraint?.distributionLimit ?? '0'
     const _targetCurrency = parseInt(
-      fundAccessConstraint?.distributionLimitCurrency ?? `${V2_CURRENCY_ETH}`,
+      fundAccessConstraint?.distributionLimitCurrency ?? '0',
     ) as V2CurrencyOption
 
-    const durationSeconds = parseInt(fundingCycleData?.duration ?? '0')
+    const durationSeconds = fundingCycleData
+      ? parseInt(fundingCycleData.duration)
+      : 0
+    setDurationEnabled(durationSeconds > 0)
 
     const durationUnit = deriveDurationUnit(durationSeconds)
 
@@ -113,9 +115,10 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
         unit: durationUnit,
       }).toString(),
     })
+
     setTarget(_target)
     setTargetCurrency(_targetCurrency)
-    setSplits(payoutGroupedSplits?.splits)
+    setSplits(payoutGroupedSplits?.splits ?? [])
 
     if (parseInt(_target ?? '0') === 0) {
       setTargetType('none')
@@ -135,7 +138,8 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
           terminal: contracts.JBETHPaymentTerminal.address,
           token: ETH_TOKEN_ADDRESS,
           distributionLimit: target ?? fromWad(MAX_DISTRIBUTION_LIMIT),
-          distributionLimitCurrency: targetCurrency.toString(),
+          distributionLimitCurrency:
+            targetCurrency?.toString() ?? V2_CURRENCY_ETH,
           overflowAllowance: '0', // nothing for the time being.
           overflowAllowanceCurrency: '0',
         }

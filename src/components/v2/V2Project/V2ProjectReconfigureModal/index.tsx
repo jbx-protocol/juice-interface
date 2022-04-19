@@ -105,7 +105,7 @@ export default function V2ProjectReconfigureModal({
     projectId,
   })
 
-  const [queuedFundingCycle] = queuedFundingCycleResponse || []
+  const [queuedFundingCycle] = queuedFundingCycleResponse ?? []
   const { data: queuedPayoutSplits } = useProjectSplits({
     projectId,
     splitGroup: ETH_PAYOUT_SPLIT_GROUP,

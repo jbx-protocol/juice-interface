@@ -15,15 +15,18 @@ import {
   SerializedV2FundingCycleData,
   SerializedV2FundingCycleMetadata,
   SerializedV2FundAccessConstraint,
+  serializeFundAccessConstraint,
 } from 'utils/v2/serializers'
 
 import { redemptionRateFrom } from 'utils/v2/math'
+import { V2_CURRENCY_ETH } from 'utils/v2/currency'
 
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/v2/splits'
 import { DEFAULT_BALLOT_STRATEGY } from 'constants/v2/ballotStrategies'
+import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
 
 export interface V2ProjectState {
   version: number
@@ -81,6 +84,16 @@ export const defaultFundingCycleMetadata: SerializedV2FundingCycleMetadata =
     dataSource: constants.AddressZero,
   })
 
+export const defaultFundAccessConstraint: SerializedV2FundAccessConstraint =
+  serializeFundAccessConstraint({
+    terminal: '',
+    token: ETH_TOKEN_ADDRESS,
+    distributionLimit: BigNumber.from(0),
+    distributionLimitCurrency: BigNumber.from(V2_CURRENCY_ETH),
+    overflowAllowance: BigNumber.from(0),
+    overflowAllowanceCurrency: BigNumber.from(0),
+  })
+
 export const EMPTY_PAYOUT_GROUPED_SPLITS = {
   group: ETH_PAYOUT_SPLIT_GROUP,
   splits: [],
@@ -96,7 +109,7 @@ export const defaultProjectState: V2ProjectState = {
   projectMetadata: { ...defaultProjectMetadataState },
   fundingCycleData: { ...defaultFundingCycleData },
   fundingCycleMetadata: { ...defaultFundingCycleMetadata },
-  fundAccessConstraints: [],
+  fundAccessConstraints: [defaultFundAccessConstraint],
   payoutGroupedSplits: EMPTY_PAYOUT_GROUPED_SPLITS,
   reservedTokensGroupedSplits: EMPTY_RESERVED_TOKENS_GROUPED_SPLITS,
 }

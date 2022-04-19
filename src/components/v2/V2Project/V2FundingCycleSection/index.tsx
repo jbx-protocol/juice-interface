@@ -34,13 +34,21 @@ export default function V2FundingCycleSection({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const { fundingCycle, isPreviewMode } = useContext(V2ProjectContext)
+  const {
+    fundingCycle,
+    isPreviewMode,
+    loading: { fundingCycleLoading },
+  } = useContext(V2ProjectContext)
 
   const canReconfigure = useHasPermission(V2OperatorPermission.RECONFIGURE)
   const showReconfigureButton = canReconfigure && !isPreviewMode
 
-  if (!fundingCycle) {
+  if (fundingCycleLoading) {
     return <Loading />
+  }
+
+  if (!fundingCycle) {
+    return null
   }
 
   const tabText = ({ text }: { text: string }) => {

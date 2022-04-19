@@ -2,13 +2,7 @@ import { Trans } from '@lingui/macro'
 
 import { Button, Form, Space } from 'antd'
 
-import {
-  useCallback,
-  useContext,
-  useEffect,
-  useLayoutEffect,
-  useState,
-} from 'react'
+import { useCallback, useContext, useLayoutEffect, useState } from 'react'
 
 import { ThemeContext } from 'contexts/themeContext'
 import { helpPagePath } from 'utils/helpPageHelper'
@@ -40,9 +34,6 @@ import ExternalLink from 'components/shared/ExternalLink'
 import { Split } from 'models/v2/splits'
 
 import { formatFee, MAX_DISTRIBUTION_LIMIT } from 'utils/v2/math'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
-import useProjectSplits from 'hooks/v2/contractReader/ProjectSplits'
-import { V2FundingCycle } from 'models/v2/fundingCycle'
 import { CurrencyContext } from 'contexts/currencyContext'
 import {
   deriveDurationUnit,
@@ -52,8 +43,6 @@ import {
 import { fromWad, parseWad } from 'utils/formatNumber'
 import BudgetTargetInput from 'components/shared/inputs/BudgetTargetInput'
 import { Link } from 'react-router-dom'
-import useProjectDistributionLimit from 'hooks/v2/contractReader/ProjectDistributionLimit'
-import useProjectQueuedFundingCycle from 'hooks/v2/contractReader/ProjectQueuedFundingCycle'
 
 import FormItemWarningText from 'components/shared/FormItemWarningText'
 
@@ -65,7 +54,6 @@ import { shadowCard } from 'constants/styles/shadowCard'
 import TargetTypeSelect, { TargetType } from './TargetTypeSelect'
 import DurationInputAndSelect from './DurationInputAndSelect'
 import { DurationUnitsOption } from 'constants/time'
-import { ETH_PAYOUT_SPLIT_GROUP } from 'constants/v2/splits'
 
 type FundingFormFields = {
   duration?: string
@@ -76,8 +64,6 @@ type FundingFormFields = {
 export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
   const { theme } = useContext(ThemeContext)
   const { contracts } = useContext(V2UserContext)
-  const { projectId, primaryTerminal, fundingCycle } =
-    useContext(V2ProjectContext)
 
   const {
     currencies: { ETH },
@@ -95,80 +81,18 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
   const [durationEnabled, setDurationEnabled] = useState<boolean>(false)
   const [targetType, setTargetType] = useState<TargetType>('specific')
 
-  // Load redux state (may not exist)
+  const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
+  const feeFormatted = ETHPaymentTerminalFee
+    ? formatFee(ETHPaymentTerminalFee)
+    : undefined
+
+  // Load redux state (will be empty in create flow)
   const { fundAccessConstraints, fundingCycleData, payoutGroupedSplits } =
     useAppSelector(state => state.editingV2Project)
   const fundAccessConstraint =
     getDefaultFundAccessConstraint<SerializedV2FundAccessConstraint>(
       fundAccessConstraints,
     )
-
-  // Load queued FC data of project
-  const { data: queuedFundingCycleResponse } = useProjectQueuedFundingCycle({
-    projectId,
-  })
-
-  const [queuedFundingCycle] = queuedFundingCycleResponse || []
-
-  let effectiveFundingCycle: V2FundingCycle | undefined
-  // If duration is 0, use current FC (not queued)
-  if (!fundingCycle?.duration || fundingCycle?.duration.eq(0)) {
-    effectiveFundingCycle = fundingCycle
-  } else {
-    effectiveFundingCycle = queuedFundingCycle
-  }
-
-  const { data: queuedDistributionLimitData } = useProjectDistributionLimit({
-    projectId,
-    configuration: effectiveFundingCycle?.configuration.toString(),
-    terminal: primaryTerminal,
-  })
-  const [queuedDistributionLimit, queuedDistributionLimitCurrency] =
-    queuedDistributionLimitData ?? []
-
-  const { data: queuedPayoutSplits } = useProjectSplits({
-    projectId,
-    splitGroup: ETH_PAYOUT_SPLIT_GROUP,
-    domain: effectiveFundingCycle?.configuration?.toString(),
-  })
-
-  const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
-  const feeFormatted = ETHPaymentTerminalFee
-    ? formatFee(ETHPaymentTerminalFee)
-    : undefined
-
-  // Load queued FC data (if it exists) into redux
-  useEffect(() => {
-    if (queuedDistributionLimitData) {
-      dispatch(
-        editingV2ProjectActions.setDistributionLimit(
-          fromWad(queuedDistributionLimit),
-        ),
-      )
-      dispatch(
-        editingV2ProjectActions.setDistributionLimitCurrency(
-          queuedDistributionLimitCurrency.toNumber().toString(),
-        ),
-      )
-    }
-    if (effectiveFundingCycle?.duration) {
-      dispatch(
-        editingV2ProjectActions.setDuration(
-          effectiveFundingCycle?.duration.toNumber().toString(),
-        ),
-      )
-    }
-    if (queuedPayoutSplits) {
-      dispatch(editingV2ProjectActions.setPayoutSplits(queuedPayoutSplits))
-    }
-  }, [
-    queuedDistributionLimitData,
-    dispatch,
-    effectiveFundingCycle,
-    queuedDistributionLimit,
-    queuedDistributionLimitCurrency,
-    queuedPayoutSplits,
-  ])
 
   // Loads redux state into form
   const resetProjectForm = useCallback(() => {

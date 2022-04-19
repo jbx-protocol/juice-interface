@@ -48,7 +48,7 @@ export default function V2FundingCycleSection({
   }
 
   if (!fundingCycle) {
-    return null
+    return <p>No funding cycle</p>
   }
 
   const tabText = ({ text }: { text: string }) => {
@@ -88,7 +88,6 @@ export default function V2FundingCycleSection({
       content: <CurrentFundingCycle expandCard={expandCard} />,
     },
     !isPreviewMode &&
-      fundingCycle &&
       hasFundingDuration(fundingCycleData) && {
         key: 'upcoming',
         label: tabText({ text: t`Upcoming` }),

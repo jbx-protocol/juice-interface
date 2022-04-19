@@ -46,7 +46,7 @@ export default function V2ReconfigureFundingModalTrigger({
     projectId,
   })
 
-  const [queuedFundingCycle] = queuedFundingCycleResponse || []
+  const [queuedFundingCycle] = queuedFundingCycleResponse ?? []
 
   let effectiveFundingCycle: V2FundingCycle | undefined
   // If duration is 0, use current FC (not queued)

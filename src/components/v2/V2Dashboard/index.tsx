@@ -1,20 +1,18 @@
-import { NetworkName } from 'models/network-name'
+import { FEATURE_FLAGS, featureFlagEnabled } from 'utils/featureFlags'
 
-import { readNetwork } from 'constants/networks'
-import V2MainnetWarning from '../shared/V2MainnetWarning'
+import V2SupportWarning from '../shared/V2SupportWarning'
 import V2Dashboard from './Dashboard'
 
 export default function V2DashboardContainer() {
-  const isRinkeby = readNetwork.name === NetworkName.rinkeby
-
   return (
     <>
-      {!isRinkeby && (
+      {!featureFlagEnabled(FEATURE_FLAGS.ENABLE_V2) ? (
         <div style={{ padding: '1rem', textAlign: 'center' }}>
-          <V2MainnetWarning />
+          <V2SupportWarning />
         </div>
+      ) : (
+        <V2Dashboard />
       )}
-      {isRinkeby && <V2Dashboard />}
     </>
   )
 }

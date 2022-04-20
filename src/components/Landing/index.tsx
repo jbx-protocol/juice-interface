@@ -12,9 +12,11 @@ import Grid from 'components/shared/Grid'
 
 import ProjectCard from 'components/shared/ProjectCard'
 
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 import ExternalLink from 'components/shared/ExternalLink'
+
+import { FEATURE_FLAGS, featureFlagEnabled } from 'utils/featureFlags'
 
 import { ThemeOption } from 'constants/theme/theme-option'
 
@@ -55,8 +57,11 @@ function scrollToCreate() {
   document.getElementById('create')?.scrollIntoView({ behavior: 'smooth' })
 }
 
+const v2Enabled = featureFlagEnabled(FEATURE_FLAGS.ENABLE_V2)
+
 export default function Landing() {
   const { theme, forThemeOption } = useContext(ThemeContext)
+  const history = useHistory()
   const colors = theme.colors
   const totalMaxWidth = 1080
 
@@ -163,13 +168,25 @@ export default function Landing() {
 
                 <div className="hide-mobile">
                   <div style={{ display: 'inline-block' }}>
-                    <Button
-                      type="primary"
-                      size="large"
-                      onClick={scrollToCreate}
-                    >
-                      <Trans>Design your project</Trans>
-                    </Button>
+                    {v2Enabled ? (
+                      <Button
+                        type="primary"
+                        size="large"
+                        onClick={() => {
+                          history.push('/v2/create')
+                        }}
+                      >
+                        <Trans>Design your project</Trans>
+                      </Button>
+                    ) : (
+                      <Button
+                        type="primary"
+                        size="large"
+                        onClick={scrollToCreate}
+                      >
+                        <Trans>Design your project</Trans>
+                      </Button>
+                    )}
                   </div>
                 </div>
               </div>
@@ -324,7 +341,7 @@ export default function Landing() {
         </div>
       </section>
 
-      {window.innerWidth > 600 && (
+      {window.innerWidth > 600 && !v2Enabled && (
         <section
           id="create"
           style={{

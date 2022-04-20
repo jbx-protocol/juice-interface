@@ -1,4 +1,4 @@
-import { Form, Switch } from 'antd'
+import { Form } from 'antd'
 import { Trans } from '@lingui/macro'
 
 import { ThemeContext } from 'contexts/themeContext'
@@ -16,8 +16,11 @@ import ExternalLink from 'components/shared/ExternalLink'
 
 import NumberSlider from '../inputs/NumberSlider'
 import { FormItemExt } from './formItemExt'
+import FormItemWarningText from '../FormItemWarningText'
+import SwitchHeading from '../SwitchHeading'
 
 const GRAPH_CONTAINER_ID = 'graph-container'
+const DEFAULT_BONDING_CURVE_RATE_PERCENTAGE = '100'
 
 function BondingCurveRateExtra({ disabled }: { disabled?: boolean }) {
   const {
@@ -37,13 +40,11 @@ function BondingCurveRateExtra({ disabled }: { disabled?: boolean }) {
   return (
     <div>
       {disabled && (
-        <p>
+        <FormItemWarningText>
           <Trans>
-            <i style={{ color: colors.text.warn }}>
-              Disabled when funding target has not been set.
-            </i>
+            Disabled when your project's funding cycle has no funding target.
           </Trans>
-        </p>
+        </FormItemWarningText>
       )}
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <div style={{ position: 'relative' }}>
@@ -106,7 +107,7 @@ function BondingCurveRateExtra({ disabled }: { disabled?: boolean }) {
             This rate determines the amount of overflow that each token can be
             redeemed for at any given time. On a lower bonding curve, redeeming
             a token increases the value of each remaining token, creating an
-            incentive to hodl tokens longer than others. The default bonding
+            incentive to hold tokens longer than others. The default bonding
             curve of 100% means all tokens will have equal value regardless of
             when they are redeemed. Learn more in this{' '}
             <ExternalLink href="https://youtu.be/dxqc3yMqi5M">
@@ -128,14 +129,17 @@ export default function ProjectBondingCurveRate({
   label,
   formItemProps,
   onChange,
+  checked,
+  onToggled,
   disabled,
-  toggleDisabled,
 }: {
   value: string | undefined
   style?: CSSProperties
-  label?: string
+  label?: string | JSX.Element
   onChange: (val?: number) => void
-  toggleDisabled?: (checked: boolean) => void
+  checked?: boolean
+  onToggled?: (checked: boolean) => void
+  disabled?: boolean
 } & FormItemExt) {
   const { colors } = useContext(ThemeContext).theme
   const [calculator, setCalculator] = useState<any>() // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -211,12 +215,10 @@ export default function ProjectBondingCurveRate({
   )
 
   useEffect(
-    () => graphCurve(parseFloat(value ?? '100')),
+    () =>
+      graphCurve(parseFloat(value ?? DEFAULT_BONDING_CURVE_RATE_PERCENTAGE)),
     [calculator, graphCurve, value],
   )
-
-  // When toggle is disabled and can't be changed, the whole item is unavailable
-  const unavailable = !Boolean(toggleDisabled) && disabled
 
   return (
     <Form.Item
@@ -224,45 +226,46 @@ export default function ProjectBondingCurveRate({
       label={
         hideLabel ? undefined : (
           <div style={{ display: 'flex' }}>
-            <FormItemLabel>
-              {label ?? <Trans>Bonding curve rate</Trans>}
-            </FormItemLabel>
-            {toggleDisabled ? (
-              <>
-                <Switch checked={!disabled} onChange={toggleDisabled} />{' '}
-                {disabled ? (
-                  <span style={{ color: colors.text.tertiary, marginLeft: 10 }}>
-                    <Trans>(100%)</Trans>
-                  </span>
-                ) : null}
-              </>
-            ) : null}
+            {onToggled ? (
+              <SwitchHeading
+                checked={Boolean(checked)}
+                onChange={checked => {
+                  onToggled(checked)
+                  if (!checked) {
+                    onChange(100)
+                  }
+                }}
+                disabled={disabled}
+              >
+                {label ?? <Trans>Bonding curve rate</Trans>}
+              </SwitchHeading>
+            ) : (
+              <FormItemLabel>
+                {label ?? <Trans>Bonding curve rate</Trans>}
+              </FormItemLabel>
+            )}
           </div>
         )
       }
       style={style}
-      extra={<BondingCurveRateExtra disabled={unavailable} />}
+      extra={<BondingCurveRateExtra disabled={disabled} />}
       {...formItemProps}
     >
-      {!disabled ? (
-        <div style={{ display: 'flex', alignItems: 'center', marginTop: 10 }}>
-          <NumberSlider
-            min={0}
-            max={100}
-            step={0.5}
-            name={name}
-            defaultValue={100}
-            sliderValue={parseFloat(value ?? '100')}
-            disabled={disabled}
-            onChange={(val: number | undefined) => {
-              graphCurve(val)
-              onChange(val)
-            }}
-            suffix="%"
-            style={{ flexGrow: 1 }}
-          />
-        </div>
-      ) : null}
+      <NumberSlider
+        min={0}
+        max={100}
+        step={0.5}
+        name={name}
+        defaultValue={parseInt(DEFAULT_BONDING_CURVE_RATE_PERCENTAGE)}
+        sliderValue={parseFloat(value ?? DEFAULT_BONDING_CURVE_RATE_PERCENTAGE)}
+        disabled={disabled || (onToggled && !checked)}
+        onChange={(val: number | undefined) => {
+          graphCurve(val)
+          onChange(val)
+        }}
+        suffix="%"
+        style={{ flexGrow: 1 }}
+      />
     </Form.Item>
   )
 }

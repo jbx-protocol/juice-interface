@@ -7,12 +7,12 @@ import { ThemeContext } from 'contexts/themeContext'
 
 import ReconfigurationStrategyOption from 'components/shared/ReconfigurationStrategy/ReconfigurationStrategyOption'
 
-import {
-  ballotStrategies,
-  createCustomStrategy,
-  Strategy,
-} from 'constants/ballotStrategies/ballotStrategies'
+import { BallotStrategy } from 'models/ballot'
+
+import { createCustomStrategy } from 'utils/ballot'
+
 import ExternalLink from '../ExternalLink'
+import FormItemWarningText from '../FormItemWarningText'
 
 const CUSTOM_STRATEGY_INDEX = -1
 
@@ -49,13 +49,15 @@ function CustomStrategyInput({
 export default function ReconfigurationStrategySelector({
   selectedStrategy,
   onChange,
+  ballotStrategies,
 }: {
-  selectedStrategy: Strategy
-  onChange: (strategy: Strategy) => void
+  ballotStrategies: BallotStrategy[]
+  selectedStrategy: BallotStrategy
+  onChange: (strategy: BallotStrategy) => void
 }) {
   const { colors } = useContext(ThemeContext).theme
 
-  const selectedStrategyIndex = ballotStrategies().findIndex(s => {
+  const selectedStrategyIndex = ballotStrategies.findIndex(s => {
     return s.address?.toLowerCase() === selectedStrategy.address?.toLowerCase()
   })
   const selectedIsCustom = selectedStrategyIndex === CUSTOM_STRATEGY_INDEX // selected strategy is the custom strategy
@@ -68,16 +70,16 @@ export default function ReconfigurationStrategySelector({
 
   return (
     <Space direction="vertical">
-      {ballotStrategies()[selectedStrategyIndex]?.address ===
-        ballotStrategies()[0].address && (
-        <p style={{ color: colors.text.warn }}>
+      {ballotStrategies[selectedStrategyIndex]?.address ===
+        ballotStrategies[0].address && (
+        <FormItemWarningText>
           <Trans>
             Using a reconfiguration strategy is recommended. Projects with no
             strategy will appear risky to contributors.
           </Trans>
-        </p>
+        </FormItemWarningText>
       )}
-      {ballotStrategies().map((strategy: Strategy, idx) => (
+      {ballotStrategies.map((strategy: BallotStrategy, idx) => (
         <ReconfigurationStrategyOption
           title={strategy.name}
           key={idx}

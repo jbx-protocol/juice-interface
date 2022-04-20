@@ -1,11 +1,12 @@
 import { Button, Form, FormInstance, Space } from 'antd'
-import { t, Trans } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import { FormItems } from 'components/shared/formItems'
 import { ThemeContext } from 'contexts/themeContext'
 import { TicketMod } from 'models/mods'
 import { useContext, useLayoutEffect, useState } from 'react'
 
 import { RESERVED_RATE_WARNING_THRESHOLD_PERCENT as reservedRateRiskyMin } from 'constants/fundingWarningText'
+import FormItemWarningText from '../FormItemWarningText'
 
 export type TicketingFormFields = {
   reserved: number
@@ -68,19 +69,22 @@ export default function TicketingForm({
           onChange={(val?: number) => {
             setReservedRate(val ?? 0)
             form.setFieldsValue({ reserved: val })
-            setShowReservedRateWarning(!!(val && val >= reservedRateRiskyMin))
+            setShowReservedRateWarning(
+              Boolean(val && val >= reservedRateRiskyMin),
+            )
           }}
+          checked
         />
         {showReservedRateWarning && (
           <Form.Item>
-            <p style={{ color: colors.text.warn }}>
+            <FormItemWarningText>
               <Trans>
                 Projects using a reserved rate of {reservedRateRiskyMin}% or
                 more will appear risky to contributors, as a relatively small
                 number of tokens will be received in exchange for paying your
                 project.
               </Trans>
-            </p>
+            </FormItemWarningText>
           </Form.Item>
         )}
         <FormItems.ProjectTicketMods
@@ -88,8 +92,13 @@ export default function TicketingForm({
           mods={mods}
           onModsChanged={setMods}
           formItemProps={{
-            label: t`Reserved token allocation (optional)`,
-            extra: t`Allocate a portion of your project's reserved tokens to other Ethereum wallets or Juicebox projects.`,
+            label: <Trans>Reserved token allocation (optional)</Trans>,
+            extra: (
+              <Trans>
+                Allocate a portion of your project's reserved tokens to other
+                Ethereum wallets or Juicebox projects.
+              </Trans>
+            ),
           }}
           reservedRate={reservedRate}
         />

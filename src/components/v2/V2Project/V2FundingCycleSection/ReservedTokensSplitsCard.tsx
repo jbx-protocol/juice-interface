@@ -98,7 +98,7 @@ export default function ReservedTokensSplitsCard({
                 }
                 tip={
                   <Trans>
-                    The amount of tokens reserved for this project. These tokens
+                    The amount of tokens this project has reserved. These tokens
                     can be distributed to reserved token beneficiaries.
                   </Trans>
                 }

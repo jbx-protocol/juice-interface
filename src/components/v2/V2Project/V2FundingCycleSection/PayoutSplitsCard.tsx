@@ -10,7 +10,7 @@ import { useContext, useState } from 'react'
 
 import { V2CurrencyName } from 'utils/v2/currency'
 
-import { formatFee } from 'utils/v2/math'
+import { formatFee, MAX_DISTRIBUTION_LIMIT } from 'utils/v2/math'
 
 import { useETHPaymentTerminalFee } from 'hooks/v2/contractReader/ETHPaymentTerminalFee'
 import { Split } from 'models/v2/splits'
@@ -86,7 +86,7 @@ export default function PayoutSplitsCard({
           <TooltipLabel
             label={
               <h4 style={{ display: 'inline-block' }}>
-                <Trans>Funding Distribution</Trans>
+                <Trans>Distribution splits</Trans>
               </h4>
             }
             tip={
@@ -101,7 +101,7 @@ export default function PayoutSplitsCard({
               currency={distributionLimitCurrency}
               totalValue={distributionLimit}
               projectOwnerAddress={projectOwnerAddress}
-              showSplitValues
+              showSplitValues={!distributionLimit?.eq(MAX_DISTRIBUTION_LIMIT)}
             />
           ) : null}
         </div>

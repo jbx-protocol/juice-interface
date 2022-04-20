@@ -17,9 +17,12 @@ import { editingProjectActions } from 'redux/slices/editingProject'
 import { fromWad, parseWad } from 'utils/formatNumber'
 import { hasFundingTarget, isRecurring } from 'utils/v1/fundingCycle'
 import { helpPagePath } from 'utils/helpPageHelper'
+import { getV1CurrencyOption, V1CurrencyName } from 'utils/v1/currency'
 
-import ExternalLink from '../ExternalLink'
-import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
+import FormItemWarningText from 'components/shared/FormItemWarningText'
+
+import ExternalLink from '../../shared/ExternalLink'
+import { CurrencyName } from 'constants/currency'
 
 const DEFAULT_TARGET_AFTER_FEE = '10000'
 
@@ -38,7 +41,7 @@ export default function BudgetForm({
     theme: { colors },
   } = useContext(ThemeContext)
   // State objects avoid antd form input dependency rerendering issues
-  const [currency, setCurrency] = useState<V1CurrencyOption>(V1_CURRENCY_ETH)
+  const [currency, setCurrency] = useState<CurrencyName>('ETH')
   const [target, setTarget] = useState<string>('0')
   const [targetSubFee, setTargetSubFee] = useState<string>('0')
   const [duration, setDuration] = useState<string>('0')
@@ -51,7 +54,7 @@ export default function BudgetForm({
   const terminalFee = useTerminalFee(terminal?.version)
 
   useLayoutEffect(() => {
-    setCurrency(initialCurrency)
+    setCurrency(V1CurrencyName(initialCurrency) ?? 'ETH')
     setTarget(initialTarget)
     setTargetSubFee(targetToTargetSubFeeFormatted(initialTarget, terminalFee))
     setDuration(initialDuration)
@@ -131,7 +134,7 @@ export default function BudgetForm({
                 setTarget(
                   targetSubFeeToTargetFormatted(targetSubFee, terminalFee),
                 )
-                setCurrency(V1_CURRENCY_USD)
+                setCurrency('USD')
                 setShowFundingFields(checked)
               }}
             />
@@ -181,13 +184,9 @@ export default function BudgetForm({
 
         {showFundingFields && target === '0' && (
           <p style={{ color: colors.text.primary }}>
-            <span style={{ fontWeight: 600 }}>
-              <Trans>Target is 0.</Trans>
-            </span>
             <Trans>
-              The project's entire balance will be considered overflow.{' '}
-            </Trans>
-            <Trans>
+              <span style={{ fontWeight: 600 }}>Target is 0.</span> The
+              project's entire balance will be considered overflow.{' '}
               <ExternalLink
                 href={helpPagePath('protocol/learn/topics/overflow')}
               >
@@ -250,19 +249,17 @@ export default function BudgetForm({
 
         {duration === '0' && (
           <p style={{ color: colors.text.primary, marginTop: 20 }}>
-            <span style={{ fontWeight: 600 }}>
-              <Trans>No duration set.</Trans>{' '}
-            </span>
             <Trans>
+              <span style={{ fontWeight: 600 }}>No duration set.</span>
               Funding can be reconfigured at any time. Reconfigurations will
               start a new funding cycle.
-            </Trans>{' '}
-            <span style={{ color: colors.text.warn }}>
+            </Trans>
+            <FormItemWarningText>
               <Trans>
                 Using a duration is recommended. Allowing funding cycles to be
                 reconfigured at any time will appear risky to contributors.
               </Trans>
-            </span>
+            </FormItemWarningText>
           </p>
         )}
 
@@ -271,7 +268,9 @@ export default function BudgetForm({
             style={{ marginTop: 20 }}
             htmlType="submit"
             type="primary"
-            onClick={() => onSave(currency, target, duration)}
+            onClick={() =>
+              onSave(getV1CurrencyOption(currency), target, duration)
+            }
           >
             <Trans>Save funding configuration</Trans>
           </Button>

@@ -50,23 +50,19 @@ export default function ProjectPreview({
 
     projectId: BigNumber.from(0),
     projectMetadata,
+
     fundingCycle,
     fundingCycleMetadata,
-    queuedFundingCycleMetadata: undefined,
+
     distributionLimit: fundAccessConstraint?.distributionLimit,
+    distributionLimitCurrency: fundAccessConstraint?.distributionLimitCurrency,
+
     payoutSplits: payoutGroupedSplits?.splits,
     reservedTokensSplits: reservedTokensGroupedSplits?.splits,
-    distributionLimitCurrency: fundAccessConstraint?.distributionLimitCurrency,
 
     usedDistributionLimit: BigNumber.from(0),
     ETHBalance: BigNumber.from(0),
     balanceInDistributionLimitCurrency: BigNumber.from(0),
-
-    queuedFundingCycle: undefined,
-    queuedDistributionLimit: undefined,
-    queuedDistributionLimitCurrency: undefined,
-    queuedPayoutSplits: undefined,
-    queuedReservedTokensSplits: undefined,
 
     tokenAddress: undefined,
     terminals: [],
@@ -76,6 +72,13 @@ export default function ProjectPreview({
     ballotState: undefined,
     primaryTerminalCurrentOverflow: undefined,
     totalTokenSupply: undefined,
+
+    loading: {
+      ETHBalanceLoading: false,
+      balanceInDistributionLimitCurrencyLoading: false,
+      distributionLimitLoading: false,
+      fundingCycleLoading: false,
+    },
   }
 
   return (

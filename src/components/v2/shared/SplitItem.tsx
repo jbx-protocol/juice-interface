@@ -92,7 +92,12 @@ export default function SplitItem({
           alignItems: 'baseline',
         }}
       >
-        <FormattedAddress address={split.beneficiary} />
+        {split.beneficiary ? (
+          <FormattedAddress address={split.beneficiary} />
+        ) : null}
+        {!split.beneficiary && isProjectOwner ? (
+          <Trans>Project owner (you)</Trans>
+        ) : null}
         {isProjectOwner && (
           <span style={{ marginLeft: 5 }}>
             <Tooltip title={<Trans>Project owner</Trans>}>

@@ -102,7 +102,7 @@ export default function DistributeReservedTokensModal({
             <p>
               <Trans>
                 There are no reserved token recipients defined for this funding
-                cycle. The project owner will recieve all available tokens.
+                cycle. The project owner will receive all available tokens.
               </Trans>
             </p>
           ) : null}

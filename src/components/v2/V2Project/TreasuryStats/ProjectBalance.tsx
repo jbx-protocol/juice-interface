@@ -18,11 +18,12 @@ export default function ProjectBalance({ style }: { style?: CSSProperties }) {
     ETHBalance,
     balanceInDistributionLimitCurrency,
     distributionLimitCurrency,
+    loading: { balanceInDistributionLimitCurrencyLoading },
   } = useContext(V2ProjectContext)
 
   return (
     <StatLine
-      loading={!Boolean(balanceInDistributionLimitCurrency)}
+      loading={balanceInDistributionLimitCurrencyLoading}
       statLabel={<Trans>In Juicebox</Trans>}
       statLabelTip={
         <Trans>The balance of this project in the Juicebox contract.</Trans>

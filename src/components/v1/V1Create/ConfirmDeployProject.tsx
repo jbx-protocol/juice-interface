@@ -37,7 +37,7 @@ import { V1CurrencyName } from 'utils/v1/currency'
 
 import FundingCycleDetailWarning from 'components/shared/Project/FundingCycleDetailWarning'
 
-import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
+import { getBallotStrategyByAddress } from 'constants/v1/ballotStrategies/getBallotStrategiesByAddress'
 import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
 
 export default function ConfirmDeployProject() {
@@ -234,8 +234,8 @@ export default function ConfirmDeployProject() {
                 title={t`Token minting`}
                 valueRender={() => (
                   <FundingCycleDetailWarning
-                    showWarning={unsafeFundingCycleProperties.allowMint}
-                    tooltipTitle={riskWarningText.allowMint}
+                    showWarning={unsafeFundingCycleProperties.allowMinting}
+                    tooltipTitle={riskWarningText.allowMinting}
                   >
                     {editingFC.ticketPrintingIsAllowed
                       ? t`Allowed`

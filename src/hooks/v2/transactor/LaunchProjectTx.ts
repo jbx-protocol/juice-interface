@@ -15,7 +15,7 @@ import { PEEL_METADATA_DOMAIN } from 'constants/v2/metadataDomain'
 const DEFAULT_MUST_START_AT_OR_AFTER = '1' // start immediately
 const DEFAULT_MEMO = ''
 
-export function useDeployProjectTx(): TransactorInstance<{
+export function useLaunchProjectTx(): TransactorInstance<{
   projectMetadataCID: string
   fundingCycleData: V2FundingCycleData
   fundingCycleMetadata: V2FundingCycleMetadata

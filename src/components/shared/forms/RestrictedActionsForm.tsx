@@ -4,6 +4,8 @@ import { t, Trans } from '@lingui/macro'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext, useEffect, useState } from 'react'
 
+import FormItemWarningText from '../FormItemWarningText'
+
 export type RestrictedActionsFormFields = {
   payIsPaused: boolean
   ticketPrintingIsAllowed: boolean
@@ -69,12 +71,12 @@ export default function RestrictedActionsForm({
         </Form.Item>
         {showTicketPrintingWarning && (
           <Form.Item>
-            <p style={{ color: colors.text.warn }}>
+            <FormItemWarningText>
               <Trans>
                 Enabling token minting will appear risky to contributors. Only
                 enable this when necessary.
               </Trans>
-            </p>
+            </FormItemWarningText>
           </Form.Item>
         )}
         <Form.Item>

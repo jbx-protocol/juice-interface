@@ -11,7 +11,6 @@ import { useContext } from 'react'
 import { formatDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
-
 import { V2CurrencyName } from 'utils/v2/currency'
 import TooltipLabel from 'components/shared/TooltipLabel'
 
@@ -25,10 +24,11 @@ import {
   formatDiscountRate,
   formatRedemptionRate,
   formatReservedRate,
+  MAX_DISTRIBUTION_LIMIT,
   weightedAmount,
 } from 'utils/v2/math'
 
-import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
+import { getBallotStrategyByAddress } from 'constants/v2/ballotStrategies/getBallotStrategiesByAddress'
 import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
 
 export default function FundingCycleDetails({
@@ -49,12 +49,13 @@ export default function FundingCycleDetails({
 
   if (!fundingCycle) return null
 
-  const formattedDuration = detailedTimeString(fundingCycle.duration.toNumber())
+  const formattedDuration = detailedTimeString({
+    timeSeconds: fundingCycle.duration.toNumber(),
+  })
   const formattedStartTime = formatDate(fundingCycle.start.mul(1000))
   const formattedEndTime = formatDate(
     fundingCycle.start.add(fundingCycle.duration).mul(1000),
   )
-
   const ballotStrategy = getBallotStrategyByAddress(fundingCycle.ballot)
   const unsafeFundingCycleProperties =
     getUnsafeV2FundingCycleProperties(fundingCycle)
@@ -112,16 +113,26 @@ export default function FundingCycleDetails({
 
   const riskWarningText = FUNDING_CYCLE_WARNING_TEXT()
 
+  const distributionLimitIsInfinite = distributionLimit?.eq(
+    MAX_DISTRIBUTION_LIMIT,
+  )
+  const distributionLimitIsZero = !distributionLimit || distributionLimit?.eq(0)
+
   return (
     <div>
       <Descriptions
         labelStyle={{ fontWeight: 600 }}
         size="small"
         column={{ xs: 1, sm: 1, md: 1, lg: 1, xl: 1, xxl: 2 }}
+        contentStyle={{ marginRight: '0.5rem' }}
       >
         <Descriptions.Item label={<Trans>Distribution limit</Trans>}>
           <span style={{ whiteSpace: 'nowrap' }}>
-            {distributionLimit ? (
+            {distributionLimitIsInfinite ? (
+              <Trans>Infinite</Trans>
+            ) : distributionLimitIsZero ? (
+              <>Zero</>
+            ) : (
               <>
                 <CurrencySymbol
                   currency={V2CurrencyName(
@@ -132,8 +143,6 @@ export default function FundingCycleDetails({
                 />
                 {formatWad(distributionLimit)}
               </>
-            ) : (
-              <Trans>No distribution limit</Trans>
             )}
           </span>
         </Descriptions.Item>
@@ -191,7 +200,7 @@ export default function FundingCycleDetails({
                   This rate determines the amount of overflow that each token
                   can be redeemed for at any given time. On a lower bonding
                   curve, redeeming a token increases the value of each remaining
-                  token, creating an incentive to hodl tokens longer than
+                  token, creating an incentive to hold tokens longer than
                   others. A redemption rate of 100% means all tokens will have
                   equal value regardless of when they are redeemed.
                 </Trans>
@@ -275,13 +284,13 @@ export default function FundingCycleDetails({
           }
         >
           <FundingCycleDetailWarning
-            showWarning={!fundingCycleMetadata?.pauseMint}
-            tooltipTitle={FUNDING_CYCLE_WARNING_TEXT().allowMint}
+            showWarning={fundingCycleMetadata?.allowMinting}
+            tooltipTitle={FUNDING_CYCLE_WARNING_TEXT().allowMinting}
           >
-            {fundingCycleMetadata?.pauseMint ? (
-              <Trans>No</Trans>
+            {fundingCycleMetadata?.allowMinting ? (
+              <Trans>Allowed</Trans>
             ) : (
-              <Trans>Yes</Trans>
+              <Trans>Disabled</Trans>
             )}
           </FundingCycleDetailWarning>
         </Descriptions.Item>

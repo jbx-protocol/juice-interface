@@ -1,9 +1,16 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { BallotState } from 'models/ballot-state'
+import { V2BallotState } from 'models/ballot'
 import { ProjectMetadataV4 } from 'models/project-metadata'
 import { V2FundingCycle, V2FundingCycleMetadata } from 'models/v2/fundingCycle'
 import { Split } from 'models/v2/splits'
 import { createContext } from 'react'
+
+type V2ProjectLoadingStates = {
+  ETHBalanceLoading: boolean
+  balanceInDistributionLimitCurrencyLoading: boolean
+  distributionLimitLoading: boolean
+  fundingCycleLoading: boolean
+}
 
 export type V2ProjectContextType = {
   isPreviewMode?: boolean
@@ -20,24 +27,19 @@ export type V2ProjectContextType = {
   usedDistributionLimit: BigNumber | undefined // how much has been distributed
 
   fundingCycleMetadata: V2FundingCycleMetadata | undefined
-  queuedFundingCycleMetadata: V2FundingCycleMetadata | undefined
   fundingCycle: V2FundingCycle | undefined
-  queuedFundingCycle: V2FundingCycle | undefined
-  ballotState: BallotState | undefined
+  ballotState: V2BallotState | undefined
 
-  distributionLimit: BigNumber | undefined // previously funding target
+  distributionLimit: BigNumber | undefined
   distributionLimitCurrency: BigNumber | undefined
-  queuedDistributionLimit: BigNumber | undefined
-  queuedDistributionLimitCurrency: BigNumber | undefined
 
   payoutSplits: Split[] | undefined
-  queuedPayoutSplits: Split[] | undefined
-
   reservedTokensSplits: Split[] | undefined
-  queuedReservedTokensSplits: Split[] | undefined
 
   primaryTerminalCurrentOverflow: BigNumber | undefined
   totalTokenSupply: BigNumber | undefined
+
+  loading: V2ProjectLoadingStates
 }
 
 export const V2ProjectContext = createContext<V2ProjectContextType>({
@@ -55,22 +57,22 @@ export const V2ProjectContext = createContext<V2ProjectContextType>({
   usedDistributionLimit: undefined,
 
   fundingCycleMetadata: undefined,
-  queuedFundingCycleMetadata: undefined,
   fundingCycle: undefined,
-  queuedFundingCycle: undefined,
   ballotState: undefined,
 
   distributionLimit: undefined,
   distributionLimitCurrency: undefined,
-  queuedDistributionLimit: undefined,
-  queuedDistributionLimitCurrency: undefined,
 
   payoutSplits: undefined,
-  queuedPayoutSplits: undefined,
-
   reservedTokensSplits: undefined,
-  queuedReservedTokensSplits: undefined,
 
   primaryTerminalCurrentOverflow: undefined,
   totalTokenSupply: undefined,
+
+  loading: {
+    ETHBalanceLoading: false,
+    balanceInDistributionLimitCurrencyLoading: false,
+    distributionLimitLoading: false,
+    fundingCycleLoading: false,
+  },
 })

@@ -4,14 +4,7 @@ import {
   V2FundingCycleMetadata,
   V2FundAccessConstraint,
 } from 'models/v2/fundingCycle'
-import {
-  permilleToPercent,
-  permyriadToPercent,
-  fromWad,
-  percentToPermille,
-  percentToPermyriad,
-  parseWad,
-} from 'utils/formatNumber'
+import { fromWad, parseWad } from 'utils/formatNumber'
 
 export type SerializedV2FundingCycleMetadata = Record<
   keyof Omit<
@@ -45,15 +38,13 @@ export type SerializedV2FundAccessConstraint = Record<
 export const serializeV2FundingCycleMetadata = (
   fundingCycleMetadata: V2FundingCycleMetadata,
 ): SerializedV2FundingCycleMetadata => ({
-  reservedRate: permyriadToPercent(fundingCycleMetadata.reservedRate),
-  redemptionRate: permyriadToPercent(fundingCycleMetadata.redemptionRate),
-  ballotRedemptionRate: permyriadToPercent(
-    fundingCycleMetadata.ballotRedemptionRate,
-  ),
+  reservedRate: fundingCycleMetadata.reservedRate.toString(),
+  redemptionRate: fundingCycleMetadata.redemptionRate.toString(),
+  ballotRedemptionRate: fundingCycleMetadata.ballotRedemptionRate.toString(),
   pausePay: fundingCycleMetadata.pausePay,
   pauseDistributions: fundingCycleMetadata.pauseDistributions,
   pauseRedeem: fundingCycleMetadata.pauseRedeem,
-  pauseMint: fundingCycleMetadata.pauseMint,
+  allowMinting: fundingCycleMetadata.allowMinting,
   pauseBurn: fundingCycleMetadata.pauseBurn,
   allowChangeToken: fundingCycleMetadata.allowChangeToken,
   allowTerminalMigration: fundingCycleMetadata.allowTerminalMigration,
@@ -71,17 +62,15 @@ export const serializeV2FundingCycleMetadata = (
 export const deserializeV2FundingCycleMetadata = (
   serializedFundingCycleMetadata: SerializedV2FundingCycleMetadata,
 ): Omit<V2FundingCycleMetadata, 'version'> => ({
-  reservedRate: percentToPermyriad(serializedFundingCycleMetadata.reservedRate),
-  redemptionRate: percentToPermyriad(
-    serializedFundingCycleMetadata.redemptionRate,
-  ),
-  ballotRedemptionRate: percentToPermyriad(
+  reservedRate: BigNumber.from(serializedFundingCycleMetadata.reservedRate),
+  redemptionRate: BigNumber.from(serializedFundingCycleMetadata.redemptionRate),
+  ballotRedemptionRate: BigNumber.from(
     serializedFundingCycleMetadata.ballotRedemptionRate,
   ),
   pausePay: serializedFundingCycleMetadata.pausePay,
   pauseDistributions: serializedFundingCycleMetadata.pauseDistributions,
   pauseRedeem: serializedFundingCycleMetadata.pauseRedeem,
-  pauseMint: serializedFundingCycleMetadata.pauseMint,
+  allowMinting: serializedFundingCycleMetadata.allowMinting,
   pauseBurn: serializedFundingCycleMetadata.pauseBurn,
   allowChangeToken: serializedFundingCycleMetadata.allowChangeToken,
   allowTerminalMigration: serializedFundingCycleMetadata.allowTerminalMigration,
@@ -102,7 +91,7 @@ export const serializeV2FundingCycleData = (
 ): SerializedV2FundingCycleData => ({
   duration: fundingCycleData.duration.toString(),
   weight: fromWad(fundingCycleData.weight),
-  discountRate: permilleToPercent(fundingCycleData.discountRate),
+  discountRate: fundingCycleData.discountRate.toString(),
   ballot: fundingCycleData.ballot, // hex, contract address
 })
 
@@ -111,7 +100,7 @@ export const deserializeV2FundingCycleData = (
 ): V2FundingCycleData => ({
   duration: BigNumber.from(serializedFundingCycleData.duration || '0'),
   weight: parseWad(serializedFundingCycleData.weight),
-  discountRate: percentToPermille(serializedFundingCycleData.discountRate),
+  discountRate: BigNumber.from(serializedFundingCycleData.discountRate),
   ballot: serializedFundingCycleData.ballot, // hex, contract address
 })
 
@@ -120,6 +109,7 @@ export const serializeFundAccessConstraint = (
 ): SerializedV2FundAccessConstraint => {
   return {
     terminal: fundAccessConstraint.terminal,
+    token: fundAccessConstraint.token,
     distributionLimit: fromWad(fundAccessConstraint.distributionLimit),
     distributionLimitCurrency:
       fundAccessConstraint.distributionLimitCurrency.toString(),
@@ -134,6 +124,7 @@ export const deserializeFundAccessConstraint = (
 ): V2FundAccessConstraint => {
   return {
     terminal: fundAccessConstraint.terminal,
+    token: fundAccessConstraint.token,
     distributionLimit: parseWad(fundAccessConstraint.distributionLimit),
     distributionLimitCurrency: BigNumber.from(
       fundAccessConstraint.distributionLimitCurrency,

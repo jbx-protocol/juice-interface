@@ -31,14 +31,16 @@ export interface EditingProjectState {
   ticketMods: TicketMod[]
 }
 
+// Increment this version by 1 when making breaking changes.
+// When users return to the site and their local version is less than
+// this number, their state will be reset.
+export const REDUX_STORE_V1_PROJECT_VERSION = 1
+
 const defaultDiscountRate = percentToPermille(0)
 const defaultBondingCurveRate = percentToPerbicent(100)
 
 export const defaultProjectState: EditingProjectState = {
-  // Increment this version by 1 when making breaking changes.
-  // When users return to the site and their local version is less than
-  // this number, their state will be reset.
-  version: 1,
+  version: REDUX_STORE_V1_PROJECT_VERSION,
   info: {
     metadata: {
       name: '',
@@ -83,8 +85,6 @@ export const editingProjectSlice = createSlice({
   name: 'editingProject',
   initialState: defaultProjectState,
   reducers: {
-    setState: (state, action: PayloadAction<EditingProjectState>) =>
-      action.payload,
     resetState: () => defaultProjectState,
     setProjectInfo: (state, action: PayloadAction<EditingProjectInfo>) => {
       state.info = action.payload

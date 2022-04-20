@@ -6,7 +6,7 @@ import {
   useEditingV2FundingCycleDataSelector,
   useEditingV2FundingCycleMetadataSelector,
 } from 'hooks/AppSelector'
-import { useDeployProjectTx } from 'hooks/v2/transactor/DeployProjectTx'
+import { useLaunchProjectTx } from 'hooks/v2/transactor/LaunchProjectTx'
 import { useCallback, useContext, useState } from 'react'
 import { uploadProjectMetadata } from 'utils/ipfs'
 import { TransactionReceipt } from '@ethersproject/providers'
@@ -15,6 +15,10 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { NetworkContext } from 'contexts/networkContext'
 
 import TransactionModal from 'components/shared/TransactionModal'
+
+import { useAppDispatch } from 'hooks/AppDispatch'
+
+import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 
 import { readProvider } from 'constants/readProvider'
 import { readNetwork } from 'constants/networks'
@@ -35,7 +39,7 @@ const getProjectIdFromReceipt = (txReceipt: TransactionReceipt): number => {
 }
 
 export default function DeployProjectButton() {
-  const deployProjectTx = useDeployProjectTx()
+  const launchProjectTx = useLaunchProjectTx()
   const history = useHistory()
 
   const { userAddress, onSelectWallet } = useContext(NetworkContext)
@@ -48,6 +52,7 @@ export default function DeployProjectButton() {
   const fundingCycleMetadata = useEditingV2FundingCycleMetadataSelector()
   const fundingCycleData = useEditingV2FundingCycleDataSelector()
   const fundAccessConstraints = useEditingV2FundAccessConstraintsSelector()
+  const dispatch = useAppDispatch()
 
   const deployProject = useCallback(async () => {
     setDeployLoading(true)
@@ -74,7 +79,7 @@ export default function DeployProjectButton() {
 
     const groupedSplits = [payoutGroupedSplits, reservedTokensGroupedSplits]
 
-    const txSuccessful = await deployProjectTx(
+    const txSuccessful = await launchProjectTx(
       {
         projectMetadataCID: uploadedMetadata.IpfsHash,
         fundingCycleData,
@@ -99,6 +104,9 @@ export default function DeployProjectButton() {
             return
           }
 
+          // Reset Redux state/localstorage after deploying
+          dispatch(editingV2ProjectActions.resetState())
+
           history.push(`/v2/p/${projectId}?newDeploy=true`)
         },
         onCancelled() {
@@ -113,7 +121,7 @@ export default function DeployProjectButton() {
       setTransactionPending(false)
     }
   }, [
-    deployProjectTx,
+    launchProjectTx,
     projectMetadata,
     payoutGroupedSplits,
     reservedTokensGroupedSplits,
@@ -121,6 +129,7 @@ export default function DeployProjectButton() {
     fundingCycleMetadata,
     fundAccessConstraints,
     history,
+    dispatch,
   ])
 
   return (

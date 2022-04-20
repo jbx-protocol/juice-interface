@@ -13,7 +13,6 @@ import useProjectSplits from 'hooks/v2/contractReader/ProjectSplits'
 import useProjectTerminals from 'hooks/v2/contractReader/ProjectTerminals'
 import { usePaymentTerminalBalance } from 'hooks/v2/contractReader/PaymentTerminalBalance'
 import useProjectToken from 'hooks/v2/contractReader/ProjectToken'
-import useProjectQueuedFundingCycle from 'hooks/v2/contractReader/ProjectQueuedFundingCycle'
 import useProjectDistributionLimit from 'hooks/v2/contractReader/ProjectDistributionLimit'
 import { useMemo } from 'react'
 import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
@@ -53,22 +52,16 @@ export default function V2Dashboard() {
     isLoading: metadataLoading,
   } = useProjectMetadata(metadataCID)
 
-  const { data: fundingCycle } = useProjectCurrentFundingCycle({
-    projectId,
-  })
+  // Calls JBFundingCycleStore.currentOf
+  const { data: fundingCycle, loading: fundingCycleLoading } =
+    useProjectCurrentFundingCycle({
+      projectId,
+    })
 
   console.info('fundingCycle.basedOn:: ', fundingCycle?.basedOn)
 
   const fundingCycleMetadata = fundingCycle
     ? decodeV2FundingCycleMetadata(fundingCycle?.metadata)
-    : undefined
-
-  const { data: queuedFundingCycle } = useProjectQueuedFundingCycle({
-    projectId,
-  })
-
-  const queuedFundingCycleMetadata = queuedFundingCycle
-    ? decodeV2FundingCycleMetadata(queuedFundingCycle?.metadata)
     : undefined
 
   const { data: payoutSplits } = useProjectSplits({
@@ -83,11 +76,12 @@ export default function V2Dashboard() {
 
   const primaryTerminal = terminals?.[0] // TODO: make primaryTerminalOf hook and use it
 
-  const { data: distributionLimitData } = useProjectDistributionLimit({
-    projectId,
-    domain: fundingCycle?.configuration?.toString(),
-    terminal: primaryTerminal,
-  })
+  const { data: distributionLimitData, loading: distributionLimitLoading } =
+    useProjectDistributionLimit({
+      projectId,
+      configuration: fundingCycle?.configuration?.toString(),
+      terminal: primaryTerminal,
+    })
 
   const { data: usedDistributionLimit } = useUsedDistributionLimit({
     projectId,
@@ -98,28 +92,17 @@ export default function V2Dashboard() {
   const [distributionLimit, distributionLimitCurrency] =
     distributionLimitData ?? []
 
-  const { data: queuedPayoutSplits } = useProjectSplits({
-    projectId,
-    splitGroup: ETH_PAYOUT_SPLIT_GROUP,
-    domain: queuedFundingCycle?.configuration?.toString(),
-  })
-
   const { data: reservedTokensSplits } = useProjectSplits({
     projectId,
     splitGroup: RESERVED_TOKEN_SPLIT_GROUP,
     domain: fundingCycle?.configuration?.toString(),
   })
 
-  const { data: queuedReservedTokensSplits } = useProjectSplits({
-    projectId,
-    splitGroup: RESERVED_TOKEN_SPLIT_GROUP,
-    domain: queuedFundingCycle?.configuration?.toString(),
-  })
-
-  const { data: ETHBalance } = usePaymentTerminalBalance({
-    terminal: primaryTerminal,
-    projectId,
-  })
+  const { data: ETHBalance, loading: ETHBalanceLoading } =
+    usePaymentTerminalBalance({
+      terminal: primaryTerminal,
+      projectId,
+    })
 
   const { data: tokenAddress } = useProjectToken({
     projectId,
@@ -127,32 +110,29 @@ export default function V2Dashboard() {
 
   const tokenSymbol = useSymbolOfERC20(tokenAddress)
 
-  const { data: queuedDistributionLimitData } = useProjectDistributionLimit({
-    projectId,
-    domain: queuedFundingCycle?.configuration.toString(),
-    terminal: primaryTerminal,
-  })
-  const [queuedDistributionLimit, queuedDistributionLimitCurrency] =
-    queuedDistributionLimitData ?? []
-
   const { data: primaryTerminalCurrentOverflow } = useTerminalCurrentOverflow({
     projectId,
     terminal: primaryTerminal,
   })
 
   const converter = useCurrencyConverter()
-  const balanceInDistributionLimitCurrency = useMemo(
-    () =>
-      ETHBalance &&
-      converter.wadToCurrency(
+  const {
+    data: balanceInDistributionLimitCurrency,
+    loading: balanceInDistributionLimitCurrencyLoading,
+  } = useMemo(() => {
+    if (ETHBalanceLoading) return { loading: true }
+
+    return {
+      data: converter.wadToCurrency(
         ETHBalance,
         V2CurrencyName(
           distributionLimitCurrency?.toNumber() as V2CurrencyOption,
         ),
         V2CurrencyName(V2_CURRENCY_ETH),
       ),
-    [ETHBalance, converter, distributionLimitCurrency],
-  )
+      loading: false,
+    }
+  }, [ETHBalance, ETHBalanceLoading, converter, distributionLimitCurrency])
 
   const { data: projectOwnerAddress } = useProjectOwner(projectId)
 
@@ -171,27 +151,28 @@ export default function V2Dashboard() {
     projectMetadata,
     fundingCycle,
     fundingCycleMetadata,
-    queuedFundingCycle,
-    queuedFundingCycleMetadata,
     distributionLimit,
     usedDistributionLimit,
-    queuedDistributionLimit,
     payoutSplits,
-    queuedPayoutSplits,
     reservedTokensSplits,
-    queuedReservedTokensSplits,
     tokenAddress,
     terminals,
     primaryTerminal,
     ETHBalance,
     distributionLimitCurrency,
-    queuedDistributionLimitCurrency,
     balanceInDistributionLimitCurrency,
     tokenSymbol,
     projectOwnerAddress,
     primaryTerminalCurrentOverflow,
     totalTokenSupply,
     ballotState,
+
+    loading: {
+      ETHBalanceLoading,
+      balanceInDistributionLimitCurrencyLoading,
+      distributionLimitLoading,
+      fundingCycleLoading,
+    },
   }
 
   return (

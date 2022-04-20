@@ -96,7 +96,7 @@ export default function V2ManageTokensSection() {
   const userHasMintPermission = Boolean(
     useHasPermission(V2OperatorPermission.MINT),
   )
-  const projectAllowsMint = !fundingCycleMetadata?.pauseMint //TODO
+  const projectAllowsMint = Boolean(fundingCycleMetadata?.allowMinting)
 
   return (
     <>

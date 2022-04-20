@@ -1,8 +1,7 @@
 import { CheckCircleFilled } from '@ant-design/icons'
 import { ThemeContext } from 'contexts/themeContext'
+import { BallotStrategy } from 'models/ballot'
 import { CSSProperties, useContext } from 'react'
-
-import { Strategy } from 'constants/ballotStrategies/ballotStrategies'
 
 export default function ReconfigurationStrategyOption({
   title,
@@ -16,10 +15,10 @@ export default function ReconfigurationStrategyOption({
   title: string
   content: JSX.Element
   index: number
-  strategy: Strategy
+  strategy: BallotStrategy
   selected: boolean
   background?: string
-  onSelectBallot: (strategy: Strategy) => void
+  onSelectBallot: (strategy: BallotStrategy) => void
 }) {
   const { colors, radii } = useContext(ThemeContext).theme
 

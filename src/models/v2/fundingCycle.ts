@@ -15,8 +15,8 @@ export type V2FundingCycleMetadata = {
   pausePay: boolean
   pauseDistributions: boolean
   pauseRedeem: boolean
-  pauseMint: boolean
   pauseBurn: boolean
+  allowMinting: boolean
   allowChangeToken: boolean
   allowTerminalMigration: boolean
   allowControllerMigration: boolean
@@ -31,6 +31,7 @@ export type V2FundingCycleMetadata = {
 
 export type V2FundAccessConstraint = {
   terminal: string // address probably
+  token: string // address
   distributionLimit: BigNumber
   distributionLimitCurrency: BigNumber
   overflowAllowance: BigNumber

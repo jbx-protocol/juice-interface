@@ -10,9 +10,16 @@ import {
 } from 'hooks/v2/contractReader/HasPermission'
 import { useContext } from 'react'
 
-import { V2FundingCycleRiskCount } from 'utils/v2/fundingCycle'
+import {
+  hasFundingDuration,
+  V2FundingCycleRiskCount,
+} from 'utils/v2/fundingCycle'
+import { serializeV2FundingCycleData } from 'utils/v2/serializers'
+import Loading from 'components/shared/Loading'
 
-import FundingCycleSection from 'components/shared/Project/FundingCycleSection'
+import FundingCycleSection, {
+  TabType,
+} from 'components/shared/Project/FundingCycleSection'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { CardSection } from 'components/shared/CardSection'
 
@@ -29,7 +36,22 @@ export default function V2FundingCycleSection({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const { fundingCycle, isPreviewMode } = useContext(V2ProjectContext)
+  const {
+    fundingCycle,
+    isPreviewMode,
+    loading: { fundingCycleLoading },
+  } = useContext(V2ProjectContext)
+
+  const canReconfigure = useHasPermission(V2OperatorPermission.RECONFIGURE)
+  const showReconfigureButton = canReconfigure && !isPreviewMode
+
+  if (fundingCycleLoading) {
+    return <Loading />
+  }
+
+  if (!fundingCycle) {
+    return <p>No funding cycle</p>
+  }
 
   const tabText = ({ text }: { text: string }) => {
     const hasRisks = fundingCycle && V2FundingCycleRiskCount(fundingCycle)
@@ -59,7 +81,7 @@ export default function V2FundingCycleSection({
     )
   }
 
-  console.info('currentFC: ', fundingCycle)
+  const fundingCycleData = serializeV2FundingCycleData(fundingCycle)
 
   const tabs = [
     {
@@ -67,24 +89,22 @@ export default function V2FundingCycleSection({
       label: tabText({ text: t`Current` }),
       content: <CurrentFundingCycle expandCard={expandCard} />,
     },
-    {
-      key: 'upcoming',
-      label: tabText({ text: t`Upcoming` }),
-      content: <UpcomingFundingCycle expandCard={expandCard} />,
-    },
+    !isPreviewMode &&
+      hasFundingDuration(fundingCycleData) && {
+        key: 'upcoming',
+        label: tabText({ text: t`Upcoming` }),
+        content: <UpcomingFundingCycle expandCard={expandCard} />,
+      },
     {
       key: 'history',
       label: tabText({ text: t`History` }),
       content: (
         <CardSection>
-          <FundingCycleHistory startId={fundingCycle?.number.sub(1)} />
+          <FundingCycleHistory currentFC={fundingCycle} />
         </CardSection>
       ),
     },
-  ]
-
-  const canReconfigure = useHasPermission(V2OperatorPermission.RECONFIGURE)
-  const showReconfigureButton = canReconfigure && !isPreviewMode
+  ].filter(Boolean) as TabType[]
 
   return (
     <FundingCycleSection
@@ -96,7 +116,11 @@ export default function V2FundingCycleSection({
             triggerButton={(onClick: VoidFunction) => (
               <Button size="small" onClick={onClick} icon={<SettingOutlined />}>
                 <span>
-                  <Trans>Reconfigure upcoming</Trans>
+                  {hasFundingDuration(fundingCycleData) ? (
+                    <Trans>Reconfigure upcoming</Trans>
+                  ) : (
+                    <Trans>Reconfigure</Trans>
+                  )}
                 </span>
               </Button>
             )}

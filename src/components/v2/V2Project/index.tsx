@@ -36,7 +36,7 @@ export default function V2Project({
     : undefined
 
   return (
-    <Space direction="vertical" size={GUTTER_PX}>
+    <Space direction="vertical" size={GUTTER_PX} style={{ width: '100%' }}>
       <ProjectHeader
         metadata={projectMetadata}
         actions={!isPreviewMode ? <V2ProjectHeaderActions /> : undefined}
@@ -56,7 +56,11 @@ export default function V2Project({
       </Row>
       <Row gutter={GUTTER_PX}>
         <Col md={colSizeMd} xs={24}>
-          <Space direction="vertical" size={GUTTER_PX}>
+          <Space
+            direction="vertical"
+            size={GUTTER_PX}
+            style={{ width: '100%' }}
+          >
             {/* TODO volume chart */}
             <V2ManageTokensSection />
             <V2FundingCycleSection expandCard={expandFundingCycleCard} />

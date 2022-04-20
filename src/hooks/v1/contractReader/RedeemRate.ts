@@ -1,6 +1,6 @@
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { BigNumber } from '@ethersproject/bignumber'
-import { BallotState } from 'models/ballot-state'
+import { V1BallotState } from 'models/ballot'
 import { V1ContractName } from 'models/v1/contracts'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { useContext, useMemo } from 'react'
@@ -46,7 +46,7 @@ export function useRedeemRate({
     valueDidChange: bigNumbersDiff,
   })?.add(reservedTicketBalance ? reservedTicketBalance : BigNumber.from(0))
 
-  const currentBallotState = useContractReader<BallotState>({
+  const currentBallotState = useContractReader<V1BallotState>({
     contract: V1ContractName.FundingCycles,
     functionName: 'currentBallotStateOf',
     args: projectId ? [projectId.toHexString()] : null,
@@ -56,7 +56,7 @@ export function useRedeemRate({
     if (!metadata || !totalSupply?.gt(0)) return BigNumber.from(0)
 
     const bondingCurveRate =
-      currentBallotState === BallotState.Active
+      currentBallotState === V1BallotState.Active
         ? metadata.reconfigurationBondingCurveRate
         : metadata.bondingCurveRate
 

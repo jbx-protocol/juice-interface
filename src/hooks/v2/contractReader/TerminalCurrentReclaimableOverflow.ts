@@ -22,7 +22,7 @@ export default function useTerminalCurrentReclaimableOverflow({
     useTotalBalanceOf(userAddress, projectId)
 
   return useV2ContractReader<BigNumber>({
-    contract: V2ContractName.JBPaymentTerminalStore,
+    contract: V2ContractName.JBSingleTokenPaymentTerminalStore,
     functionName: 'currentReclaimableOverflowOf',
     args:
       !totalBalanceLoading &&

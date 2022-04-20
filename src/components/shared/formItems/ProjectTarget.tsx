@@ -1,5 +1,4 @@
 import { Form } from 'antd'
-import { V1CurrencyOption } from 'models/v1/currencyOption'
 
 import { BigNumber } from '@ethersproject/bignumber'
 
@@ -7,6 +6,7 @@ import { Trans } from '@lingui/macro'
 
 import BudgetTargetInput from '../inputs/BudgetTargetInput'
 import { FormItemExt } from './formItemExt'
+import { CurrencyName } from 'constants/currency'
 
 export default function ProjectTarget({
   hideLabel,
@@ -24,8 +24,8 @@ export default function ProjectTarget({
   targetSubFee: string | undefined
   onTargetChange: (val: string | undefined) => void
   onTargetSubFeeChange: (val: string | undefined) => void
-  currency: V1CurrencyOption
-  onCurrencyChange: (val: V1CurrencyOption) => void
+  currency: CurrencyName
+  onCurrencyChange: (val: CurrencyName) => void
   disabled?: boolean
   feePerbicent?: BigNumber
 } & FormItemExt) {

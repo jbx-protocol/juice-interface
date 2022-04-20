@@ -55,6 +55,7 @@ export default function ProjectPayoutMods({
   lockedMods,
   mods,
   onModsChanged,
+  targetIsInfinite,
   formItemProps,
 }: {
   target: string
@@ -63,6 +64,7 @@ export default function ProjectPayoutMods({
   lockedMods?: EditingPayoutMod[]
   mods: EditingPayoutMod[] | undefined
   onModsChanged: (mods: EditingPayoutMod[]) => void
+  targetIsInfinite?: boolean
 } & FormItemExt) {
   const [form] = useForm<{
     handle: string
@@ -240,7 +242,7 @@ export default function ProjectPayoutMods({
                   >
                     <Space size="large">
                       <span>{permyriadToPercent(mod.percent)}%</span>
-                      {parseWad(target).lt(constants.MaxUint256) && (
+                      {!targetIsInfinite && (
                         <span>
                           <CurrencySymbol currency={currencyName} />
                           {formatWad(
@@ -301,6 +303,7 @@ export default function ProjectPayoutMods({
       editingPercent,
       onModsChanged,
       currencyName,
+      targetIsInfinite,
     ],
   )
 
@@ -434,15 +437,15 @@ export default function ProjectPayoutMods({
           }}
           block
         >
-          <Trans>Add a payout</Trans>
+          <Trans>Add a split</Trans>
         </Button>
       </Space>
 
       <Modal
-        title={modalMode === 'Edit' ? 'Edit existing payout' : 'Add a payout'}
+        title={modalMode === 'Edit' ? t`Edit existing split` : t`Add a split`}
         visible={editingModIndex !== undefined}
         onOk={setReceiver}
-        okText={modalMode === 'Edit' ? 'Save payout' : 'Add payout'}
+        okText={modalMode === 'Edit' ? t`Save split` : t`Add split`}
         onCancel={() => {
           form.resetFields()
           setEditingModIndex(undefined)
@@ -459,8 +462,12 @@ export default function ProjectPayoutMods({
         >
           <Form.Item>
             <Select value={editingModType} onChange={setEditingModType}>
-              <Select.Option value="address">Wallet address</Select.Option>
-              <Select.Option value="project">Juicebox project</Select.Option>
+              <Select.Option value="address">
+                <Trans>Wallet address</Trans>
+              </Select.Option>
+              <Select.Option value="project">
+                <Trans>Juicebox project</Trans>
+              </Select.Option>
             </Select>
           </Form.Item>
 
@@ -518,7 +525,7 @@ export default function ProjectPayoutMods({
           ) : null}
 
           {/* Only show amount input if project has a funding target */}
-          {parseWad(target).lt(constants.MaxUint256) ? ( // Target = MaxUint256 when unset
+          {!targetIsInfinite ? (
             <Form.Item
               label="Amount"
               // Display message to user if the amount they inputted

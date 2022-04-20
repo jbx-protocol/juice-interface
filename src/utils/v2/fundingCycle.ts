@@ -13,17 +13,18 @@ import {
   SerializedV2FundingCycleData,
 } from './serializers'
 import { FundingCycleRiskFlags } from 'constants/fundingWarningText'
-import { getBallotStrategyByAddress } from 'constants/ballotStrategies/getBallotStrategiesByAddress'
+import { getBallotStrategyByAddress } from 'constants/v2/ballotStrategies/getBallotStrategiesByAddress'
+import { MAX_DISTRIBUTION_LIMIT } from './math'
 
-export const hasFundingTarget = (
+export const hasDistributionLimit = (
   fundAccessConstraint: SerializedV2FundAccessConstraint | undefined,
-) => {
-  return (
+): boolean => {
+  return Boolean(
     fundAccessConstraint?.distributionLimit &&
-    !parseWad(fundAccessConstraint.distributionLimit).eq(
-      constants.MaxUint256,
-    ) &&
-    fundAccessConstraint.distributionLimit !== '0'
+      !parseWad(fundAccessConstraint.distributionLimit).eq(
+        MAX_DISTRIBUTION_LIMIT,
+      ) &&
+      fundAccessConstraint.distributionLimit !== '0',
   )
 }
 
@@ -75,8 +76,8 @@ const parameters: {
     parser: bigNumberToBoolean,
   },
   { name: 'pauseRedeem', bits: 1, parser: bigNumberToBoolean },
-  { name: 'pauseMint', bits: 1, parser: bigNumberToBoolean },
   { name: 'pauseBurn', bits: 1, parser: bigNumberToBoolean },
+  { name: 'allowMinting', bits: 1, parser: bigNumberToBoolean },
   { name: 'allowChangeToken', bits: 1, parser: bigNumberToBoolean },
   {
     name: 'allowTerminalMigration',
@@ -172,13 +173,13 @@ export const getUnsafeV2FundingCycleProperties = (
   const metadata = decodeV2FundingCycleMetadata(fundingCycle.metadata)
   const ballotAddress = getBallotStrategyByAddress(fundingCycle.ballot).address
   const reservedRatePercentage = parseFloat(fromWad(metadata?.reservedRate))
-  const allowMint = Boolean(!metadata?.pauseMint)
+  const allowMinting = Boolean(metadata?.allowMinting)
 
   return unsafeFundingCycleProperties({
     ballotAddress,
     reservedRatePercentage,
     hasFundingDuration: fundingCycle.duration?.gt(0),
-    allowMint,
+    allowMinting,
   })
 }
 

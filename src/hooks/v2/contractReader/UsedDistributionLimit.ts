@@ -13,7 +13,7 @@ export default function useUsedDistributionLimit({
   fundingCycleNumber: BigNumber | undefined
 }) {
   return useV2ContractReader<BigNumber>({
-    contract: V2ContractName.JBPaymentTerminalStore,
+    contract: V2ContractName.JBSingleTokenPaymentTerminalStore,
     functionName: 'usedDistributionLimitOf',
     args:
       terminal && projectId && fundingCycleNumber

@@ -21,6 +21,7 @@ export type TransactorOptions = {
   onDone?: VoidFunction
   onConfirmed?: TransactorCallback
   onCancelled?: TransactorCallback
+  onError?: ErrorCallback
 }
 
 export type Transactor = (

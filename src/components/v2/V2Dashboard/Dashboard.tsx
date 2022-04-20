@@ -39,9 +39,18 @@ import {
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/v2/splits'
 
+const parseProjectIdParameter = (projectIdParameter?: string) => {
+  try {
+    return BigNumber.from(projectIdParameter)
+  } catch (e) {
+    return undefined
+  }
+}
+
 export default function V2Dashboard() {
   const { projectId: projectIdParameter }: { projectId?: string } = useParams()
-  const projectId = BigNumber.from(projectIdParameter)
+
+  const projectId = parseProjectIdParameter(projectIdParameter)
 
   const { data: metadataCID, loading: metadataURILoading } =
     useProjectMetadataContent(projectId)

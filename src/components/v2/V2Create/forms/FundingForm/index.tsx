@@ -223,7 +223,7 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
             if (!checked) {
               fundingForm.setFieldsValue({ duration: '0' })
             }
-            fundingForm.setFieldsValue({ duration: '30' })
+            fundingForm.setFieldsValue({ duration: '14' })
           }}
         >
           <Trans>Funding cycles</Trans>
@@ -240,7 +240,7 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
               <li>
                 <Trans>
                   <strong>Recurring funding cycles</strong> (for example,
-                  distribute $30,000 from your project's treasury every 30
+                  distribute $30,000 from your project's treasury every 14
                   days).
                 </Trans>
               </li>
@@ -282,7 +282,7 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
         }}
       >
         <h3>
-          <Trans>Distribution</Trans>
+          <Trans>Distribution limit</Trans>
         </h3>
         <p>
           <Trans>

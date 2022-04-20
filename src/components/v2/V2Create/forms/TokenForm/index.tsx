@@ -5,7 +5,7 @@ import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
 import ReservedTokensFormItem from 'components/v2/V2Create/forms/TokenForm/ReservedTokensFormItem'
 
-import { useCallback, useContext, useState } from 'react'
+import { CSSProperties, useCallback, useContext, useState } from 'react'
 import {
   defaultFundingCycleData,
   defaultFundingCycleMetadata,
@@ -42,13 +42,36 @@ import SwitchHeading from 'components/shared/SwitchHeading'
 import NumberSlider from 'components/shared/inputs/NumberSlider'
 
 import FormItemWarningText from 'components/shared/FormItemWarningText'
+import { formattedNum } from 'utils/formatNumber'
 
 import { shadowCard } from 'constants/styles/shadowCard'
 import TabDescription from '../../TabDescription'
 
 const MAX_DISCOUNT_RATE = 20 // this is an opinionated limit
+export const DEFAULT_ISSUANCE_RATE = 10 ** 6
 
-function DiscountRateExtra({ hasDuration }: { hasDuration?: boolean }) {
+// These 'default' are used when the values are enabled.
+// If not enabled, they use the values in EditingV2Project.defaultFundingCycleData
+const DEFAULT_ENABLED_DISCOUNT_RATE = 5
+export const DEFAULT_ENABLED_REDEMPTION_RATE = 75
+export const DEFAULT_ENABLED_RESERVE_RATE = 50
+
+function DiscountRateExtra({
+  hasDuration,
+  initialIssuanceRate,
+  discountRatePercent,
+}: {
+  hasDuration?: boolean
+  initialIssuanceRate: number
+  discountRatePercent: number
+}) {
+  console.info('initialIssuanceRate: ', initialIssuanceRate)
+  const discountRateDecimal = discountRatePercent * 0.01
+
+  const secondIssuanceRate =
+    initialIssuanceRate - initialIssuanceRate * discountRateDecimal
+  const thirdIssuanceRate =
+    secondIssuanceRate - secondIssuanceRate * discountRateDecimal
   return (
     <div>
       {!hasDuration && (
@@ -58,17 +81,33 @@ function DiscountRateExtra({ hasDuration }: { hasDuration?: boolean }) {
           </Trans>
         </FormItemWarningText>
       )}
-      <Trans>
-        The ratio of tokens rewarded per payment amount will decrease by this
-        percentage with each new funding cycle. A higher discount rate will
-        incentivize supporters to pay your project earlier than later.
-      </Trans>
+      <p>
+        <Trans>
+          The issuance rate will decrease by this percentage with each new
+          funding cycle. A higher discount rate will incentivize supporters to
+          pay your project earlier than later.
+        </Trans>
+      </p>
+      {discountRatePercent > 0 && (
+        <>
+          <br />
+          <TabDescription>
+            The issuance rate of your second funding cycle will be{' '}
+            {formattedNum(secondIssuanceRate)} tokens / ETH, then{' '}
+            {formattedNum(thirdIssuanceRate)} tokens / ETH for your third
+            funding cycle, and so on.
+          </TabDescription>
+        </>
+      )}
     </div>
   )
 }
 
 export default function TokenForm({ onFinish }: { onFinish: VoidFunction }) {
-  const { theme } = useContext(ThemeContext)
+  const {
+    theme,
+    theme: { colors },
+  } = useContext(ThemeContext)
 
   const dispatch = useAppDispatch()
   const {
@@ -144,6 +183,23 @@ export default function TokenForm({ onFinish }: { onFinish: VoidFunction }) {
     redemptionRate,
   ])
 
+  const defaultValueStyle: CSSProperties = {
+    color: colors.text.tertiary,
+    marginLeft: 15,
+  }
+
+  const reservedRatePercent = parseFloat(
+    formatReservedRate(BigNumber.from(reservedRate)),
+  )
+
+  const discountRatePercent = parseFloat(
+    formatDiscountRate(BigNumber.from(discountRate)),
+  )
+
+  // Tokens received by contributor's per ETH
+  const initialIssuanceRate =
+    DEFAULT_ISSUANCE_RATE - reservedRatePercent * 10000
+
   return (
     <Form layout="vertical" onFinish={onTokenFormSaved}>
       <Space size="middle" direction="vertical">
@@ -158,9 +214,7 @@ export default function TokenForm({ onFinish }: { onFinish: VoidFunction }) {
 
         <div>
           <ReservedTokensFormItem
-            initialValue={parseFloat(
-              formatReservedRate(BigNumber.from(reservedRate)),
-            )}
+            initialValue={reservedRatePercent}
             onChange={newReservedRatePercentage => {
               setReservedRate(
                 reservedRateFrom(
@@ -174,50 +228,68 @@ export default function TokenForm({ onFinish }: { onFinish: VoidFunction }) {
           />
 
           <Form.Item
-            extra={<DiscountRateExtra hasDuration={canSetDiscountRate} />}
+            extra={
+              <DiscountRateExtra
+                hasDuration={canSetDiscountRate}
+                initialIssuanceRate={initialIssuanceRate}
+                discountRatePercent={discountRatePercent}
+              />
+            }
             label={
               <SwitchHeading
                 onChange={checked => {
                   setDiscountRateChecked(checked)
-                  if (!checked) {
-                    setDiscountRate(defaultFundingCycleData.discountRate)
-                  }
+                  setDiscountRate(
+                    checked
+                      ? discountRateFrom(
+                          DEFAULT_ENABLED_DISCOUNT_RATE?.toString() ?? '0',
+                        ).toString()
+                      : discountRateFrom('0').toString(),
+                  )
                 }}
                 checked={discountRateChecked}
                 disabled={!canSetDiscountRate}
               >
                 <Trans>Discount rate</Trans>
+                {!discountRateChecked && canSetDiscountRate && (
+                  <span style={defaultValueStyle}>(0%)</span>
+                )}
               </SwitchHeading>
             }
             style={{ ...shadowCard(theme), padding: 25, marginBottom: 10 }}
           >
-            <NumberSlider
-              max={MAX_DISCOUNT_RATE}
-              defaultValue={0}
-              sliderValue={parseFloat(
-                formatDiscountRate(BigNumber.from(discountRate)),
-              )}
-              suffix="%"
-              onChange={value =>
-                setDiscountRate(
-                  discountRateFrom(value?.toString() ?? '0').toString(),
-                )
-              }
-              step={0.1}
-              disabled={!canSetDiscountRate || !discountRateChecked}
-            />
+            {canSetDiscountRate && discountRateChecked && (
+              <NumberSlider
+                max={MAX_DISCOUNT_RATE}
+                sliderValue={discountRatePercent}
+                suffix="%"
+                onChange={value =>
+                  setDiscountRate(
+                    discountRateFrom(value?.toString() ?? '0').toString(),
+                  )
+                }
+                step={0.1}
+              />
+            )}
           </Form.Item>
 
           <FormItems.ProjectBondingCurveRate
-            label={<Trans>Redemption rate</Trans>}
+            label={
+              <>
+                <Trans>Redemption rate</Trans>
+                {!redemptionRateChecked && canSetRedemptionRate && (
+                  <span style={defaultValueStyle}>(100%)</span>
+                )}
+              </>
+            }
             value={formatRedemptionRate(BigNumber.from(redemptionRate))}
-            onChange={newRedemptionRatePercentage =>
+            onChange={newRedemptionRatePercentage => {
               setRedemptionRate(
                 redemptionRateFrom(
                   newRedemptionRatePercentage?.toString() ?? '0',
                 ).toString(),
               )
-            }
+            }}
             style={{ ...shadowCard(theme), padding: 25, marginBottom: 10 }}
             onToggled={setRedemptionRateChecked}
             checked={redemptionRateChecked}

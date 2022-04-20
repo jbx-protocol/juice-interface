@@ -58,8 +58,6 @@ export default function V2Dashboard() {
       projectId,
     })
 
-  console.info('fundingCycle.basedOn:: ', fundingCycle?.basedOn)
-
   const fundingCycleMetadata = fundingCycle
     ? decodeV2FundingCycleMetadata(fundingCycle?.metadata)
     : undefined

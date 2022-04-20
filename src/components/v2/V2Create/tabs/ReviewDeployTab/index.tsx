@@ -13,7 +13,7 @@ export default function ReviewDeployTab() {
   } = useContext(ThemeContext)
   return (
     <div>
-      <h1 style={{ fontSize: '2rem' }}>
+      <h1 style={{ fontSize: '1.5rem' }}>
         <Trans>Review project configuration</Trans>
       </h1>
       <div

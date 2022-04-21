@@ -2567,8 +2567,8 @@ msgstr "O seu projeto é financiado através dos ciclos de financiamento. Um cic
 msgid "Your project will appear archived, and will not be able to receive payments through the juicebox.money app. You can unarchive a project at any time. Please allow a few days for your project to appear under the \"archived\" filter on the Projects page."
 msgstr "O seu projeto aparecerá arquivado e não poderá receber pagamentos através do app juicebox.money. Pode desarquivar um projeto a qualquer momento. Por favor, aguarde alguns dias para que o seu projeto apareça sob o filtro \"arquivado\" na Página de Projetos."
 
-#: src/components/v2/V2Create/index.tsx
-msgid "Your project will be created on the Juicebox V2 protocol. <0>Learn more.</0>"
+#: src/components/v2/V2Create/V2WarningBanner.tsx
+msgid "Your project will be created on the Juicebox V2 contracts. <0>Learn more.</0>"
 msgstr ""
 
 #: src/components/v1/V1Project/ArchiveV1Project.tsx

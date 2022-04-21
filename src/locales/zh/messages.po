@@ -2567,8 +2567,8 @@ msgstr "您的项目按筹款周期来进行筹款。每个筹款周期都有一
 msgid "Your project will appear archived, and will not be able to receive payments through the juicebox.money app. You can unarchive a project at any time. Please allow a few days for your project to appear under the \"archived\" filter on the Projects page."
 msgstr "您的项目将体现为“存档”，并且将无法通过juicebox.money应用程序接收付款。您可以在任何时候取消项目的存档。请留出几天时间，以便您的项目显示在\"项目\"页面上的\"已存档\"过滤器下。"
 
-#: src/components/v2/V2Create/index.tsx
-msgid "Your project will be created on the Juicebox V2 protocol. <0>Learn more.</0>"
+#: src/components/v2/V2Create/V2WarningBanner.tsx
+msgid "Your project will be created on the Juicebox V2 contracts. <0>Learn more.</0>"
 msgstr ""
 
 #: src/components/v1/V1Project/ArchiveV1Project.tsx

@@ -24,7 +24,7 @@ export default function V2Switch() {
 
   return (
     <Tooltip title="Select if you'd like to enable the Juicebox V2 protocol.">
-      <div style={{ marginBottom: 5 }}>Enable Juicebox V2</div>
+      <div style={{ marginBottom: 5, color: 'white' }}>Enable Juicebox V2</div>
       <Switch onChange={onChange} checked={checked} />
     </Tooltip>
   )

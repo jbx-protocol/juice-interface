@@ -29,11 +29,13 @@ export const disableFeatureFlag = (featureFlag: string) => {
 
 export const featureFlagEnabled = (featureFlag: string) => {
   // if default-enabled for this environment, return trues
-  if (DEFAULTS[featureFlag][readNetwork.name as string]) return true
+  const defaultEnabled = DEFAULTS[featureFlag][readNetwork.name as string]
 
   try {
-    return JSON.parse(localStorage.getItem(featureFlagKey(featureFlag)) || '')
+    return JSON.parse(
+      localStorage.getItem(featureFlagKey(featureFlag)) || `${defaultEnabled}`,
+    )
   } catch (e) {
-    return false
+    return defaultEnabled
   }
 }

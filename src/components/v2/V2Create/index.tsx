@@ -1,6 +1,5 @@
 import { Tabs } from 'antd'
 import { PropsWithChildren, useContext, useState } from 'react'
-import { InfoCircleOutlined } from '@ant-design/icons'
 
 import V2UserProvider from 'providers/v2/UserProvider'
 
@@ -9,12 +8,11 @@ import { ThemeContext } from 'contexts/themeContext'
 
 import V2CurrencyProvider from 'providers/v2/V2CurrencyProvider'
 
-import ExternalLink from 'components/shared/ExternalLink'
-
 import ProjectDetailsTabContent from './tabs/ProjectDetailsTab/ProjectDetailsTabContent'
 import FundingCycleTabContent from './tabs/FundingCycleTab/FundingCycleTabContent'
 import { TabContentProps } from './models'
 import ReviewDeployTab from './tabs/ReviewDeployTab'
+import V2WarningBanner from './V2WarningBanner'
 
 const { TabPane } = Tabs
 
@@ -49,6 +47,7 @@ export default function V2Create() {
   return (
     <V2UserProvider>
       <V2CurrencyProvider>
+        <V2WarningBanner />
         <div
           style={{
             maxWidth: 1300,
@@ -65,16 +64,6 @@ export default function V2Create() {
             >
               <Trans>Design your project</Trans> 🎨
             </h1>
-
-            <p>
-              <InfoCircleOutlined />{' '}
-              <Trans>
-                Your project will be created on the Juicebox V2 protocol.{' '}
-                <ExternalLink href="https://info.juicebox.money/docs/build/project-design">
-                  Learn more.
-                </ExternalLink>
-              </Trans>
-            </p>
 
             <Tabs
               activeKey={activeTab}

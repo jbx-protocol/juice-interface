@@ -6,7 +6,7 @@ import { useCallback, useContext, useLayoutEffect, useState } from 'react'
 
 import { ThemeContext } from 'contexts/themeContext'
 import { helpPagePath } from 'utils/helpPageHelper'
-import ProjectPayoutMods from 'components/shared/formItems/ProjectPayoutMods'
+
 import { useETHPaymentTerminalFee } from 'hooks/v2/contractReader/ETHPaymentTerminalFee'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 
@@ -20,7 +20,7 @@ import { V2UserContext } from 'contexts/v2/userContext'
 import { useAppSelector } from 'hooks/AppSelector'
 import { SerializedV2FundAccessConstraint } from 'utils/v2/serializers'
 
-import { sanitizeSplit, toMod, toSplit } from 'utils/v2/splits'
+import { sanitizeSplit } from 'utils/v2/splits'
 
 import { getDefaultFundAccessConstraint } from 'utils/v2/fundingCycle'
 import {
@@ -47,6 +47,7 @@ import { Link } from 'react-router-dom'
 import FormItemWarningText from 'components/shared/FormItemWarningText'
 
 import SwitchHeading from 'components/shared/SwitchHeading'
+import DistributionSplitsSection from 'components/v2/shared/DistributionSplitsSection'
 
 import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
 
@@ -370,19 +371,13 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
               and the resulting JBX will go to the project's owner.
             </p>
 
-            <ProjectPayoutMods
-              mods={splits.map(toMod)}
-              target={target ?? '0'}
+            <DistributionSplitsSection
+              distributionLimit={target}
               currencyName={targetCurrency === ETH ? 'ETH' : 'USD'}
-              feePercentage={
-                ETHPaymentTerminalFee
-                  ? formatFee(ETHPaymentTerminalFee)
-                  : undefined
-              }
-              onModsChanged={newMods => {
-                setSplits(newMods.map(toSplit))
+              splits={splits}
+              onSplitsChanged={newMods => {
+                setSplits(newMods)
               }}
-              targetIsInfinite={targetType === 'infinite'}
             />
           </>
         ) : (

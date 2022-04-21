@@ -28,7 +28,7 @@ import { amountSubFee } from 'utils/math'
 import { V1CurrencyName } from 'utils/v1/currency'
 
 import { V1_CURRENCY_ETH } from 'constants/v1/currency'
-import ProjectPayoutMods from '../shared/formItems/ProjectPayoutMods'
+import ProjectPayoutMods from './ProjectPayoutMods'
 
 export default function PayoutModsList({
   mods,

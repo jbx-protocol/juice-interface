@@ -5,7 +5,11 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { layouts } from 'constants/styles/layouts'
 import { padding } from 'constants/styles/padding'
 
-export default function Dashboard404({ projectId }: { projectId: BigNumber }) {
+export default function Dashboard404({
+  projectId,
+}: {
+  projectId: BigNumber | string | undefined
+}) {
   return (
     <div
       style={{

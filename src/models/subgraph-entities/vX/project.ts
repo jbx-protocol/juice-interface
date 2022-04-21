@@ -2,9 +2,9 @@ import { BigNumber } from '@ethersproject/bignumber'
 import {
   parseParticipantJson,
   ParticipantJson,
-} from 'models/subgraph-entities/participant'
+} from 'models/subgraph-entities/vX/participant'
 
-import { CV } from './cv'
+import { CV } from '../../cv'
 import {
   DeployedERC20Event,
   DeployedERC20EventJson,
@@ -14,30 +14,30 @@ import {
   DistributeToPayoutModEvent,
   DistributeToPayoutModEventJson,
   parseDistributeToPayoutModEvent,
-} from './distribute-to-payout-mod-event'
+} from '../v1/distribute-to-payout-mod-event'
 import {
   DistributeToTicketModEvent,
   DistributeToTicketModEventJson,
   parseDistributeToTicketModEvent,
-} from './distribute-to-ticket-mod-event'
+} from '../v1/distribute-to-ticket-mod-event'
 import { Participant } from './participant'
 import { parsePayEventJson, PayEvent, PayEventJson } from './pay-event'
 import {
-  parsePrintPremineEventJson,
-  PrintPremineEvent,
-  PrintPremineEventJson,
-} from './print-premine-event'
+  parseMintTokensEventJson,
+  MintTokensEvent,
+  MintTokensEventJson,
+} from './mint-tokens-event'
 import {
   parsePrintReservesEventJson,
   PrintReservesEvent,
   PrintReservesEventJson,
-} from './print-reserves-event'
+} from '../v1/print-reserves-event'
 import {
   parseRedeemEventJson,
   RedeemEvent,
   RedeemEventJson,
 } from './redeem-event'
-import { parseTapEventJson, TapEvent, TapEventJson } from './tap-event'
+import { parseTapEventJson, TapEvent, TapEventJson } from '../v1/tap-event'
 
 type BaseProject = {
   id: string
@@ -49,7 +49,7 @@ type BaseProject = {
   currentBalance: BigNumber
   participants: Partial<Participant>[]
   payEvents: Partial<PayEvent>[]
-  printPremineEvents: Partial<PrintPremineEvent>[]
+  printPremineEvents: Partial<MintTokensEvent>[]
   tapEvents: Partial<TapEvent>[]
   redeemEvents: Partial<RedeemEvent>[]
   printReservesEvents: Partial<PrintReservesEvent>[]
@@ -96,7 +96,7 @@ export type ProjectJson = Partial<
     string
   > & {
     participants: ParticipantJson[]
-    printPremineEvents: PrintPremineEventJson[]
+    printPremineEvents: MintTokensEventJson[]
     payEvents: PayEventJson[]
     tapEvents: TapEventJson[]
     redeemEvents: RedeemEventJson[]
@@ -119,7 +119,7 @@ export const parseProjectJson = (project: ProjectJson): Partial<Project> => ({
     : undefined,
   participants: project.participants?.map(parseParticipantJson) ?? undefined,
   printPremineEvents:
-    project.printPremineEvents?.map(parsePrintPremineEventJson) ?? undefined,
+    project.printPremineEvents?.map(parseMintTokensEventJson) ?? undefined,
   payEvents: project.payEvents?.map(parsePayEventJson) ?? undefined,
   tapEvents: project.tapEvents?.map(parseTapEventJson) ?? undefined,
   redeemEvents: project.redeemEvents?.map(parseRedeemEventJson) ?? undefined,

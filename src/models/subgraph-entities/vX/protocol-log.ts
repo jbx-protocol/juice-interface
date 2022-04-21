@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 
 export type ProtocolLog = {
-  id: '1'
+  id: '1' // Only one entity exists
   projectsCount: number
   volumePaid: BigNumber
   volumeRedeemed: BigNumber

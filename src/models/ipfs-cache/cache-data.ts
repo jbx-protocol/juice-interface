@@ -1,7 +1,7 @@
 import {
   TrendingProject,
   TrendingProjectJson,
-} from 'models/subgraph-entities/project'
+} from 'models/subgraph-entities/vX/project'
 
 import { IpfsCacheName } from './cache-name'
 

@@ -4,7 +4,7 @@ import EtherscanLink from 'components/shared/EtherscanLink'
 
 import { ThemeContext } from 'contexts/themeContext'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
-import { PrintReservesEvent } from 'models/subgraph-entities/print-reserves-event'
+import { PrintReservesEvent } from 'models/subgraph-entities/v1/print-reserves-event'
 import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'

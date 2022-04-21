@@ -8,7 +8,7 @@ import {
   Project,
   TrendingProject,
   TrendingProjectJson,
-} from 'models/subgraph-entities/project'
+} from 'models/subgraph-entities/vX/project'
 import { V1TerminalVersion } from 'models/v1/terminals'
 import { useEffect, useMemo, useState } from 'react'
 import {

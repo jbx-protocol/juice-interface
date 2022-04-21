@@ -5,7 +5,7 @@ import EtherscanLink from 'components/shared/EtherscanLink'
 
 import { ThemeContext } from 'contexts/themeContext'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
-import { TapEvent } from 'models/subgraph-entities/tap-event'
+import { TapEvent } from 'models/subgraph-entities/v1/tap-event'
 import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'

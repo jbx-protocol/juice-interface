@@ -5,7 +5,7 @@ import FormattedAddress from 'components/shared/FormattedAddress'
 import RichNote from 'components/shared/RichNote'
 import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
-import { PayEvent } from 'models/subgraph-entities/pay-event'
+import { PayEvent } from 'models/subgraph-entities/vX/pay-event'
 import { useCallback, useContext } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 

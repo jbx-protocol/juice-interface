@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import EtherscanLink from 'components/shared/EtherscanLink'
 import { ThemeContext } from 'contexts/themeContext'
-import { DeployedERC20Event } from 'models/subgraph-entities/deployed-erc20-event'
+import { DeployedERC20Event } from 'models/subgraph-entities/vX/deployed-erc20-event'
 import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 

@@ -1,7 +1,7 @@
 import EtherscanLink from 'components/shared/EtherscanLink'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import { ThemeContext } from 'contexts/themeContext'
-import { ProjectCreateEvent } from 'models/subgraph-entities/project-create-event'
+import { ProjectCreateEvent } from 'models/subgraph-entities/vX/project-create-event'
 import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 

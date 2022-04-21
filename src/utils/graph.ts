@@ -2,61 +2,64 @@ import axios from 'axios'
 import {
   DeployedERC20EventJson,
   parseDeployedERC20EventJson,
-} from 'models/subgraph-entities/deployed-erc20-event'
+} from 'models/subgraph-entities/vX/deployed-erc20-event'
 import {
   DistributeToPayoutModEvent,
   DistributeToPayoutModEventJson,
   parseDistributeToPayoutModEvent,
-} from 'models/subgraph-entities/distribute-to-payout-mod-event'
+} from 'models/subgraph-entities/v1/distribute-to-payout-mod-event'
 import {
   DistributeToTicketModEvent,
   DistributeToTicketModEventJson,
   parseDistributeToTicketModEvent,
-} from 'models/subgraph-entities/distribute-to-ticket-mod-event'
-import {
-  parseParticipantJson,
-  Participant,
-  ParticipantJson,
-} from 'models/subgraph-entities/participant'
+} from 'models/subgraph-entities/v1/distribute-to-ticket-mod-event'
 import {
   parsePayEventJson,
   PayEvent,
   PayEventJson,
-} from 'models/subgraph-entities/pay-event'
-import { parsePrintPremineEventJson } from 'models/subgraph-entities/print-premine-event'
+} from 'models/subgraph-entities/vX/pay-event'
+import { parseMintTokensEventJson } from 'models/subgraph-entities/vX/mint-tokens-event'
 import {
   parsePrintReservesEventJson,
   PrintReservesEvent,
   PrintReservesEventJson,
-} from 'models/subgraph-entities/print-reserves-event'
+} from 'models/subgraph-entities/v1/print-reserves-event'
 import {
   parseProjectJson,
   Project,
   ProjectJson,
-} from 'models/subgraph-entities/project'
-import { ProjectCreateEvent } from 'models/subgraph-entities/project-create-event'
+} from 'models/subgraph-entities/vX/project'
+import {
+  parseProjectCreateEvent,
+  ProjectCreateEvent,
+} from 'models/subgraph-entities/vX/project-create-event'
 import {
   ProjectEvent,
   ProjectEventJson,
-} from 'models/subgraph-entities/project-event'
+} from 'models/subgraph-entities/vX/project-event'
 import {
   parseProtocolLogJson,
   ProtocolLog,
   ProtocolLogJson,
-} from 'models/subgraph-entities/protocol-log'
+} from 'models/subgraph-entities/vX/protocol-log'
 import {
   parseRedeemEventJson,
   RedeemEvent,
   RedeemEventJson,
-} from 'models/subgraph-entities/redeem-event'
+} from 'models/subgraph-entities/vX/redeem-event'
 import {
   parseTapEventJson,
   TapEvent,
   TapEventJson,
-} from 'models/subgraph-entities/tap-event'
+} from 'models/subgraph-entities/v1/tap-event'
 
-import { parseProjectEventJson } from '../models/subgraph-entities/project-event'
-import { DeployedERC20Event } from '../models/subgraph-entities/deployed-erc20-event'
+import {
+  Participant,
+  ParticipantJson,
+} from 'models/subgraph-entities/vX/participant'
+
+import { parseProjectEventJson } from '../models/subgraph-entities/vX/project-event'
+import { DeployedERC20Event } from '../models/subgraph-entities/vX/deployed-erc20-event'
 
 export interface SubgraphEntities {
   protocolLog: ProtocolLog
@@ -272,7 +275,7 @@ export function formatGraphResponse<E extends EntityKey>(
     case 'projectCreateEvent':
       if ('projectCreateEvents' in response) {
         // @ts-ignore
-        return response.projectCreateEvents
+        return response.projectCreateEvents.map(parseProjectCreateEvent)
       }
       break
     case 'projectSearch':
@@ -330,7 +333,7 @@ export function formatGraphResponse<E extends EntityKey>(
     case 'printPremineEvent':
       if ('printPremineEvents' in response) {
         // @ts-ignore
-        return response.printPremineEvent.map(parsePrintPremineEventJson)
+        return response.printPremineEvent.map(parseMintTokensEventJson)
       }
       break
     case 'deployedERC20Event':

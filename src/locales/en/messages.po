@@ -1126,8 +1126,8 @@ msgid "Infinite"
 msgstr "Infinite"
 
 #: src/components/shared/formItems/ProjectReserved.tsx
-msgid "Initial issuance rate will be {0} tokens / ETH for contributors. {1} tokens / ETH will be reserved to the project."
-msgstr "Initial issuance rate will be {0} tokens / ETH for contributors. {1} tokens / ETH will be reserved to the project."
+msgid "Initial issuance rate will be {0} tokens / ETH for contributors.{1} tokens / ETH will be reserved to the project."
+msgstr "Initial issuance rate will be {0} tokens / ETH for contributors.{1} tokens / ETH will be reserved to the project."
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Invalid address"

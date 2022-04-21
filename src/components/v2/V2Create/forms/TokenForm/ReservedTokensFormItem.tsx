@@ -7,8 +7,6 @@ import { toMod, toSplit } from 'utils/v2/splits'
 import { Split } from 'models/v2/splits'
 import { defaultFundingCycleMetadata } from 'redux/slices/editingV2Project'
 
-import { DEFAULT_ENABLED_RESERVE_RATE } from '.'
-
 export default function ReservedTokensFormItem({
   hideLabel,
   initialValue,
@@ -48,10 +46,7 @@ export default function ReservedTokensFormItem({
         checked={reservedRateChecked}
         onToggled={checked => {
           setReservedRateChecked(checked)
-
-          const newReservedRate = checked ? DEFAULT_ENABLED_RESERVE_RATE : 0
-          setReservedRate(newReservedRate)
-          onChange(newReservedRate)
+          if (!checked) onChange(0)
         }}
         hideLabel={hideLabel}
       />

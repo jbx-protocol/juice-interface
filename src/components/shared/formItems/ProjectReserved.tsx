@@ -1,10 +1,11 @@
 import { Form } from 'antd'
 import { Trans } from '@lingui/macro'
-import { CSSProperties, useState } from 'react'
+import { CSSProperties, useContext, useState } from 'react'
 import FormItemLabel from 'components/v2/V2Create/FormItemLabel'
 import TabDescription from 'components/v2/V2Create/TabDescription'
 import { formattedNum } from 'utils/formatNumber'
 import { DEFAULT_ISSUANCE_RATE } from 'components/v2/V2Create/forms/TokenForm'
+import { ThemeContext } from 'contexts/themeContext'
 
 import NumberSlider from '../inputs/NumberSlider'
 import { FormItemExt } from './formItemExt'
@@ -32,6 +33,10 @@ export default function ProjectReserved({
   checked?: boolean
   onToggled?: (checked: boolean) => void
 } & FormItemExt) {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
+
   const shouldRenderToggle = Boolean(onToggled)
 
   const [showRiskWarning, setShowRiskWarning] = useState<boolean>(
@@ -86,6 +91,16 @@ export default function ProjectReserved({
             {shouldRenderToggle ? (
               <SwitchHeading checked={Boolean(checked)} onChange={onToggled}>
                 <Trans>Reserved rate</Trans>
+                {!Boolean(checked) && (
+                  <span
+                    style={{
+                      color: colors.text.tertiary,
+                      marginLeft: 15,
+                    }}
+                  >
+                    (0%)
+                  </span>
+                )}
               </SwitchHeading>
             ) : (
               <FormItemLabel>

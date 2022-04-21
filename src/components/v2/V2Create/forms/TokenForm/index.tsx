@@ -50,12 +50,6 @@ import TabDescription from '../../TabDescription'
 const MAX_DISCOUNT_RATE = 20 // this is an opinionated limit
 export const DEFAULT_ISSUANCE_RATE = 10 ** 6
 
-// These 'default' are used when the values are enabled.
-// If not enabled, they use the values in EditingV2Project.defaultFundingCycleData
-const DEFAULT_ENABLED_DISCOUNT_RATE = 5
-export const DEFAULT_ENABLED_REDEMPTION_RATE = 75
-export const DEFAULT_ENABLED_RESERVE_RATE = 50
-
 function DiscountRateExtra({
   hasDuration,
   initialIssuanceRate,
@@ -65,7 +59,6 @@ function DiscountRateExtra({
   initialIssuanceRate: number
   discountRatePercent: number
 }) {
-  console.info('initialIssuanceRate: ', initialIssuanceRate)
   const discountRateDecimal = discountRatePercent * 0.01
 
   const secondIssuanceRate =
@@ -239,13 +232,7 @@ export default function TokenForm({ onFinish }: { onFinish: VoidFunction }) {
               <SwitchHeading
                 onChange={checked => {
                   setDiscountRateChecked(checked)
-                  setDiscountRate(
-                    checked
-                      ? discountRateFrom(
-                          DEFAULT_ENABLED_DISCOUNT_RATE?.toString() ?? '0',
-                        ).toString()
-                      : discountRateFrom('0').toString(),
-                  )
+                  if (!checked) setDiscountRate('0')
                 }}
                 checked={discountRateChecked}
                 disabled={!canSetDiscountRate}

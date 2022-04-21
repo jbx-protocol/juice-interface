@@ -11,7 +11,6 @@ import {
   useState,
 } from 'react'
 import FormItemLabel from 'components/v2/V2Create/FormItemLabel'
-import { DEFAULT_ENABLED_REDEMPTION_RATE } from 'components/v2/V2Create/forms/TokenForm'
 
 import ExternalLink from 'components/shared/ExternalLink'
 
@@ -233,7 +232,8 @@ export default function ProjectBondingCurveRate({
                 checked={Boolean(checked)}
                 onChange={checked => {
                   onToggled(checked)
-                  onChange(checked ? DEFAULT_ENABLED_REDEMPTION_RATE : 100)
+                  if (!checked)
+                    onChange(parseInt(DEFAULT_BONDING_CURVE_RATE_PERCENTAGE))
                 }}
                 disabled={disabled}
               >

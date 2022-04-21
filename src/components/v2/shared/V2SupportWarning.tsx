@@ -14,8 +14,15 @@ export default function V2SupportWarning() {
       <h3>
         <Trans>Juicebox V2 on {readNetwork.name} isn't enabled.</Trans>
       </h3>
-
-      <V2Switch />
+      <p>
+        <Trans>
+          The Juicebox V2 frontend is still in development. Some features are
+          missing and there are known bugs.
+        </Trans>
+      </p>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <V2Switch />
+      </div>
     </div>
   )
 }

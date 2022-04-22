@@ -3,6 +3,8 @@ import { useContext } from 'react'
 import { InfoCircleOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 
+import ExternalLink from 'components/shared/ExternalLink'
+
 import { ThemeOption } from 'constants/theme/theme-option'
 
 export default function V2WarningBanner() {
@@ -23,7 +25,22 @@ export default function V2WarningBanner() {
       }}
     >
       <InfoCircleOutlined />{' '}
-      <Trans>Your project will be created on the Juicebox V2 contracts.</Trans>
+      <Trans>
+        Your project will be created on the Juicebox V2 contracts.{' '}
+        <ExternalLink
+          style={{
+            color:
+              themeOption === ThemeOption.dark
+                ? colors.text.over.action.primary
+                : colors.text.primary,
+            fontWeight: 400,
+            textDecoration: 'underline',
+          }}
+          href="https://info.juicebox.money/docs/build/project-design"
+        >
+          Learn more.
+        </ExternalLink>
+      </Trans>
     </div>
   )
 }

@@ -253,7 +253,7 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
               <li>
                 <Trans>
                   A <strong>discount rate</strong> to automatically reduce the
-                  issue rate of your project's token (tokens/ETH) each new
+                  issuance rate of your project's token (tokens/ETH) each new
                   funding cycle.
                 </Trans>
               </li>

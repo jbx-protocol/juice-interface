@@ -1,3 +1,5 @@
+import { NetworkName } from 'models/network-name'
+
 import { readNetwork } from 'constants/networks'
 
 export const FEATURE_FLAGS = {
@@ -6,8 +8,8 @@ export const FEATURE_FLAGS = {
 
 const DEFAULTS: { [k: string]: { [j: string]: boolean } } = {
   [FEATURE_FLAGS.ENABLE_V2]: {
-    rinkeby: true,
-    mainnet: false,
+    [NetworkName.rinkeby]: true,
+    [NetworkName.mainnet]: false,
   },
 }
 

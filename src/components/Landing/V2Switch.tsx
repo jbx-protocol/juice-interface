@@ -10,6 +10,10 @@ import {
 import { useState } from 'react'
 import { Trans } from '@lingui/macro'
 
+import { NetworkName } from 'models/network-name'
+
+import { readNetwork } from 'constants/networks'
+
 export default function V2Switch() {
   const [checked, setChecked] = useState<boolean>(
     featureFlagEnabled(FEATURE_FLAGS.ENABLE_V2),
@@ -23,6 +27,9 @@ export default function V2Switch() {
       window.location.reload()
     }, 500)
   }
+
+  // don't show the switch on mainnet for now.
+  if (readNetwork.name === NetworkName.mainnet) return null
 
   return (
     <Tooltip

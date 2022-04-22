@@ -1,4 +1,5 @@
 import { Switch, Tooltip } from 'antd'
+import { ExclamationCircleOutlined } from '@ant-design/icons'
 
 import {
   FEATURE_FLAGS,
@@ -7,6 +8,7 @@ import {
 } from 'utils/featureFlags'
 
 import { useState } from 'react'
+import { Trans } from '@lingui/macro'
 
 export default function V2Switch() {
   const [checked, setChecked] = useState<boolean>(
@@ -23,9 +25,22 @@ export default function V2Switch() {
   }
 
   return (
-    <Tooltip title="Select if you'd like to enable the Juicebox V2 protocol.">
+    <Tooltip
+      title={
+        <>
+          <p>
+            <Trans>
+              The Juicebox V2 frontend is still in development. It is{' '}
+              <strong>not recommended</strong> for use on mainnet. Some features
+              are missing and there are known bugs.{' '}
+              <strong>Use with caution.</strong>
+            </Trans>
+          </p>
+        </>
+      }
+    >
       <label style={{ marginBottom: 5, color: 'white', display: 'block' }}>
-        Enable Juicebox V2
+        <Trans>Enable Juicebox V2</Trans> <ExclamationCircleOutlined />
       </label>
       <Switch onChange={onChange} checked={checked} />
     </Tooltip>

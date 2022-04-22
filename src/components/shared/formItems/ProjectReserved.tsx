@@ -1,7 +1,12 @@
 import { Form } from 'antd'
 import { Trans } from '@lingui/macro'
-import { CSSProperties, useState } from 'react'
+import { CSSProperties, useContext, useState } from 'react'
 import FormItemLabel from 'components/v2/V2Create/FormItemLabel'
+import TabDescription from 'components/v2/V2Create/TabDescription'
+import { formattedNum } from 'utils/formatNumber'
+import { ThemeContext } from 'contexts/themeContext'
+import { defaultFundingCycleMetadata } from 'redux/slices/editingV2Project'
+import { DEFAULT_ISSUANCE_RATE } from 'utils/v2/math'
 
 import NumberSlider from '../inputs/NumberSlider'
 import { FormItemExt } from './formItemExt'
@@ -29,6 +34,10 @@ export default function ProjectReserved({
   checked?: boolean
   onToggled?: (checked: boolean) => void
 } & FormItemExt) {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
+
   const shouldRenderToggle = Boolean(onToggled)
 
   const [showRiskWarning, setShowRiskWarning] = useState<boolean>(
@@ -44,10 +53,25 @@ export default function ProjectReserved({
     </FormItemWarningText>
   )
 
+  // Reserved tokens received by project per ETH
+  const initialReservedTokensPerEth =
+    DEFAULT_ISSUANCE_RATE * ((value ?? 0) / 100)
+
+  // Tokens received by contributor's per ETH
+  const initialIssuanceRate =
+    DEFAULT_ISSUANCE_RATE - initialReservedTokensPerEth
   return (
     <Form.Item
       extra={
         <>
+          <TabDescription>
+            <Trans>
+              Initial issuance rate will be {formattedNum(initialIssuanceRate)}{' '}
+              tokens / ETH for contributors.{' '}
+              {formattedNum(initialReservedTokensPerEth)} tokens / ETH will be
+              reserved by the project.
+            </Trans>
+          </TabDescription>
           <p>
             <Trans>
               Whenever someone pays your project, this percentage of tokens will
@@ -69,6 +93,16 @@ export default function ProjectReserved({
             {shouldRenderToggle ? (
               <SwitchHeading checked={Boolean(checked)} onChange={onToggled}>
                 <Trans>Reserved rate</Trans>
+                {!Boolean(checked) && (
+                  <span
+                    style={{
+                      color: colors.text.tertiary,
+                      marginLeft: 15,
+                    }}
+                  >
+                    ({defaultFundingCycleMetadata.reservedRate}%)
+                  </span>
+                )}
               </SwitchHeading>
             ) : (
               <FormItemLabel>
@@ -87,21 +121,23 @@ export default function ProjectReserved({
       style={style}
       {...formItemProps}
     >
-      <NumberSlider
-        sliderValue={value}
-        defaultValue={value ?? 0}
-        suffix="%"
-        onChange={value => {
-          setShowRiskWarning(
-            (value ?? 0) > RESERVED_RATE_WARNING_THRESHOLD_PERCENT,
-          )
-          onChange(value)
-        }}
-        name={name}
-        step={0.5}
-        formItemProps={showRiskWarning ? { extra: riskNotice } : {}}
-        disabled={!checked}
-      />
+      {checked && (
+        <NumberSlider
+          sliderValue={value}
+          defaultValue={value ?? 0}
+          suffix="%"
+          onChange={value => {
+            setShowRiskWarning(
+              (value ?? 0) > RESERVED_RATE_WARNING_THRESHOLD_PERCENT,
+            )
+            onChange(value)
+          }}
+          name={name}
+          step={0.5}
+          formItemProps={showRiskWarning ? { extra: riskNotice } : {}}
+          disabled={!checked}
+        />
+      )}
     </Form.Item>
   )
 }

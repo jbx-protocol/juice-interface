@@ -17,7 +17,7 @@ import {
   SerializedV2FundAccessConstraint,
 } from 'utils/v2/serializers'
 
-import { redemptionRateFrom } from 'utils/v2/math'
+import { DEFAULT_ISSUANCE_RATE, redemptionRateFrom } from 'utils/v2/math'
 
 import {
   ETH_PAYOUT_SPLIT_GROUP,
@@ -53,7 +53,7 @@ const defaultProjectMetadataState: ProjectMetadataV4 = {
 export const defaultFundingCycleData: SerializedV2FundingCycleData =
   serializeV2FundingCycleData({
     duration: BigNumber.from(0),
-    weight: constants.WeiPerEther.mul(1000000), // 1e24, resulting in 1,000,000 tokens per ETH
+    weight: constants.WeiPerEther.mul(DEFAULT_ISSUANCE_RATE), // 1e24, resulting in 1,000,000 tokens per ETH
     discountRate: BigNumber.from(0), // A number from 0-1,000,000,000
     ballot: DEFAULT_BALLOT_STRATEGY.address,
   })

@@ -15,6 +15,7 @@ import { V2CurrencyName } from 'utils/v2/currency'
 import TooltipLabel from 'components/shared/TooltipLabel'
 
 import FundingCycleDetailWarning from 'components/shared/Project/FundingCycleDetailWarning'
+import EtherscanLink from 'components/shared/EtherscanLink'
 
 import { getUnsafeV2FundingCycleProperties } from 'utils/v2/fundingCycle'
 
@@ -304,7 +305,10 @@ export default function FundingCycleDetails({
         </FundingCycleDetailWarning>
         <div style={{ color: colors.text.secondary }}>
           <div style={{ fontSize: '0.7rem' }}>
-            <Trans>Address: {ballotStrategy.address}</Trans>
+            <Trans>
+              Address:{' '}
+              <EtherscanLink value={ballotStrategy.address} type="address" />
+            </Trans>
             <br />
             {ballotStrategy.description}
           </div>

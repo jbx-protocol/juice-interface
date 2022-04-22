@@ -33,7 +33,11 @@ import ExternalLink from 'components/shared/ExternalLink'
 
 import { Split } from 'models/v2/splits'
 
-import { formatFee, MAX_DISTRIBUTION_LIMIT } from 'utils/v2/math'
+import {
+  DEFAULT_FUNDING_CYCLE_DURATION,
+  formatFee,
+  MAX_DISTRIBUTION_LIMIT,
+} from 'utils/v2/math'
 import { CurrencyContext } from 'contexts/currencyContext'
 import {
   deriveDurationUnit,
@@ -223,7 +227,9 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
             if (!checked) {
               fundingForm.setFieldsValue({ duration: '0' })
             }
-            fundingForm.setFieldsValue({ duration: '14' })
+            fundingForm.setFieldsValue({
+              duration: DEFAULT_FUNDING_CYCLE_DURATION.toString(),
+            })
           }}
         >
           <Trans>Funding cycles</Trans>

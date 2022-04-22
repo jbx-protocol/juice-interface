@@ -17,10 +17,12 @@ import { sanitizeSplit } from 'utils/v2/splits'
 import { Split } from 'models/v2/splits'
 
 import {
+  DEFAULT_ISSUANCE_RATE,
   discountRateFrom,
   formatDiscountRate,
   formatRedemptionRate,
   formatReservedRate,
+  MAX_RESERVED_RATE,
   redemptionRateFrom,
   reservedRateFrom,
 } from 'utils/v2/math'
@@ -49,7 +51,6 @@ import { shadowCard } from 'constants/styles/shadowCard'
 import TabDescription from '../../TabDescription'
 
 const MAX_DISCOUNT_RATE = 20 // this is an opinionated limit
-export const DEFAULT_ISSUANCE_RATE = 10 ** 6
 
 function DiscountRateExtra({
   hasDuration,
@@ -84,8 +85,7 @@ function DiscountRateExtra({
       </p>
       {discountRatePercent > 0 && (
         <>
-          <br />
-          <TabDescription>
+          <TabDescription style={{ marginTop: 20 }}>
             The issuance rate of your second funding cycle will be{' '}
             {formattedNum(secondIssuanceRate)} tokens / ETH, then{' '}
             {formattedNum(thirdIssuanceRate)} tokens / ETH for your third
@@ -192,7 +192,7 @@ export default function TokenForm({ onFinish }: { onFinish: VoidFunction }) {
 
   // Tokens received by contributor's per ETH
   const initialIssuanceRate =
-    DEFAULT_ISSUANCE_RATE - reservedRatePercent * 10000
+    DEFAULT_ISSUANCE_RATE - reservedRatePercent * MAX_RESERVED_RATE
 
   return (
     <Form layout="vertical" onFinish={onTokenFormSaved}>

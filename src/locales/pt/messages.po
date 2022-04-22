@@ -693,6 +693,7 @@ msgid "Deposit 1 wei to @{handle}"
 msgstr "Deposite 1 Wei para @{handle}"
 
 #: src/components/Landing/index.tsx
+#: src/components/Landing/index.tsx
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/index.tsx
 msgid "Design your project"
@@ -888,6 +889,10 @@ msgstr "Editar destinatário de token"
 msgid "Edit tracked assets"
 msgstr "Editar ativos rastreados"
 
+#: src/components/Landing/V2Switch.tsx
+msgid "Enable Juicebox V2"
+msgstr ""
+
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Enabled"
@@ -1022,10 +1027,6 @@ msgstr "Vá para Etherscan"
 msgid "Handle"
 msgstr "Identificador"
 
-#: src/components/v2/shared/V2MainnetWarning.tsx
-msgid "Head to <0>rinkeby.juicebox.money</0> to create a project using the Juicebox V2 contracts on Rinkeby."
-msgstr "Dirija a <0>rinkeby.juicebox.money</0> para criar um projeto usando os contratos Juicebox V2 no Rinkeby."
-
 #: src/components/shared/PayWarningModal.tsx
 msgid "Heads up"
 msgstr "Atenção"
@@ -1087,7 +1088,7 @@ msgid "I understand"
 msgstr "Eu entendo"
 
 #: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
-#: src/components/v2/V2ProjectHeaderActions.tsx
+#: src/components/v2/V2Project/V2ProjectHeaderActions.tsx
 msgid "ID: {0}"
 msgstr "ID: {0}"
 
@@ -1175,9 +1176,9 @@ msgstr "Taxa de JBX ({0}%):"
 msgid "JBX Fee ({feePercentage}%):"
 msgstr "Taxa de JBX ({feePercentage}%):"
 
-#: src/components/v2/shared/V2MainnetWarning.tsx
-msgid "Juicebox V2 on mainnet isn't supported."
-msgstr "Juicebox V2 não é compatível com mainnet."
+#: src/components/v2/shared/V2SupportWarning.tsx
+msgid "Juicebox V2 on {0} isn't enabled."
+msgstr ""
 
 #: src/components/Landing/QAs.tsx
 msgid "Juicebox has handled tens of thousands of ETH through its protocol, and has so far had 0 security mishaps."
@@ -2019,6 +2020,14 @@ msgstr "Esse é o plano, mas os principais contratos do Juicebox primeiramente s
 msgid "The JBX protocol is unaudited, and projects built on it may be vulnerable to bugs or exploits. Be smart!"
 msgstr "O protocolo JBX não é auditado e projetos criados nele podem estar vulneráveis a bugs ou exploits. Seja inteligente!"
 
+#: src/components/Landing/V2Switch.tsx
+msgid "The Juicebox V2 frontend is still in development. It is <0>not recommended</0> for use on mainnet. Some features are missing and there are known bugs. <1>Use with caution.</1>"
+msgstr ""
+
+#: src/components/v2/shared/V2SupportWarning.tsx
+msgid "The Juicebox V2 frontend is still in development. Some features are missing and there are known bugs."
+msgstr ""
+
 #: src/components/Landing/QAs.tsx
 msgid "The Juicebox protocol is governed by a community of JBX token holders who vote on proposals fortnightly."
 msgstr "O protocolo do Juicebox é administrado por uma comunidade de títulares de token JBX que votam quinzenalmente em propostas."
@@ -2171,7 +2180,7 @@ msgstr "Este projeto foi arquivado e não pode ser pago."
 msgid "This project is currently using the Juicebox V1 terminal contract. New features introduced in V1.1 allow the project owner to:"
 msgstr "Este projeto está atualmente usando o contrato de terminal do Juicebox V1. Novas adições introduzidas na V1.1 permitem ao dono do projeto:"
 
-#: src/components/v2/V2ProjectHeaderActions.tsx
+#: src/components/v2/V2Project/V2ProjectHeaderActions.tsx
 msgid "This project uses the V2 version of the Juicebox contracts."
 msgstr "Este projeto usa a versão V2 dos contratos do Juicebox."
 
@@ -2571,8 +2580,8 @@ msgid "Your project will appear archived, and will not be able to receive paymen
 msgstr "O seu projeto aparecerá arquivado e não poderá receber pagamentos através do app juicebox.money. Pode desarquivar um projeto a qualquer momento. Por favor, aguarde alguns dias para que o seu projeto apareça sob o filtro \"arquivado\" na Página de Projetos."
 
 #: src/components/v2/V2Create/V2WarningBanner.tsx
-msgid "Your project will be created on the Juicebox V2 contracts."
-msgstr "O seu projeto será criado nos contratos do Juicebox V2."
+msgid "Your project will be created on the Juicebox V2 contracts. <0>Learn more.</0>"
+msgstr ""
 
 #: src/components/v1/V1Project/ArchiveV1Project.tsx
 msgid "Your project will immediately appear active on the juicebox.money app. Please allow a few days for it to appear in the \"active\" projects list on the Projects page."

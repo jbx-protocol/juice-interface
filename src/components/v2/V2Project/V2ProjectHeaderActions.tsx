@@ -15,7 +15,7 @@ import { useTransferProjectOwnershipTx } from 'hooks/v2/transactor/TransferProje
 import { useTransferUnclaimedTokensTx } from 'hooks/v2/transactor/TransferUnclaimedTokensTx'
 import useUserUnclaimedTokenBalance from 'hooks/v2/contractReader/UserUnclaimedTokenBalance'
 
-import V2ReconfigureFundingModalTrigger from './V2Project/V2ProjectReconfigureModal/V2ReconfigureModalTrigger'
+import V2ReconfigureFundingModalTrigger from './V2ProjectReconfigureModal/V2ReconfigureModalTrigger'
 
 export default function V2ProjectHeaderActions() {
   const { projectId, tokenSymbol, projectOwnerAddress } =

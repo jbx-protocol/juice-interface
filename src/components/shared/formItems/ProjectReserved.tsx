@@ -6,6 +6,7 @@ import TabDescription from 'components/v2/V2Create/TabDescription'
 import { formattedNum } from 'utils/formatNumber'
 import { DEFAULT_ISSUANCE_RATE } from 'components/v2/V2Create/forms/TokenForm'
 import { ThemeContext } from 'contexts/themeContext'
+import { defaultFundingCycleMetadata } from 'redux/slices/editingV2Project'
 
 import NumberSlider from '../inputs/NumberSlider'
 import { FormItemExt } from './formItemExt'
@@ -53,7 +54,8 @@ export default function ProjectReserved({
   )
 
   // Reserved tokens received by project per ETH
-  const initialReservedTokensPerEth = (value ?? 1) * 10 ** 4
+  const initialReservedTokensPerEth =
+    DEFAULT_ISSUANCE_RATE * ((value ?? 0) / 100)
 
   // Tokens received by contributor's per ETH
   const initialIssuanceRate =
@@ -65,9 +67,9 @@ export default function ProjectReserved({
           <TabDescription>
             <Trans>
               Initial issuance rate will be {formattedNum(initialIssuanceRate)}{' '}
-              tokens / ETH for contributors.
+              tokens / ETH for contributors.{' '}
               {formattedNum(initialReservedTokensPerEth)} tokens / ETH will be
-              reserved to the project.
+              reserved by the project.
             </Trans>
           </TabDescription>
           <p>
@@ -98,7 +100,7 @@ export default function ProjectReserved({
                       marginLeft: 15,
                     }}
                   >
-                    (0%)
+                    ({defaultFundingCycleMetadata.reservedRate}%)
                   </span>
                 )}
               </SwitchHeading>

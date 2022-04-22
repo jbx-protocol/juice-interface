@@ -43,6 +43,7 @@ import NumberSlider from 'components/shared/inputs/NumberSlider'
 
 import FormItemWarningText from 'components/shared/FormItemWarningText'
 import { formattedNum } from 'utils/formatNumber'
+import { DEFAULT_BONDING_CURVE_RATE_PERCENTAGE } from 'components/shared/formItems/ProjectBondingCurveRate'
 
 import { shadowCard } from 'constants/styles/shadowCard'
 import TabDescription from '../../TabDescription'
@@ -232,14 +233,17 @@ export default function TokenForm({ onFinish }: { onFinish: VoidFunction }) {
               <SwitchHeading
                 onChange={checked => {
                   setDiscountRateChecked(checked)
-                  if (!checked) setDiscountRate('0')
+                  if (!checked)
+                    setDiscountRate(defaultFundingCycleData.discountRate)
                 }}
                 checked={discountRateChecked}
                 disabled={!canSetDiscountRate}
               >
                 <Trans>Discount rate</Trans>
                 {!discountRateChecked && canSetDiscountRate && (
-                  <span style={defaultValueStyle}>(0%)</span>
+                  <span style={defaultValueStyle}>
+                    ({defaultFundingCycleData.discountRate}%)
+                  </span>
                 )}
               </SwitchHeading>
             }
@@ -265,7 +269,9 @@ export default function TokenForm({ onFinish }: { onFinish: VoidFunction }) {
               <>
                 <Trans>Redemption rate</Trans>
                 {!redemptionRateChecked && canSetRedemptionRate && (
-                  <span style={defaultValueStyle}>(100%)</span>
+                  <span style={defaultValueStyle}>
+                    ({DEFAULT_BONDING_CURVE_RATE_PERCENTAGE}%)
+                  </span>
                 )}
               </>
             }

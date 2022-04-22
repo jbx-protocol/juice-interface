@@ -20,7 +20,7 @@ import FormItemWarningText from '../FormItemWarningText'
 import SwitchHeading from '../SwitchHeading'
 
 const GRAPH_CONTAINER_ID = 'graph-container'
-const DEFAULT_BONDING_CURVE_RATE_PERCENTAGE = '100'
+export const DEFAULT_BONDING_CURVE_RATE_PERCENTAGE = '100'
 
 function BondingCurveRateExtra({ disabled }: { disabled?: boolean }) {
   const {
@@ -42,8 +42,8 @@ function BondingCurveRateExtra({ disabled }: { disabled?: boolean }) {
       {disabled && (
         <FormItemWarningText>
           <Trans>
-            Disabled when your project's distribution limit is <i>No limit</i>{' '}
-            (infinite)
+            Disabled when your project's distribution limit is{' '}
+            <strong>No limit</strong> (infinite)
           </Trans>
         </FormItemWarningText>
       )}

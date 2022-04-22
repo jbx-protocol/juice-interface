@@ -85,6 +85,7 @@ export default function IssueTicketsButton({
         visible={modalVisible}
         title={t`Issue ERC-20 token`}
         okText={t`Issue token`}
+        cancelText={t`Later`}
         onOk={issue}
         onCancel={() => setModalVisible(false)}
         confirmLoading={loading}

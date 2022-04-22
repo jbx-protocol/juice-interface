@@ -1,14 +1,18 @@
 import { ThemeContext } from 'contexts/themeContext'
-import { PropsWithChildren, useContext } from 'react'
+import { CSSProperties, PropsWithChildren, useContext } from 'react'
 import { InfoCircleOutlined } from '@ant-design/icons'
 
-export default function TabDescription(props: PropsWithChildren<{}>) {
+export default function TabDescription({
+  style,
+  children,
+}: PropsWithChildren<{ style?: CSSProperties }>) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
   return (
     <div
       style={{
+        ...style,
         color: colors.text.primary,
         padding: '1rem',
         backgroundColor: colors.background.l1,
@@ -18,7 +22,7 @@ export default function TabDescription(props: PropsWithChildren<{}>) {
       }}
     >
       <InfoCircleOutlined style={{ marginRight: '1rem' }} />
-      <div>{props.children}</div>
+      <div>{children}</div>
     </div>
   )
 }

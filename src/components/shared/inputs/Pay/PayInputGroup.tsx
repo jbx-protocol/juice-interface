@@ -67,6 +67,11 @@ export default function PayInputGroup({
             />
           }
         />
+        {!Number(payAmount) && (
+          <span style={{ color: 'red' }}>
+            Pay amount must be greater than 0.
+          </span>
+        )}
         <PayInputSubText
           payInCurrency={payInCurrency ?? ETH}
           amount={payAmount}

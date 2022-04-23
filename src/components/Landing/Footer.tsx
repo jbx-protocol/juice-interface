@@ -52,7 +52,7 @@ export default function Footer() {
         textAlign: 'center',
       }}
     >
-      <div style={footerLinksStyles}>
+      <div style={{ ...footerLinksStyles, display: 'flex', flexWrap: 'wrap' }}>
         {Object.keys(Languages).map(languageLink)}
       </div>
       <div style={{ ...footerLinksStyles, display: 'flex' }}>

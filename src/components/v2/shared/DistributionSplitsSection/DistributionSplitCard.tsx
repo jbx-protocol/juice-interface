@@ -1,7 +1,7 @@
 import { Button, Col, Row, Space } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { Split } from 'models/v2/splits'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { permyriadToPercent } from 'utils/formatNumber'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import { formatDate } from 'utils/formatDate'
@@ -12,23 +12,30 @@ import {
 } from '@ant-design/icons'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 
+import DistributionSplitModal from './DistributionSplitModal'
+import { CurrencyName } from 'constants/currency'
+
 export default function DistributionSplitCard({
   split,
-  index,
-  onClick,
-  feePercentage,
-  onDelete,
+  splitIndex,
+  splits,
+  onSplitsChanged,
+  distributionLimit,
+  currencyName,
 }: {
   split: Split
-  index: number
-  onClick: VoidFunction
-  feePercentage: string
-  onDelete: VoidFunction
+  splits: Split[]
+  splitIndex: number
+  onSplitsChanged: (splits: Split[]) => void
+  distributionLimit: string | undefined
+  currencyName: CurrencyName
 }) {
   const {
     theme: { colors, radii },
   } = useContext(ThemeContext)
   const { projectOwnerAddress } = useContext(V2ProjectContext)
+
+  const [editSplitModalOpen, setEditSplitModalOpen] = useState<boolean>(false)
 
   const gutter = 10
 
@@ -49,7 +56,7 @@ export default function DistributionSplitCard({
           (isLocked ? colors.stroke.disabled : colors.stroke.tertiary),
         borderRadius: radii.md,
       }}
-      key={split.beneficiary ?? '' + index}
+      key={split.beneficiary ?? '' + splitIndex}
     >
       <Space
         direction="vertical"
@@ -58,7 +65,7 @@ export default function DistributionSplitCard({
           color: colors.text.primary,
           cursor: isLocked ? 'default' : 'pointer',
         }}
-        onClick={onClick}
+        onClick={() => setEditSplitModalOpen(true)}
       >
         {/* TODO: allow for project handles */}
         {split.projectId && parseInt(split.projectId) > 0 ? (
@@ -170,15 +177,24 @@ export default function DistributionSplitCard({
         <Button
           type="text"
           onClick={e => {
-            // onSplitsChanged([
-            //   ...splits.slice(0, index),
-            //   ...splits.slice(index + 1),
-            // ])
+            onSplitsChanged([
+              ...splits.slice(0, splitIndex),
+              ...splits.slice(splitIndex + 1),
+            ])
             e.stopPropagation()
           }}
           icon={<CloseCircleOutlined />}
         />
       )}
+      <DistributionSplitModal
+        visible={editSplitModalOpen}
+        onSplitsChanged={onSplitsChanged}
+        mode={'Edit'}
+        splits={splits}
+        distributionLimit={distributionLimit}
+        onClose={() => setEditSplitModalOpen(false)}
+        currencyName={currencyName}
+      />
     </div>
   )
 }

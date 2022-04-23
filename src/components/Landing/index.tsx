@@ -252,7 +252,7 @@ export default function Landing() {
             </Col>
             <Col xs={24} md={12} style={{ marginBottom: 100 }}>
               <SmallHeader text={t`Latest payments`} />
-              <div style={{ maxHeight: 600, overflow: 'auto' }}>
+              <div style={{ maxHeight: 600, overflow: 'auto', marginTop: 20 }}>
                 <Payments />
               </div>
             </Col>

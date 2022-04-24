@@ -12,7 +12,19 @@ export function useSafeTransferFromTx(): TransactorInstance<{
 
   return ({ newOwnerAddress }, txOpts) => {
     if (!transactor || !projectId || !contracts?.Projects) {
-      txOpts?.onDone?.()
+      let missingParam = !transactor
+        ? 'transactor'
+        : !projectId
+        ? 'projectId'
+        : !contracts?.Projects
+        ? 'contracts.Projects'
+        : null
+
+      txOpts?.onError?.(
+        new DOMException(
+          `Missing ${missingParam ?? 'parameter not found'} in v1 transactor`,
+        ),
+      )
       return Promise.resolve(false)
     }
 

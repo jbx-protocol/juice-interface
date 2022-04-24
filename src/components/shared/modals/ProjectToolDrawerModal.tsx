@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Button, Divider, Drawer, Form, Space } from 'antd'
+import { Button, Divider, Drawer, Form, notification, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { FormItems } from 'components/shared/formItems'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
@@ -73,6 +73,15 @@ export default function ProjectToolDrawerModal({
         onConfirmed: () => {
           setLoadingTransferOwnership(false)
           transferOwnershipForm.resetFields()
+        },
+        onError: (error: Error) => {
+          setLoadingTransferOwnership(false)
+          notification.error({
+            key: new Date().valueOf().toString(),
+            message: 'Transaction failed',
+            description: error.message,
+            duration: 0,
+          })
         },
       },
     )

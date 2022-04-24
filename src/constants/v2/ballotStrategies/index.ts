@@ -5,13 +5,14 @@ import { readNetwork } from 'constants/networks'
 
 const BALLOT_ADDRESSES: { [k: string]: { [j: string]: string } } = {
   THREE_DAY: {
-    rinkeby: '',
-    mainnet: '',
+    rinkeby: '0xcA65D0348E6d53BD29d52e298140375cbC6d3C0D',
+    mainnet: '0x5eaBF1D7A8c6942534cCb3489Ff221b2CBc0255b',
   },
-  SEVEN_DAY: {
-    rinkeby: '',
-    mainnet: '',
-  },
+  // TODO waiting on 7-day buffer contract to be deployed.
+  // SEVEN_DAY: {
+  //   rinkeby: '',
+  //   mainnet: '',
+  // },
 }
 
 export function ballotStrategies() {
@@ -22,16 +23,16 @@ export function ballotStrategies() {
       address: constants.AddressZero,
     },
     {
-      name: t`7-day delay`,
-      description: t`A reconfiguration to an upcoming funding cycle must be submitted at least 7 days before it starts.`,
-      address: BALLOT_ADDRESSES.SEVEN_DAY[readNetwork.name as string],
-    },
-    {
       name: t`3-day delay`,
       description: t`A reconfiguration to an upcoming funding cycle must be submitted at least 3 days before it starts.`,
       address: BALLOT_ADDRESSES.THREE_DAY[readNetwork.name as string],
     },
+    // {
+    //   name: t`7-day delay`,
+    //   description: t`A reconfiguration to an upcoming funding cycle must be submitted at least 7 days before it starts.`,
+    //   address: BALLOT_ADDRESSES.SEVEN_DAY[readNetwork.name as string],
+    // },
   ]
 }
 
-export const DEFAULT_BALLOT_STRATEGY = ballotStrategies()[2]
+export const DEFAULT_BALLOT_STRATEGY = ballotStrategies()[1]

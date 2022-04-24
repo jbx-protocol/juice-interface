@@ -10,6 +10,8 @@ import { invertPermyriad } from 'utils/bigNumbers'
 
 import { decodeV2FundingCycleMetadata } from '../fundingCycle'
 
+process.env.REACT_APP_INFURA_NETWORK = 'mainnet'
+
 /**
  * Returns a mock FundingCyleMetadata packed into a BigNumber
  * @summary Should mirror the bit logic in JBFundingCycleMetadataResolver.sol.

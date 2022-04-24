@@ -12,7 +12,7 @@ import Grid from 'components/shared/Grid'
 
 import ProjectCard from 'components/shared/ProjectCard'
 
-import { Link, useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import ExternalLink from 'components/shared/ExternalLink'
 
@@ -61,7 +61,6 @@ const v2Enabled = featureFlagEnabled(FEATURE_FLAGS.ENABLE_V2)
 
 export default function Landing() {
   const { theme, forThemeOption } = useContext(ThemeContext)
-  const history = useHistory()
   const colors = theme.colors
   const totalMaxWidth = 1080
 
@@ -169,15 +168,11 @@ export default function Landing() {
                 <div className="hide-mobile">
                   <div style={{ display: 'inline-block' }}>
                     {v2Enabled ? (
-                      <Button
-                        type="primary"
-                        size="large"
-                        onClick={() => {
-                          history.push('/v2/create')
-                        }}
-                      >
-                        <Trans>Design your project</Trans>
-                      </Button>
+                      <Link to={'/v2/create'}>
+                        <Button type="primary" size="large">
+                          <Trans>Design your project</Trans>
+                        </Button>
+                      </Link>
                     ) : (
                       <Button
                         type="primary"

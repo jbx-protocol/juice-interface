@@ -21,6 +21,7 @@ export interface DistributeToReservedTokenSplitEvent
   beneficiary: string
   lockedUntil: number
   allocator: string
+  distributeReservedTokensEvent: string
 }
 
 export type DistributeToReservedTokenSplitEventJson = Partial<
@@ -41,4 +42,5 @@ export const parseDistributeToReservedTokenSplitEventJson = (
   beneficiary: j.beneficiary,
   lockedUntil: j.lockedUntil ? parseInt(j.lockedUntil) : undefined,
   allocator: j.allocator,
+  distributeReservedTokensEvent: j.distributeReservedTokensEvent,
 })

@@ -5,25 +5,25 @@ import FormattedAddress from 'components/shared/FormattedAddress'
 import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
-import { PrintReservesEvent } from 'models/subgraph-entities/v1/print-reserves-event'
+import { DistributeReservedTokensEvent } from 'models/subgraph-entities/v2/distribute-reserved-tokens-event'
 import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
-export default function ReservesEventElem({
+export default function DistributeReservedTokensEventElem({
   event,
 }: {
   event:
     | Pick<
-        PrintReservesEvent,
+        DistributeReservedTokensEvent,
         | 'id'
         | 'timestamp'
         | 'txHash'
         | 'caller'
         | 'beneficiary'
-        | 'beneficiaryTicketAmount'
-        | 'count'
+        | 'beneficiaryTokenCount'
+        | 'tokenCount'
       >
     | undefined
 }) {
@@ -34,13 +34,20 @@ export default function ReservesEventElem({
 
   const { data: distributeEvents } = useSubgraphQuery(
     {
-      entity: 'distributeToTicketModEvent',
-      keys: ['id', 'timestamp', 'txHash', 'modBeneficiary', 'modCut'],
+      entity: 'distributeToReservedTokenSplitEvent',
+      keys: [
+        'id',
+        'timestamp',
+        'txHash',
+        'beneficiary',
+        'tokenCount',
+        'projectId',
+      ],
       orderDirection: 'desc',
-      orderBy: 'modCut',
+      orderBy: 'tokenCount',
       where: event?.id
         ? {
-            key: 'printReservesEvent',
+            key: 'distributeReservedTokensEvent',
             value: event.id,
           }
         : undefined,
@@ -91,7 +98,7 @@ export default function ReservesEventElem({
             }}
           >
             <div style={{ fontWeight: 500, fontSize: '0.8rem' }}>
-              <FormattedAddress address={e.modBeneficiary} />:
+              <FormattedAddress address={e.beneficiary} />:
             </div>
 
             <div
@@ -101,12 +108,12 @@ export default function ReservesEventElem({
                   : { fontWeight: 500 }
               }
             >
-              {formatWad(e.modCut, { precision: 0 })}
+              {formatWad(e.tokenCount, { precision: 0 })}
             </div>
           </div>
         ))}
 
-        {event.beneficiaryTicketAmount?.gt(0) && (
+        {event.beneficiaryTokenCount?.gt(0) && (
           <div
             style={{
               display: 'flex',
@@ -118,7 +125,7 @@ export default function ReservesEventElem({
               <FormattedAddress address={event.beneficiary} />:
             </div>
             <div style={{ color: colors.text.secondary }}>
-              {formatWad(event.beneficiaryTicketAmount, {
+              {formatWad(event.beneficiaryTokenCount, {
                 precision: 0,
               })}
             </div>
@@ -134,7 +141,7 @@ export default function ReservesEventElem({
             textAlign: 'right',
           }}
         >
-          {formatWad(event.count, { precision: 0 })}
+          {formatWad(event.tokenCount, { precision: 0 })}
         </div>
       ) : null}
     </div>

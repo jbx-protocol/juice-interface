@@ -8,11 +8,13 @@ import RedeemEventElem from 'components/shared/activityEventElems/RedeemEventEle
 import Loading from 'components/shared/Loading'
 import DownloadActivityModal from 'components/shared/modals/DownloadActivityModal'
 import SectionHeader from 'components/shared/SectionHeader'
+import TapEventElem from 'components/v1/V1Project/ProjectActivity/eventElems/TapEventElem'
 import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useInfiniteSubgraphQuery } from 'hooks/SubgraphQuery'
-import { PrintReservesEvent } from 'models/subgraph-entities/v1/print-reserves-event'
 import { TapEvent } from 'models/subgraph-entities/v1/tap-event'
+import { DistributePayoutsEvent } from 'models/subgraph-entities/v2/distribute-payouts-event'
+import { DistributeReservedTokensEvent } from 'models/subgraph-entities/v2/distribute-reserved-tokens-event'
 import { DeployedERC20Event } from 'models/subgraph-entities/vX/deployed-erc20-event'
 import { PayEvent } from 'models/subgraph-entities/vX/pay-event'
 import { ProjectCreateEvent } from 'models/subgraph-entities/vX/project-create-event'
@@ -21,28 +23,28 @@ import { RedeemEvent } from 'models/subgraph-entities/vX/redeem-event'
 import { useContext, useMemo, useState } from 'react'
 import { WhereConfig } from 'utils/graph'
 
-import ReservesEventElem from './eventElems/ReservesEventElem'
-import TapEventElem from './eventElems/TapEventElem'
+import DistributePayoutsElem from './eventElems/DistributePayoutsElem'
+import DistributeReservedTokensEventElem from './eventElems/DistributeReservedTokensElem'
 
 type EventFilter =
   | 'all'
   | 'pay'
+  | 'mintTokens'
   | 'redeem'
-  | 'withdraw'
-  | 'printReserves'
   | 'deployERC20'
   | 'projectCreate'
-// | 'mintTokens' TODO
+  | 'distributePayouts'
+  | 'distributeReservedTokens'
+// TODO | 'useAllowanceEvent'
 
 export default function ProjectActivity() {
   const [downloadModalVisible, setDownloadModalVisible] = useState<boolean>()
-
-  const { projectId } = useContext(V1ProjectContext)
-
   const [eventFilter, setEventFilter] = useState<EventFilter>('all')
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+
+  const { projectId } = useContext(V1ProjectContext)
 
   const pageSize = 50
 
@@ -50,7 +52,7 @@ export default function ProjectActivity() {
     const _where: WhereConfig<'projectEvent'>[] = [
       {
         key: 'cv',
-        value: 1,
+        value: 2,
       },
     ]
 
@@ -70,22 +72,15 @@ export default function ProjectActivity() {
       case 'pay':
         key = 'payEvent'
         break
-      case 'printReserves':
-        key = 'printReservesEvent'
-        break
       case 'projectCreate':
         key = 'projectCreateEvent'
         break
       case 'redeem':
         key = 'redeemEvent'
         break
-      case 'withdraw':
-        key = 'tapEvent'
+      case 'distributePayouts':
+        key = 'distributePayoutsEvent'
         break
-      // TODO
-      // case 'mintTokens':
-      //   key = 'mintTokensEvent'
-      //   break
     }
 
     if (key) {
@@ -131,18 +126,6 @@ export default function ProjectActivity() {
         ],
       },
       {
-        entity: 'printReservesEvent',
-        keys: [
-          'id',
-          'timestamp',
-          'txHash',
-          'caller',
-          'beneficiary',
-          'beneficiaryTicketAmount',
-          'count',
-        ],
-      },
-      {
         entity: 'redeemEvent',
         keys: [
           'id',
@@ -178,13 +161,6 @@ export default function ProjectActivity() {
           if (e.redeemEvent) {
             elem = <RedeemEventElem event={e.redeemEvent as RedeemEvent} />
           }
-          if (e.printReservesEvent) {
-            elem = (
-              <ReservesEventElem
-                event={e.printReservesEvent as PrintReservesEvent}
-              />
-            )
-          }
           if (e.projectCreateEvent) {
             elem = (
               <ProjectCreateEventElem
@@ -198,6 +174,30 @@ export default function ProjectActivity() {
                 event={e.deployedERC20Event as DeployedERC20Event}
               />
             )
+          }
+          if (e.distributePayoutsEvent) {
+            elem = (
+              <DistributePayoutsElem
+                event={e.distributePayoutsEvent as DistributePayoutsEvent}
+              />
+            )
+          }
+          if (e.distributeReservedTokensEvent) {
+            elem = (
+              <DistributeReservedTokensEventElem
+                event={
+                  e.distributeReservedTokensEvent as DistributeReservedTokensEvent
+                }
+              />
+            )
+          }
+          if (e.useAllowanceEvent) {
+            // TODO
+            // elem = (
+            //   <DeployedERC20EventElem
+            //     event={e.deployedERC20Event as DeployedERC20Event}
+            //   />
+            // )
           }
 
           if (!elem) return null
@@ -309,19 +309,19 @@ export default function ProjectActivity() {
             <Select.Option value="pay">
               <Trans>Paid</Trans>
             </Select.Option>
-            {/* TODO */}
-            {/* <Select.Option value="mintTokens">
-              <Trans>Minted Tokens</Trans>
-            </Select.Option> */}
             <Select.Option value="redeem">
               <Trans>Redeemed</Trans>
             </Select.Option>
-            <Select.Option value="withdraw">
+            <Select.Option value="distributePayouts">
               <Trans>Distributed Funds</Trans>
             </Select.Option>
-            <Select.Option value="printReserves">
-              <Trans>Distributed Reserves</Trans>
+            <Select.Option value="distributeTokens">
+              <Trans>Distributed Tokens</Trans>
             </Select.Option>
+            {/* TODO */}
+            {/* <Select.Option value="useAllowance">
+              <Trans>Used Allowance</Trans>
+            </Select.Option> */}
             <Select.Option value="deployERC20">
               <Trans>ERC20 Deployed</Trans>
             </Select.Option>

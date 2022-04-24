@@ -19,7 +19,7 @@ export type ProjectCreateEventJson = Partial<
     BaseEventEntityJson
 >
 
-export const parseProjectCreateEvent = (
+export const parseProjectCreateEventJson = (
   j: ProjectCreateEventJson,
 ): Partial<ProjectCreateEvent> => ({
   ...parseBaseProjectEntityJson(j),

@@ -1,9 +1,5 @@
 import axios from 'axios'
 import {
-  DeployedERC20EventJson,
-  parseDeployedERC20EventJson,
-} from 'models/subgraph-entities/vX/deployed-erc20-event'
-import {
   DistributeToPayoutModEvent,
   DistributeToPayoutModEventJson,
   parseDistributeToPayoutModEvent,
@@ -14,26 +10,72 @@ import {
   parseDistributeToTicketModEvent,
 } from 'models/subgraph-entities/v1/distribute-to-ticket-mod-event'
 import {
-  parsePayEventJson,
-  PayEvent,
-  PayEventJson,
-} from 'models/subgraph-entities/vX/pay-event'
-import { parseMintTokensEventJson } from 'models/subgraph-entities/vX/mint-tokens-event'
-import {
   parsePrintReservesEventJson,
   PrintReservesEvent,
   PrintReservesEventJson,
 } from 'models/subgraph-entities/v1/print-reserves-event'
+import {
+  parseTapEventJson,
+  TapEvent,
+  TapEventJson,
+} from 'models/subgraph-entities/v1/tap-event'
+import {
+  DistributePayoutsEvent,
+  DistributePayoutsEventJson,
+  parseDistributePayoutsEventJson,
+} from 'models/subgraph-entities/v2/distribute-payouts-event'
+import {
+  DistributeReservedTokensEvent,
+  DistributeReservedTokensEventJson,
+  parseDistributeReservedTokensEventJson,
+} from 'models/subgraph-entities/v2/distribute-reserved-tokens-event'
+import {
+  DistributeToPayoutSplitEvent,
+  DistributeToPayoutSplitEventJson,
+  parseDistributeToPayoutSplitEventJson,
+} from 'models/subgraph-entities/v2/distribute-to-payout-split-event'
+import {
+  DistributeToReservedTokenSplitEvent,
+  DistributeToReservedTokenSplitEventJson,
+  parseDistributeToReservedTokenSplitEventJson,
+} from 'models/subgraph-entities/v2/distribute-to-reserved-token-split-event'
+import {
+  parseUseAllowanceEventJson,
+  UseAllowanceEvent,
+  UseAllowanceEventJson,
+} from 'models/subgraph-entities/v2/use-allowance-event'
+import {
+  DeployedERC20Event,
+  DeployedERC20EventJson,
+  parseDeployedERC20EventJson,
+} from 'models/subgraph-entities/vX/deployed-erc20-event'
+import {
+  MintTokensEvent,
+  MintTokensEventJson,
+  parseMintTokensEventJson,
+} from 'models/subgraph-entities/vX/mint-tokens-event'
+import {
+  parseParticipantJson,
+  Participant,
+  ParticipantJson,
+} from 'models/subgraph-entities/vX/participant'
+import {
+  parsePayEventJson,
+  PayEvent,
+  PayEventJson,
+} from 'models/subgraph-entities/vX/pay-event'
 import {
   parseProjectJson,
   Project,
   ProjectJson,
 } from 'models/subgraph-entities/vX/project'
 import {
-  parseProjectCreateEvent,
+  parseProjectCreateEventJson,
   ProjectCreateEvent,
+  ProjectCreateEventJson,
 } from 'models/subgraph-entities/vX/project-create-event'
 import {
+  parseProjectEventJson,
   ProjectEvent,
   ProjectEventJson,
 } from 'models/subgraph-entities/vX/project-event'
@@ -47,19 +89,6 @@ import {
   RedeemEvent,
   RedeemEventJson,
 } from 'models/subgraph-entities/vX/redeem-event'
-import {
-  parseTapEventJson,
-  TapEvent,
-  TapEventJson,
-} from 'models/subgraph-entities/v1/tap-event'
-
-import {
-  Participant,
-  ParticipantJson,
-} from 'models/subgraph-entities/vX/participant'
-
-import { parseProjectEventJson } from '../models/subgraph-entities/vX/project-event'
-import { DeployedERC20Event } from '../models/subgraph-entities/vX/deployed-erc20-event'
 
 export interface SubgraphEntities {
   protocolLog: ProtocolLog
@@ -75,12 +104,18 @@ export interface SubgraphEntities {
   distributeToPayoutModEvent: DistributeToPayoutModEvent
   distributeToTicketModEvent: DistributeToTicketModEvent
   printReservesEvent: PrintReservesEvent
+  mintTokensEvent: MintTokensEvent
+  distributePayoutsEvent: DistributePayoutsEvent
+  distributeReservedTokensEvent: DistributeReservedTokensEvent
+  distributeToReservedTokenSplitEvent: DistributeToReservedTokenSplitEvent
+  distributeToPayoutSplitEvent: DistributeToPayoutSplitEvent
+  useAllowanceEvent: UseAllowanceEvent
 }
 
 export interface SubgraphQueryReturnTypes {
   protocolLog: { protocolLogs: ProtocolLogJson[] }
   projectEvent: { projectEvents: ProjectEventJson[] }
-  projectCreateEvent: { projectCreateEvents: ProjectCreateEvent[] }
+  projectCreateEvent: { projectCreateEvents: ProjectCreateEventJson[] }
   deployedERC20Event: { deployedERC20Events: DeployedERC20EventJson[] }
   project: { projects: ProjectJson[] }
   projectSearch: { projectSearch: ProjectJson[] }
@@ -97,6 +132,20 @@ export interface SubgraphQueryReturnTypes {
   printReservesEvent: {
     printReservesEvents: PrintReservesEventJson[]
   }
+  distributePayoutsEvent: {
+    distributePayoutsEvent: DistributePayoutsEventJson[]
+  }
+  distributeReservedTokensEvent: {
+    distributeReservedTokensEvents: DistributeReservedTokensEventJson[]
+  }
+  distributeToReservedTokenSplitEvent: {
+    distributeToReservedTokenSplitEvents: DistributeToReservedTokenSplitEventJson[]
+  }
+  distributeToPayoutSplitEvent: {
+    distributeToPayoutSplitEvents: DistributeToPayoutSplitEventJson[]
+  }
+  useAllowanceEvent: { useAllowanceEvents: UseAllowanceEventJson[] }
+  mintTokensEvent: { mintTokensEvent: MintTokensEventJson[] }
 }
 
 export type EntityKey = keyof SubgraphEntities
@@ -275,7 +324,7 @@ export function formatGraphResponse<E extends EntityKey>(
     case 'projectCreateEvent':
       if ('projectCreateEvents' in response) {
         // @ts-ignore
-        return response.projectCreateEvents.map(parseProjectCreateEvent)
+        return response.projectCreateEvents.map(parseProjectCreateEventJson)
       }
       break
     case 'projectSearch':
@@ -330,16 +379,54 @@ export function formatGraphResponse<E extends EntityKey>(
         return response.printReservesEvents.map(parsePrintReservesEventJson)
       }
       break
-    case 'printPremineEvent':
-      if ('printPremineEvents' in response) {
+    case 'mintTokensEvent':
+      if ('mintTokensEvents' in response) {
         // @ts-ignore
-        return response.printPremineEvent.map(parseMintTokensEventJson)
+        return response.mintTokensEvents.map(parseMintTokensEventJson)
       }
       break
     case 'deployedERC20Event':
       if ('deployedERC20Events' in response) {
         // @ts-ignore
         return response.deployedERC20Events.map(parseDeployedERC20EventJson)
+      }
+      break
+    case 'distributePayoutsEvent':
+      if ('distributePayoutsEvents' in response) {
+        // @ts-ignore
+        return response.distributePayoutsEvents.map(
+          parseDistributePayoutsEventJson,
+        )
+      }
+      break
+    case 'distributeReservedTokensEvent':
+      if ('distributeReservedTokensEvents' in response) {
+        // @ts-ignore
+        return response.distributeReservedTokensEvents.map(
+          parseDistributeReservedTokensEventJson,
+        )
+      }
+      break
+    case 'distributeToReservedTokenSplitEvent':
+      if ('distributeToReservedTokenSplitEvents' in response) {
+        // @ts-ignore
+        return response.distributeToReservedTokenSplitEvents.map(
+          parseDistributeToReservedTokenSplitEventJson,
+        )
+      }
+      break
+    case 'distributeToPayoutSplitEvent':
+      if ('distributeToPayoutSplitEvents' in response) {
+        // @ts-ignore
+        return response.distributeToPayoutSplitEvents.map(
+          parseDistributeToPayoutSplitEventJson,
+        )
+      }
+      break
+    case 'useAllowanceEvent':
+      if ('useAllowanceEvents' in response) {
+        // @ts-ignore
+        return response.useAllowanceEvents.map(parseUseAllowanceEventJson)
       }
       break
   }

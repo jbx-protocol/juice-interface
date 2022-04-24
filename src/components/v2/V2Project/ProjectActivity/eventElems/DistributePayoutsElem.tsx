@@ -5,27 +5,27 @@ import EtherscanLink from 'components/shared/EtherscanLink'
 
 import { ThemeContext } from 'contexts/themeContext'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
-import { TapEvent } from 'models/subgraph-entities/v1/tap-event'
 import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
 
 import { Trans } from '@lingui/macro'
 import { smallHeaderStyle } from 'components/shared/activityEventElems/styles'
+import { DistributePayoutsEvent } from 'models/subgraph-entities/v2/distribute-payouts-event'
 
-export default function TapEventElem({
+export default function DistributePayoutsElem({
   event,
 }: {
   event:
     | Pick<
-        TapEvent,
+        DistributePayoutsEvent,
         | 'id'
         | 'timestamp'
         | 'txHash'
         | 'caller'
         | 'beneficiary'
-        | 'beneficiaryTransferAmount'
-        | 'netTransferAmount'
+        | 'distributedAmount'
+        | 'memo'
       >
     | undefined
 }) {
@@ -33,21 +33,14 @@ export default function TapEventElem({
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const { data: payoutEvents } = useSubgraphQuery({
-    entity: 'distributeToPayoutModEvent',
-    keys: [
-      'id',
-      'timestamp',
-      'txHash',
-      'modProjectId',
-      'modBeneficiary',
-      'modCut',
-    ],
+  const { data: distributePayoutsEvents } = useSubgraphQuery({
+    entity: 'distributeToPayoutSplitEvent',
+    keys: ['id', 'timestamp', 'txHash', 'amount', 'beneficiary', 'projectId'],
     orderDirection: 'desc',
-    orderBy: 'modCut',
+    orderBy: 'amount',
     where: event?.id
       ? {
-          key: 'tapEvent',
+          key: 'distributePayoutsEvent',
           value: event.id,
         }
       : undefined,
@@ -83,7 +76,7 @@ export default function TapEventElem({
       </div>
 
       <div style={{ marginTop: 5 }}>
-        {payoutEvents?.map(e => (
+        {distributePayoutsEvents?.map(e => (
           <div
             key={e.id}
             style={{
@@ -94,33 +87,30 @@ export default function TapEventElem({
             }}
           >
             <div style={{ fontWeight: 500 }}>
-              {e.modProjectId?.gt(0) ? (
+              {e.projectId ? (
                 <span>
-                  <V1ProjectHandle projectId={e.modProjectId} />
+                  <V1ProjectHandle projectId={e.projectId} />
                 </span>
               ) : (
-                <FormattedAddress address={e.modBeneficiary} />
+                <FormattedAddress address={e.beneficiary} />
               )}
               :
             </div>
 
             <div style={{ color: colors.text.secondary }}>
               <CurrencySymbol currency="ETH" />
-              {formatWad(e.modCut, { precision: 4 })}
+              {formatWad(e.amount, { precision: 4 })}
             </div>
           </div>
         ))}
 
-        {event.beneficiaryTransferAmount?.gt(0) && (
+        {event.distributedAmount?.gt(0) && (
           <div
             style={{
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'baseline',
-              fontSize:
-                payoutEvents?.length && payoutEvents.length > 1
-                  ? '0.8rem'
-                  : undefined,
+              fontSize: distributePayoutsEvents?.length ? '0.8rem' : undefined,
             }}
           >
             <div style={{ fontWeight: 500 }}>
@@ -128,19 +118,19 @@ export default function TapEventElem({
             </div>
             <div
               style={
-                payoutEvents?.length && payoutEvents.length > 1
+                distributePayoutsEvents?.length
                   ? { color: colors.text.secondary }
                   : { fontWeight: 500 }
               }
             >
               <CurrencySymbol currency="ETH" />
-              {formatWad(event.beneficiaryTransferAmount, { precision: 4 })}
+              {formatWad(event.distributedAmount, { precision: 4 })}
             </div>
           </div>
         )}
       </div>
 
-      {payoutEvents?.length && payoutEvents.length > 1 ? (
+      {distributePayoutsEvents?.length ? (
         <div
           style={{
             color: colors.text.primary,
@@ -149,7 +139,7 @@ export default function TapEventElem({
           }}
         >
           <CurrencySymbol currency="ETH" />
-          {formatWad(event.netTransferAmount, { precision: 4 })}
+          {formatWad(event.distributedAmount, { precision: 4 })}
         </div>
       ) : null}
     </div>

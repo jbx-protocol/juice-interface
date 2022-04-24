@@ -1,35 +1,25 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Col, Row, Space } from 'antd'
-import V1Create from 'components/v1/V1Create'
-import Loading from 'components/shared/Loading'
+import ExternalLink from 'components/shared/ExternalLink'
 import FeedbackFormButton from 'components/shared/FeedbackFormButton'
+import Grid from 'components/shared/Grid'
+import Loading from 'components/shared/Loading'
+import ProjectCard from 'components/shared/ProjectCard'
+import V1Create from 'components/v1/V1Create'
 
 import { ThemeContext } from 'contexts/themeContext'
 import { useProjectsQuery } from 'hooks/v1/Projects'
 import { CSSProperties, useContext } from 'react'
-
-import Grid from 'components/shared/Grid'
-
-import ProjectCard from 'components/shared/ProjectCard'
-
-import { Link } from 'react-router-dom'
-
-import ExternalLink from 'components/shared/ExternalLink'
-
+import { Link, useHistory } from 'react-router-dom'
 import { FEATURE_FLAGS, featureFlagEnabled } from 'utils/featureFlags'
-import useSubgraphQuery from 'hooks/SubgraphQuery'
-
-import { formatWad } from 'utils/formatNumber'
-
-import CurrencySymbol from 'components/shared/CurrencySymbol'
 
 import { ThemeOption } from 'constants/theme/theme-option'
 
 import Faq from './Faq'
 import Footer from './Footer'
 import Payments from './Payments'
-import TrendingSection from './TrendingSection'
 import { OverflowVideoLink } from './QAs'
+import TrendingSection from './TrendingSection'
 
 const BigHeader = ({ text }: { text: string }) => (
   <h1
@@ -85,12 +75,12 @@ export default function Landing() {
     margin: '0 auto',
   }
 
-  const { data: protocolLogs } = useSubgraphQuery({
-    entity: 'protocolLog',
-    keys: ['erc20Count', 'paymentsCount', 'projectsCount', 'volumePaid'],
-  })
+  // const { data: protocolLogs } = useSubgraphQuery({
+  //   entity: 'protocolLog',
+  //   keys: ['erc20Count', 'paymentsCount', 'projectsCount', 'volumePaid'],
+  // })
 
-  const stats = protocolLogs?.[0]
+  // const stats = protocolLogs?.[0]
 
   return (
     <div>
@@ -228,7 +218,7 @@ export default function Landing() {
         </div>
       </section>
 
-      <section
+      {/* <section
         style={{
           ...section,
           marginTop: 80,
@@ -250,7 +240,7 @@ export default function Landing() {
           </div>
           <div>{stats?.erc20Count} ERC20s deployed</div>
         </div>
-      </section>
+      </section> */}
 
       <TrendingSection />
 

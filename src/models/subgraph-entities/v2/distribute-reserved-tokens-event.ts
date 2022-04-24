@@ -1,4 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { parseDistributeToReservedTokenSplitEventJson } from 'models/subgraph-entities/v2/distribute-to-reserved-token-split-event'
 
 import {
   BaseEventEntity,
@@ -10,6 +11,10 @@ import {
   BaseProjectEntityJson,
   parseBaseProjectEntityJson,
 } from '../base/base-project-entity'
+import {
+  DistributeToReservedTokenSplitEvent,
+  DistributeToReservedTokenSplitEventJson,
+} from './distribute-to-reserved-token-split-event'
 
 export interface DistributeReservedTokensEvent
   extends BaseEventEntity,
@@ -19,13 +24,19 @@ export interface DistributeReservedTokensEvent
   tokenCount: BigNumber
   beneficiaryTokenCount: BigNumber
   memo: string
+  splitDistributions: Partial<DistributeToReservedTokenSplitEvent>[]
 }
 
 export type DistributeReservedTokensEventJson = Partial<
-  Record<keyof DistributeReservedTokensEvent, string> &
+  Record<
+    keyof Omit<DistributeReservedTokensEvent, 'splitDistributions'>,
+    string
+  > &
     BaseEventEntityJson &
     BaseProjectEntityJson
->
+> & {
+  splitDistributions: DistributeToReservedTokenSplitEventJson[]
+}
 
 export const parseDistributeReservedTokensEventJson = (
   j: DistributeReservedTokensEventJson,
@@ -41,4 +52,7 @@ export const parseDistributeReservedTokensEventJson = (
     ? BigNumber.from(j.beneficiaryTokenCount)
     : undefined,
   memo: j.memo,
+  splitDistributions: j.splitDistributions
+    ? j.splitDistributions.map(parseDistributeToReservedTokenSplitEventJson)
+    : undefined,
 })

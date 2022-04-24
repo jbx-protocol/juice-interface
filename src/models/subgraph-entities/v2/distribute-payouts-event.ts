@@ -10,6 +10,11 @@ import {
   BaseProjectEntityJson,
   parseBaseProjectEntityJson,
 } from '../base/base-project-entity'
+import {
+  DistributeToPayoutSplitEvent,
+  DistributeToPayoutSplitEventJson,
+  parseDistributeToPayoutSplitEventJson,
+} from './distribute-to-payout-split-event'
 
 export interface DistributePayoutsEvent
   extends BaseEventEntity,
@@ -22,13 +27,16 @@ export interface DistributePayoutsEvent
   fee: BigNumber
   beneficiaryDistributionAmount: BigNumber
   memo: string
+  splitDistributions: Partial<DistributeToPayoutSplitEvent>[]
 }
 
 export type DistributePayoutsEventJson = Partial<
-  Record<keyof DistributePayoutsEvent, string> &
+  Record<keyof Omit<DistributePayoutsEvent, 'splitDistributions'>, string> &
     BaseEventEntityJson &
     BaseProjectEntityJson
->
+> & {
+  splitDistributions: DistributeToPayoutSplitEventJson[]
+}
 
 export const parseDistributePayoutsEventJson = (
   j: DistributePayoutsEventJson,
@@ -51,4 +59,7 @@ export const parseDistributePayoutsEventJson = (
     : undefined,
   fee: j.fee ? BigNumber.from(j.fee) : undefined,
   memo: j.memo,
+  splitDistributions: j.splitDistributions
+    ? j.splitDistributions.map(parseDistributeToPayoutSplitEventJson)
+    : undefined,
 })

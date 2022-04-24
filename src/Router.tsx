@@ -11,7 +11,9 @@ import V1CurrencyProvider from 'providers/v1/V1CurrencyProvider'
 import V2EntryGuard from 'components/v2/V2EntryGuard'
 
 const V2Create = lazy(() => import('components/v2/V2Create'))
-const V2Dashboard = lazy(() => import('components/v2/V2Dashboard'))
+const V2DashboardGateway = lazy(
+  () => import('components/v2/V2Dashboard/Gateway'),
+)
 
 function CatchallRedirect() {
   const route = useParams<{ route: string }>()['route']
@@ -39,6 +41,16 @@ export default function Router() {
         <Route path="/projects">
           <Projects />
         </Route>
+
+        <Route path="/p/:ensName(*.eth)">
+          <V2EntryGuard>
+            <Suspense fallback={<Loading />}>
+              <V2UserProvider>
+                <V2DashboardGateway />
+              </V2UserProvider>
+            </Suspense>
+          </V2EntryGuard>
+        </Route>
         <Route path="/p/:handle">
           <V1Dashboard />
         </Route>
@@ -54,7 +66,7 @@ export default function Router() {
           <V2EntryGuard>
             <Suspense fallback={<Loading />}>
               <V2UserProvider>
-                <V2Dashboard />
+                <V2DashboardGateway />
               </V2UserProvider>
             </Suspense>
           </V2EntryGuard>

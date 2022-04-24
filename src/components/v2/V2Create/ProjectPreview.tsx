@@ -82,6 +82,7 @@ export default function ProjectPreview({
       balanceInDistributionLimitCurrencyLoading: false,
       distributionLimitLoading: false,
       fundingCycleLoading: false,
+      usedDistributionLimitLoading: false,
     },
   }
 

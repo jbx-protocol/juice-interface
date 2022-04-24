@@ -90,11 +90,12 @@ export default function V2Dashboard() {
       terminal: primaryTerminal,
     })
 
-  const { data: usedDistributionLimit } = useUsedDistributionLimit({
-    projectId,
-    terminal: primaryTerminal,
-    fundingCycleNumber: fundingCycle?.number,
-  })
+  const { data: usedDistributionLimit, loading: usedDistributionLimitLoading } =
+    useUsedDistributionLimit({
+      projectId,
+      terminal: primaryTerminal,
+      fundingCycleNumber: fundingCycle?.number,
+    })
 
   const [distributionLimit, distributionLimitCurrency] =
     distributionLimitData ?? []
@@ -179,6 +180,7 @@ export default function V2Dashboard() {
       balanceInDistributionLimitCurrencyLoading,
       distributionLimitLoading,
       fundingCycleLoading,
+      usedDistributionLimitLoading,
     },
   }
 

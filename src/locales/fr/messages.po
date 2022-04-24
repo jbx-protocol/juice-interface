@@ -77,7 +77,6 @@ msgid "7 days"
 msgstr "7 jours"
 
 #: src/constants/v1/ballotStrategies/index.ts
-#: src/constants/v2/ballotStrategies/index.ts
 msgid "7-day delay"
 msgstr "7 jours de délai"
 
@@ -217,7 +216,6 @@ msgid "A reconfiguration to an upcoming funding cycle must be submitted at least
 msgstr "Le reparamétrage d'un cycle de financement à venir doit être soumis au moins 3 jours avant son début."
 
 #: src/constants/v1/ballotStrategies/index.ts
-#: src/constants/v2/ballotStrategies/index.ts
 msgid "A reconfiguration to an upcoming funding cycle must be submitted at least 7 days before it starts."
 msgstr "Le reparamétrage d'un cycle de financement à venir doit être soumis au moins 7 jours avant son début."
 

@@ -34,28 +34,38 @@ export default function PayoutSplitsCard({
     projectOwnerAddress,
     balanceInDistributionLimitCurrency,
     isPreviewMode,
+    loading,
   } = useContext(V2ProjectContext)
   const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
 
   const [distributePayoutsModalVisible, setDistributePayoutsModalVisible] =
     useState<boolean>()
 
+  const isLoadingStats =
+    loading.ETHBalanceLoading ||
+    loading.distributionLimitLoading ||
+    loading.balanceInDistributionLimitCurrencyLoading ||
+    loading.usedDistributionLimitLoading
+
   return (
     <CardSection>
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
         {hideDistributeButton ? null : (
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            {ETHPaymentTerminalFee &&
-            distributionLimit &&
-            usedDistributionLimit ? (
+            <Skeleton
+              loading={isLoadingStats}
+              active
+              title={false}
+              paragraph={{ rows: 2, width: ['60%', '60%'] }}
+            >
               <SpendingStats
                 hasFundingTarget={distributionLimit?.gt(0)}
                 currency={V2CurrencyName(
                   distributionLimitCurrency?.toNumber() as V2CurrencyOption,
                 )}
                 projectBalanceInCurrency={balanceInDistributionLimitCurrency}
-                targetAmount={distributionLimit}
-                distributedAmount={usedDistributionLimit}
+                targetAmount={distributionLimit ?? BigNumber.from(0)}
+                distributedAmount={usedDistributionLimit ?? BigNumber.from(0)}
                 feePercentage={
                   ETHPaymentTerminalFee
                     ? formatFee(ETHPaymentTerminalFee)
@@ -63,13 +73,7 @@ export default function PayoutSplitsCard({
                 }
                 ownerAddress={projectOwnerAddress}
               />
-            ) : (
-              <Skeleton
-                active
-                title={false}
-                paragraph={{ rows: 2, width: ['60%', '60%'] }}
-              />
-            )}
+            </Skeleton>
 
             <Button
               type="ghost"

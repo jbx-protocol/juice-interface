@@ -42,7 +42,7 @@ export default function Router() {
           <Projects />
         </Route>
 
-        <Route path="/p/:ensName(*.eth)">
+        <Route path="/p/:ensName(.*.eth)">
           <V2EntryGuard>
             <Suspense fallback={<Loading />}>
               <V2UserProvider>

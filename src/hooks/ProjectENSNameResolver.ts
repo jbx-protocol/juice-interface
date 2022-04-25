@@ -4,7 +4,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 
 import { readProvider } from 'constants/readProvider'
 
-const JUICEBOX_V2_TXT_RECORD_KEY = 'juicebox_v2'
+const JUICEBOX_V2_TXT_RECORD_KEY = 'juicebox'
 
 export const getProjectIdFromENSName = async (ensName: string) => {
   const resolver = await readProvider.getResolver(ensName)
@@ -25,10 +25,10 @@ export default function useProjectENSNameResolver({
 
   useEffect(() => {
     const resolve = async () => {
-      setLoading(true)
       try {
         if (!ensName) throw new Error('No ENS name')
 
+        setLoading(true)
         const newProjectId = await getProjectIdFromENSName(ensName)
         if (!newProjectId)
           throw new Error(`No project ID for ENS name: ${ensName}`)

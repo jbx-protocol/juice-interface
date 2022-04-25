@@ -34,7 +34,9 @@
     "supabase:login": "supabase login",
     "supabase:pushdb": "supabase db push",
     "supabase:diffdb": "supabase db diff",
-    "supabase:generate:local": "supabase gen types typescript --local > src/types/database.types.ts"
+    "supabase:generate:local": "supabase gen types typescript --local > src/types/database.types.ts",
+    "cy:run": "cypress run",
+    "cy:open": "cypress open"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,json,css}": [
@@ -151,6 +153,7 @@
     "@types/ethereum-block-by-date": "1.4.1",
     "@types/formidable": "^2.0.5",
     "@types/he": "^1.2.0",
+    "@testing-library/cypress": "^8.0.2",
     "@types/jest": "^26.0.15",
     "@types/lodash": "^4.14.180",
     "@types/mjml": "^4.7.0",
@@ -165,6 +168,7 @@
     "@typescript-eslint/eslint-plugin": "^5.35.1",
     "@typescript-eslint/parser": "^5.35.1",
     "autoprefixer": "10.4.13",
+    "cypress": "^9.5.4",
     "dotenv": "^16.0.1",
     "eslint": "^8.19.0",
     "eslint-config-prettier": "^8.5.0",

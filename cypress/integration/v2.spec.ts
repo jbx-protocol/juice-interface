@@ -1,6 +1,9 @@
 import {v4 as UUIDv4} from 'uuid'
 
 context('V2 Testing', () => {
+  before(() => {
+    cy.setupMetaMask()
+  })
   it('foo', () => {
     cy.visit('/#/v2/create')
     const projectName = UUIDv4()

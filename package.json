@@ -68,7 +68,7 @@
     "postinstall": "yarn i18n:compile",
     "analyze": "yarn build && source-map-explorer 'build/static/js/*.js'",
     "cy:run": "cypress run",
-    "cy:open": "cypress open"
+    "cy:open": "CYPRESS_REMOTE_DEBUGGING_PORT=9222 cypress open"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,json,css}": [
@@ -90,20 +90,25 @@
   },
   "devDependencies": {
     "@testing-library/cypress": "^8.0.2",
+    "@types/cross-zip": "^4.0.0",
     "@types/jest": "^26.0.15",
     "@types/lodash": "^4.14.180",
-    "@types/node": "^12.0.0",
+    "@types/node": "^17.0.26",
+    "@types/puppeteer": "^5.4.5",
     "@types/react": "^17",
     "@types/react-dom": "^17",
     "@types/react-router-dom": "^5.1.7",
     "@types/uuid": "^8.3.4",
+    "cross-zip": "^4.0.0",
     "cypress": "^9.5.4",
     "eslint-config-react-app": "^6.0.0",
     "eslint-plugin-import": "^2.25.3",
+    "fs": "^0.0.1-security",
     "husky": "^7.0.0",
     "less": "^4.1.1",
     "lint-staged": "^12.1.1",
     "prettier": "2.4.1",
+    "puppeteer-core": "^10.4.0",
     "source-map-explorer": "^2.5.2",
     "uuid": "^8.3.2"
   }

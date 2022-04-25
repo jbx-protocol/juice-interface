@@ -2,7 +2,7 @@ import { t, Trans } from '@lingui/macro'
 import { Modal, Space, Tooltip } from 'antd'
 import ExternalLink from 'components/shared/ExternalLink'
 import RichButton from 'components/shared/RichButton'
-import { V2StakeForNFTDrawer } from 'components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2StakeForNFTDrawer'
+import { V2StakeForNFTDrawer } from 'components/v2/V2Project/V2ManageTokensSection/V2StakeForNFTDrawer'
 import { PropsWithChildren, useState } from 'react'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import * as constants from '@ethersproject/constants'
@@ -202,6 +202,7 @@ export default function ManageTokensModal({
       />
       <V2StakeForNFTDrawer
         visible={stakeDrawerVisible}
+        onSave={() => setStakeDrawerVisible(false)}
         onClose={() => {
           setStakeDrawerVisible(false)
         }}

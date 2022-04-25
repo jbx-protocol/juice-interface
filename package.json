@@ -66,7 +66,9 @@
     "i18n:compile": "lingui compile",
     "i18n:lint": "./scripts/lint-translations.sh",
     "postinstall": "yarn i18n:compile",
-    "analyze": "yarn build && source-map-explorer 'build/static/js/*.js'"
+    "analyze": "yarn build && source-map-explorer 'build/static/js/*.js'",
+    "cy:run": "cypress run",
+    "cy:open": "cypress open"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,json,css}": [
@@ -87,18 +89,22 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/cypress": "^8.0.2",
     "@types/jest": "^26.0.15",
     "@types/lodash": "^4.14.180",
     "@types/node": "^12.0.0",
     "@types/react": "^17",
     "@types/react-dom": "^17",
     "@types/react-router-dom": "^5.1.7",
+    "@types/uuid": "^8.3.4",
+    "cypress": "^9.5.4",
     "eslint-config-react-app": "^6.0.0",
     "eslint-plugin-import": "^2.25.3",
     "husky": "^7.0.0",
     "less": "^4.1.1",
     "lint-staged": "^12.1.1",
     "prettier": "2.4.1",
-    "source-map-explorer": "^2.5.2"
+    "source-map-explorer": "^2.5.2",
+    "uuid": "^8.3.2"
   }
 }

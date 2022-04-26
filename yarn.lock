@@ -4430,10 +4430,10 @@
     base64-sol "1.0.1"
     hardhat-watcher "^2.1.1"
 
-"@uniswap/v3-sdk@3.6.3":
-  version "3.6.3"
-  resolved "https://registry.yarnpkg.com/@uniswap/v3-sdk/-/v3-sdk-3.6.3.tgz#f2fca86cfde1450976581028195fc0ee4b11036d"
-  integrity sha512-nepNTZMpM1uwLJAlQaUUEDMFrSujS1sOqyVD739zoPWsVHAUPvqVAKQN0GlgZcLXOqeCMKjO3lteaNHEXef1XA==
+"@uniswap/v3-sdk@3.8.2":
+  version "3.8.2"
+  resolved "https://registry.yarnpkg.com/@uniswap/v3-sdk/-/v3-sdk-3.8.2.tgz#6e10eebe0da851a4f6a5036a1e70a896a5c239d4"
+  integrity sha512-JVrs1ZuWKP8JmYi5hxFliOnCFAEREwMpE7qB6rKPCo155/pIRyQ90lJfQZCJO7pP/webx5t5JFxCOytmDIp29Q==
   dependencies:
     "@ethersproject/abi" "^5.0.12"
     "@ethersproject/solidity" "^5.0.9"

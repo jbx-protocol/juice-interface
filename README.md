@@ -117,6 +117,17 @@ Take the following steps to set up Juicebox's subgraph for local development:
    yarn start
    ```
 
+### Testing
+
+** Make sure you start the app using `yarn start` first **
+
+1. Setup your .env file with the `E2E_` prefixed variables.
+2. Open Cypress.
+   ```bash
+   yarn cy:open
+   ```
+3. Run tests.
+
 ## Contributing
 
 If you'd like to contribute code or translations to the repository, check out

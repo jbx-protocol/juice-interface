@@ -52,6 +52,6 @@ const loadContract = (
   network: NetworkName,
   signerOrProvider: JsonRpcSigner | JsonRpcProvider,
 ): Contract => {
-  let contract = require(`@jbx-protocol/contracts-v1/deployments/${network}/${contractName}.json`)
+  const contract = require(`@jbx-protocol/contracts-v1/deployments/${network}/${contractName}.json`)
   return new Contract(contract.address, contract.abi, signerOrProvider)
 }

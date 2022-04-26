@@ -1,15 +1,16 @@
+/* eslint-disable react/jsx-key */
 import { t, Trans } from '@lingui/macro'
 import ExternalLink from 'components/shared/ExternalLink'
-import { PropsWithChildren } from 'react'
+import { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 
-export const OverflowVideoLink = ({ children }: PropsWithChildren<{}>) => (
+export const OverflowVideoLink = ({ children }: { children: ReactNode }) => (
   <ExternalLink href="https://youtu.be/9Mq5oDh0aBY">{children}</ExternalLink>
 )
 
 const JB_FEE = 2.5
 
-export const JBDiscordLink = ({ children }: PropsWithChildren<{}>) => (
+export const JBDiscordLink = ({ children }: { children: ReactNode }) => (
   <ExternalLink href="https://discord.gg/6jXrJSyDFf">{children}</ExternalLink>
 )
 

@@ -4,7 +4,7 @@ import CurrencySymbol from 'components/shared/CurrencySymbol'
 
 import { ThemeContext } from 'contexts/themeContext'
 import moment from 'moment'
-import React, {
+import {
   CSSProperties,
   SVGProps,
   useContext,
@@ -68,7 +68,7 @@ export default function VolumeChart({
 
     loadBlockRefs({ duration, now }).then(async blockRefs => {
       if (!projectId) return
-      let projectEvents = await loadProjectEvents({
+      const projectEvents = await loadProjectEvents({
         blockRefs,
         showGraph,
         projectId,
@@ -110,7 +110,7 @@ export default function VolumeChart({
   const xTicks = useMemo(() => {
     if (!events?.length) return []
 
-    let ticks = []
+    const ticks = []
     const max = now / 1000
     const min = duration ? (now - daysToMillis(duration)) / 1000 : undefined
 

@@ -1,8 +1,38 @@
 {
-  "plugins": ["import"],
-  "extends": ["react-app", "react-app/jest", "prettier"],
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
   "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": ["react", "@typescript-eslint", "import", "react-hooks"],
   "rules": {
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "react/prop-types": "off",
+    "react/no-unescaped-entities": "off",
+    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+
+    "@typescript-eslint/no-var-requires": "warn",
+    "@typescript-eslint/ban-ts-comment": "warn",
+
     "@typescript-eslint/no-explicit-any": "error",
     "react-hooks/exhaustive-deps": "error",
     "@typescript-eslint/no-redeclare": "error",
@@ -33,13 +63,5 @@
         ]
       }
     ]
-  },
-  "overrides": [
-    {
-      "files": "package.json",
-      "rules": {
-        "no-unused-expressions": "off"
-      }
-    }
-  ]
+  }
 }

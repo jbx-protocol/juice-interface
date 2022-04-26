@@ -148,7 +148,7 @@ export const ProjectPayoutModsModal = ({
   }, [feePerbicent, form, target])
 
   const onAmountChange = (newAmount: number | undefined) => {
-    let newPercent = getPercentFromAmount(newAmount, target, feePercentage)
+    const newPercent = getPercentFromAmount(newAmount, target, feePercentage)
     setEditingPercent(newPercent)
     form.setFieldsValue({ amount: newAmount })
     form.setFieldsValue({ percent: newPercent })
@@ -324,7 +324,7 @@ export const ProjectPayoutModsModal = ({
             <span style={{ flex: 1 }}>
               <NumberSlider
                 onChange={(percent: number | undefined) => {
-                  let newAmount = getAmountFromPercent(
+                  const newAmount = getAmountFromPercent(
                     percent ?? 0,
                     target,
                     feePercentage,

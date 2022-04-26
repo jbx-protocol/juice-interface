@@ -665,7 +665,6 @@ msgid "Connect your wallet to see your projects."
 msgstr "Conecta tu billetera para ver tus proyectos."
 
 #: src/components/shared/ArchiveProject/index.tsx
-#: src/components/shared/ArchiveProject/index.tsx
 msgid "Connected wallet not authorized"
 msgstr "Billetera conectada no autorizada"
 
@@ -1148,7 +1147,6 @@ msgstr "Preguntas frecuentes"
 msgid "FAQs"
 msgstr "Preguntas frecuentes"
 
-#: src/components/shared/ArchiveProject/index.tsx
 #: src/components/shared/ArchiveProject/index.tsx
 msgid "Failed to update project metadata"
 msgstr "No se ha podido actualizar la metadata del proyecto"
@@ -2431,7 +2429,6 @@ msgstr "Algunas propiedades de los ciclos de financiamiento pueden indicar riesg
 msgid "Some properties of the project's current funding cycle may indicate risk for contributors."
 msgstr "Algunas propiedades del presente ciclo de financiamiento del proyecto pueden significar riesgo para los contribuyentes."
 
-#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Something went wrong."
 msgstr "Algo salió mal."

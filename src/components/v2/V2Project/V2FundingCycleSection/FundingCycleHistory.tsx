@@ -70,7 +70,8 @@ const deriveFundingCyclesBetweenEachConfiguration = ({
       let interimStart: BigNumber = firstFundingCycleOfConfiguration.start
       let interimNumber: BigNumber = firstFundingCycleOfConfiguration.number
 
-      let interimFundingCycle: V2FundingCycle = firstFundingCycleOfConfiguration
+      const interimFundingCycle: V2FundingCycle =
+        firstFundingCycleOfConfiguration
 
       while (interimIndex < numInterimFundingCycles) {
         // This is to prevent doubling up of an extrapolated FC and the first FC
@@ -87,7 +88,7 @@ const deriveFundingCyclesBetweenEachConfiguration = ({
         const nextInterimStart = interimStart.add(currentDuration)
         const nextInterimNumber = interimNumber.add(1)
 
-        let nextFundingCycle = {
+        const nextFundingCycle = {
           duration: interimFundingCycle.duration,
           weight: nextInterimWeight,
           discountRate: interimFundingCycle.discountRate,
@@ -294,6 +295,7 @@ export default function FundingCycleHistory() {
       {pastFundingCycles.length ? (
         pastFundingCycles.map((fundingCycle: V2FundingCycle, i) => (
           <HistoricalFundingCycle
+            key={i}
             fundingCycle={fundingCycle}
             numFundingCycles={pastFundingCycles.length}
             index={i}

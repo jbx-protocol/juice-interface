@@ -16,7 +16,7 @@ import {
 } from './styles'
 
 // Maps a project id to an internal map of payment event overrides.
-let payEventOverrides = new Map<number, Map<string, string>>([
+const payEventOverrides = new Map<number, Map<string, string>>([
   [
     10,
     new Map<string, string>([

@@ -27,7 +27,7 @@ import { useEffect, useMemo } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
 import { getTerminalName, getTerminalVersion } from 'utils/v1/terminals'
 
-import V1CurrencyProvider from 'providers/v1/V1CurrencyProvider'
+import { V1CurrencyProvider } from 'providers/v1/V1CurrencyProvider'
 
 import { V1CurrencyName } from 'utils/v1/currency'
 

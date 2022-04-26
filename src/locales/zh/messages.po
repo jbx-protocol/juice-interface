@@ -665,7 +665,6 @@ msgid "Connect your wallet to see your projects."
 msgstr "连接钱包查看你的项目。"
 
 #: src/components/shared/ArchiveProject/index.tsx
-#: src/components/shared/ArchiveProject/index.tsx
 msgid "Connected wallet not authorized"
 msgstr "已链接钱包未授权"
 
@@ -1148,7 +1147,6 @@ msgstr "常见问题解答"
 msgid "FAQs"
 msgstr "常见问题解答"
 
-#: src/components/shared/ArchiveProject/index.tsx
 #: src/components/shared/ArchiveProject/index.tsx
 msgid "Failed to update project metadata"
 msgstr "更新项目元数据失败"
@@ -2431,7 +2429,6 @@ msgstr "一些筹款周期的配置可能会给项目贡献者们造成一些风
 msgid "Some properties of the project's current funding cycle may indicate risk for contributors."
 msgstr "项目当前筹款周期的某些属性可能会让捐款人感觉项目存在风险。"
 
-#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Something went wrong."
 msgstr "出错了。"

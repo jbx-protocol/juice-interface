@@ -9,7 +9,7 @@ import { ProjectCategory } from 'models/project-visibility'
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
 
 import Grid from 'components/shared/Grid'
-import ProjectCard from 'components/shared/ProjectCard'
+import ProjectCard, { ProjectCardProject } from 'components/shared/ProjectCard'
 
 import { Link, useHistory, useLocation } from 'react-router-dom'
 
@@ -227,11 +227,11 @@ export default function Projects() {
       {selectedTab === 'all' ? (
         <React.Fragment>
           {concatenatedPages && (
-            <Grid
-              children={concatenatedPages.map((p, i) => (
-                <ProjectCard key={i} project={p} />
+            <Grid>
+              {concatenatedPages.map((p, i) => (
+                <ProjectCard key={i} project={p as ProjectCardProject} />
               ))}
-            />
+            </Grid>
           )}
 
           {(isLoading || isFetchingNextPage) && <Loading />}

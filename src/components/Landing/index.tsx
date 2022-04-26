@@ -132,7 +132,7 @@ export default function Landing() {
           block={isMobile}
           href={'/#/create'}
           onClick={() => {
-            window.fathom?.trackGoal('IIYVJKNC', 0)
+            fathom?.trackGoal('IIYVJKNC', 0)
           }}
           style={{
             marginRight: isMobile ? 0 : '0.8rem',

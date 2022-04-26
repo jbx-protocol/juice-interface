@@ -665,7 +665,6 @@ msgid "Connect your wallet to see your projects."
 msgstr "Подключите свой кошелек, чтобы увидеть свои проекты."
 
 #: src/components/shared/ArchiveProject/index.tsx
-#: src/components/shared/ArchiveProject/index.tsx
 msgid "Connected wallet not authorized"
 msgstr "Подключенный кошелек не авторизован"
 
@@ -1148,7 +1147,6 @@ msgstr "FAQ (Вопросы)"
 msgid "FAQs"
 msgstr "FAQ (Вопросы)"
 
-#: src/components/shared/ArchiveProject/index.tsx
 #: src/components/shared/ArchiveProject/index.tsx
 msgid "Failed to update project metadata"
 msgstr ""
@@ -2431,7 +2429,6 @@ msgstr "Некоторые свойства цикла финансирован�
 msgid "Some properties of the project's current funding cycle may indicate risk for contributors."
 msgstr "Некоторые свойства текущего цикла финансирования проекта могут указывать на риск для вкладчиков."
 
-#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Something went wrong."
 msgstr "Что-то пошло не так."

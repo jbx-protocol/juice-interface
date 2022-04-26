@@ -51,14 +51,14 @@ export class PuppeteerSupport {
   static async switchToMetaMaskNotification() {
     const pages = await this._puppeteerBrowser.pages()
     for (const page of pages) {
-      if (page.url().includes('notificaiton')) {
+      if (page.url().includes('notification')) {
         await page.bringToFront()
         return page
       }
     }
   }
 
-  static async waitFor(selector, page = this._metaMaskWindow) {
+  static async waitFor(selector: string | number | boolean | BigInt | puppeteer.JSONArray | puppeteer.JSONObject | puppeteer.JSHandle<unknown>, page = this._metaMaskWindow) {
     await page.waitForFunction(
       `document.querySelector('${selector}') && document.querySelector('${selector}')?.clientHeight != 0`,
       undefined,
@@ -67,18 +67,18 @@ export class PuppeteerSupport {
     await page.waitForTimeout(300)
   }
 
-  static async waitAndClick(selector, page = this._metaMaskWindow) {
+  static async waitAndClick(selector: string | number | boolean | BigInt | puppeteer.JSONArray | puppeteer.JSONObject | puppeteer.JSHandle<unknown>, page = this._metaMaskWindow) {
     await this.waitFor(selector, page)
-    await page.evaluate(selector => document.querySelector(selector).click(), selector)
+    await page.evaluate(selector => document.querySelector(selector)?.click(), selector)
   }
 
-  static async waitAndType(selector, value: string, page = this._metaMaskWindow) {
+  static async waitAndType(selector: string, value: string, page = this._metaMaskWindow) {
     await this.waitFor(selector, page)
     const element = await page.$(selector)
     await element.type(value)
   }
 
-  static async waitForText(selector, text: string, page = this._metaMaskWindow) {
+  static async waitForText(selector: string, text: string, page = this._metaMaskWindow) {
     await this.waitFor(selector, page)
     await page.waitForFunction(
       `document.querySelector('${selector}').innerText.toLowerCase().includes('${text}')`,

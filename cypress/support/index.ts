@@ -22,6 +22,9 @@ declare global {
   namespace Cypress {
     interface Chainable {
       setupMetaMask()
+      acceptMetaMaskAccess()
+      confirmMetaMaskTransaction()
+      lockMetaMask()
     }
   }
 }

@@ -12,7 +12,7 @@
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
 
-const { MetaMaskSupport } = require('../support/metamask')
+const { MetaMaskSupport } = require('../support/metamask/metaMaskSupport')
 const helpers = require('../support/helpers')
 const { PuppeteerSupport } = require('../support/puppeteer')
 
@@ -44,6 +44,15 @@ module.exports = (on, config) => {
       } 
       await MetaMaskSupport.initialSetup()
       return true
+    },
+    async acceptMetaMaskAccess() {
+      return await MetaMaskSupport.acceptAccess()
+    },
+    async confirmMetaMaskTransaction() {
+      return await MetaMaskSupport.confirmTransaction()
+    },
+    async lockMetaMask() {
+      return await MetaMaskSupport.lock()
     }
   })
 

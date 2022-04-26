@@ -7,8 +7,8 @@ import { formatSplitPercent, MAX_DISTRIBUTION_LIMIT } from './math'
  * Gets distribution amount from percent of the distribution limit and then applies
  * the protocol fee
  * @param percent {float} - value as a percentage.
- * @param distributionLimit string (BigNumber as string)
- * @param feePercentage string (BigNumber as string)
+ * @param distributionLimit string (hexString)
+ * @param feePercentage string (hexString)
  * @returns {number} distribution amount
  */
 export function getDistributionAmountFromPercentAfterFee({
@@ -39,7 +39,7 @@ export function getDistributionAmountFromPercentAfterFee({
  * Gets distribution amount from percent of the distribution limit and does not apply
  * any fee
  * @param percent {float} - value as a percentage.
- * @param distributionLimit string (BigNumber as string)
+ * @param distributionLimit string (hexString)
  * @returns {number} distribution amount
  */
 export function getDistributionAmountFromPercentBeforeFee({
@@ -63,7 +63,7 @@ export function getDistributionAmountFromPercentBeforeFee({
 /**
  * Gets split percent from split amount and the distribution limit
  * @param percent {float} - value as a percentage.
- * @param distributionLimit string (BigNumber as string)
+ * @param distributionLimit string (hexString)
  * @returns {number} percent as an actual percentage of distribution limit (/100)
  */
 export function getDistributionPercentFromAmount({

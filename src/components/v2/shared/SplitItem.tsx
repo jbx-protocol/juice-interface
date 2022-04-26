@@ -23,7 +23,6 @@ export default function SplitItem({
   projectOwnerAddress,
   valueSuffix,
   valueFormatProps,
-  onClick,
 }: {
   split: Split
   currency?: BigNumber
@@ -32,7 +31,6 @@ export default function SplitItem({
   showSplitValue: boolean
   valueSuffix?: string | JSX.Element
   valueFormatProps?: { precision?: number }
-  onClick?: VoidFunction
 }) {
   const {
     theme: { colors },

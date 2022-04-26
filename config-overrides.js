@@ -1,6 +1,4 @@
 const webpack = require('webpack')
-const reactAppRewirePostcss = require('react-app-rewire-postcss')
-const postcssNormalize = require('postcss-normalize')
 
 module.exports = function override(config) {
   const fallback = config.resolve.fallback || {}

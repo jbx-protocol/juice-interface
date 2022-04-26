@@ -10,6 +10,7 @@ type V2ProjectLoadingStates = {
   balanceInDistributionLimitCurrencyLoading: boolean
   distributionLimitLoading: boolean
   fundingCycleLoading: boolean
+  usedDistributionLimitLoading: boolean
 }
 
 export type V2ProjectContextType = {
@@ -74,5 +75,6 @@ export const V2ProjectContext = createContext<V2ProjectContextType>({
     balanceInDistributionLimitCurrencyLoading: false,
     distributionLimitLoading: false,
     fundingCycleLoading: false,
+    usedDistributionLimitLoading: false,
   },
 })

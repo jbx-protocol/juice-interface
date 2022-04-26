@@ -11,6 +11,9 @@ on:
   # manual trigger from Github UI - Action tab
   workflow_dispatch:
 
+env:
+  REACT_APP_INFURA_NETWORK: mainnet
+
 jobs:
   run-yarn-tests:
     if: github.event.pull_request.draft == false

@@ -29,7 +29,7 @@ export default function IssueTicketsButton({
 
   const issueTokensTx = useIssueTokensTx()
 
-  function issue() {
+  function executeIssueTokensTx() {
     setLoading(true)
 
     const fields = form.getFieldsValue(true)
@@ -45,6 +45,10 @@ export default function IssueTicketsButton({
           setTransactionPending(false)
           setLoading(false)
           // refresh page
+          // remove newDeploy=true query parameter
+          history.replace({
+            search: '',
+          })
           history.go(0)
         },
       },
@@ -75,6 +79,15 @@ export default function IssueTicketsButton({
     )
   }
 
+  const onClose = () => {
+    setModalVisible(false)
+
+    // remove newDeploy=true query parameter
+    history.replace({
+      search: '',
+    })
+  }
+
   return (
     <div>
       <Space>
@@ -85,8 +98,9 @@ export default function IssueTicketsButton({
         visible={modalVisible}
         title={t`Issue ERC-20 token`}
         okText={t`Issue token`}
-        onOk={issue}
-        onCancel={() => setModalVisible(false)}
+        cancelText={t`Later`}
+        onOk={executeIssueTokensTx}
+        onCancel={() => onClose()}
         confirmLoading={loading}
         transactionPending={transactionPending}
       >

@@ -36,7 +36,10 @@ export const parseDistributeToPayoutModEvent = (
     : undefined,
   project: j.project ? parseProjectJson(j.project) : undefined,
   projectId: j.projectId ? BigNumber.from(j.projectId) : undefined,
-  modProjectId: j.modProjectId ? BigNumber.from(j.modProjectId) : undefined,
-  modCut: j.modCut ? BigNumber.from(j.modCut) : undefined,
+  modBeneficiary: j.modBeneficiary,
   modPreferUnstaked: !!j.modPreferUnstaked,
+  modProjectId: j.modProjectId ? BigNumber.from(j.modProjectId) : undefined,
+  modAllocator: j.modAllocator,
+  modCut: j.modCut ? BigNumber.from(j.modCut) : undefined,
+  tapEvent: j.tapEvent,
 })

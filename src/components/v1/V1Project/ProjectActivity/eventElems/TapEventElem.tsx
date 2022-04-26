@@ -33,25 +33,31 @@ export default function TapEventElem({
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const { data: payoutEvents } = useSubgraphQuery({
-    entity: 'distributeToPayoutModEvent',
-    keys: [
-      'id',
-      'timestamp',
-      'txHash',
-      'modProjectId',
-      'modBeneficiary',
-      'modCut',
-    ],
-    orderDirection: 'desc',
-    orderBy: 'modCut',
-    where: event?.id
+  const { data: payoutEvents } = useSubgraphQuery(
+    event?.id
       ? {
-          key: 'tapEvent',
-          value: event.id,
+          entity: 'distributeToPayoutModEvent',
+          keys: [
+            'id',
+            'timestamp',
+            'txHash',
+            'modProjectId',
+            'modBeneficiary',
+            'modCut',
+            {
+              entity: 'tapEvent',
+              keys: ['id'],
+            },
+          ],
+          orderDirection: 'desc',
+          orderBy: 'modCut',
+          where: {
+            key: 'tapEvent',
+            value: event.id,
+          },
         }
-      : undefined,
-  })
+      : null,
+  )
 
   if (!event) return null
 

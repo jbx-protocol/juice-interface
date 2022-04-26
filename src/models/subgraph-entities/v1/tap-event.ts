@@ -1,7 +1,11 @@
 import { BigNumber } from '@ethersproject/bignumber'
 
 import { parseProjectJson, Project, ProjectJson } from '../vX/project'
-import { BaseEventEntity, BaseEventEntityJson } from '../base/base-event-entity'
+import {
+  BaseEventEntity,
+  BaseEventEntityJson,
+  parseBaseEventEntityJson,
+} from '../base/base-event-entity'
 
 export interface TapEvent extends BaseEventEntity {
   project: Partial<Project>
@@ -21,6 +25,7 @@ export type TapEventJson = Partial<
 >
 
 export const parseTapEventJson = (j: TapEventJson): Partial<TapEvent> => ({
+  ...parseBaseEventEntityJson(j),
   project: j.project ? parseProjectJson(j.project) : undefined,
   fundingCycleId: j.fundingCycleId
     ? BigNumber.from(j.fundingCycleId)

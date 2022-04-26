@@ -3,20 +3,19 @@ import {
   SortAscendingOutlined,
   SortDescendingOutlined,
 } from '@ant-design/icons'
+import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
-
 import { Button, Modal, Select } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import Loading from 'components/shared/Loading'
 import UntrackedErc20Notice from 'components/shared/UntrackedErc20Notice'
 
-import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import * as constants from '@ethersproject/constants'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import useTotalSupplyOfProjectToken from 'hooks/v1/contractReader/TotalSupplyOfProjectToken'
 import { NetworkName } from 'models/network-name'
-import { Participant } from 'models/subgraph-entities/participant'
+import { Participant } from 'models/subgraph-entities/vX/participant'
 import { useContext, useEffect, useMemo, useState } from 'react'
 import { formatPercent, formatWad } from 'utils/formatNumber'
 import { OrderDirection, querySubgraph } from 'utils/graph'

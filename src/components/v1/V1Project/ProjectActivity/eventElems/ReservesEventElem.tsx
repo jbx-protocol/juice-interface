@@ -33,19 +33,18 @@ export default function ReservesEventElem({
   const { tokenSymbol } = useContext(V1ProjectContext)
 
   const { data: distributeEvents } = useSubgraphQuery(
-    {
-      entity: 'distributeToTicketModEvent',
-      keys: ['id', 'timestamp', 'txHash', 'modBeneficiary', 'modCut'],
-      orderDirection: 'desc',
-      orderBy: 'modCut',
-      where: event?.id
-        ? {
+    event?.id
+      ? {
+          entity: 'distributeToTicketModEvent',
+          keys: ['id', 'timestamp', 'txHash', 'modBeneficiary', 'modCut'],
+          orderDirection: 'desc',
+          orderBy: 'modCut',
+          where: {
             key: 'printReservesEvent',
             value: event.id,
-          }
-        : undefined,
-    },
-    {},
+          },
+        }
+      : null,
   )
 
   if (!event) return null

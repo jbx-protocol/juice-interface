@@ -8,11 +8,9 @@ import RedeemEventElem from 'components/shared/activityEventElems/RedeemEventEle
 import Loading from 'components/shared/Loading'
 import DownloadActivityModal from 'components/shared/modals/DownloadActivityModal'
 import SectionHeader from 'components/shared/SectionHeader'
-import TapEventElem from 'components/v1/V1Project/ProjectActivity/eventElems/TapEventElem'
 import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useInfiniteSubgraphQuery } from 'hooks/SubgraphQuery'
-import { TapEvent } from 'models/subgraph-entities/v1/tap-event'
 import { DistributePayoutsEvent } from 'models/subgraph-entities/v2/distribute-payouts-event'
 import { DistributeReservedTokensEvent } from 'models/subgraph-entities/v2/distribute-reserved-tokens-event'
 import { DeployedERC20Event } from 'models/subgraph-entities/vX/deployed-erc20-event'
@@ -154,9 +152,6 @@ export default function ProjectActivity() {
 
           if (e.payEvent) {
             elem = <PayEventElem event={e.payEvent as PayEvent} />
-          }
-          if (e.tapEvent) {
-            elem = <TapEventElem event={e.tapEvent as TapEvent} />
           }
           if (e.redeemEvent) {
             elem = <RedeemEventElem event={e.redeemEvent as RedeemEvent} />

@@ -1,7 +1,11 @@
 import { BigNumber } from '@ethersproject/bignumber'
 
 import { parseProjectJson, Project, ProjectJson } from '../vX/project'
-import { BaseEventEntity, BaseEventEntityJson } from '../base/base-event-entity'
+import {
+  BaseEventEntity,
+  BaseEventEntityJson,
+  parseBaseEventEntityJson,
+} from '../base/base-event-entity'
 
 export interface PrintReservesEvent extends BaseEventEntity {
   project: Partial<Project>
@@ -20,6 +24,7 @@ export type PrintReservesEventJson = Partial<
 export const parsePrintReservesEventJson = (
   j: PrintReservesEventJson,
 ): Partial<PrintReservesEvent> => ({
+  ...parseBaseEventEntityJson(j),
   project: j.project ? parseProjectJson(j.project) : undefined,
   fundingCycleId: j.fundingCycleId
     ? BigNumber.from(j.fundingCycleId)
@@ -29,5 +34,4 @@ export const parsePrintReservesEventJson = (
     ? BigNumber.from(j.beneficiaryTicketAmount)
     : undefined,
   count: j.count ? BigNumber.from(j.count) : undefined,
-  timestamp: j.timestamp ? parseInt(j.timestamp) : undefined,
 })

@@ -132,7 +132,8 @@ export default function Landing() {
           block={isMobile}
           href={'/#/create'}
           onClick={() => {
-            window.fathom?.trackGoal('IIYVJKNC', 0)
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            ;(window as any).fathom?.trackGoal('IIYVJKNC', 0)
           }}
           style={{
             marginRight: isMobile ? 0 : '0.8rem',

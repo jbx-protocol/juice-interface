@@ -2,7 +2,13 @@ import { Web3Provider } from '@ethersproject/providers'
 
 import { NetworkContext } from 'contexts/networkContext'
 import { NetworkName } from 'models/network-name'
-import { useCallback, useContext, useEffect, useState } from 'react'
+import {
+  PropsWithChildren,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react'
 
 import { initOnboard } from 'utils/onboard'
 import { API, Subscriptions, Wallet } from 'bnc-onboard/dist/src/interfaces'
@@ -13,7 +19,9 @@ import { NETWORKS } from 'constants/networks'
 
 const KEY_SELECTED_WALLET = 'selectedWallet'
 
-export const NetworkProvider: React.FC = ({ children }) => {
+export const NetworkProvider: React.FC = ({
+  children,
+}: PropsWithChildren<{}>) => {
   const { isDarkMode } = useContext(ThemeContext)
 
   const [signingProvider, setSigningProvider] = useState<Web3Provider>()

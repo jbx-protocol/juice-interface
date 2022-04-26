@@ -6,7 +6,7 @@ import React, { CSSProperties, useContext } from 'react'
 
 import { ThemeOption } from 'constants/theme/theme-option'
 
-export default function ThemePicker({ mobile }: { mobile?: boolean }) {
+export default function ThemePicker() {
   const {
     themeOption,
     setThemeOption,

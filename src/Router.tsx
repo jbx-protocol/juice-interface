@@ -36,7 +36,7 @@ function usePageViews() {
   const location = useLocation()
 
   useEffect(() => {
-    window.fathom?.trackPageview({
+    fathom?.trackPageview({
       url: location.pathname,
     })
   }, [location])

@@ -21,7 +21,7 @@ import { V1ArchivedProjectIds } from '../../constants/v1/archivedProjects'
 import Loading from './Loading'
 import { V2ArchivedProjectIds } from 'constants/v2/archivedProjects'
 
-type ProjectCardProject = Pick<
+export type ProjectCardProject = Pick<
   Project,
   | 'id'
   | 'handle'

@@ -1,8 +1,54 @@
 {
-  "plugins": ["import"],
-  "extends": ["react-app", "react-app/jest", "prettier"],
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
   "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": ["react", "@typescript-eslint", "import", "react-hooks"],
+  "overrides": [
+    {
+      "files": ["config-overrides.js", "jest.config.js"],
+      "env": {
+        "node": true,
+        "commonjs": true
+      }
+    },
+    {
+      "files": "package.json",
+      "rules": {
+        "no-unused-expressions": "off"
+      }
+    }
+  ],
   "rules": {
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/no-var-requires": "off",
+    "@typescript-eslint/ban-types": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "react/prop-types": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "react/no-unescaped-entities": "off",
+    "@typescript-eslint/no-inferrable-types": "off",
+    "react/react-in-jsx-scope": "off",
+
     "@typescript-eslint/no-explicit-any": "error",
     "react-hooks/exhaustive-deps": "error",
     "@typescript-eslint/no-redeclare": "error",
@@ -33,13 +79,5 @@
         ]
       }
     ]
-  },
-  "overrides": [
-    {
-      "files": "package.json",
-      "rules": {
-        "no-unused-expressions": "off"
-      }
-    }
-  ]
+  }
 }

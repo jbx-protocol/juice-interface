@@ -145,92 +145,88 @@ export default function V2ManageTokensSection() {
                     <Descriptions.Item
                       label={t`Project token`}
                       labelStyle={labelStyle}
-                      children={
-                        <div style={manageTokensRowStyle}>
-                          <div>
-                            {tokenSymbol} (
-                            <FormattedAddress address={tokenAddress} />)
-                          </div>
+                    >
+                      <div style={manageTokensRowStyle}>
+                        <div>
+                          {tokenSymbol} (
+                          <FormattedAddress address={tokenAddress} />)
                         </div>
-                      }
-                    />
+                      </div>
+                    </Descriptions.Item>
                   </>
                 )}
                 <Descriptions.Item
                   label={t`Total supply`}
                   labelStyle={labelStyle}
-                  children={
-                    <div
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'baseline',
-                        width: '100%',
-                        gap: 5,
-                        flexWrap: 'wrap',
-                      }}
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'baseline',
+                      width: '100%',
+                      gap: 5,
+                      flexWrap: 'wrap',
+                    }}
+                  >
+                    {formatWad(totalTokenSupply, { precision: 0 })} {tokenText}
+                    <Button
+                      size="small"
+                      onClick={() => setParticipantsModalVisible(true)}
+                      disabled={isPreviewMode}
                     >
-                      {formatWad(totalTokenSupply, { precision: 0 })}{' '}
-                      {tokenText}
-                      <Button
-                        size="small"
-                        onClick={() => setParticipantsModalVisible(true)}
-                        disabled={isPreviewMode}
-                      >
-                        <Trans>Holders</Trans>
-                      </Button>
-                    </div>
-                  }
-                />
+                      <Trans>Holders</Trans>
+                    </Button>
+                  </div>
+                </Descriptions.Item>
                 {userAddress ? (
                   <Descriptions.Item
                     label={t`Your balance`}
                     labelStyle={labelStyle}
                     style={{ paddingBottom: '0.5rem' }}
-                    children={
-                      <div style={manageTokensRowStyle}>
-                        <div>
-                          {hasIssuedERC20 && (
-                            <div>
-                              {claimedBalanceFormatted} {tokenText}
-                            </div>
-                          )}
+                  >
+                    {' '}
+                    <div style={manageTokensRowStyle}>
+                      <div>
+                        {hasIssuedERC20 && (
                           <div>
-                            {hasIssuedERC20 ? (
-                              <Trans>
-                                {unclaimedBalanceFormatted} {tokenText}{' '}
-                                claimable
-                              </Trans>
-                            ) : (
-                              <>
-                                {unclaimedBalanceFormatted} {tokenText}
-                              </>
-                            )}
+                            {claimedBalanceFormatted} {tokenText}
                           </div>
-                          <div
-                            style={{
-                              cursor: 'default',
-                              fontSize: '0.8rem',
-                              fontWeight: 500,
-                              color: colors.text.tertiary,
-                            }}
-                          >
+                        )}
+                        <div>
+                          {hasIssuedERC20 ? (
                             <Trans>
-                              {userOwnershipPercentage}% of total supply
+                              {unclaimedBalanceFormatted} {tokenText} claimable
                             </Trans>
-                          </div>
+                          ) : (
+                            <>
+                              {unclaimedBalanceFormatted} {tokenText}
+                            </>
+                          )}
                         </div>
-
-                        <Button
-                          size="small"
-                          onClick={() => setManageTokensModalVisible(true)}
-                          disabled={isPreviewMode}
+                        <div
+                          style={{
+                            cursor: 'default',
+                            fontSize: '0.8rem',
+                            fontWeight: 500,
+                            color: colors.text.tertiary,
+                          }}
                         >
-                          <Trans>Manage {tokenText}</Trans>
-                        </Button>
+                          <Trans>
+                            {userOwnershipPercentage}% of total supply
+                          </Trans>
+                        </div>
                       </div>
-                    }
-                  />
+
+                      <Button
+                        size="small"
+                        onClick={() => setManageTokensModalVisible(true)}
+                        disabled={isPreviewMode}
+                      >
+                        <Trans>Manage {tokenText}</Trans>
+                      </Button>
+                    </div>
+                  </Descriptions.Item>
                 ) : null}
               </Descriptions>
             </>

@@ -25,6 +25,17 @@ Mention `@Peel` in [Discord](https://discord.gg/6jXrJSyDFf) and someone from our
 
 Read the [development guidelines](doc/development.md) for instructions on running the app in development.
 
+### Testing
+
+** Make sure you start the app using `yarn start` first **
+
+1. Setup your .env file with the `E2E_` prefixed variables.
+2. Open Cypress.
+   ```bash
+   yarn cy:open
+   ```
+3. Run tests.
+
 ## Contributing
 
 Anyone can contribute! [Start here](CONTRIBUTING.md).

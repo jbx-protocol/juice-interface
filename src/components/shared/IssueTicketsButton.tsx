@@ -105,6 +105,7 @@ export default function IssueTicketsButton({
         transactionPending={transactionPending}
       >
         <p>
+          {/* eslint-disable-next-line no-extra-boolean-cast */}
           {!Boolean(isNewDeploy) ? (
             <Trans>
               Issue an ERC-20 to be used as this project's token. Once issued,

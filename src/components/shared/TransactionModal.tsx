@@ -59,6 +59,7 @@ export default function TransactionModal(props: TransactionModalProps) {
     },
   }
 
+  // eslint-disable-next-line no-empty
   if (props.transactionPending) {
   }
 

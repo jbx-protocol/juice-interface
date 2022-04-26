@@ -331,6 +331,7 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
               targetSubFee={undefined}
               currency={V2CurrencyName(targetCurrency) ?? 'ETH'}
               onTargetChange={setTarget}
+              // eslint-disable-next-line @typescript-eslint/no-empty-function
               onTargetSubFeeChange={() => {}}
               onCurrencyChange={currencyName =>
                 setTargetCurrency(getV2CurrencyOption(currencyName))

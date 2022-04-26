@@ -102,6 +102,7 @@ export default function useV2ContractReader<V>({
 
     getValue()
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const listener = (x: any) => getValue() // eslint-disable-line @typescript-eslint/no-explicit-any
 
     let subscriptions: {

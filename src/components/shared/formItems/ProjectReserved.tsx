@@ -93,6 +93,7 @@ export default function ProjectReserved({
             {shouldRenderToggle ? (
               <SwitchHeading checked={Boolean(checked)} onChange={onToggled}>
                 <Trans>Reserved rate</Trans>
+                {/* eslint-disable-next-line no-extra-boolean-cast */}
                 {!Boolean(checked) && (
                   <span
                     style={{

@@ -38,6 +38,7 @@ export default function PayInputGroup({
 
   const [payAmount, setPayAmount] = useState<string>('0')
   const [payInCurrency, setPayInCurrency] = useState<CurrencyOption>(ETH)
+  const [isErrorField, setIsErrorField] = useState<boolean>(false)
 
   const togglePayInCurrency = () => {
     const newPayInCurrency = payInCurrency === ETH ? USD : ETH
@@ -45,47 +46,50 @@ export default function PayInputGroup({
   }
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        width: '100%',
-      }}
-    >
-      <div style={{ flex: 1, marginRight: 10 }}>
-        <FormattedNumberInput
-          placeholder="0"
-          onChange={val => {
-            setPayAmount(val ?? '0')
-          }}
-          value={payAmount}
-          min={0}
-          accessory={
-            <InputAccessoryButton
-              withArrow={true}
-              content={currencyMetadata[payInCurrency ?? ETH].name}
-              onClick={togglePayInCurrency}
-            />
-          }
-        />
-        {!Number(payAmount) && (
-          <span style={{ color: 'red' }}>
-            Pay amount must be greater than 0.
-          </span>
-        )}
-        <PayInputSubText
-          payInCurrency={payInCurrency ?? ETH}
-          amount={payAmount}
-          reservedRate={reservedRate}
-          weight={weight}
-          tokenSymbol={tokenSymbol}
-          tokenAddress={tokenAddress}
-          weightingFn={weightingFn}
-        />
-      </div>
+    <>
+      {isErrorField && (
+        <span style={{ color: 'red', fontSize: '0.7rem' }}>
+          Pay amount must be greater than 0.
+        </span>
+      )}
+      <div
+        style={{
+          display: 'flex',
+          width: '100%',
+        }}
+      >
+        <div style={{ flex: 1, marginRight: 10 }}>
+          <FormattedNumberInput
+            placeholder="0"
+            onChange={val => {
+              setIsErrorField(Number(val) <= 0)
+              setPayAmount(val ?? '0')
+            }}
+            value={payAmount}
+            min={0}
+            accessory={
+              <InputAccessoryButton
+                withArrow={true}
+                content={currencyMetadata[payInCurrency ?? ETH].name}
+                onClick={togglePayInCurrency}
+              />
+            }
+          />
+          <PayInputSubText
+            payInCurrency={payInCurrency ?? ETH}
+            amount={payAmount}
+            reservedRate={reservedRate}
+            weight={weight}
+            tokenSymbol={tokenSymbol}
+            tokenAddress={tokenAddress}
+            weightingFn={weightingFn}
+          />
+        </div>
 
-      <div style={{ textAlign: 'center', minWidth: 150 }}>
-        <PayButton payAmount={payAmount} payInCurrency={payInCurrency} />
+        <div style={{ textAlign: 'center', minWidth: 150 }}>
+          <PayButton payAmount={payAmount} payInCurrency={payInCurrency} />
+        </div>
       </div>
-    </div>
+    </>
   )
 }

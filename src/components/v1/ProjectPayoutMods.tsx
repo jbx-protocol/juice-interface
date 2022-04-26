@@ -535,9 +535,11 @@ export default function ProjectPayoutMods({
                 isPercentBeingRounded() &&
                 !(form.getFieldValue('percent') > 100) ? (
                   <div>
-                    Will be rounded to{' '}
-                    <CurrencySymbol currency={currencyName} />
-                    {roundedDownAmount()}
+                    <Trans>
+                      Will be rounded to{' '}
+                      <CurrencySymbol currency={currencyName} />
+                      {roundedDownAmount()}
+                    </Trans>
                   </div>
                 ) : null
               }
@@ -562,7 +564,7 @@ export default function ProjectPayoutMods({
             </Form.Item>
           ) : null}
 
-          <Form.Item label="Percent">
+          <Form.Item label={t`Percent`}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <span style={{ flex: 1 }}>
                 <NumberSlider
@@ -590,8 +592,8 @@ export default function ProjectPayoutMods({
           </Form.Item>
           <Form.Item
             name="lockedUntil"
-            label="Lock until"
-            extra="If locked, this can't be edited or removed until the lock expires or the funding cycle is reconfigured."
+            label={t`Lock until`}
+            extra={t`If locked, this can't be edited or removed until the lock expires or the funding cycle is reconfigured.`}
           >
             <DatePicker />
           </Form.Item>

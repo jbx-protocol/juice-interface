@@ -14,7 +14,7 @@ export default function TargetTypeSelect({
   return (
     <Select value={value} onChange={onChange} style={{ width: '100%' }}>
       <Option value="specific">
-        <Trans>Specific target</Trans>
+        <Trans>Specific limit</Trans>
       </Option>
       <Option value="infinite">
         <Trans>No limit (infinite)</Trans>

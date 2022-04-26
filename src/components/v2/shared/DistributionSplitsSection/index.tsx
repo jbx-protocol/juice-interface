@@ -3,10 +3,10 @@ import { Button, Form, Space } from 'antd'
 
 import { ThemeContext } from 'contexts/themeContext'
 import { useCallback, useContext, useState } from 'react'
-import { permyriadToPercent } from 'utils/formatNumber'
 
 import { Split } from 'models/v2/splits'
 import { FormItemExt } from 'components/shared/formItems/formItemExt'
+import { getTotalSplitsPercentage } from 'utils/v2/distributions'
 
 import FormattedAddress from 'components/shared/FormattedAddress'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
@@ -18,13 +18,15 @@ import DistributionSplitModal from './DistributionSplitModal'
 export default function DistributionSplitsSection({
   distributionLimit,
   currencyName,
-  splits,
+  editableSplits,
+  lockedSplits,
   onSplitsChanged,
   formItemProps,
 }: {
   distributionLimit: string | undefined
   currencyName: CurrencyName
-  splits: Split[]
+  editableSplits: Split[]
+  lockedSplits: Split[]
   onSplitsChanged: (splits: Split[]) => void
 } & FormItemExt) {
   const [addSplitModalVisible, setAddSplitModalVisible] =
@@ -35,30 +37,30 @@ export default function DistributionSplitsSection({
 
   const { projectOwnerAddress } = useContext(V2ProjectContext)
 
+  const allSplits = lockedSplits.concat(editableSplits)
+
   const renderSplitCard = useCallback(
-    (split: Split, index: number) => {
+    (split: Split, index: number, isLocked?: boolean) => {
       if (!split) return
 
       return (
         <DistributionSplitCard
           split={split}
-          splits={splits}
+          splits={allSplits}
           splitIndex={index}
           distributionLimit={distributionLimit}
           onSplitsChanged={onSplitsChanged}
           currencyName={currencyName}
+          isLocked={isLocked}
         />
       )
     },
-    [distributionLimit, onSplitsChanged, splits, currencyName],
+    [distributionLimit, onSplitsChanged, allSplits, currencyName],
   )
 
-  if (!splits) return null
+  if (!allSplits) return null
 
-  const total = splits.reduce(
-    (acc, curr) => acc + parseFloat(permyriadToPercent(curr.percent ?? '0')),
-    0,
-  )
+  const total = getTotalSplitsPercentage(allSplits)
 
   return (
     <Form.Item
@@ -71,8 +73,15 @@ export default function DistributionSplitsSection({
         size="large"
       >
         <Space style={{ width: '100%' }} direction="vertical" size="small">
-          {splits.map((split, index) => renderSplitCard(split, index))}
+          {editableSplits.map((split, index) => renderSplitCard(split, index))}
         </Space>
+        {lockedSplits ? (
+          <Space style={{ width: '100%' }} direction="vertical" size="small">
+            {lockedSplits.map((split, index) =>
+              renderSplitCard(split, index, true),
+            )}
+          </Space>
+        ) : null}
         <div
           style={{
             display: 'flex',
@@ -103,14 +112,14 @@ export default function DistributionSplitsSection({
           }}
           block
         >
-          <Trans>Add a payout</Trans>
+          <Trans>Add a split</Trans>
         </Button>
       </Space>
       <DistributionSplitModal
         visible={addSplitModalVisible}
         onSplitsChanged={onSplitsChanged}
         mode={'Add'}
-        splits={splits}
+        splits={allSplits}
         distributionLimit={distributionLimit}
         currencyName={currencyName}
         onClose={() => setAddSplitModalVisible(false)}

@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { DatePicker, Form, Modal, Select } from 'antd'
+import { DatePicker, Form, InputNumber, Modal, Select } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { FormItems } from 'components/shared/formItems'
 import {
@@ -7,16 +7,34 @@ import {
   validateEthAddress,
   validatePercentage,
 } from 'components/shared/formItems/formHelpers'
-import { isAddress } from 'ethers/lib/utils'
-import { Split } from 'models/v2/splits'
-import { useContext, useState } from 'react'
-import { parseWad, percentToPermyriad } from 'utils/formatNumber'
-import { getDistributionPercentFromAmount } from 'utils/v2/distributions'
-import * as constants from '@ethersproject/constants'
+import { defaultSplit, Split } from 'models/v2/splits'
+import { useContext, useLayoutEffect, useState } from 'react'
+import { parseWad } from 'utils/formatNumber'
+import {
+  getDistributionAmountFromPercentAfterFee,
+  getDistributionPercentFromAmount,
+} from 'utils/v2/distributions'
 import { ThemeContext } from 'contexts/themeContext'
 
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
+
+import { useETHPaymentTerminalFee } from 'hooks/v2/contractReader/ETHPaymentTerminalFee'
+import {
+  formatFee,
+  formatSplitPercent,
+  MAX_DISTRIBUTION_LIMIT,
+  splitPercentFrom,
+} from 'utils/v2/math'
+import NumberSlider from 'components/shared/inputs/NumberSlider'
+import { getDistributionAmountFromPercentBeforeFee } from 'utils/v2/distributions'
+import { BigNumber } from '@ethersproject/bignumber'
+
+import { stringIsDigit } from 'utils/math'
+import CurrencySymbol from 'components/shared/CurrencySymbol'
+import * as Moment from 'moment'
+import moment from 'moment'
+import TooltipLabel from 'components/shared/TooltipLabel'
 
 import { CurrencyName } from 'constants/currency'
 
@@ -24,12 +42,13 @@ export type AddOrEditSplitFormFields = {
   projectId: string
   beneficiary: string
   percent: number
-  amount: number
-  lockedUntil: moment.Moment
 }
 
 type SplitType = 'project' | 'address'
 
+// Using both state and a form in this modal. I know it seems over the top,
+// but the state is necessary to link the percent and amount fields, and the form
+// is useful for its features such as field validation.
 export default function DistributionSplitModal({
   visible,
   mode,
@@ -53,42 +72,81 @@ export default function DistributionSplitModal({
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const [editingSplitType, setEditingSplitType] = useState<SplitType>('address')
-
   const [form] = useForm<AddOrEditSplitFormFields>()
 
-  // const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
+  let split: Split = defaultSplit
+  let initialAmount: number | undefined
+  let initialProjectId: number | undefined
+  let initialPercent: number | undefined
+  let initialLockedUntil: Moment.Moment | undefined
 
-  // const feePercentage = ETHPaymentTerminalFee
-  //   ? formatFee(ETHPaymentTerminalFee)
-  //   : undefined
+  if (splits.length && splitIndex !== undefined) {
+    split = splits[splitIndex]
+    initialPercent = parseFloat(
+      formatSplitPercent(BigNumber.from(split?.percent)),
+    )
+    initialAmount = getDistributionAmountFromPercentBeforeFee({
+      percent: initialPercent,
+      distributionLimit,
+    })
+    initialLockedUntil = split.lockedUntil
+      ? Moment.default(split.lockedUntil * 1000)
+      : undefined
+
+    if (split.projectId) {
+      initialProjectId = BigNumber.from(split.projectId).toNumber()
+    }
+  }
+
+  const [editingSplitType, setEditingSplitType] = useState<SplitType>(
+    initialProjectId ? 'project' : 'address',
+  )
+  const [projectId, setProjectId] = useState<string | undefined>(
+    initialProjectId?.toString(),
+  )
+  const [beneficiary, setBeneficiary] = useState<string | undefined>(
+    split.beneficiary,
+  )
+  const [percent, setPercent] = useState<number | undefined>(initialPercent)
+  const [amount, setAmount] = useState<number | undefined>(initialAmount)
+  const [lockedUntil, setLockedUntil] = useState<
+    Moment.Moment | undefined | null
+  >(initialLockedUntil)
+
+  useLayoutEffect(() => form.setFieldsValue({ percent, projectId }))
+
+  const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
+
+  const feePercentage = ETHPaymentTerminalFee
+    ? formatFee(ETHPaymentTerminalFee)
+    : undefined
+
+  const resetStates = () => {
+    setProjectId(undefined)
+    setBeneficiary(undefined)
+    setPercent(undefined)
+    setAmount(undefined)
+  }
 
   // Validates new or newly edited split, then adds it to or edits the splits list
   const setSplit = async () => {
     await form.validateFields()
 
-    const handle = form.getFieldValue('handle')
-    const beneficiary = form.getFieldValue('beneficiary')
-    const percent = percentToPermyriad(form.getFieldValue('percent')).toNumber()
-    const _lockedUntil = form.getFieldValue('lockedUntil') as moment.Moment
-
-    const lockedUntil = _lockedUntil
-      ? Math.round(_lockedUntil.valueOf() / 1000)
+    const roundedLockedUntil = lockedUntil
+      ? Math.round(lockedUntil.valueOf() / 1000)
       : undefined
 
-    // Store handle in mod object only to repopulate handle input while editing
     const newSplit = {
-      beneficiary,
-      percent,
-      handle,
-      lockedUntil,
+      beneficiary: beneficiary,
+      percent: splitPercentFrom(percent ?? 0).toNumber(),
+      lockedUntil: roundedLockedUntil,
       preferClaimed: true,
-      projectId: undefined,
-      allocator: undefined,
-    }
+      projectId: projectId,
+      allocator: undefined, // TODO: new v2 feature
+    } as Split
 
     onSplitsChanged(
-      mode === 'Edit' //editingSplitIndex !== undefined && editingSplitIndex < splits.length
+      mode === 'Edit'
         ? splits.map((m, i) =>
             i === splitIndex
               ? {
@@ -100,53 +158,52 @@ export default function DistributionSplitModal({
         : [...splits, newSplit],
     )
 
-    // form.resetFields()
+    form.resetFields()
+    if (mode === 'Add') resetStates()
+
     onClose()
   }
 
-  // const roundedDownAmount = () => {
-  //   const percent = roundDown(form.getFieldValue('percent'), 2)
-  //   // const targetSubFee = parseFloat(
-  //   //   fromWad(amountSubFee(parseWad(target), feePerbicent)),
-  //   // )
-  //   // return parseFloat(((percent * targetSubFee) / 100).toFixed(4))
-  // }
-
   const onAmountChange = (newAmount: number) => {
-    let newPercent = parseFloat(
-      getDistributionPercentFromAmount({
-        amount: newAmount,
-        distributionLimit,
-      }),
-    )
-    form.setFieldsValue({ amount: newAmount })
+    let newPercent = getDistributionPercentFromAmount({
+      amount: newAmount,
+      distributionLimit,
+    })
+    setAmount(newAmount)
+    setPercent(newPercent)
     form.setFieldsValue({ percent: newPercent })
   }
 
   // Validates new payout receiving address
   const validatePayoutAddress = () => {
-    return validateEthAddress(
-      form.getFieldValue('beneficiary'),
-      splits,
-      mode,
-      splitIndex,
-    )
+    return validateEthAddress(beneficiary ?? '', splits, mode, splitIndex)
+  }
+
+  const validateProjectId = () => {
+    if (!stringIsDigit(form.getFieldValue('projectId'))) {
+      return Promise.reject(t`Project ID is a number.`)
+    }
+    // TODO: check if projectId exists
+    return Promise.resolve()
   }
 
   const validatePayoutPercentage = () => {
-    return validatePercentage(form.getFieldValue('percent'))
+    return validatePercentage(percent)
   }
 
-  // export const isPercentBeingRounded = () => {
-  //   return countDecimalPlaces(form.getFieldValue('percent')) > 2
-  // }
+  // Cannot select days before today or today with lockedUntil
+  const disabledDate = (current: moment.Moment) =>
+    current && current < moment().endOf('day')
+
+  const distributionLimitIsInfinite =
+    !distributionLimit || parseWad(distributionLimit).eq(MAX_DISTRIBUTION_LIMIT)
 
   return (
     <Modal
-      title={mode === 'Edit' ? t`Edit existing split` : t`Add a payout`}
+      title={mode === 'Edit' ? t`Edit existing split` : t`Add a split`}
       visible={visible}
       onOk={setSplit}
-      okText={mode === 'Edit' ? t`Save split` : t`Add payout`}
+      okText={mode === 'Edit' ? t`Save split` : t`Add split`}
       onCancel={onClose}
       destroyOnClose
     >
@@ -171,75 +228,79 @@ export default function DistributionSplitModal({
         {editingSplitType === 'address' ? (
           <FormItems.EthAddress
             name="beneficiary"
-            defaultValue={form.getFieldValue('beneficiary')}
+            defaultValue={beneficiary}
             formItemProps={{
               label: t`Address`,
               rules: [
                 {
-                  validator: validatePayoutPercentage,
+                  validator: validatePayoutAddress,
                 },
               ],
             }}
             onAddressChange={(beneficiary: string) =>
-              form.setFieldsValue({ beneficiary })
+              setBeneficiary(beneficiary)
             }
           />
         ) : (
-          <FormItems.ProjectHandleFormItem
-            name="projectId"
-            requireState="exists"
-            initialValue={form.getFieldValue('projectId')}
-            formItemProps={{
-              label: t`Project id`,
-            }}
+          <Form.Item
+            name={'projectId'}
+            rules={[{ validator: validateProjectId }]}
+            label={t`Project ID`}
             required
-          />
+          >
+            <InputNumber
+              value={parseInt(projectId ?? '')}
+              style={{ width: '100%' }}
+              placeholder={t`ID`}
+              onChange={(projectId: number) => {
+                setProjectId(projectId?.toString())
+              }}
+            />
+          </Form.Item>
         )}
         {editingSplitType === 'project' ? (
           <FormItems.EthAddress
             name="beneficiary"
-            defaultValue={form.getFieldValue('beneficiary')}
+            defaultValue={beneficiary}
             formItemProps={{
-              label: t`Address`,
+              label: t`Token beneficiary`,
               extra: t`The address that should receive the tokens minted from paying this project.`,
-              rules: [
-                {
-                  validator: () => {
-                    const address = form.getFieldValue('beneficiary')
-                    if (!address || !isAddress(address))
-                      return Promise.reject(t`Address is required`)
-                    else if (address === constants.AddressZero)
-                      return Promise.reject(t`Cannot use zero address.`)
-                    else return Promise.resolve()
-                  },
-                },
-              ],
             }}
-            onAddressChange={beneficiary =>
-              form.setFieldsValue({ beneficiary })
-            }
+            onAddressChange={beneficiary => {
+              setBeneficiary(beneficiary)
+            }}
           />
         ) : null}
 
         {/* Only show amount input if project distribution limit is not infinite */}
-        {!parseWad(distributionLimit).eq(constants.MaxUint256) ? (
+        {!distributionLimitIsInfinite ? (
           <Form.Item
             label={t`Amount`}
-            // Display message to user if the amount they inputted
-            // will result in percentage with > 2 decimal places
-            // and no error is present
             className="ant-form-item-extra-only"
             extra={
-              'poo'
-              // isPercentBeingRounded() &&
-              // !(form.getFieldValue('percent') > 100) ? (
-              //   <div>
-              //     <Trans>Will be rounded to{' '}
-              //       <CurrencySymbol currency={currencyName} />
-              //       {roundedDownAmount()}
-              //     </Trans>
-              //   </div>
-              // ) : null
+              feePercentage && percent && !(percent > 100) ? (
+                <>
+                  {editingSplitType === 'address' ? (
+                    <div>
+                      <Trans>
+                        Payee will receive{' '}
+                        <CurrencySymbol currency={currencyName} />
+                        {getDistributionAmountFromPercentAfterFee({
+                          percent: percent,
+                          distributionLimit,
+                          feePercentage,
+                        })}{' '}
+                        after {feePercentage}% JBX membership fee.
+                      </Trans>
+                    </div>
+                  ) : (
+                    <Trans>
+                      Distributions to other Juicebox project do not incur any
+                      fee.
+                    </Trans>
+                  )}
+                </>
+              ) : null
             }
           >
             <div
@@ -250,11 +311,11 @@ export default function DistributionSplitModal({
               }}
             >
               <FormattedNumberInput
-                value={form.getFieldValue('amount')}
+                value={amount?.toString()}
                 placeholder={'0'}
                 onChange={amount => onAmountChange(parseFloat(amount || '0'))}
                 formItemProps={{
-                  rules: [{ validator: validatePayoutAddress }],
+                  rules: [{ validator: validatePayoutPercentage }],
                 }}
                 accessory={<InputAccessoryButton content={currencyName} />}
               />
@@ -262,38 +323,57 @@ export default function DistributionSplitModal({
           </Form.Item>
         ) : null}
 
-        {/* <Form.Item label={t`Percent`}>
+        <Form.Item
+          label={
+            <TooltipLabel
+              label={<Trans>Percent</Trans>}
+              tip={
+                distributionLimitIsInfinite ? (
+                  <Trans>
+                    Percent this payee will receive of all funds raised.
+                  </Trans>
+                ) : (
+                  <Trans>
+                    Percent of the distribution limit this payee will receive.
+                  </Trans>
+                )
+              }
+            />
+          }
+        >
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <span style={{ flex: 1 }}>
               <NumberSlider
                 onChange={(percent: number | undefined) => {
-                  let newAmount = getAmountFromPercent(
-                    percent ?? 0,
-                    target,
-                    feePercentage,
-                  )
-                  form.setFieldsValue({ amount: newAmount })
-                  form.setFieldsValue({ percent })
-                  setEditingPercent(percent)
+                  let newAmount = getDistributionAmountFromPercentBeforeFee({
+                    percent: percent ?? 0,
+                    distributionLimit,
+                  })
+                  setAmount(newAmount)
+                  setPercent(percent)
                 }}
                 step={0.01}
-                defaultValue={form.getFieldValue('percent') || 0}
+                defaultValue={0}
                 sliderValue={form.getFieldValue('percent')}
                 suffix="%"
                 name="percent"
                 formItemProps={{
-                  rules: [{ validator: validatePayout }],
+                  rules: [{ validator: validatePayoutPercentage }],
                 }}
               />
             </span>
           </div>
-        </Form.Item> */}
+        </Form.Item>
         <Form.Item
           name="lockedUntil"
-          label="Lock until"
-          extra="If locked, this can't be edited or removed until the lock expires or the funding cycle is reconfigured."
+          label={t`Lock until`}
+          extra={t`If locked, this can't be edited or removed until the lock expires or the funding cycle is reconfigured.`}
         >
-          <DatePicker />
+          <DatePicker
+            value={lockedUntil}
+            disabledDate={disabledDate}
+            onChange={lockedUntil => setLockedUntil(lockedUntil)}
+          />
         </Form.Item>
       </Form>
     </Modal>

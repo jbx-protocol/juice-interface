@@ -2,8 +2,10 @@ import { Button, Col, Row, Space } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { Split } from 'models/v2/splits'
 import { useContext, useState } from 'react'
-import { permyriadToPercent } from 'utils/formatNumber'
+import { parseWad } from 'utils/formatNumber'
 import FormattedAddress from 'components/shared/FormattedAddress'
+import { BigNumber } from '@ethersproject/bignumber'
+
 import { formatDate } from 'utils/formatDate'
 import {
   CrownFilled,
@@ -11,6 +13,11 @@ import {
   CloseCircleOutlined,
 } from '@ant-design/icons'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
+
+import { formatSplitPercent, MAX_DISTRIBUTION_LIMIT } from 'utils/v2/math'
+import CurrencySymbol from 'components/shared/CurrencySymbol'
+import { getDistributionAmountFromPercentBeforeFee } from 'utils/v2/distributions'
+import { Trans } from '@lingui/macro'
 
 import DistributionSplitModal from './DistributionSplitModal'
 import { CurrencyName } from 'constants/currency'
@@ -22,6 +29,7 @@ export default function DistributionSplitCard({
   onSplitsChanged,
   distributionLimit,
   currencyName,
+  isLocked,
 }: {
   split: Split
   splits: Split[]
@@ -29,6 +37,7 @@ export default function DistributionSplitCard({
   onSplitsChanged: (splits: Split[]) => void
   distributionLimit: string | undefined
   currencyName: CurrencyName
+  isLocked?: boolean
 }) {
   const {
     theme: { colors, radii },
@@ -39,7 +48,9 @@ export default function DistributionSplitCard({
 
   const gutter = 10
 
-  const isLocked = Boolean(split.lockedUntil)
+  const labelColSpan = 9
+  const dataColSpan = 15
+
   const isProject = parseInt(split.projectId ?? '0') > 0
 
   // !isProject added here because we don't want to show the crown next to
@@ -65,15 +76,16 @@ export default function DistributionSplitCard({
           color: colors.text.primary,
           cursor: isLocked ? 'default' : 'pointer',
         }}
-        onClick={() => setEditSplitModalOpen(true)}
+        onClick={!isLocked ? () => setEditSplitModalOpen(true) : undefined}
       >
-        {/* TODO: allow for project handles */}
         {split.projectId && parseInt(split.projectId) > 0 ? (
           <Row gutter={gutter} style={{ width: '100%' }} align="middle">
-            <Col span={7}>
-              <label>Project ID:</label>{' '}
+            <Col span={labelColSpan}>
+              <label>
+                <Trans>Project ID:</Trans>
+              </label>{' '}
             </Col>
-            <Col span={17}>
+            <Col span={dataColSpan}>
               <div
                 style={{
                   display: 'flex',
@@ -87,10 +99,12 @@ export default function DistributionSplitCard({
           </Row>
         ) : (
           <Row gutter={gutter} style={{ width: '100%' }} align="middle">
-            <Col span={7}>
-              <label>Address:</label>{' '}
+            <Col span={labelColSpan}>
+              <label>
+                <Trans>Address:</Trans>
+              </label>{' '}
             </Col>
-            <Col span={17}>
+            <Col span={dataColSpan}>
               <div
                 style={{
                   display: 'flex',
@@ -109,10 +123,12 @@ export default function DistributionSplitCard({
 
         {parseInt(split.projectId ?? '0') > 0 ? (
           <Row>
-            <Col span={7}>
-              <label>Beneficiary:</label>
+            <Col span={labelColSpan}>
+              <label>
+                <Trans>Token beneficiary:</Trans>
+              </label>
             </Col>
-            <Col span={17}>
+            <Col span={dataColSpan}>
               <span style={{ cursor: 'pointer' }}>
                 <FormattedAddress address={split.beneficiary} />
               </span>
@@ -121,10 +137,10 @@ export default function DistributionSplitCard({
         ) : null}
 
         <Row gutter={gutter} style={{ width: '100%' }} align="middle">
-          <Col span={7}>
-            <label>Percentage / Amount:</label>
+          <Col span={labelColSpan}>
+            <label>Percentage:</label>
           </Col>
-          <Col span={17}>
+          <Col span={dataColSpan}>
             <div
               style={{
                 display: 'flex',
@@ -141,34 +157,38 @@ export default function DistributionSplitCard({
                 }}
               >
                 <Space size="large">
-                  <span>{permyriadToPercent(split.percent)}%</span>
-                  {/* {!targetIsInfinite && (
+                  <span>
+                    {formatSplitPercent(BigNumber.from(split.percent))}%
+                  </span>
+                  {!parseWad(distributionLimit).eq(MAX_DISTRIBUTION_LIMIT) && (
                     <span>
                       <CurrencySymbol currency={currencyName} />
-                      {formatWad(
-                        amountSubFee(parseWad(target), feePerbicent)
-                          ?.mul(split.percent)
-                          .div(10000),
-                        { precision: 4, padEnd: true },
-                      )}
+                      {getDistributionAmountFromPercentBeforeFee({
+                        percent: parseFloat(
+                          formatSplitPercent(BigNumber.from(split.percent)),
+                        ),
+                        distributionLimit,
+                      })}
                     </span>
-                  )} */}
+                  )}
                 </Space>
               </span>
             </div>
           </Col>
         </Row>
 
-        {isLocked && (
+        {split.lockedUntil ? (
           <Row gutter={gutter} style={{ width: '100%' }} align="middle">
-            <Col span={7}>
-              <label>Locked: </label>
+            <Col span={labelColSpan}>
+              <label>
+                <Trans>Locked:</Trans>
+              </label>
             </Col>
-            <Col span={17}>
+            <Col span={dataColSpan}>
               until {formatDate((split.lockedUntil ?? 0) * 1000, 'yyyy-MM-DD')}
             </Col>
           </Row>
-        )}
+        ) : null}
       </Space>
 
       {isLocked ? (
@@ -194,6 +214,7 @@ export default function DistributionSplitCard({
         distributionLimit={distributionLimit}
         onClose={() => setEditSplitModalOpen(false)}
         currencyName={currencyName}
+        splitIndex={splitIndex}
       />
     </div>
   )

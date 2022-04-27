@@ -1,5 +1,14 @@
 import { Trans } from '@lingui/macro'
-import { Button, Divider, Form, Space, InputNumber, Col, Row } from 'antd'
+import {
+  Button,
+  Divider,
+  Form,
+  Space,
+  InputNumber,
+  Col,
+  Row,
+  Select,
+} from 'antd'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
@@ -7,6 +16,16 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useContext, useState } from 'react'
 
 import { StakingNFT } from 'models/v2/stakingNFT'
+
+import ExternalLink from 'components/shared/ExternalLink'
+
+import useTotalBalanceOf from 'hooks/v2/contractReader/TotalBalanceOf'
+
+import { NetworkContext } from 'contexts/networkContext'
+
+import { fromWad } from 'utils/formatNumber'
+
+import { NFTDelegate } from 'models/v2/nftDelegate'
 
 import StakedTokenStats from './StakedTokenStatsSection'
 import { OwnedNFT } from './OwnedNFTSection'
@@ -17,6 +36,9 @@ import nammuSvg from './SVGs/01.svg'
 import farceurSvg from './SVGs/02.svg'
 import bronsonSvg from './SVGs/03.svg'
 import johnnySvg from './SVGs/04.svg'
+
+import StakingTokenRangesModal from './StakingTokenRangesModal'
+import DelegatePickerModal from './DelegatePickerModal'
 
 const FakeOwnedNFTS: OwnedNFT[] = [
   {
@@ -45,7 +67,6 @@ const FakeOwnedNFTS: OwnedNFT[] = [
 const FakeTokenStatsData = {
   initialLocked: 0.0,
   totalStaked: 2668000000,
-  userTokenBalance: 21159000,
   userTotalLocked: 10159000,
   totalStakedPeriodInDays: 1600,
   delegates: [
@@ -58,29 +79,51 @@ const FakeStakingNFTs: StakingNFT[] = [
   {
     svg: nammuSvg,
     name: 'Nammu',
-    tokenMin: 1,
-    tokenMax: 99,
+    votingPowerMin: 1,
+    votingPowerMax: 99,
   },
   {
     svg: farceurSvg,
     name: 'Farceur',
-    tokenMin: 100,
-    tokenMax: 199,
+    votingPowerMin: 100,
+    votingPowerMax: 199,
   },
   {
     svg: bronsonSvg,
     name: 'Bronson',
-    tokenMin: 200,
-    tokenMax: 299,
+    votingPowerMin: 200,
+    votingPowerMax: 299,
   },
   {
     svg: johnnySvg,
     name: 'Johnny Utah',
-    tokenMin: 300,
+    votingPowerMin: 300,
+    votingPowerMax: 499,
+  },
+  {
+    svg: nammuSvg,
+    name: 'Nammu',
+    votingPowerMin: 500,
+    votingPowerMax: 999,
+  },
+  {
+    svg: farceurSvg,
+    name: 'Farceur',
+    votingPowerMin: 1000,
+    votingPowerMax: 1999,
+  },
+  {
+    svg: bronsonSvg,
+    name: 'Bronson',
+    votingPowerMin: 2000,
+    votingPowerMax: 4999,
+  },
+  {
+    svg: johnnySvg,
+    name: 'Johnny Utah',
+    votingPowerMin: 5000,
   },
 ]
-
-const fakeRemainingToken = 574895789347589
 
 export default function StakeForNFTForm({
   onFinish,
@@ -89,36 +132,44 @@ export default function StakeForNFTForm({
   onFinish: VoidFunction
   onClose: VoidFunction
 }) {
-  const { tokenSymbol, projectMetadata } = useContext(V2ProjectContext)
-  const projectName = projectMetadata?.name ?? 'Untitled Project'
   const [activeIdx, setActiveIdx] = useState(0)
-  const stakingNFTs = FakeStakingNFTs
   const [tokensStaked, setTokensStaked] = useState(0)
-  const [votingPower, setVotingPower] = useState(0)
-  const daysStaked = 100
+  const [daysStaked, setDaysStaked] = useState(100)
+  const [selectedDelgate, setSelectedDelgate] = useState('tankbottoms.eth')
+
+  const [tokenRangesModalVisible, setTokenRangesModalVisible] = useState(false)
+  const [delegatePickerModalVisible, setdelegatePickerModalVisible] =
+    useState(false)
+
+  const { tokenSymbol, projectMetadata, projectId } =
+    useContext(V2ProjectContext)
+  const { userAddress } = useContext(NetworkContext)
+
+  const { data: totalBalance } = useTotalBalanceOf(userAddress, projectId)
+
+  const projectName = projectMetadata?.name ?? 'Untitled Project'
+  const stakingNFTs = FakeStakingNFTs
   const maxLockTime = 1000
-  const unstakedTokens = fakeRemainingToken - tokensStaked
+  const totalBalanceInWad = parseInt(fromWad(totalBalance))
+  const unstakedTokens = totalBalanceInWad
+    ? totalBalanceInWad - tokensStaked
+    : 0
+  const votingPower = tokensStaked * (daysStaked / maxLockTime)
 
-  const votingPowerFormula = (tokensStaked: number) => {
-    return tokensStaked * (daysStaked / maxLockTime)
+  const solveForTokensStaked = (votingPower: number) => {
+    return Math.floor(votingPower / (daysStaked / maxLockTime))
   }
 
-  const tokensStakedFormula = (votingPower: number) => {
-    return votingPower / (daysStaked / maxLockTime)
-  }
-
-  const handleTokensStakedChange = (value: number) => {
-    const newTokensStaked = value
-    setTokensStaked(newTokensStaked)
-    setVotingPower(votingPowerFormula(newTokensStaked))
+  const checkVotingPower = (newTokensStaked: number, newDaysStaked: number) => {
+    const newVotingPower = newTokensStaked * (newDaysStaked / maxLockTime)
     const activeNFTIdx = stakingNFTs.findIndex(nft => {
-      if (!nft.tokenMax && newTokensStaked >= nft.tokenMin) {
+      if (!nft.votingPowerMax && newVotingPower >= nft.votingPowerMin) {
         return true
       }
       if (
-        nft.tokenMax &&
-        newTokensStaked >= nft.tokenMin &&
-        newTokensStaked < nft.tokenMax
+        nft.votingPowerMax &&
+        newVotingPower >= nft.votingPowerMin &&
+        newVotingPower < nft.votingPowerMax
       ) {
         return true
       }
@@ -128,32 +179,41 @@ export default function StakeForNFTForm({
       setActiveIdx(activeNFTIdx)
     }
   }
-
-  const handleVotingPowerChange = (value: number) => {
-    const newVotingPower = value
-    setVotingPower(newVotingPower)
-    const newTokensStaked = tokensStakedFormula(newVotingPower)
+  const handleTokensStakedChange = (value: number) => {
+    const newTokensStaked = value
     setTokensStaked(newTokensStaked)
-    const activeNFTIdx = stakingNFTs.findIndex(
-      nft => nft.tokenMin <= newTokensStaked,
-    )
-    if (activeNFTIdx !== -1) {
-      setActiveIdx(activeNFTIdx)
-    }
+    checkVotingPower(newTokensStaked, daysStaked)
+  }
+
+  const handleDaysStakedChange = (value: number) => {
+    const newDaysStaked = value
+    setDaysStaked(newDaysStaked)
+    checkVotingPower(tokensStaked, newDaysStaked)
   }
 
   const handleNextCarouselButtonClicked = () => {
     const newActiveIdx = Math.min(activeIdx + 1, stakingNFTs.length - 1)
     setActiveIdx(newActiveIdx)
-    setTokensStaked(stakingNFTs[newActiveIdx].tokenMin)
-    setVotingPower(votingPowerFormula(stakingNFTs[newActiveIdx].tokenMin))
+    const neededTokens = solveForTokensStaked(
+      stakingNFTs[newActiveIdx].votingPowerMin,
+    )
+    setTokensStaked(neededTokens)
   }
 
   const handlePrevCarouselButtonClicked = () => {
     const newActiveIdx = Math.max(activeIdx - 1, 0)
     setActiveIdx(newActiveIdx)
-    setTokensStaked(stakingNFTs[newActiveIdx].tokenMin)
-    setVotingPower(votingPowerFormula(stakingNFTs[newActiveIdx].tokenMin))
+    const neededTokens = solveForTokensStaked(
+      stakingNFTs[newActiveIdx].votingPowerMin,
+    )
+    setTokensStaked(neededTokens)
+  }
+
+  const handleDelegatePickerOk = (delegate?: NFTDelegate) => {
+    if (delegate) {
+      setSelectedDelgate(delegate.address)
+    }
+    setdelegatePickerModalVisible(false)
   }
 
   const {
@@ -161,131 +221,156 @@ export default function StakeForNFTForm({
   } = useContext(ThemeContext)
 
   return (
-    <Form layout="vertical" onFinish={() => {}}>
-      <Space size="middle" direction="vertical">
-        <h1>
-          <Trans>Voting Power in {projectName}</Trans>
-        </h1>
-        <div style={{ color: colors.text.secondary }}>
+    <div>
+      <Form layout="vertical" onFinish={() => {}}>
+        <Space size="middle" direction="vertical">
+          <h1>
+            <Trans>Voting Power in {projectName}</Trans>
+          </h1>
+          <div style={{ color: colors.text.secondary }}>
+            <p>
+              <Trans>
+                Stake Juicebox (${tokenSymbolText({ tokenSymbol })}) tokens for
+                irrevocable durations (in days) in exchange for voting weight.
+                In return, you will impact {projectName} governance and receive
+                a choice anathropomorphic banana character NFT.
+              </Trans>
+            </p>
+          </div>
+          <Button block onClick={() => setTokenRangesModalVisible(true)}>
+            <Trans>View All Token Ranges</Trans>
+          </Button>
+          <h4>
+            <Trans>
+              Voting weight is a function of Tokens multiplied by time remaining
+              over max lock duration. The following equation determines how much
+              voting weight you have. To learn more about the governance process
+              at Juicebox visit <ExternalLink href={''}>here.</ExternalLink>
+            </Trans>
+          </h4>
+        </Space>
+        <Divider />
+        <div style={{ color: colors.text.secondary, textAlign: 'center' }}>
           <p>
             <Trans>
-              Stake Juicebox (${tokenSymbolText({ tokenSymbol })}) tokens for
-              irrevocable durations (in days) in exchange for voting weight. In
-              return, you will impact {projectName} governance and receive a
-              choice anathropomorphic banana character NFT.
+              Voting Power = Tokens * ( Lock Time Remaining / Max Lock Time )
             </Trans>
           </p>
         </div>
-        <Button block>
-          <Trans>View All Token Ranges</Trans>
-        </Button>
-        <h4>
-          <Trans>
-            Voting weight is a function of Tokens multiplied by time remaining
-            over max lock duration. The following equation determines how much
-            voting weight you have. To learn more about the governance process
-            at Juicebox visit here.
-          </Trans>
-        </h4>
-      </Space>
-      <Divider />
-      <div style={{ color: colors.text.secondary, textAlign: 'center' }}>
-        <p>
-          <Trans>
-            Voting Power = Tokens * ( Lock Time Remaining / Max Lock Time )
-          </Trans>
-        </p>
-      </div>
-      <Row>
-        <Space direction="horizontal">
-          <Form.Item>
-            <InputNumber
-              value={votingPower}
-              id="votingPower"
-              onChange={handleVotingPowerChange}
-            ></InputNumber>
-          </Form.Item>
-          =
-          <Form.Item>
-            <InputNumber
-              value={tokensStaked}
-              id="tokensStaked"
-              onChange={handleTokensStakedChange}
-            ></InputNumber>
-          </Form.Item>
-          ${tokenSymbol} *
-          <Form.Item>
-            <InputNumber disabled={true} value={daysStaked}></InputNumber>
-          </Form.Item>
-          / {maxLockTime} days
-        </Space>
-      </Row>
-      <StakingNFTCarousel activeIdx={activeIdx} stakingNFTs={FakeStakingNFTs} />
-      <Row align="middle">
-        <Col span={2}>0</Col>
-        <Col span={20}>
-          <Space direction="horizontal" size="middle" align="center">
-            {stakingNFTs[activeIdx].tokenMin}
-            <Button
-              disabled={activeIdx === 0}
-              onClick={handlePrevCarouselButtonClicked}
-            >
-              {'<'}
-            </Button>
-            X
-            <Button
-              disabled={activeIdx === stakingNFTs.length - 1}
-              onClick={handleNextCarouselButtonClicked}
-            >
-              {'>'}
-            </Button>
-            {stakingNFTs[activeIdx].tokenMax
-              ? stakingNFTs[activeIdx].tokenMax
-              : '+'}
+        <Row>
+          <Space direction="horizontal">
+            <Form.Item>
+              <InputNumber
+                value={votingPower}
+                id="votingPower"
+                disabled={true}
+              ></InputNumber>
+            </Form.Item>
+            =
+            <Form.Item>
+              <InputNumber
+                value={tokensStaked}
+                id="tokensStaked"
+                onChange={handleTokensStakedChange}
+              ></InputNumber>
+            </Form.Item>
+            ${tokenSymbol} *
+            <Form.Item>
+              <Select value={daysStaked} onChange={handleDaysStakedChange}>
+                <Select.Option value={10}>10 Days</Select.Option>
+                <Select.Option value={50}>50 Days</Select.Option>
+                <Select.Option value={100}>100 Days</Select.Option>
+                <Select.Option value={500}>500 Days</Select.Option>
+                <Select.Option value={1000}>1000 Days</Select.Option>
+              </Select>
+            </Form.Item>
+            / {maxLockTime} days
           </Space>
-        </Col>
-        <Col span={2}>3B</Col>
-      </Row>
-      <div style={{ color: colors.text.secondary }}>
-        <p>
-          Remaining: {fakeRemainingToken - tokensStaked} {tokenSymbol}
-        </p>
-      </div>
-      <Space size="middle" direction="vertical" style={{ width: '100%' }}>
-        <Button block style={{ whiteSpace: 'pre' }}>
-          Delegate:{' '}
-          <span style={{ color: colors.text.primary }}>tankbottoms.eth</span>
-        </Button>
-        <Button block style={{ whiteSpace: 'pre' }}>
-          Stake{' '}
-          <span style={{ color: colors.text.primary }}>{tokensStaked}</span> of
-          ${tokenSymbol} Token for{' '}
-          <span style={{ color: colors.text.primary }}>{daysStaked}</span> days
-        </Button>
-      </Space>
-
-      <Divider />
-      <OwnedNFTsSection ownedNFTs={FakeOwnedNFTS} tokenSymbol={tokenSymbol!} />
-      <Divider />
-      <StakedTokenStats {...FakeTokenStatsData} tokenSymbol={tokenSymbol!} />
-      {unstakedTokens > 0 && (
-        <h4>
-          A remaining balance of non-staked tokens exist. You have enough tokens
-          to stake and receive a veBatman.
-        </h4>
-      )}
-      <Space>
-        <Form.Item>
-          <Button>
-            <Trans>Preview</Trans>
+        </Row>
+        <StakingNFTCarousel
+          activeIdx={activeIdx}
+          stakingNFTs={FakeStakingNFTs}
+        />
+        <Row align="middle">
+          <Col span={2}>0</Col>
+          <Col span={20}>
+            <Space direction="horizontal" size="middle" align="center">
+              {stakingNFTs[activeIdx].votingPowerMin}
+              <Button
+                disabled={activeIdx === 0}
+                onClick={handlePrevCarouselButtonClicked}
+              >
+                {'<'}
+              </Button>
+              X
+              <Button
+                disabled={activeIdx === stakingNFTs.length - 1}
+                onClick={handleNextCarouselButtonClicked}
+              >
+                {'>'}
+              </Button>
+              {stakingNFTs[activeIdx].votingPowerMax
+                ? stakingNFTs[activeIdx].votingPowerMax
+                : '+'}
+            </Space>
+          </Col>
+          <Col span={2}>3B</Col>
+        </Row>
+        <div style={{ color: colors.text.secondary }}>
+          <p>
+            Remaining: {unstakedTokens} {tokenSymbol}
+          </p>
+        </div>
+        <Space size="middle" direction="vertical" style={{ width: '100%' }}>
+          <Button
+            block
+            style={{ whiteSpace: 'pre' }}
+            onClick={() => setdelegatePickerModalVisible(true)}
+          >
+            Delegate:{' '}
+            <span style={{ color: colors.text.primary }}>
+              {selectedDelgate}
+            </span>
           </Button>
-        </Form.Item>
+          <Button block style={{ whiteSpace: 'pre' }}>
+            Stake{' '}
+            <span style={{ color: colors.text.primary }}>{tokensStaked}</span>{' '}
+            of ${tokenSymbol} Token for{' '}
+            <span style={{ color: colors.text.primary }}>{daysStaked}</span>{' '}
+            days
+          </Button>
+        </Space>
+        <Divider />
+        <OwnedNFTsSection
+          ownedNFTs={FakeOwnedNFTS}
+          tokenSymbol={tokenSymbol!}
+        />
+        <Divider />
+        <StakedTokenStats
+          {...FakeTokenStatsData}
+          userTokenBalance={totalBalanceInWad}
+          tokenSymbol={tokenSymbol!}
+        />
+        {unstakedTokens > 0 && (
+          <h4>A remaining balance of non-staked tokens exist.</h4>
+        )}
         <Form.Item>
           <Button onClick={onClose}>
             <Trans>Close</Trans>
           </Button>
         </Form.Item>
-      </Space>
-    </Form>
+      </Form>
+      <StakingTokenRangesModal
+        visible={tokenRangesModalVisible}
+        onCancel={() => setTokenRangesModalVisible(false)}
+        stakingNFTs={stakingNFTs}
+        tokenSymbol={tokenSymbol!}
+      />
+      <DelegatePickerModal
+        visible={delegatePickerModalVisible}
+        onCancel={() => setdelegatePickerModalVisible(false)}
+        onOk={handleDelegatePickerOk}
+      />
+    </div>
   )
 }

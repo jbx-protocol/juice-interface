@@ -238,6 +238,7 @@ export default function V2ManageTokensSection() {
         userHasMintPermission={userHasMintPermission}
         hasOverflow={hasOverflow}
         tokenSymbol={tokenSymbol}
+        tokenAddress={tokenAddress}
         RedeemModal={V2RedeemModal}
         ClaimTokensModal={V2ClaimTokensModal}
         MintModal={V2MintModal}

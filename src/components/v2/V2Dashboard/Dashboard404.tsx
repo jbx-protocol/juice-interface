@@ -7,8 +7,10 @@ import { padding } from 'constants/styles/padding'
 
 export default function Dashboard404({
   projectId,
+  ensName,
 }: {
   projectId: BigNumber | string | undefined
+  ensName?: string
 }) {
   return (
     <div
@@ -19,7 +21,11 @@ export default function Dashboard404({
       }}
     >
       <h2>
-        <Trans>Project {projectId} not found</Trans>
+        {ensName ? (
+          <Trans>Project for {ensName} not found</Trans>
+        ) : (
+          <Trans>Project {projectId} not found</Trans>
+        )}
       </h2>
     </div>
   )

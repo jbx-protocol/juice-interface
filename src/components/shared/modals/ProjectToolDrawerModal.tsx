@@ -6,13 +6,14 @@ import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { BigNumber } from '@ethersproject/bignumber'
 
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { TransactorInstance } from 'hooks/Transactor'
 import { JBDiscordLink } from 'components/Landing/QAs'
 
 import ArchiveV1Project from 'components/v1/V1Project/ArchiveV1Project'
+import { NetworkContext } from 'contexts/networkContext'
 
 export default function ProjectToolDrawerModal({
   visible,
@@ -46,6 +47,8 @@ export default function ProjectToolDrawerModal({
       }>
     | undefined // Currently undefined for v2
 }) {
+  const { userAddress } = useContext(NetworkContext)
+
   const transferProjectOwnershipTx = useTransferProjectOwnershipTx()
   const transferUnclaimedTokensTx = useTransferUnclaimedTokensTx()
   const addToBalanceTx = useAddToBalanceTx()
@@ -108,6 +111,11 @@ export default function ProjectToolDrawerModal({
     )
   }
 
+  const isOwnerWallet =
+    ownerAddress &&
+    userAddress &&
+    ownerAddress.toLowerCase() === userAddress.toLowerCase()
+
   const tokenSymbolShort = tokenSymbolText({
     tokenSymbol: tokenSymbol,
     capitalize: false,
@@ -121,42 +129,46 @@ export default function ProjectToolDrawerModal({
           <Trans>Tools</Trans>
         </h1>
 
-        <section>
-          <h3>
-            <Trans>Transfer ownership</Trans>
-          </h3>
-          <p>
-            <Trans>Current owner: {ownerAddress}</Trans>
-          </p>
-          <Form
-            form={transferOwnershipForm}
-            labelCol={{ span: 4 }}
-            wrapperCol={{ span: 20 }}
-          >
-            <Form.Item name="to" label="To">
-              <FormItems.EthAddress
-                defaultValue={undefined}
-                onAddressChange={to =>
-                  transferTokensForm.setFieldsValue({ to })
-                }
-              />
-            </Form.Item>
-            <Form.Item>
-              <Button
-                onClick={() => transferOwnership()}
-                loading={loadingTransferOwnership}
-                size="small"
-                type="primary"
+        {isOwnerWallet && (
+          <>
+            <section>
+              <h3>
+                <Trans>Transfer ownership</Trans>
+              </h3>
+              <p>
+                <Trans>Current owner: {ownerAddress}</Trans>
+              </p>
+              <Form
+                form={transferOwnershipForm}
+                labelCol={{ span: 4 }}
+                wrapperCol={{ span: 20 }}
               >
-                <span>
-                  <Trans>Transfer ownership</Trans>
-                </span>
-              </Button>
-            </Form.Item>
-          </Form>
-        </section>
+                <Form.Item name="to" label="To">
+                  <FormItems.EthAddress
+                    defaultValue={undefined}
+                    onAddressChange={to =>
+                      transferTokensForm.setFieldsValue({ to })
+                    }
+                  />
+                </Form.Item>
+                <Form.Item>
+                  <Button
+                    onClick={() => transferOwnership()}
+                    loading={loadingTransferOwnership}
+                    size="small"
+                    type="primary"
+                  >
+                    <span>
+                      <Trans>Transfer ownership</Trans>
+                    </span>
+                  </Button>
+                </Form.Item>
+              </Form>
+            </section>
 
-        <Divider />
+            <Divider />
+          </>
+        )}
 
         <section>
           <h3>
@@ -257,24 +269,30 @@ export default function ProjectToolDrawerModal({
           </Form>
         </section>
 
-        <Divider />
-
-        {setUriTx ? (
-          <ArchiveV1Project setUriTx={setUriTx} />
-        ) : (
-          <section>
-            <h3>
-              <Trans>Archive project</Trans>
-            </h3>
-            <p>
-              <Trans>
-                Please contact the Juicebox dev team through our{' '}
-                <JBDiscordLink>Discord</JBDiscordLink> to have your project
-                archived.
-              </Trans>
-            </p>
-          </section>
-        )}
+        {isOwnerWallet ? (
+          setUriTx ? (
+            <>
+              <Divider />
+              <ArchiveV1Project setUriTx={setUriTx} />
+            </>
+          ) : (
+            <>
+              <Divider />
+              <section>
+                <h3>
+                  <Trans>Archive project</Trans>
+                </h3>
+                <p>
+                  <Trans>
+                    Please contact the Juicebox dev team through our{' '}
+                    <JBDiscordLink>Discord</JBDiscordLink> to have your project
+                    archived.
+                  </Trans>
+                </p>
+              </section>
+            </>
+          )
+        ) : null}
         <br />
       </Space>
     </Drawer>

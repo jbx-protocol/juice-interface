@@ -17,6 +17,9 @@ export const SPLITS_TOTAL_PERCENT = ONE_BILLION
 export const MAX_FEE = ONE_BILLION
 export const MAX_DISTRIBUTION_LIMIT = MaxUint248
 
+export const DEFAULT_ISSUANCE_RATE = 10 ** 6
+export const DEFAULT_FUNDING_CYCLE_DURATION = 14
+
 /**
  * Express a given discount rate (parts-per-billion) as a percentage.
  * @param discountRate - discount rate as parts-per-billion.

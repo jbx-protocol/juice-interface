@@ -5,7 +5,13 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { layouts } from 'constants/styles/layouts'
 import { padding } from 'constants/styles/padding'
 
-export default function Dashboard404({ projectId }: { projectId: BigNumber }) {
+export default function Dashboard404({
+  projectId,
+  ensName,
+}: {
+  projectId: BigNumber | string | undefined
+  ensName?: string
+}) {
   return (
     <div
       style={{
@@ -15,7 +21,11 @@ export default function Dashboard404({ projectId }: { projectId: BigNumber }) {
       }}
     >
       <h2>
-        <Trans>Project {projectId} not found</Trans>
+        {ensName ? (
+          <Trans>Project for {ensName} not found</Trans>
+        ) : (
+          <Trans>Project {projectId} not found</Trans>
+        )}
       </h2>
     </div>
   )

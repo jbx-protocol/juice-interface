@@ -9,7 +9,13 @@ export default function Faq() {
       {QAs().map((qa, i) => (
         <CollapsePanel header={qa.q} key={i}>
           {qa.a && qa.a.map((p, j) => <p key={j}>{p}</p>)}
-          {qa.img && <img src={qa.img.src} alt={qa.img.alt} />}
+          {qa.img && (
+            <img
+              src={qa.img.src}
+              alt={qa.img.alt}
+              style={{ maxWidth: '100%' }}
+            />
+          )}
         </CollapsePanel>
       ))}
     </Collapse>

@@ -46,8 +46,8 @@ export default function ReservedTokensFormItem({
         checked={reservedRateChecked}
         onToggled={checked => {
           setReservedRateChecked(checked)
-          setReservedRate(0)
-          onChange(0)
+          if (!checked)
+            onChange(parseInt(defaultFundingCycleMetadata.reservedRate))
         }}
         hideLabel={hideLabel}
       />

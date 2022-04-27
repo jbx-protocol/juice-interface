@@ -10,7 +10,7 @@ import { decodeV2FundingCycleMetadata } from 'utils/v2/fundingCycle'
 import { weightedAmount } from 'utils/v2/math'
 
 import V2PayButton from './V2PayButton'
-import V2ProjectHeaderActions from '../V2ProjectHeaderActions'
+import V2ProjectHeaderActions from './V2ProjectHeaderActions'
 import TreasuryStats from './TreasuryStats'
 import V2FundingCycleSection from './V2FundingCycleSection'
 import V2ManageTokensSection from './V2ManageTokensSection'

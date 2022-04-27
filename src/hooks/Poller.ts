@@ -9,7 +9,7 @@ export function usePoller(
 
   // run at start too
   useEffect(
-    function() {
+    function () {
       fn()
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -18,7 +18,7 @@ export function usePoller(
 
   // Remember the latest fn.
   useEffect(
-    function() {
+    function () {
       savedCallback.current = fn
     },
     [fn],
@@ -26,13 +26,13 @@ export function usePoller(
 
   // Set up the interval.
   useEffect(
-    function() {
+    function () {
       function tick() {
         if (savedCallback.current) savedCallback.current()
       }
 
-      var id_1 = setInterval(tick, delay)
-      return function() {
+      let id_1 = setInterval(tick, delay)
+      return function () {
         return clearInterval(id_1)
       }
     },

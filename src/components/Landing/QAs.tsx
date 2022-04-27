@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import { t, Trans } from '@lingui/macro'
 import ExternalLink from 'components/shared/ExternalLink'
 import { PropsWithChildren } from 'react'

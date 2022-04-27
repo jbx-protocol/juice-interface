@@ -82,6 +82,7 @@ export default function ManageTokensModal({
     plural: true,
   })
 
+  // eslint-disable-next-line no-extra-boolean-cast
   const redeemDisabled = !Boolean(hasOverflow)
   const hasIssuedTokens = tokenAddress && tokenAddress !== constants.AddressZero
 

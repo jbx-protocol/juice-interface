@@ -39,6 +39,7 @@ export default function ProjectRiskNotice({
       </p>
       <ul>
         {warnings.map(text => (
+          // eslint-disable-next-line react/jsx-key
           <li>{text}</li>
         ))}
       </ul>

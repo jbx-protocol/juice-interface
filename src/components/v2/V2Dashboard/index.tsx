@@ -3,7 +3,6 @@ import {
   V2ProjectContextType,
 } from 'contexts/v2/projectContext'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
-import { useParams } from 'react-router-dom'
 import Loading from 'components/shared/Loading'
 import { BigNumber } from '@ethersproject/bignumber'
 import useProjectMetadataContent from 'hooks/v2/contractReader/ProjectMetadataContent'
@@ -39,19 +38,7 @@ import {
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/v2/splits'
 
-const parseProjectIdParameter = (projectIdParameter?: string) => {
-  try {
-    return BigNumber.from(projectIdParameter)
-  } catch (e) {
-    return undefined
-  }
-}
-
-export default function V2Dashboard() {
-  const { projectId: projectIdParameter }: { projectId?: string } = useParams()
-
-  const projectId = parseProjectIdParameter(projectIdParameter)
-
+export default function V2Dashboard({ projectId }: { projectId: BigNumber }) {
   const { data: metadataCID, loading: metadataURILoading } =
     useProjectMetadataContent(projectId)
 
@@ -149,7 +136,6 @@ export default function V2Dashboard() {
   const { data: ballotState } = useBallotState(projectId)
 
   if (metadataLoading || metadataURILoading) return <Loading />
-
   if (projectId?.eq(0) || metadataError || !metadataCID) {
     return <Dashboard404 projectId={projectId} />
   }

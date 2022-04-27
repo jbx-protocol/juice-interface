@@ -44,7 +44,6 @@ export default function ImageUploader({
       <Col xs={24} md={7}>
         <Space align="start">
           {url && (
-            // eslint-disable-next-line jsx-a11y/img-redundant-alt
             <img
               style={{
                 maxHeight: 80,

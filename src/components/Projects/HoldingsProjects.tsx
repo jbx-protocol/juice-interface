@@ -23,6 +23,7 @@ export default function HoldingsProjects() {
         <React.Fragment>
           <Grid>
             {projects.map(p => (
+              // eslint-disable-next-line react/jsx-key
               <ProjectCard project={p} />
             ))}
           </Grid>

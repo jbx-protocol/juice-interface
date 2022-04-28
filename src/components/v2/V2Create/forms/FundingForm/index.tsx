@@ -287,7 +287,7 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
         </SwitchHeading>
 
         <Space size="middle" direction="vertical">
-          <div>
+          <div style={{ marginTop: '0.5rem' }}>
             <p>
               <Trans>
                 Set the length of your funding cycles, which can enable:

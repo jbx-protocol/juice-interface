@@ -6,6 +6,8 @@ import { ThemeContext } from 'contexts/themeContext'
 import FormItemLabel from 'components/v2/V2Create/FormItemLabel'
 import { defaultFundingCycleData } from 'redux/slices/editingV2Project'
 
+import { DISCOUNT_RATE_EXPLANATION } from 'components/v2/V2Project/V2FundingCycleSection/settingExplanations'
+
 import { FormItemExt } from './formItemExt'
 import NumberSlider from '../inputs/NumberSlider'
 import FormItemWarningText from '../FormItemWarningText'
@@ -20,11 +22,7 @@ function DiscountRateExtra({ disabled }: { disabled?: boolean }) {
           </Trans>
         </FormItemWarningText>
       )}
-      <Trans>
-        The ratio of tokens rewarded per payment amount will decrease by this
-        percentage with each new funding cycle. A higher discount rate will
-        incentivize supporters to pay your project earlier than later.
-      </Trans>
+      {DISCOUNT_RATE_EXPLANATION}
     </div>
   )
 }

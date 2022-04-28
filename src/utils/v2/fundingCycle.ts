@@ -194,22 +194,3 @@ export const V2FundingCycleRiskCount = (
     v => v === true,
   ).length
 }
-
-export const deepEqV2FundingCycles = (
-  a?: V2FundingCycle,
-  b?: V2FundingCycle,
-) => {
-  if (a && !b) return false
-  if (b && !a) return false
-  return (
-    a?.ballot === b?.ballot &&
-    a?.configuration.eq(b?.configuration ?? -1) &&
-    a?.discountRate.eq(b?.discountRate ?? -1) &&
-    a?.duration.eq(b?.duration ?? -1) &&
-    a?.metadata.eq(b?.metadata ?? -1) &&
-    a?.number.eq(b?.number ?? -1) &&
-    a?.basedOn.eq(b?.basedOn ?? -1) &&
-    a?.start.eq(b?.start ?? -1) &&
-    a?.weight.eq(b?.weight ?? -1)
-  )
-}

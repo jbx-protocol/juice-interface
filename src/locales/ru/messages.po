@@ -812,6 +812,7 @@ msgstr "Выигрывает ли проект от собственного п�
 #: src/components/v1/V1Project/FundingCycles/FundingHistory.tsx
 #: src/components/v1/V1Project/modals/BalancesModal.tsx
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleHistory.tsx
 msgid "Done"
 msgstr "Готово"
 
@@ -1027,6 +1028,7 @@ msgid "Heads up"
 msgstr "Уведомления"
 
 #: src/components/v1/V1Project/FundingCycles/index.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/index.tsx
 msgid "History"
 msgstr "История"
 
@@ -1356,6 +1358,7 @@ msgid "No more than the funding cycle target can be distributed by the project i
 msgstr "Не более одного целевого показателя цикла финансирования можно распределить по проекту в рамках одного цикла финансирования."
 
 #: src/components/v1/V1Project/FundingCycles/FundingHistory.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleHistory.tsx
 msgid "No past funding cycles"
 msgstr "Нет прошлых циклов финансирования"
 
@@ -2764,6 +2767,7 @@ msgid "{0} will go to the project owner: <0/>"
 msgstr "{0} будет перенаправлен владельцу проекта: <0/>"
 
 #: src/components/v1/V1Project/FundingCycles/FundingHistory.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleHistory.tsx
 msgid "{0} withdrawn"
 msgstr "{0} снято"
 
@@ -2784,6 +2788,7 @@ msgid "{0}% to {1}"
 msgstr "{0}% к {1}"
 
 #: src/components/v1/V1Project/FundingCycles/FundingHistory.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleHistory.tsx
 msgid "{0}/{1} withdrawn"
 msgstr "{0}{1} снято"
 

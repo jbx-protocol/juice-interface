@@ -100,7 +100,7 @@ export default function V2FundingCycleSection({
       label: tabText({ text: t`History` }),
       content: (
         <CardSection>
-          <FundingCycleHistory currentFC={fundingCycle} />
+          <FundingCycleHistory />
         </CardSection>
       ),
     },

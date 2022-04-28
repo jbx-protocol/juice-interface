@@ -108,17 +108,23 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
       fundAccessConstraints,
     )
 
-  const { editableSplits, lockedSplits } = useMemo(() => {
+  const {
+    editableSplits,
+    lockedSplits,
+  }: {
+    editableSplits: Split[]
+    lockedSplits: Split[]
+  } = useMemo(() => {
     const now = new Date().valueOf() / 1000
 
     return {
       editableSplits:
         splits?.filter(
           split => !split.lockedUntil || split.lockedUntil < now,
-        ) ?? ([] as Split[]),
+        ) ?? [],
       lockedSplits:
         splits?.filter(split => split.lockedUntil && split.lockedUntil > now) ??
-        ([] as Split[]),
+        [],
     }
   }, [splits])
 
@@ -161,7 +167,6 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
 
   const onFundingFormSave = useCallback(
     async (fields: FundingFormFields) => {
-      await fundingForm.validateFields()
       if (!contracts) throw new Error('Failed to save funding configuration.')
 
       const fundAccessConstraint: SerializedV2FundAccessConstraint | undefined =
@@ -223,7 +228,6 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
       target,
       targetCurrency,
       onFinish,
-      fundingForm,
     ],
   )
 

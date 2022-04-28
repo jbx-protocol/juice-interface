@@ -593,7 +593,12 @@ export default function ProjectPayoutMods({
           <Form.Item
             name="lockedUntil"
             label={t`Lock until`}
-            extra={t`If locked, this can't be edited or removed until the lock expires or the funding cycle is reconfigured.`}
+            extra={
+              <Trans>
+                If locked, this split can't be edited or removed until the lock
+                expires or the funding cycle is reconfigured.
+              </Trans>
+            }
           >
             <DatePicker />
           </Form.Item>

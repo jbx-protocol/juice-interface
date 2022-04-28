@@ -27,7 +27,7 @@ import {
   splitPercentFrom,
 } from 'utils/v2/math'
 import NumberSlider from 'components/shared/inputs/NumberSlider'
-import { getDistributionAmountFromPercentBeforeFee } from 'utils/v2/distributions'
+import { amountFromPercent } from 'utils/v2/distributions'
 import { BigNumber } from '@ethersproject/bignumber'
 
 import { stringIsDigit } from 'utils/math'
@@ -80,15 +80,20 @@ export default function DistributionSplitModal({
   let initialPercent: number | undefined
   let initialLockedUntil: Moment.Moment | undefined
 
+  const distributionLimitIsInfinite =
+    !distributionLimit || parseWad(distributionLimit).eq(MAX_DISTRIBUTION_LIMIT)
+
   if (splits.length && splitIndex !== undefined) {
     split = splits[splitIndex]
     initialPercent = parseFloat(
       formatSplitPercent(BigNumber.from(split?.percent)),
     )
-    initialAmount = getDistributionAmountFromPercentBeforeFee({
-      percent: initialPercent,
-      distributionLimit,
-    })
+    initialAmount = !distributionLimitIsInfinite
+      ? amountFromPercent({
+          percent: initialPercent,
+          amount: distributionLimit,
+        })
+      : undefined
     initialLockedUntil = split.lockedUntil
       ? Moment.default(split.lockedUntil * 1000)
       : undefined
@@ -165,6 +170,8 @@ export default function DistributionSplitModal({
   }
 
   const onAmountChange = (newAmount: number) => {
+    if (distributionLimitIsInfinite) return
+
     let newPercent = getDistributionPercentFromAmount({
       amount: newAmount,
       distributionLimit,
@@ -194,9 +201,6 @@ export default function DistributionSplitModal({
   // Cannot select days before today or today with lockedUntil
   const disabledDate = (current: moment.Moment) =>
     current && current < moment().endOf('day')
-
-  const distributionLimitIsInfinite =
-    !distributionLimit || parseWad(distributionLimit).eq(MAX_DISTRIBUTION_LIMIT)
 
   return (
     <Modal
@@ -245,7 +249,7 @@ export default function DistributionSplitModal({
           <Form.Item
             name={'projectId'}
             rules={[{ validator: validateProjectId }]}
-            label={t`Project ID`}
+            label={t`Juicebox Project ID`}
             required
           >
             <InputNumber
@@ -263,7 +267,7 @@ export default function DistributionSplitModal({
             name="beneficiary"
             defaultValue={beneficiary}
             formItemProps={{
-              label: t`Token beneficiary`,
+              label: t`Token beneficiary address`,
               extra: t`The address that should receive the tokens minted from paying this project.`,
             }}
             onAddressChange={beneficiary => {
@@ -275,23 +279,33 @@ export default function DistributionSplitModal({
         {/* Only show amount input if project distribution limit is not infinite */}
         {!distributionLimitIsInfinite ? (
           <Form.Item
-            label={t`Amount`}
+            label={t`Payout amount`}
             className="ant-form-item-extra-only"
             extra={
               feePercentage && percent && !(percent > 100) ? (
                 <>
                   {editingSplitType === 'address' ? (
                     <div>
-                      <Trans>
-                        Payee will receive{' '}
-                        <CurrencySymbol currency={currencyName} />
-                        {getDistributionAmountFromPercentAfterFee({
-                          percent: percent,
-                          distributionLimit,
-                          feePercentage,
-                        })}{' '}
-                        after {feePercentage}% JBX membership fee.
-                      </Trans>
+                      <TooltipLabel
+                        label={
+                          <Trans>
+                            <CurrencySymbol currency={currencyName} />
+                            {getDistributionAmountFromPercentAfterFee({
+                              percent: percent,
+                              distributionLimit,
+                              feePercentage,
+                            })}{' '}
+                            after {feePercentage}% JBX membership fee
+                          </Trans>
+                        }
+                        tip={
+                          <Trans>
+                            Payouts to Ethereum addresses incur a{' '}
+                            {feePercentage}% fee. Your project will receive JBX
+                            in return at the current issuance rate.
+                          </Trans>
+                        }
+                      />
                     </div>
                   ) : (
                     <Trans>
@@ -326,15 +340,16 @@ export default function DistributionSplitModal({
         <Form.Item
           label={
             <TooltipLabel
-              label={<Trans>Percent</Trans>}
+              label={<Trans>Percent of distribution limit</Trans>}
               tip={
                 distributionLimitIsInfinite ? (
                   <Trans>
-                    Percent this payee will receive of all funds raised.
+                    Percentage this payee will receive of all funds raised.
                   </Trans>
                 ) : (
                   <Trans>
-                    Percent of the distribution limit this payee will receive.
+                    Percentage of the distribution limit this payee will
+                    receive.
                   </Trans>
                 )
               }
@@ -345,10 +360,12 @@ export default function DistributionSplitModal({
             <span style={{ flex: 1 }}>
               <NumberSlider
                 onChange={(percent: number | undefined) => {
-                  let newAmount = getDistributionAmountFromPercentBeforeFee({
-                    percent: percent ?? 0,
-                    distributionLimit,
-                  })
+                  let newAmount = !distributionLimitIsInfinite
+                    ? amountFromPercent({
+                        percent: percent ?? 0,
+                        amount: distributionLimit,
+                      })
+                    : undefined
                   setAmount(newAmount)
                   setPercent(percent)
                 }}
@@ -367,7 +384,12 @@ export default function DistributionSplitModal({
         <Form.Item
           name="lockedUntil"
           label={t`Lock until`}
-          extra={t`If locked, this can't be edited or removed until the lock expires or the funding cycle is reconfigured.`}
+          extra={
+            <Trans>
+              If locked, this split can't be edited or removed until the lock
+              expires or the funding cycle is reconfigured.
+            </Trans>
+          }
         >
           <DatePicker
             value={lockedUntil}

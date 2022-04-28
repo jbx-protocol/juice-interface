@@ -91,6 +91,10 @@ msgstr "<0/> The Juicebox protocol is open to anyone, and project configurations
 msgid "<0/> owner balance"
 msgstr ""
 
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
+msgid "<0/>{0} after {feePercentage}% JBX membership fee"
+msgstr "<0/>{0} after {feePercentage}% JBX membership fee"
+
 #: src/components/shared/Project/SpendingStats.tsx
 msgid "<0/>{0}{1} distributed"
 msgstr "<0/>{0}{1} distributed"
@@ -337,9 +341,7 @@ msgstr "Allowed"
 msgid "Almost definitely."
 msgstr ""
 
-#: src/components/shared/modals/ProjectToolDrawerModal.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
-#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Amount"
 msgstr "Amount"
 
@@ -1107,10 +1109,13 @@ msgid "ID: {0}"
 msgstr "ID: {0}"
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
-#: src/components/v1/ProjectPayoutMods.tsx
-#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "If locked, this can't be edited or removed until the lock expires or the funding cycle is reconfigured."
 msgstr "If locked, this can't be edited or removed until the lock expires or the funding cycle is reconfigured."
+
+#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
+msgid "If locked, this split can't be edited or removed until the lock expires or the funding cycle is reconfigured."
+msgstr "If locked, this split can't be edited or removed until the lock expires or the funding cycle is reconfigured."
 
 #: src/components/Landing/QAs.tsx
 msgid "If you know how much your project needs to earn over some period of time to be sustainable, you can set a funding target with that amount. If your project earns more than that, the surplus funds are locked in an overflow pool. Anyone holding your project's tokens can claim a portion of the overflow pool in exchange for redeeming their tokens."
@@ -1195,6 +1200,10 @@ msgstr ""
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "JBX Fee ({feePercentage}%):"
 msgstr "JBX Fee ({feePercentage}%):"
+
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
+msgid "Juicebox Project ID"
+msgstr "Juicebox Project ID"
 
 #: src/components/v2/shared/V2SupportWarning.tsx
 msgid "Juicebox V2 on {0} isn't enabled."
@@ -1490,10 +1499,6 @@ msgstr ""
 msgid "Pay {0}"
 msgstr ""
 
-#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
-msgid "Payee will receive <0/>{0} after {feePercentage}% JBX membership fee."
-msgstr "Payee will receive <0/>{0} after {feePercentage}% JBX membership fee."
-
 #: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
 msgid "Payer"
 msgstr "Payer"
@@ -1526,6 +1531,11 @@ msgstr ""
 msgid "Payments paused"
 msgstr ""
 
+#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
+msgid "Payout amount"
+msgstr "Payout amount"
+
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Payout recipients"
 msgstr "Payout recipients"
@@ -1542,6 +1552,10 @@ msgstr "Payout splits can't be scheduled when the distribution limit is Zero."
 msgid "Payouts (optional)"
 msgstr "Payouts (optional)"
 
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
+msgid "Payouts to Ethereum addresses incur a {feePercentage}% fee. Your project will receive JBX in return at the current issuance rate."
+msgstr "Payouts to Ethereum addresses incur a {feePercentage}% fee. Your project will receive JBX in return at the current issuance rate."
+
 #: src/components/shared/formItems/ProjectName.tsx
 msgid "Peach's Juicebox Stand"
 msgstr ""
@@ -1555,7 +1569,6 @@ msgid "People using Juicebox are interacting with each other through public infr
 msgstr ""
 
 #: src/components/v1/ProjectPayoutMods.tsx
-#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Percent"
 msgstr "Percent"
 
@@ -1564,12 +1577,16 @@ msgid "Percent allocation"
 msgstr "Percent allocation"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
-msgid "Percent of the distribution limit this payee will receive."
-msgstr "Percent of the distribution limit this payee will receive."
+msgid "Percent of distribution limit"
+msgstr "Percent of distribution limit"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
-msgid "Percent this payee will receive of all funds raised."
-msgstr "Percent this payee will receive of all funds raised."
+msgid "Percentage of the distribution limit this payee will receive."
+msgstr "Percentage of the distribution limit this payee will receive."
+
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
+msgid "Percentage this payee will receive of all funds raised."
+msgstr "Percentage this payee will receive of all funds raised."
 
 #: src/components/shared/formItems/ProjectTicketMods.tsx
 msgid "Percentages must add up to 100% or less"
@@ -1603,10 +1620,6 @@ msgstr ""
 #: src/components/v1/V1Project/BalanceTimeline.tsx
 msgid "Project"
 msgstr ""
-
-#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
-msgid "Project ID"
-msgstr "Project ID"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Project ID is a number."
@@ -2103,10 +2116,6 @@ msgstr ""
 msgid "The address that should receive the tokens minted from paying this project."
 msgstr ""
 
-#: src/components/shared/modals/ReservedTokenReceiverModal.tsx
-msgid "The address that should receive the tokens."
-msgstr "The address that should receive the tokens."
-
 #: src/components/v2/V2Project/V2FundingCycleSection/ReservedTokensSplitsCard.tsx
 msgid "The amount of tokens this project has reserved. These tokens can be distributed to reserved token beneficiaries."
 msgstr "The amount of tokens this project has reserved. These tokens can be distributed to reserved token beneficiaries."
@@ -2225,6 +2234,10 @@ msgstr "This address is an unrecognized strategy contract. Make sure it is corre
 msgid "This address will receive any tokens minted when the recipient project gets paid."
 msgstr ""
 
+#: src/components/shared/modals/ReservedTokenReceiverModal.tsx
+msgid "This address will receive the tokens minted from paying this project."
+msgstr "This address will receive the tokens minted from paying this project."
+
 #: src/components/v1/V1Project/FundingCycles/index.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/index.tsx
 msgid "This funding cycle may pose risks to contributors. Check the funding cycle details before paying this project."
@@ -2291,8 +2304,8 @@ msgid "Token address: <0/>"
 msgstr ""
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
-msgid "Token beneficiary"
-msgstr "Token beneficiary"
+msgid "Token beneficiary address"
+msgstr "Token beneficiary address"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
 msgid "Token beneficiary:"

@@ -80,7 +80,7 @@ export default function ReservedTokenReceiverModal({
           defaultValue={form.getFieldValue('beneficiary')}
           formItemProps={{
             label: t`Beneficiary address`,
-            extra: t`The address that should receive the tokens.`,
+            extra: t`This address will receive the tokens minted from paying this project.`,
             rules: [
               {
                 validator: validateReservedTokenReceiver,

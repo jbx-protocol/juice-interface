@@ -16,7 +16,7 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import { formatSplitPercent, MAX_DISTRIBUTION_LIMIT } from 'utils/v2/math'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
-import { getDistributionAmountFromPercentBeforeFee } from 'utils/v2/distributions'
+import { amountFromPercent } from 'utils/v2/distributions'
 import { Trans } from '@lingui/macro'
 
 import DistributionSplitModal from './DistributionSplitModal'
@@ -56,6 +56,9 @@ export default function DistributionSplitCard({
   // !isProject added here because we don't want to show the crown next to
   // a project recipient whose token benefiary is the owner of this project
   const isOwner = projectOwnerAddress === split.beneficiary && !isProject
+
+  const distributionLimitIsInfinite =
+    !distributionLimit || parseWad(distributionLimit).eq(MAX_DISTRIBUTION_LIMIT)
 
   return (
     <div
@@ -160,14 +163,14 @@ export default function DistributionSplitCard({
                   <span>
                     {formatSplitPercent(BigNumber.from(split.percent))}%
                   </span>
-                  {!parseWad(distributionLimit).eq(MAX_DISTRIBUTION_LIMIT) && (
+                  {!distributionLimitIsInfinite && (
                     <span>
                       <CurrencySymbol currency={currencyName} />
-                      {getDistributionAmountFromPercentBeforeFee({
+                      {amountFromPercent({
                         percent: parseFloat(
                           formatSplitPercent(BigNumber.from(split.percent)),
                         ),
-                        distributionLimit,
+                        amount: distributionLimit,
                       })}
                     </span>
                   )}

@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Split } from 'models/v2/splits'
 
-import { formatSplitPercent, MAX_DISTRIBUTION_LIMIT } from './math'
+import { formatSplitPercent } from './math'
 
 /**
  * Gets distribution amount from percent of the distribution limit and then applies
@@ -17,12 +17,12 @@ export function getDistributionAmountFromPercentAfterFee({
   feePercentage,
 }: {
   percent: number
-  distributionLimit: string | undefined
+  distributionLimit: string
   feePercentage: string
 }) {
-  const amountBeforeFee = getDistributionAmountFromPercentBeforeFee({
+  const amountBeforeFee = amountFromPercent({
     percent,
-    distributionLimit,
+    amount: distributionLimit,
   })
 
   if (!amountBeforeFee) return
@@ -36,28 +36,19 @@ export function getDistributionAmountFromPercentAfterFee({
 }
 
 /**
- * Gets distribution amount from percent of the distribution limit and does not apply
- * any fee
+ * Gets amount from percent of a bigger amount
  * @param percent {float} - value as a percentage.
- * @param distributionLimit string (hexString)
+ * @param amount string (hexString)
  * @returns {number} distribution amount
  */
-export function getDistributionAmountFromPercentBeforeFee({
+export function amountFromPercent({
   percent,
-  distributionLimit,
+  amount,
 }: {
   percent: number
-  distributionLimit: string | undefined
+  amount: string
 }) {
-  if (
-    !distributionLimit ||
-    BigNumber.from(distributionLimit).eq(MAX_DISTRIBUTION_LIMIT)
-  )
-    return
-
-  return parseFloat(
-    ((percent / 100) * parseFloat(distributionLimit)).toFixed(8),
-  )
+  return parseFloat(((percent / 100) * parseFloat(amount)).toFixed(8))
 }
 
 /**
@@ -71,14 +62,8 @@ export function getDistributionPercentFromAmount({
   distributionLimit,
 }: {
   amount: number
-  distributionLimit: string | undefined
+  distributionLimit: string
 }) {
-  if (
-    !distributionLimit ||
-    BigNumber.from(distributionLimit).eq(MAX_DISTRIBUTION_LIMIT)
-  )
-    return
-
   return (amount / parseFloat(distributionLimit)) * 100
 }
 

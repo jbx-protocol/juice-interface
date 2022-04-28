@@ -39,6 +39,7 @@ import johnnySvg from './SVGs/04.svg'
 
 import StakingTokenRangesModal from './StakingTokenRangesModal'
 import DelegatePickerModal from './DelegatePickerModal'
+import ConfirmStakeModal from './ConfirmStakeModal'
 
 const FakeOwnedNFTS: OwnedNFT[] = [
   {
@@ -139,6 +140,8 @@ export default function StakeForNFTForm({
 
   const [tokenRangesModalVisible, setTokenRangesModalVisible] = useState(false)
   const [delegatePickerModalVisible, setdelegatePickerModalVisible] =
+    useState(false)
+  const [confirmStakeModalVisible, setConfirmStakeModalVisible] =
     useState(false)
 
   const { tokenSymbol, projectMetadata, projectId } =
@@ -332,7 +335,11 @@ export default function StakeForNFTForm({
               {selectedDelgate}
             </span>
           </Button>
-          <Button block style={{ whiteSpace: 'pre' }}>
+          <Button
+            block
+            style={{ whiteSpace: 'pre' }}
+            onClick={() => setConfirmStakeModalVisible(true)}
+          >
             Stake{' '}
             <span style={{ color: colors.text.primary }}>{tokensStaked}</span>{' '}
             of ${tokenSymbol} Token for{' '}
@@ -370,6 +377,18 @@ export default function StakeForNFTForm({
         visible={delegatePickerModalVisible}
         onCancel={() => setdelegatePickerModalVisible(false)}
         onOk={handleDelegatePickerOk}
+      />
+      <ConfirmStakeModal
+        visible={confirmStakeModalVisible}
+        tokenSymbol={tokenSymbol!}
+        tokensStaked={tokensStaked}
+        votingPower={votingPower}
+        daysStaked={daysStaked}
+        maxLockTime={maxLockTime}
+        delegateAddress={selectedDelgate}
+        nftSvg={stakingNFTs[activeIdx].svg}
+        onCancel={() => setConfirmStakeModalVisible(false)}
+        onOk={() => setConfirmStakeModalVisible(false)}
       />
     </div>
   )

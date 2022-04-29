@@ -1657,6 +1657,10 @@ msgstr "Détails du projet"
 msgid "Project details reconfigurations will create a separate transaction."
 msgstr "Les modifications des détails du projet créeront une transaction à part."
 
+#: src/components/v2/V2Dashboard/Dashboard404.tsx
+msgid "Project for {ensName} not found"
+msgstr ""
+
 #: src/components/shared/formItems/ProjectHandle/ProjectHandleFormItem.tsx
 #: src/components/v1/ProjectPayoutMods.tsx
 msgid "Project handle"

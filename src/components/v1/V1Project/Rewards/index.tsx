@@ -211,6 +211,7 @@ export default function Rewards() {
         userHasMintPermission={userHasMintPermission}
         hasOverflow={hasOverflow}
         tokenSymbol={tokenSymbol}
+        tokenAddress={tokenAddress}
         RedeemModal={RedeemModal}
         ClaimTokensModal={ConfirmUnstakeTokensModal}
         MintModal={PrintPreminedModal}

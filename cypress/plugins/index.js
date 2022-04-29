@@ -31,7 +31,7 @@ module.exports = (on, config) => {
         '--disable-renderer-backgrounding',
       )
     }
-    const metamaskPath = await helpers.prepareMetamask('9.4.0')
+    const metamaskPath = await helpers.prepareMetaMask('9.4.0')
     _arguments.extensions.push(metamaskPath)
     return _arguments
   })

@@ -105,8 +105,9 @@ using a GraphQL API.
 Take the following steps to set up Juicebox's subgraph for local development:
 
 1. Join [Peel's discord server](https://discord.gg/akpxJZ5HKR).
-2. Go to [the dev channel](https://discord.com/channels/939317843059679252/939705688563810304)
-    and inquire about mainnet and rinkeby subgraph URLs.
+2. Go to
+   [the dev channel](https://discord.com/channels/939317843059679252/939705688563810304)
+   and inquire about mainnet and rinkeby subgraph URLs.
 3. Copy the URL into the `REACT_APP_SUBGRAPH_URL` variable of the `.env` file.
 
 ### Usage
@@ -117,16 +118,43 @@ Take the following steps to set up Juicebox's subgraph for local development:
    yarn start
    ```
 
-### Testing
+## Testing
 
-** Make sure you start the app using `yarn start` first **
+### Unit tests
 
-1. Setup your .env file with the `E2E_` prefixed variables.
-2. Open Cypress.
+Run the jest test suite using the following command:
+
+```bash
+yarn test
+```
+
+### End-to-end tests
+
+#### Configuration
+
+Setup your .env file with the `E2E_` prefixed variables.
+
+- `E2E_SECRET_WORDS`: 12 word Mnemonic. Generate this here:
+  https://iancoleman.io/bip39/. **Important**: wrap mnemonic in quotes (`"`).
+- `E2E_PASSWORD`: Any random password with at least 8 characters. Cypress will use this to create the fake
+  MetaMask account.
+- `E2E_NETWORK`: Set this to `rinkeby` (unless you have a reason not to).
+
+#### Running Cypress
+
+1. Start the app in a seperate terminal:
+
+   ```bash
+   yarn start
+   ```
+
+1. Open Cypress.
+
    ```bash
    yarn cy:open
    ```
-3. Run tests.
+
+1. Run tests.
 
 ## Contributing
 

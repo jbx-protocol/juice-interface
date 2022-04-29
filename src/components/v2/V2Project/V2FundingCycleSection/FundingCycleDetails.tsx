@@ -16,7 +16,10 @@ import TooltipLabel from 'components/shared/TooltipLabel'
 
 import FundingCycleDetailWarning from 'components/shared/Project/FundingCycleDetailWarning'
 
-import { getUnsafeV2FundingCycleProperties } from 'utils/v2/fundingCycle'
+import {
+  decodeV2FundingCycleMetadata,
+  getUnsafeV2FundingCycleProperties,
+} from 'utils/v2/fundingCycle'
 
 import { detailedTimeString } from 'utils/formatTime'
 
@@ -27,6 +30,7 @@ import {
   MAX_DISTRIBUTION_LIMIT,
   weightedAmount,
 } from 'utils/v2/math'
+import useProjectDistributionLimit from 'hooks/v2/contractReader/ProjectDistributionLimit'
 
 import { getBallotStrategyByAddress } from 'constants/v2/ballotStrategies/getBallotStrategiesByAddress'
 import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
@@ -40,14 +44,23 @@ export default function FundingCycleDetails({
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const {
-    tokenSymbol,
-    distributionLimit,
-    distributionLimitCurrency,
-    fundingCycleMetadata,
-  } = useContext(V2ProjectContext)
+  const { tokenSymbol, projectId, primaryTerminal } =
+    useContext(V2ProjectContext)
+
+  const { data: distributionLimitData } = useProjectDistributionLimit({
+    projectId,
+    configuration: fundingCycle?.configuration?.toString(),
+    terminal: primaryTerminal,
+  })
 
   if (!fundingCycle) return null
+
+  const fundingCycleMetadata = decodeV2FundingCycleMetadata(
+    fundingCycle.metadata,
+  )
+
+  const [distributionLimit, distributionLimitCurrency] =
+    distributionLimitData ?? []
 
   const formattedDuration = detailedTimeString({
     timeSeconds: fundingCycle.duration.toNumber(),

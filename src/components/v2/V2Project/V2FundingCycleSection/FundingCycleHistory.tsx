@@ -26,12 +26,12 @@ function HistoricalFundingCycle({
   fundingCycle,
   numFundingCycles,
   index,
-  setSelectedIndex,
+  onClick,
 }: {
   fundingCycle: V2FundingCycle
   numFundingCycles: number
   index: number
-  setSelectedIndex: (index: number) => void
+  onClick: VoidFunction
 }) {
   const { projectId, primaryTerminal } = useContext(V2ProjectContext)
 
@@ -59,16 +59,19 @@ function HistoricalFundingCycle({
   )
   const distributionLimitIsZero = !distributionLimit || distributionLimit?.eq(0)
 
+  const isLastFundingCycle = index < numFundingCycles - 1
+
   return (
     <div
       key={fundingCycle.number.toString()}
-      onClick={() => setSelectedIndex(index)}
+      role="button"
+      onClick={onClick}
       style={{
         display: 'flex',
         alignItems: 'baseline',
         justifyContent: 'space-between',
         cursor: 'pointer',
-        ...(index < numFundingCycles - 1
+        ...(isLastFundingCycle
           ? {
               paddingBottom: 20,
               borderBottom: '1px solid ' + colors.stroke.tertiary,
@@ -102,8 +105,6 @@ function HistoricalFundingCycle({
         </div>
       </Space>
 
-      <div style={{ flex: 1 }}></div>
-
       <Space align="baseline" style={{ fontSize: '.8rem' }}>
         {formatHistoricalDate(
           fundingCycle.start.add(fundingCycle.duration).mul(1000).toNumber(),
@@ -125,72 +126,94 @@ export default function FundingCycleHistory() {
   )
 
   useEffect(() => {
+    // This function gets all the previous configurations with FC.basedOn
+    // Then fills in the gaps between them:
+    //     - derives starts from duration and start time of the first FC of that configuration
+    //     - derives weights from discount rate and weight of the first FC of the configuration
+    //     - derives number by incrementing
+    //     - everything else the same as the first FC of the configuration
     const loadPastFundingCycles = async () => {
       if (!(projectId && currentFundingCycle)) return []
 
-      const firstFCOfEachReconfiguration: V2FundingCycle[] = []
-      const allPastFundingCycles: V2FundingCycle[] = []
-
-      // Add first FC for current configuration
-      firstFCOfEachReconfiguration.push(
-        (await contracts?.JBFundingCycleStore.get(
+      const firstFCOfCurrentConfiguration =
+        await contracts?.JBFundingCycleStore.get(
           projectId,
           currentFundingCycle.configuration,
-        )) as V2FundingCycle,
-      )
+        )
+
+      let firstFCOfEachConfiguration: V2FundingCycle[] = [
+        firstFCOfCurrentConfiguration,
+      ]
+
+      const allPastFundingCycles: V2FundingCycle[] = []
 
       let previousReconfiguration = currentFundingCycle.basedOn
 
-      // Get first funding cycle of each reconfiguration
+      // Get first funding cycle of each configuration
       while (!previousReconfiguration.eq(BigNumber.from(0))) {
         const previousReconfigurationFirstFundingCycle: V2FundingCycle =
           (await contracts?.JBFundingCycleStore.get(
             projectId,
             previousReconfiguration,
           )) as V2FundingCycle
-
         if (previousReconfigurationFirstFundingCycle) {
           // Add it to the start of list
-          ;[previousReconfigurationFirstFundingCycle].concat(
-            firstFCOfEachReconfiguration,
-          )
+          firstFCOfEachConfiguration = [
+            previousReconfigurationFirstFundingCycle,
+          ].concat(firstFCOfEachConfiguration)
           previousReconfiguration =
             previousReconfigurationFirstFundingCycle.basedOn
         }
       }
+
       // Now fill in gaps between each reconfiguration
-      firstFCOfEachReconfiguration.forEach(
-        (firstFundingCycleOfReconfiguration, reconfigurationIndex) => {
-          allPastFundingCycles.push(firstFundingCycleOfReconfiguration)
+      firstFCOfEachConfiguration.forEach(
+        (firstFundingCycleOfConfiguration, configurationIndex) => {
+          allPastFundingCycles.push(firstFundingCycleOfConfiguration)
 
           const currentReconfigurationStart =
-            firstFundingCycleOfReconfiguration.start
-          const nextReconfigurationStart =
-            firstFCOfEachReconfiguration.length > 1
-              ? firstFCOfEachReconfiguration[reconfigurationIndex + 1].start
+            firstFundingCycleOfConfiguration.start
+          const nextConfigurationStart =
+            configurationIndex < firstFCOfEachConfiguration.length - 1
+              ? firstFCOfEachConfiguration[configurationIndex + 1].start
               : currentFundingCycle.start
-          const currentDuration = firstFundingCycleOfReconfiguration.duration
+          const currentDuration = firstFundingCycleOfConfiguration.duration
           const currentDiscountRate =
-            firstFundingCycleOfReconfiguration.discountRate
+            firstFundingCycleOfConfiguration.discountRate
 
-          const numInterimFundingCycles = nextReconfigurationStart
-            .sub(currentReconfigurationStart)
-            .div(currentDuration)
-            .toNumber()
+          let numInterimFundingCycles: number
+
+          if (currentDuration && !currentDuration.eq(0)) {
+            numInterimFundingCycles = nextConfigurationStart
+              .sub(currentReconfigurationStart)
+              .div(currentDuration)
+              .toNumber()
+          } else {
+            numInterimFundingCycles = 0
+          }
+
+          const isLastConfiguration =
+            configurationIndex === firstFCOfEachConfiguration.length - 1
 
           let interimIndex = 0
 
           // Initially set to first of the reconfiguration
-          let interimWeight: BigNumber =
-            firstFundingCycleOfReconfiguration.weight
-          let interimStart: BigNumber = firstFundingCycleOfReconfiguration.start
-          let interimNumber: BigNumber =
-            firstFundingCycleOfReconfiguration.number
+          let interimWeight: BigNumber = firstFundingCycleOfConfiguration.weight
+          let interimStart: BigNumber = firstFundingCycleOfConfiguration.start
+          let interimNumber: BigNumber = firstFundingCycleOfConfiguration.number
 
           let interimFundingCycle: V2FundingCycle =
-            firstFundingCycleOfReconfiguration
+            firstFundingCycleOfConfiguration
 
           while (interimIndex < numInterimFundingCycles) {
+            // This is to prevent doubling up of an extrapolated FC and the first FC
+            // of the next configuration.
+            if (
+              !isLastConfiguration &&
+              interimIndex === numInterimFundingCycles - 1
+            ) {
+              break
+            }
             const nextInterimWeight = interimWeight.sub(
               interimWeight
                 .mul(formatDiscountRate(currentDiscountRate))
@@ -239,14 +262,18 @@ export default function FundingCycleHistory() {
     selectedIndex !== undefined ? pastFundingCycles[selectedIndex] : undefined
 
   const fundingCycleElems = (
-    <Space direction="vertical" size="large" style={{ width: '100%' }}>
+    <Space
+      direction="vertical"
+      size="large"
+      style={{ width: '100%', maxHeight: '80vh', overflow: 'scroll' }}
+    >
       {pastFundingCycles.length ? (
         pastFundingCycles.map((fundingCycle: V2FundingCycle, i) => (
           <HistoricalFundingCycle
             fundingCycle={fundingCycle}
             numFundingCycles={pastFundingCycles.length}
             index={i}
-            setSelectedIndex={index => setSelectedIndex(index)}
+            onClick={() => setSelectedIndex(i)}
           />
         ))
       ) : (
@@ -265,7 +292,7 @@ export default function FundingCycleHistory() {
 
       {selectedFC && (
         <Modal
-          visible={!!selectedFC}
+          visible={Boolean(selectedFC)}
           width={600}
           title={`Cycle #${selectedFC.number.toString()}`}
           onCancel={() => setSelectedIndex(undefined)}

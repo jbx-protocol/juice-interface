@@ -96,6 +96,10 @@ msgstr "<0/> Juicebox协议向所有人开放，不同项目的配置可能相�
 msgid "<0/> owner balance"
 msgstr "<0/> 项目钱包余额"
 
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
+msgid "<0/>{0} after {feePercentage}% JBX membership fee"
+msgstr ""
+
 #: src/components/shared/Project/SpendingStats.tsx
 msgid "<0/>{0}{1} distributed"
 msgstr ""
@@ -231,8 +235,13 @@ msgstr "可提取"
 msgid "Activity"
 msgstr "最近动态"
 
-#: src/components/shared/formItems/ProjectPayoutMods.tsx
-#: src/components/shared/formItems/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayoutMods.tsx
+msgid "Add a payout"
+msgstr ""
+
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
+#: src/components/v2/shared/DistributionSplitsSection/index.tsx
 msgid "Add a split"
 msgstr ""
 
@@ -245,7 +254,11 @@ msgstr "往项目中添加资金，但不铸造代币。"
 msgid "Add image"
 msgstr "添加图片"
 
-#: src/components/shared/formItems/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayoutMods.tsx
+msgid "Add payout"
+msgstr ""
+
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Add split"
 msgstr ""
 
@@ -263,13 +276,18 @@ msgstr "添加到余额"
 msgid "Add token receiver"
 msgstr "添加代币接收者"
 
-#: src/components/shared/formItems/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayoutMods.tsx
 #: src/components/v1/V1Project/Rewards/index.tsx
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Address"
 msgstr "地址"
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Address required"
+msgstr ""
+
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
+msgid "Address:"
 msgstr ""
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
@@ -328,7 +346,6 @@ msgstr "允许"
 msgid "Almost definitely."
 msgstr "答案是肯定的."
 
-#: src/components/shared/modals/ProjectToolDrawerModal.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Amount"
 msgstr "数量"
@@ -793,6 +810,10 @@ msgstr ""
 msgid "Distribution splits"
 msgstr ""
 
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
+msgid "Distributions to other Juicebox project do not incur any fee."
+msgstr ""
+
 #: src/components/Landing/QAs.tsx
 msgid "Do I have to make my project open source to use Juicebox as its business model?"
 msgstr "要把 Juicebox 用作项目的商业模式的话，我必须把项目进行开源吗？"
@@ -855,7 +876,8 @@ msgstr ""
 msgid "Each project has its own <0>ERC-20 tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
 msgstr "每个项目都有自己的<0>ERC-20代币</0>。每个资助项目的人都会获得项目代币作为回报。在项目方发行 ERC-20 代币之前，代币余额会由协议来记录。"
 
-#: src/components/shared/formItems/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Edit existing split"
 msgstr ""
 
@@ -1082,6 +1104,10 @@ msgstr "然而，Juicebox仍处于试验阶段。尽管Juicebox的合约团队�
 msgid "I understand"
 msgstr "我明白了"
 
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
+msgid "ID"
+msgstr ""
+
 #: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 #: src/components/v2/V2Project/V2ProjectHeaderActions.tsx
 msgid "ID: {0}"
@@ -1090,6 +1116,11 @@ msgstr "ID: {0}"
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "If locked, this can't be edited or removed until the lock expires or the funding cycle is reconfigured."
 msgstr "如果锁定了，这一项就不能编辑或删除，除非锁定失效或重新配置筹款周期。"
+
+#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
+msgid "If locked, this split can't be edited or removed until the lock expires or the funding cycle is reconfigured."
+msgstr ""
 
 #: src/components/Landing/QAs.tsx
 msgid "If you know how much your project needs to earn over some period of time to be sustainable, you can set a funding target with that amount. If your project earns more than that, the surplus funds are locked in an overflow pool. Anyone holding your project's tokens can claim a portion of the overflow pool in exchange for redeeming their tokens."
@@ -1175,6 +1206,10 @@ msgstr "JBX 费率（{0}%）："
 msgid "JBX Fee ({feePercentage}%):"
 msgstr ""
 
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
+msgid "Juicebox Project ID"
+msgstr ""
+
 #: src/components/v2/shared/V2SupportWarning.tsx
 msgid "Juicebox V2 on {0} isn't enabled."
 msgstr ""
@@ -1195,7 +1230,8 @@ msgstr "Juicebox 是以太坊上的一个开放协议，其本身也是通过这
 msgid "Juicebox loading animation"
 msgstr ""
 
-#: src/components/shared/formItems/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Juicebox project"
 msgstr ""
 
@@ -1235,8 +1271,14 @@ msgid "Load more"
 msgstr "加载更多"
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
+#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Lock until"
 msgstr "锁定至"
+
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
+msgid "Locked:"
+msgstr ""
 
 #: src/components/shared/formItems/ProjectLogoUri.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
@@ -1494,6 +1536,11 @@ msgstr "当前筹款周期暂停付款。"
 msgid "Payments paused"
 msgstr "付款已暂停"
 
+#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
+msgid "Payout amount"
+msgstr ""
+
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Payout recipients"
 msgstr ""
@@ -1510,6 +1557,10 @@ msgstr ""
 msgid "Payouts (optional)"
 msgstr "支出 (可选)"
 
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
+msgid "Payouts to Ethereum addresses incur a {feePercentage}% fee. Your project will receive JBX in return at the current issuance rate."
+msgstr ""
+
 #: src/components/shared/formItems/ProjectName.tsx
 msgid "Peach's Juicebox Stand"
 msgstr "桃子的果汁摊"
@@ -1522,9 +1573,25 @@ msgstr "Peel"
 msgid "People using Juicebox are interacting with each other through public infrastructure—not a private, profit-seeking corporate service that brokers the exchange."
 msgstr "使用 Juicebox 的人是通过公共基础设施相互交互的 —— 而不是通过一个私人的、追求利润的企业服务来中介交流。"
 
+#: src/components/v1/ProjectPayoutMods.tsx
+msgid "Percent"
+msgstr ""
+
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "Percent allocation"
 msgstr "分配百分比"
+
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
+msgid "Percent of distribution limit"
+msgstr ""
+
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
+msgid "Percentage of the distribution limit this payee will receive."
+msgstr ""
+
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
+msgid "Percentage this payee will receive of all funds raised."
+msgstr ""
 
 #: src/components/shared/formItems/ProjectTicketMods.tsx
 msgid "Percentages must add up to 100% or less"
@@ -1559,6 +1626,14 @@ msgstr "可编程的开支"
 msgid "Project"
 msgstr "项目"
 
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
+msgid "Project ID is a number."
+msgstr ""
+
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
+msgid "Project ID:"
+msgstr ""
+
 #: src/components/shared/IssueTicketsButton.tsx
 msgid "Project Token"
 msgstr "项目代币"
@@ -1587,7 +1662,7 @@ msgid "Project for {ensName} not found"
 msgstr ""
 
 #: src/components/shared/formItems/ProjectHandle/ProjectHandleFormItem.tsx
-#: src/components/shared/formItems/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayoutMods.tsx
 msgid "Project handle"
 msgstr "项目标识"
 
@@ -1899,7 +1974,8 @@ msgstr "保存新的配置"
 msgid "Save rules"
 msgstr ""
 
-#: src/components/shared/formItems/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Save split"
 msgstr ""
 
@@ -1976,8 +2052,8 @@ msgid "Some properties of the project's current funding cycle may indicate risk 
 msgstr ""
 
 #: src/components/v2/V2Create/forms/FundingForm/TargetTypeSelect.tsx
-msgid "Specific target"
-msgstr "具体目标"
+msgid "Specific limit"
+msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
@@ -2003,6 +2079,7 @@ msgid "Sum of percentages cannot exceed 100%"
 msgstr "百分比合计不能超过 100%"
 
 #: src/components/shared/forms/PayModsForm.tsx
+#: src/components/v2/V2Create/forms/FundingForm/index.tsx
 msgid "Sum of percentages cannot exceed 100%."
 msgstr "百分比合计不能超过 100%."
 
@@ -2043,13 +2120,10 @@ msgstr "Juicebox协议由JBX代币持有者组成的社区所管理，他们每�
 msgid "The address of any smart contract deployed on {signerNetwork} that implements"
 msgstr "在 {signerNetwork} 上部署的智能合约地址，该合约实现了"
 
-#: src/components/shared/formItems/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "The address that should receive the tokens minted from paying this project."
 msgstr "项目收到付款时，应该接收到新铸造代币的地址。"
-
-#: src/components/shared/modals/ReservedTokenReceiverModal.tsx
-msgid "The address that should receive the tokens."
-msgstr "应该收到代币的地址。"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/ReservedTokensSplitsCard.tsx
 msgid "The amount of tokens this project has reserved. These tokens can be distributed to reserved token beneficiaries."
@@ -2169,6 +2243,10 @@ msgstr "此地址是一个未识别的策略合约。请确保这个地址是对
 msgid "This address will receive any tokens minted when the recipient project gets paid."
 msgstr "有人给这个项目付款时，此地址会收到保留的代币。"
 
+#: src/components/shared/modals/ReservedTokenReceiverModal.tsx
+msgid "This address will receive the tokens minted from paying this project."
+msgstr ""
+
 #: src/components/v1/V1Project/FundingCycles/index.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/index.tsx
 msgid "This funding cycle may pose risks to contributors. Check the funding cycle details before paying this project."
@@ -2233,6 +2311,14 @@ msgstr "代币"
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 msgid "Token address: <0/>"
 msgstr "代币地址：<0/>"
+
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
+msgid "Token beneficiary address"
+msgstr ""
+
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
+msgid "Token beneficiary:"
+msgstr ""
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
@@ -2317,8 +2403,9 @@ msgstr "总筹款"
 msgid "Total supply"
 msgstr "总供应量"
 
-#: src/components/shared/formItems/ProjectPayoutMods.tsx
 #: src/components/shared/formItems/ProjectTicketMods.tsx
+#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v2/shared/DistributionSplitsSection/index.tsx
 msgid "Total: {0}%"
 msgstr "总共：{0}%"
 
@@ -2420,8 +2507,9 @@ msgstr "当前项目所使用的 Terminal 版本。"
 msgid "Volume"
 msgstr "总收入"
 
-#: src/components/shared/formItems/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayoutMods.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Wallet address"
 msgstr "钱包地址"
 
@@ -2498,6 +2586,10 @@ msgstr "为什么是以太坊？"
 #: src/components/Landing/QAs.tsx
 msgid "Why should I want to own a project's tokens?"
 msgstr "为什么我会想要持有一个项目的代币？"
+
+#: src/components/v1/ProjectPayoutMods.tsx
+msgid "Will be rounded to <0/>{0}"
+msgstr ""
 
 #: src/components/Landing/QAs.tsx
 msgid "Will it work on L2s?"
@@ -2775,7 +2867,8 @@ msgstr "{0}{1} 保留"
 msgid "{0}% of supply"
 msgstr "占比 {0}%"
 
-#: src/components/shared/formItems/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v2/shared/DistributionSplitsSection/index.tsx
 msgid "{0}% to <0/>"
 msgstr "{0}% 分配给 <0/>"
 

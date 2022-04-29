@@ -112,8 +112,8 @@ export default function IssueTicketsButton({
             </Trans>
           ) : (
             <Trans>
-              Would you to issue an ERC-20 token to be used as this project's
-              token?
+              Would you like to issue an ERC-20 token to be used as this
+              project's token?
             </Trans>
           )}
         </p>

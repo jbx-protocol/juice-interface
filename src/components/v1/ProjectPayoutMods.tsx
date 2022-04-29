@@ -4,8 +4,6 @@ import { Button, Col, DatePicker, Form, Modal, Row, Select, Space } from 'antd'
 import {
   validateEthAddress,
   validatePercentage,
-  getAmountFromPercent,
-  getPercentFromAmount,
   countDecimalPlaces,
   roundDown,
   ModalMode,
@@ -32,16 +30,17 @@ import {
   percentToPerbicent,
 } from 'utils/formatNumber'
 import { amountSubFee } from 'utils/math'
+import { getAmountFromPercent, getPercentFromAmount } from 'utils/v1/payouts'
 
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 
-import { FormItems } from '.'
-import CurrencySymbol from '../CurrencySymbol'
-import FormattedAddress from '../FormattedAddress'
-import NumberSlider from '../inputs/NumberSlider'
-import V1ProjectHandle from '../../v1/shared/V1ProjectHandle'
-import { FormItemExt } from './formItemExt'
+import { FormItems } from '../shared/formItems'
+import CurrencySymbol from '../shared/CurrencySymbol'
+import FormattedAddress from '../shared/FormattedAddress'
+import NumberSlider from '../shared/inputs/NumberSlider'
+import V1ProjectHandle from './shared/V1ProjectHandle'
+import { FormItemExt } from '../shared/formItems/formItemExt'
 import { CurrencyName } from 'constants/currency'
 
 type ModType = 'project' | 'address'
@@ -437,15 +436,15 @@ export default function ProjectPayoutMods({
           }}
           block
         >
-          <Trans>Add a split</Trans>
+          <Trans>Add a payout</Trans>
         </Button>
       </Space>
 
       <Modal
-        title={modalMode === 'Edit' ? t`Edit existing split` : t`Add a split`}
+        title={modalMode === 'Edit' ? t`Edit existing split` : t`Add a payout`}
         visible={editingModIndex !== undefined}
         onOk={setReceiver}
-        okText={modalMode === 'Edit' ? t`Save split` : t`Add split`}
+        okText={modalMode === 'Edit' ? t`Save split` : t`Add payout`}
         onCancel={() => {
           form.resetFields()
           setEditingModIndex(undefined)
@@ -536,9 +535,11 @@ export default function ProjectPayoutMods({
                 isPercentBeingRounded() &&
                 !(form.getFieldValue('percent') > 100) ? (
                   <div>
-                    Will be rounded to{' '}
-                    <CurrencySymbol currency={currencyName} />
-                    {roundedDownAmount()}
+                    <Trans>
+                      Will be rounded to{' '}
+                      <CurrencySymbol currency={currencyName} />
+                      {roundedDownAmount()}
+                    </Trans>
                   </div>
                 ) : null
               }
@@ -563,7 +564,7 @@ export default function ProjectPayoutMods({
             </Form.Item>
           ) : null}
 
-          <Form.Item label="Percent">
+          <Form.Item label={t`Percent`}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <span style={{ flex: 1 }}>
                 <NumberSlider
@@ -591,8 +592,13 @@ export default function ProjectPayoutMods({
           </Form.Item>
           <Form.Item
             name="lockedUntil"
-            label="Lock until"
-            extra="If locked, this can't be edited or removed until the lock expires or the funding cycle is reconfigured."
+            label={t`Lock until`}
+            extra={
+              <Trans>
+                If locked, this split can't be edited or removed until the lock
+                expires or the funding cycle is reconfigured.
+              </Trans>
+            }
           >
             <DatePicker />
           </Form.Item>

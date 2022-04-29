@@ -11,11 +11,11 @@
 
 ## Links
 
-| Name                      | Link                                                                                                                                |
-| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| Mainnet              | https://juicebox.money                                                                                                              |
-| Goerli                    | https://goerli.juicebox.money                                                                                                       |
-| Subgraph                  | [https://thegraph.com/explorer/subgraph...](https://thegraph.com/explorer/subgraph?id=FVmuv3TndQDNd2BWARV8Y27yuKKukryKXPzvAS5E7htC) |
+| Name     | Link                                                                                                                                |
+| -------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| Mainnet  | https://juicebox.money                                                                                                              |
+| Goerli   | https://goerli.juicebox.money                                                                                                       |
+| Subgraph | [https://thegraph.com/explorer/subgraph...](https://thegraph.com/explorer/subgraph?id=FVmuv3TndQDNd2BWARV8Y27yuKKukryKXPzvAS5E7htC) |
 
 ## Report a bug
 
@@ -25,16 +25,41 @@ Mention `@Peel` in [Discord](https://discord.gg/6jXrJSyDFf) and someone from our
 
 Read the [development guidelines](doc/development.md) for instructions on running the app in development.
 
-### Testing
+## Testing
 
-** Make sure you start the app using `yarn start` first **
+### Unit tests
 
-1. Setup your .env file with the `E2E_` prefixed variables.
-2. Open Cypress.
+Run the jest test suite using the following command:
+
+```bash
+yarn test
+```
+
+### End-to-end tests
+
+#### Configuration
+
+Setup your .env file with the `E2E_` prefixed variables.
+
+- `E2E_SECRET_WORDS`: 12 word Mnemonic. Generate this here: https://iancoleman.io/bip39/. **Important**: wrap mnemonic in quotes (`"`).
+- `E2E_PASSWORD`: Any random password with at least 8 characters. Cypress will use this to create the fake MetaMask account.
+- `E2E_NETWORK`: Set this to `rinkeby` (unless you have a reason not to).
+
+#### Running Cypress
+
+1. Start the app in a seperate terminal:
+
+   ```bash
+   yarn start
+   ```
+
+1. Open Cypress.
+
    ```bash
    yarn cy:open
    ```
-3. Run tests.
+
+1. Run tests.
 
 ## Contributing
 

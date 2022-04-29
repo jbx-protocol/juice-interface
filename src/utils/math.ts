@@ -41,6 +41,11 @@ export const weightedRate: WeightFunction = (
   )
 }
 
+// Determines if a string value contains only digits
+export const stringIsDigit = (value: string) => {
+  return /^\d+$/.test(value)
+}
+
 export const feeForAmount = (
   amount: BigNumber | undefined,
   feePerbicent: BigNumber | undefined,

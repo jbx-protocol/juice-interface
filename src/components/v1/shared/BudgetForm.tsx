@@ -1,10 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { Button, Divider, Form, Space, Switch } from 'antd'
 import { FormItems } from 'components/shared/formItems'
-import {
-  targetSubFeeToTargetFormatted,
-  targetToTargetSubFeeFormatted,
-} from 'components/shared/formItems/formHelpers'
+
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import * as constants from '@ethersproject/constants'
@@ -20,6 +17,10 @@ import { helpPagePath } from 'utils/helpPageHelper'
 import { getV1CurrencyOption, V1CurrencyName } from 'utils/v1/currency'
 
 import FormItemWarningText from 'components/shared/FormItemWarningText'
+import {
+  targetSubFeeToTargetFormatted,
+  targetToTargetSubFeeFormatted,
+} from 'utils/v1/payouts'
 
 import ExternalLink from '../../shared/ExternalLink'
 import { CurrencyName } from 'constants/currency'

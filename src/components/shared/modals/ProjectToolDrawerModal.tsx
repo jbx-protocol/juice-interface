@@ -243,7 +243,7 @@ export default function ProjectToolDrawerModal({
             labelCol={{ span: 4 }}
             wrapperCol={{ span: 20 }}
           >
-            <Form.Item name="amount" label={t`Amount`}>
+            <Form.Item name="amount" label={t`Payout amount`}>
               <FormattedNumberInput
                 placeholder="0"
                 onChange={amount =>

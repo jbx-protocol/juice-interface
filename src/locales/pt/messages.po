@@ -2624,7 +2624,7 @@ msgid "Workspace"
 msgstr "Área de trabalho"
 
 #: src/components/shared/IssueTicketsButton.tsx
-msgid "Would you to issue an ERC-20 token to be used as this project's token?"
+msgid "Would you like to issue an ERC-20 token to be used as this project's token?"
 msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx

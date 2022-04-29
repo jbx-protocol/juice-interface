@@ -20,7 +20,7 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 import useProjectDistributionLimit from 'hooks/v2/contractReader/ProjectDistributionLimit'
 import useUsedDistributionLimit from 'hooks/v2/contractReader/UsedDistributionLimit'
 import { V2UserContext } from 'contexts/v2/userContext'
-import { formatDiscountRate } from 'utils/v2/math'
+import { formatDiscountRate, MAX_DISTRIBUTION_LIMIT } from 'utils/v2/math'
 
 function HistoricalFundingCycle({
   fundingCycle,
@@ -54,6 +54,11 @@ function HistoricalFundingCycle({
   const [distributionLimit, distributionLimitCurrency] =
     distributionLimitData ?? []
 
+  const distributionLimitIsInfinite = distributionLimit?.eq(
+    MAX_DISTRIBUTION_LIMIT,
+  )
+  const distributionLimitIsZero = !distributionLimit || distributionLimit?.eq(0)
+
   return (
     <div
       key={fundingCycle.number.toString()}
@@ -80,7 +85,7 @@ function HistoricalFundingCycle({
               distributionLimitCurrency?.toNumber() as V2CurrencyOption,
             )}
           />
-          {distributionLimit && distributionLimit.gt(0) ? (
+          {!(distributionLimitIsInfinite || distributionLimitIsZero) ? (
             <>
               <Trans>
                 {formatWad(usedDistributionLimit, { precision: 2 })}/

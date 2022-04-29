@@ -31,7 +31,7 @@ export function extract(file: string, destination: string) {
    unzipSync(file, destination)
 }
 
-export async function prepareMetamask(version: string) {
+export async function prepareMetaMask(version: string) {
   const release = await getMetaMaskReleases(version)
   const downloadsDirectory = path.resolve(__dirname, 'downloads')
   if (!fs.existsSync(downloadsDirectory)) {

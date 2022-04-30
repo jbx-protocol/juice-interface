@@ -31,11 +31,14 @@ export function detailedTimeString({
 
 export function detailedTimeUntil(endTimeSeconds?: BigNumberish) {
   const nowSeconds = Math.floor(Date.now().valueOf() / 1000)
-  const secondsLeft = Math.floor(
-    BigNumber.from(endTimeSeconds).sub(Math.floor(nowSeconds)).toNumber(),
-  )
+  const secondsLeft = BigNumber.from(endTimeSeconds)
+    .sub(Math.floor(nowSeconds))
+    .toNumber()
 
-  return detailedTimeString({ timeSeconds: secondsLeft, roundToMinutes: true })
+  return detailedTimeString({
+    timeSeconds: secondsLeft,
+    roundToMinutes: secondsLeft > 120,
+  })
 }
 
 export const secondsToDays = (seconds: number) => seconds / SECONDS_IN_DAY

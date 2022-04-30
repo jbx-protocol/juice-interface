@@ -17,6 +17,7 @@ export default function FundingCycleDetailsCard({
   isFundingCycleRecurring,
   fundingCycleDetails,
   expand,
+  isPreviewMode,
 }: {
   fundingCycleNumber: BigNumber
   fundingCycleStartTime: BigNumber
@@ -25,6 +26,7 @@ export default function FundingCycleDetailsCard({
   fundingCycleDetails: JSX.Element
   isFundingCycleRecurring: boolean
   expand?: boolean
+  isPreviewMode?: boolean
 }) {
   const {
     theme: { colors },
@@ -36,7 +38,9 @@ export default function FundingCycleDetailsCard({
     const endTimeSeconds = fundingCycleStartTime.add(
       fundingCycleDurationSeconds,
     )
-    const formattedTimeLeft = detailedTimeUntil(endTimeSeconds)
+    const formattedTimeLeft = !isPreviewMode
+      ? detailedTimeUntil(endTimeSeconds)
+      : detailedTimeUntil(fundingCycleDurationSeconds)
 
     return (
       <span style={{ color: colors.text.secondary, marginLeft: 10 }}>

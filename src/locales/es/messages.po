@@ -2159,6 +2159,10 @@ msgstr "El código siempre podrá usar más ojos y más críticas para acrecenta
 msgid "The contract team will soon start working on L2 payment terminals for Juicebox projects."
 msgstr "El equipo de contratos va a estar trabajando pronto en terminales de pago L2 para los proyectos en Juicebox."
 
+#: src/components/v2/V2Project/TreasuryStats/DistributedRatio.tsx
+msgid "The distribution limit for this funding cycle is 0, meaning all funds in Juicebox are currently considered overflow. Overflow can be redeemed by token holders, but not distributed."
+msgstr ""
+
 #: src/components/shared/Project/SpendingStats.tsx
 msgid "The funds available to distribution for this funding cycle (before the {feePercentage}% JBX fee is subtracted). This number won't roll over to the next funding cycle, so funds should be distributed before this funding cycle ends."
 msgstr ""
@@ -2202,7 +2206,6 @@ msgid "The rest is left to share between token holders."
 msgstr ""
 
 #: src/components/v1/V1Project/Paid.tsx
-#: src/components/v2/V2Project/TreasuryStats/DistributedRatio.tsx
 msgid "The target for this funding cycle is 0, meaning all funds in Juicebox are currently considered overflow. Overflow can be redeemed by token holders, but not distributed."
 msgstr "El objetivo para este ciclo de financiamiento es 0, lo que significa que todos los fondos en Juicebox actualmente se consideran excedente. El excedente puede canjearse por poseedores de tokens, pero no distribuidos."
 

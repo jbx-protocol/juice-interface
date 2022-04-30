@@ -6,8 +6,9 @@ import { WeightFunction } from 'utils/math'
 
 const TEN_THOUSAND = 10000
 const ONE_BILLION = 1000000000
-const MaxUint248 = constants.MaxUint256.add(1)
-  .div(2 ** 8)
+
+const MaxUint232 = constants.MaxUint256.add(1)
+  .div(2 ** 24)
   .sub(1)
 
 export const MAX_RESERVED_RATE = TEN_THOUSAND
@@ -15,7 +16,7 @@ export const MAX_REDEMPTION_RATE = TEN_THOUSAND
 export const MAX_DISCOUNT_RATE = ONE_BILLION
 export const SPLITS_TOTAL_PERCENT = ONE_BILLION
 export const MAX_FEE = ONE_BILLION
-export const MAX_DISTRIBUTION_LIMIT = MaxUint248
+export const MAX_DISTRIBUTION_LIMIT = MaxUint232
 
 export const DEFAULT_ISSUANCE_RATE = 10 ** 6
 export const DEFAULT_FUNDING_CYCLE_DURATION = 14

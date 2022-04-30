@@ -134,7 +134,8 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
   const resetProjectForm = useCallback(() => {
     const _target = fundAccessConstraint?.distributionLimit ?? '0'
     const _targetCurrency = parseInt(
-      fundAccessConstraint?.distributionLimitCurrency ?? '0',
+      fundAccessConstraint?.distributionLimitCurrency ??
+        V2_CURRENCY_ETH.toString(),
     ) as V2CurrencyOption
 
     const durationSeconds = fundingCycleData

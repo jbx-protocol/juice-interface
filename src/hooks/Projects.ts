@@ -22,9 +22,9 @@ import { getTerminalAddress } from 'utils/v1/terminals'
 
 import { SECONDS_IN_DAY } from 'constants/numbers'
 
-import { archivedProjectIds } from '../../constants/v1/archivedProjects'
-import { uploadIpfsJsonCache } from '../../utils/ipfs'
-import useSubgraphQuery, { useInfiniteSubgraphQuery } from '../SubgraphQuery'
+import { archivedProjectIds } from '../constants/v1/archivedProjects'
+import { uploadIpfsJsonCache } from '../utils/ipfs'
+import useSubgraphQuery, { useInfiniteSubgraphQuery } from './SubgraphQuery'
 
 interface ProjectsOptions {
   pageNumber?: number
@@ -47,10 +47,12 @@ const keys: (keyof Project)[] = [
   'creator',
   'createdAt',
   'metadataUri',
+  'metadataDomain',
   'currentBalance',
   'totalPaid',
   'totalRedeemed',
   'terminal',
+  'cv',
 ]
 
 const queryOpts = (
@@ -79,7 +81,7 @@ const queryOpts = (
 
   if (opts.state === 'archived') {
     where.push({
-      key: 'id',
+      key: 'projectId',
       value: archivedProjectIds,
       operator: 'in',
     })
@@ -92,19 +94,7 @@ const queryOpts = (
 
   return {
     entity: 'project',
-    keys: opts.keys ?? [
-      'id',
-      'projectId',
-      'handle',
-      'creator',
-      'createdAt',
-      'metadataUri',
-      'metadataDomain',
-      'currentBalance',
-      'totalPaid',
-      'totalRedeemed',
-      'terminal',
-    ],
+    keys: opts.keys ?? keys,
     orderDirection: opts.orderDirection ?? 'desc',
     orderBy: opts.orderBy ?? 'totalPaid',
     pageSize: opts.pageSize,

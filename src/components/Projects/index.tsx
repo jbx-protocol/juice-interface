@@ -13,13 +13,13 @@ import ProjectCard from 'components/shared/ProjectCard'
 
 import { Link, useHistory, useLocation } from 'react-router-dom'
 
-import { useInfiniteProjectsQuery, useProjectsSearch } from 'hooks/v1/Projects'
-import { V1TerminalVersion } from 'models/v1/terminals'
+import { useInfiniteProjectsQuery, useProjectsSearch } from 'hooks/Projects'
 
 import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 
 import { featureFlagEnabled, FEATURE_FLAGS } from 'utils/featureFlags'
+import { CV } from 'models/cv'
 
 import { layouts } from 'constants/styles/layouts'
 import TrendingProjects from './TrendingProjects'
@@ -72,7 +72,7 @@ export default function Projects() {
 
   const [orderBy, setOrderBy] = useState<OrderByOption>('totalPaid')
   const [includeV1, setIncludeV1] = useState<boolean>(true)
-  const [includeV1_1, setIncludeV1_1] = useState<boolean>(true)
+  const [includeV2, setIncludeV2] = useState<boolean>(true)
   const [showArchived, setShowArchived] = useState<boolean>(false)
 
   const loadMoreContainerRef = useRef<HTMLDivElement>(null)
@@ -81,10 +81,10 @@ export default function Projects() {
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const terminalVersion: V1TerminalVersion | undefined = useMemo(() => {
-    if (includeV1 && !includeV1_1) return '1'
-    if (!includeV1 && includeV1_1) return '1.1'
-  }, [includeV1, includeV1_1])
+  const cv: CV | undefined = useMemo(() => {
+    if (includeV1 && !includeV2) return 1
+    if (!includeV1 && includeV2) return 2
+  }, [includeV1, includeV2])
 
   const {
     data: pages,
@@ -97,7 +97,7 @@ export default function Projects() {
     pageSize,
     orderDirection: 'desc',
     state: showArchived ? 'archived' : 'active',
-    terminalVersion,
+    cv,
   })
 
   const { data: searchPages, isLoading: isLoadingSearch } =
@@ -191,9 +191,9 @@ export default function Projects() {
           {selectedTab === 'all' && !searchText ? (
             <ProjectsFilterAndSort
               includeV1={includeV1}
+              includeV2={includeV2}
               setIncludeV1={setIncludeV1}
-              includeV1_1={includeV1_1}
-              setIncludeV1_1={setIncludeV1_1}
+              setIncludeV2={setIncludeV2}
               showArchived={showArchived}
               setShowArchived={setShowArchived}
               orderBy={orderBy}

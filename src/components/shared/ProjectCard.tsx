@@ -22,12 +22,14 @@ import Loading from './Loading'
 
 type ProjectCardProject = Pick<
   Project,
+  | 'id'
   | 'handle'
   | 'metadataUri'
   | 'totalPaid'
   | 'createdAt'
   | 'terminal'
   | 'projectId'
+  | 'cv'
 >
 
 export default function ProjectCard({
@@ -54,12 +56,14 @@ export default function ProjectCard({
       ? {
           entity: 'project',
           keys: [
+            'id',
             'handle',
             'metadataUri',
             'totalPaid',
             'createdAt',
             'terminal',
             'projectId',
+            'cv',
           ],
           where: {
             key: 'projectId',
@@ -101,8 +105,12 @@ export default function ProjectCard({
         cursor: 'pointer',
         overflow: 'hidden',
       }}
-      key={_project?.handle}
-      to={`/p/${_project?.handle}`}
+      key={_project.id}
+      to={
+        _project.cv === 2
+          ? `/v2/p/${_project.projectId}`
+          : `/p/${_project?.handle}`
+      }
     >
       <div style={cardStyle} className="clickable-border">
         <div style={{ marginRight: 20 }}>
@@ -141,19 +149,64 @@ export default function ProjectCard({
           )}
 
           <div>
-            <span style={{ color: colors.text.primary, fontWeight: 500 }}>
-              @{_project?.handle}
-            </span>
+            {_project?.handle && (
+              <span
+                style={{
+                  color: colors.text.primary,
+                  fontWeight: 500,
+                  marginRight: 10,
+                }}
+              >
+                @{_project?.handle}
+              </span>
+            )}
             <span
               style={{
-                marginLeft: 10,
                 color: colors.text.tertiary,
                 fontSize: '0.7rem',
                 fontWeight: 500,
               }}
             >
-              V{terminalVersion}
+              V{terminalVersion ?? _project.cv}
             </span>
+          </div>
+
+          <div>
+            <span style={{ color: colors.text.primary, fontWeight: 500 }}>
+              <ETHAmount amount={_project?.totalPaid} precision={precision} />{' '}
+            </span>
+
+            <span style={{ color: colors.text.secondary }}>
+              since{' '}
+              {!!_project?.createdAt &&
+                formatDate(_project?.createdAt * 1000, 'yyyy-MM-DD')}
+            </span>
+          </div>
+
+          {metadata?.description && (
+            <Tooltip title={metadata.description} placement="bottom">
+              <div
+                style={{
+                  maxHeight: 20,
+                  color: colors.text.tertiary,
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                }}
+              >
+                {metadata.description}
+              </div>
+            </Tooltip>
+          )}
+
+          <div
+            style={{
+              marginLeft: 10,
+              color: colors.text.tertiary,
+              fontSize: '0.7rem',
+              fontWeight: 500,
+            }}
+          >
+            V{terminalVersion}
           </div>
 
           <div>

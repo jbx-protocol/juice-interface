@@ -368,9 +368,13 @@ msgstr "Monto a distribuir"
 msgid "An invite link to your project's Discord server."
 msgstr "Un enlace de invitación al servidor de Discord de su proyecto."
 
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
-msgid "Any changes will take effect in the next funding cycle. The current funding cycle won't be altered."
-msgstr "Cualquier cambio tomará efecto en el siguiente ciclo de financiamiento. El ciclo de financiamiento actual no será alterado."
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
+msgid "Any changes you make will take effect in FC #{effectedFCNumber}. The current funding cycle (#{currentFCNumber}) and any intermediate funding cycles won't be altered."
+msgstr ""
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
+msgid "Any changes you make will take effect in FC #{effectedFCNumber}. The current funding cycle (#{currentFCNumber}) won't be altered."
+msgstr ""
 
 #: src/constants/v1/ballotStrategies/index.ts
 #: src/constants/v2/ballotStrategies/index.ts
@@ -429,6 +433,10 @@ msgstr "Balance excedido"
 #: src/components/shared/Project/SpendingStats.tsx
 msgid "Balance of the project owner's wallet."
 msgstr "Balance en la cartera del dueño del proyecto."
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
+msgid "Because you do not have a funding cycle duration, changes you make will take effect immediately."
+msgstr ""
 
 #: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
 msgid "Beneficiary"
@@ -531,6 +539,10 @@ msgstr "Se pueden hacer cambios a estos atributos en cualquier momento y serán 
 #: src/components/Landing/index.tsx
 msgid "Changes to your project's funding configuration require a community-approved period to take effect, which acts as a safeguard against rug pulls. Your supporters don't have to trust you — even though they already do."
 msgstr "Los cambios a las configuraciones de financiamiento de tu proyecto requieren un periodo aprobado por la comunidad para surtir efecto, lo cual actúa como salvaguardia contra rug pulls. Tus partidarios no necesitan confiar en ti — aunque ya lo hacen."
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
+msgid "Changes will take effect according to the custom reconfiguration rule you are using."
+msgstr ""
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Check this to mint this project's ERC-20 tokens to your wallet. Leave unchecked to have your token balance tracked by Juicebox, saving gas on this transaction. You can always claim your ERC-20 tokens later."

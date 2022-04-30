@@ -135,6 +135,7 @@ export default function FundingCycleTabContent({
           onFinish={() => {
             setTokenDrawerVisible(false)
           }}
+          isCreate
         />
       </Drawer>
       <Drawer

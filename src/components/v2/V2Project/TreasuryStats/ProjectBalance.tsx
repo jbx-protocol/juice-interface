@@ -41,7 +41,7 @@ export default function ProjectBalance({ style }: { style?: CSSProperties }) {
               <ETHAmount amount={ETHBalance} precision={4} padEnd={true} />{' '}
             </span>
           ) : (
-            ''
+            '0'
           )}
           <V2CurrencyAmount
             amount={balanceInDistributionLimitCurrency ?? BigNumber.from(0)}

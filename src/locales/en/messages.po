@@ -364,12 +364,8 @@ msgid "An invite link to your project's Discord server."
 msgstr ""
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
-msgid "Any changes you make will take effect in FC #{effectedFCNumber}. The current funding cycle (#{currentFCNumber}) and any intermediate funding cycles won't be altered."
-msgstr "Any changes you make will take effect in FC #{effectedFCNumber}. The current funding cycle (#{currentFCNumber}) and any intermediate funding cycles won't be altered."
-
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
-msgid "Any changes you make will take effect in FC #{effectedFCNumber}. The current funding cycle (#{currentFCNumber}) won't be altered."
-msgstr "Any changes you make will take effect in FC #{effectedFCNumber}. The current funding cycle (#{currentFCNumber}) won't be altered."
+msgid "Any changes you make will take effect in  <0>funding cycle #{0}</0>. The current funding cycle (#{currentFCNumber}) won't be altered."
+msgstr "Any changes you make will take effect in  <0>funding cycle #{0}</0>. The current funding cycle (#{currentFCNumber}) won't be altered."
 
 #: src/constants/v1/ballotStrategies/index.ts
 #: src/constants/v2/ballotStrategies/index.ts
@@ -538,6 +534,10 @@ msgstr "Changes to your project's funding configuration require a community-appr
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "Changes will take effect according to the custom reconfiguration rule you are using."
 msgstr "Changes will take effect according to the custom reconfiguration rule you are using."
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
+msgid "Changes you make will take effect according to your  <0>{0}</0> reconfiguration rule: i.e. the first funding cycle following <1> {1} </1> from now."
+msgstr "Changes you make will take effect according to your  <0>{0}</0> reconfiguration rule: i.e. the first funding cycle following <1> {1} </1> from now."
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Check this to mint this project's ERC-20 tokens to your wallet. Leave unchecked to have your token balance tracked by Juicebox, saving gas on this transaction. You can always claim your ERC-20 tokens later."
@@ -2737,12 +2737,17 @@ msgid "characters max"
 msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/utils/formatTime.ts
 msgid "days"
 msgstr ""
 
 #: src/components/shared/formItems/ProjectHandle/ProjectHandleInput.tsx
 msgid "handle"
 msgstr ""
+
+#: src/utils/formatTime.ts
+msgid "hours"
+msgstr "hours"
 
 #: src/components/shared/formItems/ProjectDiscord.tsx
 msgid "https://discord.gg/abcdefgh"
@@ -2772,6 +2777,10 @@ msgstr "locked until {lockedUntilFormatted}"
 msgid "matching \"{searchText}\""
 msgstr "matching \"{searchText}\""
 
+#: src/utils/formatTime.ts
+msgid "minutes"
+msgstr "minutes"
+
 #: src/components/shared/inputs/Pay/PayInputSubText.tsx
 msgid "or <0><1>buy {tokenText} on exchange<2/></1></0>"
 msgstr "or <0><1>buy {tokenText} on exchange<2/></1></0>"
@@ -2789,6 +2798,10 @@ msgstr "project owner"
 #: src/components/Projects/index.tsx
 msgid "projects"
 msgstr "projects"
+
+#: src/utils/formatTime.ts
+msgid "seconds"
+msgstr "seconds"
 
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx

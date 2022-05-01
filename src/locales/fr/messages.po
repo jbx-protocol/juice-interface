@@ -369,11 +369,7 @@ msgid "An invite link to your project's Discord server."
 msgstr ""
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
-msgid "Any changes you make will take effect in FC #{effectedFCNumber}. The current funding cycle (#{currentFCNumber}) and any intermediate funding cycles won't be altered."
-msgstr ""
-
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
-msgid "Any changes you make will take effect in FC #{effectedFCNumber}. The current funding cycle (#{currentFCNumber}) won't be altered."
+msgid "Any changes you make will take effect in  <0>funding cycle #{0}</0>. The current funding cycle (#{currentFCNumber}) won't be altered."
 msgstr ""
 
 #: src/constants/v1/ballotStrategies/index.ts
@@ -542,6 +538,10 @@ msgstr "Les changements de financement de votre projet demandent une période d'
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "Changes will take effect according to the custom reconfiguration rule you are using."
+msgstr ""
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
+msgid "Changes you make will take effect according to your  <0>{0}</0> reconfiguration rule: i.e. the first funding cycle following <1> {1} </1> from now."
 msgstr ""
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
@@ -2742,12 +2742,17 @@ msgid "characters max"
 msgstr "caractères maximum"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/utils/formatTime.ts
 msgid "days"
 msgstr "jours"
 
 #: src/components/shared/formItems/ProjectHandle/ProjectHandleInput.tsx
 msgid "handle"
 msgstr "identifiant"
+
+#: src/utils/formatTime.ts
+msgid "hours"
+msgstr ""
 
 #: src/components/shared/formItems/ProjectDiscord.tsx
 msgid "https://discord.gg/abcdefgh"
@@ -2777,6 +2782,10 @@ msgstr ""
 msgid "matching \"{searchText}\""
 msgstr "correspondant à \"{searchText}\""
 
+#: src/utils/formatTime.ts
+msgid "minutes"
+msgstr ""
+
 #: src/components/shared/inputs/Pay/PayInputSubText.tsx
 msgid "or <0><1>buy {tokenText} on exchange<2/></1></0>"
 msgstr "ou <0><1>acheter {tokenText} en échange<2/></1></0>"
@@ -2794,6 +2803,10 @@ msgstr "propriétaire du projet"
 #: src/components/Projects/index.tsx
 msgid "projects"
 msgstr "projets"
+
+#: src/utils/formatTime.ts
+msgid "seconds"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx

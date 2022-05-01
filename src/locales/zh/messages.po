@@ -369,11 +369,7 @@ msgid "An invite link to your project's Discord server."
 msgstr "项目 Discord 的邀请链接。"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
-msgid "Any changes you make will take effect in FC #{effectedFCNumber}. The current funding cycle (#{currentFCNumber}) and any intermediate funding cycles won't be altered."
-msgstr ""
-
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
-msgid "Any changes you make will take effect in FC #{effectedFCNumber}. The current funding cycle (#{currentFCNumber}) won't be altered."
+msgid "Any changes you make will take effect in  <0>funding cycle #{0}</0>. The current funding cycle (#{currentFCNumber}) won't be altered."
 msgstr ""
 
 #: src/constants/v1/ballotStrategies/index.ts
@@ -542,6 +538,10 @@ msgstr "对项目资金的变动需要经过社区的批准阶段才能生效，
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "Changes will take effect according to the custom reconfiguration rule you are using."
+msgstr ""
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
+msgid "Changes you make will take effect according to your  <0>{0}</0> reconfiguration rule: i.e. the first funding cycle following <1> {1} </1> from now."
 msgstr ""
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
@@ -2742,12 +2742,17 @@ msgid "characters max"
 msgstr "最大字符数"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/utils/formatTime.ts
 msgid "days"
 msgstr "天"
 
 #: src/components/shared/formItems/ProjectHandle/ProjectHandleInput.tsx
 msgid "handle"
 msgstr "标识"
+
+#: src/utils/formatTime.ts
+msgid "hours"
+msgstr ""
 
 #: src/components/shared/formItems/ProjectDiscord.tsx
 msgid "https://discord.gg/abcdefgh"
@@ -2777,6 +2782,10 @@ msgstr ""
 msgid "matching \"{searchText}\""
 msgstr "满足条件 \"{searchText}\""
 
+#: src/utils/formatTime.ts
+msgid "minutes"
+msgstr ""
+
 #: src/components/shared/inputs/Pay/PayInputSubText.tsx
 msgid "or <0><1>buy {tokenText} on exchange<2/></1></0>"
 msgstr "或是 <0><1>在交易所购买 {tokenText} <2/></1></0>"
@@ -2794,6 +2803,10 @@ msgstr "项目拥有者"
 #: src/components/Projects/index.tsx
 msgid "projects"
 msgstr "项目"
+
+#: src/utils/formatTime.ts
+msgid "seconds"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx

@@ -83,7 +83,7 @@ export default function ProjectsFilterAndSort({
                 e.stopPropagation()
               }}
             >
-              <FilterOutlined /> <label>Filter</label>
+              <FilterOutlined /> <label style={{ cursor:"pointer" }}>Filter</label>
             </span>
           }
         >

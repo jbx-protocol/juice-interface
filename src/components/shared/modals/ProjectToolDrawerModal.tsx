@@ -11,6 +11,7 @@ import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { TransactorInstance } from 'hooks/Transactor'
 import { JBDiscordLink } from 'components/Landing/QAs'
+import ProjectPayerSection from 'components/v2/V2Project/ProjectPayerSection'
 
 import ArchiveV1Project from 'components/v1/V1Project/ArchiveV1Project'
 import { NetworkContext } from 'contexts/networkContext'
@@ -25,6 +26,7 @@ export default function ProjectToolDrawerModal({
   useTransferUnclaimedTokensTx,
   useAddToBalanceTx,
   useSetProjectUriTx,
+  useDeployProjectPayerTx,
 }: {
   visible?: boolean
   onClose?: VoidFunction
@@ -46,6 +48,7 @@ export default function ProjectToolDrawerModal({
         cid: string
       }>
     | undefined // Currently undefined for v2
+  useDeployProjectPayerTx: () => TransactorInstance<{}> | undefined // undefined for v1
 }) {
   const { userAddress } = useContext(NetworkContext)
 
@@ -54,6 +57,8 @@ export default function ProjectToolDrawerModal({
   const addToBalanceTx = useAddToBalanceTx()
 
   const setUriTx = useSetProjectUriTx()
+
+  const deployProjectPayerTx = useDeployProjectPayerTx()
 
   const [loadingAddToBalance, setLoadingAddToBalance] = useState<boolean>()
   const [loadingTransferTokens, setLoadingTransferTokens] = useState<boolean>()
@@ -168,6 +173,11 @@ export default function ProjectToolDrawerModal({
 
             <Divider />
           </>
+        )}
+        {deployProjectPayerTx && (
+          <ProjectPayerSection
+            useDeployProjectPayerTx={useDeployProjectPayerTx}
+          />
         )}
 
         <section>

@@ -14,6 +14,7 @@ import { useAddToBalanceTx } from 'hooks/v2/transactor/AddToBalanceTx'
 import { useTransferProjectOwnershipTx } from 'hooks/v2/transactor/TransferProjectOwnershipTx'
 import { useTransferUnclaimedTokensTx } from 'hooks/v2/transactor/TransferUnclaimedTokensTx'
 import useUserUnclaimedTokenBalance from 'hooks/v2/contractReader/UserUnclaimedTokenBalance'
+import { useDeployProjectPayerTx } from 'hooks/v2/transactor/DeployProjectPayerTx'
 
 import V2ReconfigureFundingModalTrigger from './V2ProjectReconfigureModal/V2ReconfigureModalTrigger'
 
@@ -70,6 +71,7 @@ export default function V2ProjectHeaderActions() {
         useTransferUnclaimedTokensTx={useTransferUnclaimedTokensTx}
         useAddToBalanceTx={useAddToBalanceTx}
         useSetProjectUriTx={() => undefined}
+        useDeployProjectPayerTx={useDeployProjectPayerTx}
       />
       <div style={{ display: 'flex' }}>
         <Button

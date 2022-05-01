@@ -140,6 +140,10 @@ msgstr "<0>NOTA:</0> Este proyecto tiene un balance de 0. Los proyectos no puede
 msgid "<0>No duration set.</0>Funding can be reconfigured at any time. Reconfigurations will start a new funding cycle."
 msgstr ""
 
+#: src/components/v2/V2Project/ProjectPayerSection.tsx
+msgid "<0>Note:</0> Copy this address and save it now."
+msgstr ""
+
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "<0>Note:</0> These properties will <1>not</1> be editable immediately within a funding cycle. They can only be changed for <2>upcoming</2> funding cycles."
 msgstr "<0>Nota:</0> Estas propiedades <1>no</1> se podrán editar inmediatamente dentro de un ciclo de financiamiento. Solo pueden ser cambiadas para <2>próximos</2> ciclos de financiamiento."
@@ -632,6 +636,10 @@ msgstr "¡Copiado!"
 msgid "Copy to clipboard"
 msgstr "Copiar a portapapeles"
 
+#: src/components/v2/V2Project/ProjectPayerSection.tsx
+msgid "Create payable address"
+msgstr ""
+
 #: src/components/Projects/index.tsx
 msgid "Create project"
 msgstr "Crear proyecto"
@@ -698,6 +706,10 @@ msgstr "Desplegar proyecto"
 #: src/components/v1/V1Create/index.tsx
 msgid "Deploy project on {signerNetwork}"
 msgstr "Desplegar proyecto en {signerNetwork}"
+
+#: src/components/v2/V2Project/ProjectPayerSection.tsx
+msgid "Deploy project payer contract"
+msgstr ""
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/DeployProjectButton.tsx
 msgid "Deploy project to {0}"
@@ -1120,6 +1132,10 @@ msgstr "Si está bloqueado, esto no se puede editar o remover hasta que el bloqu
 #: src/components/v1/ProjectPayoutMods.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "If locked, this split can't be edited or removed until the lock expires or the funding cycle is reconfigured."
+msgstr ""
+
+#: src/components/v2/V2Project/ProjectPayerSection.tsx
+msgid "If you have already deployed a payable address and have lost it, please contact the Juicebox team through <0>Discord.</0>"
 msgstr ""
 
 #: src/components/Landing/QAs.tsx
@@ -2209,6 +2225,10 @@ msgstr ""
 msgid "The target for this funding cycle is 0, meaning all funds in Juicebox are currently considered overflow. Overflow can be redeemed by token holders, but not distributed."
 msgstr "El objetivo para este ciclo de financiamiento es 0, lo que significa que todos los fondos en Juicebox actualmente se consideran excedente. El excedente puede canjearse por poseedores de tokens, pero no distribuidos."
 
+#: src/components/v2/V2Project/ProjectPayerSection.tsx
+msgid "The tokens minted as a result of payments to this address will belong to the payer, the same way as if they were to pay through the interface. <0>However</0>, if someone pays the project from a non-custodial entity such as the Coinbase app, the tokens cannot be issued to their personal wallets and will be lost."
+msgstr ""
+
 #: src/components/v1/V1Project/Paid.tsx
 msgid "The total amount received by this project through Juicebox since it was created."
 msgstr "El monto total recibido por este proyecto a través de Juicebox desde que fue creado."
@@ -2255,6 +2275,10 @@ msgstr ""
 msgid "This funding cycle may pose risks to contributors. Check the funding cycle details before paying this project."
 msgstr "Este ciclo de financiación puede representar riesgos a los contribuidores. Revisa los detalles del ciclo de financiación antes de pagar este proyecto."
 
+#: src/components/v2/V2Project/ProjectPayerSection.tsx
+msgid "This launches a new contract so will incur significant gas fees."
+msgstr ""
+
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 msgid "This list is using an experimental data index and may be inaccurate for some projects."
 msgstr "Está lista está usando un índice experimental de datos y puede ser incorrecta para algunos proyectos."
@@ -2298,6 +2322,10 @@ msgstr "Este sitio web (juicebox.money) se conecta a los contratos inteligentes 
 #: src/components/v1/V1Create/index.tsx
 msgid "This will erase all of your changes."
 msgstr "Esto borrará todos tus cambios."
+
+#: src/components/v2/V2Project/ProjectPayerSection.tsx
+msgid "This will give you an ETH address people can use to pay this project rather than paying through the juicebox.money interface."
+msgstr ""
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
@@ -2516,6 +2544,10 @@ msgstr "Volumen"
 msgid "Wallet address"
 msgstr "Dirección de billetera virtual"
 
+#: src/components/v2/V2Project/ProjectPayerSection.tsx
+msgid "We are currently still working on a way to load this address through our interface. If you lose your address please contact the Juicebox team through <0>Discord</0>."
+msgstr ""
+
 #: src/components/shared/formItems/ProjectLink.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "Website"
@@ -2671,6 +2703,10 @@ msgstr "Tu balance: {0}"
 #: src/components/v1/V1Project/modals/FeedbackPromptModal.tsx
 msgid "Your feedback will be sent to a <0>public Discord channel </0>for our development team to consider."
 msgstr "Tu retroalimentación se enviará a un <0>canal de Discord público</0>para consideración de nuestro equipo de desarrollo."
+
+#: src/components/v2/V2Project/ProjectPayerSection.tsx
+msgid "Your new payable address:"
+msgstr ""
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "Your project cannot receive direct payments while paused."

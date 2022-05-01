@@ -369,7 +369,7 @@ msgid "An invite link to your project's Discord server."
 msgstr "Projenizin Discord Sunucusuna davet linki."
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
-msgid "Any changes you make will take effect in  <0>funding cycle #{0}</0>. The current funding cycle (#{currentFCNumber}) won't be altered."
+msgid "Any changes you make will take effect in <0>funding cycle #{0}</0>. The current funding cycle (#{currentFCNumber}) won't be altered."
 msgstr ""
 
 #: src/constants/v1/ballotStrategies/index.ts
@@ -541,7 +541,7 @@ msgid "Changes will take effect according to the custom reconfiguration rule you
 msgstr ""
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
-msgid "Changes you make will take effect according to your  <0>{0}</0> reconfiguration rule: i.e. the first funding cycle following <1> {1} </1> from now."
+msgid "Changes you make will take effect according to your <0>{0}</0> reconfiguration rule: i.e. the first funding cycle following<1>{1}</1> from now."
 msgstr ""
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx

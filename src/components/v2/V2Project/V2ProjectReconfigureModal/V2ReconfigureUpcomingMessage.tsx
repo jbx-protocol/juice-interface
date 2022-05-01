@@ -22,19 +22,19 @@ export default function V2ReconfigureUpcomingMessage() {
 
   // Separating the full message out like this for translation purposes
   // (they need full sentences, can't chop and change)
-  if (ballotStrategyLength === undefined) {
-    return (
-      <Trans>
-        Changes will take effect according to the custom reconfiguration rule
-        you are using.
-      </Trans>
-    )
+  if (!duration || duration === 0) {
     // If duration is unset/0, changes take effect immediately to current FC
-  } else if (!duration || duration === 0) {
     return (
       <Trans>
         Because you do not have a funding cycle duration, changes you make will
         take effect immediately.
+      </Trans>
+    )
+  } else if (ballotStrategyLength === undefined) {
+    return (
+      <Trans>
+        Changes will take effect according to the custom reconfiguration rule
+        you are using.
       </Trans>
     )
   } else if (ballotStrategyLength > secondsUntilNextFC) {

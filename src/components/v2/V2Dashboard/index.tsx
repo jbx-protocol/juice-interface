@@ -29,6 +29,10 @@ import useTerminalCurrentOverflow from 'hooks/v2/contractReader/TerminalCurrentO
 import { useBallotState } from 'hooks/v2/contractReader/BallotState'
 import useProjectTokenTotalSupply from 'hooks/v2/contractReader/ProjectTokenTotalSupply'
 
+import DashboardNewDeploy from 'components/shared/Dashboard/DashboardNewDeploy'
+
+import { useLocation } from 'react-router-dom'
+
 import { layouts } from 'constants/styles/layouts'
 
 import V2Project from '../V2Project'
@@ -67,6 +71,10 @@ export default function V2Dashboard({ projectId }: { projectId: BigNumber }) {
   const { data: terminals } = useProjectTerminals({
     projectId,
   })
+
+  const location = useLocation()
+  const params = new URLSearchParams(location.search)
+  const isNewDeploy = Boolean(params.get('newDeploy'))
 
   const primaryTerminal = terminals?.[0] // TODO: make primaryTerminalOf hook and use it
 
@@ -136,7 +144,16 @@ export default function V2Dashboard({ projectId }: { projectId: BigNumber }) {
   const { data: ballotState } = useBallotState(projectId)
 
   if (metadataLoading || metadataURILoading) return <Loading />
-  if (projectId?.eq(0) || metadataError || !metadataCID) {
+  if (isNewDeploy && !metadataCID) {
+    return (
+      <DashboardNewDeploy
+        projectId={projectId}
+        owner={projectOwnerAddress}
+        isV2={true}
+      />
+    )
+  }
+  if (metadataError || !metadataCID) {
     return <Dashboard404 projectId={projectId} />
   }
 

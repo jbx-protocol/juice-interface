@@ -1832,7 +1832,7 @@ msgstr ""
 msgid "Redistributable surplus"
 msgstr "Yeniden dağıtılabilir fazlalık"
 
-#: src/components/v1/V1Dashboard/index.tsx
+#: src/components/shared/Dashboard/DashboardNewDeploy.tsx
 msgid "Refresh"
 msgstr "Yenile"
 
@@ -2854,6 +2854,10 @@ msgstr "stake edilen {0}"
 msgid "{0} total"
 msgstr "Toplam {0}"
 
+#: src/components/shared/Dashboard/DashboardNewDeploy.tsx
+msgid "{0} will be available soon! Try refreshing the page shortly."
+msgstr ""
+
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 msgid "{0} will go to the project owner: <0/>"
 msgstr "{0} proje sahibine gidecek: <0/>"
@@ -2906,10 +2910,6 @@ msgstr "#{0}'a kadar kalan {formattedTimeLeft}"
 #: src/components/v1/V1Dashboard/index.tsx
 msgid "{handle} not found"
 msgstr "{handle} bulunamadı"
-
-#: src/components/v1/V1Dashboard/index.tsx
-msgid "{handle} will be available soon! Try refreshing the page shortly."
-msgstr "{handle} yakında burada olacak! Kısa bir süre sonra sayfayı yenilemeyi deneyin."
 
 #: src/components/Projects/FilterCheckboxItem.tsx
 msgid "{label}"

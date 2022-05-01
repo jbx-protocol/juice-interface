@@ -1832,7 +1832,7 @@ msgstr ""
 msgid "Redistributable surplus"
 msgstr "Excédent redistribuable"
 
-#: src/components/v1/V1Dashboard/index.tsx
+#: src/components/shared/Dashboard/DashboardNewDeploy.tsx
 msgid "Refresh"
 msgstr "Actualiser"
 
@@ -2854,6 +2854,10 @@ msgstr "{0} jalonné"
 msgid "{0} total"
 msgstr "{0} total"
 
+#: src/components/shared/Dashboard/DashboardNewDeploy.tsx
+msgid "{0} will be available soon! Try refreshing the page shortly."
+msgstr ""
+
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 msgid "{0} will go to the project owner: <0/>"
 msgstr "{0} ira au propriétaire du projet : <0/>"
@@ -2906,10 +2910,6 @@ msgstr "{formattedTimeLeft} jusqu'à #{0}"
 #: src/components/v1/V1Dashboard/index.tsx
 msgid "{handle} not found"
 msgstr "{handle} introuvable"
-
-#: src/components/v1/V1Dashboard/index.tsx
-msgid "{handle} will be available soon! Try refreshing the page shortly."
-msgstr "{handle} sera disponible bientôt ! Essayez d'actualiser la page sous peu."
 
 #: src/components/Projects/FilterCheckboxItem.tsx
 msgid "{label}"

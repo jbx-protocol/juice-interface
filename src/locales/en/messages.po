@@ -1827,7 +1827,7 @@ msgstr "Redemption rate: <0>{0}%</0>"
 msgid "Redistributable surplus"
 msgstr ""
 
-#: src/components/v1/V1Dashboard/index.tsx
+#: src/components/shared/Dashboard/DashboardNewDeploy.tsx
 msgid "Refresh"
 msgstr "Refresh"
 
@@ -2849,6 +2849,10 @@ msgstr ""
 msgid "{0} total"
 msgstr ""
 
+#: src/components/shared/Dashboard/DashboardNewDeploy.tsx
+msgid "{0} will be available soon! Try refreshing the page shortly."
+msgstr "{0} will be available soon! Try refreshing the page shortly."
+
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 msgid "{0} will go to the project owner: <0/>"
 msgstr ""
@@ -2901,10 +2905,6 @@ msgstr "{formattedTimeLeft} until #{0}"
 #: src/components/v1/V1Dashboard/index.tsx
 msgid "{handle} not found"
 msgstr ""
-
-#: src/components/v1/V1Dashboard/index.tsx
-msgid "{handle} will be available soon! Try refreshing the page shortly."
-msgstr "{handle} will be available soon! Try refreshing the page shortly."
 
 #: src/components/Projects/FilterCheckboxItem.tsx
 msgid "{label}"

@@ -1832,7 +1832,7 @@ msgstr ""
 msgid "Redistributable surplus"
 msgstr "Перераспределяемый излишек"
 
-#: src/components/v1/V1Dashboard/index.tsx
+#: src/components/shared/Dashboard/DashboardNewDeploy.tsx
 msgid "Refresh"
 msgstr "Обновить"
 
@@ -2854,6 +2854,10 @@ msgstr "{0} размещено"
 msgid "{0} total"
 msgstr "{0} всего"
 
+#: src/components/shared/Dashboard/DashboardNewDeploy.tsx
+msgid "{0} will be available soon! Try refreshing the page shortly."
+msgstr ""
+
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 msgid "{0} will go to the project owner: <0/>"
 msgstr "{0} будет перенаправлен владельцу проекта: <0/>"
@@ -2906,10 +2910,6 @@ msgstr ""
 #: src/components/v1/V1Dashboard/index.tsx
 msgid "{handle} not found"
 msgstr "{никнейм} не найден"
-
-#: src/components/v1/V1Dashboard/index.tsx
-msgid "{handle} will be available soon! Try refreshing the page shortly."
-msgstr "{Handle} будет скоро доступен! Попробуй перезагрузить страницу."
 
 #: src/components/Projects/FilterCheckboxItem.tsx
 msgid "{label}"

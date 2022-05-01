@@ -1832,7 +1832,7 @@ msgstr ""
 msgid "Redistributable surplus"
 msgstr "可分派的盈余"
 
-#: src/components/v1/V1Dashboard/index.tsx
+#: src/components/shared/Dashboard/DashboardNewDeploy.tsx
 msgid "Refresh"
 msgstr "刷新"
 
@@ -2854,6 +2854,10 @@ msgstr "{0} 已存入"
 msgid "{0} total"
 msgstr "{0} 总共"
 
+#: src/components/shared/Dashboard/DashboardNewDeploy.tsx
+msgid "{0} will be available soon! Try refreshing the page shortly."
+msgstr ""
+
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 msgid "{0} will go to the project owner: <0/>"
 msgstr "{0} 会给到项目拥有者：<0/>"
@@ -2906,10 +2910,6 @@ msgstr ""
 #: src/components/v1/V1Dashboard/index.tsx
 msgid "{handle} not found"
 msgstr "{handle} 没有找到"
-
-#: src/components/v1/V1Dashboard/index.tsx
-msgid "{handle} will be available soon! Try refreshing the page shortly."
-msgstr "{handle} 很快就能使用了！可以尝试立即刷新页面。"
 
 #: src/components/Projects/FilterCheckboxItem.tsx
 msgid "{label}"

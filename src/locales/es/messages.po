@@ -1698,7 +1698,7 @@ msgid "Project token"
 msgstr "Token de proyecto"
 
 #: src/components/shared/NewDeployNotAvailable.tsx
-msgid "Project {0} will be available soon! Try refreshing the page shortly."
+msgid "Project {name} will be available soon! Try refreshing the page shortly."
 msgstr ""
 
 #: src/components/shared/Project404.tsx

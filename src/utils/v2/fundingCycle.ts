@@ -194,28 +194,3 @@ export const V2FundingCycleRiskCount = (
     v => v === true,
   ).length
 }
-
-// Calculates which FC# a reconfiguration will take effect
-export const getEffectedFCNumberAfterReconfig = ({
-  currentFundingCycle,
-}: {
-  currentFundingCycle: V2FundingCycle
-}): number | undefined => {
-  const ballotStrategyLength = getBallotStrategyByAddress(
-    currentFundingCycle.ballot,
-  ).length
-
-  // Return undefined if using custom ballot strategy (unknown length)
-  if (ballotStrategyLength === undefined) return
-
-  let currentFundingCycleNumber = currentFundingCycle.number.toNumber()
-
-  // If length is 0, changes take effect immediately to current FC
-  if (ballotStrategyLength === 0) return currentFundingCycle.number.toNumber()
-
-  const duration = currentFundingCycle.duration.toNumber()
-
-  return Math.ceil(
-    currentFundingCycleNumber + ballotStrategyLength / duration + 1,
-  )
-}

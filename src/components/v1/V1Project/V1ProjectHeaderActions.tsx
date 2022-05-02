@@ -93,7 +93,7 @@ export default function V1ProjectHeaderActions() {
       </span>
 
       <div>
-        <Tooltip title={<Trans>Tools</Trans>} placement="bottom">
+        <Tooltip title={'Tools'} placement="bottom">
           <Button
             onClick={() => setToolDrawerVisible(true)}
             icon={<ToolOutlined />}
@@ -102,7 +102,7 @@ export default function V1ProjectHeaderActions() {
         </Tooltip>
         {hasEditPermission && (
           <Tooltip
-            title={<Trans>Reconfigure project and funding details</Trans>}
+            title={'Reconfigure project and funding details'}
             placement="bottom"
           >
             <Button

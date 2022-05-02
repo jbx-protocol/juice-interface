@@ -10,10 +10,8 @@ import { padding } from 'constants/styles/padding'
 
 export default function NewDeployNotAvailable({
   name,
-  projectId,
 }: {
-  name?: string
-  projectId?: BigNumber
+  name?: string | BigNumber
 }) {
   const history = useHistory()
 
@@ -28,8 +26,8 @@ export default function NewDeployNotAvailable({
     >
       <h2>
         <Trans>
-          Project {name ?? projectId} will be available soon! Try refreshing the
-          page shortly.
+          Project {name} will be available soon! Try refreshing the page
+          shortly.
         </Trans>
         <br />
         <br />

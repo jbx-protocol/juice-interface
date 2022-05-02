@@ -14,6 +14,7 @@ import { JBDiscordLink } from 'components/Landing/QAs'
 
 import ArchiveV1Project from 'components/v1/V1Project/ArchiveV1Project'
 import { NetworkContext } from 'contexts/networkContext'
+import LaunchProjectPayerButton from 'components/v2/V2Project/LaunchProjectPayerButton'
 
 export default function ProjectToolDrawerModal({
   visible,
@@ -25,6 +26,7 @@ export default function ProjectToolDrawerModal({
   useTransferUnclaimedTokensTx,
   useAddToBalanceTx,
   useSetProjectUriTx,
+  useDeployProjectPayerTx,
 }: {
   visible?: boolean
   onClose?: VoidFunction
@@ -46,6 +48,7 @@ export default function ProjectToolDrawerModal({
         cid: string
       }>
     | undefined // Currently undefined for v2
+  useDeployProjectPayerTx: () => TransactorInstance<{}> | undefined // undefined for v1
 }) {
   const { userAddress } = useContext(NetworkContext)
 
@@ -54,6 +57,8 @@ export default function ProjectToolDrawerModal({
   const addToBalanceTx = useAddToBalanceTx()
 
   const setUriTx = useSetProjectUriTx()
+
+  const deployProjectPayerTx = useDeployProjectPayerTx()
 
   const [loadingAddToBalance, setLoadingAddToBalance] = useState<boolean>()
   const [loadingTransferTokens, setLoadingTransferTokens] = useState<boolean>()
@@ -166,6 +171,32 @@ export default function ProjectToolDrawerModal({
               </Form>
             </section>
 
+            <Divider />
+          </>
+        )}
+        {deployProjectPayerTx && (
+          <>
+            <section>
+              <h3>
+                <Trans>Create payable address</Trans>
+              </h3>
+              <p>
+                <Trans>
+                  Create an ETH address people can use to pay this project
+                  rather than paying through the juicebox.money interface.
+                </Trans>
+              </p>
+              <LaunchProjectPayerButton
+                useDeployProjectPayerTx={useDeployProjectPayerTx}
+              />
+              <p style={{ fontSize: 11, marginTop: 10 }}>
+                <Trans>
+                  If you have already deployed a payable address and have lost
+                  it, please contact the Juicebox team through{' '}
+                  <JBDiscordLink>Discord.</JBDiscordLink>
+                </Trans>
+              </p>
+            </section>
             <Divider />
           </>
         )}

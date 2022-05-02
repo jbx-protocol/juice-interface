@@ -12,7 +12,12 @@ export default function TargetTypeSelect({
   onChange: (value: TargetType) => void
 }) {
   return (
-    <Select value={value} onChange={onChange} style={{ width: '100%' }}>
+    <Select
+      value={value}
+      onChange={onChange}
+      getPopupContainer={triggerNode => triggerNode.parentElement}
+      style={{ width: '100%' }}
+    >
       <Option value="specific">
         <Trans>Specific limit</Trans>
       </Option>

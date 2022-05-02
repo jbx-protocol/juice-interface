@@ -1657,7 +1657,7 @@ msgstr "Detalhes do projeto"
 msgid "Project details reconfigurations will create a separate transaction."
 msgstr "As reconfiguracões dos detalhes do projeto irão criar uma transação separada."
 
-#: src/components/v2/V2Dashboard/Dashboard404.tsx
+#: src/components/shared/Project404.tsx
 msgid "Project for {ensName} not found"
 msgstr ""
 
@@ -1697,7 +1697,11 @@ msgstr "Donos de projeto podem configurar um período de demora, que significa q
 msgid "Project token"
 msgstr ""
 
-#: src/components/v2/V2Dashboard/Dashboard404.tsx
+#: src/components/shared/NewDeployNotAvailable.tsx
+msgid "Project {0} will be available soon! Try refreshing the page shortly."
+msgstr ""
+
+#: src/components/shared/Project404.tsx
 msgid "Project {projectId} not found"
 msgstr "Projeto {projectId} não encontrado"
 
@@ -1832,7 +1836,7 @@ msgstr ""
 msgid "Redistributable surplus"
 msgstr "Excedente redistribuível"
 
-#: src/components/shared/Dashboard/DashboardNewDeploy.tsx
+#: src/components/shared/NewDeployNotAvailable.tsx
 msgid "Refresh"
 msgstr "Atualizar"
 
@@ -2854,10 +2858,6 @@ msgstr "{0} staked"
 msgid "{0} total"
 msgstr "{0} total"
 
-#: src/components/shared/Dashboard/DashboardNewDeploy.tsx
-msgid "{0} will be available soon! Try refreshing the page shortly."
-msgstr ""
-
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 msgid "{0} will go to the project owner: <0/>"
 msgstr "{0} Irá para o proprietário do projeto: <0/>"
@@ -2906,10 +2906,6 @@ msgstr "{formattedTimeLeft} restante"
 #: src/components/shared/Project/FundingCycleDetailsCard.tsx
 msgid "{formattedTimeLeft} until #{0}"
 msgstr "{formattedTimeLeft} até #{0}"
-
-#: src/components/v1/V1Dashboard/index.tsx
-msgid "{handle} not found"
-msgstr "{handle} não encontrado"
 
 #: src/components/Projects/FilterCheckboxItem.tsx
 msgid "{label}"

@@ -29,10 +29,14 @@ import useTerminalCurrentOverflow from 'hooks/v2/contractReader/TerminalCurrentO
 import { useBallotState } from 'hooks/v2/contractReader/BallotState'
 import useProjectTokenTotalSupply from 'hooks/v2/contractReader/ProjectTokenTotalSupply'
 
+import NewDeployNotAvailable from 'components/shared/NewDeployNotAvailable'
+
+import { useLocation } from 'react-router-dom'
+
 import { layouts } from 'constants/styles/layouts'
 
 import V2Project from '../V2Project'
-import Dashboard404 from './Dashboard404'
+import Project404 from '../../shared/Project404'
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
@@ -67,6 +71,10 @@ export default function V2Dashboard({ projectId }: { projectId: BigNumber }) {
   const { data: terminals } = useProjectTerminals({
     projectId,
   })
+
+  const location = useLocation()
+  const params = new URLSearchParams(location.search)
+  const isNewDeploy = Boolean(params.get('newDeploy'))
 
   const primaryTerminal = terminals?.[0] // TODO: make primaryTerminalOf hook and use it
 
@@ -136,8 +144,11 @@ export default function V2Dashboard({ projectId }: { projectId: BigNumber }) {
   const { data: ballotState } = useBallotState(projectId)
 
   if (metadataLoading || metadataURILoading) return <Loading />
-  if (projectId?.eq(0) || metadataError || !metadataCID) {
-    return <Dashboard404 projectId={projectId} />
+  if (isNewDeploy && !metadataCID) {
+    return <NewDeployNotAvailable handleOrId={projectId} />
+  }
+  if (metadataError || !metadataCID) {
+    return <Project404 projectId={projectId} />
   }
 
   const project: V2ProjectContextType = {

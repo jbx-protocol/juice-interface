@@ -37,6 +37,7 @@ export default function ProjectDetailsForm({
 }) {
   return (
     <Form
+      scrollToFirstError={{ behavior: 'smooth' }}
       form={form}
       layout="vertical"
       onFinish={onFinish}

@@ -1714,7 +1714,7 @@ msgstr ""
 msgid "Project details reconfigurations will create a separate transaction."
 msgstr "Project details reconfigurations will create a separate transaction."
 
-#: src/components/v2/V2Dashboard/Dashboard404.tsx
+#: src/components/shared/Project404.tsx
 msgid "Project for {ensName} not found"
 msgstr "Project for {ensName} not found"
 
@@ -1762,7 +1762,11 @@ msgstr "Project owners can configure a delay period, meaning reconfigurations to
 msgid "Project token"
 msgstr "Project token"
 
-#: src/components/v2/V2Dashboard/Dashboard404.tsx
+#: src/components/shared/NewDeployNotAvailable.tsx
+msgid "Project {name} will be available soon! Try refreshing the page shortly."
+msgstr "Project {name} will be available soon! Try refreshing the page shortly."
+
+#: src/components/shared/Project404.tsx
 msgid "Project {projectId} not found"
 msgstr "Project {projectId} not found"
 
@@ -1899,7 +1903,7 @@ msgstr "Redemption rate: <0>{0}%</0>"
 msgid "Redistributable surplus"
 msgstr ""
 
-#: src/components/v1/V1Dashboard/index.tsx
+#: src/components/shared/NewDeployNotAvailable.tsx
 msgid "Refresh"
 msgstr "Refresh"
 
@@ -2987,14 +2991,6 @@ msgstr "{formattedTimeLeft} left"
 #: src/components/shared/Project/FundingCycleDetailsCard.tsx
 msgid "{formattedTimeLeft} until #{0}"
 msgstr "{formattedTimeLeft} until #{0}"
-
-#: src/components/v1/V1Dashboard/index.tsx
-msgid "{handle} not found"
-msgstr ""
-
-#: src/components/v1/V1Dashboard/index.tsx
-msgid "{handle} will be available soon! Try refreshing the page shortly."
-msgstr "{handle} will be available soon! Try refreshing the page shortly."
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSection.tsx
 msgid "{initialIssuanceRate} tokens / ETH"

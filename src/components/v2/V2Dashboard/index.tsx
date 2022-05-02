@@ -29,14 +29,14 @@ import useTerminalCurrentOverflow from 'hooks/v2/contractReader/TerminalCurrentO
 import { useBallotState } from 'hooks/v2/contractReader/BallotState'
 import useProjectTokenTotalSupply from 'hooks/v2/contractReader/ProjectTokenTotalSupply'
 
-import DashboardNewDeploy from 'components/shared/Dashboard/DashboardNewDeploy'
+import NewDeployNotAvailable from 'components/shared/NewDeployNotAvailable'
 
 import { useLocation } from 'react-router-dom'
 
 import { layouts } from 'constants/styles/layouts'
 
 import V2Project from '../V2Project'
-import Dashboard404 from './Dashboard404'
+import Project404 from '../../shared/Project404'
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
@@ -146,15 +146,14 @@ export default function V2Dashboard({ projectId }: { projectId: BigNumber }) {
   if (metadataLoading || metadataURILoading) return <Loading />
   if (isNewDeploy && !metadataCID) {
     return (
-      <DashboardNewDeploy
+      <NewDeployNotAvailable
+        name={projectMetadata?.name}
         projectId={projectId}
-        owner={projectOwnerAddress}
-        isV2={true}
       />
     )
   }
   if (metadataError || !metadataCID) {
-    return <Dashboard404 projectId={projectId} />
+    return <Project404 projectId={projectId} />
   }
 
   const project: V2ProjectContextType = {

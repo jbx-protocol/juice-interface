@@ -1,4 +1,3 @@
-import { Trans } from '@lingui/macro'
 import FeedbackFormButton from 'components/shared/FeedbackFormButton'
 
 import {
@@ -34,7 +33,9 @@ import V1CurrencyProvider from 'providers/v1/V1CurrencyProvider'
 
 import { V1CurrencyName } from 'utils/v1/currency'
 
-import DashboardNewDeploy from 'components/shared/Dashboard/DashboardNewDeploy'
+import NewDeployNotAvailable from 'components/shared/NewDeployNotAvailable'
+
+import Project404 from 'components/shared/Project404'
 
 import { layouts } from 'constants/styles/layouts'
 import { projectTypes } from 'constants/v1/projectTypes'
@@ -49,7 +50,6 @@ export default function V1Dashboard() {
   const location = useLocation()
   const params = new URLSearchParams(location.search)
   const isNewDeploy = Boolean(params.get('newDeploy'))
-  const feedbackModalOpen = Boolean(params.get('feedbackModalOpen'))
 
   const projectId = useProjectIdForHandle(handle)
   const owner = useOwnerOfProject(projectId)
@@ -173,19 +173,9 @@ export default function V1Dashboard() {
 
   if (projectId?.eq(0)) {
     if (isNewDeploy) {
-      return (
-        <DashboardNewDeploy
-          handle={handle}
-          owner={owner}
-          initialFeedbackModalOpen={feedbackModalOpen}
-        />
-      )
+      return <NewDeployNotAvailable name={handle} />
     }
-    return (
-      <h2>
-        <Trans>{handle} not found</Trans>
-      </h2>
-    )
+    return <Project404 projectId={handle} />
   }
 
   if (!projectId || !handle || !metadata) return null

@@ -1476,6 +1476,7 @@ msgstr ""
 msgid "Pay"
 msgstr ""
 
+#: src/components/shared/modals/ProjectToolDrawerModal.tsx
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Pay amount"
@@ -1531,7 +1532,6 @@ msgstr ""
 msgid "Payments paused"
 msgstr ""
 
-#: src/components/shared/modals/ProjectToolDrawerModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Payout amount"
 msgstr "Payout amount"

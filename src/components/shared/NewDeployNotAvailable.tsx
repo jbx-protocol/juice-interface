@@ -9,9 +9,9 @@ import { layouts } from 'constants/styles/layouts'
 import { padding } from 'constants/styles/padding'
 
 export default function NewDeployNotAvailable({
-  name,
+  handleOrId: name,
 }: {
-  name?: string | BigNumber
+  handleOrId: string | BigNumber | undefined
 }) {
   const history = useHistory()
 

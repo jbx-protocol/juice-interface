@@ -173,7 +173,7 @@ export default function V1Dashboard() {
 
   if (projectId?.eq(0)) {
     if (isNewDeploy) {
-      return <NewDeployNotAvailable name={handle} />
+      return <NewDeployNotAvailable handleOrId={handle} />
     }
     return <Project404 projectId={handle} />
   }

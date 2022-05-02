@@ -145,7 +145,7 @@ export default function V2Dashboard({ projectId }: { projectId: BigNumber }) {
 
   if (metadataLoading || metadataURILoading) return <Loading />
   if (isNewDeploy && !metadataCID) {
-    return <NewDeployNotAvailable name={projectMetadata?.name ?? projectId} />
+    return <NewDeployNotAvailable handleOrId={projectId} />
   }
   if (metadataError || !metadataCID) {
     return <Project404 projectId={projectId} />

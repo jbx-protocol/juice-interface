@@ -72,7 +72,7 @@ export default function V2ProjectHeaderActions() {
         useSetProjectUriTx={() => undefined}
       />
       <div style={{ display: 'flex' }}>
-        <Tooltip title={'Tools'} placement="bottom">
+        <Tooltip title={t`Tools`} placement="bottom">
           <Button
             onClick={() => setToolDrawerVisible(true)}
             icon={<ToolOutlined />}

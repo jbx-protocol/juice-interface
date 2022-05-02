@@ -13,6 +13,8 @@ import useProjectSplits from 'hooks/v2/contractReader/ProjectSplits'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { fromWad } from 'utils/formatNumber'
 
+import { t } from '@lingui/macro'
+
 import { ETH_PAYOUT_SPLIT_GROUP } from 'constants/v2/splits'
 import V2ProjectReconfigureModal from './index'
 
@@ -109,7 +111,7 @@ export default function V2ReconfigureFundingModalTrigger({
         triggerButton(handleModalOpen)
       ) : (
         <Tooltip
-          title={'Reconfigure project and funding details'}
+          title={t`Reconfigure project and funding details`}
           placement="bottom"
         >
           <Button

@@ -11,10 +11,10 @@ import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { TransactorInstance } from 'hooks/Transactor'
 import { JBDiscordLink } from 'components/Landing/QAs'
-import ProjectPayerSection from 'components/v2/V2Project/ProjectPayerSection'
 
 import ArchiveV1Project from 'components/v1/V1Project/ArchiveV1Project'
 import { NetworkContext } from 'contexts/networkContext'
+import LaunchProjectPayerButton from 'components/v2/V2Project/LaunchProjectPayerButton'
 
 export default function ProjectToolDrawerModal({
   visible,
@@ -175,9 +175,27 @@ export default function ProjectToolDrawerModal({
           </>
         )}
         {deployProjectPayerTx && (
-          <ProjectPayerSection
-            useDeployProjectPayerTx={useDeployProjectPayerTx}
-          />
+          <section>
+            <h3>
+              <Trans>Create payable address</Trans>
+            </h3>
+            <p>
+              <Trans>
+                Create an ETH address people can use to pay this project rather
+                than paying through the juicebox.money interface.
+              </Trans>
+            </p>
+            <LaunchProjectPayerButton
+              useDeployProjectPayerTx={useDeployProjectPayerTx}
+            />
+            <p style={{ fontSize: 11, marginTop: 10 }}>
+              <Trans>
+                If you have already deployed a payable address and have lost it,
+                please contact the Juicebox team through{' '}
+                <JBDiscordLink>Discord.</JBDiscordLink>
+              </Trans>
+            </p>
+          </section>
         )}
 
         <section>

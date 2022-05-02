@@ -140,8 +140,8 @@ msgstr "<0>NOT:</0> Bu projenin bakiyesi 0. Projeler bakiye olmadan taşınamaz.
 msgid "<0>No duration set.</0>Funding can be reconfigured at any time. Reconfigurations will start a new funding cycle."
 msgstr ""
 
-#: src/components/v2/V2Project/ProjectPayerSection.tsx
-msgid "<0>Note:</0> Copy this address and save it now."
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+msgid "<0>Note:</0> Copy this address and save it somewhere now."
 msgstr ""
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
@@ -636,13 +636,31 @@ msgstr "Kopyalandı!"
 msgid "Copy to clipboard"
 msgstr "Panoya kopyala"
 
-#: src/components/v2/V2Project/ProjectPayerSection.tsx
+#: src/components/v2/V2Project/NewDeployModal.tsx
+msgid "Create a payable address"
+msgstr ""
+
+#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/v2/V2Project/NewDeployModal.tsx
+msgid "Create an ETH address people can use to pay this project rather than paying through the juicebox.money interface."
+msgstr ""
+
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+msgid "Create an ETH address that people can use to pay this project rather than paying through the juicebox.money interface."
+msgstr ""
+
+#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
 msgid "Create payable address"
 msgstr ""
 
 #: src/components/Projects/index.tsx
 msgid "Create project"
 msgstr "Proje oluştur"
+
+#: src/components/v2/V2Project/NewDeployModal.tsx
+msgid "Create your own ERC-20 token to represent stake in your project. Contributors will receive these tokens when they pay your project."
+msgstr ""
 
 #: src/components/Landing/QAs.tsx
 msgid "Creating a Juicebox project mints you an NFT (ERC-721) representing ownership over it. Whoever owns this NFT can configure the rules of the game and how payouts are distributed."
@@ -707,7 +725,8 @@ msgstr ""
 msgid "Deploy project on {signerNetwork}"
 msgstr ""
 
-#: src/components/v2/V2Project/ProjectPayerSection.tsx
+#: src/components/v2/V2Project/LaunchProjectPayerButton.tsx
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
 msgid "Deploy project payer contract"
 msgstr ""
 
@@ -845,6 +864,8 @@ msgstr "Bir proje kendi taşmasından faydalanır mı?"
 #: src/components/v1/V1Project/FundingCycles/FundingHistory.tsx
 #: src/components/v1/V1Project/modals/BalancesModal.tsx
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Done"
 msgstr "Tamamlandı"
 
@@ -1134,7 +1155,7 @@ msgstr "Kilitliyse kilidin süresi dolana veya finansman döngüsü yeniden yap�
 msgid "If locked, this split can't be edited or removed until the lock expires or the funding cycle is reconfigured."
 msgstr ""
 
-#: src/components/v2/V2Project/ProjectPayerSection.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal.tsx
 msgid "If you have already deployed a payable address and have lost it, please contact the Juicebox team through <0>Discord.</0>"
 msgstr ""
 
@@ -1189,20 +1210,21 @@ msgstr ""
 msgid "Issuance rate"
 msgstr ""
 
-#: src/components/shared/IssueTicketsButton.tsx
+#: src/components/shared/IssueTokenButton.tsx
 msgid "Issue ERC-20"
 msgstr ""
 
-#: src/components/shared/IssueTicketsButton.tsx
+#: src/components/shared/modals/IssueTokenModal.tsx
+#: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Issue ERC-20 token"
 msgstr "ERC-20 token'ı çıkart"
 
-#: src/components/shared/IssueTicketsButton.tsx
-#: src/components/shared/IssueTicketsButton.tsx
+#: src/components/shared/IssueTokenButton.tsx
+#: src/components/shared/modals/IssueTokenModal.tsx
 msgid "Issue an ERC-20 to be used as this project's token. Once issued, anyone can claim their existing token balance in the new token."
 msgstr ""
 
-#: src/components/shared/IssueTicketsButton.tsx
+#: src/components/shared/modals/IssueTokenModal.tsx
 msgid "Issue token"
 msgstr "Token çıkar"
 
@@ -1263,7 +1285,8 @@ msgstr "Son ödeme"
 msgid "Last paid timestamp"
 msgstr "Son ödeme zaman damgası"
 
-#: src/components/shared/IssueTicketsButton.tsx
+#: src/components/shared/modals/IssueTokenModal.tsx
+#: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Later"
 msgstr ""
 
@@ -1380,6 +1403,10 @@ msgstr "İsim"
 #: src/components/Projects/TrendingProjectCard.tsx
 msgid "New"
 msgstr "Yeni"
+
+#: src/components/v2/V2Project/NewDeployModal.tsx
+msgid "Next steps"
+msgstr ""
 
 #: src/components/v2/V2Create/tabs/ProjectDetailsTab/ProjectDetailsTabContent.tsx
 msgid "Next: Funding cycle"
@@ -1650,7 +1677,7 @@ msgstr ""
 msgid "Project ID:"
 msgstr ""
 
-#: src/components/shared/IssueTicketsButton.tsx
+#: src/components/shared/modals/IssueTokenModal.tsx
 msgid "Project Token"
 msgstr "Proje Token'ı"
 
@@ -2051,6 +2078,10 @@ msgstr ""
 msgid "Set the length of your funding cycles."
 msgstr "Finansman döngülerinizin süresini belirleyin."
 
+#: src/components/shared/ShareToTwitterButton.tsx
+msgid "Share to Twitter"
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "Should you Juicebox?"
 msgstr "Juicebox’a katılmalı mısın?"
@@ -2225,7 +2256,7 @@ msgstr ""
 msgid "The target for this funding cycle is 0, meaning all funds in Juicebox are currently considered overflow. Overflow can be redeemed by token holders, but not distributed."
 msgstr "Bu finansman döngüsü için hedef 0'dır, yani Juicebox'taki tüm fonlar şu anda taşma olarak kabul edilir. Taşma, token sahipleri tarafından talep edilerek kullanılabilir, ancak dağıtılamaz."
 
-#: src/components/v2/V2Project/ProjectPayerSection.tsx
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
 msgid "The tokens minted as a result of payments to this address will belong to the payer, the same way as if they were to pay through the interface. <0>However</0>, if someone pays the project from a non-custodial entity such as the Coinbase app, the tokens cannot be issued to their personal wallets and will be lost."
 msgstr ""
 
@@ -2275,7 +2306,7 @@ msgstr ""
 msgid "This funding cycle may pose risks to contributors. Check the funding cycle details before paying this project."
 msgstr "Bu finansman döngüsü katkı sahipleri için risk oluşturabilir. Bu projeye ödeme yapmadan önce finansman döngüsü detaylarını kontrol edin."
 
-#: src/components/v2/V2Project/ProjectPayerSection.tsx
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
 msgid "This launches a new contract so will incur significant gas fees."
 msgstr ""
 
@@ -2323,10 +2354,6 @@ msgstr "Bu web sitesi (juicebox.money), Juicebox protokolünün Ethereum ağına
 msgid "This will erase all of your changes."
 msgstr "Yaptığınız tüm değişiklikler silinecektir."
 
-#: src/components/v2/V2Project/ProjectPayerSection.tsx
-msgid "This will give you an ETH address people can use to pay this project rather than paying through the juicebox.money interface."
-msgstr ""
-
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "To: <0/>"
@@ -2366,7 +2393,7 @@ msgstr ""
 msgid "Token minting is only available for V1.1 projects. Token minting can be enabled or disabled by reconfiguring the project's funding cycle."
 msgstr "Token basma seçeneği yalnızca V1.1 projelerinde kullanılabilir. Token basma seçeneği, projenin finansman döngüsü yeniden yapılandırılarak etkinleştirilebilir veya devre dışı bırakılabilir."
 
-#: src/components/shared/IssueTicketsButton.tsx
+#: src/components/shared/modals/IssueTokenModal.tsx
 msgid "Token name"
 msgstr "Token adı"
 
@@ -2374,7 +2401,7 @@ msgstr "Token adı"
 msgid "Token redeem value"
 msgstr "Token kullanma değeri"
 
-#: src/components/shared/IssueTicketsButton.tsx
+#: src/components/shared/modals/IssueTokenModal.tsx
 msgid "Token symbol"
 msgstr "Token sembolü"
 
@@ -2544,7 +2571,7 @@ msgstr "Hacim"
 msgid "Wallet address"
 msgstr "Cüzdan adresi"
 
-#: src/components/v2/V2Project/ProjectPayerSection.tsx
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
 msgid "We are currently still working on a way to load this address through our interface. If you lose your address please contact the Juicebox team through <0>Discord</0>."
 msgstr ""
 
@@ -2655,7 +2682,7 @@ msgstr "Fonları çek"
 msgid "Workspace"
 msgstr "Çalışma Alan"
 
-#: src/components/shared/IssueTicketsButton.tsx
+#: src/components/shared/modals/IssueTokenModal.tsx
 msgid "Would you like to issue an ERC-20 token to be used as this project's token?"
 msgstr ""
 
@@ -2704,7 +2731,7 @@ msgstr "Bakiyeniz: {0}"
 msgid "Your feedback will be sent to a <0>public Discord channel </0>for our development team to consider."
 msgstr "Geri bildiriminiz, geliştirme ekibimizin dikkate alması için <0>herkese açık bir Discord kanalına </0>gönderilecektir."
 
-#: src/components/v2/V2Project/ProjectPayerSection.tsx
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
 msgid "Your new payable address:"
 msgstr ""
 

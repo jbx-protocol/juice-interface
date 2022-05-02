@@ -21,7 +21,7 @@ import { CSSProperties, useContext, useState } from 'react'
 import { formatPercent, formatWad } from 'utils/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
-import IssueTicketsButton from 'components/shared/IssueTicketsButton'
+import IssueTokenButton from 'components/shared/IssueTokenButton'
 import SectionHeader from 'components/shared/SectionHeader'
 import useCanPrintPreminedTokens from 'hooks/v1/contractReader/CanPrintPreminedTokens'
 
@@ -200,7 +200,7 @@ export default function Rewards() {
         />
 
         {!ticketsIssued && hasIssueTicketsPermission && !isPreviewMode && (
-          <IssueTicketsButton useIssueTokensTx={useIssueTokensTx} />
+          <IssueTokenButton useIssueTokensTx={useIssueTokensTx} />
         )}
       </Space>
 

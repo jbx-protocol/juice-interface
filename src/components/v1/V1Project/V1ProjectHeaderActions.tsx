@@ -93,17 +93,24 @@ export default function V1ProjectHeaderActions() {
       </span>
 
       <div>
-        <Button
-          onClick={() => setToolDrawerVisible(true)}
-          icon={<ToolOutlined />}
-          type="text"
-        />
-        {hasEditPermission && (
+        <Tooltip title={<Trans>Tools</Trans>} placement="bottom">
           <Button
-            onClick={() => setEditProjectModalVisible(true)}
-            icon={<SettingOutlined />}
+            onClick={() => setToolDrawerVisible(true)}
+            icon={<ToolOutlined />}
             type="text"
           />
+        </Tooltip>
+        {hasEditPermission && (
+          <Tooltip
+            title={<Trans>Reconfigure project and funding details</Trans>}
+            placement="bottom"
+          >
+            <Button
+              onClick={() => setEditProjectModalVisible(true)}
+              icon={<SettingOutlined />}
+              type="text"
+            />
+          </Tooltip>
         )}
       </div>
 

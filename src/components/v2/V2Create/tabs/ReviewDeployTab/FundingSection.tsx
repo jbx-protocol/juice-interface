@@ -34,8 +34,8 @@ import TooltipLabel from 'components/shared/TooltipLabel'
 import { V2FundingCycle } from 'models/v2/fundingCycle'
 import { parseEther } from 'ethers/lib/utils'
 import {
-  DISCOUNT_RATE_EXPLAINATION,
-  REDEMPTION_RATE_EXPLAINATION,
+  DISCOUNT_RATE_EXPLANATION,
+  REDEMPTION_RATE_EXPLANATION,
 } from 'components/v2/V2Project/V2FundingCycleSection/settingExplanations'
 
 import { rowGutter } from '.'
@@ -211,7 +211,7 @@ export default function FundingSection() {
                 title={
                   <TooltipLabel
                     label={t`Discount rate`}
-                    tip={DISCOUNT_RATE_EXPLAINATION}
+                    tip={DISCOUNT_RATE_EXPLANATION}
                   />
                 }
                 value={formatDiscountRate(fundingCycle.discountRate)}
@@ -227,7 +227,7 @@ export default function FundingSection() {
                 title={
                   <TooltipLabel
                     label={t`Redemption rate`}
-                    tip={REDEMPTION_RATE_EXPLAINATION}
+                    tip={REDEMPTION_RATE_EXPLANATION}
                   />
                 }
                 value={formatRedemptionRate(

@@ -31,8 +31,8 @@ import {
 import { getBallotStrategyByAddress } from 'constants/v2/ballotStrategies/getBallotStrategiesByAddress'
 import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
 import {
-  DISCOUNT_RATE_EXPLAINATION,
-  REDEMPTION_RATE_EXPLAINATION,
+  DISCOUNT_RATE_EXPLANATION,
+  REDEMPTION_RATE_EXPLANATION,
 } from './settingExplanations'
 
 export default function FundingCycleDetails({
@@ -180,7 +180,7 @@ export default function FundingCycleDetails({
           label={
             <TooltipLabel
               label={<Trans>Discount rate</Trans>}
-              tip={DISCOUNT_RATE_EXPLAINATION}
+              tip={DISCOUNT_RATE_EXPLANATION}
             />
           }
         >
@@ -192,7 +192,7 @@ export default function FundingCycleDetails({
           label={
             <TooltipLabel
               label={<Trans>Redemption rate</Trans>}
-              tip={REDEMPTION_RATE_EXPLAINATION}
+              tip={REDEMPTION_RATE_EXPLANATION}
             />
           }
         >

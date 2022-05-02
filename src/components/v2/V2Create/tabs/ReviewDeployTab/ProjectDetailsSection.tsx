@@ -14,7 +14,7 @@ export default function ProjectDetailsSection() {
   const { projectMetadata } = useAppSelector(state => state.editingV2Project)
 
   return (
-    <div>
+    <div style={{ marginBottom: '2rem' }}>
       <h2 style={{ marginBottom: 0 }}>
         <Trans>Project details</Trans>
       </h2>
@@ -22,10 +22,10 @@ export default function ProjectDetailsSection() {
         <Trans>These attributes can be changed at any time.</Trans>
       </p>
       <Row gutter={rowGutter} style={{ marginBottom: 30 }}>
-        <Col md={6} xs={24}>
+        <Col md={6} xs={12}>
           <Statistic title={t`Name`} value={orEmpty(projectMetadata.name)} />
         </Col>
-        <Col md={6} xs={24}>
+        <Col md={6} xs={12}>
           <Statistic
             title={t`Pay button text`}
             value={
@@ -33,7 +33,7 @@ export default function ProjectDetailsSection() {
             }
           />
         </Col>
-        <Col md={6} xs={24}>
+        <Col md={6} xs={12}>
           <Statistic
             title={t`Twitter`}
             value={
@@ -43,7 +43,7 @@ export default function ProjectDetailsSection() {
             }
           />
         </Col>
-        <Col md={6} xs={24}>
+        <Col md={6} xs={12}>
           <Statistic
             title={t`Discord`}
             value={orEmpty(projectMetadata.discord)}
@@ -51,7 +51,7 @@ export default function ProjectDetailsSection() {
         </Col>
       </Row>
       <Row gutter={rowGutter} style={{ wordBreak: 'break-all' }}>
-        <Col md={6} xs={24}>
+        <Col md={6} xs={12}>
           <Statistic title={t`Logo`} value={' '} />
           <div style={{ marginTop: -20 }}>
             <ProjectLogo
@@ -61,7 +61,7 @@ export default function ProjectDetailsSection() {
             />
           </div>
         </Col>
-        <Col md={6} xs={24}>
+        <Col md={6} xs={12}>
           <Statistic
             title={t`Website`}
             value={orEmpty(projectMetadata.infoUri)}

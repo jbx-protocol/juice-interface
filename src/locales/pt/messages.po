@@ -1547,6 +1547,7 @@ msgstr "Pausado"
 msgid "Pay"
 msgstr "Pagar"
 
+#: src/components/shared/modals/ProjectToolDrawerModal.tsx
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Pay amount"
@@ -1605,7 +1606,6 @@ msgstr "Os pagamentos estão pausados para para o atual ciclo de financiamento."
 msgid "Payments paused"
 msgstr "Pagamentos pausados"
 
-#: src/components/shared/modals/ProjectToolDrawerModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Payout amount"
 msgstr ""

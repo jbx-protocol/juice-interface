@@ -109,6 +109,16 @@ export default function V1ConfirmPayOwnerModal({
 
   const riskCount = currentFC ? fundingCycleRiskCount(currentFC) : undefined
 
+  const renderRiskNotice = () => {
+    if (currentFC && riskCount && riskCount > 0) {
+      return (
+        <ProjectRiskNotice
+          unsafeProperties={getUnsafeV1FundingCycleProperties(currentFC)}
+        />
+      )
+    }
+  }
+
   return (
     <Modal
       title={t`Pay ${metadata.name}`}
@@ -138,11 +148,7 @@ export default function V1ConfirmPayOwnerModal({
             <Paragraph description={metadata.payDisclosure} />
           </div>
         )}
-        {riskCount && currentFC && (
-          <ProjectRiskNotice
-            unsafeProperties={getUnsafeV1FundingCycleProperties(currentFC)}
-          />
-        )}
+        {renderRiskNotice()}
         <Descriptions column={1} bordered>
           <Descriptions.Item label={t`Pay amount`} className="content-right">
             {formattedNum(usdAmount)} {V1CurrencyName(V1_CURRENCY_USD)} (

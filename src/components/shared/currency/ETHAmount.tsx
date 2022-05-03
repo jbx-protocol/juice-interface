@@ -49,6 +49,14 @@ export default function ETHAmount({
   })
 
   if (amount) {
+    if (Number(formattedETHAmount) === 0) {
+      return (
+        <>
+          <CurrencySymbol currency="ETH" />
+          {formattedETHAmount}
+        </>
+      )
+    }
     return (
       <Tooltip title={<ETHToUSD ethAmount={amount} />}>
         <CurrencySymbol currency="ETH" />

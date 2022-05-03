@@ -5,7 +5,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { layouts } from 'constants/styles/layouts'
 import { padding } from 'constants/styles/padding'
 
-export default function Dashboard404({
+export default function Project404({
   projectId,
   ensName,
 }: {

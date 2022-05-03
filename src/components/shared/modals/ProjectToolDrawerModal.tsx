@@ -179,11 +179,7 @@ export default function ProjectToolDrawerModal({
               Your balance: {formatWad(unclaimedTokenBalance, { precision: 0 })}
             </Trans>
           </p>
-          <Form
-            form={transferTokensForm}
-            labelCol={{ span: 4 }}
-            wrapperCol={{ span: 20 }}
-          >
+          <Form form={transferTokensForm} layout="vertical">
             <Form.Item name="amount" label="Amount">
               <FormattedNumberInput
                 placeholder="0"
@@ -238,12 +234,8 @@ export default function ProjectToolDrawerModal({
               Add funds to this project's balance without minting tokens.
             </Trans>
           </p>
-          <Form
-            form={addToBalanceForm}
-            labelCol={{ span: 4 }}
-            wrapperCol={{ span: 20 }}
-          >
-            <Form.Item name="amount" label={t`Payout amount`}>
+          <Form form={addToBalanceForm} layout="vertical">
+            <Form.Item name="amount" label={t`Pay amount`}>
               <FormattedNumberInput
                 placeholder="0"
                 onChange={amount =>

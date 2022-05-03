@@ -292,8 +292,8 @@ msgstr ""
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
-msgid "Address: {0}"
-msgstr "Адрес: {0}"
+msgid "Address: <0/>"
+msgstr ""
 
 #: src/components/v1/V1Create/index.tsx
 msgid "Adjust incentives for paying your project."
@@ -572,6 +572,7 @@ msgstr ""
 #: src/components/v1/V1Project/modals/DownloadActivityModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/StakeForNFTForm/index.tsx
 msgid "Close"
 msgstr "Закрыть"
 
@@ -2069,6 +2070,22 @@ msgstr ""
 msgid "Spending"
 msgstr "Расходы"
 
+#: src/components/v2/V2Project/V2ManageTokensSection/StakeForNFTForm/index.tsx
+msgid "Stake Juicebox (${0}) tokens for irrevocable durations (in days) in exchange for voting weight. In return, you will impact {projectName} governance and receive a choice anathropomorphic banana character NFT."
+msgstr ""
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2StakeForNFTDrawer.tsx
+msgid "Stake for NFT"
+msgstr ""
+
+#: src/components/shared/ManageTokensModal.tsx
+msgid "Stake your {tokensLabel} to increase your voting weight and claim your BannyVerse NFT."
+msgstr ""
+
+#: src/components/shared/ManageTokensModal.tsx
+msgid "Stake {tokensLabel} for NFT"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 msgid "Staked balance"
 msgstr "Учтенный баланс"
@@ -2515,11 +2532,28 @@ msgstr "V1.1"
 msgid "Version of the terminal contract used by this project."
 msgstr "Версия терминального контракта, используемая в этом проекте."
 
+#: src/components/v2/V2Project/V2ManageTokensSection/StakeForNFTForm/index.tsx
+msgid "View All Token Ranges"
+msgstr ""
+
 #: src/components/v1/V1Project/BalanceTimeline.tsx
 #: src/components/v1/V1Project/BalanceTimeline.tsx
 #: src/components/v1/V1Project/Paid.tsx
 msgid "Volume"
 msgstr "Объём"
+
+#: src/components/v2/V2Project/V2ManageTokensSection/StakeForNFTForm/ConfirmStakeModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/StakeForNFTForm/index.tsx
+msgid "Voting Power = Tokens * ( Lock Time Remaining / Max Lock Time )"
+msgstr ""
+
+#: src/components/v2/V2Project/V2ManageTokensSection/StakeForNFTForm/index.tsx
+msgid "Voting Power in {projectName}"
+msgstr ""
+
+#: src/components/v2/V2Project/V2ManageTokensSection/StakeForNFTForm/index.tsx
+msgid "Voting weight is a function of Tokens multiplied by time remaining over max lock duration. The following equation determines how much voting weight you have. To learn more about the governance process at Juicebox visit <0>here.</0>"
+msgstr ""
 
 #: src/components/v1/ProjectPayoutMods.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
@@ -2641,6 +2675,10 @@ msgstr ""
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "Yes"
 msgstr "Да"
+
+#: src/components/v2/V2Project/V2ManageTokensSection/StakeForNFTForm/ConfirmStakeModal.tsx
+msgid "You are agreeing to irrevocably lock your tokens for {daysStaked} days in exchange for {votingPower} ve{tokenSymbol} delegated to {delegateAddress}."
+msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "You can redeem your {tokenTextLong} for overflow without claiming them. You can transfer your unclaimed {tokenTextLong} to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
@@ -2814,6 +2852,10 @@ msgstr "погашенных токенов"
 msgid "until"
 msgstr "до"
 
+#: src/components/v2/V2Project/V2ManageTokensSection/StakeForNFTForm/StakedTokenStatsSection.tsx
+msgid "{0, plural, one {Delegate:} other {Delegates:}}"
+msgstr ""
+
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "{0} after JBX fee"
@@ -2959,6 +3001,10 @@ msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "{tokensTokenUpper} amount"
+msgstr ""
+
+#: src/components/v2/V2Project/V2ManageTokensSection/StakeForNFTForm/StakedTokenStatsSection.tsx
+msgid "{totalStakedPeriodInDays, plural, one {day} other {days}}"
 msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx

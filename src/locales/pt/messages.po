@@ -140,10 +140,6 @@ msgstr "<0>NOTA:</0> Este projeto tem um saldo de 0. Os projetos não podem ser 
 msgid "<0>No duration set.</0>Funding can be reconfigured at any time. Reconfigurations will start a new funding cycle."
 msgstr ""
 
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
-msgid "<0>Note:</0> Copy this address and save it somewhere now."
-msgstr ""
-
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "<0>Note:</0> These properties will <1>not</1> be editable immediately within a funding cycle. They can only be changed for <2>upcoming</2> funding cycles."
 msgstr "<0>Nota:</0>Essas propriedades <1>não</1> serão editáveis imediatamente durante um um ciclo de financiamento. Elas só poderão ser alteradas para <2>próximos</2> ciclos de financiamento."
@@ -636,12 +632,12 @@ msgstr "Copiado!"
 msgid "Copy to clipboard"
 msgstr "Copiar para a área de transferência"
 
-#: src/components/shared/modals/ProjectToolDrawerModal.tsx
-msgid "Create an ETH address people can use to pay this project rather than paying through the juicebox.money interface."
-msgstr ""
-
 #: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
 msgid "Create an ETH address that people can use to pay this project rather than paying through the juicebox.money interface."
+msgstr ""
+
+#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+msgid "Create an Ethereum address that can be used to pay your project directly."
 msgstr ""
 
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
@@ -1152,6 +1148,10 @@ msgstr ""
 #: src/components/Landing/QAs.tsx
 msgid "If you know how much your project needs to earn over some period of time to be sustainable, you can set a funding target with that amount. If your project earns more than that, the surplus funds are locked in an overflow pool. Anyone holding your project's tokens can claim a portion of the overflow pool in exchange for redeeming their tokens."
 msgstr "Se você sabe o quanto seu projeto precisa ganhar durante um periodo de tempo para ser sustentável, você pode colocar seu objetivo de financiamento como essa quantia. Se seu projeto ganhar mais que essa quantia, o excesso será restrito a um conjunto de overflow. Qualquer um com tokens de seu projeto pode reivindicar uma porção desse conjunto de overflow em troca de resgatar seus tokens."
+
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+msgid "If you lose your address, please contact the Juicebox team through <0>Discord</0>."
+msgstr ""
 
 #: src/components/Landing/QAs.tsx
 msgid "If you're interested in creating a project but still confused on how to get started, consider watching this <0>instructional video</0>. Also feel free to reach out in the <1>Juicebox Discord</1> where our team will be happy to help bring your project idea to life!"
@@ -2236,10 +2236,6 @@ msgstr ""
 msgid "The target for this funding cycle is 0, meaning all funds in Juicebox are currently considered overflow. Overflow can be redeemed by token holders, but not distributed."
 msgstr "O objetivo desse ciclo de financiamento é 0, o que significa que todos os fundos no Juicebox são atualmente considerados overflow. Overflow pode ser resgatado por detentores de tokens, mas não distribuído."
 
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
-msgid "The tokens minted as a result of payments to this address will belong to the payer, the same way as if they were to pay through the interface. <0>However</0>, if someone pays the project from a non-custodial entity such as the Coinbase app, the tokens cannot be issued to their personal wallets and will be lost."
-msgstr ""
-
 #: src/components/v1/V1Project/Paid.tsx
 msgid "The total amount received by this project through Juicebox since it was created."
 msgstr "O montante total recebido por este projeto através do Juicebox desde que foi criado."
@@ -2272,6 +2268,10 @@ msgstr "Essas ferramentas <0>não</0> serão editáveis imediatamente durante um
 msgid "This address is an unrecognized strategy contract. Make sure it is correct!"
 msgstr "Este endereço é um contrato de estratégia não reconhecido. Tenha certeza que está correto!"
 
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+msgid "This address will disappear when you close this window. <0>Copy the address and save it now</0>."
+msgstr ""
+
 #: src/components/shared/Mod.tsx
 #: src/components/v2/shared/SplitItem.tsx
 msgid "This address will receive any tokens minted when the recipient project gets paid."
@@ -2285,10 +2285,6 @@ msgstr ""
 #: src/components/v2/V2Project/V2FundingCycleSection/index.tsx
 msgid "This funding cycle may pose risks to contributors. Check the funding cycle details before paying this project."
 msgstr "Este ciclo de financiamento pode representar riscos para os contribuidores. Avalie os detalhes de ciclo de financiamento antes de pagar este projeto."
-
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
-msgid "This launches a new contract so will incur significant gas fees."
-msgstr ""
 
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 msgid "This list is using an experimental data index and may be inaccurate for some projects."
@@ -2409,6 +2405,10 @@ msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "Tokens cannot be claimed because no ERC-20 token has been issued for this project. ERC-20 tokens must be issued by the project owner."
+msgstr ""
+
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+msgid "Tokens minted from payments to this address will belong to the payer. However, if someone pays the project from a non-custodial entity like the Coinbase app, <0>tokens can't be issued to their personal wallets and will be lost</0>."
 msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
@@ -2550,10 +2550,6 @@ msgstr "Volume"
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Wallet address"
 msgstr "Endereço da carteira"
-
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
-msgid "We are currently still working on a way to load this address through our interface. If you lose your address please contact the Juicebox team through <0>Discord</0>."
-msgstr ""
 
 #: src/components/shared/formItems/ProjectLink.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
@@ -2767,6 +2763,10 @@ msgstr ""
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 msgid "after {0}% JBX fee"
 msgstr "depois da taxa de {0}% de JBX"
+
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+msgid "and will incur significant gas fees."
+msgstr ""
 
 #: src/components/shared/formItems/ProjectDescription.tsx
 msgid "characters max"

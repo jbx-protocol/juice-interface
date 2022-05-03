@@ -182,8 +182,8 @@ export default function ProjectToolDrawerModal({
               </h3>
               <p>
                 <Trans>
-                  Create an ETH address people can use to pay this project
-                  rather than paying through the juicebox.money interface.
+                  Create an Ethereum address that can be used to pay your
+                  project directly.
                 </Trans>
               </p>
               <LaunchProjectPayerButton

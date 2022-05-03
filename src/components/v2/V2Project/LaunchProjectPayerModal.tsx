@@ -46,38 +46,39 @@ export default function LaunchProjectPayerModal({
   const deployProjectPayerTx = useDeployProjectPayerTx()
 
   function deployProjectPayer() {
-    setLoadingProjectPayer(true)
-    if (deployProjectPayerTx) {
-      deployProjectPayerTx(
-        {
-          args: [],
-        },
-        {
-          onDone() {
-            setTransactionPending(true)
-          },
-          async onConfirmed(result) {
-            const txHash = result?.transaction?.hash
-            if (!txHash) {
-              return
-            }
+    if (!deployProjectPayerTx) return
 
-            const txReceipt = await readProvider.getTransactionReceipt(txHash)
-            const newProjectPayerAddress =
-              getProjectPayerAddressFromReceipt(txReceipt)
-            if (newProjectPayerAddress === undefined) {
-              return
-            }
-            if (onConfirmed) onConfirmed()
-            onClose()
-            setProjectPayerAddress(newProjectPayerAddress)
-            setLoadingProjectPayer(false)
-            setTransactionPending(false)
-            setConfirmedModalVisible(true)
-          },
+    setLoadingProjectPayer(true)
+
+    deployProjectPayerTx(
+      {
+        args: [],
+      },
+      {
+        onDone() {
+          setTransactionPending(true)
         },
-      )
-    }
+        async onConfirmed(result) {
+          const txHash = result?.transaction?.hash
+          if (!txHash) {
+            return
+          }
+
+          const txReceipt = await readProvider.getTransactionReceipt(txHash)
+          const newProjectPayerAddress =
+            getProjectPayerAddressFromReceipt(txReceipt)
+          if (newProjectPayerAddress === undefined) {
+            return
+          }
+          if (onConfirmed) onConfirmed()
+          onClose()
+          setProjectPayerAddress(newProjectPayerAddress)
+          setLoadingProjectPayer(false)
+          setTransactionPending(false)
+          setConfirmedModalVisible(true)
+        },
+      },
+    )
   }
 
   return (
@@ -99,17 +100,17 @@ export default function LaunchProjectPayerModal({
         </p>
         <p>
           <Trans>
-            The tokens minted as a result of payments to this address will
-            belong to the payer, the same way as if they were to pay through the
-            interface. <strong>However</strong>, if someone pays the project
-            from a non-custodial entity such as the Coinbase app, the tokens
-            cannot be issued to their personal wallets and will be lost.
+            Tokens minted from payments to this address will belong to the
+            payer. However, if someone pays the project from a non-custodial
+            entity like the Coinbase app,{' '}
+            <strong>
+              tokens can't be issued to their personal wallets and will be lost
+            </strong>
+            .
           </Trans>
         </p>
         <p>
-          <Trans>
-            This launches a new contract so will incur significant gas fees.
-          </Trans>
+          <Trans>and will incur significant gas fees.</Trans>
         </p>
       </TransactionModal>
       <Modal
@@ -130,14 +131,14 @@ export default function LaunchProjectPayerModal({
         <CopyTextButton value={projectPayerAddress} style={{ fontSize: 25 }} />
         <p style={{ marginTop: 30 }}>
           <Trans>
-            <strong>Note:</strong> Copy this address and save it somewhere now.
+            This address will disappear when you close this window.{' '}
+            <strong>Copy the address and save it now</strong>.
           </Trans>
         </p>
         <p>
           <Trans>
-            We are currently still working on a way to load this address through
-            our interface. If you lose your address please contact the Juicebox
-            team through <JBDiscordLink>Discord</JBDiscordLink>.
+            If you lose your address, please contact the Juicebox team through{' '}
+            <JBDiscordLink>Discord</JBDiscordLink>.
           </Trans>
         </p>
       </Modal>

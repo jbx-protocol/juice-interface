@@ -637,11 +637,8 @@ msgstr ""
 msgid "Copy to clipboard"
 msgstr ""
 
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
-msgid "Create an ETH address that people can use to pay this project directly."
-msgstr "Create an ETH address that people can use to pay this project directly."
-
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
 msgid "Create an Ethereum address that can be used to pay your project directly."
 msgstr "Create an Ethereum address that can be used to pay your project directly."
 

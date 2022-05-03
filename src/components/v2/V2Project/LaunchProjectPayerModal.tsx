@@ -99,7 +99,7 @@ export default function LaunchProjectPayerModal({
       >
         <p>
           <Trans>
-            Create an ETH address that people can use to pay this project
+            Create an Ethereum address that can be used to pay your project
             directly.
           </Trans>
         </p>

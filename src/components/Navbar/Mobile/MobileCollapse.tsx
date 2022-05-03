@@ -86,15 +86,17 @@ export default function MobileCollapse() {
 
             <ResourcesDropdownMobile />
 
-            <Menu.Item key="language-selector">
-              <NavLanguageSelector mobile />
-            </Menu.Item>
-            <Menu.Item key="theme-picker">
-              <ThemePickerMobile />
-            </Menu.Item>
-            <Menu.Item key="feedback">
-              <FeedbackFormButton mobile />
-            </Menu.Item>
+            <div className="top-left-nav" style={{ marginLeft: 15 }}>
+              <Menu.Item key="language-selector">
+                <NavLanguageSelector mobile />
+              </Menu.Item>
+              <Menu.Item key="theme-picker">
+                <ThemePickerMobile />
+              </Menu.Item>
+              <Menu.Item key="feedback">
+                <FeedbackFormButton mobile />
+              </Menu.Item>
+            </div>
           </Menu>
           <div
             style={{

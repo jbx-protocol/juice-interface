@@ -2158,6 +2158,7 @@ msgid "Some properties of the project's current funding cycle may indicate risk 
 msgstr "Some properties of the project's current funding cycle may indicate risk for contributors."
 
 #: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
 msgid "Something went wrong."
 msgstr "Something went wrong."
 

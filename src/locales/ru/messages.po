@@ -2163,6 +2163,7 @@ msgid "Some properties of the project's current funding cycle may indicate risk 
 msgstr ""
 
 #: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
 msgid "Something went wrong."
 msgstr ""
 

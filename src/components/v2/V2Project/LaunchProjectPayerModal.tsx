@@ -45,12 +45,12 @@ export default function LaunchProjectPayerModal({
 
   const deployProjectPayerTx = useDeployProjectPayerTx()
 
-  function deployProjectPayer() {
+  async function deployProjectPayer() {
     if (!deployProjectPayerTx) return
 
     setLoadingProjectPayer(true)
 
-    deployProjectPayerTx(
+    const txSuccess = await deployProjectPayerTx(
       {
         args: [],
       },
@@ -82,12 +82,12 @@ export default function LaunchProjectPayerModal({
           setTransactionPending(false)
           setConfirmedModalVisible(true)
         },
-        onCancelled() {
-          setLoadingProjectPayer(false)
-          setTransactionPending(false)
-        },
       },
     )
+    if (!txSuccess) {
+      setLoadingProjectPayer(false)
+      setTransactionPending(false)
+    }
   }
 
   return (

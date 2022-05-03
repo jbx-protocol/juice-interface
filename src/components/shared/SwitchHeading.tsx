@@ -13,7 +13,7 @@ export default function SwitchHeading({
 }>) {
   return (
     <div
-      style={{ display: 'flex', alignItems: 'center', marginBottom: '0.8rem' }}
+      style={{ display: 'flex', alignItems: 'center' }}
     >
       <Switch
         checked={checked}

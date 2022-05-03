@@ -41,15 +41,15 @@ export default function V2ReconfigureUpcomingMessage() {
     return (
       <Trans>
         Changes you make will take effect according to your{' '}
-        <strong>{ballotStrategy.name}</strong> reconfiguration rule: i.e. the
-        first funding cycle following
+        <strong>{ballotStrategy.name}</strong> reconfiguration rule (the first
+        funding cycle following
         <strong>
           {detailedTimeString({
             timeSeconds: BigNumber.from(ballotStrategyLength),
             fullWords: true,
           })}
         </strong>{' '}
-        from now.
+        from now).
       </Trans>
     )
   } else {

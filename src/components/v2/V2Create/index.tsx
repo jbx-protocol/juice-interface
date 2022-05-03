@@ -5,7 +5,7 @@ import V2UserProvider from 'providers/v2/UserProvider'
 
 import { t, Trans } from '@lingui/macro'
 import { ThemeContext } from 'contexts/themeContext'
-
+import useMobile from 'hooks/Mobile'
 import V2CurrencyProvider from 'providers/v2/V2CurrencyProvider'
 
 import ProjectDetailsTabContent from './tabs/ProjectDetailsTab/ProjectDetailsTabContent'
@@ -44,6 +44,8 @@ export default function V2Create() {
   const { colors } = useContext(ThemeContext).theme
   const [activeTab, setActiveTab] = useState<string>('0')
 
+  const isMobile = useMobile()
+
   return (
     <V2UserProvider>
       <V2CurrencyProvider>
@@ -52,7 +54,7 @@ export default function V2Create() {
           style={{
             maxWidth: 1300,
             margin: '0 auto',
-            padding: '2rem 4rem',
+            padding: !isMobile ? '2rem 4rem' : '2rem 1rem',
           }}
         >
           <div>

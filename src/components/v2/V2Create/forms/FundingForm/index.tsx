@@ -88,7 +88,7 @@ export default function FundingForm({
   onFormUpdated,
   onFinish,
 }: {
-  onFormUpdated: (updated: boolean) => void
+  onFormUpdated?: (updated: boolean) => void
   onFinish: VoidFunction
 }) {
   const { theme } = useContext(ThemeContext)
@@ -307,7 +307,7 @@ export default function FundingForm({
       initialValues.distributionLimit !== target ||
       initialValues.distributionLimitCurrency !== targetCurrency ||
       !isEqual(initialValues.payoutSplits, splits)
-    onFormUpdated(hasFormUpdated)
+    onFormUpdated?.(hasFormUpdated)
   }, [
     durationEnabled,
     editingSplits,

@@ -117,7 +117,7 @@ export default function TokenForm({
   onFinish,
   isCreate,
 }: {
-  onFormUpdated: (updated: boolean) => void
+  onFormUpdated?: (updated: boolean) => void
   onFinish: VoidFunction
   isCreate?: boolean // If the instance of this form is in the create flow (not reconfig)
 }) {
@@ -223,7 +223,7 @@ export default function TokenForm({
       initialValues.reservedRate !== reservedRate ||
       initialValues.discountRate !== discountRate ||
       initialValues.redemptionRate !== redemptionRate
-    onFormUpdated(hasFormUpdated)
+    onFormUpdated?.(hasFormUpdated)
   })
 
   const defaultValueStyle: CSSProperties = {

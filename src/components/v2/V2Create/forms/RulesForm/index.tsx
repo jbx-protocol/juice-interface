@@ -34,7 +34,7 @@ export default function RulesForm({
   onFormUpdated,
   onFinish,
 }: {
-  onFormUpdated: (updated: boolean) => void
+  onFormUpdated?: (updated: boolean) => void
   onFinish: VoidFunction
 }) {
   const { theme } = useContext(ThemeContext)
@@ -69,7 +69,7 @@ export default function RulesForm({
       initialValues.allowMinting !== allowMinting ||
       initialValues.pausePay !== pausePay ||
       !isEqual(initialValues.ballotStrategy, ballotStrategy)
-    onFormUpdated(hasFormUpdated)
+    onFormUpdated?.(hasFormUpdated)
   }, [onFormUpdated, initialValues, pausePay, allowMinting, ballotStrategy])
 
   const onFormSaved = useCallback(() => {

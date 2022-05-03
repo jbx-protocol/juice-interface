@@ -74,11 +74,13 @@ export default function V2ProjectHeaderActions() {
         useDeployProjectPayerTx={useDeployProjectPayerTx}
       />
       <div style={{ display: 'flex' }}>
-        <Button
-          onClick={() => setToolDrawerVisible(true)}
-          icon={<ToolOutlined />}
-          type="text"
-        />
+        <Tooltip title={t`Tools`} placement="bottom">
+          <Button
+            onClick={() => setToolDrawerVisible(true)}
+            icon={<ToolOutlined />}
+            type="text"
+          />
+        </Tooltip>
         {showReconfigureButton && <V2ReconfigureFundingModalTrigger />}
       </div>
     </div>

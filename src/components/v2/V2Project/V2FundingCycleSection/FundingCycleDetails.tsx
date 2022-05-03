@@ -15,6 +15,7 @@ import { V2CurrencyName } from 'utils/v2/currency'
 import TooltipLabel from 'components/shared/TooltipLabel'
 
 import FundingCycleDetailWarning from 'components/shared/Project/FundingCycleDetailWarning'
+import EtherscanLink from 'components/shared/EtherscanLink'
 
 import {
   decodeV2FundingCycleMetadata,
@@ -34,6 +35,10 @@ import useProjectDistributionLimit from 'hooks/v2/contractReader/ProjectDistribu
 
 import { getBallotStrategyByAddress } from 'constants/v2/ballotStrategies/getBallotStrategiesByAddress'
 import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
+import {
+  DISCOUNT_RATE_EXPLANATION,
+  REDEMPTION_RATE_EXPLANATION,
+} from './settingExplanations'
 
 export default function FundingCycleDetails({
   fundingCycle,
@@ -189,14 +194,7 @@ export default function FundingCycleDetails({
           label={
             <TooltipLabel
               label={<Trans>Discount rate</Trans>}
-              tip={
-                <Trans>
-                  The ratio of tokens rewarded per payment amount will decrease
-                  by this percentage with each new funding cycle. A higher
-                  discount rate will incentivize supporters to pay your project
-                  earlier than later.
-                </Trans>
-              }
+              tip={DISCOUNT_RATE_EXPLANATION}
             />
           }
         >
@@ -208,16 +206,7 @@ export default function FundingCycleDetails({
           label={
             <TooltipLabel
               label={<Trans>Redemption rate</Trans>}
-              tip={
-                <Trans>
-                  This rate determines the amount of overflow that each token
-                  can be redeemed for at any given time. On a lower bonding
-                  curve, redeeming a token increases the value of each remaining
-                  token, creating an incentive to hold tokens longer than
-                  others. A redemption rate of 100% means all tokens will have
-                  equal value regardless of when they are redeemed.
-                </Trans>
-              }
+              tip={REDEMPTION_RATE_EXPLANATION}
             />
           }
         >
@@ -329,7 +318,10 @@ export default function FundingCycleDetails({
         </FundingCycleDetailWarning>
         <div style={{ color: colors.text.secondary }}>
           <div style={{ fontSize: '0.7rem' }}>
-            <Trans>Address: {ballotStrategy.address}</Trans>
+            <Trans>
+              Address:{' '}
+              <EtherscanLink value={ballotStrategy.address} type="address" />
+            </Trans>
             <br />
             {ballotStrategy.description}
           </div>

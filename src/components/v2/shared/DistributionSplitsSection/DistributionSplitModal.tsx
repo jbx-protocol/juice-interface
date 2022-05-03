@@ -8,7 +8,7 @@ import {
   validatePercentage,
 } from 'components/shared/formItems/formHelpers'
 import { defaultSplit, Split } from 'models/v2/splits'
-import { useContext, useLayoutEffect, useState } from 'react'
+import { useContext, useEffect, useLayoutEffect, useState } from 'react'
 import { parseWad } from 'utils/formatNumber'
 import {
   getDistributionAmountFromPercentAfterFee,
@@ -75,9 +75,7 @@ export default function DistributionSplitModal({
   const [form] = useForm<AddOrEditSplitFormFields>()
 
   let split: Split = defaultSplit
-  let initialAmount: number | undefined
   let initialProjectId: number | undefined
-  let initialPercent: number | undefined
   let initialLockedUntil: Moment.Moment | undefined
 
   const distributionLimitIsInfinite =
@@ -85,15 +83,6 @@ export default function DistributionSplitModal({
 
   if (splits.length && splitIndex !== undefined) {
     split = splits[splitIndex]
-    initialPercent = parseFloat(
-      formatSplitPercent(BigNumber.from(split?.percent)),
-    )
-    initialAmount = !distributionLimitIsInfinite
-      ? amountFromPercent({
-          percent: initialPercent,
-          amount: distributionLimit,
-        })
-      : undefined
     initialLockedUntil = split.lockedUntil
       ? Moment.default(split.lockedUntil * 1000)
       : undefined
@@ -112,8 +101,8 @@ export default function DistributionSplitModal({
   const [beneficiary, setBeneficiary] = useState<string | undefined>(
     split.beneficiary,
   )
-  const [percent, setPercent] = useState<number | undefined>(initialPercent)
-  const [amount, setAmount] = useState<number | undefined>(initialAmount)
+  const [percent, setPercent] = useState<number | undefined>()
+  const [amount, setAmount] = useState<number | undefined>()
   const [lockedUntil, setLockedUntil] = useState<
     Moment.Moment | undefined | null
   >(initialLockedUntil)
@@ -125,6 +114,21 @@ export default function DistributionSplitModal({
   const feePercentage = ETHPaymentTerminalFee
     ? formatFee(ETHPaymentTerminalFee)
     : undefined
+
+  useEffect(() => {
+    if (!splits.length || splitIndex === undefined || !distributionLimit) {
+      return
+    }
+    const percent = parseFloat(
+      formatSplitPercent(BigNumber.from(splits[splitIndex].percent)),
+    )
+    const amount = amountFromPercent({
+      percent,
+      amount: distributionLimit,
+    })
+    setAmount(amount)
+    setPercent(percent)
+  }, [distributionLimit, splits, splitIndex])
 
   const resetStates = () => {
     setProjectId(undefined)
@@ -214,6 +218,7 @@ export default function DistributionSplitModal({
       <Form
         form={form}
         layout="vertical"
+        scrollToFirstError={{ behavior: 'smooth' }}
         onKeyDown={e => {
           if (e.key === 'Enter') setSplit()
         }}

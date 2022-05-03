@@ -1,4 +1,5 @@
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
+import { t } from '@lingui/macro'
 
 import { SECONDS_IN_DAY, SECONDS_IN_HOUR } from 'constants/numbers'
 import { DurationUnitsOption } from 'constants/time'
@@ -6,9 +7,11 @@ import { DurationUnitsOption } from 'constants/time'
 export function detailedTimeString({
   timeSeconds,
   roundToMinutes,
+  fullWords,
 }: {
   timeSeconds?: BigNumberish
   roundToMinutes?: boolean
+  fullWords?: boolean
 }) {
   const timeSecondsNumber = BigNumber.from(timeSeconds).toNumber()
 
@@ -17,25 +20,38 @@ export function detailedTimeString({
   const minutes = (timeSecondsNumber / 60) % 60
   const seconds = timeSecondsNumber % 60
 
-  const daysText = `${days && days > 0 ? days.toString() + 'd ' : ''}`
-  const hoursText = `${hours && hours >= 1 ? Math.floor(hours) + 'h ' : ''}`
+  const daysString = fullWords ? ' ' + t`days` + ' ' : 'd '
+  const hoursString = fullWords ? ' ' + t`hours` + ' ' : 'h '
+  const minutesString = fullWords ? ' ' + t`minutes` + ' ' : 'm '
+  const secondsString = fullWords ? ' ' + t`seconds` : 's'
+
+  const daysText = `${days && days > 0 ? days.toString() + daysString : ''}`
+  const hoursText = `${
+    hours && hours >= 1 ? Math.floor(hours) + hoursString : ''
+  }`
   const minutesText = `${
-    minutes && minutes >= 1 ? Math.floor(minutes) + 'm ' : ''
+    minutes && minutes >= 1 ? Math.floor(minutes) + minutesString : ''
   }`
   const secondsText = `${
-    seconds && seconds > 0 && !roundToMinutes ? Math.floor(seconds) + 's' : ''
+    seconds && seconds > 0 && !roundToMinutes
+      ? Math.floor(seconds) + secondsString
+      : ''
   }`
 
   return `${daysText}${hoursText}${minutesText}${secondsText}`.trimEnd() || '--'
 }
 
-export function detailedTimeUntil(endTimeSeconds?: BigNumberish) {
+export function secondsUntil(timeSeconds?: BigNumberish) {
   const nowSeconds = Math.floor(Date.now().valueOf() / 1000)
-  const secondsLeft = Math.floor(
-    BigNumber.from(endTimeSeconds).sub(Math.floor(nowSeconds)).toNumber(),
-  )
+  return BigNumber.from(timeSeconds).sub(Math.floor(nowSeconds)).toNumber()
+}
 
-  return detailedTimeString({ timeSeconds: secondsLeft, roundToMinutes: true })
+export function detailedTimeUntil(endTimeSeconds?: BigNumberish) {
+  const secondsLeft = secondsUntil(endTimeSeconds)
+  return detailedTimeString({
+    timeSeconds: secondsLeft,
+    roundToMinutes: secondsLeft > 120,
+  })
 }
 
 export const secondsToDays = (seconds: number) => seconds / SECONDS_IN_DAY

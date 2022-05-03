@@ -79,11 +79,7 @@ export default function ProjectDetailsDrawerContent({
         hideProjectHandle
         onValuesChange={() => dispatchFormData()}
         saveButton={
-          <Button
-            type="primary"
-            onClick={() => onProjectFormSaved()}
-            size="large"
-          >
+          <Button type="primary" htmlType="submit" size="large">
             <Trans>Next: Funding cycle</Trans>
           </Button>
         }

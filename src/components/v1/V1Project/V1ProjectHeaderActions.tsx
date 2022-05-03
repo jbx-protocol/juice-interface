@@ -93,17 +93,24 @@ export default function V1ProjectHeaderActions() {
       </span>
 
       <div>
-        <Button
-          onClick={() => setToolDrawerVisible(true)}
-          icon={<ToolOutlined />}
-          type="text"
-        />
-        {hasEditPermission && (
+        <Tooltip title={t`Tools`} placement="bottom">
           <Button
-            onClick={() => setEditProjectModalVisible(true)}
-            icon={<SettingOutlined />}
+            onClick={() => setToolDrawerVisible(true)}
+            icon={<ToolOutlined />}
             type="text"
           />
+        </Tooltip>
+        {hasEditPermission && (
+          <Tooltip
+            title={t`Reconfigure project and funding details`}
+            placement="bottom"
+          >
+            <Button
+              onClick={() => setEditProjectModalVisible(true)}
+              icon={<SettingOutlined />}
+              type="text"
+            />
+          </Tooltip>
         )}
       </div>
 
@@ -121,6 +128,7 @@ export default function V1ProjectHeaderActions() {
         useTransferUnclaimedTokensTx={useTransferTokensTx}
         useAddToBalanceTx={useAddToBalanceTx}
         useSetProjectUriTx={useSetProjectUriTx}
+        useDeployProjectPayerTx={() => undefined}
       />
       <EditProjectModal
         visible={editProjectModalVisible}

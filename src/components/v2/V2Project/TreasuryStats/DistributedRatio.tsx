@@ -63,9 +63,10 @@ export default function DistributedRatio({ style }: { style?: CSSProperties }) {
             <TooltipLabel
               tip={
                 <Trans>
-                  The target for this funding cycle is 0, meaning all funds in
-                  Juicebox are currently considered overflow. Overflow can be
-                  redeemed by token holders, but not distributed.
+                  The distribution limit for this funding cycle is 0, meaning
+                  all funds in Juicebox are currently considered overflow.
+                  Overflow can be redeemed by token holders, but not
+                  distributed.
                 </Trans>
               }
               label={<Trans>100% overflow</Trans>}

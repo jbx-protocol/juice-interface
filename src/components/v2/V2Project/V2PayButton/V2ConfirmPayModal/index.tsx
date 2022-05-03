@@ -9,7 +9,7 @@ import { NetworkContext } from 'contexts/networkContext'
 import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { formattedNum, formatWad } from 'utils/formatNumber'
 
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -69,6 +69,10 @@ export default function V2ConfirmPayModal({
   const [transactionPending, setTransactionPending] = useState<boolean>()
 
   const [form] = useForm<{ memo: string; beneficiary: string }>()
+
+  useEffect(() => {
+    setBeneficiary(userAddress)
+  }, [userAddress])
 
   const usdAmount = converter.weiToUsd(weiAmount)
 

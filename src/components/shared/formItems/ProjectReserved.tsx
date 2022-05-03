@@ -27,12 +27,14 @@ export default function ProjectReserved({
   onChange,
   checked,
   onToggled,
+  isCreate,
 }: {
   value: number | undefined
   style?: CSSProperties
   onChange: (val?: number) => void
   checked?: boolean
   onToggled?: (checked: boolean) => void
+  isCreate?: boolean // Instance of this form item is in the create flow (not reconfig)
 } & FormItemExt) {
   const {
     theme: { colors },
@@ -63,15 +65,17 @@ export default function ProjectReserved({
   return (
     <Form.Item
       extra={
-        <>
-          <TabDescription>
-            <Trans>
-              Initial issuance rate will be {formattedNum(initialIssuanceRate)}{' '}
-              tokens / ETH for contributors.{' '}
-              {formattedNum(initialReservedTokensPerEth)} tokens / ETH will be
-              reserved by the project.
-            </Trans>
-          </TabDescription>
+        <div style={{ fontSize: '0.9rem' }}>
+          {isCreate && (
+            <TabDescription>
+              <Trans>
+                Initial issuance rate will be{' '}
+                {formattedNum(initialIssuanceRate)} tokens / 1 ETH for
+                contributors. {formattedNum(initialReservedTokensPerEth)} tokens
+                / 1 ETH will be reserved by the project.
+              </Trans>
+            </TabDescription>
+          )}
           <p>
             <Trans>
               Whenever someone pays your project, this percentage of tokens will
@@ -84,7 +88,7 @@ export default function ProjectReserved({
               you can also allocate portions to other wallet addresses.
             </Trans>
           </p>
-        </>
+        </div>
       }
       name={name}
       label={

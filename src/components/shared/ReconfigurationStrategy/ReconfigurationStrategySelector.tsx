@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Input, Space } from 'antd'
+import { Form, Input, Space } from 'antd'
 import * as constants from '@ethersproject/constants'
 import { NetworkContext } from 'contexts/networkContext'
 import { useContext, useState } from 'react'
@@ -26,22 +26,25 @@ function CustomStrategyInput({
   const { signerNetwork } = useContext(NetworkContext)
   return (
     <div>
-      <Input
-        style={{ width: 400 }}
-        value={value}
-        placeholder={constants.AddressZero}
-        onChange={e => onChange(e.target.value.toLowerCase())}
-      />
-      <p>
-        <Trans>
-          The address of any smart contract deployed on {signerNetwork} that
-          implements
-        </Trans>{' '}
-        <ExternalLink href="https://github.com/jbx-protocol/juice-contracts-v1/blob/main/contracts/FundingCycles.sol">
-          this interface
-        </ExternalLink>
-        .
-      </p>
+      <Form.Item
+        extra={
+          <Trans>
+            The address of any smart contract deployed on{' '}
+            {signerNetwork ?? 'mainnet'} that implements{' '}
+            <ExternalLink href="https://github.com/jbx-protocol/juice-contracts-v1/blob/main/contracts/FundingCycles.sol">
+              this interface
+            </ExternalLink>
+            .
+          </Trans>
+        }
+      >
+        <Input
+          style={{ width: 400 }}
+          value={value}
+          placeholder={constants.AddressZero}
+          onChange={e => onChange(e.target.value.toLowerCase())}
+        />
+      </Form.Item>
     </div>
   )
 }

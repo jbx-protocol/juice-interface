@@ -14,12 +14,14 @@ export default function ReservedTokensFormItem({
   onReservedTokensSplitsChange,
   style = {},
   onChange,
+  isCreate,
 }: {
   initialValue: number | undefined
   reservedTokensSplits: Split[]
   onReservedTokensSplitsChange: (splits: Split[]) => void
   onChange: (val?: number) => void
   style?: CSSProperties
+  isCreate?: boolean // Instance of this form item is in the create flow (not reconfig)
 } & FormItemExt) {
   // Using a state here because relying on the form does not
   // pass through updated reservedRate to ProjectTicketMods
@@ -50,6 +52,7 @@ export default function ReservedTokensFormItem({
             onChange(parseInt(defaultFundingCycleMetadata.reservedRate))
         }}
         hideLabel={hideLabel}
+        isCreate={isCreate}
       />
 
       {hasReservedRate ? (

@@ -42,6 +42,7 @@ import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/v2/splits'
+import V2ReconfigureUpcomingMessage from './V2ReconfigureUpcomingMessage'
 
 function ReconfigureButton({
   title,
@@ -334,10 +335,7 @@ export default function V2ProjectReconfigureModal({
           <Trans>Reconfigure upcoming funding cycles</Trans>
         </h4>
         <p>
-          <Trans>
-            Any changes will take effect in the next funding cycle. The current
-            funding cycle won't be altered.
-          </Trans>
+          <V2ReconfigureUpcomingMessage />
         </p>
         <ReconfigureButton
           title={t`Distribution limit, duration and payouts`}

@@ -14,7 +14,7 @@ export default function V2CurrencyAmount({
 }) {
   if (!amount) return null
 
-  if (currency?.eq(0) || currency?.eq(V2_CURRENCY_ETH)) {
+  if (currency?.eq(V2_CURRENCY_ETH)) {
     return <ETHAmount amount={amount} precision={precision} padEnd />
   }
 

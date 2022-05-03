@@ -22,19 +22,19 @@ export function ballotStrategies() {
       name: t`No strategy`,
       description: t`Any reconfiguration to an upcoming funding cycle will take effect once the current cycle ends. A project with no strategy may be vulnerable to being rug-pulled by its owner.`,
       address: constants.AddressZero,
-      length: 0,
+      durationSeconds: 0,
     },
     {
       name: t`3-day delay`,
       description: t`A reconfiguration to an upcoming funding cycle must be submitted at least 3 days before it starts.`,
       address: BALLOT_ADDRESSES.THREE_DAY[readNetwork.name as string],
-      length: SECONDS_IN_DAY * 3,
+      durationSeconds: SECONDS_IN_DAY * 3,
     },
     // {
     //   name: t`7-day delay`,
     //   description: t`A reconfiguration to an upcoming funding cycle must be submitted at least 7 days before it starts.`,
     //   address: BALLOT_ADDRESSES.SEVEN_DAY[readNetwork.name as string],
-    //   length: SECONDS_IN_DAY * 7
+    //   durationSeconds: SECONDS_IN_DAY * 7
     // },
   ]
 }

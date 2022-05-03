@@ -16,5 +16,5 @@ export type BallotStrategy = {
   name: string
   description?: string
   unknown?: boolean
-  length?: number // Length in seconds (only applies to 0, 3 and 7 day ballot)
+  durationSeconds?: number // Length in seconds (only applies to 0, 3 and 7 day ballot)
 }

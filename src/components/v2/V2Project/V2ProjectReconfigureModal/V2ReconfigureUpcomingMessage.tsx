@@ -14,7 +14,7 @@ export default function V2ReconfigureUpcomingMessage() {
   const currentFCNumber = fundingCycle.number.toNumber()
 
   const ballotStrategy = getBallotStrategyByAddress(fundingCycle.ballot)
-  const ballotStrategyLength = ballotStrategy.length
+  const ballotStrategyLength = ballotStrategy.durationSeconds
 
   const duration = fundingCycle.duration.toNumber()
 

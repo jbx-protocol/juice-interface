@@ -86,7 +86,7 @@ export default function MobileCollapse() {
 
             <ResourcesDropdownMobile />
 
-            <div className="top-left-nav" style={{ marginLeft: 15 }}>
+            <div style={{ marginLeft: 15 }}>
               <Menu.Item key="language-selector">
                 <NavLanguageSelector mobile />
               </Menu.Item>

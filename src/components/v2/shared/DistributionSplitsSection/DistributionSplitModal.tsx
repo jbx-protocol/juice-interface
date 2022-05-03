@@ -218,6 +218,7 @@ export default function DistributionSplitModal({
       <Form
         form={form}
         layout="vertical"
+        scrollToFirstError={{ behavior: 'smooth' }}
         onKeyDown={e => {
           if (e.key === 'Enter') setSplit()
         }}

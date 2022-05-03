@@ -100,6 +100,10 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
     ? formatFee(ETHPaymentTerminalFee)
     : undefined
 
+  const payoutSplitsDisabled =
+    targetType === 'none' ||
+    (targetType === 'specific' && target && target === '0')
+
   // Load redux state (will be empty in create flow)
   const { fundAccessConstraints, fundingCycleData, payoutGroupedSplits } =
     useAppSelector(state => state.editingV2Project)
@@ -287,7 +291,7 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
         </SwitchHeading>
 
         <Space size="middle" direction="vertical">
-          <div>
+          <div style={{ marginTop: '0.5rem' }}>
             <p>
               <Trans>
                 Set the length of your funding cycles, which can enable:
@@ -418,7 +422,7 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
         <h3>
           <Trans>Payout splits</Trans>
         </h3>
-        {targetType !== 'none' ? (
+        {!payoutSplitsDisabled ? (
           <>
             <p style={{ color: theme.colors.text.primary }}>
               Distributing payouts to addresses outside the Juicebox contracts

@@ -292,8 +292,8 @@ msgstr ""
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
-msgid "Address: {0}"
-msgstr "Dirección: {0}"
+msgid "Address: <0/>"
+msgstr ""
 
 #: src/components/v1/V1Create/index.tsx
 msgid "Adjust incentives for paying your project."

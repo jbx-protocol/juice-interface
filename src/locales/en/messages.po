@@ -628,8 +628,8 @@ msgid "Copy to clipboard"
 msgstr ""
 
 #: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
-msgid "Create an ETH address that people can use to pay this project rather than paying through the juicebox.money interface."
-msgstr "Create an ETH address that people can use to pay this project rather than paying through the juicebox.money interface."
+msgid "Create an ETH address that people can use to pay this project directly."
+msgstr "Create an ETH address that people can use to pay this project directly."
 
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
 msgid "Create an Ethereum address that can be used to pay your project directly."
@@ -2073,6 +2073,10 @@ msgstr "Some funding cycle properties may indicate risk for project contributors
 msgid "Some properties of the project's current funding cycle may indicate risk for contributors."
 msgstr "Some properties of the project's current funding cycle may indicate risk for contributors."
 
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+msgid "Something went wrong."
+msgstr "Something went wrong."
+
 #: src/components/v2/V2Create/forms/FundingForm/TargetTypeSelect.tsx
 msgid "Specific limit"
 msgstr "Specific limit"
@@ -2758,10 +2762,6 @@ msgstr "Zero, no funds can be distributed"
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 msgid "after {0}% JBX fee"
 msgstr ""
-
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
-msgid "and will incur significant gas fees."
-msgstr "and will incur significant gas fees."
 
 #: src/components/shared/formItems/ProjectDescription.tsx
 msgid "characters max"

@@ -633,7 +633,7 @@ msgid "Copy to clipboard"
 msgstr "Panoya kopyala"
 
 #: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
-msgid "Create an ETH address that people can use to pay this project rather than paying through the juicebox.money interface."
+msgid "Create an ETH address that people can use to pay this project directly."
 msgstr ""
 
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
@@ -2078,6 +2078,10 @@ msgstr "Bazı finansman döngüsü özellikleri projeye katkıda bulunanlar içi
 msgid "Some properties of the project's current funding cycle may indicate risk for contributors."
 msgstr ""
 
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+msgid "Something went wrong."
+msgstr ""
+
 #: src/components/v2/V2Create/forms/FundingForm/TargetTypeSelect.tsx
 msgid "Specific limit"
 msgstr ""
@@ -2763,10 +2767,6 @@ msgstr ""
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 msgid "after {0}% JBX fee"
 msgstr "%{0} JBX ücretinden sonra"
-
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
-msgid "and will incur significant gas fees."
-msgstr ""
 
 #: src/components/shared/formItems/ProjectDescription.tsx
 msgid "characters max"

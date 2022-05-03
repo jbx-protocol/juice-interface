@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { TransactionReceipt } from '@ethersproject/providers'
 import { TransactorInstance } from 'hooks/Transactor'
 
-import { Modal } from 'antd'
+import { Modal, notification } from 'antd'
 import { JBDiscordLink } from 'components/Landing/QAs'
 import EtherscanLink from 'components/shared/EtherscanLink'
 import CopyTextButton from 'components/shared/CopyTextButton'
@@ -68,6 +68,11 @@ export default function LaunchProjectPayerModal({
           const newProjectPayerAddress =
             getProjectPayerAddressFromReceipt(txReceipt)
           if (newProjectPayerAddress === undefined) {
+            notification.error({
+              key: new Date().valueOf().toString(),
+              message: t`Something went wrong.`,
+              duration: 0,
+            })
             return
           }
           if (onConfirmed) onConfirmed()
@@ -94,8 +99,8 @@ export default function LaunchProjectPayerModal({
       >
         <p>
           <Trans>
-            Create an ETH address that people can use to pay this project rather
-            than paying through the juicebox.money interface.
+            Create an ETH address that people can use to pay this project
+            directly.
           </Trans>
         </p>
         <p>
@@ -108,9 +113,6 @@ export default function LaunchProjectPayerModal({
             </strong>
             .
           </Trans>
-        </p>
-        <p>
-          <Trans>and will incur significant gas fees.</Trans>
         </p>
       </TransactionModal>
       <Modal

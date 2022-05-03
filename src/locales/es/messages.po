@@ -1847,6 +1847,11 @@ msgstr "Reconfigurar"
 msgid "Reconfigure funding"
 msgstr "Reconfigurar financiamiento"
 
+#: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureModalTrigger.tsx
+msgid "Reconfigure project and funding details"
+msgstr ""
+
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectDetailsDrawer.tsx
 msgid "Reconfigure project details"
 msgstr "Reconfigura los detalles del proyecto"
@@ -2476,6 +2481,8 @@ msgid "Tokens:"
 msgstr "Tokens:"
 
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
+#: src/components/v2/V2Project/V2ProjectHeaderActions.tsx
 msgid "Tools"
 msgstr "Herramientas"
 

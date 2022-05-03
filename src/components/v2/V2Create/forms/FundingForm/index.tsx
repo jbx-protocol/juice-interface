@@ -418,7 +418,7 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
         <h3>
           <Trans>Payout splits</Trans>
         </h3>
-        {targetType !== 'none' ? (
+        {targetType !== 'none' && target && target !== '0' ? (
           <>
             <p style={{ color: theme.colors.text.primary }}>
               Distributing payouts to addresses outside the Juicebox contracts

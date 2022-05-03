@@ -650,6 +650,16 @@ msgstr "Kopyalandı!"
 msgid "Copy to clipboard"
 msgstr "Panoya kopyala"
 
+#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+msgid "Create an Ethereum address that can be used to pay your project directly."
+msgstr ""
+
+#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+msgid "Create payable address"
+msgstr ""
+
 #: src/components/Projects/index.tsx
 msgid "Create project"
 msgstr "Proje oluştur"
@@ -715,6 +725,11 @@ msgstr ""
 
 #: src/components/v1/V1Create/index.tsx
 msgid "Deploy project on {signerNetwork}"
+msgstr ""
+
+#: src/components/v2/V2Project/LaunchProjectPayerButton.tsx
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+msgid "Deploy project payer contract"
 msgstr ""
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/DeployProjectButton.tsx
@@ -864,6 +879,7 @@ msgstr "Bir proje kendi taşmasından faydalanır mı?"
 #: src/components/v1/V1Project/FundingCycles/FundingHistory.tsx
 #: src/components/v1/V1Project/modals/BalancesModal.tsx
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
 msgid "Done"
 msgstr "Tamamlandı"
 
@@ -1167,8 +1183,16 @@ msgstr "Kilitliyse kilidin süresi dolana veya finansman döngüsü yeniden yap�
 msgid "If locked, this split can't be edited or removed until the lock expires or the funding cycle is reconfigured."
 msgstr ""
 
+#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+msgid "If you have already deployed a payable address and have lost it, please contact the Juicebox team through <0>Discord.</0>"
+msgstr ""
+
 #: src/components/Landing/QAs.tsx
 msgid "If you know how much your project needs to earn over some period of time to be sustainable, you can set a funding target with that amount. If your project earns more than that, the surplus funds are locked in an overflow pool. Anyone holding your project's tokens can claim a portion of the overflow pool in exchange for redeeming their tokens."
+msgstr ""
+
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+msgid "If you lose your address, please contact the Juicebox team through <0>Discord</0>."
 msgstr ""
 
 #: src/components/Landing/QAs.tsx
@@ -2150,6 +2174,11 @@ msgstr "Bazı finansman döngüsü özellikleri projeye katkıda bulunanlar içi
 msgid "Some properties of the project's current funding cycle may indicate risk for contributors."
 msgstr ""
 
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+msgid "Something went wrong."
+msgstr ""
+
 #: src/components/v2/V2Create/forms/FundingForm/TargetTypeSelect.tsx
 msgid "Specific limit"
 msgstr ""
@@ -2347,6 +2376,10 @@ msgstr "Bu ayarlar, bir finansman döngüsü içinde hemen <0>düzenlenemez</0>.
 msgid "This address is an unrecognized strategy contract. Make sure it is correct!"
 msgstr "Bu adres, tanınmayan bir strateji sözleşmesine aittir. Doğru olduğundan emin olun!"
 
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+msgid "This address will disappear when you close this window. <0>Copy the address and save it now</0>."
+msgstr ""
+
 #: src/components/shared/Mod.tsx
 #: src/components/v2/shared/SplitItem.tsx
 msgid "This address will receive any tokens minted when the recipient project gets paid."
@@ -2472,6 +2505,10 @@ msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "Tokens cannot be claimed because no ERC-20 token has been issued for this project. ERC-20 tokens must be issued by the project owner."
+msgstr ""
+
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+msgid "Tokens minted from payments to this address will belong to the payer. However, if someone pays the project from a non-custodial entity like the Coinbase app, <0>tokens can't be issued to their personal wallets and will be lost</0>."
 msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
@@ -2778,6 +2815,10 @@ msgstr "Bakiyeniz: {0}"
 #: src/components/v1/V1Project/modals/FeedbackPromptModal.tsx
 msgid "Your feedback will be sent to a <0>public Discord channel </0>for our development team to consider."
 msgstr "Geri bildiriminiz, geliştirme ekibimizin dikkate alması için <0>herkese açık bir Discord kanalına </0>gönderilecektir."
+
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+msgid "Your new payable address:"
+msgstr ""
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "Your project cannot receive direct payments while paused."

@@ -128,6 +128,7 @@ export default function V1ProjectHeaderActions() {
         useTransferUnclaimedTokensTx={useTransferTokensTx}
         useAddToBalanceTx={useAddToBalanceTx}
         useSetProjectUriTx={useSetProjectUriTx}
+        useDeployProjectPayerTx={() => undefined}
       />
       <EditProjectModal
         visible={editProjectModalVisible}

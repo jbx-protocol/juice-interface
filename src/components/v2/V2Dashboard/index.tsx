@@ -32,6 +32,7 @@ import useProjectTokenTotalSupply from 'hooks/v2/contractReader/ProjectTokenTota
 import NewDeployNotAvailable from 'components/shared/NewDeployNotAvailable'
 
 import { useLocation } from 'react-router-dom'
+import useNameOfERC20 from 'hooks/v1/contractReader/NameofERC20'
 
 import { layouts } from 'constants/styles/layouts'
 
@@ -112,6 +113,7 @@ export default function V2Dashboard({ projectId }: { projectId: BigNumber }) {
   })
 
   const tokenSymbol = useSymbolOfERC20(tokenAddress)
+  const tokenName = useNameOfERC20(tokenAddress)
 
   const { data: primaryTerminalCurrentOverflow } = useTerminalCurrentOverflow({
     projectId,
@@ -167,6 +169,7 @@ export default function V2Dashboard({ projectId }: { projectId: BigNumber }) {
     distributionLimitCurrency,
     balanceInDistributionLimitCurrency,
     tokenSymbol,
+    tokenName,
     projectOwnerAddress,
     primaryTerminalCurrentOverflow,
     totalTokenSupply,

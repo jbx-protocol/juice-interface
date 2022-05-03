@@ -370,8 +370,8 @@ msgstr ""
 msgid "An invite link to your project's Discord server."
 msgstr "项目 Discord 的邀请链接。"
 
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
-msgid "Any changes will take effect in the next funding cycle. The current funding cycle won't be altered."
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
+msgid "Any changes you make will take effect in <0>funding cycle #{0}</0>. The current funding cycle (#{currentFCNumber}) won't be altered."
 msgstr ""
 
 #: src/constants/v1/ballotStrategies/index.ts
@@ -533,6 +533,14 @@ msgstr "可以随时修改这些属性，并立即应用于你的项目。"
 #: src/components/Landing/index.tsx
 msgid "Changes to your project's funding configuration require a community-approved period to take effect, which acts as a safeguard against rug pulls. Your supporters don't have to trust you — even though they already do."
 msgstr "对项目资金的变动需要经过社区的批准阶段才能生效，这可以作为预防项目方跑路的措施。项目支持者不需要依赖于对你的信任 —— 尽管他们已经这样做了。"
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
+msgid "Changes will take effect according to the project's custom ballot contract."
+msgstr ""
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
+msgid "Changes you make will take effect according to your <0>{0}</0> reconfiguration rule: i.e. the first funding cycle following<1>{1}</1> from now."
+msgstr ""
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Check this to mint this project's ERC-20 tokens to your wallet. Leave unchecked to have your token balance tracked by Juicebox, saving gas on this transaction. You can always claim your ERC-20 tokens later."
@@ -2740,6 +2748,10 @@ msgstr ""
 msgid "You can still redeem your {tokenSymbol} tokens for overflow without claiming them, and you can transfer your unclaimed {tokenSymbol} tokens to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
 msgstr "未领取的 {tokenSymbol} 代币，依然可以用来赎回溢出池中的 ETH，也可以在工具菜单中把代币直接转给其他地址。点击右上角的扳手按钮可以打开工具菜单。"
 
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
+msgid "You don't have a funding cycle duration. Changes you make will take effect immediately."
+msgstr ""
+
 #: src/components/v1/shared/BudgetForm.tsx
 msgid "You have set a funding cycle target."
 msgstr "您设定了一个筹款周期目标。"
@@ -2831,12 +2843,17 @@ msgid "characters max"
 msgstr "最大字符数"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/utils/formatTime.ts
 msgid "days"
 msgstr "天"
 
 #: src/components/shared/formItems/ProjectHandle/ProjectHandleInput.tsx
 msgid "handle"
 msgstr "标识"
+
+#: src/utils/formatTime.ts
+msgid "hours"
+msgstr ""
 
 #: src/components/shared/formItems/ProjectDiscord.tsx
 msgid "https://discord.gg/abcdefgh"
@@ -2866,6 +2883,10 @@ msgstr ""
 msgid "matching \"{searchText}\""
 msgstr "满足条件 \"{searchText}\""
 
+#: src/utils/formatTime.ts
+msgid "minutes"
+msgstr ""
+
 #: src/components/shared/inputs/Pay/PayInputSubText.tsx
 msgid "or <0><1>buy {tokenText} on exchange<2/></1></0>"
 msgstr "或是 <0><1>在交易所购买 {tokenText} <2/></1></0>"
@@ -2883,6 +2904,10 @@ msgstr "项目拥有者"
 #: src/components/Projects/index.tsx
 msgid "projects"
 msgstr "项目"
+
+#: src/utils/formatTime.ts
+msgid "seconds"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx

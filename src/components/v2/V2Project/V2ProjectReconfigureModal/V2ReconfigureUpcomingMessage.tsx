@@ -26,15 +26,15 @@ export default function V2ReconfigureUpcomingMessage() {
     // If duration is unset/0, changes take effect immediately to current FC
     return (
       <Trans>
-        Because you do not have a funding cycle duration, changes you make will
-        take effect immediately.
+        You don't have a funding cycle duration. Changes you make will take
+        effect immediately.
       </Trans>
     )
   } else if (ballotStrategyLength === undefined) {
     return (
       <Trans>
-        Changes will take effect according to the custom reconfiguration rule
-        you are using.
+        Changes will take effect according to the project's custom ballot
+        contract.
       </Trans>
     )
   } else if (ballotStrategyLength > secondsUntilNextFC) {

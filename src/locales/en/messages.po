@@ -425,10 +425,6 @@ msgstr "Balance exceeded"
 msgid "Balance of the project owner's wallet."
 msgstr "Balance of the project owner's wallet."
 
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
-msgid "Because you do not have a funding cycle duration, changes you make will take effect immediately."
-msgstr "Because you do not have a funding cycle duration, changes you make will take effect immediately."
-
 #: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
 msgid "Beneficiary"
 msgstr "Beneficiary"
@@ -532,8 +528,8 @@ msgid "Changes to your project's funding configuration require a community-appro
 msgstr "Changes to your project's funding configuration require a community-approved period to take effect, which acts as a safeguard against rug pulls. Your supporters don't have to trust you — even though they already do."
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
-msgid "Changes will take effect according to the custom reconfiguration rule you are using."
-msgstr "Changes will take effect according to the custom reconfiguration rule you are using."
+msgid "Changes will take effect according to the project's custom ballot contract."
+msgstr "Changes will take effect according to the project's custom ballot contract."
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "Changes you make will take effect according to your <0>{0}</0> reconfiguration rule: i.e. the first funding cycle following<1>{1}</1> from now."
@@ -2645,6 +2641,10 @@ msgstr "You can redeem your {tokenTextLong} for overflow without claiming them. 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
 msgid "You can still redeem your {tokenSymbol} tokens for overflow without claiming them, and you can transfer your unclaimed {tokenSymbol} tokens to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
 msgstr "You can still redeem your {tokenSymbol} tokens for overflow without claiming them, and you can transfer your unclaimed {tokenSymbol} tokens to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
+msgid "You don't have a funding cycle duration. Changes you make will take effect immediately."
+msgstr "You don't have a funding cycle duration. Changes you make will take effect immediately."
 
 #: src/components/v1/shared/BudgetForm.tsx
 msgid "You have set a funding cycle target."

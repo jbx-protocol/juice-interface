@@ -1,18 +1,17 @@
 import { t, Trans } from '@lingui/macro'
 import { Modal } from 'antd'
-import IssueTokenButton from 'components/shared/IssueTokenButton'
-import ShareToTwitterButton from 'components/shared/ShareToTwitterButton'
 import { useDeployProjectPayerTx } from 'hooks/v2/transactor/DeployProjectPayerTx'
 import { useIssueTokensTx } from 'hooks/v2/transactor/IssueTokensTx'
 import { useLocation } from 'react-router-dom'
-import { CheckSquareOutlined } from '@ant-design/icons'
-import { useState } from 'react'
+import { CheckCircleFilled } from '@ant-design/icons'
+import { CSSProperties, useContext, useState } from 'react'
+import RichButton from 'components/shared/RichButton'
 
-import LaunchProjectPayerButton from './LaunchProjectPayerButton'
+import { ThemeContext } from 'contexts/themeContext'
+import IssueTokenModal from 'components/shared/modals/IssueTokenModal'
+import { tweet } from 'utils/v2/tweet'
 
-function NextStepItem({ title }: { title: JSX.Element }) {
-  return <li style={{ marginBottom: 25, marginTop: 25 }}>{title}</li>
-}
+import LaunchProjectPayerModal from './LaunchProjectPayerModal'
 
 export default function NewDeployModal({
   visible,
@@ -21,8 +20,16 @@ export default function NewDeployModal({
   visible: boolean
   onClose: VoidFunction
 }) {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
   const projectURL = window.location.origin + useLocation().pathname
   const twitterMsg = `Check out my new @juiceboxETH project! ${projectURL}`
+
+  const [issueTokenModalVisible, setIssueTokenModalVisible] =
+    useState<boolean>(false)
+  const [launchProjectPayerModalVisible, setLaunchProjectPayerModalVisible] =
+    useState<boolean>(false)
 
   const [hasIssuedToken, setHasIssuedToken] = useState<boolean>()
   const [hasLaunchedPayableAddress, setHasLaunchedPayableAddress] =
@@ -31,6 +38,12 @@ export default function NewDeployModal({
 
   const completedAllSteps =
     hasIssuedToken && hasLaunchedPayableAddress && hasSharedToTwitter
+
+  const seenColor = colors.text.tertiary
+
+  const stepButtonStyle: CSSProperties = {
+    marginBottom: 15,
+  }
 
   return (
     <Modal
@@ -45,75 +58,81 @@ export default function NewDeployModal({
       <h2>
         <Trans>Next steps</Trans>
       </h2>
-      <ol style={{ fontSize: 17, marginTop: 20 }}>
-        <NextStepItem
-          title={
-            <IssueTokenButton
-              useIssueTokensTx={useIssueTokensTx}
-              disabled={hasIssuedToken}
-              text={
-                <>
-                  <Trans>Issue ERC-20 token</Trans>
-                  {hasIssuedToken && (
-                    <>
-                      {' '}
-                      <CheckSquareOutlined />
-                    </>
-                  )}
-                </>
-              }
-              type="default"
-              size="middle"
-              tooltipText={
-                <Trans>
-                  Create your own ERC-20 token to represent stake in your
-                  project. Contributors will receive these tokens when they pay
-                  your project.
-                </Trans>
-              }
-              hideIcon
-              onCompleted={() => setHasIssuedToken(true)}
-            />
+      <p>
+        <Trans>
+          These are all optional and can be completed at any time through your
+          project page.
+        </Trans>
+      </p>
+      <ol style={{ fontSize: 17, marginTop: 20, padding: 0 }}>
+        <RichButton
+          prefix="1"
+          heading={<Trans>Issue an ERC-20 token</Trans>}
+          description={
+            <Trans>
+              Create your own ERC-20 token to represent stake in your project.
+              Contributors will receive these tokens when they pay your project.
+            </Trans>
           }
+          onClick={() => setIssueTokenModalVisible(true)}
+          disabled={hasIssuedToken}
+          icon={
+            hasIssuedToken ? (
+              <CheckCircleFilled style={{ color: seenColor }} />
+            ) : undefined
+          }
+          primaryColor={hasIssuedToken ? seenColor : undefined}
+          style={stepButtonStyle}
         />
-        <NextStepItem
-          title={
-            <LaunchProjectPayerButton
-              useDeployProjectPayerTx={useDeployProjectPayerTx}
-              disabled={hasLaunchedPayableAddress}
-              size="middle"
-              tooltipText={
-                <Trans>
-                  Create an ETH address people can use to pay this project
-                  rather than paying through the juicebox.money interface.
-                </Trans>
-              }
-              text={
-                <>
-                  <Trans>Create a payable address</Trans>
-                  {hasLaunchedPayableAddress && (
-                    <>
-                      {' '}
-                      <CheckSquareOutlined />
-                    </>
-                  )}
-                </>
-              }
-              onCompleted={() => setHasLaunchedPayableAddress(true)}
-            />
+        <RichButton
+          prefix="2"
+          heading={<Trans>Create a payable address</Trans>}
+          description={
+            <Trans>
+              Create an ETH address people can use to pay this project rather
+              than paying through the juicebox.money interface.
+            </Trans>
           }
+          onClick={() => setLaunchProjectPayerModalVisible(true)}
+          disabled={hasLaunchedPayableAddress}
+          icon={
+            hasLaunchedPayableAddress ? (
+              <CheckCircleFilled style={{ color: seenColor }} />
+            ) : undefined
+          }
+          primaryColor={hasLaunchedPayableAddress ? seenColor : undefined}
+          style={stepButtonStyle}
         />
-        <NextStepItem
-          title={
-            <ShareToTwitterButton
-              message={twitterMsg}
-              onClick={() => setHasSharedToTwitter(true)}
-              disabled={hasSharedToTwitter}
-              icon={hasSharedToTwitter ? <CheckSquareOutlined /> : undefined}
-            />
+        <RichButton
+          prefix="3"
+          heading={<Trans>Share to Twitter</Trans>}
+          description={<Trans>Let's get this party started!</Trans>}
+          onClick={() => {
+            tweet(twitterMsg)
+            setHasSharedToTwitter(true)
+          }}
+          disabled={hasSharedToTwitter}
+          icon={
+            hasSharedToTwitter ? (
+              <CheckCircleFilled style={{ color: seenColor }} />
+            ) : undefined
           }
+          primaryColor={hasSharedToTwitter ? seenColor : undefined}
+          style={stepButtonStyle}
         />
       </ol>
+      <IssueTokenModal
+        visible={issueTokenModalVisible}
+        useIssueTokensTx={useIssueTokensTx}
+        onClose={() => setIssueTokenModalVisible(false)}
+        onConfirmed={() => setHasIssuedToken(true)}
+      />
+      <LaunchProjectPayerModal
+        visible={launchProjectPayerModalVisible}
+        onClose={() => setLaunchProjectPayerModalVisible(false)}
+        useDeployProjectPayerTx={useDeployProjectPayerTx}
+        onConfirmed={() => setHasLaunchedPayableAddress(true)}
+      />
     </Modal>
   )
 }

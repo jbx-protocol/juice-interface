@@ -22,17 +22,6 @@ export default function RichButton({
     theme: { colors, radii },
   } = useContext(ThemeContext)
 
-  const cardStyles: CSSProperties = {
-    display: 'flex',
-    justifyContent: 'space-between',
-    borderRadius: radii.md,
-    cursor: disabled ? 'not-allowed' : 'pointer',
-    border:
-      '1px solid ' +
-      (disabled ? colors.stroke.disabled : colors.stroke.action.primary),
-    background: colors.background.l0,
-  }
-
   const headingColor = disabled
     ? colors.text.disabled
     : primaryColor ?? colors.text.action.primary
@@ -41,15 +30,27 @@ export default function RichButton({
     ? colors.text.disabled
     : primaryColor ?? colors.text.primary
 
+  const cardStyles: CSSProperties = {
+    ...props?.style,
+    display: 'flex',
+    justifyContent: 'space-between',
+    borderRadius: radii.md,
+    cursor: disabled ? 'not-allowed' : 'pointer',
+    border:
+      '1px solid ' +
+      (disabled ? colors.stroke.disabled : colors.stroke.action.primary),
+    background: colors.background.l0,
+    padding: '1rem 0 1rem 1rem',
+    borderColor: headingColor,
+  }
+
   return (
     <div
       className="clickable-border"
+      {...props}
       style={{
         ...cardStyles,
-        padding: '1rem 0 1rem 1rem',
-        borderColor: headingColor,
       }}
-      {...props}
       role="button"
       onClick={e => {
         if (disabled) return

@@ -14,7 +14,7 @@ import ReconfigurationStrategySelector from 'components/shared/ReconfigurationSt
 
 import { BallotStrategy } from 'models/ballot'
 
-import _ from 'lodash'
+import isEqual from 'lodash/isEqual'
 
 import { shadowCard } from 'constants/styles/shadowCard'
 import {
@@ -68,7 +68,7 @@ export default function RulesForm({
     const hasFormUpdated =
       initialValues.allowMinting !== allowMinting ||
       initialValues.pausePay !== pausePay ||
-      !_.isEqual(initialValues.ballotStrategy, ballotStrategy)
+      !isEqual(initialValues.ballotStrategy, ballotStrategy)
     onFormUpdated(hasFormUpdated)
   }, [onFormUpdated, initialValues, pausePay, allowMinting, ballotStrategy])
 

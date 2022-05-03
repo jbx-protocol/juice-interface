@@ -61,7 +61,7 @@ import SwitchHeading from 'components/shared/SwitchHeading'
 import DistributionSplitsSection from 'components/v2/shared/DistributionSplitsSection'
 import { getTotalSplitsPercentage } from 'utils/v2/distributions'
 
-import _ from 'lodash'
+import isEqual from 'lodash/isEqual'
 
 import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
 
@@ -306,7 +306,7 @@ export default function FundingForm({
       initialValues.durationSeconds !== durationInSeconds ||
       initialValues.distributionLimit !== target ||
       initialValues.distributionLimitCurrency !== targetCurrency ||
-      !_.isEqual(initialValues.payoutSplits, splits)
+      !isEqual(initialValues.payoutSplits, splits)
     onFormUpdated(hasFormUpdated)
   }, [
     durationEnabled,

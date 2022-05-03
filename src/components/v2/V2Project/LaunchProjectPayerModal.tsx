@@ -82,6 +82,10 @@ export default function LaunchProjectPayerModal({
           setTransactionPending(false)
           setConfirmedModalVisible(true)
         },
+        onCancelled() {
+          setLoadingProjectPayer(false)
+          setTransactionPending(false)
+        },
       },
     )
   }

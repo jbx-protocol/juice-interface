@@ -370,8 +370,8 @@ msgstr "Montant à distribuer"
 msgid "An invite link to your project's Discord server."
 msgstr ""
 
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
-msgid "Any changes will take effect in the next funding cycle. The current funding cycle won't be altered."
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
+msgid "Any changes you make will take effect in <0>funding cycle #{0}</0>. The current funding cycle (#{currentFCNumber}) won't be altered."
 msgstr ""
 
 #: src/constants/v1/ballotStrategies/index.ts
@@ -533,6 +533,14 @@ msgstr "Ces attributs peuvent être modifiés à tout moment et les changements 
 #: src/components/Landing/index.tsx
 msgid "Changes to your project's funding configuration require a community-approved period to take effect, which acts as a safeguard against rug pulls. Your supporters don't have to trust you — even though they already do."
 msgstr "Les changements de financement de votre projet demandent une période d'homologation de la communauté pour prendre effet. Vos financeurs n'ont pas besoin de vous faire confiance, même s'ils le font déjà."
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
+msgid "Changes will take effect according to the project's custom ballot contract."
+msgstr ""
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
+msgid "Changes you make will take effect according to your <0>{0}</0> reconfiguration rule: i.e. the first funding cycle following<1>{1}</1> from now."
+msgstr ""
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Check this to mint this project's ERC-20 tokens to your wallet. Leave unchecked to have your token balance tracked by Juicebox, saving gas on this transaction. You can always claim your ERC-20 tokens later."
@@ -2740,6 +2748,10 @@ msgstr ""
 msgid "You can still redeem your {tokenSymbol} tokens for overflow without claiming them, and you can transfer your unclaimed {tokenSymbol} tokens to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
 msgstr "Vous pouvez toujours récupérer vos tokens {tokenSymbol} de l'overflow sans les réclamer, et vous pouvez transférer vos tokens {tokenSymbol} non réclamés vers une autre adresse à partir du menu Outils, accessible à partir de l'icône en forme de clé anglaise dans le coin supérieur droit de ce projet. ."
 
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
+msgid "You don't have a funding cycle duration. Changes you make will take effect immediately."
+msgstr ""
+
 #: src/components/v1/shared/BudgetForm.tsx
 msgid "You have set a funding cycle target."
 msgstr "Vous avez défini un objectif du cycle de financement."
@@ -2831,12 +2843,17 @@ msgid "characters max"
 msgstr "caractères maximum"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/utils/formatTime.ts
 msgid "days"
 msgstr "jours"
 
 #: src/components/shared/formItems/ProjectHandle/ProjectHandleInput.tsx
 msgid "handle"
 msgstr "identifiant"
+
+#: src/utils/formatTime.ts
+msgid "hours"
+msgstr ""
 
 #: src/components/shared/formItems/ProjectDiscord.tsx
 msgid "https://discord.gg/abcdefgh"
@@ -2866,6 +2883,10 @@ msgstr ""
 msgid "matching \"{searchText}\""
 msgstr "correspondant à \"{searchText}\""
 
+#: src/utils/formatTime.ts
+msgid "minutes"
+msgstr ""
+
 #: src/components/shared/inputs/Pay/PayInputSubText.tsx
 msgid "or <0><1>buy {tokenText} on exchange<2/></1></0>"
 msgstr "ou <0><1>acheter {tokenText} en échange<2/></1></0>"
@@ -2883,6 +2904,10 @@ msgstr "propriétaire du projet"
 #: src/components/Projects/index.tsx
 msgid "projects"
 msgstr "projets"
+
+#: src/utils/formatTime.ts
+msgid "seconds"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx

@@ -370,9 +370,9 @@ msgstr "Monto a distribuir"
 msgid "An invite link to your project's Discord server."
 msgstr "Un enlace de invitación al servidor de Discord de su proyecto."
 
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
-msgid "Any changes will take effect in the next funding cycle. The current funding cycle won't be altered."
-msgstr "Cualquier cambio tomará efecto en el siguiente ciclo de financiamiento. El ciclo de financiamiento actual no será alterado."
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
+msgid "Any changes you make will take effect in <0>funding cycle #{0}</0>. The current funding cycle (#{currentFCNumber}) won't be altered."
+msgstr ""
 
 #: src/constants/v1/ballotStrategies/index.ts
 #: src/constants/v2/ballotStrategies/index.ts
@@ -533,6 +533,14 @@ msgstr "Se pueden hacer cambios a estos atributos en cualquier momento y serán 
 #: src/components/Landing/index.tsx
 msgid "Changes to your project's funding configuration require a community-approved period to take effect, which acts as a safeguard against rug pulls. Your supporters don't have to trust you — even though they already do."
 msgstr "Los cambios a las configuraciones de financiamiento de tu proyecto requieren un periodo aprobado por la comunidad para surtir efecto, lo cual actúa como salvaguardia contra rug pulls. Tus partidarios no necesitan confiar en ti — aunque ya lo hacen."
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
+msgid "Changes will take effect according to the project's custom ballot contract."
+msgstr ""
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
+msgid "Changes you make will take effect according to your <0>{0}</0> reconfiguration rule: i.e. the first funding cycle following<1>{1}</1> from now."
+msgstr ""
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Check this to mint this project's ERC-20 tokens to your wallet. Leave unchecked to have your token balance tracked by Juicebox, saving gas on this transaction. You can always claim your ERC-20 tokens later."
@@ -2740,6 +2748,10 @@ msgstr "Puedes canjear tus {tokenTextLong} por excedente sin reclamarlos. Puedes
 msgid "You can still redeem your {tokenSymbol} tokens for overflow without claiming them, and you can transfer your unclaimed {tokenSymbol} tokens to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
 msgstr "Todavía, puedes canjear tus tokens {tokenSymbol} por el exceso sin reclamarlos y puedes transferir tus tokens {tokenSymbol} sin reclamar a otra dirección desde el menú de Herramientas, el cual puedes encontrar en el icóno de la llave inglesa en la esquina superior derecha de este proyecto."
 
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
+msgid "You don't have a funding cycle duration. Changes you make will take effect immediately."
+msgstr ""
+
 #: src/components/v1/shared/BudgetForm.tsx
 msgid "You have set a funding cycle target."
 msgstr "Has establecido un objetivo del ciclo de financiamiento."
@@ -2831,12 +2843,17 @@ msgid "characters max"
 msgstr "máximo número de carácteres"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/utils/formatTime.ts
 msgid "days"
 msgstr "días"
 
 #: src/components/shared/formItems/ProjectHandle/ProjectHandleInput.tsx
 msgid "handle"
 msgstr "usuario"
+
+#: src/utils/formatTime.ts
+msgid "hours"
+msgstr ""
 
 #: src/components/shared/formItems/ProjectDiscord.tsx
 msgid "https://discord.gg/abcdefgh"
@@ -2866,6 +2883,10 @@ msgstr "bloqueado hasta {lockedUntilFormatted}"
 msgid "matching \"{searchText}\""
 msgstr "coincidencia \"{searchText}\""
 
+#: src/utils/formatTime.ts
+msgid "minutes"
+msgstr ""
+
 #: src/components/shared/inputs/Pay/PayInputSubText.tsx
 msgid "or <0><1>buy {tokenText} on exchange<2/></1></0>"
 msgstr "o <0><1> compra el {tokenText} en el exchange <2/></1></0>"
@@ -2883,6 +2904,10 @@ msgstr "dueño del proyecto"
 #: src/components/Projects/index.tsx
 msgid "projects"
 msgstr "proyectos"
+
+#: src/utils/formatTime.ts
+msgid "seconds"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx

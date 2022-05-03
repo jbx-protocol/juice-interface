@@ -143,17 +143,18 @@ export default function ManageTokensModal({
               onClick={() => setUnstakeModalVisible(true)}
             />
           )}
-
-          <RichButton
-            heading={<Trans>Stake {tokensLabel} for NFT</Trans>}
-            description={
-              <Trans>
-                Stake your {tokensLabel} to increase your voting weight and
-                claim your BannyVerse NFT.
-              </Trans>
-            }
-            onClick={() => setStakeDrawerVisible(true)}
-          />
+          {false && (
+            <RichButton
+              heading={<Trans>Stake {tokensLabel} for NFT</Trans>}
+              description={
+                <Trans>
+                  Stake your {tokensLabel} to increase your voting weight and
+                  claim your BannyVerse NFT.
+                </Trans>
+              }
+              onClick={() => setStakeDrawerVisible(true)}
+            />
+          )}
 
           {userHasMintPermission && projectAllowsMint && (
             <Tooltip
@@ -200,13 +201,15 @@ export default function ManageTokensModal({
         visible={mintModalVisible}
         onCancel={() => setMintModalVisible(false)}
       />
-      <V2StakeForNFTDrawer
-        visible={stakeDrawerVisible}
-        onSave={() => setStakeDrawerVisible(false)}
-        onClose={() => {
-          setStakeDrawerVisible(false)
-        }}
-      />
+      {
+        <V2StakeForNFTDrawer
+          visible={stakeDrawerVisible}
+          onSave={() => setStakeDrawerVisible(false)}
+          onClose={() => {
+            setStakeDrawerVisible(false)
+          }}
+        />
+      }
     </>
   )
 }

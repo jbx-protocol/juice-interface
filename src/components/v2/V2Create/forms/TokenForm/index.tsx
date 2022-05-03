@@ -5,7 +5,14 @@ import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
 import ReservedTokensFormItem from 'components/v2/V2Create/forms/TokenForm/ReservedTokensFormItem'
 
-import { CSSProperties, useCallback, useContext, useState } from 'react'
+import {
+  CSSProperties,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import {
   defaultFundingCycleData,
   defaultFundingCycleMetadata,
@@ -99,10 +106,18 @@ function DiscountRateExtra({
   )
 }
 
+interface InitialValues {
+  reservedRate: string
+  discountRate: string
+  redemptionRate: string
+}
+
 export default function TokenForm({
+  onFormUpdated,
   onFinish,
   isCreate,
 }: {
+  onFormUpdated: (updated: boolean) => void
   onFinish: VoidFunction
   isCreate?: boolean // If the instance of this form is in the create flow (not reconfig)
 }) {
@@ -126,6 +141,27 @@ export default function TokenForm({
   const canSetRedemptionRate = hasDistributionLimit(fundAccessConstraint)
   const canSetDiscountRate = hasFundingDuration(fundingCycleData)
 
+  const initialValues: InitialValues = useMemo(
+    () => ({
+      reservedRate:
+        fundingCycleMetadata.reservedRate ??
+        defaultFundingCycleMetadata.reservedRate,
+      discountRate:
+        (canSetDiscountRate && fundingCycleData?.discountRate) ||
+        defaultFundingCycleData.discountRate,
+      redemptionRate:
+        (canSetRedemptionRate && fundingCycleMetadata?.redemptionRate) ||
+        defaultFundingCycleMetadata.redemptionRate,
+    }),
+    [
+      fundingCycleMetadata.reservedRate,
+      fundingCycleMetadata?.redemptionRate,
+      canSetDiscountRate,
+      fundingCycleData?.discountRate,
+      canSetRedemptionRate,
+    ],
+  )
+
   /**
    * NOTE: these values will all be in their 'native' units,
    * e.g. permyriads, parts-per-billion etc.
@@ -134,16 +170,13 @@ export default function TokenForm({
    * props later on.
    */
   const [reservedRate, setReservedRate] = useState<string>(
-    fundingCycleMetadata?.reservedRate ??
-      defaultFundingCycleMetadata.reservedRate,
+    initialValues.reservedRate,
   )
   const [discountRate, setDiscountRate] = useState<string>(
-    (canSetDiscountRate && fundingCycleData?.discountRate) ||
-      defaultFundingCycleData.discountRate,
+    initialValues.discountRate,
   )
   const [redemptionRate, setRedemptionRate] = useState<string>(
-    (canSetRedemptionRate && fundingCycleMetadata?.redemptionRate) ||
-      defaultFundingCycleMetadata.redemptionRate,
+    initialValues.redemptionRate,
   )
 
   const [discountRateChecked, setDiscountRateChecked] = useState<boolean>(
@@ -184,6 +217,14 @@ export default function TokenForm({
     reservedRate,
     redemptionRate,
   ])
+
+  useEffect(() => {
+    const hasFormUpdated =
+      initialValues.reservedRate !== reservedRate ||
+      initialValues.discountRate !== discountRate ||
+      initialValues.redemptionRate !== redemptionRate
+    onFormUpdated(hasFormUpdated)
+  })
 
   const defaultValueStyle: CSSProperties = {
     color: colors.text.tertiary,

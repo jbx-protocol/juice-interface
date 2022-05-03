@@ -337,11 +337,13 @@ msgid "Allow minting tokens"
 msgstr "允许铸造代币"
 
 #: src/components/v2/V2Create/forms/RulesForm/index.tsx
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSection.tsx
 msgid "Allow token minting"
 msgstr "允许铸造代币"
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSection.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Allowed"
 msgstr "允许"
@@ -620,6 +622,10 @@ msgstr ""
 msgid "Contract address: {0}"
 msgstr "合约地址：{0}"
 
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSection.tsx
+msgid "Contributors will be rewarded this amount of your project's tokens per ETH contributed."
+msgstr ""
+
 #: src/constants/fundingWarningText.ts
 msgid "Contributors will not receive any tokens in exchange for paying this project."
 msgstr "捐献者给项目付款将不会获得任何代币。"
@@ -627,6 +633,10 @@ msgstr "捐献者给项目付款将不会获得任何代币。"
 #: src/constants/fundingWarningText.ts
 msgid "Contributors will receive a relatively small portion of tokens in exchange for paying this project."
 msgstr "捐款者给项目付款将获得相对较低比例的代币。"
+
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
+msgid "Contributors will see this message before they pay your project."
+msgstr ""
 
 #: src/components/shared/CopyTextButton.tsx
 msgid "Copied!"
@@ -636,17 +646,9 @@ msgstr "已复制！"
 msgid "Copy to clipboard"
 msgstr "复制到剪贴板"
 
-#: src/components/v2/V2Project/NewDeployModal.tsx
-msgid "Create a payable address"
-msgstr ""
-
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
-#: src/components/v2/V2Project/NewDeployModal.tsx
-msgid "Create an ETH address people can use to pay this project rather than paying through the juicebox.money interface."
-msgstr ""
-
 #: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
-msgid "Create an ETH address that people can use to pay this project rather than paying through the juicebox.money interface."
+msgid "Create an Ethereum address that can be used to pay your project directly."
 msgstr ""
 
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
@@ -751,6 +753,7 @@ msgstr "详情"
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSection.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Disabled"
 msgstr "已禁用"
@@ -775,6 +778,7 @@ msgstr "断开连接"
 #: src/components/Navbar/MenuItems.tsx
 #: src/components/shared/formItems/ProjectDiscord.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
 msgid "Discord"
 msgstr "Discord"
 
@@ -783,6 +787,7 @@ msgstr "Discord"
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Create/forms/TokenForm/index.tsx
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSection.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Discount rate"
 msgstr "折扣率"
@@ -825,6 +830,7 @@ msgstr "已分发"
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSection.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Distribution limit"
 msgstr ""
@@ -833,10 +839,19 @@ msgstr ""
 msgid "Distribution limit infinite"
 msgstr ""
 
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSection.tsx
+msgid "Distribution limit is 0: All funds will be considered overflow and can be redeemed by token holders."
+msgstr ""
+
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSection.tsx
+msgid "Distribution limit is infinite: The project will control how all funds are distributed, and none can be redeemed by token holders."
+msgstr ""
+
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Distribution limit, duration and payouts"
 msgstr ""
 
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSection.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
 msgid "Distribution splits"
 msgstr ""
@@ -865,7 +880,6 @@ msgstr "项目是否能从溢出中获益？"
 #: src/components/v1/V1Project/modals/BalancesModal.tsx
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 #: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
-#: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Done"
 msgstr "完成"
 
@@ -893,6 +907,7 @@ msgstr "由于其公共性质，任何对合约的恶意利用都可能产生不
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSection.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Duration"
 msgstr "持续时间"
@@ -966,6 +981,10 @@ msgstr ""
 msgid "End"
 msgstr "结束时间"
 
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSection.tsx
+msgid "Entities you will distribute to from your treasury each funding cycle."
+msgstr ""
+
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 msgid "Error loading holders"
 msgstr ""
@@ -1023,6 +1042,7 @@ msgid "Funding cycle"
 msgstr "筹款周期"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSection.tsx
 msgid "Funding cycle details"
 msgstr "筹款周期详情"
 
@@ -1121,9 +1141,17 @@ msgstr "怎样创建一个项目呢？"
 msgid "How have the contracts been tested?"
 msgstr "这些合约是如何被测试的？"
 
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSection.tsx
+msgid "How long before your next funding cycle must you reconfigure in order for changes to take effect."
+msgstr ""
+
 #: src/components/shared/formItems/ProjectDuration.tsx
 msgid "How long one funding cycle will last. Funding cycle <0>reconfigurations</0> will only take effect for <1>upcoming</1> funding cycles, i.e. once a current funding cycle has ended."
 msgstr "一个筹款周期的时长是多少。筹款周期 <0>参数设置的更改</0> 只能生效于 <1>后面的</1> 筹款周期，亦即是当前筹款周期终止之后。"
+
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSection.tsx
+msgid "How you will split your {formattedReservedRate}% of reserved tokens."
+msgstr ""
 
 #: src/components/v1/V1Create/index.tsx
 msgid "How your project will distribute funds."
@@ -1163,6 +1191,10 @@ msgstr ""
 msgid "If you know how much your project needs to earn over some period of time to be sustainable, you can set a funding target with that amount. If your project earns more than that, the surplus funds are locked in an overflow pool. Anyone holding your project's tokens can claim a portion of the overflow pool in exchange for redeeming their tokens."
 msgstr "如果你知道你的项目在一段时间内需要多少资金才能维持下去，你可以设定一个相应的资金目标。 如果项目获取到的资金比预想的多，盈余的资金就会被锁定在一个溢出池中。 任何持有你项目代币的人，都可以通过燃烧代币来赎回溢出池中的一部分。"
 
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+msgid "If you lose your address, please contact the Juicebox team through <0>Discord</0>."
+msgstr ""
+
 #: src/components/Landing/QAs.tsx
 msgid "If you're interested in creating a project but still confused on how to get started, consider watching this <0>instructional video</0>. Also feel free to reach out in the <1>Juicebox Discord</1> where our team will be happy to help bring your project idea to life!"
 msgstr "如果你对创建一个项目感兴趣，却不知道该如何开始，可以考虑看看这个<0>教学视频</0>。也可以在 <1>Juicebox Discord</1> 中寻求帮助，我们的团队将很乐意帮助您实现您的项目想法！"
@@ -1195,6 +1227,10 @@ msgstr "独立艺术家，开发者，创作者"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Infinite"
+msgstr ""
+
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSection.tsx
+msgid "Initial issuance rate"
 msgstr ""
 
 #: src/components/shared/formItems/ProjectReserved.tsx
@@ -1321,6 +1357,7 @@ msgstr ""
 
 #: src/components/shared/formItems/ProjectLogoUri.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
 msgid "Logo"
 msgstr "标志"
 
@@ -1397,6 +1434,7 @@ msgid "NO LIMIT"
 msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
 msgid "Name"
 msgstr "名称"
 
@@ -1417,6 +1455,7 @@ msgid "Next: Review and deploy"
 msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSection.tsx
 msgid "No"
 msgstr "取消"
 
@@ -1459,6 +1498,7 @@ msgstr "不设定筹款目标。"
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSection.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Not set"
 msgstr "未设定"
@@ -1496,6 +1536,14 @@ msgstr "项目拥有者钱包内的其他资产"
 msgid "Overflow is created if your project's balance exceeds your funding cycle target. Overflow can be redeemed by your project's token holders."
 msgstr "如果您项目的资金余额超出您的筹款周期目标，就会产生溢出。项目代币持有人可以赎回溢出部分资金。"
 
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSection.tsx
+msgid "Owner can mint tokens at any time."
+msgstr ""
+
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSection.tsx
+msgid "Owner is not allowed to mint tokens."
+msgstr ""
+
 #: src/components/v1/V1Project/V1PayButton.tsx
 #: src/components/v2/V2Project/V2PayButton/index.tsx
 msgid "Paid as <0/>"
@@ -1519,6 +1567,7 @@ msgstr "已暂停"
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 #: src/components/v1/V1Project/V1PayButton.tsx
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 #: src/components/v2/V2Project/V2PayButton/index.tsx
 msgid "Pay"
@@ -1534,11 +1583,13 @@ msgid "Pay button"
 msgstr "支付按钮"
 
 #: src/components/shared/formItems/ProjectPayButton.tsx
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
 msgid "Pay button text"
 msgstr "支付按钮文本"
 
 #: src/components/shared/formItems/ProjectPayDisclosure.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
 msgid "Pay disclosure"
 msgstr "付款声明"
 
@@ -1576,6 +1627,7 @@ msgstr "当前筹款周期暂停付款。"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSection.tsx
 msgid "Payments paused"
 msgstr "付款已暂停"
 
@@ -1626,6 +1678,10 @@ msgstr "分配百分比"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Percent of distribution limit"
+msgstr ""
+
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSection.tsx
+msgid "Percentage of newly minted tokens reserved for the project."
 msgstr ""
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
@@ -1692,6 +1748,7 @@ msgstr "项目说明"
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v1/V1Create/index.tsx
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Project details"
 msgstr "项目详情"
@@ -1700,7 +1757,7 @@ msgstr "项目详情"
 msgid "Project details reconfigurations will create a separate transaction."
 msgstr ""
 
-#: src/components/v2/V2Dashboard/Dashboard404.tsx
+#: src/components/shared/Project404.tsx
 msgid "Project for {ensName} not found"
 msgstr ""
 
@@ -1712,6 +1769,14 @@ msgstr "项目标识"
 #: src/components/shared/forms/ProjectDetailsForm.tsx
 msgid "Project handle must be unique."
 msgstr "项目标识必须是唯一的。"
+
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSection.tsx
+msgid "Project is accepting payments this funding cycle."
+msgstr ""
+
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSection.tsx
+msgid "Project is not accepting payments this funding cycle."
+msgstr ""
 
 #: src/components/shared/formItems/ProjectName.tsx
 msgid "Project name"
@@ -1740,7 +1805,11 @@ msgstr "项目方可以配置一个延迟期，这意味着对即将到来的筹
 msgid "Project token"
 msgstr ""
 
-#: src/components/v2/V2Dashboard/Dashboard404.tsx
+#: src/components/shared/NewDeployNotAvailable.tsx
+msgid "Project {name} will be available soon! Try refreshing the page shortly."
+msgstr ""
+
+#: src/components/shared/Project404.tsx
 msgid "Project {projectId} not found"
 msgstr "项目 {projectId} 未找到"
 
@@ -1795,6 +1864,7 @@ msgid "Reconfiguration"
 msgstr "重新配置"
 
 #: src/components/v1/ReconfigurationStrategyDrawer.tsx
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSection.tsx
 msgid "Reconfiguration rules"
 msgstr ""
 
@@ -1814,6 +1884,11 @@ msgstr "重新配置"
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure funding"
 msgstr "重新配置筹款"
+
+#: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureModalTrigger.tsx
+msgid "Reconfigure project and funding details"
+msgstr ""
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectDetailsDrawer.tsx
 msgid "Reconfigure project details"
@@ -1863,6 +1938,7 @@ msgid "Redeem {tokensTextLong} for ETH"
 msgstr "燃烧 {tokensTextLong} 来赎回 ETH"
 
 #: src/components/v2/V2Create/forms/TokenForm/index.tsx
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSection.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Redemption rate"
 msgstr "赎回率"
@@ -1875,7 +1951,7 @@ msgstr ""
 msgid "Redistributable surplus"
 msgstr "可分派的盈余"
 
-#: src/components/v1/V1Dashboard/index.tsx
+#: src/components/shared/NewDeployNotAvailable.tsx
 msgid "Refresh"
 msgstr "刷新"
 
@@ -1899,11 +1975,16 @@ msgstr "保留代币的分配方案（可选）"
 msgid "Reserved token allocations"
 msgstr "保留代币的分配方案"
 
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSection.tsx
+msgid "Reserved token splits"
+msgstr ""
+
 #: src/components/shared/forms/TicketingForm.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSection.tsx
 msgid "Reserved tokens"
 msgstr "保留代币"
 
@@ -2087,6 +2168,7 @@ msgid "Should you Juicebox?"
 msgstr "你应该使用Juicebox吗?"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSection.tsx
 msgid "Since you have not set a funding duration, changes to these settings will be applied immediately."
 msgstr "鉴于你并未设置筹款持续时间，对这些设置的修改将会立即生效。"
 
@@ -2096,6 +2178,11 @@ msgstr "一些筹款周期的配置可能会给项目贡献者们造成一些风
 
 #: src/components/shared/ProjectRiskNotice.tsx
 msgid "Some properties of the project's current funding cycle may indicate risk for contributors."
+msgstr ""
+
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+msgid "Something went wrong."
 msgstr ""
 
 #: src/components/v2/V2Create/forms/FundingForm/TargetTypeSelect.tsx
@@ -2222,6 +2309,10 @@ msgstr "创造者将引领未来, 而社区会拥有未来."
 msgid "The issuance rate will decrease by this percentage with each new funding cycle. A higher discount rate will incentivize supporters to pay your project earlier than later."
 msgstr ""
 
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSection.tsx
+msgid "The maximum amount of funds allowed to be distributed from your treasury each funding cycle."
+msgstr ""
+
 #: src/components/shared/formItems/ProjectTarget.tsx
 msgid "The maximum amount of funds that can be distributed from this project in one funding cycle. Funds will be withdrawn in ETH no matter the currency you choose."
 msgstr ""
@@ -2244,7 +2335,7 @@ msgstr "项目在收到付款之后铸造和分发的代币是 ERC-20 标准的�
 
 #: src/components/shared/formItems/ProjectDiscountRate.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/settingExplanations.tsx
 msgid "The ratio of tokens rewarded per payment amount will decrease by this percentage with each new funding cycle. A higher discount rate will incentivize supporters to pay your project earlier than later."
 msgstr "按付款金额奖励项目代币的比例，会随着进入新的筹款周期不断按这个比率递进减少。较高的折扣率会鼓励您的支持者更早一点给您的项目捐款。"
 
@@ -2281,8 +2372,13 @@ msgid "There was also a script written to iteratively run the integration tests 
 msgstr "这里还有一个集成测试脚本，该脚本使用随机输入生成器迭代运行，优先处理边缘情况。项目代码使用这个压力测试脚本已经成功通过了超过100万个测试用例。"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
 msgid "These attributes can be changed at any time."
 msgstr "任何时候都可以修改这些属性。"
+
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSection.tsx
+msgid "These settings will <0>not</0> be editable immediately within a funding cycle. They can only be changed for <1>upcoming</1> funding cycles according to your <2>reconfiguration rules</2>."
+msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "These settings will <0>not</0> be editable immediately within a funding cycle. They can only be changed for <1>upcoming</1> funding cycles."
@@ -2291,6 +2387,10 @@ msgstr "这些属性<0>不能</0> 在同一个筹款周期内马上进行修改�
 #: src/utils/ballot.ts
 msgid "This address is an unrecognized strategy contract. Make sure it is correct!"
 msgstr "此地址是一个未识别的策略合约。请确保这个地址是对的。"
+
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+msgid "This address will disappear when you close this window. <0>Copy the address and save it now</0>."
+msgstr ""
 
 #: src/components/shared/Mod.tsx
 #: src/components/v2/shared/SplitItem.tsx
@@ -2334,7 +2434,7 @@ msgstr ""
 msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
 msgstr ""
 
-#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/settingExplanations.tsx
 msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than others. A redemption rate of 100% means all tokens will have equal value regardless of when they are redeemed."
 msgstr ""
 
@@ -2431,6 +2531,10 @@ msgstr ""
 msgid "Tokens cannot be claimed because no ERC-20 token has been issued for this project. ERC-20 tokens must be issued by the project owner."
 msgstr ""
 
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+msgid "Tokens minted from payments to this address will belong to the payer. However, if someone pays the project from a non-custodial entity like the Coinbase app, <0>tokens can't be issued to their personal wallets and will be lost</0>."
+msgstr ""
+
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "Tokens receiver"
 msgstr ""
@@ -2440,6 +2544,8 @@ msgid "Tokens:"
 msgstr ""
 
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
+#: src/components/v2/V2Project/V2ProjectHeaderActions.tsx
 msgid "Tools"
 msgstr "工具"
 
@@ -2494,6 +2600,7 @@ msgstr "热门"
 
 #: src/components/shared/formItems/ProjectTwitter.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
 msgid "Twitter"
 msgstr "Twitter"
 
@@ -2577,6 +2684,7 @@ msgstr ""
 
 #: src/components/shared/formItems/ProjectLink.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
 msgid "Website"
 msgstr "网站"
 
@@ -2687,6 +2795,7 @@ msgid "Would you like to issue an ERC-20 token to be used as this project's toke
 msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSection.tsx
 msgid "Yes"
 msgstr "确定"
 
@@ -2966,13 +3075,9 @@ msgstr ""
 msgid "{formattedTimeLeft} until #{0}"
 msgstr ""
 
-#: src/components/v1/V1Dashboard/index.tsx
-msgid "{handle} not found"
-msgstr "{handle} 没有找到"
-
-#: src/components/v1/V1Dashboard/index.tsx
-msgid "{handle} will be available soon! Try refreshing the page shortly."
-msgstr "{handle} 很快就能使用了！可以尝试立即刷新页面。"
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSection.tsx
+msgid "{initialIssuanceRate} tokens / ETH"
+msgstr ""
 
 #: src/components/Projects/FilterCheckboxItem.tsx
 msgid "{label}"

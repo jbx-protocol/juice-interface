@@ -1,5 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
+import { ButtonType } from 'antd/lib/button'
 import { SizeType } from 'antd/lib/config-provider/SizeContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useState } from 'react'
@@ -12,6 +13,7 @@ export default function LaunchProjectPayerButton({
   text,
   onCompleted,
   disabled,
+  type,
   tooltipText,
 }: {
   useDeployProjectPayerTx: () => TransactorInstance<{}> | undefined
@@ -19,6 +21,7 @@ export default function LaunchProjectPayerButton({
   text?: JSX.Element
   onCompleted?: VoidFunction
   disabled?: boolean
+  type?: ButtonType
   tooltipText?: JSX.Element
 }) {
   const [modalVisible, setModalVisible] = useState<boolean>(false)
@@ -29,7 +32,7 @@ export default function LaunchProjectPayerButton({
         <Button
           onClick={() => setModalVisible(true)}
           size={size ?? 'small'}
-          type="default"
+          type={type ?? 'primary'}
           disabled={disabled}
         >
           <span>{text ?? <Trans>Deploy project payer contract</Trans>}</span>

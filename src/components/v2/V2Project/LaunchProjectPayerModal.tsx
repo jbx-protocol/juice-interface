@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { TransactionReceipt } from '@ethersproject/providers'
 import { TransactorInstance } from 'hooks/Transactor'
 
-import { Modal } from 'antd'
+import { Modal, notification } from 'antd'
 import { JBDiscordLink } from 'components/Landing/QAs'
 import EtherscanLink from 'components/shared/EtherscanLink'
 import CopyTextButton from 'components/shared/CopyTextButton'
@@ -45,38 +45,48 @@ export default function LaunchProjectPayerModal({
 
   const deployProjectPayerTx = useDeployProjectPayerTx()
 
-  function deployProjectPayer() {
-    setLoadingProjectPayer(true)
-    if (deployProjectPayerTx) {
-      deployProjectPayerTx(
-        {
-          args: [],
-        },
-        {
-          onDone() {
-            setTransactionPending(true)
-          },
-          async onConfirmed(result) {
-            const txHash = result?.transaction?.hash
-            if (!txHash) {
-              return
-            }
+  async function deployProjectPayer() {
+    if (!deployProjectPayerTx) return
 
-            const txReceipt = await readProvider.getTransactionReceipt(txHash)
-            const newProjectPayerAddress =
-              getProjectPayerAddressFromReceipt(txReceipt)
-            if (newProjectPayerAddress === undefined) {
-              return
-            }
-            if (onConfirmed) onConfirmed()
-            onClose()
-            setProjectPayerAddress(newProjectPayerAddress)
-            setLoadingProjectPayer(false)
-            setTransactionPending(false)
-            setConfirmedModalVisible(true)
-          },
+    setLoadingProjectPayer(true)
+
+    const txSuccess = await deployProjectPayerTx(
+      {
+        args: [],
+      },
+      {
+        onDone() {
+          setTransactionPending(true)
         },
-      )
+        async onConfirmed(result) {
+          const txHash = result?.transaction?.hash
+          if (!txHash) {
+            return
+          }
+
+          const txReceipt = await readProvider.getTransactionReceipt(txHash)
+          const newProjectPayerAddress =
+            getProjectPayerAddressFromReceipt(txReceipt)
+          if (newProjectPayerAddress === undefined) {
+            notification.error({
+              key: new Date().valueOf().toString(),
+              message: t`Something went wrong.`,
+              duration: 0,
+            })
+            return
+          }
+          if (onConfirmed) onConfirmed()
+          onClose()
+          setProjectPayerAddress(newProjectPayerAddress)
+          setLoadingProjectPayer(false)
+          setTransactionPending(false)
+          setConfirmedModalVisible(true)
+        },
+      },
+    )
+    if (!txSuccess) {
+      setLoadingProjectPayer(false)
+      setTransactionPending(false)
     }
   }
 
@@ -93,22 +103,19 @@ export default function LaunchProjectPayerModal({
       >
         <p>
           <Trans>
-            Create an ETH address that people can use to pay this project rather
-            than paying through the juicebox.money interface.
+            Create an Ethereum address that can be used to pay your project
+            directly.
           </Trans>
         </p>
         <p>
           <Trans>
-            The tokens minted as a result of payments to this address will
-            belong to the payer, the same way as if they were to pay through the
-            interface. <strong>However</strong>, if someone pays the project
-            from a non-custodial entity such as the Coinbase app, the tokens
-            cannot be issued to their personal wallets and will be lost.
-          </Trans>
-        </p>
-        <p>
-          <Trans>
-            This launches a new contract so will incur significant gas fees.
+            Tokens minted from payments to this address will belong to the
+            payer. However, if someone pays the project from a non-custodial
+            entity like the Coinbase app,{' '}
+            <strong>
+              tokens can't be issued to their personal wallets and will be lost
+            </strong>
+            .
           </Trans>
         </p>
       </TransactionModal>
@@ -130,14 +137,14 @@ export default function LaunchProjectPayerModal({
         <CopyTextButton value={projectPayerAddress} style={{ fontSize: 25 }} />
         <p style={{ marginTop: 30 }}>
           <Trans>
-            <strong>Note:</strong> Copy this address and save it somewhere now.
+            This address will disappear when you close this window.{' '}
+            <strong>Copy the address and save it now</strong>.
           </Trans>
         </p>
         <p>
           <Trans>
-            We are currently still working on a way to load this address through
-            our interface. If you lose your address please contact the Juicebox
-            team through <JBDiscordLink>Discord</JBDiscordLink>.
+            If you lose your address, please contact the Juicebox team through{' '}
+            <JBDiscordLink>Discord</JBDiscordLink>.
           </Trans>
         </p>
       </Modal>

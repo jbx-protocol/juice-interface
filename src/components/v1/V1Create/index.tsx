@@ -316,9 +316,7 @@ export default function V1Create() {
           dispatch(editingProjectActions.resetState())
 
           window.location.hash =
-            '/p/' +
-            editingProjectInfo.handle +
-            '?newDeploy=true&feedbackModalOpen=true'
+            '/p/' + editingProjectInfo.handle + '?newDeploy=true'
         },
       },
     )

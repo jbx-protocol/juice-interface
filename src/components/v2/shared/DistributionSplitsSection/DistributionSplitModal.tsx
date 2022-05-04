@@ -13,6 +13,7 @@ import { parseWad } from 'utils/formatNumber'
 import {
   getDistributionAmountFromPercentAfterFee,
   getDistributionPercentFromAmount,
+  sumOfPayoutSplitAmounts,
 } from 'utils/v2/distributions'
 import { ThemeContext } from 'contexts/themeContext'
 
@@ -35,6 +36,7 @@ import CurrencySymbol from 'components/shared/CurrencySymbol'
 import * as Moment from 'moment'
 import moment from 'moment'
 import TooltipLabel from 'components/shared/TooltipLabel'
+import { DistributionLimitType } from 'components/v2/V2Create/forms/FundingForm/DistributionLimitTypeSelect'
 
 import { CurrencyName } from 'constants/currency'
 
@@ -55,6 +57,7 @@ export default function DistributionSplitModal({
   splits,
   onSplitsChanged,
   distributionLimit,
+  distributionLimitType,
   splitIndex, // Only in the case mode==='Edit'
   onClose,
   currencyName,
@@ -64,6 +67,7 @@ export default function DistributionSplitModal({
   splits: Split[]
   onSplitsChanged: (splits: Split[]) => void
   distributionLimit: string | undefined
+  distributionLimitType?: DistributionLimitType
   splitIndex?: number
   onClose: VoidFunction
   currencyName: CurrencyName
@@ -175,11 +179,36 @@ export default function DistributionSplitModal({
 
   const onAmountChange = (newAmount: number) => {
     if (distributionLimitIsInfinite) return
-
-    let newPercent = getDistributionPercentFromAmount({
-      amount: newAmount,
-      distributionLimit,
-    })
+    let newPercent: number
+    if (distributionLimitType !== 'sum') {
+      newPercent = getDistributionPercentFromAmount({
+        amount: newAmount,
+        distributionLimit,
+      })
+    } else {
+      const previousSplitAmount = amountFromPercent({
+        percent: percent ?? 0,
+        amount: distributionLimit,
+      }) // only when reconfiging, not adding
+      console.info('distributionLimit: ', distributionLimit)
+      const newDistributionLimit = BigNumber.from(
+        sumOfPayoutSplitAmounts({
+          splits,
+          previousDistributionLimit: BigNumber.from(distributionLimit),
+        }) -
+          previousSplitAmount +
+          newAmount,
+      )
+        .toNumber()
+        .toString()
+      console.info('newDistributionLimit: ', newDistributionLimit)
+      newPercent = getDistributionPercentFromAmount({
+        amount: newAmount,
+        // current sum of split amounts - previous split amount + newAmount
+        distributionLimit: newDistributionLimit,
+      })
+      console.info('newPercent: ', newDistributionLimit)
+    }
     setAmount(newAmount)
     setPercent(newPercent)
     form.setFieldsValue({ percent: newPercent })
@@ -341,27 +370,33 @@ export default function DistributionSplitModal({
             </div>
           </Form.Item>
         ) : null}
-
         <Form.Item
           label={
-            <TooltipLabel
-              label={<Trans>Percent of distribution limit</Trans>}
-              tip={
-                distributionLimitIsInfinite ? (
-                  <Trans>
-                    Percentage this payee will receive of all funds raised.
-                  </Trans>
-                ) : (
-                  <Trans>
-                    Percentage of the distribution limit this payee will
-                    receive.
-                  </Trans>
-                )
-              }
-            />
+            distributionLimitType !== 'sum' ? (
+              <TooltipLabel
+                label={<Trans>Percent of distribution limit</Trans>}
+                tip={
+                  distributionLimitIsInfinite ? (
+                    <Trans>
+                      Percentage this payee will receive of all funds raised.
+                    </Trans>
+                  ) : (
+                    <Trans>
+                      Percentage of the distribution limit this payee will
+                      receive.
+                    </Trans>
+                  )
+                }
+              />
+            ) : null
           }
         >
-          <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div
+            style={{
+              display: distributionLimitType !== 'sum' ? 'flex' : 'none',
+              alignItems: 'center',
+            }}
+          >
             <span style={{ flex: 1 }}>
               <NumberSlider
                 onChange={(percent: number | undefined) => {
@@ -380,7 +415,11 @@ export default function DistributionSplitModal({
                 suffix="%"
                 name="percent"
                 formItemProps={{
-                  rules: [{ validator: validatePayoutPercentage }],
+                  rules: [
+                    distributionLimitType !== 'sum'
+                      ? { validator: validatePayoutPercentage }
+                      : {},
+                  ],
                 }}
               />
             </span>

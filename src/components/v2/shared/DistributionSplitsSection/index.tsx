@@ -10,6 +10,7 @@ import { getTotalSplitsPercentage } from 'utils/v2/distributions'
 
 import FormattedAddress from 'components/shared/FormattedAddress'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { DistributionLimitType } from 'components/v2/V2Create/forms/FundingForm/DistributionLimitTypeSelect'
 
 import DistributionSplitCard from './DistributionSplitCard'
 import { CurrencyName } from 'constants/currency'
@@ -17,6 +18,7 @@ import DistributionSplitModal from './DistributionSplitModal'
 
 export default function DistributionSplitsSection({
   distributionLimit,
+  distributionLimitType,
   currencyName,
   editableSplits,
   lockedSplits,
@@ -24,6 +26,7 @@ export default function DistributionSplitsSection({
   formItemProps,
 }: {
   distributionLimit: string | undefined
+  distributionLimitType: DistributionLimitType
   currencyName: CurrencyName
   editableSplits: Split[]
   lockedSplits: Split[]
@@ -121,6 +124,7 @@ export default function DistributionSplitsSection({
         mode={'Add'}
         splits={allSplits}
         distributionLimit={distributionLimit}
+        distributionLimitType={distributionLimitType}
         currencyName={currencyName}
         onClose={() => setAddSplitModalVisible(false)}
       />

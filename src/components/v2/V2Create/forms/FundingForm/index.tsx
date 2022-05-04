@@ -58,12 +58,17 @@ import FormItemWarningText from 'components/shared/FormItemWarningText'
 
 import SwitchHeading from 'components/shared/SwitchHeading'
 import DistributionSplitsSection from 'components/v2/shared/DistributionSplitsSection'
-import { getTotalSplitsPercentage } from 'utils/v2/distributions'
+import {
+  getTotalSplitsPercentage,
+  sumOfPayoutSplitAmounts,
+} from 'utils/v2/distributions'
 
 import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
 
 import { shadowCard } from 'constants/styles/shadowCard'
-import TargetTypeSelect, { TargetType } from './TargetTypeSelect'
+import DistributionLimitTypeSelect, {
+  DistributionLimitType,
+} from './DistributionLimitTypeSelect'
 import DurationInputAndSelect from './DurationInputAndSelect'
 import { DurationUnitsOption } from 'constants/time'
 
@@ -88,12 +93,15 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
   // added with a lockedUntil
   const [editingSplits, setEditingSplits] = useState<Split[]>([])
 
-  const [target, setTarget] = useState<string | undefined>()
+  const [distributionLimit, setDistributionLimit] = useState<
+    string | undefined
+  >()
 
-  const [targetCurrency, setTargetCurrency] =
+  const [distributionLimitCurrency, setDistributionLimitCurrency] =
     useState<V2CurrencyOption>(V2_CURRENCY_ETH)
   const [durationEnabled, setDurationEnabled] = useState<boolean>(false)
-  const [targetType, setTargetType] = useState<TargetType>('specific')
+  const [distributionLimitType, setDistributionLimitType] =
+    useState<DistributionLimitType>('specific')
 
   const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
   const feeFormatted = ETHPaymentTerminalFee
@@ -101,8 +109,10 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
     : undefined
 
   const payoutSplitsDisabled =
-    targetType === 'none' ||
-    (targetType === 'specific' && target && target === '0')
+    distributionLimitType === 'none' ||
+    (distributionLimitType === 'specific' &&
+      distributionLimit &&
+      distributionLimit === '0')
 
   // Load redux state (will be empty in create flow)
   const { fundAccessConstraints, fundingCycleData, payoutGroupedSplits } =
@@ -136,8 +146,8 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
 
   // Loads redux state into form
   const resetProjectForm = useCallback(() => {
-    const _target = fundAccessConstraint?.distributionLimit ?? '0'
-    const _targetCurrency = parseInt(
+    const _distributionLimit = fundAccessConstraint?.distributionLimit ?? '0'
+    const _distributionLimitCurrency = parseInt(
       fundAccessConstraint?.distributionLimitCurrency ??
         V2_CURRENCY_ETH.toString(),
     ) as V2CurrencyOption
@@ -157,16 +167,21 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
       }).toString(),
     })
 
-    setTarget(_target)
-    setTargetCurrency(_targetCurrency)
-    setSplits(payoutGroupedSplits?.splits ?? [])
+    const payoutSplits = payoutGroupedSplits?.splits
 
-    if (parseInt(_target ?? '0') === 0) {
-      setTargetType('none')
-    } else if (parseWad(_target).eq(MAX_DISTRIBUTION_LIMIT)) {
-      setTargetType('infinite')
+    setDistributionLimit(_distributionLimit)
+    setDistributionLimitCurrency(_distributionLimitCurrency)
+    setSplits(payoutSplits ?? [])
+
+    if (parseInt(_distributionLimit) === 0) {
+      setDistributionLimitType('none')
+    } else if (parseWad(_distributionLimit).eq(MAX_DISTRIBUTION_LIMIT)) {
+      setDistributionLimitType('infinite')
+    } else if (payoutSplits.length > 0 && _distributionLimit !== undefined) {
+      setDistributionLimitType('specific')
     } else {
-      setTargetType('specific')
+      // if _distributionLimit === undefined
+      setDistributionLimitType('sum')
     }
   }, [fundingForm, fundingCycleData, fundAccessConstraint, payoutGroupedSplits])
 
@@ -178,9 +193,10 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
         {
           terminal: contracts.JBETHPaymentTerminal.address,
           token: ETH_TOKEN_ADDRESS,
-          distributionLimit: target ?? fromWad(MAX_DISTRIBUTION_LIMIT),
+          distributionLimit:
+            distributionLimit ?? fromWad(MAX_DISTRIBUTION_LIMIT),
           distributionLimitCurrency:
-            targetCurrency?.toString() ?? V2_CURRENCY_ETH,
+            distributionLimitCurrency?.toString() ?? V2_CURRENCY_ETH,
           overflowAllowance: '0', // nothing for the time being.
           overflowAllowanceCurrency: '0',
         }
@@ -214,8 +230,8 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
         )
       }
 
-      // reset redemption rate if target is 0
-      if (!target || target === '0') {
+      // reset redemption rate if distributionLimit is 0
+      if (!distributionLimit || distributionLimit === '0') {
         dispatch(
           editingV2ProjectActions.setRedemptionRate(
             defaultFundingCycleMetadata.redemptionRate,
@@ -230,8 +246,8 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
       lockedSplits,
       contracts,
       dispatch,
-      target,
-      targetCurrency,
+      distributionLimit,
+      distributionLimitCurrency,
       onFinish,
     ],
   )
@@ -241,18 +257,26 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
     resetProjectForm()
   }, [resetProjectForm])
 
-  const onTargetTypeSelect = (type: TargetType) => {
-    setTargetType(type)
+  const onDistributionLimitTypeSelect = (type: DistributionLimitType) => {
+    setDistributionLimitType(type)
     switch (type) {
       case 'infinite':
-        setTarget(undefined)
+        setDistributionLimit(undefined)
         break
       case 'none':
         setSplits([])
-        setTarget('0')
+        setDistributionLimit('0')
         break
       case 'specific':
-        setTarget('0')
+        setDistributionLimit('0')
+        break
+      case 'sum':
+        setDistributionLimit(
+          sumOfPayoutSplitAmounts({
+            previousDistributionLimit: parseWad(distributionLimit),
+            splits,
+          }).toString(),
+        )
         break
     }
   }
@@ -376,25 +400,29 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
         </p>
 
         <Form.Item label={<Trans>Distribution limit</Trans>}>
-          <TargetTypeSelect value={targetType} onChange={onTargetTypeSelect} />
+          <DistributionLimitTypeSelect
+            value={distributionLimitType}
+            onChange={onDistributionLimitTypeSelect}
+            distributionLimit={parseWad(distributionLimit)}
+          />
         </Form.Item>
 
-        {targetType === 'specific' ? (
+        {distributionLimitType === 'specific' ? (
           <Form.Item required>
             <BudgetTargetInput
-              target={target?.toString()}
+              target={DistributionLimitTypeSelect?.toString()}
               targetSubFee={undefined}
-              currency={V2CurrencyName(targetCurrency) ?? 'ETH'}
-              onTargetChange={setTarget}
+              currency={V2CurrencyName(distributionLimitCurrency) ?? 'ETH'}
+              onTargetChange={setDistributionLimit}
               onTargetSubFeeChange={() => {}}
               onCurrencyChange={currencyName =>
-                setTargetCurrency(getV2CurrencyOption(currencyName))
+                setDistributionLimitCurrency(getV2CurrencyOption(currencyName))
               }
               showTargetSubFeeInput={false}
               feePerbicent={undefined}
             />
           </Form.Item>
-        ) : targetType === 'infinite' ? (
+        ) : distributionLimitType === 'infinite' ? (
           <FormItemWarningText>
             <Trans>
               With an infinite distribution limit, all funds can be distributed
@@ -432,8 +460,9 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
             </p>
 
             <DistributionSplitsSection
-              distributionLimit={target}
-              currencyName={V2CurrencyName(targetCurrency) ?? 'ETH'}
+              distributionLimit={distributionLimit}
+              distributionLimitType={distributionLimitType}
+              currencyName={V2CurrencyName(distributionLimitCurrency) ?? 'ETH'}
               editableSplits={editingSplits}
               lockedSplits={lockedSplits}
               onSplitsChanged={newSplits => {

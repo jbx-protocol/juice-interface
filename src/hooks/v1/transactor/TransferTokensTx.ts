@@ -23,7 +23,12 @@ export function useTransferTokensTx(): TransactorInstance<{
     return transactor(
       contracts.TicketBooth,
       'transfer',
-      [userAddress, projectId.toHexString(), amount.toHexString(), to],
+      [
+        userAddress,
+        BigNumber.from(projectId).toHexString(),
+        amount.toHexString(),
+        to,
+      ],
       txOpts,
     )
   }

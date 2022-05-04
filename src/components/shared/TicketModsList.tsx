@@ -25,7 +25,7 @@ export default function TicketModsList({
   total?: BigNumber
   mods: TicketMod[] | undefined
   fundingCycle: V1FundingCycle | undefined
-  projectId: BigNumber | undefined
+  projectId: number | undefined
   reservedRate: number
 }) {
   const [modalVisible, setModalVisible] = useState<boolean>(false)
@@ -121,7 +121,7 @@ export default function TicketModsList({
         />
       )}
 
-      {fundingCycle && projectId?.gt(0) && hasEditPermission ? (
+      {fundingCycle && projectId && hasEditPermission ? (
         <div style={{ marginTop: 10 }}>
           <Button size="small" onClick={() => setModalVisible(true)}>
             <Trans>Edit token allocation</Trans>

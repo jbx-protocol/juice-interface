@@ -69,6 +69,7 @@ import {
 export type ProjectEvent = {
   id: string
   timestamp: number
+  project: string
   projectId: number
   cv: CV
 
@@ -95,7 +96,7 @@ export type ProjectEvent = {
 
 export type ProjectEventJson = Pick<
   ProjectEvent,
-  'id' | 'timestamp' | 'projectId' // primitive types
+  'id' | 'timestamp' | 'projectId' | 'project' // primitive types
 > & {
   cv: CV
   payEvent: PayEventJson | null

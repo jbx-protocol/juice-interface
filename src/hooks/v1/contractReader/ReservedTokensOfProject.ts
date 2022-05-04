@@ -12,7 +12,7 @@ export default function useReservedTokensOfProject(
 ) {
   const { projectId, terminal } = useContext(V1ProjectContext)
 
-  const _projectId = projectId?.toHexString()
+  const _projectId = BigNumber.from(projectId).toHexString()
 
   return useContractReader<BigNumber>({
     contract: terminal?.name,

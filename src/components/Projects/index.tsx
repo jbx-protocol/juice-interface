@@ -72,6 +72,7 @@ export default function Projects() {
 
   const [orderBy, setOrderBy] = useState<OrderByOption>('totalPaid')
   const [includeV1, setIncludeV1] = useState<boolean>(true)
+  const [includeV1_1, setIncludeV1_1] = useState<boolean>(true)
   const [includeV2, setIncludeV2] = useState<boolean>(true)
   const [showArchived, setShowArchived] = useState<boolean>(false)
 
@@ -81,10 +82,13 @@ export default function Projects() {
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const cv: CV | undefined = useMemo(() => {
-    if (includeV1 && !includeV2) return 1
-    if (!includeV1 && includeV2) return 2
-  }, [includeV1, includeV2])
+  const cv: CV[] | undefined = useMemo(() => {
+    const _cv: CV[] = []
+    if (includeV1) _cv.push('1')
+    if (includeV1_1) _cv.push('1.1')
+    if (includeV2) _cv.push('2')
+    return _cv.length ? _cv : ['1', '1.1', '2']
+  }, [includeV1, includeV1_1, includeV2])
 
   const {
     data: pages,
@@ -191,8 +195,10 @@ export default function Projects() {
           {selectedTab === 'all' && !searchText ? (
             <ProjectsFilterAndSort
               includeV1={includeV1}
+              includeV1_1={includeV1_1}
               includeV2={includeV2}
               setIncludeV1={setIncludeV1}
+              setIncludeV1_1={setIncludeV1_1}
               setIncludeV2={setIncludeV2}
               showArchived={showArchived}
               setShowArchived={setShowArchived}

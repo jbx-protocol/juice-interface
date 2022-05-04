@@ -1,6 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 
 import { useIpfsCache } from 'hooks/IpfsCache'
+import { CV } from 'models/cv'
 import { IpfsCacheName } from 'models/ipfs-cache/cache-name'
 import { ProjectState } from 'models/project-visibility'
 import {
@@ -35,7 +36,7 @@ interface ProjectsOptions {
   state?: ProjectState
   keys?: (keyof Project)[]
   terminalVersion?: V1TerminalVersion
-  cv?: Project['cv']
+  cv?: CV[]
 }
 
 const staleTime = 60 * 1000 // 60 seconds
@@ -76,6 +77,7 @@ const queryOpts = (
     where.push({
       key: 'cv',
       value: opts.cv,
+      operator: 'in',
     })
   }
 
@@ -138,7 +140,7 @@ export function useTrendingProjects(count: number, days: number) {
   const [loadingPayments, setLoadingPayments] = useState<boolean>()
   const [projectStats, setProjectStats] = useState<
     Record<
-      number,
+      string,
       {
         trendingVolume: BigNumber
         paymentsCount: number
@@ -184,7 +186,7 @@ export function useTrendingProjects(count: number, days: number) {
           'amount',
           {
             entity: 'project',
-            keys: ['projectId'],
+            keys: ['id'],
           },
         ],
         where: [
@@ -200,7 +202,7 @@ export function useTrendingProjects(count: number, days: number) {
       setProjectStats(
         (payments ?? []).reduce(
           (acc, curr) => {
-            const projectId = curr.project.projectId
+            const projectId = curr.project.id
 
             return projectId
               ? {
@@ -238,8 +240,8 @@ export function useTrendingProjects(count: number, days: number) {
           entity: 'project',
           keys,
           where: {
-            key: 'projectId',
-            value: Object.keys(projectStats).map(k => parseInt(k)),
+            key: 'id',
+            value: Object.keys(projectStats),
             operator: 'in',
           },
         }
@@ -253,8 +255,7 @@ export function useTrendingProjects(count: number, days: number) {
     // Return TrendingProjects sorted by `trendingScore`
     data: projectsQuery.data
       ?.map(p => {
-        const stats =
-          p.projectId && projectStats ? projectStats[p.projectId] : undefined
+        const stats = p.id && projectStats ? projectStats[p.id] : undefined
 
         // Algorithm to rank trending projects:
         // trendingScore = volume * (number of payments)^2
@@ -301,7 +302,7 @@ export function useTrendingProjects(count: number, days: number) {
 // Query all projects that a wallet has previously made payments to
 export function useHoldingsProjectsQuery(wallet: string | undefined) {
   const [loadingParticipants, setLoadingParticipants] = useState<boolean>()
-  const [projectIds, setProjectIds] = useState<number[]>()
+  const [projectIds, setProjectIds] = useState<string[]>()
 
   useEffect(() => {
     // Get all participant entities for wallet
@@ -338,13 +339,13 @@ export function useHoldingsProjectsQuery(wallet: string | undefined) {
       // Reduce list of paid project ids
       setProjectIds(
         participants?.reduce((acc, curr) => {
-          const projectId = curr?.project.projectId
+          const projectId = curr?.project.id
 
           return [
             ...acc,
             ...(projectId ? (acc.includes(projectId) ? [] : [projectId]) : []),
           ]
-        }, [] as number[]),
+        }, [] as string[]),
       )
 
       setLoadingParticipants(false)

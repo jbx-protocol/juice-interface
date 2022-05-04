@@ -12,9 +12,9 @@ import { formatHistoricalDate } from 'utils/formatDate'
 import { contentLineHeight, smallHeaderStyle } from './styles'
 
 // Maps a project id to an internal map of payment event overrides.
-let payEventOverrides = new Map<string, Map<string, string>>([
+let payEventOverrides = new Map<number, Map<string, string>>([
   [
-    '10',
+    10,
     new Map<string, string>([
       ['Minted WikiToken for Page ID', 'WikiToken minted'],
     ]),
@@ -37,8 +37,7 @@ export default function PayEventElem({
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const usePayEventOverrides =
-    projectId && payEventOverrides.has(projectId.toString())
+  const usePayEventOverrides = projectId && payEventOverrides.has(projectId)
 
   const formatPayEventOverride = useCallback(
     (e: Partial<PayEvent>) => {
@@ -48,7 +47,7 @@ export default function PayEventElem({
 
       let override
       payEventOverrides
-        .get(projectId.toString())
+        .get(projectId)
         ?.forEach((value: string, key: string) => {
           if (e.note?.includes(key)) {
             override = value

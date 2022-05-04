@@ -20,7 +20,7 @@ export default function DownloadPaymentsModal({
   const [latestBlockNumber, setLatestBlockNumber] = useState<number>()
   const [blockNumber, setBlockNumber] = useState<number>()
   const [loading, setLoading] = useState<boolean>()
-  const { projectId, handle } = useContext(V1ProjectContext)
+  const { projectId, cv, handle } = useContext(V1ProjectContext)
 
   useEffect(() => {
     readProvider.getBlockNumber().then(val => {
@@ -30,7 +30,7 @@ export default function DownloadPaymentsModal({
   }, [])
 
   const download = useCallback(async () => {
-    if (blockNumber === undefined || !projectId) return
+    if (blockNumber === undefined || !projectId || !cv) return
 
     setLoading(true)
 
@@ -47,10 +47,16 @@ export default function DownloadPaymentsModal({
         block: {
           number: blockNumber,
         },
-        where: {
-          key: 'project',
-          value: projectId.toString(),
-        },
+        where: [
+          {
+            key: 'projectId',
+            value: projectId,
+          },
+          {
+            key: 'cv',
+            value: cv,
+          },
+        ],
       })
 
       if (!payments) {
@@ -86,7 +92,7 @@ export default function DownloadPaymentsModal({
       console.error('Error downloading payments', e)
       setLoading(false)
     }
-  }, [projectId, setLoading, blockNumber, handle])
+  }, [projectId, cv, setLoading, blockNumber, handle])
 
   return (
     <Modal

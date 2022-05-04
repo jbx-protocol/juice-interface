@@ -18,7 +18,6 @@ export default function Payments() {
   const { data: events, isLoading } = useSubgraphQuery({
     entity: 'projectEvent',
     keys: ['payEvent', 'timestamp', 'id', { entity: 'project', keys: ['id'] }],
-    where: { key: 'cv', value: 1 },
     first: 20,
     orderDirection: 'desc',
     orderBy: 'timestamp',

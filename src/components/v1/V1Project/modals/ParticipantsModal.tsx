@@ -9,19 +9,14 @@ import { Button, Modal, Select } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import Loading from 'components/shared/Loading'
-import UntrackedErc20Notice from 'components/shared/UntrackedErc20Notice'
-
 import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import useTotalSupplyOfProjectToken from 'hooks/v1/contractReader/TotalSupplyOfProjectToken'
-import { NetworkName } from 'models/network-name'
 import { Participant } from 'models/subgraph-entities/vX/participant'
 import { useContext, useEffect, useMemo, useState } from 'react'
 import { formatPercent, formatWad } from 'utils/formatNumber'
 import { OrderDirection, querySubgraph } from 'utils/graph'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
-
-import { indexedProjectERC20s } from 'constants/v1/indexedProjectERC20s'
 
 import DownloadParticipantsModal from './DownloadParticipantsModal'
 
@@ -42,7 +37,8 @@ export default function ParticipantsModal({
   const [downloadModalVisible, setDownloadModalVisible] = useState<boolean>()
   const [sortPayerReportsDirection, setSortPayerReportsDirection] =
     useState<OrderDirection>('desc')
-  const { projectId, tokenSymbol, tokenAddress } = useContext(V1ProjectContext)
+  const { projectId, tokenSymbol, tokenAddress, cv } =
+    useContext(V1ProjectContext)
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -71,24 +67,29 @@ export default function ParticipantsModal({
       skip: pageNumber * pageSize,
       orderBy: sortPayerReports,
       orderDirection: sortPayerReportsDirection,
-      where: projectId
-        ? [
-            {
-              key: 'project',
-              value: projectId.toString(),
-            },
-            {
-              key: 'balance',
-              value: 0,
-              operator: 'gt',
-            },
-            {
-              key: 'wallet',
-              value: constants.AddressZero,
-              operator: 'not',
-            },
-          ]
-        : undefined,
+      where:
+        projectId && cv
+          ? [
+              {
+                key: 'projectId',
+                value: projectId,
+              },
+              {
+                key: 'cv',
+                value: cv,
+              },
+              {
+                key: 'balance',
+                value: 0,
+                operator: 'gt',
+              },
+              {
+                key: 'wallet',
+                value: constants.AddressZero,
+                operator: 'not',
+              },
+            ]
+          : undefined,
     }).then(res => {
       setParticipants(curr => {
         const newParticipants = [...curr]
@@ -100,6 +101,7 @@ export default function ParticipantsModal({
   }, [
     pageNumber,
     projectId,
+    cv,
     sortPayerReportsDirection,
     sortPayerReports,
     visible,
@@ -246,13 +248,6 @@ export default function ParticipantsModal({
     totalTokenSupply,
   ])
 
-  const erc20IsUntracked =
-    tokenSymbol &&
-    projectId &&
-    !indexedProjectERC20s[
-      process.env.REACT_APP_INFURA_NETWORK as NetworkName
-    ]?.includes(projectId?.toNumber())
-
   return (
     <Modal
       visible={visible}
@@ -283,12 +278,6 @@ export default function ParticipantsModal({
             for some projects.
           </Trans>
         </p>
-
-        {erc20IsUntracked && (
-          <p style={{ padding: 10, background: colors.background.l1 }}>
-            <UntrackedErc20Notice tokenSymbol={tokenSymbol} />
-          </p>
-        )}
 
         {list}
 

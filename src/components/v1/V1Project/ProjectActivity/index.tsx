@@ -50,14 +50,15 @@ export default function ProjectActivity() {
     const _where: WhereConfig<'projectEvent'>[] = [
       {
         key: 'cv',
-        value: 1,
+        operator: 'in',
+        value: ['1', '1.1'],
       },
     ]
 
     if (projectId) {
       _where.push({
         key: 'projectId',
-        value: projectId.toNumber(),
+        value: projectId,
       })
     }
 

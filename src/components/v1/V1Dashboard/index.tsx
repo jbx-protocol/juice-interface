@@ -1,10 +1,15 @@
+import { Trans } from '@lingui/macro'
+import { Button } from 'antd'
 import FeedbackFormButton from 'components/shared/FeedbackFormButton'
+import ScrollToTopButton from 'components/shared/ScrollToTopButton'
+import FeedbackPromptModal from 'components/v1/V1Project/modals/FeedbackPromptModal'
 
 import {
   V1ProjectContext,
   V1ProjectContextType,
 } from 'contexts/v1/projectContext'
-
+import { useProjectMetadata } from 'hooks/ProjectMetadata'
+import { useProjectsQuery } from 'hooks/Projects'
 import useBalanceOfProject from 'hooks/v1/contractReader/BalanceOfProject'
 import useCurrentFundingCycleOfProject from 'hooks/v1/contractReader/CurrentFundingCycleOfProject'
 import useCurrentPayoutModsOfProject from 'hooks/v1/contractReader/CurrentPayoutModsOfProject'
@@ -16,18 +21,14 @@ import useQueuedFundingCycleOfProject from 'hooks/v1/contractReader/QueuedFundin
 import useQueuedPayoutModsOfProject from 'hooks/v1/contractReader/QueuedPayoutModsOfProject'
 import useQueuedTicketModsOfProject from 'hooks/v1/contractReader/QueuedTicketModsOfProject'
 import useSymbolOfERC20 from 'hooks/v1/contractReader/SymbolOfERC20'
+import useTerminalOfProject from 'hooks/v1/contractReader/TerminalOfProject'
 import useTokenAddressOfProject from 'hooks/v1/contractReader/TokenAddressOfProject'
 import useUriOfProject from 'hooks/v1/contractReader/UriOfProject'
 import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
-import { useProjectMetadata } from 'hooks/ProjectMetadata'
-import { useProjectsQuery } from 'hooks/Projects'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useEffect, useMemo } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
 import { getTerminalName, getTerminalVersion } from 'utils/v1/terminals'
-import useTerminalOfProject from 'hooks/v1/contractReader/TerminalOfProject'
-
-import ScrollToTopButton from 'components/shared/ScrollToTopButton'
 
 import V1CurrencyProvider from 'providers/v1/V1CurrencyProvider'
 
@@ -121,7 +122,7 @@ export default function V1Dashboard() {
 
     return {
       createdAt,
-      projectId,
+      projectId: projectId?.toNumber(),
       projectType,
       owner,
       earned,
@@ -140,6 +141,7 @@ export default function V1Dashboard() {
       overflow,
       isPreviewMode,
       isArchived,
+      cv: terminalVersion,
       terminal: {
         address: terminalAddress,
         name: terminalName,

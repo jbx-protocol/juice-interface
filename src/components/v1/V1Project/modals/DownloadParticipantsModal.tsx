@@ -121,7 +121,7 @@ export default function DownloadParticipantsModal({
     projectId &&
     !indexedProjectERC20s[
       process.env.REACT_APP_INFURA_NETWORK as NetworkName
-    ]?.includes(projectId?.toNumber())
+    ]?.includes(projectId)
 
   return (
     <Modal

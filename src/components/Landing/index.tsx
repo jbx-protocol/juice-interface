@@ -10,7 +10,7 @@ import V1Create from 'components/v1/V1Create'
 import { ThemeContext } from 'contexts/themeContext'
 import { useProjectsQuery } from 'hooks/Projects'
 import { CSSProperties, useContext } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { FEATURE_FLAGS, featureFlagEnabled } from 'utils/featureFlags'
 
 import { ThemeOption } from 'constants/theme/theme-option'

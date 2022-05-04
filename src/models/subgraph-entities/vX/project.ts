@@ -144,6 +144,7 @@ export type TrendingProject = Pick<
   | 'totalPaid'
   | 'handle'
   | 'metadataUri'
+  | 'cv'
 > & {
   trendingVolume: BigNumber
   trendingScore: BigNumber
@@ -159,6 +160,7 @@ export type TrendingProjectJson = Pick<
   | 'handle'
   | 'metadataUri'
   | 'trendingPaymentsCount'
+  | 'cv'
 > & {
   trendingVolume: string
   trendingScore: string

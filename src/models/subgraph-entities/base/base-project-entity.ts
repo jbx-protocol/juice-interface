@@ -19,7 +19,7 @@ export const parseBaseProjectEntityJson = (
   j: BaseProjectEntityJson,
 ): Partial<BaseProjectEntity> => ({
   id: j.id,
-  cv: j.cv ? (parseInt(j.cv) as CV) : undefined,
+  cv: j.cv ? (j.cv as CV) : undefined,
   project: j.project ? parseProjectJson(j.project) : undefined,
   projectId: j.projectId ? parseInt(j.projectId) : undefined,
 })

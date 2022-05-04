@@ -107,7 +107,7 @@ export default function ProjectCard({
       }}
       key={_project.id}
       to={
-        _project.cv === 2
+        _project.cv === '2'
           ? `/v2/p/${_project.projectId}`
           : `/p/${_project?.handle}`
       }

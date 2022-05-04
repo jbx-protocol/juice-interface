@@ -10,7 +10,7 @@ import { CSSProperties, useContext, useState } from 'react'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import { formatPercent, formatWad } from 'utils/formatNumber'
 
-import IssueTicketsButton from 'components/shared/IssueTicketsButton'
+import IssueTokenButton from 'components/shared/IssueTokenButton'
 import {
   useHasPermission,
   V2OperatorPermission,
@@ -20,7 +20,6 @@ import { tokenSymbolText } from 'utils/tokenSymbolText'
 import useTotalBalanceOf from 'hooks/v2/contractReader/TotalBalanceOf'
 import { ThemeContext } from 'contexts/themeContext'
 import useUserUnclaimedTokenBalance from 'hooks/v2/contractReader/UserUnclaimedTokenBalance'
-import { useLocation } from 'react-router-dom'
 import ManageTokensModal from 'components/shared/ManageTokensModal'
 
 import V2RedeemModal from './V2RedeemModal'
@@ -43,11 +42,6 @@ export default function V2ManageTokensSection() {
     projectId,
     primaryTerminalCurrentOverflow,
   } = useContext(V2ProjectContext)
-
-  // Checks URL to see if user was just directed from project deploy
-  const location = useLocation()
-  const params = new URLSearchParams(location.search)
-  const isNewDeploy = Boolean(params.get('newDeploy'))
 
   const { userAddress } = useContext(NetworkContext)
 
@@ -128,10 +122,7 @@ export default function V2ManageTokensSection() {
               />
               {showIssueTokensButton && (
                 <div style={{ marginBottom: 20 }}>
-                  <IssueTicketsButton
-                    isNewDeploy={isNewDeploy}
-                    useIssueTokensTx={useIssueTokensTx}
-                  />
+                  <IssueTokenButton useIssueTokensTx={useIssueTokensTx} />
                 </div>
               )}
             </div>

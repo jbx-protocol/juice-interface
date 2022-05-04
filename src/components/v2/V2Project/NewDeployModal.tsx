@@ -60,8 +60,9 @@ export default function NewDeployModal({
       </h2>
       <p>
         <Trans>
-          These are all optional and can be completed at any time through your
-          project page.
+          Congratulations on launching your project! We recommend you take these
+          next steps to help your project gain traction. These steps are
+          optional and you can complete them later on.
         </Trans>
       </p>
       <ol style={{ fontSize: 17, marginTop: 20, padding: 0 }}>
@@ -89,8 +90,8 @@ export default function NewDeployModal({
           heading={<Trans>Create a payable address</Trans>}
           description={
             <Trans>
-              Create an ETH address people can use to pay this project rather
-              than paying through the juicebox.money interface.
+              Create an Ethereum address that can be used to pay your project
+              directly.
             </Trans>
           }
           onClick={() => setLaunchProjectPayerModalVisible(true)}

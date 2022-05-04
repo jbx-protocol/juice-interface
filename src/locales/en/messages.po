@@ -596,6 +596,10 @@ msgstr "Configure the dynamics of your project's token."
 msgid "Congrats on creating your project!"
 msgstr "Congrats on creating your project!"
 
+#: src/components/v2/V2Project/NewDeployModal.tsx
+msgid "Congratulations on launching your project! We recommend you take these next steps to help your project gain traction. These steps are optional and you can complete them later on."
+msgstr "Congratulations on launching your project! We recommend you take these next steps to help your project gain traction. These steps are optional and you can complete them later on."
+
 #: src/components/Navbar/Account.tsx
 msgid "Connect"
 msgstr ""
@@ -641,12 +645,9 @@ msgstr ""
 msgid "Create a payable address"
 msgstr "Create a payable address"
 
-#: src/components/v2/V2Project/NewDeployModal.tsx
-msgid "Create an ETH address people can use to pay this project rather than paying through the juicebox.money interface."
-msgstr "Create an ETH address people can use to pay this project rather than paying through the juicebox.money interface."
-
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
 #: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Create an Ethereum address that can be used to pay your project directly."
 msgstr "Create an Ethereum address that can be used to pay your project directly."
 
@@ -2373,10 +2374,6 @@ msgstr ""
 #: src/components/Landing/QAs.tsx
 msgid "There was also a script written to iteratively run the integration tests using a random input generator, prioritizing edge cases. The code has successfully passed over 1 million test cases through this stress-testing script."
 msgstr "There was also a script written to iteratively run the integration tests using a random input generator, prioritizing edge cases. The code has successfully passed over 1 million test cases through this stress-testing script."
-
-#: src/components/v2/V2Project/NewDeployModal.tsx
-msgid "These are all optional and can be completed at any time through your project page."
-msgstr "These are all optional and can be completed at any time through your project page."
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx

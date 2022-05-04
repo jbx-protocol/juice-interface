@@ -143,7 +143,7 @@ export default function FundingCycleTabContent({
         </h1>
 
         <FundingForm
-          onFormUpdated={updated => setFundingFormUpdated(updated)}
+          onFormUpdated={didFormUpdate => setFundingFormUpdated(didFormUpdate)}
           onFinish={() => {
             setFundingDrawerVisible(false)
           }}
@@ -160,7 +160,7 @@ export default function FundingCycleTabContent({
           <Trans>Token</Trans>
         </h1>
         <TokenForm
-          onFormUpdated={updated => setTokenFormUpdated(updated)}
+          onFormUpdated={didFormUpdate => setTokenFormUpdated(didFormUpdate)}
           onFinish={() => {
             setTokenDrawerVisible(false)
           }}
@@ -179,7 +179,7 @@ export default function FundingCycleTabContent({
         </h1>
 
         <RulesForm
-          onFormUpdated={updated => setRulesFormUpdated(updated)}
+          onFormUpdated={didFormUpdate => setRulesFormUpdated(didFormUpdate)}
           onFinish={() => {
             setRulesDrawerVisible(false)
           }}

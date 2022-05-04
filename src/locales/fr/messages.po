@@ -880,6 +880,7 @@ msgstr "Un projet est-il bénéficié par son propre overflow ?"
 #: src/components/v1/V1Project/modals/BalancesModal.tsx
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 #: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleHistory.tsx
 msgid "Done"
 msgstr "Finalisé"
 
@@ -1102,6 +1103,7 @@ msgid "Heads up"
 msgstr "Attention"
 
 #: src/components/v1/V1Project/FundingCycles/index.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/index.tsx
 msgid "History"
 msgstr "Historique"
 
@@ -1478,6 +1480,7 @@ msgid "No more than the funding cycle target can be distributed by the project i
 msgstr ""
 
 #: src/components/v1/V1Project/FundingCycles/FundingHistory.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleHistory.tsx
 msgid "No past funding cycles"
 msgstr "Aucun cycle de financement précédent"
 
@@ -3024,6 +3027,7 @@ msgid "{0} will go to the project owner: <0/>"
 msgstr "{0} ira au propriétaire du projet : <0/>"
 
 #: src/components/v1/V1Project/FundingCycles/FundingHistory.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleHistory.tsx
 msgid "{0} withdrawn"
 msgstr "{0} retiré"
 
@@ -3045,6 +3049,7 @@ msgid "{0}% to {1}"
 msgstr "{0}% à {1}"
 
 #: src/components/v1/V1Project/FundingCycles/FundingHistory.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleHistory.tsx
 msgid "{0}/{1} withdrawn"
 msgstr "{0}/{1} retiré"
 

@@ -71,7 +71,8 @@ export default function ProjectReserved({
               <Trans>
                 Initial issuance rate will be{' '}
                 {formattedNum(initialIssuanceRate)} tokens / 1 ETH for
-                contributors. {formattedNum(initialReservedTokensPerEth)} tokens / 1 ETH will be reserved by the project.
+                contributors. {formattedNum(initialReservedTokensPerEth)} tokens
+                / 1 ETH will be reserved by the project.
               </Trans>
             </TabDescription>
           )}

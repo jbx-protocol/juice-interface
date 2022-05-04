@@ -736,6 +736,10 @@ msgstr ""
 msgid "Disabled when your project's funding cycle has no duration."
 msgstr ""
 
+#: src/components/v2/shared/UnsavedChangesModal.tsx
+msgid "Discard"
+msgstr ""
+
 #: src/components/Navbar/Mobile/MobileCollapse.tsx
 #: src/components/Navbar/Wallet.tsx
 msgid "Disconnect"
@@ -2466,6 +2470,10 @@ msgstr "不可用"
 msgid "Unless payments are paused in your funding cycle settings, your project will still be able to receive payments directly through the Juicebox protocol contracts."
 msgstr "除非“付款”已在您的筹款周期设置中被暂停，否则您的项目仍可通过Juicebox协议的智能合约直接收到付款。"
 
+#: src/components/v2/shared/UnsavedChangesModal.tsx
+msgid "Unsaved changes"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 msgid "Unstaked balance"
 msgstr "取出的余额"
@@ -2653,6 +2661,10 @@ msgstr "未领取的 {tokenSymbol} 代币，依然可以用来赎回溢出池中
 #: src/components/v1/shared/BudgetForm.tsx
 msgid "You have set a funding cycle target."
 msgstr "您设定了一个筹款周期目标。"
+
+#: src/components/v2/shared/UnsavedChangesModal.tsx
+msgid "You have unsaved changes. Are you sure you want to discard them?"
+msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "You will receive minimum {minReturnedTokensFormatted} ETH"

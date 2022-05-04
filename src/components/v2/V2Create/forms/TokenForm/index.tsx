@@ -106,12 +106,6 @@ function DiscountRateExtra({
   )
 }
 
-interface InitialValues {
-  reservedRate: string
-  discountRate: string
-  redemptionRate: string
-}
-
 export default function TokenForm({
   onFormUpdated,
   onFinish,
@@ -141,7 +135,8 @@ export default function TokenForm({
   const canSetRedemptionRate = hasDistributionLimit(fundAccessConstraint)
   const canSetDiscountRate = hasFundingDuration(fundingCycleData)
 
-  const initialValues: InitialValues = useMemo(
+  // Form initial values set by default
+  const initialValues = useMemo(
     () => ({
       reservedRate:
         fundingCycleMetadata.reservedRate ??

@@ -24,12 +24,6 @@ import {
 import FormItemLabel from '../../FormItemLabel'
 import { getBallotStrategyByAddress } from 'constants/v2/ballotStrategies/getBallotStrategiesByAddress'
 
-interface InitialValues {
-  pausePay: boolean
-  allowMinting: boolean
-  ballotStrategy: BallotStrategy
-}
-
 export default function RulesForm({
   onFormUpdated,
   onFinish,
@@ -44,7 +38,8 @@ export default function RulesForm({
     state => state.editingV2Project,
   )
 
-  const initialValues: InitialValues = useMemo(
+  // Form initial values set by default
+  const initialValues = useMemo(
     () => ({
       pausePay: fundingCycleMetadata.pausePay,
       allowMinting: fundingCycleMetadata.allowMinting,

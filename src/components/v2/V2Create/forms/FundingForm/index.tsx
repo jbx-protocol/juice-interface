@@ -77,13 +77,6 @@ type FundingFormFields = {
   totalSplitsPercentage?: number
 }
 
-interface InitialValues {
-  durationSeconds: string
-  distributionLimit: string
-  distributionLimitCurrency: V2CurrencyOption
-  payoutSplits: Split[]
-}
-
 export default function FundingForm({
   onFormUpdated,
   onFinish,
@@ -124,7 +117,8 @@ export default function FundingForm({
       fundAccessConstraints,
     )
 
-  const initialValues: InitialValues = useMemo(
+  // Form initial values set by default
+  const initialValues = useMemo(
     () => ({
       durationSeconds: fundingCycleData ? fundingCycleData.duration : '0',
       distributionLimit: fundAccessConstraint?.distributionLimit ?? '0',

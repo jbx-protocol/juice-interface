@@ -54,7 +54,7 @@ export default function Payments() {
                 <div
                   style={{ color: colors.text.action.primary, fontWeight: 500 }}
                 >
-                  {e?.project?.projectId && (
+                  {e.project?.projectId && (
                     <V1ProjectHandle projectId={e.project.projectId} />
                   )}
                 </div>
@@ -72,14 +72,14 @@ export default function Payments() {
                 }}
               >
                 <span style={{ fontSize: '1rem', fontWeight: 500 }}>
-                  <ETHAmount amount={e?.amount} precision={4} />
+                  <ETHAmount amount={e.amount} precision={4} />
                 </span>
                 <span>
-                  <FormattedAddress address={e?.beneficiary} />
+                  <FormattedAddress address={e.beneficiary} />
                 </span>
               </div>
               <div>
-                <RichNote note={e?.note} />
+                <RichNote note={e.note} />
               </div>
             </div>
           ))}

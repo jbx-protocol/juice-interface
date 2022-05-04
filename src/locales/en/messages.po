@@ -778,6 +778,10 @@ msgstr "Disabled when your project's funding cycle duration is 0."
 msgid "Disabled when your project's funding cycle has no duration."
 msgstr "Disabled when your project's funding cycle has no duration."
 
+#: src/components/v2/shared/UnsavedChangesModal.tsx
+msgid "Discard"
+msgstr "Discard"
+
 #: src/components/Navbar/Mobile/MobileCollapse.tsx
 #: src/components/Navbar/Wallet.tsx
 msgid "Disconnect"
@@ -2622,6 +2626,10 @@ msgstr "Unavailable"
 msgid "Unless payments are paused in your funding cycle settings, your project will still be able to receive payments directly through the Juicebox protocol contracts."
 msgstr "Unless payments are paused in your funding cycle settings, your project will still be able to receive payments directly through the Juicebox protocol contracts."
 
+#: src/components/v2/shared/UnsavedChangesModal.tsx
+msgid "Unsaved changes"
+msgstr "Unsaved changes"
+
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 msgid "Unstaked balance"
 msgstr "Unstaked balance"
@@ -2815,6 +2823,10 @@ msgstr "You don't have a funding cycle duration. Changes you make will take effe
 #: src/components/v1/shared/BudgetForm.tsx
 msgid "You have set a funding cycle target."
 msgstr ""
+
+#: src/components/v2/shared/UnsavedChangesModal.tsx
+msgid "You have unsaved changes. Are you sure you want to discard them?"
+msgstr "You have unsaved changes. Are you sure you want to discard them?"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "You will receive minimum {minReturnedTokensFormatted} ETH"

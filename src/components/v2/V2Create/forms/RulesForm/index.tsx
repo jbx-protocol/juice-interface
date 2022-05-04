@@ -4,7 +4,7 @@ import { InfoCircleOutlined } from '@ant-design/icons'
 
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
-import { useCallback, useContext, useState } from 'react'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { ThemeContext } from 'contexts/themeContext'
 
@@ -14,6 +14,8 @@ import ReconfigurationStrategySelector from 'components/shared/ReconfigurationSt
 
 import { BallotStrategy } from 'models/ballot'
 
+import isEqual from 'lodash/isEqual'
+
 import { shadowCard } from 'constants/styles/shadowCard'
 import {
   ballotStrategies,
@@ -22,7 +24,13 @@ import {
 import FormItemLabel from '../../FormItemLabel'
 import { getBallotStrategyByAddress } from 'constants/v2/ballotStrategies/getBallotStrategiesByAddress'
 
-export default function RulesForm({ onFinish }: { onFinish: VoidFunction }) {
+export default function RulesForm({
+  onFormUpdated,
+  onFinish,
+}: {
+  onFormUpdated?: (updated: boolean) => void
+  onFinish: VoidFunction
+}) {
   const { theme } = useContext(ThemeContext)
 
   const dispatch = useAppDispatch()
@@ -30,18 +38,34 @@ export default function RulesForm({ onFinish }: { onFinish: VoidFunction }) {
     state => state.editingV2Project,
   )
 
+  // Form initial values set by default
+  const initialValues = useMemo(
+    () => ({
+      pausePay: fundingCycleMetadata.pausePay,
+      allowMinting: fundingCycleMetadata.allowMinting,
+      ballotStrategy: getBallotStrategyByAddress(
+        fundingCycleData.ballot ?? DEFAULT_BALLOT_STRATEGY.address,
+      ),
+    }),
+    [fundingCycleData, fundingCycleMetadata],
+  )
+
   const [showMintingWarning, setShowMintingWarning] = useState<boolean>(false)
   const [ballotStrategy, setBallotStrategy] = useState<BallotStrategy>(
-    getBallotStrategyByAddress(
-      fundingCycleData?.ballot ?? DEFAULT_BALLOT_STRATEGY.address,
-    ),
+    initialValues.ballotStrategy,
   )
-  const [pausePay, setPausePay] = useState<boolean>(
-    fundingCycleMetadata?.pausePay,
-  )
+  const [pausePay, setPausePay] = useState<boolean>(initialValues.pausePay)
   const [allowMinting, setAllowMinting] = useState<boolean>(
-    fundingCycleMetadata?.allowMinting,
+    initialValues.allowMinting,
   )
+
+  useEffect(() => {
+    const hasFormUpdated =
+      initialValues.allowMinting !== allowMinting ||
+      initialValues.pausePay !== pausePay ||
+      !isEqual(initialValues.ballotStrategy, ballotStrategy)
+    onFormUpdated?.(hasFormUpdated)
+  }, [onFormUpdated, initialValues, pausePay, allowMinting, ballotStrategy])
 
   const onFormSaved = useCallback(() => {
     dispatch(editingV2ProjectActions.setPausePay(pausePay))

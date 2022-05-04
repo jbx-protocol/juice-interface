@@ -2,17 +2,13 @@ import { t, Trans } from '@lingui/macro'
 import { Modal, notification } from 'antd'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
-import UntrackedErc20Notice from 'components/shared/UntrackedErc20Notice'
 
-import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
-import { NetworkName } from 'models/network-name'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { fromWad } from 'utils/formatNumber'
 import { querySubgraphExhaustive } from 'utils/graph'
 
 import { readProvider } from 'constants/readProvider'
-import { indexedProjectERC20s } from 'constants/v1/indexedProjectERC20s'
 
 export default function DownloadParticipantsModal({
   visible,
@@ -25,9 +21,6 @@ export default function DownloadParticipantsModal({
   const [blockNumber, setBlockNumber] = useState<number>()
   const [loading, setLoading] = useState<boolean>()
   const { projectId, tokenSymbol, handle } = useContext(V1ProjectContext)
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
 
   useEffect(() => {
     readProvider.getBlockNumber().then(val => {
@@ -116,13 +109,6 @@ export default function DownloadParticipantsModal({
     }
   }, [projectId, setLoading, blockNumber, handle, tokenSymbol])
 
-  const erc20IsUntracked =
-    tokenSymbol &&
-    projectId &&
-    !indexedProjectERC20s[
-      process.env.REACT_APP_INFURA_NETWORK as NetworkName
-    ]?.includes(projectId)
-
   return (
     <Modal
       visible={visible}
@@ -138,13 +124,6 @@ export default function DownloadParticipantsModal({
         <h4>
           <Trans>Download CSV of {tokenSymbol || t`token`} holders</Trans>
         </h4>
-
-        {erc20IsUntracked && (
-          <p style={{ padding: 10, background: colors.background.l1 }}>
-            (
-            <UntrackedErc20Notice tokenSymbol={tokenSymbol} />
-          </p>
-        )}
 
         <label style={{ display: 'block', marginTop: 20, marginBottom: 5 }}>
           <Trans>Block number</Trans>

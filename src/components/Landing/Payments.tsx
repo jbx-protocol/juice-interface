@@ -16,8 +16,15 @@ export default function Payments() {
   } = useContext(ThemeContext)
 
   const { data: events, isLoading } = useSubgraphQuery({
-    entity: 'projectEvent',
-    keys: ['payEvent', 'timestamp', 'id', { entity: 'project', keys: ['id'] }],
+    entity: 'payEvent',
+    keys: [
+      'amount',
+      'beneficiary',
+      'note',
+      'timestamp',
+      'id',
+      { entity: 'project', keys: ['id'] },
+    ],
     first: 20,
     orderDirection: 'desc',
     orderBy: 'timestamp',
@@ -47,8 +54,8 @@ export default function Payments() {
                 <div
                   style={{ color: colors.text.action.primary, fontWeight: 500 }}
                 >
-                  {e.payEvent?.project?.projectId && (
-                    <V1ProjectHandle projectId={e.payEvent.project.projectId} />
+                  {e?.project?.projectId && (
+                    <V1ProjectHandle projectId={e.project.projectId} />
                   )}
                 </div>
                 <div
@@ -65,14 +72,14 @@ export default function Payments() {
                 }}
               >
                 <span style={{ fontSize: '1rem', fontWeight: 500 }}>
-                  <ETHAmount amount={e.payEvent?.amount} precision={4} />
+                  <ETHAmount amount={e?.amount} precision={4} />
                 </span>
                 <span>
-                  <FormattedAddress address={e.payEvent?.beneficiary} />
+                  <FormattedAddress address={e?.beneficiary} />
                 </span>
               </div>
               <div>
-                <RichNote note={e.payEvent?.note} />
+                <RichNote note={e?.note} />
               </div>
             </div>
           ))}

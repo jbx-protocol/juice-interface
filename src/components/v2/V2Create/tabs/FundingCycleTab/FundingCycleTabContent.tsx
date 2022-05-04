@@ -6,6 +6,8 @@ import { useContext, useState } from 'react'
 
 import { ThemeContext } from 'contexts/themeContext'
 
+import UnsavedChangesModal from 'components/v2/shared/UnsavedChangesModal'
+
 import FundingCycleExplainer from '../../FundingCycleExplainer'
 import FundingForm from '../../forms/FundingForm'
 
@@ -23,15 +25,44 @@ export default function FundingCycleTabContent({
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const [fundingDrawerVisible, setFundingDrawerVisible] = useState<boolean>()
-  const [tokenDrawerVisible, setTokenDrawerVisible] = useState<boolean>()
-  const [rulesDrawerVisible, setRulesDrawerVisible] = useState<boolean>()
+  const [fundingDrawerVisible, setFundingDrawerVisible] =
+    useState<boolean>(false)
+  const [tokenDrawerVisible, setTokenDrawerVisible] = useState<boolean>(false)
+  const [rulesDrawerVisible, setRulesDrawerVisible] = useState<boolean>(false)
+
+  const [fundingFormUpdated, setFundingFormUpdated] = useState<boolean>(false)
+  const [tokenFormUpdated, setTokenFormUpdated] = useState<boolean>(false)
+  const [rulesFormUpdated, setRulesFormUpdated] = useState<boolean>(false)
+
+  const [unsavedChangesModalVisible, setUnsavedChangesModalVisible] =
+    useState<boolean>(false)
 
   const fundingDrawerSeen = fundingDrawerVisible !== undefined
   const tokenDrawerSeen = tokenDrawerVisible !== undefined
   const rulesDrawerSeen = rulesDrawerVisible !== undefined
 
   const seenColor = colors.text.tertiary
+
+  const openModal = () => setUnsavedChangesModalVisible(true)
+  const closeModal = () => setUnsavedChangesModalVisible(false)
+
+  const closeDrawer = () => {
+    setFundingDrawerVisible(false)
+    setTokenDrawerVisible(false)
+    setRulesDrawerVisible(false)
+  }
+
+  const closeModalAndDrawer = () => {
+    closeModal()
+    closeDrawer()
+  }
+
+  const handleDrawerCloseClick = (formUpdated: boolean) => {
+    if (!formUpdated) {
+      return closeDrawer()
+    }
+    openModal()
+  }
 
   return (
     <ProjectConfigurationFieldsContainer showPreview>
@@ -103,9 +134,7 @@ export default function FundingCycleTabContent({
       <Drawer
         {...drawerStyle}
         visible={fundingDrawerVisible}
-        onClose={() => {
-          setFundingDrawerVisible(false)
-        }}
+        onClose={() => handleDrawerCloseClick(fundingFormUpdated)}
         getContainer={false}
         destroyOnClose
       >
@@ -114,6 +143,7 @@ export default function FundingCycleTabContent({
         </h1>
 
         <FundingForm
+          onFormUpdated={didFormUpdate => setFundingFormUpdated(didFormUpdate)}
           onFinish={() => {
             setFundingDrawerVisible(false)
           }}
@@ -122,9 +152,7 @@ export default function FundingCycleTabContent({
       <Drawer
         {...drawerStyle}
         visible={tokenDrawerVisible}
-        onClose={() => {
-          setTokenDrawerVisible(false)
-        }}
+        onClose={() => handleDrawerCloseClick(tokenFormUpdated)}
         getContainer={false}
         destroyOnClose
       >
@@ -132,6 +160,7 @@ export default function FundingCycleTabContent({
           <Trans>Token</Trans>
         </h1>
         <TokenForm
+          onFormUpdated={didFormUpdate => setTokenFormUpdated(didFormUpdate)}
           onFinish={() => {
             setTokenDrawerVisible(false)
           }}
@@ -141,9 +170,7 @@ export default function FundingCycleTabContent({
       <Drawer
         {...drawerStyle}
         visible={rulesDrawerVisible}
-        onClose={() => {
-          setRulesDrawerVisible(false)
-        }}
+        onClose={() => handleDrawerCloseClick(rulesFormUpdated)}
         getContainer={false}
         destroyOnClose
       >
@@ -152,11 +179,17 @@ export default function FundingCycleTabContent({
         </h1>
 
         <RulesForm
+          onFormUpdated={didFormUpdate => setRulesFormUpdated(didFormUpdate)}
           onFinish={() => {
             setRulesDrawerVisible(false)
           }}
         />
       </Drawer>
+      <UnsavedChangesModal
+        visible={unsavedChangesModalVisible}
+        onOk={() => closeModalAndDrawer()}
+        onCancel={() => closeModal()}
+      />
     </ProjectConfigurationFieldsContainer>
   )
 }

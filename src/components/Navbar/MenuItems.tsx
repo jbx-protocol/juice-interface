@@ -81,7 +81,6 @@ export function TopLeftNavItems({
   return (
     <Space
       size={mobile ? 0 : 'large'}
-      className="top-left-nav"
       style={{ ...topLeftNavStyles }}
       direction={mobile ? 'vertical' : 'horizontal'}
     >

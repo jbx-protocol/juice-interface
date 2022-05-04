@@ -65,14 +65,14 @@ export default function ProjectReserved({
   return (
     <Form.Item
       extra={
-        <>
+        <div style={{ fontSize: '0.9rem' }}>
           {isCreate && (
             <TabDescription>
               <Trans>
                 Initial issuance rate will be{' '}
-                {formattedNum(initialIssuanceRate)} tokens / ETH for
+                {formattedNum(initialIssuanceRate)} tokens / 1 ETH for
                 contributors. {formattedNum(initialReservedTokensPerEth)} tokens
-                / ETH will be reserved by the project.
+                / 1 ETH will be reserved by the project.
               </Trans>
             </TabDescription>
           )}
@@ -88,7 +88,7 @@ export default function ProjectReserved({
               you can also allocate portions to other wallet addresses.
             </Trans>
           </p>
-        </>
+        </div>
       }
       name={name}
       label={

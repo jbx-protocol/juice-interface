@@ -14,6 +14,8 @@ import FormItemLabel from 'components/v2/V2Create/FormItemLabel'
 
 import ExternalLink from 'components/shared/ExternalLink'
 
+import { REDEMPTION_RATE_EXPLANATION } from 'components/v2/V2Project/V2FundingCycleSection/settingExplanations'
+
 import NumberSlider from '../inputs/NumberSlider'
 import { FormItemExt } from './formItemExt'
 import FormItemWarningText from '../FormItemWarningText'
@@ -38,7 +40,7 @@ function BondingCurveRateExtra({ disabled }: { disabled?: boolean }) {
   const graphPad = 50
 
   return (
-    <div>
+    <div style={{ fontSize: '0.9rem' }}>
       {disabled && (
         <FormItemWarningText>
           <Trans>
@@ -104,13 +106,9 @@ function BondingCurveRateExtra({ disabled }: { disabled?: boolean }) {
           </div>
         </div>
         <p>
+          {REDEMPTION_RATE_EXPLANATION}{' '}
           <Trans>
-            This rate determines the amount of overflow that each token can be
-            redeemed for at any given time. On a lower redemption rate,
-            redeeming a token increases the value of each remaining token,
-            creating an incentive to hold tokens longer than others. The default
-            redemption rate of 100% means all tokens will have equal value
-            regardless of when they are redeemed. Learn more in this{' '}
+            Learn more in this{' '}
             <ExternalLink href="https://youtu.be/dxqc3yMqi5M">
               short video
             </ExternalLink>

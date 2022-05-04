@@ -54,6 +54,8 @@ import FormItemWarningText from 'components/shared/FormItemWarningText'
 import { formattedNum } from 'utils/formatNumber'
 import { DEFAULT_BONDING_CURVE_RATE_PERCENTAGE } from 'components/shared/formItems/ProjectBondingCurveRate'
 
+import { DISCOUNT_RATE_EXPLANATION } from 'components/v2/V2Project/V2FundingCycleSection/settingExplanations'
+
 import { shadowCard } from 'constants/styles/shadowCard'
 import TabDescription from '../../TabDescription'
 
@@ -77,7 +79,7 @@ function DiscountRateExtra({
   const thirdIssuanceRate =
     secondIssuanceRate - secondIssuanceRate * discountRateDecimal
   return (
-    <div>
+    <div style={{ fontSize: '0.9rem' }}>
       {!hasDuration && (
         <FormItemWarningText>
           <Trans>
@@ -85,19 +87,13 @@ function DiscountRateExtra({
           </Trans>
         </FormItemWarningText>
       )}
-      <p>
-        <Trans>
-          The issuance rate will decrease by this percentage with each new
-          funding cycle. A higher discount rate will incentivize supporters to
-          pay your project earlier than later.
-        </Trans>
-      </p>
+      <p>{DISCOUNT_RATE_EXPLANATION}</p>
       {discountRatePercent > 0 && isCreate && (
         <>
           <TabDescription style={{ marginTop: 20 }}>
             The issuance rate of your second funding cycle will be{' '}
-            {formattedNum(secondIssuanceRate)} tokens / ETH, then{' '}
-            {formattedNum(thirdIssuanceRate)} tokens / ETH for your third
+            {formattedNum(secondIssuanceRate)} tokens / 1 ETH, then{' '}
+            {formattedNum(thirdIssuanceRate)} tokens / 1 ETH for your third
             funding cycle, and so on.
           </TabDescription>
         </>

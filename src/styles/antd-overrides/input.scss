@@ -72,8 +72,15 @@
   }
 }
 
+.ant-form-item {
+  margin-bottom: 16px;
+}
+
 .ant-form-item-extra {
   color: var(--text-secondary);
+  font-size: 0.8rem;
+  margin-top: 8px;
+  min-height: unset;
 }
 
 /* Chrome, Safari, Edge, Opera */

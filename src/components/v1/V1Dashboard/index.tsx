@@ -1,8 +1,5 @@
-import { Trans } from '@lingui/macro'
-import { Button } from 'antd'
 import FeedbackFormButton from 'components/shared/FeedbackFormButton'
 import ScrollToTopButton from 'components/shared/ScrollToTopButton'
-import FeedbackPromptModal from 'components/v1/V1Project/modals/FeedbackPromptModal'
 
 import {
   V1ProjectContext,

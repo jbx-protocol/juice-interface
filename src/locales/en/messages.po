@@ -647,7 +647,7 @@ msgstr ""
 
 #: src/components/shared/CopyTextButton.tsx
 msgid "Copy to clipboard"
-msgstr "<<<<<<< HEAD"
+msgstr "Copy to clipboard"
 
 #: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Create a payable address"
@@ -1351,7 +1351,7 @@ msgstr "Latest"
 
 #: src/components/Landing/index.tsx
 msgid "Latest payments"
-msgstr "<<<<<<< HEAD"
+msgstr "Latest payments"
 
 #: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 msgid "Learn more in this <0>short video</0>."

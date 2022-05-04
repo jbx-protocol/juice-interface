@@ -880,6 +880,7 @@ msgstr "Bir proje kendi taşmasından faydalanır mı?"
 #: src/components/v1/V1Project/modals/BalancesModal.tsx
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 #: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleHistory.tsx
 msgid "Done"
 msgstr "Tamamlandı"
 
@@ -1102,6 +1103,7 @@ msgid "Heads up"
 msgstr "Dikkat"
 
 #: src/components/v1/V1Project/FundingCycles/index.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/index.tsx
 msgid "History"
 msgstr "Geçmiş"
 
@@ -1478,6 +1480,7 @@ msgid "No more than the funding cycle target can be distributed by the project i
 msgstr "Tek bir finansman döngüsünde proje, finansman döngüsü hedefinden daha fazlasını dağıtamaz."
 
 #: src/components/v1/V1Project/FundingCycles/FundingHistory.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleHistory.tsx
 msgid "No past funding cycles"
 msgstr "Geçmiş finansman döngüsü yok"
 
@@ -3024,6 +3027,7 @@ msgid "{0} will go to the project owner: <0/>"
 msgstr "{0} proje sahibine gidecek: <0/>"
 
 #: src/components/v1/V1Project/FundingCycles/FundingHistory.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleHistory.tsx
 msgid "{0} withdrawn"
 msgstr "{0} çekildi"
 
@@ -3045,6 +3049,7 @@ msgid "{0}% to {1}"
 msgstr ""
 
 #: src/components/v1/V1Project/FundingCycles/FundingHistory.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleHistory.tsx
 msgid "{0}/{1} withdrawn"
 msgstr "{0}/{1} çekildi"
 

@@ -880,6 +880,7 @@ msgstr "项目是否能从溢出中获益？"
 #: src/components/v1/V1Project/modals/BalancesModal.tsx
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 #: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleHistory.tsx
 msgid "Done"
 msgstr "完成"
 
@@ -1102,6 +1103,7 @@ msgid "Heads up"
 msgstr "注意"
 
 #: src/components/v1/V1Project/FundingCycles/index.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/index.tsx
 msgid "History"
 msgstr "历史"
 
@@ -1478,6 +1480,7 @@ msgid "No more than the funding cycle target can be distributed by the project i
 msgstr "在单个筹款周期中，项目无法提取超出筹款目标的资金。"
 
 #: src/components/v1/V1Project/FundingCycles/FundingHistory.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleHistory.tsx
 msgid "No past funding cycles"
 msgstr "没有历史筹款周期"
 
@@ -3024,6 +3027,7 @@ msgid "{0} will go to the project owner: <0/>"
 msgstr "{0} 会给到项目拥有者：<0/>"
 
 #: src/components/v1/V1Project/FundingCycles/FundingHistory.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleHistory.tsx
 msgid "{0} withdrawn"
 msgstr "已提取 {0}"
 
@@ -3045,6 +3049,7 @@ msgid "{0}% to {1}"
 msgstr "{0}% 分配给 {1}"
 
 #: src/components/v1/V1Project/FundingCycles/FundingHistory.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleHistory.tsx
 msgid "{0}/{1} withdrawn"
 msgstr "已提取 {0}/{1}"
 

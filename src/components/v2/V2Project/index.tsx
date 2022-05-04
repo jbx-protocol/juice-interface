@@ -8,12 +8,13 @@ import { useContext, useState } from 'react'
 import { weightedAmount } from 'utils/v2/math'
 import { useHistory, useLocation } from 'react-router-dom'
 
-import V2PayButton from './V2PayButton'
-import V2ProjectHeaderActions from './V2ProjectHeaderActions'
+import ProjectActivity from './ProjectActivity'
 import TreasuryStats from './TreasuryStats'
 import V2FundingCycleSection from './V2FundingCycleSection'
 import V2ManageTokensSection from './V2ManageTokensSection'
 import NewDeployModal from './NewDeployModal'
+import V2PayButton from './V2PayButton'
+import V2ProjectHeaderActions from './V2ProjectHeaderActions'
 
 const GUTTER_PX = 40
 
@@ -86,6 +87,10 @@ export default function V2Project({
             <V2ManageTokensSection />
             <V2FundingCycleSection expandCard={expandFundingCycleCard} />
           </Space>
+        </Col>
+
+        <Col md={colSizeMd} xs={24}>
+          <ProjectActivity />
         </Col>
       </Row>
       <NewDeployModal

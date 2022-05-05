@@ -5,6 +5,7 @@ import { Button, Form, Input, Space } from 'antd'
 import {
   useCallback,
   useContext,
+  useEffect,
   useLayoutEffect,
   useMemo,
   useState,
@@ -60,6 +61,8 @@ import SwitchHeading from 'components/shared/SwitchHeading'
 import DistributionSplitsSection from 'components/v2/shared/DistributionSplitsSection'
 import { getTotalSplitsPercentage } from 'utils/v2/distributions'
 
+import isEqual from 'lodash/isEqual'
+
 import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
 
 import { shadowCard } from 'constants/styles/shadowCard'
@@ -74,7 +77,13 @@ type FundingFormFields = {
   totalSplitsPercentage?: number
 }
 
-export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
+export default function FundingForm({
+  onFormUpdated,
+  onFinish,
+}: {
+  onFormUpdated?: (updated: boolean) => void
+  onFinish: VoidFunction
+}) {
   const { theme } = useContext(ThemeContext)
   const { contracts } = useContext(V2UserContext)
 
@@ -111,6 +120,20 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
     getDefaultFundAccessConstraint<SerializedV2FundAccessConstraint>(
       fundAccessConstraints,
     )
+
+  // Form initial values set by default
+  const initialValues = useMemo(
+    () => ({
+      durationSeconds: fundingCycleData ? fundingCycleData.duration : '0',
+      distributionLimit: fundAccessConstraint?.distributionLimit ?? '0',
+      distributionLimitCurrency: parseInt(
+        fundAccessConstraint?.distributionLimitCurrency ??
+          V2_CURRENCY_ETH.toString(),
+      ) as V2CurrencyOption,
+      payoutSplits: payoutGroupedSplits.splits,
+    }),
+    [fundingCycleData, fundAccessConstraint, payoutGroupedSplits],
+  )
 
   const {
     editableSplits,
@@ -264,8 +287,47 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
     return Promise.resolve()
   }
 
+  const onFormChange = useCallback(() => {
+    const duration = fundingForm.getFieldValue('duration') as number
+    const durationUnit = fundingForm.getFieldValue(
+      'durationUnit',
+    ) as DurationUnitsOption
+
+    const durationInSeconds = durationEnabled
+      ? otherUnitToSeconds({
+          duration: duration,
+          unit: durationUnit,
+        }).toString()
+      : '0'
+    const splits = lockedSplits.concat(editingSplits).map(sanitizeSplit)
+    const hasFormUpdated =
+      initialValues.durationSeconds !== durationInSeconds ||
+      initialValues.distributionLimit !== target ||
+      initialValues.distributionLimitCurrency !== targetCurrency ||
+      !isEqual(initialValues.payoutSplits, splits)
+    onFormUpdated?.(hasFormUpdated)
+  }, [
+    durationEnabled,
+    editingSplits,
+    fundingForm,
+    initialValues,
+    lockedSplits,
+    onFormUpdated,
+    target,
+    targetCurrency,
+  ])
+
+  useEffect(() => {
+    onFormChange()
+  }, [onFormChange])
+
   return (
-    <Form form={fundingForm} layout="vertical" onFinish={onFundingFormSave}>
+    <Form
+      form={fundingForm}
+      onValuesChange={onFormChange}
+      layout="vertical"
+      onFinish={onFundingFormSave}
+    >
       <div
         style={{
           padding: '2rem',

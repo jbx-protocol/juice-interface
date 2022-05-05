@@ -783,6 +783,10 @@ msgstr ""
 msgid "Disabled when your project's funding cycle has no duration."
 msgstr ""
 
+#: src/components/v2/shared/UnsavedChangesModal.tsx
+msgid "Discard"
+msgstr ""
+
 #: src/components/Navbar/Mobile/MobileCollapse.tsx
 #: src/components/Navbar/Wallet.tsx
 msgid "Disconnect"
@@ -2627,6 +2631,10 @@ msgstr "Indisponível"
 msgid "Unless payments are paused in your funding cycle settings, your project will still be able to receive payments directly through the Juicebox protocol contracts."
 msgstr "A não ser que os pagamentos estejam pausados nas suas configurações de ciclo de financiamento, seu projeto ainda poderá receber pagamentos diretamente através do protocolo de contratos Juicebox."
 
+#: src/components/v2/shared/UnsavedChangesModal.tsx
+msgid "Unsaved changes"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 msgid "Unstaked balance"
 msgstr "Saldo fora de Stake"
@@ -2820,6 +2828,10 @@ msgstr ""
 #: src/components/v1/shared/BudgetForm.tsx
 msgid "You have set a funding cycle target."
 msgstr "Você definiu a meta do ciclo de financiamento."
+
+#: src/components/v2/shared/UnsavedChangesModal.tsx
+msgid "You have unsaved changes. Are you sure you want to discard them?"
+msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "You will receive minimum {minReturnedTokensFormatted} ETH"

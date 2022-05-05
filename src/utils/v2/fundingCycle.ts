@@ -23,8 +23,7 @@ export const hasDistributionLimit = (
     fundAccessConstraint?.distributionLimit &&
       !parseWad(fundAccessConstraint.distributionLimit).eq(
         MAX_DISTRIBUTION_LIMIT,
-      ) &&
-      fundAccessConstraint.distributionLimit !== '0',
+      ),
   )
 }
 

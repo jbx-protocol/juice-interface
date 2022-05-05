@@ -2,6 +2,7 @@ import { Tooltip } from 'antd'
 import { t } from '@lingui/macro'
 import { NetworkName } from 'models/network-name'
 import { LinkOutlined } from '@ant-design/icons'
+import { CSSProperties } from 'react'
 
 import { readNetwork } from 'constants/networks'
 import ExternalLink from './ExternalLink'
@@ -10,10 +11,12 @@ export default function EtherscanLink({
   value,
   type,
   truncated,
+  style,
 }: {
   value: string | undefined
   type: 'tx' | 'address'
   truncated?: boolean
+  style?: CSSProperties
 }) {
   if (!value) return null
   let truncatedValue: string | undefined
@@ -29,7 +32,7 @@ export default function EtherscanLink({
   }
   const linkProps = {
     className: 'hover-action',
-    style: { fontWeight: 400 },
+    style: { ...style, fontWeight: 400 },
     href: `https://${subdomain}etherscan.io/${type}/${value}`,
   }
 

@@ -14,13 +14,15 @@ import FormItemLabel from 'components/v2/V2Create/FormItemLabel'
 
 import ExternalLink from 'components/shared/ExternalLink'
 
+import { REDEMPTION_RATE_EXPLANATION } from 'components/v2/V2Project/V2FundingCycleSection/settingExplanations'
+
 import NumberSlider from '../inputs/NumberSlider'
 import { FormItemExt } from './formItemExt'
 import FormItemWarningText from '../FormItemWarningText'
 import SwitchHeading from '../SwitchHeading'
 
 const GRAPH_CONTAINER_ID = 'graph-container'
-const DEFAULT_BONDING_CURVE_RATE_PERCENTAGE = '100'
+export const DEFAULT_BONDING_CURVE_RATE_PERCENTAGE = '100'
 
 function BondingCurveRateExtra({ disabled }: { disabled?: boolean }) {
   const {
@@ -38,11 +40,12 @@ function BondingCurveRateExtra({ disabled }: { disabled?: boolean }) {
   const graphPad = 50
 
   return (
-    <div>
+    <div style={{ fontSize: '0.9rem' }}>
       {disabled && (
         <FormItemWarningText>
           <Trans>
-            Disabled when your project's funding cycle has no funding target.
+            Disabled when your project's distribution limit is{' '}
+            <strong>No limit</strong> (infinite)
           </Trans>
         </FormItemWarningText>
       )}
@@ -103,13 +106,9 @@ function BondingCurveRateExtra({ disabled }: { disabled?: boolean }) {
           </div>
         </div>
         <p>
+          {REDEMPTION_RATE_EXPLANATION}{' '}
           <Trans>
-            This rate determines the amount of overflow that each token can be
-            redeemed for at any given time. On a lower bonding curve, redeeming
-            a token increases the value of each remaining token, creating an
-            incentive to hold tokens longer than others. The default bonding
-            curve of 100% means all tokens will have equal value regardless of
-            when they are redeemed. Learn more in this{' '}
+            Learn more in this{' '}
             <ExternalLink href="https://youtu.be/dxqc3yMqi5M">
               short video
             </ExternalLink>
@@ -231,9 +230,8 @@ export default function ProjectBondingCurveRate({
                 checked={Boolean(checked)}
                 onChange={checked => {
                   onToggled(checked)
-                  if (!checked) {
-                    onChange(100)
-                  }
+                  if (!checked)
+                    onChange(parseInt(DEFAULT_BONDING_CURVE_RATE_PERCENTAGE))
                 }}
                 disabled={disabled}
               >
@@ -251,21 +249,23 @@ export default function ProjectBondingCurveRate({
       extra={<BondingCurveRateExtra disabled={disabled} />}
       {...formItemProps}
     >
-      <NumberSlider
-        min={0}
-        max={100}
-        step={0.5}
-        name={name}
-        defaultValue={parseInt(DEFAULT_BONDING_CURVE_RATE_PERCENTAGE)}
-        sliderValue={parseFloat(value ?? DEFAULT_BONDING_CURVE_RATE_PERCENTAGE)}
-        disabled={disabled || (onToggled && !checked)}
-        onChange={(val: number | undefined) => {
-          graphCurve(val)
-          onChange(val)
-        }}
-        suffix="%"
-        style={{ flexGrow: 1 }}
-      />
+      {!disabled && !(onToggled && !checked) && (
+        <NumberSlider
+          min={0}
+          max={100}
+          step={0.5}
+          name={name}
+          sliderValue={parseFloat(
+            value ?? DEFAULT_BONDING_CURVE_RATE_PERCENTAGE,
+          )}
+          onChange={(val: number | undefined) => {
+            graphCurve(val)
+            onChange(val)
+          }}
+          suffix="%"
+          style={{ flexGrow: 1 }}
+        />
+      )}
     </Form.Item>
   )
 }

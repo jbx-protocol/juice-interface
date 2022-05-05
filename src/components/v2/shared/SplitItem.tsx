@@ -14,6 +14,7 @@ import CurrencySymbol from 'components/shared/CurrencySymbol'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { V2CurrencyName } from 'utils/v2/currency'
 import { formatSplitPercent, SPLITS_TOTAL_PERCENT } from 'utils/v2/math'
+import useMobile from 'hooks/Mobile'
 
 export default function SplitItem({
   split,
@@ -50,6 +51,10 @@ export default function SplitItem({
       </div>
     )
   }
+
+  const isMobile = useMobile()
+
+  const itemFontSize = isMobile ? '0.9rem' : 'unset'
 
   const JuiceboxProjectBeneficiary = () => {
     return (
@@ -88,6 +93,7 @@ export default function SplitItem({
       <div
         style={{
           fontWeight: 500,
+          fontSize: itemFontSize,
           display: 'flex',
           alignItems: 'baseline',
         }}
@@ -115,7 +121,7 @@ export default function SplitItem({
     const splitValueFormatted = formatWad(splitValue, { ...valueFormatProps })
 
     return (
-      <>
+      <span style={{ fontSize: itemFontSize }}>
         (
         <CurrencySymbol
           currency={V2CurrencyName(
@@ -124,7 +130,7 @@ export default function SplitItem({
         />
         {splitValueFormatted}
         {valueSuffix ? <span> {valueSuffix}</span> : null})
-      </>
+      </span>
     )
   }
 

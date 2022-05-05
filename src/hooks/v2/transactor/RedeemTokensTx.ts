@@ -1,5 +1,6 @@
 import { NetworkContext } from 'contexts/networkContext'
 import { BigNumber } from '@ethersproject/bignumber'
+import * as constants from '@ethersproject/constants'
 import { randomBytes } from '@ethersproject/random'
 import { useContext } from 'react'
 
@@ -36,6 +37,7 @@ export function useRedeemTokensTx(): TransactorInstance<{
         userAddress, // _holder
         projectId, // _projectId
         redeemAmount, // _tokenCount, tokens to redeem
+        constants.AddressZero, // _token, unused parameter
         minReturnedTokens, // _minReturnedTokens, min amount of ETH to receive
         userAddress, // _beneficiary
         memo, // _memo

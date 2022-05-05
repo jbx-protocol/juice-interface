@@ -1,12 +1,19 @@
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 
-import { Button, Form, Space } from 'antd'
+import { Button, Form, Input, Space } from 'antd'
 
-import { useCallback, useContext, useLayoutEffect, useState } from 'react'
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useState,
+} from 'react'
 
 import { ThemeContext } from 'contexts/themeContext'
 import { helpPagePath } from 'utils/helpPageHelper'
-import ProjectPayoutMods from 'components/shared/formItems/ProjectPayoutMods'
+
 import { useETHPaymentTerminalFee } from 'hooks/v2/contractReader/ETHPaymentTerminalFee'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 
@@ -20,7 +27,7 @@ import { V2UserContext } from 'contexts/v2/userContext'
 import { useAppSelector } from 'hooks/AppSelector'
 import { SerializedV2FundAccessConstraint } from 'utils/v2/serializers'
 
-import { sanitizeSplit, toMod, toSplit } from 'utils/v2/splits'
+import { sanitizeSplit } from 'utils/v2/splits'
 
 import { getDefaultFundAccessConstraint } from 'utils/v2/fundingCycle'
 import {
@@ -33,8 +40,12 @@ import ExternalLink from 'components/shared/ExternalLink'
 
 import { Split } from 'models/v2/splits'
 
-import { formatFee, MAX_DISTRIBUTION_LIMIT } from 'utils/v2/math'
-import { CurrencyContext } from 'contexts/currencyContext'
+import {
+  DEFAULT_FUNDING_CYCLE_DURATION,
+  formatFee,
+  MAX_DISTRIBUTION_LIMIT,
+} from 'utils/v2/math'
+
 import {
   deriveDurationUnit,
   secondsToOtherUnit,
@@ -47,6 +58,10 @@ import { Link } from 'react-router-dom'
 import FormItemWarningText from 'components/shared/FormItemWarningText'
 
 import SwitchHeading from 'components/shared/SwitchHeading'
+import DistributionSplitsSection from 'components/v2/shared/DistributionSplitsSection'
+import { getTotalSplitsPercentage } from 'utils/v2/distributions'
+
+import isEqual from 'lodash/isEqual'
 
 import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
 
@@ -59,21 +74,29 @@ type FundingFormFields = {
   duration?: string
   durationUnit?: DurationUnitsOption
   durationEnabled?: boolean
+  totalSplitsPercentage?: number
 }
 
-export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
+export default function FundingForm({
+  onFormUpdated,
+  onFinish,
+}: {
+  onFormUpdated?: (updated: boolean) => void
+  onFinish: VoidFunction
+}) {
   const { theme } = useContext(ThemeContext)
   const { contracts } = useContext(V2UserContext)
-
-  const {
-    currencies: { ETH },
-  } = useContext(CurrencyContext)
 
   const dispatch = useAppDispatch()
 
   const [fundingForm] = Form.useForm<FundingFormFields>()
 
   const [splits, setSplits] = useState<Split[]>([])
+  // Must differentiate between splits loaded from redux and
+  // ones just added to be able to still edit splits you've
+  // added with a lockedUntil
+  const [editingSplits, setEditingSplits] = useState<Split[]>([])
+
   const [target, setTarget] = useState<string | undefined>()
 
   const [targetCurrency, setTargetCurrency] =
@@ -86,6 +109,10 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
     ? formatFee(ETHPaymentTerminalFee)
     : undefined
 
+  const payoutSplitsDisabled =
+    targetType === 'none' ||
+    (targetType === 'specific' && target && target === '0')
+
   // Load redux state (will be empty in create flow)
   const { fundAccessConstraints, fundingCycleData, payoutGroupedSplits } =
     useAppSelector(state => state.editingV2Project)
@@ -94,11 +121,48 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
       fundAccessConstraints,
     )
 
+  // Form initial values set by default
+  const initialValues = useMemo(
+    () => ({
+      durationSeconds: fundingCycleData ? fundingCycleData.duration : '0',
+      distributionLimit: fundAccessConstraint?.distributionLimit ?? '0',
+      distributionLimitCurrency: parseInt(
+        fundAccessConstraint?.distributionLimitCurrency ??
+          V2_CURRENCY_ETH.toString(),
+      ) as V2CurrencyOption,
+      payoutSplits: payoutGroupedSplits.splits,
+    }),
+    [fundingCycleData, fundAccessConstraint, payoutGroupedSplits],
+  )
+
+  const {
+    editableSplits,
+    lockedSplits,
+  }: {
+    editableSplits: Split[]
+    lockedSplits: Split[]
+  } = useMemo(() => {
+    const now = new Date().valueOf() / 1000
+
+    return {
+      editableSplits:
+        splits?.filter(
+          split => !split.lockedUntil || split.lockedUntil < now,
+        ) ?? [],
+      lockedSplits:
+        splits?.filter(split => split.lockedUntil && split.lockedUntil > now) ??
+        [],
+    }
+  }, [splits])
+
+  useLayoutEffect(() => setEditingSplits(editableSplits), [editableSplits])
+
   // Loads redux state into form
   const resetProjectForm = useCallback(() => {
     const _target = fundAccessConstraint?.distributionLimit ?? '0'
     const _targetCurrency = parseInt(
-      fundAccessConstraint?.distributionLimitCurrency ?? '0',
+      fundAccessConstraint?.distributionLimitCurrency ??
+        V2_CURRENCY_ETH.toString(),
     ) as V2CurrencyOption
 
     const durationSeconds = fundingCycleData
@@ -130,7 +194,7 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
   }, [fundingForm, fundingCycleData, fundAccessConstraint, payoutGroupedSplits])
 
   const onFundingFormSave = useCallback(
-    (fields: FundingFormFields) => {
+    async (fields: FundingFormFields) => {
       if (!contracts) throw new Error('Failed to save funding configuration.')
 
       const fundAccessConstraint: SerializedV2FundAccessConstraint | undefined =
@@ -158,7 +222,9 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
         ),
       )
       dispatch(
-        editingV2ProjectActions.setPayoutSplits(splits.map(sanitizeSplit)),
+        editingV2ProjectActions.setPayoutSplits(
+          lockedSplits.concat(editingSplits).map(sanitizeSplit),
+        ),
       )
       dispatch(editingV2ProjectActions.setDuration(durationInSeconds ?? '0'))
 
@@ -182,7 +248,15 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
 
       onFinish?.()
     },
-    [splits, contracts, dispatch, target, targetCurrency, onFinish],
+    [
+      editingSplits,
+      lockedSplits,
+      contracts,
+      dispatch,
+      target,
+      targetCurrency,
+      onFinish,
+    ],
   )
 
   // initially fill form with any existing redux state
@@ -205,8 +279,55 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
         break
     }
   }
+
+  // Ensures total split percentages do not exceed 100
+  const validateTotalSplitsPercentage = () => {
+    if (fundingForm.getFieldValue('totalSplitsPercentage') > 100)
+      return Promise.reject(t`Sum of percentages cannot exceed 100%.`)
+    return Promise.resolve()
+  }
+
+  const onFormChange = useCallback(() => {
+    const duration = fundingForm.getFieldValue('duration') as number
+    const durationUnit = fundingForm.getFieldValue(
+      'durationUnit',
+    ) as DurationUnitsOption
+
+    const durationInSeconds = durationEnabled
+      ? otherUnitToSeconds({
+          duration: duration,
+          unit: durationUnit,
+        }).toString()
+      : '0'
+    const splits = lockedSplits.concat(editingSplits).map(sanitizeSplit)
+    const hasFormUpdated =
+      initialValues.durationSeconds !== durationInSeconds ||
+      initialValues.distributionLimit !== target ||
+      initialValues.distributionLimitCurrency !== targetCurrency ||
+      !isEqual(initialValues.payoutSplits, splits)
+    onFormUpdated?.(hasFormUpdated)
+  }, [
+    durationEnabled,
+    editingSplits,
+    fundingForm,
+    initialValues,
+    lockedSplits,
+    onFormUpdated,
+    target,
+    targetCurrency,
+  ])
+
+  useEffect(() => {
+    onFormChange()
+  }, [onFormChange])
+
   return (
-    <Form form={fundingForm} layout="vertical" onFinish={onFundingFormSave}>
+    <Form
+      form={fundingForm}
+      onValuesChange={onFormChange}
+      layout="vertical"
+      onFinish={onFundingFormSave}
+    >
       <div
         style={{
           padding: '2rem',
@@ -223,14 +344,16 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
             if (!checked) {
               fundingForm.setFieldsValue({ duration: '0' })
             }
-            fundingForm.setFieldsValue({ duration: '30' })
+            fundingForm.setFieldsValue({
+              duration: DEFAULT_FUNDING_CYCLE_DURATION.toString(),
+            })
           }}
         >
           <Trans>Funding cycles</Trans>
         </SwitchHeading>
 
         <Space size="middle" direction="vertical">
-          <div>
+          <div style={{ marginTop: '0.5rem' }}>
             <p>
               <Trans>
                 Set the length of your funding cycles, which can enable:
@@ -240,7 +363,7 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
               <li>
                 <Trans>
                   <strong>Recurring funding cycles</strong> (for example,
-                  distribute $30,000 from your project's treasury every 30
+                  distribute $30,000 from your project's treasury every 14
                   days).
                 </Trans>
               </li>
@@ -282,7 +405,7 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
         }}
       >
         <h3>
-          <Trans>Distribution</Trans>
+          <Trans>Distribution limit</Trans>
         </h3>
         <p>
           <Trans>
@@ -361,7 +484,7 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
         <h3>
           <Trans>Payout splits</Trans>
         </h3>
-        {targetType !== 'none' ? (
+        {!payoutSplitsDisabled ? (
           <>
             <p style={{ color: theme.colors.text.primary }}>
               Distributing payouts to addresses outside the Juicebox contracts
@@ -370,20 +493,31 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
               and the resulting JBX will go to the project's owner.
             </p>
 
-            <ProjectPayoutMods
-              mods={splits.map(toMod)}
-              target={target ?? '0'}
-              currencyName={targetCurrency === ETH ? 'ETH' : 'USD'}
-              feePercentage={
-                ETHPaymentTerminalFee
-                  ? formatFee(ETHPaymentTerminalFee)
-                  : undefined
-              }
-              onModsChanged={newMods => {
-                setSplits(newMods.map(toSplit))
+            <DistributionSplitsSection
+              distributionLimit={target}
+              currencyName={V2CurrencyName(targetCurrency) ?? 'ETH'}
+              editableSplits={editingSplits}
+              lockedSplits={lockedSplits}
+              onSplitsChanged={newSplits => {
+                setEditingSplits(newSplits)
+                fundingForm.setFieldsValue({
+                  totalSplitsPercentage: getTotalSplitsPercentage(newSplits),
+                })
               }}
-              targetIsInfinite={targetType === 'infinite'}
             />
+            <Form.Item
+              name={'totalSplitsPercentage'}
+              rules={[
+                {
+                  validator: validateTotalSplitsPercentage,
+                },
+              ]}
+            >
+              {/* Added a hidden input here because Form.Item needs 
+              a child Input to work. Need the parent Form.Item to 
+              validate totalSplitsPercentage */}
+              <Input hidden type="string" autoComplete="off" />
+            </Form.Item>
           </>
         ) : (
           <FormItemWarningText>

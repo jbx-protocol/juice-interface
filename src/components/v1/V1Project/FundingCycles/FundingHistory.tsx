@@ -32,6 +32,7 @@ export default function FundingHistory({
     theme: { colors },
   } = useContext(ThemeContext)
 
+  //startId = currentFC.basedOn
   if (startId?.gt(0) && !cycleIds.length) setCycleIds([startId])
 
   const allCyclesLoaded = fundingCycles.length >= cycleIds.length

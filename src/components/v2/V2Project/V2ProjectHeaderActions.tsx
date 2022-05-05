@@ -14,8 +14,9 @@ import { useAddToBalanceTx } from 'hooks/v2/transactor/AddToBalanceTx'
 import { useTransferProjectOwnershipTx } from 'hooks/v2/transactor/TransferProjectOwnershipTx'
 import { useTransferUnclaimedTokensTx } from 'hooks/v2/transactor/TransferUnclaimedTokensTx'
 import useUserUnclaimedTokenBalance from 'hooks/v2/contractReader/UserUnclaimedTokenBalance'
+import { useDeployProjectPayerTx } from 'hooks/v2/transactor/DeployProjectPayerTx'
 
-import V2ReconfigureFundingModalTrigger from './V2Project/V2ProjectReconfigureModal/V2ReconfigureModalTrigger'
+import V2ReconfigureFundingModalTrigger from './V2ProjectReconfigureModal/V2ReconfigureModalTrigger'
 
 export default function V2ProjectHeaderActions() {
   const { projectId, tokenSymbol, projectOwnerAddress } =
@@ -70,13 +71,16 @@ export default function V2ProjectHeaderActions() {
         useTransferUnclaimedTokensTx={useTransferUnclaimedTokensTx}
         useAddToBalanceTx={useAddToBalanceTx}
         useSetProjectUriTx={() => undefined}
+        useDeployProjectPayerTx={useDeployProjectPayerTx}
       />
       <div style={{ display: 'flex' }}>
-        <Button
-          onClick={() => setToolDrawerVisible(true)}
-          icon={<ToolOutlined />}
-          type="text"
-        />
+        <Tooltip title={t`Tools`} placement="bottom">
+          <Button
+            onClick={() => setToolDrawerVisible(true)}
+            icon={<ToolOutlined />}
+            type="text"
+          />
+        </Tooltip>
         {showReconfigureButton && <V2ReconfigureFundingModalTrigger />}
       </div>
     </div>

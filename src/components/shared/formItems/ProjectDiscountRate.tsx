@@ -4,6 +4,9 @@ import { Trans } from '@lingui/macro'
 import { CSSProperties, useContext } from 'react'
 import { ThemeContext } from 'contexts/themeContext'
 import FormItemLabel from 'components/v2/V2Create/FormItemLabel'
+import { defaultFundingCycleData } from 'redux/slices/editingV2Project'
+
+import { DISCOUNT_RATE_EXPLANATION } from 'components/v2/V2Project/V2FundingCycleSection/settingExplanations'
 
 import { FormItemExt } from './formItemExt'
 import NumberSlider from '../inputs/NumberSlider'
@@ -19,11 +22,7 @@ function DiscountRateExtra({ disabled }: { disabled?: boolean }) {
           </Trans>
         </FormItemWarningText>
       )}
-      <Trans>
-        The ratio of tokens rewarded per payment amount will decrease by this
-        percentage with each new funding cycle. A higher discount rate will
-        incentivize supporters to pay your project earlier than later.
-      </Trans>
+      {DISCOUNT_RATE_EXPLANATION}
     </div>
   )
 }
@@ -65,7 +64,7 @@ export default function ProjectDiscountRate({
                 <Switch checked={checked} onChange={onToggle} />{' '}
                 {!checked ? (
                   <span style={{ color: colors.text.tertiary, marginLeft: 10 }}>
-                    <Trans>(0%)</Trans>
+                    <Trans>({defaultFundingCycleData.discountRate}%)</Trans>
                   </span>
                 ) : null}
               </>

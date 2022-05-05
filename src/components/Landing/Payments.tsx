@@ -34,11 +34,11 @@ export default function Payments() {
     <div>
       {events || !isLoading ? (
         <div>
-          {events?.map(e => (
+          {events?.map((e, i) => (
             <div
               key={e.id}
               style={{
-                paddingTop: 10,
+                paddingTop: i === 0 ? 0 : 10,
                 paddingBottom: 20,
                 marginBottom: 10,
                 borderBottom: '1px solid ' + colors.stroke.tertiary,

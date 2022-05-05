@@ -16,6 +16,8 @@ import { Link } from 'react-router-dom'
 
 import ExternalLink from 'components/shared/ExternalLink'
 
+import { FEATURE_FLAGS, featureFlagEnabled } from 'utils/featureFlags'
+
 import { ThemeOption } from 'constants/theme/theme-option'
 
 import Faq from './Faq'
@@ -54,6 +56,8 @@ const FourthCol = ({
 function scrollToCreate() {
   document.getElementById('create')?.scrollIntoView({ behavior: 'smooth' })
 }
+
+const v2Enabled = featureFlagEnabled(FEATURE_FLAGS.ENABLE_V2)
 
 export default function Landing() {
   const { theme, forThemeOption } = useContext(ThemeContext)
@@ -163,13 +167,21 @@ export default function Landing() {
 
                 <div className="hide-mobile">
                   <div style={{ display: 'inline-block' }}>
-                    <Button
-                      type="primary"
-                      size="large"
-                      onClick={scrollToCreate}
-                    >
-                      <Trans>Design your project</Trans>
-                    </Button>
+                    {v2Enabled ? (
+                      <Link to={'/v2/create'}>
+                        <Button type="primary" size="large">
+                          <Trans>Design your project</Trans>
+                        </Button>
+                      </Link>
+                    ) : (
+                      <Button
+                        type="primary"
+                        size="large"
+                        onClick={scrollToCreate}
+                      >
+                        <Trans>Design your project</Trans>
+                      </Button>
+                    )}
                   </div>
                 </div>
               </div>
@@ -235,7 +247,7 @@ export default function Landing() {
             </Col>
             <Col xs={24} md={12} style={{ marginBottom: 100 }}>
               <SmallHeader text={t`Latest payments`} />
-              <div style={{ maxHeight: 600, overflow: 'auto' }}>
+              <div style={{ maxHeight: 600, overflow: 'auto', marginTop: 20 }}>
                 <Payments />
               </div>
             </Col>
@@ -324,7 +336,7 @@ export default function Landing() {
         </div>
       </section>
 
-      {window.innerWidth > 600 && (
+      {window.innerWidth > 600 && !v2Enabled && (
         <section
           id="create"
           style={{

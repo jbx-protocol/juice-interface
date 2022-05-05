@@ -178,6 +178,7 @@ export default function DistributionSplitModal({
   }
 
   const onAmountChange = (newAmount: number) => {
+    console.info('distributionLimit: ', distributionLimit)
     if (distributionLimitIsInfinite) return
     let newPercent: number
     if (distributionLimitType !== 'sum') {
@@ -190,7 +191,6 @@ export default function DistributionSplitModal({
         percent: percent ?? 0,
         amount: distributionLimit,
       }) // only when reconfiging, not adding
-      console.info('distributionLimit: ', distributionLimit)
       const newDistributionLimit = BigNumber.from(
         sumOfPayoutSplitAmounts({
           splits,
@@ -207,7 +207,7 @@ export default function DistributionSplitModal({
         // current sum of split amounts - previous split amount + newAmount
         distributionLimit: newDistributionLimit,
       })
-      console.info('newPercent: ', newDistributionLimit)
+      console.info('newPercent: ', newPercent)
     }
     setAmount(newAmount)
     setPercent(newPercent)

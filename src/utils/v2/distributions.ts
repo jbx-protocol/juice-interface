@@ -1,5 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Split } from 'models/v2/splits'
+import { fromWad } from 'utils/formatNumber'
 
 import { formatSplitPercent, MAX_DISTRIBUTION_LIMIT } from './math'
 
@@ -93,7 +94,10 @@ export function sumOfPayoutSplitAmounts({
   previousDistributionLimit: BigNumber
 }) {
   if (previousDistributionLimit.eq(MAX_DISTRIBUTION_LIMIT)) return 0
-
+  console.info(
+    'previousDistributionLimit: ',
+    fromWad(previousDistributionLimit),
+  )
   const distributionLimitNumber = previousDistributionLimit.toNumber()
   console.info(
     'distributionLimitNumber * getTotalSplitsPercentage(splits): ',

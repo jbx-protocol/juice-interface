@@ -410,7 +410,7 @@ export default function FundingForm({ onFinish }: { onFinish: VoidFunction }) {
         {distributionLimitType === 'specific' ? (
           <Form.Item required>
             <BudgetTargetInput
-              target={DistributionLimitTypeSelect?.toString()}
+              target={distributionLimit?.toString()}
               targetSubFee={undefined}
               currency={V2CurrencyName(distributionLimitCurrency) ?? 'ETH'}
               onTargetChange={setDistributionLimit}

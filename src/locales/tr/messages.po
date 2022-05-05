@@ -749,9 +749,9 @@ msgid "Distribute available funds to other Ethereum wallets or Juicebox projects
 msgstr "Uygun fonları diğer Ethereum cüzdanlarına veya Juicebox projelerine ödeme olarak dağıtın. Bunu katılımcılara, yardım kuruluşlarına, bağlı olduğunuz Juicebox projelerine veya başkalarına ödeme yapmak için kullanın. Projelerinizden para çekildiğinde fonlar dağıtılır."
 
 #: src/components/v1/FundingCycle/Spending.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Distribute funds"
 msgstr "Fonları dağıt"
 
@@ -961,9 +961,9 @@ msgid "Funding Distribution"
 msgstr "Finansman Dağılımı"
 
 #: src/components/shared/Project/FundingCycleSection.tsx
+#: src/components/v1/shared/BudgetForm.tsx
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
-#: src/components/v1/shared/BudgetForm.tsx
 msgid "Funding cycle"
 msgstr "Finansman döngüsü"
 
@@ -1225,8 +1225,8 @@ msgid "Light theme"
 msgstr "Aydınlık tema"
 
 #: src/components/Projects/index.tsx
-#: src/components/v1/V1Project/ProjectActivity/ActivityTabContent.tsx
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
+#: src/components/v1/V1Project/ProjectActivity/ActivityTabContent.tsx
 msgid "Load more"
 msgstr "Daha fazla yükle"
 
@@ -1430,8 +1430,8 @@ msgstr "Duraklatıldı"
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 #: src/components/v1/V1Project/V1PayButton.tsx
-#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 #: src/components/v2/V2Project/V2PayButton/index.tsx
+#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Pay"
 msgstr "Ödeme"
 
@@ -1439,6 +1439,10 @@ msgstr "Ödeme"
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Pay amount"
 msgstr "Ödeme miktarı"
+
+#: src/components/shared/inputs/Pay/PayInputGroup.tsx
+msgid "Pay amount must be greater than 0."
+msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "Pay button"

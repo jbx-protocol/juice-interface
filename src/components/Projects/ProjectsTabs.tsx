@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom'
 const TAB_TYPE_NAMES: { [k in ProjectCategory]: string } = {
   all: t`All`,
   holdings: t`Holdings`,
+  myprojects: t`My Projects`,
   trending: t`Trending`,
 }
 
@@ -54,6 +55,7 @@ export default function ProjectsTabs({
       <Space direction="horizontal" size="large">
         <Tab type="trending" />
         {signingProvider ? <Tab type="holdings" /> : null}
+        {signingProvider ? <Tab type="myprojects" /> : null}
         <Tab type="all" />
       </Space>
     </div>

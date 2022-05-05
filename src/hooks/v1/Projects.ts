@@ -365,6 +365,26 @@ export function useHoldingsProjectsQuery(wallet: string | undefined) {
   }
 }
 
+export function useMyProjectsQuery(wallet: string | undefined) {
+  const projectsQuery = useSubgraphQuery(
+    wallet
+      ? {
+          entity: 'project',
+          keys,
+          where: {
+            key: 'creator',
+            operator: 'in',
+            value: [wallet],
+          },
+        }
+      : null,
+  )
+
+  return {
+    ...projectsQuery,
+  }
+}
+
 export function useInfiniteProjectsQuery(opts: ProjectsOptions) {
   return useInfiniteSubgraphQuery(
     queryOpts(opts) as InfiniteGraphQueryOpts<'project', EntityKeys<'project'>>,

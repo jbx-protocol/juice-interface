@@ -7,7 +7,6 @@ import { formatWad, fromWad } from 'utils/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 import useWeiConverter from 'hooks/WeiConverter'
 import PayWarningModal from 'components/shared/PayWarningModal'
-// import { CurrencyOption } from 'models/currencyOption'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { PayButtonProps } from 'components/shared/inputs/Pay/PayInputGroup'
 
@@ -20,10 +19,7 @@ import V1ConfirmPayOwnerModal from './modals/V1ConfirmPayOwnerModal'
 export default function V1PayButton({
   payAmount,
   payInCurrency,
-}: // }: {
-//   payAmount: string
-//   payInCurrency: CurrencyOption // TODO make the V1CurrencyOption
-PayButtonProps) {
+}: PayButtonProps) {
   const { projectId, currentFC, metadata, isArchived, terminal } =
     useContext(V1ProjectContext)
 

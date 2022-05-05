@@ -7,8 +7,6 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { V2_CURRENCY_USD } from 'utils/v2/currency'
 import PayWarningModal from 'components/shared/PayWarningModal'
 import useWeiConverter from 'hooks/WeiConverter'
-// import { CurrencyOption } from 'models/currencyOption'
-
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { PayButtonProps } from 'components/shared/inputs/Pay/PayInputGroup'
 
@@ -17,9 +15,6 @@ import V2ConfirmPayModal from './V2ConfirmPayModal'
 export default function V2PayButton({
   payAmount,
   payInCurrency,
-  //}: {
-  // payAmount: string
-  // payInCurrency: CurrencyOption // TODO make the V2CurrencyOption
   onError,
 }: PayButtonProps) {
   const { projectMetadata, fundingCycleMetadata } = useContext(V2ProjectContext)

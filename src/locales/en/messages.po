@@ -1455,6 +1455,10 @@ msgstr "More trending projects"
 msgid "Move your {tokensLabel} from the Juicebox contract to your wallet."
 msgstr "Move your {tokensLabel} from the Juicebox contract to your wallet."
 
+#: src/components/Projects/ProjectsTabs.tsx
+msgid "My Projects"
+msgstr "My Projects"
+
 #: src/components/shared/Project/SpendingStats.tsx
 msgid "NO LIMIT"
 msgstr "NO LIMIT"
@@ -1855,6 +1859,10 @@ msgstr "Projects can be created with an optional discount rate designed to incen
 #: src/components/Projects/index.tsx
 msgid "Projects on Juicebox"
 msgstr ""
+
+#: src/components/Projects/MyProjects.tsx
+msgid "Projects that you have created."
+msgstr "Projects that you have created."
 
 #: src/components/Landing/index.tsx
 msgid "Projects using Juicebox"
@@ -2832,6 +2840,10 @@ msgstr ""
 msgid "You have unsaved changes. Are you sure you want to discard them?"
 msgstr "You have unsaved changes. Are you sure you want to discard them?"
 
+#: src/components/Projects/MyProjects.tsx
+msgid "You haven't created any projects yet."
+msgstr "You haven't created any projects yet."
+
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "You will receive minimum {minReturnedTokensFormatted} ETH"
 msgstr "You will receive minimum {minReturnedTokensFormatted} ETH"
@@ -2976,6 +2988,7 @@ msgid "or <0><1>buy {tokenText} on exchange<2/></1></0>"
 msgstr "or <0><1>buy {tokenText} on exchange<2/></1></0>"
 
 #: src/components/Projects/HoldingsProjects.tsx
+#: src/components/Projects/MyProjects.tsx
 #: src/components/Projects/index.tsx
 msgid "project"
 msgstr "project"
@@ -2985,6 +2998,7 @@ msgid "project owner"
 msgstr "project owner"
 
 #: src/components/Projects/HoldingsProjects.tsx
+#: src/components/Projects/MyProjects.tsx
 #: src/components/Projects/index.tsx
 msgid "projects"
 msgstr "projects"

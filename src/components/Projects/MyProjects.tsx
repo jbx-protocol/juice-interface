@@ -1,4 +1,4 @@
-import { t } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import Grid from 'components/shared/Grid'
 import Loading from 'components/shared/Loading'
 import ProjectCard from 'components/shared/ProjectCard'
@@ -40,7 +40,7 @@ export default function MyProjects() {
             }}
             hidden={isLoading}
           >
-            You don't hold tokens for any Juicebox project.
+            <Trans>You haven't created any projects yet.</Trans>
           </div>
         ) : (
           <div
@@ -61,7 +61,7 @@ export default function MyProjects() {
       )}
 
       <p style={{ marginBottom: 40, marginTop: 40, maxWidth: 800 }}>
-        <InfoCircleOutlined /> Projects that you hold tokens for.
+        <InfoCircleOutlined /> <Trans>Projects that you have created.</Trans>
       </p>
     </React.Fragment>
   )

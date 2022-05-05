@@ -1460,6 +1460,10 @@ msgstr "Mais projetos populares"
 msgid "Move your {tokensLabel} from the Juicebox contract to your wallet."
 msgstr "Mova seus {tokensLabel} do contrato do Juicebox para sua carteira."
 
+#: src/components/Projects/ProjectsTabs.tsx
+msgid "My Projects"
+msgstr ""
+
 #: src/components/shared/Project/SpendingStats.tsx
 msgid "NO LIMIT"
 msgstr ""
@@ -1860,6 +1864,10 @@ msgstr "Os projetos podem ser criados com uma taxa de desconto opcional com intu
 #: src/components/Projects/index.tsx
 msgid "Projects on Juicebox"
 msgstr "Projetos no Juicebox"
+
+#: src/components/Projects/MyProjects.tsx
+msgid "Projects that you have created."
+msgstr ""
 
 #: src/components/Landing/index.tsx
 msgid "Projects using Juicebox"
@@ -2837,6 +2845,10 @@ msgstr "Você definiu a meta do ciclo de financiamento."
 msgid "You have unsaved changes. Are you sure you want to discard them?"
 msgstr ""
 
+#: src/components/Projects/MyProjects.tsx
+msgid "You haven't created any projects yet."
+msgstr ""
+
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "You will receive minimum {minReturnedTokensFormatted} ETH"
 msgstr ""
@@ -2981,6 +2993,7 @@ msgid "or <0><1>buy {tokenText} on exchange<2/></1></0>"
 msgstr "ou <0><1> compre {tokenText} em troca<2/></1></0>"
 
 #: src/components/Projects/HoldingsProjects.tsx
+#: src/components/Projects/MyProjects.tsx
 #: src/components/Projects/index.tsx
 msgid "project"
 msgstr "projeto"
@@ -2990,6 +3003,7 @@ msgid "project owner"
 msgstr "proprietário do projeto"
 
 #: src/components/Projects/HoldingsProjects.tsx
+#: src/components/Projects/MyProjects.tsx
 #: src/components/Projects/index.tsx
 msgid "projects"
 msgstr "projetos"

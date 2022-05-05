@@ -1460,6 +1460,10 @@ msgstr "Daha fazla ilgi gören proje"
 msgid "Move your {tokensLabel} from the Juicebox contract to your wallet."
 msgstr "{tokensLabel} token'larınızı Juicebox sözleşmesinden cüzdanınıza taşıyın."
 
+#: src/components/Projects/ProjectsTabs.tsx
+msgid "My Projects"
+msgstr ""
+
 #: src/components/shared/Project/SpendingStats.tsx
 msgid "NO LIMIT"
 msgstr ""
@@ -1860,6 +1864,10 @@ msgstr ""
 #: src/components/Projects/index.tsx
 msgid "Projects on Juicebox"
 msgstr "Juicebox'taki projeler"
+
+#: src/components/Projects/MyProjects.tsx
+msgid "Projects that you have created."
+msgstr ""
 
 #: src/components/Landing/index.tsx
 msgid "Projects using Juicebox"
@@ -2837,6 +2845,10 @@ msgstr "Bir finansman döngüsü hedefi belirlediniz."
 msgid "You have unsaved changes. Are you sure you want to discard them?"
 msgstr ""
 
+#: src/components/Projects/MyProjects.tsx
+msgid "You haven't created any projects yet."
+msgstr ""
+
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "You will receive minimum {minReturnedTokensFormatted} ETH"
 msgstr ""
@@ -2981,6 +2993,7 @@ msgid "or <0><1>buy {tokenText} on exchange<2/></1></0>"
 msgstr "veya <0><1>borsada {tokenText} satın alın<2/></1></0>"
 
 #: src/components/Projects/HoldingsProjects.tsx
+#: src/components/Projects/MyProjects.tsx
 #: src/components/Projects/index.tsx
 msgid "project"
 msgstr "proje"
@@ -2990,6 +3003,7 @@ msgid "project owner"
 msgstr "proje sahibi"
 
 #: src/components/Projects/HoldingsProjects.tsx
+#: src/components/Projects/MyProjects.tsx
 #: src/components/Projects/index.tsx
 msgid "projects"
 msgstr "projeler"

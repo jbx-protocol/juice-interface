@@ -9,11 +9,16 @@ import { CurrencyOption } from 'models/currencyOption'
 
 import { WeightFunction } from 'utils/math'
 
+import { ThemeContext } from 'contexts/themeContext'
+
+import { Trans } from '@lingui/macro'
+
 import PayInputSubText from './PayInputSubText'
 
 export type PayButtonProps = {
   payAmount: string
   payInCurrency: CurrencyOption
+  onError?: (error?: Error) => void
 }
 
 export default function PayInputGroup({
@@ -35,6 +40,9 @@ export default function PayInputGroup({
     currencyMetadata,
     currencies: { USD, ETH },
   } = useContext(CurrencyContext)
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
 
   const [payAmount, setPayAmount] = useState<string>('0')
   const [payInCurrency, setPayInCurrency] = useState<CurrencyOption>(ETH)
@@ -48,8 +56,8 @@ export default function PayInputGroup({
   return (
     <>
       {isErrorField && (
-        <span style={{ color: 'red', fontSize: '0.7rem' }}>
-          Pay amount must be greater than 0.
+        <span style={{ color: colors.text.failure, fontSize: '0.7rem' }}>
+          <Trans>Pay amount must be greater than 0.</Trans>
         </span>
       )}
       <div
@@ -87,7 +95,11 @@ export default function PayInputGroup({
         </div>
 
         <div style={{ textAlign: 'center', minWidth: 150 }}>
-          <PayButton payAmount={payAmount} payInCurrency={payInCurrency} />
+          <PayButton
+            payAmount={payAmount}
+            payInCurrency={payInCurrency}
+            onError={() => setIsErrorField(true)}
+          />
         </div>
       </div>
     </>

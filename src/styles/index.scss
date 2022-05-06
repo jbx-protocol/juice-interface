@@ -11,6 +11,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: var(--text-primary);
   background: var(--background-l0);
+  overscroll-behavior-y: none;
 }
 
 div#root {

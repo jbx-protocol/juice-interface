@@ -15,6 +15,7 @@ import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { V2CurrencyName } from 'utils/v2/currency'
 import { formatSplitPercent, SPLITS_TOTAL_PERCENT } from 'utils/v2/math'
 import useMobile from 'hooks/Mobile'
+import { Link } from 'react-router-dom'
 
 export default function SplitItem({
   split,
@@ -60,7 +61,21 @@ export default function SplitItem({
     return (
       <div>
         {/* TODO figure out project "handles" with ENS resolution */}
-        <div style={{ fontWeight: 500 }}>@{split.projectId}:</div>
+
+        <div style={{ fontWeight: 500 }}>
+          <Tooltip
+            title={<Trans>Juicebox V2 project with ID {split.projectId}</Trans>}
+          >
+            <Link
+              to={`/v2/p/${split.projectId}`}
+              target="_blank"
+              className="text-primary hover-text-action-primary hover-text-decoration-underline"
+            >
+              @{split.projectId}
+            </Link>
+          </Tooltip>
+          :
+        </div>
         <div
           style={{
             fontSize: '.8rem',

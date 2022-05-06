@@ -1355,11 +1355,11 @@ msgstr "Latest payments"
 
 #: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 msgid "Learn more in this <0>short video</0>."
-msgstr "Learn more in this <0>short video</0>.>>>>>>> d038cabf4b8a6e6471d9f5aabbd48d7e3ad304e5"
+msgstr "Learn more in this <0>short video</0>."
 
 #: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Let's get this party started!"
-msgstr "Let's get this party started!======="
+msgstr "Let's get this party started!"
 
 #: src/components/Navbar/Mobile/ThemePickerMobile.tsx
 msgid "Light theme"

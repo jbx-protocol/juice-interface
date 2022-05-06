@@ -847,10 +847,6 @@ msgstr ""
 msgid "Distribution limit"
 msgstr "Distribution limit"
 
-#: src/components/shared/currency/ETHAmount.tsx
-msgid "Distribution limit infinite"
-msgstr "Distribution limit infinite"
-
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSection.tsx
 msgid "Distribution limit is 0: All funds will be considered overflow and can be redeemed by token holders."
 msgstr "Distribution limit is 0: All funds will be considered overflow and can be redeemed by token holders."
@@ -1240,10 +1236,6 @@ msgstr ""
 msgid "Indie artists, devs, creators"
 msgstr ""
 
-#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
-msgid "Infinite"
-msgstr "Infinite"
-
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSection.tsx
 msgid "Initial issuance rate"
 msgstr "Initial issuance rate"
@@ -1305,6 +1297,10 @@ msgstr "Juicebox Project ID"
 #: src/components/v2/shared/V2SupportWarning.tsx
 msgid "Juicebox V2 on {0} isn't enabled."
 msgstr "Juicebox V2 on {0} isn't enabled."
+
+#: src/components/v2/shared/SplitItem.tsx
+msgid "Juicebox V2 project with ID {0}"
+msgstr "Juicebox V2 project with ID {0}"
 
 #: src/components/Landing/QAs.tsx
 msgid "Juicebox has handled tens of thousands of ETH through its protocol, and has so far had 0 security mishaps."
@@ -1456,6 +1452,7 @@ msgid "Move your {tokensLabel} from the Juicebox contract to your wallet."
 msgstr "Move your {tokensLabel} from the Juicebox contract to your wallet."
 
 #: src/components/shared/Project/SpendingStats.tsx
+#: src/components/v2/V2Project/TreasuryStats/DistributedRatio.tsx
 msgid "NO LIMIT"
 msgstr "NO LIMIT"
 
@@ -1493,11 +1490,8 @@ msgstr ""
 msgid "No funding target: The project will control how all funds are distributed, and none can be redeemed by token holders."
 msgstr ""
 
-#: src/components/shared/currency/ETHAmount.tsx
-msgid "No limit"
-msgstr "No limit"
-
 #: src/components/v2/V2Create/forms/FundingForm/TargetTypeSelect.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "No limit (infinite)"
 msgstr "No limit (infinite)"
 
@@ -2912,6 +2906,10 @@ msgstr "Your transaction has been submitted and is awaiting confirmation."
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "Your unclaimed {tokenTextLong}"
 msgstr "Your unclaimed {tokenTextLong}"
+
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+msgid "Zero"
+msgstr "Zero"
 
 #: src/components/v2/V2Create/forms/FundingForm/TargetTypeSelect.tsx
 msgid "Zero, no funds can be distributed"

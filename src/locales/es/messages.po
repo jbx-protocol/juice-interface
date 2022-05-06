@@ -818,9 +818,9 @@ msgid "Distribute available funds to other Ethereum wallets or Juicebox projects
 msgstr "Distribuye fondos disponibles a otras wallets de Ethereum o proyectos de Juicebox como pagos. Usa esto para pagarle a colaboradores, caridades, proyectos de Juicebox de los que dependas, o a cualquier otro. Los fondos son distribuidos cuando un retiro se hace desde tu proyecto."
 
 #: src/components/v1/FundingCycle/Spending.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Distribute funds"
 msgstr "Distribuir fondos"
 
@@ -1054,9 +1054,9 @@ msgid "Funding Distribution"
 msgstr "Distribución de fondos"
 
 #: src/components/shared/Project/FundingCycleSection.tsx
-#: src/components/v1/shared/BudgetForm.tsx
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v1/shared/BudgetForm.tsx
 msgid "Funding cycle"
 msgstr "Ciclo de financiamiento"
 
@@ -1371,8 +1371,8 @@ msgid "Light theme"
 msgstr "Tema luminoso"
 
 #: src/components/Projects/index.tsx
-#: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 #: src/components/v1/V1Project/ProjectActivity/ActivityTabContent.tsx
+#: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 msgid "Load more"
 msgstr "Cargar más"
 
@@ -1600,8 +1600,8 @@ msgstr "Pausado"
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 #: src/components/v1/V1Project/V1PayButton.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
-#: src/components/v2/V2Project/V2PayButton/index.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
+#: src/components/v2/V2Project/V2PayButton/index.tsx
 msgid "Pay"
 msgstr "Pagar"
 

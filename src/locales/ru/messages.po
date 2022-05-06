@@ -818,9 +818,9 @@ msgid "Distribute available funds to other Ethereum wallets or Juicebox projects
 msgstr "Распределяйте доступные средства на другие кошельки Ethereum или проекты Juicebox в качестве выплат. Используйте это, чтобы платить вкладчикам, благотворительным организациям, проектам Juicebox, от которых вы зависите, или кому-либо еще. Средства распределяются всякий раз, когда производится вывод средств из вашего проекта."
 
 #: src/components/v1/FundingCycle/Spending.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Distribute funds"
 msgstr "Распределить средства"
 
@@ -1054,9 +1054,9 @@ msgid "Funding Distribution"
 msgstr "Распределение финансирования"
 
 #: src/components/shared/Project/FundingCycleSection.tsx
-#: src/components/v1/shared/BudgetForm.tsx
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v1/shared/BudgetForm.tsx
 msgid "Funding cycle"
 msgstr "Цикл финансирования"
 
@@ -1371,8 +1371,8 @@ msgid "Light theme"
 msgstr "Светлая тема"
 
 #: src/components/Projects/index.tsx
-#: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 #: src/components/v1/V1Project/ProjectActivity/ActivityTabContent.tsx
+#: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 msgid "Load more"
 msgstr "Загрузить ещё"
 
@@ -1600,8 +1600,8 @@ msgstr "Приостановлено"
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 #: src/components/v1/V1Project/V1PayButton.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
-#: src/components/v2/V2Project/V2PayButton/index.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
+#: src/components/v2/V2Project/V2PayButton/index.tsx
 msgid "Pay"
 msgstr "Оплатить"
 

@@ -818,9 +818,9 @@ msgid "Distribute available funds to other Ethereum wallets or Juicebox projects
 msgstr "把可用资金分发给其他以太坊钱包或者其他Juicebox项目。使用这项功能付款给项目的贡献者、慈善机构、其他帮助你的Juicebox项目、或是任何其他人。无论什么时候从您项目提款，资金都会自动进行发放。"
 
 #: src/components/v1/FundingCycle/Spending.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Distribute funds"
 msgstr "分发资金"
 
@@ -1054,9 +1054,9 @@ msgid "Funding Distribution"
 msgstr "资金分发"
 
 #: src/components/shared/Project/FundingCycleSection.tsx
-#: src/components/v1/shared/BudgetForm.tsx
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v1/shared/BudgetForm.tsx
 msgid "Funding cycle"
 msgstr "筹款周期"
 
@@ -1371,8 +1371,8 @@ msgid "Light theme"
 msgstr "浅色主题"
 
 #: src/components/Projects/index.tsx
-#: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 #: src/components/v1/V1Project/ProjectActivity/ActivityTabContent.tsx
+#: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 msgid "Load more"
 msgstr "加载更多"
 
@@ -1600,8 +1600,8 @@ msgstr "已暂停"
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 #: src/components/v1/V1Project/V1PayButton.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
-#: src/components/v2/V2Project/V2PayButton/index.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
+#: src/components/v2/V2Project/V2PayButton/index.tsx
 msgid "Pay"
 msgstr "支付"
 

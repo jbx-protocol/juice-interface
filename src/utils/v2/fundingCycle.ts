@@ -65,6 +65,16 @@ const parameters: {
     parser: (val: BigNumber) =>
       val.toNumber() as V2FundingCycleMetadata['version'],
   },
+  {
+    name: 'allowSetTerminals',
+    bits: 8,
+    parser: bigNumberToBoolean,
+  },
+  {
+    name: 'allowSetController',
+    bits: 8,
+    parser: bigNumberToBoolean,
+  },
   { name: 'reservedRate', bits: 16 },
   { name: 'redemptionRate', bits: 16, parser: invertPermyriad },
   { name: 'ballotRedemptionRate', bits: 16, parser: invertPermyriad },
@@ -85,16 +95,6 @@ const parameters: {
   },
   {
     name: 'allowControllerMigration',
-    bits: 1,
-    parser: bigNumberToBoolean,
-  },
-  {
-    name: 'allowSetTerminals',
-    bits: 1,
-    parser: bigNumberToBoolean,
-  },
-  {
-    name: 'allowSetController',
     bits: 1,
     parser: bigNumberToBoolean,
   },

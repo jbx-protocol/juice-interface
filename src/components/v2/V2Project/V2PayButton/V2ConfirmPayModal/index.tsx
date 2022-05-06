@@ -25,7 +25,6 @@ import { FormItems } from 'components/shared/formItems'
 import * as constants from '@ethersproject/constants'
 
 import {
-  decodeV2FundingCycleMetadata,
   getUnsafeV2FundingCycleProperties,
   V2FundingCycleRiskCount,
 } from 'utils/v2/fundingCycle'
@@ -51,6 +50,7 @@ export default function V2ConfirmPayModal({
   const { userAddress, onSelectWallet } = useContext(NetworkContext)
   const {
     fundingCycle,
+    fundingCycleMetadata,
     projectMetadata,
     projectId,
     tokenAddress,
@@ -78,9 +78,6 @@ export default function V2ConfirmPayModal({
 
   if (!fundingCycle || !projectId || !projectMetadata) return null
 
-  const fundingCycleMetadata = decodeV2FundingCycleMetadata(
-    fundingCycle.metadata,
-  )
   const reservedRate = fundingCycleMetadata?.reservedRate?.toNumber()
 
   const receivedTickets = weightedAmount(

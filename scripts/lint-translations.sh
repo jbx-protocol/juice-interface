@@ -14,7 +14,7 @@ else
   # bail if .po files contain git merge conflict diff artefact (like <<<<< HEAD)
   for File in $(find src/locales -maxdepth 2 -regex '.*.po')
   do
-    if grep -q '<<<' "$File"; then
+    if grep -e '<<<' -e '>>>' -e '====' "$File"; then
       echo "🍎 Translation source files contain artefacts from git merge conflict."
       exit 1
     fi

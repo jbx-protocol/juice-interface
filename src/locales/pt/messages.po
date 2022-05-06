@@ -626,6 +626,14 @@ msgstr "Conecte uma carteira para implementar"
 msgid "Connect wallet to pay"
 msgstr "Conecte uma carteira para pagar"
 
+#: src/components/Projects/HoldingsProjects.tsx
+msgid "Connect your wallet to see your holdings."
+msgstr ""
+
+#: src/components/Projects/MyProjects.tsx
+msgid "Connect your wallet to see your projects."
+msgstr ""
+
 #: src/components/shared/ReconfigurationStrategy/ReconfigurationStrategySelector.tsx
 msgid "Contract address: {0}"
 msgstr "Endereço de contato: {0}"

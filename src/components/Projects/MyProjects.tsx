@@ -19,50 +19,67 @@ export default function MyProjects() {
 
   return (
     <React.Fragment>
-      {projects && projects.length > 0 && (
+      {!userAddress ? (
+        <div
+          style={{
+            textAlign: 'center',
+            color: colors.text.disabled,
+            padding: 20,
+          }}
+          hidden={isLoading}
+        >
+          <Trans>Connect your wallet to see your projects.</Trans>
+        </div>
+      ) : (
         <React.Fragment>
-          <Grid>
-            {projects.map(p => (
-              <ProjectCard project={p} />
+          {projects && projects.length > 0 && (
+            <React.Fragment>
+              <Grid>
+                {projects.map(p => (
+                  <ProjectCard project={p} />
+                ))}
+              </Grid>
+            </React.Fragment>
+          )}
+
+          {!isLoading &&
+            projects &&
+            (projects.length === 0 ? (
+              <div
+                style={{
+                  textAlign: 'center',
+                  color: colors.text.disabled,
+                  padding: 20,
+                }}
+                hidden={isLoading}
+              >
+                <Trans>You haven't created any projects yet.</Trans>
+              </div>
+            ) : (
+              <div
+                style={{
+                  textAlign: 'center',
+                  color: colors.text.disabled,
+                  padding: 20,
+                }}
+              >
+                {projects.length}{' '}
+                {projects.length === 1 ? t`project` : t`projects`}{' '}
+              </div>
             ))}
-          </Grid>
+
+          {isLoading && (
+            <div style={{ marginTop: 40 }}>
+              <Loading />
+            </div>
+          )}
+
+          <p style={{ marginBottom: 40, marginTop: 40, maxWidth: 800 }}>
+            <InfoCircleOutlined />{' '}
+            <Trans>Projects that you have created.</Trans>
+          </p>
         </React.Fragment>
       )}
-
-      {!isLoading &&
-        projects &&
-        (projects.length === 0 ? (
-          <div
-            style={{
-              textAlign: 'center',
-              color: colors.text.disabled,
-              padding: 20,
-            }}
-            hidden={isLoading}
-          >
-            <Trans>You haven't created any projects yet.</Trans>
-          </div>
-        ) : (
-          <div
-            style={{
-              textAlign: 'center',
-              color: colors.text.disabled,
-              padding: 20,
-            }}
-          >
-            {projects.length} {projects.length === 1 ? t`project` : t`projects`}{' '}
-          </div>
-        ))}
-
-      {isLoading && (
-        <div style={{ marginTop: 40 }}>
-          <Loading />
-        </div>
-      )}
-
-      <p style={{ marginBottom: 40, marginTop: 40, maxWidth: 800 }}>
-        <InfoCircleOutlined /> <Trans>Projects that you have created.</Trans>
-      </p>
     </React.Fragment>
   )
 }

@@ -1,6 +1,5 @@
 import { t } from '@lingui/macro'
 import { Space } from 'antd'
-import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { ProjectCategory } from 'models/project-visibility'
 import { useContext } from 'react'
@@ -18,8 +17,6 @@ export default function ProjectsTabs({
 }: {
   selectedTab: ProjectCategory
 }) {
-  const { signingProvider } = useContext(NetworkContext)
-
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -54,8 +51,8 @@ export default function ProjectsTabs({
     <div style={{ height: 40, marginTop: 15 }}>
       <Space direction="horizontal" size="large">
         <Tab type="trending" />
-        {signingProvider ? <Tab type="holdings" /> : null}
-        {signingProvider ? <Tab type="myprojects" /> : null}
+        <Tab type="holdings" />
+        <Tab type="myprojects" />
         <Tab type="all" />
       </Space>
     </div>

@@ -626,6 +626,14 @@ msgstr "Connectez un portefeuille à déployer"
 msgid "Connect wallet to pay"
 msgstr "Connectez un portefeuille pour payer"
 
+#: src/components/Projects/HoldingsProjects.tsx
+msgid "Connect your wallet to see your holdings."
+msgstr ""
+
+#: src/components/Projects/MyProjects.tsx
+msgid "Connect your wallet to see your projects."
+msgstr ""
+
 #: src/components/shared/ReconfigurationStrategy/ReconfigurationStrategySelector.tsx
 msgid "Contract address: {0}"
 msgstr "Adresse du contrat : {0}"

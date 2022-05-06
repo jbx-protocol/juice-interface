@@ -626,6 +626,14 @@ msgstr ""
 msgid "Connect wallet to pay"
 msgstr "Ödemek için cüzdanınızı bağlayın"
 
+#: src/components/Projects/HoldingsProjects.tsx
+msgid "Connect your wallet to see your holdings."
+msgstr ""
+
+#: src/components/Projects/MyProjects.tsx
+msgid "Connect your wallet to see your projects."
+msgstr ""
+
 #: src/components/shared/ReconfigurationStrategy/ReconfigurationStrategySelector.tsx
 msgid "Contract address: {0}"
 msgstr "Sözleşme Adresi: {0}"

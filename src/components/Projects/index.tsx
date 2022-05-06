@@ -57,11 +57,9 @@ export default function Projects() {
         case 'all':
           return 'all'
         case 'holdings':
-          // If no wallet connected, revert to default tab
-          return userAddress ? 'holdings' : defaultTab
+          return 'holdings'
         case 'myprojects':
-          // If no wallet connected, revert to default tab
-          return userAddress ? 'myprojects' : defaultTab
+          return 'myprojects'
         default:
           return defaultTab
       }

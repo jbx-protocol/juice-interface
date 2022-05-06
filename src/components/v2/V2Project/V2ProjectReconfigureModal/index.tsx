@@ -109,7 +109,8 @@ export default function V2ProjectReconfigureModal({
   hideProjectDetails,
 }: {
   visible: boolean
-  onOk: () => void
+  onOk: VoidFunction
+  onCancel: VoidFunction
   hideProjectDetails?: boolean
 }) {
   const {
@@ -396,7 +397,6 @@ export default function V2ProjectReconfigureModal({
         onConfirmed() {
           setReconfigureTxLoading(false)
           exit()
-          window.location.reload()
         },
       },
     )

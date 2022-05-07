@@ -59,8 +59,8 @@ const bits1 = 0b1
 const bigNumberToBoolean = (val: BigNumber) => Boolean(val.toNumber())
 
 const parameters: {
-  name?: keyof V2FundingCycleMetadata
-  bits: 0 | 1 | 2 | 8 | 16
+  name: keyof V2FundingCycleMetadata
+  bits: 0 | 1 | 8 | 16
   parser?: (
     val: BigNumber,
   ) =>
@@ -90,7 +90,6 @@ const parameters: {
   { name: 'reservedRate', bits: 16 },
   { name: 'redemptionRate', bits: 16, parser: invertPermyriad },
   { name: 'ballotRedemptionRate', bits: 16, parser: invertPermyriad },
-  { bits: 2 }, // 2 "spacer" bits
   { name: 'pausePay', bits: 1, parser: bigNumberToBoolean },
   {
     name: 'pauseDistributions',
@@ -167,10 +166,6 @@ export const decodeV2FundingCycleMetadata = (
       value = packedMetadata.shr(shiftRightBits).and(bits)
     }
 
-    // if "spacer", return metadata as-is
-    if (!parameter.name) {
-      return metadata
-    }
     return {
       ...metadata,
       ...{

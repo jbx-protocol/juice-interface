@@ -16,8 +16,7 @@ export default function TokenRefs({
   return (
     <div>
       {refs.map((r, i) => (
-        // eslint-disable-next-line react/jsx-key
-        <div>
+        <div key={i}>
           <div style={{ display: 'flex', alignItems: 'baseline', height: 40 }}>
             <Button
               style={{ marginRight: 20, width: 100 }}

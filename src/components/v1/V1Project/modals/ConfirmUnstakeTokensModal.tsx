@@ -14,9 +14,11 @@ import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
 export default function ConfirmUnstakeTokensModal({
   visible,
   onCancel,
+  onConfirmed,
 }: {
   visible?: boolean
   onCancel?: VoidFunction
+  onConfirmed?: VoidFunction
 }) {
   const [loading, setLoading] = useState<boolean>()
   const [unstakeAmount, setUnstakeAmount] = useState<string>()
@@ -45,7 +47,7 @@ export default function ConfirmUnstakeTokensModal({
       { unstakeAmount: parseWad(unstakeAmount) },
       {
         onDone: () => setLoading(false),
-        onConfirmed: onCancel ? () => onCancel() : undefined,
+        onConfirmed,
       },
     )
   }

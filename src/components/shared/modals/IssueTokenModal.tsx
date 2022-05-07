@@ -41,7 +41,7 @@ export default function IssueTokenModal({
           onClose()
           setTransactionPending(false)
           setLoading(false)
-          if (onConfirmed) onConfirmed()
+          onConfirmed?.()
         },
       },
     )

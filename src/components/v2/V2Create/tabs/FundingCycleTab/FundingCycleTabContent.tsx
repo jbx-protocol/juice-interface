@@ -37,9 +37,9 @@ export default function FundingCycleTabContent({
   const [unsavedChangesModalVisible, setUnsavedChangesModalVisible] =
     useState<boolean>(false)
 
-  const fundingDrawerSeen = fundingDrawerVisible !== undefined
-  const tokenDrawerSeen = tokenDrawerVisible !== undefined
-  const rulesDrawerSeen = rulesDrawerVisible !== undefined
+  const [fundingDrawerSeen, setFundingDrawerSeen] = useState<boolean>(false)
+  const [tokenDrawerSeen, setTokenDrawerSeen] = useState<boolean>(false)
+  const [rulesDrawerSeen, setRulesDrawerSeen] = useState<boolean>(false)
 
   const seenColor = colors.text.tertiary
 
@@ -73,6 +73,7 @@ export default function FundingCycleTabContent({
           heading={<Trans>Funding</Trans>}
           onClick={() => {
             setFundingDrawerVisible(true)
+            setFundingDrawerSeen(true)
           }}
           description={
             <Trans>
@@ -92,6 +93,7 @@ export default function FundingCycleTabContent({
           heading={<Trans>Token</Trans>}
           onClick={() => {
             setTokenDrawerVisible(true)
+            setTokenDrawerSeen(true)
           }}
           description={
             <Trans>Configure the dynamics of your project's token.</Trans>
@@ -109,6 +111,7 @@ export default function FundingCycleTabContent({
           heading={<Trans>Rules</Trans>}
           onClick={() => {
             setRulesDrawerVisible(true)
+            setRulesDrawerSeen(true)
           }}
           description={
             <Trans>Configure restrictions for your funding cycles.</Trans>

@@ -61,6 +61,7 @@ import {
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/v2/splits'
 import V2ReconfigureUpcomingMessage from './V2ReconfigureUpcomingMessage'
+import ReconfigurePreview from './ReconfigurePreview'
 
 const DrawerUnsavedChangesModal = UnsavedChangesModal
 
@@ -436,11 +437,15 @@ export default function V2ProjectReconfigureModal({
       okText={t`Deploy new project configuration`}
       okButtonProps={{ disabled: !fundingHasSavedChanges }}
       confirmLoading={reconfigureTxLoading}
-      width={540}
+      width={650}
       centered
       destroyOnClose
     >
-      <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+      <Space
+        direction="vertical"
+        size="middle"
+        style={{ width: '100%', marginBottom: 40 }}
+      >
         {hideProjectDetails ? null : (
           <div style={{ marginBottom: 20 }}>
             <h4 style={{ marginBottom: 0 }}>
@@ -477,6 +482,13 @@ export default function V2ProjectReconfigureModal({
           onClick={() => setRulesDrawerVisible(true)}
         />
       </Space>
+      <ReconfigurePreview
+        payoutSplits={editingPayoutGroupedSplits.splits}
+        reserveSplits={editingReservedTokensGroupedSplits.splits}
+        fundingCycleMetadata={editingFundingCycleMetadata}
+        fundingCycleData={editingFundingCycleData}
+        fundAccessConstraints={editingFundAccessConstraints}
+      />
       {hideProjectDetails ? null : (
         <V2ReconfigureProjectDetailsDrawer
           visible={projectDetailsDrawerVisible}

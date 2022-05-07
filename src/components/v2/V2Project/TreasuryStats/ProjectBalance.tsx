@@ -24,7 +24,7 @@ export default function ProjectBalance({ style }: { style?: CSSProperties }) {
   return (
     <StatLine
       loading={balanceInDistributionLimitCurrencyLoading}
-      statLabel={<Trans>In Juicebox</Trans>}
+      statLabel={<Trans>In treasury</Trans>}
       statLabelTip={
         <Trans>The balance of this project in the Juicebox contract.</Trans>
       }

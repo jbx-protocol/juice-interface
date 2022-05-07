@@ -30,6 +30,8 @@ export default function V2Project({
     fundingCycle,
     fundingCycleMetadata,
     isPreviewMode,
+    tokenSymbol,
+    tokenAddress,
   } = useContext(V2ProjectContext)
 
   // Checks URL to see if user was just directed from project deploy
@@ -68,6 +70,8 @@ export default function V2Project({
             reservedRate={fundingCycleMetadata?.reservedRate.toNumber()}
             weight={fundingCycle?.weight}
             weightingFn={weightedAmount}
+            tokenSymbol={tokenSymbol}
+            tokenAddress={tokenAddress}
           />
         </Col>
       </Row>

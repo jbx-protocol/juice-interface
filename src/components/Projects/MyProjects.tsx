@@ -74,10 +74,12 @@ export default function MyProjects() {
             </div>
           )}
 
-          <p style={{ marginBottom: 40, marginTop: 40, maxWidth: 800 }}>
-            <InfoCircleOutlined />{' '}
-            <Trans>Projects that you have created.</Trans>
-          </p>
+          {projects?.length !== 0 && (
+            <p style={{ marginBottom: 40, marginTop: 40, maxWidth: 800 }}>
+              <InfoCircleOutlined />{' '}
+              <Trans>Projects that you have created.</Trans>
+            </p>
+          )}
         </React.Fragment>
       )}
     </React.Fragment>

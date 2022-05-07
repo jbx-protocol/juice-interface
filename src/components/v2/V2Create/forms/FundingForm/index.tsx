@@ -450,8 +450,6 @@ export default function FundingForm({
               targetSubFee={undefined}
               currency={V2CurrencyName(targetCurrency) ?? 'ETH'}
               onTargetChange={setTarget}
-              // eslint-disable-next-line @typescript-eslint/no-empty-function
-              onTargetSubFeeChange={() => {}}
               onCurrencyChange={currencyName =>
                 setTargetCurrency(getV2CurrencyOption(currencyName))
               }
@@ -516,8 +514,8 @@ export default function FundingForm({
                 },
               ]}
             >
-              {/* Added a hidden input here because Form.Item needs 
-              a child Input to work. Need the parent Form.Item to 
+              {/* Added a hidden input here because Form.Item needs
+              a child Input to work. Need the parent Form.Item to
               validate totalSplitsPercentage */}
               <Input hidden type="string" autoComplete="off" />
             </Form.Item>

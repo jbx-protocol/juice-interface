@@ -6,8 +6,7 @@ import React, { CSSProperties, useContext } from 'react'
 
 import { ThemeOption } from 'constants/theme/theme-option'
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export default function ThemePicker({ mobile }: { mobile?: boolean }) {
+export default function ThemePicker() {
   const {
     themeOption,
     setThemeOption,

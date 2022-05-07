@@ -40,8 +40,6 @@ export default function ProjectReserved({
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const shouldRenderToggle = Boolean(onToggled)
-
   const [showRiskWarning, setShowRiskWarning] = useState<boolean>(
     (value ?? 0) > RESERVED_RATE_WARNING_THRESHOLD_PERCENT,
   )
@@ -94,11 +92,10 @@ export default function ProjectReserved({
       label={
         hideLabel ? undefined : (
           <>
-            {shouldRenderToggle ? (
+            {onToggled ? (
               <SwitchHeading checked={Boolean(checked)} onChange={onToggled}>
                 <Trans>Reserved rate</Trans>
-                {/* eslint-disable-next-line no-extra-boolean-cast */}
-                {!Boolean(checked) && (
+                {checked && (
                   <span
                     style={{
                       color: colors.text.tertiary,

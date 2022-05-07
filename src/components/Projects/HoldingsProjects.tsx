@@ -74,9 +74,11 @@ export default function HoldingsProjects() {
             </div>
           )}
 
-          <p style={{ marginBottom: 40, marginTop: 40, maxWidth: 800 }}>
-            <InfoCircleOutlined /> Projects that you hold tokens for.
-          </p>
+          {projects?.length !== 0 && (
+            <p style={{ marginBottom: 40, marginTop: 40, maxWidth: 800 }}>
+              <InfoCircleOutlined /> Projects that you hold tokens for.
+            </p>
+          )}
         </React.Fragment>
       )}
     </React.Fragment>

@@ -67,7 +67,11 @@ export default function UpcomingFundingCycle({
         <FundingCycleDetailsCard
           fundingCycleNumber={queuedFundingCycle.number}
           fundingCycleDetails={
-            <FundingCycleDetails fundingCycle={queuedFundingCycle} />
+            <FundingCycleDetails
+              fundingCycle={queuedFundingCycle}
+              distributionLimit={queuedDistributionLimit}
+              distributionLimitCurrency={queuedDistributionLimitCurrency}
+            />
           }
           fundingCycleDurationSeconds={queuedFundingCycle.duration}
           fundingCycleStartTime={queuedFundingCycle.start}

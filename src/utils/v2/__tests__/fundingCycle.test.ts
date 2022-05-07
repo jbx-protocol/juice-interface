@@ -25,6 +25,7 @@ export function packFundingCycleMetadata(
 
   const {
     version,
+    global,
     reservedRate, // percentage
     redemptionRate, // percentage
     ballotRedemptionRate, // percentage
@@ -36,8 +37,6 @@ export function packFundingCycleMetadata(
     allowChangeToken, // boolean
     allowTerminalMigration, // boolean
     allowControllerMigration, // boolean
-    allowSetTerminals, // boolean
-    allowSetController, // boolean
     holdFees, // boolean
     useTotalOverflowForRedemptions, // boolean
     useDataSourceForPay, // boolean
@@ -46,24 +45,24 @@ export function packFundingCycleMetadata(
   } = packedMetadata
 
   let packed = BigNumber.from(version)
-  packed = packed.or(reservedRate.shl(8))
-  packed = packed.or(invertPermyriad(redemptionRate).shl(24))
-  packed = packed.or(invertPermyriad(ballotRedemptionRate).shl(40))
-  if (pausePay) packed = packed.or(one.shl(56))
-  if (pauseDistributions) packed = packed.or(one.shl(57))
-  if (pauseRedeem) packed = packed.or(one.shl(58))
-  if (pauseBurn) packed = packed.or(one.shl(60))
-  if (allowMinting) packed = packed.or(one.shl(59))
-  if (allowChangeToken) packed = packed.or(one.shl(61))
-  if (allowTerminalMigration) packed = packed.or(one.shl(62))
-  if (allowControllerMigration) packed = packed.or(one.shl(63))
-  if (allowSetTerminals) packed = packed.or(one.shl(64))
-  if (allowSetController) packed = packed.or(one.shl(65))
-  if (holdFees) packed = packed.or(one.shl(66))
-  if (useTotalOverflowForRedemptions) packed = packed.or(one.shl(67))
-  if (useDataSourceForPay) packed = packed.or(one.shl(68))
-  if (useDataSourceForRedeem) packed = packed.or(one.shl(69))
-  return packed.or(BigNumber.from(dataSource).shl(70))
+  if (global.allowSetTerminals) packed = packed.or(one.shl(8))
+  if (global.allowSetController) packed = packed.or(one.shl(16))
+  packed = packed.or(reservedRate.shl(24))
+  packed = packed.or(invertPermyriad(redemptionRate).shl(40))
+  packed = packed.or(invertPermyriad(ballotRedemptionRate).shl(56))
+  if (pausePay) packed = packed.or(one.shl(72))
+  if (pauseDistributions) packed = packed.or(one.shl(73))
+  if (pauseRedeem) packed = packed.or(one.shl(74))
+  if (pauseBurn) packed = packed.or(one.shl(75))
+  if (allowMinting) packed = packed.or(one.shl(76))
+  if (allowChangeToken) packed = packed.or(one.shl(77))
+  if (allowTerminalMigration) packed = packed.or(one.shl(78))
+  if (allowControllerMigration) packed = packed.or(one.shl(79))
+  if (holdFees) packed = packed.or(one.shl(80))
+  if (useTotalOverflowForRedemptions) packed = packed.or(one.shl(81))
+  if (useDataSourceForPay) packed = packed.or(one.shl(82))
+  if (useDataSourceForRedeem) packed = packed.or(one.shl(83))
+  return packed.or(BigNumber.from(dataSource).shl(84))
 }
 
 const createMetadata = ({
@@ -80,9 +79,14 @@ const createMetadata = ({
   const dataSource = Wallet.createRandom()
   return {
     version: 1,
+    global: {
+      allowSetTerminals: flagsEnabled,
+      allowSetController: flagsEnabled,
+    },
     reservedRate,
     redemptionRate,
     ballotRedemptionRate,
+
     pausePay: flagsEnabled,
     pauseDistributions: flagsEnabled,
     pauseRedeem: flagsEnabled,
@@ -91,8 +95,6 @@ const createMetadata = ({
     allowChangeToken: flagsEnabled,
     allowTerminalMigration: flagsEnabled,
     allowControllerMigration: flagsEnabled,
-    allowSetTerminals: flagsEnabled,
-    allowSetController: flagsEnabled,
     holdFees: flagsEnabled,
     useTotalOverflowForRedemptions: flagsEnabled,
     useDataSourceForPay: flagsEnabled,
@@ -111,9 +113,9 @@ describe('fundingCycle', () => {
       'decodes metadata correctly when flagsEnabled is $flagsEnabled',
       ({ flagsEnabled }) => {
         const metadata = createMetadata({
-          reservedRate: percentToPermyriad(100),
-          redemptionRate: percentToPermyriad(100),
-          ballotRedemptionRate: percentToPermyriad(100),
+          reservedRate: percentToPermyriad(69),
+          redemptionRate: percentToPermyriad(71),
+          ballotRedemptionRate: percentToPermyriad(92),
           flagsEnabled,
         })
 

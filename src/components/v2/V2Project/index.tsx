@@ -5,8 +5,6 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import { useContext, useState } from 'react'
 
-import { decodeV2FundingCycleMetadata } from 'utils/v2/fundingCycle'
-
 import { weightedAmount } from 'utils/v2/math'
 import { useHistory, useLocation } from 'react-router-dom'
 
@@ -26,8 +24,15 @@ export default function V2Project({
   singleColumnLayout?: boolean
   expandFundingCycleCard?: boolean
 }) {
-  const { projectId, projectMetadata, fundingCycle, isPreviewMode } =
-    useContext(V2ProjectContext)
+  const {
+    projectId,
+    projectMetadata,
+    fundingCycle,
+    fundingCycleMetadata,
+    isPreviewMode,
+    tokenSymbol,
+    tokenAddress,
+  } = useContext(V2ProjectContext)
 
   // Checks URL to see if user was just directed from project deploy
   const location = useLocation()
@@ -42,10 +47,6 @@ export default function V2Project({
   const colSizeMd = singleColumnLayout ? 24 : 12
 
   if (!projectId) return null
-
-  const fundingCycleMetadata = fundingCycle
-    ? decodeV2FundingCycleMetadata(fundingCycle?.metadata)
-    : undefined
 
   const closeNewDeployModal = () => {
     // Change URL without refreshing page
@@ -69,6 +70,8 @@ export default function V2Project({
             reservedRate={fundingCycleMetadata?.reservedRate.toNumber()}
             weight={fundingCycle?.weight}
             weightingFn={weightedAmount}
+            tokenSymbol={tokenSymbol}
+            tokenAddress={tokenAddress}
           />
         </Col>
       </Row>

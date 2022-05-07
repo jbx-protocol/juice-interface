@@ -5,7 +5,7 @@ import useMobile from 'hooks/Mobile'
 
 import DeployProjectButton from './DeployProjectButton'
 import ProjectDetailsSection from './ProjectDetailsSection'
-import FundingSection from './FundingSection'
+import FundingSummarySection from './FundingSummarySection'
 
 export const rowGutter: [Gutter, Gutter] = [40, 30]
 
@@ -22,9 +22,9 @@ export default function ReviewDeployTab() {
           marginTop: '4rem',
         }}
       >
-        <Space size="large" direction="vertical">
+        <Space size="large" direction="vertical" style={{ width: '100%' }}>
           <ProjectDetailsSection />
-          <FundingSection />
+          <FundingSummarySection />
         </Space>
       </div>
 

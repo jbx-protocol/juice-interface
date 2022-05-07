@@ -2,7 +2,7 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { V2UserContext } from 'contexts/v2/userContext'
 import { useContext } from 'react'
 
-import { PEEL_METADATA_DOMAIN } from 'constants/v2/metadataDomain'
+import { JUICEBOX_MONEY_METADATA_DOMAIN } from 'constants/v2/metadataDomain'
 
 import { TransactorInstance } from '../../Transactor'
 
@@ -21,7 +21,7 @@ export function useEditV2ProjectDetailsTx(): TransactorInstance<{
     return transactor(
       contracts.JBProjects,
       'setMetadataOf',
-      [projectId.toHexString(), [cid, PEEL_METADATA_DOMAIN]],
+      [projectId.toHexString(), [cid, JUICEBOX_MONEY_METADATA_DOMAIN]],
       txOpts,
     )
   }

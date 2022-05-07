@@ -19,8 +19,6 @@ import { V1TerminalVersion } from 'models/v1/terminals'
 import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 
-import { featureFlagEnabled, FEATURE_FLAGS } from 'utils/featureFlags'
-
 import { layouts } from 'constants/styles/layouts'
 import TrendingProjects from './TrendingProjects'
 import ProjectsTabs from './ProjectsTabs'
@@ -123,7 +121,6 @@ export default function Projects() {
   }, [selectedTab, fetchNextPage, hasNextPage])
 
   const isLoading = isLoadingProjects || isLoadingSearch
-  const v2Enabled = featureFlagEnabled(FEATURE_FLAGS.ENABLE_V2)
 
   const concatenatedPages = searchText?.length
     ? searchPages
@@ -143,7 +140,7 @@ export default function Projects() {
             <Trans>Projects on Juicebox</Trans>
           </h1>
 
-          <Link to={v2Enabled ? '/v2/create' : '/create'}>
+          <Link to="/create">
             <Button type="primary" size="large">
               <Trans>Create project</Trans>
             </Button>

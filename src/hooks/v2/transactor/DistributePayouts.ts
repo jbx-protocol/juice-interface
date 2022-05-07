@@ -7,6 +7,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 
 import { TransactorInstance } from '../../Transactor'
+import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
 
 export type DistributePayoutsTx = TransactorInstance<{
   memo?: string
@@ -35,7 +36,7 @@ export function useDistributePayoutsTx(): DistributePayoutsTx {
     return transactor(
       contracts.JBETHPaymentTerminal,
       'distributePayoutsOf',
-      [projectId, amount, currency, minReturnedTokens, memo],
+      [projectId, amount, currency, ETH_TOKEN_ADDRESS, minReturnedTokens, memo],
       txOpts,
     )
   }

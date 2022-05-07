@@ -159,11 +159,10 @@ export default function V2ConfirmPayModal({
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
         <p>
           <Trans>
-            Paying{' '}
-            <span style={{ fontWeight: 'bold' }}>{projectMetadata.name}</span>{' '}
-            is not an investment — it's a way to support the project. Any value
-            or utility of the tokens you receive is determined by{' '}
-            {projectMetadata.name}.
+            Paying <strong>{projectMetadata.name}</strong> is not an investment
+            — it's a way to support the project. Any value or utility of the
+            tokens you receive is determined by{' '}
+            <strong>{projectMetadata.name}</strong>.
           </Trans>
         </p>
 
@@ -176,11 +175,11 @@ export default function V2ConfirmPayModal({
           </div>
         )}
 
-        {riskCount && fundingCycle && (
+        {riskCount && fundingCycle ? (
           <ProjectRiskNotice
             unsafeProperties={getUnsafeV2FundingCycleProperties(fundingCycle)}
           />
-        )}
+        ) : null}
 
         <Descriptions column={1} bordered>
           <Descriptions.Item label={t`Pay amount`} className="content-right">

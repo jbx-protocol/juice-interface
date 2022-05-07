@@ -168,7 +168,7 @@ export default function Landing() {
                 <div className="hide-mobile">
                   <div style={{ display: 'inline-block' }}>
                     {v2Enabled ? (
-                      <Link to={'/v2/create'}>
+                      <Link to={'/create'}>
                         <Button type="primary" size="large">
                           <Trans>Design your project</Trans>
                         </Button>

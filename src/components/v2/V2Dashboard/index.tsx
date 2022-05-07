@@ -18,8 +18,6 @@ import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { V2CurrencyName, V2_CURRENCY_ETH } from 'utils/v2/currency'
 
-import { decodeV2FundingCycleMetadata } from 'utils/v2/fundingCycle'
-
 import useSymbolOfERC20 from 'hooks/v1/contractReader/SymbolOfERC20' // this is version-agnostic, we chillin
 
 import useProjectOwner from 'hooks/v2/contractReader/ProjectOwner'
@@ -52,15 +50,11 @@ export default function V2Dashboard({ projectId }: { projectId: BigNumber }) {
     isLoading: metadataLoading,
   } = useProjectMetadata(metadataCID)
 
-  // Calls JBFundingCycleStore.currentOf
-  const { data: fundingCycle, loading: fundingCycleLoading } =
+  const { data: fundingCycleResponse, loading: fundingCycleLoading } =
     useProjectCurrentFundingCycle({
       projectId,
     })
-
-  const fundingCycleMetadata = fundingCycle
-    ? decodeV2FundingCycleMetadata(fundingCycle?.metadata)
-    : undefined
+  const [fundingCycle, fundingCycleMetadata] = fundingCycleResponse ?? []
 
   const { data: payoutSplits } = useProjectSplits({
     projectId,

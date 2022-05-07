@@ -11,12 +11,12 @@ export const resourcesMenuItems = (): ResourceItem[] => {
     {
       text: t`Docs`,
       key: 'docs',
-      link: 'https://docs.juicebox.money',
+      link: 'https://info.juicebox.money/docs',
     },
     {
       text: t`Blog`,
       key: 'blog',
-      link: 'https://blog.juicebox.money',
+      link: 'https://info.juicebox.money/blog',
     },
     {
       key: 'workspace',

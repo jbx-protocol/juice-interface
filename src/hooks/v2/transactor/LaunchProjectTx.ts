@@ -10,7 +10,7 @@ import {
 import { GroupedSplits, SplitGroup } from 'models/v2/splits'
 
 import { TransactorInstance } from '../../Transactor'
-import { PEEL_METADATA_DOMAIN } from 'constants/v2/metadataDomain'
+import { JUICEBOX_MONEY_METADATA_DOMAIN } from 'constants/v2/metadataDomain'
 
 const DEFAULT_MUST_START_AT_OR_AFTER = '1' // start immediately
 const DEFAULT_MEMO = ''
@@ -49,7 +49,7 @@ export function useLaunchProjectTx(): TransactorInstance<{
 
     const args = [
       userAddress, // _owner
-      [projectMetadataCID, PEEL_METADATA_DOMAIN], // _projectMetadata (JBProjectMetadata)
+      [projectMetadataCID, JUICEBOX_MONEY_METADATA_DOMAIN], // _projectMetadata (JBProjectMetadata)
       fundingCycleData, // _data (JBFundingCycleData)
       fundingCycleMetadata, // _metadata (JBFundingCycleMetadata)
       mustStartAtOrAfter, // _mustStartAtOrAfter

@@ -122,7 +122,10 @@ export default function V2ManageTokensSection() {
               />
               {showIssueTokensButton && (
                 <div style={{ marginBottom: 20 }}>
-                  <IssueTokenButton useIssueTokensTx={useIssueTokensTx} />
+                  <IssueTokenButton
+                    useIssueTokensTx={useIssueTokensTx}
+                    onCompleted={() => window.location.reload()}
+                  />
                 </div>
               )}
             </div>

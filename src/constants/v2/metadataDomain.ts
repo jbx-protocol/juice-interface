@@ -1,1 +1,1 @@
-export const PEEL_METADATA_DOMAIN = 1
+export const JUICEBOX_MONEY_METADATA_DOMAIN = 0

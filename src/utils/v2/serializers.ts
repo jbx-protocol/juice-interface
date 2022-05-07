@@ -14,6 +14,7 @@ export type SerializedV2FundingCycleMetadata = Record<
     | 'ballotRedemptionRate'
     | 'dataSource'
     | 'version'
+    | 'global'
   >,
   boolean
 > &
@@ -23,7 +24,8 @@ export type SerializedV2FundingCycleMetadata = Record<
       'reservedRate' | 'redemptionRate' | 'ballotRedemptionRate' | 'dataSource'
     >,
     string
-  >
+  > &
+  Pick<V2FundingCycleMetadata, 'global'>
 
 export type SerializedV2FundingCycleData = Record<
   keyof V2FundingCycleData,
@@ -38,6 +40,10 @@ export type SerializedV2FundAccessConstraint = Record<
 export const serializeV2FundingCycleMetadata = (
   fundingCycleMetadata: V2FundingCycleMetadata,
 ): SerializedV2FundingCycleMetadata => ({
+  global: {
+    allowSetTerminals: fundingCycleMetadata.global.allowSetTerminals,
+    allowSetController: fundingCycleMetadata.global.allowSetController,
+  },
   reservedRate: fundingCycleMetadata.reservedRate.toString(),
   redemptionRate: fundingCycleMetadata.redemptionRate.toString(),
   ballotRedemptionRate: fundingCycleMetadata.ballotRedemptionRate.toString(),
@@ -49,8 +55,6 @@ export const serializeV2FundingCycleMetadata = (
   allowChangeToken: fundingCycleMetadata.allowChangeToken,
   allowTerminalMigration: fundingCycleMetadata.allowTerminalMigration,
   allowControllerMigration: fundingCycleMetadata.allowControllerMigration,
-  allowSetTerminals: fundingCycleMetadata.allowSetTerminals,
-  allowSetController: fundingCycleMetadata.allowSetController,
   holdFees: fundingCycleMetadata.holdFees,
   useTotalOverflowForRedemptions:
     fundingCycleMetadata.useTotalOverflowForRedemptions,
@@ -62,6 +66,11 @@ export const serializeV2FundingCycleMetadata = (
 export const deserializeV2FundingCycleMetadata = (
   serializedFundingCycleMetadata: SerializedV2FundingCycleMetadata,
 ): Omit<V2FundingCycleMetadata, 'version'> => ({
+  global: {
+    allowSetTerminals: serializedFundingCycleMetadata.global.allowSetTerminals,
+    allowSetController:
+      serializedFundingCycleMetadata.global.allowSetController,
+  },
   reservedRate: BigNumber.from(serializedFundingCycleMetadata.reservedRate),
   redemptionRate: BigNumber.from(serializedFundingCycleMetadata.redemptionRate),
   ballotRedemptionRate: BigNumber.from(
@@ -76,8 +85,6 @@ export const deserializeV2FundingCycleMetadata = (
   allowTerminalMigration: serializedFundingCycleMetadata.allowTerminalMigration,
   allowControllerMigration:
     serializedFundingCycleMetadata.allowControllerMigration,
-  allowSetTerminals: serializedFundingCycleMetadata.allowSetTerminals,
-  allowSetController: serializedFundingCycleMetadata.allowSetController,
   holdFees: serializedFundingCycleMetadata.holdFees,
   useTotalOverflowForRedemptions:
     serializedFundingCycleMetadata.useTotalOverflowForRedemptions,

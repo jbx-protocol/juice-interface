@@ -58,7 +58,7 @@ export default function PayInputSubText({
   })
 
   const tokenText = tokenSymbolText({
-    tokenSymbol: tokenSymbol,
+    tokenSymbol,
     capitalize: false,
     plural: true,
   })
@@ -72,7 +72,7 @@ export default function PayInputSubText({
     if (weiPayAmt?.gt(0)) {
       const receivedTickets = formatReceivedTickets(weiPayAmt)
       const tokenReceiveText = tokenSymbolText({
-        tokenSymbol: tokenSymbol,
+        tokenSymbol,
         capitalize: false,
         plural: receivedTickets !== '1',
       })
@@ -86,7 +86,7 @@ export default function PayInputSubText({
     )
 
     const tokenReceiveText = tokenSymbolText({
-      tokenSymbol: tokenSymbol,
+      tokenSymbol,
       capitalize: false,
       plural: receivedTickets !== '1',
     })

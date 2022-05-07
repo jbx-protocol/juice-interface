@@ -54,7 +54,6 @@ export default function V2PayButton({
           style={{ width: '100%' }}
           type="primary"
           onClick={() => {
-            // if (weiPayAmt?.eq(0)) return
             if (weiPayAmt?.eq(0)) {
               return onError?.()
             }

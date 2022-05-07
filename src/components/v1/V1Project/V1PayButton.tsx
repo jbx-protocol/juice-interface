@@ -19,6 +19,7 @@ import V1ConfirmPayOwnerModal from './modals/V1ConfirmPayOwnerModal'
 export default function V1PayButton({
   payAmount,
   payInCurrency,
+  onError,
 }: PayButtonProps) {
   const { projectId, currentFC, metadata, isArchived, terminal } =
     useContext(V1ProjectContext)
@@ -97,8 +98,14 @@ export default function V1PayButton({
         type="primary"
         onClick={
           parseFloat(fromWad(weiPayAmt))
-            ? () => setPayWarningModalVisible(true)
-            : undefined
+            ? () => {
+                setPayWarningModalVisible(true)
+              }
+            : () => {
+                if (parseFloat(fromWad(weiPayAmt)) === 0) {
+                  return onError?.()
+                }
+              }
         }
       >
         {payButtonText}

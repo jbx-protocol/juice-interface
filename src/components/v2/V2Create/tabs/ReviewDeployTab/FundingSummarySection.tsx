@@ -1,5 +1,5 @@
-import { t, Trans } from '@lingui/macro'
-import { Col, Row, Space, Statistic } from 'antd'
+import { Trans } from '@lingui/macro'
+import { Col, Row, Space } from 'antd'
 import { BigNumber } from '@ethersproject/bignumber'
 
 import {
@@ -21,9 +21,7 @@ import {
   MAX_DISTRIBUTION_LIMIT,
   weightedAmount,
 } from 'utils/v2/math'
-import SplitList from 'components/v2/shared/SplitList'
 import { NetworkContext } from 'contexts/networkContext'
-import TooltipLabel from 'components/shared/TooltipLabel'
 
 import { V2FundingCycle } from 'models/v2/fundingCycle'
 import { parseEther } from 'ethers/lib/utils'
@@ -40,6 +38,8 @@ import {
   ReconfigurationStatistic,
   RedemptionRateStatistic,
   ReservedTokensStatistic,
+  DistributionSplitsStatistic,
+  ReservedSplitsStatistic,
 } from './FundingAttributes'
 
 export default function FundingSummarySection() {
@@ -72,14 +72,15 @@ export default function FundingSummarySection() {
   )
 
   const distributionLimit = fundAccessConstraint?.distributionLimit
-  const hasDistributionLimit =
-    distributionLimit && !distributionLimit.eq(MAX_DISTRIBUTION_LIMIT)
+  const hasDistributionLimit = Boolean(
+    distributionLimit && !distributionLimit.gte(MAX_DISTRIBUTION_LIMIT),
+  )
 
   const unsafeFundingCycleProperties =
     getUnsafeV2FundingCycleProperties(fundingCycle)
 
   const duration = fundingCycle.duration
-  const hasDuration = duration && duration.gt(0)
+  const hasDuration = duration?.gt(0)
 
   const initialIssuanceRate =
     formatWad(
@@ -107,7 +108,7 @@ export default function FundingSummarySection() {
           <Trans>
             These settings will <strong>not</strong> be editable immediately
             within a funding cycle. They can only be changed for{' '}
-            <strong>upcoming</strong> funding cycles according to your{' '}
+            <strong>upcoming</strong> funding cycles according to the project's{' '}
             <strong>reconfiguration rules</strong>.
           </Trans>
         ) : (
@@ -173,22 +174,12 @@ export default function FundingSummarySection() {
           {!distributionLimit?.eq(0) && (
             <>
               <Col md={10} xs={24}>
-                <Statistic
-                  title={
-                    <TooltipLabel
-                      label={t`Distribution splits`}
-                      tip={t`Entities you will distribute to from your treasury each funding cycle.`}
-                    />
-                  }
-                  valueRender={() => (
-                    <SplitList
-                      splits={payoutGroupedSplits.splits}
-                      currency={fundAccessConstraint?.distributionLimitCurrency}
-                      totalValue={distributionLimit}
-                      projectOwnerAddress={userAddress}
-                      showSplitValues={hasDistributionLimit}
-                    />
-                  )}
+                <DistributionSplitsStatistic
+                  splits={payoutGroupedSplits.splits}
+                  currency={fundAccessConstraint?.distributionLimitCurrency}
+                  totalValue={distributionLimit}
+                  projectOwnerAddress={userAddress}
+                  showSplitValues={hasDistributionLimit}
                 />
               </Col>
               <Col md={2} xs={0}></Col>
@@ -196,20 +187,10 @@ export default function FundingSummarySection() {
           )}
           {fundingCycleMetadata?.reservedRate.gt(0) && (
             <Col md={10} xs={24}>
-              <Statistic
-                title={
-                  <TooltipLabel
-                    label={t`Reserved token splits`}
-                    tip={t`How you will split your ${formattedReservedRate}% of reserved tokens.`}
-                  />
-                }
-                valueRender={() => (
-                  <SplitList
-                    splits={reservedTokensGroupedSplits.splits}
-                    projectOwnerAddress={userAddress}
-                    totalValue={undefined}
-                  />
-                )}
+              <ReservedSplitsStatistic
+                splits={reservedTokensGroupedSplits.splits}
+                formattedReservedRate={formattedReservedRate}
+                projectOwnerAddress={userAddress}
               />
             </Col>
           )}

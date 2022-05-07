@@ -868,9 +868,8 @@ msgstr ""
 msgid "Distribution limit, duration and payouts"
 msgstr "Límite de distribución, duración y pagos"
 
-#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSummarySection.tsx
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/ReconfigurePreview.tsx
 msgid "Distribution splits"
 msgstr ""
 
@@ -1001,9 +1000,8 @@ msgstr ""
 msgid "End"
 msgstr "Fin"
 
-#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSummarySection.tsx
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/ReconfigurePreview.tsx
-msgid "Entities you will distribute to from your treasury each funding cycle."
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
+msgid "Entities that will receive funds from the treasury each funding cycle."
 msgstr ""
 
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
@@ -1171,9 +1169,8 @@ msgstr ""
 msgid "How long one funding cycle will last. Funding cycle <0>reconfigurations</0> will only take effect for <1>upcoming</1> funding cycles, i.e. once a current funding cycle has ended."
 msgstr "Cuanto durará un ciclo de financiamiento. Las <0>reconfiguraciones</0> del ciclo de financiamiento, solo tendrán efecto para los <1>próximos</1> ciclos de financiamiento, p. ej. una vez que el ciclo de financiamiento actual haya terminado."
 
-#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSummarySection.tsx
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/ReconfigurePreview.tsx
-msgid "How you will split your {formattedReservedRate}% of reserved tokens."
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
+msgid "How the {formattedReservedRate}% of your project's reserved tokens will be split."
 msgstr ""
 
 #: src/components/v1/V1Create/index.tsx
@@ -2012,8 +2009,7 @@ msgstr "Asignación de tokens reservados (opcional)"
 msgid "Reserved token allocations"
 msgstr "Colocación de tokens reservados"
 
-#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSummarySection.tsx
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/ReconfigurePreview.tsx
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Reserved token splits"
 msgstr ""
 
@@ -2344,7 +2340,7 @@ msgid "The future will be led by creators, and owned by communities."
 msgstr "El futuro será liderado por creadores y las comunidades serán los dueños."
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
-msgid "The maximum amount of funds allowed to be distributed from your treasury each funding cycle."
+msgid "The maximum amount of funds allowed to be distributed from the project's treasury each funding cycle."
 msgstr ""
 
 #: src/components/shared/formItems/ProjectTarget.tsx
@@ -2409,7 +2405,7 @@ msgid "These attributes can be changed at any time."
 msgstr "Estos atributos pueden cambiarse en cualquier momento."
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSummarySection.tsx
-msgid "These settings will <0>not</0> be editable immediately within a funding cycle. They can only be changed for <1>upcoming</1> funding cycles according to your <2>reconfiguration rules</2>."
+msgid "These settings will <0>not</0> be editable immediately within a funding cycle. They can only be changed for <1>upcoming</1> funding cycles according to the project's <2>reconfiguration rules</2>."
 msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx

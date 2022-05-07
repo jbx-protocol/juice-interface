@@ -16,6 +16,8 @@ import {
   DISCOUNT_RATE_EXPLANATION,
   REDEMPTION_RATE_EXPLANATION,
 } from 'components/v2/V2Project/V2FundingCycleSection/settingExplanations'
+import SplitList from 'components/v2/shared/SplitList'
+import { Split } from 'models/v2/splits'
 
 import { getBallotStrategyByAddress } from 'constants/v2/ballotStrategies/getBallotStrategiesByAddress'
 import {
@@ -40,7 +42,7 @@ export function DistributionLimitStatistic({
       title={
         <TooltipLabel
           label={t`Distribution limit`}
-          tip={t`The maximum amount of funds allowed to be distributed from your treasury each funding cycle.`}
+          tip={t`The maximum amount of funds allowed to be distributed from the project's treasury each funding cycle.`}
         />
       }
       valueRender={() =>
@@ -85,7 +87,7 @@ export function DurationStatistic({
   const formattedDuration = detailedTimeString({
     timeSeconds: duration?.toNumber(),
   })
-  const hasDuration = duration && duration.gt(0)
+  const hasDuration = duration?.gt(0)
 
   return (
     <Statistic
@@ -265,6 +267,68 @@ export function ReconfigurationStatistic({
           </FundingCycleDetailWarning>
         )
       }}
+    />
+  )
+}
+
+export function DistributionSplitsStatistic({
+  splits,
+  currency,
+  totalValue,
+  projectOwnerAddress,
+  showSplitValues,
+}: {
+  splits: Split[]
+  currency: BigNumber | undefined
+  totalValue: BigNumber | undefined
+  projectOwnerAddress: string | undefined
+  showSplitValues: boolean
+}) {
+  return (
+    <Statistic
+      title={
+        <TooltipLabel
+          label={t`Distribution splits`}
+          tip={t`Entities that will receive funds from the treasury each funding cycle.`}
+        />
+      }
+      valueRender={() => (
+        <SplitList
+          splits={splits}
+          currency={currency}
+          totalValue={totalValue}
+          projectOwnerAddress={projectOwnerAddress}
+          showSplitValues={showSplitValues}
+        />
+      )}
+    />
+  )
+}
+
+export function ReservedSplitsStatistic({
+  splits,
+  formattedReservedRate,
+  projectOwnerAddress,
+}: {
+  splits: Split[]
+  formattedReservedRate: number
+  projectOwnerAddress: string | undefined
+}) {
+  return (
+    <Statistic
+      title={
+        <TooltipLabel
+          label={t`Reserved token splits`}
+          tip={t`How the ${formattedReservedRate}% of your project's reserved tokens will be split.`}
+        />
+      }
+      valueRender={() => (
+        <SplitList
+          splits={splits}
+          projectOwnerAddress={projectOwnerAddress}
+          totalValue={undefined}
+        />
+      )}
     />
   )
 }

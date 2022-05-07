@@ -863,9 +863,8 @@ msgstr "Distribution limit is infinite: The project will control how all funds a
 msgid "Distribution limit, duration and payouts"
 msgstr "Distribution limit, duration and payouts"
 
-#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSummarySection.tsx
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/ReconfigurePreview.tsx
 msgid "Distribution splits"
 msgstr "Distribution splits"
 
@@ -996,10 +995,9 @@ msgstr "Enabling token minting will appear risky to contributors. Only enable th
 msgid "End"
 msgstr ""
 
-#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSummarySection.tsx
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/ReconfigurePreview.tsx
-msgid "Entities you will distribute to from your treasury each funding cycle."
-msgstr "Entities you will distribute to from your treasury each funding cycle."
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
+msgid "Entities that will receive funds from the treasury each funding cycle."
+msgstr "Entities that will receive funds from the treasury each funding cycle."
 
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 msgid "Error loading holders"
@@ -1166,10 +1164,9 @@ msgstr "How long before your next funding cycle must you reconfigure in order fo
 msgid "How long one funding cycle will last. Funding cycle <0>reconfigurations</0> will only take effect for <1>upcoming</1> funding cycles, i.e. once a current funding cycle has ended."
 msgstr "How long one funding cycle will last. Funding cycle <0>reconfigurations</0> will only take effect for <1>upcoming</1> funding cycles, i.e. once a current funding cycle has ended."
 
-#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSummarySection.tsx
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/ReconfigurePreview.tsx
-msgid "How you will split your {formattedReservedRate}% of reserved tokens."
-msgstr "How you will split your {formattedReservedRate}% of reserved tokens."
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
+msgid "How the {formattedReservedRate}% of your project's reserved tokens will be split."
+msgstr "How the {formattedReservedRate}% of your project's reserved tokens will be split."
 
 #: src/components/v1/V1Create/index.tsx
 msgid "How your project will distribute funds."
@@ -2007,8 +2004,7 @@ msgstr "Reserved token allocation (optional)"
 msgid "Reserved token allocations"
 msgstr ""
 
-#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSummarySection.tsx
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/ReconfigurePreview.tsx
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Reserved token splits"
 msgstr "Reserved token splits"
 
@@ -2339,8 +2335,8 @@ msgid "The future will be led by creators, and owned by communities."
 msgstr ""
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
-msgid "The maximum amount of funds allowed to be distributed from your treasury each funding cycle."
-msgstr "The maximum amount of funds allowed to be distributed from your treasury each funding cycle."
+msgid "The maximum amount of funds allowed to be distributed from the project's treasury each funding cycle."
+msgstr "The maximum amount of funds allowed to be distributed from the project's treasury each funding cycle."
 
 #: src/components/shared/formItems/ProjectTarget.tsx
 msgid "The maximum amount of funds that can be distributed from this project in one funding cycle. Funds will be withdrawn in ETH no matter the currency you choose."
@@ -2404,8 +2400,8 @@ msgid "These attributes can be changed at any time."
 msgstr "These attributes can be changed at any time."
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingSummarySection.tsx
-msgid "These settings will <0>not</0> be editable immediately within a funding cycle. They can only be changed for <1>upcoming</1> funding cycles according to your <2>reconfiguration rules</2>."
-msgstr "These settings will <0>not</0> be editable immediately within a funding cycle. They can only be changed for <1>upcoming</1> funding cycles according to your <2>reconfiguration rules</2>."
+msgid "These settings will <0>not</0> be editable immediately within a funding cycle. They can only be changed for <1>upcoming</1> funding cycles according to the project's <2>reconfiguration rules</2>."
+msgstr "These settings will <0>not</0> be editable immediately within a funding cycle. They can only be changed for <1>upcoming</1> funding cycles according to the project's <2>reconfiguration rules</2>."
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "These settings will <0>not</0> be editable immediately within a funding cycle. They can only be changed for <1>upcoming</1> funding cycles."

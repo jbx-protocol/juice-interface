@@ -1,14 +1,15 @@
-import { t } from '@lingui/macro'
-import { Col, Row, Statistic } from 'antd'
+import { Col, Row } from 'antd'
 import {
   AllowMintingStatistic,
   DiscountRateStatistic,
   DistributionLimitStatistic,
+  DistributionSplitsStatistic,
   DurationStatistic,
   IssuanceRateStatistic,
   PausePayStatistic,
   ReconfigurationStatistic,
   RedemptionRateStatistic,
+  ReservedSplitsStatistic,
   ReservedTokensStatistic,
 } from 'components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes'
 import {
@@ -30,8 +31,6 @@ import {
 } from 'utils/v2/math'
 import { formatWad } from 'utils/formatNumber'
 import { parseEther } from 'ethers/lib/utils'
-import TooltipLabel from 'components/shared/TooltipLabel'
-import SplitList from 'components/v2/shared/SplitList'
 import { Split } from 'models/v2/splits'
 
 export default function ReconfigurePreview({
@@ -67,11 +66,12 @@ export default function ReconfigurePreview({
   )
 
   const distributionLimit = fundAccessConstraint?.distributionLimit
-  const hasDistributionLimit =
-    distributionLimit && !distributionLimit.eq(MAX_DISTRIBUTION_LIMIT)
+  const hasDistributionLimit = Boolean(
+    distributionLimit && !distributionLimit.gte(MAX_DISTRIBUTION_LIMIT),
+  )
 
   const duration = fundingCycle.duration
-  const hasDuration = duration && duration.gt(0)
+  const hasDuration = duration?.gt(0)
 
   const issuanceRate =
     formatWad(
@@ -96,32 +96,32 @@ export default function ReconfigurePreview({
   return (
     <div style={{ padding: '0 0px' }}>
       <Row gutter={gutter} style={{ marginBottom: rowMargin }}>
-        <Col span={8}>
+        <Col md={8} sm={12}>
           <DurationStatistic duration={fundingCycle.duration} />
         </Col>
-        <Col span={8}>
+        <Col md={8} sm={12}>
           <DistributionLimitStatistic
             distributionLimit={distributionLimit}
             currencyName={currencyName ?? 'ETH'}
           />
         </Col>
-        <Col span={8}>
+        <Col md={8} sm={12}>
           <ReservedTokensStatistic
             formattedReservedRate={formattedReservedRate}
           />
         </Col>
       </Row>
       <Row gutter={gutter} style={{ marginBottom: rowMargin }}>
-        <Col span={8}>
+        <Col md={8} sm={12}>
           <IssuanceRateStatistic issuanceRate={issuanceRate} />
         </Col>
         {hasDuration ? (
-          <Col span={8}>
+          <Col md={8} sm={12}>
             <DiscountRateStatistic discountRate={fundingCycle.discountRate} />
           </Col>
         ) : null}
         {hasDistributionLimit ? (
-          <Col span={8}>
+          <Col md={8} sm={12}>
             <RedemptionRateStatistic
               redemptionRate={fundingCycleMetadata.redemptionRate}
             />
@@ -129,10 +129,10 @@ export default function ReconfigurePreview({
         ) : null}
       </Row>
       <Row gutter={gutter} style={{ marginBottom: rowMargin }}>
-        <Col span={8}>
+        <Col md={8} sm={12}>
           <PausePayStatistic pausePay={fundingCycleMetadata.pausePay} />
         </Col>
-        <Col span={8}>
+        <Col md={8} sm={12}>
           <AllowMintingStatistic
             allowMinting={fundingCycleMetadata.allowMinting}
           />
@@ -147,39 +147,19 @@ export default function ReconfigurePreview({
       </Row>
 
       {!distributionLimit?.eq(0) && (
-        <Statistic
-          title={
-            <TooltipLabel
-              label={t`Distribution splits`}
-              tip={t`Entities you will distribute to from your treasury each funding cycle.`}
-            />
-          }
-          valueRender={() => (
-            <SplitList
-              splits={payoutSplits}
-              currency={fundAccessConstraint?.distributionLimitCurrency}
-              totalValue={distributionLimit}
-              projectOwnerAddress={userAddress}
-              showSplitValues={hasDistributionLimit}
-            />
-          )}
+        <DistributionSplitsStatistic
+          splits={payoutSplits}
+          currency={fundAccessConstraint?.distributionLimitCurrency}
+          totalValue={distributionLimit}
+          projectOwnerAddress={userAddress}
+          showSplitValues={hasDistributionLimit}
         />
       )}
       {fundingCycleMetadata?.reservedRate.gt(0) && (
-        <Statistic
-          title={
-            <TooltipLabel
-              label={t`Reserved token splits`}
-              tip={t`How you will split your ${formattedReservedRate}% of reserved tokens.`}
-            />
-          }
-          valueRender={() => (
-            <SplitList
-              splits={reserveSplits}
-              projectOwnerAddress={userAddress}
-              totalValue={undefined}
-            />
-          )}
+        <ReservedSplitsStatistic
+          splits={reserveSplits}
+          formattedReservedRate={formattedReservedRate}
+          projectOwnerAddress={userAddress}
         />
       )}
     </div>

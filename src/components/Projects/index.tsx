@@ -19,6 +19,8 @@ import { V1TerminalVersion } from 'models/v1/terminals'
 import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 
+import { featureFlagEnabled, FEATURE_FLAGS } from 'utils/featureFlags'
+
 import { layouts } from 'constants/styles/layouts'
 import TrendingProjects from './TrendingProjects'
 import ProjectsTabs from './ProjectsTabs'
@@ -119,6 +121,7 @@ export default function Projects() {
   }, [selectedTab, fetchNextPage, hasNextPage])
 
   const isLoading = isLoadingProjects || isLoadingSearch
+  const isV2Enabled = featureFlagEnabled(FEATURE_FLAGS.ENABLE_V2)
 
   const concatenatedPages = searchText?.length
     ? searchPages
@@ -248,7 +251,7 @@ export default function Projects() {
             )
           )}
           {concatenatedPages?.length === 0 &&
-            v2Enabled &&
+            isV2Enabled &&
             !isLoadingSearch &&
             !isLoadingProjects && (
               <div

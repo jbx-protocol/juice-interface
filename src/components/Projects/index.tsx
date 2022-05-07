@@ -247,6 +247,24 @@ export default function Projects() {
               </div>
             )
           )}
+          {concatenatedPages?.length === 0 &&
+            v2Enabled &&
+            !isLoadingSearch &&
+            !isLoadingProjects && (
+              <div
+                style={{
+                  textAlign: 'center',
+                  color: colors.text.disabled,
+                  padding: 20,
+                }}
+              >
+                <InfoCircleOutlined />{' '}
+                <Trans>
+                  Projects on Juicebox V2 don't currently appear in these
+                  results.
+                </Trans>
+              </div>
+            )}
         </React.Fragment>
       ) : selectedTab === 'holdings' ? (
         <div style={{ paddingBottom: 50 }}>

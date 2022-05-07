@@ -1867,6 +1867,10 @@ msgstr "创建项目时，可选择配置一个折扣率用于激励早期支持
 msgid "Projects on Juicebox"
 msgstr "Juicebox 上的项目"
 
+#: src/components/Projects/index.tsx
+msgid "Projects on Juicebox V2 don't currently appear in these results."
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "Projects using Juicebox"
 msgstr "正在使用 Juicebox 的项目"

@@ -61,7 +61,7 @@ export default function Footer() {
         {link('Twitter', 'https://twitter.com/juiceboxETH')}
       </div>
       <div style={{ display: 'flex', margin: 'auto' }}>
-        <V2Switch />
+        <V2Switch labelStyle={{ color: '#fff' }} />
       </div>
     </div>
   )

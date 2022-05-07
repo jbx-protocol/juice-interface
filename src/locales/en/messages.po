@@ -659,6 +659,10 @@ msgstr "Create a payable address"
 msgid "Create an Ethereum address that can be used to pay your project directly."
 msgstr "Create an Ethereum address that can be used to pay your project directly."
 
+#: src/components/Landing/V2Switch.tsx
+msgid "Create and view projects on the V2 Juicebox protocol."
+msgstr "Create and view projects on the V2 Juicebox protocol."
+
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
 #: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
 msgid "Create payable address"

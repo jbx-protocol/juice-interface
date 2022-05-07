@@ -1877,6 +1877,10 @@ msgstr "Les projets dans Juicebox"
 msgid "Projects that you have created."
 msgstr ""
 
+#: src/components/Projects/HoldingsProjects.tsx
+msgid "Projects that you hold tokens for."
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "Projects using Juicebox"
 msgstr "Les projets utilisant Juicebox"
@@ -2843,6 +2847,10 @@ msgstr "Vous pouvez toujours récupérer vos tokens {tokenSymbol} de l'overflow 
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "You don't have a funding cycle duration. Changes you make will take effect immediately."
+msgstr ""
+
+#: src/components/Projects/HoldingsProjects.tsx
+msgid "You don't hold tokens for any Juicebox project."
 msgstr ""
 
 #: src/components/v1/shared/BudgetForm.tsx

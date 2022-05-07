@@ -53,7 +53,7 @@ export default function HoldingsProjects() {
                 }}
                 hidden={isLoading}
               >
-                You don't hold tokens for any Juicebox project.
+                <Trans>You don't hold tokens for any Juicebox project.</Trans>
               </div>
             ) : (
               <div
@@ -76,7 +76,8 @@ export default function HoldingsProjects() {
 
           {projects?.length !== 0 && (
             <p style={{ marginBottom: 40, marginTop: 40, maxWidth: 800 }}>
-              <InfoCircleOutlined /> Projects that you hold tokens for.
+              <InfoCircleOutlined />{' '}
+              <Trans>Projects that you hold tokens for.</Trans>
             </p>
           )}
         </React.Fragment>

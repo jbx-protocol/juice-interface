@@ -1877,6 +1877,10 @@ msgstr "Juicebox 上的项目"
 msgid "Projects that you have created."
 msgstr ""
 
+#: src/components/Projects/HoldingsProjects.tsx
+msgid "Projects that you hold tokens for."
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "Projects using Juicebox"
 msgstr "正在使用 Juicebox 的项目"
@@ -2843,6 +2847,10 @@ msgstr "未领取的 {tokenSymbol} 代币，依然可以用来赎回溢出池中
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "You don't have a funding cycle duration. Changes you make will take effect immediately."
+msgstr ""
+
+#: src/components/Projects/HoldingsProjects.tsx
+msgid "You don't hold tokens for any Juicebox project."
 msgstr ""
 
 #: src/components/v1/shared/BudgetForm.tsx

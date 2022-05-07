@@ -1872,6 +1872,10 @@ msgstr ""
 msgid "Projects that you have created."
 msgstr "Projects that you have created."
 
+#: src/components/Projects/HoldingsProjects.tsx
+msgid "Projects that you hold tokens for."
+msgstr "Projects that you hold tokens for."
+
 #: src/components/Landing/index.tsx
 msgid "Projects using Juicebox"
 msgstr ""
@@ -2839,6 +2843,10 @@ msgstr "You can still redeem your {tokenSymbol} tokens for overflow without clai
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "You don't have a funding cycle duration. Changes you make will take effect immediately."
 msgstr "You don't have a funding cycle duration. Changes you make will take effect immediately."
+
+#: src/components/Projects/HoldingsProjects.tsx
+msgid "You don't hold tokens for any Juicebox project."
+msgstr "You don't hold tokens for any Juicebox project."
 
 #: src/components/v1/shared/BudgetForm.tsx
 msgid "You have set a funding cycle target."

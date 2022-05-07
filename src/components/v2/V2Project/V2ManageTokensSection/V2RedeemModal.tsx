@@ -29,12 +29,12 @@ const statsStyle: CSSProperties = {
 // This doubles as the 'Redeem' and 'Burn' modal depending on if project has overflow
 export default function V2RedeemModal({
   visible,
-  onOk,
   onCancel,
+  onConfirmed,
 }: {
   visible?: boolean
-  onOk?: VoidFunction
   onCancel?: VoidFunction
+  onConfirmed?: VoidFunction
 }) {
   const {
     theme: { colors },
@@ -130,7 +130,7 @@ export default function V2RedeemModal({
         onConfirmed: () => {
           setTransactionPending(false)
           setLoading(false)
-          onOk?.()
+          onConfirmed?.()
         },
       },
     )

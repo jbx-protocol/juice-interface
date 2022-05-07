@@ -278,6 +278,8 @@ export default function FundingForm({
         setTarget('0')
         break
     }
+
+    setTargetCurrency(V2_CURRENCY_ETH)
   }
 
   // Ensures total split percentages do not exceed 100

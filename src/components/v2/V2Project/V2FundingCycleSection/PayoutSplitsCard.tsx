@@ -114,7 +114,7 @@ export default function PayoutSplitsCard({
       <DistributePayoutsModal
         visible={distributePayoutsModalVisible}
         onCancel={() => setDistributePayoutsModalVisible(false)}
-        onConfirmed={() => setDistributePayoutsModalVisible(false)}
+        onConfirmed={() => window.location.reload()}
       />
     </CardSection>
   )

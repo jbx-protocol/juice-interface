@@ -106,6 +106,7 @@ export const FundingDrawersSubtitles = (
 export default function V2ProjectReconfigureModal({
   visible,
   onOk: exit,
+  onCancel,
   hideProjectDetails,
 }: {
   visible: boolean
@@ -210,7 +211,7 @@ export default function V2ProjectReconfigureModal({
 
   const closeUnsavedChangesModalAndExit = () => {
     closeUnsavedChangesModal()
-    exit()
+    onCancel()
   }
 
   const [reconfigureTxLoading, setReconfigureTxLoading] =
@@ -358,10 +359,10 @@ export default function V2ProjectReconfigureModal({
 
   const handleGlobalModalClose = useCallback(() => {
     if (!fundingHasSavedChanges) {
-      return exit()
+      return onCancel()
     }
     openUnsavedChangesModal()
-  }, [fundingHasSavedChanges, exit])
+  }, [fundingHasSavedChanges, onCancel])
 
   const reconfigureV2FundingCycleTx = useReconfigureV2FundingCycleTx()
 

@@ -8,6 +8,8 @@ import { CSSProperties, useContext } from 'react'
 
 import V2CurrencyAmount from 'components/v2/shared/V2CurrencyAmount'
 
+import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2/math'
+
 import { textSecondary } from 'constants/styles/text'
 
 export default function DistributedRatio({ style }: { style?: CSSProperties }) {
@@ -47,11 +49,17 @@ export default function DistributedRatio({ style }: { style?: CSSProperties }) {
               amount={usedDistributionLimit}
               currency={distributionLimitCurrency}
             />{' '}
-            /{' '}
-            <V2CurrencyAmount
-              amount={distributionLimit}
-              currency={distributionLimitCurrency}
-            />
+            <>
+              /{' '}
+              {distributionLimit.eq(MAX_DISTRIBUTION_LIMIT) ? (
+                <Trans>NO LIMIT</Trans>
+              ) : (
+                <V2CurrencyAmount
+                  amount={distributionLimit}
+                  currency={distributionLimitCurrency}
+                />
+              )}
+            </>
           </div>
         ) : (
           <div

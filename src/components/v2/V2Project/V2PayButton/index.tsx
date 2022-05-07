@@ -87,7 +87,7 @@ export default function V2PayButton({
       />
       <V2ConfirmPayModal
         visible={payModalVisible}
-        onSuccess={() => setPayModalVisible(false)}
+        onSuccess={() => window.location.reload()}
         onCancel={() => setPayModalVisible(false)}
         weiAmount={weiPayAmt}
       />

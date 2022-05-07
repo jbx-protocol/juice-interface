@@ -20,7 +20,7 @@ export default function useProjectDistributionLimit({
     functionName: 'distributionLimitOf',
     args:
       projectId && configuration && terminal
-        ? [projectId.toHexString(), configuration, terminal, ETH_TOKEN_ADDRESS]
+        ? [projectId, configuration, terminal, ETH_TOKEN_ADDRESS]
         : null,
   })
 }

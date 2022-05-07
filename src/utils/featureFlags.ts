@@ -6,12 +6,13 @@ export const FEATURE_FLAGS = {
   ENABLE_V2: 'ENABLE_V2',
 }
 
-const DEFAULTS: { [k: string]: { [j: string]: boolean } } = {
-  [FEATURE_FLAGS.ENABLE_V2]: {
-    [NetworkName.rinkeby]: true,
-    [NetworkName.mainnet]: false,
-  },
-}
+export const FEATURE_FLAG_DEFAULTS: { [k: string]: { [j: string]: boolean } } =
+  {
+    [FEATURE_FLAGS.ENABLE_V2]: {
+      [NetworkName.rinkeby]: true,
+      [NetworkName.mainnet]: false,
+    },
+  }
 
 const featureFlagKey = (baseKey: string) => {
   return `${baseKey}_${readNetwork.name}`
@@ -29,9 +30,17 @@ export const disableFeatureFlag = (featureFlag: string) => {
   setFeatureFlag(featureFlag, false)
 }
 
+export const featureFlagDefaultEnabled = (featureFlag: string) => {
+  // if default-enabled for this environment, return true
+  const defaultEnabled =
+    FEATURE_FLAG_DEFAULTS[featureFlag][readNetwork.name as string]
+
+  return defaultEnabled
+}
+
 export const featureFlagEnabled = (featureFlag: string) => {
   // if default-enabled for this environment, return trues
-  const defaultEnabled = DEFAULTS[featureFlag][readNetwork.name as string]
+  const defaultEnabled = featureFlagDefaultEnabled(featureFlag)
 
   try {
     return JSON.parse(

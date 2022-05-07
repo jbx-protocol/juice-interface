@@ -16,9 +16,11 @@ import { tokenSymbolText } from 'utils/tokenSymbolText'
 export default function V2MintModal({
   visible,
   onCancel,
+  onConfirmed,
 }: {
   visible?: boolean
   onCancel?: VoidFunction
+  onConfirmed?: VoidFunction
 }) {
   const { tokenSymbol, tokenAddress } = useContext(V2ProjectContext)
   const mintTokensTx = useMintTokensTx()
@@ -32,7 +34,7 @@ export default function V2MintModal({
   const [loading, setLoading] = useState<boolean>()
   const [transactionPending, setTransactionPending] = useState<boolean>()
 
-  async function mint() {
+  async function executeMintTx() {
     const beneficiary = form.getFieldValue('beneficary')
     if (!isAddress(beneficiary)) return
 
@@ -48,15 +50,15 @@ export default function V2MintModal({
         memo: form.getFieldValue('memo'),
       },
       {
-        onConfirmed: () => {
-          form.resetFields()
-          setValue('0')
-          if (onCancel) onCancel()
-          setTransactionPending(false)
-        },
         onDone: () => {
           setLoading(false)
           setTransactionPending(true)
+        },
+        onConfirmed: () => {
+          form.resetFields()
+          setValue('0')
+          setTransactionPending(false)
+          onConfirmed?.()
         },
       },
     )
@@ -81,7 +83,7 @@ export default function V2MintModal({
     <TransactionModal
       visible={visible}
       title={t`Mint ${tokensTokenLower}`}
-      onOk={mint}
+      onOk={executeMintTx}
       confirmLoading={loading}
       transactionPending={transactionPending}
       onCancel={onCancel}

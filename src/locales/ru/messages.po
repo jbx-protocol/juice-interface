@@ -1867,6 +1867,10 @@ msgstr "Проекты могут быть созданы с дополните�
 msgid "Projects on Juicebox"
 msgstr "Проекты в Juicebox"
 
+#: src/components/Projects/index.tsx
+msgid "Projects on Juicebox V2 don't currently appear in these results."
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "Projects using Juicebox"
 msgstr "Проекты с использованием Juicebox"

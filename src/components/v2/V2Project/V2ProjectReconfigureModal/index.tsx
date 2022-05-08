@@ -53,7 +53,7 @@ import { isEqual } from 'lodash'
 
 import { Split } from 'models/v2/splits'
 
-import { V2_CURRENCY_ETH } from 'utils/v2/currency'
+import { NO_CURRENCY, V2_CURRENCY_ETH } from 'utils/v2/currency'
 
 import { V2ReconfigureFundingDrawer } from './drawers/V2ReconfigureFundingDrawer'
 import { V2ReconfigureProjectDetailsDrawer } from './drawers/V2ReconfigureProjectDetailsDrawer'
@@ -91,7 +91,7 @@ function ReconfigureButton({
           '1px solid ' +
           (reconfigureHasChanges
             ? colors.stroke.action.primary
-            : colors.stroke.secondary),
+            : colors.stroke.action.secondary),
       }}
       onClick={onClick}
     >
@@ -255,16 +255,16 @@ export default function V2ProjectReconfigureModal({
       undefined
     if (effectiveDistributionLimit) {
       const distributionLimitCurrency =
-        effectiveDistributionLimitCurrency?.toString() ??
-        V2_CURRENCY_ETH.toString()
+        effectiveDistributionLimitCurrency?.toNumber() ?? V2_CURRENCY_ETH
+
       fundAccessConstraint = {
         terminal: contracts?.JBETHPaymentTerminal.address ?? '',
         token: ETH_TOKEN_ADDRESS,
         distributionLimit: fromWad(effectiveDistributionLimit),
         distributionLimitCurrency:
-          distributionLimitCurrency === '0'
+          distributionLimitCurrency === NO_CURRENCY
             ? V2_CURRENCY_ETH.toString()
-            : distributionLimitCurrency,
+            : distributionLimitCurrency.toString(),
         overflowAllowance: '0', // nothing for the time being.
         overflowAllowanceCurrency: '0',
       }

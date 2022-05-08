@@ -1,6 +1,6 @@
-import { HashRouter, Route, Switch } from 'react-router-dom'
+import { HashRouter, Route, Switch, useLocation } from 'react-router-dom'
 import { Redirect, useParams } from 'react-router'
-import { Suspense, lazy } from 'react'
+import { Suspense, lazy, useEffect } from 'react'
 import V1Dashboard from 'components/v1/V1Dashboard'
 import Landing from 'components/Landing'
 import Projects from 'components/Projects'
@@ -38,67 +38,84 @@ const V2CreateRoute = () => (
   </V2EntryGuard>
 )
 
-export default function Router() {
+function usePageViews() {
+  let location = useLocation()
+
+  useEffect(() => {
+    window.fathom?.trackPageview({
+      url: location.pathname,
+    })
+  }, [location])
+}
+
+function JuiceboxSwitch() {
+  usePageViews()
   const isV2Enabled = featureFlagEnabled(FEATURE_FLAGS.ENABLE_V2)
 
   return (
+    <Switch>
+      <Route exact path="/">
+        <V1CurrencyProvider>
+          <Landing />
+        </V1CurrencyProvider>
+      </Route>
+      <Route path="/create">
+        {isV2Enabled ? <V2CreateRoute /> : <V1CreateRoute />}
+      </Route>
+      {isV2Enabled ? (
+        <Route path="/v1/create">
+          <V1CreateRoute />
+        </Route>
+      ) : (
+        <Route path="/v2/create">
+          <V2CreateRoute />
+        </Route>
+      )}
+
+      <Route path="/projects/:owner">
+        <Projects />
+      </Route>
+      <Route path="/projects">
+        <Projects />
+      </Route>
+
+      <Route path="/p/:ensName(.*.eth)">
+        <V2EntryGuard>
+          <Suspense fallback={<Loading />}>
+            <V2UserProvider>
+              <V2DashboardGateway />
+            </V2UserProvider>
+          </Suspense>
+        </V2EntryGuard>
+      </Route>
+      <Route path="/p/:handle">
+        <V1Dashboard />
+      </Route>
+
+      <Route path="/v2/p/:projectId">
+        <V2EntryGuard>
+          <Suspense fallback={<Loading />}>
+            <V2UserProvider>
+              <V2DashboardGateway />
+            </V2UserProvider>
+          </Suspense>
+        </V2EntryGuard>
+      </Route>
+
+      <Route path="/privacy">
+        <PrivacyPolicy />
+      </Route>
+      <Route path="/:route">
+        <CatchallRedirect />
+      </Route>
+    </Switch>
+  )
+}
+
+export default function Router() {
+  return (
     <HashRouter>
-      <Switch>
-        <Route exact path="/">
-          <V1CurrencyProvider>
-            <Landing />
-          </V1CurrencyProvider>
-        </Route>
-        <Route path="/create">
-          {isV2Enabled ? <V2CreateRoute /> : <V1CreateRoute />}
-        </Route>
-        {isV2Enabled ? (
-          <Route path="/v1/create">
-            <V1CreateRoute />
-          </Route>
-        ) : (
-          <Route path="/v2/create">
-            <V2CreateRoute />
-          </Route>
-        )}
-
-        <Route path="/projects/:owner">
-          <Projects />
-        </Route>
-        <Route path="/projects">
-          <Projects />
-        </Route>
-
-        <Route path="/p/:ensName(.*.eth)">
-          <V2EntryGuard>
-            <Suspense fallback={<Loading />}>
-              <V2UserProvider>
-                <V2DashboardGateway />
-              </V2UserProvider>
-            </Suspense>
-          </V2EntryGuard>
-        </Route>
-        <Route path="/p/:handle">
-          <V1Dashboard />
-        </Route>
-
-        <Route path="/v2/p/:projectId">
-          <V2EntryGuard>
-            <Suspense fallback={<Loading />}>
-              <V2UserProvider>
-                <V2DashboardGateway />
-              </V2UserProvider>
-            </Suspense>
-          </V2EntryGuard>
-        </Route>
-
-        <Route path="/privacy">
-          <PrivacyPolicy />
-        </Route>
-        <Route path="/:route">
-          <CatchallRedirect />
-        </Route>
-      </Switch>
+      <JuiceboxSwitch />
     </HashRouter>
   )
 }

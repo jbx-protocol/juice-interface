@@ -42,6 +42,7 @@ export type AddOrEditSplitFormFields = {
   projectId: string
   beneficiary: string
   percent: number
+  lockedUntil: Moment.Moment | undefined | null
 }
 
 type SplitType = 'project' | 'address'
@@ -52,21 +53,23 @@ type SplitType = 'project' | 'address'
 export default function DistributionSplitModal({
   visible,
   mode,
-  splits,
+  splits, // Locked and editable splits
   onSplitsChanged,
   distributionLimit,
-  splitIndex, // Only in the case mode==='Edit'
+  editableSplitIndex, // index in editingSplits list (Only in the case mode==='Edit')
   onClose,
   currencyName,
+  editableSplits,
 }: {
   visible: boolean
   mode: ModalMode // 'Add' or 'Edit' or 'Undefined'
   splits: Split[]
   onSplitsChanged: (splits: Split[]) => void
   distributionLimit: string | undefined
-  splitIndex?: number
+  editableSplitIndex?: number
   onClose: VoidFunction
   currencyName: CurrencyName
+  editableSplits: Split[]
 }) {
   const {
     theme: { colors },
@@ -81,8 +84,9 @@ export default function DistributionSplitModal({
   const distributionLimitIsInfinite =
     !distributionLimit || parseWad(distributionLimit).eq(MAX_DISTRIBUTION_LIMIT)
 
-  if (splits.length && splitIndex !== undefined) {
-    split = splits[splitIndex]
+  // If editing, format the lockedUntil and projectId
+  if (editableSplits.length && editableSplitIndex !== undefined) {
+    split = editableSplits[editableSplitIndex]
     initialLockedUntil = split.lockedUntil
       ? Moment.default(split.lockedUntil * 1000)
       : undefined
@@ -107,7 +111,9 @@ export default function DistributionSplitModal({
     Moment.Moment | undefined | null
   >(initialLockedUntil)
 
-  useLayoutEffect(() => form.setFieldsValue({ percent, projectId }))
+  useLayoutEffect(() =>
+    form.setFieldsValue({ percent, projectId, lockedUntil }),
+  )
 
   const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
 
@@ -116,11 +122,17 @@ export default function DistributionSplitModal({
     : undefined
 
   useEffect(() => {
-    if (!splits.length || splitIndex === undefined || !distributionLimit) {
+    if (
+      !editableSplits.length ||
+      editableSplitIndex === undefined ||
+      !distributionLimit
+    ) {
       return
     }
     const percent = parseFloat(
-      formatSplitPercent(BigNumber.from(splits[splitIndex].percent)),
+      formatSplitPercent(
+        BigNumber.from(editableSplits[editableSplitIndex].percent),
+      ),
     )
     const amount = amountFromPercent({
       percent,
@@ -128,13 +140,14 @@ export default function DistributionSplitModal({
     })
     setAmount(amount)
     setPercent(percent)
-  }, [distributionLimit, splits, splitIndex])
+  }, [distributionLimit, editableSplits, editableSplitIndex])
 
   const resetStates = () => {
     setProjectId(undefined)
     setBeneficiary(undefined)
     setPercent(undefined)
     setAmount(undefined)
+    setLockedUntil(undefined)
   }
 
   // Validates new or newly edited split, then adds it to or edits the splits list
@@ -154,18 +167,19 @@ export default function DistributionSplitModal({
       allocator: undefined, // TODO: new v2 feature
     } as Split
 
-    onSplitsChanged(
+    const newSplits =
       mode === 'Edit'
-        ? splits.map((m, i) =>
-            i === splitIndex
+        ? editableSplits.map((m, i) =>
+            i === editableSplitIndex
               ? {
                   ...m,
                   ...newSplit,
                 }
               : m,
           )
-        : [...splits, newSplit],
-    )
+        : [...editableSplits, newSplit]
+
+    onSplitsChanged(newSplits)
 
     form.resetFields()
     if (mode === 'Add') resetStates()
@@ -187,7 +201,18 @@ export default function DistributionSplitModal({
 
   // Validates new payout receiving address
   const validatePayoutAddress = () => {
-    return validateEthAddress(beneficiary ?? '', splits, mode, splitIndex)
+    if (
+      editableSplitIndex !== undefined &&
+      beneficiary === editableSplits[editableSplitIndex].beneficiary
+    ) {
+      return Promise.resolve()
+    }
+    return validateEthAddress(
+      beneficiary ?? '',
+      splits,
+      mode,
+      editableSplitIndex,
+    )
   }
 
   const validateProjectId = () => {
@@ -397,7 +422,6 @@ export default function DistributionSplitModal({
           }
         >
           <DatePicker
-            value={lockedUntil}
             disabledDate={disabledDate}
             onChange={lockedUntil => setLockedUntil(lockedUntil)}
           />

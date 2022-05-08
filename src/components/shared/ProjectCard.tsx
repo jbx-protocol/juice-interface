@@ -11,6 +11,7 @@ import { formatDate } from 'utils/formatDate'
 import { getTerminalVersion } from 'utils/v1/terminals'
 
 import useSubgraphQuery from 'hooks/SubgraphQuery'
+import { Trans } from '@lingui/macro'
 
 import { Link } from 'react-router-dom'
 
@@ -184,7 +185,7 @@ export default function ProjectCard({
               fontWeight: 500,
             }}
           >
-            ARCHIVED
+            <Trans>ARCHIVED</Trans>
           </div>
         )}
 

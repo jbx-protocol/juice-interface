@@ -222,6 +222,10 @@ msgstr ""
 msgid "A reserved rate of more than 90% is risky for contributors. Contributors won't receive many tokens for their contribution."
 msgstr "A reserved rate of more than 90% is risky for contributors. Contributors won't receive many tokens for their contribution."
 
+#: src/components/shared/ProjectCard.tsx
+msgid "ARCHIVED"
+msgstr "ARCHIVED"
+
 #: src/components/shared/Project/SpendingStats.tsx
 msgid "AVAILABLE"
 msgstr ""

@@ -27,6 +27,7 @@ import ProjectsTabs from './ProjectsTabs'
 import HoldingsProjects from './HoldingsProjects'
 import ProjectsFilterAndSort from './ProjectsFilterAndSort'
 import ArchivedProjectsMessage from './ArchivedProjectsMessage'
+import MyProjects from './MyProjects'
 
 type OrderByOption = 'createdAt' | 'totalPaid'
 
@@ -56,8 +57,9 @@ export default function Projects() {
         case 'all':
           return 'all'
         case 'holdings':
-          // If no wallet connected, revert to default tab
-          return userAddress ? 'holdings' : defaultTab
+          return 'holdings'
+        case 'myprojects':
+          return 'myprojects'
         default:
           return defaultTab
       }
@@ -272,6 +274,10 @@ export default function Projects() {
       ) : selectedTab === 'holdings' ? (
         <div style={{ paddingBottom: 50 }}>
           <HoldingsProjects />
+        </div>
+      ) : selectedTab === 'myprojects' ? (
+        <div style={{ paddingBottom: 50 }}>
+          <MyProjects />
         </div>
       ) : selectedTab === 'trending' ? (
         <div style={{ paddingBottom: 50 }}>

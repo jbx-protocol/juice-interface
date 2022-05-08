@@ -36,7 +36,7 @@ export default function V2WarningBanner() {
             fontWeight: 400,
             textDecoration: 'underline',
           }}
-          href="https://info.juicebox.money/docs/build/project-design"
+          href="https://info.juicebox.money/docs/protocol/build/project-design"
         >
           Learn more.
         </ExternalLink>

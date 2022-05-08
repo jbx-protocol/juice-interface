@@ -37,7 +37,7 @@ export interface V2ProjectState {
 // Increment this version by 1 when making breaking changes.
 // When users return to the site and their local version is less than
 // this number, their state will be reset.
-export const REDUX_STORE_V2_PROJECT_VERSION = 2
+export const REDUX_STORE_V2_PROJECT_VERSION = 3
 
 const defaultProjectMetadataState: ProjectMetadataV4 = {
   name: '',
@@ -60,6 +60,10 @@ export const defaultFundingCycleData: SerializedV2FundingCycleData =
 
 export const defaultFundingCycleMetadata: SerializedV2FundingCycleMetadata =
   serializeV2FundingCycleMetadata({
+    global: {
+      allowSetTerminals: false,
+      allowSetController: false,
+    },
     reservedRate: BigNumber.from(0), // A number from 0-10,000
     redemptionRate: redemptionRateFrom('100'), // A number from 0-10,000
     ballotRedemptionRate: redemptionRateFrom('100'), // A number from 0-10,000
@@ -71,8 +75,6 @@ export const defaultFundingCycleMetadata: SerializedV2FundingCycleMetadata =
     allowChangeToken: false,
     allowTerminalMigration: false,
     allowControllerMigration: false,
-    allowSetTerminals: false,
-    allowSetController: false,
     holdFees: false,
     useTotalOverflowForRedemptions: false,
     useDataSourceForPay: false,

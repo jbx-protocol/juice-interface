@@ -30,10 +30,10 @@ export default function PayInputGroup({
   weightingFn,
 }: {
   PayButton: (props: PayButtonProps) => JSX.Element | null
-  reservedRate?: number
-  weight?: BigNumber
-  tokenSymbol?: string
-  tokenAddress?: string
+  reservedRate: number | undefined
+  weight: BigNumber | undefined
+  tokenSymbol: string | undefined
+  tokenAddress: string | undefined
   weightingFn: WeightFunction
 }) {
   const {

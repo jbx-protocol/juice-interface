@@ -121,7 +121,7 @@ export default function Projects() {
   }, [selectedTab, fetchNextPage, hasNextPage])
 
   const isLoading = isLoadingProjects || isLoadingSearch
-  const v2Enabled = featureFlagEnabled(FEATURE_FLAGS.ENABLE_V2)
+  const isV2Enabled = featureFlagEnabled(FEATURE_FLAGS.ENABLE_V2)
 
   const concatenatedPages = searchText?.length
     ? searchPages
@@ -141,7 +141,7 @@ export default function Projects() {
             <Trans>Projects on Juicebox</Trans>
           </h1>
 
-          <Link to={v2Enabled ? '/v2/create' : '/create'}>
+          <Link to="/create">
             <Button type="primary" size="large">
               <Trans>Create project</Trans>
             </Button>
@@ -250,6 +250,24 @@ export default function Projects() {
               </div>
             )
           )}
+          {concatenatedPages?.length === 0 &&
+            isV2Enabled &&
+            !isLoadingSearch &&
+            !isLoadingProjects && (
+              <div
+                style={{
+                  textAlign: 'center',
+                  color: colors.text.disabled,
+                  padding: 20,
+                }}
+              >
+                <InfoCircleOutlined />{' '}
+                <Trans>
+                  Projects on Juicebox V2 don't currently appear in these
+                  results.
+                </Trans>
+              </div>
+            )}
         </React.Fragment>
       ) : selectedTab === 'holdings' ? (
         <div style={{ paddingBottom: 50 }}>

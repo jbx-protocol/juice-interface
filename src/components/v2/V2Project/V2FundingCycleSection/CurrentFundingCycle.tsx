@@ -33,7 +33,11 @@ export default function CurrentFundingCycle({
         <FundingCycleDetailsCard
           fundingCycleNumber={fundingCycle.number}
           fundingCycleDetails={
-            <FundingCycleDetails fundingCycle={fundingCycle} />
+            <FundingCycleDetails
+              fundingCycle={fundingCycle}
+              distributionLimit={distributionLimit}
+              distributionLimitCurrency={distributionLimitCurrency}
+            />
           }
           fundingCycleDurationSeconds={fundingCycle.duration}
           fundingCycleStartTime={fundingCycle.start}

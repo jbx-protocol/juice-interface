@@ -95,7 +95,7 @@ export default function FundingCycleDetailsCard({
                       </Trans>
                     }
                   >
-                    <ExclamationCircleOutlined style={{ marginRight: 2 }} />
+                    <ExclamationCircleOutlined style={{ marginRight: 6 }} />
                     {fundingCycleRiskCount}
                   </Tooltip>
                 </span>

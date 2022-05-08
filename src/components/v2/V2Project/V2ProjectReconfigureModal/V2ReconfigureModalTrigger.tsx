@@ -43,6 +43,11 @@ export default function V2ReconfigureFundingModalTrigger({
     setReconfigureModalVisible(true)
   }
 
+  function handleOk() {
+    setReconfigureModalVisible(false)
+    window.location.reload()
+  }
+
   // Load queued FC data of project
   const { data: queuedFundingCycleResponse } = useProjectQueuedFundingCycle({
     projectId,
@@ -126,7 +131,8 @@ export default function V2ReconfigureFundingModalTrigger({
         <Provider store={localStoreRef.current}>
           <V2ProjectReconfigureModal
             visible={reconfigureModalVisible}
-            onOk={() => setReconfigureModalVisible(false)}
+            onOk={handleOk}
+            onCancel={() => setReconfigureModalVisible(false)}
             hideProjectDetails={hideProjectDetails}
           />
         </Provider>

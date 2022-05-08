@@ -278,6 +278,8 @@ export default function FundingForm({
         setTarget('0')
         break
     }
+
+    setTargetCurrency(V2_CURRENCY_ETH)
   }
 
   // Ensures total split percentages do not exceed 100
@@ -379,7 +381,7 @@ export default function FundingForm({
                   Restrict how the owner can reconfigure upcoming funding cycles
                   to mitigate abuse of power.{' '}
                   <ExternalLink
-                    href={'https://info.juicebox.money/docs/learn/risks'}
+                    href={'https://info.juicebox.money/docs/protocol/learn/risks'}
                   >
                     Learn more.
                   </ExternalLink>
@@ -418,7 +420,7 @@ export default function FundingForm({
             Any treasury funds within the distribution limit can be paid out to
             destinations that you can define as <strong>splits</strong>.{' '}
             <ExternalLink
-              href={'https://info.juicebox.money/docs/learn/glossary/splits'}
+              href={'https://info.juicebox.money/docs/protocol/learn/glossary/splits'}
             >
               Learn more
             </ExternalLink>{' '}

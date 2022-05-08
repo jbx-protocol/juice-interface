@@ -91,7 +91,7 @@ function ReconfigureButton({
           '1px solid ' +
           (reconfigureHasChanges
             ? colors.stroke.action.primary
-            : colors.stroke.action.secondary),
+            : colors.stroke.secondary),
       }}
       onClick={onClick}
     >

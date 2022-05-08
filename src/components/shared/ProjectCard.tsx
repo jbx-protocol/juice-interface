@@ -1,4 +1,4 @@
-import { Tooltip } from 'antd'
+import { Skeleton, Tooltip } from 'antd'
 
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
@@ -11,13 +11,14 @@ import { formatDate } from 'utils/formatDate'
 import { getTerminalVersion } from 'utils/v1/terminals'
 
 import useSubgraphQuery from 'hooks/SubgraphQuery'
+import { Trans } from '@lingui/macro'
 
 import { Link } from 'react-router-dom'
 
-import Loading from './Loading'
 import ProjectLogo from './ProjectLogo'
 import ETHAmount from './currency/ETHAmount'
 import { archivedProjectIds } from '../../constants/v1/archivedProjects'
+import Loading from './Loading'
 
 type ProjectCardProject = Pick<
   Project,
@@ -91,23 +92,27 @@ export default function ProjectCard({
       key={_project?.handle}
       to={`/p/${_project?.handle}`}
     >
-      {metadata ? (
-        <div style={cardStyle} className="clickable-border">
-          <div style={{ marginRight: 20 }}>
+      <div style={cardStyle} className="clickable-border">
+        <div style={{ marginRight: 20 }}>
+          {metadata ? (
             <ProjectLogo
               uri={metadata.logoUri}
               name={metadata.name}
               size={110}
             />
-          </div>
+          ) : (
+            <ProjectLogo uri={undefined} name={undefined} size={110} />
+          )}
+        </div>
 
-          <div
-            style={{
-              flex: 1,
-              minWidth: 0,
-              fontWeight: 400,
-            }}
-          >
+        <div
+          style={{
+            flex: 1,
+            minWidth: 0,
+            fontWeight: 400,
+          }}
+        >
+          {metadata ? (
             <h2
               style={{
                 color: colors.text.primary,
@@ -119,80 +124,73 @@ export default function ProjectCard({
             >
               {metadata.name}
             </h2>
+          ) : (
+            <Skeleton paragraph={false} title={{ width: 120 }} />
+          )}
 
-            <div>
-              <span style={{ color: colors.text.primary, fontWeight: 500 }}>
-                @{_project?.handle}
-              </span>
-              <span
-                style={{
-                  marginLeft: 10,
-                  color: colors.text.tertiary,
-                  fontSize: '0.7rem',
-                  fontWeight: 500,
-                }}
-              >
-                V{terminalVersion}
-              </span>
-            </div>
-
-            <div>
-              <span style={{ color: colors.text.primary, fontWeight: 500 }}>
-                <ETHAmount amount={_project?.totalPaid} precision={precision} />{' '}
-              </span>
-
-              <span style={{ color: colors.text.secondary }}>
-                since{' '}
-                {!!_project?.createdAt &&
-                  formatDate(_project?.createdAt * 1000, 'yyyy-MM-DD')}
-              </span>
-            </div>
-
-            {metadata.description && (
-              <Tooltip title={metadata.description} placement="bottom">
-                <div
-                  style={{
-                    maxHeight: 20,
-                    color: colors.text.tertiary,
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                  }}
-                >
-                  {metadata.description}
-                </div>
-              </Tooltip>
-            )}
-          </div>
-
-          {isArchived && (
-            <div
+          <div>
+            <span style={{ color: colors.text.primary, fontWeight: 500 }}>
+              @{_project?.handle}
+            </span>
+            <span
               style={{
-                position: 'absolute',
-                top: 0,
-                right: 0,
-                padding: '2px 4px',
-                background: colors.background.l1,
-                fontSize: '0.7rem',
+                marginLeft: 10,
                 color: colors.text.tertiary,
+                fontSize: '0.7rem',
                 fontWeight: 500,
               }}
             >
-              ARCHIVED
-            </div>
+              V{terminalVersion}
+            </span>
+          </div>
+
+          <div>
+            <span style={{ color: colors.text.primary, fontWeight: 500 }}>
+              <ETHAmount amount={_project?.totalPaid} precision={precision} />{' '}
+            </span>
+
+            <span style={{ color: colors.text.secondary }}>
+              since{' '}
+              {!!_project?.createdAt &&
+                formatDate(_project?.createdAt * 1000, 'yyyy-MM-DD')}
+            </span>
+          </div>
+
+          {metadata && metadata.description && (
+            <Tooltip title={metadata.description} placement="bottom">
+              <div
+                style={{
+                  maxHeight: 20,
+                  color: colors.text.tertiary,
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                }}
+              >
+                {metadata.description}
+              </div>
+            </Tooltip>
           )}
         </div>
-      ) : (
-        <div
-          style={{
-            display: 'flex',
-            flex: 1,
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
-          {_project?.handle} <Loading />
-        </div>
-      )}
+
+        {isArchived && (
+          <div
+            style={{
+              position: 'absolute',
+              top: 0,
+              right: 0,
+              padding: '2px 4px',
+              background: colors.background.l1,
+              fontSize: '0.7rem',
+              color: colors.text.tertiary,
+              fontWeight: 500,
+            }}
+          >
+            <Trans>ARCHIVED</Trans>
+          </div>
+        )}
+
+        {!metadata && <Loading />}
+      </div>
     </Link>
   )
 }

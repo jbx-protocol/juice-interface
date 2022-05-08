@@ -60,6 +60,7 @@ import FormItemWarningText from 'components/shared/FormItemWarningText'
 import SwitchHeading from 'components/shared/SwitchHeading'
 import DistributionSplitsSection from 'components/v2/shared/DistributionSplitsSection'
 import { getTotalSplitsPercentage } from 'utils/v2/distributions'
+import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import isEqual from 'lodash/isEqual'
 
@@ -80,12 +81,15 @@ type FundingFormFields = {
 export default function FundingForm({
   onFormUpdated,
   onFinish,
+  isCreate,
 }: {
   onFormUpdated?: (updated: boolean) => void
   onFinish: VoidFunction
+  isCreate?: boolean // Instance of FundingForm in create flow
 }) {
   const { theme } = useContext(ThemeContext)
   const { contracts } = useContext(V2UserContext)
+  const { payoutSplits } = useContext(V2ProjectContext)
 
   const dispatch = useAppDispatch()
 
@@ -144,16 +148,35 @@ export default function FundingForm({
   } = useMemo(() => {
     const now = new Date().valueOf() / 1000
 
-    return {
-      editableSplits:
-        splits?.filter(
-          split => !split.lockedUntil || split.lockedUntil < now,
-        ) ?? [],
-      lockedSplits:
-        splits?.filter(split => split.lockedUntil && split.lockedUntil > now) ??
-        [],
+    // Checks if the given split exists in the projectContext splits.
+    // If it doesn't, then it means it was just added or edited is which case
+    // we want to still be able to edit it
+    const confirmedSplitsIncludesSplit = (split: Split) => {
+      let includes = false
+      payoutSplits?.forEach(confirmedSplit => {
+        if (isEqual(confirmedSplit, split)) {
+          includes = true
+        }
+      })
+      return includes
     }
-  }, [splits])
+
+    const isLockedSplit = (split: Split) => {
+      return (
+        split.lockedUntil &&
+        split.lockedUntil > now &&
+        !isCreate &&
+        confirmedSplitsIncludesSplit(split)
+      )
+    }
+
+    const lockedSplits = splits?.filter(split => isLockedSplit(split)) ?? []
+    const editableSplits = splits?.filter(split => !isLockedSplit(split)) ?? []
+    return {
+      lockedSplits,
+      editableSplits,
+    }
+  }, [splits, isCreate, payoutSplits])
 
   useLayoutEffect(() => setEditingSplits(editableSplits), [editableSplits])
 
@@ -381,7 +404,9 @@ export default function FundingForm({
                   Restrict how the owner can reconfigure upcoming funding cycles
                   to mitigate abuse of power.{' '}
                   <ExternalLink
-                    href={'https://info.juicebox.money/docs/learn/risks'}
+                    href={
+                      'https://info.juicebox.money/docs/protocol/learn/risks'
+                    }
                   >
                     Learn more.
                   </ExternalLink>
@@ -420,7 +445,9 @@ export default function FundingForm({
             Any treasury funds within the distribution limit can be paid out to
             destinations that you can define as <strong>splits</strong>.{' '}
             <ExternalLink
-              href={'https://info.juicebox.money/docs/learn/glossary/splits'}
+              href={
+                'https://info.juicebox.money/docs/protocol/learn/glossary/splits'
+              }
             >
               Learn more
             </ExternalLink>{' '}

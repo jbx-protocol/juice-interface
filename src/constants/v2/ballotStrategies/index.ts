@@ -6,8 +6,8 @@ import { SECONDS_IN_DAY } from 'constants/numbers'
 
 const BALLOT_ADDRESSES: { [k: string]: { [j: string]: string } } = {
   THREE_DAY: {
-    rinkeby: '0x63f683ef542779Cc151608b48aFB7Ec3E8e9BF7E',
-    mainnet: '0xedfCFdCB621aFA76781eFBe7586fAe83D1578Ac2',
+    rinkeby: '0xf91150aa07a1AC707148420713cefd299b8D094A',
+    mainnet: '0x9733F02d3A1068A11B07516fa2f3C3BaEf90e7eF',
   },
   // TODO waiting on 7-day buffer contract to be deployed.
   // SEVEN_DAY: {

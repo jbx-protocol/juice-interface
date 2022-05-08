@@ -19,12 +19,15 @@ import { V1TerminalVersion } from 'models/v1/terminals'
 import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 
+import { featureFlagEnabled, FEATURE_FLAGS } from 'utils/featureFlags'
+
 import { layouts } from 'constants/styles/layouts'
 import TrendingProjects from './TrendingProjects'
 import ProjectsTabs from './ProjectsTabs'
 import HoldingsProjects from './HoldingsProjects'
 import ProjectsFilterAndSort from './ProjectsFilterAndSort'
 import ArchivedProjectsMessage from './ArchivedProjectsMessage'
+import MyProjects from './MyProjects'
 
 type OrderByOption = 'createdAt' | 'totalPaid'
 
@@ -54,8 +57,9 @@ export default function Projects() {
         case 'all':
           return 'all'
         case 'holdings':
-          // If no wallet connected, revert to default tab
-          return userAddress ? 'holdings' : defaultTab
+          return 'holdings'
+        case 'myprojects':
+          return 'myprojects'
         default:
           return defaultTab
       }
@@ -119,6 +123,7 @@ export default function Projects() {
   }, [selectedTab, fetchNextPage, hasNextPage])
 
   const isLoading = isLoadingProjects || isLoadingSearch
+  const isV2Enabled = featureFlagEnabled(FEATURE_FLAGS.ENABLE_V2)
 
   const concatenatedPages = searchText?.length
     ? searchPages
@@ -247,10 +252,32 @@ export default function Projects() {
               </div>
             )
           )}
+          {concatenatedPages?.length === 0 &&
+            isV2Enabled &&
+            !isLoadingSearch &&
+            !isLoadingProjects && (
+              <div
+                style={{
+                  textAlign: 'center',
+                  color: colors.text.disabled,
+                  padding: 20,
+                }}
+              >
+                <InfoCircleOutlined />{' '}
+                <Trans>
+                  Projects on Juicebox V2 don't currently appear in these
+                  results.
+                </Trans>
+              </div>
+            )}
         </React.Fragment>
       ) : selectedTab === 'holdings' ? (
         <div style={{ paddingBottom: 50 }}>
           <HoldingsProjects />
+        </div>
+      ) : selectedTab === 'myprojects' ? (
+        <div style={{ paddingBottom: 50 }}>
+          <MyProjects />
         </div>
       ) : selectedTab === 'trending' ? (
         <div style={{ paddingBottom: 50 }}>

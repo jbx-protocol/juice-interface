@@ -168,7 +168,12 @@ export default function Landing() {
                 <div className="hide-mobile">
                   <div style={{ display: 'inline-block' }}>
                     {v2Enabled ? (
-                      <Link to={'/create'}>
+                      <Link
+                        to={'/create'}
+                        onClick={() => {
+                          fathom.trackGoal('IIYVJKNC', 0)
+                        }}
+                      >
                         <Button type="primary" size="large">
                           <Trans>Design your project</Trans>
                         </Button>
@@ -177,7 +182,10 @@ export default function Landing() {
                       <Button
                         type="primary"
                         size="large"
-                        onClick={scrollToCreate}
+                        onClick={() => {
+                          fathom.trackGoal('IIYVJKNC', 0)
+                          scrollToCreate()
+                        }}
                       >
                         <Trans>Design your project</Trans>
                       </Button>

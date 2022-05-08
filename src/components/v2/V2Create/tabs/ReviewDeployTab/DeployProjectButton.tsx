@@ -26,13 +26,29 @@ import { readNetwork } from 'constants/networks'
 const CREATE_EVENT_IDX = 0
 const PROJECT_ID_TOPIC_IDX = 3
 
+const findTransactionReceipt = async (txHash: string) => {
+  let retries = 5
+  let receipt
+  while (retries > 0 && !receipt) {
+    receipt = await readProvider.getTransactionReceipt(txHash)
+    if (receipt) break
+
+    retries -= 1
+    // wait 2s
+    await new Promise(r => setTimeout(r, 2000))
+    console.info('Retrying tx receipt lookup...')
+  }
+
+  return receipt
+}
+
 /**
  * Return the project ID created from a `launchProjectFor` transaction.
  * @param txReceipt receipt of `launchProjectFor` transaction
  */
 const getProjectIdFromReceipt = (txReceipt: TransactionReceipt): number => {
   const projectIdHex =
-    txReceipt.logs[CREATE_EVENT_IDX]?.topics?.[PROJECT_ID_TOPIC_IDX]
+    txReceipt?.logs[CREATE_EVENT_IDX]?.topics?.[PROJECT_ID_TOPIC_IDX]
   const projectId = BigNumber.from(projectIdHex).toNumber()
 
   return projectId
@@ -95,13 +111,18 @@ export default function DeployProjectButton() {
         async onConfirmed(result) {
           const txHash = result?.transaction?.hash
           if (!txHash) {
-            return
+            return // TODO error notififcation
           }
 
-          const txReceipt = await readProvider.getTransactionReceipt(txHash)
+          const txReceipt = await findTransactionReceipt(txHash)
+          if (!txReceipt) {
+            return // TODO error notififcation
+          }
+          console.info('Found tx receipt.')
+
           const projectId = getProjectIdFromReceipt(txReceipt)
           if (projectId === undefined) {
-            return
+            return // TODO error notififcation
           }
 
           // Reset Redux state/localstorage after deploying

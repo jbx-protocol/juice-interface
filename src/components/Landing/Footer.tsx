@@ -59,6 +59,7 @@ export default function Footer() {
         {link('Discord', 'https://discord.gg/6jXrJSyDFf')}
         {link('GitHub', 'https://github.com/jbx-protocol/juice-interface')}
         {link('Twitter', 'https://twitter.com/juiceboxETH')}
+        {link('Privacy Policy', '/#/privacy')}
       </div>
       <div style={{ display: 'flex', margin: 'auto' }}>
         <V2Switch labelStyle={{ color: '#fff' }} />

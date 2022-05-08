@@ -11,6 +11,9 @@ import { readProvider } from 'constants/readProvider'
 
 import { FormItemExt } from './formItemExt'
 
+const isENS = (address = '') =>
+  address.endsWith('.eth') || address.endsWith('.xyz')
+
 export default function EthAddress({
   name,
   formItemProps,
@@ -24,65 +27,49 @@ export default function EthAddress({
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const [addressForENS, setAddressForENS] = useState<string>()
-  const [displayValue, setDisplayValue] = useState<string>()
+  const [value, setValue] = useState<string>()
+  const [addressForENSName, setAddressForENSName] = useState<string>()
+  const [ENSName, setENSName] = useState<string>()
 
   const onInputChange = useCallback(
+    // value can be ENS name *or* ETH address (0x00...)
     async (value: string) => {
-      setDisplayValue(value)
+      setValue(value)
+      onAddressChange(value)
 
-      try {
-        const resolved = await readProvider.resolveName(value)
+      setAddressForENSName('')
+      setENSName('')
 
-        if (typeof resolved === 'string' && isAddress(resolved)) {
-          setAddressForENS(resolved)
-          onAddressChange(resolved)
-        } else {
-          setAddressForENS('')
-          onAddressChange('')
+      if (isENS(value)) {
+        try {
+          const addressForENSName = await readProvider.resolveName(value)
+          if (addressForENSName) {
+            setAddressForENSName(addressForENSName)
+            onAddressChange(addressForENSName)
+            setENSName(value)
+          }
+          // eslint-disable-next-line no-empty
+        } catch (e) {}
+      }
+
+      if (isAddress(value)) {
+        const ENSNameForAddress = await readProvider.lookupAddress(value)
+
+        if (ENSNameForAddress) {
+          setENSName(ENSNameForAddress)
+          setAddressForENSName(value)
+          setValue(ENSNameForAddress)
         }
-      } catch (e) {
-        console.error('Error getting address for ENS name:', value)
-
-        setAddressForENS('')
-        onAddressChange('')
       }
     },
     [onAddressChange],
   )
 
   useLayoutEffect(() => {
-    const readENSName = async () => {
-      if (!defaultValue || !isAddress(defaultValue)) {
-        setDisplayValue(defaultValue)
-        return
-      }
+    onInputChange(defaultValue ?? '')
+  }, [defaultValue, onInputChange])
 
-      try {
-        const name = await readProvider.lookupAddress(defaultValue)
-
-        if (!name) {
-          setDisplayValue(defaultValue)
-          return
-        }
-
-        // Reverse lookup to check validity
-        const isValid =
-          (await readProvider.resolveName(name))?.toLowerCase() ===
-          defaultValue.toLowerCase()
-
-        setDisplayValue(isValid ? name : defaultValue)
-
-        if (isValid) setAddressForENS(defaultValue)
-      } catch (e) {
-        console.error('Error looking up ENS name for address', defaultValue, e)
-      }
-    }
-
-    setDisplayValue(defaultValue)
-
-    readENSName()
-  }, [defaultValue])
+  const extraText = ENSName && addressForENSName ? addressForENSName : ''
 
   return (
     <Form.Item
@@ -95,15 +82,17 @@ export default function EthAddress({
       }
     >
       <Input
+        id="0xAddress" // name it something other than address for auto fill doxxing
+        name="0xAddress" // name it something other than address for auto fill doxxing
+        autoComplete="off"
         placeholder={'juicebox.eth / ' + constants.AddressZero}
         type="string"
-        autoComplete="off"
         onChange={e => onInputChange(e.target.value)}
-        value={displayValue}
+        value={value}
       />
-      {addressForENS?.length ? (
+      {extraText ? (
         <div style={{ fontSize: '0.7rem', color: colors.text.secondary }}>
-          <CheckCircleFilled /> {addressForENS}
+          <CheckCircleFilled /> {extraText}
         </div>
       ) : null}
       <Form.Item

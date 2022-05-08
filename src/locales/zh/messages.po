@@ -626,6 +626,14 @@ msgstr "连接钱包以部署"
 msgid "Connect wallet to pay"
 msgstr ""
 
+#: src/components/Projects/HoldingsProjects.tsx
+msgid "Connect your wallet to see your holdings."
+msgstr ""
+
+#: src/components/Projects/MyProjects.tsx
+msgid "Connect your wallet to see your projects."
+msgstr ""
+
 #: src/components/shared/ReconfigurationStrategy/ReconfigurationStrategySelector.tsx
 msgid "Contract address: {0}"
 msgstr "合约地址：{0}"
@@ -673,6 +681,7 @@ msgstr ""
 msgid "Create payable address"
 msgstr ""
 
+#: src/components/Projects/MyProjects.tsx
 #: src/components/Projects/index.tsx
 msgid "Create project"
 msgstr "创建项目"
@@ -1464,6 +1473,10 @@ msgstr "更多热门项目"
 msgid "Move your {tokensLabel} from the Juicebox contract to your wallet."
 msgstr "将你的 {tokensLabel} 从 Juicebox 合约中取到你的钱包里。"
 
+#: src/components/Projects/ProjectsTabs.tsx
+msgid "My Projects"
+msgstr ""
+
 #: src/components/shared/Project/SpendingStats.tsx
 #: src/components/v2/V2Project/TreasuryStats/DistributedRatio.tsx
 msgid "NO LIMIT"
@@ -1873,6 +1886,14 @@ msgstr "Juicebox 上的项目"
 
 #: src/components/Projects/index.tsx
 msgid "Projects on Juicebox V2 don't currently appear in these results."
+msgstr ""
+
+#: src/components/Projects/MyProjects.tsx
+msgid "Projects that you have created."
+msgstr ""
+
+#: src/components/Projects/HoldingsProjects.tsx
+msgid "Projects that you hold tokens for."
 msgstr ""
 
 #: src/components/Landing/index.tsx
@@ -2847,12 +2868,20 @@ msgstr "未领取的 {tokenSymbol} 代币，依然可以用来赎回溢出池中
 msgid "You don't have a funding cycle duration. Changes you make will take effect immediately."
 msgstr ""
 
+#: src/components/Projects/HoldingsProjects.tsx
+msgid "You don't hold tokens for any Juicebox project."
+msgstr ""
+
 #: src/components/v1/shared/BudgetForm.tsx
 msgid "You have set a funding cycle target."
 msgstr "您设定了一个筹款周期目标。"
 
 #: src/components/v2/shared/UnsavedChangesModal.tsx
 msgid "You have unsaved changes. Are you sure you want to discard them?"
+msgstr ""
+
+#: src/components/Projects/MyProjects.tsx
+msgid "You haven't created any projects yet."
 msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
@@ -3003,6 +3032,7 @@ msgid "or <0><1>buy {tokenText} on exchange<2/></1></0>"
 msgstr "或是 <0><1>在交易所购买 {tokenText} <2/></1></0>"
 
 #: src/components/Projects/HoldingsProjects.tsx
+#: src/components/Projects/MyProjects.tsx
 #: src/components/Projects/index.tsx
 msgid "project"
 msgstr "项目"
@@ -3012,6 +3042,7 @@ msgid "project owner"
 msgstr "项目拥有者"
 
 #: src/components/Projects/HoldingsProjects.tsx
+#: src/components/Projects/MyProjects.tsx
 #: src/components/Projects/index.tsx
 msgid "projects"
 msgstr "项目"

@@ -621,6 +621,14 @@ msgstr "Connect wallet to deploy"
 msgid "Connect wallet to pay"
 msgstr "Connect wallet to pay"
 
+#: src/components/Projects/HoldingsProjects.tsx
+msgid "Connect your wallet to see your holdings."
+msgstr "Connect your wallet to see your holdings."
+
+#: src/components/Projects/MyProjects.tsx
+msgid "Connect your wallet to see your projects."
+msgstr "Connect your wallet to see your projects."
+
 #: src/components/shared/ReconfigurationStrategy/ReconfigurationStrategySelector.tsx
 msgid "Contract address: {0}"
 msgstr ""
@@ -668,6 +676,7 @@ msgstr "Create and view projects on the V2 Juicebox protocol."
 msgid "Create payable address"
 msgstr "Create payable address"
 
+#: src/components/Projects/MyProjects.tsx
 #: src/components/Projects/index.tsx
 msgid "Create project"
 msgstr "Create project"
@@ -1459,6 +1468,10 @@ msgstr "More trending projects"
 msgid "Move your {tokensLabel} from the Juicebox contract to your wallet."
 msgstr "Move your {tokensLabel} from the Juicebox contract to your wallet."
 
+#: src/components/Projects/ProjectsTabs.tsx
+msgid "My Projects"
+msgstr "My Projects"
+
 #: src/components/shared/Project/SpendingStats.tsx
 #: src/components/v2/V2Project/TreasuryStats/DistributedRatio.tsx
 msgid "NO LIMIT"
@@ -1869,6 +1882,14 @@ msgstr ""
 #: src/components/Projects/index.tsx
 msgid "Projects on Juicebox V2 don't currently appear in these results."
 msgstr "Projects on Juicebox V2 don't currently appear in these results."
+
+#: src/components/Projects/MyProjects.tsx
+msgid "Projects that you have created."
+msgstr "Projects that you have created."
+
+#: src/components/Projects/HoldingsProjects.tsx
+msgid "Projects that you hold tokens for."
+msgstr "Projects that you hold tokens for."
 
 #: src/components/Landing/index.tsx
 msgid "Projects using Juicebox"
@@ -2842,6 +2863,10 @@ msgstr "You can still redeem your {tokenSymbol} tokens for overflow without clai
 msgid "You don't have a funding cycle duration. Changes you make will take effect immediately."
 msgstr "You don't have a funding cycle duration. Changes you make will take effect immediately."
 
+#: src/components/Projects/HoldingsProjects.tsx
+msgid "You don't hold tokens for any Juicebox project."
+msgstr "You don't hold tokens for any Juicebox project."
+
 #: src/components/v1/shared/BudgetForm.tsx
 msgid "You have set a funding cycle target."
 msgstr ""
@@ -2849,6 +2874,10 @@ msgstr ""
 #: src/components/v2/shared/UnsavedChangesModal.tsx
 msgid "You have unsaved changes. Are you sure you want to discard them?"
 msgstr "You have unsaved changes. Are you sure you want to discard them?"
+
+#: src/components/Projects/MyProjects.tsx
+msgid "You haven't created any projects yet."
+msgstr "You haven't created any projects yet."
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "You will receive minimum {minReturnedTokensFormatted} ETH"
@@ -2998,6 +3027,7 @@ msgid "or <0><1>buy {tokenText} on exchange<2/></1></0>"
 msgstr "or <0><1>buy {tokenText} on exchange<2/></1></0>"
 
 #: src/components/Projects/HoldingsProjects.tsx
+#: src/components/Projects/MyProjects.tsx
 #: src/components/Projects/index.tsx
 msgid "project"
 msgstr "project"
@@ -3007,6 +3037,7 @@ msgid "project owner"
 msgstr "project owner"
 
 #: src/components/Projects/HoldingsProjects.tsx
+#: src/components/Projects/MyProjects.tsx
 #: src/components/Projects/index.tsx
 msgid "projects"
 msgstr "projects"

@@ -47,7 +47,8 @@ export default function DistributionSplitsSection({
         <DistributionSplitCard
           split={split}
           splits={allSplits}
-          splitIndex={index}
+          editableSplits={editableSplits}
+          editableSplitIndex={index}
           distributionLimit={distributionLimit}
           onSplitsChanged={onSplitsChanged}
           currencyName={currencyName}
@@ -55,7 +56,13 @@ export default function DistributionSplitsSection({
         />
       )
     },
-    [distributionLimit, onSplitsChanged, allSplits, currencyName],
+    [
+      distributionLimit,
+      onSplitsChanged,
+      allSplits,
+      currencyName,
+      editableSplits,
+    ],
   )
 
   if (!allSplits) return null
@@ -120,6 +127,7 @@ export default function DistributionSplitsSection({
         onSplitsChanged={onSplitsChanged}
         mode={'Add'}
         splits={allSplits}
+        editableSplits={editableSplits}
         distributionLimit={distributionLimit}
         currencyName={currencyName}
         onClose={() => setAddSplitModalVisible(false)}

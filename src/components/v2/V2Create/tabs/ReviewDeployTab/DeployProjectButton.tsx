@@ -48,7 +48,7 @@ const findTransactionReceipt = async (txHash: string) => {
  */
 const getProjectIdFromReceipt = (txReceipt: TransactionReceipt): number => {
   const projectIdHex =
-    txReceipt.logs[CREATE_EVENT_IDX]?.topics?.[PROJECT_ID_TOPIC_IDX]
+    txReceipt?.logs[CREATE_EVENT_IDX]?.topics?.[PROJECT_ID_TOPIC_IDX]
   const projectId = BigNumber.from(projectIdHex).toNumber()
 
   return projectId

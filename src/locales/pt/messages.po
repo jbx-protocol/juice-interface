@@ -681,6 +681,7 @@ msgstr ""
 msgid "Create payable address"
 msgstr ""
 
+#: src/components/Projects/MyProjects.tsx
 #: src/components/Projects/index.tsx
 msgid "Create project"
 msgstr "Criar projeto"

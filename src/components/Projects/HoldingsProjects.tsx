@@ -23,7 +23,6 @@ export default function HoldingsProjects() {
         <div
           style={{
             textAlign: 'center',
-            color: colors.text.disabled,
             padding: 20,
           }}
           hidden={isLoading}

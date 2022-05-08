@@ -676,6 +676,7 @@ msgstr "Create and view projects on the V2 Juicebox protocol."
 msgid "Create payable address"
 msgstr "Create payable address"
 
+#: src/components/Projects/MyProjects.tsx
 #: src/components/Projects/index.tsx
 msgid "Create project"
 msgstr "Create project"

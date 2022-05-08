@@ -1742,6 +1742,10 @@ msgstr "Percentage of the distribution limit this payee will receive."
 msgid "Percentage this payee will receive of all funds raised."
 msgstr "Percentage this payee will receive of all funds raised."
 
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
+msgid "Percentage:"
+msgstr "Percentage:"
+
 #: src/components/shared/formItems/ProjectTicketMods.tsx
 msgid "Percentages must add up to 100% or less"
 msgstr "Percentages must add up to 100% or less"

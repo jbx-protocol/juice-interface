@@ -150,6 +150,7 @@ export default function FundingCycleTabContent({
           onFinish={() => {
             setFundingDrawerVisible(false)
           }}
+          isCreate
         />
       </Drawer>
       <Drawer

@@ -6,6 +6,7 @@ import { FormItems } from 'components/shared/formItems'
 import { toMod, toSplit } from 'utils/v2/splits'
 import { Split } from 'models/v2/splits'
 import { defaultFundingCycleMetadata } from 'redux/slices/editingV2Project'
+import FormItemWarningText from 'components/shared/FormItemWarningText'
 
 export default function ReservedTokensFormItem({
   hideLabel,
@@ -55,24 +56,36 @@ export default function ReservedTokensFormItem({
         isCreate={isCreate}
       />
 
-      {hasReservedRate ? (
-        <FormItems.ProjectTicketMods
-          mods={reservedTokensSplits.map(split => toMod(split))}
-          onModsChanged={mods => {
-            const splits = mods.map(mod => toSplit(mod))
-            onReservedTokensSplitsChange(splits)
-          }}
-          formItemProps={{
-            label: <Trans>Reserved token allocation (optional)</Trans>,
-            extra: (
+      {(hasReservedRate && reservedRateChecked) ||
+      reservedTokensSplits.length ? (
+        <>
+          {!hasReservedRate && (
+            <FormItemWarningText>
               <Trans>
-                Allocate a portion of your project's reserved tokens to other
-                Ethereum wallets or Juicebox projects.
+                Reserved rate is 0% but has reserved token allocation. Consider
+                adding a reserved rate that is greater than zero, or remove the
+                token allocation.
               </Trans>
-            ),
-          }}
-          reservedRate={reservedRate ?? 0}
-        />
+            </FormItemWarningText>
+          )}
+          <FormItems.ProjectTicketMods
+            mods={reservedTokensSplits.map(split => toMod(split))}
+            onModsChanged={mods => {
+              const splits = mods.map(mod => toSplit(mod))
+              onReservedTokensSplitsChange(splits)
+            }}
+            formItemProps={{
+              label: <Trans>Reserved token allocation (optional)</Trans>,
+              extra: (
+                <Trans>
+                  Allocate a portion of your project's reserved tokens to other
+                  Ethereum wallets or Juicebox projects.
+                </Trans>
+              ),
+            }}
+            reservedRate={reservedRate ?? 0}
+          />
+        </>
       ) : null}
     </div>
   )

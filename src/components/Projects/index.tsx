@@ -19,6 +19,8 @@ import { V1TerminalVersion } from 'models/v1/terminals'
 import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 
+import { featureFlagEnabled, FEATURE_FLAGS } from 'utils/featureFlags'
+
 import { layouts } from 'constants/styles/layouts'
 import TrendingProjects from './TrendingProjects'
 import ProjectsTabs from './ProjectsTabs'
@@ -121,6 +123,7 @@ export default function Projects() {
   }, [selectedTab, fetchNextPage, hasNextPage])
 
   const isLoading = isLoadingProjects || isLoadingSearch
+  const isV2Enabled = featureFlagEnabled(FEATURE_FLAGS.ENABLE_V2)
 
   const concatenatedPages = searchText?.length
     ? searchPages
@@ -249,6 +252,24 @@ export default function Projects() {
               </div>
             )
           )}
+          {concatenatedPages?.length === 0 &&
+            isV2Enabled &&
+            !isLoadingSearch &&
+            !isLoadingProjects && (
+              <div
+                style={{
+                  textAlign: 'center',
+                  color: colors.text.disabled,
+                  padding: 20,
+                }}
+              >
+                <InfoCircleOutlined />{' '}
+                <Trans>
+                  Projects on Juicebox V2 don't currently appear in these
+                  results.
+                </Trans>
+              </div>
+            )}
         </React.Fragment>
       ) : selectedTab === 'holdings' ? (
         <div style={{ paddingBottom: 50 }}>

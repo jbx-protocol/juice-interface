@@ -16,6 +16,7 @@ export default function V2PayButton({
   payAmount,
   payInCurrency,
   onError,
+  disabled,
 }: PayButtonProps) {
   const { projectMetadata, fundingCycleMetadata } = useContext(V2ProjectContext)
 
@@ -41,7 +42,7 @@ export default function V2PayButton({
     disabledMessage = t`Payments are paused for the current funding cycle.`
   }
 
-  const isPayDisabled = Boolean(disabledMessage)
+  const isPayDisabled = Boolean(disabledMessage) || disabled
 
   return (
     <>

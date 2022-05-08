@@ -13,6 +13,10 @@ import {
   CURRENCY_METADATA,
 } from 'constants/currency'
 
+// If a project has no fund access constraint,
+// then currency will be 0.
+// If this is the case, then we'll display the amount as ETH
+export const NO_CURRENCY = 0
 export const V2_CURRENCY_ETH: V2CurrencyETH = 1
 export const V2_CURRENCY_USD: V2CurrencyUSD = 2
 

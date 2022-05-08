@@ -1614,6 +1614,10 @@ msgstr "支付"
 msgid "Pay amount"
 msgstr "支付金额"
 
+#: src/components/shared/inputs/Pay/PayInputGroup.tsx
+msgid "Pay amount must be greater than 0."
+msgstr ""
+
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "Pay button"
 msgstr "支付按钮"

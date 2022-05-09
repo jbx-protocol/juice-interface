@@ -399,21 +399,21 @@ export default function FundingForm({
                   funding cycle.
                 </Trans>
               </li>
-              <li>
-                <Trans>
-                  Restrict how the owner can reconfigure upcoming funding cycles
-                  to mitigate abuse of power.{' '}
-                  <ExternalLink
-                    href={
-                      'https://info.juicebox.money/docs/protocol/learn/risks'
-                    }
-                  >
-                    Learn more.
-                  </ExternalLink>
-                </Trans>
-              </li>
             </ol>
           </div>
+          {!durationEnabled ? (
+            <FormItemWarningText>
+              <Trans>
+                With no funding cycles, the project's owner can start a new
+                funding cycle (Funding Cycle #2) on-demand.{' '}
+                <ExternalLink
+                  href={'https://info.juicebox.money/docs/protocol/learn/risks'}
+                >
+                  Learn more.
+                </ExternalLink>
+              </Trans>
+            </FormItemWarningText>
+          ) : null}
 
           {durationEnabled && (
             <DurationInputAndSelect

@@ -8,8 +8,8 @@ export default function FundingCycleExplainer() {
         Once deployed, <strong>Funding Cycle #1 can't be reconfigured</strong>.
       </p>
       <p>
-        You can reconfigure your project's funding cycles later on, and changes
-        will take effect in the next funding cycle (Funding Cycle #2).
+        You can reconfigure your project's next funding cycle (Funding Cycle #2)
+        at any time within the bounds of the rules you set below.
       </p>
     </TabDescription>
   )

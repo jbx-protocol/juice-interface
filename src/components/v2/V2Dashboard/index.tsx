@@ -15,7 +15,7 @@ import useProjectDistributionLimit from 'hooks/v2/contractReader/ProjectDistribu
 import { useMemo } from 'react'
 import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
-import { V2CurrencyName, V2_CURRENCY_ETH } from 'utils/v2/currency'
+import { NO_CURRENCY, V2CurrencyName, V2_CURRENCY_ETH } from 'utils/v2/currency'
 
 import useSymbolOfERC20 from 'hooks/v1/contractReader/SymbolOfERC20' // this is version-agnostic, we chillin
 
@@ -117,6 +117,14 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
     loading: balanceInDistributionLimitCurrencyLoading,
   } = useMemo(() => {
     if (ETHBalanceLoading) return { loading: true }
+
+    // if ETH, no conversion necessary
+    if (
+      distributionLimitCurrency?.eq(V2_CURRENCY_ETH) ||
+      distributionLimitCurrency?.eq(NO_CURRENCY)
+    ) {
+      return { data: ETHBalance, loading: false }
+    }
 
     return {
       data: converter.wadToCurrency(

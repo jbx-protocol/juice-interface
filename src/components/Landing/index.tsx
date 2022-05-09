@@ -171,7 +171,7 @@ export default function Landing() {
                       <Link
                         to={'/create'}
                         onClick={() => {
-                          fathom.trackGoal('IIYVJKNC', 0)
+                          window.fathom?.trackGoal('IIYVJKNC', 0)
                         }}
                       >
                         <Button type="primary" size="large">
@@ -183,7 +183,7 @@ export default function Landing() {
                         type="primary"
                         size="large"
                         onClick={() => {
-                          fathom.trackGoal('IIYVJKNC', 0)
+                          window.fathom?.trackGoal('IIYVJKNC', 0)
                           scrollToCreate()
                         }}
                       >

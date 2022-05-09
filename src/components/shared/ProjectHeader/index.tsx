@@ -83,7 +83,7 @@ export default function ProjectHeader({
               fontWeight: 500,
             }}
           >
-            {isArchived && (
+            {(isArchived || metadata?.archived) && (
               <span
                 style={{
                   fontSize: '0.8rem',

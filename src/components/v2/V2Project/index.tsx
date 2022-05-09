@@ -8,6 +8,8 @@ import { useContext, useState } from 'react'
 import { weightedAmount } from 'utils/v2/math'
 import { useHistory, useLocation } from 'react-router-dom'
 
+import useMobile from 'hooks/Mobile'
+
 import ProjectActivity from './ProjectActivity'
 import TreasuryStats from './TreasuryStats'
 import V2FundingCycleSection from './V2FundingCycleSection'
@@ -41,6 +43,8 @@ export default function V2Project({
   const isNewDeploy = Boolean(params.get('newDeploy'))
 
   const history = useHistory()
+
+  const isMobile = useMobile()
 
   const [newDeployModalVisible, setNewDeployModalVisible] =
     useState<boolean>(isNewDeploy)
@@ -89,7 +93,11 @@ export default function V2Project({
           </Space>
         </Col>
 
-        <Col md={colSizeMd} xs={24}>
+        <Col
+          md={colSizeMd}
+          xs={24}
+          style={{ marginTop: isMobile ? GUTTER_PX : 0 }}
+        >
           <ProjectActivity />
         </Col>
       </Row>

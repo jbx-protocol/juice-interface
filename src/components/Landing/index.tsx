@@ -11,6 +11,8 @@ import { useProjectsQuery } from 'hooks/Projects'
 import { CSSProperties, useContext } from 'react'
 import { Link } from 'react-router-dom'
 
+import useMobile from 'hooks/Mobile'
+
 import { ThemeOption } from 'constants/theme/theme-option'
 
 import Faq from './Faq'
@@ -19,18 +21,21 @@ import Payments from './Payments'
 import { OverflowVideoLink } from './QAs'
 import TrendingSection from './TrendingSection'
 
-const BigHeader = ({ text }: { text: string }) => (
-  <h1
-    style={{
-      fontSize: '2.4rem',
-      fontWeight: 600,
-      lineHeight: 1.2,
-      margin: 0,
-    }}
-  >
-    {text}
-  </h1>
-)
+const BigHeader = ({ text }: { text: string }) => {
+  const isMobile = useMobile()
+  return (
+    <h1
+      style={{
+        fontSize: !isMobile ? '3.8rem' : '2.3rem',
+        fontWeight: 600,
+        lineHeight: 1.2,
+        margin: 0,
+      }}
+    >
+      {text}
+    </h1>
+  )
+}
 
 const SmallHeader = ({ text }: { text: string }) => (
   <h3 style={{ fontWeight: 600, margin: 0 }}>{text}</h3>
@@ -74,6 +79,65 @@ export default function Landing() {
 
   // const stats = protocolLogs?.[0]
 
+  const BuiltForList = () => (
+    <div
+      style={{
+        display: 'grid',
+        gridAutoFlow: 'row',
+        rowGap: 8,
+        fontWeight: 500,
+      }}
+    >
+      <p
+        style={{
+          marginBottom: 4,
+        }}
+      >
+        <Trans>Built for:</Trans>
+      </p>
+      {[
+        t`DAOs and communities`,
+        t`Crowdfunding campaigns`,
+        t`Crypto and Web3 businesses`,
+        t`Indie creators and builders`,
+      ].map((data, i) => (
+        <Space
+          style={{ fontStyle: 'italic', paddingLeft: 8 }}
+          key={i}
+          size="middle"
+        >
+          <img src="/assets/bolt.png" style={{ height: 24 }} alt="⚡️" />
+          {data}
+        </Space>
+      ))}
+    </div>
+  )
+
+  const CallToAction = () => (
+    <div style={{ display: 'flex' }}>
+      <div className="hide-mobile">
+        <div style={{ display: 'inline-block', marginRight: '1rem' }}>
+          <Link
+            to={'/create'}
+            onClick={() => {
+              window.fathom?.trackGoal('IIYVJKNC', 0)
+            }}
+          >
+            <Button type="primary" size="large">
+              <Trans>Launch your project</Trans>
+            </Button>
+          </Link>
+        </div>
+      </div>
+
+      <Link to={'/projects'}>
+        <Button size="large">
+          <Trans>Explore projects</Trans>
+        </Button>
+      </Link>
+    </div>
+  )
+
   return (
     <div>
       <section style={section}>
@@ -88,99 +152,42 @@ export default function Landing() {
                 paddingBottom: 60,
               }}
             >
-              <div
-                style={{
-                  display: 'grid',
-                  rowGap: 30,
-                }}
-              >
-                <BigHeader
-                  text={t`Community funding for people and projects`}
-                />
-                <div
-                  style={{
-                    fontWeight: 500,
-                    fontSize: '1rem',
-                  }}
-                >
-                  <Trans>
-                    Build a community around a project, fund it, and program its
-                    spending. Light enough for a group of friends, powerful
-                    enough for a global network of anons.
-                  </Trans>
-                  <br />
-                  <br />
-                  <Trans>
-                    Powered by public smart contracts on{' '}
-                    <ExternalLink
+              <div>
+                <Space direction="vertical" size="large">
+                  <BigHeader text={t`Fund anything. Grow together.`} />
+                  <div
+                    style={{
+                      marginBottom: '1rem',
+                    }}
+                  >
+                    <div
                       style={{
-                        color: colors.text.primary,
                         fontWeight: 500,
-                        borderBottom:
-                          '1px solid ' + colors.stroke.action.primary,
-                      }}
-                      href="https://ethereum.org/en/what-is-ethereum/"
-                    >
-                      Ethereum
-                    </ExternalLink>
-                    .
-                  </Trans>
-                </div>
-
-                <div
-                  style={{
-                    display: 'grid',
-                    gridAutoFlow: 'row',
-                    rowGap: 8,
-                    fontWeight: 600,
-                  }}
-                >
-                  <p style={{ color: colors.text.brand.primary, opacity: 1 }}>
-                    <Trans>Built for:</Trans>
-                  </p>
-                  {[
-                    t`Indie artists, devs, creators`,
-                    t`Ethereum protocols and DAOs`,
-                    t`Public goods and services`,
-                    t`Open source businesses`,
-                  ].map((data, i) => (
-                    <Space
-                      style={{ fontStyle: 'italic', paddingLeft: 8 }}
-                      key={i}
-                      size="middle"
-                    >
-                      <img
-                        src="/assets/bolt.png"
-                        style={{ height: 24 }}
-                        alt="⚡️"
-                      />
-                      {data}
-                    </Space>
-                  ))}
-                </div>
-
-                <div className="hide-mobile">
-                  <div style={{ display: 'inline-block' }}>
-                    <Link
-                      to={'/create'}
-                      onClick={() => {
-                        window.fathom?.trackGoal('IIYVJKNC', 0)
+                        fontSize: '1rem',
+                        marginBottom: '1rem',
                       }}
                     >
-                      <Button type="primary" size="large">
-                        <Trans>Design your project</Trans>
-                      </Button>
-                    </Link>
+                      <Trans>
+                        Juicebox is the world's largest decentralized funding
+                        platform. Light enough for a group of friends, powerful
+                        enough for a global network of anons.
+                      </Trans>
+                    </div>
+
+                    <BuiltForList />
                   </div>
-                </div>
+                  <CallToAction />
+                </Space>
               </div>
             </Col>
 
             <Col xs={24} md={11}>
               <img
+                className="hide-mobile"
                 style={{
                   minHeight: 300,
-                  maxWidth: '100%',
+                  width: '100%',
+                  maxWidth: '50vw',
                   objectFit: 'contain',
                 }}
                 src={

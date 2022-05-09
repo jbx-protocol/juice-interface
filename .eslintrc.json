@@ -23,6 +23,15 @@
     "sourceType": "module"
   },
   "plugins": ["react", "@typescript-eslint", "import", "react-hooks"],
+  "overrides": [
+    {
+      "files": ["config-overrides.js"],
+      "env": {
+        "node": true,
+        "commonjs": true
+      }
+    }
+  ],
   "rules": {
     "@typescript-eslint/no-var-requires": "off",
     "@typescript-eslint/ban-types": "off",

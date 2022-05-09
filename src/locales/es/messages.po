@@ -148,10 +148,6 @@ msgstr "<0>Nota:</0> Estas propiedades <1>no</1> se podrán editar inmediatament
 msgid "<0>Note:</0> Tokens cannot be claimed because no ERC-20 token has been issued for this project. ERC-20 tokens must be issued by the project owner."
 msgstr "<0>Nota:</0> Los tokens no se pueden reclamar porque no se ha emitido un token ERC-20 para este proyecto. Los tokens ERC-20 deben ser emitidos por el dueño del proyecto."
 
-#: src/components/shared/UntrackedErc20Notice.tsx
-msgid "<0>Notice:</0> These balances will not reflect transfers of claimed tokens because the {tokenSymbol} ERC-20 token has not yet been indexed by Juicebox."
-msgstr "<0>Aviso:</0> Estos balances no reflejarán las transferencias de tokens reclamados porque Juicebox aún no ha indexado el token ERC-20 {tokenSymbol}."
-
 #: src/components/Landing/QAs.tsx
 msgid "<0>Peel</0> is the DAO that manages the juicebox.money frontend interface. You can reach out to Peel either through the <1>Peel Discord</1> or the <2>Juicebox Discord</2>."
 msgstr "<0>Peel</0> Es la DAO que maneja la interfaz frontend de juicebox.money. Puedes contactar a Peel mediante <1>Discord de Peel</1> o <2>Discord de Juicebox</2>."
@@ -236,6 +232,7 @@ msgid "AVAILABLE"
 msgstr "DISPONIBLE"
 
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
+#: src/components/v2/V2Project/ProjectActivity/index.tsx
 msgid "Activity"
 msgstr "Actividad"
 
@@ -315,13 +312,12 @@ msgstr "Todos los activos"
 msgid "All changes will be applied to the <0>upcoming</0> funding cycle."
 msgstr "Todos los cambios se aplicarán al <0>siguiente </0>ciclo de financiación."
 
-#: src/components/v1/shared/BudgetForm.tsx
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
+#: src/components/v2/V2Project/ProjectActivity/index.tsx
 msgid "All events"
 msgstr ""
 
-#: src/components/shared/forms/BudgetForm.tsx
-#: src/components/v2/V2Create/forms/FundingForm/index.tsx
+#: src/components/v1/shared/BudgetForm.tsx
 msgid "All funds can be distributed by the project. The project will have no overflow (the same as setting the target to infinity)."
 msgstr "Todos los fondos pueden ser distribuidos por el proyecto. El proyecto no tendrá excedente (lo mismo que establecer el objetivo a infinito)."
 
@@ -367,7 +363,7 @@ msgstr "Cantidad"
 msgid "Amount of ERC-20 tokens to claim"
 msgstr "Cantidad de tokens ERC-20 a reclamar"
 
-#: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
+#: src/components/shared/modals/DownloadPaymentsModal.tsx
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 msgid "Amount paid"
 msgstr "Monto pagado"
@@ -442,7 +438,7 @@ msgstr "Balance excedido"
 msgid "Balance of the project owner's wallet."
 msgstr "Balance en la cartera del dueño del proyecto."
 
-#: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
+#: src/components/shared/modals/DownloadPaymentsModal.tsx
 msgid "Beneficiary"
 msgstr "Beneficiario"
 
@@ -454,8 +450,8 @@ msgstr "Dirección de beneficiario"
 msgid "Big ups to the Ethereum community for crafting the infrastructure and economy to make Juicebox possible."
 msgstr "Dar las gracias a la comunidad Ethereum por fabricar la infraestructura y la economía para hacer posible Juicebox."
 
+#: src/components/shared/modals/DownloadPaymentsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
-#: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
 msgid "Block number"
 msgstr "Número de bloque"
 
@@ -589,9 +585,9 @@ msgid "Claiming {tokenTextLong} will convert your {tokenTextShort} balance to ER
 msgstr "Reclamar {tokenTextLong} convertirá tu balance de {tokenTextShort} a tokens ERC-20 y las acuñará a tu cartera."
 
 #: src/components/shared/TransactionModal.tsx
-#: src/components/v1/V1Project/modals/DownloadActivityModal.tsx
+#: src/components/shared/modals/DownloadActivityModal.tsx
+#: src/components/shared/modals/DownloadPaymentsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
-#: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
 msgid "Close"
 msgstr "Cerrar"
 
@@ -739,7 +735,7 @@ msgstr "Ciclo #{0}"
 msgid "Dark theme"
 msgstr "Tema oscuro"
 
-#: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
+#: src/components/shared/modals/DownloadPaymentsModal.tsx
 msgid "Date"
 msgstr "Fecha"
 
@@ -772,7 +768,7 @@ msgstr ""
 msgid "Deploy project to {0}"
 msgstr "Desplegar proyecto a {0}"
 
-#: src/components/v1/V1Project/ProjectActivity/eventElems/DeployedERC20EventElem.tsx
+#: src/components/shared/activityEventElems/DeployedERC20EventElem.tsx
 msgid "Deployed ERC20 token"
 msgstr ""
 
@@ -872,6 +868,24 @@ msgstr "Distribuir {tokensText}"
 msgid "Distributed"
 msgstr "Distribuido"
 
+#: src/components/v1/V1Project/ProjectActivity/index.tsx
+#: src/components/v2/V2Project/ProjectActivity/index.tsx
+msgid "Distributed Funds"
+msgstr ""
+
+#: src/components/v1/V1Project/ProjectActivity/index.tsx
+msgid "Distributed Reserves"
+msgstr ""
+
+#: src/components/v2/V2Project/ProjectActivity/index.tsx
+msgid "Distributed Tokens"
+msgstr ""
+
+#: src/components/v1/V1Project/ProjectActivity/eventElems/ReservesEventElem.tsx
+#: src/components/v2/V2Project/ProjectActivity/eventElems/DistributeReservedTokensElem.tsx
+msgid "Distributed reserved"
+msgstr ""
+
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
@@ -890,13 +904,6 @@ msgstr ""
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Distribution limit, duration and payouts"
 msgstr "Límite de distribución, duración y pagos"
-#: src/components/v1/V1Project/ProjectActivity/index.tsx
-msgid "Distributed Funds"
-msgstr ""
-
-#: src/components/v1/V1Project/ProjectActivity/index.tsx
-msgid "Distributed Reserves"
-msgstr ""
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
@@ -906,18 +913,6 @@ msgstr ""
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Distributions to other Juicebox project do not incur any fee."
 msgstr ""
-
-#: src/components/v1/V1Project/ProjectActivity/eventElems/ReservesEventElem.tsx
-msgid "Distributed reserved"
-msgstr ""
-
-#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
-msgid "Distribution limit"
-msgstr "Límite de distribución"
-
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
-msgid "Distribution limit, duration and payouts"
-msgstr "Límite de distribución, duración y pagos"
 
 #: src/components/Landing/QAs.tsx
 msgid "Do I have to make my project open source to use Juicebox as its business model?"
@@ -944,16 +939,16 @@ msgstr "¿Un proyecto se beneficia de su exceso?"
 msgid "Done"
 msgstr "Hecho"
 
+#: src/components/shared/modals/DownloadPaymentsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
-#: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
 msgid "Download CSV"
 msgstr "Descargar CSV"
 
-#: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
+#: src/components/shared/modals/DownloadPaymentsModal.tsx
 msgid "Download CSV of payments"
 msgstr "Descargar CSV de pagos"
 
-#: src/components/v1/V1Project/modals/DownloadActivityModal.tsx
+#: src/components/shared/modals/DownloadActivityModal.tsx
 msgid "Download CSV of project activity"
 msgstr "Descargar CSV de la actividad del proyecto"
 
@@ -982,6 +977,7 @@ msgid "ERC-20 tokens can only be minted once an ERC-20 token has been issued for
 msgstr "Los tokens ERC-20 solo se pueden acuñar una vez que se ha emitido un token ERC-20 para este proyecto."
 
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
+#: src/components/v2/V2Project/ProjectActivity/index.tsx
 msgid "ERC20 Deployed"
 msgstr ""
 
@@ -1054,7 +1050,7 @@ msgstr ""
 msgid "Error loading holders"
 msgstr "Error al cargar holders"
 
-#: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
+#: src/components/shared/modals/DownloadPaymentsModal.tsx
 msgid "Error loading payments"
 msgstr "Error al cargar pagos"
 
@@ -1237,8 +1233,8 @@ msgstr ""
 
 #: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 #: src/components/v2/V2Project/V2ProjectHeaderActions.tsx
-msgid "ID: {0}"
-msgstr "ID: {0}"
+msgid "ID: {projectId}"
+msgstr ""
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "If locked, this can't be edited or removed until the lock expires or the funding cycle is reconfigured."
@@ -1399,8 +1395,8 @@ msgstr "Última marca de tiempo pagada"
 msgid "Later"
 msgstr ""
 
+#: src/components/shared/modals/DownloadPaymentsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
-#: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
 msgid "Latest"
 msgstr "Último"
 
@@ -1423,6 +1419,7 @@ msgstr "Tema luminoso"
 #: src/components/Projects/index.tsx
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
+#: src/components/v2/V2Project/ProjectActivity/index.tsx
 msgid "Load more"
 msgstr "Cargar más"
 
@@ -1546,6 +1543,7 @@ msgid "No"
 msgstr "No"
 
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
+#: src/components/v2/V2Project/ProjectActivity/index.tsx
 msgid "No activity yet"
 msgstr "Sin actividad, todavía"
 
@@ -1588,7 +1586,7 @@ msgstr "Sin meta-objetivo establecida."
 msgid "Not set"
 msgstr "No establecido"
 
-#: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
+#: src/components/shared/modals/DownloadPaymentsModal.tsx
 msgid "Note"
 msgstr "Nota"
 
@@ -1627,12 +1625,11 @@ msgstr ""
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Owner is not allowed to mint tokens."
-#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
-msgid "Owner can mint tokens"
-msgstr "El propietario puede acuñar tokens"
+msgstr ""
 
-#: src/components/v1/V1Project/ProjectActivity/eventElems/PayEventElem.tsx
+#: src/components/shared/activityEventElems/PayEventElem.tsx
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
+#: src/components/v2/V2Project/ProjectActivity/index.tsx
 msgid "Paid"
 msgstr ""
 
@@ -1694,7 +1691,7 @@ msgstr "Declaración por pago"
 msgid "Pay {0}"
 msgstr "Pagar {0}"
 
-#: src/components/v1/V1Project/modals/DownloadPaymentsModal.tsx
+#: src/components/shared/modals/DownloadPaymentsModal.tsx
 msgid "Payer"
 msgstr "Pagador"
 
@@ -1827,6 +1824,11 @@ msgstr "Gasto programable"
 msgid "Project"
 msgstr "Proyecto"
 
+#: src/components/v1/V1Project/ProjectActivity/index.tsx
+#: src/components/v2/V2Project/ProjectActivity/index.tsx
+msgid "Project Created"
+msgstr ""
+
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Project ID is a number."
 msgstr ""
@@ -1836,12 +1838,6 @@ msgid "Project ID:"
 msgstr ""
 
 #: src/components/shared/modals/IssueTokenModal.tsx
-#: src/components/shared/IssueTicketsButton.tsx
-#: src/components/v1/V1Project/ProjectActivity/index.tsx
-msgid "Project Created"
-msgstr ""
-
-#: src/components/shared/IssueTicketsButton.tsx
 msgid "Project Token"
 msgstr "Token de proyecto"
 
@@ -1849,7 +1845,7 @@ msgstr "Token de proyecto"
 msgid "Project configuration"
 msgstr "Configuración de proyecto"
 
-#: src/components/v1/V1Project/ProjectActivity/eventElems/ProjectCreateEventElem.tsx
+#: src/components/shared/activityEventElems/ProjectCreateEventElem.tsx
 msgid "Project created by"
 msgstr ""
 
@@ -1962,10 +1958,6 @@ msgid "Projects using a reserved rate of {reservedRateRiskyMin}% or more will ap
 msgstr "Los proyectos que usan una tarifa reservada {reservedRateRiskyMin}% o más parecerán arriesgados para los colaboradores, como un número relativamente pequeño de tokens serán recibidos a cambio de pagar por tu proyecto."
 
 #: src/components/Landing/index.tsx
-msgid "Protocol stats"
-msgstr ""
-
-#: src/components/Landing/index.tsx
 msgid "Public goods and services"
 msgstr "Bienes y servicios públicos"
 
@@ -2044,13 +2036,6 @@ msgstr "Reconfigurar financiamientos próximos"
 msgid "Reconfigure upcoming funding cycles"
 msgstr "Reconfigurar ciclos de financiamiento próximos"
 
-#: src/components/v1/V1Project/ProjectActivity/index.tsx
-msgid "Redeem"
-msgstr "Canjear"
-#: src/components/v2/V2Create/forms/FundingForm/FundingTypeSelect.tsx
-msgid "Recurring target"
-msgstr "Objetivo recurrente"
-
 #: src/components/shared/ManageTokensModal.tsx
 msgid "Redeem your {tokensLabel} for a portion of the project's overflow. Any {tokensLabel} you redeem will be burned."
 msgstr "Canjea tus {tokensLabel} por una porción del excedente del proyecto. Cualquier {tokensLabel} que canjees será quemado."
@@ -2068,15 +2053,14 @@ msgstr "Canjea {tokensLabel} por ETH"
 msgid "Redeem {tokensTextLong} for ETH"
 msgstr "Canjear {tokensTextLong} por ETH"
 
-#: src/components/v2/V2Create/forms/TokenForm/index.tsx
-#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
-#: src/components/v1/V1Project/ProjectActivity/eventElems/RedeemEventElem.tsx
+#: src/components/shared/activityEventElems/RedeemEventElem.tsx
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
+#: src/components/v2/V2Project/ProjectActivity/index.tsx
 msgid "Redeemed"
 msgstr ""
 
 #: src/components/v2/V2Create/forms/TokenForm/index.tsx
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Redemption rate"
 msgstr "Porcentaje de canje"
@@ -2786,6 +2770,10 @@ msgstr "V1"
 msgid "V1.1"
 msgstr "V1.1"
 
+#: src/components/Projects/ProjectsFilterAndSort.tsx
+msgid "V2"
+msgstr ""
+
 #: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 msgid "Version of the terminal contract used by this project."
 msgstr "Versión del contrato terminal usado por este proyecto."
@@ -3046,6 +3034,8 @@ msgstr "{0}% después de la comisión de JBX"
 
 #: src/components/v1/V1Project/ProjectActivity/eventElems/ReservesEventElem.tsx
 #: src/components/v1/V1Project/ProjectActivity/eventElems/TapEventElem.tsx
+#: src/components/v2/V2Project/ProjectActivity/eventElems/DistributePayoutsElem.tsx
+#: src/components/v2/V2Project/ProjectActivity/eventElems/DistributeReservedTokensElem.tsx
 msgid "called by"
 msgstr ""
 
@@ -3229,6 +3219,7 @@ msgid "{0}{1}"
 msgstr "{0}{1}"
 
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
+#: src/components/v2/V2Project/ProjectActivity/index.tsx
 msgid "{count} total"
 msgstr "{count} total"
 

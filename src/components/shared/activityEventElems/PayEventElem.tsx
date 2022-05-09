@@ -9,7 +9,11 @@ import { PayEvent } from 'models/subgraph-entities/vX/pay-event'
 import { useCallback, useContext } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 
-import { contentLineHeight, smallHeaderStyle } from './styles'
+import {
+  contentLineHeight,
+  primaryContentFontSize,
+  smallHeaderStyle,
+} from './styles'
 
 // Maps a project id to an internal map of payment event overrides.
 let payEventOverrides = new Map<number, Map<string, string>>([
@@ -78,7 +82,7 @@ export default function PayEventElem({
           <div
             style={{
               lineHeight: contentLineHeight,
-              fontSize: '1rem',
+              fontSize: primaryContentFontSize,
             }}
           >
             <ETHAmount amount={event.amount} precision={4} />

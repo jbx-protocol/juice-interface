@@ -10,7 +10,11 @@ import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
-import { contentLineHeight, smallHeaderStyle } from './styles'
+import {
+  contentLineHeight,
+  primaryContentFontSize,
+  smallHeaderStyle,
+} from './styles'
 
 export default function RedeemEventElem({
   event,
@@ -50,7 +54,7 @@ export default function RedeemEventElem({
           <div
             style={{
               lineHeight: contentLineHeight,
-              fontSize: '1rem',
+              fontSize: primaryContentFontSize,
             }}
           >
             {formatWad(event.amount, { precision: 0 })}{' '}

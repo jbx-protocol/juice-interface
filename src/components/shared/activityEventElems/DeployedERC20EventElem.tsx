@@ -5,7 +5,11 @@ import { DeployedERC20Event } from 'models/subgraph-entities/vX/deployed-erc20-e
 import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 
-import { contentLineHeight, smallHeaderStyle } from './styles'
+import {
+  contentLineHeight,
+  primaryContentFontSize,
+  smallHeaderStyle,
+} from './styles'
 
 export default function DeployedERC20EventElem({
   event,
@@ -35,7 +39,7 @@ export default function DeployedERC20EventElem({
         <div
           style={{
             lineHeight: contentLineHeight,
-            fontSize: '1rem',
+            fontSize: primaryContentFontSize,
           }}
         >
           {event.symbol}

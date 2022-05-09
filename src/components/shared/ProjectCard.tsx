@@ -197,44 +197,6 @@ export default function ProjectCard({
               </div>
             </Tooltip>
           )}
-
-          <div
-            style={{
-              marginLeft: 10,
-              color: colors.text.tertiary,
-              fontSize: '0.7rem',
-              fontWeight: 500,
-            }}
-          >
-            V{terminalVersion}
-          </div>
-
-          <div>
-            <span style={{ color: colors.text.primary, fontWeight: 500 }}>
-              <ETHAmount amount={_project?.totalPaid} precision={precision} />{' '}
-            </span>
-
-            <span style={{ color: colors.text.secondary }}>
-              since{' '}
-              {!!_project?.createdAt &&
-                formatDate(_project?.createdAt * 1000, 'yyyy-MM-DD')}
-            </span>
-          </div>
-
-          {metadata && metadata.description && (
-            <Tooltip title={metadata.description} placement="bottom">
-              <div
-                style={{
-                  maxHeight: 20,
-                  color: colors.text.tertiary,
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                }}
-              >
-                {metadata.description}
-              </div>
-            </Tooltip>
-          )}
         </div>
 
         {isArchived && (

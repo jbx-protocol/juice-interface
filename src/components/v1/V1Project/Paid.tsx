@@ -214,7 +214,7 @@ export default function Paid() {
               <ProjectTokenBalance
                 style={{ display: 'inline-block' }}
                 wallet={owner}
-                projectId={BigNumber.from(V1_PROJECT_IDS.JUICEBOX_DAO)}
+                projectId={V1_PROJECT_IDS.JUICEBOX_DAO}
                 hideHandle
               />{' '}
               +{' '}

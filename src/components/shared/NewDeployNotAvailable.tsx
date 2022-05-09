@@ -3,15 +3,13 @@ import { Button } from 'antd'
 
 import { useHistory } from 'react-router-dom'
 
-import { BigNumber } from '@ethersproject/bignumber'
-
 import { layouts } from 'constants/styles/layouts'
 import { padding } from 'constants/styles/padding'
 
 export default function NewDeployNotAvailable({
   handleOrId: name,
 }: {
-  handleOrId: string | BigNumber | undefined
+  handleOrId: string | number | undefined
 }) {
   const history = useHistory()
 

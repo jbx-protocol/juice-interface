@@ -1,6 +1,5 @@
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import FormattedAddress from 'components/shared/FormattedAddress'
-import V1ProjectHandle from 'components/v1/shared/V1ProjectHandle'
 import EtherscanLink from 'components/shared/EtherscanLink'
 
 import { ThemeContext } from 'contexts/themeContext'
@@ -35,7 +34,14 @@ export default function DistributePayoutsElem({
 
   const { data: distributePayoutsEvents } = useSubgraphQuery({
     entity: 'distributeToPayoutSplitEvent',
-    keys: ['id', 'timestamp', 'txHash', 'amount', 'beneficiary', 'projectId'],
+    keys: [
+      'id',
+      'timestamp',
+      'txHash',
+      'amount',
+      'beneficiary',
+      'splitProjectId',
+    ],
     orderDirection: 'desc',
     orderBy: 'amount',
     where: event?.id
@@ -87,10 +93,8 @@ export default function DistributePayoutsElem({
             }}
           >
             <div style={{ fontWeight: 500 }}>
-              {e.projectId ? (
-                <span>
-                  <V1ProjectHandle projectId={e.projectId} />
-                </span>
+              {e.splitProjectId ? (
+                <span>Project {e.splitProjectId}</span>
               ) : (
                 <FormattedAddress address={e.beneficiary} />
               )}

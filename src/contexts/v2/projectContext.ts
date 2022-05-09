@@ -16,7 +16,7 @@ type V2ProjectLoadingStates = {
 export type V2ProjectContextType = {
   isPreviewMode?: boolean
 
-  projectId: BigNumber | undefined
+  projectId: number | undefined
   projectMetadata: ProjectMetadataV4 | undefined
   tokenAddress: string | undefined
   tokenSymbol: string | undefined

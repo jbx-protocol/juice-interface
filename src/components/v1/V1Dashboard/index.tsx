@@ -56,7 +56,10 @@ export default function V1Dashboard() {
     address: terminalAddress,
   })
   const terminalVersion = getTerminalVersion(terminalAddress)
-  const currentFC = useCurrentFundingCycleOfProject(projectId, terminalName)
+  const currentFC = useCurrentFundingCycleOfProject(
+    projectId?.toNumber(),
+    terminalName,
+  )
   const queuedFC = useQueuedFundingCycleOfProject(projectId)
   const currentPayoutMods = useCurrentPayoutModsOfProject(
     projectId,
@@ -76,7 +79,7 @@ export default function V1Dashboard() {
   )
   const tokenAddress = useTokenAddressOfProject(projectId)
   const tokenSymbol = useSymbolOfERC20(tokenAddress)
-  const balance = useBalanceOfProject(projectId, terminalName)
+  const balance = useBalanceOfProject(projectId?.toNumber(), terminalName)
   const converter = useCurrencyConverter()
   const balanceInCurrency = useMemo(
     () =>

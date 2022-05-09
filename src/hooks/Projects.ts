@@ -45,7 +45,7 @@ const keys: (keyof Project)[] = [
   'id',
   'projectId',
   'handle',
-  'creator',
+  'owner',
   'createdAt',
   'metadataUri',
   'metadataDomain',
@@ -381,7 +381,7 @@ export function useMyProjectsQuery(wallet: string | undefined) {
           entity: 'project',
           keys,
           where: {
-            key: 'creator',
+            key: 'owner',
             operator: 'in',
             value: [wallet],
           },

@@ -49,7 +49,7 @@ export default function ProjectPreview({
   const project: V2ProjectContextType = {
     isPreviewMode: true,
 
-    projectId: BigNumber.from(0),
+    projectId: 0,
     projectMetadata,
 
     fundingCycle,

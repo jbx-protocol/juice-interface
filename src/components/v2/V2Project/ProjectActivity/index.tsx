@@ -9,7 +9,7 @@ import Loading from 'components/shared/Loading'
 import DownloadActivityModal from 'components/shared/modals/DownloadActivityModal'
 import SectionHeader from 'components/shared/SectionHeader'
 import { ThemeContext } from 'contexts/themeContext'
-import { V1ProjectContext } from 'contexts/v1/projectContext'
+import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useInfiniteSubgraphQuery } from 'hooks/SubgraphQuery'
 import { DistributePayoutsEvent } from 'models/subgraph-entities/v2/distribute-payouts-event'
 import { DistributeReservedTokensEvent } from 'models/subgraph-entities/v2/distribute-reserved-tokens-event'
@@ -32,6 +32,7 @@ type EventFilter =
   | 'deployERC20'
   | 'projectCreate'
   | 'distributePayouts'
+  | 'distributeTokens'
   | 'distributeReservedTokens'
 // TODO | 'useAllowanceEvent'
 
@@ -42,7 +43,7 @@ export default function ProjectActivity() {
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const { projectId } = useContext(V1ProjectContext)
+  const { projectId } = useContext(V2ProjectContext)
 
   const pageSize = 50
 
@@ -56,7 +57,7 @@ export default function ProjectActivity() {
 
     if (projectId) {
       _where.push({
-        key: 'project',
+        key: 'projectId',
         value: projectId,
       })
     }
@@ -78,6 +79,9 @@ export default function ProjectActivity() {
         break
       case 'distributePayouts':
         key = 'distributePayoutsEvent'
+        break
+      case 'distributeTokens':
+        key = 'distributeReservedTokensEvent'
         break
     }
 
@@ -137,6 +141,30 @@ export default function ProjectActivity() {
       {
         entity: 'projectCreateEvent',
         keys: ['id', 'txHash', 'timestamp', 'caller'],
+      },
+      {
+        entity: 'distributePayoutsEvent',
+        keys: [
+          'id',
+          'timestamp',
+          'txHash',
+          'caller',
+          'beneficiary',
+          'distributedAmount',
+          'memo',
+        ],
+      },
+      {
+        entity: 'distributeReservedTokensEvent',
+        keys: [
+          'id',
+          'timestamp',
+          'txHash',
+          'caller',
+          'beneficiary',
+          'beneficiaryTokenCount',
+          'tokenCount',
+        ],
       },
     ],
     orderDirection: 'desc',

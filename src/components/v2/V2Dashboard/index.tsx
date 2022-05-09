@@ -4,7 +4,6 @@ import {
 } from 'contexts/v2/projectContext'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import Loading from 'components/shared/Loading'
-import { BigNumber } from '@ethersproject/bignumber'
 import useProjectMetadataContent from 'hooks/v2/contractReader/ProjectMetadataContent'
 import ScrollToTopButton from 'components/shared/ScrollToTopButton'
 import useProjectCurrentFundingCycle from 'hooks/v2/contractReader/ProjectCurrentFundingCycle'
@@ -40,7 +39,7 @@ import {
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/v2/splits'
 
-export default function V2Dashboard({ projectId }: { projectId: BigNumber }) {
+export default function V2Dashboard({ projectId }: { projectId: number }) {
   const { data: metadataCID, loading: metadataURILoading } =
     useProjectMetadataContent(projectId)
 

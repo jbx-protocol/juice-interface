@@ -11,7 +11,7 @@ export default function useProjectDistributionLimit({
   configuration,
   terminal,
 }: {
-  projectId: BigNumber | undefined
+  projectId: number | undefined
   configuration: string | undefined
   terminal: string | undefined
 }) {

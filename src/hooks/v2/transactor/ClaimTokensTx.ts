@@ -22,7 +22,7 @@ export function useClaimTokensTx(): TransactorInstance<{
     return transactor(
       contracts?.JBTokenStore,
       'claimFor',
-      [userAddress, projectId.toHexString(), claimAmount.toHexString()],
+      [userAddress, projectId, claimAmount.toHexString()],
       txOpts,
     )
   }

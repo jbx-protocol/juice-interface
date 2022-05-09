@@ -42,7 +42,7 @@ import { parseTapEventJson, TapEvent, TapEventJson } from '../v1/tap-event'
 type BaseProject = {
   id: string
   projectId: number
-  creator: string
+  owner: string
   createdAt: number
   totalPaid: BigNumber
   totalRedeemed: BigNumber

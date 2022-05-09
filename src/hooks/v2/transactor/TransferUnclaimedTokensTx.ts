@@ -23,7 +23,7 @@ export function useTransferUnclaimedTokensTx(): TransactorInstance<{
     return transactor(
       contracts.JBTokenStore,
       'transferFrom',
-      [userAddress, projectId.toHexString(), to, amount.toHexString()],
+      [userAddress, projectId, to, amount.toHexString()],
       txOpts,
     )
   }

@@ -8,6 +8,11 @@ import { ipfsCidUrl, pinFileToIpfs } from 'utils/ipfs'
 
 import ExternalLink from '../ExternalLink'
 
+enum ByteUnit {
+  KB = 'KB',
+  MB = 'MB',
+}
+
 export default function ImageUploader({
   initialUrl,
   onSuccess,
@@ -69,7 +74,14 @@ export default function ImageUploader({
               accept="image/png, image/jpeg, image/jpg, image/gif"
               beforeUpload={file => {
                 if (maxSize !== undefined && file.size > maxSize * 1000) {
-                  message.error('File must be less than ' + maxSize + 'KB')
+                  const unit = maxSize > 999 ? ByteUnit.MB : ByteUnit.KB
+                  const formattedSize =
+                    unit === ByteUnit.MB
+                      ? (maxSize / 1000.0).toFixed(1)
+                      : maxSize.toString()
+                  message.error(
+                    `File must be less than ${formattedSize}${unit}`,
+                  )
                   return Upload.LIST_IGNORE
                 }
               }}

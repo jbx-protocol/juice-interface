@@ -81,16 +81,22 @@ const queryOpts = (
     })
   }
 
-  if (opts.state === 'archived') {
+  if (opts.projectId) {
+    where.push({
+      key: 'projectId',
+      value: opts.projectId,
+    })
+  } else if (opts.state === 'archived') {
     where.push({
       key: 'projectId',
       value: archivedProjectIds,
       operator: 'in',
     })
-  } else if (opts.projectId) {
+  } else {
     where.push({
       key: 'projectId',
-      value: opts.projectId,
+      value: archivedProjectIds,
+      operator: 'not_in',
     })
   }
 

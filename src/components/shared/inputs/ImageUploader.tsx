@@ -1,6 +1,6 @@
 import { CloseCircleFilled } from '@ant-design/icons'
 import { FileImageOutlined } from '@ant-design/icons'
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Button, Col, message, Row, Space, Upload } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext, useLayoutEffect, useState } from 'react'
@@ -80,7 +80,7 @@ export default function ImageUploader({
                       ? (maxSize / 1000.0).toFixed(1)
                       : maxSize.toString()
                   message.error(
-                    `File must be less than ${formattedSize}${unit}`,
+                    t`File must be less than ${formattedSize}${unit}`,
                   )
                   return Upload.LIST_IGNORE
                 }

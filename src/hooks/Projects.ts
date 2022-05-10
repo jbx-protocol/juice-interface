@@ -277,7 +277,7 @@ export function useTrendingProjects(count: number, days: number) {
   if (trendingProjectsQuery.data?.length && shouldUpdateCache) {
     // Update cache with new queried data
     uploadIpfsJsonCache(
-      IpfsCacheName.trending,
+      IpfsCacheName.trendingV2,
       trendingProjectsQuery.data.map(p =>
         Object.entries(p).reduce(
           (acc, [key, val]) => ({

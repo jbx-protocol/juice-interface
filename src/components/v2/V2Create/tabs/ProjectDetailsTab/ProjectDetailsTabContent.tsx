@@ -72,7 +72,8 @@ export default function ProjectDetailsDrawerContent({
     <ProjectConfigurationFieldsContainer showPreview>
       <TabDescription>
         <Trans>
-          You can edit your project details after creation at any time.
+          You can edit your project details after creation at any time, but the
+          transaction will cost gas. All details are optional.
         </Trans>
       </TabDescription>
       <ProjectDetailsForm

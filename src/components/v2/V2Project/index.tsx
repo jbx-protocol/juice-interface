@@ -93,13 +93,15 @@ export default function V2Project({
           </Space>
         </Col>
 
-        <Col
-          md={colSizeMd}
-          xs={24}
-          style={{ marginTop: isMobile ? GUTTER_PX : 0 }}
-        >
-          <ProjectActivity />
-        </Col>
+        {!isPreviewMode ? (
+          <Col
+            md={colSizeMd}
+            xs={24}
+            style={{ marginTop: isMobile ? GUTTER_PX : 0 }}
+          >
+            <ProjectActivity />
+          </Col>
+        ) : null}
       </Row>
       <NewDeployModal
         visible={newDeployModalVisible}

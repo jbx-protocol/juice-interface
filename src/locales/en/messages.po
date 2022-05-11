@@ -891,11 +891,8 @@ msgstr "Distributed Tokens"
 msgid "Distributed funds"
 msgstr "Distributed funds"
 
-#: src/components/v2/V2Project/ProjectActivity/eventElems/DistributeReservedTokensElem.tsx
-msgid "Distributed reserved"
-msgstr "Distributed reserved"
-
 #: src/components/v1/V1Project/ProjectActivity/eventElems/ReservesEventElem.tsx
+#: src/components/v2/V2Project/ProjectActivity/eventElems/DistributeReservedTokensElem.tsx
 msgid "Distributed reserved {0}"
 msgstr "Distributed reserved {0}"
 

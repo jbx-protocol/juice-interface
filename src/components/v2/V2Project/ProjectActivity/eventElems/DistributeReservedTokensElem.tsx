@@ -66,12 +66,14 @@ export default function DistributeReservedTokensEventElem({
         }}
       >
         <div style={smallHeaderStyle(colors)}>
-          <Trans>Distributed reserved</Trans>{' '}
-          {tokenSymbolText({
-            tokenSymbol: tokenSymbol,
-            capitalize: false,
-            plural: true,
-          })}
+          <Trans>
+            Distributed reserved{' '}
+            {tokenSymbolText({
+              tokenSymbol: tokenSymbol,
+              capitalize: false,
+              plural: true,
+            })}
+          </Trans>
         </div>
 
         <div style={{ textAlign: 'right' }}>

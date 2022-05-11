@@ -45,7 +45,7 @@ export default function V1Project({
 
   const gutter = 40
 
-  if (!projectId || !fcMetadata) return null
+  if (projectId === undefined || !fcMetadata) return null
 
   return (
     <div style={style}>

@@ -46,7 +46,7 @@ export function useConfigureProjectTx(): TransactorInstance<{
         : contracts.TerminalV1,
       'configure',
       [
-        projectId.toHexString(),
+        BigNumber.from(projectId).toHexString(),
         properties,
         fcMetadata,
         payoutMods.map(m => ({

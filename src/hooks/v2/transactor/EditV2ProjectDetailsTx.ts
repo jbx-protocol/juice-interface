@@ -21,7 +21,7 @@ export function useEditV2ProjectDetailsTx(): TransactorInstance<{
     return transactor(
       contracts.JBProjects,
       'setMetadataOf',
-      [projectId.toHexString(), [cid, JUICEBOX_MONEY_METADATA_DOMAIN]],
+      [projectId, [cid, JUICEBOX_MONEY_METADATA_DOMAIN]],
       txOpts,
     )
   }

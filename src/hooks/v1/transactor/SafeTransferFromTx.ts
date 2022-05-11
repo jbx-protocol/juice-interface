@@ -1,3 +1,4 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1UserContext } from 'contexts/v1/userContext'
 import { useContext } from 'react'
@@ -19,7 +20,7 @@ export function useSafeTransferFromTx(): TransactorInstance<{
     return transactor(
       contracts.Projects,
       'safeTransferFrom(address,address,uint256)',
-      [owner, newOwnerAddress, projectId.toHexString()],
+      [owner, newOwnerAddress, BigNumber.from(projectId).toHexString()],
       txOpts,
     )
   }

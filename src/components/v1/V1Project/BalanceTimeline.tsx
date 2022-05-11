@@ -5,7 +5,7 @@ import CurrencySymbol from 'components/shared/CurrencySymbol'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import EthDater from 'ethereum-block-by-date'
-import { Project } from 'models/subgraph-entities/project'
+import { Project } from 'models/subgraph-entities/vX/project'
 import moment from 'moment'
 import {
   CSSProperties,
@@ -158,8 +158,8 @@ export default function BalanceTimeline({ height }: { height: number }) {
               : {}),
             where: projectId
               ? {
-                  key: 'id',
-                  value: projectId.toString(),
+                  key: 'projectId',
+                  value: projectId,
                 }
               : undefined,
           }).then(projects => {

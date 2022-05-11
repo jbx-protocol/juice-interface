@@ -7,15 +7,12 @@ export default function useProjectReservedTokens({
   projectId,
   reservedRate,
 }: {
-  projectId: BigNumber | undefined
+  projectId: number | undefined
   reservedRate: BigNumber | undefined
 }) {
   return useContractReader<BigNumber>({
     contract: V2ContractName.JBController,
     functionName: 'reservedTokenBalanceOf',
-    args:
-      projectId && reservedRate && !projectId.eq(0)
-        ? [projectId, reservedRate]
-        : null,
+    args: projectId && reservedRate ? [projectId, reservedRate] : null,
   })
 }

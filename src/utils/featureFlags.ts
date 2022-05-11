@@ -10,7 +10,7 @@ export const FEATURE_FLAG_DEFAULTS: { [k: string]: { [j: string]: boolean } } =
   {
     [FEATURE_FLAGS.ENABLE_V2]: {
       [NetworkName.rinkeby]: true,
-      [NetworkName.mainnet]: true,
+      [NetworkName.mainnet]: false,
     },
   }
 

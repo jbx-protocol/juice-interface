@@ -212,6 +212,20 @@ export default function Projects() {
         />
       </div>
 
+      {!!searchText && (
+        <div
+          style={{
+            marginBottom: 20,
+            textAlign: 'center',
+            color: colors.text.secondary,
+          }}
+        >
+          <Trans>
+            <InfoCircleOutlined /> Search results don't include V2 projects yet.
+          </Trans>
+        </div>
+      )}
+
       {selectedTab === 'all' ? (
         <React.Fragment>
           {concatenatedPages && (

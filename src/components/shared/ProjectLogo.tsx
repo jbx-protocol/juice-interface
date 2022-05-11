@@ -29,15 +29,15 @@ export default function ProjectLogo({
       }}
     >
       {uri ? (
-        <img
+        <div
           style={{
-            maxHeight: '100%',
-            minWidth: '100%',
-            objectFit: 'cover',
-            objectPosition: 'center',
+            height: '100%',
+            width: '100%',
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
+            backgroundImage: `url(${uri})`,
+            backgroundColor: '#fbf9f6',
           }}
-          src={uri}
-          alt={name + ' logo'}
         />
       ) : (
         <div

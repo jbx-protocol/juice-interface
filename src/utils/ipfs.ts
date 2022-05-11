@@ -24,6 +24,10 @@ export const IPFS_TAGS = {
     (process.env.NODE_ENV === 'production'
       ? 'trending_projects_'
       : 'DEV_trending_projects_') + readNetwork.name,
+  [IpfsCacheName.trendingV2]:
+    (process.env.NODE_ENV === 'production'
+      ? 'trending_projects_v2_'
+      : 'DEV_trending_projects_v2_') + readNetwork.name,
   METADATA:
     process.env.NODE_ENV === 'production'
       ? 'juicebox_project_metadata'

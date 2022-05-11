@@ -18,7 +18,7 @@ export function useTransferProjectOwnershipTx(): TransactorInstance<{
     return transactor(
       contracts.JBProjects,
       'safeTransferFrom(address,address,uint256)',
-      [projectOwnerAddress, newOwnerAddress, projectId.toHexString()],
+      [projectOwnerAddress, newOwnerAddress, projectId],
       txOpts,
     )
   }

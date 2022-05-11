@@ -34,7 +34,7 @@ export function useRedeemTokensTx(): TransactorInstance<{
       'redeem',
       [
         userAddress,
-        projectId.toHexString(),
+        BigNumber.from(projectId).toHexString(),
         redeemAmount.toHexString(),
         minAmount.toHexString(),
         userAddress,

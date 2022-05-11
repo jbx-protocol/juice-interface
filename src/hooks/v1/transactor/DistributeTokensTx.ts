@@ -1,5 +1,6 @@
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1UserContext } from 'contexts/v1/userContext'
+import { BigNumber } from '@ethersproject/bignumber'
 import { useContext } from 'react'
 
 import { TransactorInstance } from '../../Transactor'
@@ -19,7 +20,7 @@ export function useDistributeTokensTx(): TransactorInstance<{}> {
         ? contracts.TerminalV1_1
         : contracts.TerminalV1,
       'printReservedTickets',
-      [projectId.toHexString()],
+      [BigNumber.from(projectId).toHexString()],
       txOpts,
     )
   }

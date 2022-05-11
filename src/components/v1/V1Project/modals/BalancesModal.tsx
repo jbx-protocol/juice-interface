@@ -110,7 +110,7 @@ export default function BalancesModal({
         <Space direction="vertical" style={{ width: '100%', marginTop: 20 }}>
           <ProjectTokenBalance
             wallet={owner}
-            projectId={BigNumber.from(V1_PROJECT_IDS.JUICEBOX_DAO)}
+            projectId={V1_PROJECT_IDS.JUICEBOX_DAO}
           />
           {(metadata as ProjectMetadataV4)?.tokens?.map(t =>
             t.type === 'erc20' ? (
@@ -123,7 +123,7 @@ export default function BalancesModal({
               <ProjectTokenBalance
                 key={t.value}
                 wallet={owner}
-                projectId={BigNumber.from(t.value)}
+                projectId={BigNumber.from(t.value).toNumber()}
               />
             ),
           )}

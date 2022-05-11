@@ -32,7 +32,7 @@ export function usePrintTokensTx(): TransactorInstance<{
         terminalContract = contracts.TerminalV1
         functionName = 'printPreminedTickets'
         args = [
-          projectId.toHexString(),
+          BigNumber.from(projectId).toHexString(),
           value.toHexString(),
           BigNumber.from(currency).toHexString(),
           beneficiary,
@@ -44,7 +44,7 @@ export function usePrintTokensTx(): TransactorInstance<{
         terminalContract = contracts.TerminalV1_1
         functionName = 'printTickets'
         args = [
-          projectId.toHexString(),
+          BigNumber.from(projectId).toHexString(),
           value.toHexString(),
           beneficiary,
           memo ?? '',

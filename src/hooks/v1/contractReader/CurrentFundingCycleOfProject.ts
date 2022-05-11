@@ -1,4 +1,4 @@
-import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
+import { BigNumber } from '@ethersproject/bignumber'
 import { V1ContractName } from 'models/v1/contracts'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { V1TerminalName } from 'models/v1/terminals'
@@ -9,7 +9,7 @@ import useContractReader from './ContractReader'
 
 /** Returns current funding cycle for project. */
 export default function useCurrentFundingCycleOfProject(
-  projectId: BigNumberish | undefined,
+  projectId: number | undefined,
   terminalName: V1TerminalName | undefined,
 ) {
   return useContractReader<V1FundingCycle>({

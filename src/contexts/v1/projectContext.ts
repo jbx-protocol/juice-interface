@@ -6,9 +6,10 @@ import { ProjectType } from 'models/project-type'
 import { V1TerminalName } from 'models/v1/terminals'
 import { V1TerminalVersion } from 'models/v1/terminals'
 import { createContext } from 'react'
+import { CV } from 'models/cv'
 
 export type V1ProjectContextType = {
-  projectId: BigNumber | undefined
+  projectId: number | undefined
   projectType: ProjectType | undefined
   createdAt: number | undefined
   handle: string | undefined
@@ -28,6 +29,7 @@ export type V1ProjectContextType = {
   overflow: BigNumber | undefined
   isPreviewMode: boolean | undefined
   isArchived: boolean | undefined
+  cv: CV | undefined
   terminal:
     | {
         version: V1TerminalVersion | undefined
@@ -58,5 +60,6 @@ export const V1ProjectContext = createContext<V1ProjectContextType>({
   overflow: undefined,
   isPreviewMode: false,
   isArchived: false,
+  cv: undefined,
   terminal: undefined,
 })

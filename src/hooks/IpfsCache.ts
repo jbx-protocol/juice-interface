@@ -21,7 +21,7 @@ export function useIpfsCache<T extends IpfsCacheName>(
     async function load() {
       try {
         // Load pinned items by tag
-        const list = await getPinnedListByTag(IpfsCacheName.trending)
+        const list = await getPinnedListByTag(tag)
 
         if (!list.count) {
           setCache(null)

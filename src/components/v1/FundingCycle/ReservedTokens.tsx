@@ -37,11 +37,11 @@ export default function ReservedTokens({
 
   const isConstitutionDAO =
     readNetwork.name === NetworkName.mainnet &&
-    projectId?.eq(V1_PROJECT_IDS.CONSTITUTION_DAO)
+    projectId === V1_PROJECT_IDS.CONSTITUTION_DAO
 
   const isSharkDAO =
     readNetwork.name === NetworkName.mainnet &&
-    projectId?.eq(V1_PROJECT_IDS.SHARK_DAO)
+    projectId === V1_PROJECT_IDS.SHARK_DAO
 
   return (
     <div>

@@ -1,21 +1,16 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Col, Row, Space } from 'antd'
-import V1Create from 'components/v1/V1Create'
-import Loading from 'components/shared/Loading'
+import ExternalLink from 'components/shared/ExternalLink'
 import FeedbackFormButton from 'components/shared/FeedbackFormButton'
+import Grid from 'components/shared/Grid'
+import Loading from 'components/shared/Loading'
+import ProjectCard from 'components/shared/ProjectCard'
+import V1Create from 'components/v1/V1Create'
 
 import { ThemeContext } from 'contexts/themeContext'
-import { useProjectsQuery } from 'hooks/v1/Projects'
+import { useProjectsQuery } from 'hooks/Projects'
 import { CSSProperties, useContext } from 'react'
-
-import Grid from 'components/shared/Grid'
-
-import ProjectCard from 'components/shared/ProjectCard'
-
 import { Link } from 'react-router-dom'
-
-import ExternalLink from 'components/shared/ExternalLink'
-
 import { FEATURE_FLAGS, featureFlagEnabled } from 'utils/featureFlags'
 
 import { ThemeOption } from 'constants/theme/theme-option'
@@ -23,8 +18,8 @@ import { ThemeOption } from 'constants/theme/theme-option'
 import Faq from './Faq'
 import Footer from './Footer'
 import Payments from './Payments'
-import TrendingSection from './TrendingSection'
 import { OverflowVideoLink } from './QAs'
+import TrendingSection from './TrendingSection'
 
 const BigHeader = ({ text }: { text: string }) => (
   <h1
@@ -79,6 +74,13 @@ export default function Landing() {
     maxWidth: totalMaxWidth,
     margin: '0 auto',
   }
+
+  // const { data: protocolLogs } = useSubgraphQuery({
+  //   entity: 'protocolLog',
+  //   keys: ['erc20Count', 'paymentsCount', 'projectsCount', 'volumePaid'],
+  // })
+
+  // const stats = protocolLogs?.[0]
 
   return (
     <div>
@@ -216,6 +218,30 @@ export default function Landing() {
         </div>
       </section>
 
+      {/* <section
+        style={{
+          ...section,
+          marginTop: 80,
+          paddingTop: 20,
+          paddingBottom: 60,
+        }}
+      >
+        <div
+          style={{
+            ...wrapper,
+          }}
+        >
+          <SmallHeader text={t`Protocol stats`} />
+          <div>{stats?.projectsCount} projects</div>
+          <div>{stats?.paymentsCount} payments</div>
+          <div>
+            <CurrencySymbol currency={'ETH'} />
+            {formatWad(stats?.volumePaid, { precision: 0 })} volume
+          </div>
+          <div>{stats?.erc20Count} ERC20s deployed</div>
+        </div>
+      </section> */}
+
       <TrendingSection />
 
       <section
@@ -238,7 +264,7 @@ export default function Landing() {
                 {previewProjects ? (
                   <Grid list>
                     {previewProjects.map(p => (
-                      <ProjectCard key={p.uri} project={p} />
+                      <ProjectCard key={p.metadataUri} project={p} />
                     ))}
                   </Grid>
                 ) : (

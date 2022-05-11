@@ -4,7 +4,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { ThemeContext } from 'contexts/themeContext'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
-import { Project } from 'models/subgraph-entities/project'
+import { Project } from 'models/subgraph-entities/vX/project'
 import { CSSProperties, useContext } from 'react'
 import { formatDate } from 'utils/formatDate'
 
@@ -22,7 +22,14 @@ import Loading from './Loading'
 
 type ProjectCardProject = Pick<
   Project,
-  'handle' | 'uri' | 'totalPaid' | 'createdAt' | 'terminal' | 'id'
+  | 'id'
+  | 'handle'
+  | 'metadataUri'
+  | 'totalPaid'
+  | 'createdAt'
+  | 'terminal'
+  | 'projectId'
+  | 'cv'
 >
 
 export default function ProjectCard({
@@ -48,9 +55,18 @@ export default function ProjectCard({
     BigNumber.isBigNumber(project)
       ? {
           entity: 'project',
-          keys: ['handle', 'uri', 'totalPaid', 'createdAt', 'terminal', 'id'],
+          keys: [
+            'id',
+            'handle',
+            'metadataUri',
+            'totalPaid',
+            'createdAt',
+            'terminal',
+            'projectId',
+            'cv',
+          ],
           where: {
-            key: 'id',
+            key: 'projectId',
             value: project.toString(),
           },
         }
@@ -70,7 +86,7 @@ export default function ProjectCard({
     _project = projectObj
   }
 
-  const { data: metadata } = useProjectMetadata(_project?.uri)
+  const { data: metadata } = useProjectMetadata(_project?.metadataUri)
   // If the total paid is greater than 0, but less than 10 ETH, show two decimal places.
   const precision =
     _project?.totalPaid?.gt(0) && _project?.totalPaid.lt(constants.WeiPerEther)
@@ -80,7 +96,7 @@ export default function ProjectCard({
   const terminalVersion = getTerminalVersion(_project?.terminal)
 
   const isArchived =
-    archivedProjectIds.includes(_project.id.toNumber()) || metadata?.archived
+    archivedProjectIds.includes(_project.projectId) || metadata?.archived
 
   return (
     <Link
@@ -89,8 +105,12 @@ export default function ProjectCard({
         cursor: 'pointer',
         overflow: 'hidden',
       }}
-      key={_project?.handle}
-      to={`/p/${_project?.handle}`}
+      key={_project.id}
+      to={
+        _project.cv === '2'
+          ? `/v2/p/${_project.projectId}`
+          : `/p/${_project?.handle}`
+      }
     >
       <div style={cardStyle} className="clickable-border">
         <div style={{ marginRight: 20 }}>
@@ -129,18 +149,25 @@ export default function ProjectCard({
           )}
 
           <div>
-            <span style={{ color: colors.text.primary, fontWeight: 500 }}>
-              @{_project?.handle}
-            </span>
+            {_project?.handle && (
+              <span
+                style={{
+                  color: colors.text.primary,
+                  fontWeight: 500,
+                  marginRight: 10,
+                }}
+              >
+                @{_project?.handle}
+              </span>
+            )}
             <span
               style={{
-                marginLeft: 10,
                 color: colors.text.tertiary,
                 fontSize: '0.7rem',
                 fontWeight: 500,
               }}
             >
-              V{terminalVersion}
+              V{terminalVersion ?? _project.cv}
             </span>
           </div>
 
@@ -156,7 +183,7 @@ export default function ProjectCard({
             </span>
           </div>
 
-          {metadata && metadata.description && (
+          {metadata?.description && (
             <Tooltip title={metadata.description} placement="bottom">
               <div
                 style={{

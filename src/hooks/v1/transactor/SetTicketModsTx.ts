@@ -32,7 +32,7 @@ export function useSetTicketModsTx(): TransactorInstance<{
       contracts.ModStore,
       'setTicketMods',
       [
-        projectId.toHexString(),
+        BigNumber.from(projectId).toHexString(),
         configured.toHexString(),
         ticketMods.map(m => ({
           preferUnstaked: false,

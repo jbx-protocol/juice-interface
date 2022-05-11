@@ -22,7 +22,11 @@ export function useStakeTokensTx(): TransactorInstance<{
     return transactor(
       contracts.TicketBooth,
       'stake',
-      [userAddress, projectId.toHexString(), amount.toHexString()],
+      [
+        userAddress,
+        BigNumber.from(projectId).toHexString(),
+        amount.toHexString(),
+      ],
       txOpts,
     )
   }

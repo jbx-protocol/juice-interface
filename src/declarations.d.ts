@@ -1,3 +1,2 @@
-// eslint-disable-next-line no-var
-declare var Desmos
+declare let Desmos
 declare module 'ethereum-block-by-date'

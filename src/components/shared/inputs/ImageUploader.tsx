@@ -53,7 +53,7 @@ export default function ImageUploader({
                 borderRadius: theme.radii.md,
               }}
               src={url}
-              alt="Uploaded image"
+              alt="Uploaded user content"
             />
           )}
 

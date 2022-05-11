@@ -1,5 +1,3 @@
-/* eslint-disable no-undef */
-// TODO come back and fix this with override
 const webpack = require('webpack')
 
 module.exports = function override(config) {

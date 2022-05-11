@@ -8,7 +8,7 @@ export function usePaymentTerminalBalance({
   terminal,
 }: {
   terminal: string | undefined
-  projectId: BigNumber | undefined
+  projectId: number | undefined
 }) {
   return useV2ContractReader<BigNumber>({
     contract: V2ContractName.JBSingleTokenPaymentTerminalStore,

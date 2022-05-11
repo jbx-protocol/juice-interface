@@ -27,7 +27,7 @@ export function useAddToBalanceTx(): TransactorInstance<{
         ? contracts.TerminalV1_1
         : contracts.TerminalV1,
       'addToBalance',
-      [projectId.toHexString()],
+      [BigNumber.from(projectId).toHexString()],
       {
         ...txOpts,
         value: value.toHexString(),

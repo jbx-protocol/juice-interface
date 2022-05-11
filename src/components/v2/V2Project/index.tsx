@@ -8,12 +8,15 @@ import { useContext, useState } from 'react'
 import { weightedAmount } from 'utils/v2/math'
 import { useHistory, useLocation } from 'react-router-dom'
 
-import V2PayButton from './V2PayButton'
-import V2ProjectHeaderActions from './V2ProjectHeaderActions'
+import useMobile from 'hooks/Mobile'
+
+import ProjectActivity from './ProjectActivity'
 import TreasuryStats from './TreasuryStats'
 import V2FundingCycleSection from './V2FundingCycleSection'
 import V2ManageTokensSection from './V2ManageTokensSection'
 import NewDeployModal from './NewDeployModal'
+import V2PayButton from './V2PayButton'
+import V2ProjectHeaderActions from './V2ProjectHeaderActions'
 
 const GUTTER_PX = 40
 
@@ -41,12 +44,14 @@ export default function V2Project({
 
   const history = useHistory()
 
+  const isMobile = useMobile()
+
   const [newDeployModalVisible, setNewDeployModalVisible] =
     useState<boolean>(isNewDeploy)
 
   const colSizeMd = singleColumnLayout ? 24 : 12
 
-  if (!projectId) return null
+  if (projectId === undefined) return null
 
   const closeNewDeployModal = () => {
     // Change URL without refreshing page
@@ -86,6 +91,14 @@ export default function V2Project({
             <V2ManageTokensSection />
             <V2FundingCycleSection expandCard={expandFundingCycleCard} />
           </Space>
+        </Col>
+
+        <Col
+          md={colSizeMd}
+          xs={24}
+          style={{ marginTop: isMobile ? GUTTER_PX : 0 }}
+        >
+          <ProjectActivity />
         </Col>
       </Row>
       <NewDeployModal

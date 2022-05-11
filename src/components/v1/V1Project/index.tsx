@@ -75,7 +75,7 @@ export default function V1Project({
 
       <Row gutter={gutter} style={{ paddingBottom: gutter }}>
         <Col xs={24} md={column ? 24 : 12} style={{ marginTop: gutter }}>
-          {projectId.gt(0) && (
+          {projectId && (
             <div style={{ marginBottom: gutter }}>
               <Suspense fallback={<LoadingOutlined />}>
                 <BalanceTimeline height={240} />

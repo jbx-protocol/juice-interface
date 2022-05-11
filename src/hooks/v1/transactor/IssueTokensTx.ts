@@ -1,3 +1,4 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1UserContext } from 'contexts/v1/userContext'
 import { useContext } from 'react'
@@ -20,7 +21,7 @@ export function useIssueTokensTx(): TransactorInstance<{
     return transactor(
       contracts.TicketBooth,
       'issue',
-      [projectId.toHexString(), name, symbol],
+      [BigNumber.from(projectId).toHexString(), name, symbol],
       txOpts,
     )
   }

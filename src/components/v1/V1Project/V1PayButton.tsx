@@ -47,11 +47,10 @@ export default function V1PayButton({
 
   // Edge case for MoonDAO, upgraded to v1.1 but can't use payIsPaused for now
   const isMoonAndMaxRR =
-    projectId?.eq(V1_PROJECT_IDS.MOON_DAO) && fcMetadata.reservedRate === 200
+    projectId === V1_PROJECT_IDS.MOON_DAO && fcMetadata.reservedRate === 200
 
   const overridePayDisabled =
-    projectId &&
-    disablePayOverrides[readNetwork.name]?.has(projectId.toNumber())
+    projectId && disablePayOverrides[readNetwork.name]?.has(projectId)
 
   if (isArchived) {
     return (

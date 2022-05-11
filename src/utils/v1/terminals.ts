@@ -22,7 +22,7 @@ export const getTerminalAddress = (
 }
 
 export const getTerminalVersion = (
-  address?: string,
+  address?: string | null,
 ): V1TerminalVersion | undefined => {
   if (!address) return
 

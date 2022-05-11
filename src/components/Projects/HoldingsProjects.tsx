@@ -4,7 +4,7 @@ import Loading from 'components/shared/Loading'
 import ProjectCard from 'components/shared/ProjectCard'
 import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { useHoldingsProjectsQuery } from 'hooks/v1/Projects'
+import { useHoldingsProjectsQuery } from 'hooks/Projects'
 import React, { useContext } from 'react'
 import { InfoCircleOutlined } from '@ant-design/icons'
 

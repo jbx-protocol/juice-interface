@@ -1,2 +1,2 @@
-declare var Desmos
+declare let Desmos
 declare module 'ethereum-block-by-date'

@@ -1,7 +1,5 @@
 import { Trans } from '@lingui/macro'
 
-import { BigNumber } from '@ethersproject/bignumber'
-
 import { layouts } from 'constants/styles/layouts'
 import { padding } from 'constants/styles/padding'
 
@@ -9,7 +7,7 @@ export default function Project404({
   projectId,
   ensName,
 }: {
-  projectId: BigNumber | string | undefined
+  projectId: number | string | undefined
   ensName?: string
 }) {
   return (

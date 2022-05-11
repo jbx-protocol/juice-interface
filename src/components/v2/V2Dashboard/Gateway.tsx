@@ -30,5 +30,5 @@ export default function V2DashboardGateway() {
     projectIdForName ?? parseProjectIdParameter(projectIdParameter)
   if (!projectId) return <Project404 projectId={projectId} ensName={ensName} />
 
-  return <V2Dashboard projectId={projectId} />
+  return <V2Dashboard projectId={projectId.toNumber()} />
 }

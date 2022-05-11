@@ -3,6 +3,7 @@ import TabDescription from './TabDescription'
 export default function FundingCycleExplainer() {
   return (
     <TabDescription>
+      <p>The configs below can be edited on a per-cycle basis.</p>
       <p>
         Funding Cycle #1 will start immediately after you deploy your project.
         Once deployed, <strong>Funding Cycle #1 can't be reconfigured</strong>.

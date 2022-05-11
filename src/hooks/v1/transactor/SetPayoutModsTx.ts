@@ -32,7 +32,7 @@ export function useSetPayoutModsTx(): TransactorInstance<{
       contracts.ModStore,
       'setPayoutMods',
       [
-        projectId.toHexString(),
+        BigNumber.from(projectId).toHexString(),
         configured.toHexString(),
         payoutMods.map(m => ({
           preferUnstaked: false,

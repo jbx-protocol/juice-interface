@@ -23,7 +23,7 @@ export function useAddToBalanceTx(): TransactorInstance<{
     return transactor(
       contracts?.JBETHPaymentTerminal,
       'addToBalanceOf',
-      [projectId.toHexString(), value, ETH_TOKEN_ADDRESS, DEFAULT_MEMO],
+      [projectId, value, ETH_TOKEN_ADDRESS, DEFAULT_MEMO],
       {
         ...txOpts,
         value,

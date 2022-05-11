@@ -16,7 +16,7 @@ export default function TokenRefs({
   return (
     <div>
       {refs.map((r, i) => (
-        <div>
+        <div key={i}>
           <div style={{ display: 'flex', alignItems: 'baseline', height: 40 }}>
             <Button
               style={{ marginRight: 20, width: 100 }}

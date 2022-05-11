@@ -59,7 +59,7 @@ export default function IssueTokenModal({
       transactionPending={transactionPending}
     >
       <p>
-        {!Boolean(isNewDeploy) ? (
+        {!isNewDeploy ? (
           <Trans>
             Issue an ERC-20 to be used as this project's token. Once issued,
             anyone can claim their existing token balance in the new token.

@@ -7,7 +7,6 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useInfiniteSubgraphQuery } from 'hooks/SubgraphQuery'
 import { PayEvent } from 'models/subgraph-entities/pay-event'
 import React, { useCallback, useContext } from 'react'
-import { formatHistoricalDate } from 'utils/formatDate'
 
 import ActivityTabContent from './ActivityTabContent'
 import RichNote from '../../../shared/RichNote'
@@ -115,8 +114,11 @@ export function PaymentActivity({ pageSize }: { pageSize: number }) {
                 <div style={{ textAlign: 'right' }}>
                   {e.timestamp && (
                     <div style={smallHeaderStyle(colors)}>
-                      {formatHistoricalDate(e.timestamp * 1000)}{' '}
-                      <EtherscanLink value={e.txHash} type="tx" />
+                      <EtherscanLink
+                        timestamp={e.timestamp}
+                        value={e.txHash}
+                        type="tx"
+                      />
                     </div>
                   )}
                   <div

@@ -6,7 +6,6 @@ import { ThemeContext } from 'contexts/themeContext'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { PrintReservesEvent } from 'models/subgraph-entities/print-reserves-event'
 import { useContext } from 'react'
-import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
@@ -77,12 +76,11 @@ export default function ReservesEventElem({
 
         <div style={{ textAlign: 'right' }}>
           <div style={smallHeaderStyle(colors)}>
-            {printReservesEvent.timestamp && (
-              <span>
-                {formatHistoricalDate(printReservesEvent.timestamp * 1000)}
-              </span>
-            )}{' '}
-            <EtherscanLink value={printReservesEvent.txHash} type="tx" />
+            <EtherscanLink
+              timestamp={printReservesEvent.timestamp}
+              value={printReservesEvent.txHash}
+              type="tx"
+            />
           </div>
           <div style={smallHeaderStyle(colors)}>
             called by <FormattedAddress address={printReservesEvent.caller} />

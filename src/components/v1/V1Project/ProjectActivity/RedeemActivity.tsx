@@ -6,7 +6,6 @@ import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { useInfiniteSubgraphQuery } from 'hooks/SubgraphQuery'
 import React, { useContext } from 'react'
-import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
@@ -99,10 +98,11 @@ export function RedeemActivity({ pageSize }: { pageSize: number }) {
                       textAlign: 'right',
                     }}
                   >
-                    {e.timestamp && (
-                      <span>{formatHistoricalDate(e.timestamp * 1000)}</span>
-                    )}{' '}
-                    <EtherscanLink value={e.txHash} type="tx" />
+                    <EtherscanLink
+                      timestamp={e.timestamp}
+                      value={e.txHash}
+                      type="tx"
+                    />
                   </div>
                   <div
                     style={{

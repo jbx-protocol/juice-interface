@@ -7,7 +7,6 @@ import { ThemeContext } from 'contexts/themeContext'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { TapEvent } from 'models/subgraph-entities/tap-event'
 import { useContext } from 'react'
-import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
 
 import { smallHeaderStyle } from '../styles'
@@ -76,10 +75,11 @@ export default function TapEventElem({
           }}
         >
           <div style={smallHeaderStyle(colors)}>
-            {tapEvent.timestamp && (
-              <span>{formatHistoricalDate(tapEvent.timestamp * 1000)}</span>
-            )}{' '}
-            <EtherscanLink value={tapEvent.txHash} type="tx" />
+            <EtherscanLink
+              timestamp={tapEvent.timestamp}
+              value={tapEvent.txHash}
+              type="tx"
+            />
           </div>
           <div style={smallHeaderStyle(colors)}>
             called by <FormattedAddress address={tapEvent.caller} />

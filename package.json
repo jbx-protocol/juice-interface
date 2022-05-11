@@ -20,7 +20,7 @@
     "@types/react-redux": "^7.1.16",
     "@uniswap/sdk": "3.0.3",
     "@uniswap/sdk-core": "3.0.1",
-    "@uniswap/v3-sdk": "3.6.3",
+    "@uniswap/v3-sdk": "3.8.2",
     "@walletconnect/web3-provider": "^1.5.4",
     "antd": "4.16.13",
     "autolinker": "^3.14.3",
@@ -49,7 +49,7 @@
     "jest": "26.6.0",
     "**/@typescript-eslint/eslint-plugin": "^4.1.1",
     "**/@typescript-eslint/parser": "^4.1.1",
-    "eslint-plugin-react-hooks": "4.2.0"
+    "eslint-plugin-react-hooks": "4.2.1"
   },
   "scripts": {
     "compile-styles": "lessc ./node_modules/antd/dist/antd.less ./src/styles/antd.css --js",
@@ -93,11 +93,14 @@
     "@types/react": "^17",
     "@types/react-dom": "^17",
     "@types/react-router-dom": "^5.1.7",
+    "@typescript-eslint/eslint-plugin": "^5.21.0",
+    "@typescript-eslint/parser": "^5.21.0",
     "browserify-fs": "^1.0.0",
     "browserify-zlib": "^0.2.0",
     "crypto-browserify": "^3.12.0",
     "eslint-config-react-app": "^6.0.0",
     "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-react": "^7.29.4",
     "https-browserify": "^1.0.0",
     "husky": "^7.0.0",
     "less": "^4.1.1",

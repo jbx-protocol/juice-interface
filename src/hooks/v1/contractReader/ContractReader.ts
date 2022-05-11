@@ -96,7 +96,7 @@ export default function useContractReader<V>({
 
     getValue()
 
-    const listener = (x: any) => getValue() // eslint-disable-line @typescript-eslint/no-explicit-any
+    const listener = () => getValue()
 
     let subscriptions: {
       contract: Contract

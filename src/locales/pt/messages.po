@@ -891,9 +891,17 @@ msgstr ""
 msgid "Distributed Tokens"
 msgstr ""
 
-#: src/components/v1/V1Project/ProjectActivity/eventElems/ReservesEventElem.tsx
+#: src/components/v1/V1Project/ProjectActivity/eventElems/TapEventElem.tsx
+#: src/components/v2/V2Project/ProjectActivity/eventElems/DistributePayoutsElem.tsx
+msgid "Distributed funds"
+msgstr ""
+
 #: src/components/v2/V2Project/ProjectActivity/eventElems/DistributeReservedTokensElem.tsx
 msgid "Distributed reserved"
+msgstr ""
+
+#: src/components/v1/V1Project/ProjectActivity/eventElems/ReservesEventElem.tsx
+msgid "Distributed reserved {0}"
 msgstr ""
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
@@ -3053,7 +3061,7 @@ msgstr "depois da taxa de {0}% de JBX"
 #: src/components/v1/V1Project/ProjectActivity/eventElems/TapEventElem.tsx
 #: src/components/v2/V2Project/ProjectActivity/eventElems/DistributePayoutsElem.tsx
 #: src/components/v2/V2Project/ProjectActivity/eventElems/DistributeReservedTokensElem.tsx
-msgid "called by"
+msgid "called by <0/>"
 msgstr ""
 
 #: src/components/shared/formItems/ProjectDescription.tsx

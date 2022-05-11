@@ -886,10 +886,18 @@ msgstr "Distributed Reserves"
 msgid "Distributed Tokens"
 msgstr "Distributed Tokens"
 
-#: src/components/v1/V1Project/ProjectActivity/eventElems/ReservesEventElem.tsx
+#: src/components/v1/V1Project/ProjectActivity/eventElems/TapEventElem.tsx
+#: src/components/v2/V2Project/ProjectActivity/eventElems/DistributePayoutsElem.tsx
+msgid "Distributed funds"
+msgstr "Distributed funds"
+
 #: src/components/v2/V2Project/ProjectActivity/eventElems/DistributeReservedTokensElem.tsx
 msgid "Distributed reserved"
 msgstr "Distributed reserved"
+
+#: src/components/v1/V1Project/ProjectActivity/eventElems/ReservesEventElem.tsx
+msgid "Distributed reserved {0}"
+msgstr "Distributed reserved {0}"
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
@@ -3048,8 +3056,8 @@ msgstr ""
 #: src/components/v1/V1Project/ProjectActivity/eventElems/TapEventElem.tsx
 #: src/components/v2/V2Project/ProjectActivity/eventElems/DistributePayoutsElem.tsx
 #: src/components/v2/V2Project/ProjectActivity/eventElems/DistributeReservedTokensElem.tsx
-msgid "called by"
-msgstr "called by"
+msgid "called by <0/>"
+msgstr "called by <0/>"
 
 #: src/components/shared/formItems/ProjectDescription.tsx
 msgid "characters max"

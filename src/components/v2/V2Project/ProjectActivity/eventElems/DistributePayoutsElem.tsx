@@ -62,7 +62,9 @@ export default function DistributePayoutsElem({
           justifyContent: 'space-between',
         }}
       >
-        <div style={smallHeaderStyle(colors)}>Distributed funds</div>
+        <div style={smallHeaderStyle(colors)}>
+          <Trans>Distributed funds</Trans>
+        </div>
 
         <div
           style={{
@@ -76,7 +78,9 @@ export default function DistributePayoutsElem({
             <EtherscanLink value={event.txHash} type="tx" />
           </div>
           <div style={smallHeaderStyle(colors)}>
-            <Trans>called by</Trans> <FormattedAddress address={event.caller} />
+            <Trans>
+              called by <FormattedAddress address={event.caller} />
+            </Trans>
           </div>
         </div>
       </div>

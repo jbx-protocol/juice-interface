@@ -58,12 +58,14 @@ export default function ReservesEventElem({
         }}
       >
         <div style={smallHeaderStyle(colors)}>
-          <Trans>Distributed reserved</Trans>{' '}
-          {tokenSymbolText({
-            tokenSymbol: tokenSymbol,
-            capitalize: false,
-            plural: true,
-          })}
+          <Trans>
+            Distributed reserved{' '}
+            {tokenSymbolText({
+              tokenSymbol: tokenSymbol,
+              capitalize: false,
+              plural: true,
+            })}
+          </Trans>
         </div>
 
         <div style={{ textAlign: 'right' }}>
@@ -74,7 +76,9 @@ export default function ReservesEventElem({
             <EtherscanLink value={event.txHash} type="tx" />
           </div>
           <div style={smallHeaderStyle(colors)}>
-            <Trans>called by</Trans> <FormattedAddress address={event.caller} />
+            <Trans>
+              called by <FormattedAddress address={event.caller} />
+            </Trans>
           </div>
         </div>
       </div>

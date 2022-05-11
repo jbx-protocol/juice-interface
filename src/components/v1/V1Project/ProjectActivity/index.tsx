@@ -230,7 +230,9 @@ export default function ProjectActivity() {
           <Loading />
         </div>
       )
-    } else if (count === 0 && !isLoading) {
+    }
+
+    if (count === 0 && !isLoading) {
       return (
         <div
           style={{
@@ -242,7 +244,9 @@ export default function ProjectActivity() {
           <Trans>No activity yet</Trans>
         </div>
       )
-    } else if (hasNextPage) {
+    }
+
+    if (hasNextPage) {
       return (
         <div
           style={{
@@ -255,19 +259,19 @@ export default function ProjectActivity() {
           <Trans>Load more</Trans>
         </div>
       )
-    } else {
-      return (
-        <div
-          style={{
-            textAlign: 'center',
-            padding: 10,
-            color: colors.text.secondary,
-          }}
-        >
-          <Trans>{count} total</Trans>
-        </div>
-      )
     }
+
+    return (
+      <div
+        style={{
+          textAlign: 'center',
+          padding: 10,
+          color: colors.text.secondary,
+        }}
+      >
+        <Trans>{count} total</Trans>
+      </div>
+    )
   }, [
     projectEvents,
     isLoading,

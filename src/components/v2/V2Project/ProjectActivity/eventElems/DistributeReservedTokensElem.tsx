@@ -82,7 +82,9 @@ export default function DistributeReservedTokensEventElem({
             <EtherscanLink value={event.txHash} type="tx" />
           </div>
           <div style={smallHeaderStyle(colors)}>
-            <Trans>called by</Trans> <FormattedAddress address={event.caller} />
+            <Trans>
+              called by <FormattedAddress address={event.caller} />
+            </Trans>
           </div>
         </div>
       </div>

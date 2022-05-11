@@ -89,6 +89,10 @@ msgid "<0/> Archived projects have not been modified or deleted on the blockchai
 msgstr "<0/> Les projets archivés n'ont pas été modifiés ou supprimés de la blockchain et peuvent toujours être intégrés directement à travers les contrats Juicebox."
 
 #: src/components/Projects/index.tsx
+msgid "<0/> Search results don't include V2 projects yet."
+msgstr ""
+
+#: src/components/Projects/index.tsx
 msgid "<0/> The Juicebox protocol is open to anyone, and project configurations can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO or Peel. Do your own research and understand the risks before committing your funds."
 msgstr "<0/> Le protocole Juicebox est ouvert à tous et les paramètres du projet peuvent varier considérablement. Il y a des risques associés à l'interaction avec tous les projets du protocole. Les projets développés à partir du protocole ne sont ni approuvés, ni vérifiés par JuiceboxDAO. Vous devez faire votre propre recherche et comprendre les risques avant d'engager vos fonds."
 
@@ -363,8 +367,9 @@ msgstr "Somme"
 msgid "Amount of ERC-20 tokens to claim"
 msgstr ""
 
-#: src/components/shared/modals/DownloadPaymentsModal.tsx
+#: src/components/v1/V1DownloadPaymentsModal.tsx
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
+#: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Amount paid"
 msgstr "Somme payée"
 
@@ -438,7 +443,8 @@ msgstr "Solde dépassé"
 msgid "Balance of the project owner's wallet."
 msgstr "Solde du portefeuille du propriétaire du projet."
 
-#: src/components/shared/modals/DownloadPaymentsModal.tsx
+#: src/components/v1/V1DownloadPaymentsModal.tsx
+#: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Beneficiary"
 msgstr "Bénéficiaire"
 
@@ -450,8 +456,9 @@ msgstr "Adresse du bénéficiaire"
 msgid "Big ups to the Ethereum community for crafting the infrastructure and economy to make Juicebox possible."
 msgstr "Bravo à la communauté Ethereum pour avoir créé l'infrastructure et l'économie nécessaires pour rendre Juicebox possible."
 
-#: src/components/shared/modals/DownloadPaymentsModal.tsx
+#: src/components/v1/V1DownloadPaymentsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Block number"
 msgstr "Numéro de blocage"
 
@@ -585,9 +592,11 @@ msgid "Claiming {tokenTextLong} will convert your {tokenTextShort} balance to ER
 msgstr ""
 
 #: src/components/shared/TransactionModal.tsx
-#: src/components/shared/modals/DownloadActivityModal.tsx
-#: src/components/shared/modals/DownloadPaymentsModal.tsx
+#: src/components/v1/V1DownloadActivityModal.tsx
+#: src/components/v1/V1DownloadPaymentsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/components/v2/V2Project/V2DownloadActivityModal.tsx
+#: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Close"
 msgstr "Fermer"
 
@@ -735,7 +744,8 @@ msgstr "Cycle #{0}"
 msgid "Dark theme"
 msgstr "Mode sombre"
 
-#: src/components/shared/modals/DownloadPaymentsModal.tsx
+#: src/components/v1/V1DownloadPaymentsModal.tsx
+#: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Date"
 msgstr "Date"
 
@@ -939,16 +949,19 @@ msgstr "Un projet est-il bénéficié par son propre overflow ?"
 msgid "Done"
 msgstr "Finalisé"
 
-#: src/components/shared/modals/DownloadPaymentsModal.tsx
+#: src/components/v1/V1DownloadPaymentsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Download CSV"
 msgstr "Télécharger CSV"
 
-#: src/components/shared/modals/DownloadPaymentsModal.tsx
+#: src/components/v1/V1DownloadPaymentsModal.tsx
+#: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Download CSV of payments"
 msgstr "Télécharger CSV des paiements"
 
-#: src/components/shared/modals/DownloadActivityModal.tsx
+#: src/components/v1/V1DownloadActivityModal.tsx
+#: src/components/v2/V2Project/V2DownloadActivityModal.tsx
 msgid "Download CSV of project activity"
 msgstr "Télécharger CSV de l'activité de votre projet"
 
@@ -1050,7 +1063,8 @@ msgstr ""
 msgid "Error loading holders"
 msgstr "Erreur lors du chargement des titulaires"
 
-#: src/components/shared/modals/DownloadPaymentsModal.tsx
+#: src/components/v1/V1DownloadPaymentsModal.tsx
+#: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Error loading payments"
 msgstr "Erreur lors du chargement des paiements"
 
@@ -1395,8 +1409,9 @@ msgstr "Ticket daté du dernier paiement"
 msgid "Later"
 msgstr ""
 
-#: src/components/shared/modals/DownloadPaymentsModal.tsx
+#: src/components/v1/V1DownloadPaymentsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Latest"
 msgstr "Dernier"
 
@@ -1586,7 +1601,8 @@ msgstr "Aucun objectif défini."
 msgid "Not set"
 msgstr "Pas encore défini"
 
-#: src/components/shared/modals/DownloadPaymentsModal.tsx
+#: src/components/v1/V1DownloadPaymentsModal.tsx
+#: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Note"
 msgstr "Remarque"
 
@@ -1691,7 +1707,8 @@ msgstr "Déclaration pour le paiement"
 msgid "Pay {0}"
 msgstr "Payer {0}"
 
-#: src/components/shared/modals/DownloadPaymentsModal.tsx
+#: src/components/v1/V1DownloadPaymentsModal.tsx
+#: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Payer"
 msgstr "Payeur"
 

@@ -89,6 +89,10 @@ msgid "<0/> Archived projects have not been modified or deleted on the blockchai
 msgstr "<0/> Архивные проекты не были изменены или удалены в блокчейне, и с ними по-прежнему можно взаимодействовать напрямую через контракты Juicebox."
 
 #: src/components/Projects/index.tsx
+msgid "<0/> Search results don't include V2 projects yet."
+msgstr ""
+
+#: src/components/Projects/index.tsx
 msgid "<0/> The Juicebox protocol is open to anyone, and project configurations can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO or Peel. Do your own research and understand the risks before committing your funds."
 msgstr "<0/> Протокол Juicebox открыт для всех, и конфигурации проектов могут сильно различаться. Взаимодействие со всеми проектами протокола связано с определенными рисками. Проекты, созданные на основе протокола, не поддерживаются и не проверяются JuiceboxDAO или Peel. Прежде чем вкладывать средства, проведите собственное исследование и осознайте риски."
 
@@ -363,8 +367,9 @@ msgstr "Количество"
 msgid "Amount of ERC-20 tokens to claim"
 msgstr ""
 
-#: src/components/shared/modals/DownloadPaymentsModal.tsx
+#: src/components/v1/V1DownloadPaymentsModal.tsx
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
+#: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Amount paid"
 msgstr "Оплаченная сумма"
 
@@ -438,7 +443,8 @@ msgstr "Баланс превышен"
 msgid "Balance of the project owner's wallet."
 msgstr ""
 
-#: src/components/shared/modals/DownloadPaymentsModal.tsx
+#: src/components/v1/V1DownloadPaymentsModal.tsx
+#: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Beneficiary"
 msgstr "Получатель"
 
@@ -450,8 +456,9 @@ msgstr "Адрес получателя"
 msgid "Big ups to the Ethereum community for crafting the infrastructure and economy to make Juicebox possible."
 msgstr "Большое спасибо сообществу Ethereum за создание инфраструктуры и экономики, что сделало Juicebox возможным."
 
-#: src/components/shared/modals/DownloadPaymentsModal.tsx
+#: src/components/v1/V1DownloadPaymentsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Block number"
 msgstr "Номер блока"
 
@@ -585,9 +592,11 @@ msgid "Claiming {tokenTextLong} will convert your {tokenTextShort} balance to ER
 msgstr ""
 
 #: src/components/shared/TransactionModal.tsx
-#: src/components/shared/modals/DownloadActivityModal.tsx
-#: src/components/shared/modals/DownloadPaymentsModal.tsx
+#: src/components/v1/V1DownloadActivityModal.tsx
+#: src/components/v1/V1DownloadPaymentsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/components/v2/V2Project/V2DownloadActivityModal.tsx
+#: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Close"
 msgstr "Закрыть"
 
@@ -735,7 +744,8 @@ msgstr "Цикл #{0}"
 msgid "Dark theme"
 msgstr "Тёмная тема"
 
-#: src/components/shared/modals/DownloadPaymentsModal.tsx
+#: src/components/v1/V1DownloadPaymentsModal.tsx
+#: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Date"
 msgstr ""
 
@@ -939,16 +949,19 @@ msgstr "Выигрывает ли проект от собственного п�
 msgid "Done"
 msgstr "Готово"
 
-#: src/components/shared/modals/DownloadPaymentsModal.tsx
+#: src/components/v1/V1DownloadPaymentsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Download CSV"
 msgstr "Скачать CSV"
 
-#: src/components/shared/modals/DownloadPaymentsModal.tsx
+#: src/components/v1/V1DownloadPaymentsModal.tsx
+#: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Download CSV of payments"
 msgstr "Скачать CSV данных о платежах"
 
-#: src/components/shared/modals/DownloadActivityModal.tsx
+#: src/components/v1/V1DownloadActivityModal.tsx
+#: src/components/v2/V2Project/V2DownloadActivityModal.tsx
 msgid "Download CSV of project activity"
 msgstr "Скачать CSV о активности проекта"
 
@@ -1050,7 +1063,8 @@ msgstr ""
 msgid "Error loading holders"
 msgstr ""
 
-#: src/components/shared/modals/DownloadPaymentsModal.tsx
+#: src/components/v1/V1DownloadPaymentsModal.tsx
+#: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Error loading payments"
 msgstr ""
 
@@ -1395,8 +1409,9 @@ msgstr "Последняя оплаченная временная метка"
 msgid "Later"
 msgstr ""
 
-#: src/components/shared/modals/DownloadPaymentsModal.tsx
+#: src/components/v1/V1DownloadPaymentsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Latest"
 msgstr "Последние"
 
@@ -1586,7 +1601,8 @@ msgstr "Цель не установлена."
 msgid "Not set"
 msgstr "Не установлено"
 
-#: src/components/shared/modals/DownloadPaymentsModal.tsx
+#: src/components/v1/V1DownloadPaymentsModal.tsx
+#: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Note"
 msgstr "Примечание"
 
@@ -1691,7 +1707,8 @@ msgstr "Раскрытие информации о платеже"
 msgid "Pay {0}"
 msgstr "Заплатить {0}"
 
-#: src/components/shared/modals/DownloadPaymentsModal.tsx
+#: src/components/v1/V1DownloadPaymentsModal.tsx
+#: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Payer"
 msgstr ""
 

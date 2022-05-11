@@ -84,6 +84,10 @@ msgid "<0/> Archived projects have not been modified or deleted on the blockchai
 msgstr ""
 
 #: src/components/Projects/index.tsx
+msgid "<0/> Search results don't include V2 projects yet."
+msgstr "<0/> Search results don't include V2 projects yet."
+
+#: src/components/Projects/index.tsx
 msgid "<0/> The Juicebox protocol is open to anyone, and project configurations can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO or Peel. Do your own research and understand the risks before committing your funds."
 msgstr "<0/> The Juicebox protocol is open to anyone, and project configurations can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO or Peel. Do your own research and understand the risks before committing your funds."
 
@@ -358,8 +362,9 @@ msgstr "Amount"
 msgid "Amount of ERC-20 tokens to claim"
 msgstr "Amount of ERC-20 tokens to claim"
 
-#: src/components/shared/modals/DownloadPaymentsModal.tsx
+#: src/components/v1/V1DownloadPaymentsModal.tsx
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
+#: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Amount paid"
 msgstr ""
 
@@ -433,7 +438,8 @@ msgstr "Balance exceeded"
 msgid "Balance of the project owner's wallet."
 msgstr "Balance of the project owner's wallet."
 
-#: src/components/shared/modals/DownloadPaymentsModal.tsx
+#: src/components/v1/V1DownloadPaymentsModal.tsx
+#: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Beneficiary"
 msgstr "Beneficiary"
 
@@ -445,8 +451,9 @@ msgstr "Beneficiary address"
 msgid "Big ups to the Ethereum community for crafting the infrastructure and economy to make Juicebox possible."
 msgstr ""
 
-#: src/components/shared/modals/DownloadPaymentsModal.tsx
+#: src/components/v1/V1DownloadPaymentsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Block number"
 msgstr "Block number"
 
@@ -580,9 +587,11 @@ msgid "Claiming {tokenTextLong} will convert your {tokenTextShort} balance to ER
 msgstr "Claiming {tokenTextLong} will convert your {tokenTextShort} balance to ERC-20 tokens and mint them to your wallet."
 
 #: src/components/shared/TransactionModal.tsx
-#: src/components/shared/modals/DownloadActivityModal.tsx
-#: src/components/shared/modals/DownloadPaymentsModal.tsx
+#: src/components/v1/V1DownloadActivityModal.tsx
+#: src/components/v1/V1DownloadPaymentsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/components/v2/V2Project/V2DownloadActivityModal.tsx
+#: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Close"
 msgstr "Close"
 
@@ -730,7 +739,8 @@ msgstr ""
 msgid "Dark theme"
 msgstr ""
 
-#: src/components/shared/modals/DownloadPaymentsModal.tsx
+#: src/components/v1/V1DownloadPaymentsModal.tsx
+#: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Date"
 msgstr "Date"
 
@@ -934,16 +944,19 @@ msgstr ""
 msgid "Done"
 msgstr "Done"
 
-#: src/components/shared/modals/DownloadPaymentsModal.tsx
+#: src/components/v1/V1DownloadPaymentsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Download CSV"
 msgstr "Download CSV"
 
-#: src/components/shared/modals/DownloadPaymentsModal.tsx
+#: src/components/v1/V1DownloadPaymentsModal.tsx
+#: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Download CSV of payments"
 msgstr "Download CSV of payments"
 
-#: src/components/shared/modals/DownloadActivityModal.tsx
+#: src/components/v1/V1DownloadActivityModal.tsx
+#: src/components/v2/V2Project/V2DownloadActivityModal.tsx
 msgid "Download CSV of project activity"
 msgstr "Download CSV of project activity"
 
@@ -1045,7 +1058,8 @@ msgstr "Entities that will receive funds from the treasury each funding cycle."
 msgid "Error loading holders"
 msgstr "Error loading holders"
 
-#: src/components/shared/modals/DownloadPaymentsModal.tsx
+#: src/components/v1/V1DownloadPaymentsModal.tsx
+#: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Error loading payments"
 msgstr "Error loading payments"
 
@@ -1390,8 +1404,9 @@ msgstr "Last paid timestamp"
 msgid "Later"
 msgstr "Later"
 
-#: src/components/shared/modals/DownloadPaymentsModal.tsx
+#: src/components/v1/V1DownloadPaymentsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Latest"
 msgstr "Latest"
 
@@ -1581,7 +1596,8 @@ msgstr ""
 msgid "Not set"
 msgstr ""
 
-#: src/components/shared/modals/DownloadPaymentsModal.tsx
+#: src/components/v1/V1DownloadPaymentsModal.tsx
+#: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Note"
 msgstr "Note"
 
@@ -1686,7 +1702,8 @@ msgstr ""
 msgid "Pay {0}"
 msgstr ""
 
-#: src/components/shared/modals/DownloadPaymentsModal.tsx
+#: src/components/v1/V1DownloadPaymentsModal.tsx
+#: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Payer"
 msgstr "Payer"
 

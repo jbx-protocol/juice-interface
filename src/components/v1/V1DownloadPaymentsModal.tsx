@@ -10,7 +10,7 @@ import { querySubgraphExhaustive } from 'utils/graph'
 
 import { readProvider } from 'constants/readProvider'
 
-export default function DownloadPaymentsModal({
+export default function V1DownloadPaymentsModal({
   visible,
   onCancel,
 }: {

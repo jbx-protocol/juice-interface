@@ -2,9 +2,9 @@ import { t, Trans } from '@lingui/macro'
 import { Button, Modal } from 'antd'
 import { useState } from 'react'
 
-import DownloadPaymentsModal from './DownloadPaymentsModal'
+import V2DownloadPaymentsModal from './V2DownloadPaymentsModal'
 
-export default function DownloadActivityModal({
+export default function V2DownloadActivityModal({
   visible,
   onCancel,
 }: {
@@ -33,7 +33,7 @@ export default function DownloadActivityModal({
         </div>
       </div>
 
-      <DownloadPaymentsModal
+      <V2DownloadPaymentsModal
         visible={paymentsModalVisible}
         onCancel={() => setPaymentsModalVisible(false)}
       />

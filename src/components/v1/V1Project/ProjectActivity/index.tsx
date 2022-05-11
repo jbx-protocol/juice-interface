@@ -6,7 +6,7 @@ import PayEventElem from 'components/shared/activityEventElems/PayEventElem'
 import ProjectCreateEventElem from 'components/shared/activityEventElems/ProjectCreateEventElem'
 import RedeemEventElem from 'components/shared/activityEventElems/RedeemEventElem'
 import Loading from 'components/shared/Loading'
-import DownloadActivityModal from 'components/shared/modals/DownloadActivityModal'
+import V1DownloadActivityModal from 'components/v1/V1DownloadActivityModal'
 import SectionHeader from 'components/shared/SectionHeader'
 import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
@@ -337,7 +337,7 @@ export default function ProjectActivity() {
 
       {listStatus}
 
-      <DownloadActivityModal
+      <V1DownloadActivityModal
         visible={downloadModalVisible}
         onCancel={() => setDownloadModalVisible(false)}
       />

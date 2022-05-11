@@ -1,5 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { V2BallotState } from 'models/ballot'
+import { CV } from 'models/cv'
 import { ProjectMetadataV4 } from 'models/project-metadata'
 import { V2FundingCycle, V2FundingCycleMetadata } from 'models/v2/fundingCycle'
 import { Split } from 'models/v2/splits'
@@ -17,6 +18,7 @@ export type V2ProjectContextType = {
   isPreviewMode?: boolean
 
   projectId: number | undefined
+  cv: CV | undefined
   projectMetadata: ProjectMetadataV4 | undefined
   tokenAddress: string | undefined
   tokenSymbol: string | undefined
@@ -47,6 +49,7 @@ export const V2ProjectContext = createContext<V2ProjectContextType>({
   isPreviewMode: false,
 
   projectId: undefined,
+  cv: undefined,
   projectMetadata: undefined,
   tokenAddress: undefined,
   tokenSymbol: undefined,

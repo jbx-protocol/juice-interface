@@ -6,7 +6,6 @@ import PayEventElem from 'components/shared/activityEventElems/PayEventElem'
 import ProjectCreateEventElem from 'components/shared/activityEventElems/ProjectCreateEventElem'
 import RedeemEventElem from 'components/shared/activityEventElems/RedeemEventElem'
 import Loading from 'components/shared/Loading'
-import DownloadActivityModal from 'components/shared/modals/DownloadActivityModal'
 import SectionHeader from 'components/shared/SectionHeader'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
@@ -21,6 +20,7 @@ import { RedeemEvent } from 'models/subgraph-entities/vX/redeem-event'
 import { useContext, useMemo, useState } from 'react'
 import { WhereConfig } from 'utils/graph'
 
+import V2DownloadActivityModal from '../V2DownloadActivityModal'
 import DistributePayoutsElem from './eventElems/DistributePayoutsElem'
 import DistributeReservedTokensEventElem from './eventElems/DistributeReservedTokensElem'
 
@@ -359,7 +359,7 @@ export default function ProjectActivity() {
 
       {listStatus}
 
-      <DownloadActivityModal
+      <V2DownloadActivityModal
         visible={downloadModalVisible}
         onCancel={() => setDownloadModalVisible(false)}
       />

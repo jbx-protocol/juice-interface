@@ -51,7 +51,7 @@ export default function V2Project({
 
   const colSizeMd = singleColumnLayout ? 24 : 12
 
-  if (!projectId) return null
+  if (projectId === undefined) return null
 
   const closeNewDeployModal = () => {
     // Change URL without refreshing page

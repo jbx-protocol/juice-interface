@@ -153,6 +153,7 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
   }
 
   const project: V2ProjectContextType = {
+    cv: '2',
     projectId,
     projectMetadata,
     fundingCycle,

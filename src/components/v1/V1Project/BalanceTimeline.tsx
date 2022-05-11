@@ -158,8 +158,8 @@ export default function BalanceTimeline({ height }: { height: number }) {
               : {}),
             where: projectId
               ? {
-                  key: 'id',
-                  value: projectId.toString(),
+                  key: 'projectId',
+                  value: projectId,
                 }
               : undefined,
           }).then(projects => {

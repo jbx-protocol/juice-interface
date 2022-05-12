@@ -479,10 +479,6 @@ msgid "Bonding curve:"
 msgstr "Bağlanma eğrisi:"
 
 #: src/components/Landing/index.tsx
-msgid "Build a community around a project, fund it, and program its spending. Light enough for a group of friends, powerful enough for a global network of anons."
-msgstr "Bir proje etrafında bir topluluk oluşturun, onu finanse edin ve harcamalarını programlayın. Bir grup arkadaş için yeterince hafif, küresel bir duyuru ağı için yeterince güçlü."
-
-#: src/components/Landing/index.tsx
 msgid "Built for:"
 msgstr "Şunlar için üretildi:"
 
@@ -604,10 +600,6 @@ msgstr "Kapat"
 msgid "Commit portions of your funds to the people or projects you want to support, or the contributors you want to pay. When you get paid, so do they."
 msgstr "Gelirinizin bir kısmını, desteklemek istediğiniz kişilere veya projelere veya ödeme yapmak istediğiniz katkıda bulunanlara gitmesi için taahhüt edin. Siz ödeme aldığınızda, onlar da alsın."
 
-#: src/components/Landing/index.tsx
-msgid "Community funding for people and projects"
-msgstr "İnsanlar ve projeler için topluluk finansmanı"
-
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 msgid "Configure how your project will collect and spend funds."
 msgstr ""
@@ -705,6 +697,14 @@ msgstr ""
 msgid "Creating a Juicebox project mints you an NFT (ERC-721) representing ownership over it. Whoever owns this NFT can configure the rules of the game and how payouts are distributed."
 msgstr "Bir Juicebox projesi oluşturmak, size üzerinde sahipliğinizi temsil eden bir NFT (ERC-721) verir. Bu NFT'ye sahip olan kişi, oyunun kurallarını ve ödemelerin nasıl dağıtılacağını yapılandırabilir."
 
+#: src/components/Landing/index.tsx
+msgid "Crowdfunding campaigns"
+msgstr ""
+
+#: src/components/Landing/index.tsx
+msgid "Crypto and Web3 businesses"
+msgstr ""
+
 #: src/components/v1/V1Project/FundingCycles/index.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/index.tsx
 msgid "Current"
@@ -735,6 +735,10 @@ msgstr ""
 #: src/components/shared/Project/FundingCycleDetailsCard.tsx
 msgid "Cycle #{0}"
 msgstr "Döngü #{0}"
+
+#: src/components/Landing/index.tsx
+msgid "DAOs and communities"
+msgstr ""
 
 #: src/components/Navbar/Mobile/ThemePickerMobile.tsx
 msgid "Dark theme"
@@ -782,7 +786,6 @@ msgstr ""
 msgid "Deposit 1 wei to @{handle}"
 msgstr "@{handle} hesabına 1 wei yatırın"
 
-#: src/components/Landing/index.tsx
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/index.tsx
 msgid "Design your project"
@@ -1064,13 +1067,13 @@ msgstr "Sahipler yüklenirken hata oluştu"
 msgid "Error loading payments"
 msgstr "Ödemeler yüklenirken hata oluştu"
 
-#: src/components/Landing/index.tsx
-msgid "Ethereum protocols and DAOs"
-msgstr "Ethereum protokolleri ve DAO'lar"
-
 #: src/components/Landing/QAs.tsx
 msgid "Ethereum provides a public environment where internet apps like Juicebox can run in a permission-less, trustless, and unstoppable fashion."
 msgstr "Ethereum, Juicebox gibi internet uygulamalarının izine ve güvene dayalı olmadan, kesintisiz bir şekilde çalışabileceği herkesin kullanımına açık bir ortam sağlar."
+
+#: src/components/Landing/index.tsx
+msgid "Explore projects"
+msgstr ""
 
 #: src/components/Navbar/MenuItems.tsx
 msgid "FAQ"
@@ -1099,6 +1102,10 @@ msgstr "Daha fazla bilgi için bu <0>kısa video</0>'yu izleyin."
 #: src/components/Landing/QAs.tsx
 msgid "For users paying through your app, you should route those funds through the Juicebox smart contracts so they receive tokens in return."
 msgstr "Uygulamanız aracılığıyla ödeme yapan kullanıcıların, karşılığında token almaları için bu fonları Juicebox akıllı sözleşmeleri aracılığıyla yönlendirmelisiniz."
+
+#: src/components/Landing/index.tsx
+msgid "Fund anything. Grow together."
+msgstr ""
 
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
@@ -1301,8 +1308,8 @@ msgid "Incentives"
 msgstr "Teşvikler"
 
 #: src/components/Landing/index.tsx
-msgid "Indie artists, devs, creators"
-msgstr "Bağımsız sanatçılar, geliştiriciler, yaratıcılar"
+msgid "Indie creators and builders"
+msgstr ""
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Initial issuance rate"
@@ -1383,6 +1390,10 @@ msgstr "Juicebox, yönetişim açısından minimal bir protokoldür. Ayarlanabil
 msgid "Juicebox is an open protocol on Ethereum that is funded using Juicebox itself. You can check out the contractualized budget specs <0>here</0>."
 msgstr ""
 
+#: src/components/Landing/index.tsx
+msgid "Juicebox is the world's largest decentralized funding platform. Light enough for a group of friends, powerful enough for a global network of anons."
+msgstr ""
+
 #: src/components/shared/TransactionModal.tsx
 msgid "Juicebox loading animation"
 msgstr ""
@@ -1418,6 +1429,10 @@ msgstr "En son"
 #: src/components/Landing/index.tsx
 msgid "Latest payments"
 msgstr "Son ödemeler"
+
+#: src/components/Landing/index.tsx
+msgid "Launch your project"
+msgstr ""
 
 #: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 msgid "Learn more in this <0>short video</0>."
@@ -1623,10 +1638,6 @@ msgstr ""
 msgid "Notice from {0}:"
 msgstr "{0} tarafından yapılan bildirim:"
 
-#: src/components/Landing/index.tsx
-msgid "Open source businesses"
-msgstr "Açık kaynak işletmeleri"
-
 #: src/components/v1/V1Project/modals/BalancesModal.tsx
 msgid "Other assets in this project's owner's wallet."
 msgstr "Bu projenin sahibinin cüzdanındaki diğer varlıklar."
@@ -1728,6 +1739,10 @@ msgstr "Bu projeye ödeme şu anda devredışı çünkü ayrılmış token oran�
 msgid "Paying this project is currently disabled."
 msgstr "Bu projeye ödeme şu anda devredışı."
 
+#: src/components/shared/RichImgPreview.tsx
+msgid "Payment memo image"
+msgstr ""
+
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Payments"
@@ -1823,10 +1838,6 @@ msgstr "Podcast"
 #: src/components/shared/ProjectRiskNotice.tsx
 msgid "Potential risks"
 msgstr ""
-
-#: src/components/Landing/index.tsx
-msgid "Powered by public smart contracts on <0>Ethereum</0>."
-msgstr "Ethereum'daki halka açık akıllı sözleşmelerle desteklenmektedir."
 
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/ProjectConfigurationFieldsContainer.tsx
@@ -1973,10 +1984,6 @@ msgstr "Juicebox kullanan projeler"
 #: src/components/shared/forms/TicketingForm.tsx
 msgid "Projects using a reserved rate of {reservedRateRiskyMin}% or more will appear risky to contributors, as a relatively small number of tokens will be received in exchange for paying your project."
 msgstr "%{reservedRateRiskyMin} veya daha fazla ayrılmış oran kullanan projeler, projenizin ödenmesi karşılığında nispeten az sayıda token alınacağından, katkıda bulunanlar açısından riskli görünecektir."
-
-#: src/components/Landing/index.tsx
-msgid "Public goods and services"
-msgstr "Kamu malları ve hizmetleri"
 
 #: src/components/Projects/RankingExplanation.tsx
 msgid "Rankings based on number of contributions and volume gained in the last {trendingWindow} days. <0>See code</0>"

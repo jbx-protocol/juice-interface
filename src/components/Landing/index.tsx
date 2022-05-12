@@ -149,7 +149,7 @@ export default function Landing() {
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                paddingBottom: 60,
+                paddingBottom: 25,
               }}
             >
               <div>

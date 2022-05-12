@@ -1089,6 +1089,10 @@ msgstr "FAQ"
 msgid "FAQs"
 msgstr "FAQs"
 
+#: src/components/shared/inputs/ImageUploader.tsx
+msgid "File must be less than {formattedSize}{unit}"
+msgstr ""
+
 #: src/components/Landing/QAs.tsx
 msgid "For example, with a bonding curve of 70%, redeeming 10% of the token supply at any given time will claim around 7% of the total overflow."
 msgstr "Por exemplo, com uma curva de ligação de 70%, ao resgatar 10% do suprimento dos tokens a qualquer momento, irá reivindicar cerca de 7% do total de overflow."
@@ -1937,6 +1941,10 @@ msgstr ""
 
 #: src/components/shared/NewDeployNotAvailable.tsx
 msgid "Project {name} will be available soon! Try refreshing the page shortly."
+msgstr ""
+
+#: src/components/v2/shared/V2ProjectHandle.tsx
+msgid "Project {projectId}"
 msgstr ""
 
 #: src/components/shared/Project404.tsx

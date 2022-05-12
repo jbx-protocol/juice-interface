@@ -1084,6 +1084,10 @@ msgstr ""
 msgid "FAQs"
 msgstr ""
 
+#: src/components/shared/inputs/ImageUploader.tsx
+msgid "File must be less than {formattedSize}{unit}"
+msgstr "File must be less than {formattedSize}{unit}"
+
 #: src/components/Landing/QAs.tsx
 msgid "For example, with a bonding curve of 70%, redeeming 10% of the token supply at any given time will claim around 7% of the total overflow."
 msgstr ""
@@ -1933,6 +1937,10 @@ msgstr "Project token"
 #: src/components/shared/NewDeployNotAvailable.tsx
 msgid "Project {name} will be available soon! Try refreshing the page shortly."
 msgstr "Project {name} will be available soon! Try refreshing the page shortly."
+
+#: src/components/v2/shared/V2ProjectHandle.tsx
+msgid "Project {projectId}"
+msgstr "Project {projectId}"
 
 #: src/components/shared/Project404.tsx
 msgid "Project {projectId} not found"

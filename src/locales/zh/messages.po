@@ -1089,6 +1089,10 @@ msgstr "常见问题解答"
 msgid "FAQs"
 msgstr "常见问题解答"
 
+#: src/components/shared/inputs/ImageUploader.tsx
+msgid "File must be less than {formattedSize}{unit}"
+msgstr ""
+
 #: src/components/Landing/QAs.tsx
 msgid "For example, with a bonding curve of 70%, redeeming 10% of the token supply at any given time will claim around 7% of the total overflow."
 msgstr "例如：在 70% 的联合曲线配置下，任意时间赎回 10% 的代币供应将能从总溢出中领取到 7% 左右。"
@@ -1937,6 +1941,10 @@ msgstr ""
 
 #: src/components/shared/NewDeployNotAvailable.tsx
 msgid "Project {name} will be available soon! Try refreshing the page shortly."
+msgstr ""
+
+#: src/components/v2/shared/V2ProjectHandle.tsx
+msgid "Project {projectId}"
 msgstr ""
 
 #: src/components/shared/Project404.tsx

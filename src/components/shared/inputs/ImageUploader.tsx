@@ -16,14 +16,14 @@ enum ByteUnit {
 export default function ImageUploader({
   initialUrl,
   onSuccess,
-  maxSize,
+  maxSizeKBs: maxSize,
   metadata,
   text,
 }: {
   initialUrl?: string
   metadata?: Record<string | number, any> // eslint-disable-line @typescript-eslint/no-explicit-any
   onSuccess?: (url?: string) => void
-  maxSize?: number // KB
+  maxSizeKBs?: number // KB
   text?: string
 }) {
   const [url, setUrl] = useState<string | undefined>(initialUrl)

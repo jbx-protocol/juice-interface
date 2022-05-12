@@ -7,8 +7,6 @@ import Projects from 'components/Projects'
 import V2UserProvider from 'providers/v2/UserProvider'
 import Loading from 'components/shared/Loading'
 import V1CurrencyProvider from 'providers/v1/V1CurrencyProvider'
-import V2EntryGuard from 'components/v2/V2EntryGuard'
-import { featureFlagEnabled, FEATURE_FLAGS } from 'utils/featureFlags'
 import PrivacyPolicy from 'components/PrivacyPolicy'
 
 const V1Create = lazy(() => import('components/v1/V1Create'))
@@ -22,22 +20,6 @@ function CatchallRedirect() {
   return <Redirect to={'/p/' + route} />
 }
 
-const V1CreateRoute = () => (
-  <V1CurrencyProvider>
-    <Suspense fallback={<Loading />}>
-      <V1Create />
-    </Suspense>
-  </V1CurrencyProvider>
-)
-
-const V2CreateRoute = () => (
-  <V2EntryGuard>
-    <Suspense fallback={<Loading />}>
-      <V2Create />
-    </Suspense>
-  </V2EntryGuard>
-)
-
 function usePageViews() {
   let location = useLocation()
 
@@ -50,7 +32,6 @@ function usePageViews() {
 
 function JuiceboxSwitch() {
   usePageViews()
-  const isV2Enabled = featureFlagEnabled(FEATURE_FLAGS.ENABLE_V2)
 
   return (
     <Switch>
@@ -59,18 +40,19 @@ function JuiceboxSwitch() {
           <Landing />
         </V1CurrencyProvider>
       </Route>
+
       <Route path="/create">
-        {isV2Enabled ? <V2CreateRoute /> : <V1CreateRoute />}
+        <Suspense fallback={<Loading />}>
+          <V2Create />
+        </Suspense>
       </Route>
-      {isV2Enabled ? (
-        <Route path="/v1/create">
-          <V1CreateRoute />
-        </Route>
-      ) : (
-        <Route path="/v2/create">
-          <V2CreateRoute />
-        </Route>
-      )}
+      <Route path="/v1/create">
+        <V1CurrencyProvider>
+          <Suspense fallback={<Loading />}>
+            <V1Create />
+          </Suspense>
+        </V1CurrencyProvider>{' '}
+      </Route>
 
       <Route path="/projects/:owner">
         <Projects />
@@ -80,26 +62,22 @@ function JuiceboxSwitch() {
       </Route>
 
       <Route path="/p/:ensName(.*.eth)">
-        <V2EntryGuard>
-          <Suspense fallback={<Loading />}>
-            <V2UserProvider>
-              <V2DashboardGateway />
-            </V2UserProvider>
-          </Suspense>
-        </V2EntryGuard>
+        <Suspense fallback={<Loading />}>
+          <V2UserProvider>
+            <V2DashboardGateway />
+          </V2UserProvider>
+        </Suspense>
       </Route>
       <Route path="/p/:handle">
         <V1Dashboard />
       </Route>
 
       <Route path="/v2/p/:projectId">
-        <V2EntryGuard>
-          <Suspense fallback={<Loading />}>
-            <V2UserProvider>
-              <V2DashboardGateway />
-            </V2UserProvider>
-          </Suspense>
-        </V2EntryGuard>
+        <Suspense fallback={<Loading />}>
+          <V2UserProvider>
+            <V2DashboardGateway />
+          </V2UserProvider>
+        </Suspense>
       </Route>
 
       <Route path="/privacy">

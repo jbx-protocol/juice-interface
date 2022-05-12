@@ -16,6 +16,8 @@ import { useTransferUnclaimedTokensTx } from 'hooks/v2/transactor/TransferUnclai
 import useUserUnclaimedTokenBalance from 'hooks/v2/contractReader/UserUnclaimedTokenBalance'
 import { useDeployProjectPayerTx } from 'hooks/v2/transactor/DeployProjectPayerTx'
 
+import ProjectVersionBadge from 'components/shared/ProjectVersionBadge'
+
 import V2ReconfigureFundingModalTrigger from './V2ProjectReconfigureModal/V2ReconfigureModalTrigger'
 
 export default function V2ProjectHeaderActions() {
@@ -51,14 +53,7 @@ export default function V2ProjectHeaderActions() {
         <Tooltip
           title={t`This project uses the V2 version of the Juicebox contracts.`}
         >
-          <span
-            style={{
-              padding: '2px 4px',
-              background: colors.background.l1,
-            }}
-          >
-            V2
-          </span>
+          <ProjectVersionBadge versionText="V2" />
         </Tooltip>
       </span>
       <ProjectToolDrawerModal

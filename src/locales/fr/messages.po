@@ -1089,6 +1089,10 @@ msgstr "FAQ"
 msgid "FAQs"
 msgstr "FAQs"
 
+#: src/components/shared/inputs/ImageUploader.tsx
+msgid "File must be less than {formattedSize}{unit}"
+msgstr ""
+
 #: src/components/Landing/QAs.tsx
 msgid "For example, with a bonding curve of 70%, redeeming 10% of the token supply at any given time will claim around 7% of the total overflow."
 msgstr "Par exemple, avec une courbe de liaison de 70%, récupérer 10% de l'offre de tokens à un moment donné demandera environ 7% de l'overflow total."

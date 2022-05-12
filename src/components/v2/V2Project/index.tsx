@@ -77,6 +77,7 @@ export default function V2Project({
             weightingFn={weightedAmount}
             tokenSymbol={tokenSymbol}
             tokenAddress={tokenAddress}
+            disabled={isPreviewMode}
           />
         </Col>
       </Row>

@@ -60,7 +60,6 @@ export default function Payments() {
                 borderBottom: '1px solid ' + colors.stroke.tertiary,
               }}
             >
-              <ProjectHandle project={e.project} />
               <div
                 style={{
                   display: 'flex',
@@ -68,6 +67,8 @@ export default function Payments() {
                   alignItems: 'baseline',
                 }}
               >
+                <ProjectHandle project={e.project} />
+
                 <div
                   style={{ fontSize: '.7rem', color: colors.text.secondary }}
                 >

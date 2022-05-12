@@ -78,7 +78,7 @@ export default function Paid() {
 
   const isConstitutionDAO =
     readNetwork.name === NetworkName.mainnet &&
-    projectId?.eq(V1_PROJECT_IDS.CONSTITUTION_DAO)
+    projectId === V1_PROJECT_IDS.CONSTITUTION_DAO
 
   return (
     <div>
@@ -214,7 +214,7 @@ export default function Paid() {
               <ProjectTokenBalance
                 style={{ display: 'inline-block' }}
                 wallet={owner}
-                projectId={BigNumber.from(V1_PROJECT_IDS.JUICEBOX_DAO)}
+                projectId={V1_PROJECT_IDS.JUICEBOX_DAO}
                 hideHandle
               />{' '}
               +{' '}

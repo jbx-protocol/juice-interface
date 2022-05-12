@@ -19,6 +19,7 @@ export type PayButtonProps = {
   payAmount: string
   payInCurrency: CurrencyOption
   onError?: (error?: Error) => void
+  disabled?: boolean
 }
 
 export default function PayInputGroup({
@@ -28,6 +29,7 @@ export default function PayInputGroup({
   tokenSymbol,
   tokenAddress,
   weightingFn,
+  disabled,
 }: {
   PayButton: (props: PayButtonProps) => JSX.Element | null
   reservedRate: number | undefined
@@ -35,6 +37,7 @@ export default function PayInputGroup({
   tokenSymbol: string | undefined
   tokenAddress: string | undefined
   weightingFn: WeightFunction
+  disabled?: boolean
 }) {
   const {
     currencyMetadata,
@@ -99,6 +102,7 @@ export default function PayInputGroup({
             payAmount={payAmount}
             payInCurrency={payInCurrency}
             onError={() => setIsErrorField(true)}
+            disabled={disabled}
           />
         </div>
       </div>

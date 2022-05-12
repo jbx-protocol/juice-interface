@@ -24,7 +24,7 @@ export function useDeployProjectPayerTx(): TransactorInstance<{}> {
       contracts?.JBETHERC20ProjectPayerDeployer,
       'deployProjectPayer',
       [
-        projectId.toHexString(),
+        projectId,
         constants.AddressZero, // defaultBeneficiary is none because we want tokens to go to msg.sender
         false, // _defaultPreferClaimedTokens,
         DEFAULT_MEMO, // _defaultMemo,

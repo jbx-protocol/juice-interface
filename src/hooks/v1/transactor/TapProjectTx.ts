@@ -35,7 +35,7 @@ export function useTapProjectTx(): TransactorInstance<{
         : contracts.TerminalV1,
       'tap',
       [
-        projectId.toHexString(),
+        BigNumber.from(projectId).toHexString(),
         tapAmount.toHexString(),
         currency,
         minAmount?.toHexString(),

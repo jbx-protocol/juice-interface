@@ -47,7 +47,7 @@ export default function V2ProjectHeaderActions() {
           paddingRight: 10,
         }}
       >
-        {projectId && <Trans>ID: {projectId.toNumber()}</Trans>}{' '}
+        {projectId && <Trans>ID: {projectId}</Trans>}{' '}
         <Tooltip
           title={t`This project uses the V2 version of the Juicebox contracts.`}
         >

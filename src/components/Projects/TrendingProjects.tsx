@@ -3,7 +3,7 @@ import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import Grid from 'components/shared/Grid'
 import Loading from 'components/shared/Loading'
-import { useTrendingProjects } from 'hooks/v1/Projects'
+import { useTrendingProjects } from 'hooks/Projects'
 import React from 'react'
 import { Link } from 'react-router-dom'
 

@@ -1,4 +1,3 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { ThemeContext } from 'contexts/themeContext'
 import useSymbolOfERC20 from 'hooks/v1/contractReader/SymbolOfERC20'
 import useTerminalOfProject from 'hooks/v1/contractReader/TerminalOfProject'
@@ -17,7 +16,7 @@ export default function ProjectTokenBalance({
   precision,
   hideHandle,
 }: {
-  projectId: BigNumber
+  projectId: number
   wallet: string | undefined
   style?: CSSProperties
   precision?: number

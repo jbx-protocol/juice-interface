@@ -1,13 +1,13 @@
+import { InfoCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
+import { Button } from 'antd'
 import Grid from 'components/shared/Grid'
 import Loading from 'components/shared/Loading'
 import ProjectCard from 'components/shared/ProjectCard'
 import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { useMyProjectsQuery } from 'hooks/v1/Projects'
-import React, { useContext } from 'react'
-import { InfoCircleOutlined } from '@ant-design/icons'
-import { Button } from 'antd'
+import { useMyProjectsQuery } from 'hooks/Projects'
+import { useContext } from 'react'
 import { Link } from 'react-router-dom'
 
 export default function MyProjects() {

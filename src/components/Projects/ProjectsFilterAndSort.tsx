@@ -17,6 +17,8 @@ export default function ProjectsFilterAndSort({
   setIncludeV1,
   includeV1_1,
   setIncludeV1_1,
+  includeV2,
+  setIncludeV2,
   showArchived,
   setShowArchived,
   orderBy,
@@ -26,6 +28,8 @@ export default function ProjectsFilterAndSort({
   setIncludeV1: CheckboxOnChange
   includeV1_1: boolean
   setIncludeV1_1: CheckboxOnChange
+  includeV2: boolean
+  setIncludeV2: CheckboxOnChange
   showArchived: boolean
   setShowArchived: CheckboxOnChange
   orderBy: OrderByOption
@@ -99,6 +103,11 @@ export default function ProjectsFilterAndSort({
               label={t`V1.1`}
               checked={includeV1_1}
               onChange={setIncludeV1_1}
+            />
+            <FilterCheckboxItem
+              label={t`V2`}
+              checked={includeV2}
+              onChange={setIncludeV2}
             />
             <FilterCheckboxItem
               label={t`Archived`}

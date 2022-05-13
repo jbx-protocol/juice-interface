@@ -34,17 +34,14 @@ export default function useProjectSplits({
   splitGroup,
   domain,
 }: {
-  projectId: BigNumber | undefined
+  projectId: number | undefined
   splitGroup: SplitGroup
   domain: string | undefined
 }) {
   return useV2ContractReader<Split[]>({
     contract: V2ContractName.JBSplitsStore,
     functionName: 'splitsOf',
-    args:
-      projectId && domain
-        ? [projectId.toHexString(), domain, splitGroup]
-        : null,
+    args: projectId && domain ? [projectId, domain, splitGroup] : null,
     formatter: useCallback((value): Split[] => {
       return formatSplitResult((value ?? []) as SplitResult[])
     }, []),

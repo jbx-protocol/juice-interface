@@ -44,7 +44,7 @@ function BondingCurveRateExtra({ disabled }: { disabled?: boolean }) {
       {disabled && (
         <FormItemWarningText>
           <Trans>
-            Disabled when your project's distribution limit is{' '}
+            Disabled when your funding cycle's distribution limit is{' '}
             <strong>No limit</strong> (infinite)
           </Trans>
         </FormItemWarningText>

@@ -42,7 +42,7 @@ export function useReconfigureV2FundingCycleTx(): TransactorInstance<{
       contracts.JBController,
       'reconfigureFundingCyclesOf',
       [
-        projectId.toHexString(),
+        projectId,
         fundingCycleData,
         fundingCycleMetadata,
         mustStartAtOrAfter,

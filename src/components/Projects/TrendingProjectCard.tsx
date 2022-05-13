@@ -7,7 +7,7 @@ import { t, Trans, Plural } from '@lingui/macro'
 import { ThemeContext } from 'contexts/themeContext'
 import * as constants from '@ethersproject/constants'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
-import { TrendingProject } from 'models/subgraph-entities/project'
+import { TrendingProject } from 'models/subgraph-entities/vX/project'
 import { CSSProperties, useContext, useMemo } from 'react'
 import { getTerminalVersion } from 'utils/v1/terminals'
 
@@ -48,7 +48,7 @@ export default function TrendingProjectCard({
     textAlign: 'center',
   }
 
-  const { data: metadata } = useProjectMetadata(project?.uri)
+  const { data: metadata } = useProjectMetadata(project?.metadataUri)
 
   const terminalVersion = getTerminalVersion(project?.terminal)
 
@@ -103,7 +103,11 @@ export default function TrendingProjectCard({
         overflow: 'hidden',
       }}
       key={project.handle}
-      to={`/p/${project.handle}`}
+      to={
+        project.cv === '2'
+          ? `/v2/p/${project.projectId}`
+          : `/p/${project?.handle}`
+      }
     >
       {metadata ? (
         <div style={cardStyle} className="clickable-border">
@@ -139,18 +143,25 @@ export default function TrendingProjectCard({
 
             {size === 'sm' ? null : (
               <div>
-                <span style={{ color: colors.text.primary, fontWeight: 500 }}>
-                  @{project?.handle}
-                </span>
+                {project.handle && (
+                  <span
+                    style={{
+                      color: colors.text.primary,
+                      fontWeight: 500,
+                      marginRight: 10,
+                    }}
+                  >
+                    @{project.handle}
+                  </span>
+                )}
                 <span
                   style={{
-                    marginLeft: 10,
                     color: colors.text.tertiary,
                     fontSize: '0.7rem',
                     fontWeight: 500,
                   }}
                 >
-                  V{terminalVersion}
+                  V{terminalVersion ?? project.cv}
                 </span>
               </div>
             )}
@@ -206,7 +217,7 @@ export default function TrendingProjectCard({
             alignItems: 'center',
           }}
         >
-          {project?.handle} <Loading />
+          {project?.handle ?? ''} <Loading />
         </div>
       )}
     </Link>

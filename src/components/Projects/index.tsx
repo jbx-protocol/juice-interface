@@ -13,13 +13,12 @@ import ProjectCard from 'components/shared/ProjectCard'
 
 import { Link, useHistory, useLocation } from 'react-router-dom'
 
-import { useInfiniteProjectsQuery, useProjectsSearch } from 'hooks/v1/Projects'
-import { V1TerminalVersion } from 'models/v1/terminals'
+import { useInfiniteProjectsQuery, useProjectsSearch } from 'hooks/Projects'
 
 import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 
-import { featureFlagEnabled, FEATURE_FLAGS } from 'utils/featureFlags'
+import { CV } from 'models/cv'
 
 import { layouts } from 'constants/styles/layouts'
 import TrendingProjects from './TrendingProjects'
@@ -73,6 +72,7 @@ export default function Projects() {
   const [orderBy, setOrderBy] = useState<OrderByOption>('totalPaid')
   const [includeV1, setIncludeV1] = useState<boolean>(true)
   const [includeV1_1, setIncludeV1_1] = useState<boolean>(true)
+  const [includeV2, setIncludeV2] = useState<boolean>(true)
   const [showArchived, setShowArchived] = useState<boolean>(false)
 
   const loadMoreContainerRef = useRef<HTMLDivElement>(null)
@@ -81,10 +81,13 @@ export default function Projects() {
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const terminalVersion: V1TerminalVersion | undefined = useMemo(() => {
-    if (includeV1 && !includeV1_1) return '1'
-    if (!includeV1 && includeV1_1) return '1.1'
-  }, [includeV1, includeV1_1])
+  const cv: CV[] | undefined = useMemo(() => {
+    const _cv: CV[] = []
+    if (includeV1) _cv.push('1')
+    if (includeV1_1) _cv.push('1.1')
+    if (includeV2) _cv.push('2')
+    return _cv.length ? _cv : ['1', '1.1', '2']
+  }, [includeV1, includeV1_1, includeV2])
 
   const {
     data: pages,
@@ -97,7 +100,7 @@ export default function Projects() {
     pageSize,
     orderDirection: 'desc',
     state: showArchived ? 'archived' : 'active',
-    terminalVersion,
+    cv,
   })
 
   const { data: searchPages, isLoading: isLoadingSearch } =
@@ -123,7 +126,6 @@ export default function Projects() {
   }, [selectedTab, fetchNextPage, hasNextPage])
 
   const isLoading = isLoadingProjects || isLoadingSearch
-  const isV2Enabled = featureFlagEnabled(FEATURE_FLAGS.ENABLE_V2)
 
   const concatenatedPages = searchText?.length
     ? searchPages
@@ -191,9 +193,11 @@ export default function Projects() {
           {selectedTab === 'all' && !searchText ? (
             <ProjectsFilterAndSort
               includeV1={includeV1}
-              setIncludeV1={setIncludeV1}
               includeV1_1={includeV1_1}
+              includeV2={includeV2}
+              setIncludeV1={setIncludeV1}
               setIncludeV1_1={setIncludeV1_1}
+              setIncludeV2={setIncludeV2}
               showArchived={showArchived}
               setShowArchived={setShowArchived}
               orderBy={orderBy}
@@ -205,6 +209,20 @@ export default function Projects() {
           hidden={!showArchived || selectedTab !== 'all'}
         />
       </div>
+
+      {!!searchText && (
+        <div
+          style={{
+            marginBottom: 20,
+            textAlign: 'center',
+            color: colors.text.secondary,
+          }}
+        >
+          <Trans>
+            <InfoCircleOutlined /> Search results don't include V2 projects yet.
+          </Trans>
+        </div>
+      )}
 
       {selectedTab === 'all' ? (
         <React.Fragment>
@@ -252,24 +270,6 @@ export default function Projects() {
               </div>
             )
           )}
-          {concatenatedPages?.length === 0 &&
-            isV2Enabled &&
-            !isLoadingSearch &&
-            !isLoadingProjects && (
-              <div
-                style={{
-                  textAlign: 'center',
-                  color: colors.text.disabled,
-                  padding: 20,
-                }}
-              >
-                <InfoCircleOutlined />{' '}
-                <Trans>
-                  Projects on Juicebox V2 don't currently appear in these
-                  results.
-                </Trans>
-              </div>
-            )}
         </React.Fragment>
       ) : selectedTab === 'holdings' ? (
         <div style={{ paddingBottom: 50 }}>

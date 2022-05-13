@@ -23,7 +23,7 @@ export default function NewDeployModal({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const projectURL = window.location.origin + useLocation().pathname
+  const projectURL = window.location.origin + '/#' + useLocation().pathname
   const twitterMsg = `Check out my new @juiceboxETH project! ${projectURL}`
 
   const [issueTokenModalVisible, setIssueTokenModalVisible] =

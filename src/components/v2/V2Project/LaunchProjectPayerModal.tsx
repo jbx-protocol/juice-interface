@@ -4,7 +4,7 @@ import { useContext, useState } from 'react'
 import { TransactionReceipt } from '@ethersproject/providers'
 import { TransactorInstance } from 'hooks/Transactor'
 
-import { Checkbox, Collapse, Input, Modal, notification, Switch } from 'antd'
+import { Collapse, Form, Input, Modal, notification, Switch } from 'antd'
 import { JBDiscordLink } from 'components/Landing/QAs'
 import EtherscanLink from 'components/shared/EtherscanLink'
 import CopyTextButton from 'components/shared/CopyTextButton'
@@ -16,10 +16,10 @@ import TooltipLabel from 'components/shared/TooltipLabel'
 import { FormItems } from 'components/shared/formItems'
 import { NetworkContext } from 'contexts/networkContext'
 import { DeployProjectPayerTxArgs } from 'hooks/v2/transactor/DeployProjectPayerTx'
+import { useForm } from 'antd/lib/form/Form'
 
 import { readProvider } from 'constants/readProvider'
 import TransactionModal from '../../shared/TransactionModal'
-import FormItemLabel from '../V2Create/FormItemLabel'
 
 const DEPLOY_EVENT_IDX = 0
 
@@ -33,6 +33,7 @@ const getProjectPayerAddressFromReceipt = (
   const newProjectPayerAddress = txReceipt?.logs[DEPLOY_EVENT_IDX]?.address
   return newProjectPayerAddress
 }
+
 export default function LaunchProjectPayerModal({
   visible,
   onClose,
@@ -52,14 +53,17 @@ export default function LaunchProjectPayerModal({
   const [loadingProjectPayer, setLoadingProjectPayer] = useState<boolean>()
   const [transactionPending, setTransactionPending] = useState<boolean>()
   const [projectPayerAddress, setProjectPayerAddress] = useState<string>()
+  const [activeKey, setActiveKey] = useState<number>()
 
-  const [tokenMintingEnabled, setTokenMintingEnabled] = useState<boolean>(true)
   const [customBeneficiaryEnabled, setCustomBeneficiaryEnabled] =
     useState<boolean>(false)
-  const [customBeneficiaryAddress, setCustomBeneficiaryAddress] =
-    useState<string>()
-  const [customMemo, setCustomMemo] = useState<string>('')
-  const [preferClaimed, setPreferClaimed] = useState<boolean>(true)
+  const [tokenMintingEnabled, setTokenMintingEnabled] = useState<boolean>(true)
+  const [preferClaimed, setPreferClaimed] = useState<boolean>(false)
+
+  const [form] = useForm<{
+    memo: string
+    customBeneficiaryAddress: string
+  }>()
 
   const [confirmedModalVisible, setConfirmedModalVisible] = useState<boolean>()
   // TODO: load project payer and show different thing in this section if the project already has one
@@ -67,97 +71,122 @@ export default function LaunchProjectPayerModal({
 
   const deployProjectPayerTx = useDeployProjectPayerTx()
 
+  const advancedSettingsMargin = '20px'
+  const switchMargin = '20px'
+
   function AdvancedOptionsCollapse() {
     return (
-      <Collapse defaultActiveKey={undefined} accordion>
-        <CollapsePanel header={t`Advanced options`} key={0}>
-          <div>
-            <TooltipLabel
-              label={t`Custom memo`}
-              tip={
-                <Trans>
-                  The memo that will appear in the project's payment feed when
-                  someone pays this address.
-                </Trans>
-              }
-            />
-            <Input
-              placeholder={t`Payment through Frank's payable address`}
-              type="string"
-              autoComplete="off"
-              onChange={e => setCustomMemo(e.target.value)}
-            />
-          </div>
-          <div style={{ display: 'flex' }}>
-            <FormItemLabel>
-              <TooltipLabel
-                label={t`Token minting enabled`}
-                tip={t`Determines whether tokens will be minted when people pay to this address.`}
-              />
-            </FormItemLabel>
-            <Switch
-              onChange={setTokenMintingEnabled}
-              checked={tokenMintingEnabled}
-            />
-          </div>
-          {tokenMintingEnabled ? (
-            <div style={{ display: 'flex' }}>
-              <FormItemLabel>
+      <Collapse style={{ border: 'none' }} activeKey={activeKey}>
+        <CollapsePanel
+          header={
+            <span onClick={() => setActiveKey(activeKey === 0 ? undefined : 0)}>
+              <Trans>Advanced options (optional)</Trans>
+            </span>
+          }
+          key={0}
+          style={{ border: 'none', marginLeft: '-18px' }}
+        >
+          <div
+            style={{ paddingLeft: '24px', marginTop: '-15px' }}
+            onClick={e => e.stopPropagation()}
+          >
+            <Form form={form}>
+              <div>
                 <TooltipLabel
-                  label={t`Custom token beneficiary`}
+                  label={t`Custom memo`}
                   tip={
                     <Trans>
-                      By default, newly minted tokens will go to the wallet who
-                      sends funds to the address. You can enable this to set the
-                      token beneficiary to a custom address.
+                      The onchain memo for each transaction made through the
+                      address. It will appear in the project's payment feed when
+                      someone pays this address.
                     </Trans>
                   }
                 />
-              </FormItemLabel>
-              <Switch
-                onChange={checked => {
-                  setCustomBeneficiaryEnabled(checked)
-                  setCustomBeneficiaryAddress(checked ? userAddress : undefined)
-                }}
-                checked={customBeneficiaryEnabled}
-              />
-            </div>
-          ) : null}
-          {customBeneficiaryEnabled ? (
-            <FormItems.EthAddress
-              name="beneficiary"
-              defaultValue={userAddress}
-              formItemProps={{
-                label: t`Beneficiary address`,
-                extra: t`This address will receive all the tokens minted from paying this address.`,
-              }}
-              onAddressChange={setCustomBeneficiaryAddress}
-            />
-          ) : null}
-          {tokenAddress && tokenAddress !== constants.AddressZero ? (
-            <div style={{ display: 'flex' }}>
-              <FormItemLabel>
+                <Form.Item name="memo">
+                  <Input
+                    placeholder={t`Payment made through payable address`}
+                    type="string"
+                    autoComplete="off"
+                    style={{ marginTop: 5 }}
+                  />
+                </Form.Item>
+              </div>
+              <div
+                style={{ display: 'flex', marginTop: advancedSettingsMargin }}
+              >
                 <TooltipLabel
-                  label={t`Mint tokens as ERC-20`}
-                  tip={
-                    <Trans>
-                      Check this to mint this project's ERC-20 tokens to the
-                      beneficiary's wallet when the payable address receives
-                      funds. Leave unchecked to have the beneficiary's newly
-                      minted token balance tracked by Juicebox, saving gas on
-                      their payment transactions. The beneficiary can always
-                      claim their ERC-20 tokens later.
-                    </Trans>
-                  }
+                  label={t`Token minting enabled`}
+                  tip={t`Determines whether tokens will be minted when people pay to this address.`}
                 />
-              </FormItemLabel>
-              <Checkbox
-                style={{ padding: 20 }}
-                checked={preferClaimed}
-                onChange={e => setPreferClaimed(e.target.checked)}
-              />
-            </div>
-          ) : null}
+                <Switch
+                  onChange={setTokenMintingEnabled}
+                  checked={tokenMintingEnabled}
+                  style={{ marginLeft: switchMargin }}
+                />
+              </div>
+              {tokenMintingEnabled ? (
+                <div
+                  style={{
+                    display: 'flex',
+                    margin: `${advancedSettingsMargin} 0 14px`,
+                  }}
+                >
+                  <TooltipLabel
+                    label={t`Custom token beneficiary`}
+                    tip={
+                      <Trans>
+                        By default, newly minted tokens will go to the wallet
+                        who sends funds to the address. You can enable this to
+                        set the token beneficiary to a custom address.
+                      </Trans>
+                    }
+                  />
+                  <Switch
+                    onChange={checked => {
+                      setCustomBeneficiaryEnabled(checked)
+                    }}
+                    checked={customBeneficiaryEnabled}
+                    style={{ marginLeft: switchMargin }}
+                  />
+                </div>
+              ) : null}
+              {tokenMintingEnabled && customBeneficiaryEnabled ? (
+                <FormItems.EthAddress
+                  name="beneficiary"
+                  defaultValue={userAddress}
+                  onAddressChange={address => {
+                    form.setFieldsValue({
+                      customBeneficiaryAddress: address,
+                    })
+                  }}
+                />
+              ) : null}
+              {tokenAddress && tokenAddress !== constants.AddressZero ? (
+                <div
+                  style={{ display: 'flex', marginTop: advancedSettingsMargin }}
+                >
+                  <TooltipLabel
+                    label={t`Mint tokens as ERC-20`}
+                    tip={
+                      <Trans>
+                        Checking this will mint this project's ERC-20 tokens to
+                        the beneficiary's wallet when they pay to the address,
+                        and cost them more gas for each payment. If left
+                        unchecked, the beneficiary's new token balance will be
+                        tracked by Juicebox when they pay, and they can then
+                        claim their ERC-20 tokens later at any time.
+                      </Trans>
+                    }
+                  />
+                  <Switch
+                    style={{ marginLeft: switchMargin }}
+                    checked={preferClaimed}
+                    onChange={setPreferClaimed}
+                  />
+                </div>
+              ) : null}
+            </Form>
+          </div>
         </CollapsePanel>
       </Collapse>
     )
@@ -170,8 +199,10 @@ export default function LaunchProjectPayerModal({
 
     const txSuccess = await deployProjectPayerTx(
       {
-        customBeneficiaryAddress,
-        customMemo,
+        customBeneficiaryAddress: form.getFieldValue(
+          'customBeneficiaryAddress',
+        ),
+        customMemo: form.getFieldValue('memo'),
         tokenMintingEnabled,
         preferClaimed,
       },
@@ -209,6 +240,7 @@ export default function LaunchProjectPayerModal({
       setLoadingProjectPayer(false)
       setTransactionPending(false)
     }
+    form.resetFields()
   }
 
   return (

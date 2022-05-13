@@ -46,7 +46,12 @@ export function usePayV1ProjectTx(): TransactorInstance<{
         ? contracts.TerminalV1_1
         : contracts.TerminalV1,
       'pay',
-      [projectId.toHexString(), userAddress, note || '', preferUnstaked],
+      [
+        BigNumber.from(projectId).toHexString(),
+        userAddress,
+        note || '',
+        preferUnstaked,
+      ],
       {
         ...txOpts,
         value: value.toHexString(),

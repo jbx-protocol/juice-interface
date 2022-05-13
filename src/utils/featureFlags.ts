@@ -1,18 +1,7 @@
-import { NetworkName } from 'models/network-name'
-
 import { readNetwork } from 'constants/networks'
 
-export const FEATURE_FLAGS = {
-  ENABLE_V2: 'ENABLE_V2',
-}
-
 export const FEATURE_FLAG_DEFAULTS: { [k: string]: { [j: string]: boolean } } =
-  {
-    [FEATURE_FLAGS.ENABLE_V2]: {
-      [NetworkName.rinkeby]: true,
-      [NetworkName.mainnet]: true,
-    },
-  }
+  {}
 
 const featureFlagKey = (baseKey: string) => {
   return `${baseKey}_${readNetwork.name}`

@@ -5,13 +5,11 @@ import FeedbackFormButton from 'components/shared/FeedbackFormButton'
 import Grid from 'components/shared/Grid'
 import Loading from 'components/shared/Loading'
 import ProjectCard from 'components/shared/ProjectCard'
-import V1Create from 'components/v1/V1Create'
 
 import { ThemeContext } from 'contexts/themeContext'
 import { useProjectsQuery } from 'hooks/Projects'
 import { CSSProperties, useContext } from 'react'
 import { Link } from 'react-router-dom'
-import { FEATURE_FLAGS, featureFlagEnabled } from 'utils/featureFlags'
 
 import { ThemeOption } from 'constants/theme/theme-option'
 
@@ -47,12 +45,6 @@ const FourthCol = ({
     <p style={{ marginBottom: 0, marginTop: 5 }}>{children}</p>
   </div>
 )
-
-function scrollToCreate() {
-  document.getElementById('create')?.scrollIntoView({ behavior: 'smooth' })
-}
-
-const v2Enabled = featureFlagEnabled(FEATURE_FLAGS.ENABLE_V2)
 
 export default function Landing() {
   const { theme, forThemeOption } = useContext(ThemeContext)
@@ -169,29 +161,16 @@ export default function Landing() {
 
                 <div className="hide-mobile">
                   <div style={{ display: 'inline-block' }}>
-                    {v2Enabled ? (
-                      <Link
-                        to={'/create'}
-                        onClick={() => {
-                          window.fathom?.trackGoal('IIYVJKNC', 0)
-                        }}
-                      >
-                        <Button type="primary" size="large">
-                          <Trans>Design your project</Trans>
-                        </Button>
-                      </Link>
-                    ) : (
-                      <Button
-                        type="primary"
-                        size="large"
-                        onClick={() => {
-                          window.fathom?.trackGoal('IIYVJKNC', 0)
-                          scrollToCreate()
-                        }}
-                      >
+                    <Link
+                      to={'/create'}
+                      onClick={() => {
+                        window.fathom?.trackGoal('IIYVJKNC', 0)
+                      }}
+                    >
+                      <Button type="primary" size="large">
                         <Trans>Design your project</Trans>
                       </Button>
-                    )}
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -369,20 +348,6 @@ export default function Landing() {
           </Row>
         </div>
       </section>
-
-      {window.innerWidth > 600 && !v2Enabled && (
-        <section
-          id="create"
-          style={{
-            ...section,
-            marginTop: 0,
-            paddingTop: 20,
-            paddingBottom: 40,
-          }}
-        >
-          <V1Create />
-        </section>
-      )}
 
       <section
         style={{

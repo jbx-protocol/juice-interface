@@ -1,5 +1,4 @@
 import { Trans } from '@lingui/macro'
-import V2Switch from 'components/Landing/V2Switch'
 
 import { readNetwork } from 'constants/networks'
 
@@ -20,9 +19,6 @@ export default function V2SupportWarning() {
           missing and there are known bugs.
         </Trans>
       </p>
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <V2Switch />
-      </div>
     </div>
   )
 }

@@ -3,7 +3,6 @@ import { useContext } from 'react'
 import { CSSProperties } from 'react'
 
 import { Languages } from 'constants/languages/language-options'
-import V2Switch from './V2Switch'
 
 export default function Footer() {
   const { colors } = useContext(ThemeContext).theme
@@ -60,9 +59,6 @@ export default function Footer() {
         {link('GitHub', 'https://github.com/jbx-protocol/juice-interface')}
         {link('Twitter', 'https://twitter.com/juiceboxETH')}
         {link('Privacy Policy', '/#/privacy')}
-      </div>
-      <div style={{ display: 'flex', margin: 'auto' }}>
-        <V2Switch labelStyle={{ color: '#fff' }} />
       </div>
     </div>
   )

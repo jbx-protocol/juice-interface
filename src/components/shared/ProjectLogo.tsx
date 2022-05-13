@@ -1,5 +1,5 @@
 import { ThemeContext } from 'contexts/themeContext'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 
 export default function ProjectLogo({
   uri,
@@ -10,6 +10,8 @@ export default function ProjectLogo({
   name: string | undefined
   size?: number
 }) {
+  const [srcLoadError, setSrcLoadError] = useState(false)
+  const validImg = uri && !srcLoadError
   const {
     theme: { colors, radii },
   } = useContext(ThemeContext)
@@ -25,10 +27,10 @@ export default function ProjectLogo({
         height: _size,
         width: _size,
         borderRadius: radii.xl,
-        background: uri ? undefined : colors.background.l1,
+        background: validImg ? undefined : colors.background.l1,
       }}
     >
-      {uri ? (
+      {validImg ? (
         <img
           style={{
             maxHeight: '100%',
@@ -38,6 +40,7 @@ export default function ProjectLogo({
           }}
           src={uri}
           alt={name + ' logo'}
+          onError={() => setSrcLoadError(true)}
         />
       ) : (
         <div

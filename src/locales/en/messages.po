@@ -1084,6 +1084,10 @@ msgstr ""
 msgid "FAQs"
 msgstr ""
 
+#: src/components/shared/inputs/ImageUploader.tsx
+msgid "File must be less than {formattedSize}{unit}"
+msgstr "File must be less than {formattedSize}{unit}"
+
 #: src/components/Landing/QAs.tsx
 msgid "For example, with a bonding curve of 70%, redeeming 10% of the token supply at any given time will claim around 7% of the total overflow."
 msgstr ""
@@ -1957,10 +1961,6 @@ msgstr "Projects can be created with an optional discount rate designed to incen
 #: src/components/Projects/index.tsx
 msgid "Projects on Juicebox"
 msgstr ""
-
-#: src/components/Projects/index.tsx
-msgid "Projects on Juicebox V2 don't currently appear in these results."
-msgstr "Projects on Juicebox V2 don't currently appear in these results."
 
 #: src/components/Projects/MyProjects.tsx
 msgid "Projects that you have created."

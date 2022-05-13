@@ -114,19 +114,11 @@ export default function TrendingProjectCard({
       <div style={cardStyle} className="clickable-border">
         <div style={{ marginRight: 20, display: 'flex', alignItems: 'center' }}>
           <div style={rankStyle}>{rank}</div>
-          {metadata ? (
-            <ProjectLogo
-              uri={metadata.logoUri}
-              name={metadata.name}
-              size={size === 'sm' ? 70 : 110}
-            />
-          ) : (
-            <ProjectLogo
-              uri={undefined}
-              name={undefined}
-              size={size === 'sm' ? 70 : 110}
-            />
-          )}
+          <ProjectLogo
+            uri={metadata?.logoUri}
+            name={metadata?.name}
+            size={size === 'sm' ? 70 : 110}
+          />
         </div>
 
         <div
@@ -149,7 +141,7 @@ export default function TrendingProjectCard({
               {metadata.name}
             </h2>
           ) : (
-            <Skeleton paragraph={false} title={{ width: 120 }} />
+            <Skeleton paragraph={false} title={{ width: 120 }} active />
           )}
 
           {size === 'sm' ? null : (

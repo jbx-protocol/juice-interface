@@ -30,6 +30,8 @@ import NewDeployNotAvailable from 'components/shared/NewDeployNotAvailable'
 
 import { useLocation } from 'react-router-dom'
 
+import { useProjectsQuery } from 'hooks/Projects'
+
 import { layouts } from 'constants/styles/layouts'
 
 import V2Project from '../V2Project'
@@ -48,6 +50,12 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
     error: metadataError,
     isLoading: metadataLoading,
   } = useProjectMetadata(metadataCID)
+
+  const { data: projects } = useProjectsQuery({
+    projectId,
+    keys: ['createdAt'],
+  })
+  const createdAt = projects?.[0].createdAt
 
   const { data: fundingCycleResponse, loading: fundingCycleLoading } =
     useProjectCurrentFundingCycle({
@@ -155,6 +163,7 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
   const project: V2ProjectContextType = {
     cv: '2',
     projectId,
+    createdAt,
     projectMetadata,
     fundingCycle,
     fundingCycleMetadata,

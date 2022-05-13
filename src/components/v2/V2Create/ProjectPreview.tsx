@@ -53,6 +53,8 @@ export default function ProjectPreview({
     projectId: 0,
     projectMetadata,
 
+    createdAt: undefined,
+
     fundingCycle,
     fundingCycleMetadata,
 

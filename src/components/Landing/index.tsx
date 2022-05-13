@@ -21,15 +21,21 @@ import Payments from './Payments'
 import { OverflowVideoLink } from './QAs'
 import TrendingSection from './TrendingSection'
 
-const BigHeader = ({ text }: { text: string }) => {
-  const isMobile = useMobile()
+const BigHeader = ({
+  text,
+  style,
+}: {
+  text: string
+  style?: CSSProperties
+}) => {
   return (
     <h1
       style={{
-        fontSize: !isMobile ? '3.8rem' : '2.3rem',
+        fontSize: '2.4rem',
         fontWeight: 600,
         lineHeight: 1.2,
         margin: 0,
+        ...style,
       }}
     >
       {text}
@@ -54,6 +60,8 @@ const FourthCol = ({
 export default function Landing() {
   const { theme, forThemeOption } = useContext(ThemeContext)
   const colors = theme.colors
+  const isMobile = useMobile()
+
   const totalMaxWidth = 1080
 
   const { data: previewProjects } = useProjectsQuery({
@@ -157,7 +165,10 @@ export default function Landing() {
             >
               <div>
                 <Space direction="vertical" size="large">
-                  <BigHeader text={t`Fund anything. Grow together.`} />
+                  <BigHeader
+                    text={t`Fund anything. Grow together.`}
+                    style={{ fontSize: !isMobile ? '3.8rem' : '2.3rem' }}
+                  />
                   <div
                     style={{
                       marginBottom: '1rem',

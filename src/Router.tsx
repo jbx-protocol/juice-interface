@@ -8,6 +8,7 @@ import V2UserProvider from 'providers/v2/UserProvider'
 import Loading from 'components/shared/Loading'
 import V1CurrencyProvider from 'providers/v1/V1CurrencyProvider'
 import PrivacyPolicy from 'components/PrivacyPolicy'
+import { t } from '@lingui/macro'
 
 const V1Create = lazy(() => import('components/v1/V1Create'))
 const V2Create = lazy(() => import('components/v2/V2Create'))
@@ -15,13 +16,20 @@ const V2DashboardGateway = lazy(
   () => import('components/v2/V2Dashboard/Gateway'),
 )
 
+const pageTitles = (): { [k in string]: string } => {
+  return {
+    '/create': t`Create project`,
+    '/projects': t`Projects`,
+  }
+}
+
 function CatchallRedirect() {
   const route = useParams<{ route: string }>()['route']
   return <Redirect to={'/p/' + route} />
 }
 
 function usePageViews() {
-  let location = useLocation()
+  const location = useLocation()
 
   useEffect(() => {
     window.fathom?.trackPageview({
@@ -30,8 +38,18 @@ function usePageViews() {
   }, [location])
 }
 
+function usePageTitle() {
+  const location = useLocation()
+
+  useEffect(() => {
+    const name = pageTitles()[location.pathname]
+    document.title = name ? `${name} | Juicebox` : 'Juicebox'
+  }, [location])
+}
+
 function JuiceboxSwitch() {
   usePageViews()
+  usePageTitle()
 
   return (
     <Switch>

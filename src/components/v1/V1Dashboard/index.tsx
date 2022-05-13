@@ -97,7 +97,7 @@ export default function V1Dashboard() {
 
   useEffect(() => {
     if (metadata?.name) {
-      document.title = metadata.name
+      document.title = `${metadata.name} | Juicebox`
     } else {
       document.title = 'Juicebox'
     }

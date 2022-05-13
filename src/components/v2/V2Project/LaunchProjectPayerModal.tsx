@@ -1,16 +1,25 @@
 import { t, Trans } from '@lingui/macro'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 
 import { TransactionReceipt } from '@ethersproject/providers'
 import { TransactorInstance } from 'hooks/Transactor'
 
-import { Modal, notification } from 'antd'
+import { Checkbox, Collapse, Input, Modal, notification, Switch } from 'antd'
 import { JBDiscordLink } from 'components/Landing/QAs'
 import EtherscanLink from 'components/shared/EtherscanLink'
 import CopyTextButton from 'components/shared/CopyTextButton'
+import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
+import { V2ProjectContext } from 'contexts/v2/projectContext'
+import * as constants from '@ethersproject/constants'
+
+import TooltipLabel from 'components/shared/TooltipLabel'
+import { FormItems } from 'components/shared/formItems'
+import { NetworkContext } from 'contexts/networkContext'
+import { DeployProjectPayerTxArgs } from 'hooks/v2/transactor/DeployProjectPayerTx'
 
 import { readProvider } from 'constants/readProvider'
 import TransactionModal from '../../shared/TransactionModal'
+import FormItemLabel from '../V2Create/FormItemLabel'
 
 const DEPLOY_EVENT_IDX = 0
 
@@ -32,18 +41,127 @@ export default function LaunchProjectPayerModal({
 }: {
   visible: boolean
   onClose: VoidFunction
-  useDeployProjectPayerTx: () => TransactorInstance<{}> | undefined
+  useDeployProjectPayerTx: () =>
+    | TransactorInstance<DeployProjectPayerTxArgs>
+    | undefined
   onConfirmed?: VoidFunction
 }) {
+  const { userAddress } = useContext(NetworkContext)
+  const { tokenAddress } = useContext(V2ProjectContext)
+
   const [loadingProjectPayer, setLoadingProjectPayer] = useState<boolean>()
   const [transactionPending, setTransactionPending] = useState<boolean>()
   const [projectPayerAddress, setProjectPayerAddress] = useState<string>()
+
+  const [tokenMintingEnabled, setTokenMintingEnabled] = useState<boolean>(true)
+  const [customBeneficiaryEnabled, setCustomBeneficiaryEnabled] =
+    useState<boolean>(false)
+  const [customBeneficiaryAddress, setCustomBeneficiaryAddress] =
+    useState<string>()
+  const [customMemo, setCustomMemo] = useState<string>('')
+  const [preferClaimed, setPreferClaimed] = useState<boolean>(true)
 
   const [confirmedModalVisible, setConfirmedModalVisible] = useState<boolean>()
   // TODO: load project payer and show different thing in this section if the project already has one
   // (Issue: #897)
 
   const deployProjectPayerTx = useDeployProjectPayerTx()
+
+  function AdvancedOptionsCollapse() {
+    return (
+      <Collapse defaultActiveKey={undefined} accordion>
+        <CollapsePanel header={t`Advanced options`} key={0}>
+          <div>
+            <TooltipLabel
+              label={t`Custom memo`}
+              tip={
+                <Trans>
+                  The memo that will appear in the project's payment feed when
+                  someone pays this address.
+                </Trans>
+              }
+            />
+            <Input
+              placeholder={t`Payment through Frank's payable address`}
+              type="string"
+              autoComplete="off"
+              onChange={e => setCustomMemo(e.target.value)}
+            />
+          </div>
+          <div style={{ display: 'flex' }}>
+            <FormItemLabel>
+              <TooltipLabel
+                label={t`Token minting enabled`}
+                tip={t`Determines whether tokens will be minted when people pay to this address.`}
+              />
+            </FormItemLabel>
+            <Switch
+              onChange={setTokenMintingEnabled}
+              checked={tokenMintingEnabled}
+            />
+          </div>
+          {tokenMintingEnabled ? (
+            <div style={{ display: 'flex' }}>
+              <FormItemLabel>
+                <TooltipLabel
+                  label={t`Custom token beneficiary`}
+                  tip={
+                    <Trans>
+                      By default, newly minted tokens will go to the wallet who
+                      sends funds to the address. You can enable this to set the
+                      token beneficiary to a custom address.
+                    </Trans>
+                  }
+                />
+              </FormItemLabel>
+              <Switch
+                onChange={checked => {
+                  setCustomBeneficiaryEnabled(checked)
+                  setCustomBeneficiaryAddress(checked ? userAddress : undefined)
+                }}
+                checked={customBeneficiaryEnabled}
+              />
+            </div>
+          ) : null}
+          {customBeneficiaryEnabled ? (
+            <FormItems.EthAddress
+              name="beneficiary"
+              defaultValue={userAddress}
+              formItemProps={{
+                label: t`Beneficiary address`,
+                extra: t`This address will receive all the tokens minted from paying this address.`,
+              }}
+              onAddressChange={setCustomBeneficiaryAddress}
+            />
+          ) : null}
+          {tokenAddress && tokenAddress !== constants.AddressZero ? (
+            <div style={{ display: 'flex' }}>
+              <FormItemLabel>
+                <TooltipLabel
+                  label={t`Mint tokens as ERC-20`}
+                  tip={
+                    <Trans>
+                      Check this to mint this project's ERC-20 tokens to the
+                      beneficiary's wallet when the payable address receives
+                      funds. Leave unchecked to have the beneficiary's newly
+                      minted token balance tracked by Juicebox, saving gas on
+                      their payment transactions. The beneficiary can always
+                      claim their ERC-20 tokens later.
+                    </Trans>
+                  }
+                />
+              </FormItemLabel>
+              <Checkbox
+                style={{ padding: 20 }}
+                checked={preferClaimed}
+                onChange={e => setPreferClaimed(e.target.checked)}
+              />
+            </div>
+          ) : null}
+        </CollapsePanel>
+      </Collapse>
+    )
+  }
 
   async function deployProjectPayer() {
     if (!deployProjectPayerTx) return
@@ -52,7 +170,10 @@ export default function LaunchProjectPayerModal({
 
     const txSuccess = await deployProjectPayerTx(
       {
-        args: [],
+        customBeneficiaryAddress,
+        customMemo,
+        tokenMintingEnabled,
+        preferClaimed,
       },
       {
         onDone() {
@@ -109,8 +230,8 @@ export default function LaunchProjectPayerModal({
         </p>
         <p>
           <Trans>
-            Tokens minted from payments to this address will belong to the
-            payer. However, if someone pays the project though a custodial
+            Tokens minted from payments to this address will belong to the payer
+            by default. However, if someone pays the project though a custodial
             service platform such as Coinbase,{' '}
             <strong>
               tokens can't be issued to their personal wallets and will be lost
@@ -118,6 +239,7 @@ export default function LaunchProjectPayerModal({
             .
           </Trans>
         </p>
+        <AdvancedOptionsCollapse />
       </TransactionModal>
       <Modal
         visible={confirmedModalVisible}

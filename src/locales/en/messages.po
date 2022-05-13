@@ -298,6 +298,10 @@ msgstr "Address: <0/>"
 msgid "Adjust incentives for paying your project."
 msgstr "Adjust incentives for paying your project."
 
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+msgid "Advanced options"
+msgstr "Advanced options"
+
 #: src/components/Projects/ProjectsTabs.tsx
 msgid "All"
 msgstr "All"
@@ -436,6 +440,7 @@ msgid "Beneficiary"
 msgstr "Beneficiary"
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
 msgid "Beneficiary address"
 msgstr "Beneficiary address"
 
@@ -497,6 +502,10 @@ msgstr "Burn {tokensTextLong}"
 msgid "By default, all unallocated funds can be distributed to the project owner's wallet."
 msgstr "By default, all unallocated funds can be distributed to the project owner's wallet."
 
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+msgid "By default, newly minted tokens will go to the wallet who sends funds to the address. You can enable this to set the token beneficiary to a custom address."
+msgstr "By default, newly minted tokens will go to the wallet who sends funds to the address. You can enable this to set the token beneficiary to a custom address."
+
 #: src/components/v2/V2Create/forms/TokenForm/index.tsx
 msgid "By default, the issuance rate for your project's token is 1,000,000 tokens / 1 ETH. For example, a 1 ETH contribution to your project will return 1,000,000 tokens. You can manipulate the issuance rate with the following configurations."
 msgstr "By default, the issuance rate for your project's token is 1,000,000 tokens / 1 ETH. For example, a 1 ETH contribution to your project will return 1,000,000 tokens. You can manipulate the issuance rate with the following configurations."
@@ -540,6 +549,10 @@ msgstr "Changes will take effect according to the project's custom ballot contra
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "Changes you make will take effect according to your <0>{0}</0> reconfiguration rule (the first funding cycle following <1>{1}</1> from now)."
 msgstr "Changes you make will take effect according to your <0>{0}</0> reconfiguration rule (the first funding cycle following <1>{1}</1> from now)."
+
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+msgid "Check this to mint this project's ERC-20 tokens to the beneficiary's wallet when the payable address receives funds. Leave unchecked to have the beneficiary's newly minted token balance tracked by Juicebox, saving gas on their payment transactions. The beneficiary can always claim their ERC-20 tokens later."
+msgstr "Check this to mint this project's ERC-20 tokens to the beneficiary's wallet when the payable address receives funds. Leave unchecked to have the beneficiary's newly minted token balance tracked by Juicebox, saving gas on their payment transactions. The beneficiary can always claim their ERC-20 tokens later."
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Check this to mint this project's ERC-20 tokens to your wallet. Leave unchecked to have your token balance tracked by Juicebox, saving gas on this transaction. You can always claim your ERC-20 tokens later."
@@ -711,11 +724,16 @@ msgstr "Current owner: {ownerAddress}"
 msgid "Currently worth: <0><1/>{0}</0>"
 msgstr "Currently worth: <0><1/>{0}</0>"
 
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+msgid "Custom memo"
+msgstr "Custom memo"
+
 #: src/components/shared/ReconfigurationStrategy/ReconfigurationStrategySelector.tsx
 #: src/utils/ballot.ts
 msgid "Custom strategy"
 msgstr ""
 
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Custom token beneficiary"
 msgstr "Custom token beneficiary"
@@ -775,6 +793,10 @@ msgstr ""
 #: src/components/shared/Project/FundingCycleDetailsCard.tsx
 msgid "Details"
 msgstr ""
+
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+msgid "Determines whether tokens will be minted when people pay to this address."
+msgstr "Determines whether tokens will be minted when people pay to this address."
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
@@ -1447,6 +1469,10 @@ msgstr "Mint new {tokensLabel} into an account. Only a project's owner, a design
 msgid "Mint project tokens on demand"
 msgstr "Mint project tokens on demand"
 
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+msgid "Mint tokens as ERC-20"
+msgstr "Mint tokens as ERC-20"
+
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Mint tokens to a custom address."
 msgstr "Mint tokens to a custom address."
@@ -1669,6 +1695,10 @@ msgstr ""
 #: src/components/v1/V1Project/V1PayButton.tsx
 msgid "Paying this project is currently disabled."
 msgstr ""
+
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+msgid "Payment through Frank's payable address"
+msgstr "Payment through Frank's payable address"
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
@@ -2387,6 +2417,10 @@ msgstr "The maximum amount of funds allowed to be distributed from the project's
 msgid "The maximum amount of funds that can be distributed from this project in one funding cycle. Funds will be withdrawn in ETH no matter the currency you choose."
 msgstr "The maximum amount of funds that can be distributed from this project in one funding cycle. Funds will be withdrawn in ETH no matter the currency you choose."
 
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+msgid "The memo that will appear in the project's payment feed when someone pays this address."
+msgstr "The memo that will appear in the project's payment feed when someone pays this address."
+
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "The percent this individual receives of the overall {reservedRate}% reserved token allocation"
 msgstr "The percent this individual receives of the overall {reservedRate}% reserved token allocation"
@@ -2459,6 +2493,10 @@ msgstr "This address is an unrecognized strategy contract. Make sure it is corre
 #: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
 msgid "This address will disappear when you close this window. <0>Copy the address and save it now</0>."
 msgstr "This address will disappear when you close this window. <0>Copy the address and save it now</0>."
+
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+msgid "This address will receive all the tokens minted from paying this address."
+msgstr "This address will receive all the tokens minted from paying this address."
 
 #: src/components/shared/Mod.tsx
 #: src/components/v2/shared/SplitItem.tsx
@@ -2545,6 +2583,10 @@ msgstr ""
 msgid "Token minting allows the project owner to mint project tokens at any time."
 msgstr "Token minting allows the project owner to mint project tokens at any time."
 
+#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+msgid "Token minting enabled"
+msgstr "Token minting enabled"
+
 #: src/components/shared/ManageTokensModal.tsx
 msgid "Token minting is only available for V1.1 projects. Token minting can be enabled or disabled by reconfiguring the project's funding cycle."
 msgstr "Token minting is only available for V1.1 projects. Token minting can be enabled or disabled by reconfiguring the project's funding cycle."
@@ -2588,8 +2630,8 @@ msgid "Tokens cannot be claimed because no ERC-20 token has been issued for this
 msgstr "Tokens cannot be claimed because no ERC-20 token has been issued for this project. ERC-20 tokens must be issued by the project owner."
 
 #: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
-msgid "Tokens minted from payments to this address will belong to the payer. However, if someone pays the project though a custodial service platform such as Coinbase, <0>tokens can't be issued to their personal wallets and will be lost</0>."
-msgstr "Tokens minted from payments to this address will belong to the payer. However, if someone pays the project though a custodial service platform such as Coinbase, <0>tokens can't be issued to their personal wallets and will be lost</0>."
+msgid "Tokens minted from payments to this address will belong to the payer by default. However, if someone pays the project though a custodial service platform such as Coinbase, <0>tokens can't be issued to their personal wallets and will be lost</0>."
+msgstr "Tokens minted from payments to this address will belong to the payer by default. However, if someone pays the project though a custodial service platform such as Coinbase, <0>tokens can't be issued to their personal wallets and will be lost</0>."
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "Tokens receiver"

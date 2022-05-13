@@ -17,6 +17,7 @@ import ArchiveV1Project from 'components/v1/V1Project/ArchiveV1Project'
 import { NetworkContext } from 'contexts/networkContext'
 import LaunchProjectPayerButton from 'components/v2/V2Project/LaunchProjectPayerButton'
 import { ThemeContext } from 'contexts/themeContext'
+import { DeployProjectPayerTxArgs } from 'hooks/v2/transactor/DeployProjectPayerTx'
 
 export default function ProjectToolDrawerModal({
   visible,
@@ -50,7 +51,9 @@ export default function ProjectToolDrawerModal({
         cid: string
       }>
     | undefined // Currently undefined for v2
-  useDeployProjectPayerTx: () => TransactorInstance<{}> | undefined // undefined for v1
+  useDeployProjectPayerTx: () =>
+    | TransactorInstance<DeployProjectPayerTxArgs>
+    | undefined // undefined for v1
 }) {
   const { userAddress } = useContext(NetworkContext)
   const {

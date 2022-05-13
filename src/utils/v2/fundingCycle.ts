@@ -1,7 +1,11 @@
 import * as constants from '@ethersproject/constants'
 import { BigNumber } from '@ethersproject/bignumber'
 import { getAddress } from '@ethersproject/address'
-import { V2FundingCycle, V2FundingCycleMetadata } from 'models/v2/fundingCycle'
+import {
+  V2FundingCycle,
+  V2FundingCycleMetadata,
+  V2FundingCycleMetadataGlobal,
+} from 'models/v2/fundingCycle'
 
 import { invertPermyriad } from 'utils/bigNumbers'
 import unsafeFundingCycleProperties from 'utils/unsafeFundingCycleProperties'
@@ -44,8 +48,8 @@ export function getDefaultFundAccessConstraint<T>(
 }
 
 /**
- * | pause pay (1 bit) | ballot redemption rate (16 bits) | redemption rate (16 bits) | reserved rate (16 bits) | version (8 bits)  |
- * |         p         |        bbbbbbbbbbbbbbbb          |    RRRRRRRRRRRRRRRR       |     rrrrrrrrrrrrrrrr    |     VVVVVVVV      |
+ * | flags (1 bit each) | ballot redemption rate (16 bits) | redemption rate (16 bits) | reserved rate (16 bits) |     global (16 bits)    | version (8 bits)  |
+ * |         p          |        bbbbbbbbbbbbbbbb          |    RRRRRRRRRRRRRRRR       |     rrrrrrrrrrrrrrrr    |     00000000000000tt    |     VVVVVVVV      |
  */
 
 const bits16 = 0b1111111111111111
@@ -57,13 +61,31 @@ const bigNumberToBoolean = (val: BigNumber) => Boolean(val.toNumber())
 const parameters: {
   name: keyof V2FundingCycleMetadata
   bits: 0 | 1 | 8 | 16
-  parser?: (val: BigNumber) => string | boolean | BigNumber | number | undefined
+  parser?: (
+    val: BigNumber,
+  ) =>
+    | string
+    | boolean
+    | BigNumber
+    | number
+    | undefined
+    | V2FundingCycleMetadataGlobal
 }[] = [
   {
     name: 'version',
     bits: 8,
     parser: (val: BigNumber) =>
       val.toNumber() as V2FundingCycleMetadata['version'],
+  },
+  {
+    name: 'global',
+    bits: 16,
+    parser: val => {
+      return {
+        allowSetTerminals: bigNumberToBoolean(BigNumber.from(val).shr(1)),
+        allowSetController: bigNumberToBoolean(BigNumber.from(val).shr(2)),
+      }
+    },
   },
   { name: 'reservedRate', bits: 16 },
   { name: 'redemptionRate', bits: 16, parser: invertPermyriad },
@@ -85,16 +107,6 @@ const parameters: {
   },
   {
     name: 'allowControllerMigration',
-    bits: 1,
-    parser: bigNumberToBoolean,
-  },
-  {
-    name: 'allowSetTerminals',
-    bits: 1,
-    parser: bigNumberToBoolean,
-  },
-  {
-    name: 'allowSetController',
     bits: 1,
     parser: bigNumberToBoolean,
   },
@@ -129,7 +141,8 @@ const parameters: {
 export const decodeV2FundingCycleMetadata = (
   packedMetadata: BigNumber,
 ): V2FundingCycleMetadata => {
-  return parameters.reduce((metadata, parameter, i) => {
+  const metadata = parameters.reduce((metadata, parameter, i) => {
+    // 1. Get the bits used by the parameter.
     const bits =
       parameter.bits === 16
         ? bits16
@@ -139,11 +152,13 @@ export const decodeV2FundingCycleMetadata = (
         ? bits1
         : 0
 
+    // 2. Get the amount of bits to shift right by.
     const shiftRightBits =
       i === 0
         ? 0
         : parameters.slice(0, i).reduce((acc, p) => (acc += p.bits), 0)
 
+    // 3. Get the value of the parameter from the bits
     let value
     if (bits === 0) {
       value = packedMetadata.shr(shiftRightBits)
@@ -158,6 +173,8 @@ export const decodeV2FundingCycleMetadata = (
       },
     }
   }, {}) as V2FundingCycleMetadata
+
+  return metadata
 }
 
 /**

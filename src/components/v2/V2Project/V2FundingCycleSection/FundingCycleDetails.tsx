@@ -17,7 +17,10 @@ import TooltipLabel from 'components/shared/TooltipLabel'
 import FundingCycleDetailWarning from 'components/shared/Project/FundingCycleDetailWarning'
 import EtherscanLink from 'components/shared/EtherscanLink'
 
-import { getUnsafeV2FundingCycleProperties } from 'utils/v2/fundingCycle'
+import {
+  decodeV2FundingCycleMetadata,
+  getUnsafeV2FundingCycleProperties,
+} from 'utils/v2/fundingCycle'
 
 import { detailedTimeString } from 'utils/formatTime'
 
@@ -29,6 +32,8 @@ import {
   weightedAmount,
 } from 'utils/v2/math'
 
+import { BigNumber } from '@ethersproject/bignumber'
+
 import { getBallotStrategyByAddress } from 'constants/v2/ballotStrategies/getBallotStrategiesByAddress'
 import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
 import {
@@ -38,24 +43,28 @@ import {
 
 export default function FundingCycleDetails({
   fundingCycle,
+  distributionLimit,
+  distributionLimitCurrency,
 }: {
   fundingCycle: V2FundingCycle | undefined
+  distributionLimit: BigNumber | undefined
+  distributionLimitCurrency: BigNumber | undefined
 }) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const {
-    tokenSymbol,
-    distributionLimit,
-    distributionLimitCurrency,
-    fundingCycleMetadata,
-  } = useContext(V2ProjectContext)
+  const { tokenSymbol } = useContext(V2ProjectContext)
 
   if (!fundingCycle) return null
 
+  const fundingCycleMetadata = decodeV2FundingCycleMetadata(
+    fundingCycle.metadata,
+  )
+
   const formattedDuration = detailedTimeString({
     timeSeconds: fundingCycle.duration.toNumber(),
+    fullWords: true,
   })
   const formattedStartTime = formatDate(fundingCycle.start.mul(1000))
   const formattedEndTime = formatDate(
@@ -121,7 +130,7 @@ export default function FundingCycleDetails({
   const distributionLimitIsInfinite = distributionLimit?.eq(
     MAX_DISTRIBUTION_LIMIT,
   )
-  const distributionLimitIsZero = !distributionLimit || distributionLimit?.eq(0)
+  const distributionLimitIsZero = distributionLimit?.eq(0)
 
   return (
     <div>
@@ -134,9 +143,9 @@ export default function FundingCycleDetails({
         <Descriptions.Item label={<Trans>Distribution limit</Trans>}>
           <span style={{ whiteSpace: 'nowrap' }}>
             {distributionLimitIsInfinite ? (
-              <Trans>Infinite</Trans>
+              <Trans>No limit (infinite)</Trans>
             ) : distributionLimitIsZero ? (
-              <>Zero</>
+              <Trans>Zero</Trans>
             ) : (
               <>
                 <CurrencySymbol

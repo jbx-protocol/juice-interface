@@ -9,6 +9,8 @@ import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 
 import ETHAmount from 'components/shared/currency/ETHAmount'
+import { Project } from 'models/subgraph-entities/vX/project'
+import V2ProjectHandle from 'components/v2/shared/V2ProjectHandle'
 
 export default function Payments() {
   const {
@@ -23,12 +25,26 @@ export default function Payments() {
       'note',
       'timestamp',
       'id',
-      { entity: 'project', keys: ['id'] },
+      { entity: 'project', keys: ['id', 'projectId', 'cv'] },
     ],
     first: 20,
     orderDirection: 'desc',
     orderBy: 'timestamp',
   })
+
+  const ProjectHandle = ({ project }: { project: Partial<Project> }) => {
+    if (!project?.projectId) return null
+
+    return (
+      <div style={{ color: colors.text.action.primary, fontWeight: 500 }}>
+        {project.cv === '2' ? (
+          <V2ProjectHandle projectId={project.projectId} />
+        ) : (
+          <V1ProjectHandle projectId={project.projectId} />
+        )}
+      </div>
+    )
+  }
 
   return (
     <div>
@@ -51,13 +67,8 @@ export default function Payments() {
                   alignItems: 'baseline',
                 }}
               >
-                <div
-                  style={{ color: colors.text.action.primary, fontWeight: 500 }}
-                >
-                  {e.project?.id && (
-                    <V1ProjectHandle projectId={e.project.id} />
-                  )}
-                </div>
+                <ProjectHandle project={e.project} />
+
                 <div
                   style={{ fontSize: '.7rem', color: colors.text.secondary }}
                 >

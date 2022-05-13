@@ -9,7 +9,7 @@ import {
 } from 'components/shared/formItems/formHelpers'
 import { defaultSplit, Split } from 'models/v2/splits'
 import { useContext, useEffect, useLayoutEffect, useState } from 'react'
-import { parseWad } from 'utils/formatNumber'
+import { fromWad, parseWad } from 'utils/formatNumber'
 import {
   getDistributionAmountFromPercentAfterFee,
   getDistributionPercentFromAmount,
@@ -36,7 +36,6 @@ import CurrencySymbol from 'components/shared/CurrencySymbol'
 import * as Moment from 'moment'
 import moment from 'moment'
 import TooltipLabel from 'components/shared/TooltipLabel'
-import { DistributionLimitType } from 'components/v2/V2Create/forms/FundingForm/DistributionLimitTypeSelect'
 
 import { CurrencyName } from 'constants/currency'
 
@@ -44,9 +43,11 @@ export type AddOrEditSplitFormFields = {
   projectId: string
   beneficiary: string
   percent: number
+  lockedUntil: Moment.Moment | undefined | null
 }
 
 type SplitType = 'project' | 'address'
+type DistributionType = 'amount' | 'percent'
 
 // Using both state and a form in this modal. I know it seems over the top,
 // but the state is necessary to link the percent and amount fields, and the form
@@ -54,23 +55,25 @@ type SplitType = 'project' | 'address'
 export default function DistributionSplitModal({
   visible,
   mode,
-  splits,
+  splits, // Locked and editable splits
   onSplitsChanged,
   distributionLimit,
-  distributionLimitType,
-  splitIndex, // Only in the case mode==='Edit'
+  setDistributionLimit,
+  editableSplitIndex, // index in editingSplits list (Only in the case mode==='Edit')
   onClose,
   currencyName,
+  editableSplits,
 }: {
   visible: boolean
   mode: ModalMode // 'Add' or 'Edit' or 'Undefined'
   splits: Split[]
   onSplitsChanged: (splits: Split[]) => void
   distributionLimit: string | undefined
-  distributionLimitType?: DistributionLimitType
-  splitIndex?: number
+  setDistributionLimit: (distributionLimit: string) => void
+  editableSplitIndex?: number
   onClose: VoidFunction
   currencyName: CurrencyName
+  editableSplits: Split[]
 }) {
   const {
     theme: { colors },
@@ -85,8 +88,9 @@ export default function DistributionSplitModal({
   const distributionLimitIsInfinite =
     !distributionLimit || parseWad(distributionLimit).eq(MAX_DISTRIBUTION_LIMIT)
 
-  if (splits.length && splitIndex !== undefined) {
-    split = splits[splitIndex]
+  // If editing, format the lockedUntil and projectId
+  if (editableSplits.length && editableSplitIndex !== undefined) {
+    split = editableSplits[editableSplitIndex]
     initialLockedUntil = split.lockedUntil
       ? Moment.default(split.lockedUntil * 1000)
       : undefined
@@ -99,19 +103,25 @@ export default function DistributionSplitModal({
   const [editingSplitType, setEditingSplitType] = useState<SplitType>(
     initialProjectId ? 'project' : 'address',
   )
+  const [distributionType, setDistributionType] = useState<DistributionType>(
+    distributionLimitIsInfinite ? 'percent' : 'amount',
+  )
   const [projectId, setProjectId] = useState<string | undefined>(
     initialProjectId?.toString(),
   )
   const [beneficiary, setBeneficiary] = useState<string | undefined>(
     split.beneficiary,
   )
+  const [newDistributionLimit, setNewDistributionLimit] = useState<string>()
   const [percent, setPercent] = useState<number | undefined>()
   const [amount, setAmount] = useState<number | undefined>()
   const [lockedUntil, setLockedUntil] = useState<
     Moment.Moment | undefined | null
   >(initialLockedUntil)
 
-  useLayoutEffect(() => form.setFieldsValue({ percent, projectId }))
+  useLayoutEffect(() =>
+    form.setFieldsValue({ percent, projectId, lockedUntil }),
+  )
 
   const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
 
@@ -120,11 +130,17 @@ export default function DistributionSplitModal({
     : undefined
 
   useEffect(() => {
-    if (!splits.length || splitIndex === undefined || !distributionLimit) {
+    if (
+      !editableSplits.length ||
+      editableSplitIndex === undefined ||
+      !distributionLimit
+    ) {
       return
     }
     const percent = parseFloat(
-      formatSplitPercent(BigNumber.from(splits[splitIndex].percent)),
+      formatSplitPercent(
+        BigNumber.from(editableSplits[editableSplitIndex].percent),
+      ),
     )
     const amount = amountFromPercent({
       percent,
@@ -132,13 +148,14 @@ export default function DistributionSplitModal({
     })
     setAmount(amount)
     setPercent(percent)
-  }, [distributionLimit, splits, splitIndex])
+  }, [distributionLimit, editableSplits, editableSplitIndex])
 
   const resetStates = () => {
     setProjectId(undefined)
     setBeneficiary(undefined)
     setPercent(undefined)
     setAmount(undefined)
+    setLockedUntil(undefined)
   }
 
   // Validates new or newly edited split, then adds it to or edits the splits list
@@ -158,18 +175,47 @@ export default function DistributionSplitModal({
       allocator: undefined, // TODO: new v2 feature
     } as Split
 
-    onSplitsChanged(
+    let adjustedSplits: Split[] = editableSplits
+    // If an amount and therefore the distribution limit has been changed,
+    // recalculate all split percents based on newly added split amount
+    if (newDistributionLimit && distributionLimit) {
+      adjustedSplits = []
+      editableSplits.forEach((split: Split) => {
+        const currentAmount = amountFromPercent({
+          percent: split.percent,
+          amount: distributionLimit,
+        })
+        const newPercent = getDistributionPercentFromAmount({
+          amount: currentAmount,
+          distributionLimit: newDistributionLimit,
+        })
+        const adjustedSplit = {
+          beneficiary: split.beneficiary,
+          percent: newPercent,
+          preferClaimed: split.preferClaimed,
+          lockedUntil: split.lockedUntil,
+          projectId: split.projectId,
+          allocator: split.allocator,
+        } as Split
+        console.info('pushing adjusted split: ', adjustedSplit)
+        adjustedSplits?.push(adjustedSplit)
+      })
+      setDistributionLimit(newDistributionLimit)
+    }
+
+    const newSplits =
       mode === 'Edit'
-        ? splits.map((m, i) =>
-            i === splitIndex
+        ? adjustedSplits.map((m, i) =>
+            i === editableSplitIndex
               ? {
                   ...m,
                   ...newSplit,
                 }
               : m,
           )
-        : [...splits, newSplit],
-    )
+        : [...adjustedSplits, newSplit]
+
+    onSplitsChanged(newSplits)
 
     form.resetFields()
     if (mode === 'Add') resetStates()
@@ -178,37 +224,36 @@ export default function DistributionSplitModal({
   }
 
   const onAmountChange = (newAmount: number) => {
-    console.info('distributionLimit: ', distributionLimit)
-    if (distributionLimitIsInfinite) return
-    let newPercent: number
-    if (distributionLimitType !== 'sum') {
-      newPercent = getDistributionPercentFromAmount({
-        amount: newAmount,
-        distributionLimit,
-      })
-    } else {
-      const previousSplitAmount = amountFromPercent({
-        percent: percent ?? 0,
-        amount: distributionLimit,
-      }) // only when reconfiging, not adding
-      const newDistributionLimit = BigNumber.from(
-        sumOfPayoutSplitAmounts({
-          splits,
-          previousDistributionLimit: BigNumber.from(distributionLimit),
-        }) -
-          previousSplitAmount +
-          newAmount,
-      )
-        .toNumber()
-        .toString()
-      console.info('newDistributionLimit: ', newDistributionLimit)
-      newPercent = getDistributionPercentFromAmount({
-        amount: newAmount,
-        // current sum of split amounts - previous split amount + newAmount
-        distributionLimit: newDistributionLimit,
-      })
-      console.info('newPercent: ', newPercent)
-    }
+    if (distributionLimitIsInfinite || !newAmount) return
+
+    const sumOfCurrentSplitAmounts = sumOfPayoutSplitAmounts({
+      splits,
+      distributionLimit: BigNumber.from(distributionLimit),
+    })
+
+    const previousSplitAmount = amountFromPercent({
+      percent: percent ?? 0,
+      amount: distributionLimit,
+    }) // will be 0 when adding split, amount if reconfiging
+
+    const newLimitRounded = (
+      sumOfCurrentSplitAmounts -
+      previousSplitAmount +
+      newAmount
+    ).toFixed()
+
+    console.info('newLimitRounded: ', newLimitRounded)
+
+    const newDistributionLimit = BigNumber.from(newLimitRounded)
+      .toNumber()
+      .toString()
+
+    const newPercent = getDistributionPercentFromAmount({
+      amount: newAmount,
+      // current sum of split amounts - previous split amount + newAmount
+      distributionLimit: newDistributionLimit,
+    })
+    setNewDistributionLimit(newDistributionLimit)
     setAmount(newAmount)
     setPercent(newPercent)
     form.setFieldsValue({ percent: newPercent })
@@ -216,7 +261,18 @@ export default function DistributionSplitModal({
 
   // Validates new payout receiving address
   const validatePayoutAddress = () => {
-    return validateEthAddress(beneficiary ?? '', splits, mode, splitIndex)
+    if (
+      editableSplitIndex !== undefined &&
+      beneficiary === editableSplits[editableSplitIndex].beneficiary
+    ) {
+      return Promise.resolve()
+    }
+    return validateEthAddress(
+      beneficiary ?? '',
+      splits,
+      mode,
+      editableSplitIndex,
+    )
   }
 
   const validateProjectId = () => {
@@ -310,10 +366,32 @@ export default function DistributionSplitModal({
           />
         ) : null}
 
+        <Form.Item label={t`Distribution type`}>
+          {!splits.length ? (
+            <Select
+              value={distributionType}
+              onChange={(newType: DistributionType) => {
+                if (newType === 'percent') {
+                  setDistributionLimit(fromWad(MAX_DISTRIBUTION_LIMIT))
+                } else if (newType === 'amount') {
+                  setDistributionLimit('0')
+                }
+                setDistributionType(newType)
+              }}
+            >
+              <Select.Option value="amount">
+                <Trans>Specific amount</Trans>
+              </Select.Option>
+              <Select.Option value="percent">
+                <Trans>Percent of all funds raised</Trans>
+              </Select.Option>
+            </Select>
+          ) : null}
+        </Form.Item>
+
         {/* Only show amount input if project distribution limit is not infinite */}
-        {!distributionLimitIsInfinite ? (
+        {distributionLimit && distributionType === 'amount' ? (
           <Form.Item
-            label={t`Payout amount`}
             className="ant-form-item-extra-only"
             extra={
               feePercentage && percent && !(percent > 100) ? (
@@ -369,62 +447,39 @@ export default function DistributionSplitModal({
               />
             </div>
           </Form.Item>
-        ) : null}
-        <Form.Item
-          label={
-            distributionLimitType !== 'sum' ? (
-              <TooltipLabel
-                label={<Trans>Percent of distribution limit</Trans>}
-                tip={
-                  distributionLimitIsInfinite ? (
-                    <Trans>
-                      Percentage this payee will receive of all funds raised.
-                    </Trans>
-                  ) : (
-                    <Trans>
-                      Percentage of the distribution limit this payee will
-                      receive.
-                    </Trans>
-                  )
-                }
-              />
-            ) : null
-          }
-        >
-          <div
-            style={{
-              display: distributionLimitType !== 'sum' ? 'flex' : 'none',
-              alignItems: 'center',
-            }}
-          >
-            <span style={{ flex: 1 }}>
-              <NumberSlider
-                onChange={(percent: number | undefined) => {
-                  let newAmount = !distributionLimitIsInfinite
-                    ? amountFromPercent({
-                        percent: percent ?? 0,
-                        amount: distributionLimit,
-                      })
-                    : undefined
-                  setAmount(newAmount)
-                  setPercent(percent)
-                }}
-                step={0.01}
-                defaultValue={0}
-                sliderValue={form.getFieldValue('percent')}
-                suffix="%"
-                name="percent"
-                formItemProps={{
-                  rules: [
-                    distributionLimitType !== 'sum'
-                      ? { validator: validatePayoutPercentage }
-                      : {},
-                  ],
-                }}
-              />
-            </span>
-          </div>
-        </Form.Item>
+        ) : (
+          <Form.Item>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              <span style={{ flex: 1 }}>
+                <NumberSlider
+                  onChange={(percent: number | undefined) => {
+                    let newAmount = !distributionLimitIsInfinite
+                      ? amountFromPercent({
+                          percent: percent ?? 0,
+                          amount: distributionLimit,
+                        })
+                      : undefined
+                    setAmount(newAmount)
+                    setPercent(percent)
+                  }}
+                  step={0.01}
+                  defaultValue={0}
+                  sliderValue={form.getFieldValue('percent')}
+                  suffix="%"
+                  name="percent"
+                  formItemProps={{
+                    rules: [{ validator: validatePayoutPercentage }],
+                  }}
+                />
+              </span>
+            </div>
+          </Form.Item>
+        )}
         <Form.Item
           name="lockedUntil"
           label={t`Lock until`}
@@ -436,7 +491,6 @@ export default function DistributionSplitModal({
           }
         >
           <DatePicker
-            value={lockedUntil}
             disabledDate={disabledDate}
             onChange={lockedUntil => setLockedUntil(lockedUntil)}
           />

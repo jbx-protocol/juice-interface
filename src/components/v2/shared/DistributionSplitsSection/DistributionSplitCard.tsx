@@ -24,18 +24,22 @@ import { CurrencyName } from 'constants/currency'
 
 export default function DistributionSplitCard({
   split,
-  splitIndex,
+  editableSplitIndex,
   splits,
+  editableSplits,
   onSplitsChanged,
   distributionLimit,
+  setDistributionLimit,
   currencyName,
   isLocked,
 }: {
   split: Split
   splits: Split[]
-  splitIndex: number
+  editableSplits: Split[]
+  editableSplitIndex: number
   onSplitsChanged: (splits: Split[]) => void
   distributionLimit: string | undefined
+  setDistributionLimit: (distributionLimit: string) => void
   currencyName: CurrencyName
   isLocked?: boolean
 }) {
@@ -70,7 +74,7 @@ export default function DistributionSplitCard({
           (isLocked ? colors.stroke.disabled : colors.stroke.tertiary),
         borderRadius: radii.md,
       }}
-      key={split.beneficiary ?? '' + splitIndex}
+      key={split.beneficiary ?? '' + editableSplitIndex}
     >
       <Space
         direction="vertical"
@@ -141,7 +145,13 @@ export default function DistributionSplitCard({
 
         <Row gutter={gutter} style={{ width: '100%' }} align="middle">
           <Col span={labelColSpan}>
-            <label>Percentage:</label>
+            <label>
+              {distributionLimitIsInfinite ? (
+                <Trans>Percentage:</Trans>
+              ) : (
+                <Trans>Amount:</Trans>
+              )}
+            </label>
           </Col>
           <Col span={dataColSpan}>
             <div
@@ -159,7 +169,14 @@ export default function DistributionSplitCard({
                   maxWidth: 100,
                 }}
               >
-                <Space size="large">
+                <Space
+                  size="large"
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row-reverse',
+                    justifyContent: 'flex-end',
+                  }}
+                >
                   <span>
                     {formatSplitPercent(BigNumber.from(split.percent))}%
                   </span>
@@ -201,24 +218,28 @@ export default function DistributionSplitCard({
           type="text"
           onClick={e => {
             onSplitsChanged([
-              ...splits.slice(0, splitIndex),
-              ...splits.slice(splitIndex + 1),
+              ...splits.slice(0, editableSplitIndex),
+              ...splits.slice(editableSplitIndex + 1),
             ])
             e.stopPropagation()
           }}
           icon={<CloseCircleOutlined />}
         />
       )}
-      <DistributionSplitModal
-        visible={editSplitModalOpen}
-        onSplitsChanged={onSplitsChanged}
-        mode={'Edit'}
-        splits={splits}
-        distributionLimit={distributionLimit}
-        onClose={() => setEditSplitModalOpen(false)}
-        currencyName={currencyName}
-        splitIndex={splitIndex}
-      />
+      {!isLocked ? (
+        <DistributionSplitModal
+          visible={editSplitModalOpen}
+          onSplitsChanged={onSplitsChanged}
+          editableSplits={editableSplits}
+          mode={'Edit'}
+          splits={splits}
+          distributionLimit={distributionLimit}
+          setDistributionLimit={setDistributionLimit}
+          onClose={() => setEditSplitModalOpen(false)}
+          currencyName={currencyName}
+          editableSplitIndex={editableSplitIndex}
+        />
+      ) : null}
     </div>
   )
 }

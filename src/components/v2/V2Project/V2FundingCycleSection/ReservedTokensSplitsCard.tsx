@@ -150,7 +150,7 @@ export default function ReservedTokensSplitsCard({
       <DistributeReservedTokensModal
         visible={distributeReservedTokensModalVisible}
         onCancel={() => setDistributeReservedTokensModalVisible(false)}
-        onConfirmed={() => setDistributeReservedTokensModalVisible(false)}
+        onConfirmed={() => window.location.reload()}
       />
     </CardSection>
   )

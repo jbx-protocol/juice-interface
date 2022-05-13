@@ -5,6 +5,7 @@ import { FormItems } from 'components/shared/formItems'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { BigNumber } from '@ethersproject/bignumber'
+import { ExclamationCircleOutlined } from '@ant-design/icons'
 
 import { useContext, useState } from 'react'
 import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
@@ -14,6 +15,8 @@ import { JBDiscordLink } from 'components/Landing/QAs'
 
 import ArchiveV1Project from 'components/v1/V1Project/ArchiveV1Project'
 import { NetworkContext } from 'contexts/networkContext'
+import LaunchProjectPayerButton from 'components/v2/V2Project/LaunchProjectPayerButton'
+import { ThemeContext } from 'contexts/themeContext'
 
 export default function ProjectToolDrawerModal({
   visible,
@@ -25,6 +28,7 @@ export default function ProjectToolDrawerModal({
   useTransferUnclaimedTokensTx,
   useAddToBalanceTx,
   useSetProjectUriTx,
+  useDeployProjectPayerTx,
 }: {
   visible?: boolean
   onClose?: VoidFunction
@@ -46,14 +50,20 @@ export default function ProjectToolDrawerModal({
         cid: string
       }>
     | undefined // Currently undefined for v2
+  useDeployProjectPayerTx: () => TransactorInstance<{}> | undefined // undefined for v1
 }) {
   const { userAddress } = useContext(NetworkContext)
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
 
   const transferProjectOwnershipTx = useTransferProjectOwnershipTx()
   const transferUnclaimedTokensTx = useTransferUnclaimedTokensTx()
   const addToBalanceTx = useAddToBalanceTx()
 
   const setUriTx = useSetProjectUriTx()
+
+  const deployProjectPayerTx = useDeployProjectPayerTx()
 
   const [loadingAddToBalance, setLoadingAddToBalance] = useState<boolean>()
   const [loadingTransferTokens, setLoadingTransferTokens] = useState<boolean>()
@@ -166,6 +176,33 @@ export default function ProjectToolDrawerModal({
               </Form>
             </section>
 
+            <Divider />
+          </>
+        )}
+        {deployProjectPayerTx && (
+          <>
+            <section>
+              <h3>
+                <Trans>Create payable address</Trans>
+              </h3>
+              <p>
+                <Trans>
+                  Create an Ethereum address that can be used to pay your
+                  project directly.
+                </Trans>
+              </p>
+              <LaunchProjectPayerButton
+                useDeployProjectPayerTx={useDeployProjectPayerTx}
+              />
+              <p style={{ marginTop: 10, color: colors.text.secondary }}>
+                <ExclamationCircleOutlined />{' '}
+                <Trans>
+                  If you have already deployed a payable address and have lost
+                  it, please contact the Juicebox team through{' '}
+                  <JBDiscordLink>Discord.</JBDiscordLink>
+                </Trans>
+              </p>
+            </section>
             <Divider />
           </>
         )}

@@ -17,9 +17,11 @@ import { tokenSymbolText } from 'utils/tokenSymbolText'
 export default function V2ClaimTokensModal({
   visible,
   onCancel,
+  onConfirmed,
 }: {
   visible?: boolean
   onCancel?: VoidFunction
+  onConfirmed?: VoidFunction
 }) {
   const [loading, setLoading] = useState<boolean>()
   const [transactionPending, setTransactionPending] = useState<boolean>()
@@ -36,7 +38,7 @@ export default function V2ClaimTokensModal({
     setClaimAmount(fromWad(unclaimedBalance))
   }, [unclaimedBalance])
 
-  function unstake() {
+  function executeClaimTokensTx() {
     if (
       !claimAmount ||
       parseWad(claimAmount).eq(0) // Disable claiming 0 tokens
@@ -54,7 +56,7 @@ export default function V2ClaimTokensModal({
         },
         onConfirmed: () => {
           setTransactionPending(false)
-          if (onCancel) onCancel()
+          onConfirmed?.()
         },
       },
     )
@@ -79,7 +81,7 @@ export default function V2ClaimTokensModal({
     <TransactionModal
       title={t`Claim ${tokenTextShort} as ERC-20 tokens`}
       visible={visible}
-      onOk={unstake}
+      onOk={executeClaimTokensTx}
       okText={t`Claim ${tokenTextShort}`}
       confirmLoading={loading}
       transactionPending={transactionPending}

@@ -12,9 +12,7 @@ export default function SwitchHeading({
   onChange?: (checked: boolean) => void
 }>) {
   return (
-    <div
-      style={{ display: 'flex', alignItems: 'center' }}
-    >
+    <div style={{ display: 'flex', alignItems: 'center' }}>
       <Switch
         checked={checked}
         onChange={onChange}

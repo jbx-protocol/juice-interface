@@ -9,11 +9,17 @@ import { CurrencyOption } from 'models/currencyOption'
 
 import { WeightFunction } from 'utils/math'
 
+import { ThemeContext } from 'contexts/themeContext'
+
+import { Trans } from '@lingui/macro'
+
 import PayInputSubText from './PayInputSubText'
 
 export type PayButtonProps = {
   payAmount: string
   payInCurrency: CurrencyOption
+  onError?: (error?: Error) => void
+  disabled?: boolean
 }
 
 export default function PayInputGroup({
@@ -23,21 +29,27 @@ export default function PayInputGroup({
   tokenSymbol,
   tokenAddress,
   weightingFn,
+  disabled,
 }: {
   PayButton: (props: PayButtonProps) => JSX.Element | null
-  reservedRate?: number
-  weight?: BigNumber
-  tokenSymbol?: string
-  tokenAddress?: string
+  reservedRate: number | undefined
+  weight: BigNumber | undefined
+  tokenSymbol: string | undefined
+  tokenAddress: string | undefined
   weightingFn: WeightFunction
+  disabled?: boolean
 }) {
   const {
     currencyMetadata,
     currencies: { USD, ETH },
   } = useContext(CurrencyContext)
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
 
   const [payAmount, setPayAmount] = useState<string>('0')
   const [payInCurrency, setPayInCurrency] = useState<CurrencyOption>(ETH)
+  const [isErrorField, setIsErrorField] = useState<boolean>(false)
 
   const togglePayInCurrency = () => {
     const newPayInCurrency = payInCurrency === ETH ? USD : ETH
@@ -45,42 +57,55 @@ export default function PayInputGroup({
   }
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        width: '100%',
-      }}
-    >
-      <div style={{ flex: 1, marginRight: 10 }}>
-        <FormattedNumberInput
-          placeholder="0"
-          onChange={val => {
-            setPayAmount(val ?? '0')
-          }}
-          value={payAmount}
-          min={0}
-          accessory={
-            <InputAccessoryButton
-              withArrow={true}
-              content={currencyMetadata[payInCurrency ?? ETH].name}
-              onClick={togglePayInCurrency}
-            />
-          }
-        />
-        <PayInputSubText
-          payInCurrency={payInCurrency ?? ETH}
-          amount={payAmount}
-          reservedRate={reservedRate}
-          weight={weight}
-          tokenSymbol={tokenSymbol}
-          tokenAddress={tokenAddress}
-          weightingFn={weightingFn}
-        />
-      </div>
+    <>
+      {isErrorField && (
+        <span style={{ color: colors.text.failure, fontSize: '0.7rem' }}>
+          <Trans>Pay amount must be greater than 0.</Trans>
+        </span>
+      )}
+      <div
+        style={{
+          display: 'flex',
+          width: '100%',
+        }}
+      >
+        <div style={{ flex: 1, marginRight: 10 }}>
+          <FormattedNumberInput
+            placeholder="0"
+            onChange={val => {
+              setIsErrorField(Number(val) <= 0)
+              setPayAmount(val ?? '0')
+            }}
+            value={payAmount}
+            min={0}
+            accessory={
+              <InputAccessoryButton
+                withArrow={true}
+                content={currencyMetadata[payInCurrency ?? ETH].name}
+                onClick={togglePayInCurrency}
+              />
+            }
+          />
+          <PayInputSubText
+            payInCurrency={payInCurrency ?? ETH}
+            amount={payAmount}
+            reservedRate={reservedRate}
+            weight={weight}
+            tokenSymbol={tokenSymbol}
+            tokenAddress={tokenAddress}
+            weightingFn={weightingFn}
+          />
+        </div>
 
-      <div style={{ textAlign: 'center', minWidth: 150 }}>
-        <PayButton payAmount={payAmount} payInCurrency={payInCurrency} />
+        <div style={{ textAlign: 'center', minWidth: 150 }}>
+          <PayButton
+            payAmount={payAmount}
+            payInCurrency={payInCurrency}
+            onError={() => setIsErrorField(true)}
+            disabled={disabled}
+          />
+        </div>
       </div>
-    </div>
+    </>
   )
 }

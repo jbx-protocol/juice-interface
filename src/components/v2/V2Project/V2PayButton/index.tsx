@@ -1,28 +1,23 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
-
 import { useContext, useState } from 'react'
 import { formatWad } from 'utils/formatNumber'
-
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { V2_CURRENCY_USD } from 'utils/v2/currency'
 import PayWarningModal from 'components/shared/PayWarningModal'
 import useWeiConverter from 'hooks/WeiConverter'
-
-import { CurrencyOption } from 'models/currencyOption'
-
 import { V2CurrencyOption } from 'models/v2/currencyOption'
+import { PayButtonProps } from 'components/shared/inputs/Pay/PayInputGroup'
 
 import V2ConfirmPayModal from './V2ConfirmPayModal'
 
 export default function V2PayButton({
   payAmount,
   payInCurrency,
-}: {
-  payAmount: string
-  payInCurrency: CurrencyOption // TODO make the V2CurrencyOption
-}) {
+  onError,
+  disabled,
+}: PayButtonProps) {
   const { projectMetadata, fundingCycleMetadata } = useContext(V2ProjectContext)
 
   const [payModalVisible, setPayModalVisible] = useState<boolean>(false)
@@ -47,7 +42,7 @@ export default function V2PayButton({
     disabledMessage = t`Payments are paused for the current funding cycle.`
   }
 
-  const isPayDisabled = Boolean(disabledMessage)
+  const isPayDisabled = Boolean(disabledMessage) || disabled
 
   return (
     <>
@@ -60,7 +55,9 @@ export default function V2PayButton({
           style={{ width: '100%' }}
           type="primary"
           onClick={() => {
-            if (weiPayAmt?.eq(0)) return
+            if (weiPayAmt?.eq(0)) {
+              return onError?.()
+            }
             setPayWarningModalVisible(true)
           }}
           disabled={isPayDisabled}
@@ -87,7 +84,7 @@ export default function V2PayButton({
       />
       <V2ConfirmPayModal
         visible={payModalVisible}
-        onSuccess={() => setPayModalVisible(false)}
+        onSuccess={() => window.location.reload()}
         onCancel={() => setPayModalVisible(false)}
         weiAmount={weiPayAmt}
       />

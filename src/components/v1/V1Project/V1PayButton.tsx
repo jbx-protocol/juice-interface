@@ -1,31 +1,26 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
-
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useContext, useState } from 'react'
 import { formatWad, fromWad } from 'utils/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 import useWeiConverter from 'hooks/WeiConverter'
 import PayWarningModal from 'components/shared/PayWarningModal'
-import { CurrencyOption } from 'models/currencyOption'
-
 import { V1CurrencyOption } from 'models/v1/currencyOption'
+import { PayButtonProps } from 'components/shared/inputs/Pay/PayInputGroup'
 
 import { readNetwork } from 'constants/networks'
 import { disablePayOverrides } from 'constants/v1/overrides'
 import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
 import { V1_CURRENCY_USD } from 'constants/v1/currency'
-
 import V1ConfirmPayOwnerModal from './modals/V1ConfirmPayOwnerModal'
 
 export default function V1PayButton({
   payAmount,
   payInCurrency,
-}: {
-  payAmount: string
-  payInCurrency: CurrencyOption // TODO make the V1CurrencyOption
-}) {
+  onError,
+}: PayButtonProps) {
   const { projectId, currentFC, metadata, isArchived, terminal } =
     useContext(V1ProjectContext)
 
@@ -52,11 +47,10 @@ export default function V1PayButton({
 
   // Edge case for MoonDAO, upgraded to v1.1 but can't use payIsPaused for now
   const isMoonAndMaxRR =
-    projectId?.eq(V1_PROJECT_IDS.MOON_DAO) && fcMetadata.reservedRate === 200
+    projectId === V1_PROJECT_IDS.MOON_DAO && fcMetadata.reservedRate === 200
 
   const overridePayDisabled =
-    projectId &&
-    disablePayOverrides[readNetwork.name]?.has(projectId.toNumber())
+    projectId && disablePayOverrides[readNetwork.name]?.has(projectId)
 
   if (isArchived) {
     return (
@@ -103,8 +97,14 @@ export default function V1PayButton({
         type="primary"
         onClick={
           parseFloat(fromWad(weiPayAmt))
-            ? () => setPayWarningModalVisible(true)
-            : undefined
+            ? () => {
+                setPayWarningModalVisible(true)
+              }
+            : () => {
+                if (parseFloat(fromWad(weiPayAmt)) === 0) {
+                  return onError?.()
+                }
+              }
         }
       >
         {payButtonText}

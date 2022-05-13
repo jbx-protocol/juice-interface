@@ -15,7 +15,7 @@ export function V2ReconfigureFundingDrawer({
   content: JSX.Element
 }) {
   return (
-    <Drawer visible={visible} {...drawerStyle} onClose={onClose}>
+    <Drawer visible={visible} {...drawerStyle} onClose={onClose} destroyOnClose>
       <h3>{title}</h3>
       {FundingDrawersSubtitles}
       <br />

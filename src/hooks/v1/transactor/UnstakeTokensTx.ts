@@ -22,7 +22,11 @@ export function useUnstakeTokensTx(): TransactorInstance<{
     return transactor(
       contracts.TicketBooth,
       'unstake',
-      [userAddress, projectId.toHexString(), unstakeAmount.toHexString()],
+      [
+        userAddress,
+        BigNumber.from(projectId).toHexString(),
+        unstakeAmount.toHexString(),
+      ],
       txOpts,
     )
   }

@@ -44,8 +44,8 @@ export const RedeemButtonTooltip = ({
 
 type ModalProps = {
   visible?: boolean
-  onOk?: VoidFunction
   onCancel?: VoidFunction
+  onConfirmed?: VoidFunction
 }
 
 export default function ManageTokensModal({
@@ -172,20 +172,18 @@ export default function ManageTokensModal({
 
       <RedeemModal
         visible={redeemModalVisible}
-        onOk={() => {
-          setRedeemModalVisible(false)
-        }}
-        onCancel={() => {
-          setRedeemModalVisible(false)
-        }}
+        onCancel={() => setRedeemModalVisible(false)}
+        onConfirmed={() => window.location.reload()}
       />
       <ClaimTokensModal
         visible={unstakeModalVisible}
         onCancel={() => setUnstakeModalVisible(false)}
+        onConfirmed={() => window.location.reload()}
       />
       <MintModal
         visible={mintModalVisible}
         onCancel={() => setMintModalVisible(false)}
+        onConfirmed={() => window.location.reload()}
       />
     </>
   )

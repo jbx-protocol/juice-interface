@@ -70,7 +70,7 @@ export default function V1ProjectHeaderActions() {
           paddingRight: 10,
         }}
       >
-        <Trans>ID: {projectId.toNumber()}</Trans>{' '}
+        <Trans>ID: {projectId}</Trans>{' '}
         {terminal?.version && (
           <Tooltip
             title={t`Version of the terminal contract used by this project.`}
@@ -128,6 +128,7 @@ export default function V1ProjectHeaderActions() {
         useTransferUnclaimedTokensTx={useTransferTokensTx}
         useAddToBalanceTx={useAddToBalanceTx}
         useSetProjectUriTx={useSetProjectUriTx}
+        useDeployProjectPayerTx={() => undefined}
       />
       <EditProjectModal
         visible={editProjectModalVisible}

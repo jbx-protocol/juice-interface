@@ -7,8 +7,14 @@ export type V2FundingCycleData = {
   ballot: string // hex, contract address
 }
 
+export type V2FundingCycleMetadataGlobal = {
+  allowSetController: boolean
+  allowSetTerminals: boolean
+}
+
 export type V2FundingCycleMetadata = {
   version?: number
+  global: V2FundingCycleMetadataGlobal
   reservedRate: BigNumber
   redemptionRate: BigNumber
   ballotRedemptionRate: BigNumber
@@ -20,8 +26,6 @@ export type V2FundingCycleMetadata = {
   allowChangeToken: boolean
   allowTerminalMigration: boolean
   allowControllerMigration: boolean
-  allowSetTerminals: boolean
-  allowSetController: boolean
   holdFees: boolean
   useTotalOverflowForRedemptions: boolean
   useDataSourceForPay: boolean

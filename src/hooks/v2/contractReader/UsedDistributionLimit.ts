@@ -8,7 +8,7 @@ export default function useUsedDistributionLimit({
   terminal,
   fundingCycleNumber,
 }: {
-  projectId: BigNumber | undefined
+  projectId: number | undefined
   terminal: string | undefined
   fundingCycleNumber: BigNumber | undefined
 }) {

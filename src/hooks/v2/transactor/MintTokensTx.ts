@@ -27,7 +27,7 @@ export function useMintTokensTx(): TransactorInstance<{
     const contract = contracts.JBController
     const functionName = 'mintTokensOf'
     const args = [
-      projectId.toHexString(),
+      projectId,
       value.toHexString(),
       beneficiary,
       memo ?? '',

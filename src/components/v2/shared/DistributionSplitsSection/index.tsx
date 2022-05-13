@@ -1,6 +1,5 @@
 import { Trans } from '@lingui/macro'
 import { Button, Form, Space } from 'antd'
-
 import { ThemeContext } from 'contexts/themeContext'
 import { useCallback, useContext, useState } from 'react'
 
@@ -10,7 +9,6 @@ import { getTotalSplitsPercentage } from 'utils/v2/distributions'
 
 import FormattedAddress from 'components/shared/FormattedAddress'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { DistributionLimitType } from 'components/v2/V2Create/forms/FundingForm/DistributionLimitTypeSelect'
 
 import DistributionSplitCard from './DistributionSplitCard'
 import { CurrencyName } from 'constants/currency'
@@ -18,7 +16,7 @@ import DistributionSplitModal from './DistributionSplitModal'
 
 export default function DistributionSplitsSection({
   distributionLimit,
-  distributionLimitType,
+  setDistributionLimit,
   currencyName,
   editableSplits,
   lockedSplits,
@@ -26,7 +24,7 @@ export default function DistributionSplitsSection({
   formItemProps,
 }: {
   distributionLimit: string | undefined
-  distributionLimitType: DistributionLimitType
+  setDistributionLimit: (distributionLimit: string) => void
   currencyName: CurrencyName
   editableSplits: Split[]
   lockedSplits: Split[]
@@ -50,15 +48,24 @@ export default function DistributionSplitsSection({
         <DistributionSplitCard
           split={split}
           splits={allSplits}
-          splitIndex={index}
+          editableSplits={editableSplits}
+          editableSplitIndex={index}
           distributionLimit={distributionLimit}
+          setDistributionLimit={setDistributionLimit}
           onSplitsChanged={onSplitsChanged}
           currencyName={currencyName}
           isLocked={isLocked}
         />
       )
     },
-    [distributionLimit, onSplitsChanged, allSplits, currencyName],
+    [
+      distributionLimit,
+      onSplitsChanged,
+      allSplits,
+      currencyName,
+      editableSplits,
+      setDistributionLimit,
+    ],
   )
 
   if (!allSplits) return null
@@ -115,7 +122,7 @@ export default function DistributionSplitsSection({
           }}
           block
         >
-          <Trans>Add a split</Trans>
+          <Trans>Add a distribution destination</Trans>
         </Button>
       </Space>
       <DistributionSplitModal
@@ -123,8 +130,9 @@ export default function DistributionSplitsSection({
         onSplitsChanged={onSplitsChanged}
         mode={'Add'}
         splits={allSplits}
+        editableSplits={editableSplits}
         distributionLimit={distributionLimit}
-        distributionLimitType={distributionLimitType}
+        setDistributionLimit={setDistributionLimit}
         currencyName={currencyName}
         onClose={() => setAddSplitModalVisible(false)}
       />

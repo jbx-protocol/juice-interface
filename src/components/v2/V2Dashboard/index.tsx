@@ -4,7 +4,6 @@ import {
 } from 'contexts/v2/projectContext'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import Loading from 'components/shared/Loading'
-import { BigNumber } from '@ethersproject/bignumber'
 import useProjectMetadataContent from 'hooks/v2/contractReader/ProjectMetadataContent'
 import ScrollToTopButton from 'components/shared/ScrollToTopButton'
 import useProjectCurrentFundingCycle from 'hooks/v2/contractReader/ProjectCurrentFundingCycle'
@@ -16,9 +15,7 @@ import useProjectDistributionLimit from 'hooks/v2/contractReader/ProjectDistribu
 import { useMemo } from 'react'
 import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
-import { V2CurrencyName, V2_CURRENCY_ETH } from 'utils/v2/currency'
-
-import { decodeV2FundingCycleMetadata } from 'utils/v2/fundingCycle'
+import { NO_CURRENCY, V2CurrencyName, V2_CURRENCY_ETH } from 'utils/v2/currency'
 
 import useSymbolOfERC20 from 'hooks/v1/contractReader/SymbolOfERC20' // this is version-agnostic, we chillin
 
@@ -42,7 +39,7 @@ import {
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/v2/splits'
 
-export default function V2Dashboard({ projectId }: { projectId: BigNumber }) {
+export default function V2Dashboard({ projectId }: { projectId: number }) {
   const { data: metadataCID, loading: metadataURILoading } =
     useProjectMetadataContent(projectId)
 
@@ -52,15 +49,11 @@ export default function V2Dashboard({ projectId }: { projectId: BigNumber }) {
     isLoading: metadataLoading,
   } = useProjectMetadata(metadataCID)
 
-  // Calls JBFundingCycleStore.currentOf
-  const { data: fundingCycle, loading: fundingCycleLoading } =
+  const { data: fundingCycleResponse, loading: fundingCycleLoading } =
     useProjectCurrentFundingCycle({
       projectId,
     })
-
-  const fundingCycleMetadata = fundingCycle
-    ? decodeV2FundingCycleMetadata(fundingCycle?.metadata)
-    : undefined
+  const [fundingCycle, fundingCycleMetadata] = fundingCycleResponse ?? []
 
   const { data: payoutSplits } = useProjectSplits({
     projectId,
@@ -125,6 +118,14 @@ export default function V2Dashboard({ projectId }: { projectId: BigNumber }) {
   } = useMemo(() => {
     if (ETHBalanceLoading) return { loading: true }
 
+    // if ETH, no conversion necessary
+    if (
+      distributionLimitCurrency?.eq(V2_CURRENCY_ETH) ||
+      distributionLimitCurrency?.eq(NO_CURRENCY)
+    ) {
+      return { data: ETHBalance, loading: false }
+    }
+
     return {
       data: converter.wadToCurrency(
         ETHBalance,
@@ -152,6 +153,7 @@ export default function V2Dashboard({ projectId }: { projectId: BigNumber }) {
   }
 
   const project: V2ProjectContextType = {
+    cv: '2',
     projectId,
     projectMetadata,
     fundingCycle,

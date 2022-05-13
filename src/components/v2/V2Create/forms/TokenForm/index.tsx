@@ -5,7 +5,14 @@ import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
 import ReservedTokensFormItem from 'components/v2/V2Create/forms/TokenForm/ReservedTokensFormItem'
 
-import { CSSProperties, useCallback, useContext, useState } from 'react'
+import {
+  CSSProperties,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import {
   defaultFundingCycleData,
   defaultFundingCycleMetadata,
@@ -96,9 +103,11 @@ function DiscountRateExtra({
 }
 
 export default function TokenForm({
+  onFormUpdated,
   onFinish,
   isCreate,
 }: {
+  onFormUpdated?: (updated: boolean) => void
   onFinish: VoidFunction
   isCreate?: boolean // If the instance of this form is in the create flow (not reconfig)
 }) {
@@ -122,6 +131,28 @@ export default function TokenForm({
   const canSetRedemptionRate = hasDistributionLimit(fundAccessConstraint)
   const canSetDiscountRate = hasFundingDuration(fundingCycleData)
 
+  // Form initial values set by default
+  const initialValues = useMemo(
+    () => ({
+      reservedRate:
+        fundingCycleMetadata.reservedRate ??
+        defaultFundingCycleMetadata.reservedRate,
+      discountRate:
+        (canSetDiscountRate && fundingCycleData?.discountRate) ||
+        defaultFundingCycleData.discountRate,
+      redemptionRate:
+        (canSetRedemptionRate && fundingCycleMetadata?.redemptionRate) ||
+        defaultFundingCycleMetadata.redemptionRate,
+    }),
+    [
+      fundingCycleMetadata.reservedRate,
+      fundingCycleMetadata?.redemptionRate,
+      canSetDiscountRate,
+      fundingCycleData?.discountRate,
+      canSetRedemptionRate,
+    ],
+  )
+
   /**
    * NOTE: these values will all be in their 'native' units,
    * e.g. permyriads, parts-per-billion etc.
@@ -130,16 +161,13 @@ export default function TokenForm({
    * props later on.
    */
   const [reservedRate, setReservedRate] = useState<string>(
-    fundingCycleMetadata?.reservedRate ??
-      defaultFundingCycleMetadata.reservedRate,
+    initialValues.reservedRate,
   )
   const [discountRate, setDiscountRate] = useState<string>(
-    (canSetDiscountRate && fundingCycleData?.discountRate) ||
-      defaultFundingCycleData.discountRate,
+    initialValues.discountRate,
   )
   const [redemptionRate, setRedemptionRate] = useState<string>(
-    (canSetRedemptionRate && fundingCycleMetadata?.redemptionRate) ||
-      defaultFundingCycleMetadata.redemptionRate,
+    initialValues.redemptionRate,
   )
 
   const [discountRateChecked, setDiscountRateChecked] = useState<boolean>(
@@ -181,6 +209,14 @@ export default function TokenForm({
     redemptionRate,
   ])
 
+  useEffect(() => {
+    const hasFormUpdated =
+      initialValues.reservedRate !== reservedRate ||
+      initialValues.discountRate !== discountRate ||
+      initialValues.redemptionRate !== redemptionRate
+    onFormUpdated?.(hasFormUpdated)
+  })
+
   const defaultValueStyle: CSSProperties = {
     color: colors.text.tertiary,
     marginLeft: 15,
@@ -204,10 +240,10 @@ export default function TokenForm({
         {isCreate && (
           <TabDescription>
             <Trans>
-              By default, the issuance rate for your project's token is
-              1,000,000 tokens / 1 ETH. For example, a 1 ETH contribution to
-              your project will return 1,000,000 tokens. You can manipulate the
-              issuance rate with the following configurations.
+              By default, the issuance rate for your project's token during
+              funding cycle #1 is 1,000,000 tokens / 1 ETH. For example, a 1 ETH
+              contribution to your project will return 1,000,000 tokens. You can
+              manipulate the issuance rate with the following configurations.
             </Trans>
           </TabDescription>
         )}

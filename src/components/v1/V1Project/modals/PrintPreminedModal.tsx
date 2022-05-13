@@ -15,9 +15,11 @@ import { V1_CURRENCY_ETH } from 'constants/v1/currency'
 export default function PrintPreminedModal({
   visible,
   onCancel,
+  onConfirmed,
 }: {
   visible?: boolean
   onCancel?: VoidFunction
+  onConfirmed?: VoidFunction
 }) {
   const { tokenSymbol, tokenAddress, terminal } = useContext(V1ProjectContext)
   const printTokensTx = usePrintTokensTx()
@@ -50,7 +52,7 @@ export default function PrintPreminedModal({
         onConfirmed: () => {
           form.resetFields()
           setValue('0')
-          if (onCancel) onCancel()
+          onConfirmed?.()
         },
         onDone: () => {
           setLoading(false)

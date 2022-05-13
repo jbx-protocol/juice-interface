@@ -25,7 +25,7 @@ export function useRedeemRate({
   const currentOverflow = useContractReader<BigNumber>({
     contract: terminal?.name,
     functionName: 'currentOverflowOf',
-    args: projectId ? [projectId.toHexString()] : null,
+    args: projectId ? [BigNumber.from(projectId).toHexString()] : null,
     valueDidChange: bigNumbersDiff,
   })
 
@@ -42,14 +42,14 @@ export function useRedeemRate({
   const totalSupply = useContractReader<BigNumber>({
     contract: V1ContractName.TicketBooth,
     functionName: 'totalSupplyOf',
-    args: projectId ? [projectId?.toHexString()] : null,
+    args: projectId ? [BigNumber.from(projectId).toHexString()] : null,
     valueDidChange: bigNumbersDiff,
   })?.add(reservedTicketBalance ? reservedTicketBalance : BigNumber.from(0))
 
   const currentBallotState = useContractReader<V1BallotState>({
     contract: V1ContractName.FundingCycles,
     functionName: 'currentBallotStateOf',
-    args: projectId ? [projectId.toHexString()] : null,
+    args: projectId ? [BigNumber.from(projectId).toHexString()] : null,
   })
 
   return useMemo(() => {

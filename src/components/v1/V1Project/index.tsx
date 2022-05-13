@@ -38,6 +38,7 @@ export default function V1Project({
     isArchived,
     tokenSymbol,
     tokenAddress,
+    isPreviewMode,
   } = useContext(V1ProjectContext)
 
   const fcMetadata = decodeFundingCycleMetadata(currentFC?.metadata)
@@ -89,10 +90,11 @@ export default function V1Project({
 
           <FundingCycles showCurrentDetail={showCurrentDetail} />
         </Col>
-
-        <Col xs={24} md={column ? 24 : 12} style={{ marginTop: gutter }}>
-          <ProjectActivity />
-        </Col>
+        {!isPreviewMode ? (
+          <Col xs={24} md={column ? 24 : 12} style={{ marginTop: gutter }}>
+            <ProjectActivity />
+          </Col>
+        ) : null}
       </Row>
     </div>
   )

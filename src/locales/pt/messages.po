@@ -1967,10 +1967,6 @@ msgstr "Os projetos podem ser criados com uma taxa de desconto opcional com intu
 msgid "Projects on Juicebox"
 msgstr "Projetos no Juicebox"
 
-#: src/components/Projects/index.tsx
-msgid "Projects on Juicebox V2 don't currently appear in these results."
-msgstr ""
-
 #: src/components/Projects/MyProjects.tsx
 msgid "Projects that you have created."
 msgstr ""

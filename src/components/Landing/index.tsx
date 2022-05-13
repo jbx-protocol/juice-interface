@@ -182,9 +182,9 @@ export default function Landing() {
                       }}
                     >
                       <Trans>
-                        Juicebox is the world's largest decentralized funding
-                        platform. Light enough for a group of friends, powerful
-                        enough for a global network of anons.
+                        The world's largest decentralized funding platform.
+                        Light enough for a group of friends, powerful enough for
+                        a global network of anons.
                       </Trans>
                     </div>
 

@@ -2,6 +2,8 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
 import { CSSProperties } from 'react'
 
+import { Button } from 'antd'
+
 import { Languages } from 'constants/languages/language-options'
 
 export default function Footer() {
@@ -14,7 +16,7 @@ export default function Footer() {
     marginBottom: 30,
   }
 
-  const link = (text: string, link?: string) => (
+  const link = (text: string, link: string) => (
     <a
       style={{
         color: colors.text.action.primary,
@@ -29,9 +31,9 @@ export default function Footer() {
 
   // Renders language links
   const languageLink = (lang: string) => (
-    <span key={lang} onClick={() => setLanguage(lang)}>
-      {link(Languages[lang].long)}
-    </span>
+    <Button key={lang} onClick={() => setLanguage(lang)} type="link">
+      {Languages[lang].long}
+    </Button>
   )
 
   // Sets the new language with localStorage and reloads the page

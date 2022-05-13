@@ -106,37 +106,40 @@ export default function Landing() {
           key={i}
           size="middle"
         >
-          <img src="/assets/bolt.png" style={{ height: 24 }} alt="⚡️" />
+          <img src="/assets/bolt.svg" alt="⚡️" />
           {data}
         </Space>
       ))}
     </div>
   )
 
-  const CallToAction = () => (
-    <div style={{ display: 'flex' }}>
-      <div className="hide-mobile">
-        <div style={{ display: 'inline-block', marginRight: '1rem' }}>
-          <Link
-            to={'/create'}
-            onClick={() => {
-              window.fathom?.trackGoal('IIYVJKNC', 0)
-            }}
-          >
-            <Button type="primary" size="large">
-              <Trans>Launch your project</Trans>
-            </Button>
-          </Link>
-        </div>
-      </div>
+  const CallToAction = () => {
+    const isMobile = useMobile()
 
-      <Link to={'/projects'}>
-        <Button size="large">
+    return (
+      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+        <Button
+          type="primary"
+          size="large"
+          block={isMobile}
+          href={'/#/create'}
+          onClick={() => {
+            window.fathom?.trackGoal('IIYVJKNC', 0)
+          }}
+          style={{
+            marginRight: isMobile ? 0 : '0.8rem',
+            marginBottom: isMobile ? '0.8rem' : 0,
+          }}
+        >
+          <Trans>Launch your project</Trans>
+        </Button>
+
+        <Button size="large" block={isMobile} href="/#/projects">
           <Trans>Explore projects</Trans>
         </Button>
-      </Link>
-    </div>
-  )
+      </div>
+    )
+  }
 
   return (
     <div>
@@ -198,6 +201,7 @@ export default function Landing() {
                   })
                 }
                 alt="Chill banana drinking juice"
+                loading="lazy"
               />
             </Col>
           </Row>
@@ -298,6 +302,7 @@ export default function Landing() {
                 }}
                 src="/assets/pina.png"
                 alt="Pinepple geek artist holding a paintbrush"
+                loading="lazy"
               />
             </Col>
             <Col xs={24} sm={13}>
@@ -394,9 +399,10 @@ export default function Landing() {
 
             <Col xs={24} md={10}>
               <img
-                style={{ maxWidth: '100%' }}
+                style={{ maxWidth: 420 }}
                 src="/assets/blueberry-ol.png"
                 alt="Sexy blueberry with bright pink lipstick spraying a can of spraypaint"
+                loading="lazy"
               />
             </Col>
           </Row>
@@ -451,6 +457,7 @@ export default function Landing() {
             })
           }
           alt="Powerlifting orange hitting an olympic deadlift"
+          loading="lazy"
         />
       </div>
 

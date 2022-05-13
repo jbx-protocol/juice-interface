@@ -24,8 +24,6 @@ export default function ProjectLogo({
         alignItems: 'center',
         justifyContent: 'center',
         overflow: 'hidden',
-        height: _size,
-        width: _size,
         borderRadius: radii.xl,
         background: validImg ? undefined : colors.background.l1,
       }}
@@ -33,10 +31,8 @@ export default function ProjectLogo({
       {validImg ? (
         <img
           style={{
-            maxHeight: '100%',
-            minWidth: '100%',
-            objectFit: 'cover',
-            objectPosition: 'center',
+            height: _size,
+            width: _size,
           }}
           src={uri}
           alt={name + ' logo'}

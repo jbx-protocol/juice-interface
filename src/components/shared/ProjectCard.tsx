@@ -114,15 +114,11 @@ export default function ProjectCard({
     >
       <div style={cardStyle} className="clickable-border">
         <div style={{ marginRight: 20 }}>
-          {metadata ? (
-            <ProjectLogo
-              uri={metadata.logoUri}
-              name={metadata.name}
-              size={110}
-            />
-          ) : (
-            <ProjectLogo uri={undefined} name={undefined} size={110} />
-          )}
+          <ProjectLogo
+            uri={metadata?.logoUri}
+            name={metadata?.name}
+            size={110}
+          />
         </div>
 
         <div
@@ -145,7 +141,7 @@ export default function ProjectCard({
               {metadata.name}
             </h2>
           ) : (
-            <Skeleton paragraph={false} title={{ width: 120 }} />
+            <Skeleton paragraph={false} title={{ width: 120 }} active />
           )}
 
           <div>

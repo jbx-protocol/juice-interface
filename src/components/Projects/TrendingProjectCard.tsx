@@ -13,6 +13,8 @@ import { getTerminalVersion } from 'utils/v1/terminals'
 
 import { Link } from 'react-router-dom'
 
+import { Skeleton } from 'antd'
+
 import { SECONDS_IN_DAY } from 'constants/numbers'
 
 export default function TrendingProjectCard({
@@ -95,7 +97,7 @@ export default function TrendingProjectCard({
 
   const paymentCount = project.trendingPaymentsCount
 
-  return project ? (
+  return (
     <Link
       style={{
         borderRadius: radii.lg,
@@ -109,26 +111,24 @@ export default function TrendingProjectCard({
           : `/p/${project?.handle}`
       }
     >
-      {metadata ? (
-        <div style={cardStyle} className="clickable-border">
-          <div
-            style={{ marginRight: 20, display: 'flex', alignItems: 'center' }}
-          >
-            <div style={rankStyle}>{rank}</div>
-            <ProjectLogo
-              uri={metadata.logoUri}
-              name={metadata.name}
-              size={size === 'sm' ? 70 : 110}
-            />
-          </div>
+      <div style={cardStyle} className="clickable-border">
+        <div style={{ marginRight: 20, display: 'flex', alignItems: 'center' }}>
+          <div style={rankStyle}>{rank}</div>
+          <ProjectLogo
+            uri={metadata?.logoUri}
+            name={metadata?.name}
+            size={size === 'sm' ? 70 : 110}
+          />
+        </div>
 
-          <div
-            style={{
-              flex: 1,
-              minWidth: 0,
-              fontWeight: 400,
-            }}
-          >
+        <div
+          style={{
+            flex: 1,
+            minWidth: 0,
+            fontWeight: 400,
+          }}
+        >
+          {metadata ? (
             <h2
               style={{
                 color: colors.text.primary,
@@ -140,88 +140,79 @@ export default function TrendingProjectCard({
             >
               {metadata.name}
             </h2>
+          ) : (
+            <Skeleton paragraph={false} title={{ width: 120 }} active />
+          )}
 
-            {size === 'sm' ? null : (
-              <div>
-                {project.handle && (
-                  <span
-                    style={{
-                      color: colors.text.primary,
-                      fontWeight: 500,
-                      marginRight: 10,
-                    }}
-                  >
-                    @{project.handle}
-                  </span>
-                )}
+          {size === 'sm' ? null : (
+            <div>
+              {project.handle && (
                 <span
                   style={{
-                    color: colors.text.tertiary,
-                    fontSize: '0.7rem',
+                    color: colors.text.primary,
                     fontWeight: 500,
+                    marginRight: 10,
                   }}
                 >
-                  V{terminalVersion ?? project.cv}
+                  @{project.handle}
                 </span>
-              </div>
-            )}
-
-            <div
-              style={{
-                color: colors.text.primary,
-                display: 'flex',
-                flexWrap: 'wrap',
-                width: '100%',
-              }}
-            >
+              )}
               <span
                 style={{
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  alignItems: 'baseline',
+                  color: colors.text.tertiary,
+                  fontSize: '0.7rem',
+                  fontWeight: 500,
                 }}
               >
-                <span style={{ fontWeight: 600, marginTop: 3 }}>
-                  <ETHAmount
-                    amount={project.trendingVolume}
-                    precision={precision}
-                  />{' '}
-                </span>
-                <span style={{ fontWeight: 400, color: colors.text.secondary }}>
-                  <Trans>last {trendingWindowDays} days</Trans>{' '}
-                </span>
-                <span style={{ fontWeight: 600, color: colors.text.header }}>
-                  {percentGainText && <>{percentGainText}</>}
-                </span>
+                V{terminalVersion ?? project.cv}
               </span>
             </div>
+          )}
 
-            <div
+          <div
+            style={{
+              color: colors.text.primary,
+              display: 'flex',
+              flexWrap: 'wrap',
+              width: '100%',
+            }}
+          >
+            <span
               style={{
-                fontWeight: 400,
-                color: colors.text.secondary,
-                fontSize: 13,
-                marginTop: 2,
+                display: 'flex',
+                flexWrap: 'wrap',
+                alignItems: 'baseline',
               }}
             >
-              <Plural value={paymentCount} one="# payment" other="# payments" />
-            </div>
+              <span style={{ fontWeight: 600, marginTop: 3 }}>
+                <ETHAmount
+                  amount={project.trendingVolume}
+                  precision={precision}
+                />{' '}
+              </span>
+              <span style={{ fontWeight: 400, color: colors.text.secondary }}>
+                <Trans>last {trendingWindowDays} days</Trans>{' '}
+              </span>
+              <span style={{ fontWeight: 600, color: colors.text.header }}>
+                {percentGainText && <>{percentGainText}</>}
+              </span>
+            </span>
+          </div>
+
+          <div
+            style={{
+              fontWeight: 400,
+              color: colors.text.secondary,
+              fontSize: 13,
+              marginTop: 2,
+            }}
+          >
+            <Plural value={paymentCount} one="# payment" other="# payments" />
           </div>
         </div>
-      ) : (
-        <div
-          style={{
-            display: 'flex',
-            flex: 1,
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
-          {project?.handle ?? ''} <Loading />
-        </div>
-      )}
+
+        {!metadata && <Loading />}
+      </div>
     </Link>
-  ) : (
-    <Loading />
   )
 }

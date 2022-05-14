@@ -396,8 +396,6 @@ msgstr "Any treasury funds within the distribution limit can be paid out to dest
 #: src/components/shared/ArchiveProject/index.tsx
 #: src/components/shared/ArchiveProject/index.tsx
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
-#: src/components/v2/V2Project/ArchiveV2Project.tsx
 msgid "Archive project"
 msgstr "Archive project"
 
@@ -1082,7 +1080,7 @@ msgstr ""
 msgid "FAQs"
 msgstr ""
 
-#: src/components/v2/V2Project/ArchiveV2Project.tsx
+#: src/components/shared/ArchiveProject/index.tsx
 #: src/components/shared/ArchiveProject/index.tsx
 msgid "Failed to update project metadata"
 msgstr "Failed to update project metadata"
@@ -2724,8 +2722,7 @@ msgstr "Trending"
 msgid "Twitter"
 msgstr ""
 
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
-#: src/components/v2/V2Project/ArchiveV2Project.tsx
+#: src/components/shared/ArchiveProject/index.tsx
 #: src/components/shared/ArchiveProject/index.tsx
 msgid "Unarchive project"
 msgstr "Unarchive project"

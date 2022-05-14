@@ -401,8 +401,6 @@ msgstr ""
 #: src/components/shared/ArchiveProject/index.tsx
 #: src/components/shared/ArchiveProject/index.tsx
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
-#: src/components/v2/V2Project/ArchiveV2Project.tsx
 msgid "Archive project"
 msgstr "Archivar proyecto"
 
@@ -651,7 +649,7 @@ msgstr ""
 msgid "Connect your wallet to see your projects."
 msgstr ""
 
-#: src/components/v2/V2Project/ArchiveV2Project.tsx
+#: src/components/shared/ArchiveProject/index.tsx
 #: src/components/shared/ArchiveProject/index.tsx
 msgid "Connected wallet not authorized"
 msgstr ""
@@ -1087,8 +1085,9 @@ msgstr "Preguntas frecuentes"
 msgid "FAQs"
 msgstr "Preguntas frecuentes"
 
-#: src/components/v2/V2Project/ArchiveV2Project.tsx
 #: src/components/shared/ArchiveProject/index.tsx
+#: src/components/shared/ArchiveProject/index.tsx
+msgid "Failed to update project metadata"
 msgstr ""
 
 #: src/components/shared/inputs/ImageUploader.tsx
@@ -2728,8 +2727,7 @@ msgstr "Tendencias"
 msgid "Twitter"
 msgstr "Twitter"
 
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
-#: src/components/v2/V2Project/ArchiveV2Project.tsx
+#: src/components/shared/ArchiveProject/index.tsx
 #: src/components/shared/ArchiveProject/index.tsx
 msgid "Unarchive project"
 msgstr "Desarchivar proyecto"

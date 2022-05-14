@@ -38,6 +38,7 @@ msgstr "({realTokenAllocationPercent}% de todos os tokens recentemente criados).
 msgid "0% fee"
 msgstr "0% de taxa"
 
+#: src/components/shared/VolumeChart/index.tsx
 #: src/components/v1/V1Project/BalanceTimeline.tsx
 msgid "1 year"
 msgstr "1 ano"
@@ -55,6 +56,7 @@ msgstr "100% overflow"
 msgid "2. Funding cycle"
 msgstr ""
 
+#: src/components/shared/VolumeChart/index.tsx
 #: src/components/v1/V1Project/BalanceTimeline.tsx
 msgid "24 hours"
 msgstr "24 horas"
@@ -68,10 +70,12 @@ msgstr "3 dias de atraso"
 msgid "3. Review and deploy"
 msgstr ""
 
+#: src/components/shared/VolumeChart/index.tsx
 #: src/components/v1/V1Project/BalanceTimeline.tsx
 msgid "30 days"
 msgstr "30 dias"
 
+#: src/components/shared/VolumeChart/index.tsx
 #: src/components/v1/V1Project/BalanceTimeline.tsx
 msgid "7 days"
 msgstr "7 dias"
@@ -80,6 +84,7 @@ msgstr "7 dias"
 msgid "7-day delay"
 msgstr "7 dias de atraso"
 
+#: src/components/shared/VolumeChart/index.tsx
 #: src/components/v1/V1Project/BalanceTimeline.tsx
 msgid "90 days"
 msgstr "90 dias"
@@ -1290,6 +1295,7 @@ msgstr "Se está interessado em criar um projeto, mas ainda está confuso sobre 
 msgid "If you're unsure if you need to claim, you probably don't."
 msgstr "Caso tenha dúvidas se precisa reivindicar seus tokens, você provavelmente não deveria fazer isso."
 
+#: src/components/shared/VolumeChart/index.tsx
 #: src/components/v1/V1Project/BalanceTimeline.tsx
 #: src/components/v1/V1Project/Paid.tsx
 msgid "In Juicebox"
@@ -2797,6 +2803,7 @@ msgstr ""
 msgid "Version of the terminal contract used by this project."
 msgstr "Versão do contrato de terminal utilizado por este projeto."
 
+#: src/components/shared/VolumeChart/index.tsx
 #: src/components/v1/V1Project/BalanceTimeline.tsx
 #: src/components/v1/V1Project/BalanceTimeline.tsx
 #: src/components/v1/V1Project/Paid.tsx
@@ -3095,6 +3102,7 @@ msgstr "juiceboxETH"
 msgid "last {trendingWindowDays} days"
 msgstr "últimos {trendingWindowDays} dias"
 
+#: src/components/shared/VolumeChart/index.tsx
 #: src/components/v1/V1Project/BalanceTimeline.tsx
 msgid "loading"
 msgstr "carregando"

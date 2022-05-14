@@ -38,6 +38,7 @@ msgstr "（{realTokenAllocationPercent}% 新铸造的代币）。"
 msgid "0% fee"
 msgstr "0% 费率"
 
+#: src/components/shared/VolumeChart/index.tsx
 #: src/components/v1/V1Project/BalanceTimeline.tsx
 msgid "1 year"
 msgstr "1 年"
@@ -55,6 +56,7 @@ msgstr "100% 溢出"
 msgid "2. Funding cycle"
 msgstr ""
 
+#: src/components/shared/VolumeChart/index.tsx
 #: src/components/v1/V1Project/BalanceTimeline.tsx
 msgid "24 hours"
 msgstr "24 小时"
@@ -68,10 +70,12 @@ msgstr "延迟三天生效"
 msgid "3. Review and deploy"
 msgstr ""
 
+#: src/components/shared/VolumeChart/index.tsx
 #: src/components/v1/V1Project/BalanceTimeline.tsx
 msgid "30 days"
 msgstr "30 天"
 
+#: src/components/shared/VolumeChart/index.tsx
 #: src/components/v1/V1Project/BalanceTimeline.tsx
 msgid "7 days"
 msgstr "7 天"
@@ -80,6 +84,7 @@ msgstr "7 天"
 msgid "7-day delay"
 msgstr "延迟七天生效"
 
+#: src/components/shared/VolumeChart/index.tsx
 #: src/components/v1/V1Project/BalanceTimeline.tsx
 msgid "90 days"
 msgstr "90 天"
@@ -1290,6 +1295,7 @@ msgstr "如果你对创建一个项目感兴趣，却不知道该如何开始，
 msgid "If you're unsure if you need to claim, you probably don't."
 msgstr "如果你不确定你是否需要领取，那么你或许不需要。"
 
+#: src/components/shared/VolumeChart/index.tsx
 #: src/components/v1/V1Project/BalanceTimeline.tsx
 #: src/components/v1/V1Project/Paid.tsx
 msgid "In Juicebox"
@@ -2797,6 +2803,7 @@ msgstr ""
 msgid "Version of the terminal contract used by this project."
 msgstr "当前项目所使用的 Terminal 版本。"
 
+#: src/components/shared/VolumeChart/index.tsx
 #: src/components/v1/V1Project/BalanceTimeline.tsx
 #: src/components/v1/V1Project/BalanceTimeline.tsx
 #: src/components/v1/V1Project/Paid.tsx
@@ -3095,6 +3102,7 @@ msgstr "juiceboxETH"
 msgid "last {trendingWindowDays} days"
 msgstr "最近 {trendingWindowDays} 天"
 
+#: src/components/shared/VolumeChart/index.tsx
 #: src/components/v1/V1Project/BalanceTimeline.tsx
 msgid "loading"
 msgstr "加载中"

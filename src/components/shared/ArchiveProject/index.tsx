@@ -7,8 +7,6 @@ import { ProjectMetadataV4 } from 'models/project-metadata'
 import { useContext, useState } from 'react'
 import { uploadProjectMetadata } from 'utils/ipfs'
 
-import { BigNumber } from '@ethersproject/bignumber'
-
 import { emitErrorNotification } from './emitErrorNotification'
 import { postGitHubIssueForArchive } from './postGitHubIssueForArchive'
 
@@ -22,7 +20,7 @@ export default function ArchiveProject({
 }: {
   storeCidTx: TransactorInstance<{ cid: string }>
   metadata: ProjectMetadataV4 | undefined
-  projectId: BigNumber | undefined
+  projectId: number | undefined
   owner: string | undefined
   handle?: string | undefined // Used on V1 projects
   canTakePaymentsWhenArchived?: boolean

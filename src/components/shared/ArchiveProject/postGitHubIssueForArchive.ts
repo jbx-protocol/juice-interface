@@ -2,8 +2,6 @@ import axios from 'axios'
 
 import { ProjectMetadataV4 } from 'models/project-metadata'
 
-import { BigNumber } from '@ethersproject/bignumber'
-
 import { readNetwork } from 'constants/networks'
 
 export const postGitHubIssueForArchive = ({
@@ -13,7 +11,7 @@ export const postGitHubIssueForArchive = ({
   handle,
 }: {
   archived: boolean
-  projectId: BigNumber | undefined
+  projectId: number | undefined
   metadata: ProjectMetadataV4 | undefined
   handle: string | undefined
 }) =>

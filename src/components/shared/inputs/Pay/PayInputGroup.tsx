@@ -67,9 +67,11 @@ export default function PayInputGroup({
         style={{
           display: 'flex',
           width: '100%',
+          flexWrap: 'wrap',
+          gap: 10,
         }}
       >
-        <div style={{ flex: 1, marginRight: 10 }}>
+        <div style={{ flex: 3, minWidth: '50%' }}>
           <FormattedNumberInput
             placeholder="0"
             onChange={val => {
@@ -97,14 +99,12 @@ export default function PayInputGroup({
           />
         </div>
 
-        <div style={{ textAlign: 'center', minWidth: 150 }}>
-          <PayButton
-            payAmount={payAmount}
-            payInCurrency={payInCurrency}
-            onError={() => setIsErrorField(true)}
-            disabled={disabled}
-          />
-        </div>
+        <PayButton
+          payAmount={payAmount}
+          payInCurrency={payInCurrency}
+          onError={() => setIsErrorField(true)}
+          disabled={disabled}
+        />
       </div>
     </>
   )

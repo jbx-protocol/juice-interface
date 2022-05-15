@@ -237,6 +237,7 @@ export default function DistributionSplitCard({
           setDistributionLimit={setDistributionLimit}
           onClose={() => setEditSplitModalOpen(false)}
           currencyName={currencyName}
+          onCurrencyChange={undefined}
           editableSplitIndex={editableSplitIndex}
         />
       ) : null}

@@ -30,7 +30,11 @@ import { SerializedV2FundAccessConstraint } from 'utils/v2/serializers'
 import { sanitizeSplit } from 'utils/v2/splits'
 
 import { getDefaultFundAccessConstraint } from 'utils/v2/fundingCycle'
-import { V2CurrencyName, V2_CURRENCY_ETH } from 'utils/v2/currency'
+import {
+  getV2CurrencyOption,
+  V2CurrencyName,
+  V2_CURRENCY_ETH,
+} from 'utils/v2/currency'
 
 import ExternalLink from 'components/shared/ExternalLink'
 
@@ -90,6 +94,14 @@ export default function FundingForm({
 
   const [fundingForm] = Form.useForm<FundingFormFields>()
 
+  // Load redux state (will be empty in create flow)
+  const { fundAccessConstraints, fundingCycleData, payoutGroupedSplits } =
+    useAppSelector(state => state.editingV2Project)
+  const fundAccessConstraint =
+    getDefaultFundAccessConstraint<SerializedV2FundAccessConstraint>(
+      fundAccessConstraints,
+    )
+
   const [splits, setSplits] = useState<Split[]>([])
   // Must differentiate between splits loaded from redux and
   // ones just added to be able to still edit splits you've
@@ -98,7 +110,7 @@ export default function FundingForm({
 
   const [distributionLimit, setDistributionLimit] = useState<
     string | undefined
-  >()
+  >(fundAccessConstraint?.distributionLimit ?? '0')
 
   const [distributionLimitCurrency, setDistributionLimitCurrency] =
     useState<V2CurrencyOption>(V2_CURRENCY_ETH)
@@ -108,14 +120,6 @@ export default function FundingForm({
   const feeFormatted = ETHPaymentTerminalFee
     ? formatFee(ETHPaymentTerminalFee)
     : undefined
-
-  // Load redux state (will be empty in create flow)
-  const { fundAccessConstraints, fundingCycleData, payoutGroupedSplits } =
-    useAppSelector(state => state.editingV2Project)
-  const fundAccessConstraint =
-    getDefaultFundAccessConstraint<SerializedV2FundAccessConstraint>(
-      fundAccessConstraints,
-    )
 
   // Form initial values set by default
   const initialValues = useMemo(
@@ -412,7 +416,7 @@ export default function FundingForm({
         <p>
           <Trans>
             All treasury funds outside of what you pre-program for distribution
-            is called <strong>overflow</strong>. Overlow can be claimed by your
+            is called <strong>overflow</strong>. Overflow can be claimed by your
             project's token holders by redeeming their tokens.{' '}
             <ExternalLink href={helpPagePath('protocol/learn/topics/overflow')}>
               Learn more
@@ -475,6 +479,9 @@ export default function FundingForm({
           distributionLimit={distributionLimit}
           setDistributionLimit={setDistributionLimit}
           currencyName={V2CurrencyName(distributionLimitCurrency) ?? 'ETH'}
+          onCurrencyChange={currencyName =>
+            setDistributionLimitCurrency(getV2CurrencyOption(currencyName))
+          }
           editableSplits={editingSplits}
           lockedSplits={lockedSplits}
           onSplitsChanged={newSplits => {

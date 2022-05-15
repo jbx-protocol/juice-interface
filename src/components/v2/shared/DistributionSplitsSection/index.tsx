@@ -1,14 +1,9 @@
 import { Trans } from '@lingui/macro'
 import { Button, Form, Space } from 'antd'
-import { ThemeContext } from 'contexts/themeContext'
-import { useCallback, useContext, useState } from 'react'
+import { useCallback, useState } from 'react'
 
 import { Split } from 'models/v2/splits'
 import { FormItemExt } from 'components/shared/formItems/formItemExt'
-import { getTotalSplitsPercentage } from 'utils/v2/distributions'
-
-import FormattedAddress from 'components/shared/FormattedAddress'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import DistributionSplitCard from './DistributionSplitCard'
 import { CurrencyName } from 'constants/currency'
@@ -18,6 +13,7 @@ export default function DistributionSplitsSection({
   distributionLimit,
   setDistributionLimit,
   currencyName,
+  onCurrencyChange,
   editableSplits,
   lockedSplits,
   onSplitsChanged,
@@ -26,17 +22,13 @@ export default function DistributionSplitsSection({
   distributionLimit: string | undefined
   setDistributionLimit: (distributionLimit: string) => void
   currencyName: CurrencyName
+  onCurrencyChange: (currencyName: CurrencyName) => void
   editableSplits: Split[]
   lockedSplits: Split[]
   onSplitsChanged: (splits: Split[]) => void
 } & FormItemExt) {
   const [addSplitModalVisible, setAddSplitModalVisible] =
     useState<boolean>(false)
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
-  const { projectOwnerAddress } = useContext(V2ProjectContext)
 
   const allSplits = lockedSplits.concat(editableSplits)
 
@@ -70,8 +62,6 @@ export default function DistributionSplitsSection({
 
   if (!allSplits) return null
 
-  const total = getTotalSplitsPercentage(allSplits)
-
   return (
     <Form.Item
       {...formItemProps}
@@ -92,29 +82,6 @@ export default function DistributionSplitsSection({
             )}
           </Space>
         ) : null}
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            color: colors.text.secondary,
-          }}
-        >
-          <div
-            style={{
-              color: total > 100 ? colors.text.warn : colors.text.secondary,
-            }}
-          >
-            <Trans>Total: {total.toFixed(2)}%</Trans>
-          </div>
-          <div>
-            {projectOwnerAddress ? (
-              <Trans>
-                {(100 - total).toFixed(2)}% to{' '}
-                <FormattedAddress address={projectOwnerAddress} />
-              </Trans>
-            ) : null}
-          </div>
-        </div>
         <Button
           type="dashed"
           onClick={() => {
@@ -134,6 +101,7 @@ export default function DistributionSplitsSection({
         distributionLimit={distributionLimit}
         setDistributionLimit={setDistributionLimit}
         currencyName={currencyName}
+        onCurrencyChange={onCurrencyChange}
         onClose={() => setAddSplitModalVisible(false)}
       />
     </Form.Item>

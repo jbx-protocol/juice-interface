@@ -11,7 +11,6 @@ import { defaultSplit, Split } from 'models/v2/splits'
 import { useContext, useEffect, useLayoutEffect, useState } from 'react'
 import { fromWad, parseWad } from 'utils/formatNumber'
 import {
-  getDistributionAmountFromPercentAfterFee,
   getDistributionPercentFromAmount,
   sumOfPayoutSplitAmounts,
 } from 'utils/v2/distributions'
@@ -36,6 +35,7 @@ import CurrencySymbol from 'components/shared/CurrencySymbol'
 import * as Moment from 'moment'
 import moment from 'moment'
 import TooltipLabel from 'components/shared/TooltipLabel'
+import CurrencySwitch from 'components/shared/CurrencySwitch'
 
 import { CurrencyName } from 'constants/currency'
 
@@ -62,6 +62,7 @@ export default function DistributionSplitModal({
   editableSplitIndex, // index in editingSplits list (Only in the case mode==='Edit')
   onClose,
   currencyName,
+  onCurrencyChange,
   editableSplits,
 }: {
   visible: boolean
@@ -73,6 +74,7 @@ export default function DistributionSplitModal({
   editableSplitIndex?: number
   onClose: VoidFunction
   currencyName: CurrencyName
+  onCurrencyChange?: (currencyName: CurrencyName) => void
   editableSplits: Split[]
 }) {
   const {
@@ -88,8 +90,10 @@ export default function DistributionSplitModal({
   const distributionLimitIsInfinite =
     !distributionLimit || parseWad(distributionLimit).eq(MAX_DISTRIBUTION_LIMIT)
 
+  const isFirstSplit = editableSplits.length === 0
+
   // If editing, format the lockedUntil and projectId
-  if (editableSplits.length && editableSplitIndex !== undefined) {
+  if (!isFirstSplit && editableSplitIndex !== undefined) {
     split = editableSplits[editableSplitIndex]
     initialLockedUntil = split.lockedUntil
       ? Moment.default(split.lockedUntil * 1000)
@@ -114,7 +118,18 @@ export default function DistributionSplitModal({
   )
   const [newDistributionLimit, setNewDistributionLimit] = useState<string>()
   const [percent, setPercent] = useState<number | undefined>()
-  const [amount, setAmount] = useState<number | undefined>()
+  const [amount, setAmount] = useState<number | undefined>(
+    !distributionLimitIsInfinite
+      ? parseFloat(
+          (
+            amountFromPercent({
+              percent: split.percent,
+              amount: distributionLimit,
+            }) / 10000000
+          ).toFixed(4),
+        )
+      : undefined,
+  )
   const [lockedUntil, setLockedUntil] = useState<
     Moment.Moment | undefined | null
   >(initialLockedUntil)
@@ -131,7 +146,7 @@ export default function DistributionSplitModal({
 
   useEffect(() => {
     if (
-      !editableSplits.length ||
+      !isFirstSplit ||
       editableSplitIndex === undefined ||
       !distributionLimit
     ) {
@@ -148,7 +163,7 @@ export default function DistributionSplitModal({
     })
     setAmount(amount)
     setPercent(percent)
-  }, [distributionLimit, editableSplits, editableSplitIndex])
+  }, [distributionLimit, editableSplits, editableSplitIndex, isFirstSplit])
 
   const resetStates = () => {
     setProjectId(undefined)
@@ -242,8 +257,6 @@ export default function DistributionSplitModal({
       newAmount
     ).toFixed()
 
-    console.info('newLimitRounded: ', newLimitRounded)
-
     const newDistributionLimit = BigNumber.from(newLimitRounded)
       .toNumber()
       .toString()
@@ -290,6 +303,29 @@ export default function DistributionSplitModal({
   // Cannot select days before today or today with lockedUntil
   const disabledDate = (current: moment.Moment) =>
     current && current < moment().endOf('day')
+
+  const amountSubFee = amount
+    ? amount - (amount * parseFloat(feePercentage ?? '0')) / 100
+    : undefined
+
+  function AfterFeeMessage() {
+    return amount && amount > 0 ? (
+      <TooltipLabel
+        label={
+          <Trans>
+            <CurrencySymbol currency={currencyName} />
+            {amountSubFee} after {feePercentage}% JBX membership fee
+          </Trans>
+        }
+        tip={
+          <Trans>
+            Payouts to Ethereum addresses incur a {feePercentage}% fee. Your
+            project will receive JBX in return at the current issuance rate.
+          </Trans>
+        }
+      />
+    ) : null
+  }
 
   return (
     <Modal
@@ -398,26 +434,7 @@ export default function DistributionSplitModal({
                 <>
                   {editingSplitType === 'address' ? (
                     <div>
-                      <TooltipLabel
-                        label={
-                          <Trans>
-                            <CurrencySymbol currency={currencyName} />
-                            {getDistributionAmountFromPercentAfterFee({
-                              percent: percent,
-                              distributionLimit,
-                              feePercentage,
-                            })}{' '}
-                            after {feePercentage}% JBX membership fee
-                          </Trans>
-                        }
-                        tip={
-                          <Trans>
-                            Payouts to Ethereum addresses incur a{' '}
-                            {feePercentage}% fee. Your project will receive JBX
-                            in return at the current issuance rate.
-                          </Trans>
-                        }
-                      />
+                      <AfterFeeMessage />
                     </div>
                   ) : (
                     <Trans>
@@ -443,7 +460,16 @@ export default function DistributionSplitModal({
                 formItemProps={{
                   rules: [{ validator: validatePayoutPercentage }],
                 }}
-                accessory={<InputAccessoryButton content={currencyName} />}
+                accessory={
+                  isFirstSplit && onCurrencyChange ? (
+                    <CurrencySwitch
+                      onCurrencyChange={onCurrencyChange}
+                      currency={currencyName}
+                    />
+                  ) : (
+                    <InputAccessoryButton content={currencyName} />
+                  )
+                }
               />
             </div>
           </Form.Item>

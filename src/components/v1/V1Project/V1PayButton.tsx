@@ -93,7 +93,7 @@ export default function V1PayButton({
   return (
     <>
       <Button
-        style={{ width: '100%' }}
+        style={{ flex: 1 }}
         type="primary"
         onClick={
           parseFloat(fromWad(weiPayAmt))

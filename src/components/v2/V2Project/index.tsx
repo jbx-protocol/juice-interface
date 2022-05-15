@@ -38,6 +38,7 @@ export default function V2Project({
     isPreviewMode,
     tokenSymbol,
     tokenAddress,
+    cv,
   } = useContext(V2ProjectContext)
 
   // Checks URL to see if user was just directed from project deploy
@@ -96,6 +97,7 @@ export default function V2Project({
               style={{ height: 240 }}
               createdAt={createdAt}
               projectId={projectId}
+              cv={cv ?? '2'}
             />
             <V2ManageTokensSection />
             <V2FundingCycleSection expandCard={expandFundingCycleCard} />

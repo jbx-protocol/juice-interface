@@ -40,6 +40,7 @@ export default function V1Project({
     tokenSymbol,
     tokenAddress,
     isPreviewMode,
+    cv,
   } = useContext(V1ProjectContext)
 
   const fcMetadata = decodeFundingCycleMetadata(currentFC?.metadata)
@@ -84,6 +85,7 @@ export default function V1Project({
                   style={{ height: 240 }}
                   projectId={projectId}
                   createdAt={createdAt}
+                  cv={cv ?? '1'}
                 />
               </Suspense>
             </div>

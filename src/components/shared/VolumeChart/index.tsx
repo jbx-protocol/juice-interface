@@ -6,7 +6,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import EthDater from 'ethereum-block-by-date'
 import { Project } from 'models/subgraph-entities/vX/project'
 import moment from 'moment'
-import {
+import React, {
   CSSProperties,
   SVGProps,
   useContext,
@@ -24,7 +24,7 @@ import {
   YAxis,
 } from 'recharts'
 import { fromWad } from 'utils/formatNumber'
-import { querySubgraph } from 'utils/graph'
+import { querySubgraph, WhereConfig } from 'utils/graph'
 
 import { readProvider } from 'constants/readProvider'
 
@@ -33,6 +33,8 @@ import { SECONDS_IN_DAY } from 'constants/numbers'
 const now = moment.now() - 5 * 60 * 1000 // 5 min ago
 
 const daysToMillis = (days: number) => days * SECONDS_IN_DAY * 1000
+
+const epochToEpochMs = (epoch: number) => epoch * 1000
 
 type Duration = 1 | 7 | 30 | 90 | 365
 type EventRef = {
@@ -44,21 +46,46 @@ type EventRef = {
 type BlockRef = { block: number | null; timestamp: number }
 type ShowGraph = 'volume' | 'balance'
 
+const useDuration = (
+  createdAt: number | undefined,
+): [
+  Duration | undefined,
+  React.Dispatch<React.SetStateAction<Duration | undefined>>,
+] => {
+  const [duration, setDuration] = useState<Duration>()
+
+  useEffect(() => {
+    if (!createdAt) return
+    const createdAtMs = epochToEpochMs(createdAt)
+    if (createdAtMs > now - daysToMillis(1)) {
+      setDuration(1)
+    } else if (createdAtMs > now - daysToMillis(7)) {
+      setDuration(7)
+    } else {
+      setDuration(30)
+    }
+  }, [createdAt])
+
+  return [duration, setDuration]
+}
+
 export default function VolumeChart({
   style: { height },
   createdAt,
   projectId,
+  cv,
 }: {
   style: { height: number }
   createdAt: number | undefined
   projectId: number | undefined
+  cv: string
 }) {
   const [events, setEvents] = useState<EventRef[]>([])
   const [blockRefs, setBlockRefs] = useState<BlockRef[]>([])
   const [loading, setLoading] = useState<boolean>()
   const [domain, setDomain] = useState<[number, number]>()
-  const [duration, setDuration] = useState<Duration>()
   const [showGraph, setShowGraph] = useState<ShowGraph>('volume')
+  const [duration, setDuration] = useDuration(createdAt)
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -67,18 +94,6 @@ export default function VolumeChart({
     duration
       ? moment(timestamp * 1000).format(duration > 1 ? 'M/DD' : 'h:mma')
       : undefined
-
-  useEffect(() => {
-    if (!createdAt) return
-
-    if (createdAt * 1000 > now - daysToMillis(1)) {
-      setDuration(1)
-    } else if (createdAt * 1000 > now - daysToMillis(7)) {
-      setDuration(7)
-    } else {
-      setDuration(30)
-    }
-  }, [createdAt])
 
   // Get references to timestamp of blocks in interval
   useEffect(() => {
@@ -150,23 +165,25 @@ export default function VolumeChart({
       }
 
       // Query balance of project for interval blocks
-      for (let i = 0; i < blockRefs.length; i++) {
-        const blockRef = blockRefs[i]
+      blockRefs.forEach(blockRef => {
+        let whereOpts: WhereConfig<'project'>[] = []
+        if (projectId) {
+          whereOpts.push({ key: 'projectId', value: projectId })
+        }
+        if (cv) {
+          whereOpts.push({ key: 'cv', value: cv })
+        }
+
+        // For block == null, don't specify block param
+        const block =
+          blockRef.block !== null ? { block: { number: blockRef.block } } : {}
 
         promises.push(
           querySubgraph({
             entity: 'project',
             keys: queryKeys,
-            // For block == null, don't specify block param
-            ...(blockRef.block !== null
-              ? { block: { number: blockRef.block } }
-              : {}),
-            where: projectId
-              ? {
-                  key: 'projectId',
-                  value: projectId,
-                }
-              : undefined,
+            ...block,
+            where: whereOpts,
           }).then(projects => {
             if (!projects.length) return
 
@@ -175,31 +192,32 @@ export default function VolumeChart({
             const project = projects[0]
 
             if (!project) return
+            projects.forEach(project => {
+              switch (showGraph) {
+                case 'volume':
+                  value = parseFloat(
+                    parseFloat(fromWad(project.totalPaid)).toFixed(4),
+                  )
+                  break
+                case 'balance':
+                  value = parseFloat(
+                    parseFloat(fromWad(project.currentBalance)).toFixed(4),
+                  )
+                  break
+              }
 
-            switch (showGraph) {
-              case 'volume':
-                value = parseFloat(
-                  parseFloat(fromWad(project.totalPaid)).toFixed(4),
-                )
-                break
-              case 'balance':
-                value = parseFloat(
-                  parseFloat(fromWad(project.currentBalance)).toFixed(4),
-                )
-                break
-            }
-
-            if (value !== undefined) {
-              newEvents.push({
-                timestamp: blockRef.timestamp,
-                value,
-              })
-            }
+              if (value !== undefined) {
+                newEvents.push({
+                  timestamp: blockRef.timestamp,
+                  value,
+                })
+              }
+            })
           }),
         )
-      }
+      })
 
-      await Promise.all(promises)
+      await Promise.allSettled(promises)
 
       // Calculate domain for graph based on floor/ceiling balances
       newEvents.forEach(r => {
@@ -264,13 +282,12 @@ export default function VolumeChart({
           return e
         }),
       )
-
       setLoading(false)
     }
 
     setEvents([])
     loadEvents()
-  }, [blockRefs, duration, projectId, showGraph])
+  }, [blockRefs, cv, duration, projectId, showGraph])
 
   const buttonStyle: CSSProperties = {
     fontSize: '0.7rem',

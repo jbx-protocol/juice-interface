@@ -178,6 +178,7 @@ export type WhereConfig<E extends EntityKey> = {
 
 export type BlockConfig = {
   number?: number
+  number_gte?: number
   hash?: string
 }
 
@@ -250,6 +251,8 @@ export const formatGraphQuery = <E extends EntityKey, K extends EntityKeys<E>>(
       addArg('block', `{ number: ${opts.block.number} }`)
     } else if (opts.block.hash) {
       addArg('block', `{ hash: ${opts.block.hash} }`)
+    } else if (opts.block.number_gte) {
+      addArg('block', `{ number_gte: ${opts.block.number_gte} }`)
     }
   }
   addArg(

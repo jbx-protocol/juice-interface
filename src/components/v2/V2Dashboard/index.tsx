@@ -54,6 +54,7 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
   const { data: projects } = useProjectsQuery({
     projectId,
     keys: ['createdAt'],
+    cv: ['2'],
   })
   const createdAt = projects?.[0].createdAt
 

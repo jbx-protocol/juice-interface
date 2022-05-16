@@ -34,7 +34,6 @@ msgid "0% fee"
 msgstr "0% fee"
 
 #: src/components/shared/VolumeChart/index.tsx
-#: src/components/v1/V1Project/BalanceTimeline.tsx
 msgid "1 year"
 msgstr "1 year"
 
@@ -52,7 +51,6 @@ msgid "2. Funding cycle"
 msgstr "2. Funding cycle"
 
 #: src/components/shared/VolumeChart/index.tsx
-#: src/components/v1/V1Project/BalanceTimeline.tsx
 msgid "24 hours"
 msgstr "24 hours"
 
@@ -66,12 +64,10 @@ msgid "3. Review and deploy"
 msgstr "3. Review and deploy"
 
 #: src/components/shared/VolumeChart/index.tsx
-#: src/components/v1/V1Project/BalanceTimeline.tsx
 msgid "30 days"
 msgstr "30 days"
 
 #: src/components/shared/VolumeChart/index.tsx
-#: src/components/v1/V1Project/BalanceTimeline.tsx
 msgid "7 days"
 msgstr "7 days"
 
@@ -80,7 +76,6 @@ msgid "7-day delay"
 msgstr ""
 
 #: src/components/shared/VolumeChart/index.tsx
-#: src/components/v1/V1Project/BalanceTimeline.tsx
 msgid "90 days"
 msgstr "90 days"
 
@@ -1291,7 +1286,6 @@ msgid "If you're unsure if you need to claim, you probably don't."
 msgstr "If you're unsure if you need to claim, you probably don't."
 
 #: src/components/shared/VolumeChart/index.tsx
-#: src/components/v1/V1Project/BalanceTimeline.tsx
 #: src/components/v1/V1Project/Paid.tsx
 msgid "In Juicebox"
 msgstr ""
@@ -1846,10 +1840,6 @@ msgstr "Preview:"
 
 #: src/components/Landing/index.tsx
 msgid "Programmable spending"
-msgstr ""
-
-#: src/components/v1/V1Project/BalanceTimeline.tsx
-msgid "Project"
 msgstr ""
 
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
@@ -2799,8 +2789,6 @@ msgid "Version of the terminal contract used by this project."
 msgstr "Version of the terminal contract used by this project."
 
 #: src/components/shared/VolumeChart/index.tsx
-#: src/components/v1/V1Project/BalanceTimeline.tsx
-#: src/components/v1/V1Project/BalanceTimeline.tsx
 #: src/components/v1/V1Project/Paid.tsx
 msgid "Volume"
 msgstr ""
@@ -3098,7 +3086,6 @@ msgid "last {trendingWindowDays} days"
 msgstr "last {trendingWindowDays} days"
 
 #: src/components/shared/VolumeChart/index.tsx
-#: src/components/v1/V1Project/BalanceTimeline.tsx
 msgid "loading"
 msgstr "loading"
 

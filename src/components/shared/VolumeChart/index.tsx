@@ -3,8 +3,6 @@ import { t, Trans } from '@lingui/macro'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 
 import { ThemeContext } from 'contexts/themeContext'
-import EthDater from 'ethereum-block-by-date'
-import { Project } from 'models/subgraph-entities/vX/project'
 import moment from 'moment'
 import React, {
   CSSProperties,
@@ -23,51 +21,16 @@ import {
   XAxis,
   YAxis,
 } from 'recharts'
-import { fromWad } from 'utils/formatNumber'
-import { querySubgraph, WhereConfig } from 'utils/graph'
 
-import { readProvider } from 'constants/readProvider'
-
-import { SECONDS_IN_DAY } from 'constants/numbers'
+import { EventRef, ShowGraph } from './types'
+import { useDuration } from './hooks/useDuration'
+import { loadBlockRefs } from './loadBlockRefs'
+import { loadProjectEvents } from './loadProjectEvents'
+import { loadDomain } from './loadDomain'
+import { loadTapEvents } from './loadTapEvents'
+import { daysToMillis } from './daysToMillis'
 
 const now = moment.now() - 5 * 60 * 1000 // 5 min ago
-
-const daysToMillis = (days: number) => days * SECONDS_IN_DAY * 1000
-
-const epochToEpochMs = (epoch: number) => epoch * 1000
-
-type Duration = 1 | 7 | 30 | 90 | 365
-type EventRef = {
-  timestamp: number
-  value?: number
-  tapped?: number
-  previousBalance?: number
-}
-type BlockRef = { block: number | null; timestamp: number }
-type ShowGraph = 'volume' | 'balance'
-
-const useDuration = (
-  createdAt: number | undefined,
-): [
-  Duration | undefined,
-  React.Dispatch<React.SetStateAction<Duration | undefined>>,
-] => {
-  const [duration, setDuration] = useState<Duration>()
-
-  useEffect(() => {
-    if (!createdAt) return
-    const createdAtMs = epochToEpochMs(createdAt)
-    if (createdAtMs > now - daysToMillis(1)) {
-      setDuration(1)
-    } else if (createdAtMs > now - daysToMillis(7)) {
-      setDuration(7)
-    } else {
-      setDuration(30)
-    }
-  }, [createdAt])
-
-  return [duration, setDuration]
-}
 
 export default function VolumeChart({
   style: { height },
@@ -85,7 +48,7 @@ export default function VolumeChart({
   const [loading, setLoading] = useState<boolean>()
   const [domain, setDomain] = useState<[number, number]>()
   const [showGraph, setShowGraph] = useState<ShowGraph>('volume')
-  const [duration, setDuration] = useDuration(createdAt)
+  const [duration, setDuration] = useDuration({ createdAt, now })
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -99,194 +62,37 @@ export default function VolumeChart({
   useEffect(() => {
     if (!duration || !showGraph) return
 
-    const loadBlockRefs = async () => {
-      // Get number of most recent block, and block at start of duration window
-      const blockRefs = new EthDater(readProvider)
-        .getEvery(
-          'days',
-          //TODO + 0.1 fixes bug where only one block is returned. Needs better fix
-          moment(now - daysToMillis(duration + 0.1)).toISOString(),
-          moment(now).toISOString(),
-          duration,
-          false,
-        )
-        .then((res: (BlockRef & { block: number })[]) => {
-          const newBlockRefs: BlockRef[] = []
-          const blocksCount = 40
-
-          // Calculate intermediate block numbers at consistent intervals
-          for (let i = 0; i < blocksCount; i++) {
-            newBlockRefs.push({
-              block: Math.round(
-                ((res[1].block - res[0].block) / blocksCount) * i +
-                  res[0].block,
-              ),
-              timestamp: Math.round(
-                ((res[1].timestamp - res[0].timestamp) / blocksCount) * i +
-                  res[0].timestamp,
-              ),
-            })
-          }
-
-          // Push blockRef for "now"
-          newBlockRefs.push({
-            block: null,
-            timestamp: Math.round(now.valueOf() / 1000),
-          })
-
-          return newBlockRefs
-          // setBlockRefs(newBlockRefs)
-        })
-      return blockRefs
-    }
-
-    const loadEvents = async (blockRefs: BlockRef[]) => {
-      setLoading(true)
-
-      const newEvents: EventRef[] = []
-      const promises: Promise<void>[] = []
-      let max: number | undefined = undefined
-      let min: number | undefined = undefined
-
-      if (!blockRefs.length) return
-
-      let queryKeys: (keyof Project)[]
-
-      switch (showGraph) {
-        case 'volume':
-          queryKeys = ['totalPaid']
-          break
-        case 'balance':
-          queryKeys = ['currentBalance']
-          break
-      }
-
-      // Query balance of project for interval blocks
-      blockRefs.forEach(blockRef => {
-        let whereOpts: WhereConfig<'project'>[] = []
-        if (projectId) {
-          whereOpts.push({ key: 'projectId', value: projectId })
-        }
-        if (cv) {
-          whereOpts.push({ key: 'cv', value: cv })
-        }
-
-        // For block == null, don't specify block param
-        const block =
-          blockRef.block !== null ? { block: { number: blockRef.block } } : {}
-
-        promises.push(
-          querySubgraph({
-            entity: 'project',
-            keys: queryKeys,
-            ...block,
-            where: whereOpts,
-          }).then(projects => {
-            if (!projects.length) return
-
-            let value: number | undefined = undefined
-
-            const project = projects[0]
-
-            if (!project) return
-            projects.forEach(project => {
-              switch (showGraph) {
-                case 'volume':
-                  value = parseFloat(
-                    parseFloat(fromWad(project.totalPaid)).toFixed(4),
-                  )
-                  break
-                case 'balance':
-                  value = parseFloat(
-                    parseFloat(fromWad(project.currentBalance)).toFixed(4),
-                  )
-                  break
-              }
-
-              if (value !== undefined) {
-                newEvents.push({
-                  timestamp: blockRef.timestamp,
-                  value,
-                })
-              }
-            })
-          }),
-        )
-      })
-
-      await Promise.allSettled(promises)
-
-      // Calculate domain for graph based on floor/ceiling balances
-      newEvents.forEach(r => {
-        if (r.value === undefined) return
-        if (min === undefined || r.value < min) min = r.value
-        if (max === undefined || r.value > max) max = r.value
-      })
-
-      if (max === undefined || min === undefined) {
-        setDomain([0, 0])
-      } else {
-        const domainPad = (max - min) * 0.05
-        setDomain([Math.max(min - domainPad, 0), Math.max(max + domainPad, 10)])
-      }
-
-      // Load tap events
-      if (showGraph === 'balance') {
-        await querySubgraph({
-          entity: 'tapEvent',
-          keys: ['netTransferAmount', 'timestamp'],
-          where: projectId
-            ? [
-                {
-                  key: 'project',
-                  value: projectId.toString(),
-                },
-                {
-                  key: 'timestamp',
-                  value: Math.round((now - daysToMillis(duration)) / 1000),
-                  operator: 'gte',
-                },
-              ]
-            : undefined,
-        }).then(tapEvents => {
-          newEvents.push(
-            ...tapEvents.map(event => {
-              return {
-                ...event,
-                tapped: parseFloat(
-                  parseFloat(fromWad(event.netTransferAmount)).toFixed(4),
-                ),
-                timestamp: event.timestamp ?? 0,
-              }
-            }),
-          )
-        })
-      }
-
-      const sortedEvents = newEvents.sort((a, b) =>
-        a.timestamp < b.timestamp ? -1 : 1,
-      )
-
-      setEvents(
-        sortedEvents.map((e, i) => {
-          if (e.tapped) {
-            return {
-              ...e,
-              previousBalance: sortedEvents[i - 1]?.value,
-            }
-          }
-
-          return e
-        }),
-      )
-      setLoading(false)
-    }
-
     setLoading(true)
     setEvents([])
     setDomain(undefined)
 
-    loadBlockRefs().then(loadEvents)
+    loadBlockRefs({ duration, now }).then(async blockRefs => {
+      if (!projectId) return
+      let projectEvents = await loadProjectEvents({
+        blockRefs,
+        showGraph,
+        projectId,
+        cv,
+      })
+      if (!projectEvents) return
+      const domain = loadDomain(projectEvents)
+      setDomain(domain)
+      if (showGraph === 'balance') {
+        const tapEvents = await loadTapEvents({ projectId, duration, now })
+        projectEvents.concat(tapEvents)
+      }
+      const sortedEvents = projectEvents.sort((a, b) =>
+        a.timestamp < b.timestamp ? -1 : 1,
+      )
+      const events = sortedEvents.map((e, i) => {
+        if (e.tapped) {
+          return { ...e, previousBalance: sortedEvents[i - 1]?.value }
+        }
+        return e
+      })
+      setEvents(events)
+      setLoading(false)
+    })
     // loadEvents(blockRefs)
   }, [cv, duration, projectId, showGraph])
 

@@ -32,6 +32,8 @@ import { useLocation } from 'react-router-dom'
 
 import { useProjectsQuery } from 'hooks/Projects'
 
+import { first } from 'lodash'
+
 import { layouts } from 'constants/styles/layouts'
 
 import V2Project from '../V2Project'
@@ -56,7 +58,7 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
     keys: ['createdAt'],
     cv: ['2'],
   })
-  const createdAt = projects?.[0].createdAt
+  const createdAt = first(projects)?.createdAt
 
   const { data: fundingCycleResponse, loading: fundingCycleLoading } =
     useProjectCurrentFundingCycle({

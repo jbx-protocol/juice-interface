@@ -49,10 +49,9 @@ export default function V2PayButton({
       <Tooltip
         visible={isPayDisabled ? undefined : false}
         title={disabledMessage}
-        className="block"
       >
         <Button
-          style={{ width: '100%' }}
+          style={{ flex: 1 }}
           type="primary"
           onClick={() => {
             if (weiPayAmt?.eq(0)) {

@@ -38,7 +38,7 @@ msgstr "({realTokenAllocationPercent}% de tous les tokens récemment frappés)."
 msgid "0% fee"
 msgstr "0% de frais"
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 msgid "1 year"
 msgstr "1 an"
 
@@ -55,7 +55,7 @@ msgstr "100% overflow"
 msgid "2. Funding cycle"
 msgstr ""
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 msgid "24 hours"
 msgstr "24 heures"
 
@@ -68,11 +68,11 @@ msgstr "3 jours de délai"
 msgid "3. Review and deploy"
 msgstr ""
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 msgid "30 days"
 msgstr "30 jours"
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 msgid "7 days"
 msgstr "7 jours"
 
@@ -80,7 +80,7 @@ msgstr "7 jours"
 msgid "7-day delay"
 msgstr "7 jours de délai"
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 msgid "90 days"
 msgstr "90 jours"
 
@@ -398,9 +398,9 @@ msgstr ""
 msgid "Any treasury funds within the distribution limit can be paid out to destinations that you can define as <0>splits</0>. <1>Learn more</1> about payout splits."
 msgstr ""
 
+#: src/components/shared/ArchiveProject/index.tsx
+#: src/components/shared/ArchiveProject/index.tsx
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
 msgid "Archive project"
 msgstr "Archiver le projet"
 
@@ -639,6 +639,11 @@ msgstr ""
 
 #: src/components/Projects/MyProjects.tsx
 msgid "Connect your wallet to see your projects."
+msgstr ""
+
+#: src/components/shared/ArchiveProject/index.tsx
+#: src/components/shared/ArchiveProject/index.tsx
+msgid "Connected wallet not authorized"
 msgstr ""
 
 #: src/components/shared/ReconfigurationStrategy/ReconfigurationStrategySelector.tsx
@@ -1084,6 +1089,11 @@ msgstr "FAQ"
 msgid "FAQs"
 msgstr "FAQs"
 
+#: src/components/shared/ArchiveProject/index.tsx
+#: src/components/shared/ArchiveProject/index.tsx
+msgid "Failed to update project metadata"
+msgstr ""
+
 #: src/components/shared/inputs/ImageUploader.tsx
 msgid "File must be less than {formattedSize}{unit}"
 msgstr ""
@@ -1288,7 +1298,7 @@ msgstr "Si vous souhaitez créer un projet, mais que vous ne savez toujours pas 
 msgid "If you're unsure if you need to claim, you probably don't."
 msgstr "Si vous n'êtes pas sûr de pouvoir le réclamer, probablement vous ne pouvez pas."
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 #: src/components/v1/V1Project/Paid.tsx
 msgid "In Juicebox"
 msgstr "Dans Juicebox"
@@ -1618,7 +1628,7 @@ msgstr "Pas encore défini"
 msgid "Note"
 msgstr "Remarque"
 
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
+#: src/components/shared/ArchiveProject/index.tsx
 msgid "Note:"
 msgstr "Remarque :"
 
@@ -1844,10 +1854,6 @@ msgstr "Aperçu :"
 #: src/components/Landing/index.tsx
 msgid "Programmable spending"
 msgstr "Dépenses programmables"
-
-#: src/components/v1/V1Project/BalanceTimeline.tsx
-msgid "Project"
-msgstr "Projet"
 
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 #: src/components/v2/V2Project/ProjectActivity/index.tsx
@@ -2726,8 +2732,8 @@ msgstr "Tendance"
 msgid "Twitter"
 msgstr "Twitter"
 
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
+#: src/components/shared/ArchiveProject/index.tsx
+#: src/components/shared/ArchiveProject/index.tsx
 msgid "Unarchive project"
 msgstr "Désarchiver le projet"
 
@@ -2735,7 +2741,7 @@ msgstr "Désarchiver le projet"
 msgid "Unavailable"
 msgstr "Indisponible"
 
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
+#: src/components/shared/ArchiveProject/index.tsx
 msgid "Unless payments are paused in your funding cycle settings, your project will still be able to receive payments directly through the Juicebox protocol contracts."
 msgstr ""
 
@@ -2796,8 +2802,7 @@ msgstr ""
 msgid "Version of the terminal contract used by this project."
 msgstr ""
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 #: src/components/v1/V1Project/Paid.tsx
 msgid "Volume"
 msgstr "Volume"
@@ -3005,7 +3010,7 @@ msgstr "Votre projet est financé sur plusieurs cycles de financement. Un cycle 
 msgid "Your project token's issuance rate will decrease by this percentage every funding cycle. A higher discount rate will incentivize supporters to pay your project earlier."
 msgstr ""
 
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
+#: src/components/shared/ArchiveProject/index.tsx
 msgid "Your project will appear archived, and will not be able to receive payments through the juicebox.money app. You can unarchive a project at any time. Please allow a few days for your project to appear under the \"archived\" filter on the Projects page."
 msgstr "Votre projet apparaîtra archivé et ne pourra pas recevoir de paiements via l'application juicebox.money. Vous pouvez désarchiver un projet à tout moment. Veuillez patienter quelques jours pour que votre projet apparaisse sous le filtre \"archivé\" sur la page Projets."
 
@@ -3013,11 +3018,11 @@ msgstr "Votre projet apparaîtra archivé et ne pourra pas recevoir de paiements
 msgid "Your project will be created on the Juicebox V2 contracts. <0>Learn more.</0>"
 msgstr ""
 
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
+#: src/components/shared/ArchiveProject/index.tsx
 msgid "Your project will immediately appear active on the juicebox.money app. Please allow a few days for it to appear in the \"active\" projects list on the Projects page."
 msgstr "Votre projet apparaîtra immédiatement actif sur l'application juicebox.money. Veuillez patienter quelques jours pour qu'il apparaisse dans la liste des projets \"actifs\" sur la page Projets."
 
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
+#: src/components/shared/ArchiveProject/index.tsx
 msgid "Your project will still be able to receive payments directly through the Juicebox protocol contracts."
 msgstr "Votre projet pourra toujours recevoir des paiements directement via les contrats du protocole Juicebox."
 
@@ -3094,7 +3099,7 @@ msgstr "juiceboxETH"
 msgid "last {trendingWindowDays} days"
 msgstr "derniers {trendingWindowDays} jours"
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 msgid "loading"
 msgstr "chargement en cours"
 

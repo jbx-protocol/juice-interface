@@ -38,7 +38,7 @@ msgstr "（{realTokenAllocationPercent}% 新铸造的代币）。"
 msgid "0% fee"
 msgstr "0% 费率"
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 msgid "1 year"
 msgstr "1 年"
 
@@ -55,7 +55,7 @@ msgstr "100% 溢出"
 msgid "2. Funding cycle"
 msgstr ""
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 msgid "24 hours"
 msgstr "24 小时"
 
@@ -68,11 +68,11 @@ msgstr "延迟三天生效"
 msgid "3. Review and deploy"
 msgstr ""
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 msgid "30 days"
 msgstr "30 天"
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 msgid "7 days"
 msgstr "7 天"
 
@@ -80,7 +80,7 @@ msgstr "7 天"
 msgid "7-day delay"
 msgstr "延迟七天生效"
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 msgid "90 days"
 msgstr "90 天"
 
@@ -398,9 +398,9 @@ msgstr ""
 msgid "Any treasury funds within the distribution limit can be paid out to destinations that you can define as <0>splits</0>. <1>Learn more</1> about payout splits."
 msgstr ""
 
+#: src/components/shared/ArchiveProject/index.tsx
+#: src/components/shared/ArchiveProject/index.tsx
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
 msgid "Archive project"
 msgstr "存档项目"
 
@@ -639,6 +639,11 @@ msgstr ""
 
 #: src/components/Projects/MyProjects.tsx
 msgid "Connect your wallet to see your projects."
+msgstr ""
+
+#: src/components/shared/ArchiveProject/index.tsx
+#: src/components/shared/ArchiveProject/index.tsx
+msgid "Connected wallet not authorized"
 msgstr ""
 
 #: src/components/shared/ReconfigurationStrategy/ReconfigurationStrategySelector.tsx
@@ -1084,6 +1089,11 @@ msgstr "常见问题解答"
 msgid "FAQs"
 msgstr "常见问题解答"
 
+#: src/components/shared/ArchiveProject/index.tsx
+#: src/components/shared/ArchiveProject/index.tsx
+msgid "Failed to update project metadata"
+msgstr ""
+
 #: src/components/shared/inputs/ImageUploader.tsx
 msgid "File must be less than {formattedSize}{unit}"
 msgstr ""
@@ -1288,7 +1298,7 @@ msgstr "如果你对创建一个项目感兴趣，却不知道该如何开始，
 msgid "If you're unsure if you need to claim, you probably don't."
 msgstr "如果你不确定你是否需要领取，那么你或许不需要。"
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 #: src/components/v1/V1Project/Paid.tsx
 msgid "In Juicebox"
 msgstr "项目金库余额"
@@ -1618,7 +1628,7 @@ msgstr "未设定"
 msgid "Note"
 msgstr ""
 
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
+#: src/components/shared/ArchiveProject/index.tsx
 msgid "Note:"
 msgstr "请注意："
 
@@ -1844,10 +1854,6 @@ msgstr ""
 #: src/components/Landing/index.tsx
 msgid "Programmable spending"
 msgstr "可编程的开支"
-
-#: src/components/v1/V1Project/BalanceTimeline.tsx
-msgid "Project"
-msgstr "项目"
 
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 #: src/components/v2/V2Project/ProjectActivity/index.tsx
@@ -2726,8 +2732,8 @@ msgstr "热门"
 msgid "Twitter"
 msgstr "Twitter"
 
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
+#: src/components/shared/ArchiveProject/index.tsx
+#: src/components/shared/ArchiveProject/index.tsx
 msgid "Unarchive project"
 msgstr "取消项目的存档状态"
 
@@ -2735,7 +2741,7 @@ msgstr "取消项目的存档状态"
 msgid "Unavailable"
 msgstr "不可用"
 
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
+#: src/components/shared/ArchiveProject/index.tsx
 msgid "Unless payments are paused in your funding cycle settings, your project will still be able to receive payments directly through the Juicebox protocol contracts."
 msgstr "除非“付款”已在您的筹款周期设置中被暂停，否则您的项目仍可通过Juicebox协议的智能合约直接收到付款。"
 
@@ -2796,8 +2802,7 @@ msgstr ""
 msgid "Version of the terminal contract used by this project."
 msgstr "当前项目所使用的 Terminal 版本。"
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 #: src/components/v1/V1Project/Paid.tsx
 msgid "Volume"
 msgstr "总收入"
@@ -3005,7 +3010,7 @@ msgstr "您的项目按筹款周期来进行筹款。每个筹款周期都有一
 msgid "Your project token's issuance rate will decrease by this percentage every funding cycle. A higher discount rate will incentivize supporters to pay your project earlier."
 msgstr ""
 
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
+#: src/components/shared/ArchiveProject/index.tsx
 msgid "Your project will appear archived, and will not be able to receive payments through the juicebox.money app. You can unarchive a project at any time. Please allow a few days for your project to appear under the \"archived\" filter on the Projects page."
 msgstr "您的项目将体现为“存档”，并且将无法通过juicebox.money应用程序接收付款。您可以在任何时候取消项目的存档。请留出几天时间，以便您的项目显示在\"项目\"页面上的\"已存档\"过滤器下。"
 
@@ -3013,11 +3018,11 @@ msgstr "您的项目将体现为“存档”，并且将无法通过juicebox.mon
 msgid "Your project will be created on the Juicebox V2 contracts. <0>Learn more.</0>"
 msgstr ""
 
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
+#: src/components/shared/ArchiveProject/index.tsx
 msgid "Your project will immediately appear active on the juicebox.money app. Please allow a few days for it to appear in the \"active\" projects list on the Projects page."
 msgstr "您的项目将立即在 juicebox.money 应用程序上显示为“活动”状态。请留出几天时间，让它显示在\"项目\"页面上的\"活动\"项目列表中。"
 
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
+#: src/components/shared/ArchiveProject/index.tsx
 msgid "Your project will still be able to receive payments directly through the Juicebox protocol contracts."
 msgstr "您的项目仍可通过Juicebox协议的智能合约直接收到付款。"
 
@@ -3094,7 +3099,7 @@ msgstr "juiceboxETH"
 msgid "last {trendingWindowDays} days"
 msgstr "最近 {trendingWindowDays} 天"
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 msgid "loading"
 msgstr "加载中"
 

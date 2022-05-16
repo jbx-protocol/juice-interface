@@ -479,10 +479,6 @@ msgid "Bonding curve:"
 msgstr "Curva de adhesión:"
 
 #: src/components/Landing/index.tsx
-msgid "Build a community around a project, fund it, and program its spending. Light enough for a group of friends, powerful enough for a global network of anons."
-msgstr "Construye una comunidad alrededor de un proyecto, finánciala y programa su gasto. Lo suficientemente liviana para un grupo de amigos, lo suficientemente potente para una red global de anons."
-
-#: src/components/Landing/index.tsx
 msgid "Built for:"
 msgstr "Construido para:"
 
@@ -604,10 +600,6 @@ msgstr "Cerrar"
 msgid "Commit portions of your funds to the people or projects you want to support, or the contributors you want to pay. When you get paid, so do they."
 msgstr "Asigna porciones de tus fondos para la gente o proyectos que quieres apoyar, o a los colaboradores a los que les quieres pagar. Cuando te pagan, también a ellos."
 
-#: src/components/Landing/index.tsx
-msgid "Community funding for people and projects"
-msgstr "Financiamiento comunitario para personas y proyectos"
-
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 msgid "Configure how your project will collect and spend funds."
 msgstr ""
@@ -697,6 +689,7 @@ msgstr ""
 msgid "Create payable address"
 msgstr ""
 
+#: src/Router.tsx
 #: src/components/Projects/MyProjects.tsx
 #: src/components/Projects/index.tsx
 msgid "Create project"
@@ -709,6 +702,14 @@ msgstr ""
 #: src/components/Landing/QAs.tsx
 msgid "Creating a Juicebox project mints you an NFT (ERC-721) representing ownership over it. Whoever owns this NFT can configure the rules of the game and how payouts are distributed."
 msgstr "Crear un proyecto en Juicebox te acuña un NFT (ERC-721) que representa la propiedad sobre aquel. Cualquiera que sea propietario de este NFT, puede configurar las reglas del juego y cómo son distribuidos los pagos."
+
+#: src/components/Landing/index.tsx
+msgid "Crowdfunding campaigns"
+msgstr ""
+
+#: src/components/Landing/index.tsx
+msgid "Crypto and Web3 businesses"
+msgstr ""
 
 #: src/components/v1/V1Project/FundingCycles/index.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/index.tsx
@@ -740,6 +741,10 @@ msgstr "Beneficiario de token personalizado"
 #: src/components/shared/Project/FundingCycleDetailsCard.tsx
 msgid "Cycle #{0}"
 msgstr "Ciclo #{0}"
+
+#: src/components/Landing/index.tsx
+msgid "DAOs and communities"
+msgstr ""
 
 #: src/components/Navbar/Mobile/ThemePickerMobile.tsx
 msgid "Dark theme"
@@ -787,7 +792,6 @@ msgstr ""
 msgid "Deposit 1 wei to @{handle}"
 msgstr "Deposita 1 wei a @{handle}"
 
-#: src/components/Landing/index.tsx
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/index.tsx
 msgid "Design your project"
@@ -1069,13 +1073,13 @@ msgstr "Error al cargar holders"
 msgid "Error loading payments"
 msgstr "Error al cargar pagos"
 
-#: src/components/Landing/index.tsx
-msgid "Ethereum protocols and DAOs"
-msgstr "Protocolos de Ethereum y DAOs"
-
 #: src/components/Landing/QAs.tsx
 msgid "Ethereum provides a public environment where internet apps like Juicebox can run in a permission-less, trustless, and unstoppable fashion."
 msgstr "Ethereum provee un ambiente público donde las apps de internet como Juicebox pueden correr sin necesidad de permisos, ni confianza y de manera imparable."
+
+#: src/components/Landing/index.tsx
+msgid "Explore projects"
+msgstr ""
 
 #: src/components/Navbar/MenuItems.tsx
 msgid "FAQ"
@@ -1109,6 +1113,10 @@ msgstr "Para más información, mira este <0>video corto</0>."
 #: src/components/Landing/QAs.tsx
 msgid "For users paying through your app, you should route those funds through the Juicebox smart contracts so they receive tokens in return."
 msgstr "Para los usuarios que paguen a través de tu aplicación, deberás dirigir esos fondos a través de los contratos inteligentes de Juicebox para que reciban tokens a cambio."
+
+#: src/components/Landing/index.tsx
+msgid "Fund anything. Grow together."
+msgstr ""
 
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
@@ -1311,8 +1319,8 @@ msgid "Incentives"
 msgstr "Incentivos"
 
 #: src/components/Landing/index.tsx
-msgid "Indie artists, devs, creators"
-msgstr "Artistas indis, desarrolladores, creadores"
+msgid "Indie creators and builders"
+msgstr ""
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Initial issuance rate"
@@ -1428,6 +1436,10 @@ msgstr "Último"
 #: src/components/Landing/index.tsx
 msgid "Latest payments"
 msgstr "Últimos pagos"
+
+#: src/components/Landing/index.tsx
+msgid "Launch your project"
+msgstr ""
 
 #: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 msgid "Learn more in this <0>short video</0>."
@@ -1633,10 +1645,6 @@ msgstr "Nota: los tokens pueden ser acuñados manualmente cuando se permita en e
 msgid "Notice from {0}:"
 msgstr "Aviso de {0}:"
 
-#: src/components/Landing/index.tsx
-msgid "Open source businesses"
-msgstr "Negocios de código abierto"
-
 #: src/components/v1/V1Project/modals/BalancesModal.tsx
 msgid "Other assets in this project's owner's wallet."
 msgstr "Otros activos en la billetera del dueño de este proyecto."
@@ -1738,6 +1746,10 @@ msgstr "Actúalmente, los pagos a este proyecto se encuentran desactivados dado 
 msgid "Paying this project is currently disabled."
 msgstr "Actúalmente, los pagos a este proyecto se encuentran desactivados."
 
+#: src/components/shared/RichImgPreview.tsx
+msgid "Payment memo image"
+msgstr ""
+
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Payments"
@@ -1833,10 +1845,6 @@ msgstr "Podcast"
 #: src/components/shared/ProjectRiskNotice.tsx
 msgid "Potential risks"
 msgstr ""
-
-#: src/components/Landing/index.tsx
-msgid "Powered by public smart contracts on <0>Ethereum</0>."
-msgstr "Impulsado por contratos públicos en <0>Ethereum</0>."
 
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/ProjectConfigurationFieldsContainer.tsx
@@ -1948,6 +1956,7 @@ msgstr ""
 msgid "Project {projectId} not found"
 msgstr "Proyecto {projectId} no encontrado"
 
+#: src/Router.tsx
 #: src/components/Navbar/MenuItems.tsx
 msgid "Projects"
 msgstr "Proyectos"
@@ -1979,10 +1988,6 @@ msgstr "Proyectos usando Juicebox"
 #: src/components/shared/forms/TicketingForm.tsx
 msgid "Projects using a reserved rate of {reservedRateRiskyMin}% or more will appear risky to contributors, as a relatively small number of tokens will be received in exchange for paying your project."
 msgstr "Los proyectos que usan una tarifa reservada {reservedRateRiskyMin}% o más parecerán arriesgados para los colaboradores, como un número relativamente pequeño de tokens serán recibidos a cambio de pagar por tu proyecto."
-
-#: src/components/Landing/index.tsx
-msgid "Public goods and services"
-msgstr "Bienes y servicios públicos"
 
 #: src/components/Projects/RankingExplanation.tsx
 msgid "Rankings based on number of contributions and volume gained in the last {trendingWindow} days. <0>See code</0>"
@@ -2485,6 +2490,10 @@ msgstr "El objetivo para este ciclo de financiamiento es 0, lo que significa que
 #: src/components/v1/V1Project/Paid.tsx
 msgid "The total amount received by this project through Juicebox since it was created."
 msgstr "El monto total recibido por este proyecto a través de Juicebox desde que fue creado."
+
+#: src/components/Landing/index.tsx
+msgid "The world's largest decentralized funding platform. Light enough for a group of friends, powerful enough for a global network of anons."
+msgstr ""
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "There are no payouts defined for this funding cycle. The project owner will recieve all available funds."

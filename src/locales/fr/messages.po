@@ -38,7 +38,7 @@ msgstr "({realTokenAllocationPercent}% de tous les tokens récemment frappés)."
 msgid "0% fee"
 msgstr "0% de frais"
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 msgid "1 year"
 msgstr "1 an"
 
@@ -55,7 +55,7 @@ msgstr "100% overflow"
 msgid "2. Funding cycle"
 msgstr ""
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 msgid "24 hours"
 msgstr "24 heures"
 
@@ -68,11 +68,11 @@ msgstr "3 jours de délai"
 msgid "3. Review and deploy"
 msgstr ""
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 msgid "30 days"
 msgstr "30 jours"
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 msgid "7 days"
 msgstr "7 jours"
 
@@ -80,7 +80,7 @@ msgstr "7 jours"
 msgid "7-day delay"
 msgstr "7 jours de délai"
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 msgid "90 days"
 msgstr "90 jours"
 
@@ -1290,7 +1290,7 @@ msgstr "Si vous souhaitez créer un projet, mais que vous ne savez toujours pas 
 msgid "If you're unsure if you need to claim, you probably don't."
 msgstr "Si vous n'êtes pas sûr de pouvoir le réclamer, probablement vous ne pouvez pas."
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 #: src/components/v1/V1Project/Paid.tsx
 msgid "In Juicebox"
 msgstr "Dans Juicebox"
@@ -1846,10 +1846,6 @@ msgstr "Aperçu :"
 #: src/components/Landing/index.tsx
 msgid "Programmable spending"
 msgstr "Dépenses programmables"
-
-#: src/components/v1/V1Project/BalanceTimeline.tsx
-msgid "Project"
-msgstr "Projet"
 
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 #: src/components/v2/V2Project/ProjectActivity/index.tsx
@@ -2797,8 +2793,7 @@ msgstr ""
 msgid "Version of the terminal contract used by this project."
 msgstr ""
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 #: src/components/v1/V1Project/Paid.tsx
 msgid "Volume"
 msgstr "Volume"
@@ -3095,7 +3090,7 @@ msgstr "juiceboxETH"
 msgid "last {trendingWindowDays} days"
 msgstr "derniers {trendingWindowDays} jours"
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 msgid "loading"
 msgstr "chargement en cours"
 

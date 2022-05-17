@@ -2625,6 +2625,10 @@ msgstr "Token basma seçeneği yalnızca V1.1 projelerinde kullanılabilir. Toke
 msgid "Token name"
 msgstr "Token adı"
 
+#: src/components/shared/modals/IssueTokenModal.tsx
+msgid "Token name is required"
+msgstr ""
+
 #: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 msgid "Token redeem value"
 msgstr "Token kullanma değeri"
@@ -2632,6 +2636,10 @@ msgstr "Token kullanma değeri"
 #: src/components/shared/modals/IssueTokenModal.tsx
 msgid "Token symbol"
 msgstr "Token sembolü"
+
+#: src/components/shared/modals/IssueTokenModal.tsx
+msgid "Token symbol is required"
+msgstr ""
 
 #: src/components/shared/Mod.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx

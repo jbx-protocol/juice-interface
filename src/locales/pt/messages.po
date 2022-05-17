@@ -2625,6 +2625,10 @@ msgstr "A criação de token está disponível apenas para projetos V1.1. A cria
 msgid "Token name"
 msgstr "O nome do token"
 
+#: src/components/shared/modals/IssueTokenModal.tsx
+msgid "Token name is required"
+msgstr ""
+
 #: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 msgid "Token redeem value"
 msgstr "Valor de resgate do token"
@@ -2632,6 +2636,10 @@ msgstr "Valor de resgate do token"
 #: src/components/shared/modals/IssueTokenModal.tsx
 msgid "Token symbol"
 msgstr "O símbolo do token"
+
+#: src/components/shared/modals/IssueTokenModal.tsx
+msgid "Token symbol is required"
+msgstr ""
 
 #: src/components/shared/Mod.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx

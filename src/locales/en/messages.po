@@ -2620,6 +2620,10 @@ msgstr "Token minting is only available for V1.1 projects. Token minting can be 
 msgid "Token name"
 msgstr "Token name"
 
+#: src/components/shared/modals/IssueTokenModal.tsx
+msgid "Token name is required"
+msgstr "Token name is required"
+
 #: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 msgid "Token redeem value"
 msgstr ""
@@ -2627,6 +2631,10 @@ msgstr ""
 #: src/components/shared/modals/IssueTokenModal.tsx
 msgid "Token symbol"
 msgstr "Token symbol"
+
+#: src/components/shared/modals/IssueTokenModal.tsx
+msgid "Token symbol is required"
+msgstr "Token symbol is required"
 
 #: src/components/shared/Mod.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx

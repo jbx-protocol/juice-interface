@@ -2625,6 +2625,10 @@ msgstr "代币铸造功能只在 V1.1 项目中可用。可以通过重新配置
 msgid "Token name"
 msgstr "代币名称"
 
+#: src/components/shared/modals/IssueTokenModal.tsx
+msgid "Token name is required"
+msgstr ""
+
 #: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 msgid "Token redeem value"
 msgstr "代币赎回价值"
@@ -2632,6 +2636,10 @@ msgstr "代币赎回价值"
 #: src/components/shared/modals/IssueTokenModal.tsx
 msgid "Token symbol"
 msgstr "代币符号"
+
+#: src/components/shared/modals/IssueTokenModal.tsx
+msgid "Token symbol is required"
+msgstr ""
 
 #: src/components/shared/Mod.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx

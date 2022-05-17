@@ -2625,6 +2625,10 @@ msgstr "La acuñación de tokens solo está disponible para proyectos V1.1. La a
 msgid "Token name"
 msgstr "Nombre del token"
 
+#: src/components/shared/modals/IssueTokenModal.tsx
+msgid "Token name is required"
+msgstr ""
+
 #: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 msgid "Token redeem value"
 msgstr "Valor de canje del token"
@@ -2632,6 +2636,10 @@ msgstr "Valor de canje del token"
 #: src/components/shared/modals/IssueTokenModal.tsx
 msgid "Token symbol"
 msgstr "Símbolo del token"
+
+#: src/components/shared/modals/IssueTokenModal.tsx
+msgid "Token symbol is required"
+msgstr ""
 
 #: src/components/shared/Mod.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx

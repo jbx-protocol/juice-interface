@@ -3,7 +3,7 @@ import PayInputGroup from 'components/shared/inputs/Pay/PayInputGroup'
 import ProjectHeader from 'components/shared/ProjectHeader'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 
-import { useContext, useState } from 'react'
+import { lazy, useContext, useState } from 'react'
 
 import { weightedAmount } from 'utils/v2/math'
 import { useHistory, useLocation } from 'react-router-dom'
@@ -20,6 +20,8 @@ import V2ProjectHeaderActions from './V2ProjectHeaderActions'
 
 const GUTTER_PX = 40
 
+const VolumeChart = lazy(() => import('../../shared/VolumeChart'))
+
 export default function V2Project({
   singleColumnLayout,
   expandFundingCycleCard,
@@ -28,6 +30,7 @@ export default function V2Project({
   expandFundingCycleCard?: boolean
 }) {
   const {
+    createdAt,
     projectId,
     projectMetadata,
     fundingCycle,
@@ -35,6 +38,7 @@ export default function V2Project({
     isPreviewMode,
     tokenSymbol,
     tokenAddress,
+    cv,
   } = useContext(V2ProjectContext)
 
   // Checks URL to see if user was just directed from project deploy
@@ -64,6 +68,7 @@ export default function V2Project({
       <ProjectHeader
         metadata={projectMetadata}
         actions={!isPreviewMode ? <V2ProjectHeaderActions /> : undefined}
+        isArchived={projectMetadata?.archived}
       />
       <Row gutter={GUTTER_PX} align="bottom">
         <Col md={colSizeMd} xs={24}>
@@ -88,7 +93,14 @@ export default function V2Project({
             size={GUTTER_PX}
             style={{ width: '100%' }}
           >
-            {/* TODO volume chart */}
+            {!isPreviewMode ? (
+              <VolumeChart
+                style={{ height: 240 }}
+                createdAt={createdAt}
+                projectId={projectId}
+                cv={cv ?? '2'}
+              />
+            ) : null}
             <V2ManageTokensSection />
             <V2FundingCycleSection expandCard={expandFundingCycleCard} />
           </Space>

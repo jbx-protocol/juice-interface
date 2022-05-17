@@ -38,7 +38,7 @@ msgstr "（{realTokenAllocationPercent}% 新铸造的代币）。"
 msgid "0% fee"
 msgstr "0% 费率"
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 msgid "1 year"
 msgstr "1 年"
 
@@ -55,7 +55,7 @@ msgstr "100% 溢出"
 msgid "2. Funding cycle"
 msgstr ""
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 msgid "24 hours"
 msgstr "24 小时"
 
@@ -68,11 +68,11 @@ msgstr "延迟三天生效"
 msgid "3. Review and deploy"
 msgstr ""
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 msgid "30 days"
 msgstr "30 天"
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 msgid "7 days"
 msgstr "7 天"
 
@@ -80,7 +80,7 @@ msgstr "7 天"
 msgid "7-day delay"
 msgstr "延迟七天生效"
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 msgid "90 days"
 msgstr "90 天"
 
@@ -402,9 +402,9 @@ msgstr ""
 msgid "Any treasury funds within the distribution limit can be paid out to destinations that you can define as <0>splits</0>. <1>Learn more</1> about payout splits."
 msgstr ""
 
+#: src/components/shared/ArchiveProject/index.tsx
+#: src/components/shared/ArchiveProject/index.tsx
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
 msgid "Archive project"
 msgstr "存档项目"
 
@@ -481,10 +481,6 @@ msgstr "联合曲线比率"
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Bonding curve:"
 msgstr "联合曲线："
-
-#: src/components/Landing/index.tsx
-msgid "Build a community around a project, fund it, and program its spending. Light enough for a group of friends, powerful enough for a global network of anons."
-msgstr "围绕一个项目建立一个社区，为其提供资金，并对其支出进行规划。既能简单易用让一群知己好友轻松创建属于自己的社区项目，也可以强大到能够支持一个全球匿名网络的运作"
 
 #: src/components/Landing/index.tsx
 msgid "Built for:"
@@ -616,10 +612,6 @@ msgstr "关闭"
 msgid "Commit portions of your funds to the people or projects you want to support, or the contributors you want to pay. When you get paid, so do they."
 msgstr "提前设定把您资金的一部分自动分拨给您想要支持的人或项目，或者您需要支付的贡献者。您获得收入的同时，他们也会收到相应款项。"
 
-#: src/components/Landing/index.tsx
-msgid "Community funding for people and projects"
-msgstr "为个人和项目提供社区资助"
-
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 msgid "Configure how your project will collect and spend funds."
 msgstr ""
@@ -661,6 +653,11 @@ msgstr ""
 msgid "Connect your wallet to see your projects."
 msgstr ""
 
+#: src/components/shared/ArchiveProject/index.tsx
+#: src/components/shared/ArchiveProject/index.tsx
+msgid "Connected wallet not authorized"
+msgstr ""
+
 #: src/components/shared/ReconfigurationStrategy/ReconfigurationStrategySelector.tsx
 msgid "Contract address: {0}"
 msgstr "合约地址：{0}"
@@ -699,15 +696,12 @@ msgstr ""
 msgid "Create an Ethereum address that can be used to pay your project directly."
 msgstr ""
 
-#: src/components/Landing/V2Switch.tsx
-msgid "Create and view projects on the V2 Juicebox protocol."
-msgstr ""
-
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
 #: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
 msgid "Create payable address"
 msgstr ""
 
+#: src/Router.tsx
 #: src/components/Projects/MyProjects.tsx
 #: src/components/Projects/index.tsx
 msgid "Create project"
@@ -720,6 +714,14 @@ msgstr ""
 #: src/components/Landing/QAs.tsx
 msgid "Creating a Juicebox project mints you an NFT (ERC-721) representing ownership over it. Whoever owns this NFT can configure the rules of the game and how payouts are distributed."
 msgstr "创建一个 Juicebox 项目时，你会得到一个代表项目所有权的 NFT（ERC-721）。无论谁拥有这个NFT，都可以设置游戏规则以及决定如何分配报酬。"
+
+#: src/components/Landing/index.tsx
+msgid "Crowdfunding campaigns"
+msgstr ""
+
+#: src/components/Landing/index.tsx
+msgid "Crypto and Web3 businesses"
+msgstr ""
 
 #: src/components/v1/V1Project/FundingCycles/index.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/index.tsx
@@ -756,6 +758,10 @@ msgstr "自定义代币受益人"
 #: src/components/shared/Project/FundingCycleDetailsCard.tsx
 msgid "Cycle #{0}"
 msgstr "周期 #{0}"
+
+#: src/components/Landing/index.tsx
+msgid "DAOs and communities"
+msgstr ""
 
 #: src/components/Navbar/Mobile/ThemePickerMobile.tsx
 msgid "Dark theme"
@@ -803,8 +809,6 @@ msgstr ""
 msgid "Deposit 1 wei to @{handle}"
 msgstr "存入 1 wei 给 @{handle}"
 
-#: src/components/Landing/index.tsx
-#: src/components/Landing/index.tsx
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/index.tsx
 msgid "Design your project"
@@ -1054,10 +1058,6 @@ msgstr "编辑代币接收方"
 msgid "Edit tracked assets"
 msgstr "编辑监测的资产"
 
-#: src/components/Landing/V2Switch.tsx
-msgid "Enable Juicebox V2"
-msgstr ""
-
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Enabled"
@@ -1094,13 +1094,13 @@ msgstr ""
 msgid "Error loading payments"
 msgstr ""
 
-#: src/components/Landing/index.tsx
-msgid "Ethereum protocols and DAOs"
-msgstr "以太坊协议和 DAO"
-
 #: src/components/Landing/QAs.tsx
 msgid "Ethereum provides a public environment where internet apps like Juicebox can run in a permission-less, trustless, and unstoppable fashion."
 msgstr "以太坊提供了一个公共环境，让 Juicebox 这样的互联网应用得以无需许可、无需信任且无可阻挡地在上面运行。"
+
+#: src/components/Landing/index.tsx
+msgid "Explore projects"
+msgstr ""
 
 #: src/components/Navbar/MenuItems.tsx
 msgid "FAQ"
@@ -1109,6 +1109,11 @@ msgstr "常见问题解答"
 #: src/components/Landing/index.tsx
 msgid "FAQs"
 msgstr "常见问题解答"
+
+#: src/components/shared/ArchiveProject/index.tsx
+#: src/components/shared/ArchiveProject/index.tsx
+msgid "Failed to update project metadata"
+msgstr ""
 
 #: src/components/shared/inputs/ImageUploader.tsx
 msgid "File must be less than {formattedSize}{unit}"
@@ -1129,6 +1134,10 @@ msgstr "了解更多信息，请查看 <0>短片</0>。"
 #: src/components/Landing/QAs.tsx
 msgid "For users paying through your app, you should route those funds through the Juicebox smart contracts so they receive tokens in return."
 msgstr "对于通过你的应用程序进行支付的用户，你应该将资金再导向 Juicebox 智能合约，这样他们才能收到作为回报的代币。"
+
+#: src/components/Landing/index.tsx
+msgid "Fund anything. Grow together."
+msgstr ""
 
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
@@ -1310,7 +1319,7 @@ msgstr "如果你对创建一个项目感兴趣，却不知道该如何开始，
 msgid "If you're unsure if you need to claim, you probably don't."
 msgstr "如果你不确定你是否需要领取，那么你或许不需要。"
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 #: src/components/v1/V1Project/Paid.tsx
 msgid "In Juicebox"
 msgstr "项目金库余额"
@@ -1331,8 +1340,8 @@ msgid "Incentives"
 msgstr "激励措施"
 
 #: src/components/Landing/index.tsx
-msgid "Indie artists, devs, creators"
-msgstr "独立艺术家，开发者，创作者"
+msgid "Indie creators and builders"
+msgstr ""
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Initial issuance rate"
@@ -1448,6 +1457,10 @@ msgstr "最近"
 #: src/components/Landing/index.tsx
 msgid "Latest payments"
 msgstr "最近付款"
+
+#: src/components/Landing/index.tsx
+msgid "Launch your project"
+msgstr ""
 
 #: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 msgid "Learn more in this <0>short video</0>."
@@ -1640,7 +1653,7 @@ msgstr "未设定"
 msgid "Note"
 msgstr ""
 
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
+#: src/components/shared/ArchiveProject/index.tsx
 msgid "Note:"
 msgstr "请注意："
 
@@ -1656,10 +1669,6 @@ msgstr ""
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Notice from {0}:"
 msgstr "通知自{0}:"
-
-#: src/components/Landing/index.tsx
-msgid "Open source businesses"
-msgstr "开源业务"
 
 #: src/components/v1/V1Project/modals/BalancesModal.tsx
 msgid "Other assets in this project's owner's wallet."
@@ -1762,8 +1771,8 @@ msgstr "因代币保留率为 100% 且支付后并不会获得相应的代币，
 msgid "Paying this project is currently disabled."
 msgstr "当前项目已暂停接收付款。"
 
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
-msgid "Payment made through payable address"
+#: src/components/shared/RichImgPreview.tsx
+msgid "Payment memo image"
 msgstr ""
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
@@ -1862,10 +1871,6 @@ msgstr "播客"
 msgid "Potential risks"
 msgstr ""
 
-#: src/components/Landing/index.tsx
-msgid "Powered by public smart contracts on <0>Ethereum</0>."
-msgstr "由<0>以太坊</0>公共智能合约提供支持。"
-
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/ProjectConfigurationFieldsContainer.tsx
 msgid "Preview:"
@@ -1874,10 +1879,6 @@ msgstr ""
 #: src/components/Landing/index.tsx
 msgid "Programmable spending"
 msgstr "可编程的开支"
-
-#: src/components/v1/V1Project/BalanceTimeline.tsx
-msgid "Project"
-msgstr "项目"
 
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 #: src/components/v2/V2Project/ProjectActivity/index.tsx
@@ -1980,6 +1981,7 @@ msgstr ""
 msgid "Project {projectId} not found"
 msgstr "项目 {projectId} 未找到"
 
+#: src/Router.tsx
 #: src/components/Navbar/MenuItems.tsx
 msgid "Projects"
 msgstr "项目"
@@ -2011,10 +2013,6 @@ msgstr "正在使用 Juicebox 的项目"
 #: src/components/shared/forms/TicketingForm.tsx
 msgid "Projects using a reserved rate of {reservedRateRiskyMin}% or more will appear risky to contributors, as a relatively small number of tokens will be received in exchange for paying your project."
 msgstr "项目使用的代币保留率大于或等于{reservedRateRiskyMin}% 会让捐款人觉得项目不安全，因为这种情况下给您的项目捐款从而获得的代币数量会比较少。"
-
-#: src/components/Landing/index.tsx
-msgid "Public goods and services"
-msgstr "公共产品和服务"
 
 #: src/components/Projects/RankingExplanation.tsx
 msgid "Rankings based on number of contributions and volume gained in the last {trendingWindow} days. <0>See code</0>"
@@ -2411,10 +2409,6 @@ msgstr "有这一个这是计划，但核心的 Juicebox 合约将首先部署�
 msgid "The JBX protocol is unaudited, and projects built on it may be vulnerable to bugs or exploits. Be smart!"
 msgstr "JBX 协议未经审计，基于它构建的项目可能受到 bug 的影响或漏洞被恶意利用。使用风险请自行承担！"
 
-#: src/components/Landing/V2Switch.tsx
-msgid "The Juicebox V2 frontend is still in development. It is <0>not recommended</0> for use on mainnet. Some features are missing and there are known bugs. <1>Use with caution.</1>"
-msgstr ""
-
 #: src/components/v2/shared/V2SupportWarning.tsx
 msgid "The Juicebox V2 frontend is still in development. Some features are missing and there are known bugs."
 msgstr ""
@@ -2525,6 +2519,10 @@ msgstr "当前筹款周期的目标为零，意味着目前所有资金都视作
 #: src/components/v1/V1Project/Paid.tsx
 msgid "The total amount received by this project through Juicebox since it was created."
 msgstr "该项目自创建以来通过 Juicebox 接收的总金额。"
+
+#: src/components/Landing/index.tsx
+msgid "The world's largest decentralized funding platform. Light enough for a group of friends, powerful enough for a global network of anons."
+msgstr ""
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "There are no payouts defined for this funding cycle. The project owner will recieve all available funds."
@@ -2660,6 +2658,10 @@ msgstr "代币铸造功能只在 V1.1 项目中可用。可以通过重新配置
 msgid "Token name"
 msgstr "代币名称"
 
+#: src/components/shared/modals/IssueTokenModal.tsx
+msgid "Token name is required"
+msgstr ""
+
 #: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 msgid "Token redeem value"
 msgstr "代币赎回价值"
@@ -2667,6 +2669,10 @@ msgstr "代币赎回价值"
 #: src/components/shared/modals/IssueTokenModal.tsx
 msgid "Token symbol"
 msgstr "代币符号"
+
+#: src/components/shared/modals/IssueTokenModal.tsx
+msgid "Token symbol is required"
+msgstr ""
 
 #: src/components/shared/Mod.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
@@ -2767,8 +2773,8 @@ msgstr "热门"
 msgid "Twitter"
 msgstr "Twitter"
 
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
+#: src/components/shared/ArchiveProject/index.tsx
+#: src/components/shared/ArchiveProject/index.tsx
 msgid "Unarchive project"
 msgstr "取消项目的存档状态"
 
@@ -2776,7 +2782,7 @@ msgstr "取消项目的存档状态"
 msgid "Unavailable"
 msgstr "不可用"
 
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
+#: src/components/shared/ArchiveProject/index.tsx
 msgid "Unless payments are paused in your funding cycle settings, your project will still be able to receive payments directly through the Juicebox protocol contracts."
 msgstr "除非“付款”已在您的筹款周期设置中被暂停，否则您的项目仍可通过Juicebox协议的智能合约直接收到付款。"
 
@@ -2837,8 +2843,7 @@ msgstr ""
 msgid "Version of the terminal contract used by this project."
 msgstr "当前项目所使用的 Terminal 版本。"
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 #: src/components/v1/V1Project/Paid.tsx
 msgid "Volume"
 msgstr "总收入"
@@ -3046,7 +3051,7 @@ msgstr "您的项目按筹款周期来进行筹款。每个筹款周期都有一
 msgid "Your project token's issuance rate will decrease by this percentage every funding cycle. A higher discount rate will incentivize supporters to pay your project earlier."
 msgstr ""
 
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
+#: src/components/shared/ArchiveProject/index.tsx
 msgid "Your project will appear archived, and will not be able to receive payments through the juicebox.money app. You can unarchive a project at any time. Please allow a few days for your project to appear under the \"archived\" filter on the Projects page."
 msgstr "您的项目将体现为“存档”，并且将无法通过juicebox.money应用程序接收付款。您可以在任何时候取消项目的存档。请留出几天时间，以便您的项目显示在\"项目\"页面上的\"已存档\"过滤器下。"
 
@@ -3054,11 +3059,11 @@ msgstr "您的项目将体现为“存档”，并且将无法通过juicebox.mon
 msgid "Your project will be created on the Juicebox V2 contracts. <0>Learn more.</0>"
 msgstr ""
 
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
+#: src/components/shared/ArchiveProject/index.tsx
 msgid "Your project will immediately appear active on the juicebox.money app. Please allow a few days for it to appear in the \"active\" projects list on the Projects page."
 msgstr "您的项目将立即在 juicebox.money 应用程序上显示为“活动”状态。请留出几天时间，让它显示在\"项目\"页面上的\"活动\"项目列表中。"
 
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
+#: src/components/shared/ArchiveProject/index.tsx
 msgid "Your project will still be able to receive payments directly through the Juicebox protocol contracts."
 msgstr "您的项目仍可通过Juicebox协议的智能合约直接收到付款。"
 
@@ -3135,7 +3140,7 @@ msgstr "juiceboxETH"
 msgid "last {trendingWindowDays} days"
 msgstr "最近 {trendingWindowDays} 天"
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 msgid "loading"
 msgstr "加载中"
 

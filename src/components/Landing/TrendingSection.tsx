@@ -20,7 +20,7 @@ export default function TrendingSection() {
   const trendingProjectsStyle: CSSProperties = {
     // Light theme uses a slightly lighter background than background-l1
     backgroundColor: isDarkMode ? colors.background.l1 : '#e7e3dc80',
-    margin: '150px 0',
+    marginTop: '3rem',
     paddingTop: !isMobile ? 40 : 80,
     paddingLeft: 40,
     paddingRight: 40,

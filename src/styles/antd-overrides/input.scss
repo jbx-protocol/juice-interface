@@ -99,7 +99,8 @@ input.ant-input[type='number'] {
   -moz-appearance: textfield;
 }
 
-.ant-input-prefix {
+.ant-input-prefix, 
+.ant-input-show-count-suffix {
   color: var(--text-secondary);
 }
 

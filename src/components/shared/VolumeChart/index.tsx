@@ -2,12 +2,9 @@ import { Select, Space } from 'antd'
 import { t, Trans } from '@lingui/macro'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 
-import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import EthDater from 'ethereum-block-by-date'
-import { Project } from 'models/subgraph-entities/vX/project'
 import moment from 'moment'
-import {
+import React, {
   CSSProperties,
   SVGProps,
   useContext,
@@ -24,36 +21,34 @@ import {
   XAxis,
   YAxis,
 } from 'recharts'
-import { fromWad } from 'utils/formatNumber'
-import { querySubgraph } from 'utils/graph'
 
-import { readProvider } from 'constants/readProvider'
-
-import SectionHeader from '../../shared/SectionHeader'
-import { SECONDS_IN_DAY } from 'constants/numbers'
+import { EventRef, ShowGraph } from './types'
+import { useDuration } from './hooks/useDuration'
+import { loadBlockRefs } from './loadBlockRefs'
+import { loadProjectEvents } from './loadProjectEvents'
+import { loadDomain } from './loadDomain'
+import { loadTapEvents } from './loadTapEvents'
+import { daysToMillis } from './daysToMillis'
 
 const now = moment.now() - 5 * 60 * 1000 // 5 min ago
 
-const daysToMillis = (days: number) => days * SECONDS_IN_DAY * 1000
-
-type Duration = 1 | 7 | 30 | 90 | 365
-type EventRef = {
-  timestamp: number
-  value?: number
-  tapped?: number
-  previousBalance?: number
-}
-type BlockRef = { block: number | null; timestamp: number }
-type ShowGraph = 'volume' | 'balance'
-
-export default function BalanceTimeline({ height }: { height: number }) {
+export default function VolumeChart({
+  style: { height },
+  createdAt,
+  projectId,
+  cv,
+}: {
+  style: { height: number }
+  createdAt: number | undefined
+  projectId: number | undefined
+  cv: string
+}) {
   const [events, setEvents] = useState<EventRef[]>([])
-  const [blockRefs, setBlockRefs] = useState<BlockRef[]>([])
+  // const [blockRefs, setBlockRefs] = useState<BlockRef[]>([])
   const [loading, setLoading] = useState<boolean>()
   const [domain, setDomain] = useState<[number, number]>()
-  const [duration, setDuration] = useState<Duration>()
   const [showGraph, setShowGraph] = useState<ShowGraph>('volume')
-  const { projectId, projectType, createdAt } = useContext(V1ProjectContext)
+  const [duration, setDuration] = useDuration({ createdAt, now })
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -63,209 +58,43 @@ export default function BalanceTimeline({ height }: { height: number }) {
       ? moment(timestamp * 1000).format(duration > 1 ? 'M/DD' : 'h:mma')
       : undefined
 
-  useEffect(() => {
-    if (!createdAt) return
-
-    if (createdAt * 1000 > now - daysToMillis(1)) {
-      setDuration(1)
-    } else if (createdAt * 1000 > now - daysToMillis(7)) {
-      setDuration(7)
-    } else {
-      setDuration(30)
-    }
-  }, [createdAt])
-
   // Get references to timestamp of blocks in interval
   useEffect(() => {
-    if (!duration) return
+    if (!duration || !showGraph) return
 
     setLoading(true)
     setEvents([])
     setDomain(undefined)
 
-    // Get number of most recent block, and block at start of duration window
-    new EthDater(readProvider)
-      .getEvery(
-        'days',
-        //TODO + 0.1 fixes bug where only one block is returned. Needs better fix
-        moment(now - daysToMillis(duration + 0.1)).toISOString(),
-        moment(now).toISOString(),
-        duration,
-        false,
-      )
-      .then((res: (BlockRef & { block: number })[]) => {
-        const newBlockRefs: BlockRef[] = []
-        const blocksCount = 40
-
-        // Calculate intermediate block numbers at consistent intervals
-        for (let i = 0; i < blocksCount; i++) {
-          newBlockRefs.push({
-            block: Math.round(
-              ((res[1].block - res[0].block) / blocksCount) * i + res[0].block,
-            ),
-            timestamp: Math.round(
-              ((res[1].timestamp - res[0].timestamp) / blocksCount) * i +
-                res[0].timestamp,
-            ),
-          })
-        }
-
-        // Push blockRef for "now"
-        newBlockRefs.push({
-          block: null,
-          timestamp: Math.round(now.valueOf() / 1000),
-        })
-
-        setBlockRefs(newBlockRefs)
+    loadBlockRefs({ duration, now }).then(async blockRefs => {
+      if (!projectId) return
+      let projectEvents = await loadProjectEvents({
+        blockRefs,
+        showGraph,
+        projectId,
+        cv,
       })
-  }, [duration])
-
-  useEffect(() => {
-    if (!showGraph || !duration) return
-
-    const loadEvents = async () => {
-      setLoading(true)
-
-      const newEvents: EventRef[] = []
-      const promises: Promise<void>[] = []
-      let max: number | undefined = undefined
-      let min: number | undefined = undefined
-
-      if (!blockRefs.length) return
-
-      let queryKeys: (keyof Project)[]
-
-      switch (showGraph) {
-        case 'volume':
-          queryKeys = ['totalPaid']
-          break
-        case 'balance':
-          queryKeys = ['currentBalance']
-          break
-      }
-
-      // Query balance of project for interval blocks
-      for (let i = 0; i < blockRefs.length; i++) {
-        const blockRef = blockRefs[i]
-
-        promises.push(
-          querySubgraph({
-            entity: 'project',
-            keys: queryKeys,
-            // For block == null, don't specify block param
-            ...(blockRef.block !== null
-              ? { block: { number: blockRef.block } }
-              : {}),
-            where: projectId
-              ? {
-                  key: 'projectId',
-                  value: projectId,
-                }
-              : undefined,
-          }).then(projects => {
-            if (!projects.length) return
-
-            let value: number | undefined = undefined
-
-            const project = projects[0]
-
-            if (!project) return
-
-            switch (showGraph) {
-              case 'volume':
-                value = parseFloat(
-                  parseFloat(fromWad(project.totalPaid)).toFixed(4),
-                )
-                break
-              case 'balance':
-                value = parseFloat(
-                  parseFloat(fromWad(project.currentBalance)).toFixed(4),
-                )
-                break
-            }
-
-            if (value !== undefined) {
-              newEvents.push({
-                timestamp: blockRef.timestamp,
-                value,
-              })
-            }
-          }),
-        )
-      }
-
-      await Promise.all(promises)
-
-      // Calculate domain for graph based on floor/ceiling balances
-      newEvents.forEach(r => {
-        if (r.value === undefined) return
-        if (min === undefined || r.value < min) min = r.value
-        if (max === undefined || r.value > max) max = r.value
-      })
-
-      if (max === undefined || min === undefined) {
-        setDomain([0, 0])
-      } else {
-        const domainPad = (max - min) * 0.05
-        setDomain([Math.max(min - domainPad, 0), Math.max(max + domainPad, 10)])
-      }
-
-      // Load tap events
+      if (!projectEvents) return
+      const domain = loadDomain(projectEvents)
+      setDomain(domain)
       if (showGraph === 'balance') {
-        await querySubgraph({
-          entity: 'tapEvent',
-          keys: ['netTransferAmount', 'timestamp'],
-          where: projectId
-            ? [
-                {
-                  key: 'project',
-                  value: projectId.toString(),
-                },
-                {
-                  key: 'timestamp',
-                  value: Math.round((now - daysToMillis(duration)) / 1000),
-                  operator: 'gte',
-                },
-              ]
-            : undefined,
-        }).then(tapEvents => {
-          newEvents.push(
-            ...tapEvents.map(event => {
-              return {
-                ...event,
-                tapped: parseFloat(
-                  parseFloat(fromWad(event.netTransferAmount)).toFixed(4),
-                ),
-                timestamp: event.timestamp ?? 0,
-              }
-            }),
-          )
-        })
+        const tapEvents = await loadTapEvents({ projectId, duration, now })
+        projectEvents.concat(tapEvents)
       }
-
-      const sortedEvents = newEvents.sort((a, b) =>
+      const sortedEvents = projectEvents.sort((a, b) =>
         a.timestamp < b.timestamp ? -1 : 1,
       )
-
-      setEvents(
-        sortedEvents.map((e, i) => {
-          if (e.tapped) {
-            return {
-              ...e,
-              previousBalance: sortedEvents[i - 1]?.value,
-            }
-          }
-
-          return e
-        }),
-      )
-
+      const events = sortedEvents.map((e, i) => {
+        if (e.tapped) {
+          return { ...e, previousBalance: sortedEvents[i - 1]?.value }
+        }
+        return e
+      })
+      setEvents(events)
       setLoading(false)
-    }
-
-    setEvents([])
-    loadEvents()
-  }, [blockRefs, duration, projectId, showGraph])
+    })
+    // loadEvents(blockRefs)
+  }, [cv, duration, projectId, showGraph])
 
   const buttonStyle: CSSProperties = {
     fontSize: '0.7rem',
@@ -294,17 +123,6 @@ export default function BalanceTimeline({ height }: { height: number }) {
 
     return ticks
   }, [events, duration])
-
-  let header: string | undefined = undefined
-
-  switch (showGraph) {
-    case 'volume':
-      header = t`Volume`
-      break
-    case 'balance':
-      header = t`Project`
-      break
-  }
 
   const tab = (tab: ShowGraph) => {
     const selected = tab === showGraph
@@ -344,16 +162,12 @@ export default function BalanceTimeline({ height }: { height: number }) {
           alignItems: 'baseline',
         }}
       >
-        {projectType === 'bidpool' ? (
-          <SectionHeader text={header} />
-        ) : (
-          <div>
-            <Space size="large">
-              {tab('volume')}
-              {tab('balance')}
-            </Space>
-          </div>
-        )}
+        <div>
+          <Space size="large">
+            {tab('volume')}
+            {tab('balance')}
+          </Space>
+        </div>
 
         <Select
           className="small"

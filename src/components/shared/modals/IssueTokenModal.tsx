@@ -26,25 +26,32 @@ export default function IssueTokenModal({
 
   const issueTokensTx = useIssueTokensTx()
 
-  function executeIssueTokensTx() {
+  async function executeIssueTokensTx() {
+    await form.validateFields()
+
     setLoading(true)
 
     const fields = form.getFieldsValue(true)
 
-    issueTokensTx(
+    const txSuccess = await issueTokensTx(
       { name: fields.name, symbol: fields.symbol },
       {
         onDone: () => {
           setTransactionPending(true)
         },
         onConfirmed: () => {
-          onClose()
           setTransactionPending(false)
           setLoading(false)
+          onClose()
           onConfirmed?.()
         },
       },
     )
+
+    if (!txSuccess) {
+      setLoading(false)
+      setTransactionPending(false)
+    }
   }
 
   return (
@@ -72,10 +79,18 @@ export default function IssueTokenModal({
         )}
       </p>
       <Form form={form} layout="vertical">
-        <Form.Item name="name" label={t`Token name`}>
+        <Form.Item
+          name="name"
+          label={t`Token name`}
+          rules={[{ required: true, message: t`Token name is required` }]}
+        >
           <Input placeholder={t`Project Token`} />
         </Form.Item>
-        <Form.Item name="symbol" label={t`Token symbol`}>
+        <Form.Item
+          name="symbol"
+          label={t`Token symbol`}
+          rules={[{ required: true, message: t`Token symbol is required` }]}
+        >
           <Input
             placeholder="PRJ"
             onChange={e =>

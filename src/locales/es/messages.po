@@ -38,7 +38,7 @@ msgstr "({realTokenAllocationPercent}% de todos los tokens recién acuñados)."
 msgid "0% fee"
 msgstr "0% de comisión"
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 msgid "1 year"
 msgstr "1 año"
 
@@ -55,7 +55,7 @@ msgstr "100% de excedente"
 msgid "2. Funding cycle"
 msgstr "2. Ciclo de financiamiento"
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 msgid "24 hours"
 msgstr "24 horas"
 
@@ -68,11 +68,11 @@ msgstr "Espera de 3 días"
 msgid "3. Review and deploy"
 msgstr "3. Revisar y desplegar"
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 msgid "30 days"
 msgstr "30 días"
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 msgid "7 days"
 msgstr "7 días"
 
@@ -80,7 +80,7 @@ msgstr "7 días"
 msgid "7-day delay"
 msgstr "Espera de 7 días"
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 msgid "90 days"
 msgstr "90 días"
 
@@ -402,9 +402,9 @@ msgstr ""
 msgid "Any treasury funds within the distribution limit can be paid out to destinations that you can define as <0>splits</0>. <1>Learn more</1> about payout splits."
 msgstr ""
 
+#: src/components/shared/ArchiveProject/index.tsx
+#: src/components/shared/ArchiveProject/index.tsx
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
 msgid "Archive project"
 msgstr "Archivar proyecto"
 
@@ -481,10 +481,6 @@ msgstr "Tasa de curva de adhesión"
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Bonding curve:"
 msgstr "Curva de adhesión:"
-
-#: src/components/Landing/index.tsx
-msgid "Build a community around a project, fund it, and program its spending. Light enough for a group of friends, powerful enough for a global network of anons."
-msgstr "Construye una comunidad alrededor de un proyecto, finánciala y programa su gasto. Lo suficientemente liviana para un grupo de amigos, lo suficientemente potente para una red global de anons."
 
 #: src/components/Landing/index.tsx
 msgid "Built for:"
@@ -616,10 +612,6 @@ msgstr "Cerrar"
 msgid "Commit portions of your funds to the people or projects you want to support, or the contributors you want to pay. When you get paid, so do they."
 msgstr "Asigna porciones de tus fondos para la gente o proyectos que quieres apoyar, o a los colaboradores a los que les quieres pagar. Cuando te pagan, también a ellos."
 
-#: src/components/Landing/index.tsx
-msgid "Community funding for people and projects"
-msgstr "Financiamiento comunitario para personas y proyectos"
-
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 msgid "Configure how your project will collect and spend funds."
 msgstr ""
@@ -661,6 +653,11 @@ msgstr ""
 msgid "Connect your wallet to see your projects."
 msgstr ""
 
+#: src/components/shared/ArchiveProject/index.tsx
+#: src/components/shared/ArchiveProject/index.tsx
+msgid "Connected wallet not authorized"
+msgstr ""
+
 #: src/components/shared/ReconfigurationStrategy/ReconfigurationStrategySelector.tsx
 msgid "Contract address: {0}"
 msgstr "Dirección de contrato: {0}"
@@ -699,15 +696,12 @@ msgstr ""
 msgid "Create an Ethereum address that can be used to pay your project directly."
 msgstr ""
 
-#: src/components/Landing/V2Switch.tsx
-msgid "Create and view projects on the V2 Juicebox protocol."
-msgstr ""
-
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
 #: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
 msgid "Create payable address"
 msgstr ""
 
+#: src/Router.tsx
 #: src/components/Projects/MyProjects.tsx
 #: src/components/Projects/index.tsx
 msgid "Create project"
@@ -720,6 +714,14 @@ msgstr ""
 #: src/components/Landing/QAs.tsx
 msgid "Creating a Juicebox project mints you an NFT (ERC-721) representing ownership over it. Whoever owns this NFT can configure the rules of the game and how payouts are distributed."
 msgstr "Crear un proyecto en Juicebox te acuña un NFT (ERC-721) que representa la propiedad sobre aquel. Cualquiera que sea propietario de este NFT, puede configurar las reglas del juego y cómo son distribuidos los pagos."
+
+#: src/components/Landing/index.tsx
+msgid "Crowdfunding campaigns"
+msgstr ""
+
+#: src/components/Landing/index.tsx
+msgid "Crypto and Web3 businesses"
+msgstr ""
 
 #: src/components/v1/V1Project/FundingCycles/index.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/index.tsx
@@ -756,6 +758,10 @@ msgstr "Beneficiario de token personalizado"
 #: src/components/shared/Project/FundingCycleDetailsCard.tsx
 msgid "Cycle #{0}"
 msgstr "Ciclo #{0}"
+
+#: src/components/Landing/index.tsx
+msgid "DAOs and communities"
+msgstr ""
 
 #: src/components/Navbar/Mobile/ThemePickerMobile.tsx
 msgid "Dark theme"
@@ -803,8 +809,6 @@ msgstr ""
 msgid "Deposit 1 wei to @{handle}"
 msgstr "Deposita 1 wei a @{handle}"
 
-#: src/components/Landing/index.tsx
-#: src/components/Landing/index.tsx
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/index.tsx
 msgid "Design your project"
@@ -1054,10 +1058,6 @@ msgstr "Editar los beneficiarios de tokens"
 msgid "Edit tracked assets"
 msgstr "Editar activos en seguimiento"
 
-#: src/components/Landing/V2Switch.tsx
-msgid "Enable Juicebox V2"
-msgstr ""
-
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Enabled"
@@ -1094,13 +1094,13 @@ msgstr "Error al cargar holders"
 msgid "Error loading payments"
 msgstr "Error al cargar pagos"
 
-#: src/components/Landing/index.tsx
-msgid "Ethereum protocols and DAOs"
-msgstr "Protocolos de Ethereum y DAOs"
-
 #: src/components/Landing/QAs.tsx
 msgid "Ethereum provides a public environment where internet apps like Juicebox can run in a permission-less, trustless, and unstoppable fashion."
 msgstr "Ethereum provee un ambiente público donde las apps de internet como Juicebox pueden correr sin necesidad de permisos, ni confianza y de manera imparable."
+
+#: src/components/Landing/index.tsx
+msgid "Explore projects"
+msgstr ""
 
 #: src/components/Navbar/MenuItems.tsx
 msgid "FAQ"
@@ -1109,6 +1109,11 @@ msgstr "Preguntas frecuentes"
 #: src/components/Landing/index.tsx
 msgid "FAQs"
 msgstr "Preguntas frecuentes"
+
+#: src/components/shared/ArchiveProject/index.tsx
+#: src/components/shared/ArchiveProject/index.tsx
+msgid "Failed to update project metadata"
+msgstr ""
 
 #: src/components/shared/inputs/ImageUploader.tsx
 msgid "File must be less than {formattedSize}{unit}"
@@ -1129,6 +1134,10 @@ msgstr "Para más información, mira este <0>video corto</0>."
 #: src/components/Landing/QAs.tsx
 msgid "For users paying through your app, you should route those funds through the Juicebox smart contracts so they receive tokens in return."
 msgstr "Para los usuarios que paguen a través de tu aplicación, deberás dirigir esos fondos a través de los contratos inteligentes de Juicebox para que reciban tokens a cambio."
+
+#: src/components/Landing/index.tsx
+msgid "Fund anything. Grow together."
+msgstr ""
 
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
@@ -1310,7 +1319,7 @@ msgstr "Si estás interesado en crear un proyecto pero aún estás confundido so
 msgid "If you're unsure if you need to claim, you probably don't."
 msgstr "Si dudas de si necesitas reclamar tus tokens, probablemente no deberías hacerlo."
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 #: src/components/v1/V1Project/Paid.tsx
 msgid "In Juicebox"
 msgstr "En Juicebox"
@@ -1331,8 +1340,8 @@ msgid "Incentives"
 msgstr "Incentivos"
 
 #: src/components/Landing/index.tsx
-msgid "Indie artists, devs, creators"
-msgstr "Artistas indis, desarrolladores, creadores"
+msgid "Indie creators and builders"
+msgstr ""
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Initial issuance rate"
@@ -1448,6 +1457,10 @@ msgstr "Último"
 #: src/components/Landing/index.tsx
 msgid "Latest payments"
 msgstr "Últimos pagos"
+
+#: src/components/Landing/index.tsx
+msgid "Launch your project"
+msgstr ""
 
 #: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 msgid "Learn more in this <0>short video</0>."
@@ -1640,7 +1653,7 @@ msgstr "No establecido"
 msgid "Note"
 msgstr "Nota"
 
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
+#: src/components/shared/ArchiveProject/index.tsx
 msgid "Note:"
 msgstr "Nota:"
 
@@ -1656,10 +1669,6 @@ msgstr "Nota: los tokens pueden ser acuñados manualmente cuando se permita en e
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Notice from {0}:"
 msgstr "Aviso de {0}:"
-
-#: src/components/Landing/index.tsx
-msgid "Open source businesses"
-msgstr "Negocios de código abierto"
 
 #: src/components/v1/V1Project/modals/BalancesModal.tsx
 msgid "Other assets in this project's owner's wallet."
@@ -1762,8 +1771,8 @@ msgstr "Actúalmente, los pagos a este proyecto se encuentran desactivados dado 
 msgid "Paying this project is currently disabled."
 msgstr "Actúalmente, los pagos a este proyecto se encuentran desactivados."
 
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
-msgid "Payment made through payable address"
+#: src/components/shared/RichImgPreview.tsx
+msgid "Payment memo image"
 msgstr ""
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
@@ -1862,10 +1871,6 @@ msgstr "Podcast"
 msgid "Potential risks"
 msgstr ""
 
-#: src/components/Landing/index.tsx
-msgid "Powered by public smart contracts on <0>Ethereum</0>."
-msgstr "Impulsado por contratos públicos en <0>Ethereum</0>."
-
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/ProjectConfigurationFieldsContainer.tsx
 msgid "Preview:"
@@ -1874,10 +1879,6 @@ msgstr "Vista previa:"
 #: src/components/Landing/index.tsx
 msgid "Programmable spending"
 msgstr "Gasto programable"
-
-#: src/components/v1/V1Project/BalanceTimeline.tsx
-msgid "Project"
-msgstr "Proyecto"
 
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 #: src/components/v2/V2Project/ProjectActivity/index.tsx
@@ -1980,6 +1981,7 @@ msgstr ""
 msgid "Project {projectId} not found"
 msgstr "Proyecto {projectId} no encontrado"
 
+#: src/Router.tsx
 #: src/components/Navbar/MenuItems.tsx
 msgid "Projects"
 msgstr "Proyectos"
@@ -2011,10 +2013,6 @@ msgstr "Proyectos usando Juicebox"
 #: src/components/shared/forms/TicketingForm.tsx
 msgid "Projects using a reserved rate of {reservedRateRiskyMin}% or more will appear risky to contributors, as a relatively small number of tokens will be received in exchange for paying your project."
 msgstr "Los proyectos que usan una tarifa reservada {reservedRateRiskyMin}% o más parecerán arriesgados para los colaboradores, como un número relativamente pequeño de tokens serán recibidos a cambio de pagar por tu proyecto."
-
-#: src/components/Landing/index.tsx
-msgid "Public goods and services"
-msgstr "Bienes y servicios públicos"
 
 #: src/components/Projects/RankingExplanation.tsx
 msgid "Rankings based on number of contributions and volume gained in the last {trendingWindow} days. <0>See code</0>"
@@ -2411,10 +2409,6 @@ msgstr "Ese es el plan, pero los contratos base de Juicebox serán primeramente 
 msgid "The JBX protocol is unaudited, and projects built on it may be vulnerable to bugs or exploits. Be smart!"
 msgstr "El protocolo JBX está inauditado, y los proyectos contruidos sobre este pueden ser vulnerables a bugs o exploits. ¡Sé inteligente!"
 
-#: src/components/Landing/V2Switch.tsx
-msgid "The Juicebox V2 frontend is still in development. It is <0>not recommended</0> for use on mainnet. Some features are missing and there are known bugs. <1>Use with caution.</1>"
-msgstr ""
-
 #: src/components/v2/shared/V2SupportWarning.tsx
 msgid "The Juicebox V2 frontend is still in development. Some features are missing and there are known bugs."
 msgstr ""
@@ -2525,6 +2519,10 @@ msgstr "El objetivo para este ciclo de financiamiento es 0, lo que significa que
 #: src/components/v1/V1Project/Paid.tsx
 msgid "The total amount received by this project through Juicebox since it was created."
 msgstr "El monto total recibido por este proyecto a través de Juicebox desde que fue creado."
+
+#: src/components/Landing/index.tsx
+msgid "The world's largest decentralized funding platform. Light enough for a group of friends, powerful enough for a global network of anons."
+msgstr ""
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "There are no payouts defined for this funding cycle. The project owner will recieve all available funds."
@@ -2660,6 +2658,10 @@ msgstr "La acuñación de tokens solo está disponible para proyectos V1.1. La a
 msgid "Token name"
 msgstr "Nombre del token"
 
+#: src/components/shared/modals/IssueTokenModal.tsx
+msgid "Token name is required"
+msgstr ""
+
 #: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 msgid "Token redeem value"
 msgstr "Valor de canje del token"
@@ -2667,6 +2669,10 @@ msgstr "Valor de canje del token"
 #: src/components/shared/modals/IssueTokenModal.tsx
 msgid "Token symbol"
 msgstr "Símbolo del token"
+
+#: src/components/shared/modals/IssueTokenModal.tsx
+msgid "Token symbol is required"
+msgstr ""
 
 #: src/components/shared/Mod.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
@@ -2767,8 +2773,8 @@ msgstr "Tendencias"
 msgid "Twitter"
 msgstr "Twitter"
 
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
+#: src/components/shared/ArchiveProject/index.tsx
+#: src/components/shared/ArchiveProject/index.tsx
 msgid "Unarchive project"
 msgstr "Desarchivar proyecto"
 
@@ -2776,7 +2782,7 @@ msgstr "Desarchivar proyecto"
 msgid "Unavailable"
 msgstr "No disponible"
 
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
+#: src/components/shared/ArchiveProject/index.tsx
 msgid "Unless payments are paused in your funding cycle settings, your project will still be able to receive payments directly through the Juicebox protocol contracts."
 msgstr "A menos que los pagos sean pausados en los ajustes de tu ciclo de financiamiento, tu proyecto aún podrá recibir pagos directamente a través de los contratos del protocolo Juicebox."
 
@@ -2837,8 +2843,7 @@ msgstr ""
 msgid "Version of the terminal contract used by this project."
 msgstr "Versión del contrato terminal usado por este proyecto."
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 #: src/components/v1/V1Project/Paid.tsx
 msgid "Volume"
 msgstr "Volumen"
@@ -3046,7 +3051,7 @@ msgstr "Tu proyecto está financiado a través de los ciclos de financiamiento. 
 msgid "Your project token's issuance rate will decrease by this percentage every funding cycle. A higher discount rate will incentivize supporters to pay your project earlier."
 msgstr ""
 
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
+#: src/components/shared/ArchiveProject/index.tsx
 msgid "Your project will appear archived, and will not be able to receive payments through the juicebox.money app. You can unarchive a project at any time. Please allow a few days for your project to appear under the \"archived\" filter on the Projects page."
 msgstr "Tu proyecto aparecerá archivado, y no podrá recibir pagos a través de la app juicebox.money. Puedes desarchivar un proyecto en cualquier momento. Por favor da unos días para que tu proyecto aparezca debajo del filtro \"archivado\" en la Página de Proyectos."
 
@@ -3054,11 +3059,11 @@ msgstr "Tu proyecto aparecerá archivado, y no podrá recibir pagos a través de
 msgid "Your project will be created on the Juicebox V2 contracts. <0>Learn more.</0>"
 msgstr ""
 
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
+#: src/components/shared/ArchiveProject/index.tsx
 msgid "Your project will immediately appear active on the juicebox.money app. Please allow a few days for it to appear in the \"active\" projects list on the Projects page."
 msgstr "Tu proyecto inmediatamente aparecerá activo en la app juicebox.money. Por favor da unos días para que aparezca en la lista de proyectos \"activos\" en la Página de Proyectos."
 
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
+#: src/components/shared/ArchiveProject/index.tsx
 msgid "Your project will still be able to receive payments directly through the Juicebox protocol contracts."
 msgstr "Tu proyecto aún podrá recibir pagos directamente a través de los contratos del protocolo Juicebox."
 
@@ -3135,7 +3140,7 @@ msgstr "juiceboxETH"
 msgid "last {trendingWindowDays} days"
 msgstr "últimos {trendingWindowDays} días"
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 msgid "loading"
 msgstr "cargando"
 

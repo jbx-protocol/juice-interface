@@ -125,7 +125,7 @@ button {
 }
 
 body, .top-nav, div {
-  transition: background-color 750ms;
+  transition: background-color 250ms linear;
 }
 
 @import 'antd-overrides/index.scss';

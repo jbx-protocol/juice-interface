@@ -103,6 +103,9 @@ export default function V2ConfirmPayModal({
     if (!weiAmount) return
     await form.validateFields()
 
+    const beneficiaryFormVal = form.getFieldValue('beneficiary')
+    const txBeneficiary = beneficiaryFormVal ? beneficiaryFormVal : beneficiary
+
     // Prompt wallet connect if no wallet connected
     if (!userAddress && onSelectWallet) {
       onSelectWallet()
@@ -113,7 +116,7 @@ export default function V2ConfirmPayModal({
       {
         memo: form.getFieldValue('memo'),
         preferClaimedTokens: preferClaimed,
-        beneficiary: beneficiary,
+        beneficiary: txBeneficiary,
         value: weiAmount,
       },
       {
@@ -136,9 +139,10 @@ export default function V2ConfirmPayModal({
   }
 
   const validateCustomBeneficiary = () => {
-    if (!beneficiary) {
+    const formBeneficiary = form.getFieldValue('beneficiary')
+    if (!formBeneficiary) {
       return Promise.reject(t`Address required`)
-    } else if (!isAddress(beneficiary)) {
+    } else if (!isAddress(formBeneficiary)) {
       return Promise.reject(t`Invalid address`)
     }
     return Promise.resolve()
@@ -252,10 +256,10 @@ export default function V2ConfirmPayModal({
 
           {customBeneficiaryEnabled && (
             <FormItems.EthAddress
-              defaultValue={''}
+              defaultValue={undefined}
               name={'beneficiary'}
               onAddressChange={beneficiary => {
-                setBeneficiary(beneficiary)
+                form.setFieldsValue({ beneficiary })
               }}
               formItemProps={{
                 rules: [

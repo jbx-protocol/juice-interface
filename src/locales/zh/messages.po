@@ -2837,9 +2837,18 @@ msgstr "总供应量"
 msgid "Total: {0}%"
 msgstr "总共：{0}%"
 
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/hooks/Transactor.ts
+msgid "Transaction failed"
+msgstr ""
+
 #: src/components/shared/TransactionModal.tsx
 msgid "Transaction pending..."
 msgstr "交易进行中......"
+
+#: src/components/shared/ArchiveProject/index.tsx
+msgid "Transaction unsuccessful"
+msgstr ""
 
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx

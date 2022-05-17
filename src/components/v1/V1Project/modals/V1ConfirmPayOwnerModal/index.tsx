@@ -1,10 +1,10 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
-import { notification } from 'antd'
 import { Checkbox, Descriptions, Form, Input, Modal, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import ImageUploader from 'components/shared/inputs/ImageUploader'
+import { emitErrorNotification } from 'components/shared/Notifications/emitErrorNotification'
 import { NetworkContext } from 'contexts/networkContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import * as constants from '@ethersproject/constants'
@@ -75,12 +75,7 @@ export default function V1ConfirmPayOwnerModal({
         onDone: () => setLoading(false),
         onError: (error: Error) => {
           setLoading(false)
-          notification.error({
-            key: new Date().valueOf().toString(),
-            message: 'Transaction failed',
-            description: error.message,
-            duration: 0,
-          })
+          emitErrorNotification(t`Transaction failed`, error.message)
         },
       },
     )

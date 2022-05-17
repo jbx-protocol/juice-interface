@@ -4,10 +4,11 @@ import { useState } from 'react'
 import { TransactionReceipt } from '@ethersproject/providers'
 import { TransactorInstance } from 'hooks/Transactor'
 
-import { Modal, notification } from 'antd'
+import { Modal } from 'antd'
 import { JBDiscordLink } from 'components/Landing/QAs'
 import EtherscanLink from 'components/shared/EtherscanLink'
 import CopyTextButton from 'components/shared/CopyTextButton'
+import { emitErrorNotification } from 'components/shared/Notifications/emitErrorNotification'
 
 import { DeployProjectPayerTxArgs } from 'hooks/v2/transactor/DeployProjectPayerTx'
 import { useForm } from 'antd/lib/form/Form'
@@ -88,11 +89,7 @@ export default function LaunchProjectPayerModal({
           const newProjectPayerAddress =
             getProjectPayerAddressFromReceipt(txReceipt)
           if (newProjectPayerAddress === undefined) {
-            notification.error({
-              key: new Date().valueOf().toString(),
-              message: t`Something went wrong.`,
-              duration: 0,
-            })
+            emitErrorNotification(t`Something went wrong.`)
             return
           }
           if (onConfirmed) onConfirmed()

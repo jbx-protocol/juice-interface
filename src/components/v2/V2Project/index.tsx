@@ -93,12 +93,14 @@ export default function V2Project({
             size={GUTTER_PX}
             style={{ width: '100%' }}
           >
-            <VolumeChart
-              style={{ height: 240 }}
-              createdAt={createdAt}
-              projectId={projectId}
-              cv={cv ?? '2'}
-            />
+            {!isPreviewMode ? (
+              <VolumeChart
+                style={{ height: 240 }}
+                createdAt={createdAt}
+                projectId={projectId}
+                cv={cv ?? '2'}
+              />
+            ) : null}
             <V2ManageTokensSection />
             <V2FundingCycleSection expandCard={expandFundingCycleCard} />
           </Space>

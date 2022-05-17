@@ -15,7 +15,7 @@ import { JBDiscordLink } from 'components/Landing/QAs'
 
 import ArchiveV1Project from 'components/v1/V1Project/ArchiveV1Project'
 import { NetworkContext } from 'contexts/networkContext'
-import LaunchProjectPayerButton from 'components/v2/V2Project/LaunchProjectPayerButton'
+import LaunchProjectPayerButton from 'components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerButton'
 import { ThemeContext } from 'contexts/themeContext'
 import { DeployProjectPayerTxArgs } from 'hooks/v2/transactor/DeployProjectPayerTx'
 import ArchiveV2Project from 'components/v2/V2Project/ArchiveV2Project'

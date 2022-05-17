@@ -11,7 +11,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import IssueTokenModal from 'components/shared/modals/IssueTokenModal'
 import { tweet } from 'utils/v2/tweet'
 
-import LaunchProjectPayerModal from './LaunchProjectPayerModal'
+import LaunchProjectPayerModal from './LaunchProjectPayer/LaunchProjectPayerModal'
 
 export default function NewDeployModal({
   visible,

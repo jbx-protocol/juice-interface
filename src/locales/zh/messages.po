@@ -304,7 +304,7 @@ msgstr ""
 msgid "Adjust incentives for paying your project."
 msgstr "调整激励措施，以便鼓励其他人或项目向你的项目付款。"
 
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "Advanced options (optional)"
 msgstr ""
 
@@ -511,7 +511,7 @@ msgstr "燃烧 {tokensTextLong}"
 msgid "By default, all unallocated funds can be distributed to the project owner's wallet."
 msgstr "默认的情况下，所有未分配资金可被分发给项目拥有者的钱包。"
 
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "By default, newly minted tokens will go to the wallet who sends funds to the address. You can enable this to set the token beneficiary to a custom address."
 msgstr ""
 
@@ -565,10 +565,6 @@ msgstr ""
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 msgid "Check this to mint {tokenSymbol} ERC-20 to your wallet. Leave unchecked to have your token balance tracked by Juicebox, saving gas on this transaction. You can always claim your ERC-20 tokens later."
-msgstr ""
-
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
-msgid "Checking this will mint this project's ERC-20 tokens to the beneficiary's wallet when they pay to the address, and cost them more gas for each payment. If left unchecked, the beneficiary's new token balance will be tracked by Juicebox when they pay, and they can then claim their ERC-20 tokens later at any time."
 msgstr ""
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
@@ -691,13 +687,13 @@ msgid "Create a payable address"
 msgstr ""
 
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 #: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Create an Ethereum address that can be used to pay your project directly."
 msgstr ""
 
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Create payable address"
 msgstr ""
 
@@ -741,7 +737,7 @@ msgstr ""
 msgid "Currently worth: <0><1/>{0}</0>"
 msgstr "当前价值： <0><1/>{0}</0>"
 
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "Custom memo"
 msgstr ""
 
@@ -750,7 +746,7 @@ msgstr ""
 msgid "Custom strategy"
 msgstr "自定义策略"
 
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Custom token beneficiary"
 msgstr "自定义代币受益人"
@@ -792,8 +788,8 @@ msgstr "部署项目"
 msgid "Deploy project on {signerNetwork}"
 msgstr "在{signerNetwork} 上部署项目"
 
-#: src/components/v2/V2Project/LaunchProjectPayerButton.tsx
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerButton.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Deploy project payer contract"
 msgstr ""
 
@@ -818,8 +814,8 @@ msgstr "设计你的项目"
 msgid "Details"
 msgstr "详情"
 
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
-msgid "Determines whether tokens will be minted when people pay to this address."
+#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
+msgid "Determines whether tokens will be minted from payments to this address."
 msgstr ""
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
@@ -973,7 +969,7 @@ msgstr "项目是否能从溢出中获益？"
 #: src/components/v1/V1Project/FundingCycles/FundingHistory.tsx
 #: src/components/v1/V1Project/modals/BalancesModal.tsx
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 #: src/components/v2/V2Project/NewDeployModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleHistory.tsx
 msgid "Done"
@@ -1306,7 +1302,7 @@ msgstr ""
 msgid "If you know how much your project needs to earn over some period of time to be sustainable, you can set a funding target with that amount. If your project earns more than that, the surplus funds are locked in an overflow pool. Anyone holding your project's tokens can claim a portion of the overflow pool in exchange for redeeming their tokens."
 msgstr "如果你知道你的项目在一段时间内需要多少资金才能维持下去，你可以设定一个相应的资金目标。 如果项目获取到的资金比预想的多，盈余的资金就会被锁定在一个溢出池中。 任何持有你项目代币的人，都可以通过燃烧代币来赎回溢出池中的一部分。"
 
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "If you lose your address, please contact the Juicebox team through <0>Discord</0>."
 msgstr ""
 
@@ -1540,7 +1536,7 @@ msgstr ""
 msgid "Mint project tokens on demand"
 msgstr "按需铸造项目代币"
 
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "Mint tokens as ERC-20"
 msgstr ""
 
@@ -1770,6 +1766,10 @@ msgstr "因代币保留率为 100% 且支付后并不会获得相应的代币，
 #: src/components/v1/V1Project/V1PayButton.tsx
 msgid "Paying this project is currently disabled."
 msgstr "当前项目已暂停接收付款。"
+
+#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
+msgid "Payment made through payable address"
+msgstr ""
 
 #: src/components/shared/RichImgPreview.tsx
 msgid "Payment memo image"
@@ -2351,8 +2351,8 @@ msgstr "一些筹款周期的配置可能会给项目贡献者们造成一些风
 msgid "Some properties of the project's current funding cycle may indicate risk for contributors."
 msgstr ""
 
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Something went wrong."
 msgstr ""
 
@@ -2480,7 +2480,7 @@ msgstr ""
 msgid "The maximum amount of funds that can be distributed from this project in one funding cycle. Funds will be withdrawn in ETH no matter the currency you choose."
 msgstr ""
 
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "The onchain memo for each transaction made through the address. It will appear in the project's payment feed when someone pays this address."
 msgstr ""
 
@@ -2557,7 +2557,7 @@ msgstr "这些属性<0>不能</0> 在同一个筹款周期内马上进行修改�
 msgid "This address is an unrecognized strategy contract. Make sure it is correct!"
 msgstr "此地址是一个未识别的策略合约。请确保这个地址是对的。"
 
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "This address will disappear when you close this window. <0>Copy the address and save it now</0>."
 msgstr ""
 
@@ -2646,7 +2646,7 @@ msgstr "代币铸造"
 msgid "Token minting allows the project owner to mint project tokens at any time."
 msgstr ""
 
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "Token minting enabled"
 msgstr ""
 
@@ -2700,7 +2700,7 @@ msgstr ""
 msgid "Tokens cannot be claimed because no ERC-20 token has been issued for this project. ERC-20 tokens must be issued by the project owner."
 msgstr ""
 
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Tokens minted from payments to this address will belong to the payer by default. However, if someone pays the project though a custodial service platform such as Coinbase, <0>tokens can't be issued to their personal wallets and will be lost</0>."
 msgstr ""
 
@@ -2888,6 +2888,10 @@ msgstr "什么是折扣率？"
 msgid "What's going on under the hood?"
 msgstr "里面究竟有什么乾坤？"
 
+#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
+msgid "When checked, payments to this address will mint this project's ERC-20 tokens to the beneficiary's wallet. Payments will cost more gas. When unchecked, Juicebox will track the beneficiary's new tokens when they pay. The beneficiary can claim their ERC-20 tokens at any time."
+msgstr ""
+
 #: src/components/v2/V2Create/forms/RulesForm/index.tsx
 msgid "When enabled, the project owner can manually mint any amount of tokens to any address."
 msgstr ""
@@ -3035,7 +3039,7 @@ msgstr "你的余额：{0}"
 msgid "Your feedback will be sent to a <0>public Discord channel </0>for our development team to consider."
 msgstr "您的反馈会被发送至一个 <0>Discord 的公开频道</0>，我们的开发团队可以查看并考量。"
 
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Your new payable address:"
 msgstr ""
 

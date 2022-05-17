@@ -9,7 +9,7 @@ import { NetworkContext } from 'contexts/networkContext'
 import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import { formattedNum, formatWad } from 'utils/formatNumber'
 
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -63,16 +63,9 @@ export default function V2ConfirmPayModal({
   const [preferClaimed, setPreferClaimed] = useState<boolean>(false)
   const [customBeneficiaryEnabled, setCustomBeneficiaryEnabled] =
     useState<boolean>(false)
-  const [beneficiary, setBeneficiary] = useState<string | undefined>(
-    userAddress,
-  )
   const [transactionPending, setTransactionPending] = useState<boolean>()
 
   const [form] = useForm<{ memo: string; beneficiary: string }>()
-
-  useEffect(() => {
-    setBeneficiary(userAddress)
-  }, [userAddress])
 
   const usdAmount = converter.weiToUsd(weiAmount)
 
@@ -103,8 +96,8 @@ export default function V2ConfirmPayModal({
     if (!weiAmount) return
     await form.validateFields()
 
-    const beneficiaryFormVal = form.getFieldValue('beneficiary')
-    const txBeneficiary = beneficiaryFormVal ? beneficiaryFormVal : beneficiary
+    const beneficiary = form.getFieldValue('beneficiary')
+    const txBeneficiary = beneficiary ? beneficiary : userAddress
 
     // Prompt wallet connect if no wallet connected
     if (!userAddress && onSelectWallet) {
@@ -139,10 +132,10 @@ export default function V2ConfirmPayModal({
   }
 
   const validateCustomBeneficiary = () => {
-    const formBeneficiary = form.getFieldValue('beneficiary')
-    if (!formBeneficiary) {
+    const beneficiary = form.getFieldValue('beneficiary')
+    if (!beneficiary) {
       return Promise.reject(t`Address required`)
-    } else if (!isAddress(formBeneficiary)) {
+    } else if (!isAddress(beneficiary)) {
       return Promise.reject(t`Invalid address`)
     }
     return Promise.resolve()

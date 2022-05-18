@@ -17,6 +17,7 @@ export default function V2PayButton({
   payInCurrency,
   onError,
   disabled,
+  wrapperStyle,
 }: PayButtonProps) {
   const { projectMetadata, fundingCycleMetadata } = useContext(V2ProjectContext)
 
@@ -45,13 +46,14 @@ export default function V2PayButton({
   const isPayDisabled = Boolean(disabledMessage) || disabled
 
   return (
-    <>
+    <div style={{ textAlign: 'center', ...wrapperStyle }}>
       <Tooltip
         visible={isPayDisabled ? undefined : false}
         title={disabledMessage}
+        className="block"
       >
         <Button
-          style={{ flex: 1 }}
+          style={{ width: '100%' }}
           type="primary"
           onClick={() => {
             if (weiPayAmt?.eq(0)) {
@@ -87,6 +89,6 @@ export default function V2PayButton({
         onCancel={() => setPayModalVisible(false)}
         weiAmount={weiPayAmt}
       />
-    </>
+    </div>
   )
 }

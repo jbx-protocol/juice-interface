@@ -92,7 +92,7 @@ const queryOpts = (
       value: archivedProjectIds,
       operator: 'in',
     })
-  } else {
+  } else if (archivedProjectIds.length) {
     where.push({
       key: 'projectId',
       value: archivedProjectIds,

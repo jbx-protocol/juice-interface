@@ -6,7 +6,14 @@ import { NetworkContext } from 'contexts/networkContext'
 
 import { TransactorInstance } from '../../Transactor'
 
-export function useDeployProjectPayerTx(): TransactorInstance<{}> {
+export type DeployProjectPayerTxArgs = {
+  customBeneficiaryAddress: string | undefined
+  customMemo: string | undefined
+  tokenMintingEnabled: boolean
+  preferClaimed: boolean
+}
+
+export function useDeployProjectPayerTx(): TransactorInstance<DeployProjectPayerTxArgs> {
   const { transactor, contracts } = useContext(V2UserContext)
   const { userAddress } = useContext(NetworkContext)
   const { projectId } = useContext(V2ProjectContext)
@@ -14,7 +21,15 @@ export function useDeployProjectPayerTx(): TransactorInstance<{}> {
   const DEFAULT_MEMO = ''
   const DEFAULT_METADATA = [0x1]
 
-  return (_, txOpts) => {
+  return (
+    {
+      customBeneficiaryAddress,
+      customMemo,
+      tokenMintingEnabled,
+      preferClaimed,
+    },
+    txOpts,
+  ) => {
     if (!transactor || !projectId || !contracts?.JBETHPaymentTerminal) {
       txOpts?.onDone?.()
       return Promise.resolve(false)
@@ -25,11 +40,11 @@ export function useDeployProjectPayerTx(): TransactorInstance<{}> {
       'deployProjectPayer',
       [
         projectId,
-        constants.AddressZero, // defaultBeneficiary is none because we want tokens to go to msg.sender
-        false, // _defaultPreferClaimedTokens,
-        DEFAULT_MEMO, // _defaultMemo,
+        customBeneficiaryAddress ?? constants.AddressZero, // defaultBeneficiary is none because we want tokens to go to msg.sender
+        preferClaimed, // _defaultPreferClaimedTokens,
+        customMemo ?? DEFAULT_MEMO, // _defaultMemo,
         DEFAULT_METADATA, //_defaultMetadata,
-        false, // defaultPreferAddToBalance,
+        !tokenMintingEnabled, // defaultPreferAddToBalance,
         contracts.JBDirectory.address, // _directory,
         userAddress, //, _owner
       ],

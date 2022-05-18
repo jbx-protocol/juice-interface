@@ -75,8 +75,7 @@ export const ProjectPayoutModsModal = ({
 
   const [modalMode, setModalMode] = useState<ModalMode>('Add') //either 'Add', or 'Edit'
   const [editingModType, setEditingModType] = useState<ModType>('address')
-  const [editingModHandle, setEditingModHandle] = useState<string>()
-  // kind of a hack to get the form to work.
+  const [editingModHandle, setEditingModHandle] = useState<string | BigNumber>()
   const [, setEditingPercent] = useState<number>()
   const [form] = useForm<ProjectPayoutModsForm>()
 
@@ -86,8 +85,7 @@ export const ProjectPayoutModsModal = ({
       setEditingModType(
         BigNumber.from(mod.projectId ?? '0').gt(0) ? 'project' : 'address',
       )
-      setEditingModType(mod.handle ? 'project' : 'address')
-      setEditingModHandle(mod.handle)
+      setEditingModHandle(mod.handle ?? mod.projectId)
       const percent = parseFloat(permyriadToPercent(mod.percent))
       setEditingPercent(percent)
       form.setFieldsValue({

@@ -83,7 +83,7 @@ export default function PayInputGroup({
             min={0}
             accessory={
               <InputAccessoryButton
-                withArrow={true}
+                withArrow
                 content={currencyMetadata[payInCurrency ?? ETH].name}
                 onClick={togglePayInCurrency}
               />

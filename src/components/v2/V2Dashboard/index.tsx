@@ -42,6 +42,7 @@ import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/v2/splits'
+import { V2ArchivedProjectIds } from 'constants/v2/archivedProjects'
 
 export default function V2Dashboard({ projectId }: { projectId: number }) {
   const { data: metadataCID, loading: metadataURILoading } =
@@ -155,6 +156,10 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
 
   const { data: ballotState } = useBallotState(projectId)
 
+  const isArchived = projectId
+    ? V2ArchivedProjectIds.includes(projectId) || projectMetadata?.archived
+    : false
+
   if (metadataLoading || metadataURILoading) return <Loading />
   if (isNewDeploy && !metadataCID) {
     return <NewDeployNotAvailable handleOrId={projectId} />
@@ -185,6 +190,7 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
     primaryTerminalCurrentOverflow,
     totalTokenSupply,
     ballotState,
+    isArchived,
 
     loading: {
       ETHBalanceLoading,

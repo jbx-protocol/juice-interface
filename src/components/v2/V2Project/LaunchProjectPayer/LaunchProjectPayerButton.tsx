@@ -3,6 +3,7 @@ import { Button, Tooltip } from 'antd'
 import { ButtonType } from 'antd/lib/button'
 import { SizeType } from 'antd/lib/config-provider/SizeContext'
 import { TransactorInstance } from 'hooks/Transactor'
+import { DeployProjectPayerTxArgs } from 'hooks/v2/transactor/DeployProjectPayerTx'
 import { useState } from 'react'
 
 import LaunchProjectPayerModal from './LaunchProjectPayerModal'
@@ -16,7 +17,9 @@ export default function LaunchProjectPayerButton({
   type,
   tooltipText,
 }: {
-  useDeployProjectPayerTx: () => TransactorInstance<{}> | undefined
+  useDeployProjectPayerTx: () =>
+    | TransactorInstance<DeployProjectPayerTxArgs>
+    | undefined
   size?: SizeType
   text?: JSX.Element
   onCompleted?: VoidFunction

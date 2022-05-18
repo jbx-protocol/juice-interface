@@ -9,8 +9,12 @@ import { JBDiscordLink } from 'components/Landing/QAs'
 import EtherscanLink from 'components/shared/EtherscanLink'
 import CopyTextButton from 'components/shared/CopyTextButton'
 
+import { DeployProjectPayerTxArgs } from 'hooks/v2/transactor/DeployProjectPayerTx'
+import { useForm } from 'antd/lib/form/Form'
+
 import { readProvider } from 'constants/readProvider'
-import TransactionModal from '../../shared/TransactionModal'
+import TransactionModal from '../../../shared/TransactionModal'
+import AdvancedOptionsCollapse from './AdvancedOptionsCollapse'
 
 const DEPLOY_EVENT_IDX = 0
 
@@ -24,6 +28,7 @@ const getProjectPayerAddressFromReceipt = (
   const newProjectPayerAddress = txReceipt?.logs[DEPLOY_EVENT_IDX]?.address
   return newProjectPayerAddress
 }
+
 export default function LaunchProjectPayerModal({
   visible,
   onClose,
@@ -32,12 +37,22 @@ export default function LaunchProjectPayerModal({
 }: {
   visible: boolean
   onClose: VoidFunction
-  useDeployProjectPayerTx: () => TransactorInstance<{}> | undefined
+  useDeployProjectPayerTx: () =>
+    | TransactorInstance<DeployProjectPayerTxArgs>
+    | undefined
   onConfirmed?: VoidFunction
 }) {
   const [loadingProjectPayer, setLoadingProjectPayer] = useState<boolean>()
   const [transactionPending, setTransactionPending] = useState<boolean>()
   const [projectPayerAddress, setProjectPayerAddress] = useState<string>()
+
+  const [tokenMintingEnabled, setTokenMintingEnabled] = useState<boolean>(true)
+  const [preferClaimed, setPreferClaimed] = useState<boolean>(false)
+
+  const [form] = useForm<{
+    memo: string
+    customBeneficiaryAddress: string
+  }>()
 
   const [confirmedModalVisible, setConfirmedModalVisible] = useState<boolean>()
   // TODO: load project payer and show different thing in this section if the project already has one
@@ -52,7 +67,12 @@ export default function LaunchProjectPayerModal({
 
     const txSuccess = await deployProjectPayerTx(
       {
-        args: [],
+        customBeneficiaryAddress: form.getFieldValue(
+          'customBeneficiaryAddress',
+        ),
+        customMemo: form.getFieldValue('memo'),
+        tokenMintingEnabled,
+        preferClaimed,
       },
       {
         onDone() {
@@ -88,6 +108,7 @@ export default function LaunchProjectPayerModal({
       setLoadingProjectPayer(false)
       setTransactionPending(false)
     }
+    form.resetFields()
   }
 
   return (
@@ -109,8 +130,8 @@ export default function LaunchProjectPayerModal({
         </p>
         <p>
           <Trans>
-            Tokens minted from payments to this address will belong to the
-            payer. However, if someone pays the project though a custodial
+            Tokens minted from payments to this address will belong to the payer
+            by default. However, if someone pays the project though a custodial
             service platform such as Coinbase,{' '}
             <strong>
               tokens can't be issued to their personal wallets and will be lost
@@ -118,6 +139,13 @@ export default function LaunchProjectPayerModal({
             .
           </Trans>
         </p>
+        <AdvancedOptionsCollapse
+          form={form}
+          tokenMintingEnabled={tokenMintingEnabled}
+          setTokenMintingEnabled={setTokenMintingEnabled}
+          preferClaimed={preferClaimed}
+          setPreferClaimed={setPreferClaimed}
+        />
       </TransactionModal>
       <Modal
         visible={confirmedModalVisible}

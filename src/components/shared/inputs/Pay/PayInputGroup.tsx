@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { CSSProperties, useContext, useState } from 'react'
 import { BigNumber } from '@ethersproject/bignumber'
 
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
@@ -18,8 +18,9 @@ import PayInputSubText from './PayInputSubText'
 export type PayButtonProps = {
   payAmount: string
   payInCurrency: CurrencyOption
-  onError?: (error?: Error) => void
+  onError: (error?: Error) => void
   disabled?: boolean
+  wrapperStyle?: CSSProperties
 }
 
 export default function PayInputGroup({
@@ -71,7 +72,7 @@ export default function PayInputGroup({
           gap: 10,
         }}
       >
-        <div style={{ flex: 3, minWidth: '50%' }}>
+        <div style={{ flex: 2, minWidth: '50%' }}>
           <FormattedNumberInput
             placeholder="0"
             onChange={val => {
@@ -100,6 +101,7 @@ export default function PayInputGroup({
         </div>
 
         <PayButton
+          wrapperStyle={{ flex: 1 }}
           payAmount={payAmount}
           payInCurrency={payInCurrency}
           onError={() => setIsErrorField(true)}

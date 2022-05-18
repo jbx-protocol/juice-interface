@@ -37,7 +37,7 @@ import Project404 from 'components/shared/Project404'
 
 import { layouts } from 'constants/styles/layouts'
 import { projectTypes } from 'constants/v1/projectTypes'
-import { archivedProjectIds } from 'constants/v1/archivedProjects'
+import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 
 import Loading from '../../shared/Loading'
 import V1Project from '../V1Project'
@@ -117,7 +117,8 @@ export default function V1Dashboard() {
       : 'standard'
     const isPreviewMode = false
     const isArchived = projectId
-      ? archivedProjectIds.includes(projectId.toNumber()) || metadata?.archived
+      ? V1ArchivedProjectIds.includes(projectId.toNumber()) ||
+        metadata?.archived
       : false
 
     return {

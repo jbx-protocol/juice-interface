@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { CV } from 'models/cv'
 import {
   DistributeToPayoutModEvent,
   DistributeToPayoutModEventJson,
@@ -508,4 +509,13 @@ const isPluralQuery = (key: EntityKey): boolean => {
   if (key === 'projectSearch') return false
 
   return true
+}
+
+/**
+ * Get the subgraph representation of a project ID, based on given [cv] and [projectId]
+ * @param cv Contracts version
+ * @param projectId the on-chain project ID
+ */
+export const getSubgraphIdForProject = (cv: CV, projectId: number) => {
+  return `${cv}-${projectId}`
 }

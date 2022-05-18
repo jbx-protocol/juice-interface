@@ -64,7 +64,7 @@ export default function V1PayButton({
 
   let disabledMessage: string
   if (isArchived) {
-    disabledMessage = `This project has been archived and cannot be paid.`
+    disabledMessage = t`This project has been archived and cannot be paid.`
   } else if (isV1AndMaxRR || isMoonAndMaxRR) {
     disabledMessage = t`Paying this project is currently disabled, because the token reserved rate is 100% and no tokens will be earned by making a payment.`
   } else if (fcMetadata.payIsPaused) {

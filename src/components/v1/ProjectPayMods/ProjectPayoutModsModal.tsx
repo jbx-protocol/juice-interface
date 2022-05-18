@@ -49,34 +49,34 @@ type ProjectPayoutModsForm = {
 
 export const ProjectPayoutModsModal = ({
   visible,
-  target,
-  feePercentage,
   mods,
   editingModIndex,
+  target,
+  feePercentage,
   targetIsInfinite,
   currencyName,
   onOk,
   onCancel,
 }: {
-  target: string
-  feePercentage: string | undefined
+  visible: boolean
   mods: PayoutMod[]
+  target: string
   editingModIndex: number | undefined
+  feePercentage: string | undefined
   targetIsInfinite?: boolean
   currencyName: CurrencyName | undefined
-  visible: boolean
   onOk: (mods: EditingPayoutMod[]) => void
   onCancel: VoidFunction
 }) => {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+
   const [modalMode, setModalMode] = useState<ModalMode>('Add') //either 'Add', or 'Edit'
   const [editingModType, setEditingModType] = useState<ModType>('address')
   const [editingModHandle, setEditingModHandle] = useState<string>()
   // kind of a hack to get the form to work.
   const [, setEditingPercent] = useState<number>()
-  // const form = Form.useFormInstance<ProjectPayoutModsForm>()
   const [form] = useForm<ProjectPayoutModsForm>()
 
   useEffect(() => {
@@ -89,7 +89,6 @@ export const ProjectPayoutModsModal = ({
       setEditingModHandle(editingModHandle)
       const percent = parseFloat(permyriadToPercent(mod.percent))
       setEditingPercent(percent)
-      form.setFieldsValue({ handle: 'this-is-handle' })
       form.setFieldsValue({
         ...mod,
         handle: mod.handle,
@@ -120,11 +119,6 @@ export const ProjectPayoutModsModal = ({
   }, [editingModHandle, editingModIndex, feePercentage, form, mods, target])
 
   const feePerbicent = percentToPerbicent(feePercentage)
-
-  const cleanupModal = () => {
-    form.resetFields()
-    setEditingPercent(0)
-  }
 
   // Validates the amount and percentage (ensures percent !== 0 or > 100)
   const validatePayout = () => {
@@ -183,14 +177,12 @@ export const ProjectPayoutModsModal = ({
         i === editingModIndex ? { ...m, ...newMod } : m,
       )
     }
-    cleanupModal()
     onOk(modsToReturn)
 
     return true
   }
 
   const discardAndClose = () => {
-    cleanupModal()
     onCancel()
     return true
   }

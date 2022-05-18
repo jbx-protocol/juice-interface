@@ -35,9 +35,9 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { useForm } from 'antd/lib/form/Form'
 
 import { CurrencyName } from 'constants/currency'
+import { EditingPayoutMod } from './types'
 
-type ModType = 'project' | 'address'
-type EditingPayoutMod = PayoutMod & { handle?: string; percent?: number }
+export type ModType = 'project' | 'address'
 
 type ProjectPayoutModsForm = {
   handle: string

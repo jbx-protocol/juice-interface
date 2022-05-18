@@ -2,7 +2,6 @@ import { Trans } from '@lingui/macro'
 import { Button, Form, Space } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
-import { PayoutMod } from 'models/mods'
 import { useContext, useState } from 'react'
 import { permyriadToPercent } from 'utils/formatNumber'
 
@@ -11,8 +10,7 @@ import FormattedAddress from '../../shared/FormattedAddress'
 import { FormItemExt } from '../../shared/formItems/formItemExt'
 import { ProjectModInput } from './ProjectModInput'
 import { ProjectPayoutModsModal } from './ProjectPayoutModsModal'
-
-type EditingPayoutMod = PayoutMod & { handle?: string; percent?: number }
+import { EditingPayoutMod } from './types'
 
 export default function ProjectPayoutMods({
   target,

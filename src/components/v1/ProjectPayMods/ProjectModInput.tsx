@@ -4,7 +4,6 @@ import CurrencySymbol from 'components/shared/CurrencySymbol'
 import FormattedAddress from 'components/shared/FormattedAddress'
 
 import { ThemeContext } from 'contexts/themeContext'
-import { PayoutMod } from 'models/mods'
 import { useContext } from 'react'
 import { formatDate } from 'utils/formatDate'
 import {
@@ -17,8 +16,7 @@ import { amountSubFee } from 'utils/math'
 
 import { CurrencyName } from 'constants/currency'
 import V1ProjectHandle from '../shared/V1ProjectHandle'
-
-type EditingPayoutMod = PayoutMod & { handle?: string; percent?: number }
+import { EditingPayoutMod } from './types'
 
 export function ProjectModInput({
   mod,

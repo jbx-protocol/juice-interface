@@ -39,6 +39,7 @@ export default function V2Project({
     tokenSymbol,
     tokenAddress,
     cv,
+    isArchived,
   } = useContext(V2ProjectContext)
 
   // Checks URL to see if user was just directed from project deploy
@@ -68,7 +69,7 @@ export default function V2Project({
       <ProjectHeader
         metadata={projectMetadata}
         actions={!isPreviewMode ? <V2ProjectHeaderActions /> : undefined}
-        isArchived={projectMetadata?.archived}
+        isArchived={isArchived}
       />
       <Row gutter={GUTTER_PX} align="bottom">
         <Col md={colSizeMd} xs={24}>

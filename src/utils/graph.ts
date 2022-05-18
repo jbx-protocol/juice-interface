@@ -513,6 +513,9 @@ const isPluralQuery = (key: EntityKey): boolean => {
 
 /**
  * Get the subgraph representation of a project ID, based on given [cv] and [projectId]
+ *
+ * Reference implementation: https://github.com/jbx-protocol/juice-subgraph/blob/main/src/utils.ts#L84
+ *
  * @param cv Contracts version
  * @param projectId the on-chain project ID
  */

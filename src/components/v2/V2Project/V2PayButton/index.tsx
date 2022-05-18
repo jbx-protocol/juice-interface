@@ -19,7 +19,8 @@ export default function V2PayButton({
   disabled,
   wrapperStyle,
 }: PayButtonProps) {
-  const { projectMetadata, fundingCycleMetadata } = useContext(V2ProjectContext)
+  const { projectMetadata, fundingCycleMetadata, isArchived } =
+    useContext(V2ProjectContext)
 
   const [payModalVisible, setPayModalVisible] = useState<boolean>(false)
   const [payWarningModalVisible, setPayWarningModalVisible] =
@@ -36,10 +37,10 @@ export default function V2PayButton({
     ? projectMetadata.payButton
     : t`Pay`
 
-  //TODO: archived states, other reasons for pay being disabled
-
   let disabledMessage: string | undefined
-  if (fundingCycleMetadata.pausePay) {
+  if (isArchived) {
+    disabledMessage = t`This project is archived and can't be paid.`
+  } else if (fundingCycleMetadata.pausePay) {
     disabledMessage = t`Payments are paused for the current funding cycle.`
   }
 

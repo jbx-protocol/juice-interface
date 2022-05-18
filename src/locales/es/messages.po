@@ -2555,8 +2555,9 @@ msgid "This means that anyone can see the code that they're using, anyone can us
 msgstr "Esto significa que cualquiera puede ver el código que ellos están usando, cualquiera puede usar el código sin pedir permiso y cualquiera puede alterar el código o echarlo abajo."
 
 #: src/components/v1/V1Project/V1PayButton.tsx
-msgid "This project has been archived and cannot be paid."
-msgstr "Este proyecto ha sido archivado y no se puede pagar."
+#: src/components/v2/V2Project/V2PayButton/index.tsx
+msgid "This project is archived and can't be paid."
+msgstr ""
 
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "This project is currently using the Juicebox V1 terminal contract. New features introduced in V1.1 allow the project owner to:"

@@ -10,15 +10,17 @@ import ProjectLogoUri from './ProjectLogoUri'
 import ProjectName from './ProjectName'
 import ProjectPayButton from './ProjectPayButton'
 import ProjectPayDisclosure from './ProjectPayDisclosure'
-import ProjectPayoutMods from '../../v1/ProjectPayoutMods'
+import ProjectPayoutMods from '../../v1/ProjectPayMods/ProjectPayoutMods'
 import ProjectReserved from './ProjectReserved'
 import ProjectTarget from './ProjectTarget'
 import ProjectTicketMods from './ProjectTicketMods'
 import ProjectTwitter from './ProjectTwitter'
 import TokenRefs from './TokenRefs'
+import { ItemNoInput } from './ItemNoInput'
 
 export const FormItems = {
   EthAddress,
+  ItemNoInput,
   ProjectBondingCurveRate,
   ProjectDescription,
   ProjectDiscord,

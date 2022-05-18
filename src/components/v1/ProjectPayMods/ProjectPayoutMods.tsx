@@ -49,10 +49,12 @@ export default function ProjectPayoutMods({
 
   if (!mods) return null
 
-  const total = mods.reduce(
-    (acc, curr) => acc + parseFloat(permyriadToPercent(curr.percent ?? '0')),
-    0,
-  )
+  const total = mods
+    .concat(lockedMods ? lockedMods : [])
+    .reduce(
+      (acc, curr) => acc + parseFloat(permyriadToPercent(curr.percent ?? '0')),
+      0,
+    )
 
   return (
     <Form.Item

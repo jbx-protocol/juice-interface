@@ -10,7 +10,6 @@ import ProjectLogoUri from './ProjectLogoUri'
 import ProjectName from './ProjectName'
 import ProjectPayButton from './ProjectPayButton'
 import ProjectPayDisclosure from './ProjectPayDisclosure'
-import ProjectPayoutMods from '../../v1/ProjectPayMods/ProjectPayoutMods'
 import ProjectReserved from './ProjectReserved'
 import ProjectTarget from './ProjectTarget'
 import ProjectTicketMods from './ProjectTicketMods'
@@ -32,7 +31,6 @@ export const FormItems = {
   ProjectName,
   ProjectPayButton,
   ProjectPayDisclosure,
-  ProjectPayoutMods,
   ProjectReserved,
   ProjectTarget,
   ProjectTicketMods,

@@ -186,7 +186,6 @@ export default function PayoutModsList({
             okText="Save payouts"
             onOk={() => setMods()}
             onCancel={() => {
-              setEditingMods(mods)
               setModalVisible(false)
             }}
             confirmLoading={loading}

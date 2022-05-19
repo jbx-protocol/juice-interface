@@ -182,9 +182,16 @@ export default function Landing() {
                       }}
                     >
                       <Trans>
-                        The world's largest decentralized funding platform.
-                        Light enough for a group of friends, powerful enough for
-                        a global network of anons.
+                        The Decentralized Funding Platform. Light enough for a
+                        group of friends, powerful enough for a global network
+                        of anons.{' '}
+                        <Link
+                          className="text-primary hover-text-decoration-underline"
+                          to="/p/juicebox"
+                        >
+                          Community-owned
+                        </Link>
+                        , on Ethereum.
                       </Trans>
                     </div>
 
@@ -480,12 +487,12 @@ export default function Landing() {
         }}
       >
         <div style={{ fontSize: 20, marginBottom: 20 }}>🧃⚡️</div>
-        <h3 style={{ color: 'white', margin: 0 }}>
+        <p style={{ color: 'white', margin: 0 }}>
           <Trans>
             Big ups to the Ethereum community for crafting the infrastructure
             and economy to make Juicebox possible.
           </Trans>
-        </h3>
+        </p>
       </div>
       <FeedbackFormButton />
       <Footer />

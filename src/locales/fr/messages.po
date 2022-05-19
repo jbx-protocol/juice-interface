@@ -2405,6 +2405,10 @@ msgstr "Texte affiché sur votre bouton \"payer\". Laissez-le vide pour utiliser
 msgid "That's the plan, but the core Juicebox contracts will first be deployed to Ethereum Mainnet."
 msgstr "C'est le plan, mais les principaux contrats Juicebox seront d'abord développés sur Ethereum Mainnet."
 
+#: src/components/Landing/index.tsx
+msgid "The Decentralized Funding Platform. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."
+msgstr ""
+
 #: src/components/v1/V1Create/index.tsx
 msgid "The JBX protocol is unaudited, and projects built on it may be vulnerable to bugs or exploits. Be smart!"
 msgstr "Le protocole JBX n'est pas audité et les projets construits dessus peuvent être vulnérables aux bogues ou aux exploits. Soyez intelligent !"
@@ -2519,10 +2523,6 @@ msgstr ""
 #: src/components/v1/V1Project/Paid.tsx
 msgid "The total amount received by this project through Juicebox since it was created."
 msgstr "Le montant total reçu par ce projet via Juicebox depuis sa création."
-
-#: src/components/Landing/index.tsx
-msgid "The world's largest decentralized funding platform. Light enough for a group of friends, powerful enough for a global network of anons."
-msgstr ""
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "There are no payouts defined for this funding cycle. The project owner will recieve all available funds."

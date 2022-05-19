@@ -3062,8 +3062,7 @@ msgstr "Projeniz arşivlenecek ve juicebox.money uygulaması üzerinden ödeme a
 
 #: src/components/v2/V2Create/V2WarningBanner.tsx
 msgid "Your project will be created on the Juicebox V2 contracts. <0>Learn more.</0>"
-msgstr "Projeniz Juicebox V2 sözleşmeleri üzerinde oluşturulacaktır. <0>Daha fazla \n"
-" bilgi edinin</0>"
+msgstr "Projeniz Juicebox V2 sözleşmeleri üzerinde oluşturulacaktır. <0>Daha fazla bilgi edinin</0>"
 
 #: src/components/shared/ArchiveProject/index.tsx
 msgid "Your project will immediately appear active on the juicebox.money app. Please allow a few days for it to appear in the \"active\" projects list on the Projects page."

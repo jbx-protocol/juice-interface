@@ -1068,6 +1068,7 @@ msgid "Enabling this will mint {tokenSymbol} ERC-20 tokens. Otherwise staked {to
 msgstr "En activant cette option cela frappera les tokens {tokenSymbol} ERC-20. Sinon, les {tokenSymbol} tokens mis en gage seront frappés et pourront être réclamés ultérieurement comme ERC-20 par le destinataire."
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
+#: src/components/v2/V2Create/forms/RulesForm/TokenMintingExtra.tsx
 #: src/components/v2/V2Create/forms/RulesForm/index.tsx
 msgid "Enabling token minting will appear risky to contributors. Only enable this when necessary."
 msgstr "Activer la frappe de tokens peut sembler risquée pour les contributeurs. Activez l'option qu'en cas de nécessité."
@@ -1136,7 +1137,7 @@ msgid "Fund anything. Grow together."
 msgstr "Financez quoi que ce soit. Grandissez ensemble."
 
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
-#: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/FundingDrawer.tsx
 msgid "Funding"
 msgstr "Financement"
 
@@ -2054,7 +2055,6 @@ msgid "Reconfigure"
 msgstr "Modifier les paramètres"
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure funding"
 msgstr "Modifier les paramètres de financement"
 
@@ -2072,7 +2072,6 @@ msgid "Reconfigure rules"
 msgstr "Reconfigurer les règles"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureTokenDrawer.tsx
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure token"
 msgstr "Modifier les paramètres du token"
 
@@ -2216,8 +2215,8 @@ msgstr "Récompenser des membres spécifiques de la communauté avec des tokens.
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
-#: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/RulesDrawer.tsx
 msgid "Rules"
 msgstr "Règles"
 
@@ -2618,8 +2617,8 @@ msgid "To: <0/>"
 msgstr "À : <0/>"
 
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
-#: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/TokenDrawer.tsx
 #: src/utils/tokenSymbolText.ts
 msgid "Token"
 msgstr "Token"
@@ -2891,6 +2890,9 @@ msgstr "Que se passe-t-il sous le capot ?"
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "When checked, payments to this address will mint this project's ERC-20 tokens to the beneficiary's wallet. Payments will cost more gas. When unchecked, Juicebox will track the beneficiary's new tokens when they pay. The beneficiary can claim their ERC-20 tokens at any time."
+#: src/components/v2/V2Create/forms/RulesForm/TokenMintingExtra.tsx
+#: src/components/v2/V2Create/forms/RulesForm/index.tsx
+msgid "When enabled, the project owner can manually mint any amount of tokens to any address."
 msgstr ""
 
 #: src/components/v2/V2Create/forms/RulesForm/index.tsx

@@ -1068,6 +1068,7 @@ msgid "Enabling this will mint {tokenSymbol} ERC-20 tokens. Otherwise staked {to
 msgstr "允许这个选项将会铸造出 ERC-20 标准的 {tokenSymbol} 代币。 否则就会铸造 {tokenSymbol} 托管代币，以后可以再来按 ERC-20 标准的代币进行领取。"
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
+#: src/components/v2/V2Create/forms/RulesForm/TokenMintingExtra.tsx
 #: src/components/v2/V2Create/forms/RulesForm/index.tsx
 msgid "Enabling token minting will appear risky to contributors. Only enable this when necessary."
 msgstr "允许代币铸造会令捐款人感觉有风险。请仅在必要情况下启用。"
@@ -1136,7 +1137,7 @@ msgid "Fund anything. Grow together."
 msgstr ""
 
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
-#: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/FundingDrawer.tsx
 msgid "Funding"
 msgstr "筹款"
 
@@ -2054,7 +2055,6 @@ msgid "Reconfigure"
 msgstr "重新配置"
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure funding"
 msgstr "重新配置筹款"
 
@@ -2072,7 +2072,6 @@ msgid "Reconfigure rules"
 msgstr "重新配置规则"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureTokenDrawer.tsx
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure token"
 msgstr "重新配置代币"
 
@@ -2216,8 +2215,8 @@ msgstr "用代币奖励特定的社区成员。"
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
-#: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/RulesDrawer.tsx
 msgid "Rules"
 msgstr "规则"
 
@@ -2618,8 +2617,8 @@ msgid "To: <0/>"
 msgstr "分配给：<0/>"
 
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
-#: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/TokenDrawer.tsx
 #: src/utils/tokenSymbolText.ts
 msgid "Token"
 msgstr "代币"
@@ -2891,6 +2890,9 @@ msgstr "里面究竟有什么乾坤？"
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "When checked, payments to this address will mint this project's ERC-20 tokens to the beneficiary's wallet. Payments will cost more gas. When unchecked, Juicebox will track the beneficiary's new tokens when they pay. The beneficiary can claim their ERC-20 tokens at any time."
+#: src/components/v2/V2Create/forms/RulesForm/TokenMintingExtra.tsx
+#: src/components/v2/V2Create/forms/RulesForm/index.tsx
+msgid "When enabled, the project owner can manually mint any amount of tokens to any address."
 msgstr ""
 
 #: src/components/v2/V2Create/forms/RulesForm/index.tsx

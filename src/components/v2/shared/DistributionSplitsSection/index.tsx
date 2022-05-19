@@ -1,9 +1,12 @@
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Button, Form, Space } from 'antd'
 import { useCallback, useState } from 'react'
 
 import { Split } from 'models/v2/splits'
 import { FormItemExt } from 'components/shared/formItems/formItemExt'
+import { parseWad } from 'utils/formatNumber'
+import DistributionLimit from 'components/v2/V2Project/DistributionLimit'
+import TooltipIcon from 'components/shared/TooltipIcon'
 
 import DistributionSplitCard from './DistributionSplitCard'
 import { CurrencyName } from 'constants/currency'
@@ -35,7 +38,9 @@ export default function DistributionSplitsSection({
   const renderSplitCard = useCallback(
     (split: Split, index: number, isLocked?: boolean) => {
       if (!split) return
-
+      const isFirstSplit =
+        editableSplits.length === 0 ||
+        (editableSplits.length === 1 && index === 0)
       return (
         <DistributionSplitCard
           split={split}
@@ -45,6 +50,7 @@ export default function DistributionSplitsSection({
           distributionLimit={distributionLimit}
           setDistributionLimit={setDistributionLimit}
           onSplitsChanged={onSplitsChanged}
+          onCurrencyChange={isFirstSplit ? onCurrencyChange : undefined}
           currencyName={currencyName}
           isLocked={isLocked}
         />
@@ -57,6 +63,7 @@ export default function DistributionSplitsSection({
       currencyName,
       editableSplits,
       setDistributionLimit,
+      onCurrencyChange,
     ],
   )
 
@@ -65,7 +72,12 @@ export default function DistributionSplitsSection({
   return (
     <Form.Item
       {...formItemProps}
-      style={{ ...formItemProps?.style, display: 'block' }}
+      style={{
+        ...formItemProps?.style,
+        display: 'block',
+        marginBottom: 0,
+        marginTop: 34,
+      }}
     >
       <Space
         direction="vertical"
@@ -91,6 +103,23 @@ export default function DistributionSplitsSection({
         >
           <Trans>Add a distribution destination</Trans>
         </Button>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <span>
+            <TooltipIcon
+              tip={t`The maximum amount of funds that can be distributed from the treasury each funding cycle.`}
+              iconStyle={{ marginRight: 5 }}
+            />
+            <strong>
+              <Trans>Total distribution limit:</Trans>
+            </strong>
+          </span>
+          <strong>
+            <DistributionLimit
+              distributionLimit={parseWad(distributionLimit)}
+              currencyName={currencyName}
+            />
+          </strong>
+        </div>
       </Space>
       <DistributionSplitModal
         visible={addSplitModalVisible}

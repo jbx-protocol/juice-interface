@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Split } from 'models/v2/splits'
 
-import { formatSplitPercent, MAX_DISTRIBUTION_LIMIT } from './math'
+import { formatSplitPercent, splitPercentFrom } from './math'
 
 /**
  * Gets distribution amount from percent of the distribution limit and then applies
@@ -54,7 +54,7 @@ export function amountFromPercent({
 /**
  * Gets split percent from split amount and the distribution limit
  * @param percent {float} - value as a percentage.
- * @param distributionLimit string (hexString)
+ * @param distributionLimit number
  * @returns {number} percent as an actual percentage of distribution limit (/100)
  */
 export function getDistributionPercentFromAmount({
@@ -62,9 +62,10 @@ export function getDistributionPercentFromAmount({
   distributionLimit,
 }: {
   amount: number
-  distributionLimit: string
+  distributionLimit: number
 }) {
-  return parseInt(((amount / parseFloat(distributionLimit)) * 100).toFixed(16))
+  // return parseFloat(((amount / distributionLimit) * 100).toFixed(9))
+  return splitPercentFrom((amount / distributionLimit) * 100).toNumber()
 }
 
 /**
@@ -90,11 +91,72 @@ export function sumOfPayoutSplitAmounts({
   distributionLimit,
 }: {
   splits: Split[]
-  distributionLimit: BigNumber
+  distributionLimit: number
 }) {
-  if (distributionLimit.eq(MAX_DISTRIBUTION_LIMIT)) return 0
+  // if (distributionLimit.eq(MAX_DISTRIBUTION_LIMIT)) return 0
 
-  const distributionLimitNumber = distributionLimit.toNumber()
+  // const distributionLimitNumber = distributionLimit.toNumber()
 
-  return (distributionLimitNumber * getTotalSplitsPercentage(splits)) / 100
+  return (distributionLimit * getTotalSplitsPercentage(splits)) / 100
+}
+
+export function adjustedSplitPercents({
+  splits,
+  oldDistributionLimit,
+  newDistributionLimit,
+}: {
+  splits: Split[]
+  oldDistributionLimit: string
+  newDistributionLimit: string
+}) {
+  let adjustedSplits: Split[] = []
+  splits.forEach((split: Split) => {
+    const currentAmount = amountFromPercent({
+      percent: parseFloat(formatSplitPercent(BigNumber.from(split.percent))),
+      amount: oldDistributionLimit,
+    })
+
+    const newPercent = getDistributionPercentFromAmount({
+      amount: currentAmount,
+      distributionLimit: parseFloat(newDistributionLimit),
+    })
+    const adjustedSplit = {
+      beneficiary: split.beneficiary,
+      percent: newPercent,
+      preferClaimed: split.preferClaimed,
+      lockedUntil: split.lockedUntil,
+      projectId: split.projectId,
+      allocator: split.allocator,
+    } as Split
+    adjustedSplits?.push(adjustedSplit)
+  })
+  return adjustedSplits
+}
+
+export function getNewDistributionLimit({
+  splits,
+  editingSplitPercent,
+  newSplitAmount,
+  currentDistributionLimit,
+}: {
+  splits: Split[]
+  editingSplitPercent: number // percent per billion
+  newSplitAmount: number
+  currentDistributionLimit: string
+}) {
+  const sumOfCurrentSplitAmounts = sumOfPayoutSplitAmounts({
+    splits,
+    distributionLimit: parseFloat(currentDistributionLimit),
+  })
+
+  const previousSplitAmount = amountFromPercent({
+    percent: parseFloat(
+      formatSplitPercent(BigNumber.from(editingSplitPercent)),
+    ),
+    amount: currentDistributionLimit,
+  }) // will be 0 when adding split but an actual amount when reconfiging or deleting
+
+  const newDistributionLimit =
+    sumOfCurrentSplitAmounts - previousSplitAmount + newSplitAmount
+  return newDistributionLimit
 }

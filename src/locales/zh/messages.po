@@ -100,12 +100,12 @@ msgstr "<0/> Juicebox协议向所有人开放，不同项目的配置可能相�
 msgid "<0/> owner balance"
 msgstr "<0/> 项目钱包余额"
 
-#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
-msgid "<0/>{0} after {feePercentage}% JBX membership fee"
-msgstr ""
-
 #: src/components/shared/Project/SpendingStats.tsx
 msgid "<0/>{0}{1} distributed"
+msgstr ""
+
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
+msgid "<0/>{amountSubFee} after {feePercentage}% JBX membership fee"
 msgstr ""
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
@@ -240,13 +240,16 @@ msgstr "可提取"
 msgid "Activity"
 msgstr "最近动态"
 
+#: src/components/v2/shared/DistributionSplitsSection/index.tsx
+msgid "Add a distribution destination"
+msgstr ""
+
 #: src/components/v1/ProjectPayoutMods.tsx
 #: src/components/v1/ProjectPayoutMods.tsx
 msgid "Add a payout"
 msgstr ""
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
-#: src/components/v2/shared/DistributionSplitsSection/index.tsx
 msgid "Add a split"
 msgstr ""
 
@@ -329,6 +332,10 @@ msgstr "所有资金都可以分配给项目，项目将不再会产生溢出（
 msgid "All projects"
 msgstr "所有项目"
 
+#: src/components/v2/V2Create/forms/FundingForm/index.tsx
+msgid "All treasury funds outside of what you pre-program for distribution is called <0>overflow</0>. Overflow can be claimed by your project's token holders by redeeming their tokens. <1>Learn more</1> about overflow."
+msgstr ""
+
 #: src/components/v1/FundingCycle/modals/DistributeTokensModal.tsx
 msgid "All {0} will go to the project owner:"
 msgstr "所有 {0} 会给到项目拥有者："
@@ -377,6 +384,10 @@ msgstr "支付数额"
 msgid "Amount to distribute"
 msgstr ""
 
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
+msgid "Amount:"
+msgstr ""
+
 #: src/components/shared/formItems/ProjectDiscord.tsx
 msgid "An invite link to your project's Discord server."
 msgstr "项目 Discord 的邀请链接。"
@@ -389,14 +400,6 @@ msgstr ""
 #: src/constants/v2/ballotStrategies/index.ts
 msgid "Any reconfiguration to an upcoming funding cycle will take effect once the current cycle ends. A project with no strategy may be vulnerable to being rug-pulled by its owner."
 msgstr "对之后的筹款周期进行重新配置，更改将在当前周期结束后生效。 没有策略的项目会有项目方跑路的风险。"
-
-#: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "Any treasury funds in excess of the distribution limit is called <0>overflow</0>. Overflow can be claimed by your project's token holders by redeeming their tokens. <1>Learn more</1> about overflow."
-msgstr ""
-
-#: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "Any treasury funds within the distribution limit can be paid out to destinations that you can define as <0>splits</0>. <1>Learn more</1> about payout splits."
-msgstr ""
 
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
 #: src/components/v1/V1Project/ArchiveV1Project.tsx
@@ -902,7 +905,14 @@ msgid "Distributed reserved {0}"
 msgstr ""
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
+msgid "Distributing payouts to addresses outside the Juicebox contracts incurs a {feeFormatted}% JBX membership fee. The ETH from the fee will go to the <0>JuiceboxDAO treasury</0>, and the resulting JBX will go to the project's owner."
+msgstr ""
+
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
+msgid "Distribution"
+msgstr ""
+
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Distribution limit"
@@ -1571,9 +1581,8 @@ msgstr "暂无动态"
 msgid "No funding target: The project will control how all funds are distributed, and none can be redeemed by token holders."
 msgstr "不设定筹款目标：所有的资金如何分发都由此项目决定，代币持有者无法赎回。"
 
-#: src/components/v2/V2Create/forms/FundingForm/TargetTypeSelect.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+#: src/components/v2/V2Project/DistributionLimit.tsx
 msgid "No limit (infinite)"
 msgstr ""
 
@@ -1749,20 +1758,8 @@ msgstr "当前筹款周期暂停付款。"
 msgid "Payments paused"
 msgstr "付款已暂停"
 
-#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
-msgid "Payout amount"
-msgstr ""
-
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Payout recipients"
-msgstr ""
-
-#: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "Payout splits"
-msgstr ""
-
-#: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "Payout splits can't be scheduled when the distribution limit is Zero."
 msgstr ""
 
 #: src/components/shared/forms/PayModsForm.tsx
@@ -1794,19 +1791,11 @@ msgid "Percent allocation"
 msgstr "分配百分比"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
-msgid "Percent of distribution limit"
+msgid "Percent of all funds raised"
 msgstr ""
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Percentage of newly minted tokens reserved for the project."
-msgstr ""
-
-#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
-msgid "Percentage of the distribution limit this payee will receive."
-msgstr ""
-
-#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
-msgid "Percentage this payee will receive of all funds raised."
 msgstr ""
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
@@ -2287,13 +2276,13 @@ msgstr "设定筹款周期目标"
 msgid "Set a funding target to cover predictable expenses. Any extra funds (<0>overflow</0>) can be claimed by anyone holding your project's tokens alongside you."
 msgstr "设定一个筹款目标以保证计划内的开销。对于超出部分的资金(<0>溢出</0>)，您及其他持有项目代币的人都有权去领取。"
 
-#: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "Set the amount of funds you'd like to distribute from your treasury each funding cycle."
-msgstr ""
-
 #: src/components/v1/shared/BudgetForm.tsx
 msgid "Set the amount of funds you'd like to raise each funding cycle. Any funds raised within the funding cycle target can be distributed by the project, and can't be redeemed by your project's token holders."
 msgstr "设定你每个筹款周期想要筹款的金额。筹款周期目标以内的金额会分配给项目，项目代币持有人不能通过赎回取得这部分资金。"
+
+#: src/components/v2/V2Create/forms/FundingForm/index.tsx
+msgid "Set the destination of funds you'd like to distribute from your treasury each funding cycle."
+msgstr ""
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
 msgid "Set the length of your funding cycles, which can enable:"
@@ -2329,8 +2318,8 @@ msgstr ""
 msgid "Something went wrong."
 msgstr ""
 
-#: src/components/v2/V2Create/forms/FundingForm/TargetTypeSelect.tsx
-msgid "Specific limit"
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
+msgid "Specific amount"
 msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
@@ -2451,6 +2440,10 @@ msgstr "创造者将引领未来, 而社区会拥有未来."
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "The maximum amount of funds allowed to be distributed from the project's treasury each funding cycle."
+msgstr ""
+
+#: src/components/v2/shared/DistributionSplitsSection/index.tsx
+msgid "The maximum amount of funds that can be distributed from the treasury each funding cycle."
 msgstr ""
 
 #: src/components/shared/formItems/ProjectTarget.tsx
@@ -2679,6 +2672,10 @@ msgstr "工具"
 msgid "Total ETH paid"
 msgstr "一共支付的 ETH"
 
+#: src/components/v2/shared/DistributionSplitsSection/index.tsx
+msgid "Total distribution limit:"
+msgstr ""
+
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Total funds:"
@@ -2695,7 +2692,6 @@ msgstr "总供应量"
 
 #: src/components/shared/formItems/ProjectTicketMods.tsx
 #: src/components/v1/ProjectPayoutMods.tsx
-#: src/components/v2/shared/DistributionSplitsSection/index.tsx
 msgid "Total: {0}%"
 msgstr "总共：{0}%"
 
@@ -2900,14 +2896,6 @@ msgid "With Juicebox, projects are built and maintained by motivated punks getti
 msgstr "积极进取的朋克们通过 Juicebox 构建和维护项目，并以透明的方式获得报酬。用户和赞助者组成的社区对项目给予资助，而他们则可以在项目成功时获得回报。"
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "With a distribution limit of Zero, no funds can be distributed by the project. All funds belong to token holders as overflow."
-msgstr ""
-
-#: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "With an infinite distribution limit, all funds can be distributed by the project. The project will have no overflow, meaning token holders won't be able to redeem their tokens for treasury funds."
-msgstr ""
-
-#: src/components/v2/V2Create/forms/FundingForm/index.tsx
 msgid "With no funding cycles, the project's owner can start a new funding cycle (Funding Cycle #2) on-demand. <0>Learn more.</0>"
 msgstr ""
 
@@ -3045,12 +3033,8 @@ msgstr ""
 msgid "Your unclaimed {tokenTextLong}"
 msgstr ""
 
-#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+#: src/components/v2/V2Project/DistributionLimit.tsx
 msgid "Zero"
-msgstr ""
-
-#: src/components/v2/V2Create/forms/FundingForm/TargetTypeSelect.tsx
-msgid "Zero, no funds can be distributed"
 msgstr ""
 
 #: src/components/shared/inputs/BudgetTargetInput.tsx
@@ -3227,7 +3211,6 @@ msgid "{0}% of supply"
 msgstr "占比 {0}%"
 
 #: src/components/v1/ProjectPayoutMods.tsx
-#: src/components/v2/shared/DistributionSplitsSection/index.tsx
 msgid "{0}% to <0/>"
 msgstr "{0}% 分配给 <0/>"
 

@@ -14,9 +14,17 @@ import {
 } from '@ant-design/icons'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 
-import { formatSplitPercent, MAX_DISTRIBUTION_LIMIT } from 'utils/v2/math'
+import {
+  formatSplitPercent,
+  MAX_DISTRIBUTION_LIMIT,
+  SPLITS_TOTAL_PERCENT,
+} from 'utils/v2/math'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
-import { amountFromPercent } from 'utils/v2/distributions'
+import {
+  adjustedSplitPercents,
+  amountFromPercent,
+  getNewDistributionLimit,
+} from 'utils/v2/distributions'
 import { Trans } from '@lingui/macro'
 
 import DistributionSplitModal from './DistributionSplitModal'
@@ -31,6 +39,7 @@ export default function DistributionSplitCard({
   distributionLimit,
   setDistributionLimit,
   currencyName,
+  onCurrencyChange,
   isLocked,
 }: {
   split: Split
@@ -41,6 +50,7 @@ export default function DistributionSplitCard({
   distributionLimit: string | undefined
   setDistributionLimit: (distributionLimit: string) => void
   currencyName: CurrencyName
+  onCurrencyChange?: (currencyName: CurrencyName) => void
   isLocked?: boolean
 }) {
   const {
@@ -173,24 +183,21 @@ export default function DistributionSplitCard({
                   size="large"
                   style={{
                     display: 'flex',
-                    flexDirection: 'row-reverse',
-                    justifyContent: 'flex-end',
+                    justifyContent: 'flex-start',
                   }}
                 >
-                  <span>
-                    {formatSplitPercent(BigNumber.from(split.percent))}%
-                  </span>
                   {!distributionLimitIsInfinite && (
                     <span>
                       <CurrencySymbol currency={currencyName} />
                       {amountFromPercent({
-                        percent: parseFloat(
-                          formatSplitPercent(BigNumber.from(split.percent)),
-                        ),
+                        percent: (split.percent / SPLITS_TOTAL_PERCENT) * 100,
                         amount: distributionLimit,
                       })}
                     </span>
                   )}
+                  <span>
+                    {formatSplitPercent(BigNumber.from(split.percent))}%
+                  </span>
                 </Space>
               </span>
             </div>
@@ -217,9 +224,30 @@ export default function DistributionSplitCard({
         <Button
           type="text"
           onClick={e => {
+            let adjustedSplits = splits
+            // Adjust all split percents if
+            // - distributionLimit is not infinite
+            // - not deleting the last split
+            if (!distributionLimitIsInfinite && splits.length !== 1) {
+              const newDistributionLimit = getNewDistributionLimit({
+                splits,
+                currentDistributionLimit: distributionLimit,
+                newSplitAmount: 0,
+                editingSplitPercent: splits[editableSplitIndex].percent,
+              }).toString()
+
+              adjustedSplits = adjustedSplitPercents({
+                splits: editableSplits,
+                oldDistributionLimit: distributionLimit,
+                newDistributionLimit,
+              })
+              setDistributionLimit(newDistributionLimit)
+            }
+            if (splits.length === 1) setDistributionLimit('0')
+
             onSplitsChanged([
-              ...splits.slice(0, editableSplitIndex),
-              ...splits.slice(editableSplitIndex + 1),
+              ...adjustedSplits.slice(0, editableSplitIndex),
+              ...adjustedSplits.slice(editableSplitIndex + 1),
             ])
             e.stopPropagation()
           }}
@@ -237,7 +265,7 @@ export default function DistributionSplitCard({
           setDistributionLimit={setDistributionLimit}
           onClose={() => setEditSplitModalOpen(false)}
           currencyName={currencyName}
-          onCurrencyChange={undefined}
+          onCurrencyChange={onCurrencyChange}
           editableSplitIndex={editableSplitIndex}
         />
       ) : null}

@@ -11,8 +11,9 @@ import { defaultSplit, Split } from 'models/v2/splits'
 import { useContext, useEffect, useLayoutEffect, useState } from 'react'
 import { fromWad, parseWad } from 'utils/formatNumber'
 import {
+  adjustedSplitPercents,
   getDistributionPercentFromAmount,
-  sumOfPayoutSplitAmounts,
+  getNewDistributionLimit,
 } from 'utils/v2/distributions'
 import { ThemeContext } from 'contexts/themeContext'
 
@@ -25,6 +26,7 @@ import {
   formatSplitPercent,
   MAX_DISTRIBUTION_LIMIT,
   splitPercentFrom,
+  SPLITS_TOTAL_PERCENT,
 } from 'utils/v2/math'
 import NumberSlider from 'components/shared/inputs/NumberSlider'
 import { amountFromPercent } from 'utils/v2/distributions'
@@ -90,10 +92,12 @@ export default function DistributionSplitModal({
   const distributionLimitIsInfinite =
     !distributionLimit || parseWad(distributionLimit).eq(MAX_DISTRIBUTION_LIMIT)
 
-  const isFirstSplit = editableSplits.length === 0
+  const isFirstSplit =
+    editableSplits.length === 0 ||
+    (editableSplits.length === 1 && editableSplitIndex === 0)
 
   // If editing, format the lockedUntil and projectId
-  if (!isFirstSplit && editableSplitIndex !== undefined) {
+  if (editableSplits.length && editableSplitIndex !== undefined) {
     split = editableSplits[editableSplitIndex]
     initialLockedUntil = split.lockedUntil
       ? Moment.default(split.lockedUntil * 1000)
@@ -117,17 +121,13 @@ export default function DistributionSplitModal({
     split.beneficiary,
   )
   const [newDistributionLimit, setNewDistributionLimit] = useState<string>()
-  const [percent, setPercent] = useState<number | undefined>()
+  const [percent, setPercent] = useState<number>(split.percent)
   const [amount, setAmount] = useState<number | undefined>(
     !distributionLimitIsInfinite
-      ? parseFloat(
-          (
-            amountFromPercent({
-              percent: split.percent,
-              amount: distributionLimit,
-            }) / 10000000
-          ).toFixed(4),
-        )
+      ? amountFromPercent({
+          percent: (split.percent / SPLITS_TOTAL_PERCENT) * 100,
+          amount: distributionLimit,
+        })
       : undefined,
   )
   const [lockedUntil, setLockedUntil] = useState<
@@ -135,7 +135,11 @@ export default function DistributionSplitModal({
   >(initialLockedUntil)
 
   useLayoutEffect(() =>
-    form.setFieldsValue({ percent, projectId, lockedUntil }),
+    form.setFieldsValue({
+      percent: parseFloat(formatSplitPercent(BigNumber.from(percent))),
+      projectId,
+      lockedUntil,
+    }),
   )
 
   const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
@@ -152,23 +156,19 @@ export default function DistributionSplitModal({
     ) {
       return
     }
-    const percent = parseFloat(
-      formatSplitPercent(
-        BigNumber.from(editableSplits[editableSplitIndex].percent),
-      ),
-    )
+    const percentPerBillion = editableSplits[editableSplitIndex].percent
     const amount = amountFromPercent({
-      percent,
+      percent: (percentPerBillion / SPLITS_TOTAL_PERCENT) * 100,
       amount: distributionLimit,
     })
     setAmount(amount)
-    setPercent(percent)
+    setPercent(percentPerBillion)
   }, [distributionLimit, editableSplits, editableSplitIndex, isFirstSplit])
 
   const resetStates = () => {
     setProjectId(undefined)
     setBeneficiary(undefined)
-    setPercent(undefined)
+    setPercent(0)
     setAmount(undefined)
     setLockedUntil(undefined)
   }
@@ -183,7 +183,7 @@ export default function DistributionSplitModal({
 
     const newSplit = {
       beneficiary: beneficiary,
-      percent: splitPercentFrom(percent ?? 0).toNumber(),
+      percent: percent,
       lockedUntil: roundedLockedUntil,
       preferClaimed: true,
       projectId: projectId,
@@ -194,26 +194,10 @@ export default function DistributionSplitModal({
     // If an amount and therefore the distribution limit has been changed,
     // recalculate all split percents based on newly added split amount
     if (newDistributionLimit && distributionLimit) {
-      adjustedSplits = []
-      editableSplits.forEach((split: Split) => {
-        const currentAmount = amountFromPercent({
-          percent: split.percent,
-          amount: distributionLimit,
-        })
-        const newPercent = getDistributionPercentFromAmount({
-          amount: currentAmount,
-          distributionLimit: newDistributionLimit,
-        })
-        const adjustedSplit = {
-          beneficiary: split.beneficiary,
-          percent: newPercent,
-          preferClaimed: split.preferClaimed,
-          lockedUntil: split.lockedUntil,
-          projectId: split.projectId,
-          allocator: split.allocator,
-        } as Split
-        console.info('pushing adjusted split: ', adjustedSplit)
-        adjustedSplits?.push(adjustedSplit)
+      adjustedSplits = adjustedSplitPercents({
+        splits: editableSplits,
+        oldDistributionLimit: distributionLimit,
+        newDistributionLimit,
       })
       setDistributionLimit(newDistributionLimit)
     }
@@ -241,35 +225,24 @@ export default function DistributionSplitModal({
   const onAmountChange = (newAmount: number) => {
     if (distributionLimitIsInfinite || !newAmount) return
 
-    const sumOfCurrentSplitAmounts = sumOfPayoutSplitAmounts({
+    const newDistributionLimit = getNewDistributionLimit({
       splits,
-      distributionLimit: BigNumber.from(distributionLimit),
+      currentDistributionLimit: distributionLimit,
+      newSplitAmount: newAmount,
+      editingSplitPercent: percent,
     })
-
-    const previousSplitAmount = amountFromPercent({
-      percent: percent ?? 0,
-      amount: distributionLimit,
-    }) // will be 0 when adding split, amount if reconfiging
-
-    const newLimitRounded = (
-      sumOfCurrentSplitAmounts -
-      previousSplitAmount +
-      newAmount
-    ).toFixed()
-
-    const newDistributionLimit = BigNumber.from(newLimitRounded)
-      .toNumber()
-      .toString()
 
     const newPercent = getDistributionPercentFromAmount({
       amount: newAmount,
-      // current sum of split amounts - previous split amount + newAmount
       distributionLimit: newDistributionLimit,
     })
-    setNewDistributionLimit(newDistributionLimit)
+
+    setNewDistributionLimit(newDistributionLimit.toString())
     setAmount(newAmount)
     setPercent(newPercent)
-    form.setFieldsValue({ percent: newPercent })
+    form.setFieldsValue({
+      percent: parseFloat(formatSplitPercent(BigNumber.from(newPercent))),
+    })
   }
 
   // Validates new payout receiving address
@@ -297,7 +270,7 @@ export default function DistributionSplitModal({
   }
 
   const validatePayoutPercentage = () => {
-    return validatePercentage(percent)
+    return validatePercentage(form.getFieldValue('percent'))
   }
 
   // Cannot select days before today or today with lockedUntil
@@ -402,8 +375,11 @@ export default function DistributionSplitModal({
           />
         ) : null}
 
-        <Form.Item label={t`Distribution type`}>
-          {!splits.length ? (
+        <Form.Item
+          label={t`Distribution`}
+          style={!isFirstSplit ? { marginBottom: 0 } : {}}
+        >
+          {isFirstSplit ? (
             <Select
               value={distributionType}
               onChange={(newType: DistributionType) => {
@@ -484,18 +460,15 @@ export default function DistributionSplitModal({
               <span style={{ flex: 1 }}>
                 <NumberSlider
                   onChange={(percent: number | undefined) => {
-                    let newAmount = !distributionLimitIsInfinite
-                      ? amountFromPercent({
-                          percent: percent ?? 0,
-                          amount: distributionLimit,
-                        })
-                      : undefined
-                    setAmount(newAmount)
-                    setPercent(percent)
+                    setPercent(splitPercentFrom(percent ?? 0).toNumber())
                   }}
                   step={0.01}
                   defaultValue={0}
-                  sliderValue={form.getFieldValue('percent')}
+                  // sliderValue={parseFloat(
+                  //   formatSplitPercent(
+                  //     BigNumber.from(form.getFieldValue('percent'))
+                  //   )
+                  // )}
                   suffix="%"
                   name="percent"
                   formItemProps={{

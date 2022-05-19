@@ -95,13 +95,13 @@ msgstr "<0/> The Juicebox protocol is open to anyone, and project configurations
 msgid "<0/> owner balance"
 msgstr ""
 
-#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
-msgid "<0/>{0} after {feePercentage}% JBX membership fee"
-msgstr "<0/>{0} after {feePercentage}% JBX membership fee"
-
 #: src/components/shared/Project/SpendingStats.tsx
 msgid "<0/>{0}{1} distributed"
 msgstr "<0/>{0}{1} distributed"
+
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
+msgid "<0/>{amountSubFee} after {feePercentage}% JBX membership fee"
+msgstr "<0/>{amountSubFee} after {feePercentage}% JBX membership fee"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "<0><1/>{netDistributionAmount}</0> after {feePercentage}% JBX fee"
@@ -235,13 +235,16 @@ msgstr ""
 msgid "Activity"
 msgstr ""
 
+#: src/components/v2/shared/DistributionSplitsSection/index.tsx
+msgid "Add a distribution destination"
+msgstr "Add a distribution destination"
+
 #: src/components/v1/ProjectPayoutMods.tsx
 #: src/components/v1/ProjectPayoutMods.tsx
 msgid "Add a payout"
 msgstr "Add a payout"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
-#: src/components/v2/shared/DistributionSplitsSection/index.tsx
 msgid "Add a split"
 msgstr "Add a split"
 
@@ -324,6 +327,10 @@ msgstr ""
 msgid "All projects"
 msgstr ""
 
+#: src/components/v2/V2Create/forms/FundingForm/index.tsx
+msgid "All treasury funds outside of what you pre-program for distribution is called <0>overflow</0>. Overflow can be claimed by your project's token holders by redeeming their tokens. <1>Learn more</1> about overflow."
+msgstr "All treasury funds outside of what you pre-program for distribution is called <0>overflow</0>. Overflow can be claimed by your project's token holders by redeeming their tokens. <1>Learn more</1> about overflow."
+
 #: src/components/v1/FundingCycle/modals/DistributeTokensModal.tsx
 msgid "All {0} will go to the project owner:"
 msgstr ""
@@ -372,6 +379,10 @@ msgstr ""
 msgid "Amount to distribute"
 msgstr "Amount to distribute"
 
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
+msgid "Amount:"
+msgstr "Amount:"
+
 #: src/components/shared/formItems/ProjectDiscord.tsx
 msgid "An invite link to your project's Discord server."
 msgstr ""
@@ -384,14 +395,6 @@ msgstr "Any changes you make will take effect in <0>funding cycle #{0}</0>. The 
 #: src/constants/v2/ballotStrategies/index.ts
 msgid "Any reconfiguration to an upcoming funding cycle will take effect once the current cycle ends. A project with no strategy may be vulnerable to being rug-pulled by its owner."
 msgstr ""
-
-#: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "Any treasury funds in excess of the distribution limit is called <0>overflow</0>. Overflow can be claimed by your project's token holders by redeeming their tokens. <1>Learn more</1> about overflow."
-msgstr "Any treasury funds in excess of the distribution limit is called <0>overflow</0>. Overflow can be claimed by your project's token holders by redeeming their tokens. <1>Learn more</1> about overflow."
-
-#: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "Any treasury funds within the distribution limit can be paid out to destinations that you can define as <0>splits</0>. <1>Learn more</1> about payout splits."
-msgstr "Any treasury funds within the distribution limit can be paid out to destinations that you can define as <0>splits</0>. <1>Learn more</1> about payout splits."
 
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
 #: src/components/v1/V1Project/ArchiveV1Project.tsx
@@ -897,7 +900,14 @@ msgid "Distributed reserved {0}"
 msgstr "Distributed reserved {0}"
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
+msgid "Distributing payouts to addresses outside the Juicebox contracts incurs a {feeFormatted}% JBX membership fee. The ETH from the fee will go to the <0>JuiceboxDAO treasury</0>, and the resulting JBX will go to the project's owner."
+msgstr "Distributing payouts to addresses outside the Juicebox contracts incurs a {feeFormatted}% JBX membership fee. The ETH from the fee will go to the <0>JuiceboxDAO treasury</0>, and the resulting JBX will go to the project's owner."
+
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
+msgid "Distribution"
+msgstr "Distribution"
+
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Distribution limit"
@@ -1566,9 +1576,8 @@ msgstr ""
 msgid "No funding target: The project will control how all funds are distributed, and none can be redeemed by token holders."
 msgstr ""
 
-#: src/components/v2/V2Create/forms/FundingForm/TargetTypeSelect.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+#: src/components/v2/V2Project/DistributionLimit.tsx
 msgid "No limit (infinite)"
 msgstr "No limit (infinite)"
 
@@ -1744,21 +1753,9 @@ msgstr ""
 msgid "Payments paused"
 msgstr ""
 
-#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
-msgid "Payout amount"
-msgstr "Payout amount"
-
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Payout recipients"
 msgstr "Payout recipients"
-
-#: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "Payout splits"
-msgstr "Payout splits"
-
-#: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "Payout splits can't be scheduled when the distribution limit is Zero."
-msgstr "Payout splits can't be scheduled when the distribution limit is Zero."
 
 #: src/components/shared/forms/PayModsForm.tsx
 msgid "Payouts (optional)"
@@ -1789,20 +1786,12 @@ msgid "Percent allocation"
 msgstr "Percent allocation"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
-msgid "Percent of distribution limit"
-msgstr "Percent of distribution limit"
+msgid "Percent of all funds raised"
+msgstr "Percent of all funds raised"
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Percentage of newly minted tokens reserved for the project."
 msgstr "Percentage of newly minted tokens reserved for the project."
-
-#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
-msgid "Percentage of the distribution limit this payee will receive."
-msgstr "Percentage of the distribution limit this payee will receive."
-
-#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
-msgid "Percentage this payee will receive of all funds raised."
-msgstr "Percentage this payee will receive of all funds raised."
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
 msgid "Percentage:"
@@ -2282,13 +2271,13 @@ msgstr ""
 msgid "Set a funding target to cover predictable expenses. Any extra funds (<0>overflow</0>) can be claimed by anyone holding your project's tokens alongside you."
 msgstr "Set a funding target to cover predictable expenses. Any extra funds (<0>overflow</0>) can be claimed by anyone holding your project's tokens alongside you."
 
-#: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "Set the amount of funds you'd like to distribute from your treasury each funding cycle."
-msgstr "Set the amount of funds you'd like to distribute from your treasury each funding cycle."
-
 #: src/components/v1/shared/BudgetForm.tsx
 msgid "Set the amount of funds you'd like to raise each funding cycle. Any funds raised within the funding cycle target can be distributed by the project, and can't be redeemed by your project's token holders."
 msgstr ""
+
+#: src/components/v2/V2Create/forms/FundingForm/index.tsx
+msgid "Set the destination of funds you'd like to distribute from your treasury each funding cycle."
+msgstr "Set the destination of funds you'd like to distribute from your treasury each funding cycle."
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
 msgid "Set the length of your funding cycles, which can enable:"
@@ -2324,9 +2313,9 @@ msgstr "Some properties of the project's current funding cycle may indicate risk
 msgid "Something went wrong."
 msgstr "Something went wrong."
 
-#: src/components/v2/V2Create/forms/FundingForm/TargetTypeSelect.tsx
-msgid "Specific limit"
-msgstr "Specific limit"
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
+msgid "Specific amount"
+msgstr "Specific amount"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
@@ -2447,6 +2436,10 @@ msgstr ""
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "The maximum amount of funds allowed to be distributed from the project's treasury each funding cycle."
 msgstr "The maximum amount of funds allowed to be distributed from the project's treasury each funding cycle."
+
+#: src/components/v2/shared/DistributionSplitsSection/index.tsx
+msgid "The maximum amount of funds that can be distributed from the treasury each funding cycle."
+msgstr "The maximum amount of funds that can be distributed from the treasury each funding cycle."
 
 #: src/components/shared/formItems/ProjectTarget.tsx
 msgid "The maximum amount of funds that can be distributed from this project in one funding cycle. Funds will be withdrawn in ETH no matter the currency you choose."
@@ -2674,6 +2667,10 @@ msgstr ""
 msgid "Total ETH paid"
 msgstr "Total ETH paid"
 
+#: src/components/v2/shared/DistributionSplitsSection/index.tsx
+msgid "Total distribution limit:"
+msgstr "Total distribution limit:"
+
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Total funds:"
@@ -2690,7 +2687,6 @@ msgstr ""
 
 #: src/components/shared/formItems/ProjectTicketMods.tsx
 #: src/components/v1/ProjectPayoutMods.tsx
-#: src/components/v2/shared/DistributionSplitsSection/index.tsx
 msgid "Total: {0}%"
 msgstr ""
 
@@ -2895,14 +2891,6 @@ msgid "With Juicebox, projects are built and maintained by motivated punks getti
 msgstr ""
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "With a distribution limit of Zero, no funds can be distributed by the project. All funds belong to token holders as overflow."
-msgstr "With a distribution limit of Zero, no funds can be distributed by the project. All funds belong to token holders as overflow."
-
-#: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "With an infinite distribution limit, all funds can be distributed by the project. The project will have no overflow, meaning token holders won't be able to redeem their tokens for treasury funds."
-msgstr "With an infinite distribution limit, all funds can be distributed by the project. The project will have no overflow, meaning token holders won't be able to redeem their tokens for treasury funds."
-
-#: src/components/v2/V2Create/forms/FundingForm/index.tsx
 msgid "With no funding cycles, the project's owner can start a new funding cycle (Funding Cycle #2) on-demand. <0>Learn more.</0>"
 msgstr "With no funding cycles, the project's owner can start a new funding cycle (Funding Cycle #2) on-demand. <0>Learn more.</0>"
 
@@ -3040,13 +3028,9 @@ msgstr "Your transaction has been submitted and is awaiting confirmation."
 msgid "Your unclaimed {tokenTextLong}"
 msgstr "Your unclaimed {tokenTextLong}"
 
-#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+#: src/components/v2/V2Project/DistributionLimit.tsx
 msgid "Zero"
 msgstr "Zero"
-
-#: src/components/v2/V2Create/forms/FundingForm/TargetTypeSelect.tsx
-msgid "Zero, no funds can be distributed"
-msgstr "Zero, no funds can be distributed"
 
 #: src/components/shared/inputs/BudgetTargetInput.tsx
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
@@ -3222,7 +3206,6 @@ msgid "{0}% of supply"
 msgstr ""
 
 #: src/components/v1/ProjectPayoutMods.tsx
-#: src/components/v2/shared/DistributionSplitsSection/index.tsx
 msgid "{0}% to <0/>"
 msgstr ""
 

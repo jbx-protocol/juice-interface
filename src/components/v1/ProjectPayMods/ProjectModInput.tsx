@@ -4,7 +4,7 @@ import CurrencySymbol from 'components/shared/CurrencySymbol'
 import FormattedAddress from 'components/shared/FormattedAddress'
 
 import { ThemeContext } from 'contexts/themeContext'
-import { useContext } from 'react'
+import { PropsWithChildren, useContext } from 'react'
 import { formatDate } from 'utils/formatDate'
 import {
   formatWad,
@@ -14,9 +14,66 @@ import {
 } from 'utils/formatNumber'
 import { amountSubFee } from 'utils/math'
 
+import { BigNumber } from '@ethersproject/bignumber'
+
 import { CurrencyName } from 'constants/currency'
 import V1ProjectHandle from '../shared/V1ProjectHandle'
 import { EditingPayoutMod } from './types'
+
+const FormattedRow = ({
+  label,
+  children,
+}: PropsWithChildren<{ label: string; disabled?: boolean }>) => {
+  return (
+    <Row gutter={10} style={{ width: '100%' }} align="middle">
+      <Col span={7}>
+        <label>{label}:</label>{' '}
+      </Col>
+      <Col span={17}>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
+          <span style={{ cursor: 'default' }}>{children}</span>
+        </div>
+      </Col>
+    </Row>
+  )
+}
+
+const FormattedPercentageAmount = ({
+  percent,
+  targetIsInfinite,
+  feePerbicent,
+  target,
+  currencyName,
+}: {
+  percent: number
+  feePerbicent: BigNumber
+  target: string
+  targetIsInfinite: boolean | undefined
+  currencyName: CurrencyName | undefined
+}) => {
+  return (
+    <Space size="large">
+      <span>{permyriadToPercent(percent)}%</span>
+      {!targetIsInfinite && (
+        <span>
+          <CurrencySymbol currency={currencyName} />
+          {formatWad(
+            amountSubFee(parseWad(target), feePerbicent)
+              ?.mul(percent)
+              .div(10000),
+            { precision: 4, padEnd: true },
+          )}
+        </span>
+      )}
+    </Space>
+  )
+}
 
 export function ProjectModInput({
   mod,
@@ -43,8 +100,6 @@ export function ProjectModInput({
     theme: { colors, radii },
   } = useContext(ThemeContext)
 
-  const gutter = 10
-
   const feePerbicent = percentToPerbicent(feePercentage)
 
   return (
@@ -69,106 +124,32 @@ export function ProjectModInput({
         onClick={() => onSelect?.(index)}
       >
         {mod.projectId?.gt(0) ? (
-          <Row gutter={gutter} style={{ width: '100%' }} align="middle">
-            <Col span={7}>
-              <label>Project:</label>{' '}
-            </Col>
-            <Col span={17}>
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                }}
-              >
-                <span style={{ cursor: 'pointer' }}>
-                  <V1ProjectHandle projectId={mod.projectId} />
-                </span>
-              </div>
-            </Col>
-          </Row>
+          <FormattedRow label={'Project'}>
+            <V1ProjectHandle projectId={mod.projectId} />
+          </FormattedRow>
         ) : (
-          <Row gutter={gutter} style={{ width: '100%' }} align="middle">
-            <Col span={7}>
-              <label>Address:</label>{' '}
-            </Col>
-            <Col span={17}>
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                }}
-              >
-                <span style={{ cursor: 'pointer' }}>
-                  <FormattedAddress address={mod.beneficiary} />
-                </span>
-              </div>
-            </Col>
-          </Row>
+          <FormattedRow label={'Address'}>
+            <FormattedAddress address={mod.beneficiary} />
+          </FormattedRow>
         )}
-
-        {mod.projectId?.gt(0) ? (
-          <Row>
-            <Col span={7}>
-              <label>Beneficiary:</label>
-            </Col>
-            <Col span={17}>
-              <span style={{ cursor: 'pointer' }}>
-                <FormattedAddress address={mod.beneficiary} />
-              </span>
-            </Col>
-          </Row>
-        ) : null}
-
-        <Row gutter={gutter} style={{ width: '100%' }} align="middle">
-          <Col span={7}>
-            <label>Percentage:</label>
-          </Col>
-          <Col span={17}>
-            <div
-              style={{
-                display: 'flex',
-                width: '100%',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}
-            >
-              <span
-                style={{
-                  marginRight: 10,
-                  width: 100,
-                  maxWidth: 100,
-                }}
-              >
-                <Space size="large">
-                  <span>{permyriadToPercent(mod.percent)}%</span>
-                  {!targetIsInfinite && (
-                    <span>
-                      <CurrencySymbol currency={currencyName} />
-                      {formatWad(
-                        amountSubFee(parseWad(target), feePerbicent)
-                          ?.mul(mod.percent)
-                          .div(10000),
-                        { precision: 4, padEnd: true },
-                      )}
-                    </span>
-                  )}
-                </Space>
-              </span>
-            </div>
-          </Col>
-        </Row>
-
+        {mod.projectId?.gt(0) && (
+          <FormattedRow label="Beneficiary">
+            <FormattedAddress address={mod.beneficiary} />
+          </FormattedRow>
+        )}
+        <FormattedRow label="Percentage">
+          <FormattedPercentageAmount
+            percent={mod.percent}
+            targetIsInfinite={targetIsInfinite}
+            feePerbicent={feePerbicent}
+            target={target}
+            currencyName={currencyName}
+          />
+        </FormattedRow>
         {mod.lockedUntil ? (
-          <Row gutter={gutter} style={{ width: '100%' }} align="middle">
-            <Col span={7}>
-              <label>Locked</label>
-            </Col>
-            <Col span={17}>
-              until {formatDate(mod.lockedUntil * 1000, 'yyyy-MM-DD')}
-            </Col>
-          </Row>
+          <FormattedRow label="Locked">
+            until {formatDate(mod.lockedUntil * 1000, 'yyyy-MM-DD')}
+          </FormattedRow>
         ) : null}
       </Space>
 

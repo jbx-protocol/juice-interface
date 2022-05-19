@@ -2067,10 +2067,6 @@ msgstr ""
 msgid "Reconfigure project details"
 msgstr "Перенастроить детали проекта"
 
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
-msgid "Reconfigure rules"
-msgstr "Перепишите правила"
-
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureTokenDrawer.tsx
 msgid "Reconfigure token"
 msgstr "Перенастроить токен"
@@ -2890,11 +2886,9 @@ msgstr "Что творится под капотом?"
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "When checked, payments to this address will mint this project's ERC-20 tokens to the beneficiary's wallet. Payments will cost more gas. When unchecked, Juicebox will track the beneficiary's new tokens when they pay. The beneficiary can claim their ERC-20 tokens at any time."
-#: src/components/v2/V2Create/forms/RulesForm/TokenMintingExtra.tsx
-#: src/components/v2/V2Create/forms/RulesForm/index.tsx
-msgid "When enabled, the project owner can manually mint any amount of tokens to any address."
 msgstr ""
 
+#: src/components/v2/V2Create/forms/RulesForm/TokenMintingExtra.tsx
 #: src/components/v2/V2Create/forms/RulesForm/index.tsx
 msgid "When enabled, the project owner can manually mint any amount of tokens to any address."
 msgstr "Если эта функция включена, владелец проекта может вручную минтить любое количество токенов на любой адрес."

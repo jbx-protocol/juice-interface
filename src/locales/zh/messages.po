@@ -2067,10 +2067,6 @@ msgstr "重新配置项目和筹款详细内容"
 msgid "Reconfigure project details"
 msgstr "重新配置项目明细"
 
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
-msgid "Reconfigure rules"
-msgstr "重新配置规则"
-
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureTokenDrawer.tsx
 msgid "Reconfigure token"
 msgstr "重新配置代币"
@@ -2890,11 +2886,9 @@ msgstr "里面究竟有什么乾坤？"
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "When checked, payments to this address will mint this project's ERC-20 tokens to the beneficiary's wallet. Payments will cost more gas. When unchecked, Juicebox will track the beneficiary's new tokens when they pay. The beneficiary can claim their ERC-20 tokens at any time."
-#: src/components/v2/V2Create/forms/RulesForm/TokenMintingExtra.tsx
-#: src/components/v2/V2Create/forms/RulesForm/index.tsx
-msgid "When enabled, the project owner can manually mint any amount of tokens to any address."
 msgstr ""
 
+#: src/components/v2/V2Create/forms/RulesForm/TokenMintingExtra.tsx
 #: src/components/v2/V2Create/forms/RulesForm/index.tsx
 msgid "When enabled, the project owner can manually mint any amount of tokens to any address."
 msgstr "启用此选项，项目拥有者就能够随时手动铸造任意数量的代币。"

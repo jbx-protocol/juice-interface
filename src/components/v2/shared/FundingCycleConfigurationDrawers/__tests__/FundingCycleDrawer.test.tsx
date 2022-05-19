@@ -9,10 +9,10 @@ describe('FundingCycleDrawer', () => {
       return result
     }
     test('calls onClose when emitDrawerClose is called', () => {
-      let called = false
-      const result = instanceUnderTest(() => (called = true))
+      const callback = jest.fn()
+      const result = instanceUnderTest(callback)
       result.current.emitDrawerClose()
-      expect(called).toEqual(true)
+      expect(callback).toHaveBeenCalled()
     })
 
     test('updatesForm on setFormUpdated', () => {

@@ -24,7 +24,7 @@ jobs:
         run: 'yarn i18n:extract'
 
       - name: Upload to Crowdin
-        uses: crowdin/github-action@1.4.4
+        uses: crowdin/github-action@1.4.9
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:

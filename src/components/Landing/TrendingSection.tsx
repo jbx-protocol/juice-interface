@@ -19,7 +19,7 @@ export default function TrendingSection() {
 
   const trendingProjectsStyle: CSSProperties = {
     // Light theme uses a slightly lighter background than background-l1
-    backgroundColor: isDarkMode ? colors.background.l1 : '#e7e3dc80',
+    backgroundColor: isDarkMode ? colors.background.l1 : '#faf7f5',
     marginTop: '3rem',
     paddingTop: !isMobile ? 40 : 80,
     paddingLeft: 40,
@@ -58,7 +58,7 @@ export default function TrendingSection() {
         </Col>
         <Col xs={24} lg={15}>
           <div style={{ paddingBottom: 20 }}>
-            <h3 style={headingStyles}>
+            <h2 style={headingStyles}>
               <Trans>
                 <span style={{ marginRight: 12 }}>Trending projects</span>
                 <Tooltip
@@ -68,7 +68,7 @@ export default function TrendingSection() {
                   <InfoCircleOutlined style={{ fontSize: 20 }} />
                 </Tooltip>
               </Trans>
-            </h3>
+            </h2>
             <TrendingProjects count={6} trendingWindowDays={7} isHomePage />
           </div>
         </Col>

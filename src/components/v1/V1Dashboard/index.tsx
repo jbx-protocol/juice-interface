@@ -41,6 +41,7 @@ import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 
 import Loading from '../../shared/Loading'
 import V1Project from '../V1Project'
+import { DEFAULT_SITE_TITLE } from 'constants/siteMetadata'
 
 export default function V1Dashboard() {
   const { handle }: { handle?: string } = useParams()
@@ -99,7 +100,7 @@ export default function V1Dashboard() {
     if (metadata?.name) {
       document.title = `${metadata.name} | Juicebox`
     } else {
-      document.title = 'Juicebox'
+      document.title = DEFAULT_SITE_TITLE
     }
   }, [metadata])
 

@@ -13,15 +13,26 @@ export default function Paragraph({
 }) {
   const CHARACTER_LIMIT_EXCEEDED =
     (characterLimit && description.length > characterLimit) ||
-    description.split('\n').length > 1
+    description.split('\n').length > 3
 
   const [expanded, setExpanded] = useState<boolean>(false)
   const toggleExpanded = () => setExpanded(!expanded)
 
-  // truncate the first line of the description
+  const allLines = description.split('\n')
+  let firstThreeLines = ''
+
+  // Truncate the first 3 lines of the description
+  allLines.forEach((line, index) => {
+    console.info(`Line: ${line}, index: ${index}`)
+    if (index < allLines.length && index < 3) {
+      firstThreeLines = firstThreeLines.concat(`${line}\n`)
+    }
+  })
+
+  // Apply character limit to first 3 lines
   const shortDescription = useMemo(
-    () => `${description.split('\n')[0].slice(0, characterLimit).trim()}...`,
-    [description, characterLimit],
+    () => `${firstThreeLines.slice(0, characterLimit).trim()}...`,
+    [characterLimit, firstThreeLines],
   )
 
   return (

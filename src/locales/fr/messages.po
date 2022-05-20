@@ -240,8 +240,8 @@ msgstr "DISPONIBLE"
 msgid "Activity"
 msgstr "Activité"
 
-#: src/components/v1/ProjectPayoutMods.tsx
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 msgid "Add a payout"
 msgstr "Ajouter un paiement"
 
@@ -259,7 +259,7 @@ msgstr "Ajouter des fonds au solde de ce projet sans frapper des tokens."
 msgid "Add image"
 msgstr "Ajouter une image"
 
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 msgid "Add payout"
 msgstr "Ajouter un paiement"
 
@@ -281,7 +281,7 @@ msgstr "Ajouter au solde"
 msgid "Add token receiver"
 msgstr "Ajouter un récepteur de token"
 
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v1/V1Project/Rewards/index.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Address"
@@ -1024,7 +1024,7 @@ msgstr "ERC20 Déployé"
 msgid "Each project has its own <0>ERC-20 tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
 msgstr "Chaque projet a ses propres <0>tokens ERC-20</0>. Tous ceux qui financent un projet reçoivent en retour les tokens de ce projet. Les soldes de jetons seront suivis par le protocole jusqu'à ce que les jetons ERC-20 soient éventuellement émis par le propriétaire du projet."
 
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Edit existing split"
 msgstr "Modifier une répartition existante"
@@ -1290,7 +1290,7 @@ msgstr "Identifiant : {projectId}"
 msgid "If locked, this can't be edited or removed until the lock expires or the funding cycle is reconfigured."
 msgstr "Si bloqué, ceci ne peut pas être modifié ou supprimé avant que le blocage expire ou le cycle de financement soit reconfiguré."
 
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "If locked, this split can't be edited or removed until the lock expires or the funding cycle is reconfigured."
 msgstr "Si bloquée, cette répartition ne peut pas être modifiée ou supprimée avant que le blocage expire ou le cycle de financement soit reconfiguré."
@@ -1423,7 +1423,7 @@ msgstr "Juicebox est un protocole ouvert sur Ethereum qui est financé à l'aide
 msgid "Juicebox loading animation"
 msgstr "Animation de chargement de Juicebox"
 
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Juicebox project"
 msgstr "Projet Juicebox"
@@ -1479,7 +1479,7 @@ msgid "Load more"
 msgstr "Télécharger d'avantage"
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Lock until"
 msgstr "Bloquer jusqu'à"
@@ -1828,7 +1828,7 @@ msgstr "Peel"
 msgid "People using Juicebox are interacting with each other through public infrastructure—not a private, profit-seeking corporate service that brokers the exchange."
 msgstr "Les personnes qui utilisent Juicebox interagissent les unes avec les autres via une infrastructure publique, et non pas via un service d'entreprise privé à but lucratif qui négocie l'échange."
 
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 msgid "Percent"
 msgstr "Pourcentage"
 
@@ -1927,7 +1927,7 @@ msgid "Project for {ensName} not found"
 msgstr "Projet pour {ensName} non trouvé"
 
 #: src/components/shared/formItems/ProjectHandle/ProjectHandleFormItem.tsx
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 msgid "Project handle"
 msgstr "Identifiant du projet"
 
@@ -2264,7 +2264,7 @@ msgstr "Sauvegarder les modifications"
 msgid "Save rules"
 msgstr "Sauvegarder les règles"
 
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Save split"
 msgstr "Sauvegarder la répartition"
@@ -2420,7 +2420,7 @@ msgstr "Le protocole Juicebox est régi par une communauté de détenteurs de to
 msgid "The address of any smart contract deployed on {0} that implements <0>this interface</0>."
 msgstr "L'adresse de tout contrat intelligent déployé sur {0} qui implémente <0>cette interface</0>."
 
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "The address that should receive the tokens minted from paying this project."
 msgstr "L'adresse qui doit recevoir les tokens émis pour le paiement de ce projet."
@@ -2733,7 +2733,7 @@ msgid "Total supply"
 msgstr "Offre totale"
 
 #: src/components/shared/formItems/ProjectTicketMods.tsx
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutMods.tsx
 #: src/components/v2/shared/DistributionSplitsSection/index.tsx
 msgid "Total: {0}%"
 msgstr "Total : {0}%"
@@ -2844,7 +2844,7 @@ msgstr "Version du contrat terminal utilisé par ce projet."
 msgid "Volume"
 msgstr "Volume"
 
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Wallet address"
@@ -2930,7 +2930,7 @@ msgstr "Pourquoi Ethereum ?"
 msgid "Why should I want to own a project's tokens?"
 msgstr "Pourquoi devrais-je vouloir posséder les tokens d'un projet ?"
 
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 msgid "Will be rounded to <0/>{0}"
 msgstr "Ce sera arrondi à <0/>{0}"
 
@@ -3269,7 +3269,7 @@ msgstr "{0} {1} réservé"
 msgid "{0}% of supply"
 msgstr "{0}% de l'offre"
 
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutMods.tsx
 #: src/components/v2/shared/DistributionSplitsSection/index.tsx
 msgid "{0}% to <0/>"
 msgstr "{0}% à <0/>"

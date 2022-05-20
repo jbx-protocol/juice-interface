@@ -240,8 +240,8 @@ msgstr "MEVCUT"
 msgid "Activity"
 msgstr "Etkinlik"
 
-#: src/components/v1/ProjectPayoutMods.tsx
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 msgid "Add a payout"
 msgstr "Ödeme ekle"
 
@@ -259,7 +259,7 @@ msgstr "Bu projenin bakiyesine token basmadan fon ekleyin."
 msgid "Add image"
 msgstr "Resim ekle"
 
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 msgid "Add payout"
 msgstr "Ödeme ekle"
 
@@ -281,7 +281,7 @@ msgstr "Bakiyeye ekle"
 msgid "Add token receiver"
 msgstr "Token alıcısı ekle"
 
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v1/V1Project/Rewards/index.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Address"
@@ -1024,7 +1024,7 @@ msgstr ""
 msgid "Each project has its own <0>ERC-20 tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
 msgstr "Her projenin kendi <0>ERC-20 token'ları</0> vardır. Bir projeye fon sağlayan herkes, karşılığında o projenin token'larını alır. Proje sahibi isteğe bağlı olarak ERC-20 token'ı çıkarana kadar, token bakiyeleri protokol tarafından izlenecektir."
 
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Edit existing split"
 msgstr "Mevcut bölümü düzenle"
@@ -1290,7 +1290,7 @@ msgstr ""
 msgid "If locked, this can't be edited or removed until the lock expires or the funding cycle is reconfigured."
 msgstr "Kilitliyse kilidin süresi dolana veya finansman döngüsü yeniden yapılandırılana kadar düzenlenemez veya kaldırılamaz."
 
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "If locked, this split can't be edited or removed until the lock expires or the funding cycle is reconfigured."
 msgstr "Kilitliyse, kilidin süresi dolana veya finansman döngüsü yeniden yapılandırılana kadar bu bölüm düzenlenemez veya kaldırılamaz."
@@ -1423,7 +1423,7 @@ msgstr "Juicebox, Ethereum üzerinde kendi kendini finanse eden açık bir proto
 msgid "Juicebox loading animation"
 msgstr "Juicebox yüklenme animasyonu"
 
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Juicebox project"
 msgstr "Juicebox projesi"
@@ -1479,7 +1479,7 @@ msgid "Load more"
 msgstr "Daha fazla yükle"
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Lock until"
 msgstr "Kilit süresi bitiş tarihi"
@@ -1828,7 +1828,7 @@ msgstr "Peel"
 msgid "People using Juicebox are interacting with each other through public infrastructure—not a private, profit-seeking corporate service that brokers the exchange."
 msgstr "Juicebox'ı kullanan kişiler, borsaya aracılık eden özel, kâr amaçlı kurumsal bir hizmet değil, kamu altyapısı aracılığıyla birbirleriyle etkileşime giriyor."
 
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 msgid "Percent"
 msgstr "Yüzde"
 
@@ -1927,7 +1927,7 @@ msgid "Project for {ensName} not found"
 msgstr "{ensName} için proje bulunamadı"
 
 #: src/components/shared/formItems/ProjectHandle/ProjectHandleFormItem.tsx
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 msgid "Project handle"
 msgstr "Proje tanıtıcısı"
 
@@ -2264,7 +2264,7 @@ msgstr "Yeniden yapılandırmayı kaydet"
 msgid "Save rules"
 msgstr "Kuralları kaydet"
 
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Save split"
 msgstr "Bölümü kaydet"
@@ -2420,7 +2420,7 @@ msgstr "Juicebox protokolü, iki haftada bir tekliflere oy veren JBX token sahip
 msgid "The address of any smart contract deployed on {0} that implements <0>this interface</0>."
 msgstr ""
 
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "The address that should receive the tokens minted from paying this project."
 msgstr "Bu projeye ödeme yaparak basılan token'ları alması gereken adres."
@@ -2733,7 +2733,7 @@ msgid "Total supply"
 msgstr "Toplam arz"
 
 #: src/components/shared/formItems/ProjectTicketMods.tsx
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutMods.tsx
 #: src/components/v2/shared/DistributionSplitsSection/index.tsx
 msgid "Total: {0}%"
 msgstr "Toplam: %{0}"
@@ -2844,7 +2844,7 @@ msgstr "Bu proje tarafından kullanılan terminal sözleşmesinin sürümü."
 msgid "Volume"
 msgstr "Hacim"
 
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Wallet address"
@@ -2930,7 +2930,7 @@ msgstr "Neden Ethereum?"
 msgid "Why should I want to own a project's tokens?"
 msgstr "Neden bir projenin tokenlerine sahip olmak isteyeyim?"
 
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 msgid "Will be rounded to <0/>{0}"
 msgstr "<0/>{0} değerine yuvarlanacak"
 
@@ -3269,7 +3269,7 @@ msgstr "{0}{1} ayrıldı"
 msgid "{0}% of supply"
 msgstr "%{0} arz"
 
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutMods.tsx
 #: src/components/v2/shared/DistributionSplitsSection/index.tsx
 msgid "{0}% to <0/>"
 msgstr "<0/> adresine %{0}"

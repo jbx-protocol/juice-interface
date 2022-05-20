@@ -299,6 +299,10 @@ msgstr "Address: <0/>"
 msgid "Adjust incentives for paying your project."
 msgstr "Adjust incentives for paying your project."
 
+#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
+msgid "Advanced options (optional)"
+msgstr "Advanced options (optional)"
+
 #: src/components/Projects/ProjectsTabs.tsx
 msgid "All"
 msgstr "All"
@@ -502,6 +506,10 @@ msgstr "Burn {tokensTextLong}"
 msgid "By default, all unallocated funds can be distributed to the project owner's wallet."
 msgstr "By default, all unallocated funds can be distributed to the project owner's wallet."
 
+#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
+msgid "By default, newly minted tokens will go to the wallet who sends funds to the address. You can enable this to set the token beneficiary to a custom address."
+msgstr "By default, newly minted tokens will go to the wallet who sends funds to the address. You can enable this to set the token beneficiary to a custom address."
+
 #: src/components/v2/V2Create/forms/TokenForm/index.tsx
 msgid "By default, the issuance rate for your project's token during funding cycle #1 is 1,000,000 tokens / 1 ETH. For example, a 1 ETH contribution to your project will return 1,000,000 tokens. You can manipulate the issuance rate with the following configurations."
 msgstr "By default, the issuance rate for your project's token during funding cycle #1 is 1,000,000 tokens / 1 ETH. For example, a 1 ETH contribution to your project will return 1,000,000 tokens. You can manipulate the issuance rate with the following configurations."
@@ -674,13 +682,13 @@ msgid "Create a payable address"
 msgstr "Create a payable address"
 
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 #: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Create an Ethereum address that can be used to pay your project directly."
 msgstr "Create an Ethereum address that can be used to pay your project directly."
 
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Create payable address"
 msgstr "Create payable address"
 
@@ -724,11 +732,16 @@ msgstr "Current owner: {ownerAddress}"
 msgid "Currently worth: <0><1/>{0}</0>"
 msgstr "Currently worth: <0><1/>{0}</0>"
 
+#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
+msgid "Custom memo"
+msgstr "Custom memo"
+
 #: src/components/shared/ReconfigurationStrategy/ReconfigurationStrategySelector.tsx
 #: src/utils/ballot.ts
 msgid "Custom strategy"
 msgstr ""
 
+#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Custom token beneficiary"
 msgstr "Custom token beneficiary"
@@ -770,8 +783,8 @@ msgstr "Deploy project"
 msgid "Deploy project on {signerNetwork}"
 msgstr "Deploy project on {signerNetwork}"
 
-#: src/components/v2/V2Project/LaunchProjectPayerButton.tsx
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerButton.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Deploy project payer contract"
 msgstr "Deploy project payer contract"
 
@@ -795,6 +808,10 @@ msgstr ""
 #: src/components/shared/Project/FundingCycleDetailsCard.tsx
 msgid "Details"
 msgstr ""
+
+#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
+msgid "Determines whether tokens will be minted from payments to this address."
+msgstr "Determines whether tokens will be minted from payments to this address."
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
@@ -947,7 +964,7 @@ msgstr ""
 #: src/components/v1/V1Project/FundingCycles/FundingHistory.tsx
 #: src/components/v1/V1Project/modals/BalancesModal.tsx
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 #: src/components/v2/V2Project/NewDeployModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleHistory.tsx
 msgid "Done"
@@ -1046,6 +1063,7 @@ msgid "Enabling this will mint {tokenSymbol} ERC-20 tokens. Otherwise staked {to
 msgstr "Enabling this will mint {tokenSymbol} ERC-20 tokens. Otherwise staked {tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver."
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
+#: src/components/v2/V2Create/forms/RulesForm/TokenMintingExtra.tsx
 #: src/components/v2/V2Create/forms/RulesForm/index.tsx
 msgid "Enabling token minting will appear risky to contributors. Only enable this when necessary."
 msgstr "Enabling token minting will appear risky to contributors. Only enable this when necessary."
@@ -1114,7 +1132,7 @@ msgid "Fund anything. Grow together."
 msgstr "Fund anything. Grow together."
 
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
-#: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/FundingDrawer.tsx
 msgid "Funding"
 msgstr "Funding"
 
@@ -1280,7 +1298,7 @@ msgstr "If you have already deployed a payable address and have lost it, please 
 msgid "If you know how much your project needs to earn over some period of time to be sustainable, you can set a funding target with that amount. If your project earns more than that, the surplus funds are locked in an overflow pool. Anyone holding your project's tokens can claim a portion of the overflow pool in exchange for redeeming their tokens."
 msgstr "If you know how much your project needs to earn over some period of time to be sustainable, you can set a funding target with that amount. If your project earns more than that, the surplus funds are locked in an overflow pool. Anyone holding your project's tokens can claim a portion of the overflow pool in exchange for redeeming their tokens."
 
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "If you lose your address, please contact the Juicebox team through <0>Discord</0>."
 msgstr "If you lose your address, please contact the Juicebox team through <0>Discord</0>."
 
@@ -1514,6 +1532,10 @@ msgstr "Mint new {tokensLabel} into an account. Only a project's owner, a design
 msgid "Mint project tokens on demand"
 msgstr "Mint project tokens on demand"
 
+#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
+msgid "Mint tokens as ERC-20"
+msgstr "Mint tokens as ERC-20"
+
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Mint tokens to a custom address."
 msgstr "Mint tokens to a custom address."
@@ -1740,6 +1762,10 @@ msgstr ""
 #: src/components/v1/V1Project/V1PayButton.tsx
 msgid "Paying this project is currently disabled."
 msgstr ""
+
+#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
+msgid "Payment made through payable address"
+msgstr "Payment made through payable address"
 
 #: src/components/shared/RichImgPreview.tsx
 msgid "Payment memo image"
@@ -2024,7 +2050,6 @@ msgid "Reconfigure"
 msgstr "Reconfigure"
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure funding"
 msgstr "Reconfigure funding"
 
@@ -2037,12 +2062,7 @@ msgstr "Reconfigure project and funding details"
 msgid "Reconfigure project details"
 msgstr "Reconfigure project details"
 
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
-msgid "Reconfigure rules"
-msgstr "Reconfigure rules"
-
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureTokenDrawer.tsx
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure token"
 msgstr "Reconfigure token"
 
@@ -2186,8 +2206,8 @@ msgstr ""
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
-#: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/RulesDrawer.tsx
 msgid "Rules"
 msgstr ""
 
@@ -2321,8 +2341,8 @@ msgstr "Some funding cycle properties may indicate risk for project contributors
 msgid "Some properties of the project's current funding cycle may indicate risk for contributors."
 msgstr "Some properties of the project's current funding cycle may indicate risk for contributors."
 
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Something went wrong."
 msgstr "Something went wrong."
 
@@ -2374,6 +2394,10 @@ msgstr ""
 #: src/components/Landing/QAs.tsx
 msgid "That's the plan, but the core Juicebox contracts will first be deployed to Ethereum Mainnet."
 msgstr ""
+
+#: src/components/Landing/index.tsx
+msgid "The Decentralized Funding Platform. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."
+msgstr "The Decentralized Funding Platform. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."
 
 #: src/components/v1/V1Create/index.tsx
 msgid "The JBX protocol is unaudited, and projects built on it may be vulnerable to bugs or exploits. Be smart!"
@@ -2450,6 +2474,10 @@ msgstr "The maximum amount of funds allowed to be distributed from the project's
 msgid "The maximum amount of funds that can be distributed from this project in one funding cycle. Funds will be withdrawn in ETH no matter the currency you choose."
 msgstr "The maximum amount of funds that can be distributed from this project in one funding cycle. Funds will be withdrawn in ETH no matter the currency you choose."
 
+#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
+msgid "The onchain memo for each transaction made through the address. It will appear in the project's payment feed when someone pays this address."
+msgstr "The onchain memo for each transaction made through the address. It will appear in the project's payment feed when someone pays this address."
+
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "The percent this individual receives of the overall {reservedRate}% reserved token allocation"
 msgstr "The percent this individual receives of the overall {reservedRate}% reserved token allocation"
@@ -2486,10 +2514,6 @@ msgstr ""
 msgid "The total amount received by this project through Juicebox since it was created."
 msgstr ""
 
-#: src/components/Landing/index.tsx
-msgid "The world's largest decentralized funding platform. Light enough for a group of friends, powerful enough for a global network of anons."
-msgstr "The world's largest decentralized funding platform. Light enough for a group of friends, powerful enough for a global network of anons."
-
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "There are no payouts defined for this funding cycle. The project owner will recieve all available funds."
 msgstr "There are no payouts defined for this funding cycle. The project owner will recieve all available funds."
@@ -2523,7 +2547,7 @@ msgstr "These settings will <0>not</0> be editable immediately within a funding 
 msgid "This address is an unrecognized strategy contract. Make sure it is correct!"
 msgstr "This address is an unrecognized strategy contract. Make sure it is correct!"
 
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "This address will disappear when you close this window. <0>Copy the address and save it now</0>."
 msgstr "This address will disappear when you close this window. <0>Copy the address and save it now</0>."
 
@@ -2550,8 +2574,9 @@ msgid "This means that anyone can see the code that they're using, anyone can us
 msgstr ""
 
 #: src/components/v1/V1Project/V1PayButton.tsx
-msgid "This project has been archived and cannot be paid."
-msgstr ""
+#: src/components/v2/V2Project/V2PayButton/index.tsx
+msgid "This project is archived and can't be paid."
+msgstr "This project is archived and can't be paid."
 
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "This project is currently using the Juicebox V1 terminal contract. New features introduced in V1.1 allow the project owner to:"
@@ -2583,8 +2608,8 @@ msgid "To: <0/>"
 msgstr ""
 
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
-#: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/TokenDrawer.tsx
 #: src/utils/tokenSymbolText.ts
 msgid "Token"
 msgstr "Token"
@@ -2611,6 +2636,10 @@ msgstr ""
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Token minting allows the project owner to mint project tokens at any time."
 msgstr "Token minting allows the project owner to mint project tokens at any time."
+
+#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
+msgid "Token minting enabled"
+msgstr "Token minting enabled"
 
 #: src/components/shared/ManageTokensModal.tsx
 msgid "Token minting is only available for V1.1 projects. Token minting can be enabled or disabled by reconfiguring the project's funding cycle."
@@ -2662,9 +2691,9 @@ msgstr "Tokens can be redeemed for a portion of this project's ETH overflow, acc
 msgid "Tokens cannot be claimed because no ERC-20 token has been issued for this project. ERC-20 tokens must be issued by the project owner."
 msgstr "Tokens cannot be claimed because no ERC-20 token has been issued for this project. ERC-20 tokens must be issued by the project owner."
 
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
-msgid "Tokens minted from payments to this address will belong to the payer. However, if someone pays the project though a custodial service platform such as Coinbase, <0>tokens can't be issued to their personal wallets and will be lost</0>."
-msgstr "Tokens minted from payments to this address will belong to the payer. However, if someone pays the project though a custodial service platform such as Coinbase, <0>tokens can't be issued to their personal wallets and will be lost</0>."
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
+msgid "Tokens minted from payments to this address will belong to the payer by default. However, if someone pays the project though a custodial service platform such as Coinbase, <0>tokens can't be issued to their personal wallets and will be lost</0>."
+msgstr "Tokens minted from payments to this address will belong to the payer by default. However, if someone pays the project though a custodial service platform such as Coinbase, <0>tokens can't be issued to their personal wallets and will be lost</0>."
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "Tokens receiver"
@@ -2850,6 +2879,11 @@ msgstr ""
 msgid "What's going on under the hood?"
 msgstr ""
 
+#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
+msgid "When checked, payments to this address will mint this project's ERC-20 tokens to the beneficiary's wallet. Payments will cost more gas. When unchecked, Juicebox will track the beneficiary's new tokens when they pay. The beneficiary can claim their ERC-20 tokens at any time."
+msgstr "When checked, payments to this address will mint this project's ERC-20 tokens to the beneficiary's wallet. Payments will cost more gas. When unchecked, Juicebox will track the beneficiary's new tokens when they pay. The beneficiary can claim their ERC-20 tokens at any time."
+
+#: src/components/v2/V2Create/forms/RulesForm/TokenMintingExtra.tsx
 #: src/components/v2/V2Create/forms/RulesForm/index.tsx
 msgid "When enabled, the project owner can manually mint any amount of tokens to any address."
 msgstr "When enabled, the project owner can manually mint any amount of tokens to any address."
@@ -2997,7 +3031,7 @@ msgstr ""
 msgid "Your feedback will be sent to a <0>public Discord channel </0>for our development team to consider."
 msgstr "Your feedback will be sent to a <0>public Discord channel </0>for our development team to consider."
 
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Your new payable address:"
 msgstr "Your new payable address:"
 

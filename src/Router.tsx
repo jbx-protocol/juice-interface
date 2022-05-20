@@ -10,6 +10,8 @@ import V1CurrencyProvider from 'providers/v1/V1CurrencyProvider'
 import PrivacyPolicy from 'components/PrivacyPolicy'
 import { t } from '@lingui/macro'
 
+import { DEFAULT_SITE_TITLE } from 'constants/siteMetadata'
+
 const V1Create = lazy(() => import('components/v1/V1Create'))
 const V2Create = lazy(() => import('components/v2/V2Create'))
 const V2DashboardGateway = lazy(
@@ -43,7 +45,7 @@ function usePageTitle() {
 
   useEffect(() => {
     const name = pageTitles()[location.pathname]
-    document.title = name ? `${name} | Juicebox` : 'Juicebox'
+    document.title = name ? `${name} | Juicebox` : DEFAULT_SITE_TITLE
   }, [location])
 }
 

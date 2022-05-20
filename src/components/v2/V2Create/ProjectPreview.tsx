@@ -49,6 +49,7 @@ export default function ProjectPreview({
   const project: V2ProjectContextType = {
     isPreviewMode: true,
     cv: '2',
+    isArchived: false,
 
     projectId: 0,
     projectMetadata,

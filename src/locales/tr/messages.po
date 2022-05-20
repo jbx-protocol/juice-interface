@@ -8,7 +8,7 @@ msgstr ""
 "Language: tr\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-04-11 02:39\n"
+"PO-Revision-Date: 2022-05-19 02:18\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -28,7 +28,7 @@ msgstr "(İsteğe bağlı) Bu ödemeye zincir üstü bir not ekleyin"
 
 #: src/components/shared/formItems/ProjectDiscountRate.tsx
 msgid "({0}%)"
-msgstr ""
+msgstr "(%{0})"
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "({realTokenAllocationPercent}% of all newly minted tokens)."
@@ -53,7 +53,7 @@ msgstr "%100 taşma"
 
 #: src/components/v2/V2Create/index.tsx
 msgid "2. Funding cycle"
-msgstr ""
+msgstr "2. Finansman döngüsü"
 
 #: src/components/shared/VolumeChart/index.tsx
 msgid "24 hours"
@@ -66,7 +66,7 @@ msgstr "3 günlük gecikme"
 
 #: src/components/v2/V2Create/index.tsx
 msgid "3. Review and deploy"
-msgstr ""
+msgstr "3. İncele ve Başlat"
 
 #: src/components/shared/VolumeChart/index.tsx
 msgid "30 days"
@@ -90,7 +90,7 @@ msgstr "<0/> Arşivlenen projeler blok zincirinde değiştirilmemiştir veya sil
 
 #: src/components/Projects/index.tsx
 msgid "<0/> Search results don't include V2 projects yet."
-msgstr ""
+msgstr "<0/> Arama sonuçları henüz V2 projelerini içermiyor."
 
 #: src/components/Projects/index.tsx
 msgid "<0/> The Juicebox protocol is open to anyone, and project configurations can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO or Peel. Do your own research and understand the risks before committing your funds."
@@ -102,11 +102,11 @@ msgstr "<0/> sahip bakiyesi"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "<0/>{0} after {feePercentage}% JBX membership fee"
-msgstr ""
+msgstr "%{feePercentage} JBX üyelik ücretinden sonra kalan <0/>{0}"
 
 #: src/components/shared/Project/SpendingStats.tsx
 msgid "<0/>{0}{1} distributed"
-msgstr ""
+msgstr "<0/>{0}{1} dağıtıldı"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "<0><1/>{netDistributionAmount}</0> after {feePercentage}% JBX fee"
@@ -142,7 +142,7 @@ msgstr "<0>NOT:</0> Bu projenin bakiyesi 0. Projeler bakiye olmadan taşınamaz.
 
 #: src/components/v1/shared/BudgetForm.tsx
 msgid "<0>No duration set.</0>Funding can be reconfigured at any time. Reconfigurations will start a new funding cycle."
-msgstr ""
+msgstr "<0>Süre ayarlanmadı.</0>Finansman herhangi bir zamanda yeniden yapılandırılabilir. Yeniden yapılandırmalar yeni bir finansman döngüsü başlatır."
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "<0>Note:</0> These properties will <1>not</1> be editable immediately within a funding cycle. They can only be changed for <2>upcoming</2> funding cycles."
@@ -158,11 +158,11 @@ msgstr "<0>Peel</0>, juicebox.money kullanıcı arayüzünü yöneten DAO'dur. P
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
 msgid "<0>Recurring funding cycles</0> (for example, distribute $30,000 from your project's treasury every 14 days)."
-msgstr ""
+msgstr "<0>Yinelenen finansman döngüleri</0> (örneğin, her 14 günde bir projenizin hazinesinden 30.000 ABD doları dağıtılması)."
 
 #: src/components/v1/shared/BudgetForm.tsx
 msgid "<0>Target is 0.</0> The project's entire balance will be considered overflow. <1>Learn more</1> about overflow."
-msgstr ""
+msgstr "<0>Hedef 0.</0> Projenin tüm bakiyesi taşma olarak kabul edilecektir. Taşma hakkında <1>daha fazla bilgi edinin</1>."
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "<0>This project has no overflow</0>, so you will not receive any ETH for burning tokens."
@@ -187,7 +187,7 @@ msgstr "@"
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
 msgid "A <0>discount rate</0> to automatically reduce the issuance rate of your project's token (tokens/ETH) each new funding cycle."
-msgstr ""
+msgstr "Her yeni finansman döngüsünde projenizin token'ının (token/ETH) basım oranını otomatik olarak azaltmak için bir <0>indirim oranı</0>."
 
 #: src/components/Landing/QAs.tsx
 msgid "A bonding curve rewards people who wait longer to redeem your tokens for overflow."
@@ -225,7 +225,7 @@ msgstr "Yaklaşan bir finansman döngüsü için yeniden yapılandırma, döngü
 
 #: src/components/shared/formItems/ProjectReserved.tsx
 msgid "A reserved rate of more than 90% is risky for contributors. Contributors won't receive many tokens for their contribution."
-msgstr ""
+msgstr "%90'ın üzerindeki ayırma oranları, katkıda bulunanlar için risklidir. Katkıda bulunanlar, katkıları karşılığında çok fazla token almazlar."
 
 #: src/components/shared/ProjectCard.tsx
 msgid "ARCHIVED"
@@ -243,12 +243,12 @@ msgstr "Etkinlik"
 #: src/components/v1/ProjectPayMods/ProjectPayoutMods.tsx
 #: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 msgid "Add a payout"
-msgstr ""
+msgstr "Ödeme ekle"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/index.tsx
 msgid "Add a split"
-msgstr ""
+msgstr "Bölüm ekle"
 
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
 msgid "Add funds to this project's balance without minting tokens."
@@ -261,11 +261,11 @@ msgstr "Resim ekle"
 
 #: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 msgid "Add payout"
-msgstr ""
+msgstr "Ödeme ekle"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Add split"
-msgstr ""
+msgstr "Bölüm ekle"
 
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
 msgid "Add to Balance"
@@ -289,20 +289,24 @@ msgstr "Adres"
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Address required"
-msgstr ""
+msgstr "Adres gerekli"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
 msgid "Address:"
-msgstr ""
+msgstr "Adres:"
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Address: <0/>"
-msgstr ""
+msgstr "Adres: <0/>"
 
 #: src/components/v1/V1Create/index.tsx
 msgid "Adjust incentives for paying your project."
 msgstr "Projenize gelecek ödemeler için teşvikleri ayarlayın."
+
+#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
+msgid "Advanced options (optional)"
+msgstr ""
 
 #: src/components/Projects/ProjectsTabs.tsx
 msgid "All"
@@ -383,7 +387,7 @@ msgstr "Projenizin Discord Sunucusuna davet linki."
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "Any changes you make will take effect in <0>funding cycle #{0}</0>. The current funding cycle (#{currentFCNumber}) won't be altered."
-msgstr ""
+msgstr "Yaptığınız tüm değişiklikler <0>finansman döngüsü #{0}</0> içinde geçerli olacaktır. Mevcut finansman döngüsü (#{currentFCNumber}) değiştirilmeyecektir."
 
 #: src/constants/v1/ballotStrategies/index.ts
 #: src/constants/v2/ballotStrategies/index.ts
@@ -392,11 +396,11 @@ msgstr "Yaklaşan bir finansman döngüsüne yönelik herhangi bir yeniden yapı
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
 msgid "Any treasury funds in excess of the distribution limit is called <0>overflow</0>. Overflow can be claimed by your project's token holders by redeeming their tokens. <1>Learn more</1> about overflow."
-msgstr ""
+msgstr "Dağıtım sınırını aşan her türlü hazine fonuna <0>taşma</0> denir. Projenizin token sahipleri, token'larını kullanarak taşma talebinde bulunabilir. Taşma hakkında <1>daha fazla bilgi edinin</1>."
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
 msgid "Any treasury funds within the distribution limit can be paid out to destinations that you can define as <0>splits</0>. <1>Learn more</1> about payout splits."
-msgstr ""
+msgstr "Dağıtım limiti dahilindeki herhangi bir hazine fonu, <0>bölüm</0> olarak tanımlayabileceğiniz hedef noktalarına ödenebilir. Ödeme bölümleri hakkında <1>daha fazla bilgi edinin</1>."
 
 #: src/components/shared/ArchiveProject/index.tsx
 #: src/components/shared/ArchiveProject/index.tsx
@@ -488,7 +492,7 @@ msgstr "Proje token'larını yakın"
 
 #: src/components/shared/ManageTokensModal.tsx
 msgid "Burn your {tokensLabel}. You won't receive ETH in return because this project has no overflow."
-msgstr ""
+msgstr "{tokensLabel} token'larınızı yakın. Karşılığında ETH almayacaksınız çünkü bu projede taşma bulunmuyor."
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Burn {0} {tokensTextShort}"
@@ -496,7 +500,7 @@ msgstr "{0} adet {tokensTextShort} token'ını yak"
 
 #: src/components/shared/ManageTokensModal.tsx
 msgid "Burn {tokensLabel}"
-msgstr ""
+msgstr "{tokensLabel} token'larını yak"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
@@ -507,13 +511,17 @@ msgstr "{tokensTextLong} yak"
 msgid "By default, all unallocated funds can be distributed to the project owner's wallet."
 msgstr "Aksi istenmediği takdirde, tahsis edilmemiş bütün fonlar proje sahibinin cüzdanına dağıtılabilir."
 
+#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
+msgid "By default, newly minted tokens will go to the wallet who sends funds to the address. You can enable this to set the token beneficiary to a custom address."
+msgstr ""
+
 #: src/components/v2/V2Create/forms/TokenForm/index.tsx
 msgid "By default, the issuance rate for your project's token during funding cycle #1 is 1,000,000 tokens / 1 ETH. For example, a 1 ETH contribution to your project will return 1,000,000 tokens. You can manipulate the issuance rate with the following configurations."
 msgstr ""
 
 #: src/components/shared/formItems/ProjectReserved.tsx
 msgid "By default, these tokens are reserved for the project owner, but you can also allocate portions to other wallet addresses."
-msgstr ""
+msgstr "Varsayılan olarak, bu token'lar proje sahibi için ayrılmıştır, ancak bölümleri diğer cüzdan adreslerine de tahsis edebilirsiniz."
 
 #: src/components/Landing/QAs.tsx
 msgid "Can I change my project's contract after it's been created?"
@@ -545,7 +553,7 @@ msgstr "Projenizin finansman yapılandırmasında yapılan değişikliklerin yü
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "Changes will take effect according to the project's custom ballot contract."
-msgstr ""
+msgstr "Değişiklikler, projenin özel oylama sözleşmesine göre yürürlüğe girecektir."
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "Changes you make will take effect according to your <0>{0}</0> reconfiguration rule (the first funding cycle following <1>{1}</1> from now)."
@@ -561,19 +569,19 @@ msgstr "Cüzdanınıza {tokenSymbol} ERC-20 basmak için burayı işaretleyin. T
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
 msgid "Claim {0}"
-msgstr ""
+msgstr "{0} Talep et"
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
 msgid "Claim {0} as ERC-20 tokens"
-msgstr ""
+msgstr "{0} token'ları ERC-20 olarak talep et"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "Claim {tokenTextShort}"
-msgstr ""
+msgstr "{tokenTextShort} Talep et"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "Claim {tokenTextShort} as ERC-20 tokens"
-msgstr ""
+msgstr "{tokenTextShort} token'ları ERC-20 olarak talep et"
 
 #: src/components/shared/ManageTokensModal.tsx
 msgid "Claim {tokensLabel} as ERC-20"
@@ -585,7 +593,7 @@ msgstr "{tokenSymbol} token'larını talep etmek, {tokenSymbol} bakiyenizi ERC-2
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "Claiming {tokenTextLong} will convert your {tokenTextShort} balance to ERC-20 tokens and mint them to your wallet."
-msgstr ""
+msgstr "{tokenTextLong} token'larınızı talep etmeniz, {tokenTextShort} bakiyenizi ERC-20 token'larına dönüştürecek ve bunları cüzdanınıza basacaktır."
 
 #: src/components/shared/TransactionModal.tsx
 #: src/components/v1/V1DownloadActivityModal.tsx
@@ -602,15 +610,15 @@ msgstr "Gelirinizin bir kısmını, desteklemek istediğiniz kişilere veya proj
 
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 msgid "Configure how your project will collect and spend funds."
-msgstr ""
+msgstr "Projenizin nasıl fon toplayacağını ve harcayacağını yapılandırın."
 
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 msgid "Configure restrictions for your funding cycles."
-msgstr ""
+msgstr "Finansman döngüleriniz için kısıtlamaları yapılandırın."
 
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 msgid "Configure the dynamics of your project's token."
-msgstr ""
+msgstr "Proje token'ınızın dinamiklerini yapılandırın."
 
 #: src/components/v1/V1Project/modals/FeedbackPromptModal.tsx
 msgid "Congrats on creating your project!"
@@ -627,7 +635,7 @@ msgstr "Bağlan"
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/DeployProjectButton.tsx
 msgid "Connect wallet to deploy"
-msgstr ""
+msgstr "Başlatmak için cüzdanınızı bağlayın"
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 msgid "Connect wallet to pay"
@@ -635,7 +643,7 @@ msgstr "Ödemek için cüzdanınızı bağlayın"
 
 #: src/components/Projects/HoldingsProjects.tsx
 msgid "Connect your wallet to see your holdings."
-msgstr ""
+msgstr "Varlıklarınızı görmek için cüzdanınızı bağlayın."
 
 #: src/components/Projects/MyProjects.tsx
 msgid "Connect your wallet to see your projects."
@@ -679,13 +687,13 @@ msgid "Create a payable address"
 msgstr ""
 
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 #: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Create an Ethereum address that can be used to pay your project directly."
 msgstr ""
 
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Create payable address"
 msgstr ""
 
@@ -722,21 +730,26 @@ msgstr "Güncel 3. Taraf Kripto Kurları"
 
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
 msgid "Current owner: {ownerAddress}"
-msgstr ""
+msgstr "Güncel sahibi: {ownerAddress}"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Currently worth: <0><1/>{0}</0>"
 msgstr "Güncel değeri: <0><1/>{0}</0>"
 
+#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
+msgid "Custom memo"
+msgstr ""
+
 #: src/components/shared/ReconfigurationStrategy/ReconfigurationStrategySelector.tsx
 #: src/utils/ballot.ts
 msgid "Custom strategy"
 msgstr "Özel strateji"
 
+#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Custom token beneficiary"
-msgstr ""
+msgstr "Özel token faydalanıcısı"
 
 #: src/components/shared/Project/FundingCycleDetailsCard.tsx
 msgid "Cycle #{0}"
@@ -761,7 +774,7 @@ msgstr "Oluşturma tarihi"
 
 #: src/constants/time.ts
 msgid "Days"
-msgstr ""
+msgstr "Gün"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Deploy new project configuration"
@@ -769,20 +782,20 @@ msgstr "Yeni proje yapılandırmasını devreye alın"
 
 #: src/components/v1/V1Create/index.tsx
 msgid "Deploy project"
-msgstr ""
+msgstr "Projeyi başlat"
 
 #: src/components/v1/V1Create/index.tsx
 msgid "Deploy project on {signerNetwork}"
-msgstr ""
+msgstr "Projeyi {signerNetwork} üzerinde başlat"
 
-#: src/components/v2/V2Project/LaunchProjectPayerButton.tsx
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerButton.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Deploy project payer contract"
 msgstr ""
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/DeployProjectButton.tsx
 msgid "Deploy project to {0}"
-msgstr ""
+msgstr "Projeyi {0} ağında başlat"
 
 #: src/components/shared/activityEventElems/DeployedERC20EventElem.tsx
 msgid "Deployed ERC20 token"
@@ -801,6 +814,10 @@ msgstr "Projenizi tasarlayın"
 msgid "Details"
 msgstr "Detaylar"
 
+#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
+msgid "Determines whether tokens will be minted from payments to this address."
+msgstr ""
+
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
@@ -814,11 +831,11 @@ msgstr ""
 
 #: src/components/shared/formItems/ProjectDiscountRate.tsx
 msgid "Disabled when your project's funding cycle duration is 0."
-msgstr ""
+msgstr "Projenizin finansman döngüsü süresi 0 (sıfır) olduğunda devre dışı kalır."
 
 #: src/components/v2/V2Create/forms/TokenForm/index.tsx
 msgid "Disabled when your project's funding cycle has no duration."
-msgstr ""
+msgstr "Projenizin finansman döngüsünün süresi olmadığında devre dışı kalır."
 
 #: src/components/v2/shared/UnsavedChangesModal.tsx
 msgid "Discard"
@@ -910,7 +927,7 @@ msgstr ""
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Distribution limit"
-msgstr ""
+msgstr "Dağıtım sınırı"
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Distribution limit is 0: All funds will be considered overflow and can be redeemed by token holders."
@@ -922,16 +939,16 @@ msgstr ""
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Distribution limit, duration and payouts"
-msgstr ""
+msgstr "Dağıtım sınırı, süre ve ödemeler"
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
 msgid "Distribution splits"
-msgstr ""
+msgstr "Dağıtım bölümleri"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Distributions to other Juicebox project do not incur any fee."
-msgstr ""
+msgstr "Diğer Juicebox projesine yapılan dağıtımlar herhangi bir ücrete tabi değildir."
 
 #: src/components/Landing/QAs.tsx
 msgid "Do I have to make my project open source to use Juicebox as its business model?"
@@ -952,7 +969,7 @@ msgstr "Bir proje kendi taşmasından faydalanır mı?"
 #: src/components/v1/V1Project/FundingCycles/FundingHistory.tsx
 #: src/components/v1/V1Project/modals/BalancesModal.tsx
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 #: src/components/v2/V2Project/NewDeployModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleHistory.tsx
 msgid "Done"
@@ -1010,7 +1027,7 @@ msgstr "Her projenin kendi <0>ERC-20 token'ları</0> vardır. Bir projeye fon sa
 #: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Edit existing split"
-msgstr ""
+msgstr "Mevcut bölümü düzenle"
 
 #: src/components/v1/V1Project/modals/EditProjectModal.tsx
 msgid "Edit project"
@@ -1048,12 +1065,13 @@ msgstr "Bunun etkinleştirilmesi, proje sahibine, herhangi bir miktarda token'ı
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "Enabling this will mint {tokenSymbol} ERC-20 tokens. Otherwise staked {tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver."
-msgstr ""
+msgstr "Bunu etkinleştirmek ERC-20 {tokenSymbol} token'ları basacaktır. Aksi takdirde, stake edilmiş {tokenSymbol} token'ları basılacaktır ve bunlar, daha sonra alıcı tarafından ERC-20 olarak talep edilebilecektir."
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
+#: src/components/v2/V2Create/forms/RulesForm/TokenMintingExtra.tsx
 #: src/components/v2/V2Create/forms/RulesForm/index.tsx
 msgid "Enabling token minting will appear risky to contributors. Only enable this when necessary."
-msgstr ""
+msgstr "Token basımının etkinleştirilmesi, katkıda bulunanlar açısından riskli görünecektir. Bunu yalnızca gerektiğinde etkinleştirin."
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
@@ -1119,9 +1137,9 @@ msgid "Fund anything. Grow together."
 msgstr ""
 
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
-#: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/FundingDrawer.tsx
 msgid "Funding"
-msgstr ""
+msgstr "Finansman"
 
 #: src/components/v1/FundingCycle/Spending.tsx
 msgid "Funding Distribution"
@@ -1151,7 +1169,7 @@ msgstr "Finansman döngüsü hedefi"
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
 msgid "Funding cycles"
-msgstr ""
+msgstr "Finansman döngüleri"
 
 #: src/constants/fundingWarningText.ts
 msgid "Funding cycles can be reconfigured moments before a new cycle begins, without notifying contributors."
@@ -1213,7 +1231,7 @@ msgstr "Token'larınız"
 
 #: src/constants/time.ts
 msgid "Hours"
-msgstr ""
+msgstr "Saat"
 
 #: src/components/Landing/QAs.tsx
 msgid "How decentralized is Juicebox?"
@@ -1261,7 +1279,7 @@ msgstr "Anladım"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "ID"
-msgstr ""
+msgstr "Kimlik"
 
 #: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 #: src/components/v2/V2Project/V2ProjectHeaderActions.tsx
@@ -1275,7 +1293,7 @@ msgstr "Kilitliyse kilidin süresi dolana veya finansman döngüsü yeniden yap�
 #: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "If locked, this split can't be edited or removed until the lock expires or the funding cycle is reconfigured."
-msgstr ""
+msgstr "Kilitliyse, kilidin süresi dolana veya finansman döngüsü yeniden yapılandırılana kadar bu bölüm düzenlenemez veya kaldırılamaz."
 
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
 msgid "If you have already deployed a payable address and have lost it, please contact the Juicebox team through <0>Discord.</0>"
@@ -1283,15 +1301,15 @@ msgstr ""
 
 #: src/components/Landing/QAs.tsx
 msgid "If you know how much your project needs to earn over some period of time to be sustainable, you can set a funding target with that amount. If your project earns more than that, the surplus funds are locked in an overflow pool. Anyone holding your project's tokens can claim a portion of the overflow pool in exchange for redeeming their tokens."
-msgstr ""
+msgstr "Projenizin sürdürülebilir kalmasını sağlamak için belirli bir sürede ne kadar finansmana ihtiyacınız olduğunu biliyorsanız bu miktarı içeren bir finansman hedefi oluşturabilirsiniz. Projeniz bu miktardan fazla kazanırsa artan miktar bir taşma havuzuna aktarılır. Projenizin token'larına sahip olan herkes, token'larını kullanarak taşma havuzunun bir kısmını talep edebilir."
 
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "If you lose your address, please contact the Juicebox team through <0>Discord</0>."
 msgstr ""
 
 #: src/components/Landing/QAs.tsx
 msgid "If you're interested in creating a project but still confused on how to get started, consider watching this <0>instructional video</0>. Also feel free to reach out in the <1>Juicebox Discord</1> where our team will be happy to help bring your project idea to life!"
-msgstr ""
+msgstr "Bir proje başlatmak istiyorsanız ama hala çekinceleriniz varsa <0>bu bilgilendirici video</0>'yu izlemelisiniz. Ayrıca bize <1>Juicebox Discord</1>'u üzerinden ulaşabilirsiniz, takım arkadaşlarımız proje fikrinizi hayata geçirirken size yardımcı olmaktan mutluluk duyacaktır!"
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
@@ -1332,7 +1350,7 @@ msgstr ""
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Invalid address"
-msgstr ""
+msgstr "Geçersiz adres"
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
@@ -1363,7 +1381,7 @@ msgstr "Token çıkar"
 
 #: src/components/Landing/QAs.tsx
 msgid "It isn't possible to remove a project's data from the blockchain, but we can hide it in the app if you'd like to prevent people from seeing or interacting with it — just let us know in <0>Discord</0>. Keep in mind people will still be able to use your project by interacting directly with the contract."
-msgstr ""
+msgstr "Bir projenin verilerini blok zincirinden tümüyle kaldırmak mümkün olmasa da Juicebox uygulaması içinde gizleyebilir ve erişime kapatabiliriz. Bunun için bizimle <0>Discord</0> üzerinden iletişime geçmeniz yeterli. Ancak projenizin doğrudan sözleşmeye erişim aracılığıyla kullanıma açık olacağını unutmayın."
 
 #: src/components/Landing/QAs.tsx
 msgid "It'd be a lot cooler if you did"
@@ -1379,11 +1397,11 @@ msgstr "JBX Ücreti (%{feePercentage}):"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Juicebox Project ID"
-msgstr ""
+msgstr "Juicebox Proje Kimliği"
 
 #: src/components/v2/shared/V2SupportWarning.tsx
 msgid "Juicebox V2 on {0} isn't enabled."
-msgstr ""
+msgstr "{0} üzerinde Juicebox V2 etkin değil."
 
 #: src/components/v2/shared/SplitItem.tsx
 msgid "Juicebox V2 project with ID {0}"
@@ -1399,16 +1417,16 @@ msgstr "Juicebox, yönetişim açısından minimal bir protokoldür. Ayarlanabil
 
 #: src/components/Landing/QAs.tsx
 msgid "Juicebox is an open protocol on Ethereum that is funded using Juicebox itself. You can check out the contractualized budget specs <0>here</0>."
-msgstr ""
+msgstr "Juicebox, Ethereum üzerinde kendi kendini finanse eden açık bir protokoldür. Sözleşme haline getirilmiş bütçe özelliklerine <0>buradan</0> göz atabilirsiniz."
 
 #: src/components/shared/TransactionModal.tsx
 msgid "Juicebox loading animation"
-msgstr ""
+msgstr "Juicebox yüklenme animasyonu"
 
 #: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Juicebox project"
-msgstr ""
+msgstr "Juicebox projesi"
 
 #: src/components/Landing/QAs.tsx
 msgid "Juicebox was built to allow people and projects to get paid for creating public art and infrastructure, as much as or more than they would working towards corporate ends. No more shady business."
@@ -1425,7 +1443,7 @@ msgstr "Son ödeme zaman damgası"
 #: src/components/shared/modals/IssueTokenModal.tsx
 #: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Later"
-msgstr ""
+msgstr "Daha sonra"
 
 #: src/components/v1/V1DownloadPaymentsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
@@ -1464,11 +1482,11 @@ msgstr "Daha fazla yükle"
 #: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Lock until"
-msgstr ""
+msgstr "Kilit süresi bitiş tarihi"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
 msgid "Locked:"
-msgstr ""
+msgstr "Kilitlendi:"
 
 #: src/components/shared/formItems/ProjectLogoUri.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
@@ -1492,11 +1510,11 @@ msgstr "Yönet"
 
 #: src/components/shared/ManageTokensModal.tsx
 msgid "Manage {0}"
-msgstr ""
+msgstr "{0} token'ını yönet"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "Manage {tokenText}"
-msgstr ""
+msgstr "{tokenText} token'ını yönet"
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
@@ -1509,7 +1527,7 @@ msgstr "Juicebox V1.1'e geçiş yapın"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "Mint as ERC-20"
-msgstr ""
+msgstr "ERC-20 olarak bas"
 
 #: src/components/shared/ManageTokensModal.tsx
 msgid "Mint new {tokensLabel} into an account. Only a project's owner, a designated operator, or one of its terminal's delegates can mint its tokens."
@@ -1517,24 +1535,28 @@ msgstr "Bir hesaba yeni {tokensLabel} token'ı basın. Bir projenin token'ların
 
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "Mint project tokens on demand"
+msgstr "Talep üzerine proje token'larının basılması"
+
+#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
+msgid "Mint tokens as ERC-20"
 msgstr ""
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Mint tokens to a custom address."
-msgstr ""
+msgstr "Token'ları özel bir adrese basın."
 
 #: src/components/shared/ManageTokensModal.tsx
 msgid "Mint {tokensLabel}"
-msgstr ""
+msgstr "{tokensLabel} token'larını bas"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "Mint {tokensTokenLower}"
-msgstr ""
+msgstr "{tokensTokenLower} token'larını bas"
 
 #: src/constants/time.ts
 msgid "Minutes"
-msgstr ""
+msgstr "Dakika"
 
 #: src/components/Projects/TrendingProjects.tsx
 msgid "More trending projects"
@@ -1551,7 +1573,7 @@ msgstr ""
 #: src/components/shared/Project/SpendingStats.tsx
 #: src/components/v2/V2Project/TreasuryStats/DistributedRatio.tsx
 msgid "NO LIMIT"
-msgstr ""
+msgstr "LİMİT YOK"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
@@ -1568,11 +1590,11 @@ msgstr ""
 
 #: src/components/v2/V2Create/tabs/ProjectDetailsTab/ProjectDetailsTabContent.tsx
 msgid "Next: Funding cycle"
-msgstr ""
+msgstr "Sonraki: Finansman döngüsü"
 
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 msgid "Next: Review and deploy"
-msgstr ""
+msgstr "Sonraki: İncele ve başlat"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
@@ -1592,7 +1614,7 @@ msgstr "Finansman hedefi yok: Proje, tüm fonların nasıl dağıtılacağını 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "No limit (infinite)"
-msgstr ""
+msgstr "Limit yok (sonsuz)"
 
 #: src/components/v1/shared/BudgetForm.tsx
 msgid "No more than the funding cycle target can be distributed by the project in a single funding cycle."
@@ -1638,7 +1660,7 @@ msgstr "Not: Juicebox yenidir, denetlenmemiştir ve kusursuz çalışması garan
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "Note: Tokens can be minted manually when allowed in the current funding cycle. This can be changed by the project owner for upcoming cycles."
-msgstr ""
+msgstr "Not: Token'lar, mevcut finansman döngüsünde izin verildiğinde manuel olarak basılabilir. İzin, sonraki döngüler için proje sahibi tarafından değiştirilebilir."
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
@@ -1736,7 +1758,7 @@ msgstr ""
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 msgid "Paying <0>{0}</0> is not an investment — it's a way to support the project. Any value or utility of the tokens you receive is determined by {1}."
-msgstr ""
+msgstr "<0>{0}</0> ödemek bir yatırım değil, projeyi desteklemenin bir yoludur. Aldığınız token'ların değeri veya faydası {1} tarafından belirlenir."
 
 #: src/components/v1/V1Project/V1PayButton.tsx
 msgid "Paying this project is currently disabled, because the token reserved rate is 100% and no tokens will be earned by making a payment."
@@ -1745,6 +1767,10 @@ msgstr "Bu projeye ödeme şu anda devredışı çünkü ayrılmış token oran�
 #: src/components/v1/V1Project/V1PayButton.tsx
 msgid "Paying this project is currently disabled."
 msgstr "Bu projeye ödeme şu anda devredışı."
+
+#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
+msgid "Payment made through payable address"
+msgstr ""
 
 #: src/components/shared/RichImgPreview.tsx
 msgid "Payment memo image"
@@ -1768,7 +1794,7 @@ msgstr "Ödemeler duraklatıldı"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Payout amount"
-msgstr ""
+msgstr "Ödeme miktarı"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Payout recipients"
@@ -1776,11 +1802,11 @@ msgstr "Ödeme alıcıları"
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
 msgid "Payout splits"
-msgstr ""
+msgstr "Ödeme bölümleri"
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
 msgid "Payout splits can't be scheduled when the distribution limit is Zero."
-msgstr ""
+msgstr "Dağıtım limiti Sıfır olduğunda ödeme bölümleri planlanamaz."
 
 #: src/components/shared/forms/PayModsForm.tsx
 msgid "Payouts (optional)"
@@ -1804,7 +1830,7 @@ msgstr "Juicebox'ı kullanan kişiler, borsaya aracılık eden özel, kâr amaç
 
 #: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 msgid "Percent"
-msgstr ""
+msgstr "Yüzde"
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "Percent allocation"
@@ -1812,7 +1838,7 @@ msgstr "Yüzde tahsisi"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Percent of distribution limit"
-msgstr ""
+msgstr "Dağıtım limit yüzdesi"
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Percentage of newly minted tokens reserved for the project."
@@ -1820,11 +1846,11 @@ msgstr ""
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Percentage of the distribution limit this payee will receive."
-msgstr ""
+msgstr "Alacaklının alacağı dağıtım limitinin yüzdesi."
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Percentage this payee will receive of all funds raised."
-msgstr ""
+msgstr "Alacaklının toplanan tüm finansmandan alacağı yüzde."
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
 msgid "Percentage:"
@@ -1836,7 +1862,7 @@ msgstr "Yüzdelerin toplamı %100 veya daha az olmalıdır"
 
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
 msgid "Please contact the Juicebox dev team through our <0>Discord</0> to have your project archived."
-msgstr ""
+msgstr "Projenizi arşivletmek için lütfen <0>Discord</0> aracılığıyla Juicebox geliştirici ekibiyle iletişime geçin."
 
 #: src/components/Navbar/constants.ts
 msgid "Podcast"
@@ -1844,12 +1870,12 @@ msgstr "Podcast"
 
 #: src/components/shared/ProjectRiskNotice.tsx
 msgid "Potential risks"
-msgstr ""
+msgstr "Potansiyel riskler"
 
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/ProjectConfigurationFieldsContainer.tsx
 msgid "Preview:"
-msgstr ""
+msgstr "Önizleme:"
 
 #: src/components/Landing/index.tsx
 msgid "Programmable spending"
@@ -1862,11 +1888,11 @@ msgstr ""
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Project ID is a number."
-msgstr ""
+msgstr "Proje kimliği bir sayıdır."
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
 msgid "Project ID:"
-msgstr ""
+msgstr "Proje Kimliği:"
 
 #: src/components/shared/modals/IssueTokenModal.tsx
 msgid "Project Token"
@@ -1894,11 +1920,11 @@ msgstr "Proje ayrıntıları"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectDetailsDrawer.tsx
 msgid "Project details reconfigurations will create a separate transaction."
-msgstr ""
+msgstr "Proje detaylarını yeniden yapılandırmak, ayrı bir işlem oluşturacaktır."
 
 #: src/components/shared/Project404.tsx
 msgid "Project for {ensName} not found"
-msgstr ""
+msgstr "{ensName} için proje bulunamadı"
 
 #: src/components/shared/formItems/ProjectHandle/ProjectHandleFormItem.tsx
 #: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
@@ -1934,19 +1960,19 @@ msgstr "Proje sahibi"
 
 #: src/components/v2/shared/SplitItem.tsx
 msgid "Project owner (you)"
-msgstr ""
+msgstr "Proje sahibi (siz)"
 
 #: src/components/Landing/QAs.tsx
 msgid "Project owners can configure a delay period, meaning reconfigurations to an upcoming funding cycle must be submitted a certain number of days before it starts. For example, a 3-day delay period means reconfigurations must be submitted at least 3 days before the next funding cycle starts. This gives token holders time to react to the decision and reduces the chance of rug-pulls."
-msgstr ""
+msgstr "Proje sahipleri, bir gecikme aralığı yapılandırabilir. Bu takdirde, yaklaşan bir finansman döngüsünde yapılmak istenen değişiklikler, döngü başlangıç tarihinin belirlenen gün kadar öncesinde yapılmalıdır. Örneğin, 3 günlük bir gecikme aralığı, değişikliklerin bir sonraki finansman döngüsü başlamadan 3 gün önce yapılması gerektiği anlamına gelir. Gecikme aralığı, token sahiplerine karara tepki vermek için zaman tanır ve dolandırıcılık yapılabilme ihtimalini düşürür."
 
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "Project token"
-msgstr ""
+msgstr "Proje token'ı"
 
 #: src/components/shared/NewDeployNotAvailable.tsx
 msgid "Project {name} will be available soon! Try refreshing the page shortly."
-msgstr ""
+msgstr "{name} yakında burada olacak! Kısa bir süre sonra sayfayı yenilemeyi deneyin."
 
 #: src/components/v2/shared/V2ProjectHandle.tsx
 msgid "Project {projectId}"
@@ -1963,11 +1989,11 @@ msgstr "Projeler"
 
 #: src/components/Landing/QAs.tsx
 msgid "Projects building on Juicebox pay a {JB_FEE}% JBX membership fee from withdrawn funds into the JuiceboxDAO treasury. Projects can then use their JBX to participate in the governance of JuiceboxDAO and its collective treasury, as well as redeem from its growing <0>overflow</0>. The fee is also subject to change via JBX member votes."
-msgstr ""
+msgstr "Juicebox üzerinde oluşturulan projeler, JuiceboxDAO hazinesine çekilen fonlar için %{JB_FEE} JBX üyelik ücreti öder. Projeler JBX token'larını JuiceboxDAO ve hazinesinin yönetişimine katılmak veya büyüyen <0>taşma</0> oranından talepte bulunmak için kullanabilir. Bu ücret JBX üyelerinin oylarıyla değişime de açıktır."
 
 #: src/components/Landing/QAs.tsx
 msgid "Projects can be created with an optional discount rate designed to incentivize supporters to contribute earlier rather than later. The amount of tokens rewarded per amount paid to your project will decrease by the discount rate with each new funding cycle. A higher discount rate will incentivize supporters to pay your project earlier rather than later."
-msgstr ""
+msgstr "Projeler, isteğe bağlı olarak, erken destekçileri teşvik etmek için tasarlanmış bir indirim oranı ile oluşturulabilir. Projenize ödenen Eth başına ödüllendilen token miktarı, her yeni finansman döngüsünde iskonto oranı kadar azalacaktır. Yüksek bir indirim oranı, destekçileri projenizi daha erken desteklemeye teşvik edecektir."
 
 #: src/components/Projects/index.tsx
 msgid "Projects on Juicebox"
@@ -2004,7 +2030,7 @@ msgstr "{receiveText} alın"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Recipients will receive payouts in ETH."
-msgstr ""
+msgstr "Alıcılar ödemeleri ETH olarak alacaktır."
 
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/forms/RulesForm/index.tsx
@@ -2014,7 +2040,7 @@ msgstr "Yeniden yapılandırma"
 #: src/components/v1/ReconfigurationStrategyDrawer.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Reconfiguration rules"
-msgstr ""
+msgstr "Yeniden yapılandırma kuralları"
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
@@ -2029,27 +2055,21 @@ msgid "Reconfigure"
 msgstr "Yeniden yapılandır"
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure funding"
 msgstr "Finansmanı yeniden yapılandır"
 
 #: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureModalTrigger.tsx
 msgid "Reconfigure project and funding details"
-msgstr ""
+msgstr "Proje ve finansman ayrıntılarını yeniden yapılandırın"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectDetailsDrawer.tsx
 msgid "Reconfigure project details"
 msgstr "Proje detaylarını yeniden yapılandır"
 
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
-msgid "Reconfigure rules"
-msgstr "Kuralları yeniden yapılandır"
-
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureTokenDrawer.tsx
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure token"
-msgstr ""
+msgstr "Token'ı yeniden yapılandırın"
 
 #: src/components/v1/V1Project/FundingCycles/ReconfigureFundingModalTrigger.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/index.tsx
@@ -2062,15 +2082,15 @@ msgstr "Yaklaşan finansmanı yeniden yapılandır"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure upcoming funding cycles"
-msgstr ""
+msgstr "Yaklaşan finansman döngülerini yeniden yapılandır"
 
 #: src/components/shared/ManageTokensModal.tsx
 msgid "Redeem your {tokensLabel} for a portion of the project's overflow. Any {tokensLabel} you redeem will be burned."
-msgstr ""
+msgstr "{tokensLabel} token'larınızı, projenin taşmasının bir kısmını talep etmek için kullanın. Kullanılan her {tokensLabel} token'ı yakılacaktır."
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Redeem {0} {tokensTextShort} for ETH"
-msgstr ""
+msgstr "{0} adet {tokensTextShort} token'ı ETH için kullan"
 
 #: src/components/shared/ManageTokensModal.tsx
 msgid "Redeem {tokensLabel} for ETH"
@@ -2079,7 +2099,7 @@ msgstr "{tokensLabel} token'larını ETH için kullan"
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Redeem {tokensTextLong} for ETH"
-msgstr ""
+msgstr "{tokensTextLong} token'larını ETH için kullan"
 
 #: src/components/shared/activityEventElems/RedeemEventElem.tsx
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
@@ -2095,7 +2115,7 @@ msgstr "Kullanım oranı"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Redemption rate: <0>{0}%</0>"
-msgstr ""
+msgstr "Kullanım oranı: <0>%{0}</0>"
 
 #: src/components/Landing/index.tsx
 msgid "Redistributable surplus"
@@ -2140,7 +2160,7 @@ msgstr ""
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Reserved tokens"
-msgstr ""
+msgstr "Ayrılmış token'lar"
 
 #: src/components/v1/FundingCycle/ReservedTokens.tsx
 msgid "Reserved {0}"
@@ -2183,7 +2203,7 @@ msgstr "Projeyi gözden geçir"
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/index.tsx
 msgid "Review project configuration"
-msgstr ""
+msgstr "Proje yapılandırmasını gözden geçirin"
 
 #: src/components/v1/V1Create/index.tsx
 msgid "Reward specific community members with tokens."
@@ -2191,8 +2211,8 @@ msgstr "Belirli topluluk üyelerini token'larla ödüllendirin."
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
-#: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/RulesDrawer.tsx
 msgid "Rules"
 msgstr "Kurallar"
 
@@ -2242,12 +2262,12 @@ msgstr "Yeniden yapılandırmayı kaydet"
 #: src/components/v1/ReconfigurationStrategyDrawer.tsx
 #: src/components/v2/V2Create/forms/RulesForm/index.tsx
 msgid "Save rules"
-msgstr ""
+msgstr "Kuralları kaydet"
 
 #: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Save split"
-msgstr ""
+msgstr "Bölümü kaydet"
 
 #: src/components/shared/TicketModsList.tsx
 msgid "Save token allocation"
@@ -2255,7 +2275,7 @@ msgstr "Token tahsisini kaydet"
 
 #: src/components/v2/V2Create/forms/TokenForm/index.tsx
 msgid "Save token configuration"
-msgstr ""
+msgstr "Token yapılandırmasını kaydet"
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "Save token receiver"
@@ -2271,7 +2291,7 @@ msgstr "Tanıtıcıya göre proje ara"
 
 #: src/constants/time.ts
 msgid "Seconds"
-msgstr ""
+msgstr "Saniye"
 
 #: src/components/shared/EtherscanLink.tsx
 msgid "See transaction"
@@ -2291,7 +2311,7 @@ msgstr "Öngörülebilir masrafları karşılamak için bir finansman hedefi bel
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
 msgid "Set the amount of funds you'd like to distribute from your treasury each funding cycle."
-msgstr ""
+msgstr "Her finansman döngüsünde hazinenizden dağıtmak istediğiniz fon miktarını belirleyin."
 
 #: src/components/v1/shared/BudgetForm.tsx
 msgid "Set the amount of funds you'd like to raise each funding cycle. Any funds raised within the funding cycle target can be distributed by the project, and can't be redeemed by your project's token holders."
@@ -2299,7 +2319,7 @@ msgstr "Her finansman döngüsünde toplamak istediğiniz fon miktarını belirl
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
 msgid "Set the length of your funding cycles, which can enable:"
-msgstr ""
+msgstr "Aşağıdakileri sağlayabilecek finansman döngülerinizin uzunluğunu ayarlayın:"
 
 #: src/components/v1/shared/BudgetForm.tsx
 msgid "Set the length of your funding cycles."
@@ -2324,16 +2344,16 @@ msgstr "Bazı finansman döngüsü özellikleri projeye katkıda bulunanlar içi
 
 #: src/components/shared/ProjectRiskNotice.tsx
 msgid "Some properties of the project's current funding cycle may indicate risk for contributors."
-msgstr ""
+msgstr "Projenin mevcut finansman döngüsünün bazı özellikleri, katkıda bulunanlar için risk ifade edebilir."
 
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Something went wrong."
 msgstr ""
 
 #: src/components/v2/V2Create/forms/FundingForm/TargetTypeSelect.tsx
 msgid "Specific limit"
-msgstr ""
+msgstr "Belirli sınır"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
@@ -2380,13 +2400,17 @@ msgstr "Projenizin \"Ödeme\" butonunda görüntülenen metin. Varsayılanı kul
 msgid "That's the plan, but the core Juicebox contracts will first be deployed to Ethereum Mainnet."
 msgstr "Plan bu, ancak çekirdek Juicebox sözleşmeleri önce Ethereum Mainnet'e dağıtılacak."
 
+#: src/components/Landing/index.tsx
+msgid "The Decentralized Funding Platform. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."
+msgstr ""
+
 #: src/components/v1/V1Create/index.tsx
 msgid "The JBX protocol is unaudited, and projects built on it may be vulnerable to bugs or exploits. Be smart!"
 msgstr "JBX protokolü denetlenmez ve bunun üzerine inşa edilen projeler hatalara veya açıklardan yararlanmaya karşı savunmasız olabilir. Dikkatli olunmalıdır!"
 
 #: src/components/v2/shared/V2SupportWarning.tsx
 msgid "The Juicebox V2 frontend is still in development. Some features are missing and there are known bugs."
-msgstr ""
+msgstr "Juicebox V2 ön yüzü hala geliştirme aşamasındadır. Bazı özellikler eksiktir ve bilinen hatalar bulunmaktadır."
 
 #: src/components/Landing/QAs.tsx
 msgid "The Juicebox protocol is governed by a community of JBX token holders who vote on proposals fortnightly."
@@ -2403,15 +2427,15 @@ msgstr "Bu projeye ödeme yaparak basılan token'ları alması gereken adres."
 
 #: src/components/v2/V2Project/V2FundingCycleSection/ReservedTokensSplitsCard.tsx
 msgid "The amount of tokens this project has reserved. These tokens can be distributed to reserved token beneficiaries."
-msgstr ""
+msgstr "Bu projenin sahip olduğu ayrılmış token miktarı. Bu token'lar, ayrılmış token faydalanıcılarına dağıtılabilir."
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "The amount of tokens to mint to the receiver."
-msgstr ""
+msgstr "Alıcıya basılacak token miktarı."
 
 #: src/components/v2/V2Project/TreasuryStats/DistributedRatio.tsx
 msgid "The amount that has been distributed from the Juicebox balance in this funding cycle, out of the current distribution limit. No more than the distribution limit can be distributed in a single funding cycle—any remaining ETH in Juicebox is overflow, until the next cycle begins."
-msgstr ""
+msgstr "Mevcut dağıtım limitinin dışında, bu finansman döngüsünde Juicebox bakiyesinden dağıtılan miktar. Tek bir finansman döngüsünde dağıtım limitinden fazlası dağıtılamaz; Juicebox'ta kalan tüm ETH, bir sonraki döngü başlayana kadar taşma olarak kabul edilir."
 
 #: src/components/v1/V1Project/Paid.tsx
 msgid "The amount that has been distributed from the Juicebox balance in this funding cycle, out of the current funding target. No more than the funding target can be distributed in a single funding cycle—any remaining ETH in Juicebox is overflow, until the next cycle begins."
@@ -2437,11 +2461,11 @@ msgstr "Sözleşme ekibi yakında, Juicebox projeleri için L2 ödeme terminalle
 
 #: src/components/v2/V2Project/TreasuryStats/DistributedRatio.tsx
 msgid "The distribution limit for this funding cycle is 0, meaning all funds in Juicebox are currently considered overflow. Overflow can be redeemed by token holders, but not distributed."
-msgstr ""
+msgstr "Bu finansman döngüsü için dağıtım limiti 0'dır, yani Juicebox'taki tüm fonlar şu anda taşma olarak kabul edilir. Taşma, token sahipleri tarafından kullanılabilir, ancak dağıtılamaz."
 
 #: src/components/shared/Project/SpendingStats.tsx
 msgid "The funds available to distribution for this funding cycle (before the {feePercentage}% JBX fee is subtracted). This number won't roll over to the next funding cycle, so funds should be distributed before this funding cycle ends."
-msgstr ""
+msgstr "Bu finansman döngüsü için dağıtılmaya uygun fonlar (%{feePercentage} JBX ücreti düşülmeden önce). Bu sayı bir sonraki finansman döngüsüne aktarılmayacaktır, bu nedenle fonlar bu finansman döngüsü sona ermeden dağıtılmalıdır."
 
 #: src/components/Landing/index.tsx
 msgid "The future will be led by creators, and owned by communities."
@@ -2454,6 +2478,10 @@ msgstr ""
 #: src/components/shared/formItems/ProjectTarget.tsx
 msgid "The maximum amount of funds that can be distributed from this project in one funding cycle. Funds will be withdrawn in ETH no matter the currency you choose."
 msgstr "Bir finansman döngüsü içinde bu projeden dağıtılabilecek maksimum fon miktarı. Fonlar, hangi para birimini seçerseniz seçin ETH olarak çekilecektir."
+
+#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
+msgid "The onchain memo for each transaction made through the address. It will appear in the project's payment feed when someone pays this address."
+msgstr ""
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "The percent this individual receives of the overall {reservedRate}% reserved token allocation"
@@ -2481,7 +2509,7 @@ msgstr ""
 
 #: src/components/Landing/QAs.tsx
 msgid "The rest is left to share between token holders."
-msgstr ""
+msgstr "Gerisi token sahipleri arasında paylaşılmak üzere bırakılır."
 
 #: src/components/v1/V1Project/Paid.tsx
 msgid "The target for this funding cycle is 0, meaning all funds in Juicebox are currently considered overflow. Overflow can be redeemed by token holders, but not distributed."
@@ -2491,17 +2519,13 @@ msgstr "Bu finansman döngüsü için hedef 0'dır, yani Juicebox'taki tüm fonl
 msgid "The total amount received by this project through Juicebox since it was created."
 msgstr "Oluşturulma tarihinden bu yana, bu proje tarafından Juicebox aracılığıyla alınan toplam miktar."
 
-#: src/components/Landing/index.tsx
-msgid "The world's largest decentralized funding platform. Light enough for a group of friends, powerful enough for a global network of anons."
-msgstr ""
-
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "There are no payouts defined for this funding cycle. The project owner will recieve all available funds."
 msgstr "Bu finansman döngüsü için tanımlı ödeme yok. Mevcut tüm fonları proje sahibi alacak."
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributeReservedTokensModal.tsx
 msgid "There are no reserved token recipients defined for this funding cycle. The project owner will receive all available tokens."
-msgstr ""
+msgstr "Bu finansman döngüsü için tanımlanan ayrılmış token alıcısı yok. Proje sahibi mevcut tüm token'ları alacaktır."
 
 #: src/components/Landing/QAs.tsx
 msgid "There are unit tests written for every condition of every function in the contracts, and integration tests for every workflow that the protocol supports."
@@ -2528,7 +2552,7 @@ msgstr "Bu ayarlar, bir finansman döngüsü içinde hemen <0>düzenlenemez</0>.
 msgid "This address is an unrecognized strategy contract. Make sure it is correct!"
 msgstr "Bu adres, tanınmayan bir strateji sözleşmesine aittir. Doğru olduğundan emin olun!"
 
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "This address will disappear when you close this window. <0>Copy the address and save it now</0>."
 msgstr ""
 
@@ -2539,7 +2563,7 @@ msgstr "Bu adres, alıcı projeye ödeme yapıldığında basılan tüm token'la
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "This address will receive the tokens minted from paying this project."
-msgstr ""
+msgstr "Bu adres, bu projeyi ödeyerek basılan token'ları alacaktır."
 
 #: src/components/v1/V1Project/FundingCycles/index.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/index.tsx
@@ -2555,8 +2579,9 @@ msgid "This means that anyone can see the code that they're using, anyone can us
 msgstr "Bu, herkesin kullandığı kodu görebileceği, herkesin izin istemeden kodu kullanabileceği ve hiç kimsenin kodu bozamayacağı veya kodu kaldıramayacağı anlamına gelir."
 
 #: src/components/v1/V1Project/V1PayButton.tsx
-msgid "This project has been archived and cannot be paid."
-msgstr "Bu proje arşivlendi ve ödeme yapılamaz."
+#: src/components/v2/V2Project/V2PayButton/index.tsx
+msgid "This project is archived and can't be paid."
+msgstr ""
 
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "This project is currently using the Juicebox V1 terminal contract. New features introduced in V1.1 allow the project owner to:"
@@ -2568,7 +2593,7 @@ msgstr "Bu proje, Juicebox sözleşmelerinin V2 sürümünü kullanır."
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
-msgstr ""
+msgstr "Bu oran, her token'ın herhangi bir zamanda kullanılabilecek taşma miktarını belirler. Daha düşük bir bağlanma eğrisinde, bir token'ı kullanmak, kalan her bir token'ın değerini artırır ve token'ları diğerlerinden daha uzun süre tutmak için bir teşvik yaratır. %100'lük bir bağlanma eğrisi, ne zaman kullanıldıklarına bakılmaksızın tüm token'ların eşit değere sahip olacağı anlamına gelir."
 
 #: src/components/shared/formItems/ProjectPayDisclosure.tsx
 msgid "This text will be displayed to your supporters before they complete their payment."
@@ -2588,8 +2613,8 @@ msgid "To: <0/>"
 msgstr "Kime: <0/>"
 
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
-#: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/TokenDrawer.tsx
 #: src/utils/tokenSymbolText.ts
 msgid "Token"
 msgstr "Token"
@@ -2600,11 +2625,11 @@ msgstr "Token adresi: <0/>"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Token beneficiary address"
-msgstr ""
+msgstr "Token faydalanıcısı adresi"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
 msgid "Token beneficiary:"
-msgstr ""
+msgstr "Token faydalanıcısı:"
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
@@ -2615,6 +2640,10 @@ msgstr "Token basımı"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Token minting allows the project owner to mint project tokens at any time."
+msgstr "Token basımı, proje sahibinin herhangi bir zamanda proje token'larını basmasına olanak tanır."
+
+#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
+msgid "Token minting enabled"
 msgstr ""
 
 #: src/components/shared/ManageTokensModal.tsx
@@ -2661,19 +2690,19 @@ msgstr "Token'lar, mevcut finansman döngüsünün bağlanma eğrisi oranına g�
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Tokens can be redeemed for a portion of this project's ETH overflow, according to the redemption rate of the current funding cycle. <0>Tokens are burned when they are redeemed.</0>"
-msgstr ""
+msgstr "Token'lar, mevcut finansman döngüsünün kullanım oranına göre bu projenin ETH taşmasının bir kısmı için kullanılabilir. <0>Token'lar, kullanıldıklarında yakılır.</0>"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "Tokens cannot be claimed because no ERC-20 token has been issued for this project. ERC-20 tokens must be issued by the project owner."
 msgstr ""
 
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
-msgid "Tokens minted from payments to this address will belong to the payer. However, if someone pays the project though a custodial service platform such as Coinbase, <0>tokens can't be issued to their personal wallets and will be lost</0>."
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
+msgid "Tokens minted from payments to this address will belong to the payer by default. However, if someone pays the project though a custodial service platform such as Coinbase, <0>tokens can't be issued to their personal wallets and will be lost</0>."
 msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "Tokens receiver"
-msgstr ""
+msgstr "Token alıcısı"
 
 #: src/components/v2/shared/SplitItem.tsx
 msgid "Tokens:"
@@ -2696,7 +2725,7 @@ msgstr "Toplam fon:"
 
 #: src/components/Projects/ProjectsFilterAndSort.tsx
 msgid "Total raised"
-msgstr ""
+msgstr "Toplanan yekün"
 
 #: src/components/v1/V1Project/Rewards/index.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
@@ -2732,7 +2761,7 @@ msgstr "Şeffaflık ve hesap verebilirlik"
 
 #: src/components/Projects/ProjectsTabs.tsx
 msgid "Trending"
-msgstr ""
+msgstr "Çok konuşulanlar"
 
 #: src/components/shared/formItems/ProjectTwitter.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
@@ -2855,17 +2884,22 @@ msgstr "İndirim oranı nedir?"
 msgid "What's going on under the hood?"
 msgstr "Kaputun altında neler oluyor?"
 
+#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
+msgid "When checked, payments to this address will mint this project's ERC-20 tokens to the beneficiary's wallet. Payments will cost more gas. When unchecked, Juicebox will track the beneficiary's new tokens when they pay. The beneficiary can claim their ERC-20 tokens at any time."
+msgstr ""
+
+#: src/components/v2/V2Create/forms/RulesForm/TokenMintingExtra.tsx
 #: src/components/v2/V2Create/forms/RulesForm/index.tsx
 msgid "When enabled, the project owner can manually mint any amount of tokens to any address."
-msgstr ""
+msgstr "Etkinleştirildiğinde, proje sahibi herhangi bir token miktarını herhangi bir adrese manuel olarak basabilir."
 
 #: src/components/v2/V2Create/forms/RulesForm/index.tsx
 msgid "When enabled, your project cannot receive direct payments."
-msgstr ""
+msgstr "Etkinleştirildiğinde, projeniz doğrudan ödeme alamaz."
 
 #: src/components/Landing/index.tsx
 msgid "When someone pays your project, they'll receive your project's tokens in return. Tokens can be redeemed for a portion of your project's overflow funds; when you win, your community wins with you. Leverage your project's token to grant governance rights, community access, or other membership perks."
-msgstr ""
+msgstr "Birisi projenize ödeme yaptığında, karşılığında projenizin token'larından alırlar. Token'lar projenizin taşmasından bir miktar talep etmek için kullanılabilir; siz kazandığınızda topluluğunuz da sizinle birlikte kazanır. Projenizin token'ınını yönetişimde oy hakkı, topluluk erişimi veya başka üyelik ayrıcalıkları vermek için kullanabilirsiniz."
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 msgid "When token minting is allowed, the owner of this project has permission to mint any number of tokens to any address at their discretion. This has the effect of diluting all current token holders, without increasing the project's treasury balance. The project owner can reconfigure this along with all other properties of the funding cycle."
@@ -2873,7 +2907,7 @@ msgstr "Token basımına izin verildiğinde bu projenin sahibi, kararı kendisin
 
 #: src/components/shared/formItems/ProjectReserved.tsx
 msgid "Whenever someone pays your project, this percentage of tokens will be reserved and the rest will go to the payer."
-msgstr ""
+msgstr "Biri projenize ödeme yaptığında, bu token yüzdesi ayrılacak ve geri kalanı ödeyene gidecektir."
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
@@ -2898,7 +2932,7 @@ msgstr "Neden bir projenin tokenlerine sahip olmak isteyeyim?"
 
 #: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 msgid "Will be rounded to <0/>{0}"
-msgstr ""
+msgstr "<0/>{0} değerine yuvarlanacak"
 
 #: src/components/Landing/QAs.tsx
 msgid "Will it work on L2s?"
@@ -2910,11 +2944,11 @@ msgstr "Juicebox ile projeler, motive olmuş punklar tarafından şeffaf bir şe
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
 msgid "With a distribution limit of Zero, no funds can be distributed by the project. All funds belong to token holders as overflow."
-msgstr ""
+msgstr "Sıfır dağıtım limiti ile proje tarafından fon dağıtılamaz. Tüm fonlar, taşma olarak token sahiplerine aittir."
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
 msgid "With an infinite distribution limit, all funds can be distributed by the project. The project will have no overflow, meaning token holders won't be able to redeem their tokens for treasury funds."
-msgstr ""
+msgstr "Sonsuz dağıtım limiti ile tüm fonlar proje tarafından dağıtılabilir. Projede taşma olmayacak, yani token sahipleri token'larını hazine fonları için kullanamayacaktır."
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
 msgid "With no funding cycles, the project's owner can start a new funding cycle (Funding Cycle #2) on-demand. <0>Learn more.</0>"
@@ -2947,7 +2981,7 @@ msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "You can redeem your {tokenTextLong} for overflow without claiming them. You can transfer your unclaimed {tokenTextLong} to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
-msgstr ""
+msgstr "{tokenTextLong} token'larınızı hak talebinde bulunmadan taşma için kullanabilirsiniz. Bu projenin sağ üst köşesindeki İngiliz anahtarı simgesinden erişilebilen Araçlar menüsünden talep edilmemiş {tokenTextLong} token'larınızı başka bir adrese aktarabilirsiniz."
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
 msgid "You can still redeem your {tokenSymbol} tokens for overflow without claiming them, and you can transfer your unclaimed {tokenSymbol} tokens to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
@@ -2975,7 +3009,7 @@ msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "You will receive minimum {minReturnedTokensFormatted} ETH"
-msgstr ""
+msgstr "En az {minReturnedTokensFormatted} ETH alacaksınız"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "You will receive {0}{1} ETH"
@@ -2983,7 +3017,7 @@ msgstr "{0}{1} ETH alacaksınız"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "You will receive {minReturnedTokensFormatted} ETH"
-msgstr ""
+msgstr "{minReturnedTokensFormatted} ETH alacaksınız"
 
 #: src/components/shared/forms/TicketingForm.tsx
 msgid "You'll be able to issue ERC-20 tokens once your project contract has been deployed. Until then, the protocol will track token balances, allowing your supporters to earn tokens and redeem for overflow in the meantime."
@@ -3002,7 +3036,7 @@ msgstr "Bakiyeniz: {0}"
 msgid "Your feedback will be sent to a <0>public Discord channel </0>for our development team to consider."
 msgstr "Geri bildiriminiz, geliştirme ekibimizin dikkate alması için <0>herkese açık bir Discord kanalına </0>gönderilecektir."
 
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Your new payable address:"
 msgstr ""
 
@@ -3020,11 +3054,11 @@ msgstr ""
 
 #: src/components/shared/ArchiveProject/index.tsx
 msgid "Your project will appear archived, and will not be able to receive payments through the juicebox.money app. You can unarchive a project at any time. Please allow a few days for your project to appear under the \"archived\" filter on the Projects page."
-msgstr ""
+msgstr "Projeniz arşivlenecek ve juicebox.money uygulaması üzerinden ödeme alamayacaktır. Bir projeyi arşivden istediğiniz zaman çıkarabilirsiniz. Lütfen projenizin projeler sayfasında, \"arşivlenen\" filtresi altında gözükmesi için bir kaç gün bekleyin."
 
 #: src/components/v2/V2Create/V2WarningBanner.tsx
 msgid "Your project will be created on the Juicebox V2 contracts. <0>Learn more.</0>"
-msgstr ""
+msgstr "Projeniz Juicebox V2 sözleşmeleri üzerinde oluşturulacaktır. <0>Daha fazla bilgi edinin</0>"
 
 #: src/components/shared/ArchiveProject/index.tsx
 msgid "Your project will immediately appear active on the juicebox.money app. Please allow a few days for it to appear in the \"active\" projects list on the Projects page."
@@ -3032,7 +3066,7 @@ msgstr "Projeniz juicebox.money uygulamasında hemen aktif olarak görünecektir
 
 #: src/components/shared/ArchiveProject/index.tsx
 msgid "Your project will still be able to receive payments directly through the Juicebox protocol contracts."
-msgstr ""
+msgstr "Projeniz Juicebox protocol sözleşmelerine doğrudan erişim yoluyla ödeme alabilmeye devam edecektir."
 
 #: src/components/shared/formItems/ProjectTwitter.tsx
 msgid "Your project's Twitter handle."
@@ -3048,11 +3082,11 @@ msgstr "Projenizin web sitesi."
 
 #: src/components/shared/TransactionModal.tsx
 msgid "Your transaction has been submitted and is awaiting confirmation."
-msgstr ""
+msgstr "İşleminiz gönderildi ve onay bekliyor."
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "Your unclaimed {tokenTextLong}"
-msgstr ""
+msgstr "Talep edilmemiş {tokenTextLong} token'larınız"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Zero"
@@ -3060,7 +3094,7 @@ msgstr ""
 
 #: src/components/v2/V2Create/forms/FundingForm/TargetTypeSelect.tsx
 msgid "Zero, no funds can be distributed"
-msgstr ""
+msgstr "Sıfır, fonlar dağıtılamaz"
 
 #: src/components/shared/inputs/BudgetTargetInput.tsx
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
@@ -3113,7 +3147,7 @@ msgstr "yükleniyor"
 
 #: src/components/v2/shared/SplitItem.tsx
 msgid "locked until {lockedUntilFormatted}"
-msgstr ""
+msgstr "Kilit süresi bitiş tarihi {lockedUntilFormatted}"
 
 #: src/components/Projects/index.tsx
 msgid "matching \"{searchText}\""
@@ -3186,7 +3220,7 @@ msgstr "{0} bakiyesi"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "{0} balance: <0><1>{1} {tokensTextShort}</1><2>({share}% of supply)</2></0>"
-msgstr ""
+msgstr "{0} bakiyesi: <0><1>{1} {tokensTextShort}</1><2>(arzın %{share} kadarı)</2></0>"
 
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 msgid "{0} contributed"
@@ -3238,7 +3272,7 @@ msgstr "%{0} arz"
 #: src/components/v1/ProjectPayMods/ProjectPayoutMods.tsx
 #: src/components/v2/shared/DistributionSplitsSection/index.tsx
 msgid "{0}% to <0/>"
-msgstr ""
+msgstr "<0/> adresine %{0}"
 
 #: src/components/shared/formItems/ProjectTicketMods.tsx
 msgid "{0}% to {1}"
@@ -3295,11 +3329,11 @@ msgstr "{paymentCount, plural, one {# ödeme} other {# ödeme}}"
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "{tokenSymbolPlural} received per ETH paid to the treasury. This can change over time according to the discount rate and reserved tokens amount of future funding cycles."
-msgstr ""
+msgstr "Hazineye ödenen ETH başına alınan {tokenSymbolPlural} token'ı. Miktar, gelecek finansman döngülerindeki indirim oranı ve ayrılan token'lara bağlı olarak değişebilir."
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "{tokenSymbol} ERC-20 address"
-msgstr ""
+msgstr "{tokenSymbol} ERC-20 addresi"
 
 #: src/components/shared/AMMPrices/TokenAMMPriceRow.tsx
 msgid "{tokenSymbol}/ETH exchange rate on {exchangeName}."
@@ -3311,7 +3345,7 @@ msgstr "{tokenTextSingular} token'ı alıcıları"
 
 #: src/components/v1/V1Project/Rewards/index.tsx
 msgid "{tokensLabel} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
-msgstr ""
+msgstr "{tokensLabel} token'ları bu projeye ödeme yapan herkese dağıtılır. Proje için bir finansman hedefi belirlenmişse token'lar, talep edilmiş olup olmadıklarına bakılmaksızın proje taşmasının bir miktarı için kullanılabilir."
 
 #: src/components/v2/V2Project/V2FundingCycleSection/ReservedTokensSplitsCard.tsx
 msgid "{tokensText} reserved"
@@ -3319,7 +3353,7 @@ msgstr "Ayrılmış {tokensText} token'ları"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "{tokensTokenUpper} amount"
-msgstr ""
+msgstr "{tokensTokenUpper} token miktarı"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "{unclaimedBalanceFormatted} {tokenText} claimable"

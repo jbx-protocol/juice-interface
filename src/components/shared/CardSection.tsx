@@ -1,6 +1,5 @@
 import { ThemeContext } from 'contexts/themeContext'
-import { ChildElems } from 'models/child-elems'
-import { CSSProperties, useContext } from 'react'
+import { CSSProperties, PropsWithChildren, useContext } from 'react'
 
 import { shadowCard } from 'constants/styles/shadowCard'
 
@@ -10,13 +9,12 @@ export function CardSection({
   noShadow,
   children,
   style,
-}: {
+}: PropsWithChildren<{
   header?: string
   padded?: boolean
   noShadow?: boolean
-  children?: ChildElems
   style?: CSSProperties
-}) {
+}>) {
   const { theme } = useContext(ThemeContext)
   return (
     <div

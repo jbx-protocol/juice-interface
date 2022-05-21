@@ -3,9 +3,8 @@ import { V1UserContext } from 'contexts/v1/userContext'
 import { useV1ContractLoader } from 'hooks/v1/V1ContractLoader'
 import { useGasPriceQuery } from 'hooks/GasPrice'
 import { useTransactor } from 'hooks/Transactor'
-import { ChildElems } from 'models/child-elems'
 
-export default function V1UserProvider({ children }: { children: ChildElems }) {
+export const V1UserProvider: React.FC = ({ children }) => {
   const contracts = useV1ContractLoader()
 
   const { data: gasPrice } = useGasPriceQuery('average')

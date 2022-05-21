@@ -1,7 +1,6 @@
 import { Web3Provider } from '@ethersproject/providers'
 
 import { NetworkContext } from 'contexts/networkContext'
-import { ChildElems } from 'models/child-elems'
 import { NetworkName } from 'models/network-name'
 import { useCallback, useContext, useEffect, useState } from 'react'
 
@@ -14,11 +13,7 @@ import { NETWORKS } from 'constants/networks'
 
 const KEY_SELECTED_WALLET = 'selectedWallet'
 
-export default function NetworkProvider({
-  children,
-}: {
-  children: ChildElems
-}) {
+export const NetworkProvider: React.FC = ({ children }) => {
   const { isDarkMode } = useContext(ThemeContext)
 
   const [signingProvider, setSigningProvider] = useState<Web3Provider>()

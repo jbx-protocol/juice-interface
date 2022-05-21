@@ -17,6 +17,7 @@ import useUserUnclaimedTokenBalance from 'hooks/v2/contractReader/UserUnclaimedT
 import { useDeployProjectPayerTx } from 'hooks/v2/transactor/DeployProjectPayerTx'
 
 import ProjectVersionBadge from 'components/shared/ProjectVersionBadge'
+import { useEditV2ProjectDetailsTx } from 'hooks/v2/transactor/EditV2ProjectDetailsTx'
 
 import V2ReconfigureFundingModalTrigger from './V2ProjectReconfigureModal/V2ReconfigureModalTrigger'
 
@@ -66,6 +67,7 @@ export default function V2ProjectHeaderActions() {
         useTransferUnclaimedTokensTx={useTransferUnclaimedTokensTx}
         useAddToBalanceTx={useAddToBalanceTx}
         useSetProjectUriTx={() => undefined}
+        useEditV2ProjectDetailsTx={useEditV2ProjectDetailsTx}
         useDeployProjectPayerTx={useDeployProjectPayerTx}
       />
       <div style={{ display: 'flex' }}>

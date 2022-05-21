@@ -1,3 +1,4 @@
+import { t } from '@lingui/macro'
 import { Image } from 'antd'
 import { useContentType } from 'hooks/ContentType'
 import { CSSProperties } from 'react'
@@ -35,6 +36,7 @@ export default function RichImgPreview({
             width: w,
             height: h,
           }}
+          alt={t`Payment memo image`}
         />
       </div>
     )

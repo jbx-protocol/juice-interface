@@ -118,9 +118,7 @@ export default function RulesForm({
               }}
             >
               <Switch
-                onChange={checked => {
-                  setPausePay(checked)
-                }}
+                onChange={setPausePay}
                 style={{ marginRight: '0.5rem' }}
                 checked={pausePay}
               />
@@ -157,9 +155,7 @@ export default function RulesForm({
           <ReconfigurationStrategySelector
             ballotStrategies={ballotStrategies()}
             selectedStrategy={ballotStrategy}
-            onChange={(strategy: BallotStrategy) => {
-              setBallotStrategy(strategy)
-            }}
+            onChange={setBallotStrategy}
           />
         </Form.Item>
 

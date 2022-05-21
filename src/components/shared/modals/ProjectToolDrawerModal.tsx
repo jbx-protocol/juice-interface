@@ -15,8 +15,10 @@ import { JBDiscordLink } from 'components/Landing/QAs'
 
 import ArchiveV1Project from 'components/v1/V1Project/ArchiveV1Project'
 import { NetworkContext } from 'contexts/networkContext'
-import LaunchProjectPayerButton from 'components/v2/V2Project/LaunchProjectPayerButton'
+import LaunchProjectPayerButton from 'components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerButton'
 import { ThemeContext } from 'contexts/themeContext'
+import { DeployProjectPayerTxArgs } from 'hooks/v2/transactor/DeployProjectPayerTx'
+import ArchiveV2Project from 'components/v2/V2Project/ArchiveV2Project'
 
 export default function ProjectToolDrawerModal({
   visible,
@@ -28,6 +30,7 @@ export default function ProjectToolDrawerModal({
   useTransferUnclaimedTokensTx,
   useAddToBalanceTx,
   useSetProjectUriTx,
+  useEditV2ProjectDetailsTx,
   useDeployProjectPayerTx,
 }: {
   visible?: boolean
@@ -50,7 +53,14 @@ export default function ProjectToolDrawerModal({
         cid: string
       }>
     | undefined // Currently undefined for v2
-  useDeployProjectPayerTx: () => TransactorInstance<{}> | undefined // undefined for v1
+  useDeployProjectPayerTx: () =>
+    | TransactorInstance<DeployProjectPayerTxArgs>
+    | undefined // undefined for v1
+  useEditV2ProjectDetailsTx: () =>
+    | TransactorInstance<{
+        cid: string
+      }>
+    | undefined // undefined for v1
 }) {
   const { userAddress } = useContext(NetworkContext)
   const {
@@ -62,6 +72,8 @@ export default function ProjectToolDrawerModal({
   const addToBalanceTx = useAddToBalanceTx()
 
   const setUriTx = useSetProjectUriTx()
+
+  const editV2ProjectDetailsTx = useEditV2ProjectDetailsTx()
 
   const deployProjectPayerTx = useDeployProjectPayerTx()
 
@@ -297,12 +309,18 @@ export default function ProjectToolDrawerModal({
             </Form.Item>
           </Form>
         </section>
-
         {isOwnerWallet ? (
           setUriTx ? (
             <>
               <Divider />
               <ArchiveV1Project setUriTx={setUriTx} />
+            </>
+          ) : editV2ProjectDetailsTx ? (
+            <>
+              <Divider />
+              <ArchiveV2Project
+                editV2ProjectDetailsTx={editV2ProjectDetailsTx}
+              />
             </>
           ) : (
             <>

@@ -13,6 +13,7 @@ import { uploadProjectMetadata } from 'utils/ipfs'
 import { useEditV2ProjectDetailsTx } from 'hooks/v2/transactor/EditV2ProjectDetailsTx'
 
 import { drawerStyle } from 'constants/styles/drawerStyle'
+import { PROJECT_PAY_CHARACTER_LIMIT } from 'constants/numbers'
 
 export function V2ReconfigureProjectDetailsDrawer({
   visible,
@@ -42,7 +43,7 @@ export function V2ReconfigureProjectDetailsDrawer({
       infoUri: fields.infoUri,
       twitter: fields.twitter,
       discord: fields.discord,
-      payButton: fields.payButton,
+      payButton: fields.payButton.substring(0, PROJECT_PAY_CHARACTER_LIMIT), // Enforce limit
       payDisclosure: fields.payDisclosure,
     })
 

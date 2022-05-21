@@ -14,17 +14,19 @@ import { V1TerminalVersion } from 'models/v1/terminals'
 import { useEffect, useMemo, useState } from 'react'
 import {
   EntityKeys,
+  getSubgraphIdForProject,
   GraphQueryOpts,
   InfiniteGraphQueryOpts,
   querySubgraphExhaustive,
   WhereConfig,
 } from 'utils/graph'
 import { getTerminalAddress } from 'utils/v1/terminals'
+import { uploadIpfsJsonCache } from 'utils/ipfs'
 
 import { SECONDS_IN_DAY } from 'constants/numbers'
+import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
+import { V2ArchivedProjectIds } from 'constants/v2/archivedProjects'
 
-import { archivedProjectIds } from '../constants/v1/archivedProjects'
-import { uploadIpfsJsonCache } from '../utils/ipfs'
 import useSubgraphQuery, { useInfiniteSubgraphQuery } from './SubgraphQuery'
 
 interface ProjectsOptions {
@@ -65,6 +67,13 @@ const queryOpts = (
   const where: WhereConfig<'project'>[] = []
 
   const terminalAddress = getTerminalAddress(opts.terminalVersion)
+  const V1ArchivedProjectKeys = V1ArchivedProjectIds.map(projectId =>
+    getSubgraphIdForProject('1', projectId),
+  )
+  const V2ArchivedProjectKeys = V2ArchivedProjectIds.map(projectId =>
+    getSubgraphIdForProject('2', projectId),
+  )
+  const archivedKeys = [...V1ArchivedProjectKeys, ...V2ArchivedProjectKeys]
 
   if (terminalAddress) {
     where.push({
@@ -88,14 +97,14 @@ const queryOpts = (
     })
   } else if (opts.state === 'archived') {
     where.push({
-      key: 'projectId',
-      value: archivedProjectIds,
+      key: 'id',
+      value: archivedKeys,
       operator: 'in',
     })
-  } else {
+  } else if (archivedKeys.length) {
     where.push({
-      key: 'projectId',
-      value: archivedProjectIds,
+      key: 'id',
+      value: archivedKeys,
       operator: 'not_in',
     })
   }

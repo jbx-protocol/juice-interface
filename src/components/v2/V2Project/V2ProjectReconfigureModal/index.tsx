@@ -37,10 +37,6 @@ import {
 import { useReconfigureV2FundingCycleTx } from 'hooks/v2/transactor/ReconfigureV2FundingCycleTx'
 import { decodeV2FundingCycleMetadata } from 'utils/v2/fundingCycle'
 
-import FundingTabContent from 'components/v2/V2Create/forms/FundingForm'
-import TokenTabContent from 'components/v2/V2Create/forms/TokenForm'
-import RulesTabContent from 'components/v2/V2Create/forms/RulesForm'
-
 import useProjectSplits from 'hooks/v2/contractReader/ProjectSplits'
 
 import useProjectQueuedFundingCycle from 'hooks/v2/contractReader/ProjectQueuedFundingCycle'
@@ -55,7 +51,12 @@ import { Split } from 'models/v2/splits'
 
 import { NO_CURRENCY, V2_CURRENCY_ETH } from 'utils/v2/currency'
 
-import { V2ReconfigureFundingDrawer } from './drawers/V2ReconfigureFundingDrawer'
+import FundingDrawer from 'components/v2/shared/FundingCycleConfigurationDrawers/FundingDrawer'
+
+import TokenDrawer from 'components/v2/shared/FundingCycleConfigurationDrawers/TokenDrawer'
+
+import RulesDrawer from 'components/v2/shared/FundingCycleConfigurationDrawers/RulesDrawer'
+
 import { V2ReconfigureProjectDetailsDrawer } from './drawers/V2ReconfigureProjectDetailsDrawer'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
 import {
@@ -64,8 +65,6 @@ import {
 } from 'constants/v2/splits'
 import V2ReconfigureUpcomingMessage from './V2ReconfigureUpcomingMessage'
 import ReconfigurePreview from './ReconfigurePreview'
-
-const DrawerUnsavedChangesModal = UnsavedChangesModal
 
 function ReconfigureButton({
   title,
@@ -186,36 +185,10 @@ export default function V2ProjectReconfigureModal({
   const openUnsavedChangesModal = () => setUnsavedChangesModalVisible(true)
   const closeUnsavedChangesModal = () => setUnsavedChangesModalVisible(false)
 
-  const [fundingFormUpdated, setFundingFormUpdated] = useState<boolean>(false)
-  const [tokenFormUpdated, setTokenFormUpdated] = useState<boolean>(false)
-  const [rulesFormUpdated, setRulesFormUpdated] = useState<boolean>(false)
-
-  const [
-    drawerUnsavedChangesModalVisible,
-    setDrawerUnsavedChangesModalVisible,
-  ] = useState<boolean>(false)
-
-  const openDrawerUnsavedChangesModal = () =>
-    setDrawerUnsavedChangesModalVisible(true)
-  const closeDrawerUnsavedChangesModal = () =>
-    setDrawerUnsavedChangesModalVisible(false)
-
   const closeReconfigureDrawer = () => {
     setFundingDrawerVisible(false)
     setTokenDrawerVisible(false)
     setRulesDrawerVisible(false)
-  }
-
-  const closeDrawerUnsavedChangesModalAndReconfigureDrawer = () => {
-    closeDrawerUnsavedChangesModal()
-    closeReconfigureDrawer()
-  }
-
-  const handleReconfigureDrawerCloseClick = (formUpdated: boolean) => {
-    if (!formUpdated) {
-      return closeReconfigureDrawer()
-    }
-    openDrawerUnsavedChangesModal()
   }
 
   const closeUnsavedChangesModalAndExit = () => {
@@ -433,18 +406,6 @@ export default function V2ProjectReconfigureModal({
     exit,
   ])
 
-  const saveFundingTab = () => {
-    setFundingDrawerVisible(false)
-  }
-
-  const saveTokenTab = () => {
-    setTokenDrawerVisible(false)
-  }
-
-  const saveRulesTab = () => {
-    setRulesDrawerVisible(false)
-  }
-
   const fundingDrawerHasSavedChanges = () => {
     const fundingCycleData = serializeV2FundingCycleData(
       editingFundingCycleData,
@@ -614,43 +575,17 @@ export default function V2ProjectReconfigureModal({
           onFinish={() => setProjectDetailsDrawerVisible(false)}
         />
       )}
-      <V2ReconfigureFundingDrawer
+      <FundingDrawer
         visible={fundingDrawerVisible}
-        onClose={() => handleReconfigureDrawerCloseClick(fundingFormUpdated)}
-        title={<Trans>Reconfigure funding</Trans>}
-        content={
-          <FundingTabContent
-            onFormUpdated={updated => setFundingFormUpdated(updated)}
-            onFinish={saveFundingTab}
-          />
-        }
+        onClose={closeReconfigureDrawer}
       />
-      <V2ReconfigureFundingDrawer
+      <TokenDrawer
         visible={tokenDrawerVisible}
-        onClose={() => handleReconfigureDrawerCloseClick(tokenFormUpdated)}
-        title={<Trans>Reconfigure token</Trans>}
-        content={
-          <TokenTabContent
-            onFormUpdated={updated => setTokenFormUpdated(updated)}
-            onFinish={saveTokenTab}
-          />
-        }
+        onClose={closeReconfigureDrawer}
       />
-      <V2ReconfigureFundingDrawer
+      <RulesDrawer
         visible={rulesDrawerVisible}
-        onClose={() => handleReconfigureDrawerCloseClick(rulesFormUpdated)}
-        title={<Trans>Reconfigure rules</Trans>}
-        content={
-          <RulesTabContent
-            onFormUpdated={updated => setRulesFormUpdated(updated)}
-            onFinish={saveRulesTab}
-          />
-        }
-      />
-      <DrawerUnsavedChangesModal
-        visible={drawerUnsavedChangesModalVisible}
-        onOk={closeDrawerUnsavedChangesModalAndReconfigureDrawer}
-        onCancel={closeDrawerUnsavedChangesModal}
+        onClose={closeReconfigureDrawer}
       />
       <UnsavedChangesModal
         visible={unsavedChangesModalVisibile}

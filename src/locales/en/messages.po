@@ -33,7 +33,7 @@ msgstr "({realTokenAllocationPercent}% of all newly minted tokens)."
 msgid "0% fee"
 msgstr "0% fee"
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 msgid "1 year"
 msgstr "1 year"
 
@@ -50,7 +50,7 @@ msgstr ""
 msgid "2. Funding cycle"
 msgstr "2. Funding cycle"
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 msgid "24 hours"
 msgstr "24 hours"
 
@@ -63,11 +63,11 @@ msgstr ""
 msgid "3. Review and deploy"
 msgstr "3. Review and deploy"
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 msgid "30 days"
 msgstr "30 days"
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 msgid "7 days"
 msgstr "7 days"
 
@@ -75,7 +75,7 @@ msgstr "7 days"
 msgid "7-day delay"
 msgstr ""
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 msgid "90 days"
 msgstr "90 days"
 
@@ -239,8 +239,8 @@ msgstr ""
 msgid "Add a distribution destination"
 msgstr "Add a distribution destination"
 
-#: src/components/v1/ProjectPayoutMods.tsx
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 msgid "Add a payout"
 msgstr "Add a payout"
 
@@ -257,7 +257,7 @@ msgstr ""
 msgid "Add image"
 msgstr ""
 
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 msgid "Add payout"
 msgstr "Add payout"
 
@@ -279,7 +279,7 @@ msgstr ""
 msgid "Add token receiver"
 msgstr ""
 
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v1/V1Project/Rewards/index.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Address"
@@ -301,6 +301,10 @@ msgstr "Address: <0/>"
 #: src/components/v1/V1Create/index.tsx
 msgid "Adjust incentives for paying your project."
 msgstr "Adjust incentives for paying your project."
+
+#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
+msgid "Advanced options (optional)"
+msgstr "Advanced options (optional)"
 
 #: src/components/Projects/ProjectsTabs.tsx
 msgid "All"
@@ -396,9 +400,9 @@ msgstr "Any changes you make will take effect in <0>funding cycle #{0}</0>. The 
 msgid "Any reconfiguration to an upcoming funding cycle will take effect once the current cycle ends. A project with no strategy may be vulnerable to being rug-pulled by its owner."
 msgstr ""
 
+#: src/components/shared/ArchiveProject/index.tsx
+#: src/components/shared/ArchiveProject/index.tsx
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
 msgid "Archive project"
 msgstr "Archive project"
 
@@ -477,10 +481,6 @@ msgid "Bonding curve:"
 msgstr ""
 
 #: src/components/Landing/index.tsx
-msgid "Build a community around a project, fund it, and program its spending. Light enough for a group of friends, powerful enough for a global network of anons."
-msgstr ""
-
-#: src/components/Landing/index.tsx
 msgid "Built for:"
 msgstr ""
 
@@ -508,6 +508,10 @@ msgstr "Burn {tokensTextLong}"
 #: src/components/shared/forms/PayModsForm.tsx
 msgid "By default, all unallocated funds can be distributed to the project owner's wallet."
 msgstr "By default, all unallocated funds can be distributed to the project owner's wallet."
+
+#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
+msgid "By default, newly minted tokens will go to the wallet who sends funds to the address. You can enable this to set the token beneficiary to a custom address."
+msgstr "By default, newly minted tokens will go to the wallet who sends funds to the address. You can enable this to set the token beneficiary to a custom address."
 
 #: src/components/v2/V2Create/forms/TokenForm/index.tsx
 msgid "By default, the issuance rate for your project's token during funding cycle #1 is 1,000,000 tokens / 1 ETH. For example, a 1 ETH contribution to your project will return 1,000,000 tokens. You can manipulate the issuance rate with the following configurations."
@@ -602,10 +606,6 @@ msgstr "Close"
 msgid "Commit portions of your funds to the people or projects you want to support, or the contributors you want to pay. When you get paid, so do they."
 msgstr "Commit portions of your funds to the people or projects you want to support, or the contributors you want to pay. When you get paid, so do they."
 
-#: src/components/Landing/index.tsx
-msgid "Community funding for people and projects"
-msgstr ""
-
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 msgid "Configure how your project will collect and spend funds."
 msgstr "Configure how your project will collect and spend funds."
@@ -647,6 +647,11 @@ msgstr "Connect your wallet to see your holdings."
 msgid "Connect your wallet to see your projects."
 msgstr "Connect your wallet to see your projects."
 
+#: src/components/shared/ArchiveProject/index.tsx
+#: src/components/shared/ArchiveProject/index.tsx
+msgid "Connected wallet not authorized"
+msgstr "Connected wallet not authorized"
+
 #: src/components/shared/ReconfigurationStrategy/ReconfigurationStrategySelector.tsx
 msgid "Contract address: {0}"
 msgstr ""
@@ -680,20 +685,17 @@ msgid "Create a payable address"
 msgstr "Create a payable address"
 
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 #: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Create an Ethereum address that can be used to pay your project directly."
 msgstr "Create an Ethereum address that can be used to pay your project directly."
 
-#: src/components/Landing/V2Switch.tsx
-msgid "Create and view projects on the V2 Juicebox protocol."
-msgstr "Create and view projects on the V2 Juicebox protocol."
-
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Create payable address"
 msgstr "Create payable address"
 
+#: src/Router.tsx
 #: src/components/Projects/MyProjects.tsx
 #: src/components/Projects/index.tsx
 msgid "Create project"
@@ -706,6 +708,14 @@ msgstr "Create your own ERC-20 token to represent stake in your project. Contrib
 #: src/components/Landing/QAs.tsx
 msgid "Creating a Juicebox project mints you an NFT (ERC-721) representing ownership over it. Whoever owns this NFT can configure the rules of the game and how payouts are distributed."
 msgstr ""
+
+#: src/components/Landing/index.tsx
+msgid "Crowdfunding campaigns"
+msgstr "Crowdfunding campaigns"
+
+#: src/components/Landing/index.tsx
+msgid "Crypto and Web3 businesses"
+msgstr "Crypto and Web3 businesses"
 
 #: src/components/v1/V1Project/FundingCycles/index.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/index.tsx
@@ -725,11 +735,16 @@ msgstr "Current owner: {ownerAddress}"
 msgid "Currently worth: <0><1/>{0}</0>"
 msgstr "Currently worth: <0><1/>{0}</0>"
 
+#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
+msgid "Custom memo"
+msgstr "Custom memo"
+
 #: src/components/shared/ReconfigurationStrategy/ReconfigurationStrategySelector.tsx
 #: src/utils/ballot.ts
 msgid "Custom strategy"
 msgstr ""
 
+#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Custom token beneficiary"
 msgstr "Custom token beneficiary"
@@ -737,6 +752,10 @@ msgstr "Custom token beneficiary"
 #: src/components/shared/Project/FundingCycleDetailsCard.tsx
 msgid "Cycle #{0}"
 msgstr ""
+
+#: src/components/Landing/index.tsx
+msgid "DAOs and communities"
+msgstr "DAOs and communities"
 
 #: src/components/Navbar/Mobile/ThemePickerMobile.tsx
 msgid "Dark theme"
@@ -767,8 +786,8 @@ msgstr "Deploy project"
 msgid "Deploy project on {signerNetwork}"
 msgstr "Deploy project on {signerNetwork}"
 
-#: src/components/v2/V2Project/LaunchProjectPayerButton.tsx
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerButton.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Deploy project payer contract"
 msgstr "Deploy project payer contract"
 
@@ -784,8 +803,6 @@ msgstr "Deployed ERC20 token"
 msgid "Deposit 1 wei to @{handle}"
 msgstr "Deposit 1 wei to @{handle}"
 
-#: src/components/Landing/index.tsx
-#: src/components/Landing/index.tsx
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/index.tsx
 msgid "Design your project"
@@ -794,6 +811,10 @@ msgstr ""
 #: src/components/shared/Project/FundingCycleDetailsCard.tsx
 msgid "Details"
 msgstr ""
+
+#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
+msgid "Determines whether tokens will be minted from payments to this address."
+msgstr "Determines whether tokens will be minted from payments to this address."
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
@@ -953,7 +974,7 @@ msgstr ""
 #: src/components/v1/V1Project/FundingCycles/FundingHistory.tsx
 #: src/components/v1/V1Project/modals/BalancesModal.tsx
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 #: src/components/v2/V2Project/NewDeployModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleHistory.tsx
 msgid "Done"
@@ -1008,7 +1029,7 @@ msgstr "ERC20 Deployed"
 msgid "Each project has its own <0>ERC-20 tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
 msgstr "Each project has its own <0>ERC-20 tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
 
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Edit existing split"
 msgstr "Edit existing split"
@@ -1038,10 +1059,6 @@ msgstr "Edit token receiver"
 msgid "Edit tracked assets"
 msgstr "Edit tracked assets"
 
-#: src/components/Landing/V2Switch.tsx
-msgid "Enable Juicebox V2"
-msgstr "Enable Juicebox V2"
-
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Enabled"
@@ -1056,6 +1073,7 @@ msgid "Enabling this will mint {tokenSymbol} ERC-20 tokens. Otherwise staked {to
 msgstr "Enabling this will mint {tokenSymbol} ERC-20 tokens. Otherwise staked {tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver."
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
+#: src/components/v2/V2Create/forms/RulesForm/TokenMintingExtra.tsx
 #: src/components/v2/V2Create/forms/RulesForm/index.tsx
 msgid "Enabling token minting will appear risky to contributors. Only enable this when necessary."
 msgstr "Enabling token minting will appear risky to contributors. Only enable this when necessary."
@@ -1078,13 +1096,13 @@ msgstr "Error loading holders"
 msgid "Error loading payments"
 msgstr "Error loading payments"
 
-#: src/components/Landing/index.tsx
-msgid "Ethereum protocols and DAOs"
-msgstr ""
-
 #: src/components/Landing/QAs.tsx
 msgid "Ethereum provides a public environment where internet apps like Juicebox can run in a permission-less, trustless, and unstoppable fashion."
 msgstr "Ethereum provides a public environment where internet apps like Juicebox can run in a permission-less, trustless, and unstoppable fashion."
+
+#: src/components/Landing/index.tsx
+msgid "Explore projects"
+msgstr "Explore projects"
 
 #: src/components/Navbar/MenuItems.tsx
 msgid "FAQ"
@@ -1093,6 +1111,15 @@ msgstr ""
 #: src/components/Landing/index.tsx
 msgid "FAQs"
 msgstr ""
+
+#: src/components/shared/ArchiveProject/index.tsx
+#: src/components/shared/ArchiveProject/index.tsx
+msgid "Failed to update project metadata"
+msgstr "Failed to update project metadata"
+
+#: src/components/shared/inputs/ImageUploader.tsx
+msgid "File must be less than {formattedSize}{unit}"
+msgstr "File must be less than {formattedSize}{unit}"
 
 #: src/components/Landing/QAs.tsx
 msgid "For example, with a bonding curve of 70%, redeeming 10% of the token supply at any given time will claim around 7% of the total overflow."
@@ -1110,8 +1137,12 @@ msgstr "For more info, check out this <0>short video</0>."
 msgid "For users paying through your app, you should route those funds through the Juicebox smart contracts so they receive tokens in return."
 msgstr "For users paying through your app, you should route those funds through the Juicebox smart contracts so they receive tokens in return."
 
+#: src/components/Landing/index.tsx
+msgid "Fund anything. Grow together."
+msgstr "Fund anything. Grow together."
+
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
-#: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/FundingDrawer.tsx
 msgid "Funding"
 msgstr "Funding"
 
@@ -1264,7 +1295,7 @@ msgstr "ID: {projectId}"
 msgid "If locked, this can't be edited or removed until the lock expires or the funding cycle is reconfigured."
 msgstr "If locked, this can't be edited or removed until the lock expires or the funding cycle is reconfigured."
 
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "If locked, this split can't be edited or removed until the lock expires or the funding cycle is reconfigured."
 msgstr "If locked, this split can't be edited or removed until the lock expires or the funding cycle is reconfigured."
@@ -1277,7 +1308,7 @@ msgstr "If you have already deployed a payable address and have lost it, please 
 msgid "If you know how much your project needs to earn over some period of time to be sustainable, you can set a funding target with that amount. If your project earns more than that, the surplus funds are locked in an overflow pool. Anyone holding your project's tokens can claim a portion of the overflow pool in exchange for redeeming their tokens."
 msgstr "If you know how much your project needs to earn over some period of time to be sustainable, you can set a funding target with that amount. If your project earns more than that, the surplus funds are locked in an overflow pool. Anyone holding your project's tokens can claim a portion of the overflow pool in exchange for redeeming their tokens."
 
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "If you lose your address, please contact the Juicebox team through <0>Discord</0>."
 msgstr "If you lose your address, please contact the Juicebox team through <0>Discord</0>."
 
@@ -1290,7 +1321,7 @@ msgstr "If you're interested in creating a project but still confused on how to 
 msgid "If you're unsure if you need to claim, you probably don't."
 msgstr "If you're unsure if you need to claim, you probably don't."
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 #: src/components/v1/V1Project/Paid.tsx
 msgid "In Juicebox"
 msgstr ""
@@ -1311,8 +1342,8 @@ msgid "Incentives"
 msgstr ""
 
 #: src/components/Landing/index.tsx
-msgid "Indie artists, devs, creators"
-msgstr ""
+msgid "Indie creators and builders"
+msgstr "Indie creators and builders"
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Initial issuance rate"
@@ -1397,7 +1428,7 @@ msgstr "Juicebox is an open protocol on Ethereum that is funded using Juicebox i
 msgid "Juicebox loading animation"
 msgstr "Juicebox loading animation"
 
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Juicebox project"
 msgstr "Juicebox project"
@@ -1429,6 +1460,10 @@ msgstr "Latest"
 msgid "Latest payments"
 msgstr "Latest payments"
 
+#: src/components/Landing/index.tsx
+msgid "Launch your project"
+msgstr "Launch your project"
+
 #: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 msgid "Learn more in this <0>short video</0>."
 msgstr "Learn more in this <0>short video</0>."
@@ -1449,7 +1484,7 @@ msgid "Load more"
 msgstr ""
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Lock until"
 msgstr "Lock until"
@@ -1506,6 +1541,10 @@ msgstr "Mint new {tokensLabel} into an account. Only a project's owner, a design
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "Mint project tokens on demand"
 msgstr "Mint project tokens on demand"
+
+#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
+msgid "Mint tokens as ERC-20"
+msgstr "Mint tokens as ERC-20"
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Mint tokens to a custom address."
@@ -1615,7 +1654,7 @@ msgstr ""
 msgid "Note"
 msgstr "Note"
 
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
+#: src/components/shared/ArchiveProject/index.tsx
 msgid "Note:"
 msgstr "Note:"
 
@@ -1630,10 +1669,6 @@ msgstr "Note: Tokens can be minted manually when allowed in the current funding 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Notice from {0}:"
-msgstr ""
-
-#: src/components/Landing/index.tsx
-msgid "Open source businesses"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/BalancesModal.tsx
@@ -1737,6 +1772,14 @@ msgstr ""
 msgid "Paying this project is currently disabled."
 msgstr ""
 
+#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
+msgid "Payment made through payable address"
+msgstr "Payment made through payable address"
+
+#: src/components/shared/RichImgPreview.tsx
+msgid "Payment memo image"
+msgstr "Payment memo image"
+
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Payments"
@@ -1777,7 +1820,7 @@ msgstr "Peel"
 msgid "People using Juicebox are interacting with each other through public infrastructure—not a private, profit-seeking corporate service that brokers the exchange."
 msgstr ""
 
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 msgid "Percent"
 msgstr "Percent"
 
@@ -1813,10 +1856,6 @@ msgstr ""
 msgid "Potential risks"
 msgstr "Potential risks"
 
-#: src/components/Landing/index.tsx
-msgid "Powered by public smart contracts on <0>Ethereum</0>."
-msgstr ""
-
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/ProjectConfigurationFieldsContainer.tsx
 msgid "Preview:"
@@ -1824,10 +1863,6 @@ msgstr "Preview:"
 
 #: src/components/Landing/index.tsx
 msgid "Programmable spending"
-msgstr ""
-
-#: src/components/v1/V1Project/BalanceTimeline.tsx
-msgid "Project"
 msgstr ""
 
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
@@ -1876,7 +1911,7 @@ msgid "Project for {ensName} not found"
 msgstr "Project for {ensName} not found"
 
 #: src/components/shared/formItems/ProjectHandle/ProjectHandleFormItem.tsx
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 msgid "Project handle"
 msgstr ""
 
@@ -1931,6 +1966,7 @@ msgstr "Project {projectId}"
 msgid "Project {projectId} not found"
 msgstr "Project {projectId} not found"
 
+#: src/Router.tsx
 #: src/components/Navbar/MenuItems.tsx
 msgid "Projects"
 msgstr ""
@@ -1947,10 +1983,6 @@ msgstr "Projects can be created with an optional discount rate designed to incen
 msgid "Projects on Juicebox"
 msgstr ""
 
-#: src/components/Projects/index.tsx
-msgid "Projects on Juicebox V2 don't currently appear in these results."
-msgstr "Projects on Juicebox V2 don't currently appear in these results."
-
 #: src/components/Projects/MyProjects.tsx
 msgid "Projects that you have created."
 msgstr "Projects that you have created."
@@ -1966,10 +1998,6 @@ msgstr ""
 #: src/components/shared/forms/TicketingForm.tsx
 msgid "Projects using a reserved rate of {reservedRateRiskyMin}% or more will appear risky to contributors, as a relatively small number of tokens will be received in exchange for paying your project."
 msgstr "Projects using a reserved rate of {reservedRateRiskyMin}% or more will appear risky to contributors, as a relatively small number of tokens will be received in exchange for paying your project."
-
-#: src/components/Landing/index.tsx
-msgid "Public goods and services"
-msgstr ""
 
 #: src/components/Projects/RankingExplanation.tsx
 msgid "Rankings based on number of contributions and volume gained in the last {trendingWindow} days. <0>See code</0>"
@@ -2011,7 +2039,6 @@ msgid "Reconfigure"
 msgstr "Reconfigure"
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure funding"
 msgstr "Reconfigure funding"
 
@@ -2024,12 +2051,7 @@ msgstr "Reconfigure project and funding details"
 msgid "Reconfigure project details"
 msgstr "Reconfigure project details"
 
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
-msgid "Reconfigure rules"
-msgstr "Reconfigure rules"
-
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureTokenDrawer.tsx
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure token"
 msgstr "Reconfigure token"
 
@@ -2173,8 +2195,8 @@ msgstr ""
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
-#: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/RulesDrawer.tsx
 msgid "Rules"
 msgstr ""
 
@@ -2226,7 +2248,7 @@ msgstr ""
 msgid "Save rules"
 msgstr "Save rules"
 
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Save split"
 msgstr "Save split"
@@ -2308,8 +2330,8 @@ msgstr "Some funding cycle properties may indicate risk for project contributors
 msgid "Some properties of the project's current funding cycle may indicate risk for contributors."
 msgstr "Some properties of the project's current funding cycle may indicate risk for contributors."
 
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Something went wrong."
 msgstr "Something went wrong."
 
@@ -2362,13 +2384,13 @@ msgstr ""
 msgid "That's the plan, but the core Juicebox contracts will first be deployed to Ethereum Mainnet."
 msgstr ""
 
+#: src/components/Landing/index.tsx
+msgid "The Decentralized Funding Platform. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."
+msgstr "The Decentralized Funding Platform. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."
+
 #: src/components/v1/V1Create/index.tsx
 msgid "The JBX protocol is unaudited, and projects built on it may be vulnerable to bugs or exploits. Be smart!"
 msgstr ""
-
-#: src/components/Landing/V2Switch.tsx
-msgid "The Juicebox V2 frontend is still in development. It is <0>not recommended</0> for use on mainnet. Some features are missing and there are known bugs. <1>Use with caution.</1>"
-msgstr "The Juicebox V2 frontend is still in development. It is <0>not recommended</0> for use on mainnet. Some features are missing and there are known bugs. <1>Use with caution.</1>"
 
 #: src/components/v2/shared/V2SupportWarning.tsx
 msgid "The Juicebox V2 frontend is still in development. Some features are missing and there are known bugs."
@@ -2382,7 +2404,7 @@ msgstr "The Juicebox protocol is governed by a community of JBX token holders wh
 msgid "The address of any smart contract deployed on {0} that implements <0>this interface</0>."
 msgstr "The address of any smart contract deployed on {0} that implements <0>this interface</0>."
 
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "The address that should receive the tokens minted from paying this project."
 msgstr ""
@@ -2444,6 +2466,10 @@ msgstr "The maximum amount of funds that can be distributed from the treasury ea
 #: src/components/shared/formItems/ProjectTarget.tsx
 msgid "The maximum amount of funds that can be distributed from this project in one funding cycle. Funds will be withdrawn in ETH no matter the currency you choose."
 msgstr "The maximum amount of funds that can be distributed from this project in one funding cycle. Funds will be withdrawn in ETH no matter the currency you choose."
+
+#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
+msgid "The onchain memo for each transaction made through the address. It will appear in the project's payment feed when someone pays this address."
+msgstr "The onchain memo for each transaction made through the address. It will appear in the project's payment feed when someone pays this address."
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "The percent this individual receives of the overall {reservedRate}% reserved token allocation"
@@ -2514,7 +2540,7 @@ msgstr "These settings will <0>not</0> be editable immediately within a funding 
 msgid "This address is an unrecognized strategy contract. Make sure it is correct!"
 msgstr "This address is an unrecognized strategy contract. Make sure it is correct!"
 
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "This address will disappear when you close this window. <0>Copy the address and save it now</0>."
 msgstr "This address will disappear when you close this window. <0>Copy the address and save it now</0>."
 
@@ -2541,8 +2567,9 @@ msgid "This means that anyone can see the code that they're using, anyone can us
 msgstr ""
 
 #: src/components/v1/V1Project/V1PayButton.tsx
-msgid "This project has been archived and cannot be paid."
-msgstr ""
+#: src/components/v2/V2Project/V2PayButton/index.tsx
+msgid "This project is archived and can't be paid."
+msgstr "This project is archived and can't be paid."
 
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "This project is currently using the Juicebox V1 terminal contract. New features introduced in V1.1 allow the project owner to:"
@@ -2574,8 +2601,8 @@ msgid "To: <0/>"
 msgstr ""
 
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
-#: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/TokenDrawer.tsx
 #: src/utils/tokenSymbolText.ts
 msgid "Token"
 msgstr "Token"
@@ -2603,6 +2630,10 @@ msgstr ""
 msgid "Token minting allows the project owner to mint project tokens at any time."
 msgstr "Token minting allows the project owner to mint project tokens at any time."
 
+#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
+msgid "Token minting enabled"
+msgstr "Token minting enabled"
+
 #: src/components/shared/ManageTokensModal.tsx
 msgid "Token minting is only available for V1.1 projects. Token minting can be enabled or disabled by reconfiguring the project's funding cycle."
 msgstr "Token minting is only available for V1.1 projects. Token minting can be enabled or disabled by reconfiguring the project's funding cycle."
@@ -2611,6 +2642,10 @@ msgstr "Token minting is only available for V1.1 projects. Token minting can be 
 msgid "Token name"
 msgstr "Token name"
 
+#: src/components/shared/modals/IssueTokenModal.tsx
+msgid "Token name is required"
+msgstr "Token name is required"
+
 #: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 msgid "Token redeem value"
 msgstr ""
@@ -2618,6 +2653,10 @@ msgstr ""
 #: src/components/shared/modals/IssueTokenModal.tsx
 msgid "Token symbol"
 msgstr "Token symbol"
+
+#: src/components/shared/modals/IssueTokenModal.tsx
+msgid "Token symbol is required"
+msgstr "Token symbol is required"
 
 #: src/components/shared/Mod.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
@@ -2645,9 +2684,9 @@ msgstr "Tokens can be redeemed for a portion of this project's ETH overflow, acc
 msgid "Tokens cannot be claimed because no ERC-20 token has been issued for this project. ERC-20 tokens must be issued by the project owner."
 msgstr "Tokens cannot be claimed because no ERC-20 token has been issued for this project. ERC-20 tokens must be issued by the project owner."
 
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
-msgid "Tokens minted from payments to this address will belong to the payer. However, if someone pays the project though a custodial service platform such as Coinbase, <0>tokens can't be issued to their personal wallets and will be lost</0>."
-msgstr "Tokens minted from payments to this address will belong to the payer. However, if someone pays the project though a custodial service platform such as Coinbase, <0>tokens can't be issued to their personal wallets and will be lost</0>."
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
+msgid "Tokens minted from payments to this address will belong to the payer by default. However, if someone pays the project though a custodial service platform such as Coinbase, <0>tokens can't be issued to their personal wallets and will be lost</0>."
+msgstr "Tokens minted from payments to this address will belong to the payer by default. However, if someone pays the project though a custodial service platform such as Coinbase, <0>tokens can't be issued to their personal wallets and will be lost</0>."
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "Tokens receiver"
@@ -2686,7 +2725,7 @@ msgid "Total supply"
 msgstr ""
 
 #: src/components/shared/formItems/ProjectTicketMods.tsx
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutMods.tsx
 msgid "Total: {0}%"
 msgstr ""
 
@@ -2721,8 +2760,8 @@ msgstr "Trending"
 msgid "Twitter"
 msgstr ""
 
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
+#: src/components/shared/ArchiveProject/index.tsx
+#: src/components/shared/ArchiveProject/index.tsx
 msgid "Unarchive project"
 msgstr "Unarchive project"
 
@@ -2730,7 +2769,7 @@ msgstr "Unarchive project"
 msgid "Unavailable"
 msgstr "Unavailable"
 
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
+#: src/components/shared/ArchiveProject/index.tsx
 msgid "Unless payments are paused in your funding cycle settings, your project will still be able to receive payments directly through the Juicebox protocol contracts."
 msgstr "Unless payments are paused in your funding cycle settings, your project will still be able to receive payments directly through the Juicebox protocol contracts."
 
@@ -2791,13 +2830,12 @@ msgstr "V2"
 msgid "Version of the terminal contract used by this project."
 msgstr "Version of the terminal contract used by this project."
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 #: src/components/v1/V1Project/Paid.tsx
 msgid "Volume"
 msgstr ""
 
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Wallet address"
@@ -2837,6 +2875,11 @@ msgstr ""
 msgid "What's going on under the hood?"
 msgstr ""
 
+#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
+msgid "When checked, payments to this address will mint this project's ERC-20 tokens to the beneficiary's wallet. Payments will cost more gas. When unchecked, Juicebox will track the beneficiary's new tokens when they pay. The beneficiary can claim their ERC-20 tokens at any time."
+msgstr "When checked, payments to this address will mint this project's ERC-20 tokens to the beneficiary's wallet. Payments will cost more gas. When unchecked, Juicebox will track the beneficiary's new tokens when they pay. The beneficiary can claim their ERC-20 tokens at any time."
+
+#: src/components/v2/V2Create/forms/RulesForm/TokenMintingExtra.tsx
 #: src/components/v2/V2Create/forms/RulesForm/index.tsx
 msgid "When enabled, the project owner can manually mint any amount of tokens to any address."
 msgstr "When enabled, the project owner can manually mint any amount of tokens to any address."
@@ -2878,7 +2921,7 @@ msgstr ""
 msgid "Why should I want to own a project's tokens?"
 msgstr ""
 
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 msgid "Will be rounded to <0/>{0}"
 msgstr "Will be rounded to <0/>{0}"
 
@@ -2976,7 +3019,7 @@ msgstr ""
 msgid "Your feedback will be sent to a <0>public Discord channel </0>for our development team to consider."
 msgstr "Your feedback will be sent to a <0>public Discord channel </0>for our development team to consider."
 
-#: src/components/v2/V2Project/LaunchProjectPayerModal.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Your new payable address:"
 msgstr "Your new payable address:"
 
@@ -2992,7 +3035,7 @@ msgstr ""
 msgid "Your project token's issuance rate will decrease by this percentage every funding cycle. A higher discount rate will incentivize supporters to pay your project earlier."
 msgstr "Your project token's issuance rate will decrease by this percentage every funding cycle. A higher discount rate will incentivize supporters to pay your project earlier."
 
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
+#: src/components/shared/ArchiveProject/index.tsx
 msgid "Your project will appear archived, and will not be able to receive payments through the juicebox.money app. You can unarchive a project at any time. Please allow a few days for your project to appear under the \"archived\" filter on the Projects page."
 msgstr "Your project will appear archived, and will not be able to receive payments through the juicebox.money app. You can unarchive a project at any time. Please allow a few days for your project to appear under the \"archived\" filter on the Projects page."
 
@@ -3000,11 +3043,11 @@ msgstr "Your project will appear archived, and will not be able to receive payme
 msgid "Your project will be created on the Juicebox V2 contracts. <0>Learn more.</0>"
 msgstr "Your project will be created on the Juicebox V2 contracts. <0>Learn more.</0>"
 
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
+#: src/components/shared/ArchiveProject/index.tsx
 msgid "Your project will immediately appear active on the juicebox.money app. Please allow a few days for it to appear in the \"active\" projects list on the Projects page."
 msgstr "Your project will immediately appear active on the juicebox.money app. Please allow a few days for it to appear in the \"active\" projects list on the Projects page."
 
-#: src/components/v1/V1Project/ArchiveV1Project.tsx
+#: src/components/shared/ArchiveProject/index.tsx
 msgid "Your project will still be able to receive payments directly through the Juicebox protocol contracts."
 msgstr "Your project will still be able to receive payments directly through the Juicebox protocol contracts."
 
@@ -3077,7 +3120,7 @@ msgstr "juiceboxETH"
 msgid "last {trendingWindowDays} days"
 msgstr "last {trendingWindowDays} days"
 
-#: src/components/v1/V1Project/BalanceTimeline.tsx
+#: src/components/shared/VolumeChart/index.tsx
 msgid "loading"
 msgstr "loading"
 
@@ -3205,7 +3248,7 @@ msgstr "{0} {1} reserved"
 msgid "{0}% of supply"
 msgstr ""
 
-#: src/components/v1/ProjectPayoutMods.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutMods.tsx
 msgid "{0}% to <0/>"
 msgstr ""
 

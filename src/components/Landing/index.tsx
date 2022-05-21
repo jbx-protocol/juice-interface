@@ -5,13 +5,13 @@ import FeedbackFormButton from 'components/shared/FeedbackFormButton'
 import Grid from 'components/shared/Grid'
 import Loading from 'components/shared/Loading'
 import ProjectCard from 'components/shared/ProjectCard'
-import V1Create from 'components/v1/V1Create'
 
 import { ThemeContext } from 'contexts/themeContext'
 import { useProjectsQuery } from 'hooks/Projects'
 import { CSSProperties, useContext } from 'react'
 import { Link } from 'react-router-dom'
-import { FEATURE_FLAGS, featureFlagEnabled } from 'utils/featureFlags'
+
+import useMobile from 'hooks/Mobile'
 
 import { ThemeOption } from 'constants/theme/theme-option'
 
@@ -21,18 +21,27 @@ import Payments from './Payments'
 import { OverflowVideoLink } from './QAs'
 import TrendingSection from './TrendingSection'
 
-const BigHeader = ({ text }: { text: string }) => (
-  <h1
-    style={{
-      fontSize: '2.4rem',
-      fontWeight: 600,
-      lineHeight: 1.2,
-      margin: 0,
-    }}
-  >
-    {text}
-  </h1>
-)
+const BigHeader = ({
+  text,
+  style,
+}: {
+  text: string
+  style?: CSSProperties
+}) => {
+  return (
+    <h1
+      style={{
+        fontSize: '2.4rem',
+        fontWeight: 600,
+        lineHeight: 1.2,
+        margin: 0,
+        ...style,
+      }}
+    >
+      {text}
+    </h1>
+  )
+}
 
 const SmallHeader = ({ text }: { text: string }) => (
   <h3 style={{ fontWeight: 600, margin: 0 }}>{text}</h3>
@@ -48,15 +57,11 @@ const FourthCol = ({
   </div>
 )
 
-function scrollToCreate() {
-  document.getElementById('create')?.scrollIntoView({ behavior: 'smooth' })
-}
-
-const v2Enabled = featureFlagEnabled(FEATURE_FLAGS.ENABLE_V2)
-
 export default function Landing() {
   const { theme, forThemeOption } = useContext(ThemeContext)
   const colors = theme.colors
+  const isMobile = useMobile()
+
   const totalMaxWidth = 1080
 
   const { data: previewProjects } = useProjectsQuery({
@@ -82,6 +87,68 @@ export default function Landing() {
 
   // const stats = protocolLogs?.[0]
 
+  const BuiltForList = () => (
+    <div
+      style={{
+        display: 'grid',
+        gridAutoFlow: 'row',
+        rowGap: 8,
+        fontWeight: 500,
+      }}
+    >
+      <p
+        style={{
+          marginBottom: 4,
+        }}
+      >
+        <Trans>Built for:</Trans>
+      </p>
+      {[
+        t`DAOs and communities`,
+        t`Crowdfunding campaigns`,
+        t`Crypto and Web3 businesses`,
+        t`Indie creators and builders`,
+      ].map((data, i) => (
+        <Space
+          style={{ fontStyle: 'italic', paddingLeft: 8 }}
+          key={i}
+          size="middle"
+        >
+          <img src="/assets/bolt.svg" alt="⚡️" />
+          {data}
+        </Space>
+      ))}
+    </div>
+  )
+
+  const CallToAction = () => {
+    const isMobile = useMobile()
+
+    return (
+      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+        <Button
+          type="primary"
+          size="large"
+          block={isMobile}
+          href={'/#/create'}
+          onClick={() => {
+            window.fathom?.trackGoal('IIYVJKNC', 0)
+          }}
+          style={{
+            marginRight: isMobile ? 0 : '0.8rem',
+            marginBottom: isMobile ? '0.8rem' : 0,
+          }}
+        >
+          <Trans>Launch your project</Trans>
+        </Button>
+
+        <Button size="large" block={isMobile} href="/#/projects">
+          <Trans>Explore projects</Trans>
+        </Button>
+      </div>
+    )
+  }
+
   return (
     <div>
       <section style={section}>
@@ -93,115 +160,55 @@ export default function Landing() {
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                paddingBottom: 60,
+                paddingBottom: 25,
               }}
             >
-              <div
-                style={{
-                  display: 'grid',
-                  rowGap: 30,
-                }}
-              >
-                <BigHeader
-                  text={t`Community funding for people and projects`}
-                />
-                <div
-                  style={{
-                    fontWeight: 500,
-                    fontSize: '1rem',
-                  }}
-                >
-                  <Trans>
-                    Build a community around a project, fund it, and program its
-                    spending. Light enough for a group of friends, powerful
-                    enough for a global network of anons.
-                  </Trans>
-                  <br />
-                  <br />
-                  <Trans>
-                    Powered by public smart contracts on{' '}
-                    <ExternalLink
+              <div>
+                <Space direction="vertical" size="large">
+                  <BigHeader
+                    text={t`Fund anything. Grow together.`}
+                    style={{ fontSize: !isMobile ? '3.8rem' : '2.3rem' }}
+                  />
+                  <div
+                    style={{
+                      marginBottom: '1rem',
+                    }}
+                  >
+                    <div
                       style={{
-                        color: colors.text.primary,
                         fontWeight: 500,
-                        borderBottom:
-                          '1px solid ' + colors.stroke.action.primary,
+                        fontSize: '1rem',
+                        marginBottom: '1rem',
                       }}
-                      href="https://ethereum.org/en/what-is-ethereum/"
                     >
-                      Ethereum
-                    </ExternalLink>
-                    .
-                  </Trans>
-                </div>
+                      <Trans>
+                        The Decentralized Funding Platform. Light enough for a
+                        group of friends, powerful enough for a global network
+                        of anons.{' '}
+                        <Link
+                          className="text-primary hover-text-decoration-underline"
+                          to="/p/juicebox"
+                        >
+                          Community-owned
+                        </Link>
+                        , on Ethereum.
+                      </Trans>
+                    </div>
 
-                <div
-                  style={{
-                    display: 'grid',
-                    gridAutoFlow: 'row',
-                    rowGap: 8,
-                    fontWeight: 600,
-                  }}
-                >
-                  <p style={{ color: colors.text.brand.primary, opacity: 1 }}>
-                    <Trans>Built for:</Trans>
-                  </p>
-                  {[
-                    t`Indie artists, devs, creators`,
-                    t`Ethereum protocols and DAOs`,
-                    t`Public goods and services`,
-                    t`Open source businesses`,
-                  ].map((data, i) => (
-                    <Space
-                      style={{ fontStyle: 'italic', paddingLeft: 8 }}
-                      key={i}
-                      size="middle"
-                    >
-                      <img
-                        src="/assets/bolt.png"
-                        style={{ height: 24 }}
-                        alt="⚡️"
-                      />
-                      {data}
-                    </Space>
-                  ))}
-                </div>
-
-                <div className="hide-mobile">
-                  <div style={{ display: 'inline-block' }}>
-                    {v2Enabled ? (
-                      <Link
-                        to={'/create'}
-                        onClick={() => {
-                          window.fathom?.trackGoal('IIYVJKNC', 0)
-                        }}
-                      >
-                        <Button type="primary" size="large">
-                          <Trans>Design your project</Trans>
-                        </Button>
-                      </Link>
-                    ) : (
-                      <Button
-                        type="primary"
-                        size="large"
-                        onClick={() => {
-                          window.fathom?.trackGoal('IIYVJKNC', 0)
-                          scrollToCreate()
-                        }}
-                      >
-                        <Trans>Design your project</Trans>
-                      </Button>
-                    )}
+                    <BuiltForList />
                   </div>
-                </div>
+                  <CallToAction />
+                </Space>
               </div>
             </Col>
 
             <Col xs={24} md={11}>
               <img
+                className="hide-mobile"
                 style={{
                   minHeight: 300,
-                  maxWidth: '100%',
+                  width: '100%',
+                  maxWidth: '50vw',
                   objectFit: 'contain',
                 }}
                 src={
@@ -212,6 +219,7 @@ export default function Landing() {
                   })
                 }
                 alt="Chill banana drinking juice"
+                loading="lazy"
               />
             </Col>
           </Row>
@@ -312,6 +320,7 @@ export default function Landing() {
                 }}
                 src="/assets/pina.png"
                 alt="Pinepple geek artist holding a paintbrush"
+                loading="lazy"
               />
             </Col>
             <Col xs={24} sm={13}>
@@ -370,20 +379,6 @@ export default function Landing() {
         </div>
       </section>
 
-      {window.innerWidth > 600 && !v2Enabled && (
-        <section
-          id="create"
-          style={{
-            ...section,
-            marginTop: 0,
-            paddingTop: 20,
-            paddingBottom: 40,
-          }}
-        >
-          <V1Create />
-        </section>
-      )}
-
       <section
         style={{
           padding: 30,
@@ -425,6 +420,7 @@ export default function Landing() {
                 style={{ maxWidth: '100%' }}
                 src="/assets/blueberry-ol.png"
                 alt="Sexy blueberry with bright pink lipstick spraying a can of spraypaint"
+                loading="lazy"
               />
             </Col>
           </Row>
@@ -479,6 +475,7 @@ export default function Landing() {
             })
           }
           alt="Powerlifting orange hitting an olympic deadlift"
+          loading="lazy"
         />
       </div>
 
@@ -490,12 +487,12 @@ export default function Landing() {
         }}
       >
         <div style={{ fontSize: 20, marginBottom: 20 }}>🧃⚡️</div>
-        <h3 style={{ color: 'white', margin: 0 }}>
+        <p style={{ color: 'white', margin: 0 }}>
           <Trans>
             Big ups to the Ethereum community for crafting the infrastructure
             and economy to make Juicebox possible.
           </Trans>
-        </h3>
+        </p>
       </div>
       <FeedbackFormButton />
       <Footer />

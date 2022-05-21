@@ -1,6 +1,6 @@
 import { CloseCircleFilled } from '@ant-design/icons'
 import { FileImageOutlined } from '@ant-design/icons'
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Button, Col, message, Row, Space, Upload } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext, useLayoutEffect, useState } from 'react'
@@ -8,17 +8,22 @@ import { ipfsCidUrl, pinFileToIpfs } from 'utils/ipfs'
 
 import ExternalLink from '../ExternalLink'
 
+enum ByteUnit {
+  KB = 'KB',
+  MB = 'MB',
+}
+
 export default function ImageUploader({
   initialUrl,
   onSuccess,
-  maxSize,
+  maxSizeKBs: maxSize,
   metadata,
   text,
 }: {
   initialUrl?: string
   metadata?: Record<string | number, any> // eslint-disable-line @typescript-eslint/no-explicit-any
   onSuccess?: (url?: string) => void
-  maxSize?: number // KB
+  maxSizeKBs?: number // KB
   text?: string
 }) {
   const [url, setUrl] = useState<string | undefined>(initialUrl)
@@ -69,7 +74,14 @@ export default function ImageUploader({
               accept="image/png, image/jpeg, image/jpg, image/gif"
               beforeUpload={file => {
                 if (maxSize !== undefined && file.size > maxSize * 1000) {
-                  message.error('File must be less than ' + maxSize + 'KB')
+                  const unit = maxSize > 999 ? ByteUnit.MB : ByteUnit.KB
+                  const formattedSize =
+                    unit === ByteUnit.MB
+                      ? (maxSize / 1000.0).toFixed(1)
+                      : maxSize.toString()
+                  message.error(
+                    t`File must be less than ${formattedSize}${unit}`,
+                  )
                   return Upload.LIST_IGNORE
                 }
               }}

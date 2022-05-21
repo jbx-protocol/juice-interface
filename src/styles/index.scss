@@ -117,13 +117,15 @@ h6 {
 }
 
 html,
-body,
-div,
 p,
 span,
 li,
 button {
   transition: background-color 100ms ease-in, background 100ms ease-in;
+}
+
+body, .top-nav, div {
+  transition: background-color 250ms linear;
 }
 
 @import 'antd-overrides/index.scss';

@@ -18,6 +18,7 @@ export type V2ProjectContextType = {
   isPreviewMode?: boolean
 
   projectId: number | undefined
+  createdAt: number | undefined
   cv: CV | undefined
   projectMetadata: ProjectMetadataV4 | undefined
   tokenAddress: string | undefined
@@ -28,6 +29,7 @@ export type V2ProjectContextType = {
   projectOwnerAddress: string | undefined
   balanceInDistributionLimitCurrency: BigNumber | undefined
   usedDistributionLimit: BigNumber | undefined // how much has been distributed
+  isArchived: boolean | undefined
 
   fundingCycleMetadata: V2FundingCycleMetadata | undefined
   fundingCycle: V2FundingCycle | undefined
@@ -49,6 +51,7 @@ export const V2ProjectContext = createContext<V2ProjectContextType>({
   isPreviewMode: false,
 
   projectId: undefined,
+  createdAt: undefined,
   cv: undefined,
   projectMetadata: undefined,
   tokenAddress: undefined,
@@ -59,6 +62,7 @@ export const V2ProjectContext = createContext<V2ProjectContextType>({
   projectOwnerAddress: undefined,
   balanceInDistributionLimitCurrency: undefined,
   usedDistributionLimit: undefined,
+  isArchived: undefined,
 
   fundingCycleMetadata: undefined,
   fundingCycle: undefined,

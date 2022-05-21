@@ -19,7 +19,7 @@ import V1ProjectHeaderActions from './V1ProjectHeaderActions'
 import Rewards from './Rewards'
 import V1PayButton from './V1PayButton'
 
-const BalanceTimeline = lazy(() => import('./BalanceTimeline'))
+const VolumeChart = lazy(() => import('./../../shared/VolumeChart'))
 
 export default function V1Project({
   style,
@@ -31,6 +31,7 @@ export default function V1Project({
   column?: boolean
 }) {
   const {
+    createdAt,
     currentFC,
     projectId,
     handle,
@@ -38,6 +39,8 @@ export default function V1Project({
     isArchived,
     tokenSymbol,
     tokenAddress,
+    isPreviewMode,
+    cv,
   } = useContext(V1ProjectContext)
 
   const fcMetadata = decodeFundingCycleMetadata(currentFC?.metadata)
@@ -78,7 +81,12 @@ export default function V1Project({
           {projectId && (
             <div style={{ marginBottom: gutter }}>
               <Suspense fallback={<LoadingOutlined />}>
-                <BalanceTimeline height={240} />
+                <VolumeChart
+                  style={{ height: 240 }}
+                  projectId={projectId}
+                  createdAt={createdAt}
+                  cv={cv ?? '1'}
+                />
               </Suspense>
             </div>
           )}
@@ -89,10 +97,11 @@ export default function V1Project({
 
           <FundingCycles showCurrentDetail={showCurrentDetail} />
         </Col>
-
-        <Col xs={24} md={column ? 24 : 12} style={{ marginTop: gutter }}>
-          <ProjectActivity />
-        </Col>
+        {!isPreviewMode ? (
+          <Col xs={24} md={column ? 24 : 12} style={{ marginTop: gutter }}>
+            <ProjectActivity />
+          </Col>
+        ) : null}
       </Row>
     </div>
   )

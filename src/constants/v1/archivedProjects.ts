@@ -13,7 +13,7 @@ const {
   VOTING_DAO,
 } = V1_PROJECT_IDS
 
-const archivedProjectIdsByNetwork: Partial<Record<NetworkName, number[]>> = {
+const V1ArchivedProjectIdsByNetwork: Partial<Record<NetworkName, number[]>> = {
   [NetworkName.mainnet]: [
     PX_DAO,
     SVSPOOL002,
@@ -26,5 +26,5 @@ const archivedProjectIdsByNetwork: Partial<Record<NetworkName, number[]>> = {
   [NetworkName.rinkeby]: [],
 }
 
-export const archivedProjectIds =
-  archivedProjectIdsByNetwork[readNetwork.name] ?? []
+export const V1ArchivedProjectIds =
+  V1ArchivedProjectIdsByNetwork[readNetwork.name] ?? []

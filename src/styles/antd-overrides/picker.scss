@@ -8,6 +8,10 @@
   color: var(--text-action-primary);
 }
 
+.ant-picker-today-btn-disabled {
+  color: var(--text-disabled);
+}
+
 .ant-picker-focused {
   border-color: var(--stroke-action-secondary);
 }

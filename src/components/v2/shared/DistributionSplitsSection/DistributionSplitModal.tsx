@@ -463,11 +463,7 @@ export default function DistributionSplitModal({
                   }}
                   step={0.01}
                   defaultValue={0}
-                  // sliderValue={parseFloat(
-                  //   formatSplitPercent(
-                  //     BigNumber.from(form.getFieldValue('percent'))
-                  //   )
-                  // )}
+                  sliderValue={form.getFieldValue('percent')}
                   suffix="%"
                   name="percent"
                   formItemProps={{

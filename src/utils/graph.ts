@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { CV } from 'models/cv'
 import {
   DistributeToPayoutModEvent,
   DistributeToPayoutModEventJson,
@@ -178,6 +179,7 @@ export type WhereConfig<E extends EntityKey> = {
 
 export type BlockConfig = {
   number?: number
+  number_gte?: number
   hash?: string
 }
 
@@ -250,6 +252,8 @@ export const formatGraphQuery = <E extends EntityKey, K extends EntityKeys<E>>(
       addArg('block', `{ number: ${opts.block.number} }`)
     } else if (opts.block.hash) {
       addArg('block', `{ hash: ${opts.block.hash} }`)
+    } else if (opts.block.number_gte) {
+      addArg('block', `{ number_gte: ${opts.block.number_gte} }`)
     }
   }
   addArg(
@@ -505,4 +509,16 @@ const isPluralQuery = (key: EntityKey): boolean => {
   if (key === 'projectSearch') return false
 
   return true
+}
+
+/**
+ * Get the subgraph representation of a project ID, based on given [cv] and [projectId]
+ *
+ * Reference implementation: https://github.com/jbx-protocol/juice-subgraph/blob/main/src/utils.ts#L84
+ *
+ * @param cv Contracts version
+ * @param projectId the on-chain project ID
+ */
+export const getSubgraphIdForProject = (cv: CV, projectId: number) => {
+  return `${cv}-${projectId}`
 }

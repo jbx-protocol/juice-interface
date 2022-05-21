@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { CSSProperties, useContext, useState } from 'react'
 import { BigNumber } from '@ethersproject/bignumber'
 
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
@@ -18,8 +18,9 @@ import PayInputSubText from './PayInputSubText'
 export type PayButtonProps = {
   payAmount: string
   payInCurrency: CurrencyOption
-  onError?: (error?: Error) => void
+  onError: (error?: Error) => void
   disabled?: boolean
+  wrapperStyle?: CSSProperties
 }
 
 export default function PayInputGroup({
@@ -67,9 +68,11 @@ export default function PayInputGroup({
         style={{
           display: 'flex',
           width: '100%',
+          flexWrap: 'wrap',
+          gap: 10,
         }}
       >
-        <div style={{ flex: 1, marginRight: 10 }}>
+        <div style={{ flex: 2, minWidth: '50%' }}>
           <FormattedNumberInput
             placeholder="0"
             onChange={val => {
@@ -80,7 +83,7 @@ export default function PayInputGroup({
             min={0}
             accessory={
               <InputAccessoryButton
-                withArrow={true}
+                withArrow
                 content={currencyMetadata[payInCurrency ?? ETH].name}
                 onClick={togglePayInCurrency}
               />
@@ -97,14 +100,13 @@ export default function PayInputGroup({
           />
         </div>
 
-        <div style={{ textAlign: 'center', minWidth: 150 }}>
-          <PayButton
-            payAmount={payAmount}
-            payInCurrency={payInCurrency}
-            onError={() => setIsErrorField(true)}
-            disabled={disabled}
-          />
-        </div>
+        <PayButton
+          wrapperStyle={{ flex: 1 }}
+          payAmount={payAmount}
+          payInCurrency={payInCurrency}
+          onError={() => setIsErrorField(true)}
+          disabled={disabled}
+        />
       </div>
     </>
   )

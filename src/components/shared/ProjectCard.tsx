@@ -17,8 +17,9 @@ import { Link } from 'react-router-dom'
 
 import ProjectLogo from './ProjectLogo'
 import ETHAmount from './currency/ETHAmount'
-import { archivedProjectIds } from '../../constants/v1/archivedProjects'
+import { V1ArchivedProjectIds } from '../../constants/v1/archivedProjects'
 import Loading from './Loading'
+import { V2ArchivedProjectIds } from 'constants/v2/archivedProjects'
 
 type ProjectCardProject = Pick<
   Project,
@@ -96,7 +97,11 @@ export default function ProjectCard({
   const terminalVersion = getTerminalVersion(_project?.terminal)
 
   const isArchived =
-    archivedProjectIds.includes(_project.projectId) || metadata?.archived
+    ((_project.cv === '1' || _project.cv === '1.1') &&
+      V1ArchivedProjectIds.includes(_project.projectId)) ||
+    (_project.cv === '2' &&
+      V2ArchivedProjectIds.includes(_project.projectId)) ||
+    metadata?.archived
 
   return (
     <Link
@@ -114,15 +119,11 @@ export default function ProjectCard({
     >
       <div style={cardStyle} className="clickable-border">
         <div style={{ marginRight: 20 }}>
-          {metadata ? (
-            <ProjectLogo
-              uri={metadata.logoUri}
-              name={metadata.name}
-              size={110}
-            />
-          ) : (
-            <ProjectLogo uri={undefined} name={undefined} size={110} />
-          )}
+          <ProjectLogo
+            uri={metadata?.logoUri}
+            name={metadata?.name}
+            size={110}
+          />
         </div>
 
         <div
@@ -145,7 +146,7 @@ export default function ProjectCard({
               {metadata.name}
             </h2>
           ) : (
-            <Skeleton paragraph={false} title={{ width: 120 }} />
+            <Skeleton paragraph={false} title={{ width: 120 }} active />
           )}
 
           <div>

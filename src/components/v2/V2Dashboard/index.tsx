@@ -30,6 +30,10 @@ import NewDeployNotAvailable from 'components/shared/NewDeployNotAvailable'
 
 import { useLocation } from 'react-router-dom'
 
+import { useProjectsQuery } from 'hooks/Projects'
+
+import { first } from 'lodash'
+
 import { layouts } from 'constants/styles/layouts'
 
 import V2Project from '../V2Project'
@@ -38,6 +42,7 @@ import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/v2/splits'
+import { V2ArchivedProjectIds } from 'constants/v2/archivedProjects'
 
 export default function V2Dashboard({ projectId }: { projectId: number }) {
   const { data: metadataCID, loading: metadataURILoading } =
@@ -48,6 +53,13 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
     error: metadataError,
     isLoading: metadataLoading,
   } = useProjectMetadata(metadataCID)
+
+  const { data: projects } = useProjectsQuery({
+    projectId,
+    keys: ['createdAt'],
+    cv: ['2'],
+  })
+  const createdAt = first(projects)?.createdAt
 
   const { data: fundingCycleResponse, loading: fundingCycleLoading } =
     useProjectCurrentFundingCycle({
@@ -144,6 +156,10 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
 
   const { data: ballotState } = useBallotState(projectId)
 
+  const isArchived = projectId
+    ? V2ArchivedProjectIds.includes(projectId) || projectMetadata?.archived
+    : false
+
   if (metadataLoading || metadataURILoading) return <Loading />
   if (isNewDeploy && !metadataCID) {
     return <NewDeployNotAvailable handleOrId={projectId} />
@@ -155,6 +171,7 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
   const project: V2ProjectContextType = {
     cv: '2',
     projectId,
+    createdAt,
     projectMetadata,
     fundingCycle,
     fundingCycleMetadata,
@@ -173,6 +190,7 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
     primaryTerminalCurrentOverflow,
     totalTokenSupply,
     ballotState,
+    isArchived,
 
     loading: {
       ETHBalanceLoading,

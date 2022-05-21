@@ -1,5 +1,5 @@
 import { InputNumber, Form } from 'antd'
-import { CSSProperties, useLayoutEffect, useMemo, useState } from 'react'
+import { CSSProperties } from 'react'
 import { formattedNum } from 'utils/formatNumber'
 
 import { FormItemExt } from 'components/shared/formItems/formItemExt'
@@ -30,10 +30,6 @@ export default function FormattedNumberInput({
   accessory?: JSX.Element
   onChange?: (val?: string) => void
 } & FormItemExt) {
-  const [accessoryWidth, setAccessoryWidth] = useState<number>(0)
-
-  const accessoryId = useMemo(() => 'accessory' + Math.random() * 100, [])
-
   const thousandsSeparator = ','
   const decimalSeparator = '.'
   const _suffix = suffix ? ` ${suffix}` : ''
@@ -53,12 +49,6 @@ export default function FormattedNumberInput({
     decimalSeparator,
   ]
 
-  useLayoutEffect(() => {
-    const accessoryContainer = document.getElementById(accessoryId)
-    if (!accessoryContainer) return
-    setAccessoryWidth(accessoryContainer.clientWidth)
-  }, [accessoryId])
-
   return (
     <div className="formatted-number-input">
       <Form.Item {...formItemProps}>
@@ -66,6 +56,7 @@ export default function FormattedNumberInput({
           style={{
             display: 'flex',
             alignItems: 'center',
+            position: 'relative',
             ...style,
           }}
         >
@@ -101,17 +92,18 @@ export default function FormattedNumberInput({
             }
             disabled={disabled}
             onChange={_value => {
-              if (onChange) onChange(_value?.toString())
+              onChange?.(_value?.toString())
             }}
           />
           <div
             style={{
-              marginLeft: accessoryWidth * -1 - 5,
               zIndex: 1,
               fontSize: '.8rem',
+              position: 'absolute',
+              right: 5,
             }}
           >
-            {accessory && <div id={accessoryId}>{accessory}</div>}
+            {accessory && <div>{accessory}</div>}
           </div>
         </div>
       </Form.Item>

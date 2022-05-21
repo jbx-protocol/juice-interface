@@ -20,6 +20,7 @@ export default function V1PayButton({
   payAmount,
   payInCurrency,
   onError,
+  wrapperStyle,
 }: PayButtonProps) {
   const { projectId, currentFC, metadata, isArchived, terminal } =
     useContext(V1ProjectContext)
@@ -52,63 +53,51 @@ export default function V1PayButton({
   const overridePayDisabled =
     projectId && disablePayOverrides[readNetwork.name]?.has(projectId)
 
-  if (isArchived) {
-    return (
-      <Tooltip
-        title={t`This project has been archived and cannot be paid.`}
-        className="block"
-      >
-        <Button style={{ width: '100%' }} type="primary" disabled>
-          {payButtonText}
-        </Button>
-      </Tooltip>
-    )
-  } else if (
-    fcMetadata.payIsPaused || // v1.1 only
-    overridePayDisabled ||
-    isV1AndMaxRR || // v1 projects who still use 100% RR to disable pay
-    currentFC.configured.eq(0) || // Edge case, see sequoiacapitaldao
-    isMoonAndMaxRR // Edge case for MoonDAO
-  ) {
-    let disabledMessage: string
+  const shouldDisableButton =
+    (fcMetadata.payIsPaused || // v1.1 only
+      overridePayDisabled ||
+      isV1AndMaxRR || // v1 projects who still use 100% RR to disable pay
+      currentFC.configured.eq(0) || // Edge case, see sequoiacapitaldao
+      isMoonAndMaxRR || // Edge case for MoonDAO
+      isArchived) ??
+    false
 
-    if (isV1AndMaxRR || isMoonAndMaxRR) {
-      disabledMessage = t`Paying this project is currently disabled, because the token reserved rate is 100% and no tokens will be earned by making a payment.`
-    } else if (fcMetadata.payIsPaused) {
-      disabledMessage = t`Payments are paused for the current funding cycle.`
-    } else {
-      disabledMessage = t`Paying this project is currently disabled.`
+  let disabledMessage: string
+  if (isArchived) {
+    disabledMessage = t`This project is archived and can't be paid.`
+  } else if (isV1AndMaxRR || isMoonAndMaxRR) {
+    disabledMessage = t`Paying this project is currently disabled, because the token reserved rate is 100% and no tokens will be earned by making a payment.`
+  } else if (fcMetadata.payIsPaused) {
+    disabledMessage = t`Payments are paused for the current funding cycle.`
+  } else {
+    disabledMessage = t`Paying this project is currently disabled.`
+  }
+
+  const onPayButtonClick = () => {
+    if (parseFloat(fromWad(weiPayAmt)) === 0) {
+      return onError()
     }
 
-    return (
-      <Tooltip title={disabledMessage} className="block">
-        <Button style={{ width: '100%' }} type="primary" disabled>
-          {payButtonText}
-        </Button>
-      </Tooltip>
-    )
+    setPayWarningModalVisible(true)
   }
 
   // Pay enabled
   return (
-    <>
-      <Button
-        style={{ width: '100%' }}
-        type="primary"
-        onClick={
-          parseFloat(fromWad(weiPayAmt))
-            ? () => {
-                setPayWarningModalVisible(true)
-              }
-            : () => {
-                if (parseFloat(fromWad(weiPayAmt)) === 0) {
-                  return onError?.()
-                }
-              }
-        }
+    <div style={{ textAlign: 'center', ...wrapperStyle }}>
+      <Tooltip
+        title={disabledMessage}
+        className="block"
+        visible={Boolean(disabledMessage) ? undefined : false}
       >
-        {payButtonText}
-      </Button>
+        <Button
+          style={{ width: '100%' }}
+          type="primary"
+          onClick={onPayButtonClick}
+          disabled={shouldDisableButton}
+        >
+          {payButtonText}
+        </Button>
+      </Tooltip>
       {payInCurrency === V1_CURRENCY_USD && (
         <div style={{ fontSize: '.7rem' }}>
           <Trans>
@@ -132,6 +121,6 @@ export default function V1PayButton({
         weiAmount={weiPayAmt}
         payButtonText={payButtonText}
       />
-    </>
+    </div>
   )
 }

@@ -25,8 +25,8 @@ import {
   formatFee,
   formatSplitPercent,
   MAX_DISTRIBUTION_LIMIT,
+  preciseFormatSplitPercent,
   splitPercentFrom,
-  SPLITS_TOTAL_PERCENT,
 } from 'utils/v2/math'
 import NumberSlider from 'components/shared/inputs/NumberSlider'
 import { amountFromPercent } from 'utils/v2/distributions'
@@ -125,7 +125,7 @@ export default function DistributionSplitModal({
   const [amount, setAmount] = useState<number | undefined>(
     !distributionLimitIsInfinite
       ? amountFromPercent({
-          percent: (split.percent / SPLITS_TOTAL_PERCENT) * 100,
+          percent: preciseFormatSplitPercent(split.percent),
           amount: distributionLimit,
         })
       : undefined,
@@ -150,7 +150,7 @@ export default function DistributionSplitModal({
 
   useEffect(() => {
     if (
-      !isFirstSplit ||
+      editableSplits.length === 0 ||
       editableSplitIndex === undefined ||
       !distributionLimit
     ) {
@@ -158,7 +158,7 @@ export default function DistributionSplitModal({
     }
     const percentPerBillion = editableSplits[editableSplitIndex].percent
     const amount = amountFromPercent({
-      percent: (percentPerBillion / SPLITS_TOTAL_PERCENT) * 100,
+      percent: preciseFormatSplitPercent(percentPerBillion),
       amount: distributionLimit,
     })
     setAmount(amount)
@@ -224,12 +224,11 @@ export default function DistributionSplitModal({
 
   const onAmountChange = (newAmount: number) => {
     if (distributionLimitIsInfinite || !newAmount) return
-
     const newDistributionLimit = getNewDistributionLimit({
-      splits,
       currentDistributionLimit: distributionLimit,
       newSplitAmount: newAmount,
-      editingSplitPercent: percent,
+      editingSplitPercent:
+        mode === 'Add' ? 0 : splits[editableSplitIndex ?? 0].percent, //percentPerBillion,
     })
 
     const newPercent = getDistributionPercentFromAmount({
@@ -430,7 +429,7 @@ export default function DistributionSplitModal({
               }}
             >
               <FormattedNumberInput
-                value={amount?.toString()}
+                value={amount?.toFixed(4)}
                 placeholder={'0'}
                 onChange={amount => onAmountChange(parseFloat(amount || '0'))}
                 formItemProps={{

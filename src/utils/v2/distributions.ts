@@ -1,7 +1,11 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Split } from 'models/v2/splits'
 
-import { formatSplitPercent, splitPercentFrom } from './math'
+import {
+  formatSplitPercent,
+  preciseFormatSplitPercent,
+  splitPercentFrom,
+} from './math'
 
 /**
  * Gets distribution amount from percent of the distribution limit and then applies
@@ -36,7 +40,7 @@ export function getDistributionAmountFromPercentAfterFee({
 }
 
 /**
- * Gets amount from percent of a bigger amount
+ * Gets amount from percent of a bigger amount (rounded to 4dp)
  * @param percent {float} - value as a percentage.
  * @param amount string (hexString)
  * @returns {number} distribution amount
@@ -48,7 +52,7 @@ export function amountFromPercent({
   percent: number
   amount: string
 }) {
-  return parseFloat(((percent / 100) * parseFloat(amount)).toFixed(8))
+  return (percent / 100) * parseFloat(amount)
 }
 
 /**
@@ -93,13 +97,16 @@ export function sumOfPayoutSplitAmounts({
   splits: Split[]
   distributionLimit: number
 }) {
-  // if (distributionLimit.eq(MAX_DISTRIBUTION_LIMIT)) return 0
-
-  // const distributionLimitNumber = distributionLimit.toNumber()
-
   return (distributionLimit * getTotalSplitsPercentage(splits)) / 100
 }
 
+/**
+ * Adjusts exist split percents to stay the same amount when distribution limit is changes
+ * @param splits {Split[]} - list of current splits to have their percents adjusted
+ * @param oldDistributionLimit {string} - string of the old distribution limit number (e.g. '1')
+ * @param newDistributionLimit {string} - string of the new distribution limit number
+ * @returns {Split[]} splits with their percents adjusted
+ */
 export function adjustedSplitPercents({
   splits,
   oldDistributionLimit,
@@ -133,30 +140,28 @@ export function adjustedSplitPercents({
   return adjustedSplits
 }
 
+/**
+ * Derives the new distribution limit when a split amount is altered or added
+ * @param editingSplitPercent {number} - percent of the split being edited (0 if adding a split)
+ * @param newDistributionLimit {string} - string of the new distribution limit number (e.g. '1')
+ * @returns {number} newDistributionLimit
+ */
 export function getNewDistributionLimit({
-  splits,
   editingSplitPercent,
   newSplitAmount,
   currentDistributionLimit,
 }: {
-  splits: Split[]
   editingSplitPercent: number // percent per billion
   newSplitAmount: number
   currentDistributionLimit: string
 }) {
-  const sumOfCurrentSplitAmounts = sumOfPayoutSplitAmounts({
-    splits,
-    distributionLimit: parseFloat(currentDistributionLimit),
-  })
-
   const previousSplitAmount = amountFromPercent({
-    percent: parseFloat(
-      formatSplitPercent(BigNumber.from(editingSplitPercent)),
-    ),
+    percent: preciseFormatSplitPercent(editingSplitPercent),
     amount: currentDistributionLimit,
   }) // will be 0 when adding split but an actual amount when reconfiging or deleting
 
   const newDistributionLimit =
-    sumOfCurrentSplitAmounts - previousSplitAmount + newSplitAmount
-  return newDistributionLimit
+    parseFloat(currentDistributionLimit) - previousSplitAmount + newSplitAmount
+
+  return parseFloat(newDistributionLimit.toFixed(4)) // round to 4dp
 }

@@ -17,6 +17,7 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 import {
   formatSplitPercent,
   MAX_DISTRIBUTION_LIMIT,
+  preciseFormatSplitPercent,
   SPLITS_TOTAL_PERCENT,
 } from 'utils/v2/math'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
@@ -73,6 +74,11 @@ export default function DistributionSplitCard({
 
   const distributionLimitIsInfinite =
     !distributionLimit || parseWad(distributionLimit).eq(MAX_DISTRIBUTION_LIMIT)
+
+  // If percentage has greater than 2 dp it will be rounded in the UI
+  const percentIsRounded =
+    split.percent !== SPLITS_TOTAL_PERCENT &&
+    (split.percent / SPLITS_TOTAL_PERCENT).toString().split('.')[1].length > 4
 
   return (
     <div
@@ -189,13 +195,16 @@ export default function DistributionSplitCard({
                   {!distributionLimitIsInfinite && (
                     <span>
                       <CurrencySymbol currency={currencyName} />
-                      {amountFromPercent({
-                        percent: (split.percent / SPLITS_TOTAL_PERCENT) * 100,
-                        amount: distributionLimit,
-                      })}
+                      {parseFloat(
+                        amountFromPercent({
+                          percent: preciseFormatSplitPercent(split.percent),
+                          amount: distributionLimit,
+                        }).toFixed(4),
+                      )}
                     </span>
                   )}
                   <span>
+                    {percentIsRounded ? '~' : null}
                     {formatSplitPercent(BigNumber.from(split.percent))}%
                   </span>
                 </Space>
@@ -230,7 +239,6 @@ export default function DistributionSplitCard({
             // - not deleting the last split
             if (!distributionLimitIsInfinite && splits.length !== 1) {
               const newDistributionLimit = getNewDistributionLimit({
-                splits,
                 currentDistributionLimit: distributionLimit,
                 newSplitAmount: 0,
                 editingSplitPercent: splits[editableSplitIndex].percent,

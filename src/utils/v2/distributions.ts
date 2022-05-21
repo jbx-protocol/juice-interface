@@ -68,7 +68,6 @@ export function getDistributionPercentFromAmount({
   amount: number
   distributionLimit: number
 }) {
-  // return parseFloat(((amount / distributionLimit) * 100).toFixed(9))
   return splitPercentFrom((amount / distributionLimit) * 100).toNumber()
 }
 
@@ -101,7 +100,7 @@ export function sumOfPayoutSplitAmounts({
 }
 
 /**
- * Adjusts exist split percents to stay the same amount when distribution limit is changes
+ * Adjusts exist split percents to stay the same amount when distribution limit is changed
  * @param splits {Split[]} - list of current splits to have their percents adjusted
  * @param oldDistributionLimit {string} - string of the old distribution limit number (e.g. '1')
  * @param newDistributionLimit {string} - string of the new distribution limit number

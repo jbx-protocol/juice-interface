@@ -434,47 +434,6 @@ export default function FundingForm({
           </Trans>
         </p>
 
-        {/* <Form.Item label={<Trans>Distribution limit</Trans>}>
-          <DistributionLimitTypeSelect
-            value={distributionLimitType}
-            onChange={onDistributionLimitTypeSelect}
-            distributionLimit={parseWad(distributionLimit)}
-          />
-        </Form.Item> */}
-
-        {/* {distributionLimitType === 'specific' ? (
-          <Form.Item required>
-            <BudgetTargetInput
-              target={distributionLimit?.toString()}
-              targetSubFee={undefined}
-              currency={V2CurrencyName(distributionLimitCurrency) ?? 'ETH'}
-              onTargetChange={setDistributionLimit}
-              onTargetSubFeeChange={() => {}}
-              onCurrencyChange={currencyName =>
-                setDistributionLimitCurrency(getV2CurrencyOption(currencyName))
-              }
-              showTargetSubFeeInput={false}
-              feePerbicent={undefined}
-            />
-          </Form.Item>
-        ) : distributionLimitType === 'infinite' ? (
-          <FormItemWarningText>
-            <Trans>
-              With an infinite distribution limit, all funds can be distributed
-              by the project. The project will have no overflow, meaning token
-              holders won't be able to redeem their tokens for treasury funds.
-            </Trans>
-          </FormItemWarningText>
-        ) : (
-          <FormItemWarningText>
-            <Trans>
-              With a distribution limit of Zero, no funds can be distributed by
-              the project. All funds belong to token holders as overflow.
-            </Trans>
-          </FormItemWarningText>
-        )}
-      </div> */}
-
         <DistributionSplitsSection
           distributionLimit={distributionLimit}
           setDistributionLimit={setDistributionLimit}

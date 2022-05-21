@@ -50,23 +50,6 @@ export default function BudgetTargetInput({
 
   if (_currency === undefined) return null
 
-  // const CurrencySwitch = () => {
-  //   if (onCurrencyChange)
-  //     return (
-  //       <InputAccessoryButton
-  //         onClick={() => {
-  //           const newCurrency = _currency === 'USD' ? 'ETH' : 'USD'
-  //           setCurrency(newCurrency)
-  //           onCurrencyChange(newCurrency)
-  //         }}
-  //         content={_currency}
-  //         withArrow
-  //         placement="suffix"
-  //       />
-  //     )
-  //   return <InputAccessoryButton content={_currency} placement="suffix" />
-  // }
-
   const _currencySwitch = onCurrencyChange ? (
     <CurrencySwitch
       onCurrencyChange={(currencyName: CurrencyName) => {

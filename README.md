@@ -24,6 +24,9 @@ Notice something broken? Create a
    [fork](https://docs.github.com/en/get-started/quickstart/fork-a-repo) of this
    repository.
 1. Clone your fork and navigate to the root directory.
+1. [`nvm use`](https://github.com/nvm-sh/nvm#nvmrc) to match the version of node
+   specified in the
+   [`.nvmrc`](https://github.com/jbx-protocol/juice-interface/blob/main/.nvmrc)
 1. Install project dependencies.
 
    ```bash

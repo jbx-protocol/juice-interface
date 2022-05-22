@@ -13,16 +13,17 @@ export default function Paragraph({
 }) {
   const CHARACTER_LIMIT_EXCEEDED =
     (characterLimit && description.length > characterLimit) ||
-    description.split('\n').length > 1
+    description.split('\n').length > 3
 
   const [expanded, setExpanded] = useState<boolean>(false)
   const toggleExpanded = () => setExpanded(!expanded)
 
-  // truncate the first line of the description
-  const shortDescription = useMemo(
-    () => `${description.split('\n')[0].slice(0, characterLimit).trim()}...`,
-    [description, characterLimit],
-  )
+  // Apply character limit to first 3 lines
+  const shortDescription = useMemo(() => {
+    const allLines = description.split('\n')
+    const firstThreeLines = allLines.slice(0, 3).join('\n')
+    return `${firstThreeLines.slice(0, characterLimit).trim()}...`
+  }, [characterLimit, description])
 
   return (
     <div>

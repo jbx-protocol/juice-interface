@@ -8,18 +8,15 @@ export default function CurrencySwitch({
   currency: CurrencyName
   onCurrencyChange: (currency: CurrencyName) => void
 }) {
-  if (onCurrencyChange) {
-    return (
-      <InputAccessoryButton
-        onClick={() => {
-          const newCurrency = currency === 'USD' ? 'ETH' : 'USD'
-          onCurrencyChange(newCurrency)
-        }}
-        content={currency}
-        withArrow
-        placement="suffix"
-      />
-    )
-  }
-  return <InputAccessoryButton content={currency} placement="suffix" />
+  return (
+    <InputAccessoryButton
+      onClick={() => {
+        const newCurrency = currency === 'USD' ? 'ETH' : 'USD'
+        onCurrencyChange(newCurrency)
+      }}
+      content={currency}
+      withArrow
+      placement="suffix"
+    />
+  )
 }

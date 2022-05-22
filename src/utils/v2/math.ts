@@ -82,7 +82,7 @@ export const preciseFormatSplitPercent = (
  */
 export const splitPercentFrom = (percentage: number): BigNumber => {
   return percentage
-    ? BigNumber.from((percentage * SPLITS_TOTAL_PERCENT) / 100)
+    ? BigNumber.from(((percentage * SPLITS_TOTAL_PERCENT) / 100).toFixed())
     : BigNumber.from(0)
 }
 

@@ -165,6 +165,10 @@ export default function DistributionSplitModal({
     setPercent(percentPerBillion)
   }, [distributionLimit, editableSplits, editableSplitIndex, isFirstSplit])
 
+  useEffect(() => {
+    setDistributionType(distributionLimitIsInfinite ? 'percent' : 'amount')
+  }, [distributionLimitIsInfinite])
+
   const resetStates = () => {
     setProjectId(undefined)
     setBeneficiary(undefined)
@@ -193,7 +197,7 @@ export default function DistributionSplitModal({
     let adjustedSplits: Split[] = editableSplits
     // If an amount and therefore the distribution limit has been changed,
     // recalculate all split percents based on newly added split amount
-    if (newDistributionLimit && distributionLimit) {
+    if (newDistributionLimit && !distributionLimitIsInfinite) {
       adjustedSplits = adjustedSplitPercents({
         splits: editableSplits,
         oldDistributionLimit: distributionLimit,

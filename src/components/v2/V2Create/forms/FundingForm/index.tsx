@@ -1,6 +1,6 @@
-import { t, Trans } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 
-import { Button, Form, Input, Space } from 'antd'
+import { Button, Form, Space } from 'antd'
 
 import {
   useCallback,
@@ -60,6 +60,7 @@ import SwitchHeading from 'components/shared/SwitchHeading'
 import DistributionSplitsSection from 'components/v2/shared/DistributionSplitsSection'
 import { getTotalSplitsPercentage } from 'utils/v2/distributions'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { ItemNoInput } from 'components/shared/formItems/ItemNoInput'
 
 import isEqual from 'lodash/isEqual'
 
@@ -86,7 +87,10 @@ export default function FundingForm({
   onFinish: VoidFunction
   isCreate?: boolean // Instance of FundingForm in create flow
 }) {
-  const { theme } = useContext(ThemeContext)
+  const {
+    theme,
+    theme: { colors },
+  } = useContext(ThemeContext)
   const { contracts } = useContext(V2UserContext)
   const { payoutSplits } = useContext(V2ProjectContext)
 
@@ -110,7 +114,7 @@ export default function FundingForm({
 
   const [distributionLimit, setDistributionLimit] = useState<
     string | undefined
-  >(fundAccessConstraint?.distributionLimit ?? '0')
+  >('0')
 
   const [distributionLimitCurrency, setDistributionLimitCurrency] =
     useState<V2CurrencyOption>(V2_CURRENCY_ETH)
@@ -281,7 +285,7 @@ export default function FundingForm({
   // Ensures total split percentages do not exceed 100
   const validateTotalSplitsPercentage = () => {
     if (fundingForm.getFieldValue('totalSplitsPercentage') > 100)
-      return Promise.reject(t`Sum of percentages cannot exceed 100%.`)
+      return Promise.reject()
     return Promise.resolve()
   }
 
@@ -331,7 +335,7 @@ export default function FundingForm({
           padding: '2rem',
           marginBottom: '10px',
           ...shadowCard(theme),
-          color: theme.colors.text.primary,
+          color: colors.text.primary,
         }}
       >
         <SwitchHeading
@@ -401,7 +405,7 @@ export default function FundingForm({
           padding: '2rem',
           marginBottom: '10px',
           ...shadowCard(theme),
-          color: theme.colors.text.primary,
+          color: colors.text.primary,
         }}
       >
         <h3>
@@ -425,7 +429,7 @@ export default function FundingForm({
           </Trans>
         </p>
 
-        <p style={{ color: theme.colors.text.primary }}>
+        <p style={{ color: colors.text.primary }}>
           <Trans>
             Distributing payouts to addresses outside the Juicebox contracts
             incurs a {feeFormatted}% JBX membership fee. The ETH from the fee
@@ -450,19 +454,14 @@ export default function FundingForm({
             })
           }}
         />
-        <Form.Item
+        <ItemNoInput
           name={'totalSplitsPercentage'}
           rules={[
             {
               validator: validateTotalSplitsPercentage,
             },
           ]}
-        >
-          {/* Added a hidden input here because Form.Item needs 
-          a child Input to work. Need the parent Form.Item to 
-          validate totalSplitsPercentage */}
-          <Input hidden type="string" autoComplete="off" />
-        </Form.Item>
+        />
       </div>
 
       <Form.Item style={{ marginTop: '2rem' }}>

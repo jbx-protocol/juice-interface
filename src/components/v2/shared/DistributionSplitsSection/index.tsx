@@ -1,12 +1,14 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Form, Space } from 'antd'
-import { useCallback, useState } from 'react'
+import { useCallback, useContext, useState } from 'react'
 
 import { Split } from 'models/v2/splits'
 import { FormItemExt } from 'components/shared/formItems/formItemExt'
 import { parseWad } from 'utils/formatNumber'
 import DistributionLimit from 'components/v2/V2Project/DistributionLimit'
 import TooltipIcon from 'components/shared/TooltipIcon'
+import { getTotalSplitsPercentage } from 'utils/v2/distributions'
+import { ThemeContext } from 'contexts/themeContext'
 
 import DistributionSplitCard from './DistributionSplitCard'
 import { CurrencyName } from 'constants/currency'
@@ -30,6 +32,10 @@ export default function DistributionSplitsSection({
   lockedSplits: Split[]
   onSplitsChanged: (splits: Split[]) => void
 } & FormItemExt) {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
+
   const [addSplitModalVisible, setAddSplitModalVisible] =
     useState<boolean>(false)
 
@@ -69,6 +75,8 @@ export default function DistributionSplitsSection({
 
   if (!allSplits) return null
 
+  const totalSplitsPercentageInvalid = getTotalSplitsPercentage(allSplits) > 100
+
   return (
     <Form.Item
       {...formItemProps}
@@ -94,6 +102,11 @@ export default function DistributionSplitsSection({
             )}
           </Space>
         ) : null}
+        {totalSplitsPercentageInvalid ? (
+          <span style={{ color: colors.text.failure }}>
+            <Trans>Sum of percentages cannot exceed 100%.</Trans>
+          </span>
+        ) : null}
         <Button
           type="dashed"
           onClick={() => {
@@ -109,7 +122,7 @@ export default function DistributionSplitsSection({
               tip={t`The maximum amount of funds that can be distributed from the treasury each funding cycle.`}
               iconStyle={{ marginRight: 5 }}
             />
-            <strong>
+            <strong style={{ color: colors.text.primary }}>
               <Trans>Total distribution limit:</Trans>
             </strong>
           </span>

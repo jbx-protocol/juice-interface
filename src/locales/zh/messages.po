@@ -2368,7 +2368,7 @@ msgid "Sum of percentages cannot exceed 100%"
 msgstr "百分比合计不能超过 100%"
 
 #: src/components/shared/forms/PayModsForm.tsx
-#: src/components/v2/V2Create/forms/FundingForm/index.tsx
+#: src/components/v2/shared/DistributionSplitsSection/index.tsx
 msgid "Sum of percentages cannot exceed 100%."
 msgstr "百分比合计不能超过 100%."
 

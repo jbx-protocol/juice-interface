@@ -238,9 +238,9 @@ export const formatGraphQuery = <E extends EntityKey, K extends EntityKeys<E>>(
       ? `[${where.value
           .map(v => (typeof v === 'string' ? `"${v}"` : v))
           .join(',')}]`
-      : typeof where.value === 'number'
-      ? where.value
-      : `"${where.value}"`)
+      : typeof where.value === 'string'
+      ? `"${where.value}"`
+      : where.value)
 
   addArg('text', opts.text ? `"${opts.text}"` : undefined)
   addArg('first', opts.first)

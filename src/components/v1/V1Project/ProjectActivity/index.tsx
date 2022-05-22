@@ -53,6 +53,14 @@ export default function ProjectActivity() {
         operator: 'in',
         value: ['1', '1.1'],
       },
+      {
+        key: 'mintTokensEvent',
+        value: null, // Exclude all mintTokensEvents. One of these events is created for every Pay event, and showing both event types may lead to confusion
+      },
+      {
+        key: 'useAllowanceEvent',
+        value: null, // Exclude all useAllowanceEvents, no UI support yet
+      },
     ]
 
     if (projectId) {

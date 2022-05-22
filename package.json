@@ -66,7 +66,8 @@
     "i18n:compile": "lingui compile",
     "i18n:lint": "./scripts/lint-translations.sh",
     "postinstall": "yarn i18n:compile",
-    "analyze": "yarn build && source-map-explorer 'build/static/js/*.js'"
+    "analyze": "yarn build && source-map-explorer 'build/static/js/*.js'",
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx}'"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,json,css}": [

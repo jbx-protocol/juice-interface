@@ -105,8 +105,9 @@ using a GraphQL API.
 Take the following steps to set up Juicebox's subgraph for local development:
 
 1. Join [Peel's discord server](https://discord.gg/akpxJZ5HKR).
-2. Go to [the dev channel](https://discord.com/channels/939317843059679252/939705688563810304)
-    and inquire about mainnet and rinkeby subgraph URLs.
+2. Go to
+   [the dev channel](https://discord.com/channels/939317843059679252/939705688563810304)
+   and inquire about mainnet and rinkeby subgraph URLs.
 3. Copy the URL into the `REACT_APP_SUBGRAPH_URL` variable of the `.env` file.
 
 ### Usage

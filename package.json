@@ -70,7 +70,7 @@
     "format": "prettier --write './**/*.{js,jsx,ts,tsx}'"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx,json,css}": [
+    "*.{js,jsx,ts,tsx,json,css,md}": [
       "eslint",
       "prettier --write"
     ]

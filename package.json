@@ -32,6 +32,7 @@
     "eslint-config-prettier": "^8.3.0",
     "ethereum-block-by-date": "^1.4.2",
     "ethers": "^5.1.0",
+    "juice-sdk": "0.0.18-alpha",
     "lodash": "^4.17.21",
     "react": "^17",
     "react-dom": "^17.0.1",
@@ -66,7 +67,7 @@
     "i18n:compile": "lingui compile",
     "i18n:lint": "./scripts/lint-translations.sh",
     "postinstall": "yarn i18n:compile",
-    "analyze": "yarn build && source-map-explorer 'build/static/js/*.js'"
+    "analyze": "source-map-explorer 'build/static/js/*.js'"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,json,css}": [

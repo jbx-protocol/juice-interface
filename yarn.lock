@@ -3064,7 +3064,7 @@
     hardhat-deploy-ethers "^0.3.0-beta.10"
     prettier "^2.4.0"
 
-"@jbx-protocol/contracts-v2@4.0.0":
+"@jbx-protocol/contracts-v2@4.0.0", "@jbx-protocol/contracts-v2@^4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@jbx-protocol/contracts-v2/-/contracts-v2-4.0.0.tgz#0e1758c3be932993c7dbfa6b23addd10cc1855ea"
   integrity sha512-8B3UBPZYS4HCvRY25M8ROZi7mQdDrUMfq7dT3ucPVlE1KQLC8nBMwV2PiihgUamKpbQES9vhs7T4UIZbAv79rg==
@@ -13071,6 +13071,13 @@ jsqr@^1.2.0:
   dependencies:
     array-includes "^3.1.3"
     object.assign "^4.1.2"
+
+juice-sdk@0.0.18-alpha:
+  version "0.0.18-alpha"
+  resolved "https://registry.yarnpkg.com/juice-sdk/-/juice-sdk-0.0.18-alpha.tgz#d6134b1fc39db86ace9c87e03b71c68fd20431c9"
+  integrity sha512-nfvPSKDXxrSi6pwUSIzZx/7ZGrqj9gLgoKQy4PwnSFm0BASe/7OdsGxesdQjyEFwEcvfCg12rktPI4g1Qtde9A==
+  dependencies:
+    "@jbx-protocol/contracts-v2" "^4.0.0"
 
 keccak256@^1.0.0:
   version "1.0.3"

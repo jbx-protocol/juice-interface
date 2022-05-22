@@ -1,13 +1,24 @@
 import { Contract } from '@ethersproject/contracts'
-import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
 
 import { NetworkContext } from 'contexts/networkContext'
-import { V2ContractName, V2Contracts } from 'models/v2/contracts'
-import { NetworkName } from 'models/network-name'
+import { V2Contracts } from 'models/v2/contracts'
 import { useContext, useEffect, useState } from 'react'
+import {
+  getJBController,
+  getJBDirectory,
+  getJBETHERC20ProjectPayerDeployer,
+  getJBETHPaymentTerminal,
+  getJBFundingCycleStore,
+  getJBOperatorStore,
+  getJBPrices,
+  getJBProjects,
+  getJBSingleTokenPaymentTerminalStore,
+  getJBSplitsStore,
+  getJBTokenStore,
+} from 'juice-sdk'
+import { Signer } from '@ethersproject/abstract-signer'
 
 import { readProvider } from 'constants/readProvider'
-import { readNetwork } from 'constants/networks'
 
 export function useV2ContractLoader() {
   const [contracts, setContracts] = useState<V2Contracts>()
@@ -15,42 +26,42 @@ export function useV2ContractLoader() {
   const { signingProvider } = useContext(NetworkContext)
 
   useEffect(() => {
-    async function loadContracts() {
-      try {
-        const network = readNetwork.name
+    try {
+      // Contracts can be used read-only without a signer, but require a signer to create transactions.
+      const signerOrProvider =
+        (signingProvider?.getSigner() as Signer) ?? readProvider
 
-        // Contracts can be used read-only without a signer, but require a signer to create transactions.
-        const signerOrProvider = signingProvider?.getSigner() ?? readProvider
-
-        const newContracts = Object.values(V2ContractName).reduce(
-          (accumulator, contractName) => ({
-            ...accumulator,
-            [contractName]: loadContract(
-              contractName,
-              network,
-              signerOrProvider,
-            ),
-          }),
-          {} as V2Contracts,
-        )
-
-        setContracts(newContracts)
-      } catch (e) {
-        console.error('CONTRACT LOADER ERROR:', e)
+      const newContracts: V2Contracts = {
+        JBController: getJBController(signerOrProvider) as unknown as Contract,
+        JBDirectory: getJBDirectory(signerOrProvider) as unknown as Contract,
+        JBETHPaymentTerminal: getJBETHPaymentTerminal(
+          signerOrProvider,
+        ) as unknown as Contract,
+        JBFundingCycleStore: getJBFundingCycleStore(
+          signerOrProvider,
+        ) as unknown as Contract,
+        JBOperatorStore: getJBOperatorStore(
+          signerOrProvider,
+        ) as unknown as Contract,
+        JBPrices: getJBPrices(signerOrProvider) as unknown as Contract,
+        JBProjects: getJBProjects(signerOrProvider) as unknown as Contract,
+        JBSplitsStore: getJBSplitsStore(
+          signerOrProvider,
+        ) as unknown as Contract,
+        JBTokenStore: getJBTokenStore(signerOrProvider) as unknown as Contract,
+        JBSingleTokenPaymentTerminalStore: getJBSingleTokenPaymentTerminalStore(
+          signerOrProvider,
+        ) as unknown as Contract,
+        JBETHERC20ProjectPayerDeployer: getJBETHERC20ProjectPayerDeployer(
+          signerOrProvider,
+        ) as unknown as Contract,
       }
-    }
 
-    loadContracts()
+      setContracts(newContracts)
+    } catch (e) {
+      console.error('CONTRACT LOADER ERROR:', e)
+    }
   }, [signingProvider, setContracts])
 
   return contracts
-}
-
-const loadContract = (
-  contractName: keyof typeof V2ContractName,
-  network: NetworkName,
-  signerOrProvider: JsonRpcSigner | JsonRpcProvider,
-): Contract | undefined => {
-  const contract = require(`@jbx-protocol/contracts-v2/deployments/${network}/${contractName}.json`)
-  return new Contract(contract.address, contract.abi, signerOrProvider)
 }

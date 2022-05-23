@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-05-19 02:18\n"
+"PO-Revision-Date: 2022-05-23 02:48\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -791,7 +791,7 @@ msgstr "Desplegar proyecto en {signerNetwork}"
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerButton.tsx
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Deploy project payer contract"
-msgstr ""
+msgstr "Desplegar contrato del pagador de proyecto"
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/DeployProjectButton.tsx
 msgid "Deploy project to {0}"
@@ -1338,7 +1338,7 @@ msgstr "Incentivos"
 
 #: src/components/Landing/index.tsx
 msgid "Indie creators and builders"
-msgstr ""
+msgstr "Creadores y constructores Indie"
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Initial issuance rate"
@@ -2698,7 +2698,7 @@ msgstr "Los tokens no pueden ser reclamados porque no se ha emitido un token ERC
 
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Tokens minted from payments to this address will belong to the payer by default. However, if someone pays the project though a custodial service platform such as Coinbase, <0>tokens can't be issued to their personal wallets and will be lost</0>."
-msgstr ""
+msgstr "Los tokens minteados desde pagos a esta dirección pertenecerán al pagador por defecto. Sin embargo, si alguien paga al proyecto a través de una plataforma de servicios custodiados como Coinbase, <0>los tokens no podrán ser emitidos a sus billeteras personales y se perderán</0>."
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "Tokens receiver"

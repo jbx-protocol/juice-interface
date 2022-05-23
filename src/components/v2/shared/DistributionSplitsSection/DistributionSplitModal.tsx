@@ -27,6 +27,7 @@ import {
   MAX_DISTRIBUTION_LIMIT,
   preciseFormatSplitPercent,
   splitPercentFrom,
+  SPLITS_TOTAL_PERCENT,
 } from 'utils/v2/math'
 import NumberSlider from 'components/shared/inputs/NumberSlider'
 import { amountFromPercent } from 'utils/v2/distributions'
@@ -38,6 +39,7 @@ import * as Moment from 'moment'
 import moment from 'moment'
 import TooltipLabel from 'components/shared/TooltipLabel'
 import CurrencySwitch from 'components/shared/CurrencySwitch'
+import TooltipIcon from 'components/shared/TooltipIcon'
 
 import { CurrencyName } from 'constants/currency'
 
@@ -290,7 +292,7 @@ export default function DistributionSplitModal({
         label={
           <Trans>
             <CurrencySymbol currency={currencyName} />
-            {amountSubFee} after {feePercentage}% JBX membership fee
+            {amountSubFee?.toFixed(4)} after {feePercentage}% JBX membership fee
           </Trans>
         }
         tip={
@@ -302,6 +304,8 @@ export default function DistributionSplitModal({
       />
     ) : null
   }
+
+  const formattedSplitPercent = formatSplitPercent(BigNumber.from(percent))
 
   return (
     <Modal
@@ -409,7 +413,7 @@ export default function DistributionSplitModal({
           <Form.Item
             className="ant-form-item-extra-only"
             extra={
-              feePercentage && percent && !(percent > 100) ? (
+              feePercentage && percent && !(percent > SPLITS_TOTAL_PERCENT) ? (
                 <>
                   {editingSplitType === 'address' ? (
                     <div>
@@ -450,6 +454,27 @@ export default function DistributionSplitModal({
                   )
                 }
               />
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  marginLeft: 10,
+                }}
+              >
+                <Trans>{formattedSplitPercent}%</Trans>
+                <TooltipIcon
+                  tip={
+                    <Trans>
+                      If you don't raise the sum of all your payouts (
+                      <CurrencySymbol currency={currencyName} />
+                      {distributionLimit}), this address will receive{' '}
+                      {formattedSplitPercent}% of all the funds you raise.
+                    </Trans>
+                  }
+                  placement={'topLeft'}
+                  iconStyle={{ marginLeft: 5 }}
+                />
+              </div>
             </div>
           </Form.Item>
         ) : (

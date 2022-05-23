@@ -135,7 +135,7 @@ export default function DistributionSplitsSection({
               />
             </strong>
             <TooltipIcon
-              tip={t`If you don't receive this amount, you will distribute whatever funds you do receive according to each split's percentage.`}
+              tip={t`If you don't raise this amount, your splits will receive their percentage of whatever you raise.`}
               placement={'topLeft'}
               iconStyle={{ marginLeft: 5 }}
             />

@@ -118,7 +118,7 @@ export function adjustedSplitPercents({
   let adjustedSplits: Split[] = []
   splits.forEach((split: Split) => {
     const currentAmount = amountFromPercent({
-      percent: parseFloat(formatSplitPercent(BigNumber.from(split.percent))),
+      percent: preciseFormatSplitPercent(split.percent),
       amount: oldDistributionLimit,
     })
 

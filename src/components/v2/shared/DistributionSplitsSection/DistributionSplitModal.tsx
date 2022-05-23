@@ -10,6 +10,7 @@ import {
 import { defaultSplit, Split } from 'models/v2/splits'
 import { useContext, useEffect, useLayoutEffect, useState } from 'react'
 import { fromWad, parseWad } from 'utils/formatNumber'
+import { round } from 'lodash'
 import {
   adjustedSplitPercents,
   getDistributionPercentFromAmount,
@@ -139,6 +140,7 @@ export default function DistributionSplitModal({
   useLayoutEffect(() =>
     form.setFieldsValue({
       percent: parseFloat(formatSplitPercent(BigNumber.from(percent))),
+      beneficiary,
       projectId,
       lockedUntil,
     }),
@@ -222,8 +224,10 @@ export default function DistributionSplitModal({
 
     onSplitsChanged(newSplits)
 
-    form.resetFields()
-    if (mode === 'Add') resetStates()
+    if (mode === 'Add') {
+      resetStates()
+      form.resetFields()
+    }
 
     onClose()
   }
@@ -287,12 +291,12 @@ export default function DistributionSplitModal({
     : undefined
 
   function AfterFeeMessage() {
-    return amount && amount > 0 ? (
+    return amountSubFee && amountSubFee > 0 ? (
       <TooltipLabel
         label={
           <Trans>
             <CurrencySymbol currency={currencyName} />
-            {amountSubFee?.toFixed(4)} after {feePercentage}% JBX membership fee
+            {round(amountSubFee, 4)} after {feePercentage}% JBX membership fee
           </Trans>
         }
         tip={

@@ -120,18 +120,26 @@ export default function DistributionSplitsSection({
           <span>
             <TooltipIcon
               tip={t`The maximum amount of funds that can be distributed from the treasury each funding cycle.`}
+              placement={'topLeft'}
               iconStyle={{ marginRight: 5 }}
             />
             <strong style={{ color: colors.text.primary }}>
               <Trans>Total distribution limit:</Trans>
             </strong>
           </span>
-          <strong>
-            <DistributionLimit
-              distributionLimit={parseWad(distributionLimit)}
-              currencyName={currencyName}
+          <span>
+            <strong>
+              <DistributionLimit
+                distributionLimit={parseWad(distributionLimit)}
+                currencyName={currencyName}
+              />
+            </strong>
+            <TooltipIcon
+              tip={t`If you don't receive this amount, you will distribute whatever funds you do receive according to each split's percentage.`}
+              placement={'topLeft'}
+              iconStyle={{ marginLeft: 5 }}
             />
-          </strong>
+          </span>
         </div>
       </Space>
       <DistributionSplitModal

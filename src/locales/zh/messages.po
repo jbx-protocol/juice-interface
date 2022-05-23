@@ -1305,6 +1305,10 @@ msgstr "如果锁定了，这一项就不能编辑或删除，除非锁定失效
 msgid "If locked, this split can't be edited or removed until the lock expires or the funding cycle is reconfigured."
 msgstr "如果设置锁定，这个支出收款人将不可编辑或删除，直到锁定期结束或筹款周期重新配置。"
 
+#: src/components/v2/shared/DistributionSplitsSection/index.tsx
+msgid "If you don't receive this amount, you will distribute whatever funds you do receive according to each split's percentage."
+msgstr ""
+
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
 msgid "If you have already deployed a payable address and have lost it, please contact the Juicebox team through <0>Discord.</0>"
 msgstr "如果你已经部署过可支付地址但把它弄丢了，请到<0>Discord</0>去联系 Juicebox 团队。"

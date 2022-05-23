@@ -1305,6 +1305,10 @@ msgstr "Kilitliyse kilidin süresi dolana veya finansman döngüsü yeniden yap�
 msgid "If locked, this split can't be edited or removed until the lock expires or the funding cycle is reconfigured."
 msgstr "Kilitliyse, kilidin süresi dolana veya finansman döngüsü yeniden yapılandırılana kadar bu bölüm düzenlenemez veya kaldırılamaz."
 
+#: src/components/v2/shared/DistributionSplitsSection/index.tsx
+msgid "If you don't receive this amount, you will distribute whatever funds you do receive according to each split's percentage."
+msgstr ""
+
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
 msgid "If you have already deployed a payable address and have lost it, please contact the Juicebox team through <0>Discord.</0>"
 msgstr ""

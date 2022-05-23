@@ -1305,6 +1305,10 @@ msgstr "Si bloqué, ceci ne peut pas être modifié ou supprimé avant que le bl
 msgid "If locked, this split can't be edited or removed until the lock expires or the funding cycle is reconfigured."
 msgstr "Si bloquée, cette répartition ne peut pas être modifiée ou supprimée avant que le blocage expire ou le cycle de financement soit reconfiguré."
 
+#: src/components/v2/shared/DistributionSplitsSection/index.tsx
+msgid "If you don't receive this amount, you will distribute whatever funds you do receive according to each split's percentage."
+msgstr ""
+
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
 msgid "If you have already deployed a payable address and have lost it, please contact the Juicebox team through <0>Discord.</0>"
 msgstr "Si vous avez déjà déployé une adresse de paiement et que vous l'avez perdue, veuillez contacter l'équipe Juicebox par le biais de <0>Discord.</0>"

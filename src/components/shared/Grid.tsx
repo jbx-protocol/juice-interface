@@ -1,5 +1,6 @@
 import { Col, ColProps, Row, Space } from 'antd'
-import { ChildElems } from 'models/child-elems'
+import { PropsWithChildren } from 'react'
+import { isReactNodeArray } from 'utils/isReactNodeArray'
 
 const DEFAULT_GUTTER = 20
 
@@ -7,20 +8,18 @@ export default function Grid({
   children,
   list,
   gutter,
-}: {
-  children: ChildElems
+}: PropsWithChildren<{
   list?: boolean
   gutter?: number
-}) {
+}>) {
   const colProps: ColProps = {
     xs: 24,
     md: 12,
     style: { marginBottom: gutter ?? DEFAULT_GUTTER },
   }
 
-  if (!children) return null
-
-  if (children && !Array.isArray(children)) return children
+  if (!children) return <></>
+  if (!isReactNodeArray(children)) return <>{children}</>
 
   return list ? (
     <Space style={{ width: '100%' }} direction="vertical">

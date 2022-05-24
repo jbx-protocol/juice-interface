@@ -1,7 +1,7 @@
 import { Tabs } from 'antd'
 import { PropsWithChildren, useContext, useState } from 'react'
 
-import V2UserProvider from 'providers/v2/UserProvider'
+import { V2UserProvider } from 'providers/v2/UserProvider'
 
 import { t, Trans } from '@lingui/macro'
 import { ThemeContext } from 'contexts/themeContext'

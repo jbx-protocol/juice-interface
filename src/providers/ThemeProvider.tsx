@@ -1,8 +1,7 @@
 import { ThemeContext } from 'contexts/themeContext'
 import { useJuiceTheme } from 'hooks/JuiceTheme'
-import { ChildElems } from 'models/child-elems'
 
-export default function ThemeProvider({ children }: { children: ChildElems }) {
+export const ThemeProvider: React.FC = ({ children }) => {
   const juiceTheme = useJuiceTheme()
 
   return (

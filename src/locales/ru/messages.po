@@ -599,6 +599,7 @@ msgstr "Требование {tokenTextLong} токенов конвертиру
 #: src/components/v1/V1DownloadActivityModal.tsx
 #: src/components/v1/V1DownloadPaymentsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/components/v2/V2Project/StakeForNFTForm/index.tsx
 #: src/components/v2/V2Project/V2DownloadActivityModal.tsx
 #: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Close"
@@ -2360,6 +2361,18 @@ msgstr ""
 msgid "Spending"
 msgstr "Расходы"
 
+#: src/components/v2/V2Project/StakeForNFTForm/index.tsx
+msgid "Stake Juicebox (${0}) tokens for irrevocable durations (in days) in exchange for voting weight. In return, you will impact {projectName} governance and receive a choice anathropomorphic banana character NFT."
+msgstr ""
+
+#: src/components/shared/ManageTokensModal.tsx
+msgid "Stake your {tokensLabel} to increase your voting weight and claim your BannyVerse NFT."
+msgstr ""
+
+#: src/components/shared/ManageTokensModal.tsx
+msgid "Stake {tokensLabel} for NFT"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 msgid "Staked balance"
 msgstr "Учтенный баланс"
@@ -2839,10 +2852,27 @@ msgstr ""
 msgid "Version of the terminal contract used by this project."
 msgstr "Версия терминального контракта, используемая в этом проекте."
 
+#: src/components/v2/V2Project/StakeForNFTForm/index.tsx
+msgid "View All Token Ranges"
+msgstr ""
+
 #: src/components/shared/VolumeChart/index.tsx
 #: src/components/v1/V1Project/Paid.tsx
 msgid "Volume"
 msgstr "Объём"
+
+#: src/components/v2/V2Project/StakeForNFTForm/ConfirmStakeModal.tsx
+#: src/components/v2/V2Project/StakeForNFTForm/index.tsx
+msgid "Voting Power = Tokens * ( Lock Time Remaining / Max Lock Time )"
+msgstr ""
+
+#: src/components/v2/V2Project/StakeForNFTForm/index.tsx
+msgid "Voting Power in {projectName}"
+msgstr ""
+
+#: src/components/v2/V2Project/StakeForNFTForm/index.tsx
+msgid "Voting weight is a function of Tokens multiplied by time remaining over max lock duration. The following equation determines how much voting weight you have. To learn more about the governance process at Juicebox visit <0>here.</0>"
+msgstr ""
 
 #: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
@@ -2974,6 +3004,10 @@ msgstr "Хотите ли вы выпустить токен ERC-20, котор�
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Yes"
 msgstr "Да"
+
+#: src/components/v2/V2Project/StakeForNFTForm/ConfirmStakeModal.tsx
+msgid "You are agreeing to irrevocably lock your tokens for {daysStaked} days in exchange for {votingPower} ve{tokenSymbol} delegated to {delegateAddress}."
+msgstr ""
 
 #: src/components/v2/V2Create/tabs/ProjectDetailsTab/ProjectDetailsTabContent.tsx
 msgid "You can edit your project details after creation at any time, but the transaction will cost gas. All details are optional."
@@ -3201,6 +3235,10 @@ msgstr "погашенных токенов"
 msgid "until"
 msgstr "до"
 
+#: src/components/v2/V2Project/StakeForNFTForm/StakedTokenStatsSection.tsx
+msgid "{0, plural, one {Delegate:} other {Delegates:}}"
+msgstr ""
+
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "{0} after JBX fee"
@@ -3354,6 +3392,10 @@ msgstr "{tokensText} зарезервировано"
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "{tokensTokenUpper} amount"
 msgstr "{tokensTokenUpper} количество"
+
+#: src/components/v2/V2Project/StakeForNFTForm/StakedTokenStatsSection.tsx
+msgid "{totalStakedPeriodInDays, plural, one {day} other {days}}"
+msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "{unclaimedBalanceFormatted} {tokenText} claimable"

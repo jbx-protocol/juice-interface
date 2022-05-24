@@ -2,6 +2,7 @@ import { t, Trans } from '@lingui/macro'
 import { Modal, Space, Tooltip } from 'antd'
 import ExternalLink from 'components/shared/ExternalLink'
 import RichButton from 'components/shared/RichButton'
+import { V2StakeForNFTDrawer } from 'components/v2/V2Project/V2ManageTokensSection/V2StakeForNFTDrawer'
 import { PropsWithChildren, useState } from 'react'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import * as constants from '@ethersproject/constants'
@@ -75,6 +76,7 @@ export default function ManageTokensModal({
   const [redeemModalVisible, setRedeemModalVisible] = useState<boolean>(false)
   const [unstakeModalVisible, setUnstakeModalVisible] = useState<boolean>()
   const [mintModalVisible, setMintModalVisible] = useState<boolean>()
+  const [stakeDrawerVisible, setStakeDrawerVisible] = useState<boolean>(false)
 
   const tokensLabel = tokenSymbolText({
     tokenSymbol: tokenSymbol,
@@ -113,7 +115,6 @@ export default function ManageTokensModal({
               disabled={redeemDisabled}
             />
           </RedeemButtonTooltip>
-
           {redeemDisabled && (
             <Tooltip title={<BurnTokensHelp />} placement="right">
               <RichButton
@@ -128,7 +129,6 @@ export default function ManageTokensModal({
               />
             </Tooltip>
           )}
-
           {hasIssuedTokens && (
             <RichButton
               heading={<Trans>Claim {tokensLabel} as ERC-20</Trans>}
@@ -141,7 +141,16 @@ export default function ManageTokensModal({
               onClick={() => setUnstakeModalVisible(true)}
             />
           )}
-
+          <RichButton
+            heading={<Trans>Stake {tokensLabel} for NFT</Trans>}
+            description={
+              <Trans>
+                Stake your {tokensLabel} to increase your voting weight and
+                claim your BannyVerse NFT.
+              </Trans>
+            }
+            onClick={() => setStakeDrawerVisible(true)}
+          />
           {userHasMintPermission && projectAllowsMint && (
             <Tooltip
               title={
@@ -184,6 +193,13 @@ export default function ManageTokensModal({
         visible={mintModalVisible}
         onCancel={() => setMintModalVisible(false)}
         onConfirmed={() => window.location.reload()}
+      />
+      <V2StakeForNFTDrawer
+        visible={stakeDrawerVisible}
+        onSave={() => setStakeDrawerVisible(false)}
+        onClose={() => {
+          setStakeDrawerVisible(false)
+        }}
       />
     </>
   )

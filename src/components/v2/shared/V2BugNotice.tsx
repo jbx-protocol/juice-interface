@@ -6,6 +6,8 @@ export default function V2BugNotice() {
     theme: { colors },
   } = useContext(ThemeContext)
 
+  // This copy has not been prepped for translations due to being a hot fix that is likely to change.
+
   return (
     <div
       style={{

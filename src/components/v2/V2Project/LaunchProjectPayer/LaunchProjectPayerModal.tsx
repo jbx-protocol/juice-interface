@@ -131,7 +131,7 @@ export default function LaunchProjectPayerModal({
         <p>
           <Trans>
             Tokens minted from payments to this address will belong to the payer
-            by default. However, if someone pays the project though a custodial
+            by default. However, if someone pays the project through a custodial
             service platform such as Coinbase,{' '}
             <strong>
               tokens can't be issued to their personal wallets and will be lost

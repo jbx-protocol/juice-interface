@@ -73,7 +73,7 @@ export default function V2Project({
         actions={!isPreviewMode ? <V2ProjectHeaderActions /> : undefined}
         isArchived={isArchived}
       />
-      <V2BugNotice />
+      {!isPreviewMode && <V2BugNotice />}
       <Row gutter={GUTTER_PX} align="bottom">
         <Col md={colSizeMd} xs={24}>
           <TreasuryStats />

@@ -62,15 +62,16 @@ export default function V1PayButton({
       isArchived) ??
     false
 
-  let disabledMessage: string
+  let disabledMessage: string | undefined = shouldDisableButton
+    ? t`Paying this project is currently disabled.`
+    : undefined
+
   if (isArchived) {
     disabledMessage = t`This project is archived and can't be paid.`
   } else if (isV1AndMaxRR || isMoonAndMaxRR) {
     disabledMessage = t`Paying this project is currently disabled, because the token reserved rate is 100% and no tokens will be earned by making a payment.`
   } else if (fcMetadata.payIsPaused) {
     disabledMessage = t`Payments are paused for the current funding cycle.`
-  } else {
-    disabledMessage = t`Paying this project is currently disabled.`
   }
 
   const onPayButtonClick = () => {

@@ -10,7 +10,7 @@ export const backgroundColors: Record<
   [ThemeOption.light]: {
     l0: '#FEFDFB',
     l1: '#e7e3dc',
-    l2: '#f3f1ec',
+    l2: '#f5f4ef',
     disabled: '#00000018',
     success: lightColors.green,
     warn: lightColors.yellow,

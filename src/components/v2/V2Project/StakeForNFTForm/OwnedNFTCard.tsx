@@ -1,7 +1,6 @@
 import { Button, Card, Col, Row, Image } from 'antd'
 
 import { ThemeContext } from 'contexts/themeContext'
-import moment from 'moment'
 
 import { useContext } from 'react'
 import { formattedNum } from 'utils/formatNumber'
@@ -21,9 +20,8 @@ export default function OwnedNFTCard({
   idx,
   tokenSymbol,
 }: OwnedNFTCardProps) {
-  const { stakedAmount, startLockTime, stakedPeriod, delegate, nftSvg } = nft
+  const { stakedAmount, stakedPeriod, delegate, nftSvg } = nft
   const bordered = idx % 2 === 0
-  const formattedTime = moment(startLockTime).format('MM/DD/YYYY HH:MM:SS')
 
   const { colors } = useContext(ThemeContext).theme
 
@@ -38,13 +36,11 @@ export default function OwnedNFTCard({
             <Col span={2}>{idx + 1}</Col>
             <Col span={10}>
               <p>Staked ${tokenSymbolText({ tokenSymbol })}:</p>
-              <p>Start lock time:</p>
               <p>Staked period:</p>
               <p>Delegate:</p>
             </Col>
             <Col span={12}>
               <p>{formattedNum(stakedAmount)}</p>
-              <p>{formattedTime}</p>
               <p>{stakedPeriod} days / 0 remaining</p>
               <p>
                 <FormattedAddress address={delegate} />

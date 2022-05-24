@@ -772,6 +772,11 @@ msgstr "Date created"
 msgid "Days"
 msgstr "Days"
 
+#: src/components/v2/V2Project/StakeForNFTForm/index.tsx
+#: src/components/v2/V2Project/StakeForNFTForm/index.tsx
+msgid "Days Locked"
+msgstr "Days Locked"
+
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Deploy new project configuration"
 msgstr "Deploy new project configuration"
@@ -1480,6 +1485,10 @@ msgstr ""
 msgid "Lock until"
 msgstr "Lock until"
 
+#: src/components/v2/V2Project/StakeForNFTForm/index.tsx
+msgid "Lock {tokenName} for Voting Power"
+msgstr "Lock {tokenName} for Voting Power"
+
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
 msgid "Locked:"
 msgstr "Locked:"
@@ -2121,6 +2130,10 @@ msgstr ""
 msgid "Refresh"
 msgstr "Refresh"
 
+#: src/components/v2/V2Project/StakeForNFTForm/index.tsx
+msgid "Remaining: {unstakedTokens}"
+msgstr "Remaining: {unstakedTokens}"
+
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Required"
@@ -2356,13 +2369,13 @@ msgstr "Specific limit"
 msgid "Spending"
 msgstr ""
 
-#: src/components/v2/V2Project/StakeForNFTForm/index.tsx
-msgid "Stake Juicebox (${0}) tokens for irrevocable durations (in days) in exchange for voting weight. In return, you will impact {projectName} governance and receive a choice anathropomorphic banana character NFT."
-msgstr "Stake Juicebox (${0}) tokens for irrevocable durations (in days) in exchange for voting weight. In return, you will impact {projectName} governance and receive a choice anathropomorphic banana character NFT."
-
 #: src/components/shared/ManageTokensModal.tsx
 msgid "Stake your {tokensLabel} to increase your voting weight and claim your BannyVerse NFT."
 msgstr "Stake your {tokensLabel} to increase your voting weight and claim your BannyVerse NFT."
+
+#: src/components/v2/V2Project/StakeForNFTForm/index.tsx
+msgid "Stake {tokenName} (${0}) tokens for irrevocable durations (in days) in exchange for voting weight. In return, you will impact {projectName} governance and receive a choice anathropomorphic banana character NFT."
+msgstr "Stake {tokenName} (${0}) tokens for irrevocable durations (in days) in exchange for voting weight. In return, you will impact {projectName} governance and receive a choice anathropomorphic banana character NFT."
 
 #: src/components/shared/ManageTokensModal.tsx
 msgid "Stake {tokensLabel} for NFT"
@@ -2843,13 +2856,17 @@ msgstr ""
 msgid "V2"
 msgstr "V2"
 
+#: src/components/v2/V2Project/StakeForNFTForm/index.tsx
+msgid "VP decays over time linearly. When @ 5 days of 19 day lock = 50% PWR."
+msgstr "VP decays over time linearly. When @ 5 days of 19 day lock = 50% PWR."
+
 #: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 msgid "Version of the terminal contract used by this project."
 msgstr "Version of the terminal contract used by this project."
 
 #: src/components/v2/V2Project/StakeForNFTForm/index.tsx
-msgid "View All Token Ranges"
-msgstr "View All Token Ranges"
+msgid "View Token Ranges"
+msgstr "View Token Ranges"
 
 #: src/components/shared/VolumeChart/index.tsx
 #: src/components/v1/V1Project/Paid.tsx
@@ -2862,12 +2879,8 @@ msgid "Voting Power = Tokens * ( Lock Time Remaining / Max Lock Time )"
 msgstr "Voting Power = Tokens * ( Lock Time Remaining / Max Lock Time )"
 
 #: src/components/v2/V2Project/StakeForNFTForm/index.tsx
-msgid "Voting Power in {projectName}"
-msgstr "Voting Power in {projectName}"
-
-#: src/components/v2/V2Project/StakeForNFTForm/index.tsx
-msgid "Voting weight is a function of Tokens multiplied by time remaining over max lock duration. The following equation determines how much voting weight you have. To learn more about the governance process at Juicebox visit <0>here.</0>"
-msgstr "Voting weight is a function of Tokens multiplied by time remaining over max lock duration. The following equation determines how much voting weight you have. To learn more about the governance process at Juicebox visit <0>here.</0>"
+msgid "Voting weight is a function of how many ${0} you have locked for how long intitially divided by how much time left in that lock period."
+msgstr "Voting weight is a function of how many ${0} you have locked for how long intitially divided by how much time left in that lock period."
 
 #: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
@@ -3280,6 +3293,10 @@ msgstr ""
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 msgid "{0} staked"
 msgstr ""
+
+#: src/components/v2/V2Project/StakeForNFTForm/index.tsx
+msgid "{0} to lock"
+msgstr "{0} to lock"
 
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 msgid "{0} total"

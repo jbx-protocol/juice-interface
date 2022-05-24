@@ -777,6 +777,11 @@ msgstr "Дата создания"
 msgid "Days"
 msgstr "Дней"
 
+#: src/components/v2/V2Project/StakeForNFTForm/index.tsx
+#: src/components/v2/V2Project/StakeForNFTForm/index.tsx
+msgid "Days Locked"
+msgstr ""
+
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Deploy new project configuration"
 msgstr "Установка новой конфигурации проекта"
@@ -1485,6 +1490,10 @@ msgstr "Загрузить ещё"
 msgid "Lock until"
 msgstr "Заблокировать до"
 
+#: src/components/v2/V2Project/StakeForNFTForm/index.tsx
+msgid "Lock {tokenName} for Voting Power"
+msgstr ""
+
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
 msgid "Locked:"
 msgstr ""
@@ -2126,6 +2135,10 @@ msgstr "Перераспределяемый излишек"
 msgid "Refresh"
 msgstr "Обновить"
 
+#: src/components/v2/V2Project/StakeForNFTForm/index.tsx
+msgid "Remaining: {unstakedTokens}"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Required"
@@ -2361,12 +2374,12 @@ msgstr ""
 msgid "Spending"
 msgstr "Расходы"
 
-#: src/components/v2/V2Project/StakeForNFTForm/index.tsx
-msgid "Stake Juicebox (${0}) tokens for irrevocable durations (in days) in exchange for voting weight. In return, you will impact {projectName} governance and receive a choice anathropomorphic banana character NFT."
-msgstr ""
-
 #: src/components/shared/ManageTokensModal.tsx
 msgid "Stake your {tokensLabel} to increase your voting weight and claim your BannyVerse NFT."
+msgstr ""
+
+#: src/components/v2/V2Project/StakeForNFTForm/index.tsx
+msgid "Stake {tokenName} (${0}) tokens for irrevocable durations (in days) in exchange for voting weight. In return, you will impact {projectName} governance and receive a choice anathropomorphic banana character NFT."
 msgstr ""
 
 #: src/components/shared/ManageTokensModal.tsx
@@ -2848,12 +2861,16 @@ msgstr "V1.1"
 msgid "V2"
 msgstr ""
 
+#: src/components/v2/V2Project/StakeForNFTForm/index.tsx
+msgid "VP decays over time linearly. When @ 5 days of 19 day lock = 50% PWR."
+msgstr ""
+
 #: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 msgid "Version of the terminal contract used by this project."
 msgstr "Версия терминального контракта, используемая в этом проекте."
 
 #: src/components/v2/V2Project/StakeForNFTForm/index.tsx
-msgid "View All Token Ranges"
+msgid "View Token Ranges"
 msgstr ""
 
 #: src/components/shared/VolumeChart/index.tsx
@@ -2867,11 +2884,7 @@ msgid "Voting Power = Tokens * ( Lock Time Remaining / Max Lock Time )"
 msgstr ""
 
 #: src/components/v2/V2Project/StakeForNFTForm/index.tsx
-msgid "Voting Power in {projectName}"
-msgstr ""
-
-#: src/components/v2/V2Project/StakeForNFTForm/index.tsx
-msgid "Voting weight is a function of Tokens multiplied by time remaining over max lock duration. The following equation determines how much voting weight you have. To learn more about the governance process at Juicebox visit <0>here.</0>"
+msgid "Voting weight is a function of how many ${0} you have locked for how long intitially divided by how much time left in that lock period."
 msgstr ""
 
 #: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
@@ -3285,6 +3298,10 @@ msgstr "{0} зарезервировано"
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 msgid "{0} staked"
 msgstr "{0} размещено"
+
+#: src/components/v2/V2Project/StakeForNFTForm/index.tsx
+msgid "{0} to lock"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 msgid "{0} total"

@@ -76,7 +76,7 @@ export default function ManageTokensModal({
   const [redeemModalVisible, setRedeemModalVisible] = useState<boolean>(false)
   const [unstakeModalVisible, setUnstakeModalVisible] = useState<boolean>()
   const [mintModalVisible, setMintModalVisible] = useState<boolean>()
-  const [stakeDrawerVisible, setStakeDrawerVisible] = useState<boolean>(false)
+  const [stakeDrawerVisible, setStakeDrawerVisible] = useState<boolean>(true)
 
   const tokensLabel = tokenSymbolText({
     tokenSymbol: tokenSymbol,

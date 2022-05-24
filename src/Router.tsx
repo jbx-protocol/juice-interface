@@ -7,6 +7,7 @@ import Projects from 'components/Projects'
 import Loading from 'components/shared/Loading'
 import V1CurrencyProvider from 'providers/v1/V1CurrencyProvider'
 import PrivacyPolicy from 'components/PrivacyPolicy'
+import V2BugUpdates from 'components/V2BugUpdates'
 import { t } from '@lingui/macro'
 
 import { V2UserProvider } from 'providers/v2/UserProvider'
@@ -103,6 +104,9 @@ function JuiceboxSwitch() {
 
       <Route path="/privacy">
         <PrivacyPolicy />
+      </Route>
+      <Route path="/v2-bug-updates">
+        <V2BugUpdates />
       </Route>
       <Route path="/:route">
         <CatchallRedirect />

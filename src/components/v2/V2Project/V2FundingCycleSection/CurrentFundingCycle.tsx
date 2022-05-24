@@ -35,6 +35,7 @@ export default function CurrentFundingCycle({
           fundingCycleDetails={
             <FundingCycleDetails
               fundingCycle={fundingCycle}
+              fundingCycleMetadata={fundingCycleMetadata}
               distributionLimit={distributionLimit}
               distributionLimitCurrency={distributionLimitCurrency}
             />

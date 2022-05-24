@@ -188,6 +188,10 @@ export default function Landing() {
                         <Link
                           className="text-primary hover-text-decoration-underline"
                           to="/p/juicebox"
+                          style={{
+                            textDecoration: 'underline',
+                            fontWeight: 'inherit',
+                          }}
                         >
                           Community-owned
                         </Link>

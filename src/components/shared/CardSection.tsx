@@ -20,6 +20,7 @@ export function CardSection({
     <div
       style={{
         marginBottom: noShadow ? 0 : 10,
+        marginRight: noShadow ? 0 : 10,
       }}
     >
       {header && (

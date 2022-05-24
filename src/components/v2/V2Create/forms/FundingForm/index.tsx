@@ -356,7 +356,7 @@ export default function FundingForm({
       <div
         style={{
           padding: '2rem',
-          marginBottom: '10px',
+          marginBottom: 10,
           ...shadowCard(theme),
           color: theme.colors.text.primary,
         }}
@@ -426,7 +426,7 @@ export default function FundingForm({
       <div
         style={{
           padding: '2rem',
-          marginBottom: '10px',
+          marginBottom: 10,
           ...shadowCard(theme),
           color: theme.colors.text.primary,
         }}

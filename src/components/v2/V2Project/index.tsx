@@ -17,6 +17,7 @@ import V2ManageTokensSection from './V2ManageTokensSection'
 import NewDeployModal from './NewDeployModal'
 import V2PayButton from './V2PayButton'
 import V2ProjectHeaderActions from './V2ProjectHeaderActions'
+import V2BugNotice from '../shared/V2BugNotice'
 
 const GUTTER_PX = 40
 
@@ -40,6 +41,7 @@ export default function V2Project({
     tokenAddress,
     cv,
     isArchived,
+    ETHBalance,
   } = useContext(V2ProjectContext)
 
   // Checks URL to see if user was just directed from project deploy
@@ -71,6 +73,7 @@ export default function V2Project({
         actions={!isPreviewMode ? <V2ProjectHeaderActions /> : undefined}
         isArchived={isArchived}
       />
+      <V2BugNotice />
       <Row gutter={GUTTER_PX} align="bottom">
         <Col md={colSizeMd} xs={24}>
           <TreasuryStats />
@@ -83,7 +86,7 @@ export default function V2Project({
             weightingFn={weightedAmount}
             tokenSymbol={tokenSymbol}
             tokenAddress={tokenAddress}
-            disabled={isPreviewMode}
+            disabled={isPreviewMode || ETHBalance?.eq(0)}
           />
         </Col>
       </Row>

@@ -69,6 +69,7 @@ export default function UpcomingFundingCycle({
           fundingCycleDetails={
             <FundingCycleDetails
               fundingCycle={queuedFundingCycle}
+              fundingCycleMetadata={queuedFundingCycleMetadata}
               distributionLimit={queuedDistributionLimit}
               distributionLimitCurrency={queuedDistributionLimitCurrency}
             />

@@ -8,7 +8,7 @@ msgstr ""
 "Language: fr\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-05-19 02:18\n"
+"PO-Revision-Date: 2022-05-24 02:54\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -306,7 +306,7 @@ msgstr "Définir des récompenses au paiement de votre projet."
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "Advanced options (optional)"
-msgstr ""
+msgstr "Options avancées (facultatif)"
 
 #: src/components/Projects/ProjectsTabs.tsx
 msgid "All"
@@ -517,7 +517,7 @@ msgstr ""
 
 #: src/components/v2/V2Create/forms/TokenForm/index.tsx
 msgid "By default, the issuance rate for your project's token during funding cycle #1 is 1,000,000 tokens / 1 ETH. For example, a 1 ETH contribution to your project will return 1,000,000 tokens. You can manipulate the issuance rate with the following configurations."
-msgstr "Par défaut, le taux d'émission du token de votre projet lors du cycle de financement #1 est de 1.000.000 tokens / 1 ETH. Par exemple, une contribution de 1 ETH à votre projet renverra 1.000.000 tokens. Vous pouvez manipuler le taux d'émission avec les paramètres suivants. DEMANDE DE CONTEXTE."
+msgstr "Par défaut, le taux d'émission du token de votre projet lors du cycle de financement #1 est de 1.000.000 tokens / 1 ETH. Par exemple, une contribution de 1 ETH à votre projet renverra 1.000.000 tokens. Vous pouvez manipuler le taux d'émission avec les paramètres suivants."
 
 #: src/components/shared/formItems/ProjectReserved.tsx
 msgid "By default, these tokens are reserved for the project owner, but you can also allocate portions to other wallet addresses."

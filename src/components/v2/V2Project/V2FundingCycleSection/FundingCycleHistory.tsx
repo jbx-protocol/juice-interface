@@ -21,6 +21,7 @@ import useProjectDistributionLimit from 'hooks/v2/contractReader/ProjectDistribu
 import useUsedDistributionLimit from 'hooks/v2/contractReader/UsedDistributionLimit'
 import { V2UserContext } from 'contexts/v2/userContext'
 import { formatDiscountRate, MAX_DISTRIBUTION_LIMIT } from 'utils/v2/math'
+import { decodeV2FundingCycleMetadata } from 'utils/v2/fundingCycle'
 
 // Fill in gaps between first funding cycle of each configuration:
 //     - derives starts from duration and start time of the first FC of that configuration
@@ -325,6 +326,9 @@ export default function FundingCycleHistory() {
         >
           <FundingCycleDetails
             fundingCycle={selectedFundingCycle}
+            fundingCycleMetadata={decodeV2FundingCycleMetadata(
+              selectedFundingCycle.metadata,
+            )}
             distributionLimit={distributionLimit}
             distributionLimitCurrency={distributionLimitCurrency}
           />

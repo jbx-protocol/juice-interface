@@ -332,6 +332,10 @@ msgstr "所有活动"
 msgid "All funds can be distributed by the project. The project will have no overflow (the same as setting the target to infinity)."
 msgstr "所有资金都可以分配给项目，项目将不再会产生溢出（把筹款目标设为无限也是同样结果）。"
 
+#: src/components/v2/V2Project/DistributionLimit.tsx
+msgid "All funds received by the treasury will be distributed."
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "All projects"
 msgstr "所有项目"
@@ -1309,7 +1313,7 @@ msgstr "如果设置锁定，这个支出收款人将不可编辑或删除，直
 msgid "If you don't raise the sum of all your payouts (<0/>{distributionLimit}), this address will receive {formattedSplitPercent}% of all the funds you raise."
 msgstr ""
 
-#: src/components/v2/shared/DistributionSplitsSection/index.tsx
+#: src/components/v2/V2Project/DistributionLimit.tsx
 msgid "If you don't raise this amount, your splits will receive their percentage of whatever you raise."
 msgstr ""
 
@@ -1627,6 +1631,10 @@ msgstr "暂无动态"
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "No funding target: The project will control how all funds are distributed, and none can be redeemed by token holders."
 msgstr "不设定筹款目标：所有的资金如何分发都由此项目决定，代币持有者无法赎回。"
+
+#: src/components/v2/V2Project/DistributionLimit.tsx
+msgid "No funds can be distributed out of the treasury. Funds can only be accessed by token holders redeeming their tokens."
+msgstr ""
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/DistributionLimit.tsx
@@ -2507,6 +2515,10 @@ msgstr "按付款金额奖励项目代币的比例，会随着进入新的筹款
 #: src/components/v2/V2Project/V2FundingCycleSection/settingExplanations.tsx
 msgid "The redemption rate determines the amount of overflow each token can be redeemed for at any given time. On a lower redemption rate, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than other holders. A redemption rate of 100% means all tokens will have equal value regardless of when they are redeemed."
 msgstr "赎回比率决定了任何时候每赎回一个代币可以换取的溢出金额。赎回比率低的时候，每赎回一个代币都会增加每个剩余代币的价值，形成一个比其他人持有更长时间的激励机制。100%的赎回比率意味着不管什么时候赎回，所有代币都将拥有同样的价值。"
+
+#: src/components/v2/shared/DistributionSplitsSection/index.tsx
+msgid "The remaining {remainingSplitsPercentage}% of funds will go to the project owner."
+msgstr ""
 
 #: src/components/Landing/QAs.tsx
 msgid "The rest is left to share between token holders."

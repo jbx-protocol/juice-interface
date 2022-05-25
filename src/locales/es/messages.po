@@ -332,6 +332,10 @@ msgstr "Todos los eventos"
 msgid "All funds can be distributed by the project. The project will have no overflow (the same as setting the target to infinity)."
 msgstr "Todos los fondos pueden ser distribuidos por el proyecto. El proyecto no tendrá excedente (lo mismo que establecer el objetivo a infinito)."
 
+#: src/components/v2/V2Project/DistributionLimit.tsx
+msgid "All funds received by the treasury will be distributed."
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "All projects"
 msgstr "Todos los proyectos"
@@ -1309,7 +1313,7 @@ msgstr "Si está bloqueado, esta división no se puede editar o remover hasta qu
 msgid "If you don't raise the sum of all your payouts (<0/>{distributionLimit}), this address will receive {formattedSplitPercent}% of all the funds you raise."
 msgstr ""
 
-#: src/components/v2/shared/DistributionSplitsSection/index.tsx
+#: src/components/v2/V2Project/DistributionLimit.tsx
 msgid "If you don't raise this amount, your splits will receive their percentage of whatever you raise."
 msgstr ""
 
@@ -1627,6 +1631,10 @@ msgstr "Sin actividad, todavía"
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "No funding target: The project will control how all funds are distributed, and none can be redeemed by token holders."
 msgstr "Sin meta-objetivo de financiamiento: Este proyecto va a controlar cómo serán distribuidos todos los fondos, y ninguno podrá ser canjeado por los tenedores de los tokens."
+
+#: src/components/v2/V2Project/DistributionLimit.tsx
+msgid "No funds can be distributed out of the treasury. Funds can only be accessed by token holders redeeming their tokens."
+msgstr ""
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/DistributionLimit.tsx
@@ -2507,6 +2515,10 @@ msgstr "La proporción de tokens otorgados por monto de pago irán disminuyendo 
 #: src/components/v2/V2Project/V2FundingCycleSection/settingExplanations.tsx
 msgid "The redemption rate determines the amount of overflow each token can be redeemed for at any given time. On a lower redemption rate, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than other holders. A redemption rate of 100% means all tokens will have equal value regardless of when they are redeemed."
 msgstr "La tasa de canje determina la cantidad de excedente por la que cada token puede ser canjeado en cualquier momento. En una tasa de canje baja, canjear un token incrementa el valor de cada token restante, creando un incentivo para holdear los tokens por más tiempo que otros. Una tasa de canje del 100% significa que todos los tokens tendrán igual valor sin importar el cuándo fueron canjeados."
+
+#: src/components/v2/shared/DistributionSplitsSection/index.tsx
+msgid "The remaining {remainingSplitsPercentage}% of funds will go to the project owner."
+msgstr ""
 
 #: src/components/Landing/QAs.tsx
 msgid "The rest is left to share between token holders."

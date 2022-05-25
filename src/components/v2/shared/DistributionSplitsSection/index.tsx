@@ -75,7 +75,9 @@ export default function DistributionSplitsSection({
 
   if (!allSplits) return null
 
-  const totalSplitsPercentageInvalid = getTotalSplitsPercentage(allSplits) > 100
+  const totalSplitsPercentage = getTotalSplitsPercentage(allSplits)
+  const totalSplitsPercentageInvalid = totalSplitsPercentage > 100
+  const remainingSplitsPercentage = 100 - getTotalSplitsPercentage(allSplits) // this amount goes to the project owner
 
   return (
     <Form.Item
@@ -106,6 +108,15 @@ export default function DistributionSplitsSection({
           <span style={{ color: colors.text.failure }}>
             <Trans>Sum of percentages cannot exceed 100%.</Trans>
           </span>
+        ) : remainingSplitsPercentage !== 0 && distributionLimit !== '0' ? (
+          <span style={{ color: colors.text.primary }}>
+            <strong>
+              <Trans>
+                The remaining {remainingSplitsPercentage}% of funds will go to
+                the project owner.
+              </Trans>
+            </strong>
+          </span>
         ) : null}
         <Button
           type="dashed"
@@ -132,13 +143,9 @@ export default function DistributionSplitsSection({
               <DistributionLimit
                 distributionLimit={parseWad(distributionLimit)}
                 currencyName={currencyName}
+                showTooltip
               />
             </strong>
-            <TooltipIcon
-              tip={t`If you don't raise this amount, your splits will receive their percentage of whatever you raise.`}
-              placement={'topLeft'}
-              iconStyle={{ marginLeft: 5 }}
-            />
           </span>
         </div>
       </Space>

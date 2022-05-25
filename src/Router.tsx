@@ -4,11 +4,13 @@ import { Suspense, lazy, useEffect } from 'react'
 import V1Dashboard from 'components/v1/V1Dashboard'
 import Landing from 'components/Landing'
 import Projects from 'components/Projects'
-import V2UserProvider from 'providers/v2/UserProvider'
 import Loading from 'components/shared/Loading'
 import V1CurrencyProvider from 'providers/v1/V1CurrencyProvider'
 import PrivacyPolicy from 'components/PrivacyPolicy'
+import V2BugUpdates from 'components/V2BugUpdates'
 import { t } from '@lingui/macro'
+
+import { V2UserProvider } from 'providers/v2/UserProvider'
 
 import { DEFAULT_SITE_TITLE } from 'constants/siteMetadata'
 
@@ -102,6 +104,9 @@ function JuiceboxSwitch() {
 
       <Route path="/privacy">
         <PrivacyPolicy />
+      </Route>
+      <Route path="/v2-bug-updates">
+        <V2BugUpdates />
       </Route>
       <Route path="/:route">
         <CatchallRedirect />

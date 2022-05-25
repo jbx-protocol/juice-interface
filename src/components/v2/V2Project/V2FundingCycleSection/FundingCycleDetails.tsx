@@ -5,7 +5,7 @@ import { Descriptions } from 'antd'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
-import { V2FundingCycle } from 'models/v2/fundingCycle'
+import { V2FundingCycle, V2FundingCycleMetadata } from 'models/v2/fundingCycle'
 import { useContext } from 'react'
 import { formatDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
@@ -16,10 +16,7 @@ import TooltipLabel from 'components/shared/TooltipLabel'
 import FundingCycleDetailWarning from 'components/shared/Project/FundingCycleDetailWarning'
 import EtherscanLink from 'components/shared/EtherscanLink'
 
-import {
-  decodeV2FundingCycleMetadata,
-  getUnsafeV2FundingCycleProperties,
-} from 'utils/v2/fundingCycle'
+import { getUnsafeV2FundingCycleProperties } from 'utils/v2/fundingCycle'
 
 import { detailedTimeString } from 'utils/formatTime'
 
@@ -42,10 +39,12 @@ import DistributionLimit from '../DistributionLimit'
 
 export default function FundingCycleDetails({
   fundingCycle,
+  fundingCycleMetadata,
   distributionLimit,
   distributionLimitCurrency,
 }: {
   fundingCycle: V2FundingCycle | undefined
+  fundingCycleMetadata: V2FundingCycleMetadata | undefined
   distributionLimit: BigNumber | undefined
   distributionLimitCurrency: BigNumber | undefined
 }) {
@@ -56,10 +55,6 @@ export default function FundingCycleDetails({
   const { tokenSymbol } = useContext(V2ProjectContext)
 
   if (!fundingCycle) return null
-
-  const fundingCycleMetadata = decodeV2FundingCycleMetadata(
-    fundingCycle.metadata,
-  )
 
   const formattedDuration = detailedTimeString({
     timeSeconds: fundingCycle.duration.toNumber(),

@@ -51,7 +51,14 @@ export default function PayoutSplitsCard({
     <CardSection>
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
         {hideDistributeButton ? null : (
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              gap: 10,
+              flexWrap: 'wrap',
+            }}
+          >
             <Skeleton
               loading={isLoadingStats}
               active

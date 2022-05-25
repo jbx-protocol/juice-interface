@@ -1,7 +1,7 @@
 import { Tabs } from 'antd'
 import { PropsWithChildren, useContext, useState } from 'react'
 
-import V2UserProvider from 'providers/v2/UserProvider'
+import { V2UserProvider } from 'providers/v2/UserProvider'
 
 import { t, Trans } from '@lingui/macro'
 import { ThemeContext } from 'contexts/themeContext'
@@ -13,6 +13,7 @@ import FundingCycleTabContent from './tabs/FundingCycleTab/FundingCycleTabConten
 import { TabContentProps } from './models'
 import ReviewDeployTab from './tabs/ReviewDeployTab'
 import V2WarningBanner from './V2WarningBanner'
+import V2BugNotice from '../shared/V2BugNotice'
 
 const { TabPane } = Tabs
 
@@ -50,6 +51,9 @@ export default function V2Create() {
     <V2UserProvider>
       <V2CurrencyProvider>
         <V2WarningBanner />
+        <div style={{ padding: 20 }}>
+          <V2BugNotice />
+        </div>
         <div
           style={{
             maxWidth: 1300,

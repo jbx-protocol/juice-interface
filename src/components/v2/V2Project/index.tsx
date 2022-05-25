@@ -18,6 +18,7 @@ import NewDeployModal from './NewDeployModal'
 import V2PayButton from './V2PayButton'
 import V2ProjectHeaderActions from './V2ProjectHeaderActions'
 import V2BugNotice from '../shared/V2BugNotice'
+import { V2_PROJECT_IDS } from '../../../constants/v2/projectIds'
 
 const GUTTER_PX = 40
 
@@ -66,6 +67,16 @@ export default function V2Project({
     setNewDeployModalVisible(false)
   }
 
+  // Temporarily disable pay for V2 projects until V2 contracts have been redeployed
+  const payIsDisabledPreV2Redeploy = () => {
+    // Do not disable pay for projects with these ids
+    const exceptionProjectIds = [V2_PROJECT_IDS.MOON_MARS]
+
+    if (exceptionProjectIds.includes(projectId)) return false
+
+    return ETHBalance?.eq(0)
+  }
+
   return (
     <Space direction="vertical" size={GUTTER_PX} style={{ width: '100%' }}>
       <ProjectHeader
@@ -86,7 +97,7 @@ export default function V2Project({
             weightingFn={weightedAmount}
             tokenSymbol={tokenSymbol}
             tokenAddress={tokenAddress}
-            disabled={isPreviewMode || ETHBalance?.eq(0)}
+            disabled={isPreviewMode || payIsDisabledPreV2Redeploy()}
           />
         </Col>
       </Row>

@@ -82,12 +82,6 @@ export default function ProjectReserved({
               be reserved and the rest will go to the payer.
             </Trans>
           </p>
-          <p style={{ margin: 0 }}>
-            <Trans>
-              By default, these tokens are reserved for the project owner, but
-              you can also allocate portions to other wallet addresses.
-            </Trans>
-          </p>
         </div>
       }
       name={name}

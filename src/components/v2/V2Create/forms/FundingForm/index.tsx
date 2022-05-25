@@ -333,7 +333,7 @@ export default function FundingForm({
       <div
         style={{
           padding: '2rem',
-          marginBottom: '10px',
+          marginBottom: 10,
           ...shadowCard(theme),
           color: colors.text.primary,
         }}
@@ -350,15 +350,16 @@ export default function FundingForm({
               duration: DEFAULT_FUNDING_CYCLE_DURATION.toString(),
             })
           }}
+          style={{ marginBottom: '1rem' }}
         >
           <Trans>Funding cycles</Trans>
         </SwitchHeading>
 
-        <Space size="middle" direction="vertical">
-          <div style={{ marginTop: '0.5rem' }}>
+        <Space size="small" direction="vertical">
+          <div>
             <p>
               <Trans>
-                Set the length of your funding cycles, which can enable:
+                Automatted funding cycles enable the following characteristics:
               </Trans>
             </p>
             <ol style={{ marginBottom: 0 }}>
@@ -409,34 +410,39 @@ export default function FundingForm({
         }}
       >
         <h3>
-          <Trans>Distribution</Trans>
+          <Trans>Funding distribution</Trans>
         </h3>
         <p>
           <Trans>
-            Set the destination of funds you'd like to distribute from your
-            treasury each funding cycle.
+            Configure how your funds will be distributed with payouts. The sum
+            of your payouts will determine your funding cycle's Distribution
+            Limit.
           </Trans>
         </p>
         <p>
           <Trans>
-            All treasury funds outside of what you pre-program for distribution
-            is called <strong>overflow</strong>. Overflow can be claimed by your
-            project's token holders by redeeming their tokens.{' '}
+            Treasury funds that exceed your distribution limit is is called{' '}
+            <strong>overflow</strong>. Overflow can be claimed by your project's
+            token holders by redeeming their tokens.{' '}
             <ExternalLink href={helpPagePath('protocol/learn/topics/overflow')}>
               Learn more
             </ExternalLink>{' '}
-            about overflow.
+            .
           </Trans>
         </p>
 
         <p style={{ color: colors.text.primary }}>
           <Trans>
-            Distributing payouts to addresses outside the Juicebox contracts
-            incurs a {feeFormatted}% JBX membership fee. The ETH from the fee
-            will go to the <Link to="/p/juicebox">JuiceboxDAO treasury</Link>,
-            and the resulting JBX will go to the project's owner.
+            Distributions to Juicebox projects don't incur fees. Otherwise,
+            distributions incur a {feeFormatted}% JBX membership fee. The{' '}
+            <Link to="/p/juicebox">Juicebox DAO treasury</Link> receives the
+            fee, and the project owner (you) receives JBX in return.
           </Trans>
         </p>
+
+        <h4>
+          <Trans>Payouts</Trans>
+        </h4>
 
         <DistributionSplitsSection
           distributionLimit={distributionLimit}

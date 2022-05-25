@@ -86,7 +86,6 @@ export default function DistributionSplitsSection({
         ...formItemProps?.style,
         display: 'block',
         marginBottom: 0,
-        marginTop: 34,
       }}
     >
       <Space
@@ -125,18 +124,19 @@ export default function DistributionSplitsSection({
           }}
           block
         >
-          <Trans>Add a distribution destination</Trans>
+          <Trans>Add payout</Trans>
         </Button>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <span>
-            <TooltipIcon
-              tip={t`The maximum amount of funds that can be distributed from the treasury each funding cycle.`}
-              placement={'topLeft'}
-              iconStyle={{ marginRight: 5 }}
-            />
-            <strong style={{ color: colors.text.primary }}>
-              <Trans>Total distribution limit:</Trans>
-            </strong>
+            <Trans>
+              Distribution Limit{' '}
+              <TooltipIcon
+                tip={t`The maximum amount of funds that can be distributed from the treasury each funding cycle.`}
+                placement={'topLeft'}
+                iconStyle={{ marginRight: 5 }}
+              />
+              :
+            </Trans>
           </span>
           <span>
             <strong>

@@ -1,4 +1,4 @@
-import { Button, Col, Row, Space } from 'antd'
+import { Button, Col, Row, Space, Tooltip } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { Split } from 'models/v2/splits'
 import { useContext, useState } from 'react'
@@ -7,11 +7,7 @@ import FormattedAddress from 'components/shared/FormattedAddress'
 import { BigNumber } from '@ethersproject/bignumber'
 
 import { formatDate } from 'utils/formatDate'
-import {
-  CrownFilled,
-  LockOutlined,
-  CloseCircleOutlined,
-} from '@ant-design/icons'
+import { CrownFilled, LockOutlined, DeleteOutlined } from '@ant-design/icons'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import {
@@ -185,13 +181,7 @@ export default function DistributionSplitCard({
                   maxWidth: 100,
                 }}
               >
-                <Space
-                  size="large"
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'flex-start',
-                  }}
-                >
+                <Space size="small" direction="horizontal">
                   {!distributionLimitIsInfinite && (
                     <span>
                       <CurrencySymbol currency={currencyName} />
@@ -204,8 +194,8 @@ export default function DistributionSplitCard({
                     </span>
                   )}
                   <span>
-                    {percentIsRounded ? '~' : null}
-                    {formatSplitPercent(BigNumber.from(split.percent))}%
+                    ({percentIsRounded ? '~' : null}
+                    {formatSplitPercent(BigNumber.from(split.percent))}%)
                   </span>
                 </Space>
               </span>
@@ -230,37 +220,39 @@ export default function DistributionSplitCard({
       {isLocked ? (
         <LockOutlined style={{ color: colors.icon.disabled }} />
       ) : (
-        <Button
-          type="text"
-          onClick={e => {
-            let adjustedSplits = splits
-            // Adjust all split percents if
-            // - distributionLimit is not infinite
-            // - not deleting the last split
-            if (!distributionLimitIsInfinite && splits.length !== 1) {
-              const newDistributionLimit = getNewDistributionLimit({
-                currentDistributionLimit: distributionLimit,
-                newSplitAmount: 0,
-                editingSplitPercent: splits[editableSplitIndex].percent,
-              }).toString()
+        <Tooltip title={<Trans>Delete payout</Trans>}>
+          <Button
+            type="text"
+            onClick={e => {
+              let adjustedSplits = splits
+              // Adjust all split percents if
+              // - distributionLimit is not infinite
+              // - not deleting the last split
+              if (!distributionLimitIsInfinite && splits.length !== 1) {
+                const newDistributionLimit = getNewDistributionLimit({
+                  currentDistributionLimit: distributionLimit,
+                  newSplitAmount: 0,
+                  editingSplitPercent: splits[editableSplitIndex].percent,
+                }).toString()
 
-              adjustedSplits = adjustedSplitPercents({
-                splits: editableSplits,
-                oldDistributionLimit: distributionLimit,
-                newDistributionLimit,
-              })
-              setDistributionLimit(newDistributionLimit)
-            }
-            if (splits.length === 1) setDistributionLimit('0')
+                adjustedSplits = adjustedSplitPercents({
+                  splits: editableSplits,
+                  oldDistributionLimit: distributionLimit,
+                  newDistributionLimit,
+                })
+                setDistributionLimit(newDistributionLimit)
+              }
+              if (splits.length === 1) setDistributionLimit('0')
 
-            onSplitsChanged([
-              ...adjustedSplits.slice(0, editableSplitIndex),
-              ...adjustedSplits.slice(editableSplitIndex + 1),
-            ])
-            e.stopPropagation()
-          }}
-          icon={<CloseCircleOutlined />}
-        />
+              onSplitsChanged([
+                ...adjustedSplits.slice(0, editableSplitIndex),
+                ...adjustedSplits.slice(editableSplitIndex + 1),
+              ])
+              e.stopPropagation()
+            }}
+            icon={<DeleteOutlined />}
+          />
+        </Tooltip>
       )}
       {!isLocked ? (
         <DistributionSplitModal

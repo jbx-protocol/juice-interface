@@ -313,10 +313,10 @@ export default function DistributionSplitModal({
 
   return (
     <Modal
-      title={mode === 'Edit' ? t`Edit existing split` : t`Add a split`}
+      title={mode === 'Edit' ? t`Edit existing payout` : t`Add new payout`}
       visible={visible}
       onOk={setSplit}
-      okText={mode === 'Edit' ? t`Save split` : t`Add split`}
+      okText={mode === 'Edit' ? t`Save payout` : t`Add payout`}
       onCancel={onClose}
       destroyOnClose
     >
@@ -328,7 +328,7 @@ export default function DistributionSplitModal({
           if (e.key === 'Enter') setSplit()
         }}
       >
-        <Form.Item>
+        <Form.Item label={t`Recipient type`}>
           <Select value={editingSplitType} onChange={setEditingSplitType}>
             <Select.Option value="address">
               <Trans>Wallet address</Trans>
@@ -350,6 +350,7 @@ export default function DistributionSplitModal({
                   validator: validatePayoutAddress,
                 },
               ],
+              required: true,
             }}
             onAddressChange={(beneficiary: string) =>
               setBeneficiary(beneficiary)
@@ -387,8 +388,9 @@ export default function DistributionSplitModal({
         ) : null}
 
         <Form.Item
-          label={t`Distribution`}
+          label={t`Payout amount`}
           style={!isFirstSplit ? { marginBottom: 0 } : {}}
+          required
         >
           {isFirstSplit ? (
             <Select
@@ -406,7 +408,7 @@ export default function DistributionSplitModal({
                 <Trans>Specific amount</Trans>
               </Select.Option>
               <Select.Option value="percent">
-                <Trans>Percent of all funds raised</Trans>
+                <Trans>Percentage of all funds raised</Trans>
               </Select.Option>
             </Select>
           ) : null}
@@ -425,8 +427,7 @@ export default function DistributionSplitModal({
                     </div>
                   ) : (
                     <Trans>
-                      Distributions to other Juicebox project do not incur any
-                      fee.
+                      Distributing funds to Juicebox projects won't incur fees.
                     </Trans>
                   )}
                 </>

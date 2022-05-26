@@ -1,5 +1,6 @@
 import { t, Trans } from '@lingui/macro'
-import { DatePicker, Form, InputNumber, Modal, Select } from 'antd'
+import { InfoCircleOutlined } from '@ant-design/icons'
+import { DatePicker, Form, InputNumber, Modal, Radio, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { FormItems } from 'components/shared/formItems'
 import {
@@ -272,7 +273,7 @@ export default function DistributionSplitModal({
 
   const validateProjectId = () => {
     if (!stringIsDigit(form.getFieldValue('projectId'))) {
-      return Promise.reject(t`Project ID is a number.`)
+      return Promise.reject(t`Project ID must be a number.`)
     }
     // TODO: check if projectId exists
     return Promise.resolve()
@@ -313,7 +314,7 @@ export default function DistributionSplitModal({
 
   return (
     <Modal
-      title={mode === 'Edit' ? t`Edit existing payout` : t`Add new payout`}
+      title={mode === 'Edit' ? t`Edit payout` : t`Add new payout`}
       visible={visible}
       onOk={setSplit}
       okText={mode === 'Edit' ? t`Save payout` : t`Add payout`}
@@ -328,201 +329,215 @@ export default function DistributionSplitModal({
           if (e.key === 'Enter') setSplit()
         }}
       >
-        <Form.Item label={t`Recipient type`}>
-          <Select value={editingSplitType} onChange={setEditingSplitType}>
-            <Select.Option value="address">
-              <Trans>Wallet address</Trans>
-            </Select.Option>
-            <Select.Option value="project">
-              <Trans>Juicebox project</Trans>
-            </Select.Option>
-          </Select>
-        </Form.Item>
+        <Space direction="vertical" size="large">
+          <div>
+            <Form.Item label={t`Recipient`}>
+              <Radio.Group
+                value={editingSplitType}
+                onChange={e => setEditingSplitType(e.target.value)}
+              >
+                <Radio value="address" style={{ fontWeight: 400 }}>
+                  <Trans>Wallet address</Trans>
+                </Radio>
+                <Radio value="project" style={{ fontWeight: 400 }}>
+                  <Trans>Juicebox project</Trans>
+                </Radio>
+              </Radio.Group>
+            </Form.Item>
 
-        {editingSplitType === 'address' ? (
-          <FormItems.EthAddress
-            name="beneficiary"
-            defaultValue={beneficiary}
-            formItemProps={{
-              label: t`Address`,
-              rules: [
-                {
-                  validator: validatePayoutAddress,
-                },
-              ],
-              required: true,
-            }}
-            onAddressChange={(beneficiary: string) =>
-              setBeneficiary(beneficiary)
-            }
-          />
-        ) : (
-          <Form.Item
-            name={'projectId'}
-            rules={[{ validator: validateProjectId }]}
-            label={t`Juicebox Project ID`}
-            required
-          >
-            <InputNumber
-              value={parseInt(projectId ?? '')}
-              style={{ width: '100%' }}
-              placeholder={t`ID`}
-              onChange={(projectId: number) => {
-                setProjectId(projectId?.toString())
-              }}
-            />
-          </Form.Item>
-        )}
-        {editingSplitType === 'project' ? (
-          <FormItems.EthAddress
-            name="beneficiary"
-            defaultValue={beneficiary}
-            formItemProps={{
-              label: t`Token beneficiary address`,
-              extra: t`The address that should receive the tokens minted from paying this project.`,
-            }}
-            onAddressChange={beneficiary => {
-              setBeneficiary(beneficiary)
-            }}
-          />
-        ) : null}
-
-        <Form.Item
-          label={t`Payout amount`}
-          style={!isFirstSplit ? { marginBottom: 0 } : {}}
-          required
-        >
-          {isFirstSplit ? (
-            <Select
-              value={distributionType}
-              onChange={(newType: DistributionType) => {
-                if (newType === 'percent') {
-                  setDistributionLimit(fromWad(MAX_DISTRIBUTION_LIMIT))
-                } else if (newType === 'amount') {
-                  setDistributionLimit('0')
-                }
-                setDistributionType(newType)
-              }}
-            >
-              <Select.Option value="amount">
-                <Trans>Specific amount</Trans>
-              </Select.Option>
-              <Select.Option value="percent">
-                <Trans>Percentage of all funds raised</Trans>
-              </Select.Option>
-            </Select>
-          ) : null}
-        </Form.Item>
-
-        {/* Only show amount input if project distribution limit is not infinite */}
-        {distributionLimit && distributionType === 'amount' ? (
-          <Form.Item
-            className="ant-form-item-extra-only"
-            extra={
-              feePercentage && percent && !(percent > SPLITS_TOTAL_PERCENT) ? (
-                <>
-                  {editingSplitType === 'address' ? (
-                    <div>
-                      <AfterFeeMessage />
-                    </div>
-                  ) : (
-                    <Trans>
-                      Distributing funds to Juicebox projects won't incur fees.
-                    </Trans>
-                  )}
-                </>
-              ) : null
-            }
-          >
-            <div
-              style={{
-                display: 'flex',
-                color: colors.text.primary,
-                alignItems: 'center',
-              }}
-            >
-              <FormattedNumberInput
-                value={amount?.toFixed(4)}
-                placeholder={'0'}
-                onChange={amount => onAmountChange(parseFloat(amount || '0'))}
+            {editingSplitType === 'address' ? (
+              <FormItems.EthAddress
+                name="beneficiary"
+                defaultValue={beneficiary}
                 formItemProps={{
-                  rules: [{ validator: validatePayoutPercentage }],
+                  label: t`Address`,
+                  rules: [
+                    {
+                      validator: validatePayoutAddress,
+                    },
+                  ],
+                  required: true,
                 }}
-                accessory={
-                  isFirstSplit && onCurrencyChange ? (
-                    <CurrencySwitch
-                      onCurrencyChange={onCurrencyChange}
-                      currency={currencyName}
-                    />
-                  ) : (
-                    <InputAccessoryButton content={currencyName} />
-                  )
+                onAddressChange={(beneficiary: string) =>
+                  setBeneficiary(beneficiary)
                 }
               />
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  marginLeft: 10,
-                }}
+            ) : (
+              <Form.Item
+                name={'projectId'}
+                rules={[{ validator: validateProjectId }]}
+                label={t`Juicebox Project ID`}
+                required
               >
-                <Trans>{formattedSplitPercent}%</Trans>
-                <TooltipIcon
-                  tip={
-                    <Trans>
-                      If you don't raise the sum of all your payouts (
-                      <CurrencySymbol currency={currencyName} />
-                      {distributionLimit}), this address will receive{' '}
-                      {formattedSplitPercent}% of all the funds you raise.
-                    </Trans>
-                  }
-                  placement={'topLeft'}
-                  iconStyle={{ marginLeft: 5 }}
+                <InputNumber
+                  value={parseInt(projectId ?? '')}
+                  style={{ width: '100%' }}
+                  placeholder={t`ID`}
+                  onChange={(projectId: number) => {
+                    setProjectId(projectId?.toString())
+                  }}
                 />
-              </div>
-            </div>
-          </Form.Item>
-        ) : (
-          <Form.Item>
+              </Form.Item>
+            )}
+            {editingSplitType === 'project' ? (
+              <FormItems.EthAddress
+                name="beneficiary"
+                defaultValue={beneficiary}
+                formItemProps={{
+                  label: t`Token beneficiary address`,
+                  extra: t`The address that should receive the tokens minted from paying this project.`,
+                }}
+                onAddressChange={beneficiary => {
+                  setBeneficiary(beneficiary)
+                }}
+              />
+            ) : null}
             <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-              }}
+              style={{ marginTop: 0, marginBottom: '0.5rem' }}
+              className="ant-form-item-extra"
             >
-              <span style={{ flex: 1 }}>
-                <NumberSlider
-                  onChange={(percent: number | undefined) => {
-                    setPercent(splitPercentFrom(percent ?? 0).toNumber())
-                  }}
-                  step={0.01}
-                  defaultValue={0}
-                  sliderValue={form.getFieldValue('percent')}
-                  suffix="%"
-                  name="percent"
-                  formItemProps={{
-                    rules: [{ validator: validatePayoutPercentage }],
-                  }}
-                />
-              </span>
+              <InfoCircleOutlined />{' '}
+              <Trans>
+                Distributions to Juicebox projects don't incur fees.
+              </Trans>
             </div>
-          </Form.Item>
-        )}
-        <Form.Item
-          name="lockedUntil"
-          label={t`Lock until`}
-          extra={
-            <Trans>
-              If locked, this split can't be edited or removed until the lock
-              expires or the funding cycle is reconfigured.
-            </Trans>
-          }
-        >
-          <DatePicker
-            disabledDate={disabledDate}
-            onChange={lockedUntil => setLockedUntil(lockedUntil)}
-          />
-        </Form.Item>
+          </div>
+
+          <div>
+            <Form.Item label={t`Distribution`} required>
+              <Radio.Group
+                value={distributionType}
+                onChange={e => {
+                  const newType = e.target.value
+                  if (newType === 'percent') {
+                    setDistributionLimit(fromWad(MAX_DISTRIBUTION_LIMIT))
+                  } else if (newType === 'amount') {
+                    setDistributionLimit('0')
+                  }
+                  setDistributionType(newType)
+                }}
+                disabled={!isFirstSplit}
+              >
+                <Radio value="amount" style={{ fontWeight: 400 }}>
+                  <Trans>Amount</Trans>
+                </Radio>
+                <Radio value="percent" style={{ fontWeight: 400 }}>
+                  <Trans>Percentage of funds</Trans>
+                </Radio>
+              </Radio.Group>
+            </Form.Item>
+
+            {/* Only show amount input if project distribution limit is not infinite */}
+            {distributionLimit && distributionType === 'amount' ? (
+              <Form.Item
+                className="ant-form-item-extra-only"
+                extra={
+                  feePercentage &&
+                  percent &&
+                  !(percent > SPLITS_TOTAL_PERCENT) ? (
+                    <>
+                      {editingSplitType === 'address' ? (
+                        <div>
+                          <AfterFeeMessage />
+                        </div>
+                      ) : null}
+                    </>
+                  ) : null
+                }
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    color: colors.text.primary,
+                    alignItems: 'center',
+                  }}
+                >
+                  <FormattedNumberInput
+                    value={amount?.toFixed(4)}
+                    placeholder={'0'}
+                    onChange={amount =>
+                      onAmountChange(parseFloat(amount || '0'))
+                    }
+                    formItemProps={{
+                      rules: [{ validator: validatePayoutPercentage }],
+                    }}
+                    accessory={
+                      isFirstSplit && onCurrencyChange ? (
+                        <CurrencySwitch
+                          onCurrencyChange={onCurrencyChange}
+                          currency={currencyName}
+                        />
+                      ) : (
+                        <InputAccessoryButton content={currencyName} />
+                      )
+                    }
+                  />
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      marginLeft: 10,
+                    }}
+                  >
+                    <Trans>{formattedSplitPercent}%</Trans>
+                    <TooltipIcon
+                      tip={
+                        <Trans>
+                          If you don't raise the sum of all your payouts (
+                          <CurrencySymbol currency={currencyName} />
+                          {distributionLimit}), this address will receive{' '}
+                          {formattedSplitPercent}% of all the funds you raise.
+                        </Trans>
+                      }
+                      placement={'topLeft'}
+                      iconStyle={{ marginLeft: 5 }}
+                    />
+                  </div>
+                </div>
+              </Form.Item>
+            ) : (
+              <Form.Item>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                >
+                  <span style={{ flex: 1 }}>
+                    <NumberSlider
+                      onChange={(percent: number | undefined) => {
+                        setPercent(splitPercentFrom(percent ?? 0).toNumber())
+                      }}
+                      step={0.01}
+                      defaultValue={0}
+                      sliderValue={form.getFieldValue('percent')}
+                      suffix="%"
+                      name="percent"
+                      formItemProps={{
+                        rules: [{ validator: validatePayoutPercentage }],
+                      }}
+                    />
+                  </span>
+                </div>
+              </Form.Item>
+            )}
+            <Form.Item
+              name="lockedUntil"
+              label={t`Lock until`}
+              extra={
+                <Trans>
+                  If locked, this split can't be edited or removed until the
+                  lock expires or the funding cycle is reconfigured.
+                </Trans>
+              }
+            >
+              <DatePicker
+                disabledDate={disabledDate}
+                onChange={lockedUntil => setLockedUntil(lockedUntil)}
+              />
+            </Form.Item>
+          </div>
+        </Space>
       </Form>
     </Modal>
   )

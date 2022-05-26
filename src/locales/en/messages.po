@@ -359,6 +359,7 @@ msgid "Almost definitely."
 msgstr ""
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Amount"
 msgstr "Amount"
 
@@ -927,8 +928,8 @@ msgid "Distributed reserved {0}"
 msgstr "Distributed reserved {0}"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
-msgid "Distributing funds to Juicebox projects won't incur fees."
-msgstr "Distributing funds to Juicebox projects won't incur fees."
+msgid "Distribution"
+msgstr "Distribution"
 
 #: src/components/v2/shared/DistributionSplitsSection/index.tsx
 msgid "Distribution Limit <0/>:"
@@ -951,10 +952,9 @@ msgstr "Distribution limit is infinite: The project will control how all funds a
 msgid "Distribution limit, duration and payouts"
 msgstr "Distribution limit, duration and payouts"
 
-#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
-msgid "Distribution splits"
-msgstr "Distribution splits"
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
+msgid "Distributions to Juicebox projects don't incur fees."
+msgstr "Distributions to Juicebox projects don't incur fees."
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
 msgid "Distributions to Juicebox projects don't incur fees. Otherwise, distributions incur a {feeFormatted}% JBX membership fee. The <0>Juicebox DAO treasury</0> receives the fee, and the project owner (you) receives JBX in return."
@@ -1036,8 +1036,8 @@ msgstr "Each project has its own <0>ERC-20 tokens</0>. Anyone who contributes fu
 
 #: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
-msgid "Edit existing payout"
-msgstr "Edit existing payout"
+msgid "Edit payout"
+msgstr "Edit payout"
 
 #: src/components/v1/V1Project/modals/EditProjectModal.tsx
 msgid "Edit project"
@@ -1149,6 +1149,7 @@ msgid "Funding"
 msgstr "Funding"
 
 #: src/components/v1/FundingCycle/Spending.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
 msgid "Funding Distribution"
 msgstr "Funding Distribution"
 
@@ -1186,6 +1187,7 @@ msgstr "Funding cycles can be reconfigured moments before a new cycle begins, wi
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Funding distribution"
 msgstr "Funding distribution"
 
@@ -1811,10 +1813,6 @@ msgstr ""
 msgid "Payments paused"
 msgstr ""
 
-#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
-msgid "Payout amount"
-msgstr "Payout amount"
-
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Payout recipients"
 msgstr "Payout recipients"
@@ -1852,8 +1850,8 @@ msgid "Percentage allocation"
 msgstr "Percentage allocation"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
-msgid "Percentage of all funds raised"
-msgstr "Percentage of all funds raised"
+msgid "Percentage of funds"
+msgstr "Percentage of funds"
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Percentage of newly minted tokens reserved for the project."
@@ -1894,8 +1892,8 @@ msgid "Project Created"
 msgstr "Project Created"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
-msgid "Project ID is a number."
-msgstr "Project ID is a number."
+msgid "Project ID must be a number."
+msgstr "Project ID must be a number."
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
 msgid "Project ID:"
@@ -2036,8 +2034,8 @@ msgid "Receive {receiveText}"
 msgstr "Receive {receiveText}"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
-msgid "Recipient type"
-msgstr "Recipient type"
+msgid "Recipient"
+msgstr "Recipient"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Recipients will receive payouts in ETH."
@@ -2350,10 +2348,6 @@ msgstr "Some properties of the project's current funding cycle may indicate risk
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Something went wrong."
 msgstr "Something went wrong."
-
-#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
-msgid "Specific amount"
-msgstr "Specific amount"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx

@@ -9,7 +9,7 @@ import {
 } from 'components/shared/formItems/formHelpers'
 import { defaultSplit, Split } from 'models/v2/splits'
 import { useContext, useEffect, useLayoutEffect, useState } from 'react'
-import { fromWad, parseWad } from 'utils/formatNumber'
+import { parseWad } from 'utils/formatNumber'
 import { round } from 'lodash'
 import {
   adjustedSplitPercents,
@@ -52,7 +52,6 @@ export type AddOrEditSplitFormFields = {
 }
 
 type SplitType = 'project' | 'address'
-type DistributionType = 'amount' | 'percent'
 
 // Using both state and a form in this modal. I know it seems over the top,
 // but the state is necessary to link the percent and amount fields, and the form
@@ -114,9 +113,7 @@ export default function DistributionSplitModal({
   const [editingSplitType, setEditingSplitType] = useState<SplitType>(
     initialProjectId ? 'project' : 'address',
   )
-  const [distributionType, setDistributionType] = useState<DistributionType>(
-    distributionLimitIsInfinite ? 'percent' : 'amount',
-  )
+
   const [projectId, setProjectId] = useState<string | undefined>(
     initialProjectId?.toString(),
   )
@@ -168,10 +165,6 @@ export default function DistributionSplitModal({
     setAmount(amount)
     setPercent(percentPerBillion)
   }, [distributionLimit, editableSplits, editableSplitIndex, isFirstSplit])
-
-  useEffect(() => {
-    setDistributionType(distributionLimitIsInfinite ? 'percent' : 'amount')
-  }, [distributionLimitIsInfinite])
 
   const resetStates = () => {
     setProjectId(undefined)
@@ -313,10 +306,10 @@ export default function DistributionSplitModal({
 
   return (
     <Modal
-      title={mode === 'Edit' ? t`Edit existing payout` : t`Add new payout`}
+      title={mode === 'Edit' ? t`Edit existing split` : t`Add a split`}
       visible={visible}
       onOk={setSplit}
-      okText={mode === 'Edit' ? t`Save payout` : t`Add payout`}
+      okText={mode === 'Edit' ? t`Save split` : t`Add split`}
       onCancel={onClose}
       destroyOnClose
     >
@@ -328,7 +321,7 @@ export default function DistributionSplitModal({
           if (e.key === 'Enter') setSplit()
         }}
       >
-        <Form.Item label={t`Recipient type`}>
+        <Form.Item>
           <Select value={editingSplitType} onChange={setEditingSplitType}>
             <Select.Option value="address">
               <Trans>Wallet address</Trans>
@@ -350,7 +343,6 @@ export default function DistributionSplitModal({
                   validator: validatePayoutAddress,
                 },
               ],
-              required: true,
             }}
             onAddressChange={(beneficiary: string) =>
               setBeneficiary(beneficiary)
@@ -387,10 +379,9 @@ export default function DistributionSplitModal({
           />
         ) : null}
 
-        <Form.Item
-          label={t`Payout amount`}
+        {/* <Form.Item
+          label={t`Distribution`}
           style={!isFirstSplit ? { marginBottom: 0 } : {}}
-          required
         >
           {isFirstSplit ? (
             <Select
@@ -408,14 +399,14 @@ export default function DistributionSplitModal({
                 <Trans>Specific amount</Trans>
               </Select.Option>
               <Select.Option value="percent">
-                <Trans>Percentage of all funds raised</Trans>
+                <Trans>Percent of all funds raised</Trans>
               </Select.Option>
             </Select>
           ) : null}
-        </Form.Item>
+        </Form.Item> */}
 
         {/* Only show amount input if project distribution limit is not infinite */}
-        {distributionLimit && distributionType === 'amount' ? (
+        {distributionLimit && !distributionLimitIsInfinite ? (
           <Form.Item
             className="ant-form-item-extra-only"
             extra={
@@ -427,7 +418,8 @@ export default function DistributionSplitModal({
                     </div>
                   ) : (
                     <Trans>
-                      Distributing funds to Juicebox projects won't incur fees.
+                      Distributions to other Juicebox project do not incur any
+                      fee.
                     </Trans>
                   )}
                 </>

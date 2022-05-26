@@ -22,7 +22,7 @@ import {
   amountFromPercent,
   getNewDistributionLimit,
 } from 'utils/v2/distributions'
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 
 import DistributionSplitModal from './DistributionSplitModal'
 import { CurrencyName } from 'constants/currency'
@@ -38,6 +38,7 @@ export default function DistributionSplitCard({
   currencyName,
   onCurrencyChange,
   isLocked,
+  isProjectOwner,
 }: {
   split: Split
   splits: Split[]
@@ -49,6 +50,7 @@ export default function DistributionSplitCard({
   currencyName: CurrencyName
   onCurrencyChange?: (currencyName: CurrencyName) => void
   isLocked?: boolean
+  isProjectOwner?: boolean
 }) {
   const {
     theme: { colors, radii },
@@ -66,7 +68,8 @@ export default function DistributionSplitCard({
 
   // !isProject added here because we don't want to show the crown next to
   // a project recipient whose token benefiary is the owner of this project
-  const isOwner = projectOwnerAddress === split.beneficiary && !isProject
+  const isOwner =
+    (projectOwnerAddress === split.beneficiary && !isProject) || isProjectOwner
 
   const distributionLimitIsInfinite =
     !distributionLimit || parseWad(distributionLimit).eq(MAX_DISTRIBUTION_LIMIT)
@@ -74,7 +77,7 @@ export default function DistributionSplitCard({
   // If percentage has greater than 2 dp it will be rounded in the UI
   const percentIsRounded =
     split.percent !== SPLITS_TOTAL_PERCENT &&
-    (split.percent / SPLITS_TOTAL_PERCENT).toString().split('.')[1].length > 4
+    (split.percent / SPLITS_TOTAL_PERCENT).toString().split('.')[1]?.length > 4
 
   return (
     <div
@@ -132,9 +135,17 @@ export default function DistributionSplitCard({
                 }}
               >
                 <span style={{ cursor: 'pointer' }}>
-                  <FormattedAddress address={split.beneficiary} />
+                  {isOwner && !split.beneficiary ? (
+                    <Trans>Project owner</Trans>
+                  ) : (
+                    <FormattedAddress address={split.beneficiary} />
+                  )}
                 </span>
-                {isOwner && <CrownFilled />}
+                {isOwner && (
+                  <Tooltip title={t`Project owner`}>
+                    <CrownFilled />
+                  </Tooltip>
+                )}
               </div>
             </Col>
           </Row>
@@ -194,8 +205,10 @@ export default function DistributionSplitCard({
                     </span>
                   )}
                   <span>
-                    ({percentIsRounded ? '~' : null}
-                    {formatSplitPercent(BigNumber.from(split.percent))}%)
+                    {!distributionLimitIsInfinite ? '(' : null}
+                    {percentIsRounded ? '~' : null}
+                    {formatSplitPercent(BigNumber.from(split.percent))}%
+                    {!distributionLimitIsInfinite ? ')' : null}
                   </span>
                 </Space>
               </span>
@@ -218,7 +231,9 @@ export default function DistributionSplitCard({
       </Space>
 
       {isLocked ? (
-        <LockOutlined style={{ color: colors.icon.disabled }} />
+        <LockOutlined
+          style={{ color: colors.icon.disabled, paddingTop: '4px' }}
+        />
       ) : (
         <Tooltip title={<Trans>Delete payout</Trans>}>
           <Button

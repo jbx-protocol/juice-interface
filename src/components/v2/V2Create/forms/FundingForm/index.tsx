@@ -421,12 +421,12 @@ export default function FundingForm({
         </p>
         <p>
           <Trans>
-            Treasury funds that exceed your distribution limit is is called{' '}
+            Treasury funds that exceed your distribution limit is called{' '}
             <strong>overflow</strong>. Overflow can be claimed by your project's
             token holders by redeeming their tokens.{' '}
             <ExternalLink href={helpPagePath('protocol/learn/topics/overflow')}>
               Learn more
-            </ExternalLink>{' '}
+            </ExternalLink>
             .
           </Trans>
         </p>

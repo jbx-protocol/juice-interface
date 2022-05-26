@@ -1,11 +1,6 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { Split } from 'models/v2/splits'
 
-import {
-  formatSplitPercent,
-  preciseFormatSplitPercent,
-  splitPercentFrom,
-} from './math'
+import { preciseFormatSplitPercent, splitPercentFrom } from './math'
 
 /**
  * Gets distribution amount from percent of the distribution limit and then applies
@@ -78,8 +73,7 @@ export function getDistributionPercentFromAmount({
  */
 export function getTotalSplitsPercentage(splits: Split[]) {
   return splits.reduce(
-    (acc, curr) =>
-      acc + parseFloat(formatSplitPercent(BigNumber.from(curr.percent))),
+    (acc, curr) => acc + preciseFormatSplitPercent(curr.percent),
     0,
   )
 }

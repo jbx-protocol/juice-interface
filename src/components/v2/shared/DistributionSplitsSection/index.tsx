@@ -1,18 +1,23 @@
 import { t, Trans } from '@lingui/macro'
-import { Button, Form, Space } from 'antd'
-import { useCallback, useContext, useState } from 'react'
+import { Button, Form, Radio, Space } from 'antd'
+import { useCallback, useContext, useEffect, useState } from 'react'
 
 import { Split } from 'models/v2/splits'
 import { FormItemExt } from 'components/shared/formItems/formItemExt'
-import { parseWad } from 'utils/formatNumber'
+import { fromWad, parseWad } from 'utils/formatNumber'
 import DistributionLimit from 'components/v2/V2Project/DistributionLimit'
 import TooltipIcon from 'components/shared/TooltipIcon'
 import { getTotalSplitsPercentage } from 'utils/v2/distributions'
 import { ThemeContext } from 'contexts/themeContext'
+import { MAX_DISTRIBUTION_LIMIT, splitPercentFrom } from 'utils/v2/math'
+import { NetworkContext } from 'contexts/networkContext'
 
 import DistributionSplitCard from './DistributionSplitCard'
 import { CurrencyName } from 'constants/currency'
 import DistributionSplitModal from './DistributionSplitModal'
+import SpecificLimitModal from './SpecificLimitModal'
+
+type DistributionType = 'amount' | 'percent'
 
 export default function DistributionSplitsSection({
   distributionLimit,
@@ -35,8 +40,19 @@ export default function DistributionSplitsSection({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+  const { userAddress } = useContext(NetworkContext)
+
+  const distributionLimitIsInfinite =
+    !distributionLimit || parseWad(distributionLimit).eq(MAX_DISTRIBUTION_LIMIT)
 
   const [addSplitModalVisible, setAddSplitModalVisible] =
+    useState<boolean>(false)
+
+  const [distributionType, setDistributionType] = useState<DistributionType>(
+    distributionLimitIsInfinite ? 'percent' : 'amount',
+  )
+
+  const [specificLimitModalOpen, setSpecificLimitModalOpen] =
     useState<boolean>(false)
 
   const allSplits = lockedSplits.concat(editableSplits)
@@ -73,11 +89,37 @@ export default function DistributionSplitsSection({
     ],
   )
 
+  useEffect(() => {
+    setDistributionType(distributionLimitIsInfinite ? 'percent' : 'amount')
+  }, [distributionLimitIsInfinite])
+
   if (!allSplits) return null
 
   const totalSplitsPercentage = getTotalSplitsPercentage(allSplits)
   const totalSplitsPercentageInvalid = totalSplitsPercentage > 100
   const remainingSplitsPercentage = 100 - getTotalSplitsPercentage(allSplits) // this amount goes to the project owner
+
+  function OwnerSplitCard() {
+    const ownerSplit = {
+      beneficiary: userAddress,
+      percent: splitPercentFrom(remainingSplitsPercentage).toNumber(),
+    } as Split
+    return (
+      <DistributionSplitCard
+        split={ownerSplit}
+        splits={[]}
+        editableSplits={[]}
+        editableSplitIndex={0}
+        distributionLimit={undefined}
+        setDistributionLimit={() => null}
+        onSplitsChanged={() => null}
+        onCurrencyChange={undefined}
+        currencyName={currencyName}
+        isLocked
+        isProjectOwner
+      />
+    )
+  }
 
   return (
     <Form.Item
@@ -93,6 +135,33 @@ export default function DistributionSplitsSection({
         style={{ width: '100%', minHeight: 0 }}
         size="large"
       >
+        <Form.Item style={{ marginBottom: 0 }}>
+          <Radio.Group
+            onChange={e => {
+              const newType = e.target.value
+              if (newType === 'percent') {
+                setDistributionLimit(fromWad(MAX_DISTRIBUTION_LIMIT))
+                setDistributionType(newType)
+              } else if (newType === 'amount') {
+                if (editableSplits.length) {
+                  setSpecificLimitModalOpen(true)
+                } else {
+                  setDistributionLimit('0')
+                  setDistributionType(newType)
+                }
+              }
+            }}
+            value={distributionType}
+            style={{}}
+          >
+            <Radio value="amount">
+              <Trans>Specific amounts</Trans>
+            </Radio>
+            <Radio value="percent">
+              <Trans>Percent of all funds raised</Trans>
+            </Radio>
+          </Radio.Group>
+        </Form.Item>
         <Space style={{ width: '100%' }} direction="vertical" size="small">
           {editableSplits.map((split, index) => renderSplitCard(split, index))}
         </Space>
@@ -107,15 +176,8 @@ export default function DistributionSplitsSection({
           <span style={{ color: colors.text.failure }}>
             <Trans>Sum of percentages cannot exceed 100%.</Trans>
           </span>
-        ) : remainingSplitsPercentage !== 0 && distributionLimit !== '0' ? (
-          <span style={{ color: colors.text.primary }}>
-            <strong>
-              <Trans>
-                The remaining {remainingSplitsPercentage}% of funds will go to
-                the project owner.
-              </Trans>
-            </strong>
-          </span>
+        ) : remainingSplitsPercentage > 0 && distributionLimit !== '0' ? (
+          <OwnerSplitCard />
         ) : null}
         <Button
           type="dashed"
@@ -160,6 +222,13 @@ export default function DistributionSplitsSection({
         currencyName={currencyName}
         onCurrencyChange={onCurrencyChange}
         onClose={() => setAddSplitModalVisible(false)}
+      />
+      <SpecificLimitModal
+        visible={specificLimitModalOpen}
+        onClose={() => setSpecificLimitModalOpen(false)}
+        setDistributionLimit={setDistributionLimit}
+        currencyName={currencyName}
+        onCurrencyChange={onCurrencyChange}
       />
     </Form.Item>
   )

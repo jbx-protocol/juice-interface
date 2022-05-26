@@ -25,7 +25,11 @@ export default function DistributionLimit({
     <TooltipIcon
       tip={
         distributionLimitIsInfinite ? (
-          <Trans>All funds received by the treasury will be distributed.</Trans>
+          <Trans>
+            All funds received by the treasury will be distributed. Token
+            holders will receive <strong>no ETH</strong> when burning their
+            tokens.
+          </Trans>
         ) : distributionLimitIsZero ? (
           <Trans>
             No funds can be distributed out of the treasury. Funds can only be

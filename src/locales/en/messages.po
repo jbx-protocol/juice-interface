@@ -239,10 +239,6 @@ msgstr ""
 msgid "Add a payout"
 msgstr "Add a payout"
 
-#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
-msgid "Add a split"
-msgstr "Add a split"
-
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
 msgid "Add funds to this project's balance without minting tokens."
 msgstr ""
@@ -253,6 +249,7 @@ msgid "Add image"
 msgstr ""
 
 #: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Add new payout"
 msgstr "Add new payout"
 
@@ -281,6 +278,7 @@ msgstr "Add token allocation"
 
 #: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v1/V1Project/Rewards/index.tsx
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Address"
 msgstr ""
@@ -930,7 +928,7 @@ msgstr "Distributed funds"
 #: src/components/v1/V1Project/ProjectActivity/eventElems/ReservesEventElem.tsx
 #: src/components/v2/V2Project/ProjectActivity/eventElems/DistributeReservedTokensElem.tsx
 msgid "Distributed reserved {0}"
-msgstr "Distributed reserved {0}"
+msgstr "Distributed reserved {0}<<<<<<< HEAD======="
 
 #: src/components/v2/shared/DistributionSplitsSection/index.tsx
 msgid "Distribution Limit <0/>:"
@@ -953,10 +951,9 @@ msgstr "Distribution limit is infinite: The project will control how all funds a
 msgid "Distribution limit, duration and payouts"
 msgstr "Distribution limit, duration and payouts"
 
-#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
-msgid "Distribution splits"
-msgstr "Distribution splits"
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
+msgid "Distributions to Juicebox projects don't incur fees."
+msgstr "Distributions to Juicebox projects don't incur fees."
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
 msgid "Distributions to Juicebox projects don't incur fees. Otherwise, distributions incur a {feeFormatted}% JBX membership fee. The <0>Juicebox DAO treasury</0> receives the fee, and the project owner (you) receives JBX in return."
@@ -1045,12 +1042,9 @@ msgid "Each project has its own <0>ERC-20 tokens</0>. Anyone who contributes fun
 msgstr "Each project has its own <0>ERC-20 tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
 
 #: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
-msgid "Edit existing payout"
-msgstr "Edit existing payout"
-
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
-msgid "Edit existing split"
-msgstr "Edit existing split"
+msgid "Edit payout"
+msgstr "Edit payout>>>>>>> ba2b7233f33c378f39106629cdfddf31b63fc9c2"
 
 #: src/components/v1/V1Project/modals/EditProjectModal.tsx
 msgid "Edit project"
@@ -1162,6 +1156,7 @@ msgid "Funding"
 msgstr "Funding"
 
 #: src/components/v1/FundingCycle/Spending.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
 msgid "Funding Distribution"
 msgstr "Funding Distribution"
 
@@ -1199,6 +1194,7 @@ msgstr "Funding cycles can be reconfigured moments before a new cycle begins, wi
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Funding distribution"
 msgstr "Funding distribution"
 
@@ -1299,6 +1295,7 @@ msgid "I understand"
 msgstr "I understand"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "ID"
 msgstr "ID"
 
@@ -1312,13 +1309,8 @@ msgid "If locked, this can't be edited or removed until the lock expires or the 
 msgstr "If locked, this can't be edited or removed until the lock expires or the funding cycle is reconfigured."
 
 #: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
-#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "If locked, this split can't be edited or removed until the lock expires or the funding cycle is reconfigured."
 msgstr "If locked, this split can't be edited or removed until the lock expires or the funding cycle is reconfigured."
-
-#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
-msgid "If you don't raise the sum of all your payouts (<0/>{distributionLimit}), this address will receive {formattedSplitPercent}% of all the funds you raise."
-msgstr "If you don't raise the sum of all your payouts (<0/>{distributionLimit}), this address will receive {formattedSplitPercent}% of all the funds you raise."
 
 #: src/components/v2/V2Project/DistributionLimit.tsx
 msgid "If you don't raise this amount, your splits will receive their percentage of whatever you raise."
@@ -1425,6 +1417,7 @@ msgid "JBX Fee ({feePercentage}%):"
 msgstr "JBX Fee ({feePercentage}%):"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Juicebox Project ID"
 msgstr "Juicebox Project ID"
 
@@ -1509,7 +1502,6 @@ msgstr ""
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 #: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
-#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Lock until"
 msgstr "Lock until"
 
@@ -1862,7 +1854,7 @@ msgstr "Percent of all funds raised"
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "Percentage allocation"
-msgstr "Percentage allocation"
+msgstr "Percentage allocation<<<<<<< HEAD======="
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Percentage of newly minted tokens reserved for the project."
@@ -1903,8 +1895,8 @@ msgid "Project Created"
 msgstr "Project Created"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
-msgid "Project ID is a number."
-msgstr "Project ID is a number."
+msgid "Project ID must be a number."
+msgstr "Project ID must be a number."
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
 msgid "Project ID:"
@@ -2044,7 +2036,11 @@ msgstr "Receive ERC-20"
 
 #: src/components/shared/inputs/Pay/PayInputSubText.tsx
 msgid "Receive {receiveText}"
-msgstr "Receive {receiveText}"
+msgstr "Receive {receiveText}<<<<<<< HEAD======="
+
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
+msgid "Recipient"
+msgstr "Recipient>>>>>>> ba2b7233f33c378f39106629cdfddf31b63fc9c2"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Recipients will receive payouts in ETH."
@@ -2367,11 +2363,11 @@ msgstr "Some properties of the project's current funding cycle may indicate risk
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Something went wrong."
-msgstr "Something went wrong."
+msgstr "Something went wrong.<<<<<<< HEAD"
 
 #: src/components/v2/shared/DistributionSplitsSection/index.tsx
 msgid "Specific amounts"
-msgstr "Specific amounts"
+msgstr "Specific amounts=======>>>>>>> ba2b7233f33c378f39106629cdfddf31b63fc9c2"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
@@ -2439,6 +2435,7 @@ msgid "The address of any smart contract deployed on {0} that implements <0>this
 msgstr "The address of any smart contract deployed on {0} that implements <0>this interface</0>."
 
 #: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "The address that should receive the tokens minted from paying this project."
 msgstr ""
@@ -2650,6 +2647,7 @@ msgid "Token address: <0/>"
 msgstr ""
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Token beneficiary address"
 msgstr "Token beneficiary address"
 
@@ -2785,8 +2783,8 @@ msgid "Transparency & accountability"
 msgstr ""
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "Treasury funds that exceed your distribution limit is called <0>overflow</0>. Overflow can be claimed by your project's token holders by redeeming their tokens. <1>Learn more</1>."
-msgstr "Treasury funds that exceed your distribution limit is called <0>overflow</0>. Overflow can be claimed by your project's token holders by redeeming their tokens. <1>Learn more</1>."
+msgid "Treasury funds that exceed your distribution limit is called <0>overflow</0>. Token holders can redeem (burn) their tokens for a portion of the overflow. <1>Learn more</1>."
+msgstr "Treasury funds that exceed your distribution limit is called <0>overflow</0>. Token holders can redeem (burn) their tokens for a portion of the overflow. <1>Learn more</1>.>>>>>>> ba2b7233f33c378f39106629cdfddf31b63fc9c2"
 
 #: src/components/Projects/ProjectsTabs.tsx
 msgid "Trending"
@@ -3312,10 +3310,6 @@ msgstr ""
 msgid "{exchangeName} has no market for {tokenSymbol}."
 msgstr "{exchangeName} has no market for {tokenSymbol}."
 
-#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
-msgid "{formattedSplitPercent}%"
-msgstr "{formattedSplitPercent}%"
-
 #: src/components/shared/Project/FundingCycleDetailsCard.tsx
 msgid "{formattedTimeLeft} left"
 msgstr "{formattedTimeLeft} left"
@@ -3382,4 +3376,5 @@ msgstr "{unclaimedBalanceFormatted} {tokenText} claimable"
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "{userOwnershipPercentage}% of total supply"
 msgstr "{userOwnershipPercentage}% of total supply"
+
 

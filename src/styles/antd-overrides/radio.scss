@@ -1,6 +1,7 @@
-.ant-radio-inner::after {
-  background-color: var(--text-action-primary);
-}
 .ant-radio-checked .ant-radio-inner {
-  border-color: var(--text-action-primary);
+  border-color: var(--background-action-primary);
+}
+
+.ant-radio-inner::after {
+  background-color: var(--background-action-primary);
 }

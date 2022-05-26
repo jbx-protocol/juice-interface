@@ -422,8 +422,8 @@ export default function FundingForm({
         <p>
           <Trans>
             Treasury funds that exceed your distribution limit is called{' '}
-            <strong>overflow</strong>. Overflow can be claimed by your project's
-            token holders by redeeming their tokens.{' '}
+            <strong>overflow</strong>. Token holders can redeem (burn) their
+            tokens for a portion of the overflow.{' '}
             <ExternalLink href={helpPagePath('protocol/learn/topics/overflow')}>
               Learn more
             </ExternalLink>

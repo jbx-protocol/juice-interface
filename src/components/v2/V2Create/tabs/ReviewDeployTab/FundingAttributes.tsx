@@ -288,7 +288,7 @@ export function DistributionSplitsStatistic({
     <Statistic
       title={
         <TooltipLabel
-          label={t`Distribution splits`}
+          label={t`Funding distribution`}
           tip={t`Entities that will receive funds from the treasury each funding cycle.`}
         />
       }

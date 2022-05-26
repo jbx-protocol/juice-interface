@@ -1,7 +1,7 @@
 import { Button, Col, Row, Space, Tooltip } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { Split } from 'models/v2/splits'
-import { useContext, useState } from 'react'
+import { PropsWithChildren, useContext, useState } from 'react'
 import { parseWad } from 'utils/formatNumber'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import { BigNumber } from '@ethersproject/bignumber'
@@ -26,6 +26,14 @@ import { t, Trans } from '@lingui/macro'
 
 import DistributionSplitModal from './DistributionSplitModal'
 import { CurrencyName } from 'constants/currency'
+
+const Parens = ({
+  withParens = false,
+  children,
+}: PropsWithChildren<{ withParens: boolean }>) => {
+  if (withParens) return <>({children})</>
+  return <>{children}</>
+}
 
 export default function DistributionSplitCard({
   split,
@@ -205,10 +213,10 @@ export default function DistributionSplitCard({
                     </span>
                   )}
                   <span>
-                    {!distributionLimitIsInfinite ? '(' : null}
-                    {percentIsRounded ? '~' : null}
-                    {formatSplitPercent(BigNumber.from(split.percent))}%
-                    {!distributionLimitIsInfinite ? ')' : null}
+                    <Parens withParens={!distributionLimitIsInfinite}>
+                      {percentIsRounded ? '~' : null}
+                      {formatSplitPercent(BigNumber.from(split.percent))}%
+                    </Parens>
                   </span>
                 </Space>
               </span>

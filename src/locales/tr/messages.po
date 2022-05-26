@@ -933,7 +933,7 @@ msgstr ""
 #: src/components/v1/V1Project/ProjectActivity/eventElems/ReservesEventElem.tsx
 #: src/components/v2/V2Project/ProjectActivity/eventElems/DistributeReservedTokensElem.tsx
 msgid "Distributed reserved {0}"
-msgstr "<<<<<<< HEAD======="
+msgstr ""
 
 #: src/components/v2/shared/DistributionSplitsSection/index.tsx
 msgid "Distribution Limit <0/>:"
@@ -1855,7 +1855,7 @@ msgstr "Yüzde"
 
 #: src/components/v2/shared/DistributionSplitsSection/index.tsx
 msgid "Percent of all funds raised"
-msgstr "<<<<<<< HEAD"
+msgstr ""
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "Percentage allocation"
@@ -2041,11 +2041,11 @@ msgstr "ERC-20 al"
 
 #: src/components/shared/inputs/Pay/PayInputSubText.tsx
 msgid "Receive {receiveText}"
-msgstr "{receiveText} alın<<<<<<< HEAD======="
+msgstr "{receiveText} alın"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Recipient"
-msgstr ">>>>>>> ba2b7233f33c378f39106629cdfddf31b63fc9c2"
+msgstr ""
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Recipients will receive payouts in ETH."
@@ -2368,11 +2368,11 @@ msgstr "Projenin mevcut finansman döngüsünün bazı özellikleri, katkıda bu
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Something went wrong."
-msgstr "<<<<<<< HEAD"
+msgstr ""
 
 #: src/components/v2/shared/DistributionSplitsSection/index.tsx
 msgid "Specific amounts"
-msgstr "=======>>>>>>> ba2b7233f33c378f39106629cdfddf31b63fc9c2"
+msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx

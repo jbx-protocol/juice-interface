@@ -3377,4 +3377,3 @@ msgstr "{unclaimedBalanceFormatted} {tokenText} claimable"
 msgid "{userOwnershipPercentage}% of total supply"
 msgstr "{userOwnershipPercentage}% of total supply"
 
-

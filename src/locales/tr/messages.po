@@ -2772,7 +2772,7 @@ msgid "Transparency & accountability"
 msgstr "Şeffaflık ve hesap verebilirlik"
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "Treasury funds that exceed your distribution limit is is called <0>overflow</0>. Overflow can be claimed by your project's token holders by redeeming their tokens. <1>Learn more</1> ."
+msgid "Treasury funds that exceed your distribution limit is called <0>overflow</0>. Token holders can redeem (burn) their tokens for a portion of the overflow. <1>Learn more</1>."
 msgstr ""
 
 #: src/components/Projects/ProjectsTabs.tsx

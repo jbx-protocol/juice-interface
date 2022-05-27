@@ -207,6 +207,7 @@ msgid "A project can reserve a percentage of tokens minted from every payment it
 msgstr "A project can reserve a percentage of tokens minted from every payment it receives. Reserved tokens can be distributed according to the allocation below at any time."
 
 #: src/components/shared/Project/FundingCycleSection.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/NoFundingCycle.tsx
 msgid "A project's lifetime is defined in funding cycles. If a funding target is set, the project can withdraw no more than the target for the duration of the cycle."
 msgstr ""
 
@@ -1147,6 +1148,7 @@ msgstr "Funding Distribution"
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v1/shared/BudgetForm.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/NoFundingCycle.tsx
 msgid "Funding cycle"
 msgstr ""
 
@@ -1607,6 +1609,10 @@ msgstr "Next: Review and deploy"
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "No"
 msgstr "No"
+
+#: src/components/v2/V2Project/V2FundingCycleSection/NoFundingCycle.tsx
+msgid "No active funding cycle."
+msgstr "No active funding cycle."
 
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 #: src/components/v2/V2Project/ProjectActivity/index.tsx

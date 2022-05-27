@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-05-24 02:55\n"
+"PO-Revision-Date: 2022-05-27 02:56\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -306,7 +306,7 @@ msgstr "调整激励措施，以便鼓励其他人或项目向你的项目付款
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "Advanced options (optional)"
-msgstr ""
+msgstr "高级选项（可选）"
 
 #: src/components/Projects/ProjectsTabs.tsx
 msgid "All"
@@ -513,7 +513,7 @@ msgstr "默认的情况下，所有未分配资金可被分发给项目拥有者
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "By default, newly minted tokens will go to the wallet who sends funds to the address. You can enable this to set the token beneficiary to a custom address."
-msgstr ""
+msgstr "默认情况下，新铸造代币会分发给向这个地址付款的钱包地址。打开此选项可以把代币受益人设置为一个自定义地址。"
 
 #: src/components/v2/V2Create/forms/TokenForm/index.tsx
 msgid "By default, the issuance rate for your project's token during funding cycle #1 is 1,000,000 tokens / 1 ETH. For example, a 1 ETH contribution to your project will return 1,000,000 tokens. You can manipulate the issuance rate with the following configurations."
@@ -652,7 +652,7 @@ msgstr "连接钱包查看你的项目。"
 #: src/components/shared/ArchiveProject/index.tsx
 #: src/components/shared/ArchiveProject/index.tsx
 msgid "Connected wallet not authorized"
-msgstr ""
+msgstr "已链接钱包未授权"
 
 #: src/components/shared/ReconfigurationStrategy/ReconfigurationStrategySelector.tsx
 msgid "Contract address: {0}"
@@ -713,7 +713,7 @@ msgstr "创建一个 Juicebox 项目时，你会得到一个代表项目所有�
 
 #: src/components/Landing/index.tsx
 msgid "Crowdfunding campaigns"
-msgstr ""
+msgstr "筹款活动"
 
 #: src/components/Landing/index.tsx
 msgid "Crypto and Web3 businesses"
@@ -739,7 +739,7 @@ msgstr "当前价值： <0><1/>{0}</0>"
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "Custom memo"
-msgstr ""
+msgstr "自定义备注"
 
 #: src/components/shared/ReconfigurationStrategy/ReconfigurationStrategySelector.tsx
 #: src/utils/ballot.ts
@@ -757,7 +757,7 @@ msgstr "周期 #{0}"
 
 #: src/components/Landing/index.tsx
 msgid "DAOs and communities"
-msgstr ""
+msgstr "DAO 和社区"
 
 #: src/components/Navbar/Mobile/ThemePickerMobile.tsx
 msgid "Dark theme"
@@ -816,7 +816,7 @@ msgstr "详情"
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "Determines whether tokens will be minted from payments to this address."
-msgstr ""
+msgstr "决定了向这个地址付款是否会铸造代币。"
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
@@ -1097,7 +1097,7 @@ msgstr "以太坊提供了一个公共环境，让 Juicebox 这样的互联网�
 
 #: src/components/Landing/index.tsx
 msgid "Explore projects"
-msgstr ""
+msgstr "探索项目"
 
 #: src/components/Navbar/MenuItems.tsx
 msgid "FAQ"
@@ -1110,7 +1110,7 @@ msgstr "常见问题解答"
 #: src/components/shared/ArchiveProject/index.tsx
 #: src/components/shared/ArchiveProject/index.tsx
 msgid "Failed to update project metadata"
-msgstr ""
+msgstr "更新项目元数据失败"
 
 #: src/components/shared/inputs/ImageUploader.tsx
 msgid "File must be less than {formattedSize}{unit}"

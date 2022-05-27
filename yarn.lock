@@ -3057,10 +3057,10 @@
     hardhat-deploy-ethers "^0.3.0-beta.10"
     prettier "^2.4.0"
 
-"@jbx-protocol/contracts-v2@5.0.0":
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/@jbx-protocol/contracts-v2/-/contracts-v2-5.0.0.tgz#22a685569c236b3b2237b08c9992bdc5b5340771"
-  integrity sha512-n0wqXhOTVD0om0fAPFUJq99/RxAcGLaj94GdD/6rLDx8ybI0VHH5YMkONmD8aacm4eIXjQ86P45vgcIHHV0edA==
+"@jbx-protocol/contracts-v2@5.0.1":
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/@jbx-protocol/contracts-v2/-/contracts-v2-5.0.1.tgz#b6f8088a5f83b812cb577ef57db27140e28718cf"
+  integrity sha512-aHV7Ni7Lw7lnpkkCUEqrnAOUGwac1NV+PVtz3rCS0A3uzT5bNVPTJe0Fh44rmjPZM0S+IHXMt0ex3HdjP589PA==
 
 "@jest/console@^26.6.2":
   version "26.6.2"

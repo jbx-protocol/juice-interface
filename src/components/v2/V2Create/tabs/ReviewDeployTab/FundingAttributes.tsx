@@ -67,8 +67,11 @@ export function DistributionLimitStatistic({
         ) : (
           <span>
             <Trans>
-              Distribution limit is infinite: The project will control how all
-              funds are distributed, and none can be redeemed by token holders.
+              Distribution limit is infinite.{' '}
+              <p style={{ fontSize: '1rem' }}>
+                The project will control how all funds are distributed, and none
+                can be redeemed by token holders.
+              </p>
             </Trans>
           </span>
         )

@@ -142,7 +142,7 @@ export default function RelaunchFundingCycleBanner() {
         title={<Trans>Funding cycle required.</Trans>}
         body={
           <Trans>
-            Your Juicebox project has no current funding cycle. Launch a funding
+            Your Juicebox project has no active funding cycle. Launch a funding
             cycle to re-enable payments on your project.
           </Trans>
         }
@@ -168,15 +168,20 @@ export default function RelaunchFundingCycleBanner() {
         transactionPending={transactionPending}
       >
         {loading ? (
-          'loading...'
+          'Loading...'
         ) : (
-          <ReconfigurePreview
-            payoutSplits={deprecatedPayoutSplits ?? []}
-            reserveSplits={deprecatedTokenSplits ?? []}
-            fundingCycleMetadata={deprecatedFundingCycleMetadata}
-            fundingCycleData={deprecatedFundingCycle}
-            fundAccessConstraints={[deprecatedFundAccessConstraint]}
-          />
+          <>
+            <p style={{ marginBottom: '2rem' }}>
+              Relaunch your funding cycle on the new Juicebox V2 contracts.
+            </p>
+            <ReconfigurePreview
+              payoutSplits={deprecatedPayoutSplits ?? []}
+              reserveSplits={deprecatedTokenSplits ?? []}
+              fundingCycleMetadata={deprecatedFundingCycleMetadata}
+              fundingCycleData={deprecatedFundingCycle}
+              fundAccessConstraints={[deprecatedFundAccessConstraint]}
+            />
+          </>
         )}
       </TransactionModal>
     </>

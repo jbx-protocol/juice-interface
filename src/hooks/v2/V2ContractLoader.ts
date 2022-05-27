@@ -9,6 +9,9 @@ import { useContext, useEffect, useState } from 'react'
 import { readProvider } from 'constants/readProvider'
 import { readNetwork } from 'constants/networks'
 
+/**
+ *  Defines the ABI filename to use for a given V2ContractName.
+ */
 const CONTRACT_ABI_OVERRIDES: { [k in V2ContractName]?: string } = {
   JBController: 'JBController_2',
   JBDirectory: 'JBDirectory_2',
@@ -17,7 +20,10 @@ const CONTRACT_ABI_OVERRIDES: { [k in V2ContractName]?: string } = {
   JBTokenStore: 'JBTokenStore_2',
   JBSingleTokenPaymentTerminalStore: 'JBSingleTokenPaymentTerminalStore_2',
   JBFundingCycleStore: 'JBFundingCycleStore_2',
+
   DeprecatedJBController: 'JBController',
+  DeprecatedJBSplitsStore: 'JBSplitsStore',
+  DeprecatedJBDirectory: 'JBDirectory',
 }
 
 export function useV2ContractLoader() {

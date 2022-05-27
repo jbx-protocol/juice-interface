@@ -10,13 +10,17 @@ export default function useProjectDistributionLimit({
   projectId,
   configuration,
   terminal,
+  useDeprecatedContract,
 }: {
   projectId: number | undefined
   configuration: string | undefined
   terminal: string | undefined
+  useDeprecatedContract?: boolean
 }) {
   return useV2ContractReader<BigNumber[]>({
-    contract: V2ContractName.JBController,
+    contract: useDeprecatedContract
+      ? V2ContractName.DeprecatedJBController
+      : V2ContractName.JBController,
     functionName: 'distributionLimitOf',
     args:
       projectId && configuration && terminal

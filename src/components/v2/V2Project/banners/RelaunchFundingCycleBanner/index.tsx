@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Button, Form, Input } from 'antd'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 
 import Banner from 'components/shared/Banner'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
@@ -25,18 +25,14 @@ import {
 import ReconfigurePreview from '../../V2ProjectReconfigureModal/ReconfigurePreview'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
 
-const { useForm } = Form
-
 export default function RelaunchFundingCycleBanner() {
   const { projectId } = useContext(V2ProjectContext)
   const { contracts } = useContext(V2UserContext)
-  const [newFundingCycleData, setNewFundingCycleData] =
-    useState<V2FundingCycleData>()
+  const [newDuration, setNewDuration] = useState<BigNumber>(BigNumber.from(0))
+  const [newStart, setNewStart] = useState<string>('0')
 
   const [modalOpen, setModalOpen] = useState<boolean>(false)
   const [transactionPending, setTransactionPending] = useState<boolean>(false)
-
-  const [form] = useForm<{ duration: number; start: number }>()
 
   const { data, loading: deprecatedFundingCycleLoading } =
     useProjectCurrentFundingCycle({
@@ -44,10 +40,6 @@ export default function RelaunchFundingCycleBanner() {
       useDeprecatedContract: true,
     })
   const [deprecatedFundingCycle, deprecatedFundingCycleMetadata] = data ?? []
-
-  useEffect(() => {
-    setNewFundingCycleData(deprecatedFundingCycle)
-  }, [deprecatedFundingCycle])
 
   const { data: deprecatedPayoutSplits, loading: payoutSplitsLoading } =
     useProjectSplits({
@@ -101,15 +93,14 @@ export default function RelaunchFundingCycleBanner() {
   if (
     !projectId ||
     !deprecatedFundingCycle ||
-    !deprecatedFundingCycleMetadata ||
-    !newFundingCycleData
+    !deprecatedFundingCycleMetadata
   ) {
     return null
   }
 
   const onLaunchModalOk = async () => {
-    const fundingCycleData: V2FundingCycleData = newFundingCycleData ?? {
-      duration: deprecatedFundingCycle.duration,
+    const fundingCycleData: V2FundingCycleData = {
+      duration: newDuration ?? deprecatedFundingCycle.duration,
       ballot: deprecatedFundingCycle.ballot,
       weight: deprecatedFundingCycle.weight,
       discountRate: deprecatedFundingCycle.discountRate,
@@ -134,7 +125,7 @@ export default function RelaunchFundingCycleBanner() {
             splits: deprecatedTokenSplits ?? [],
           },
         ],
-        mustStartAtOrAfter: form.getFieldValue('start'),
+        mustStartAtOrAfter: newStart,
       },
       {
         onDone() {
@@ -187,18 +178,7 @@ export default function RelaunchFundingCycleBanner() {
             <p style={{ marginBottom: '2rem' }}>
               Relaunch your funding cycle on the new Juicebox V2 contracts.
             </p>
-            <Form
-              layout="vertical"
-              form={form}
-              style={{ marginBottom: '1rem' }}
-              onValuesChange={v => {
-                const newFc = {
-                  ...newFundingCycleData,
-                  duration: BigNumber.from(v?.duration || 0),
-                }
-                setNewFundingCycleData(newFc)
-              }}
-            >
+            <Form layout="vertical" style={{ marginBottom: '1rem' }}>
               <div style={{ display: 'flex', gap: 20 }}>
                 <Form.Item
                   name="start"
@@ -210,6 +190,9 @@ export default function RelaunchFundingCycleBanner() {
                     suffix={<Trans>Seconds</Trans>}
                     type="number"
                     min={0}
+                    onChange={e => {
+                      setNewStart(e.target.value || '0')
+                    }}
                   />
                 </Form.Item>
                 <Form.Item
@@ -222,6 +205,9 @@ export default function RelaunchFundingCycleBanner() {
                     suffix={<Trans>Seconds</Trans>}
                     type="number"
                     min={0}
+                    onChange={e => {
+                      setNewDuration(BigNumber.from(e.target.value || 0))
+                    }}
                   />
                 </Form.Item>
               </div>
@@ -233,7 +219,10 @@ export default function RelaunchFundingCycleBanner() {
               payoutSplits={deprecatedPayoutSplits ?? []}
               reserveSplits={deprecatedTokenSplits ?? []}
               fundingCycleMetadata={deprecatedFundingCycleMetadata}
-              fundingCycleData={newFundingCycleData}
+              fundingCycleData={{
+                ...deprecatedFundingCycle,
+                duration: newDuration ?? deprecatedFundingCycle.duration,
+              }}
               fundAccessConstraints={[deprecatedFundAccessConstraint]}
             />
           </>

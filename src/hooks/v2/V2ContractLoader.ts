@@ -39,19 +39,21 @@ export function useV2ContractLoader() {
         // Contracts can be used read-only without a signer, but require a signer to create transactions.
         const signerOrProvider = signingProvider?.getSigner() ?? readProvider
 
-        const newContracts = Object.values(V2ContractName).reduce(
-          (accumulator, contractName) => ({
+        const contractLoaders = await Promise.all(
+          Object.values(V2ContractName).map(contractName =>
+            loadContract(contractName, network, signerOrProvider),
+          ),
+        )
+
+        const newContractMap = Object.values(V2ContractName).reduce(
+          (accumulator, contractName, idx) => ({
             ...accumulator,
-            [contractName]: loadContract(
-              contractName,
-              network,
-              signerOrProvider,
-            ),
+            [contractName]: contractLoaders[idx],
           }),
           {} as V2Contracts,
         )
 
-        setContracts(newContracts)
+        setContracts(newContractMap)
       } catch (e) {
         console.error('CONTRACT LOADER ERROR:', e)
       }
@@ -63,14 +65,16 @@ export function useV2ContractLoader() {
   return contracts
 }
 
-const loadContract = (
+const loadContract = async (
   contractName: V2ContractName,
   network: NetworkName,
   signerOrProvider: JsonRpcSigner | JsonRpcProvider,
-): Contract | undefined => {
+): Promise<Contract | undefined> => {
   const resolvedContractName =
     CONTRACT_ABI_OVERRIDES[contractName] ?? contractName
 
-  const contract = require(`@jbx-protocol/contracts-v2/deployments/${network}/${resolvedContractName}.json`)
+  const contract = await import(
+    `@jbx-protocol/contracts-v2/deployments/${network}/${resolvedContractName}.json`
+  )
   return new Contract(contract.address, contract.abi, signerOrProvider)
 }

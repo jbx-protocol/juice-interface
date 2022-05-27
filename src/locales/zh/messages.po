@@ -259,13 +259,10 @@ msgid "Add new payout"
 msgstr ""
 
 #: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/index.tsx
 msgid "Add payout"
 msgstr "添加支出"
-
-#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
-msgid "Add split"
-msgstr ""
 
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
 msgid "Add to Balance"
@@ -283,7 +280,6 @@ msgstr ""
 
 #: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v1/V1Project/Rewards/index.tsx
-#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Address"
 msgstr "地址"
@@ -935,6 +931,14 @@ msgstr "分配资金"
 msgid "Distributed reserved {0}"
 msgstr "已分配的保留代币 {0}"
 
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
+msgid "Distributing funds to Juicebox projects won't incur fees."
+msgstr ""
+
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
+msgid "Distribution"
+msgstr ""
+
 #: src/components/v2/shared/DistributionSplitsSection/index.tsx
 msgid "Distribution Limit <0/>:"
 msgstr ""
@@ -956,16 +960,8 @@ msgstr "分配限额为无限：项目将决定所有资金的分配，没有资
 msgid "Distribution limit, duration and payouts"
 msgstr "分配上限、时长及支出"
 
-#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
-msgid "Distributions to Juicebox projects don't incur fees."
-msgstr ""
-
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
 msgid "Distributions to Juicebox projects don't incur fees. Otherwise, distributions incur a {feeFormatted}% JBX membership fee. The <0>Juicebox DAO treasury</0> receives the fee, and the project owner (you) receives JBX in return."
-msgstr ""
-
-#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
-msgid "Distributions to other Juicebox project do not incur any fee."
 msgstr ""
 
 #: src/components/Landing/QAs.tsx
@@ -1300,7 +1296,6 @@ msgid "I understand"
 msgstr "我明白了"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
-#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "ID"
 msgstr "标识"
 
@@ -1314,8 +1309,13 @@ msgid "If locked, this can't be edited or removed until the lock expires or the 
 msgstr "如果锁定了，这一项就不能编辑或删除，除非锁定失效或重新配置筹款周期。"
 
 #: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "If locked, this split can't be edited or removed until the lock expires or the funding cycle is reconfigured."
 msgstr "如果设置锁定，这个支出收款人将不可编辑或删除，直到锁定期结束或筹款周期重新配置。"
+
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
+msgid "If you don't raise the sum of all your payouts (<0/>{distributionLimit}), this address will receive {formattedSplitPercent}% of all the funds you raise."
+msgstr ""
 
 #: src/components/v2/V2Project/DistributionLimit.tsx
 msgid "If you don't raise this amount, your splits will receive their percentage of whatever you raise."
@@ -1422,7 +1422,6 @@ msgid "JBX Fee ({feePercentage}%):"
 msgstr "JBX 费率 ({feePercentage}%):"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
-#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Juicebox Project ID"
 msgstr "Juicebox 项目标识"
 
@@ -1507,6 +1506,7 @@ msgstr "加载更多"
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 #: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Lock until"
 msgstr "锁定至"
 
@@ -1821,6 +1821,10 @@ msgstr "当前筹款周期暂停付款。"
 msgid "Payments paused"
 msgstr "付款已暂停"
 
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
+msgid "Payout is locked"
+msgstr ""
+
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Payout recipients"
 msgstr "支出的收款人"
@@ -1967,12 +1971,12 @@ msgstr "项目名称，标识，链接以及其他详细信息。"
 #: src/components/shared/Mod.tsx
 #: src/components/shared/Mod.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
-#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
 #: src/components/v2/shared/SplitItem.tsx
 #: src/components/v2/shared/SplitItem.tsx
 msgid "Project owner"
 msgstr "项目拥有者"
 
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
 #: src/components/v2/shared/SplitItem.tsx
 msgid "Project owner (you)"
 msgstr "项目拥有者 (你)"
@@ -2267,6 +2271,7 @@ msgid "Save handle"
 msgstr "保存标识"
 
 #: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Save payout"
 msgstr ""
 
@@ -2286,10 +2291,6 @@ msgstr "保存新的配置"
 #: src/components/v2/V2Create/forms/RulesForm/index.tsx
 msgid "Save rules"
 msgstr "保存规则"
-
-#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
-msgid "Save split"
-msgstr ""
 
 #: src/components/shared/TicketModsList.tsx
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
@@ -2440,7 +2441,6 @@ msgid "The address of any smart contract deployed on {0} that implements <0>this
 msgstr "所有在 {0} 上面部署同时实现<0>这个接口</0>的智能合约地址 。"
 
 #: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
-#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "The address that should receive the tokens minted from paying this project."
 msgstr "项目收到付款时，应该接收到新铸造代币的地址。"
@@ -2651,7 +2651,6 @@ msgstr "代币"
 msgid "Token address: <0/>"
 msgstr "代币地址：<0/>"
 
-#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Token beneficiary address"
 msgstr "代币受益人地址"
@@ -3019,6 +3018,10 @@ msgstr "你的项目未设置筹款周期时长。你做的更改将会立即生
 msgid "You don't hold tokens for any Juicebox project."
 msgstr "你目前未持有任何 Juicebox 项目的代币。"
 
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
+msgid "You have configured for all funds to be distributed from the treasury. Your current payouts do not sum to 100%, so the remainder will go to the project owner."
+msgstr ""
+
 #: src/components/v1/shared/BudgetForm.tsx
 msgid "You have set a funding cycle target."
 msgstr "您设定了一个筹款周期目标。"
@@ -3314,6 +3317,10 @@ msgstr "总共 {count}"
 #: src/components/shared/AMMPrices/TokenAMMPriceRow.tsx
 msgid "{exchangeName} has no market for {tokenSymbol}."
 msgstr "{exchangeName} 不存在 {tokenSymbol} 的兑换市场"
+
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
+msgid "{formattedSplitPercent}%"
+msgstr ""
 
 #: src/components/shared/Project/FundingCycleDetailsCard.tsx
 msgid "{formattedTimeLeft} left"

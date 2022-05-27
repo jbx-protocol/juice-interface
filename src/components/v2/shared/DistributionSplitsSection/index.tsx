@@ -98,24 +98,28 @@ export default function DistributionSplitsSection({
   const totalSplitsPercentage = getTotalSplitsPercentage(allSplits)
   const totalSplitsPercentageInvalid = totalSplitsPercentage > 100
   const remainingSplitsPercentage = 100 - getTotalSplitsPercentage(allSplits) // this amount goes to the project owner
+  let ownerSplit: Split
 
-  function OwnerSplitCard() {
-    const ownerSplit = {
+  if (remainingSplitsPercentage) {
+    ownerSplit = {
       beneficiary: userAddress,
       percent: splitPercentFrom(remainingSplitsPercentage).toNumber(),
     } as Split
+  }
+
+  function OwnerSplitCard() {
     return (
       <DistributionSplitCard
         split={ownerSplit}
-        splits={[]}
-        editableSplits={[]}
+        splits={allSplits}
+        editableSplits={editableSplits}
         editableSplitIndex={0}
-        distributionLimit={undefined}
-        setDistributionLimit={() => null}
-        onSplitsChanged={() => null}
-        onCurrencyChange={undefined}
+        distributionLimit={distributionLimit}
+        setDistributionLimit={setDistributionLimit}
+        onSplitsChanged={onSplitsChanged}
+        onCurrencyChange={onCurrencyChange}
         currencyName={currencyName}
-        isLocked
+        isLocked={distributionLimitIsInfinite}
         isProjectOwner
       />
     )
@@ -148,6 +152,9 @@ export default function DistributionSplitsSection({
                 } else {
                   setDistributionLimit('0')
                   setDistributionType(newType)
+                }
+                if (remainingSplitsPercentage) {
+                  editableSplits.push(ownerSplit)
                 }
               }
             }}

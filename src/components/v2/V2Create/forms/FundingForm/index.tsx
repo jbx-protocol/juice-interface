@@ -440,9 +440,9 @@ export default function FundingForm({
           </Trans>
         </p>
 
-        <h4>
+        <h3 style={{ marginTop: 20 }}>
           <Trans>Payouts</Trans>
-        </h4>
+        </h3>
 
         <DistributionSplitsSection
           distributionLimit={distributionLimit}

@@ -23,6 +23,7 @@ import {
   getNewDistributionLimit,
 } from 'utils/v2/distributions'
 import { t, Trans } from '@lingui/macro'
+import TooltipIcon from 'components/shared/TooltipIcon'
 
 import DistributionSplitModal from './DistributionSplitModal'
 import { CurrencyName } from 'constants/currency'
@@ -87,6 +88,8 @@ export default function DistributionSplitCard({
     split.percent !== SPLITS_TOTAL_PERCENT &&
     (split.percent / SPLITS_TOTAL_PERCENT).toString().split('.')[1]?.length > 4
 
+  const cursor = isLocked ? 'default' : 'pointer'
+
   return (
     <div
       style={{
@@ -104,14 +107,14 @@ export default function DistributionSplitCard({
         style={{
           width: '100%',
           color: colors.text.primary,
-          cursor: isLocked ? 'default' : 'pointer',
+          cursor,
         }}
         onClick={!isLocked ? () => setEditSplitModalOpen(true) : undefined}
       >
         {split.projectId && parseInt(split.projectId) > 0 ? (
           <Row gutter={gutter} style={{ width: '100%' }} align="middle">
             <Col span={labelColSpan}>
-              <label>
+              <label style={{ cursor }}>
                 <Trans>Project ID:</Trans>
               </label>{' '}
             </Col>
@@ -123,14 +126,14 @@ export default function DistributionSplitCard({
                   justifyContent: 'space-between',
                 }}
               >
-                <span style={{ cursor: 'pointer' }}>{split.projectId}</span>
+                <span style={{ cursor }}>{split.projectId}</span>
               </div>
             </Col>
           </Row>
         ) : (
           <Row gutter={gutter} style={{ width: '100%' }} align="middle">
             <Col span={labelColSpan}>
-              <label>
+              <label style={{ cursor }}>
                 <Trans>Address:</Trans>
               </label>{' '}
             </Col>
@@ -142,13 +145,15 @@ export default function DistributionSplitCard({
                   justifyContent: 'space-between',
                 }}
               >
-                <span style={{ cursor: 'pointer' }}>
-                  {isOwner && !split.beneficiary ? (
-                    <Trans>Project owner</Trans>
-                  ) : (
+                {isOwner && !split.beneficiary ? (
+                  <span style={{ cursor }}>
+                    <Trans>Project owner (you)</Trans>
+                  </span>
+                ) : (
+                  <span style={{ cursor: 'pointer' }}>
                     <FormattedAddress address={split.beneficiary} />
-                  )}
-                </span>
+                  </span>
+                )}
                 {isOwner && (
                   <Tooltip title={t`Project owner`}>
                     <CrownFilled />
@@ -162,7 +167,7 @@ export default function DistributionSplitCard({
         {parseInt(split.projectId ?? '0') > 0 ? (
           <Row>
             <Col span={labelColSpan}>
-              <label>
+              <label style={{ cursor }}>
                 <Trans>Token beneficiary:</Trans>
               </label>
             </Col>
@@ -176,7 +181,7 @@ export default function DistributionSplitCard({
 
         <Row gutter={gutter} style={{ width: '100%' }} align="middle">
           <Col span={labelColSpan}>
-            <label>
+            <label style={{ cursor }}>
               {distributionLimitIsInfinite ? (
                 <Trans>Percentage:</Trans>
               ) : (
@@ -227,7 +232,7 @@ export default function DistributionSplitCard({
         {split.lockedUntil ? (
           <Row gutter={gutter} style={{ width: '100%' }} align="middle">
             <Col span={labelColSpan}>
-              <label>
+              <label style={{ cursor }}>
                 <Trans>Locked:</Trans>
               </label>
             </Col>
@@ -239,9 +244,26 @@ export default function DistributionSplitCard({
       </Space>
 
       {isLocked ? (
-        <LockOutlined
-          style={{ color: colors.icon.disabled, paddingTop: '4px' }}
-        />
+        <>
+          {!isOwner ? (
+            <Tooltip title={<Trans>Payout is locked</Trans>}>
+              <LockOutlined
+                style={{ color: colors.icon.disabled, paddingTop: '4px' }}
+              />
+            </Tooltip>
+          ) : (
+            <TooltipIcon
+              iconStyle={{ paddingTop: '4px' }}
+              tip={
+                <Trans>
+                  You have configured for all funds to be distributed from the
+                  treasury. Your current payouts do not sum to 100%, so the
+                  remainder will go to the project owner.
+                </Trans>
+              }
+            />
+          )}
+        </>
       ) : (
         <Tooltip title={<Trans>Delete payout</Trans>}>
           <Button

@@ -9,6 +9,17 @@ import { useContext, useEffect, useState } from 'react'
 import { readProvider } from 'constants/readProvider'
 import { readNetwork } from 'constants/networks'
 
+const CONTRACT_ABI_OVERRIDES: { [k in V2ContractName]?: string } = {
+  JBController: 'JBController_2',
+  JBDirectory: 'JBDirectory_2',
+  JBETHPaymentTerminal: 'JBETHPaymentTerminal_2',
+  JBSplitsStore: 'JBSplitsStore_2',
+  JBTokenStore: 'JBTokenStore_2',
+  JBSingleTokenPaymentTerminalStore: 'JBSingleTokenPaymentTerminalStore_2',
+  JBFundingCycleStore: 'JBFundingCycleStore_2',
+  DeprecatedJBController: 'JBController',
+}
+
 export function useV2ContractLoader() {
   const [contracts, setContracts] = useState<V2Contracts>()
 
@@ -47,10 +58,13 @@ export function useV2ContractLoader() {
 }
 
 const loadContract = (
-  contractName: keyof typeof V2ContractName,
+  contractName: V2ContractName,
   network: NetworkName,
   signerOrProvider: JsonRpcSigner | JsonRpcProvider,
 ): Contract | undefined => {
-  const contract = require(`@jbx-protocol/contracts-v2/deployments/${network}/${contractName}.json`)
+  const resolvedContractName =
+    CONTRACT_ABI_OVERRIDES[contractName] ?? contractName
+
+  const contract = require(`@jbx-protocol/contracts-v2/deployments/${network}/${resolvedContractName}.json`)
   return new Contract(contract.address, contract.abi, signerOrProvider)
 }

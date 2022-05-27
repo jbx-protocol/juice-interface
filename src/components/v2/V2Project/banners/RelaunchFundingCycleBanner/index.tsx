@@ -8,24 +8,79 @@ import useDeprecatedProjectCurrentFundingCycle from 'hooks/v2/contractReader/Dep
 import { useLaunchFundingCyclesTx } from 'hooks/v2/transactor/LaunchFundingCyclesTx'
 import TransactionModal from 'components/shared/TransactionModal'
 import {
+  V2FundAccessConstraint,
   V2FundingCycleData,
   V2FundingCycleMetadata,
 } from 'models/v2/fundingCycle'
+import useDeprecatedProjectSplits from 'hooks/v2/contractReader/DeprecatedProjectSplits'
+import { V2UserContext } from 'contexts/v2/userContext'
+import { BigNumber } from '@ethersproject/bignumber'
+import useDeprecatedProjectTerminals from 'hooks/v2/contractReader/DeprecatedProjectTerminals'
+import useDeprecatedProjectDistributionLimit from 'hooks/v2/contractReader/DeprecatedProjectDistributionLimit'
 
+import {
+  ETH_PAYOUT_SPLIT_GROUP,
+  RESERVED_TOKEN_SPLIT_GROUP,
+} from 'constants/v2/splits'
 import ReconfigurePreview from '../../V2ProjectReconfigureModal/ReconfigurePreview'
+import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
 
 export default function RelaunchFundingCycleBanner() {
   const [modalOpen, setModalOpen] = useState<boolean>(false)
   const [transactionPending, setTransactionPending] = useState<boolean>(false)
   const { projectId } = useContext(V2ProjectContext)
+  const { contracts } = useContext(V2UserContext)
+
   const { data, loading: deprecatedFundingCycleLoading } =
     useDeprecatedProjectCurrentFundingCycle({
       projectId,
     })
+  const [deprecatedFundingCycle, deprecatedFundingCycleMetadata] = data ?? []
+
+  const { data: deprecatedPayoutSplits, loading: payoutSplitsLoading } =
+    useDeprecatedProjectSplits({
+      projectId,
+      splitGroup: ETH_PAYOUT_SPLIT_GROUP,
+      domain: deprecatedFundingCycle?.configuration?.toString(),
+    })
+  const { data: deprecatedTokenSplits, loading: tokenSplitsLoading } =
+    useDeprecatedProjectSplits({
+      projectId,
+      splitGroup: RESERVED_TOKEN_SPLIT_GROUP,
+      domain: deprecatedFundingCycle?.configuration?.toString(),
+    })
+
+  const { data: terminals } = useDeprecatedProjectTerminals({
+    projectId,
+  })
+  const primaryTerminal = terminals?.[0]
+
+  const { data: distributionLimitData, loading: distributionLimitLoading } =
+    useDeprecatedProjectDistributionLimit({
+      projectId,
+      configuration: deprecatedFundingCycle?.configuration?.toString(),
+      terminal: primaryTerminal,
+    })
+
+  const [deprecatedDistributionLimit, deprecatedDistributionLimitCurrency] =
+    distributionLimitData ?? []
+
+  const fundAccessConstraint: V2FundAccessConstraint = {
+    terminal: contracts?.JBETHPaymentTerminal.address ?? '',
+    token: ETH_TOKEN_ADDRESS,
+    distributionLimit: deprecatedDistributionLimit,
+    distributionLimitCurrency: deprecatedDistributionLimitCurrency,
+    overflowAllowance: BigNumber.from(0), // nothing for the time being.
+    overflowAllowanceCurrency: BigNumber.from(0),
+  }
 
   const launchFundingCycleTx = useLaunchFundingCyclesTx()
 
-  const [deprecatedFundingCycle, deprecatedFundingCycleMetadata] = data ?? []
+  const loading =
+    payoutSplitsLoading ||
+    deprecatedFundingCycleLoading ||
+    tokenSplitsLoading ||
+    distributionLimitLoading
 
   if (
     !projectId ||
@@ -51,8 +106,17 @@ export default function RelaunchFundingCycleBanner() {
         projectId,
         fundingCycleData,
         fundingCycleMetadata,
-        fundAccessConstraints: [],
-        groupedSplits: [],
+        fundAccessConstraints: [fundAccessConstraint],
+        groupedSplits: [
+          {
+            group: ETH_PAYOUT_SPLIT_GROUP,
+            splits: deprecatedPayoutSplits ?? [],
+          },
+          {
+            group: RESERVED_TOKEN_SPLIT_GROUP,
+            splits: deprecatedTokenSplits ?? [],
+          },
+        ],
       },
       {
         onDone() {
@@ -98,7 +162,7 @@ export default function RelaunchFundingCycleBanner() {
         onCancel={() => setModalOpen(false)}
         transactionPending={transactionPending}
       >
-        {deprecatedFundingCycleLoading ? (
+        {loading ? (
           'loading...'
         ) : (
           <ReconfigurePreview

@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import { Button } from 'antd'
+import { Button, Form, Input, Space } from 'antd'
 import { useContext, useState } from 'react'
 
 import Banner from 'components/shared/Banner'
@@ -25,11 +25,16 @@ import {
 import ReconfigurePreview from '../../V2ProjectReconfigureModal/ReconfigurePreview'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
 
+const { useForm } = Form
+
 export default function RelaunchFundingCycleBanner() {
-  const [modalOpen, setModalOpen] = useState<boolean>(false)
-  const [transactionPending, setTransactionPending] = useState<boolean>(false)
   const { projectId } = useContext(V2ProjectContext)
   const { contracts } = useContext(V2UserContext)
+
+  const [modalOpen, setModalOpen] = useState<boolean>(false)
+  const [transactionPending, setTransactionPending] = useState<boolean>(false)
+
+  const [form] = useForm<{ duration: number; start: number }>()
 
   const { data, loading: deprecatedFundingCycleLoading } =
     useProjectCurrentFundingCycle({
@@ -97,7 +102,8 @@ export default function RelaunchFundingCycleBanner() {
 
   const onLaunchModalOk = async () => {
     const fundingCycleData: V2FundingCycleData = {
-      duration: deprecatedFundingCycle.duration,
+      duration:
+        form.getFieldValue('duration') ?? deprecatedFundingCycle.duration,
       ballot: deprecatedFundingCycle.ballot,
       weight: deprecatedFundingCycle.weight,
       discountRate: deprecatedFundingCycle.discountRate,
@@ -122,6 +128,7 @@ export default function RelaunchFundingCycleBanner() {
             splits: deprecatedTokenSplits ?? [],
           },
         ],
+        mustStartAtOrAfter: form.getFieldValue('start'),
       },
       {
         onDone() {
@@ -174,6 +181,25 @@ export default function RelaunchFundingCycleBanner() {
             <p style={{ marginBottom: '2rem' }}>
               Relaunch your funding cycle on the new Juicebox V2 contracts.
             </p>
+            <Form layout="vertical" form={form}>
+              <Space size="large" style={{ width: '100%' }}>
+                <Form.Item
+                  name="start"
+                  label={<Trans>Start time</Trans>}
+                  required
+                >
+                  <Input suffix={<Trans>Seconds</Trans>} type="number" />
+                </Form.Item>
+                <Form.Item
+                  name="duration"
+                  label={<Trans>Duration</Trans>}
+                  required
+                >
+                  <Input suffix={<Trans>Seconds</Trans>} type="number" />
+                </Form.Item>
+              </Space>
+            </Form>
+
             <ReconfigurePreview
               payoutSplits={deprecatedPayoutSplits ?? []}
               reserveSplits={deprecatedTokenSplits ?? []}

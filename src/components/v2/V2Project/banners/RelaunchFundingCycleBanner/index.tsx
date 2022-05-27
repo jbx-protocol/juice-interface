@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
-import { Button, Form, Input, Space } from 'antd'
-import { useContext, useState } from 'react'
+import { Button, Form, Input } from 'antd'
+import { useContext, useEffect, useState } from 'react'
 
 import Banner from 'components/shared/Banner'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
@@ -30,6 +30,8 @@ const { useForm } = Form
 export default function RelaunchFundingCycleBanner() {
   const { projectId } = useContext(V2ProjectContext)
   const { contracts } = useContext(V2UserContext)
+  const [newFundingCycleData, setNewFundingCycleData] =
+    useState<V2FundingCycleData>()
 
   const [modalOpen, setModalOpen] = useState<boolean>(false)
   const [transactionPending, setTransactionPending] = useState<boolean>(false)
@@ -42,6 +44,10 @@ export default function RelaunchFundingCycleBanner() {
       useDeprecatedContract: true,
     })
   const [deprecatedFundingCycle, deprecatedFundingCycleMetadata] = data ?? []
+
+  useEffect(() => {
+    setNewFundingCycleData(deprecatedFundingCycle)
+  }, [deprecatedFundingCycle])
 
   const { data: deprecatedPayoutSplits, loading: payoutSplitsLoading } =
     useProjectSplits({
@@ -95,15 +101,15 @@ export default function RelaunchFundingCycleBanner() {
   if (
     !projectId ||
     !deprecatedFundingCycle ||
-    !deprecatedFundingCycleMetadata
+    !deprecatedFundingCycleMetadata ||
+    !newFundingCycleData
   ) {
     return null
   }
 
   const onLaunchModalOk = async () => {
-    const fundingCycleData: V2FundingCycleData = {
-      duration:
-        form.getFieldValue('duration') ?? deprecatedFundingCycle.duration,
+    const fundingCycleData: V2FundingCycleData = newFundingCycleData ?? {
+      duration: deprecatedFundingCycle.duration,
       ballot: deprecatedFundingCycle.ballot,
       weight: deprecatedFundingCycle.weight,
       discountRate: deprecatedFundingCycle.discountRate,
@@ -181,30 +187,53 @@ export default function RelaunchFundingCycleBanner() {
             <p style={{ marginBottom: '2rem' }}>
               Relaunch your funding cycle on the new Juicebox V2 contracts.
             </p>
-            <Form layout="vertical" form={form}>
-              <Space size="large" style={{ width: '100%' }}>
+            <Form
+              layout="vertical"
+              form={form}
+              style={{ marginBottom: '1rem' }}
+              onValuesChange={v => {
+                const newFc = {
+                  ...newFundingCycleData,
+                  duration: BigNumber.from(v?.duration || 0),
+                }
+                setNewFundingCycleData(newFc)
+              }}
+            >
+              <div style={{ display: 'flex', gap: 20 }}>
                 <Form.Item
                   name="start"
                   label={<Trans>Start time</Trans>}
                   required
+                  style={{ width: '100%' }}
                 >
-                  <Input suffix={<Trans>Seconds</Trans>} type="number" />
+                  <Input
+                    suffix={<Trans>Seconds</Trans>}
+                    type="number"
+                    min={0}
+                  />
                 </Form.Item>
                 <Form.Item
                   name="duration"
                   label={<Trans>Duration</Trans>}
                   required
+                  style={{ width: '100%' }}
                 >
-                  <Input suffix={<Trans>Seconds</Trans>} type="number" />
+                  <Input
+                    suffix={<Trans>Seconds</Trans>}
+                    type="number"
+                    min={0}
+                  />
                 </Form.Item>
-              </Space>
+              </div>
             </Form>
+
+            <h3>Funding cycle preview</h3>
 
             <ReconfigurePreview
               payoutSplits={deprecatedPayoutSplits ?? []}
               reserveSplits={deprecatedTokenSplits ?? []}
               fundingCycleMetadata={deprecatedFundingCycleMetadata}
-              fundingCycleData={deprecatedFundingCycle}
+              fundingCycleData={newFundingCycleData}
               fundAccessConstraints={[deprecatedFundAccessConstraint]}
             />
           </>

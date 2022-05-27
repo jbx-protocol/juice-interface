@@ -3050,7 +3050,7 @@ msgid "You'll be able to issue ERC-20 tokens once your project contract has been
 msgstr "项目合约部署上线后，你就可以铸造ERC-20代币了。在此之后，协议就会开始追踪代币余额，同时允许你的支持者获得代币以及赎回代币取得项目溢出资金。"
 
 #: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
-msgid "Your Juicebox project has no current funding cycle. Launch a funding cycle to re-enable payments on your project."
+msgid "Your Juicebox project has no active funding cycle. Launch a funding cycle to re-enable payments on your project."
 msgstr ""
 
 #: src/components/v1/V1Project/Rewards/index.tsx

@@ -3050,7 +3050,7 @@ msgid "You'll be able to issue ERC-20 tokens once your project contract has been
 msgstr "Вы сможете выпускать ERC-20 токены после того, как ваш контракт по проекту будет установлен. До тех пор протокол будет отслеживать балансы токенов, позволяя вашим сторонникам заработать токены и использовать их для переполнения."
 
 #: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
-msgid "Your Juicebox project has no current funding cycle. Launch a funding cycle to re-enable payments on your project."
+msgid "Your Juicebox project has no active funding cycle. Launch a funding cycle to re-enable payments on your project."
 msgstr ""
 
 #: src/components/v1/V1Project/Rewards/index.tsx

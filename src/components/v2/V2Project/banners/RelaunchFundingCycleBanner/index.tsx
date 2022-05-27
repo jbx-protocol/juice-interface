@@ -65,7 +65,7 @@ export default function RelaunchFundingCycleBanner() {
   const [deprecatedDistributionLimit, deprecatedDistributionLimitCurrency] =
     distributionLimitData ?? []
 
-  const fundAccessConstraint: V2FundAccessConstraint = {
+  const deprecatedFundAccessConstraint: V2FundAccessConstraint = {
     terminal: contracts?.JBETHPaymentTerminal.address ?? '',
     token: ETH_TOKEN_ADDRESS,
     distributionLimit: deprecatedDistributionLimit,
@@ -106,7 +106,7 @@ export default function RelaunchFundingCycleBanner() {
         projectId,
         fundingCycleData,
         fundingCycleMetadata,
-        fundAccessConstraints: [fundAccessConstraint],
+        fundAccessConstraints: [deprecatedFundAccessConstraint],
         groupedSplits: [
           {
             group: ETH_PAYOUT_SPLIT_GROUP,
@@ -166,11 +166,11 @@ export default function RelaunchFundingCycleBanner() {
           'loading...'
         ) : (
           <ReconfigurePreview
-            payoutSplits={[]}
-            reserveSplits={[]}
+            payoutSplits={deprecatedPayoutSplits ?? []}
+            reserveSplits={deprecatedTokenSplits ?? []}
             fundingCycleMetadata={deprecatedFundingCycleMetadata}
             fundingCycleData={deprecatedFundingCycle}
-            fundAccessConstraints={[]}
+            fundAccessConstraints={[deprecatedFundAccessConstraint]}
           />
         )}
       </TransactionModal>

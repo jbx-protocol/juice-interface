@@ -42,7 +42,6 @@ export function useLaunchFundingCyclesTx(): TransactorInstance<{
       !contracts?.JBController ||
       !contracts?.JBETHPaymentTerminal
     ) {
-      txOpts?.onDone?.()
       return Promise.resolve(false)
     }
 

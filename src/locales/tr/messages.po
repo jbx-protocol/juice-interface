@@ -1008,6 +1008,7 @@ msgstr "Kamuya açık olmaları nedeniyle, sözleşmelere yönelik herhangi bir 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
 msgid "Duration"
 msgstr "Süre"
 
@@ -2315,6 +2316,8 @@ msgstr "İzlenen varlıkları kaydet"
 msgid "Search projects by handle"
 msgstr "Tanıtıcıya göre proje ara"
 
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
 #: src/constants/time.ts
 msgid "Seconds"
 msgstr "Saniye"
@@ -2399,6 +2402,10 @@ msgstr "Başlangıç"
 #: src/components/v1/V1Create/index.tsx
 msgid "Start Over"
 msgstr "Baştan Başla"
+
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Start time"
+msgstr ""
 
 #: src/components/v1/PayoutModsList.tsx
 msgid "Sum of percentages cannot exceed 100%"

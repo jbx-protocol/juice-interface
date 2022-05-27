@@ -1008,6 +1008,7 @@ msgstr "En raison de leur nature publique, toute exploitation des contrats peut 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
 msgid "Duration"
 msgstr "Durée"
 
@@ -2315,6 +2316,8 @@ msgstr "Sauvegarder les actifs suivis"
 msgid "Search projects by handle"
 msgstr "Rechercher un projet par son identifiant"
 
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
 #: src/constants/time.ts
 msgid "Seconds"
 msgstr "Secondes"
@@ -2399,6 +2402,10 @@ msgstr "Début"
 #: src/components/v1/V1Create/index.tsx
 msgid "Start Over"
 msgstr "Recommencer"
+
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Start time"
+msgstr ""
 
 #: src/components/v1/PayoutModsList.tsx
 msgid "Sum of percentages cannot exceed 100%"

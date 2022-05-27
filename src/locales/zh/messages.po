@@ -1008,6 +1008,7 @@ msgstr "由于其公共性质，任何对合约的恶意利用都可能产生不
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
 msgid "Duration"
 msgstr "持续时间"
 
@@ -2315,6 +2316,8 @@ msgstr "保存监测资产项"
 msgid "Search projects by handle"
 msgstr "通过标识搜索项目"
 
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
 #: src/constants/time.ts
 msgid "Seconds"
 msgstr "秒"
@@ -2399,6 +2402,10 @@ msgstr "开始时间"
 #: src/components/v1/V1Create/index.tsx
 msgid "Start Over"
 msgstr "重新来过"
+
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Start time"
+msgstr ""
 
 #: src/components/v1/PayoutModsList.tsx
 msgid "Sum of percentages cannot exceed 100%"

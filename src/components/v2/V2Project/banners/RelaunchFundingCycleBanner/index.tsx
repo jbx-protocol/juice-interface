@@ -4,19 +4,19 @@ import { useContext, useState } from 'react'
 
 import Banner from 'components/shared/Banner'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import useDeprecatedProjectCurrentFundingCycle from 'hooks/v2/contractReader/DeprecatedProjectCurrentFundingCycle'
-import { useLaunchFundingCyclesTx } from 'hooks/v2/transactor/LaunchFundingCyclesTx'
 import TransactionModal from 'components/shared/TransactionModal'
 import {
   V2FundAccessConstraint,
   V2FundingCycleData,
   V2FundingCycleMetadata,
 } from 'models/v2/fundingCycle'
-import useDeprecatedProjectSplits from 'hooks/v2/contractReader/DeprecatedProjectSplits'
 import { V2UserContext } from 'contexts/v2/userContext'
 import { BigNumber } from '@ethersproject/bignumber'
-import useDeprecatedProjectTerminals from 'hooks/v2/contractReader/DeprecatedProjectTerminals'
-import useDeprecatedProjectDistributionLimit from 'hooks/v2/contractReader/DeprecatedProjectDistributionLimit'
+import useProjectTerminals from 'hooks/v2/contractReader/ProjectTerminals'
+import useProjectDistributionLimit from 'hooks/v2/contractReader/ProjectDistributionLimit'
+import useProjectCurrentFundingCycle from 'hooks/v2/contractReader/ProjectCurrentFundingCycle'
+import useProjectSplits from 'hooks/v2/contractReader/ProjectSplits'
+import { useLaunchFundingCyclesTx } from 'hooks/v2/transactor/LaunchFundingCyclesTx'
 
 import {
   ETH_PAYOUT_SPLIT_GROUP,
@@ -32,34 +32,39 @@ export default function RelaunchFundingCycleBanner() {
   const { contracts } = useContext(V2UserContext)
 
   const { data, loading: deprecatedFundingCycleLoading } =
-    useDeprecatedProjectCurrentFundingCycle({
+    useProjectCurrentFundingCycle({
       projectId,
+      useDeprecatedContract: true,
     })
   const [deprecatedFundingCycle, deprecatedFundingCycleMetadata] = data ?? []
 
   const { data: deprecatedPayoutSplits, loading: payoutSplitsLoading } =
-    useDeprecatedProjectSplits({
+    useProjectSplits({
       projectId,
       splitGroup: ETH_PAYOUT_SPLIT_GROUP,
       domain: deprecatedFundingCycle?.configuration?.toString(),
+      useDeprecatedContract: true,
     })
   const { data: deprecatedTokenSplits, loading: tokenSplitsLoading } =
-    useDeprecatedProjectSplits({
+    useProjectSplits({
       projectId,
       splitGroup: RESERVED_TOKEN_SPLIT_GROUP,
       domain: deprecatedFundingCycle?.configuration?.toString(),
+      useDeprecatedContract: true,
     })
 
-  const { data: terminals } = useDeprecatedProjectTerminals({
+  const { data: terminals } = useProjectTerminals({
     projectId,
+    useDeprecatedContract: true,
   })
   const primaryTerminal = terminals?.[0]
 
   const { data: distributionLimitData, loading: distributionLimitLoading } =
-    useDeprecatedProjectDistributionLimit({
+    useProjectDistributionLimit({
       projectId,
       configuration: deprecatedFundingCycle?.configuration?.toString(),
       terminal: primaryTerminal,
+      useDeprecatedContract: true,
     })
 
   const [deprecatedDistributionLimit, deprecatedDistributionLimitCurrency] =

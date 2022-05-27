@@ -1,8 +1,8 @@
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
 import { CSSProperties } from 'react'
-
 import { Button } from 'antd'
+import ExternalLink from 'components/shared/ExternalLink'
 
 import { Languages } from 'constants/languages/language-options'
 
@@ -43,6 +43,9 @@ export default function Footer() {
     window.scrollTo(0, 0) // scroll to top of page after reload
   }
 
+  const gitCommit = process.env.REACT_APP_VERSION
+  const gitCommitLink = `https://github.com/jbx-protocol/juice-interface/commit/${gitCommit}`
+
   return (
     <div
       style={{
@@ -62,6 +65,15 @@ export default function Footer() {
         {link('Twitter', 'https://twitter.com/juiceboxETH')}
         {link('Privacy Policy', '/#/privacy')}
       </div>
+
+      {gitCommit ? (
+        <span style={{ color: 'white' }}>
+          Version:{' '}
+          <ExternalLink href={gitCommitLink} style={{ fontSize: '0.8rem' }}>
+            #{gitCommit}
+          </ExternalLink>
+        </span>
+      ) : null}
     </div>
   )
 }

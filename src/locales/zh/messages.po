@@ -935,8 +935,8 @@ msgid "Distribution limit is 0: All funds will be considered overflow and can be
 msgstr "分配限额为0：所有资金将被视为溢出，持币人可以赎回这些资金。"
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
-msgid "Distribution limit is infinite: The project will control how all funds are distributed, and none can be redeemed by token holders."
-msgstr "分配限额为无限：项目将决定所有资金的分配，没有资金可供持币人赎回。"
+msgid "Distribution limit is infinite. <0>The project will control how all funds are distributed, and none can be redeemed by token holders.</0>"
+msgstr ""
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Distribution limit, duration and payouts"
@@ -1163,6 +1163,10 @@ msgstr "筹款周期详情"
 #: src/components/v2/V2Create/forms/FundingForm/DurationInputAndSelect.tsx
 msgid "Funding cycle duration"
 msgstr "筹款周期持续时间"
+
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Funding cycle required."
+msgstr ""
 
 #: src/components/v1/shared/BudgetForm.tsx
 msgid "Funding cycle target"
@@ -1455,6 +1459,11 @@ msgstr "最近"
 #: src/components/Landing/index.tsx
 msgid "Latest payments"
 msgstr "最近付款"
+
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Launch funding cycle"
+msgstr ""
 
 #: src/components/Landing/index.tsx
 msgid "Launch your project"
@@ -2201,6 +2210,10 @@ msgstr "受限操作"
 #: src/components/v1/V1Create/index.tsx
 msgid "Review & Deploy"
 msgstr "检查并部署"
+
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Review and launch funding cycle"
+msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "Review project"
@@ -3027,6 +3040,10 @@ msgstr "你将会收到 {minReturnedTokensFormatted} ETH"
 #: src/components/shared/forms/TicketingForm.tsx
 msgid "You'll be able to issue ERC-20 tokens once your project contract has been deployed. Until then, the protocol will track token balances, allowing your supporters to earn tokens and redeem for overflow in the meantime."
 msgstr "项目合约部署上线后，你就可以铸造ERC-20代币了。在此之后，协议就会开始追踪代币余额，同时允许你的支持者获得代币以及赎回代币取得项目溢出资金。"
+
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Your Juicebox project has no current funding cycle. Launch a funding cycle to re-enable payments on your project."
+msgstr ""
 
 #: src/components/v1/V1Project/Rewards/index.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx

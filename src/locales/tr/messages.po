@@ -935,7 +935,7 @@ msgid "Distribution limit is 0: All funds will be considered overflow and can be
 msgstr ""
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
-msgid "Distribution limit is infinite: The project will control how all funds are distributed, and none can be redeemed by token holders."
+msgid "Distribution limit is infinite. <0>The project will control how all funds are distributed, and none can be redeemed by token holders.</0>"
 msgstr ""
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
@@ -1163,6 +1163,10 @@ msgstr "Finansman döngüsü detayları"
 #: src/components/v2/V2Create/forms/FundingForm/DurationInputAndSelect.tsx
 msgid "Funding cycle duration"
 msgstr "Finansman döngüsü süresi"
+
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Funding cycle required."
+msgstr ""
 
 #: src/components/v1/shared/BudgetForm.tsx
 msgid "Funding cycle target"
@@ -1455,6 +1459,11 @@ msgstr "En son"
 #: src/components/Landing/index.tsx
 msgid "Latest payments"
 msgstr "Son ödemeler"
+
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Launch funding cycle"
+msgstr ""
 
 #: src/components/Landing/index.tsx
 msgid "Launch your project"
@@ -2201,6 +2210,10 @@ msgstr "Kısıtlanmış eylemler"
 #: src/components/v1/V1Create/index.tsx
 msgid "Review & Deploy"
 msgstr "İncele ve Dağıt"
+
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Review and launch funding cycle"
+msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "Review project"
@@ -3027,6 +3040,10 @@ msgstr "{minReturnedTokensFormatted} ETH alacaksınız"
 #: src/components/shared/forms/TicketingForm.tsx
 msgid "You'll be able to issue ERC-20 tokens once your project contract has been deployed. Until then, the protocol will track token balances, allowing your supporters to earn tokens and redeem for overflow in the meantime."
 msgstr "Proje sözleşmeniz dağıtıldıktan sonra ERC-20 token'larını çıkarabileceksiniz. O zamana kadar protokol, token bakiyelerini takip ederek destekçilerinizin bu arada token kazanmasına ve onları taşma için kullanmasına izin verecektir."
+
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Your Juicebox project has no current funding cycle. Launch a funding cycle to re-enable payments on your project."
+msgstr ""
 
 #: src/components/v1/V1Project/Rewards/index.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx

@@ -935,8 +935,8 @@ msgid "Distribution limit is 0: All funds will be considered overflow and can be
 msgstr "El límite de distribución es 0: Todos los fondos serán considerados excedente y pueden ser canjeados por los holders de tokens."
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
-msgid "Distribution limit is infinite: The project will control how all funds are distributed, and none can be redeemed by token holders."
-msgstr "El límite de distribución es infinito: El proyecto controlará cómo son distribuidos todos los fondos, y niguno puede ser canjeado por los holders de tokens."
+msgid "Distribution limit is infinite. <0>The project will control how all funds are distributed, and none can be redeemed by token holders.</0>"
+msgstr ""
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Distribution limit, duration and payouts"
@@ -1163,6 +1163,10 @@ msgstr "Detalles del ciclo de financiamiento"
 #: src/components/v2/V2Create/forms/FundingForm/DurationInputAndSelect.tsx
 msgid "Funding cycle duration"
 msgstr "Duración del ciclo de financiamiento"
+
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Funding cycle required."
+msgstr ""
 
 #: src/components/v1/shared/BudgetForm.tsx
 msgid "Funding cycle target"
@@ -1455,6 +1459,11 @@ msgstr "Último"
 #: src/components/Landing/index.tsx
 msgid "Latest payments"
 msgstr "Últimos pagos"
+
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Launch funding cycle"
+msgstr ""
 
 #: src/components/Landing/index.tsx
 msgid "Launch your project"
@@ -2201,6 +2210,10 @@ msgstr "Acciones restringidas"
 #: src/components/v1/V1Create/index.tsx
 msgid "Review & Deploy"
 msgstr "Revisa & Despliega"
+
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Review and launch funding cycle"
+msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "Review project"
@@ -3027,6 +3040,10 @@ msgstr "Recibirás {minReturnedTokensFormatted} ETH"
 #: src/components/shared/forms/TicketingForm.tsx
 msgid "You'll be able to issue ERC-20 tokens once your project contract has been deployed. Until then, the protocol will track token balances, allowing your supporters to earn tokens and redeem for overflow in the meantime."
 msgstr "Podrás emitir tokens ERC-20 una vez el contrato de tu proyecto haya sido desplegado. Hasta entonces, el protocolo rastreará mientras tanto los balances de los tokens, permitiendo a tus seguidores ganar tokens y canjearlos por el excedente."
+
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Your Juicebox project has no current funding cycle. Launch a funding cycle to re-enable payments on your project."
+msgstr ""
 
 #: src/components/v1/V1Project/Rewards/index.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx

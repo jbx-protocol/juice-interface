@@ -33,5 +33,13 @@
         ]
       }
     ]
-  }
+  },
+  "overrides": [
+    {
+      "files": "package.json",
+      "rules": {
+        "no-unused-expressions": "off"
+      }
+    }
+  ]
 }

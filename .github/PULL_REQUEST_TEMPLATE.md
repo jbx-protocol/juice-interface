@@ -10,5 +10,8 @@ changes._
 
 ## Acceptance checklist
 
-- [ ] I have evaluated the [Approval Guidelines](https://github.com/jbx-protocol/juice-interface/blob/main/CONTRIBUTING.md#approval-guidelines) for this PR.
-- [ ] I have tested this PR in [all supported browsers](https://github.com/jbx-protocol/juice-interface/blob/main/CONTRIBUTING.md#supported-browsers).
+- [ ] I have evaluated the
+      [Approval Guidelines](https://github.com/jbx-protocol/juice-interface/blob/main/CONTRIBUTING.md#approval-guidelines)
+      for this PR.
+- [ ] I have tested this PR in
+      [all supported browsers](https://github.com/jbx-protocol/juice-interface/blob/main/CONTRIBUTING.md#supported-browsers).

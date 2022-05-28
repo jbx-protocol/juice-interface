@@ -12,18 +12,21 @@ import { readNetwork } from 'constants/networks'
 /**
  *  Defines the ABI filename to use for a given V2ContractName.
  */
-const CONTRACT_ABI_OVERRIDES: { [k in V2ContractName]?: string } = {
-  JBController: 'JBController_2',
-  JBDirectory: 'JBDirectory_2',
-  JBETHPaymentTerminal: 'JBETHPaymentTerminal_2',
-  JBSplitsStore: 'JBSplitsStore_2',
-  JBTokenStore: 'JBTokenStore_2',
-  JBSingleTokenPaymentTerminalStore: 'JBSingleTokenPaymentTerminalStore_2',
-  JBFundingCycleStore: 'JBFundingCycleStore_2',
-
-  DeprecatedJBController: 'JBController',
-  DeprecatedJBSplitsStore: 'JBSplitsStore',
-  DeprecatedJBDirectory: 'JBDirectory',
+const CONTRACT_ABI_OVERRIDES: {
+  [k in V2ContractName]?: { filename: string; version: string }
+} = {
+  DeprecatedJBController: {
+    version: '4.0.0',
+    filename: 'JBController',
+  },
+  DeprecatedJBSplitsStore: {
+    version: '4.0.0',
+    filename: 'JBSplitsStore',
+  },
+  DeprecatedJBDirectory: {
+    version: '4.0.0',
+    filename: 'JBDirectory',
+  },
 }
 
 export function useV2ContractLoader() {
@@ -70,11 +73,12 @@ const loadContract = async (
   network: NetworkName,
   signerOrProvider: JsonRpcSigner | JsonRpcProvider,
 ): Promise<Contract | undefined> => {
-  const resolvedContractName =
-    CONTRACT_ABI_OVERRIDES[contractName] ?? contractName
+  const contractOverride = CONTRACT_ABI_OVERRIDES[contractName]
+  const version = contractOverride?.version ?? 'latest'
+  const filename = contractOverride?.filename ?? contractName
 
   const contract = await import(
-    `@jbx-protocol/contracts-v2/deployments/${network}/${resolvedContractName}.json`
+    `@jbx-protocol/contracts-v2-${version}/deployments/${network}/${filename}.json`
   )
   return new Contract(contract.address, contract.abi, signerOrProvider)
 }

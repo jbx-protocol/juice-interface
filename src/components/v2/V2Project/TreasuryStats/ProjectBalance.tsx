@@ -9,6 +9,8 @@ import ETHAmount from 'components/shared/currency/ETHAmount'
 
 import V2CurrencyAmount from 'components/v2/shared/V2CurrencyAmount'
 
+import { VolumeStatLine } from 'components/shared/Project/VolumeStatLine'
+
 import { textPrimary, textSecondary } from 'constants/styles/text'
 
 export default function ProjectBalance({ style }: { style?: CSSProperties }) {
@@ -18,36 +20,40 @@ export default function ProjectBalance({ style }: { style?: CSSProperties }) {
     ETHBalance,
     balanceInDistributionLimitCurrency,
     distributionLimitCurrency,
+    totalVolume,
     loading: { balanceInDistributionLimitCurrencyLoading },
   } = useContext(V2ProjectContext)
 
   return (
-    <StatLine
-      loading={balanceInDistributionLimitCurrencyLoading}
-      statLabel={<Trans>In treasury</Trans>}
-      statLabelTip={
-        <Trans>The balance of this project in the Juicebox contract.</Trans>
-      }
-      statValue={
-        <div
-          style={{
-            ...textPrimary,
-            color: colors.text.brand.primary,
-            marginLeft: 10,
-          }}
-        >
-          {distributionLimitCurrency?.eq(V2_CURRENCY_USD) && (
-            <span style={textSecondary(theme)}>
-              <ETHAmount amount={ETHBalance} precision={4} padEnd={true} />{' '}
-            </span>
-          )}
-          <V2CurrencyAmount
-            amount={balanceInDistributionLimitCurrency ?? BigNumber.from(0)}
-            currency={distributionLimitCurrency}
-          />
-        </div>
-      }
-      style={style}
-    />
+    <>
+      <VolumeStatLine totalVolume={totalVolume} color={colors.text.primary} />
+      <StatLine
+        loading={balanceInDistributionLimitCurrencyLoading}
+        statLabel={<Trans>In treasury</Trans>}
+        statLabelTip={
+          <Trans>The balance of this project in the Juicebox contract.</Trans>
+        }
+        statValue={
+          <div
+            style={{
+              ...textPrimary,
+              color: colors.text.brand.primary,
+              marginLeft: 10,
+            }}
+          >
+            {distributionLimitCurrency?.eq(V2_CURRENCY_USD) && (
+              <span style={textSecondary(theme)}>
+                <ETHAmount amount={ETHBalance} precision={4} padEnd={true} />{' '}
+              </span>
+            )}
+            <V2CurrencyAmount
+              amount={balanceInDistributionLimitCurrency ?? BigNumber.from(0)}
+              currency={distributionLimitCurrency}
+            />
+          </div>
+        }
+        style={style}
+      />
+    </>
   )
 }

@@ -56,6 +56,7 @@ export default function V2ConfirmPayModal({
     tokenAddress,
     tokenSymbol,
   } = useContext(V2ProjectContext)
+  // TODO-wraeth: This is a v1 hook - do we need to update?
   const converter = useCurrencyConverter()
   const payProjectTx = usePayV2ProjectTx()
 

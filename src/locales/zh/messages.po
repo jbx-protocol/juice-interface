@@ -1008,9 +1008,12 @@ msgstr "由于其公共性质，任何对合约的恶意利用都可能产生不
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
-#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
 msgid "Duration"
 msgstr "持续时间"
+
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Duration (seconds)"
+msgstr ""
 
 #: src/components/Landing/index.tsx
 msgid "ERC-20 community tokens"
@@ -1168,6 +1171,10 @@ msgstr "筹款周期详情"
 #: src/components/v2/V2Create/forms/FundingForm/DurationInputAndSelect.tsx
 msgid "Funding cycle duration"
 msgstr "筹款周期持续时间"
+
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Funding cycle preview"
+msgstr ""
 
 #: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
 msgid "Funding cycle required."
@@ -1477,6 +1484,10 @@ msgstr "启动你的项目"
 #: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 msgid "Learn more in this <0>short video</0>."
 msgstr "观看 <0>短视频</0>了解更多。"
+
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Leave blank to start immediately."
+msgstr ""
 
 #: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Let's get this party started!"
@@ -2148,6 +2159,10 @@ msgstr "可分派的盈余"
 msgid "Refresh"
 msgstr "刷新"
 
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Relaunch your funding cycle on the new Juicebox V2 contracts."
+msgstr ""
+
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Required"
@@ -2316,8 +2331,6 @@ msgstr "保存监测资产项"
 msgid "Search projects by handle"
 msgstr "通过标识搜索项目"
 
-#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
-#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
 #: src/constants/time.ts
 msgid "Seconds"
 msgstr "秒"
@@ -2404,7 +2417,7 @@ msgid "Start Over"
 msgstr "重新来过"
 
 #: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
-msgid "Start time"
+msgid "Start time (seconds, Unix time)"
 msgstr ""
 
 #: src/components/v1/PayoutModsList.tsx
@@ -3072,6 +3085,10 @@ msgstr "你的余额：{0}"
 #: src/components/v1/V1Project/modals/FeedbackPromptModal.tsx
 msgid "Your feedback will be sent to a <0>public Discord channel </0>for our development team to consider."
 msgstr "您的反馈会被发送至一个 <0>Discord 的公开频道</0>，我们的开发团队可以查看并考量。"
+
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Your funding cycle configuration has been pre-populated using the configuration you originally launched with. If you need to customize it, contact us."
+msgstr ""
 
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Your new payable address:"

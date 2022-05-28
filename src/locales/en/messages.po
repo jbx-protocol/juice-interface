@@ -1003,9 +1003,12 @@ msgstr "Due to their public nature, any exploits to the contracts may have irrev
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
-#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
 msgid "Duration"
 msgstr ""
+
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Duration (seconds)"
+msgstr "Duration (seconds)"
 
 #: src/components/Landing/index.tsx
 msgid "ERC-20 community tokens"
@@ -1163,6 +1166,10 @@ msgstr "Funding cycle details"
 #: src/components/v2/V2Create/forms/FundingForm/DurationInputAndSelect.tsx
 msgid "Funding cycle duration"
 msgstr ""
+
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Funding cycle preview"
+msgstr "Funding cycle preview"
 
 #: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
 msgid "Funding cycle required."
@@ -1472,6 +1479,10 @@ msgstr "Launch your project"
 #: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 msgid "Learn more in this <0>short video</0>."
 msgstr "Learn more in this <0>short video</0>."
+
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Leave blank to start immediately."
+msgstr "Leave blank to start immediately."
 
 #: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Let's get this party started!"
@@ -2143,6 +2154,10 @@ msgstr ""
 msgid "Refresh"
 msgstr "Refresh"
 
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Relaunch your funding cycle on the new Juicebox V2 contracts."
+msgstr "Relaunch your funding cycle on the new Juicebox V2 contracts."
+
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Required"
@@ -2311,8 +2326,6 @@ msgstr "Save tracked assets"
 msgid "Search projects by handle"
 msgstr ""
 
-#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
-#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
 #: src/constants/time.ts
 msgid "Seconds"
 msgstr "Seconds"
@@ -2399,8 +2412,8 @@ msgid "Start Over"
 msgstr ""
 
 #: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
-msgid "Start time"
-msgstr "Start time"
+msgid "Start time (seconds, Unix time)"
+msgstr "Start time (seconds, Unix time)"
 
 #: src/components/v1/PayoutModsList.tsx
 msgid "Sum of percentages cannot exceed 100%"
@@ -3067,6 +3080,10 @@ msgstr ""
 #: src/components/v1/V1Project/modals/FeedbackPromptModal.tsx
 msgid "Your feedback will be sent to a <0>public Discord channel </0>for our development team to consider."
 msgstr "Your feedback will be sent to a <0>public Discord channel </0>for our development team to consider."
+
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Your funding cycle configuration has been pre-populated using the configuration you originally launched with. If you need to customize it, contact us."
+msgstr "Your funding cycle configuration has been pre-populated using the configuration you originally launched with. If you need to customize it, contact us."
 
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Your new payable address:"

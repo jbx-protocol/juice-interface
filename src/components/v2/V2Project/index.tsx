@@ -94,7 +94,7 @@ export default function V2Project({
         actions={!isPreviewMode ? <V2ProjectHeaderActions /> : undefined}
         isArchived={isArchived}
       />
-      {!isPreviewMode && <V2BugNotice />}
+      {!isPreviewMode && !hasCurrentFundingCycle && <V2BugNotice />}
       <Row gutter={GUTTER_PX} align="bottom">
         <Col md={colSizeMd} xs={24}>
           <TreasuryStats />

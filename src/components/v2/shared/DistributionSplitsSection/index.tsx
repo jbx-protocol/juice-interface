@@ -153,13 +153,15 @@ export default function DistributionSplitsSection({
                   setDistributionLimit('0')
                   setDistributionType(newType)
                 }
-                if (remainingSplitsPercentage) {
+                if (
+                  remainingSplitsPercentage &&
+                  remainingSplitsPercentage !== 100
+                ) {
                   editableSplits.push(ownerSplit)
                 }
               }
             }}
             value={distributionType}
-            style={{}}
           >
             <Radio value="amount">
               <Trans>Specific amounts</Trans>

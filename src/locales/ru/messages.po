@@ -172,6 +172,10 @@ msgstr "<0>У этого проекта нет переполнения</0>, п�
 msgid "<0>Trending projects</0><1><2/></1>"
 msgstr "<0>Трендовые проекты</0><1><2/></1>"
 
+#: src/components/v2/V2Create/forms/FundingForm/index.tsx
+msgid "<0>You have 2 options:</0><1><2>Distribute specific amounts to entities each funding cycle. In this case, the sum of all your entities' payouts will determine your <3>distribution limit</3>.</2><4>Split everything that comes into the treasury out to entities by percentage. The <5>distribution limit will be infinite</5>.</4> </1>"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
 msgid "<0>Your unclaimed {tokenSymbol} tokens:</0> {0}"
 msgstr "<0>Ваши невостребованные {tokenSymbol} токены:</0> {0}"
@@ -606,7 +610,7 @@ msgid "Commit portions of your funds to the people or projects you want to suppo
 msgstr "Выделите часть своих средств людям или проектам, которых вы хотите поддержать, или спонсорам, которым вы хотите платить. Когда вам платят, им тоже платят."
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "Configure how your funds will be distributed with payouts. The sum of your payouts will determine your funding cycle's Distribution Limit."
+msgid "Configure how your funds will be distributed from the treasury with payouts to ETH addresses or Juicebox projects."
 msgstr ""
 
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
@@ -959,10 +963,6 @@ msgstr "Лимит распределения не ограничен: Прое�
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Distribution limit, duration and payouts"
 msgstr "Лимит распределения, продолжительность и выплаты"
-
-#: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "Distributions to Juicebox projects don't incur fees. Otherwise, distributions incur a {feeFormatted}% JBX membership fee. The <0>Juicebox DAO treasury</0> receives the fee, and the project owner (you) receives JBX in return."
-msgstr ""
 
 #: src/components/Landing/QAs.tsx
 msgid "Do I have to make my project open source to use Juicebox as its business model?"
@@ -2787,7 +2787,7 @@ msgid "Transparency & accountability"
 msgstr "Прозрачность и подотчетность"
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "Treasury funds that exceed your distribution limit is called <0>overflow</0>. Token holders can redeem (burn) their tokens for a portion of the overflow. <1>Learn more</1>."
+msgid "Treasury funds that exceed the distribution limit are called <0>overflow</0>. Token holders can redeem (burn) their tokens for a portion of the overflow. With an infinite distribution limit, the overflow is always 0 and tokens can never be redeemed for ETH.  <1>Learn more</1>."
 msgstr ""
 
 #: src/components/Projects/ProjectsTabs.tsx

@@ -173,7 +173,7 @@ msgid "<0>Trending projects</0><1><2/></1>"
 msgstr "<0>Projets tendance</0><1><2/></1>"
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "<0>You have 2 options:</0><1><2>Distribute specific amounts to entities each funding cycle. In this case, the sum of all your entities' payouts will determine your <3>distribution limit</3>.</2><4>Split everything that comes into the treasury out to entities by percentage. The <5>distribution limit will be infinite</5>.</4> </1>"
+msgid "<0>You have 2 options:</0><1><2>Distribute specific amounts to entities each funding cycle. In this case, the sum of all your entities' payouts will determine your <3>distribution limit</3>.</2><4>Split everything that comes into the treasury out to entities by percentage. The <5>distribution limit will be infinite</5>.</4></1>"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
@@ -2787,7 +2787,7 @@ msgid "Transparency & accountability"
 msgstr "Transparence et responsabilité"
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "Treasury funds that exceed the distribution limit are called <0>overflow</0>. Token holders can redeem (burn) their tokens for a portion of the overflow. With an infinite distribution limit, the overflow is always 0 and tokens can never be redeemed for ETH.  <1>Learn more</1>."
+msgid "Treasury funds that exceed the distribution limit are called <0>overflow</0>. Token holders can redeem (burn) their tokens for a portion of the overflow. With an infinite distribution limit, the overflow is always 0 and tokens can never be redeemed for ETH. <1>Learn more</1>."
 msgstr ""
 
 #: src/components/Projects/ProjectsTabs.tsx

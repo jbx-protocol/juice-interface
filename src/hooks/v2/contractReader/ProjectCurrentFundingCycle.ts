@@ -5,11 +5,15 @@ import useV2ContractReader from './V2ContractReader'
 
 export default function useProjectCurrentFundingCycle({
   projectId,
+  useDeprecatedContract,
 }: {
   projectId?: number
+  useDeprecatedContract?: boolean
 }) {
   return useV2ContractReader<[V2FundingCycle, V2FundingCycleMetadata]>({
-    contract: V2ContractName.JBController,
+    contract: useDeprecatedContract
+      ? V2ContractName.DeprecatedJBController
+      : V2ContractName.JBController,
     functionName: 'currentFundingCycleOf',
     args: projectId ? [projectId] : null,
   })

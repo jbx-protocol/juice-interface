@@ -6,12 +6,12 @@ import { SECONDS_IN_DAY } from 'constants/numbers'
 
 const BALLOT_ADDRESSES: { [k: string]: { [j: string]: string } } = {
   THREE_DAY: {
-    rinkeby: '0xf91150aa07a1AC707148420713cefd299b8D094A',
-    mainnet: '0xE81a1c3D4f12824712770F50252d8FeE797F3A04',
+    rinkeby: '0xbb5fe3f1c422a13700d8F990a17813e554c5b380',
+    mainnet: '0x138D6d59afC6DbBD1DC0bDdF05Ae27f645Eb4305',
   },
   SEVEN_DAY: {
-    rinkeby: '0x22223769a43502EFef4231eB49aa2e22F2745420',
-    mainnet: '0x3EA16DeFF07f031e86bd13C55961eB576cd579a6',
+    rinkeby: '0xeC2a134FE6FC50798057dcd2d72f34d84f2aaEa7',
+    mainnet: '0xf341D09b5eEA92B1C1C9bB8C0D7be4467743c84a',
   },
 }
 

@@ -190,6 +190,11 @@ export default function RelaunchFundingCycleBanner() {
                   label={<Trans>Duration (seconds)</Trans>}
                   required
                   style={{ width: '100%' }}
+                  extra={
+                    newDuration.toNumber() > 0
+                      ? `= ${newDuration.toNumber() / 86400} days`
+                      : ''
+                  }
                 >
                   <Input
                     type="number"

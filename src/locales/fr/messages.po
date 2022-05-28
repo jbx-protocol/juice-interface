@@ -894,6 +894,7 @@ msgstr "Distribuer {tokenTextPlural}"
 msgid "Distribute {tokensText}"
 msgstr "Distribuer {tokensText}"
 
+#: src/components/shared/Project/FundingProgressBar.tsx
 #: src/components/v1/V1Project/Paid.tsx
 #: src/components/v2/V2Project/TreasuryStats/DistributedRatio.tsx
 msgid "Distributed"
@@ -1670,6 +1671,10 @@ msgstr "Notification de {0} :"
 #: src/components/v1/V1Project/modals/BalancesModal.tsx
 msgid "Other assets in this project's owner's wallet."
 msgstr "Autres actifs dans le portefeuille du propriétaire de ce projet."
+
+#: src/components/shared/Project/FundingProgressBar.tsx
+msgid "Overflow"
+msgstr ""
 
 #: src/components/v1/shared/BudgetForm.tsx
 msgid "Overflow is created if your project's balance exceeds your funding cycle target. Overflow can be redeemed by your project's token holders."

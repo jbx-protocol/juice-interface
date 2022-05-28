@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-05-27 02:56\n"
+"PO-Revision-Date: 2022-05-28 02:38\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -717,7 +717,7 @@ msgstr "筹款活动"
 
 #: src/components/Landing/index.tsx
 msgid "Crypto and Web3 businesses"
-msgstr ""
+msgstr "加密货币和 Web3 商业活动"
 
 #: src/components/v1/V1Project/FundingCycles/index.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/index.tsx
@@ -1134,7 +1134,7 @@ msgstr "对于通过你的应用程序进行支付的用户，你应该将资金
 
 #: src/components/Landing/index.tsx
 msgid "Fund anything. Grow together."
-msgstr ""
+msgstr "运“筹”帷幄，共创未来。"
 
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/FundingDrawer.tsx
@@ -1338,7 +1338,7 @@ msgstr "激励措施"
 
 #: src/components/Landing/index.tsx
 msgid "Indie creators and builders"
-msgstr ""
+msgstr "独立创作者和建设者们"
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Initial issuance rate"
@@ -1457,7 +1457,7 @@ msgstr "最近付款"
 
 #: src/components/Landing/index.tsx
 msgid "Launch your project"
-msgstr ""
+msgstr "启动你的项目"
 
 #: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 msgid "Learn more in this <0>short video</0>."
@@ -1539,7 +1539,7 @@ msgstr "按需铸造项目代币"
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "Mint tokens as ERC-20"
-msgstr ""
+msgstr "铸造 ERC-20 标准代币"
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Mint tokens to a custom address."
@@ -1770,11 +1770,11 @@ msgstr "当前项目已暂停接收付款。"
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "Payment made through payable address"
-msgstr ""
+msgstr "通过可支付地址支付的款项"
 
 #: src/components/shared/RichImgPreview.tsx
 msgid "Payment memo image"
-msgstr ""
+msgstr "付款留言图片"
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
@@ -2402,7 +2402,7 @@ msgstr "有这一个这是计划，但核心的 Juicebox 合约将首先部署�
 
 #: src/components/Landing/index.tsx
 msgid "The Decentralized Funding Platform. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."
-msgstr ""
+msgstr "去中心化筹款平台。既简便易用方便一群好友创建项目，又强大到能支持一个全球性的匿名网络。 在以太坊上，<0>社区共有</0>。"
 
 #: src/components/v1/V1Create/index.tsx
 msgid "The JBX protocol is unaudited, and projects built on it may be vulnerable to bugs or exploits. Be smart!"
@@ -2481,7 +2481,7 @@ msgstr "单个筹款周期内，可从项目分配出去的资金上限。无论
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "The onchain memo for each transaction made through the address. It will appear in the project's payment feed when someone pays this address."
-msgstr ""
+msgstr "通过这个地址进行的每一笔交易的链上备注。如果有人向这个地址付款，链上备注会出现在项目的付款情况一栏内。"
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "The percent this individual receives of the overall {reservedRate}% reserved token allocation"
@@ -2581,7 +2581,7 @@ msgstr "这意味着任何人都可以看到他们正在使用的代码，任何
 #: src/components/v1/V1Project/V1PayButton.tsx
 #: src/components/v2/V2Project/V2PayButton/index.tsx
 msgid "This project is archived and can't be paid."
-msgstr ""
+msgstr "项目已被归档，无法收到付款。"
 
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "This project is currently using the Juicebox V1 terminal contract. New features introduced in V1.1 allow the project owner to:"
@@ -2644,7 +2644,7 @@ msgstr "代币铸造功能允许项目拥有者随时铸造项目代币。"
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "Token minting enabled"
-msgstr ""
+msgstr "代币铸造已允许"
 
 #: src/components/shared/ManageTokensModal.tsx
 msgid "Token minting is only available for V1.1 projects. Token minting can be enabled or disabled by reconfiguring the project's funding cycle."
@@ -2656,7 +2656,7 @@ msgstr "代币名称"
 
 #: src/components/shared/modals/IssueTokenModal.tsx
 msgid "Token name is required"
-msgstr ""
+msgstr "请填写代币名称"
 
 #: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 msgid "Token redeem value"
@@ -2668,7 +2668,7 @@ msgstr "代币符号"
 
 #: src/components/shared/modals/IssueTokenModal.tsx
 msgid "Token symbol is required"
-msgstr ""
+msgstr "请填写代币简称"
 
 #: src/components/shared/Mod.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
@@ -2698,7 +2698,7 @@ msgstr "因为 ERC-20 代币还没有签发，所以目前还不能领取代币�
 
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Tokens minted from payments to this address will belong to the payer by default. However, if someone pays the project through a custodial service platform such as Coinbase, <0>tokens can't be issued to their personal wallets and will be lost</0>."
-msgstr ""
+msgstr "向这个地址付款铸造出来的代币默认属于付款人。但是，如果有人通过类似 Coinbase 这样的托管式服务平台来给项目付款， <0>代币不会分发到他们的个人钱包且将会丢失</0>。"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "Tokens receiver"
@@ -2886,7 +2886,7 @@ msgstr "里面究竟有什么乾坤？"
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "When checked, payments to this address will mint this project's ERC-20 tokens to the beneficiary's wallet. Payments will cost more gas. When unchecked, Juicebox will track the beneficiary's new tokens when they pay. The beneficiary can claim their ERC-20 tokens at any time."
-msgstr ""
+msgstr "勾选此项，向这个地址付款会把 ERC-20 标准代币铸造到受益人钱包地址。付款的 gas 费用会增加。取消勾选，则付款后受益人的新代币将在 Juicebox 协议内托管。受益人可以随时来提取自己的 ERC-20 代币。"
 
 #: src/components/v2/V2Create/forms/RulesForm/TokenMintingExtra.tsx
 #: src/components/v2/V2Create/forms/RulesForm/index.tsx
@@ -3090,7 +3090,7 @@ msgstr "你的待领取 {tokenTextLong} 代币"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Zero"
-msgstr ""
+msgstr "0"
 
 #: src/components/v2/V2Create/forms/FundingForm/TargetTypeSelect.tsx
 msgid "Zero, no funds can be distributed"

@@ -33,13 +33,17 @@ export default function useProjectSplits({
   projectId,
   splitGroup,
   domain,
+  useDeprecatedContract,
 }: {
   projectId: number | undefined
   splitGroup: SplitGroup
   domain: string | undefined
+  useDeprecatedContract?: boolean
 }) {
   return useV2ContractReader<Split[]>({
-    contract: V2ContractName.JBSplitsStore,
+    contract: useDeprecatedContract
+      ? V2ContractName.DeprecatedJBSplitsStore
+      : V2ContractName.JBSplitsStore,
     functionName: 'splitsOf',
     args: projectId && domain ? [projectId, domain, splitGroup] : null,
     formatter: useCallback((value): Split[] => {

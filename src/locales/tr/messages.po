@@ -2604,7 +2604,7 @@ msgstr "Gerisi token sahipleri arasında paylaşılmak üzere bırakılır."
 msgid "The target for this funding cycle is 0, meaning all funds in Juicebox are currently considered overflow. Overflow can be redeemed by token holders, but not distributed."
 msgstr "Bu finansman döngüsü için hedef 0'dır, yani Juicebox'taki tüm fonlar şu anda taşma olarak kabul edilir. Taşma, token sahipleri tarafından talep edilerek kullanılabilir, ancak dağıtılamaz."
 
-#: src/components/v1/V1Project/Paid.tsx
+#: src/components/shared/Project/VolumeStatLine/VolumeStatLine.tsx
 msgid "The total amount received by this project through Juicebox since it was created."
 msgstr "Oluşturulma tarihinden bu yana, bu proje tarafından Juicebox aracılığıyla alınan toplam miktar."
 
@@ -2933,8 +2933,8 @@ msgstr ""
 msgid "Version of the terminal contract used by this project."
 msgstr "Bu proje tarafından kullanılan terminal sözleşmesinin sürümü."
 
+#: src/components/shared/Project/VolumeStatLine/VolumeStatLine.tsx
 #: src/components/shared/VolumeChart/index.tsx
-#: src/components/v1/V1Project/Paid.tsx
 msgid "Volume"
 msgstr "Hacim"
 

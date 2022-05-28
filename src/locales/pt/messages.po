@@ -2604,7 +2604,7 @@ msgstr "O resto é deixado para divisão entre os titulares do token."
 msgid "The target for this funding cycle is 0, meaning all funds in Juicebox are currently considered overflow. Overflow can be redeemed by token holders, but not distributed."
 msgstr "O objetivo desse ciclo de financiamento é 0, o que significa que todos os fundos no Juicebox são atualmente considerados overflow. Overflow pode ser resgatado por detentores de tokens, mas não distribuído."
 
-#: src/components/v1/V1Project/Paid.tsx
+#: src/components/shared/Project/VolumeStatLine/VolumeStatLine.tsx
 msgid "The total amount received by this project through Juicebox since it was created."
 msgstr "O montante total recebido por este projeto através do Juicebox desde que foi criado."
 
@@ -2933,8 +2933,8 @@ msgstr "V2"
 msgid "Version of the terminal contract used by this project."
 msgstr "Versão do contrato de terminal utilizado por este projeto."
 
+#: src/components/shared/Project/VolumeStatLine/VolumeStatLine.tsx
 #: src/components/shared/VolumeChart/index.tsx
-#: src/components/v1/V1Project/Paid.tsx
 msgid "Volume"
 msgstr "Volume"
 

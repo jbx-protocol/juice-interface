@@ -2604,7 +2604,7 @@ msgstr "Остальное распределяется между держат�
 msgid "The target for this funding cycle is 0, meaning all funds in Juicebox are currently considered overflow. Overflow can be redeemed by token holders, but not distributed."
 msgstr "Целью данного цикла финансирования является 0, то есть все средства в Juicebox в настоящее время считаются переполнением. Переполнение может быть использовано держателями токенов, но не распределено."
 
-#: src/components/v1/V1Project/Paid.tsx
+#: src/components/shared/Project/VolumeStatLine/VolumeStatLine.tsx
 msgid "The total amount received by this project through Juicebox since it was created."
 msgstr "Общая сумма, полученная этим проектом через Juicebox с момента его создания."
 
@@ -2933,8 +2933,8 @@ msgstr ""
 msgid "Version of the terminal contract used by this project."
 msgstr "Версия терминального контракта, используемая в этом проекте."
 
+#: src/components/shared/Project/VolumeStatLine/VolumeStatLine.tsx
 #: src/components/shared/VolumeChart/index.tsx
-#: src/components/v1/V1Project/Paid.tsx
 msgid "Volume"
 msgstr "Объём"
 

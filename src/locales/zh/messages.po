@@ -2604,7 +2604,7 @@ msgstr "剩下的就留给代币持有人来分享。"
 msgid "The target for this funding cycle is 0, meaning all funds in Juicebox are currently considered overflow. Overflow can be redeemed by token holders, but not distributed."
 msgstr "当前筹款周期的目标为零，意味着目前所有资金都视作溢出。代币持有者可以从溢出池中赎回 ETH，但是项目方不能从溢出池中提取资金。"
 
-#: src/components/v1/V1Project/Paid.tsx
+#: src/components/shared/Project/VolumeStatLine/VolumeStatLine.tsx
 msgid "The total amount received by this project through Juicebox since it was created."
 msgstr "该项目自创建以来通过 Juicebox 接收的总金额。"
 
@@ -2933,8 +2933,8 @@ msgstr "V2"
 msgid "Version of the terminal contract used by this project."
 msgstr "当前项目所使用的 Terminal 版本。"
 
+#: src/components/shared/Project/VolumeStatLine/VolumeStatLine.tsx
 #: src/components/shared/VolumeChart/index.tsx
-#: src/components/v1/V1Project/Paid.tsx
 msgid "Volume"
 msgstr "总收入"
 

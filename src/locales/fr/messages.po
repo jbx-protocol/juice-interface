@@ -382,8 +382,8 @@ msgstr "Somme"
 msgid "Amount of ERC-20 tokens to claim"
 msgstr "Montant de tokens ERC-20 à réclamer"
 
+#: src/components/shared/modals/ParticipantsModal.tsx
 #: src/components/v1/V1DownloadPaymentsModal.tsx
-#: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 #: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Amount paid"
 msgstr "Somme payée"
@@ -475,8 +475,8 @@ msgstr "Adresse du bénéficiaire"
 msgid "Big ups to the Ethereum community for crafting the infrastructure and economy to make Juicebox possible."
 msgstr "Bravo à la communauté Ethereum pour avoir créé l'infrastructure et l'économie nécessaires pour rendre Juicebox possible."
 
+#: src/components/shared/modals/DownloadParticipantsModal.tsx
 #: src/components/v1/V1DownloadPaymentsModal.tsx
-#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 #: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Block number"
 msgstr "Numéro de blocage"
@@ -607,9 +607,9 @@ msgid "Claiming {tokenTextLong} will convert your {tokenTextShort} balance to ER
 msgstr "Si vous réclamez {tokenTextLong} votre solde {tokenTextShort} sera converti en tokens ERC-20 et ils seront frappés vers votre portefeuille."
 
 #: src/components/shared/TransactionModal.tsx
+#: src/components/shared/modals/DownloadParticipantsModal.tsx
 #: src/components/v1/V1DownloadActivityModal.tsx
 #: src/components/v1/V1DownloadPaymentsModal.tsx
-#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 #: src/components/v2/V2Project/V2DownloadActivityModal.tsx
 #: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Close"
@@ -991,17 +991,17 @@ msgstr "Documents dans v1.1 contrats"
 msgid "Does a project benefit from its own overflow?"
 msgstr "Un projet est-il bénéficié par son propre overflow ?"
 
+#: src/components/shared/modals/ParticipantsModal.tsx
 #: src/components/v1/V1Project/FundingCycles/FundingHistory.tsx
 #: src/components/v1/V1Project/modals/BalancesModal.tsx
-#: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 #: src/components/v2/V2Project/NewDeployModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleHistory.tsx
 msgid "Done"
 msgstr "Finalisé"
 
+#: src/components/shared/modals/DownloadParticipantsModal.tsx
 #: src/components/v1/V1DownloadPaymentsModal.tsx
-#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 #: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Download CSV"
 msgstr "Télécharger CSV"
@@ -1016,7 +1016,7 @@ msgstr "Télécharger CSV des paiements"
 msgid "Download CSV of project activity"
 msgstr "Télécharger CSV de l'activité de votre projet"
 
-#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/components/shared/modals/DownloadParticipantsModal.tsx
 msgid "Download CSV of {0} holders"
 msgstr "Télécharger CSV des {0} titulaires"
 
@@ -1108,7 +1108,7 @@ msgstr "Activer la frappe de tokens peut sembler risquée pour les contributeurs
 msgid "End"
 msgstr "Fin"
 
-#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/components/shared/modals/DownloadParticipantsModal.tsx
 msgid "Error loading holders"
 msgstr "Erreur lors du chargement des titulaires"
 
@@ -1255,6 +1255,7 @@ msgid "History"
 msgstr "Historique"
 
 #: src/components/v1/V1Project/Rewards/index.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "Holders"
 msgstr "Titulaires"
 
@@ -1477,11 +1478,11 @@ msgstr "Projet Juicebox"
 msgid "Juicebox was built to allow people and projects to get paid for creating public art and infrastructure, as much as or more than they would working towards corporate ends. No more shady business."
 msgstr "Juicebox a été conçu pour permettre aux personnes et aux projets d'être payés pour la création d'art public et d'infrastructures, autant ou plus qu'ils ne le feraient à des fins commerciales. Fini les affaires louches."
 
-#: src/components/v1/V1Project/modals/ParticipantsModal.tsx
+#: src/components/shared/modals/ParticipantsModal.tsx
 msgid "Last paid"
 msgstr "Dernier paiement"
 
-#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/components/shared/modals/DownloadParticipantsModal.tsx
 msgid "Last paid timestamp"
 msgstr "Ticket daté du dernier paiement"
 
@@ -1490,8 +1491,8 @@ msgstr "Ticket daté du dernier paiement"
 msgid "Later"
 msgstr "Plus tard"
 
+#: src/components/shared/modals/DownloadParticipantsModal.tsx
 #: src/components/v1/V1DownloadPaymentsModal.tsx
-#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 #: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Latest"
 msgstr "Dernier"
@@ -1526,8 +1527,8 @@ msgid "Light theme"
 msgstr "Mode clair"
 
 #: src/components/Projects/index.tsx
+#: src/components/shared/modals/ParticipantsModal.tsx
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
-#: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 #: src/components/v2/V2Project/ProjectActivity/index.tsx
 msgid "Load more"
 msgstr "Télécharger d'avantage"
@@ -2425,7 +2426,7 @@ msgstr ""
 msgid "Spending"
 msgstr "Dépenses"
 
-#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/components/shared/modals/DownloadParticipantsModal.tsx
 msgid "Staked balance"
 msgstr "Solde jalonné"
 
@@ -2647,7 +2648,7 @@ msgstr "Ce cycle de financement peut présenter des risques pour les contributeu
 msgid "This is the maximum amount of funds that can leave the treasury each funding cycle."
 msgstr ""
 
-#: src/components/v1/V1Project/modals/ParticipantsModal.tsx
+#: src/components/shared/modals/ParticipantsModal.tsx
 msgid "This list is using an experimental data index and may be inaccurate for some projects."
 msgstr "Cette liste utilise un index de données expérimental et peut être inexacte pour certains projets."
 
@@ -2696,7 +2697,7 @@ msgstr "À : <0/>"
 msgid "Token"
 msgstr "Token"
 
-#: src/components/v1/V1Project/modals/ParticipantsModal.tsx
+#: src/components/shared/modals/ParticipantsModal.tsx
 msgid "Token address: <0/>"
 msgstr "Adresse du token : <0/>"
 
@@ -2791,7 +2792,7 @@ msgstr "Tokens :"
 msgid "Tools"
 msgstr "Outils"
 
-#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/components/shared/modals/DownloadParticipantsModal.tsx
 msgid "Total ETH paid"
 msgstr "Total ETH payé"
 
@@ -2866,7 +2867,7 @@ msgstr "À moins que les paiements ne soient suspendus dans les paramètres de v
 msgid "Unsaved changes"
 msgstr "Modifications non sauvegardées"
 
-#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/components/shared/modals/DownloadParticipantsModal.tsx
 msgid "Unstaked balance"
 msgstr "Solde jalonné"
 
@@ -2924,8 +2925,8 @@ msgstr "Version du contrat terminal utilisé par ce projet."
 msgid "Volume"
 msgstr "Volume"
 
+#: src/components/shared/modals/DownloadParticipantsModal.tsx
 #: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
-#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Wallet address"
 msgstr "Adresse du portefeuille"
@@ -3261,8 +3262,8 @@ msgstr "projets"
 msgid "seconds"
 msgstr "secondes"
 
-#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
-#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/components/shared/modals/DownloadParticipantsModal.tsx
+#: src/components/shared/modals/DownloadParticipantsModal.tsx
 #: src/utils/tokenSymbolText.ts
 msgid "token"
 msgstr "token"
@@ -3294,7 +3295,7 @@ msgstr "il y a {0}"
 msgid "{0} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
 msgstr "{0} sont distribués à tous ceux qui paient ce projet. Si le projet a défini un objectif de financement, les tokens peuvent être récupérés d'une partie de l'overflow du projet, qu'ils aient été déjà réclamés ou non."
 
-#: src/components/v1/V1Project/modals/ParticipantsModal.tsx
+#: src/components/shared/modals/ParticipantsModal.tsx
 msgid "{0} balance"
 msgstr "{0} solde"
 
@@ -3302,7 +3303,7 @@ msgstr "{0} solde"
 msgid "{0} balance: <0><1>{1} {tokensTextShort}</1><2>({share}% of supply)</2></0>"
 msgstr "{0} solde : <0><1>{1} {tokensTextShort}</1><2>({share}% d'offre)</2></0>"
 
-#: src/components/v1/V1Project/modals/ParticipantsModal.tsx
+#: src/components/shared/modals/ParticipantsModal.tsx
 msgid "{0} contributed"
 msgstr "{0} contribué"
 
@@ -3315,7 +3316,7 @@ msgstr "{0} jours"
 msgid "{0} for you"
 msgstr "{0} pour vous"
 
-#: src/components/v1/V1Project/modals/ParticipantsModal.tsx
+#: src/components/shared/modals/ParticipantsModal.tsx
 msgid "{0} holders"
 msgstr "{0} titulaires"
 
@@ -3324,11 +3325,11 @@ msgstr "{0} titulaires"
 msgid "{0} reserved"
 msgstr "{0} réservé"
 
-#: src/components/v1/V1Project/modals/ParticipantsModal.tsx
+#: src/components/shared/modals/ParticipantsModal.tsx
 msgid "{0} staked"
 msgstr "{0} jalonné"
 
-#: src/components/v1/V1Project/modals/ParticipantsModal.tsx
+#: src/components/shared/modals/ParticipantsModal.tsx
 msgid "{0} total"
 msgstr "{0} total"
 

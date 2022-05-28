@@ -382,8 +382,8 @@ msgstr "Количество"
 msgid "Amount of ERC-20 tokens to claim"
 msgstr "Количество токенов ERC-20, на которые можно претендовать"
 
+#: src/components/shared/modals/ParticipantsModal.tsx
 #: src/components/v1/V1DownloadPaymentsModal.tsx
-#: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 #: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Amount paid"
 msgstr "Оплаченная сумма"
@@ -475,8 +475,8 @@ msgstr "Адрес получателя"
 msgid "Big ups to the Ethereum community for crafting the infrastructure and economy to make Juicebox possible."
 msgstr "Большое спасибо сообществу Ethereum за создание инфраструктуры и экономики, что сделало Juicebox возможным."
 
+#: src/components/shared/modals/DownloadParticipantsModal.tsx
 #: src/components/v1/V1DownloadPaymentsModal.tsx
-#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 #: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Block number"
 msgstr "Номер блока"
@@ -607,9 +607,9 @@ msgid "Claiming {tokenTextLong} will convert your {tokenTextShort} balance to ER
 msgstr "Требование {tokenTextLong} токенов конвертирует ваш {tokenTextShort} баланс в токены ERC-20 и отчеканит их в вашем кошельке."
 
 #: src/components/shared/TransactionModal.tsx
+#: src/components/shared/modals/DownloadParticipantsModal.tsx
 #: src/components/v1/V1DownloadActivityModal.tsx
 #: src/components/v1/V1DownloadPaymentsModal.tsx
-#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 #: src/components/v2/V2Project/V2DownloadActivityModal.tsx
 #: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Close"
@@ -991,17 +991,17 @@ msgstr "Документация по контрактам версии 1.1"
 msgid "Does a project benefit from its own overflow?"
 msgstr "Выигрывает ли проект от собственного переполнения?"
 
+#: src/components/shared/modals/ParticipantsModal.tsx
 #: src/components/v1/V1Project/FundingCycles/FundingHistory.tsx
 #: src/components/v1/V1Project/modals/BalancesModal.tsx
-#: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 #: src/components/v2/V2Project/NewDeployModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleHistory.tsx
 msgid "Done"
 msgstr "Готово"
 
+#: src/components/shared/modals/DownloadParticipantsModal.tsx
 #: src/components/v1/V1DownloadPaymentsModal.tsx
-#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 #: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Download CSV"
 msgstr "Скачать CSV"
@@ -1016,7 +1016,7 @@ msgstr "Скачать CSV данных о платежах"
 msgid "Download CSV of project activity"
 msgstr "Скачать CSV о активности проекта"
 
-#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/components/shared/modals/DownloadParticipantsModal.tsx
 msgid "Download CSV of {0} holders"
 msgstr "Загрузить CSV из {0} держателей"
 
@@ -1108,7 +1108,7 @@ msgstr "Включение выпуска токенов покажется вк
 msgid "End"
 msgstr "Конец"
 
-#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/components/shared/modals/DownloadParticipantsModal.tsx
 msgid "Error loading holders"
 msgstr "Ошибка загрузки владельцев"
 
@@ -1255,6 +1255,7 @@ msgid "History"
 msgstr "История"
 
 #: src/components/v1/V1Project/Rewards/index.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "Holders"
 msgstr "Держатели"
 
@@ -1477,11 +1478,11 @@ msgstr "Проект Juicebox"
 msgid "Juicebox was built to allow people and projects to get paid for creating public art and infrastructure, as much as or more than they would working towards corporate ends. No more shady business."
 msgstr "Juicebox был построен, чтобы позволить людям и проектам получать оплату за создание публичного искусства и инфраструктуры столько же или больше, чем они будут работать для достижения корпоративных целей. Больше никаких теневых дел."
 
-#: src/components/v1/V1Project/modals/ParticipantsModal.tsx
+#: src/components/shared/modals/ParticipantsModal.tsx
 msgid "Last paid"
 msgstr "Последний платеж"
 
-#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/components/shared/modals/DownloadParticipantsModal.tsx
 msgid "Last paid timestamp"
 msgstr "Последняя оплаченная временная метка"
 
@@ -1490,8 +1491,8 @@ msgstr "Последняя оплаченная временная метка"
 msgid "Later"
 msgstr "Позже"
 
+#: src/components/shared/modals/DownloadParticipantsModal.tsx
 #: src/components/v1/V1DownloadPaymentsModal.tsx
-#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 #: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Latest"
 msgstr "Последние"
@@ -1526,8 +1527,8 @@ msgid "Light theme"
 msgstr "Светлая тема"
 
 #: src/components/Projects/index.tsx
+#: src/components/shared/modals/ParticipantsModal.tsx
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
-#: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 #: src/components/v2/V2Project/ProjectActivity/index.tsx
 msgid "Load more"
 msgstr "Загрузить ещё"
@@ -2425,7 +2426,7 @@ msgstr ""
 msgid "Spending"
 msgstr "Расходы"
 
-#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/components/shared/modals/DownloadParticipantsModal.tsx
 msgid "Staked balance"
 msgstr "Учтенный баланс"
 
@@ -2647,7 +2648,7 @@ msgstr "Этот цикл финансирования может предста
 msgid "This is the maximum amount of funds that can leave the treasury each funding cycle."
 msgstr ""
 
-#: src/components/v1/V1Project/modals/ParticipantsModal.tsx
+#: src/components/shared/modals/ParticipantsModal.tsx
 msgid "This list is using an experimental data index and may be inaccurate for some projects."
 msgstr "Этот список использует экспериментальный индекс данных и может быть неточным для некоторых проектов."
 
@@ -2696,7 +2697,7 @@ msgstr "Кому: <0/>"
 msgid "Token"
 msgstr "Токен"
 
-#: src/components/v1/V1Project/modals/ParticipantsModal.tsx
+#: src/components/shared/modals/ParticipantsModal.tsx
 msgid "Token address: <0/>"
 msgstr "Адрес токена: <0/>"
 
@@ -2791,7 +2792,7 @@ msgstr "Токены:"
 msgid "Tools"
 msgstr "Инструменты"
 
-#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/components/shared/modals/DownloadParticipantsModal.tsx
 msgid "Total ETH paid"
 msgstr "Общий платёж ETH"
 
@@ -2866,7 +2867,7 @@ msgstr "Если платежи не приостановлены в настр�
 msgid "Unsaved changes"
 msgstr "Несохраненные изменения"
 
-#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/components/shared/modals/DownloadParticipantsModal.tsx
 msgid "Unstaked balance"
 msgstr "Неучтенный баланс"
 
@@ -2924,8 +2925,8 @@ msgstr "Версия терминального контракта, исполь
 msgid "Volume"
 msgstr "Объём"
 
+#: src/components/shared/modals/DownloadParticipantsModal.tsx
 #: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
-#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Wallet address"
 msgstr "Адрес кошелька"
@@ -3261,8 +3262,8 @@ msgstr "проекты"
 msgid "seconds"
 msgstr "секунды"
 
-#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
-#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/components/shared/modals/DownloadParticipantsModal.tsx
+#: src/components/shared/modals/DownloadParticipantsModal.tsx
 #: src/utils/tokenSymbolText.ts
 msgid "token"
 msgstr "токен"
@@ -3294,7 +3295,7 @@ msgstr "{0} лет назад"
 msgid "{0} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
 msgstr "{0} распределяются среди всех, кто платит этому проекту. Если проект установил цель финансирования, токены могут быть выкуплены за часть переполнения проекта независимо от того, были ли они еще востребованы."
 
-#: src/components/v1/V1Project/modals/ParticipantsModal.tsx
+#: src/components/shared/modals/ParticipantsModal.tsx
 msgid "{0} balance"
 msgstr "{0} баланс"
 
@@ -3302,7 +3303,7 @@ msgstr "{0} баланс"
 msgid "{0} balance: <0><1>{1} {tokensTextShort}</1><2>({share}% of supply)</2></0>"
 msgstr "{0} баланс: <0><1>{1} {tokensTextShort}</1><2>({share}% от предложения)</2></0>"
 
-#: src/components/v1/V1Project/modals/ParticipantsModal.tsx
+#: src/components/shared/modals/ParticipantsModal.tsx
 msgid "{0} contributed"
 msgstr "{0} внесли вклад"
 
@@ -3315,7 +3316,7 @@ msgstr "{0} дней"
 msgid "{0} for you"
 msgstr "{0} для вас"
 
-#: src/components/v1/V1Project/modals/ParticipantsModal.tsx
+#: src/components/shared/modals/ParticipantsModal.tsx
 msgid "{0} holders"
 msgstr "{0} держатели"
 
@@ -3324,11 +3325,11 @@ msgstr "{0} держатели"
 msgid "{0} reserved"
 msgstr "{0} зарезервировано"
 
-#: src/components/v1/V1Project/modals/ParticipantsModal.tsx
+#: src/components/shared/modals/ParticipantsModal.tsx
 msgid "{0} staked"
 msgstr "{0} размещено"
 
-#: src/components/v1/V1Project/modals/ParticipantsModal.tsx
+#: src/components/shared/modals/ParticipantsModal.tsx
 msgid "{0} total"
 msgstr "{0} всего"
 

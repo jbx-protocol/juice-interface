@@ -382,8 +382,8 @@ msgstr "Miktar"
 msgid "Amount of ERC-20 tokens to claim"
 msgstr "Talep edilecek ERC-20 token miktarı"
 
+#: src/components/shared/modals/ParticipantsModal.tsx
 #: src/components/v1/V1DownloadPaymentsModal.tsx
-#: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 #: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Amount paid"
 msgstr "Ödenen miktar"
@@ -475,8 +475,8 @@ msgstr "Faydalanıcı adresi"
 msgid "Big ups to the Ethereum community for crafting the infrastructure and economy to make Juicebox possible."
 msgstr "Juicebox'ı mümkün kılan altyapı ve ekonomiyi hazırladığı için Ethereum topluluğuna selamlar."
 
+#: src/components/shared/modals/DownloadParticipantsModal.tsx
 #: src/components/v1/V1DownloadPaymentsModal.tsx
-#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 #: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Block number"
 msgstr "Blok numarası"
@@ -607,9 +607,9 @@ msgid "Claiming {tokenTextLong} will convert your {tokenTextShort} balance to ER
 msgstr "{tokenTextLong} token'larınızı talep etmeniz, {tokenTextShort} bakiyenizi ERC-20 token'larına dönüştürecek ve bunları cüzdanınıza basacaktır."
 
 #: src/components/shared/TransactionModal.tsx
+#: src/components/shared/modals/DownloadParticipantsModal.tsx
 #: src/components/v1/V1DownloadActivityModal.tsx
 #: src/components/v1/V1DownloadPaymentsModal.tsx
-#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 #: src/components/v2/V2Project/V2DownloadActivityModal.tsx
 #: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Close"
@@ -991,17 +991,17 @@ msgstr "V1.1 sözleşmelerine ilişkin belgeler"
 msgid "Does a project benefit from its own overflow?"
 msgstr "Bir proje kendi taşmasından faydalanır mı?"
 
+#: src/components/shared/modals/ParticipantsModal.tsx
 #: src/components/v1/V1Project/FundingCycles/FundingHistory.tsx
 #: src/components/v1/V1Project/modals/BalancesModal.tsx
-#: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 #: src/components/v2/V2Project/NewDeployModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleHistory.tsx
 msgid "Done"
 msgstr "Tamamlandı"
 
+#: src/components/shared/modals/DownloadParticipantsModal.tsx
 #: src/components/v1/V1DownloadPaymentsModal.tsx
-#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 #: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Download CSV"
 msgstr "CSV'yi indirin"
@@ -1016,7 +1016,7 @@ msgstr "Ödemeler CSV'sini indirin"
 msgid "Download CSV of project activity"
 msgstr "Proje Etkinliği CSV'sini indirin"
 
-#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/components/shared/modals/DownloadParticipantsModal.tsx
 msgid "Download CSV of {0} holders"
 msgstr "{0} sahipleri CSV'sini indirin"
 
@@ -1108,7 +1108,7 @@ msgstr "Token basımının etkinleştirilmesi, katkıda bulunanlar açısından 
 msgid "End"
 msgstr "Son"
 
-#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/components/shared/modals/DownloadParticipantsModal.tsx
 msgid "Error loading holders"
 msgstr "Sahipler yüklenirken hata oluştu"
 
@@ -1255,6 +1255,7 @@ msgid "History"
 msgstr "Geçmiş"
 
 #: src/components/v1/V1Project/Rewards/index.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "Holders"
 msgstr "Sahipler"
 
@@ -1477,11 +1478,11 @@ msgstr "Juicebox projesi"
 msgid "Juicebox was built to allow people and projects to get paid for creating public art and infrastructure, as much as or more than they would working towards corporate ends. No more shady business."
 msgstr "Juicebox, insanların ve projelerin kamusal sanat ve altyapı oluşturmak için kurumsal amaçlara yönelik çalıştıkları kadar veya daha fazla para almalarına izin vermek için inşa edildi. Artık karanlık iş yok."
 
-#: src/components/v1/V1Project/modals/ParticipantsModal.tsx
+#: src/components/shared/modals/ParticipantsModal.tsx
 msgid "Last paid"
 msgstr "Son ödeme"
 
-#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/components/shared/modals/DownloadParticipantsModal.tsx
 msgid "Last paid timestamp"
 msgstr "Son ödeme zaman damgası"
 
@@ -1490,8 +1491,8 @@ msgstr "Son ödeme zaman damgası"
 msgid "Later"
 msgstr "Daha sonra"
 
+#: src/components/shared/modals/DownloadParticipantsModal.tsx
 #: src/components/v1/V1DownloadPaymentsModal.tsx
-#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 #: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Latest"
 msgstr "En son"
@@ -1526,8 +1527,8 @@ msgid "Light theme"
 msgstr "Aydınlık tema"
 
 #: src/components/Projects/index.tsx
+#: src/components/shared/modals/ParticipantsModal.tsx
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
-#: src/components/v1/V1Project/modals/ParticipantsModal.tsx
 #: src/components/v2/V2Project/ProjectActivity/index.tsx
 msgid "Load more"
 msgstr "Daha fazla yükle"
@@ -2425,7 +2426,7 @@ msgstr ""
 msgid "Spending"
 msgstr "Harcama"
 
-#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/components/shared/modals/DownloadParticipantsModal.tsx
 msgid "Staked balance"
 msgstr "Stake edilen bakiye"
 
@@ -2647,7 +2648,7 @@ msgstr "Bu finansman döngüsü katkı sahipleri için risk oluşturabilir. Bu p
 msgid "This is the maximum amount of funds that can leave the treasury each funding cycle."
 msgstr ""
 
-#: src/components/v1/V1Project/modals/ParticipantsModal.tsx
+#: src/components/shared/modals/ParticipantsModal.tsx
 msgid "This list is using an experimental data index and may be inaccurate for some projects."
 msgstr "Bu liste deneysel bir veri dizini kullanıyor ve bazı projeler için doğru olmayabilir."
 
@@ -2696,7 +2697,7 @@ msgstr "Kime: <0/>"
 msgid "Token"
 msgstr "Token"
 
-#: src/components/v1/V1Project/modals/ParticipantsModal.tsx
+#: src/components/shared/modals/ParticipantsModal.tsx
 msgid "Token address: <0/>"
 msgstr "Token adresi: <0/>"
 
@@ -2791,7 +2792,7 @@ msgstr "Token'lar:"
 msgid "Tools"
 msgstr "Araçlar"
 
-#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/components/shared/modals/DownloadParticipantsModal.tsx
 msgid "Total ETH paid"
 msgstr "Ödenen toplam ETH"
 
@@ -2866,7 +2867,7 @@ msgstr "Ödemeler finansman döngüsü ayarlarınızdan duraklatılmadıkça pro
 msgid "Unsaved changes"
 msgstr ""
 
-#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/components/shared/modals/DownloadParticipantsModal.tsx
 msgid "Unstaked balance"
 msgstr "Stake'den kaldırılan bakiye"
 
@@ -2924,8 +2925,8 @@ msgstr "Bu proje tarafından kullanılan terminal sözleşmesinin sürümü."
 msgid "Volume"
 msgstr "Hacim"
 
+#: src/components/shared/modals/DownloadParticipantsModal.tsx
 #: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
-#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Wallet address"
 msgstr "Cüzdan adresi"
@@ -3261,8 +3262,8 @@ msgstr "projeler"
 msgid "seconds"
 msgstr ""
 
-#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
-#: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
+#: src/components/shared/modals/DownloadParticipantsModal.tsx
+#: src/components/shared/modals/DownloadParticipantsModal.tsx
 #: src/utils/tokenSymbolText.ts
 msgid "token"
 msgstr "token"
@@ -3294,7 +3295,7 @@ msgstr "{0} önce"
 msgid "{0} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
 msgstr "{0} token'ları bu projeye ödeme yapan herkese dağıtılır. Proje için bir finansman hedefi belirlenmişse token'lar, talep edilmiş olup olmadıklarına bakılmaksızın proje taşmasının bir miktarı için kullanılabilir."
 
-#: src/components/v1/V1Project/modals/ParticipantsModal.tsx
+#: src/components/shared/modals/ParticipantsModal.tsx
 msgid "{0} balance"
 msgstr "{0} bakiyesi"
 
@@ -3302,7 +3303,7 @@ msgstr "{0} bakiyesi"
 msgid "{0} balance: <0><1>{1} {tokensTextShort}</1><2>({share}% of supply)</2></0>"
 msgstr "{0} bakiyesi: <0><1>{1} {tokensTextShort}</1><2>(arzın %{share} kadarı)</2></0>"
 
-#: src/components/v1/V1Project/modals/ParticipantsModal.tsx
+#: src/components/shared/modals/ParticipantsModal.tsx
 msgid "{0} contributed"
 msgstr "{0} katkı"
 
@@ -3315,7 +3316,7 @@ msgstr "{0} gün"
 msgid "{0} for you"
 msgstr "Size ait {0}"
 
-#: src/components/v1/V1Project/modals/ParticipantsModal.tsx
+#: src/components/shared/modals/ParticipantsModal.tsx
 msgid "{0} holders"
 msgstr "{0} sahipleri"
 
@@ -3324,11 +3325,11 @@ msgstr "{0} sahipleri"
 msgid "{0} reserved"
 msgstr "Ayrılan {0}"
 
-#: src/components/v1/V1Project/modals/ParticipantsModal.tsx
+#: src/components/shared/modals/ParticipantsModal.tsx
 msgid "{0} staked"
 msgstr "stake edilen {0}"
 
-#: src/components/v1/V1Project/modals/ParticipantsModal.tsx
+#: src/components/shared/modals/ParticipantsModal.tsx
 msgid "{0} total"
 msgstr "Toplam {0}"
 

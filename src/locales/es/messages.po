@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-05-24 02:55\n"
+"PO-Revision-Date: 2022-05-27 02:55\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -1297,7 +1297,7 @@ msgstr "Si está bloqueado, esta división no se puede editar o remover hasta qu
 
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
 msgid "If you have already deployed a payable address and have lost it, please contact the Juicebox team through <0>Discord.</0>"
-msgstr ""
+msgstr "Si ya has desplegado una dirección de pago y la has perdido, por favor contacta al equipo de Juicebox mediante <0>Discord.</0>"
 
 #: src/components/Landing/QAs.tsx
 msgid "If you know how much your project needs to earn over some period of time to be sustainable, you can set a funding target with that amount. If your project earns more than that, the surplus funds are locked in an overflow pool. Anyone holding your project's tokens can claim a portion of the overflow pool in exchange for redeeming their tokens."
@@ -2581,7 +2581,7 @@ msgstr "Esto significa que cualquiera puede ver el código que ellos están usan
 #: src/components/v1/V1Project/V1PayButton.tsx
 #: src/components/v2/V2Project/V2PayButton/index.tsx
 msgid "This project is archived and can't be paid."
-msgstr ""
+msgstr "Este proyecto está archivado y no puede ser pagado."
 
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "This project is currently using the Juicebox V1 terminal contract. New features introduced in V1.1 allow the project owner to:"
@@ -2656,7 +2656,7 @@ msgstr "Nombre del token"
 
 #: src/components/shared/modals/IssueTokenModal.tsx
 msgid "Token name is required"
-msgstr ""
+msgstr "Se requiere el nombre del Token"
 
 #: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 msgid "Token redeem value"
@@ -2668,7 +2668,7 @@ msgstr "Símbolo del token"
 
 #: src/components/shared/modals/IssueTokenModal.tsx
 msgid "Token symbol is required"
-msgstr ""
+msgstr "Se requiere el símbolo del Token"
 
 #: src/components/shared/Mod.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
@@ -2698,7 +2698,7 @@ msgstr "Los tokens no pueden ser reclamados porque no se ha emitido un token ERC
 
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Tokens minted from payments to this address will belong to the payer by default. However, if someone pays the project through a custodial service platform such as Coinbase, <0>tokens can't be issued to their personal wallets and will be lost</0>."
-msgstr ""
+msgstr "Los tokens acuñados de pagos a esta dirección pertenecerán al pagador por defecto. Sin embargo, si alguien paga el proyecto a través de una plataforma de servicio de custodia como Coinbase, <0>los tokens no pueden ser emitidos a sus billeteras personales y se perderán</0>."
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "Tokens receiver"

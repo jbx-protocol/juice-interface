@@ -53,8 +53,9 @@
   },
   "scripts": {
     "compile-styles": "lessc ./node_modules/antd/dist/antd.less ./src/styles/antd.css --js",
-    "start": "yarn compile-styles && ESLINT_NO_DEV_ERRORS=true react-scripts start",
-    "build": "react-scripts build",
+    "prestart": "yarn compile-styles",
+    "start": "ESLINT_NO_DEV_ERRORS=true REACT_APP_VERSION=$(git rev-parse --short HEAD) react-scripts start",
+    "build": "REACT_APP_VERSION=$(git rev-parse --short HEAD) react-scripts build",
     "prebuild": "yarn compile-styles && yarn i18n:compile",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

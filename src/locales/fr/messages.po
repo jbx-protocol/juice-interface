@@ -8,7 +8,7 @@ msgstr ""
 "Language: fr\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-05-24 02:54\n"
+"PO-Revision-Date: 2022-05-26 02:56\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -739,7 +739,7 @@ msgstr "Valeur actuelle : <0><1/>{0}</0>"
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "Custom memo"
-msgstr ""
+msgstr "Customiser le mémo"
 
 #: src/components/shared/ReconfigurationStrategy/ReconfigurationStrategySelector.tsx
 #: src/utils/ballot.ts
@@ -816,7 +816,7 @@ msgstr "Détails"
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "Determines whether tokens will be minted from payments to this address."
-msgstr ""
+msgstr "Détermine si les tokens seront frappés à partir des paiements effectués à cette adresse."
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
@@ -935,7 +935,7 @@ msgstr "La limite de distribution est de 0 : Tous les fonds seront considérés 
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Distribution limit is infinite: The project will control how all funds are distributed, and none can be redeemed by token holders."
-msgstr ""
+msgstr "La limite de distribution est infinie : Le projet contrôlera la manière dont tous les fonds seront distribués et aucun ne pourra être récupéré par les titulaires de tokens."
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Distribution limit, duration and payouts"
@@ -1539,7 +1539,7 @@ msgstr "Frapper des tokens de projet sur demande"
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "Mint tokens as ERC-20"
-msgstr ""
+msgstr "Frapper des tokens comme ERC-20"
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Mint tokens to a custom address."
@@ -1770,7 +1770,7 @@ msgstr "Le paiement de ce projet est actuellement désactivé."
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "Payment made through payable address"
-msgstr ""
+msgstr "Paiement effectué par le biais d'une adresse de facturation"
 
 #: src/components/shared/RichImgPreview.tsx
 msgid "Payment memo image"
@@ -1976,7 +1976,7 @@ msgstr "Le projet {name} sera bientôt disponible ! Essayez d'actualiser la page
 
 #: src/components/v2/shared/V2ProjectHandle.tsx
 msgid "Project {projectId}"
-msgstr ""
+msgstr "Projet {projectId}"
 
 #: src/components/shared/Project404.tsx
 msgid "Project {projectId} not found"
@@ -2481,7 +2481,7 @@ msgstr "Le montant maximal des fonds pouvant être distribués à partir de ce p
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "The onchain memo for each transaction made through the address. It will appear in the project's payment feed when someone pays this address."
-msgstr ""
+msgstr "Le mémo en chaîne pour chaque transaction réalisée par biais de l'adresse. Il apparaîtra dans le flux de paiement du projet quand quelqu'un paie à cette adresse."
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "The percent this individual receives of the overall {reservedRate}% reserved token allocation"
@@ -2554,7 +2554,7 @@ msgstr "Cette adresse est un contrat stratégique non reconnu. Assurez-vous qu'i
 
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "This address will disappear when you close this window. <0>Copy the address and save it now</0>."
-msgstr ""
+msgstr "Cette adresse disparaîtra lorsque vous fermerez cette fenêtre. <0>Copiez l'adresse et sauvegardez-la maintenant</0>."
 
 #: src/components/shared/Mod.tsx
 #: src/components/v2/shared/SplitItem.tsx
@@ -2581,7 +2581,7 @@ msgstr "Cela signifie que n'importe qui peut voir le code qu'ils utilisent, n'im
 #: src/components/v1/V1Project/V1PayButton.tsx
 #: src/components/v2/V2Project/V2PayButton/index.tsx
 msgid "This project is archived and can't be paid."
-msgstr ""
+msgstr "Ce projet a été archivé et ne peut pas être payé."
 
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "This project is currently using the Juicebox V1 terminal contract. New features introduced in V1.1 allow the project owner to:"
@@ -2656,7 +2656,7 @@ msgstr "Nom du token"
 
 #: src/components/shared/modals/IssueTokenModal.tsx
 msgid "Token name is required"
-msgstr ""
+msgstr "Le nom du token est requis"
 
 #: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 msgid "Token redeem value"
@@ -2668,7 +2668,7 @@ msgstr "Symbole du token"
 
 #: src/components/shared/modals/IssueTokenModal.tsx
 msgid "Token symbol is required"
-msgstr ""
+msgstr "Le symbole du token est requis"
 
 #: src/components/shared/Mod.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
@@ -2886,7 +2886,7 @@ msgstr "Que se passe-t-il sous le capot ?"
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "When checked, payments to this address will mint this project's ERC-20 tokens to the beneficiary's wallet. Payments will cost more gas. When unchecked, Juicebox will track the beneficiary's new tokens when they pay. The beneficiary can claim their ERC-20 tokens at any time."
-msgstr ""
+msgstr "Lorsqu'ils sont vérifiés, les paiements à cette adresse frapperont les tokens ERC-20 de ce projet vers le portefeuille du bénéficiaire. Les paiements coûteront plus de gaz. Quand ils ne sont pas vérifiés, Juicebox suivra les nouveaux tokens du bénéficiaire quand ils paient. Le bénéficiaire peut réclamer ses tokens ERC-20 à tout moment."
 
 #: src/components/v2/V2Create/forms/RulesForm/TokenMintingExtra.tsx
 #: src/components/v2/V2Create/forms/RulesForm/index.tsx
@@ -2989,7 +2989,7 @@ msgstr "Vous pouvez toujours récupérer vos tokens {tokenSymbol} de l'overflow 
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "You don't have a funding cycle duration. Changes you make will take effect immediately."
-msgstr ""
+msgstr "Vous n'avez pas une durée de cycle de financement. Les modifications que vous apportez prendront effet immédiatement."
 
 #: src/components/Projects/HoldingsProjects.tsx
 msgid "You don't hold tokens for any Juicebox project."
@@ -3005,7 +3005,7 @@ msgstr "Vous avez des modifications non sauvegardées. Voulez-vous vraiment les 
 
 #: src/components/Projects/MyProjects.tsx
 msgid "You haven't created any projects yet."
-msgstr ""
+msgstr "Vous n'avez pas encore créé aucun projet."
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "You will receive minimum {minReturnedTokensFormatted} ETH"
@@ -3050,7 +3050,7 @@ msgstr "Votre projet est financé sur plusieurs cycles de financement. Un cycle 
 
 #: src/components/v2/V2Project/V2FundingCycleSection/settingExplanations.tsx
 msgid "Your project token's issuance rate will decrease by this percentage every funding cycle. A higher discount rate will incentivize supporters to pay your project earlier."
-msgstr ""
+msgstr "Le taux d'émission de token de votre projet diminuera de ce pourcentage à chaque nouveau cycle de financement. Un taux de remise plus élevé incitera les financeurs à payer votre projet plus tôt."
 
 #: src/components/shared/ArchiveProject/index.tsx
 msgid "Your project will appear archived, and will not be able to receive payments through the juicebox.money app. You can unarchive a project at any time. Please allow a few days for your project to appear under the \"archived\" filter on the Projects page."

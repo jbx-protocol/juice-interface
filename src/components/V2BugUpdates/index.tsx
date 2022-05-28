@@ -25,24 +25,16 @@ export default function V2BugUpdates() {
           will be temporarily disabled along with payments to existing V2
           projects with a 0 treasury balance.
         </p>
-        <h4>(In progress) Redeploy Juicebox V2 protocol contracts</h4>
+        <h4>(Done) Redeploy Juicebox V2 protocol contracts</h4>
         <p>
           Redeployed contracts will include a fix, but will otherwise be
           functionally identical to the current protocol contracts.
         </p>
-        <h4>Update juicebox.money app to use new contracts</h4>
+        <h4>(In progress) Update juicebox.money app to use new contracts</h4>
         <p>
           Once the contracts have been redeployed, the app will be updated to
-          use these contracts. This may take up to 48 hours.{' '}
-          <a
-            href="https://twitter.com/PeelDao"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Peel
-          </a>{' '}
-          will ensure that existing V2 projects will still be accessible in the
-          app or via a separate interface.
+          use these contracts, and to provide an interface for existing V2
+          projects to reconfigure their funding cycles with the new contracts.
         </p>
         <h4>Project migration</h4>
         <p>

@@ -12,9 +12,6 @@ export enum V2ContractName {
   JBTokenStore = 'JBTokenStore',
   JBSingleTokenPaymentTerminalStore = 'JBSingleTokenPaymentTerminalStore',
   JBETHERC20ProjectPayerDeployer = 'JBETHERC20ProjectPayerDeployer',
-  DeprecatedJBController = 'DeprecatedJBController',
-  DeprecatedJBSplitsStore = 'DeprecatedJBSplitsStore',
-  DeprecatedJBDirectory = 'DeprecatedJBDirectory',
 }
 
 export type V2Contracts = Record<V2ContractName, Contract>

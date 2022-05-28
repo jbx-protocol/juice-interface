@@ -27,7 +27,6 @@ import CurrentFundingCycle from './CurrentFundingCycle'
 import V2ReconfigureFundingModalTrigger from '../V2ProjectReconfigureModal/V2ReconfigureModalTrigger'
 import UpcomingFundingCycle from './UpcomingFundingCycle'
 import FundingCycleHistory from './FundingCycleHistory'
-import NoFundingCycle from './NoFundingCycle'
 
 export default function V2FundingCycleSection({
   expandCard,
@@ -50,8 +49,8 @@ export default function V2FundingCycleSection({
     return <Loading />
   }
 
-  if (!fundingCycle || fundingCycle.number.eq(0)) {
-    return <NoFundingCycle />
+  if (!fundingCycle) {
+    return <p>No funding cycle</p>
   }
 
   const tabText = ({ text }: { text: string }) => {

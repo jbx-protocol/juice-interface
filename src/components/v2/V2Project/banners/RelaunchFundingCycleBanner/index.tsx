@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Button, Form, Input } from 'antd'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 import Banner from 'components/shared/Banner'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
@@ -29,7 +29,7 @@ export default function RelaunchFundingCycleBanner() {
   const { projectId } = useContext(V2ProjectContext)
   const { contracts } = useContext(V2UserContext)
   const [newDuration, setNewDuration] = useState<BigNumber>(BigNumber.from(0))
-  const [newStart, setNewStart] = useState<string>('0')
+  const [newStart, setNewStart] = useState<string>('1')
 
   const [modalOpen, setModalOpen] = useState<boolean>(false)
   const [transactionPending, setTransactionPending] = useState<boolean>(false)
@@ -56,6 +56,10 @@ export default function RelaunchFundingCycleBanner() {
       useDeprecatedContract: true,
     })
 
+  useEffect(() => {
+    setNewDuration(deprecatedFundingCycle?.duration ?? BigNumber.from(0))
+  }, [deprecatedFundingCycle])
+
   const { data: terminals } = useProjectTerminals({
     projectId,
     useDeprecatedContract: true,
@@ -78,7 +82,7 @@ export default function RelaunchFundingCycleBanner() {
     token: ETH_TOKEN_ADDRESS,
     distributionLimit: deprecatedDistributionLimit,
     distributionLimitCurrency: deprecatedDistributionLimitCurrency,
-    overflowAllowance: BigNumber.from(0), // nothing for the time being.
+    overflowAllowance: BigNumber.from(0),
     overflowAllowanceCurrency: BigNumber.from(0),
   }
 
@@ -176,44 +180,53 @@ export default function RelaunchFundingCycleBanner() {
         ) : (
           <>
             <p style={{ marginBottom: '2rem' }}>
-              Relaunch your funding cycle on the new Juicebox V2 contracts.
+              <Trans>
+                Relaunch your funding cycle on the new Juicebox V2 contracts.
+              </Trans>
             </p>
             <Form layout="vertical" style={{ marginBottom: '1rem' }}>
               <div style={{ display: 'flex', gap: 20 }}>
                 <Form.Item
-                  name="start"
-                  label={<Trans>Start time</Trans>}
+                  label={<Trans>Duration (seconds)</Trans>}
                   required
                   style={{ width: '100%' }}
                 >
                   <Input
-                    suffix={<Trans>Seconds</Trans>}
                     type="number"
                     min={0}
+                    value={newDuration.toNumber()}
                     onChange={e => {
-                      setNewStart(e.target.value || '0')
+                      setNewDuration(BigNumber.from(e.target.value || 0))
                     }}
                   />
                 </Form.Item>
+
                 <Form.Item
-                  name="duration"
-                  label={<Trans>Duration</Trans>}
-                  required
+                  label={<Trans>Start time (seconds, Unix time)</Trans>}
                   style={{ width: '100%' }}
+                  extra={<Trans>Leave blank to start immediately.</Trans>}
                 >
                   <Input
-                    suffix={<Trans>Seconds</Trans>}
                     type="number"
                     min={0}
                     onChange={e => {
-                      setNewDuration(BigNumber.from(e.target.value || 0))
+                      setNewStart(e.target.value || '1')
                     }}
                   />
                 </Form.Item>
               </div>
             </Form>
 
-            <h3>Funding cycle preview</h3>
+            <h3>
+              <Trans>Funding cycle preview</Trans>
+            </h3>
+            <p>
+              <Trans>
+                Your funding cycle configuration has been pre-populated using
+                the configuration you originally launched with. If you need to
+                customize it, contact us.
+              </Trans>
+            </p>
 
             <ReconfigurePreview
               payoutSplits={deprecatedPayoutSplits ?? []}

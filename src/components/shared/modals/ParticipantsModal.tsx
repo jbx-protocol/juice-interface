@@ -3,6 +3,7 @@ import {
   SortAscendingOutlined,
   SortDescendingOutlined,
 } from '@ant-design/icons'
+import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
 import { Button, Modal, Select } from 'antd'
@@ -10,8 +11,7 @@ import CurrencySymbol from 'components/shared/CurrencySymbol'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import Loading from 'components/shared/Loading'
 import { ThemeContext } from 'contexts/themeContext'
-import { V1ProjectContext } from 'contexts/v1/projectContext'
-import useTotalSupplyOfProjectToken from 'hooks/v1/contractReader/TotalSupplyOfProjectToken'
+import { CV } from 'models/cv'
 import { Participant } from 'models/subgraph-entities/vX/participant'
 import { useContext, useEffect, useMemo, useState } from 'react'
 import { formatPercent, formatWad } from 'utils/formatNumber'
@@ -23,9 +23,21 @@ import DownloadParticipantsModal from './DownloadParticipantsModal'
 const pageSize = 100
 
 export default function ParticipantsModal({
+  projectId,
+  projectName,
+  tokenSymbol,
+  tokenAddress,
+  cv,
+  totalTokenSupply,
   visible,
   onCancel,
 }: {
+  projectId: number | undefined
+  projectName: string | undefined
+  tokenSymbol: string | undefined
+  tokenAddress: string | undefined
+  cv: CV | undefined
+  totalTokenSupply: BigNumber | undefined
   visible: boolean | undefined
   onCancel: VoidFunction | undefined
 }) {
@@ -37,13 +49,9 @@ export default function ParticipantsModal({
   const [downloadModalVisible, setDownloadModalVisible] = useState<boolean>()
   const [sortPayerReportsDirection, setSortPayerReportsDirection] =
     useState<OrderDirection>('desc')
-  const { projectId, tokenSymbol, tokenAddress, cv } =
-    useContext(V1ProjectContext)
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-
-  const totalTokenSupply = useTotalSupplyOfProjectToken(projectId)
 
   useEffect(() => {
     setLoading(true)
@@ -312,6 +320,9 @@ export default function ParticipantsModal({
       </div>
 
       <DownloadParticipantsModal
+        projectId={projectId}
+        tokenSymbol={tokenSymbol}
+        projectName={projectName}
         visible={downloadModalVisible}
         onCancel={() => setDownloadModalVisible(false)}
       />

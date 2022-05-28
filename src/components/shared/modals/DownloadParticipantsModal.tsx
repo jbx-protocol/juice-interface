@@ -3,24 +3,28 @@ import { Modal, notification } from 'antd'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 
-import { V1ProjectContext } from 'contexts/v1/projectContext'
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { fromWad } from 'utils/formatNumber'
 import { querySubgraphExhaustive } from 'utils/graph'
 
 import { readProvider } from 'constants/readProvider'
 
 export default function DownloadParticipantsModal({
+  projectId,
+  tokenSymbol,
+  projectName,
   visible,
   onCancel,
 }: {
+  projectId: number | undefined
+  tokenSymbol: string | undefined
+  projectName: string | undefined
   visible: boolean | undefined
   onCancel: VoidFunction | undefined
 }) {
   const [latestBlockNumber, setLatestBlockNumber] = useState<number>()
   const [blockNumber, setBlockNumber] = useState<number>()
   const [loading, setLoading] = useState<boolean>()
-  const { projectId, tokenSymbol, handle } = useContext(V1ProjectContext)
 
   useEffect(() => {
     readProvider.getBlockNumber().then(val => {
@@ -96,7 +100,7 @@ export default function DownloadParticipantsModal({
       link.setAttribute('href', encodedUri)
       link.setAttribute(
         'download',
-        `@${handle}_holders-block${blockNumber}.csv`,
+        `@${projectName}_holders-block${blockNumber}.csv`,
       )
       document.body.appendChild(link)
 
@@ -107,7 +111,7 @@ export default function DownloadParticipantsModal({
       console.error('Error downloading participants', e)
       setLoading(false)
     }
-  }, [projectId, setLoading, blockNumber, handle, tokenSymbol])
+  }, [blockNumber, projectId, tokenSymbol, projectName])
 
   return (
     <Modal

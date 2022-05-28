@@ -22,6 +22,8 @@ import { ThemeContext } from 'contexts/themeContext'
 import useUserUnclaimedTokenBalance from 'hooks/v2/contractReader/UserUnclaimedTokenBalance'
 import ManageTokensModal from 'components/shared/ManageTokensModal'
 
+import ParticipantsModal from 'components/shared/modals/ParticipantsModal'
+
 import V2RedeemModal from './V2RedeemModal'
 import V2ClaimTokensModal from './V2ClaimTokensModal'
 import V2MintModal from './V2MintModal'
@@ -41,12 +43,17 @@ export default function V2ManageTokensSection() {
     fundingCycleMetadata,
     projectId,
     primaryTerminalCurrentOverflow,
+    projectMetadata,
+    cv,
   } = useContext(V2ProjectContext)
 
   const { userAddress } = useContext(NetworkContext)
 
   const { data: claimedBalance } = useERC20BalanceOf(tokenAddress, userAddress)
   const { data: unclaimedBalance } = useUserUnclaimedTokenBalance()
+
+  const [participantsModalVisible, setParticipantsModalVisible] =
+    useState<boolean>(false)
 
   const labelStyle: CSSProperties = {
     width: 128,
@@ -165,7 +172,13 @@ export default function V2ManageTokensSection() {
                     >
                       {formatWad(totalTokenSupply, { precision: 0 })}{' '}
                       {tokenText}
-                      {/* TODO: Holders modal button */}
+                      <Button
+                        size="small"
+                        onClick={() => setParticipantsModalVisible(true)}
+                        disabled={isPreviewMode}
+                      >
+                        <Trans>Holders</Trans>
+                      </Button>
                     </div>
                   }
                 />
@@ -237,7 +250,16 @@ export default function V2ManageTokensSection() {
         ClaimTokensModal={V2ClaimTokensModal}
         MintModal={V2MintModal}
       />
-      {/* TODO: 'Holders modal */}
+      <ParticipantsModal
+        projectId={projectId}
+        projectName={projectMetadata?.name}
+        tokenSymbol={tokenSymbol}
+        tokenAddress={tokenAddress}
+        cv={cv}
+        totalTokenSupply={totalTokenSupply}
+        visible={participantsModalVisible}
+        onCancel={() => setParticipantsModalVisible(false)}
+      />
     </>
   )
 }

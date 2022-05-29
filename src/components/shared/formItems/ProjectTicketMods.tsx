@@ -1,7 +1,7 @@
-import { CloseCircleOutlined, LockOutlined } from '@ant-design/icons'
+import { DeleteOutlined, LockOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 
-import { Button, Col, Form, Row, Space } from 'antd'
+import { Button, Col, Form, Row, Space, Tooltip } from 'antd'
 
 import { useForm } from 'antd/lib/form/Form'
 import { ThemeContext } from 'contexts/themeContext'
@@ -153,17 +153,19 @@ export default function ProjectTicketMods({
           {locked ? (
             <LockOutlined style={{ color: colors.icon.disabled }} />
           ) : (
-            <Button
-              type="text"
-              onClick={e => {
-                onModsChanged([
-                  ...mods.slice(0, index),
-                  ...mods.slice(index + 1),
-                ])
-                e.stopPropagation()
-              }}
-              icon={<CloseCircleOutlined />}
-            />
+            <Tooltip title={t`Delete token allcation`}>
+              <Button
+                type="text"
+                onClick={e => {
+                  onModsChanged([
+                    ...mods.slice(0, index),
+                    ...mods.slice(index + 1),
+                  ])
+                  e.stopPropagation()
+                }}
+                icon={<DeleteOutlined />}
+              />
+            </Tooltip>
           )}
         </div>
       )
@@ -303,7 +305,7 @@ export default function ProjectTicketMods({
           }}
           block
         >
-          <Trans>Add token receiver</Trans>
+          <Trans>Add token allocation</Trans>
         </Button>
       </Space>
       <ReservedTokenReceiverModal

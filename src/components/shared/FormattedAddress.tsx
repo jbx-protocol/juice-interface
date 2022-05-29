@@ -99,11 +99,7 @@ export default function FormattedAddress({
 
   if (tooltipDisabled) {
     return (
-      <span
-        style={{ cursor: 'default', userSelect: 'all', lineHeight: '22px' }}
-      >
-        {formatted}
-      </span>
+      <span style={{ userSelect: 'all', lineHeight: '22px' }}>{formatted}</span>
     )
   }
 
@@ -117,11 +113,7 @@ export default function FormattedAddress({
         </span>
       }
     >
-      <span
-        style={{ cursor: 'default', userSelect: 'all', lineHeight: '22px' }}
-      >
-        {formatted}
-      </span>
+      <span style={{ userSelect: 'all', lineHeight: '22px' }}>{formatted}</span>
     </Tooltip>
   )
 }

@@ -241,3 +241,14 @@ export const formatPercent = (
   }
   return (sharePct?.toNumber() / 100).toString()
 }
+
+export function round({
+  amount,
+  decimals,
+}: {
+  amount: number
+  decimals: number
+}) {
+  const roundingFactor = 10 ** decimals
+  return Math.round(amount * roundingFactor) / roundingFactor
+}

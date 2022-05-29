@@ -1,7 +1,6 @@
 import { parseEther } from '@ethersproject/units'
 import { Trans } from '@lingui/macro'
 import { Descriptions } from 'antd'
-import CurrencySymbol from 'components/shared/CurrencySymbol'
 
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
@@ -25,7 +24,6 @@ import {
   formatDiscountRate,
   formatRedemptionRate,
   formatReservedRate,
-  MAX_DISTRIBUTION_LIMIT,
   weightedAmount,
 } from 'utils/v2/math'
 
@@ -37,6 +35,7 @@ import {
   DISCOUNT_RATE_EXPLANATION,
   REDEMPTION_RATE_EXPLANATION,
 } from './settingExplanations'
+import DistributionLimit from '../DistributionLimit'
 
 export default function FundingCycleDetails({
   fundingCycle,
@@ -122,11 +121,6 @@ export default function FundingCycleDetails({
 
   const riskWarningText = FUNDING_CYCLE_WARNING_TEXT()
 
-  const distributionLimitIsInfinite = distributionLimit?.eq(
-    MAX_DISTRIBUTION_LIMIT,
-  )
-  const distributionLimitIsZero = distributionLimit?.eq(0)
-
   return (
     <div>
       <Descriptions
@@ -137,22 +131,14 @@ export default function FundingCycleDetails({
       >
         <Descriptions.Item label={<Trans>Distribution limit</Trans>}>
           <span style={{ whiteSpace: 'nowrap' }}>
-            {distributionLimitIsInfinite ? (
-              <Trans>No limit (infinite)</Trans>
-            ) : distributionLimitIsZero ? (
-              <Trans>Zero</Trans>
-            ) : (
-              <>
-                <CurrencySymbol
-                  currency={V2CurrencyName(
-                    distributionLimitCurrency?.toNumber() as
-                      | V2CurrencyOption
-                      | undefined,
-                  )}
-                />
-                {formatWad(distributionLimit)}
-              </>
-            )}
+            <DistributionLimit
+              distributionLimit={distributionLimit}
+              currencyName={V2CurrencyName(
+                distributionLimitCurrency?.toNumber() as
+                  | V2CurrencyOption
+                  | undefined,
+              )}
+            />
           </span>
         </Descriptions.Item>
 

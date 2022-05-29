@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Button, Form, Input } from 'antd'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useMemo, useState } from 'react'
 
 import Banner from 'components/shared/Banner'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
@@ -24,6 +24,11 @@ import {
 } from 'constants/v2/splits'
 import ReconfigurePreview from '../../V2ProjectReconfigureModal/ReconfigurePreview'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
+import {
+  BALLOT_ADDRESSES,
+  DEPRECATED_BALLOT_ADDRESSES,
+} from 'constants/v2/ballotStrategies'
+import { readNetwork } from 'constants/networks'
 
 export default function RelaunchFundingCycleBanner() {
   const { projectId } = useContext(V2ProjectContext)
@@ -88,6 +93,19 @@ export default function RelaunchFundingCycleBanner() {
 
   const launchFundingCycleTx = useLaunchFundingCyclesTx()
 
+  const newBallot = useMemo(() => {
+    if (!deprecatedFundingCycle) return
+
+    switch (deprecatedFundingCycle.ballot) {
+      case DEPRECATED_BALLOT_ADDRESSES.THREE_DAY[readNetwork.name]:
+        return BALLOT_ADDRESSES.THREE_DAY[readNetwork.name]!
+      // case DEPRECATED_BALLOT_ADDRESSES.SEVEN_DAY[readNetwork.name]:
+      //   return BALLOT_ADDRESSES.SEVEN_DAY[readNetwork.name]!
+      default:
+        return deprecatedFundingCycle.ballot
+    }
+  }, [deprecatedFundingCycle])
+
   const loading =
     payoutSplitsLoading ||
     deprecatedFundingCycleLoading ||
@@ -105,7 +123,7 @@ export default function RelaunchFundingCycleBanner() {
   const onLaunchModalOk = async () => {
     const fundingCycleData: V2FundingCycleData = {
       duration: newDuration ?? deprecatedFundingCycle.duration,
-      ballot: deprecatedFundingCycle.ballot,
+      ballot: newBallot ?? deprecatedFundingCycle.ballot,
       weight: deprecatedFundingCycle.weight,
       discountRate: deprecatedFundingCycle.discountRate,
     }
@@ -240,6 +258,7 @@ export default function RelaunchFundingCycleBanner() {
               fundingCycleData={{
                 ...deprecatedFundingCycle,
                 duration: newDuration ?? deprecatedFundingCycle.duration,
+                ballot: newBallot ?? deprecatedFundingCycle.ballot,
               }}
               fundAccessConstraints={[deprecatedFundAccessConstraint]}
             />

@@ -5,6 +5,9 @@ import { formatWad } from 'utils/formatNumber'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2/math'
 import TooltipIcon from 'components/shared/TooltipIcon'
 
+import { useContext } from 'react'
+import { ThemeContext } from 'contexts/themeContext'
+
 import { CurrencyName } from 'constants/currency'
 
 export default function DistributionLimit({
@@ -16,6 +19,10 @@ export default function DistributionLimit({
   currencyName: CurrencyName | undefined
   showTooltip?: boolean
 }) {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
+
   const distributionLimitIsInfinite = distributionLimit?.eq(
     MAX_DISTRIBUTION_LIMIT,
   )
@@ -59,9 +66,9 @@ export default function DistributionLimit({
   )
 
   return (
-    <>
+    <span style={{ color: colors.text.primary }}>
       {_text}
       {_tooltip}
-    </>
+    </span>
   )
 }

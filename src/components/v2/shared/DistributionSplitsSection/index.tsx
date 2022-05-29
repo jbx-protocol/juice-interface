@@ -198,7 +198,7 @@ export default function DistributionSplitsSection({
           <Trans>Add payout</Trans>
         </Button>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <span>
+          <span style={{ color: colors.text.primary }}>
             <Trans>
               Distribution Limit{' '}
               <TooltipIcon

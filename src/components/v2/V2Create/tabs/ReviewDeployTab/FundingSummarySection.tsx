@@ -180,6 +180,7 @@ export default function FundingSummarySection() {
                   totalValue={distributionLimit}
                   projectOwnerAddress={userAddress}
                   showSplitValues={hasDistributionLimit}
+                  fundingCycleDuration={duration}
                 />
               </Col>
               <Col md={2} xs={0}></Col>

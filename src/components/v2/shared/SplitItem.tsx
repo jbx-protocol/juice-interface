@@ -16,6 +16,7 @@ import { V2CurrencyName } from 'utils/v2/currency'
 import { formatSplitPercent, SPLITS_TOTAL_PERCENT } from 'utils/v2/math'
 import useMobile from 'hooks/Mobile'
 import { Link } from 'react-router-dom'
+import TooltipIcon from 'components/shared/TooltipIcon'
 
 export default function SplitItem({
   split,
@@ -25,6 +26,7 @@ export default function SplitItem({
   projectOwnerAddress,
   valueSuffix,
   valueFormatProps,
+  reservedRate,
 }: {
   split: Split
   currency?: BigNumber
@@ -33,6 +35,7 @@ export default function SplitItem({
   showSplitValue: boolean
   valueSuffix?: string | JSX.Element
   valueFormatProps?: { precision?: number }
+  reservedRate?: number
 }) {
   const {
     theme: { colors },
@@ -149,6 +152,10 @@ export default function SplitItem({
     )
   }
 
+  const formattedSplitPercent = formatSplitPercent(
+    BigNumber.from(split.percent),
+  )
+
   return (
     <div
       style={{
@@ -172,12 +179,23 @@ export default function SplitItem({
         ) : null}
       </div>
       <div>
-        <span>{formatSplitPercent(BigNumber.from(split.percent))}%</span>
+        <span>{formattedSplitPercent}%</span>
         {totalValue?.gt(0) && showSplitValue ? (
           <span style={{ marginLeft: '0.2rem' }}>
             {' '}
             <SplitValue />
           </span>
+        ) : null}
+        {reservedRate ? (
+          <TooltipIcon
+            iconStyle={{ marginLeft: 7 }}
+            tip={
+              <Trans>
+                {(reservedRate * parseFloat(formattedSplitPercent)) / 100}% of
+                all newly minted tokens.
+              </Trans>
+            }
+          />
         ) : null}
       </div>
     </div>

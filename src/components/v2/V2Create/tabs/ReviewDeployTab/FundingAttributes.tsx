@@ -280,19 +280,32 @@ export function DistributionSplitsStatistic({
   totalValue,
   projectOwnerAddress,
   showSplitValues,
+  fundingCycleDuration,
 }: {
   splits: Split[]
   currency: BigNumber | undefined
   totalValue: BigNumber | undefined
   projectOwnerAddress: string | undefined
   showSplitValues: boolean
+  fundingCycleDuration: BigNumber | undefined
 }) {
+  const formattedDuration = detailedTimeString({
+    timeSeconds: fundingCycleDuration?.toNumber(),
+    fullWords: true,
+  })
+  const hasDuration = fundingCycleDuration?.gt(0)
+
   return (
     <Statistic
       title={
         <TooltipLabel
-          label={t`Funding distribution`}
-          tip={t`Entities that will receive funds from the treasury each funding cycle.`}
+          label={t`Payouts`}
+          tip={
+            <Trans>
+              Available funds will be distributed according to the payouts below
+              {hasDuration ? ` every ${formattedDuration}` : null}.
+            </Trans>
+          }
         />
       }
       valueRender={() => (

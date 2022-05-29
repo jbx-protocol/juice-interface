@@ -8,7 +8,7 @@ msgstr ""
 "Language: id\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-05-24 02:55\n"
+"PO-Revision-Date: 2022-05-29 03:00\n"
 "Last-Translator: \n"
 "Language-Team: Indonesian\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -77,6 +77,7 @@ msgid "7 days"
 msgstr ""
 
 #: src/constants/v1/ballotStrategies/index.ts
+#: src/constants/v2/ballotStrategies/index.ts
 msgid "7-day delay"
 msgstr ""
 
@@ -211,6 +212,7 @@ msgid "A project can reserve a percentage of tokens minted from every payment it
 msgstr ""
 
 #: src/components/shared/Project/FundingCycleSection.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/NoFundingCycle.tsx
 msgid "A project's lifetime is defined in funding cycles. If a funding target is set, the project can withdraw no more than the target for the duration of the cycle."
 msgstr ""
 
@@ -220,6 +222,7 @@ msgid "A reconfiguration to an upcoming funding cycle must be submitted at least
 msgstr ""
 
 #: src/constants/v1/ballotStrategies/index.ts
+#: src/constants/v2/ballotStrategies/index.ts
 msgid "A reconfiguration to an upcoming funding cycle must be submitted at least 7 days before it starts."
 msgstr ""
 
@@ -894,6 +897,7 @@ msgstr ""
 msgid "Distribute {tokensText}"
 msgstr ""
 
+#: src/components/shared/Project/FundingProgressBar.tsx
 #: src/components/v1/V1Project/Paid.tsx
 #: src/components/v2/V2Project/TreasuryStats/DistributedRatio.tsx
 msgid "Distributed"
@@ -934,7 +938,7 @@ msgid "Distribution limit is 0: All funds will be considered overflow and can be
 msgstr ""
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
-msgid "Distribution limit is infinite: The project will control how all funds are distributed, and none can be redeemed by token holders."
+msgid "Distribution limit is infinite. <0>The project will control how all funds are distributed, and none can be redeemed by token holders.</0>"
 msgstr ""
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
@@ -1005,6 +1009,10 @@ msgstr ""
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Duration"
+msgstr ""
+
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Duration (seconds)"
 msgstr ""
 
 #: src/components/Landing/index.tsx
@@ -1149,6 +1157,7 @@ msgstr ""
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v1/shared/BudgetForm.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/NoFundingCycle.tsx
 msgid "Funding cycle"
 msgstr ""
 
@@ -1161,6 +1170,14 @@ msgstr ""
 #: src/components/v1/shared/BudgetForm.tsx
 #: src/components/v2/V2Create/forms/FundingForm/DurationInputAndSelect.tsx
 msgid "Funding cycle duration"
+msgstr ""
+
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Funding cycle preview"
+msgstr ""
+
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Funding cycle required."
 msgstr ""
 
 #: src/components/v1/shared/BudgetForm.tsx
@@ -1455,12 +1472,21 @@ msgstr ""
 msgid "Latest payments"
 msgstr ""
 
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Launch funding cycle"
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "Launch your project"
 msgstr ""
 
 #: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 msgid "Learn more in this <0>short video</0>."
+msgstr ""
+
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Leave blank to start immediately."
 msgstr ""
 
 #: src/components/v2/V2Project/NewDeployModal.tsx
@@ -1601,6 +1627,10 @@ msgstr ""
 msgid "No"
 msgstr ""
 
+#: src/components/v2/V2Project/V2FundingCycleSection/NoFundingCycle.tsx
+msgid "No active funding cycle."
+msgstr ""
+
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 #: src/components/v2/V2Project/ProjectActivity/index.tsx
 msgid "No activity yet"
@@ -1669,6 +1699,10 @@ msgstr ""
 
 #: src/components/v1/V1Project/modals/BalancesModal.tsx
 msgid "Other assets in this project's owner's wallet."
+msgstr ""
+
+#: src/components/shared/Project/FundingProgressBar.tsx
+msgid "Overflow"
 msgstr ""
 
 #: src/components/v1/shared/BudgetForm.tsx
@@ -2125,6 +2159,10 @@ msgstr ""
 msgid "Refresh"
 msgstr ""
 
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Relaunch your funding cycle on the new Juicebox V2 contracts."
+msgstr ""
+
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Required"
@@ -2195,6 +2233,10 @@ msgstr ""
 
 #: src/components/v1/V1Create/index.tsx
 msgid "Review & Deploy"
+msgstr ""
+
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Review and launch funding cycle"
 msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
@@ -2372,6 +2414,10 @@ msgstr ""
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v1/V1Create/index.tsx
 msgid "Start Over"
+msgstr ""
+
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Start time (seconds, Unix time)"
 msgstr ""
 
 #: src/components/v1/PayoutModsList.tsx
@@ -3023,6 +3069,10 @@ msgstr ""
 msgid "You'll be able to issue ERC-20 tokens once your project contract has been deployed. Until then, the protocol will track token balances, allowing your supporters to earn tokens and redeem for overflow in the meantime."
 msgstr ""
 
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Your Juicebox project has no active funding cycle. Launch a funding cycle to re-enable payments on your project."
+msgstr ""
+
 #: src/components/v1/V1Project/Rewards/index.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "Your balance"
@@ -3034,6 +3084,10 @@ msgstr ""
 
 #: src/components/v1/V1Project/modals/FeedbackPromptModal.tsx
 msgid "Your feedback will be sent to a <0>public Discord channel </0>for our development team to consider."
+msgstr ""
+
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Your funding cycle configuration has been pre-populated using the configuration you originally launched with. If you need to customize it, contact us."
 msgstr ""
 
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx

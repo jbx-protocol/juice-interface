@@ -1,6 +1,7 @@
 import { QuestionCircleOutlined } from '@ant-design/icons'
 import { Tooltip, TooltipProps } from 'antd'
-import { CSSProperties } from 'react'
+import { ThemeContext } from 'contexts/themeContext'
+import { CSSProperties, useContext } from 'react'
 
 export default function TooltipIcon({
   tip,
@@ -11,9 +12,14 @@ export default function TooltipIcon({
   placement?: TooltipProps['placement']
   iconStyle?: CSSProperties
 }) {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
   return (
     <Tooltip title={tip} placement={placement} trigger={['hover', 'click']}>
-      <QuestionCircleOutlined style={iconStyle} />
+      <QuestionCircleOutlined
+        style={{ color: colors.text.primary, ...iconStyle }}
+      />
     </Tooltip>
   )
 }

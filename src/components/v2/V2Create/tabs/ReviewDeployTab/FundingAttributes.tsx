@@ -302,7 +302,7 @@ export function DistributionSplitsStatistic({
           label={t`Payouts`}
           tip={
             <Trans>
-              Available funds will be distributed according to the payouts below
+              Available funds can be distributed according to the payouts below
               {hasDuration ? ` every ${formattedDuration}` : null}.
             </Trans>
           }

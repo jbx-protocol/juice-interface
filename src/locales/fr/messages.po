@@ -442,7 +442,7 @@ msgstr "Les fonds disponibles sont distribués selon les paiements ci-dessous."
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
-msgid "Available funds will be distributed according to the payouts below{0}."
+msgid "Available funds can be distributed according to the payouts below{0}."
 msgstr ""
 
 #: src/components/v1/FundingCycle/modals/DistributeTokensModal.tsx

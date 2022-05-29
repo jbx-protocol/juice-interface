@@ -111,7 +111,7 @@ export default function PayoutSplitsCard({
             }
             tip={
               <Trans>
-                Available funds will be distributed according to the payouts
+                Available funds can be distributed according to the payouts
                 below
                 {hasDuration ? ` every ${formattedDuration}` : null}.
               </Trans>

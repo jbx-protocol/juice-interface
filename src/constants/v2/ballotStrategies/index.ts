@@ -11,6 +11,7 @@ type BallotOption = Record<
   Partial<Record<NetworkName, string>>
 >
 
+// based on @jbx-protocol/v2-contracts@4.0.0
 export const DEPRECATED_BALLOT_ADDRESSES: BallotOption = {
   THREE_DAY: {
     rinkeby: '0xf91150aa07a1AC707148420713cefd299b8D094A',
@@ -25,12 +26,12 @@ export const DEPRECATED_BALLOT_ADDRESSES: BallotOption = {
 
 export const BALLOT_ADDRESSES: BallotOption = {
   THREE_DAY: {
-    rinkeby: '0xbb5fe3f1c422a13700d8F990a17813e554c5b380',
-    mainnet: '0x138D6d59afC6DbBD1DC0bDdF05Ae27f645Eb4305',
+    rinkeby: '0xC3890c4Dac5D06C4DAA2eE3Fdc95eC1686A4718e',
+    mainnet: '0x4b9f876c7Fc5f6DEF8991fDe639b2C812a85Fb12',
   },
   SEVEN_DAY: {
-    rinkeby: '0xeC2a134FE6FC50798057dcd2d72f34d84f2aaEa7',
-    mainnet: '0xf341D09b5eEA92B1C1C9bB8C0D7be4467743c84a',
+    rinkeby: '0x69f9aAC8e68cBa3685b84A1990a0F29F131Ca791',
+    mainnet: '0x642EFF5259624FD09D021AB764a4b47d1DbD5770',
   },
 }
 

@@ -1,18 +1,20 @@
 import { Switch } from 'antd'
-import { PropsWithChildren } from 'react'
+import { CSSProperties, PropsWithChildren } from 'react'
 
 export default function SwitchHeading({
   children,
   checked,
   onChange,
   disabled,
+  style,
 }: PropsWithChildren<{
   checked: boolean
   disabled?: boolean
   onChange?: (checked: boolean) => void
+  style?: CSSProperties
 }>) {
   return (
-    <div style={{ display: 'flex', alignItems: 'center' }}>
+    <div style={{ display: 'flex', alignItems: 'center', ...style }}>
       <Switch
         checked={checked}
         onChange={onChange}

@@ -63,6 +63,17 @@ export const formatSplitPercent = (splitPercent: BigNumber): string => {
 }
 
 /**
+ * Express a given split "percent" (parts-per-billion) as a percentage to the maximum precision.
+ * @param splitPercent - split "percent" as parts-per-billion.
+ * @returns {number} percentage (/100)
+ */
+export const preciseFormatSplitPercent = (
+  percentPerBillion: number,
+): number => {
+  return (percentPerBillion / SPLITS_TOTAL_PERCENT) * 100
+}
+
+/**
  * Express a given [percentage] as a split "percent" (parts-per-billion).
  * NOTE: splitPercent is named misleadingly. splitPercent is not a percentage (x/100)
  * It is express as parts-per-billion.
@@ -71,7 +82,7 @@ export const formatSplitPercent = (splitPercent: BigNumber): string => {
  */
 export const splitPercentFrom = (percentage: number): BigNumber => {
   return percentage
-    ? BigNumber.from((percentage * SPLITS_TOTAL_PERCENT) / 100)
+    ? BigNumber.from(((percentage * SPLITS_TOTAL_PERCENT) / 100).toFixed())
     : BigNumber.from(0)
 }
 

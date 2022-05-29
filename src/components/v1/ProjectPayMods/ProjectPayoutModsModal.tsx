@@ -191,10 +191,10 @@ export const ProjectPayoutModsModal = ({
 
   return (
     <Modal
-      title={modalMode === 'Edit' ? t`Edit existing split` : t`Add a payout`}
+      title={modalMode === 'Edit' ? t`Edit payout` : t`Add new payout`}
       visible={visible}
       onOk={validateAndSave}
-      okText={modalMode === 'Edit' ? t`Save split` : t`Add payout`}
+      okText={modalMode === 'Edit' ? t`Save payout` : t`Add payout`}
       onCancel={discardAndClose}
       destroyOnClose
     >

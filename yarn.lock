@@ -3082,10 +3082,10 @@
     solhint "^3.3.6"
     solhint-plugin-prettier "^0.0.5"
 
-"@jbx-protocol/contracts-v2-latest@npm:@jbx-protocol/contracts-v2@7.0.0":
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/@jbx-protocol/contracts-v2/-/contracts-v2-7.0.0.tgz#f4899d1f35d22d5c0f61fefd4e028664c4b5c4e0"
-  integrity sha512-IY65VDDFaXV4RmrtrpWr/axKgaPxwmO2pT6oWO9gsF/41BaS0uzl7QsRx9kPGt3Fpm+LL+Enw7J/9WppkBelWg==
+"@jbx-protocol/contracts-v2-latest@npm:@jbx-protocol/contracts-v2@8.0.0":
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/@jbx-protocol/contracts-v2/-/contracts-v2-8.0.0.tgz#25aee5766716947beb37ad08cdb3d30463a4b988"
+  integrity sha512-0yFuhZBVHg+CGHNe9vPjbdSAhQSXVhFOQficc5ed1yzdG8ZaBSKg9ZdC351hJD7w7Mp9Vhf/0gh3ErYAv2OQqw==
 
 "@jest/console@^26.6.2":
   version "26.6.2"

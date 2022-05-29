@@ -789,7 +789,7 @@ msgid "Delete payout"
 msgstr ""
 
 #: src/components/shared/formItems/ProjectTicketMods.tsx
-msgid "Delete token allcation"
+msgid "Delete token allocation"
 msgstr ""
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx

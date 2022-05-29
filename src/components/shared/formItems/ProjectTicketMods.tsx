@@ -153,7 +153,7 @@ export default function ProjectTicketMods({
           {locked ? (
             <LockOutlined style={{ color: colors.icon.disabled }} />
           ) : (
-            <Tooltip title={t`Delete token allcation`}>
+            <Tooltip title={t`Delete token allocation`}>
               <Button
                 type="text"
                 onClick={e => {

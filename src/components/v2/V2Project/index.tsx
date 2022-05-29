@@ -13,6 +13,8 @@ import {
   V2OperatorPermission,
 } from 'hooks/v2/contractReader/HasPermission'
 
+import useProjectQueuedFundingCycle from 'hooks/v2/contractReader/ProjectQueuedFundingCycle'
+
 import ProjectActivity from './ProjectActivity'
 import TreasuryStats from './TreasuryStats'
 import V2FundingCycleSection from './V2FundingCycleSection'
@@ -51,6 +53,12 @@ export default function V2Project({
     V2OperatorPermission.RECONFIGURE,
   )
 
+  const { data: queuedFundingCycleResponse } = useProjectQueuedFundingCycle({
+    projectId,
+  })
+
+  const [queuedFundingCycle] = queuedFundingCycleResponse || []
+
   // Checks URL to see if user was just directed from project deploy
   const location = useLocation()
   const params = new URLSearchParams(location.search)
@@ -62,7 +70,8 @@ export default function V2Project({
     useState<boolean>(isNewDeploy)
 
   const colSizeMd = singleColumnLayout ? 24 : 12
-  const hasCurrentFundingCycle = fundingCycle && !fundingCycle.number.eq(0)
+  const hasCurrentFundingCycle = fundingCycle?.number.gt(0)
+  const hasQueuedFundingCycle = queuedFundingCycle?.number.gt(0)
 
   if (projectId === undefined) return null
 
@@ -85,7 +94,9 @@ export default function V2Project({
 
   return (
     <Space direction="vertical" size={GUTTER_PX} style={{ width: '100%' }}>
-      {!hasCurrentFundingCycle && canReconfigureFundingCycles ? (
+      {!hasCurrentFundingCycle &&
+      !hasQueuedFundingCycle &&
+      canReconfigureFundingCycles ? (
         <RelaunchFundingCycleBanner />
       ) : null}
 
@@ -94,7 +105,9 @@ export default function V2Project({
         actions={!isPreviewMode ? <V2ProjectHeaderActions /> : undefined}
         isArchived={isArchived}
       />
-      {!isPreviewMode && !hasCurrentFundingCycle && <V2BugNotice />}
+      {!isPreviewMode &&
+        hasCurrentFundingCycle === false &&
+        hasQueuedFundingCycle === false && <V2BugNotice />}
       <Row gutter={GUTTER_PX} align="bottom">
         <Col md={colSizeMd} xs={24}>
           <TreasuryStats />

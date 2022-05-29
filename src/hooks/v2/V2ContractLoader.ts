@@ -9,6 +9,26 @@ import { useContext, useEffect, useState } from 'react'
 import { readProvider } from 'constants/readProvider'
 import { readNetwork } from 'constants/networks'
 
+/**
+ *  Defines the ABI filename to use for a given V2ContractName.
+ */
+const CONTRACT_ABI_OVERRIDES: {
+  [k in V2ContractName]?: { filename: string; version: string }
+} = {
+  DeprecatedJBController: {
+    version: '4.0.0',
+    filename: 'JBController',
+  },
+  DeprecatedJBSplitsStore: {
+    version: '4.0.0',
+    filename: 'JBSplitsStore',
+  },
+  DeprecatedJBDirectory: {
+    version: '4.0.0',
+    filename: 'JBDirectory',
+  },
+}
+
 export function useV2ContractLoader() {
   const [contracts, setContracts] = useState<V2Contracts>()
 
@@ -22,19 +42,21 @@ export function useV2ContractLoader() {
         // Contracts can be used read-only without a signer, but require a signer to create transactions.
         const signerOrProvider = signingProvider?.getSigner() ?? readProvider
 
-        const newContracts = Object.values(V2ContractName).reduce(
-          (accumulator, contractName) => ({
+        const contractLoaders = await Promise.all(
+          Object.values(V2ContractName).map(contractName =>
+            loadContract(contractName, network, signerOrProvider),
+          ),
+        )
+
+        const newContractMap = Object.values(V2ContractName).reduce(
+          (accumulator, contractName, idx) => ({
             ...accumulator,
-            [contractName]: loadContract(
-              contractName,
-              network,
-              signerOrProvider,
-            ),
+            [contractName]: contractLoaders[idx],
           }),
           {} as V2Contracts,
         )
 
-        setContracts(newContracts)
+        setContracts(newContractMap)
       } catch (e) {
         console.error('CONTRACT LOADER ERROR:', e)
       }
@@ -46,11 +68,17 @@ export function useV2ContractLoader() {
   return contracts
 }
 
-const loadContract = (
-  contractName: keyof typeof V2ContractName,
+const loadContract = async (
+  contractName: V2ContractName,
   network: NetworkName,
   signerOrProvider: JsonRpcSigner | JsonRpcProvider,
-): Contract | undefined => {
-  const contract = require(`@jbx-protocol/contracts-v2/deployments/${network}/${contractName}.json`)
+): Promise<Contract | undefined> => {
+  const contractOverride = CONTRACT_ABI_OVERRIDES[contractName]
+  const version = contractOverride?.version ?? 'latest'
+  const filename = contractOverride?.filename ?? contractName
+
+  const contract = await import(
+    `@jbx-protocol/contracts-v2-${version}/deployments/${network}/${filename}.json`
+  )
   return new Contract(contract.address, contract.abi, signerOrProvider)
 }

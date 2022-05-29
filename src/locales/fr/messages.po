@@ -8,7 +8,7 @@ msgstr ""
 "Language: fr\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-05-25 02:51\n"
+"PO-Revision-Date: 2022-05-26 02:56\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -77,6 +77,7 @@ msgid "7 days"
 msgstr "7 jours"
 
 #: src/constants/v1/ballotStrategies/index.ts
+#: src/constants/v2/ballotStrategies/index.ts
 msgid "7-day delay"
 msgstr "7 jours de délai"
 
@@ -215,6 +216,7 @@ msgid "A project can reserve a percentage of tokens minted from every payment it
 msgstr "Un projet peut réserver un pourcentage de tokens frappés de chaque paiement reçu. Les tokens réservés peuvent être distribués à tout moment, selon les allocations ci-dessous."
 
 #: src/components/shared/Project/FundingCycleSection.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/NoFundingCycle.tsx
 msgid "A project's lifetime is defined in funding cycles. If a funding target is set, the project can withdraw no more than the target for the duration of the cycle."
 msgstr "La durée de vie d'un projet est définie en cycles de financement. Si un objectif de financement est fixé, le projet ne peut retirer que la somme définie pour la durée du cycle."
 
@@ -224,6 +226,7 @@ msgid "A reconfiguration to an upcoming funding cycle must be submitted at least
 msgstr "Le reparamétrage d'un cycle de financement à venir doit être soumis au moins 3 jours avant son début."
 
 #: src/constants/v1/ballotStrategies/index.ts
+#: src/constants/v2/ballotStrategies/index.ts
 msgid "A reconfiguration to an upcoming funding cycle must be submitted at least 7 days before it starts."
 msgstr "Le reparamétrage d'un cycle de financement à venir doit être soumis au moins 7 jours avant son début."
 
@@ -744,7 +747,7 @@ msgstr "Valeur actuelle : <0><1/>{0}</0>"
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "Custom memo"
-msgstr ""
+msgstr "Customiser le mémo"
 
 #: src/components/shared/ReconfigurationStrategy/ReconfigurationStrategySelector.tsx
 #: src/utils/ballot.ts
@@ -829,7 +832,7 @@ msgstr "Détails"
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "Determines whether tokens will be minted from payments to this address."
-msgstr ""
+msgstr "Détermine si les tokens seront frappés à partir des paiements effectués à cette adresse."
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
@@ -907,6 +910,7 @@ msgstr "Distribuer {tokenTextPlural}"
 msgid "Distribute {tokensText}"
 msgstr "Distribuer {tokensText}"
 
+#: src/components/shared/Project/FundingProgressBar.tsx
 #: src/components/v1/V1Project/Paid.tsx
 #: src/components/v2/V2Project/TreasuryStats/DistributedRatio.tsx
 msgid "Distributed"
@@ -957,7 +961,7 @@ msgid "Distribution limit is 0: All funds will be considered overflow and can be
 msgstr "La limite de distribution est de 0 : Tous les fonds seront considérés comme de l'overflow et pourront être récupérés par les titulaires de token."
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
-msgid "Distribution limit is infinite: The project will control how all funds are distributed, and none can be redeemed by token holders."
+msgid "Distribution limit is infinite. <0>The project will control how all funds are distributed, and none can be redeemed by token holders.</0>"
 msgstr ""
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
@@ -1020,6 +1024,10 @@ msgstr "En raison de leur nature publique, toute exploitation des contrats peut 
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Duration"
 msgstr "Durée"
+
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Duration (seconds)"
+msgstr ""
 
 #: src/components/Landing/index.tsx
 msgid "ERC-20 community tokens"
@@ -1165,6 +1173,7 @@ msgstr "Distribution du financement"
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v1/shared/BudgetForm.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/NoFundingCycle.tsx
 msgid "Funding cycle"
 msgstr "Cycle de financement"
 
@@ -1178,6 +1187,14 @@ msgstr "Détails du cycle de financement"
 #: src/components/v2/V2Create/forms/FundingForm/DurationInputAndSelect.tsx
 msgid "Funding cycle duration"
 msgstr "Durée du cycle de financement"
+
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Funding cycle preview"
+msgstr ""
+
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Funding cycle required."
+msgstr ""
 
 #: src/components/v1/shared/BudgetForm.tsx
 msgid "Funding cycle target"
@@ -1481,6 +1498,11 @@ msgstr "Dernier"
 msgid "Latest payments"
 msgstr "Derniers paiements"
 
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Launch funding cycle"
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "Launch your project"
 msgstr "Lancez votre projet"
@@ -1488,6 +1510,10 @@ msgstr "Lancez votre projet"
 #: src/components/shared/formItems/ProjectBondingCurveRate.tsx
 msgid "Learn more in this <0>short video</0>."
 msgstr "Pour en savoir plus, regardez cette <0>courte vidéo</0>."
+
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Leave blank to start immediately."
+msgstr ""
 
 #: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Let's get this party started!"
@@ -1565,7 +1591,7 @@ msgstr "Frapper des tokens de projet sur demande"
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "Mint tokens as ERC-20"
-msgstr ""
+msgstr "Frapper des tokens comme ERC-20"
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Mint tokens to a custom address."
@@ -1626,6 +1652,10 @@ msgstr "Suivant : Réviser et appliquer"
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "No"
 msgstr "Non"
+
+#: src/components/v2/V2Project/V2FundingCycleSection/NoFundingCycle.tsx
+msgid "No active funding cycle."
+msgstr ""
 
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 #: src/components/v2/V2Project/ProjectActivity/index.tsx
@@ -1699,6 +1729,10 @@ msgstr "Notification de {0} :"
 #: src/components/v1/V1Project/modals/BalancesModal.tsx
 msgid "Other assets in this project's owner's wallet."
 msgstr "Autres actifs dans le portefeuille du propriétaire de ce projet."
+
+#: src/components/shared/Project/FundingProgressBar.tsx
+msgid "Overflow"
+msgstr ""
 
 #: src/components/v1/shared/BudgetForm.tsx
 msgid "Overflow is created if your project's balance exceeds your funding cycle target. Overflow can be redeemed by your project's token holders."
@@ -1799,7 +1833,7 @@ msgstr "Le paiement de ce projet est actuellement désactivé."
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "Payment made through payable address"
-msgstr ""
+msgstr "Paiement effectué par le biais d'une adresse de facturation"
 
 #: src/components/shared/RichImgPreview.tsx
 msgid "Payment memo image"
@@ -1995,7 +2029,7 @@ msgstr "Le projet {name} sera bientôt disponible ! Essayez d'actualiser la page
 
 #: src/components/v2/shared/V2ProjectHandle.tsx
 msgid "Project {projectId}"
-msgstr ""
+msgstr "Projet {projectId}"
 
 #: src/components/shared/Project404.tsx
 msgid "Project {projectId} not found"
@@ -2148,6 +2182,10 @@ msgstr "Excédent redistribuable"
 msgid "Refresh"
 msgstr "Actualiser"
 
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Relaunch your funding cycle on the new Juicebox V2 contracts."
+msgstr ""
+
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Required"
@@ -2219,6 +2257,10 @@ msgstr "Actions restreintes"
 #: src/components/v1/V1Create/index.tsx
 msgid "Review & Deploy"
 msgstr "Réviser et appliquer"
+
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Review and launch funding cycle"
+msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "Review project"
@@ -2394,6 +2436,10 @@ msgstr "Début"
 msgid "Start Over"
 msgstr "Recommencer"
 
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Start time (seconds, Unix time)"
+msgstr ""
+
 #: src/components/v1/PayoutModsList.tsx
 msgid "Sum of percentages cannot exceed 100%"
 msgstr "La somme des pourcentages ne peut pas dépasser 100%"
@@ -2505,7 +2551,7 @@ msgstr "Le montant maximal des fonds pouvant être distribués à partir de ce p
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "The onchain memo for each transaction made through the address. It will appear in the project's payment feed when someone pays this address."
-msgstr ""
+msgstr "Le mémo en chaîne pour chaque transaction réalisée par biais de l'adresse. Il apparaîtra dans le flux de paiement du projet quand quelqu'un paie à cette adresse."
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "The percentage this individual receives of the overall {reservedRate}% reserved token allocation"
@@ -3012,7 +3058,7 @@ msgstr "Vous pouvez toujours récupérer vos tokens {tokenSymbol} de l'overflow 
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "You don't have a funding cycle duration. Changes you make will take effect immediately."
-msgstr ""
+msgstr "Vous n'avez pas une durée de cycle de financement. Les modifications que vous apportez prendront effet immédiatement."
 
 #: src/components/Projects/HoldingsProjects.tsx
 msgid "You don't hold tokens for any Juicebox project."
@@ -3050,6 +3096,10 @@ msgstr "Vous recevrez {minReturnedTokensFormatted} d'ETH"
 msgid "You'll be able to issue ERC-20 tokens once your project contract has been deployed. Until then, the protocol will track token balances, allowing your supporters to earn tokens and redeem for overflow in the meantime."
 msgstr "Vous pourrez émettre des tokens ERC-20 une fois votre contrat de projet déployé. Jusque-là, le protocole suivra les soldes de tokens, permettant à vos financeurs de gagner des tokens et de les récupérer de l'overflow entre-temps."
 
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Your Juicebox project has no active funding cycle. Launch a funding cycle to re-enable payments on your project."
+msgstr ""
+
 #: src/components/v1/V1Project/Rewards/index.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "Your balance"
@@ -3062,6 +3112,10 @@ msgstr "Votre solde : {0}"
 #: src/components/v1/V1Project/modals/FeedbackPromptModal.tsx
 msgid "Your feedback will be sent to a <0>public Discord channel </0>for our development team to consider."
 msgstr "Vos commentaires seront envoyés à une <0>chaîne Discord public </0>pour que notre équipe de développement les examine."
+
+#: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner/index.tsx
+msgid "Your funding cycle configuration has been pre-populated using the configuration you originally launched with. If you need to customize it, contact us."
+msgstr ""
 
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Your new payable address:"

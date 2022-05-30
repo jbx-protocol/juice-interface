@@ -12,6 +12,7 @@ export default function SplitList({
   projectOwnerAddress,
   valueSuffix,
   valueFormatProps,
+  reservedRate,
 }: {
   splits: Split[]
   currency?: BigNumber
@@ -20,6 +21,7 @@ export default function SplitList({
   showSplitValues?: boolean
   valueSuffix?: string | JSX.Element
   valueFormatProps?: { precision?: number }
+  reservedRate?: number
 }) {
   const totalSplitPercentage =
     splits?.reduce((sum, split) => sum + split.percent, 0) ?? 0
@@ -42,6 +44,7 @@ export default function SplitList({
               projectOwnerAddress={projectOwnerAddress}
               valueSuffix={valueSuffix}
               valueFormatProps={valueFormatProps}
+              reservedRate={reservedRate}
             />
           </div>
         ))}
@@ -61,6 +64,7 @@ export default function SplitList({
           projectOwnerAddress={projectOwnerAddress}
           valueSuffix={valueSuffix}
           valueFormatProps={valueFormatProps}
+          reservedRate={reservedRate}
         />
       ) : null}
     </div>

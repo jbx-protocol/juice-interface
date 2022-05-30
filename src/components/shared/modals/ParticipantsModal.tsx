@@ -236,7 +236,7 @@ export default function ParticipantsModal({
                       capitalize: false,
                       plural: true,
                     })}{' '}
-                    staked
+                    unclaimed
                   </Trans>
                 </div>
               </div>

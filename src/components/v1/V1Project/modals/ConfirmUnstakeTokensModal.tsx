@@ -10,6 +10,7 @@ import useUnclaimedBalanceOfUser from 'hooks/v1/contractReader/UnclaimedBalanceO
 import { useUnstakeTokensTx } from 'hooks/v1/transactor/UnstakeTokensTx'
 import { useContext, useLayoutEffect, useState } from 'react'
 import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export default function ConfirmUnstakeTokensModal({
   visible,
@@ -56,12 +57,14 @@ export default function ConfirmUnstakeTokensModal({
     ? tokenAddress !== constants.AddressZero
     : false
 
+  const tokenTextPlural = tokenSymbolText({ tokenSymbol, plural: true })
+
   return (
     <Modal
-      title={t`Claim ${tokenSymbol ?? 'tokens'} as ERC-20 tokens`}
+      title={t`Claim ${tokenTextPlural} as ERC-20 tokens`}
       visible={visible}
       onOk={unstake}
-      okText={t`Claim ${tokenSymbol ?? 'tokens'}`}
+      okText={t`Claim ${tokenTextPlural}`}
       confirmLoading={loading}
       okButtonProps={{ disabled: parseWad(unstakeAmount).eq(0) }}
       onCancel={onCancel}

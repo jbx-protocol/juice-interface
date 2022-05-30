@@ -579,12 +579,12 @@ msgid "Check this to mint {tokenSymbol} ERC-20 to your wallet. Leave unchecked t
 msgstr "Marca esto para acuñar {tokenSymbol} ERC-20 a tu cartera. Deja desmarcado para que tu balance de tokens sea registrado por Juicebox, ahorrando gas en está transacción. Siempre puedes reclamar tus tokens ERC-20 después."
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
-msgid "Claim {0}"
-msgstr "Reclamar {0}"
+msgid "Claim {tokenTextPlural}"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
-msgid "Claim {0} as ERC-20 tokens"
-msgstr "Reclamar {0} como tokens ERC-20"
+msgid "Claim {tokenTextPlural} as ERC-20 tokens"
+msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "Claim {tokenTextShort}"
@@ -906,9 +906,6 @@ msgid "Distribute reserved {tokenTextPlural}"
 msgstr "Distribuir los {tokenTextPlural} reservados"
 
 #: src/components/v1/FundingCycle/ReservedTokens.tsx
-msgid "Distribute {0}"
-msgstr "Distribuir {0}"
-
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributeReservedTokensModal.tsx
 msgid "Distribute {tokenTextPlural}"
 msgstr "Distribuir {tokenTextPlural}"
@@ -1094,8 +1091,8 @@ msgid "Enabling this allows the project owner to manually mint any amount of tok
 msgstr "Activar esto permite al dueño del proyecto acuñar manualmente cualquier cantidad de tokens a cualquier dirección."
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
-msgid "Enabling this will mint {tokenSymbol} ERC-20 tokens. Otherwise staked {tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver."
-msgstr "Activar esto acuñará tokens ERC-20 {tokenSymbol}. En caso contrario, los tokens {tokenSymbol} serán acuñados, que podrán ser reclamados como ERC-20 por el beneficiario."
+msgid "Enabling this will mint {tokenSymbol} ERC-20 tokens. Otherwise, unclaimed {tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver."
+msgstr ""
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 #: src/components/v2/V2Create/forms/RulesForm/TokenMintingExtra.tsx
@@ -1481,10 +1478,6 @@ msgstr "Juicebox fue construido para permitir que las personas y los proyectos s
 #: src/components/shared/modals/ParticipantsModal.tsx
 msgid "Last paid"
 msgstr "Pagado por última vez"
-
-#: src/components/shared/modals/DownloadParticipantsModal.tsx
-msgid "Last paid timestamp"
-msgstr "Última marca de tiempo pagada"
 
 #: src/components/shared/modals/IssueTokenModal.tsx
 #: src/components/v2/V2Project/NewDeployModal.tsx
@@ -2426,10 +2419,6 @@ msgstr ""
 msgid "Spending"
 msgstr "Gasto"
 
-#: src/components/shared/modals/DownloadParticipantsModal.tsx
-msgid "Staked balance"
-msgstr "Balance apostado"
-
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Start"
@@ -2792,10 +2781,6 @@ msgstr "Tokens:"
 msgid "Tools"
 msgstr "Herramientas"
 
-#: src/components/shared/modals/DownloadParticipantsModal.tsx
-msgid "Total ETH paid"
-msgstr "Total de ETH pagado"
-
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Total funds:"
@@ -2867,10 +2852,6 @@ msgstr "A menos que los pagos sean pausados en los ajustes de tu ciclo de financ
 msgid "Unsaved changes"
 msgstr "Cambios sin guardar"
 
-#: src/components/shared/modals/DownloadParticipantsModal.tsx
-msgid "Unstaked balance"
-msgstr "Balance sin stakear"
-
 #: src/components/shared/ProjectHeader/index.tsx
 msgid "Untitled project"
 msgstr "Proyecto sin título"
@@ -2925,7 +2906,6 @@ msgstr "Versión del contrato terminal usado por este proyecto."
 msgid "Volume"
 msgstr "Volumen"
 
-#: src/components/shared/modals/DownloadParticipantsModal.tsx
 #: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Wallet address"
@@ -3262,14 +3242,10 @@ msgstr "proyectos"
 msgid "seconds"
 msgstr "segundos"
 
-#: src/components/shared/modals/DownloadParticipantsModal.tsx
-#: src/components/shared/modals/DownloadParticipantsModal.tsx
 #: src/utils/tokenSymbolText.ts
 msgid "token"
 msgstr "token"
 
-#: src/components/v1/FundingCycle/ReservedTokens.tsx
-#: src/components/v1/FundingCycle/ReservedTokens.tsx
 #: src/utils/tokenSymbolText.ts
 msgid "tokens"
 msgstr "tokens"
@@ -3326,12 +3302,12 @@ msgid "{0} reserved"
 msgstr "{0} reservados"
 
 #: src/components/shared/modals/ParticipantsModal.tsx
-msgid "{0} staked"
-msgstr "{0} staked"
-
-#: src/components/shared/modals/ParticipantsModal.tsx
 msgid "{0} total"
 msgstr "{0} en total"
+
+#: src/components/shared/modals/ParticipantsModal.tsx
+msgid "{0} unclaimed"
+msgstr ""
 
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 msgid "{0} will go to the project owner: <0/>"
@@ -3343,8 +3319,8 @@ msgid "{0} withdrawn"
 msgstr "{0} retirado"
 
 #: src/components/v1/FundingCycle/ReservedTokens.tsx
-msgid "{0} {1} reserved"
-msgstr "{0} {1} reservados"
+msgid "{0} {tokenTextPlural} reserved"
+msgstr ""
 
 #: src/components/v2/shared/SplitItem.tsx
 msgid "{0}% of all newly minted tokens."

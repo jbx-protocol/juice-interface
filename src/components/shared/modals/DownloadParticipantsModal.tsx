@@ -6,6 +6,7 @@ import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { useCallback, useEffect, useState } from 'react'
 import { fromWad } from 'utils/formatNumber'
 import { querySubgraphExhaustive } from 'utils/graph'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 import { readProvider } from 'constants/readProvider'
 
@@ -35,20 +36,18 @@ export default function DownloadParticipantsModal({
 
   const download = useCallback(async () => {
     if (blockNumber === undefined || !projectId) return
-
-    setLoading(true)
-
     const rows = [
       [
-        t`Wallet address`,
-        `Total ${tokenSymbol ?? t`token`} balance`,
-        t`Staked balance`,
-        t`Unstaked balance`,
-        t`Total ETH paid`,
-        t`Last paid timestamp`,
+        'Wallet address',
+        `Total ${tokenSymbolText({ tokenSymbol })} balance`,
+        'Unclaimed balance',
+        'Claimed balance',
+        'Total ETH paid',
+        'Last paid timestamp',
       ], // CSV header row
     ]
 
+    setLoading(true)
     try {
       const participants = await querySubgraphExhaustive({
         entity: 'participant',
@@ -126,7 +125,9 @@ export default function DownloadParticipantsModal({
     >
       <div>
         <h4>
-          <Trans>Download CSV of {tokenSymbol || t`token`} holders</Trans>
+          <Trans>
+            Download CSV of {tokenSymbolText({ tokenSymbol })} holders
+          </Trans>
         </h4>
 
         <label style={{ display: 'block', marginTop: 20, marginBottom: 5 }}>

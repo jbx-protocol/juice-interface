@@ -579,12 +579,12 @@ msgid "Check this to mint {tokenSymbol} ERC-20 to your wallet. Leave unchecked t
 msgstr "Cüzdanınıza {tokenSymbol} ERC-20 basmak için burayı işaretleyin. Token bakiyenizin Juicebox tarafından takip edilmesini sağlamak için işaretlemeden bırakın ve bu işlemde gazdan tasarruf edin. ERC-20 token'larınızı daha sonra her zaman talep edebilirsiniz."
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
-msgid "Claim {0}"
-msgstr "{0} Talep et"
+msgid "Claim {tokenTextPlural}"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
-msgid "Claim {0} as ERC-20 tokens"
-msgstr "{0} token'ları ERC-20 olarak talep et"
+msgid "Claim {tokenTextPlural} as ERC-20 tokens"
+msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "Claim {tokenTextShort}"
@@ -906,9 +906,6 @@ msgid "Distribute reserved {tokenTextPlural}"
 msgstr "Ayrılmış {tokenTextPlural} token'ları dağıt"
 
 #: src/components/v1/FundingCycle/ReservedTokens.tsx
-msgid "Distribute {0}"
-msgstr "{0} dağıt"
-
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributeReservedTokensModal.tsx
 msgid "Distribute {tokenTextPlural}"
 msgstr "{tokenTextPlural} token'ları dağıt"
@@ -1094,8 +1091,8 @@ msgid "Enabling this allows the project owner to manually mint any amount of tok
 msgstr "Bunun etkinleştirilmesi, proje sahibine, herhangi bir miktarda token'ı herhangi bir adrese manuel olarak basma izni verir."
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
-msgid "Enabling this will mint {tokenSymbol} ERC-20 tokens. Otherwise staked {tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver."
-msgstr "Bunu etkinleştirmek ERC-20 {tokenSymbol} token'ları basacaktır. Aksi takdirde, stake edilmiş {tokenSymbol} token'ları basılacaktır ve bunlar, daha sonra alıcı tarafından ERC-20 olarak talep edilebilecektir."
+msgid "Enabling this will mint {tokenSymbol} ERC-20 tokens. Otherwise, unclaimed {tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver."
+msgstr ""
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 #: src/components/v2/V2Create/forms/RulesForm/TokenMintingExtra.tsx
@@ -1481,10 +1478,6 @@ msgstr "Juicebox, insanların ve projelerin kamusal sanat ve altyapı oluşturma
 #: src/components/shared/modals/ParticipantsModal.tsx
 msgid "Last paid"
 msgstr "Son ödeme"
-
-#: src/components/shared/modals/DownloadParticipantsModal.tsx
-msgid "Last paid timestamp"
-msgstr "Son ödeme zaman damgası"
 
 #: src/components/shared/modals/IssueTokenModal.tsx
 #: src/components/v2/V2Project/NewDeployModal.tsx
@@ -2426,10 +2419,6 @@ msgstr ""
 msgid "Spending"
 msgstr "Harcama"
 
-#: src/components/shared/modals/DownloadParticipantsModal.tsx
-msgid "Staked balance"
-msgstr "Stake edilen bakiye"
-
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Start"
@@ -2792,10 +2781,6 @@ msgstr "Token'lar:"
 msgid "Tools"
 msgstr "Araçlar"
 
-#: src/components/shared/modals/DownloadParticipantsModal.tsx
-msgid "Total ETH paid"
-msgstr "Ödenen toplam ETH"
-
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Total funds:"
@@ -2867,10 +2852,6 @@ msgstr "Ödemeler finansman döngüsü ayarlarınızdan duraklatılmadıkça pro
 msgid "Unsaved changes"
 msgstr ""
 
-#: src/components/shared/modals/DownloadParticipantsModal.tsx
-msgid "Unstaked balance"
-msgstr "Stake'den kaldırılan bakiye"
-
 #: src/components/shared/ProjectHeader/index.tsx
 msgid "Untitled project"
 msgstr "İsimsiz proje"
@@ -2925,7 +2906,6 @@ msgstr "Bu proje tarafından kullanılan terminal sözleşmesinin sürümü."
 msgid "Volume"
 msgstr "Hacim"
 
-#: src/components/shared/modals/DownloadParticipantsModal.tsx
 #: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Wallet address"
@@ -3262,14 +3242,10 @@ msgstr "projeler"
 msgid "seconds"
 msgstr ""
 
-#: src/components/shared/modals/DownloadParticipantsModal.tsx
-#: src/components/shared/modals/DownloadParticipantsModal.tsx
 #: src/utils/tokenSymbolText.ts
 msgid "token"
 msgstr "token"
 
-#: src/components/v1/FundingCycle/ReservedTokens.tsx
-#: src/components/v1/FundingCycle/ReservedTokens.tsx
 #: src/utils/tokenSymbolText.ts
 msgid "tokens"
 msgstr "token'lar"
@@ -3326,12 +3302,12 @@ msgid "{0} reserved"
 msgstr "Ayrılan {0}"
 
 #: src/components/shared/modals/ParticipantsModal.tsx
-msgid "{0} staked"
-msgstr "stake edilen {0}"
-
-#: src/components/shared/modals/ParticipantsModal.tsx
 msgid "{0} total"
 msgstr "Toplam {0}"
+
+#: src/components/shared/modals/ParticipantsModal.tsx
+msgid "{0} unclaimed"
+msgstr ""
 
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 msgid "{0} will go to the project owner: <0/>"
@@ -3343,8 +3319,8 @@ msgid "{0} withdrawn"
 msgstr "{0} çekildi"
 
 #: src/components/v1/FundingCycle/ReservedTokens.tsx
-msgid "{0} {1} reserved"
-msgstr "{0}{1} ayrıldı"
+msgid "{0} {tokenTextPlural} reserved"
+msgstr ""
 
 #: src/components/v2/shared/SplitItem.tsx
 msgid "{0}% of all newly minted tokens."

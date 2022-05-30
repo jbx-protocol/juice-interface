@@ -579,12 +579,12 @@ msgid "Check this to mint {tokenSymbol} ERC-20 to your wallet. Leave unchecked t
 msgstr "勾选此项来铸造{tokenSymbol} ERC-20 代币并领取到你的钱包。不勾选可以降低本次交易的 gas 费用，你的代币余额将交由 Juicebox 托管。 你以后可以随时再来领取你的 ERC-20 代币。"
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
-msgid "Claim {0}"
-msgstr "领取 {0}"
+msgid "Claim {tokenTextPlural}"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
-msgid "Claim {0} as ERC-20 tokens"
-msgstr "以 ERC-20 代币形式领取 {0}"
+msgid "Claim {tokenTextPlural} as ERC-20 tokens"
+msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "Claim {tokenTextShort}"
@@ -906,9 +906,6 @@ msgid "Distribute reserved {tokenTextPlural}"
 msgstr "分配保留的 {tokenTextPlural} 代币"
 
 #: src/components/v1/FundingCycle/ReservedTokens.tsx
-msgid "Distribute {0}"
-msgstr "分发 {0}"
-
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributeReservedTokensModal.tsx
 msgid "Distribute {tokenTextPlural}"
 msgstr "分配 {tokenTextPlural}"
@@ -1094,8 +1091,8 @@ msgid "Enabling this allows the project owner to manually mint any amount of tok
 msgstr "允许项目所有者手动铸造并发送任何数量的代币。"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
-msgid "Enabling this will mint {tokenSymbol} ERC-20 tokens. Otherwise staked {tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver."
-msgstr "允许这个选项将会铸造出 ERC-20 标准的 {tokenSymbol} 代币。 否则就会铸造 {tokenSymbol} 托管代币，以后可以再来按 ERC-20 标准的代币进行领取。"
+msgid "Enabling this will mint {tokenSymbol} ERC-20 tokens. Otherwise, unclaimed {tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver."
+msgstr ""
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 #: src/components/v2/V2Create/forms/RulesForm/TokenMintingExtra.tsx
@@ -1481,10 +1478,6 @@ msgstr "Juicebox 的建立是为了让人们和项目在创造公共艺术和基
 #: src/components/shared/modals/ParticipantsModal.tsx
 msgid "Last paid"
 msgstr "上次支付"
-
-#: src/components/shared/modals/DownloadParticipantsModal.tsx
-msgid "Last paid timestamp"
-msgstr "上次支付的时间戳"
 
 #: src/components/shared/modals/IssueTokenModal.tsx
 #: src/components/v2/V2Project/NewDeployModal.tsx
@@ -2426,10 +2419,6 @@ msgstr ""
 msgid "Spending"
 msgstr "资金分配"
 
-#: src/components/shared/modals/DownloadParticipantsModal.tsx
-msgid "Staked balance"
-msgstr "已存入余额"
-
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Start"
@@ -2792,10 +2781,6 @@ msgstr "代币："
 msgid "Tools"
 msgstr "工具"
 
-#: src/components/shared/modals/DownloadParticipantsModal.tsx
-msgid "Total ETH paid"
-msgstr "一共支付的 ETH"
-
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Total funds:"
@@ -2867,10 +2852,6 @@ msgstr "除非“付款”已在您的筹款周期设置中被暂停，否则您
 msgid "Unsaved changes"
 msgstr "未保存更改"
 
-#: src/components/shared/modals/DownloadParticipantsModal.tsx
-msgid "Unstaked balance"
-msgstr "取出的余额"
-
 #: src/components/shared/ProjectHeader/index.tsx
 msgid "Untitled project"
 msgstr "项目未命名"
@@ -2925,7 +2906,6 @@ msgstr "当前项目所使用的 Terminal 版本。"
 msgid "Volume"
 msgstr "总收入"
 
-#: src/components/shared/modals/DownloadParticipantsModal.tsx
 #: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Wallet address"
@@ -3262,14 +3242,10 @@ msgstr "项目"
 msgid "seconds"
 msgstr "秒"
 
-#: src/components/shared/modals/DownloadParticipantsModal.tsx
-#: src/components/shared/modals/DownloadParticipantsModal.tsx
 #: src/utils/tokenSymbolText.ts
 msgid "token"
 msgstr "代币"
 
-#: src/components/v1/FundingCycle/ReservedTokens.tsx
-#: src/components/v1/FundingCycle/ReservedTokens.tsx
 #: src/utils/tokenSymbolText.ts
 msgid "tokens"
 msgstr "代币"
@@ -3326,12 +3302,12 @@ msgid "{0} reserved"
 msgstr "{0} 已保留"
 
 #: src/components/shared/modals/ParticipantsModal.tsx
-msgid "{0} staked"
-msgstr "{0} 已存入"
-
-#: src/components/shared/modals/ParticipantsModal.tsx
 msgid "{0} total"
 msgstr "{0} 总共"
+
+#: src/components/shared/modals/ParticipantsModal.tsx
+msgid "{0} unclaimed"
+msgstr ""
 
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 msgid "{0} will go to the project owner: <0/>"
@@ -3343,8 +3319,8 @@ msgid "{0} withdrawn"
 msgstr "已提取 {0}"
 
 #: src/components/v1/FundingCycle/ReservedTokens.tsx
-msgid "{0} {1} reserved"
-msgstr "{0}{1} 保留"
+msgid "{0} {tokenTextPlural} reserved"
+msgstr ""
 
 #: src/components/v2/shared/SplitItem.tsx
 msgid "{0}% of all newly minted tokens."

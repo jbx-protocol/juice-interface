@@ -23,7 +23,7 @@ interface EditingProjectInfo {
   handle: string
 }
 
-export interface EditingProjectState {
+interface EditingProjectState {
   version: number
   info: EditingProjectInfo
   fundingCycle: SerializedV1FundingCycle
@@ -81,7 +81,7 @@ export const defaultProjectState: EditingProjectState = {
   ticketMods: [],
 }
 
-export const editingProjectSlice = createSlice({
+const editingProjectSlice = createSlice({
   name: 'editingProject',
   initialState: defaultProjectState,
   reducers: {

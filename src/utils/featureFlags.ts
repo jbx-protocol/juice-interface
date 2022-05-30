@@ -1,13 +1,12 @@
 import { readNetwork } from 'constants/networks'
 
-export const FEATURE_FLAG_DEFAULTS: { [k: string]: { [j: string]: boolean } } =
-  {}
+const FEATURE_FLAG_DEFAULTS: { [k: string]: { [j: string]: boolean } } = {}
 
 const featureFlagKey = (baseKey: string) => {
   return `${baseKey}_${readNetwork.name}`
 }
 
-export const setFeatureFlag = (featureFlag: string, enabled: boolean) => {
+const setFeatureFlag = (featureFlag: string, enabled: boolean) => {
   localStorage.setItem(featureFlagKey(featureFlag), JSON.stringify(enabled))
 }
 
@@ -19,7 +18,7 @@ export const disableFeatureFlag = (featureFlag: string) => {
   setFeatureFlag(featureFlag, false)
 }
 
-export const featureFlagDefaultEnabled = (featureFlag: string) => {
+const featureFlagDefaultEnabled = (featureFlag: string) => {
   // if default-enabled for this environment, return true
   const defaultEnabled =
     FEATURE_FLAG_DEFAULTS[featureFlag][readNetwork.name as string]

@@ -15,7 +15,7 @@ export const MAX_RESERVED_RATE = TEN_THOUSAND
 export const MAX_REDEMPTION_RATE = TEN_THOUSAND
 export const MAX_DISCOUNT_RATE = ONE_BILLION
 export const SPLITS_TOTAL_PERCENT = ONE_BILLION
-export const MAX_FEE = ONE_BILLION
+const MAX_FEE = ONE_BILLION
 export const MAX_DISTRIBUTION_LIMIT = MaxUint232
 
 export const DEFAULT_ISSUANCE_RATE = 10 ** 6
@@ -202,21 +202,4 @@ export const amountSubFee = (
   if (!feePerBillion || !amountWad) return
   const feeAmount = feeForAmount(amountWad, feePerBillion) ?? 0
   return amountWad.sub(feeAmount)
-}
-
-/**
- * new amount = old amount / (1 - fee)
- */
-export const amountAddFee = (
-  amountWad?: string,
-  feePerBillion?: BigNumber,
-): string | undefined => {
-  if (!feePerBillion || !amountWad) return
-
-  const inverseFeePerbillion = BigNumber.from(ONE_BILLION).sub(feePerBillion)
-  const amountPerbillion = BigNumber.from(amountWad).mul(ONE_BILLION)
-  // new amount is in regular decimal units
-  const newAmount = amountPerbillion.div(inverseFeePerbillion)
-
-  return newAmount.toString()
 }

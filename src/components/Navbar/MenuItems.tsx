@@ -12,7 +12,7 @@ import {
 } from './navStyles'
 import { resourcesMenuItems } from './constants'
 
-export function NavMenuItem({
+function NavMenuItem({
   text,
   route,
   onClick,

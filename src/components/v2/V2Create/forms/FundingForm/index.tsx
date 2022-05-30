@@ -117,6 +117,11 @@ export default function FundingForm({
     useState<V2CurrencyOption>(V2_CURRENCY_ETH)
   const [durationEnabled, setDurationEnabled] = useState<boolean>(false)
 
+  console.info(
+    'fundAccessConstraint?.distributionLimit: ',
+    fundAccessConstraint?.distributionLimit,
+  )
+
   // Form initial values set by default
   const initialValues = useMemo(
     () => ({

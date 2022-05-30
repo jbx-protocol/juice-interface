@@ -71,7 +71,8 @@ export default function FundingSummarySection() {
     fundAccessConstraint?.distributionLimitCurrency.toNumber() as V2CurrencyOption,
   )
 
-  const distributionLimit = fundAccessConstraint?.distributionLimit
+  const distributionLimit =
+    fundAccessConstraint?.distributionLimit ?? BigNumber.from(0)
   const hasDistributionLimit = Boolean(
     distributionLimit && !distributionLimit.gte(MAX_DISTRIBUTION_LIMIT),
   )

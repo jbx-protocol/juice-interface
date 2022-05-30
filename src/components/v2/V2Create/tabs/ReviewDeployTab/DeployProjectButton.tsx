@@ -160,8 +160,8 @@ export default function DeployProjectButton() {
         type="primary"
         htmlType="submit"
         size="large"
-        disabled={true} // Project creation temporarily disabled ahead of V2 redeploy
-        // disabled={!projectMetadata?.name}
+        // disabled={true} // Project creation temporarily disabled ahead of V2 redeploy
+        disabled={!projectMetadata?.name}
         loading={deployLoading}
       >
         <span>

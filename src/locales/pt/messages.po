@@ -211,6 +211,9 @@ msgid "A project can choose to reserve a percentage of tokens for itself. Instea
 msgstr "Um projeto pode escolher reservar uma porcentagem de tokens para si mesmo. Em vez de ser distribuída para pagar os usuários, essa porcentagem de tokens é cunhada para o projeto."
 
 #: src/components/v1/FundingCycle/ReservedTokens.tsx
+msgid "A project can reserve a percentage of the tokens minted from payments it receives. Reserved tokens can be distributed according to the allocation below at any time."
+msgstr ""
+
 #: src/components/v2/V2Project/V2FundingCycleSection/ReservedTokensSplitsCard.tsx
 msgid "A project can reserve a percentage of tokens minted from every payment it receives. Reserved tokens can be distributed according to the allocation below at any time."
 msgstr "Um projeto pode reservar uma porcentagem de tokens gerados por cada pagamento recebido. Tokens reservados podem ser distribuídos a qualquer momento conforme a alocação abaixo."
@@ -434,9 +437,13 @@ msgid "Available after fee:"
 msgstr "Disponível após a taxa:"
 
 #: src/components/v1/FundingCycle/Spending.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
 msgid "Available funds are distributed according to the payouts below."
 msgstr "Fundos disponíveis são distribuídos conforme os pagamentos abaixo."
+
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
+msgid "Available funds can be distributed according to the payouts below{0}."
+msgstr ""
 
 #: src/components/v1/FundingCycle/modals/DistributeTokensModal.tsx
 msgid "Available:"
@@ -1101,10 +1108,6 @@ msgstr ""
 msgid "End"
 msgstr "Fim"
 
-#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
-msgid "Entities that will receive funds from the treasury each funding cycle."
-msgstr "Entidades que receberão fundos da tesouraria a cada ciclo de financiamento."
-
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 msgid "Error loading holders"
 msgstr "Erro ao carregar titulares"
@@ -1164,7 +1167,6 @@ msgstr ""
 msgid "Funding"
 msgstr "Financiamento"
 
-#: src/components/v1/FundingCycle/Spending.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
 msgid "Funding Distribution"
 msgstr "Distribuição de financiamento"
@@ -1209,10 +1211,10 @@ msgid "Funding cycles can be reconfigured moments before a new cycle begins, wit
 msgstr "Ciclos de financiamento podem ser reconfigurados momentos antes de um novo ciclo começar, sem notificar os contribuidores."
 
 #: src/components/shared/forms/PayModsForm.tsx
+#: src/components/v1/FundingCycle/Spending.tsx
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
-#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Funding distribution"
 msgstr "Distribuição de fundos"
 
@@ -1864,6 +1866,7 @@ msgid "Payout recipients"
 msgstr "Recipientes de pagamento"
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Payouts"
 msgstr ""
 
@@ -3341,6 +3344,10 @@ msgstr "{0} retirado"
 #: src/components/v1/FundingCycle/ReservedTokens.tsx
 msgid "{0} {1} reserved"
 msgstr "{0} {1} reservados"
+
+#: src/components/v2/shared/SplitItem.tsx
+msgid "{0}% of all newly minted tokens."
+msgstr ""
 
 #: src/components/v1/V1Project/Rewards/index.tsx
 msgid "{0}% of supply"

@@ -211,6 +211,9 @@ msgid "A project can choose to reserve a percentage of tokens for itself. Instea
 msgstr "项目可以选择为自己保留一定比例的代币。这些代币不是分发给付费的用户，而是给到项目方。"
 
 #: src/components/v1/FundingCycle/ReservedTokens.tsx
+msgid "A project can reserve a percentage of the tokens minted from payments it receives. Reserved tokens can be distributed according to the allocation below at any time."
+msgstr ""
+
 #: src/components/v2/V2Project/V2FundingCycleSection/ReservedTokensSplitsCard.tsx
 msgid "A project can reserve a percentage of tokens minted from every payment it receives. Reserved tokens can be distributed according to the allocation below at any time."
 msgstr "项目每收到一笔付款都会铸造代币，其中某个百分比的代币会保留在项目内。保留代币可随时按以下分配方案进行分发。"
@@ -434,9 +437,13 @@ msgid "Available after fee:"
 msgstr "扣除手续费后可用"
 
 #: src/components/v1/FundingCycle/Spending.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
 msgid "Available funds are distributed according to the payouts below."
 msgstr "可用资金会分发给以下支出对象。"
+
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
+msgid "Available funds can be distributed according to the payouts below{0}."
+msgstr ""
 
 #: src/components/v1/FundingCycle/modals/DistributeTokensModal.tsx
 msgid "Available:"
@@ -1101,10 +1108,6 @@ msgstr "允许代币铸造会令捐款人感觉有风险。请仅在必要情况
 msgid "End"
 msgstr "结束时间"
 
-#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
-msgid "Entities that will receive funds from the treasury each funding cycle."
-msgstr "每个筹款周期从项目金库获得资金的项目或者个人。"
-
 #: src/components/v1/V1Project/modals/DownloadParticipantsModal.tsx
 msgid "Error loading holders"
 msgstr "加载持有人错误"
@@ -1164,7 +1167,6 @@ msgstr "运“筹”帷幄，共创未来。"
 msgid "Funding"
 msgstr "筹款"
 
-#: src/components/v1/FundingCycle/Spending.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
 msgid "Funding Distribution"
 msgstr "资金分发"
@@ -1209,10 +1211,10 @@ msgid "Funding cycles can be reconfigured moments before a new cycle begins, wit
 msgstr "新的筹款周期开始前即可重新配置筹款周期参数，无须通知捐款者。"
 
 #: src/components/shared/forms/PayModsForm.tsx
+#: src/components/v1/FundingCycle/Spending.tsx
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
-#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Funding distribution"
 msgstr "资金分发"
 
@@ -1864,6 +1866,7 @@ msgid "Payout recipients"
 msgstr "支出的收款人"
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Payouts"
 msgstr ""
 
@@ -3341,6 +3344,10 @@ msgstr "已提取 {0}"
 #: src/components/v1/FundingCycle/ReservedTokens.tsx
 msgid "{0} {1} reserved"
 msgstr "{0}{1} 保留"
+
+#: src/components/v2/shared/SplitItem.tsx
+msgid "{0}% of all newly minted tokens."
+msgstr ""
 
 #: src/components/v1/V1Project/Rewards/index.tsx
 msgid "{0}% of supply"

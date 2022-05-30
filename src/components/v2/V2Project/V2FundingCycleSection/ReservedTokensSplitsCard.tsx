@@ -142,6 +142,7 @@ export default function ReservedTokensSplitsCard({
               splits={reservedTokensSplits}
               projectOwnerAddress={projectOwnerAddress}
               totalValue={undefined}
+              reservedRate={parseFloat(formatReservedRate(reservedRate))}
             />
           ) : null}
         </div>

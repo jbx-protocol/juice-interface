@@ -153,6 +153,7 @@ export default function ReconfigurePreview({
           totalValue={distributionLimit}
           projectOwnerAddress={userAddress}
           showSplitValues={hasDistributionLimit}
+          fundingCycleDuration={duration}
         />
       )}
       {fundingCycleMetadata?.reservedRate.gt(0) && (

@@ -8,7 +8,7 @@ msgstr ""
 "Language: fr\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-05-29 02:59\n"
+"PO-Revision-Date: 2022-05-30 03:01\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -103,7 +103,7 @@ msgstr "<0/> solde du propriétaire"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "<0/>{0} after {feePercentage}% JBX membership fee"
-msgstr ""
+msgstr "<0/>{0} après {feePercentage}% frais de membre JBX"
 
 #: src/components/shared/Project/SpendingStats.tsx
 msgid "<0/>{0}{1} distributed"
@@ -528,7 +528,7 @@ msgstr "Par défaut, tous les fonds non assignés peuvent être distribués au p
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "By default, newly minted tokens will go to the wallet who sends funds to the address. You can enable this to set the token beneficiary to a custom address."
-msgstr ""
+msgstr "Par défaut, les tokens nouvellement frappés iront au portefeuille qui envoie des fonds à l'adresse. Vous pouvez activer ceci pour associer le bénéficiaire de tokens à une adresse customisée."
 
 #: src/components/v2/V2Create/forms/TokenForm/index.tsx
 msgid "By default, the issuance rate for your project's token during funding cycle #1 is 1,000,000 tokens / 1 ETH. For example, a 1 ETH contribution to your project will return 1,000,000 tokens. You can manipulate the issuance rate with the following configurations."
@@ -560,7 +560,7 @@ msgstr "Ces attributs peuvent être modifiés à tout moment et les changements 
 
 #: src/components/Landing/index.tsx
 msgid "Changes to your project's funding configuration require a community-approved period to take effect, which acts as a safeguard against rug pulls. Your supporters don't have to trust you — even though they already do."
-msgstr "Les changements de financement de votre projet demandent une période d'homologation de la communauté pour prendre effet. Vos financeurs n'ont pas besoin de vous faire confiance, même s'ils le font déjà."
+msgstr ""
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "Changes will take effect according to the project's custom ballot contract."
@@ -658,7 +658,7 @@ msgstr "Connectez un portefeuille pour payer"
 
 #: src/components/Projects/HoldingsProjects.tsx
 msgid "Connect your wallet to see your holdings."
-msgstr ""
+msgstr "Connectez votre portefeuille pour voir vos participations."
 
 #: src/components/Projects/MyProjects.tsx
 msgid "Connect your wallet to see your projects."
@@ -2471,7 +2471,7 @@ msgstr "C'est le plan, mais les principaux contrats Juicebox seront d'abord dév
 
 #: src/components/Landing/index.tsx
 msgid "The Decentralized Funding Platform. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."
-msgstr ""
+msgstr "La Plateforme de Financement Décentralisée. Assez légère pour un groupe d'amis, assez puissante pour un réseau mondial d'anonymes. <0>Communautaire</0>, en Ethereum."
 
 #: src/components/v1/V1Create/index.tsx
 msgid "The JBX protocol is unaudited, and projects built on it may be vulnerable to bugs or exploits. Be smart!"

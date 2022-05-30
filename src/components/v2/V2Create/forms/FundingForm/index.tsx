@@ -344,7 +344,7 @@ export default function FundingForm({
           }}
           style={{ marginBottom: '1rem' }}
         >
-          <Trans>Funding cycles</Trans>
+          <Trans>Automate funding cycles</Trans>
         </SwitchHeading>
 
         <Space size="small" direction="vertical">

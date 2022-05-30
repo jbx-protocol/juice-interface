@@ -51,7 +51,7 @@ export default function V2Create() {
     <V2UserProvider>
       <V2CurrencyProvider>
         <V2WarningBanner />
-        <div style={{ padding: 20 }}>
+        <div style={{ maxWidth: 1300, paddingTop: 20, margin: '0 8rem' }}>
           <V2BugNotice />
         </div>
         <div

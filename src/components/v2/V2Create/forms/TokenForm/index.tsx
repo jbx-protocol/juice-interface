@@ -91,10 +91,21 @@ function DiscountRateExtra({
       {discountRatePercent > 0 && isCreate && (
         <>
           <TabDescription style={{ marginTop: 20 }}>
-            The issuance rate of your second funding cycle will be{' '}
-            {formattedNum(secondIssuanceRate)} tokens / 1 ETH, then{' '}
-            {formattedNum(thirdIssuanceRate)} tokens / 1 ETH for your third
-            funding cycle, and so on.
+            <p>
+              <Trans>
+                Contributors will receive {discountRatePercent}% more of the
+                project's tokens for contributions they make this funding cycle
+                compared to the next.
+              </Trans>
+            </p>
+            <p>
+              <Trans>
+                The issuance rate of your second funding cycle will be{' '}
+                {formattedNum(secondIssuanceRate)} tokens / 1 ETH, then{' '}
+                {formattedNum(thirdIssuanceRate)} tokens / 1 ETH for your third
+                funding cycle, and so on.
+              </Trans>
+            </p>
           </TabDescription>
         </>
       )}

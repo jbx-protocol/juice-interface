@@ -2,9 +2,9 @@ import { Trans } from '@lingui/macro'
 
 export const DISCOUNT_RATE_EXPLANATION = (
   <Trans>
-    Your project token's issuance rate will decrease by this percentage every
-    funding cycle. A higher discount rate will incentivize supporters to pay
-    your project earlier.
+    The project token's issuance rate will decrease by this percentage every
+    funding cycle. A higher discount rate will incentivize supporters to pay the
+    project earlier.
   </Trans>
 )
 

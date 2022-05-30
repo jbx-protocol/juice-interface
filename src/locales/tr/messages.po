@@ -428,6 +428,10 @@ msgid "Assets"
 msgstr "Varlıklar"
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
+msgid "Automate funding cycles"
+msgstr ""
+
+#: src/components/v2/V2Create/forms/FundingForm/index.tsx
 msgid "Automatted funding cycles enable the following characteristics:"
 msgstr ""
 
@@ -684,6 +688,10 @@ msgstr "Katkı sahipleri bu projeye ödeme karşılığında token almayacaktır
 #: src/constants/fundingWarningText.ts
 msgid "Contributors will receive a relatively small portion of tokens in exchange for paying this project."
 msgstr "Katkı sahipleri bu projeye ödeme karşılığında token'ların nispeten küçük bir kısmını alacaktır."
+
+#: src/components/v2/V2Create/forms/TokenForm/index.tsx
+msgid "Contributors will receive {discountRatePercent}% more of the project's tokens for contributions they make this funding cycle compared to the next."
+msgstr ""
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
 msgid "Contributors will see this message before they pay your project."
@@ -1202,10 +1210,6 @@ msgstr ""
 msgid "Funding cycle target"
 msgstr "Finansman döngüsü hedefi"
 
-#: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "Funding cycles"
-msgstr "Finansman döngüleri"
-
 #: src/constants/fundingWarningText.ts
 msgid "Funding cycles can be reconfigured moments before a new cycle begins, without notifying contributors."
 msgstr "Finansman döngüleri, katkı sahiplerini bilgilendirmeden, yeni bir döngü başlangıcından dakikalar önce yeniden yapılandırılabilir."
@@ -1383,6 +1387,10 @@ msgstr "Teşvikler"
 
 #: src/components/Landing/index.tsx
 msgid "Indie creators and builders"
+msgstr ""
+
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
+msgid "Infinite (no limit)"
 msgstr ""
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
@@ -1672,7 +1680,6 @@ msgstr "Finansman hedefi yok: Proje, tüm fonların nasıl dağıtılacağını 
 msgid "No funds can be distributed out of the treasury. Funds can only be accessed by token holders redeeming their tokens."
 msgstr ""
 
-#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/DistributionLimit.tsx
 msgid "No limit (infinite)"
 msgstr "Limit yok (sonsuz)"
@@ -2540,6 +2547,10 @@ msgstr "Bu finansman döngüsü için dağıtılmaya uygun fonlar (%{feePercenta
 msgid "The future will be led by creators, and owned by communities."
 msgstr "Gelecek, içerik üreticileri tarafından yönetilecek ve topluluklara ait olacak."
 
+#: src/components/v2/V2Create/forms/TokenForm/index.tsx
+msgid "The issuance rate of your second funding cycle will be {0} tokens / 1 ETH, then {1} tokens / 1 ETH for your third funding cycle, and so on."
+msgstr ""
+
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "The maximum amount of funds allowed to be distributed from the project's treasury each funding cycle."
 msgstr ""
@@ -2567,6 +2578,10 @@ msgstr "Proje sahibi, herhangi bir zamanda herhangi bir miktarda token basarak t
 #: src/constants/fundingWarningText.ts
 msgid "The project owner may reconfigure this funding cycle at any time, without notice."
 msgstr "Proje sahibi, bu finansman döngüsünü, herhangi bir zamanda, bildirimde bulunmadan yeniden yapılandırabilir."
+
+#: src/components/v2/V2Project/V2FundingCycleSection/settingExplanations.tsx
+msgid "The project token's issuance rate will decrease by this percentage every funding cycle. A higher discount rate will incentivize supporters to pay the project earlier."
+msgstr ""
 
 #: src/components/Landing/QAs.tsx
 msgid "The project's tokens that are minted and distributed as a result of a received payment are ERC-20's. The amount of tokens minted and distributed are proportional to the volume of payments received, weighted by the project's discount rate over time."
@@ -3132,10 +3147,6 @@ msgstr "Projeniz duraklatıldığında doğrudan ödeme alamaz."
 msgid "Your project is funded across funding cycles. A funding cycle has a funding target and a duration. Your project's funding cycle configuration will depend on the kind of project you're starting."
 msgstr "Projeniz finansman döngüleri boyunca finanse edilir. Bir finansman döngüsü, bir finansman hedefine ve süreye sahiptir. Projenizin finansman döngüsü yapılandırması, başlattığınız projenin türüne bağlı olacaktır."
 
-#: src/components/v2/V2Project/V2FundingCycleSection/settingExplanations.tsx
-msgid "Your project token's issuance rate will decrease by this percentage every funding cycle. A higher discount rate will incentivize supporters to pay your project earlier."
-msgstr ""
-
 #: src/components/shared/ArchiveProject/index.tsx
 msgid "Your project will appear archived, and will not be able to receive payments through the juicebox.money app. You can unarchive a project at any time. Please allow a few days for your project to appear under the \"archived\" filter on the Projects page."
 msgstr "Projeniz arşivlenecek ve juicebox.money uygulaması üzerinden ödeme alamayacaktır. Bir projeyi arşivden istediğiniz zaman çıkarabilirsiniz. Lütfen projenizin projeler sayfasında, \"arşivlenen\" filtresi altında gözükmesi için bir kaç gün bekleyin."
@@ -3172,6 +3183,7 @@ msgstr "İşleminiz gönderildi ve onay bekliyor."
 msgid "Your unclaimed {tokenTextLong}"
 msgstr "Talep edilmemiş {tokenTextLong} token'larınız"
 
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/DistributionLimit.tsx
 msgid "Zero"
 msgstr ""

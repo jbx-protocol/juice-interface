@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-05-29 03:00\n"
+"PO-Revision-Date: 2022-05-30 03:01\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -103,7 +103,7 @@ msgstr "Saldo del propietario <0/>"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "<0/>{0} after {feePercentage}% JBX membership fee"
-msgstr ""
+msgstr "<0/>{0} después de {feePercentage}% de la cuota de membresía JBX"
 
 #: src/components/shared/Project/SpendingStats.tsx
 msgid "<0/>{0}{1} distributed"

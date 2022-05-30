@@ -49,3 +49,9 @@ export type V2FundingCycle = V2FundingCycleData & {
   start: BigNumber
   metadata: BigNumber // encoded FundingCycleMetadata
 }
+
+export enum BallotState {
+  'active',
+  'approved',
+  'failed',
+}

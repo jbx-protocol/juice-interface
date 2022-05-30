@@ -1,13 +1,49 @@
 import { ExclamationCircleOutlined } from '@ant-design/icons'
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Collapse, Tooltip } from 'antd'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import { ThemeContext } from 'contexts/themeContext'
 import { BigNumber } from '@ethersproject/bignumber'
 import { useContext } from 'react'
 import { detailedTimeUntil } from 'utils/formatTime'
+import { BallotState } from 'models/v2/fundingCycle'
+
+import { Badge, BadgeVariant } from '../Badge'
 
 const COLLAPSE_PANEL_KEY = 'funding-cycle-details'
+
+function BallotStateBadge({ ballotState }: { ballotState: BallotState }) {
+  // only show badge for ballot states 0 and 2 (don't show if ballot is 'approved'.)
+  const ballotStateVariantMap: { [k in BallotState]?: BadgeVariant } = {
+    0: 'warning',
+    2: 'danger',
+  }
+
+  const ballotStateLabelMap: { [k in BallotState]?: string } = {
+    0: 'Pending',
+    2: 'Failed',
+  }
+
+  const ballotStateTooltips: { [k in BallotState]?: string } = {
+    0: t`This proposed funding cycle reconfiguration has an active ballot and isn't yet approved.`,
+    2: t`This proposed funding cycle reconfiguration has failed.`,
+  }
+
+  const variant = ballotStateVariantMap[ballotState]
+
+  if (!variant) return null
+
+  return (
+    <Badge
+      variant={variant}
+      style={{ marginLeft: '0.5rem', textTransform: 'capitalize' }}
+    >
+      <Tooltip title={ballotStateTooltips[ballotState]}>
+        <ExclamationCircleOutlined /> {ballotStateLabelMap[ballotState]}
+      </Tooltip>
+    </Badge>
+  )
+}
 
 export default function FundingCycleDetailsCard({
   fundingCycleNumber,
@@ -18,6 +54,7 @@ export default function FundingCycleDetailsCard({
   fundingCycleDetails,
   expand,
   isPreviewMode,
+  ballotState,
 }: {
   fundingCycleNumber: BigNumber
   fundingCycleStartTime: BigNumber
@@ -27,6 +64,7 @@ export default function FundingCycleDetailsCard({
   isFundingCycleRecurring: boolean
   expand?: boolean
   isPreviewMode?: boolean
+  ballotState?: BallotState
 }) {
   const {
     theme: { colors },
@@ -84,6 +122,9 @@ export default function FundingCycleDetailsCard({
                   <Trans>Details</Trans>
                 )}
               </span>
+              {ballotState !== undefined ? (
+                <BallotStateBadge ballotState={ballotState} />
+              ) : null}
 
               {fundingCycleRiskCount > 0 && (
                 <span style={{ marginLeft: 10, color: colors.text.secondary }}>

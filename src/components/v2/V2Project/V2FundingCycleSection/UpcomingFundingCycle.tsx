@@ -4,12 +4,9 @@ import { LoadingOutlined } from '@ant-design/icons'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useContext } from 'react'
 import { V2FundingCycleRiskCount } from 'utils/v2/fundingCycle'
-
 import useProjectDistributionLimit from 'hooks/v2/contractReader/ProjectDistributionLimit'
-
+import { useProjectLatestConfiguredFundingCycle } from 'hooks/v2/contractReader/ProjectLatestConfiguredFundingCycle'
 import useProjectSplits from 'hooks/v2/contractReader/ProjectSplits'
-
-import useProjectQueuedFundingCycle from 'hooks/v2/contractReader/ProjectQueuedFundingCycle'
 
 import FundingCycleDetails from './FundingCycleDetails'
 import PayoutSplitsCard from './PayoutSplitsCard'
@@ -29,12 +26,15 @@ export default function UpcomingFundingCycle({
   const {
     data: queuedFundingCycleResponse,
     loading: queuedFundingCycleLoading,
-  } = useProjectQueuedFundingCycle({
+  } = useProjectLatestConfiguredFundingCycle({
     projectId,
   })
 
-  const [queuedFundingCycle, queuedFundingCycleMetadata] =
-    queuedFundingCycleResponse || []
+  const [
+    queuedFundingCycle,
+    queuedFundingCycleMetadata,
+    queuedFundingCycleBallotState,
+  ] = queuedFundingCycleResponse ?? []
 
   const { data: queuedPayoutSplits } = useProjectSplits({
     projectId,
@@ -79,6 +79,7 @@ export default function UpcomingFundingCycle({
           isFundingCycleRecurring
           fundingCycleRiskCount={V2FundingCycleRiskCount(queuedFundingCycle)}
           expand={expandCard}
+          ballotState={queuedFundingCycleBallotState}
         />
       </CardSection>
 

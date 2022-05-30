@@ -211,7 +211,7 @@ msgid "A project can choose to reserve a percentage of tokens for itself. Instea
 msgstr "Un projet peut choisir de réserver un pourcentage de tokens pour soi. À la place d'être distribué pour payer les utilisateurs, ce pourcentage de tokens est frappé pour le projet."
 
 #: src/components/v1/FundingCycle/ReservedTokens.tsx
-msgid "A project can reserve a percentage of tokens minted as a result of all payments it receives. Reserved tokens can be distributed according to the allocation below at any time."
+msgid "A project can reserve a percentage of the tokens minted from payments it receives. Reserved tokens can be distributed according to the allocation below at any time."
 msgstr ""
 
 #: src/components/v2/V2Project/V2FundingCycleSection/ReservedTokensSplitsCard.tsx

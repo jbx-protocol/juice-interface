@@ -1,4 +1,4 @@
-import { Form } from 'antd'
+import { Form, Space } from 'antd'
 import { Trans } from '@lingui/macro'
 
 import { ThemeContext } from 'contexts/themeContext'
@@ -25,46 +25,44 @@ export const DEFAULT_BONDING_CURVE_RATE_PERCENTAGE = '100'
 
 function BondingCurveRateExtra({ disabled }: { disabled?: boolean }) {
   return (
-    <div>
-      <div style={{ fontSize: '0.9rem' }}>
-        <p>
-          <Trans>
-            The redemption rate determines the amount of overflow each token can
-            be redeemed for.
-          </Trans>
-        </p>
+    <Space style={{ fontSize: '0.9rem' }} direction="vertical" size="large">
+      <p style={{ margin: 0 }}>
+        <Trans>
+          The redemption rate determines the amount of overflow each token can
+          be redeemed for.
+        </Trans>
+      </p>
 
-        <MinimalCollapse
-          header={<Trans>How do I set the redemption rate?</Trans>}
-        >
-          <Trans>
-            <p>
-              On a lower redemption rate, redeeming a token increases the value
-              of each remaining token, creating an incentive to hold tokens
-              longer than other holders.
-            </p>{' '}
-            <p>
-              A redemption rate of 100% means all tokens will have equal value
-              regardless of when they are redeemed.
-            </p>
-            Learn more in this{' '}
-            <ExternalLink href="https://youtu.be/dxqc3yMqi5M">
-              short video
-            </ExternalLink>
-            .
-          </Trans>
-        </MinimalCollapse>
+      <MinimalCollapse
+        header={<Trans>How do I set the redemption rate?</Trans>}
+      >
+        <Trans>
+          <p>
+            On a lower redemption rate, redeeming a token increases the value of
+            each remaining token, creating an incentive to hold tokens longer
+            than other holders.
+          </p>{' '}
+          <p>
+            A redemption rate of 100% means all tokens will have equal value
+            regardless of when they are redeemed.
+          </p>
+          Learn more in this{' '}
+          <ExternalLink href="https://youtu.be/dxqc3yMqi5M">
+            short video
+          </ExternalLink>
+          .
+        </Trans>
+      </MinimalCollapse>
 
-        {disabled && (
-          <FormItemWarningText>
-            <Trans>
-              Disabled when your funding cycle's distribution limit is{' '}
-              <strong>No limit</strong> (infinite)
-            </Trans>
-          </FormItemWarningText>
-        )}
-      </div>
-    </div>
+      {disabled && (
+        <FormItemWarningText>
+          <Trans>
+            Disabled when your funding cycle's distribution limit is{' '}
+            <strong>No limit</strong> (infinite)
+          </Trans>
+        </FormItemWarningText>
+      )}
+    </Space>
   )
 }
 

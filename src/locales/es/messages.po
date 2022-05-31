@@ -117,7 +117,7 @@ msgstr "<0><1/>{netDistributionAmount}</0> después de la tarifa JBX de {feePerc
 msgid "<0><1>This project has no overflow</1>, so you will not receive any ETH for burning tokens.</0>"
 msgstr "<0><1>Este proyecto no tiene excedente</1>, así que no recibirás ETH por quemar tokens.</0>"
 
-#: src/components/v2/V2Create/forms/FundingForm/index.tsx
+#: src/components/v2/V2Create/forms/FundingForm/FundingCycleExplainerCollapse.tsx
 msgid "<0>Discount rate</0>, to reduce your project token's issuance rate (tokens per ETH) each funding cycle."
 msgstr ""
 
@@ -161,7 +161,7 @@ msgstr "<0>Nota:</0> Los tokens no se pueden reclamar porque no se ha emitido un
 msgid "<0>Peel</0> is the DAO that manages the juicebox.money frontend interface. You can reach out to Peel either through the <1>Peel Discord</1> or the <2>Juicebox Discord</2>."
 msgstr "<0>Peel</0> Es la DAO que maneja la interfaz frontend de juicebox.money. Puedes contactar a Peel mediante <1>Discord de Peel</1> o <2>Discord de Juicebox</2>."
 
-#: src/components/v2/V2Create/forms/FundingForm/index.tsx
+#: src/components/v2/V2Create/forms/FundingForm/FundingCycleExplainerCollapse.tsx
 msgid "<0>Recurring funding cycles</0>. For example, distribute funds from your project's treasury every week."
 msgstr ""
 
@@ -427,7 +427,7 @@ msgstr "Activos"
 msgid "Automate funding cycles"
 msgstr ""
 
-#: src/components/v2/V2Create/forms/FundingForm/index.tsx
+#: src/components/v2/V2Create/forms/FundingForm/FundingCycleExplainerCollapse.tsx
 msgid "Automatted funding cycles enable the following characteristics:"
 msgstr ""
 

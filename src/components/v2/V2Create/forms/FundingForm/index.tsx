@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 
-import { Button, Form, Space } from 'antd'
+import { Button, Form } from 'antd'
 
 import {
   useCallback,
@@ -67,6 +67,8 @@ import { shadowCard } from 'constants/styles/shadowCard'
 
 import DurationInputAndSelect from './DurationInputAndSelect'
 import { DurationUnitsOption } from 'constants/time'
+
+import { FundingCycleExplainerCollapse } from './FundingCycleExplainerCollapse'
 
 type FundingFormFields = {
   duration?: string
@@ -347,48 +349,29 @@ export default function FundingForm({
           <Trans>Automate funding cycles</Trans>
         </SwitchHeading>
 
-        <Space size="small" direction="vertical">
-          <div>
-            <p>
-              <Trans>
-                Automatted funding cycles enable the following characteristics:
-              </Trans>
-            </p>
-            <ol style={{ marginBottom: 0 }}>
-              <li>
-                <Trans>
-                  <strong>Recurring funding cycles</strong>. For example,
-                  distribute funds from your project's treasury every week.
-                </Trans>
-              </li>
-              <li>
-                <Trans>
-                  <strong>Discount rate</strong>, to reduce your project token's
-                  issuance rate (tokens per ETH) each funding cycle.
-                </Trans>
-              </li>
-            </ol>
-          </div>
-          {!durationEnabled ? (
-            <FormItemWarningText>
-              <Trans>
-                With no funding cycles, the project's owner can start a new
-                funding cycle (Funding Cycle #2) on-demand.{' '}
-                <ExternalLink
-                  href={'https://info.juicebox.money/docs/protocol/learn/risks'}
-                >
-                  Learn more.
-                </ExternalLink>
-              </Trans>
-            </FormItemWarningText>
-          ) : null}
+        {!durationEnabled ? (
+          <FormItemWarningText>
+            <Trans>
+              With no funding cycles, the project's owner can start a new
+              funding cycle (Funding Cycle #2) on-demand.{' '}
+              <ExternalLink
+                href={'https://info.juicebox.money/docs/protocol/learn/risks'}
+              >
+                Learn more.
+              </ExternalLink>
+            </Trans>
+          </FormItemWarningText>
+        ) : null}
 
-          {durationEnabled && (
-            <DurationInputAndSelect
-              defaultDurationUnit={fundingForm.getFieldValue('durationUnit')}
-            />
-          )}
-        </Space>
+        {durationEnabled && (
+          <DurationInputAndSelect
+            defaultDurationUnit={fundingForm.getFieldValue('durationUnit')}
+          />
+        )}
+
+        <div>
+          <FundingCycleExplainerCollapse />
+        </div>
       </div>
 
       <div

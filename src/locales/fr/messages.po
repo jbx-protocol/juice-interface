@@ -432,8 +432,8 @@ msgid "Automate funding cycles"
 msgstr ""
 
 #: src/components/v2/V2Create/forms/FundingForm/FundingCycleExplainerCollapse.tsx
-msgid "Automatted funding cycles enable the following characteristics:"
-msgstr "Les cycles de financement automatisés permettent les caractéristiques suivantes :"
+msgid "Automated funding cycles enable the following characteristics:"
+msgstr ""
 
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
@@ -2981,7 +2981,7 @@ msgid "Website"
 msgstr "Site internet"
 
 #: src/components/v2/V2Create/forms/FundingForm/FundingCycleExplainerCollapse.tsx
-msgid "What are automatted funding cycles?"
+msgid "What are automated funding cycles?"
 msgstr ""
 
 #: src/components/Landing/QAs.tsx

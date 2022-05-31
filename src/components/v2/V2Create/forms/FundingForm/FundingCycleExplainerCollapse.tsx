@@ -3,13 +3,11 @@ import { MinimalCollapse } from 'components/shared/MinimalCollapse'
 
 export function FundingCycleExplainerCollapse() {
   return (
-    <MinimalCollapse
-      header={<Trans>What are automatted funding cycles?</Trans>}
-    >
+    <MinimalCollapse header={<Trans>What are automated funding cycles?</Trans>}>
       <div>
         <p>
           <Trans>
-            Automatted funding cycles enable the following characteristics:
+            Automated funding cycles enable the following characteristics:
           </Trans>
         </p>
         <ol style={{ marginBottom: 0 }}>

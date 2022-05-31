@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import { MinimalCollapse } from 'components/MinimalCollapse'
+import { MinimalCollapse } from 'components/shared/MinimalCollapse'
 
 export function FundingCycleExplainerCollapse() {
   return (

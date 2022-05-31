@@ -14,7 +14,7 @@ export default function ProjectPayDisclosure({
     <Form.Item
       name={name}
       label={hideLabel ? undefined : t`Pay disclosure`}
-      extra={t`Disclose any details to your supporters before they pay your project.`}
+      extra={t`Disclose any details to your contributors before they pay your project.`}
       {...formItemProps}
     >
       <TextArea autoComplete="off" />

@@ -52,7 +52,7 @@ import NumberSlider from 'components/shared/inputs/NumberSlider'
 
 import FormItemWarningText from 'components/shared/FormItemWarningText'
 import { formattedNum } from 'utils/formatNumber'
-import { DEFAULT_BONDING_CURVE_RATE_PERCENTAGE } from 'components/shared/formItems/ProjectBondingCurveRate'
+import { DEFAULT_BONDING_CURVE_RATE_PERCENTAGE } from 'components/shared/formItems/ProjectRedemptionRate'
 
 import { DISCOUNT_RATE_EXPLANATION } from 'components/v2/V2Project/V2FundingCycleSection/settingExplanations'
 
@@ -320,12 +320,13 @@ export default function TokenForm({
             )}
           </Form.Item>
 
-          <FormItems.ProjectBondingCurveRate
+          <FormItems.ProjectRedemptionRate
             label={
               <>
                 <Trans>Redemption rate</Trans>
                 {!redemptionRateChecked && canSetRedemptionRate && (
                   <span style={defaultValueStyle}>
+                    {' '}
                     ({DEFAULT_BONDING_CURVE_RATE_PERCENTAGE}%)
                   </span>
                 )}

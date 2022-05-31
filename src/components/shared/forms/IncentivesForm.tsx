@@ -56,7 +56,7 @@ export default function IncentivesForm({
           disabled={Boolean(disableDiscountRate)}
         />
 
-        <FormItems.ProjectBondingCurveRate
+        <FormItems.ProjectRedemptionRate
           name="bondingCurveRate"
           value={form.getFieldValue('bondingCurveRate')}
           onChange={(val?: number) =>

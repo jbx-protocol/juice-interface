@@ -157,6 +157,10 @@ msgstr "<0>注意：</0> 这些属性<1>不能</1> 在同一个筹款周期内�
 msgid "<0>Note:</0> Tokens cannot be claimed because no ERC-20 token has been issued for this project. ERC-20 tokens must be issued by the project owner."
 msgstr "<0>请注意：</0> 该项目还未发行 ERC-20 形式的代币，因此暂时无法领取代币。ERC-20 形式的代币必须由项目拥有者来发行。"
 
+#: src/components/shared/formItems/ProjectRedemptionRate.tsx
+msgid "<0>On a lower redemption rate, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than other holders.</0> <1>A redemption rate of 100% means all tokens will have equal value regardless of when they are redeemed.</1>Learn more in this <2>short video</2>."
+msgstr ""
+
 #: src/components/Landing/QAs.tsx
 msgid "<0>Peel</0> is the DAO that manages the juicebox.money frontend interface. You can reach out to Peel either through the <1>Peel Discord</1> or the <2>Juicebox Discord</2>."
 msgstr "<0>Peel</0>是一个 DAO，负责管理 juicebox.money 的前端页面。你可以通过<1>Peel</1> 或 <2>Juicebox</2> 的 Discord 服务器来接触 Peel。"
@@ -485,8 +489,8 @@ msgstr "区块数"
 msgid "Blog"
 msgstr "博客"
 
-#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
-#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
+#: src/components/shared/formItems/ProjectRedemptionRate.tsx
+#: src/components/shared/formItems/ProjectRedemptionRate.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
@@ -855,7 +859,7 @@ msgstr "决定了向这个地址付款是否会铸造代币。"
 msgid "Disabled"
 msgstr "已禁用"
 
-#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
+#: src/components/shared/formItems/ProjectRedemptionRate.tsx
 msgid "Disabled when your funding cycle's distribution limit is <0>No limit</0> (infinite)"
 msgstr "筹款周期的可分配资金的限额为<0>无限额</0> (无上限) 的时候，此项禁用。"
 
@@ -872,7 +876,7 @@ msgid "Discard"
 msgstr "放弃"
 
 #: src/components/shared/formItems/ProjectPayDisclosure.tsx
-msgid "Disclose any details to your supporters before they pay your project."
+msgid "Disclose any details to your contributors before they pay your project."
 msgstr ""
 
 #: src/components/Navbar/Mobile/MobileCollapse.tsx
@@ -1300,6 +1304,10 @@ msgstr "怎样创建一个项目呢？"
 msgid "How do I decide?"
 msgstr ""
 
+#: src/components/shared/formItems/ProjectRedemptionRate.tsx
+msgid "How do I set the redemption rate?"
+msgstr ""
+
 #: src/components/Landing/QAs.tsx
 msgid "How have the contracts been tested?"
 msgstr "这些合约是如何被测试的？"
@@ -1408,7 +1416,7 @@ msgid "Initial issuance rate"
 msgstr "初始发行比率"
 
 #: src/components/shared/formItems/ProjectReserved.tsx
-msgid "Initial issuance rate will be <0>{0} tokens per 1 ETH</0> for contributors. Your project will reserve <1>{1} tokens per 1 ETH</1>."
+msgid "Initial issuance rate will be <0>{0} tokens per 1 ETH</0> for contributors. Your project will reserve <1>{1} tokens per 1 ETH</1> contributed."
 msgstr ""
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
@@ -1527,10 +1535,6 @@ msgstr ""
 #: src/components/v2/V2Create/index.tsx
 msgid "Launch your project"
 msgstr "启动你的项目"
-
-#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
-msgid "Learn more in this <0>short video</0>."
-msgstr "观看 <0>短视频</0>了解更多。"
 
 #: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner.tsx
 msgid "Leave blank to start immediately."
@@ -2600,7 +2604,7 @@ msgid "The project owner may reconfigure this funding cycle at any time, without
 msgstr "项目方可以随时修改当前筹款周期的配置，不需要事先通知。"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/settingExplanations.tsx
-msgid "The project token's issuance rate will decrease by this percentage every funding cycle. A higher discount rate will incentivize supporters to pay the project earlier."
+msgid "The project token's issuance rate will decrease by this percentage every funding cycle. A higher discount rate will incentivize contributors to pay the project earlier."
 msgstr ""
 
 #: src/components/Landing/QAs.tsx
@@ -2614,6 +2618,10 @@ msgstr "按付款金额奖励项目代币的比例，会随着进入新的筹款
 #: src/components/v2/V2Project/V2FundingCycleSection/settingExplanations.tsx
 msgid "The redemption rate determines the amount of overflow each token can be redeemed for at any given time. On a lower redemption rate, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than other holders. A redemption rate of 100% means all tokens will have equal value regardless of when they are redeemed."
 msgstr "赎回比率决定了任何时候每赎回一个代币可以换取的溢出金额。赎回比率低的时候，每赎回一个代币都会增加每个剩余代币的价值，形成一个比其他人持有更长时间的激励机制。100%的赎回比率意味着不管什么时候赎回，所有代币都将拥有同样的价值。"
+
+#: src/components/shared/formItems/ProjectRedemptionRate.tsx
+msgid "The redemption rate determines the amount of overflow each token can be redeemed for."
+msgstr ""
 
 #: src/components/Landing/QAs.tsx
 msgid "The rest is left to share between token holders."
@@ -2765,7 +2773,7 @@ msgstr "代币名称"
 msgid "Token name is required"
 msgstr "请填写代币名称"
 
-#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
+#: src/components/shared/formItems/ProjectRedemptionRate.tsx
 msgid "Token redeem value"
 msgstr "代币赎回价值"
 
@@ -3294,7 +3302,7 @@ msgstr "代币"
 msgid "tokens"
 msgstr "代币"
 
-#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
+#: src/components/shared/formItems/ProjectRedemptionRate.tsx
 msgid "tokens redeemed"
 msgstr "代币已赎回"
 

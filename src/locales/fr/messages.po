@@ -157,6 +157,10 @@ msgstr "<0>Remarque :</0> Ces propriétés <1>ne</1> seront pas immédiatement �
 msgid "<0>Note:</0> Tokens cannot be claimed because no ERC-20 token has been issued for this project. ERC-20 tokens must be issued by the project owner."
 msgstr "<0>Remarque : </0> Les tokens ne peuvent pas être réclamés, car aucun token ERC-20 a été émis pour ce projet. Les tokens ERC-20 doivent être émis par le propriétaire du projet."
 
+#: src/components/shared/formItems/ProjectRedemptionRate.tsx
+msgid "<0>On a lower redemption rate, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than other holders.</0> <1>A redemption rate of 100% means all tokens will have equal value regardless of when they are redeemed.</1>Learn more in this <2>short video</2>."
+msgstr ""
+
 #: src/components/Landing/QAs.tsx
 msgid "<0>Peel</0> is the DAO that manages the juicebox.money frontend interface. You can reach out to Peel either through the <1>Peel Discord</1> or the <2>Juicebox Discord</2>."
 msgstr "<0>Peel</0> c'est la DAO qui gère l'interface principale de juicebox.money. Vous pouvez contacter Peel à travers le <1>Peel Discord</1> ou le <2>Juicebox Discord</2>."
@@ -485,8 +489,8 @@ msgstr "Numéro de blocage"
 msgid "Blog"
 msgstr "Blog"
 
-#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
-#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
+#: src/components/shared/formItems/ProjectRedemptionRate.tsx
+#: src/components/shared/formItems/ProjectRedemptionRate.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
@@ -855,7 +859,7 @@ msgstr "Détermine si les tokens seront frappés à partir des paiements effectu
 msgid "Disabled"
 msgstr "Désactivé"
 
-#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
+#: src/components/shared/formItems/ProjectRedemptionRate.tsx
 msgid "Disabled when your funding cycle's distribution limit is <0>No limit</0> (infinite)"
 msgstr "Désactivé lorsque la limite de distribution de votre cycle de financement est <0>Aucune limite</0> (infinie)"
 
@@ -872,7 +876,7 @@ msgid "Discard"
 msgstr "Supprimer"
 
 #: src/components/shared/formItems/ProjectPayDisclosure.tsx
-msgid "Disclose any details to your supporters before they pay your project."
+msgid "Disclose any details to your contributors before they pay your project."
 msgstr ""
 
 #: src/components/Navbar/Mobile/MobileCollapse.tsx
@@ -1300,6 +1304,10 @@ msgstr "Comment créer un projet ?"
 msgid "How do I decide?"
 msgstr ""
 
+#: src/components/shared/formItems/ProjectRedemptionRate.tsx
+msgid "How do I set the redemption rate?"
+msgstr ""
+
 #: src/components/Landing/QAs.tsx
 msgid "How have the contracts been tested?"
 msgstr "Comment les contrats ont été testés ?"
@@ -1408,7 +1416,7 @@ msgid "Initial issuance rate"
 msgstr "Taux d'émission initiale"
 
 #: src/components/shared/formItems/ProjectReserved.tsx
-msgid "Initial issuance rate will be <0>{0} tokens per 1 ETH</0> for contributors. Your project will reserve <1>{1} tokens per 1 ETH</1>."
+msgid "Initial issuance rate will be <0>{0} tokens per 1 ETH</0> for contributors. Your project will reserve <1>{1} tokens per 1 ETH</1> contributed."
 msgstr ""
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
@@ -1527,10 +1535,6 @@ msgstr "Lancer le cycle de financement"
 #: src/components/v2/V2Create/index.tsx
 msgid "Launch your project"
 msgstr "Lancez votre projet"
-
-#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
-msgid "Learn more in this <0>short video</0>."
-msgstr "Pour en savoir plus, regardez cette <0>courte vidéo</0>."
 
 #: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner.tsx
 msgid "Leave blank to start immediately."
@@ -2600,7 +2604,7 @@ msgid "The project owner may reconfigure this funding cycle at any time, without
 msgstr "Le propriétaire du projet peut modifier les paramètres de ce cycle de financement à tout moment, sans préavis."
 
 #: src/components/v2/V2Project/V2FundingCycleSection/settingExplanations.tsx
-msgid "The project token's issuance rate will decrease by this percentage every funding cycle. A higher discount rate will incentivize supporters to pay the project earlier."
+msgid "The project token's issuance rate will decrease by this percentage every funding cycle. A higher discount rate will incentivize contributors to pay the project earlier."
 msgstr ""
 
 #: src/components/Landing/QAs.tsx
@@ -2613,6 +2617,10 @@ msgstr "La proportion de tokens récompensés par montant de paiement diminuera 
 
 #: src/components/v2/V2Project/V2FundingCycleSection/settingExplanations.tsx
 msgid "The redemption rate determines the amount of overflow each token can be redeemed for at any given time. On a lower redemption rate, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than other holders. A redemption rate of 100% means all tokens will have equal value regardless of when they are redeemed."
+msgstr ""
+
+#: src/components/shared/formItems/ProjectRedemptionRate.tsx
+msgid "The redemption rate determines the amount of overflow each token can be redeemed for."
 msgstr ""
 
 #: src/components/Landing/QAs.tsx
@@ -2765,7 +2773,7 @@ msgstr "Nom du token"
 msgid "Token name is required"
 msgstr "Le nom du token est requis"
 
-#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
+#: src/components/shared/formItems/ProjectRedemptionRate.tsx
 msgid "Token redeem value"
 msgstr "Valeur d'échange du token"
 
@@ -3294,7 +3302,7 @@ msgstr "token"
 msgid "tokens"
 msgstr "tokens"
 
-#: src/components/shared/formItems/ProjectBondingCurveRate.tsx
+#: src/components/shared/formItems/ProjectRedemptionRate.tsx
 msgid "tokens redeemed"
 msgstr "tokens récupérés"
 

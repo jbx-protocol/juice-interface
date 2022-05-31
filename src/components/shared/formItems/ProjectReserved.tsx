@@ -82,8 +82,8 @@ export default function ProjectReserved({
                 for contributors. Your project will reserve{' '}
                 <strong style={{ whiteSpace: 'nowrap' }}>
                   {formattedNum(initialReservedTokensPerEth)} tokens per 1 ETH
-                </strong>
-                .
+                </strong>{' '}
+                contributed.
               </Trans>
             </TabDescription>
           )}

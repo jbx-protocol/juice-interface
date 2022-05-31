@@ -432,7 +432,7 @@ msgid "Automate funding cycles"
 msgstr ""
 
 #: src/components/v2/V2Create/forms/FundingForm/FundingCycleExplainerCollapse.tsx
-msgid "Automatted funding cycles enable the following characteristics:"
+msgid "Automated funding cycles enable the following characteristics:"
 msgstr ""
 
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
@@ -2981,7 +2981,7 @@ msgid "Website"
 msgstr "网站"
 
 #: src/components/v2/V2Create/forms/FundingForm/FundingCycleExplainerCollapse.tsx
-msgid "What are automatted funding cycles?"
+msgid "What are automated funding cycles?"
 msgstr ""
 
 #: src/components/Landing/QAs.tsx
@@ -3066,8 +3066,8 @@ msgid "With Juicebox, projects are built and maintained by motivated punks getti
 msgstr "积极进取的朋克们通过 Juicebox 构建和维护项目，并以透明的方式获得报酬。用户和赞助者组成的社区对项目给予资助，而他们则可以在项目成功时获得回报。"
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "With no funding cycles, the project's owner can start a new funding cycle (Funding Cycle #2) on-demand. <0>Learn more.</0>"
-msgstr "没有筹款周期的话，项目方可以按自己需要开始一个新的筹款周期 (第二个筹款周期)。 <0>了解更多。</0>"
+msgid "With no automated funding cycles, the project's owner can start a new funding cycle (Funding Cycle #2) with a different configuration on-demand. <0>Learn more.</0>"
+msgstr ""
 
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 msgid "Withdraw"

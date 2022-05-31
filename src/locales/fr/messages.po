@@ -432,8 +432,8 @@ msgid "Automate funding cycles"
 msgstr ""
 
 #: src/components/v2/V2Create/forms/FundingForm/FundingCycleExplainerCollapse.tsx
-msgid "Automatted funding cycles enable the following characteristics:"
-msgstr "Les cycles de financement automatisés permettent les caractéristiques suivantes :"
+msgid "Automated funding cycles enable the following characteristics:"
+msgstr ""
 
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
@@ -2981,7 +2981,7 @@ msgid "Website"
 msgstr "Site internet"
 
 #: src/components/v2/V2Create/forms/FundingForm/FundingCycleExplainerCollapse.tsx
-msgid "What are automatted funding cycles?"
+msgid "What are automated funding cycles?"
 msgstr ""
 
 #: src/components/Landing/QAs.tsx
@@ -3066,8 +3066,8 @@ msgid "With Juicebox, projects are built and maintained by motivated punks getti
 msgstr "Avec Juicebox, les projets sont construits et maintenus par des punks motivés qui sont payés de manière transparente et financés par une communauté d'utilisateurs et de mécènes qui sont récompensés au fur et à mesure que les projets qu'ils soutiennent réussissent."
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "With no funding cycles, the project's owner can start a new funding cycle (Funding Cycle #2) on-demand. <0>Learn more.</0>"
-msgstr "En l'absence de cycles de financement, le propriétaire du projet peut démarrer un nouveau cycle de financement (cycle de financement #2) à la demande. <0>En savoir plus.</0>"
+msgid "With no automated funding cycles, the project's owner can start a new funding cycle (Funding Cycle #2) with a different configuration on-demand. <0>Learn more.</0>"
+msgstr ""
 
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 msgid "Withdraw"

@@ -351,8 +351,9 @@ export default function FundingForm({
         {!durationEnabled ? (
           <FormItemWarningText>
             <Trans>
-              With no funding cycles, the project's owner can start a new
-              funding cycle (Funding Cycle #2) on-demand.{' '}
+              With no automated funding cycles, the project's owner can start a
+              new funding cycle (Funding Cycle #2) with a different
+              configuration on-demand.{' '}
               <ExternalLink
                 href={'https://info.juicebox.money/docs/protocol/learn/risks'}
               >

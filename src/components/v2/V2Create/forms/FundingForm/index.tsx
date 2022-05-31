@@ -12,7 +12,6 @@ import {
 } from 'react'
 
 import { ThemeContext } from 'contexts/themeContext'
-import { helpPagePath } from 'utils/helpPageHelper'
 
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 
@@ -383,48 +382,8 @@ export default function FundingForm({
         }}
       >
         <h3 style={{ color: colors.text.primary }}>
-          <Trans>Funding distribution</Trans>
-        </h3>
-        <p>
-          <Trans>
-            Configure how your funds will be distributed from the treasury with
-            payouts to ETH addresses or Juicebox projects.
-          </Trans>
-        </p>
-        <p>
-          <Trans>
-            <strong>You have 2 options:</strong>
-            <ol>
-              <li>
-                Distribute specific amounts to entities each funding cycle. In
-                this case, the sum of all your entities' payouts will determine
-                your <strong>distribution limit</strong>.
-              </li>
-              <li>
-                Split everything that comes into the treasury out to entities by
-                percentage. The{' '}
-                <strong>distribution limit will be infinite</strong>.
-              </li>
-            </ol>
-          </Trans>
-        </p>
-        <p>
-          <Trans>
-            Treasury funds that exceed the distribution limit are called{' '}
-            <strong>overflow</strong>. Token holders can redeem (burn) their
-            tokens for a portion of the overflow. With an infinite distribution
-            limit, the overflow is always 0 and tokens can never be redeemed for
-            ETH.{' '}
-            <ExternalLink href={helpPagePath('protocol/learn/topics/overflow')}>
-              Learn more
-            </ExternalLink>
-            .
-          </Trans>
-        </p>
-
-        <h4 style={{ marginTop: 20, color: colors.text.primary }}>
           <Trans>Payouts</Trans>
-        </h4>
+        </h3>
 
         <DistributionSplitsSection
           distributionLimit={distributionLimit}

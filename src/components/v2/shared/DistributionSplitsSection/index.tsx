@@ -16,6 +16,7 @@ import DistributionSplitCard from './DistributionSplitCard'
 import { CurrencyName } from 'constants/currency'
 import DistributionSplitModal from './DistributionSplitModal'
 import SpecificLimitModal from './SpecificLimitModal'
+import { PayoutConfigurationExplainerCollapse } from './PayoutConfigurationExplainerCollapse'
 
 type DistributionType = 'amount' | 'percent'
 
@@ -140,6 +141,12 @@ export default function DistributionSplitsSection({
         size="large"
       >
         <Form.Item style={{ marginBottom: 0 }}>
+          <p>
+            <Trans>Chose how would you like to configure your payouts.</Trans>
+          </p>
+          <PayoutConfigurationExplainerCollapse
+            style={{ marginBottom: '1rem' }}
+          />
           <Radio.Group
             onChange={e => {
               const newType = e.target.value
@@ -163,14 +170,30 @@ export default function DistributionSplitsSection({
             }}
             value={distributionType}
           >
-            <Radio value="amount">
-              <Trans>Specific amounts</Trans>
-            </Radio>
-            <Radio value="percent">
-              <Trans>Percent of all funds raised</Trans>
-            </Radio>
+            <Space direction="vertical">
+              <Radio value="amount">
+                <Trans>Amounts</Trans>
+                <p style={{ fontWeight: 400, fontSize: '0.8rem' }}>
+                  <Trans>
+                    Distribute a specific amount of funds to entities each
+                    funding cycle. Your distribution limit will equal the{' '}
+                    <strong>sum of all payout amounts.</strong>
+                  </Trans>
+                </p>
+              </Radio>
+              <Radio value="percent">
+                <Trans>Percentages</Trans>
+                <p style={{ fontWeight: 400, fontSize: '0.8rem' }}>
+                  <Trans>
+                    Distribute a percentage of all funds recieved to entities.
+                    Your distribution limit will be <strong>infinite</strong>.
+                  </Trans>
+                </p>
+              </Radio>
+            </Space>
           </Radio.Group>
         </Form.Item>
+
         <Space style={{ width: '100%' }} direction="vertical" size="small">
           {editableSplits.map((split, index) => renderSplitCard(split, index))}
         </Space>

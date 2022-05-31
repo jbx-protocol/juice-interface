@@ -1,17 +1,19 @@
 import { Collapse } from 'antd'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
-import { PropsWithChildren } from 'react'
+import { CSSProperties, PropsWithChildren } from 'react'
 
 export function MinimalCollapse({
   children,
   header,
-}: PropsWithChildren<{ header: string | JSX.Element }>) {
+  style,
+}: PropsWithChildren<{ header: string | JSX.Element; style?: CSSProperties }>) {
   return (
     <Collapse
       bordered={false}
       ghost
       style={{
         background: 'transparent',
+        ...style,
       }}
       className="minimal ant-collapse-header-text-primary ant-collapse-header-p-0"
     >

@@ -3,7 +3,9 @@ import { MinimalCollapse } from 'components/MinimalCollapse'
 
 export function FundingCycleExplainerCollapse() {
   return (
-    <MinimalCollapse header="What are automatted funding cycles?">
+    <MinimalCollapse
+      header={<Trans>What are automatted funding cycles?</Trans>}
+    >
       <div>
         <p>
           <Trans>

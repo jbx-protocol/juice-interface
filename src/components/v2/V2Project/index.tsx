@@ -24,7 +24,7 @@ import V2PayButton from './V2PayButton'
 import V2ProjectHeaderActions from './V2ProjectHeaderActions'
 import V2BugNotice from '../shared/V2BugNotice'
 import { V2_PROJECT_IDS } from '../../../constants/v2/projectIds'
-import RelaunchFundingCycleBanner from './banners/RelaunchFundingCycleBanner'
+import { RelaunchFundingCycleBanner } from './banners/RelaunchFundingCycleBanner'
 
 const GUTTER_PX = 40
 

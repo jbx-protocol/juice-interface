@@ -427,8 +427,8 @@ msgid "Automate funding cycles"
 msgstr "Automate funding cycles"
 
 #: src/components/v2/V2Create/forms/FundingForm/FundingCycleExplainerCollapse.tsx
-msgid "Automatted funding cycles enable the following characteristics:"
-msgstr "Automatted funding cycles enable the following characteristics:"
+msgid "Automated funding cycles enable the following characteristics:"
+msgstr "Automated funding cycles enable the following characteristics:"
 
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
@@ -2976,8 +2976,8 @@ msgid "Website"
 msgstr ""
 
 #: src/components/v2/V2Create/forms/FundingForm/FundingCycleExplainerCollapse.tsx
-msgid "What are automatted funding cycles?"
-msgstr "What are automatted funding cycles?"
+msgid "What are automated funding cycles?"
+msgstr "What are automated funding cycles?"
 
 #: src/components/Landing/QAs.tsx
 msgid "What are community tokens?"

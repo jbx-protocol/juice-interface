@@ -25,7 +25,6 @@ export const VolumeStatLine = ({
   const { theme } = useContext(ThemeContext)
   const secondaryTextStyle = textSecondary(theme)
 
-  // TODO-wraeth: This is a v1 hook - do we need to update?
   const converter = useCurrencyConverter()
 
   const convertedVolume = useMemo(() => {

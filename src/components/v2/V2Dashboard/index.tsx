@@ -124,7 +124,6 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
     terminal: primaryTerminal,
   })
 
-  // TODO-wraeth: This is a v1 hook - do we need to update?
   const converter = useCurrencyConverter()
   const {
     data: balanceInDistributionLimitCurrency,

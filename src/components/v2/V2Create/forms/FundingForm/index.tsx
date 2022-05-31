@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 
-import { Button, Form, Space } from 'antd'
+import { Button, Form } from 'antd'
 
 import {
   useCallback,
@@ -12,7 +12,6 @@ import {
 } from 'react'
 
 import { ThemeContext } from 'contexts/themeContext'
-import { helpPagePath } from 'utils/helpPageHelper'
 
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 
@@ -67,6 +66,8 @@ import { shadowCard } from 'constants/styles/shadowCard'
 
 import DurationInputAndSelect from './DurationInputAndSelect'
 import { DurationUnitsOption } from 'constants/time'
+
+import { FundingCycleExplainerCollapse } from './FundingCycleExplainerCollapse'
 
 type FundingFormFields = {
   duration?: string
@@ -344,53 +345,32 @@ export default function FundingForm({
           }}
           style={{ marginBottom: '1rem' }}
         >
-          <Trans>Funding cycles</Trans>
+          <Trans>Automate funding cycles</Trans>
         </SwitchHeading>
 
-        <Space size="small" direction="vertical">
-          <div>
-            <p>
-              <Trans>
-                Automatted funding cycles enable the following characteristics:
-              </Trans>
-            </p>
-            <ol style={{ marginBottom: 0 }}>
-              <li>
-                <Trans>
-                  <strong>Recurring funding cycles</strong> (for example,
-                  distribute $30,000 from your project's treasury every 14
-                  days).
-                </Trans>
-              </li>
-              <li>
-                <Trans>
-                  A <strong>discount rate</strong> to automatically reduce the
-                  issuance rate of your project's token (tokens/ETH) each new
-                  funding cycle.
-                </Trans>
-              </li>
-            </ol>
-          </div>
-          {!durationEnabled ? (
-            <FormItemWarningText>
-              <Trans>
-                With no funding cycles, the project's owner can start a new
-                funding cycle (Funding Cycle #2) on-demand.{' '}
-                <ExternalLink
-                  href={'https://info.juicebox.money/docs/protocol/learn/risks'}
-                >
-                  Learn more.
-                </ExternalLink>
-              </Trans>
-            </FormItemWarningText>
-          ) : null}
+        {!durationEnabled ? (
+          <FormItemWarningText>
+            <Trans>
+              With no funding cycles, the project's owner can start a new
+              funding cycle (Funding Cycle #2) on-demand.{' '}
+              <ExternalLink
+                href={'https://info.juicebox.money/docs/protocol/learn/risks'}
+              >
+                Learn more.
+              </ExternalLink>
+            </Trans>
+          </FormItemWarningText>
+        ) : null}
 
-          {durationEnabled && (
-            <DurationInputAndSelect
-              defaultDurationUnit={fundingForm.getFieldValue('durationUnit')}
-            />
-          )}
-        </Space>
+        {durationEnabled && (
+          <DurationInputAndSelect
+            defaultDurationUnit={fundingForm.getFieldValue('durationUnit')}
+          />
+        )}
+
+        <div>
+          <FundingCycleExplainerCollapse />
+        </div>
       </div>
 
       <div
@@ -401,47 +381,7 @@ export default function FundingForm({
           color: colors.text.primary,
         }}
       >
-        <h3>
-          <Trans>Funding distribution</Trans>
-        </h3>
-        <p>
-          <Trans>
-            Configure how your funds will be distributed from the treasury with
-            payouts to ETH addresses or Juicebox projects.
-          </Trans>
-        </p>
-        <p>
-          <Trans>
-            <strong>You have 2 options:</strong>
-            <ol>
-              <li>
-                Distribute specific amounts to entities each funding cycle. In
-                this case, the sum of all your entities' payouts will determine
-                your <strong>distribution limit</strong>.
-              </li>
-              <li>
-                Split everything that comes into the treasury out to entities by
-                percentage. The{' '}
-                <strong>distribution limit will be infinite</strong>.
-              </li>
-            </ol>
-          </Trans>
-        </p>
-        <p>
-          <Trans>
-            Treasury funds that exceed the distribution limit are called{' '}
-            <strong>overflow</strong>. Token holders can redeem (burn) their
-            tokens for a portion of the overflow. With an infinite distribution
-            limit, the overflow is always 0 and tokens can never be redeemed for
-            ETH.{' '}
-            <ExternalLink href={helpPagePath('protocol/learn/topics/overflow')}>
-              Learn more
-            </ExternalLink>
-            .
-          </Trans>
-        </p>
-
-        <h3 style={{ marginTop: 20 }}>
+        <h3 style={{ color: colors.text.primary }}>
           <Trans>Payouts</Trans>
         </h3>
 

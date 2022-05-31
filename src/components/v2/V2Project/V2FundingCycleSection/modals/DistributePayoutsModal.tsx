@@ -242,7 +242,7 @@ export default function DistributePayoutsModal({
             <p>
               <Trans>
                 There are no payouts defined for this funding cycle. The project
-                owner will recieve all available funds.
+                owner will receive all available funds.
               </Trans>
             </p>
           ) : null}

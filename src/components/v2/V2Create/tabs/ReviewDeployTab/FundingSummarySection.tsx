@@ -107,9 +107,9 @@ export default function FundingSummarySection() {
       <p style={{ marginBottom: 15 }}>
         {hasDuration ? (
           <Trans>
-            These settings will <strong>not</strong> be editable immediately
-            within a funding cycle. They can only be changed for{' '}
-            <strong>upcoming</strong> funding cycles according to the project's{' '}
+            Once launched, your first funding cycle{' '}
+            <strong>can't be changed</strong>. You can reconfigure upcoming
+            funding cycles according to the project's{' '}
             <strong>reconfiguration rules</strong>.
           </Trans>
         ) : (

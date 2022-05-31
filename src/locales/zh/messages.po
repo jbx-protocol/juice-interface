@@ -1014,8 +1014,8 @@ msgid "Download CSV of project activity"
 msgstr "下载项目活动记录的 CSV 文件"
 
 #: src/components/shared/modals/DownloadParticipantsModal.tsx
-msgid "Download CSV of {0} holders"
-msgstr "下载包含 {0} 持有者的 CSV"
+msgid "Download CSV of {0} holders ---"
+msgstr ""
 
 #: src/components/Landing/QAs.tsx
 msgid "Due to their public nature, any exploits to the contracts may have irreversible consequences, including loss of funds. Please use Juicebox with caution."

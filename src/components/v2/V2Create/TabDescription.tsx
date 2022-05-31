@@ -12,13 +12,12 @@ export default function TabDescription({
   return (
     <div
       style={{
-        ...style,
         color: colors.text.primary,
         padding: '1rem',
         backgroundColor: colors.background.l2,
         display: 'flex',
         alignItems: 'flex-start',
-        marginBottom: '1rem',
+        ...style,
       }}
     >
       <InfoCircleOutlined style={{ marginRight: '1rem', lineHeight: 1.8 }} />

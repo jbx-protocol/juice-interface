@@ -66,22 +66,27 @@ export default function ProjectReserved({
     <Form.Item
       extra={
         <div style={{ fontSize: '0.9rem' }}>
+          <p>
+            <Trans>
+              Reserve a percentage of freshly minted tokens for your project to
+              use.
+            </Trans>
+          </p>
           {isCreate && (
-            <TabDescription>
+            <TabDescription style={{ backgroundColor: colors.background.l1 }}>
               <Trans>
                 Initial issuance rate will be{' '}
-                {formattedNum(initialIssuanceRate)} tokens / 1 ETH for
-                contributors. {formattedNum(initialReservedTokensPerEth)} tokens
-                / 1 ETH will be reserved by the project.
+                <strong style={{ whiteSpace: 'nowrap' }}>
+                  {formattedNum(initialIssuanceRate)} tokens per 1 ETH
+                </strong>{' '}
+                for contributors. Your project will reserve{' '}
+                <strong style={{ whiteSpace: 'nowrap' }}>
+                  {formattedNum(initialReservedTokensPerEth)} tokens per 1 ETH
+                </strong>
+                .
               </Trans>
             </TabDescription>
           )}
-          <p>
-            <Trans>
-              Whenever someone pays your project, this percentage of tokens will
-              be reserved and the rest will go to the payer.
-            </Trans>
-          </p>
         </div>
       }
       name={name}
@@ -95,9 +100,9 @@ export default function ProjectReserved({
                   <span
                     style={{
                       color: colors.text.tertiary,
-                      marginLeft: 15,
                     }}
                   >
+                    {' '}
                     ({defaultFundingCycleMetadata.reservedRate}%)
                   </span>
                 )}

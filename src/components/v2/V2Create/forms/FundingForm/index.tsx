@@ -357,16 +357,14 @@ export default function FundingForm({
             <ol style={{ marginBottom: 0 }}>
               <li>
                 <Trans>
-                  <strong>Recurring funding cycles</strong> (for example,
-                  distribute $30,000 from your project's treasury every 14
-                  days).
+                  <strong>Recurring funding cycles</strong>. For example,
+                  distribute funds from your project's treasury every week.
                 </Trans>
               </li>
               <li>
                 <Trans>
-                  A <strong>discount rate</strong> to automatically reduce the
-                  issuance rate of your project's token (tokens/ETH) each new
-                  funding cycle.
+                  <strong>Discount rate</strong>, to reduce your project token's
+                  issuance rate (tokens per ETH) each funding cycle.
                 </Trans>
               </li>
             </ol>
@@ -401,7 +399,7 @@ export default function FundingForm({
           color: colors.text.primary,
         }}
       >
-        <h3>
+        <h3 style={{ color: colors.text.primary }}>
           <Trans>Funding distribution</Trans>
         </h3>
         <p>
@@ -441,9 +439,9 @@ export default function FundingForm({
           </Trans>
         </p>
 
-        <h3 style={{ marginTop: 20 }}>
+        <h4 style={{ marginTop: 20, color: colors.text.primary }}>
           <Trans>Payouts</Trans>
-        </h3>
+        </h4>
 
         <DistributionSplitsSection
           distributionLimit={distributionLimit}

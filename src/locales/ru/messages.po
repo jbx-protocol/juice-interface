@@ -117,6 +117,10 @@ msgstr "<0><1/>{netDistributionAmount}</0> после {feePercentage}% JBX ко�
 msgid "<0><1>This project has no overflow</1>, so you will not receive any ETH for burning tokens.</0>"
 msgstr "<0><1>В этом проекте нет переполнения</1>, поэтому вы не получите ETH за сжигание токенов..</0>"
 
+#: src/components/v2/V2Create/forms/FundingForm/index.tsx
+msgid "<0>Discount rate</0>, to reduce your project token's issuance rate (tokens per ETH) each funding cycle."
+msgstr ""
+
 #: src/components/shared/PayWarningModal.tsx
 msgid "<0>Juicebox contracts</0> are unaudited, and may be vulnerable to bugs or hacks. All funds moved through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable for any losses by projects or their supporters."
 msgstr "<0>Контракты Juicebox</0> не проверяются и могут быть уязвимы к ошибкам или взломам. Все средства, перемещаемые через Juicebox, могут быть потеряны или украдены. JuiceboxDAO и Peel не несут ответственности за любые потери проектов или их сторонников."
@@ -158,8 +162,8 @@ msgid "<0>Peel</0> is the DAO that manages the juicebox.money frontend interface
 msgstr "<0>Peel</0> - это DAO, управляющее интерфейсом фронтенда juicebox.money. Вы можете связаться с Peel либо через <1>Peel Discord</1>, либо через <2>Juicebox Discord</2>."
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "<0>Recurring funding cycles</0> (for example, distribute $30,000 from your project's treasury every 14 days)."
-msgstr "<0> Повторяющиеся циклы финансирования</0> (например, распределять $30 000 из казны вашего проекта каждые 14 дней)."
+msgid "<0>Recurring funding cycles</0>. For example, distribute funds from your project's treasury every week."
+msgstr ""
 
 #: src/components/v1/shared/BudgetForm.tsx
 msgid "<0>Target is 0.</0> The project's entire balance will be considered overflow. <1>Learn more</1> about overflow."
@@ -189,10 +193,6 @@ msgstr "<0>{tokenSymbol} ERC20 адрес:</0> <1/>"
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "@"
 msgstr "@"
-
-#: src/components/v2/V2Create/forms/FundingForm/index.tsx
-msgid "A <0>discount rate</0> to automatically reduce the issuance rate of your project's token (tokens/ETH) each new funding cycle."
-msgstr "<0>дисконтная ставка</0> для автоматического снижения курса эмиссии токенов (tokens/ETH) вашего проекта при каждом новом цикле финансирования."
 
 #: src/components/Landing/QAs.tsx
 msgid "A bonding curve rewards people who wait longer to redeem your tokens for overflow."
@@ -530,10 +530,6 @@ msgstr "По умолчанию все нераспределенные сред
 msgid "By default, newly minted tokens will go to the wallet who sends funds to the address. You can enable this to set the token beneficiary to a custom address."
 msgstr ""
 
-#: src/components/v2/V2Create/forms/TokenForm/index.tsx
-msgid "By default, the issuance rate for your project's token during funding cycle #1 is 1,000,000 tokens / 1 ETH. For example, a 1 ETH contribution to your project will return 1,000,000 tokens. You can manipulate the issuance rate with the following configurations."
-msgstr "По умолчанию курс эмиссии токенов вашего проекта во время цикла финансирования №1 составляет 1 000 000 токенов / 1 ETH. Например, взнос в размере 1 ETH в ваш проект принесет 1 000 000 токенов. Вы можете управлять скоростью эмиссии с помощью следующих конфигураций."
-
 #: src/components/Landing/QAs.tsx
 msgid "Can I change my project's contract after it's been created?"
 msgstr "Могу ли я изменить контракт своего проекта после его создания?"
@@ -635,6 +631,10 @@ msgstr "Настройте ограничения для ваших циклов
 msgid "Configure the dynamics of your project's token."
 msgstr "Настройте динамику токена вашего проекта."
 
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/TokenDrawer.tsx
+msgid "Configure your project's tokenomics."
+msgstr ""
+
 #: src/components/v1/V1Project/modals/FeedbackPromptModal.tsx
 msgid "Congrats on creating your project!"
 msgstr "Поздравляю с созданием вашего проекта!"
@@ -681,13 +681,13 @@ msgstr "За каждый внесенный ETH вкладчики получа
 msgid "Contributors will not receive any tokens in exchange for paying this project."
 msgstr "Участники не получат никаких токенов в обмен на оплату этого проекта."
 
+#: src/components/v2/V2Create/forms/TokenForm/index.tsx
+msgid "Contributors will receive <0>{discountRatePercent}%</0> more tokens for contributions they make this funding cycle compared to the next funding cycle."
+msgstr ""
+
 #: src/constants/fundingWarningText.ts
 msgid "Contributors will receive a relatively small portion of tokens in exchange for paying this project."
 msgstr "Участники получат относительно небольшую часть токенов в обмен на оплату этого проекта."
-
-#: src/components/v2/V2Create/forms/TokenForm/index.tsx
-msgid "Contributors will receive {discountRatePercent}% more of the project's tokens for contributions they make this funding cycle compared to the next."
-msgstr ""
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
 msgid "Contributors will see this message before they pay your project."
@@ -1400,8 +1400,8 @@ msgid "Initial issuance rate"
 msgstr "Первоначальная ставка эмиссии"
 
 #: src/components/shared/formItems/ProjectReserved.tsx
-msgid "Initial issuance rate will be {0} tokens / 1 ETH for contributors. {1} tokens / 1 ETH will be reserved by the project."
-msgstr "Первоначальный курс эмиссии составит {0} токенов / 1 ETH для вкладчиков. {1} токенов / 1 ETH будет зарезервировано проектом."
+msgid "Initial issuance rate will be <0>{0} tokens per 1 ETH</0> for contributors. Your project will reserve <1>{1} tokens per 1 ETH</1>."
+msgstr ""
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Invalid address"
@@ -2045,6 +2045,7 @@ msgid "Project page customizations"
 msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/TokenDrawer.tsx
 msgid "Project token"
 msgstr "Токен проекта"
 
@@ -2215,6 +2216,10 @@ msgstr ""
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Required"
 msgstr "Требуется"
+
+#: src/components/shared/formItems/ProjectReserved.tsx
+msgid "Reserve a percentage of freshly minted tokens for your project to use."
+msgstr ""
 
 #: src/components/shared/formItems/ProjectReserved.tsx
 #: src/components/shared/formItems/ProjectReserved.tsx
@@ -2559,7 +2564,7 @@ msgid "The future will be led by creators, and owned by communities."
 msgstr "Будущее будет возглавляться создателями и принадлежать сообществам."
 
 #: src/components/v2/V2Create/forms/TokenForm/index.tsx
-msgid "The issuance rate of your second funding cycle will be {0} tokens / 1 ETH, then {1} tokens / 1 ETH for your third funding cycle, and so on."
+msgid "The issuance rate of your second funding cycle will be <0>{0} tokens per 1 ETH</0>, then <1>{1} tokens per 1 ETH </1>for your third funding cycle, and so on."
 msgstr ""
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
@@ -2619,8 +2624,8 @@ msgid "The total amount received by this project through Juicebox since it was c
 msgstr "Общая сумма, полученная этим проектом через Juicebox с момента его создания."
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
-msgid "There are no payouts defined for this funding cycle. The project owner will recieve all available funds."
-msgstr "Для данного цикла финансирования выплаты не определены. Владелец проекта получит все имеющиеся средства."
+msgid "There are no payouts defined for this funding cycle. The project owner will receive all available funds."
+msgstr ""
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributeReservedTokensModal.tsx
 msgid "There are no reserved token recipients defined for this funding cycle. The project owner will receive all available tokens."
@@ -2713,7 +2718,6 @@ msgstr "Кому: <0/>"
 
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/TokenDrawer.tsx
 #: src/utils/tokenSymbolText.ts
 msgid "Token"
 msgstr "Токен"
@@ -3005,10 +3009,6 @@ msgstr "Когда кто-то платит вашему проекту, он п
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 msgid "When token minting is allowed, the owner of this project has permission to mint any number of tokens to any address at their discretion. This has the effect of diluting all current token holders, without increasing the project's treasury balance. The project owner can reconfigure this along with all other properties of the funding cycle."
 msgstr "Когда допускается обработка токенов, владелец этого проекта имеет разрешение на удаление любого количества токенов на любой адрес по своему усмотрению. Это влечет за собой размытие всех текущих владельцев токенов без увеличения казначейского баланса проекта. Владелец проекта может перенастроить это вместе со всеми остальными свойствами цикла финансирования."
-
-#: src/components/shared/formItems/ProjectReserved.tsx
-msgid "Whenever someone pays your project, this percentage of tokens will be reserved and the rest will go to the payer."
-msgstr "Каждый раз, когда кто-то платит вашему проекту, этот процент токенов будет зарезервирован, а остальное достанется плательщику."
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx

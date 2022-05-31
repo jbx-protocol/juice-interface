@@ -18,10 +18,10 @@ export default function ProjectDescription({
       name={name}
       label={hideLabel ? undefined : t`Project description`}
       {...formItemProps}
+      extra={t`Maximum ${MAX_DESCRIPTION_LENGTH} characters`}
     >
       <TextArea
         autoComplete="off"
-        placeholder={MAX_DESCRIPTION_LENGTH + ' ' + t`characters max`}
         maxLength={MAX_DESCRIPTION_LENGTH}
         onChange={onChange ? e => onChange(e.target.value) : undefined}
       />

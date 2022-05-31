@@ -15,13 +15,13 @@ export default function TabDescription({
         ...style,
         color: colors.text.primary,
         padding: '1rem',
-        backgroundColor: colors.background.l1,
+        backgroundColor: colors.background.l2,
         display: 'flex',
         alignItems: 'flex-start',
         marginBottom: '1rem',
       }}
     >
-      <InfoCircleOutlined style={{ marginRight: '1rem' }} />
+      <InfoCircleOutlined style={{ marginRight: '1rem', lineHeight: 1.8 }} />
       <div>{children}</div>
     </div>
   )

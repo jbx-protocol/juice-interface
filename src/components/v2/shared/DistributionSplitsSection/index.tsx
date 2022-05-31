@@ -185,7 +185,7 @@ export default function DistributionSplitsSection({
                 <Trans>Percentages</Trans>
                 <p style={{ fontWeight: 400, fontSize: '0.8rem' }}>
                   <Trans>
-                    Distribute a percentage of all funds recieved to entities.
+                    Distribute a percentage of all funds received to entities.
                     Your distribution limit will be <strong>infinite</strong>.
                   </Trans>
                 </p>

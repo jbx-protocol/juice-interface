@@ -15,7 +15,7 @@ export function PayoutConfigurationExplainerCollapse({
         <Trans>
           Use <strong>Amounts</strong> when you want to configure a{' '}
           <strong>distribution limit</strong>. Treasury funds that exceed the
-          distribution limit is called <strong>overflow</strong>. Token holders
+          distribution limit are called <strong>overflow</strong>. Token holders
           can redeem (burn) their tokens for a portion of the overflow.{' '}
           <ExternalLink href={helpPagePath('protocol/learn/topics/overflow')}>
             Learn more

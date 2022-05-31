@@ -65,8 +65,8 @@ export default function DownloadParticipantsModal({
           number: blockNumber,
         },
         where: {
-          key: 'project',
-          value: projectId.toString(),
+          key: 'projectId',
+          value: projectId,
         },
       })
 
@@ -126,7 +126,7 @@ export default function DownloadParticipantsModal({
       <div>
         <h4>
           <Trans>
-            Download CSV of {tokenSymbolText({ tokenSymbol })} holders
+            Download CSV of {tokenSymbolText({ tokenSymbol })} holders ---
           </Trans>
         </h4>
 

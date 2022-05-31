@@ -16,7 +16,7 @@ export default function ProjectDiscord({
     >
       <Input
         placeholder={t`https://discord.gg/abcdefgh`}
-        type="string"
+        type="url"
         autoComplete="off"
       />
     </Form.Item>

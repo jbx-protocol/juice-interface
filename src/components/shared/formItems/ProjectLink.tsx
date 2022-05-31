@@ -16,7 +16,7 @@ export default function ProjectLink({
     >
       <Input
         placeholder={t`https://your-project.com`}
-        type="string"
+        type="url"
         autoComplete="off"
       />
     </Form.Item>

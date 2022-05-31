@@ -1110,9 +1110,8 @@ msgstr "允许这个选项将会铸造出 ERC-20 标准的 {tokenSymbol} 代币�
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 #: src/components/v2/V2Create/forms/RulesForm/TokenMintingExtra.tsx
-#: src/components/v2/V2Create/forms/RulesForm/index.tsx
-msgid "Enabling token minting will appear risky to contributors. Only enable this when necessary."
-msgstr "允许代币铸造会令捐款人感觉有风险。请仅在必要情况下启用。"
+msgid "Enabling token minting will appear risky to contributors."
+msgstr ""
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
@@ -2116,11 +2115,11 @@ msgid "Recipients will receive payouts in ETH."
 msgstr "收款人将收到以 ETH 支付的报酬。"
 
 #: src/components/v1/V1Create/index.tsx
-#: src/components/v2/V2Create/forms/RulesForm/index.tsx
 msgid "Reconfiguration"
 msgstr "重新配置"
 
 #: src/components/v1/ReconfigurationStrategyDrawer.tsx
+#: src/components/v2/V2Create/forms/RulesForm/index.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Reconfiguration rules"
 msgstr "重新配置的规则"
@@ -2992,7 +2991,6 @@ msgid "When checked, payments to this address will mint this project's ERC-20 to
 msgstr "勾选此项，向这个地址付款会把 ERC-20 标准代币铸造到受益人钱包地址。付款的 gas 费用会增加。取消勾选，则付款后受益人的新代币将在 Juicebox 协议内托管。受益人可以随时来提取自己的 ERC-20 代币。"
 
 #: src/components/v2/V2Create/forms/RulesForm/TokenMintingExtra.tsx
-#: src/components/v2/V2Create/forms/RulesForm/index.tsx
 msgid "When enabled, the project owner can manually mint any amount of tokens to any address."
 msgstr "启用此选项，项目拥有者就能够随时手动铸造任意数量的代币。"
 

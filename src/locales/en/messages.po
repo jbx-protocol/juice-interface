@@ -1105,9 +1105,8 @@ msgstr "Enabling this will mint {tokenSymbol} ERC-20 tokens. Otherwise staked {t
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 #: src/components/v2/V2Create/forms/RulesForm/TokenMintingExtra.tsx
-#: src/components/v2/V2Create/forms/RulesForm/index.tsx
-msgid "Enabling token minting will appear risky to contributors. Only enable this when necessary."
-msgstr "Enabling token minting will appear risky to contributors. Only enable this when necessary."
+msgid "Enabling token minting will appear risky to contributors."
+msgstr "Enabling token minting will appear risky to contributors."
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
@@ -2111,11 +2110,11 @@ msgid "Recipients will receive payouts in ETH."
 msgstr "Recipients will receive payouts in ETH."
 
 #: src/components/v1/V1Create/index.tsx
-#: src/components/v2/V2Create/forms/RulesForm/index.tsx
 msgid "Reconfiguration"
 msgstr ""
 
 #: src/components/v1/ReconfigurationStrategyDrawer.tsx
+#: src/components/v2/V2Create/forms/RulesForm/index.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Reconfiguration rules"
 msgstr "Reconfiguration rules"
@@ -2987,7 +2986,6 @@ msgid "When checked, payments to this address will mint this project's ERC-20 to
 msgstr "When checked, payments to this address will mint this project's ERC-20 tokens to the beneficiary's wallet. Payments will cost more gas. When unchecked, Juicebox will track the beneficiary's new tokens when they pay. The beneficiary can claim their ERC-20 tokens at any time."
 
 #: src/components/v2/V2Create/forms/RulesForm/TokenMintingExtra.tsx
-#: src/components/v2/V2Create/forms/RulesForm/index.tsx
 msgid "When enabled, the project owner can manually mint any amount of tokens to any address."
 msgstr "When enabled, the project owner can manually mint any amount of tokens to any address."
 

@@ -1110,9 +1110,8 @@ msgstr "Bunu etkinleştirmek ERC-20 {tokenSymbol} token'ları basacaktır. Aksi 
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 #: src/components/v2/V2Create/forms/RulesForm/TokenMintingExtra.tsx
-#: src/components/v2/V2Create/forms/RulesForm/index.tsx
-msgid "Enabling token minting will appear risky to contributors. Only enable this when necessary."
-msgstr "Token basımının etkinleştirilmesi, katkıda bulunanlar açısından riskli görünecektir. Bunu yalnızca gerektiğinde etkinleştirin."
+msgid "Enabling token minting will appear risky to contributors."
+msgstr ""
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
@@ -2116,11 +2115,11 @@ msgid "Recipients will receive payouts in ETH."
 msgstr "Alıcılar ödemeleri ETH olarak alacaktır."
 
 #: src/components/v1/V1Create/index.tsx
-#: src/components/v2/V2Create/forms/RulesForm/index.tsx
 msgid "Reconfiguration"
 msgstr "Yeniden yapılandırma"
 
 #: src/components/v1/ReconfigurationStrategyDrawer.tsx
+#: src/components/v2/V2Create/forms/RulesForm/index.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Reconfiguration rules"
 msgstr "Yeniden yapılandırma kuralları"
@@ -2992,7 +2991,6 @@ msgid "When checked, payments to this address will mint this project's ERC-20 to
 msgstr ""
 
 #: src/components/v2/V2Create/forms/RulesForm/TokenMintingExtra.tsx
-#: src/components/v2/V2Create/forms/RulesForm/index.tsx
 msgid "When enabled, the project owner can manually mint any amount of tokens to any address."
 msgstr "Etkinleştirildiğinde, proje sahibi herhangi bir token miktarını herhangi bir adrese manuel olarak basabilir."
 

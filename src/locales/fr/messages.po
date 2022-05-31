@@ -1110,9 +1110,8 @@ msgstr "En activant cette option cela frappera les tokens {tokenSymbol} ERC-20. 
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 #: src/components/v2/V2Create/forms/RulesForm/TokenMintingExtra.tsx
-#: src/components/v2/V2Create/forms/RulesForm/index.tsx
-msgid "Enabling token minting will appear risky to contributors. Only enable this when necessary."
-msgstr "Activer la frappe de tokens peut sembler risquée pour les contributeurs. Activez l'option qu'en cas de nécessité."
+msgid "Enabling token minting will appear risky to contributors."
+msgstr ""
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
@@ -2116,11 +2115,11 @@ msgid "Recipients will receive payouts in ETH."
 msgstr "Les bénéficiaires recevront les paiements en ETH."
 
 #: src/components/v1/V1Create/index.tsx
-#: src/components/v2/V2Create/forms/RulesForm/index.tsx
 msgid "Reconfiguration"
 msgstr "Reparamétrage"
 
 #: src/components/v1/ReconfigurationStrategyDrawer.tsx
+#: src/components/v2/V2Create/forms/RulesForm/index.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Reconfiguration rules"
 msgstr "Règles de reparamétrage"
@@ -2992,7 +2991,6 @@ msgid "When checked, payments to this address will mint this project's ERC-20 to
 msgstr "Lorsqu'ils sont vérifiés, les paiements à cette adresse frapperont les tokens ERC-20 de ce projet vers le portefeuille du bénéficiaire. Les paiements coûteront plus de gaz. Quand ils ne sont pas vérifiés, Juicebox suivra les nouveaux tokens du bénéficiaire quand ils paient. Le bénéficiaire peut réclamer ses tokens ERC-20 à tout moment."
 
 #: src/components/v2/V2Create/forms/RulesForm/TokenMintingExtra.tsx
-#: src/components/v2/V2Create/forms/RulesForm/index.tsx
 msgid "When enabled, the project owner can manually mint any amount of tokens to any address."
 msgstr "Lorsque cette option est activée, le propriétaire du projet peut frapper manuellement n'importe quelle quantité de tokens vers n'importe quelle adresse."
 

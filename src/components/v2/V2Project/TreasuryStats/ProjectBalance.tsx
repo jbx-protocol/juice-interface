@@ -1,15 +1,13 @@
 import { Trans } from '@lingui/macro'
 import StatLine from 'components/shared/Project/StatLine'
 import { BigNumber } from '@ethersproject/bignumber'
-import { V2_CURRENCY_USD } from 'utils/v2/currency'
+import { NO_CURRENCY, V2_CURRENCY_USD } from 'utils/v2/currency'
 import { CSSProperties, useContext } from 'react'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import ETHAmount from 'components/shared/currency/ETHAmount'
 
 import V2CurrencyAmount from 'components/v2/shared/V2CurrencyAmount'
-
-import { VolumeStatLine } from 'components/shared/Project/VolumeStatLine'
 
 import { textPrimary, textSecondary } from 'constants/styles/text'
 
@@ -20,13 +18,11 @@ export default function ProjectBalance({ style }: { style?: CSSProperties }) {
     ETHBalance,
     balanceInDistributionLimitCurrency,
     distributionLimitCurrency,
-    totalVolume,
     loading: { balanceInDistributionLimitCurrencyLoading },
   } = useContext(V2ProjectContext)
 
   return (
     <>
-      <VolumeStatLine totalVolume={totalVolume} color={colors.text.primary} />
       <StatLine
         loading={balanceInDistributionLimitCurrencyLoading}
         statLabel={<Trans>In treasury</Trans>}
@@ -48,7 +44,9 @@ export default function ProjectBalance({ style }: { style?: CSSProperties }) {
             )}
             <V2CurrencyAmount
               amount={balanceInDistributionLimitCurrency ?? BigNumber.from(0)}
-              currency={distributionLimitCurrency}
+              currency={
+                distributionLimitCurrency ?? BigNumber.from(NO_CURRENCY)
+              }
             />
           </div>
         }

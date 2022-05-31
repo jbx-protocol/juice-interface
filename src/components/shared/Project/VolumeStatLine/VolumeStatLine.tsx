@@ -58,7 +58,10 @@ export const VolumeStatLine = ({
               color,
             }}
           >
-            <ETHAmount amount={totalVolume} precision={4} />
+            <ETHAmount
+              amount={totalVolume ?? BigNumber.from(0)}
+              precision={4}
+            />
           </span>
         </span>
       }

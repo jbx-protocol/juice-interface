@@ -32,7 +32,7 @@ export default function ETHAmount({
     padEnd,
   })
 
-  if (!amount) return null
+  if (amount === undefined) return null
 
   if (Number(formattedETHAmount) === 0) {
     return (

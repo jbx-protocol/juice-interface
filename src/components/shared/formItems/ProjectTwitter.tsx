@@ -11,8 +11,7 @@ export default function ProjectTwitter({
   return (
     <Form.Item
       name={name}
-      label={hideLabel ? undefined : t`Twitter`}
-      extra={t`Your project's Twitter handle.`}
+      label={hideLabel ? undefined : t`Twitter handle`}
       {...formItemProps}
     >
       <Input

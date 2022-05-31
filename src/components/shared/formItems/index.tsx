@@ -1,5 +1,5 @@
 import EthAddress from './EthAddress'
-import ProjectBondingCurveRate from './ProjectBondingCurveRate'
+import { ProjectRedemptionRate } from './ProjectRedemptionRate'
 import ProjectDescription from './ProjectDescription'
 import ProjectDiscord from './ProjectDiscord'
 import ProjectDiscountRate from './ProjectDiscountRate'
@@ -20,7 +20,7 @@ import { ItemNoInput } from './ItemNoInput'
 export const FormItems = {
   EthAddress,
   ItemNoInput,
-  ProjectBondingCurveRate,
+  ProjectRedemptionRate,
   ProjectDescription,
   ProjectDiscord,
   ProjectDiscountRate,

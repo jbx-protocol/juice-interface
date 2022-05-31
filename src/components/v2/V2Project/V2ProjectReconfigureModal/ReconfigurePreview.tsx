@@ -93,6 +93,8 @@ export default function ReconfigurePreview({
   const gutter = 20
   const rowMargin = 20
 
+  const secondRowColWidth = hasDuration && hasDistributionLimit ? 8 : 12
+
   return (
     <div style={{ padding: '0 0px' }}>
       <Row gutter={gutter} style={{ marginBottom: rowMargin }}>
@@ -112,11 +114,11 @@ export default function ReconfigurePreview({
         </Col>
       </Row>
       <Row gutter={gutter} style={{ marginBottom: rowMargin }}>
-        <Col md={8} sm={12}>
+        <Col md={secondRowColWidth} sm={12}>
           <IssuanceRateStatistic issuanceRate={issuanceRate} />
         </Col>
         {hasDuration ? (
-          <Col md={8} sm={12}>
+          <Col md={secondRowColWidth} sm={12}>
             <DiscountRateStatistic discountRate={fundingCycle.discountRate} />
           </Col>
         ) : null}
@@ -129,10 +131,10 @@ export default function ReconfigurePreview({
         ) : null}
       </Row>
       <Row gutter={gutter} style={{ marginBottom: rowMargin }}>
-        <Col md={8} sm={12}>
+        <Col md={12} sm={12}>
           <PausePayStatistic pausePay={fundingCycleMetadata.pausePay} />
         </Col>
-        <Col md={8} sm={12}>
+        <Col md={12} sm={12}>
           <AllowMintingStatistic
             allowMinting={fundingCycleMetadata.allowMinting}
           />

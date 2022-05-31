@@ -1,10 +1,10 @@
 import { ThemeContext } from 'contexts/themeContext'
 import { PropsWithChildren, useContext } from 'react'
-import { QuestionCircleOutlined } from '@ant-design/icons'
+import { InfoCircleOutlined } from '@ant-design/icons'
 
 export default function FormItemWarningText({
   children,
-  icon = <QuestionCircleOutlined />,
+  icon = <InfoCircleOutlined />,
 }: PropsWithChildren<{ icon?: JSX.Element }>) {
   const {
     theme: { colors },

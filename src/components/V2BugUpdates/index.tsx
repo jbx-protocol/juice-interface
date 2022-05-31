@@ -36,13 +36,14 @@ export default function V2BugUpdates() {
           use these contracts, and to provide an interface for existing V2
           projects to reconfigure their funding cycles with the new contracts.
         </p>
-        <h4>(In progress) Enabling new projects and project migration.</h4>
+        <h4>(Done) Enabling new projects and project migration.</h4>
         <p>
           To re-enable project creation, the JuiceboxDAO multisig members must
           migrate the JuiceboxDAO project (https://juicebox.money/#/v2/p/1) as
           soon as possible, so that it can start accepting fees from new
           projects.
         </p>
+        <h4>(In progress) Project migration.</h4>
         <p>
           JuiceboxDAO and Peel will support existing V2 projects to reconfigure
           on the new V2 contracts as needed, and ensure all token balances are

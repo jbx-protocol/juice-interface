@@ -13,7 +13,7 @@ export default function ProjectPayButton({
     <Form.Item
       name={name}
       label={hideLabel ? undefined : t`Pay button text`}
-      extra={t`Text displayed on your project's "pay" button. Leave this blank to use the default.`}
+      extra={t`Customize your project's "pay" button. Leave blank to use the default.`}
       {...formItemProps}
     >
       <Input

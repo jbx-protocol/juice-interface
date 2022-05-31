@@ -19,7 +19,7 @@ export default function ProjectDetailsSection() {
         <Trans>Project details</Trans>
       </h2>
       <p>
-        <Trans>These attributes can be changed at any time.</Trans>
+        <Trans>Project details can be edited at any time.</Trans>
       </p>
       <Row gutter={rowGutter} style={{ marginBottom: 30 }}>
         <Col md={6} xs={12}>

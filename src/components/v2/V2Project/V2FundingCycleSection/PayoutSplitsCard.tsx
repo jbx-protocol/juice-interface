@@ -106,7 +106,7 @@ export default function PayoutSplitsCard({
           <TooltipLabel
             label={
               <h4 style={{ display: 'inline-block' }}>
-                <Trans>Funding Distribution</Trans>
+                <Trans>Funding distribution</Trans>
               </h4>
             }
             tip={

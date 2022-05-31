@@ -3,7 +3,7 @@ import { V1ContractName } from 'models/v1/contracts'
 import { useCallback, useState } from 'react'
 import { fromWad } from 'utils/formatNumber'
 
-import useContractReader from './contractReader/ContractReader'
+import useContractReader from './v1/contractReader/ContractReader'
 
 export function useEtherPrice() {
   const [price, setPrice] = useState<number>()
@@ -11,7 +11,7 @@ export function useEtherPrice() {
   useContractReader({
     contract: V1ContractName.Prices,
     functionName: 'getETHPriceFor',
-    args: ['1'], // USD
+    args: ['1'], // $1 USD
     callback: useCallback(
       (val?: BigNumber) => setPrice(parseFloat(fromWad(val))),
       [setPrice],

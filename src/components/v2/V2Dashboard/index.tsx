@@ -13,7 +13,7 @@ import { usePaymentTerminalBalance } from 'hooks/v2/contractReader/PaymentTermin
 import useProjectToken from 'hooks/v2/contractReader/ProjectToken'
 import useProjectDistributionLimit from 'hooks/v2/contractReader/ProjectDistributionLimit'
 import { useMemo } from 'react'
-import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
+import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { NO_CURRENCY, V2CurrencyName, V2_CURRENCY_ETH } from 'utils/v2/currency'
 

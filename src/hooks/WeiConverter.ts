@@ -1,4 +1,4 @@
-import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
+import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { parseEther } from 'ethers/lib/utils'
 
 import { useContext } from 'react'

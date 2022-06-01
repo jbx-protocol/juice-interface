@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-05-31 02:54\n"
+"PO-Revision-Date: 2022-06-01 03:23\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -1038,7 +1038,7 @@ msgstr "下载项目活动记录的 CSV 文件"
 
 #: src/components/shared/modals/DownloadParticipantsModal.tsx
 msgid "Download CSV of {0} holders"
-msgstr ""
+msgstr "下载包含 {0} 持有者的 CSV"
 
 #: src/components/Landing/QAs.tsx
 msgid "Due to their public nature, any exploits to the contracts may have irreversible consequences, including loss of funds. Please use Juicebox with caution."

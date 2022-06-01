@@ -1,4 +1,4 @@
-import { t } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import FundingCycleDrawer from 'components/v2/shared/FundingCycleConfigurationDrawers/FundingCycleDrawer'
 import { useFundingCycleDrawer } from 'components/v2/shared/FundingCycleConfigurationDrawers/useFundingCycleDrawer'
 import UnsavedChangesModal from 'components/v2/shared/UnsavedChangesModal'
@@ -25,10 +25,13 @@ export default function TokenDrawer({
   return (
     <>
       <FundingCycleDrawer
-        title={t`Token`}
+        title={t`Project token`}
         visible={visible}
         onClose={handleDrawerCloseClick}
       >
+        <p>
+          <Trans>Configure your project's tokenomics.</Trans>
+        </p>
         <TokenForm
           onFinish={emitDrawerClose}
           onFormUpdated={setFormUpdated}

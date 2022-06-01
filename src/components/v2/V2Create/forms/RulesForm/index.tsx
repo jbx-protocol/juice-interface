@@ -1,6 +1,5 @@
 import { Trans } from '@lingui/macro'
 import { Button, Form, Space, Switch } from 'antd'
-import { InfoCircleOutlined } from '@ant-design/icons'
 
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
@@ -23,6 +22,7 @@ import {
 } from 'constants/v2/ballotStrategies'
 import FormItemLabel from '../../FormItemLabel'
 import { getBallotStrategyByAddress } from 'constants/v2/ballotStrategies/getBallotStrategiesByAddress'
+import TokenMintingExtra from './TokenMintingExtra'
 
 export default function RulesForm({
   onFormUpdated,
@@ -80,24 +80,6 @@ export default function RulesForm({
     fontWeight: 500,
   }
 
-  const tokenMintingExtra = (
-    <>
-      <Trans>
-        When enabled, the project owner can manually mint any amount of tokens
-        to any address.
-      </Trans>
-      {showMintingWarning && (
-        <div style={{ color: theme.colors.text.warn, marginTop: 10 }}>
-          <InfoCircleOutlined />{' '}
-          <Trans>
-            Enabling token minting will appear risky to contributors. Only
-            enable this when necessary.
-          </Trans>
-        </div>
-      )}
-    </>
-  )
-
   const disableSaveButton =
     !ballotStrategy || !isAddress(ballotStrategy.address)
 
@@ -125,7 +107,11 @@ export default function RulesForm({
               <Trans>Pause payments</Trans>
             </div>
           </Form.Item>
-          <Form.Item extra={tokenMintingExtra}>
+          <Form.Item
+            extra={
+              <TokenMintingExtra showMintingWarning={showMintingWarning} />
+            }
+          >
             <div
               style={{
                 ...switchContainerStyle,
@@ -148,7 +134,7 @@ export default function RulesForm({
           style={{ ...shadowCard(theme), padding: '2rem' }}
           label={
             <FormItemLabel>
-              <Trans>Reconfiguration</Trans>
+              <Trans>Reconfiguration rules</Trans>
             </FormItemLabel>
           }
         >

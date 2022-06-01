@@ -12,12 +12,11 @@ export default function ProjectDiscord({
     <Form.Item
       name={name}
       label={hideLabel ? undefined : t`Discord`}
-      extra={t`An invite link to your project's Discord server.`}
       {...formItemProps}
     >
       <Input
         placeholder={t`https://discord.gg/abcdefgh`}
-        type="string"
+        type="url"
         autoComplete="off"
       />
     </Form.Item>

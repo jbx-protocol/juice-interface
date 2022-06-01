@@ -296,6 +296,7 @@ export default function DistributionSplitCard({
               e.stopPropagation()
             }}
             icon={<DeleteOutlined />}
+            style={{ height: 16 }}
           />
         </Tooltip>
       )}

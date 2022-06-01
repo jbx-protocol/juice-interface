@@ -52,7 +52,7 @@ import NumberSlider from 'components/shared/inputs/NumberSlider'
 
 import FormItemWarningText from 'components/shared/FormItemWarningText'
 import { formattedNum } from 'utils/formatNumber'
-import { DEFAULT_BONDING_CURVE_RATE_PERCENTAGE } from 'components/shared/formItems/ProjectBondingCurveRate'
+import { DEFAULT_BONDING_CURVE_RATE_PERCENTAGE } from 'components/shared/formItems/ProjectRedemptionRate'
 
 import { DISCOUNT_RATE_EXPLANATION } from 'components/v2/V2Project/V2FundingCycleSection/settingExplanations'
 
@@ -72,12 +72,16 @@ function DiscountRateExtra({
   discountRatePercent: number
   isCreate?: boolean
 }) {
-  const discountRateDecimal = discountRatePercent * 0.01
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
 
+  const discountRateDecimal = discountRatePercent * 0.01
   const secondIssuanceRate =
     initialIssuanceRate - initialIssuanceRate * discountRateDecimal
   const thirdIssuanceRate =
     secondIssuanceRate - secondIssuanceRate * discountRateDecimal
+
   return (
     <div style={{ fontSize: '0.9rem' }}>
       {!hasDuration && (
@@ -90,11 +94,30 @@ function DiscountRateExtra({
       <p>{DISCOUNT_RATE_EXPLANATION}</p>
       {discountRatePercent > 0 && isCreate && (
         <>
-          <TabDescription style={{ marginTop: 20 }}>
-            The issuance rate of your second funding cycle will be{' '}
-            {formattedNum(secondIssuanceRate)} tokens / 1 ETH, then{' '}
-            {formattedNum(thirdIssuanceRate)} tokens / 1 ETH for your third
-            funding cycle, and so on.
+          <TabDescription
+            style={{ marginTop: 20, backgroundColor: colors.background.l1 }}
+          >
+            <p>
+              <Trans>
+                Contributors will receive{' '}
+                <strong>{discountRatePercent}%</strong> more tokens for
+                contributions they make this funding cycle compared to the next
+                funding cycle.
+              </Trans>
+            </p>
+            <p>
+              <Trans>
+                The issuance rate of your second funding cycle will be{' '}
+                <strong style={{ whiteSpace: 'nowrap' }}>
+                  {formattedNum(secondIssuanceRate)} tokens per 1 ETH
+                </strong>
+                , then{' '}
+                <strong style={{ whiteSpace: 'nowrap' }}>
+                  {formattedNum(thirdIssuanceRate)} tokens per 1 ETH{' '}
+                </strong>
+                for your third funding cycle, and so on.
+              </Trans>
+            </p>
           </TabDescription>
         </>
       )}
@@ -219,7 +242,6 @@ export default function TokenForm({
 
   const defaultValueStyle: CSSProperties = {
     color: colors.text.tertiary,
-    marginLeft: 15,
   }
 
   const reservedRatePercent = parseFloat(
@@ -237,17 +259,6 @@ export default function TokenForm({
   return (
     <Form layout="vertical" onFinish={onTokenFormSaved}>
       <Space size="middle" direction="vertical">
-        {isCreate && (
-          <TabDescription>
-            <Trans>
-              By default, the issuance rate for your project's token during
-              funding cycle #1 is 1,000,000 tokens / 1 ETH. For example, a 1 ETH
-              contribution to your project will return 1,000,000 tokens. You can
-              manipulate the issuance rate with the following configurations.
-            </Trans>
-          </TabDescription>
-        )}
-
         <div>
           <ReservedTokensFormItem
             initialValue={reservedRatePercent}
@@ -286,6 +297,7 @@ export default function TokenForm({
                 <Trans>Discount rate</Trans>
                 {!discountRateChecked && canSetDiscountRate && (
                   <span style={defaultValueStyle}>
+                    {' '}
                     ({defaultFundingCycleData.discountRate}%)
                   </span>
                 )}
@@ -308,12 +320,13 @@ export default function TokenForm({
             )}
           </Form.Item>
 
-          <FormItems.ProjectBondingCurveRate
+          <FormItems.ProjectRedemptionRate
             label={
               <>
                 <Trans>Redemption rate</Trans>
                 {!redemptionRateChecked && canSetRedemptionRate && (
                   <span style={defaultValueStyle}>
+                    {' '}
                     ({DEFAULT_BONDING_CURVE_RATE_PERCENTAGE}%)
                   </span>
                 )}
@@ -333,7 +346,6 @@ export default function TokenForm({
             disabled={!canSetRedemptionRate}
           />
         </div>
-
         <Form.Item>
           <Button htmlType="submit" type="primary">
             <Trans>Save token configuration</Trans>

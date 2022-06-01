@@ -157,3 +157,11 @@
 .ant-collapse-content-hidden {
   display: none !important;
 }
+
+.ant-collapse-header-text-primary .ant-collapse-item .ant-collapse-header {
+  color: var(--text-primary)
+}
+
+.ant-collapse-header-p-0 .ant-collapse-item .ant-collapse-header {
+  padding: 0;
+}

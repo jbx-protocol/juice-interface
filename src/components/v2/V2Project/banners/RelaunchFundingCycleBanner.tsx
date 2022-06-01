@@ -22,7 +22,7 @@ import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/v2/splits'
-import ReconfigurePreview from '../../V2ProjectReconfigureModal/ReconfigurePreview'
+import ReconfigurePreview from '../V2ProjectReconfigureModal/ReconfigurePreview'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
 import {
   BALLOT_ADDRESSES,
@@ -30,7 +30,7 @@ import {
 } from 'constants/v2/ballotStrategies'
 import { readNetwork } from 'constants/networks'
 
-export default function RelaunchFundingCycleBanner() {
+export function RelaunchFundingCycleBanner() {
   const { projectId } = useContext(V2ProjectContext)
   const { contracts } = useContext(V2UserContext)
   const [newDuration, setNewDuration] = useState<BigNumber>(BigNumber.from(0))

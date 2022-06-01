@@ -155,6 +155,9 @@ const editingV2ProjectSlice = createSlice({
     setRedemptionRate: (state, action: PayloadAction<string>) => {
       state.fundingCycleMetadata.redemptionRate = action.payload
     },
+    setWeight: (state, action: PayloadAction<string>) => {
+      state.fundingCycleData.weight = action.payload
+    },
     setFundAccessConstraints: (
       state,
       action: PayloadAction<SerializedV2FundAccessConstraint[]>,

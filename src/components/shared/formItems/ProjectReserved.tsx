@@ -27,6 +27,7 @@ export default function ProjectReserved({
   onChange,
   checked,
   onToggled,
+  issuanceRate,
   isCreate,
 }: {
   value: number | undefined
@@ -34,6 +35,7 @@ export default function ProjectReserved({
   onChange: (val?: number) => void
   checked?: boolean
   onToggled?: (checked: boolean) => void
+  issuanceRate?: number
   isCreate?: boolean // Instance of this form item is in the create flow (not reconfig)
 } & FormItemExt) {
   const {
@@ -54,14 +56,17 @@ export default function ProjectReserved({
       </Trans>
     </FormItemWarningText>
   )
+  const effectiveIssuanceRate = issuanceRate ?? DEFAULT_ISSUANCE_RATE
 
   // Reserved tokens received by project per ETH
-  const initialReservedTokensPerEth =
-    DEFAULT_ISSUANCE_RATE * ((value ?? 0) / 100)
+  const initialReservedTokensPerEth = Math.round(
+    effectiveIssuanceRate * ((value ?? 0) / 100),
+  )
 
   // Tokens received by contributor's per ETH
-  const initialIssuanceRate =
-    DEFAULT_ISSUANCE_RATE - initialReservedTokensPerEth
+  const contributorIssuanceRate = Math.round(
+    effectiveIssuanceRate - initialReservedTokensPerEth,
+  )
   return (
     <Form.Item
       extra={
@@ -75,15 +80,16 @@ export default function ProjectReserved({
           {isCreate && (
             <TabDescription style={{ backgroundColor: colors.background.l1 }}>
               <Trans>
-                Initial issuance rate will be{' '}
+                For every <strong>1 ETH</strong> contributed,{' '}
                 <strong style={{ whiteSpace: 'nowrap' }}>
-                  {formattedNum(initialIssuanceRate)} tokens per 1 ETH
+                  {formattedNum(contributorIssuanceRate)} tokens
                 </strong>{' '}
-                for contributors. Your project will reserve{' '}
+                will go to the contributor and{' '}
                 <strong style={{ whiteSpace: 'nowrap' }}>
-                  {formattedNum(initialReservedTokensPerEth)} tokens per 1 ETH
+                  {formattedNum(initialReservedTokensPerEth)} tokens will be
+                  reserved
                 </strong>{' '}
-                contributed.
+                for the project.
               </Trans>
             </TabDescription>
           )}

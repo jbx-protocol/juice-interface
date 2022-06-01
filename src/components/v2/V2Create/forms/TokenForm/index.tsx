@@ -1,4 +1,4 @@
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Button, Form, Space } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { useAppDispatch } from 'hooks/AppDispatch'
@@ -10,6 +10,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useState,
 } from 'react'
@@ -55,6 +56,8 @@ import { formattedNum } from 'utils/formatNumber'
 import { DEFAULT_BONDING_CURVE_RATE_PERCENTAGE } from 'components/shared/formItems/ProjectRedemptionRate'
 
 import { DISCOUNT_RATE_EXPLANATION } from 'components/v2/V2Project/V2FundingCycleSection/settingExplanations'
+import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
+import TooltipLabel from 'components/shared/TooltipLabel'
 
 import { shadowCard } from 'constants/styles/shadowCard'
 import TabDescription from '../../TabDescription'
@@ -77,10 +80,12 @@ function DiscountRateExtra({
   } = useContext(ThemeContext)
 
   const discountRateDecimal = discountRatePercent * 0.01
-  const secondIssuanceRate =
-    initialIssuanceRate - initialIssuanceRate * discountRateDecimal
-  const thirdIssuanceRate =
-    secondIssuanceRate - secondIssuanceRate * discountRateDecimal
+  const secondIssuanceRate = Math.round(
+    initialIssuanceRate - initialIssuanceRate * discountRateDecimal,
+  )
+  const thirdIssuanceRate = Math.round(
+    secondIssuanceRate - secondIssuanceRate * discountRateDecimal,
+  )
 
   return (
     <div style={{ fontSize: '0.9rem' }}>
@@ -139,6 +144,8 @@ export default function TokenForm({
     theme: { colors },
   } = useContext(ThemeContext)
 
+  const [tokenForm] = Form.useForm<{ weight: string }>()
+
   const dispatch = useAppDispatch()
   const {
     fundingCycleMetadata,
@@ -152,7 +159,8 @@ export default function TokenForm({
     )
 
   const canSetRedemptionRate = hasDistributionLimit(fundAccessConstraint)
-  const canSetDiscountRate = hasFundingDuration(fundingCycleData)
+  const hasDuration = hasFundingDuration(fundingCycleData)
+  const canSetDiscountRate = hasDuration
 
   // Form initial values set by default
   const initialValues = useMemo(
@@ -166,15 +174,21 @@ export default function TokenForm({
       redemptionRate:
         (canSetRedemptionRate && fundingCycleMetadata?.redemptionRate) ||
         defaultFundingCycleMetadata.redemptionRate,
+      weight: fundingCycleData?.weight ?? DEFAULT_ISSUANCE_RATE.toString(),
     }),
     [
       fundingCycleMetadata.reservedRate,
       fundingCycleMetadata?.redemptionRate,
       canSetDiscountRate,
       fundingCycleData?.discountRate,
+      fundingCycleData?.weight,
       canSetRedemptionRate,
     ],
   )
+
+  useLayoutEffect(() => {
+    tokenForm.setFieldsValue({ weight })
+  })
 
   /**
    * NOTE: these values will all be in their 'native' units,
@@ -192,6 +206,7 @@ export default function TokenForm({
   const [redemptionRate, setRedemptionRate] = useState<string>(
     initialValues.redemptionRate,
   )
+  const [weight, setWeight] = useState<string>(initialValues.weight)
 
   const [discountRateChecked, setDiscountRateChecked] = useState<boolean>(
     fundingCycleData?.discountRate !== defaultFundingCycleData.discountRate,
@@ -207,6 +222,7 @@ export default function TokenForm({
   )
 
   const onTokenFormSaved = useCallback(() => {
+    const weight = tokenForm.getFieldValue('weight')
     const newReservedTokensSplits = reservedTokensSplits.map(split =>
       sanitizeSplit(split),
     )
@@ -215,6 +231,11 @@ export default function TokenForm({
      * e.g. permyriads, parts-per-billion etc.
      * and NOT percentages.
      */
+    dispatch(
+      editingV2ProjectActions.setWeight(
+        weight ?? DEFAULT_ISSUANCE_RATE.toString(),
+      ),
+    )
     dispatch(editingV2ProjectActions.setDiscountRate(discountRate ?? '0'))
     dispatch(editingV2ProjectActions.setReservedRate(reservedRate ?? '0'))
     dispatch(editingV2ProjectActions.setRedemptionRate(redemptionRate))
@@ -227,6 +248,7 @@ export default function TokenForm({
     dispatch,
     reservedTokensSplits,
     onFinish,
+    tokenForm,
     discountRate,
     reservedRate,
     redemptionRate,
@@ -256,10 +278,49 @@ export default function TokenForm({
   const initialIssuanceRate =
     DEFAULT_ISSUANCE_RATE - reservedRatePercent * MAX_RESERVED_RATE
 
+  const formattedWeight = formattedNum(
+    tokenForm.getFieldValue('weight') ?? initialValues.weight,
+  )
+
   return (
-    <Form layout="vertical" onFinish={onTokenFormSaved}>
+    <Form form={tokenForm} layout="vertical" onFinish={onTokenFormSaved}>
       <Space size="middle" direction="vertical">
         <div>
+          <div style={{ display: 'flex' }}>
+            {isCreate ? (
+              <Form.Item
+                name="weight"
+                label={
+                  <TooltipLabel
+                    label={<Trans>Initial token issuance rate</Trans>}
+                    tip={
+                      hasDuration
+                        ? t`For your first funding cycle, contributors will receive ${formattedWeight} tokens for every 1 ETH contributed.`
+                        : t`Contributors will receive ${formattedWeight} tokens for every 1 ETH contributed.`
+                    }
+                  />
+                }
+                style={{ width: '100%' }}
+                required
+              >
+                <FormattedNumberInput
+                  min={1}
+                  accessory={
+                    <span
+                      style={{ color: colors.text.primary, marginRight: 20 }}
+                    >
+                      <Trans>tokens per ETH contributed</Trans>
+                    </span>
+                  }
+                  onChange={newWeight => {
+                    tokenForm.setFieldsValue({ weight: newWeight })
+                    setWeight(newWeight ?? DEFAULT_ISSUANCE_RATE.toString())
+                  }}
+                  style={{ paddingRight: 15 }}
+                />
+              </Form.Item>
+            ) : null}
+          </div>
           <ReservedTokensFormItem
             initialValue={reservedRatePercent}
             onChange={newReservedRatePercentage => {
@@ -273,6 +334,7 @@ export default function TokenForm({
             reservedTokensSplits={reservedTokensSplits}
             onReservedTokensSplitsChange={setReservedTokensSplits}
             isCreate={isCreate}
+            issuanceRate={parseInt(weight)}
           />
 
           <Form.Item

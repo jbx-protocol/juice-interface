@@ -684,6 +684,10 @@ msgstr "Contributors will receive <0>{discountRatePercent}%</0> more tokens for 
 msgid "Contributors will receive a relatively small portion of tokens in exchange for paying this project."
 msgstr "Contributors will receive a relatively small portion of tokens in exchange for paying this project."
 
+#: src/components/v2/V2Create/forms/TokenForm/index.tsx
+msgid "Contributors will receive {formattedWeight} tokens for every 1 ETH contributed."
+msgstr "Contributors will receive {formattedWeight} tokens for every 1 ETH contributed."
+
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
 msgid "Contributors will see this message before they pay your project."
 msgstr "Contributors will see this message before they pay your project."
@@ -1152,6 +1156,10 @@ msgstr "Failed to update project metadata"
 msgid "File must be less than {formattedSize}{unit}"
 msgstr "File must be less than {formattedSize}{unit}"
 
+#: src/components/shared/formItems/ProjectReserved.tsx
+msgid "For every <0>1 ETH</0> contributed, <1>{0} tokens</1> will go to the contributor and <2>{1} tokens will be reserved</2> for the project."
+msgstr "For every <0>1 ETH</0> contributed, <1>{0} tokens</1> will go to the contributor and <2>{1} tokens will be reserved</2> for the project."
+
 #: src/components/Landing/QAs.tsx
 msgid "For example, with a bonding curve of 70%, redeeming 10% of the token supply at any given time will claim around 7% of the total overflow."
 msgstr ""
@@ -1167,6 +1175,10 @@ msgstr "For more info, check out this <0>short video</0>."
 #: src/components/Landing/QAs.tsx
 msgid "For users paying through your app, you should route those funds through the Juicebox smart contracts so they receive tokens in return."
 msgstr "For users paying through your app, you should route those funds through the Juicebox smart contracts so they receive tokens in return."
+
+#: src/components/v2/V2Create/forms/TokenForm/index.tsx
+msgid "For your first funding cycle, contributors will receive {formattedWeight} tokens for every 1 ETH contributed."
+msgstr "For your first funding cycle, contributors will receive {formattedWeight} tokens for every 1 ETH contributed."
 
 #: src/components/Landing/index.tsx
 msgid "Fund anything. Grow together."
@@ -1395,9 +1407,9 @@ msgstr "Infinite (no limit)"
 msgid "Initial issuance rate"
 msgstr "Initial issuance rate"
 
-#: src/components/shared/formItems/ProjectReserved.tsx
-msgid "Initial issuance rate will be <0>{0} tokens per 1 ETH</0> for contributors. Your project will reserve <1>{1} tokens per 1 ETH</1> contributed."
-msgstr "Initial issuance rate will be <0>{0} tokens per 1 ETH</0> for contributors. Your project will reserve <1>{1} tokens per 1 ETH</1> contributed."
+#: src/components/v2/V2Create/forms/TokenForm/index.tsx
+msgid "Initial token issuance rate"
+msgstr "Initial token issuance rate"
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Invalid address"
@@ -3259,6 +3271,10 @@ msgstr "token"
 #: src/utils/tokenSymbolText.ts
 msgid "tokens"
 msgstr ""
+
+#: src/components/v2/V2Create/forms/TokenForm/index.tsx
+msgid "tokens per ETH contributed"
+msgstr "tokens per ETH contributed"
 
 #: src/components/shared/formItems/ProjectRedemptionRate.tsx
 msgid "tokens redeemed"

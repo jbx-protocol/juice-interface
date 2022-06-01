@@ -689,6 +689,10 @@ msgstr ""
 msgid "Contributors will receive a relatively small portion of tokens in exchange for paying this project."
 msgstr "Katkı sahipleri bu projeye ödeme karşılığında token'ların nispeten küçük bir kısmını alacaktır."
 
+#: src/components/v2/V2Create/forms/TokenForm/index.tsx
+msgid "Contributors will receive {formattedWeight} tokens for every 1 ETH contributed."
+msgstr ""
+
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
 msgid "Contributors will see this message before they pay your project."
 msgstr ""
@@ -1157,6 +1161,10 @@ msgstr ""
 msgid "File must be less than {formattedSize}{unit}"
 msgstr ""
 
+#: src/components/shared/formItems/ProjectReserved.tsx
+msgid "For every <0>1 ETH</0> contributed, <1>{0} tokens</1> will go to the contributor and <2>{1} tokens will be reserved</2> for the project."
+msgstr ""
+
 #: src/components/Landing/QAs.tsx
 msgid "For example, with a bonding curve of 70%, redeeming 10% of the token supply at any given time will claim around 7% of the total overflow."
 msgstr "Örnek olarak, %70'lik bir bağlanma eğrisi ile herhangi bir zamanda token arzının %10'u talep edildiğinde, toplam taşmanın yaklaşık %7'sine denk düşecektir."
@@ -1172,6 +1180,10 @@ msgstr "Daha fazla bilgi için bu <0>kısa video</0>'yu izleyin."
 #: src/components/Landing/QAs.tsx
 msgid "For users paying through your app, you should route those funds through the Juicebox smart contracts so they receive tokens in return."
 msgstr "Uygulamanız aracılığıyla ödeme yapan kullanıcıların, karşılığında token almaları için bu fonları Juicebox akıllı sözleşmeleri aracılığıyla yönlendirmelisiniz."
+
+#: src/components/v2/V2Create/forms/TokenForm/index.tsx
+msgid "For your first funding cycle, contributors will receive {formattedWeight} tokens for every 1 ETH contributed."
+msgstr ""
 
 #: src/components/Landing/index.tsx
 msgid "Fund anything. Grow together."
@@ -1400,8 +1412,8 @@ msgstr ""
 msgid "Initial issuance rate"
 msgstr ""
 
-#: src/components/shared/formItems/ProjectReserved.tsx
-msgid "Initial issuance rate will be <0>{0} tokens per 1 ETH</0> for contributors. Your project will reserve <1>{1} tokens per 1 ETH</1> contributed."
+#: src/components/v2/V2Create/forms/TokenForm/index.tsx
+msgid "Initial token issuance rate"
 msgstr ""
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
@@ -3264,6 +3276,10 @@ msgstr "token"
 #: src/utils/tokenSymbolText.ts
 msgid "tokens"
 msgstr "token'lar"
+
+#: src/components/v2/V2Create/forms/TokenForm/index.tsx
+msgid "tokens per ETH contributed"
+msgstr ""
 
 #: src/components/shared/formItems/ProjectRedemptionRate.tsx
 msgid "tokens redeemed"

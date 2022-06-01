@@ -62,7 +62,7 @@ export default function FundingCycleDetails({
 
   const tokenSymbolPlural = tokenSymbolText({
     tokenSymbol,
-    capitalize: false,
+    capitalize: true,
     plural: true,
   })
 

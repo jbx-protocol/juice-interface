@@ -80,12 +80,11 @@ function DiscountRateExtra({
   } = useContext(ThemeContext)
 
   const discountRateDecimal = discountRatePercent * 0.01
-  const secondIssuanceRate = Math.round(
-    initialIssuanceRate - initialIssuanceRate * discountRateDecimal,
-  )
-  const thirdIssuanceRate = Math.round(
-    secondIssuanceRate - secondIssuanceRate * discountRateDecimal,
-  )
+  const secondIssuanceRate =
+    initialIssuanceRate - initialIssuanceRate * discountRateDecimal
+
+  const thirdIssuanceRate =
+    secondIssuanceRate - secondIssuanceRate * discountRateDecimal
 
   return (
     <div style={{ fontSize: '0.9rem' }}>
@@ -278,10 +277,6 @@ export default function TokenForm({
   const initialIssuanceRate =
     DEFAULT_ISSUANCE_RATE - reservedRatePercent * MAX_RESERVED_RATE
 
-  const formattedWeight = formattedNum(
-    tokenForm.getFieldValue('weight') ?? initialValues.weight,
-  )
-
   return (
     <Form form={tokenForm} layout="vertical" onFinish={onTokenFormSaved}>
       <Space size="middle" direction="vertical">
@@ -295,8 +290,8 @@ export default function TokenForm({
                     label={<Trans>Initial token issuance rate</Trans>}
                     tip={
                       hasDuration
-                        ? t`For your first funding cycle, contributors will receive ${formattedWeight} tokens for every 1 ETH contributed.`
-                        : t`Contributors will receive ${formattedWeight} tokens for every 1 ETH contributed.`
+                        ? t`Project tokens minted as a result of 1 ETH being contributed in the first funding cycle.`
+                        : t`Project tokens minted as a result of 1 ETH being contributed.`
                     }
                   />
                 }

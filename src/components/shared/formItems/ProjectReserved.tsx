@@ -59,14 +59,13 @@ export default function ProjectReserved({
   const effectiveIssuanceRate = issuanceRate ?? DEFAULT_ISSUANCE_RATE
 
   // Reserved tokens received by project per ETH
-  const initialReservedTokensPerEth = Math.round(
-    effectiveIssuanceRate * ((value ?? 0) / 100),
-  )
+  const initialReservedTokensPerEth =
+    effectiveIssuanceRate * ((value ?? 0) / 100)
 
   // Tokens received by contributor's per ETH
-  const contributorIssuanceRate = Math.round(
-    effectiveIssuanceRate - initialReservedTokensPerEth,
-  )
+  const contributorIssuanceRate =
+    effectiveIssuanceRate - initialReservedTokensPerEth
+
   return (
     <Form.Item
       extra={

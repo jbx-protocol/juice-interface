@@ -56,13 +56,13 @@ export default function NewDeployModal({
       cancelText={t`Later`}
     >
       <h2>
-        <Trans>Next steps</Trans>
+        <Trans>Next steps (optional)</Trans>
       </h2>
       <p>
         <Trans>
-          Congratulations on launching your project! We recommend you take these
-          next steps to help your project gain traction. These steps are
-          optional and you can complete them later on.
+          Congratulations on launching your project! The following steps are{' '}
+          <strong>completely optional</strong> and you can complete them at any
+          time, but they may be useful next steps for your project.
         </Trans>
       </p>
       <ol style={{ fontSize: 17, marginTop: 20, padding: 0 }}>

@@ -635,8 +635,8 @@ msgid "Configure your project's tokenomics."
 msgstr "Configure your project's tokenomics."
 
 #: src/components/v2/V2Project/NewDeployModal.tsx
-msgid "Congratulations on launching your project! We recommend you take these next steps to help your project gain traction. These steps are optional and you can complete them later on."
-msgstr "Congratulations on launching your project! We recommend you take these next steps to help your project gain traction. These steps are optional and you can complete them later on."
+msgid "Congratulations on launching your project! The following steps are <0>completely optional</0> and you can complete them at any time, but they may be useful next steps for your project."
+msgstr "Congratulations on launching your project! The following steps are <0>completely optional</0> and you can complete them at any time, but they may be useful next steps for your project."
 
 #: src/components/Navbar/Account.tsx
 msgid "Connect"
@@ -683,10 +683,6 @@ msgstr "Contributors will receive <0>{discountRatePercent}%</0> more tokens for 
 #: src/constants/fundingWarningText.ts
 msgid "Contributors will receive a relatively small portion of tokens in exchange for paying this project."
 msgstr "Contributors will receive a relatively small portion of tokens in exchange for paying this project."
-
-#: src/components/v2/V2Create/forms/TokenForm/index.tsx
-msgid "Contributors will receive {formattedWeight} tokens for every 1 ETH contributed."
-msgstr "Contributors will receive {formattedWeight} tokens for every 1 ETH contributed."
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
 msgid "Contributors will see this message before they pay your project."
@@ -1176,10 +1172,6 @@ msgstr "For more info, check out this <0>short video</0>."
 msgid "For users paying through your app, you should route those funds through the Juicebox smart contracts so they receive tokens in return."
 msgstr "For users paying through your app, you should route those funds through the Juicebox smart contracts so they receive tokens in return."
 
-#: src/components/v2/V2Create/forms/TokenForm/index.tsx
-msgid "For your first funding cycle, contributors will receive {formattedWeight} tokens for every 1 ETH contributed."
-msgstr "For your first funding cycle, contributors will receive {formattedWeight} tokens for every 1 ETH contributed."
-
 #: src/components/Landing/index.tsx
 msgid "Fund anything. Grow together."
 msgstr "Fund anything. Grow together."
@@ -1654,8 +1646,8 @@ msgid "New"
 msgstr "New"
 
 #: src/components/v2/V2Project/NewDeployModal.tsx
-msgid "Next steps"
-msgstr "Next steps"
+msgid "Next steps (optional)"
+msgstr "Next steps (optional)"
 
 #: src/components/v2/V2Create/tabs/ProjectDetailsTab/ProjectDetailsTabContent.tsx
 msgid "Next: Funding cycle"
@@ -2052,6 +2044,14 @@ msgstr "Project page customizations"
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/TokenDrawer.tsx
 msgid "Project token"
 msgstr "Project token"
+
+#: src/components/v2/V2Create/forms/TokenForm/index.tsx
+msgid "Project tokens minted as a result of 1 ETH being contributed in the first funding cycle."
+msgstr "Project tokens minted as a result of 1 ETH being contributed in the first funding cycle."
+
+#: src/components/v2/V2Create/forms/TokenForm/index.tsx
+msgid "Project tokens minted as a result of 1 ETH being contributed."
+msgstr "Project tokens minted as a result of 1 ETH being contributed."
 
 #: src/components/shared/NewDeployNotAvailable.tsx
 msgid "Project {name} will be available soon! Try refreshing the page shortly."

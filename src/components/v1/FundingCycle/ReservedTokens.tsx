@@ -35,6 +35,8 @@ export default function ReservedTokens({
 
   const reservedTokens = useReservedTokensOfProject(metadata?.reservedRate)
 
+  const tokenTextPlural = tokenSymbolText({ tokenSymbol, plural: true })
+
   const isConstitutionDAO =
     readNetwork.name === NetworkName.mainnet &&
     projectId === V1_PROJECT_IDS.CONSTITUTION_DAO
@@ -85,7 +87,7 @@ export default function ReservedTokens({
           <span>
             <Trans>
               {formatWad(reservedTokens, { precision: 0 }) || 0}{' '}
-              {tokenSymbol ?? t`tokens`} reserved
+              {tokenTextPlural} reserved
             </Trans>
           </span>
           <Button
@@ -94,7 +96,7 @@ export default function ReservedTokens({
             onClick={() => setModalIsVisible(true)}
             disabled={isPreviewMode}
           >
-            <Trans>Distribute {tokenSymbol ?? t`tokens`}</Trans>
+            <Trans>Distribute {tokenTextPlural}</Trans>
           </Button>
 
           <DistributeTokensModal

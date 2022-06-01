@@ -1014,7 +1014,7 @@ msgid "Download CSV of project activity"
 msgstr "Скачать CSV о активности проекта"
 
 #: src/components/shared/modals/DownloadParticipantsModal.tsx
-msgid "Download CSV of {0} holders ---"
+msgid "Download CSV of {0} holders"
 msgstr ""
 
 #: src/components/Landing/QAs.tsx

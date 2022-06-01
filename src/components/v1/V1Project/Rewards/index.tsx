@@ -25,8 +25,9 @@ import IssueTokenButton from 'components/shared/IssueTokenButton'
 import SectionHeader from 'components/shared/SectionHeader'
 import useCanPrintPreminedTokens from 'hooks/v1/contractReader/CanPrintPreminedTokens'
 
+import ParticipantsModal from 'components/shared/modals/ParticipantsModal'
+
 import ManageTokensModal from '../../../shared/ManageTokensModal'
-import ParticipantsModal from '../modals/ParticipantsModal'
 import RedeemModal from '../modals/RedeemModal'
 import ConfirmUnstakeTokensModal from '../modals/ConfirmUnstakeTokensModal'
 import PrintPreminedModal from '../modals/PrintPreminedModal'
@@ -40,8 +41,10 @@ export default function Rewards() {
   const { userAddress } = useContext(NetworkContext)
   const {
     projectId,
+    handle,
     tokenAddress,
     tokenSymbol,
+    cv,
     isPreviewMode,
     currentFC,
     terminal,
@@ -60,11 +63,15 @@ export default function Rewards() {
     metadata?.reservedRate,
   )
 
-  const totalSupply = useTotalSupplyOfProjectToken(projectId)?.add(
+  const totalSupply = useTotalSupplyOfProjectToken(projectId)
+  const totalSupplyWithReservedTicketBalance = totalSupply?.add(
     reservedTicketBalance ? reservedTicketBalance : BigNumber.from(0),
   )
 
-  const share = formatPercent(totalBalance, totalSupply)
+  const share = formatPercent(
+    totalBalance,
+    totalSupplyWithReservedTicketBalance,
+  )
 
   const ticketsIssued = tokenAddress
     ? tokenAddress !== constants.AddressZero
@@ -133,7 +140,9 @@ export default function Rewards() {
                       flexWrap: 'wrap',
                     }}
                   >
-                    {formatWad(totalSupply, { precision: 0 })}
+                    {formatWad(totalSupplyWithReservedTicketBalance, {
+                      precision: 0,
+                    })}
                     <Button
                       size="small"
                       onClick={() => setParticipantsModalVisible(true)}
@@ -217,6 +226,12 @@ export default function Rewards() {
         MintModal={PrintPreminedModal}
       />
       <ParticipantsModal
+        projectId={projectId}
+        projectName={handle}
+        tokenSymbol={tokenSymbol}
+        tokenAddress={tokenAddress}
+        cv={cv}
+        totalTokenSupply={totalSupply}
         visible={participantsModalVisible}
         onCancel={() => setParticipantsModalVisible(false)}
       />

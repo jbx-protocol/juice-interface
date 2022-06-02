@@ -8,7 +8,7 @@ msgstr ""
 "Language: ru\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-05-31 02:54\n"
+"PO-Revision-Date: 2022-06-01 03:23\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -1038,7 +1038,7 @@ msgstr "Скачать CSV о активности проекта"
 
 #: src/components/shared/modals/DownloadParticipantsModal.tsx
 msgid "Download CSV of {0} holders"
-msgstr ""
+msgstr "Загрузить CSV из {0} держателей"
 
 #: src/components/Landing/QAs.tsx
 msgid "Due to their public nature, any exploits to the contracts may have irreversible consequences, including loss of funds. Please use Juicebox with caution."

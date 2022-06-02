@@ -76,7 +76,14 @@ export default function ReservedTokensSplitsCard({
     <CardSection>
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
         {hideDistributeButton ? null : (
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              flexWrap: 'wrap',
+              gap: '10px',
+            }}
+          >
             <div style={{ marginRight: '3rem' }}>
               <span
                 style={{

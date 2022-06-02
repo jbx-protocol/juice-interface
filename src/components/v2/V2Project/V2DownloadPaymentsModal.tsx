@@ -2,7 +2,7 @@ import { t, Trans } from '@lingui/macro'
 import { Modal } from 'antd'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
-import { emitErrorNotification } from 'components/shared/Notifications/emitErrorNotification'
+import { emitErrorNotification } from 'utils/notifications'
 
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useCallback, useContext, useEffect, useState } from 'react'

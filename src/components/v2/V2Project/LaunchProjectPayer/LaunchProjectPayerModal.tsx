@@ -8,7 +8,7 @@ import { Modal } from 'antd'
 import { JBDiscordLink } from 'components/Landing/QAs'
 import EtherscanLink from 'components/shared/EtherscanLink'
 import CopyTextButton from 'components/shared/CopyTextButton'
-import { emitErrorNotification } from 'components/shared/Notifications/emitErrorNotification'
+import { emitErrorNotification } from 'utils/notifications'
 
 import { DeployProjectPayerTxArgs } from 'hooks/v2/transactor/DeployProjectPayerTx'
 import { useForm } from 'antd/lib/form/Form'

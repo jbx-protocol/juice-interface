@@ -8,7 +8,7 @@ import { useCallback, useContext, useEffect, useState } from 'react'
 import { fromWad } from 'utils/formatNumber'
 import { querySubgraphExhaustive } from 'utils/graph'
 
-import { emitErrorNotification } from 'components/shared/Notifications/emitErrorNotification'
+import { emitErrorNotification } from 'utils/notifications'
 
 import { readProvider } from 'constants/readProvider'
 

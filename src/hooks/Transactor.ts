@@ -9,7 +9,7 @@ import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { useCallback, useContext } from 'react'
 
-import { emitErrorNotification } from 'components/shared/Notifications/emitErrorNotification'
+import { emitErrorNotification } from 'utils/notifications'
 
 import * as Sentry from '@sentry/browser'
 import { t } from '@lingui/macro'
@@ -195,7 +195,7 @@ export function useTransactor({
           description = message
         }
 
-        emitErrorNotification(t`Transaction failed`, description)
+        emitErrorNotification(t`Transaction failed`, { description })
 
         options?.onDone?.()
 

@@ -4,7 +4,7 @@ import { Checkbox, Descriptions, Form, Input, Modal, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import ImageUploader from 'components/shared/inputs/ImageUploader'
-import { emitErrorNotification } from 'components/shared/Notifications/emitErrorNotification'
+import { emitErrorNotification } from 'utils/notifications'
 import { NetworkContext } from 'contexts/networkContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import * as constants from '@ethersproject/constants'
@@ -75,7 +75,9 @@ export default function V1ConfirmPayOwnerModal({
         onDone: () => setLoading(false),
         onError: (error: Error) => {
           setLoading(false)
-          emitErrorNotification(t`Transaction failed`, error.message)
+          emitErrorNotification(t`Transaction failed`, {
+            description: error.message,
+          })
         },
       },
     )

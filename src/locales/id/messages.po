@@ -8,7 +8,7 @@ msgstr ""
 "Language: id\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-06-01 03:23\n"
+"PO-Revision-Date: 2022-06-02 03:06\n"
 "Last-Translator: \n"
 "Language-Team: Indonesian\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -2837,8 +2837,17 @@ msgstr ""
 msgid "Total: {0}%"
 msgstr ""
 
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/hooks/Transactor.ts
+msgid "Transaction failed"
+msgstr ""
+
 #: src/components/shared/TransactionModal.tsx
 msgid "Transaction pending..."
+msgstr ""
+
+#: src/components/shared/ArchiveProject/index.tsx
+msgid "Transaction unsuccessful"
 msgstr ""
 
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx

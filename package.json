@@ -69,7 +69,8 @@
     "i18n:lint": "./scripts/lint-translations.sh",
     "postinstall": "yarn i18n:compile",
     "analyze": "yarn build && source-map-explorer 'build/static/js/*.js'",
-    "format": "prettier --write './**/*.{js,jsx,ts,tsx}'"
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx}'",
+    "find-deadcode": "ts-prune"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,json,css,md}": [
@@ -105,6 +106,7 @@
     "prettier": "2.4.1",
     "react-test-renderer": "^17",
     "source-map-explorer": "^2.5.2",
+    "ts-prune": "^0.10.3",
     "uuid": "^8.3.2"
   }
 }

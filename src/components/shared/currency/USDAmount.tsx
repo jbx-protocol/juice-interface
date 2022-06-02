@@ -4,7 +4,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
 import { betweenZeroAndOne } from 'utils/bigNumbers'
 
-import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
+import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 
 import CurrencySymbol from '../CurrencySymbol'
 

@@ -8,7 +8,7 @@ import { emitErrorNotification } from 'utils/notifications'
 import { NetworkContext } from 'contexts/networkContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import * as constants from '@ethersproject/constants'
-import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
+import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 
 import { useContext, useState } from 'react'
 import { V1CurrencyName } from 'utils/v1/currency'

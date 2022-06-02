@@ -10,7 +10,7 @@ import PayoutModsList from 'components/v1/PayoutModsList'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
+import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useTapProjectTx } from 'hooks/v1/transactor/TapProjectTx'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useContext, useEffect, useState } from 'react'

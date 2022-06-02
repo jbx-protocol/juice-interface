@@ -22,36 +22,32 @@ export default function ProjectBalance({ style }: { style?: CSSProperties }) {
   } = useContext(V2ProjectContext)
 
   return (
-    <>
-      <StatLine
-        loading={balanceInDistributionLimitCurrencyLoading}
-        statLabel={<Trans>In treasury</Trans>}
-        statLabelTip={
-          <Trans>The balance of this project in the Juicebox contract.</Trans>
-        }
-        statValue={
-          <div
-            style={{
-              ...textPrimary,
-              color: colors.text.brand.primary,
-              marginLeft: 10,
-            }}
-          >
-            {distributionLimitCurrency?.eq(V2_CURRENCY_USD) && (
-              <span style={textSecondary(theme)}>
-                <ETHAmount amount={ETHBalance} precision={4} padEnd={true} />{' '}
-              </span>
-            )}
-            <V2CurrencyAmount
-              amount={balanceInDistributionLimitCurrency ?? BigNumber.from(0)}
-              currency={
-                distributionLimitCurrency ?? BigNumber.from(NO_CURRENCY)
-              }
-            />
-          </div>
-        }
-        style={style}
-      />
-    </>
+    <StatLine
+      loading={balanceInDistributionLimitCurrencyLoading}
+      statLabel={<Trans>In treasury</Trans>}
+      statLabelTip={
+        <Trans>The balance of this project in the Juicebox contract.</Trans>
+      }
+      statValue={
+        <div
+          style={{
+            ...textPrimary,
+            color: colors.text.brand.primary,
+            marginLeft: 10,
+          }}
+        >
+          {distributionLimitCurrency?.eq(V2_CURRENCY_USD) && (
+            <span style={textSecondary(theme)}>
+              <ETHAmount amount={ETHBalance} precision={4} padEnd={true} />{' '}
+            </span>
+          )}
+          <V2CurrencyAmount
+            amount={balanceInDistributionLimitCurrency ?? BigNumber.from(0)}
+            currency={distributionLimitCurrency ?? BigNumber.from(NO_CURRENCY)}
+          />
+        </div>
+      }
+      style={style}
+    />
   )
 }

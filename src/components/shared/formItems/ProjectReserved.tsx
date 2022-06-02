@@ -94,7 +94,7 @@ export default function ProjectReserved({
             {onToggled ? (
               <SwitchHeading checked={Boolean(checked)} onChange={onToggled}>
                 <Trans>Reserved rate</Trans>
-                {checked && (
+                {!checked && (
                   <span
                     style={{
                       color: colors.text.tertiary,

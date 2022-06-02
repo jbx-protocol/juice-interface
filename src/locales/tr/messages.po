@@ -2837,9 +2837,18 @@ msgstr "Toplam arz"
 msgid "Total: {0}%"
 msgstr "Toplam: %{0}"
 
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/hooks/Transactor.ts
+msgid "Transaction failed"
+msgstr ""
+
 #: src/components/shared/TransactionModal.tsx
 msgid "Transaction pending..."
 msgstr "İşlem beklemede..."
+
+#: src/components/shared/ArchiveProject/index.tsx
+msgid "Transaction unsuccessful"
+msgstr ""
 
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx

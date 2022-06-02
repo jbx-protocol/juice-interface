@@ -1,7 +1,8 @@
 import { t, Trans } from '@lingui/macro'
-import { Modal, notification } from 'antd'
+import { Modal } from 'antd'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
+import { emitErrorNotification } from 'utils/notifications'
 
 import { useCallback, useEffect, useState } from 'react'
 import { fromWad } from 'utils/formatNumber'
@@ -71,9 +72,7 @@ export default function DownloadParticipantsModal({
       })
 
       if (!participants) {
-        notification.error({
-          message: t`Error loading holders`,
-        })
+        emitErrorNotification(t`Error loading holders`)
         throw new Error('No data.')
       }
 

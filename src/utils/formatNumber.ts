@@ -224,9 +224,6 @@ export const formattedNum = (
   return formatted
 }
 
-export const toUint256 = (num: BigNumber) =>
-  '0x' + (num?.toHexString().split('x')[1] ?? '').padStart(64, '0')
-
 export const formatPercent = (
   numerator: BigNumber | undefined,
   divisor: BigNumber | undefined,
@@ -240,15 +237,4 @@ export const formatPercent = (
     return '<0.01'
   }
   return (sharePct?.toNumber() / 100).toString()
-}
-
-export function round({
-  amount,
-  decimals,
-}: {
-  amount: number
-  decimals: number
-}) {
-  const roundingFactor = 10 ** decimals
-  return Math.round(amount * roundingFactor) / roundingFactor
 }

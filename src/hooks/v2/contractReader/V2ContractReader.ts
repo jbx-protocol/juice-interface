@@ -6,13 +6,13 @@ import { useCallback, useContext, useState } from 'react'
 import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect'
 import * as Sentry from '@sentry/browser'
 
-export type ContractUpdateOn = {
+type ContractUpdateOn = {
   contract?: ContractConfig
   eventName?: string
   topics?: EventFilter['topics']
 }[]
 
-export type ContractConfig = V2ContractName | Contract | undefined
+type ContractConfig = V2ContractName | Contract | undefined
 
 export default function useV2ContractReader<V>({
   contract,

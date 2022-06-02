@@ -24,7 +24,7 @@ import {
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/v2/splits'
 import { DEFAULT_BALLOT_STRATEGY } from 'constants/v2/ballotStrategies'
-export interface V2ProjectState {
+interface V2ProjectState {
   version: number
   projectMetadata: ProjectMetadataV4
   fundingCycleData: SerializedV2FundingCycleData
@@ -82,12 +82,12 @@ export const defaultFundingCycleMetadata: SerializedV2FundingCycleMetadata =
     dataSource: constants.AddressZero,
   })
 
-export const EMPTY_PAYOUT_GROUPED_SPLITS = {
+const EMPTY_PAYOUT_GROUPED_SPLITS = {
   group: ETH_PAYOUT_SPLIT_GROUP,
   splits: [],
 }
 
-export const EMPTY_RESERVED_TOKENS_GROUPED_SPLITS = {
+const EMPTY_RESERVED_TOKENS_GROUPED_SPLITS = {
   group: RESERVED_TOKEN_SPLIT_GROUP,
   splits: [],
 }
@@ -102,7 +102,7 @@ export const defaultProjectState: V2ProjectState = {
   reservedTokensGroupedSplits: EMPTY_RESERVED_TOKENS_GROUPED_SPLITS,
 }
 
-export const editingV2ProjectSlice = createSlice({
+const editingV2ProjectSlice = createSlice({
   name: 'editingV2Project',
   initialState: defaultProjectState,
   reducers: {

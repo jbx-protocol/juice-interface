@@ -8,7 +8,7 @@ import { randomBytes } from '@ethersproject/random'
 import { TransactorInstance } from '../../Transactor'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
 
-export type PayV2ProjectTx = TransactorInstance<{
+type PayV2ProjectTx = TransactorInstance<{
   memo: string
   preferClaimedTokens: boolean
   beneficiary?: string

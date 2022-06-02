@@ -4,7 +4,7 @@ import { useContext } from 'react'
 
 import { TransactorInstance } from '../../Transactor'
 
-export type DistributeReserveTokensTx = TransactorInstance<{
+type DistributeReserveTokensTx = TransactorInstance<{
   memo?: string
 }>
 

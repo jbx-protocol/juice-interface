@@ -639,10 +639,6 @@ msgstr "Configurer la dynamique du token de votre projet."
 msgid "Configure your project's tokenomics."
 msgstr "Paramétrer la tokéconomie de votre projet."
 
-#: src/components/v1/V1Project/modals/FeedbackPromptModal.tsx
-msgid "Congrats on creating your project!"
-msgstr "Félicitations, vous avez créé votre projet !"
-
 #: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Congratulations on launching your project! We recommend you take these next steps to help your project gain traction. These steps are optional and you can complete them later on."
 msgstr "Félicitations pour le lancement de votre projet ! Nous vous recommandons de suivre les étapes suivantes pour aider votre projet à gagner du terrain. Ces étapes sont facultatives et vous pouvez les compléter ultérieurement."
@@ -1240,13 +1236,8 @@ msgstr "Les fonds seront distribués à :"
 
 #: src/components/shared/FeedbackFormButton.tsx
 #: src/components/shared/FeedbackFormButton.tsx
-#: src/components/v1/V1Project/modals/FeedbackPromptModal.tsx
 msgid "Give feedback"
 msgstr "Donner un feedback"
-
-#: src/components/v1/V1Project/modals/FeedbackPromptModal.tsx
-msgid "Give us your feedback"
-msgstr "Donnez-nous votre feedback"
 
 #: src/components/shared/EtherscanLink.tsx
 msgid "Go to Etherscan"
@@ -1285,10 +1276,6 @@ msgstr "Heures"
 #: src/components/Landing/QAs.tsx
 msgid "How decentralized is Juicebox?"
 msgstr "À quel point Juicebox est-il décentralisé ?"
-
-#: src/components/v1/V1Project/modals/FeedbackPromptModal.tsx
-msgid "How did we do? We'd love to get your feedback so we can make creating Juicebox projects as juicy as possible!"
-msgstr "Comment s'est-il passé ? Nous aimerions avoir votre feedback pour que nous puissions créer des projets Juicebox les plus juteux possible !"
 
 #: src/components/Projects/ArchivedProjectsMessage.tsx
 msgid "How do I archive a project?"
@@ -1467,10 +1454,6 @@ msgstr "Frais JBX ({feePercentage}%):"
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Juicebox Project ID"
 msgstr "Identifiant du projet Juicebox"
-
-#: src/components/v2/shared/V2SupportWarning.tsx
-msgid "Juicebox V2 on {0} isn't enabled."
-msgstr "Juicebox V2 sur {0} n'est pas activé."
 
 #: src/components/v2/shared/SplitItem.tsx
 msgid "Juicebox V2 project with ID {0}"
@@ -2502,10 +2485,6 @@ msgstr "La Plateforme de Financement Décentralisée. Assez légère pour un gro
 msgid "The JBX protocol is unaudited, and projects built on it may be vulnerable to bugs or exploits. Be smart!"
 msgstr "Le protocole JBX n'est pas audité et les projets construits dessus peuvent être vulnérables aux bogues ou aux exploits. Soyez intelligent !"
 
-#: src/components/v2/shared/V2SupportWarning.tsx
-msgid "The Juicebox V2 frontend is still in development. Some features are missing and there are known bugs."
-msgstr "Le frontend Juicebox V2 est encore en développement. Certaines fonctionnalités sont manquantes et il y a des bogues déjà connus."
-
 #: src/components/Landing/QAs.tsx
 msgid "The Juicebox protocol is governed by a community of JBX token holders who vote on proposals fortnightly."
 msgstr "Le protocole Juicebox est régi par une communauté de détenteurs de token JBX qui votent les propositions tous les quinze jours."
@@ -3144,10 +3123,6 @@ msgstr "Votre solde"
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
 msgid "Your balance: {0}"
 msgstr "Votre solde : {0}"
-
-#: src/components/v1/V1Project/modals/FeedbackPromptModal.tsx
-msgid "Your feedback will be sent to a <0>public Discord channel </0>for our development team to consider."
-msgstr "Vos commentaires seront envoyés à une <0>chaîne Discord public </0>pour que notre équipe de développement les examine."
 
 #: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner.tsx
 msgid "Your funding cycle configuration has been pre-populated using the configuration you originally launched with. If you need to customize it, contact us."

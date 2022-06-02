@@ -5,7 +5,7 @@ import moment, { DurationInputArg1 } from 'moment'
 import { useEffect, useState } from 'react'
 import { getPinnedListByTag, ipfsCidUrl, unpinIpfsFileByCid } from 'utils/ipfs'
 
-export type IpfsCacheOpts<T extends IpfsCacheName> = {
+type IpfsCacheOpts<T extends IpfsCacheName> = {
   ttl: DurationInputArg1
   deserialize?: (x: IpfsCacheJsonData[T]) => IpfsCacheData[T]
 }

@@ -10,9 +10,9 @@ import { CurrencyOption } from 'models/currencyOption'
 import { CurrencyMetadata, CurrencyName } from 'constants/currency'
 
 // TODO make this CurrencyOption instead of number
-export type CurrencyMetadataType = Record<number, CurrencyMetadata>
+type CurrencyMetadataType = Record<number, CurrencyMetadata>
 
-export type CurrencyContextType = {
+type CurrencyContextType = {
   currencyMetadata: CurrencyMetadataType
   currencies: Record<CurrencyName, CurrencyOption>
 }

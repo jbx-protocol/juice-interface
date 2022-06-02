@@ -3,38 +3,6 @@ import { Split } from 'models/v2/splits'
 import { preciseFormatSplitPercent, splitPercentFrom } from './math'
 
 /**
- * Gets distribution amount from percent of the distribution limit and then applies
- * the protocol fee
- * @param percent {float} - value as a percentage.
- * @param distributionLimit string (hexString)
- * @param feePercentage string (hexString)
- * @returns {number} distribution amount
- */
-export function getDistributionAmountFromPercentAfterFee({
-  percent,
-  distributionLimit,
-  feePercentage,
-}: {
-  percent: number
-  distributionLimit: string
-  feePercentage: string
-}) {
-  const amountBeforeFee = amountFromPercent({
-    percent,
-    amount: distributionLimit,
-  })
-
-  if (!amountBeforeFee) return
-
-  return parseFloat(
-    (
-      amountBeforeFee -
-      (amountBeforeFee * parseFloat(feePercentage)) / 100
-    ).toFixed(4),
-  )
-}
-
-/**
  * Gets amount from percent of a bigger amount (rounded to 4dp)
  * @param percent {float} - value as a percentage.
  * @param amount string (hexString)
@@ -76,21 +44,6 @@ export function getTotalSplitsPercentage(splits: Split[]) {
     (acc, curr) => acc + preciseFormatSplitPercent(curr.percent),
     0,
   )
-}
-
-/**
- * Calculates sum of all split amounts based on current distribution limit
- * @param splits {Split[]} - list of splits
- * @returns {number} sum of all split amounts
- */
-export function sumOfPayoutSplitAmounts({
-  splits,
-  distributionLimit,
-}: {
-  splits: Split[]
-  distributionLimit: number
-}) {
-  return (distributionLimit * getTotalSplitsPercentage(splits)) / 100
 }
 
 /**

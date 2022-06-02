@@ -37,7 +37,7 @@ import { useForm } from 'antd/lib/form/Form'
 import { CurrencyName } from 'constants/currency'
 import { EditingPayoutMod } from './types'
 
-export type ModType = 'project' | 'address'
+type ModType = 'project' | 'address'
 
 type ProjectPayoutModsForm = {
   projectId: string

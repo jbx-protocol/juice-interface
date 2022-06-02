@@ -14,12 +14,9 @@ import { emitErrorNotification } from 'utils/notifications'
 import * as Sentry from '@sentry/browser'
 import { t } from '@lingui/macro'
 
-export type TransactorCallback = (
-  e?: TransactionEvent,
-  signer?: JsonRpcSigner,
-) => void
+type TransactorCallback = (e?: TransactionEvent, signer?: JsonRpcSigner) => void
 
-export type TransactorOptions = {
+type TransactorOptions = {
   value?: BigNumberish
   onDone?: VoidFunction
   onConfirmed?: TransactorCallback

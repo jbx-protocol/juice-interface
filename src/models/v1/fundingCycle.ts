@@ -28,7 +28,7 @@ export interface V1FundingCycleProperties {
   ballot: string
 }
 
-export type FundingCycleMetadataV0 = {
+type FundingCycleMetadataV0 = {
   version: 0
   bondingCurveRate: number
   reconfigurationBondingCurveRate: number
@@ -38,7 +38,7 @@ export type FundingCycleMetadataV0 = {
   treasuryExtension: null
 }
 
-export type FundingCycleMetadataV1 = {
+type FundingCycleMetadataV1 = {
   version: 1
   bondingCurveRate: number
   reconfigurationBondingCurveRate: number

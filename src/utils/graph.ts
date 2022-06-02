@@ -177,7 +177,7 @@ export type WhereConfig<E extends EntityKey> = {
     | 'not_ends_with'
 }
 
-export type BlockConfig = {
+type BlockConfig = {
   number?: number
   number_gte?: number
   hash?: string
@@ -281,8 +281,6 @@ export const formatGraphQuery = <E extends EntityKey, K extends EntityKeys<E>>(
 }
 
 const subgraphUrl = process.env.REACT_APP_SUBGRAPH_URL
-
-export const trimHexZero = (hexStr: string) => hexStr.replace('0x0', '0x')
 
 export function formatGraphResponse<E extends EntityKey>(
   entity: E,

@@ -20,5 +20,3 @@ export function ballotStrategies() {
     },
   ]
 }
-
-export const DEFAULT_BALLOT_STRATEGY = ballotStrategies()[2]

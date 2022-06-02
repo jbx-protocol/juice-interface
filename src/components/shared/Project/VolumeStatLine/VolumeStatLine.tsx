@@ -4,7 +4,7 @@ import CurrencySymbol from 'components/shared/CurrencySymbol'
 
 import { ThemeContext } from 'contexts/themeContext'
 import { Property } from 'csstype'
-import { BigNumber } from 'ethers/lib/ethers'
+import { BigNumber } from '@ethersproject/bignumber'
 import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
 import { useContext, useMemo } from 'react'
 import { formatWad } from 'utils/formatNumber'
@@ -16,11 +16,11 @@ import StatLine from '../StatLine'
 export const VolumeStatLine = ({
   totalVolume,
   color,
-  convertTo,
+  convertToCurrency,
 }: {
   totalVolume: BigNumber | undefined
   color: Property.Color
-  convertTo?: { currency: CurrencyName }
+  convertToCurrency?: CurrencyName
 }) => {
   const { theme } = useContext(ThemeContext)
   const secondaryTextStyle = textSecondary(theme)
@@ -28,28 +28,27 @@ export const VolumeStatLine = ({
   const converter = useCurrencyConverter()
 
   const convertedVolume = useMemo(() => {
-    if (!convertTo) return undefined
-    const { currency: targetCurrency } = convertTo
+    if (!convertToCurrency) return undefined
     return formatWad(
-      converter.wadToCurrency(totalVolume, targetCurrency, 'ETH'),
+      converter.wadToCurrency(totalVolume, convertToCurrency, 'ETH'),
       { precision: 2, padEnd: true },
     )
-  }, [convertTo, converter, totalVolume])
+  }, [convertToCurrency, converter, totalVolume])
 
   return (
     <StatLine
       statLabel={<Trans>Volume</Trans>}
       statLabelTip={
         <Trans>
-          The total amount received by this project through Juicebox since it
-          was created.
+          The total funds this Juicebox project has received since it was
+          created.
         </Trans>
       }
       statValue={
         <span style={textPrimary}>
-          {convertedVolume && convertTo ? (
+          {convertedVolume && convertToCurrency ? (
             <span style={secondaryTextStyle}>
-              <CurrencySymbol currency={convertTo.currency} />
+              <CurrencySymbol currency={convertToCurrency} />
               {convertedVolume}{' '}
             </span>
           ) : null}

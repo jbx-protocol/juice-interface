@@ -1,4 +1,4 @@
-export type Language = Record<string, Record<string, string>>
+type Language = Record<string, Record<string, string>>
 
 // List of languages supported on Juicebox
 export const Languages: Language = {

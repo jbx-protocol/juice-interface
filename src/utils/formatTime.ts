@@ -54,8 +54,6 @@ export function detailedTimeUntil(endTimeSeconds?: BigNumberish) {
   })
 }
 
-export const secondsToDays = (seconds: number) => seconds / SECONDS_IN_DAY
-
 export const otherUnitToSeconds = ({
   duration,
   unit,
@@ -92,20 +90,6 @@ export const secondsToOtherUnit = ({
     default:
       return duration
   }
-}
-
-export const convertTime = ({
-  duration,
-  fromUnit,
-  toUnit,
-}: {
-  duration: number
-  fromUnit: DurationUnitsOption
-  toUnit: DurationUnitsOption
-}) => {
-  const durationInSeconds = otherUnitToSeconds({ duration, unit: fromUnit })
-
-  return secondsToOtherUnit({ duration: durationInSeconds, unit: toUnit })
 }
 
 export const deriveDurationUnit = (

@@ -2,7 +2,7 @@ import { NetworkName } from 'models/network-name'
 
 const infuraId = process.env.REACT_APP_INFURA_ID
 
-export type NetworkInfo = {
+type NetworkInfo = {
   name: NetworkName
   color: string
   chainId: number
@@ -92,7 +92,7 @@ export const NETWORKS: Record<number, NetworkInfo> = {
   },
 }
 
-export const NETWORKS_BY_NAME = Object.values(NETWORKS).reduce(
+const NETWORKS_BY_NAME = Object.values(NETWORKS).reduce(
   (acc, curr) => ({
     ...acc,
     [curr.name]: curr,

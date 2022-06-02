@@ -44,7 +44,7 @@ import TooltipIcon from 'components/shared/TooltipIcon'
 
 import { CurrencyName } from 'constants/currency'
 
-export type AddOrEditSplitFormFields = {
+type AddOrEditSplitFormFields = {
   projectId: string
   beneficiary: string
   percent: number

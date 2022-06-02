@@ -3,6 +3,7 @@ import { Button } from 'antd'
 
 import { NetworkContext } from 'contexts/networkContext'
 import { TransactorInstance } from 'hooks/Transactor'
+import { CV } from 'models/cv'
 import { ProjectMetadataV4 } from 'models/project-metadata'
 import { useContext, useState } from 'react'
 import { uploadProjectMetadata } from 'utils/ipfs'
@@ -17,6 +18,7 @@ export default function ArchiveProject({
   owner,
   handle,
   canTakePaymentsWhenArchived = false,
+  cv,
 }: {
   storeCidTx: TransactorInstance<{ cid: string }>
   metadata: ProjectMetadataV4 | undefined
@@ -24,6 +26,7 @@ export default function ArchiveProject({
   owner: string | undefined
   handle?: string | undefined // Used on V1 projects
   canTakePaymentsWhenArchived?: boolean
+  cv: CV
 }) {
   const { userAddress } = useContext(NetworkContext)
 
@@ -45,7 +48,7 @@ export default function ArchiveProject({
     // Create github issue when archive is requested
     // https://docs.github.com/en/rest/reference/issues#create-an-issue
     // Do this first, in case the user closes the page before the on-chain tx completes
-    postGitHubIssueForArchive({ archived, projectId, metadata, handle })
+    postGitHubIssueForArchive({ archived, projectId, metadata, handle, cv })
 
     const txSuccessful = await storeCidTx(
       { cid: uploadedMetadata.IpfsHash },

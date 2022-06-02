@@ -14,7 +14,7 @@ export default function ArchiveV2Project({
     cid: string
   }>
 }) {
-  const { projectMetadata, projectId, projectOwnerAddress } =
+  const { projectMetadata, projectId, projectOwnerAddress, cv } =
     useContext(V2ProjectContext)
 
   return (
@@ -23,6 +23,7 @@ export default function ArchiveV2Project({
       metadata={projectMetadata}
       projectId={projectId}
       owner={projectOwnerAddress}
+      cv={cv ?? '2'}
     />
   )
 }

@@ -103,7 +103,7 @@ export default function PayoutModsList({
 
   if (!fundingCycle) return null
 
-  const target = fundingCycle.target
+  const { target } = fundingCycle
   const targetIsInfinite = !target || target.eq(constants.MaxUint256)
 
   return (

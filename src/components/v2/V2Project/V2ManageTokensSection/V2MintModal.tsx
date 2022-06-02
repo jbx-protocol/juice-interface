@@ -133,7 +133,7 @@ export default function V2MintModal({
           valuePropName="checked"
           extra={
             erc20Issued
-              ? t`Enabling this will mint ${tokenSymbol} ERC-20 tokens. Otherwise staked ${tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver.`
+              ? t`Enabling this will mint ${tokenSymbol} ERC-20 tokens. Otherwise, unclaimed ${tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver.`
               : t`ERC-20 tokens can only be minted once an ERC-20 token has been issued for this project.`
           }
           initialValue={false}

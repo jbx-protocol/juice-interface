@@ -5,7 +5,7 @@ import TextArea from 'antd/lib/input/TextArea'
 
 import { FormItemExt } from './formItemExt'
 
-const MAX_DESCRIPTION_LENGTH = 1000
+const MAX_DESCRIPTION_LENGTH = 5000
 
 export default function ProjectDescription({
   name,
@@ -18,10 +18,10 @@ export default function ProjectDescription({
       name={name}
       label={hideLabel ? undefined : t`Project description`}
       {...formItemProps}
+      extra={t`Maximum ${MAX_DESCRIPTION_LENGTH} characters`}
     >
       <TextArea
         autoComplete="off"
-        placeholder={MAX_DESCRIPTION_LENGTH + ' ' + t`characters max`}
         maxLength={MAX_DESCRIPTION_LENGTH}
         onChange={onChange ? e => onChange(e.target.value) : undefined}
       />

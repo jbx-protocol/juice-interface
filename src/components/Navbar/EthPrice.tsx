@@ -1,6 +1,6 @@
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 
-import { useEtherPrice } from 'hooks/v1/EtherPrice'
+import { useEtherPrice } from 'hooks/EtherPrice'
 
 import { CURRENCY_METADATA } from 'constants/currency'
 

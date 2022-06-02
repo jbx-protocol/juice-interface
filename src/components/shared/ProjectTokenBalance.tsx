@@ -5,6 +5,7 @@ import useTokenAddressOfProject from 'hooks/v1/contractReader/TokenAddressOfProj
 import useTotalBalanceOf from 'hooks/v1/contractReader/TotalBalanceOf'
 import { CSSProperties, useContext } from 'react'
 import { formatWad } from 'utils/formatNumber'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { getTerminalName } from 'utils/v1/terminals'
 
 import V1ProjectHandle from '../v1/shared/V1ProjectHandle'
@@ -26,7 +27,7 @@ export default function ProjectTokenBalance({
     theme: { colors },
   } = useContext(ThemeContext)
   const tokenAddress = useTokenAddressOfProject(projectId)
-  const symbol = useSymbolOfERC20(tokenAddress)
+  const tokenSymbol = useSymbolOfERC20(tokenAddress)
   const terminalAddress = useTerminalOfProject(projectId)
   const terminalName = getTerminalName({
     address: terminalAddress,
@@ -36,10 +37,10 @@ export default function ProjectTokenBalance({
   return (
     <div style={{ display: 'flex', justifyContent: 'space-between', ...style }}>
       <span>
-        {symbol !== undefined ? (
+        {tokenSymbol !== undefined ? (
           <>
             {formatWad(balance, { precision: precision ?? 0 })}{' '}
-            {symbol ?? 'tokens'}
+            {tokenSymbolText({ tokenSymbol, plural: true })}
           </>
         ) : (
           '--'

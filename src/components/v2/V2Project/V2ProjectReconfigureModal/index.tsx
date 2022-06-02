@@ -216,8 +216,13 @@ export default function V2ProjectReconfigureModal({
     effectiveDistributionLimit = queuedDistributionLimit
   }
 
-  const effectiveDistributionLimitCurrency =
-    queuedDistributionLimitCurrency ?? distributionLimitCurrency
+  let effectiveDistributionLimitCurrency = distributionLimitCurrency
+  if (
+    effectiveFundingCycle?.duration.gt(0) &&
+    queuedDistributionLimitCurrency
+  ) {
+    effectiveDistributionLimitCurrency = queuedDistributionLimitCurrency
+  }
 
   // Creates the local redux state from V2ProjectContext values
   useLayoutEffect(() => {

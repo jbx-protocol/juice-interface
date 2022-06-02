@@ -12,8 +12,6 @@ import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 
 import ProjectConfigurationFieldsContainer from '../../ProjectConfigurationFieldsContainer'
 
-import TabDescription from '../../TabDescription'
-
 export default function ProjectDetailsDrawerContent({
   onFinish,
 }: {
@@ -70,12 +68,6 @@ export default function ProjectDetailsDrawerContent({
 
   return (
     <ProjectConfigurationFieldsContainer showPreview>
-      <TabDescription>
-        <Trans>
-          You can edit your project details after creation at any time, but the
-          transaction will cost gas. All details are optional.
-        </Trans>
-      </TabDescription>
       <ProjectDetailsForm
         form={projectForm}
         onFinish={onProjectFormSaved}

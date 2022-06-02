@@ -1,4 +1,4 @@
-import { useEtherPrice } from 'hooks/v1/EtherPrice'
+import { useEtherPrice } from 'hooks/EtherPrice'
 import { useMemo } from 'react'
 import { CurrencyUtils } from 'utils/formatCurrency'
 

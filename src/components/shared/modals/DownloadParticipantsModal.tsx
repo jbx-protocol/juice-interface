@@ -1,26 +1,32 @@
 import { t, Trans } from '@lingui/macro'
-import { Modal, notification } from 'antd'
+import { Modal } from 'antd'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
+import { emitErrorNotification } from 'utils/notifications'
 
-import { V1ProjectContext } from 'contexts/v1/projectContext'
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { fromWad } from 'utils/formatNumber'
 import { querySubgraphExhaustive } from 'utils/graph'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 import { readProvider } from 'constants/readProvider'
 
 export default function DownloadParticipantsModal({
+  projectId,
+  tokenSymbol,
+  projectName,
   visible,
   onCancel,
 }: {
+  projectId: number | undefined
+  tokenSymbol: string | undefined
+  projectName: string | undefined
   visible: boolean | undefined
   onCancel: VoidFunction | undefined
 }) {
   const [latestBlockNumber, setLatestBlockNumber] = useState<number>()
   const [blockNumber, setBlockNumber] = useState<number>()
   const [loading, setLoading] = useState<boolean>()
-  const { projectId, tokenSymbol, handle } = useContext(V1ProjectContext)
 
   useEffect(() => {
     readProvider.getBlockNumber().then(val => {
@@ -31,20 +37,18 @@ export default function DownloadParticipantsModal({
 
   const download = useCallback(async () => {
     if (blockNumber === undefined || !projectId) return
-
-    setLoading(true)
-
     const rows = [
       [
-        t`Wallet address`,
-        `Total ${tokenSymbol ?? t`token`} balance`,
-        t`Staked balance`,
-        t`Unstaked balance`,
-        t`Total ETH paid`,
-        t`Last paid timestamp`,
+        'Wallet address',
+        `Total ${tokenSymbolText({ tokenSymbol })} balance`,
+        'Unclaimed balance',
+        'Claimed balance',
+        'Total ETH paid',
+        'Last paid timestamp',
       ], // CSV header row
     ]
 
+    setLoading(true)
     try {
       const participants = await querySubgraphExhaustive({
         entity: 'participant',
@@ -62,15 +66,13 @@ export default function DownloadParticipantsModal({
           number: blockNumber,
         },
         where: {
-          key: 'project',
-          value: projectId.toString(),
+          key: 'projectId',
+          value: projectId,
         },
       })
 
       if (!participants) {
-        notification.error({
-          message: t`Error loading holders`,
-        })
+        emitErrorNotification(t`Error loading holders`)
         throw new Error('No data.')
       }
 
@@ -96,7 +98,7 @@ export default function DownloadParticipantsModal({
       link.setAttribute('href', encodedUri)
       link.setAttribute(
         'download',
-        `@${handle}_holders-block${blockNumber}.csv`,
+        `@${projectName}_holders-block${blockNumber}.csv`,
       )
       document.body.appendChild(link)
 
@@ -107,7 +109,7 @@ export default function DownloadParticipantsModal({
       console.error('Error downloading participants', e)
       setLoading(false)
     }
-  }, [projectId, setLoading, blockNumber, handle, tokenSymbol])
+  }, [blockNumber, projectId, tokenSymbol, projectName])
 
   return (
     <Modal
@@ -122,7 +124,9 @@ export default function DownloadParticipantsModal({
     >
       <div>
         <h4>
-          <Trans>Download CSV of {tokenSymbol || t`token`} holders</Trans>
+          <Trans>
+            Download CSV of {tokenSymbolText({ tokenSymbol })} holders
+          </Trans>
         </h4>
 
         <label style={{ display: 'block', marginTop: 20, marginBottom: 5 }}>

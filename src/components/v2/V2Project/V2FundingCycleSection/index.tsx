@@ -62,12 +62,12 @@ export default function V2FundingCycleSection({
     fundingCycleLoading ||
     queuedFundingCycleLoading ||
     !fundingCycle ||
-    !queuedFundingCycle
+    (!queuedFundingCycle && !isPreviewMode)
   ) {
     return <Loading />
   }
 
-  if (fundingCycle.number.eq(0) && queuedFundingCycle.number.eq(0)) {
+  if (fundingCycle.number.eq(0) && queuedFundingCycle?.number.eq(0)) {
     return <NoFundingCycle />
   }
 

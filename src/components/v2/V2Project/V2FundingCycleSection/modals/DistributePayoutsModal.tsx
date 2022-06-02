@@ -5,7 +5,7 @@ import CurrencySymbol from 'components/shared/CurrencySymbol'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { ThemeContext } from 'contexts/themeContext'
-import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
+import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useContext, useEffect, useState } from 'react'
 import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
 import { amountSubFee, feeForAmount } from 'utils/v2/math'
@@ -242,7 +242,7 @@ export default function DistributePayoutsModal({
             <p>
               <Trans>
                 There are no payouts defined for this funding cycle. The project
-                owner will recieve all available funds.
+                owner will receive all available funds.
               </Trans>
             </p>
           ) : null}

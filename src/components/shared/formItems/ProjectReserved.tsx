@@ -7,6 +7,7 @@ import { formattedNum } from 'utils/formatNumber'
 import { ThemeContext } from 'contexts/themeContext'
 import { defaultFundingCycleMetadata } from 'redux/slices/editingV2Project'
 import { DEFAULT_ISSUANCE_RATE } from 'utils/v2/math'
+import { round } from 'lodash'
 
 import NumberSlider from '../inputs/NumberSlider'
 import { FormItemExt } from './formItemExt'
@@ -63,8 +64,10 @@ export default function ProjectReserved({
     effectiveIssuanceRate * ((value ?? 0) / 100)
 
   // Tokens received by contributor's per ETH
-  const contributorIssuanceRate =
-    effectiveIssuanceRate - initialReservedTokensPerEth
+  const contributorIssuanceRate = round(
+    effectiveIssuanceRate - initialReservedTokensPerEth,
+    4,
+  )
 
   return (
     <Form.Item
@@ -76,22 +79,20 @@ export default function ProjectReserved({
               use.
             </Trans>
           </p>
-          {isCreate && (
-            <TabDescription style={{ backgroundColor: colors.background.l1 }}>
-              <Trans>
-                For every <strong>1 ETH</strong> contributed,{' '}
-                <strong style={{ whiteSpace: 'nowrap' }}>
-                  {formattedNum(contributorIssuanceRate)} tokens
-                </strong>{' '}
-                will go to the contributor and{' '}
-                <strong style={{ whiteSpace: 'nowrap' }}>
-                  {formattedNum(initialReservedTokensPerEth)} tokens will be
-                  reserved
-                </strong>{' '}
-                for the project.
-              </Trans>
-            </TabDescription>
-          )}
+          <TabDescription style={{ backgroundColor: colors.background.l1 }}>
+            <Trans>
+              For every <strong>1 ETH</strong> contributed,{' '}
+              <strong style={{ whiteSpace: 'nowrap' }}>
+                {formattedNum(contributorIssuanceRate)} tokens
+              </strong>{' '}
+              will go to the contributor and{' '}
+              <strong style={{ whiteSpace: 'nowrap' }}>
+                {formattedNum(round(initialReservedTokensPerEth, 4))} tokens
+                will be reserved
+              </strong>{' '}
+              for the project.
+            </Trans>
+          </TabDescription>
         </div>
       }
       name={name}

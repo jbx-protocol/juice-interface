@@ -13,6 +13,8 @@ import { getTotalPercentage } from 'components/shared/formItems/formHelpers'
 import { CurrencyContext } from 'contexts/currencyContext'
 import ProjectPayoutMods from 'components/v1/ProjectPayMods/ProjectPayoutMods'
 
+import * as constants from '@ethersproject/constants'
+
 export default function PayModsForm({
   initialMods,
   currency,
@@ -113,6 +115,7 @@ export default function PayModsForm({
           formItemProps={{
             label: t`Payouts (optional)`,
           }}
+          targetIsInfinite={!target || target.eq(constants.MaxUint256)}
         />
         <Form.Item>
           <Button

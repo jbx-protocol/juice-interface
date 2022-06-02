@@ -1,1 +1,1 @@
-NODE_ENV=production yarn install --ignore-engines && yarn build
+NODE_ENV=production yarn install && yarn build

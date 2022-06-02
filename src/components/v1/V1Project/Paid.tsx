@@ -9,7 +9,7 @@ import ETHAmount from 'components/shared/currency/ETHAmount'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
+import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useEthBalanceQuery } from 'hooks/EthBalance'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { NetworkName } from 'models/network-name'

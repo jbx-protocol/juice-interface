@@ -6,7 +6,7 @@ import { useForm } from 'antd/lib/form/Form'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import ImageUploader from 'components/shared/inputs/ImageUploader'
 import { NetworkContext } from 'contexts/networkContext'
-import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
+import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import { useContext, useState } from 'react'

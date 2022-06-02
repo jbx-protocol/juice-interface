@@ -8,7 +8,7 @@ msgstr ""
 "Language: fr\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-06-01 03:22\n"
+"PO-Revision-Date: 2022-06-02 03:05\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -433,7 +433,7 @@ msgstr "Cycle de financement automatisé"
 
 #: src/components/v2/V2Create/forms/FundingForm/FundingCycleExplainerCollapse.tsx
 msgid "Automated funding cycles enable the following characteristics:"
-msgstr ""
+msgstr "Les cycles de financement automatisés permettent les caractéristiques suivantes :"
 
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
@@ -584,11 +584,11 @@ msgstr "Choisissez comment souhaitez-vous paramétrer vos paiements."
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
 msgid "Claim {tokenTextPlural}"
-msgstr ""
+msgstr "Réclamer {tokenTextPlural}"
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
 msgid "Claim {tokenTextPlural} as ERC-20 tokens"
-msgstr ""
+msgstr "Réclamer {tokenTextPlural} comme tokens ERC-20"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "Claim {tokenTextShort}"
@@ -1115,7 +1115,7 @@ msgstr "L'activation de cette option permet au propriétaire du projet de frappe
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "Enabling this will mint {tokenSymbol} ERC-20 tokens. Otherwise, unclaimed {tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver."
-msgstr ""
+msgstr "En activant cette option cela frappera les {tokenSymbol} tokens ERC-20. Faute de quoi, les {tokenSymbol} tokens non réclamés seront frappés et pourront être réclamés ultérieurement comme ERC-20 par le destinataire."
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 #: src/components/v2/V2Create/forms/RulesForm/TokenMintingExtra.tsx
@@ -2972,7 +2972,7 @@ msgstr "Site internet"
 
 #: src/components/v2/V2Create/forms/FundingForm/FundingCycleExplainerCollapse.tsx
 msgid "What are automated funding cycles?"
-msgstr ""
+msgstr "Que sont les cycles de financement automatisés ?"
 
 #: src/components/Landing/QAs.tsx
 msgid "What are community tokens?"
@@ -3082,7 +3082,7 @@ msgstr "Oui"
 
 #: src/components/shared/forms/ProjectDetailsForm.tsx
 msgid "You can edit your project details after creation at any time, but the transaction will cost gas."
-msgstr ""
+msgstr "Vous pouvez modifier les détails de votre projet à tout moment après sa création, mais la transaction coûtera du gaz."
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "You can redeem your {tokenTextLong} for overflow without claiming them. You can transfer your unclaimed {tokenTextLong} to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
@@ -3344,7 +3344,7 @@ msgstr "{0} total"
 
 #: src/components/shared/modals/ParticipantsModal.tsx
 msgid "{0} unclaimed"
-msgstr ""
+msgstr "{0} non réclamé"
 
 #: src/components/v1/FundingCycle/modals/WithdrawModal.tsx
 msgid "{0} will go to the project owner: <0/>"
@@ -3357,7 +3357,7 @@ msgstr "{0} retiré"
 
 #: src/components/v1/FundingCycle/ReservedTokens.tsx
 msgid "{0} {tokenTextPlural} reserved"
-msgstr ""
+msgstr "{0} {tokenTextPlural} réservé"
 
 #: src/components/v2/shared/SplitItem.tsx
 msgid "{0}% of all newly minted tokens."

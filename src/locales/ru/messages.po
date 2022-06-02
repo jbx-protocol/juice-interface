@@ -2520,7 +2520,6 @@ msgid "The balance of the project owner's wallet."
 msgstr "Баланс кошелька владельца проекта."
 
 #: src/components/v1/V1Project/Paid.tsx
-#: src/components/v2/V2Project/TreasuryStats/ProjectBalance.tsx
 msgid "The balance of this project in the Juicebox contract."
 msgstr "Баланс этого проекта в контракте Juicebox."
 
@@ -2605,8 +2604,8 @@ msgid "The target for this funding cycle is 0, meaning all funds in Juicebox are
 msgstr "Целью данного цикла финансирования является 0, то есть все средства в Juicebox в настоящее время считаются переполнением. Переполнение может быть использовано держателями токенов, но не распределено."
 
 #: src/components/shared/Project/VolumeStatLine/VolumeStatLine.tsx
-msgid "The total amount received by this project through Juicebox since it was created."
-msgstr "Общая сумма, полученная этим проектом через Juicebox с момента его создания."
+msgid "The total funds this Juicebox project has received since it was created."
+msgstr ""
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "There are no payouts defined for this funding cycle. The project owner will receive all available funds."
@@ -2678,6 +2677,10 @@ msgstr "Этот проект в настоящее время использу�
 #: src/components/v2/V2Project/V2ProjectHeaderActions.tsx
 msgid "This project uses the V2 version of the Juicebox contracts."
 msgstr "В этом проекте используется версия V2 контрактов Juicebox."
+
+#: src/components/v2/V2Project/TreasuryStats/ProjectBalance.tsx
+msgid "This project's balance in the Juicebox contract."
+msgstr ""
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."

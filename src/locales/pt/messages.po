@@ -2520,7 +2520,6 @@ msgid "The balance of the project owner's wallet."
 msgstr "O saldo da carteira do dono do projeto."
 
 #: src/components/v1/V1Project/Paid.tsx
-#: src/components/v2/V2Project/TreasuryStats/ProjectBalance.tsx
 msgid "The balance of this project in the Juicebox contract."
 msgstr "O saldo deste projeto no contrato do Juicebox."
 
@@ -2605,8 +2604,8 @@ msgid "The target for this funding cycle is 0, meaning all funds in Juicebox are
 msgstr "O objetivo desse ciclo de financiamento é 0, o que significa que todos os fundos no Juicebox são atualmente considerados overflow. Overflow pode ser resgatado por detentores de tokens, mas não distribuído."
 
 #: src/components/shared/Project/VolumeStatLine/VolumeStatLine.tsx
-msgid "The total amount received by this project through Juicebox since it was created."
-msgstr "O montante total recebido por este projeto através do Juicebox desde que foi criado."
+msgid "The total funds this Juicebox project has received since it was created."
+msgstr ""
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "There are no payouts defined for this funding cycle. The project owner will receive all available funds."
@@ -2678,6 +2677,10 @@ msgstr "Este projeto está atualmente usando o contrato de terminal do Juicebox 
 #: src/components/v2/V2Project/V2ProjectHeaderActions.tsx
 msgid "This project uses the V2 version of the Juicebox contracts."
 msgstr "Este projeto usa a versão V2 dos contratos do Juicebox."
+
+#: src/components/v2/V2Project/TreasuryStats/ProjectBalance.tsx
+msgid "This project's balance in the Juicebox contract."
+msgstr ""
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."

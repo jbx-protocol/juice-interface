@@ -6,7 +6,7 @@ import { readProvider } from 'constants/readProvider'
 
 const JUICEBOX_V2_TXT_RECORD_KEY = 'juicebox'
 
-export const getProjectIdFromENSName = async (ensName: string) => {
+const getProjectIdFromENSName = async (ensName: string) => {
   const resolver = await readProvider.getResolver(ensName)
 
   const projectId = await resolver?.getText(JUICEBOX_V2_TXT_RECORD_KEY)

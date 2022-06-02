@@ -18,9 +18,7 @@ import { decodeV2FundingCycleMetadata } from '../fundingCycle'
  * @return {BigNumber}
  * @note Passing in an empty obj will use default values below
  */
-export function packFundingCycleMetadata(
-  packedMetadata: V2FundingCycleMetadata,
-) {
+function packFundingCycleMetadata(packedMetadata: V2FundingCycleMetadata) {
   const one = BigNumber.from(1)
 
   const {

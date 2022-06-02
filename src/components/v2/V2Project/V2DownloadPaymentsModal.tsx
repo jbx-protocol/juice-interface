@@ -1,7 +1,8 @@
 import { t, Trans } from '@lingui/macro'
-import { Modal, notification } from 'antd'
+import { Modal } from 'antd'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
+import { emitErrorNotification } from 'utils/notifications'
 
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useCallback, useContext, useEffect, useState } from 'react'
@@ -60,9 +61,7 @@ export default function V2DownloadPaymentsModal({
       })
 
       if (!payments) {
-        notification.error({
-          message: t`Error loading payments`,
-        })
+        emitErrorNotification(t`Error loading payments`)
         throw new Error('No data.')
       }
 

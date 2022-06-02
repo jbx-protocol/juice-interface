@@ -5,7 +5,7 @@ import TextArea from 'antd/lib/input/TextArea'
 
 import { FormItemExt } from './formItemExt'
 
-const MAX_DESCRIPTION_LENGTH = 1000
+const MAX_DESCRIPTION_LENGTH = 5000
 
 export default function ProjectDescription({
   name,

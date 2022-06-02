@@ -7,7 +7,8 @@ import { ProjectMetadataV4 } from 'models/project-metadata'
 import { useContext, useState } from 'react'
 import { uploadProjectMetadata } from 'utils/ipfs'
 
-import { emitErrorNotification } from './emitErrorNotification'
+import { emitErrorNotification } from 'utils/notifications'
+
 import { postGitHubIssueForArchive } from './postGitHubIssueForArchive'
 
 export default function ArchiveProject({
@@ -57,7 +58,7 @@ export default function ArchiveProject({
       },
     )
     if (!txSuccessful) {
-      emitErrorNotification('Transaction unsuccessful')
+      emitErrorNotification(t`Transaction unsuccessful`)
       setIsLoadingArchive(false)
     }
   }

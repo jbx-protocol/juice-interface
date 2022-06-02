@@ -4,12 +4,15 @@ import { Contract } from '@ethersproject/contracts'
 import { Deferrable } from '@ethersproject/properties'
 import { JsonRpcSigner, TransactionRequest } from '@ethersproject/providers'
 import { parseUnits } from '@ethersproject/units'
-import { notification } from 'antd'
 import Notify, { InitOptions, TransactionEvent } from 'bnc-notify'
 import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { useCallback, useContext } from 'react'
+
+import { emitErrorNotification } from 'utils/notifications'
+
 import * as Sentry from '@sentry/browser'
+import { t } from '@lingui/macro'
 
 export type TransactorCallback = (
   e?: TransactionEvent,
@@ -192,12 +195,7 @@ export function useTransactor({
           description = message
         }
 
-        notification.error({
-          key: new Date().valueOf().toString(),
-          message: 'Transaction failed',
-          description,
-          duration: 0,
-        })
+        emitErrorNotification(t`Transaction failed`, { description })
 
         options?.onDone?.()
 

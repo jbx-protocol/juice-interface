@@ -2717,6 +2717,10 @@ msgstr "Dirección de beneficiario de token"
 msgid "Token beneficiary:"
 msgstr "Beneficiario del token:"
 
+#: src/components/shared/formItems/ProjectRedemptionRate.tsx
+msgid "Token holders <0>cannot redeem their tokens</0> for any ETH when the redemption rate is 0."
+msgstr ""
+
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx

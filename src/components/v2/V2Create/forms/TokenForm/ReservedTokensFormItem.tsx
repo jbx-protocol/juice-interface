@@ -38,6 +38,10 @@ export default function ReservedTokensFormItem({
   const [reservedRateChecked, setReservedRateChecked] =
     useState<boolean>(hasReservedRate)
 
+  const defaultReservedRateNum = parseInt(
+    defaultFundingCycleMetadata.reservedRate,
+  )
+
   return (
     <div style={style}>
       <FormItems.ProjectReserved
@@ -49,8 +53,10 @@ export default function ReservedTokensFormItem({
         checked={reservedRateChecked}
         onToggled={checked => {
           setReservedRateChecked(checked)
-          if (!checked)
-            onChange(parseInt(defaultFundingCycleMetadata.reservedRate))
+          if (!checked) {
+            setReservedRate(defaultReservedRateNum)
+            onChange(defaultReservedRateNum)
+          }
         }}
         hideLabel={hideLabel}
         isCreate={isCreate}

@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import StatLine from 'components/shared/Project/StatLine'
 import { BigNumber } from '@ethersproject/bignumber'
-import { V2_CURRENCY_USD } from 'utils/v2/currency'
+import { NO_CURRENCY, V2_CURRENCY_USD } from 'utils/v2/currency'
 import { CSSProperties, useContext } from 'react'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
@@ -26,7 +26,7 @@ export default function ProjectBalance({ style }: { style?: CSSProperties }) {
       loading={balanceInDistributionLimitCurrencyLoading}
       statLabel={<Trans>In treasury</Trans>}
       statLabelTip={
-        <Trans>The balance of this project in the Juicebox contract.</Trans>
+        <Trans>This project's balance in the Juicebox contract.</Trans>
       }
       statValue={
         <div
@@ -43,7 +43,7 @@ export default function ProjectBalance({ style }: { style?: CSSProperties }) {
           )}
           <V2CurrencyAmount
             amount={balanceInDistributionLimitCurrency ?? BigNumber.from(0)}
-            currency={distributionLimitCurrency}
+            currency={distributionLimitCurrency ?? BigNumber.from(NO_CURRENCY)}
           />
         </div>
       }

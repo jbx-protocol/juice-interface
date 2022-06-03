@@ -4,6 +4,10 @@ import { useContext } from 'react'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import useTerminalCurrentOverflow from 'hooks/v2/contractReader/TerminalCurrentOverflow'
 
+import { VolumeStatLine } from 'components/shared/Project/VolumeStatLine'
+
+import { ThemeContext } from 'contexts/themeContext'
+
 import ProjectBalance from './ProjectBalance'
 import DistributedRatio from './DistributedRatio'
 import OwnerBalance from './OwnerBalance'
@@ -14,8 +18,13 @@ export default function TreasuryStats() {
     distributionLimit,
     terminals,
     projectId,
+    totalVolume,
     loading: { distributionLimitLoading },
   } = useContext(V2ProjectContext)
+
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
 
   const { data: overflow, loading: overflowLoading } =
     useTerminalCurrentOverflow({
@@ -27,6 +36,7 @@ export default function TreasuryStats() {
 
   return (
     <Space direction="vertical" style={{ display: 'flex' }}>
+      <VolumeStatLine totalVolume={totalVolume} color={colors.text.primary} />
       <ProjectBalance />
       <DistributedRatio />
       <Skeleton

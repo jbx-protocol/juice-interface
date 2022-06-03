@@ -1,7 +1,6 @@
 import { RightCircleOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
-import CurrencySymbol from 'components/shared/CurrencySymbol'
 import EtherscanLink from 'components/shared/EtherscanLink'
 import ProjectTokenBalance from 'components/shared/ProjectTokenBalance'
 import TooltipLabel from 'components/shared/TooltipLabel'
@@ -14,7 +13,6 @@ import { useEthBalanceQuery } from 'hooks/EthBalance'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { NetworkName } from 'models/network-name'
 import { useContext, useState } from 'react'
-import { formatWad } from 'utils/formatNumber'
 import { hasFundingTarget } from 'utils/v1/fundingCycle'
 
 import { V1CurrencyName } from 'utils/v1/currency'
@@ -23,6 +21,8 @@ import StatLine from 'components/shared/Project/StatLine'
 import USDAmount from 'components/shared/currency/USDAmount'
 
 import FundingProgressBar from 'components/shared/Project/FundingProgressBar'
+
+import { VolumeStatLine } from 'components/shared/Project/VolumeStatLine'
 
 import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
 import { readNetwork } from 'constants/networks'
@@ -81,119 +81,95 @@ export default function Paid() {
     projectId === V1_PROJECT_IDS.CONSTITUTION_DAO
 
   return (
-    <div>
-      <StatLine
-        statLabel={<Trans>Volume</Trans>}
-        statLabelTip={
-          <Trans>
-            The total amount received by this project through Juicebox since it
-            was created.
-          </Trans>
+    <>
+      <VolumeStatLine
+        totalVolume={earned}
+        color={
+          isConstitutionDAO ? colors.text.brand.primary : colors.text.primary
         }
-        statValue={
-          <span style={textPrimary}>
-            {isConstitutionDAO && (
-              <span style={secondaryTextStyle}>
-                <CurrencySymbol currency="USD" />
-                {formatWad(converter.wadToCurrency(earned, 'USD', 'ETH'), {
-                  precision: 2,
-                  padEnd: true,
-                })}{' '}
-              </span>
-            )}
-            <span
+        convertToCurrency={isConstitutionDAO ? 'USD' : undefined}
+      />
+      <div style={{ marginTop: spacing, marginBottom: spacing }}>
+        <StatLine
+          statLabel={<Trans>In Juicebox</Trans>}
+          statLabelTip={
+            <Trans>The balance of this project in the Juicebox contract.</Trans>
+          }
+          statValue={
+            <div
               style={{
+                ...textPrimary,
                 color: isConstitutionDAO
-                  ? colors.text.brand.primary
-                  : colors.text.primary,
+                  ? colors.text.primary
+                  : colors.text.brand.primary,
+                marginLeft: 10,
               }}
             >
-              <ETHAmount amount={earned} precision={4} />
-            </span>
-          </span>
-        }
-        style={{ marginBottom: spacing }}
-      />
+              {currentFC.currency.eq(V1_CURRENCY_USD) ? (
+                <span style={secondaryTextStyle}>
+                  <ETHAmount amount={balance} precision={2} padEnd={true} />{' '}
+                </span>
+              ) : (
+                ''
+              )}
+              {formatCurrencyAmount(balanceInCurrency)}
+            </div>
+          }
+        />
 
-      <StatLine
-        statLabel={<Trans>In Juicebox</Trans>}
-        statLabelTip={
-          <Trans>The balance of this project in the Juicebox contract.</Trans>
-        }
-        statValue={
-          <div
-            style={{
-              ...textPrimary,
-              color: isConstitutionDAO
-                ? colors.text.primary
-                : colors.text.brand.primary,
-              marginLeft: 10,
-            }}
-          >
-            {currentFC.currency.eq(V1_CURRENCY_USD) ? (
-              <span style={secondaryTextStyle}>
-                <ETHAmount amount={balance} precision={2} padEnd={true} />{' '}
-              </span>
-            ) : (
-              ''
-            )}
-            {formatCurrencyAmount(balanceInCurrency)}
-          </div>
-        }
-      />
-
-      {hasFundingTarget(currentFC) &&
-        (currentFC.target.gt(0) ? (
-          <StatLine
-            statLabel={<Trans>Distributed</Trans>}
-            statLabelTip={
-              <Trans>
-                The amount that has been distributed from the Juicebox balance
-                in this funding cycle, out of the current funding target. No
-                more than the funding target can be distributed in a single
-                funding cycle—any remaining ETH in Juicebox is overflow, until
-                the next cycle begins.
-              </Trans>
-            }
-            statValue={
-              <div
-                style={{
-                  ...secondaryTextStyle,
-                  color: colors.text.primary,
-                }}
-              >
-                {formatCurrencyAmount(currentFC.tapped)} /{' '}
-                {formatCurrencyAmount(currentFC.target)}
-              </div>
-            }
-          />
-        ) : (
-          <div
-            style={{
-              ...secondaryTextStyle,
-              textAlign: 'right',
-            }}
-          >
-            <TooltipLabel
-              tip={
+        {hasFundingTarget(currentFC) &&
+          (currentFC.target.gt(0) ? (
+            <StatLine
+              statLabel={<Trans>Distributed</Trans>}
+              statLabelTip={
                 <Trans>
-                  The target for this funding cycle is 0, meaning all funds in
-                  Juicebox are currently considered overflow. Overflow can be
-                  redeemed by token holders, but not distributed.
+                  The amount that has been distributed from the Juicebox balance
+                  in this funding cycle, out of the current funding target. No
+                  more than the funding target can be distributed in a single
+                  funding cycle—any remaining ETH in Juicebox is overflow, until
+                  the next cycle begins.
                 </Trans>
               }
-              label={<Trans>100% overflow</Trans>}
+              statValue={
+                <div
+                  style={{
+                    ...secondaryTextStyle,
+                    color: colors.text.primary,
+                  }}
+                >
+                  {formatCurrencyAmount(currentFC.tapped)} /{' '}
+                  {formatCurrencyAmount(currentFC.target)}
+                </div>
+              }
             />
-          </div>
-        ))}
+          ) : (
+            <div
+              style={{
+                ...secondaryTextStyle,
+                textAlign: 'right',
+              }}
+            >
+              <TooltipLabel
+                tip={
+                  <Trans>
+                    The target for this funding cycle is 0, meaning all funds in
+                    Juicebox are currently considered overflow. Overflow can be
+                    redeemed by token holders, but not distributed.
+                  </Trans>
+                }
+                label={<Trans>100% overflow</Trans>}
+              />
+            </div>
+          ))}
 
-      {hasFundingTarget(currentFC) && currentFC.target.gt(0) && (
-        <FundingProgressBar
-          targetAmount={currentFC.target}
-          overflowAmountInTargetCurrency={overflowInCurrency}
-          balanceInTargetCurrency={balanceInCurrency}
-        />
-      )}
+        {hasFundingTarget(currentFC) && currentFC.target.gt(0) && (
+          <FundingProgressBar
+            targetAmount={currentFC.target}
+            overflowAmountInTargetCurrency={overflowInCurrency}
+            balanceInTargetCurrency={balanceInCurrency}
+          />
+        )}
+      </div>
 
       <StatLine
         statLabel={<Trans>In wallet</Trans>}
@@ -205,9 +181,6 @@ export default function Paid() {
             <EtherscanLink value={owner} type="address" />
           </>
         }
-        style={{
-          marginTop: spacing,
-        }}
         statValue={
           <span>
             <span style={secondaryTextStyle}>
@@ -243,6 +216,6 @@ export default function Paid() {
         visible={balancesModalVisible}
         onCancel={() => setBalancesModalVisible(false)}
       />
-    </div>
+    </>
   )
 }

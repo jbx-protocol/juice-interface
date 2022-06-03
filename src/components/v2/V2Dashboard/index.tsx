@@ -56,10 +56,11 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
 
   const { data: projects } = useProjectsQuery({
     projectId,
-    keys: ['createdAt'],
+    keys: ['createdAt', 'totalPaid'],
     cv: ['2'],
   })
   const createdAt = first(projects)?.createdAt
+  const totalVolume = first(projects)?.totalPaid
 
   const { data: fundingCycleResponse, loading: fundingCycleLoading } =
     useProjectCurrentFundingCycle({
@@ -183,6 +184,7 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
     terminals,
     primaryTerminal,
     ETHBalance,
+    totalVolume,
     distributionLimitCurrency,
     balanceInDistributionLimitCurrency,
     tokenSymbol,

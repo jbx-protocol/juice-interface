@@ -62,7 +62,7 @@ export default function NewDeployModal({
         <Trans>
           Congratulations on launching your project! The following steps are{' '}
           <strong>completely optional</strong> and you can complete them at any
-          time, but they may be useful next steps for your project.
+          time.
         </Trans>
       </p>
       <ol style={{ fontSize: 17, marginTop: 20, padding: 0 }}>

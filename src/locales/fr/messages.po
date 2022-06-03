@@ -640,7 +640,7 @@ msgid "Configure your project's tokenomics."
 msgstr "Paramétrer la tokéconomie de votre projet."
 
 #: src/components/v2/V2Project/NewDeployModal.tsx
-msgid "Congratulations on launching your project! The following steps are <0>completely optional</0> and you can complete them at any time, but they may be useful next steps for your project."
+msgid "Congratulations on launching your project! The following steps are <0>completely optional</0> and you can complete them at any time."
 msgstr ""
 
 #: src/components/Navbar/Account.tsx

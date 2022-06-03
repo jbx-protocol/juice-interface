@@ -185,6 +185,7 @@ export default function TokenForm({
     ],
   )
 
+  // Only want this to run once on load, not constantly update (because the weight state has some lag)
   useLayoutEffect(() => {
     tokenForm.setFieldsValue({ weight })
   })

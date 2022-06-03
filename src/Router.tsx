@@ -9,6 +9,7 @@ import { V1CurrencyProvider } from 'providers/v1/V1CurrencyProvider'
 import PrivacyPolicy from 'components/PrivacyPolicy'
 import V2BugUpdates from 'components/V2BugUpdates'
 import { t } from '@lingui/macro'
+import { fathom } from 'lib/fathom'
 
 import { V2UserProvider } from 'providers/v2/UserProvider'
 

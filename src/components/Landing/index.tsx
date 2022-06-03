@@ -10,8 +10,8 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useProjectsQuery } from 'hooks/Projects'
 import { CSSProperties, useContext } from 'react'
 import { Link } from 'react-router-dom'
-
 import useMobile from 'hooks/Mobile'
+import { fathom } from 'lib/fathom'
 
 import { ThemeOption } from 'constants/theme/theme-option'
 

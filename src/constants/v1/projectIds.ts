@@ -1,3 +1,4 @@
+// mainnet
 export const V1_PROJECT_IDS = {
   CONSTITUTION_DAO: 36,
   MOON_DAO: 199,
@@ -12,4 +13,6 @@ export const V1_PROJECT_IDS = {
   VOTING_DAO: 290,
   DEFI_DAO: 31,
   JUICEBOX_DAO: 1,
+  BLUECOLLARDS: 555,
+  LUNAR_DAO: 287,
 }

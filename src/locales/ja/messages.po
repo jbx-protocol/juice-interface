@@ -8,7 +8,7 @@ msgstr ""
 "Language: ja\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-06-02 03:05\n"
+"PO-Revision-Date: 2022-06-03 02:44\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -639,10 +639,6 @@ msgstr ""
 msgid "Configure your project's tokenomics."
 msgstr ""
 
-#: src/components/v1/V1Project/modals/FeedbackPromptModal.tsx
-msgid "Congrats on creating your project!"
-msgstr ""
-
 #: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Congratulations on launching your project! We recommend you take these next steps to help your project gain traction. These steps are optional and you can complete them later on."
 msgstr ""
@@ -1240,12 +1236,7 @@ msgstr ""
 
 #: src/components/shared/FeedbackFormButton.tsx
 #: src/components/shared/FeedbackFormButton.tsx
-#: src/components/v1/V1Project/modals/FeedbackPromptModal.tsx
 msgid "Give feedback"
-msgstr ""
-
-#: src/components/v1/V1Project/modals/FeedbackPromptModal.tsx
-msgid "Give us your feedback"
 msgstr ""
 
 #: src/components/shared/EtherscanLink.tsx
@@ -1284,10 +1275,6 @@ msgstr ""
 
 #: src/components/Landing/QAs.tsx
 msgid "How decentralized is Juicebox?"
-msgstr ""
-
-#: src/components/v1/V1Project/modals/FeedbackPromptModal.tsx
-msgid "How did we do? We'd love to get your feedback so we can make creating Juicebox projects as juicy as possible!"
 msgstr ""
 
 #: src/components/Projects/ArchivedProjectsMessage.tsx
@@ -1466,10 +1453,6 @@ msgstr ""
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Juicebox Project ID"
-msgstr ""
-
-#: src/components/v2/shared/V2SupportWarning.tsx
-msgid "Juicebox V2 on {0} isn't enabled."
 msgstr ""
 
 #: src/components/v2/shared/SplitItem.tsx
@@ -2502,10 +2485,6 @@ msgstr ""
 msgid "The JBX protocol is unaudited, and projects built on it may be vulnerable to bugs or exploits. Be smart!"
 msgstr ""
 
-#: src/components/v2/shared/V2SupportWarning.tsx
-msgid "The Juicebox V2 frontend is still in development. Some features are missing and there are known bugs."
-msgstr ""
-
 #: src/components/Landing/QAs.tsx
 msgid "The Juicebox protocol is governed by a community of JBX token holders who vote on proposals fortnightly."
 msgstr ""
@@ -3143,10 +3122,6 @@ msgstr ""
 
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
 msgid "Your balance: {0}"
-msgstr ""
-
-#: src/components/v1/V1Project/modals/FeedbackPromptModal.tsx
-msgid "Your feedback will be sent to a <0>public Discord channel </0>for our development team to consider."
 msgstr ""
 
 #: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner.tsx

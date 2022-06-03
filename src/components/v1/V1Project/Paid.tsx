@@ -87,7 +87,7 @@ export default function Paid() {
         color={
           isConstitutionDAO ? colors.text.brand.primary : colors.text.primary
         }
-        convertTo={isConstitutionDAO ? { currency: 'USD' } : undefined}
+        convertToCurrency={isConstitutionDAO ? 'USD' : undefined}
       />
       <div style={{ marginTop: spacing, marginBottom: spacing }}>
         <StatLine

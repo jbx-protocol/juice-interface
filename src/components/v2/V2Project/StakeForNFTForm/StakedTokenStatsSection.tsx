@@ -1,23 +1,17 @@
 import { Plural } from '@lingui/macro'
-import { Card, Col, Row, Space } from 'antd'
-import FormattedAddress from 'components/shared/FormattedAddress'
+import { Card, Col, Row } from 'antd'
 import { formattedNum } from 'utils/formatNumber'
 
 export interface StakedTokenStatsSectionProps {
   tokenSymbol: string
-  initialLocked: number
   totalStaked: number
-  userTokenBalance: number
-  userTotalLocked: number
   totalStakedPeriodInDays: number
-  delegates: string[]
 }
 
 export default function StakedTokenStatsSection({
   tokenSymbol,
   totalStaked,
   totalStakedPeriodInDays,
-  delegates,
 }: StakedTokenStatsSectionProps) {
   return (
     <Card>
@@ -25,11 +19,6 @@ export default function StakedTokenStatsSection({
         <Col span={8}>
           <p>Total staked ${tokenSymbol}:</p>
           <p>Total staked period:</p>
-          <Plural
-            value={delegates.length}
-            one="Delegate: "
-            other="Delegates: "
-          />
         </Col>
         <Col span={16}>
           <p>
@@ -44,16 +33,6 @@ export default function StakedTokenStatsSection({
             />{' '}
             remaining
           </p>
-          <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
-            {delegates.map((address: string) => {
-              return (
-                <FormattedAddress
-                  address={address}
-                  key={address}
-                ></FormattedAddress>
-              )
-            })}
-          </Space>
         </Col>
         <br />
       </Row>

@@ -5,7 +5,6 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
 import { formattedNum } from 'utils/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
-import FormattedAddress from 'components/shared/FormattedAddress'
 
 import { OwnedNFT } from './OwnedNFTSection'
 
@@ -20,7 +19,7 @@ export default function OwnedNFTCard({
   idx,
   tokenSymbol,
 }: OwnedNFTCardProps) {
-  const { stakedAmount, stakedPeriod, delegate, nftSvg } = nft
+  const { stakedAmount, stakedPeriod, nftSvg } = nft
   const bordered = idx % 2 === 0
 
   const { colors } = useContext(ThemeContext).theme
@@ -37,14 +36,10 @@ export default function OwnedNFTCard({
             <Col span={10}>
               <p>Staked ${tokenSymbolText({ tokenSymbol })}:</p>
               <p>Staked period:</p>
-              <p>Delegate:</p>
             </Col>
             <Col span={12}>
               <p>{formattedNum(stakedAmount)}</p>
               <p>{stakedPeriod} days / 0 remaining</p>
-              <p>
-                <FormattedAddress address={delegate} />
-              </p>
             </Col>
           </Row>
           <Row align="top" gutter={0}>

@@ -1,16 +1,13 @@
-import { Col, Modal, Row, Image } from 'antd'
-import { StakingNFT } from 'models/v2/stakingNFT'
+import { Col, Modal, Row } from 'antd'
 
 type StakingTokenRangesModalProps = {
   visible: boolean
-  stakingNFTs: StakingNFT[]
   tokenSymbol: string
   onCancel: VoidFunction
 }
 
 export default function StakingTokenRangesModal({
   visible,
-  stakingNFTs,
   tokenSymbol,
   onCancel,
 }: StakingTokenRangesModalProps) {
@@ -27,12 +24,13 @@ export default function StakingTokenRangesModal({
         <Col span={6}>Range</Col>
         <Col span={4}>Banny</Col>
       </Row>
-      {stakingNFTs.map(nft => {
-        const nftRange = `${nft.votingPowerMin}${
-          nft.votingPowerMax ? `-${nft.votingPowerMax}` : '+'
+      {/* {nftProject.nfts.map(nft => {
+        const image = getNFTBaseImage(nftProject, nft)
+        const nftRange = `${nft.tokensStakedMin}${
+          nft.tokensStakedMax ? `-${nft.tokensStakedMax}` : '+'
         }`
-        const nftRangeDifference = nft.votingPowerMax
-          ? nft.votingPowerMax - nft.votingPowerMin + 1
+        const nftRangeDifference = nft.tokensStakedMax
+          ? nft.tokensStakedMax - nft.tokensStakedMin + 1
           : '+'
         return (
           <Row>
@@ -40,11 +38,11 @@ export default function StakingTokenRangesModal({
             <Col span={8}>{nft.name}</Col>
             <Col span={6}>{nftRangeDifference}</Col>
             <Col span={4}>
-              <Image src={nft.svg} preview={false} />
+              <Image src={image} preview={false} />
             </Col>
           </Row>
         )
-      })}
+      })} */}
     </Modal>
   )
 }

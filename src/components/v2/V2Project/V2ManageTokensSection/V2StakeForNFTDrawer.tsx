@@ -7,11 +7,9 @@ import { drawerStyle } from 'constants/styles/drawerStyle'
 
 export function V2StakeForNFTDrawer({
   visible,
-  onSave,
   onClose,
 }: {
   visible: boolean
-  onSave: VoidFunction
   onClose: VoidFunction
 }) {
   const memoizedDrawerStyle: Partial<DrawerProps> = useMemo(
@@ -21,7 +19,7 @@ export function V2StakeForNFTDrawer({
 
   return (
     <Drawer visible={visible} {...memoizedDrawerStyle} onClose={onClose}>
-      <StakeForNFTContent onFinish={onSave} onClose={onClose} />
+      <StakeForNFTContent onClose={onClose} />
     </Drawer>
   )
 }

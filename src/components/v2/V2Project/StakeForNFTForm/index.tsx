@@ -6,145 +6,55 @@ import { ThemeContext } from 'contexts/themeContext'
 
 import { useContext, useState } from 'react'
 
-import { StakingNFT } from 'models/v2/stakingNFT'
-
 import useTotalBalanceOf from 'hooks/v2/contractReader/TotalBalanceOf'
 
 import { NetworkContext } from 'contexts/networkContext'
 
 import { fromWad } from 'utils/formatNumber'
 
-import { NFTDelegate } from 'models/v2/nftDelegate'
-
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 
-import { OwnedNFT } from './OwnedNFTSection'
-import OwnedNFTsSection from './OwnedNFTSection'
+import { NFTProjectContext } from 'contexts/v2/nftProjectContext'
 
-import nammuSvg from './SVGs/01.svg'
-import farceurSvg from './SVGs/02.svg'
-import bronsonSvg from './SVGs/03.svg'
-import johnnySvg from './SVGs/04.svg'
+import { BigNumber } from '@ethersproject/bignumber'
 
-import StakingTokenRangesModal from './StakingTokenRangesModal'
-import DelegatePickerModal from './DelegatePickerModal'
+import { useLockTx } from 'hooks/v2/nft/LockTx'
+
 import StakedTokenStatsSection from './StakedTokenStatsSection'
-
-const FakeOwnedNFTS: OwnedNFT[] = [
-  {
-    stakedAmount: 28000,
-    startLockTime: new Date(),
-    stakedPeriod: 10,
-    delegate: '0x0000000000000000000000000000000000000000',
-    nftSvg: bronsonSvg,
-  },
-  {
-    stakedAmount: 28000,
-    startLockTime: new Date(),
-    stakedPeriod: 10,
-    delegate: '0x0000000000000000000000000000000000000000',
-    nftSvg: johnnySvg,
-  },
-  {
-    stakedAmount: 28000,
-    startLockTime: new Date(),
-    stakedPeriod: 10,
-    delegate: '0x0000000000000000000000000000000000000000',
-    nftSvg: farceurSvg,
-  },
-]
+import StakingTokenRangesModal from './StakingTokenRangesModal'
 
 const FakeTokenStatsData = {
   initialLocked: 0.0,
   totalStaked: 2668000000,
   userTotalLocked: 10159000,
-  totalStakedPeriodInDays: 1600,
-  delegates: [
-    '0x0000000000000000000000000000000000000000',
-    '0x0000000000000000000000000000000000000000',
-  ],
+  totalStakedPeriodInDays: 10,
 }
 
-const FakeStakingNFTs: StakingNFT[] = [
-  {
-    svg: nammuSvg,
-    name: 'Nammu',
-    votingPowerMin: 1,
-    votingPowerMax: 99,
-  },
-  {
-    svg: farceurSvg,
-    name: 'Farceur',
-    votingPowerMin: 100,
-    votingPowerMax: 199,
-  },
-  {
-    svg: bronsonSvg,
-    name: 'Bronson',
-    votingPowerMin: 200,
-    votingPowerMax: 299,
-  },
-  {
-    svg: johnnySvg,
-    name: 'Johnny Utah',
-    votingPowerMin: 300,
-    votingPowerMax: 499,
-  },
-  {
-    svg: nammuSvg,
-    name: 'Nammu',
-    votingPowerMin: 500,
-    votingPowerMax: 999,
-  },
-  {
-    svg: farceurSvg,
-    name: 'Farceur',
-    votingPowerMin: 1000,
-    votingPowerMax: 1999,
-  },
-  {
-    svg: bronsonSvg,
-    name: 'Bronson',
-    votingPowerMin: 2000,
-    votingPowerMax: 4999,
-  },
-  {
-    svg: johnnySvg,
-    name: 'Johnny Utah',
-    votingPowerMin: 5000,
-  },
-]
-
-export type LockDurations = [10, 50, 100, 500, 1000]
-
 export default function StakeForNFTForm({
-  onFinish,
   onClose,
 }: {
-  onFinish: VoidFunction
   onClose: VoidFunction
 }) {
+  const { userAddress, onSelectWallet } = useContext(NetworkContext)
   const [tokenRangesModalVisible, setTokenRangesModalVisible] = useState(false)
-  const [delegatePickerModalVisible, setdelegatePickerModalVisible] =
-    useState(false)
-
+  const { lockDurationOptions } = useContext(NFTProjectContext)
+  const lockDurationOptionsInSeconds = lockDurationOptions
+    ? lockDurationOptions.map((option: BigNumber) => {
+        return option.toNumber()
+      })
+    : []
   // const [confirmStakeModalVisible, setConfirmStakeModalVisible] =
   //   useState(false)
 
-  const [tokensStaked, setTokensStaked] = useState('0')
-  const [lockDuration, setLockDuration] = useState(10)
-  const [delegate, setDelegate] = useState<string | undefined>(
-    'tankbottoms.eth',
-  )
+  const [tokensStaked, setTokensStaked] = useState('200')
+  const [lockDuration, setLockDuration] = useState(864000)
 
   const { tokenSymbol, tokenName, projectMetadata, projectId } =
     useContext(V2ProjectContext)
-  const { userAddress } = useContext(NetworkContext)
 
   const { data: totalBalance } = useTotalBalanceOf(userAddress, projectId)
 
   const projectName = projectMetadata?.name ?? 'Untitled Project'
-  const stakingNFTs = FakeStakingNFTs
   const maxLockDuration = 1000
   const totalBalanceInWad = parseInt(fromWad(totalBalance))
   const unstakedTokens = totalBalance
@@ -152,11 +62,29 @@ export default function StakeForNFTForm({
     : 0
   const votingPower = parseInt(tokensStaked) * (lockDuration / maxLockDuration)
 
-  const handleDelegatePickerOk = (delegate?: NFTDelegate) => {
-    if (delegate) {
-      setDelegate(delegate.address)
+  const lockTx = useLockTx()
+
+  async function lock() {
+    // Prompt wallet connect if no wallet connected
+    if (!userAddress && onSelectWallet) {
+      onSelectWallet()
     }
-    setdelegatePickerModalVisible(false)
+
+    const txSuccess = await lockTx(
+      {
+        value: BigNumber.from(tokensStaked),
+        lockDuration: BigNumber.from(lockDuration),
+        beneficiary: '0x2c8A7A737155e04c9fEc639520ed72626040763B',
+      },
+      {
+        onConfirmed() {},
+        onDone() {},
+      },
+    )
+
+    if (!txSuccess) {
+      return
+    }
   }
 
   const {
@@ -220,11 +148,13 @@ export default function StakeForNFTForm({
             }
           >
             <Select value={lockDuration} onChange={val => setLockDuration(val)}>
-              <Select.Option value={10}>10 Days</Select.Option>
-              <Select.Option value={50}>50 Days</Select.Option>
-              <Select.Option value={100}>100 Days</Select.Option>
-              <Select.Option value={500}>500 Days</Select.Option>
-              <Select.Option value={1000}>1000 Days</Select.Option>
+              {lockDurationOptionsInSeconds.map((duration: number) => {
+                return (
+                  <Select.Option key={duration} value={duration}>
+                    {duration / 86400}
+                  </Select.Option>
+                )
+              })}
             </Select>
           </Form.Item>
         </Col>
@@ -241,7 +171,7 @@ export default function StakeForNFTForm({
                   textAlign: 'right',
                 }}
               >
-                <Trans>Days Locked</Trans>
+                <Trans>Voting Power</Trans>
               </div>
             }
           >
@@ -264,75 +194,9 @@ export default function StakeForNFTForm({
         </p>
       </div>
 
-      {/* <Row>
-          <Space direction="horizontal">
-            <Form.Item>
-              <InputNumber
-                value={votingPower}
-                id="votingPower"
-                disabled={true}
-              ></InputNumber>
-            </Form.Item>
-            =
-            <Form.Item>
-              <InputNumber
-                value={tokensStaked}
-                id="tokensStaked"
-                onChange={handleTokensStakedChange}
-              ></InputNumber>
-            </Form.Item>
-            ${tokenSymbol} *
-            <Form.Item>
-              <Select value={daysStaked} onChange={handleDaysStakedChange}>
-                <Select.Option value={10}>10 Days</Select.Option>
-                <Select.Option value={50}>50 Days</Select.Option>
-                <Select.Option value={100}>100 Days</Select.Option>
-                <Select.Option value={500}>500 Days</Select.Option>
-                <Select.Option value={1000}>1000 Days</Select.Option>
-              </Select>
-            </Form.Item>
-            / {maxLockDuration} days
-          </Space>
-        </Row> */}
-      {/* <StakingNFTCarousel
-          activeIdx={activeIdx}
-          stakingNFTs={FakeStakingNFTs}
-        /> */}
-      {/* <Row align="middle">
-          <Col span={2}>0</Col>
-          <Col span={20}>
-            <Space direction="horizontal" size="middle" align="center">
-              {stakingNFTs[activeIdx].votingPowerMin}
-              <Button
-                disabled={activeIdx === 0}
-                onClick={handlePrevCarouselButtonClicked}
-              >
-                {'<'}
-              </Button>
-              X
-              <Button
-                disabled={activeIdx === stakingNFTs.length - 1}
-                onClick={handleNextCarouselButtonClicked}
-              >
-                {'>'}
-              </Button>
-              {stakingNFTs[activeIdx].votingPowerMax
-                ? stakingNFTs[activeIdx].votingPowerMax
-                : '+'}
-            </Space>
-          </Col>
-          <Col span={2}>3B</Col>
-        </Row> */}
+      {/* <StakingNFTCarousel activeIdx={1} stakingNFTs={FakeStakingNFTs} /> */}
       <Space size="middle" direction="vertical" style={{ width: '100%' }}>
-        <Button
-          block
-          style={{ whiteSpace: 'pre' }}
-          onClick={() => setdelegatePickerModalVisible(true)}
-        >
-          Delegate:{' '}
-          <span style={{ color: colors.text.primary }}>{delegate}</span>
-        </Button>
-        <Button block style={{ whiteSpace: 'pre' }} onClick={() => {}}>
+        <Button block style={{ whiteSpace: 'pre' }} onClick={lock}>
           IRREVOCABLY STAKE{' '}
           <span style={{ color: colors.text.primary }}>[{tokensStaked}]</span> $
           {tokenSymbol} for{' '}
@@ -341,10 +205,9 @@ export default function StakeForNFTForm({
         </Button>
       </Space>
       <Divider />
-      <OwnedNFTsSection ownedNFTs={FakeOwnedNFTS} tokenSymbol={tokenSymbol!} />
+      {/* <OwnedNFTsSection ownedNFTs={FakeOwnedNFTS} tokenSymbol={tokenSymbol!} /> */}
       <StakedTokenStatsSection
         {...FakeTokenStatsData}
-        userTokenBalance={totalBalanceInWad}
         tokenSymbol={tokenSymbol!}
       />
       <Form.Item>
@@ -355,13 +218,7 @@ export default function StakeForNFTForm({
       <StakingTokenRangesModal
         visible={tokenRangesModalVisible}
         onCancel={() => setTokenRangesModalVisible(false)}
-        stakingNFTs={stakingNFTs}
         tokenSymbol={tokenSymbol!}
-      />
-      <DelegatePickerModal
-        visible={delegatePickerModalVisible}
-        onCancel={() => setdelegatePickerModalVisible(false)}
-        onOk={handleDelegatePickerOk}
       />
       {/* <ConfirmStakeModal
         visible={confirmStakeModalVisible}

@@ -6,7 +6,6 @@ export type OwnedNFT = {
   stakedAmount: number
   startLockTime: Date
   stakedPeriod: number
-  delegate: string
   nftSvg: string
 }
 

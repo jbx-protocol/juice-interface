@@ -196,7 +196,6 @@ export default function ManageTokensModal({
       />
       <V2StakeForNFTDrawer
         visible={stakeDrawerVisible}
-        onSave={() => setStakeDrawerVisible(false)}
         onClose={() => {
           setStakeDrawerVisible(false)
         }}

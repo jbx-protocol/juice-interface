@@ -35,6 +35,17 @@ import { useProjectsQuery } from 'hooks/Projects'
 
 import { first } from 'lodash'
 
+import {
+  NFTProjectContext,
+  NFTProjectContextType,
+} from 'contexts/v2/nftProjectContext'
+
+import { useNFTLockDurationOptions } from 'hooks/v2/nft/NFTLockDurationOptions'
+
+import { StakingNFT } from 'models/v2/stakingNFT'
+
+import { useNFTBaseImagesHash } from 'hooks/v2/nft/NFTBaseImagesHash'
+
 import { layouts } from 'constants/styles/layouts'
 
 import V2Project from '../V2Project'
@@ -46,6 +57,33 @@ import {
 import { V2ArchivedProjectIds } from 'constants/v2/archivedProjects'
 
 export default function V2Dashboard({ projectId }: { projectId: number }) {
+  //TODO: Move NFT stuff
+
+  const { data: lockDurationOptions } = useNFTLockDurationOptions()
+
+  const baseImagesHash = useNFTBaseImagesHash()
+
+  const nfts: StakingNFT[] = [
+    {
+      name: 'Nammu',
+      id: 1,
+      tokensStakedMin: 1,
+      tokensStakedMax: 99,
+    },
+    {
+      name: 'Farceur',
+      id: 2,
+      tokensStakedMin: 100,
+      tokensStakedMax: 199,
+    },
+  ]
+
+  const nftProject: NFTProjectContextType = {
+    lockDurationOptions,
+    baseImagesHash,
+    nfts,
+  }
+
   const { data: metadataCID, loading: metadataURILoading } =
     useProjectMetadataContent(projectId)
 
@@ -206,13 +244,15 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
 
   return (
     <V2ProjectContext.Provider value={project}>
-      <div style={layouts.maxWidth}>
-        <V2Project />
+      <NFTProjectContext.Provider value={nftProject}>
+        <div style={layouts.maxWidth}>
+          <V2Project />
 
-        <div style={{ textAlign: 'center', marginTop: '3rem' }}>
-          <ScrollToTopButton />
+          <div style={{ textAlign: 'center', marginTop: '3rem' }}>
+            <ScrollToTopButton />
+          </div>
         </div>
-      </div>
+      </NFTProjectContext.Provider>
     </V2ProjectContext.Provider>
   )
 }

@@ -1,6 +1,16 @@
 export type StakingNFT = {
-  svg: string
   name: string
-  votingPowerMin: number
-  votingPowerMax?: number
+  id: number
+  tokensStakedMin: number
+  tokensStakedMax?: number
+}
+
+export type StakingNFTVariation = {
+  lockDuration: number
+  variationImage: string
+}
+
+export type OwnedStakingNFT = {
+  nft: StakingNFTVariation
+  owner: string
 }

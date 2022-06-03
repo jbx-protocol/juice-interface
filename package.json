@@ -64,7 +64,7 @@
     "prebuild": "yarn compile-styles && yarn i18n:compile",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint --ext .ts,.tsx ./",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx ./",
     "lint:fix": "yarn lint --fix",
     "lint-staged": "lint-staged",
     "prepare": "husky install",
@@ -78,7 +78,7 @@
     "find-deadcode": "ts-prune"
   },
   "lint-staged": {
-    "*.{ts,tsx,json,css,md}": [
+    "*.{js,jsx,ts,tsx,json,css,md}": [
       "eslint",
       "prettier --write"
     ]

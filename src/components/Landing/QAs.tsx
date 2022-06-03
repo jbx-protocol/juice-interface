@@ -1,10 +1,10 @@
-/* eslint-disable react/jsx-key */
 import { t, Trans } from '@lingui/macro'
 import ExternalLink from 'components/shared/ExternalLink'
-import { ReactNode } from 'react'
+import { uniqueId } from 'lodash'
+import React, { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 
-export const OverflowVideoLink = ({ children }: { children: ReactNode }) => (
+export const OverflowVideoLink: React.FC = ({ children }) => (
   <ExternalLink href="https://youtu.be/9Mq5oDh0aBY">{children}</ExternalLink>
 )
 
@@ -19,19 +19,19 @@ export const JBDiscordLink = ({ children }: { children: ReactNode }) => (
 // Saw the suggestion to separate the store and render into 2 files here:
 // https://github.com/lingui/js-lingui/issues/707#issuecomment-657199843
 // Not sure why but this fixed the problem.
-// Take-away: If you're storing a list of <Trans>` strings in a list,
+// Take-away: If you're storing a list of <Trans key={uniqueId()}>` strings in a list,
 // make sure you're not rendering it from the same file.
 export default function QAs() {
   return [
     {
       q: <Trans>Who funds Juicebox projects?</Trans>,
       a: [
-        <Trans>
+        <Trans key={uniqueId()}>
           Users fund your project by paying to use your app or service, or as a
           patron or investor by making a payment directly to your project's
           smart contract (like on this app).
         </Trans>,
-        <Trans>
+        <Trans key={uniqueId()}>
           For users paying through your app, you should route those funds
           through the Juicebox smart contracts so they receive tokens in return.
         </Trans>,
@@ -40,7 +40,7 @@ export default function QAs() {
     {
       q: <Trans>What does Juicebox cost?</Trans>,
       a: [
-        <Trans>
+        <Trans key={uniqueId()}>
           Juicebox is an open protocol on Ethereum that is funded using Juicebox
           itself. You can check out the contractualized budget specs{' '}
           <ExternalLink href="https://juicebox.money/#/p/juicebox">
@@ -48,7 +48,7 @@ export default function QAs() {
           </ExternalLink>
           .
         </Trans>,
-        <Trans>
+        <Trans key={uniqueId()}>
           Projects building on Juicebox pay a {JB_FEE}% JBX membership fee from
           withdrawn funds into the JuiceboxDAO treasury. Projects can then use
           their JBX to participate in the governance of JuiceboxDAO and its
@@ -61,14 +61,14 @@ export default function QAs() {
     {
       q: <Trans>What is overflow?</Trans>,
       a: [
-        <Trans>
+        <Trans key={uniqueId()}>
           If you know how much your project needs to earn over some period of
           time to be sustainable, you can set a funding target with that amount.
           If your project earns more than that, the surplus funds are locked in
           an overflow pool. Anyone holding your project's tokens can claim a
           portion of the overflow pool in exchange for redeeming their tokens.
         </Trans>,
-        <Trans>
+        <Trans key={uniqueId()}>
           For more info, check out this{' '}
           <OverflowVideoLink>short video</OverflowVideoLink>.
         </Trans>,
@@ -77,7 +77,7 @@ export default function QAs() {
     {
       q: <Trans>What are community tokens?</Trans>,
       a: [
-        <Trans>
+        <Trans key={uniqueId()}>
           Each project has its own{' '}
           <ExternalLink href="https://youtu.be/cqZhNzZoMh8">
             ERC-20 tokens
@@ -89,9 +89,13 @@ export default function QAs() {
       ],
     },
     {
-      q: <Trans>Why should I want to own a project's tokens?</Trans>,
+      q: (
+        <Trans key={uniqueId()}>
+          Why should I want to own a project's tokens?
+        </Trans>
+      ),
       a: [
-        <Trans>
+        <Trans key={uniqueId()}>
           Tokens can be redeemed for a portion of a project's{' '}
           <OverflowVideoLink>overflow</OverflowVideoLink>, letting you benefit
           from its success. After all, you helped it get there. The token may
@@ -103,7 +107,7 @@ export default function QAs() {
     {
       q: <Trans>What's a discount rate?</Trans>,
       a: [
-        <Trans>
+        <Trans key={uniqueId()}>
           Projects can be created with an optional discount rate designed to
           incentivize supporters to contribute earlier rather than later. The
           amount of tokens rewarded per amount paid to your project will
@@ -116,16 +120,18 @@ export default function QAs() {
     {
       q: <Trans>What's a bonding curve?</Trans>,
       a: [
-        <Trans>
+        <Trans key={uniqueId()}>
           A bonding curve rewards people who wait longer to redeem your tokens
           for overflow.
         </Trans>,
-        <Trans>
+        <Trans key={uniqueId()}>
           For example, with a bonding curve of 70%, redeeming 10% of the token
           supply at any given time will claim around 7% of the total overflow.
         </Trans>,
-        <Trans>The rest is left to share between token holders.</Trans>,
-        <Trans>
+        <Trans key={uniqueId()}>
+          The rest is left to share between token holders.
+        </Trans>,
+        <Trans key={uniqueId()}>
           For more info, check out this{' '}
           <ExternalLink href="https://youtu.be/dxqc3yMqi5M">
             short video
@@ -135,14 +141,18 @@ export default function QAs() {
       ],
     },
     {
-      q: <Trans>Does a project benefit from its own overflow?</Trans>,
+      q: (
+        <Trans key={uniqueId()}>
+          Does a project benefit from its own overflow?
+        </Trans>
+      ),
       a: [
-        <Trans>
+        <Trans key={uniqueId()}>
           A project can choose to reserve a percentage of tokens for itself.
           Instead of being distributed to paying users, this percentage of
           tokens is instead minted for the project.
         </Trans>,
-        <Trans>
+        <Trans key={uniqueId()}>
           Holding these tokens entitles a project to a portion of its own
           overflow.
         </Trans>,
@@ -150,12 +160,12 @@ export default function QAs() {
     },
     {
       q: (
-        <Trans>
+        <Trans key={uniqueId()}>
           Can I change my project's contract after it's been created?
         </Trans>
       ),
       a: [
-        <Trans>
+        <Trans key={uniqueId()}>
           Project owners can configure a delay period, meaning reconfigurations
           to an upcoming funding cycle must be submitted a certain number of
           days before it starts. For example, a 3-day delay period means
@@ -168,7 +178,7 @@ export default function QAs() {
     {
       q: <Trans>Can I delete a project?</Trans>,
       a: [
-        <Trans>
+        <Trans key={uniqueId()}>
           It isn't possible to remove a project's data from the blockchain, but
           we can hide it in the app if you'd like to prevent people from seeing
           or interacting with it — just let us know in{' '}
@@ -180,27 +190,27 @@ export default function QAs() {
     {
       q: <Trans>Why Ethereum?</Trans>,
       a: [
-        <Trans>
+        <Trans key={uniqueId()}>
           A mechanism like Juicebox where upfront financial commitments should
           be honored over time is only guaranteed within an ecosystem like
           Ethereum.
         </Trans>,
-        <Trans>
+        <Trans key={uniqueId()}>
           Ethereum provides a public environment where internet apps like
           Juicebox can run in a permission-less, trustless, and unstoppable
           fashion.
         </Trans>,
-        <Trans>
+        <Trans key={uniqueId()}>
           This means that anyone can see the code that they're using, anyone can
           use the code without asking for permission, and no one can mess with
           the code or take it down.
         </Trans>,
-        <Trans>
+        <Trans key={uniqueId()}>
           People using Juicebox are interacting with each other through public
           infrastructure—not a private, profit-seeking corporate service that
           brokers the exchange.
         </Trans>,
-        <Trans>
+        <Trans key={uniqueId()}>
           Juicebox was built to allow people and projects to get paid for
           creating public art and infrastructure, as much as or more than they
           would working towards corporate ends. No more shady business.
@@ -210,19 +220,19 @@ export default function QAs() {
     {
       q: <Trans>What's going on under the hood?</Trans>,
       a: [
-        <Trans>
+        <Trans key={uniqueId()}>
           This website (juicebox.money) connects to the Juicebox protocol's
           smart contracts, deployed on the Ethereum network. (note: anyone else
           can make a website that also connects to these same smart contracts.
           For now, don't trust any site other than this one to access the
           Juicebox protocol).
         </Trans>,
-        <Trans>
+        <Trans key={uniqueId()}>
           Creating a Juicebox project mints you an NFT (ERC-721) representing
           ownership over it. Whoever owns this NFT can configure the rules of
           the game and how payouts are distributed.
         </Trans>,
-        <Trans>
+        <Trans key={uniqueId()}>
           The project's tokens that are minted and distributed as a result of a
           received payment are ERC-20's. The amount of tokens minted and
           distributed are proportional to the volume of payments received,
@@ -233,13 +243,13 @@ export default function QAs() {
     {
       q: <Trans>How decentralized is Juicebox?</Trans>,
       a: [
-        <Trans>
+        <Trans key={uniqueId()}>
           Juicebox is a governance-minimal protocol. There are only a few levers
           that can be tuned, none of which impose changes for users without
           their consent. The Juicebox governance smart contract can adjust these
           levers.
         </Trans>,
-        <Trans>
+        <Trans key={uniqueId()}>
           The Juicebox protocol is governed by a community of JBX token holders
           who vote on proposals fortnightly.
         </Trans>,
@@ -248,17 +258,17 @@ export default function QAs() {
     {
       q: <Trans>What are the risks?</Trans>,
       a: [
-        <Trans>
+        <Trans key={uniqueId()}>
           Juicebox has handled tens of thousands of ETH through its protocol,
           and has so far had 0 security mishaps.
         </Trans>,
-        <Trans>
+        <Trans key={uniqueId()}>
           However, Juicebox is still experimental software. Although the
           Juicebox contract team have done their part to shape the smart
           contracts for public use and have tested the code thoroughly, the risk
           of exploits is never 0%.
         </Trans>,
-        <Trans>
+        <Trans key={uniqueId()}>
           Due to their public nature, any exploits to the contracts may have
           irreversible consequences, including loss of funds. Please use
           Juicebox with caution.
@@ -268,18 +278,18 @@ export default function QAs() {
     {
       q: <Trans>How have the contracts been tested?</Trans>,
       a: [
-        <Trans>
+        <Trans key={uniqueId()}>
           There are unit tests written for every condition of every function in
           the contracts, and integration tests for every workflow that the
           protocol supports.
         </Trans>,
-        <Trans>
+        <Trans key={uniqueId()}>
           There was also a script written to iteratively run the integration
           tests using a random input generator, prioritizing edge cases. The
           code has successfully passed over 1 million test cases through this
           stress-testing script.
         </Trans>,
-        <Trans>
+        <Trans key={uniqueId()}>
           The code could always use more eyes and more critique to further the
           community's confidence. Join our{' '}
           <JBDiscordLink>Discord</JBDiscordLink> and check out the code on{' '}
@@ -293,11 +303,11 @@ export default function QAs() {
     {
       q: <Trans>Will it work on L2s?</Trans>,
       a: [
-        <Trans>
+        <Trans key={uniqueId()}>
           That's the plan, but the core Juicebox contracts will first be
           deployed to Ethereum Mainnet.
         </Trans>,
-        <Trans>
+        <Trans key={uniqueId()}>
           The contract team will soon start working on L2 payment terminals for
           Juicebox projects.
         </Trans>,
@@ -305,7 +315,7 @@ export default function QAs() {
     },
     {
       q: (
-        <Trans>
+        <Trans key={uniqueId()}>
           Do I have to make my project open source to use Juicebox as its
           business model?
         </Trans>
@@ -318,7 +328,7 @@ export default function QAs() {
     {
       q: <Trans>Who is Peel?</Trans>,
       a: [
-        <Trans>
+        <Trans key={uniqueId()}>
           <Link to="/p/peel" target="_blank">
             Peel
           </Link>{' '}
@@ -334,7 +344,7 @@ export default function QAs() {
     {
       q: <Trans>How do I create a project?</Trans>,
       a: [
-        <Trans>
+        <Trans key={uniqueId()}>
           If you're interested in creating a project but still confused on how
           to get started, consider watching this{' '}
           <ExternalLink href="https://youtu.be/R43XqPriS5M">

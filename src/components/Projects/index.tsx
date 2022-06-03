@@ -228,8 +228,11 @@ export default function Projects() {
         <React.Fragment>
           {concatenatedPages && (
             <Grid>
-              {concatenatedPages.map((p, i) => (
-                <ProjectCard key={i} project={p as ProjectCardProject} />
+              {concatenatedPages.map(p => (
+                <ProjectCard
+                  key={`allprojects_${p.id}_${p.cv}`}
+                  project={p as ProjectCardProject}
+                />
               ))}
             </Grid>
           )}

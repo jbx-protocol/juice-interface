@@ -4,7 +4,7 @@ import { useFundingCycleDrawer } from '../useFundingCycleDrawer'
 
 describe('FundingCycleDrawer', () => {
   describe('useFundingCycleDrawer', () => {
-    const instanceUnderTest = (onClose: VoidFunction = jest.fn()) => {
+    const instanceUnderTest = (onClose = jest.fn()) => {
       const { result } = renderHook(() => useFundingCycleDrawer(onClose))
       return result
     }

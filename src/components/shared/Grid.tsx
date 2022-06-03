@@ -1,4 +1,5 @@
 import { Col, ColProps, Row, Space } from 'antd'
+import { uniqueId } from 'lodash'
 import { PropsWithChildren } from 'react'
 import { isReactNodeArray } from 'utils/isReactNodeArray'
 
@@ -30,7 +31,7 @@ export default function Grid({
       {children.map(
         (child, i) =>
           i % 2 === 0 && (
-            <Row gutter={gutter ?? DEFAULT_GUTTER} key={i}>
+            <Row gutter={gutter ?? DEFAULT_GUTTER} key={uniqueId()}>
               <Col {...colProps}>{child}</Col>
               {i + 1 < children.length && (
                 <Col {...colProps}>{children[i + 1]}</Col>

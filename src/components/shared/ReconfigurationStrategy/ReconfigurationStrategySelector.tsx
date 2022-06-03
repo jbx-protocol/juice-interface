@@ -97,7 +97,6 @@ export default function ReconfigurationStrategySelector({
           strategy={strategy}
           selected={selectedStrategyIndex === idx}
           onSelectBallot={() => onChange(strategy)}
-          index={idx}
         />
       ))}
       <ReconfigurationStrategyOption
@@ -111,7 +110,6 @@ export default function ReconfigurationStrategySelector({
             }}
           />
         }
-        index={CUSTOM_STRATEGY_INDEX}
         strategy={customStrategy}
         selected={selectedIsCustom}
         onSelectBallot={() => onChange(customStrategy)}

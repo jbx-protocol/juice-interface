@@ -295,7 +295,7 @@ export default function FundingCycleHistory() {
       {pastFundingCycles.length ? (
         pastFundingCycles.map((fundingCycle: V2FundingCycle, i) => (
           <HistoricalFundingCycle
-            key={i}
+            key={`pastfc_${fundingCycle.configuration}`}
             fundingCycle={fundingCycle}
             numFundingCycles={pastFundingCycles.length}
             index={i}

@@ -17,70 +17,67 @@ export default function HoldingsProjects() {
     theme: { colors },
   } = useContext(ThemeContext)
 
+  if (!userAddress) {
+    return (
+      <div
+        style={{
+          textAlign: 'center',
+          padding: 20,
+        }}
+        hidden={isLoading}
+      >
+        <Trans>Connect your wallet to see your holdings.</Trans>
+      </div>
+    )
+  }
+
   return (
-    <React.Fragment>
-      {!userAddress ? (
-        <div
-          style={{
-            textAlign: 'center',
-            padding: 20,
-          }}
-          hidden={isLoading}
-        >
-          <Trans>Connect your wallet to see your holdings.</Trans>
-        </div>
-      ) : (
-        <React.Fragment>
-          {projects && projects.length > 0 && (
-            <React.Fragment>
-              <Grid>
-                {projects.map((p, i) => (
-                  <ProjectCard key={i} project={p} />
-                ))}
-              </Grid>
-            </React.Fragment>
-          )}
-
-          {!isLoading &&
-            projects &&
-            (projects.length === 0 ? (
-              <div
-                style={{
-                  textAlign: 'center',
-                  color: colors.text.disabled,
-                  padding: 20,
-                }}
-                hidden={isLoading}
-              >
-                <Trans>You don't hold tokens for any Juicebox project.</Trans>
-              </div>
-            ) : (
-              <div
-                style={{
-                  textAlign: 'center',
-                  color: colors.text.disabled,
-                  padding: 20,
-                }}
-              >
-                {projects.length}{' '}
-                {projects.length === 1 ? t`project` : t`projects`}{' '}
-              </div>
-            ))}
-
-          {isLoading && (
-            <div style={{ marginTop: 40 }}>
-              <Loading />
-            </div>
-          )}
-
-          {projects?.length !== 0 && (
-            <p style={{ marginBottom: 40, marginTop: 40, maxWidth: 800 }}>
-              <InfoCircleOutlined />{' '}
-              <Trans>Projects that you hold tokens for.</Trans>
-            </p>
-          )}
-        </React.Fragment>
+    <>
+      {projects && projects.length > 0 && (
+        <Grid>
+          {projects.map(p => (
+            <ProjectCard key={`holdingsproject_${p.id}_${p.cv}`} project={p} />
+          ))}
+        </Grid>
       )}
-    </React.Fragment>
+
+      {!isLoading &&
+        projects &&
+        (projects.length === 0 ? (
+          <div
+            style={{
+              textAlign: 'center',
+              color: colors.text.disabled,
+              padding: 20,
+            }}
+            hidden={isLoading}
+          >
+            <Trans>You don't hold tokens for any Juicebox project.</Trans>
+          </div>
+        ) : (
+          <div
+            style={{
+              textAlign: 'center',
+              color: colors.text.disabled,
+              padding: 20,
+            }}
+          >
+            {projects.length} {projects.length === 1 ? t`project` : t`projects`}{' '}
+          </div>
+        ))}
+
+      {isLoading && (
+        <div style={{ marginTop: 40 }}>
+          <Loading />
+        </div>
+      )}
+
+      {projects?.length !== 0 && (
+        <p style={{ marginBottom: 40, marginTop: 40, maxWidth: 800 }}>
+          <InfoCircleOutlined />{' '}
+          <Trans>Projects that you hold tokens for.</Trans>
+        </p>
+      )}
+    </>
   )
 }

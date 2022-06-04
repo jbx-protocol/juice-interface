@@ -5,18 +5,17 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 
 import { useContext, useState } from 'react'
-
-import useTotalBalanceOf from 'hooks/v2/contractReader/TotalBalanceOf'
-
 import { NetworkContext } from 'contexts/networkContext'
-
 import { fromWad } from 'utils/formatNumber'
-
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
-
 import { NFTProjectContext } from 'contexts/v2/nftProjectContext'
-
 import { BigNumber } from '@ethersproject/bignumber'
+import useERC20BalanceOf from 'hooks/v2/contractReader/ERC20BalanceOf'
+import { detailedTimeString } from 'utils/formatTime'
+
+import { useNFTMetadata } from 'hooks/v2/nft/NFTMetadata'
+
+import { useNFTResolverTokenURI } from 'hooks/v2/nft/NFTResolverTokenURI'
 
 import StakedTokenStatsSection from './StakedTokenStatsSection'
 import StakingTokenRangesModal from './StakingTokenRangesModal'
@@ -35,35 +34,52 @@ export default function StakeForNFTForm({
   onClose: VoidFunction
 }) {
   const { userAddress } = useContext(NetworkContext)
+  const { tokenSymbol, tokenName, projectMetadata, tokenAddress } =
+    useContext(V2ProjectContext)
+  const { lockDurationOptions, resolverAddress } = useContext(NFTProjectContext)
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
+
+  const [tokensStaked, setTokensStaked] = useState('0')
+  const [lockDuration, setLockDuration] = useState(864000)
+
   const [tokenRangesModalVisible, setTokenRangesModalVisible] = useState(false)
-  const { lockDurationOptions } = useContext(NFTProjectContext)
+  const [confirmStakeModalVisible, setConfirmStakeModalVisible] =
+    useState(false)
+
   const lockDurationOptionsInSeconds = lockDurationOptions
     ? lockDurationOptions.map((option: BigNumber) => {
         return option.toNumber()
       })
     : []
-  const [confirmStakeModalVisible, setConfirmStakeModalVisible] =
-    useState(false)
+  const maxLockDuration =
+    lockDurationOptionsInSeconds.length > 0
+      ? lockDurationOptionsInSeconds[lockDurationOptionsInSeconds.length - 1]
+      : 0
 
-  const [tokensStaked, setTokensStaked] = useState('200')
-  const [lockDuration, setLockDuration] = useState(864000)
-
-  const { tokenSymbol, tokenName, projectMetadata, projectId } =
-    useContext(V2ProjectContext)
-
-  const { data: totalBalance } = useTotalBalanceOf(userAddress, projectId)
+  const { data: claimedBalance } = useERC20BalanceOf(tokenAddress, userAddress)
+  const totalBalanceInWad = fromWad(claimedBalance)
+  const unstakedTokens = claimedBalance
+    ? parseInt(totalBalanceInWad) - parseInt(tokensStaked)
+    : 0
 
   const projectName = projectMetadata?.name ?? 'Untitled Project'
-  const maxLockDuration = 1000
-  const totalBalanceInWad = parseInt(fromWad(totalBalance))
-  const unstakedTokens = totalBalance
-    ? totalBalanceInWad - parseInt(tokensStaked)
-    : 0
   const votingPower = parseInt(tokensStaked) * (lockDuration / maxLockDuration)
 
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
+  const { data: nftTokenURI } = useNFTResolverTokenURI(
+    resolverAddress,
+    parseInt(tokensStaked),
+    lockDuration,
+    lockDurationOptions,
+  )
+  const nftHash = nftTokenURI ? nftTokenURI.split('ipfs://')[1] : undefined
+  const { data: metadata, refetch } = useNFTMetadata(nftHash)
+
+  const handleReviewButtonClick = () => {
+    refetch()
+    setConfirmStakeModalVisible(true)
+  }
 
   return (
     <Form layout="vertical" style={{ width: '100%' }}>
@@ -86,9 +102,8 @@ export default function StakeForNFTForm({
         </Button>
         <h4>
           <Trans>
-            Voting weight is a function of how many $
-            {tokenSymbolText({ tokenSymbol })} you have locked for how long
-            intitially divided by how much time left in that lock period.
+            Currently, only project tokens claimed as ERC-20 tokens can be
+            staked for NFTs.
           </Trans>
         </h4>
       </Space>
@@ -125,7 +140,10 @@ export default function StakeForNFTForm({
               {lockDurationOptionsInSeconds.map((duration: number) => {
                 return (
                   <Select.Option key={duration} value={duration}>
-                    {duration / 86400}
+                    {detailedTimeString({
+                      timeSeconds: duration,
+                      fullWords: true,
+                    })}
                   </Select.Option>
                 )
               })}
@@ -157,6 +175,13 @@ export default function StakeForNFTForm({
       <div style={{ color: colors.text.secondary, textAlign: 'center' }}>
         <p>
           <Trans>
+            Voting weight is a function of how many $
+            {tokenSymbolText({ tokenSymbol })} you have locked for how long
+            intitially divided by how much time left in that lock period.
+          </Trans>
+        </p>
+        <p>
+          <Trans>
             Voting Power = Tokens * ( Lock Time Remaining / Max Lock Time )
           </Trans>
         </p>
@@ -173,13 +198,10 @@ export default function StakeForNFTForm({
         <Button
           block
           style={{ whiteSpace: 'pre' }}
-          onClick={() => setConfirmStakeModalVisible(true)}
+          onClick={handleReviewButtonClick}
+          disabled={!userAddress}
         >
-          IRREVOCABLY STAKE{' '}
-          <span style={{ color: colors.text.primary }}>[{tokensStaked}]</span> $
-          {tokenSymbol} for{' '}
-          <span style={{ color: colors.text.primary }}>[{lockDuration}]</span>{' '}
-          days
+          {userAddress ? 'Review and Confirm Stake' : 'Connect Wallet'}
         </Button>
       </Space>
       <Divider />
@@ -203,8 +225,9 @@ export default function StakeForNFTForm({
         tokenSymbol={tokenSymbol!}
         tokensStaked={parseInt(tokensStaked)}
         votingPower={votingPower}
-        daysStaked={lockDuration}
+        lockDuration={lockDuration}
         maxLockDuration={maxLockDuration}
+        tokenMetadata={metadata}
         onCancel={() => setConfirmStakeModalVisible(false)}
         onOk={() => setConfirmStakeModalVisible(false)}
       />

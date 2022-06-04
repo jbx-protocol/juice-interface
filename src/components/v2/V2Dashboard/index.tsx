@@ -46,6 +46,8 @@ import { StakingNFT } from 'models/v2/stakingNFT'
 
 import { useNFTBaseImagesHash } from 'hooks/v2/nft/NFTBaseImagesHash'
 
+import { useNFTResolverAddress } from 'hooks/v2/nft/NFTResolverAddress'
+
 import { layouts } from 'constants/styles/layouts'
 
 import V2Project from '../V2Project'
@@ -60,6 +62,7 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
   //TODO: Move NFT stuff
 
   const { data: lockDurationOptions } = useNFTLockDurationOptions()
+  const { data: resolverAddress } = useNFTResolverAddress()
 
   const baseImagesHash = useNFTBaseImagesHash()
 
@@ -82,6 +85,7 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
     lockDurationOptions,
     baseImagesHash,
     nfts,
+    resolverAddress,
   }
 
   const { data: metadataCID, loading: metadataURILoading } =

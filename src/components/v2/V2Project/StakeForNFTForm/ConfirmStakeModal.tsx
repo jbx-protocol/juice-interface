@@ -1,25 +1,20 @@
 import { Trans } from '@lingui/macro'
-import { Button, Col, Divider, Modal, Row } from 'antd'
-import { NetworkContext } from 'contexts/networkContext'
+import { Col, Divider, Modal, Row, Image } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
-import useERC20Allowance from 'hooks/v2/nft/ERC20Allowance'
-import { useLockTx } from 'hooks/v2/nft/LockTx'
+
 import { useContext } from 'react'
-import { BigNumber } from '@ethersproject/bignumber'
 
-import { fromWad, parseWad } from 'utils/formatNumber'
-import useERC20Approve from 'hooks/v2/nft/ERC20Approve'
-
-import { VEBANNY_CONTRACT_ADDRESS } from 'constants/v2/nft/nftProject'
+import { detailedTimeString } from 'utils/formatTime'
 
 type ConfirmStakeModalProps = {
   visible: boolean
   tokenSymbol: string
   tokensStaked: number
   votingPower: number
-  daysStaked: number
+  lockDuration: number
   maxLockDuration: number
+  //eslint-disable-next-line @typescript-eslint/no-explicit-any
+  tokenMetadata: any
   onCancel: VoidFunction
   onOk: VoidFunction
 }
@@ -29,61 +24,77 @@ export default function ConfirmStakeModal({
   tokenSymbol,
   tokensStaked,
   votingPower,
-  daysStaked,
+  lockDuration,
   maxLockDuration,
+  tokenMetadata,
   onCancel,
   onOk,
 }: ConfirmStakeModalProps) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const { userAddress, onSelectWallet } = useContext(NetworkContext)
-  const { tokenAddress } = useContext(V2ProjectContext)
-  const { data: allowance } = useERC20Allowance(
-    tokenAddress,
-    userAddress,
-    VEBANNY_CONTRACT_ADDRESS,
-  )
-  const tokenAllowance = allowance ? fromWad(allowance, 18) : '0'
+  // const { userAddress, onSelectWallet } = useContext(NetworkContext)
+  // const { tokenAddress } = useContext(V2ProjectContext)
+  // const { data: allowance } = useERC20Allowance(
+  //   tokenAddress,
+  //   userAddress,
+  //   VEBANNY_CONTRACT_ADDRESS,
+  // )
+  // const tokenAllowance = allowance
+  //   ? parseInt(fromWad(allowance, 18))
+  //   : undefined
+  // const hasAdequateApproval = tokenAllowance
+  //   ? tokenAllowance >= tokensStaked
+  //   : false
 
-  const lockTx = useLockTx()
-  const approveTx = useERC20Approve()
+  // const tokensStakedInWad = parseWad(tokensStaked)
 
-  async function approve() {
-    // Prompt wallet connect if no wallet connected
-    if (!userAddress && onSelectWallet) {
-      onSelectWallet()
-    }
+  const formattedLockDuration = detailedTimeString({
+    timeSeconds: lockDuration,
+    fullWords: true,
+  })
+  const formattedMaxLockDuration = detailedTimeString({
+    timeSeconds: maxLockDuration,
+    fullWords: true,
+  })
 
-    const txSuccess = await approveTx({ value: parseWad(100) })
+  // const lockTx = useLockTx()
+  // const approveTx = useERC20Approve()
 
-    if (!txSuccess) {
-      return
-    }
-  }
+  // async function approve() {
+  //   if (!userAddress && onSelectWallet) {
+  //     onSelectWallet()
+  //   }
 
-  async function lock() {
-    // Prompt wallet connect if no wallet connected
-    if (!userAddress && onSelectWallet) {
-      onSelectWallet()
-    }
+  //   const txSuccess = await approveTx({ value: MaxUint256 })
 
-    const txSuccess = await lockTx(
-      {
-        value: parseWad(10),
-        lockDuration: BigNumber.from(daysStaked),
-        beneficiary: userAddress!,
-      },
-      {
-        onConfirmed() {},
-        onDone() {},
-      },
-    )
+  //   if (!txSuccess) {
+  //     return
+  //   }
+  // }
 
-    if (!txSuccess) {
-      return
-    }
-  }
+  // async function lock() {
+  //   // Prompt wallet connect if no wallet connected
+  //   if (!userAddress && onSelectWallet) {
+  //     onSelectWallet()
+  //   }
+
+  //   const txSuccess = await lockTx(
+  //     {
+  //       value: tokensStakedInWad,
+  //       lockDuration: lockDuration,
+  //       beneficiary: userAddress!,
+  //     },
+  //     {
+  //       onConfirmed() {},
+  //       onDone() {},
+  //     },
+  //   )
+
+  //   if (!txSuccess) {
+  //     return
+  //   }
+  // }
 
   return (
     <Modal
@@ -92,27 +103,17 @@ export default function ConfirmStakeModal({
       onOk={onOk}
       okText={`Lock $${tokenSymbol}`}
     >
-      <h2>Data</h2>
-      <p>Token address: {tokenAddress}</p>
-      <p>Allowance: {tokenAllowance ? tokenAllowance : 'Loading'}</p>
-      <Button onClick={approve}>Approve 100 tokens</Button>
-      <Button onClick={lock}>Mint NFT for 10</Button>
-      <h4>Stake</h4>
+      <h2>Confirm Stake</h2>
       <div style={{ color: colors.text.secondary, textAlign: 'center' }}>
         <p>
-          <Trans>
-            Voting Power = Tokens * ( Lock Time Remaining / Max Lock Time )
-          </Trans>
-        </p>
-        <p>
-          {votingPower} = {tokensStaked} ${tokenSymbol} * {daysStaked} days /{' '}
-          {maxLockDuration} days
+          {votingPower} = {tokensStaked} ${tokenSymbol} * ({' '}
+          {formattedLockDuration} / {formattedMaxLockDuration} )
         </p>
       </div>
       <h4>
         <Trans>
-          You are agreeing to irrevocably lock your tokens for {daysStaked} days
-          in exchange for {votingPower} ve{tokenSymbol}.
+          You are agreeing to IRREVOCABLY lock your tokens for{' '}
+          {formattedLockDuration} in exchange for {votingPower} $ve{tokenSymbol}
         </Trans>
       </h4>
       <Divider />
@@ -127,11 +128,15 @@ export default function ConfirmStakeModal({
         <Col span={8}>
           <p>{tokensStaked}</p>
           <p>13/04/22 10:15:00</p>
-          <p>
-            {daysStaked} days / {daysStaked} remaining
-          </p>
+          <p>{formattedLockDuration}</p>
         </Col>
-        <Col span={6}>Image</Col>
+        <Col span={6}>
+          NFT
+          <Image
+            src={tokenMetadata && tokenMetadata.thumbnailUri}
+            preview={false}
+          ></Image>
+        </Col>
       </Row>
     </Modal>
   )

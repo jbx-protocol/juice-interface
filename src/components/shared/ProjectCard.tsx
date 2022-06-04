@@ -110,7 +110,7 @@ export default function ProjectCard({
         cursor: 'pointer',
         overflow: 'hidden',
       }}
-      key={_project.id}
+      key={`${_project.id}_${_project.cv}`}
       to={
         _project.cv === '2'
           ? `/v2/p/${_project.projectId}`

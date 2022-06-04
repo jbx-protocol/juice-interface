@@ -36,7 +36,7 @@ export default function HoldingsProjects() {
       {projects && projects.length > 0 && (
         <Grid>
           {projects.map(p => (
-            <ProjectCard key={`holdingsproject_${p.id}_${p.cv}`} project={p} />
+            <ProjectCard key={`${p.id}_${p.cv}`} project={p} />
           ))}
         </Grid>
       )}

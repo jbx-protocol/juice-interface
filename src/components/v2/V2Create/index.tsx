@@ -74,7 +74,7 @@ export default function V2Create() {
               size="large"
             >
               {TABS.map((tab, idx) => (
-                <TabPane tab={<TabText>{tab.title}</TabText>} key={`${idx}`}>
+                <TabPane tab={<TabText>{tab.title}</TabText>} key={idx}>
                   <tab.component
                     onFinish={() => {
                       // bail if on last tab.

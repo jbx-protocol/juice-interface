@@ -230,7 +230,7 @@ export default function Projects() {
             <Grid>
               {concatenatedPages.map(p => (
                 <ProjectCard
-                  key={`allprojects_${p.id}_${p.cv}`}
+                  key={`${p.id}_${p.cv}`}
                   project={p as ProjectCardProject}
                 />
               ))}

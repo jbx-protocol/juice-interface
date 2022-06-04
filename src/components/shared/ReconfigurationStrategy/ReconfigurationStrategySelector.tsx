@@ -85,7 +85,7 @@ export default function ReconfigurationStrategySelector({
       {ballotStrategies.map((strategy: BallotStrategy, idx) => (
         <ReconfigurationStrategyOption
           title={strategy.name}
-          key={idx}
+          key={strategy.address}
           content={
             <div>
               <p>{strategy.description}</p>

@@ -36,8 +36,8 @@ export default function DurationInputAndSelect({
           }}
           defaultValue={defaultDurationUnit}
         >
-          {DURATION_UNIT_OPTIONS.map((value, i) => (
-            <Select.Option key={`durationinput_${i}`} value={value}>
+          {DURATION_UNIT_OPTIONS.map(value => (
+            <Select.Option key={value} value={value}>
               {durationUnitText(value)}
             </Select.Option>
           ))}

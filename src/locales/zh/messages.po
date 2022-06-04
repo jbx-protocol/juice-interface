@@ -3022,7 +3022,7 @@ msgid "Yes"
 msgstr "确定"
 
 #: src/components/v2/V2Project/StakeForNFTForm/ConfirmStakeModal.tsx
-msgid "You are agreeing to irrevocably lock your tokens for {daysStaked} days in exchange for {votingPower} ve{tokenSymbol} delegated to {delegateAddress}."
+msgid "You are agreeing to irrevocably lock your tokens for {daysStaked} days in exchange for {votingPower} ve{tokenSymbol}."
 msgstr ""
 
 #: src/components/v2/V2Create/tabs/ProjectDetailsTab/ProjectDetailsTabContent.tsx

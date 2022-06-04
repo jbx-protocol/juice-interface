@@ -8,6 +8,11 @@ import { useLockTx } from 'hooks/v2/nft/LockTx'
 import { useContext } from 'react'
 import { BigNumber } from '@ethersproject/bignumber'
 
+import { fromWad, parseWad } from 'utils/formatNumber'
+import useERC20Approve from 'hooks/v2/nft/ERC20Approve'
+
+import { VEBANNY_CONTRACT_ADDRESS } from 'constants/v2/nft/nftProject'
+
 type ConfirmStakeModalProps = {
   visible: boolean
   tokenSymbol: string
@@ -36,11 +41,26 @@ export default function ConfirmStakeModal({
   const { tokenAddress } = useContext(V2ProjectContext)
   const { data: allowance } = useERC20Allowance(
     tokenAddress,
-    tokenAddress,
     userAddress,
+    VEBANNY_CONTRACT_ADDRESS,
   )
+  const tokenAllowance = allowance ? fromWad(allowance, 18) : '0'
 
   const lockTx = useLockTx()
+  const approveTx = useERC20Approve()
+
+  async function approve() {
+    // Prompt wallet connect if no wallet connected
+    if (!userAddress && onSelectWallet) {
+      onSelectWallet()
+    }
+
+    const txSuccess = await approveTx({ value: parseWad(100) })
+
+    if (!txSuccess) {
+      return
+    }
+  }
 
   async function lock() {
     // Prompt wallet connect if no wallet connected
@@ -50,7 +70,7 @@ export default function ConfirmStakeModal({
 
     const txSuccess = await lockTx(
       {
-        value: BigNumber.from(10),
+        value: parseWad(10),
         lockDuration: BigNumber.from(daysStaked),
         beneficiary: userAddress!,
       },
@@ -74,8 +94,9 @@ export default function ConfirmStakeModal({
     >
       <h2>Data</h2>
       <p>Token address: {tokenAddress}</p>
-      <p>Allowance: {allowance ? allowance.toString() : 'Loading'}</p>
-      <Button onClick={lock}>Mint NFT</Button>
+      <p>Allowance: {tokenAllowance ? tokenAllowance : 'Loading'}</p>
+      <Button onClick={approve}>Approve 100 tokens</Button>
+      <Button onClick={lock}>Mint NFT for 10</Button>
       <h4>Stake</h4>
       <div style={{ color: colors.text.secondary, textAlign: 'center' }}>
         <p>

@@ -738,6 +738,10 @@ msgstr "当前项目方：{ownerAddress}"
 msgid "Currently worth: <0><1/>{0}</0>"
 msgstr "当前价值： <0><1/>{0}</0>"
 
+#: src/components/v2/V2Project/StakeForNFTForm/index.tsx
+msgid "Currently, only project tokens claimed as ERC-20 tokens can be staked for NFTs."
+msgstr ""
+
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "Custom memo"
 msgstr ""
@@ -2881,7 +2885,6 @@ msgstr "总收入"
 msgid "Voting Power"
 msgstr ""
 
-#: src/components/v2/V2Project/StakeForNFTForm/ConfirmStakeModal.tsx
 #: src/components/v2/V2Project/StakeForNFTForm/index.tsx
 msgid "Voting Power = Tokens * ( Lock Time Remaining / Max Lock Time )"
 msgstr ""
@@ -3022,7 +3025,7 @@ msgid "Yes"
 msgstr "确定"
 
 #: src/components/v2/V2Project/StakeForNFTForm/ConfirmStakeModal.tsx
-msgid "You are agreeing to irrevocably lock your tokens for {daysStaked} days in exchange for {votingPower} ve{tokenSymbol}."
+msgid "You are agreeing to IRREVOCABLY lock your tokens for {formattedLockDuration} in exchange for {votingPower} $ve{tokenSymbol}"
 msgstr ""
 
 #: src/components/v2/V2Create/tabs/ProjectDetailsTab/ProjectDetailsTabContent.tsx

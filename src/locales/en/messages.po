@@ -773,7 +773,6 @@ msgid "Days"
 msgstr "Days"
 
 #: src/components/v2/V2Project/StakeForNFTForm/index.tsx
-#: src/components/v2/V2Project/StakeForNFTForm/index.tsx
 msgid "Days Locked"
 msgstr "Days Locked"
 
@@ -2873,6 +2872,10 @@ msgstr "View Token Ranges"
 msgid "Volume"
 msgstr ""
 
+#: src/components/v2/V2Project/StakeForNFTForm/index.tsx
+msgid "Voting Power"
+msgstr "Voting Power"
+
 #: src/components/v2/V2Project/StakeForNFTForm/ConfirmStakeModal.tsx
 #: src/components/v2/V2Project/StakeForNFTForm/index.tsx
 msgid "Voting Power = Tokens * ( Lock Time Remaining / Max Lock Time )"
@@ -3242,10 +3245,6 @@ msgstr ""
 #: src/components/shared/Mod.tsx
 msgid "until"
 msgstr ""
-
-#: src/components/v2/V2Project/StakeForNFTForm/StakedTokenStatsSection.tsx
-msgid "{0, plural, one {Delegate:} other {Delegates:}}"
-msgstr "{0, plural, one {Delegate:} other {Delegates:}}"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx

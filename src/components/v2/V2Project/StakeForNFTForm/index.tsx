@@ -18,10 +18,9 @@ import { NFTProjectContext } from 'contexts/v2/nftProjectContext'
 
 import { BigNumber } from '@ethersproject/bignumber'
 
-import { useLockTx } from 'hooks/v2/nft/LockTx'
-
 import StakedTokenStatsSection from './StakedTokenStatsSection'
 import StakingTokenRangesModal from './StakingTokenRangesModal'
+import ConfirmStakeModal from './ConfirmStakeModal'
 
 const FakeTokenStatsData = {
   initialLocked: 0.0,
@@ -35,7 +34,7 @@ export default function StakeForNFTForm({
 }: {
   onClose: VoidFunction
 }) {
-  const { userAddress, onSelectWallet } = useContext(NetworkContext)
+  const { userAddress } = useContext(NetworkContext)
   const [tokenRangesModalVisible, setTokenRangesModalVisible] = useState(false)
   const { lockDurationOptions } = useContext(NFTProjectContext)
   const lockDurationOptionsInSeconds = lockDurationOptions
@@ -43,8 +42,8 @@ export default function StakeForNFTForm({
         return option.toNumber()
       })
     : []
-  // const [confirmStakeModalVisible, setConfirmStakeModalVisible] =
-  //   useState(false)
+  const [confirmStakeModalVisible, setConfirmStakeModalVisible] =
+    useState(false)
 
   const [tokensStaked, setTokensStaked] = useState('200')
   const [lockDuration, setLockDuration] = useState(864000)
@@ -61,31 +60,6 @@ export default function StakeForNFTForm({
     ? totalBalanceInWad - parseInt(tokensStaked)
     : 0
   const votingPower = parseInt(tokensStaked) * (lockDuration / maxLockDuration)
-
-  const lockTx = useLockTx()
-
-  async function lock() {
-    // Prompt wallet connect if no wallet connected
-    if (!userAddress && onSelectWallet) {
-      onSelectWallet()
-    }
-
-    const txSuccess = await lockTx(
-      {
-        value: BigNumber.from(tokensStaked),
-        lockDuration: BigNumber.from(lockDuration),
-        beneficiary: '0x2c8A7A737155e04c9fEc639520ed72626040763B',
-      },
-      {
-        onConfirmed() {},
-        onDone() {},
-      },
-    )
-
-    if (!txSuccess) {
-      return
-    }
-  }
 
   const {
     theme: { colors },
@@ -196,7 +170,11 @@ export default function StakeForNFTForm({
 
       {/* <StakingNFTCarousel activeIdx={1} stakingNFTs={FakeStakingNFTs} /> */}
       <Space size="middle" direction="vertical" style={{ width: '100%' }}>
-        <Button block style={{ whiteSpace: 'pre' }} onClick={lock}>
+        <Button
+          block
+          style={{ whiteSpace: 'pre' }}
+          onClick={() => setConfirmStakeModalVisible(true)}
+        >
           IRREVOCABLY STAKE{' '}
           <span style={{ color: colors.text.primary }}>[{tokensStaked}]</span> $
           {tokenSymbol} for{' '}
@@ -220,18 +198,16 @@ export default function StakeForNFTForm({
         onCancel={() => setTokenRangesModalVisible(false)}
         tokenSymbol={tokenSymbol!}
       />
-      {/* <ConfirmStakeModal
+      <ConfirmStakeModal
         visible={confirmStakeModalVisible}
         tokenSymbol={tokenSymbol!}
         tokensStaked={parseInt(tokensStaked)}
         votingPower={votingPower}
         daysStaked={lockDuration}
         maxLockDuration={maxLockDuration}
-        delegateAddress={delegate}
-        nftSvg={stakingNFTs[activeIdx].svg}
         onCancel={() => setConfirmStakeModalVisible(false)}
         onOk={() => setConfirmStakeModalVisible(false)}
-      /> */}
+      />
     </Form>
   )
 }

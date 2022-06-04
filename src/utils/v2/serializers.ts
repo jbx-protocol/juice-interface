@@ -97,7 +97,7 @@ export const serializeV2FundingCycleData = (
   fundingCycleData: V2FundingCycleData,
 ): SerializedV2FundingCycleData => ({
   duration: fundingCycleData.duration.toString(),
-  weight: fromWad(fundingCycleData.weight),
+  weight: fundingCycleData.weight.toString(),
   discountRate: fundingCycleData.discountRate.toString(),
   ballot: fundingCycleData.ballot, // hex, contract address
 })

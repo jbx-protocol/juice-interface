@@ -1,16 +1,15 @@
-import { t, Trans } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import { Button, Form, Space } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
 import ReservedTokensFormItem from 'components/v2/V2Create/forms/TokenForm/ReservedTokensFormItem'
-
+import { round } from 'lodash'
 import {
   CSSProperties,
   useCallback,
   useContext,
   useEffect,
-  useLayoutEffect,
   useMemo,
   useState,
 } from 'react'
@@ -28,9 +27,10 @@ import {
   DEFAULT_ISSUANCE_RATE,
   discountRateFrom,
   formatDiscountRate,
+  formatIssuanceRate,
   formatRedemptionRate,
   formatReservedRate,
-  MAX_RESERVED_RATE,
+  issuanceRateFrom,
   redemptionRateFrom,
   reservedRateFrom,
 } from 'utils/v2/math'
@@ -80,11 +80,15 @@ function DiscountRateExtra({
   } = useContext(ThemeContext)
 
   const discountRateDecimal = discountRatePercent * 0.01
-  const secondIssuanceRate =
-    initialIssuanceRate - initialIssuanceRate * discountRateDecimal
+  const secondIssuanceRate = round(
+    initialIssuanceRate - initialIssuanceRate * discountRateDecimal,
+    4,
+  )
 
-  const thirdIssuanceRate =
-    secondIssuanceRate - secondIssuanceRate * discountRateDecimal
+  const thirdIssuanceRate = round(
+    secondIssuanceRate - secondIssuanceRate * discountRateDecimal,
+    4,
+  )
 
   return (
     <div style={{ fontSize: '0.9rem' }}>
@@ -111,7 +115,8 @@ function DiscountRateExtra({
             </p>
             <p>
               <Trans>
-                The issuance rate of your second funding cycle will be{' '}
+                The <strong>issuance rate</strong> of your second funding cycle
+                will be{' '}
                 <strong style={{ whiteSpace: 'nowrap' }}>
                   {formattedNum(secondIssuanceRate)} tokens per 1 ETH
                 </strong>
@@ -173,7 +178,9 @@ export default function TokenForm({
       redemptionRate:
         (canSetRedemptionRate && fundingCycleMetadata?.redemptionRate) ||
         defaultFundingCycleMetadata.redemptionRate,
-      weight: fundingCycleData?.weight ?? DEFAULT_ISSUANCE_RATE.toString(),
+      weight: fundingCycleData?.weight
+        ? formatIssuanceRate(fundingCycleData?.weight)
+        : DEFAULT_ISSUANCE_RATE.toString(),
     }),
     [
       fundingCycleMetadata.reservedRate,
@@ -186,7 +193,7 @@ export default function TokenForm({
   )
 
   // Only want this to run once on load, not constantly update (because the weight state has some lag)
-  useLayoutEffect(() => {
+  useEffect(() => {
     tokenForm.setFieldsValue({ weight })
   })
 
@@ -233,7 +240,7 @@ export default function TokenForm({
      */
     dispatch(
       editingV2ProjectActions.setWeight(
-        weight ?? DEFAULT_ISSUANCE_RATE.toString(),
+        issuanceRateFrom(weight ?? DEFAULT_ISSUANCE_RATE.toString()),
       ),
     )
     dispatch(editingV2ProjectActions.setDiscountRate(discountRate ?? '0'))
@@ -274,9 +281,12 @@ export default function TokenForm({
     formatDiscountRate(BigNumber.from(discountRate)),
   )
 
+  // Total tokens minted as a result of a 1 ETH contribution
+  const initialMintingRate = parseFloat(weight) ?? DEFAULT_ISSUANCE_RATE
+  const reservedRateDecimal = reservedRatePercent * 0.01
   // Tokens received by contributor's per ETH
   const initialIssuanceRate =
-    DEFAULT_ISSUANCE_RATE - reservedRatePercent * MAX_RESERVED_RATE
+    initialMintingRate - reservedRateDecimal * initialMintingRate
 
   return (
     <Form form={tokenForm} layout="vertical" onFinish={onTokenFormSaved}>
@@ -288,11 +298,20 @@ export default function TokenForm({
                 name="weight"
                 label={
                   <TooltipLabel
-                    label={<Trans>Initial token issuance rate</Trans>}
+                    label={<Trans>Initial token minting rate</Trans>}
                     tip={
-                      hasDuration
-                        ? t`Project tokens minted as a result of 1 ETH being contributed in the first funding cycle.`
-                        : t`Project tokens minted as a result of 1 ETH being contributed.`
+                      hasDuration ? (
+                        <Trans>
+                          <strong>Total project tokens minted</strong> as a
+                          result of 1 ETH being contributed in the first funding
+                          cycle.
+                        </Trans>
+                      ) : (
+                        <Trans>
+                          <strong>Total project tokens minted</strong> as a
+                          result of 1 ETH being contributed.
+                        </Trans>
+                      )
                     }
                   />
                 }

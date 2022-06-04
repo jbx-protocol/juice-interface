@@ -25,12 +25,11 @@ import { getDefaultFundAccessConstraint } from 'utils/v2/fundingCycle'
 import { V2CurrencyName } from 'utils/v2/currency'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 import {
+  formatIssuanceRate,
   formatReservedRate,
   MAX_DISTRIBUTION_LIMIT,
   weightedAmount,
 } from 'utils/v2/math'
-import { formatWad } from 'utils/formatNumber'
-import { parseEther } from 'ethers/lib/utils'
 import { Split } from 'models/v2/splits'
 
 export default function ReconfigurePreview({
@@ -73,18 +72,14 @@ export default function ReconfigurePreview({
   const duration = fundingCycle.duration
   const hasDuration = duration?.gt(0)
 
-  const issuanceRate =
-    formatWad(
-      weightedAmount(
-        fundingCycle?.weight,
-        fundingCycleMetadata?.reservedRate.toNumber(),
-        parseEther('1'),
-        'payer',
-      ),
-      {
-        precision: 0,
-      },
-    ) ?? ''
+  const issuanceRate = formatIssuanceRate(
+    weightedAmount(
+      fundingCycle?.weight,
+      fundingCycleMetadata?.reservedRate.toNumber(),
+      BigNumber.from(1),
+      'payer',
+    ),
+  )
 
   const formattedReservedRate = parseFloat(
     formatReservedRate(fundingCycleMetadata?.reservedRate),

@@ -1,4 +1,3 @@
-import { parseEther } from '@ethersproject/units'
 import { Trans } from '@lingui/macro'
 import { Descriptions } from 'antd'
 
@@ -8,7 +7,7 @@ import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { V2FundingCycle, V2FundingCycleMetadata } from 'models/v2/fundingCycle'
 import { useContext } from 'react'
 import { formatDate } from 'utils/formatDate'
-import { formatWad } from 'utils/formatNumber'
+import { formattedNum, fromWad } from 'utils/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { V2CurrencyName } from 'utils/v2/currency'
 import TooltipLabel from 'components/shared/TooltipLabel'
@@ -22,6 +21,7 @@ import { detailedTimeString } from 'utils/formatTime'
 
 import {
   formatDiscountRate,
+  formatIssuanceRate,
   formatRedemptionRate,
   formatReservedRate,
   weightedAmount,
@@ -74,47 +74,45 @@ export default function FundingCycleDetails({
     plural: true,
   })
 
-  const ReservedRateText = () => {
-    const payerRate = formatWad(
-      weightedAmount(
-        fundingCycle?.weight,
-        fundingCycleMetadata?.reservedRate.toNumber(),
-        parseEther('1'),
-        'payer',
+  const ReservedTokensText = () => {
+    const reservedRate = formattedNum(
+      formatIssuanceRate(
+        weightedAmount(
+          fundingCycle?.weight,
+          fundingCycleMetadata?.reservedRate.toNumber(),
+          BigNumber.from(1),
+          'reserved',
+        ) ?? '',
       ),
-      {
-        precision: 0,
-      },
-    )
-
-    const reservedRate = formatWad(
-      weightedAmount(
-        fundingCycle?.weight,
-        fundingCycleMetadata?.reservedRate.toNumber(),
-        parseEther('1'),
-        'reserved',
-      ),
-      {
-        precision: 0,
-      },
-    )
-
-    const withReservedRate = (
-      <Trans>
-        {payerRate} (+ {reservedRate} reserved) {tokenSymbolPlural}/ETH
-      </Trans>
-    )
-    const withoutReservedRate = (
-      <Trans>
-        {payerRate} {tokenSymbolPlural}/ETH
-      </Trans>
     )
 
     return (
       <span>
-        {fundingCycleMetadata?.reservedRate.gt(0)
-          ? withReservedRate
-          : withoutReservedRate}
+        <Trans>
+          {reservedRate} {tokenSymbolPlural}/ETH (
+          {formatReservedRate(fundingCycleMetadata?.reservedRate)}%)
+        </Trans>
+      </span>
+    )
+  }
+
+  const IssuanceRateText = () => {
+    const payerRate = formattedNum(
+      formatIssuanceRate(
+        weightedAmount(
+          fundingCycle?.weight,
+          fundingCycleMetadata?.reservedRate.toNumber(),
+          BigNumber.from(1),
+          'payer',
+        ) ?? '',
+      ),
+    )
+
+    return (
+      <span>
+        <Trans>
+          {payerRate} {tokenSymbolPlural}/ETH
+        </Trans>
       </span>
     )
   }
@@ -197,15 +195,56 @@ export default function FundingCycleDetails({
         <Descriptions.Item
           label={
             <TooltipLabel
+              label={<Trans>Token minting rate</Trans>}
+              tip={
+                <Trans>
+                  <strong>Total project tokens minted</strong> as a result of 1
+                  ETH being contributed. This can change over time according to
+                  the discount rate and reserved tokens amount of future funding
+                  cycles.
+                </Trans>
+              }
+            />
+          }
+          span={2}
+          contentStyle={{ minWidth: '10em' }}
+        >
+          <Trans>
+            {formattedNum(formatIssuanceRate(fromWad(fundingCycle?.weight)))}{' '}
+            tokens/ETH
+          </Trans>
+        </Descriptions.Item>
+
+        <Descriptions.Item
+          label={
+            <TooltipLabel
+              label={<Trans>Issuance rate</Trans>}
+              tip={
+                <Trans>
+                  Newly minted {tokenSymbolPlural}{' '}
+                  <strong>received by contributors</strong> per ETH they
+                  contribute to the treasury.
+                </Trans>
+              }
+            />
+          }
+          span={2}
+          contentStyle={{ minWidth: '10em' }}
+        >
+          <IssuanceRateText />
+        </Descriptions.Item>
+
+        <Descriptions.Item
+          label={
+            <TooltipLabel
               label={<Trans>Reserved {tokenSymbolPlural}</Trans>}
               tip={
                 <Trans>
-                  Whenever someone pays your project, this percentage of tokens
-                  will be reserved and the rest will go to the payer. Reserve
-                  tokens are reserved for the project owner by default, but can
-                  also be allocated to other wallet addresses by the owner. Once
-                  tokens are reserved, anyone can "mint" them, which distributes
-                  them to their intended receivers.
+                  Amount of newly minted project tokens{' '}
+                  <strong>reserved for the project</strong> when 1 ETH is
+                  contributed. Reserve tokens are reserved for the project owner
+                  by default, but can also be allocated to other wallet
+                  addresses by the owner.
                 </Trans>
               }
             />
@@ -215,27 +254,8 @@ export default function FundingCycleDetails({
             showWarning={unsafeFundingCycleProperties.metadataReservedRate}
             tooltipTitle={riskWarningText.metadataReservedRate}
           >
-            {formatReservedRate(fundingCycleMetadata?.reservedRate)}%
+            <ReservedTokensText />
           </FundingCycleDetailWarning>
-        </Descriptions.Item>
-
-        <Descriptions.Item
-          label={
-            <TooltipLabel
-              label={<Trans>Issuance rate</Trans>}
-              tip={
-                <Trans>
-                  {tokenSymbolPlural} received per ETH paid to the treasury.
-                  This can change over time according to the discount rate and
-                  reserved tokens amount of future funding cycles.
-                </Trans>
-              }
-            />
-          }
-          span={2}
-          contentStyle={{ minWidth: '10em' }}
-        >
-          <ReservedRateText />
         </Descriptions.Item>
 
         <Descriptions.Item
@@ -252,7 +272,7 @@ export default function FundingCycleDetails({
           span={2}
           label={
             <TooltipLabel
-              label={<Trans>Token minting</Trans>}
+              label={<Trans>Owner token minting</Trans>}
               tip={
                 <Trans>
                   Token minting allows the project owner to mint project tokens

@@ -1,5 +1,5 @@
 import { Form } from 'antd'
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { CSSProperties, useContext, useState } from 'react'
 import FormItemLabel from 'components/v2/V2Create/FormItemLabel'
 import TabDescription from 'components/v2/V2Create/TabDescription'
@@ -18,6 +18,7 @@ import {
 import FundingCycleDetailWarning from '../Project/FundingCycleDetailWarning'
 import FormItemWarningText from '../FormItemWarningText'
 import SwitchHeading from '../SwitchHeading'
+import TooltipLabel from '../TooltipLabel'
 
 export default function ProjectReserved({
   name,
@@ -79,8 +80,14 @@ export default function ProjectReserved({
               use.
             </Trans>
           </p>
-          <TabDescription style={{ backgroundColor: colors.background.l1 }}>
-            <Trans>
+          <TabDescription
+            style={{
+              backgroundColor: colors.background.l1,
+              width: '100%',
+              fontWeight: 600,
+            }}
+          >
+            {/* <Trans>
               For every <strong>1 ETH</strong> contributed,{' '}
               <strong style={{ whiteSpace: 'nowrap' }}>
                 {formattedNum(contributorIssuanceRate)} tokens
@@ -91,7 +98,50 @@ export default function ProjectReserved({
                 will be reserved
               </strong>{' '}
               for the project.
-            </Trans>
+            </Trans> */}
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                width: '100%',
+              }}
+            >
+              <span>
+                <TooltipLabel
+                  label={t`Issuance rate`}
+                  tip={
+                    <Trans>
+                      Tokens <strong>received by the contributor</strong> when
+                      they contribute 1 ETH.
+                    </Trans>
+                  }
+                />
+                :
+              </span>
+              {formattedNum(contributorIssuanceRate)} tokens / 1 ETH
+            </div>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                width: '100%',
+              }}
+            >
+              <span>
+                <TooltipLabel
+                  label={t`Reserved rate`}
+                  tip={
+                    <Trans>
+                      Tokens <strong>reserved for the project</strong> when 1
+                      ETH is contributed.
+                    </Trans>
+                  }
+                />
+                :
+              </span>
+              {formattedNum(round(initialReservedTokensPerEth, 4))} tokens / 1
+              ETH
+            </div>
           </TabDescription>
         </div>
       }
@@ -101,7 +151,7 @@ export default function ProjectReserved({
           <>
             {shouldRenderToggle ? (
               <SwitchHeading checked={Boolean(checked)} onChange={onToggled}>
-                <Trans>Reserved rate</Trans>
+                <Trans>Reserved tokens</Trans>
                 {!Boolean(checked) && (
                   <span
                     style={{

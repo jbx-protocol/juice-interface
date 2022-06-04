@@ -177,6 +177,18 @@ msgstr "<0>筹款目标设置为0。</0> 项目的全部余额将被视为溢出
 msgid "<0>This project has no overflow</0>, so you will not receive any ETH for burning tokens."
 msgstr "<0>此项目没有溢出</0>，所以您无法通过燃烧代币来获得 ETH。"
 
+#: src/components/v2/V2Create/forms/TokenForm/index.tsx
+msgid "<0>Total project tokens minted</0> as a result of 1 ETH being contributed in the first funding cycle."
+msgstr ""
+
+#: src/components/v2/V2Create/forms/TokenForm/index.tsx
+msgid "<0>Total project tokens minted</0> as a result of 1 ETH being contributed."
+msgstr ""
+
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+msgid "<0>Total project tokens minted</0> as a result of 1 ETH being contributed. This can change over time according to the discount rate and reserved tokens amount of future funding cycles."
+msgstr ""
+
 #: src/components/Landing/TrendingSection.tsx
 msgid "<0>Trending projects</0><1><2/></1>"
 msgstr "<0>热门项目</0><1><2/></1>"
@@ -381,6 +393,10 @@ msgstr "数量"
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "Amount of ERC-20 tokens to claim"
 msgstr "可领取的 ERC-20 代币数量"
+
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+msgid "Amount of newly minted project tokens <0>reserved for the project</0> when 1 ETH is contributed. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner."
+msgstr ""
 
 #: src/components/shared/modals/ParticipantsModal.tsx
 #: src/components/v1/V1DownloadPaymentsModal.tsx
@@ -1157,10 +1173,6 @@ msgstr "更新项目元数据失败"
 msgid "File must be less than {formattedSize}{unit}"
 msgstr "文件大小必须小于 {formattedSize}{unit}"
 
-#: src/components/shared/formItems/ProjectReserved.tsx
-msgid "For every <0>1 ETH</0> contributed, <1>{0} tokens</1> will go to the contributor and <2>{1} tokens will be reserved</2> for the project."
-msgstr ""
-
 #: src/components/Landing/QAs.tsx
 msgid "For example, with a bonding curve of 70%, redeeming 10% of the token supply at any given time will claim around 7% of the total overflow."
 msgstr "例如：在 70% 的联合曲线配置下，任意时间赎回 10% 的代币供应将能从总溢出中领取到 7% 左右。"
@@ -1405,13 +1417,14 @@ msgid "Initial issuance rate"
 msgstr "初始发行比率"
 
 #: src/components/v2/V2Create/forms/TokenForm/index.tsx
-msgid "Initial token issuance rate"
+msgid "Initial token minting rate"
 msgstr ""
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Invalid address"
 msgstr "无效地址"
 
+#: src/components/shared/formItems/ProjectReserved.tsx
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
@@ -1650,6 +1663,10 @@ msgstr "名称"
 msgid "New"
 msgstr "新"
 
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+msgid "Newly minted {tokenSymbolPluralLower} <0>received by contributors</0> per ETH they contribute to the treasury."
+msgstr ""
+
 #: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Next steps (optional)"
 msgstr ""
@@ -1762,6 +1779,10 @@ msgstr "项目方可以随时铸造代币"
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Owner is not allowed to mint tokens."
 msgstr "项目方不能够铸造代币。"
+
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+msgid "Owner token minting"
+msgstr ""
 
 #: src/components/shared/activityEventElems/PayEventElem.tsx
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
@@ -2050,14 +2071,6 @@ msgstr ""
 msgid "Project token"
 msgstr "项目代币"
 
-#: src/components/v2/V2Create/forms/TokenForm/index.tsx
-msgid "Project tokens minted as a result of 1 ETH being contributed in the first funding cycle."
-msgstr ""
-
-#: src/components/v2/V2Create/forms/TokenForm/index.tsx
-msgid "Project tokens minted as a result of 1 ETH being contributed."
-msgstr ""
-
 #: src/components/shared/NewDeployNotAvailable.tsx
 msgid "Project {name} will be available soon! Try refreshing the page shortly."
 msgstr "{name} 项目即将创建完成！请稍后尝试刷新页面。"
@@ -2253,6 +2266,7 @@ msgstr "保留代币的分配方案"
 msgid "Reserved token splits"
 msgstr "保留代币受益人"
 
+#: src/components/shared/formItems/ProjectReserved.tsx
 #: src/components/shared/forms/TicketingForm.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Create/index.tsx
@@ -2268,8 +2282,8 @@ msgstr "已保留 {0}"
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
-msgid "Reserved {tokenSymbolPlural}"
-msgstr "保留的 {tokenSymbolPlural}"
+msgid "Reserved {tokenSymbolPluralLower}"
+msgstr ""
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributeReservedTokensModal.tsx
 msgid "Reserved {tokenTextPlural}: <0>{reservedTokensFormatted} {tokenTextPlural}</0>"
@@ -2489,6 +2503,10 @@ msgstr "目标为 0 ：所有资金将被视为溢出，可以通过燃烧项目
 msgid "That's the plan, but the core Juicebox contracts will first be deployed to Ethereum Mainnet."
 msgstr "有这一个这是计划，但核心的 Juicebox 合约将首先部署到以太坊主网。"
 
+#: src/components/v2/V2Create/forms/TokenForm/index.tsx
+msgid "The <0>issuance rate</0> of your second funding cycle will be <1>{0} tokens per 1 ETH</1>, then <2>{1} tokens per 1 ETH </2>for your third funding cycle, and so on."
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "The Decentralized Funding Platform. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."
 msgstr "去中心化筹款平台。既简便易用方便一群好友创建项目，又强大到能支持一个全球性的匿名网络。 在以太坊上，<0>社区共有</0>。"
@@ -2554,10 +2572,6 @@ msgstr "当前筹款周期的可分配资金(未扣除 {feePercentage}% JBX 费�
 #: src/components/Landing/index.tsx
 msgid "The future will be led by creators, and owned by communities."
 msgstr "创造者将引领未来, 而社区会拥有未来."
-
-#: src/components/v2/V2Create/forms/TokenForm/index.tsx
-msgid "The issuance rate of your second funding cycle will be <0>{0} tokens per 1 ETH</0>, then <1>{1} tokens per 1 ETH </1>for your third funding cycle, and so on."
-msgstr ""
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "The maximum amount of funds allowed to be distributed from the project's treasury each funding cycle."
@@ -2732,7 +2746,6 @@ msgstr "代币受益人："
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Token minting"
 msgstr "代币铸造"
 
@@ -2747,6 +2760,10 @@ msgstr "代币铸造已允许"
 #: src/components/shared/ManageTokensModal.tsx
 msgid "Token minting is only available for V1.1 projects. Token minting can be enabled or disabled by reconfiguring the project's funding cycle."
 msgstr "代币铸造功能只在 V1.1 项目中可用。可以通过重新配置项目的筹款周期来启用或禁用这一功能。"
+
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+msgid "Token minting rate"
+msgstr ""
 
 #: src/components/shared/modals/IssueTokenModal.tsx
 msgid "Token name"
@@ -2773,6 +2790,14 @@ msgstr "请填写代币简称"
 #: src/utils/tokenSymbolText.ts
 msgid "Tokens"
 msgstr "代币"
+
+#: src/components/shared/formItems/ProjectReserved.tsx
+msgid "Tokens <0>received by the contributor</0> when they contribute 1 ETH."
+msgstr ""
+
+#: src/components/shared/formItems/ProjectReserved.tsx
+msgid "Tokens <0>reserved for the project</0> when 1 ETH is contributed."
+msgstr ""
 
 #: src/components/shared/forms/TicketingForm.tsx
 msgid "Tokens are earned by anyone who pays your project, and can be redeemed for overflow if your project has set a funding target."
@@ -3017,9 +3042,8 @@ msgid "When token minting is allowed, the owner of this project has permission t
 msgstr "当铸造代币功能启用时，该项目方可以铸造任意数量的代币并发送给任意地址。这一操作并不会增加项目金库的余额，所以会稀释所有当前代币持有者的份额。和其他属性一样，也可以在每个筹款周期中重新配置这一项。"
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
-msgid "Whenever someone pays your project, this percentage of tokens will be reserved and the rest will go to the payer. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner. Once tokens are reserved, anyone can \"mint\" them, which distributes them to their intended receivers."
-msgstr "有人对你的项目付款时，这一比例的代币会被保留, 剩余的代币会发送至付款人。在默认情况下, 保留代币会留给项目拥有者, 但是项目拥有者也可以将保留代币分配给其他钱包地址。保留代币产生后，任何人都可以把它们“铸造”出来，亦即把保留代币分发给预先指定的接收人。"
+msgid "Whenever someone pays your project, this percentage of the newly minted tokens will be reserved and the rest will go to the payer. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner. Once tokens are reserved, anyone can \"mint\" them, which distributes them to their intended receivers."
+msgstr ""
 
 #: src/components/Landing/QAs.tsx
 msgid "Who funds Juicebox projects?"
@@ -3332,6 +3356,10 @@ msgstr "{0} 持有者"
 msgid "{0} reserved"
 msgstr "{0} 已保留"
 
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+msgid "{0} tokens/ETH"
+msgstr ""
+
 #: src/components/shared/modals/ParticipantsModal.tsx
 msgid "{0} total"
 msgstr "{0} 总共"
@@ -3408,23 +3436,25 @@ msgid "{label}"
 msgstr "{label}"
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
-msgid "{payerRate} (+ {reservedRate} reserved) {tokenSymbolPlural}/ETH"
-msgstr "{payerRate} (+ {reservedRate} 保留) {tokenSymbolPlural}/ETH"
+msgid "{payerRate} (+ {reservedRate} reserved) {tokenSymbolPluralLower}/ETH"
+msgstr ""
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
-msgid "{payerRate} {tokenSymbolPlural}/ETH"
-msgstr "{payerRate} {tokenSymbolPlural}/ETH"
+msgid "{payerRate} {tokenSymbolPluralLower}/ETH"
+msgstr ""
 
 #: src/components/Projects/TrendingProjectCard.tsx
 msgid "{paymentCount, plural, one {# payment} other {# payments}}"
 msgstr "{paymentCount, plural, one {# 笔付款} other {# 笔付款}}"
 
-#: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
-msgid "{tokenSymbolPlural} received per ETH paid to the treasury. This can change over time according to the discount rate and reserved tokens amount of future funding cycles."
-msgstr "向项目金库每支付一个ETH将获得的{tokenSymbolPlural} 代币数量。以后的筹款周期中，折扣率和保留代币比率会使这一数量逐步发生变化。"
+msgid "{reservedRate} {tokenSymbolPluralLower}/ETH ({0}%)"
+msgstr ""
+
+#: src/components/v1/FundingCycle/FundingCycleDetails.tsx
+msgid "{tokenSymbolPluralCap} received per ETH paid to the treasury. This can change over time according to the discount rate and reserved tokens amount of future funding cycles."
+msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "{tokenSymbol} ERC-20 address"

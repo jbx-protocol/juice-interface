@@ -141,6 +141,24 @@ export const redemptionRateFrom = (percentage: string): BigNumber => {
 }
 
 /**
+ * Express a given issuance rate [tokens / 1 ETH] as an issuance rate in parts per 1e18
+ * @param issuanceRate - issuance rate as tokens / ETH
+ * @returns {string} issuance rate in parts per 1e18
+ */
+export const issuanceRateFrom = (issuanceRate: string): string => {
+  return constants.WeiPerEther.mul(issuanceRate).toString()
+}
+
+/**
+ * Express a given issuance rate in parts per 1e18 as an issuance rate [tokens / 1 ETH]
+ * @param {BigNumber} issuanceRate issuance rate in parts per 1e18
+ * @returns {string} issuance rate in tokens / 1ETH
+ */
+export const formatIssuanceRate = (issuanceRate: string): string => {
+  return BigNumber.from(issuanceRate).div(constants.WeiPerEther).toString()
+}
+
+/**
  * Express a given fee (parts-per-billion) as a percentage.
  * @param feePerBillion - fee as parts-per-billion.
  * @returns {string} fee expressed as a percentage.
@@ -170,20 +188,22 @@ export const weightedAmount: WeightFunction = (
   reservedRatePermyriad: number | undefined,
   amountWad: BigNumber | undefined,
   outputType: 'payer' | 'reserved',
-): string | undefined => {
-  if (!weight || !amountWad) return
+): string => {
+  if (!weight || !amountWad) return '0'
 
-  if (reservedRatePermyriad === undefined) return
+  if (reservedRatePermyriad === undefined) return '0'
 
-  return fromWad(
-    amountWad
-      .mul(weight)
-      .mul(
-        outputType === 'reserved'
-          ? reservedRatePermyriad
-          : invertPermyriad(BigNumber.from(reservedRatePermyriad)),
-      )
-      .div(percentToPermyriad(100)),
+  return (
+    fromWad(
+      amountWad
+        .mul(weight)
+        .mul(
+          outputType === 'reserved'
+            ? reservedRatePermyriad
+            : invertPermyriad(BigNumber.from(reservedRatePermyriad)),
+        )
+        .div(percentToPermyriad(100)),
+    ) ?? '0'
   )
 }
 

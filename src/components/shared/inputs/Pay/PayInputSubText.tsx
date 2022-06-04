@@ -1,11 +1,11 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { formatWad } from 'utils/formatNumber'
 import { parseEther } from '@ethersproject/units'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { WeightFunction } from 'utils/math'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { Trans } from '@lingui/macro'
 import { useContext, useMemo } from 'react'
+import * as constants from '@ethersproject/constants'
 
 import { CurrencyContext } from 'contexts/currencyContext'
 
@@ -16,6 +16,7 @@ import TooltipIcon from 'components/shared/TooltipIcon'
 
 import useWeiConverter from 'hooks/WeiConverter'
 import { CurrencyOption } from 'models/currencyOption'
+import { formatIssuanceRate } from 'utils/v2/math'
 
 /**
  * Help text shown below the Pay input field.
@@ -65,8 +66,13 @@ export default function PayInputSubText({
 
   const receiveText = useMemo(() => {
     const formatReceivedTickets = (wei: BigNumber) => {
-      const exchangeRate = weightingFn(weight, reservedRate, wei, 'payer')
-      return formatWad(exchangeRate, { precision: 0 })
+      const exchangeRate = weightingFn(
+        weight,
+        reservedRate,
+        wei.div(constants.WeiPerEther),
+        'payer',
+      )
+      return formatIssuanceRate(exchangeRate)
     }
 
     if (weiPayAmt?.gt(0)) {

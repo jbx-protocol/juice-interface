@@ -298,7 +298,7 @@ export default function TokenForm({
                 name="weight"
                 label={
                   <TooltipLabel
-                    label={<Trans>Initial token minting rate</Trans>}
+                    label={<Trans>Initial inflation rate</Trans>}
                     tip={
                       hasDuration ? (
                         <Trans>

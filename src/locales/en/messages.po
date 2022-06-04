@@ -1659,8 +1659,8 @@ msgid "New"
 msgstr "New"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
-msgid "Newly minted {tokenSymbolPluralLower} <0>received by contributors</0> per ETH they contribute to the treasury."
-msgstr "Newly minted {tokenSymbolPluralLower} <0>received by contributors</0> per ETH they contribute to the treasury."
+msgid "Newly minted {tokenSymbolPlural} <0>received by contributors</0> per ETH they contribute to the treasury."
+msgstr "Newly minted {tokenSymbolPlural} <0>received by contributors</0> per ETH they contribute to the treasury."
 
 #: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Next steps (optional)"
@@ -2277,8 +2277,8 @@ msgstr ""
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
-msgid "Reserved {tokenSymbolPluralLower}"
-msgstr "Reserved {tokenSymbolPluralLower}"
+msgid "Reserved {tokenSymbolPlural}"
+msgstr "Reserved {tokenSymbolPlural}"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributeReservedTokensModal.tsx
 msgid "Reserved {tokenTextPlural}: <0>{reservedTokensFormatted} {tokenTextPlural}</0>"
@@ -3431,21 +3431,21 @@ msgid "{label}"
 msgstr "{label}"
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
-msgid "{payerRate} (+ {reservedRate} reserved) {tokenSymbolPluralLower}/ETH"
-msgstr "{payerRate} (+ {reservedRate} reserved) {tokenSymbolPluralLower}/ETH"
+msgid "{payerRate} (+ {reservedRate} reserved) {tokenSymbolPlural}/ETH"
+msgstr "{payerRate} (+ {reservedRate} reserved) {tokenSymbolPlural}/ETH"
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
-msgid "{payerRate} {tokenSymbolPluralLower}/ETH"
-msgstr "{payerRate} {tokenSymbolPluralLower}/ETH"
+msgid "{payerRate} {tokenSymbolPlural}/ETH"
+msgstr "{payerRate} {tokenSymbolPlural}/ETH"
 
 #: src/components/Projects/TrendingProjectCard.tsx
 msgid "{paymentCount, plural, one {# payment} other {# payments}}"
 msgstr "{paymentCount, plural, one {# payment} other {# payments}}"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
-msgid "{reservedRate} {tokenSymbolPluralLower}/ETH ({0}%)"
-msgstr "{reservedRate} {tokenSymbolPluralLower}/ETH ({0}%)"
+msgid "{reservedRate} {tokenSymbolPlural}/ETH ({0}%)"
+msgstr "{reservedRate} {tokenSymbolPlural}/ETH ({0}%)"
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 msgid "{tokenSymbolPluralCap} received per ETH paid to the treasury. This can change over time according to the discount rate and reserved tokens amount of future funding cycles."

@@ -195,7 +195,7 @@ export default function FundingCycleDetails({
         <Descriptions.Item
           label={
             <TooltipLabel
-              label={<Trans>Token minting rate</Trans>}
+              label={<Trans>Inflation rate</Trans>}
               tip={
                 <Trans>
                   <strong>Total project tokens minted</strong> as a result of 1

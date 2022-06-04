@@ -1664,7 +1664,7 @@ msgid "New"
 msgstr "Новый"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
-msgid "Newly minted {tokenSymbolPluralLower} <0>received by contributors</0> per ETH they contribute to the treasury."
+msgid "Newly minted {tokenSymbolPlural} <0>received by contributors</0> per ETH they contribute to the treasury."
 msgstr ""
 
 #: src/components/v2/V2Project/NewDeployModal.tsx
@@ -2282,7 +2282,7 @@ msgstr "Зарезервировано {0}"
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
-msgid "Reserved {tokenSymbolPluralLower}"
+msgid "Reserved {tokenSymbolPlural}"
 msgstr ""
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributeReservedTokensModal.tsx
@@ -3436,12 +3436,12 @@ msgid "{label}"
 msgstr "{название}"
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
-msgid "{payerRate} (+ {reservedRate} reserved) {tokenSymbolPluralLower}/ETH"
+msgid "{payerRate} (+ {reservedRate} reserved) {tokenSymbolPlural}/ETH"
 msgstr ""
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
-msgid "{payerRate} {tokenSymbolPluralLower}/ETH"
+msgid "{payerRate} {tokenSymbolPlural}/ETH"
 msgstr ""
 
 #: src/components/Projects/TrendingProjectCard.tsx
@@ -3449,7 +3449,7 @@ msgid "{paymentCount, plural, one {# payment} other {# payments}}"
 msgstr "{paymentCount, plural, one {# платеж} other {# платежи}}"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
-msgid "{reservedRate} {tokenSymbolPluralLower}/ETH ({0}%)"
+msgid "{reservedRate} {tokenSymbolPlural}/ETH ({0}%)"
 msgstr ""
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx

@@ -210,20 +210,6 @@ export default function Projects() {
         />
       </div>
 
-      {!!searchText && (
-        <div
-          style={{
-            marginBottom: 20,
-            textAlign: 'center',
-            color: colors.text.secondary,
-          }}
-        >
-          <Trans>
-            <InfoCircleOutlined /> Search results don't include V2 projects yet.
-          </Trans>
-        </div>
-      )}
-
       {selectedTab === 'all' ? (
         <React.Fragment>
           {concatenatedPages && (
@@ -265,6 +251,7 @@ export default function Projects() {
                   textAlign: 'center',
                   color: colors.text.disabled,
                   padding: 20,
+                  paddingTop: concatenatedPages?.length === 0 ? 0 : 20,
                 }}
               >
                 {concatenatedPages?.length}{' '}
@@ -287,6 +274,18 @@ export default function Projects() {
           <TrendingProjects count={12} trendingWindowDays={7} />
         </div>
       ) : null}
+      {Boolean(searchText) && !isLoading && (
+        <div
+          style={{
+            textAlign: 'center',
+            color: colors.text.secondary,
+          }}
+        >
+          <Trans>
+            <InfoCircleOutlined /> Search results don't include V2 projects yet.
+          </Trans>
+        </div>
+      )}
       <FeedbackFormButton />
     </div>
   )

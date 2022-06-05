@@ -606,8 +606,8 @@ msgid "Check this to mint {tokenSymbol} ERC-20 to your wallet. Leave unchecked t
 msgstr "Check this to mint {tokenSymbol} ERC-20 to your wallet. Leave unchecked to have your token balance tracked by Juicebox, saving gas on this transaction. You can always claim your ERC-20 tokens later."
 
 #: src/components/v2/shared/DistributionSplitsSection/index.tsx
-msgid "Chose how would you like to configure your payouts."
-msgstr "Chose how would you like to configure your payouts."
+msgid "Choose how you would like to configure your payouts."
+msgstr "Choose how you would like to configure your payouts."
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
 msgid "Claim {tokenTextPlural}"

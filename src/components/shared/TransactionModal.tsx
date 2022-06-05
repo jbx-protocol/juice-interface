@@ -59,9 +59,6 @@ export default function TransactionModal(props: TransactionModalProps) {
     },
   }
 
-  if (props.transactionPending) {
-  }
-
   return (
     <Modal {...modalProps}>
       {props.transactionPending ? (

@@ -23,7 +23,17 @@ import SwitchHeading from '../SwitchHeading'
 const GRAPH_CONTAINER_ID = 'graph-container'
 export const DEFAULT_BONDING_CURVE_RATE_PERCENTAGE = '100'
 
-function BondingCurveRateExtra({ disabled }: { disabled?: boolean }) {
+function BondingCurveRateExtra({
+  disabled,
+  value,
+}: {
+  disabled?: boolean
+  value: string | undefined
+}) {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
+
   return (
     <Space style={{ fontSize: '0.9rem' }} direction="vertical" size="large">
       <p style={{ margin: 0 }}>
@@ -32,6 +42,15 @@ function BondingCurveRateExtra({ disabled }: { disabled?: boolean }) {
           be redeemed for.
         </Trans>
       </p>
+
+      {value === '0' ? (
+        <span style={{ color: colors.text.warn }}>
+          <Trans>
+            Token holders <strong>cannot redeem their tokens</strong> for any
+            ETH when the redemption rate is 0.
+          </Trans>
+        </span>
+      ) : null}
 
       <MinimalCollapse
         header={<Trans>How do I set the redemption rate?</Trans>}
@@ -156,16 +175,24 @@ export function ProjectRedemptionRate({
         { id: baseCurveId },
       ])
       calculator.setExpression({
+        id: baseCurveId,
+        latex: `y=x`,
+        color: colors.stroke.secondary,
+      })
+      if (_value === 0) {
+        calculator.setExpression({
+          id: bondingCurveId,
+          latex: `y=0`,
+          color: colors.text.brand.primary,
+        })
+        return
+      }
+      calculator.setExpression({
         id: bondingCurveId,
         latex: `y=${overflow} * (x/${supply}) * (${_value / 100} + (x - x${
           _value / 100
         })/${supply})`,
         color: colors.text.brand.primary,
-      })
-      calculator.setExpression({
-        id: baseCurveId,
-        latex: `y=x`,
-        color: colors.stroke.secondary,
       })
     },
     [calculator, colors.stroke.secondary, colors.text.brand.primary],
@@ -204,7 +231,7 @@ export function ProjectRedemptionRate({
             </div>
           )
         }
-        extra={<BondingCurveRateExtra disabled={disabled} />}
+        extra={<BondingCurveRateExtra disabled={disabled} value={value} />}
         {...formItemProps}
       >
         {!disabled && !(onToggled && !checked) && (

@@ -5,7 +5,7 @@ import { useContext } from 'react'
 
 import { TransactorInstance } from '../../Transactor'
 
-export function useDistributeTokensTx(): TransactorInstance<{}> {
+export function useDistributeTokensTx(): TransactorInstance {
   const { transactor, contracts } = useContext(V1UserContext)
   const { terminal, projectId } = useContext(V1ProjectContext)
 

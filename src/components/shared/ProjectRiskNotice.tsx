@@ -38,8 +38,8 @@ export default function ProjectRiskNotice({
         </Trans>
       </p>
       <ul>
-        {warnings.map(text => (
-          <li>{text}</li>
+        {warnings.map((text, i) => (
+          <li key={i}>{text}</li>
         ))}
       </ul>
     </div>

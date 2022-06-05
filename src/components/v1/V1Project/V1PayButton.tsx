@@ -88,7 +88,7 @@ export default function V1PayButton({
       <Tooltip
         title={disabledMessage}
         className="block"
-        visible={Boolean(disabledMessage) ? undefined : false}
+        visible={disabledMessage ? undefined : false}
       >
         <Button
           style={{ width: '100%' }}

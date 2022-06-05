@@ -49,7 +49,6 @@ export default function ImageUploader({
       <Col xs={24} md={7}>
         <Space align="start">
           {url && (
-            // eslint-disable-next-line jsx-a11y/img-redundant-alt
             <img
               style={{
                 maxHeight: 80,
@@ -59,7 +58,7 @@ export default function ImageUploader({
                 borderRadius: theme.radii.md,
               }}
               src={url}
-              alt="Uploaded image"
+              alt="Uploaded user content"
             />
           )}
 

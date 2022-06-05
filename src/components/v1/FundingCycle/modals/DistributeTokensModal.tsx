@@ -33,13 +33,10 @@ export default function DistributeTokensModal({
   function distribute() {
     setLoading(true)
 
-    distributeTokensTx(
-      {},
-      {
-        onDone: () => setLoading(false),
-        onConfirmed: () => onConfirmed && onConfirmed(),
-      },
-    )
+    distributeTokensTx(undefined, {
+      onDone: () => setLoading(false),
+      onConfirmed: () => onConfirmed && onConfirmed(),
+    })
   }
 
   const reservedTokensFormatted = formatWad(reservedTokens, { precision: 0 })

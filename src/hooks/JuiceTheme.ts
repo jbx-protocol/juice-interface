@@ -19,9 +19,7 @@ const flattenNestedObject = (
     }
   }, {})
 
-export function useJuiceTheme(
-  storageKey: string = 'jb_theme',
-): ThemeContextType {
+export function useJuiceTheme(storageKey = 'jb_theme'): ThemeContextType {
   const initialThemeOption =
     (localStorage.getItem(storageKey) as ThemeOption) || ThemeOption.light
 

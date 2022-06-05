@@ -8,7 +8,7 @@ export default function Faq() {
     <Collapse defaultActiveKey={QAs.length ? 0 : undefined} accordion>
       {QAs().map((qa, i) => (
         <CollapsePanel header={qa.q} key={i}>
-          {qa.a && qa.a.map((p, j) => <p key={j}>{p}</p>)}
+          {qa.a && <div>{qa.a}</div>}
           {qa.img && (
             <img
               src={qa.img.src}

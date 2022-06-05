@@ -1,7 +1,7 @@
 import { Token, WETH9, Route, Pair, CurrencyAmount } from '@sushiswap/sdk'
 import { Contract } from '@ethersproject/contracts'
 
-import { abi as IUniswapV2PairABI } from '@uniswap/v2-core/build/IUniswapV2Pair.json'
+import IUniswapV2PairABI from '@uniswap/v2-core/build/IUniswapV2Pair.json'
 
 import { useQuery } from 'react-query'
 
@@ -22,7 +22,7 @@ async function fetchPairData(tokenA: Token, tokenB: Token): Promise<Pair> {
 
   const [reserves0, reserves1] = await new Contract(
     pairAddress,
-    IUniswapV2PairABI,
+    IUniswapV2PairABI.abi,
     readProvider,
   ).getReserves()
 

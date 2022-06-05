@@ -6,12 +6,10 @@ export default function Banner({
   title,
   body,
   actions,
-  variant = 'info',
 }: {
   title: string | JSX.Element
   body: string | JSX.Element
   actions: JSX.Element
-  variant?: 'info'
 }) {
   const {
     theme: { colors },

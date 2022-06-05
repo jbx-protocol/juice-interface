@@ -685,6 +685,7 @@ msgid "Connect wallet to deploy"
 msgstr "Conecte uma carteira para implementar"
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Connect wallet to pay"
 msgstr "Conecte uma carteira para pagar"
 

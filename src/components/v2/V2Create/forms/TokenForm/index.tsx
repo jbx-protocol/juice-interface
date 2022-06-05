@@ -148,8 +148,6 @@ export default function TokenForm({
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const [tokenForm] = Form.useForm<{ weight: string }>()
-
   const dispatch = useAppDispatch()
   const {
     fundingCycleMetadata,
@@ -192,11 +190,6 @@ export default function TokenForm({
     ],
   )
 
-  // Only want this to run once on load, not constantly update (because the weight state has some lag)
-  useEffect(() => {
-    tokenForm.setFieldsValue({ weight })
-  })
-
   /**
    * NOTE: these values will all be in their 'native' units,
    * e.g. permyriads, parts-per-billion etc.
@@ -229,7 +222,6 @@ export default function TokenForm({
   )
 
   const onTokenFormSaved = useCallback(() => {
-    const weight = tokenForm.getFieldValue('weight')
     const newReservedTokensSplits = reservedTokensSplits.map(split =>
       sanitizeSplit(split),
     )
@@ -255,8 +247,8 @@ export default function TokenForm({
     dispatch,
     reservedTokensSplits,
     onFinish,
-    tokenForm,
     discountRate,
+    weight,
     reservedRate,
     redemptionRate,
   ])
@@ -289,13 +281,12 @@ export default function TokenForm({
     initialMintingRate - reservedRateDecimal * initialMintingRate
 
   return (
-    <Form form={tokenForm} layout="vertical" onFinish={onTokenFormSaved}>
+    <Form layout="vertical" onFinish={onTokenFormSaved}>
       <Space size="middle" direction="vertical">
         <div>
           <div style={{ display: 'flex' }}>
             {isCreate ? (
               <Form.Item
-                name="weight"
                 label={
                   <TooltipLabel
                     label={<Trans>Initial inflation rate</Trans>}
@@ -327,8 +318,8 @@ export default function TokenForm({
                       <Trans>tokens per ETH contributed</Trans>
                     </span>
                   }
+                  value={weight}
                   onChange={newWeight => {
-                    tokenForm.setFieldsValue({ weight: newWeight })
                     setWeight(newWeight ?? DEFAULT_ISSUANCE_RATE.toString())
                   }}
                   style={{ paddingRight: 15 }}

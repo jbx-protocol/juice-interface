@@ -1412,13 +1412,17 @@ msgstr "Créateurs indépendants et constructeurs"
 msgid "Infinite (no limit)"
 msgstr "Infini (aucune limite)"
 
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+msgid "Inflation rate"
+msgstr ""
+
+#: src/components/v2/V2Create/forms/TokenForm/index.tsx
+msgid "Initial inflation rate"
+msgstr ""
+
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Initial issuance rate"
 msgstr "Taux d'émission initiale"
-
-#: src/components/v2/V2Create/forms/TokenForm/index.tsx
-msgid "Initial token minting rate"
-msgstr ""
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Invalid address"
@@ -2760,10 +2764,6 @@ msgstr "Frappe de tokens activée"
 #: src/components/shared/ManageTokensModal.tsx
 msgid "Token minting is only available for V1.1 projects. Token minting can be enabled or disabled by reconfiguring the project's funding cycle."
 msgstr "La frappe de tokens n'est disponible que pour les projets V1.1. La frappe de tokens peut être activée ou désactivée en reconfigurant le cycle de financement du projet."
-
-#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
-msgid "Token minting rate"
-msgstr ""
 
 #: src/components/shared/modals/IssueTokenModal.tsx
 msgid "Token name"

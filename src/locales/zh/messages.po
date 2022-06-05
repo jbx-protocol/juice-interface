@@ -1412,13 +1412,17 @@ msgstr "独立创作者和建设者们"
 msgid "Infinite (no limit)"
 msgstr ""
 
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+msgid "Inflation rate"
+msgstr ""
+
+#: src/components/v2/V2Create/forms/TokenForm/index.tsx
+msgid "Initial inflation rate"
+msgstr ""
+
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Initial issuance rate"
 msgstr "初始发行比率"
-
-#: src/components/v2/V2Create/forms/TokenForm/index.tsx
-msgid "Initial token minting rate"
-msgstr ""
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Invalid address"
@@ -2760,10 +2764,6 @@ msgstr "代币铸造已允许"
 #: src/components/shared/ManageTokensModal.tsx
 msgid "Token minting is only available for V1.1 projects. Token minting can be enabled or disabled by reconfiguring the project's funding cycle."
 msgstr "代币铸造功能只在 V1.1 项目中可用。可以通过重新配置项目的筹款周期来启用或禁用这一功能。"
-
-#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
-msgid "Token minting rate"
-msgstr ""
 
 #: src/components/shared/modals/IssueTokenModal.tsx
 msgid "Token name"

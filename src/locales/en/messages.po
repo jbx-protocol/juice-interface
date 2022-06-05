@@ -1407,13 +1407,17 @@ msgstr "Indie creators and builders"
 msgid "Infinite (no limit)"
 msgstr "Infinite (no limit)"
 
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+msgid "Inflation rate"
+msgstr "Inflation rate"
+
+#: src/components/v2/V2Create/forms/TokenForm/index.tsx
+msgid "Initial inflation rate"
+msgstr "Initial inflation rate"
+
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Initial issuance rate"
 msgstr "Initial issuance rate"
-
-#: src/components/v2/V2Create/forms/TokenForm/index.tsx
-msgid "Initial token minting rate"
-msgstr "Initial token minting rate"
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Invalid address"
@@ -2755,10 +2759,6 @@ msgstr "Token minting enabled"
 #: src/components/shared/ManageTokensModal.tsx
 msgid "Token minting is only available for V1.1 projects. Token minting can be enabled or disabled by reconfiguring the project's funding cycle."
 msgstr "Token minting is only available for V1.1 projects. Token minting can be enabled or disabled by reconfiguring the project's funding cycle."
-
-#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
-msgid "Token minting rate"
-msgstr "Token minting rate"
 
 #: src/components/shared/modals/IssueTokenModal.tsx
 msgid "Token name"

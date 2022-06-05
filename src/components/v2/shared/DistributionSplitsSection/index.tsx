@@ -142,7 +142,7 @@ export default function DistributionSplitsSection({
       >
         <Form.Item style={{ marginBottom: 0 }}>
           <p style={{ color: colors.text.primary }}>
-            <Trans>Chose how would you like to configure your payouts.</Trans>
+            <Trans>Choose how would you like to configure your payouts.</Trans>
           </p>
           <PayoutConfigurationExplainerCollapse
             style={{ marginBottom: '1rem' }}

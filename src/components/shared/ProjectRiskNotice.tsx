@@ -39,7 +39,7 @@ export default function ProjectRiskNotice({
       </p>
       <ul>
         {warnings.map((text, i) => (
-          <li key={`warning_${i}`}>{text}</li>
+          <li key={i}>{text}</li>
         ))}
       </ul>
     </div>

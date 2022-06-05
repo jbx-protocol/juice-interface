@@ -111,7 +111,7 @@ export default function Landing() {
       ].map((data, i) => (
         <Space
           style={{ fontStyle: 'italic', paddingLeft: 8 }}
-          key={`builtfor_${i}`}
+          key={i}
           size="middle"
         >
           <img src="/assets/bolt.svg" alt="⚡️" />

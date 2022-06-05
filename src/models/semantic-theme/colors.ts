@@ -1,5 +1,6 @@
 import { Property } from 'csstype'
 
+// eslint-disable-next-line @typescript-eslint/no-namespace
 namespace SemanticColor {
   export type Primary = { primary: Property.Color }
   export type Secondary = { secondary: Property.Color }

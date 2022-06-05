@@ -23,7 +23,7 @@ export function usePayV1ProjectTx(): TransactorInstance<{
       !contracts?.TicketBooth ||
       !terminal?.version
     ) {
-      let missingParam = !transactor
+      const missingParam = !transactor
         ? 'transactor'
         : !projectId
         ? 'projectId'

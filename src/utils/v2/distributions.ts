@@ -62,7 +62,7 @@ export function adjustedSplitPercents({
   oldDistributionLimit: string
   newDistributionLimit: string
 }) {
-  let adjustedSplits: Split[] = []
+  const adjustedSplits: Split[] = []
   splits.forEach((split: Split) => {
     const currentAmount = amountFromPercent({
       percent: preciseFormatSplitPercent(split.percent),

@@ -25,7 +25,7 @@ export default function BudgetTargetInput({
   target: string | undefined
   targetSubFee: string | undefined
   onTargetChange: (target?: string) => void
-  onTargetSubFeeChange: (target?: string) => void
+  onTargetSubFeeChange?: (target?: string) => void
   onCurrencyChange?: (currency: CurrencyName) => void
   disabled?: boolean
   placeholder?: string
@@ -78,7 +78,7 @@ export default function BudgetTargetInput({
               disabled={disabled}
               accessory={_currencySwitch}
               onChange={newTargetSubFee =>
-                onTargetSubFeeChange(newTargetSubFee?.toString())
+                onTargetSubFeeChange?.(newTargetSubFee?.toString())
               }
             />
           </div>

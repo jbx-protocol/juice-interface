@@ -1,3 +1,2 @@
-declare var Desmos
-declare var fathom
+declare const Desmos
 declare module 'ethereum-block-by-date'

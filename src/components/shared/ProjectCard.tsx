@@ -21,7 +21,7 @@ import { V1ArchivedProjectIds } from '../../constants/v1/archivedProjects'
 import Loading from './Loading'
 import { V2ArchivedProjectIds } from 'constants/v2/archivedProjects'
 
-type ProjectCardProject = Pick<
+export type ProjectCardProject = Pick<
   Project,
   | 'id'
   | 'handle'
@@ -110,7 +110,7 @@ export default function ProjectCard({
         cursor: 'pointer',
         overflow: 'hidden',
       }}
-      key={_project.id}
+      key={`${_project.id}_${_project.cv}`}
       to={
         _project.cv === '2'
           ? `/v2/p/${_project.projectId}`

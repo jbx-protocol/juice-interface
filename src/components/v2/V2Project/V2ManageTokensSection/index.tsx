@@ -138,102 +138,93 @@ export default function V2ManageTokensSection() {
             </div>
           }
           valueRender={() => (
-            <>
-              <Descriptions layout="horizontal" column={1} size="small">
-                {hasIssuedERC20 && tokenSymbol && (
-                  <>
-                    <Descriptions.Item
-                      label={t`Project token`}
-                      labelStyle={labelStyle}
-                      children={
-                        <div style={manageTokensRowStyle}>
-                          <div>
-                            {tokenSymbol} (
-                            <FormattedAddress address={tokenAddress} />)
-                          </div>
-                        </div>
-                      }
-                    />
-                  </>
-                )}
+            <Descriptions layout="horizontal" column={1} size="small">
+              {hasIssuedERC20 && tokenSymbol && (
                 <Descriptions.Item
-                  label={t`Total supply`}
+                  label={t`Project token`}
                   labelStyle={labelStyle}
-                  children={
-                    <div
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'baseline',
-                        width: '100%',
-                        gap: 5,
-                        flexWrap: 'wrap',
-                      }}
-                    >
-                      {formatWad(totalTokenSupply, { precision: 0 })}{' '}
-                      {tokenText}
-                      <Button
-                        size="small"
-                        onClick={() => setParticipantsModalVisible(true)}
-                        disabled={isPreviewMode}
-                      >
-                        <Trans>Holders</Trans>
-                      </Button>
+                >
+                  <div style={manageTokensRowStyle}>
+                    <div>
+                      {tokenSymbol} (
+                      <FormattedAddress address={tokenAddress} />)
                     </div>
-                  }
-                />
-                {userAddress ? (
-                  <Descriptions.Item
-                    label={t`Your balance`}
-                    labelStyle={labelStyle}
-                    style={{ paddingBottom: '0.5rem' }}
-                    children={
-                      <div style={manageTokensRowStyle}>
+                  </div>
+                </Descriptions.Item>
+              )}
+              <Descriptions.Item
+                label={t`Total supply`}
+                labelStyle={labelStyle}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'baseline',
+                    width: '100%',
+                    gap: 5,
+                    flexWrap: 'wrap',
+                  }}
+                >
+                  {formatWad(totalTokenSupply, { precision: 0 })} {tokenText}
+                  <Button
+                    size="small"
+                    onClick={() => setParticipantsModalVisible(true)}
+                    disabled={isPreviewMode}
+                  >
+                    <Trans>Holders</Trans>
+                  </Button>
+                </div>
+              </Descriptions.Item>
+              {userAddress ? (
+                <Descriptions.Item
+                  label={t`Your balance`}
+                  labelStyle={labelStyle}
+                  style={{ paddingBottom: '0.5rem' }}
+                >
+                  <div style={manageTokensRowStyle}>
+                    <div>
+                      {hasIssuedERC20 && (
                         <div>
-                          {hasIssuedERC20 && (
-                            <div>
-                              {claimedBalanceFormatted} {tokenText}
-                            </div>
-                          )}
-                          <div>
-                            {hasIssuedERC20 ? (
-                              <Trans>
-                                {unclaimedBalanceFormatted} {tokenText}{' '}
-                                claimable
-                              </Trans>
-                            ) : (
-                              <>
-                                {unclaimedBalanceFormatted} {tokenText}
-                              </>
-                            )}
-                          </div>
-                          <div
-                            style={{
-                              cursor: 'default',
-                              fontSize: '0.8rem',
-                              fontWeight: 500,
-                              color: colors.text.tertiary,
-                            }}
-                          >
-                            <Trans>
-                              {userOwnershipPercentage}% of total supply
-                            </Trans>
-                          </div>
+                          {claimedBalanceFormatted} {tokenText}
                         </div>
-
-                        <Button
-                          size="small"
-                          onClick={() => setManageTokensModalVisible(true)}
-                          disabled={isPreviewMode}
-                        >
-                          <Trans>Manage {tokenText}</Trans>
-                        </Button>
+                      )}
+                      <div>
+                        {hasIssuedERC20 ? (
+                          <Trans>
+                            {unclaimedBalanceFormatted} {tokenText} claimable
+                          </Trans>
+                        ) : (
+                          <>
+                            {unclaimedBalanceFormatted} {tokenText}
+                          </>
+                        )}
                       </div>
-                    }
-                  />
-                ) : null}
-              </Descriptions>
-            </>
+                      <div
+                        style={{
+                          cursor: 'default',
+                          fontSize: '0.8rem',
+                          fontWeight: 500,
+                          color: colors.text.tertiary,
+                        }}
+                      >
+                        <Trans>
+                          {userOwnershipPercentage}% of total supply
+                        </Trans>
+                      </div>
+                    </div>
+
+                    <Button
+                      size="small"
+                      onClick={() => setManageTokensModalVisible(true)}
+                      disabled={isPreviewMode}
+                    >
+                      <Trans>Manage {tokenText}</Trans>
+                    </Button>
+                  </div>
+                </Descriptions.Item>
+              ) : null}
+            </Descriptions>
           )}
         />
       </Space>

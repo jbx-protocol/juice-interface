@@ -85,7 +85,7 @@ export default function ReconfigurationStrategySelector({
       {ballotStrategies.map((strategy: BallotStrategy, idx) => (
         <ReconfigurationStrategyOption
           title={strategy.name}
-          key={idx}
+          key={strategy.address}
           content={
             <div>
               <p>{strategy.description}</p>
@@ -97,7 +97,6 @@ export default function ReconfigurationStrategySelector({
           strategy={strategy}
           selected={selectedStrategyIndex === idx}
           onSelectBallot={() => onChange(strategy)}
-          index={idx}
         />
       ))}
       <ReconfigurationStrategyOption
@@ -111,7 +110,6 @@ export default function ReconfigurationStrategySelector({
             }}
           />
         }
-        index={CUSTOM_STRATEGY_INDEX}
         strategy={customStrategy}
         selected={selectedIsCustom}
         onSelectBallot={() => onChange(customStrategy)}

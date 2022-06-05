@@ -54,7 +54,7 @@ export default function FormattedAddress({
         return
       }
 
-      let newRecord = {
+      const newRecord = {
         name: null,
         expires: now + SECONDS_IN_DAY * 1000, // Expires in one day
       } as EnsRecord

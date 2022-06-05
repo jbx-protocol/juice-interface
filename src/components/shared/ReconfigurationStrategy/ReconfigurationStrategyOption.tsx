@@ -6,7 +6,6 @@ import { CSSProperties, useContext } from 'react'
 export default function ReconfigurationStrategyOption({
   title,
   content,
-  index,
   strategy,
   selected,
   background,
@@ -14,7 +13,6 @@ export default function ReconfigurationStrategyOption({
 }: {
   title: string
   content: JSX.Element
-  index: number
   strategy: BallotStrategy
   selected: boolean
   background?: string
@@ -35,7 +33,6 @@ export default function ReconfigurationStrategyOption({
 
   return (
     <div
-      key={index}
       className="clickable-border"
       style={cardStyles}
       onClick={() => onSelectBallot(strategy)}

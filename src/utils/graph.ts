@@ -265,7 +265,7 @@ export const formatGraphQuery = <E extends EntityKey, K extends EntityKeys<E>>(
       : undefined,
   )
 
-  let overrideEntity: string = opts.entity
+  const overrideEntity: string = opts.entity
 
   return `{ ${overrideEntity}${isPluralQuery(opts.entity) ? 's' : ''}${
     args ? `(${args})` : ''

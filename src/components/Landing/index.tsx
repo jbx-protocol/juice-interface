@@ -10,8 +10,8 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useProjectsQuery } from 'hooks/Projects'
 import { CSSProperties, useContext } from 'react'
 import { Link } from 'react-router-dom'
-
 import useMobile from 'hooks/Mobile'
+import { fathom } from 'lib/fathom'
 
 import { ThemeOption } from 'constants/theme/theme-option'
 
@@ -132,7 +132,7 @@ export default function Landing() {
           block={isMobile}
           href={'/#/create'}
           onClick={() => {
-            window.fathom?.trackGoal('IIYVJKNC', 0)
+            fathom?.trackGoal('IIYVJKNC', 0)
           }}
           style={{
             marginRight: isMobile ? 0 : '0.8rem',

@@ -33,7 +33,7 @@ export const loadProjectEvents = async ({
 
   // Query balance of project for interval blocks
   blockRefs.forEach(blockRef => {
-    let whereOpts: WhereConfig<'project'>[] = []
+    const whereOpts: WhereConfig<'project'>[] = []
     if (projectId) {
       whereOpts.push({ key: 'projectId', value: projectId })
     }

@@ -31,7 +31,7 @@ export type Transactor = (
   options?: TransactorOptions,
 ) => Promise<boolean>
 
-export type TransactorInstance<T> = (
+export type TransactorInstance<T = undefined> = (
   args: T,
   txOpts?: Omit<TransactorOptions, 'value'>,
 ) => ReturnType<Transactor>

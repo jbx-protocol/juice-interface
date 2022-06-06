@@ -11,7 +11,7 @@ export const resourcesMenuItems = (): ResourceItem[] => {
     {
       text: t`Docs`,
       key: 'docs',
-      link: 'https://info.juicebox.money/docs',
+      link: 'https://info.juicebox.money/',
     },
     {
       text: t`Blog`,

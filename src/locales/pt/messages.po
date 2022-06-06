@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-06-03 02:45\n"
+"PO-Revision-Date: 2022-06-04 02:39\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -244,7 +244,7 @@ msgstr "Um projeto pode ser arquivado por seu dono através do menu de ferrament
 
 #: src/components/v1/FundingCycle/ReservedTokens.tsx
 msgid "A project can reserve a percentage of the tokens minted from payments it receives. Reserved tokens can be distributed according to the allocation below at any time."
-msgstr ""
+msgstr "Um projeto pode reservar uma porcentagem de tokens gerados por pelos pagamentos recebidos. Tokens reservados podem ser distribuídos a qualquer momento conforme a alocação abaixo."
 
 #: src/components/v2/V2Project/V2FundingCycleSection/ReservedTokensSplitsCard.tsx
 msgid "A project can reserve a percentage of tokens minted from every payment it receives. Reserved tokens can be distributed according to the allocation below at any time."
@@ -370,7 +370,7 @@ msgstr "Todos os fundos podem ser distribuídos pelo projeto. O projeto não ter
 
 #: src/components/v2/V2Project/DistributionLimit.tsx
 msgid "All funds received by the treasury will be distributed. Token holders will receive <0>no ETH</0> when burning their tokens."
-msgstr ""
+msgstr "Todos os fundos recebidos pela tesouraria serão distribuídos. Donos de tokens <0>não receberão ETH</0> ao queimar seus tokens."
 
 #: src/components/Landing/index.tsx
 msgid "All projects"

@@ -15,7 +15,6 @@ export default function ReservedTokensFormItem({
   onReservedTokensSplitsChange,
   style = {},
   onChange,
-  isCreate,
   issuanceRate,
 }: {
   initialValue: number | undefined
@@ -23,7 +22,6 @@ export default function ReservedTokensFormItem({
   onReservedTokensSplitsChange: (splits: Split[]) => void
   onChange: (val?: number) => void
   style?: CSSProperties
-  isCreate?: boolean // Instance of this form item is in the create flow (not reconfig)
   issuanceRate?: number
 } & FormItemExt) {
   // Using a state here because relying on the form does not
@@ -62,7 +60,6 @@ export default function ReservedTokensFormItem({
         }}
         hideLabel={hideLabel}
         issuanceRate={issuanceRate}
-        isCreate={isCreate}
       />
 
       {(hasReservedRate && reservedRateChecked) ||

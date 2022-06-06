@@ -339,7 +339,6 @@ export default function TokenForm({
             style={{ ...shadowCard(theme), padding: 25, marginBottom: 10 }}
             reservedTokensSplits={reservedTokensSplits}
             onReservedTokensSplitsChange={setReservedTokensSplits}
-            isCreate={isCreate}
             issuanceRate={parseInt(weight)}
           />
 

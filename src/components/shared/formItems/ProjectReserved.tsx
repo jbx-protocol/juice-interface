@@ -83,18 +83,6 @@ export default function ProjectReserved({
               fontWeight: 600,
             }}
           >
-            {/* <Trans>
-              For every <strong>1 ETH</strong> contributed,{' '}
-              <strong style={{ whiteSpace: 'nowrap' }}>
-                {formattedNum(contributorIssuanceRate)} tokens
-              </strong>{' '}
-              will go to the contributor and{' '}
-              <strong style={{ whiteSpace: 'nowrap' }}>
-                {formattedNum(round(initialReservedTokensPerEth, 4))} tokens
-                will be reserved
-              </strong>{' '}
-              for the project.
-            </Trans> */}
             <div
               style={{
                 display: 'flex',

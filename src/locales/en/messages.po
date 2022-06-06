@@ -220,6 +220,7 @@ msgstr "<0>Total project tokens minted</0> as a result of 1 ETH being contribute
 msgid "<0>Total project tokens minted</0> as a result of 1 ETH being contributed."
 msgstr "<0>Total project tokens minted</0> as a result of 1 ETH being contributed."
 
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "<0>Total project tokens minted</0> as a result of 1 ETH being contributed. This can change over time according to the discount rate and reserved tokens amount of future funding cycles."
 msgstr "<0>Total project tokens minted</0> as a result of 1 ETH being contributed. This can change over time according to the discount rate and reserved tokens amount of future funding cycles."
@@ -421,6 +422,7 @@ msgstr "Amount"
 msgid "Amount of ERC-20 tokens to claim"
 msgstr "Amount of ERC-20 tokens to claim"
 
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Amount of newly minted project tokens <0>reserved for the project</0> when 1 ETH is contributed. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner."
 msgstr "Amount of newly minted project tokens <0>reserved for the project</0> when 1 ETH is contributed. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner."
@@ -1315,8 +1317,8 @@ msgid "How long one funding cycle will last. Funding cycle <0>reconfigurations</
 msgstr "How long one funding cycle will last. Funding cycle <0>reconfigurations</0> will only take effect for <1>upcoming</1> funding cycles, i.e. once a current funding cycle has ended."
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
-msgid "How the {formattedReservedRate}% of your project's reserved tokens will be split."
-msgstr "How the {formattedReservedRate}% of your project's reserved tokens will be split."
+msgid "How the {reservedPercentage}% of your project's reserved tokens will be split."
+msgstr "How the {reservedPercentage}% of your project's reserved tokens will be split."
 
 #: src/components/v1/V1Create/index.tsx
 msgid "How your project will distribute funds."
@@ -1397,11 +1399,13 @@ msgstr "Indie creators and builders"
 msgid "Infinite (no limit)"
 msgstr "Infinite (no limit)"
 
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Inflation rate"
 msgstr "Inflation rate"
 
 #: src/components/v2/V2Create/forms/TokenForm/index.tsx
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Initial inflation rate"
 msgstr "Initial inflation rate"
 
@@ -1902,10 +1906,6 @@ msgstr "Percent"
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "Percentage allocation"
 msgstr "Percentage allocation"
-
-#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
-msgid "Percentage of newly minted tokens reserved for the project."
-msgstr "Percentage of newly minted tokens reserved for the project."
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
 msgid "Percentage:"
@@ -3346,6 +3346,10 @@ msgstr "{formattedTimeLeft} left"
 #: src/components/shared/Project/FundingCycleDetailsCard.tsx
 msgid "{formattedTimeLeft} until #{0}"
 msgstr "{formattedTimeLeft} until #{0}"
+
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
+msgid "{inflationRate} tokens / ETH"
+msgstr "{inflationRate} tokens / ETH"
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "{issuanceRate} tokens / ETH"

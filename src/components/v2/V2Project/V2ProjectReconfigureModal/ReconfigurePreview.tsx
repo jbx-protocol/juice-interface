@@ -5,6 +5,7 @@ import {
   DistributionLimitStatistic,
   DistributionSplitsStatistic,
   DurationStatistic,
+  InflationRateStatistic,
   IssuanceRateStatistic,
   PausePayStatistic,
   ReconfigurationStatistic,
@@ -31,6 +32,7 @@ import {
   weightedAmount,
 } from 'utils/v2/math'
 import { Split } from 'models/v2/splits'
+import { formattedNum, fromWad } from 'utils/formatNumber'
 
 export default function ReconfigurePreview({
   payoutSplits,
@@ -81,14 +83,26 @@ export default function ReconfigurePreview({
     ),
   )
 
-  const formattedReservedRate = parseFloat(
+  const reservedPercentage = parseFloat(
     formatReservedRate(fundingCycleMetadata?.reservedRate),
   )
 
   const gutter = 20
   const rowMargin = 20
 
-  const secondRowColWidth = hasDuration && hasDistributionLimit ? 8 : 12
+  const secondRowColWidth = hasDuration && hasDistributionLimit ? 6 : 8
+
+  const reservedRate =
+    formattedNum(
+      formatIssuanceRate(
+        weightedAmount(
+          fundingCycle?.weight,
+          fundingCycleMetadata?.reservedRate.toNumber(),
+          BigNumber.from(1),
+          'reserved',
+        ) ?? '',
+      ),
+    ) ?? '0'
 
   return (
     <div style={{ padding: '0 0px' }}>
@@ -103,8 +117,11 @@ export default function ReconfigurePreview({
           />
         </Col>
         <Col md={8} sm={12}>
-          <ReservedTokensStatistic
-            formattedReservedRate={formattedReservedRate}
+          <InflationRateStatistic
+            inflationRate={
+              formattedNum(formatIssuanceRate(fromWad(fundingCycle?.weight))) ??
+              '0'
+            }
           />
         </Col>
       </Row>
@@ -112,13 +129,19 @@ export default function ReconfigurePreview({
         <Col md={secondRowColWidth} sm={12}>
           <IssuanceRateStatistic issuanceRate={issuanceRate} />
         </Col>
+        <Col md={secondRowColWidth} sm={12}>
+          <ReservedTokensStatistic
+            reservedRate={reservedRate}
+            reservedPercentage={reservedPercentage}
+          />
+        </Col>
         {hasDuration ? (
           <Col md={secondRowColWidth} sm={12}>
             <DiscountRateStatistic discountRate={fundingCycle.discountRate} />
           </Col>
         ) : null}
         {hasDistributionLimit ? (
-          <Col md={8} sm={12}>
+          <Col md={secondRowColWidth} sm={12}>
             <RedemptionRateStatistic
               redemptionRate={fundingCycleMetadata.redemptionRate}
             />
@@ -156,7 +179,7 @@ export default function ReconfigurePreview({
       {fundingCycleMetadata?.reservedRate.gt(0) && (
         <ReservedSplitsStatistic
           splits={reserveSplits}
-          formattedReservedRate={formattedReservedRate}
+          reservedPercentage={reservedPercentage}
           projectOwnerAddress={userAddress}
         />
       )}

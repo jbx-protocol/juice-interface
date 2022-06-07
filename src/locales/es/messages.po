@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-06-06 02:50\n"
+"PO-Revision-Date: 2022-06-07 02:46\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -119,15 +119,15 @@ msgstr "<0><1>Este proyecto no tiene excedente</1>, así que no recibirás ETH p
 
 #: src/components/Landing/QAs.tsx
 msgid "<0>A bonding curve rewards people who wait longer to redeem your tokens for overflow.</0><1>For example, with a bonding curve of 70%, redeeming 10% of the token supply at any given time will claim around 7% of the total overflow.</1><2>The rest is left to share between token holders.</2>,<3>For more info, check out this <4>short video</4> on bonding curves.</3>"
-msgstr ""
+msgstr "<0>Una curva de adhesión recompensa a la gente que espera más para canjear sus tokens por excedente.</0><1>Por ejemplo, con una curva de adhesión del 70 %, canjear el 10 % del suministro de tokens en un momento dado reclamará alrededor del 7 % del excedente total.</1><2>El resto se deja para compartir entre los poseedores de tokens.</2>,<3>Para obtener más información, mira este <4>video corto</4> sobre curvas de adhesión</3>"
 
 #: src/components/Landing/QAs.tsx
 msgid "<0>A mechanism like Juicebox where upfront financial commitments should be honored over time is only guaranteed within an ecosystem like Ethereum.</0><1>Ethereum provides a public environment where internet apps like Juicebox can run in a permission-less, trustless, and unstoppable fashion.</1><2>This means that anyone can see the code that they're using, anyone can use the code without asking for permission, and no one can mess with the code or take it down.</2><3>People using Juicebox are interacting with each other through public infrastructure—not a private, profit-seeking corporate service that brokers the exchange.</3><4>Juicebox was built to allow people and projects to get paid for creating public art and infrastructure, as much as or more than they would working towards corporate ends. No more shady business.</4>"
-msgstr ""
+msgstr "<0>Un mecanismo como Juicebox en el que los compromisos financieros iniciales deben cumplirse a lo largo del tiempo solo está garantizado dentro de un ecosistema como Ethereum.</0><1>Ethereum provee un entorno público donde las apps de internet como Juicebox pueden ejecutarse sin necesidad de permisos o confianza, y de forma imparable.</1><2>Esto significa que cualquiera puede ver el código que están usando, cualquiera puede usar el código sin pedir permiso, y nadie puede arruinar el código o eliminarlo.</2><3>La gente que usa Juicebox están interactuando entre ellos a través de infraestructura pública—no es un servicio corporativo privado con fines de lucro que negocia el intercambio.</3><4>Juicebox fue creado para permitir que la gente y proyectos sean pagados por crear arte público e infraestructura, tanto o más que lo que ganarían trabajando por fines corporativos. No más negocios turbios.</4>"
 
 #: src/components/Landing/QAs.tsx
 msgid "<0>A project can choose to reserve a percentage of tokens for itself. Instead of being distributed to paying users, this percentage of tokens is instead minted for the project.</0><1>Holding these tokens entitles a project to a portion of its own overflow.</1>"
-msgstr ""
+msgstr "<0>Un proyecto puede elegir reservar un porcentaje de tokens para él mismo. En vez de ser distribuido para pagar usuarios, este porcentaje de tokens se acuña para el proyecto.</0><1>Tener estos tokens le da derecho a un proyecto una parte de su propio excedente.</1>"
 
 #: src/components/v2/V2Create/forms/FundingForm/FundingCycleExplainerCollapse.tsx
 msgid "<0>Discount rate</0>, to reduce your project token's issuance rate (tokens per ETH) each funding cycle."
@@ -135,7 +135,7 @@ msgstr "<0>Tasa de descuento</0>, para reducir la tasa de emisión del token de 
 
 #: src/components/Landing/QAs.tsx
 msgid "<0>If you know how much your project needs to earn over some period of time to be sustainable, you can set a funding target with that amount. If your project earns more than that, the surplus funds are locked in an overflow pool. Anyone holding your project's tokens can claim a portion of the overflow pool in exchange for redeeming their tokens.</0><1>For more info, check out this <2>short video</2>.</1>"
-msgstr ""
+msgstr "<0>Sí sabes cuanto necesita obtener tu proyecto en un periodo para ser sostenible, puedes establecer un objetivo de financiamiento con esa cantidad. Si tu proyecto gana más que eso, el sobrante se bloquea en un fondo de excedente. Cualquiera que posea los tokens de tu proyecto puede reclamar una porción del fondo de excedente a cambio de canjear sus tokens.</0><1> Para más información, revisa este <2>video corto</2>.</1>"
 
 #: src/components/shared/PayWarningModal.tsx
 msgid "<0>Juicebox contracts</0> are unaudited, and may be vulnerable to bugs or hacks. All funds moved through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable for any losses by projects or their supporters."
@@ -143,15 +143,15 @@ msgstr "<0>Los contratos de Juicebox</0> no están auditados, y pueden ser vulne
 
 #: src/components/Landing/QAs.tsx
 msgid "<0>Juicebox has handled tens of thousands of ETH through its protocol, and has so far had 0 security mishaps.</0> <1>However, Juicebox is still experimental software. Although the Juicebox contract team have done their part to shape the smart contracts for public use and have tested the code thoroughly, the risk of exploits is never 0%.</1><2>Due to their public nature, any exploits to the contracts may have irreversible consequences, including loss of funds. Please use Juicebox with caution.</2>"
-msgstr ""
+msgstr "<0>Juicebox ha manejado decenas de miles de ETH a través de su protocolo, y hasta ahora no ha tenido ningún percance de seguridad.</0> <1>De cualquier forma, Juicebox es aún software experimental. Aunque el equipo de contratos de Juicebox ha hecho su parte para dar forma a los contratos inteligentes para uso público y ha probado el código a fondo, el riesgo de vulnerabilidades nunca es del 0 %.</1><2>Debido a su naturaleza pública, cualquier explotación de los contratos pueden tener consecuencias irreversibles, incluida la pérdida de fondos. Utilice Juicebox con precaución.</2>"
 
 #: src/components/Landing/QAs.tsx
 msgid "<0>Juicebox is a governance-minimal protocol. There are only a few levers that can be tuned, none of which impose changes for users without their consent. The Juicebox governance smart contract can adjust these levers.</0><1>The Juicebox protocol is governed by a community of JBX token holders who vote on proposals fortnightly.</1>"
-msgstr ""
+msgstr "<0>Juicebox es un protocolo de mínimo de gobernanza. Solo hay unas pocas palancas que se pueden ajustar, ninguna de las cuales impone cambios para los usuarios sin su consentimiento. El contrato inteligente de gobernanza de Juicebox puede ajustar estas palancas.</0><1>El protocolo de Juicebox es gobernado por una comunidad de poseedores de tokens JBX que votan las propuestas de forma quincenal.</1>"
 
 #: src/components/Landing/QAs.tsx
 msgid "<0>Juicebox is an open protocol on Ethereum that is funded using Juicebox itself. You can check out the contractualized budget specs <1>here</1>.</0><2>Projects building on Juicebox pay a {JB_FEE}% JBX membership fee from withdrawn funds into the JuiceboxDAO treasury. Projects can then use their JBX to participate in the governance of JuiceboxDAO and its collective treasury, as well as redeem from its growing <3>overflow</3>. The fee is also subject to change via JBX member votes.</2>"
-msgstr ""
+msgstr "<0>Juicebox es un protocolo abierto en Ethereum que se financia utilizando el mismo Juicebox. Puedes revisar las especificaciones del presupuesto contractualizado <1>specs</1>. </0><2>Los proyectos que construyen en juicebox pagan un {JB_FEE}% de la cuota de membresía JBX de los fondos retirados al tesoro de JuiceboxDAO. Los proyectos pueden usar sus JBX para participar en la gobernanza de JuiceboxDAO y su tesoro colectivo, así como canjearlos por su creciente <3>excedente</3>. La cuota también está sujeta a cambios por los votos de los miembros JBX.</2>"
 
 #: src/components/shared/ManageTokensModal.tsx
 msgid "<0>Learn more</0> about burning tokens."
@@ -203,11 +203,11 @@ msgstr "<0>El objetivo es 0.</0> El balance completo del proyecto será consider
 
 #: src/components/Landing/QAs.tsx
 msgid "<0>That's the plan, but the core Juicebox contracts will first be deployed to Ethereum Mainnet.</0><1>The contract team will soon start working on L2 payment terminals for Juicebox projects.</1>"
-msgstr ""
+msgstr "<0>Ese es el plan, pero los contratos básicos de Juicebox primero serán activados en la red principal de Ethereum.</0><1>El equipo de contratos pronto comenzarán a trabajar en terminales de pago L2 para proyectos Juicebox.</1>"
 
 #: src/components/Landing/QAs.tsx
 msgid "<0>There are unit tests written for every condition of every function in the contracts, and integration tests for every workflow that the protocol supports.</0><1>There was also a script written to iteratively run the integration tests using a random input generator, prioritizing edge cases. The code has successfully passed over 1 million test cases through this stress-testing script.</1> <2>The code could always use more eyes and more critique to further the community's confidence. Join our <3>Discord</3> and check out the code on <4>GitHub</4> to work with us.</2>"
-msgstr ""
+msgstr "<0>Hay pruebas de unidad escritas para cada condición de cada función en los contratos y pruebas de integración para cada flujo de trabajo que admite el protocolo.</0><1>También se escribió un script para ejecutar de forma iterativa las pruebas de integración utilizando un generador de entrada aleatoria, priorizando los casos extremos. El código ha superado con éxito más de 1 millón de casos de prueba a través de este script de prueba de estrés.</1> <2>El código siempre podría usar más ojos y más críticas para aumentar la confianza de la comunidad. Únete a nuestro <3>Discord</3> y revisa el código en <4>GitHub</4> para trabajar con nosotros.</2>"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "<0>This project has no overflow</0>, so you will not receive any ETH for burning tokens."
@@ -215,7 +215,7 @@ msgstr "<0>Este proyecto no tiene excedente</0>, así que no recibirás ETH por 
 
 #: src/components/Landing/QAs.tsx
 msgid "<0>This website (juicebox.money) connects to the Juicebox protocol's smart contracts, deployed on the Ethereum network. (note: anyone else can make a website that also connects to these same smart contracts. For now, don't trust any site other than this one to access the Juicebox protocol).</0><1>Creating a Juicebox project mints you an NFT (ERC-721) representing ownership over it. Whoever owns this NFT can configure the rules of the game and how payouts are distributed.</1><2>The project's tokens that are minted and distributed as a result of a received payment are ERC-20's. The amount of tokens minted and distributed are proportional to the volume of payments received, weighted by the project's discount rate over time.</2>"
-msgstr ""
+msgstr "<0>Este sitio web (juicebox.money) se conecta a los contratos inteligentes del protocolo Juicebox, desplegados en la red Ethereum. (nota: cualquier otra persona puede crear un sitio web que también se conecte a estos mismos contratos inteligentes. Por ahora, no confíes en ningún otro sitio que no sea este para acceder al protocolo de Juicebox).</0><1>La creación de un proyecto de Juicebox le otorga un NFT (ERC-721) que representa la propiedad sobre él. Quien sea propietario de este NFT puede configurar las reglas del juego y cómo se distribuyen los pagos.</1><2>Los tokens del proyecto que se acuñan y distribuyen como resultado de un pago recibido son ERC-20. La cantidad de tokens acuñados y distribuidos son proporcionales al volumen de pagos recibidos, ponderados por la tasa de descuento del proyecto a lo largo del tiempo.</2>"
 
 #: src/components/Landing/TrendingSection.tsx
 msgid "<0>Trending projects</0><1><2/></1>"
@@ -223,7 +223,7 @@ msgstr "<0>Proyectos en tendencia</0><1><2/></1>"
 
 #: src/components/Landing/QAs.tsx
 msgid "<0>Users fund your project by paying to use your app or service, or as a patron or investor by making a payment directly to your project's smart contract (like on this app).</0><1>For users paying through your app, you should route those funds through the Juicebox smart contracts so they receive tokens in return.</1>"
-msgstr ""
+msgstr "<0>Los usuarios financian su proyecto pagando por usar su aplicación o servicio, o como patrocinadores o inversores al realizar un pago directamente al contrato inteligente de su proyecto (como en esta aplicación).</0><1>Para los usuarios que pagan a través de su aplicación, debe canalizar esos fondos a través de los contratos inteligentes de Juicebox para que reciban tokens a cambio.</1>"
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
 msgid "<0>Your unclaimed {tokenSymbol} tokens:</0> {0}"
@@ -612,7 +612,7 @@ msgstr "Marca esto para acuñar {tokenSymbol} ERC-20 a tu cartera. Deja desmarca
 
 #: src/components/v2/shared/DistributionSplitsSection/index.tsx
 msgid "Choose how you would like to configure your payouts."
-msgstr ""
+msgstr "Elige como te gustaría configurar tus pagos."
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
 msgid "Claim {tokenTextPlural}"
@@ -2644,7 +2644,7 @@ msgstr "Beneficiario del token:"
 
 #: src/components/shared/formItems/ProjectRedemptionRate.tsx
 msgid "Token holders <0>cannot redeem their tokens</0> for any ETH when the redemption rate is 0."
-msgstr ""
+msgstr "Los poseedores <0>no pueden canjear sus tokens</0> por nada de ETH cuando la tasa de emisión es 0."
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx

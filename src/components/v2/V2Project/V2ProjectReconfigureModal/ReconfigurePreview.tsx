@@ -74,14 +74,17 @@ export default function ReconfigurePreview({
   const duration = fundingCycle.duration
   const hasDuration = duration?.gt(0)
 
-  const issuanceRate = formatIssuanceRate(
-    weightedAmount(
-      fundingCycle?.weight,
-      fundingCycleMetadata?.reservedRate.toNumber(),
-      BigNumber.from(1),
-      'payer',
-    ),
-  )
+  const issuanceRate =
+    formattedNum(
+      formatIssuanceRate(
+        weightedAmount(
+          fundingCycle?.weight,
+          fundingCycleMetadata?.reservedRate.toNumber(),
+          BigNumber.from(1),
+          'payer',
+        ),
+      ),
+    ) ?? '0'
 
   const reservedPercentage = parseFloat(
     formatReservedRate(fundingCycleMetadata?.reservedRate),

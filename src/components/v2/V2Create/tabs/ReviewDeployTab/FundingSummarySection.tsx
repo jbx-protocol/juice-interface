@@ -1,6 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { Col, Row, Space } from 'antd'
 import { BigNumber } from '@ethersproject/bignumber'
+import { parseEther } from '@ethersproject/units'
 
 import {
   useAppSelector,
@@ -10,7 +11,7 @@ import {
 } from 'hooks/AppSelector'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { useContext } from 'react'
-import { formattedNum, fromWad } from 'utils/formatNumber'
+import { formattedNum } from 'utils/formatNumber'
 import { V2CurrencyName } from 'utils/v2/currency'
 import {
   getDefaultFundAccessConstraint,
@@ -84,14 +85,17 @@ export default function FundingSummarySection() {
   const duration = fundingCycle.duration
   const hasDuration = duration?.gt(0)
 
-  const initialIssuanceRate = formatIssuanceRate(
-    weightedAmount(
-      fundingCycle?.weight,
-      fundingCycleMetadata?.reservedRate.toNumber(),
-      BigNumber.from(1),
-      'payer',
-    ),
-  )
+  const initialIssuanceRate =
+    formattedNum(
+      formatIssuanceRate(
+        weightedAmount(
+          fundingCycle?.weight,
+          fundingCycleMetadata?.reservedRate.toNumber(),
+          parseEther('1'),
+          'payer',
+        ),
+      ),
+    ) ?? '0'
 
   const reservedPercentage = parseFloat(
     formatReservedRate(fundingCycleMetadata?.reservedRate),
@@ -103,7 +107,7 @@ export default function FundingSummarySection() {
         weightedAmount(
           fundingCycle?.weight,
           fundingCycleMetadata?.reservedRate.toNumber(),
-          BigNumber.from(1),
+          parseEther('1'),
           'reserved',
         ) ?? '',
       ),
@@ -147,7 +151,7 @@ export default function FundingSummarySection() {
               isInitial
               inflationRate={
                 formattedNum(
-                  formatIssuanceRate(fromWad(fundingCycle?.weight)),
+                  formatIssuanceRate(fundingCycle?.weight.toString()),
                 ) ?? '0'
               }
             />

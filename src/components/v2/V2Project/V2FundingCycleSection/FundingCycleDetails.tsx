@@ -7,7 +7,7 @@ import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { V2FundingCycle, V2FundingCycleMetadata } from 'models/v2/fundingCycle'
 import { useContext } from 'react'
 import { formatDate } from 'utils/formatDate'
-import { formattedNum, fromWad } from 'utils/formatNumber'
+import { formattedNum } from 'utils/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { V2CurrencyName } from 'utils/v2/currency'
 import TooltipLabel from 'components/shared/TooltipLabel'
@@ -28,6 +28,7 @@ import {
 } from 'utils/v2/math'
 
 import { BigNumber } from '@ethersproject/bignumber'
+import { parseEther } from 'ethers/lib/utils'
 
 import { getBallotStrategyByAddress } from 'constants/v2/ballotStrategies/getBallotStrategiesByAddress'
 import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
@@ -80,7 +81,7 @@ export default function FundingCycleDetails({
         weightedAmount(
           fundingCycle?.weight,
           fundingCycleMetadata?.reservedRate.toNumber(),
-          BigNumber.from(1),
+          parseEther('1'),
           'reserved',
         ) ?? '',
       ),
@@ -102,7 +103,7 @@ export default function FundingCycleDetails({
         weightedAmount(
           fundingCycle?.weight,
           fundingCycleMetadata?.reservedRate.toNumber(),
-          BigNumber.from(1),
+          parseEther('1'),
           'payer',
         ) ?? '',
       ),
@@ -210,7 +211,7 @@ export default function FundingCycleDetails({
           contentStyle={{ minWidth: '10em' }}
         >
           <Trans>
-            {formattedNum(formatIssuanceRate(fromWad(fundingCycle?.weight)))}{' '}
+            {formattedNum(formatIssuanceRate(fundingCycle?.weight.toString()))}{' '}
             tokens/ETH
           </Trans>
         </Descriptions.Item>

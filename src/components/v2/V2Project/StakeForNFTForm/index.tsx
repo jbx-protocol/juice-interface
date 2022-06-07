@@ -3,10 +3,11 @@ import { Button, Divider, Form, Space, Col, Row, Select, Input } from 'antd'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
+import { MaxUint256 } from '@ethersproject/constants'
 
 import { useContext, useState } from 'react'
 import { NetworkContext } from 'contexts/networkContext'
-import { fromWad } from 'utils/formatNumber'
+import { fromWad, parseWad } from 'utils/formatNumber'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { NFTProjectContext } from 'contexts/v2/nftProjectContext'
 import { BigNumber } from '@ethersproject/bignumber'
@@ -17,9 +18,15 @@ import { useNFTMetadata } from 'hooks/v2/nft/NFTMetadata'
 
 import { useNFTResolverTokenURI } from 'hooks/v2/nft/NFTResolverTokenURI'
 
+import useERC20Approve from 'hooks/v2/nft/ERC20Approve'
+
+import useERC20Allowance from 'hooks/v2/nft/ERC20Allowance'
+
 import StakedTokenStatsSection from './StakedTokenStatsSection'
 import StakingTokenRangesModal from './StakingTokenRangesModal'
 import ConfirmStakeModal from './ConfirmStakeModal'
+
+import { VEBANNY_CONTRACT_ADDRESS } from 'constants/v2/nft/nftProject'
 
 const FakeTokenStatsData = {
   initialLocked: 0.0,
@@ -33,7 +40,7 @@ export default function StakeForNFTForm({
 }: {
   onClose: VoidFunction
 }) {
-  const { userAddress } = useContext(NetworkContext)
+  const { userAddress, onSelectWallet } = useContext(NetworkContext)
   const { tokenSymbol, tokenName, projectMetadata, tokenAddress } =
     useContext(V2ProjectContext)
   const { lockDurationOptions, resolverAddress } = useContext(NFTProjectContext)
@@ -41,7 +48,7 @@ export default function StakeForNFTForm({
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const [tokensStaked, setTokensStaked] = useState('0')
+  const [tokensStaked, setTokensStaked] = useState('1')
   const [lockDuration, setLockDuration] = useState(864000)
 
   const [tokenRangesModalVisible, setTokenRangesModalVisible] = useState(false)
@@ -76,9 +83,63 @@ export default function StakeForNFTForm({
   const nftHash = nftTokenURI ? nftTokenURI.split('ipfs://')[1] : undefined
   const { data: metadata, refetch } = useNFTMetadata(nftHash)
 
+  const { data: allowance } = useERC20Allowance(
+    tokenAddress,
+    userAddress,
+    VEBANNY_CONTRACT_ADDRESS,
+  )
+  const hasAdequateApproval = allowance
+    ? allowance.gte(parseWad(tokensStaked))
+    : false
+
+  const approveTx = useERC20Approve()
+
+  async function approve() {
+    if (!userAddress && onSelectWallet) {
+      onSelectWallet()
+    }
+
+    const txSuccess = await approveTx({ value: MaxUint256 })
+
+    if (!txSuccess) {
+      return
+    }
+  }
+
   const handleReviewButtonClick = () => {
     refetch()
     setConfirmStakeModalVisible(true)
+  }
+
+  const renderActionButton = () => {
+    if (!userAddress && onSelectWallet) {
+      return (
+        <Button
+          block
+          style={{ whiteSpace: 'pre' }}
+          onClick={() => onSelectWallet()}
+        >
+          Connect Wallet
+        </Button>
+      )
+    }
+    if (!hasAdequateApproval) {
+      return (
+        <Button block style={{ whiteSpace: 'pre' }} onClick={approve}>
+          Approve Token for Transaction
+        </Button>
+      )
+    } else {
+      return (
+        <Button
+          block
+          style={{ whiteSpace: 'pre' }}
+          onClick={handleReviewButtonClick}
+        >
+          Review and Confirm Stake
+        </Button>
+      )
+    }
   }
 
   return (
@@ -195,14 +256,7 @@ export default function StakeForNFTForm({
 
       {/* <StakingNFTCarousel activeIdx={1} stakingNFTs={FakeStakingNFTs} /> */}
       <Space size="middle" direction="vertical" style={{ width: '100%' }}>
-        <Button
-          block
-          style={{ whiteSpace: 'pre' }}
-          onClick={handleReviewButtonClick}
-          disabled={!userAddress}
-        >
-          {userAddress ? 'Review and Confirm Stake' : 'Connect Wallet'}
-        </Button>
+        {renderActionButton()}
       </Space>
       <Divider />
       {/* <OwnedNFTsSection ownedNFTs={FakeOwnedNFTS} tokenSymbol={tokenSymbol!} /> */}

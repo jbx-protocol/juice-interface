@@ -35,11 +35,7 @@ export const veBannyAbi = [
   { inputs: [], name: 'INVALID_BLOCK', type: 'error' },
   { inputs: [], name: 'INVALID_LOCK_DURATION', type: 'error' },
   { inputs: [], name: 'INVALID_LOCK_EXTENSION', type: 'error' },
-  {
-    inputs: [],
-    name: 'INVALID_PUBLIC_EXTENSION_FLAG_VALUE',
-    type: 'error',
-  },
+  { inputs: [], name: 'INVALID_PUBLIC_EXTENSION_FLAG_VALUE', type: 'error' },
   { inputs: [], name: 'LOCK_DURATION_NOT_OVER', type: 'error' },
   { inputs: [], name: 'LOCK_PERIOD_NOT_OVER', type: 'error' },
   { inputs: [], name: 'NON_EXISTENT_TOKEN', type: 'error' },
@@ -87,12 +83,7 @@ export const veBannyAbi = [
         name: 'operator',
         type: 'address',
       },
-      {
-        indexed: false,
-        internalType: 'bool',
-        name: 'approved',
-        type: 'bool',
-      },
+      { indexed: false, internalType: 'bool', name: 'approved', type: 'bool' },
     ],
     name: 'ApprovalForAll',
     type: 'event',
@@ -285,12 +276,7 @@ export const veBannyAbi = [
         name: 'claimedAmount',
         type: 'uint256',
       },
-      {
-        indexed: false,
-        internalType: 'string',
-        name: 'memo',
-        type: 'string',
-      },
+      { indexed: false, internalType: 'string', name: 'memo', type: 'string' },
       {
         indexed: false,
         internalType: 'address',
@@ -348,18 +334,8 @@ export const veBannyAbi = [
   {
     anonymous: false,
     inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'from',
-        type: 'address',
-      },
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'to',
-        type: 'address',
-      },
+      { indexed: true, internalType: 'address', name: 'from', type: 'address' },
+      { indexed: true, internalType: 'address', name: 'to', type: 'address' },
       {
         indexed: true,
         internalType: 'uint256',
@@ -455,6 +431,13 @@ export const veBannyAbi = [
   },
   {
     inputs: [],
+    name: 'contractURI',
+    outputs: [{ internalType: 'string', name: '', type: 'string' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
     name: 'count',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
@@ -500,11 +483,7 @@ export const veBannyAbi = [
       {
         components: [
           { internalType: 'uint256', name: 'tokenId', type: 'uint256' },
-          {
-            internalType: 'uint256',
-            name: 'updatedDuration',
-            type: 'uint256',
-          },
+          { internalType: 'uint256', name: 'updatedDuration', type: 'uint256' },
         ],
         internalType: 'struct JBLockExtensionData[]',
         name: '_lockExtensionData',
@@ -513,11 +492,7 @@ export const veBannyAbi = [
     ],
     name: 'extendLock',
     outputs: [
-      {
-        internalType: 'uint256[]',
-        name: 'newTokenIds',
-        type: 'uint256[]',
-      },
+      { internalType: 'uint256[]', name: 'newTokenIds', type: 'uint256[]' },
     ],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -587,11 +562,7 @@ export const veBannyAbi = [
       { internalType: 'uint256', name: '_duration', type: 'uint256' },
       { internalType: 'address', name: '_beneficiary', type: 'address' },
       { internalType: 'bool', name: '_useJbToken', type: 'bool' },
-      {
-        internalType: 'bool',
-        name: '_allowPublicExtension',
-        type: 'bool',
-      },
+      { internalType: 'bool', name: '_allowPublicExtension', type: 'bool' },
     ],
     name: 'lock',
     outputs: [{ internalType: 'uint256', name: 'tokenId', type: 'uint256' }],
@@ -629,11 +600,7 @@ export const veBannyAbi = [
     inputs: [],
     name: 'operatorStore',
     outputs: [
-      {
-        internalType: 'contract IJBOperatorStore',
-        name: '',
-        type: 'address',
-      },
+      { internalType: 'contract IJBOperatorStore', name: '', type: 'address' },
     ],
     stateMutability: 'view',
     type: 'function',
@@ -740,11 +707,7 @@ export const veBannyAbi = [
       {
         components: [
           { internalType: 'uint256', name: 'tokenId', type: 'uint256' },
-          {
-            internalType: 'bool',
-            name: 'allowPublicExtension',
-            type: 'bool',
-          },
+          { internalType: 'bool', name: 'allowPublicExtension', type: 'bool' },
         ],
         internalType: 'struct JBAllowPublicExtensionData[]',
         name: '_allowPublicExtensionData',
@@ -850,11 +813,7 @@ export const veBannyAbi = [
     inputs: [],
     name: 'tokenStore',
     outputs: [
-      {
-        internalType: 'contract IJBTokenStore',
-        name: '',
-        type: 'address',
-      },
+      { internalType: 'contract IJBTokenStore', name: '', type: 'address' },
     ],
     stateMutability: 'view',
     type: 'function',
@@ -906,11 +865,7 @@ export const veBannyAbi = [
       {
         components: [
           { internalType: 'uint256', name: 'tokenId', type: 'uint256' },
-          {
-            internalType: 'address',
-            name: 'beneficiary',
-            type: 'address',
-          },
+          { internalType: 'address', name: 'beneficiary', type: 'address' },
         ],
         internalType: 'struct JBUnlockData[]',
         name: '_unlockData',

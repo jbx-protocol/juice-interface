@@ -1,8 +1,12 @@
 import { Trans } from '@lingui/macro'
 import { Col, Divider, Modal, Row, Image } from 'antd'
+
+import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
+import { useLockTx } from 'hooks/v2/nft/LockTx'
 
 import { useContext } from 'react'
+import { parseWad } from 'utils/formatNumber'
 
 import { detailedTimeString } from 'utils/formatTime'
 
@@ -33,21 +37,9 @@ export default function ConfirmStakeModal({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  // const { userAddress, onSelectWallet } = useContext(NetworkContext)
-  // const { tokenAddress } = useContext(V2ProjectContext)
-  // const { data: allowance } = useERC20Allowance(
-  //   tokenAddress,
-  //   userAddress,
-  //   VEBANNY_CONTRACT_ADDRESS,
-  // )
-  // const tokenAllowance = allowance
-  //   ? parseInt(fromWad(allowance, 18))
-  //   : undefined
-  // const hasAdequateApproval = tokenAllowance
-  //   ? tokenAllowance >= tokensStaked
-  //   : false
+  const { userAddress, onSelectWallet } = useContext(NetworkContext)
 
-  // const tokensStakedInWad = parseWad(tokensStaked)
+  const tokensStakedInWad = parseWad(tokensStaked)
 
   const formattedLockDuration = detailedTimeString({
     timeSeconds: lockDuration,
@@ -58,49 +50,36 @@ export default function ConfirmStakeModal({
     fullWords: true,
   })
 
-  // const lockTx = useLockTx()
-  // const approveTx = useERC20Approve()
+  const lockTx = useLockTx()
 
-  // async function approve() {
-  //   if (!userAddress && onSelectWallet) {
-  //     onSelectWallet()
-  //   }
+  async function lock() {
+    // Prompt wallet connect if no wallet connected
+    if (!userAddress && onSelectWallet) {
+      onSelectWallet()
+    }
 
-  //   const txSuccess = await approveTx({ value: MaxUint256 })
+    const txSuccess = await lockTx(
+      {
+        value: tokensStakedInWad,
+        lockDuration: lockDuration,
+        beneficiary: userAddress!,
+      },
+      {
+        onConfirmed() {},
+        onDone() {},
+      },
+    )
 
-  //   if (!txSuccess) {
-  //     return
-  //   }
-  // }
-
-  // async function lock() {
-  //   // Prompt wallet connect if no wallet connected
-  //   if (!userAddress && onSelectWallet) {
-  //     onSelectWallet()
-  //   }
-
-  //   const txSuccess = await lockTx(
-  //     {
-  //       value: tokensStakedInWad,
-  //       lockDuration: lockDuration,
-  //       beneficiary: userAddress!,
-  //     },
-  //     {
-  //       onConfirmed() {},
-  //       onDone() {},
-  //     },
-  //   )
-
-  //   if (!txSuccess) {
-  //     return
-  //   }
-  // }
+    if (!txSuccess) {
+      return
+    }
+  }
 
   return (
     <Modal
       visible={visible}
       onCancel={onCancel}
-      onOk={onOk}
+      onOk={lock}
       okText={`Lock $${tokenSymbol}`}
     >
       <h2>Confirm Stake</h2>

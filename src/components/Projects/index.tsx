@@ -190,7 +190,7 @@ export default function Projects() {
         >
           <ProjectsTabs selectedTab={selectedTab} />
 
-          {selectedTab === 'all' && !searchText ? (
+          {selectedTab === 'all' ? (
             <ProjectsFilterAndSort
               includeV1={includeV1}
               includeV1_1={includeV1_1}

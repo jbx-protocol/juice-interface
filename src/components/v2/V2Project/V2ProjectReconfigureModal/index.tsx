@@ -516,9 +516,13 @@ export default function V2ProjectReconfigureModal({
       onOk={reconfigureFundingCycle}
       onCancel={handleGlobalModalClose}
       okText={t`Deploy new project configuration`}
-      okButtonProps={{ disabled: !fundingHasSavedChanges }}
+      okButtonProps={{
+        disabled: !fundingHasSavedChanges,
+        style: { marginBottom: '15px' },
+      }}
       confirmLoading={reconfigureTxLoading}
       width={650}
+      style={{ paddingBottom: 20, paddingTop: 20 }}
       centered
       destroyOnClose
     >

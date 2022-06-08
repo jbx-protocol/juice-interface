@@ -9,7 +9,6 @@ import { useContext, useState } from 'react'
 import { NetworkContext } from 'contexts/networkContext'
 import { fromWad, parseWad } from 'utils/formatNumber'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
-import { NFTProjectContext } from 'contexts/v2/nftProjectContext'
 import { BigNumber } from '@ethersproject/bignumber'
 import useERC20BalanceOf from 'hooks/v2/contractReader/ERC20BalanceOf'
 import { detailedTimeString } from 'utils/formatTime'
@@ -22,18 +21,15 @@ import useERC20Approve from 'hooks/v2/nft/ERC20Approve'
 
 import useERC20Allowance from 'hooks/v2/nft/ERC20Allowance'
 
+import { VeNftProjectContext } from 'contexts/v2/nftProjectContext'
+
 import StakedTokenStatsSection from './StakedTokenStatsSection'
 import StakingTokenRangesModal from './StakingTokenRangesModal'
 import ConfirmStakeModal from './ConfirmStakeModal'
+import OwnedNFTSection from './OwnedNFTSection'
 
 import { VEBANNY_CONTRACT_ADDRESS } from 'constants/v2/nft/nftProject'
-
-const FakeTokenStatsData = {
-  initialLocked: 0.0,
-  totalStaked: 2668000000,
-  userTotalLocked: 10159000,
-  totalStakedPeriodInDays: 10,
-}
+import StakingNFTCarousel from './StakingNFTCarousel'
 
 export default function StakeForNFTForm({
   onClose,
@@ -43,7 +39,13 @@ export default function StakeForNFTForm({
   const { userAddress, onSelectWallet } = useContext(NetworkContext)
   const { tokenSymbol, tokenName, projectMetadata, tokenAddress } =
     useContext(V2ProjectContext)
-  const { lockDurationOptions, resolverAddress } = useContext(NFTProjectContext)
+  const {
+    lockDurationOptions,
+    resolverAddress,
+    baseImagesHash,
+    userTokens,
+    variants,
+  } = useContext(VeNftProjectContext)
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -254,16 +256,21 @@ export default function StakeForNFTForm({
         </p>
       </div>
 
-      {/* <StakingNFTCarousel activeIdx={1} stakingNFTs={FakeStakingNFTs} /> */}
+      {variants && baseImagesHash && (
+        <StakingNFTCarousel
+          activeIdx={0}
+          variants={variants}
+          baseImagesHash={baseImagesHash}
+        />
+      )}
       <Space size="middle" direction="vertical" style={{ width: '100%' }}>
         {renderActionButton()}
       </Space>
       <Divider />
-      {/* <OwnedNFTsSection ownedNFTs={FakeOwnedNFTS} tokenSymbol={tokenSymbol!} /> */}
-      <StakedTokenStatsSection
-        {...FakeTokenStatsData}
-        tokenSymbol={tokenSymbol!}
-      />
+      {userTokens && (
+        <OwnedNFTSection tokenSymbol={tokenSymbol!} userTokens={userTokens} />
+      )}
+      <StakedTokenStatsSection tokenSymbol={tokenSymbol!} />
       <Form.Item>
         <Button block onClick={onClose}>
           <Trans>Close</Trans>

@@ -1,18 +1,18 @@
 import { Plural } from '@lingui/macro'
 import { Card, Col, Row } from 'antd'
+import { useNFTGetSummaryStats } from 'hooks/v2/nft/NFTGetSummaryStats'
 import { formattedNum } from 'utils/formatNumber'
 
 export interface StakedTokenStatsSectionProps {
   tokenSymbol: string
-  totalStaked: number
-  totalStakedPeriodInDays: number
 }
 
 export default function StakedTokenStatsSection({
   tokenSymbol,
-  totalStaked,
-  totalStakedPeriodInDays,
 }: StakedTokenStatsSectionProps) {
+  const { totalStaked, totalStakedPeriod } = useNFTGetSummaryStats()
+  const totalStakedPeriodInDays = totalStakedPeriod / (60 * 60 * 24)
+
   return (
     <Card>
       <Row>

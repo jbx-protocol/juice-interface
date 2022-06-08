@@ -1,19 +1,19 @@
 import { Card, Image } from 'antd'
 
 type StakingTokenRangeProps = {
-  tokenSvg: string
+  image: string
   tokenMin: number
   tokenMax: number
 }
 
 export default function StakingTokenRange({
-  tokenSvg,
+  image,
   tokenMin,
   tokenMax,
 }: StakingTokenRangeProps) {
   return (
     <Card>
-      <Image src={tokenSvg} alt="token" />
+      <Image src={image} alt="token" />
       <p>
         {tokenMin} - {tokenMax}
       </p>

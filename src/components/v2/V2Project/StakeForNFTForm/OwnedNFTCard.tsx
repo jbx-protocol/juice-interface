@@ -1,25 +1,30 @@
 import { Button, Card, Col, Row, Image } from 'antd'
 
 import { ThemeContext } from 'contexts/themeContext'
+import { VeNftToken } from 'models/v2/stakingNFT'
 
 import { useContext } from 'react'
 import { formattedNum } from 'utils/formatNumber'
+import { detailedTimeString } from 'utils/formatTime'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
-import { OwnedNFT } from './OwnedNFTSection'
-
 type OwnedNFTCardProps = {
-  nft: OwnedNFT
+  token: VeNftToken
   idx: number
   tokenSymbol: string
 }
 
 export default function OwnedNFTCard({
-  nft,
+  token,
   idx,
   tokenSymbol,
 }: OwnedNFTCardProps) {
-  const { stakedAmount, stakedPeriod, nftSvg } = nft
+  const { lockInfo, metadata } = token
+  const { amount, end, duration } = lockInfo
+  const { thumbnailUri } = metadata
+
+  const remaining = Math.round(end - Date.now() / 1000)
+
   const bordered = idx % 2 === 0
 
   const { colors } = useContext(ThemeContext).theme
@@ -38,8 +43,18 @@ export default function OwnedNFTCard({
               <p>Staked period:</p>
             </Col>
             <Col span={12}>
-              <p>{formattedNum(stakedAmount)}</p>
-              <p>{stakedPeriod} days / 0 remaining</p>
+              <p>{formattedNum(amount)}</p>
+              <p>
+                {detailedTimeString({
+                  timeSeconds: duration,
+                  fullWords: true,
+                })}{' '}
+                /{' '}
+                {detailedTimeString({
+                  timeSeconds: remaining,
+                })}{' '}
+                remaining
+              </p>
             </Col>
           </Row>
           <Row align="top" gutter={0}>
@@ -47,7 +62,7 @@ export default function OwnedNFTCard({
           </Row>
         </Col>
         <Col span={6}>
-          <Image src={nftSvg} alt="nft" preview={false} />
+          <Image src={thumbnailUri} alt="nft" preview={false} />
         </Col>
       </Row>
     </Card>

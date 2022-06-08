@@ -1,49 +1,59 @@
 import { Row, Col, Image } from 'antd'
-import { StakingNFT } from 'models/v2/stakingNFT'
+import { VeNftVariant } from 'models/v2/stakingNFT'
+import { getNFTBaseImage } from 'utils/v2/nftProject'
 
 type StakingNFTCarouselProps = {
   activeIdx: number
-  stakingNFTs: StakingNFT[]
+  variants: VeNftVariant[]
+  baseImagesHash: string
 }
 
 export default function StakingNFTCarousel({
   activeIdx,
-  stakingNFTs,
+  variants,
+  baseImagesHash,
 }: StakingNFTCarouselProps) {
-  // const nonActiveStyle = { opacity: 0.3 }
+  const prevImage =
+    activeIdx - 1 < 0
+      ? undefined
+      : getNFTBaseImage(baseImagesHash, variants[activeIdx - 1])
+  const currentImage = getNFTBaseImage(baseImagesHash, variants[activeIdx])
+  const nextImage =
+    activeIdx + 1 >= variants.length
+      ? undefined
+      : getNFTBaseImage(baseImagesHash, variants[activeIdx + 1])
+
+  const nonActiveStyle = { opacity: 0.3 }
 
   const dims = 150
 
-  const nftimg =
-    'https://gateway.pinata.cloud/ipfs/bafybeifmoblvbbtir5xf3dtfk727m7olmji4r4pmd7r3lfbjip2bdllxfi/281s.png'
-
   return (
     <Row>
-      {/* <Col span={8}>
-        {prevNFTsvg && (
-          <Image
-            src={nftimg}
-            preview={false}
-            style={nonActiveStyle}
-            width={dims}
-            height={dims}
-          />
-        )}
-      </Col> */}
       <Col span={8}>
-        <Image src={nftimg} preview={false} width={dims} height={dims} />
-      </Col>
-      {/* <Col span={8}>
-        {nextNFTsvg && (
+        {prevImage && (
           <Image
-            src={nftimg}
+            src={prevImage}
             preview={false}
             style={nonActiveStyle}
             width={dims}
             height={dims}
           />
         )}
-      </Col> */}
+      </Col>
+      <Col span={8}>
+        <Image src={currentImage} preview={false} width={dims} height={dims} />
+      </Col>
+      <Col span={8}>
+        {nextImage && (
+          <Image
+            src={nextImage}
+            preview={false}
+            style={nonActiveStyle}
+            width={dims}
+            height={dims}
+          />
+        )}
+      </Col>
     </Row>
   )
 }

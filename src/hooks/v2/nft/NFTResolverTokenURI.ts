@@ -1,8 +1,9 @@
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 import { parseWad } from 'utils/formatNumber'
 
+import { useNFTResolverContract } from 'hooks/v2/nft/NFTResolverContract'
+
 import useV2ContractReader from '../contractReader/V2ContractReader'
-import { useNFTResolverContract } from './NFTResolverContract'
 
 export function useNFTResolverTokenURI(
   resolverAddress: string | undefined,

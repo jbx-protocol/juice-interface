@@ -12,7 +12,7 @@ import useProjectTerminals from 'hooks/v2/contractReader/ProjectTerminals'
 import { usePaymentTerminalBalance } from 'hooks/v2/contractReader/PaymentTerminalBalance'
 import useProjectToken from 'hooks/v2/contractReader/ProjectToken'
 import useProjectDistributionLimit from 'hooks/v2/contractReader/ProjectDistributionLimit'
-import { useMemo } from 'react'
+import { useContext, useMemo } from 'react'
 import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { NO_CURRENCY, V2CurrencyName, V2_CURRENCY_ETH } from 'utils/v2/currency'
@@ -35,18 +35,22 @@ import { useProjectsQuery } from 'hooks/Projects'
 
 import { first } from 'lodash'
 
-import {
-  NFTProjectContext,
-  NFTProjectContextType,
-} from 'contexts/v2/nftProjectContext'
-
 import { useNFTLockDurationOptions } from 'hooks/v2/nft/NFTLockDurationOptions'
-
-import { StakingNFT } from 'models/v2/stakingNFT'
 
 import { useNFTBaseImagesHash } from 'hooks/v2/nft/NFTBaseImagesHash'
 
 import { useNFTResolverAddress } from 'hooks/v2/nft/NFTResolverAddress'
+
+import {
+  VeNftProjectContextType,
+  VeNftProjectContext,
+} from 'contexts/v2/nftProjectContext'
+
+import { useNFTGetVariants } from 'hooks/v2/nft/NFTGetVariants'
+
+import { useNFTGetUserTokens } from 'hooks/v2/nft/NFTGetUserTokens'
+
+import { NetworkContext } from 'contexts/networkContext'
 
 import { layouts } from 'constants/styles/layouts'
 
@@ -61,32 +65,24 @@ import { V2ArchivedProjectIds } from 'constants/v2/archivedProjects'
 export default function V2Dashboard({ projectId }: { projectId: number }) {
   //TODO: Move NFT stuff
 
+  const { userAddress } = useContext(NetworkContext)
+  const nftProjectName = 'veBanny'
   const { data: lockDurationOptions } = useNFTLockDurationOptions()
   const { data: resolverAddress } = useNFTResolverAddress()
-
   const baseImagesHash = useNFTBaseImagesHash()
+  const variants = useNFTGetVariants()
+  const userTokens = useNFTGetUserTokens(userAddress)
 
-  const nfts: StakingNFT[] = [
-    {
-      name: 'Nammu',
-      id: 1,
-      tokensStakedMin: 1,
-      tokensStakedMax: 99,
-    },
-    {
-      name: 'Farceur',
-      id: 2,
-      tokensStakedMin: 100,
-      tokensStakedMax: 199,
-    },
-  ]
-
-  const nftProject: NFTProjectContextType = {
+  const veNftProject: VeNftProjectContextType = {
+    name: nftProjectName,
     lockDurationOptions,
     baseImagesHash,
-    nfts,
     resolverAddress,
+    variants,
+    userTokens,
   }
+
+  //TODO: Move NFT stuff
 
   const { data: metadataCID, loading: metadataURILoading } =
     useProjectMetadataContent(projectId)
@@ -248,7 +244,7 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
 
   return (
     <V2ProjectContext.Provider value={project}>
-      <NFTProjectContext.Provider value={nftProject}>
+      <VeNftProjectContext.Provider value={veNftProject}>
         <div style={layouts.maxWidth}>
           <V2Project />
 
@@ -256,7 +252,7 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
             <ScrollToTopButton />
           </div>
         </div>
-      </NFTProjectContext.Provider>
+      </VeNftProjectContext.Provider>
     </V2ProjectContext.Provider>
   )
 }

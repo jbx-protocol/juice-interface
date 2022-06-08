@@ -11,14 +11,14 @@ import { useContext, useState } from 'react'
 import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { TransactorInstance } from 'hooks/Transactor'
-import { JBDiscordLink } from 'components/Landing/QAs'
+import { JBDiscordLink } from 'pages/home/QAs'
 
-import ArchiveV1Project from 'components/v1/V1Project/ArchiveV1Project'
+import ArchiveV1Project from 'pages/p/V1Project/ArchiveV1Project'
 import { NetworkContext } from 'contexts/networkContext'
-import LaunchProjectPayerButton from 'components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerButton'
+import LaunchProjectPayerButton from 'pages/v2/p/V2Project/LaunchProjectPayer/LaunchProjectPayerButton'
 import { ThemeContext } from 'contexts/themeContext'
 import { DeployProjectPayerTxArgs } from 'hooks/v2/transactor/DeployProjectPayerTx'
-import ArchiveV2Project from 'components/v2/V2Project/ArchiveV2Project'
+import ArchiveV2Project from 'pages/v2/p/V2Project/ArchiveV2Project'
 
 export default function ProjectToolDrawerModal({
   visible,

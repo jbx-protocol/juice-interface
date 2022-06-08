@@ -3,7 +3,7 @@ import { Content } from 'antd/lib/layout/layout'
 
 import { NetworkContext } from 'contexts/networkContext'
 import { NetworkName } from 'models/network-name'
-import { useContext, useLayoutEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 import Navbar from 'components/Navbar'
 
@@ -11,9 +11,11 @@ import useMobile from 'hooks/Mobile'
 
 import { readNetwork } from 'constants/networks'
 
-import Router from './Router'
+interface Props {
+  children: JSX.Element
+}
 
-function App() {
+function App({ children }: Props) {
   const [switchNetworkModalVisible, setSwitchNetworkModalVisible] =
     useState<boolean>()
 
@@ -28,7 +30,7 @@ function App() {
     NetworkName.rinkeby,
   ]
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!signerNetwork) return
 
     setSwitchNetworkModalVisible(signerNetwork !== networkName)
@@ -45,9 +47,7 @@ function App() {
         }}
       >
         <Navbar />
-        <Content style={isMobile ? { paddingTop: 40 } : {}}>
-          <Router />
-        </Content>
+        <Content style={isMobile ? { paddingTop: 40 } : {}}>{children}</Content>
       </Layout>
 
       <Modal
@@ -68,7 +68,7 @@ function App() {
             <h2>Connect wallet to {networkName}</h2>
             <div>Or, go to:</div>
             {supportedNetworks
-              .filter(n => process.env.REACT_APP_INFURA_NETWORK !== n)
+              .filter(n => process.env.NEXT_PUBLIC_INFURA_NETWORK !== n)
               .map(_n => {
                 const subDomain = _n === NetworkName.mainnet ? '' : _n + '.'
 

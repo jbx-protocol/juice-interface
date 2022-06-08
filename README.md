@@ -60,11 +60,11 @@ Take the following steps to create an Infura project for local development:
 Next, copy the following fields into your `.env` file:
 
 - **Project ID**. In the `.env` file, copy the **Project ID** into the
-  `REACT_APP_INFURA_ID` variable.
+  `NEXT_PUBLIC_INFURA_ID` variable.
 - **Endpoint**. This is the Ethereum network that will be used for testing. If
   you don't know which endpoint to use, select **mainnet**. In the `.env` file,
   copy the network name (e.g. 'mainnet', not the url) into the
-  `REACT_APP_INFURA_NETWORK` variable.
+  `NEXT_PUBLIC_INFURA_NETWORK` variable.
 
 #### Piñata
 
@@ -80,9 +80,9 @@ Take the following steps to set up Piñata for local development:
    - Enable the **Admin** toggle in the **Admin** field.
 1. Copy the following fields into your `.env` file:
    - **API Key**. In the `.env` file, copy the **API Key** into the
-     `REACT_APP_PINATA_PINNER_KEY` variable.
+     `NEXT_PUBLIC_PINATA_PINNER_KEY` variable.
    - **API Secret**. In the `.env` file, copy the **API Secret** into the
-     `REACT_APP_PINATA_PINNER_SECRET` variable.
+     `NEXT_PUBLIC_PINATA_PINNER_SECRET` variable.
 
 #### Blocknative
 
@@ -94,7 +94,7 @@ Take the following steps to set up Blocknative for local development:
 
 1. Create a Blocknative API key
    ([learn more](https://docs.blocknative.com/webhook-api#setup-api-key)).
-1. Copy the API key into the `REACT_APP_BLOCKNATIVE_API_KEY` variable of the
+1. Copy the API key into the `NEXT_PUBLIC_BLOCKNATIVE_API_KEY` variable of the
    `.env` file.
 
 #### The Graph
@@ -108,7 +108,7 @@ Take the following steps to set up Juicebox's subgraph for local development:
 2. Go to
    [the dev channel](https://discord.com/channels/939317843059679252/939705688563810304)
    and inquire about mainnet and rinkeby subgraph URLs.
-3. Copy the URL into the `REACT_APP_SUBGRAPH_URL` variable of the `.env` file.
+3. Copy the URL into the `NEXT_PUBLIC_SUBGRAPH_URL` variable of the `.env` file.
 
 ### Usage
 

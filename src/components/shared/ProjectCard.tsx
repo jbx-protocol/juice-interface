@@ -13,7 +13,7 @@ import { getTerminalVersion } from 'utils/v1/terminals'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { Trans } from '@lingui/macro'
 
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 
 import ProjectLogo from './ProjectLogo'
 import ETHAmount from './currency/ETHAmount'
@@ -111,7 +111,7 @@ export default function ProjectCard({
         overflow: 'hidden',
       }}
       key={`${_project.id}_${_project.cv}`}
-      to={
+      href={
         _project.cv === '2'
           ? `/v2/p/${_project.projectId}`
           : `/p/${_project?.handle}`

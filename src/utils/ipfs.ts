@@ -8,12 +8,12 @@ import { consolidateMetadata, ProjectMetadataV4 } from 'models/project-metadata'
 import { readNetwork } from 'constants/networks'
 import { IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
 
-const pinata_api_key = process.env.REACT_APP_PINATA_PINNER_KEY
-const pinata_secret_api_key = process.env.REACT_APP_PINATA_PINNER_SECRET
+const pinata_api_key = process.env.NEXT_PUBLIC_PINATA_PINNER_KEY
+const pinata_secret_api_key = process.env.NEXT_PUBLIC_PINATA_PINNER_SECRET
 
 if (!pinata_api_key || !pinata_secret_api_key) {
   throw new Error(
-    'Missing .env vars REACT_APP_PINATA_PINNER_KEY or REACT_APP_PINATA_PINNER_SECRET',
+    'Missing .env vars NEXT_PUBLIC_PINATA_PINNER_KEY or NEXT_PUBLIC_PINATA_PINNER_SECRET',
   )
 }
 

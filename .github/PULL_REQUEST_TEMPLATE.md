@@ -1,6 +1,6 @@
 ## What does this PR do and why?
 
-_Provide a description of what this PR does. Link to any relevant GitHub issues,
+_Provide a description of what this PR does. Link href any relevant GitHub issues,
 Notion tasks or Discord discussions._
 
 ## Screenshots or screen recordings

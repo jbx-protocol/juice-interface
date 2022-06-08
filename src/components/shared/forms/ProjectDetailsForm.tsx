@@ -5,7 +5,7 @@ import { FormItems } from 'components/shared/formItems'
 import { normalizeHandle } from 'utils/formatHandle'
 import { cidFromUrl, unpinIpfsFileByCid } from 'utils/ipfs'
 import { CSSProperties } from 'react'
-import TabDescription from 'components/v2/V2Create/TabDescription'
+import TabDescription from 'pages/create/TabDescription'
 
 export type ProjectDetailsFormFields = {
   name: string

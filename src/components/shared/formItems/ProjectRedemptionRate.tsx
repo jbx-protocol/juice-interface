@@ -10,7 +10,7 @@ import {
   useLayoutEffect,
   useState,
 } from 'react'
-import FormItemLabel from 'components/v2/V2Create/FormItemLabel'
+import FormItemLabel from 'pages/create/FormItemLabel'
 
 import ExternalLink from 'components/shared/ExternalLink'
 import { MinimalCollapse } from 'components/shared/MinimalCollapse'

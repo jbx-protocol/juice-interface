@@ -1,6 +1,6 @@
 import { NetworkName } from 'models/network-name'
 
-const infuraId = process.env.REACT_APP_INFURA_ID
+const infuraId = process.env.NEXT_PUBLIC_INFURA_ID
 
 type NetworkInfo = {
   name: NetworkName
@@ -14,27 +14,12 @@ type NetworkInfo = {
 }
 
 export const NETWORKS: Record<number, NetworkInfo> = {
-  31337: {
-    name: NetworkName.localhost,
-    color: '#666666',
-    chainId: 31337,
-    blockExplorer: '',
-    rpcUrl: 'http://' + window.location.hostname + ':8545',
-  },
   1: {
     name: NetworkName.mainnet,
     color: '#ff8b9e',
     chainId: 1,
     rpcUrl: `https://mainnet.infura.io/v3/${infuraId}`,
     blockExplorer: 'https://etherscan.io/',
-  },
-  42: {
-    name: NetworkName.kovan,
-    color: '#7003DD',
-    chainId: 42,
-    rpcUrl: `https://kovan.infura.io/v3/${infuraId}`,
-    blockExplorer: 'https://kovan.etherscan.io/',
-    faucet: 'https://gitter.im/kovan-testnet/faucet', //https://faucet.kovan.network/
   },
   4: {
     name: NetworkName.rinkeby,
@@ -52,44 +37,6 @@ export const NETWORKS: Record<number, NetworkInfo> = {
     blockExplorer: 'https://ropsten.etherscan.io/',
     rpcUrl: `https://ropsten.infura.io/v3/${infuraId}`,
   },
-  5: {
-    name: NetworkName.goerli,
-    color: '#0975F6',
-    chainId: 5,
-    faucet: 'https://goerli-faucet.slock.it/',
-    blockExplorer: 'https://goerli.etherscan.io/',
-    rpcUrl: `https://goerli.infura.io/v3/${infuraId}`,
-  },
-  100: {
-    name: NetworkName.xdai,
-    color: '#48a9a6',
-    chainId: 100,
-    price: 1,
-    gasPrice: 1000000000,
-    rpcUrl: 'https://dai.poa.network',
-    faucet: 'https://xdai-faucet.top/',
-    blockExplorer: 'https://blockscout.com/poa/xdai/',
-  },
-  137: {
-    name: NetworkName.matic,
-    color: '#2bbdf7',
-    chainId: 137,
-    price: 1,
-    gasPrice: 1000000000,
-    rpcUrl: 'https://rpc-mainnet.maticvigil.com',
-    faucet: 'https://faucet.matic.network/',
-    blockExplorer: 'https://explorer-mainnet.maticvigil.com//',
-  },
-  80001: {
-    name: NetworkName.mumbai,
-    color: '#92D9FA',
-    chainId: 80001,
-    price: 1,
-    gasPrice: 1000000000,
-    rpcUrl: 'https://rpc-mumbai.maticvigil.com',
-    faucet: 'https://faucet.matic.network/',
-    blockExplorer: 'https://mumbai-explorer.matic.today/',
-  },
 }
 
 const NETWORKS_BY_NAME = Object.values(NETWORKS).reduce(
@@ -101,4 +48,4 @@ const NETWORKS_BY_NAME = Object.values(NETWORKS).reduce(
 )
 
 export const readNetwork =
-  NETWORKS_BY_NAME[process.env.REACT_APP_INFURA_NETWORK as NetworkName]
+  NETWORKS_BY_NAME[process.env.NEXT_PUBLIC_INFURA_NETWORK as NetworkName]

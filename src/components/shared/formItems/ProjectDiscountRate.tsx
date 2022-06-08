@@ -3,10 +3,10 @@ import { Trans } from '@lingui/macro'
 
 import { CSSProperties, useContext } from 'react'
 import { ThemeContext } from 'contexts/themeContext'
-import FormItemLabel from 'components/v2/V2Create/FormItemLabel'
+import FormItemLabel from 'pages/create/FormItemLabel'
 import { defaultFundingCycleData } from 'redux/slices/editingV2Project'
 
-import { DISCOUNT_RATE_EXPLANATION } from 'components/v2/V2Project/V2FundingCycleSection/settingExplanations'
+import { DISCOUNT_RATE_EXPLANATION } from 'pages/v2/p/V2Project/V2FundingCycleSection/settingExplanations'
 
 import { FormItemExt } from './formItemExt'
 import NumberSlider from '../inputs/NumberSlider'

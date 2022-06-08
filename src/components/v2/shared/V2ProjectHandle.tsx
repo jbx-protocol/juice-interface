@@ -2,7 +2,7 @@ import { BigNumberish } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
 import ProjectVersionBadge from 'components/shared/ProjectVersionBadge'
 import { CSSProperties } from 'react'
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 
 export default function V2ProjectHandle({
   projectId,
@@ -14,7 +14,7 @@ export default function V2ProjectHandle({
   return (
     <div style={{ display: 'flex', alignItems: 'center' }}>
       <Link
-        to={`/v2/p/${projectId}`}
+        href={`/v2/p/${projectId}`}
         style={{ fontWeight: 500, ...style }}
         className="text-primary hover-text-action-primary hover-text-decoration-underline"
       >

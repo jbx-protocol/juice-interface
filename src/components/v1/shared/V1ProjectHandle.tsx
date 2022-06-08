@@ -11,6 +11,7 @@ export default function V1ProjectHandle({
   style?: CSSProperties
 }) {
   const handle = useHandleForProjectId(projectId)
+  if (!handle) return null
 
   return (
     <Link
@@ -18,7 +19,7 @@ export default function V1ProjectHandle({
       style={{ fontWeight: 500, ...style }}
       className="text-primary hover-text-action-primary hover-text-decoration-underline"
     >
-      @{handle}
+      <span>@{handle}</span>
     </Link>
   )
 }

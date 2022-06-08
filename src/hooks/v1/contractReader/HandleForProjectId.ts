@@ -9,7 +9,7 @@ import useContractReader from './ContractReader'
 export default function useHandleForProjectId(
   projectId: BigNumberish | undefined,
 ) {
-  return useContractReader<string>({
+  return useContractReader<string | undefined>({
     contract: V1ContractName.Projects,
     functionName: 'handleOf',
     args: projectId ? [BigNumber.from(projectId).toHexString()] : null,

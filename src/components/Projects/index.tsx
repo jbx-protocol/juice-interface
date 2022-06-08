@@ -9,7 +9,7 @@ import { ProjectCategory } from 'models/project-visibility'
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
 
 import Grid from 'components/shared/Grid'
-import ProjectCard from 'components/shared/ProjectCard'
+import ProjectCard, { ProjectCardProject } from 'components/shared/ProjectCard'
 
 import { Link, useHistory, useLocation } from 'react-router-dom'
 
@@ -190,7 +190,7 @@ export default function Projects() {
         >
           <ProjectsTabs selectedTab={selectedTab} />
 
-          {selectedTab === 'all' && !searchText ? (
+          {selectedTab === 'all' ? (
             <ProjectsFilterAndSort
               includeV1={includeV1}
               includeV1_1={includeV1_1}
@@ -227,11 +227,14 @@ export default function Projects() {
       {selectedTab === 'all' ? (
         <React.Fragment>
           {concatenatedPages && (
-            <Grid
-              children={concatenatedPages.map((p, i) => (
-                <ProjectCard key={i} project={p} />
+            <Grid>
+              {concatenatedPages.map(p => (
+                <ProjectCard
+                  key={`${p.id}_${p.cv}`}
+                  project={p as ProjectCardProject}
+                />
               ))}
-            />
+            </Grid>
           )}
 
           {(isLoading || isFetchingNextPage) && <Loading />}

@@ -45,7 +45,7 @@ export default function MyProjects() {
       {projects && projects.length > 0 && (
         <Grid>
           {projects.map(p => (
-            <ProjectCard project={p} />
+            <ProjectCard key={`${p.id}_${p.cv}`} project={p} />
           ))}
         </Grid>
       )}

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { SemanticTheme } from 'models/semantic-theme/theme'
 
 import { createContext } from 'react'
@@ -18,6 +19,7 @@ export type ThemeContextType = {
 export const ThemeContext = createContext<ThemeContextType>({
   themeOption: defaultThemeOption,
   theme: juiceTheme(defaultThemeOption),
-  setThemeOption: (themeOption: ThemeOption) => {},
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  setThemeOption: function (themeOption: ThemeOption) {},
   isDarkMode: defaultThemeOption === ThemeOption.dark,
 })

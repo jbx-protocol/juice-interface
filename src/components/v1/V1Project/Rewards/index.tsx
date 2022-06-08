@@ -25,8 +25,9 @@ import IssueTokenButton from 'components/shared/IssueTokenButton'
 import SectionHeader from 'components/shared/SectionHeader'
 import useCanPrintPreminedTokens from 'hooks/v1/contractReader/CanPrintPreminedTokens'
 
+import ParticipantsModal from 'components/shared/modals/ParticipantsModal'
+
 import ManageTokensModal from '../../../shared/ManageTokensModal'
-import ParticipantsModal from '../modals/ParticipantsModal'
 import RedeemModal from '../modals/RedeemModal'
 import ConfirmUnstakeTokensModal from '../modals/ConfirmUnstakeTokensModal'
 import PrintPreminedModal from '../modals/PrintPreminedModal'
@@ -40,8 +41,10 @@ export default function Rewards() {
   const { userAddress } = useContext(NetworkContext)
   const {
     projectId,
+    handle,
     tokenAddress,
     tokenSymbol,
+    cv,
     isPreviewMode,
     currentFC,
     terminal,
@@ -60,11 +63,15 @@ export default function Rewards() {
     metadata?.reservedRate,
   )
 
-  const totalSupply = useTotalSupplyOfProjectToken(projectId)?.add(
+  const totalSupply = useTotalSupplyOfProjectToken(projectId)
+  const totalSupplyWithReservedTicketBalance = totalSupply?.add(
     reservedTicketBalance ? reservedTicketBalance : BigNumber.from(0),
   )
 
-  const share = formatPercent(totalBalance, totalSupply)
+  const share = formatPercent(
+    totalBalance,
+    totalSupplyWithReservedTicketBalance,
+  )
 
   const ticketsIssued = tokenAddress
     ? tokenAddress !== constants.AddressZero
@@ -109,91 +116,87 @@ export default function Rewards() {
           valueRender={() => (
             <Descriptions layout="horizontal" column={1}>
               {ticketsIssued && (
-                <Descriptions.Item
-                  label={t`Address`}
-                  labelStyle={labelStyle}
-                  children={
-                    <div style={{ width: '100%' }}>
-                      <FormattedAddress address={tokenAddress} />
-                    </div>
-                  }
-                />
+                <Descriptions.Item label={t`Address`} labelStyle={labelStyle}>
+                  <div style={{ width: '100%' }}>
+                    <FormattedAddress address={tokenAddress} />
+                  </div>
+                </Descriptions.Item>
               )}
               <Descriptions.Item
                 label={t`Total supply`}
                 labelStyle={labelStyle}
-                children={
-                  <div
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'baseline',
-                      width: '100%',
-                      gap: 5,
-                      flexWrap: 'wrap',
-                    }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'baseline',
+                    width: '100%',
+                    gap: 5,
+                    flexWrap: 'wrap',
+                  }}
+                >
+                  {formatWad(totalSupplyWithReservedTicketBalance, {
+                    precision: 0,
+                  })}
+                  <Button
+                    size="small"
+                    onClick={() => setParticipantsModalVisible(true)}
+                    disabled={isPreviewMode}
                   >
-                    {formatWad(totalSupply, { precision: 0 })}
-                    <Button
-                      size="small"
-                      onClick={() => setParticipantsModalVisible(true)}
-                      disabled={isPreviewMode}
-                    >
-                      <Trans>Holders</Trans>
-                    </Button>
-                  </div>
-                }
-              />
+                    <Trans>Holders</Trans>
+                  </Button>
+                </div>
+              </Descriptions.Item>
               {userAddress ? (
                 <Descriptions.Item
                   label={t`Your balance`}
                   labelStyle={labelStyle}
-                  children={
-                    <div
-                      style={{
-                        display: 'flex',
-                        flexWrap: 'wrap',
-                        gap: 5,
-                        justifyContent: 'space-between',
-                        width: '100%',
-                      }}
-                    >
-                      <div>
-                        {ticketsIssued && (
-                          <div>
-                            {`${formatWad(claimedBalance ?? 0, {
-                              precision: 0,
-                            })} ${tokenSymbol}`}
-                          </div>
-                        )}
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      gap: 5,
+                      justifyContent: 'space-between',
+                      width: '100%',
+                    }}
+                  >
+                    <div>
+                      {ticketsIssued && (
                         <div>
-                          <Trans>
-                            {formatWad(unclaimedBalance ?? 0, { precision: 0 })}
-                            {ticketsIssued ? <> claimable</> : null}
-                          </Trans>
+                          {`${formatWad(claimedBalance ?? 0, {
+                            precision: 0,
+                          })} ${tokenSymbol}`}
                         </div>
-
-                        <div
-                          style={{
-                            cursor: 'default',
-                            fontSize: '0.8rem',
-                            fontWeight: 500,
-                            color: colors.text.tertiary,
-                          }}
-                        >
-                          <Trans>{share || 0}% of supply</Trans>
-                        </div>
+                      )}
+                      <div>
+                        <Trans>
+                          {formatWad(unclaimedBalance ?? 0, { precision: 0 })}
+                          {ticketsIssued ? <> claimable</> : null}
+                        </Trans>
                       </div>
 
-                      <Button
-                        size="small"
-                        onClick={() => setManageTokensModalVisible(true)}
+                      <div
+                        style={{
+                          cursor: 'default',
+                          fontSize: '0.8rem',
+                          fontWeight: 500,
+                          color: colors.text.tertiary,
+                        }}
                       >
-                        <Trans>Manage</Trans>
-                      </Button>
+                        <Trans>{share || 0}% of supply</Trans>
+                      </div>
                     </div>
-                  }
-                />
+
+                    <Button
+                      size="small"
+                      onClick={() => setManageTokensModalVisible(true)}
+                    >
+                      <Trans>Manage</Trans>
+                    </Button>
+                  </div>
+                </Descriptions.Item>
               ) : null}
             </Descriptions>
           )}
@@ -217,6 +220,12 @@ export default function Rewards() {
         MintModal={PrintPreminedModal}
       />
       <ParticipantsModal
+        projectId={projectId}
+        projectName={handle}
+        tokenSymbol={tokenSymbol}
+        tokenAddress={tokenAddress}
+        cv={cv}
+        totalTokenSupply={totalSupply}
         visible={participantsModalVisible}
         onCancel={() => setParticipantsModalVisible(false)}
       />

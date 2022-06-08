@@ -16,7 +16,7 @@ export default function V2CurrencyAmount({
   currency: BigNumber | undefined
   precision?: number
 }) {
-  if (!amount) return null
+  if (amount === undefined) return null
 
   if (currency?.eq(NO_CURRENCY) || currency?.eq(V2_CURRENCY_ETH)) {
     return <ETHAmount amount={amount} precision={precision} padEnd />

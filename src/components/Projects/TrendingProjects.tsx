@@ -31,7 +31,7 @@ export default function TrendingProjects({
               project={p}
               size={isHomePage ? 'sm' : 'lg'}
               rank={i + 1}
-              key={i}
+              key={`${p.id}_${p.cv}`}
               trendingWindowDays={trendingWindowDays}
             />
           ))}

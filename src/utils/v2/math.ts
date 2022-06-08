@@ -15,7 +15,7 @@ export const MAX_RESERVED_RATE = TEN_THOUSAND
 export const MAX_REDEMPTION_RATE = TEN_THOUSAND
 export const MAX_DISCOUNT_RATE = ONE_BILLION
 export const SPLITS_TOTAL_PERCENT = ONE_BILLION
-export const MAX_FEE = ONE_BILLION
+const MAX_FEE = ONE_BILLION
 export const MAX_DISTRIBUTION_LIMIT = MaxUint232
 
 export const DEFAULT_ISSUANCE_RATE = 10 ** 6
@@ -63,6 +63,17 @@ export const formatSplitPercent = (splitPercent: BigNumber): string => {
 }
 
 /**
+ * Express a given split "percent" (parts-per-billion) as a percentage to the maximum precision.
+ * @param splitPercent - split "percent" as parts-per-billion.
+ * @returns {number} percentage (/100)
+ */
+export const preciseFormatSplitPercent = (
+  percentPerBillion: number,
+): number => {
+  return (percentPerBillion / SPLITS_TOTAL_PERCENT) * 100
+}
+
+/**
  * Express a given [percentage] as a split "percent" (parts-per-billion).
  * NOTE: splitPercent is named misleadingly. splitPercent is not a percentage (x/100)
  * It is express as parts-per-billion.
@@ -71,7 +82,7 @@ export const formatSplitPercent = (splitPercent: BigNumber): string => {
  */
 export const splitPercentFrom = (percentage: number): BigNumber => {
   return percentage
-    ? BigNumber.from((percentage * SPLITS_TOTAL_PERCENT) / 100)
+    ? BigNumber.from(((percentage * SPLITS_TOTAL_PERCENT) / 100).toFixed())
     : BigNumber.from(0)
 }
 
@@ -191,21 +202,4 @@ export const amountSubFee = (
   if (!feePerBillion || !amountWad) return
   const feeAmount = feeForAmount(amountWad, feePerBillion) ?? 0
   return amountWad.sub(feeAmount)
-}
-
-/**
- * new amount = old amount / (1 - fee)
- */
-export const amountAddFee = (
-  amountWad?: string,
-  feePerBillion?: BigNumber,
-): string | undefined => {
-  if (!feePerBillion || !amountWad) return
-
-  const inverseFeePerbillion = BigNumber.from(ONE_BILLION).sub(feePerBillion)
-  const amountPerbillion = BigNumber.from(amountWad).mul(ONE_BILLION)
-  // new amount is in regular decimal units
-  const newAmount = amountPerbillion.div(inverseFeePerbillion)
-
-  return newAmount.toString()
 }

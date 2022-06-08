@@ -55,7 +55,7 @@ export function DistributionLimitStatistic({
                   and can be redeemed by token holders.
                 </Trans>
               ) : (
-                <Trans>No limit (infinite)</Trans>
+                <Trans>Zero</Trans>
               )}
             </span>
           ) : (
@@ -66,10 +66,17 @@ export function DistributionLimitStatistic({
           )
         ) : (
           <span>
-            <Trans>
-              Distribution limit is infinite: The project will control how all
-              funds are distributed, and none can be redeemed by token holders.
-            </Trans>
+            {showDetail ? (
+              <Trans>
+                Distribution limit is infinite.{' '}
+                <p style={{ fontSize: '1rem' }}>
+                  The project will control how all funds are distributed, and
+                  none can be redeemed by token holders.
+                </p>
+              </Trans>
+            ) : (
+              <Trans>Infinite (no limit)</Trans>
+            )}
           </span>
         )
       }
@@ -277,19 +284,32 @@ export function DistributionSplitsStatistic({
   totalValue,
   projectOwnerAddress,
   showSplitValues,
+  fundingCycleDuration,
 }: {
   splits: Split[]
   currency: BigNumber | undefined
   totalValue: BigNumber | undefined
   projectOwnerAddress: string | undefined
   showSplitValues: boolean
+  fundingCycleDuration: BigNumber | undefined
 }) {
+  const formattedDuration = detailedTimeString({
+    timeSeconds: fundingCycleDuration?.toNumber(),
+    fullWords: true,
+  })
+  const hasDuration = fundingCycleDuration?.gt(0)
+
   return (
     <Statistic
       title={
         <TooltipLabel
-          label={t`Distribution splits`}
-          tip={t`Entities that will receive funds from the treasury each funding cycle.`}
+          label={t`Payouts`}
+          tip={
+            <Trans>
+              Available funds can be distributed according to the payouts below
+              {hasDuration ? ` every ${formattedDuration}` : null}.
+            </Trans>
+          }
         />
       }
       valueRender={() => (

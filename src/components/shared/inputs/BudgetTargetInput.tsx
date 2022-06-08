@@ -5,9 +5,9 @@ import { perbicentToPercent } from 'utils/formatNumber'
 
 import { Trans } from '@lingui/macro'
 
-import InputAccessoryButton from '../InputAccessoryButton'
 import FormattedNumberInput from './FormattedNumberInput'
 import { CurrencyName } from 'constants/currency'
+import CurrencySwitch from '../CurrencySwitch'
 
 export default function BudgetTargetInput({
   currency,
@@ -25,7 +25,7 @@ export default function BudgetTargetInput({
   target: string | undefined
   targetSubFee: string | undefined
   onTargetChange: (target?: string) => void
-  onTargetSubFeeChange: (target?: string) => void
+  onTargetSubFeeChange?: (target?: string) => void
   onCurrencyChange?: (currency: CurrencyName) => void
   disabled?: boolean
   placeholder?: string
@@ -50,22 +50,15 @@ export default function BudgetTargetInput({
 
   if (_currency === undefined) return null
 
-  const CurrencySwitch = () => {
-    if (onCurrencyChange)
-      return (
-        <InputAccessoryButton
-          onClick={() => {
-            const newCurrency = _currency === 'USD' ? 'ETH' : 'USD'
-            setCurrency(newCurrency)
-            onCurrencyChange(newCurrency)
-          }}
-          content={_currency}
-          withArrow
-          placement="suffix"
-        />
-      )
-    return <InputAccessoryButton content={_currency} placement="suffix" />
-  }
+  const _currencySwitch = onCurrencyChange ? (
+    <CurrencySwitch
+      onCurrencyChange={(currencyName: CurrencyName) => {
+        setCurrency(currencyName)
+        onCurrencyChange(currencyName)
+      }}
+      currency={_currency}
+    />
+  ) : undefined
 
   return (
     <div>
@@ -73,7 +66,7 @@ export default function BudgetTargetInput({
         value={target}
         placeholder={placeholder}
         disabled={disabled}
-        accessory={<CurrencySwitch />}
+        accessory={_currencySwitch}
         onChange={target => onTargetChange(target?.toString())}
       />
       {feePerbicent?.gt(0) && showTargetSubFeeInput && (
@@ -83,9 +76,9 @@ export default function BudgetTargetInput({
               value={targetSubFee}
               placeholder={placeholder}
               disabled={disabled}
-              accessory={<CurrencySwitch />}
+              accessory={_currencySwitch}
               onChange={newTargetSubFee =>
-                onTargetSubFeeChange(newTargetSubFee?.toString())
+                onTargetSubFeeChange?.(newTargetSubFee?.toString())
               }
             />
           </div>

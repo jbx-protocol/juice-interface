@@ -73,8 +73,7 @@ export default function RestrictedActionsForm({
           <Form.Item>
             <FormItemWarningText>
               <Trans>
-                Enabling token minting will appear risky to contributors. Only
-                enable this when necessary.
+                Enabling token minting will appear risky to contributors.
               </Trans>
             </FormItemWarningText>
           </Form.Item>

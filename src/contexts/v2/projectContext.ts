@@ -27,6 +27,7 @@ export type V2ProjectContextType = {
   terminals: string[] | undefined // array of terminal addresses, 0xABC...
   primaryTerminal: string | undefined
   ETHBalance: BigNumber | undefined
+  totalVolume: BigNumber | undefined
   projectOwnerAddress: string | undefined
   balanceInDistributionLimitCurrency: BigNumber | undefined
   usedDistributionLimit: BigNumber | undefined // how much has been distributed
@@ -61,6 +62,7 @@ export const V2ProjectContext = createContext<V2ProjectContextType>({
   terminals: undefined,
   primaryTerminal: undefined,
   ETHBalance: undefined,
+  totalVolume: undefined,
   projectOwnerAddress: undefined,
   balanceInDistributionLimitCurrency: undefined,
   usedDistributionLimit: undefined,

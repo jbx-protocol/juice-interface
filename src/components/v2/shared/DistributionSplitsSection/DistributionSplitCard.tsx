@@ -1,26 +1,40 @@
-import { Button, Col, Row, Space } from 'antd'
+import { Button, Col, Row, Space, Tooltip } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { Split } from 'models/v2/splits'
-import { useContext, useState } from 'react'
+import { PropsWithChildren, useContext, useState } from 'react'
 import { parseWad } from 'utils/formatNumber'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import { BigNumber } from '@ethersproject/bignumber'
 
 import { formatDate } from 'utils/formatDate'
-import {
-  CrownFilled,
-  LockOutlined,
-  CloseCircleOutlined,
-} from '@ant-design/icons'
+import { CrownFilled, LockOutlined, DeleteOutlined } from '@ant-design/icons'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 
-import { formatSplitPercent, MAX_DISTRIBUTION_LIMIT } from 'utils/v2/math'
+import {
+  formatSplitPercent,
+  MAX_DISTRIBUTION_LIMIT,
+  preciseFormatSplitPercent,
+  SPLITS_TOTAL_PERCENT,
+} from 'utils/v2/math'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
-import { amountFromPercent } from 'utils/v2/distributions'
-import { Trans } from '@lingui/macro'
+import {
+  adjustedSplitPercents,
+  amountFromPercent,
+  getNewDistributionLimit,
+} from 'utils/v2/distributions'
+import { t, Trans } from '@lingui/macro'
+import TooltipIcon from 'components/shared/TooltipIcon'
 
 import DistributionSplitModal from './DistributionSplitModal'
 import { CurrencyName } from 'constants/currency'
+
+const Parens = ({
+  withParens = false,
+  children,
+}: PropsWithChildren<{ withParens: boolean }>) => {
+  if (withParens) return <>({children})</>
+  return <>{children}</>
+}
 
 export default function DistributionSplitCard({
   split,
@@ -29,8 +43,11 @@ export default function DistributionSplitCard({
   editableSplits,
   onSplitsChanged,
   distributionLimit,
+  setDistributionLimit,
   currencyName,
+  onCurrencyChange,
   isLocked,
+  isProjectOwner,
 }: {
   split: Split
   splits: Split[]
@@ -38,8 +55,11 @@ export default function DistributionSplitCard({
   editableSplitIndex: number
   onSplitsChanged: (splits: Split[]) => void
   distributionLimit: string | undefined
+  setDistributionLimit: (distributionLimit: string) => void
   currencyName: CurrencyName
+  onCurrencyChange?: (currencyName: CurrencyName) => void
   isLocked?: boolean
+  isProjectOwner?: boolean
 }) {
   const {
     theme: { colors, radii },
@@ -57,10 +77,18 @@ export default function DistributionSplitCard({
 
   // !isProject added here because we don't want to show the crown next to
   // a project recipient whose token benefiary is the owner of this project
-  const isOwner = projectOwnerAddress === split.beneficiary && !isProject
+  const isOwner =
+    (projectOwnerAddress === split.beneficiary && !isProject) || isProjectOwner
 
   const distributionLimitIsInfinite =
     !distributionLimit || parseWad(distributionLimit).eq(MAX_DISTRIBUTION_LIMIT)
+
+  // If percentage has greater than 2 dp it will be rounded in the UI
+  const percentIsRounded =
+    split.percent !== SPLITS_TOTAL_PERCENT &&
+    (split.percent / SPLITS_TOTAL_PERCENT).toString().split('.')[1]?.length > 4
+
+  const cursor = isLocked ? 'default' : 'pointer'
 
   return (
     <div
@@ -79,14 +107,14 @@ export default function DistributionSplitCard({
         style={{
           width: '100%',
           color: colors.text.primary,
-          cursor: isLocked ? 'default' : 'pointer',
+          cursor,
         }}
         onClick={!isLocked ? () => setEditSplitModalOpen(true) : undefined}
       >
         {split.projectId && parseInt(split.projectId) > 0 ? (
           <Row gutter={gutter} style={{ width: '100%' }} align="middle">
             <Col span={labelColSpan}>
-              <label>
+              <label style={{ cursor }}>
                 <Trans>Project ID:</Trans>
               </label>{' '}
             </Col>
@@ -98,14 +126,14 @@ export default function DistributionSplitCard({
                   justifyContent: 'space-between',
                 }}
               >
-                <span style={{ cursor: 'pointer' }}>{split.projectId}</span>
+                <span style={{ cursor }}>{split.projectId}</span>
               </div>
             </Col>
           </Row>
         ) : (
           <Row gutter={gutter} style={{ width: '100%' }} align="middle">
             <Col span={labelColSpan}>
-              <label>
+              <label style={{ cursor }}>
                 <Trans>Address:</Trans>
               </label>{' '}
             </Col>
@@ -117,10 +145,20 @@ export default function DistributionSplitCard({
                   justifyContent: 'space-between',
                 }}
               >
-                <span style={{ cursor: 'pointer' }}>
-                  <FormattedAddress address={split.beneficiary} />
-                </span>
-                {isOwner && <CrownFilled />}
+                {isOwner && !split.beneficiary ? (
+                  <span style={{ cursor }}>
+                    <Trans>Project owner (you)</Trans>
+                  </span>
+                ) : (
+                  <span style={{ cursor: 'pointer' }}>
+                    <FormattedAddress address={split.beneficiary} />
+                  </span>
+                )}
+                {isOwner && (
+                  <Tooltip title={t`Project owner`}>
+                    <CrownFilled />
+                  </Tooltip>
+                )}
               </div>
             </Col>
           </Row>
@@ -129,7 +167,7 @@ export default function DistributionSplitCard({
         {parseInt(split.projectId ?? '0') > 0 ? (
           <Row>
             <Col span={labelColSpan}>
-              <label>
+              <label style={{ cursor }}>
                 <Trans>Token beneficiary:</Trans>
               </label>
             </Col>
@@ -143,8 +181,12 @@ export default function DistributionSplitCard({
 
         <Row gutter={gutter} style={{ width: '100%' }} align="middle">
           <Col span={labelColSpan}>
-            <label>
-              <Trans>Percentage:</Trans>
+            <label style={{ cursor }}>
+              {distributionLimitIsInfinite ? (
+                <Trans>Percentage:</Trans>
+              ) : (
+                <Trans>Amount:</Trans>
+              )}
             </label>
           </Col>
           <Col span={dataColSpan}>
@@ -163,21 +205,24 @@ export default function DistributionSplitCard({
                   maxWidth: 100,
                 }}
               >
-                <Space size="large">
-                  <span>
-                    {formatSplitPercent(BigNumber.from(split.percent))}%
-                  </span>
+                <Space size="small" direction="horizontal">
                   {!distributionLimitIsInfinite && (
                     <span>
                       <CurrencySymbol currency={currencyName} />
-                      {amountFromPercent({
-                        percent: parseFloat(
-                          formatSplitPercent(BigNumber.from(split.percent)),
-                        ),
-                        amount: distributionLimit,
-                      })}
+                      {parseFloat(
+                        amountFromPercent({
+                          percent: preciseFormatSplitPercent(split.percent),
+                          amount: distributionLimit,
+                        }).toFixed(4),
+                      )}
                     </span>
                   )}
+                  <span>
+                    <Parens withParens={!distributionLimitIsInfinite}>
+                      {percentIsRounded ? '~' : null}
+                      {formatSplitPercent(BigNumber.from(split.percent))}%
+                    </Parens>
+                  </span>
                 </Space>
               </span>
             </div>
@@ -187,7 +232,7 @@ export default function DistributionSplitCard({
         {split.lockedUntil ? (
           <Row gutter={gutter} style={{ width: '100%' }} align="middle">
             <Col span={labelColSpan}>
-              <label>
+              <label style={{ cursor }}>
                 <Trans>Locked:</Trans>
               </label>
             </Col>
@@ -199,19 +244,61 @@ export default function DistributionSplitCard({
       </Space>
 
       {isLocked ? (
-        <LockOutlined style={{ color: colors.icon.disabled }} />
+        <>
+          {!isOwner ? (
+            <Tooltip title={<Trans>Payout is locked</Trans>}>
+              <LockOutlined
+                style={{ color: colors.icon.disabled, paddingTop: '4px' }}
+              />
+            </Tooltip>
+          ) : (
+            <TooltipIcon
+              iconStyle={{ paddingTop: '4px' }}
+              tip={
+                <Trans>
+                  You have configured for all funds to be distributed from the
+                  treasury. Your current payouts do not sum to 100%, so the
+                  remainder will go to the project owner.
+                </Trans>
+              }
+            />
+          )}
+        </>
       ) : (
-        <Button
-          type="text"
-          onClick={e => {
-            onSplitsChanged([
-              ...splits.slice(0, editableSplitIndex),
-              ...splits.slice(editableSplitIndex + 1),
-            ])
-            e.stopPropagation()
-          }}
-          icon={<CloseCircleOutlined />}
-        />
+        <Tooltip title={<Trans>Delete payout</Trans>}>
+          <Button
+            type="text"
+            onClick={e => {
+              let adjustedSplits = splits
+              // Adjust all split percents if
+              // - distributionLimit is not infinite
+              // - not deleting the last split
+              if (!distributionLimitIsInfinite && splits.length !== 1) {
+                const newDistributionLimit = getNewDistributionLimit({
+                  currentDistributionLimit: distributionLimit,
+                  newSplitAmount: 0,
+                  editingSplitPercent: splits[editableSplitIndex].percent,
+                }).toString()
+
+                adjustedSplits = adjustedSplitPercents({
+                  splits: editableSplits,
+                  oldDistributionLimit: distributionLimit,
+                  newDistributionLimit,
+                })
+                setDistributionLimit(newDistributionLimit)
+              }
+              if (splits.length === 1) setDistributionLimit('0')
+
+              onSplitsChanged([
+                ...adjustedSplits.slice(0, editableSplitIndex),
+                ...adjustedSplits.slice(editableSplitIndex + 1),
+              ])
+              e.stopPropagation()
+            }}
+            icon={<DeleteOutlined />}
+            style={{ height: 16 }}
+          />
+        </Tooltip>
       )}
       {!isLocked ? (
         <DistributionSplitModal
@@ -221,8 +308,10 @@ export default function DistributionSplitCard({
           mode={'Edit'}
           splits={splits}
           distributionLimit={distributionLimit}
+          setDistributionLimit={setDistributionLimit}
           onClose={() => setEditSplitModalOpen(false)}
           currencyName={currencyName}
+          onCurrencyChange={onCurrencyChange}
           editableSplitIndex={editableSplitIndex}
         />
       ) : null}

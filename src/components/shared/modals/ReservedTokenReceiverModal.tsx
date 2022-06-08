@@ -42,7 +42,7 @@ export default function ReservedTokenReceiverModal({
     const realTokenAllocation = (reservedRate ?? 0) * percentOfReserved
     const realTokenAllocationPercent = (realTokenAllocation / 100).toFixed(2)
     const extra =
-      t`The percent this individual receives of the overall ${reservedRate}% reserved token allocation` +
+      t`The percentage this individual receives of the overall ${reservedRate}% reserved token allocation` +
       `${
         realTokenAllocation
           ? ' ' +
@@ -54,14 +54,18 @@ export default function ReservedTokenReceiverModal({
 
   return (
     <Modal
-      title={mode === 'Add' ? t`Add token receiver` : t`Edit token receiver`} // Full sentences for translation purposes
+      title={
+        mode === 'Add' ? t`Add token allocation` : t`Edit token allocation`
+      } // Full sentences for translation purposes
       visible={visible}
       // Must reset the state in case user opens this modal for another receiver straight away
       onOk={() => {
         setPercent(undefined)
         onOk()
       }}
-      okText={mode === 'Add' ? t`Add token receiver` : t`Save token receiver`}
+      okText={
+        mode === 'Add' ? t`Add token allocation` : t`Save token allocation`
+      }
       onCancel={() => {
         setPercent(undefined)
         onCancel()
@@ -86,11 +90,15 @@ export default function ReservedTokenReceiverModal({
                 validator: validateReservedTokenReceiver,
               },
             ],
+            required: true,
           }}
           onAddressChange={beneficiary => form.setFieldsValue({ beneficiary })}
         />
 
-        <Form.Item label={t`Percent allocation`} rules={[{ required: true }]}>
+        <Form.Item
+          label={t`Percentage allocation`}
+          rules={[{ required: true }]}
+        >
           <NumberSlider
             onChange={(percent: number | undefined) => {
               setPercent(percent ?? form.getFieldValue('percent'))

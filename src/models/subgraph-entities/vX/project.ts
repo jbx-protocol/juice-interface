@@ -58,7 +58,7 @@ type BaseProject = {
   deployedERC20Events: Partial<DeployedERC20Event>[]
 }
 
-export type ProjectV1 = {
+type ProjectV1 = {
   cv: CV
   terminal: string
   metadataUri: string
@@ -66,7 +66,7 @@ export type ProjectV1 = {
   handle: string
 } & BaseProject
 
-export type ProjectV2 = {
+type ProjectV2 = {
   cv: CV
   terminal: null
   metadataUri: string

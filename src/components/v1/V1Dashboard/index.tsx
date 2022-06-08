@@ -21,13 +21,13 @@ import useSymbolOfERC20 from 'hooks/v1/contractReader/SymbolOfERC20'
 import useTerminalOfProject from 'hooks/v1/contractReader/TerminalOfProject'
 import useTokenAddressOfProject from 'hooks/v1/contractReader/TokenAddressOfProject'
 import useUriOfProject from 'hooks/v1/contractReader/UriOfProject'
-import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
+import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useEffect, useMemo } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
 import { getTerminalName, getTerminalVersion } from 'utils/v1/terminals'
 
-import V1CurrencyProvider from 'providers/v1/V1CurrencyProvider'
+import { V1CurrencyProvider } from 'providers/v1/V1CurrencyProvider'
 
 import { V1CurrencyName } from 'utils/v1/currency'
 

@@ -19,7 +19,7 @@ const BurnTokensHelp = () => {
   )
 }
 
-export const RedeemButtonTooltip = ({
+const RedeemButtonTooltip = ({
   buttonDisabled,
   children,
 }: PropsWithChildren<{
@@ -84,7 +84,7 @@ export default function ManageTokensModal({
     plural: true,
   })
 
-  const redeemDisabled = !Boolean(hasOverflow)
+  const redeemDisabled = !hasOverflow
   const hasIssuedTokens = tokenAddress && tokenAddress !== constants.AddressZero
 
   return (

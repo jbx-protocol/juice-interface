@@ -1,12 +1,12 @@
 import { Tabs } from 'antd'
-import { PropsWithChildren, useContext, useState } from 'react'
+import { useContext, useState } from 'react'
 
 import { V2UserProvider } from 'providers/v2/UserProvider'
 
 import { t, Trans } from '@lingui/macro'
 import { ThemeContext } from 'contexts/themeContext'
 import useMobile from 'hooks/Mobile'
-import V2CurrencyProvider from 'providers/v2/V2CurrencyProvider'
+import { V2CurrencyProvider } from 'providers/v2/V2CurrencyProvider'
 
 import ProjectDetailsTabContent from './tabs/ProjectDetailsTab/ProjectDetailsTabContent'
 import FundingCycleTabContent from './tabs/FundingCycleTab/FundingCycleTabContent'
@@ -16,7 +16,7 @@ import V2WarningBanner from './V2WarningBanner'
 
 const { TabPane } = Tabs
 
-const TabText = ({ children }: PropsWithChildren<{}>) => {
+const TabText: React.FC = ({ children }) => {
   return <span style={{ fontSize: 18 }}>{children}</span>
 }
 
@@ -64,7 +64,7 @@ export default function V2Create() {
                 fontSize: 28,
               }}
             >
-              <Trans>Design your project</Trans> 🎨
+              <Trans>Launch your project</Trans>
             </h1>
 
             <Tabs
@@ -74,7 +74,7 @@ export default function V2Create() {
               size="large"
             >
               {TABS.map((tab, idx) => (
-                <TabPane tab={<TabText>{tab.title}</TabText>} key={`${idx}`}>
+                <TabPane tab={<TabText>{tab.title}</TabText>} key={idx}>
                   <tab.component
                     onFinish={() => {
                       // bail if on last tab.

@@ -8,7 +8,7 @@ export const feedbackFormURL = ({
   projectHandle?: string
   userAddress?: string
 }) => {
-  let url = new URL(`https://auditor.typeform.com/to/REMUTIbQ#`)
+  const url = new URL(`https://auditor.typeform.com/to/REMUTIbQ#`)
   if (projectHandle) {
     url.searchParams.set('project', projectHandle)
   }

@@ -7,8 +7,13 @@ import { lazy, useContext, useState } from 'react'
 
 import { weightedAmount } from 'utils/v2/math'
 import { useHistory, useLocation } from 'react-router-dom'
-
 import useMobile from 'hooks/Mobile'
+import {
+  useHasPermission,
+  V2OperatorPermission,
+} from 'hooks/v2/contractReader/HasPermission'
+
+import useProjectQueuedFundingCycle from 'hooks/v2/contractReader/ProjectQueuedFundingCycle'
 
 import ProjectActivity from './ProjectActivity'
 import TreasuryStats from './TreasuryStats'
@@ -17,6 +22,9 @@ import V2ManageTokensSection from './V2ManageTokensSection'
 import NewDeployModal from './NewDeployModal'
 import V2PayButton from './V2PayButton'
 import V2ProjectHeaderActions from './V2ProjectHeaderActions'
+import V2BugNotice from '../shared/V2BugNotice'
+import { V2_PROJECT_IDS } from '../../../constants/v2/projectIds'
+import { RelaunchFundingCycleBanner } from './banners/RelaunchFundingCycleBanner'
 
 const GUTTER_PX = 40
 
@@ -41,20 +49,29 @@ export default function V2Project({
     cv,
     isArchived,
   } = useContext(V2ProjectContext)
+  const canReconfigureFundingCycles = useHasPermission(
+    V2OperatorPermission.RECONFIGURE,
+  )
+
+  const { data: queuedFundingCycleResponse } = useProjectQueuedFundingCycle({
+    projectId,
+  })
+
+  const [queuedFundingCycle] = queuedFundingCycleResponse || []
 
   // Checks URL to see if user was just directed from project deploy
   const location = useLocation()
   const params = new URLSearchParams(location.search)
   const isNewDeploy = Boolean(params.get('newDeploy'))
-
   const history = useHistory()
-
   const isMobile = useMobile()
 
   const [newDeployModalVisible, setNewDeployModalVisible] =
     useState<boolean>(isNewDeploy)
 
   const colSizeMd = singleColumnLayout ? 24 : 12
+  const hasCurrentFundingCycle = fundingCycle?.number.gt(0)
+  const hasQueuedFundingCycle = queuedFundingCycle?.number.gt(0)
 
   if (projectId === undefined) return null
 
@@ -64,13 +81,33 @@ export default function V2Project({
     setNewDeployModalVisible(false)
   }
 
+  // Temporarily disable pay for V2 projects until V2 contracts have been redeployed
+  const payIsDisabledPreV2Redeploy = () => {
+    // Do not disable pay for projects with these ids
+    const exceptionProjectIds = [V2_PROJECT_IDS.MOON_MARS]
+
+    if (exceptionProjectIds.includes(projectId)) return false
+
+    // disable if there's no current funding cycle
+    return !hasCurrentFundingCycle
+  }
+
   return (
     <Space direction="vertical" size={GUTTER_PX} style={{ width: '100%' }}>
+      {!hasCurrentFundingCycle &&
+      !hasQueuedFundingCycle &&
+      canReconfigureFundingCycles ? (
+        <RelaunchFundingCycleBanner />
+      ) : null}
+
       <ProjectHeader
         metadata={projectMetadata}
         actions={!isPreviewMode ? <V2ProjectHeaderActions /> : undefined}
         isArchived={isArchived}
       />
+      {!isPreviewMode &&
+        hasCurrentFundingCycle === false &&
+        hasQueuedFundingCycle === false && <V2BugNotice />}
       <Row gutter={GUTTER_PX} align="bottom">
         <Col md={colSizeMd} xs={24}>
           <TreasuryStats />
@@ -83,7 +120,7 @@ export default function V2Project({
             weightingFn={weightedAmount}
             tokenSymbol={tokenSymbol}
             tokenAddress={tokenAddress}
-            disabled={isPreviewMode}
+            disabled={isPreviewMode || payIsDisabledPreV2Redeploy()}
           />
         </Col>
       </Row>

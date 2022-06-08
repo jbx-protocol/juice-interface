@@ -13,7 +13,7 @@ import { usePaymentTerminalBalance } from 'hooks/v2/contractReader/PaymentTermin
 import useProjectToken from 'hooks/v2/contractReader/ProjectToken'
 import useProjectDistributionLimit from 'hooks/v2/contractReader/ProjectDistributionLimit'
 import { useContext, useMemo } from 'react'
-import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
+import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { NO_CURRENCY, V2CurrencyName, V2_CURRENCY_ETH } from 'utils/v2/currency'
 
@@ -95,10 +95,11 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
 
   const { data: projects } = useProjectsQuery({
     projectId,
-    keys: ['createdAt'],
+    keys: ['createdAt', 'totalPaid'],
     cv: ['2'],
   })
   const createdAt = first(projects)?.createdAt
+  const totalVolume = first(projects)?.totalPaid
 
   const { data: fundingCycleResponse, loading: fundingCycleLoading } =
     useProjectCurrentFundingCycle({
@@ -223,6 +224,7 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
     terminals,
     primaryTerminal,
     ETHBalance,
+    totalVolume,
     distributionLimitCurrency,
     balanceInDistributionLimitCurrency,
     tokenSymbol,

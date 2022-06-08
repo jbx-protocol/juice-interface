@@ -10,7 +10,7 @@ export function useProjectMetadata(uri: string | undefined) {
       if (!uri) {
         throw new Error('Project URI not specified.')
       }
-      const url = ipfsCidUrl(uri!)
+      const url = ipfsCidUrl(uri)
       const response = await axios.get(url)
       return consolidateMetadata(response.data)
     },

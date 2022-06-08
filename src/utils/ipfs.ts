@@ -58,7 +58,7 @@ export const pinFileToIpfs = (
   file: File | Blob | string,
   metadata?: PinataMetadata,
 ) => {
-  let data = new FormData()
+  const data = new FormData()
 
   data.append('file', file)
 

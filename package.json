@@ -4,7 +4,8 @@
   "private": true,
   "dependencies": {
     "@jbx-protocol/contracts-v1": "^1.1.5",
-    "@jbx-protocol/contracts-v2": "4.0.0",
+    "@jbx-protocol/contracts-v2-4.0.0": "npm:@jbx-protocol/contracts-v2@4.0.0",
+    "@jbx-protocol/contracts-v2-latest": "npm:@jbx-protocol/contracts-v2@8.0.0",
     "@lingui/cli": "^3.13.0",
     "@lingui/detect-locale": "^3.13.0",
     "@lingui/macro": "^3.13.0",
@@ -14,25 +15,35 @@
     "@sentry/react": "^6.18.2",
     "@sentry/tracing": "^6.18.2",
     "@sushiswap/sdk": "5.0.0-canary.116",
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
+    "@types/ethereum-block-by-date": "^1.4.1",
+    "@types/jest": "^26.0.15",
+    "@types/lodash": "^4.14.180",
+    "@types/node": "^12.0.0",
+    "@types/react": "^17",
+    "@types/react-dom": "^17",
     "@types/react-redux": "^7.1.16",
+    "@types/react-router-dom": "^5.1.7",
+    "@typescript-eslint/eslint-plugin": "5.27.0",
+    "@typescript-eslint/parser": "5.27.0",
     "@uniswap/sdk": "3.0.3",
     "@uniswap/sdk-core": "3.0.1",
-    "@uniswap/v3-sdk": "3.6.3",
+    "@uniswap/v3-sdk": "3.8.2",
     "@walletconnect/web3-provider": "^1.5.4",
     "antd": "4.18.0",
     "autolinker": "^3.14.3",
     "axios": "^0.21.1",
     "bnc-notify": "^1.9.1",
     "bnc-onboard": "1.36.0",
-    "env-cmd": "^10.1.0",
     "erc-20-abi": "^1.0.0",
-    "eslint-config-prettier": "^8.3.0",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-config-react-app": "^6.0.0",
+    "eslint-plugin-import": "2.26.0",
+    "eslint-plugin-react": "7.30.0",
     "ethereum-block-by-date": "^1.4.2",
     "ethers": "^5.1.0",
+    "less": "4.1.2",
     "lodash": "^4.17.21",
+    "prettier": "2.6.2",
     "react": "^17",
     "react-dom": "^17.0.1",
     "react-query": "^3.33.2",
@@ -40,21 +51,16 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "recharts": "^2.1.2",
-    "sass": "^1.38.1",
-    "typescript": "^4.0.3",
+    "sass": "^1.52.1",
+    "typescript": "4.4.3",
     "use-deep-compare-effect": "^1.6.1",
-    "web-vitals": "^0.2.4"
-  },
-  "resolutions": {
-    "jest": "26.6.0",
-    "**/@typescript-eslint/eslint-plugin": "^4.1.1",
-    "**/@typescript-eslint/parser": "^4.1.1",
-    "eslint-plugin-react-hooks": "4.2.0"
+    "uuid": "^8.3.2"
   },
   "scripts": {
     "compile-styles": "lessc ./node_modules/antd/dist/antd.less ./src/styles/antd.css --js",
-    "start": "yarn compile-styles && ESLINT_NO_DEV_ERRORS=true react-scripts start",
-    "build": "react-scripts build",
+    "prestart": "yarn compile-styles",
+    "start": "ESLINT_NO_DEV_ERRORS=true REACT_APP_VERSION=$(git rev-parse --short HEAD) react-scripts start",
+    "build": "REACT_APP_VERSION=$(git rev-parse --short HEAD) react-scripts build",
     "prebuild": "yarn compile-styles && yarn i18n:compile",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -66,42 +72,36 @@
     "i18n:compile": "lingui compile",
     "i18n:lint": "./scripts/lint-translations.sh",
     "postinstall": "yarn i18n:compile",
-    "analyze": "yarn build && source-map-explorer 'build/static/js/*.js'"
+    "analyze": "yarn build && source-map-explorer 'build/static/js/*.js'",
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx}'",
+    "pristine": "rm -Rf node_modules && yarn install",
+    "find-deadcode": "ts-prune"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx,json,css}": [
+    "*.{js,jsx,ts,tsx,json,css,md}": [
       "eslint",
       "prettier --write"
     ]
   },
   "browserslist": {
     "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
+      "last 1 chrome version",
+      "last 1 firefox version"
     ],
     "development": [
       "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
+      "last 1 firefox version"
     ]
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^11.1.0",
     "@testing-library/react-hooks": "^8.0.0",
-    "@types/jest": "^26.0.15",
-    "@types/lodash": "^4.14.180",
-    "@types/node": "^12.0.0",
-    "@types/react": "^17",
-    "@types/react-dom": "^17",
-    "@types/react-router-dom": "^5.1.7",
-    "eslint-config-react-app": "^6.0.0",
-    "eslint-plugin-import": "^2.25.3",
+    "@testing-library/user-event": "^12.1.10",
     "husky": "^7.0.0",
-    "less": "^4.1.1",
-    "lint-staged": "^12.1.1",
-    "prettier": "2.4.1",
+    "lint-staged": "13.0.0",
     "react-test-renderer": "^17",
     "source-map-explorer": "^2.5.2",
-    "uuid": "^8.3.2"
+    "ts-prune": "^0.10.3"
   }
 }

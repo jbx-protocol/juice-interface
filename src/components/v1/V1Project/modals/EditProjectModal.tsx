@@ -16,7 +16,7 @@ import {
 
 import { PROJECT_PAY_CHARACTER_LIMIT } from 'constants/numbers'
 
-export type ProjectInfoFormFields = {
+type ProjectInfoFormFields = {
   name: string
   description: string
   infoUri: string
@@ -28,7 +28,7 @@ export type ProjectInfoFormFields = {
   version: number
 }
 
-export type HandleFormFields = {
+type HandleFormFields = {
   handle: string
 }
 

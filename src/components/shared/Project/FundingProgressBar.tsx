@@ -1,24 +1,90 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Progress } from 'antd'
+import { Progress, Tooltip } from 'antd'
 import { Property } from 'csstype'
 
 import { ThemeContext } from 'contexts/themeContext'
-import { useContext, useMemo } from 'react'
+import { useContext, useMemo, useState } from 'react'
 import { fracDiv } from 'utils/formatNumber'
+import { t } from '@lingui/macro'
 
-const TargetIndicatorLine = ({ color }: { color: Property.Color }) => (
+const TargetIndicatorLine = (
+  props: { color: Property.Color } & React.DOMAttributes<HTMLDivElement>,
+) => (
   <div
+    {...props}
     style={{
       minWidth: 4,
       height: 15,
       borderRadius: 2,
-      background: color,
+      background: props.color,
       marginLeft: 5,
       marginRight: 5,
       marginTop: 3,
     }}
   ></div>
 )
+
+const ProgressWithOverflow = ({
+  percentOverflow,
+}: {
+  percentOverflow: number
+}) => {
+  const [showTooltips, setShowTooltips] = useState(false)
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
+  return (
+    <div
+      style={{ display: 'flex', alignItems: 'center', paddingBottom: 8 }}
+      onMouseOver={() => setShowTooltips(true)}
+      onMouseEnter={() => setShowTooltips(true)}
+      onMouseLeave={() => setShowTooltips(false)}
+    >
+      <Tooltip
+        title={t`Distributed`}
+        visible={showTooltips}
+        placement="bottomLeft"
+      >
+        <Progress
+          style={{
+            width: (1 - percentOverflow) * 100 + '%',
+            minWidth: 12,
+          }}
+          percent={100}
+          showInfo={false}
+          strokeColor={colors.text.brand.primary}
+        />
+      </Tooltip>
+
+      <TargetIndicatorLine color={colors.text.primary} />
+
+      <Tooltip title={t`Overflow`} visible={showTooltips} placement="topRight">
+        <Progress
+          style={{
+            width: percentOverflow * 100 + '%',
+            minWidth: 12,
+          }}
+          percent={100}
+          showInfo={false}
+          strokeColor={colors.text.brand.primary}
+        />
+      </Tooltip>
+    </div>
+  )
+}
+
+const ProgressNoOverflow = ({ percentPaid }: { percentPaid: number }) => {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
+  return (
+    <Progress
+      percent={percentPaid ? Math.max(percentPaid, 1) : 0}
+      showInfo={false}
+      strokeColor={colors.text.brand.primary}
+    />
+  )
+}
 
 export default function FundingProgressBar({
   targetAmount,
@@ -29,10 +95,6 @@ export default function FundingProgressBar({
   balanceInTargetCurrency: BigNumber | undefined
   overflowAmountInTargetCurrency: BigNumber | undefined
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const percentPaid = useMemo(
     () =>
       balanceInTargetCurrency && targetAmount
@@ -43,52 +105,23 @@ export default function FundingProgressBar({
   )
 
   // Percent overflow of target
-  const percentOverflow = fracDiv(
-    (overflowAmountInTargetCurrency?.sub(targetAmount ?? 0) ?? 0).toString(),
-    (targetAmount ?? 0).toString(),
+  const percentOverflow = useMemo(
+    () =>
+      fracDiv(
+        (
+          overflowAmountInTargetCurrency?.sub(targetAmount ?? 0) ?? 0
+        ).toString(),
+        (targetAmount ?? 0).toString(),
+      ),
+    [overflowAmountInTargetCurrency, targetAmount],
   )
 
-  const ProgressWithOverflow = () => {
-    return (
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <Progress
-          style={{
-            width: (1 - percentOverflow) * 100 + '%',
-            minWidth: 10,
-          }}
-          percent={100}
-          showInfo={false}
-          strokeColor={colors.text.brand.primary}
-        />
+  const hasTargetAmount = targetAmount.gt(0)
+  const hasOverFlow = overflowAmountInTargetCurrency?.gt(0) ?? false
 
-        <TargetIndicatorLine color={colors.text.primary} />
-
-        <Progress
-          style={{
-            width: percentOverflow * 100 + '%',
-            minWidth: 10,
-          }}
-          percent={100}
-          showInfo={false}
-          strokeColor={colors.text.brand.primary}
-        />
-      </div>
-    )
+  if (!hasTargetAmount || !hasOverFlow) {
+    return <ProgressNoOverflow percentPaid={percentPaid} />
   }
 
-  const ProgressNoOverflow = () => {
-    return (
-      <Progress
-        percent={percentPaid ? Math.max(percentPaid, 1) : 0}
-        showInfo={false}
-        strokeColor={colors.text.brand.primary}
-      />
-    )
-  }
-
-  return overflowAmountInTargetCurrency?.gt(0) ? (
-    <ProgressWithOverflow />
-  ) : (
-    <ProgressNoOverflow />
-  )
+  return <ProgressWithOverflow percentOverflow={percentOverflow} />
 }

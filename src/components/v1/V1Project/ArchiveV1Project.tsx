@@ -14,7 +14,7 @@ export default function ArchiveV1Project({
     cid: string
   }>
 }) {
-  const { metadata, projectId, handle, terminal, owner } =
+  const { metadata, projectId, handle, terminal, owner, cv } =
     useContext(V1ProjectContext)
 
   const canTakePaymentsWhenArchived = !(terminal?.version === '1.1')
@@ -27,6 +27,7 @@ export default function ArchiveV1Project({
       owner={owner}
       handle={handle}
       canTakePaymentsWhenArchived={canTakePaymentsWhenArchived}
+      cv={cv ?? '1'}
     />
   )
 }

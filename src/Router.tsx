@@ -5,9 +5,11 @@ import V1Dashboard from 'components/v1/V1Dashboard'
 import Landing from 'components/Landing'
 import Projects from 'components/Projects'
 import Loading from 'components/shared/Loading'
-import V1CurrencyProvider from 'providers/v1/V1CurrencyProvider'
+import { V1CurrencyProvider } from 'providers/v1/V1CurrencyProvider'
 import PrivacyPolicy from 'components/PrivacyPolicy'
+import V2BugUpdates from 'components/V2BugUpdates'
 import { t } from '@lingui/macro'
+import { fathom } from 'lib/fathom'
 
 import { V2UserProvider } from 'providers/v2/UserProvider'
 
@@ -35,7 +37,7 @@ function usePageViews() {
   const location = useLocation()
 
   useEffect(() => {
-    window.fathom?.trackPageview({
+    fathom?.trackPageview({
       url: location.pathname,
     })
   }, [location])
@@ -103,6 +105,9 @@ function JuiceboxSwitch() {
 
       <Route path="/privacy">
         <PrivacyPolicy />
+      </Route>
+      <Route path="/v2-bug-updates">
+        <V2BugUpdates />
       </Route>
       <Route path="/:route">
         <CatchallRedirect />

@@ -224,9 +224,6 @@ export const formattedNum = (
   return formatted
 }
 
-export const toUint256 = (num: BigNumber) =>
-  '0x' + (num?.toHexString().split('x')[1] ?? '').padStart(64, '0')
-
 export const formatPercent = (
   numerator: BigNumber | undefined,
   divisor: BigNumber | undefined,

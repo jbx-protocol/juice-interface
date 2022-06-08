@@ -6,8 +6,8 @@ import { createContext } from 'react'
 export const NetworkContext: React.Context<{
   signingProvider?: Web3Provider
   signerNetwork?: NetworkName
-  userAddress?: string,
+  userAddress?: string
   onNeedProvider?: () => Promise<void>
-  onSelectWallet?: () => void,
-  onLogOut?: () => void,
+  onSelectWallet?: () => void
+  onLogOut?: () => void
 }> = createContext({})

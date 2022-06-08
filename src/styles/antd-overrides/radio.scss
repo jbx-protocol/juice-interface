@@ -1,0 +1,11 @@
+.ant-radio-checked .ant-radio-inner {
+  border-color: var(--background-action-primary);
+}
+
+.ant-radio-inner::after {
+  background-color: var(--background-action-primary);
+}
+
+.ant-radio-wrapper {
+  color: var(--text-primary);
+}

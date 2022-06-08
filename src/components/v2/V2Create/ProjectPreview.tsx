@@ -70,6 +70,7 @@ export default function ProjectPreview({
 
     usedDistributionLimit: BigNumber.from(0),
     ETHBalance: BigNumber.from(0),
+    totalVolume: BigNumber.from(0),
     balanceInDistributionLimitCurrency: BigNumber.from(0),
 
     tokenAddress: undefined,

@@ -37,7 +37,7 @@ import { useForm } from 'antd/lib/form/Form'
 import { CurrencyName } from 'constants/currency'
 import { EditingPayoutMod } from './types'
 
-export type ModType = 'project' | 'address'
+type ModType = 'project' | 'address'
 
 type ProjectPayoutModsForm = {
   projectId: string
@@ -148,7 +148,7 @@ export const ProjectPayoutModsModal = ({
   }, [feePerbicent, form, target])
 
   const onAmountChange = (newAmount: number | undefined) => {
-    let newPercent = getPercentFromAmount(newAmount, target, feePercentage)
+    const newPercent = getPercentFromAmount(newAmount, target, feePercentage)
     setEditingPercent(newPercent)
     form.setFieldsValue({ amount: newAmount })
     form.setFieldsValue({ percent: newPercent })
@@ -191,10 +191,10 @@ export const ProjectPayoutModsModal = ({
 
   return (
     <Modal
-      title={modalMode === 'Edit' ? t`Edit existing split` : t`Add a payout`}
+      title={modalMode === 'Edit' ? t`Edit payout` : t`Add new payout`}
       visible={visible}
       onOk={validateAndSave}
-      okText={modalMode === 'Edit' ? t`Save split` : t`Add payout`}
+      okText={modalMode === 'Edit' ? t`Save payout` : t`Add payout`}
       onCancel={discardAndClose}
       destroyOnClose
     >
@@ -324,7 +324,7 @@ export const ProjectPayoutModsModal = ({
             <span style={{ flex: 1 }}>
               <NumberSlider
                 onChange={(percent: number | undefined) => {
-                  let newAmount = getAmountFromPercent(
+                  const newAmount = getAmountFromPercent(
                     percent ?? 0,
                     target,
                     feePercentage,

@@ -23,10 +23,13 @@ import FundingCycleSection, {
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { CardSection } from 'components/shared/CardSection'
 
+import useProjectQueuedFundingCycle from 'hooks/v2/contractReader/ProjectQueuedFundingCycle'
+
 import CurrentFundingCycle from './CurrentFundingCycle'
 import V2ReconfigureFundingModalTrigger from '../V2ProjectReconfigureModal/V2ReconfigureModalTrigger'
 import UpcomingFundingCycle from './UpcomingFundingCycle'
 import FundingCycleHistory from './FundingCycleHistory'
+import NoFundingCycle from './NoFundingCycle'
 
 export default function V2FundingCycleSection({
   expandCard,
@@ -40,17 +43,32 @@ export default function V2FundingCycleSection({
     fundingCycle,
     isPreviewMode,
     loading: { fundingCycleLoading },
+    projectId,
   } = useContext(V2ProjectContext)
 
   const canReconfigure = useHasPermission(V2OperatorPermission.RECONFIGURE)
   const showReconfigureButton = canReconfigure && !isPreviewMode
 
-  if (fundingCycleLoading) {
+  const {
+    data: queuedFundingCycleResponse,
+    loading: queuedFundingCycleLoading,
+  } = useProjectQueuedFundingCycle({
+    projectId,
+  })
+
+  const [queuedFundingCycle] = queuedFundingCycleResponse || []
+
+  if (
+    fundingCycleLoading ||
+    queuedFundingCycleLoading ||
+    !fundingCycle ||
+    (!queuedFundingCycle && !isPreviewMode)
+  ) {
     return <Loading />
   }
 
-  if (!fundingCycle) {
-    return <p>No funding cycle</p>
+  if (fundingCycle.number.eq(0) && queuedFundingCycle?.number.eq(0)) {
+    return <NoFundingCycle />
   }
 
   const tabText = ({ text }: { text: string }) => {
@@ -84,13 +102,13 @@ export default function V2FundingCycleSection({
   const fundingCycleData = serializeV2FundingCycleData(fundingCycle)
 
   const tabs = [
-    {
+    fundingCycle.number.gt(0) && {
       key: 'current',
       label: tabText({ text: t`Current` }),
       content: <CurrentFundingCycle expandCard={expandCard} />,
     },
     !isPreviewMode &&
-      hasFundingDuration(fundingCycleData) && {
+      (hasFundingDuration(fundingCycleData) || fundingCycle.number.eq(0)) && {
         key: 'upcoming',
         label: tabText({ text: t`Upcoming` }),
         content: <UpcomingFundingCycle expandCard={expandCard} />,

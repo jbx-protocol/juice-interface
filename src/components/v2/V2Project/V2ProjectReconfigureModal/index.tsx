@@ -65,6 +65,7 @@ import {
 } from 'constants/v2/splits'
 import V2ReconfigureUpcomingMessage from './V2ReconfigureUpcomingMessage'
 import ReconfigurePreview from './ReconfigurePreview'
+import { V2ReconfigureProjectHandleDrawer } from './drawers/V2ReconfigureProjectHandleDrawer'
 
 function ReconfigureButton({
   title,
@@ -172,6 +173,8 @@ export default function V2ProjectReconfigureModal({
     }
   }>()
 
+  const [projectHandleDrawerVisible, setProjectHandleDrawerVisible] =
+    useState<boolean>(false)
   const [projectDetailsDrawerVisible, setProjectDetailsDrawerVisible] =
     useState<boolean>(false)
   const [fundingDrawerVisible, setFundingDrawerVisible] =
@@ -534,6 +537,24 @@ export default function V2ProjectReconfigureModal({
         {hideProjectDetails ? null : (
           <div style={{ marginBottom: 20 }}>
             <h4 style={{ marginBottom: 0 }}>
+              <Trans>Edit project handle</Trans>
+            </h4>
+            <p>
+              <Trans>
+                Changes to project handle will take effect immediately.
+              </Trans>
+            </p>
+            <ReconfigureButton
+              reconfigureHasChanges={false}
+              title={t`Project handle`}
+              onClick={() => setProjectHandleDrawerVisible(true)}
+            />
+          </div>
+        )}
+
+        {hideProjectDetails ? null : (
+          <div style={{ marginBottom: 20 }}>
+            <h4 style={{ marginBottom: 0 }}>
               <Trans>Edit project details</Trans>
             </h4>
             <p>
@@ -582,6 +603,12 @@ export default function V2ProjectReconfigureModal({
         <V2ReconfigureProjectDetailsDrawer
           visible={projectDetailsDrawerVisible}
           onFinish={() => setProjectDetailsDrawerVisible(false)}
+        />
+      )}
+      {hideProjectDetails ? null : (
+        <V2ReconfigureProjectHandleDrawer
+          visible={projectHandleDrawerVisible}
+          onFinish={() => setProjectHandleDrawerVisible(false)}
         />
       )}
       <FundingDrawer

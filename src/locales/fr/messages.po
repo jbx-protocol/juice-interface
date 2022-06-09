@@ -676,7 +676,7 @@ msgid "Configure your project's tokenomics."
 msgstr "Paramétrer la tokéconomie de votre projet."
 
 #: src/components/v2/V2Project/NewDeployModal.tsx
-msgid "Congratulations on launching your project! Continue with these optional next steps."
+msgid "Congratulations on launching your project! The next steps are optional and can be completed at any time."
 msgstr ""
 
 #: src/components/Navbar/Account.tsx
@@ -741,9 +741,12 @@ msgstr "Copier dans le presse-papier"
 msgid "Create a payable address (optional)"
 msgstr ""
 
+#: src/components/v2/V2Project/NewDeployModal.tsx
+msgid "Create an Ethereum address for your project. Enables direct payments without going through your project's Juicebox page."
+msgstr ""
+
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
-#: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Create an Ethereum address that can be used to pay your project directly."
 msgstr "Créez une adresse Ethereum qui peut être utilisée pour payer directement votre projet."
 

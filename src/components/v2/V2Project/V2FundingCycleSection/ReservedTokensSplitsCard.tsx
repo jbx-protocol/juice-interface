@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import { Button, Space } from 'antd'
+import { Button, Skeleton, Space } from 'antd'
 import { CardSection } from 'components/shared/CardSection'
 import TooltipLabel from 'components/shared/TooltipLabel'
 import SplitList from 'components/v2/shared/SplitList'
@@ -48,10 +48,11 @@ export default function ReservedTokensSplitsCard({
     distributeReservedTokensModalVisible,
     setDistributeReservedTokensModalVisible,
   ] = useState<boolean>()
-  const { data: reservedTokens } = useProjectReservedTokens({
-    projectId,
-    reservedRate: reservedRate,
-  })
+  const { data: reservedTokens, loading: loadingReservedTokens } =
+    useProjectReservedTokens({
+      projectId,
+      reservedRate: reservedRate,
+    })
 
   const smallHeaderStyle: CSSProperties = {
     fontSize: '.7rem',
@@ -85,14 +86,22 @@ export default function ReservedTokensSplitsCard({
             }}
           >
             <div style={{ marginRight: '3rem' }}>
-              <span
-                style={{
-                  fontSize: '1rem',
-                  fontWeight: 500,
-                }}
+              <Skeleton
+                active
+                loading={loadingReservedTokens}
+                paragraph={{ rows: 1, width: 20 }}
+                title={false}
+                style={{ display: 'inline' }}
               >
-                {formatWad(reservedTokens, { precision: 0 })}
-              </span>{' '}
+                <span
+                  style={{
+                    fontSize: '1rem',
+                    fontWeight: 500,
+                  }}
+                >
+                  {formatWad(reservedTokens, { precision: 0 })}
+                </span>
+              </Skeleton>{' '}
               <TooltipLabel
                 style={{
                   ...smallHeaderStyle,

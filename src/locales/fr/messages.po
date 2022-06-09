@@ -8,7 +8,7 @@ msgstr ""
 "Language: fr\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-06-03 02:44\n"
+"PO-Revision-Date: 2022-06-09 02:52\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -698,6 +698,7 @@ msgid "Connect wallet to deploy"
 msgstr "Connectez un portefeuille à déployer"
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Connect wallet to pay"
 msgstr "Connectez un portefeuille pour payer"
 
@@ -1302,7 +1303,7 @@ msgstr ""
 
 #: src/components/shared/formItems/ProjectRedemptionRate.tsx
 msgid "How do I set the redemption rate?"
-msgstr ""
+msgstr "Comment définir le taux de récupération ?"
 
 #: src/components/Landing/QAs.tsx
 msgid "How have the contracts been tested?"
@@ -2579,7 +2580,7 @@ msgstr "L'objectif pour ce cycle de financement est de 0, ce qui signifie que to
 
 #: src/components/shared/Project/VolumeStatLine/VolumeStatLine.tsx
 msgid "The total funds this Juicebox project has received since it was created."
-msgstr ""
+msgstr "Le total des fonds que ce projet Juicebox a reçu depuis sa création."
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "There are no payouts defined for this funding cycle. The project owner will receive all available funds."
@@ -2642,7 +2643,7 @@ msgstr "Ce projet utilise la version V2 des contrats Juicebox."
 
 #: src/components/v2/V2Project/TreasuryStats/ProjectBalance.tsx
 msgid "This project's balance in the Juicebox contract."
-msgstr ""
+msgstr "Le solde de ce projet dans le contrat Juicebox."
 
 #: src/components/v1/FundingCycle/FundingCycleDetails.tsx
 msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
@@ -2791,7 +2792,7 @@ msgstr "Total : {0}%"
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 #: src/hooks/Transactor.ts
 msgid "Transaction failed"
-msgstr ""
+msgstr "Transaction ratée"
 
 #: src/components/shared/TransactionModal.tsx
 msgid "Transaction pending..."

@@ -651,6 +651,10 @@ msgstr "Reivindicar {tokenTextLong} irá converter o seu saldo de {tokenTextShor
 msgid "Close"
 msgstr "Fechar"
 
+#: src/components/v2/V2Project/NewDeployModal.tsx
+msgid "Close, I'll do these later"
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "Commit portions of your funds to the people or projects you want to support, or the contributors you want to pay. When you get paid, so do they."
 msgstr "Garanta porções dos seus fundos para pessoas ou projetos que você quer apoiar, ou contribuidores que você quer pagar. Quando você for pago, eles também serão."
@@ -672,8 +676,8 @@ msgid "Configure your project's tokenomics."
 msgstr "Configure o tokenomic do projeto."
 
 #: src/components/v2/V2Project/NewDeployModal.tsx
-msgid "Congratulations on launching your project! We recommend you take these next steps to help your project gain traction. These steps are optional and you can complete them later on."
-msgstr "Parabéns por lançar seu projeto! Nós recomendamos que você tome os seguintes passos para ajudar que seu projeto ganhe tração. Esses passos são opcionais e você pode completar eles mais tarde."
+msgid "Congratulations on launching your project! Continue with these optional next steps."
+msgstr ""
 
 #: src/components/Navbar/Account.tsx
 msgid "Connect"
@@ -734,8 +738,8 @@ msgid "Copy to clipboard"
 msgstr "Copiar para a área de transferência"
 
 #: src/components/v2/V2Project/NewDeployModal.tsx
-msgid "Create a payable address"
-msgstr "Criar um endereço de pagamento"
+msgid "Create a payable address (optional)"
+msgstr ""
 
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
@@ -1419,8 +1423,8 @@ msgid "Issue an ERC-20 to be used as this project's token. Once issued, anyone c
 msgstr "Emita um token ERC-20 como token deste projeto. Uma vez emitido, qualquer pessoa pode reivindicar seu saldo de tokens existentes no novo token."
 
 #: src/components/v2/V2Project/NewDeployModal.tsx
-msgid "Issue an ERC-20 token"
-msgstr "Emitir um token ERC-20"
+msgid "Issue an ERC-20 token (optional)"
+msgstr ""
 
 #: src/components/shared/modals/IssueTokenModal.tsx
 msgid "Issue token"
@@ -1464,7 +1468,6 @@ msgid "Last paid"
 msgstr "Último pagamento"
 
 #: src/components/shared/modals/IssueTokenModal.tsx
-#: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Later"
 msgstr "Mais tarde"
 
@@ -1491,10 +1494,6 @@ msgstr "Lance seu projeto"
 #: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner.tsx
 msgid "Leave blank to start immediately."
 msgstr "Deixar em branco para iniciar imediatamente."
-
-#: src/components/v2/V2Project/NewDeployModal.tsx
-msgid "Let's get this party started!"
-msgstr "Vamos começar essa festa!"
 
 #: src/components/Navbar/Mobile/ThemePickerMobile.tsx
 msgid "Light theme"
@@ -1620,10 +1619,6 @@ msgstr "Nome"
 #: src/components/Projects/TrendingProjectCard.tsx
 msgid "New"
 msgstr "Novo"
-
-#: src/components/v2/V2Project/NewDeployModal.tsx
-msgid "Next steps"
-msgstr "Próximos passos"
 
 #: src/components/v2/V2Create/tabs/ProjectDetailsTab/ProjectDetailsTabContent.tsx
 msgid "Next: Funding cycle"
@@ -1982,6 +1977,10 @@ msgstr "O projeto está aceitando pagamentos neste ciclo de financiamento."
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Project is not accepting payments this funding cycle."
 msgstr "O projeto não está aceitando pagamentos neste ciclo de financiamento."
+
+#: src/components/v2/V2Project/NewDeployModal.tsx
+msgid "Project launch successful"
+msgstr ""
 
 #: src/components/shared/formItems/ProjectName.tsx
 msgid "Project name"
@@ -2376,10 +2375,6 @@ msgstr "Defina a duração de seus ciclos de financiamento."
 #: src/components/v2/shared/DistributionSplitsSection/SpecificLimitModal.tsx
 msgid "Set this to the sum of all your payouts"
 msgstr "Defina isso na soma de todos os seus pagamentos"
-
-#: src/components/v2/V2Project/NewDeployModal.tsx
-msgid "Share to Twitter"
-msgstr "Compartilhe no Twitter"
 
 #: src/components/Landing/index.tsx
 msgid "Should you Juicebox?"

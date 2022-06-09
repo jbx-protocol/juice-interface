@@ -651,6 +651,10 @@ msgstr "{tokenTextLong} token'larınızı talep etmeniz, {tokenTextShort} bakiye
 msgid "Close"
 msgstr "Kapat"
 
+#: src/components/v2/V2Project/NewDeployModal.tsx
+msgid "Close, I'll do these later"
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "Commit portions of your funds to the people or projects you want to support, or the contributors you want to pay. When you get paid, so do they."
 msgstr "Gelirinizin bir kısmını, desteklemek istediğiniz kişilere veya projelere veya ödeme yapmak istediğiniz katkıda bulunanlara gitmesi için taahhüt edin. Siz ödeme aldığınızda, onlar da alsın."
@@ -672,7 +676,7 @@ msgid "Configure your project's tokenomics."
 msgstr "Projenizin token ekonomisini yapılandırın."
 
 #: src/components/v2/V2Project/NewDeployModal.tsx
-msgid "Congratulations on launching your project! We recommend you take these next steps to help your project gain traction. These steps are optional and you can complete them later on."
+msgid "Congratulations on launching your project! Continue with these optional next steps."
 msgstr ""
 
 #: src/components/Navbar/Account.tsx
@@ -734,7 +738,7 @@ msgid "Copy to clipboard"
 msgstr "Panoya kopyala"
 
 #: src/components/v2/V2Project/NewDeployModal.tsx
-msgid "Create a payable address"
+msgid "Create a payable address (optional)"
 msgstr ""
 
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
@@ -1419,7 +1423,7 @@ msgid "Issue an ERC-20 to be used as this project's token. Once issued, anyone c
 msgstr ""
 
 #: src/components/v2/V2Project/NewDeployModal.tsx
-msgid "Issue an ERC-20 token"
+msgid "Issue an ERC-20 token (optional)"
 msgstr ""
 
 #: src/components/shared/modals/IssueTokenModal.tsx
@@ -1464,7 +1468,6 @@ msgid "Last paid"
 msgstr "Son ödeme"
 
 #: src/components/shared/modals/IssueTokenModal.tsx
-#: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Later"
 msgstr "Daha sonra"
 
@@ -1491,10 +1494,6 @@ msgstr "Projenizi başlatın"
 #: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner.tsx
 msgid "Leave blank to start immediately."
 msgstr ""
-
-#: src/components/v2/V2Project/NewDeployModal.tsx
-msgid "Let's get this party started!"
-msgstr "Hadi partiyi başlatalım!"
 
 #: src/components/Navbar/Mobile/ThemePickerMobile.tsx
 msgid "Light theme"
@@ -1620,10 +1619,6 @@ msgstr "İsim"
 #: src/components/Projects/TrendingProjectCard.tsx
 msgid "New"
 msgstr "Yeni"
-
-#: src/components/v2/V2Project/NewDeployModal.tsx
-msgid "Next steps"
-msgstr "Sonraki adımlar"
 
 #: src/components/v2/V2Create/tabs/ProjectDetailsTab/ProjectDetailsTabContent.tsx
 msgid "Next: Funding cycle"
@@ -1981,6 +1976,10 @@ msgstr ""
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Project is not accepting payments this funding cycle."
+msgstr ""
+
+#: src/components/v2/V2Project/NewDeployModal.tsx
+msgid "Project launch successful"
 msgstr ""
 
 #: src/components/shared/formItems/ProjectName.tsx
@@ -2375,10 +2374,6 @@ msgstr "Finansman döngülerinizin süresini belirleyin."
 
 #: src/components/v2/shared/DistributionSplitsSection/SpecificLimitModal.tsx
 msgid "Set this to the sum of all your payouts"
-msgstr ""
-
-#: src/components/v2/V2Project/NewDeployModal.tsx
-msgid "Share to Twitter"
 msgstr ""
 
 #: src/components/Landing/index.tsx

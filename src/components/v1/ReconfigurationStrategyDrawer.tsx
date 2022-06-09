@@ -3,7 +3,7 @@ import { Button, Drawer, DrawerProps } from 'antd'
 
 import { ThemeContext } from 'contexts/themeContext'
 import { BallotStrategy } from 'models/ballot'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 import { ballotStrategies } from 'constants/v1/ballotStrategies'
 
@@ -29,6 +29,10 @@ export default function ReconfigurationStrategyDrawer({
   const [strategy, setStrategy] = useState<BallotStrategy>(
     initialSelectedStrategy,
   )
+
+  useEffect(() => {
+    setStrategy(initialSelectedStrategy)
+  }, [initialSelectedStrategy])
 
   return (
     <Drawer visible={visible} {...style} onClose={onClose}>

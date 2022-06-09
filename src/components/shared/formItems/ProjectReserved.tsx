@@ -2,7 +2,6 @@ import { Form } from 'antd'
 import { t, Trans } from '@lingui/macro'
 import { CSSProperties, useContext, useState } from 'react'
 import FormItemLabel from 'components/v2/V2Create/FormItemLabel'
-import TabDescription from 'components/v2/V2Create/TabDescription'
 import { formattedNum } from 'utils/formatNumber'
 import { ThemeContext } from 'contexts/themeContext'
 import { defaultFundingCycleMetadata } from 'redux/slices/editingV2Project'
@@ -76,11 +75,11 @@ export default function ProjectReserved({
               use.
             </Trans>
           </p>
-          <TabDescription
+          <div
             style={{
               backgroundColor: colors.background.l1,
               width: '100%',
-              fontWeight: 600,
+              padding: '1rem',
             }}
           >
             <div
@@ -88,6 +87,7 @@ export default function ProjectReserved({
                 display: 'flex',
                 justifyContent: 'space-between',
                 width: '100%',
+                marginBottom: '5px',
               }}
             >
               <span>
@@ -95,7 +95,7 @@ export default function ProjectReserved({
                   label={t`Issuance rate`}
                   tip={
                     <Trans>
-                      Tokens <strong>received by the contributor</strong> when
+                      Tokens <strong>contributors will receive</strong> when
                       they contribute 1 ETH.
                     </Trans>
                   }
@@ -126,7 +126,7 @@ export default function ProjectReserved({
               {formattedNum(round(initialReservedTokensPerEth, 4))} tokens / 1
               ETH
             </div>
-          </TabDescription>
+          </div>
         </div>
       }
       name={name}

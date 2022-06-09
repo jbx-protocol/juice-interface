@@ -180,12 +180,12 @@ export function InflationRateStatistic({
     <Statistic
       title={
         <TooltipLabel
-          label={isInitial ? t`Initial inflation rate` : t`Inflation rate`}
+          label={isInitial ? t`Initial mint rate` : t`Mint rate`}
           tip={
             <Trans>
-              <strong>Total project tokens minted</strong> as a result of 1 ETH
-              being contributed. This can change over time according to the
-              discount rate and reserved tokens amount of future funding cycles.
+              <strong>Total project tokens minted</strong> when 1 ETH is
+              contributed. This can change over time according to the discount
+              rate and reserved tokens amount of future funding cycles.
             </Trans>
           }
         />
@@ -374,7 +374,7 @@ export function ReservedSplitsStatistic({
     <Statistic
       title={
         <TooltipLabel
-          label={t`Reserved token splits`}
+          label={t`Reserved token allocation`}
           tip={t`How the ${reservedPercentage}% of your project's reserved tokens will be split.`}
         />
       }

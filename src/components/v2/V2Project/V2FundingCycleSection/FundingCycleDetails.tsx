@@ -196,12 +196,12 @@ export default function FundingCycleDetails({
         <Descriptions.Item
           label={
             <TooltipLabel
-              label={<Trans>Inflation rate</Trans>}
+              label={<Trans>Mint rate</Trans>}
               tip={
                 <Trans>
-                  <strong>Total project tokens minted</strong> as a result of 1
-                  ETH being contributed. This can change over time according to
-                  the discount rate and reserved tokens amount of future funding
+                  <strong>Total project tokens minted</strong> when 1 ETH is
+                  contributed. This can change over time according to the
+                  discount rate and reserved tokens amount of future funding
                   cycles.
                 </Trans>
               }
@@ -243,9 +243,9 @@ export default function FundingCycleDetails({
                 <Trans>
                   Amount of newly minted project tokens{' '}
                   <strong>reserved for the project</strong> when 1 ETH is
-                  contributed. Reserve tokens are reserved for the project owner
-                  by default, but can also be allocated to other wallet
-                  addresses by the owner.
+                  contributed. The project owner is allocated all reserved
+                  tokens by default, but they can also be allocated to other
+                  wallet addresses.
                 </Trans>
               }
             />

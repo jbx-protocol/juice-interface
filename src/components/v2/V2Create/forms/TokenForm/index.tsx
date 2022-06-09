@@ -56,11 +56,10 @@ import { formattedNum } from 'utils/formatNumber'
 import { DEFAULT_BONDING_CURVE_RATE_PERCENTAGE } from 'components/shared/formItems/ProjectRedemptionRate'
 
 import { DISCOUNT_RATE_EXPLANATION } from 'components/v2/V2Project/V2FundingCycleSection/settingExplanations'
-import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
-import TooltipLabel from 'components/shared/TooltipLabel'
 
 import { shadowCard } from 'constants/styles/shadowCard'
 import TabDescription from '../../TabDescription'
+import MintRateFormItem from './MintRateFormItem'
 
 const MAX_DISCOUNT_RATE = 20 // this is an opinionated limit
 
@@ -284,49 +283,14 @@ export default function TokenForm({
     <Form layout="vertical" onFinish={onTokenFormSaved}>
       <Space size="middle" direction="vertical">
         <div>
-          <div style={{ display: 'flex' }}>
-            {isCreate ? (
-              <Form.Item
-                label={
-                  <TooltipLabel
-                    label={<Trans>Initial inflation rate</Trans>}
-                    tip={
-                      hasDuration ? (
-                        <Trans>
-                          <strong>Total project tokens minted</strong> as a
-                          result of 1 ETH being contributed in the first funding
-                          cycle.
-                        </Trans>
-                      ) : (
-                        <Trans>
-                          <strong>Total project tokens minted</strong> as a
-                          result of 1 ETH being contributed.
-                        </Trans>
-                      )
-                    }
-                  />
-                }
-                style={{ width: '100%' }}
-                required
-              >
-                <FormattedNumberInput
-                  min={1}
-                  accessory={
-                    <span
-                      style={{ color: colors.text.primary, marginRight: 20 }}
-                    >
-                      <Trans>tokens per ETH contributed</Trans>
-                    </span>
-                  }
-                  value={weight}
-                  onChange={newWeight => {
-                    setWeight(newWeight ?? DEFAULT_ISSUANCE_RATE.toString())
-                  }}
-                  style={{ paddingRight: 15 }}
-                />
-              </Form.Item>
-            ) : null}
-          </div>
+          <MintRateFormItem
+            value={weight}
+            onChange={newWeight => {
+              setWeight(newWeight ?? DEFAULT_ISSUANCE_RATE.toString())
+            }}
+            hasDuration={hasDuration}
+            isCreate={Boolean(isCreate)}
+          />
           <ReservedTokensFormItem
             initialValue={reservedRatePercent}
             onChange={newReservedRatePercentage => {

@@ -217,17 +217,9 @@ msgstr "<0>Este proyecto no tiene excedente</0>, así que no recibirás ETH por 
 msgid "<0>This website (juicebox.money) connects to the Juicebox protocol's smart contracts, deployed on the Ethereum network. (note: anyone else can make a website that also connects to these same smart contracts. For now, don't trust any site other than this one to access the Juicebox protocol).</0><1>Creating a Juicebox project mints you an NFT (ERC-721) representing ownership over it. Whoever owns this NFT can configure the rules of the game and how payouts are distributed.</1><2>The project's tokens that are minted and distributed as a result of a received payment are ERC-20's. The amount of tokens minted and distributed are proportional to the volume of payments received, weighted by the project's discount rate over time.</2>"
 msgstr ""
 
-#: src/components/v2/V2Create/forms/TokenForm/index.tsx
-msgid "<0>Total project tokens minted</0> as a result of 1 ETH being contributed in the first funding cycle."
-msgstr ""
-
-#: src/components/v2/V2Create/forms/TokenForm/index.tsx
-msgid "<0>Total project tokens minted</0> as a result of 1 ETH being contributed."
-msgstr ""
-
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
-msgid "<0>Total project tokens minted</0> as a result of 1 ETH being contributed. This can change over time according to the discount rate and reserved tokens amount of future funding cycles."
+msgid "<0>Total project tokens minted</0> when 1 ETH is contributed. This can change over time according to the discount rate and reserved tokens amount of future funding cycles."
 msgstr ""
 
 #: src/components/Landing/TrendingSection.tsx
@@ -428,8 +420,11 @@ msgid "Amount of ERC-20 tokens to claim"
 msgstr "Cantidad de tokens ERC-20 a reclamar"
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Amount of newly minted project tokens <0>reserved for the project</0> when 1 ETH is contributed. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner."
+msgstr ""
+
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+msgid "Amount of newly minted project tokens <0>reserved for the project</0> when 1 ETH is contributed. The project owner is allocated all reserved tokens by default, but they can also be allocated to other wallet addresses."
 msgstr ""
 
 #: src/components/shared/modals/ParticipantsModal.tsx
@@ -1405,18 +1400,13 @@ msgid "Infinite (no limit)"
 msgstr "Infinito (sin límite)"
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
-msgid "Inflation rate"
-msgstr ""
-
-#: src/components/v2/V2Create/forms/TokenForm/index.tsx
-#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
-msgid "Initial inflation rate"
-msgstr ""
-
-#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Initial issuance rate"
 msgstr "Tasa de emisión inicial"
+
+#: src/components/v2/V2Create/forms/TokenForm/MintRateFormItem.tsx
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
+msgid "Initial mint rate"
+msgstr ""
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Invalid address"
@@ -1597,6 +1587,11 @@ msgstr "Acuña nuevos {tokensLabel} a una cuenta. Solo el propietario de un proy
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "Mint project tokens on demand"
 msgstr "Crea tokens del proyecto a demanda"
+
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+msgid "Mint rate"
+msgstr ""
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "Mint tokens as ERC-20"
@@ -2222,6 +2217,10 @@ msgstr "Cuota reservada"
 msgid "Reserved rate is 0% but has reserved token allocation. Consider adding a reserved rate that is greater than zero, or remove the token allocation."
 msgstr "La tasa de reservación es 0%, pero tiene asignación de tokens reservados. Considera añadir una tasa de reservación que sea mayor que 0, o quitar la asignación de tokens."
 
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
+msgid "Reserved token allocation"
+msgstr ""
+
 #: src/components/shared/forms/TicketingForm.tsx
 #: src/components/v2/V2Create/forms/TokenForm/ReservedTokensFormItem.tsx
 msgid "Reserved token allocation (optional)"
@@ -2231,10 +2230,6 @@ msgstr "Asignación de tokens reservados (opcional)"
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Reserved token allocations"
 msgstr "Colocación de tokens reservados"
-
-#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
-msgid "Reserved token splits"
-msgstr "Distribución de los tokens reservados"
 
 #: src/components/shared/formItems/ProjectReserved.tsx
 #: src/components/shared/forms/TicketingForm.tsx
@@ -2538,6 +2533,14 @@ msgstr "La cantidad máxima de fondos que pueden ser distribuidos desde el tesor
 msgid "The maximum amount of funds that can be distributed from this project in one funding cycle. Funds will be withdrawn in ETH no matter the currency you choose."
 msgstr "El monto máximo de fondos que puede ser distribuido desde este proyecto en un ciclo de financiamiento. Los fondos serán retirados en ETH sin importar la moneda que tú escojas."
 
+#: src/components/v2/V2Create/forms/TokenForm/MintRateFormItem.tsx
+msgid "The number of project tokens minted when 1 ETH is contributed in the first funding cycle."
+msgstr ""
+
+#: src/components/v2/V2Create/forms/TokenForm/MintRateFormItem.tsx
+msgid "The number of project tokens minted when 1 ETH is contributed."
+msgstr ""
+
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "The onchain memo for each transaction made through the address. It will appear in the project's payment feed when someone pays this address."
 msgstr ""
@@ -2721,7 +2724,7 @@ msgid "Tokens"
 msgstr "Tokens"
 
 #: src/components/shared/formItems/ProjectReserved.tsx
-msgid "Tokens <0>received by the contributor</0> when they contribute 1 ETH."
+msgid "Tokens <0>contributors will receive</0> when they contribute 1 ETH."
 msgstr ""
 
 #: src/components/shared/formItems/ProjectReserved.tsx
@@ -3226,7 +3229,7 @@ msgstr "token"
 msgid "tokens"
 msgstr "tokens"
 
-#: src/components/v2/V2Create/forms/TokenForm/index.tsx
+#: src/components/v2/V2Create/forms/TokenForm/MintRateFormItem.tsx
 msgid "tokens per ETH contributed"
 msgstr ""
 

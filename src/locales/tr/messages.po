@@ -1226,6 +1226,10 @@ msgstr "Juicebox'ı iş modeli olarak kullanmak için projemi açık kaynak yapm
 msgid "Do I need this?"
 msgstr ""
 
+#: src/components/modals/MigrateProjectTokensModal.tsx
+msgid "Do I need to swap my V1 tokens?"
+msgstr ""
+
 #: src/components/Navbar/constants.ts
 msgid "Docs"
 msgstr "Dokümanlar"
@@ -2886,6 +2890,18 @@ msgstr "Yüzdelerin toplamı %100'ü aşamaz"
 msgid "Sum of percentages cannot exceed 100%."
 msgstr "Yüzdelerin toplamı %100'ü aşamaz."
 
+#: src/components/modals/MigrateProjectTokensModal.tsx
+msgid "Swap V1 {tokenSymbolFormattedPlural}"
+msgstr ""
+
+#: src/components/modals/MigrateProjectTokensModal.tsx
+msgid "Swap V1 {tokenSymbolFormattedPlural} for V2 {tokenSymbolFormattedPlural}"
+msgstr ""
+
+#: src/components/v2/V2Project/V2ManageTokensSection/V1TokensSection.tsx
+msgid "Swap for V2 {tokenText}"
+msgstr ""
+
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 msgid "Target"
@@ -3237,6 +3253,10 @@ msgstr "Bu adrese yapılan ödemelerden basılan token'lar varsayılan olarak ö
 msgid "Tokens receiver"
 msgstr "Token alıcısı"
 
+#: src/components/modals/MigrateProjectTokensModal.tsx
+msgid "Tokens to migrate"
+msgstr ""
+
 #: src/components/v2/shared/SplitItem.tsx
 msgid "Tokens:"
 msgstr "Token'lar:"
@@ -3563,6 +3583,10 @@ msgstr "Bir finansman döngüsü süreniz yok. Yaptığınız değişiklikler he
 msgid "You don't hold tokens for any Juicebox project."
 msgstr "Herhangi bir Juicebox projesi için token tutmuyorsunuz."
 
+#: src/components/modals/MigrateProjectTokensModal.tsx
+msgid "You have <0>{v2ProjectName}</0> tokens on <1>Juicebox V1</1>. You can swap your <2>{v2ProjectName}</2> V1 tokens for V2 tokens."
+msgstr ""
+
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
 msgid "You have configured for all funds to be distributed from the treasury. Your current payouts do not sum to 100%, so the remainder will go to the project owner."
 msgstr "Tüm fonları hazineden dağıtılacak şekilde yapılandırdınız. Mevcut ödemeleriniz %100'e ulaşmıyor, bu nedenle geri kalan miktar proje sahibine gidecek."
@@ -3611,9 +3635,21 @@ msgstr ""
 msgid "You've completed this step."
 msgstr ""
 
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
+msgid "Your <0>@{v1ProjectHandle}</0> V1 token balance."
+msgstr ""
+
 #: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner.tsx
 msgid "Your Juicebox project has no active funding cycle. Launch a funding cycle to re-enable payments on your project."
 msgstr "Juicebox projenizin aktif bir finansman döngüsü yok. Projenizde ödemeleri yeniden etkinleştirmek için bir finansman döngüsü başlatın."
+
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
+msgid "Your V1 balance"
+msgstr ""
+
+#: src/components/modals/MigrateProjectTokensModal.tsx
+msgid "Your V1 {tokenSymbolFormatted} balance:"
+msgstr ""
 
 #: src/components/v1/V1Project/Rewards/index.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx

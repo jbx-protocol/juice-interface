@@ -1226,6 +1226,10 @@ msgstr "要把 Juicebox 用作项目的商业模式的话，我必须把项目�
 msgid "Do I need this?"
 msgstr ""
 
+#: src/components/modals/MigrateProjectTokensModal.tsx
+msgid "Do I need to swap my V1 tokens?"
+msgstr ""
+
 #: src/components/Navbar/constants.ts
 msgid "Docs"
 msgstr "文档"
@@ -2886,6 +2890,18 @@ msgstr "百分比合计不能超过 100%"
 msgid "Sum of percentages cannot exceed 100%."
 msgstr "百分比合计不能超过 100%."
 
+#: src/components/modals/MigrateProjectTokensModal.tsx
+msgid "Swap V1 {tokenSymbolFormattedPlural}"
+msgstr ""
+
+#: src/components/modals/MigrateProjectTokensModal.tsx
+msgid "Swap V1 {tokenSymbolFormattedPlural} for V2 {tokenSymbolFormattedPlural}"
+msgstr ""
+
+#: src/components/v2/V2Project/V2ManageTokensSection/V1TokensSection.tsx
+msgid "Swap for V2 {tokenText}"
+msgstr ""
+
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 msgid "Target"
@@ -3237,6 +3253,10 @@ msgstr "向这个地址付款铸造出来的代币默认属于付款人。但是
 msgid "Tokens receiver"
 msgstr "代币接收方"
 
+#: src/components/modals/MigrateProjectTokensModal.tsx
+msgid "Tokens to migrate"
+msgstr ""
+
 #: src/components/v2/shared/SplitItem.tsx
 msgid "Tokens:"
 msgstr "代币："
@@ -3563,6 +3583,10 @@ msgstr "你的项目未设置筹款周期时长。你做的更改将会立即生
 msgid "You don't hold tokens for any Juicebox project."
 msgstr "你目前未持有任何 Juicebox 项目的代币。"
 
+#: src/components/modals/MigrateProjectTokensModal.tsx
+msgid "You have <0>{v2ProjectName}</0> tokens on <1>Juicebox V1</1>. You can swap your <2>{v2ProjectName}</2> V1 tokens for V2 tokens."
+msgstr ""
+
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
 msgid "You have configured for all funds to be distributed from the treasury. Your current payouts do not sum to 100%, so the remainder will go to the project owner."
 msgstr "你已经配置把金库的所有资金分配出去。你当前的支出总额没有达到所有资金的100%，因此剩余部分将会分配给项目方。"
@@ -3611,9 +3635,21 @@ msgstr ""
 msgid "You've completed this step."
 msgstr ""
 
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
+msgid "Your <0>@{v1ProjectHandle}</0> V1 token balance."
+msgstr ""
+
 #: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner.tsx
 msgid "Your Juicebox project has no active funding cycle. Launch a funding cycle to re-enable payments on your project."
 msgstr "你的 Juicevox 项目没有活跃的筹款周期。启动筹款周期以便重新允许向项目付款。"
+
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
+msgid "Your V1 balance"
+msgstr ""
+
+#: src/components/modals/MigrateProjectTokensModal.tsx
+msgid "Your V1 {tokenSymbolFormatted} balance:"
+msgstr ""
 
 #: src/components/v1/V1Project/Rewards/index.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx

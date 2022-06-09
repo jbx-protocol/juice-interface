@@ -3,10 +3,7 @@ import { Button, Tooltip } from 'antd'
 import { ProjectToolsDrawer } from 'components/Project/ProjectToolsDrawer/ProjectToolsDrawer'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import {
-  useHasPermission,
-  V2OperatorPermission,
-} from 'hooks/v2/contractReader/HasPermission'
+import { useUserHasPermission } from 'hooks/v2/contractReader/UserHasPermission'
 import { useContext, useState } from 'react'
 import { ToolOutlined } from '@ant-design/icons'
 
@@ -18,6 +15,7 @@ import { useDeployProjectPayerTx } from 'hooks/v2/transactor/DeployProjectPayerT
 
 import ProjectVersionBadge from 'components/ProjectVersionBadge'
 import { useEditV2ProjectDetailsTx } from 'hooks/v2/transactor/EditV2ProjectDetailsTx'
+import { V2OperatorPermission } from 'hooks/v2/contractReader/HasPermission'
 
 import V2ReconfigureFundingModalTrigger from './V2ProjectReconfigureModal/V2ReconfigureModalTrigger'
 
@@ -31,7 +29,7 @@ export default function V2ProjectHeaderActions() {
 
   const [toolDrawerVisible, setToolDrawerVisible] = useState<boolean>(false)
 
-  const canReconfigure = useHasPermission(V2OperatorPermission.RECONFIGURE)
+  const canReconfigure = useUserHasPermission(V2OperatorPermission.RECONFIGURE)
 
   const showReconfigureButton = canReconfigure
 

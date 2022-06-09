@@ -4,10 +4,9 @@ import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { CardSection } from 'components/CardSection'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import {
-  OperatorPermission,
-  useHasPermission,
-} from 'hooks/v1/contractReader/HasPermission'
+import { useUserHasPermission } from 'hooks/v1/contractReader/UserHasPermission'
+import { OperatorPermission } from 'hooks/v1/contractReader/HasPermission'
+
 import { useContext } from 'react'
 
 import { fundingCycleRiskCount } from 'utils/v1/fundingCycle'
@@ -19,7 +18,6 @@ import FundingCycleSection from 'components/Project/FundingCycleSection'
 
 import FundingHistory from './FundingHistory'
 import ReconfigureFundingModalTrigger from './ReconfigureFundingModalTrigger'
-
 export default function FundingCycles({
   showCurrentDetail,
 }: {
@@ -86,7 +84,7 @@ export default function FundingCycles({
     },
   ]
 
-  const canReconfigure = useHasPermission(OperatorPermission.Configure)
+  const canReconfigure = useUserHasPermission(OperatorPermission.Configure)
 
   if (!projectId) return null
   return (

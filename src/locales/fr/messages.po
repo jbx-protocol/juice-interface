@@ -1226,6 +1226,10 @@ msgstr "Dois-je rendre mon projet open source pour utiliser Juicebox comme son m
 msgid "Do I need this?"
 msgstr ""
 
+#: src/components/modals/MigrateProjectTokensModal.tsx
+msgid "Do I need to swap my V1 tokens?"
+msgstr ""
+
 #: src/components/Navbar/constants.ts
 msgid "Docs"
 msgstr "Documents"
@@ -2886,6 +2890,18 @@ msgstr "La somme des pourcentages ne peut pas dépasser 100%"
 msgid "Sum of percentages cannot exceed 100%."
 msgstr "La somme des pourcentages ne peut pas dépasser 100%."
 
+#: src/components/modals/MigrateProjectTokensModal.tsx
+msgid "Swap V1 {tokenSymbolFormattedPlural}"
+msgstr ""
+
+#: src/components/modals/MigrateProjectTokensModal.tsx
+msgid "Swap V1 {tokenSymbolFormattedPlural} for V2 {tokenSymbolFormattedPlural}"
+msgstr ""
+
+#: src/components/v2/V2Project/V2ManageTokensSection/V1TokensSection.tsx
+msgid "Swap for V2 {tokenText}"
+msgstr ""
+
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 msgid "Target"
@@ -3237,6 +3253,10 @@ msgstr "Les tokens frappés à partir des paiements à cette adresse appartiendr
 msgid "Tokens receiver"
 msgstr "Bénéficiaire de tokens"
 
+#: src/components/modals/MigrateProjectTokensModal.tsx
+msgid "Tokens to migrate"
+msgstr ""
+
 #: src/components/v2/shared/SplitItem.tsx
 msgid "Tokens:"
 msgstr "Tokens :"
@@ -3563,6 +3583,10 @@ msgstr "Vous n'avez pas une durée de cycle de financement. Les modifications qu
 msgid "You don't hold tokens for any Juicebox project."
 msgstr "Vous ne détenez pas de tokens pour aucun projet Juicebox."
 
+#: src/components/modals/MigrateProjectTokensModal.tsx
+msgid "You have <0>{v2ProjectName}</0> tokens on <1>Juicebox V1</1>. You can swap your <2>{v2ProjectName}</2> V1 tokens for V2 tokens."
+msgstr ""
+
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
 msgid "You have configured for all funds to be distributed from the treasury. Your current payouts do not sum to 100%, so the remainder will go to the project owner."
 msgstr "Vous avez configuré pour que tous les fonds soient distribués à partir de la trésorerie. Vos paiements actuels ne totalisent pas 100%, le reste ira donc au propriétaire du projet."
@@ -3611,9 +3635,21 @@ msgstr ""
 msgid "You've completed this step."
 msgstr ""
 
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
+msgid "Your <0>@{v1ProjectHandle}</0> V1 token balance."
+msgstr ""
+
 #: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner.tsx
 msgid "Your Juicebox project has no active funding cycle. Launch a funding cycle to re-enable payments on your project."
 msgstr "Votre projet Juicebox n'a pas de cycle de financement actif. Lancez un cycle de financement pour réactiver les paiements dans votre projet."
+
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
+msgid "Your V1 balance"
+msgstr ""
+
+#: src/components/modals/MigrateProjectTokensModal.tsx
+msgid "Your V1 {tokenSymbolFormatted} balance:"
+msgstr ""
 
 #: src/components/v1/V1Project/Rewards/index.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx

@@ -43,9 +43,17 @@ export function useV2ContractLoader() {
         const signerOrProvider = signingProvider?.getSigner() ?? readProvider
 
         const contractLoaders = await Promise.all(
-          Object.values(V2ContractName).map(contractName =>
-            loadContract(contractName, network, signerOrProvider),
-          ),
+          Object.values(V2ContractName)
+            .filter(
+              name =>
+                ![
+                  V2ContractName.JBProjectHandles,
+                  V2ContractName.PublicResolver,
+                ].includes(name),
+            ) // TODO remove once contract data is added
+            .map(contractName =>
+              loadContract(contractName, network, signerOrProvider),
+            ),
         )
 
         const newContractMap = Object.values(V2ContractName).reduce(

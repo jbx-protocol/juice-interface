@@ -1,5 +1,6 @@
+import ENSName from './ENSName'
 import EthAddress from './EthAddress'
-import { ProjectRedemptionRate } from './ProjectRedemptionRate'
+import { ItemNoInput } from './ItemNoInput'
 import ProjectDescription from './ProjectDescription'
 import ProjectDiscord from './ProjectDiscord'
 import ProjectDiscountRate from './ProjectDiscountRate'
@@ -10,14 +11,15 @@ import ProjectLogoUri from './ProjectLogoUri'
 import ProjectName from './ProjectName'
 import ProjectPayButton from './ProjectPayButton'
 import ProjectPayDisclosure from './ProjectPayDisclosure'
+import { ProjectRedemptionRate } from './ProjectRedemptionRate'
 import ProjectReserved from './ProjectReserved'
 import ProjectTarget from './ProjectTarget'
 import ProjectTicketMods from '../../v1/shared/ProjectTicketMods'
 import ProjectTwitter from './ProjectTwitter'
-import TokenRefs from '../../v1/shared/formItems/TokenRefs'
-import { ItemNoInput } from './ItemNoInput'
+import TokenRefs from './TokenRefs'
 
 export const FormItems = {
+  ENSName,
   EthAddress,
   ItemNoInput,
   ProjectRedemptionRate,

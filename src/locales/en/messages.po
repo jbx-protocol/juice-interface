@@ -321,6 +321,7 @@ msgstr "Add token allocation"
 msgid "Address"
 msgstr "Address"
 
+#: src/components/v2/V2Project/StakeForNFTForm/UnlockModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Address required"
 msgstr "Address required"
@@ -782,6 +783,10 @@ msgstr "Currently worth: <0><1/>{0}</0>"
 #: src/components/v2/V2Project/StakeForNFTForm/index.tsx
 msgid "Currently, only project tokens claimed as ERC-20 tokens can be staked for NFTs."
 msgstr "Currently, only project tokens claimed as ERC-20 tokens can be staked for NFTs."
+
+#: src/components/v2/V2Project/StakeForNFTForm/UnlockModal.tsx
+msgid "Custom beneficiary"
+msgstr "Custom beneficiary"
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "Custom memo"
@@ -1399,6 +1404,7 @@ msgstr "Initial issuance rate"
 msgid "Initial issuance rate will be <0>{0} tokens per 1 ETH</0> for contributors. Your project will reserve <1>{1} tokens per 1 ETH</1> contributed."
 msgstr "Initial issuance rate will be <0>{0} tokens per 1 ETH</0> for contributors. Your project will reserve <1>{1} tokens per 1 ETH</1> contributed."
 
+#: src/components/v2/V2Project/StakeForNFTForm/UnlockModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Invalid address"
 msgstr "Invalid address"
@@ -2364,6 +2370,10 @@ msgstr "Seconds"
 #: src/components/shared/EtherscanLink.tsx
 msgid "See transaction"
 msgstr "See transaction"
+
+#: src/components/v2/V2Project/StakeForNFTForm/UnlockModal.tsx
+msgid "Send unlocked tokens to a custom address."
+msgstr "Send unlocked tokens to a custom address."
 
 #: src/components/v2/shared/DistributionSplitsSection/SpecificLimitModal.tsx
 msgid "Set a distribution limit"

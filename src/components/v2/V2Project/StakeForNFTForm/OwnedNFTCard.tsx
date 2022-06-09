@@ -10,6 +10,7 @@ import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 import ExtendLockModal from './ExtendLockModal'
 import RedeemVeNftModal from './RedeemVeNftModal'
+import UnlockModal from './UnlockModal'
 
 type OwnedNFTCardProps = {
   token: VeNftToken
@@ -22,6 +23,7 @@ export default function OwnedNFTCard({
 }: OwnedNFTCardProps) {
   const [extendLockModalVisible, setExtendLockModalVisible] = useState(false)
   const [redeemModalVisible, setRedeemModalVisible] = useState(false)
+  const [unlockModalVisible, setUnlockModalVisible] = useState(false)
 
   const { lockInfo, metadata } = token
   const { amount, end, duration } = lockInfo
@@ -77,24 +79,44 @@ export default function OwnedNFTCard({
               EXTEND LOCK
             </Button>
           </Row>
-          <Row>
-            <Button
-              block
-              disabled={remaining > 0}
-              onClick={() => setRedeemModalVisible(true)}
-            >
-              REDEEM
-            </Button>
-          </Row>
+          {remaining === 0 && (
+            <>
+              <Row>
+                <Button
+                  block
+                  disabled={remaining > 0}
+                  onClick={() => setRedeemModalVisible(true)}
+                >
+                  REDEEM
+                </Button>
+              </Row>
+              <Row>
+                <Button
+                  block
+                  disabled={remaining > 0}
+                  onClick={() => setUnlockModalVisible(true)}
+                >
+                  UNLOCK
+                </Button>
+              </Row>
+            </>
+          )}
         </Space>
       </div>
       <ExtendLockModal
         visible={extendLockModalVisible}
         onCancel={() => setExtendLockModalVisible(false)}
+        token={token}
       />
       <RedeemVeNftModal
         visible={redeemModalVisible}
         onCancel={() => setRedeemModalVisible(false)}
+      />
+      <UnlockModal
+        visible={unlockModalVisible}
+        onCancel={() => setUnlockModalVisible(false)}
+        token={token}
+        tokenSymbol={tokenSymbol}
       />
     </Card>
   )

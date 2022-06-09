@@ -321,6 +321,7 @@ msgstr ""
 msgid "Address"
 msgstr ""
 
+#: src/components/v2/V2Project/StakeForNFTForm/UnlockModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Address required"
 msgstr ""
@@ -781,6 +782,10 @@ msgstr ""
 
 #: src/components/v2/V2Project/StakeForNFTForm/index.tsx
 msgid "Currently, only project tokens claimed as ERC-20 tokens can be staked for NFTs."
+msgstr ""
+
+#: src/components/v2/V2Project/StakeForNFTForm/UnlockModal.tsx
+msgid "Custom beneficiary"
 msgstr ""
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
@@ -1399,6 +1404,7 @@ msgstr ""
 msgid "Initial issuance rate will be <0>{0} tokens per 1 ETH</0> for contributors. Your project will reserve <1>{1} tokens per 1 ETH</1> contributed."
 msgstr ""
 
+#: src/components/v2/V2Project/StakeForNFTForm/UnlockModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Invalid address"
 msgstr ""
@@ -2363,6 +2369,10 @@ msgstr ""
 
 #: src/components/shared/EtherscanLink.tsx
 msgid "See transaction"
+msgstr ""
+
+#: src/components/v2/V2Project/StakeForNFTForm/UnlockModal.tsx
+msgid "Send unlocked tokens to a custom address."
 msgstr ""
 
 #: src/components/v2/shared/DistributionSplitsSection/SpecificLimitModal.tsx

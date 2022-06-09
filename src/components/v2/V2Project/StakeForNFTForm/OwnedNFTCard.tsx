@@ -3,10 +3,13 @@ import { Button, Card, Col, Row, Image, Space } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { VeNftToken } from 'models/v2/stakingNFT'
 
-import { CSSProperties, useContext } from 'react'
+import { CSSProperties, useContext, useState } from 'react'
 import { formattedNum } from 'utils/formatNumber'
 import { detailedTimeString } from 'utils/formatTime'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
+
+import ExtendLockModal from './ExtendLockModal'
+import RedeemVeNftModal from './RedeemVeNftModal'
 
 type OwnedNFTCardProps = {
   token: VeNftToken
@@ -17,6 +20,9 @@ export default function OwnedNFTCard({
   token,
   tokenSymbol,
 }: OwnedNFTCardProps) {
+  const [extendLockModalVisible, setExtendLockModalVisible] = useState(false)
+  const [redeemModalVisible, setRedeemModalVisible] = useState(false)
+
   const { lockInfo, metadata } = token
   const { amount, end, duration } = lockInfo
   const { thumbnailUri } = metadata
@@ -67,15 +73,29 @@ export default function OwnedNFTCard({
         </Row>
         <Space direction="vertical" style={{ width: '100%' }}>
           <Row>
-            <Button block>EXTEND LOCK</Button>
+            <Button block onClick={() => setExtendLockModalVisible(true)}>
+              EXTEND LOCK
+            </Button>
           </Row>
           <Row>
-            <Button block disabled={remaining > 0}>
+            <Button
+              block
+              disabled={remaining > 0}
+              onClick={() => setRedeemModalVisible(true)}
+            >
               REDEEM
             </Button>
           </Row>
         </Space>
       </div>
+      <ExtendLockModal
+        visible={extendLockModalVisible}
+        onCancel={() => setExtendLockModalVisible(false)}
+      />
+      <RedeemVeNftModal
+        visible={redeemModalVisible}
+        onCancel={() => setRedeemModalVisible(false)}
+      />
     </Card>
   )
 }

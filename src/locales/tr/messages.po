@@ -38,6 +38,10 @@ msgstr "1 yıl"
 msgid "1. Project details"
 msgstr "1. Proje ayrıntıları"
 
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectHandleDrawer.tsx
+msgid "1. Set ENS name"
+msgstr ""
+
 #: src/components/v1/V1Project/Paid.tsx
 #: src/components/v2/V2Project/TreasuryStats/DistributedRatio.tsx
 msgid "100% overflow"
@@ -46,6 +50,10 @@ msgstr "%100 taşma"
 #: src/components/v2/V2Create/index.tsx
 msgid "2. Funding cycle"
 msgstr "2. Finansman döngüsü"
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectHandleDrawer.tsx
+msgid "2. Set text record"
+msgstr ""
 
 #: src/components/shared/VolumeChart/index.tsx
 msgid "24 hours"
@@ -601,6 +609,10 @@ msgstr "Bu projede taşma bulunmadığından ETH için token talep edilemez."
 msgid "Changes to project details will take effect immediately."
 msgstr "Proje detaylarında yapılan değişiklikler hemen etkili olacaktır."
 
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Changes to project handle will take effect immediately."
+msgstr ""
+
 #: src/components/v1/V1Create/index.tsx
 msgid "Changes to these attributes can be made at any time and will be applied to your project immediately."
 msgstr "Bu özellikler üzerinde herhangi bir zamanda değişiklik yapılabilir ve projenize hemen uygulanacaktır."
@@ -628,6 +640,10 @@ msgstr "Cüzdanınıza {tokenSymbol} ERC-20 basmak için burayı işaretleyin. T
 #: src/components/v2/shared/DistributionSplitsSection/index.tsx
 msgid "Choose how you would like to configure your payouts."
 msgstr "Ödemelerinizi nasıl yapılandırmak istediğinizi seçin."
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectHandleDrawer.tsx
+msgid "Choose the ENS name to use as the project's handle, with an optional subdomain. The handle won't include the \".eth\" extension."
+msgstr ""
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
 msgid "Claim {tokenTextPlural}"
@@ -1128,6 +1144,10 @@ msgstr "Süre"
 msgid "Duration (seconds)"
 msgstr "Süre (saniye)"
 
+#: src/components/shared/formItems/ENSName.tsx
+msgid "ENS Name"
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "ERC-20 community tokens"
 msgstr "ERC-20 topluluk token'ları"
@@ -1162,7 +1182,11 @@ msgstr "Projeyi düzenle"
 msgid "Edit project details"
 msgstr "Proje ayrıntılarını düzenle"
 
-#: src/components/v1/shared/TicketModsList.tsx
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Edit project handle"
+msgstr ""
+
+#: src/components/shared/TicketModsList.tsx
 msgid "Edit reserved token allocation"
 msgstr "Rezerve token tahsisini düzenle"
 
@@ -1509,6 +1533,10 @@ msgstr "Juicebox yüklenme animasyonu"
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Juicebox project"
 msgstr "Juicebox projesi"
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectHandleDrawer.tsx
+msgid "Juicebox projects use <0>ENS names</0> as handles. Setting a handle requires 2 transactions:"
+msgstr ""
 
 #: src/components/shared/modals/ParticipantsModal.tsx
 msgid "Last paid"
@@ -2017,8 +2045,9 @@ msgstr "Proje detaylarını yeniden yapılandırmak, ayrı bir işlem oluşturac
 msgid "Project for {ensName} not found"
 msgstr "{ensName} için proje bulunamadı"
 
-#: src/components/v1/shared/ProjectPayMods/ProjectPayoutModsModal.tsx
-#: src/components/v1/shared/formItems/ProjectHandle/ProjectHandleFormItem.tsx
+#: src/components/shared/formItems/ProjectHandle/ProjectHandleFormItem.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Project handle"
 msgstr "Proje tanıtıcısı"
 
@@ -2410,6 +2439,10 @@ msgstr "Saniye"
 msgid "See transaction"
 msgstr "İşlemi gör"
 
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectHandleDrawer.tsx
+msgid "Set ENS name"
+msgstr ""
+
 #: src/components/v2/shared/DistributionSplitsSection/SpecificLimitModal.tsx
 msgid "Set a distribution limit"
 msgstr "Bir dağıtım sınırı belirleyin"
@@ -2426,7 +2459,19 @@ msgstr "Bir finansman döngüsü hedefi belirleyin"
 msgid "Set a funding target to cover predictable expenses. Any extra funds (<0>overflow</0>) can be claimed by anyone holding your project's tokens alongside you."
 msgstr "Öngörülebilir masrafları karşılamak için bir finansman hedefi belirleyin. Tüm ekstra fonlar (<0>taşma</0>), sizinle beraber projenizin token'larını tutan herhangi biri tarafından talep edilebilir."
 
-#: src/components/v1/shared/forms/BudgetForm.tsx
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectHandleDrawer.tsx
+msgid "Set a text record for {0} with the key <0>\"juicebox\"</0> and the value <1>\"{projectId}\"</1> (this project's ID). You can do this via the <2>ENS app</2> , or using the button below (as long as your connected wallet has permission to edit records for that ENS name)."
+msgstr ""
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectHandleDrawer.tsx
+msgid "Set project handle"
+msgstr ""
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectHandleDrawer.tsx
+msgid "Set text record for {0}"
+msgstr ""
+
+#: src/components/v1/shared/BudgetForm.tsx
 msgid "Set the amount of funds you'd like to raise each funding cycle. Any funds raised within the funding cycle target can be distributed by the project, and can't be redeemed by your project's token holders."
 msgstr "Her finansman döngüsünde toplamak istediğiniz fon miktarını belirleyin. Finansman döngüsü hedefi dahilinde toplanan fonlar proje tarafından dağıtılabilir ve projenizin token sahipleri tarafından talep edilemez."
 
@@ -2497,9 +2542,15 @@ msgstr "Hedef"
 msgid "Target is 0: All funds will be considered overflow and can be redeemed by burning project tokens."
 msgstr "Hedef 0: Tüm fonlar taşma olarak kabul edilecek ve proje token'ları yakılarak kullanılabilecektir."
 
+<<<<<<< HEAD
 #: src/components/v2/V2Create/forms/TokenForm/index.tsx
 msgid "The <0>issuance rate</0> of your second funding cycle will be <1>{0} tokens per 1 ETH</1>, then <2>{1} tokens per 1 ETH </2>for your third funding cycle, and so on."
 msgstr "<0>Token çıkarma oranı</0>, ikinci finansman döngünüz için <1>1 ETH başına {0} token</1>, üçüncü finansman döngünüz için <2>1 ETH başına {1} token</2> olacak ve bu şekilde ilerleyecektir."
+=======
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectHandleDrawer.tsx
+msgid "Text record is set"
+msgstr ""
+>>>>>>> dc5fe2da (i18n)
 
 #: src/components/Landing/index.tsx
 msgid "The Decentralized Funding Platform. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."
@@ -3210,6 +3261,10 @@ msgstr "https://discord.gg/abcdefgh"
 #: src/components/shared/formItems/ProjectLink.tsx
 msgid "https://your-project.com"
 msgstr "https://your-project.com"
+
+#: src/components/shared/formItems/ENSName.tsx
+msgid "juicebox"
+msgstr ""
 
 #: src/components/shared/formItems/ProjectTwitter.tsx
 msgid "juiceboxETH"

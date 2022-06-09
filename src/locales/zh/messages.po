@@ -38,6 +38,10 @@ msgstr "1 年"
 msgid "1. Project details"
 msgstr "1. 项目详情"
 
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectHandleDrawer.tsx
+msgid "1. Set ENS name"
+msgstr ""
+
 #: src/components/v1/V1Project/Paid.tsx
 #: src/components/v2/V2Project/TreasuryStats/DistributedRatio.tsx
 msgid "100% overflow"
@@ -46,6 +50,10 @@ msgstr "100% 溢出"
 #: src/components/v2/V2Create/index.tsx
 msgid "2. Funding cycle"
 msgstr "2. 筹款周期"
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectHandleDrawer.tsx
+msgid "2. Set text record"
+msgstr ""
 
 #: src/components/shared/VolumeChart/index.tsx
 msgid "24 hours"
@@ -601,6 +609,10 @@ msgstr "这个项目的筹款没有溢出，无法用代币赎回 ETH"
 msgid "Changes to project details will take effect immediately."
 msgstr "对项目详情的更改将立即生效。"
 
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Changes to project handle will take effect immediately."
+msgstr ""
+
 #: src/components/v1/V1Create/index.tsx
 msgid "Changes to these attributes can be made at any time and will be applied to your project immediately."
 msgstr "可以随时修改这些属性，并立即应用于你的项目。"
@@ -627,6 +639,10 @@ msgstr "勾选此项来铸造{tokenSymbol} ERC-20 代币并领取到你的钱包
 
 #: src/components/v2/shared/DistributionSplitsSection/index.tsx
 msgid "Choose how you would like to configure your payouts."
+msgstr ""
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectHandleDrawer.tsx
+msgid "Choose the ENS name to use as the project's handle, with an optional subdomain. The handle won't include the \".eth\" extension."
 msgstr ""
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
@@ -1128,6 +1144,10 @@ msgstr "持续时间"
 msgid "Duration (seconds)"
 msgstr ""
 
+#: src/components/shared/formItems/ENSName.tsx
+msgid "ENS Name"
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "ERC-20 community tokens"
 msgstr "ERC-20 标准的社区代币"
@@ -1162,7 +1182,11 @@ msgstr "编辑项目"
 msgid "Edit project details"
 msgstr "编辑项目的细节"
 
-#: src/components/v1/shared/TicketModsList.tsx
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Edit project handle"
+msgstr ""
+
+#: src/components/shared/TicketModsList.tsx
 msgid "Edit reserved token allocation"
 msgstr "保留代币的分配方案"
 
@@ -1509,6 +1533,10 @@ msgstr "Juicebox加载动画"
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Juicebox project"
 msgstr "Juicebox项目"
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectHandleDrawer.tsx
+msgid "Juicebox projects use <0>ENS names</0> as handles. Setting a handle requires 2 transactions:"
+msgstr ""
 
 #: src/components/shared/modals/ParticipantsModal.tsx
 msgid "Last paid"
@@ -2017,8 +2045,9 @@ msgstr "项目细节的重新配置将会发起一个单独的交易。"
 msgid "Project for {ensName} not found"
 msgstr "未能找到 {ensName} 的项目。"
 
-#: src/components/v1/shared/ProjectPayMods/ProjectPayoutModsModal.tsx
-#: src/components/v1/shared/formItems/ProjectHandle/ProjectHandleFormItem.tsx
+#: src/components/shared/formItems/ProjectHandle/ProjectHandleFormItem.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Project handle"
 msgstr "项目标识"
 
@@ -2410,6 +2439,10 @@ msgstr "秒"
 msgid "See transaction"
 msgstr "查看交易"
 
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectHandleDrawer.tsx
+msgid "Set ENS name"
+msgstr ""
+
 #: src/components/v2/shared/DistributionSplitsSection/SpecificLimitModal.tsx
 msgid "Set a distribution limit"
 msgstr ""
@@ -2426,7 +2459,19 @@ msgstr "设定筹款周期目标"
 msgid "Set a funding target to cover predictable expenses. Any extra funds (<0>overflow</0>) can be claimed by anyone holding your project's tokens alongside you."
 msgstr "设定一个筹款目标以保证计划内的开销。对于超出部分的资金(<0>溢出</0>)，您及其他持有项目代币的人都有权去领取。"
 
-#: src/components/v1/shared/forms/BudgetForm.tsx
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectHandleDrawer.tsx
+msgid "Set a text record for {0} with the key <0>\"juicebox\"</0> and the value <1>\"{projectId}\"</1> (this project's ID). You can do this via the <2>ENS app</2> , or using the button below (as long as your connected wallet has permission to edit records for that ENS name)."
+msgstr ""
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectHandleDrawer.tsx
+msgid "Set project handle"
+msgstr ""
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectHandleDrawer.tsx
+msgid "Set text record for {0}"
+msgstr ""
+
+#: src/components/v1/shared/BudgetForm.tsx
 msgid "Set the amount of funds you'd like to raise each funding cycle. Any funds raised within the funding cycle target can be distributed by the project, and can't be redeemed by your project's token holders."
 msgstr "设定你每个筹款周期想要筹款的金额。筹款周期目标以内的金额会分配给项目，项目代币持有人不能通过赎回取得这部分资金。"
 
@@ -2497,8 +2542,13 @@ msgstr "目标"
 msgid "Target is 0: All funds will be considered overflow and can be redeemed by burning project tokens."
 msgstr "目标为 0 ：所有资金将被视为溢出，可以通过燃烧项目代币来赎回。"
 
+<<<<<<< HEAD
 #: src/components/v2/V2Create/forms/TokenForm/index.tsx
 msgid "The <0>issuance rate</0> of your second funding cycle will be <1>{0} tokens per 1 ETH</1>, then <2>{1} tokens per 1 ETH </2>for your third funding cycle, and so on."
+=======
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectHandleDrawer.tsx
+msgid "Text record is set"
+>>>>>>> dc5fe2da (i18n)
 msgstr ""
 
 #: src/components/Landing/index.tsx
@@ -3210,6 +3260,10 @@ msgstr "https://discord.gg/abcdefgh"
 #: src/components/shared/formItems/ProjectLink.tsx
 msgid "https://your-project.com"
 msgstr "https://your-project.com"
+
+#: src/components/shared/formItems/ENSName.tsx
+msgid "juicebox"
+msgstr ""
 
 #: src/components/shared/formItems/ProjectTwitter.tsx
 msgid "juiceboxETH"

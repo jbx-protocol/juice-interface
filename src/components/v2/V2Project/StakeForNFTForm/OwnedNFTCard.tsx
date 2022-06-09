@@ -1,70 +1,81 @@
-import { Button, Card, Col, Row, Image } from 'antd'
+import { Button, Card, Col, Row, Image, Space } from 'antd'
 
 import { ThemeContext } from 'contexts/themeContext'
 import { VeNftToken } from 'models/v2/stakingNFT'
 
-import { useContext } from 'react'
+import { CSSProperties, useContext } from 'react'
 import { formattedNum } from 'utils/formatNumber'
 import { detailedTimeString } from 'utils/formatTime'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 type OwnedNFTCardProps = {
   token: VeNftToken
-  idx: number
   tokenSymbol: string
 }
 
 export default function OwnedNFTCard({
   token,
-  idx,
   tokenSymbol,
 }: OwnedNFTCardProps) {
   const { lockInfo, metadata } = token
   const { amount, end, duration } = lockInfo
   const { thumbnailUri } = metadata
 
-  const remaining = Math.round(end - Date.now() / 1000)
+  const remaining = Math.max(Math.round(end - Date.now() / 1000), 0)
 
-  const bordered = idx % 2 === 0
+  const { colors, radii } = useContext(ThemeContext).theme
 
-  const { colors } = useContext(ThemeContext).theme
+  const cardStyles: CSSProperties = {
+    display: 'flex',
+    padding: '1rem',
+    borderRadius: radii.md,
+    background: colors.background.l0,
+  }
 
   return (
-    <Card
-      bordered={bordered}
-      style={{ marginTop: '20px', borderColor: colors.stroke.action.primary }}
-    >
-      <Row>
-        <Col span={18}>
-          <Row align="top" gutter={0}>
-            <Col span={2}>{idx + 1}</Col>
-            <Col span={10}>
-              <p>Staked ${tokenSymbolText({ tokenSymbol })}:</p>
-              <p>Staked period:</p>
-            </Col>
-            <Col span={12}>
-              <p>{formattedNum(amount)}</p>
-              <p>
-                {detailedTimeString({
-                  timeSeconds: duration,
-                  fullWords: true,
-                })}{' '}
-                /{' '}
-                {detailedTimeString({
-                  timeSeconds: remaining,
-                })}{' '}
-                remaining
-              </p>
-            </Col>
-          </Row>
-          <Row align="top" gutter={0}>
+    <Card style={cardStyles}>
+      <div style={{ color: colors.text.primary }}>
+        <Row>
+          <Col span={14}>
+            <Row align="top" gutter={0}>
+              <Col span={12}>
+                <p>Staked ${tokenSymbolText({ tokenSymbol })}:</p>
+                <p>Stake duration:</p>
+                <p>Time remaining:</p>
+              </Col>
+              <Col span={12}>
+                <p>{formattedNum(amount)}</p>
+                <p>
+                  {detailedTimeString({
+                    timeSeconds: duration,
+                    fullWords: true,
+                  })}
+                </p>
+                <p>
+                  {detailedTimeString({
+                    timeSeconds: remaining,
+                  })}{' '}
+                </p>
+              </Col>
+            </Row>
+            <Row align="top" gutter={0}></Row>
+          </Col>
+          <Col span={4} />
+          <Col span={6}>
+            <Image src={thumbnailUri} alt="nft" preview={false} />
+          </Col>
+        </Row>
+        <Space direction="vertical" style={{ width: '100%' }}>
+          <Row>
             <Button block>EXTEND LOCK</Button>
           </Row>
-        </Col>
-        <Col span={6}>
-          <Image src={thumbnailUri} alt="nft" preview={false} />
-        </Col>
-      </Row>
+          <Row>
+            <Button block disabled={remaining > 0}>
+              REDEEM
+            </Button>
+          </Row>
+        </Space>
+      </div>
     </Card>
   )
 }

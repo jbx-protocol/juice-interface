@@ -40,7 +40,7 @@ export default function StakingTokenRangesModal({
             ? variant.tokensStakedMax - variant.tokensStakedMin + 1
             : '+'
           return (
-            <Row>
+            <Row key={variant.id}>
               <Col span={6}>{nftRange}</Col>
               <Col span={8}>{variant.name}</Col>
               <Col span={6}>{nftRangeDifference}</Col>

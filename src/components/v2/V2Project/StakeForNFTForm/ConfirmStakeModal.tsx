@@ -6,7 +6,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useLockTx } from 'hooks/v2/nft/LockTx'
 
 import { useContext } from 'react'
-import { parseWad } from 'utils/formatNumber'
+import { formattedNum, parseWad } from 'utils/formatNumber'
 
 import { detailedTimeString } from 'utils/formatTime'
 
@@ -16,11 +16,11 @@ type ConfirmStakeModalProps = {
   tokensStaked: number
   votingPower: number
   lockDuration: number
+  beneficiary: string
   maxLockDuration: number
   //eslint-disable-next-line @typescript-eslint/no-explicit-any
   tokenMetadata: any
   onCancel: VoidFunction
-  onOk: VoidFunction
 }
 
 export default function ConfirmStakeModal({
@@ -29,10 +29,10 @@ export default function ConfirmStakeModal({
   tokensStaked,
   votingPower,
   lockDuration,
+  beneficiary,
   maxLockDuration,
   tokenMetadata,
   onCancel,
-  onOk,
 }: ConfirmStakeModalProps) {
   const {
     theme: { colors },
@@ -58,17 +58,11 @@ export default function ConfirmStakeModal({
       onSelectWallet()
     }
 
-    const txSuccess = await lockTx(
-      {
-        value: tokensStakedInWad,
-        lockDuration: lockDuration,
-        beneficiary: userAddress!,
-      },
-      {
-        onConfirmed() {},
-        onDone() {},
-      },
-    )
+    const txSuccess = await lockTx({
+      value: tokensStakedInWad,
+      lockDuration: lockDuration,
+      beneficiary: beneficiary !== '' ? beneficiary : userAddress!,
+    })
 
     if (!txSuccess) {
       return
@@ -98,19 +92,22 @@ export default function ConfirmStakeModal({
       <Divider />
       <h4>$ve{tokenSymbol} NFT summary:</h4>
       <Row>
-        <Col span={4}></Col>
-        <Col span={6}>
-          <p>Staked ${tokenSymbol}:</p>
-          <p>Start lock time:</p>
-          <p>Staked period:</p>
+        <Col span={14}>
+          <Row align="top" gutter={0}>
+            <Col span={12}>
+              <p>Staked ${tokenSymbol}:</p>
+              <p>Lock Duration:</p>
+              <p>$ve{tokenSymbol} Received:</p>
+            </Col>
+            <Col span={12}>
+              <p>{formattedNum(tokensStaked)}</p>
+              <p>{formattedLockDuration}</p>
+              <p>{formattedNum(votingPower)}</p>
+            </Col>
+          </Row>
         </Col>
-        <Col span={8}>
-          <p>{tokensStaked}</p>
-          <p>13/04/22 10:15:00</p>
-          <p>{formattedLockDuration}</p>
-        </Col>
+        <Col span={4} />
         <Col span={6}>
-          NFT
           <Image
             src={tokenMetadata && tokenMetadata.thumbnailUri}
             preview={false}

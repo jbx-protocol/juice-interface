@@ -19,6 +19,14 @@ export function useNFTGetUserTokens(userAddress?: string) {
     allowPublicExtension: false,
   }
 
+  const lockInfo2: VeNftLockInfo = {
+    amount: BigNumber.from(10),
+    end: 1653361600,
+    duration: 4320000,
+    useJbToken: true,
+    allowPublicExtension: false,
+  }
+
   const variant: VeNftVariant = {
     id: 1,
     name: 'Nammu',
@@ -43,6 +51,13 @@ export function useNFTGetUserTokens(userAddress?: string) {
       tokenId: 1,
       ownerAddress: userAddress,
       lockInfo,
+      variant,
+      metadata,
+    },
+    {
+      tokenId: 2,
+      ownerAddress: userAddress,
+      lockInfo: lockInfo2,
       variant,
       metadata,
     },

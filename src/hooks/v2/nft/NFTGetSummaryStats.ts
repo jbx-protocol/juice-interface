@@ -1,12 +1,18 @@
+import { VeNftToken } from 'models/v2/stakingNFT'
+
 export type VeNftSummaryStats = {
   totalStaked: number
   totalStakedPeriod: number
 }
 
-export function useNFTGetSummaryStats() {
+export function useNFTGetSummaryStats(userTokens: VeNftToken[]) {
   const summaryStats: VeNftSummaryStats = {
-    totalStaked: 1100,
-    totalStakedPeriod: 86400 * 2,
+    totalStaked: userTokens.reduce((acc, token) => {
+      return acc + token.lockInfo.amount.toNumber()
+    }, 0),
+    totalStakedPeriod: userTokens.reduce((acc, token) => {
+      return acc + token.lockInfo.duration
+    }, 0),
   }
 
   return summaryStats

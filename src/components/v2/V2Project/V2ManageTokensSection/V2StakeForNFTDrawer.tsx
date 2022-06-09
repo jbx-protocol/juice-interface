@@ -18,8 +18,13 @@ export function V2StakeForNFTDrawer({
   )
 
   return (
-    <Drawer visible={visible} {...memoizedDrawerStyle} onClose={onClose}>
-      <StakeForNFTContent onClose={onClose} />
+    <Drawer
+      {...memoizedDrawerStyle}
+      visible={visible}
+      onClose={onClose}
+      destroyOnClose
+    >
+      <StakeForNFTContent />
     </Drawer>
   )
 }

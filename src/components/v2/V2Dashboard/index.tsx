@@ -1,47 +1,42 @@
-import {
-  V2ProjectContext,
-  V2ProjectContextType,
-} from 'contexts/v2/projectContext'
-import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import Loading from 'components/shared/Loading'
-import useProjectMetadataContent from 'hooks/v2/contractReader/ProjectMetadataContent'
-import ScrollToTopButton from 'components/shared/ScrollToTopButton'
-import useProjectCurrentFundingCycle from 'hooks/v2/contractReader/ProjectCurrentFundingCycle'
-import useProjectSplits from 'hooks/v2/contractReader/ProjectSplits'
-import useProjectTerminals from 'hooks/v2/contractReader/ProjectTerminals'
-import { usePaymentTerminalBalance } from 'hooks/v2/contractReader/PaymentTerminalBalance'
-import useProjectToken from 'hooks/v2/contractReader/ProjectToken'
-import useProjectDistributionLimit from 'hooks/v2/contractReader/ProjectDistributionLimit'
-import { useMemo } from 'react'
-import { useCurrencyConverter } from 'hooks/CurrencyConverter'
-import { V2CurrencyOption } from 'models/v2/currencyOption'
-import { NO_CURRENCY, V2CurrencyName, V2_CURRENCY_ETH } from 'utils/v2/currency'
-
-import useSymbolOfERC20 from 'hooks/SymbolOfERC20' // this is version-agnostic, we chillin
-
-import useProjectOwner from 'hooks/v2/contractReader/ProjectOwner'
-
-import useUsedDistributionLimit from 'hooks/v2/contractReader/UsedDistributionLimit'
-import useTerminalCurrentOverflow from 'hooks/v2/contractReader/TerminalCurrentOverflow'
-import { useBallotState } from 'hooks/v2/contractReader/BallotState'
-import useProjectTokenTotalSupply from 'hooks/v2/contractReader/ProjectTokenTotalSupply'
-
 import NewDeployNotAvailable from 'components/shared/NewDeployNotAvailable'
-
-import { useLocation } from 'react-router-dom'
-import { useProjectsQuery } from 'hooks/Projects'
-import { first } from 'lodash'
-import { usePageTitle } from 'hooks/PageTitle'
-
+import ScrollToTopButton from 'components/shared/ScrollToTopButton'
 import { layouts } from 'constants/styles/layouts'
-
-import V2Project from '../V2Project'
-import Project404 from '../../shared/Project404'
+import { V2ArchivedProjectIds } from 'constants/v2/archivedProjects'
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/v2/splits'
-import { V2ArchivedProjectIds } from 'constants/v2/archivedProjects'
+import {
+  V2ProjectContext,
+  V2ProjectContextType,
+} from 'contexts/v2/projectContext'
+import { useCurrencyConverter } from 'hooks/CurrencyConverter'
+import { usePageTitle } from 'hooks/PageTitle'
+import { useProjectMetadata } from 'hooks/ProjectMetadata'
+import { useProjectsQuery } from 'hooks/Projects'
+import useSymbolOfERC20 from 'hooks/SymbolOfERC20'
+import { useBallotState } from 'hooks/v2/contractReader/BallotState'
+import { usePaymentTerminalBalance } from 'hooks/v2/contractReader/PaymentTerminalBalance'
+import useProjectCurrentFundingCycle from 'hooks/v2/contractReader/ProjectCurrentFundingCycle'
+import useProjectDistributionLimit from 'hooks/v2/contractReader/ProjectDistributionLimit'
+import useProjectHandle from 'hooks/v2/contractReader/ProjectHandle'
+import useProjectMetadataContent from 'hooks/v2/contractReader/ProjectMetadataContent'
+import useProjectOwner from 'hooks/v2/contractReader/ProjectOwner'
+import useProjectSplits from 'hooks/v2/contractReader/ProjectSplits'
+import useProjectTerminals from 'hooks/v2/contractReader/ProjectTerminals'
+import useProjectToken from 'hooks/v2/contractReader/ProjectToken'
+import useProjectTokenTotalSupply from 'hooks/v2/contractReader/ProjectTokenTotalSupply'
+import useTerminalCurrentOverflow from 'hooks/v2/contractReader/TerminalCurrentOverflow'
+import useUsedDistributionLimit from 'hooks/v2/contractReader/UsedDistributionLimit'
+import { first } from 'lodash'
+import { V2CurrencyOption } from 'models/v2/currencyOption'
+import { useMemo } from 'react'
+import { useLocation } from 'react-router-dom'
+import { NO_CURRENCY, V2_CURRENCY_ETH, V2CurrencyName } from 'utils/v2/currency'
+
+import Project404 from '../../shared/Project404'
+import V2Project from '../V2Project'
 
 export default function V2Dashboard({ projectId }: { projectId: number }) {
   const { data: metadataCID, loading: metadataURILoading } =
@@ -122,6 +117,10 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
     projectId,
   })
 
+  const { data: handle } = useProjectHandle({
+    projectId,
+  })
+
   const tokenSymbol = useSymbolOfERC20(tokenAddress)
 
   const { data: primaryTerminalCurrentOverflow } = useTerminalCurrentOverflow({
@@ -176,6 +175,7 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
 
   const project: V2ProjectContextType = {
     cv: '2',
+    handle,
     projectId,
     createdAt,
     projectMetadata,

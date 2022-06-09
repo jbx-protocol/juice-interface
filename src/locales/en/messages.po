@@ -37,6 +37,10 @@ msgstr "1. Get funded."
 msgid "1. Project details"
 msgstr "1. Project details"
 
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectHandleDrawer.tsx
+msgid "1. Set ENS name"
+msgstr "1. Set ENS name"
+
 #: src/components/v1/V1Project/Paid.tsx
 #: src/components/v2/V2Project/TreasuryStats/DistributedRatio.tsx
 msgid "100% overflow"
@@ -49,6 +53,9 @@ msgstr "2. Funding cycle"
 #: src/components/Landing/HowItWorksSection.tsx
 msgid "2. Give ownership"
 msgstr "2. Give ownership"
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectHandleDrawer.tsx
+msgid "2. Set text record"
+msgstr "2. Set text record"
 
 #: src/components/shared/VolumeChart/index.tsx
 msgid "24 hours"
@@ -665,6 +672,10 @@ msgstr "Changes to payouts will take effect immediately."
 msgid "Changes to project details will take effect immediately."
 msgstr "Changes to project details will take effect immediately."
 
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Changes to project handle will take effect immediately."
+msgstr "Changes to project handle will take effect immediately."
+
 #: src/components/v1/V1Create/index.tsx
 msgid "Changes to these attributes can be made at any time and will be applied to your project immediately."
 msgstr "Changes to these attributes can be made at any time and will be applied to your project immediately."
@@ -696,6 +707,10 @@ msgstr "Check this to mint {tokenSymbol} ERC-20 to your wallet. Leave unchecked 
 #: src/components/v2/shared/DistributionSplitsSection/index.tsx
 msgid "Choose how you would like to configure your payouts."
 msgstr "Choose how you would like to configure your payouts."
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectHandleDrawer.tsx
+msgid "Choose the ENS name to use as the project's handle, with an optional subdomain. The handle won't include the \".eth\" extension."
+msgstr "Choose the ENS name to use as the project's handle, with an optional subdomain. The handle won't include the \".eth\" extension."
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
 msgid "Claim {tokenTextPlural}"
@@ -1239,6 +1254,14 @@ msgstr ""
 msgid "Duration (seconds)"
 msgstr "Duration (seconds)"
 
+#: src/components/shared/formItems/ENSName.tsx
+msgid "ENS Name"
+msgstr "ENS Name"
+
+#: src/components/Landing/index.tsx
+msgid "ERC-20 community tokens"
+msgstr "ERC-20 community tokens"
+
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "ERC-20 tokens can only be minted once an ERC-20 token has been issued for this project."
@@ -1284,6 +1307,11 @@ msgstr "Edit project details"
 
 #: src/components/v1/shared/TicketModsList.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/EditTokenAllocationModal.tsx
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Edit project handle"
+msgstr "Edit project handle"
+
+#: src/components/shared/TicketModsList.tsx
 msgid "Edit reserved token allocation"
 msgstr "Edit reserved token allocation"
 
@@ -1676,6 +1704,9 @@ msgstr "Juicebox project"
 #: src/components/Landing/TopProjectsSection.tsx
 msgid "Juicebox puts the fun back in funding so you can focus on building."
 msgstr "Juicebox puts the fun back in funding so you can focus on building."
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectHandleDrawer.tsx
+msgid "Juicebox projects use <0>ENS names</0> as handles. Setting a handle requires 2 transactions:"
+msgstr "Juicebox projects use <0>ENS names</0> as handles. Setting a handle requires 2 transactions:"
 
 #: src/components/shared/modals/ParticipantsModal.tsx
 msgid "Last paid"
@@ -2231,8 +2262,9 @@ msgstr "Project details reconfigurations will create a separate transaction."
 msgid "Project for {ensName} not found"
 msgstr "Project for {ensName} not found"
 
-#: src/components/v1/shared/ProjectPayMods/ProjectPayoutModsModal.tsx
-#: src/components/v1/shared/formItems/ProjectHandle/ProjectHandleFormItem.tsx
+#: src/components/shared/formItems/ProjectHandle/ProjectHandleFormItem.tsx
+#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Project handle"
 msgstr ""
 
@@ -2664,6 +2696,10 @@ msgstr "Seconds"
 msgid "See transaction"
 msgstr "See transaction"
 
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectHandleDrawer.tsx
+msgid "Set ENS name"
+msgstr "Set ENS name"
+
 #: src/components/v2/shared/DistributionSplitsSection/SpecificLimitModal.tsx
 msgid "Set a distribution limit"
 msgstr "Set a distribution limit"
@@ -2677,6 +2713,23 @@ msgid "Set a funding cycle target"
 msgstr ""
 
 #: src/components/v1/shared/forms/BudgetForm.tsx
+#: src/components/Landing/index.tsx
+msgid "Set a funding target to cover predictable expenses. Any extra funds (<0>overflow</0>) can be claimed by anyone holding your project's tokens alongside you."
+msgstr "Set a funding target to cover predictable expenses. Any extra funds (<0>overflow</0>) can be claimed by anyone holding your project's tokens alongside you."
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectHandleDrawer.tsx
+msgid "Set a text record for {0} with the key <0>\"juicebox\"</0> and the value <1>\"{projectId}\"</1> (this project's ID). You can do this via the <2>ENS app</2> , or using the button below (as long as your connected wallet has permission to edit records for that ENS name)."
+msgstr "Set a text record for {0} with the key <0>\"juicebox\"</0> and the value <1>\"{projectId}\"</1> (this project's ID). You can do this via the <2>ENS app</2> , or using the button below (as long as your connected wallet has permission to edit records for that ENS name)."
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectHandleDrawer.tsx
+msgid "Set project handle"
+msgstr "Set project handle"
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectHandleDrawer.tsx
+msgid "Set text record for {0}"
+msgstr "Set text record for {0}"
+
+#: src/components/v1/shared/BudgetForm.tsx
 msgid "Set the amount of funds you'd like to raise each funding cycle. Any funds raised within the funding cycle target can be distributed by the project, and can't be redeemed by your project's token holders."
 msgstr ""
 
@@ -2780,6 +2833,9 @@ msgstr ""
 #: src/components/v2/V2Create/forms/TokenForm/index.tsx
 msgid "The <0>issuance rate</0> of your second funding cycle will be <1>{0} tokens per 1 ETH</1>, then <2>{1} tokens per 1 ETH </2>for your third funding cycle, and so on."
 msgstr "The <0>issuance rate</0> of your second funding cycle will be <1>{0} tokens per 1 ETH</1>, then <2>{1} tokens per 1 ETH </2>for your third funding cycle, and so on."
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectHandleDrawer.tsx
+msgid "Text record is set"
+msgstr "Text record is set"
 
 #: src/components/Landing/index.tsx
 msgid "The Decentralized Funding Platform. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."
@@ -3554,6 +3610,18 @@ msgstr ""
 #: src/utils/formatTime.ts
 msgid "hours"
 msgstr "hours"
+
+#: src/components/shared/formItems/ProjectDiscord.tsx
+msgid "https://discord.gg/abcdefgh"
+msgstr ""
+
+#: src/components/shared/formItems/ProjectLink.tsx
+msgid "https://your-project.com"
+msgstr ""
+
+#: src/components/shared/formItems/ENSName.tsx
+msgid "juicebox"
+msgstr "juicebox"
 
 #: src/components/shared/formItems/ProjectTwitter.tsx
 msgid "juiceboxETH"

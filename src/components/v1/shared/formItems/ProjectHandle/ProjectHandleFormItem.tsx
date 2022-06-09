@@ -13,7 +13,7 @@ import {
   ProjectHandleInput,
   ProjectHandleInitialValue,
 } from './ProjectHandleInput'
-import { FormItemExt } from '../formItemExt'
+import { FormItemExt } from '../../../../shared/formItems/formItemExt'
 
 /**
  * Custom Form.Item component for project handles.

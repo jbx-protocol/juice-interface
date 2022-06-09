@@ -1,9 +1,9 @@
 import { SettingOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Modal, Space } from 'antd'
-import ERC20TokenBalance from 'components/shared/ERC20TokenBalance'
+import ERC20TokenBalance from 'components/v1/ERC20TokenBalance'
 import { FormItems } from 'components/shared/formItems'
-import ProjectTokenBalance from 'components/shared/ProjectTokenBalance'
+import ProjectTokenBalance from 'components/v1/ProjectTokenBalance'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import {
   OperatorPermission,

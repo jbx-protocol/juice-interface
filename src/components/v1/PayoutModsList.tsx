@@ -3,7 +3,7 @@ import { Button, Form, Input, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import { getTotalPercentage } from 'components/shared/formItems/formHelpers'
-import Mod from 'components/shared/Mod'
+import Mod from 'components/v1/Mod'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { BigNumber } from '@ethersproject/bignumber'

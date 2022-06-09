@@ -53,11 +53,11 @@ import ProjectDetailsForm, {
   ProjectDetailsFormFields,
 } from 'components/shared/forms/ProjectDetailsForm'
 
-import BudgetForm from 'components/v1/shared/BudgetForm'
+import BudgetForm from 'components/v1/shared/forms/BudgetForm'
 import IncentivesForm, {
   IncentivesFormFields,
 } from 'components/shared/forms/IncentivesForm'
-import PayModsForm from 'components/shared/forms/PayModsForm'
+import PayModsForm from 'components/v1/shared/forms/PayModsForm'
 import RestrictedActionsForm, {
   RestrictedActionsFormFields,
 } from 'components/shared/forms/RestrictedActionsForm'

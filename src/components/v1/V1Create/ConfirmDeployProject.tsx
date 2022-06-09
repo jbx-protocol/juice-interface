@@ -5,7 +5,7 @@ import { Gutter } from 'antd/lib/grid/row'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import PayoutModsList from 'components/v1/PayoutModsList'
 import ProjectLogo from 'components/shared/ProjectLogo'
-import TicketModsList from 'components/shared/TicketModsList'
+import TicketModsList from 'components/v1/TicketModsList'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1FundingCycle } from 'models/v1/fundingCycle'

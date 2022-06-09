@@ -22,7 +22,7 @@ import {
   targetToTargetSubFeeFormatted,
 } from 'utils/v1/payouts'
 
-import ExternalLink from '../../shared/ExternalLink'
+import ExternalLink from '../../../shared/ExternalLink'
 import { CurrencyName } from 'constants/currency'
 
 const DEFAULT_TARGET_AFTER_FEE = '10000'

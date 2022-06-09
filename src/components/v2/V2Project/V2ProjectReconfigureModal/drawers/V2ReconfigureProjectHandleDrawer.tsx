@@ -55,7 +55,7 @@ export function V2ReconfigureProjectHandleDrawer({
     setLoadingSetTextRecord(true)
 
     setENSTextRecordForHandleTx(
-      { ensName: handle + '.eth' },
+      { ensName: projectEnsName ?? '' },
       {
         onDone: () => setLoadingSetTextRecord(false),
       },

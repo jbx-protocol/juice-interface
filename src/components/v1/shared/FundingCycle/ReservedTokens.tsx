@@ -15,7 +15,7 @@ import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { readNetwork } from 'constants/networks'
 
 import DistributeTokensModal from './modals/DistributeTokensModal'
-import TicketModsList from '../../shared/TicketModsList'
+import TicketModsList from '../TicketModsList'
 import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
 
 export default function ReservedTokens({

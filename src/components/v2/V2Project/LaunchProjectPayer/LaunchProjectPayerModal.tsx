@@ -8,13 +8,12 @@ import { Modal } from 'antd'
 import { JBDiscordLink } from 'components/Landing/QAs'
 import EtherscanLink from 'components/shared/EtherscanLink'
 import CopyTextButton from 'components/shared/CopyTextButton'
+import TransactionModal from 'components/shared/TransactionModal'
 import { emitErrorNotification } from 'utils/notifications'
-
 import { DeployProjectPayerTxArgs } from 'hooks/v2/transactor/DeployProjectPayerTx'
 import { useForm } from 'antd/lib/form/Form'
 
 import { readProvider } from 'constants/readProvider'
-import TransactionModal from '../../../shared/TransactionModal'
 import AdvancedOptionsCollapse from './AdvancedOptionsCollapse'
 
 const DEPLOY_EVENT_IDX = 0

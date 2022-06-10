@@ -2,7 +2,7 @@ import { RightCircleOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
 import EtherscanLink from 'components/shared/EtherscanLink'
-import ProjectTokenBalance from 'components/shared/ProjectTokenBalance'
+import ProjectTokenBalance from 'components/v1/V1Project/ProjectTokenBalance'
 import TooltipLabel from 'components/shared/TooltipLabel'
 import ETHAmount from 'components/shared/currency/ETHAmount'
 

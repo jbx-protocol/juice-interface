@@ -29,7 +29,7 @@
     "@uniswap/sdk-core": "3.0.1",
     "@uniswap/v3-sdk": "3.8.2",
     "@walletconnect/web3-provider": "^1.5.4",
-    "antd": "4.18.0",
+    "antd": "4.21.0",
     "autolinker": "^3.14.3",
     "axios": "^0.21.1",
     "bnc-notify": "^1.9.1",
@@ -100,8 +100,13 @@
     "@testing-library/user-event": "^12.1.10",
     "husky": "^7.0.0",
     "lint-staged": "13.0.0",
+    "react-error-overlay": "6.0.9",
     "react-test-renderer": "^17",
     "source-map-explorer": "^2.5.2",
     "ts-prune": "^0.10.3"
+  },
+  "resolutions": {
+    "//": "See https://github.com/facebook/create-react-app/issues/11773",
+    "react-error-overlay": "6.0.9"
   }
 }

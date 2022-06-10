@@ -3,9 +3,9 @@ import { Col, Row, Space, Statistic } from 'antd'
 import { Gutter } from 'antd/lib/grid/row'
 
 import CurrencySymbol from 'components/shared/CurrencySymbol'
-import PayoutModsList from 'components/v1/PayoutModsList'
+import PayoutModsList from 'components/v1/shared/PayoutModsList'
 import ProjectLogo from 'components/shared/ProjectLogo'
-import TicketModsList from 'components/v1/TicketModsList'
+import TicketModsList from 'components/v1/shared/TicketModsList'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1FundingCycle } from 'models/v1/fundingCycle'

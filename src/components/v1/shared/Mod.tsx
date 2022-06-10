@@ -8,9 +8,9 @@ import { PayoutMod, TicketMod } from 'models/mods'
 import { useContext } from 'react'
 import { formatDate } from 'utils/formatDate'
 
-import FormattedAddress from '../shared/FormattedAddress'
-import V1ProjectHandle from './shared/V1ProjectHandle'
-import TooltipLabel from '../shared/TooltipLabel'
+import FormattedAddress from '../../shared/FormattedAddress'
+import V1ProjectHandle from './V1ProjectHandle'
+import TooltipLabel from '../../shared/TooltipLabel'
 
 export default function Mod({
   mod,

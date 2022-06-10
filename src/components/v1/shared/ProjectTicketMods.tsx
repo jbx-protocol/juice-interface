@@ -19,8 +19,8 @@ import {
   validatePercentage,
 } from 'components/shared/formItems/formHelpers'
 
-import FormattedAddress from '../shared/FormattedAddress'
-import { FormItemExt } from '../shared/formItems/formItemExt'
+import FormattedAddress from '../../shared/FormattedAddress'
+import { FormItemExt } from '../../shared/formItems/formItemExt'
 
 type ModalMode = 'Add' | 'Edit' | undefined
 

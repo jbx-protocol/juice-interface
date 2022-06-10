@@ -8,9 +8,9 @@ import RestrictedActionsForm, {
   RestrictedActionsFormFields,
 } from 'components/shared/forms/RestrictedActionsForm'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
-import PayoutModsList from 'components/v1/PayoutModsList'
-import TicketModsList from 'components/v1/TicketModsList'
-import ReconfigurationStrategyDrawer from 'components/v1/ReconfigurationStrategyDrawer'
+import PayoutModsList from 'components/v1/shared/PayoutModsList'
+import TicketModsList from 'components/v1/shared/TicketModsList'
+import ReconfigurationStrategyDrawer from 'components/v1/shared/ReconfigurationStrategyDrawer'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'

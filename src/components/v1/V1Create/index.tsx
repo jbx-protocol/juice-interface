@@ -48,7 +48,7 @@ import { getTerminalAddress } from 'utils/v1/terminals'
 import TicketingForm, {
   TicketingFormFields,
 } from 'components/shared/forms/TicketingForm'
-import ReconfigurationStrategyDrawer from 'components/v1/ReconfigurationStrategyDrawer'
+import ReconfigurationStrategyDrawer from 'components/v1/shared/ReconfigurationStrategyDrawer'
 import ProjectDetailsForm, {
   ProjectDetailsFormFields,
 } from 'components/shared/forms/ProjectDetailsForm'

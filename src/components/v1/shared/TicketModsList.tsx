@@ -1,7 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Modal } from 'antd'
-import ProjectTicketMods from 'components/v1/ProjectTicketMods'
-import Mod from 'components/v1/Mod'
+import ProjectTicketMods from 'components/v1/shared/ProjectTicketMods'
+import Mod from 'components/v1/shared/Mod'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { BigNumber } from '@ethersproject/bignumber'
 import {

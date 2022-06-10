@@ -6,11 +6,12 @@ import { useContext, useState } from 'react'
 
 import { ThemeContext } from 'contexts/themeContext'
 
-import FundingCycleExplainer from '../../FundingCycleExplainer'
-import ProjectConfigurationFieldsContainer from '../../ProjectConfigurationFieldsContainer'
-import RulesDrawer from '../../../shared/FundingCycleConfigurationDrawers/RulesDrawer'
 import FundingDrawer from '../../../shared/FundingCycleConfigurationDrawers/FundingDrawer'
 import TokenDrawer from '../../../shared/FundingCycleConfigurationDrawers/TokenDrawer'
+import RulesDrawer from '../../../shared/FundingCycleConfigurationDrawers/RulesDrawer'
+
+import FundingCycleExplainer from '../../FundingCycleExplainer'
+import ProjectConfigurationFieldsContainer from '../../ProjectConfigurationFieldsContainer'
 
 export default function FundingCycleTabContent({
   onFinish,

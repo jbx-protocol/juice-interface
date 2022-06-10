@@ -7,7 +7,7 @@ import { useContext, useEffect, useState } from 'react'
 
 import { ballotStrategies } from 'constants/v1/ballotStrategies'
 
-import ReconfigurationStrategySelector from '../shared/ReconfigurationStrategy/ReconfigurationStrategySelector'
+import ReconfigurationStrategySelector from '../../shared/ReconfigurationStrategy/ReconfigurationStrategySelector'
 
 export default function ReconfigurationStrategyDrawer({
   visible,

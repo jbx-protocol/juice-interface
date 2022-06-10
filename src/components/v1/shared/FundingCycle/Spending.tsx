@@ -1,11 +1,11 @@
 import { Trans } from '@lingui/macro'
 import { Button, Space } from 'antd'
-import WithdrawModal from 'components/v1/FundingCycle/modals/WithdrawModal'
+import WithdrawModal from 'components/v1/shared/FundingCycle/modals/WithdrawModal'
 import TooltipLabel from 'components/shared/TooltipLabel'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { PayoutMod } from 'models/mods'
 import { useContext, useState } from 'react'
-import PayoutModsList from 'components/v1/PayoutModsList'
+import PayoutModsList from 'components/v1/shared/PayoutModsList'
 
 import { hasFundingTarget } from 'utils/v1/fundingCycle'
 import { V1CurrencyName } from 'utils/v1/currency'

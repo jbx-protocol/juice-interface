@@ -236,6 +236,8 @@ export default function ProjectTicketMods({
     return validatePercentage(form.getFieldValue('percent'))
   }
 
+  const totalSplitsPercentageInvalid = total > 100
+
   return (
     <Form.Item
       name={name}
@@ -275,27 +277,31 @@ export default function ProjectTicketMods({
           <div style={{ textAlign: 'right' }}>
             <span
               style={{
-                color: total > 100 ? colors.text.warn : colors.text.secondary,
+                color:
+                  total > 100 ? colors.text.failure : colors.text.secondary,
               }}
             >
-              <Trans>
-                Total:{' '}
-                {total
-                  .toString()
-                  .split('.')
-                  .map((x, i) => (i > 0 ? x[0] : x))
-                  .join('.')}
-                %
-              </Trans>
+              <Trans>Total: {total.toFixed(2)}%</Trans>
             </span>
           </div>
-          <div>
-            <Trans>
-              {100 - total}% to{' '}
-              {owner ? <FormattedAddress address={owner} /> : t`project owner`}
-            </Trans>
-          </div>
+          {total < 100 ? (
+            <div>
+              <Trans>
+                {(100 - total).toFixed(2)}% to{' '}
+                {owner ? (
+                  <FormattedAddress address={owner} />
+                ) : (
+                  t`project owner`
+                )}
+              </Trans>
+            </div>
+          ) : null}
         </div>
+        {totalSplitsPercentageInvalid ? (
+          <span style={{ color: colors.text.failure, fontWeight: 600 }}>
+            <Trans>Sum of percentages cannot exceed 100%.</Trans>
+          </span>
+        ) : null}
         <Button
           type="dashed"
           onClick={() => {

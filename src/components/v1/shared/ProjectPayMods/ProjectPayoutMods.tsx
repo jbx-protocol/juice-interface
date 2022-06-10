@@ -108,7 +108,7 @@ export default function ProjectPayoutMods({
         >
           <div
             style={{
-              color: total > 100 ? colors.text.warn : colors.text.secondary,
+              color: total > 100 ? colors.text.failure : colors.text.secondary,
             }}
           >
             <Trans>Total: {total.toFixed(2)}%</Trans>

@@ -4,6 +4,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
 import ReservedTokensFormItem from 'components/v2/V2Create/forms/TokenForm/ReservedTokensFormItem'
+import { ItemNoInput } from 'components/shared/formItems/ItemNoInput'
 
 import {
   CSSProperties,
@@ -55,6 +56,8 @@ import { formattedNum } from 'utils/formatNumber'
 import { DEFAULT_BONDING_CURVE_RATE_PERCENTAGE } from 'components/shared/formItems/ProjectRedemptionRate'
 
 import { DISCOUNT_RATE_EXPLANATION } from 'components/v2/V2Project/V2FundingCycleSection/settingExplanations'
+import { getTotalSplitsPercentage } from 'utils/v2/distributions'
+import { useForm } from 'antd/lib/form/Form'
 
 import { shadowCard } from 'constants/styles/shadowCard'
 import TabDescription from '../../TabDescription'
@@ -139,6 +142,8 @@ export default function TokenForm({
     theme: { colors },
   } = useContext(ThemeContext)
 
+  const [tokenForm] = useForm<{ totalReservedSplitPercent: number }>()
+
   const dispatch = useAppDispatch()
   const {
     fundingCycleMetadata,
@@ -206,7 +211,8 @@ export default function TokenForm({
     reservedTokensGroupedSplits?.splits,
   )
 
-  const onTokenFormSaved = useCallback(() => {
+  const onTokenFormSaved = useCallback(async () => {
+    await tokenForm.validateFields()
     const newReservedTokensSplits = reservedTokensSplits.map(split =>
       sanitizeSplit(split),
     )
@@ -230,6 +236,7 @@ export default function TokenForm({
     discountRate,
     reservedRate,
     redemptionRate,
+    tokenForm,
   ])
 
   useEffect(() => {
@@ -256,8 +263,15 @@ export default function TokenForm({
   const initialIssuanceRate =
     DEFAULT_ISSUANCE_RATE - reservedRatePercent * MAX_RESERVED_RATE
 
+  const validateTotalReservedPercent = () => {
+    if (getTotalSplitsPercentage(reservedTokensSplits) > 100) {
+      return Promise.reject(`Reserved allocations exceed 100%.`)
+    }
+    return Promise.resolve()
+  }
+
   return (
-    <Form layout="vertical" onFinish={onTokenFormSaved}>
+    <Form layout="vertical" onFinish={onTokenFormSaved} form={tokenForm}>
       <Space size="middle" direction="vertical">
         <div>
           <ReservedTokensFormItem
@@ -346,6 +360,14 @@ export default function TokenForm({
             disabled={!canSetRedemptionRate}
           />
         </div>
+        <ItemNoInput
+          name={'totalSplitsPercentage'}
+          rules={[
+            {
+              validator: validateTotalReservedPercent,
+            },
+          ]}
+        />
         <Form.Item>
           <Button htmlType="submit" type="primary">
             <Trans>Save token configuration</Trans>

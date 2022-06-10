@@ -29,7 +29,7 @@
     "@uniswap/sdk-core": "3.0.1",
     "@uniswap/v3-sdk": "3.8.2",
     "@walletconnect/web3-provider": "^1.5.4",
-    "antd": "4.18.0",
+    "antd": "4.21.0",
     "autolinker": "^3.14.3",
     "axios": "^0.21.1",
     "bnc-notify": "^1.9.1",

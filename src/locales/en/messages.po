@@ -646,6 +646,10 @@ msgstr "Claiming {tokenTextLong} will convert your {tokenTextShort} balance to E
 msgid "Close"
 msgstr "Close"
 
+#: src/components/v2/V2Project/NewDeployModal.tsx
+msgid "Close, I'll do these later"
+msgstr "Close, I'll do these later"
+
 #: src/components/Landing/index.tsx
 msgid "Commit portions of your funds to the people or projects you want to support, or the contributors you want to pay. When you get paid, so do they."
 msgstr "Commit portions of your funds to the people or projects you want to support, or the contributors you want to pay. When you get paid, so do they."
@@ -667,8 +671,8 @@ msgid "Configure your project's tokenomics."
 msgstr "Configure your project's tokenomics."
 
 #: src/components/v2/V2Project/NewDeployModal.tsx
-msgid "Congratulations on launching your project! We recommend you take these next steps to help your project gain traction. These steps are optional and you can complete them later on."
-msgstr "Congratulations on launching your project! We recommend you take these next steps to help your project gain traction. These steps are optional and you can complete them later on."
+msgid "Congratulations on launching your project! The next steps are optional and can be completed at any time."
+msgstr "Congratulations on launching your project! The next steps are optional and can be completed at any time."
 
 #: src/components/Navbar/Account.tsx
 msgid "Connect"
@@ -729,12 +733,15 @@ msgid "Copy to clipboard"
 msgstr "Copy to clipboard"
 
 #: src/components/v2/V2Project/NewDeployModal.tsx
-msgid "Create a payable address"
-msgstr "Create a payable address"
+msgid "Create a payable address (optional)"
+msgstr "Create a payable address (optional)"
+
+#: src/components/v2/V2Project/NewDeployModal.tsx
+msgid "Create an Ethereum address for your project. Enables direct payments without going through your project's Juicebox page."
+msgstr "Create an Ethereum address for your project. Enables direct payments without going through your project's Juicebox page."
 
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
-#: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Create an Ethereum address that can be used to pay your project directly."
 msgstr "Create an Ethereum address that can be used to pay your project directly."
 
@@ -1414,8 +1421,8 @@ msgid "Issue an ERC-20 to be used as this project's token. Once issued, anyone c
 msgstr "Issue an ERC-20 to be used as this project's token. Once issued, anyone can claim their existing token balance in the new token."
 
 #: src/components/v2/V2Project/NewDeployModal.tsx
-msgid "Issue an ERC-20 token"
-msgstr "Issue an ERC-20 token"
+msgid "Issue an ERC-20 token (optional)"
+msgstr "Issue an ERC-20 token (optional)"
 
 #: src/components/shared/modals/IssueTokenModal.tsx
 msgid "Issue token"
@@ -1459,7 +1466,6 @@ msgid "Last paid"
 msgstr ""
 
 #: src/components/shared/modals/IssueTokenModal.tsx
-#: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Later"
 msgstr "Later"
 
@@ -1486,10 +1492,6 @@ msgstr "Launch your project"
 #: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner.tsx
 msgid "Leave blank to start immediately."
 msgstr "Leave blank to start immediately."
-
-#: src/components/v2/V2Project/NewDeployModal.tsx
-msgid "Let's get this party started!"
-msgstr "Let's get this party started!"
 
 #: src/components/Navbar/Mobile/ThemePickerMobile.tsx
 msgid "Light theme"
@@ -1615,10 +1617,6 @@ msgstr ""
 #: src/components/Projects/TrendingProjectCard.tsx
 msgid "New"
 msgstr "New"
-
-#: src/components/v2/V2Project/NewDeployModal.tsx
-msgid "Next steps"
-msgstr "Next steps"
 
 #: src/components/v2/V2Create/tabs/ProjectDetailsTab/ProjectDetailsTabContent.tsx
 msgid "Next: Funding cycle"
@@ -1977,6 +1975,10 @@ msgstr "Project is accepting payments this funding cycle."
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Project is not accepting payments this funding cycle."
 msgstr "Project is not accepting payments this funding cycle."
+
+#: src/components/v2/V2Project/NewDeployModal.tsx
+msgid "Project launch successful"
+msgstr "Project launch successful"
 
 #: src/components/shared/formItems/ProjectName.tsx
 msgid "Project name"
@@ -2371,10 +2373,6 @@ msgstr ""
 #: src/components/v2/shared/DistributionSplitsSection/SpecificLimitModal.tsx
 msgid "Set this to the sum of all your payouts"
 msgstr "Set this to the sum of all your payouts"
-
-#: src/components/v2/V2Project/NewDeployModal.tsx
-msgid "Share to Twitter"
-msgstr "Share to Twitter"
 
 #: src/components/Landing/index.tsx
 msgid "Should you Juicebox?"

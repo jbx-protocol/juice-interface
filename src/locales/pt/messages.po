@@ -1186,7 +1186,7 @@ msgstr "Editar detalhes do projeto"
 msgid "Edit project handle"
 msgstr ""
 
-#: src/components/shared/TicketModsList.tsx
+#: src/components/v1/shared/TicketModsList.tsx
 msgid "Edit reserved token allocation"
 msgstr "Editar a alocação de tokens reservados"
 
@@ -2045,8 +2045,8 @@ msgstr "As reconfiguracões dos detalhes do projeto irão criar uma transação 
 msgid "Project for {ensName} not found"
 msgstr "Projeto {ensName} não encontrado"
 
-#: src/components/shared/formItems/ProjectHandle/ProjectHandleFormItem.tsx
-#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
+#: src/components/v1/shared/ProjectPayMods/ProjectPayoutModsModal.tsx
+#: src/components/v1/shared/formItems/ProjectHandle/ProjectHandleFormItem.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Project handle"
 msgstr "Identificador do projeto"
@@ -2471,7 +2471,7 @@ msgstr ""
 msgid "Set text record for {0}"
 msgstr ""
 
-#: src/components/v1/shared/BudgetForm.tsx
+#: src/components/v1/shared/forms/BudgetForm.tsx
 msgid "Set the amount of funds you'd like to raise each funding cycle. Any funds raised within the funding cycle target can be distributed by the project, and can't be redeemed by your project's token holders."
 msgstr "Defina a quantidade de fundos que você gostaria de aumentar a cada ciclo de financiamento. Quaisquer fundos arrecadados dentro do valor alvo do ciclo de financiamento podem ser distribuídos pelo projeto, e não podem ser resgatados pelos donos dos tokens de seu projeto."
 

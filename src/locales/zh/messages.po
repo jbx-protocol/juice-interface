@@ -1186,7 +1186,7 @@ msgstr "编辑项目的细节"
 msgid "Edit project handle"
 msgstr ""
 
-#: src/components/shared/TicketModsList.tsx
+#: src/components/v1/shared/TicketModsList.tsx
 msgid "Edit reserved token allocation"
 msgstr "保留代币的分配方案"
 
@@ -2045,8 +2045,8 @@ msgstr "项目细节的重新配置将会发起一个单独的交易。"
 msgid "Project for {ensName} not found"
 msgstr "未能找到 {ensName} 的项目。"
 
-#: src/components/shared/formItems/ProjectHandle/ProjectHandleFormItem.tsx
-#: src/components/v1/ProjectPayMods/ProjectPayoutModsModal.tsx
+#: src/components/v1/shared/ProjectPayMods/ProjectPayoutModsModal.tsx
+#: src/components/v1/shared/formItems/ProjectHandle/ProjectHandleFormItem.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Project handle"
 msgstr "项目标识"
@@ -2471,7 +2471,7 @@ msgstr ""
 msgid "Set text record for {0}"
 msgstr ""
 
-#: src/components/v1/shared/BudgetForm.tsx
+#: src/components/v1/shared/forms/BudgetForm.tsx
 msgid "Set the amount of funds you'd like to raise each funding cycle. Any funds raised within the funding cycle target can be distributed by the project, and can't be redeemed by your project's token holders."
 msgstr "设定你每个筹款周期想要筹款的金额。筹款周期目标以内的金额会分配给项目，项目代币持有人不能通过赎回取得这部分资金。"
 

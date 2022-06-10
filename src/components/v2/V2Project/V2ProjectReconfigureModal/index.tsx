@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Modal, Space } from 'antd'
+import { Divider, Modal, Space } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import {
   useCallback,
@@ -534,26 +534,8 @@ export default function V2ProjectReconfigureModal({
         size="middle"
         style={{ width: '100%', marginBottom: 40 }}
       >
-        {hideProjectDetails ? null : (
-          <div style={{ marginBottom: 20 }}>
-            <h4 style={{ marginBottom: 0 }}>
-              <Trans>Edit project handle</Trans>
-            </h4>
-            <p>
-              <Trans>
-                Changes to project handle will take effect immediately.
-              </Trans>
-            </p>
-            <ReconfigureButton
-              reconfigureHasChanges={false}
-              title={t`Project handle`}
-              onClick={() => setProjectHandleDrawerVisible(true)}
-            />
-          </div>
-        )}
-
-        {hideProjectDetails ? null : (
-          <div style={{ marginBottom: 20 }}>
+        {!hideProjectDetails && (
+          <>
             <h4 style={{ marginBottom: 0 }}>
               <Trans>Edit project details</Trans>
             </h4>
@@ -562,13 +544,24 @@ export default function V2ProjectReconfigureModal({
                 Changes to project details will take effect immediately.
               </Trans>
             </p>
-            <ReconfigureButton
-              reconfigureHasChanges={false}
-              title={t`Project details`}
-              onClick={() => setProjectDetailsDrawerVisible(true)}
-            />
-          </div>
+          </>
         )}
+        {!hideProjectDetails && (
+          <ReconfigureButton
+            reconfigureHasChanges={false}
+            title={t`Project handle`}
+            onClick={() => setProjectHandleDrawerVisible(true)}
+          />
+        )}
+        {!hideProjectDetails && (
+          <ReconfigureButton
+            reconfigureHasChanges={false}
+            title={t`Other details`}
+            onClick={() => setProjectDetailsDrawerVisible(true)}
+          />
+        )}
+
+        <Divider />
 
         <h4 style={{ marginBottom: 0 }}>
           <Trans>Reconfigure upcoming funding cycles</Trans>

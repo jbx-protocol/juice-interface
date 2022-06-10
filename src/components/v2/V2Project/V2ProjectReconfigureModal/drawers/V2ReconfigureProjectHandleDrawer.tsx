@@ -111,7 +111,7 @@ export function V2ReconfigureProjectHandleDrawer({
       </p>
       <br />
       <Form form={ensNameForm} onFinish={onSetENSNameFormSaved}>
-        <FormItems.ENSName subdomainCount={1} name="handle" />
+        <FormItems.ENSName subdomainCount={1} name="handle" hideLabel />
         <Button htmlType="submit" loading={loadingSetENSName} type="primary">
           <Trans>Set ENS name</Trans>
         </Button>

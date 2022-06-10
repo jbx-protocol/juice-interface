@@ -24,10 +24,9 @@ import { tokenSymbolText } from 'utils/tokenSymbolText'
 import IssueTokenButton from 'components/shared/IssueTokenButton'
 import SectionHeader from 'components/shared/SectionHeader'
 import useCanPrintPreminedTokens from 'hooks/v1/contractReader/CanPrintPreminedTokens'
-
 import ParticipantsModal from 'components/shared/modals/ParticipantsModal'
+import ManageTokensModal from 'components/shared/ManageTokensModal'
 
-import ManageTokensModal from '../../../shared/ManageTokensModal'
 import RedeemModal from '../modals/RedeemModal'
 import ConfirmUnstakeTokensModal from '../modals/ConfirmUnstakeTokensModal'
 import PrintPreminedModal from '../modals/PrintPreminedModal'

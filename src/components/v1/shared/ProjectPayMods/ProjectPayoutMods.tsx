@@ -4,10 +4,11 @@ import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useContext, useState } from 'react'
 import { permyriadToPercent } from 'utils/formatNumber'
+import FormattedAddress from 'components/shared/FormattedAddress'
+import { FormItemExt } from 'components/shared/formItems/formItemExt'
 
 import { CurrencyName } from 'constants/currency'
-import FormattedAddress from '../../shared/FormattedAddress'
-import { FormItemExt } from '../../shared/formItems/formItemExt'
+
 import { ProjectModInput } from './ProjectModInput'
 import { ProjectPayoutModsModal } from './ProjectPayoutModsModal'
 import { EditingPayoutMod } from './types'

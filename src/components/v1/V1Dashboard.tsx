@@ -39,8 +39,8 @@ import { layouts } from 'constants/styles/layouts'
 import { projectTypes } from 'constants/v1/projectTypes'
 import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 
-import Loading from '../../shared/Loading'
-import V1Project from '../V1Project'
+import Loading from '../shared/Loading'
+import V1Project from './V1Project'
 import { DEFAULT_SITE_TITLE } from 'constants/siteMetadata'
 
 export default function V1Dashboard() {

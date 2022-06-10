@@ -8,7 +8,7 @@ import { formatWad } from 'utils/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { getTerminalName } from 'utils/v1/terminals'
 
-import V1ProjectHandle from '../v1/shared/V1ProjectHandle'
+import V1ProjectHandle from '../shared/V1ProjectHandle'
 
 export default function ProjectTokenBalance({
   projectId,

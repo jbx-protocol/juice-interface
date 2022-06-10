@@ -17,7 +17,7 @@ import { amountSubFee } from 'utils/math'
 import { BigNumber } from '@ethersproject/bignumber'
 
 import { CurrencyName } from 'constants/currency'
-import V1ProjectHandle from '../shared/V1ProjectHandle'
+import V1ProjectHandle from '../V1ProjectHandle'
 import { EditingPayoutMod } from './types'
 
 const FormattedRow = ({

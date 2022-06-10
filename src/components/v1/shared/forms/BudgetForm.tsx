@@ -15,6 +15,7 @@ import { fromWad, parseWad } from 'utils/formatNumber'
 import { hasFundingTarget, isRecurring } from 'utils/v1/fundingCycle'
 import { helpPagePath } from 'utils/helpPageHelper'
 import { getV1CurrencyOption, V1CurrencyName } from 'utils/v1/currency'
+import ExternalLink from 'components/shared/ExternalLink'
 
 import FormItemWarningText from 'components/shared/FormItemWarningText'
 import {
@@ -22,7 +23,6 @@ import {
   targetToTargetSubFeeFormatted,
 } from 'utils/v1/payouts'
 
-import ExternalLink from '../../shared/ExternalLink'
 import { CurrencyName } from 'constants/currency'
 
 const DEFAULT_TARGET_AFTER_FEE = '10000'

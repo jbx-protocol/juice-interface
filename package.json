@@ -100,8 +100,13 @@
     "@testing-library/user-event": "^12.1.10",
     "husky": "^7.0.0",
     "lint-staged": "13.0.0",
+    "react-error-overlay": "6.0.9",
     "react-test-renderer": "^17",
     "source-map-explorer": "^2.5.2",
     "ts-prune": "^0.10.3"
+  },
+  "resolutions": {
+    "//": "See https://github.com/facebook/create-react-app/issues/11773",
+    "react-error-overlay": "6.0.9"
   }
 }

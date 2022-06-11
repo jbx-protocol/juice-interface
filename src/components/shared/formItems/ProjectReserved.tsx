@@ -5,7 +5,7 @@ import FormItemLabel from 'components/v2/V2Create/FormItemLabel'
 import { formattedNum } from 'utils/formatNumber'
 import { ThemeContext } from 'contexts/themeContext'
 import { defaultFundingCycleMetadata } from 'redux/slices/editingV2Project'
-import { DEFAULT_ISSUANCE_RATE } from 'utils/v2/math'
+import { DEFAULT_MINT_RATE } from 'utils/v2/math'
 import { round } from 'lodash'
 
 import NumberSlider from '../inputs/NumberSlider'
@@ -53,7 +53,7 @@ export default function ProjectReserved({
       </Trans>
     </FormItemWarningText>
   )
-  const effectiveIssuanceRate = issuanceRate ?? DEFAULT_ISSUANCE_RATE
+  const effectiveIssuanceRate = issuanceRate ?? DEFAULT_MINT_RATE
 
   // Reserved tokens received by project per ETH
   const initialReservedTokensPerEth =

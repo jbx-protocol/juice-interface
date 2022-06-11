@@ -24,7 +24,7 @@ import { sanitizeSplit } from 'utils/v2/splits'
 import { Split } from 'models/v2/splits'
 
 import {
-  DEFAULT_ISSUANCE_RATE,
+  DEFAULT_MINT_RATE,
   discountRateFrom,
   formatDiscountRate,
   formatIssuanceRate,
@@ -177,7 +177,7 @@ export default function TokenForm({
         defaultFundingCycleMetadata.redemptionRate,
       weight: fundingCycleData?.weight
         ? formatIssuanceRate(fundingCycleData?.weight)
-        : DEFAULT_ISSUANCE_RATE.toString(),
+        : DEFAULT_MINT_RATE.toString(),
     }),
     [
       fundingCycleMetadata.reservedRate,
@@ -231,7 +231,7 @@ export default function TokenForm({
      */
     dispatch(
       editingV2ProjectActions.setWeight(
-        issuanceRateFrom(weight ?? DEFAULT_ISSUANCE_RATE.toString()),
+        issuanceRateFrom(weight ?? DEFAULT_MINT_RATE.toString()),
       ),
     )
     dispatch(editingV2ProjectActions.setDiscountRate(discountRate ?? '0'))
@@ -273,7 +273,7 @@ export default function TokenForm({
   )
 
   // Total tokens minted as a result of a 1 ETH contribution
-  const initialMintingRate = parseFloat(weight) ?? DEFAULT_ISSUANCE_RATE
+  const initialMintingRate = parseFloat(weight) ?? DEFAULT_MINT_RATE
   const reservedRateDecimal = reservedRatePercent * 0.01
   // Tokens received by contributor's per ETH
   const initialIssuanceRate =
@@ -286,7 +286,7 @@ export default function TokenForm({
           <MintRateFormItem
             value={weight}
             onChange={newWeight => {
-              setWeight(newWeight ?? DEFAULT_ISSUANCE_RATE.toString())
+              setWeight(newWeight ?? DEFAULT_MINT_RATE.toString())
             }}
             hasDuration={hasDuration}
             isCreate={Boolean(isCreate)}

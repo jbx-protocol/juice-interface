@@ -18,7 +18,7 @@ import {
 } from 'utils/v2/serializers'
 
 import {
-  DEFAULT_ISSUANCE_RATE,
+  DEFAULT_MINT_RATE,
   issuanceRateFrom,
   redemptionRateFrom,
 } from 'utils/v2/math'
@@ -57,7 +57,7 @@ const defaultProjectMetadataState: ProjectMetadataV4 = {
 export const defaultFundingCycleData: SerializedV2FundingCycleData =
   serializeV2FundingCycleData({
     duration: BigNumber.from(0),
-    weight: BigNumber.from(issuanceRateFrom(DEFAULT_ISSUANCE_RATE.toString())), // 1e24, resulting in 1,000,000 tokens per ETH
+    weight: BigNumber.from(issuanceRateFrom(DEFAULT_MINT_RATE.toString())), // 1e24, resulting in 1,000,000 tokens per ETH
     discountRate: BigNumber.from(0), // A number from 0-1,000,000,000
     ballot: DEFAULT_BALLOT_STRATEGY.address,
   })

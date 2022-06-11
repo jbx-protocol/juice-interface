@@ -4,6 +4,7 @@ import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import TooltipLabel from 'components/shared/TooltipLabel'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
+import { MAX_MINT_RATE } from 'utils/v2/math'
 
 export default function MintRateFormItem({
   value,
@@ -46,6 +47,7 @@ export default function MintRateFormItem({
         >
           <FormattedNumberInput
             min={1}
+            max={MAX_MINT_RATE}
             accessory={
               <span style={{ color: colors.text.primary, marginRight: 20 }}>
                 <Trans>tokens per ETH contributed</Trans>

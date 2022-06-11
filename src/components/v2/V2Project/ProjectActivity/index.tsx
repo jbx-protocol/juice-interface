@@ -158,6 +158,7 @@ export default function ProjectActivity() {
           'txHash',
           'caller',
           'beneficiary',
+          'beneficiaryDistributionAmount',
           'distributedAmount',
           'memo',
         ],

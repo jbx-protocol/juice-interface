@@ -160,7 +160,7 @@ export function IssuanceRateStatistic({
     <Statistic
       title={
         <TooltipLabel
-          label={isInitial ? t`Initial issuance rate` : t`Issuance rate`}
+          label={isInitial ? t`Initial issuance rate` : t`Contributor rate`}
           tip={t`Contributors will be rewarded this amount of your project's tokens per ETH contributed.`}
         />
       }

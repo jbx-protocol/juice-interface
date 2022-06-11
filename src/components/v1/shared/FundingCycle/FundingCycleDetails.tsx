@@ -234,7 +234,7 @@ export default function FundingCycleDetails({
         <Descriptions.Item
           label={
             <TooltipLabel
-              label={<Trans>Issuance rate</Trans>}
+              label={<Trans>Contributor rate</Trans>}
               tip={
                 <Trans>
                   {tokenSymbolPluralCap} received per ETH paid to the treasury.

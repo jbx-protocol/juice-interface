@@ -1409,7 +1409,7 @@ msgstr ""
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
-msgid "Issuance rate"
+msgid "Contributor rate"
 msgstr ""
 
 #: src/components/shared/IssueTokenButton.tsx
@@ -3365,4 +3365,5 @@ msgstr ""
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "{userOwnershipPercentage}% of total supply"
 msgstr ""
+
 

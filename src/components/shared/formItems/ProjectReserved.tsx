@@ -92,7 +92,7 @@ export default function ProjectReserved({
             >
               <span>
                 <TooltipLabel
-                  label={t`Issuance rate`}
+                  label={t`Contributor rate`}
                   tip={
                     <Trans>
                       Tokens <strong>contributors will receive</strong> when

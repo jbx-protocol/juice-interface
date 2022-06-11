@@ -2423,6 +2423,7 @@ msgstr "Hora de início (segundos, tempo Unix)"
 msgid "Sum of percentages cannot exceed 100%"
 msgstr "Soma de porcentagens não pode exceder 100%"
 
+#: src/components/v1/shared/ProjectTicketMods.tsx
 #: src/components/v1/shared/forms/PayModsForm.tsx
 #: src/components/v2/shared/DistributionSplitsSection/index.tsx
 msgid "Sum of percentages cannot exceed 100%."

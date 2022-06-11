@@ -609,10 +609,6 @@ msgstr "这个项目的筹款没有溢出，无法用代币赎回 ETH"
 msgid "Changes to project details will take effect immediately."
 msgstr "对项目详情的更改将立即生效。"
 
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
-msgid "Changes to project handle will take effect immediately."
-msgstr ""
-
 #: src/components/v1/V1Create/index.tsx
 msgid "Changes to these attributes can be made at any time and will be applied to your project immediately."
 msgstr "可以随时修改这些属性，并立即应用于你的项目。"
@@ -1181,10 +1177,6 @@ msgstr "编辑项目"
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Edit project details"
 msgstr "编辑项目的细节"
-
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
-msgid "Edit project handle"
-msgstr ""
 
 #: src/components/v1/shared/TicketModsList.tsx
 msgid "Edit reserved token allocation"
@@ -1793,6 +1785,10 @@ msgstr ""
 msgid "Other assets in this project's owner's wallet."
 msgstr "项目拥有者钱包内的其他资产"
 
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Other details"
+msgstr ""
+
 #: src/components/shared/Project/FundingProgressBar.tsx
 msgid "Overflow"
 msgstr ""
@@ -2029,7 +2025,6 @@ msgstr "项目说明"
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Project details"
 msgstr "项目详情"
 

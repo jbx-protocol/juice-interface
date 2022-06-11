@@ -158,6 +158,10 @@ export const issuanceRateFrom = (issuanceRate: string): string => {
  * @returns {string} issuance rate in tokens / 1ETH
  */
 export const formatIssuanceRate = (issuanceRate: string): string => {
+  // Round down to nearest wei
+  if (issuanceRate.split('.').length) {
+    issuanceRate = issuanceRate.split('.')[0]
+  }
   return BigNumber.from(issuanceRate).div(constants.WeiPerEther).toString()
 }
 

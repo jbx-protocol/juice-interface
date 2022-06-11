@@ -66,11 +66,7 @@ export default function PayInputSubText({
 
   const receiveText = useMemo(() => {
     const formatReceivedTickets = (wei: BigNumber) => {
-      let exchangeRate = weightingFn(weight, reservedRate, wei, 'payer')
-      // Round to nearest wei
-      if (exchangeRate.split('.').length) {
-        exchangeRate = exchangeRate.split('.')[0]
-      }
+      const exchangeRate = weightingFn(weight, reservedRate, wei, 'payer')
       return formattedNum(formatIssuanceRate(exchangeRate))
     }
 

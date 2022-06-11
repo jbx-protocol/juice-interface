@@ -32,7 +32,8 @@ import {
   weightedAmount,
 } from 'utils/v2/math'
 import { Split } from 'models/v2/splits'
-import { formattedNum, fromWad } from 'utils/formatNumber'
+import { formattedNum } from 'utils/formatNumber'
+import { parseEther } from 'ethers/lib/utils'
 
 export default function ReconfigurePreview({
   payoutSplits,
@@ -80,7 +81,7 @@ export default function ReconfigurePreview({
         weightedAmount(
           fundingCycle?.weight,
           fundingCycleMetadata?.reservedRate.toNumber(),
-          BigNumber.from(1),
+          parseEther('1'),
           'payer',
         ),
       ),
@@ -101,7 +102,7 @@ export default function ReconfigurePreview({
         weightedAmount(
           fundingCycle?.weight,
           fundingCycleMetadata?.reservedRate.toNumber(),
-          BigNumber.from(1),
+          parseEther('1'),
           'reserved',
         ) ?? '',
       ),
@@ -122,8 +123,9 @@ export default function ReconfigurePreview({
         <Col md={8} sm={12}>
           <InflationRateStatistic
             inflationRate={
-              formattedNum(formatIssuanceRate(fromWad(fundingCycle?.weight))) ??
-              '0'
+              formattedNum(
+                formatIssuanceRate(fundingCycle?.weight.toString()),
+              ) ?? '0'
             }
           />
         </Col>

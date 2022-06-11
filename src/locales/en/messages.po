@@ -691,10 +691,28 @@ msgstr "Congratulations on launching your project! The next steps are optional a
 msgid "Connect"
 msgstr ""
 
+#: src/components/shared/TransactionModal.tsx
+msgid "Connect wallet"
+msgstr "Connect wallet"
+
+#: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
+msgid "Connect wallet to claim"
+msgstr "Connect wallet to claim"
+
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/DeployProjectButton.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Connect wallet to deploy"
 msgstr "Connect wallet to deploy"
+
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributeReservedTokensModal.tsx
+msgid "Connect wallet to distribute"
+msgstr "Connect wallet to distribute"
+
+#: src/components/shared/modals/IssueTokenModal.tsx
+msgid "Connect wallet to issue"
+msgstr "Connect wallet to issue"
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx

@@ -80,6 +80,7 @@ export default function V2ClaimTokensModal({
   return (
     <TransactionModal
       title={t`Claim ${tokenTextShort} as ERC-20 tokens`}
+      connectWalletText={t`Connect wallet to claim`}
       visible={visible}
       onOk={executeClaimTokensTx}
       okText={t`Claim ${tokenTextShort}`}

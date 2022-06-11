@@ -21,7 +21,7 @@ export default function TabDescription({
       }}
     >
       <InfoCircleOutlined style={{ marginRight: '1rem', lineHeight: 1.8 }} />
-      <div>{children}</div>
+      <div style={{ width: '100%' }}>{children}</div>
     </div>
   )
 }

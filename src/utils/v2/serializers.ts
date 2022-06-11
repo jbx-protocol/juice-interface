@@ -97,7 +97,7 @@ export const serializeV2FundingCycleData = (
   fundingCycleData: V2FundingCycleData,
 ): SerializedV2FundingCycleData => ({
   duration: fundingCycleData.duration.toString(),
-  weight: fromWad(fundingCycleData.weight),
+  weight: fundingCycleData.weight.toString(),
   discountRate: fundingCycleData.discountRate.toString(),
   ballot: fundingCycleData.ballot, // hex, contract address
 })
@@ -106,7 +106,7 @@ export const deserializeV2FundingCycleData = (
   serializedFundingCycleData: SerializedV2FundingCycleData,
 ): V2FundingCycleData => ({
   duration: BigNumber.from(serializedFundingCycleData.duration || '0'),
-  weight: parseWad(serializedFundingCycleData.weight),
+  weight: BigNumber.from(serializedFundingCycleData.weight),
   discountRate: BigNumber.from(serializedFundingCycleData.discountRate),
   ballot: serializedFundingCycleData.ballot, // hex, contract address
 })

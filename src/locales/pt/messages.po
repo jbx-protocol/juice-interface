@@ -634,10 +634,6 @@ msgstr "Mudanças nos pagamentos entrarão em vigor imediatamente."
 msgid "Changes to project details will take effect immediately."
 msgstr "Mudanças nos detalhes do projeto serão implementadas imediatamente."
 
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
-msgid "Changes to project handle will take effect immediately."
-msgstr ""
-
 #: src/components/v1/V1Create/index.tsx
 msgid "Changes to these attributes can be made at any time and will be applied to your project immediately."
 msgstr "As mudanças para esses atribuitos podem ser feitas a qualquer momento e irão ser aplicadas ao seu projeto imediatamente."
@@ -1895,6 +1891,10 @@ msgstr "Uma vez lançado, o seu primeiro ciclo de financiamento <0>não pode ser
 msgid "Other assets in this project's owner's wallet."
 msgstr "Outros ativos na carteira do proprietário deste projeto."
 
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Other details"
+msgstr ""
+
 #: src/components/shared/Project/FundingProgressBar.tsx
 msgid "Overflow"
 msgstr "Overflow"
@@ -2142,7 +2142,6 @@ msgstr "Descrição do projeto"
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Project details"
 msgstr "Detalhes do projeto"
 

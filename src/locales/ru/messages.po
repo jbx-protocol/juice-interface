@@ -634,10 +634,6 @@ msgstr ""
 msgid "Changes to project details will take effect immediately."
 msgstr "Изменения в деталях проекта вступят в силу немедленно."
 
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
-msgid "Changes to project handle will take effect immediately."
-msgstr ""
-
 #: src/components/v1/V1Create/index.tsx
 msgid "Changes to these attributes can be made at any time and will be applied to your project immediately."
 msgstr "Изменения этих атрибутов можно внести в любое время, и они будут немедленно применены к вашему проекту."
@@ -1895,6 +1891,10 @@ msgstr ""
 msgid "Other assets in this project's owner's wallet."
 msgstr "Другие активы в кошельке владельца этого проекта."
 
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Other details"
+msgstr ""
+
 #: src/components/shared/Project/FundingProgressBar.tsx
 msgid "Overflow"
 msgstr ""
@@ -2142,7 +2142,6 @@ msgstr "Описание Проекта"
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Project details"
 msgstr "Детали проекта"
 

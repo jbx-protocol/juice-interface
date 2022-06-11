@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-06-08 02:52\n"
+"PO-Revision-Date: 2022-06-11 02:48\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -564,7 +564,7 @@ msgstr "Por defecto, todos los fondos no asignados pueden ser distribuidos a la 
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "By default, newly minted tokens will go to the wallet who sends funds to the address. You can enable this to set the token beneficiary to a custom address."
-msgstr ""
+msgstr "Por defecto, tokens recientemente minteados irán a la billetera que envíe los fondos a la dirección. Puedes activar esto para establecer una dirección personalizada como beneficiario del token."
 
 #: src/components/Landing/QAs.tsx
 msgid "Can I change my project's contract after it's been created?"
@@ -865,7 +865,7 @@ msgstr "Desplegar proyecto a {0}"
 
 #: src/components/shared/activityEventElems/DeployedERC20EventElem.tsx
 msgid "Deployed ERC20 token"
-msgstr ""
+msgstr "Desplegar token ERC20"
 
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "Deposit 1 wei to @{handle}"
@@ -977,7 +977,7 @@ msgstr "Distribuido"
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 #: src/components/v2/V2Project/ProjectActivity/index.tsx
 msgid "Distributed Funds"
-msgstr ""
+msgstr "Fondos Distribuidos"
 
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 msgid "Distributed Reserves"
@@ -1305,7 +1305,7 @@ msgstr "¿Cómo se han puesto a prueba los contratos?"
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "How long before your next funding cycle must you reconfigure in order for changes to take effect."
-msgstr ""
+msgstr "En cuánto tiempo antes de que empiece el siguiente ciclo de financiamiento debes hacer la reconfiguración de forma que los cambios surtan efecto."
 
 #: src/components/shared/formItems/ProjectDuration.tsx
 msgid "How long one funding cycle will last. Funding cycle <0>reconfigurations</0> will only take effect for <1>upcoming</1> funding cycles, i.e. once a current funding cycle has ended."
@@ -1730,7 +1730,7 @@ msgstr "El dueño puede acuñar tokens en cualquier momento."
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Owner is not allowed to mint tokens."
-msgstr ""
+msgstr "El dueño no está autorizado para emitir tokens."
 
 #: src/components/shared/activityEventElems/PayEventElem.tsx
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
@@ -1876,7 +1876,7 @@ msgstr "Porcentaje"
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "Percentage allocation"
-msgstr ""
+msgstr "Asignación porcentual"
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Percentage of newly minted tokens reserved for the project."
@@ -2448,7 +2448,7 @@ msgstr "El protocolo JBX está inauditado, y los proyectos contruidos sobre este
 
 #: src/components/shared/ReconfigurationStrategy/ReconfigurationStrategySelector.tsx
 msgid "The address of any smart contract deployed on {0} that implements <0>this interface</0>."
-msgstr ""
+msgstr "La dirección de cualquier contrato inteligente desplegado en {0} que implemente <0>esta interfaz</0>."
 
 #: src/components/v1/shared/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
@@ -2510,7 +2510,7 @@ msgstr "El monto máximo de fondos que puede ser distribuido desde este proyecto
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "The onchain memo for each transaction made through the address. It will appear in the project's payment feed when someone pays this address."
-msgstr ""
+msgstr "El memo onchain para cada transacción hecha a través de la dirección. Este aparecerá en el tablero de pagos del proyecto cuando alguien pague a esta dirección."
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 msgid "The percentage this individual receives of the overall {reservedRate}% reserved token allocation"
@@ -2964,7 +2964,7 @@ msgstr "Con Juicebox, los proyectos están construidos y mantenidos por punks mo
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
 msgid "With no funding cycles, the project's owner can start a new funding cycle (Funding Cycle #2) on-demand. <0>Learn more.</0>"
-msgstr ""
+msgstr "Sin ciclos de financiamiento, el dueño de proyecto puede empezar un nuevo ciclo de financiamiento (Ciclo de Financiamiento #2) a discreción. <0>Aprende más.</0>"
 
 #: src/components/v1/shared/FundingCycle/modals/WithdrawModal.tsx
 msgid "Withdraw"

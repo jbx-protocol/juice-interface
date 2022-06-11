@@ -7,6 +7,7 @@ import SplitList from 'components/v2/shared/SplitList'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { useContext, useState } from 'react'
+import { SettingOutlined } from '@ant-design/icons'
 
 import { V2CurrencyName } from 'utils/v2/currency'
 
@@ -17,7 +18,14 @@ import { Split } from 'models/v2/splits'
 import { BigNumber } from '@ethersproject/bignumber'
 import { detailedTimeString } from 'utils/formatTime'
 
+import { useSetProjectSplits } from 'hooks/v2/transactor/SetProjectSplits'
+
+import useProjectCurrentFundingCycle from 'hooks/v2/contractReader/ProjectCurrentFundingCycle'
+
 import DistributePayoutsModal from './modals/DistributePayoutsModal'
+import { EditPayoutsModal } from './modals/EditPayoutsModal'
+
+import { ETH_PAYOUT_SPLIT_GROUP } from 'constants/v2/splits'
 
 export default function PayoutSplitsCard({
   hideDistributeButton,
@@ -38,12 +46,25 @@ export default function PayoutSplitsCard({
     balanceInDistributionLimitCurrency,
     isPreviewMode,
     loading,
+    projectId,
   } = useContext(V2ProjectContext)
   const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
 
+  const { data: fundingCycleResponse } = useProjectCurrentFundingCycle({
+    projectId,
+  })
+  const [fundingCycle] = fundingCycleResponse ?? []
+
+  const setProjectSplits = useSetProjectSplits({
+    domain: fundingCycle?.configuration?.toString(),
+  })
+
+  const [payoutsModalLoading, setPayoutsModalLoading] = useState<boolean>(false)
+
   const [distributePayoutsModalVisible, setDistributePayoutsModalVisible] =
     useState<boolean>()
-
+  const [editPayoutModalVisible, setEditPayoutModalVisible] =
+    useState<boolean>(false)
   const isLoadingStats =
     loading.ETHBalanceLoading ||
     loading.distributionLimitLoading ||
@@ -103,20 +124,36 @@ export default function PayoutSplitsCard({
         )}
 
         <div>
-          <TooltipLabel
-            label={
-              <h4 style={{ display: 'inline-block' }}>
-                <Trans>Funding distribution</Trans>
-              </h4>
-            }
-            tip={
-              <Trans>
-                Available funds can be distributed according to the payouts
-                below
-                {hasDuration ? ` every ${formattedDuration}` : null}.
-              </Trans>
-            }
-          />
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              gap: 10,
+              flexWrap: 'wrap',
+            }}
+          >
+            <TooltipLabel
+              label={
+                <h4 style={{ display: 'inline-block' }}>
+                  <Trans>Funding distribution</Trans>
+                </h4>
+              }
+              tip={
+                <Trans>
+                  Available funds can be distributed according to the payouts
+                  below
+                  {hasDuration ? ` every ${formattedDuration}` : null}.
+                </Trans>
+              }
+            />
+            <Button
+              size="small"
+              onClick={() => setEditPayoutModalVisible(true)}
+              icon={<SettingOutlined />}
+            >
+              <span>Edit Payouts</span>
+            </Button>
+          </div>
           {payoutSplits ? (
             <SplitList
               splits={payoutSplits}
@@ -133,6 +170,29 @@ export default function PayoutSplitsCard({
         visible={distributePayoutsModalVisible}
         onCancel={() => setDistributePayoutsModalVisible(false)}
         onConfirmed={() => window.location.reload()}
+      />
+      <EditPayoutsModal
+        visible={editPayoutModalVisible}
+        confirmLoading={payoutsModalLoading}
+        onCancel={() => setEditPayoutModalVisible(false)}
+        onConfirm={newSplits => {
+          setPayoutsModalLoading(true)
+          setProjectSplits(
+            {
+              groupedSplits: {
+                group: ETH_PAYOUT_SPLIT_GROUP,
+                splits: newSplits,
+              },
+            },
+            {
+              onConfirmed: () => {
+                setPayoutsModalLoading(false)
+                setEditPayoutModalVisible(false)
+              },
+              onError: () => setPayoutsModalLoading(false),
+            },
+          )
+        }}
       />
     </CardSection>
   )

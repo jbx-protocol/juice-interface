@@ -205,7 +205,7 @@ export default function DistributionSplitsSection({
           </Space>
         ) : null}
         {totalSplitsPercentageInvalid ? (
-          <span style={{ color: colors.text.failure }}>
+          <span style={{ color: colors.text.failure, fontWeight: 600 }}>
             <Trans>Sum of percentages cannot exceed 100%.</Trans>
           </span>
         ) : remainingSplitsPercentage > 0 && distributionLimit !== '0' ? (

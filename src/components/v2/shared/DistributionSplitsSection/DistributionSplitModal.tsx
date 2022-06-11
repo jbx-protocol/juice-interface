@@ -31,11 +31,9 @@ import {
 } from 'utils/v2/distributions'
 import {
   formatFee,
-  formatSplitPercent,
   MAX_DISTRIBUTION_LIMIT,
   preciseFormatSplitPercent,
   splitPercentFrom,
-  SPLITS_TOTAL_PERCENT,
 } from 'utils/v2/math'
 import * as constants from '@ethersproject/constants'
 
@@ -45,6 +43,7 @@ type AddOrEditSplitFormFields = {
   projectId: string
   beneficiary: string
   percent: number
+  amount: number
   lockedUntil: Moment.Moment | undefined | null
 }
 
@@ -102,20 +101,24 @@ export default function DistributionSplitModal({
   )
   const [projectId, setProjectId] = useState<string | undefined>()
   const [newDistributionLimit, setNewDistributionLimit] = useState<string>()
-  const [percent, setPercent] = useState<number>(0)
   const [amount, setAmount] = useState<number | undefined>()
   const [lockedUntil, setLockedUntil] = useState<
     Moment.Moment | undefined | null
   >()
+  const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
+
+  const feePercentage = ETHPaymentTerminalFee
+    ? formatFee(ETHPaymentTerminalFee)
+    : undefined
 
   useEffect(() =>
     form.setFieldsValue({
-      percent: parseFloat(formatSplitPercent(BigNumber.from(percent))),
       projectId,
       lockedUntil,
     }),
   )
 
+  // Set address project id to undefined if editing type is address
   useEffect(() => {
     if (editingSplitType === 'address') {
       form.setFieldsValue({ projectId: undefined })
@@ -123,55 +126,34 @@ export default function DistributionSplitModal({
     }
   }, [editingSplitType, form])
 
-  const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
-
-  const feePercentage = ETHPaymentTerminalFee
-    ? formatFee(ETHPaymentTerminalFee)
-    : undefined
-
-  // Set original values
-  useEffect(() => {
-    if (
-      splits.length === 0 ||
-      editingSplit === undefined ||
-      !distributionLimit
-    ) {
-      return
-    }
-    const percentPerBillion = editingSplit.percent
-    const amount = amountFromPercent({
-      percent: preciseFormatSplitPercent(percentPerBillion),
-      amount: distributionLimit,
-    })
-    setAmount(amount)
-    setPercent(percentPerBillion)
-  }, [distributionLimit, isFirstSplit, splits, editingSplit, form])
-
   useEffect(() => {
     setDistributionType(distributionLimitIsInfinite ? 'percent' : 'amount')
-  }, [distributionLimitIsInfinite])
+  }, [distributionLimitIsInfinite, visible])
 
   // Set the initial info for form from split
   // If editing, format the lockedUntil and projectId
   useEffect(() => {
     if (!editingSplit) return
+    setEditingSplitType('address')
+    const isEditingProjectSplit =
+      editingSplit.projectId &&
+      !BigNumber.from(editingSplit.projectId).eq(
+        BigNumber.from(constants.AddressZero),
+      )
+    if (isEditingProjectSplit) {
+      setEditingSplitType('project')
+      setProjectId(editingSplit.projectId?.toString())
+    }
     setLockedUntil(
       editingSplit.lockedUntil
         ? Moment.default(editingSplit.lockedUntil * 1000)
         : undefined,
     )
-    setEditingSplitType('address')
-    if (
-      editingSplit.projectId &&
-      !BigNumber.from(editingSplit.projectId).eq(
-        BigNumber.from(constants.AddressZero),
-      )
-    ) {
-      setEditingSplitType('project')
-      setProjectId(editingSplit.projectId?.toString())
-    }
 
-    form.setFieldsValue({ beneficiary: editingSplit.beneficiary })
+    form.setFieldsValue({
+      beneficiary: editingSplit.beneficiary,
+      percent: preciseFormatSplitPercent(editingSplit.percent),
+    })
 
     if (distributionLimitIsInfinite) {
       setAmount(
@@ -180,6 +162,13 @@ export default function DistributionSplitModal({
           amount: distributionLimit ?? '0',
         }),
       )
+    } else if (distributionLimit) {
+      const percentPerBillion = editingSplit.percent
+      const amount = amountFromPercent({
+        percent: preciseFormatSplitPercent(percentPerBillion),
+        amount: distributionLimit,
+      })
+      setAmount(amount)
     } else {
       setAmount(undefined)
     }
@@ -193,7 +182,6 @@ export default function DistributionSplitModal({
 
   const resetStates = () => {
     setProjectId(undefined)
-    setPercent(0)
     setAmount(undefined)
     setLockedUntil(undefined)
   }
@@ -208,7 +196,7 @@ export default function DistributionSplitModal({
 
     const newSplit = {
       beneficiary: form.getFieldValue('beneficiary'),
-      percent: percent,
+      percent: splitPercentFrom(form.getFieldValue('percent')).toNumber(),
       lockedUntil: roundedLockedUntil,
       preferClaimed: true,
       projectId: projectId,
@@ -263,9 +251,8 @@ export default function DistributionSplitModal({
 
     setNewDistributionLimit(newDistributionLimit.toString())
     setAmount(newAmount)
-    setPercent(newPercent)
     form.setFieldsValue({
-      percent: parseFloat(formatSplitPercent(BigNumber.from(newPercent))),
+      percent: preciseFormatSplitPercent(newPercent),
     })
   }
 
@@ -297,7 +284,9 @@ export default function DistributionSplitModal({
   }
 
   const validatePayoutPercentage = () => {
-    return validatePercentage(form.getFieldValue('percent'))
+    return validatePercentage(
+      preciseFormatSplitPercent(form.getFieldValue('percent') ?? 0),
+    )
   }
 
   // Cannot select days before today or today with lockedUntil
@@ -326,8 +315,6 @@ export default function DistributionSplitModal({
       />
     ) : null
   }
-
-  const formattedSplitPercent = formatSplitPercent(BigNumber.from(percent))
 
   return (
     <Modal
@@ -420,7 +407,7 @@ export default function DistributionSplitModal({
             label={t`Distribution`}
             required
             extra={
-              feePercentage && percent && !(percent > SPLITS_TOTAL_PERCENT) ? (
+              feePercentage && form.getFieldValue('percent') <= 100 ? (
                 <>
                   {editingSplitType === 'address' ? (
                     <div>
@@ -468,14 +455,15 @@ export default function DistributionSplitModal({
                   marginLeft: 10,
                 }}
               >
-                <Trans>{formattedSplitPercent}%</Trans>
+                <Trans>{form.getFieldValue('percent')}%</Trans>
                 <TooltipIcon
                   tip={
                     <Trans>
                       If you don't raise the sum of all your payouts (
                       <CurrencySymbol currency={currencyName} />
                       {distributionLimit}), this address will receive{' '}
-                      {formattedSplitPercent}% of all the funds you raise.
+                      {form.getFieldValue('percent')}% of all the funds you
+                      raise.
                     </Trans>
                   }
                   placement={'topLeft'}
@@ -494,12 +482,12 @@ export default function DistributionSplitModal({
             >
               <span style={{ flex: 1 }}>
                 <NumberSlider
-                  onChange={(percent: number | undefined) => {
-                    setPercent(splitPercentFrom(percent ?? 0).toNumber())
+                  onChange={(percentage: number | undefined) => {
+                    form.setFieldsValue({ percent: percentage })
                   }}
                   step={0.01}
                   defaultValue={0}
-                  sliderValue={form.getFieldValue('percent')}
+                  sliderValue={form.getFieldValue('percent') ?? 0}
                   suffix="%"
                   name="percent"
                   formItemProps={{

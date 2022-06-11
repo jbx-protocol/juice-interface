@@ -175,9 +175,9 @@ export default function PayoutSplitsCard({
         visible={editPayoutModalVisible}
         confirmLoading={payoutsModalLoading}
         onCancel={() => setEditPayoutModalVisible(false)}
-        onConfirm={newSplits => {
+        onConfirm={async newSplits => {
           setPayoutsModalLoading(true)
-          setProjectSplits(
+          const tx = await setProjectSplits(
             {
               groupedSplits: {
                 group: ETH_PAYOUT_SPLIT_GROUP,
@@ -192,6 +192,9 @@ export default function PayoutSplitsCard({
               onError: () => setPayoutsModalLoading(false),
             },
           )
+          if (!tx) {
+            setPayoutsModalLoading(false)
+          }
         }}
       />
     </CardSection>

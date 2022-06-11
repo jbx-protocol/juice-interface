@@ -4,6 +4,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
 import ReservedTokensFormItem from 'components/v2/V2Create/forms/TokenForm/ReservedTokensFormItem'
+import { round } from 'lodash'
 import { ItemNoInput } from 'components/shared/formItems/ItemNoInput'
 
 import {
@@ -25,12 +26,13 @@ import { sanitizeSplit } from 'utils/v2/splits'
 import { Split } from 'models/v2/splits'
 
 import {
-  DEFAULT_ISSUANCE_RATE,
+  DEFAULT_MINT_RATE,
   discountRateFrom,
   formatDiscountRate,
+  formatIssuanceRate,
   formatRedemptionRate,
   formatReservedRate,
-  MAX_RESERVED_RATE,
+  issuanceRateFrom,
   redemptionRateFrom,
   reservedRateFrom,
 } from 'utils/v2/math'
@@ -61,6 +63,7 @@ import { useForm } from 'antd/lib/form/Form'
 
 import { shadowCard } from 'constants/styles/shadowCard'
 import TabDescription from '../../TabDescription'
+import MintRateFormItem from './MintRateFormItem'
 
 const MAX_DISCOUNT_RATE = 20 // this is an opinionated limit
 
@@ -80,10 +83,15 @@ function DiscountRateExtra({
   } = useContext(ThemeContext)
 
   const discountRateDecimal = discountRatePercent * 0.01
-  const secondIssuanceRate =
-    initialIssuanceRate - initialIssuanceRate * discountRateDecimal
-  const thirdIssuanceRate =
-    secondIssuanceRate - secondIssuanceRate * discountRateDecimal
+  const secondIssuanceRate = round(
+    initialIssuanceRate - initialIssuanceRate * discountRateDecimal,
+    4,
+  )
+
+  const thirdIssuanceRate = round(
+    secondIssuanceRate - secondIssuanceRate * discountRateDecimal,
+    4,
+  )
 
   return (
     <div style={{ fontSize: '0.9rem' }}>
@@ -110,7 +118,8 @@ function DiscountRateExtra({
             </p>
             <p>
               <Trans>
-                The issuance rate of your second funding cycle will be{' '}
+                The <strong>issuance rate</strong> of your second funding cycle
+                will be{' '}
                 <strong style={{ whiteSpace: 'nowrap' }}>
                   {formattedNum(secondIssuanceRate)} tokens per 1 ETH
                 </strong>
@@ -157,7 +166,8 @@ export default function TokenForm({
     )
 
   const canSetRedemptionRate = hasDistributionLimit(fundAccessConstraint)
-  const canSetDiscountRate = hasFundingDuration(fundingCycleData)
+  const hasDuration = hasFundingDuration(fundingCycleData)
+  const canSetDiscountRate = hasDuration
 
   // Form initial values set by default
   const initialValues = useMemo(
@@ -171,12 +181,16 @@ export default function TokenForm({
       redemptionRate:
         (canSetRedemptionRate && fundingCycleMetadata?.redemptionRate) ||
         defaultFundingCycleMetadata.redemptionRate,
+      weight: fundingCycleData?.weight
+        ? formatIssuanceRate(fundingCycleData?.weight)
+        : DEFAULT_MINT_RATE.toString(),
     }),
     [
       fundingCycleMetadata.reservedRate,
       fundingCycleMetadata?.redemptionRate,
       canSetDiscountRate,
       fundingCycleData?.discountRate,
+      fundingCycleData?.weight,
       canSetRedemptionRate,
     ],
   )
@@ -197,6 +211,7 @@ export default function TokenForm({
   const [redemptionRate, setRedemptionRate] = useState<string>(
     initialValues.redemptionRate,
   )
+  const [weight, setWeight] = useState<string>(initialValues.weight)
 
   const [discountRateChecked, setDiscountRateChecked] = useState<boolean>(
     fundingCycleData?.discountRate !== defaultFundingCycleData.discountRate,
@@ -221,6 +236,11 @@ export default function TokenForm({
      * e.g. permyriads, parts-per-billion etc.
      * and NOT percentages.
      */
+    dispatch(
+      editingV2ProjectActions.setWeight(
+        issuanceRateFrom(weight ?? DEFAULT_MINT_RATE.toString()),
+      ),
+    )
     dispatch(editingV2ProjectActions.setDiscountRate(discountRate ?? '0'))
     dispatch(editingV2ProjectActions.setReservedRate(reservedRate ?? '0'))
     dispatch(editingV2ProjectActions.setRedemptionRate(redemptionRate))
@@ -234,6 +254,7 @@ export default function TokenForm({
     reservedTokensSplits,
     onFinish,
     discountRate,
+    weight,
     reservedRate,
     redemptionRate,
     tokenForm,
@@ -259,9 +280,12 @@ export default function TokenForm({
     formatDiscountRate(BigNumber.from(discountRate)),
   )
 
+  // Total tokens minted as a result of a 1 ETH contribution
+  const initialMintingRate = parseFloat(weight) ?? DEFAULT_MINT_RATE
+  const reservedRateDecimal = reservedRatePercent * 0.01
   // Tokens received by contributor's per ETH
   const initialIssuanceRate =
-    DEFAULT_ISSUANCE_RATE - reservedRatePercent * MAX_RESERVED_RATE
+    initialMintingRate - reservedRateDecimal * initialMintingRate
 
   const validateTotalReservedPercent = () => {
     if (getTotalSplitsPercentage(reservedTokensSplits) > 100) {
@@ -274,6 +298,14 @@ export default function TokenForm({
     <Form layout="vertical" onFinish={onTokenFormSaved} form={tokenForm}>
       <Space size="middle" direction="vertical">
         <div>
+          <MintRateFormItem
+            value={weight}
+            onChange={newWeight => {
+              setWeight(newWeight ?? DEFAULT_MINT_RATE.toString())
+            }}
+            hasDuration={hasDuration}
+            isCreate={Boolean(isCreate)}
+          />
           <ReservedTokensFormItem
             initialValue={reservedRatePercent}
             onChange={newReservedRatePercentage => {
@@ -286,7 +318,7 @@ export default function TokenForm({
             style={{ ...shadowCard(theme), padding: 25, marginBottom: 10 }}
             reservedTokensSplits={reservedTokensSplits}
             onReservedTokensSplitsChange={setReservedTokensSplits}
-            isCreate={isCreate}
+            issuanceRate={parseInt(weight)}
           />
 
           <Form.Item

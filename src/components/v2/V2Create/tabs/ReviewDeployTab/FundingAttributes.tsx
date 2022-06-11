@@ -112,27 +112,37 @@ export function DurationStatistic({
 }
 
 export function ReservedTokensStatistic({
-  formattedReservedRate,
+  reservedRate,
+  reservedPercentage,
 }: {
-  formattedReservedRate: number
+  reservedRate: string
+  reservedPercentage: number
 }) {
   return (
     <Statistic
       title={
         <TooltipLabel
           label={t`Reserved tokens`}
-          tip={t`Percentage of newly minted tokens reserved for the project.`}
+          tip={
+            <Trans>
+              Amount of newly minted project tokens{' '}
+              <strong>reserved for the project</strong> when 1 ETH is
+              contributed. Reserve tokens are reserved for the project owner by
+              default, but can also be allocated to other wallet addresses by
+              the owner.
+            </Trans>
+          }
         />
       }
-      value={formattedReservedRate}
+      value={`${reservedRate} (${reservedPercentage}`}
       suffix={
         <FundingCycleDetailWarning
           showWarning={
-            formattedReservedRate > RESERVED_RATE_WARNING_THRESHOLD_PERCENT
+            reservedPercentage > RESERVED_RATE_WARNING_THRESHOLD_PERCENT
           }
           tooltipTitle={FUNDING_CYCLE_WARNING_TEXT().metadataReservedRate}
         >
-          %
+          %)
         </FundingCycleDetailWarning>
       }
     />
@@ -155,6 +165,32 @@ export function IssuanceRateStatistic({
         />
       }
       value={t`${issuanceRate} tokens / ETH`}
+    />
+  )
+}
+
+export function InflationRateStatistic({
+  inflationRate,
+  isInitial,
+}: {
+  inflationRate: string
+  isInitial?: boolean
+}) {
+  return (
+    <Statistic
+      title={
+        <TooltipLabel
+          label={isInitial ? t`Initial mint rate` : t`Mint rate`}
+          tip={
+            <Trans>
+              <strong>Total project tokens minted</strong> when 1 ETH is
+              contributed. This can change over time according to the discount
+              rate and reserved tokens amount of future funding cycles.
+            </Trans>
+          }
+        />
+      }
+      value={t`${inflationRate} tokens / ETH`}
     />
   )
 }
@@ -327,19 +363,19 @@ export function DistributionSplitsStatistic({
 
 export function ReservedSplitsStatistic({
   splits,
-  formattedReservedRate,
+  reservedPercentage,
   projectOwnerAddress,
 }: {
   splits: Split[]
-  formattedReservedRate: number
+  reservedPercentage: number
   projectOwnerAddress: string | undefined
 }) {
   return (
     <Statistic
       title={
         <TooltipLabel
-          label={t`Reserved token splits`}
-          tip={t`How the ${formattedReservedRate}% of your project's reserved tokens will be split.`}
+          label={t`Reserved token allocation`}
+          tip={t`How the ${reservedPercentage}% of your project's reserved tokens will be split.`}
         />
       }
       valueRender={() => (

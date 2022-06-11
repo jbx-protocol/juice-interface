@@ -10,6 +10,7 @@ const ONE_BILLION = 1000000000
 const MaxUint232 = constants.MaxUint256.add(1)
   .div(2 ** 24)
   .sub(1)
+const MaxUint88 = 2 ** 88 - 1
 
 export const MAX_RESERVED_RATE = TEN_THOUSAND
 export const MAX_REDEMPTION_RATE = TEN_THOUSAND
@@ -18,7 +19,9 @@ export const SPLITS_TOTAL_PERCENT = ONE_BILLION
 const MAX_FEE = ONE_BILLION
 export const MAX_DISTRIBUTION_LIMIT = MaxUint232
 
-export const DEFAULT_ISSUANCE_RATE = 10 ** 6
+export const DEFAULT_MINT_RATE = 10 ** 6
+export const MAX_MINT_RATE = Math.floor(MaxUint88 / 10 ** 18)
+
 export const DEFAULT_FUNDING_CYCLE_DURATION = 14
 
 /**
@@ -141,6 +144,24 @@ export const redemptionRateFrom = (percentage: string): BigNumber => {
 }
 
 /**
+ * Express a given issuance rate [tokens / 1 ETH] as an issuance rate in parts per 1e18
+ * @param issuanceRate - issuance rate as tokens / ETH
+ * @returns {string} issuance rate in parts per 1e18
+ */
+export const issuanceRateFrom = (issuanceRate: string): string => {
+  return constants.WeiPerEther.mul(issuanceRate).toString()
+}
+
+/**
+ * Express a given issuance rate in parts per 1e18 as an issuance rate [tokens / 1 ETH]
+ * @param {BigNumber} issuanceRate issuance rate in parts per 1e18
+ * @returns {string} issuance rate in tokens / 1ETH
+ */
+export const formatIssuanceRate = (issuanceRate: string): string => {
+  return BigNumber.from(issuanceRate).div(constants.WeiPerEther).toString()
+}
+
+/**
  * Express a given fee (parts-per-billion) as a percentage.
  * @param feePerBillion - fee as parts-per-billion.
  * @returns {string} fee expressed as a percentage.
@@ -170,20 +191,22 @@ export const weightedAmount: WeightFunction = (
   reservedRatePermyriad: number | undefined,
   amountWad: BigNumber | undefined,
   outputType: 'payer' | 'reserved',
-): string | undefined => {
-  if (!weight || !amountWad) return
+): string => {
+  if (!weight || !amountWad) return '0'
 
-  if (reservedRatePermyriad === undefined) return
+  if (reservedRatePermyriad === undefined) return '0'
 
-  return fromWad(
-    amountWad
-      .mul(weight)
-      .mul(
-        outputType === 'reserved'
-          ? reservedRatePermyriad
-          : invertPermyriad(BigNumber.from(reservedRatePermyriad)),
-      )
-      .div(percentToPermyriad(100)),
+  return (
+    fromWad(
+      amountWad
+        .mul(weight)
+        .mul(
+          outputType === 'reserved'
+            ? reservedRatePermyriad
+            : invertPermyriad(BigNumber.from(reservedRatePermyriad)),
+        )
+        .div(percentToPermyriad(100)),
+    ) ?? '0'
   )
 }
 

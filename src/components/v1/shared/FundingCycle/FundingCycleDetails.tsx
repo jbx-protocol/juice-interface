@@ -60,6 +60,12 @@ export default function FundingCycleDetails({
   const unsafeFundingCycleProperties =
     getUnsafeV1FundingCycleProperties(fundingCycle)
 
+  const tokenSymbolPluralCap = tokenSymbolText({
+    tokenSymbol,
+    capitalize: true,
+    plural: true,
+  })
+
   const tokenSymbolPlural = tokenSymbolText({
     tokenSymbol,
     capitalize: false,
@@ -205,12 +211,13 @@ export default function FundingCycleDetails({
               label={<Trans>Reserved {tokenSymbolPlural}</Trans>}
               tip={
                 <Trans>
-                  Whenever someone pays your project, this percentage of tokens
-                  will be reserved and the rest will go to the payer. Reserve
-                  tokens are reserved for the project owner by default, but can
-                  also be allocated to other wallet addresses by the owner. Once
-                  tokens are reserved, anyone can "mint" them, which distributes
-                  them to their intended receivers.
+                  Whenever someone pays your project, this percentage of the
+                  newly minted tokens will be reserved and the rest will go to
+                  the payer. Reserve tokens are reserved for the project owner
+                  by default, but can also be allocated to other wallet
+                  addresses by the owner. Once tokens are reserved, anyone can
+                  "mint" them, which distributes them to their intended
+                  receivers.
                 </Trans>
               }
             />
@@ -230,7 +237,7 @@ export default function FundingCycleDetails({
               label={<Trans>Issuance rate</Trans>}
               tip={
                 <Trans>
-                  {tokenSymbolPlural} received per ETH paid to the treasury.
+                  {tokenSymbolPluralCap} received per ETH paid to the treasury.
                   This can change over time according to the discount rate and
                   reserved tokens amount of future funding cycles.
                 </Trans>

@@ -94,7 +94,7 @@ export default function ReconfigurePreview({
   const gutter = 20
   const rowMargin = 20
 
-  const secondRowColWidth = hasDuration && hasDistributionLimit ? 6 : 8
+  const secondRowColWidth = hasDuration && hasDistributionLimit ? 8 : 12
 
   const reservedRate =
     formattedNum(
@@ -111,16 +111,18 @@ export default function ReconfigurePreview({
   return (
     <div style={{ padding: '0 0px' }}>
       <Row gutter={gutter} style={{ marginBottom: rowMargin }}>
-        <Col md={8} sm={12}>
+        <Col md={12} sm={12}>
           <DurationStatistic duration={fundingCycle.duration} />
         </Col>
-        <Col md={8} sm={12}>
+        <Col md={12} sm={12}>
           <DistributionLimitStatistic
             distributionLimit={distributionLimit}
             currencyName={currencyName ?? 'ETH'}
           />
         </Col>
-        <Col md={8} sm={12}>
+      </Row>
+      <Row gutter={gutter} style={{ marginBottom: rowMargin }}>
+        <Col md={12} sm={12}>
           <InflationRateStatistic
             inflationRate={
               formattedNum(
@@ -129,11 +131,11 @@ export default function ReconfigurePreview({
             }
           />
         </Col>
-      </Row>
-      <Row gutter={gutter} style={{ marginBottom: rowMargin }}>
-        <Col md={secondRowColWidth} sm={12}>
+        <Col md={12} sm={12}>
           <IssuanceRateStatistic issuanceRate={issuanceRate} />
         </Col>
+      </Row>
+      <Row gutter={gutter} style={{ marginBottom: rowMargin }}>
         <Col md={secondRowColWidth} sm={12}>
           <ReservedTokensStatistic
             reservedRate={reservedRate}

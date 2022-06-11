@@ -722,6 +722,13 @@ msgstr "Billetera conectada no autorizada"
 msgid "Contract address: {0}"
 msgstr "Dirección de contrato: {0}"
 
+#: src/components/shared/formItems/ProjectReserved.tsx
+#: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+msgid "Contributor rate"
+msgstr "Tasa de emisión"
+
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Contributors will be rewarded this amount of your project's tokens per ETH contributed."
 msgstr "Los contribuyentes serán retribuidos esta cantidad de tokens de tu proyecto por ETH contribuido."
@@ -1419,13 +1426,6 @@ msgstr ""
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Invalid address"
 msgstr "Dirección inválida"
-
-#: src/components/shared/formItems/ProjectReserved.tsx
-#: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
-#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
-msgid "Issuance rate"
-msgstr "Tasa de emisión"
 
 #: src/components/shared/IssueTokenButton.tsx
 msgid "Issue ERC-20"

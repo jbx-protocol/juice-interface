@@ -722,6 +722,13 @@ msgstr "Bağlı cüzdan yetkili değil"
 msgid "Contract address: {0}"
 msgstr "Sözleşme Adresi: {0}"
 
+#: src/components/shared/formItems/ProjectReserved.tsx
+#: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+msgid "Contributor rate"
+msgstr ""
+
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Contributors will be rewarded this amount of your project's tokens per ETH contributed."
 msgstr "Katkıda bulunanlar, katkıda bulundukları ETH başına bu miktarda proje token'ı ile ödüllendirilecektir."
@@ -1419,13 +1426,6 @@ msgstr ""
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Invalid address"
 msgstr "Geçersiz adres"
-
-#: src/components/shared/formItems/ProjectReserved.tsx
-#: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
-#: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
-msgid "Issuance rate"
-msgstr ""
 
 #: src/components/shared/IssueTokenButton.tsx
 msgid "Issue ERC-20"

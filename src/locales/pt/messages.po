@@ -696,15 +696,38 @@ msgstr ""
 msgid "Connect"
 msgstr "Conectar"
 
+#: src/components/shared/TransactionModal.tsx
+msgid "Connect wallet"
+msgstr ""
+
+#: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
+msgid "Connect wallet to claim"
+msgstr ""
+
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/DeployProjectButton.tsx
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Connect wallet to deploy"
 msgstr "Conecte uma carteira para implementar"
 
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributeReservedTokensModal.tsx
+msgid "Connect wallet to distribute"
+msgstr ""
+
+#: src/components/shared/modals/IssueTokenModal.tsx
+msgid "Connect wallet to issue"
+msgstr ""
+
+#: src/components/shared/modals/ProjectToolDrawerModal.tsx
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Connect wallet to pay"
 msgstr "Conecte uma carteira para pagar"
+
+#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+msgid "Connect wallet to transfer"
+msgstr ""
 
 #: src/components/Projects/HoldingsProjects.tsx
 msgid "Connect your wallet to see your holdings."

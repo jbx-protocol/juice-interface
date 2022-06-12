@@ -113,6 +113,7 @@ export default function LaunchProjectPayerModal({
         visible={visible}
         title={t`Create payable address`}
         okText={t`Deploy project payer contract`}
+        connectWalletText={t`Connect wallet to deploy`}
         onOk={deployProjectPayer}
         onCancel={() => onClose()}
         confirmLoading={loadingProjectPayer}

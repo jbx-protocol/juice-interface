@@ -1,5 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { Modal, ModalProps } from 'antd'
+import { NetworkContext } from 'contexts/networkContext'
 
 import { ThemeContext } from 'contexts/themeContext'
 import { PropsWithChildren, useContext } from 'react'
@@ -7,6 +8,7 @@ import { PropsWithChildren, useContext } from 'react'
 type TransactionModalProps = PropsWithChildren<
   ModalProps & {
     transactionPending?: boolean
+    connectWalletText?: string
   }
 >
 
@@ -51,11 +53,20 @@ const PendingTransactionModalBody = () => {
  * are replaced with a juicy loading state.
  */
 export default function TransactionModal(props: TransactionModalProps) {
+  const { userAddress } = useContext(NetworkContext)
+  const okText = userAddress
+    ? props.okText
+    : props.connectWalletText ?? t`Connect wallet`
   const modalProps = {
     ...props,
     ...{
       confirmLoading: props.transactionPending || props.confirmLoading,
       cancelText: t`Close`,
+      okButtonProps: {
+        ...props.okButtonProps,
+        disabled: !userAddress,
+      },
+      okText: okText,
     },
   }
 

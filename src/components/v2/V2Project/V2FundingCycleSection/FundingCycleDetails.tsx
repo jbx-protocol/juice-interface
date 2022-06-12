@@ -219,7 +219,7 @@ export default function FundingCycleDetails({
         <Descriptions.Item
           label={
             <TooltipLabel
-              label={<Trans>Issuance rate</Trans>}
+              label={<Trans>Contributor rate</Trans>}
               tip={
                 <Trans>
                   Newly minted {tokenSymbolPlural}{' '}
@@ -236,6 +236,7 @@ export default function FundingCycleDetails({
         </Descriptions.Item>
 
         <Descriptions.Item
+          span={2}
           label={
             <TooltipLabel
               label={<Trans>Reserved {tokenSymbolPlural}</Trans>}

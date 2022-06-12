@@ -32,7 +32,8 @@ import {
   weightedAmount,
 } from 'utils/v2/math'
 import { Split } from 'models/v2/splits'
-import { formattedNum, fromWad } from 'utils/formatNumber'
+import { formattedNum } from 'utils/formatNumber'
+import { parseEther } from 'ethers/lib/utils'
 
 export default function ReconfigurePreview({
   payoutSplits,
@@ -80,7 +81,7 @@ export default function ReconfigurePreview({
         weightedAmount(
           fundingCycle?.weight,
           fundingCycleMetadata?.reservedRate.toNumber(),
-          BigNumber.from(1),
+          parseEther('1'),
           'payer',
         ),
       ),
@@ -93,7 +94,7 @@ export default function ReconfigurePreview({
   const gutter = 20
   const rowMargin = 20
 
-  const secondRowColWidth = hasDuration && hasDistributionLimit ? 6 : 8
+  const secondRowColWidth = hasDuration && hasDistributionLimit ? 8 : 12
 
   const reservedRate =
     formattedNum(
@@ -101,7 +102,7 @@ export default function ReconfigurePreview({
         weightedAmount(
           fundingCycle?.weight,
           fundingCycleMetadata?.reservedRate.toNumber(),
-          BigNumber.from(1),
+          parseEther('1'),
           'reserved',
         ) ?? '',
       ),
@@ -110,28 +111,31 @@ export default function ReconfigurePreview({
   return (
     <div style={{ padding: '0 0px' }}>
       <Row gutter={gutter} style={{ marginBottom: rowMargin }}>
-        <Col md={8} sm={12}>
+        <Col md={12} sm={12}>
           <DurationStatistic duration={fundingCycle.duration} />
         </Col>
-        <Col md={8} sm={12}>
+        <Col md={12} sm={12}>
           <DistributionLimitStatistic
             distributionLimit={distributionLimit}
             currencyName={currencyName ?? 'ETH'}
           />
         </Col>
-        <Col md={8} sm={12}>
+      </Row>
+      <Row gutter={gutter} style={{ marginBottom: rowMargin }}>
+        <Col md={12} sm={12}>
           <InflationRateStatistic
             inflationRate={
-              formattedNum(formatIssuanceRate(fromWad(fundingCycle?.weight))) ??
-              '0'
+              formattedNum(
+                formatIssuanceRate(fundingCycle?.weight.toString()),
+              ) ?? '0'
             }
           />
         </Col>
-      </Row>
-      <Row gutter={gutter} style={{ marginBottom: rowMargin }}>
-        <Col md={secondRowColWidth} sm={12}>
+        <Col md={12} sm={12}>
           <IssuanceRateStatistic issuanceRate={issuanceRate} />
         </Col>
+      </Row>
+      <Row gutter={gutter} style={{ marginBottom: rowMargin }}>
         <Col md={secondRowColWidth} sm={12}>
           <ReservedTokensStatistic
             reservedRate={reservedRate}

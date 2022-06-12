@@ -23,14 +23,19 @@ export function useV1ContractLoader() {
         // Contracts can be used read-only without a signer, but require a signer to create transactions.
         const signerOrProvider = signingProvider?.getSigner() ?? readProvider
 
-        const newContracts = Object.values(V1ContractName).reduce(
-          (accumulator, V1ContractName) => ({
-            ...accumulator,
-            [V1ContractName]: loadContract(
-              V1ContractName,
-              network,
-              signerOrProvider,
-            ),
+        const loadContractKeyPair = async (contractName: V1ContractName) => ({
+          key: contractName,
+          val: await loadContract(contractName, network, signerOrProvider),
+        })
+
+        const newContracts = (
+          await Promise.all(
+            Object.values(V1ContractName).map(loadContractKeyPair),
+          )
+        ).reduce(
+          (acc, { key, val }) => ({
+            ...acc,
+            [key]: val,
           }),
           {} as V1Contracts,
         )

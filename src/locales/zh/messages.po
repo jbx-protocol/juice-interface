@@ -18,7 +18,7 @@ msgstr ""
 "X-Crowdin-File: messages.po\n"
 "X-Crowdin-File-ID: 9\n"
 
-#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
+#: src/components/shared/inputs/Pay/MemoFormItem.tsx
 msgid "(Optional) Add a memo to this payment on-chain"
 msgstr "（可选的）在此链上付款中添加备注"
 
@@ -472,6 +472,14 @@ msgstr "你确定要重新开始吗？"
 msgid "Assets"
 msgstr "资产"
 
+#: src/components/shared/modals/BannyAttachModal.tsx
+msgid "Attach"
+msgstr ""
+
+#: src/components/shared/modals/BannyAttachModal.tsx
+msgid "Attach a sticker"
+msgstr ""
+
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
 msgid "Automate funding cycles"
 msgstr ""
@@ -587,6 +595,7 @@ msgstr "项目合约创建后，我还更改它吗?"
 msgid "Can I delete a project?"
 msgstr "我可以删除一个项目吗？"
 
+#: src/components/shared/modals/BannyAttachModal.tsx
 #: src/components/v1/V1Project/modals/BalancesModal.tsx
 msgid "Cancel"
 msgstr "取消"
@@ -1593,8 +1602,8 @@ msgstr "管理 {tokenText}"
 msgid "Maximum {MAX_DESCRIPTION_LENGTH} characters"
 msgstr ""
 
+#: src/components/shared/inputs/Pay/MemoFormItem.tsx
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
-#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Memo"
 msgstr "留言"
 

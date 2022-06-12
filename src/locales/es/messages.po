@@ -18,7 +18,7 @@ msgstr ""
 "X-Crowdin-File: messages.po\n"
 "X-Crowdin-File-ID: 9\n"
 
-#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
+#: src/components/shared/inputs/Pay/MemoFormItem.tsx
 msgid "(Optional) Add a memo to this payment on-chain"
 msgstr "(Opcional) Añade un memo a este pago en cadena"
 
@@ -472,6 +472,14 @@ msgstr "¿Estás seguro de que quieres volver a empezar?"
 msgid "Assets"
 msgstr "Activos"
 
+#: src/components/shared/modals/BannyAttachModal.tsx
+msgid "Attach"
+msgstr ""
+
+#: src/components/shared/modals/BannyAttachModal.tsx
+msgid "Attach a sticker"
+msgstr ""
+
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
 msgid "Automate funding cycles"
 msgstr "Automatizar ciclos de financiamiento"
@@ -587,6 +595,7 @@ msgstr "¿Puedo cambiar el contrato de mi proyecto después de haber sido creado
 msgid "Can I delete a project?"
 msgstr "¿Puedo eliminar un proyecto?"
 
+#: src/components/shared/modals/BannyAttachModal.tsx
 #: src/components/v1/V1Project/modals/BalancesModal.tsx
 msgid "Cancel"
 msgstr "Cancelar"
@@ -1593,8 +1602,8 @@ msgstr "Administrar {tokenText}"
 msgid "Maximum {MAX_DESCRIPTION_LENGTH} characters"
 msgstr "Máximo {MAX_DESCRIPTION_LENGTH} caracteres"
 
+#: src/components/shared/inputs/Pay/MemoFormItem.tsx
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
-#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Memo"
 msgstr "Memo"
 

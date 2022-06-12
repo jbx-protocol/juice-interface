@@ -714,10 +714,15 @@ msgstr "Connect wallet to distribute"
 msgid "Connect wallet to issue"
 msgstr "Connect wallet to issue"
 
+#: src/components/shared/modals/ProjectToolDrawerModal.tsx
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Connect wallet to pay"
 msgstr "Connect wallet to pay"
+
+#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+msgid "Connect wallet to transfer"
+msgstr "Connect wallet to transfer"
 
 #: src/components/Projects/HoldingsProjects.tsx
 msgid "Connect your wallet to see your holdings."

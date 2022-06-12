@@ -719,10 +719,15 @@ msgstr ""
 msgid "Connect wallet to issue"
 msgstr ""
 
+#: src/components/shared/modals/ProjectToolDrawerModal.tsx
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Connect wallet to pay"
 msgstr "Conecte uma carteira para pagar"
+
+#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+msgid "Connect wallet to transfer"
+msgstr ""
 
 #: src/components/Projects/HoldingsProjects.tsx
 msgid "Connect your wallet to see your holdings."

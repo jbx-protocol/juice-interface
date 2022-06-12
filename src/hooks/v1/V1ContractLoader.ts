@@ -47,11 +47,13 @@ export function useV1ContractLoader() {
   return contracts
 }
 
-const loadContract = (
+const loadContract = async (
   contractName: keyof typeof V1ContractName,
   network: NetworkName,
   signerOrProvider: JsonRpcSigner | JsonRpcProvider,
-): Contract => {
-  const contract = require(`@jbx-protocol/contracts-v1/deployments/${network}/${contractName}.json`)
+): Promise<Contract> => {
+  const contract = await import(
+    `@jbx-protocol/contracts-v1/deployments/${network}/${contractName}.json`
+  )
   return new Contract(contract.address, contract.abi, signerOrProvider)
 }

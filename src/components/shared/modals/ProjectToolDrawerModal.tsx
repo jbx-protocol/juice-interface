@@ -20,6 +20,8 @@ import { ThemeContext } from 'contexts/themeContext'
 import { DeployProjectPayerTxArgs } from 'hooks/v2/transactor/DeployProjectPayerTx'
 import ArchiveV2Project from 'components/v2/V2Project/ArchiveV2Project'
 
+import TransactorButton from '../TransactorButton'
+
 export default function ProjectToolDrawerModal({
   visible,
   onClose,
@@ -258,16 +260,15 @@ export default function ProjectToolDrawerModal({
               />
             </Form.Item>
             <Form.Item>
-              <Button
+              <TransactorButton
                 onClick={() => transferTokens()}
                 loading={loadingTransferTokens}
                 size="small"
                 type="primary"
-              >
-                <span>
-                  <Trans>Transfer {tokenSymbolShort}</Trans>
-                </span>
-              </Button>
+                text={<Trans>Transfer {tokenSymbolShort}</Trans>}
+                disabled={!userAddress}
+                connectWalletText={t`Connect wallet to transfer`}
+              />
             </Form.Item>
           </Form>
         </section>
@@ -296,16 +297,15 @@ export default function ProjectToolDrawerModal({
               />
             </Form.Item>
             <Form.Item>
-              <Button
+              <TransactorButton
                 onClick={() => addToBalance()}
                 loading={loadingAddToBalance}
                 size="small"
                 type="primary"
-              >
-                <span>
-                  <Trans>Add to balance</Trans>
-                </span>
-              </Button>
+                text={t`Add to balance`}
+                disabled={!userAddress}
+                connectWalletText={t`Connect wallet to pay`}
+              />
             </Form.Item>
           </Form>
         </section>

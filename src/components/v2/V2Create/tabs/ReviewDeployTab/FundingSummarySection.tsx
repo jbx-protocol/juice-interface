@@ -140,13 +140,13 @@ export default function FundingSummarySection() {
           showDetail
         />
         <Row gutter={rowGutter} style={{ width: '100%' }}>
-          <Col md={6} xs={24}>
+          <Col md={8} xs={24}>
             <DurationStatistic
               showWarning={unsafeFundingCycleProperties.duration}
               duration={duration}
             />
           </Col>
-          <Col md={6} xs={24}>
+          <Col md={8} xs={24}>
             <InflationRateStatistic
               isInitial
               inflationRate={
@@ -156,41 +156,41 @@ export default function FundingSummarySection() {
               }
             />
           </Col>
-          <Col md={6} xs={24}>
+          <Col md={8} xs={24}>
             <IssuanceRateStatistic
               issuanceRate={initialIssuanceRate}
               isInitial
             />
           </Col>
-          <Col md={6} xs={24}>
+        </Row>
+        <Row gutter={rowGutter} style={{ width: '100%' }}>
+          <Col md={8} xs={24}>
             <ReservedTokensStatistic
               reservedRate={reservedRate}
               reservedPercentage={reservedPercentage}
             />
           </Col>
           {fundingCycle && hasDuration && (
-            <Col md={5} xs={24}>
+            <Col md={8} xs={24}>
               <DiscountRateStatistic discountRate={fundingCycle.discountRate} />
             </Col>
           )}
-        </Row>
-        <Row gutter={rowGutter} style={{ width: '100%' }}>
           {fundingCycleMetadata && hasDistributionLimit && (
-            <Col md={6} xs={24}>
+            <Col md={8} xs={24}>
               <RedemptionRateStatistic
                 redemptionRate={fundingCycleMetadata.redemptionRate}
               />
             </Col>
           )}
-          <Col md={6} xs={24}>
+          <Col md={8} xs={24}>
             <PausePayStatistic pausePay={fundingCycleMetadata?.pausePay} />
           </Col>
-          <Col md={6} xs={24}>
+          <Col md={8} xs={24}>
             <AllowMintingStatistic
               allowMinting={fundingCycleMetadata?.allowMinting}
             />
           </Col>
-          <Col md={6} xs={24}>
+          <Col md={8} xs={24}>
             {hasDuration && (
               <ReconfigurationStatistic ballotAddress={fundingCycle.ballot} />
             )}

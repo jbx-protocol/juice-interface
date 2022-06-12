@@ -147,8 +147,8 @@ export default function V2ConfirmPayModal({
       title={t`Pay ${projectMetadata.name}`}
       visible={visible}
       onOk={pay}
-      okText={userAddress ? t`Pay` : t`Connect wallet to pay`}
-      okButtonProps={{ disabled: !userAddress }}
+      okText={t`Pay`}
+      connectWalletText={t`Connect wallet to pay`}
       onCancel={onCancel}
       confirmLoading={loading}
       width={640}

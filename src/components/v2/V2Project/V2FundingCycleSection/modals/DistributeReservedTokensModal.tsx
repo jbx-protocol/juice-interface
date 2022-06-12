@@ -77,6 +77,7 @@ export default function DistributeReservedTokensModal({
       visible={visible}
       onOk={() => distributeReservedTokens()}
       okText={t`Distribute ${tokenTextPlural}`}
+      connectWalletText={t`Connect wallet to distribute`}
       confirmLoading={loading}
       transactionPending={transactionPending}
       onCancel={onCancel}

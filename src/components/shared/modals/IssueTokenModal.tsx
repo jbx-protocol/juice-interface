@@ -60,6 +60,7 @@ export default function IssueTokenModal({
       title={t`Issue ERC-20 token`}
       okText={t`Issue token`}
       cancelText={t`Later`}
+      connectWalletText={t`Connect wallet to issue`}
       onOk={executeIssueTokensTx}
       onCancel={() => onClose()}
       confirmLoading={loading}

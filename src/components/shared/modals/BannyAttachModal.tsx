@@ -60,6 +60,7 @@ export default function BannyAttachModal({
           onBannySelected(ATTACHABLE_BANNYS[selectedBannyIndex].url)
         }
         onClose()
+        setSelectedBannyIndex(undefined)
       }}
       okText={t`Attach`}
       okButtonProps={{ disabled: selectedBannyIndex === undefined }}

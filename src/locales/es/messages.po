@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-06-11 02:48\n"
+"PO-Revision-Date: 2022-06-12 02:57\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -666,7 +666,7 @@ msgstr "Cerrar"
 
 #: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Close, I'll do these later"
-msgstr ""
+msgstr "Cerrar, los haré después"
 
 #: src/components/Landing/index.tsx
 msgid "Commit portions of your funds to the people or projects you want to support, or the contributors you want to pay. When you get paid, so do they."
@@ -690,7 +690,7 @@ msgstr "Configura la tokenómica de tu proyecto."
 
 #: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Congratulations on launching your project! The next steps are optional and can be completed at any time."
-msgstr ""
+msgstr "¡Felicitaciones por lanzar tu proyecto! Los siguientes pasos son opcionales y se pueden completar en cualquier momento."
 
 #: src/components/Navbar/Account.tsx
 msgid "Connect"
@@ -750,7 +750,7 @@ msgstr "Dirección de contrato: {0}"
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Contributor rate"
-msgstr "Tasa de emisión"
+msgstr ""
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Contributors will be rewarded this amount of your project's tokens per ETH contributed."
@@ -782,11 +782,11 @@ msgstr "Copiar a portapapeles"
 
 #: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Create a payable address (optional)"
-msgstr ""
+msgstr "Crea una dirección de pago (opcional)"
 
 #: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Create an Ethereum address for your project. Enables direct payments without going through your project's Juicebox page."
-msgstr ""
+msgstr "Crea una dirección Ethereum para tu proyecto. Permite los pagos directos sin pasar por la página Juicebox de tu proyecto."
 
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
@@ -1465,7 +1465,7 @@ msgstr "Emite un ERC-20 para que sea usado como token de este proyecto. Una vez 
 
 #: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Issue an ERC-20 token (optional)"
-msgstr ""
+msgstr "Emite un token ERC-20 (opcional)"
 
 #: src/components/shared/modals/IssueTokenModal.tsx
 msgid "Issue token"
@@ -2030,7 +2030,7 @@ msgstr "El proyecto no está aceptando pagos este ciclo de financiamiento."
 
 #: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Project launch successful"
-msgstr ""
+msgstr "Lanzamiento de proyecto exitoso"
 
 #: src/components/shared/formItems/ProjectName.tsx
 msgid "Project name"
@@ -2274,7 +2274,7 @@ msgstr "{0} Reservados"
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Reserved {tokenSymbolPlural}"
-msgstr ""
+msgstr "{tokenSymbolPlural} Reservados"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributeReservedTokensModal.tsx
 msgid "Reserved {tokenTextPlural}: <0>{reservedTokensFormatted} {tokenTextPlural}</0>"
@@ -2492,7 +2492,7 @@ msgstr ""
 
 #: src/components/Landing/index.tsx
 msgid "The Decentralized Funding Platform. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."
-msgstr ""
+msgstr "La Plataforma de Financiamiento Descentralizada. Suficiente ligera para un grupo de amigos, lo suficiente poderosa para una red global de anónimos. <0>Apropiado-por-la-comunidad</0>, en Ethereum."
 
 #: src/components/v1/V1Create/index.tsx
 msgid "The JBX protocol is unaudited, and projects built on it may be vulnerable to bugs or exploits. Be smart!"
@@ -3392,12 +3392,12 @@ msgstr "{label}"
 
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 msgid "{payerRate} (+ {reservedRate} reserved) {tokenSymbolPlural}/ETH"
-msgstr ""
+msgstr "{payerRate} (+ {reservedRate} reservada) {tokenSymbolPlural}/ETH"
 
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "{payerRate} {tokenSymbolPlural}/ETH"
-msgstr ""
+msgstr "{payerRate} {tokenSymbolPlural}/ETH"
 
 #: src/components/Projects/TrendingProjectCard.tsx
 msgid "{paymentCount, plural, one {# payment} other {# payments}}"

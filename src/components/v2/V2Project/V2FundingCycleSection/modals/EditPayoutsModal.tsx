@@ -17,6 +17,9 @@ import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import { V2CurrencyName } from 'utils/v2/currency'
+import { useSetProjectSplits } from 'hooks/v2/transactor/SetProjectSplits'
+
+import { ETH_PAYOUT_SPLIT_GROUP } from 'constants/v2/splits'
 
 const isLockedSplit = (split: Split) => {
   const now = new Date().valueOf() / 1000
@@ -63,21 +66,26 @@ const DescriptionParagraphTwo = () => (
 
 export const EditPayoutsModal = ({
   visible,
-  confirmLoading,
-  onConfirm,
+  onOk,
   onCancel,
 }: {
   visible: boolean
-  confirmLoading?: boolean
-  onConfirm: (splits: Split[]) => void
+  onOk: VoidFunction
   onCancel: VoidFunction
 }) => {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const { payoutSplits: contextPayoutSplits, distributionLimitCurrency } =
-    useContext(V2ProjectContext)
+  const {
+    payoutSplits: contextPayoutSplits,
+    fundingCycle,
+    distributionLimitCurrency,
+  } = useContext(V2ProjectContext)
+  const setProjectSplits = useSetProjectSplits({
+    domain: fundingCycle?.configuration?.toString(),
+  })
+  const [modalLoading, setModalLoading] = useState<boolean>(false)
 
   const currencyName =
     V2CurrencyName(
@@ -113,10 +121,31 @@ export const EditPayoutsModal = ({
   )
   const totalSplitsPercentageInvalid = totalSplitsPercentage > 100
 
-  const onSplitsConfirmed = (splits: Split[]) => {
-    if (totalSplitsPercentageInvalid) return
-    onConfirm(splits)
-  }
+  const onSplitsConfirmed = useCallback(
+    async (splits: Split[]) => {
+      if (totalSplitsPercentageInvalid) return
+      setModalLoading(true)
+      const tx = await setProjectSplits(
+        {
+          groupedSplits: {
+            group: ETH_PAYOUT_SPLIT_GROUP,
+            splits,
+          },
+        },
+        {
+          onConfirmed: () => {
+            setModalLoading(false)
+            onOk()
+          },
+          onError: () => setModalLoading(false),
+        },
+      )
+      if (!tx) {
+        setModalLoading(false)
+      }
+    },
+    [onOk, setProjectSplits, totalSplitsPercentageInvalid],
+  )
 
   const onSplitsChanged = useCallback((newSplits: Split[]) => {
     setEditingSplits(newSplits)
@@ -155,10 +184,10 @@ export const EditPayoutsModal = ({
     <>
       <Modal
         visible={visible}
-        confirmLoading={confirmLoading}
+        confirmLoading={modalLoading}
         title="Edit payouts"
         okText="Save payouts"
-        cancelText={confirmLoading ? 'Close' : 'Cancel'}
+        cancelText={modalLoading ? 'Close' : 'Cancel'}
         onOk={() => onSplitsConfirmed(editingSplits)}
         onCancel={onCancel}
         width={720}

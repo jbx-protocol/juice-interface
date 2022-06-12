@@ -18,14 +18,8 @@ import { Split } from 'models/v2/splits'
 import { BigNumber } from '@ethersproject/bignumber'
 import { detailedTimeString } from 'utils/formatTime'
 
-import { useSetProjectSplits } from 'hooks/v2/transactor/SetProjectSplits'
-
-import useProjectCurrentFundingCycle from 'hooks/v2/contractReader/ProjectCurrentFundingCycle'
-
 import DistributePayoutsModal from './modals/DistributePayoutsModal'
 import { EditPayoutsModal } from './modals/EditPayoutsModal'
-
-import { ETH_PAYOUT_SPLIT_GROUP } from 'constants/v2/splits'
 
 export default function PayoutSplitsCard({
   hideDistributeButton,
@@ -46,20 +40,8 @@ export default function PayoutSplitsCard({
     balanceInDistributionLimitCurrency,
     isPreviewMode,
     loading,
-    projectId,
   } = useContext(V2ProjectContext)
   const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
-
-  const { data: fundingCycleResponse } = useProjectCurrentFundingCycle({
-    projectId,
-  })
-  const [fundingCycle] = fundingCycleResponse ?? []
-
-  const setProjectSplits = useSetProjectSplits({
-    domain: fundingCycle?.configuration?.toString(),
-  })
-
-  const [payoutsModalLoading, setPayoutsModalLoading] = useState<boolean>(false)
 
   const [distributePayoutsModalVisible, setDistributePayoutsModalVisible] =
     useState<boolean>()
@@ -151,7 +133,9 @@ export default function PayoutSplitsCard({
               onClick={() => setEditPayoutModalVisible(true)}
               icon={<SettingOutlined />}
             >
-              <span>Edit Payouts</span>
+              <span>
+                <Trans>Edit Payouts</Trans>
+              </span>
             </Button>
           </div>
           {payoutSplits ? (
@@ -173,29 +157,8 @@ export default function PayoutSplitsCard({
       />
       <EditPayoutsModal
         visible={editPayoutModalVisible}
-        confirmLoading={payoutsModalLoading}
         onCancel={() => setEditPayoutModalVisible(false)}
-        onConfirm={async newSplits => {
-          setPayoutsModalLoading(true)
-          const tx = await setProjectSplits(
-            {
-              groupedSplits: {
-                group: ETH_PAYOUT_SPLIT_GROUP,
-                splits: newSplits,
-              },
-            },
-            {
-              onConfirmed: () => {
-                setPayoutsModalLoading(false)
-                setEditPayoutModalVisible(false)
-              },
-              onError: () => setPayoutsModalLoading(false),
-            },
-          )
-          if (!tx) {
-            setPayoutsModalLoading(false)
-          }
-        }}
+        onOk={() => setEditPayoutModalVisible(false)}
       />
     </CardSection>
   )

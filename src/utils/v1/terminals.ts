@@ -10,6 +10,9 @@ const loadTerminalAddress = (
   network: NetworkName,
   terminal: V1TerminalName,
 ): string =>
+  // NOTE: This require is harder to easily change in the code base as it means
+  // making changes to the way the functions in the file are called.
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   require(`@jbx-protocol/contracts-v1/deployments/${network}/${terminal}.json`)
     .address
 

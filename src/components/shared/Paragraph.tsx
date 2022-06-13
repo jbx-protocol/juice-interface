@@ -37,7 +37,10 @@ export default function Paragraph({
           <Button
             type="link"
             style={{ padding: 0, paddingBottom: 0, height: 'auto' }}
-            onClick={() => toggleExpanded()}
+            onClick={e => {
+              toggleExpanded()
+              e.stopPropagation()
+            }}
           >
             {expanded ? 'Read less' : 'Read more'}
           </Button>

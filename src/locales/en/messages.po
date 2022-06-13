@@ -282,6 +282,11 @@ msgstr ""
 msgid "Activity"
 msgstr ""
 
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTierModal.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTierModal.tsx
+msgid "Add NFT reward"
+msgstr "Add NFT reward"
+
 #: src/components/v1/shared/ProjectPayMods/ProjectPayoutMods.tsx
 msgid "Add a payout"
 msgstr "Add a payout"
@@ -305,6 +310,10 @@ msgstr "Add new payout"
 #: src/components/v2/shared/DistributionSplitsSection/index.tsx
 msgid "Add payout"
 msgstr "Add payout"
+
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/index.tsx
+msgid "Add tier"
+msgstr "Add tier"
 
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
 msgid "Add to Balance"
@@ -466,6 +475,10 @@ msgstr "Are you sure you want to start over?"
 #: src/components/v1/V1Project/modals/BalancesModal.tsx
 msgid "Assets"
 msgstr "Assets"
+
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTUpload.tsx
+msgid "Attach the image to be associated with this NFT."
+msgstr "Attach the image to be associated with this NFT."
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
 msgid "Automate funding cycles"
@@ -683,6 +696,10 @@ msgstr "Configure the dynamics of your project's token."
 msgid "Configure your project's tokenomics."
 msgstr "Configure your project's tokenomics."
 
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTierModal.tsx
+msgid "Confirm"
+msgstr "Confirm"
+
 #: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Congratulations on launching your project! The next steps are optional and can be completed at any time."
 msgstr "Congratulations on launching your project! The next steps are optional and can be completed at any time."
@@ -740,6 +757,10 @@ msgstr "Connected wallet not authorized"
 msgid "Contract address: {0}"
 msgstr ""
 
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/CriteriaFormItem.tsx
+msgid "Contribution threshold"
+msgstr "Contribution threshold"
+
 #: src/components/shared/formItems/ProjectReserved.tsx
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
@@ -762,6 +783,10 @@ msgstr "Contributors will receive <0>{discountRatePercent}%</0> more tokens for 
 #: src/constants/fundingWarningText.ts
 msgid "Contributors will receive a relatively small portion of tokens in exchange for paying this project."
 msgstr "Contributors will receive a relatively small portion of tokens in exchange for paying this project."
+
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/CriteriaFormItem.tsx
+msgid "Contributors will receive the NFT when they contribute at least this amount."
+msgstr "Contributors will receive the NFT when they contribute at least this amount."
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
 msgid "Contributors will see this message before they pay your project."
@@ -873,6 +898,7 @@ msgid "Days"
 msgstr "Days"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTiers.tsx
 msgid "Delete payout"
 msgstr "Delete payout"
 
@@ -908,6 +934,10 @@ msgstr "Deployed ERC20 token"
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "Deposit 1 wei to @{handle}"
 msgstr "Deposit 1 wei to @{handle}"
+
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTierModal.tsx
+msgid "Description"
+msgstr "Description"
 
 #: src/components/v1/V1Create/index.tsx
 msgid "Design your project"
@@ -1134,6 +1164,10 @@ msgstr "ERC-20 tokens can only be minted once an ERC-20 token has been issued fo
 msgid "ERC20 Deployed"
 msgstr "ERC20 Deployed"
 
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/CriteriaFormItem.tsx
+msgid "ETH"
+msgstr "ETH"
+
 #: src/components/v2/shared/DistributionSplitsSection/SpecificLimitModal.tsx
 msgid "Each payout will receive their percent of this total each funding cycle if there is enough in the treasury. Otherwise, they will receive their percent of whatever is in the treasury."
 msgstr "Each payout will receive their percent of this total each funding cycle if there is enough in the treasury. Otherwise, they will receive their percent of whatever is in the treasury."
@@ -1141,6 +1175,10 @@ msgstr "Each payout will receive their percent of this total each funding cycle 
 #: src/components/Landing/QAs.tsx
 msgid "Each project has its own <0>ERC-20 tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
 msgstr "Each project has its own <0>ERC-20 tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
+
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTierModal.tsx
+msgid "Edit NFT reward"
+msgstr "Edit NFT reward"
 
 #: src/components/v1/shared/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
@@ -1187,6 +1225,10 @@ msgstr "Enabling this will mint {tokenSymbol} ERC-20 tokens. Otherwise, unclaime
 msgid "Enabling token minting will appear risky to contributors."
 msgstr "Enabling token minting will appear risky to contributors."
 
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/index.tsx
+msgid "Encourage treasury contributions by offering a reward NFT to people who contribute above a certain threshold."
+msgstr "Encourage treasury contributions by offering a reward NFT to people who contribute above a certain threshold."
+
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "End"
@@ -1204,6 +1246,10 @@ msgstr "Error loading payments"
 #: src/components/Landing/index.tsx
 msgid "Explore projects"
 msgstr "Explore projects"
+
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTierModal.tsx
+msgid "External link"
+msgstr "External link"
 
 #: src/components/Navbar/MenuItems.tsx
 msgid "FAQ"
@@ -1286,6 +1332,10 @@ msgstr ""
 #: src/components/shared/FeedbackFormButton.tsx
 msgid "Give feedback"
 msgstr "Give feedback"
+
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTierModal.tsx
+msgid "Give this NFT a name."
+msgstr "Give this NFT a name."
 
 #: src/components/shared/EtherscanLink.tsx
 msgid "Go to Etherscan"
@@ -1647,6 +1697,15 @@ msgstr "Move your {tokensLabel} from the Juicebox contract to your wallet."
 msgid "My Projects"
 msgstr "My Projects"
 
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTUpload.tsx
+msgid "NFT"
+msgstr "NFT"
+
+#: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/index.tsx
+msgid "NFT rewards"
+msgstr "NFT rewards"
+
 #: src/components/shared/Project/SpendingStats.tsx
 #: src/components/v2/V2Project/TreasuryStats/DistributedRatio.tsx
 msgid "NO LIMIT"
@@ -1654,8 +1713,13 @@ msgstr "NO LIMIT"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTierModal.tsx
 msgid "Name"
 msgstr ""
+
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTierModal.tsx
+msgid "Nammu Banny reward"
+msgstr "Nammu Banny reward"
 
 #: src/components/Projects/TrendingProjectCard.tsx
 msgid "New"
@@ -2102,6 +2166,10 @@ msgstr ""
 msgid "Projects using a reserved rate of {reservedRateRiskyMin}% or more will appear risky to contributors, as a relatively small number of tokens will be received in exchange for paying your project."
 msgstr "Projects using a reserved rate of {reservedRateRiskyMin}% or more will appear risky to contributors, as a relatively small number of tokens will be received in exchange for paying your project."
 
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTierModal.tsx
+msgid "Provide a link to additional information about this NFT."
+msgstr "Provide a link to additional information about this NFT."
+
 #: src/components/Projects/RankingExplanation.tsx
 msgid "Rankings based on number of contributions and volume gained in the last {trendingWindow} days. <0>See code</0>"
 msgstr "Rankings based on number of contributions and volume gained in the last {trendingWindow} days. <0>See code</0>"
@@ -2305,6 +2373,10 @@ msgstr "Review and launch funding cycle"
 msgid "Review project"
 msgstr ""
 
+#: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
+msgid "Reward contributors with NFT's."
+msgstr "Reward contributors with NFT's."
+
 #: src/components/v1/V1Create/index.tsx
 msgid "Reward specific community members with tokens."
 msgstr ""
@@ -2333,6 +2405,10 @@ msgstr ""
 #: src/components/shared/forms/TicketingForm.tsx
 msgid "Save"
 msgstr ""
+
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/index.tsx
+msgid "Save NFT rewards"
+msgstr "Save NFT rewards"
 
 #: src/components/v1/V1Project/modals/EditProjectModal.tsx
 msgid "Save changes"
@@ -2472,6 +2548,10 @@ msgstr "Sum of percentages cannot exceed 100%"
 msgid "Sum of percentages cannot exceed 100%."
 msgstr "Sum of percentages cannot exceed 100%."
 
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTierModal.tsx
+msgid "Supporters of the Bannyverse can flex their membership with this unique Banny NFT."
+msgstr "Supporters of the Bannyverse can flex their membership with this unique Banny NFT."
+
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 msgid "Target"
@@ -2526,6 +2606,10 @@ msgstr "The balance of the project owner's wallet."
 #: src/components/v1/V1Project/Paid.tsx
 msgid "The balance of this project in the Juicebox contract."
 msgstr "The balance of this project in the Juicebox contract."
+
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/CriteriaFormItem.tsx
+msgid "The contribution threshold above which you will reward contributors this NFT."
+msgstr "The contribution threshold above which you will reward contributors this NFT."
 
 #: src/components/v2/V2Project/TreasuryStats/DistributedRatio.tsx
 msgid "The distribution limit for this funding cycle is 0, meaning all funds in Juicebox are currently considered overflow. Overflow can be redeemed by token holders, but not distributed."
@@ -2883,6 +2967,10 @@ msgstr "Updates you make to this section will only be applied to <0>upcoming</0>
 msgid "Upload"
 msgstr ""
 
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTUpload.tsx
+msgid "Upload an image or video"
+msgstr "Upload an image or video"
+
 #: src/components/shared/inputs/ImageUploader.tsx
 msgid "Uploaded to: <0>{url}</0>"
 msgstr "Uploaded to: <0>{url}</0>"
@@ -3182,6 +3270,10 @@ msgstr ""
 #: src/utils/formatTime.ts
 msgid "hours"
 msgstr "hours"
+
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTierModal.tsx
+msgid "https://bannyverse.com/nammu-banny"
+msgstr "https://bannyverse.com/nammu-banny"
 
 #: src/components/shared/formItems/ProjectDiscord.tsx
 msgid "https://discord.gg/abcdefgh"

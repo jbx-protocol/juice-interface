@@ -2,7 +2,8 @@ import axios from 'axios'
 import { useQuery } from 'react-query'
 import { ipfsCidUrl } from 'utils/ipfs'
 
-export function useNFTMetadata(hash: string | undefined) {
+export function useNFTMetadata(tokenUri: string | undefined) {
+  const hash = tokenUri ? tokenUri.split('ipfs://')[1] : undefined
   return useQuery(
     ['nft-metadata', hash],
     async () => {
@@ -14,9 +15,8 @@ export function useNFTMetadata(hash: string | undefined) {
       return response.data
     },
     {
-      enabled: false,
+      enabled: !!tokenUri,
       staleTime: 60000,
-      retry: false,
     },
   )
 }

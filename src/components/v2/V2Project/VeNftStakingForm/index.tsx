@@ -13,23 +13,26 @@ import { BigNumber } from '@ethersproject/bignumber'
 import useERC20BalanceOf from 'hooks/v2/contractReader/ERC20BalanceOf'
 import { detailedTimeString } from 'utils/formatTime'
 
-import { useNFTMetadata } from 'hooks/v2/nft/NFTMetadata'
+import { useNFTMetadata } from 'hooks/veNft/VeNftMetadata'
 
-import { useNFTResolverTokenURI } from 'hooks/v2/nft/NFTResolverTokenURI'
+import { useNFTResolverTokenURI } from 'hooks/veNft/VeNftResolverTokenURI'
 
-import useERC20Approve from 'hooks/v2/nft/ERC20Approve'
+import useERC20Approve from 'hooks/v2/transactor/ERC20ApproveTx'
 
-import useERC20Allowance from 'hooks/v2/nft/ERC20Allowance'
+import useERC20Allowance from 'hooks/ERC20Allowance'
 
-import { VeNftProjectContext } from 'contexts/v2/nftProjectContext'
+import { VeNftProjectContext } from 'contexts/v2/veNftProjectContext'
 
-import StakedTokenStatsSection from './StakedTokenStatsSection'
-import StakingTokenRangesModal from './StakingTokenRangesModal'
-import ConfirmStakeModal from './ConfirmStakeModal'
-import OwnedNFTSection from './OwnedNFTSection'
+import StakingTokenRangesModal from 'components/v2/V2Project/VeNftStakingForm/StakingTokenRangesModal'
+import ConfirmStakeModal from 'components/v2/V2Project/VeNftStakingForm/ConfirmStakeModal'
+import OwnedNFTSection from 'components/v2/V2Project/VeNftStakingForm/OwnedNFTSection'
+import StakingNFTCarousel from 'components/v2/V2Project/VeNftStakingForm/StakingNFTCarousel'
 
-import { VEBANNY_CONTRACT_ADDRESS } from 'constants/v2/nft/nftProject'
-import StakingNFTCarousel from './StakingNFTCarousel'
+import {
+  JBX_CONTRACT_ADDRESS,
+  VEBANNY_CONTRACT_ADDRESS,
+} from 'constants/v2/nft/nftProject'
+
 import { shadowCard } from 'constants/styles/shadowCard'
 
 export default function StakeForNFTForm() {
@@ -46,7 +49,7 @@ export default function StakeForNFTForm() {
   const { theme } = useContext(ThemeContext)
 
   const [tokensStaked, setTokensStaked] = useState('1')
-  const [lockDuration, setLockDuration] = useState(864000)
+  const [lockDuration, setLockDuration] = useState(1)
   const [beneficiary, setBeneficiary] = useState('')
   const [customBeneficiaryEnabled, setCustomBeneficiaryEnabled] =
     useState(false)
@@ -80,11 +83,10 @@ export default function StakeForNFTForm() {
     lockDuration,
     lockDurationOptions,
   )
-  const nftHash = nftTokenURI ? nftTokenURI.split('ipfs://')[1] : undefined
-  const { data: metadata, refetch } = useNFTMetadata(nftHash)
+  const { data: metadata, refetch } = useNFTMetadata(nftTokenURI)
 
   const { data: allowance } = useERC20Allowance(
-    tokenAddress,
+    JBX_CONTRACT_ADDRESS,
     userAddress,
     VEBANNY_CONTRACT_ADDRESS,
   )
@@ -92,14 +94,17 @@ export default function StakeForNFTForm() {
     ? allowance.gte(parseWad(tokensStaked))
     : false
 
-  const approveTx = useERC20Approve()
+  const approveTx = useERC20Approve(JBX_CONTRACT_ADDRESS)
 
   async function approve() {
     if (!userAddress && onSelectWallet) {
       onSelectWallet()
     }
 
-    const txSuccess = await approveTx({ value: MaxUint256 })
+    const txSuccess = await approveTx({
+      spender: VEBANNY_CONTRACT_ADDRESS,
+      amount: MaxUint256,
+    })
 
     if (!txSuccess) {
       return
@@ -288,10 +293,10 @@ export default function StakeForNFTForm() {
               tokenSymbol={tokenSymbol!}
               userTokens={userTokens}
             />
-            <StakedTokenStatsSection
+            {/* <StakedTokenStatsSection
               tokenSymbol={tokenSymbol!}
               userTokens={userTokens}
-            />
+            /> */}
           </>
         )}
 

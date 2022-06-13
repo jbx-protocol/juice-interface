@@ -1,12 +1,12 @@
 import { Form, Modal, Select } from 'antd'
-import { VeNftProjectContext } from 'contexts/v2/nftProjectContext'
+import { VeNftProjectContext } from 'contexts/v2/veNftProjectContext'
 import { BigNumber } from '@ethersproject/bignumber'
 import { useContext, useState } from 'react'
 import { detailedTimeString } from 'utils/formatTime'
 import { ThemeContext } from 'contexts/themeContext'
-import { useExtendLockTx } from 'hooks/v2/nft/ExtendLockTx'
+import { useExtendLockTx } from 'hooks/veNft/transactor/ExtendLockTx'
 import { NetworkContext } from 'contexts/networkContext'
-import { VeNftToken } from 'models/v2/stakingNFT'
+import { VeNftToken } from 'models/subgraph-entities/veNft/venft-token'
 
 type ExtendLockModalProps = {
   visible: boolean

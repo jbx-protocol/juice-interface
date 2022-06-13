@@ -1,16 +1,17 @@
 import { Button, Card, Col, Row, Image, Space } from 'antd'
 
 import { ThemeContext } from 'contexts/themeContext'
-import { VeNftToken } from 'models/v2/stakingNFT'
+import { VeNftToken } from 'models/subgraph-entities/veNft/venft-token'
 
 import { CSSProperties, useContext, useState } from 'react'
-import { formattedNum } from 'utils/formatNumber'
+import { formattedNum, fromWad } from 'utils/formatNumber'
 import { detailedTimeString } from 'utils/formatTime'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
-import ExtendLockModal from './ExtendLockModal'
-import RedeemVeNftModal from './RedeemVeNftModal'
-import UnlockModal from './UnlockModal'
+import ExtendLockModal from 'components/v2/V2Project/VeNftStakingForm/ExtendLockModal'
+import RedeemVeNftModal from 'components/v2/V2Project/VeNftStakingForm/RedeemVeNftModal'
+import UnlockModal from 'components/v2/V2Project/VeNftStakingForm/UnlockModal'
+import { useNFTMetadata } from 'hooks/veNft/VeNftMetadata'
 
 type OwnedNFTCardProps = {
   token: VeNftToken
@@ -25,9 +26,11 @@ export default function OwnedNFTCard({
   const [redeemModalVisible, setRedeemModalVisible] = useState(false)
   const [unlockModalVisible, setUnlockModalVisible] = useState(false)
 
-  const { lockInfo, metadata } = token
+  const { lockInfo } = token
+  const { data: metadata } = useNFTMetadata(token.tokenUri)
+  const thumbnailUri = metadata?.thumbnailUri
   const { amount, end, duration } = lockInfo
-  const { thumbnailUri } = metadata
+  // const { thumbnailUri } = metadata
 
   const remaining = Math.max(Math.round(end - Date.now() / 1000), 0)
 
@@ -52,7 +55,7 @@ export default function OwnedNFTCard({
                 <p>Time remaining:</p>
               </Col>
               <Col span={12}>
-                <p>{formattedNum(amount)}</p>
+                <p>{formattedNum(fromWad(amount))}</p>
                 <p>
                   {detailedTimeString({
                     timeSeconds: duration,

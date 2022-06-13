@@ -1,11 +1,10 @@
-import { VeNftVariant } from 'models/v2/stakingNFT'
+import { VeNftVariant } from 'models/veNft/veNftVariant'
 
 export function useNFTGetVariants() {
   const variant: VeNftVariant = {
     id: 1,
     name: 'Nammu',
     tokensStakedMin: 1,
-    tokensStakedMax: 99,
   }
 
   const variant2: VeNftVariant = {

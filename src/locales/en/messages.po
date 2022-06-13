@@ -321,8 +321,8 @@ msgstr "Add token allocation"
 msgid "Address"
 msgstr "Address"
 
-#: src/components/v2/V2Project/StakeForNFTForm/UnlockModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/UnlockModal.tsx
 msgid "Address required"
 msgstr "Address required"
 
@@ -780,11 +780,11 @@ msgstr "Current owner: {ownerAddress}"
 msgid "Currently worth: <0><1/>{0}</0>"
 msgstr "Currently worth: <0><1/>{0}</0>"
 
-#: src/components/v2/V2Project/StakeForNFTForm/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
 msgid "Currently, only project tokens claimed as ERC-20 tokens can be staked for NFTs."
 msgstr "Currently, only project tokens claimed as ERC-20 tokens can be staked for NFTs."
 
-#: src/components/v2/V2Project/StakeForNFTForm/UnlockModal.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/UnlockModal.tsx
 msgid "Custom beneficiary"
 msgstr "Custom beneficiary"
 
@@ -798,8 +798,8 @@ msgid "Custom strategy"
 msgstr "Custom strategy"
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
-#: src/components/v2/V2Project/StakeForNFTForm/index.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
 msgid "Custom token beneficiary"
 msgstr "Custom token beneficiary"
 
@@ -832,7 +832,7 @@ msgstr "Date created"
 msgid "Days"
 msgstr "Days"
 
-#: src/components/v2/V2Project/StakeForNFTForm/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
 msgid "Days Locked"
 msgstr "Days Locked"
 
@@ -1404,8 +1404,8 @@ msgstr "Initial issuance rate"
 msgid "Initial issuance rate will be <0>{0} tokens per 1 ETH</0> for contributors. Your project will reserve <1>{1} tokens per 1 ETH</1> contributed."
 msgstr "Initial issuance rate will be <0>{0} tokens per 1 ETH</0> for contributors. Your project will reserve <1>{1} tokens per 1 ETH</1> contributed."
 
-#: src/components/v2/V2Project/StakeForNFTForm/UnlockModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/UnlockModal.tsx
 msgid "Invalid address"
 msgstr "Invalid address"
 
@@ -1527,7 +1527,7 @@ msgstr "Load more"
 msgid "Lock until"
 msgstr "Lock until"
 
-#: src/components/v2/V2Project/StakeForNFTForm/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
 msgid "Lock {tokenName} for Voting Power"
 msgstr "Lock {tokenName} for Voting Power"
 
@@ -1576,7 +1576,7 @@ msgstr "Memo"
 msgid "Migrate to Juicebox V1.1"
 msgstr "Migrate to Juicebox V1.1"
 
-#: src/components/v2/V2Project/StakeForNFTForm/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
 msgid "Mint NFT to a custom address"
 msgstr "Mint NFT to a custom address"
 
@@ -2194,7 +2194,7 @@ msgstr "Refresh"
 msgid "Relaunch your funding cycle on the new Juicebox V2 contracts."
 msgstr "Relaunch your funding cycle on the new Juicebox V2 contracts."
 
-#: src/components/v2/V2Project/StakeForNFTForm/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
 msgid "Remaining: {unstakedTokens}"
 msgstr "Remaining: {unstakedTokens}"
 
@@ -2371,7 +2371,7 @@ msgstr "Seconds"
 msgid "See transaction"
 msgstr "See transaction"
 
-#: src/components/v2/V2Project/StakeForNFTForm/UnlockModal.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/UnlockModal.tsx
 msgid "Send unlocked tokens to a custom address."
 msgstr "Send unlocked tokens to a custom address."
 
@@ -2437,7 +2437,7 @@ msgstr "Spending"
 msgid "Stake your {tokensLabel} to increase your voting weight and claim your BannyVerse NFT."
 msgstr "Stake your {tokensLabel} to increase your voting weight and claim your BannyVerse NFT."
 
-#: src/components/v2/V2Project/StakeForNFTForm/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
 msgid "Stake {tokenName} (${0}) tokens in exchange for voting weight. In return, you will impact {projectName} governance and receive a choice NFT."
 msgstr "Stake {tokenName} (${0}) tokens in exchange for voting weight. In return, you will impact {projectName} governance and receive a choice NFT."
 
@@ -2900,7 +2900,7 @@ msgstr "V2"
 msgid "Version of the terminal contract used by this project."
 msgstr "Version of the terminal contract used by this project."
 
-#: src/components/v2/V2Project/StakeForNFTForm/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
 msgid "View Token Ranges"
 msgstr "View Token Ranges"
 
@@ -2909,7 +2909,7 @@ msgstr "View Token Ranges"
 msgid "Volume"
 msgstr "Volume"
 
-#: src/components/v2/V2Project/StakeForNFTForm/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
 msgid "Voting Power"
 msgstr "Voting Power"
 
@@ -3034,7 +3034,7 @@ msgstr "Would you like to issue an ERC-20 token to be used as this project's tok
 msgid "Yes"
 msgstr "Yes"
 
-#: src/components/v2/V2Project/StakeForNFTForm/ConfirmStakeModal.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/ConfirmStakeModal.tsx
 msgid "You are agreeing to IRREVOCABLY lock your tokens for {formattedLockDuration} in exchange for {votingPower} $ve{tokenSymbol}"
 msgstr "You are agreeing to IRREVOCABLY lock your tokens for {formattedLockDuration} in exchange for {votingPower} $ve{tokenSymbol}"
 
@@ -3292,7 +3292,7 @@ msgstr "{0} holders"
 msgid "{0} reserved"
 msgstr "{0} reserved"
 
-#: src/components/v2/V2Project/StakeForNFTForm/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
 msgid "{0} to lock"
 msgstr "{0} to lock"
 
@@ -3414,7 +3414,7 @@ msgstr "{tokensText} reserved"
 msgid "{tokensTokenUpper} amount"
 msgstr "{tokensTokenUpper} amount"
 
-#: src/components/v2/V2Project/StakeForNFTForm/StakedTokenStatsSection.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/StakedTokenStatsSection.tsx
 msgid "{totalStakedPeriodInDays, plural, one {day} other {days}}"
 msgstr "{totalStakedPeriodInDays, plural, one {day} other {days}}"
 

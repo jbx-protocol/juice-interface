@@ -1,5 +1,5 @@
 import { Col, Modal, Row, Image } from 'antd'
-import { VeNftProjectContext } from 'contexts/v2/nftProjectContext'
+import { VeNftProjectContext } from 'contexts/v2/veNftProjectContext'
 import { useContext } from 'react'
 import { getNFTBaseImage } from 'utils/v2/nftProject'
 

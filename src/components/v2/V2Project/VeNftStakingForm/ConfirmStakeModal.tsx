@@ -3,7 +3,7 @@ import { Col, Divider, Modal, Row, Image } from 'antd'
 
 import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { useLockTx } from 'hooks/v2/nft/LockTx'
+import { useLockTx } from 'hooks/veNft/transactor/LockTx'
 
 import { useContext } from 'react'
 import { formattedNum, parseWad } from 'utils/formatNumber'
@@ -59,9 +59,12 @@ export default function ConfirmStakeModal({
     }
 
     const txSuccess = await lockTx({
+      account: userAddress!,
       value: tokensStakedInWad,
       lockDuration: lockDuration,
       beneficiary: beneficiary !== '' ? beneficiary : userAddress!,
+      useJbToken: true,
+      allowPublicExtension: false,
     })
 
     if (!txSuccess) {

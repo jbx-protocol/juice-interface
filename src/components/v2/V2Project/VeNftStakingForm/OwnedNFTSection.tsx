@@ -1,13 +1,13 @@
 import { Space } from 'antd'
 
 import { ThemeContext } from 'contexts/themeContext'
-import { VeNftToken } from 'models/v2/stakingNFT'
+import { VeNftToken } from 'models/subgraph-entities/veNft/venft-token'
 import { useContext } from 'react'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
-import { shadowCard } from 'constants/styles/shadowCard'
+import OwnedNFTCard from 'components/v2/V2Project/VeNftStakingForm/OwnedNFTCard'
 
-import OwnedNFTCard from './OwnedNFTCard'
+import { shadowCard } from 'constants/styles/shadowCard'
 
 type OwnedNFTsSectionProps = {
   userTokens: VeNftToken[]

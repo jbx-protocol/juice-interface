@@ -1,5 +1,5 @@
 import { Row, Col, Image } from 'antd'
-import { VeNftVariant } from 'models/v2/stakingNFT'
+import { VeNftVariant } from 'models/veNft/veNftVariant'
 import { getNFTBaseImage } from 'utils/v2/nftProject'
 
 type StakingNFTCarouselProps = {

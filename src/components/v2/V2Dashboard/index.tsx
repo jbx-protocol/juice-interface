@@ -35,22 +35,24 @@ import { useProjectsQuery } from 'hooks/Projects'
 
 import { first } from 'lodash'
 
-import { useNFTLockDurationOptions } from 'hooks/v2/nft/NFTLockDurationOptions'
+import { useNFTLockDurationOptions } from 'hooks/veNft/VeNftLockDurationOptions'
 
-import { useNFTBaseImagesHash } from 'hooks/v2/nft/NFTBaseImagesHash'
+import { useNFTBaseImagesHash } from 'hooks/veNft/VeNftBaseImagesHash'
 
-import { useNFTResolverAddress } from 'hooks/v2/nft/NFTResolverAddress'
+import { useNFTResolverAddress } from 'hooks/veNft/VeNftResolverAddress'
 
 import {
   VeNftProjectContextType,
   VeNftProjectContext,
-} from 'contexts/v2/nftProjectContext'
+} from 'contexts/v2/veNftProjectContext'
 
-import { useNFTGetVariants } from 'hooks/v2/nft/NFTGetVariants'
-
-import { useNFTGetUserTokens } from 'hooks/v2/nft/NFTGetUserTokens'
+import { useNFTGetVariants } from 'hooks/veNft/VeNftGetVariants'
 
 import { NetworkContext } from 'contexts/networkContext'
+
+import useSubgraphQuery from 'hooks/SubgraphQuery'
+
+import { VeNftToken } from 'models/subgraph-entities/veNft/venft-token'
 
 import { layouts } from 'constants/styles/layouts'
 
@@ -71,7 +73,23 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
   const { data: resolverAddress } = useNFTResolverAddress()
   const baseImagesHash = useNFTBaseImagesHash()
   const variants = useNFTGetVariants()
-  const userTokens = useNFTGetUserTokens(userAddress)
+  const userTokens: VeNftToken[] | undefined = useSubgraphQuery({
+    entity: 'veNftToken',
+    keys: [
+      'tokenId',
+      'tokenUri',
+      'owner',
+      {
+        entity: 'lockInfo',
+        keys: ['amount', 'end', 'duration'],
+      },
+    ],
+    where: {
+      key: 'owner',
+      value: userAddress || '',
+    },
+    url: process.env.REACT_APP_VEBANNY_SUBGRAPH_URL,
+  }).data
 
   const veNftProject: VeNftProjectContextType = {
     name: nftProjectName,

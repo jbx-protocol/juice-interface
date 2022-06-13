@@ -1,4 +1,4 @@
-import { VeNftVariant } from 'models/v2/stakingNFT'
+import { VeNftVariant } from 'models/veNft/veNftVariant'
 
 export const getNFTBaseImage = (
   baseImagesHash: string,

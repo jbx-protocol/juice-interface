@@ -1,4 +1,4 @@
-import { VeNftToken } from 'models/v2/stakingNFT'
+import { VeNftToken } from 'models/subgraph-entities/veNft/venft-token'
 
 export type VeNftSummaryStats = {
   totalStaked: number

@@ -2,11 +2,11 @@ import { Plural } from '@lingui/macro'
 import { Col, Row } from 'antd'
 
 import { ThemeContext } from 'contexts/themeContext'
-import { useNFTGetSummaryStats } from 'hooks/v2/nft/NFTGetSummaryStats'
+import { useNFTGetSummaryStats } from 'hooks/veNft/VeNftGetSummaryStats'
 import { useContext } from 'react'
 import { formattedNum } from 'utils/formatNumber'
 
-import { VeNftToken } from 'models/v2/stakingNFT'
+import { VeNftToken } from 'models/subgraph-entities/veNft/venft-token'
 
 import { shadowCard } from 'constants/styles/shadowCard'
 

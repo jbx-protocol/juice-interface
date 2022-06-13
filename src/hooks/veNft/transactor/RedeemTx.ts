@@ -4,7 +4,7 @@ import { V2UserContext } from 'contexts/v2/userContext'
 
 import { TransactorInstance } from 'hooks/Transactor'
 
-import { useNFTContract } from './NFTContract'
+import { useNFTContract } from '../VeNftContract'
 import { VEBANNY_CONTRACT_ADDRESS } from 'constants/v2/nft/nftProject'
 
 export type ExtendLockTx = TransactorInstance<{
@@ -25,7 +25,7 @@ export function useExtendLockTx(): ExtendLockTx {
     return transactor(
       nftContract,
       'extendLock',
-      [[{ tokenId, updatedDuration }]],
+      [[[tokenId, updatedDuration]]],
       {
         ...txOpts,
       },

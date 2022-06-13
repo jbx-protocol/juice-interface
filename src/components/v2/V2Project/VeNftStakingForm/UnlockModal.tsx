@@ -5,8 +5,8 @@ import { useForm } from 'antd/lib/form/Form'
 import { FormItems } from 'components/shared/formItems'
 import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { useUnlockTx } from 'hooks/v2/nft/UnlockTx'
-import { VeNftToken } from 'models/v2/stakingNFT'
+import { useUnlockTx } from 'hooks/veNft/transactor/UnlockTx'
+import { VeNftToken } from 'models/subgraph-entities/veNft/venft-token'
 import { useContext, useState } from 'react'
 
 type UnlockModalProps = {
@@ -74,8 +74,8 @@ const UnlockModal = ({
       <h2>Unlock Token</h2>
       <div style={{ color: colors.text.secondary }}>
         <p>
-          Unlocking this staking position will burn your NFT and return{' '}
-          {token.lockInfo.amount.toNumber()} ${tokenSymbol}.
+          Unlocking this staking position will burn your NFT and return $
+          {tokenSymbol}.
         </p>
       </div>
       <Form form={form} layout="vertical">

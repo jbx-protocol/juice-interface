@@ -1,6 +1,15 @@
 import axios from 'axios'
 import { CV } from 'models/cv'
 import {
+  VeNftLockInfo,
+  VeNftLockInfoJson,
+} from 'models/subgraph-entities/veNft/venft-lock-info'
+import {
+  parseVeNftTokenJson,
+  VeNftToken,
+  VeNftTokenJson,
+} from 'models/subgraph-entities/veNft/venft-token'
+import {
   DistributeToPayoutModEvent,
   DistributeToPayoutModEventJson,
   parseDistributeToPayoutModEvent,
@@ -111,6 +120,8 @@ export interface SubgraphEntities {
   distributeToReservedTokenSplitEvent: DistributeToReservedTokenSplitEvent
   distributeToPayoutSplitEvent: DistributeToPayoutSplitEvent
   useAllowanceEvent: UseAllowanceEvent
+  veNftToken: VeNftToken
+  lockInfo: VeNftLockInfo
 }
 
 export interface SubgraphQueryReturnTypes {
@@ -147,6 +158,8 @@ export interface SubgraphQueryReturnTypes {
   }
   useAllowanceEvent: { useAllowanceEvents: UseAllowanceEventJson[] }
   mintTokensEvent: { mintTokensEvent: MintTokensEventJson[] }
+  veNftToken: { veNftTokens: VeNftTokenJson[] }
+  lockInfo: { lockInfo: VeNftLockInfoJson }
 }
 
 export type EntityKey = keyof SubgraphEntities
@@ -429,6 +442,12 @@ export function formatGraphResponse<E extends EntityKey>(
       if ('useAllowanceEvents' in response) {
         // @ts-ignore
         return response.useAllowanceEvents.map(parseUseAllowanceEventJson)
+      }
+      break
+    case 'veNftToken':
+      if ('veNftTokens' in response) {
+        // @ts-ignore
+        return response.veNftTokens.map(parseVeNftTokenJson)
       }
       break
   }

@@ -60,7 +60,7 @@ export default function V2FundingCycleSection({
 
   if (
     fundingCycleLoading ||
-    queuedFundingCycleLoading ||
+    (queuedFundingCycleLoading && !isPreviewMode) ||
     !fundingCycle ||
     (!queuedFundingCycle && !isPreviewMode)
   ) {

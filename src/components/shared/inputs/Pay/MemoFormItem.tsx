@@ -2,7 +2,8 @@ import { t } from '@lingui/macro'
 import { Form, Input } from 'antd'
 import { SmileOutlined } from '@ant-design/icons'
 import BannyAttachModal from 'components/shared/modals/BannyAttachModal'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
+import { ThemeContext } from 'contexts/themeContext'
 
 export default function MemoFormItem({
   value,
@@ -11,6 +12,9 @@ export default function MemoFormItem({
   value: string
   onChange: (memo: string) => void
 }) {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
   const [bannyAttachModalVisible, setBannyAttachModalVisible] =
     useState<boolean>(false)
   return (
@@ -37,7 +41,7 @@ export default function MemoFormItem({
           />
           <div
             style={{
-              zIndex: 1,
+              color: colors.text.primary,
               fontSize: '.8rem',
               position: 'absolute',
               right: 5,

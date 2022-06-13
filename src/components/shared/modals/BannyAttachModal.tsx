@@ -29,21 +29,26 @@ export default function BannyAttachModal({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const [selectedBannyIndex, setSelectedBannyIndex] = useState<number>()
+  const [hoveredBannyIndex, setHoveredBannyIndex] = useState<number>()
   const renderAttachableBanny = (banny: AttachableBanny, index: number) => {
     return (
       <Col md={8}>
         <div
           style={{
             backgroundColor:
-              selectedBannyIndex === index ? colors.background.l2 : 'unset',
+              hoveredBannyIndex === index ? colors.background.l2 : 'unset',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'middle',
             padding: '20px 0',
             cursor: 'pointer',
           }}
-          onClick={() => setSelectedBannyIndex(index)}
+          onMouseEnter={() => setHoveredBannyIndex(index)}
+          onMouseLeave={() => setHoveredBannyIndex(undefined)}
+          onClick={() => {
+            onBannySelected(ATTACHABLE_BANNYS[index].url)
+            onClose()
+          }}
         >
           <img src={banny.url} alt={banny.alt} height="75px" />
         </div>
@@ -55,15 +60,7 @@ export default function BannyAttachModal({
       title={t`Attach a sticker`}
       visible={visible}
       onCancel={onClose}
-      onOk={() => {
-        if (selectedBannyIndex !== undefined) {
-          onBannySelected(ATTACHABLE_BANNYS[selectedBannyIndex].url)
-        }
-        onClose()
-        setSelectedBannyIndex(undefined)
-      }}
-      okText={t`Attach`}
-      okButtonProps={{ disabled: selectedBannyIndex === undefined }}
+      okButtonProps={{ hidden: true }}
       cancelText={t`Cancel`}
       centered
     >

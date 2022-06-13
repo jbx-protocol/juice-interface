@@ -18,10 +18,6 @@ msgstr ""
 "X-Crowdin-File: messages.po\n"
 "X-Crowdin-File-ID: 9\n"
 
-#: src/components/shared/inputs/Pay/MemoFormItem.tsx
-msgid "(Optional) Add a memo to this payment on-chain"
-msgstr "(Optionnel) Ajouter une note à ce paiement en chaîne"
-
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 msgid "(Optional) Add a note to this payment on-chain"
 msgstr "(Optionnel) Ajouter une note à ce paiement en chaîne"
@@ -287,6 +283,10 @@ msgstr "DISPONIBLE"
 msgid "Activity"
 msgstr "Activité"
 
+#: src/components/shared/inputs/Pay/MemoFormItem.tsx
+msgid "Add a memo to this payment on-chain."
+msgstr ""
+
 #: src/components/v1/shared/ProjectPayMods/ProjectPayoutMods.tsx
 msgid "Add a payout"
 msgstr "Ajouter un paiement"
@@ -471,10 +471,6 @@ msgstr "Êtes-vous sûr de vouloir recommencer ?"
 #: src/components/v1/V1Project/modals/BalancesModal.tsx
 msgid "Assets"
 msgstr "Actifs"
-
-#: src/components/shared/modals/BannyAttachModal.tsx
-msgid "Attach"
-msgstr ""
 
 #: src/components/shared/modals/BannyAttachModal.tsx
 msgid "Attach a sticker"
@@ -1602,10 +1598,13 @@ msgstr "Gérer {tokenText}"
 msgid "Maximum {MAX_DESCRIPTION_LENGTH} characters"
 msgstr "{MAX_DESCRIPTION_LENGTH} caractères au maximum"
 
-#: src/components/shared/inputs/Pay/MemoFormItem.tsx
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 msgid "Memo"
 msgstr "Mémo"
+
+#: src/components/shared/inputs/Pay/MemoFormItem.tsx
+msgid "Memo (optional)"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "Migrate to Juicebox V1.1"
@@ -2683,6 +2682,10 @@ msgstr "Ce taux détermine le montant oveflow pour lequel chaque token peut êtr
 #: src/components/v1/V1Create/index.tsx
 msgid "This will erase all of your changes."
 msgstr "Cela effacera toutes vos modifications."
+
+#: src/components/shared/inputs/Pay/MemoFormItem.tsx
+msgid "To the moon!"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx

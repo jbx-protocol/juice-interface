@@ -18,10 +18,6 @@ msgstr ""
 "X-Crowdin-File: messages.po\n"
 "X-Crowdin-File-ID: 9\n"
 
-#: src/components/shared/inputs/Pay/MemoFormItem.tsx
-msgid "(Optional) Add a memo to this payment on-chain"
-msgstr "(İsteğe bağlı) Bu ödemeye zincir üstü bir not ekleyin"
-
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 msgid "(Optional) Add a note to this payment on-chain"
 msgstr "(İsteğe bağlı) Bu ödemeye zincir üstü bir not ekleyin"
@@ -287,6 +283,10 @@ msgstr "MEVCUT"
 msgid "Activity"
 msgstr "Etkinlik"
 
+#: src/components/shared/inputs/Pay/MemoFormItem.tsx
+msgid "Add a memo to this payment on-chain."
+msgstr ""
+
 #: src/components/v1/shared/ProjectPayMods/ProjectPayoutMods.tsx
 msgid "Add a payout"
 msgstr "Ödeme ekle"
@@ -471,10 +471,6 @@ msgstr "Baştan başlamak istediğinizden emin misiniz?"
 #: src/components/v1/V1Project/modals/BalancesModal.tsx
 msgid "Assets"
 msgstr "Varlıklar"
-
-#: src/components/shared/modals/BannyAttachModal.tsx
-msgid "Attach"
-msgstr ""
 
 #: src/components/shared/modals/BannyAttachModal.tsx
 msgid "Attach a sticker"
@@ -1602,10 +1598,13 @@ msgstr "{tokenText} token'ını yönet"
 msgid "Maximum {MAX_DESCRIPTION_LENGTH} characters"
 msgstr ""
 
-#: src/components/shared/inputs/Pay/MemoFormItem.tsx
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 msgid "Memo"
 msgstr "Not"
+
+#: src/components/shared/inputs/Pay/MemoFormItem.tsx
+msgid "Memo (optional)"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "Migrate to Juicebox V1.1"
@@ -2683,6 +2682,10 @@ msgstr "Bu oran, her token'ın herhangi bir zamanda kullanılabilecek taşma mik
 #: src/components/v1/V1Create/index.tsx
 msgid "This will erase all of your changes."
 msgstr "Yaptığınız tüm değişiklikler silinecektir."
+
+#: src/components/shared/inputs/Pay/MemoFormItem.tsx
+msgid "To the moon!"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx

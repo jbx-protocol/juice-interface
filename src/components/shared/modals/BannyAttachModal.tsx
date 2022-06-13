@@ -30,7 +30,14 @@ export default function BannyAttachModal({
     theme: { colors },
   } = useContext(ThemeContext)
   const [hoveredBannyIndex, setHoveredBannyIndex] = useState<number>()
-  const renderAttachableBanny = (banny: AttachableBanny, index: number) => {
+
+  function AttachableBanny({
+    banny,
+    index,
+  }: {
+    banny: AttachableBanny
+    index: number
+  }) {
     return (
       <Col md={8}>
         <div
@@ -66,7 +73,9 @@ export default function BannyAttachModal({
     >
       <Space size="large" direction="vertical" style={{ width: '100%' }}>
         <Row style={{ width: '100%' }}>
-          {ATTACHABLE_BANNYS.map(renderAttachableBanny)}
+          {ATTACHABLE_BANNYS.map((banny, index) => (
+            <AttachableBanny banny={banny} index={index} key={index} />
+          ))}
         </Row>
       </Space>
     </Modal>

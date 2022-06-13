@@ -18,10 +18,6 @@ msgstr ""
 "X-Crowdin-File: messages.po\n"
 "X-Crowdin-File-ID: 9\n"
 
-#: src/components/shared/inputs/Pay/MemoFormItem.tsx
-msgid "(Optional) Add a memo to this payment on-chain"
-msgstr "(Opcional) Adicionar um recado a esse pagamento em cadeia"
-
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 msgid "(Optional) Add a note to this payment on-chain"
 msgstr "(Opcional) Adicionar uma nota a esse pagamento em cadeia"
@@ -287,6 +283,10 @@ msgstr "DISPONÍVEL"
 msgid "Activity"
 msgstr "Atividade"
 
+#: src/components/shared/inputs/Pay/MemoFormItem.tsx
+msgid "Add a memo to this payment on-chain."
+msgstr ""
+
 #: src/components/v1/shared/ProjectPayMods/ProjectPayoutMods.tsx
 msgid "Add a payout"
 msgstr "Adicionar um pagamento"
@@ -471,10 +471,6 @@ msgstr "Você tem certeza que quer começar novamente?"
 #: src/components/v1/V1Project/modals/BalancesModal.tsx
 msgid "Assets"
 msgstr "Ativos"
-
-#: src/components/shared/modals/BannyAttachModal.tsx
-msgid "Attach"
-msgstr ""
 
 #: src/components/shared/modals/BannyAttachModal.tsx
 msgid "Attach a sticker"
@@ -1602,10 +1598,13 @@ msgstr "Administre {tokenText}"
 msgid "Maximum {MAX_DESCRIPTION_LENGTH} characters"
 msgstr "Máximo de {MAX_DESCRIPTION_LENGTH} caracteres"
 
-#: src/components/shared/inputs/Pay/MemoFormItem.tsx
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 msgid "Memo"
 msgstr "Memo"
+
+#: src/components/shared/inputs/Pay/MemoFormItem.tsx
+msgid "Memo (optional)"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "Migrate to Juicebox V1.1"
@@ -2683,6 +2682,10 @@ msgstr "Esta taxa determina a quantidade de overflow que cada token pode ser res
 #: src/components/v1/V1Create/index.tsx
 msgid "This will erase all of your changes."
 msgstr "Isso vai apagar todas as suas mudanças."
+
+#: src/components/shared/inputs/Pay/MemoFormItem.tsx
+msgid "To the moon!"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx

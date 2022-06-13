@@ -13,10 +13,6 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/shared/inputs/Pay/MemoFormItem.tsx
-msgid "(Optional) Add a memo to this payment on-chain"
-msgstr "(Optional) Add a memo to this payment on-chain"
-
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 msgid "(Optional) Add a note to this payment on-chain"
 msgstr ""
@@ -282,6 +278,10 @@ msgstr ""
 msgid "Activity"
 msgstr ""
 
+#: src/components/shared/inputs/Pay/MemoFormItem.tsx
+msgid "Add a memo to this payment on-chain."
+msgstr "Add a memo to this payment on-chain."
+
 #: src/components/v1/shared/ProjectPayMods/ProjectPayoutMods.tsx
 msgid "Add a payout"
 msgstr "Add a payout"
@@ -466,10 +466,6 @@ msgstr "Are you sure you want to start over?"
 #: src/components/v1/V1Project/modals/BalancesModal.tsx
 msgid "Assets"
 msgstr "Assets"
-
-#: src/components/shared/modals/BannyAttachModal.tsx
-msgid "Attach"
-msgstr "Attach"
 
 #: src/components/shared/modals/BannyAttachModal.tsx
 msgid "Attach a sticker"
@@ -1597,10 +1593,13 @@ msgstr "Manage {tokenText}"
 msgid "Maximum {MAX_DESCRIPTION_LENGTH} characters"
 msgstr "Maximum {MAX_DESCRIPTION_LENGTH} characters"
 
-#: src/components/shared/inputs/Pay/MemoFormItem.tsx
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 msgid "Memo"
 msgstr "Memo"
+
+#: src/components/shared/inputs/Pay/MemoFormItem.tsx
+msgid "Memo (optional)"
+msgstr "Memo (optional)"
 
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "Migrate to Juicebox V1.1"
@@ -2678,6 +2677,10 @@ msgstr "This rate determines the amount of overflow that each token can be redee
 #: src/components/v1/V1Create/index.tsx
 msgid "This will erase all of your changes."
 msgstr "This will erase all of your changes."
+
+#: src/components/shared/inputs/Pay/MemoFormItem.tsx
+msgid "To the moon!"
+msgstr "To the moon!"
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx

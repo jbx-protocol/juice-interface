@@ -20,9 +20,10 @@ export default function MemoFormItem({
   return (
     <>
       <Form.Item
-        label={t`Memo`}
+        label={t`Memo (optional)`}
         name="memo"
         className={'antd-no-number-handler'}
+        extra={t`Add a memo to this payment on-chain.`}
       >
         <div
           style={{
@@ -32,7 +33,7 @@ export default function MemoFormItem({
           }}
         >
           <Input.TextArea
-            placeholder={t`(Optional) Add a memo to this payment on-chain`}
+            placeholder={t`To the moon!`}
             maxLength={256}
             value={value}
             onChange={e => onChange(e.target.value)}

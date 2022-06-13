@@ -1614,6 +1614,7 @@ msgstr "铸造新的 {tokensLabel} 代币并转入某个账号。 只有项目�
 msgid "Mint project tokens on demand"
 msgstr "按需铸造项目代币"
 
+#: src/components/v2/V2Create/forms/TokenForm/MintRateFormItem.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Mint rate"

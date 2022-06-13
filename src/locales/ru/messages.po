@@ -1614,6 +1614,7 @@ msgstr "Чеканить новые {tokensLabel} на счет. Чеканит�
 msgid "Mint project tokens on demand"
 msgstr "Создание токенов проекта по требованию"
 
+#: src/components/v2/V2Create/forms/TokenForm/MintRateFormItem.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Mint rate"

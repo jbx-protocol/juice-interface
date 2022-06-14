@@ -146,6 +146,7 @@ export default function DistributePayoutsModal({
       confirmLoading={loading}
       transactionPending={transactionPending}
       okText={t`Distribute funds`}
+      connectWalletText={t`Connect wallet to distribute`}
       width={640}
     >
       <Space direction="vertical" size="large" style={{ width: '100%' }}>

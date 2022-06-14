@@ -31,6 +31,6 @@ export const darkColors = {
   ctaHighlight: '#38e9ff',
   ctaHint: '#32c8db22',
   green: '#A0F3BA',
-  red: '#FF9B8',
+  red: '#ff6c6c',
   yellow: '#FCDC9C',
 }

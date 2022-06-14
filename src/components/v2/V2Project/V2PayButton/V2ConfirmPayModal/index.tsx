@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { isAddress } from '@ethersproject/address'
 import { t, Trans } from '@lingui/macro'
-import { Checkbox, Descriptions, Form, Input, Space, Switch } from 'antd'
+import { Checkbox, Descriptions, Form, Space, Switch } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import ImageUploader from 'components/shared/inputs/ImageUploader'
@@ -35,6 +35,7 @@ import { weightedAmount } from 'utils/v2/math'
 
 import TransactionModal from 'components/shared/TransactionModal'
 import ProjectRiskNotice from 'components/shared/ProjectRiskNotice'
+import MemoFormItem from 'components/shared/inputs/Pay/MemoFormItem'
 
 export default function V2ConfirmPayModal({
   visible,
@@ -63,9 +64,10 @@ export default function V2ConfirmPayModal({
   const [preferClaimed, setPreferClaimed] = useState<boolean>(false)
   const [customBeneficiaryEnabled, setCustomBeneficiaryEnabled] =
     useState<boolean>(false)
+  const [memo, setMemo] = useState<string>('')
   const [transactionPending, setTransactionPending] = useState<boolean>()
 
-  const [form] = useForm<{ memo: string; beneficiary: string }>()
+  const [form] = useForm<{ beneficiary: string }>()
 
   const usdAmount = converter.weiToUsd(weiAmount)
 
@@ -107,7 +109,7 @@ export default function V2ConfirmPayModal({
 
     const txSuccess = await payProjectTx(
       {
-        memo: form.getFieldValue('memo'),
+        memo,
         preferClaimedTokens: preferClaimed,
         beneficiary: txBeneficiary,
         value: weiAmount,
@@ -147,8 +149,8 @@ export default function V2ConfirmPayModal({
       title={t`Pay ${projectMetadata.name}`}
       visible={visible}
       onOk={pay}
-      okText={userAddress ? t`Pay` : t`Connect wallet to pay`}
-      okButtonProps={{ disabled: !userAddress }}
+      okText={t`Pay`}
+      connectWalletText={t`Connect wallet to pay`}
       onCancel={onCancel}
       confirmLoading={loading}
       width={640}
@@ -200,7 +202,6 @@ export default function V2ConfirmPayModal({
               ) : null}
             </div>
           </Descriptions.Item>
-          {/* Need ownerTickets: */}
           <Descriptions.Item
             label={t`${tokenSymbolText({
               tokenSymbol: tokenSymbol,
@@ -213,23 +214,13 @@ export default function V2ConfirmPayModal({
           </Descriptions.Item>
         </Descriptions>
         <Form form={form} layout="vertical">
-          <Form.Item label={t`Memo`} name="memo" rules={[{ max: 256 }]}>
-            <Input.TextArea
-              placeholder={t`(Optional) Add a memo to this payment on-chain`}
-              maxLength={256}
-              showCount
-              autoSize
-            />
-          </Form.Item>
+          <MemoFormItem value={memo} onChange={setMemo} />
           <Form.Item>
             <ImageUploader
               text={t`Add image`}
               onSuccess={url => {
                 if (!url) return
-                const memo = form.getFieldValue('memo') || ''
-                form.setFieldsValue({
-                  memo: memo ? memo + ' ' + url : url,
-                })
+                setMemo(memo.length ? memo + ' ' + url : url)
               }}
             />
           </Form.Item>

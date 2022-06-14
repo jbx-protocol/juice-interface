@@ -1,6 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { Col, Row, Space } from 'antd'
 import { BigNumber } from '@ethersproject/bignumber'
+import { parseEther } from '@ethersproject/units'
 
 import {
   useAppSelector,
@@ -10,13 +11,14 @@ import {
 } from 'hooks/AppSelector'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { useContext } from 'react'
-import { formatWad } from 'utils/formatNumber'
+import { formattedNum } from 'utils/formatNumber'
 import { V2CurrencyName } from 'utils/v2/currency'
 import {
   getDefaultFundAccessConstraint,
   getUnsafeV2FundingCycleProperties,
 } from 'utils/v2/fundingCycle'
 import {
+  formatIssuanceRate,
   formatReservedRate,
   MAX_DISTRIBUTION_LIMIT,
   weightedAmount,
@@ -24,7 +26,6 @@ import {
 import { NetworkContext } from 'contexts/networkContext'
 
 import { V2FundingCycle } from 'models/v2/fundingCycle'
-import { parseEther } from 'ethers/lib/utils'
 
 import { rowGutter } from '.'
 
@@ -40,6 +41,7 @@ import {
   ReservedTokensStatistic,
   DistributionSplitsStatistic,
   ReservedSplitsStatistic,
+  InflationRateStatistic,
 } from './FundingAttributes'
 
 export default function FundingSummarySection() {
@@ -84,20 +86,32 @@ export default function FundingSummarySection() {
   const hasDuration = duration?.gt(0)
 
   const initialIssuanceRate =
-    formatWad(
-      weightedAmount(
-        fundingCycle?.weight,
-        fundingCycleMetadata?.reservedRate.toNumber(),
-        parseEther('1'),
-        'payer',
+    formattedNum(
+      formatIssuanceRate(
+        weightedAmount(
+          fundingCycle?.weight,
+          fundingCycleMetadata?.reservedRate.toNumber(),
+          parseEther('1'),
+          'payer',
+        ),
       ),
-      {
-        precision: 0,
-      },
-    ) ?? ''
-  const formattedReservedRate = parseFloat(
+    ) ?? '0'
+
+  const reservedPercentage = parseFloat(
     formatReservedRate(fundingCycleMetadata?.reservedRate),
   )
+
+  const reservedRate =
+    formattedNum(
+      formatIssuanceRate(
+        weightedAmount(
+          fundingCycle?.weight,
+          fundingCycleMetadata?.reservedRate.toNumber(),
+          parseEther('1'),
+          'reserved',
+        ) ?? '',
+      ),
+    ) ?? '0'
 
   return (
     <div style={{ marginTop: 20 }}>
@@ -126,46 +140,57 @@ export default function FundingSummarySection() {
           showDetail
         />
         <Row gutter={rowGutter} style={{ width: '100%' }}>
-          <Col md={6} xs={24}>
+          <Col md={8} xs={24}>
             <DurationStatistic
               showWarning={unsafeFundingCycleProperties.duration}
               duration={duration}
             />
           </Col>
-          <Col md={6} xs={24}>
-            <ReservedTokensStatistic
-              formattedReservedRate={formattedReservedRate}
+          <Col md={8} xs={24}>
+            <InflationRateStatistic
+              isInitial
+              inflationRate={
+                formattedNum(
+                  formatIssuanceRate(fundingCycle?.weight.toString()),
+                ) ?? '0'
+              }
             />
           </Col>
-          <Col md={7} xs={24}>
+          <Col md={8} xs={24}>
             <IssuanceRateStatistic
               issuanceRate={initialIssuanceRate}
               isInitial
             />
           </Col>
+        </Row>
+        <Row gutter={rowGutter} style={{ width: '100%' }}>
+          <Col md={8} xs={24}>
+            <ReservedTokensStatistic
+              reservedRate={reservedRate}
+              reservedPercentage={reservedPercentage}
+            />
+          </Col>
           {fundingCycle && hasDuration && (
-            <Col md={5} xs={24}>
+            <Col md={8} xs={24}>
               <DiscountRateStatistic discountRate={fundingCycle.discountRate} />
             </Col>
           )}
-        </Row>
-        <Row gutter={rowGutter} style={{ width: '100%' }}>
           {fundingCycleMetadata && hasDistributionLimit && (
-            <Col md={6} xs={24}>
+            <Col md={8} xs={24}>
               <RedemptionRateStatistic
                 redemptionRate={fundingCycleMetadata.redemptionRate}
               />
             </Col>
           )}
-          <Col md={6} xs={24}>
+          <Col md={8} xs={24}>
             <PausePayStatistic pausePay={fundingCycleMetadata?.pausePay} />
           </Col>
-          <Col md={6} xs={24}>
+          <Col md={8} xs={24}>
             <AllowMintingStatistic
               allowMinting={fundingCycleMetadata?.allowMinting}
             />
           </Col>
-          <Col md={6} xs={24}>
+          <Col md={8} xs={24}>
             {hasDuration && (
               <ReconfigurationStatistic ballotAddress={fundingCycle.ballot} />
             )}
@@ -191,7 +216,7 @@ export default function FundingSummarySection() {
             <Col md={10} xs={24}>
               <ReservedSplitsStatistic
                 splits={reservedTokensGroupedSplits.splits}
-                formattedReservedRate={formattedReservedRate}
+                reservedPercentage={reservedPercentage}
                 projectOwnerAddress={userAddress}
               />
             </Col>

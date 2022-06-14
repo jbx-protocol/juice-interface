@@ -5,6 +5,7 @@ import {
   DistributionLimitStatistic,
   DistributionSplitsStatistic,
   DurationStatistic,
+  InflationRateStatistic,
   IssuanceRateStatistic,
   PausePayStatistic,
   ReconfigurationStatistic,
@@ -25,13 +26,14 @@ import { getDefaultFundAccessConstraint } from 'utils/v2/fundingCycle'
 import { V2CurrencyName } from 'utils/v2/currency'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 import {
+  formatIssuanceRate,
   formatReservedRate,
   MAX_DISTRIBUTION_LIMIT,
   weightedAmount,
 } from 'utils/v2/math'
-import { formatWad } from 'utils/formatNumber'
-import { parseEther } from 'ethers/lib/utils'
 import { Split } from 'models/v2/splits'
+import { formattedNum } from 'utils/formatNumber'
+import { parseEther } from 'ethers/lib/utils'
 
 export default function ReconfigurePreview({
   payoutSplits,
@@ -74,19 +76,18 @@ export default function ReconfigurePreview({
   const hasDuration = duration?.gt(0)
 
   const issuanceRate =
-    formatWad(
-      weightedAmount(
-        fundingCycle?.weight,
-        fundingCycleMetadata?.reservedRate.toNumber(),
-        parseEther('1'),
-        'payer',
+    formattedNum(
+      formatIssuanceRate(
+        weightedAmount(
+          fundingCycle?.weight,
+          fundingCycleMetadata?.reservedRate.toNumber(),
+          parseEther('1'),
+          'payer',
+        ),
       ),
-      {
-        precision: 0,
-      },
-    ) ?? ''
+    ) ?? '0'
 
-  const formattedReservedRate = parseFloat(
+  const reservedPercentage = parseFloat(
     formatReservedRate(fundingCycleMetadata?.reservedRate),
   )
 
@@ -95,27 +96,51 @@ export default function ReconfigurePreview({
 
   const secondRowColWidth = hasDuration && hasDistributionLimit ? 8 : 12
 
+  const reservedRate =
+    formattedNum(
+      formatIssuanceRate(
+        weightedAmount(
+          fundingCycle?.weight,
+          fundingCycleMetadata?.reservedRate.toNumber(),
+          parseEther('1'),
+          'reserved',
+        ) ?? '',
+      ),
+    ) ?? '0'
+
   return (
     <div style={{ padding: '0 0px' }}>
       <Row gutter={gutter} style={{ marginBottom: rowMargin }}>
-        <Col md={8} sm={12}>
+        <Col md={12} sm={12}>
           <DurationStatistic duration={fundingCycle.duration} />
         </Col>
-        <Col md={8} sm={12}>
+        <Col md={12} sm={12}>
           <DistributionLimitStatistic
             distributionLimit={distributionLimit}
             currencyName={currencyName ?? 'ETH'}
           />
         </Col>
-        <Col md={8} sm={12}>
-          <ReservedTokensStatistic
-            formattedReservedRate={formattedReservedRate}
+      </Row>
+      <Row gutter={gutter} style={{ marginBottom: rowMargin }}>
+        <Col md={12} sm={12}>
+          <InflationRateStatistic
+            inflationRate={
+              formattedNum(
+                formatIssuanceRate(fundingCycle?.weight.toString()),
+              ) ?? '0'
+            }
           />
+        </Col>
+        <Col md={12} sm={12}>
+          <IssuanceRateStatistic issuanceRate={issuanceRate} />
         </Col>
       </Row>
       <Row gutter={gutter} style={{ marginBottom: rowMargin }}>
         <Col md={secondRowColWidth} sm={12}>
-          <IssuanceRateStatistic issuanceRate={issuanceRate} />
+          <ReservedTokensStatistic
+            reservedRate={reservedRate}
+            reservedPercentage={reservedPercentage}
+          />
         </Col>
         {hasDuration ? (
           <Col md={secondRowColWidth} sm={12}>
@@ -123,7 +148,7 @@ export default function ReconfigurePreview({
           </Col>
         ) : null}
         {hasDistributionLimit ? (
-          <Col md={8} sm={12}>
+          <Col md={secondRowColWidth} sm={12}>
             <RedemptionRateStatistic
               redemptionRate={fundingCycleMetadata.redemptionRate}
             />
@@ -161,7 +186,7 @@ export default function ReconfigurePreview({
       {fundingCycleMetadata?.reservedRate.gt(0) && (
         <ReservedSplitsStatistic
           splits={reserveSplits}
-          formattedReservedRate={formattedReservedRate}
+          reservedPercentage={reservedPercentage}
           projectOwnerAddress={userAddress}
         />
       )}

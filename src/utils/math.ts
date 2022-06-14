@@ -7,7 +7,7 @@ export type WeightFunction = (
   reservedRate: number | undefined,
   wadAmount: BigNumber | undefined,
   outputType: 'payer' | 'reserved',
-) => string | undefined
+) => string
 
 /**
  * Return a given [amountWad] weighted by a given [weight] and [reservedRatePerbicent].
@@ -25,9 +25,9 @@ export const weightedRate: WeightFunction = (
   wadAmount: BigNumber | undefined,
   outputType: 'payer' | 'reserved',
 ) => {
-  if (!weight || !wadAmount) return
+  if (!weight || !wadAmount) return '0'
 
-  if (reservedRatePerbicent === undefined) return
+  if (reservedRatePerbicent === undefined) return '0'
 
   return fromWad(
     weight

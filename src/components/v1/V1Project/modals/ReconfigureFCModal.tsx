@@ -8,9 +8,9 @@ import RestrictedActionsForm, {
   RestrictedActionsFormFields,
 } from 'components/shared/forms/RestrictedActionsForm'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
-import PayoutModsList from 'components/v1/PayoutModsList'
-import TicketModsList from 'components/shared/TicketModsList'
-import ReconfigurationStrategyDrawer from 'components/v1/ReconfigurationStrategyDrawer'
+import PayoutModsList from 'components/v1/shared/PayoutModsList'
+import TicketModsList from 'components/v1/shared/TicketModsList'
+import ReconfigurationStrategyDrawer from 'components/v1/shared/ReconfigurationStrategyDrawer'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
@@ -47,12 +47,12 @@ import { drawerWidth } from 'utils/drawerWidth'
 
 import { V1CurrencyName } from 'utils/v1/currency'
 
-import BudgetForm from 'components/v1/shared/BudgetForm'
+import BudgetForm from 'components/v1/shared/forms/BudgetForm'
 
 import IncentivesForm, {
   IncentivesFormFields,
 } from 'components/shared/forms/IncentivesForm'
-import PayModsForm from 'components/shared/forms/PayModsForm'
+import PayModsForm from 'components/v1/shared/forms/PayModsForm'
 import TicketingForm, {
   TicketingFormFields,
 } from 'components/shared/forms/TicketingForm'

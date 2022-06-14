@@ -32,7 +32,7 @@ export default function useV2ContractReader<V>({
   valueDidChange?: (oldVal?: V, newVal?: V) => boolean
 }): { data: V | undefined; loading: boolean } {
   const [value, setValue] = useState<V | undefined>()
-  const [loading, setLoading] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(true)
 
   const { contracts } = useContext(V2UserContext)
 

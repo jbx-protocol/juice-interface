@@ -2,14 +2,12 @@ import { t, Trans } from '@lingui/macro'
 import { Modal } from 'antd'
 import { useDeployProjectPayerTx } from 'hooks/v2/transactor/DeployProjectPayerTx'
 import { useIssueTokensTx } from 'hooks/v2/transactor/IssueTokensTx'
-import { useLocation } from 'react-router-dom'
 import { CheckCircleFilled } from '@ant-design/icons'
 import { CSSProperties, useContext, useState } from 'react'
 import RichButton from 'components/shared/RichButton'
 
 import { ThemeContext } from 'contexts/themeContext'
 import IssueTokenModal from 'components/shared/modals/IssueTokenModal'
-import { tweet } from 'utils/v2/tweet'
 
 import LaunchProjectPayerModal from './LaunchProjectPayer/LaunchProjectPayerModal'
 
@@ -23,8 +21,6 @@ export default function NewDeployModal({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const projectURL = window.location.origin + '/#' + useLocation().pathname
-  const twitterMsg = `Check out my new @juiceboxETH project! ${projectURL}`
 
   const [issueTokenModalVisible, setIssueTokenModalVisible] =
     useState<boolean>(false)
@@ -34,10 +30,8 @@ export default function NewDeployModal({
   const [hasIssuedToken, setHasIssuedToken] = useState<boolean>()
   const [hasLaunchedPayableAddress, setHasLaunchedPayableAddress] =
     useState<boolean>()
-  const [hasSharedToTwitter, setHasSharedToTwitter] = useState<boolean>()
 
-  const completedAllSteps =
-    hasIssuedToken && hasLaunchedPayableAddress && hasSharedToTwitter
+  const completedAllSteps = hasIssuedToken && hasLaunchedPayableAddress
 
   const seenColor = colors.text.tertiary
 
@@ -53,22 +47,21 @@ export default function NewDeployModal({
       okButtonProps={{ hidden: !completedAllSteps }}
       cancelButtonProps={{ hidden: completedAllSteps }}
       okText={t`Done`}
-      cancelText={t`Later`}
+      cancelText={t`Close, I'll do these later`}
     >
       <h2>
-        <Trans>Next steps</Trans>
+        <Trans>Project launch successful</Trans>
       </h2>
       <p>
         <Trans>
-          Congratulations on launching your project! We recommend you take these
-          next steps to help your project gain traction. These steps are
-          optional and you can complete them later on.
+          Congratulations on launching your project! The next steps are optional
+          and can be completed at any time.
         </Trans>
       </p>
-      <ol style={{ fontSize: 17, marginTop: 20, padding: 0 }}>
+      <div>
         <RichButton
           prefix="1"
-          heading={<Trans>Issue an ERC-20 token</Trans>}
+          heading={<Trans>Issue an ERC-20 token (optional)</Trans>}
           description={
             <Trans>
               Create your own ERC-20 token to represent stake in your project.
@@ -87,11 +80,11 @@ export default function NewDeployModal({
         />
         <RichButton
           prefix="2"
-          heading={<Trans>Create a payable address</Trans>}
+          heading={<Trans>Create a payable address (optional)</Trans>}
           description={
             <Trans>
-              Create an Ethereum address that can be used to pay your project
-              directly.
+              Create an Ethereum address for your project. Enables direct
+              payments without going through your project's Juicebox page.
             </Trans>
           }
           onClick={() => setLaunchProjectPayerModalVisible(true)}
@@ -104,24 +97,7 @@ export default function NewDeployModal({
           primaryColor={hasLaunchedPayableAddress ? seenColor : undefined}
           style={stepButtonStyle}
         />
-        <RichButton
-          prefix="3"
-          heading={<Trans>Share to Twitter</Trans>}
-          description={<Trans>Let's get this party started!</Trans>}
-          onClick={() => {
-            tweet(twitterMsg)
-            setHasSharedToTwitter(true)
-          }}
-          disabled={hasSharedToTwitter}
-          icon={
-            hasSharedToTwitter ? (
-              <CheckCircleFilled style={{ color: seenColor }} />
-            ) : undefined
-          }
-          primaryColor={hasSharedToTwitter ? seenColor : undefined}
-          style={stepButtonStyle}
-        />
-      </ol>
+      </div>
       <IssueTokenModal
         visible={issueTokenModalVisible}
         useIssueTokensTx={useIssueTokensTx}

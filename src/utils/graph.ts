@@ -1,3 +1,5 @@
+// TODO: Should we fix these ts-ignore. At very least, we should consider documenting why it is done
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import axios from 'axios'
 import { CV } from 'models/cv'
 import {

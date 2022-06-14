@@ -55,7 +55,7 @@ export default function MemoFormItem({
         visible={attachStickerModalVisible}
         onClose={() => setAttachStickerModalVisible(false)}
         onSelect={sticker => {
-          const url = new URL(`${window.location.origin}${sticker.url}`)
+          const url = new URL(`${window.location.origin}${sticker.filepath}`)
           const urlString = url.toString()
 
           onChange(value.length ? `${value} ${urlString}` : urlString)

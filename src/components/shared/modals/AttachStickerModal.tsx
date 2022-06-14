@@ -2,17 +2,32 @@ import { t } from '@lingui/macro'
 import { Col, Modal, Row, Space } from 'antd'
 
 type PaymentMemoSticker = {
-  url: string
+  filepath: string
   alt: string
 }
 
 const PAYMENT_MEMO_STICKERS: PaymentMemoSticker[] = [
-  { url: '/assets/banny_eth.png', alt: 'Blockchain Banny' },
-  { url: '/assets/banny_love.png', alt: 'Banny in love' },
-  { url: '/assets/banny_party.png', alt: 'Party banny' },
-  { url: '/assets/banny_popcorn.png', alt: 'Popcorn banny' },
-  { url: '/assets/quint.gif', alt: 'Quint' },
-  { url: '/assets/stoned_banny.png', alt: 'Stoned banny' },
+  {
+    filepath: '/assets/stickers/banny_blockchain.png',
+    alt: 'Blockchain Banny',
+  },
+  {
+    filepath: '/assets/stickers/banny_coder.png',
+    alt: 'Banny at computer smoking a blunt',
+  },
+  { filepath: '/assets/stickers/banny_dao.png', alt: 'Banny holding DAO sign' },
+  { filepath: '/assets/stickers/banny_lfg.png', alt: 'Banny LFG' },
+  { filepath: '/assets/stickers/banny_love.png', alt: 'Banny in love' },
+  { filepath: '/assets/stickers/banny_party_2.png', alt: 'Banny celebrating' },
+  { filepath: '/assets/stickers/banny_party.png', alt: 'Banny celebrating' },
+  {
+    filepath: '/assets/stickers/banny_popcorn.png',
+    alt: 'Banny eating popcorn',
+  },
+  { filepath: '/assets/stickers/banny_shoes.png', alt: 'Banny with shoes' },
+  { filepath: '/assets/stickers/banny_stoned.png', alt: 'Stoned banny' },
+  { filepath: '/assets/stickers/banny_yes.png', alt: 'Stoned screaming "yes"' },
+  { filepath: '/assets/quint.gif', alt: 'Quint' },
 ]
 
 export function AttachStickerModal({
@@ -42,7 +57,7 @@ export function AttachStickerModal({
             onClose()
           }}
         >
-          <img src={sticker.url} alt={sticker.alt} height="75px" />
+          <img src={sticker.filepath} alt={sticker.alt} height="75px" />
         </div>
       </Col>
     )
@@ -57,7 +72,11 @@ export function AttachStickerModal({
       cancelText={t`Cancel`}
       centered
     >
-      <Space size="large" direction="vertical" style={{ width: '100%' }}>
+      <Space
+        size="large"
+        direction="vertical"
+        style={{ width: '100%', maxHeight: '400px', overflowY: 'scroll' }}
+      >
         <Row style={{ width: '100%' }}>
           {PAYMENT_MEMO_STICKERS.map((sticker, index) => (
             <AttachableSticker sticker={sticker} key={index} />

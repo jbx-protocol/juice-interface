@@ -50,7 +50,7 @@ export default function DistributionSplitCard({
   currencyName: CurrencyName
   isLocked?: boolean
   isProjectOwner?: boolean
-  onSplitsChanged: (splits: Split[]) => void
+  onSplitsChanged?: (splits: Split[]) => void
   onSplitDelete?: (split: Split) => void
   setDistributionLimit?: (distributionLimit: string) => void
   onCurrencyChange?: (currencyName: CurrencyName) => void

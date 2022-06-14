@@ -2,7 +2,7 @@ import { Trans } from '@lingui/macro'
 import { Button, Modal, Space } from 'antd'
 import DistributionSplitCard from 'components/v2/shared/DistributionSplitsSection/DistributionSplitCard'
 
-import { Split } from 'models/v2/splits'
+import { defaultSplit, Split } from 'models/v2/splits'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 
 import { getTotalSplitsPercentage } from 'utils/v2/distributions'
@@ -19,7 +19,45 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { V2CurrencyName } from 'utils/v2/currency'
 import { useSetProjectSplits } from 'hooks/v2/transactor/SetProjectSplits'
 
+import { NetworkContext } from 'contexts/networkContext'
+
+import { MAX_DISTRIBUTION_LIMIT, splitPercentFrom } from 'utils/v2/math'
+
 import { ETH_PAYOUT_SPLIT_GROUP } from 'constants/v2/splits'
+
+const OwnerSplitCard = ({ splits }: { splits: Split[] }) => {
+  const { userAddress } = useContext(NetworkContext)
+  const { distributionLimit, distributionLimitCurrency } =
+    useContext(V2ProjectContext)
+  const remainingSplitsPercentage = 100 - getTotalSplitsPercentage(splits)
+  const ownerSplit = useMemo<Split>(
+    () => ({
+      ...defaultSplit,
+      beneficiary: userAddress,
+      percent: splitPercentFrom(remainingSplitsPercentage).toNumber(),
+    }),
+    [remainingSplitsPercentage, userAddress],
+  )
+  const currencyName =
+    V2CurrencyName(
+      distributionLimitCurrency?.toNumber() as V2CurrencyOption | undefined,
+    ) ?? 'ETH'
+  const distributionLimitIsInfinite = distributionLimit?.eq(
+    MAX_DISTRIBUTION_LIMIT,
+  ) // hack to work around rounding error in parseWad in `DistributionSplitCard
+  return (
+    <DistributionSplitCard
+      split={ownerSplit}
+      splits={splits}
+      distributionLimit={
+        distributionLimitIsInfinite ? undefined : distributionLimit?.toString()
+      }
+      currencyName={currencyName}
+      isLocked
+      isProjectOwner
+    />
+  )
+}
 
 const isLockedSplit = (split: Split) => {
   const now = new Date().valueOf() / 1000
@@ -81,6 +119,7 @@ export const EditPayoutsModal = ({
     payoutSplits: contextPayoutSplits,
     fundingCycle,
     distributionLimitCurrency,
+    distributionLimit,
   } = useContext(V2ProjectContext)
   const setProjectSplits = useSetProjectSplits({
     domain: fundingCycle?.configuration?.toString(),
@@ -120,6 +159,9 @@ export const EditPayoutsModal = ({
     [editingSplits],
   )
   const totalSplitsPercentageInvalid = totalSplitsPercentage > 100
+  const remainingSplitsPercentage = 100 - totalSplitsPercentage
+  const ownerSplitCardVisible =
+    remainingSplitsPercentage > 0 && distributionLimit?.gt(0)
 
   const onSplitsConfirmed = useCallback(
     async (splits: Split[]) => {
@@ -212,6 +254,9 @@ export const EditPayoutsModal = ({
                 renderSplitCard(split, index, true),
               )}
             </Space>
+          ) : null}
+          {ownerSplitCardVisible ? (
+            <OwnerSplitCard splits={editingSplits} />
           ) : null}
           {totalSplitsPercentageInvalid && (
             <span style={{ color: colors.text.failure }}>

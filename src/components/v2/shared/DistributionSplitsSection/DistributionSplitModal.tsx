@@ -69,7 +69,7 @@ export default function DistributionSplitModal({
   mode: ModalMode // 'Add' or 'Edit' or 'Undefined'
   splits: Split[]
   editingSplit?: Split
-  onSplitsChanged: (splits: Split[]) => void
+  onSplitsChanged?: (splits: Split[]) => void
   distributionLimit?: string
   setDistributionLimit?: (distributionLimit: string) => void
   onClose: VoidFunction
@@ -228,7 +228,7 @@ export default function DistributionSplitModal({
           )
         : [...adjustedSplits, newSplit]
 
-    onSplitsChanged(newSplits)
+    onSplitsChanged?.(newSplits)
 
     resetStates()
     form.resetFields()

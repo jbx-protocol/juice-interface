@@ -154,7 +154,7 @@ input:-webkit-autofill-selected {
 }
 
 textarea.ant-input::placeholder {
-  color: var(--text-tertiary) !important;
+  color: var(--text-tertiary);
 }
 
 .ant-input-textarea-show-count::after {
@@ -297,6 +297,6 @@ textarea.ant-input::placeholder {
   width: 100%;
 }
 
-.ant-form-item-optional {
-  color: var(--text-primary) !important;
+.ant-form-item-label > label .ant-form-item-optional {
+  color: var(--text-primary);
 }

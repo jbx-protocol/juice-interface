@@ -1596,8 +1596,8 @@ msgid "Maximum {MAX_DESCRIPTION_LENGTH} characters"
 msgstr "Maksimum {MAX_DESCRIPTION_LENGTH} karakter"
 
 #: src/components/shared/inputs/Pay/MemoFormItem.tsx
-msgid "Memo"
-msgstr "Not"
+msgid "Memo (optional)"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "Migrate to Juicebox V1.1"

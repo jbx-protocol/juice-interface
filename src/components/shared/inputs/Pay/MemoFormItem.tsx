@@ -21,7 +21,7 @@ export default function MemoFormItem({
 
   return (
     <Form.Item
-      label={t`Memo`}
+      label={t`Memo (optional)`}
       className={'antd-no-number-handler'}
       extra={t`Add an on-chain memo to this payment.`}
     >

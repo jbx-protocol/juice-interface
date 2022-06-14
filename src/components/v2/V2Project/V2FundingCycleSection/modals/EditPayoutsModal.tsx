@@ -23,6 +23,8 @@ import { NetworkContext } from 'contexts/networkContext'
 
 import { MAX_DISTRIBUTION_LIMIT, splitPercentFrom } from 'utils/v2/math'
 
+import { formatWad } from 'utils/formatNumber'
+
 import { ETH_PAYOUT_SPLIT_GROUP } from 'constants/v2/splits'
 
 const OwnerSplitCard = ({ splits }: { splits: Split[] }) => {
@@ -50,7 +52,7 @@ const OwnerSplitCard = ({ splits }: { splits: Split[] }) => {
       split={ownerSplit}
       splits={splits}
       distributionLimit={
-        distributionLimitIsInfinite ? undefined : distributionLimit?.toString()
+        distributionLimitIsInfinite ? undefined : formatWad(distributionLimit)
       }
       currencyName={currencyName}
       isLocked
@@ -195,14 +197,23 @@ export const EditPayoutsModal = ({
 
   const renderSplitCard = useCallback(
     (split: Split, index: number, isLocked?: boolean) => {
+      const distributionLimitIsInfinite = distributionLimit?.eq(
+        MAX_DISTRIBUTION_LIMIT,
+      ) // hack to work around rounding error in parseWad in `DistributionSplitCard
       return (
         <DistributionSplitCard
           key={split.beneficiary ?? index}
+          editInputMode="Percentage" // Required for edit payouts
           split={split}
           splits={editingSplits}
-          onSplitsChanged={onSplitsChanged}
+          distributionLimit={
+            distributionLimitIsInfinite
+              ? undefined
+              : formatWad(distributionLimit)
+          }
           currencyName={currencyName}
           isLocked={isLocked}
+          onSplitsChanged={onSplitsChanged}
           onSplitDelete={deletedSplit => {
             const newEdited = filter(
               editableSplits,
@@ -214,10 +225,11 @@ export const EditPayoutsModal = ({
       )
     },
     [
+      distributionLimit,
       editingSplits,
-      editableSplits,
-      onSplitsChanged,
       currencyName,
+      onSplitsChanged,
+      editableSplits,
       lockedSplits,
     ],
   )

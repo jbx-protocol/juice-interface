@@ -56,6 +56,7 @@ type DistributionType = 'amount' | 'percent'
 export default function DistributionSplitModal({
   visible,
   mode,
+  overrideDistTypeWithPercentage = false,
   splits, // Locked and editable splits
   editingSplit, // Split that is currently being edited (only in the case mode ==='Edit')
   onSplitsChanged,
@@ -67,6 +68,7 @@ export default function DistributionSplitModal({
 }: {
   visible: boolean
   mode: ModalMode // 'Add' or 'Edit' or 'Undefined'
+  overrideDistTypeWithPercentage?: boolean
   splits: Split[]
   editingSplit?: Split
   onSplitsChanged?: (splits: Split[]) => void
@@ -127,8 +129,12 @@ export default function DistributionSplitModal({
   }, [editingSplitType, form])
 
   useEffect(() => {
+    if (overrideDistTypeWithPercentage) {
+      setDistributionType('percent')
+      return
+    }
     setDistributionType(distributionLimitIsInfinite ? 'percent' : 'amount')
-  }, [distributionLimitIsInfinite, visible])
+  }, [distributionLimitIsInfinite, overrideDistTypeWithPercentage, visible])
 
   // Set the initial info for form from split
   // If editing, format the lockedUntil and projectId

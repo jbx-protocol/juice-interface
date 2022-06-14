@@ -292,3 +292,7 @@ input:-webkit-autofill-selected {
   margin-bottom: 0;
   width: 100%;
 }
+
+.ant-form-item-label > label .ant-form-item-optional {
+  color: var(--text-primary);
+}

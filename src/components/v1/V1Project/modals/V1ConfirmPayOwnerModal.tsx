@@ -183,7 +183,7 @@ export default function V1ConfirmPayOwnerModal({
             {formatWad(ownerTickets, { precision: 0 })}
           </Descriptions.Item>
         </Descriptions>
-        <Form form={form} layout="vertical" requiredMark="optional">
+        <Form form={form} layout="vertical">
           <MemoFormItem value={memo} onChange={setMemo} />
 
           <Form.Item>

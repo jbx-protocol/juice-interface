@@ -91,7 +91,7 @@ export default function ImageUploader({
                 setLoadingUpload(false)
               }}
             >
-              <Button loading={loadingUpload} type="text">
+              <Button loading={loadingUpload} type="dashed">
                 <FileImageOutlined /> {text ?? null}
               </Button>
             </Upload>

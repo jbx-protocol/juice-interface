@@ -1,7 +1,7 @@
 import { t } from '@lingui/macro'
 import { Form, Input } from 'antd'
 import { SmileOutlined } from '@ant-design/icons'
-import BannyAttachModal from 'components/shared/modals/BannyAttachModal'
+import { AttachStickerModal } from 'components/shared/modals/AttachStickerModal'
 import { useContext, useState } from 'react'
 import { ThemeContext } from 'contexts/themeContext'
 
@@ -15,25 +15,23 @@ export default function MemoFormItem({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const [bannyAttachModalVisible, setBannyAttachModalVisible] =
+  const [attachStickerModalVisible, setAttachStickerModalVisible] =
     useState<boolean>(false)
   return (
     <>
       <Form.Item
-        label={t`Memo (optional)`}
+        label={t`Memo`}
         name="memo"
         className={'antd-no-number-handler'}
-        extra={t`Add a memo to this payment on-chain.`}
+        extra={t`Add an on-chain memo to this payment.`}
       >
         <div
           style={{
-            display: 'flex',
-            alignItems: 'center',
             position: 'relative',
           }}
         >
           <Input.TextArea
-            placeholder={t`To the moon!`}
+            placeholder={t`WAGMI!`}
             maxLength={256}
             value={value}
             onChange={e => onChange(e.target.value)}
@@ -42,23 +40,25 @@ export default function MemoFormItem({
           />
           <div
             style={{
-              color: colors.text.primary,
+              color: colors.text.secondary,
               fontSize: '.8rem',
               position: 'absolute',
-              right: 5,
+              right: 10,
+              top: 7,
             }}
           >
-            <SmileOutlined onClick={() => setBannyAttachModalVisible(true)} />
+            <SmileOutlined onClick={() => setAttachStickerModalVisible(true)} />
           </div>
         </div>
       </Form.Item>
-      <BannyAttachModal
-        visible={bannyAttachModalVisible}
-        onClose={() => setBannyAttachModalVisible(false)}
-        onBannySelected={bannyUrl => {
-          const url = window.location.origin + bannyUrl
-          if (!bannyUrl) return
-          onChange(value.length ? value + ' ' + url : url)
+      <AttachStickerModal
+        visible={attachStickerModalVisible}
+        onClose={() => setAttachStickerModalVisible(false)}
+        onSelect={sticker => {
+          const url = new URL(`${window.location.origin}${sticker.url}`)
+          const urlString = url.toString()
+
+          onChange(value.length ? `${value} ${urlString}` : urlString)
         }}
       />
     </>

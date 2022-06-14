@@ -213,7 +213,7 @@ export default function V2ConfirmPayModal({
             {formatWad(ownerTickets, { precision: 0 })}
           </Descriptions.Item>
         </Descriptions>
-        <Form form={form} layout="vertical">
+        <Form form={form} layout="vertical" requiredMark="optional">
           <MemoFormItem value={memo} onChange={setMemo} />
           <Form.Item>
             <ImageUploader

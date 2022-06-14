@@ -283,13 +283,13 @@ msgstr "DISPONIBLE"
 msgid "Activity"
 msgstr "Actividad"
 
-#: src/components/shared/inputs/Pay/MemoFormItem.tsx
-msgid "Add a memo to this payment on-chain."
-msgstr ""
-
 #: src/components/v1/shared/ProjectPayMods/ProjectPayoutMods.tsx
 msgid "Add a payout"
 msgstr "Añadir un pago"
+
+#: src/components/shared/inputs/Pay/MemoFormItem.tsx
+msgid "Add an on-chain memo to this payment."
+msgstr ""
 
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
 msgid "Add funds to this project's balance without minting tokens."
@@ -472,7 +472,7 @@ msgstr "¿Estás seguro de que quieres volver a empezar?"
 msgid "Assets"
 msgstr "Activos"
 
-#: src/components/shared/modals/BannyAttachModal.tsx
+#: src/components/shared/modals/AttachStickerModal.tsx
 msgid "Attach a sticker"
 msgstr ""
 
@@ -591,7 +591,7 @@ msgstr "¿Puedo cambiar el contrato de mi proyecto después de haber sido creado
 msgid "Can I delete a project?"
 msgstr "¿Puedo eliminar un proyecto?"
 
-#: src/components/shared/modals/BannyAttachModal.tsx
+#: src/components/shared/modals/AttachStickerModal.tsx
 #: src/components/v1/V1Project/modals/BalancesModal.tsx
 msgid "Cancel"
 msgstr "Cancelar"
@@ -1598,13 +1598,10 @@ msgstr "Administrar {tokenText}"
 msgid "Maximum {MAX_DESCRIPTION_LENGTH} characters"
 msgstr "Máximo {MAX_DESCRIPTION_LENGTH} caracteres"
 
+#: src/components/shared/inputs/Pay/MemoFormItem.tsx
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 msgid "Memo"
 msgstr "Memo"
-
-#: src/components/shared/inputs/Pay/MemoFormItem.tsx
-msgid "Memo (optional)"
-msgstr ""
 
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "Migrate to Juicebox V1.1"
@@ -2683,10 +2680,6 @@ msgstr "Esta tasa determina la cantidad de excedente por la que cada token puede
 msgid "This will erase all of your changes."
 msgstr "Esto borrará todos tus cambios."
 
-#: src/components/shared/inputs/Pay/MemoFormItem.tsx
-msgid "To the moon!"
-msgstr ""
-
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "To: <0/>"
@@ -2940,6 +2933,10 @@ msgstr "Versión del contrato terminal usado por este proyecto."
 #: src/components/shared/VolumeChart/index.tsx
 msgid "Volume"
 msgstr "Volumen"
+
+#: src/components/shared/inputs/Pay/MemoFormItem.tsx
+msgid "WAGMI!"
+msgstr ""
 
 #: src/components/v1/shared/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx

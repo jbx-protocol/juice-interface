@@ -24,3 +24,9 @@
     text-decoration: underline;
   }
 }
+
+.hover-bg-l2 {
+  &:hover {
+    background-color: var(--background-l2);
+  }
+}

@@ -1,14 +1,12 @@
 import { t } from '@lingui/macro'
 import { Col, Modal, Row, Space } from 'antd'
-import { ThemeContext } from 'contexts/themeContext'
-import { useContext, useState } from 'react'
 
-type AttachableBanny = {
+type PaymentMemoSticker = {
   url: string
   alt: string
 }
 
-const ATTACHABLE_BANNYS: AttachableBanny[] = [
+const PAYMENT_MEMO_STICKERS: PaymentMemoSticker[] = [
   { url: '/assets/banny_eth.png', alt: 'Blockchain Banny' },
   { url: '/assets/banny_love.png', alt: 'Banny in love' },
   { url: '/assets/banny_party.png', alt: 'Party banny' },
@@ -17,51 +15,39 @@ const ATTACHABLE_BANNYS: AttachableBanny[] = [
   { url: '/assets/stoned_banny.png', alt: 'Stoned banny' },
 ]
 
-export default function BannyAttachModal({
+export function AttachStickerModal({
   visible,
-  onBannySelected,
+  onSelect,
   onClose,
 }: {
   visible: boolean
-  onBannySelected: (url: string) => void
+  onSelect: (sticker: PaymentMemoSticker) => void
   onClose: VoidFunction
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-  const [hoveredBannyIndex, setHoveredBannyIndex] = useState<number>()
-
-  function AttachableBanny({
-    banny,
-    index,
-  }: {
-    banny: AttachableBanny
-    index: number
-  }) {
+  function AttachableSticker({ sticker }: { sticker: PaymentMemoSticker }) {
     return (
       <Col md={8}>
         <div
+          role="button"
           style={{
-            backgroundColor:
-              hoveredBannyIndex === index ? colors.background.l2 : 'unset',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'middle',
             padding: '20px 0',
             cursor: 'pointer',
           }}
-          onMouseEnter={() => setHoveredBannyIndex(index)}
-          onMouseLeave={() => setHoveredBannyIndex(undefined)}
+          className="hover-bg-l2"
           onClick={() => {
-            onBannySelected(ATTACHABLE_BANNYS[index].url)
+            onSelect(sticker)
             onClose()
           }}
         >
-          <img src={banny.url} alt={banny.alt} height="75px" />
+          <img src={sticker.url} alt={sticker.alt} height="75px" />
         </div>
       </Col>
     )
   }
+
   return (
     <Modal
       title={t`Attach a sticker`}
@@ -73,8 +59,8 @@ export default function BannyAttachModal({
     >
       <Space size="large" direction="vertical" style={{ width: '100%' }}>
         <Row style={{ width: '100%' }}>
-          {ATTACHABLE_BANNYS.map((banny, index) => (
-            <AttachableBanny banny={banny} index={index} key={index} />
+          {PAYMENT_MEMO_STICKERS.map((sticker, index) => (
+            <AttachableSticker sticker={sticker} key={index} />
           ))}
         </Row>
       </Space>

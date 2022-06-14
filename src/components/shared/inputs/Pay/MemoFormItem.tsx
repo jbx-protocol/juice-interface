@@ -43,7 +43,7 @@ export default function MemoFormItem({
             color: colors.text.secondary,
             fontSize: '.8rem',
             position: 'absolute',
-            right: 10,
+            right: 5,
             top: 7,
           }}
         >

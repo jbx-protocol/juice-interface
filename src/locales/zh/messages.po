@@ -442,6 +442,10 @@ msgstr ""
 msgid "Amount paid"
 msgstr "支付数额"
 
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/CriteriaFormItem.tsx
+msgid "Amount required"
+msgstr ""
+
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Amount to distribute"
 msgstr "分发数量"
@@ -701,10 +705,6 @@ msgstr "设置项目代币的各项动能指标。"
 msgid "Configure your project's tokenomics."
 msgstr ""
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTierModal.tsx
-msgid "Confirm"
-msgstr ""
-
 #: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Congratulations on launching your project! The next steps are optional and can be completed at any time."
 msgstr ""
@@ -903,7 +903,7 @@ msgid "Days"
 msgstr "天"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTiers.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTierCard.tsx
 msgid "Delete payout"
 msgstr ""
 
@@ -2410,6 +2410,10 @@ msgstr "关于如何重新配置该项目筹款周期的规则"
 #: src/components/shared/forms/TicketingForm.tsx
 msgid "Save"
 msgstr "保存"
+
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTierModal.tsx
+msgid "Save NFT reward"
+msgstr ""
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/index.tsx
 msgid "Save NFT rewards"

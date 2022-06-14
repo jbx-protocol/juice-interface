@@ -437,6 +437,10 @@ msgstr "Amount of newly minted project tokens <0>reserved for the project</0> wh
 msgid "Amount paid"
 msgstr ""
 
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/CriteriaFormItem.tsx
+msgid "Amount required"
+msgstr "Amount required"
+
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Amount to distribute"
 msgstr "Amount to distribute"
@@ -696,10 +700,6 @@ msgstr "Configure the dynamics of your project's token."
 msgid "Configure your project's tokenomics."
 msgstr "Configure your project's tokenomics."
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTierModal.tsx
-msgid "Confirm"
-msgstr "Confirm"
-
 #: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Congratulations on launching your project! The next steps are optional and can be completed at any time."
 msgstr "Congratulations on launching your project! The next steps are optional and can be completed at any time."
@@ -898,7 +898,7 @@ msgid "Days"
 msgstr "Days"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTiers.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTierCard.tsx
 msgid "Delete payout"
 msgstr "Delete payout"
 
@@ -2405,6 +2405,10 @@ msgstr ""
 #: src/components/shared/forms/TicketingForm.tsx
 msgid "Save"
 msgstr ""
+
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTierModal.tsx
+msgid "Save NFT reward"
+msgstr "Save NFT reward"
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/index.tsx
 msgid "Save NFT rewards"

@@ -9,7 +9,7 @@ import { useEffect } from 'react'
 import CriteriaFormItem from './CriteriaFormItem'
 import NFTUpload from './NFTUpload'
 
-type NFTFormFields = {
+export type NFTFormFields = {
   criteria: string
   name: string
   externalLink: string
@@ -36,7 +36,7 @@ export default function NFTRewardTierModal({
   const [NFTForm] = useForm<NFTFormFields>()
 
   const onFormSaved = async () => {
-    NFTForm.validateFields()
+    await NFTForm.validateFields()
 
     const newTier = {
       criteria: parseFloat(NFTForm.getFieldValue('criteria')),
@@ -82,7 +82,7 @@ export default function NFTRewardTierModal({
   return (
     <Modal
       visible={visible}
-      okText={mode === 'Edit' ? t`Confirm` : t`Add NFT reward`}
+      okText={mode === 'Edit' ? t`Save NFT reward` : t`Add NFT reward`}
       onOk={onFormSaved}
       onCancel={onClose}
       title={mode === 'Edit' ? t`Edit NFT reward` : t`Add NFT reward`}
@@ -93,13 +93,14 @@ export default function NFTRewardTierModal({
         contributions above a certain threshold.
       </p>
       <Form layout="vertical" form={NFTForm}>
-        <CriteriaFormItem />
+        <CriteriaFormItem form={NFTForm} />
         <NFTUpload />
         <Form.Item
           name={'name'}
           label={
             <TooltipLabel label={t`Name`} tip={t`Give this NFT a name.`} />
           }
+          rules={[{ required: true }]}
         >
           <Input
             placeholder={t`Nammu Banny reward`}

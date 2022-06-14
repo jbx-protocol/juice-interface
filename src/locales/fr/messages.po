@@ -442,6 +442,10 @@ msgstr ""
 msgid "Amount paid"
 msgstr "Somme payée"
 
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/CriteriaFormItem.tsx
+msgid "Amount required"
+msgstr ""
+
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Amount to distribute"
 msgstr "Montant à distribuer"
@@ -701,10 +705,6 @@ msgstr "Configurer la dynamique du token de votre projet."
 msgid "Configure your project's tokenomics."
 msgstr "Paramétrer la tokéconomie de votre projet."
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTierModal.tsx
-msgid "Confirm"
-msgstr ""
-
 #: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Congratulations on launching your project! The next steps are optional and can be completed at any time."
 msgstr ""
@@ -903,7 +903,7 @@ msgid "Days"
 msgstr "Jours"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTiers.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTierCard.tsx
 msgid "Delete payout"
 msgstr "Supprimer paiement"
 
@@ -2410,6 +2410,10 @@ msgstr "Règles pour déterminer comment les cycles de financement peuvent être
 #: src/components/shared/forms/TicketingForm.tsx
 msgid "Save"
 msgstr "Sauvegarder"
+
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTierModal.tsx
+msgid "Save NFT reward"
+msgstr ""
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/index.tsx
 msgid "Save NFT rewards"

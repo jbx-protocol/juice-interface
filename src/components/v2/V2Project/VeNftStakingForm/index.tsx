@@ -1,11 +1,11 @@
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Button, Form, Space, Col, Row, Select, Input, Switch } from 'antd'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { MaxUint256 } from '@ethersproject/constants'
 
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useMemo, useState } from 'react'
 import { NetworkContext } from 'contexts/networkContext'
 import { fromWad, parseWad } from 'utils/formatNumber'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
@@ -28,16 +28,29 @@ import ConfirmStakeModal from 'components/v2/V2Project/VeNftStakingForm/ConfirmS
 import OwnedNFTSection from 'components/v2/V2Project/VeNftStakingForm/OwnedNFTSection'
 import StakingNFTCarousel from 'components/v2/V2Project/VeNftStakingForm/StakingNFTCarousel'
 
+import { useForm, useWatch } from 'antd/lib/form/Form'
+
+import { FormItems } from 'components/shared/formItems'
+
+import { isAddress } from 'ethers/lib/utils'
+
 import {
   JBX_CONTRACT_ADDRESS,
   VEBANNY_CONTRACT_ADDRESS,
 } from 'constants/v2/nft/nftProject'
 
 import { shadowCard } from 'constants/styles/shadowCard'
+import StakedTokenStatsSection from './StakedTokenStatsSection'
+
+type StakingFormProps = {
+  tokensStaked: string
+  lockDuration: number
+  beneficiary: string
+}
 
 export default function StakeForNFTForm() {
   const { userAddress, onSelectWallet } = useContext(NetworkContext)
-  const { tokenSymbol, tokenName, projectMetadata, tokenAddress } =
+  const { tokenSymbol, tokenName, projectMetadata } =
     useContext(V2ProjectContext)
   const {
     lockDurationOptions,
@@ -48,9 +61,10 @@ export default function StakeForNFTForm() {
   } = useContext(VeNftProjectContext)
   const { theme } = useContext(ThemeContext)
 
-  const [tokensStaked, setTokensStaked] = useState('1')
-  const [lockDuration, setLockDuration] = useState(1)
-  const [beneficiary, setBeneficiary] = useState('')
+  const [form] = useForm<StakingFormProps>()
+  const tokensStaked = useWatch('tokensStaked', form) || '1'
+  const lockDuration = useWatch('lockDuration', form) || 0
+
   const [customBeneficiaryEnabled, setCustomBeneficiaryEnabled] =
     useState(false)
 
@@ -58,17 +72,55 @@ export default function StakeForNFTForm() {
   const [confirmStakeModalVisible, setConfirmStakeModalVisible] =
     useState(false)
 
-  const lockDurationOptionsInSeconds = lockDurationOptions
-    ? lockDurationOptions.map((option: BigNumber) => {
-        return option.toNumber()
-      })
-    : []
+  const lockDurationOptionsInSeconds = useMemo(() => {
+    return lockDurationOptions
+      ? lockDurationOptions.map((option: BigNumber) => {
+          return option.toNumber()
+        })
+      : []
+  }, [lockDurationOptions])
+
   const maxLockDuration =
     lockDurationOptionsInSeconds.length > 0
       ? lockDurationOptionsInSeconds[lockDurationOptionsInSeconds.length - 1]
       : 0
+  const minTokensAllowedToStake = 1
 
-  const { data: claimedBalance } = useERC20BalanceOf(tokenAddress, userAddress)
+  const activeIdx = variants
+    ? Math.max(
+        variants.findIndex(variant => {
+          const curTokens = parseInt(tokensStaked)
+          return (
+            variant.tokensStakedMin <= curTokens &&
+            (variant.tokensStakedMax
+              ? variant.tokensStakedMax > curTokens
+              : true)
+          )
+        }),
+        0,
+      )
+    : 0
+
+  const initialValues: StakingFormProps = {
+    tokensStaked: minTokensAllowedToStake.toString(),
+    lockDuration: 0,
+    beneficiary: '',
+  }
+
+  useEffect(() => {
+    lockDurationOptionsInSeconds.length > 0 &&
+      form.setFieldsValue({ lockDuration: lockDurationOptionsInSeconds[0] })
+  }, [lockDurationOptionsInSeconds, form])
+
+  useEffect(() => {
+    minTokensAllowedToStake &&
+      form.setFieldsValue({ tokensStaked: minTokensAllowedToStake.toString() })
+  }, [minTokensAllowedToStake, form])
+
+  const { data: claimedBalance } = useERC20BalanceOf(
+    JBX_CONTRACT_ADDRESS,
+    userAddress,
+  )
   const totalBalanceInWad = fromWad(claimedBalance)
   const unstakedTokens = claimedBalance
     ? parseInt(totalBalanceInWad) - parseInt(tokensStaked)
@@ -79,10 +131,11 @@ export default function StakeForNFTForm() {
 
   const { data: nftTokenURI } = useNFTResolverTokenURI(
     resolverAddress,
-    parseInt(tokensStaked),
+    parseWad(tokensStaked),
     lockDuration,
     lockDurationOptions,
   )
+
   const { data: metadata, refetch } = useNFTMetadata(nftTokenURI)
 
   const { data: allowance } = useERC20Allowance(
@@ -111,7 +164,31 @@ export default function StakeForNFTForm() {
     }
   }
 
-  const handleReviewButtonClick = () => {
+  const validateTokensStaked = () => {
+    const tokensStaked = parseInt(form.getFieldValue('tokensStaked'))
+    if (tokensStaked < minTokensAllowedToStake) {
+      return Promise.reject(
+        t`You must stake at least ${minTokensAllowedToStake} tokens.`,
+      )
+    }
+    if (tokensStaked > parseInt(totalBalanceInWad)) {
+      return Promise.reject(t`You don't have enough tokens`)
+    }
+    return Promise.resolve()
+  }
+
+  const validateCustomBeneficiary = () => {
+    const beneficiary = form.getFieldValue('beneficiary')
+    if (!beneficiary) {
+      return Promise.reject(t`Address required`)
+    } else if (!isAddress(beneficiary)) {
+      return Promise.reject(t`Invalid address`)
+    }
+    return Promise.resolve()
+  }
+
+  const handleReviewButtonClick = async () => {
+    await form.validateFields()
     refetch()
     setConfirmStakeModalVisible(true)
   }
@@ -159,7 +236,12 @@ export default function StakeForNFTForm() {
           governance and receive a choice NFT.
         </Trans>
       </p>
-      <Form layout="vertical" style={{ width: '100%' }}>
+      <Form
+        layout="vertical"
+        style={{ width: '100%' }}
+        form={form}
+        initialValues={initialValues}
+      >
         <div style={{ ...shadowCard(theme), padding: 25, marginBottom: 10 }}>
           <Space size="middle" direction="vertical">
             <h4>
@@ -170,6 +252,12 @@ export default function StakeForNFTForm() {
             </h4>
           </Space>
           <Form.Item
+            name="tokensStaked"
+            rules={[
+              {
+                validator: validateTokensStaked,
+              },
+            ]}
             extra={
               <div
                 style={{ color: theme.colors.text.primary, marginBottom: 10 }}
@@ -187,13 +275,14 @@ export default function StakeForNFTForm() {
               name="tokensStaked"
               value={tokensStaked}
               onChange={val => {
-                setTokensStaked(val ?? '0')
+                form.setFieldsValue({ tokensStaked: val })
               }}
             />
           </Form.Item>
           <Row>
             <Col span={14}>
               <Form.Item
+                name="lockDuration"
                 extra={
                   <div
                     style={{
@@ -206,8 +295,7 @@ export default function StakeForNFTForm() {
                 }
               >
                 <Select
-                  value={lockDuration}
-                  onChange={val => setLockDuration(val)}
+                  onChange={val => form.setFieldsValue({ lockDuration: val })}
                 >
                   {lockDurationOptionsInSeconds.map((duration: number) => {
                     return (
@@ -266,18 +354,27 @@ export default function StakeForNFTForm() {
             style={{ marginBottom: '1rem' }}
           />
           {customBeneficiaryEnabled && (
-            <Form.Item>
-              <Input
-                value={beneficiary}
-                onChange={e => setBeneficiary(e.target.value)}
-              />
-            </Form.Item>
+            <FormItems.EthAddress
+              defaultValue={''}
+              name="beneficiary"
+              onAddressChange={beneficiary => {
+                form.setFieldsValue({ beneficiary })
+              }}
+              formItemProps={{
+                rules: [
+                  {
+                    validator: validateCustomBeneficiary,
+                  },
+                ],
+              }}
+            />
           )}
           {variants && baseImagesHash && (
             <StakingNFTCarousel
-              activeIdx={0}
+              activeIdx={activeIdx}
               variants={variants}
               baseImagesHash={baseImagesHash}
+              form={form}
             />
           )}
           <Space size="middle" direction="vertical" style={{ width: '100%' }}>
@@ -287,17 +384,23 @@ export default function StakeForNFTForm() {
             {renderActionButton()}
           </Space>
         </div>
-        {userTokens && userTokens.length > 0 && (
+        {userTokens && userTokens.length > 0 ? (
           <>
             <OwnedNFTSection
               tokenSymbol={tokenSymbol!}
               userTokens={userTokens}
             />
-            {/* <StakedTokenStatsSection
+            <StakedTokenStatsSection
               tokenSymbol={tokenSymbol!}
               userTokens={userTokens}
-            /> */}
+            />
           </>
+        ) : (
+          <div style={{ ...shadowCard(theme), padding: 25, marginBottom: 10 }}>
+            <h3>
+              You don't own any $ve{tokenSymbolText({ tokenSymbol })} NFTs!
+            </h3>
+          </div>
         )}
 
         <StakingTokenRangesModal
@@ -311,7 +414,7 @@ export default function StakeForNFTForm() {
           tokensStaked={parseInt(tokensStaked)}
           votingPower={votingPower}
           lockDuration={lockDuration}
-          beneficiary={beneficiary}
+          beneficiary={form.getFieldValue('beneficiary')}
           maxLockDuration={maxLockDuration}
           tokenMetadata={metadata}
           onCancel={() => setConfirmStakeModalVisible(false)}

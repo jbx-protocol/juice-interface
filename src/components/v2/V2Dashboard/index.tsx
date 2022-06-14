@@ -70,7 +70,7 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
   const { data: lockDurationOptions } = useNFTLockDurationOptions()
   const { data: resolverAddress } = useNFTResolverAddress()
   const baseImagesHash = useNFTBaseImagesHash()
-  const variants = useNFTGetVariants()
+  const { data: variants } = useNFTGetVariants()
   const userTokens = useSubgraphQuery({
     entity: 'veNftToken',
     keys: [

@@ -29,7 +29,6 @@ export default function OwnedNFTCard({
   const { lockAmount, lockEnd, lockDuration } = token
   const { data: metadata } = useNFTMetadata(token.tokenUri)
   const thumbnailUri = metadata?.thumbnailUri
-  // const { thumbnailUri } = metadata
 
   const remaining = Math.max(Math.round(lockEnd - Date.now() / 1000), 0)
 

@@ -1,7 +1,7 @@
 import { Form, Modal, Select } from 'antd'
 import { VeNftProjectContext } from 'contexts/v2/veNftProjectContext'
 import { BigNumber } from '@ethersproject/bignumber'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useMemo, useState } from 'react'
 import { detailedTimeString } from 'utils/formatTime'
 import { ThemeContext } from 'contexts/themeContext'
 import { useExtendLockTx } from 'hooks/veNft/transactor/ExtendLockTx'
@@ -22,12 +22,20 @@ const ExtendLockModal = ({
   const { userAddress, onSelectWallet } = useContext(NetworkContext)
   const { tokenId } = token
   const { lockDurationOptions } = useContext(VeNftProjectContext)
-  const [updatedDuration, setUpdatedDuration] = useState(864000)
-  const lockDurationOptionsInSeconds = lockDurationOptions
-    ? lockDurationOptions.map((option: BigNumber) => {
-        return option.toNumber()
-      })
-    : []
+  const [updatedDuration, setUpdatedDuration] = useState(0)
+  const lockDurationOptionsInSeconds = useMemo(() => {
+    return lockDurationOptions
+      ? lockDurationOptions.map((option: BigNumber) => {
+          return option.toNumber()
+        })
+      : []
+  }, [lockDurationOptions])
+
+  useEffect(() => {
+    lockDurationOptionsInSeconds.length > 0 &&
+      setUpdatedDuration(lockDurationOptionsInSeconds[0])
+  }, [lockDurationOptionsInSeconds])
+
   const {
     theme: { colors },
   } = useContext(ThemeContext)

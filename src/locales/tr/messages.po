@@ -468,6 +468,7 @@ msgstr "Baştan başlamak istediğinizden emin misiniz?"
 msgid "Assets"
 msgstr "Varlıklar"
 
+#: src/components/shared/inputs/Pay/MemoFormItem.tsx
 #: src/components/shared/modals/AttachStickerModal.tsx
 msgid "Attach a sticker"
 msgstr ""

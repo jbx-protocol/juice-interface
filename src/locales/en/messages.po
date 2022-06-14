@@ -463,6 +463,7 @@ msgstr "Are you sure you want to start over?"
 msgid "Assets"
 msgstr "Assets"
 
+#: src/components/shared/inputs/Pay/MemoFormItem.tsx
 #: src/components/shared/modals/AttachStickerModal.tsx
 msgid "Attach a sticker"
 msgstr "Attach a sticker"

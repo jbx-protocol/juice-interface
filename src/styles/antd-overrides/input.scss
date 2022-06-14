@@ -153,6 +153,10 @@ input:-webkit-autofill-selected {
   width: 100%;
 }
 
+textarea.ant-input::placeholder {
+  color: var(--text-tertiary) !important;
+}
+
 .ant-input-textarea-show-count::after {
   color: var(--text-tertiary);
 }
@@ -291,4 +295,8 @@ input:-webkit-autofill-selected {
 .formatted-number-input .ant-form-item {
   margin-bottom: 0;
   width: 100%;
+}
+
+.ant-form-item-optional {
+  color: var(--text-primary) !important;
 }

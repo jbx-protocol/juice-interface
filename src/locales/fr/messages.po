@@ -8,7 +8,7 @@ msgstr ""
 "Language: fr\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-06-13 02:57\n"
+"PO-Revision-Date: 2022-06-14 03:05\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -783,7 +783,7 @@ msgstr "Copier dans le presse-papier"
 
 #: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Create a payable address (optional)"
-msgstr ""
+msgstr "Créer une adresse de paiement (facultatif)"
 
 #: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Create an Ethereum address for your project. Enables direct payments without going through your project's Juicebox page."
@@ -2030,7 +2030,7 @@ msgstr "Le projet n'accepte pas des paiements dans ce cycle de financement."
 
 #: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Project launch successful"
-msgstr ""
+msgstr "Démarrage du projet réussi"
 
 #: src/components/shared/formItems/ProjectName.tsx
 msgid "Project name"
@@ -2822,7 +2822,7 @@ msgstr "Transaction en attente..."
 
 #: src/components/shared/ArchiveProject/index.tsx
 msgid "Transaction unsuccessful"
-msgstr ""
+msgstr "Transaction échouée"
 
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx

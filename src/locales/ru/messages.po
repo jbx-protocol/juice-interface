@@ -18,14 +18,6 @@ msgstr ""
 "X-Crowdin-File: messages.po\n"
 "X-Crowdin-File-ID: 9\n"
 
-#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
-msgid "(Optional) Add a memo to this payment on-chain"
-msgstr "(Необязательно) Добавить примечание к этому платежу в цепочке"
-
-#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
-msgid "(Optional) Add a note to this payment on-chain"
-msgstr "(Необязательно) Добавить примечание к этому платежу в цепочке"
-
 #: src/components/shared/formItems/ProjectDiscountRate.tsx
 msgid "({0}%)"
 msgstr "({0}%)"
@@ -291,11 +283,15 @@ msgstr "Активность"
 msgid "Add a payout"
 msgstr "Добавить выплату"
 
+#: src/components/shared/inputs/Pay/MemoFormItem.tsx
+msgid "Add an on-chain memo to this payment."
+msgstr ""
+
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
 msgid "Add funds to this project's balance without minting tokens."
 msgstr "Пополняйте средства на баланс этого проекта без создания жетонов."
 
-#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Add image"
 msgstr "Добавить изображение"
@@ -472,6 +468,10 @@ msgstr "Вы уверены, что хотите начать все снача�
 msgid "Assets"
 msgstr "Активы"
 
+#: src/components/shared/modals/AttachStickerModal.tsx
+msgid "Attach a sticker"
+msgstr ""
+
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
 msgid "Automate funding cycles"
 msgstr ""
@@ -587,6 +587,7 @@ msgstr "Могу ли я изменить контракт своего прое
 msgid "Can I delete a project?"
 msgstr "Могу ли я удалить проект?"
 
+#: src/components/shared/modals/AttachStickerModal.tsx
 #: src/components/v1/V1Project/modals/BalancesModal.tsx
 msgid "Cancel"
 msgstr "Отменить"
@@ -619,7 +620,7 @@ msgstr ""
 msgid "Check this to mint this project's ERC-20 tokens to your wallet. Leave unchecked to have your token balance tracked by Juicebox, saving gas on this transaction. You can always claim your ERC-20 tokens later."
 msgstr "Установите этот флажок, чтобы зачислить токены ERC-20 этого проекта на свой кошелек. Оставьте флажок не отмеченным, чтобы ваш баланс токенов отслеживался Juicebox, экономя газ на этой транзакции. Вы всегда можете потребовать свои токены ERC-20 позже."
 
-#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 msgid "Check this to mint {tokenSymbol} ERC-20 to your wallet. Leave unchecked to have your token balance tracked by Juicebox, saving gas on this transaction. You can always claim your ERC-20 tokens later."
 msgstr "Проверьте это, чтобы минтить {tokenSymbol} ERC-20 на ваш кошелек. Оставьте флажок не отмеченным, чтобы ваш баланс токенов отслеживался Juicebox, экономя газ на этой транзакции. Вы всегда можете потребовать свои токены ERC-20 позже."
 
@@ -720,7 +721,7 @@ msgid "Connect wallet to issue"
 msgstr ""
 
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
-#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Connect wallet to pay"
 msgstr "Подключите кошелёк для оплаты"
@@ -1593,8 +1594,7 @@ msgstr "Управление {tokenText}"
 msgid "Maximum {MAX_DESCRIPTION_LENGTH} characters"
 msgstr ""
 
-#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
-#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
+#: src/components/shared/inputs/Pay/MemoFormItem.tsx
 msgid "Memo"
 msgstr "Мемо"
 
@@ -1750,7 +1750,7 @@ msgstr "Примечание: Juicebox является новым проект�
 msgid "Note: Tokens can be minted manually when allowed in the current funding cycle. This can be changed by the project owner for upcoming cycles."
 msgstr "Примечание: Токены могут быть отчеканены вручную, если это разрешено в текущем цикле финансирования. Это может быть изменено владельцем проекта для последующих циклов."
 
-#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Notice from {0}:"
 msgstr "Уведомление от {0}:"
@@ -1818,7 +1818,7 @@ msgid "Pay"
 msgstr "Оплатить"
 
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
-#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Pay amount"
 msgstr "Сумма платежа"
@@ -1842,7 +1842,7 @@ msgstr "Кнопка оплаты"
 msgid "Pay disclosure"
 msgstr "Раскрытие информации о платеже"
 
-#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Pay {0}"
 msgstr "Заплатить {0}"
@@ -1856,7 +1856,7 @@ msgstr "Плательщик"
 msgid "Paying <0>{0}</0> is not an investment — it's a way to support the project. Any value or utility of the tokens you receive is determined by <1>{1}</1>."
 msgstr "Оплата <0>{0}</0> не является инвестицией - это способ поддержать проект. Любая ценность или полезность полученных вами токенов определяется <1>{1}</1>."
 
-#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 msgid "Paying <0>{0}</0> is not an investment — it's a way to support the project. Any value or utility of the tokens you receive is determined by {1}."
 msgstr "Оплата {0} не является вложением – это способ поддержать проект. Любое значение или ценность полученных вами токенов определяется {1}."
 
@@ -2111,7 +2111,7 @@ msgstr "Проекты, использующие зарезервированн�
 msgid "Rankings based on number of contributions and volume gained in the last {trendingWindow} days. <0>See code</0>"
 msgstr "Рейтинг, основанный на количестве вкладов и объеме, полученном за последние {trendingWindow} дней. <0>Увидеть код</0>"
 
-#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Receive ERC-20"
 msgstr "Получить ERC-20"
@@ -2675,7 +2675,7 @@ msgstr "Эта ставка определяет количество переп
 msgid "This will erase all of your changes."
 msgstr "Это удалит все ваши изменения."
 
-#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "To: <0/>"
 msgstr "Кому: <0/>"
@@ -2811,7 +2811,7 @@ msgstr "Общее предложение"
 msgid "Total: {0}%"
 msgstr "Итого: {0}%"
 
-#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/hooks/Transactor.ts
 msgid "Transaction failed"
 msgstr ""
@@ -2928,6 +2928,10 @@ msgstr "Версия терминального контракта, исполь
 #: src/components/shared/VolumeChart/index.tsx
 msgid "Volume"
 msgstr "Объём"
+
+#: src/components/shared/inputs/Pay/MemoFormItem.tsx
+msgid "WAGMI!"
+msgstr ""
 
 #: src/components/v1/shared/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
@@ -3293,7 +3297,7 @@ msgstr "{0} внесли вклад"
 msgid "{0} days"
 msgstr "{0} дней"
 
-#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "{0} for you"
 msgstr "{0} для вас"
@@ -3302,7 +3306,7 @@ msgstr "{0} для вас"
 msgid "{0} holders"
 msgstr "{0} держатели"
 
-#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "{0} reserved"
 msgstr "{0} зарезервировано"

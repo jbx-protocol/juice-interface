@@ -18,14 +18,6 @@ msgstr ""
 "X-Crowdin-File: messages.po\n"
 "X-Crowdin-File-ID: 9\n"
 
-#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
-msgid "(Optional) Add a memo to this payment on-chain"
-msgstr "(Opcional) Adicionar um recado a esse pagamento em cadeia"
-
-#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
-msgid "(Optional) Add a note to this payment on-chain"
-msgstr "(Opcional) Adicionar uma nota a esse pagamento em cadeia"
-
 #: src/components/shared/formItems/ProjectDiscountRate.tsx
 msgid "({0}%)"
 msgstr "({0}%)"
@@ -291,11 +283,15 @@ msgstr "Atividade"
 msgid "Add a payout"
 msgstr "Adicionar um pagamento"
 
+#: src/components/shared/inputs/Pay/MemoFormItem.tsx
+msgid "Add an on-chain memo to this payment."
+msgstr ""
+
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
 msgid "Add funds to this project's balance without minting tokens."
 msgstr "Adicionar fundos ao saldo deste projeto sem produzir tokens."
 
-#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Add image"
 msgstr "Adicionar imagem"
@@ -472,6 +468,10 @@ msgstr "Você tem certeza que quer começar novamente?"
 msgid "Assets"
 msgstr "Ativos"
 
+#: src/components/shared/modals/AttachStickerModal.tsx
+msgid "Attach a sticker"
+msgstr ""
+
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
 msgid "Automate funding cycles"
 msgstr "Automatizar ciclos de financiamento"
@@ -587,6 +587,7 @@ msgstr "Posso mudar o contrato do meu projeto após ele ter sido criado?"
 msgid "Can I delete a project?"
 msgstr "Posso excluir um projeto?"
 
+#: src/components/shared/modals/AttachStickerModal.tsx
 #: src/components/v1/V1Project/modals/BalancesModal.tsx
 msgid "Cancel"
 msgstr "Cancelar"
@@ -619,7 +620,7 @@ msgstr "Mudanças que você fizer terão efeito de acordo com sua regra de recon
 msgid "Check this to mint this project's ERC-20 tokens to your wallet. Leave unchecked to have your token balance tracked by Juicebox, saving gas on this transaction. You can always claim your ERC-20 tokens later."
 msgstr "Marque isso para emitir os tokens ERC-20 do projeto para sua carteira. Deixe desmarcados para deixar que o Juicebox monitore o seu saldo de tokens, economizando o gás da transação. Você sempre pode reivindicar seus tokens posteriormente."
 
-#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 msgid "Check this to mint {tokenSymbol} ERC-20 to your wallet. Leave unchecked to have your token balance tracked by Juicebox, saving gas on this transaction. You can always claim your ERC-20 tokens later."
 msgstr "Marque isso para emitir os tokens {tokenSymbol} ERC-20 do projeto para sua carteira. Deixe desmarcados para deixar que o Juicebox monitore o seu saldo de tokens, economizando o gás da transação. Você sempre pode reivindicar seus tokens posteriormente."
 
@@ -720,7 +721,7 @@ msgid "Connect wallet to issue"
 msgstr ""
 
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
-#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Connect wallet to pay"
 msgstr "Conecte uma carteira para pagar"
@@ -1593,8 +1594,7 @@ msgstr "Administre {tokenText}"
 msgid "Maximum {MAX_DESCRIPTION_LENGTH} characters"
 msgstr "Máximo de {MAX_DESCRIPTION_LENGTH} caracteres"
 
-#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
-#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
+#: src/components/shared/inputs/Pay/MemoFormItem.tsx
 msgid "Memo"
 msgstr "Memo"
 
@@ -1750,7 +1750,7 @@ msgstr "Nota: o Juicebox é novo, não auditado e sem garantia de funcionar perf
 msgid "Note: Tokens can be minted manually when allowed in the current funding cycle. This can be changed by the project owner for upcoming cycles."
 msgstr "Nota: Tokens podem ser criados manualmente quando permitidos no atual ciclo de financiamento. Isso pode ser modificado pelo proprietário do projeto para os próximos ciclos."
 
-#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Notice from {0}:"
 msgstr "Aviso de {0}:"
@@ -1818,7 +1818,7 @@ msgid "Pay"
 msgstr "Pagar"
 
 #: src/components/shared/modals/ProjectToolDrawerModal.tsx
-#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Pay amount"
 msgstr "Pagar o montante"
@@ -1842,7 +1842,7 @@ msgstr "Texto do botão \"pagar\""
 msgid "Pay disclosure"
 msgstr "Pagar divulgação"
 
-#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Pay {0}"
 msgstr "Pagar {0}"
@@ -1856,7 +1856,7 @@ msgstr "Pagador"
 msgid "Paying <0>{0}</0> is not an investment — it's a way to support the project. Any value or utility of the tokens you receive is determined by <1>{1}</1>."
 msgstr "Pagar <0>{0}</0> não é um investimento — é uma forma de apoiar o projeto. Qualquer valor ou aplicabilidade dos tokens que recebe está determinado por <1>{1}</1>."
 
-#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 msgid "Paying <0>{0}</0> is not an investment — it's a way to support the project. Any value or utility of the tokens you receive is determined by {1}."
 msgstr "Pagar <0>{0}</0> não é um investimento — é uma forma de apoiar o projeto. Qualquer valor ou aplicabilidade dos tokens que recebe está determinado por {1}."
 
@@ -2111,7 +2111,7 @@ msgstr "Projetos utilizando uma taxa de reserva de {reservedRateRiskyMin}% ou ma
 msgid "Rankings based on number of contributions and volume gained in the last {trendingWindow} days. <0>See code</0>"
 msgstr "Rankings baseados em número de contribuições e volume ganho nos últimos {trendingWindow} dias. <0>Ver código</0>"
 
-#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Receive ERC-20"
 msgstr "Receber ERC-20"
@@ -2675,7 +2675,7 @@ msgstr "Esta taxa determina a quantidade de overflow que cada token pode ser res
 msgid "This will erase all of your changes."
 msgstr "Isso vai apagar todas as suas mudanças."
 
-#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "To: <0/>"
 msgstr "Para: <0/>"
@@ -2811,7 +2811,7 @@ msgstr "Fornecimento total"
 msgid "Total: {0}%"
 msgstr "Total: {0}%"
 
-#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/hooks/Transactor.ts
 msgid "Transaction failed"
 msgstr "Transação falhou"
@@ -2928,6 +2928,10 @@ msgstr "Versão do contrato de terminal utilizado por este projeto."
 #: src/components/shared/VolumeChart/index.tsx
 msgid "Volume"
 msgstr "Volume"
+
+#: src/components/shared/inputs/Pay/MemoFormItem.tsx
+msgid "WAGMI!"
+msgstr ""
 
 #: src/components/v1/shared/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
@@ -3293,7 +3297,7 @@ msgstr "{0} contribuído"
 msgid "{0} days"
 msgstr "{0} dias"
 
-#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "{0} for you"
 msgstr "{0} para você"
@@ -3302,7 +3306,7 @@ msgstr "{0} para você"
 msgid "{0} holders"
 msgstr "{0} titulares"
 
-#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal/index.tsx
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "{0} reserved"
 msgstr "{0} reservado"

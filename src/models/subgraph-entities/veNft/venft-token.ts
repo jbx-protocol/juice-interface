@@ -1,15 +1,15 @@
-import {
-  parseVeNftLockInfoJson,
-  VeNftLockInfo,
-  VeNftLockInfoJson,
-} from 'models/subgraph-entities/veNft/venft-lock-info'
+import { BigNumber } from '@ethersproject/bignumber'
 import { VeNftVariant } from 'models/veNft/veNftVariant'
 
 export interface VeNftToken {
   tokenId: number
   tokenUri: string
   owner: string
-  lockInfo: VeNftLockInfo
+  lockAmount: BigNumber
+  lockEnd: number
+  lockDuration: number
+  lockUseJbToken: boolean
+  lockAllowPublicExtension: boolean
   variant?: VeNftVariant
 }
 
@@ -21,5 +21,9 @@ export const parseVeNftTokenJson = (
   tokenId: parseInt(j.tokenId),
   tokenUri: j.tokenUri,
   owner: j.owner,
-  lockInfo: parseVeNftLockInfoJson(j.lockInfo as unknown as VeNftLockInfoJson),
+  lockAmount: BigNumber.from(j.lockAmount),
+  lockEnd: parseInt(j.lockEnd),
+  lockDuration: parseInt(j.lockDuration),
+  lockUseJbToken: j.lockUseJbToken === 'true',
+  lockAllowPublicExtension: j.lockAllowPublicExtension === 'true',
 })

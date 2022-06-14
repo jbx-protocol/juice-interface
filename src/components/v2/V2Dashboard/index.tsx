@@ -52,8 +52,6 @@ import { NetworkContext } from 'contexts/networkContext'
 
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 
-import { VeNftToken } from 'models/subgraph-entities/veNft/venft-token'
-
 import { layouts } from 'constants/styles/layouts'
 
 import V2Project from '../V2Project'
@@ -73,16 +71,17 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
   const { data: resolverAddress } = useNFTResolverAddress()
   const baseImagesHash = useNFTBaseImagesHash()
   const variants = useNFTGetVariants()
-  const userTokens: VeNftToken[] | undefined = useSubgraphQuery({
+  const userTokens = useSubgraphQuery({
     entity: 'veNftToken',
     keys: [
       'tokenId',
       'tokenUri',
       'owner',
-      {
-        entity: 'lockInfo',
-        keys: ['amount', 'end', 'duration'],
-      },
+      'lockAmount',
+      'lockDuration',
+      'lockEnd',
+      'lockUseJbToken',
+      'lockAllowPublicExtension',
     ],
     where: {
       key: 'owner',

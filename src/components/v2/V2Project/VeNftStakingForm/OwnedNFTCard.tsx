@@ -26,13 +26,12 @@ export default function OwnedNFTCard({
   const [redeemModalVisible, setRedeemModalVisible] = useState(false)
   const [unlockModalVisible, setUnlockModalVisible] = useState(false)
 
-  const { lockInfo } = token
+  const { lockAmount, lockEnd, lockDuration } = token
   const { data: metadata } = useNFTMetadata(token.tokenUri)
   const thumbnailUri = metadata?.thumbnailUri
-  const { amount, end, duration } = lockInfo
   // const { thumbnailUri } = metadata
 
-  const remaining = Math.max(Math.round(end - Date.now() / 1000), 0)
+  const remaining = Math.max(Math.round(lockEnd - Date.now() / 1000), 0)
 
   const { colors, radii } = useContext(ThemeContext).theme
 
@@ -55,10 +54,10 @@ export default function OwnedNFTCard({
                 <p>Time remaining:</p>
               </Col>
               <Col span={12}>
-                <p>{formattedNum(fromWad(amount))}</p>
+                <p>{formattedNum(fromWad(lockAmount))}</p>
                 <p>
                   {detailedTimeString({
-                    timeSeconds: duration,
+                    timeSeconds: lockDuration,
                     fullWords: true,
                   })}
                 </p>

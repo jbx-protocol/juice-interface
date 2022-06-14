@@ -8,10 +8,10 @@ export type VeNftSummaryStats = {
 export function useNFTGetSummaryStats(userTokens: VeNftToken[]) {
   const summaryStats: VeNftSummaryStats = {
     totalStaked: userTokens.reduce((acc, token) => {
-      return acc + token.lockInfo.amount.toNumber()
+      return acc + token.lockAmount.toNumber()
     }, 0),
     totalStakedPeriod: userTokens.reduce((acc, token) => {
-      return acc + token.lockInfo.duration
+      return acc + token.lockDuration
     }, 0),
   }
 

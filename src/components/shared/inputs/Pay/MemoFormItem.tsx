@@ -15,42 +15,41 @@ export default function MemoFormItem({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+
   const [attachStickerModalVisible, setAttachStickerModalVisible] =
     useState<boolean>(false)
+
   return (
-    <>
-      <Form.Item
-        label={t`Memo`}
-        name="memo"
-        className={'antd-no-number-handler'}
-        extra={t`Add an on-chain memo to this payment.`}
+    <Form.Item
+      label={t`Memo`}
+      className={'antd-no-number-handler'}
+      extra={t`Add an on-chain memo to this payment.`}
+    >
+      <div
+        style={{
+          position: 'relative',
+        }}
       >
+        <Input.TextArea
+          placeholder={t`WAGMI!`}
+          maxLength={256}
+          value={value}
+          onChange={e => onChange(e.target.value)}
+          showCount
+          autoSize
+        />
         <div
           style={{
-            position: 'relative',
+            color: colors.text.secondary,
+            fontSize: '.8rem',
+            position: 'absolute',
+            right: 10,
+            top: 7,
           }}
         >
-          <Input.TextArea
-            placeholder={t`WAGMI!`}
-            maxLength={256}
-            value={value}
-            onChange={e => onChange(e.target.value)}
-            showCount
-            autoSize
-          />
-          <div
-            style={{
-              color: colors.text.secondary,
-              fontSize: '.8rem',
-              position: 'absolute',
-              right: 10,
-              top: 7,
-            }}
-          >
-            <SmileOutlined onClick={() => setAttachStickerModalVisible(true)} />
-          </div>
+          <SmileOutlined onClick={() => setAttachStickerModalVisible(true)} />
         </div>
-      </Form.Item>
+      </div>
       <AttachStickerModal
         visible={attachStickerModalVisible}
         onClose={() => setAttachStickerModalVisible(false)}
@@ -61,6 +60,6 @@ export default function MemoFormItem({
           onChange(value.length ? `${value} ${urlString}` : urlString)
         }}
       />
-    </>
+    </Form.Item>
   )
 }

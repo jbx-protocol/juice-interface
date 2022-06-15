@@ -282,7 +282,7 @@ msgstr "Add a payout"
 msgid "Add an on-chain memo to this payment."
 msgstr "Add an on-chain memo to this payment."
 
-#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal/AddToProjectBalanceForm.tsx
 msgid "Add funds to this project's balance without minting tokens."
 msgstr ""
 
@@ -302,11 +302,11 @@ msgstr "Add new payout"
 msgid "Add payout"
 msgstr "Add payout"
 
-#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal/AddToProjectBalanceForm.tsx
 msgid "Add to Balance"
 msgstr ""
 
-#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal/AddToProjectBalanceForm.tsx
 msgid "Add to balance"
 msgstr ""
 
@@ -447,7 +447,7 @@ msgstr ""
 
 #: src/components/shared/ArchiveProject/index.tsx
 #: src/components/shared/ArchiveProject/index.tsx
-#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal/ProjectToolDrawerModal.tsx
 msgid "Archive project"
 msgstr "Archive project"
 
@@ -715,13 +715,13 @@ msgstr "Connect wallet to distribute"
 msgid "Connect wallet to issue"
 msgstr "Connect wallet to issue"
 
-#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal/AddToProjectBalanceForm.tsx
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Connect wallet to pay"
 msgstr "Connect wallet to pay"
 
-#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal/TransferUnclaimedTokensForm.tsx
 msgid "Connect wallet to transfer"
 msgstr "Connect wallet to transfer"
 
@@ -784,12 +784,12 @@ msgstr "Create a payable address (optional)"
 msgid "Create an Ethereum address for your project. Enables direct payments without going through your project's Juicebox page."
 msgstr "Create an Ethereum address for your project. Enables direct payments without going through your project's Juicebox page."
 
-#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal/PayableAddressSection.tsx
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Create an Ethereum address that can be used to pay your project directly."
 msgstr "Create an Ethereum address that can be used to pay your project directly."
 
-#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal/PayableAddressSection.tsx
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Create payable address"
 msgstr "Create payable address"
@@ -821,7 +821,7 @@ msgstr ""
 msgid "Current 3rd Party Exchange Rates"
 msgstr "Current 3rd Party Exchange Rates"
 
-#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal/TransferOwnershipForm.tsx
 msgid "Current owner: {ownerAddress}"
 msgstr "Current owner: {ownerAddress}"
 
@@ -1283,6 +1283,10 @@ msgstr "Funding target"
 msgid "Funds will be distributed to:"
 msgstr ""
 
+#: src/components/shared/modals/ProjectToolDrawerModal/ProjectToolDrawerModal.tsx
+msgid "General"
+msgstr "General"
+
 #: src/components/shared/FeedbackFormButton.tsx
 #: src/components/shared/FeedbackFormButton.tsx
 msgid "Give feedback"
@@ -1388,7 +1392,7 @@ msgstr "If you don't raise the sum of all your payouts (<0/>{distributionLimit})
 msgid "If you don't raise this amount, your splits will receive their percentage of whatever you raise."
 msgstr "If you don't raise this amount, your splits will receive their percentage of whatever you raise."
 
-#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal/PayableAddressSection.tsx
 msgid "If you have already deployed a payable address and have lost it, please contact the Juicebox team through <0>Discord.</0>"
 msgstr "If you have already deployed a payable address and have lost it, please contact the Juicebox team through <0>Discord.</0>"
 
@@ -1563,7 +1567,7 @@ msgstr "Locked:"
 msgid "Logo"
 msgstr ""
 
-#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal/TransferUnclaimedTokensForm.tsx
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 #: src/components/v1/shared/FundingCycle/modals/WithdrawModal.tsx
@@ -1733,10 +1737,6 @@ msgstr ""
 msgid "Note"
 msgstr "Note"
 
-#: src/components/shared/ArchiveProject/index.tsx
-msgid "Note:"
-msgstr "Note:"
-
 #: src/components/Landing/index.tsx
 msgid "Note: Juicebox is new, unaudited, and not guaranteed to work perfectly. Before spending money, do your own research: <0>ask questions</0>, <1>check out the code</1>, and understand the risks!"
 msgstr ""
@@ -1778,6 +1778,10 @@ msgstr "Owner is not allowed to mint tokens."
 msgid "Owner token minting"
 msgstr "Owner token minting"
 
+#: src/components/shared/modals/ProjectToolDrawerModal/ProjectToolDrawerModal.tsx
+msgid "Owner tools"
+msgstr "Owner tools"
+
 #: src/components/shared/activityEventElems/PayEventElem.tsx
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 #: src/components/v2/V2Project/ProjectActivity/index.tsx
@@ -1812,7 +1816,7 @@ msgstr ""
 msgid "Pay"
 msgstr ""
 
-#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal/AddToProjectBalanceForm.tsx
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Pay amount"
@@ -1936,7 +1940,7 @@ msgstr "Percentages"
 msgid "Percentages must add up to 100% or less"
 msgstr "Percentages must add up to 100% or less"
 
-#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal/ProjectToolDrawerModal.tsx
 msgid "Please contact the Juicebox dev team through our <0>Discord</0> to have your project archived."
 msgstr "Please contact the Juicebox dev team through our <0>Discord</0> to have your project archived."
 
@@ -2118,6 +2122,11 @@ msgstr "Receive {receiveText}"
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Recipient"
 msgstr "Recipient"
+
+#: src/components/shared/modals/ProjectToolDrawerModal/TransferOwnershipForm.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal/TransferUnclaimedTokensForm.tsx
+msgid "Recipient address"
+msgstr "Recipient address"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Recipients will receive payouts in ETH."
@@ -2781,7 +2790,7 @@ msgstr "Tokens receiver"
 msgid "Tokens:"
 msgstr "Tokens:"
 
-#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal/ProjectToolDrawerModal.tsx
 #: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 #: src/components/v2/V2Project/V2ProjectHeaderActions.tsx
 msgid "Tools"
@@ -2819,16 +2828,16 @@ msgstr "Transaction pending..."
 msgid "Transaction unsuccessful"
 msgstr "Transaction unsuccessful"
 
-#: src/components/shared/modals/ProjectToolDrawerModal.tsx
-#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal/TransferOwnershipForm.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal/TransferOwnershipForm.tsx
 msgid "Transfer ownership"
 msgstr ""
 
-#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal/TransferUnclaimedTokensForm.tsx
 msgid "Transfer unclaimed {tokenSymbolShort}"
 msgstr "Transfer unclaimed {tokenSymbolShort}"
 
-#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal/TransferUnclaimedTokensForm.tsx
 msgid "Transfer {tokenSymbolShort}"
 msgstr "Transfer {tokenSymbolShort}"
 
@@ -2859,8 +2868,8 @@ msgid "Unavailable"
 msgstr "Unavailable"
 
 #: src/components/shared/ArchiveProject/index.tsx
-msgid "Unless payments are paused in your funding cycle settings, your project will still be able to receive payments directly through the Juicebox protocol contracts."
-msgstr "Unless payments are paused in your funding cycle settings, your project will still be able to receive payments directly through the Juicebox protocol contracts."
+msgid "Unless payments are paused in your funding cycle settings, your project can still receive payments directly through the Juicebox protocol contracts."
+msgstr "Unless payments are paused in your funding cycle settings, your project can still receive payments directly through the Juicebox protocol contracts."
 
 #: src/components/v2/shared/UnsavedChangesModal.tsx
 msgid "Unsaved changes"
@@ -3109,10 +3118,6 @@ msgstr "Your Juicebox project has no active funding cycle. Launch a funding cycl
 msgid "Your balance"
 msgstr ""
 
-#: src/components/shared/modals/ProjectToolDrawerModal.tsx
-msgid "Your balance: {0}"
-msgstr ""
-
 #: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner.tsx
 msgid "Your funding cycle configuration has been pre-populated using the configuration you originally launched with. If you need to customize it, contact us."
 msgstr "Your funding cycle configuration has been pre-populated using the configuration you originally launched with. If you need to customize it, contact us."
@@ -3120,6 +3125,10 @@ msgstr "Your funding cycle configuration has been pre-populated using the config
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Your new payable address:"
 msgstr "Your new payable address:"
+
+#: src/components/shared/ArchiveProject/index.tsx
+msgid "Your project can still receive payments directly through the Juicebox protocol contracts."
+msgstr "Your project can still receive payments directly through the Juicebox protocol contracts."
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "Your project cannot receive direct payments while paused."
@@ -3130,8 +3139,8 @@ msgid "Your project is funded across funding cycles. A funding cycle has a fundi
 msgstr ""
 
 #: src/components/shared/ArchiveProject/index.tsx
-msgid "Your project will appear archived, and will not be able to receive payments through the juicebox.money app. You can unarchive a project at any time. Please allow a few days for your project to appear under the \"archived\" filter on the Projects page."
-msgstr "Your project will appear archived, and will not be able to receive payments through the juicebox.money app. You can unarchive a project at any time. Please allow a few days for your project to appear under the \"archived\" filter on the Projects page."
+msgid "Your project will appear archived, and won't be able to receive payments through the juicebox.money app. You can unarchive a project at any time. Allow a few days for your project to appear under the \"archived\" filter on the Projects page."
+msgstr "Your project will appear archived, and won't be able to receive payments through the juicebox.money app. You can unarchive a project at any time. Allow a few days for your project to appear under the \"archived\" filter on the Projects page."
 
 #: src/components/v2/V2Create/V2WarningBanner.tsx
 msgid "Your project will be created on the Juicebox V2 contracts. <0>Learn more.</0>"
@@ -3141,10 +3150,6 @@ msgstr "Your project will be created on the Juicebox V2 contracts. <0>Learn more
 msgid "Your project will immediately appear active on the juicebox.money app. Please allow a few days for it to appear in the \"active\" projects list on the Projects page."
 msgstr "Your project will immediately appear active on the juicebox.money app. Please allow a few days for it to appear in the \"active\" projects list on the Projects page."
 
-#: src/components/shared/ArchiveProject/index.tsx
-msgid "Your project will still be able to receive payments directly through the Juicebox protocol contracts."
-msgstr "Your project will still be able to receive payments directly through the Juicebox protocol contracts."
-
 #: src/components/v1/V1Create/index.tsx
 msgid "Your project's funding cycle target and duration."
 msgstr ""
@@ -3152,6 +3157,10 @@ msgstr ""
 #: src/components/shared/TransactionModal.tsx
 msgid "Your transaction has been submitted and is awaiting confirmation."
 msgstr "Your transaction has been submitted and is awaiting confirmation."
+
+#: src/components/shared/modals/ProjectToolDrawerModal/TransferUnclaimedTokensForm.tsx
+msgid "Your unclaimed token balance: {0}"
+msgstr "Your unclaimed token balance: {0}"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "Your unclaimed {tokenTextLong}"

@@ -287,7 +287,7 @@ msgstr "添加支出对象"
 msgid "Add an on-chain memo to this payment."
 msgstr ""
 
-#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal/AddToProjectBalanceForm.tsx
 msgid "Add funds to this project's balance without minting tokens."
 msgstr "往项目中添加资金，但不铸造代币。"
 
@@ -307,11 +307,11 @@ msgstr ""
 msgid "Add payout"
 msgstr "添加支出"
 
-#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal/AddToProjectBalanceForm.tsx
 msgid "Add to Balance"
 msgstr "添加到余额"
 
-#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal/AddToProjectBalanceForm.tsx
 msgid "Add to balance"
 msgstr "添加到余额"
 
@@ -452,7 +452,7 @@ msgstr "对之后的筹款周期进行重新配置，更改将在当前周期结
 
 #: src/components/shared/ArchiveProject/index.tsx
 #: src/components/shared/ArchiveProject/index.tsx
-#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal/ProjectToolDrawerModal.tsx
 msgid "Archive project"
 msgstr "存档项目"
 
@@ -720,13 +720,13 @@ msgstr ""
 msgid "Connect wallet to issue"
 msgstr ""
 
-#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal/AddToProjectBalanceForm.tsx
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Connect wallet to pay"
 msgstr "连接钱包以支付"
 
-#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal/TransferUnclaimedTokensForm.tsx
 msgid "Connect wallet to transfer"
 msgstr ""
 
@@ -789,12 +789,12 @@ msgstr ""
 msgid "Create an Ethereum address for your project. Enables direct payments without going through your project's Juicebox page."
 msgstr ""
 
-#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal/PayableAddressSection.tsx
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Create an Ethereum address that can be used to pay your project directly."
 msgstr "创建一个可用于直接支付给你的项目的以太坊地址。"
 
-#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal/PayableAddressSection.tsx
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Create payable address"
 msgstr "创建可支付地址"
@@ -826,7 +826,7 @@ msgstr "当前"
 msgid "Current 3rd Party Exchange Rates"
 msgstr "当前第三方交易平台价格"
 
-#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal/TransferOwnershipForm.tsx
 msgid "Current owner: {ownerAddress}"
 msgstr "当前项目方：{ownerAddress}"
 
@@ -1288,6 +1288,10 @@ msgstr "筹款目标"
 msgid "Funds will be distributed to:"
 msgstr "资金将会分发给："
 
+#: src/components/shared/modals/ProjectToolDrawerModal/ProjectToolDrawerModal.tsx
+msgid "General"
+msgstr ""
+
 #: src/components/shared/FeedbackFormButton.tsx
 #: src/components/shared/FeedbackFormButton.tsx
 msgid "Give feedback"
@@ -1393,7 +1397,7 @@ msgstr ""
 msgid "If you don't raise this amount, your splits will receive their percentage of whatever you raise."
 msgstr ""
 
-#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal/PayableAddressSection.tsx
 msgid "If you have already deployed a payable address and have lost it, please contact the Juicebox team through <0>Discord.</0>"
 msgstr "如果你已经部署过可支付地址但把它弄丢了，请到<0>Discord</0>去联系 Juicebox 团队。"
 
@@ -1568,7 +1572,7 @@ msgstr "锁定："
 msgid "Logo"
 msgstr "标志"
 
-#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal/TransferUnclaimedTokensForm.tsx
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 #: src/components/v1/shared/FundingCycle/modals/WithdrawModal.tsx
@@ -1738,10 +1742,6 @@ msgstr "未设定"
 msgid "Note"
 msgstr "请注意："
 
-#: src/components/shared/ArchiveProject/index.tsx
-msgid "Note:"
-msgstr "请注意："
-
 #: src/components/Landing/index.tsx
 msgid "Note: Juicebox is new, unaudited, and not guaranteed to work perfectly. Before spending money, do your own research: <0>ask questions</0>, <1>check out the code</1>, and understand the risks!"
 msgstr "注意： Juicebox是一个全新的协议，它未经审计且不保证能完美工作。 在花钱之前请先做好您自己的研究：提出疑问，核查代码以及了解所涉及的风险！"
@@ -1783,6 +1783,10 @@ msgstr "项目方不能够铸造代币。"
 msgid "Owner token minting"
 msgstr ""
 
+#: src/components/shared/modals/ProjectToolDrawerModal/ProjectToolDrawerModal.tsx
+msgid "Owner tools"
+msgstr ""
+
 #: src/components/shared/activityEventElems/PayEventElem.tsx
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 #: src/components/v2/V2Project/ProjectActivity/index.tsx
@@ -1817,7 +1821,7 @@ msgstr "已暂停"
 msgid "Pay"
 msgstr "支付"
 
-#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal/AddToProjectBalanceForm.tsx
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Pay amount"
@@ -1941,7 +1945,7 @@ msgstr ""
 msgid "Percentages must add up to 100% or less"
 msgstr "百分比总数相加必须少于或等于100%"
 
-#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal/ProjectToolDrawerModal.tsx
 msgid "Please contact the Juicebox dev team through our <0>Discord</0> to have your project archived."
 msgstr "请通过 Juicebox 的 <0>Discord</0> 联系我们的开发团队把你的项目进行归档。"
 
@@ -2122,6 +2126,11 @@ msgstr "接收 {receiveText}"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Recipient"
+msgstr ""
+
+#: src/components/shared/modals/ProjectToolDrawerModal/TransferOwnershipForm.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal/TransferUnclaimedTokensForm.tsx
+msgid "Recipient address"
 msgstr ""
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
@@ -2786,7 +2795,7 @@ msgstr "代币接收方"
 msgid "Tokens:"
 msgstr "代币："
 
-#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal/ProjectToolDrawerModal.tsx
 #: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 #: src/components/v2/V2Project/V2ProjectHeaderActions.tsx
 msgid "Tools"
@@ -2824,16 +2833,16 @@ msgstr "交易进行中......"
 msgid "Transaction unsuccessful"
 msgstr ""
 
-#: src/components/shared/modals/ProjectToolDrawerModal.tsx
-#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal/TransferOwnershipForm.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal/TransferOwnershipForm.tsx
 msgid "Transfer ownership"
 msgstr "所有权转移"
 
-#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal/TransferUnclaimedTokensForm.tsx
 msgid "Transfer unclaimed {tokenSymbolShort}"
 msgstr "转账未领取的 {tokenSymbolShort}"
 
-#: src/components/shared/modals/ProjectToolDrawerModal.tsx
+#: src/components/shared/modals/ProjectToolDrawerModal/TransferUnclaimedTokensForm.tsx
 msgid "Transfer {tokenSymbolShort}"
 msgstr "转账 {tokenSymbolShort}"
 
@@ -2864,8 +2873,8 @@ msgid "Unavailable"
 msgstr "不可用"
 
 #: src/components/shared/ArchiveProject/index.tsx
-msgid "Unless payments are paused in your funding cycle settings, your project will still be able to receive payments directly through the Juicebox protocol contracts."
-msgstr "除非“付款”已在您的筹款周期设置中被暂停，否则您的项目仍可通过Juicebox协议的智能合约直接收到付款。"
+msgid "Unless payments are paused in your funding cycle settings, your project can still receive payments directly through the Juicebox protocol contracts."
+msgstr ""
 
 #: src/components/v2/shared/UnsavedChangesModal.tsx
 msgid "Unsaved changes"
@@ -3114,10 +3123,6 @@ msgstr ""
 msgid "Your balance"
 msgstr "你的余额"
 
-#: src/components/shared/modals/ProjectToolDrawerModal.tsx
-msgid "Your balance: {0}"
-msgstr "你的余额：{0}"
-
 #: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner.tsx
 msgid "Your funding cycle configuration has been pre-populated using the configuration you originally launched with. If you need to customize it, contact us."
 msgstr ""
@@ -3125,6 +3130,10 @@ msgstr ""
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Your new payable address:"
 msgstr "你的新可支付地址："
+
+#: src/components/shared/ArchiveProject/index.tsx
+msgid "Your project can still receive payments directly through the Juicebox protocol contracts."
+msgstr ""
 
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "Your project cannot receive direct payments while paused."
@@ -3135,8 +3144,8 @@ msgid "Your project is funded across funding cycles. A funding cycle has a fundi
 msgstr "您的项目按筹款周期来进行筹款。每个筹款周期都有一个筹款目标和周期时长。您项目的筹款周期配置视您将创建项目的种类而定。"
 
 #: src/components/shared/ArchiveProject/index.tsx
-msgid "Your project will appear archived, and will not be able to receive payments through the juicebox.money app. You can unarchive a project at any time. Please allow a few days for your project to appear under the \"archived\" filter on the Projects page."
-msgstr "您的项目将体现为“存档”，并且将无法通过juicebox.money应用程序接收付款。您可以在任何时候取消项目的存档。请留出几天时间，以便您的项目显示在\"项目\"页面上的\"已存档\"过滤器下。"
+msgid "Your project will appear archived, and won't be able to receive payments through the juicebox.money app. You can unarchive a project at any time. Allow a few days for your project to appear under the \"archived\" filter on the Projects page."
+msgstr ""
 
 #: src/components/v2/V2Create/V2WarningBanner.tsx
 msgid "Your project will be created on the Juicebox V2 contracts. <0>Learn more.</0>"
@@ -3146,10 +3155,6 @@ msgstr "你的项目将在 Juicebox V2 合约上创建。 <0>了解更多。</0>
 msgid "Your project will immediately appear active on the juicebox.money app. Please allow a few days for it to appear in the \"active\" projects list on the Projects page."
 msgstr "您的项目将立即在 juicebox.money 应用程序上显示为“活动”状态。请留出几天时间，让它显示在\"项目\"页面上的\"活动\"项目列表中。"
 
-#: src/components/shared/ArchiveProject/index.tsx
-msgid "Your project will still be able to receive payments directly through the Juicebox protocol contracts."
-msgstr "您的项目仍可通过Juicebox协议的智能合约直接收到付款。"
-
 #: src/components/v1/V1Create/index.tsx
 msgid "Your project's funding cycle target and duration."
 msgstr "项目筹款周期的目标与持续时间。"
@@ -3157,6 +3162,10 @@ msgstr "项目筹款周期的目标与持续时间。"
 #: src/components/shared/TransactionModal.tsx
 msgid "Your transaction has been submitted and is awaiting confirmation."
 msgstr "你的交易已提交，正等待交易确认。"
+
+#: src/components/shared/modals/ProjectToolDrawerModal/TransferUnclaimedTokensForm.tsx
+msgid "Your unclaimed token balance: {0}"
+msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "Your unclaimed {tokenTextLong}"

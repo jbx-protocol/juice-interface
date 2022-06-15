@@ -1,6 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
-import ProjectToolDrawerModal from 'components/shared/modals/ProjectToolDrawerModal'
+import { ProjectToolDrawerModal } from 'components/shared/modals/ProjectToolDrawerModal/ProjectToolDrawerModal'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import {

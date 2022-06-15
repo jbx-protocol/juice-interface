@@ -19,7 +19,7 @@ import useUnclaimedBalanceOfUser from 'hooks/v1/contractReader/UnclaimedBalanceO
 import EditProjectModal from './modals/EditProjectModal'
 
 import MigrateV1Pt1Modal from './modals/MigrateV1Pt1Modal'
-import ProjectToolDrawerModal from '../../shared/modals/ProjectToolDrawerModal'
+import { ProjectToolDrawerModal } from '../../shared/modals/ProjectToolDrawerModal/ProjectToolDrawerModal'
 
 export default function V1ProjectHeaderActions() {
   const {

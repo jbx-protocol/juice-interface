@@ -42,7 +42,7 @@ msgstr ""
 msgid "1. Project details"
 msgstr "1. Détails du projet"
 
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectHandleDrawer.tsx
+#: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
 msgid "1. Set ENS name"
 msgstr ""
 
@@ -58,6 +58,7 @@ msgstr "2. Cycle de financement"
 #: src/components/Landing/HowItWorksSection.tsx
 msgid "2. Give ownership"
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectHandleDrawer.tsx
+#: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
 msgid "2. Set text record"
 msgstr ""
 
@@ -633,10 +634,11 @@ msgstr "Il n'est pas possible de récupérer des tokens pour ETH car ce projet n
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
 msgid "Changes to payouts will take effect immediately."
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectHandleDrawer.tsx
+#: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
 msgid "Change ENS name"
 msgstr ""
 
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectHandleDrawer.tsx
+#: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
 msgid "Change project handle"
 msgstr ""
 
@@ -676,6 +678,7 @@ msgstr "Cochez ceci pour frapper {tokenSymbol} ERC-20 vers votre portefeuille. L
 msgid "Choose how you would like to configure your payouts."
 msgstr "Choisissez comment souhaitez-vous paramétrer vos paiements."
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectHandleDrawer.tsx
+#: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
 msgid "Choose an ENS name to use as the project's handle, with an optional subdomain. The handle won't include the \".eth\" extension."
 msgstr ""
 
@@ -1630,6 +1633,7 @@ msgstr "Projet Juicebox"
 #: src/components/Landing/TopProjectsSection.tsx
 msgid "Juicebox puts the fun back in funding so you can focus on building."
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectHandleDrawer.tsx
+#: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
 msgid "Juicebox projects use <0>ENS names</0> as handles. Setting a handle involves 2 transactions:"
 msgstr ""
 
@@ -2576,7 +2580,7 @@ msgstr "Secondes"
 msgid "See transaction"
 msgstr "Voir la transaction"
 
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectHandleDrawer.tsx
+#: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
 msgid "Set ENS name"
 msgstr ""
 
@@ -2597,15 +2601,23 @@ msgstr "Définir l'objectif du cycle de financement"
 msgid "Set a funding target to cover predictable expenses. Any extra funds (<0>overflow</0>) can be claimed by anyone holding your project's tokens alongside you."
 msgstr "Définir un objectif de financement pour couvrir les dépenses prévisibles. Tout fonds supplémentaire (<0>overflow</0>) peut être récupéré par toute personne détenant des tokens de votre projet."
 
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectHandleDrawer.tsx
+#: src/components/v2/V2Project/NewDeployModal.tsx
+msgid "Set a project handle (optional)"
+msgstr ""
+
+#: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
 msgid "Set a text record for {0} with the key <0>\"juicebox\"</0> and the value <1>\"{projectId}\"</1> (this project's ID). You can do this on the <2>ENS app</2>, or use the button below (as long as your connected wallet owns or controls that ENS name)."
 msgstr ""
 
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectHandleDrawer.tsx
+#: src/components/v2/V2Project/NewDeployModal.tsx
+msgid "Set a unique name that will be visible in your project's URL, and that will allow your project to appear in search results."
+msgstr ""
+
+#: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
 msgid "Set project handle"
 msgstr ""
 
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectHandleDrawer.tsx
+#: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
 msgid "Set text record for {0}"
 msgstr ""
 
@@ -2695,6 +2707,7 @@ msgid "The <0>issuance rate</0> of your second funding cycle will be <1>{0} toke
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectHandleDrawer.tsx
 msgid "Text record is set"
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectHandleDrawer.tsx
+#: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
 msgid "Text record is set"
 msgstr ""
 

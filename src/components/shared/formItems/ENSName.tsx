@@ -8,14 +8,12 @@ export default function ENSName({
   name,
   hideLabel,
   formItemProps,
-  subdomainCount,
+  subdomainCount = 0,
   onChange,
 }: {
   subdomainCount?: number
   onChange?: (val?: string) => void
 } & FormItemExt) {
-  const _subdomainCount = subdomainCount ?? 0
-
   return (
     <Form.Item
       name={name}
@@ -24,11 +22,11 @@ export default function ENSName({
         ...(formItemProps?.rules ?? []),
         {
           validator: (rule, value: string) => {
-            if (value.split('.').length - 1 > _subdomainCount) {
+            if (value.split('.').length - 1 > subdomainCount) {
               return Promise.reject(
-                _subdomainCount
-                  ? `Only ${_subdomainCount} subdomain${
-                      _subdomainCount > 1 ? 's' : ''
+                subdomainCount
+                  ? `Only ${subdomainCount} subdomain${
+                      subdomainCount > 1 ? 's' : ''
                     } allowed`
                   : 'Subdomain not allowed',
               )

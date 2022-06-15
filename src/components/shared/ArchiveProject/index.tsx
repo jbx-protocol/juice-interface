@@ -1,5 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { Button } from 'antd'
+import { ExclamationCircleOutlined } from '@ant-design/icons'
 
 import { NetworkContext } from 'contexts/networkContext'
 import { TransactorInstance } from 'hooks/Transactor'
@@ -7,8 +8,8 @@ import { CV } from 'models/cv'
 import { ProjectMetadataV4 } from 'models/project-metadata'
 import { useContext, useState } from 'react'
 import { uploadProjectMetadata } from 'utils/ipfs'
-
 import { emitErrorNotification } from 'utils/notifications'
+import { ThemeContext } from 'contexts/themeContext'
 
 import { postGitHubIssueForArchive } from './postGitHubIssueForArchive'
 
@@ -30,6 +31,9 @@ export default function ArchiveProject({
   cv: CV
 }) {
   const { userAddress } = useContext(NetworkContext)
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
 
   const [isLoadingArchive, setIsLoadingArchive] = useState<boolean>(false)
 
@@ -100,26 +104,25 @@ export default function ArchiveProject({
       </h3>
       <p>
         <Trans>
-          Your project will appear archived, and will not be able to receive
+          Your project will appear archived, and won't be able to receive
           payments through the juicebox.money app. You can unarchive a project
-          at any time. Please allow a few days for your project to appear under
-          the "archived" filter on the Projects page.
+          at any time. Allow a few days for your project to appear under the
+          "archived" filter on the Projects page.
         </Trans>
       </p>
-      <p>
-        <strong>
-          <Trans>Note:</Trans>
-        </strong>{' '}
+
+      <p style={{ marginTop: 10, color: colors.text.secondary }}>
+        <ExclamationCircleOutlined />{' '}
         {canTakePaymentsWhenArchived ? (
           <Trans>
-            Your project will still be able to receive payments directly through
-            the Juicebox protocol contracts.
+            Your project can still receive payments directly through the
+            Juicebox protocol contracts.
           </Trans>
         ) : (
           <Trans>
             Unless payments are paused in your funding cycle settings, your
-            project will still be able to receive payments directly through the
-            Juicebox protocol contracts.
+            project can still receive payments directly through the Juicebox
+            protocol contracts.
           </Trans>
         )}
       </p>

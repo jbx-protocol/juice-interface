@@ -8,7 +8,7 @@ msgstr ""
 "Language: fr\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-06-14 03:05\n"
+"PO-Revision-Date: 2022-06-15 03:01\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -700,7 +700,7 @@ msgstr "Connectez-vous"
 
 #: src/components/shared/TransactionModal.tsx
 msgid "Connect wallet"
-msgstr ""
+msgstr "Connecter le portefeuille"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "Connect wallet to claim"
@@ -1450,7 +1450,7 @@ msgstr "Taux d'émission initiale"
 #: src/components/v2/V2Create/forms/TokenForm/MintRateFormItem.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Initial mint rate"
-msgstr ""
+msgstr "Taux de frappe initial"
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Invalid address"
@@ -1471,7 +1471,7 @@ msgstr "Émettre un token ERC-20 pour être utilisé comme token de ce projet. U
 
 #: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Issue an ERC-20 token (optional)"
-msgstr ""
+msgstr "Émettre un token ERC-20 (facultatif)"
 
 #: src/components/shared/modals/IssueTokenModal.tsx
 msgid "Issue token"
@@ -3323,7 +3323,7 @@ msgstr "{0} réservé"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "{0} tokens/ETH"
-msgstr ""
+msgstr "{0} tokens/ETH"
 
 #: src/components/shared/modals/ParticipantsModal.tsx
 msgid "{0} total"

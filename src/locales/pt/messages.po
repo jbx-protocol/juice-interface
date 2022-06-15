@@ -253,6 +253,10 @@ msgstr "<0>{tokenSymbol} Endereço ERC-20:</0><1/>"
 msgid "@"
 msgstr "@"
 
+#: src/components/shared/Project404.tsx
+msgid "@{handle} not found"
+msgstr ""
+
 #: src/components/Projects/ArchivedProjectsMessage.tsx
 msgid "A project can be archived by its owner from the tools menu on the project page."
 msgstr "Um projeto pode ser arquivado por seu dono através do menu de ferramentas na página do projeto."
@@ -2160,10 +2164,6 @@ msgstr "Os detalhes do projeto podem ser editados a qualquer momento."
 msgid "Project details reconfigurations will create a separate transaction."
 msgstr "As reconfiguracões dos detalhes do projeto irão criar uma transação separada."
 
-#: src/components/shared/Project404.tsx
-msgid "Project for {ensName} not found"
-msgstr "Projeto {ensName} não encontrado"
-
 #: src/components/v1/shared/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v1/shared/formItems/ProjectHandle/ProjectHandleFormItem.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
@@ -2193,6 +2193,10 @@ msgstr "Nome do projeto"
 #: src/components/v1/V1Create/index.tsx
 msgid "Project name, handle, links, and other details."
 msgstr "Nome, identificador, links e outros detalhes do projeto."
+
+#: src/components/shared/Project404.tsx
+msgid "Project not found"
+msgstr ""
 
 #: src/components/v1/shared/Mod.tsx
 #: src/components/v1/shared/Mod.tsx

@@ -5,10 +5,10 @@ import { padding } from 'constants/styles/padding'
 
 export default function Project404({
   projectId,
-  ensName,
+  handle,
 }: {
-  projectId: number | string | undefined
-  ensName?: string
+  projectId?: number | string | undefined
+  handle?: string
 }) {
   return (
     <div
@@ -19,10 +19,12 @@ export default function Project404({
       }}
     >
       <h2>
-        {ensName ? (
-          <Trans>Project for {ensName} not found</Trans>
-        ) : (
+        {handle ? (
+          <Trans>@{handle} not found</Trans>
+        ) : projectId ? (
           <Trans>Project {projectId} not found</Trans>
+        ) : (
+          <Trans>Project not found</Trans>
         )}
       </h2>
     </div>

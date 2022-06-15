@@ -65,7 +65,7 @@ import {
 } from 'constants/v2/splits'
 import V2ReconfigureUpcomingMessage from './V2ReconfigureUpcomingMessage'
 import ReconfigurePreview from './ReconfigurePreview'
-import { V2ReconfigureProjectHandleDrawer } from './drawers/V2ReconfigureProjectHandleDrawer'
+import { V2ReconfigureProjectHandleDrawer } from '../V2ReconfigureProjectHandleDrawer'
 
 function ReconfigureButton({
   title,

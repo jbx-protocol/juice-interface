@@ -19,12 +19,12 @@ export function useSetENSTextRecordForHandleTx(): TransactorInstance<{
       return Promise.resolve(false)
     }
 
-    const node = namehash(ensName + ensName.endsWith('.eth') ? '' : '.eth')
+    const node = namehash(ensName + (ensName.endsWith('.eth') ? '' : '.eth'))
 
     return transactor(
       contracts.PublicResolver,
       'setText',
-      [node, projectHandleENSTextRecordKey, projectId],
+      [node, projectHandleENSTextRecordKey, projectId.toString()],
       txOpts,
     )
   }

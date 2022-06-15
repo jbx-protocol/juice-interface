@@ -24,6 +24,7 @@ export function V2ReconfigureProjectHandleDrawer({
   const { handle, projectId } = useContext(V2ProjectContext)
   const [ensNameForm] = useForm<{ ensName: string }>()
 
+  const [ensNameInputDisabled, setEnsNameInputDisabled] = useState<boolean>()
   const [loadingSetENSName, setLoadingSetENSName] = useState<boolean>()
   const [loadingSetTextRecord, setLoadingSetTextRecord] = useState<boolean>()
 
@@ -37,6 +38,10 @@ export function V2ReconfigureProjectHandleDrawer({
 
   const editV2ProjectHandleTx = useEditV2ProjectHandleTx()
   const setENSTextRecordForHandleTx = useSetENSTextRecordForHandleTx()
+
+  useEffect(() => {
+    if (projectEnsName?.length) setEnsNameInputDisabled(true)
+  }, [projectEnsName])
 
   function onSetENSNameFormSaved() {
     setLoadingSetENSName(true)
@@ -76,17 +81,19 @@ export function V2ReconfigureProjectHandleDrawer({
   return (
     <Drawer visible={visible} {...drawerStyle} onClose={onFinish}>
       <h3>
-        <Trans>Set project handle</Trans>
-      </h3>
-      <div>
-        <strong>Current handle:</strong>{' '}
         {handle ? (
-          <span>@{handle}</span>
+          <Trans>Change project handle</Trans>
         ) : (
-          <span style={{ color: colors.text.disabled }}>not set</span>
+          <Trans>Set project handle</Trans>
         )}
-      </div>
+      </h3>
+
+      {handle && (
+        <div style={{ fontWeight: 'bold', fontSize: '1.4rem' }}>@{handle}</div>
+      )}
+
       <Divider />
+
       <p style={{ color: colors.text.primary }}>
         <Trans>
           Juicebox projects use{' '}
@@ -97,35 +104,54 @@ export function V2ReconfigureProjectHandleDrawer({
           >
             ENS names
           </a>{' '}
-          as handles. Setting a handle requires 2 transactions:
+          as handles. Setting a handle involves 2 transactions:
         </Trans>
       </p>
+
+      <br />
+
       <h4>
         <Trans>1. Set ENS name</Trans>
       </h4>
+
       <p style={{ color: colors.text.primary }}>
         <Trans>
-          Choose the ENS name to use as the project's handle, with an optional
+          Choose an ENS name to use as the project's handle, with an optional
           subdomain. The handle won't include the ".eth" extension.
         </Trans>
       </p>
-      <br />
-      <Form form={ensNameForm} onFinish={onSetENSNameFormSaved}>
-        <FormItems.ENSName subdomainCount={1} name="handle" hideLabel />
-        <Button htmlType="submit" loading={loadingSetENSName} type="primary">
-          <Trans>Set ENS name</Trans>
-        </Button>
-      </Form>
+
+      {ensNameInputDisabled ? (
+        <div>
+          <strong>ENS Name:</strong> {projectEnsName}.eth
+          <br />
+          <br />
+          <Button onClick={() => setEnsNameInputDisabled(false)} type="primary">
+            <Trans>Change ENS name</Trans>
+          </Button>
+        </div>
+      ) : (
+        <Form form={ensNameForm} onFinish={onSetENSNameFormSaved}>
+          <FormItems.ENSName name="ensName" hideLabel />
+          <Button htmlType="submit" loading={loadingSetENSName} type="primary">
+            <Trans>Set ENS name</Trans>
+          </Button>
+        </Form>
+      )}
+
       <Divider />
+
       <h4>
         <Trans>2. Set text record</Trans>
       </h4>
+
       <p style={{ color: colors.text.primary }}>
         <Trans>
-          Set a text record for {handle ? handle + '.eth' : 'that ENS name'}{' '}
-          with the key <strong>"juicebox"</strong> and the value{' '}
-          <strong>"{projectId}"</strong> (this project's ID). You can do this
-          via the{' '}
+          Set a text record for{' '}
+          {handle ? <strong>{handle}.eth</strong> : 'that ENS name'} with the
+          key <strong>"juicebox"</strong> and the value{' '}
+          <strong>"{projectId}"</strong> (this project's ID). You can do this on
+          the{' '}
           <a
             href={
               projectEnsName
@@ -136,26 +162,29 @@ export function V2ReconfigureProjectHandleDrawer({
             rel="noopener noreferrer"
           >
             ENS app
-          </a>{' '}
-          , or using the button below (as long as your connected wallet has
-          permission to edit records for that ENS name).
+          </a>
+          , or use the button below (as long as your connected wallet owns or
+          controls that ENS name).
         </Trans>
       </p>
-      <br />
+
       {projectId && textRecordValue.data === projectId ? (
-        <Button type="primary" disabled icon={CheckCircleFilled}>
-          <Trans>Text record is set</Trans>
+        <Button type="primary" disabled>
+          <CheckCircleFilled /> <Trans>Text record is set</Trans>
         </Button>
       ) : (
         <Button
           loading={loadingSetTextRecord}
           type="primary"
-          disabled={!projectEnsName}
+          disabled={!projectEnsName || projectEnsName === handle}
           onClick={setTextRecord}
         >
-          <Trans>Set text record for {projectEnsName ?? 'ENS name'}</Trans>
+          <Trans>
+            Set text record for {projectEnsName + '.eth' ?? 'ENS name'}
+          </Trans>
         </Button>
       )}
+
       {!projectEnsName && (
         <p style={{ color: colors.text.secondary }}>
           Choose an ENS name before setting the text record

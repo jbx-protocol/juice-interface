@@ -82,11 +82,18 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
       'lockEnd',
       'lockUseJbToken',
       'lockAllowPublicExtension',
+      'isUnlocked',
     ],
-    where: {
-      key: 'owner',
-      value: userAddress || '',
-    },
+    where: [
+      {
+        key: 'owner',
+        value: userAddress || '',
+      },
+      {
+        key: 'isUnlocked',
+        value: false,
+      },
+    ],
     url: process.env.REACT_APP_VEBANNY_SUBGRAPH_URL,
   }).data
 

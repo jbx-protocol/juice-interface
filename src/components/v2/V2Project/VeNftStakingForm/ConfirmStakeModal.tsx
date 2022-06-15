@@ -1,5 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Col, Divider, Modal, Row, Image } from 'antd'
+import FormattedAddress from 'components/shared/FormattedAddress'
 
 import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
@@ -38,6 +39,7 @@ export default function ConfirmStakeModal({
     theme: { colors },
   } = useContext(ThemeContext)
   const { userAddress, onSelectWallet } = useContext(NetworkContext)
+  const recipient = beneficiary !== '' ? beneficiary : userAddress!
 
   const tokensStakedInWad = parseWad(tokensStaked)
 
@@ -62,7 +64,7 @@ export default function ConfirmStakeModal({
       account: userAddress!,
       value: tokensStakedInWad,
       lockDuration: lockDuration,
-      beneficiary: beneficiary !== '' ? beneficiary : userAddress!,
+      beneficiary: recipient,
       useJbToken: true,
       allowPublicExtension: false,
     })
@@ -101,11 +103,13 @@ export default function ConfirmStakeModal({
               <p>Staked ${tokenSymbol}:</p>
               <p>Lock Duration:</p>
               <p>$ve{tokenSymbol} Received:</p>
+              <p>Beneficiary:</p>
             </Col>
             <Col span={12}>
               <p>{formattedNum(tokensStaked)}</p>
               <p>{formattedLockDuration}</p>
               <p>{formattedNum(votingPower)}</p>
+              <FormattedAddress address={recipient} />
             </Col>
           </Row>
         </Col>

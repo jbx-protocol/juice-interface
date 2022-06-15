@@ -6,6 +6,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: @lingui/cli\n"
 "Language: es\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
 
 #: src/components/shared/formItems/ProjectDiscountRate.tsx
 msgid "({0}%)"
@@ -318,6 +324,7 @@ msgstr ""
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 #: src/components/v2/V2Project/VeNftStakingForm/UnlockModal.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
 msgid "Address required"
 msgstr ""
 
@@ -1452,6 +1459,7 @@ msgstr ""
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 #: src/components/v2/V2Project/VeNftStakingForm/UnlockModal.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
 msgid "Invalid address"
 msgstr ""
 
@@ -3113,6 +3121,10 @@ msgstr ""
 msgid "You don't have a funding cycle duration. Changes you make will take effect immediately."
 msgstr ""
 
+#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
+msgid "You don't have enough tokens"
+msgstr ""
+
 #: src/components/Projects/HoldingsProjects.tsx
 msgid "You don't hold tokens for any Juicebox project."
 msgstr ""
@@ -3131,6 +3143,10 @@ msgstr ""
 
 #: src/components/Projects/MyProjects.tsx
 msgid "You haven't created any projects yet."
+msgstr ""
+
+#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
+msgid "You must stake at least {minTokensAllowedToStake} tokens."
 msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
@@ -3498,5 +3514,4 @@ msgstr ""
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "{userOwnershipPercentage}% of total supply"
 msgstr ""
-
 

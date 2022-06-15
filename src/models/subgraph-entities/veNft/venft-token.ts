@@ -10,6 +10,7 @@ export interface VeNftToken {
   lockDuration: number
   lockUseJbToken: boolean
   lockAllowPublicExtension: boolean
+  isUnlocked: boolean
   variant?: VeNftVariant
 }
 

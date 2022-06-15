@@ -100,8 +100,9 @@ const DescriptionParagraphOne = () => (
 const DescriptionParagraphTwo = () => (
   <p>
     <Trans>
-      By default, all unallocated funds can be distributed to the project
-      owner's wallet.
+      By design, this form only allows the adjustment of percentages to
+      distributions; this is an intended feature to save gas. To update the
+      total distribution limit, please use the Reconfiguration feature.
     </Trans>
   </p>
 )

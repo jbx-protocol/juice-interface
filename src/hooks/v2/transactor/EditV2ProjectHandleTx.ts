@@ -16,10 +16,12 @@ export function useEditV2ProjectHandleTx(): TransactorInstance<{
       return Promise.resolve(false)
     }
 
+    const ensNameParts = ensName.split('.').reverse()
+
     return transactor(
       contracts.JBProjectHandles,
-      'setENSName',
-      [projectId, ensName],
+      'setEnsNamePartsFor',
+      [projectId, ensNameParts],
       txOpts,
     )
   }

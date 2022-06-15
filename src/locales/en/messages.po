@@ -1153,8 +1153,8 @@ msgid "Edit payout"
 msgstr "Edit payout"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
-msgid "Edit percentages"
-msgstr "Edit percentages"
+msgid "Edit payouts"
+msgstr "Edit payouts"
 
 #: src/components/v1/V1Project/modals/EditProjectModal.tsx
 msgid "Edit project"

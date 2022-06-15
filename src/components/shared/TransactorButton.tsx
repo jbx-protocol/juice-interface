@@ -8,8 +8,12 @@ type TransactorButtonProps = PropsWithChildren<
   }
 >
 
-export default function TransactorButton(props: TransactorButtonProps) {
-  const buttonText = props.disabled ? props.connectWalletText : props.text
+export default function TransactorButton({
+  connectWalletText,
+  text,
+  ...props
+}: TransactorButtonProps) {
+  const buttonText = props.disabled ? connectWalletText : text
   return (
     <Button {...props}>
       <span>{buttonText}</span>

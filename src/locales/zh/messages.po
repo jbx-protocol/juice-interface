@@ -269,6 +269,10 @@ msgstr "<0>{tokenSymbol} ERC-20 地址：</0><1/>"
 msgid "@"
 msgstr "@"
 
+#: src/components/shared/Project404.tsx
+msgid "@{handle} not found"
+msgstr ""
+
 #: src/components/Projects/ArchivedProjectsMessage.tsx
 msgid "A project can be archived by its owner from the tools menu on the project page."
 msgstr "项目所有者可以在项目页面上的“工具菜单”中对项目进行存档。"
@@ -2269,10 +2273,6 @@ msgstr "项目的详情可以随时进行编辑。"
 msgid "Project details reconfigurations will create a separate transaction."
 msgstr "项目细节的重新配置将会发起一个单独的交易。"
 
-#: src/components/shared/Project404.tsx
-msgid "Project for {ensName} not found"
-msgstr "未能找到 {ensName} 的项目。"
-
 #: src/components/v1/shared/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v1/shared/formItems/ProjectHandle/ProjectHandleFormItem.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
@@ -2302,6 +2302,10 @@ msgstr "项目名称"
 #: src/components/v1/V1Create/index.tsx
 msgid "Project name, handle, links, and other details."
 msgstr "项目名称，标识，链接以及其他详细信息。"
+
+#: src/components/shared/Project404.tsx
+msgid "Project not found"
+msgstr ""
 
 #: src/components/v1/shared/Mod.tsx
 #: src/components/v1/shared/Mod.tsx

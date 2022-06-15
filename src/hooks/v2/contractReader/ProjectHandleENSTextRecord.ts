@@ -1,15 +1,21 @@
+import { namehash } from 'ethers/lib/utils'
 import { V2ContractName } from 'models/v2/contracts'
+import { useCallback, useMemo } from 'react'
 
 import { projectHandleENSTextRecordKey } from 'constants/projectHandleENSTextRecordKey'
 
 import useV2ContractReader from './V2ContractReader'
 
 export function useProjectHandleENSTextRecord(ensName: string | undefined) {
+  const node = ensName
+    ? namehash(ensName + (ensName.endsWith('.eth') ? '' : '.eth'))
+    : undefined
+
   return useV2ContractReader<number>({
     contract: V2ContractName.PublicResolver,
     functionName: 'text',
-    args: ensName ? [ensName, projectHandleENSTextRecordKey] : null,
-    formatter: (val: string) => {
+    args: node ? [node, projectHandleENSTextRecordKey] : null,
+    formatter: useCallback((val: string) => {
       let result = 0
 
       try {
@@ -20,6 +26,16 @@ export function useProjectHandleENSTextRecord(ensName: string | undefined) {
 
       // return 0 if text record is unset or not an integer
       return result
-    },
+    }, []),
+    updateOn: useMemo(
+      () => [
+        {
+          contract: V2ContractName.PublicResolver,
+          eventName: 'TextChanged',
+          topics: [[], projectHandleENSTextRecordKey],
+        },
+      ],
+      [],
+    ),
   })
 }

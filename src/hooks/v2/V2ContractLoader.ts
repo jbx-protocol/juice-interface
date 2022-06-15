@@ -2,12 +2,19 @@ import { Contract } from '@ethersproject/contracts'
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
 
 import { NetworkContext } from 'contexts/networkContext'
-import { V2ContractName, V2Contracts } from 'models/v2/contracts'
+
 import { NetworkName } from 'models/network-name'
+
+import { V2ContractName, V2Contracts } from 'models/v2/contracts'
+
 import { useContext, useEffect, useState } from 'react'
 
-import { readProvider } from 'constants/readProvider'
+import { mainnetJbProjectHandles } from 'constants/contracts/mainnet/JBProjectHandles'
+import { mainnetPublicResolver } from 'constants/contracts/mainnet/PublicResolver'
+import { rinkebyJbProjectHandles } from 'constants/contracts/rinkeby/JBProjectHandles'
+import { rinkebyPublicResolver } from 'constants/contracts/rinkeby/PublicResolver'
 import { readNetwork } from 'constants/networks'
+import { readProvider } from 'constants/readProvider'
 
 /**
  *  Defines the ABI filename to use for a given V2ContractName.
@@ -43,17 +50,9 @@ export function useV2ContractLoader() {
         const signerOrProvider = signingProvider?.getSigner() ?? readProvider
 
         const contractLoaders = await Promise.all(
-          Object.values(V2ContractName)
-            .filter(
-              name =>
-                ![
-                  V2ContractName.JBProjectHandles,
-                  V2ContractName.PublicResolver,
-                ].includes(name),
-            ) // TODO remove once contract data is added
-            .map(contractName =>
-              loadContract(contractName, network, signerOrProvider),
-            ),
+          Object.values(V2ContractName).map(contractName =>
+            loadContract(contractName, network, signerOrProvider),
+          ),
         )
 
         const newContractMap = Object.values(V2ContractName).reduce(
@@ -81,12 +80,28 @@ const loadContract = async (
   network: NetworkName,
   signerOrProvider: JsonRpcSigner | JsonRpcProvider,
 ): Promise<Contract | undefined> => {
-  const contractOverride = CONTRACT_ABI_OVERRIDES[contractName]
-  const version = contractOverride?.version ?? 'latest'
-  const filename = contractOverride?.filename ?? contractName
+  let contractJson: { abi: object[]; address: string } | undefined = undefined
 
-  const contract = await import(
-    `@jbx-protocol/contracts-v2-${version}/deployments/${network}/${filename}.json`
-  )
-  return new Contract(contract.address, contract.abi, signerOrProvider)
+  if (contractName === V2ContractName.JBProjectHandles) {
+    // TODO import JBProjectHandles package
+    if (network === NetworkName.mainnet) contractJson = mainnetJbProjectHandles
+    if (network === NetworkName.rinkeby) contractJson = rinkebyJbProjectHandles
+  } else if (contractName === V2ContractName.PublicResolver) {
+    // TODO how to avoid setting contract objects as constants
+    if (network === NetworkName.mainnet) contractJson = mainnetPublicResolver
+    if (network === NetworkName.rinkeby) contractJson = rinkebyPublicResolver
+  } else {
+    const contractOverride = CONTRACT_ABI_OVERRIDES[contractName]
+    const version = contractOverride?.version ?? 'latest'
+    const filename = contractOverride?.filename ?? contractName
+    contractJson = await import(
+      `@jbx-protocol/contracts-v2-${version}/deployments/${network}/${filename}.json`
+    )
+  }
+
+  if (!contractJson) {
+    throw new Error(`Error importing contract ${contractName} on ${network}`)
+  }
+
+  return new Contract(contractJson.address, contractJson.abi, signerOrProvider)
 }

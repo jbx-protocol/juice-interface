@@ -48,6 +48,7 @@ export default function V2Project({
     tokenAddress,
     cv,
     isArchived,
+    handle,
   } = useContext(V2ProjectContext)
   const canReconfigureFundingCycles = useHasPermission(
     V2OperatorPermission.RECONFIGURE,
@@ -104,6 +105,7 @@ export default function V2Project({
         metadata={projectMetadata}
         actions={!isPreviewMode ? <V2ProjectHeaderActions /> : undefined}
         isArchived={isArchived}
+        handle={handle}
       />
       {!isPreviewMode &&
         hasCurrentFundingCycle === false &&

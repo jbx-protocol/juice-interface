@@ -153,6 +153,10 @@ input:-webkit-autofill-selected {
   width: 100%;
 }
 
+textarea.ant-input::placeholder {
+  color: var(--text-tertiary);
+}
+
 .ant-input-textarea-show-count::after {
   color: var(--text-tertiary);
 }

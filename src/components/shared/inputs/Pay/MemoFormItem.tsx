@@ -1,5 +1,5 @@
 import { t } from '@lingui/macro'
-import { Form, Input } from 'antd'
+import { Form, Input, Tooltip } from 'antd'
 import { SmileOutlined } from '@ant-design/icons'
 import { AttachStickerModal } from 'components/shared/modals/AttachStickerModal'
 import { useContext, useState } from 'react'
@@ -47,7 +47,9 @@ export default function MemoFormItem({
             top: 7,
           }}
         >
-          <SmileOutlined onClick={() => setAttachStickerModalVisible(true)} />
+          <Tooltip title={t`Attach a sticker`}>
+            <SmileOutlined onClick={() => setAttachStickerModalVisible(true)} />
+          </Tooltip>
         </div>
       </div>
       <AttachStickerModal

@@ -19,7 +19,7 @@ import { DEFAULT_SITE_TITLE } from 'constants/siteMetadata'
 const V1Create = lazy(() => import('components/v1/V1Create'))
 const V2Create = lazy(() => import('components/v2/V2Create'))
 const V2ProjectHandleGateway = lazy(
-  () => import('components/v2/V2ProjectHandleGateway'),
+  () => import('components/v2/V2Dashboard/V2ProjectHandleGateway'),
 )
 
 function CatchallRedirect() {

@@ -312,6 +312,10 @@ msgstr "Actividad"
 msgid "Add NFT reward"
 msgstr ""
 
+#: src/components/shared/Project/ProjectToolsDrawer/V1TokenMigrationSection/V1TokenMigrationModal/AddTerminalSection.tsx
+msgid "Add Terminal"
+msgstr ""
+
 #: src/components/v1/shared/ProjectPayMods/ProjectPayoutMods.tsx
 msgid "Add a payout"
 msgstr "Añadir un pago"
@@ -343,6 +347,10 @@ msgstr "Añadir pago"
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/index.tsx
 msgid "Add reward tier"
+msgstr ""
+
+#: src/components/shared/Project/ProjectToolsDrawer/V1TokenMigrationSection/V1TokenMigrationModal/AddTerminalSection.tsx
+msgid "Add the V1 Token Payment Terminal to your project."
 msgstr ""
 
 #: src/components/shared/Project/ProjectToolsDrawer/AddToProjectBalanceForm.tsx
@@ -434,6 +442,10 @@ msgstr "Permitir tokens creados"
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Allow token minting"
 msgstr "Permitir acuñación de tokens"
+
+#: src/components/shared/Project/ProjectToolsDrawer/V1TokenMigrationSection/V1TokenMigrationSection.tsx
+msgid "Allow your V1 project token holders to swap their tokens for your V2 project tokens."
+msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
@@ -718,6 +730,7 @@ msgstr "Reclamar tokens {tokenSymbol} convertirá tu balance de {tokenSymbol} a 
 msgid "Claiming {tokenTextLong} will convert your {tokenTextShort} balance to ERC-20 tokens and mint them to your wallet."
 msgstr "Reclamar {tokenTextLong} convertirá tu balance de {tokenTextShort} a tokens ERC-20 y las acuñará a tu cartera."
 
+#: src/components/shared/Project/ProjectToolsDrawer/V1TokenMigrationSection/V1TokenMigrationModal/V1TokenMigrationModal.tsx
 #: src/components/shared/TransactionModal.tsx
 #: src/components/shared/modals/DownloadParticipantsModal.tsx
 #: src/components/v1/V1Project/V1DownloadActivityModal.tsx
@@ -747,6 +760,10 @@ msgstr "Configura restricciones para tus ciclos de financiamiento."
 #: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 msgid "Configure the dynamics of your project's token."
 msgstr "Configura la dinámica del token de tu proyecto."
+
+#: src/components/shared/Project/ProjectToolsDrawer/V1TokenMigrationSection/V1TokenMigrationModal/SetV1ProjectSection.tsx
+msgid "Configure which Juicebox V1 project you'd like to accept tokens for. Token holders of this V1 project will be able to swap their V1 tokens for V2 tokens."
+msgstr ""
 
 #: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Congratulations on launching your project! The next steps are optional and can be completed at any time."
@@ -1169,6 +1186,10 @@ msgstr "Límite de distribución: <0/>{0}"
 msgid "Do I have to make my project open source to use Juicebox as its business model?"
 msgstr "¿Tengo que volver mi proyecto de código abierto para usar Juicebox como modelo de negocio?"
 
+#: src/components/shared/Project/ProjectToolsDrawer/V1TokenMigrationSection/V1TokenMigrationSection.tsx
+msgid "Do I need this?"
+msgstr ""
+
 #: src/components/Navbar/constants.ts
 msgid "Docs"
 msgstr "Documentos"
@@ -1525,6 +1546,10 @@ msgstr "Si no recaudas la suma de todos tus pagos (<0/>{distributionLimit}), est
 msgid "If you don't raise this amount, your splits will receive their percentage of whatever you raise."
 msgstr "Si no recaudas este monto, tus divisiones recibirán el porcentaje de lo que recaudes."
 
+#: src/components/shared/Project/ProjectToolsDrawer/V1TokenMigrationSection/V1TokenMigrationSection.tsx
+msgid "If you have Juicebox project on Juicebox V1 and V2, we recommend you migrate to V2 exclusively."
+msgstr ""
+
 #: src/components/shared/Project/ProjectToolsDrawer/PayableAddressSection.tsx
 msgid "If you have already deployed a payable address and have lost it, please contact the Juicebox team through <0>Discord.</0>"
 msgstr "Si ya has desplegado una dirección de pago y la has perdido, por favor contacta al equipo de Juicebox mediante <0>Discord.</0>"
@@ -1632,6 +1657,10 @@ msgstr ""
 msgid "Juicebox Project ID"
 msgstr "ID de proyecto Juicebox"
 
+#: src/components/shared/Project/ProjectToolsDrawer/V1TokenMigrationSection/V1TokenMigrationModal/SetV1ProjectSection.tsx
+msgid "Juicebox V1 project ID"
+msgstr ""
+
 #: src/components/v2/shared/SplitItem.tsx
 msgid "Juicebox V2 project with ID {0}"
 msgstr "Proyecto de Juicebox V2 con ID {0}"
@@ -1688,6 +1717,10 @@ msgstr "Dejar en blanco para empezar de inmediato."
 #: src/components/Navbar/Mobile/ThemePickerMobile.tsx
 msgid "Light theme"
 msgstr "Tema luminoso"
+
+#: src/components/shared/Project/ProjectToolsDrawer/V1TokenMigrationSection/V1TokenMigrationModal/SetV1ProjectSection.tsx
+msgid "Link Juicebox V1 project"
+msgstr ""
 
 #: src/components/shared/forms/ProjectDetailsForm.tsx
 msgid "Links"
@@ -2660,6 +2693,18 @@ msgstr "Establece la duración de tus ciclos de financiamiento."
 msgid "Set this to the sum of all your payouts"
 msgstr "Establécelo en la suma de todos tus pagos"
 
+#: src/components/shared/Project/ProjectToolsDrawer/V1TokenMigrationSection/V1TokenMigrationModal/V1TokenMigrationModal.tsx
+msgid "Set up V1 token migration"
+msgstr ""
+
+#: src/components/shared/Project/ProjectToolsDrawer/V1TokenMigrationSection/V1TokenMigrationSection.tsx
+msgid "Set up token migration"
+msgstr ""
+
+#: src/components/shared/Project/ProjectToolsDrawer/V1TokenMigrationSection/V1TokenMigrationModal/V1TokenMigrationModal.tsx
+msgid "Set up your Juicebox V2 project for migration from your Juicebox V1 project."
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "Should you Juicebox?"
 msgstr "¿Deberías de usar Juicebox?"
@@ -2708,6 +2753,14 @@ msgstr ""
 #: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner.tsx
 msgid "Start time (seconds, Unix time)"
 msgstr "Hora de inicio (segundos, tiempo Unix)"
+
+#: src/components/shared/Project/ProjectToolsDrawer/V1TokenMigrationSection/V1TokenMigrationModal/AddTerminalSection.tsx
+msgid "Step 1. Add V1 token payment terminal"
+msgstr ""
+
+#: src/components/shared/Project/ProjectToolsDrawer/V1TokenMigrationSection/V1TokenMigrationModal/SetV1ProjectSection.tsx
+msgid "Step 2. Link your Juicebox V1 project"
+msgstr ""
 
 #: src/components/v1/shared/PayoutModsList.tsx
 msgid "Sum of percentages cannot exceed 100%"
@@ -2935,6 +2988,10 @@ msgstr "Esto borrará todos tus cambios."
 msgid "This will reset the data for your new project. All changes will be lost."
 msgstr "Esto reiniciará los datos para tu nuevo proyecto. Todos los cambios se perderán."
 
+#: src/components/shared/Project/ProjectToolsDrawer/V1TokenMigrationSection/V1TokenMigrationSection.tsx
+msgid "To do so, you need to give your V1 token holders the ability to exchange their V1 tokens for V2 tokens. Select <0>Set up token migration</0> below to get started."
+msgstr ""
+
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "To: <0/>"
@@ -2965,6 +3022,10 @@ msgstr "Beneficiario del token:"
 #: src/components/shared/formItems/ProjectRedemptionRate.tsx
 msgid "Token holders <0>cannot redeem their tokens</0> for any ETH when the redemption rate is 0."
 msgstr "Los poseedores <0>no pueden canjear sus tokens</0> por nada de ETH cuando la tasa de emisión es 0."
+
+#: src/components/shared/Project/ProjectToolsDrawer/V1TokenMigrationSection/V1TokenMigrationModal/AddTerminalSection.tsx
+msgid "Token holders of your V1 project tokens will swap their V1 tokens for V2 tokens at a 1-to-1 exchange rate."
+msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
@@ -3190,6 +3251,10 @@ msgstr "Se recomienda usar una estrategia de reconfiguración. Los proyectos sin
 msgid "V1"
 msgstr "V1"
 
+#: src/components/shared/Project/ProjectToolsDrawer/V1TokenMigrationSection/V1TokenMigrationSection.tsx
+msgid "V1 token migration"
+msgstr ""
+
 #: src/components/Projects/ProjectsFilterAndSort.tsx
 msgid "V1.1"
 msgstr "V1.1"
@@ -3242,6 +3307,10 @@ msgstr "¿Cuánto cuesta Juicebox?"
 #: src/components/Landing/QAs.tsx
 msgid "What is overflow?"
 msgstr "¿Qué es el excedente (overflow)?"
+
+#: src/components/shared/Project/ProjectToolsDrawer/V1TokenMigrationSection/V1TokenMigrationModal/AddTerminalSection.tsx
+msgid "What is the V1 Token Payment Terminal?"
+msgstr ""
 
 #: src/components/Landing/QAs.tsx
 msgid "What's a bonding curve?"
@@ -3372,6 +3441,10 @@ msgstr "Tienes cambios sin guardar. ¿Estás seguro que deseas descartarlos?"
 msgid "You haven't created any projects yet."
 msgstr "No has creado ningún proyecto todavía."
 
+#: src/components/shared/Project/ProjectToolsDrawer/V1TokenMigrationSection/V1TokenMigrationModal/SetV1ProjectSection.tsx
+msgid "You must own this V1 project."
+msgstr ""
+
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "You will receive minimum {minReturnedTokensFormatted} ETH"
 msgstr "Recibirás al menos {minReturnedTokensFormatted} ETH"
@@ -3387,6 +3460,10 @@ msgstr "Recibirás {minReturnedTokensFormatted} ETH"
 #: src/components/shared/forms/TicketingForm.tsx
 msgid "You'll be able to issue ERC-20 tokens once your project contract has been deployed. Until then, the protocol will track token balances, allowing your supporters to earn tokens and redeem for overflow in the meantime."
 msgstr "Podrás emitir tokens ERC-20 una vez el contrato de tu proyecto haya sido desplegado. Hasta entonces, el protocolo rastreará mientras tanto los balances de los tokens, permitiendo a tus seguidores ganar tokens y canjearlos por el excedente."
+
+#: src/components/shared/Project/ProjectToolsDrawer/V1TokenMigrationSection/V1TokenMigrationModal/StepSection.tsx
+msgid "You've completed this step."
+msgstr ""
 
 #: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner.tsx
 msgid "Your Juicebox project has no active funding cycle. Launch a funding cycle to re-enable payments on your project."

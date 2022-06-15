@@ -16,16 +16,14 @@ export function useProjectHandleENSTextRecord(ensName: string | undefined) {
     functionName: 'text',
     args: node ? [node, projectHandleENSTextRecordKey] : null,
     formatter: useCallback((val: string) => {
-      let result = 0
-
       try {
-        result = parseInt(val)
+        return parseInt(val)
       } catch (e) {
         console.info('Error parsing project ID from text record', e)
       }
 
       // return 0 if text record is unset or not an integer
-      return result
+      return 0
     }, []),
     updateOn: useMemo(
       () => [

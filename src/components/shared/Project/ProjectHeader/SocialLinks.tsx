@@ -1,7 +1,7 @@
 import { TwitterOutlined } from '@ant-design/icons'
 import Discord from 'components/icons/Discord'
 
-import ExternalLink from '../ExternalLink'
+import ExternalLink from '../../ExternalLink'
 
 const prettyUrl = (url: string) => {
   if (url.startsWith('https://')) {

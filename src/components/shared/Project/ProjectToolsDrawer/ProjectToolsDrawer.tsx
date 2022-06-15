@@ -15,7 +15,7 @@ import { AddToProjectBalanceForm } from './AddToProjectBalanceForm'
 import { PayableAddressSection } from './PayableAddressSection'
 const { TabPane } = Tabs
 
-export function ProjectToolDrawerModal({
+export function ProjectToolsDrawer({
   visible,
   onClose,
   unclaimedTokenBalance,
@@ -79,8 +79,9 @@ export function ProjectToolDrawerModal({
             ownerAddress={ownerAddress}
             useTransferProjectOwnershipTx={useTransferProjectOwnershipTx}
           />
-          <Divider />
         </section>
+
+        <Divider />
 
         {shouldRenderV1Archive ? (
           <ArchiveV1Project setUriTx={setUriTx} />
@@ -117,11 +118,14 @@ export function ProjectToolDrawerModal({
 
       <Tabs>
         <TabPane tab={<Trans>General</Trans>} key="1">
-          <Space direction="vertical" size="large" style={{ width: '100%' }}>
+          <Space direction="vertical" size="middle" style={{ width: '100%' }}>
             {deployProjectPayerTx && (
-              <PayableAddressSection
-                useDeployProjectPayerTx={useDeployProjectPayerTx}
-              />
+              <>
+                <PayableAddressSection
+                  useDeployProjectPayerTx={useDeployProjectPayerTx}
+                />
+                <Divider />
+              </>
             )}
 
             <section>
@@ -130,8 +134,9 @@ export function ProjectToolDrawerModal({
                 unclaimedTokenBalance={unclaimedTokenBalance}
                 useTransferUnclaimedTokensTx={useTransferUnclaimedTokensTx}
               />
-              <Divider />
             </section>
+
+            <Divider />
 
             <section>
               <AddToProjectBalanceForm useAddToBalanceTx={useAddToBalanceTx} />

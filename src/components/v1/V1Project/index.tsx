@@ -5,7 +5,7 @@ import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { CSSProperties, useContext } from 'react'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 
-import ProjectHeader from 'components/shared/ProjectHeader'
+import ProjectHeader from 'components/shared/Project/ProjectHeader'
 import PayInputGroup from 'components/shared/inputs/Pay/PayInputGroup'
 
 import { Suspense, lazy } from 'react'

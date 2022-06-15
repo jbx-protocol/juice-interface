@@ -19,7 +19,7 @@ import useUnclaimedBalanceOfUser from 'hooks/v1/contractReader/UnclaimedBalanceO
 import EditProjectModal from './modals/EditProjectModal'
 
 import MigrateV1Pt1Modal from './modals/MigrateV1Pt1Modal'
-import { ProjectToolDrawerModal } from '../../shared/modals/ProjectToolDrawerModal/ProjectToolDrawerModal'
+import { ProjectToolsDrawer } from '../../shared/Project/ProjectToolsDrawer/ProjectToolsDrawer'
 
 export default function V1ProjectHeaderActions() {
   const {
@@ -118,7 +118,7 @@ export default function V1ProjectHeaderActions() {
         visible={migrateDrawerVisible}
         onCancel={() => setMigrateDrawerVisible(false)}
       />
-      <ProjectToolDrawerModal
+      <ProjectToolsDrawer
         visible={toolDrawerVisible}
         onClose={() => setToolDrawerVisible(false)}
         unclaimedTokenBalance={unclaimedTokenBalance}

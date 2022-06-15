@@ -6,7 +6,6 @@ import { useContext } from 'react'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { DeployProjectPayerTxArgs } from 'hooks/v2/transactor/DeployProjectPayerTx'
 import { TransactorInstance } from 'hooks/Transactor'
-import { Divider } from 'antd'
 
 export function PayableAddressSection({
   useDeployProjectPayerTx,
@@ -41,7 +40,6 @@ export function PayableAddressSection({
           <JBDiscordLink>Discord.</JBDiscordLink>
         </Trans>
       </p>
-      <Divider />
     </section>
   )
 }

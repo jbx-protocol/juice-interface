@@ -1,6 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
-import { ProjectToolDrawerModal } from 'components/shared/modals/ProjectToolDrawerModal/ProjectToolDrawerModal'
+import { ProjectToolsDrawer } from 'components/shared/Project/ProjectToolsDrawer/ProjectToolsDrawer'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import {
@@ -57,7 +57,7 @@ export default function V2ProjectHeaderActions() {
           <ProjectVersionBadge versionText="V2" />
         </Tooltip>
       </span>
-      <ProjectToolDrawerModal
+      <ProjectToolsDrawer
         visible={toolDrawerVisible}
         onClose={() => setToolDrawerVisible(false)}
         unclaimedTokenBalance={unclaimedTokenBalance}

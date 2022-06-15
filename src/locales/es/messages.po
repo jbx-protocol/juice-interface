@@ -1152,14 +1152,14 @@ msgstr "Cada pago recibirá su porcentaje de este total cada ciclo de financiami
 msgid "Each project has its own <0>ERC-20 tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
 msgstr "Cada proyecto tiene sus propios <0>tokens ERC-20</0>. Todo el que financia un proyecto obtiene los tokens del proyecto a cambio. Los balances de tokens se registrarán por el protocolo hasta que los tokens ERC-20 sean emitidos por el dueño del proyecto."
 
-#: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
-msgid "Edit Percentages"
-msgstr ""
-
 #: src/components/v1/shared/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Edit payout"
 msgstr "Editar pago"
+
+#: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
+msgid "Edit percentages"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/EditProjectModal.tsx
 msgid "Edit project"

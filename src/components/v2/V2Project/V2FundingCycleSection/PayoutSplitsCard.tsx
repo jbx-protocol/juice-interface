@@ -134,7 +134,7 @@ export default function PayoutSplitsCard({
               icon={<SettingOutlined />}
             >
               <span>
-                <Trans>Edit Percentages</Trans>
+                <Trans>Edit percentages</Trans>
               </span>
             </Button>
           </div>

@@ -8,7 +8,7 @@ msgstr ""
 "Language: tr\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-06-14 03:05\n"
+"PO-Revision-Date: 2022-06-15 03:02\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -268,7 +268,7 @@ msgstr "%90'ın üzerindeki rezerv oranları, katkıda bulunanlar için risklidi
 
 #: src/components/shared/ProjectCard.tsx
 msgid "ARCHIVED"
-msgstr ""
+msgstr "ARŞİVLENDİ"
 
 #: src/components/shared/Project/SpendingStats.tsx
 msgid "AVAILABLE"
@@ -1774,11 +1774,11 @@ msgstr "Projenizin bakiyesi finansman döngüsü hedefinizi aşarsa taşma oluş
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Owner can mint tokens at any time."
-msgstr ""
+msgstr "Proje sahibi, istediği zaman token basabilir."
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Owner is not allowed to mint tokens."
-msgstr ""
+msgstr "Proje sahibinin token basmasına izin verilmez."
 
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Owner token minting"

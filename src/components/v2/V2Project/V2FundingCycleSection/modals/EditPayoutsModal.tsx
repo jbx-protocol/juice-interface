@@ -52,7 +52,9 @@ const OwnerSplitCard = ({ splits }: { splits: Split[] }) => {
       split={ownerSplit}
       splits={splits}
       distributionLimit={
-        distributionLimitIsInfinite ? undefined : formatWad(distributionLimit)
+        distributionLimitIsInfinite
+          ? undefined
+          : formatWad(distributionLimit, { thousandsSeparator: '' })
       }
       currencyName={currencyName}
       isLocked
@@ -209,7 +211,7 @@ export const EditPayoutsModal = ({
           distributionLimit={
             distributionLimitIsInfinite
               ? undefined
-              : formatWad(distributionLimit)
+              : formatWad(distributionLimit, { thousandsSeparator: '' })
           }
           currencyName={currencyName}
           isLocked={isLocked}

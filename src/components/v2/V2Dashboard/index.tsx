@@ -29,10 +29,9 @@ import useProjectTokenTotalSupply from 'hooks/v2/contractReader/ProjectTokenTota
 import NewDeployNotAvailable from 'components/shared/NewDeployNotAvailable'
 
 import { useLocation } from 'react-router-dom'
-
 import { useProjectsQuery } from 'hooks/Projects'
-
 import { first } from 'lodash'
+import { usePageTitle } from 'hooks/PageTitle'
 
 import { layouts } from 'constants/styles/layouts'
 
@@ -53,6 +52,12 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
     error: metadataError,
     isLoading: metadataLoading,
   } = useProjectMetadata(metadataCID)
+
+  usePageTitle({
+    title: projectMetadata?.name
+      ? `${projectMetadata.name} | Juicebox`
+      : undefined,
+  })
 
   const { data: projects } = useProjectsQuery({
     projectId,

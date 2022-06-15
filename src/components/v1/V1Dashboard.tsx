@@ -23,17 +23,14 @@ import useTokenAddressOfProject from 'hooks/v1/contractReader/TokenAddressOfProj
 import useUriOfProject from 'hooks/v1/contractReader/UriOfProject'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
-import { useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
 import { getTerminalName, getTerminalVersion } from 'utils/v1/terminals'
-
 import { V1CurrencyProvider } from 'providers/v1/V1CurrencyProvider'
-
 import { V1CurrencyName } from 'utils/v1/currency'
-
 import NewDeployNotAvailable from 'components/shared/NewDeployNotAvailable'
-
 import Project404 from 'components/shared/Project404'
+import { usePageTitle } from 'hooks/PageTitle'
 
 import { layouts } from 'constants/styles/layouts'
 import { projectTypes } from 'constants/v1/projectTypes'
@@ -41,7 +38,6 @@ import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 
 import Loading from '../shared/Loading'
 import V1Project from './V1Project'
-import { DEFAULT_SITE_TITLE } from 'constants/siteMetadata'
 
 export default function V1Dashboard() {
   const { handle }: { handle?: string } = useParams()
@@ -96,13 +92,9 @@ export default function V1Dashboard() {
   const uri = useUriOfProject(projectId)
   const { data: metadata } = useProjectMetadata(uri)
 
-  useEffect(() => {
-    if (metadata?.name) {
-      document.title = `${metadata.name} | Juicebox`
-    } else {
-      document.title = DEFAULT_SITE_TITLE
-    }
-  }, [metadata])
+  usePageTitle({
+    title: metadata?.name ? `${metadata.name} | Juicebox` : undefined,
+  })
 
   const { data: projects } = useProjectsQuery({
     projectId: projectId?.toNumber(),

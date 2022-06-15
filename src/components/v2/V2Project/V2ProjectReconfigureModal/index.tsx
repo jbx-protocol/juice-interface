@@ -20,7 +20,7 @@ import { useEditingProjectData } from './hooks/editingProjectData'
 import { useFundingHasSavedChanges } from './hooks/fundingHasSavedChanges'
 import { useReconfigureFundingCycle } from './hooks/reconfigureFundingCycle'
 import { useInitialEditingData } from './hooks/initialEditingData'
-import { V2ReconfigureProjectHandleDrawer } from './drawers/V2ReconfigureProjectHandleDrawer'
+import { V2ReconfigureProjectHandleDrawer } from '../V2ReconfigureProjectHandleDrawer'
 
 function ReconfigureButton({
   title,

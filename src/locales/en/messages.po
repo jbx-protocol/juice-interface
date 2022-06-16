@@ -440,6 +440,10 @@ msgstr "Amounts"
 msgid "Any changes you make will take effect in <0>funding cycle #{0}</0>. The current funding cycle (#{currentFCNumber}) won't be altered."
 msgstr "Any changes you make will take effect in <0>funding cycle #{0}</0>. The current funding cycle (#{currentFCNumber}) won't be altered."
 
+#: src/components/v2/shared/DistributionSplitsSection/SpecificLimitModal.tsx
+msgid "Any funds that enter the treasury can be distributed."
+msgstr "Any funds that enter the treasury can be distributed."
+
 #: src/constants/v1/ballotStrategies/index.ts
 #: src/constants/v2/ballotStrategies/index.ts
 msgid "Any reconfiguration to an upcoming funding cycle will take effect once the current cycle ends. A project with no strategy may be vulnerable to being rug-pulled by its owner."
@@ -976,9 +980,10 @@ msgstr ""
 msgid "Display ERC-20 tokens and other Juicebox project tokens that are in this project's owner's wallet."
 msgstr "Display ERC-20 tokens and other Juicebox project tokens that are in this project's owner's wallet."
 
+#: src/components/v2/shared/DistributionSplitsSection/SpecificLimitModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/index.tsx
-msgid "Distribute a percentage of all funds received to entities. Your distribution limit will be <0>infinite</0>."
-msgstr "Distribute a percentage of all funds received to entities. Your distribution limit will be <0>infinite</0>."
+msgid "Distribute a percentage of an overall distribution limit to entities."
+msgstr "Distribute a percentage of an overall distribution limit to entities."
 
 #: src/components/v2/shared/DistributionSplitsSection/index.tsx
 msgid "Distribute a specific amount of funds to entities each funding cycle. Your distribution limit will equal the <0>sum of all payout amounts.</0>"
@@ -1051,6 +1056,7 @@ msgstr "Distribution Limit <0/>:"
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+#: src/components/v2/shared/DistributionSplitsSection/SpecificLimitModal.tsx
 msgid "Distribution limit"
 msgstr "Distribution limit"
 
@@ -1437,6 +1443,10 @@ msgstr "Indie creators and builders"
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Infinite (no limit)"
 msgstr "Infinite (no limit)"
+
+#: src/components/v2/shared/DistributionSplitsSection/SpecificLimitModal.tsx
+msgid "Infinite limit"
+msgstr "Infinite limit"
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Initial issuance rate"
@@ -1933,6 +1943,7 @@ msgstr "Percentage allocation"
 msgid "Percentage:"
 msgstr "Percentage:"
 
+#: src/components/v2/shared/DistributionSplitsSection/SpecificLimitModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/index.tsx
 msgid "Percentages"
 msgstr "Percentages"

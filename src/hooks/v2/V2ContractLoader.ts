@@ -9,11 +9,9 @@ import { V2ContractName, V2Contracts } from 'models/v2/contracts'
 
 import { useContext, useEffect, useState } from 'react'
 
-import { mainnetJbProjectHandles } from 'constants/contracts/mainnet/JBProjectHandles'
 import { mainnetPublicResolver } from 'constants/contracts/mainnet/PublicResolver'
-import { rinkebyJbProjectHandles } from 'constants/contracts/rinkeby/JBProjectHandles'
 import { rinkebyPublicResolver } from 'constants/contracts/rinkeby/PublicResolver'
-import { readNetwork } from 'constants/networks'
+import { NETWORKS_BY_NAME, readNetwork } from 'constants/networks'
 import { readProvider } from 'constants/readProvider'
 
 /**
@@ -83,11 +81,20 @@ const loadContract = async (
   let contractJson: { abi: object[]; address: string } | undefined = undefined
 
   if (contractName === V2ContractName.JBProjectHandles) {
-    // TODO import JBProjectHandles package
-    if (network === NetworkName.mainnet) contractJson = mainnetJbProjectHandles
-    if (network === NetworkName.rinkeby) contractJson = rinkebyJbProjectHandles
+    contractJson = {
+      abi: (
+        await import(
+          `@jbx-protocol/project-handles/out/JBProjectHandles.sol/JBProjectHandles.json`
+        )
+      ).abi,
+      address: (
+        (await import(
+          `@jbx-protocol/project-handles/broadcast/Deploy.sol/${NETWORKS_BY_NAME[network]}/run-latest.json`
+        )) as { contractAddress: string }
+      ).contractAddress.substring(2), // contractAddress is prefixed `0x0x` in error, trim first `0x`
+    }
   } else if (contractName === V2ContractName.PublicResolver) {
-    // TODO how to avoid setting contract objects as constants
+    // ENS contracts package currently doesn't include rinkeby information, and ABI contains errors
     if (network === NetworkName.mainnet) contractJson = mainnetPublicResolver
     if (network === NetworkName.rinkeby) contractJson = rinkebyPublicResolver
   } else {
@@ -100,7 +107,9 @@ const loadContract = async (
   }
 
   if (!contractJson) {
-    throw new Error(`Error importing contract ${contractName} on ${network}`)
+    throw new Error(
+      `Error importing contract ${contractName}. Network: ${network})`,
+    )
   }
 
   return new Contract(contractJson.address, contractJson.abi, signerOrProvider)

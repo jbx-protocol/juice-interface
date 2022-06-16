@@ -92,7 +92,7 @@ export const NETWORKS: Record<number, NetworkInfo> = {
   },
 }
 
-const NETWORKS_BY_NAME = Object.values(NETWORKS).reduce(
+export const NETWORKS_BY_NAME = Object.values(NETWORKS).reduce(
   (acc, curr) => ({
     ...acc,
     [curr.name]: curr,

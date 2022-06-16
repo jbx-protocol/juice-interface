@@ -581,10 +581,6 @@ msgstr "默认的情况下，所有未分配资金可被分发给项目拥有者
 msgid "By default, newly minted tokens will go to the wallet who sends funds to the address. You can enable this to set the token beneficiary to a custom address."
 msgstr "默认情况下，新铸造代币会分发给向这个地址付款的钱包地址。打开此选项可以把代币受益人设置为一个自定义地址。"
 
-#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
-msgid "By design, this form only allows the adjustment of percentages to distributions; this is an intended feature to save gas. To update the total distribution limit, please use the Reconfiguration feature."
-msgstr ""
-
 #: src/components/Landing/QAs.tsx
 msgid "Can I change my project's contract after it's been created?"
 msgstr "项目合约创建后，我还更改它吗?"
@@ -601,6 +597,10 @@ msgstr "取消"
 #: src/components/shared/ManageTokensModal.tsx
 msgid "Cannot redeem tokens for ETH because this project has no overflow."
 msgstr "这个项目的筹款没有溢出，无法用代币赎回 ETH"
+
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
+msgid "Changes to payouts will take effect immediately."
+msgstr ""
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Changes to project details will take effect immediately."
@@ -995,7 +995,6 @@ msgid "Distribute a specific amount of funds to entities each funding cycle. You
 msgstr ""
 
 #: src/components/v1/shared/forms/PayModsForm.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
 msgid "Distribute available funds to other Ethereum wallets or Juicebox projects as payouts. Use this to pay contributors, charities, Juicebox projects you depend on, or anyone else. Funds are distributed whenever a withdrawal is made from your project."
 msgstr "把可用资金分发给其他以太坊钱包或者其他Juicebox项目。使用这项功能付款给项目的贡献者、慈善机构、其他帮助你的Juicebox项目、或是任何其他人。无论什么时候从您项目提款，资金都会自动进行发放。"
 
@@ -2173,6 +2172,10 @@ msgstr "重新配置"
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Reconfigure funding"
 msgstr "重新配置筹款"
+
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
+msgid "Reconfigure payouts as percentages of your distribution limit."
+msgstr ""
 
 #: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureModalTrigger.tsx

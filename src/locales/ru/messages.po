@@ -581,10 +581,6 @@ msgstr "По умолчанию все нераспределенные сред
 msgid "By default, newly minted tokens will go to the wallet who sends funds to the address. You can enable this to set the token beneficiary to a custom address."
 msgstr ""
 
-#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
-msgid "By design, this form only allows the adjustment of percentages to distributions; this is an intended feature to save gas. To update the total distribution limit, please use the Reconfiguration feature."
-msgstr ""
-
 #: src/components/Landing/QAs.tsx
 msgid "Can I change my project's contract after it's been created?"
 msgstr "Могу ли я изменить контракт своего проекта после его создания?"
@@ -601,6 +597,10 @@ msgstr "Отменить"
 #: src/components/shared/ManageTokensModal.tsx
 msgid "Cannot redeem tokens for ETH because this project has no overflow."
 msgstr "Невозможно обменять токены на ETH, так как в этом проекте нет переполнения."
+
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
+msgid "Changes to payouts will take effect immediately."
+msgstr ""
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Changes to project details will take effect immediately."
@@ -995,7 +995,6 @@ msgid "Distribute a specific amount of funds to entities each funding cycle. You
 msgstr ""
 
 #: src/components/v1/shared/forms/PayModsForm.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
 msgid "Distribute available funds to other Ethereum wallets or Juicebox projects as payouts. Use this to pay contributors, charities, Juicebox projects you depend on, or anyone else. Funds are distributed whenever a withdrawal is made from your project."
 msgstr "Распределяйте доступные средства на другие кошельки Ethereum или проекты Juicebox в качестве выплат. Используйте это, чтобы платить вкладчикам, благотворительным организациям, проектам Juicebox, от которых вы зависите, или кому-либо еще. Средства распределяются всякий раз, когда производится вывод средств из вашего проекта."
 
@@ -2173,6 +2172,10 @@ msgstr "Перенастройте"
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Reconfigure funding"
 msgstr "Перенастроить финансирование"
+
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
+msgid "Reconfigure payouts as percentages of your distribution limit."
+msgstr ""
 
 #: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureModalTrigger.tsx

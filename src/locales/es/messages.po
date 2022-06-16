@@ -581,10 +581,6 @@ msgstr "Por defecto, todos los fondos no asignados pueden ser distribuidos a la 
 msgid "By default, newly minted tokens will go to the wallet who sends funds to the address. You can enable this to set the token beneficiary to a custom address."
 msgstr "Por defecto, tokens recientemente minteados irán a la billetera que envíe los fondos a la dirección. Puedes activar esto para establecer una dirección personalizada como beneficiario del token."
 
-#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
-msgid "By design, this form only allows the adjustment of percentages to distributions; this is an intended feature to save gas. To update the total distribution limit, please use the Reconfiguration feature."
-msgstr ""
-
 #: src/components/Landing/QAs.tsx
 msgid "Can I change my project's contract after it's been created?"
 msgstr "¿Puedo cambiar el contrato de mi proyecto después de haber sido creado?"
@@ -601,6 +597,10 @@ msgstr "Cancelar"
 #: src/components/shared/ManageTokensModal.tsx
 msgid "Cannot redeem tokens for ETH because this project has no overflow."
 msgstr "No se pueden canjear tokens por ETH porque este proyecto no tiene excedente."
+
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
+msgid "Changes to payouts will take effect immediately."
+msgstr ""
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Changes to project details will take effect immediately."
@@ -995,7 +995,6 @@ msgid "Distribute a specific amount of funds to entities each funding cycle. You
 msgstr "Distribuye una cantidad específica de fondos a entidades cada ciclo de financiamiento. Tu límite de distribución será igual a la <0>suma de todas las cantidades de tus pagos.</0>"
 
 #: src/components/v1/shared/forms/PayModsForm.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
 msgid "Distribute available funds to other Ethereum wallets or Juicebox projects as payouts. Use this to pay contributors, charities, Juicebox projects you depend on, or anyone else. Funds are distributed whenever a withdrawal is made from your project."
 msgstr "Distribuye fondos disponibles a otras wallets de Ethereum o proyectos de Juicebox como pagos. Usa esto para pagarle a colaboradores, caridades, proyectos de Juicebox de los que dependas, o a cualquier otro. Los fondos son distribuidos cuando un retiro se hace desde tu proyecto."
 
@@ -2173,6 +2172,10 @@ msgstr "Reconfigurar"
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Reconfigure funding"
 msgstr "Reconfigurar financiamiento"
+
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
+msgid "Reconfigure payouts as percentages of your distribution limit."
+msgstr ""
 
 #: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureModalTrigger.tsx

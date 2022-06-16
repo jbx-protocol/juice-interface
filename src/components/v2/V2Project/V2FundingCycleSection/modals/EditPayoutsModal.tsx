@@ -1,29 +1,29 @@
 import { Trans } from '@lingui/macro'
-import { Button, Modal, Space } from 'antd'
+import { Button, Modal, Skeleton, Space } from 'antd'
 import DistributionSplitCard from 'components/v2/shared/DistributionSplitsSection/DistributionSplitCard'
-
 import { defaultSplit, Split } from 'models/v2/splits'
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
-
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import { getTotalSplitsPercentage } from 'utils/v2/distributions'
-
 import { ThemeContext } from 'contexts/themeContext'
-
 import DistributionSplitModal from 'components/v2/shared/DistributionSplitsSection/DistributionSplitModal'
-
 import { filter, isEqual } from 'lodash'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
-
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-
 import { V2CurrencyName } from 'utils/v2/currency'
 import { useSetProjectSplits } from 'hooks/v2/transactor/SetProjectSplits'
-
 import { NetworkContext } from 'contexts/networkContext'
-
 import { MAX_DISTRIBUTION_LIMIT, splitPercentFrom } from 'utils/v2/math'
-
 import { formatWad } from 'utils/formatNumber'
+
+import { ExclamationCircleOutlined, SettingOutlined } from '@ant-design/icons'
+
+import CurrencySymbol from 'components/shared/CurrencySymbol'
 
 import { ETH_PAYOUT_SPLIT_GROUP } from 'constants/v2/splits'
 
@@ -90,22 +90,74 @@ const getEditableSplits = (splits: Split[]) => {
 const DescriptionParagraphOne = () => (
   <p>
     <Trans>
-      Distribute available funds to other Ethereum wallets or Juicebox projects
-      as payouts. Use this to pay contributors, charities, Juicebox projects you
-      depend on, or anyone else. Funds are distributed whenever a withdrawal is
-      made from your project.
+      Reconfigure payouts as percentages of your distribution limit.
     </Trans>
   </p>
 )
-const DescriptionParagraphTwo = () => (
-  <p>
-    <Trans>
-      By design, this form only allows the adjustment of percentages to
-      distributions; this is an intended feature to save gas. To update the
-      total distribution limit, please use the Reconfiguration feature.
-    </Trans>
-  </p>
-)
+const DescriptionParagraphTwo = () => {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
+  return (
+    <p>
+      <Space size="small">
+        <ExclamationCircleOutlined
+          style={{
+            color: colors.text.warn,
+          }}
+        />
+        <Trans>Changes to payouts will take effect immediately.</Trans>
+      </Space>
+    </p>
+  )
+}
+
+const DistributionLimitHeader = ({
+  style,
+}: {
+  style?: React.CSSProperties
+}) => {
+  const {
+    fundingCycle,
+    distributionLimit,
+    distributionLimitCurrency,
+    loading: { distributionLimitLoading, fundingCycleLoading },
+  } = useContext(V2ProjectContext)
+
+  const currency = V2CurrencyName(
+    distributionLimitCurrency?.toNumber() as V2CurrencyOption,
+  )
+  const distributionLimitIsInfinite = distributionLimit?.eq(
+    MAX_DISTRIBUTION_LIMIT,
+  )
+  const projectLoading = distributionLimitLoading && fundingCycleLoading
+
+  return (
+    <div style={{ display: 'flex', justifyContent: 'space-between', ...style }}>
+      <Skeleton
+        loading={projectLoading}
+        paragraph={{ rows: 1, width: ['80%'] }}
+        title={false}
+        active
+      >
+        <b>
+          FC# {fundingCycle?.number.toString()} -{' '}
+          {distributionLimitIsInfinite ? (
+            'No limit (infinite)'
+          ) : (
+            <>
+              Distribution limit: <CurrencySymbol currency={currency} />
+              {formatWad(distributionLimit)}
+            </>
+          )}
+        </b>
+      </Skeleton>
+      <Button size="small" icon={<SettingOutlined />}>
+        Reconfigure limit
+      </Button>
+    </div>
+  )
+}
 
 export const EditPayoutsModal = ({
   visible,
@@ -253,6 +305,7 @@ export const EditPayoutsModal = ({
           <DescriptionParagraphOne />
           <DescriptionParagraphTwo />
         </div>
+        <DistributionLimitHeader style={{ marginTop: 32, marginBottom: 16 }} />
         <Space
           direction="vertical"
           style={{ width: '100%', minHeight: 0 }}

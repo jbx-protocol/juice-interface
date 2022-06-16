@@ -89,9 +89,9 @@ const loadContract = async (
       ).abi,
       address: (
         (await import(
-          `@jbx-protocol/project-handles/broadcast/Deploy.sol/${NETWORKS_BY_NAME[network]}/run-latest.json`
-        )) as { contractAddress: string }
-      ).contractAddress.substring(2), // contractAddress is prefixed `0x0x` in error, trim first `0x`
+          `@jbx-protocol/project-handles/broadcast/Deploy.sol/${NETWORKS_BY_NAME[network].chainId}/run-latest.json`
+        )) as { receipts: { contractAddress: string }[] }
+      ).receipts[0].contractAddress, // contractAddress is prefixed `0x0x` in error, trim first `0x`
     }
   } else if (contractName === V2ContractName.PublicResolver) {
     // ENS contracts package currently doesn't include rinkeby information, and ABI contains errors

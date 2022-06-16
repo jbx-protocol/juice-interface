@@ -8,7 +8,7 @@ msgstr ""
 "Language: id\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-06-15 03:02\n"
+"PO-Revision-Date: 2022-06-16 02:53\n"
 "Last-Translator: \n"
 "Language-Team: Indonesian\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -888,7 +888,7 @@ msgid "Delete token allocation"
 msgstr ""
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
-msgid "Deploy new project configuration"
+msgid "Deploy funding cycle configuration"
 msgstr ""
 
 #: src/components/v1/V1Create/index.tsx
@@ -1619,6 +1619,7 @@ msgstr ""
 msgid "Mint project tokens on demand"
 msgstr ""
 
+#: src/components/v2/V2Create/forms/TokenForm/MintRateFormItem.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Mint rate"

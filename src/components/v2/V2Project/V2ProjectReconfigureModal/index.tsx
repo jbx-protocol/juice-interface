@@ -515,7 +515,7 @@ export default function V2ProjectReconfigureModal({
       visible={visible}
       onOk={reconfigureFundingCycle}
       onCancel={handleGlobalModalClose}
-      okText={t`Deploy new project configuration`}
+      okText={t`Deploy funding cycle configuration`}
       okButtonProps={{
         disabled: !fundingHasSavedChanges,
         style: { marginBottom: '15px' },

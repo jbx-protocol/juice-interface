@@ -104,7 +104,9 @@ export default function ProjectDetailsForm({
           <Form.Item>
             {saveButton ?? (
               <Button htmlType="submit" loading={loading} type="primary">
-                <Trans>Save project details</Trans>
+                <span>
+                  <Trans>Save project details</Trans>
+                </span>
               </Button>
             )}
           </Form.Item>

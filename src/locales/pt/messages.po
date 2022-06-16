@@ -2565,10 +2565,6 @@ msgstr ""
 msgid "The <0>issuance rate</0> of your second funding cycle will be <1>{0} tokens per 1 ETH</1>, then <2>{1} tokens per 1 ETH </2>for your third funding cycle, and so on."
 msgstr "A <0>taxa de emissão</0> de seu segundo ciclo de financiamento será de <1>{0} tokens por 1 ETH</1>, depois <2>{1} tokens por 1 ETH </2>para o seu terceiro ciclo de financiamento e assim por diante."
 
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectHandleDrawer.tsx
-msgid "Text record is set"
-msgstr ""
-
 #: src/components/Landing/index.tsx
 msgid "The Decentralized Funding Platform. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."
 msgstr "A Plataforma de Financiamento Descentralizada. Suficiente ligeira para um grupo de amigos, suficiente poderosa para uma rede global de anônimos. <0>Propriedade de comunidade</0>, em Ethereum."

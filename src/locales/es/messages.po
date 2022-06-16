@@ -2699,10 +2699,6 @@ msgstr "Objetivo"
 msgid "Target is 0: All funds will be considered overflow and can be redeemed by burning project tokens."
 msgstr "La meta-ojetivo es 0: Todos los fondos serán considerados excedente y pueden ser canjeados al quemar tokens del proyecto."
 
-#: src/components/v2/V2Create/forms/TokenForm/index.tsx
-msgid "The <0>issuance rate</0> of your second funding cycle will be <1>{0} tokens per 1 ETH</1>, then <2>{1} tokens per 1 ETH </2>for your third funding cycle, and so on."
-msgstr "La <0>tasa de emisión</0> de tu segundo ciclo de financiamiento será <1>{0} tokens por 1 ETH</1>, entonces <2>{1} tokens por 1 ETH </2>para tu tercer ciclo de financiamiento y así sucesivamente."
-
 #: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
 msgid "Text record is set"
 msgstr ""

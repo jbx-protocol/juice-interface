@@ -1,21 +1,19 @@
 ---
 name: Feature request
-about: Suggest an idea for this project
+about: Any idea, improvement, suggestion or feature request for juicebox.money.
 title: ''
-labels: idea
+labels: enhancement
 assignees: ''
 ---
 
-## Problem to solve
+## Description
 
-_Is your feature request related to a problem? Provide a clear and concise
-description of what the problem is. Ex. I'm always frustrated when [...]_
+_A clear and concise description of what could be better._
 
 ## Proposal
 
-_Describe the feature/solution you'd like. A clear and concise description of
-what you want to happen._
+_A description of the change you'd like to see._
 
-## More details
+## Screenshots
 
-_Add any other notes or screenshots about the feature request here._
+_If applicable, add screenshots to help explain your problem._

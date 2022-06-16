@@ -888,8 +888,8 @@ msgid "Delete token allocation"
 msgstr "Deletar alocação de token"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
-msgid "Deploy new project configuration"
-msgstr "Implementar nova configuração de projeto"
+msgid "Deploy funding cycle configuration"
+msgstr ""
 
 #: src/components/v1/V1Create/index.tsx
 msgid "Deploy project"
@@ -1619,6 +1619,7 @@ msgstr "Criar novos {tokensLabel} dentro de uma conta. Só o proprietário do pr
 msgid "Mint project tokens on demand"
 msgstr "Crie tokens do projeto sob demanda"
 
+#: src/components/v2/V2Create/forms/TokenForm/MintRateFormItem.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Mint rate"

@@ -23,6 +23,7 @@ export default function DistributePayoutsElem({
         | 'txHash'
         | 'caller'
         | 'beneficiary'
+        | 'beneficiaryDistributionAmount'
         | 'distributedAmount'
         | 'memo'
       >
@@ -112,7 +113,7 @@ export default function DistributePayoutsElem({
           </div>
         ))}
 
-        {event.distributedAmount?.gt(0) && (
+        {event.beneficiaryDistributionAmount?.gt(0) && (
           <div
             style={{
               display: 'flex',
@@ -132,7 +133,7 @@ export default function DistributePayoutsElem({
               }
             >
               <CurrencySymbol currency="ETH" />
-              {formatWad(event.distributedAmount, { precision: 4 })}
+              {formatWad(event.beneficiaryDistributionAmount, { precision: 4 })}
             </div>
           </div>
         )}

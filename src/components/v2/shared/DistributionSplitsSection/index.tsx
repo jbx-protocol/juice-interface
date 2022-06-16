@@ -1,10 +1,10 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Form, Radio, Space } from 'antd'
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useState } from 'react'
 
 import { Split } from 'models/v2/splits'
 import { FormItemExt } from 'components/shared/formItems/formItemExt'
-import { fromWad, parseWad } from 'utils/formatNumber'
+import { parseWad } from 'utils/formatNumber'
 import DistributionLimit from 'components/v2/V2Project/DistributionLimit'
 import TooltipIcon from 'components/shared/TooltipIcon'
 import { getTotalSplitsPercentage } from 'utils/v2/distributions'
@@ -18,7 +18,7 @@ import DistributionSplitModal from './DistributionSplitModal'
 import SpecificLimitModal from './SpecificLimitModal'
 import { PayoutConfigurationExplainerCollapse } from './PayoutConfigurationExplainerCollapse'
 
-type DistributionType = 'amount' | 'percent'
+export type DistributionType = 'amount' | 'percent'
 
 export default function DistributionSplitsSection({
   distributionLimit,
@@ -90,9 +90,9 @@ export default function DistributionSplitsSection({
     ],
   )
 
-  useEffect(() => {
-    setDistributionType(distributionLimitIsInfinite ? 'percent' : 'amount')
-  }, [distributionLimitIsInfinite])
+  // useEffect(() => {
+  //   setDistributionType(distributionLimitIsInfinite ? 'percent' : 'amount')
+  // }, [distributionLimitIsInfinite])
 
   if (!allSplits) return null
 
@@ -151,8 +151,7 @@ export default function DistributionSplitsSection({
             onChange={e => {
               const newType = e.target.value
               if (newType === 'percent') {
-                setDistributionLimit(fromWad(MAX_DISTRIBUTION_LIMIT))
-                setDistributionType(newType)
+                setSpecificLimitModalOpen(true)
               } else if (newType === 'amount') {
                 if (editableSplits.length) {
                   setSpecificLimitModalOpen(true)
@@ -185,8 +184,8 @@ export default function DistributionSplitsSection({
                 <Trans>Percentages</Trans>
                 <p style={{ fontWeight: 400, fontSize: '0.8rem' }}>
                   <Trans>
-                    Distribute a percentage of all funds received to entities.
-                    Your distribution limit will be <strong>infinite</strong>.
+                    Distribute a percentage of an overall distribution limit to
+                    entities.
                   </Trans>
                 </p>
               </Radio>
@@ -250,6 +249,7 @@ export default function DistributionSplitsSection({
         splits={allSplits}
         editableSplits={editableSplits}
         distributionLimit={distributionLimit}
+        distributionType={distributionType}
         setDistributionLimit={setDistributionLimit}
         currencyName={currencyName}
         onCurrencyChange={onCurrencyChange}
@@ -259,8 +259,10 @@ export default function DistributionSplitsSection({
         visible={specificLimitModalOpen}
         onClose={() => setSpecificLimitModalOpen(false)}
         setDistributionLimit={setDistributionLimit}
+        setDistributionType={setDistributionType}
         currencyName={currencyName}
         onCurrencyChange={onCurrencyChange}
+        initialDistributionType={distributionType}
       />
     </Form.Item>
   )

@@ -43,6 +43,7 @@ import CurrencySwitch from 'components/shared/CurrencySwitch'
 import TooltipIcon from 'components/shared/TooltipIcon'
 
 import { CurrencyName } from 'constants/currency'
+import { DistributionType } from '.'
 
 type AddOrEditSplitFormFields = {
   projectId: string
@@ -52,7 +53,6 @@ type AddOrEditSplitFormFields = {
 }
 
 type SplitType = 'project' | 'address'
-type DistributionType = 'amount' | 'percent'
 
 // Using both state and a form in this modal. I know it seems over the top,
 // but the state is necessary to link the percent and amount fields, and the form
@@ -63,6 +63,7 @@ export default function DistributionSplitModal({
   splits, // Locked and editable splits
   onSplitsChanged,
   distributionLimit,
+  distributionType,
   setDistributionLimit,
   editableSplitIndex, // index in editingSplits list (Only in the case mode==='Edit')
   onClose,
@@ -75,6 +76,7 @@ export default function DistributionSplitModal({
   splits: Split[]
   onSplitsChanged: (splits: Split[]) => void
   distributionLimit: string | undefined
+  distributionType?: DistributionType
   setDistributionLimit: (distributionLimit: string) => void
   editableSplitIndex?: number
   onClose: VoidFunction
@@ -113,9 +115,6 @@ export default function DistributionSplitModal({
 
   const [editingSplitType, setEditingSplitType] = useState<SplitType>(
     initialProjectId ? 'project' : 'address',
-  )
-  const [distributionType, setDistributionType] = useState<DistributionType>(
-    distributionLimitIsInfinite ? 'percent' : 'amount',
   )
   const [projectId, setProjectId] = useState<string | undefined>(
     initialProjectId?.toString(),
@@ -175,10 +174,6 @@ export default function DistributionSplitModal({
     setAmount(amount)
     setPercent(percentPerBillion)
   }, [distributionLimit, editableSplits, editableSplitIndex, isFirstSplit])
-
-  useEffect(() => {
-    setDistributionType(distributionLimitIsInfinite ? 'percent' : 'amount')
-  }, [distributionLimitIsInfinite])
 
   const resetStates = () => {
     setProjectId(undefined)

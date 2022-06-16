@@ -887,8 +887,8 @@ msgid "Delete token allocation"
 msgstr "Deletar alocação de token"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
-msgid "Deploy new project configuration"
-msgstr "Implementar nova configuração de projeto"
+msgid "Deploy funding cycle configuration"
+msgstr ""
 
 #: src/components/v1/V1Create/index.tsx
 msgid "Deploy project"

@@ -3392,6 +3392,10 @@
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@jbx-protocol/juice-v1-token-terminal/-/juice-v1-token-terminal-1.0.1.tgz#b3855be69d4ebce57747cee2603df88f7ed23aad"
   integrity sha512-HZXbb6eOxCKmb/VCXDTcLEKyX6jsJhfHAS4mUu+VR18ReibNnwcdjltqsCBkNJlPOMDd3q1MVTXMrnGaOEHzIA==
+"@jbx-protocol/project-handles@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@jbx-protocol/project-handles/-/project-handles-1.0.0.tgz#d774da9fcc3164e7b27adbb3f957f5ea86df6083"
+  integrity sha512-CZnRZ1ZLd+jJEDCADnNk1V2tx6gh1cjEJTOemjofYbPqhPHu98qfqV6wP28ajbs5yhissHMDADpe9Q92OG2nbA==
 
 "@jest/console@^26.6.2":
   version "26.6.2"

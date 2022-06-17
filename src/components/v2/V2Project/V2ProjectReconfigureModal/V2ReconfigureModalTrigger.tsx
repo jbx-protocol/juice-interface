@@ -14,6 +14,7 @@ import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { fromWad } from 'utils/formatNumber'
 
 import { t } from '@lingui/macro'
+import { useLocation } from 'react-router-dom'
 
 import { ETH_PAYOUT_SPLIT_GROUP } from 'constants/v2/splits'
 import V2ProjectReconfigureModal from './index'
@@ -30,13 +31,23 @@ export default function V2ReconfigureFundingModalTrigger({
   hideProjectDetails?: boolean
   triggerButton?: (onClick: VoidFunction) => JSX.Element
 }) {
+  // Checks URL to see if Modal is already opened
+  const location = useLocation()
+  const params = new URLSearchParams(location.search)
+  const initialReconfigureModalVisible = Boolean(
+    params.get('reconfigModalOpen'),
+  )
+
   const localStoreRef = useRef<typeof store>()
+  if (initialReconfigureModalVisible && localStoreRef.current === undefined) {
+    localStoreRef.current = createStore()
+  }
   const dispatch = useDispatch()
   const { projectId, fundingCycle, primaryTerminal } =
     useContext(V2ProjectContext)
 
   const [reconfigureModalVisible, setReconfigureModalVisible] =
-    useState<boolean>(false)
+    useState<boolean>(initialReconfigureModalVisible)
 
   function handleModalOpen() {
     localStoreRef.current = createStore()
@@ -126,7 +137,6 @@ export default function V2ReconfigureFundingModalTrigger({
           />
         </Tooltip>
       )}
-      {/* Make button and drawer instance for funding drawer */}
       {localStoreRef.current && (
         <Provider store={localStoreRef.current}>
           <V2ProjectReconfigureModal

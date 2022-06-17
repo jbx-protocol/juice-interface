@@ -56,6 +56,7 @@ import FundingDrawer from 'components/v2/shared/FundingCycleConfigurationDrawers
 import TokenDrawer from 'components/v2/shared/FundingCycleConfigurationDrawers/TokenDrawer'
 
 import RulesDrawer from 'components/v2/shared/FundingCycleConfigurationDrawers/RulesDrawer'
+import { useLocation } from 'react-router-dom'
 
 import { V2ReconfigureProjectDetailsDrawer } from './drawers/V2ReconfigureProjectDetailsDrawer'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
@@ -122,6 +123,11 @@ export default function V2ProjectReconfigureModal({
   onCancel: VoidFunction
   hideProjectDetails?: boolean
 }) {
+  // Checks URL to see if fundingDrawer is already opened
+  const location = useLocation()
+  const params = new URLSearchParams(location.search)
+  const initialFundingDrawerVisible = Boolean(params.get('fundingDrawerOpen'))
+
   const {
     fundingCycle,
     payoutSplits,
@@ -174,8 +180,9 @@ export default function V2ProjectReconfigureModal({
 
   const [projectDetailsDrawerVisible, setProjectDetailsDrawerVisible] =
     useState<boolean>(false)
-  const [fundingDrawerVisible, setFundingDrawerVisible] =
-    useState<boolean>(false)
+  const [fundingDrawerVisible, setFundingDrawerVisible] = useState<boolean>(
+    initialFundingDrawerVisible,
+  )
   const [tokenDrawerVisible, setTokenDrawerVisible] = useState<boolean>(false)
   const [rulesDrawerVisible, setRulesDrawerVisible] = useState<boolean>(false)
 

@@ -24,6 +24,7 @@ import { formatWad } from 'utils/formatNumber'
 import { ExclamationCircleOutlined, SettingOutlined } from '@ant-design/icons'
 
 import CurrencySymbol from 'components/shared/CurrencySymbol'
+import { useHistory } from 'react-router-dom'
 
 import { ETH_PAYOUT_SPLIT_GROUP } from 'constants/v2/splits'
 
@@ -124,6 +125,7 @@ const DistributionLimitHeader = ({
     loading: { distributionLimitLoading, fundingCycleLoading },
   } = useContext(V2ProjectContext)
 
+  const history = useHistory()
   const currency = V2CurrencyName(
     distributionLimitCurrency?.toNumber() as V2CurrencyOption,
   )
@@ -131,6 +133,13 @@ const DistributionLimitHeader = ({
     MAX_DISTRIBUTION_LIMIT,
   )
   const projectLoading = distributionLimitLoading && fundingCycleLoading
+
+  const relocateToFundingDrawer = () => {
+    history.push({
+      search: '?reconfigModalOpen=true&fundingDrawerOpen=true',
+    })
+    history.go(0)
+  }
 
   return (
     <div style={{ display: 'flex', justifyContent: 'space-between', ...style }}>
@@ -152,8 +161,14 @@ const DistributionLimitHeader = ({
           )}
         </b>
       </Skeleton>
-      <Button size="small" icon={<SettingOutlined />}>
-        Reconfigure limit
+      <Button
+        size="small"
+        icon={<SettingOutlined />}
+        onClick={relocateToFundingDrawer}
+      >
+        <span>
+          <Trans>Reconfigure payouts and limit</Trans>
+        </span>
       </Button>
     </div>
   )

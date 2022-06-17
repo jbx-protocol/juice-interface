@@ -2169,6 +2169,10 @@ msgid "Reconfigure funding"
 msgstr "Reconfigure funding"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
+msgid "Reconfigure payouts and limit"
+msgstr "Reconfigure payouts and limit"
+
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
 msgid "Reconfigure payouts as percentages of your distribution limit."
 msgstr "Reconfigure payouts as percentages of your distribution limit."
 

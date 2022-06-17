@@ -16,12 +16,12 @@ const getBase64 = (img: Blob, callback: (result: NFTFile) => void) => {
 }
 
 export default function NFTUpload() {
-// @tank TODO: Will need to pass form object in to save the NFT URL with form.setFieldsValue({NFT, <url>})
-//   {
-//   form
-// }: {
-//   form: FormInstance
-// }
+  // @tank TODO: Will need to pass form object in to save the NFT URL with form.setFieldsValue({NFT, <url>})
+  //   {
+  //   form
+  // }: {
+  //   form: FormInstance
+  // }
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -47,7 +47,7 @@ export default function NFTUpload() {
     // check file type @tank
     const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png'
 
-    // limit file size ?? @tank
+    // limit file size ?? @tank says 5000mb
     const isLt2M = file.size / 1024 / 1024 < 2
 
     if (!isLt2M) {

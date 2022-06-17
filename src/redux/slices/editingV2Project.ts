@@ -39,6 +39,7 @@ interface V2ProjectState {
   payoutGroupedSplits: ETHPayoutGroupedSplits
   reservedTokensGroupedSplits: ReservedTokensGroupedSplits
   nftRewardTiers: NFTRewardTier[]
+  nftRewardsCid: string | undefined // points to location of the NFT's json on IPFS
 }
 
 // Increment this version by 1 when making breaking changes.
@@ -108,6 +109,7 @@ export const defaultProjectState: V2ProjectState = {
   payoutGroupedSplits: EMPTY_PAYOUT_GROUPED_SPLITS,
   reservedTokensGroupedSplits: EMPTY_RESERVED_TOKENS_GROUPED_SPLITS,
   nftRewardTiers: [],
+  nftRewardsCid: undefined,
 }
 
 const editingV2ProjectSlice = createSlice({
@@ -206,6 +208,9 @@ const editingV2ProjectSlice = createSlice({
     },
     setNftRewardTiers: (state, action: PayloadAction<NFTRewardTier[]>) => {
       state.nftRewardTiers = action.payload
+    },
+    setNftRewardsCid: (state, action: PayloadAction<string>) => {
+      state.nftRewardsCid = action.payload
     },
   },
 })

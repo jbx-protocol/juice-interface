@@ -48,7 +48,10 @@ export default function NFTDrawer({
      * e.g. permyriads, parts-per-billion etc.
      * and NOT percentages.
      */
+    // nftTiers = {}
+    // cid = cloudFunction(nftTiers)
     dispatch(editingV2ProjectActions.setNftRewardTiers(rewardTiers))
+    // dispatch(editingV2ProjectActions.setNftRewardsCid(cid))
 
     onClose?.()
   }, [rewardTiers, dispatch, onClose])

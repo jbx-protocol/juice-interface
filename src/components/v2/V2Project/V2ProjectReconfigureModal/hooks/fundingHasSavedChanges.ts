@@ -7,12 +7,15 @@ import {
 } from 'utils/v2/serializers'
 
 import { EditingProjectData } from './editingProjectData'
-import { InitialEditingData, useInitialEditingData } from './initialEditingData'
+import { InitialEditingData } from './initialEditingData'
 
-export const useFundingHasSavedChanges = (
-  editingProjectData: EditingProjectData,
-  visible: boolean,
-) => {
+export const useFundingHasSavedChanges = ({
+  editingProjectData,
+  initialEditingData,
+}: {
+  editingProjectData: EditingProjectData
+  initialEditingData: InitialEditingData | undefined
+}) => {
   const {
     editingPayoutGroupedSplits,
     editingReservedTokensGroupedSplits,
@@ -20,8 +23,6 @@ export const useFundingHasSavedChanges = (
     editingFundingCycleData,
     editingFundAccessConstraints,
   } = editingProjectData
-
-  const { initialEditingData } = useInitialEditingData(visible)
 
   const fundingHasSavedChanges = useMemo(() => {
     if (!initialEditingData) {

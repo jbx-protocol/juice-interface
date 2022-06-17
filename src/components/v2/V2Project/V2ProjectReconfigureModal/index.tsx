@@ -18,6 +18,7 @@ import ReconfigurePreview from './ReconfigurePreview'
 import { useEditingProjectData } from './hooks/editingProjectData'
 import { useFundingHasSavedChanges } from './hooks/fundingHasSavedChanges'
 import { useReconfigureFundingCycle } from './hooks/reconfigureFundingCycle'
+import { useInitialEditingData } from './hooks/initialEditingData'
 
 function ReconfigureButton({
   title,
@@ -75,13 +76,17 @@ export default function V2ProjectReconfigureModal({
   onCancel: VoidFunction
   hideProjectDetails?: boolean
 }) {
+  const { initialEditingData } = useInitialEditingData(visible)
   const editingProjectData = useEditingProjectData()
   const {
     fundingHasSavedChanges,
     fundingDrawerHasSavedChanges,
     tokenDrawerHasSavedChanges,
     rulesDrawerHasSavedChanges,
-  } = useFundingHasSavedChanges(editingProjectData, visible)
+  } = useFundingHasSavedChanges({
+    editingProjectData,
+    initialEditingData,
+  })
   const { reconfigureLoading, reconfigureFundingCycle } =
     useReconfigureFundingCycle({ editingProjectData, exit })
 

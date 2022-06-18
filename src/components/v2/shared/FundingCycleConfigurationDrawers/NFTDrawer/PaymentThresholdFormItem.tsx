@@ -1,16 +1,17 @@
 import { t } from '@lingui/macro'
-import { Form, FormInstance, Input } from 'antd'
+import { Form, FormInstance } from 'antd'
+import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import TooltipLabel from 'components/shared/TooltipLabel'
 
 import { NFTFormFields } from './NFTRewardTierModal'
 
-export default function CriteriaFormItem({
+export default function PaymentThresholdFormItem({
   form,
 }: {
   form: FormInstance<NFTFormFields>
 }) {
-  const validateCriteriaAmount = () => {
-    const value = form.getFieldValue('criteria')
+  const validatePaymentThresholdAmount = () => {
+    const value = form.getFieldValue('paymentThreshold')
     if (value === undefined || value <= 0) {
       return Promise.reject(t`Amount required`)
     }
@@ -20,7 +21,7 @@ export default function CriteriaFormItem({
   return (
     <div style={{ display: 'flex' }}>
       <Form.Item
-        name={'criteria'}
+        name={'paymentThreshold'}
         label={
           <TooltipLabel
             label={t`Contribution threshold`}
@@ -28,13 +29,11 @@ export default function CriteriaFormItem({
           />
         }
         extra={t`Contributors will receive the NFT when they contribute at least this amount.`}
-        rules={[{ required: true, validator: validateCriteriaAmount }]}
+        rules={[{ required: true, validator: validatePaymentThresholdAmount }]}
       >
-        <Input
+        <FormattedNumberInput
           placeholder={'0.5'}
-          type="string"
-          autoComplete="off"
-          suffix={t`ETH`}
+          accessory={<span>ETH</span>}
         />
       </Form.Item>
     </div>

@@ -6,15 +6,17 @@ import { NFTRewardTier } from 'models/v2/nftRewardTier'
 import TooltipLabel from 'components/shared/TooltipLabel'
 import { useEffect } from 'react'
 
-import CriteriaFormItem from './CriteriaFormItem'
+import PaymentThresholdFormItem from './PaymentThresholdFormItem'
 import NFTUpload from './NFTUpload'
+import MaxSupplyFormItem from './MaxSupplyFormItem'
 
 export type NFTFormFields = {
-  criteria: string
+  paymentThreshold: number
+  maxSupply: number
   name: string
   externalLink: string
   description: string
-  NFT: string // IPFS link
+  imageUrl: string // IPFS link
 }
 
 export default function NFTRewardTierModal({
@@ -39,8 +41,9 @@ export default function NFTRewardTierModal({
     await NFTForm.validateFields()
 
     const newTier = {
-      criteria: parseFloat(NFTForm.getFieldValue('criteria')),
-      NFT: '/assets/quint.gif',
+      paymentThreshold: parseFloat(NFTForm.getFieldValue('paymentThreshold')),
+      maxSupply: NFTForm.getFieldValue('maxSupply'),
+      imageUrl: NFTForm.getFieldValue('imageUrl'),
       name: NFTForm.getFieldValue('name'),
       externalLink: NFTForm.getFieldValue('externalLink'),
       description: NFTForm.getFieldValue('description'),
@@ -70,11 +73,12 @@ export default function NFTRewardTierModal({
       const rewardTier = rewardTiers[editingTierIndex]
 
       NFTForm.setFieldsValue({
-        NFT: rewardTier.NFT,
+        imageUrl: rewardTier.imageUrl,
         name: rewardTier.name,
         externalLink: rewardTier.externalLink,
         description: rewardTier.description,
-        criteria: rewardTier.criteria.toString(),
+        paymentThreshold: rewardTier.paymentThreshold,
+        maxSupply: rewardTier.maxSupply,
       })
     }
   })
@@ -93,8 +97,9 @@ export default function NFTRewardTierModal({
         contributions above a certain threshold.
       </p>
       <Form layout="vertical" form={NFTForm}>
-        <CriteriaFormItem form={NFTForm} />
-        <NFTUpload />
+        <PaymentThresholdFormItem form={NFTForm} />
+        <MaxSupplyFormItem form={NFTForm} />
+        <NFTUpload form={NFTForm} />
         <Form.Item
           name={'name'}
           label={

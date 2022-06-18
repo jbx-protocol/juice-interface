@@ -49,7 +49,7 @@ export default function NFTRewardTierCard({
         >
           <div style={{ display: 'flex', alignItems: 'center', fontSize: 17 }}>
             <div style={{ color: colors.text.action.primary }}>
-              {rewardTier.criteria} ETH
+              {rewardTier.paymentThreshold} ETH
             </div>
             <div style={{ display: 'flex', marginLeft: 45, fontWeight: 500 }}>
               <span>{rewardTier.name}</span>
@@ -92,7 +92,7 @@ export default function NFTRewardTierCard({
             alignItems: 'center',
           }}
         >
-          <img src={rewardTier.NFT} alt={rewardTier.name} height="75px" />
+          <img src={rewardTier.imageUrl} alt={rewardTier.name} height="75px" />
         </Col>
         <Col md={2}>
           <Tooltip title={<Trans>Delete payout</Trans>}>

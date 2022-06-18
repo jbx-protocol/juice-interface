@@ -442,7 +442,7 @@ msgstr ""
 msgid "Amount paid"
 msgstr "Somme payée"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/CriteriaFormItem.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/PaymentThresholdFormItem.tsx
 msgid "Amount required"
 msgstr ""
 
@@ -762,7 +762,7 @@ msgstr "Portefeuille connecté non autorisé"
 msgid "Contract address: {0}"
 msgstr "Adresse du contrat : {0}"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/CriteriaFormItem.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/PaymentThresholdFormItem.tsx
 msgid "Contribution threshold"
 msgstr ""
 
@@ -789,7 +789,7 @@ msgstr "Les contributeurs recevront <0>{discountRatePercent}%</0> plus de tokens
 msgid "Contributors will receive a relatively small portion of tokens in exchange for paying this project."
 msgstr "Les contributeurs recevront une petite portion des tokens en échange pour avoir payé ce projet."
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/CriteriaFormItem.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/PaymentThresholdFormItem.tsx
 msgid "Contributors will receive the NFT when they contribute at least this amount."
 msgstr ""
 
@@ -1169,10 +1169,6 @@ msgstr "Les tokens ERC-20 ne peuvent être frappés que lorsqu'un token ERC-20 a
 msgid "ERC20 Deployed"
 msgstr "ERC20 Déployé"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/CriteriaFormItem.tsx
-msgid "ETH"
-msgstr ""
-
 #: src/components/v2/shared/DistributionSplitsSection/SpecificLimitModal.tsx
 msgid "Each payout will receive their percent of this total each funding cycle if there is enough in the treasury. Otherwise, they will receive their percent of whatever is in the treasury."
 msgstr "Chaque paiement recevra son pourcentage de ce total à chaque cycle de financement s'il y en a assez dans la trésorerie. Sinon, ils recevront leur pourcentage de tout ce que dispose la trésorerie."
@@ -1271,6 +1267,10 @@ msgstr "Échec de la mise à jour des métadonnées du projet"
 #: src/components/shared/inputs/ImageUploader.tsx
 msgid "File must be less than {formattedSize}{unit}"
 msgstr "Le fichier doit être inférieur à {formattedSize}{unit}"
+
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTUpload.tsx
+msgid "File upload required"
+msgstr ""
 
 #: src/components/Landing/index.tsx
 msgid "Fund anything. Grow together."
@@ -1638,6 +1638,14 @@ msgstr "Gérer {0}"
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "Manage {tokenText}"
 msgstr "Gérer {tokenText}"
+
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/MaxSupplyFormItem.tsx
+msgid "Maximum supply"
+msgstr ""
+
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/MaxSupplyFormItem.tsx
+msgid "Maximum supply required"
+msgstr ""
 
 #: src/components/shared/formItems/ProjectDescription.tsx
 msgid "Maximum {MAX_DESCRIPTION_LENGTH} characters"
@@ -2495,6 +2503,10 @@ msgstr "Définir l'objectif du cycle de financement"
 msgid "Set a funding target to cover predictable expenses. Any extra funds (<0>overflow</0>) can be claimed by anyone holding your project's tokens alongside you."
 msgstr "Définir un objectif de financement pour couvrir les dépenses prévisibles. Tout fonds supplémentaire (<0>overflow</0>) peut être récupéré par toute personne détenant des tokens de votre projet."
 
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/MaxSupplyFormItem.tsx
+msgid "Set an upper limit on the total quantity of this NFT in circulation."
+msgstr ""
+
 #: src/components/v1/shared/forms/BudgetForm.tsx
 msgid "Set the amount of funds you'd like to raise each funding cycle. Any funds raised within the funding cycle target can be distributed by the project, and can't be redeemed by your project's token holders."
 msgstr "Définissez le montant de fonds que vous souhaitez collecter à chaque cycle de financement. Tous les fonds collectés dans le cadre de l'objectif du cycle de financement peuvent être distribués par le projet et ne peuvent pas être récupérés par les titulaires de tokens de votre projet."
@@ -2616,7 +2628,7 @@ msgstr "Le solde du portefeuille du propriétaire du projet."
 msgid "The balance of this project in the Juicebox contract."
 msgstr "Le solde de ce projet dans le contrat Juicebox."
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/CriteriaFormItem.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/PaymentThresholdFormItem.tsx
 msgid "The contribution threshold above which you will reward contributors this NFT."
 msgstr ""
 
@@ -2643,6 +2655,10 @@ msgstr "Le montant maximal de fonds pouvant être distribué à partir de la tr�
 #: src/components/shared/formItems/ProjectTarget.tsx
 msgid "The maximum amount of funds that can be distributed from this project in one funding cycle. Funds will be withdrawn in ETH no matter the currency you choose."
 msgstr "Le montant maximal des fonds pouvant être distribués à partir de ce projet au cours d'un cycle de financement. Les fonds seront retirés en ETH, quelle que soit la devise que vous choisissez."
+
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/MaxSupplyFormItem.tsx
+msgid "The maximum quantity of this NFT that can ever be minted."
+msgstr ""
 
 #: src/components/v2/V2Create/forms/TokenForm/MintRateFormItem.tsx
 msgid "The number of project tokens minted when 1 ETH is contributed in the first funding cycle."

@@ -20,7 +20,9 @@ import { RedeemEvent } from 'models/subgraph-entities/vX/redeem-event'
 import { useContext, useMemo, useState } from 'react'
 import { WhereConfig } from 'utils/graph'
 
+import { DeployETHERC20ProjectPayerEvent } from '../../../../models/subgraph-entities/v2/deploy-eth-erc20-project-payer-event'
 import V2DownloadActivityModal from '../V2DownloadActivityModal'
+import DeployETHERC20ProjectPayerEventElem from './eventElems/DeployETHERC20ProjectPayerEventElem'
 import DistributePayoutsElem from './eventElems/DistributePayoutsElem'
 import DistributeReservedTokensEventElem from './eventElems/DistributeReservedTokensElem'
 
@@ -34,6 +36,7 @@ type EventFilter =
   | 'distributePayouts'
   | 'distributeTokens'
   | 'distributeReservedTokens'
+  | 'deployETHERC20ProjectPayer'
 // TODO | 'useAllowanceEvent'
 
 export default function ProjectActivity() {
@@ -90,6 +93,9 @@ export default function ProjectActivity() {
         break
       case 'distributeTokens':
         key = 'distributeReservedTokensEvent'
+        break
+      case 'deployETHERC20ProjectPayer':
+        key = 'deployETHERC20ProjectPayerEvent'
         break
     }
 
@@ -175,6 +181,10 @@ export default function ProjectActivity() {
           'tokenCount',
         ],
       },
+      {
+        entity: 'deployETHERC20ProjectPayerEvent',
+        keys: ['id', 'timestamp', 'txHash', 'caller', 'address', 'memo'],
+      },
     ],
     orderDirection: 'desc',
     orderBy: 'timestamp',
@@ -219,6 +229,15 @@ export default function ProjectActivity() {
               <DistributeReservedTokensEventElem
                 event={
                   e.distributeReservedTokensEvent as DistributeReservedTokensEvent
+                }
+              />
+            )
+          }
+          if (e.deployETHERC20ProjectPayerEvent) {
+            elem = (
+              <DeployETHERC20ProjectPayerEventElem
+                event={
+                  e.deployETHERC20ProjectPayerEvent as DeployETHERC20ProjectPayerEvent
                 }
               />
             )
@@ -360,6 +379,9 @@ export default function ProjectActivity() {
             </Select.Option> */}
             <Select.Option value="deployERC20">
               <Trans>ERC20 Deployed</Trans>
+            </Select.Option>
+            <Select.Option value="deployETHERC20ProjectPayer">
+              <Trans>ETH-ERC20 Created</Trans>
             </Select.Option>
             <Select.Option value="projectCreate">
               <Trans>Project Created</Trans>

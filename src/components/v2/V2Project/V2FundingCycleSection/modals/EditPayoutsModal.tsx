@@ -150,7 +150,7 @@ const DistributionLimitHeader = ({
         active
       >
         <b>
-          FC# {fundingCycle?.number.toString()} -{' '}
+          Cycle #{fundingCycle?.number.toString()} -{' '}
           {distributionLimitIsInfinite ? (
             'No limit (infinite)'
           ) : (

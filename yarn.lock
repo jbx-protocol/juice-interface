@@ -3388,10 +3388,10 @@
   resolved "https://registry.yarnpkg.com/@jbx-protocol/contracts-v2/-/contracts-v2-8.0.0.tgz#25aee5766716947beb37ad08cdb3d30463a4b988"
   integrity sha512-0yFuhZBVHg+CGHNe9vPjbdSAhQSXVhFOQficc5ed1yzdG8ZaBSKg9ZdC351hJD7w7Mp9Vhf/0gh3ErYAv2OQqw==
 
-"@jbx-protocol/project-handles@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@jbx-protocol/project-handles/-/project-handles-1.0.0.tgz#d774da9fcc3164e7b27adbb3f957f5ea86df6083"
-  integrity sha512-CZnRZ1ZLd+jJEDCADnNk1V2tx6gh1cjEJTOemjofYbPqhPHu98qfqV6wP28ajbs5yhissHMDADpe9Q92OG2nbA==
+"@jbx-protocol/project-handles@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@jbx-protocol/project-handles/-/project-handles-2.0.0.tgz#9b70cdd34d4e985003c59f48643063a983322557"
+  integrity sha512-kpfIuUYzF9wTUjFw02e1Pl3GkV7PtrnNddcKxveE/IgLhVp4qlVuukasJockaLrYeV4qzQ/2YVg+6RTjMNZ38Q==
 
 "@jest/console@^26.6.2":
   version "26.6.2"

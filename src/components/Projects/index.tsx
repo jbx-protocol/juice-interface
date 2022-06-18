@@ -274,18 +274,7 @@ export default function Projects() {
           <TrendingProjects count={12} trendingWindowDays={7} />
         </div>
       ) : null}
-      {Boolean(searchText) && !isLoading && (
-        <div
-          style={{
-            textAlign: 'center',
-            color: colors.text.secondary,
-          }}
-        >
-          <Trans>
-            <InfoCircleOutlined /> Search results don't include V2 projects yet.
-          </Trans>
-        </div>
-      )}
+
       <FeedbackFormButton />
     </div>
   )

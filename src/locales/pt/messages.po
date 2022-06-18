@@ -1723,6 +1723,7 @@ msgid "No funds can be distributed out of the treasury. Funds can only be access
 msgstr "Os fundos não podem ser distribuídos para fora da tesouraria. Os fundos podem ser acessados apenas por titulares de token ao resgatarem os tokens."
 
 #: src/components/v2/V2Project/DistributionLimit.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
 msgid "No limit (infinite)"
 msgstr "Sem limite (infinito)"
 

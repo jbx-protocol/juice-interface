@@ -1,4 +1,4 @@
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Button, Modal, Skeleton, Space } from 'antd'
 import DistributionSplitCard from 'components/v2/shared/DistributionSplitsSection/DistributionSplitCard'
 import { defaultSplit, Split } from 'models/v2/splits'
@@ -150,9 +150,9 @@ const DistributionLimitHeader = ({
         active
       >
         <b>
-          <Trans>Cycle #{fundingCycle?.number.toString()} - </Trans>
+          <Trans>Cycle #{fundingCycle?.number.toString()} -</Trans>{' '}
           {distributionLimitIsInfinite ? (
-            'No limit (infinite)'
+            t`No limit (infinite)`
           ) : (
             <>
               <Trans>

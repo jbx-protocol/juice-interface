@@ -1,4 +1,4 @@
-import { Contract } from '@ethersproject/contracts'
+import { Contract, ContractInterface } from '@ethersproject/contracts'
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
 
 import { NetworkContext } from 'contexts/networkContext'
@@ -78,7 +78,8 @@ const loadContract = async (
   network: NetworkName,
   signerOrProvider: JsonRpcSigner | JsonRpcProvider,
 ): Promise<Contract | undefined> => {
-  let contractJson: { abi: object[]; address: string } | undefined = undefined
+  let contractJson: { abi: ContractInterface; address: string } | undefined =
+    undefined
 
   if (contractName === V2ContractName.JBProjectHandles) {
     contractJson = {

@@ -7,10 +7,16 @@ import { FormItemExt } from 'components/shared/formItems/formItemExt'
 import { fromWad, parseWad } from 'utils/formatNumber'
 import DistributionLimit from 'components/v2/V2Project/DistributionLimit'
 import TooltipIcon from 'components/shared/TooltipIcon'
-import { getTotalSplitsPercentage } from 'utils/v2/distributions'
+import {
+  adjustedSplitPercents,
+  getNewDistributionLimit,
+  getTotalSplitsPercentage,
+} from 'utils/v2/distributions'
 import { ThemeContext } from 'contexts/themeContext'
 import { MAX_DISTRIBUTION_LIMIT, splitPercentFrom } from 'utils/v2/math'
 import { NetworkContext } from 'contexts/networkContext'
+
+import { filter } from 'lodash'
 
 import DistributionSplitCard from './DistributionSplitCard'
 import { CurrencyName } from 'constants/currency'
@@ -68,25 +74,47 @@ export default function DistributionSplitsSection({
         <DistributionSplitCard
           split={split}
           splits={allSplits}
-          editableSplits={editableSplits}
-          editableSplitIndex={index}
           distributionLimit={distributionLimit}
           setDistributionLimit={setDistributionLimit}
           onSplitsChanged={onSplitsChanged}
           onCurrencyChange={isFirstSplit ? onCurrencyChange : undefined}
           currencyName={currencyName}
           isLocked={isLocked}
+          onSplitDelete={split => {
+            let adjustedSplits = allSplits
+            if (!distributionLimitIsInfinite && allSplits.length !== 1) {
+              const newDistributionLimit = getNewDistributionLimit({
+                currentDistributionLimit: distributionLimit,
+                newSplitAmount: 0,
+                editingSplitPercent: split.percent,
+              }).toString()
+              adjustedSplits = adjustedSplitPercents({
+                splits: editableSplits,
+                oldDistributionLimit: distributionLimit,
+                newDistributionLimit,
+              })
+              setDistributionLimit(newDistributionLimit)
+            }
+            if (allSplits.length === 1) setDistributionLimit('0')
+            const splitsAfterDelete = filter(
+              adjustedSplits,
+              s => s.beneficiary !== split.beneficiary,
+            )
+
+            onSplitsChanged(splitsAfterDelete)
+          }}
         />
       )
     },
     [
-      distributionLimit,
-      onSplitsChanged,
-      allSplits,
-      currencyName,
       editableSplits,
+      allSplits,
+      distributionLimit,
       setDistributionLimit,
+      onSplitsChanged,
       onCurrencyChange,
+      currencyName,
+      distributionLimitIsInfinite,
     ],
   )
 
@@ -113,8 +141,6 @@ export default function DistributionSplitsSection({
       <DistributionSplitCard
         split={ownerSplit}
         splits={allSplits}
-        editableSplits={editableSplits}
-        editableSplitIndex={0}
         distributionLimit={distributionLimit}
         setDistributionLimit={setDistributionLimit}
         onSplitsChanged={onSplitsChanged}
@@ -248,7 +274,6 @@ export default function DistributionSplitsSection({
         onSplitsChanged={onSplitsChanged}
         mode={'Add'}
         splits={allSplits}
-        editableSplits={editableSplits}
         distributionLimit={distributionLimit}
         setDistributionLimit={setDistributionLimit}
         currencyName={currencyName}

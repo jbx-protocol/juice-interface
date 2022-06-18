@@ -176,7 +176,7 @@ export function V2ReconfigureProjectHandleDrawer({
         <Button
           loading={loadingSetTextRecord}
           type="primary"
-          disabled={!projectEnsName || projectEnsName === handle}
+          disabled={!projectEnsName}
           onClick={setTextRecord}
         >
           <Trans>

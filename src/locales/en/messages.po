@@ -858,6 +858,10 @@ msgstr "Customize your project's \"pay\" button. Leave blank to use the default.
 msgid "Cycle #{0}"
 msgstr ""
 
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
+msgid "Cycle #{0} -"
+msgstr "Cycle #{0} -"
+
 #: src/components/Landing/index.tsx
 msgid "DAOs and communities"
 msgstr "DAOs and communities"
@@ -1070,6 +1074,10 @@ msgstr "Distribution limit is infinite. <0>The project will control how all fund
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Distribution limit, duration and payouts"
 msgstr "Distribution limit, duration and payouts"
+
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
+msgid "Distribution limit: <0/>{0}"
+msgstr "Distribution limit: <0/>{0}"
 
 #: src/components/Landing/QAs.tsx
 msgid "Do I have to make my project open source to use Juicebox as its business model?"

@@ -150,13 +150,15 @@ const DistributionLimitHeader = ({
         active
       >
         <b>
-          Cycle #{fundingCycle?.number.toString()} -{' '}
+          <Trans>Cycle #{fundingCycle?.number.toString()} - </Trans>
           {distributionLimitIsInfinite ? (
             'No limit (infinite)'
           ) : (
             <>
-              Distribution limit: <CurrencySymbol currency={currency} />
-              {formatWad(distributionLimit)}
+              <Trans>
+                Distribution limit: <CurrencySymbol currency={currency} />
+                {formatWad(distributionLimit)}
+              </Trans>
             </>
           )}
         </b>

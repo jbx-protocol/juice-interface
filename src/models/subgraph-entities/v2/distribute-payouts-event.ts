@@ -54,8 +54,8 @@ export const parseDistributePayoutsEventJson = (
   distributedAmount: j.distributedAmount
     ? BigNumber.from(j.distributedAmount)
     : undefined,
-  beneficiaryDistributionAmount: j.distributedAmount
-    ? BigNumber.from(j.distributedAmount)
+  beneficiaryDistributionAmount: j.beneficiaryDistributionAmount
+    ? BigNumber.from(j.beneficiaryDistributionAmount)
     : undefined,
   fee: j.fee ? BigNumber.from(j.fee) : undefined,
   memo: j.memo,

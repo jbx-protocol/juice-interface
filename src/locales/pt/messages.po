@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-06-15 03:02\n"
+"PO-Revision-Date: 2022-06-16 02:53\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -212,7 +212,7 @@ msgstr "<0>Este website (juicebox.money) tem conexão com os contratos inteligen
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "<0>Total project tokens minted</0> when 1 ETH is contributed. This can change over time according to the discount rate and reserved tokens amount of future funding cycles."
-msgstr ""
+msgstr "<0>O total de tokens do projeto emitidos</0> quando 1 ETH é contribuído. Isso pode mudar ao longo do tempo, de acordo com a taxa de desconto e quantidade de tokens reservados para futuros ciclos de financiamento."
 
 #: src/components/Landing/TrendingSection.tsx
 msgid "<0>Trending projects</0><1><2/></1>"
@@ -418,11 +418,11 @@ msgstr "Quantidade de tokens ERC-20 para reivindicar"
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Amount of newly minted project tokens <0>reserved for the project</0> when 1 ETH is contributed. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner."
-msgstr ""
+msgstr "A quantidade de tokens do projeto, recentemente emitidos, <0>reservados para o projeto</0> quando 1 ETH é contribuído. Esses tokens são reservados para o proprietário do projeto por padrão, mas podem ser também alocados para outro endereço de carteira pelo proprietário."
 
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Amount of newly minted project tokens <0>reserved for the project</0> when 1 ETH is contributed. The project owner is allocated all reserved tokens by default, but they can also be allocated to other wallet addresses."
-msgstr ""
+msgstr "A quantidade de tokens do projeto, recentemente emitidos, <0>reservados para o projeto</0> quando 1 ETH é contribuído. O proprietário do projeto é alocado para os tokens reservados por padrão, mas pode ser também alocado para outros endereços de carteira."
 
 #: src/components/shared/modals/ParticipantsModal.tsx
 #: src/components/v1/V1Project/V1DownloadPaymentsModal.tsx
@@ -697,7 +697,7 @@ msgstr "Configure o tokenomic do projeto."
 
 #: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Congratulations on launching your project! The next steps are optional and can be completed at any time."
-msgstr ""
+msgstr "Parabéns pelo lançamento do seu projeto! Os próximos passos são opcionais e podem ser completados a qualquer momento."
 
 #: src/components/Navbar/Account.tsx
 msgid "Connect"
@@ -705,11 +705,11 @@ msgstr "Conectar"
 
 #: src/components/shared/TransactionModal.tsx
 msgid "Connect wallet"
-msgstr ""
+msgstr "Conectar carteira"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "Connect wallet to claim"
-msgstr ""
+msgstr "Conecte uma carteira para reivindicar"
 
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/DeployProjectButton.tsx
@@ -720,11 +720,11 @@ msgstr "Conecte uma carteira para implementar"
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributeReservedTokensModal.tsx
 msgid "Connect wallet to distribute"
-msgstr ""
+msgstr "Conecte uma carteira para distribuir"
 
 #: src/components/shared/modals/IssueTokenModal.tsx
 msgid "Connect wallet to issue"
-msgstr ""
+msgstr "Conecte uma carteira para emitir"
 
 #: src/components/shared/Project/ProjectToolsDrawer/AddToProjectBalanceForm.tsx
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
@@ -734,7 +734,7 @@ msgstr "Conecte uma carteira para pagar"
 
 #: src/components/shared/Project/ProjectToolsDrawer/TransferUnclaimedTokensForm.tsx
 msgid "Connect wallet to transfer"
-msgstr ""
+msgstr "Conecte uma carteira para transferir"
 
 #: src/components/Projects/HoldingsProjects.tsx
 msgid "Connect your wallet to see your holdings."
@@ -793,7 +793,7 @@ msgstr ""
 
 #: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Create an Ethereum address for your project. Enables direct payments without going through your project's Juicebox page."
-msgstr ""
+msgstr "Criar um endereço Ethereum para o seu projeto. Habilite pagamentos diretos sem ter que ir para a página do seu projeto Juicebox."
 
 #: src/components/shared/Project/ProjectToolsDrawer/PayableAddressSection.tsx
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
@@ -897,8 +897,8 @@ msgid "Delete token allocation"
 msgstr "Deletar alocação de token"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
-msgid "Deploy new project configuration"
-msgstr "Implementar nova configuração de projeto"
+msgid "Deploy funding cycle configuration"
+msgstr ""
 
 #: src/components/v1/V1Create/index.tsx
 msgid "Deploy project"
@@ -1308,7 +1308,7 @@ msgstr "Os fundos serão distribuídos para:"
 
 #: src/components/shared/Project/ProjectToolsDrawer/ProjectToolsDrawer.tsx
 msgid "General"
-msgstr ""
+msgstr "Geral"
 
 #: src/components/shared/FeedbackFormButton.tsx
 #: src/components/shared/FeedbackFormButton.tsx
@@ -1379,7 +1379,7 @@ msgstr "Por quanto tempo durará um ciclo de financiamento. As <0>reconfiguraç�
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "How the {reservedPercentage}% of your project's reserved tokens will be split."
-msgstr ""
+msgstr "Como os {reservedPercentage}% dos tokens reservados do seu projeto serão divididos."
 
 #: src/components/v1/V1Create/index.tsx
 msgid "How your project will distribute funds."
@@ -1467,7 +1467,7 @@ msgstr "Taxa de emissão inicial"
 #: src/components/v2/V2Create/forms/TokenForm/MintRateFormItem.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Initial mint rate"
-msgstr ""
+msgstr "A taxa inicial de emissão"
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Invalid address"
@@ -1636,10 +1636,11 @@ msgstr "Criar novos {tokensLabel} dentro de uma conta. Só o proprietário do pr
 msgid "Mint project tokens on demand"
 msgstr "Crie tokens do projeto sob demanda"
 
+#: src/components/v2/V2Create/forms/TokenForm/MintRateFormItem.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Mint rate"
-msgstr ""
+msgstr "Taxa de emissão"
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "Mint tokens as ERC-20"
@@ -1690,7 +1691,7 @@ msgstr "Novo"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Newly minted {tokenSymbolPlural} <0>received by contributors</0> per ETH they contribute to the treasury."
-msgstr ""
+msgstr "{tokenSymbolPlural}, recentemente emitidos, <0>recebidos pelos contribuidores</0> por ETH que eles contribuíram para a tesouraria."
 
 #: src/components/v2/V2Create/tabs/ProjectDetailsTab/ProjectDetailsTabContent.tsx
 msgid "Next: Funding cycle"
@@ -1800,11 +1801,11 @@ msgstr "O proprietário não é capaz de emitir tokens."
 
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Owner token minting"
-msgstr ""
+msgstr "Proprietário do token emitido"
 
 #: src/components/shared/Project/ProjectToolsDrawer/ProjectToolsDrawer.tsx
 msgid "Owner tools"
-msgstr ""
+msgstr "Ferramentas do proprietário"
 
 #: src/components/shared/activityEventElems/PayEventElem.tsx
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
@@ -2150,7 +2151,7 @@ msgstr "Recipiente"
 #: src/components/shared/Project/ProjectToolsDrawer/TransferOwnershipForm.tsx
 #: src/components/shared/Project/ProjectToolsDrawer/TransferUnclaimedTokensForm.tsx
 msgid "Recipient address"
-msgstr ""
+msgstr "Endereço do recipiente"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Recipients will receive payouts in ETH."
@@ -2525,7 +2526,7 @@ msgstr "O objetivo é 0: Todos os fundos serão considerados overflow e podem se
 
 #: src/components/v2/V2Create/forms/TokenForm/index.tsx
 msgid "The <0>issuance rate</0> of your second funding cycle will be <1>{0} tokens per 1 ETH</1>, then <2>{1} tokens per 1 ETH </2>for your third funding cycle, and so on."
-msgstr ""
+msgstr "A <0>taxa de emissão</0> de seu segundo ciclo de financiamento será de <1>{0} tokens por 1 ETH</1>, depois <2>{1} tokens por 1 ETH </2>para o seu terceiro ciclo de financiamento e assim por diante."
 
 #: src/components/Landing/index.tsx
 msgid "The Decentralized Funding Platform. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."
@@ -3036,7 +3037,7 @@ msgstr "Quando a criação de tokens é permitida, o dono deste projeto tem perm
 
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 msgid "Whenever someone pays your project, this percentage of the newly minted tokens will be reserved and the rest will go to the payer. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner. Once tokens are reserved, anyone can \"mint\" them, which distributes them to their intended receivers."
-msgstr ""
+msgstr "Quando alguém paga seu projeto, essa porcentagem de tokens recém emitidos será reservada e o resto irá para quem pagou. Os tokens reservados estão reservados por padrão, mas também podem ser alocados em outros endereços de carteiras pelo proprietário. Uma vez que os tokens estão reservados, qualquer um pode \"emití-los\", que, por sua vez, distribuem-nos para seus recipientes esperados."
 
 #: src/components/Landing/QAs.tsx
 msgid "Who funds Juicebox projects?"
@@ -3296,7 +3297,7 @@ msgstr "tokens"
 
 #: src/components/v2/V2Create/forms/TokenForm/MintRateFormItem.tsx
 msgid "tokens per ETH contributed"
-msgstr ""
+msgstr "tokens por ETH contribuído"
 
 #: src/components/shared/formItems/ProjectRedemptionRate.tsx
 msgid "tokens redeemed"
@@ -3351,7 +3352,7 @@ msgstr "{0} reservado"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "{0} tokens/ETH"
-msgstr ""
+msgstr "{0} tokens/ETH"
 
 #: src/components/shared/modals/ParticipantsModal.tsx
 msgid "{0} total"
@@ -3422,7 +3423,7 @@ msgstr "{formattedTimeLeft} até #{0}"
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "{inflationRate} tokens / ETH"
-msgstr ""
+msgstr "{inflationRate} tokens / ETH"
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "{issuanceRate} tokens / ETH"
@@ -3447,11 +3448,11 @@ msgstr "{paymentCount, plural, one {# pagamento} other {# pagamentos}}"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "{reservedRate} {tokenSymbolPlural}/ETH ({0}%)"
-msgstr ""
+msgstr "{reservedRate} {tokenSymbolPlural}/ETH ({0}%)"
 
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 msgid "{tokenSymbolPluralCap} received per ETH paid to the treasury. This can change over time according to the discount rate and reserved tokens amount of future funding cycles."
-msgstr ""
+msgstr "{tokenSymbolPluralCap} recebido por ETH pagos para o tesouro. Isto pode modificar-se através do tempo conforme a taxa de desconto e a quantidade de tokens reservados de futuros ciclos de financiamento."
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "{tokenSymbol} ERC-20 address"

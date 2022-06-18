@@ -169,17 +169,17 @@ export default function V2ProjectReconfigureModal({
         </p>
         <ReconfigureButton
           title={t`Distribution limit, duration and payouts`}
-          reconfigureHasChanges={fundingDrawerHasSavedChanges()}
+          reconfigureHasChanges={fundingDrawerHasSavedChanges}
           onClick={() => setFundingDrawerVisible(true)}
         />
         <ReconfigureButton
           title={t`Token`}
-          reconfigureHasChanges={tokenDrawerHasSavedChanges()}
+          reconfigureHasChanges={tokenDrawerHasSavedChanges}
           onClick={() => setTokenDrawerVisible(true)}
         />
         <ReconfigureButton
           title={t`Rules`}
-          reconfigureHasChanges={rulesDrawerHasSavedChanges()}
+          reconfigureHasChanges={rulesDrawerHasSavedChanges}
           onClick={() => setRulesDrawerVisible(true)}
         />
       </Space>

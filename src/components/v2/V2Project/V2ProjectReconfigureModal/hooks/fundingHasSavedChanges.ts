@@ -52,7 +52,7 @@ export const useFundingHasSavedChanges = ({
     initialEditingData,
   ])
 
-  const fundingDrawerHasSavedChanges = () => {
+  const fundingDrawerHasSavedChanges = useMemo(() => {
     const fundingCycleData = serializeV2FundingCycleData(
       editingFundingCycleData,
     )
@@ -82,9 +82,14 @@ export const useFundingHasSavedChanges = ({
       distributionLimitCurrencyUpdated ||
       payoutGroupedSplitsUpdated
     )
-  }
+  }, [
+    editingFundAccessConstraints,
+    editingFundingCycleData,
+    editingPayoutGroupedSplits.splits,
+    initialEditingData,
+  ])
 
-  const tokenDrawerHasSavedChanges = () => {
+  const tokenDrawerHasSavedChanges = useMemo(() => {
     const fundingCycleData = serializeV2FundingCycleData(
       editingFundingCycleData,
     )
@@ -121,9 +126,15 @@ export const useFundingHasSavedChanges = ({
       discountRateUpdated ||
       redemptionRateUpdated
     )
-  }
+  }, [
+    editingFundAccessConstraints,
+    editingFundingCycleData,
+    editingFundingCycleMetadata,
+    editingReservedTokensGroupedSplits.splits,
+    initialEditingData,
+  ])
 
-  const rulesDrawerHasSavedChanges = () => {
+  const rulesDrawerHasSavedChanges = useMemo(() => {
     const fundingCycleData = serializeV2FundingCycleData(
       editingFundingCycleData,
     )
@@ -148,7 +159,12 @@ export const useFundingHasSavedChanges = ({
       fundingCycleData.ballot !== initialEditingData.fundingCycleData.ballot
 
     return pausePaymentsUpdated || allowMintingUpdated || ballotUpdated
-  }
+  }, [
+    editingFundAccessConstraints,
+    editingFundingCycleData,
+    editingFundingCycleMetadata,
+    initialEditingData,
+  ])
 
   return {
     fundingHasSavedChanges,

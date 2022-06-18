@@ -105,10 +105,6 @@ msgid "<0/> Archived projects have not been modified or deleted on the blockchai
 msgstr "<0/> 被存档的项目在区块链上并没有被修改或删除，用户仍然可以直接通过 Juicebox 合约进行交互。"
 
 #: src/components/Projects/index.tsx
-msgid "<0/> Search results don't include V2 projects yet."
-msgstr "<0/> 搜索结果目前不包含 V2 项目。"
-
-#: src/components/Projects/index.tsx
 msgid "<0/> The Juicebox protocol is open to anyone, and project configurations can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO or Peel. Do your own research and understand the risks before committing your funds."
 msgstr "<0/> Juicebox协议向所有人开放，不同项目的配置可能相差很大。与协议上的项目进行交互是存在风险的。在协议上部署的项目未经JuiceboxDAO或Peel的认可或审查。所以您应该在付款之前，做好自己的研究并了解其中的风险。"
 

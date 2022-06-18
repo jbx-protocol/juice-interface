@@ -105,10 +105,6 @@ msgid "<0/> Archived projects have not been modified or deleted on the blockchai
 msgstr "<0/> Arşivlenen projeler blok zincirinde değiştirilmemiştir veya silinmemiştir ve yine de doğrudan Juicebox sözleşmeleri aracılığıyla etkileşime girilebilir."
 
 #: src/components/Projects/index.tsx
-msgid "<0/> Search results don't include V2 projects yet."
-msgstr "<0/> Arama sonuçları henüz V2 projelerini içermiyor."
-
-#: src/components/Projects/index.tsx
 msgid "<0/> The Juicebox protocol is open to anyone, and project configurations can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO or Peel. Do your own research and understand the risks before committing your funds."
 msgstr "<0/> Juicebox protokolü herkese açıktır ve proje yapılandırmaları çok farklı olabilir. Protokoldeki tüm projelerle etkileşime girmenin riskleri vardır. Protokole dayalı projeler JuiceboxDAO veya Peel tarafından incelenmez veya onaylanmaz, bu nedenle kendi araştırmanızı yapmalı ve fonlarınızı taahhüt etmeden önce riskleri anlamalısınız."
 

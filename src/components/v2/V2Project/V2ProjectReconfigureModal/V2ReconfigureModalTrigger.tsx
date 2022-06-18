@@ -14,7 +14,7 @@ import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { fromWad } from 'utils/formatNumber'
 
 import { t } from '@lingui/macro'
-import { useLocation } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 
 import { ETH_PAYOUT_SPLIT_GROUP } from 'constants/v2/splits'
 import V2ProjectReconfigureModal from './index'
@@ -38,16 +38,22 @@ export default function V2ReconfigureFundingModalTrigger({
     params.get('reconfigModalOpen'),
   )
 
-  const localStoreRef = useRef<typeof store>()
-  if (initialReconfigureModalVisible && localStoreRef.current === undefined) {
-    localStoreRef.current = createStore()
-  }
+  const history = useHistory()
+
   const dispatch = useDispatch()
   const { projectId, fundingCycle, primaryTerminal } =
     useContext(V2ProjectContext)
 
   const [reconfigureModalVisible, setReconfigureModalVisible] =
-    useState<boolean>(initialReconfigureModalVisible)
+    useState<boolean>(false)
+
+  const localStoreRef = useRef<typeof store>()
+
+  if (initialReconfigureModalVisible && localStoreRef.current === undefined) {
+    // Change URL without refreshing page
+    history.replace(`/v2/p/${projectId}`)
+    handleModalOpen()
+  }
 
   function handleModalOpen() {
     localStoreRef.current = createStore()

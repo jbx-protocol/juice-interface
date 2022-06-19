@@ -22,7 +22,10 @@ import * as constants from '@ethersproject/constants'
 import { Split } from 'models/v2/splits'
 import { BigNumber } from '@ethersproject/bignumber'
 
+import { SettingOutlined } from '@ant-design/icons'
+
 import DistributeReservedTokensModal from './modals/DistributeReservedTokensModal'
+import { EditTokenAllocationModal } from './modals/EditTokenAllocationModal'
 
 export default function ReservedTokensSplitsCard({
   hideDistributeButton,
@@ -48,6 +51,8 @@ export default function ReservedTokensSplitsCard({
     distributeReservedTokensModalVisible,
     setDistributeReservedTokensModalVisible,
   ] = useState<boolean>()
+  const [editTokenAllocationModalVisible, setEditTokenAllocationModalVisible] =
+    useState<boolean>(false)
   const { data: reservedTokens, loading: loadingReservedTokens } =
     useProjectReservedTokens({
       projectId,
@@ -138,21 +143,41 @@ export default function ReservedTokensSplitsCard({
         )}
 
         <div>
-          <TooltipLabel
-            label={
-              <h4 style={{ display: 'inline-block' }}>
-                <Trans>Reserved {tokensText}</Trans> (
-                {formatReservedRate(reservedRate)}%)
-              </h4>
-            }
-            tip={
-              <Trans>
-                A project can reserve a percentage of tokens minted from every
-                payment it receives. Reserved tokens can be distributed
-                according to the allocation below at any time.
-              </Trans>
-            }
-          />
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              gap: 10,
+              flexWrap: 'wrap',
+            }}
+          >
+            <TooltipLabel
+              label={
+                <h4 style={{ display: 'inline-block' }}>
+                  <Trans>Reserved {tokensText}</Trans> (
+                  {formatReservedRate(reservedRate)}%)
+                </h4>
+              }
+              tip={
+                <Trans>
+                  A project can reserve a percentage of tokens minted from every
+                  payment it receives. Reserved tokens can be distributed
+                  according to the allocation below at any time.
+                </Trans>
+              }
+            />
+            {reservedRate?.gt(0) ? (
+              <Button
+                size="small"
+                onClick={() => setEditTokenAllocationModalVisible(true)}
+                icon={<SettingOutlined />}
+              >
+                <span>
+                  <Trans>Edit token allocation</Trans>
+                </span>
+              </Button>
+            ) : null}
+          </div>
           {reservedTokensSplits ? (
             <SplitList
               splits={reservedTokensSplits}
@@ -168,6 +193,11 @@ export default function ReservedTokensSplitsCard({
         visible={distributeReservedTokensModalVisible}
         onCancel={() => setDistributeReservedTokensModalVisible(false)}
         onConfirmed={() => window.location.reload()}
+      />
+      <EditTokenAllocationModal
+        visible={editTokenAllocationModalVisible}
+        onOk={() => setEditTokenAllocationModalVisible(false)}
+        onCancel={() => setEditTokenAllocationModalVisible(false)}
       />
     </CardSection>
   )

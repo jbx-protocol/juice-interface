@@ -354,6 +354,7 @@ msgid "All"
 msgstr "Hepsi"
 
 #: src/components/v1/V1Project/Paid.tsx
+#: src/components/v2/V2Project/index.tsx
 msgid "All assets"
 msgstr "Tüm varlıklar"
 
@@ -465,7 +466,8 @@ msgstr "Arşivlendi"
 msgid "Are you sure you want to start over?"
 msgstr "Baştan başlamak istediğinizden emin misiniz?"
 
-#: src/components/v1/V1Project/modals/BalancesModal.tsx
+#: src/components/v1/V1Project/modals/V1BalancesModal.tsx
+#: src/components/v2/V2Project/V2BalancesModal/V2BalancesModal.tsx
 msgid "Assets"
 msgstr "Varlıklar"
 
@@ -590,7 +592,8 @@ msgid "Can I delete a project?"
 msgstr "Bir projeyi silebilir miyim?"
 
 #: src/components/shared/modals/AttachStickerModal.tsx
-#: src/components/v1/V1Project/modals/BalancesModal.tsx
+#: src/components/v1/V1Project/modals/V1BalancesModal.tsx
+#: src/components/v2/V2Project/V2BalancesModal/V2BalancesModal.tsx
 msgid "Cancel"
 msgstr "İptal"
 
@@ -989,7 +992,8 @@ msgstr ""
 msgid "Discount rate"
 msgstr "İndirim oranı"
 
-#: src/components/v1/V1Project/modals/BalancesModal.tsx
+#: src/components/v1/V1Project/modals/V1BalancesModal.tsx
+#: src/components/v2/V2Project/V2BalancesModal/V2BalancesModal.tsx
 msgid "Display ERC-20 tokens and other Juicebox project tokens that are in this project's owner's wallet."
 msgstr "Bu proje sahibinin cüzdanında bulunan ERC-20 token'larını ve diğer Juicebox proje token'larını görüntüleyin."
 
@@ -1105,9 +1109,10 @@ msgstr "Bir proje kendi taşmasından faydalanır mı?"
 
 #: src/components/shared/modals/ParticipantsModal.tsx
 #: src/components/v1/V1Project/FundingCycles/FundingHistory.tsx
-#: src/components/v1/V1Project/modals/BalancesModal.tsx
+#: src/components/v1/V1Project/modals/V1BalancesModal.tsx
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 #: src/components/v2/V2Project/NewDeployModal.tsx
+#: src/components/v2/V2Project/V2BalancesModal/V2BalancesModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleHistory.tsx
 msgid "Done"
 msgstr "Tamamlandı"
@@ -1191,8 +1196,10 @@ msgstr "Rezerve token tahsisini düzenle"
 msgid "Edit token allocation"
 msgstr "Token tahsisini düzenle"
 
-#: src/components/v1/V1Project/modals/BalancesModal.tsx
-#: src/components/v1/V1Project/modals/BalancesModal.tsx
+#: src/components/v1/V1Project/modals/V1BalancesModal.tsx
+#: src/components/v1/V1Project/modals/V1BalancesModal.tsx
+#: src/components/v2/V2Project/V2BalancesModal/V2BalancesModal.tsx
+#: src/components/v2/V2Project/V2BalancesModal/V2BalancesModal.tsx
 msgid "Edit tracked assets"
 msgstr "İzlenen varlıkları düzenleyin"
 
@@ -1782,7 +1789,8 @@ msgstr "{0} tarafından yapılan bildirim:"
 msgid "Once launched, your first funding cycle <0>can't be changed</0>. You can reconfigure upcoming funding cycles according to the project's <1>reconfiguration rules</1>."
 msgstr "Bir kez başlatıldığında, ilk finansman döngünüz <0>değiştirilemez</0>. Yaklaşan finansman döngülerini projenin <1>yeniden yapılandırma kurallarına</1> göre yeniden yapılandırabilirsiniz."
 
-#: src/components/v1/V1Project/modals/BalancesModal.tsx
+#: src/components/v1/V1Project/modals/V1BalancesModal.tsx
+#: src/components/v2/V2Project/V2BalancesModal/V2BalancesModal.tsx
 msgid "Other assets in this project's owner's wallet."
 msgstr "Bu projenin sahibinin cüzdanındaki diğer varlıklar."
 
@@ -2422,7 +2430,8 @@ msgstr "Token tahsisini kaydet"
 msgid "Save token configuration"
 msgstr "Token yapılandırmasını kaydet"
 
-#: src/components/v1/V1Project/modals/BalancesModal.tsx
+#: src/components/v1/V1Project/modals/V1BalancesModal.tsx
+#: src/components/v2/V2Project/V2BalancesModal/V2BalancesModal.tsx
 msgid "Save tracked assets"
 msgstr "İzlenen varlıkları kaydet"
 

@@ -354,6 +354,7 @@ msgid "All"
 msgstr "Tudo"
 
 #: src/components/v1/V1Project/Paid.tsx
+#: src/components/v2/V2Project/index.tsx
 msgid "All assets"
 msgstr "Todos os ativos"
 
@@ -465,7 +466,8 @@ msgstr "Arquivado"
 msgid "Are you sure you want to start over?"
 msgstr "Você tem certeza que quer começar novamente?"
 
-#: src/components/v1/V1Project/modals/BalancesModal.tsx
+#: src/components/v1/V1Project/modals/V1BalancesModal.tsx
+#: src/components/v2/V2Project/V2BalancesModal/V2BalancesModal.tsx
 msgid "Assets"
 msgstr "Ativos"
 
@@ -590,7 +592,8 @@ msgid "Can I delete a project?"
 msgstr "Posso excluir um projeto?"
 
 #: src/components/shared/modals/AttachStickerModal.tsx
-#: src/components/v1/V1Project/modals/BalancesModal.tsx
+#: src/components/v1/V1Project/modals/V1BalancesModal.tsx
+#: src/components/v2/V2Project/V2BalancesModal/V2BalancesModal.tsx
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -989,7 +992,8 @@ msgstr ""
 msgid "Discount rate"
 msgstr "Taxa de desconto"
 
-#: src/components/v1/V1Project/modals/BalancesModal.tsx
+#: src/components/v1/V1Project/modals/V1BalancesModal.tsx
+#: src/components/v2/V2Project/V2BalancesModal/V2BalancesModal.tsx
 msgid "Display ERC-20 tokens and other Juicebox project tokens that are in this project's owner's wallet."
 msgstr "Mostrar os tokens ERC-20 e outros tokens de projetos do Juicebox que estejam na carteira do dono do projeto."
 
@@ -1105,9 +1109,10 @@ msgstr "Um projeto é beneficiado pelo seu próprio overflow?"
 
 #: src/components/shared/modals/ParticipantsModal.tsx
 #: src/components/v1/V1Project/FundingCycles/FundingHistory.tsx
-#: src/components/v1/V1Project/modals/BalancesModal.tsx
+#: src/components/v1/V1Project/modals/V1BalancesModal.tsx
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 #: src/components/v2/V2Project/NewDeployModal.tsx
+#: src/components/v2/V2Project/V2BalancesModal/V2BalancesModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleHistory.tsx
 msgid "Done"
 msgstr "Feito"
@@ -1191,8 +1196,10 @@ msgstr "Editar a alocação de tokens reservados"
 msgid "Edit token allocation"
 msgstr "Editar alocação de token"
 
-#: src/components/v1/V1Project/modals/BalancesModal.tsx
-#: src/components/v1/V1Project/modals/BalancesModal.tsx
+#: src/components/v1/V1Project/modals/V1BalancesModal.tsx
+#: src/components/v1/V1Project/modals/V1BalancesModal.tsx
+#: src/components/v2/V2Project/V2BalancesModal/V2BalancesModal.tsx
+#: src/components/v2/V2Project/V2BalancesModal/V2BalancesModal.tsx
 msgid "Edit tracked assets"
 msgstr "Editar ativos rastreados"
 
@@ -1782,7 +1789,8 @@ msgstr "Aviso de {0}:"
 msgid "Once launched, your first funding cycle <0>can't be changed</0>. You can reconfigure upcoming funding cycles according to the project's <1>reconfiguration rules</1>."
 msgstr "Uma vez lançado, o seu primeiro ciclo de financiamento <0>não pode ser modificado</0>. Você pode reconfigurar os próximos ciclos de financiamento de acordo com <1>as regras de reconfiguração</1> do projeto."
 
-#: src/components/v1/V1Project/modals/BalancesModal.tsx
+#: src/components/v1/V1Project/modals/V1BalancesModal.tsx
+#: src/components/v2/V2Project/V2BalancesModal/V2BalancesModal.tsx
 msgid "Other assets in this project's owner's wallet."
 msgstr "Outros ativos na carteira do proprietário deste projeto."
 
@@ -2422,7 +2430,8 @@ msgstr "Salvar alocação de token"
 msgid "Save token configuration"
 msgstr "Salvar configuração de token"
 
-#: src/components/v1/V1Project/modals/BalancesModal.tsx
+#: src/components/v1/V1Project/modals/V1BalancesModal.tsx
+#: src/components/v2/V2Project/V2BalancesModal/V2BalancesModal.tsx
 msgid "Save tracked assets"
 msgstr "Salvar ativos rastreados"
 

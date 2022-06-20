@@ -17,6 +17,10 @@ import { useETHPaymentTerminalFee } from 'hooks/v2/contractReader/ETHPaymentTerm
 import { Split } from 'models/v2/splits'
 import { BigNumber } from '@ethersproject/bignumber'
 import { detailedTimeString } from 'utils/formatTime'
+import {
+  useHasPermission,
+  V2OperatorPermission,
+} from 'hooks/v2/contractReader/HasPermission'
 
 import DistributePayoutsModal from './modals/DistributePayoutsModal'
 import { EditPayoutsModal } from './modals/EditPayoutsModal'
@@ -58,6 +62,7 @@ export default function PayoutSplitsCard({
     fullWords: true,
   })
   const hasDuration = fundingCycleDuration?.gt(0)
+  const canEditPayouts = useHasPermission(V2OperatorPermission.SET_SPLITS)
 
   return (
     <CardSection>
@@ -128,15 +133,18 @@ export default function PayoutSplitsCard({
                 </Trans>
               }
             />
-            <Button
-              size="small"
-              onClick={() => setEditPayoutModalVisible(true)}
-              icon={<SettingOutlined />}
-            >
-              <span>
-                <Trans>Edit payouts</Trans>
-              </span>
-            </Button>
+            {canEditPayouts && (
+              <Button
+                size="small"
+                onClick={() => setEditPayoutModalVisible(true)}
+                icon={<SettingOutlined />}
+                style={{ marginBottom: '1rem' }}
+              >
+                <span>
+                  <Trans>Edit payouts</Trans>
+                </span>
+              </Button>
+            )}
           </div>
           {payoutSplits ? (
             <SplitList

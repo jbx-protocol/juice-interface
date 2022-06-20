@@ -8,7 +8,7 @@ msgstr ""
 "Language: tr\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-06-16 02:53\n"
+"PO-Revision-Date: 2022-06-19 03:06\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -3411,7 +3411,7 @@ msgstr "toplam {count}"
 
 #: src/components/shared/AMMPrices/TokenAMMPriceRow.tsx
 msgid "{exchangeName} has no market for {tokenSymbol}."
-msgstr "{exchangeName}, {tokenSymbol} için piyasaya sahip değildir."
+msgstr "{exchangeName} borsasının {tokenSymbol} için piyasası yoktur."
 
 #: src/components/shared/Project/FundingCycleDetailsCard.tsx
 msgid "{formattedTimeLeft} left"
@@ -3452,7 +3452,7 @@ msgstr "{reservedRate} {tokenSymbolPlural}/ETH (%{0})"
 
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 msgid "{tokenSymbolPluralCap} received per ETH paid to the treasury. This can change over time according to the discount rate and reserved tokens amount of future funding cycles."
-msgstr "Hazineye ödenen ETH başına alınan {tokenSymbolPluralCap} miktarı. Bu, gelecek finansman döngülerindeki indirim oranına ve rezerve token miktarına göre zaman içinde değişebilir."
+msgstr "Hazineye ödenen ETH başına alınan {tokenSymbolPluralCap} token'ı. Bu miktar, gelecek finansman döngülerinin indirim oranına ve rezerve token miktarına göre zaman içinde değişebilir."
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "{tokenSymbol} ERC-20 address"

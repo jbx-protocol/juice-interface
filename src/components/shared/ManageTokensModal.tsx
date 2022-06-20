@@ -88,7 +88,7 @@ export default function ManageTokensModal({
   return (
     <>
       <Modal
-        title={t`Manage ${tokenSymbolText({
+        title={t`Manage your ${tokenSymbolText({
           tokenSymbol: tokenSymbol,
           capitalize: false,
           plural: true,

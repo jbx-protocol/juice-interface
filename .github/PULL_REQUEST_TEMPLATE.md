@@ -15,3 +15,4 @@ changes._
       for this PR.
 - [ ] I have tested this PR in
       [all supported browsers](https://github.com/jbx-protocol/juice-interface/blob/main/CONTRIBUTING.md#supported-browsers).
+- [ ] I have tested this PR in dark mode and light mode (if applicable).

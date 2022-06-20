@@ -8,7 +8,7 @@ msgstr ""
 "Language: tr\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-06-15 03:02\n"
+"PO-Revision-Date: 2022-06-20 02:48\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -302,6 +302,7 @@ msgid "Add new payout"
 msgstr "Yeni ödeme ekle"
 
 #: src/components/v1/shared/ProjectPayMods/ProjectPayoutModsModal.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/index.tsx
 msgid "Add payout"
@@ -601,6 +602,10 @@ msgstr "İptal"
 msgid "Cannot redeem tokens for ETH because this project has no overflow."
 msgstr "Bu projede taşma bulunmadığından ETH için token talep edilemez."
 
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
+msgid "Changes to payouts will take effect immediately."
+msgstr ""
+
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Changes to project details will take effect immediately."
 msgstr "Proje detaylarında yapılan değişiklikler hemen etkili olacaktır."
@@ -862,6 +867,10 @@ msgstr "Projenizin \"Ödeme\" butonunu özelleştirin. Varsayılanı kullanmak i
 msgid "Cycle #{0}"
 msgstr "Döngü #{0}"
 
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
+msgid "Cycle #{0} -"
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "DAOs and communities"
 msgstr "DAO'lar ve topluluklar"
@@ -892,8 +901,8 @@ msgid "Delete token allocation"
 msgstr "Token tahsisini sil"
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
-msgid "Deploy new project configuration"
-msgstr "Yeni proje yapılandırmasını devreye alın"
+msgid "Deploy funding cycle configuration"
+msgstr ""
 
 #: src/components/v1/V1Create/index.tsx
 msgid "Deploy project"
@@ -1077,6 +1086,10 @@ msgstr "Dağıtım sınırı sonsuzdur. <0>Tüm fonların nasıl dağıtılacağ
 msgid "Distribution limit, duration and payouts"
 msgstr "Dağıtım sınırı, süre ve ödemeler"
 
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
+msgid "Distribution limit: <0/>{0}"
+msgstr ""
+
 #: src/components/Landing/QAs.tsx
 msgid "Do I have to make my project open source to use Juicebox as its business model?"
 msgstr "Juicebox'ı iş modeli olarak kullanmak için projemi açık kaynak yapmak zorunda mıyım?"
@@ -1159,6 +1172,10 @@ msgstr "Her projenin kendi <0>ERC-20 token'ları</0> vardır. Bir projeye fon sa
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Edit payout"
 msgstr "Ödemeyi düzenle"
+
+#: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
+msgid "Edit payouts"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/EditProjectModal.tsx
 msgid "Edit project"
@@ -1397,8 +1414,8 @@ msgid "If locked, this split can't be edited or removed until the lock expires o
 msgstr "Kilitliyse, kilidin süresi dolana veya finansman döngüsü yeniden yapılandırılana kadar bu bölüm düzenlenemez veya kaldırılamaz."
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
-msgid "If you don't raise the sum of all your payouts (<0/>{distributionLimit}), this address will receive {formattedSplitPercent}% of all the funds you raise."
-msgstr "Tüm ödemelerinizin toplam tutarını toplamazsanız (<0/>{distributionLimit}) bu adres topladığınız tüm fonların %{formattedSplitPercent} kadarını alacaktır."
+msgid "If you don't raise the sum of all your payouts (<0/>{distributionLimit}), this address will receive {0}% of all the funds you raise."
+msgstr ""
 
 #: src/components/v2/V2Project/DistributionLimit.tsx
 msgid "If you don't raise this amount, your splits will receive their percentage of whatever you raise."
@@ -1598,8 +1615,8 @@ msgid "Manage"
 msgstr "Yönet"
 
 #: src/components/shared/ManageTokensModal.tsx
-msgid "Manage {0}"
-msgstr "{0} token'ını yönet"
+msgid "Manage your {0}"
+msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "Manage {tokenText}"
@@ -1629,6 +1646,7 @@ msgstr "Bir hesaba yeni {tokensLabel} token'ı basın. Bir projenin token'ların
 msgid "Mint project tokens on demand"
 msgstr "Talep üzerine proje token'larının basılması"
 
+#: src/components/v2/V2Create/forms/TokenForm/MintRateFormItem.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Mint rate"
@@ -1716,6 +1734,7 @@ msgid "No funds can be distributed out of the treasury. Funds can only be access
 msgstr "Hazineden para dağıtılamaz. Fonlara yalnızca token'larını kullanan token sahipleri erişebilir."
 
 #: src/components/v2/V2Project/DistributionLimit.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
 msgid "No limit (infinite)"
 msgstr "Limit yok (sonsuz)"
 
@@ -2175,6 +2194,14 @@ msgstr "Yeniden yapılandır"
 msgid "Reconfigure funding"
 msgstr "Finansmanı yeniden yapılandır"
 
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
+msgid "Reconfigure payouts and limit"
+msgstr ""
+
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
+msgid "Reconfigure payouts as percentages of your distribution limit."
+msgstr ""
+
 #: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureModalTrigger.tsx
 msgid "Reconfigure project and funding details"
@@ -2494,6 +2521,7 @@ msgstr "Yüzdelerin toplamı %100'ü aşamaz"
 
 #: src/components/v1/shared/ProjectTicketMods.tsx
 #: src/components/v1/shared/forms/PayModsForm.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/index.tsx
 msgid "Sum of percentages cannot exceed 100%."
 msgstr "Yüzdelerin toplamı %100'ü aşamaz."
@@ -2829,6 +2857,7 @@ msgstr "Toplam arz"
 
 #: src/components/v1/shared/ProjectPayMods/ProjectPayoutMods.tsx
 #: src/components/v1/shared/ProjectTicketMods.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
 msgid "Total: {0}%"
 msgstr "Toplam: %{0}"
 
@@ -2952,7 +2981,7 @@ msgstr "Hacim"
 
 #: src/components/shared/inputs/Pay/MemoFormItem.tsx
 msgid "WAGMI!"
-msgstr ""
+msgstr "WAGMI!"
 
 #: src/components/v1/shared/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
@@ -3357,6 +3386,10 @@ msgstr "{0} çekildi"
 msgid "{0} {tokenTextPlural} reserved"
 msgstr "{0} adet {tokenTextPlural} rezerve edildi"
 
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
+msgid "{0}%"
+msgstr ""
+
 #: src/components/v2/shared/SplitItem.tsx
 msgid "{0}% of all newly minted tokens."
 msgstr "Yeni basılan tüm token'ların %{0} kadarı."
@@ -3389,11 +3422,7 @@ msgstr "toplam {count}"
 
 #: src/components/shared/AMMPrices/TokenAMMPriceRow.tsx
 msgid "{exchangeName} has no market for {tokenSymbol}."
-msgstr "{exchangeName}, {tokenSymbol} için piyasaya sahip değildir."
-
-#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
-msgid "{formattedSplitPercent}%"
-msgstr "%{formattedSplitPercent}"
+msgstr "{exchangeName} borsasının {tokenSymbol} için piyasası yoktur."
 
 #: src/components/shared/Project/FundingCycleDetailsCard.tsx
 msgid "{formattedTimeLeft} left"
@@ -3434,7 +3463,7 @@ msgstr "{reservedRate} {tokenSymbolPlural}/ETH (%{0})"
 
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 msgid "{tokenSymbolPluralCap} received per ETH paid to the treasury. This can change over time according to the discount rate and reserved tokens amount of future funding cycles."
-msgstr "Hazineye ödenen ETH başına alınan {tokenSymbolPluralCap} miktarı. Bu, gelecek finansman döngülerindeki indirim oranına ve rezerve token miktarına göre zaman içinde değişebilir."
+msgstr "Hazineye ödenen ETH başına alınan {tokenSymbolPluralCap} token'ı. Bu miktar, gelecek finansman döngülerinin indirim oranına ve rezerve token miktarına göre zaman içinde değişebilir."
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "{tokenSymbol} ERC-20 address"

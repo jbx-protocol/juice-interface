@@ -1,3 +1,8 @@
 .ant-skeleton-content .ant-skeleton-paragraph {
   margin-bottom: 0;
 }
+
+.ant-skeleton.ant-skeleton-active .ant-skeleton-content .ant-skeleton-title,
+.ant-skeleton.ant-skeleton-active .ant-skeleton-content .ant-skeleton-paragraph > li {
+  background-color: var(--background-l1);
+}

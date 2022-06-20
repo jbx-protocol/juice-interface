@@ -63,6 +63,7 @@ export const NetworkProvider: React.FC = ({ children }) => {
     const config: Subscriptions = {
       address: setAccount,
       wallet: selectWallet,
+      network: networkId => setNetwork(NETWORKS[networkId]?.name),
     }
     setOnboard(initOnboard(config, isDarkMode))
   }, [isDarkMode, onboard, resetWallet])

@@ -8,7 +8,7 @@ msgstr ""
 "Language: hi\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-06-19 03:06\n"
+"PO-Revision-Date: 2022-06-20 02:48\n"
 "Last-Translator: \n"
 "Language-Team: Hindi\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -1605,7 +1605,7 @@ msgid "Manage"
 msgstr ""
 
 #: src/components/shared/ManageTokensModal.tsx
-msgid "Manage {0}"
+msgid "Manage your {0}"
 msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx

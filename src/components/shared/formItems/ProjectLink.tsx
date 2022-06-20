@@ -14,11 +14,7 @@ export default function ProjectLink({
       label={hideLabel ? undefined : t`Website`}
       {...formItemProps}
     >
-      <Input
-        placeholder={t`https://your-project.com`}
-        type="url"
-        autoComplete="off"
-      />
+      <Input type="text" autoComplete="off" />
     </Form.Item>
   )
 }

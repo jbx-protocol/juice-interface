@@ -52,42 +52,40 @@ export default function V2Create() {
         <V2WarningBanner />
         <div
           style={{
-            maxWidth: 1300,
+            maxWidth: 1200,
             margin: '0 auto',
             padding: !isMobile ? '2rem 4rem' : '2rem 1rem',
           }}
         >
-          <div>
-            <h1
-              style={{
-                color: colors.text.primary,
-                fontSize: 28,
-              }}
-            >
-              <Trans>Launch your project</Trans>
-            </h1>
+          <h1
+            style={{
+              color: colors.text.primary,
+              fontSize: 28,
+            }}
+          >
+            <Trans>Launch your project</Trans>
+          </h1>
 
-            <Tabs
-              activeKey={activeTab}
-              onChange={setActiveTab}
-              tabBarGutter={50}
-              size="large"
-            >
-              {TABS.map((tab, idx) => (
-                <TabPane tab={<TabText>{tab.title}</TabText>} key={idx}>
-                  <tab.component
-                    onFinish={() => {
-                      // bail if on last tab.
-                      if (idx === TABS.length - 1) return
+          <Tabs
+            activeKey={activeTab}
+            onChange={setActiveTab}
+            tabBarGutter={50}
+            size="large"
+          >
+            {TABS.map((tab, idx) => (
+              <TabPane tab={<TabText>{tab.title}</TabText>} key={idx}>
+                <tab.component
+                  onFinish={() => {
+                    // bail if on last tab.
+                    if (idx === TABS.length - 1) return
 
-                      setActiveTab(`${idx + 1}`)
-                      window.scrollTo(0, 0)
-                    }}
-                  />
-                </TabPane>
-              ))}
-            </Tabs>
-          </div>
+                    setActiveTab(`${idx + 1}`)
+                    window.scrollTo(0, 0)
+                  }}
+                />
+              </TabPane>
+            ))}
+          </Tabs>
         </div>
       </V2CurrencyProvider>
     </V2UserProvider>

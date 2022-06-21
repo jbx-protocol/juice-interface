@@ -3134,7 +3134,7 @@ msgid "You don't hold tokens for any Juicebox project."
 msgstr "你目前未持有任何 Juicebox 项目的代币。"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
-msgid "You have configured an overall distribution limit of  <0/>{distributionLimit}. Your current payouts do not sum to 100%, so the remainder will go to the project owner."
+msgid "You have configured an overall distribution limit of <0/>{distributionLimit}. Your current payouts do not sum to 100%, so the remainder will go to the project owner."
 msgstr ""
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
@@ -3510,5 +3510,4 @@ msgstr "{unclaimedBalanceFormatted} {tokenText} 可领取"
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "{userOwnershipPercentage}% of total supply"
 msgstr "总供应量的 {userOwnershipPercentage}%"
-
 

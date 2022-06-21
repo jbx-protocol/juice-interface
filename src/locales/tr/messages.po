@@ -3134,7 +3134,7 @@ msgid "You don't hold tokens for any Juicebox project."
 msgstr "Herhangi bir Juicebox projesi için token tutmuyorsunuz."
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
-msgid "You have configured an overall distribution limit of  <0/>{distributionLimit}. Your current payouts do not sum to 100%, so the remainder will go to the project owner."
+msgid "You have configured an overall distribution limit of <0/>{distributionLimit}. Your current payouts do not sum to 100%, so the remainder will go to the project owner."
 msgstr ""
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx

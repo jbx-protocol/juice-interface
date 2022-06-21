@@ -30,17 +30,20 @@ export default function NFTDrawer({
   const { nftRewardTiers } = useAppSelector(state => state.editingV2Project)
 
   const [addTierModalVisible, setAddTierModalVisible] = useState<boolean>(false)
+  const [submitLoading, setSubmitLoading] = useState<boolean>(false)
 
   const [rewardTiers, setRewardTiers] = useState<NFTRewardTier[]>(
     nftRewardTiers ?? [],
   )
 
   const onNftFormSaved = useCallback(async () => {
+    setSubmitLoading(true)
     // Calls cloud function to store NFTRewards to IPFS
     const cid = await useNFTRewardsToIPFS(rewardTiers)
     dispatch(editingV2ProjectActions.setNftRewardTiers(rewardTiers))
     // Store cid (link to nfts on IPFS) to be used later in the deploy tx
     dispatch(editingV2ProjectActions.setNftRewardsCid(cid))
+    setSubmitLoading(false)
     onClose?.()
   }, [rewardTiers, dispatch, onClose])
 
@@ -84,9 +87,12 @@ export default function NFTDrawer({
           onClick={onNftFormSaved}
           htmlType="submit"
           type="primary"
+          loading={submitLoading}
           style={{ marginTop: 30 }}
         >
-          <Trans>Save NFT rewards</Trans>
+          <span>
+            <Trans>Save NFT rewards</Trans>
+          </span>
         </Button>
       </FundingCycleDrawer>
       <NFTRewardTierModal

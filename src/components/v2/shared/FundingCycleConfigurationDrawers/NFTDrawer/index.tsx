@@ -8,6 +8,7 @@ import { useAppSelector } from 'hooks/AppSelector'
 import { NFTRewardTier } from 'models/v2/nftRewardTier'
 import { useCallback, useContext, useState } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
+import useNFTRewardsToIPFS from 'hooks/v2/nftRewards/NFTRewardsToIPFS'
 
 import { shadowCard } from 'constants/styles/shadowCard'
 
@@ -34,26 +35,12 @@ export default function NFTDrawer({
     nftRewardTiers ?? [],
   )
 
-  /**
-   * NOTE: these values will all be in their 'native' units,
-   * e.g. permyriads, parts-per-billion etc.
-   *
-   * We will convert these to percentages to pass as
-   * props later on.
-   */
-
   const onNftFormSaved = useCallback(async () => {
-    /**
-     * NOTE: all values dispatched to Redux should be in their 'native' units,
-     * e.g. permyriads, parts-per-billion etc.
-     * and NOT percentages.
-     */
-    // TODO call cloud function
-    // nftTiers = {}
-    // cid = cloudFunction(nftTiers)
+    // Calls cloud function to store NFTRewards to IPFS
+    const cid = await useNFTRewardsToIPFS(rewardTiers)
     dispatch(editingV2ProjectActions.setNftRewardTiers(rewardTiers))
-    // dispatch(editingV2ProjectActions.setNftRewardsCid(cid))
-
+    // Store cid (link to nfts on IPFS) to be used later in the deploy tx
+    dispatch(editingV2ProjectActions.setNftRewardsCid(cid))
     onClose?.()
   }, [rewardTiers, dispatch, onClose])
 

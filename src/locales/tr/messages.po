@@ -1070,7 +1070,6 @@ msgstr "Dağıtım Sınırı <0/>:"
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
-#: src/components/v2/shared/DistributionSplitsSection/SpecificLimitModal.tsx
 msgid "Distribution limit"
 msgstr "Dağıtım sınırı"
 
@@ -1167,6 +1166,10 @@ msgstr "Her ödeme, finansman döngülerinin her birinde, hazinede yeterli tutar
 #: src/components/Landing/QAs.tsx
 msgid "Each project has its own <0>ERC-20 tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
 msgstr "Her projenin kendi <0>ERC-20 token'ları</0> vardır. Bir projeye fon sağlayan herkes, karşılığında o projenin token'larını alır. Proje sahibi isteğe bağlı olarak ERC-20 token'ı çıkarana kadar, token bakiyeleri protokol tarafından izlenecektir."
+
+#: src/components/v2/shared/DistributionSplitsSection/index.tsx
+msgid "Edit distribution limit"
+msgstr ""
 
 #: src/components/v1/shared/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
@@ -1967,7 +1970,6 @@ msgstr "Yüzde tahsisi"
 msgid "Percentage:"
 msgstr "Yüzde:"
 
-#: src/components/v2/shared/DistributionSplitsSection/SpecificLimitModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/index.tsx
 msgid "Percentages"
 msgstr "Yüzdeler"
@@ -2496,6 +2498,10 @@ msgstr "Projenin mevcut finansman döngüsünün bazı özellikleri, katkıda bu
 msgid "Something went wrong."
 msgstr "Bir şeyler yanlış gitti."
 
+#: src/components/v2/shared/DistributionSplitsSection/SpecificLimitModal.tsx
+msgid "Specific limit"
+msgstr ""
+
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Spending"
@@ -2604,6 +2610,10 @@ msgstr "Her finansman döngüsünde hazineden dağıtılabilecek maksimum fon mi
 #: src/components/shared/formItems/ProjectTarget.tsx
 msgid "The maximum amount of funds that can be distributed from this project in one funding cycle. Funds will be withdrawn in ETH no matter the currency you choose."
 msgstr "Bir finansman döngüsü içinde bu projeden dağıtılabilecek maksimum fon miktarı. Fonlar, hangi para birimini seçerseniz seçin ETH olarak çekilecektir."
+
+#: src/components/v2/shared/DistributionSplitsSection/SpecificLimitModal.tsx
+msgid "The maximum amount of funds that can be withdrawn from the treasury in a funding cycle."
+msgstr ""
 
 #: src/components/v2/V2Create/forms/TokenForm/MintRateFormItem.tsx
 msgid "The number of project tokens minted when 1 ETH is contributed in the first funding cycle."
@@ -3122,6 +3132,10 @@ msgstr "Bir finansman döngüsü süreniz yok. Yaptığınız değişiklikler he
 #: src/components/Projects/HoldingsProjects.tsx
 msgid "You don't hold tokens for any Juicebox project."
 msgstr "Herhangi bir Juicebox projesi için token tutmuyorsunuz."
+
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
+msgid "You have configured an overall distribution limit of  <0/>{distributionLimit}. Your current payouts do not sum to 100%, so the remainder will go to the project owner."
+msgstr ""
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
 msgid "You have configured for all funds to be distributed from the treasury. Your current payouts do not sum to 100%, so the remainder will go to the project owner."

@@ -1,7 +1,7 @@
 import { t, Trans } from '@lingui/macro'
-import { Button, Form, Radio, Space } from 'antd'
+import { Button, Form, Radio, Space, Tooltip } from 'antd'
 import { useCallback, useContext, useState } from 'react'
-
+import { EditOutlined } from '@ant-design/icons'
 import { Split } from 'models/v2/splits'
 import { FormItemExt } from 'components/shared/formItems/formItemExt'
 import { parseWad } from 'utils/formatNumber'
@@ -61,6 +61,8 @@ export default function DistributionSplitsSection({
 
   const [specificLimitModalOpen, setSpecificLimitModalOpen] =
     useState<boolean>(false)
+  const [specificLimitRadioVisible, setSpecificLimitRadioVisible] =
+    useState<boolean>(true)
 
   const allSplits = lockedSplits.concat(editableSplits)
 
@@ -146,11 +148,13 @@ export default function DistributionSplitsSection({
         onSplitsChanged={onSplitsChanged}
         onCurrencyChange={onCurrencyChange}
         currencyName={currencyName}
-        isLocked={distributionLimitIsInfinite}
+        isLocked
         isProjectOwner
       />
     )
   }
+
+  console.info('distributionType: ', distributionType)
 
   return (
     <Form.Item
@@ -179,10 +183,10 @@ export default function DistributionSplitsSection({
               if (newType === 'percent') {
                 setSpecificLimitModalOpen(true)
               } else if (newType === 'amount') {
-                if (editableSplits.length) {
+                if (editableSplits.length && distributionLimitIsInfinite) {
+                  setSpecificLimitRadioVisible(false)
                   setSpecificLimitModalOpen(true)
                 } else {
-                  setDistributionLimit('0')
                   setDistributionType(newType)
                 }
                 if (
@@ -264,6 +268,12 @@ export default function DistributionSplitsSection({
                 currencyName={currencyName}
                 showTooltip
               />
+              <Tooltip title={t`Edit distribution limit`}>
+                <EditOutlined
+                  style={{ marginLeft: 10 }}
+                  onClick={() => setSpecificLimitModalOpen(true)}
+                />
+              </Tooltip>
             </strong>
           </span>
         </div>
@@ -284,10 +294,10 @@ export default function DistributionSplitsSection({
         visible={specificLimitModalOpen}
         onClose={() => setSpecificLimitModalOpen(false)}
         setDistributionLimit={setDistributionLimit}
-        setDistributionType={setDistributionType}
+        // setDistributionType={setDistributionType}
         currencyName={currencyName}
         onCurrencyChange={onCurrencyChange}
-        initialDistributionType={distributionType}
+        radioVisible={specificLimitRadioVisible}
       />
     </Form.Item>
   )

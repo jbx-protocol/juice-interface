@@ -19,7 +19,7 @@ import { V2CurrencyName } from 'utils/v2/currency'
 import { useSetProjectSplits } from 'hooks/v2/transactor/SetProjectSplits'
 import { NetworkContext } from 'contexts/networkContext'
 import { MAX_DISTRIBUTION_LIMIT, splitPercentFrom } from 'utils/v2/math'
-import { formatWad } from 'utils/formatNumber'
+import { formatWad, fromWad } from 'utils/formatNumber'
 
 import { ExclamationCircleOutlined, SettingOutlined } from '@ant-design/icons'
 
@@ -57,6 +57,7 @@ const OwnerSplitCard = ({ splits }: { splits: Split[] }) => {
           ? undefined
           : formatWad(distributionLimit, { thousandsSeparator: '' })
       }
+      setDistributionLimit={() => null}
       currencyName={currencyName}
       isLocked
       isProjectOwner
@@ -283,6 +284,7 @@ export const EditPayoutsModal = ({
               ? undefined
               : formatWad(distributionLimit, { thousandsSeparator: '' })
           }
+          setDistributionLimit={() => null}
           currencyName={currencyName}
           isLocked={isLocked}
           onSplitsChanged={onSplitsChanged}
@@ -380,6 +382,8 @@ export const EditPayoutsModal = ({
       <DistributionSplitModal
         visible={addSplitModalVisible}
         onSplitsChanged={onSplitsChanged}
+        distributionLimit={fromWad(distributionLimit)}
+        setDistributionLimit={() => null}
         mode={'Add'}
         splits={editingSplits}
         currencyName={currencyName}

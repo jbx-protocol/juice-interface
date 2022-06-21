@@ -1070,7 +1070,6 @@ msgstr ""
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
-#: src/components/v2/shared/DistributionSplitsSection/SpecificLimitModal.tsx
 msgid "Distribution limit"
 msgstr "Лимит распределения"
 
@@ -1167,6 +1166,10 @@ msgstr ""
 #: src/components/Landing/QAs.tsx
 msgid "Each project has its own <0>ERC-20 tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
 msgstr "Каждый проект имеет свои собственные <0>ERC-20 токены</0>. Каждый, кто вносит средства в проект, получает взамен токены этого проекта. Остатки токенов будут отслеживаться протоколом до тех пор, пока владелец проекта не выпустит токены ERC-20 по своему усмотрению."
+
+#: src/components/v2/shared/DistributionSplitsSection/index.tsx
+msgid "Edit distribution limit"
+msgstr ""
 
 #: src/components/v1/shared/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
@@ -1967,7 +1970,6 @@ msgstr ""
 msgid "Percentage:"
 msgstr ""
 
-#: src/components/v2/shared/DistributionSplitsSection/SpecificLimitModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/index.tsx
 msgid "Percentages"
 msgstr ""
@@ -2496,6 +2498,10 @@ msgstr "Некоторые свойства текущего цикла фина
 msgid "Something went wrong."
 msgstr "Что-то пошло не так."
 
+#: src/components/v2/shared/DistributionSplitsSection/SpecificLimitModal.tsx
+msgid "Specific limit"
+msgstr ""
+
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Spending"
@@ -2604,6 +2610,10 @@ msgstr ""
 #: src/components/shared/formItems/ProjectTarget.tsx
 msgid "The maximum amount of funds that can be distributed from this project in one funding cycle. Funds will be withdrawn in ETH no matter the currency you choose."
 msgstr "Максимальная сумма средств, которая может быть распределена из этого проекта за один цикл финансирования. Средства будут выводиться в ETH независимо от выбранной вами валюты."
+
+#: src/components/v2/shared/DistributionSplitsSection/SpecificLimitModal.tsx
+msgid "The maximum amount of funds that can be withdrawn from the treasury in a funding cycle."
+msgstr ""
 
 #: src/components/v2/V2Create/forms/TokenForm/MintRateFormItem.tsx
 msgid "The number of project tokens minted when 1 ETH is contributed in the first funding cycle."
@@ -3122,6 +3132,10 @@ msgstr "У вас нет продолжительности цикла фина�
 #: src/components/Projects/HoldingsProjects.tsx
 msgid "You don't hold tokens for any Juicebox project."
 msgstr "Вы не владеете токенами ни для одного проекта Juicebox."
+
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
+msgid "You have configured an overall distribution limit of  <0/>{distributionLimit}. Your current payouts do not sum to 100%, so the remainder will go to the project owner."
+msgstr ""
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
 msgid "You have configured for all funds to be distributed from the treasury. Your current payouts do not sum to 100%, so the remainder will go to the project owner."

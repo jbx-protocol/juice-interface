@@ -54,7 +54,7 @@ export default function DistributionSplitCard({
   editInputMode?: 'Distribution' | 'Percentage'
   onSplitsChanged?: (splits: Split[]) => void
   onSplitDelete?: (split: Split) => void
-  setDistributionLimit?: (distributionLimit: string) => void
+  setDistributionLimit: (distributionLimit: string) => void
   onCurrencyChange?: (currencyName: CurrencyName) => void
 }) {
   const {
@@ -250,11 +250,20 @@ export default function DistributionSplitCard({
             <TooltipIcon
               iconStyle={{ paddingTop: '4px' }}
               tip={
-                <Trans>
-                  You have configured for all funds to be distributed from the
-                  treasury. Your current payouts do not sum to 100%, so the
-                  remainder will go to the project owner.
-                </Trans>
+                distributionLimitIsInfinite ? (
+                  <Trans>
+                    You have configured for all funds to be distributed from the
+                    treasury. Your current payouts do not sum to 100%, so the
+                    remainder will go to the project owner.
+                  </Trans>
+                ) : (
+                  <Trans>
+                    You have configured an overall distribution limit of{' '}
+                    <CurrencySymbol currency={currencyName} />
+                    {distributionLimit}. Your current payouts do not sum to
+                    100%, so the remainder will go to the project owner.
+                  </Trans>
+                )
               }
             />
           )}

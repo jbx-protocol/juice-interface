@@ -9,7 +9,6 @@ import { fromWad } from 'utils/formatNumber'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2/math'
 
 import { CurrencyName } from 'constants/currency'
-import { DistributionType } from '.'
 
 type LimitType = 'infinite' | 'specific'
 
@@ -17,18 +16,16 @@ export default function SpecificLimitModal({
   visible,
   onClose,
   setDistributionLimit,
-  setDistributionType,
   currencyName,
   onCurrencyChange,
-  initialDistributionType,
+  radioVisible,
 }: {
   visible: boolean
   onClose: VoidFunction
   setDistributionLimit: (distributionLimit: string) => void
-  setDistributionType: (distributionType: DistributionType) => void
   currencyName: CurrencyName
   onCurrencyChange: (currencyName: CurrencyName) => void
-  initialDistributionType: DistributionType
+  radioVisible: boolean
 }) {
   const [form] = useForm<{ distributionLimit: string }>()
 
@@ -39,11 +36,12 @@ export default function SpecificLimitModal({
 
     setDistributionLimit(form.getFieldValue('distributionLimit'))
     onClose()
-    if (initialDistributionType === 'amount') {
-      setDistributionType('percent')
-    } else {
-      setDistributionType('amount')
-    }
+    // switch distributionType
+    // if (initialDistributionType === 'amount') {
+    //   setDistributionType('percent')
+    // } else {
+    //   setDistributionType('amount')
+    // }
   }
 
   const toggleCurrency = () => {
@@ -64,7 +62,7 @@ export default function SpecificLimitModal({
       onOk={setNewSplitsFromLimit}
     >
       <Form form={form}>
-        {initialDistributionType === 'amount' ? (
+        {radioVisible ? (
           <Radio.Group
             onChange={e => {
               const newType = e.target.value
@@ -87,7 +85,7 @@ export default function SpecificLimitModal({
                 </p>
               </Radio>
               <Radio value="specific">
-                <Trans>Percentages</Trans>
+                <Trans>Specific limit</Trans>
                 <p style={{ fontWeight: 400, fontSize: '0.8rem' }}>
                   <Trans>
                     Distribute a percentage of an overall distribution limit to
@@ -111,7 +109,7 @@ export default function SpecificLimitModal({
               rules: [{ required: true }],
               extra: (
                 <>
-                  {initialDistributionType === 'percent' ? (
+                  {!radioVisible ? (
                     <TooltipLabel
                       label={t`Set this to the sum of all your payouts`}
                       tip={
@@ -124,7 +122,7 @@ export default function SpecificLimitModal({
                       }
                     />
                   ) : (
-                    t`Distribution limit`
+                    t`The maximum amount of funds that can be withdrawn from the treasury in a funding cycle.`
                   )}
                 </>
               ),

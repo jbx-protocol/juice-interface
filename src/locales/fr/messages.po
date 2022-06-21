@@ -1070,7 +1070,6 @@ msgstr "Limite de distribution<0/> :"
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
-#: src/components/v2/shared/DistributionSplitsSection/SpecificLimitModal.tsx
 msgid "Distribution limit"
 msgstr "Limite de distribution"
 
@@ -1167,6 +1166,10 @@ msgstr "Chaque paiement recevra son pourcentage de ce total à chaque cycle de f
 #: src/components/Landing/QAs.tsx
 msgid "Each project has its own <0>ERC-20 tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
 msgstr "Chaque projet a ses propres <0>tokens ERC-20</0>. Tous ceux qui financent un projet reçoivent en retour les tokens de ce projet. Les soldes de jetons seront suivis par le protocole jusqu'à ce que les jetons ERC-20 soient éventuellement émis par le propriétaire du projet."
+
+#: src/components/v2/shared/DistributionSplitsSection/index.tsx
+msgid "Edit distribution limit"
+msgstr ""
 
 #: src/components/v1/shared/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
@@ -1967,7 +1970,6 @@ msgstr "Pourcentage d'allocation"
 msgid "Percentage:"
 msgstr "Pourcentage :"
 
-#: src/components/v2/shared/DistributionSplitsSection/SpecificLimitModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/index.tsx
 msgid "Percentages"
 msgstr "Pourcentages"
@@ -2496,6 +2498,10 @@ msgstr "Certaines propriétés du cycle de financement actuel du projet peuvent 
 msgid "Something went wrong."
 msgstr "Quelque chose a mal tourné."
 
+#: src/components/v2/shared/DistributionSplitsSection/SpecificLimitModal.tsx
+msgid "Specific limit"
+msgstr ""
+
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Spending"
@@ -2604,6 +2610,10 @@ msgstr "Le montant maximal de fonds pouvant être distribué à partir de la tr�
 #: src/components/shared/formItems/ProjectTarget.tsx
 msgid "The maximum amount of funds that can be distributed from this project in one funding cycle. Funds will be withdrawn in ETH no matter the currency you choose."
 msgstr "Le montant maximal des fonds pouvant être distribués à partir de ce projet au cours d'un cycle de financement. Les fonds seront retirés en ETH, quelle que soit la devise que vous choisissez."
+
+#: src/components/v2/shared/DistributionSplitsSection/SpecificLimitModal.tsx
+msgid "The maximum amount of funds that can be withdrawn from the treasury in a funding cycle."
+msgstr ""
 
 #: src/components/v2/V2Create/forms/TokenForm/MintRateFormItem.tsx
 msgid "The number of project tokens minted when 1 ETH is contributed in the first funding cycle."
@@ -3122,6 +3132,10 @@ msgstr "Vous n'avez pas une durée de cycle de financement. Les modifications qu
 #: src/components/Projects/HoldingsProjects.tsx
 msgid "You don't hold tokens for any Juicebox project."
 msgstr "Vous ne détenez pas de tokens pour aucun projet Juicebox."
+
+#: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
+msgid "You have configured an overall distribution limit of  <0/>{distributionLimit}. Your current payouts do not sum to 100%, so the remainder will go to the project owner."
+msgstr ""
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
 msgid "You have configured for all funds to be distributed from the treasury. Your current payouts do not sum to 100%, so the remainder will go to the project owner."

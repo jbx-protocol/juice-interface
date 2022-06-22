@@ -805,9 +805,9 @@ msgstr "Criar um endereço Ethereum que pode ser usado para pagar ao seu projeto
 msgid "Create payable address"
 msgstr "Criar endereço de pagamento"
 
-#: src/Router.tsx
 #: src/components/Projects/MyProjects.tsx
 #: src/components/Projects/index.tsx
+#: src/hooks/PageTitle.ts
 msgid "Create project"
 msgstr "Criar projeto"
 
@@ -2104,8 +2104,8 @@ msgstr "Projeto {projectId}"
 msgid "Project {projectId} not found"
 msgstr "Projeto {projectId} não encontrado"
 
-#: src/Router.tsx
 #: src/components/Navbar/MenuItems.tsx
+#: src/hooks/PageTitle.ts
 msgid "Projects"
 msgstr "Projetos"
 

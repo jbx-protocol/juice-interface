@@ -4,8 +4,10 @@ import { t, Trans } from '@lingui/macro'
 import { FormItems } from 'components/shared/formItems'
 import { normalizeHandle } from 'utils/formatHandle'
 import { cidFromUrl, unpinIpfsFileByCid } from 'utils/ipfs'
-import { CSSProperties } from 'react'
+import { CSSProperties, useEffect } from 'react'
 import TabDescription from 'components/v2/V2Create/TabDescription'
+import { useHistory, useLocation } from 'react-router-dom'
+import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 
 export type ProjectDetailsFormFields = {
   name: string
@@ -36,6 +38,24 @@ export default function ProjectDetailsForm({
   loading?: boolean
   onValuesChange?: VoidFunction
 }) {
+  const location = useLocation()
+  const history = useHistory()
+  const params = new URLSearchParams(location.search)
+  const clearFields = Boolean(params.get('resetForms'))
+
+  useEffect(() => {
+    if (clearFields) {
+      console.info('before reset form.name: ', form.getFieldValue('name'))
+      form.resetFields()
+      editingV2ProjectActions.resetState()
+      console.info('after reset form.name: ', form.getFieldValue('name'))
+      // Change URL without refreshing page
+      history.replace('/create')
+    }
+  })
+
+  console.info('render form.name: ', form.getFieldValue('name'))
+
   return (
     <Form
       scrollToFirstError={{ behavior: 'smooth' }}

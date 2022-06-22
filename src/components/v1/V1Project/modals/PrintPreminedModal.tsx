@@ -72,11 +72,13 @@ export default function PrintPreminedModal({
           return {
             label: t`Payment equivalent`,
             extra: t`The amount of tokens minted to the receiver will be calculated based on if they had paid this amount to the project in the current funding cycle.`,
+            required: true,
           }
         case '1.1':
           return {
             label: t`Token amount`,
             extra: t`The amount of tokens to mint to the receiver.`,
+            required: true,
           }
       }
     }, [terminal?.version])

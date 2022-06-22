@@ -457,6 +457,7 @@ msgid "Archived"
 msgstr "Archived"
 
 #: src/components/v1/V1Create/index.tsx
+#: src/components/v2/V2Create/StartOverButton.tsx
 msgid "Are you sure you want to start over?"
 msgstr "Are you sure you want to start over?"
 
@@ -2492,8 +2493,13 @@ msgstr ""
 
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v1/V1Create/index.tsx
+#: src/components/v2/V2Create/StartOverButton.tsx
 msgid "Start Over"
 msgstr ""
+
+#: src/components/v2/V2Create/StartOverButton.tsx
+msgid "Start over"
+msgstr "Start over"
 
 #: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner.tsx
 msgid "Start time (seconds, Unix time)"
@@ -2703,6 +2709,10 @@ msgstr "This project's balance in the Juicebox contract."
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
 msgstr "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
+
+#: src/components/v2/V2Create/StartOverButton.tsx
+msgid "This will erase all of your changes to every section of the project create flow."
+msgstr "This will erase all of your changes to every section of the project create flow."
 
 #: src/components/v1/V1Create/index.tsx
 msgid "This will erase all of your changes."

@@ -462,6 +462,7 @@ msgid "Archived"
 msgstr "Arşivlendi"
 
 #: src/components/v1/V1Create/index.tsx
+#: src/components/v2/V2Create/StartOverButton.tsx
 msgid "Are you sure you want to start over?"
 msgstr "Baştan başlamak istediğinizden emin misiniz?"
 
@@ -2497,8 +2498,13 @@ msgstr "Başlangıç"
 
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v1/V1Create/index.tsx
+#: src/components/v2/V2Create/StartOverButton.tsx
 msgid "Start Over"
 msgstr "Baştan Başla"
+
+#: src/components/v2/V2Create/StartOverButton.tsx
+msgid "Start over"
+msgstr ""
 
 #: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner.tsx
 msgid "Start time (seconds, Unix time)"
@@ -2708,6 +2714,10 @@ msgstr "Bu projenin Juicebox sözleşmesindeki bakiyesi."
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
 msgstr "Bu oran, her token'ın herhangi bir zamanda kullanılabilecek taşma miktarını belirler. Daha düşük bir bağlılık eğrisinde, bir token'ı kullanmak, kalan her bir token'ın değerini artırır ve token'ları diğerlerinden daha uzun süre tutmak için bir teşvik yaratır. %100'lük bir bağlılık eğrisi, ne zaman kullanıldıklarına bakılmaksızın tüm token'ların eşit değere sahip olacağı anlamına gelir."
+
+#: src/components/v2/V2Create/StartOverButton.tsx
+msgid "This will erase all of your changes to every section of the project create flow."
+msgstr ""
 
 #: src/components/v1/V1Create/index.tsx
 msgid "This will erase all of your changes."

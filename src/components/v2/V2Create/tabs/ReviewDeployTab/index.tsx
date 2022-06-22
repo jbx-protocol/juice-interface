@@ -5,6 +5,7 @@ import useMobile from 'hooks/Mobile'
 import DeployProjectButton from './DeployProjectButton'
 import ProjectDetailsSection from './ProjectDetailsSection'
 import FundingSummarySection from './FundingSummarySection'
+import StartOverButton from '../../StartOverButton'
 
 export const rowGutter: [Gutter, Gutter] = [40, 30]
 
@@ -24,6 +25,7 @@ export default function ReviewDeployTab() {
       </div>
 
       <DeployProjectButton />
+      <StartOverButton />
     </div>
   )
 }

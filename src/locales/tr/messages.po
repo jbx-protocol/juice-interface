@@ -970,11 +970,14 @@ msgid "Disconnect"
 msgstr "Bağlantıyı kes"
 
 #: src/components/Navbar/MenuItems.tsx
-#: src/components/shared/formItems/ProjectDiscord.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
 msgid "Discord"
 msgstr "Discord"
+
+#: src/components/shared/formItems/ProjectDiscord.tsx
+msgid "Discord link"
+msgstr ""
 
 #: src/components/shared/formItems/ProjectDiscountRate.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
@@ -1937,10 +1940,6 @@ msgstr "Ödemeler (isteğe bağlı)"
 msgid "Payouts to Ethereum addresses incur a {feePercentage}% fee. Your project will receive JBX in return at the current issuance rate."
 msgstr "Ethereum adreslerine yapılan ödemeler için %{feePercentage} ücret alınır. Bunun karşılığında projeniz, mevcut token çıkarma oranında JBX alacaktır."
 
-#: src/components/shared/formItems/ProjectName.tsx
-msgid "Peach's Juicebox Stand"
-msgstr "Peach'in Juicebox standı"
-
 #: src/components/Navbar/constants.ts
 msgid "Peel"
 msgstr "Peel"
@@ -1977,8 +1976,11 @@ msgstr "Podcast"
 msgid "Potential risks"
 msgstr "Potansiyel riskler"
 
-#: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/ProjectConfigurationFieldsContainer.tsx
+msgid "Preview"
+msgstr ""
+
+#: src/components/v1/V1Create/index.tsx
 msgid "Preview:"
 msgstr "Önizleme:"
 
@@ -3230,14 +3232,6 @@ msgstr "tanıtıcı"
 #: src/utils/formatTime.ts
 msgid "hours"
 msgstr "saat"
-
-#: src/components/shared/formItems/ProjectDiscord.tsx
-msgid "https://discord.gg/abcdefgh"
-msgstr "https://discord.gg/abcdefgh"
-
-#: src/components/shared/formItems/ProjectLink.tsx
-msgid "https://your-project.com"
-msgstr "https://your-project.com"
 
 #: src/components/shared/formItems/ProjectTwitter.tsx
 msgid "juiceboxETH"

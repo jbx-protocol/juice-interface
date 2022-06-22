@@ -11,14 +11,10 @@ export default function ProjectDiscord({
   return (
     <Form.Item
       name={name}
-      label={hideLabel ? undefined : t`Discord`}
+      label={hideLabel ? undefined : t`Discord link`}
       {...formItemProps}
     >
-      <Input
-        placeholder={t`https://discord.gg/abcdefgh`}
-        type="url"
-        autoComplete="off"
-      />
+      <Input type="url" autoComplete="off" />
     </Form.Item>
   )
 }

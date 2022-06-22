@@ -17,6 +17,7 @@ export const NetworkProvider: React.FC = ({ children }) => {
   const { isDarkMode } = useContext(ThemeContext)
 
   const [signingProvider, setSigningProvider] = useState<Web3Provider>()
+  const [previousNetwork, setPreviousNetwork] = useState<NetworkName>()
   const [network, setNetwork] = useState<NetworkName>()
   const [account, setAccount] = useState<string>()
   const [onboard, setOnboard] = useState<API>()
@@ -46,6 +47,14 @@ export const NetworkProvider: React.FC = ({ children }) => {
     resetWallet()
   }
 
+  const onNetworkChanged = useCallback(
+    (newNetwork: NetworkName | undefined) => {
+      setPreviousNetwork(network)
+      setNetwork(newNetwork)
+    },
+    [network],
+  )
+
   // Initialize Network
   useEffect(() => {
     if (onboard) return
@@ -63,10 +72,10 @@ export const NetworkProvider: React.FC = ({ children }) => {
     const config: Subscriptions = {
       address: setAccount,
       wallet: selectWallet,
-      network: networkId => setNetwork(NETWORKS[networkId]?.name),
+      network: networkId => onNetworkChanged(NETWORKS[networkId]?.name),
     }
     setOnboard(initOnboard(config, isDarkMode))
-  }, [isDarkMode, onboard, resetWallet])
+  }, [isDarkMode, onNetworkChanged, onboard, resetWallet])
 
   // On darkmode changed
   useEffect(() => {
@@ -84,10 +93,10 @@ export const NetworkProvider: React.FC = ({ children }) => {
         ? NETWORKS[signingProvider.network.chainId]
         : undefined
 
-      setNetwork(network?.name)
+      onNetworkChanged(network?.name)
     }
     getNetwork()
-  }, [signingProvider])
+  }, [onNetworkChanged, signingProvider])
 
   // Reconnect Wallet
   useEffect(() => {
@@ -97,6 +106,13 @@ export const NetworkProvider: React.FC = ({ children }) => {
       onboard.walletSelect(previouslySelectedWallet)
     }
   }, [onboard])
+
+  // Refresh when network changes
+  useEffect(() => {
+    if (!previousNetwork || !network) return
+    if (previousNetwork === network) return
+    window.location.reload()
+  }, [network, previousNetwork])
 
   return (
     <NetworkContext.Provider

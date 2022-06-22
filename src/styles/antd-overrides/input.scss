@@ -300,3 +300,11 @@ textarea.ant-input::placeholder {
 .ant-form-item-label > label .ant-form-item-optional {
   color: var(--text-primary);
 }
+
+.ant-input-number-disabled {
+  border: 1px solid var(--stroke-tertiary);
+}
+
+.ant-input-number-disabled input {
+  color: var(--text-tertiary) !important;
+}

@@ -47,7 +47,6 @@ export default function V2FundingCycleSection({
   } = useContext(V2ProjectContext)
 
   const canReconfigure = useHasPermission(V2OperatorPermission.RECONFIGURE)
-  const showReconfigureButton = canReconfigure && !isPreviewMode
 
   const {
     data: queuedFundingCycleResponse,
@@ -128,7 +127,7 @@ export default function V2FundingCycleSection({
     <FundingCycleSection
       tabs={tabs}
       reconfigureButton={
-        showReconfigureButton ? (
+        canReconfigure ? (
           <V2ReconfigureFundingModalTrigger
             hideProjectDetails
             triggerButton={(onClick: VoidFunction) => (

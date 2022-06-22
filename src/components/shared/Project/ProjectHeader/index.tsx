@@ -25,6 +25,8 @@ export default function ProjectHeader({
   const headerHeight = 120
   const spacing = 20
 
+  const projectTitle = metadata?.name || t`Untitled project`
+
   return (
     <div>
       <div
@@ -66,9 +68,12 @@ export default function ProjectHeader({
                 color: metadata?.name
                   ? colors.text.primary
                   : colors.text.placeholder,
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
               }}
+              title={projectTitle}
             >
-              {metadata?.name || t`Untitled project`}
+              {projectTitle}
             </h1>
 
             {actions ? actions : null}

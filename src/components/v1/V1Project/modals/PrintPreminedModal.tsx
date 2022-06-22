@@ -9,6 +9,8 @@ import { isAddress } from '@ethersproject/address'
 import { usePrintTokensTx } from 'hooks/v1/transactor/PrintTokensTx'
 import { useContext, useMemo, useState } from 'react'
 import { parseWad } from 'utils/formatNumber'
+import { t, Trans } from '@lingui/macro'
+import Callout from 'components/shared/Callout'
 
 import { V1_CURRENCY_ETH } from 'constants/v1/currency'
 
@@ -68,14 +70,13 @@ export default function PrintPreminedModal({
       switch (terminal.version) {
         case '1':
           return {
-            label: 'Payment equivalent',
-            extra:
-              'The amount of tokens minted to the receiver will be calculated based on if they had paid this amount to the project in the current funding cycle.',
+            label: t`Payment equivalent`,
+            extra: t`The amount of tokens minted to the receiver will be calculated based on if they had paid this amount to the project in the current funding cycle.`,
           }
         case '1.1':
           return {
-            label: 'Token amount',
-            extra: 'The amount of tokens to mint to the receiver.',
+            label: t`Token amount`,
+            extra: t`The amount of tokens to mint to the receiver.`,
           }
       }
     }, [terminal?.version])
@@ -85,27 +86,31 @@ export default function PrintPreminedModal({
 
   return (
     <Modal
+      title={<Trans>Mint tokens</Trans>}
       visible={visible}
-      onOk={mint}
+      onOk={() => form.submit()}
       confirmLoading={loading}
       onCancel={onCancel}
-      okText="Mint tokens"
+      okText={t`Mint tokens`}
     >
-      <div style={{ marginBottom: 20 }}>
-        Note: Tokens can be minted manually when allowed in the current funding
-        cycle. This can be changed by the project owner for upcoming cycles.
-      </div>
+      <Callout style={{ marginBottom: 20 }}>
+        <Trans>
+          Tokens can be minted manually when allowed in the current funding
+          cycle. The project owner can enable or disable minting for upcoming
+          cycles.
+        </Trans>
+      </Callout>
 
-      <Form layout="vertical" form={form}>
+      <Form layout="vertical" form={form} onFinish={mint}>
         <Form.Item
-          label="Tokens receiver"
+          label={<Trans>Tokens receiver</Trans>}
           name="beneficary"
           rules={[
             {
               required: true,
               validator: (rule, value) => {
                 if (!value || !isAddress(value))
-                  return Promise.reject('Not a valid ETH address')
+                  return Promise.reject(t`Not a valid ETH address`)
                 else return Promise.resolve()
               },
             },
@@ -113,28 +118,33 @@ export default function PrintPreminedModal({
         >
           <Input placeholder={constants.AddressZero} />
         </Form.Item>
-        <FormattedNumberInput
-          formItemProps={formItemProps}
-          value={value}
-          onChange={val => setValue(val ?? '0')}
-          accessory={
-            terminal?.version === '1' ? (
-              <InputAccessoryButton content="ETH" />
-            ) : undefined
-          }
-        />
-        <br />
-        <Form.Item label="Memo" name="memo">
-          <Input placeholder="Memo included on-chain (optional)" />
+        <div style={{ marginBottom: '1rem' }}>
+          <FormattedNumberInput
+            formItemProps={formItemProps}
+            value={value}
+            onChange={val => setValue(val ?? '0')}
+            accessory={
+              terminal?.version === '1' ? (
+                <InputAccessoryButton content="ETH" />
+              ) : undefined
+            }
+          />
+        </div>
+        <Form.Item
+          label={<Trans>Memo</Trans>}
+          name="memo"
+          extra={<Trans>Memo included on-chain</Trans>}
+        >
+          <Input />
         </Form.Item>
         <Form.Item
           name="preferUnstaked"
-          label="Mint as ERC-20"
+          label={<Trans>Mint as ERC-20</Trans>}
           valuePropName="checked"
           extra={
             erc20Issued
-              ? `Enabling this will mint ${tokenSymbol} ERC-20 tokens. Otherwise unclaimed ${tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver.`
-              : 'ERC-20 tokens can only be minted once an ERC-20 token has been issued for this project.'
+              ? t`Enabling this will mint ${tokenSymbol} ERC-20 tokens. Otherwise unclaimed ${tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver.`
+              : t`ERC-20 tokens can only be minted once an ERC-20 token has been issued for this project.`
           }
           initialValue={false}
         >

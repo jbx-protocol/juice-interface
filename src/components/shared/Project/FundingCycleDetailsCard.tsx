@@ -1,4 +1,8 @@
-import { ExclamationCircleOutlined } from '@ant-design/icons'
+import {
+  ExclamationCircleOutlined,
+  ClockCircleOutlined,
+  CloseCircleOutlined,
+} from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Collapse, Tooltip } from 'antd'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
@@ -29,6 +33,11 @@ function BallotStateBadge({ ballotState }: { ballotState: BallotState }) {
     2: t`This proposed funding cycle reconfiguration has failed.`,
   }
 
+  const ballotStateIcons: { [k in BallotState]?: JSX.Element } = {
+    0: <ClockCircleOutlined />,
+    2: <CloseCircleOutlined />,
+  }
+
   const variant = ballotStateVariantMap[ballotState]
 
   if (!variant) return null
@@ -38,8 +47,8 @@ function BallotStateBadge({ ballotState }: { ballotState: BallotState }) {
       variant={variant}
       style={{ marginLeft: '0.5rem', textTransform: 'capitalize' }}
     >
-      <Tooltip title={ballotStateTooltips[ballotState]}>
-        <ExclamationCircleOutlined /> {ballotStateLabelMap[ballotState]}
+      <Tooltip title={ballotStateTooltips[ballotState]} visible={true}>
+        {ballotStateIcons[ballotState]} {ballotStateLabelMap[ballotState]}
       </Tooltip>
     </Badge>
   )
@@ -71,6 +80,10 @@ export default function FundingCycleDetailsCard({
   } = useContext(ThemeContext)
 
   const HeaderText = () => {
+    if (ballotState !== undefined) {
+      return <BallotStateBadge ballotState={ballotState} />
+    }
+
     if (!fundingCycleDurationSeconds.gt(0)) return null
 
     const endTimeSeconds = fundingCycleStartTime.add(
@@ -122,9 +135,6 @@ export default function FundingCycleDetailsCard({
                   <Trans>Details</Trans>
                 )}
               </span>
-              {ballotState !== undefined ? (
-                <BallotStateBadge ballotState={ballotState} />
-              ) : null}
 
               {fundingCycleRiskCount > 0 && (
                 <span style={{ marginLeft: 10, color: colors.text.secondary }}>

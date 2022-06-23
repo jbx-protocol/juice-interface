@@ -15,12 +15,15 @@ export function Badge({
   const variantStyle: { [k in BadgeVariant]: CSSProperties } = {
     success: {
       color: colors.text.success,
+      backgroundColor: colors.background.success,
     },
     warning: {
-      color: colors.text.warn,
+      color: '#8f4700',
+      backgroundColor: '#FBD99D',
     },
     danger: {
       color: colors.text.failure,
+      backgroundColor: '#fdd4cd',
     },
   }
 
@@ -28,8 +31,9 @@ export function Badge({
     <span
       style={{
         padding: '0.1rem 0.4rem',
-        fontSize: '0.8rem',
+        fontSize: 12,
         fontWeight: 400,
+        borderRadius: 10,
         ...variantStyle[variant],
         ...style,
       }}

@@ -15,7 +15,7 @@ const linkUrl = (url: string) => {
   if (url.startsWith('http://') || url.startsWith('https://')) {
     return url
   }
-  return 'http://' + url
+  return 'https://' + url
 }
 const spacing = 20
 

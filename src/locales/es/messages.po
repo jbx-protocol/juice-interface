@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-06-20 02:48\n"
+"PO-Revision-Date: 2022-06-21 02:57\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -601,7 +601,7 @@ msgstr "No se pueden canjear tokens por ETH porque este proyecto no tiene excede
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
 msgid "Changes to payouts will take effect immediately."
-msgstr ""
+msgstr "Los cambios a los pagos surtirán efecto de inmediato."
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Changes to project details will take effect immediately."
@@ -806,9 +806,9 @@ msgstr "Crea una dirección Ethereum que pueda ser usada para pagar tu proyecto 
 msgid "Create payable address"
 msgstr "Crear dirección pagable"
 
-#: src/Router.tsx
 #: src/components/Projects/MyProjects.tsx
 #: src/components/Projects/index.tsx
+#: src/hooks/PageTitle.ts
 msgid "Create project"
 msgstr "Crear proyecto"
 
@@ -866,7 +866,7 @@ msgstr "Ciclo #{0}"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
 msgid "Cycle #{0} -"
-msgstr ""
+msgstr "Ciclo #{0} -"
 
 #: src/components/Landing/index.tsx
 msgid "DAOs and communities"
@@ -971,11 +971,14 @@ msgid "Disconnect"
 msgstr "Desconectar"
 
 #: src/components/Navbar/MenuItems.tsx
-#: src/components/shared/formItems/ProjectDiscord.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
 msgid "Discord"
 msgstr "Discord"
+
+#: src/components/shared/formItems/ProjectDiscord.tsx
+msgid "Discord link"
+msgstr ""
 
 #: src/components/shared/formItems/ProjectDiscountRate.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
@@ -1083,7 +1086,7 @@ msgstr "Límite de distribución, duración y pagos"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
 msgid "Distribution limit: <0/>{0}"
-msgstr ""
+msgstr "Límite de distribución: <0/>{0}"
 
 #: src/components/Landing/QAs.tsx
 msgid "Do I have to make my project open source to use Juicebox as its business model?"
@@ -1170,7 +1173,7 @@ msgstr "Editar pago"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
 msgid "Edit payouts"
-msgstr ""
+msgstr "Editar pagos"
 
 #: src/components/v1/V1Project/modals/EditProjectModal.tsx
 msgid "Edit project"
@@ -1410,7 +1413,7 @@ msgstr "Si está bloqueado, esta división no se puede editar o remover hasta qu
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "If you don't raise the sum of all your payouts (<0/>{distributionLimit}), this address will receive {0}% of all the funds you raise."
-msgstr ""
+msgstr "Si no recaudas la suma de todos tus pagos (<0/>{distributionLimit}), esta dirección recibirá {0}% de todos los fondos que recaudes."
 
 #: src/components/v2/V2Project/DistributionLimit.tsx
 msgid "If you don't raise this amount, your splits will receive their percentage of whatever you raise."
@@ -1607,7 +1610,7 @@ msgstr "Administra"
 
 #: src/components/shared/ManageTokensModal.tsx
 msgid "Manage your {0}"
-msgstr ""
+msgstr "Maneja tu {0}"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "Manage {tokenText}"
@@ -1938,10 +1941,6 @@ msgstr "Pagos (opcional)"
 msgid "Payouts to Ethereum addresses incur a {feePercentage}% fee. Your project will receive JBX in return at the current issuance rate."
 msgstr "Pagos a direcciones Ethereum incurren en un {feePercentage}% de cuota. Tu proyecto recibirá JBX de regreso acorde a la tasa de emisión actual."
 
-#: src/components/shared/formItems/ProjectName.tsx
-msgid "Peach's Juicebox Stand"
-msgstr "El puesto de Frutas del Sr. Melocotón"
-
 #: src/components/Navbar/constants.ts
 msgid "Peel"
 msgstr "Peel"
@@ -1978,8 +1977,11 @@ msgstr "Podcast"
 msgid "Potential risks"
 msgstr "Riesgos potenciales"
 
-#: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/ProjectConfigurationFieldsContainer.tsx
+msgid "Preview"
+msgstr ""
+
+#: src/components/v1/V1Create/index.tsx
 msgid "Preview:"
 msgstr "Vista previa:"
 
@@ -2103,8 +2105,8 @@ msgstr "Proyecto {projectId}"
 msgid "Project {projectId} not found"
 msgstr "Proyecto {projectId} no encontrado"
 
-#: src/Router.tsx
 #: src/components/Navbar/MenuItems.tsx
+#: src/hooks/PageTitle.ts
 msgid "Projects"
 msgstr "Proyectos"
 
@@ -2186,11 +2188,11 @@ msgstr "Reconfigurar financiamiento"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
 msgid "Reconfigure payouts and limit"
-msgstr ""
+msgstr "Reconfigurar pagos y límite"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
 msgid "Reconfigure payouts as percentages of your distribution limit."
-msgstr ""
+msgstr "Reconfigurar pagos como porcentajes de tu límite de distribución."
 
 #: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureModalTrigger.tsx
@@ -3241,14 +3243,6 @@ msgstr "usuario"
 msgid "hours"
 msgstr "horas"
 
-#: src/components/shared/formItems/ProjectDiscord.tsx
-msgid "https://discord.gg/abcdefgh"
-msgstr "https://discord.gg/abcdefgh"
-
-#: src/components/shared/formItems/ProjectLink.tsx
-msgid "https://your-project.com"
-msgstr "https://tu-proyecto.com"
-
 #: src/components/shared/formItems/ProjectTwitter.tsx
 msgid "juiceboxETH"
 msgstr "juiceboxETH"
@@ -3387,7 +3381,7 @@ msgstr "{0} {tokenTextPlural} reservados"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "{0}%"
-msgstr ""
+msgstr "{0}%"
 
 #: src/components/v2/shared/SplitItem.tsx
 msgid "{0}% of all newly minted tokens."

@@ -88,7 +88,7 @@ export default function ReservedTokensSplitsCard({
             <div style={{ marginRight: '3rem' }}>
               <Skeleton
                 active
-                loading={loadingReservedTokens}
+                loading={!isPreviewMode && loadingReservedTokens}
                 paragraph={{ rows: 1, width: 20 }}
                 title={false}
                 style={{ display: 'inline' }}

@@ -801,9 +801,9 @@ msgstr "Create an Ethereum address that can be used to pay your project directly
 msgid "Create payable address"
 msgstr "Create payable address"
 
-#: src/Router.tsx
 #: src/components/Projects/MyProjects.tsx
 #: src/components/Projects/index.tsx
+#: src/hooks/PageTitle.ts
 msgid "Create project"
 msgstr "Create project"
 
@@ -966,11 +966,14 @@ msgid "Disconnect"
 msgstr ""
 
 #: src/components/Navbar/MenuItems.tsx
-#: src/components/shared/formItems/ProjectDiscord.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
 msgid "Discord"
 msgstr ""
+
+#: src/components/shared/formItems/ProjectDiscord.tsx
+msgid "Discord link"
+msgstr "Discord link"
 
 #: src/components/shared/formItems/ProjectDiscountRate.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
@@ -1933,10 +1936,6 @@ msgstr "Payouts (optional)"
 msgid "Payouts to Ethereum addresses incur a {feePercentage}% fee. Your project will receive JBX in return at the current issuance rate."
 msgstr "Payouts to Ethereum addresses incur a {feePercentage}% fee. Your project will receive JBX in return at the current issuance rate."
 
-#: src/components/shared/formItems/ProjectName.tsx
-msgid "Peach's Juicebox Stand"
-msgstr ""
-
 #: src/components/Navbar/constants.ts
 msgid "Peel"
 msgstr "Peel"
@@ -1973,8 +1972,11 @@ msgstr ""
 msgid "Potential risks"
 msgstr "Potential risks"
 
-#: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/ProjectConfigurationFieldsContainer.tsx
+msgid "Preview"
+msgstr "Preview"
+
+#: src/components/v1/V1Create/index.tsx
 msgid "Preview:"
 msgstr "Preview:"
 
@@ -2098,8 +2100,8 @@ msgstr "Project {projectId}"
 msgid "Project {projectId} not found"
 msgstr "Project {projectId} not found"
 
-#: src/Router.tsx
 #: src/components/Navbar/MenuItems.tsx
+#: src/hooks/PageTitle.ts
 msgid "Projects"
 msgstr ""
 
@@ -3235,14 +3237,6 @@ msgstr ""
 #: src/utils/formatTime.ts
 msgid "hours"
 msgstr "hours"
-
-#: src/components/shared/formItems/ProjectDiscord.tsx
-msgid "https://discord.gg/abcdefgh"
-msgstr ""
-
-#: src/components/shared/formItems/ProjectLink.tsx
-msgid "https://your-project.com"
-msgstr ""
 
 #: src/components/shared/formItems/ProjectTwitter.tsx
 msgid "juiceboxETH"

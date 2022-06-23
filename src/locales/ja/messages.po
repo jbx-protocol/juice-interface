@@ -8,7 +8,7 @@ msgstr ""
 "Language: ja\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-06-20 02:48\n"
+"PO-Revision-Date: 2022-06-23 03:01\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -805,9 +805,9 @@ msgstr ""
 msgid "Create payable address"
 msgstr ""
 
-#: src/Router.tsx
 #: src/components/Projects/MyProjects.tsx
 #: src/components/Projects/index.tsx
+#: src/hooks/PageTitle.ts
 msgid "Create project"
 msgstr ""
 
@@ -970,10 +970,13 @@ msgid "Disconnect"
 msgstr ""
 
 #: src/components/Navbar/MenuItems.tsx
-#: src/components/shared/formItems/ProjectDiscord.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
 msgid "Discord"
+msgstr ""
+
+#: src/components/shared/formItems/ProjectDiscord.tsx
+msgid "Discord link"
 msgstr ""
 
 #: src/components/shared/formItems/ProjectDiscountRate.tsx
@@ -1937,10 +1940,6 @@ msgstr ""
 msgid "Payouts to Ethereum addresses incur a {feePercentage}% fee. Your project will receive JBX in return at the current issuance rate."
 msgstr ""
 
-#: src/components/shared/formItems/ProjectName.tsx
-msgid "Peach's Juicebox Stand"
-msgstr ""
-
 #: src/components/Navbar/constants.ts
 msgid "Peel"
 msgstr ""
@@ -1977,8 +1976,11 @@ msgstr ""
 msgid "Potential risks"
 msgstr ""
 
-#: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/ProjectConfigurationFieldsContainer.tsx
+msgid "Preview"
+msgstr ""
+
+#: src/components/v1/V1Create/index.tsx
 msgid "Preview:"
 msgstr ""
 
@@ -2102,8 +2104,8 @@ msgstr ""
 msgid "Project {projectId} not found"
 msgstr ""
 
-#: src/Router.tsx
 #: src/components/Navbar/MenuItems.tsx
+#: src/hooks/PageTitle.ts
 msgid "Projects"
 msgstr ""
 
@@ -3229,14 +3231,6 @@ msgstr ""
 
 #: src/utils/formatTime.ts
 msgid "hours"
-msgstr ""
-
-#: src/components/shared/formItems/ProjectDiscord.tsx
-msgid "https://discord.gg/abcdefgh"
-msgstr ""
-
-#: src/components/shared/formItems/ProjectLink.tsx
-msgid "https://your-project.com"
 msgstr ""
 
 #: src/components/shared/formItems/ProjectTwitter.tsx

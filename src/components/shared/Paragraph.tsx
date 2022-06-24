@@ -7,9 +7,11 @@ import RichNote from './RichNote'
 export default function Paragraph({
   description,
   characterLimit,
+  display = 'block',
 }: {
   description: string
   characterLimit?: number
+  display?: 'inline' | 'block' | 'flex'
 }) {
   const CHARACTER_LIMIT_EXCEEDED =
     (characterLimit && description.length > characterLimit) ||
@@ -26,7 +28,7 @@ export default function Paragraph({
   }, [characterLimit, description])
 
   return (
-    <div>
+    <div style={{ display }}>
       <RichNote
         style={{ maxWidth: '700px', display: 'inline' }} // good line length for reading
         note={

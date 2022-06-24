@@ -129,7 +129,7 @@ export default function ProjectHeader({
           )}
           {owner && (
             <>
-              <Paragraph display="inline" description={t`Owned By:`} />
+              <Paragraph display="inline" description={t`Owned by:`} />
               <FormattedAddress address={owner} />
             </>
           )}

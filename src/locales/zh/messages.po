@@ -1875,7 +1875,7 @@ msgid "Overflow is created if your project's balance exceeds your funding cycle 
 msgstr "如果您项目的资金余额超出您的筹款周期目标，就会产生溢出。项目代币持有人可以赎回溢出部分资金。"
 
 #: src/components/shared/Project/ProjectHeader/index.tsx
-msgid "Owned By:"
+msgid "Owned by:"
 msgstr ""
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx

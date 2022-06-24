@@ -1870,8 +1870,8 @@ msgid "Overflow is created if your project's balance exceeds your funding cycle 
 msgstr ""
 
 #: src/components/shared/Project/ProjectHeader/index.tsx
-msgid "Owned By:"
-msgstr "Owned By:"
+msgid "Owned by:"
+msgstr "Owned by:"
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Owner can mint tokens at any time."

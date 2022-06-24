@@ -47,7 +47,7 @@ function BallotStateBadge({ ballotState }: { ballotState: BallotState }) {
       variant={variant}
       style={{ marginLeft: '0.5rem', textTransform: 'capitalize' }}
     >
-      <Tooltip title={ballotStateTooltips[ballotState]} visible={true}>
+      <Tooltip title={ballotStateTooltips[ballotState]}>
         {ballotStateIcons[ballotState]} {ballotStateLabelMap[ballotState]}
       </Tooltip>
     </Badge>

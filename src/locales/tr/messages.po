@@ -1874,6 +1874,10 @@ msgstr "Taşma"
 msgid "Overflow is created if your project's balance exceeds your funding cycle target. Overflow can be redeemed by your project's token holders."
 msgstr "Projenizin bakiyesi finansman döngüsü hedefinizi aşarsa taşma oluşur. Taşma, projenizin token sahipleri tarafından talep edilerek kullanılabilir."
 
+#: src/components/shared/Project/ProjectHeader/index.tsx
+msgid "Owned By:"
+msgstr ""
+
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Owner can mint tokens at any time."
 msgstr "Proje sahibi, istediği zaman token basabilir."

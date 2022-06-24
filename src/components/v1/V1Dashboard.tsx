@@ -33,6 +33,8 @@ import { usePageTitle } from 'hooks/PageTitle'
 
 import { useGetProjectOwner } from 'hooks/v1/contractReader/GetProjectOwner'
 
+import { useGetProjectOwner } from 'hooks/v1/contractReader/GetProjectOwner'
+
 import { layouts } from 'constants/styles/layouts'
 import { projectTypes } from 'constants/v1/projectTypes'
 import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'

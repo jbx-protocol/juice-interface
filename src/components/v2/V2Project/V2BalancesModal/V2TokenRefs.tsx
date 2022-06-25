@@ -1,16 +1,16 @@
 import {
   CaretDownFilled,
-  CloseCircleOutlined,
   PlusOutlined,
+  DeleteOutlined,
 } from '@ant-design/icons'
 import * as constants from '@ethersproject/constants'
-import { Button, Col, Form, Input, Row } from 'antd'
+import { Button, Col, Form, Input, Row, Tooltip } from 'antd'
 
 import { FormInstance } from 'antd/lib/form/Form'
 
 import { useState } from 'react'
 
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 
 import { EditTrackedAssetsForm } from './V2BalancesModal'
 
@@ -129,10 +129,15 @@ export default function V2TokenRefs({
                   </Form.Item>
                 </Col>
                 <Col flex="none">
-                  <CloseCircleOutlined
-                    style={{ marginLeft: 10 }}
-                    onClick={() => remove(name)}
-                  />
+                  <Tooltip title={t`Untrack token`}>
+                    <Button
+                      type="text"
+                      style={{ marginLeft: 10 }}
+                      icon={<DeleteOutlined />}
+                      block
+                      onClick={() => remove(name)}
+                    />
+                  </Tooltip>
                 </Col>
               </Row>
             ))}
@@ -143,7 +148,9 @@ export default function V2TokenRefs({
                 block
                 icon={<PlusOutlined />}
               >
-                <Trans>Add token</Trans>
+                <span>
+                  <Trans>Add token</Trans>
+                </span>
               </Button>
             </Form.Item>
           </>

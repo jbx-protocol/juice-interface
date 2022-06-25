@@ -1186,6 +1186,10 @@ msgstr "Her ödeme, finansman döngülerinin her birinde, hazinede yeterli tutar
 msgid "Each project has its own <0>ERC-20 tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
 msgstr "Her projenin kendi <0>ERC-20 token'ları</0> vardır. Bir projeye fon sağlayan herkes, karşılığında o projenin token'larını alır. Proje sahibi isteğe bağlı olarak ERC-20 token'ı çıkarana kadar, token bakiyeleri protokol tarafından izlenecektir."
 
+#: src/components/v2/V2Project/V2FundingCycleSection/ReservedTokensSplitsCard.tsx
+msgid "Edit allocation"
+msgstr ""
+
 #: src/components/v1/shared/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Edit payout"
@@ -1210,7 +1214,6 @@ msgstr "Rezerve token tahsisini düzenle"
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 #: src/components/v1/shared/TicketModsList.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/ReservedTokensSplitsCard.tsx
 msgid "Edit token allocation"
 msgstr "Token tahsisini düzenle"
 
@@ -2335,12 +2338,12 @@ msgid "Reserved rate is 0% but has reserved token allocation. Consider adding a 
 msgstr "Rezerve oranı %0 ancak rezerve token tahsisi mevcut. Sıfırdan büyük bir rezerve oranı eklemeyi veya token tahsisini kaldırmayı düşünün."
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditTokenAllocationModal.tsx
 msgid "Reserved token allocation"
 msgstr "Rezerve token tahsisi"
 
 #: src/components/shared/forms/TicketingForm.tsx
 #: src/components/v2/V2Create/forms/TokenForm/ReservedTokensFormItem.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditTokenAllocationModal.tsx
 msgid "Reserved token allocation (optional)"
 msgstr "Rezerve token tahsisi (isteğe bağlı)"
 

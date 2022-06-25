@@ -1186,6 +1186,10 @@ msgstr "Chaque paiement recevra son pourcentage de ce total à chaque cycle de f
 msgid "Each project has its own <0>ERC-20 tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
 msgstr "Chaque projet a ses propres <0>tokens ERC-20</0>. Tous ceux qui financent un projet reçoivent en retour les tokens de ce projet. Les soldes de jetons seront suivis par le protocole jusqu'à ce que les jetons ERC-20 soient éventuellement émis par le propriétaire du projet."
 
+#: src/components/v2/V2Project/V2FundingCycleSection/ReservedTokensSplitsCard.tsx
+msgid "Edit allocation"
+msgstr ""
+
 #: src/components/v1/shared/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Edit payout"
@@ -1210,7 +1214,6 @@ msgstr "Modifier l'allocation des tokens réservés"
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 #: src/components/v1/shared/TicketModsList.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/ReservedTokensSplitsCard.tsx
 msgid "Edit token allocation"
 msgstr "Modifier l'allocation de token"
 
@@ -2335,12 +2338,12 @@ msgid "Reserved rate is 0% but has reserved token allocation. Consider adding a 
 msgstr "Le taux réservé est de 0% mais l'allocation de tokens est réservée. Envisagez d'ajouter un taux réservé supérieur à zéro ou supprimez l'allocation de tokens."
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditTokenAllocationModal.tsx
 msgid "Reserved token allocation"
 msgstr ""
 
 #: src/components/shared/forms/TicketingForm.tsx
 #: src/components/v2/V2Create/forms/TokenForm/ReservedTokensFormItem.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditTokenAllocationModal.tsx
 msgid "Reserved token allocation (optional)"
 msgstr "Allocation de tokens réservés (optionnel)"
 

@@ -1186,6 +1186,10 @@ msgstr ""
 msgid "Each project has its own <0>ERC-20 tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
 msgstr "Каждый проект имеет свои собственные <0>ERC-20 токены</0>. Каждый, кто вносит средства в проект, получает взамен токены этого проекта. Остатки токенов будут отслеживаться протоколом до тех пор, пока владелец проекта не выпустит токены ERC-20 по своему усмотрению."
 
+#: src/components/v2/V2Project/V2FundingCycleSection/ReservedTokensSplitsCard.tsx
+msgid "Edit allocation"
+msgstr ""
+
 #: src/components/v1/shared/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Edit payout"
@@ -1210,7 +1214,6 @@ msgstr "Изменить зарезервированное распределе
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 #: src/components/v1/shared/TicketModsList.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/ReservedTokensSplitsCard.tsx
 msgid "Edit token allocation"
 msgstr "Изменить распределение токенов"
 
@@ -2335,12 +2338,12 @@ msgid "Reserved rate is 0% but has reserved token allocation. Consider adding a 
 msgstr "Зарезервированная ставка равна 0%, но зарезервировано выделение токенов. Рассмотрите возможность добавления зарезервированной ставки, которая больше нуля, или снимите выделение токенов."
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditTokenAllocationModal.tsx
 msgid "Reserved token allocation"
 msgstr ""
 
 #: src/components/shared/forms/TicketingForm.tsx
 #: src/components/v2/V2Create/forms/TokenForm/ReservedTokensFormItem.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditTokenAllocationModal.tsx
 msgid "Reserved token allocation (optional)"
 msgstr "Зарезервированные распределения токенов (необязательно)"
 

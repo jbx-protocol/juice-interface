@@ -1186,6 +1186,10 @@ msgstr "如果金库资金足够，每个支出对象将在每个筹款周期收
 msgid "Each project has its own <0>ERC-20 tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
 msgstr "每个项目都有自己的<0>ERC-20代币</0>。每个资助项目的人都会获得项目代币作为回报。在项目方发行 ERC-20 代币之前，代币余额会由协议来记录。"
 
+#: src/components/v2/V2Project/V2FundingCycleSection/ReservedTokensSplitsCard.tsx
+msgid "Edit allocation"
+msgstr ""
+
 #: src/components/v1/shared/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Edit payout"
@@ -1210,7 +1214,6 @@ msgstr "保留代币的分配方案"
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 #: src/components/v1/shared/TicketModsList.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/ReservedTokensSplitsCard.tsx
 msgid "Edit token allocation"
 msgstr "编辑代币的分发"
 
@@ -2335,12 +2338,12 @@ msgid "Reserved rate is 0% but has reserved token allocation. Consider adding a 
 msgstr "代币保留率为0%但又需要分配保留代币。建议增加一个大于零的保留率，或者取消代币分配。"
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditTokenAllocationModal.tsx
 msgid "Reserved token allocation"
 msgstr "保留代币的分配方案"
 
 #: src/components/shared/forms/TicketingForm.tsx
 #: src/components/v2/V2Create/forms/TokenForm/ReservedTokensFormItem.tsx
-#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditTokenAllocationModal.tsx
 msgid "Reserved token allocation (optional)"
 msgstr "保留代币的分配方案（可选）"
 

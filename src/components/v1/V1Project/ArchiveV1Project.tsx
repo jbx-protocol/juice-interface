@@ -2,7 +2,7 @@ import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useContext } from 'react'
 
-import ArchiveProject from 'components/shared/ArchiveProject'
+import ArchiveProject from 'components/ArchiveProject'
 
 /**
  * V1 Wrapper around `ArchiveProject`.

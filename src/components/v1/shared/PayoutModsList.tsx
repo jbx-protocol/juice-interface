@@ -1,8 +1,8 @@
 import { t } from '@lingui/macro'
 import { Button, Form, Input, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import CurrencySymbol from 'components/shared/CurrencySymbol'
-import { getTotalPercentage } from 'components/shared/formItems/formHelpers'
+import CurrencySymbol from 'components/CurrencySymbol'
+import { getTotalPercentage } from 'components/formItems/formHelpers'
 import Mod from 'components/v1/shared/Mod'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'

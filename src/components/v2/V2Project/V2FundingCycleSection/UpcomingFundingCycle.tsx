@@ -1,5 +1,5 @@
-import { CardSection } from 'components/shared/CardSection'
-import FundingCycleDetailsCard from 'components/shared/Project/FundingCycleDetailsCard'
+import { CardSection } from 'components/CardSection'
+import FundingCycleDetailsCard from 'components/Project/FundingCycleDetailsCard'
 import { LoadingOutlined } from '@ant-design/icons'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useContext } from 'react'

@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import ETHAmount from 'components/shared/currency/ETHAmount'
-import USDAmount from 'components/shared/currency/USDAmount'
+import ETHAmount from 'components/currency/ETHAmount'
+import USDAmount from 'components/currency/USDAmount'
 import {
   NO_CURRENCY,
   V2_CURRENCY_ETH,

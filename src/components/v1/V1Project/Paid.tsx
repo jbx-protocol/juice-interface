@@ -1,10 +1,10 @@
 import { RightCircleOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
-import EtherscanLink from 'components/shared/EtherscanLink'
+import EtherscanLink from 'components/EtherscanLink'
 import ProjectTokenBalance from 'components/v1/V1Project/ProjectTokenBalance'
-import TooltipLabel from 'components/shared/TooltipLabel'
-import ETHAmount from 'components/shared/currency/ETHAmount'
+import TooltipLabel from 'components/TooltipLabel'
+import ETHAmount from 'components/currency/ETHAmount'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
@@ -16,13 +16,13 @@ import { useContext, useState } from 'react'
 import { hasFundingTarget } from 'utils/v1/fundingCycle'
 
 import { V1CurrencyName } from 'utils/v1/currency'
-import StatLine from 'components/shared/Project/StatLine'
+import StatLine from 'components/Project/StatLine'
 
-import USDAmount from 'components/shared/currency/USDAmount'
+import USDAmount from 'components/currency/USDAmount'
 
-import FundingProgressBar from 'components/shared/Project/FundingProgressBar'
+import FundingProgressBar from 'components/Project/FundingProgressBar'
 
-import { VolumeStatLine } from 'components/shared/Project/VolumeStatLine'
+import { VolumeStatLine } from 'components/Project/VolumeStatLine'
 
 import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
 import { readNetwork } from 'constants/networks'

@@ -1,7 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Divider, Form, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import { FormItems } from 'components/shared/formItems'
+import { FormItems } from 'components/formItems'
 import { useSetProjectHandleTx } from 'hooks/v1/transactor/SetProjectHandleTx'
 import { useSetProjectUriTx } from 'hooks/v1/transactor/SetProjectUriTx'
 import { ProjectMetadataV4 } from 'models/project-metadata'

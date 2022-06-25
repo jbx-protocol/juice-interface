@@ -1,6 +1,6 @@
 import { Col, Row, Space } from 'antd'
-import PayInputGroup from 'components/shared/inputs/Pay/PayInputGroup'
-import ProjectHeader from 'components/shared/Project/ProjectHeader'
+import PayInputGroup from 'components/inputs/Pay/PayInputGroup'
+import ProjectHeader from 'components/Project/ProjectHeader'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import { lazy, useContext, useState } from 'react'
@@ -28,7 +28,7 @@ import { RelaunchFundingCycleBanner } from './banners/RelaunchFundingCycleBanner
 
 const GUTTER_PX = 40
 
-const VolumeChart = lazy(() => import('../../shared/VolumeChart'))
+const VolumeChart = lazy(() => import('components/VolumeChart'))
 
 export default function V2Project({
   singleColumnLayout,

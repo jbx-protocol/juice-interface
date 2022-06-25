@@ -8,7 +8,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import useContractReader from 'hooks/v1/contractReader/ContractReader'
 import { V1ContractName } from 'models/v1/contracts'
 import { normalizeHandle } from 'utils/formatHandle'
-import { FormItemExt } from 'components/shared/formItems/formItemExt'
+import { FormItemExt } from 'components/formItems/formItemExt'
 
 import {
   ProjectHandleInput,

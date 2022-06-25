@@ -4,7 +4,7 @@ import useSymbolOfERC20 from 'hooks/v1/contractReader/SymbolOfERC20'
 import { CSSProperties } from 'react'
 import { formatWad } from 'utils/formatNumber'
 
-import FormattedAddress from '../../shared/FormattedAddress'
+import FormattedAddress from 'components/FormattedAddress'
 
 export default function ERC20TokenBalance({
   tokenAddress,

@@ -1,6 +1,6 @@
 import { Button } from 'antd'
 import { t, Trans } from '@lingui/macro'
-import TooltipLabel from 'components/shared/TooltipLabel'
+import TooltipLabel from 'components/TooltipLabel'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import useReservedTokensOfProject from 'hooks/v1/contractReader/ReservedTokensOfProject'

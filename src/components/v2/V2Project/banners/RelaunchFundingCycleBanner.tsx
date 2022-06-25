@@ -2,9 +2,9 @@ import { Trans } from '@lingui/macro'
 import { Button, Form, Input } from 'antd'
 import { useContext, useEffect, useMemo, useState } from 'react'
 
-import Banner from 'components/shared/Banner'
+import Banner from 'components/Banner'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import TransactionModal from 'components/shared/TransactionModal'
+import TransactionModal from 'components/TransactionModal'
 import {
   V2FundAccessConstraint,
   V2FundingCycleData,

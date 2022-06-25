@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { Button, Space } from 'antd'
 import WithdrawModal from 'components/v1/shared/FundingCycle/modals/WithdrawModal'
-import TooltipLabel from 'components/shared/TooltipLabel'
+import TooltipLabel from 'components/TooltipLabel'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { PayoutMod } from 'models/mods'
 import { useContext, useState } from 'react'
@@ -12,7 +12,7 @@ import { V1CurrencyName } from 'utils/v1/currency'
 
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { perbicentToPercent } from 'utils/formatNumber'
-import SpendingStats from 'components/shared/Project/SpendingStats'
+import SpendingStats from 'components/Project/SpendingStats'
 
 export default function Spending({
   payoutMods,

@@ -19,14 +19,14 @@ import { permyriadToPercent, percentToPermyriad } from 'utils/formatNumber'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 
-import ReservedTokenReceiverModal from 'components/shared/modals/ReservedTokenReceiverModal'
+import ReservedTokenReceiverModal from 'components/modals/ReservedTokenReceiverModal'
 import {
   validateEthAddress,
   validatePercentage,
-} from 'components/shared/formItems/formHelpers'
+} from 'components/formItems/formHelpers'
 
-import FormattedAddress from '../../shared/FormattedAddress'
-import { FormItemExt } from '../../shared/formItems/formItemExt'
+import FormattedAddress from '../../FormattedAddress'
+import { FormItemExt } from '../../formItems/formItemExt'
 
 type ModalMode = 'Add' | 'Edit' | undefined
 

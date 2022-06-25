@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { Button, Skeleton, Space } from 'antd'
-import { CardSection } from 'components/shared/CardSection'
-import TooltipLabel from 'components/shared/TooltipLabel'
+import { CardSection } from 'components/CardSection'
+import TooltipLabel from 'components/TooltipLabel'
 import SplitList from 'components/v2/shared/SplitList'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { CSSProperties, useContext, useState } from 'react'
@@ -16,7 +16,7 @@ import useProjectReservedTokens from 'hooks/v2/contractReader/ProjectReservedTok
 
 import { formatWad } from 'utils/formatNumber'
 
-import FormattedAddress from 'components/shared/FormattedAddress'
+import FormattedAddress from 'components/FormattedAddress'
 
 import * as constants from '@ethersproject/constants'
 import { Split } from 'models/v2/splits'

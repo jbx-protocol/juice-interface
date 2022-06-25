@@ -1,23 +1,21 @@
 import { HashRouter, Route, Switch, useLocation } from 'react-router-dom'
 import { Redirect, useParams } from 'react-router'
 import { Suspense, lazy, useEffect } from 'react'
-import V1Dashboard from 'components/v1/V1Dashboard'
-import Landing from 'components/Landing'
-import Projects from 'components/Projects'
-import Loading from 'components/shared/Loading'
+import V1Dashboard from 'pages/p'
+import Landing from 'pages'
+import Projects from 'pages/projects'
+import Loading from 'components/Loading'
 import { V1CurrencyProvider } from 'providers/v1/V1CurrencyProvider'
-import PrivacyPolicy from 'components/PrivacyPolicy'
-import V2BugUpdates from 'components/V2BugUpdates'
+import PrivacyPolicy from 'pages/privacy'
+import V2BugUpdates from 'pages/v2-bug-updates'
 import { fathom } from 'lib/fathom'
 
 import { V2UserProvider } from 'providers/v2/UserProvider'
 import { usePageTitle } from 'hooks/PageTitle'
 
-const V1Create = lazy(() => import('components/v1/V1Create'))
-const V2Create = lazy(() => import('components/v2/V2Create'))
-const V2DashboardGateway = lazy(
-  () => import('components/v2/V2Dashboard/Gateway'),
-)
+const V1Create = lazy(() => import('pages/v1/create'))
+const V2Create = lazy(() => import('pages/create'))
+const V2DashboardGateway = lazy(() => import('pages/v2/p/Gateway'))
 
 function CatchallRedirect() {
   const route = useParams<{ route: string }>()['route']

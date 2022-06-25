@@ -2,9 +2,9 @@ import { t, Trans } from '@lingui/macro'
 import { Modal, Space, Form } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 
-import CurrencySymbol from 'components/shared/CurrencySymbol'
-import InputAccessoryButton from 'components/shared/InputAccessoryButton'
-import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
+import CurrencySymbol from 'components/CurrencySymbol'
+import InputAccessoryButton from 'components/InputAccessoryButton'
+import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 
 import { NetworkContext } from 'contexts/networkContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'

@@ -1280,10 +1280,6 @@ msgstr "Échec de la mise à jour des métadonnées du projet"
 msgid "File must be less than {formattedSize}{unit}"
 msgstr "Le fichier doit être inférieur à {formattedSize}{unit}"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTUpload.tsx
-msgid "File upload required"
-msgstr ""
-
 #: src/components/Landing/index.tsx
 msgid "Fund anything. Grow together."
 msgstr "Financez quoi que ce soit. Grandissez ensemble."

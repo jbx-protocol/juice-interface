@@ -1275,10 +1275,6 @@ msgstr "Failed to update project metadata"
 msgid "File must be less than {formattedSize}{unit}"
 msgstr "File must be less than {formattedSize}{unit}"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTUpload.tsx
-msgid "File upload required"
-msgstr "File upload required"
-
 #: src/components/Landing/index.tsx
 msgid "Fund anything. Grow together."
 msgstr "Fund anything. Grow together."

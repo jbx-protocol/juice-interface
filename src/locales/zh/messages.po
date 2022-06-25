@@ -1280,10 +1280,6 @@ msgstr "更新项目元数据失败"
 msgid "File must be less than {formattedSize}{unit}"
 msgstr "文件大小必须小于 {formattedSize}{unit}"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTUpload.tsx
-msgid "File upload required"
-msgstr ""
-
 #: src/components/Landing/index.tsx
 msgid "Fund anything. Grow together."
 msgstr "运“筹”帷幄，共创未来。"

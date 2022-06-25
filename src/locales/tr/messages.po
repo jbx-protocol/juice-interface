@@ -1280,10 +1280,6 @@ msgstr "Proje meta verileri güncellenemedi"
 msgid "File must be less than {formattedSize}{unit}"
 msgstr "Dosya {formattedSize}{unit} değerinden küçük olmalıdır"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTUpload.tsx
-msgid "File upload required"
-msgstr ""
-
 #: src/components/Landing/index.tsx
 msgid "Fund anything. Grow together."
 msgstr "Herhangi bir şeye fon sağlayın. Birlikte büyüyün."

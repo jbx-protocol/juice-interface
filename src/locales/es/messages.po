@@ -316,6 +316,10 @@ msgstr "Añadir al saldo"
 msgid "Add to balance"
 msgstr "Añadir al saldo"
 
+#: src/components/v2/V2Project/V2BalancesModal/V2TokenRefs.tsx
+msgid "Add token"
+msgstr ""
+
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 #: src/components/v1/shared/ProjectTicketMods.tsx
@@ -992,8 +996,11 @@ msgstr ""
 msgid "Discount rate"
 msgstr "Tasa de descuento"
 
-#: src/components/v1/V1Project/modals/V1BalancesModal.tsx
 #: src/components/v2/V2Project/V2BalancesModal/V2BalancesModal.tsx
+msgid "Display ERC-20 and other Juicebox project tokens that this project owner holds."
+msgstr ""
+
+#: src/components/v1/V1Project/modals/V1BalancesModal.tsx
 msgid "Display ERC-20 tokens and other Juicebox project tokens that are in this project's owner's wallet."
 msgstr "Desplegar tokens ERC-20 y otros tokens de Juicebox que están en esta cartera del dueño del proyecto."
 
@@ -2924,6 +2931,10 @@ msgstr "Cambios sin guardar"
 #: src/components/shared/Project/ProjectHeader/index.tsx
 msgid "Untitled project"
 msgstr "Proyecto sin título"
+
+#: src/components/v2/V2Project/V2BalancesModal/V2TokenRefs.tsx
+msgid "Untrack token"
+msgstr ""
 
 #: src/components/v1/V1Project/FundingCycles/index.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/index.tsx

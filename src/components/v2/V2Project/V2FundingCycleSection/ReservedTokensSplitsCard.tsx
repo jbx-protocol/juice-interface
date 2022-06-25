@@ -1,28 +1,24 @@
+import { SettingOutlined } from '@ant-design/icons'
+import { BigNumber } from '@ethersproject/bignumber'
+import * as constants from '@ethersproject/constants'
 import { Trans } from '@lingui/macro'
 import { Button, Skeleton, Space } from 'antd'
 import { CardSection } from 'components/shared/CardSection'
+import FormattedAddress from 'components/shared/FormattedAddress'
 import TooltipLabel from 'components/shared/TooltipLabel'
 import SplitList from 'components/v2/shared/SplitList'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { CSSProperties, useContext, useState } from 'react'
-
 import { ThemeContext } from 'contexts/themeContext'
-
-import { formatReservedRate } from 'utils/v2/math'
-
-import { tokenSymbolText } from 'utils/tokenSymbolText'
-
+import { V2ProjectContext } from 'contexts/v2/projectContext'
+import {
+  useHasPermission,
+  V2OperatorPermission,
+} from 'hooks/v2/contractReader/HasPermission'
 import useProjectReservedTokens from 'hooks/v2/contractReader/ProjectReservedTokens'
-
-import { formatWad } from 'utils/formatNumber'
-
-import FormattedAddress from 'components/shared/FormattedAddress'
-
-import * as constants from '@ethersproject/constants'
 import { Split } from 'models/v2/splits'
-import { BigNumber } from '@ethersproject/bignumber'
-
-import { SettingOutlined } from '@ant-design/icons'
+import { CSSProperties, useContext, useState } from 'react'
+import { formatWad } from 'utils/formatNumber'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
+import { formatReservedRate } from 'utils/v2/math'
 
 import DistributeReservedTokensModal from './modals/DistributeReservedTokensModal'
 import { EditTokenAllocationModal } from './modals/EditTokenAllocationModal'
@@ -58,6 +54,7 @@ export default function ReservedTokensSplitsCard({
       projectId,
       reservedRate: reservedRate,
     })
+  const canEditTokens = useHasPermission(V2OperatorPermission.SET_SPLITS)
 
   const smallHeaderStyle: CSSProperties = {
     fontSize: '.7rem',
@@ -166,7 +163,7 @@ export default function ReservedTokensSplitsCard({
                 </Trans>
               }
             />
-            {reservedRate?.gt(0) ? (
+            {canEditTokens && reservedRate?.gt(0) ? (
               <Button
                 size="small"
                 onClick={() => setEditTokenAllocationModalVisible(true)}

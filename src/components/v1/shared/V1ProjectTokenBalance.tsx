@@ -1,5 +1,5 @@
 import { ThemeContext } from 'contexts/themeContext'
-import useSymbolOfERC20 from 'hooks/v1/contractReader/SymbolOfERC20'
+import useSymbolOfERC20 from 'hooks/SymbolOfERC20'
 import useTerminalOfProject from 'hooks/v1/contractReader/TerminalOfProject'
 import useTokenAddressOfProject from 'hooks/v1/contractReader/TokenAddressOfProject'
 import useTotalBalanceOf from 'hooks/v1/contractReader/TotalBalanceOf'
@@ -10,7 +10,7 @@ import { getTerminalName } from 'utils/v1/terminals'
 
 import V1ProjectHandle from '../shared/V1ProjectHandle'
 
-export default function ProjectTokenBalance({
+export default function V1ProjectTokenBalance({
   projectId,
   wallet,
   style,

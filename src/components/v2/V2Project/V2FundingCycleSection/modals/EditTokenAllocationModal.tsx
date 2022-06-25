@@ -94,7 +94,7 @@ export const EditTokenAllocationModal = ({
             setEditingReservedTokensSplits(mods.map(toSplit))
           }
           formItemProps={{
-            label: <Trans>Reserved token allocation (optional)</Trans>,
+            label: <Trans>Reserved token allocation</Trans>,
             extra: (
               <Trans>
                 Allocate a portion of your project's reserved tokens to other

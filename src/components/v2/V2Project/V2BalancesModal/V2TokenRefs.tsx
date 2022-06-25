@@ -1,11 +1,16 @@
-import { CaretDownFilled, CloseCircleOutlined } from '@ant-design/icons'
-import { Button, Col, Form, Input, Row } from 'antd'
+import {
+  CaretDownFilled,
+  CloseCircleOutlined,
+  PlusOutlined,
+} from '@ant-design/icons'
 import * as constants from '@ethersproject/constants'
-import { PlusOutlined } from '@ant-design/icons'
+import { Button, Col, Form, Input, Row } from 'antd'
 
 import { FormInstance } from 'antd/lib/form/Form'
 
 import { useState } from 'react'
+
+import { Trans } from '@lingui/macro'
 
 import { EditTrackedAssetsForm } from './V2BalancesModal'
 
@@ -138,7 +143,7 @@ export default function V2TokenRefs({
                 block
                 icon={<PlusOutlined />}
               >
-                Add token
+                <Trans>Add token</Trans>
               </Button>
             </Form.Item>
           </>

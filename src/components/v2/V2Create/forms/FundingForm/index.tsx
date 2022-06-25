@@ -353,7 +353,7 @@ export default function FundingForm({
             <Trans>
               With no funding cycles, the project's owner can start a new
               funding cycle (Funding Cycle #2) on-demand.{' '}
-              <ExternalLink href={'https://info.juicebox.money/learn/risks'}>
+              <ExternalLink href={'https://info.juicebox.money/dev/learn/risk://info.juicebox.money/dev/learn/risks'}>
                 Learn more.
               </ExternalLink>
             </Trans>

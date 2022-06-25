@@ -171,7 +171,7 @@ export default function ReservedTokensSplitsCard({
                 icon={<SettingOutlined />}
               >
                 <span>
-                  <Trans>Edit token allocation</Trans>
+                  <Trans>Edit allocation</Trans>
                 </span>
               </Button>
             ) : null}

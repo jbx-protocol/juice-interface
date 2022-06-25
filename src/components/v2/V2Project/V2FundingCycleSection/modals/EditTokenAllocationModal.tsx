@@ -1,16 +1,13 @@
 import { t, Trans } from '@lingui/macro'
 import { Form, Modal } from 'antd'
+import { FormItems } from 'components/shared/formItems'
+import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { useSetProjectSplits } from 'hooks/v2/transactor/SetProjectSplits'
 import { Split } from 'models/v2/splits'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { FormItems } from 'components/shared/formItems'
-
-import { toMod, toSplit } from 'utils/v2/splits'
-
-import { V2ProjectContext } from 'contexts/v2/projectContext'
-
-import { useSetProjectSplits } from 'hooks/v2/transactor/SetProjectSplits'
-
+import { emitErrorNotification } from 'utils/notifications'
 import { preciseFormatSplitPercent } from 'utils/v2/math'
+import { toMod, toSplit } from 'utils/v2/splits'
 
 import { RESERVED_TOKEN_SPLIT_GROUP } from 'constants/v2/splits'
 
@@ -68,6 +65,7 @@ export const EditTokenAllocationModal = ({
       },
     )
     if (!tx) {
+      emitErrorNotification('Token allocation edit failed')
       setModalLoading(false)
     }
   }, [

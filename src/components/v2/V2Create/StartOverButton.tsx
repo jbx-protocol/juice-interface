@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 
-export default function StartOverButton() {
+export function StartOverButton() {
   const [startOverModalVisible, setStartOverModalVisible] =
     useState<boolean>(false)
 
@@ -32,14 +32,13 @@ export default function StartOverButton() {
       <Modal
         visible={startOverModalVisible}
         okText={t`Start Over`}
-        okType="danger"
         title={t`Are you sure you want to start over?`}
         onOk={resetV2CreateFlow}
         onCancel={() => setStartOverModalVisible(false)}
       >
         <Trans>
-          This will erase all of your changes to every section of the project
-          create flow.
+          This will reset the data for your new project. All changes will be
+          lost.
         </Trans>
       </Modal>
     </>

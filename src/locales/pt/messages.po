@@ -430,6 +430,10 @@ msgstr "A quantidade de tokens do projeto, recentemente emitidos, <0>reservados 
 msgid "Amount paid"
 msgstr "Montante pago"
 
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+msgid "Amount required"
+msgstr ""
+
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Amount to distribute"
 msgstr "Quantidade para distribuir"

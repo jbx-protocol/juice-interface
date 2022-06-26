@@ -26,7 +26,8 @@ export default function PrintPreminedModal({
   const { tokenSymbol, tokenAddress, terminal } = useContext(V1ProjectContext)
   const printTokensTx = usePrintTokensTx()
   const [form] = useForm<{
-    beneficary: string
+    beneficiary: string
+    amount: string
     preferUnstaked: boolean
     memo: string
   }>()
@@ -35,7 +36,7 @@ export default function PrintPreminedModal({
   const [loading, setLoading] = useState<boolean>()
 
   async function mint() {
-    const beneficiary = form.getFieldValue('beneficary')
+    const beneficiary = form.getFieldValue('beneficiary')
     if (!isAddress(beneficiary)) return
 
     setLoading(true)
@@ -67,21 +68,33 @@ export default function PrintPreminedModal({
     useMemo(() => {
       if (!terminal?.version) return
 
+      const amountValidator = () => {
+        console.info('amountValidator: ', value)
+        if (!value || value === '0') {
+          return Promise.reject(t`Amount required`)
+        }
+        return Promise.resolve()
+      }
+
       switch (terminal.version) {
         case '1':
           return {
             label: t`Payment equivalent`,
+            name: 'amount',
             extra: t`The amount of tokens minted to the receiver will be calculated based on if they had paid this amount to the project in the current funding cycle.`,
             required: true,
+            rules: [{ validator: amountValidator }],
           }
         case '1.1':
           return {
             label: t`Token amount`,
+            name: 'amount',
             extra: t`The amount of tokens to mint to the receiver.`,
             required: true,
+            rules: [{ validator: amountValidator }],
           }
       }
-    }, [terminal?.version])
+    }, [terminal?.version, value])
 
   const erc20Issued =
     tokenSymbol && tokenAddress && tokenAddress !== constants.AddressZero
@@ -106,7 +119,7 @@ export default function PrintPreminedModal({
       <Form layout="vertical" form={form} onFinish={mint}>
         <Form.Item
           label={<Trans>Tokens receiver</Trans>}
-          name="beneficary"
+          name="beneficiary"
           rules={[
             {
               required: true,

@@ -430,6 +430,10 @@ msgstr "1 ETH katkı karşılığında <0>proje için rezerve edilmiş</0> yeni 
 msgid "Amount paid"
 msgstr "Ödenen miktar"
 
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+msgid "Amount required"
+msgstr ""
+
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Amount to distribute"
 msgstr "Dağıtılacak miktar"

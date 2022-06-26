@@ -425,6 +425,10 @@ msgstr "Amount of newly minted project tokens <0>reserved for the project</0> wh
 msgid "Amount paid"
 msgstr ""
 
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+msgid "Amount required"
+msgstr "Amount required"
+
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Amount to distribute"
 msgstr "Amount to distribute"

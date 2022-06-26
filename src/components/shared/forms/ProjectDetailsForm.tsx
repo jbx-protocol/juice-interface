@@ -5,7 +5,7 @@ import { FormItems } from 'components/shared/formItems'
 import { normalizeHandle } from 'utils/formatHandle'
 import { cidFromUrl, unpinIpfsFileByCid } from 'utils/ipfs'
 import { CSSProperties } from 'react'
-import TabDescription from 'components/v2/V2Create/TabDescription'
+import Callout from 'components/shared/Callout'
 
 export type ProjectDetailsFormFields = {
   name: string
@@ -111,12 +111,12 @@ export default function ProjectDetailsForm({
             )}
           </Form.Item>
 
-          <TabDescription>
+          <Callout>
             <Trans>
               You can edit your project details after creation at any time, but
               the transaction will cost gas.
             </Trans>
-          </TabDescription>
+          </Callout>
         </div>
       </Space>
     </Form>

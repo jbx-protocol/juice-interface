@@ -1,6 +1,6 @@
 import useERC20BalanceOf from 'hooks/v1/contractReader/ERC20BalanceOf'
 import useERC20DecimalsOf from 'hooks/v1/contractReader/ERC20DecimalsOf'
-import useSymbolOfERC20 from 'hooks/v1/contractReader/SymbolOfERC20'
+import useSymbolOfERC20 from 'hooks/SymbolOfERC20'
 import { CSSProperties } from 'react'
 import { formatWad } from 'utils/formatNumber'
 

@@ -1,4 +1,5 @@
 export const V2_PROJECT_IDS = {
+  JUICEBOX_DAO: 1,
   MOON_MARS: 4,
   SUSTAIN_DAO_A: 16,
   SUSTAIN_DAO_B: 17,

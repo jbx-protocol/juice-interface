@@ -264,10 +264,6 @@ textarea.ant-input::placeholder {
   min-height: 4px; // get error messages appearing closer to the input fields
 }
 
-// added this rule for when an the 'extra' prop is passed to FormItem (error message needs more space in this case)
-.ant-form-item-control-input-extra-and-error .ant-form-item-control-input {
-  min-height: 23px;
-}
 .ant-input-group-addon {
   background: transparent;
 }

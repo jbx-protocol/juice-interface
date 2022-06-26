@@ -84,9 +84,7 @@ export default function BudgetForm({
           configuration will depend on the kind of project you're starting.
         </Trans>{' '}
         <Trans>
-          <ExternalLink
-            href={helpPagePath('protocol/learn/topics/funding-cycle')}
-          >
+          <ExternalLink href={helpPagePath('dev/learn/glossary/funding-cycle')}>
             Learn more
           </ExternalLink>{' '}
           about funding cycles.
@@ -113,9 +111,7 @@ export default function BudgetForm({
               holders.
             </Trans>{' '}
             <Trans>
-              <ExternalLink
-                href={helpPagePath('protocol/learn/topics/overflow')}
-              >
+              <ExternalLink href={helpPagePath('dev/learn/glossary/overflow')}>
                 Learn more
               </ExternalLink>{' '}
               about overflow.
@@ -188,9 +184,7 @@ export default function BudgetForm({
             <Trans>
               <span style={{ fontWeight: 600 }}>Target is 0.</span> The
               project's entire balance will be considered overflow.{' '}
-              <ExternalLink
-                href={helpPagePath('protocol/learn/topics/overflow')}
-              >
+              <ExternalLink href={helpPagePath('dev/learn/glossary/overflow')}>
                 Learn more
               </ExternalLink>{' '}
               about overflow.
@@ -213,7 +207,7 @@ export default function BudgetForm({
             <Trans>Set the length of your funding cycles.</Trans>{' '}
             <Trans>
               <ExternalLink
-                href={helpPagePath('protocol/learn/topics/funding-cycle')}
+                href={helpPagePath('dev/learn/glossary/funding-cycle')}
               >
                 Learn more
               </ExternalLink>{' '}

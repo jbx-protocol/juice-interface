@@ -435,6 +435,10 @@ msgstr "Cantidad de tokens de proyecto recién acuñados <0>reservados para el p
 msgid "Amount paid"
 msgstr "Monto pagado"
 
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+msgid "Amount required"
+msgstr ""
+
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Amount to distribute"
 msgstr "Monto a distribuir"
@@ -1161,6 +1165,7 @@ msgstr "Duración (segundos)"
 msgid "ERC-20 community tokens"
 msgstr "Tokens ERC-20 de la comunidad"
 
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "ERC-20 tokens can only be minted once an ERC-20 token has been issued for this project."
 msgstr "Los tokens ERC-20 solo se pueden acuñar una vez que se ha emitido un token ERC-20 para este proyecto."
@@ -1219,6 +1224,10 @@ msgstr "Activado"
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "Enabling this allows the project owner to manually mint any amount of tokens to any address."
 msgstr "Activar esto permite al dueño del proyecto acuñar manualmente cualquier cantidad de tokens a cualquier dirección."
+
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+msgid "Enabling this will mint {tokenSymbol} ERC-20 tokens. Otherwise unclaimed {tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver."
+msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "Enabling this will mint {tokenSymbol} ERC-20 tokens. Otherwise, unclaimed {tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver."
@@ -1634,14 +1643,23 @@ msgstr "Administrar {tokenText}"
 msgid "Maximum {MAX_DESCRIPTION_LENGTH} characters"
 msgstr "Máximo {MAX_DESCRIPTION_LENGTH} caracteres"
 
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+msgid "Memo"
+msgstr ""
+
 #: src/components/shared/inputs/Pay/MemoFormItem.tsx
 msgid "Memo (optional)"
 msgstr "Memo (opcional)"
+
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+msgid "Memo included on-chain"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "Migrate to Juicebox V1.1"
 msgstr "Migrar a Juicebox V1.1"
 
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "Mint as ERC-20"
 msgstr "Acuñar como ERC-20"
@@ -1659,6 +1677,11 @@ msgstr "Crea tokens del proyecto a demanda"
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Mint rate"
 msgstr "Tasa de acuñación"
+
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+msgid "Mint tokens"
+msgstr ""
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "Mint tokens as ERC-20"
@@ -1767,6 +1790,10 @@ msgstr "Sin meta-objetivo de financiamiento"
 #: src/components/v1/shared/forms/BudgetForm.tsx
 msgid "No target set."
 msgstr "Sin meta-objetivo establecida."
+
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+msgid "Not a valid ETH address"
+msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
@@ -1910,6 +1937,10 @@ msgstr "Actúalmente, los pagos a este proyecto se encuentran desactivados dado 
 #: src/components/v1/V1Project/V1PayButton.tsx
 msgid "Paying this project is currently disabled."
 msgstr "Actúalmente, los pagos a este proyecto se encuentran desactivados."
+
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+msgid "Payment equivalent"
+msgstr ""
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "Payment made through payable address"
@@ -2569,10 +2600,15 @@ msgstr "La dirección de cualquier contrato inteligente desplegado en {0} que im
 msgid "The address that should receive the tokens minted from paying this project."
 msgstr "La dirección que debería recibir los tokens acuñados por pagar este proyecto."
 
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+msgid "The amount of tokens minted to the receiver will be calculated based on if they had paid this amount to the project in the current funding cycle."
+msgstr ""
+
 #: src/components/v2/V2Project/V2FundingCycleSection/ReservedTokensSplitsCard.tsx
 msgid "The amount of tokens this project has reserved. These tokens can be distributed to reserved token beneficiaries."
 msgstr "La cantidad de tokens que este proyecto tiene reservados. Estos tokens pueden ser distribuidos a los beneficiarios de tokens reservados."
 
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "The amount of tokens to mint to the receiver."
 msgstr "La cantidad de tokens a acuñar al receptor."
@@ -2756,6 +2792,10 @@ msgstr "Token"
 msgid "Token address: <0/>"
 msgstr "Dirección del token: <0/>"
 
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+msgid "Token amount"
+msgstr ""
+
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Token beneficiary address"
 msgstr "Dirección de beneficiario de token"
@@ -2824,6 +2864,10 @@ msgstr "Los tokens <0>reservados para el proyecto</0> cuando se contribuye 1 ETH
 msgid "Tokens are earned by anyone who pays your project, and can be redeemed for overflow if your project has set a funding target."
 msgstr "Los tokens son obtenidos por alguien que paga tu proyecto, y pueden ser canjeados por excedente si tu proyecto tiene un objetivo de financiamiento establecido."
 
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+msgid "Tokens can be minted manually when allowed in the current funding cycle. The project owner can enable or disable minting for upcoming cycles."
+msgstr ""
+
 #: src/components/Landing/QAs.tsx
 msgid "Tokens can be redeemed for a portion of a project's <0>overflow</0>, letting you benefit from its success. After all, you helped it get there. The token may also give you exclusive member-only privledges, and allow you to contribute to the governance of the community."
 msgstr "Los tokens pueden canjearse por una porción del <0>excedente</0> de un proyecto, permitiéndote beneficiarte de su éxito. Después de todo, tú le ayudaste a llegar ahí. El token podría también darte privilegios únicos exclusivos para miembros, y permitirte contribuir a la gobernanza de la comunidad."
@@ -2844,6 +2888,7 @@ msgstr "Los tokens no pueden ser reclamados porque no se ha emitido un token ERC
 msgid "Tokens minted from payments to this address will belong to the payer by default. However, if someone pays the project through a custodial service platform such as Coinbase, <0>tokens can't be issued to their personal wallets and will be lost</0>."
 msgstr "Los tokens acuñados de pagos a esta dirección pertenecerán al pagador por defecto. Sin embargo, si alguien paga el proyecto a través de una plataforma de servicio de custodia como Coinbase, <0>los tokens no pueden ser emitidos a sus billeteras personales y se perderán</0>."
 
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "Tokens receiver"
 msgstr "Beneficiario de los token"

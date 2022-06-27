@@ -1,5 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { Form, Modal } from 'antd'
+import Callout from 'components/shared/Callout'
 import { FormItems } from 'components/shared/formItems'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useSetProjectSplits } from 'hooks/v2/transactor/SetProjectSplits'
@@ -87,6 +88,12 @@ export const EditTokenAllocationModal = ({
       onCancel={onCancel}
       okButtonProps={{ disabled: totalPercentagesInvalid }}
     >
+      <Callout style={{ marginBottom: '1rem' }}>
+        <Trans>
+          Changes to your reserved token allocation will take effect
+          immediately.
+        </Trans>
+      </Callout>
       <Form layout="vertical">
         <FormItems.ProjectTicketMods
           mods={editingReservedTokensSplits.map(toMod)}

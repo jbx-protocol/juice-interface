@@ -628,6 +628,10 @@ msgstr "Se pueden hacer cambios a estos atributos en cualquier momento y serán 
 msgid "Changes to your project's funding configuration require a community-approved period to take effect, which acts as a safeguard against rug pulls. Your supporters don't have to trust you — even though they already do."
 msgstr "Los cambios a las configuraciones de financiamiento de tu proyecto requieren un periodo aprobado por la comunidad para surtir efecto, lo cual actúa como salvaguardia contra rug pulls. Tus partidarios no necesitan confiar en ti — aunque ya lo hacen."
 
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditTokenAllocationModal.tsx
+msgid "Changes to your reserved token allocation will take effect immediately."
+msgstr ""
+
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "Changes will take effect according to the project's custom ballot contract."
 msgstr "Los cambios surtirán efecto de acuerdo al contrato personalizado de votación del proyecto."

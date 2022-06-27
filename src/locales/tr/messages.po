@@ -8,7 +8,7 @@ msgstr ""
 "Language: tr\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-06-23 03:01\n"
+"PO-Revision-Date: 2022-06-26 03:05\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -434,6 +434,10 @@ msgstr "1 ETH katkı karşılığında <0>proje için rezerve edilmiş</0> yeni 
 #: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Amount paid"
 msgstr "Ödenen miktar"
+
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+msgid "Amount required"
+msgstr ""
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Amount to distribute"
@@ -1161,6 +1165,7 @@ msgstr "Süre (saniye)"
 msgid "ERC-20 community tokens"
 msgstr "ERC-20 topluluk token'ları"
 
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "ERC-20 tokens can only be minted once an ERC-20 token has been issued for this project."
 msgstr "ERC-20 token'ları, yalnızca bu proje için bir ERC-20 token'ı çıkarıldığında basılabilir."
@@ -1219,6 +1224,10 @@ msgstr "Etkin"
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "Enabling this allows the project owner to manually mint any amount of tokens to any address."
 msgstr "Bunun etkinleştirilmesi, proje sahibine, herhangi bir miktarda token'ı herhangi bir adrese manuel olarak basma izni verir."
+
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+msgid "Enabling this will mint {tokenSymbol} ERC-20 tokens. Otherwise unclaimed {tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver."
+msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "Enabling this will mint {tokenSymbol} ERC-20 tokens. Otherwise, unclaimed {tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver."
@@ -1634,14 +1643,23 @@ msgstr "{tokenText} token'ını yönet"
 msgid "Maximum {MAX_DESCRIPTION_LENGTH} characters"
 msgstr "Maksimum {MAX_DESCRIPTION_LENGTH} karakter"
 
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+msgid "Memo"
+msgstr ""
+
 #: src/components/shared/inputs/Pay/MemoFormItem.tsx
 msgid "Memo (optional)"
+msgstr ""
+
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+msgid "Memo included on-chain"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "Migrate to Juicebox V1.1"
 msgstr "Juicebox V1.1'e geçiş yapın"
 
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "Mint as ERC-20"
 msgstr "ERC-20 olarak bas"
@@ -1659,6 +1677,11 @@ msgstr "Talep üzerine proje token'larının basılması"
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Mint rate"
 msgstr "Basım oranı"
+
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+msgid "Mint tokens"
+msgstr ""
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "Mint tokens as ERC-20"
@@ -1767,6 +1790,10 @@ msgstr "Hedef yok"
 #: src/components/v1/shared/forms/BudgetForm.tsx
 msgid "No target set."
 msgstr "Hedef belirlenmedi."
+
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+msgid "Not a valid ETH address"
+msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
@@ -1910,6 +1937,10 @@ msgstr "Bu projeye ödeme şu anda devredışı çünkü rezerve token oranı %1
 #: src/components/v1/V1Project/V1PayButton.tsx
 msgid "Paying this project is currently disabled."
 msgstr "Bu projeye ödeme şu anda devredışı."
+
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+msgid "Payment equivalent"
+msgstr ""
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "Payment made through payable address"
@@ -2569,10 +2600,15 @@ msgstr "{0} üzerinde devreye alınan ve <0>bu arayüzü</0> kullanan herhangi b
 msgid "The address that should receive the tokens minted from paying this project."
 msgstr "Bu projeye ödeme yaparak basılan token'ları alması gereken adres."
 
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+msgid "The amount of tokens minted to the receiver will be calculated based on if they had paid this amount to the project in the current funding cycle."
+msgstr ""
+
 #: src/components/v2/V2Project/V2FundingCycleSection/ReservedTokensSplitsCard.tsx
 msgid "The amount of tokens this project has reserved. These tokens can be distributed to reserved token beneficiaries."
 msgstr "Bu projenin sahip olduğu rezerve token miktarı. Bu token'lar, rezerve token faydalanıcılarına dağıtılabilir."
 
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "The amount of tokens to mint to the receiver."
 msgstr "Alıcıya basılacak token miktarı."
@@ -2756,6 +2792,10 @@ msgstr "Token"
 msgid "Token address: <0/>"
 msgstr "Token adresi: <0/>"
 
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+msgid "Token amount"
+msgstr ""
+
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Token beneficiary address"
 msgstr "Token faydalanıcısı adresi"
@@ -2824,6 +2864,10 @@ msgstr "1 ETH katkıda bulunulduğunda <0>proje için rezerve edilen</0> token m
 msgid "Tokens are earned by anyone who pays your project, and can be redeemed for overflow if your project has set a funding target."
 msgstr "Token'lar, projenize ödeme yapan herkes tarafından kazanılır ve projenizde bir finansman hedefi belirlendiyse taşma için kullanılabilir."
 
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+msgid "Tokens can be minted manually when allowed in the current funding cycle. The project owner can enable or disable minting for upcoming cycles."
+msgstr ""
+
 #: src/components/Landing/QAs.tsx
 msgid "Tokens can be redeemed for a portion of a project's <0>overflow</0>, letting you benefit from its success. After all, you helped it get there. The token may also give you exclusive member-only privledges, and allow you to contribute to the governance of the community."
 msgstr "Token'lar, bir projenin <0>taşmasının</0> bir kısmı için kullanılarak projenin başarısından yararlanmanıza izin verir. Sonuçta, oraya ulaşmasına yardım eden sizsiniz. Token'lar, size yalnızca üyelere özel ayrıcalıklar tanıyarak topluluk yönetişimine katkıda bulunmanıza olanak da tanıyabilir."
@@ -2844,6 +2888,7 @@ msgstr "Bu proje için herhangi bir ERC-20 token'ı çıkarılmamış olduğunda
 msgid "Tokens minted from payments to this address will belong to the payer by default. However, if someone pays the project through a custodial service platform such as Coinbase, <0>tokens can't be issued to their personal wallets and will be lost</0>."
 msgstr "Bu adrese yapılan ödemelerden basılan token'lar varsayılan olarak ödeyene ait olacaktır. Ancak, birisi projeye Coinbase gibi bir emanet hizmeti platformu aracılığıyla ödeme yaparsa <0>token'lar kişisel cüzdanlarına çıkarılamaz ve kaybedilir</0>."
 
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "Tokens receiver"
 msgstr "Token alıcısı"

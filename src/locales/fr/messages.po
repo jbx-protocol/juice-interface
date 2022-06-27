@@ -8,7 +8,7 @@ msgstr ""
 "Language: fr\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-06-23 03:00\n"
+"PO-Revision-Date: 2022-06-26 03:05\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -199,7 +199,7 @@ msgstr "<0>C'est cela le plan, mais les principaux contrats Juicebox seront d'ab
 
 #: src/components/Landing/QAs.tsx
 msgid "<0>There are unit tests written for every condition of every function in the contracts, and integration tests for every workflow that the protocol supports.</0><1>There was also a script written to iteratively run the integration tests using a random input generator, prioritizing edge cases. The code has successfully passed over 1 million test cases through this stress-testing script.</1> <2>The code could always use more eyes and more critique to further the community's confidence. Join our <3>Discord</3> and check out the code on <4>GitHub</4> to work with us.</2>"
-msgstr ""
+msgstr "<0>Il y a des tests unitaires écrits pour chaque condition de chaque fonction dans les contrats, ainsi que des tests d'intégration pour chaque flux de travail pris en charge par le protocole.</0><1>Il y avait également un script écrit pour exécuter de manière itérative les tests d'intégration à l'aide d'un générateur d'entrées aléatoires, en accordant la priorité aux cas extrêmes. Le code a atteint avec succès plus d'un million de cas de test grâce à ce script de simulation de crise.</1> <2>Le code pourrait toujours utiliser plus d'agents pour surveiller et plus de critiques pour renforcer la confiance de la communauté. Rejoignez notre <3>Discord</3> et consultez le code sur <4>GitHub</4> pour travailler avec nous.</2>"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "<0>This project has no overflow</0>, so you will not receive any ETH for burning tokens."
@@ -220,7 +220,7 @@ msgstr "<0>Projets tendance</0><1><2/></1>"
 
 #: src/components/Landing/QAs.tsx
 msgid "<0>Users fund your project by paying to use your app or service, or as a patron or investor by making a payment directly to your project's smart contract (like on this app).</0><1>For users paying through your app, you should route those funds through the Juicebox smart contracts so they receive tokens in return.</1>"
-msgstr ""
+msgstr "<0>Les utilisateurs financent votre projet en payant pour utiliser votre application ou votre service, ou en tant que mécène ou investisseur en effectuant un paiement directement sur le contrat intelligent de votre projet (comme sur cette application).</0><1>Pour les utilisateurs payant via votre application, vous devez acheminer ces fonds a travers les contrats intelligents Juicebox afin qu'ils reçoivent des tokens en retour.</1>"
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
 msgid "<0>Your unclaimed {tokenSymbol} tokens:</0> {0}"
@@ -427,13 +427,17 @@ msgstr ""
 
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Amount of newly minted project tokens <0>reserved for the project</0> when 1 ETH is contributed. The project owner is allocated all reserved tokens by default, but they can also be allocated to other wallet addresses."
-msgstr ""
+msgstr "Montant de tokens récemment frappés <0>réservés pour le projet</0> lorsque 1 ETH est contribué. Le propriétaire se voit attribué l'ensemble de tokens réservés par défaut, mais ils peuvent également être attribués à d'autres adresses de portefeuille."
 
 #: src/components/shared/modals/ParticipantsModal.tsx
 #: src/components/v1/V1Project/V1DownloadPaymentsModal.tsx
 #: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Amount paid"
 msgstr "Somme payée"
+
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+msgid "Amount required"
+msgstr ""
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Amount to distribute"
@@ -801,7 +805,7 @@ msgstr "Créer une adresse de paiement (facultatif)"
 
 #: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Create an Ethereum address for your project. Enables direct payments without going through your project's Juicebox page."
-msgstr ""
+msgstr "Créez une adresse Ethereum pour votre projet. Il permet d'effectuer des paiements directs sans passer par la page de votre projet Juicebox."
 
 #: src/components/shared/Project/ProjectToolsDrawer/PayableAddressSection.tsx
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
@@ -1161,6 +1165,7 @@ msgstr "Durée (secondes)"
 msgid "ERC-20 community tokens"
 msgstr "Tokens ERC20 de la communauté"
 
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "ERC-20 tokens can only be minted once an ERC-20 token has been issued for this project."
 msgstr "Les tokens ERC-20 ne peuvent être frappés que lorsqu'un token ERC-20 a été émis pour ce projet."
@@ -1219,6 +1224,10 @@ msgstr "Activés"
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "Enabling this allows the project owner to manually mint any amount of tokens to any address."
 msgstr "L'activation de cette option permet au propriétaire du projet de frapper manuellement n'importe quelle quantité de tokens pour n'importe quelle adresse."
+
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+msgid "Enabling this will mint {tokenSymbol} ERC-20 tokens. Otherwise unclaimed {tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver."
+msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "Enabling this will mint {tokenSymbol} ERC-20 tokens. Otherwise, unclaimed {tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver."
@@ -1634,14 +1643,23 @@ msgstr "Gérer {tokenText}"
 msgid "Maximum {MAX_DESCRIPTION_LENGTH} characters"
 msgstr "{MAX_DESCRIPTION_LENGTH} caractères au maximum"
 
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+msgid "Memo"
+msgstr ""
+
 #: src/components/shared/inputs/Pay/MemoFormItem.tsx
 msgid "Memo (optional)"
 msgstr "Mémo (facultatif)"
+
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+msgid "Memo included on-chain"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "Migrate to Juicebox V1.1"
 msgstr "Migrer vers Juicebox V1.1"
 
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "Mint as ERC-20"
 msgstr "Frapper en tant que ERC-20"
@@ -1659,6 +1677,11 @@ msgstr "Frapper des tokens de projet sur demande"
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Mint rate"
 msgstr "Taux de frappe"
+
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+msgid "Mint tokens"
+msgstr ""
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "Mint tokens as ERC-20"
@@ -1767,6 +1790,10 @@ msgstr "Aucun objectif"
 #: src/components/v1/shared/forms/BudgetForm.tsx
 msgid "No target set."
 msgstr "Aucun objectif défini."
+
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+msgid "Not a valid ETH address"
+msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
@@ -1910,6 +1937,10 @@ msgstr "Le paiement de ce projet est actuellement désactivé, car le taux de to
 #: src/components/v1/V1Project/V1PayButton.tsx
 msgid "Paying this project is currently disabled."
 msgstr "Le paiement de ce projet est actuellement désactivé."
+
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+msgid "Payment equivalent"
+msgstr ""
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "Payment made through payable address"
@@ -2569,10 +2600,15 @@ msgstr "L'adresse de tout contrat intelligent déployé sur {0} qui implémente 
 msgid "The address that should receive the tokens minted from paying this project."
 msgstr "L'adresse qui doit recevoir les tokens émis pour le paiement de ce projet."
 
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+msgid "The amount of tokens minted to the receiver will be calculated based on if they had paid this amount to the project in the current funding cycle."
+msgstr ""
+
 #: src/components/v2/V2Project/V2FundingCycleSection/ReservedTokensSplitsCard.tsx
 msgid "The amount of tokens this project has reserved. These tokens can be distributed to reserved token beneficiaries."
 msgstr "Le montant de tokens réservés pour ce projet. Ces tokens peuvent être distribués aux bénéficiaires des tokens réservés."
 
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "The amount of tokens to mint to the receiver."
 msgstr "Le montant de tokens à frapper pour le bénéficiaire."
@@ -2756,6 +2792,10 @@ msgstr "Token"
 msgid "Token address: <0/>"
 msgstr "Adresse du token : <0/>"
 
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+msgid "Token amount"
+msgstr ""
+
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Token beneficiary address"
 msgstr "Adresse du bénéficiaire de token"
@@ -2824,6 +2864,10 @@ msgstr "Tokens <0>réservés pour le projet</0> quand 1 ETH est contribué."
 msgid "Tokens are earned by anyone who pays your project, and can be redeemed for overflow if your project has set a funding target."
 msgstr "Les tokens sont gagnés par toute personne qui paie votre projet et peuvent être récupérés de l'overflow si votre projet a défini un objectif de financement."
 
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+msgid "Tokens can be minted manually when allowed in the current funding cycle. The project owner can enable or disable minting for upcoming cycles."
+msgstr ""
+
 #: src/components/Landing/QAs.tsx
 msgid "Tokens can be redeemed for a portion of a project's <0>overflow</0>, letting you benefit from its success. After all, you helped it get there. The token may also give you exclusive member-only privledges, and allow you to contribute to the governance of the community."
 msgstr "Les tokens peuvent être récupérés d'une partie de l' <0>overflow</0> d'un projet, vous permettant ainsi de bénéficier de son succès. Après tout, vous l'avez aidé à y arriver. Le token peut également vous donner des privilèges exclusifs réservés aux membres et vous permettre de contribuer à la gouvernance de la communauté."
@@ -2844,6 +2888,7 @@ msgstr "Les tokens ne peuvent pas être réclamés, car aucun token ERC-20 a ét
 msgid "Tokens minted from payments to this address will belong to the payer by default. However, if someone pays the project through a custodial service platform such as Coinbase, <0>tokens can't be issued to their personal wallets and will be lost</0>."
 msgstr "Les tokens frappés à partir des paiements à cette adresse appartiendront au payeur par défaut. Cependant, si quelqu'un paie le projet à partir d'une plateforme de service custodial, comme Coinbase, <0>les tokens ne peuvent pas être émis vers leurs portefeuilles personnels et seront perdus</0>."
 
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "Tokens receiver"
 msgstr "Bénéficiaire de tokens"

@@ -60,9 +60,9 @@ import { DEFAULT_BONDING_CURVE_RATE_PERCENTAGE } from 'components/shared/formIte
 import { DISCOUNT_RATE_EXPLANATION } from 'components/v2/V2Project/V2FundingCycleSection/settingExplanations'
 import { getTotalSplitsPercentage } from 'utils/v2/distributions'
 import { useForm } from 'antd/lib/form/Form'
+import Callout from 'components/shared/Callout'
 
 import { shadowCard } from 'constants/styles/shadowCard'
-import TabDescription from '../../TabDescription'
 import MintRateFormItem from './MintRateFormItem'
 
 const MAX_DISCOUNT_RATE = 20 // this is an opinionated limit
@@ -105,7 +105,7 @@ function DiscountRateExtra({
       <p>{DISCOUNT_RATE_EXPLANATION}</p>
       {discountRatePercent > 0 && isCreate && (
         <>
-          <TabDescription
+          <Callout
             style={{ marginTop: 20, backgroundColor: colors.background.l1 }}
           >
             <p>
@@ -130,7 +130,7 @@ function DiscountRateExtra({
                 for your third funding cycle, and so on.
               </Trans>
             </p>
-          </TabDescription>
+          </Callout>
         </>
       )}
     </div>

@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-06-23 03:01\n"
+"PO-Revision-Date: 2022-06-26 03:05\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -434,6 +434,10 @@ msgstr "收到 1 ETH的捐款时 <0>保留到项目的</0>新铸项目代币数�
 #: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Amount paid"
 msgstr "支付数额"
+
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+msgid "Amount required"
+msgstr ""
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Amount to distribute"
@@ -1161,6 +1165,7 @@ msgstr "时长（秒）"
 msgid "ERC-20 community tokens"
 msgstr "ERC-20 标准的社区代币"
 
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "ERC-20 tokens can only be minted once an ERC-20 token has been issued for this project."
 msgstr "项目签发了 ERC-20 代币合约后，才能铸造 ERC-20 标准的代币。"
@@ -1219,6 +1224,10 @@ msgstr "已启用"
 #: src/components/shared/forms/RestrictedActionsForm.tsx
 msgid "Enabling this allows the project owner to manually mint any amount of tokens to any address."
 msgstr "允许项目所有者手动铸造并发送任何数量的代币。"
+
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+msgid "Enabling this will mint {tokenSymbol} ERC-20 tokens. Otherwise unclaimed {tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver."
+msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "Enabling this will mint {tokenSymbol} ERC-20 tokens. Otherwise, unclaimed {tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver."
@@ -1634,14 +1643,23 @@ msgstr "管理 {tokenText}"
 msgid "Maximum {MAX_DESCRIPTION_LENGTH} characters"
 msgstr "最高 {MAX_DESCRIPTION_LENGTH} 个字符"
 
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+msgid "Memo"
+msgstr ""
+
 #: src/components/shared/inputs/Pay/MemoFormItem.tsx
 msgid "Memo (optional)"
 msgstr "备注（可选）"
+
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+msgid "Memo included on-chain"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "Migrate to Juicebox V1.1"
 msgstr "迁移至 Juicebox V1.1"
 
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "Mint as ERC-20"
 msgstr "铸造成 ERC-20 标准的代币"
@@ -1659,6 +1677,11 @@ msgstr "按需铸造项目代币"
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Mint rate"
 msgstr "铸造比率"
+
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+msgid "Mint tokens"
+msgstr ""
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "Mint tokens as ERC-20"
@@ -1767,6 +1790,10 @@ msgstr "没有筹款目标"
 #: src/components/v1/shared/forms/BudgetForm.tsx
 msgid "No target set."
 msgstr "不设定筹款目标。"
+
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+msgid "Not a valid ETH address"
+msgstr ""
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
@@ -1910,6 +1937,10 @@ msgstr "因代币保留率为 100% 且支付后并不会获得相应的代币，
 #: src/components/v1/V1Project/V1PayButton.tsx
 msgid "Paying this project is currently disabled."
 msgstr "当前项目已暂停接收付款。"
+
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+msgid "Payment equivalent"
+msgstr ""
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "Payment made through payable address"
@@ -2569,10 +2600,15 @@ msgstr "所有在 {0} 上面部署同时实现<0>这个接口</0>的智能合约
 msgid "The address that should receive the tokens minted from paying this project."
 msgstr "项目收到付款时，应该接收到新铸造代币的地址。"
 
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+msgid "The amount of tokens minted to the receiver will be calculated based on if they had paid this amount to the project in the current funding cycle."
+msgstr ""
+
 #: src/components/v2/V2Project/V2FundingCycleSection/ReservedTokensSplitsCard.tsx
 msgid "The amount of tokens this project has reserved. These tokens can be distributed to reserved token beneficiaries."
 msgstr "项目保留的代币数量。这些代币可以分配给保留代币受益人。"
 
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "The amount of tokens to mint to the receiver."
 msgstr "铸造给接收人的代币数量。"
@@ -2756,6 +2792,10 @@ msgstr "代币"
 msgid "Token address: <0/>"
 msgstr "代币地址：<0/>"
 
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+msgid "Token amount"
+msgstr ""
+
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Token beneficiary address"
 msgstr "代币受益人地址"
@@ -2824,6 +2864,10 @@ msgstr "捐款 1 ETH 时<0>保留给项目的</0> 代币。"
 msgid "Tokens are earned by anyone who pays your project, and can be redeemed for overflow if your project has set a funding target."
 msgstr "当有人对你的项目进行支付时，他们会获得项目代币。在项目设定了筹款目标时, 可以通过赎回项目代币来获得溢出资金。"
 
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+msgid "Tokens can be minted manually when allowed in the current funding cycle. The project owner can enable or disable minting for upcoming cycles."
+msgstr ""
+
 #: src/components/Landing/QAs.tsx
 msgid "Tokens can be redeemed for a portion of a project's <0>overflow</0>, letting you benefit from its success. After all, you helped it get there. The token may also give you exclusive member-only privledges, and allow you to contribute to the governance of the community."
 msgstr "代币可以用来赎回一部分项目的 <0>溢出资金</0>，让你从项目的成功中受益。毕竟，是你帮助它实现的。代币还可以提供专属于成员的特权，并允许你为社区的治理做出贡献。"
@@ -2844,6 +2888,7 @@ msgstr "因为 ERC-20 代币还没有签发，所以目前还不能领取代币�
 msgid "Tokens minted from payments to this address will belong to the payer by default. However, if someone pays the project through a custodial service platform such as Coinbase, <0>tokens can't be issued to their personal wallets and will be lost</0>."
 msgstr "向这个地址付款铸造出来的代币默认属于付款人。但是，如果有人通过类似 Coinbase 这样的托管式服务平台来给项目付款， <0>代币不会分发到他们的个人钱包且将会丢失</0>。"
 
+#: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "Tokens receiver"
 msgstr "代币接收方"

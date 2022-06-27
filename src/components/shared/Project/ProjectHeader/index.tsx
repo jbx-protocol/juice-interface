@@ -5,7 +5,7 @@ import { useContext } from 'react'
 import { ProjectMetadataV4 } from 'models/project-metadata'
 import Paragraph from 'components/shared/Paragraph'
 
-import { useGetProjectOwner } from 'hooks/v1/contractReader/GetProjectOwner'
+import { useProjectOwner } from 'hooks/v1/contractReader/ProjectOwner'
 
 import SocialLinks from './SocialLinks'
 import FormattedAddress from '../../../shared/FormattedAddress'
@@ -24,7 +24,7 @@ export default function ProjectHeader({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const { owner } = useGetProjectOwner()
+  const { owner } = useProjectOwner()
 
   const headerHeight = 120
   const spacing = 20
@@ -129,7 +129,7 @@ export default function ProjectHeader({
           )}
           {owner && (
             <>
-              <Paragraph display="inline" description={t`Owned by:`} />
+              <span>{t`Owned by:`}</span>
               <FormattedAddress address={owner} />
             </>
           )}

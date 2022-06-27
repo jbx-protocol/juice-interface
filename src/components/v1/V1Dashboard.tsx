@@ -33,7 +33,7 @@ import { usePageTitle } from 'hooks/PageTitle'
 
 import { useGetProjectOwner } from 'hooks/v1/contractReader/GetProjectOwner'
 
-import { useGetProjectOwner } from 'hooks/v1/contractReader/GetProjectOwner'
+import { useProjectOwner } from 'hooks/v1/contractReader/ProjectOwner'
 
 import { layouts } from 'constants/styles/layouts'
 import { projectTypes } from 'constants/v1/projectTypes'
@@ -48,7 +48,7 @@ export default function V1Dashboard() {
   const location = useLocation()
   const params = new URLSearchParams(location.search)
   const isNewDeploy = Boolean(params.get('newDeploy'))
-  const { owner } = useGetProjectOwner()
+  const { owner } = useProjectOwner()
 
   const projectId = useProjectIdForHandle(handle)
   const terminalAddress = useTerminalOfProject(projectId)

@@ -3,7 +3,7 @@ import { useContext } from 'react'
 
 import useOwnerOfProject from './OwnerOfProject'
 
-export function useGetProjectOwner() {
+export function useProjectOwner() {
   const { projectId } = useContext(V1ProjectContext)
   const owner = useOwnerOfProject(projectId)
 

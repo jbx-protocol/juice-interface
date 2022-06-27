@@ -1,4 +1,8 @@
-import pinataClient, { PinataMetadata, PinataPinResponse } from '@pinata/sdk'
+import pinataClient, {
+  PinataMetadata,
+  PinataPinListResponse,
+  PinataPinResponse,
+} from '@pinata/sdk'
 import axios from 'axios'
 
 import { IpfsCacheJsonData } from 'models/ipfs-cache/cache-data'
@@ -54,7 +58,7 @@ export const ipfsCidUrl = (hash: string) =>
 
 export const cidFromUrl = (url: string | undefined) => url?.split('/').pop()
 
-export const pinFileToIpfs = (
+export const pinFileToIpfs = async (
   file: File | Blob | string,
   metadata?: PinataMetadata,
 ) => {
@@ -71,64 +75,51 @@ export const pinFileToIpfs = (
     )
   }
 
-  // We use axios here because using `pinata.pinFileToIPFS()` leads to this issue: https://github.com/PinataCloud/Pinata-SDK/issues/84
-  return axios
-    .post('https://api.pinata.cloud/pinning/pinFileToIPFS', data, {
-      maxContentLength: Infinity, //this is needed to prevent axios from erroring out with large files
-      headers: {
-        'Content-Type': `multipart/form-data;`,
-        pinata_api_key,
-        pinata_secret_api_key,
-      },
-    })
-    .then(res => res.data as PinataPinResponse)
+  const res = await axios.post('http://localhost:6969/ipfs/logo', data)
+
+  return res.data as PinataPinResponse
 }
 
-export const unpinIpfsFileByCid = (cid: string | undefined) =>
-  cid
-    ? pinata.unpin(cid).catch(err => {
-        console.error('Failed to unpin file ', cid, err)
-      })
-    : Promise.reject()
-
-export const uploadProjectMetadata = (
+export const uploadProjectMetadata = async (
   metadata: Omit<ProjectMetadataV4, 'version'>,
   handle?: string,
-) =>
-  pinata.pinJSONToIPFS(consolidateMetadata(metadata), {
-    pinataMetadata: {
-      keyvalues: {
-        tag: IPFS_TAGS.METADATA,
-      } as any, // eslint-disable-line @typescript-eslint/no-explicit-any
-      name: handle
-        ? metadataNameForHandle(handle)
-        : 'juicebox-project-metadata.json',
-    },
-  })
-
-export const uploadIpfsJsonCache = <T extends IpfsCacheName>(
-  tag: T,
-  data: IpfsCacheJsonData[T],
-) =>
-  pinata.pinJSONToIPFS(data, {
-    pinataMetadata: {
-      keyvalues: {
-        tag: IPFS_TAGS[tag],
-      } as any, // eslint-disable-line @typescript-eslint/no-explicit-any
-      name: IPFS_TAGS[tag] + '.json',
-    },
-  })
-
-export const getPinnedListByTag = (tag: keyof typeof IPFS_TAGS) =>
-  pinata.pinList({
-    pageLimit: 1000,
-    status: 'pinned',
-    metadata: {
-      keyvalues: {
-        tag: {
-          value: IPFS_TAGS[tag],
-          op: 'eq',
-        },
+) => {
+  const res = await axios.post('http://localhost:6969/ipfs/pin', {
+    data: consolidateMetadata(metadata),
+    options: {
+      pinataMetadata: {
+        keyvalues: {
+          tag: IPFS_TAGS.METADATA,
+        } as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+        name: handle
+          ? metadataNameForHandle(handle)
+          : 'juicebox-project-metadata.json',
       },
     },
   })
+
+  return res.data as PinataPinResponse
+}
+
+export const uploadIpfsJsonCache = async <T extends IpfsCacheName>(
+  tag: T,
+  data: IpfsCacheJsonData[T],
+) => {
+  return await axios.post('http://localhost:6969/ipfs/pin', {
+    data,
+    options: {
+      pinataMetadata: {
+        keyvalues: {
+          tag: IPFS_TAGS[tag],
+        } as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+        name: IPFS_TAGS[tag] + '.json',
+      },
+    },
+  })
+}
+
+export const getPinnedListByTag = async (tag: keyof typeof IPFS_TAGS) => {
+  const data = await axios.get('http://localhost:6969/ipfs/pin?tag=' + tag)
+
+  return data.data as PinataPinListResponse
+}

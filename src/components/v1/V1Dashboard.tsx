@@ -31,8 +31,6 @@ import NewDeployNotAvailable from 'components/shared/NewDeployNotAvailable'
 import Project404 from 'components/shared/Project404'
 import { usePageTitle } from 'hooks/PageTitle'
 
-import { useGetProjectOwner } from 'hooks/v1/contractReader/GetProjectOwner'
-
 import { useProjectOwner } from 'hooks/v1/contractReader/ProjectOwner'
 
 import { layouts } from 'constants/styles/layouts'

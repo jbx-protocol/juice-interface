@@ -1,7 +1,8 @@
 import { t } from '@lingui/macro'
-import { Input, Tooltip } from 'antd'
-import { SmileOutlined } from '@ant-design/icons'
-import { AttachStickerModal } from 'components/modals/AttachStickerModal'
+import { Form, Input, Tooltip } from 'antd'
+
+import { AttachStickerModal } from 'components/shared/modals/AttachStickerModal'
+import { BiSticker } from 'react-icons/bi'
 import { useContext, useState } from 'react'
 import { ThemeContext } from 'contexts/themeContext'
 
@@ -44,7 +45,13 @@ export function MemoFormInput({
           }}
         >
           <Tooltip title={t`Attach a sticker`}>
-            <SmileOutlined onClick={() => setAttachStickerModalVisible(true)} />
+            <BiSticker
+              style={{
+                height: 20,
+                width: 20,
+              }}
+              onClick={() => setAttachStickerModalVisible(true)}
+            />
           </Tooltip>
         </div>
       </div>

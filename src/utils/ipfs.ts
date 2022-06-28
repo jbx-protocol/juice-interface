@@ -1,4 +1,4 @@
-import pinataClient, {
+import {
   PinataMetadata,
   PinataPinListResponse,
   PinataPinResponse,
@@ -12,16 +12,10 @@ import { consolidateMetadata, ProjectMetadataV4 } from 'models/project-metadata'
 import { readNetwork } from 'constants/networks'
 import { IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
 
-const pinata_api_key = process.env.REACT_APP_PINATA_PINNER_KEY
-const pinata_secret_api_key = process.env.REACT_APP_PINATA_PINNER_SECRET
-
-if (!pinata_api_key || !pinata_secret_api_key) {
-  throw new Error(
-    'Missing .env vars REACT_APP_PINATA_PINNER_KEY or REACT_APP_PINATA_PINNER_SECRET',
-  )
-}
-
-const pinata = pinataClient(pinata_api_key, pinata_secret_api_key)
+const JUICEBOX_API_HOSTNAME = 'api.juicebox.money'
+const axiosInstance = axios.create({
+  baseURL: `https://${JUICEBOX_API_HOSTNAME}/api`,
+})
 
 export const IPFS_TAGS = {
   [IpfsCacheName.trending]:
@@ -43,10 +37,16 @@ export const IPFS_TAGS = {
 }
 
 // keyvalues will be upserted to existing metadata. A null value will remove an existing keyvalue
-export const editMetadataForCid = (
+export const editMetadataForCid = async (
   cid: string | undefined,
   options?: PinataMetadata,
-) => (cid ? pinata.hashMetadata(cid, { ...options }) : undefined)
+) => {
+  if (!cid) return undefined
+
+  const pinRes = await axiosInstance.put(`/ipfs/pin/${cid}`, { ...options })
+
+  return pinRes.data
+}
 
 export const logoNameForHandle = (handle: string) => `juicebox-@${handle}-logo`
 
@@ -75,7 +75,7 @@ export const pinFileToIpfs = async (
     )
   }
 
-  const res = await axios.post('http://localhost:6969/ipfs/logo', data)
+  const res = await axiosInstance.post('/ipfs/logo', data)
 
   return res.data as PinataPinResponse
 }
@@ -84,7 +84,7 @@ export const uploadProjectMetadata = async (
   metadata: Omit<ProjectMetadataV4, 'version'>,
   handle?: string,
 ) => {
-  const res = await axios.post('http://localhost:6969/ipfs/pin', {
+  const res = await axiosInstance.post('/ipfs/pin', {
     data: consolidateMetadata(metadata),
     options: {
       pinataMetadata: {
@@ -105,7 +105,7 @@ export const uploadIpfsJsonCache = async <T extends IpfsCacheName>(
   tag: T,
   data: IpfsCacheJsonData[T],
 ) => {
-  return await axios.post('http://localhost:6969/ipfs/pin', {
+  return await axiosInstance.post('/ipfs/pin', {
     data,
     options: {
       pinataMetadata: {
@@ -119,7 +119,7 @@ export const uploadIpfsJsonCache = async <T extends IpfsCacheName>(
 }
 
 export const getPinnedListByTag = async (tag: keyof typeof IPFS_TAGS) => {
-  const data = await axios.get('http://localhost:6969/ipfs/pin?tag=' + tag)
+  const data = await axiosInstance.get(`/ipfs/pin?tag=${IPFS_TAGS[tag]}`)
 
   return data.data as PinataPinListResponse
 }

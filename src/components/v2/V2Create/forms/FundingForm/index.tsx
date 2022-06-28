@@ -386,9 +386,11 @@ export default function FundingForm({
         </h3>
 
         <Callout>
-          A 2.5% membership fee will be collected by Juicebox DAO for all
-          payouts to non-juicebox. For example, any external non-juicebox wallet
-          payout will incur a 2.5% fee.
+          <Trans>
+            A 2.5% membership fee will be collected by Juicebox DAO for all
+            payouts to non-juicebox. For example, any external non-juicebox
+            wallet payout will incur a 2.5% fee.
+          </Trans>
         </Callout>
 
         <DistributionSplitsSection

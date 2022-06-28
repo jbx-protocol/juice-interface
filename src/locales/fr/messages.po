@@ -235,6 +235,10 @@ msgstr "<0>{tokenSymbol} adresse de l'ERC-20 : </0><1/>"
 msgid "@"
 msgstr "@"
 
+#: src/components/v2/V2Create/forms/FundingForm/index.tsx
+msgid "A 2.5% membership fee will be collected by Juicebox DAO for all payouts to non-juicebox. For example, any external non-juicebox wallet payout will incur a 2.5% fee."
+msgstr ""
+
 #: src/components/Projects/ArchivedProjectsMessage.tsx
 msgid "A project can be archived by its owner from the tools menu on the project page."
 msgstr "Un projet peut être archivé par son propriétaire, dans le menu des outils de la page du projet."

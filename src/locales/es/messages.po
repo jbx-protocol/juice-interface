@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-06-26 03:05\n"
+"PO-Revision-Date: 2022-06-28 03:02\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -318,7 +318,7 @@ msgstr "Añadir al saldo"
 
 #: src/components/v2/V2Project/V2BalancesModal/V2TokenRefs.tsx
 msgid "Add token"
-msgstr ""
+msgstr "Añadir token"
 
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
 #: src/components/shared/modals/ReservedTokenReceiverModal.tsx
@@ -438,7 +438,7 @@ msgstr "Monto pagado"
 
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 msgid "Amount required"
-msgstr ""
+msgstr "Cantidad requerida"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "Amount to distribute"
@@ -996,7 +996,7 @@ msgstr "Discord"
 
 #: src/components/shared/formItems/ProjectDiscord.tsx
 msgid "Discord link"
-msgstr ""
+msgstr "Enlace a Discord"
 
 #: src/components/shared/formItems/ProjectDiscountRate.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
@@ -1010,7 +1010,7 @@ msgstr "Tasa de descuento"
 
 #: src/components/v2/V2Project/V2BalancesModal/V2BalancesModal.tsx
 msgid "Display ERC-20 and other Juicebox project tokens that this project owner holds."
-msgstr ""
+msgstr "Exhibe los ERC-20 y otros tokens de proyectos Juicebox que este dueño de proyecto posee."
 
 #: src/components/v1/V1Project/modals/V1BalancesModal.tsx
 msgid "Display ERC-20 tokens and other Juicebox project tokens that are in this project's owner's wallet."
@@ -1239,7 +1239,7 @@ msgstr "Activar esto permite al dueño del proyecto acuñar manualmente cualquie
 
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 msgid "Enabling this will mint {tokenSymbol} ERC-20 tokens. Otherwise unclaimed {tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver."
-msgstr ""
+msgstr "Activar esto acuñará tokens ERC-20 {tokenSymbol}. De lo contrario tokens {tokenSymbol} no reclamados serán acuñados, que podrán reclamarse después como ERC-20 por el beneficiario."
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "Enabling this will mint {tokenSymbol} ERC-20 tokens. Otherwise, unclaimed {tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver."
@@ -1657,7 +1657,7 @@ msgstr "Máximo {MAX_DESCRIPTION_LENGTH} caracteres"
 
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 msgid "Memo"
-msgstr ""
+msgstr "Memo"
 
 #: src/components/shared/inputs/Pay/MemoFormItem.tsx
 msgid "Memo (optional)"
@@ -1665,7 +1665,7 @@ msgstr "Memo (opcional)"
 
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 msgid "Memo included on-chain"
-msgstr ""
+msgstr "Memo incluído en-cadena"
 
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "Migrate to Juicebox V1.1"
@@ -1693,7 +1693,7 @@ msgstr "Tasa de acuñación"
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 msgid "Mint tokens"
-msgstr ""
+msgstr "Acuñar tokens"
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "Mint tokens as ERC-20"
@@ -1805,7 +1805,7 @@ msgstr "Sin meta-objetivo establecida."
 
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 msgid "Not a valid ETH address"
-msgstr ""
+msgstr "No es una dirección de ETH"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
@@ -1952,7 +1952,7 @@ msgstr "Actúalmente, los pagos a este proyecto se encuentran desactivados."
 
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 msgid "Payment equivalent"
-msgstr ""
+msgstr "Pago equivalente"
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "Payment made through payable address"
@@ -2037,7 +2037,7 @@ msgstr "Riesgos potenciales"
 
 #: src/components/v2/V2Create/ProjectConfigurationFieldsContainer.tsx
 msgid "Preview"
-msgstr ""
+msgstr "Vista previa"
 
 #: src/components/v1/V1Create/index.tsx
 msgid "Preview:"
@@ -2567,7 +2567,7 @@ msgstr "Empezar de Nuevo"
 
 #: src/components/v2/V2Create/StartOverButton.tsx
 msgid "Start over"
-msgstr ""
+msgstr "Volver a comenzar"
 
 #: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner.tsx
 msgid "Start time (seconds, Unix time)"
@@ -2789,7 +2789,7 @@ msgstr "Esto borrará todos tus cambios."
 
 #: src/components/v2/V2Create/StartOverButton.tsx
 msgid "This will reset the data for your new project. All changes will be lost."
-msgstr ""
+msgstr "Esto reiniciará los datos para tu nuevo proyecto. Todos los cambios se perderán."
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
@@ -2808,7 +2808,7 @@ msgstr "Dirección del token: <0/>"
 
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 msgid "Token amount"
-msgstr ""
+msgstr "Cantidad de tokens"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Token beneficiary address"
@@ -2880,7 +2880,7 @@ msgstr "Los tokens son obtenidos por alguien que paga tu proyecto, y pueden ser 
 
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 msgid "Tokens can be minted manually when allowed in the current funding cycle. The project owner can enable or disable minting for upcoming cycles."
-msgstr ""
+msgstr "Los tokens pueden ser acuñados manualmente cuando se permite en el ciclo de financiamiento actual. El dueño del proyecto puede activar o desactivar la acuñación para ciclos próximos."
 
 #: src/components/Landing/QAs.tsx
 msgid "Tokens can be redeemed for a portion of a project's <0>overflow</0>, letting you benefit from its success. After all, you helped it get there. The token may also give you exclusive member-only privledges, and allow you to contribute to the governance of the community."
@@ -3003,7 +3003,7 @@ msgstr "Proyecto sin título"
 
 #: src/components/v2/V2Project/V2BalancesModal/V2TokenRefs.tsx
 msgid "Untrack token"
-msgstr ""
+msgstr "Dejar de seguir token"
 
 #: src/components/v1/V1Project/FundingCycles/index.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/index.tsx

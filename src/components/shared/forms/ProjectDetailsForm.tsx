@@ -3,7 +3,6 @@ import { t, Trans } from '@lingui/macro'
 
 import { FormItems } from 'components/shared/formItems'
 import { normalizeHandle } from 'utils/formatHandle'
-import { cidFromUrl, unpinIpfsFileByCid } from 'utils/ipfs'
 import { CSSProperties } from 'react'
 import Callout from 'components/shared/Callout'
 
@@ -75,10 +74,7 @@ export default function ProjectDetailsForm({
             name="logoUri"
             initialUrl={form.getFieldValue('logoUri')}
             onSuccess={logoUri => {
-              const prevUrl = form.getFieldValue('logoUri')
-              // Unpin previous file
               form.setFieldsValue({ logoUri })
-              if (prevUrl) unpinIpfsFileByCid(cidFromUrl(prevUrl))
             }}
           />
         </div>

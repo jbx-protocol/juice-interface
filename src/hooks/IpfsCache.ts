@@ -3,7 +3,7 @@ import { IpfsCacheData, IpfsCacheJsonData } from 'models/ipfs-cache/cache-data'
 import { IpfsCacheName } from 'models/ipfs-cache/cache-name'
 import moment, { DurationInputArg1 } from 'moment'
 import { useEffect, useState } from 'react'
-import { getPinnedListByTag, ipfsCidUrl, unpinIpfsFileByCid } from 'utils/ipfs'
+import { getPinnedListByTag, ipfsCidUrl } from 'utils/ipfs'
 
 type IpfsCacheOpts<T extends IpfsCacheName> = {
   ttl: DurationInputArg1
@@ -49,15 +49,6 @@ export function useIpfsCache<T extends IpfsCacheName>(
               : (data.data as unknown as IpfsCacheData[T]),
           )
         }
-
-        // Unpin cache files, including latest if expired
-        // There should never be more than one cache file to unpin. But during high traffic it may be possible for multiple unique cache files to be uploaded by different users simultaneously
-        list.rows.slice(isExpired ? 0 : 1).reduce(
-          async (_, row) =>
-            // Await sequential requests, as simultaenous requests may be rate limited by Pinata api endpoint
-            await unpinIpfsFileByCid(row.ipfs_pin_hash),
-          Promise.resolve(),
-        )
       } catch (e) {
         console.error('Error loading IPFS cache', tag, e)
       }

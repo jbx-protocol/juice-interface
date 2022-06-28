@@ -15,6 +15,7 @@ import {
 import { ThemeContext } from 'contexts/themeContext'
 import { MAX_DISTRIBUTION_LIMIT, splitPercentFrom } from 'utils/v2/math'
 import { NetworkContext } from 'contexts/networkContext'
+import { Link } from 'react-router-dom'
 
 import { filter } from 'lodash'
 
@@ -237,15 +238,36 @@ export default function DistributionSplitsSection({
         ) : remainingSplitsPercentage > 0 && distributionLimit !== '0' ? (
           <OwnerSplitCard />
         ) : null}
-        <Button
-          type="dashed"
-          onClick={() => {
-            setAddSplitModalVisible(true)
-          }}
-          block
+        <Form.Item
+          extra={
+            <Space size="small">
+              <Trans>
+                Payouts to Ethereum addresses incur a 2.5% JBX membership fee
+              </Trans>
+              <TooltipIcon
+                tip={
+                  <Trans>
+                    When distributing, payouts to Ethereum addresses incur a
+                    2.5% JBX membership fee. Payouts to other Juicebox projects
+                    don't incur fees. Your project will receive (the{' '}
+                    <Link to="/v2/p/1">JuiceboxDAO</Link> token) in return at
+                    the current issuance rate.
+                  </Trans>
+                }
+              />
+            </Space>
+          }
         >
-          <Trans>Add payout</Trans>
-        </Button>
+          <Button
+            type="dashed"
+            onClick={() => {
+              setAddSplitModalVisible(true)
+            }}
+            block
+          >
+            <Trans>Add payout</Trans>
+          </Button>
+        </Form.Item>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <span style={{ color: colors.text.primary }}>
             <Trans>

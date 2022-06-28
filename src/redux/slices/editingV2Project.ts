@@ -159,6 +159,9 @@ const editingV2ProjectSlice = createSlice({
     setRedemptionRate: (state, action: PayloadAction<string>) => {
       state.fundingCycleMetadata.redemptionRate = action.payload
     },
+    setBallotRedemptionRate: (state, action: PayloadAction<string>) => {
+      state.fundingCycleMetadata.ballotRedemptionRate = action.payload
+    },
     setWeight: (state, action: PayloadAction<string>) => {
       state.fundingCycleData.weight = action.payload
     },

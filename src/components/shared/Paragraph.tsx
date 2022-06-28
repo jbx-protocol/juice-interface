@@ -28,7 +28,7 @@ export default function Paragraph({
   return (
     <div>
       <RichNote
-        style={{ maxWidth: '700px' }} // good line length for reading
+        style={{ maxWidth: '700px', display: 'inline' }} // good line length for reading
         note={
           !expanded && CHARACTER_LIMIT_EXCEEDED ? shortDescription : description
         }

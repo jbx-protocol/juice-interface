@@ -1,28 +1,27 @@
+import { SettingOutlined } from '@ant-design/icons'
+import { BigNumber } from '@ethersproject/bignumber'
+import * as constants from '@ethersproject/constants'
 import { Trans } from '@lingui/macro'
 import { Button, Skeleton, Space } from 'antd'
 import { CardSection } from 'components/shared/CardSection'
+import FormattedAddress from 'components/shared/FormattedAddress'
 import TooltipLabel from 'components/shared/TooltipLabel'
 import SplitList from 'components/v2/shared/SplitList'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { CSSProperties, useContext, useState } from 'react'
-
 import { ThemeContext } from 'contexts/themeContext'
-
+import { V2ProjectContext } from 'contexts/v2/projectContext'
+import {
+  useHasPermission,
+  V2OperatorPermission,
+} from 'hooks/v2/contractReader/HasPermission'
+import useProjectReservedTokens from 'hooks/v2/contractReader/ProjectReservedTokens'
+import { Split } from 'models/v2/splits'
+import { CSSProperties, useContext, useState } from 'react'
+import { formatWad } from 'utils/formatNumber'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { formatReservedRate } from 'utils/v2/math'
 
-import { tokenSymbolText } from 'utils/tokenSymbolText'
-
-import useProjectReservedTokens from 'hooks/v2/contractReader/ProjectReservedTokens'
-
-import { formatWad } from 'utils/formatNumber'
-
-import FormattedAddress from 'components/shared/FormattedAddress'
-
-import * as constants from '@ethersproject/constants'
-import { Split } from 'models/v2/splits'
-import { BigNumber } from '@ethersproject/bignumber'
-
 import DistributeReservedTokensModal from './modals/DistributeReservedTokensModal'
+import { EditTokenAllocationModal } from './modals/EditTokenAllocationModal'
 
 export default function ReservedTokensSplitsCard({
   hideDistributeButton,
@@ -48,11 +47,14 @@ export default function ReservedTokensSplitsCard({
     distributeReservedTokensModalVisible,
     setDistributeReservedTokensModalVisible,
   ] = useState<boolean>()
+  const [editTokenAllocationModalVisible, setEditTokenAllocationModalVisible] =
+    useState<boolean>(false)
   const { data: reservedTokens, loading: loadingReservedTokens } =
     useProjectReservedTokens({
       projectId,
       reservedRate: reservedRate,
     })
+  const canEditTokens = useHasPermission(V2OperatorPermission.SET_SPLITS)
 
   const smallHeaderStyle: CSSProperties = {
     fontSize: '.7rem',
@@ -138,21 +140,42 @@ export default function ReservedTokensSplitsCard({
         )}
 
         <div>
-          <TooltipLabel
-            label={
-              <h4 style={{ display: 'inline-block' }}>
-                <Trans>Reserved {tokensText}</Trans> (
-                {formatReservedRate(reservedRate)}%)
-              </h4>
-            }
-            tip={
-              <Trans>
-                A project can reserve a percentage of tokens minted from every
-                payment it receives. Reserved tokens can be distributed
-                according to the allocation below at any time.
-              </Trans>
-            }
-          />
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              gap: 10,
+              flexWrap: 'wrap',
+              marginBottom: '1rem',
+            }}
+          >
+            <TooltipLabel
+              label={
+                <h4 style={{ display: 'inline-block' }}>
+                  <Trans>Reserved {tokensText}</Trans> (
+                  {formatReservedRate(reservedRate)}%)
+                </h4>
+              }
+              tip={
+                <Trans>
+                  A project can reserve a percentage of tokens minted from every
+                  payment it receives. Reserved tokens can be distributed
+                  according to the allocation below at any time.
+                </Trans>
+              }
+            />
+            {canEditTokens && reservedRate?.gt(0) ? (
+              <Button
+                size="small"
+                onClick={() => setEditTokenAllocationModalVisible(true)}
+                icon={<SettingOutlined />}
+              >
+                <span>
+                  <Trans>Edit allocation</Trans>
+                </span>
+              </Button>
+            ) : null}
+          </div>
           {reservedTokensSplits ? (
             <SplitList
               splits={reservedTokensSplits}
@@ -168,6 +191,11 @@ export default function ReservedTokensSplitsCard({
         visible={distributeReservedTokensModalVisible}
         onCancel={() => setDistributeReservedTokensModalVisible(false)}
         onConfirmed={() => window.location.reload()}
+      />
+      <EditTokenAllocationModal
+        visible={editTokenAllocationModalVisible}
+        onOk={() => setEditTokenAllocationModalVisible(false)}
+        onCancel={() => setEditTokenAllocationModalVisible(false)}
       />
     </CardSection>
   )

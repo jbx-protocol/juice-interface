@@ -33,6 +33,9 @@ export function AddToProjectBalanceForm({
           setLoadingAddToBalance(false)
           addToBalanceForm.resetFields()
         },
+        onDone: () => {
+          setLoadingAddToBalance(false)
+        },
       },
     )
   }

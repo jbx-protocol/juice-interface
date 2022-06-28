@@ -56,6 +56,7 @@ import SwitchHeading from 'components/shared/SwitchHeading'
 import DistributionSplitsSection from 'components/v2/shared/DistributionSplitsSection'
 import { getTotalSplitsPercentage } from 'utils/v2/distributions'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
+import Callout from 'components/shared/Callout'
 import { ItemNoInput } from 'components/shared/formItems/ItemNoInput'
 import { helpPagePath } from 'utils/helpPageHelper'
 
@@ -383,6 +384,12 @@ export default function FundingForm({
         <h3 style={{ color: colors.text.primary }}>
           <Trans>Payouts</Trans>
         </h3>
+
+        <Callout>
+          A 2.5% membership fee will be collected by Juicebox DAO for all
+          payouts to non-juicebox. For example, any external non-juicebox wallet
+          payout will incur a 2.5% fee.
+        </Callout>
 
         <DistributionSplitsSection
           distributionLimit={distributionLimit}

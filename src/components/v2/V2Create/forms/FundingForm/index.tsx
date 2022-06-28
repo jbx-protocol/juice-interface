@@ -256,6 +256,11 @@ export default function FundingForm({
             defaultFundingCycleMetadata.redemptionRate,
           ),
         )
+        dispatch(
+          editingV2ProjectActions.setBallotRedemptionRate(
+            defaultFundingCycleMetadata.ballotRedemptionRate,
+          ),
+        )
       }
 
       onFinish?.()

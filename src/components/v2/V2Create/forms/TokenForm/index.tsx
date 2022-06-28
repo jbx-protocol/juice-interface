@@ -243,7 +243,11 @@ export default function TokenForm({
     )
     dispatch(editingV2ProjectActions.setDiscountRate(discountRate ?? '0'))
     dispatch(editingV2ProjectActions.setReservedRate(reservedRate ?? '0'))
+
+    // When setting redemption rate, also set ballotRedemptionRate
     dispatch(editingV2ProjectActions.setRedemptionRate(redemptionRate))
+    dispatch(editingV2ProjectActions.setBallotRedemptionRate(redemptionRate))
+
     dispatch(
       editingV2ProjectActions.setReservedTokensSplits(newReservedTokensSplits),
     )

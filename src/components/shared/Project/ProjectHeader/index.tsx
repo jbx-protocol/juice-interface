@@ -6,6 +6,7 @@ import { ProjectMetadataV4 } from 'models/project-metadata'
 import Paragraph from 'components/shared/Paragraph'
 
 import { useProjectOwner } from 'hooks/v1/contractReader/ProjectOwner'
+import { Button, Tooltip } from 'antd'
 
 import SocialLinks from './SocialLinks'
 import FormattedAddress from '../../../shared/FormattedAddress'
@@ -15,11 +16,13 @@ export default function ProjectHeader({
   metadata,
   isArchived,
   actions,
+  onSetHandle,
 }: {
   metadata?: ProjectMetadataV4
   isArchived?: boolean
   handle?: string
   actions?: JSX.Element
+  onSetHandle?: VoidFunction
 }) {
   const {
     theme: { colors },
@@ -104,7 +107,7 @@ export default function ProjectHeader({
                 (archived)
               </span>
             )}
-            {handle && (
+            {handle ? (
               <span
                 style={{
                   color: colors.text.secondary,
@@ -114,7 +117,16 @@ export default function ProjectHeader({
               >
                 @{handle}
               </span>
-            )}
+            ) : onSetHandle ? (
+              <Tooltip
+                placement="bottom"
+                title="A project's handle is used in its URL, and allows it to show up in search results on the projects page."
+              >
+                <Button onClick={onSetHandle}>
+                  <Trans>Set project handle</Trans>
+                </Button>
+              </Tooltip>
+            ) : null}
             <SocialLinks
               discord={metadata?.discord}
               twitter={metadata?.twitter}

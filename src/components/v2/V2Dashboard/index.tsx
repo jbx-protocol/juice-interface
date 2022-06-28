@@ -1,12 +1,7 @@
 import Loading from 'components/shared/Loading'
 import NewDeployNotAvailable from 'components/shared/NewDeployNotAvailable'
 import ScrollToTopButton from 'components/shared/ScrollToTopButton'
-import { layouts } from 'constants/styles/layouts'
-import { V2ArchivedProjectIds } from 'constants/v2/archivedProjects'
-import {
-  ETH_PAYOUT_SPLIT_GROUP,
-  RESERVED_TOKEN_SPLIT_GROUP,
-} from 'constants/v2/splits'
+
 import {
   V2ProjectContext,
   V2ProjectContextType,
@@ -34,6 +29,13 @@ import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
 import { NO_CURRENCY, V2_CURRENCY_ETH, V2CurrencyName } from 'utils/v2/currency'
+
+import {
+  ETH_PAYOUT_SPLIT_GROUP,
+  RESERVED_TOKEN_SPLIT_GROUP,
+} from 'constants/v2/splits'
+import { V2ArchivedProjectIds } from 'constants/v2/archivedProjects'
+import { layouts } from 'constants/styles/layouts'
 
 import Project404 from '../../shared/Project404'
 import V2Project from '../V2Project'

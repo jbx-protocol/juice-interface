@@ -1,19 +1,18 @@
-import { Trans } from '@lingui/macro'
 import { BigNumber } from '@ethersproject/bignumber'
+import { Trans } from '@lingui/macro'
 import { Divider, Drawer, Space, Tabs } from 'antd'
-import { useContext } from 'react'
-import { TransactorInstance } from 'hooks/Transactor'
-import { DeployProjectPayerTxArgs } from 'hooks/v2/transactor/DeployProjectPayerTx'
-import { NetworkContext } from 'contexts/networkContext'
 import { JBDiscordLink } from 'components/Landing/QAs'
 import ArchiveV1Project from 'components/v1/V1Project/ArchiveV1Project'
 import ArchiveV2Project from 'components/v2/V2Project/ArchiveV2Project'
+import { useIsUserAddress } from 'hooks/IsUserAddress'
+import { TransactorInstance } from 'hooks/Transactor'
+import { DeployProjectPayerTxArgs } from 'hooks/v2/transactor/DeployProjectPayerTx'
 
-import { TransferOwnershipForm } from './TransferOwnershipForm'
-import { TransferUnclaimedTokensForm } from './TransferUnclaimedTokensForm'
 import { AddToProjectBalanceForm } from './AddToProjectBalanceForm'
 import { PayableAddressSection } from './PayableAddressSection'
 import { V1TokenMigrationSection } from './V1TokenMigrationSection/V1TokenMigrationSection'
+import { TransferOwnershipForm } from './TransferOwnershipForm'
+import { TransferUnclaimedTokensForm } from './TransferUnclaimedTokensForm'
 
 const { TabPane } = Tabs
 
@@ -59,16 +58,11 @@ export function ProjectToolsDrawer({
       }>
     | undefined // undefined for v1
 }) {
-  const { userAddress } = useContext(NetworkContext)
-
   const setUriTx = useSetProjectUriTx()
   const editV2ProjectDetailsTx = useEditV2ProjectDetailsTx()
   const deployProjectPayerTx = useDeployProjectPayerTx()
 
-  const isOwnerWallet =
-    ownerAddress &&
-    userAddress &&
-    ownerAddress.toLowerCase() === userAddress.toLowerCase()
+  const isOwnerWallet = useIsUserAddress(ownerAddress)
 
   const shouldRenderV1Archive = !!setUriTx
   const shouldRenderV2Archive = !!editV2ProjectDetailsTx

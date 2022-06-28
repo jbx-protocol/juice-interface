@@ -1995,6 +1995,10 @@ msgstr "Ödemeler"
 msgid "Payouts (optional)"
 msgstr "Ödemeler (isteğe bağlı)"
 
+#: src/components/v2/shared/DistributionSplitsSection/index.tsx
+msgid "Payouts to Ethereum addresses incur a 2.5% JBX membership fee"
+msgstr ""
+
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Payouts to Ethereum addresses incur a {feePercentage}% fee. Your project will receive JBX in return at the current issuance rate."
 msgstr "Ethereum adreslerine yapılan ödemeler için %{feePercentage} ücret alınır. Bunun karşılığında projeniz, mevcut token çıkarma oranında JBX alacaktır."
@@ -3109,6 +3113,10 @@ msgstr "Kaputun altında neler oluyor?"
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "When checked, payments to this address will mint this project's ERC-20 tokens to the beneficiary's wallet. Payments will cost more gas. When unchecked, Juicebox will track the beneficiary's new tokens when they pay. The beneficiary can claim their ERC-20 tokens at any time."
 msgstr "İşaretlendiğinde, bu adrese yapılan ödemeler, bu projenin ERC-20 token'larını faydalanıcının cüzdanına basacaktır. Ödemeler daha fazla gas ücretine mal olacaktır. İşaret kaldırılırsa Juicebox, ödeme yaptığında faydalanıcının yeni token'larını takip edecektir. Faydalanıcı, ERC-20 token'larını istediği zaman talep edebilir."
+
+#: src/components/v2/shared/DistributionSplitsSection/index.tsx
+msgid "When distributing, payouts to Ethereum addresses incur a 2.5% JBX membership fee. Payouts to other Juicebox projects don't incur fees. Your project will receive (the <0>JuiceboxDAO</0> token) in return at the current issuance rate."
+msgstr ""
 
 #: src/components/v2/V2Create/forms/RulesForm/TokenMintingExtra.tsx
 msgid "When enabled, the project owner can manually mint any amount of tokens to any address."

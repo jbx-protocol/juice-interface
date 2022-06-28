@@ -18,6 +18,8 @@ import { useEditV2ProjectDetailsTx } from 'hooks/v2/transactor/EditV2ProjectDeta
 import { useHistory, useLocation } from 'react-router-dom'
 import { weightedAmount } from 'utils/v2/math'
 
+import { useIsUserAddress } from 'hooks/IsUserAddress'
+
 import { textSecondary } from 'constants/styles/text'
 import { V2_PROJECT_IDS } from '../../../constants/v2/projectIds'
 import V2BugNotice from '../shared/V2BugNotice'
@@ -34,6 +36,7 @@ import V2ProjectHeaderActions from './V2ProjectHeaderActions'
 const GUTTER_PX = 40
 
 const VolumeChart = lazy(() => import('../../shared/VolumeChart'))
+import { V2ReconfigureProjectHandleDrawer } from './V2ReconfigureProjectHandleDrawer'
 
 const AllAssetsButton = ({ onClick }: { onClick: VoidFunction }) => {
   const { theme } = useContext(ThemeContext)
@@ -73,6 +76,8 @@ export default function V2Project({
     V2OperatorPermission.RECONFIGURE,
   )
 
+  const [handleModalVisible, setHandleModalVisible] = useState<boolean>()
+
   const { data: queuedFundingCycleResponse } = useProjectQueuedFundingCycle({
     projectId,
   })
@@ -89,6 +94,8 @@ export default function V2Project({
   const isMobile = useMobile()
 
   const hasEditPermission = useHasPermission(V2OperatorPermission.RECONFIGURE)
+
+  const isOwner = useIsUserAddress(projectOwnerAddress)
 
   const [newDeployModalVisible, setNewDeployModalVisible] =
     useState<boolean>(isNewDeploy)
@@ -131,6 +138,7 @@ export default function V2Project({
         actions={!isPreviewMode ? <V2ProjectHeaderActions /> : undefined}
         isArchived={isArchived}
         handle={handle}
+        onSetHandle={isOwner ? () => setHandleModalVisible(true) : undefined}
       />
       {!isPreviewMode &&
         hasCurrentFundingCycle === false &&
@@ -197,6 +205,12 @@ export default function V2Project({
         onCancel={() => setBalancesModalVisible(false)}
         storeCidTx={editV2ProjectDetailsTx}
       />
+      {isOwner && !handle && (
+        <V2ReconfigureProjectHandleDrawer
+          visible={handleModalVisible}
+          onFinish={() => setHandleModalVisible(false)}
+        />
+      )}
     </Space>
   )
 }

@@ -18,7 +18,7 @@ export function V2ReconfigureProjectHandleDrawer({
   visible,
   onFinish,
 }: {
-  visible: boolean
+  visible: boolean | undefined
   onFinish?: () => void
 }) {
   const { handle, projectId } = useContext(V2ProjectContext)

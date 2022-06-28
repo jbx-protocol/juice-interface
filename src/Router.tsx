@@ -1,4 +1,3 @@
-import { t } from '@lingui/macro'
 import Landing from 'components/Landing'
 import PrivacyPolicy from 'components/PrivacyPolicy'
 import Projects from 'components/Projects'
@@ -13,8 +12,6 @@ import { usePageTitle } from 'hooks/PageTitle'
 import { lazy, Suspense, useEffect } from 'react'
 import { Redirect, useParams } from 'react-router'
 import { HashRouter, Route, Switch, useLocation } from 'react-router-dom'
-
-import { DEFAULT_SITE_TITLE } from 'constants/siteMetadata'
 
 const V1Create = lazy(() => import('components/v1/V1Create'))
 const V2Create = lazy(() => import('components/v2/V2Create'))

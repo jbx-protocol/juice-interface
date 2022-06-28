@@ -11,6 +11,8 @@ import { NetworkContext } from 'contexts/networkContext'
 
 import ExternalLink from './ExternalLink'
 
+// Currently unused - replaced by Discord button. Code not deleted yet, but
+// maybe in future if discord button has more engagement.
 export default function FeedbackFormButton({
   mobile,
   projectHandle,

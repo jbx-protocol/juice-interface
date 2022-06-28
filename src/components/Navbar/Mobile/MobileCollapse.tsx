@@ -11,8 +11,6 @@ import { MenuOutlined } from '@ant-design/icons'
 import { ThemeContext } from 'contexts/themeContext'
 import { NetworkContext } from 'contexts/networkContext'
 
-import FeedbackFormButton from 'components/shared/FeedbackFormButton'
-
 import Logo from '../Logo'
 import Account from '../Account'
 import NavLanguageSelector from '../NavLanguageSelector'
@@ -92,9 +90,6 @@ export default function MobileCollapse() {
               </Menu.Item>
               <Menu.Item key="theme-picker">
                 <ThemePickerMobile />
-              </Menu.Item>
-              <Menu.Item key="feedback">
-                <FeedbackFormButton mobile />
               </Menu.Item>
             </div>
           </Menu>

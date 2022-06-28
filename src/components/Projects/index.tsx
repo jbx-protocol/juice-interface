@@ -2,7 +2,6 @@ import { InfoCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import Search from 'antd/lib/input/Search'
-import FeedbackFormButton from 'components/shared/FeedbackFormButton'
 import Loading from 'components/shared/Loading'
 
 import { ProjectCategory } from 'models/project-visibility'
@@ -286,7 +285,6 @@ export default function Projects() {
           </Trans>
         </div>
       )}
-      <FeedbackFormButton />
     </div>
   )
 }

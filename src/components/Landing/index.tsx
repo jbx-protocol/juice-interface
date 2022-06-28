@@ -1,7 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Col, Row, Space } from 'antd'
 import ExternalLink from 'components/shared/ExternalLink'
-import FeedbackFormButton from 'components/shared/FeedbackFormButton'
 import Grid from 'components/shared/Grid'
 import Loading from 'components/shared/Loading'
 import ProjectCard from 'components/shared/ProjectCard'
@@ -498,7 +497,6 @@ export default function Landing() {
           </Trans>
         </p>
       </div>
-      <FeedbackFormButton />
       <Footer />
     </div>
   )

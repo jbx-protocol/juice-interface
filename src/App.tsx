@@ -4,6 +4,7 @@ import { Content } from 'antd/lib/layout/layout'
 import { NetworkContext } from 'contexts/networkContext'
 import { NetworkName } from 'models/network-name'
 import { useContext, useLayoutEffect, useState } from 'react'
+import Crate from '@widgetbot/crate'
 
 import Navbar from 'components/Navbar'
 
@@ -12,6 +13,12 @@ import useMobile from 'hooks/Mobile'
 import { readNetwork } from 'constants/networks'
 
 import Router from './Router'
+
+// Widget for Discord bottom right - https://github.com/widgetbot-io/crate
+new Crate({
+  server: '775859454780244028', // 🧃Juicebox DAO
+  channel: '864240636277293106', // #❓-general-support
+})
 
 function App() {
   const [switchNetworkModalVisible, setSwitchNetworkModalVisible] =

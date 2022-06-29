@@ -10,6 +10,82 @@ import { useProjectsQuery } from 'hooks/Projects'
 import { RightCircleOutlined } from '@ant-design/icons'
 import { useContext } from 'react'
 import { Link } from 'react-router-dom'
+import useMobile from 'hooks/Mobile'
+
+import { SectionHeading } from './SectionHeading'
+
+const SmallProjectCardMobile = ({
+  project,
+}: {
+  project: ProjectCardProject
+}) => {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
+  const { data: metadata } = useProjectMetadata(project?.metadataUri)
+
+  return (
+    <Link
+      style={{
+        cursor: 'pointer',
+        overflow: 'hidden',
+        width: '100%',
+        padding: '0.5rem 1rem',
+        textAlign: 'center',
+        display: 'flex',
+        alignItems: 'center',
+        gap: 10,
+      }}
+      key={`${project.id}_${project.cv}`}
+      to={
+        project.cv === '2'
+          ? `/v2/p/${project.projectId}`
+          : `/p/${project?.handle}`
+      }
+      className="clickable-border"
+    >
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+        }}
+      >
+        <ProjectLogo uri={metadata?.logoUri} name={metadata?.name} size={60} />
+      </div>
+
+      <div
+        style={{
+          fontWeight: 400,
+          width: '100%',
+        }}
+      >
+        {metadata ? (
+          <span
+            style={{
+              color: colors.text.primary,
+              margin: 0,
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+            }}
+          >
+            {metadata.name}
+          </span>
+        ) : (
+          <Skeleton paragraph={false} title={{ width: 120 }} active />
+        )}
+
+        <div
+          style={{
+            color: colors.text.primary,
+            fontWeight: 500,
+          }}
+        >
+          <ETHAmount amount={project?.totalPaid} precision={0} /> raised
+        </div>
+      </div>
+    </Link>
+  )
+}
 
 const SmallProjectCard = ({ project }: { project: ProjectCardProject }) => {
   const {
@@ -22,7 +98,7 @@ const SmallProjectCard = ({ project }: { project: ProjectCardProject }) => {
       style={{
         cursor: 'pointer',
         overflow: 'hidden',
-        width: '200px',
+        width: 180,
         padding: '1rem',
         textAlign: 'center',
       }}
@@ -41,7 +117,7 @@ const SmallProjectCard = ({ project }: { project: ProjectCardProject }) => {
           marginBottom: '0.5rem',
         }}
       >
-        <ProjectLogo uri={metadata?.logoUri} name={metadata?.name} size={70} />
+        <ProjectLogo uri={metadata?.logoUri} name={metadata?.name} size={90} />
       </div>
 
       <div
@@ -87,6 +163,8 @@ export function TopProjectsSection() {
     theme: { colors },
     isDarkMode,
   } = useContext(ThemeContext)
+  const isMobile = useMobile()
+
   const { data: previewProjects } = useProjectsQuery({
     pageSize: 4,
   })
@@ -98,19 +176,12 @@ export function TopProjectsSection() {
         padding: '2rem',
       }}
     >
-      <div style={{ padding: '0 40px', margin: '40px auto', maxWidth: 1080 }}>
+      <div style={{ margin: '40px auto', maxWidth: 1080 }}>
         <Space direction="vertical" style={{ width: '100%' }} size="large">
           <div>
-            <h2
-              style={{
-                fontSize: '2.5rem',
-                textAlign: 'center',
-                fontWeight: 600,
-                marginBottom: '0.8rem',
-              }}
-            >
-              Fund and operate your thing, your way.
-            </h2>
+            <SectionHeading>
+              <Trans>Fund and operate your thing, your way.</Trans>
+            </SectionHeading>
 
             <p
               style={{
@@ -154,11 +225,16 @@ export function TopProjectsSection() {
                   width: '80%',
                   justifyContent: 'space-between',
                   margin: '0 auto',
+                  flexWrap: 'wrap',
                 }}
               >
-                {previewProjects.map(p => (
-                  <SmallProjectCard key={p.metadataUri} project={p} />
-                ))}
+                {previewProjects.map(p =>
+                  isMobile ? (
+                    <SmallProjectCardMobile key={p.metadataUri} project={p} />
+                  ) : (
+                    <SmallProjectCard key={p.metadataUri} project={p} />
+                  ),
+                )}
               </div>
             ) : (
               <Loading />
@@ -166,15 +242,24 @@ export function TopProjectsSection() {
           </div>
 
           <div style={{ textAlign: 'center' }}>
-            <Space direction="vertical">
-              <Button size="large" type="primary" href="/#/create">
+            <Space direction="vertical" style={{ width: '100%' }} size="large">
+              <Button
+                size="large"
+                type="primary"
+                href="/#/create"
+                block={isMobile}
+              >
                 <Trans>Launch your project</Trans>
               </Button>
 
-              <Button
-                size="large"
-                type="link"
-                style={{ fontSize: '0.9rem', color: colors.text.secondary }}
+              <div
+                role="button"
+                style={{
+                  fontSize: '0.9rem',
+                  color: colors.text.secondary,
+                  cursor: 'pointer',
+                }}
+                className="hover-text-decoration-underline"
                 onClick={() => {
                   document
                     .getElementById('how-it-works')
@@ -185,7 +270,7 @@ export function TopProjectsSection() {
                   <Trans>How does it work?</Trans>
                   <RightCircleOutlined />
                 </Space>
-              </Button>
+              </div>
             </Space>
           </div>
         </Space>

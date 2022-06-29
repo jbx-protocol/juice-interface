@@ -1,6 +1,7 @@
 import { Trans } from '@lingui/macro'
 import ETHAmount from 'components/shared/currency/ETHAmount'
 import { ThemeContext } from 'contexts/themeContext'
+import useMobile from 'hooks/Mobile'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { useContext } from 'react'
 import { formattedNum } from 'utils/formatNumber'
@@ -15,11 +16,20 @@ const Stat = ({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+  const isMobile = useMobile()
+
   return (
-    <div style={{ textAlign: 'center', width: '100%', maxWidth: '200px' }}>
+    <div
+      style={{
+        textAlign: 'center',
+        width: '100%',
+        maxWidth: '200px',
+        margin: '0 auto',
+      }}
+    >
       <div
         style={{
-          fontSize: '2.5rem',
+          fontSize: isMobile ? '1.8rem' : '2.5rem',
           fontWeight: 600,
           color: colors.text.brand.primary,
         }}
@@ -47,6 +57,8 @@ export function StatsSection() {
         maxWidth: 1200,
         margin: '0 auto',
         padding: '4rem 2rem',
+        flexWrap: 'wrap',
+        gap: '1rem',
       }}
     >
       <Stat

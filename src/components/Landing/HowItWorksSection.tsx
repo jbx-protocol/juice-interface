@@ -1,9 +1,12 @@
 import { t, Trans } from '@lingui/macro'
-import { Col, Row } from 'antd'
+import { Button, Col, Divider, Row } from 'antd'
 import ExternalLink from 'components/shared/ExternalLink'
 import { CSSProperties } from 'react'
+import { InfoCircleOutlined } from '@ant-design/icons'
+import useMobile from 'hooks/Mobile'
 
 import { OverflowVideoLink } from './QAs'
+import { SectionHeading } from './SectionHeading'
 
 const SmallHeader = ({ text }: { text: string }) => (
   <h3 style={{ fontWeight: 600, margin: 0 }}>{text}</h3>
@@ -20,6 +23,7 @@ const FourthCol = ({
 )
 
 export function HowItWorksSection() {
+  const isMobile = useMobile()
   const totalMaxWidth = 1080
 
   const wrapper: CSSProperties = {
@@ -34,16 +38,13 @@ export function HowItWorksSection() {
         padding: '2rem',
       }}
     >
-      <h2
+      <SectionHeading
         style={{
-          textAlign: 'center',
-          fontWeight: 600,
-          fontSize: '2.5rem',
           marginBottom: '4rem',
         }}
       >
         <Trans>How to Juice.</Trans>
-      </h2>
+      </SectionHeading>
 
       <div
         style={{
@@ -51,19 +52,22 @@ export function HowItWorksSection() {
         }}
       >
         <Row align="middle">
-          <Col xs={24} sm={11}>
-            <img
-              style={{
-                maxHeight: 480,
-                maxWidth: '100%',
-                objectFit: 'contain',
-                marginBottom: 40,
-              }}
-              src="/assets/pina.png"
-              alt="Pinepple geek artist holding a paintbrush"
-              loading="lazy"
-            />
-          </Col>
+          {!isMobile && (
+            <Col xs={24} sm={11}>
+              <img
+                style={{
+                  maxHeight: 480,
+                  maxWidth: '100%',
+                  objectFit: 'contain',
+                  marginBottom: 40,
+                }}
+                src="/assets/pina.png"
+                alt="Pinepple geek artist holding a paintbrush"
+                loading="lazy"
+              />
+            </Col>
+          )}
+
           <Col xs={24} sm={13}>
             <div style={{ display: 'grid', rowGap: 20, marginBottom: 40 }}>
               <FourthCol header={t`1. Get funded.`}>
@@ -99,9 +103,14 @@ export function HowItWorksSection() {
                 </Trans>
               </FourthCol>
 
+              <Divider
+                style={{ width: '50px', margin: '0 auto', minWidth: 'unset' }}
+              />
+
               <p>
+                <InfoCircleOutlined />{' '}
                 <Trans>
-                  Note: Juicebox is new, unaudited, and not guaranteed to work
+                  Juicebox is new, unaudited, and not guaranteed to work
                   perfectly. Before spending money, do your own research:{' '}
                   <ExternalLink href="https://discord.gg/6jXrJSyDFf">
                     ask questions
@@ -116,6 +125,9 @@ export function HowItWorksSection() {
             </div>
           </Col>
         </Row>
+        <Button size="large" type="primary" href="/#/create" block={isMobile}>
+          <Trans>Launch your project</Trans>
+        </Button>
       </div>
     </section>
   )

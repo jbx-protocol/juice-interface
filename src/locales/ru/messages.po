@@ -1284,6 +1284,10 @@ msgstr ""
 msgid "File must be less than {formattedSize}{unit}"
 msgstr ""
 
+#: src/components/Landing/TopProjectsSection.tsx
+msgid "Fund and operate your thing, your way."
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "Fund anything. Grow together."
 msgstr ""
@@ -1569,6 +1573,10 @@ msgstr "ID проекта Juicebox"
 msgid "Juicebox V2 project with ID {0}"
 msgstr ""
 
+#: src/components/Landing/HowItWorksSection.tsx
+msgid "Juicebox is new, unaudited, and not guaranteed to work perfectly. Before spending money, do your own research: <0>ask questions</0>, <1>check out the code</1>, and understand the risks!"
+msgstr ""
+
 #: src/components/shared/TransactionModal.tsx
 msgid "Juicebox loading animation"
 msgstr "Juicebox загружающаяся анимация"
@@ -1605,6 +1613,7 @@ msgstr "Последние платежи"
 msgid "Launch funding cycle"
 msgstr ""
 
+#: src/components/Landing/HowItWorksSection.tsx
 #: src/components/Landing/TopProjectsSection.tsx
 #: src/components/Landing/index.tsx
 #: src/components/v2/V2Create/index.tsx
@@ -1835,10 +1844,6 @@ msgstr "Не установлено"
 #: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Note"
 msgstr "Примечание"
-
-#: src/components/Landing/HowItWorksSection.tsx
-msgid "Note: Juicebox is new, unaudited, and not guaranteed to work perfectly. Before spending money, do your own research: <0>ask questions</0>, <1>check out the code</1>, and understand the risks!"
-msgstr "Примечание: Juicebox является новым проектом, не прошедшим финансовую проверку, и его работа не гарантируется. Прежде чем тратить деньги, проведите собственное исследование: задайте вопросы, проверьте код и осознайте риски!"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "Note: Tokens can be minted manually when allowed in the current funding cycle. This can be changed by the project owner for upcoming cycles."

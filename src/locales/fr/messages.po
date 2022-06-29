@@ -1284,6 +1284,10 @@ msgstr "Échec de la mise à jour des métadonnées du projet"
 msgid "File must be less than {formattedSize}{unit}"
 msgstr "Le fichier doit être inférieur à {formattedSize}{unit}"
 
+#: src/components/Landing/TopProjectsSection.tsx
+msgid "Fund and operate your thing, your way."
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "Fund anything. Grow together."
 msgstr "Financez quoi que ce soit. Grandissez ensemble."
@@ -1569,6 +1573,10 @@ msgstr "Identifiant du projet Juicebox"
 msgid "Juicebox V2 project with ID {0}"
 msgstr "Projet Juicebox V2 avec Identifiant {0}"
 
+#: src/components/Landing/HowItWorksSection.tsx
+msgid "Juicebox is new, unaudited, and not guaranteed to work perfectly. Before spending money, do your own research: <0>ask questions</0>, <1>check out the code</1>, and understand the risks!"
+msgstr ""
+
 #: src/components/shared/TransactionModal.tsx
 msgid "Juicebox loading animation"
 msgstr "Animation de chargement de Juicebox"
@@ -1605,6 +1613,7 @@ msgstr "Derniers paiements"
 msgid "Launch funding cycle"
 msgstr "Lancer le cycle de financement"
 
+#: src/components/Landing/HowItWorksSection.tsx
 #: src/components/Landing/TopProjectsSection.tsx
 #: src/components/Landing/index.tsx
 #: src/components/v2/V2Create/index.tsx
@@ -1835,10 +1844,6 @@ msgstr "Pas encore défini"
 #: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Note"
 msgstr "Remarque"
-
-#: src/components/Landing/HowItWorksSection.tsx
-msgid "Note: Juicebox is new, unaudited, and not guaranteed to work perfectly. Before spending money, do your own research: <0>ask questions</0>, <1>check out the code</1>, and understand the risks!"
-msgstr "Remarque : Juicebox est nouveau, non audité et il sans garantie de fonctionner parfaitement. Avant de dépenser de l'argent, faites vos propres recherches : <0>posez des questions</0>, <1>consultez le code</1> et comprenez les risques !"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "Note: Tokens can be minted manually when allowed in the current funding cycle. This can be changed by the project owner for upcoming cycles."

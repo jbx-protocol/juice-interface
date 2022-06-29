@@ -1284,6 +1284,10 @@ msgstr "Houve falha na atualização do metadado do projeto"
 msgid "File must be less than {formattedSize}{unit}"
 msgstr "O arquivo deve ter menos que {formattedSize}{unit}"
 
+#: src/components/Landing/TopProjectsSection.tsx
+msgid "Fund and operate your thing, your way."
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "Fund anything. Grow together."
 msgstr "Financie qualquer coisa. Cresça em conjunto."
@@ -1569,6 +1573,10 @@ msgstr "ID do projeto Juicebox"
 msgid "Juicebox V2 project with ID {0}"
 msgstr "Projeto Juicebox V2 com ID {0}"
 
+#: src/components/Landing/HowItWorksSection.tsx
+msgid "Juicebox is new, unaudited, and not guaranteed to work perfectly. Before spending money, do your own research: <0>ask questions</0>, <1>check out the code</1>, and understand the risks!"
+msgstr ""
+
 #: src/components/shared/TransactionModal.tsx
 msgid "Juicebox loading animation"
 msgstr "Animação de carregamento do Juicebox"
@@ -1605,6 +1613,7 @@ msgstr "Últimos pagamentos"
 msgid "Launch funding cycle"
 msgstr "Lançar ciclo de financiamento"
 
+#: src/components/Landing/HowItWorksSection.tsx
 #: src/components/Landing/TopProjectsSection.tsx
 #: src/components/Landing/index.tsx
 #: src/components/v2/V2Create/index.tsx
@@ -1835,10 +1844,6 @@ msgstr "Não estabelecido"
 #: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 msgid "Note"
 msgstr "Nota"
-
-#: src/components/Landing/HowItWorksSection.tsx
-msgid "Note: Juicebox is new, unaudited, and not guaranteed to work perfectly. Before spending money, do your own research: <0>ask questions</0>, <1>check out the code</1>, and understand the risks!"
-msgstr "Nota: o Juicebox é novo, não auditado e sem garantia de funcionar perfeitamente. Antes de gastar dinheiro, faça sua própria pesquisa: <0>pergunte</0>, <1>confira os códigos</1>, e entenda os riscos!"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "Note: Tokens can be minted manually when allowed in the current funding cycle. This can be changed by the project owner for upcoming cycles."

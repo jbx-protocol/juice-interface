@@ -2285,6 +2285,14 @@ msgstr "Provide a link to additional information about this NFT."
 msgid "Rankings based on number of contributions and volume gained in the last {trendingWindow} days. <0>See code</0>"
 msgstr "Rankings based on number of contributions and volume gained in the last {trendingWindow} days. <0>See code</0>"
 
+#: src/components/shared/Paragraph.tsx
+msgid "Read less"
+msgstr "Read less"
+
+#: src/components/shared/Paragraph.tsx
+msgid "Read more"
+msgstr "Read more"
+
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "Receive ERC-20"

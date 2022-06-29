@@ -1,3 +1,4 @@
+import { t } from '@lingui/macro'
 import { Button } from 'antd'
 
 import { useState, useMemo } from 'react'
@@ -42,7 +43,7 @@ export default function Paragraph({
               e.stopPropagation()
             }}
           >
-            {expanded ? 'Read less' : 'Read more'}
+            {expanded ? t`Read less` : t`Read more`}
           </Button>
         )}
       </RichNote>

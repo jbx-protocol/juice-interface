@@ -104,7 +104,7 @@ export default function FundingCycleTabContent({
         ) : null}
 
         <RichButton
-          prefix="4"
+          prefix={featureFlagEnabled('nftRewards') ? '4' : '3'}
           heading={<Trans>Rules</Trans>}
           onClick={() => {
             setRulesDrawerVisible(true)

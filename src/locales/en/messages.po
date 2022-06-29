@@ -833,6 +833,10 @@ msgstr "Create project"
 msgid "Create your own ERC-20 token to represent stake in your project. Contributors will receive these tokens when they pay your project."
 msgstr "Create your own ERC-20 token to represent stake in your project. Contributors will receive these tokens when they pay your project."
 
+#: src/components/Landing/HowItWorksSection.tsx
+msgid "Crowdfund your project with ETH. Set a funding target to cover predictable expenses, and any extra funds (<0>overflow</0>) can be claimed by anyone holding your project's tokens alongside you."
+msgstr "Crowdfund your project with ETH. Set a funding target to cover predictable expenses, and any extra funds (<0>overflow</0>) can be claimed by anyone holding your project's tokens alongside you."
+
 #: src/components/Landing/index.tsx
 msgid "Crowdfunding"
 msgstr "Crowdfunding"
@@ -2212,10 +2216,6 @@ msgstr "Projects that you hold tokens for."
 #: src/components/shared/forms/TicketingForm.tsx
 msgid "Projects using a reserved rate of {reservedRateRiskyMin}% or more will appear risky to contributors, as a relatively small number of tokens will be received in exchange for paying your project."
 msgstr "Projects using a reserved rate of {reservedRateRiskyMin}% or more will appear risky to contributors, as a relatively small number of tokens will be received in exchange for paying your project."
-
-#: src/components/Landing/HowItWorksSection.tsx
-msgid "Raise ETH for your thing. Set a funding target to cover predictable expenses. Any extra funds (<0>overflow</0>) can be claimed by anyone holding your project's tokens alongside you."
-msgstr "Raise ETH for your thing. Set a funding target to cover predictable expenses. Any extra funds (<0>overflow</0>) can be claimed by anyone holding your project's tokens alongside you."
 
 #: src/components/Landing/StatsSection.tsx
 msgid "Raised on Juicebox"

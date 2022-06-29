@@ -72,8 +72,8 @@ export function HowItWorksSection() {
             <div style={{ display: 'grid', rowGap: 20, marginBottom: 40 }}>
               <FourthCol header={t`1. Get funded.`}>
                 <Trans>
-                  Raise ETH for your thing. Set a funding target to cover
-                  predictable expenses. Any extra funds (
+                  Crowdfund your project with ETH. Set a funding target to cover
+                  predictable expenses, and any extra funds (
                   <OverflowVideoLink>overflow</OverflowVideoLink>) can be
                   claimed by anyone holding your project's tokens alongside you.
                 </Trans>

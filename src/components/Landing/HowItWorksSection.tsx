@@ -125,9 +125,11 @@ export function HowItWorksSection() {
             </div>
           </Col>
         </Row>
-        <Button size="large" type="primary" href="/#/create" block={isMobile}>
-          <Trans>Launch your project</Trans>
-        </Button>
+        <div style={{ textAlign: 'center' }}>
+          <Button size="large" type="primary" href="/#/create" block={isMobile}>
+            <Trans>Design your project</Trans>
+          </Button>
+        </div>
       </div>
     </section>
   )

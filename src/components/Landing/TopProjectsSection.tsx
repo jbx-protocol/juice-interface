@@ -249,7 +249,7 @@ export function TopProjectsSection() {
                 href="/#/create"
                 block={isMobile}
               >
-                <Trans>Launch your project</Trans>
+                <Trans>Start raising funds</Trans>
               </Button>
 
               <div

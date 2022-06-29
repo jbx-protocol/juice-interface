@@ -948,6 +948,7 @@ msgstr "Deposite 1 Wei para @{handle}"
 msgid "Design how your tokens should work."
 msgstr ""
 
+#: src/components/Landing/HowItWorksSection.tsx
 #: src/components/v1/V1Create/index.tsx
 msgid "Design your project"
 msgstr "Crie seu projeto"
@@ -1613,8 +1614,6 @@ msgstr "Últimos pagamentos"
 msgid "Launch funding cycle"
 msgstr "Lançar ciclo de financiamento"
 
-#: src/components/Landing/HowItWorksSection.tsx
-#: src/components/Landing/TopProjectsSection.tsx
 #: src/components/Landing/index.tsx
 #: src/components/v2/V2Create/index.tsx
 msgid "Launch your project"
@@ -2594,6 +2593,10 @@ msgstr "Comece novamente"
 
 #: src/components/v2/V2Create/StartOverButton.tsx
 msgid "Start over"
+msgstr ""
+
+#: src/components/Landing/TopProjectsSection.tsx
+msgid "Start raising funds"
 msgstr ""
 
 #: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner.tsx

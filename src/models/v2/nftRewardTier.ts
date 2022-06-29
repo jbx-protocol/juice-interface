@@ -1,5 +1,5 @@
 export type NFTRewardTier = {
-  paymentThreshold: number // might be better as BigNumber of wei, TODO: check with Tank
+  paymentThreshold: number // ETH amount
   maxSupply: number
   imageUrl: string // link to ipfs
   name: string

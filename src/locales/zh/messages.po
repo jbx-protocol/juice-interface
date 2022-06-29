@@ -1301,6 +1301,10 @@ msgstr "允许代币铸造会令捐款人觉得有风险。"
 msgid "Encourage treasury contributions by offering a reward NFT to people who contribute above a certain threshold."
 msgstr ""
 
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTierModal.tsx
+msgid "Encourage treasury contributions by offering an NFT reward for contributions above a certain threshold."
+msgstr ""
+
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "End"
@@ -1695,6 +1699,7 @@ msgstr "标志"
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/MaxSupplyFormItem.tsx
 msgid "MAX"
 msgstr "最大值"
 

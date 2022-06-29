@@ -1,5 +1,6 @@
 import { t } from '@lingui/macro'
 import { Form, FormInstance } from 'antd'
+import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import TooltipLabel from 'components/shared/TooltipLabel'
 
@@ -33,7 +34,7 @@ export default function PaymentThresholdFormItem({
       >
         <FormattedNumberInput
           placeholder={'0.5'}
-          accessory={<span>ETH</span>}
+          accessory={<InputAccessoryButton content={'ETH'} disabled />}
         />
       </Form.Item>
     </div>

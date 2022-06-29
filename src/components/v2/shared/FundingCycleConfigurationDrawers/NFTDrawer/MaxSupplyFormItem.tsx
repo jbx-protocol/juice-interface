@@ -1,5 +1,6 @@
 import { t } from '@lingui/macro'
 import { Form, FormInstance } from 'antd'
+import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import TooltipLabel from 'components/shared/TooltipLabel'
 
@@ -32,7 +33,17 @@ export default function MaxSupplyFormItem({
         extra={t`The maximum quantity of this NFT that can ever be minted.`}
         rules={[{ required: true, validator: validateMaxSupply }]}
       >
-        <FormattedNumberInput placeholder={'1000'} isInteger />
+        <FormattedNumberInput
+          placeholder={'100'}
+          max={1000}
+          accessory={
+            <InputAccessoryButton
+              content={t`MAX`}
+              onClick={() => form.setFieldsValue({ maxSupply: 1000 })}
+            />
+          }
+          isInteger
+        />
       </Form.Item>
     </div>
   )

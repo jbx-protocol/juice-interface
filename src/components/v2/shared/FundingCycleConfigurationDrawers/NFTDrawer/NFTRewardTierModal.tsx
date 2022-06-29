@@ -1,4 +1,4 @@
-import { t } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Form, Input, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { ModalMode } from 'components/shared/formItems/formHelpers'
@@ -91,10 +91,11 @@ export default function NFTRewardTierModal({
       onCancel={onClose}
       title={mode === 'Edit' ? t`Edit NFT reward` : t`Add NFT reward`}
     >
-      {/* TODO: translate text when confirmed */}
       <p>
-        Encourage treasury contributions by offering an NFT reward for
-        contributions above a certain threshold.
+        <Trans>
+          Encourage treasury contributions by offering an NFT reward for
+          contributions above a certain threshold.
+        </Trans>
       </p>
       <Form layout="vertical" form={NFTForm}>
         <PaymentThresholdFormItem form={NFTForm} />

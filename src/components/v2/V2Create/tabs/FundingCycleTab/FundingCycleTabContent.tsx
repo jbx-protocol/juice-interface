@@ -6,7 +6,7 @@ import { useContext, useState } from 'react'
 
 import { ThemeContext } from 'contexts/themeContext'
 import NFTDrawer from 'components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer'
-import { featureFlagEnabled } from 'utils/featureFlags'
+import { enableFeatureFlag, featureFlagEnabled } from 'utils/featureFlags'
 
 import FundingDrawer from '../../../shared/FundingCycleConfigurationDrawers/FundingDrawer'
 import TokenDrawer from '../../../shared/FundingCycleConfigurationDrawers/TokenDrawer'
@@ -43,6 +43,8 @@ export default function FundingCycleTabContent({
     setRulesDrawerVisible(false)
     setNFTDrawerVisible(false)
   }
+
+  enableFeatureFlag('nftRewards')
 
   return (
     <ProjectConfigurationFieldsContainer showPreview>

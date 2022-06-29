@@ -1,13 +1,16 @@
-import { Row, Col, Tooltip } from 'antd'
+import { Row, Col, Tooltip, Space } from 'antd'
 import { InfoCircleOutlined } from '@ant-design/icons'
 
 import { CSSProperties, useContext } from 'react'
 import { ThemeContext } from 'contexts/themeContext'
-import TrendingProjects from 'components/Projects/TrendingProjects'
 import RankingExplanation from 'components/Projects/RankingExplanation'
 import { Trans } from '@lingui/macro'
 
-import useMobile from 'hooks/Mobile'
+import { useTrendingProjects } from 'hooks/Projects'
+import TrendingProjectCard from 'components/Projects/TrendingProjectCard'
+import Grid from 'components/shared/Grid'
+
+import Payments from './Payments'
 
 export default function TrendingSection() {
   const {
@@ -15,62 +18,58 @@ export default function TrendingSection() {
     isDarkMode,
   } = useContext(ThemeContext)
 
-  const isMobile = useMobile()
-
   const trendingProjectsStyle: CSSProperties = {
     // Light theme uses a slightly lighter background than background-l1
     backgroundColor: isDarkMode ? colors.background.l1 : '#faf7f5',
-    marginTop: '3rem',
-    paddingTop: !isMobile ? 40 : 80,
-    paddingLeft: 40,
-    paddingRight: 40,
-    paddingBottom: 0,
+    padding: '2rem',
+    margin: '0 auto',
   }
 
-  const headingStyles: CSSProperties = {
-    fontWeight: 600,
-    marginBottom: 15,
-    fontSize: 22,
-    marginTop: 20,
-    display: 'flex',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-  }
+  const SmallHeader = ({ text }: { text: string | JSX.Element }) => (
+    <h3 style={{ fontWeight: 600, margin: 0, fontSize: '1.3rem' }}>{text}</h3>
+  )
+
+  const { data: projects } = useTrendingProjects(6, 7)
 
   return (
     <section style={trendingProjectsStyle}>
-      <Row style={{ maxWidth: 1200, margin: 'auto' }}>
-        <Col
-          xs={0}
-          lg={8}
-          style={{
-            display: 'flex',
-            alignItems: 'flex-end',
-            justifyContent: 'center',
-          }}
-        >
-          <img
-            className="hide-mobile hide-tablet"
-            style={{ height: 550 }}
-            src="/assets/green_orange.png"
-            alt="Green orange singing"
-          />
+      <Row style={{ maxWidth: 1200, margin: '0 auto' }} gutter={40}>
+        <Col xs={24} md={12}>
+          <Space direction="vertical" style={{ width: '100%' }} size="middle">
+            <SmallHeader
+              text={
+                <span>
+                  <Trans>Trending projects</Trans>{' '}
+                  <Tooltip
+                    title={<RankingExplanation trendingWindow={7} />}
+                    placement="bottom"
+                  >
+                    <InfoCircleOutlined style={{ fontSize: 20 }} />
+                  </Tooltip>
+                </span>
+              }
+            />
+
+            <Grid list>
+              {projects?.map((p, i) => (
+                <TrendingProjectCard
+                  project={p}
+                  size={'sm'}
+                  rank={i + 1}
+                  key={`${p.id}_${p.cv}`}
+                  trendingWindowDays={7}
+                />
+              ))}
+            </Grid>
+          </Space>
         </Col>
-        <Col xs={24} lg={15}>
-          <div style={{ paddingBottom: 20 }}>
-            <h2 style={headingStyles}>
-              <Trans>
-                <span style={{ marginRight: 12 }}>Trending projects</span>
-                <Tooltip
-                  title={<RankingExplanation trendingWindow={7} />}
-                  placement="bottom"
-                >
-                  <InfoCircleOutlined style={{ fontSize: 20 }} />
-                </Tooltip>
-              </Trans>
-            </h2>
-            <TrendingProjects count={6} trendingWindowDays={7} isHomePage />
-          </div>
+        <Col xs={24} md={12}>
+          <Space direction="vertical" style={{ width: '100%' }} size="middle">
+            <SmallHeader text={<Trans>Latest payments</Trans>} />
+            <div style={{ maxHeight: 600, overflow: 'auto' }}>
+              <Payments />
+            </div>
+          </Space>
         </Col>
       </Row>
     </section>

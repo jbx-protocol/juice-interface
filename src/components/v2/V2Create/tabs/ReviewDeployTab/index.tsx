@@ -7,6 +7,7 @@ import DeployProjectButton from './DeployProjectButton'
 import ProjectDetailsSection from './ProjectDetailsSection'
 import FundingSummarySection from './FundingSummarySection'
 import NFTSummarySection from './NFTSummarySection'
+import { StartOverButton } from '../../StartOverButton'
 
 export const rowGutter: [Gutter, Gutter] = [40, 30]
 
@@ -29,6 +30,7 @@ export default function ReviewDeployTab() {
       </div>
 
       <DeployProjectButton />
+      <StartOverButton />
     </div>
   )
 }

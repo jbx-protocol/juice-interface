@@ -3,7 +3,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Modal, Space } from 'antd'
 import ERC20TokenBalance from 'components/v1/shared/ERC20TokenBalance'
 import { FormItems } from 'components/shared/formItems'
-import ProjectTokenBalance from 'components/v1/V1Project/ProjectTokenBalance'
+import V1ProjectTokenBalance from 'components/v1/shared/V1ProjectTokenBalance'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import {
   OperatorPermission,
@@ -19,7 +19,7 @@ import { t, Trans } from '@lingui/macro'
 
 import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
 
-export default function BalancesModal({
+export function V1BalancesModal({
   visible,
   onCancel,
 }: {
@@ -33,9 +33,8 @@ export default function BalancesModal({
   const setProjectUriTx = useSetProjectUriTx()
 
   useEffect(() => {
-    setEditingTokenRefs(
-      (metadata as ProjectMetadataV4)?.tokens ?? [{ type: 'erc20', value: '' }],
-    )
+    const initialTokens = metadata?.tokens ?? [{ type: 'erc20', value: '' }]
+    setEditingTokenRefs(initialTokens)
   }, [metadata])
 
   const hasEditPermission = useHasPermission([OperatorPermission.SetUri])
@@ -108,7 +107,7 @@ export default function BalancesModal({
         </p>
 
         <Space direction="vertical" style={{ width: '100%', marginTop: 20 }}>
-          <ProjectTokenBalance
+          <V1ProjectTokenBalance
             wallet={owner}
             projectId={V1_PROJECT_IDS.JUICEBOX_DAO}
           />
@@ -120,7 +119,7 @@ export default function BalancesModal({
                 tokenAddress={t.value}
               />
             ) : (
-              <ProjectTokenBalance
+              <V1ProjectTokenBalance
                 key={t.value}
                 wallet={owner}
                 projectId={BigNumber.from(t.value).toNumber()}

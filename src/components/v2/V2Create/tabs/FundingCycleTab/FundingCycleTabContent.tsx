@@ -6,6 +6,7 @@ import { useContext, useState } from 'react'
 
 import { ThemeContext } from 'contexts/themeContext'
 import NFTDrawer from 'components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer'
+import { featureFlagEnabled } from 'utils/featureFlags'
 
 import FundingDrawer from '../../../shared/FundingCycleConfigurationDrawers/FundingDrawer'
 import TokenDrawer from '../../../shared/FundingCycleConfigurationDrawers/TokenDrawer'
@@ -84,22 +85,23 @@ export default function FundingCycleTabContent({
           }
           primaryColor={tokenDrawerSeen ? seenColor : undefined}
         />
-
-        <RichButton
-          prefix="3"
-          heading={<Trans>NFT rewards</Trans>}
-          onClick={() => {
-            setNFTDrawerVisible(true)
-            setNFTDrawerSeen(true)
-          }}
-          description={<Trans>Reward contributors with NFT's.</Trans>}
-          icon={
-            NFTDrawerSeen ? (
-              <CheckCircleFilled style={{ color: seenColor }} />
-            ) : undefined
-          }
-          primaryColor={fundingDrawerSeen ? colors.text.tertiary : undefined}
-        />
+        {featureFlagEnabled('nftRewards') ? (
+          <RichButton
+            prefix="3"
+            heading={<Trans>NFT rewards</Trans>}
+            onClick={() => {
+              setNFTDrawerVisible(true)
+              setNFTDrawerSeen(true)
+            }}
+            description={<Trans>Reward contributors with NFT's.</Trans>}
+            icon={
+              NFTDrawerSeen ? (
+                <CheckCircleFilled style={{ color: seenColor }} />
+              ) : undefined
+            }
+            primaryColor={fundingDrawerSeen ? colors.text.tertiary : undefined}
+          />
+        ) : null}
 
         <RichButton
           prefix="4"

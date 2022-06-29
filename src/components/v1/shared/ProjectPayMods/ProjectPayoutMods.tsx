@@ -81,23 +81,24 @@ export default function ProjectPayoutMods({
           </Space>
         )}
         <Space style={{ width: '100%' }} direction="vertical" size="small">
-          {mods.map((v, i) =>
-            ProjectModInput({
-              mod: v,
-              index: i,
-              target,
-              targetIsInfinite,
-              currencyName,
-              feePercentage,
-              onSelect: openModalWithModIndex,
-              onDelete: index => {
+          {mods.map((v, i) => (
+            <ProjectModInput
+              mod={v}
+              key={i}
+              index={i}
+              target={target}
+              targetIsInfinite={targetIsInfinite}
+              currencyName={currencyName}
+              feePercentage={feePercentage}
+              onSelect={openModalWithModIndex}
+              onDelete={(index: number) => {
                 onModsChanged([
                   ...mods.slice(0, index),
                   ...mods.slice(index + 1),
                 ])
-              },
-            }),
-          )}
+              }}
+            />
+          ))}
         </Space>
         <div
           style={{

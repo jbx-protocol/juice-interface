@@ -8,25 +8,16 @@ import Loading from 'components/shared/Loading'
 import { V1CurrencyProvider } from 'providers/v1/V1CurrencyProvider'
 import PrivacyPolicy from 'components/PrivacyPolicy'
 import V2BugUpdates from 'components/V2BugUpdates'
-import { t } from '@lingui/macro'
 import { fathom } from 'lib/fathom'
 
 import { V2UserProvider } from 'providers/v2/UserProvider'
-
-import { DEFAULT_SITE_TITLE } from 'constants/siteMetadata'
+import { usePageTitle } from 'hooks/PageTitle'
 
 const V1Create = lazy(() => import('components/v1/V1Create'))
 const V2Create = lazy(() => import('components/v2/V2Create'))
 const V2DashboardGateway = lazy(
   () => import('components/v2/V2Dashboard/Gateway'),
 )
-
-const pageTitles = (): { [k in string]: string } => {
-  return {
-    '/create': t`Create project`,
-    '/projects': t`Projects`,
-  }
-}
 
 function CatchallRedirect() {
   const route = useParams<{ route: string }>()['route']
@@ -40,15 +31,6 @@ function usePageViews() {
     fathom?.trackPageview({
       url: location.pathname,
     })
-  }, [location])
-}
-
-function usePageTitle() {
-  const location = useLocation()
-
-  useEffect(() => {
-    const name = pageTitles()[location.pathname]
-    document.title = name ? `${name} | Juicebox` : DEFAULT_SITE_TITLE
   }, [location])
 }
 

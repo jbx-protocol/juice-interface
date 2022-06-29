@@ -1,7 +1,7 @@
 import { TwitterOutlined } from '@ant-design/icons'
 import Discord from 'components/icons/Discord'
 
-import ExternalLink from '../ExternalLink'
+import ExternalLink from '../../ExternalLink'
 
 const prettyUrl = (url: string) => {
   if (url.startsWith('https://')) {
@@ -15,7 +15,7 @@ const linkUrl = (url: string) => {
   if (url.startsWith('http://') || url.startsWith('https://')) {
     return url
   }
-  return 'http://' + url
+  return 'https://' + url
 }
 const spacing = 20
 

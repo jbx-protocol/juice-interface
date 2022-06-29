@@ -111,7 +111,7 @@ export default function NFTUpload({ form }: { form: FormInstance }) {
             src={imageUrl}
             alt={form.getFieldValue('name') ?? 'new NFT'}
             style={{
-              width: '100%',
+              height: '100%',
             }}
           />
         ) : (

@@ -16,9 +16,10 @@ export default function TreasuryStats() {
   const {
     balanceInDistributionLimitCurrency,
     distributionLimit,
-    terminals,
     projectId,
     totalVolume,
+    isPreviewMode,
+    primaryTerminal,
     loading: { distributionLimitLoading },
   } = useContext(V2ProjectContext)
 
@@ -28,11 +29,12 @@ export default function TreasuryStats() {
 
   const { data: overflow, loading: overflowLoading } =
     useTerminalCurrentOverflow({
-      terminal: terminals?.[0],
+      terminal: primaryTerminal,
       projectId,
     })
 
-  const fundingProgressBarLoading = overflowLoading || distributionLimitLoading
+  const fundingProgressBarLoading =
+    (!isPreviewMode && overflowLoading) || distributionLimitLoading
 
   return (
     <Space direction="vertical" style={{ display: 'flex' }}>

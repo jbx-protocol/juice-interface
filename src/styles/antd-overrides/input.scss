@@ -149,6 +149,14 @@ input:-webkit-autofill-selected {
   color: var(--text-primary);
 }
 
+.ant-input-textarea {
+  width: 100%;
+}
+
+textarea.ant-input::placeholder {
+  color: var(--text-tertiary);
+}
+
 .ant-input-textarea-show-count::after {
   color: var(--text-tertiary);
 }
@@ -261,10 +269,6 @@ input:-webkit-autofill-selected {
   min-height: 4px; // get error messages appearing closer to the input fields
 }
 
-// added this rule for when an the 'extra' prop is passed to FormItem (error message needs more space in this case)
-.ant-form-item-control-input-extra-and-error .ant-form-item-control-input {
-  min-height: 23px;
-}
 .ant-input-group-addon {
   background: transparent;
 }
@@ -292,4 +296,16 @@ input:-webkit-autofill-selected {
 .formatted-number-input .ant-form-item {
   margin-bottom: 0;
   width: 100%;
+}
+
+.ant-form-item-label > label .ant-form-item-optional {
+  color: var(--text-primary);
+}
+
+.ant-input-number-disabled {
+  border: 1px solid var(--stroke-tertiary);
+}
+
+.ant-input-number-disabled input {
+  color: var(--text-tertiary) !important;
 }

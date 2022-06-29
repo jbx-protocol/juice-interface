@@ -3,10 +3,11 @@ import { V2UserContext } from 'contexts/v2/userContext'
 import { useContext } from 'react'
 
 import { BigNumber } from '@ethersproject/bignumber'
-import { randomBytes } from '@ethersproject/random'
 
 import { TransactorInstance } from '../../Transactor'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
+
+const DEFAULT_DELEGATE_METADATA = 0
 
 type PayV2ProjectTx = TransactorInstance<{
   memo: string
@@ -42,7 +43,7 @@ export function usePayV2ProjectTx(): PayV2ProjectTx {
         minReturnedTokens,
         preferClaimedTokens,
         memo || '',
-        randomBytes(1), //delegateMetadata
+        DEFAULT_DELEGATE_METADATA, //delegateMetadata
       ],
       {
         ...txOpts,

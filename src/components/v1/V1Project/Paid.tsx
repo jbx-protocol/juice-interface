@@ -1,35 +1,31 @@
 import { RightCircleOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
-import EtherscanLink from 'components/shared/EtherscanLink'
-import ProjectTokenBalance from 'components/v1/V1Project/ProjectTokenBalance'
-import TooltipLabel from 'components/shared/TooltipLabel'
 import ETHAmount from 'components/shared/currency/ETHAmount'
-
-import { V1ProjectContext } from 'contexts/v1/projectContext'
+import USDAmount from 'components/shared/currency/USDAmount'
+import EtherscanLink from 'components/shared/EtherscanLink'
+import FundingProgressBar from 'components/shared/Project/FundingProgressBar'
+import StatLine from 'components/shared/Project/StatLine'
+import TooltipLabel from 'components/shared/TooltipLabel'
+import V1ProjectTokenBalance from 'components/v1/shared/V1ProjectTokenBalance'
 import { ThemeContext } from 'contexts/themeContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useEthBalanceQuery } from 'hooks/EthBalance'
-import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { NetworkName } from 'models/network-name'
+import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useContext, useState } from 'react'
 import { hasFundingTarget } from 'utils/v1/fundingCycle'
 
 import { V1CurrencyName } from 'utils/v1/currency'
-import StatLine from 'components/shared/Project/StatLine'
-
-import USDAmount from 'components/shared/currency/USDAmount'
-
-import FundingProgressBar from 'components/shared/Project/FundingProgressBar'
 
 import { VolumeStatLine } from 'components/shared/Project/VolumeStatLine'
 
-import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
 import { readNetwork } from 'constants/networks'
-import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
-
-import BalancesModal from './modals/BalancesModal'
 import { textPrimary, textSecondary } from 'constants/styles/text'
+import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
+import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
+import { V1BalancesModal } from './modals/V1BalancesModal'
 
 export default function Paid() {
   const [balancesModalVisible, setBalancesModalVisible] = useState<boolean>()
@@ -184,7 +180,7 @@ export default function Paid() {
         statValue={
           <span>
             <span style={secondaryTextStyle}>
-              <ProjectTokenBalance
+              <V1ProjectTokenBalance
                 style={{ display: 'inline-block' }}
                 wallet={owner}
                 projectId={V1_PROJECT_IDS.JUICEBOX_DAO}
@@ -212,7 +208,7 @@ export default function Paid() {
         </span>
       </div>
 
-      <BalancesModal
+      <V1BalancesModal
         visible={balancesModalVisible}
         onCancel={() => setBalancesModalVisible(false)}
       />

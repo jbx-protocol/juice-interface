@@ -21,7 +21,7 @@ export const disableFeatureFlag = (featureFlag: string) => {
 const featureFlagDefaultEnabled = (featureFlag: string) => {
   // if default-enabled for this environment, return true
   const defaultEnabled =
-    FEATURE_FLAG_DEFAULTS[featureFlag][readNetwork.name as string]
+    FEATURE_FLAG_DEFAULTS[featureFlag]?.[readNetwork.name as string]
 
   return defaultEnabled
 }

@@ -15,21 +15,22 @@ export default function NFTSummarySection() {
       <h2 style={{ marginBottom: 0 }}>
         <Trans>NFT rewards</Trans>
       </h2>
-      {nftRewardTiers.forEach((rewardTier, index) => (
+      {nftRewardTiers.map((rewardTier, index) => (
         <Row
           style={{
             borderBottom:
-              index !== nftRewardTiers.length
+              index !== nftRewardTiers.length - 1
                 ? `1px solid ${colors.stroke.tertiary}`
                 : 'unset',
             display: 'flex',
             width: '100%',
+            marginTop: 30,
             paddingBottom: '15px',
           }}
           key={index}
         >
           <Col
-            md={4}
+            md={3}
             style={{
               display: 'flex',
               justifyContent: 'center',
@@ -37,13 +38,13 @@ export default function NFTSummarySection() {
             }}
           >
             <img
-              src={rewardTier.imageUrl}
+              src={rewardTier.imageUrl ?? '/assets/banana-od.png'}
               alt={rewardTier.name}
               height="75px"
             />
           </Col>
           <Col
-            md={6}
+            md={7}
             style={{
               display: 'flex',
               justifyContent: 'center',
@@ -51,13 +52,16 @@ export default function NFTSummarySection() {
             }}
           >
             <h3>{rewardTier.name}</h3>
-            <p>
+            <p style={{ marginBottom: '10px' }}>
               <Trans>
-                Contribution threshold: {rewardTier.paymentThreshold}
+                <strong>Contribution threshold:</strong>{' '}
+                {rewardTier.paymentThreshold} ETH
               </Trans>
             </p>
-            <p>
-              <Trans>Max. supply: {rewardTier.maxSupply}</Trans>
+            <p style={{ marginBottom: '10px' }}>
+              <Trans>
+                <strong>Max. supply:</strong> {rewardTier.maxSupply}
+              </Trans>
             </p>
           </Col>
           <Col
@@ -74,7 +78,7 @@ export default function NFTSummarySection() {
               </Trans>
             )}
             {rewardTier.description && (
-              <div style={{ fontSize: 13, marginTop: 15 }}>
+              <div style={{ marginTop: 15 }}>
                 <Trans>
                   <strong>Description: </strong>
                   <Paragraph

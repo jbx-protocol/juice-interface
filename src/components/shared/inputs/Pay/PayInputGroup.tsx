@@ -81,11 +81,13 @@ export default function PayInputGroup({
             }}
             value={payAmount}
             min={0}
+            disabled={disabled}
             accessory={
               <InputAccessoryButton
                 withArrow
                 content={currencyMetadata[payInCurrency ?? ETH].name}
                 onClick={togglePayInCurrency}
+                disabled={disabled}
               />
             }
           />

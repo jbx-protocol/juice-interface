@@ -7,7 +7,13 @@ import { useForm } from 'antd/lib/form/Form'
 import { ThemeContext } from 'contexts/themeContext'
 import { TicketMod } from 'models/mods'
 import * as moment from 'moment'
-import { CSSProperties, useCallback, useContext, useState } from 'react'
+import {
+  CSSProperties,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from 'react'
 import { formatDate } from 'utils/formatDate'
 import { permyriadToPercent, percentToPermyriad } from 'utils/formatNumber'
 
@@ -184,9 +190,12 @@ export default function ProjectTicketMods({
 
   if (!mods) return null
 
-  const total = mods.reduce(
-    (acc, curr) => acc + parseFloat(permyriadToPercent(curr.percent ?? '0')),
-    0,
+  const total = useMemo(
+    () =>
+      parseFloat(
+        permyriadToPercent(mods.map(m => m.percent).reduce((a, b) => a + b, 0)),
+      ),
+    [mods],
   )
 
   const setReceiver = async () => {

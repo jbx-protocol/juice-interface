@@ -1,13 +1,14 @@
 import { NetworkContext } from 'contexts/networkContext'
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
-import { randomBytes } from '@ethersproject/random'
 import { useContext } from 'react'
 
 import { V2UserContext } from 'contexts/v2/userContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import { TransactorInstance } from '../../Transactor'
+
+const DEFAULT_METADATA = 0
 
 export function useRedeemTokensTx(): TransactorInstance<{
   redeemAmount: BigNumber
@@ -41,7 +42,7 @@ export function useRedeemTokensTx(): TransactorInstance<{
         minReturnedTokens, // _minReturnedTokens, min amount of ETH to receive
         userAddress, // _beneficiary
         memo, // _memo
-        randomBytes(1), // _metadata, TODO: metadata
+        DEFAULT_METADATA, // _metadata, TODO: metadata
       ],
       txOpts,
     )

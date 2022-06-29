@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
-import { Checkbox, Descriptions, Form, Input, Modal, Space } from 'antd'
+import { Checkbox, Descriptions, Form, Modal, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import ImageUploader from 'components/shared/inputs/ImageUploader'
@@ -24,6 +24,7 @@ import { usePayV1ProjectTx } from 'hooks/v1/transactor/PayV1ProjectTx'
 
 import Paragraph from 'components/shared/Paragraph'
 import ProjectRiskNotice from 'components/shared/ProjectRiskNotice'
+import MemoFormItem from 'components/shared/inputs/Pay/MemoFormItem'
 
 import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
 
@@ -42,7 +43,10 @@ export default function V1ConfirmPayOwnerModal({
 }) {
   const [loading, setLoading] = useState<boolean>()
   const [preferUnstaked, setPreferUnstaked] = useState<boolean>(false)
-  const [form] = useForm<{ note: string }>()
+  const [memo, setMemo] = useState<string>('')
+
+  const [form] = useForm()
+
   const { userAddress, onSelectWallet } = useContext(NetworkContext)
   const { tokenSymbol, tokenAddress, currentFC, metadata } =
     useContext(V1ProjectContext)
@@ -64,7 +68,7 @@ export default function V1ConfirmPayOwnerModal({
 
     payProjectTx(
       {
-        note: form.getFieldValue('note'),
+        note: memo,
         preferUnstaked,
         value: weiAmount,
       },
@@ -180,14 +184,8 @@ export default function V1ConfirmPayOwnerModal({
           </Descriptions.Item>
         </Descriptions>
         <Form form={form} layout="vertical">
-          <Form.Item label={t`Memo`} name="note" rules={[{ max: 256 }]}>
-            <Input.TextArea
-              placeholder={t`(Optional) Add a note to this payment on-chain`}
-              maxLength={256}
-              showCount
-              autoSize
-            />
-          </Form.Item>
+          <MemoFormItem value={memo} onChange={setMemo} />
+
           <Form.Item>
             <ImageUploader
               text={t`Add image`}

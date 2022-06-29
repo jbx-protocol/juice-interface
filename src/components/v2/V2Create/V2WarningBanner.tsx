@@ -4,6 +4,7 @@ import { InfoCircleOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import ExternalLink from 'components/shared/ExternalLink'
 import { helpPagePath } from 'utils/helpPageHelper'
+import useMobile from 'hooks/Mobile'
 
 import { ThemeOption } from 'constants/theme/theme-option'
 
@@ -12,6 +13,8 @@ export default function V2WarningBanner() {
     theme: { colors },
     themeOption,
   } = useContext(ThemeContext)
+  const isMobile = useMobile()
+
   return (
     <div
       style={{
@@ -22,6 +25,7 @@ export default function V2WarningBanner() {
           themeOption === ThemeOption.dark
             ? colors.text.over.action.primary
             : '',
+        marginTop: isMobile ? '2rem' : 0,
       }}
     >
       <InfoCircleOutlined />{' '}

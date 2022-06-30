@@ -669,10 +669,6 @@ msgstr "Cancelar"
 msgid "Cannot redeem tokens for ETH because this project has no overflow."
 msgstr "No se pueden canjear tokens por ETH porque este proyecto no tiene excedente."
 
-#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
-msgid "Changes to payouts will take effect immediately."
-msgstr "Los cambios a los pagos surtirán efecto de inmediato."
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectHandleDrawer.tsx
 #: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
 msgid "Change ENS name"
 msgstr ""
@@ -1320,11 +1316,6 @@ msgstr "Editar detalles del proyecto"
 
 #: src/components/v1/shared/TicketModsList.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/EditTokenAllocationModal.tsx
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
-msgid "Edit project handle"
-msgstr ""
-
-#: src/components/v1/shared/TicketModsList.tsx
 msgid "Edit reserved token allocation"
 msgstr "Editar la asignación de tokens reservados"
 
@@ -2745,6 +2736,7 @@ msgstr ""
 msgid "Set a unique name that will be visible in your project's URL, and that will allow your project to appear in search results."
 msgstr ""
 
+#: src/components/shared/Project/ProjectHeader/index.tsx
 #: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
 msgid "Set project handle"
 msgstr ""
@@ -3635,14 +3627,6 @@ msgstr "usuario"
 #: src/utils/formatTime.ts
 msgid "hours"
 msgstr "horas"
-
-#: src/components/shared/formItems/ProjectDiscord.tsx
-msgid "https://discord.gg/abcdefgh"
-msgstr "https://discord.gg/abcdefgh"
-
-#: src/components/shared/formItems/ProjectLink.tsx
-msgid "https://your-project.com"
-msgstr "https://tu-proyecto.com"
 
 #: src/components/shared/formItems/ENSName.tsx
 msgid "juicebox"

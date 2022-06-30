@@ -15,6 +15,8 @@ import { Link } from 'react-router-dom'
 
 import { Skeleton } from 'antd'
 
+import { v2ProjectRoute } from 'utils/routes'
+
 import { SECONDS_IN_DAY } from 'constants/numbers'
 
 export default function TrendingProjectCard({
@@ -106,9 +108,7 @@ export default function TrendingProjectCard({
       }}
       key={project.handle}
       to={
-        project.cv === '2'
-          ? `/v2/p/${project.projectId}`
-          : `/p/${project?.handle}`
+        project.cv === '2' ? v2ProjectRoute(project) : `/p/${project?.handle}`
       }
     >
       <div style={cardStyle} className="clickable-border">

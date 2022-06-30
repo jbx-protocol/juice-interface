@@ -15,8 +15,8 @@ import { HashRouter, Route, Switch, useLocation } from 'react-router-dom'
 
 const V1Create = lazy(() => import('components/v1/V1Create'))
 const V2Create = lazy(() => import('components/v2/V2Create'))
-const V2ProjectHandleGateway = lazy(
-  () => import('components/v2/V2Dashboard/V2ProjectHandleGateway'),
+const V2DashboardGateway = lazy(
+  () => import('components/v2/V2Dashboard/V2DashboardGateway'),
 )
 
 function CatchallRedirect() {
@@ -65,21 +65,23 @@ function JuiceboxSwitch() {
       <Route path="/projects">
         <Projects />
       </Route>
+
       <Route path="/p/:handle">
         <V1Dashboard />
       </Route>
 
-      <Route path="/v2/p/id/:projectId">
+      <Route path="/@:handle">
         <Suspense fallback={<Loading />}>
           <V2UserProvider>
-            <V2ProjectHandleGateway />
+            <V2DashboardGateway />
           </V2UserProvider>
         </Suspense>
       </Route>
-      <Route path="/v2/p/:handleOrProjectId">
+
+      <Route path="/v2/p/:projectId">
         <Suspense fallback={<Loading />}>
           <V2UserProvider>
-            <V2ProjectHandleGateway />
+            <V2DashboardGateway />
           </V2UserProvider>
         </Suspense>
       </Route>

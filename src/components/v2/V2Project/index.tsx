@@ -20,8 +20,10 @@ import { weightedAmount } from 'utils/v2/math'
 
 import { useIsUserAddress } from 'hooks/IsUserAddress'
 
+import { v2ProjectRoute } from 'utils/routes'
+
 import { textSecondary } from 'constants/styles/text'
-import { V2_PROJECT_IDS } from '../../../constants/v2/projectIds'
+import { V2_PROJECT_IDS } from 'constants/v2/projectIds'
 import V2BugNotice from '../shared/V2BugNotice'
 import { RelaunchFundingCycleBanner } from './banners/RelaunchFundingCycleBanner'
 import NewDeployModal from './NewDeployModal'
@@ -110,7 +112,7 @@ export default function V2Project({
 
   const closeNewDeployModal = () => {
     // Change URL without refreshing page
-    history.replace(`/v2/p/${projectId}`)
+    history.replace(v2ProjectRoute({ projectId }))
     setNewDeployModalVisible(false)
   }
 

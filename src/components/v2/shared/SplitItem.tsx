@@ -17,6 +17,7 @@ import { formatSplitPercent, SPLITS_TOTAL_PERCENT } from 'utils/v2/math'
 import useMobile from 'hooks/Mobile'
 import { Link } from 'react-router-dom'
 import TooltipIcon from 'components/shared/TooltipIcon'
+import { v2ProjectRoute } from 'utils/routes'
 
 export default function SplitItem({
   split,
@@ -70,7 +71,7 @@ export default function SplitItem({
             title={<Trans>Juicebox V2 project with ID {split.projectId}</Trans>}
           >
             <Link
-              to={`/v2/p/${split.projectId}`}
+              to={v2ProjectRoute({ projectId: split.projectId })}
               target="_blank"
               className="text-primary hover-text-action-primary hover-text-decoration-underline"
             >

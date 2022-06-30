@@ -16,6 +16,8 @@ import { fromWad } from 'utils/formatNumber'
 import { t } from '@lingui/macro'
 import { useHistory, useLocation } from 'react-router-dom'
 
+import { v2ProjectRoute } from 'utils/routes'
+
 import { ETH_PAYOUT_SPLIT_GROUP } from 'constants/v2/splits'
 import V2ProjectReconfigureModal from './index'
 
@@ -51,7 +53,7 @@ export default function V2ReconfigureFundingModalTrigger({
 
   if (initialReconfigureModalVisible && localStoreRef.current === undefined) {
     // Change URL without refreshing page
-    history.replace(`/v2/p/${projectId}`)
+    history.replace(v2ProjectRoute({ projectId }))
     handleModalOpen()
   }
 

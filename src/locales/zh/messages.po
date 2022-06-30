@@ -2689,7 +2689,7 @@ msgstr "目标"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 msgid "Target is 0: All funds will be considered overflow and can be redeemed by burning project tokens."
-msgstr "目标为 0 ：所有资金将被视为溢出，可以通过燃烧项目代币来赎回。<<<<<<< HEAD<<<<<<< HEAD<<<<<<< HEAD"
+msgstr "目标为 0 ：所有资金将被视为溢出，可以通过燃烧项目代币来赎回。"
 
 #: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
 msgid "Text record is set"
@@ -2697,7 +2697,7 @@ msgstr ""
 
 #: src/components/v2/V2Create/forms/TokenForm/index.tsx
 msgid "The <0>issuance rate</0> of your second funding cycle will be <1>{0} tokens per 1 ETH</1>, then <2>{1} tokens per 1 ETH </2>for your third funding cycle, and so on."
-msgstr ">>>>>>> e7dc076a (i18n)"
+msgstr ""
 
 #: src/components/Landing/index.tsx
 msgid "The Decentralized Funding Platform. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."
@@ -3426,11 +3426,11 @@ msgstr "标识"
 
 #: src/utils/formatTime.ts
 msgid "hours"
-msgstr "小时<<<<<<< HEAD======="
+msgstr "小时"
 
 #: src/components/shared/formItems/ENSName.tsx
 msgid "juicebox"
-msgstr ">>>>>>> e7dc076a (i18n)"
+msgstr ""
 
 #: src/components/shared/formItems/ProjectTwitter.tsx
 msgid "juiceboxETH"

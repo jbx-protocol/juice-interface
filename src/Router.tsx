@@ -66,16 +66,16 @@ function JuiceboxSwitch() {
         <Projects />
       </Route>
 
-      <Route path="/p/:handle">
-        <V1Dashboard />
-      </Route>
-
       <Route path="/@:handle">
         <Suspense fallback={<Loading />}>
           <V2UserProvider>
             <V2DashboardGateway />
           </V2UserProvider>
         </Suspense>
+      </Route>
+
+      <Route path="/p/:handle">
+        <V1Dashboard />
       </Route>
 
       <Route path="/v2/p/:projectId">

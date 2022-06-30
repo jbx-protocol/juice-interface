@@ -12,7 +12,6 @@ import useCurrentFundingCycleOfProject from 'hooks/v1/contractReader/CurrentFund
 import useCurrentPayoutModsOfProject from 'hooks/v1/contractReader/CurrentPayoutModsOfProject'
 import useCurrentTicketModsOfProject from 'hooks/v1/contractReader/CurrentTicketModsOfProject'
 import useOverflowOfProject from 'hooks/v1/contractReader/OverflowOfProject'
-import useOwnerOfProject from 'hooks/v1/contractReader/OwnerOfProject'
 import useProjectIdForHandle from 'hooks/v1/contractReader/ProjectIdForHandle'
 import useQueuedFundingCycleOfProject from 'hooks/v1/contractReader/QueuedFundingCycleOfProject'
 import useQueuedPayoutModsOfProject from 'hooks/v1/contractReader/QueuedPayoutModsOfProject'
@@ -32,6 +31,8 @@ import NewDeployNotAvailable from 'components/shared/NewDeployNotAvailable'
 import Project404 from 'components/shared/Project404'
 import { usePageTitle } from 'hooks/PageTitle'
 
+import { useProjectOwner } from 'hooks/v1/contractReader/ProjectOwner'
+
 import { layouts } from 'constants/styles/layouts'
 import { projectTypes } from 'constants/v1/projectTypes'
 import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
@@ -45,9 +46,9 @@ export default function V1Dashboard() {
   const location = useLocation()
   const params = new URLSearchParams(location.search)
   const isNewDeploy = Boolean(params.get('newDeploy'))
+  const { owner } = useProjectOwner()
 
   const projectId = useProjectIdForHandle(handle)
-  const owner = useOwnerOfProject(projectId)
   const terminalAddress = useTerminalOfProject(projectId)
   const terminalName = getTerminalName({
     address: terminalAddress,

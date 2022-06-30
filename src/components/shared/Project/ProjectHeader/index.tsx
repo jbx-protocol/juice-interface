@@ -1,4 +1,5 @@
 import { t, Trans } from '@lingui/macro'
+import { EditOutlined } from '@ant-design/icons'
 import ProjectLogo from 'components/shared/ProjectLogo'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
@@ -30,7 +31,6 @@ export default function ProjectHeader({
   const { owner } = useProjectOwner()
 
   const headerHeight = 120
-  const spacing = 20
 
   const projectTitle = metadata?.name || t`Untitled project`
 
@@ -89,10 +89,12 @@ export default function ProjectHeader({
           <div
             style={{
               display: 'flex',
+              alignItems: 'baseline',
               flexWrap: 'wrap',
               paddingTop: 8,
               paddingBottom: 4,
               fontWeight: 500,
+              gap: 20,
             }}
           >
             {isArchived && (
@@ -101,7 +103,6 @@ export default function ProjectHeader({
                   fontSize: '0.8rem',
                   color: colors.text.disabled,
                   textTransform: 'uppercase',
-                  marginRight: spacing,
                 }}
               >
                 (archived)
@@ -111,7 +112,6 @@ export default function ProjectHeader({
               <span
                 style={{
                   color: colors.text.secondary,
-                  marginRight: spacing,
                   fontWeight: 600,
                 }}
               >
@@ -120,10 +120,14 @@ export default function ProjectHeader({
             ) : onSetHandle ? (
               <Tooltip
                 placement="bottom"
-                title="A project's handle is used in its URL, and allows it to show up in search results on the projects page."
+                title="A project's handle is used in its URL, and allows it to be included in search results on the projects page."
               >
-                <Button onClick={onSetHandle}>
-                  <Trans>Set project handle</Trans>
+                <Button
+                  onClick={onSetHandle}
+                  type="text"
+                  style={{ padding: 0 }}
+                >
+                  <EditOutlined /> <Trans>Add handle</Trans>
                 </Button>
               </Tooltip>
             ) : null}

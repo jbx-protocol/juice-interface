@@ -57,7 +57,8 @@ msgstr "2. Finansman döngüsü"
 
 #: src/components/Landing/HowItWorksSection.tsx
 msgid "2. Give ownership"
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectHandleDrawer.tsx
+msgstr ""
+
 #: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
 msgid "2. Set text record"
 msgstr ""
@@ -330,6 +331,10 @@ msgstr ""
 #: src/components/shared/Project/ProjectToolsDrawer/AddToProjectBalanceForm.tsx
 msgid "Add funds to this project's balance without minting tokens."
 msgstr "Bu projenin bakiyesine token basmadan fon ekleyin."
+
+#: src/components/shared/Project/ProjectHeader/index.tsx
+msgid "Add handle"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
@@ -714,7 +719,7 @@ msgid "Check this to mint {tokenSymbol} ERC-20 to your wallet. Leave unchecked t
 msgstr "Cüzdanınıza {tokenSymbol} ERC-20 basmak için burayı işaretleyin. Token bakiyenizin Juicebox tarafından takip edilmesini sağlamak için işaretlemeden bırakın ve bu işlemde gazdan tasarruf edin. ERC-20 token'larınızı daha sonra her zaman talep edebilirsiniz."
 
 #: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
-msgid "Choose an ENS name to use as the project's handle, with an optional subdomain. The handle won't include the \".eth\" extension."
+msgid "Choose an ENS name to use as the project's handle. Subdomains are allowed and will be included in the handle. Handles won't include the \".eth\" extension.<0/><1/>juicebox.eth = @juicebox<2/>dao.juicebox.eth = @dao.juicebox"
 msgstr ""
 
 #: src/components/v2/shared/DistributionSplitsSection/index.tsx
@@ -1267,10 +1272,6 @@ msgstr "Süre (saniye)"
 msgid "ENS Name"
 msgstr ""
 
-#: src/components/Landing/index.tsx
-msgid "ERC-20 community tokens"
-msgstr "ERC-20 topluluk token'ları"
-
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "ERC-20 tokens can only be minted once an ERC-20 token has been issued for this project."
@@ -1705,11 +1706,12 @@ msgstr "Juicebox yüklenme animasyonu"
 msgid "Juicebox project"
 msgstr "Juicebox projesi"
 
-#: src/components/Landing/TopProjectsSection.tsx
-msgid "Juicebox puts the fun back in funding so you can focus on building."
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/drawers/V2ReconfigureProjectHandleDrawer.tsx
 #: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
 msgid "Juicebox projects use <0>ENS names</0> as handles. Setting a handle involves 2 transactions:"
+msgstr ""
+
+#: src/components/Landing/TopProjectsSection.tsx
+msgid "Juicebox puts the fun back in funding so you can focus on building."
 msgstr ""
 
 #: src/components/shared/modals/ParticipantsModal.tsx
@@ -2369,6 +2371,8 @@ msgstr "%{reservedRateRiskyMin} veya daha fazla rezerve oranı kullanan projeler
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTierModal.tsx
 msgid "Provide a link to additional information about this NFT."
+#: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
+msgid "Projects with a handle are:<0/><1/>1. Included in search results on the projects page<2/>2. Accessible from the URL: <3>juicebox.money/#{0}</3><4/><5/>(The original URL <6>juicebox.money/#{1}</6> will continue to work.)"
 msgstr ""
 
 #: src/components/Landing/StatsSection.tsx
@@ -2719,11 +2723,6 @@ msgstr "Bir finansman döngüsü süresi belirleyin"
 msgid "Set a funding cycle target"
 msgstr "Bir finansman döngüsü hedefi belirleyin"
 
-#: src/components/v1/shared/forms/BudgetForm.tsx
-#: src/components/Landing/index.tsx
-msgid "Set a funding target to cover predictable expenses. Any extra funds (<0>overflow</0>) can be claimed by anyone holding your project's tokens alongside you."
-msgstr "Öngörülebilir masrafları karşılamak için bir finansman hedefi belirleyin. Tüm ekstra fonlar (<0>taşma</0>), sizinle beraber projenizin token'larını tutan herhangi biri tarafından talep edilebilir."
-
 #: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Set a project handle (optional)"
 msgstr ""
@@ -2736,7 +2735,6 @@ msgstr ""
 msgid "Set a unique name that will be visible in your project's URL, and that will allow your project to appear in search results."
 msgstr ""
 
-#: src/components/shared/Project/ProjectHeader/index.tsx
 #: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
 msgid "Set project handle"
 msgstr ""

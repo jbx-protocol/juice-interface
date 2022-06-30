@@ -17,13 +17,13 @@ export default function ProjectHeader({
   metadata,
   isArchived,
   actions,
-  onSetHandle,
+  onClickSetHandle,
 }: {
   metadata?: ProjectMetadataV4
   isArchived?: boolean
   handle?: string
   actions?: JSX.Element
-  onSetHandle?: VoidFunction
+  onClickSetHandle?: VoidFunction
 }) {
   const {
     theme: { colors },
@@ -117,13 +117,13 @@ export default function ProjectHeader({
               >
                 @{handle}
               </span>
-            ) : onSetHandle ? (
+            ) : onClickSetHandle ? (
               <Tooltip
                 placement="bottom"
                 title="A project's handle is used in its URL, and allows it to be included in search results on the projects page."
               >
                 <Button
-                  onClick={onSetHandle}
+                  onClick={onClickSetHandle}
                   type="text"
                   style={{ padding: 0 }}
                 >

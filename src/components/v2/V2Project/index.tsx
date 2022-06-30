@@ -140,7 +140,9 @@ export default function V2Project({
         actions={!isPreviewMode ? <V2ProjectHeaderActions /> : undefined}
         isArchived={isArchived}
         handle={handle}
-        onSetHandle={isOwner ? () => setHandleModalVisible(true) : undefined}
+        onClickSetHandle={
+          isOwner ? () => setHandleModalVisible(true) : undefined
+        }
       />
       {!isPreviewMode &&
         hasCurrentFundingCycle === false &&

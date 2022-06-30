@@ -51,7 +51,13 @@ const useUpcomingFundingCycle = (): [
   const [queuedFundingCycle, queuedFundingCycleMetadata] =
     queuedFundingCycleResponse ?? []
 
-  if (isCurrentFundingCycleLatest && queuedFundingCycle) {
+  const hasLatestBallotFailed =
+    latestConfiguredFundingCycleBallotState === BallotState.failed
+
+  if (
+    (isCurrentFundingCycleLatest || hasLatestBallotFailed) &&
+    queuedFundingCycle
+  ) {
     return [queuedFundingCycle, queuedFundingCycleMetadata]
   }
 

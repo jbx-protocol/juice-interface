@@ -1,7 +1,6 @@
 import {
   ExclamationCircleOutlined,
   ClockCircleOutlined,
-  CloseCircleOutlined,
 } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Collapse, Tooltip } from 'antd'
@@ -20,22 +19,18 @@ function BallotStateBadge({ ballotState }: { ballotState: BallotState }) {
   // only show badge for ballot states 0 and 2 (don't show if ballot is 'approved'.)
   const ballotStateVariantMap: { [k in BallotState]?: BadgeVariant } = {
     0: 'warning',
-    2: 'danger',
   }
 
   const ballotStateLabelMap: { [k in BallotState]?: string } = {
     0: 'Pending',
-    2: 'Failed',
   }
 
   const ballotStateTooltips: { [k in BallotState]?: string } = {
     0: t`This proposed funding cycle reconfiguration has an active ballot and isn't yet approved.`,
-    2: t`This proposed funding cycle reconfiguration has failed.`,
   }
 
   const ballotStateIcons: { [k in BallotState]?: JSX.Element } = {
     0: <ClockCircleOutlined />,
-    2: <CloseCircleOutlined />,
   }
 
   const variant = ballotStateVariantMap[ballotState]

@@ -2817,10 +2817,6 @@ msgstr "Este saldo do projeto no contrato Juicebox."
 msgid "This proposed funding cycle reconfiguration has an active ballot and isn't yet approved."
 msgstr ""
 
-#: src/components/shared/Project/FundingCycleDetailsCard.tsx
-msgid "This proposed funding cycle reconfiguration has failed."
-msgstr ""
-
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
 msgstr "Esta taxa determina a quantidade de overflow que cada token pode ser resgatado a qualquer momento. Em uma curva de ligação menor, resgatar um token aumenta o valor de cada token remanescente, criando um incentivo para segurar tokens por mais tempo que outros. Uma curva de ligação de 100% significa que todos os tokens terão o mesmo valor independentemente de onde foram resgatados."

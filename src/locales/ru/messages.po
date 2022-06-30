@@ -2817,10 +2817,6 @@ msgstr ""
 msgid "This proposed funding cycle reconfiguration has an active ballot and isn't yet approved."
 msgstr ""
 
-#: src/components/shared/Project/FundingCycleDetailsCard.tsx
-msgid "This proposed funding cycle reconfiguration has failed."
-msgstr ""
-
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
 msgstr "Эта ставка определяет количество переполнения, за которое каждый токен может быть выкуплен в любой момент времени. При более низкой кривой связывания выкуп токена увеличивает стоимость каждого оставшегося токена, создавая стимул держать токены дольше, чем другие. Кривая облигаций, равная 100%, означает, что все токены будут иметь одинаковую ценность независимо от того, когда они будут выкуплены."

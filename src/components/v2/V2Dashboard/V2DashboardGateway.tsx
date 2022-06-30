@@ -8,12 +8,12 @@ export default function V2DashboardGateway() {
   const { handle, projectId }: { handle?: string; projectId?: string } =
     useParams()
 
-  // Try parsing projectId as int
   const _projectId =
     projectId && !isNaN(parseInt(projectId)) ? parseInt(projectId) : undefined
 
+  // IF handle AND no projectId, query graph for project with that handle.
   const { isLoading, data: projects } = useSubgraphQuery(
-    handle
+    handle && !_projectId
       ? {
           entity: 'project',
           keys: ['projectId'],
@@ -25,6 +25,7 @@ export default function V2DashboardGateway() {
       : null,
   )
 
+  // IF projectId, return V2Dashboard with projectId.
   if (_projectId) return <V2Dashboard projectId={_projectId} />
 
   if (isLoading) return <Loading />
@@ -37,5 +38,6 @@ export default function V2DashboardGateway() {
     )
   }
 
+  // If matching project found in query, return dashboard for that project.
   return <V2Dashboard projectId={projects[0].projectId} />
 }

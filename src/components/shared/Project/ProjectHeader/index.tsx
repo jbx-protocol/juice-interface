@@ -1,4 +1,4 @@
-import { t } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import ProjectLogo from 'components/shared/ProjectLogo'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
@@ -128,10 +128,11 @@ export default function ProjectHeader({
             />
           )}
           {owner && (
-            <>
-              <span>{t`Owned by:`} </span>
-              <FormattedAddress address={owner} />
-            </>
+            <span style={{ color: colors.text.secondary }}>
+              <Trans>
+                Owned by: <FormattedAddress address={owner} />
+              </Trans>
+            </span>
           )}
         </div>
       </div>

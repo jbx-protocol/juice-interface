@@ -1875,7 +1875,7 @@ msgid "Overflow is created if your project's balance exceeds your funding cycle 
 msgstr "Overflow é criado se o saldo do seu projeto exceder o meta do seu ciclo de financiamento. O overflow pode ser resgatado pelos titulares do token do seu projeto."
 
 #: src/components/shared/Project/ProjectHeader/index.tsx
-msgid "Owned by:"
+msgid "Owned by: <0/>"
 msgstr ""
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx

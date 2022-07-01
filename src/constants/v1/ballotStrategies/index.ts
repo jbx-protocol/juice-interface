@@ -1,7 +1,8 @@
 import * as constants from '@ethersproject/constants'
 import { t } from '@lingui/macro'
+import { BallotStrategy } from 'models/ballot'
 
-export function ballotStrategies() {
+export function ballotStrategies(): BallotStrategy[] {
   return [
     {
       name: t`No strategy`,

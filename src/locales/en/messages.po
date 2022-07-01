@@ -2809,8 +2809,8 @@ msgid "This project's balance in the Juicebox contract."
 msgstr "This project's balance in the Juicebox contract."
 
 #: src/components/shared/Project/FundingCycleDetailsCard.tsx
-msgid "This proposed funding cycle reconfiguration has an active ballot and isn't yet approved."
-msgstr "This proposed funding cycle reconfiguration has an active ballot and isn't yet approved."
+msgid "This proposed reconfiguration hasn't passed the {0} period. It's not guaranteed to take effect in the upcoming funding cycle."
+msgstr "This proposed reconfiguration hasn't passed the {0} period. It's not guaranteed to take effect in the upcoming funding cycle."
 
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."

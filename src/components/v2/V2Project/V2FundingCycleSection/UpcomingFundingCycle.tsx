@@ -121,6 +121,7 @@ export default function UpcomingFundingCycle({
           fundingCycleRiskCount={V2FundingCycleRiskCount(upcomingFundingCycle)}
           expand={expandCard}
           ballotState={ballotState}
+          ballotStrategyAddress={upcomingFundingCycle.ballot}
         />
       </CardSection>
 

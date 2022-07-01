@@ -2814,7 +2814,7 @@ msgid "This project's balance in the Juicebox contract."
 msgstr "Este saldo do projeto no contrato Juicebox."
 
 #: src/components/shared/Project/FundingCycleDetailsCard.tsx
-msgid "This proposed funding cycle reconfiguration has an active ballot and isn't yet approved."
+msgid "This proposed reconfiguration hasn't passed the {0} period. It's not guaranteed to take effect in the upcoming funding cycle."
 msgstr ""
 
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx

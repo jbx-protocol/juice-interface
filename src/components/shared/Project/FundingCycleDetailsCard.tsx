@@ -12,10 +12,21 @@ import { detailedTimeUntil } from 'utils/formatTime'
 import { BallotState } from 'models/v2/fundingCycle'
 
 import { Badge, BadgeVariant } from '../Badge'
+import { getBallotStrategyByAddress } from 'constants/v2/ballotStrategies/getBallotStrategiesByAddress'
 
 const COLLAPSE_PANEL_KEY = 'funding-cycle-details'
 
-function BallotStateBadge({ ballotState }: { ballotState: BallotState }) {
+function BallotStateBadge({
+  ballotState,
+  ballotStrategyAddress,
+}: {
+  ballotState: BallotState
+  ballotStrategyAddress?: string
+}) {
+  const ballotStrategy = ballotStrategyAddress
+    ? getBallotStrategyByAddress(ballotStrategyAddress)
+    : undefined
+
   // only show badge for ballot states 0 and 2 (don't show if ballot is 'approved'.)
   const ballotStateVariantMap: { [k in BallotState]?: BadgeVariant } = {
     0: 'warning',
@@ -26,7 +37,11 @@ function BallotStateBadge({ ballotState }: { ballotState: BallotState }) {
   }
 
   const ballotStateTooltips: { [k in BallotState]?: string } = {
-    0: t`This proposed funding cycle reconfiguration has an active ballot and isn't yet approved.`,
+    0: t`This proposed reconfiguration hasn't passed the ${
+      ballotStrategy?.durationSeconds && ballotStrategy?.name
+        ? ballotStrategy.name
+        : 'delay'
+    } period. It's not guaranteed to take effect in the upcoming funding cycle.`,
   }
 
   const ballotStateIcons: { [k in BallotState]?: JSX.Element } = {
@@ -59,6 +74,7 @@ export default function FundingCycleDetailsCard({
   expand,
   isPreviewMode,
   ballotState,
+  ballotStrategyAddress,
 }: {
   fundingCycleNumber: BigNumber
   fundingCycleStartTime: BigNumber
@@ -69,6 +85,7 @@ export default function FundingCycleDetailsCard({
   expand?: boolean
   isPreviewMode?: boolean
   ballotState?: BallotState
+  ballotStrategyAddress?: string
 }) {
   const {
     theme: { colors },
@@ -76,7 +93,12 @@ export default function FundingCycleDetailsCard({
 
   const HeaderText = () => {
     if (ballotState !== undefined) {
-      return <BallotStateBadge ballotState={ballotState} />
+      return (
+        <BallotStateBadge
+          ballotState={ballotState}
+          ballotStrategyAddress={ballotStrategyAddress}
+        />
+      )
     }
 
     if (!fundingCycleDurationSeconds.gt(0)) return null

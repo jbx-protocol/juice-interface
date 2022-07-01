@@ -369,6 +369,7 @@ msgid "Address:"
 msgstr "Adres:"
 
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
+#: src/components/v2/V2Project/ProjectActivity/eventElems/DeployETHERC20ProjectPayerEventElem.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Address: <0/>"
 msgstr "Adres: <0/>"

@@ -52,7 +52,9 @@ export default function DeployETHERC20ProjectPayerEventElem({
       </div>
 
       <div style={{ marginTop: 5 }}>
-        Address: <FormattedAddress address={event.address} />
+        <Trans>
+          Address: <FormattedAddress address={event.address} />
+        </Trans>
       </div>
 
       {event.memo && (

@@ -65,9 +65,6 @@ function JuiceboxSwitch() {
       <Route path="/projects">
         <Projects />
       </Route>
-      <Route path="/p/:handle">
-        <V1Dashboard />
-      </Route>
 
       <Route path="/@:handle">
         <Suspense fallback={<Loading />}>

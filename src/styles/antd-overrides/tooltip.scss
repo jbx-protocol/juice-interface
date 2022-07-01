@@ -8,7 +8,7 @@
   font-size: 0.85rem;
 }
 
-.ant-tooltip-arrow-content {
+.ant-tooltip-arrow-content::before {
   background: var(--stroke-tertiary);
 }
 

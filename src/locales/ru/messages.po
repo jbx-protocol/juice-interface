@@ -53,15 +53,12 @@ msgstr "100% превышение"
 
 #: src/components/v2/V2Create/index.tsx
 msgid "2. Funding cycle"
-msgstr "2. Цикл финансирования"
+msgstr "2. Цикл финансирования<<<<<<< HEAD======="
 
-<<<<<<< HEAD
-=======
 #: src/components/Landing/HowItWorksSection.tsx
 msgid "2. Give ownership"
-msgstr ""
+msgstr ">>>>>>> v2-project-handles"
 
->>>>>>> v2-project-handles
 #: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
 msgid "2. Set text record"
 msgstr ""
@@ -645,15 +642,12 @@ msgstr ""
 
 #: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
 msgid "Change project handle"
-msgstr ""
+msgstr "<<<<<<< HEAD======="
 
-<<<<<<< HEAD
-=======
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
 msgid "Changes to payouts will take effect immediately."
-msgstr ""
+msgstr ">>>>>>> v2-project-handles"
 
->>>>>>> v2-project-handles
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Changes to project details will take effect immediately."
 msgstr "Изменения в деталях проекта вступят в силу немедленно."
@@ -687,11 +681,7 @@ msgid "Check this to mint {tokenSymbol} ERC-20 to your wallet. Leave unchecked t
 msgstr "Проверьте это, чтобы минтить {tokenSymbol} ERC-20 на ваш кошелек. Оставьте флажок не отмеченным, чтобы ваш баланс токенов отслеживался Juicebox, экономя газ на этой транзакции. Вы всегда можете потребовать свои токены ERC-20 позже."
 
 #: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
-<<<<<<< HEAD
-msgid "Choose an ENS name to use as the project's handle, with an optional subdomain. The handle won't include the \".eth\" extension."
-=======
 msgid "Choose an ENS name to use as the project's handle. Subdomains are allowed and will be included in the handle. Handles won't include the \".eth\" extension.<0/><1/>juicebox.eth = @juicebox<2/>dao.juicebox.eth = @dao.juicebox"
->>>>>>> v2-project-handles
 msgstr ""
 
 #: src/components/v2/shared/DistributionSplitsSection/index.tsx
@@ -874,21 +864,15 @@ msgstr "Создать проект"
 
 #: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Create your own ERC-20 token to represent stake in your project. Contributors will receive these tokens when they pay your project."
-msgstr "Создать свой собственный токен ERC-20 для представления доли в вашем проекте. Вкладчики будут получать эти токены при оплате вашего проекта."
+msgstr "Создать свой собственный токен ERC-20 для представления доли в вашем проекте. Вкладчики будут получать эти токены при оплате вашего проекта.<<<<<<< HEAD"
 
-<<<<<<< HEAD
 #: src/components/v2/V2Project/ProjectActivity/eventElems/DeployETHERC20ProjectPayerEventElem.tsx
 msgid "Created ETH-ERC20 payment address"
 msgstr ""
 
-#: src/components/Landing/index.tsx
-msgid "Crowdfunding campaigns"
-msgstr "Краудфандинговые акции"
-=======
 #: src/components/Landing/HowItWorksSection.tsx
 msgid "Crowdfund your project with ETH. Set a funding target to cover predictable expenses, and any extra funds (<0>overflow</0>) can be claimed by anyone holding your project's tokens alongside you."
-msgstr ""
->>>>>>> v2-project-handles
+msgstr ">>>>>>> v2-project-handles"
 
 #: src/components/Landing/index.tsx
 msgid "Crowdfunding"
@@ -1227,14 +1211,7 @@ msgstr ""
 
 #: src/components/shared/formItems/ENSName.tsx
 msgid "ENS Name"
-msgstr ""
-<<<<<<< HEAD
-
-#: src/components/Landing/index.tsx
-msgid "ERC-20 community tokens"
-msgstr "Токены сообщества ERC-20"
-=======
->>>>>>> v2-project-handles
+msgstr "<<<<<<< HEAD"
 
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
@@ -1656,15 +1633,12 @@ msgstr "Проект Juicebox"
 
 #: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
 msgid "Juicebox projects use <0>ENS names</0> as handles. Setting a handle involves 2 transactions:"
-msgstr ""
+msgstr "<<<<<<< HEAD======="
 
-<<<<<<< HEAD
-=======
 #: src/components/Landing/TopProjectsSection.tsx
 msgid "Juicebox puts the fun back in funding so you can focus on building."
-msgstr ""
+msgstr ">>>>>>> v2-project-handles"
 
->>>>>>> v2-project-handles
 #: src/components/shared/modals/ParticipantsModal.tsx
 msgid "Last paid"
 msgstr "Последний платеж"
@@ -2648,26 +2622,6 @@ msgstr ""
 msgid "Set text record for {0}"
 msgstr ""
 
-#: src/components/v2/V2Project/NewDeployModal.tsx
-msgid "Set a project handle (optional)"
-msgstr ""
-
-#: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
-msgid "Set a text record for {0} with the key <0>\"juicebox\"</0> and the value <1>\"{projectId}\"</1> (this project's ID). You can do this on the <2>ENS app</2>, or use the button below (as long as your connected wallet owns or controls that ENS name)."
-msgstr ""
-
-#: src/components/v2/V2Project/NewDeployModal.tsx
-msgid "Set a unique name that will be visible in your project's URL, and that will allow your project to appear in search results."
-msgstr ""
-
-#: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
-msgid "Set project handle"
-msgstr ""
-
-#: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
-msgid "Set text record for {0}"
-msgstr ""
-
 #: src/components/v1/shared/forms/BudgetForm.tsx
 msgid "Set the amount of funds you'd like to raise each funding cycle. Any funds raised within the funding cycle target can be distributed by the project, and can't be redeemed by your project's token holders."
 msgstr "Установите количество средств для каждого цикла финансирования. Любые средства, собранные в рамках цикла финансирования, могут быть распределены по проекту и не могут быть использованы владельцами токенов вашего проекта."
@@ -3485,23 +3439,8 @@ msgstr "никнейм"
 
 #: src/utils/formatTime.ts
 msgid "hours"
-msgstr "часы"
+msgstr "часы<<<<<<< HEAD"
 
-<<<<<<< HEAD
-#: src/components/shared/formItems/ProjectDiscord.tsx
-msgid "https://discord.gg/abcdefgh"
-msgstr "https://discord.gg/abcdefgh"
-
-#: src/components/shared/formItems/ProjectLink.tsx
-msgid "https://your-project.com"
-msgstr "https://ваш проект.com"
-
-#: src/components/shared/formItems/ENSName.tsx
-msgid "juicebox"
-msgstr ""
-
-=======
->>>>>>> v2-project-handles
 #: src/components/shared/formItems/ProjectTwitter.tsx
 msgid "juiceboxETH"
 msgstr "juiceboxETH"

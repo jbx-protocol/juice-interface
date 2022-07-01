@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Button, Form, Radio, Space } from 'antd'
+import { Button, Form, Radio, Space, Switch } from 'antd'
 import { useCallback, useContext, useEffect, useState } from 'react'
 
 import { Split } from 'models/v2/splits'
@@ -25,7 +25,9 @@ import DistributionSplitModal from './DistributionSplitModal'
 import SpecificLimitModal from './SpecificLimitModal'
 import { PayoutConfigurationExplainerCollapse } from './PayoutConfigurationExplainerCollapse'
 
-type DistributionType = 'amount' | 'percent'
+import { DistributionLimitInput } from './DistributionLimitInput'
+
+type DistributionType = 'limit' | 'infinite' | 'none'
 
 export default function DistributionSplitsSection({
   distributionLimit,
@@ -38,7 +40,7 @@ export default function DistributionSplitsSection({
   formItemProps,
 }: {
   distributionLimit: string | undefined
-  setDistributionLimit: (distributionLimit: string) => void
+  setDistributionLimit: (distributionLimit: string | undefined) => void
   currencyName: CurrencyName
   onCurrencyChange: (currencyName: CurrencyName) => void
   editableSplits: Split[]
@@ -57,8 +59,10 @@ export default function DistributionSplitsSection({
     useState<boolean>(false)
 
   const [distributionType, setDistributionType] = useState<DistributionType>(
-    distributionLimitIsInfinite ? 'percent' : 'amount',
+    distributionLimitIsInfinite ? 'infinite' : 'limit',
   )
+
+  const [sumOfPayoutsEnabled, setSumOfPayoutsEnabled] = useState<boolean>(false)
 
   const [specificLimitModalOpen, setSpecificLimitModalOpen] =
     useState<boolean>(false)
@@ -120,7 +124,7 @@ export default function DistributionSplitsSection({
   )
 
   useEffect(() => {
-    setDistributionType(distributionLimitIsInfinite ? 'percent' : 'amount')
+    setDistributionType(distributionLimitIsInfinite ? 'infinite' : 'limit')
   }, [distributionLimitIsInfinite])
 
   if (!allSplits) return null
@@ -177,10 +181,10 @@ export default function DistributionSplitsSection({
           <Radio.Group
             onChange={e => {
               const newType = e.target.value
-              if (newType === 'percent') {
+              if (newType === 'infinite') {
                 setDistributionLimit(fromWad(MAX_DISTRIBUTION_LIMIT))
                 setDistributionType(newType)
-              } else if (newType === 'amount') {
+              } else if (newType === 'limit') {
                 if (editableSplits.length) {
                   setSpecificLimitModalOpen(true)
                 } else {
@@ -193,27 +197,64 @@ export default function DistributionSplitsSection({
                 ) {
                   editableSplits.push(ownerSplit)
                 }
+              } else if (newType === 'none') {
+                setDistributionLimit('0')
+                setDistributionType(newType)
               }
             }}
             value={distributionType}
           >
             <Space direction="vertical">
-              <Radio value="amount">
-                <Trans>Amounts</Trans>
+              <Radio value="limit">
+                <Trans>Split within a distribution limit</Trans>
                 <p style={{ fontWeight: 400, fontSize: '0.8rem' }}>
                   <Trans>
                     Distribute a specific amount of funds to entities each
-                    funding cycle. Your distribution limit will equal the{' '}
-                    <strong>sum of all payout amounts.</strong>
+                    funding cycle.
                   </Trans>
                 </p>
               </Radio>
-              <Radio value="percent">
-                <Trans>Percentages</Trans>
+              {distributionType === 'limit' ? (
+                <div style={{ paddingLeft: '25px' }}>
+                  <div style={{ display: 'flex' }}>
+                    <label style={{ fontWeight: 500, width: '100%' }}>
+                      <Trans>Distribution limit:</Trans>
+                    </label>
+                    <DistributionLimitInput
+                      value={distributionLimit}
+                      onChange={setDistributionLimit}
+                      currencyName={currencyName}
+                      onCurrencyChange={onCurrencyChange}
+                      disabled={sumOfPayoutsEnabled}
+                    />
+                  </div>
+                  <div style={{ width: '100%', display: 'flex' }}>
+                    <Switch
+                      checked={sumOfPayoutsEnabled}
+                      onChange={setSumOfPayoutsEnabled}
+                      style={{ marginRight: 10 }}
+                    />
+                    <label>
+                      <Trans>Make distribution limit the sum of payouts</Trans>
+                    </label>
+                  </div>
+                </div>
+              ) : null}
+              <Radio value="infinite">
+                <Trans>Split all funds</Trans>
                 <p style={{ fontWeight: 400, fontSize: '0.8rem' }}>
                   <Trans>
                     Distribute a percentage of all funds received to entities.
                     Your distribution limit will be <strong>infinite</strong>.
+                  </Trans>
+                </p>
+              </Radio>
+              <Radio value="none">
+                <Trans>None</Trans>
+                <p style={{ fontWeight: 400, fontSize: '0.8rem' }}>
+                  <Trans>
+                    Nothing can be distributed from the treasury. Funds can only
+                    be accessed by token holders redeeming their tokens.
                   </Trans>
                 </p>
               </Radio>

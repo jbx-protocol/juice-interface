@@ -456,10 +456,6 @@ msgstr "Quantidade para distribuir"
 msgid "Amount:"
 msgstr "Quantidade:"
 
-#: src/components/v2/shared/DistributionSplitsSection/index.tsx
-msgid "Amounts"
-msgstr "Quantidades"
-
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "Any changes you make will take effect in <0>funding cycle #{0}</0>. The current funding cycle (#{currentFCNumber}) won't be altered."
 msgstr "Quaisquer mudanças que você fizer terão efeitos no <0>ciclo de financiamento #{0}</0>. O ciclo de financiamento atual (#{currentFCNumber}) não será alterado."
@@ -1030,8 +1026,8 @@ msgid "Distribute a percentage of all funds received to entities. Your distribut
 msgstr "Distribua a porcentagem de todos os fundos recebidos por entidades. O seu limite de distribuição será de <0>infinito</0>."
 
 #: src/components/v2/shared/DistributionSplitsSection/index.tsx
-msgid "Distribute a specific amount of funds to entities each funding cycle. Your distribution limit will equal the <0>sum of all payout amounts.</0>"
-msgstr "Distribua uma quantidade específica de fundos a entidades a cada ciclo de financiamento. O seu limite de distribuição será igual a <0>soma de toda a quantidade de pagamentos.</0>"
+msgid "Distribute a specific amount of funds to entities each funding cycle."
+msgstr ""
 
 #: src/components/v1/shared/forms/PayModsForm.tsx
 msgid "Distribute available funds to other Ethereum wallets or Juicebox projects as payouts. Use this to pay contributors, charities, Juicebox projects you depend on, or anyone else. Funds are distributed whenever a withdrawal is made from your project."
@@ -1114,6 +1110,10 @@ msgstr "O limite de distribuição é infinito. <0>O projeto controlará como to
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Distribution limit, duration and payouts"
 msgstr "Limite de distribuição, duração e pagamentos"
+
+#: src/components/v2/shared/DistributionSplitsSection/index.tsx
+msgid "Distribution limit:"
+msgstr ""
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
 msgid "Distribution limit: <0/>{0}"
@@ -1668,6 +1668,10 @@ msgstr "Logotipo"
 msgid "MAX"
 msgstr "MÁX"
 
+#: src/components/v2/shared/DistributionSplitsSection/index.tsx
+msgid "Make distribution limit the sum of payouts"
+msgstr ""
+
 #: src/components/v1/V1Project/Rewards/index.tsx
 msgid "Manage"
 msgstr "Administrar"
@@ -1832,6 +1836,10 @@ msgstr "Sem meta"
 msgid "No target set."
 msgstr "Sem meta definida."
 
+#: src/components/v2/shared/DistributionSplitsSection/index.tsx
+msgid "None"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 msgid "Not a valid ETH address"
 msgstr ""
@@ -1851,6 +1859,10 @@ msgstr "Nota"
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "Note: Tokens can be minted manually when allowed in the current funding cycle. This can be changed by the project owner for upcoming cycles."
 msgstr "Nota: Tokens podem ser criados manualmente quando permitidos no atual ciclo de financiamento. Isso pode ser modificado pelo proprietário do projeto para os próximos ciclos."
+
+#: src/components/v2/shared/DistributionSplitsSection/index.tsx
+msgid "Nothing can be distributed from the treasury. Funds can only be accessed by token holders redeeming their tokens."
+msgstr ""
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
@@ -2047,10 +2059,6 @@ msgstr "Porcentagem de alocação"
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
 msgid "Percentage:"
 msgstr "Porcentagem:"
-
-#: src/components/v2/shared/DistributionSplitsSection/index.tsx
-msgid "Percentages"
-msgstr "Porcentagens"
 
 #: src/components/v1/shared/ProjectTicketMods.tsx
 msgid "Percentages must add up to 100% or less"
@@ -2579,6 +2587,14 @@ msgstr "Algo deu errado."
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Spending"
 msgstr "Gastos"
+
+#: src/components/v2/shared/DistributionSplitsSection/index.tsx
+msgid "Split all funds"
+msgstr ""
+
+#: src/components/v2/shared/DistributionSplitsSection/index.tsx
+msgid "Split within a distribution limit"
+msgstr ""
 
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx

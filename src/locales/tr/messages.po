@@ -456,10 +456,6 @@ msgstr "Dağıtılacak miktar"
 msgid "Amount:"
 msgstr "Miktar:"
 
-#: src/components/v2/shared/DistributionSplitsSection/index.tsx
-msgid "Amounts"
-msgstr "Miktarlar"
-
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "Any changes you make will take effect in <0>funding cycle #{0}</0>. The current funding cycle (#{currentFCNumber}) won't be altered."
 msgstr "Yaptığınız tüm değişiklikler <0>finansman döngüsü #{0}</0> içinde geçerli olacaktır. Mevcut finansman döngüsü (#{currentFCNumber}) değiştirilmeyecektir."
@@ -1030,7 +1026,7 @@ msgid "Distribute a percentage of all funds received to entities. Your distribut
 msgstr ""
 
 #: src/components/v2/shared/DistributionSplitsSection/index.tsx
-msgid "Distribute a specific amount of funds to entities each funding cycle. Your distribution limit will equal the <0>sum of all payout amounts.</0>"
+msgid "Distribute a specific amount of funds to entities each funding cycle."
 msgstr ""
 
 #: src/components/v1/shared/forms/PayModsForm.tsx
@@ -1114,6 +1110,10 @@ msgstr "Dağıtım sınırı sonsuzdur. <0>Tüm fonların nasıl dağıtılacağ
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Distribution limit, duration and payouts"
 msgstr "Dağıtım sınırı, süre ve ödemeler"
+
+#: src/components/v2/shared/DistributionSplitsSection/index.tsx
+msgid "Distribution limit:"
+msgstr ""
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
 msgid "Distribution limit: <0/>{0}"
@@ -1668,6 +1668,10 @@ msgstr "Logo"
 msgid "MAX"
 msgstr "MAKS"
 
+#: src/components/v2/shared/DistributionSplitsSection/index.tsx
+msgid "Make distribution limit the sum of payouts"
+msgstr ""
+
 #: src/components/v1/V1Project/Rewards/index.tsx
 msgid "Manage"
 msgstr "Yönet"
@@ -1832,6 +1836,10 @@ msgstr "Hedef yok"
 msgid "No target set."
 msgstr "Hedef belirlenmedi."
 
+#: src/components/v2/shared/DistributionSplitsSection/index.tsx
+msgid "None"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 msgid "Not a valid ETH address"
 msgstr ""
@@ -1851,6 +1859,10 @@ msgstr "Not"
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "Note: Tokens can be minted manually when allowed in the current funding cycle. This can be changed by the project owner for upcoming cycles."
 msgstr "Not: Token'lar, mevcut finansman döngüsünde izin verildiğinde manuel olarak basılabilir. İzin, sonraki döngüler için proje sahibi tarafından değiştirilebilir."
+
+#: src/components/v2/shared/DistributionSplitsSection/index.tsx
+msgid "Nothing can be distributed from the treasury. Funds can only be accessed by token holders redeeming their tokens."
+msgstr ""
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
@@ -2047,10 +2059,6 @@ msgstr "Yüzde tahsisi"
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
 msgid "Percentage:"
 msgstr "Yüzde:"
-
-#: src/components/v2/shared/DistributionSplitsSection/index.tsx
-msgid "Percentages"
-msgstr "Yüzdeler"
 
 #: src/components/v1/shared/ProjectTicketMods.tsx
 msgid "Percentages must add up to 100% or less"
@@ -2579,6 +2587,14 @@ msgstr "Bir şeyler yanlış gitti."
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Spending"
 msgstr "Harcama"
+
+#: src/components/v2/shared/DistributionSplitsSection/index.tsx
+msgid "Split all funds"
+msgstr ""
+
+#: src/components/v2/shared/DistributionSplitsSection/index.tsx
+msgid "Split within a distribution limit"
+msgstr ""
 
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx

@@ -37,7 +37,7 @@ export default function InputAccessoryButton({
         marginRight: placement === 'prefix' ? 8 : 0,
         borderRadius: radii.sm,
       }}
-      onClick={onClick}
+      onClick={!disabled ? onClick : () => null}
     >
       {content}
       {withArrow && (

@@ -53,11 +53,11 @@ msgstr "100% overflow"
 
 #: src/components/v2/V2Create/index.tsx
 msgid "2. Funding cycle"
-msgstr "2. Ciclo de financiamento<<<<<<< HEAD======="
+msgstr "2. Ciclo de financiamento"
 
 #: src/components/Landing/HowItWorksSection.tsx
 msgid "2. Give ownership"
-msgstr ">>>>>>> v2-project-handles"
+msgstr ""
 
 #: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
 msgid "2. Set text record"
@@ -642,11 +642,11 @@ msgstr ""
 
 #: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
 msgid "Change project handle"
-msgstr "<<<<<<< HEAD======="
+msgstr ""
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
 msgid "Changes to payouts will take effect immediately."
-msgstr ">>>>>>> v2-project-handles"
+msgstr ""
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Changes to project details will take effect immediately."
@@ -864,7 +864,7 @@ msgstr "Criar projeto"
 
 #: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Create your own ERC-20 token to represent stake in your project. Contributors will receive these tokens when they pay your project."
-msgstr "Crie seu próprio token ERC-20 para representar a participação em seu projeto. Contribuidores receberão esses tokens quando eles pagarem seu projeto.<<<<<<< HEAD"
+msgstr "Crie seu próprio token ERC-20 para representar a participação em seu projeto. Contribuidores receberão esses tokens quando eles pagarem seu projeto."
 
 #: src/components/v2/V2Project/ProjectActivity/eventElems/DeployETHERC20ProjectPayerEventElem.tsx
 msgid "Created ETH-ERC20 payment address"
@@ -872,7 +872,7 @@ msgstr ""
 
 #: src/components/Landing/HowItWorksSection.tsx
 msgid "Crowdfund your project with ETH. Set a funding target to cover predictable expenses, and any extra funds (<0>overflow</0>) can be claimed by anyone holding your project's tokens alongside you."
-msgstr ">>>>>>> v2-project-handles"
+msgstr ""
 
 #: src/components/Landing/index.tsx
 msgid "Crowdfunding"
@@ -1211,7 +1211,7 @@ msgstr "Duração (segundos)"
 
 #: src/components/shared/formItems/ENSName.tsx
 msgid "ENS Name"
-msgstr "<<<<<<< HEAD"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
@@ -1633,11 +1633,11 @@ msgstr "Projeto do Juicebox"
 
 #: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
 msgid "Juicebox projects use <0>ENS names</0> as handles. Setting a handle involves 2 transactions:"
-msgstr "<<<<<<< HEAD======="
+msgstr ""
 
 #: src/components/Landing/TopProjectsSection.tsx
 msgid "Juicebox puts the fun back in funding so you can focus on building."
-msgstr ">>>>>>> v2-project-handles"
+msgstr ""
 
 #: src/components/shared/modals/ParticipantsModal.tsx
 msgid "Last paid"
@@ -3439,7 +3439,7 @@ msgstr "controlar"
 
 #: src/utils/formatTime.ts
 msgid "hours"
-msgstr "horas<<<<<<< HEAD"
+msgstr "horas"
 
 #: src/components/shared/formItems/ProjectTwitter.tsx
 msgid "juiceboxETH"

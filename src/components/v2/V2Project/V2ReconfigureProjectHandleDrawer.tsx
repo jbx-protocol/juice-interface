@@ -96,12 +96,12 @@ export function V2ReconfigureProjectHandleDrawer({
 
       <p>
         <Trans>
-          Projects with a handle are:
+          Projects with a handle:
           <br />
           <br />
-          1. Included in search results on the projects page
+          1. Are included in search results on the projects page
           <br />
-          2. Accessible from the URL:{' '}
+          2. Can be accessed via the URL:{' '}
           <b>juicebox.money/#{v2ProjectRoute({ handle: 'handle' })}</b>
           <br />
           <br />

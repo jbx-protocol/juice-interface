@@ -57,6 +57,7 @@ import DistributionSplitsSection from 'components/v2/shared/DistributionSplitsSe
 import { getTotalSplitsPercentage } from 'utils/v2/distributions'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { ItemNoInput } from 'components/shared/formItems/ItemNoInput'
+import { helpPagePath } from 'utils/helpPageHelper'
 
 import isEqual from 'lodash/isEqual'
 
@@ -255,6 +256,11 @@ export default function FundingForm({
             defaultFundingCycleMetadata.redemptionRate,
           ),
         )
+        dispatch(
+          editingV2ProjectActions.setBallotRedemptionRate(
+            defaultFundingCycleMetadata.ballotRedemptionRate,
+          ),
+        )
       }
 
       onFinish?.()
@@ -353,7 +359,7 @@ export default function FundingForm({
             <Trans>
               With no funding cycles, the project's owner can start a new
               funding cycle (Funding Cycle #2) on-demand.{' '}
-              <ExternalLink href={'https://info.juicebox.money/learn/risks'}>
+              <ExternalLink href={helpPagePath('dev/learn/risks')}>
                 Learn more.
               </ExternalLink>
             </Trans>

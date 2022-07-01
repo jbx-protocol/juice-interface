@@ -13,6 +13,7 @@ const {
   VOTING_DAO,
   LUNAR_DAO,
   BLUECOLLARDS,
+  CITYMONK,
 } = V1_PROJECT_IDS
 
 const V1ArchivedProjectIdsByNetwork: Partial<Record<NetworkName, number[]>> = {
@@ -26,6 +27,7 @@ const V1ArchivedProjectIdsByNetwork: Partial<Record<NetworkName, number[]>> = {
     VOTING_DAO,
     LUNAR_DAO,
     BLUECOLLARDS,
+    CITYMONK,
   ],
   [NetworkName.rinkeby]: [],
 }

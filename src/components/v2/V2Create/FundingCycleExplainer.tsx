@@ -1,8 +1,8 @@
-import TabDescription from './TabDescription'
+import Callout from '../../shared/Callout'
 
 export default function FundingCycleExplainer() {
   return (
-    <TabDescription>
+    <Callout>
       <p>
         Funding Cycle #1 will start immediately after you deploy your project.
         Once deployed, <strong>Funding Cycle #1 can't be reconfigured</strong>.
@@ -11,6 +11,6 @@ export default function FundingCycleExplainer() {
         You can reconfigure your project's next funding cycle (Funding Cycle #2)
         at any time within the bounds of the rules you set below.
       </p>
-    </TabDescription>
+    </Callout>
   )
 }

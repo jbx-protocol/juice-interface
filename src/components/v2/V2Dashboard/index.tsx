@@ -7,9 +7,10 @@ import {
   V2ProjectContextType,
 } from 'contexts/v2/projectContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
+import { usePageTitle } from 'hooks/PageTitle'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { useProjectsQuery } from 'hooks/Projects'
-import useSymbolOfERC20 from 'hooks/v1/contractReader/SymbolOfERC20'
+import useSymbolOfERC20 from 'hooks/SymbolOfERC20'
 import { useBallotState } from 'hooks/v2/contractReader/BallotState'
 import { usePaymentTerminalBalance } from 'hooks/v2/contractReader/PaymentTerminalBalance'
 import useProjectCurrentFundingCycle from 'hooks/v2/contractReader/ProjectCurrentFundingCycle'
@@ -48,6 +49,12 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
     error: metadataError,
     isLoading: metadataLoading,
   } = useProjectMetadata(metadataCID)
+
+  usePageTitle({
+    title: projectMetadata?.name
+      ? `${projectMetadata.name} | Juicebox`
+      : undefined,
+  })
 
   const { data: projects } = useProjectsQuery({
     projectId,

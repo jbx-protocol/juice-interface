@@ -1,29 +1,38 @@
-import { t } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
+import { EditOutlined } from '@ant-design/icons'
 import ProjectLogo from 'components/shared/ProjectLogo'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
 import { ProjectMetadataV4 } from 'models/project-metadata'
 import Paragraph from 'components/shared/Paragraph'
 
+import { useProjectOwner } from 'hooks/v1/contractReader/ProjectOwner'
+import { Button, Tooltip } from 'antd'
+
 import SocialLinks from './SocialLinks'
+import FormattedAddress from '../../../shared/FormattedAddress'
 
 export default function ProjectHeader({
   handle,
   metadata,
   isArchived,
   actions,
+  onClickSetHandle,
 }: {
   metadata?: ProjectMetadataV4
   isArchived?: boolean
   handle?: string
   actions?: JSX.Element
+  onClickSetHandle?: VoidFunction
 }) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+  const { owner } = useProjectOwner()
 
   const headerHeight = 120
-  const spacing = 20
+
+  const projectTitle = metadata?.name || t`Untitled project`
 
   return (
     <div>
@@ -66,9 +75,12 @@ export default function ProjectHeader({
                 color: metadata?.name
                   ? colors.text.primary
                   : colors.text.placeholder,
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
               }}
+              title={projectTitle}
             >
-              {metadata?.name || t`Untitled project`}
+              {projectTitle}
             </h1>
 
             {actions ? actions : null}
@@ -77,10 +89,12 @@ export default function ProjectHeader({
           <div
             style={{
               display: 'flex',
+              alignItems: 'baseline',
               flexWrap: 'wrap',
               paddingTop: 8,
               paddingBottom: 4,
               fontWeight: 500,
+              gap: 20,
             }}
           >
             {isArchived && (
@@ -89,23 +103,34 @@ export default function ProjectHeader({
                   fontSize: '0.8rem',
                   color: colors.text.disabled,
                   textTransform: 'uppercase',
-                  marginRight: spacing,
                 }}
               >
                 (archived)
               </span>
             )}
-            {handle && (
+            {handle ? (
               <span
                 style={{
                   color: colors.text.secondary,
-                  marginRight: spacing,
                   fontWeight: 600,
                 }}
               >
                 @{handle}
               </span>
-            )}
+            ) : onClickSetHandle ? (
+              <Tooltip
+                placement="bottom"
+                title={t`A project's handle is used in its URL, and allows it to be included in search results on the projects page.`}
+              >
+                <Button
+                  onClick={onClickSetHandle}
+                  type="text"
+                  style={{ padding: 0 }}
+                >
+                  <EditOutlined /> <Trans>Add handle</Trans>
+                </Button>
+              </Tooltip>
+            ) : null}
             <SocialLinks
               discord={metadata?.discord}
               twitter={metadata?.twitter}
@@ -117,6 +142,13 @@ export default function ProjectHeader({
               description={metadata.description}
               characterLimit={250}
             />
+          )}
+          {owner && (
+            <span style={{ color: colors.text.secondary }}>
+              <Trans>
+                Owned by: <FormattedAddress address={owner} />
+              </Trans>
+            </span>
           )}
         </div>
       </div>

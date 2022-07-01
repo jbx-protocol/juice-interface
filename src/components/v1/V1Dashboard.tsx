@@ -12,28 +12,26 @@ import useCurrentFundingCycleOfProject from 'hooks/v1/contractReader/CurrentFund
 import useCurrentPayoutModsOfProject from 'hooks/v1/contractReader/CurrentPayoutModsOfProject'
 import useCurrentTicketModsOfProject from 'hooks/v1/contractReader/CurrentTicketModsOfProject'
 import useOverflowOfProject from 'hooks/v1/contractReader/OverflowOfProject'
-import useOwnerOfProject from 'hooks/v1/contractReader/OwnerOfProject'
 import useProjectIdForHandle from 'hooks/v1/contractReader/ProjectIdForHandle'
 import useQueuedFundingCycleOfProject from 'hooks/v1/contractReader/QueuedFundingCycleOfProject'
 import useQueuedPayoutModsOfProject from 'hooks/v1/contractReader/QueuedPayoutModsOfProject'
 import useQueuedTicketModsOfProject from 'hooks/v1/contractReader/QueuedTicketModsOfProject'
-import useSymbolOfERC20 from 'hooks/v1/contractReader/SymbolOfERC20'
+import useSymbolOfERC20 from 'hooks/SymbolOfERC20'
 import useTerminalOfProject from 'hooks/v1/contractReader/TerminalOfProject'
 import useTokenAddressOfProject from 'hooks/v1/contractReader/TokenAddressOfProject'
 import useUriOfProject from 'hooks/v1/contractReader/UriOfProject'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
-import { useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
 import { getTerminalName, getTerminalVersion } from 'utils/v1/terminals'
-
 import { V1CurrencyProvider } from 'providers/v1/V1CurrencyProvider'
-
 import { V1CurrencyName } from 'utils/v1/currency'
-
 import NewDeployNotAvailable from 'components/shared/NewDeployNotAvailable'
-
 import Project404 from 'components/shared/Project404'
+import { usePageTitle } from 'hooks/PageTitle'
+
+import { useProjectOwner } from 'hooks/v1/contractReader/ProjectOwner'
 
 import { layouts } from 'constants/styles/layouts'
 import { projectTypes } from 'constants/v1/projectTypes'
@@ -41,7 +39,6 @@ import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 
 import Loading from '../shared/Loading'
 import V1Project from './V1Project'
-import { DEFAULT_SITE_TITLE } from 'constants/siteMetadata'
 
 export default function V1Dashboard() {
   const { handle }: { handle?: string } = useParams()
@@ -49,9 +46,9 @@ export default function V1Dashboard() {
   const location = useLocation()
   const params = new URLSearchParams(location.search)
   const isNewDeploy = Boolean(params.get('newDeploy'))
+  const { owner } = useProjectOwner()
 
   const projectId = useProjectIdForHandle(handle)
-  const owner = useOwnerOfProject(projectId)
   const terminalAddress = useTerminalOfProject(projectId)
   const terminalName = getTerminalName({
     address: terminalAddress,
@@ -96,13 +93,9 @@ export default function V1Dashboard() {
   const uri = useUriOfProject(projectId)
   const { data: metadata } = useProjectMetadata(uri)
 
-  useEffect(() => {
-    if (metadata?.name) {
-      document.title = `${metadata.name} | Juicebox`
-    } else {
-      document.title = DEFAULT_SITE_TITLE
-    }
-  }, [metadata])
+  usePageTitle({
+    title: metadata?.name ? `${metadata.name} | Juicebox` : undefined,
+  })
 
   const { data: projects } = useProjectsQuery({
     projectId: projectId?.toNumber(),

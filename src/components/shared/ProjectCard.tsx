@@ -15,6 +15,8 @@ import { Trans } from '@lingui/macro'
 
 import { Link } from 'react-router-dom'
 
+import { v2ProjectRoute } from 'utils/routes'
+
 import ProjectLogo from './ProjectLogo'
 import ETHAmount from './currency/ETHAmount'
 import { V1ArchivedProjectIds } from '../../constants/v1/archivedProjects'
@@ -113,7 +115,7 @@ export default function ProjectCard({
       key={`${_project.id}_${_project.cv}`}
       to={
         _project.cv === '2'
-          ? `/v2/p/${_project.projectId}`
+          ? v2ProjectRoute(_project)
           : `/p/${_project?.handle}`
       }
     >

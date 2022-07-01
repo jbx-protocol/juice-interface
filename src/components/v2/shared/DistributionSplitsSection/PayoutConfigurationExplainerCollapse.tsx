@@ -17,7 +17,7 @@ export function PayoutConfigurationExplainerCollapse({
           <strong>distribution limit</strong>. Treasury funds that exceed the
           distribution limit are called <strong>overflow</strong>. Token holders
           can redeem (burn) their tokens for a portion of the overflow.{' '}
-          <ExternalLink href={helpPagePath('protocol/learn/topics/overflow')}>
+          <ExternalLink href={helpPagePath('dev/learn/glossary/overflow')}>
             Learn more
           </ExternalLink>
           .
@@ -30,7 +30,7 @@ export function PayoutConfigurationExplainerCollapse({
           <strong>infinite distribution limit.</strong> With an infinite
           distribution limit, your project reserves all funds for itself. Your
           project won't have overflow, so tokens can never be redeemed for ETH.{' '}
-          <ExternalLink href={helpPagePath('protocol/learn/topics/overflow')}>
+          <ExternalLink href={helpPagePath('dev/learn/glossary/overflow')}>
             Learn more
           </ExternalLink>
           .

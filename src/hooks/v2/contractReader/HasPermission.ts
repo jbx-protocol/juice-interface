@@ -35,7 +35,6 @@ export function useHasPermission(
   const { projectId, isPreviewMode } = useContext(V2ProjectContext)
 
   const { data: owner } = useProjectOwner(projectId)
-
   const hasOperatorPermission = useContractReader<boolean>({
     contract: V2ContractName.JBOperatorStore,
     functionName: 'hasPermissions',
@@ -49,6 +48,8 @@ export function useHasPermission(
           ]
         : null,
   })
+
+  if (isPreviewMode) return false
 
   const isOwner =
     userAddress && owner && userAddress.toLowerCase() === owner.toLowerCase()

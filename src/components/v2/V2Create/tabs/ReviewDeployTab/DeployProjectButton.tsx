@@ -20,6 +20,8 @@ import { useAppDispatch } from 'hooks/AppDispatch'
 
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 
+import { v2ProjectRoute } from 'utils/routes'
+
 import { readProvider } from 'constants/readProvider'
 import { readNetwork } from 'constants/networks'
 
@@ -128,7 +130,7 @@ export default function DeployProjectButton() {
           // Reset Redux state/localstorage after deploying
           dispatch(editingV2ProjectActions.resetState())
 
-          history.push(`/v2/p/${projectId}?newDeploy=true`)
+          history.push(`${v2ProjectRoute({ projectId })}?newDeploy=true`)
         },
         onCancelled() {
           setDeployLoading(false)

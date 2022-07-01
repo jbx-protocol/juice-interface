@@ -12,13 +12,15 @@ import { useEditV2ProjectHandleTx } from 'hooks/v2/transactor/EditV2ProjectHandl
 import { useSetENSTextRecordForHandleTx } from 'hooks/v2/transactor/SetENSTextRecordForHandleTx'
 import { useCallback, useContext, useEffect, useState } from 'react'
 
+import { v2ProjectRoute } from 'utils/routes'
+
 import { drawerStyle } from 'constants/styles/drawerStyle'
 
 export function V2ReconfigureProjectHandleDrawer({
   visible,
   onFinish,
 }: {
-  visible: boolean
+  visible: boolean | undefined
   onFinish?: () => void
 }) {
   const { handle, projectId } = useContext(V2ProjectContext)
@@ -92,6 +94,23 @@ export function V2ReconfigureProjectHandleDrawer({
         <div style={{ fontWeight: 'bold', fontSize: '1.4rem' }}>@{handle}</div>
       )}
 
+      <p>
+        <Trans>
+          Projects with a handle:
+          <br />
+          <br />
+          1. Are included in search results on the projects page
+          <br />
+          2. Can be accessed via the URL:{' '}
+          <b>juicebox.money/#{v2ProjectRoute({ handle: 'handle' })}</b>
+          <br />
+          <br />
+          (The original URL{' '}
+          <b>juicebox.money/#{v2ProjectRoute({ projectId })}</b> will continue
+          to work.)
+        </Trans>
+      </p>
+
       <Divider />
 
       <p style={{ color: colors.text.primary }}>
@@ -116,8 +135,14 @@ export function V2ReconfigureProjectHandleDrawer({
 
       <p style={{ color: colors.text.primary }}>
         <Trans>
-          Choose an ENS name to use as the project's handle, with an optional
-          subdomain. The handle won't include the ".eth" extension.
+          Choose an ENS name to use as the project's handle. Subdomains are
+          allowed and will be included in the handle. Handles won't include the
+          ".eth" extension.
+          <br />
+          <br />
+          juicebox.eth = @juicebox
+          <br />
+          dao.juicebox.eth = @dao.juicebox
         </Trans>
       </p>
 

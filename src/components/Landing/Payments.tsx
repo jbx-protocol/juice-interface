@@ -38,7 +38,10 @@ export default function Payments() {
     return (
       <div style={{ color: colors.text.action.primary, fontWeight: 500 }}>
         {project.cv === '2' ? (
-          <V2ProjectHandle projectId={project.projectId} />
+          <V2ProjectHandle
+            projectId={project.projectId}
+            handle={project.handle}
+          />
         ) : (
           <V1ProjectHandle projectId={project.projectId} />
         )}

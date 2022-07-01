@@ -1,4 +1,3 @@
-import { t } from '@lingui/macro'
 import Landing from 'components/Landing'
 import PrivacyPolicy from 'components/PrivacyPolicy'
 import Projects from 'components/Projects'
@@ -9,24 +8,14 @@ import V2BugUpdates from 'components/V2BugUpdates'
 import { fathom } from 'lib/fathom'
 import { V1CurrencyProvider } from 'providers/v1/V1CurrencyProvider'
 import { V2UserProvider } from 'providers/v2/UserProvider'
+import { usePageTitle } from 'hooks/PageTitle'
 import { lazy, Suspense, useEffect } from 'react'
 import { Redirect, useParams } from 'react-router'
 import { HashRouter, Route, Switch, useLocation } from 'react-router-dom'
-
-import { DEFAULT_SITE_TITLE } from 'constants/siteMetadata'
+import V2ProjectHandleGateway from 'components/v2/V2Dashboard/V2ProjectHandleGateway'
 
 const V1Create = lazy(() => import('components/v1/V1Create'))
 const V2Create = lazy(() => import('components/v2/V2Create'))
-const V2ProjectHandleGateway = lazy(
-  () => import('components/v2/V2Dashboard/V2ProjectHandleGateway'),
-)
-
-const pageTitles = (): { [k in string]: string } => {
-  return {
-    '/create': t`Create project`,
-    '/projects': t`Projects`,
-  }
-}
 
 function CatchallRedirect() {
   const route = useParams<{ route: string }>()['route']
@@ -40,15 +29,6 @@ function usePageViews() {
     fathom?.trackPageview({
       url: location.pathname,
     })
-  }, [location])
-}
-
-function usePageTitle() {
-  const location = useLocation()
-
-  useEffect(() => {
-    const name = pageTitles()[location.pathname]
-    document.title = name ? `${name} | Juicebox` : DEFAULT_SITE_TITLE
   }, [location])
 }
 
@@ -87,14 +67,19 @@ function JuiceboxSwitch() {
         <V1Dashboard />
       </Route>
 
-      <Route path="/v2/p/id/:projectId">
+      <Route path="/@:handle">
         <Suspense fallback={<Loading />}>
           <V2UserProvider>
             <V2ProjectHandleGateway />
           </V2UserProvider>
         </Suspense>
       </Route>
-      <Route path="/v2/p/:handleOrProjectId">
+
+      <Route path="/p/:handle">
+        <V1Dashboard />
+      </Route>
+
+      <Route path="/v2/p/:projectId">
         <Suspense fallback={<Loading />}>
           <V2UserProvider>
             <V2ProjectHandleGateway />

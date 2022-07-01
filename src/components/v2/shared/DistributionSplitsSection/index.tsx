@@ -7,10 +7,19 @@ import { FormItemExt } from 'components/shared/formItems/formItemExt'
 import { fromWad, parseWad } from 'utils/formatNumber'
 import DistributionLimit from 'components/v2/V2Project/DistributionLimit'
 import TooltipIcon from 'components/shared/TooltipIcon'
-import { getTotalSplitsPercentage } from 'utils/v2/distributions'
+import {
+  adjustedSplitPercents,
+  getNewDistributionLimit,
+  getTotalSplitsPercentage,
+} from 'utils/v2/distributions'
 import { ThemeContext } from 'contexts/themeContext'
 import { MAX_DISTRIBUTION_LIMIT, splitPercentFrom } from 'utils/v2/math'
 import { NetworkContext } from 'contexts/networkContext'
+import { Link } from 'react-router-dom'
+
+import { filter } from 'lodash'
+
+import { v2ProjectRoute } from 'utils/routes'
 
 import DistributionSplitCard from './DistributionSplitCard'
 import { CurrencyName } from 'constants/currency'
@@ -68,25 +77,47 @@ export default function DistributionSplitsSection({
         <DistributionSplitCard
           split={split}
           splits={allSplits}
-          editableSplits={editableSplits}
-          editableSplitIndex={index}
           distributionLimit={distributionLimit}
           setDistributionLimit={setDistributionLimit}
           onSplitsChanged={onSplitsChanged}
           onCurrencyChange={isFirstSplit ? onCurrencyChange : undefined}
           currencyName={currencyName}
           isLocked={isLocked}
+          onSplitDelete={split => {
+            let adjustedSplits = allSplits
+            if (!distributionLimitIsInfinite && allSplits.length !== 1) {
+              const newDistributionLimit = getNewDistributionLimit({
+                currentDistributionLimit: distributionLimit,
+                newSplitAmount: 0,
+                editingSplitPercent: split.percent,
+              }).toString()
+              adjustedSplits = adjustedSplitPercents({
+                splits: editableSplits,
+                oldDistributionLimit: distributionLimit,
+                newDistributionLimit,
+              })
+              setDistributionLimit(newDistributionLimit)
+            }
+            if (allSplits.length === 1) setDistributionLimit('0')
+            const splitsAfterDelete = filter(
+              adjustedSplits,
+              s => s.beneficiary !== split.beneficiary,
+            )
+
+            onSplitsChanged(splitsAfterDelete)
+          }}
         />
       )
     },
     [
-      distributionLimit,
-      onSplitsChanged,
-      allSplits,
-      currencyName,
       editableSplits,
+      allSplits,
+      distributionLimit,
       setDistributionLimit,
+      onSplitsChanged,
       onCurrencyChange,
+      currencyName,
+      distributionLimitIsInfinite,
     ],
   )
 
@@ -113,8 +144,6 @@ export default function DistributionSplitsSection({
       <DistributionSplitCard
         split={ownerSplit}
         splits={allSplits}
-        editableSplits={editableSplits}
-        editableSplitIndex={0}
         distributionLimit={distributionLimit}
         setDistributionLimit={setDistributionLimit}
         onSplitsChanged={onSplitsChanged}
@@ -211,15 +240,38 @@ export default function DistributionSplitsSection({
         ) : remainingSplitsPercentage > 0 && distributionLimit !== '0' ? (
           <OwnerSplitCard />
         ) : null}
-        <Button
-          type="dashed"
-          onClick={() => {
-            setAddSplitModalVisible(true)
-          }}
-          block
+        <Form.Item
+          extra={
+            <Space size="small">
+              <Trans>
+                Payouts to Ethereum addresses incur a 2.5% JBX membership fee
+              </Trans>
+              <TooltipIcon
+                tip={
+                  <Trans>
+                    When distributing, payouts to Ethereum addresses incur a
+                    2.5% JBX membership fee. Payouts to other Juicebox projects
+                    don't incur fees. Your project will receive (the{' '}
+                    <Link to={v2ProjectRoute({ projectId: 1 })}>
+                      JuiceboxDAO
+                    </Link>{' '}
+                    token) in return at the current issuance rate.
+                  </Trans>
+                }
+              />
+            </Space>
+          }
         >
-          <Trans>Add payout</Trans>
-        </Button>
+          <Button
+            type="dashed"
+            onClick={() => {
+              setAddSplitModalVisible(true)
+            }}
+            block
+          >
+            <Trans>Add payout</Trans>
+          </Button>
+        </Form.Item>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <span style={{ color: colors.text.primary }}>
             <Trans>
@@ -248,7 +300,6 @@ export default function DistributionSplitsSection({
         onSplitsChanged={onSplitsChanged}
         mode={'Add'}
         splits={allSplits}
-        editableSplits={editableSplits}
         distributionLimit={distributionLimit}
         setDistributionLimit={setDistributionLimit}
         currencyName={currencyName}

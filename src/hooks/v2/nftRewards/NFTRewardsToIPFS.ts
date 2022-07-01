@@ -16,9 +16,11 @@ type CloudFunctionRewardTier = {
   rights: string
 }
 
-// Calls a cloudfunction created by @tankbottoms
+// Calls a cloudfunction to upload to IPFS created by @tankbottoms
 // Returns cid which points to where this NFT data is stored on IPFS
-export default async function useNFTRewardsToIPFS(nftRewards: NFTRewardTier[]) {
+export default async function useNFTRewardsToIPFS(
+  nftRewards: NFTRewardTier[],
+): Promise<string> {
   const now = new Date().toISOString()
   const args: CloudFunctionRewardTier[] = []
   nftRewards.forEach(rewardTier => {
@@ -39,7 +41,7 @@ export default async function useNFTRewardsToIPFS(nftRewards: NFTRewardTier[]) {
     })
   })
 
-  console.info('Calling CloudFunction with args: ', args)
+  console.info('>>> Calling IPFS CloudFunction with args: ', args)
 
   const response = await fetch(
     'https://us-central1-ipfs-scratch-space.cloudfunctions.net/pinning',
@@ -54,6 +56,6 @@ export default async function useNFTRewardsToIPFS(nftRewards: NFTRewardTier[]) {
   )
 
   const { cid } = await response.json()
-  console.info('CloudFunction returned cid: ', cid)
+  console.info('>>> IPFS CloudFunction returned cid: ', cid)
   return cid
 }

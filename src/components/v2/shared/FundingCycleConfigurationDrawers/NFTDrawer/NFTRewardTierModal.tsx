@@ -1,4 +1,4 @@
-import { t, Trans } from '@lingui/macro'
+import { t } from '@lingui/macro'
 import { Form, Input, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { ModalMode } from 'components/shared/formItems/formHelpers'
@@ -9,6 +9,7 @@ import { useEffect } from 'react'
 import PaymentThresholdFormItem from './PaymentThresholdFormItem'
 import NFTUpload from './NFTUpload'
 import MaxSupplyFormItem from './MaxSupplyFormItem'
+import { NFT_REWARDS_EXPLAINATION } from '.'
 
 export type NFTFormFields = {
   paymentThreshold: number
@@ -21,58 +22,43 @@ export type NFTFormFields = {
 
 export default function NFTRewardTierModal({
   visible,
-  rewardTiers,
-  setRewardTiers,
+  rewardTier,
   onClose,
   mode,
-  editingTierIndex,
+  onChange,
 }: {
   visible: boolean
-  rewardTiers: NFTRewardTier[]
-  setRewardTiers: (rewardTiers: NFTRewardTier[]) => void
+  rewardTier?: NFTRewardTier // null when mode === 'Add'
   onClose: VoidFunction
   isCreate?: boolean
   mode: ModalMode
-  editingTierIndex?: number
+  onChange: (rewardTier: NFTRewardTier) => void
 }) {
-  const [NFTForm] = useForm<NFTFormFields>()
+  const [nftForm] = useForm<NFTFormFields>()
 
   const onFormSaved = async () => {
-    await NFTForm.validateFields()
+    await nftForm.validateFields()
 
     const newTier = {
-      paymentThreshold: parseFloat(NFTForm.getFieldValue('paymentThreshold')),
-      maxSupply: NFTForm.getFieldValue('maxSupply'),
-      imageUrl: NFTForm.getFieldValue('imageUrl'),
-      name: NFTForm.getFieldValue('name'),
-      externalLink: NFTForm.getFieldValue('externalLink'),
-      description: NFTForm.getFieldValue('description'),
+      paymentThreshold: parseFloat(nftForm.getFieldValue('paymentThreshold')),
+      maxSupply: nftForm.getFieldValue('maxSupply'),
+      imageUrl: nftForm.getFieldValue('imageUrl'),
+      name: nftForm.getFieldValue('name'),
+      externalLink: nftForm.getFieldValue('externalLink'),
+      description: nftForm.getFieldValue('description'),
     } as NFTRewardTier
 
-    const newTiers =
-      mode === 'Edit'
-        ? rewardTiers.map((tier, i) =>
-            i === editingTierIndex
-              ? {
-                  ...tier,
-                  ...newTier,
-                }
-              : tier,
-          )
-        : [...rewardTiers, newTier]
-
-    setRewardTiers(newTiers)
+    onChange(newTier)
     onClose()
+
     if (mode === 'Add') {
-      NFTForm.resetFields()
+      nftForm.resetFields()
     }
   }
 
   useEffect(() => {
-    if (editingTierIndex !== undefined) {
-      const rewardTier = rewardTiers[editingTierIndex]
-
-      NFTForm.setFieldsValue({
+    if (rewardTier) {
+      nftForm.setFieldsValue({
         imageUrl: rewardTier.imageUrl,
         name: rewardTier.name,
         externalLink: rewardTier.externalLink,
@@ -91,16 +77,11 @@ export default function NFTRewardTierModal({
       onCancel={onClose}
       title={mode === 'Edit' ? t`Edit NFT reward` : t`Add NFT reward`}
     >
-      <p>
-        <Trans>
-          Encourage treasury contributions by offering an NFT reward for
-          contributions above a certain threshold.
-        </Trans>
-      </p>
-      <Form layout="vertical" form={NFTForm}>
-        <PaymentThresholdFormItem form={NFTForm} />
-        <MaxSupplyFormItem form={NFTForm} />
-        <NFTUpload form={NFTForm} />
+      <p>{NFT_REWARDS_EXPLAINATION}</p>
+      <Form layout="vertical" form={nftForm}>
+        <PaymentThresholdFormItem form={nftForm} />
+        <MaxSupplyFormItem form={nftForm} />
+        <NFTUpload form={nftForm} />
         <Form.Item
           name={'name'}
           label={
@@ -108,34 +89,29 @@ export default function NFTRewardTierModal({
           }
           rules={[{ required: true }]}
         >
-          <Input
-            placeholder={t`Nammu Banny reward`}
-            type="string"
-            autoComplete="off"
-          />
+          <Input type="string" autoComplete="off" />
         </Form.Item>
-        <Form.Item
+        {/* TODO: This was a proposed input in design but isn't ready in CloudFunction or IPFS yet */}
+        {/* <Form.Item
           name={'externalLink'}
           label={
             <TooltipLabel
-              label={t`External link`}
+              label={t`Website`}
               tip={t`Provide a link to additional information about this NFT.`}
             />
           }
         >
           <Input
-            placeholder={t`https://bannyverse.com/nammu-banny`}
             type="string"
             autoComplete="off"
           />
-        </Form.Item>
+        </Form.Item> */}
         <Form.Item
           label={t`Description`}
           name="description"
           rules={[{ max: 256 }]}
         >
           <Input.TextArea
-            placeholder={t`Supporters of the Bannyverse can flex their membership with this unique Banny NFT.`}
             maxLength={256} // TODO: unknown
             showCount
             autoSize

@@ -13,7 +13,6 @@ const ALLOWED_FILE_TYPES = [
   'image/jpeg',
   'image/png',
   'image/gif',
-  'image/svg',
   'video/mp4',
   'video/webm',
 ]
@@ -39,7 +38,7 @@ export default function NFTUpload({ form }: { form: FormInstance }) {
       emitErrorNotification('File must be less than 5000MB')
     }
     if (!fileIsAllowed) {
-      emitErrorNotification('File must be a JPG, PNG, GIF, SVG, MP4 or WEBM.')
+      emitErrorNotification('File must be a JPG, PNG, GIF, MP4 or WEBM.')
     }
 
     return fileIsAllowed && isLt5000M
@@ -89,7 +88,7 @@ export default function NFTUpload({ form }: { form: FormInstance }) {
       name={'NFT'}
       label={
         <TooltipLabel
-          label={t`NFT`}
+          label={t`Image file`}
           tip={t`Attach the image to be associated with this NFT.`}
         />
       }

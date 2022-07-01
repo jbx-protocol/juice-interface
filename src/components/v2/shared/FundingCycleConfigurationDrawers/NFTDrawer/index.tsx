@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Button } from 'antd'
+import { Button, Space } from 'antd'
 import NFTRewardTierModal from 'components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTierModal'
 import { ThemeContext } from 'contexts/themeContext'
 
@@ -13,7 +13,14 @@ import useNFTRewardsToIPFS from 'hooks/v2/nftRewards/NFTRewardsToIPFS'
 import { shadowCard } from 'constants/styles/shadowCard'
 
 import FundingCycleDrawer from '../FundingCycleDrawer'
-import NFTRewardTiers from './NFTRewardTiers'
+import NFTRewardTierCard from './NFTRewardTierCard'
+
+export const NFT_REWARDS_EXPLAINATION: JSX.Element = (
+  <Trans>
+    Reward contributors with NFTs when they meet your configured funding
+    criteria.
+  </Trans>
+)
 
 export default function NFTDrawer({
   visible,
@@ -47,6 +54,34 @@ export default function NFTDrawer({
     onClose?.()
   }, [rewardTiers, dispatch, onClose])
 
+  const handleAddRewardTier = (newRewardTier: NFTRewardTier) => {
+    setRewardTiers([...rewardTiers, newRewardTier])
+  }
+
+  const handleEditRewardTier = ({
+    index,
+    newRewardTier,
+  }: {
+    index: number
+    newRewardTier: NFTRewardTier
+  }) => {
+    return rewardTiers.map((tier, i) =>
+      i === index
+        ? {
+            ...tier,
+            ...newRewardTier,
+          }
+        : tier,
+    )
+  }
+
+  const handleDeleteRewardTier = (tierIndex: number) => {
+    setRewardTiers([
+      ...rewardTiers.slice(0, tierIndex),
+      ...rewardTiers.slice(tierIndex + 1),
+    ])
+  }
+
   return (
     <>
       <FundingCycleDrawer
@@ -62,16 +97,19 @@ export default function NFTDrawer({
             color: colors.text.primary,
           }}
         >
-          <p>
-            <Trans>
-              Encourage treasury contributions by offering a reward NFT to
-              people who contribute above a certain threshold.
-            </Trans>
-          </p>
-          <NFTRewardTiers
-            rewardTiers={rewardTiers}
-            setRewardTiers={setRewardTiers}
-          />
+          <p>{NFT_REWARDS_EXPLAINATION}</p>
+          <Space direction="vertical" size="large" style={{ width: '100%' }}>
+            {rewardTiers.map((rewardTier, index) => (
+              <NFTRewardTierCard
+                key={index}
+                rewardTier={rewardTier}
+                onChange={newRewardTier =>
+                  handleEditRewardTier({ newRewardTier, index })
+                }
+                onDelete={() => handleDeleteRewardTier(index)}
+              />
+            ))}
+          </Space>
           <Button
             type="dashed"
             onClick={() => {
@@ -80,7 +118,7 @@ export default function NFTDrawer({
             style={{ marginTop: 15 }}
             block
           >
-            <Trans>Add tier</Trans>
+            <Trans>Add reward tier</Trans>
           </Button>
         </div>
         <Button
@@ -97,8 +135,7 @@ export default function NFTDrawer({
       </FundingCycleDrawer>
       <NFTRewardTierModal
         visible={addTierModalVisible}
-        rewardTiers={rewardTiers}
-        setRewardTiers={setRewardTiers}
+        onChange={handleAddRewardTier}
         mode="Add"
         onClose={() => setAddTierModalVisible(false)}
         isCreate

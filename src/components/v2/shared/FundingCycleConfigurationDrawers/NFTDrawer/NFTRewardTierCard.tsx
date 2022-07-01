@@ -9,13 +9,13 @@ import { Trans } from '@lingui/macro'
 import NFTRewardTierModal from './NFTRewardTierModal'
 
 export default function NFTRewardTierCard({
-  tierIndex,
-  rewardTiers,
-  setRewardTiers,
+  rewardTier,
+  onChange,
+  onDelete,
 }: {
-  tierIndex: number
-  rewardTiers: NFTRewardTier[]
-  setRewardTiers: (rewardTiers: NFTRewardTier[]) => void
+  rewardTier: NFTRewardTier
+  onChange: (rewardTier: NFTRewardTier) => void
+  onDelete: VoidFunction
 }) {
   const {
     theme: { colors },
@@ -24,7 +24,6 @@ export default function NFTRewardTierCard({
     useState<boolean>(false)
   const [linkHover, setLinkHover] = useState<boolean>(false)
 
-  const rewardTier = rewardTiers[tierIndex]
   if (!rewardTier) return null
   return (
     <>
@@ -40,7 +39,7 @@ export default function NFTRewardTierCard({
         onClick={() => setEditTierModalVisible(true)}
       >
         <Col
-          md={17}
+          md={16}
           style={{
             display: 'flex',
             justifyContent: 'center',
@@ -94,15 +93,12 @@ export default function NFTRewardTierCard({
         >
           <img src={rewardTier.imageUrl} alt={rewardTier.name} height="75px" />
         </Col>
-        <Col md={2}>
-          <Tooltip title={<Trans>Delete payout</Trans>}>
+        <Col md={3}>
+          <Tooltip title={<Trans>Delete NFT</Trans>}>
             <Button
               type="text"
               onClick={e => {
-                setRewardTiers([
-                  ...rewardTiers.slice(0, tierIndex),
-                  ...rewardTiers.slice(tierIndex + 1),
-                ])
+                onDelete()
                 // prevent opening modal
                 e.stopPropagation()
               }}
@@ -114,11 +110,10 @@ export default function NFTRewardTierCard({
       </Row>
       <NFTRewardTierModal
         visible={editTierModalVisible}
-        rewardTiers={rewardTiers}
-        setRewardTiers={setRewardTiers}
+        rewardTier={rewardTier}
         mode="Edit"
         onClose={() => setEditTierModalVisible(false)}
-        editingTierIndex={tierIndex}
+        onChange={onChange}
         isCreate
       />
     </>

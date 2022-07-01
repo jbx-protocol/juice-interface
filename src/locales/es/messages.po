@@ -283,6 +283,10 @@ msgstr "Un proyecto puede reservar un porcentaje de los tokens acuñados de los 
 msgid "A project can reserve a percentage of tokens minted from every payment it receives. Reserved tokens can be distributed according to the allocation below at any time."
 msgstr "Un proyecto puede reservar un porcentaje de tokens acuñados de cada pago que reciba. Los tokens reservados pueden ser distribuidos de acorde a la asignación que está debajo en cualquier momento."
 
+#: src/components/shared/Project/ProjectHeader/index.tsx
+msgid "A project's handle is used in its URL, and allows it to be included in search results on the projects page."
+msgstr ""
+
 #: src/components/shared/Project/FundingCycleSection.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/NoFundingCycle.tsx
 msgid "A project's lifetime is defined in funding cycles. If a funding target is set, the project can withdraw no more than the target for the duration of the cycle."
@@ -3625,10 +3629,6 @@ msgstr "usuario"
 #: src/utils/formatTime.ts
 msgid "hours"
 msgstr "horas"
-
-#: src/components/shared/formItems/ENSName.tsx
-msgid "juicebox"
-msgstr ""
 
 #: src/components/shared/formItems/ProjectTwitter.tsx
 msgid "juiceboxETH"

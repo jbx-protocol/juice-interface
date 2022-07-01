@@ -2267,7 +2267,7 @@ msgid "Projects using a reserved rate of {reservedRateRiskyMin}% or more will ap
 msgstr "Projetos utilizando uma taxa de reserva de {reservedRateRiskyMin}% ou mais aparentarão ser mais arriscados para os contribuidores, pois uma quantia relativamente pequena de tokens será recebida em troca de pagar por seu projeto."
 
 #: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
-msgid "Projects with a handle are:<0/><1/>1. Included in search results on the projects page<2/>2. Accessible from the URL: <3>juicebox.money/#{0}</3><4/><5/>(The original URL <6>juicebox.money/#{1}</6> will continue to work.)"
+msgid "Projects with a handle:<0/><1/>1. Are included in search results on the projects page<2/>2. Can be accessed via the URL: <3>juicebox.money/#{0}</3><4/><5/>(The original URL <6>juicebox.money/#{1}</6> will continue to work.)"
 msgstr ""
 
 #: src/components/Landing/StatsSection.tsx

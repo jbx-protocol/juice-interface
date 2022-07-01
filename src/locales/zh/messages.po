@@ -2267,7 +2267,7 @@ msgid "Projects using a reserved rate of {reservedRateRiskyMin}% or more will ap
 msgstr "项目使用的代币保留率大于或等于{reservedRateRiskyMin}% 会让捐款人觉得项目不安全，因为这种情况下给您的项目捐款从而获得的代币数量会比较少。"
 
 #: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
-msgid "Projects with a handle are:<0/><1/>1. Included in search results on the projects page<2/>2. Accessible from the URL: <3>juicebox.money/#{0}</3><4/><5/>(The original URL <6>juicebox.money/#{1}</6> will continue to work.)"
+msgid "Projects with a handle:<0/><1/>1. Are included in search results on the projects page<2/>2. Can be accessed via the URL: <3>juicebox.money/#{0}</3><4/><5/>(The original URL <6>juicebox.money/#{1}</6> will continue to work.)"
 msgstr ""
 
 #: src/components/Landing/StatsSection.tsx

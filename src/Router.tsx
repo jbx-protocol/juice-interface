@@ -12,10 +12,12 @@ import { usePageTitle } from 'hooks/PageTitle'
 import { lazy, Suspense, useEffect } from 'react'
 import { Redirect, useParams } from 'react-router'
 import { HashRouter, Route, Switch, useLocation } from 'react-router-dom'
-import V2ProjectHandleGateway from 'components/v2/V2Dashboard/V2ProjectHandleGateway'
 
 const V1Create = lazy(() => import('components/v1/V1Create'))
 const V2Create = lazy(() => import('components/v2/V2Create'))
+const V2DashboardGateway = lazy(
+  () => import('components/v2/V2Dashboard/V2DashboardGateway'),
+)
 
 function CatchallRedirect() {
   const route = useParams<{ route: string }>()['route']
@@ -70,7 +72,7 @@ function JuiceboxSwitch() {
       <Route path="/@:handle">
         <Suspense fallback={<Loading />}>
           <V2UserProvider>
-            <V2ProjectHandleGateway />
+            <V2DashboardGateway />
           </V2UserProvider>
         </Suspense>
       </Route>
@@ -82,7 +84,7 @@ function JuiceboxSwitch() {
       <Route path="/v2/p/:projectId">
         <Suspense fallback={<Loading />}>
           <V2UserProvider>
-            <V2ProjectHandleGateway />
+            <V2DashboardGateway />
           </V2UserProvider>
         </Suspense>
       </Route>

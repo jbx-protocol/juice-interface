@@ -120,7 +120,7 @@ export default function ProjectHeader({
             ) : onClickSetHandle ? (
               <Tooltip
                 placement="bottom"
-                title="A project's handle is used in its URL, and allows it to be included in search results on the projects page."
+                title={t`A project's handle is used in its URL, and allows it to be included in search results on the projects page.`}
               >
                 <Button
                   onClick={onClickSetHandle}

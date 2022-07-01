@@ -39,7 +39,7 @@ export default function ENSName({
       {...formItemProps}
     >
       <Input
-        placeholder={t`juicebox`}
+        placeholder="juicebox"
         type="string"
         autoComplete="off"
         onChange={onChange ? e => onChange(e.target.value) : undefined}

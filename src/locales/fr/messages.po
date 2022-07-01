@@ -232,7 +232,7 @@ msgstr ""
 
 #: src/components/Landing/TrendingSection.tsx
 msgid "<0>Trending projects</0><1><2/></1>"
-msgstr "<0>Projets tendance</0><1><2/></1>"
+msgstr ""
 
 #: src/components/Landing/QAs.tsx
 msgid "<0>Users fund your project by paying to use your app or service, or as a patron or investor by making a payment directly to your project's smart contract (like on this app).</0><1>For users paying through your app, you should route those funds through the Juicebox smart contracts so they receive tokens in return.</1>"
@@ -406,7 +406,7 @@ msgstr "Tous les fonds reçus par la trésorerie seront distribués. Les détent
 
 #: src/components/Landing/index.tsx
 msgid "All projects"
-msgstr "Tous les projets"
+msgstr ""
 
 #: src/components/v1/shared/FundingCycle/modals/DistributeTokensModal.tsx
 msgid "All {0} will go to the project owner:"
@@ -870,11 +870,11 @@ msgstr "Créez votre propre token ERC-20 pour représenter le stake de votre pro
 
 #: src/components/Landing/index.tsx
 msgid "Crowdfunding campaigns"
-msgstr "Campagnes de financement participatif"
+msgstr ""
 
 #: src/components/Landing/index.tsx
 msgid "Crypto and Web3 businesses"
-msgstr "Affaires Crypto et Web3"
+msgstr ""
 
 #: src/components/v1/V1Project/FundingCycles/index.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/index.tsx
@@ -922,7 +922,7 @@ msgstr ""
 
 #: src/components/Landing/index.tsx
 msgid "DAOs and communities"
-msgstr "DAOs et communautés"
+msgstr ""
 
 #: src/components/Navbar/Mobile/ThemePickerMobile.tsx
 msgid "Dark theme"
@@ -1216,7 +1216,7 @@ msgstr "Durée (secondes)"
 
 #: src/components/Landing/index.tsx
 msgid "ERC-20 community tokens"
-msgstr "Tokens ERC20 de la communauté"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
@@ -1785,7 +1785,7 @@ msgstr "Minutes"
 
 #: src/components/Projects/TrendingProjects.tsx
 msgid "More trending projects"
-msgstr "Plus de projets populaires"
+msgstr ""
 
 #: src/components/shared/ManageTokensModal.tsx
 msgid "Move your {tokensLabel} from the Juicebox contract to your wallet."
@@ -1895,7 +1895,7 @@ msgstr "Remarque"
 
 #: src/components/Landing/index.tsx
 msgid "Note: Juicebox is new, unaudited, and not guaranteed to work perfectly. Before spending money, do your own research: <0>ask questions</0>, <1>check out the code</1>, and understand the risks!"
-msgstr "Remarque : Juicebox est nouveau, non audité et il sans garantie de fonctionner parfaitement. Avant de dépenser de l'argent, faites vos propres recherches : <0>posez des questions</0>, <1>consultez le code</1> et comprenez les risques !"
+msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "Note: Tokens can be minted manually when allowed in the current funding cycle. This can be changed by the project owner for upcoming cycles."
@@ -2123,7 +2123,7 @@ msgstr "Aperçu :"
 
 #: src/components/Landing/index.tsx
 msgid "Programmable spending"
-msgstr "Dépenses programmables"
+msgstr ""
 
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 #: src/components/v2/V2Project/ProjectActivity/index.tsx
@@ -2268,7 +2268,7 @@ msgstr "Projets pour lesquels vous détenez de tokens."
 
 #: src/components/Landing/index.tsx
 msgid "Projects using Juicebox"
-msgstr "Les projets utilisant Juicebox"
+msgstr ""
 
 #: src/components/shared/forms/TicketingForm.tsx
 msgid "Projects using a reserved rate of {reservedRateRiskyMin}% or more will appear risky to contributors, as a relatively small number of tokens will be received in exchange for paying your project."
@@ -2403,7 +2403,7 @@ msgstr "Taux de récupération : <0>{0}%</0>"
 
 #: src/components/Landing/index.tsx
 msgid "Redistributable surplus"
-msgstr "Excédent redistribuable"
+msgstr ""
 
 #: src/components/shared/NewDeployNotAvailable.tsx
 msgid "Refresh"
@@ -2620,7 +2620,7 @@ msgstr "Définir l'objectif du cycle de financement"
 
 #: src/components/Landing/index.tsx
 msgid "Set a funding target to cover predictable expenses. Any extra funds (<0>overflow</0>) can be claimed by anyone holding your project's tokens alongside you."
-msgstr "Définir un objectif de financement pour couvrir les dépenses prévisibles. Tout fonds supplémentaire (<0>overflow</0>) peut être récupéré par toute personne détenant des tokens de votre projet."
+msgstr ""
 
 #: src/components/v1/shared/forms/BudgetForm.tsx
 msgid "Set the amount of funds you'd like to raise each funding cycle. Any funds raised within the funding cycle target can be distributed by the project, and can't be redeemed by your project's token holders."
@@ -3075,7 +3075,7 @@ msgstr "Transférer {tokenSymbolShort}"
 
 #: src/components/Landing/index.tsx
 msgid "Transparency & accountability"
-msgstr "Transparence et responsabilité"
+msgstr ""
 
 #: src/components/Projects/ProjectsTabs.tsx
 msgid "Trending"

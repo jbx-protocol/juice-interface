@@ -456,6 +456,11 @@ msgstr "Permitir tokens creados"
 
 #: src/pages/create/forms/RulesForm/index.tsx
 #: src/pages/create/tabs/ReviewDeployTab/FundingAttributes.tsx
+msgid "Allow terminal configuration"
+msgstr ""
+
+#: src/pages/create/forms/RulesForm/index.tsx
+#: src/pages/create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Allow token minting"
 msgstr "Permitir acuñación de tokens"
 
@@ -465,6 +470,8 @@ msgstr ""
 
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+#: src/pages/create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/pages/create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 msgid "Allowed"
@@ -1058,6 +1065,8 @@ msgstr "Determinar si es que los tokens serán minteados desde pagos hacia esta 
 
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+#: src/pages/create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/pages/create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 msgid "Disabled"
@@ -2030,8 +2039,16 @@ msgid "Owner can mint tokens at any time."
 msgstr "El dueño puede acuñar tokens en cualquier momento."
 
 #: src/pages/create/tabs/ReviewDeployTab/FundingAttributes.tsx
+msgid "Owner can set the project's payment terminals."
+msgstr ""
+
+#: src/pages/create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Owner is not allowed to mint tokens."
 msgstr "El dueño no está autorizado para emitir tokens."
+
+#: src/pages/create/tabs/ReviewDeployTab/FundingAttributes.tsx
+msgid "Owner isn't allowed to set the project's payment terminals."
+msgstr ""
 
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Owner token minting"
@@ -2850,6 +2867,10 @@ msgstr "Objetivo"
 msgid "Target is 0: All funds will be considered overflow and can be redeemed by burning project tokens."
 msgstr "La meta-ojetivo es 0: Todos los fondos serán considerados excedente y pueden ser canjeados al quemar tokens del proyecto."
 
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+msgid "Terminal configuration"
+msgstr ""
+
 #: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
 msgid "Text record is set"
 msgstr ""
@@ -2948,6 +2969,10 @@ msgstr "El memo onchain para cada transacción hecha a través de la dirección.
 #: src/components/modals/ReservedTokenReceiverModal.tsx
 msgid "The percentage this individual receives of the overall {reservedRate}% reserved token allocation"
 msgstr "El porcentaje que éste individuo recibe del {reservedRate}% total de asignación de tokens reservados"
+
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+msgid "The project owner can add and remove payment terminals."
+msgstr ""
 
 #: src/constants/fundingWarningText.ts
 msgid "The project owner may mint any supply of tokens at any time, diluting the token share of all existing contributors."
@@ -3411,6 +3436,10 @@ msgstr ""
 #: src/pages/create/forms/RulesForm/TokenMintingExtra.tsx
 msgid "When enabled, the project owner can manually mint any amount of tokens to any address."
 msgstr "Cuando está habilitado, el dueño del proyecto puede acuñar manualmente cualquier cantidad de tokens a cualquier dirección."
+
+#: src/pages/create/forms/RulesForm/index.tsx
+msgid "When enabled, the project owner can set the project's payment terminals."
+msgstr ""
 
 #: src/pages/create/forms/RulesForm/index.tsx
 msgid "When enabled, your project cannot receive direct payments."

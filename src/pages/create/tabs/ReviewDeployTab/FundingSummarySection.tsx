@@ -42,6 +42,7 @@ import {
   DistributionSplitsStatistic,
   ReservedSplitsStatistic,
   InflationRateStatistic,
+  AllowSetTerminalsStatistic,
 } from './FundingAttributes'
 
 export default function FundingSummarySection() {
@@ -194,6 +195,11 @@ export default function FundingSummarySection() {
             {hasDuration && (
               <ReconfigurationStatistic ballotAddress={fundingCycle.ballot} />
             )}
+          </Col>
+          <Col md={8} xs={24}>
+            <AllowSetTerminalsStatistic
+              allowSetTerminals={fundingCycleMetadata.global.allowSetTerminals}
+            />
           </Col>
         </Row>
         <Row gutter={rowGutter} style={{ width: '100%' }}>

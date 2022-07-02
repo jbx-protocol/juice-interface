@@ -456,6 +456,11 @@ msgstr "允许铸造代币"
 
 #: src/pages/create/forms/RulesForm/index.tsx
 #: src/pages/create/tabs/ReviewDeployTab/FundingAttributes.tsx
+msgid "Allow terminal configuration"
+msgstr ""
+
+#: src/pages/create/forms/RulesForm/index.tsx
+#: src/pages/create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Allow token minting"
 msgstr "允许铸造代币"
 
@@ -465,6 +470,8 @@ msgstr ""
 
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+#: src/pages/create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/pages/create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 msgid "Allowed"
@@ -1058,6 +1065,8 @@ msgstr "决定了向这个地址付款是否会铸造代币。"
 
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+#: src/pages/create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/pages/create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 msgid "Disabled"
@@ -2030,8 +2039,16 @@ msgid "Owner can mint tokens at any time."
 msgstr "项目方可以随时铸造代币"
 
 #: src/pages/create/tabs/ReviewDeployTab/FundingAttributes.tsx
+msgid "Owner can set the project's payment terminals."
+msgstr ""
+
+#: src/pages/create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Owner is not allowed to mint tokens."
 msgstr "项目方不能够铸造代币。"
+
+#: src/pages/create/tabs/ReviewDeployTab/FundingAttributes.tsx
+msgid "Owner isn't allowed to set the project's payment terminals."
+msgstr ""
 
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Owner token minting"
@@ -2850,6 +2867,10 @@ msgstr "目标"
 msgid "Target is 0: All funds will be considered overflow and can be redeemed by burning project tokens."
 msgstr "目标为 0 ：所有资金将被视为溢出，可以通过燃烧项目代币来赎回。"
 
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+msgid "Terminal configuration"
+msgstr ""
+
 #: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
 msgid "Text record is set"
 msgstr ""
@@ -2948,6 +2969,10 @@ msgstr "通过这个地址进行的每一笔交易的链上备注。如果有人
 #: src/components/modals/ReservedTokenReceiverModal.tsx
 msgid "The percentage this individual receives of the overall {reservedRate}% reserved token allocation"
 msgstr "这个个体收到的全部 {reservedRate}% 保留代币分配方案中的百分比"
+
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+msgid "The project owner can add and remove payment terminals."
+msgstr ""
 
 #: src/constants/fundingWarningText.ts
 msgid "The project owner may mint any supply of tokens at any time, diluting the token share of all existing contributors."
@@ -3411,6 +3436,10 @@ msgstr ""
 #: src/pages/create/forms/RulesForm/TokenMintingExtra.tsx
 msgid "When enabled, the project owner can manually mint any amount of tokens to any address."
 msgstr "启用此选项，项目拥有者就能够随时手动铸造任意数量的代币。"
+
+#: src/pages/create/forms/RulesForm/index.tsx
+msgid "When enabled, the project owner can set the project's payment terminals."
+msgstr ""
 
 #: src/pages/create/forms/RulesForm/index.tsx
 msgid "When enabled, your project cannot receive direct payments."

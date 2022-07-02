@@ -62,7 +62,7 @@ export default function DistributionSplitsSection({
     distributionLimitIsInfinite ? 'infinite' : 'limit',
   )
 
-  const [sumOfPayoutsEnabled, setSumOfPayoutsEnabled] = useState<boolean>(false)
+  const [sumPayoutsEnabled, setSumPayoutsEnabled] = useState<boolean>(false)
 
   const [specificLimitModalOpen, setSpecificLimitModalOpen] =
     useState<boolean>(false)
@@ -225,13 +225,20 @@ export default function DistributionSplitsSection({
                       onChange={setDistributionLimit}
                       currencyName={currencyName}
                       onCurrencyChange={onCurrencyChange}
-                      disabled={sumOfPayoutsEnabled}
+                      disabled={sumPayoutsEnabled}
                     />
                   </div>
-                  <div style={{ width: '100%', display: 'flex' }}>
+                  <div
+                    style={{
+                      width: '100%',
+                      display: 'flex',
+                      marginTop: 15,
+                      marginBottom: 15,
+                    }}
+                  >
                     <Switch
-                      checked={sumOfPayoutsEnabled}
-                      onChange={setSumOfPayoutsEnabled}
+                      checked={sumPayoutsEnabled}
+                      onChange={setSumPayoutsEnabled}
                       style={{ marginRight: 10 }}
                     />
                     <label>
@@ -342,6 +349,7 @@ export default function DistributionSplitsSection({
         currencyName={currencyName}
         onCurrencyChange={onCurrencyChange}
         onClose={() => setAddSplitModalVisible(false)}
+        sumPayoutsEnabled={sumPayoutsEnabled}
       />
       <SpecificLimitModal
         visible={specificLimitModalOpen}

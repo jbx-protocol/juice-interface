@@ -65,6 +65,7 @@ export default function DistributionSplitModal({
   onClose,
   currencyName,
   onCurrencyChange,
+  sumPayoutsEnabled,
 }: {
   visible: boolean
   mode: ModalMode // 'Add' or 'Edit' or 'Undefined'
@@ -77,6 +78,7 @@ export default function DistributionSplitModal({
   onClose: VoidFunction
   currencyName: CurrencyName
   onCurrencyChange?: (currencyName: CurrencyName) => void
+  sumPayoutsEnabled?: boolean
 }) {
   const {
     theme: { colors },
@@ -303,6 +305,8 @@ export default function DistributionSplitModal({
     ? amount - (amount * parseFloat(feePercentage ?? '0')) / 100
     : undefined
 
+  console.info('sumPayoutsEnabled: ', sumPayoutsEnabled)
+
   function AfterFeeMessage() {
     return amountSubFee && amountSubFee > 0 ? (
       <TooltipLabel
@@ -407,7 +411,7 @@ export default function DistributionSplitModal({
         ) : null}
 
         {/* Only show amount input if project distribution limit is not infinite */}
-        {distributionLimit && distributionType === 'amount' ? (
+        {distributionLimit && sumPayoutsEnabled ? (
           <Form.Item
             className="ant-form-item-extra-only"
             label={t`Distribution`}
@@ -501,6 +505,7 @@ export default function DistributionSplitModal({
                   }}
                 />
               </span>
+              {distributionType === 'amount' ? <span>TODO: Amount</span> : null}
             </div>
           </Form.Item>
         )}

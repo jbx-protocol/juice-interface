@@ -312,10 +312,6 @@ msgstr "Activité"
 msgid "Add NFT reward"
 msgstr ""
 
-#: src/components/shared/Project/ProjectToolsDrawer/V1TokenMigrationSection/V1TokenMigrationModal/AddTerminalSection.tsx
-msgid "Add Terminal"
-msgstr ""
-
 #: src/components/v1/shared/ProjectPayMods/ProjectPayoutMods.tsx
 msgid "Add a payout"
 msgstr "Ajouter un paiement"
@@ -347,6 +343,10 @@ msgstr "Ajouter un paiement"
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/index.tsx
 msgid "Add reward tier"
+msgstr ""
+
+#: src/components/shared/Project/ProjectToolsDrawer/V1TokenMigrationSection/V1TokenMigrationModal/AddTerminalSection.tsx
+msgid "Add terminal"
 msgstr ""
 
 #: src/components/shared/Project/ProjectToolsDrawer/V1TokenMigrationSection/V1TokenMigrationModal/AddTerminalSection.tsx

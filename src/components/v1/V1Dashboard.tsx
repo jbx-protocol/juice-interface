@@ -31,7 +31,7 @@ import NewDeployNotAvailable from 'components/shared/NewDeployNotAvailable'
 import Project404 from 'components/shared/Project404'
 import { usePageTitle } from 'hooks/PageTitle'
 
-import { useProjectOwner } from 'hooks/v1/contractReader/ProjectOwner'
+import useOwnerOfProject from 'hooks/v1/contractReader/OwnerOfProject'
 
 import { layouts } from 'constants/styles/layouts'
 import { projectTypes } from 'constants/v1/projectTypes'
@@ -46,9 +46,9 @@ export default function V1Dashboard() {
   const location = useLocation()
   const params = new URLSearchParams(location.search)
   const isNewDeploy = Boolean(params.get('newDeploy'))
-  const { owner } = useProjectOwner()
 
   const projectId = useProjectIdForHandle(handle)
+  const owner = useOwnerOfProject(projectId)
   const terminalAddress = useTerminalOfProject(projectId)
   const terminalName = getTerminalName({
     address: terminalAddress,

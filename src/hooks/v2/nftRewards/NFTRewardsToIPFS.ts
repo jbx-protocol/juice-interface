@@ -33,7 +33,7 @@ export default async function useNFTRewardsToIPFS(
       minter: 'JuiceboxDAO',
       publishers: 'JuiceboxDAO',
       date: now,
-      uri: 'https://juicebox.money',
+      uri: rewardTier.externalLink,
       image: rewardTier.imageUrl,
       attributes_tiers: rewardTier.paymentThreshold,
       attributes_supply: rewardTier.maxSupply,

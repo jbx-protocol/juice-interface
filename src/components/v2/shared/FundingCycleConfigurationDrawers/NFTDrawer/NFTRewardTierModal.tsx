@@ -91,8 +91,7 @@ export default function NFTRewardTierModal({
         >
           <Input type="string" autoComplete="off" />
         </Form.Item>
-        {/* TODO: This was a proposed input in design but isn't ready in CloudFunction or IPFS yet */}
-        {/* <Form.Item
+        <Form.Item
           name={'externalLink'}
           label={
             <TooltipLabel
@@ -101,11 +100,8 @@ export default function NFTRewardTierModal({
             />
           }
         >
-          <Input
-            type="string"
-            autoComplete="off"
-          />
-        </Form.Item> */}
+          <Input type="string" autoComplete="off" />
+        </Form.Item>
         <Form.Item
           label={t`Description`}
           name="description"

@@ -1,5 +1,6 @@
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 import { formatUnits, parseUnits } from '@ethersproject/units'
+import { round } from 'lodash'
 
 import { WAD_DECIMALS } from 'constants/numbers'
 
@@ -31,7 +32,7 @@ export const parseWad = (value?: BigNumberish) =>
   parseUnits(value?.toString() || '0', WAD_DECIMALS)
 
 /**
- * Returns a string representation of a given [wadValue] with [decimials] digits.
+ * Returns a string representation of a given [wadValue]
  *
  * A wad is a decimal number with 18 digits of precision.
  * Wad: 1e-18
@@ -42,11 +43,8 @@ export const parseWad = (value?: BigNumberish) =>
  * fromWad(1000000000000000000);
  *
  */
-export const fromWad = (
-  wadValue?: BigNumberish,
-  decimals: number = WAD_DECIMALS,
-) => {
-  const result = formatUnits(wadValue ?? '0', decimals)
+export const fromWad = (wadValue?: BigNumberish) => {
+  const result = formatUnits(wadValue ?? '0')
   return result.substring(result.length - 2) === '.0'
     ? result.substring(0, result.length - 2)
     : result
@@ -75,7 +73,7 @@ export const formatWad = (
     _wadValue = _wadValue.toString().split('.')[0]
   }
 
-  return formattedNum(fromWad(_wadValue, formatConfig?.decimals), formatConfig)
+  return formattedNum(fromWad(_wadValue), formatConfig)
 }
 
 /**
@@ -180,6 +178,11 @@ export const formattedNum = (
   }
 
   if (!str.length) return _empty
+
+  // Round if precision specified in config
+  if (config?.precision) {
+    str = round(parseFloat(str), config?.precision).toString()
+  }
 
   // Return ~0 for >0 numbers trimmed to only zeros
   function formatNearZero(formatted: string) {

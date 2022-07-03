@@ -77,7 +77,7 @@ export default function NFTUpload({ form }: { form: FormInstance }) {
           </strong>
         </div>
         <div style={{ color: colors.text.tertiary, fontSize: 12 }}>
-          JPG, PNG, GIF, SVG, MP4, WEBM
+          JPG, PNG, GIF, MP4, WEBM
         </div>
       </div>
     </div>

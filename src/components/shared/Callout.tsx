@@ -6,7 +6,12 @@ export default function Callout({
   style,
   transparent,
   children,
-}: PropsWithChildren<{ style?: CSSProperties; transparent?: boolean }>) {
+  iconComponent,
+}: PropsWithChildren<{
+  style?: CSSProperties
+  transparent?: boolean
+  iconComponent?: JSX.Element
+}>) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -21,7 +26,9 @@ export default function Callout({
         ...style,
       }}
     >
-      <InfoCircleOutlined style={{ marginRight: '1rem', lineHeight: 1.8 }} />
+      <span style={{ marginRight: '1rem', lineHeight: 1.8 }}>
+        {iconComponent ?? <InfoCircleOutlined />}
+      </span>
       <div style={{ width: '100%' }}>{children}</div>
     </div>
   )

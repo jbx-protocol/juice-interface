@@ -239,6 +239,11 @@ textarea.ant-input::placeholder {
   box-shadow: none !important;
 }
 
+.ant-upload {
+  background-color: var(--background-l1);
+  color: var(--text-primary)
+}
+
 .ant-upload-list,
 .ant-upload-list-text {
   color: var(--text-secondary);

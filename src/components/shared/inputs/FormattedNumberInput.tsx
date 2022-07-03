@@ -17,6 +17,7 @@ export default function FormattedNumberInput({
   accessory,
   formItemProps,
   onChange,
+  isInteger,
 }: {
   style?: CSSProperties
   min?: number
@@ -29,6 +30,7 @@ export default function FormattedNumberInput({
   prefix?: string
   accessory?: JSX.Element
   onChange?: (val?: string) => void
+  isInteger?: boolean
 } & FormItemExt) {
   const thousandsSeparator = ','
   const decimalSeparator = '.'
@@ -46,8 +48,10 @@ export default function FormattedNumberInput({
     '8',
     '9',
     thousandsSeparator,
-    decimalSeparator,
   ]
+  if (!isInteger) {
+    allowedValueChars.push(decimalSeparator)
+  }
 
   return (
     <div className="formatted-number-input">

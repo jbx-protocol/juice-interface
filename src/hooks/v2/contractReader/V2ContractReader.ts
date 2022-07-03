@@ -14,6 +14,8 @@ type ContractUpdateOn = {
 
 type ContractConfig = V2ContractName | Contract | undefined
 
+export type ContractReadResult<V> = { data: V | undefined; loading: boolean }
+
 export default function useV2ContractReader<V>({
   contract,
   functionName,
@@ -30,7 +32,7 @@ export default function useV2ContractReader<V>({
   formatter?: (val?: any) => V | undefined // eslint-disable-line @typescript-eslint/no-explicit-any
   callback?: (val?: V) => void
   valueDidChange?: (oldVal?: V, newVal?: V) => boolean
-}): { data: V | undefined; loading: boolean } {
+}): ContractReadResult<V> {
   const [value, setValue] = useState<V | undefined>()
   const [loading, setLoading] = useState<boolean>(true)
 

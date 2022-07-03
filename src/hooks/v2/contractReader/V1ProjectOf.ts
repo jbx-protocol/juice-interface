@@ -19,7 +19,7 @@ export function useV1ProjectOf(
     const contractAddress =
       JB_V1_TOKEN_PAYMENT_TERMINAL_ADDRESS[readNetwork.name]
 
-    if (!contractAddress) return
+    if (!contractAddress || !projectId) return
 
     const v1TokenPaymentTerminalContract = new Contract(
       contractAddress,

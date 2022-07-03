@@ -13,8 +13,9 @@ export function V1TokenMigrationSection() {
     useState<boolean>(false)
   const { projectId } = useContext(V2ProjectContext)
 
-  const { data: v1Project, loading: v1ProjectLoading } =
-    useV1ProjectOf(projectId)
+  const { data: v1Project, loading: v1ProjectLoading } = useV1ProjectOf(
+    !migrationModalVisible ? projectId : undefined, // reload project ID when the user closes the modal.
+  )
   const hasV1ProjectId = Boolean(v1Project?.toNumber() ?? 0 > 0)
 
   return (

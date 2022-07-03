@@ -75,6 +75,10 @@ export function ProjectToolsDrawer({
 
   const OwnerTools = (
     <Space direction="vertical" size="large" style={{ width: '100%' }}>
+      <V1TokenMigrationSection />
+
+      <Divider />
+
       <section>
         <TransferOwnershipForm
           ownerAddress={ownerAddress}
@@ -102,10 +106,6 @@ export function ProjectToolsDrawer({
           </p>
         </section>
       )}
-
-      <Divider />
-
-      <V1TokenMigrationSection />
     </Space>
   )
 

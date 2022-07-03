@@ -2,27 +2,12 @@ import { Trans } from '@lingui/macro'
 import { Button, Form, Input } from 'antd'
 import { useCallback, useContext, useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
-import { getAddress } from '@ethersproject/address'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useSetV1ProjectIdTx } from 'hooks/v2/transactor/SetV1ProjectIdTx'
 import { useV1ProjectOf } from 'hooks/v2/contractReader/V1ProjectOf'
 
 import { StepSection } from './StepSection'
-import { JB_V1_TOKEN_PAYMENT_TERMINAL_ADDRESS } from 'constants/contracts'
-import { readNetwork } from 'constants/networks'
-
-const hasV1TokenPaymentTerminal = (
-  terminals: string[] | undefined,
-): boolean => {
-  if (!terminals) return false
-
-  const terminalAddress = JB_V1_TOKEN_PAYMENT_TERMINAL_ADDRESS[readNetwork.name]
-  if (!terminalAddress) return false
-
-  return Boolean(
-    terminalAddress && terminals.includes(getAddress(terminalAddress)),
-  )
-}
+import { hasV1TokenPaymentTerminal } from './utils'
 
 export function SetV1ProjectSection() {
   const [form] = Form.useForm<{ v1ProjectId: number }>()

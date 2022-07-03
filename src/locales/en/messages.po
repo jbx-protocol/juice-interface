@@ -3246,6 +3246,10 @@ msgstr "Using a reconfiguration strategy is recommended. Projects with no strate
 msgid "V1"
 msgstr ""
 
+#: src/components/shared/Project/ProjectToolsDrawer/V1TokenMigrationSection/V1TokenMigrationModal/V1TokenMigrationModal.tsx
+msgid "V1 token holders can swap their tokens for your V2 tokens on your V2 project's <0>Tokens</0> section."
+msgstr "V1 token holders can swap their tokens for your V2 tokens on your V2 project's <0>Tokens</0> section."
+
 #: src/components/shared/Project/ProjectToolsDrawer/V1TokenMigrationSection/V1TokenMigrationSection.tsx
 msgid "V1 token migration"
 msgstr "V1 token migration"
@@ -3455,6 +3459,10 @@ msgstr "You will receive {minReturnedTokensFormatted} ETH"
 #: src/components/shared/forms/TicketingForm.tsx
 msgid "You'll be able to issue ERC-20 tokens once your project contract has been deployed. Until then, the protocol will track token balances, allowing your supporters to earn tokens and redeem for overflow in the meantime."
 msgstr ""
+
+#: src/components/shared/Project/ProjectToolsDrawer/V1TokenMigrationSection/V1TokenMigrationModal/V1TokenMigrationModal.tsx
+msgid "You're all set!"
+msgstr "You're all set!"
 
 #: src/components/shared/Project/ProjectToolsDrawer/V1TokenMigrationSection/V1TokenMigrationModal/StepSection.tsx
 msgid "You've completed this step."

@@ -13,7 +13,9 @@ export function V1TokenMigrationSection() {
     useState<boolean>(false)
   const { projectId } = useContext(V2ProjectContext)
 
-  const v1Project = useV1ProjectOf(projectId)
+  const { data: v1Project, loading: v1ProjectLoading } =
+    useV1ProjectOf(projectId)
+  const hasV1ProjectId = Boolean(v1Project?.toNumber() ?? 0 > 0)
 
   return (
     <section>
@@ -46,19 +48,19 @@ export function V1TokenMigrationSection() {
         </p>
       </MinimalCollapse>
 
-      {v1Project?.loading ? (
-        <div>
+      {v1ProjectLoading ? (
+        <p>
           <LoadingOutlined spin />
-        </div>
-      ) : (
-        <p>V1 Project ID: {v1Project?.data?.toString()}</p>
-      )}
+        </p>
+      ) : hasV1ProjectId ? (
+        <p>V1 Project ID: {v1Project?.toString()}</p>
+      ) : null}
 
       <Button
         onClick={() => setMigrationModalVisible(true)}
         type="primary"
         size="small"
-        // disabled={Boolean(v1Project)}
+        disabled={hasV1ProjectId}
       >
         <Trans>Set up token migration</Trans>
       </Button>

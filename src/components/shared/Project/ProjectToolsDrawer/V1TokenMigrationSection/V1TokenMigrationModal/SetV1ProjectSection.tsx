@@ -1,25 +1,24 @@
 import { Trans } from '@lingui/macro'
 import { Button, Form, Input } from 'antd'
-import { useCallback, useContext, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useSetV1ProjectIdTx } from 'hooks/v2/transactor/SetV1ProjectIdTx'
-import { useV1ProjectOf } from 'hooks/v2/contractReader/V1ProjectOf'
 
 import { StepSection } from './StepSection'
-import { hasV1TokenPaymentTerminal } from './utils'
 
-export function SetV1ProjectSection() {
+export function SetV1ProjectSection({
+  completed,
+  disabled,
+  onCompleted,
+}: {
+  completed: boolean
+  disabled: boolean
+  onCompleted: VoidFunction
+}) {
   const [form] = Form.useForm<{ v1ProjectId: number }>()
   const [v1ProjectIdLoading, setV1ProjectIdLoading] = useState<boolean>(false)
 
-  const { terminals, projectId } = useContext(V2ProjectContext)
-
   const setV1ProjectIdTx = useSetV1ProjectIdTx()
-  const { data: v1Project } = useV1ProjectOf(projectId)
-  const hasSetV1Project = Boolean(v1Project?.toNumber())
-
-  const hasMigrationTerminal = hasV1TokenPaymentTerminal(terminals)
 
   const onSetV1ProjectId = useCallback(async () => {
     setV1ProjectIdLoading(true)
@@ -32,6 +31,7 @@ export function SetV1ProjectSection() {
         {
           onConfirmed: () => {
             setV1ProjectIdLoading(false)
+            onCompleted()
           },
         },
       )
@@ -40,12 +40,12 @@ export function SetV1ProjectSection() {
       emitErrorNotification('Error adding migration terminal.')
       setV1ProjectIdLoading(false)
     }
-  }, [setV1ProjectIdTx, form])
+  }, [setV1ProjectIdTx, form, onCompleted])
 
   return (
     <StepSection
       title={<Trans>Step 2. Link your Juicebox V1 project</Trans>}
-      completed={hasSetV1Project}
+      completed={completed}
     >
       <p>
         <Trans>
@@ -68,7 +68,7 @@ export function SetV1ProjectSection() {
         <Button
           type="primary"
           size="small"
-          disabled={!hasMigrationTerminal}
+          disabled={disabled}
           loading={v1ProjectIdLoading}
           htmlType="submit"
         >

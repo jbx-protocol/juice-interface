@@ -3,7 +3,7 @@ import { Modal, ModalProps, Space } from 'antd'
 import Callout from 'components/shared/Callout'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useV1ProjectOf } from 'hooks/v2/contractReader/V1ProjectOf'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { CheckCircleFilled } from '@ant-design/icons'
 
 import { AddTerminalSection } from './AddTerminalSection'
@@ -12,9 +12,18 @@ import { hasV1TokenPaymentTerminal } from './utils'
 
 export function V1TokenMigrationModal({ ...props }: ModalProps) {
   const { terminals, projectId } = useContext(V2ProjectContext)
-  const hasMigrationTerminal = hasV1TokenPaymentTerminal(terminals)
+  const [
+    migrationTerminalSectionComplete,
+    setMigrationTerminalSectionComplete,
+  ] = useState<boolean>(false)
+  const [v1ProjectSectionComplete, setV1ProjectSectionComplete] =
+    useState<boolean>(false)
+
+  const hasMigrationTerminal =
+    hasV1TokenPaymentTerminal(terminals) || migrationTerminalSectionComplete
   const { data: v1Project } = useV1ProjectOf(projectId)
-  const hasSetV1Project = Boolean(v1Project?.toNumber())
+  const hasSetV1Project =
+    Boolean(v1Project?.toNumber()) || v1ProjectSectionComplete
 
   const completed = hasMigrationTerminal && hasSetV1Project
 
@@ -33,8 +42,15 @@ export function V1TokenMigrationModal({ ...props }: ModalProps) {
       </p>
 
       <Space direction="vertical" size="large">
-        <AddTerminalSection />
-        <SetV1ProjectSection />
+        <AddTerminalSection
+          completed={hasMigrationTerminal}
+          onCompleted={() => setMigrationTerminalSectionComplete(true)}
+        />
+        <SetV1ProjectSection
+          completed={hasSetV1Project}
+          disabled={!hasMigrationTerminal}
+          onCompleted={() => setV1ProjectSectionComplete(true)}
+        />
 
         {completed && (
           <Callout iconComponent={<CheckCircleFilled />}>

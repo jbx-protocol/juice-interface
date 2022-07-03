@@ -9,13 +9,17 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { StepSection } from './StepSection'
 import { JB_V1_TOKEN_PAYMENT_TERMINAL_ADDRESS } from 'constants/contracts'
 import { readNetwork } from 'constants/networks'
-import { hasV1TokenPaymentTerminal } from './utils'
 
-export function AddTerminalSection() {
+export function AddTerminalSection({
+  completed,
+  onCompleted,
+}: {
+  completed: boolean
+  onCompleted: VoidFunction
+}) {
   const [addTerminalLoading, setAddTerminalLoading] = useState<boolean>(false)
   const setProjectTerminalsTx = useSetProjectTerminalsTx()
   const { terminals } = useContext(V2ProjectContext)
-  const hasMigrationTerminal = hasV1TokenPaymentTerminal(terminals)
 
   const onAddTerminal = useCallback(async () => {
     setAddTerminalLoading(true)
@@ -31,6 +35,7 @@ export function AddTerminalSection() {
         {
           onConfirmed: () => {
             setAddTerminalLoading(false)
+            onCompleted()
           },
         },
       )
@@ -39,12 +44,12 @@ export function AddTerminalSection() {
       emitErrorNotification('Error adding migration terminal.')
       setAddTerminalLoading(false)
     }
-  }, [terminals, setProjectTerminalsTx])
+  }, [terminals, setProjectTerminalsTx, onCompleted])
 
   return (
     <StepSection
       title={<Trans>Step 1. Add V1 token payment terminal</Trans>}
-      completed={hasMigrationTerminal}
+      completed={completed}
     >
       <p>
         <Trans>Add the V1 Token Payment Terminal to your project.</Trans>
@@ -64,10 +69,10 @@ export function AddTerminalSection() {
         size="small"
         onClick={onAddTerminal}
         loading={addTerminalLoading}
-        disabled={hasMigrationTerminal}
+        disabled={completed}
       >
         <span>
-          <Trans>Add Terminal</Trans>
+          <Trans>Add terminal</Trans>
         </span>
       </Button>
     </StepSection>

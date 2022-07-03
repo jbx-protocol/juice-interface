@@ -4,25 +4,12 @@ import { MinimalCollapse } from 'components/shared/MinimalCollapse'
 import { useSetProjectTerminalsTx } from 'hooks/v2/transactor/SetProjectTerminalsTx'
 import { useCallback, useContext, useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
-import { getAddress } from '@ethersproject/address'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import { StepSection } from './StepSection'
 import { JB_V1_TOKEN_PAYMENT_TERMINAL_ADDRESS } from 'constants/contracts'
 import { readNetwork } from 'constants/networks'
-
-const hasV1TokenPaymentTerminal = (
-  terminals: string[] | undefined,
-): boolean => {
-  if (!terminals) return false
-
-  const terminalAddress = JB_V1_TOKEN_PAYMENT_TERMINAL_ADDRESS[readNetwork.name]
-  if (!terminalAddress) return false
-
-  return Boolean(
-    terminalAddress && terminals.includes(getAddress(terminalAddress)),
-  )
-}
+import { hasV1TokenPaymentTerminal } from './utils'
 
 export function AddTerminalSection() {
   const [addTerminalLoading, setAddTerminalLoading] = useState<boolean>(false)
@@ -39,11 +26,17 @@ export function AddTerminalSection() {
 
     const newTerminals = [...(terminals || []), terminalAddress]
     try {
-      const result = await setProjectTerminalsTx({ terminals: newTerminals })
+      const result = await setProjectTerminalsTx(
+        { terminals: newTerminals },
+        {
+          onConfirmed: () => {
+            setAddTerminalLoading(false)
+          },
+        },
+      )
       if (!result) throw new Error('Transaction failed.')
     } catch (e) {
       emitErrorNotification('Error adding migration terminal.')
-    } finally {
       setAddTerminalLoading(false)
     }
   }, [terminals, setProjectTerminalsTx])

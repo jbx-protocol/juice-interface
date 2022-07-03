@@ -11,6 +11,7 @@ import { hasV1TokenPaymentTerminal } from './utils'
 
 export function SetV1ProjectSection() {
   const [form] = Form.useForm<{ v1ProjectId: number }>()
+  const [v1ProjectIdLoading, setV1ProjectIdLoading] = useState<boolean>(false)
 
   const { terminals, projectId } = useContext(V2ProjectContext)
 
@@ -18,21 +19,25 @@ export function SetV1ProjectSection() {
   const { data: v1Project } = useV1ProjectOf(projectId)
   const hasSetV1Project = Boolean(v1Project?.toNumber())
 
-  const [v1ProjectIdLoading, setV1ProjectIdLoading] = useState<boolean>(false)
-
   const hasMigrationTerminal = hasV1TokenPaymentTerminal(terminals)
 
   const onSetV1ProjectId = useCallback(async () => {
     setV1ProjectIdLoading(true)
 
     try {
-      const result = await setV1ProjectIdTx({
-        v1ProjectId: parseInt(form.getFieldValue('v1ProjectId')),
-      })
+      const result = await setV1ProjectIdTx(
+        {
+          v1ProjectId: parseInt(form.getFieldValue('v1ProjectId')),
+        },
+        {
+          onConfirmed: () => {
+            setV1ProjectIdLoading(false)
+          },
+        },
+      )
       if (!result) throw new Error()
     } catch (e) {
       emitErrorNotification('Error adding migration terminal.')
-    } finally {
       setV1ProjectIdLoading(false)
     }
   }, [setV1ProjectIdTx, form])

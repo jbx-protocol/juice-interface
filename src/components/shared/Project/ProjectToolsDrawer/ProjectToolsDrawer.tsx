@@ -13,6 +13,8 @@ import { TransferOwnershipForm } from './TransferOwnershipForm'
 import { TransferUnclaimedTokensForm } from './TransferUnclaimedTokensForm'
 import { AddToProjectBalanceForm } from './AddToProjectBalanceForm'
 import { PayableAddressSection } from './PayableAddressSection'
+import { V1TokenMigrationSection } from './V1TokenMigrationSection/V1TokenMigrationSection'
+
 const { TabPane } = Tabs
 
 export function ProjectToolsDrawer({
@@ -71,39 +73,41 @@ export function ProjectToolsDrawer({
   const shouldRenderV1Archive = !!setUriTx
   const shouldRenderV2Archive = !!editV2ProjectDetailsTx
 
-  const OwnerTools = () => {
-    return (
-      <Space direction="vertical" size="large" style={{ width: '100%' }}>
+  const OwnerTools = (
+    <Space direction="vertical" size="large" style={{ width: '100%' }}>
+      <V1TokenMigrationSection />
+
+      <Divider />
+
+      <section>
+        <TransferOwnershipForm
+          ownerAddress={ownerAddress}
+          useTransferProjectOwnershipTx={useTransferProjectOwnershipTx}
+        />
+      </section>
+
+      <Divider />
+
+      {shouldRenderV1Archive ? (
+        <ArchiveV1Project setUriTx={setUriTx} />
+      ) : shouldRenderV2Archive ? (
+        <ArchiveV2Project editV2ProjectDetailsTx={editV2ProjectDetailsTx} />
+      ) : (
         <section>
-          <TransferOwnershipForm
-            ownerAddress={ownerAddress}
-            useTransferProjectOwnershipTx={useTransferProjectOwnershipTx}
-          />
+          <h3>
+            <Trans>Archive project</Trans>
+          </h3>
+          <p>
+            <Trans>
+              Please contact the Juicebox dev team through our{' '}
+              <JBDiscordLink>Discord</JBDiscordLink> to have your project
+              archived.
+            </Trans>
+          </p>
         </section>
-
-        <Divider />
-
-        {shouldRenderV1Archive ? (
-          <ArchiveV1Project setUriTx={setUriTx} />
-        ) : shouldRenderV2Archive ? (
-          <ArchiveV2Project editV2ProjectDetailsTx={editV2ProjectDetailsTx} />
-        ) : (
-          <section>
-            <h3>
-              <Trans>Archive project</Trans>
-            </h3>
-            <p>
-              <Trans>
-                Please contact the Juicebox dev team through our{' '}
-                <JBDiscordLink>Discord</JBDiscordLink> to have your project
-                archived.
-              </Trans>
-            </p>
-          </section>
-        )}
-      </Space>
-    )
-  }
+      )}
+    </Space>
+  )
 
   return (
     <Drawer
@@ -145,7 +149,7 @@ export function ProjectToolsDrawer({
         </TabPane>
         {isOwnerWallet && (
           <TabPane tab={<Trans>Owner tools</Trans>} key="2">
-            <OwnerTools />
+            {OwnerTools}
           </TabPane>
         )}
       </Tabs>

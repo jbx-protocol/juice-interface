@@ -146,7 +146,6 @@ export default function ReservedTokensSplitsCard({
               justifyContent: 'space-between',
               gap: 10,
               flexWrap: 'wrap',
-              marginBottom: '1rem',
             }}
           >
             <TooltipLabel
@@ -169,6 +168,7 @@ export default function ReservedTokensSplitsCard({
                 size="small"
                 onClick={() => setEditTokenAllocationModalVisible(true)}
                 icon={<SettingOutlined />}
+                style={{ marginBottom: '1rem' }}
               >
                 <span>
                   <Trans>Edit allocation</Trans>

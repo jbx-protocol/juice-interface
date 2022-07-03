@@ -2300,6 +2300,10 @@ msgstr "Projets pour lesquels vous détenez de tokens."
 msgid "Projects using a reserved rate of {reservedRateRiskyMin}% or more will appear risky to contributors, as a relatively small number of tokens will be received in exchange for paying your project."
 msgstr "Les projets utilisant un taux réservé de {reservedRateRiskyMin}% ou plus sembleront risqués pour les contributeurs, car un nombre relativement faible de tokens sera reçu en échange du financement de votre projet."
 
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTierModal.tsx
+msgid "Provide a link to additional information about this NFT."
+msgstr ""
+
 #: src/components/Landing/StatsSection.tsx
 msgid "Raised on Juicebox"
 msgstr ""
@@ -3215,6 +3219,7 @@ msgstr "Adresse du portefeuille"
 #: src/components/shared/formItems/ProjectLink.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTierModal.tsx
 msgid "Website"
 msgstr "Site internet"
 

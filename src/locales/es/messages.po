@@ -2300,6 +2300,10 @@ msgstr "Proyectos de los que holdeas tokens."
 msgid "Projects using a reserved rate of {reservedRateRiskyMin}% or more will appear risky to contributors, as a relatively small number of tokens will be received in exchange for paying your project."
 msgstr "Los proyectos que usan una tarifa reservada {reservedRateRiskyMin}% o más parecerán arriesgados para los colaboradores, como un número relativamente pequeño de tokens serán recibidos a cambio de pagar por tu proyecto."
 
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTierModal.tsx
+msgid "Provide a link to additional information about this NFT."
+msgstr ""
+
 #: src/components/Landing/StatsSection.tsx
 msgid "Raised on Juicebox"
 msgstr ""
@@ -3215,6 +3219,7 @@ msgstr "Dirección de billetera virtual"
 #: src/components/shared/formItems/ProjectLink.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTierModal.tsx
 msgid "Website"
 msgstr "Sitio web"
 

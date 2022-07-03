@@ -137,9 +137,21 @@ msgstr "<0>Juicebox gibi, önceden verilen finansal taahhütlerin zaman içinde 
 msgid "<0>A project can choose to reserve a percentage of tokens for itself. Instead of being distributed to paying users, this percentage of tokens is instead minted for the project.</0><1>Holding these tokens entitles a project to a portion of its own overflow.</1>"
 msgstr "<0>Bir proje, token'ların bir yüzdesini kendisi için rezerve etmeyi seçebilir. Bu token yüzdesi, ödeme yapan kullanıcılara dağıtılmak yerine proje için basılır.</0><1>Bu token'ları tutmak, projeye kendi taşma payının bir kısmını alma hakkı verir.</1>"
 
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/NFTSummarySection.tsx
+msgid "<0>Contribution threshold:</0> {0} ETH"
+msgstr ""
+
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/NFTSummarySection.tsx
+msgid "<0>Description: </0><1/>"
+msgstr ""
+
 #: src/components/v2/V2Create/forms/FundingForm/FundingCycleExplainerCollapse.tsx
 msgid "<0>Discount rate</0>, to reduce your project token's issuance rate (tokens per ETH) each funding cycle."
 msgstr "<0>İndirim oranı</0>, her finansman döngüsünde projenizin token çıkarma oranını (ETH başına token) azaltmak için kullanılır."
+
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/NFTSummarySection.tsx
+msgid "<0>External link: {0}</0>"
+msgstr ""
 
 #: src/components/Landing/QAs.tsx
 msgid "<0>If you know how much your project needs to earn over some period of time to be sustainable, you can set a funding target with that amount. If your project earns more than that, the surplus funds are locked in an overflow pool. Anyone holding your project's tokens can claim a portion of the overflow pool in exchange for redeeming their tokens.</0><1>For more info, check out this <2>short video</2>.</1>"
@@ -176,6 +188,10 @@ msgstr "Finansman döngüleri hakkında <0>daha fazla bilgi edinin</0>."
 #: src/components/v1/shared/forms/BudgetForm.tsx
 msgid "<0>Learn more</0> about overflow."
 msgstr "Taşma hakkında <0>daha fazla bilgi edinin</0>."
+
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/NFTSummarySection.tsx
+msgid "<0>Max. supply:</0> {0}"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "<0>NOTE:</0> This project has a balance of 0. Projects cannot be migrated without a balance. To migrate this project, first pay it or use the button below to deposit 1 wei (0.000000000000000001 or 10<1>-18</1> ETH)."
@@ -291,6 +307,11 @@ msgstr "MEVCUT"
 msgid "Activity"
 msgstr "Etkinlik"
 
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTierModal.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTierModal.tsx
+msgid "Add NFT reward"
+msgstr ""
+
 #: src/components/v1/shared/ProjectPayMods/ProjectPayoutMods.tsx
 msgid "Add a payout"
 msgstr "Ödeme ekle"
@@ -319,6 +340,10 @@ msgstr "Yeni ödeme ekle"
 #: src/components/v2/shared/DistributionSplitsSection/index.tsx
 msgid "Add payout"
 msgstr "Ödeme ekle"
+
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/index.tsx
+msgid "Add reward tier"
+msgstr ""
 
 #: src/components/shared/Project/ProjectToolsDrawer/AddToProjectBalanceForm.tsx
 msgid "Add to Balance"
@@ -445,6 +470,7 @@ msgid "Amount paid"
 msgstr "Ödenen miktar"
 
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/PaymentThresholdFormItem.tsx
 msgid "Amount required"
 msgstr ""
 
@@ -492,6 +518,10 @@ msgstr "Varlıklar"
 #: src/components/shared/inputs/Pay/MemoFormItem.tsx
 #: src/components/shared/modals/AttachStickerModal.tsx
 msgid "Attach a sticker"
+msgstr ""
+
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTUpload.tsx
+msgid "Attach the image to be associated with this NFT."
 msgstr ""
 
 #: src/components/v2/V2Create/forms/FundingForm/index.tsx
@@ -775,12 +805,20 @@ msgstr "Bağlı cüzdan yetkili değil"
 msgid "Contract address: {0}"
 msgstr "Sözleşme Adresi: {0}"
 
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/PaymentThresholdFormItem.tsx
+msgid "Contribution threshold"
+msgstr ""
+
 #: src/components/shared/formItems/ProjectReserved.tsx
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Contributor rate"
 msgstr "Katkıda bulunan oranı"
+
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/PaymentThresholdFormItem.tsx
+msgid "Contributors receive the NFT when they contribute at least this amount."
+msgstr ""
 
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Contributors will be rewarded this amount of your project's tokens per ETH contributed."
@@ -911,6 +949,10 @@ msgstr "Oluşturma tarihi"
 msgid "Days"
 msgstr "Gün"
 
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTierCard.tsx
+msgid "Delete NFT"
+msgstr ""
+
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
 msgid "Delete payout"
 msgstr "Ödemeyi sil"
@@ -947,6 +989,10 @@ msgstr "Devreye alınan ERC20 token'ı"
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "Deposit 1 wei to @{handle}"
 msgstr "@{handle} hesabına 1 wei yatırın"
+
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTierModal.tsx
+msgid "Description"
+msgstr ""
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/TokenDrawer.tsx
 msgid "Design how your tokens should work."
@@ -1195,6 +1241,10 @@ msgstr "Her ödeme, finansman döngülerinin her birinde, hazinede yeterli tutar
 msgid "Each project has its own <0>ERC-20 tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
 msgstr "Her projenin kendi <0>ERC-20 token'ları</0> vardır. Bir projeye fon sağlayan herkes, karşılığında o projenin token'larını alır. Proje sahibi isteğe bağlı olarak ERC-20 token'ı çıkarana kadar, token bakiyeleri protokol tarafından izlenecektir."
 
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTierModal.tsx
+msgid "Edit NFT reward"
+msgstr ""
+
 #: src/components/v2/V2Project/V2FundingCycleSection/ReservedTokensSplitsCard.tsx
 msgid "Edit allocation"
 msgstr ""
@@ -1363,6 +1413,10 @@ msgstr ""
 msgid "Give feedback"
 msgstr "Geribildirim verin"
 
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTierModal.tsx
+msgid "Give this NFT a name."
+msgstr ""
+
 #: src/components/shared/EtherscanLink.tsx
 msgid "Go to Etherscan"
 msgstr "Etherscan'e git"
@@ -1487,6 +1541,10 @@ msgstr "Bir proje başlatmak istiyorsanız ama hala çekinceleriniz varsa <0>bu 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "If you're unsure if you need to claim, you probably don't."
 msgstr "Hak talebinde bulunmanız gerekip gerekmediğinden emin değilseniz muhtemelen gerekli değildir."
+
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTUpload.tsx
+msgid "Image file"
+msgstr ""
 
 #: src/components/shared/VolumeChart/index.tsx
 #: src/components/v1/V1Project/Paid.tsx
@@ -1665,6 +1723,7 @@ msgstr "Logo"
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/MaxSupplyFormItem.tsx
 msgid "MAX"
 msgstr "MAKS"
 
@@ -1679,6 +1738,14 @@ msgstr ""
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "Manage {tokenText}"
 msgstr "{tokenText} token'ını yönet"
+
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/MaxSupplyFormItem.tsx
+msgid "Maximum supply"
+msgstr ""
+
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/MaxSupplyFormItem.tsx
+msgid "Maximum supply required"
+msgstr ""
 
 #: src/components/shared/formItems/ProjectDescription.tsx
 msgid "Maximum {MAX_DESCRIPTION_LENGTH} characters"
@@ -1757,6 +1824,12 @@ msgstr "Projelerim"
 msgid "NFT projects"
 msgstr ""
 
+#: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
+#: src/components/v2/V2Create/tabs/ReviewDeployTab/NFTSummarySection.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/index.tsx
+msgid "NFT rewards"
+msgstr ""
+
 #: src/components/shared/Project/SpendingStats.tsx
 #: src/components/v2/V2Project/TreasuryStats/DistributedRatio.tsx
 msgid "NO LIMIT"
@@ -1764,6 +1837,7 @@ msgstr "LİMİT YOK"
 
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTierModal.tsx
 msgid "Name"
 msgstr "İsim"
 
@@ -2226,6 +2300,10 @@ msgstr "Token'larını tuttuğunuz projeler."
 msgid "Projects using a reserved rate of {reservedRateRiskyMin}% or more will appear risky to contributors, as a relatively small number of tokens will be received in exchange for paying your project."
 msgstr "%{reservedRateRiskyMin} veya daha fazla rezerve oranı kullanan projeler, projenize ödeme yapılması karşılığında nispeten az sayıda token alınacağından, katkıda bulunanlar açısından riskli görünecektir."
 
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTierModal.tsx
+msgid "Provide a link to additional information about this NFT."
+msgstr ""
+
 #: src/components/Landing/StatsSection.tsx
 msgid "Raised on Juicebox"
 msgstr ""
@@ -2233,6 +2311,14 @@ msgstr ""
 #: src/components/Projects/RankingExplanation.tsx
 msgid "Rankings based on number of contributions and volume gained in the last {trendingWindow} days. <0>See code</0>"
 msgstr "Katkı sayısına ve son {trendingWindow} gün içinde kazanılan hacme dayalı sıralamalar. <0>Kodu gör</0>"
+
+#: src/components/shared/Paragraph.tsx
+msgid "Read less"
+msgstr ""
+
+#: src/components/shared/Paragraph.tsx
+msgid "Read more"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
@@ -2443,6 +2529,14 @@ msgstr "Finansman döngüsünü gözden geçirin ve başlatın"
 msgid "Review project"
 msgstr "Projeyi gözden geçir"
 
+#: src/components/v2/V2Create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
+msgid "Reward contributors with NFT's."
+msgstr ""
+
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/index.tsx
+msgid "Reward contributors with NFTs when they meet your configured funding criteria."
+msgstr ""
+
 #: src/components/v1/V1Create/index.tsx
 msgid "Reward specific community members with tokens."
 msgstr "Belirli topluluk üyelerini token'larla ödüllendirin."
@@ -2471,6 +2565,14 @@ msgstr "Bu projenin finansman döngülerinin nasıl yeniden yapılandırılabile
 #: src/components/shared/forms/TicketingForm.tsx
 msgid "Save"
 msgstr "Kaydet"
+
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTierModal.tsx
+msgid "Save NFT reward"
+msgstr ""
+
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/index.tsx
+msgid "Save NFT rewards"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/EditProjectModal.tsx
 msgid "Save changes"
@@ -2701,6 +2803,10 @@ msgstr "Her finansman döngüsünde hazineden dağıtılabilecek maksimum fon mi
 #: src/components/shared/formItems/ProjectTarget.tsx
 msgid "The maximum amount of funds that can be distributed from this project in one funding cycle. Funds will be withdrawn in ETH no matter the currency you choose."
 msgstr "Bir finansman döngüsü içinde bu projeden dağıtılabilecek maksimum fon miktarı. Fonlar, hangi para birimini seçerseniz seçin ETH olarak çekilecektir."
+
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/MaxSupplyFormItem.tsx
+msgid "The maximum quantity of this NFT that can ever be minted."
+msgstr ""
 
 #: src/components/v2/V2Create/forms/TokenForm/MintRateFormItem.tsx
 msgid "The number of project tokens minted when 1 ETH is contributed in the first funding cycle."
@@ -3056,6 +3162,10 @@ msgstr "Bu bölümde yaptığınız güncellemeler yalnızca <0>gelecek</0> fina
 msgid "Upload"
 msgstr "Yükle"
 
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTUpload.tsx
+msgid "Upload an image or video"
+msgstr ""
+
 #: src/components/shared/inputs/ImageUploader.tsx
 msgid "Uploaded to: <0>{url}</0>"
 msgstr "Şuraya yüklendi: <0>{url}</0>"
@@ -3109,6 +3219,7 @@ msgstr "Cüzdan adresi"
 #: src/components/shared/formItems/ProjectLink.tsx
 #: src/components/v1/V1Create/ConfirmDeployProject.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTierModal.tsx
 msgid "Website"
 msgstr "Web sitesi"
 

@@ -26,6 +26,12 @@ import { readNetwork } from 'constants/networks'
 const CREATE_EVENT_IDX = 0
 const PROJECT_ID_TOPIC_IDX = 3
 
+// TODO: prepare for Tank's multicall function
+// type GasOfTx = {
+//   loading: boolean,
+//   value: BigNumber | undefined // gas in wei
+// }
+
 const findTransactionReceipt = async (txHash: string) => {
   let retries = 5
   let receipt
@@ -63,8 +69,16 @@ export default function DeployProjectButton() {
   const [deployLoading, setDeployLoading] = useState<boolean>()
   const [transactionPending, setTransactionPending] = useState<boolean>()
 
-  const { projectMetadata, reservedTokensGroupedSplits, payoutGroupedSplits } =
-    useAppSelector(state => state.editingV2Project)
+  // TODO: prepare for Tank's multicall function
+  // const [nftTxGas, setNftTxGas] = useState<GasOfTx>({loading: false, value: undefined})
+  // const [launchTxGas, setLaunchTxGas] = useState<GasOfTx>({loading: false, value: undefined})
+
+  const {
+    projectMetadata,
+    reservedTokensGroupedSplits,
+    payoutGroupedSplits,
+    nftRewardsCid,
+  } = useAppSelector(state => state.editingV2Project)
   const fundingCycleMetadata = useEditingV2FundingCycleMetadataSelector()
   const fundingCycleData = useEditingV2FundingCycleDataSelector()
   const fundAccessConstraints = useEditingV2FundAccessConstraintsSelector()
@@ -94,7 +108,12 @@ export default function DeployProjectButton() {
     }
 
     const groupedSplits = [payoutGroupedSplits, reservedTokensGroupedSplits]
-
+    if (nftRewardsCid) {
+      // TODO: Set loading states true of nftTxGas and launchTxGas.
+      // Call gas reader for gas of nft tx and launch tx within multicall.
+      // Set value and loading states of nftTxGas and launchTxGas.
+      // setGasReaderModalVisible(true)
+    }
     const txSuccessful = await launchProjectTx(
       {
         projectMetadataCID: uploadedMetadata.IpfsHash,
@@ -150,6 +169,7 @@ export default function DeployProjectButton() {
     fundingCycleMetadata,
     fundAccessConstraints,
     history,
+    nftRewardsCid,
     dispatch,
   ])
 
@@ -175,6 +195,12 @@ export default function DeployProjectButton() {
         transactionPending={transactionPending}
         visible={transactionPending}
       />
+      {/* TODO: Inside GasReaderModal, call multicall contract onConfirm */}
+      {/* <GasReaderModal 
+        nftTxGas={nftTxGas}
+        launchTxGas={launchTxGas}
+        nftRewardsCid={nftRewardsCid}
+      />   */}
     </>
   )
 }

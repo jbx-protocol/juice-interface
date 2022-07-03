@@ -153,6 +153,7 @@ export default function PayoutSplitsCard({
               totalValue={distributionLimit}
               projectOwnerAddress={projectOwnerAddress}
               showSplitValues={!distributionLimit?.eq(MAX_DISTRIBUTION_LIMIT)}
+              valueFormatProps={{ precision: 4 }}
             />
           ) : null}
         </div>

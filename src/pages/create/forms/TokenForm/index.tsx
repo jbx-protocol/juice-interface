@@ -3,7 +3,7 @@ import { Button, Form, Space } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
-import ReservedTokensFormItem from 'components/v2/V2Create/forms/TokenForm/ReservedTokensFormItem'
+import ReservedTokensFormItem from 'pages/create/forms/TokenForm/ReservedTokensFormItem'
 import { round } from 'lodash'
 import { ItemNoInput } from 'components/shared/formItems/ItemNoInput'
 

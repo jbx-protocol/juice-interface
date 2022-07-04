@@ -3,11 +3,11 @@ import { InfoCircleOutlined } from '@ant-design/icons'
 
 import { CSSProperties, useContext } from 'react'
 import { ThemeContext } from 'contexts/themeContext'
-import RankingExplanation from 'components/Projects/RankingExplanation'
+import RankingExplanation from 'pages/projects/RankingExplanation'
 import { Trans } from '@lingui/macro'
 
 import { useTrendingProjects } from 'hooks/Projects'
-import TrendingProjectCard from 'components/Projects/TrendingProjectCard'
+import TrendingProjectCard from 'pages/projects/TrendingProjectCard'
 import Grid from 'components/shared/Grid'
 
 import Payments from './Payments'

@@ -1,9 +1,9 @@
 import Landing from 'components/Landing'
-import PrivacyPolicy from 'components/PrivacyPolicy'
-import Projects from 'components/Projects'
+import PrivacyPolicy from 'pages/PrivacyPolicy'
+import Projects from 'pages/projects'
 import Loading from 'components/shared/Loading'
 import V1Dashboard from 'components/v1/V1Dashboard'
-import V2BugUpdates from 'components/V2BugUpdates'
+import V2BugUpdates from 'pages/V2BugNotice'
 
 import { fathom } from 'lib/fathom'
 import { V1CurrencyProvider } from 'providers/v1/V1CurrencyProvider'
@@ -14,7 +14,7 @@ import { Redirect, useParams } from 'react-router'
 import { HashRouter, Route, Switch, useLocation } from 'react-router-dom'
 
 const V1Create = lazy(() => import('components/v1/V1Create'))
-const V2Create = lazy(() => import('components/v2/V2Create'))
+const V2Create = lazy(() => import('pages/create'))
 const V2DashboardGateway = lazy(
   () => import('components/v2/V2Dashboard/V2DashboardGateway'),
 )

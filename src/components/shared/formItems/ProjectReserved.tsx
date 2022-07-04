@@ -1,7 +1,7 @@
 import { Form } from 'antd'
 import { t, Trans } from '@lingui/macro'
 import { CSSProperties, useContext, useState } from 'react'
-import FormItemLabel from 'components/v2/V2Create/FormItemLabel'
+import FormItemLabel from 'pages/create/FormItemLabel'
 import { formattedNum } from 'utils/formatNumber'
 import { ThemeContext } from 'contexts/themeContext'
 import { defaultFundingCycleMetadata } from 'redux/slices/editingV2Project'

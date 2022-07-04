@@ -8,9 +8,9 @@ import { ThemeContext } from 'contexts/themeContext'
 import NFTDrawer from 'components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer'
 import { featureFlagEnabled } from 'utils/featureFlags'
 
-import FundingDrawer from '../../../shared/FundingCycleConfigurationDrawers/FundingDrawer'
-import TokenDrawer from '../../../shared/FundingCycleConfigurationDrawers/TokenDrawer'
-import RulesDrawer from '../../../shared/FundingCycleConfigurationDrawers/RulesDrawer'
+import FundingDrawer from '../../../../components/v2/shared/FundingCycleConfigurationDrawers/FundingDrawer'
+import TokenDrawer from '../../../../components/v2/shared/FundingCycleConfigurationDrawers/TokenDrawer'
+import RulesDrawer from '../../../../components/v2/shared/FundingCycleConfigurationDrawers/RulesDrawer'
 
 import FundingCycleExplainer from '../../FundingCycleExplainer'
 import ProjectConfigurationFieldsContainer from '../../ProjectConfigurationFieldsContainer'

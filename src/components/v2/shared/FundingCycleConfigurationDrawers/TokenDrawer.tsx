@@ -4,7 +4,7 @@ import FundingCycleDrawer from 'components/v2/shared/FundingCycleConfigurationDr
 import { useFundingCycleDrawer } from 'components/v2/shared/FundingCycleConfigurationDrawers/useFundingCycleDrawer'
 import UnsavedChangesModal from 'components/v2/shared/UnsavedChangesModal'
 
-import TokenForm from '../../V2Create/forms/TokenForm'
+import TokenForm from '../../../../pages/create/forms/TokenForm'
 
 export default function TokenDrawer({
   visible,

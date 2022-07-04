@@ -1,4 +1,4 @@
-import Callout from '../../shared/Callout'
+import Callout from '../../components/shared/Callout'
 
 export default function FundingCycleExplainer() {
   return (

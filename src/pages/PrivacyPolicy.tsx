@@ -1,4 +1,4 @@
-import ExternalLink from './shared/ExternalLink'
+import ExternalLink from '../components/shared/ExternalLink'
 
 export default function PrivacyPolicy() {
   return (

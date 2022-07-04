@@ -2427,8 +2427,11 @@ msgstr "接收 {receiveText}"
 msgid "Recipient"
 msgstr "收款人"
 
-#: src/components/Project/ProjectToolsDrawer/TransferOwnershipForm.tsx
 #: src/components/Project/ProjectToolsDrawer/TransferUnclaimedTokensForm.tsx
+msgid "Recipient Address"
+msgstr ""
+
+#: src/components/Project/ProjectToolsDrawer/TransferOwnershipForm.tsx
 msgid "Recipient address"
 msgstr "接收人地址"
 

@@ -12,7 +12,7 @@ import {
   RedemptionRateStatistic,
   ReservedSplitsStatistic,
   ReservedTokensStatistic,
-} from 'components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes'
+} from 'pages/create/tabs/ReviewDeployTab/FundingAttributes'
 import {
   V2FundAccessConstraint,
   V2FundingCycle,

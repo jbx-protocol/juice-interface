@@ -1,4 +1,4 @@
-import FormattedAddress from 'components/shared/FormattedAddress'
+import FormattedAddress from 'components/FormattedAddress'
 import { LogoutOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 
@@ -7,8 +7,8 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
 import { Dropdown, Menu } from 'antd'
 
-import EtherscanLink from 'components/shared/EtherscanLink'
-import CopyTextButton from 'components/shared/CopyTextButton'
+import EtherscanLink from 'components/EtherscanLink'
+import CopyTextButton from 'components/CopyTextButton'
 import useMobile from 'hooks/Mobile'
 
 import Balance from './Balance'

@@ -1,5 +1,5 @@
 import { Button, Col, Row, Tooltip } from 'antd'
-import Paragraph from 'components/shared/Paragraph'
+import Paragraph from 'components/Paragraph'
 import { ThemeContext } from 'contexts/themeContext'
 import { NFTRewardTier } from 'models/v2/nftRewardTier'
 import { useContext, useState } from 'react'

@@ -3,7 +3,7 @@ import { Drawer } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import ProjectDetailsForm, {
   ProjectDetailsFormFields,
-} from 'components/shared/forms/ProjectDetailsForm'
+} from 'components/forms/ProjectDetailsForm'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 

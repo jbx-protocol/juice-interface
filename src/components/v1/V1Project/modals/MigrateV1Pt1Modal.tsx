@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Button, Modal } from 'antd'
-import ExternalLink from 'components/shared/ExternalLink'
+import ExternalLink from 'components/ExternalLink'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { BigNumber } from '@ethersproject/bignumber'
 import { useAddToBalanceTx } from 'hooks/v1/transactor/AddToBalanceTx'

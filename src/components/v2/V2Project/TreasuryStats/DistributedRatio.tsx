@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
-import StatLine from 'components/shared/Project/StatLine'
-import TooltipLabel from 'components/shared/TooltipLabel'
+import StatLine from 'components/Project/StatLine'
+import TooltipLabel from 'components/TooltipLabel'
 
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'

@@ -2,7 +2,7 @@ import { CheckCircleFilled } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Button, Divider, Drawer } from 'antd'
 import Form, { useForm } from 'antd/lib/form/Form'
-import { FormItems } from 'components/shared/formItems'
+import { FormItems } from 'components/formItems'
 
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'

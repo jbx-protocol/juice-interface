@@ -1,4 +1,4 @@
-import FundingCycleDetailsCard from 'components/shared/Project/FundingCycleDetailsCard'
+import FundingCycleDetailsCard from 'components/Project/FundingCycleDetailsCard'
 
 import { V1FundingCycle } from 'models/v1/fundingCycle'
 

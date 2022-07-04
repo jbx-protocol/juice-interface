@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Button, Divider, Form, Space, Switch } from 'antd'
-import { FormItems } from 'components/shared/formItems'
+import { FormItems } from 'components/formItems'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
@@ -15,9 +15,9 @@ import { fromWad, parseWad } from 'utils/formatNumber'
 import { hasFundingTarget, isRecurring } from 'utils/v1/fundingCycle'
 import { helpPagePath } from 'utils/helpPageHelper'
 import { getV1CurrencyOption, V1CurrencyName } from 'utils/v1/currency'
-import ExternalLink from 'components/shared/ExternalLink'
+import ExternalLink from 'components/ExternalLink'
 
-import FormItemWarningText from 'components/shared/FormItemWarningText'
+import FormItemWarningText from 'components/FormItemWarningText'
 import {
   targetSubFeeToTargetFormatted,
   targetToTargetSubFeeFormatted,

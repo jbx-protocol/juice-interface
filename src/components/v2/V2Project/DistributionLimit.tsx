@@ -1,9 +1,9 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
-import CurrencySymbol from 'components/shared/CurrencySymbol'
+import CurrencySymbol from 'components/CurrencySymbol'
 import { formatWad } from 'utils/formatNumber'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2/math'
-import TooltipIcon from 'components/shared/TooltipIcon'
+import TooltipIcon from 'components/TooltipIcon'
 
 import { useContext } from 'react'
 import { ThemeContext } from 'contexts/themeContext'

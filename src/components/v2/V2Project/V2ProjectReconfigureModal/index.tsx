@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Modal, Space } from 'antd'
+import { Divider, Modal, Space } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { useCallback, useContext, useState } from 'react'
 import { CaretRightFilled } from '@ant-design/icons'
@@ -20,6 +20,7 @@ import { useEditingProjectData } from './hooks/editingProjectData'
 import { useFundingHasSavedChanges } from './hooks/fundingHasSavedChanges'
 import { useReconfigureFundingCycle } from './hooks/reconfigureFundingCycle'
 import { useInitialEditingData } from './hooks/initialEditingData'
+import { V2ReconfigureProjectHandleDrawer } from '../V2ReconfigureProjectHandleDrawer'
 
 function ReconfigureButton({
   title,
@@ -96,6 +97,8 @@ export default function V2ProjectReconfigureModal({
   const { reconfigureLoading, reconfigureFundingCycle } =
     useReconfigureFundingCycle({ editingProjectData, exit })
 
+  const [projectHandleDrawerVisible, setProjectHandleDrawerVisible] =
+    useState<boolean>(false)
   const [projectDetailsDrawerVisible, setProjectDetailsDrawerVisible] =
     useState<boolean>(false)
   const [fundingDrawerVisible, setFundingDrawerVisible] = useState<boolean>(
@@ -150,8 +153,8 @@ export default function V2ProjectReconfigureModal({
         size="middle"
         style={{ width: '100%', marginBottom: 40 }}
       >
-        {hideProjectDetails ? null : (
-          <div style={{ marginBottom: 20 }}>
+        {!hideProjectDetails && (
+          <>
             <h4 style={{ marginBottom: 0 }}>
               <Trans>Edit project details</Trans>
             </h4>
@@ -160,13 +163,24 @@ export default function V2ProjectReconfigureModal({
                 Changes to project details will take effect immediately.
               </Trans>
             </p>
-            <ReconfigureButton
-              reconfigureHasChanges={false}
-              title={t`Project details`}
-              onClick={() => setProjectDetailsDrawerVisible(true)}
-            />
-          </div>
+          </>
         )}
+        {!hideProjectDetails && (
+          <ReconfigureButton
+            reconfigureHasChanges={false}
+            title={t`Project handle`}
+            onClick={() => setProjectHandleDrawerVisible(true)}
+          />
+        )}
+        {!hideProjectDetails && (
+          <ReconfigureButton
+            reconfigureHasChanges={false}
+            title={t`Other details`}
+            onClick={() => setProjectDetailsDrawerVisible(true)}
+          />
+        )}
+
+        <Divider />
 
         <h4 style={{ marginBottom: 0 }}>
           <Trans>Reconfigure upcoming funding cycles</Trans>
@@ -203,6 +217,12 @@ export default function V2ProjectReconfigureModal({
         <V2ReconfigureProjectDetailsDrawer
           visible={projectDetailsDrawerVisible}
           onFinish={() => setProjectDetailsDrawerVisible(false)}
+        />
+      )}
+      {hideProjectDetails ? null : (
+        <V2ReconfigureProjectHandleDrawer
+          visible={projectHandleDrawerVisible}
+          onFinish={() => setProjectHandleDrawerVisible(false)}
         />
       )}
       <FundingDrawer

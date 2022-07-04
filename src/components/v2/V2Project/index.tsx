@@ -18,8 +18,12 @@ import { useEditV2ProjectDetailsTx } from 'hooks/v2/transactor/EditV2ProjectDeta
 import { useHistory, useLocation } from 'react-router-dom'
 import { weightedAmount } from 'utils/v2/math'
 
+import { useIsUserAddress } from 'hooks/IsUserAddress'
+
+import { v2ProjectRoute } from 'utils/routes'
+
 import { textSecondary } from 'constants/styles/text'
-import { V2_PROJECT_IDS } from '../../../constants/v2/projectIds'
+import { V2_PROJECT_IDS } from 'constants/v2/projectIds'
 import V2BugNotice from '../shared/V2BugNotice'
 import { RelaunchFundingCycleBanner } from './banners/RelaunchFundingCycleBanner'
 import NewDeployModal from './NewDeployModal'
@@ -34,6 +38,7 @@ import V2ProjectHeaderActions from './V2ProjectHeaderActions'
 const GUTTER_PX = 40
 
 const VolumeChart = lazy(() => import('../../shared/VolumeChart'))
+import { V2ReconfigureProjectHandleDrawer } from './V2ReconfigureProjectHandleDrawer'
 
 const AllAssetsButton = ({ onClick }: { onClick: VoidFunction }) => {
   const { theme } = useContext(ThemeContext)
@@ -67,10 +72,13 @@ export default function V2Project({
     cv,
     isArchived,
     projectOwnerAddress,
+    handle,
   } = useContext(V2ProjectContext)
   const canReconfigureFundingCycles = useHasPermission(
     V2OperatorPermission.RECONFIGURE,
   )
+
+  const [handleModalVisible, setHandleModalVisible] = useState<boolean>()
 
   const { data: queuedFundingCycleResponse } = useProjectQueuedFundingCycle({
     projectId,
@@ -89,6 +97,8 @@ export default function V2Project({
 
   const hasEditPermission = useHasPermission(V2OperatorPermission.RECONFIGURE)
 
+  const isOwner = useIsUserAddress(projectOwnerAddress)
+
   const [newDeployModalVisible, setNewDeployModalVisible] =
     useState<boolean>(isNewDeploy)
   const [balancesModalVisible, setBalancesModalVisible] =
@@ -102,7 +112,7 @@ export default function V2Project({
 
   const closeNewDeployModal = () => {
     // Change URL without refreshing page
-    history.replace(`/v2/p/${projectId}`)
+    history.replace(v2ProjectRoute({ projectId }))
     setNewDeployModalVisible(false)
   }
 
@@ -129,6 +139,10 @@ export default function V2Project({
         metadata={projectMetadata}
         actions={!isPreviewMode ? <V2ProjectHeaderActions /> : undefined}
         isArchived={isArchived}
+        handle={handle}
+        onClickSetHandle={
+          isOwner ? () => setHandleModalVisible(true) : undefined
+        }
       />
       {!isPreviewMode &&
         hasCurrentFundingCycle === false &&
@@ -195,6 +209,12 @@ export default function V2Project({
         onCancel={() => setBalancesModalVisible(false)}
         storeCidTx={editV2ProjectDetailsTx}
       />
+      {isOwner && !handle && (
+        <V2ReconfigureProjectHandleDrawer
+          visible={handleModalVisible}
+          onFinish={() => setHandleModalVisible(false)}
+        />
+      )}
     </Space>
   )
 }

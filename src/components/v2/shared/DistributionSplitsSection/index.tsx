@@ -19,6 +19,8 @@ import { Link } from 'react-router-dom'
 
 import { filter } from 'lodash'
 
+import { v2ProjectRoute } from 'utils/routes'
+
 import DistributionSplitCard from './DistributionSplitCard'
 import { CurrencyName } from 'constants/currency'
 import DistributionSplitModal from './DistributionSplitModal'
@@ -250,8 +252,10 @@ export default function DistributionSplitsSection({
                     When distributing, payouts to Ethereum addresses incur a
                     2.5% JBX membership fee. Payouts to other Juicebox projects
                     don't incur fees. Your project will receive (the{' '}
-                    <Link to="/v2/p/1">JuiceboxDAO</Link> token) in return at
-                    the current issuance rate.
+                    <Link to={v2ProjectRoute({ projectId: 1 })}>
+                      JuiceboxDAO
+                    </Link>{' '}
+                    token) in return at the current issuance rate.
                   </Trans>
                 }
               />

@@ -1,9 +1,9 @@
 import Landing from 'pages'
-import PrivacyPolicy from 'pages/PrivacyPolicy'
+import PrivacyPolicy from 'pages/privacy'
 import Projects from 'pages/projects'
 import Loading from 'components/shared/Loading'
 import V1Dashboard from 'pages/p'
-import V2BugUpdates from 'pages/V2BugNotice'
+import V2BugUpdates from 'pages/v2-bug-notice'
 
 import { fathom } from 'lib/fathom'
 import { V1CurrencyProvider } from 'providers/v1/V1CurrencyProvider'

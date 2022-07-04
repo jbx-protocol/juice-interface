@@ -2,7 +2,7 @@ import Landing from 'components/Landing'
 import PrivacyPolicy from 'pages/PrivacyPolicy'
 import Projects from 'pages/projects'
 import Loading from 'components/shared/Loading'
-import V1Dashboard from 'components/v1/V1Dashboard'
+import V1Dashboard from 'pages/p'
 import V2BugUpdates from 'pages/V2BugNotice'
 
 import { fathom } from 'lib/fathom'
@@ -13,11 +13,9 @@ import { lazy, Suspense, useEffect } from 'react'
 import { Redirect, useParams } from 'react-router'
 import { HashRouter, Route, Switch, useLocation } from 'react-router-dom'
 
-const V1Create = lazy(() => import('components/v1/V1Create'))
+const V1Create = lazy(() => import('pages/v1/create'))
 const V2Create = lazy(() => import('pages/create'))
-const V2DashboardGateway = lazy(
-  () => import('components/v2/V2Dashboard/V2DashboardGateway'),
-)
+const V2DashboardGateway = lazy(() => import('pages/v2/p/V2DashboardGateway'))
 
 function CatchallRedirect() {
   const route = useParams<{ route: string }>()['route']

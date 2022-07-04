@@ -37,8 +37,8 @@ import { layouts } from 'constants/styles/layouts'
 import { projectTypes } from 'constants/v1/projectTypes'
 import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 
-import Loading from '../shared/Loading'
-import V1Project from './V1Project'
+import Loading from '../../components/shared/Loading'
+import V1Project from '../../components/v1/V1Project'
 
 export default function V1Dashboard() {
   const { handle }: { handle?: string } = useParams()

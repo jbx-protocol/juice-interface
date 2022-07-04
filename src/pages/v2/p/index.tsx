@@ -37,8 +37,8 @@ import {
 import { V2ArchivedProjectIds } from 'constants/v2/archivedProjects'
 import { layouts } from 'constants/styles/layouts'
 
-import Project404 from '../../shared/Project404'
-import V2Project from '../V2Project'
+import Project404 from '../../../components/shared/Project404'
+import V2Project from '../../../components/v2/V2Project'
 
 export default function V2Dashboard({ projectId }: { projectId: number }) {
   const { data: metadataCID, loading: metadataURILoading } =

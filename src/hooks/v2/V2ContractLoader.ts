@@ -1,13 +1,18 @@
-import { Contract } from '@ethersproject/contracts'
+import { Contract, ContractInterface } from '@ethersproject/contracts'
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
 
 import { NetworkContext } from 'contexts/networkContext'
-import { V2ContractName, V2Contracts } from 'models/v2/contracts'
+
 import { NetworkName } from 'models/network-name'
+
+import { V2ContractName, V2Contracts } from 'models/v2/contracts'
+
 import { useContext, useEffect, useState } from 'react'
 
+import { mainnetPublicResolver } from 'constants/contracts/mainnet/PublicResolver'
+import { rinkebyPublicResolver } from 'constants/contracts/rinkeby/PublicResolver'
+import { NETWORKS_BY_NAME, readNetwork } from 'constants/networks'
 import { readProvider } from 'constants/readProvider'
-import { readNetwork } from 'constants/networks'
 
 /**
  *  Defines the ABI filename to use for a given V2ContractName.
@@ -73,12 +78,40 @@ const loadContract = async (
   network: NetworkName,
   signerOrProvider: JsonRpcSigner | JsonRpcProvider,
 ): Promise<Contract | undefined> => {
-  const contractOverride = CONTRACT_ABI_OVERRIDES[contractName]
-  const version = contractOverride?.version ?? 'latest'
-  const filename = contractOverride?.filename ?? contractName
+  let contractJson: { abi: ContractInterface; address: string } | undefined =
+    undefined
 
-  const contract = await import(
-    `@jbx-protocol/contracts-v2-${version}/deployments/${network}/${filename}.json`
-  )
-  return new Contract(contract.address, contract.abi, signerOrProvider)
+  if (contractName === V2ContractName.JBProjectHandles) {
+    contractJson = {
+      abi: (
+        await import(
+          `@jbx-protocol/project-handles/out/JBProjectHandles.sol/JBProjectHandles.json`
+        )
+      ).abi,
+      address: (
+        (await import(
+          `@jbx-protocol/project-handles/broadcast/Deploy.sol/${NETWORKS_BY_NAME[network].chainId}/run-latest.json`
+        )) as { receipts: { contractAddress: string }[] }
+      ).receipts[0].contractAddress, // contractAddress is prefixed `0x0x` in error, trim first `0x`
+    }
+  } else if (contractName === V2ContractName.PublicResolver) {
+    // ENS contracts package currently doesn't include rinkeby information, and ABI contains errors
+    if (network === NetworkName.mainnet) contractJson = mainnetPublicResolver
+    if (network === NetworkName.rinkeby) contractJson = rinkebyPublicResolver
+  } else {
+    const contractOverride = CONTRACT_ABI_OVERRIDES[contractName]
+    const version = contractOverride?.version ?? 'latest'
+    const filename = contractOverride?.filename ?? contractName
+    contractJson = await import(
+      `@jbx-protocol/contracts-v2-${version}/deployments/${network}/${filename}.json`
+    )
+  }
+
+  if (!contractJson) {
+    throw new Error(
+      `Error importing contract ${contractName}. Network: ${network})`,
+    )
+  }
+
+  return new Contract(contractJson.address, contractJson.abi, signerOrProvider)
 }

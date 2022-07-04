@@ -42,6 +42,10 @@ msgstr ""
 msgid "1. Project details"
 msgstr "1. 项目详情"
 
+#: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
+msgid "1. Set ENS name"
+msgstr ""
+
 #: src/components/v1/V1Project/Paid.tsx
 #: src/components/v2/V2Project/TreasuryStats/DistributedRatio.tsx
 msgid "100% overflow"
@@ -53,6 +57,10 @@ msgstr "2. 筹款周期"
 
 #: src/components/Landing/HowItWorksSection.tsx
 msgid "2. Give ownership"
+msgstr ""
+
+#: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
+msgid "2. Set text record"
 msgstr ""
 
 #: src/components/shared/VolumeChart/index.tsx
@@ -96,10 +104,6 @@ msgstr "90 天"
 #: src/components/Projects/ArchivedProjectsMessage.tsx
 msgid "<0/> Archived projects have not been modified or deleted on the blockchain, and can still be interacted with directly through the Juicebox contracts."
 msgstr "<0/> 被存档的项目在区块链上并没有被修改或删除，用户仍然可以直接通过 Juicebox 合约进行交互。"
-
-#: src/components/Projects/index.tsx
-msgid "<0/> Search results don't include V2 projects yet."
-msgstr "<0/> 搜索结果目前不包含 V2 项目。"
 
 #: src/components/Projects/index.tsx
 msgid "<0/> The Juicebox protocol is open to anyone, and project configurations can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO or Peel. Do your own research and understand the risks before committing your funds."
@@ -263,6 +267,10 @@ msgstr "<0>{tokenSymbol} ERC-20 地址：</0><1/>"
 msgid "@"
 msgstr "@"
 
+#: src/components/shared/Project404.tsx
+msgid "@{handle} not found"
+msgstr ""
+
 #: src/components/Projects/ArchivedProjectsMessage.tsx
 msgid "A project can be archived by its owner from the tools menu on the project page."
 msgstr "项目所有者可以在项目页面上的“工具菜单”中对项目进行存档。"
@@ -274,6 +282,10 @@ msgstr "项目可以把它收到付款时铸造的代币按一定的百分比保
 #: src/components/v2/V2Project/V2FundingCycleSection/ReservedTokensSplitsCard.tsx
 msgid "A project can reserve a percentage of tokens minted from every payment it receives. Reserved tokens can be distributed according to the allocation below at any time."
 msgstr "项目每收到一笔付款都会铸造代币，其中某个百分比的代币会保留在项目内。保留代币可随时按以下分配方案进行分发。"
+
+#: src/components/shared/Project/ProjectHeader/index.tsx
+msgid "A project's handle is used in its URL, and allows it to be included in search results on the projects page."
+msgstr ""
 
 #: src/components/shared/Project/FundingCycleSection.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/NoFundingCycle.tsx
@@ -323,6 +335,10 @@ msgstr "给这笔付款添加一个链上备注"
 #: src/components/shared/Project/ProjectToolsDrawer/AddToProjectBalanceForm.tsx
 msgid "Add funds to this project's balance without minting tokens."
 msgstr "往项目中添加资金，但不铸造代币。"
+
+#: src/components/shared/Project/ProjectHeader/index.tsx
+msgid "Add handle"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
@@ -662,6 +678,14 @@ msgstr "取消"
 msgid "Cannot redeem tokens for ETH because this project has no overflow."
 msgstr "这个项目的筹款没有溢出，无法用代币赎回 ETH"
 
+#: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
+msgid "Change ENS name"
+msgstr ""
+
+#: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
+msgid "Change project handle"
+msgstr ""
+
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
 msgid "Changes to payouts will take effect immediately."
 msgstr ""
@@ -698,9 +722,13 @@ msgstr "勾选此项来铸造本项目的 ERC-20 代币并领取到你的钱包�
 msgid "Check this to mint {tokenSymbol} ERC-20 to your wallet. Leave unchecked to have your token balance tracked by Juicebox, saving gas on this transaction. You can always claim your ERC-20 tokens later."
 msgstr "勾选此项来铸造{tokenSymbol} ERC-20 代币并领取到你的钱包。不勾选可以降低本次交易的 gas 费用，你的代币余额将交由 Juicebox 托管。 你以后可以随时再来领取你的 ERC-20 代币。"
 
+#: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
+msgid "Choose an ENS name to use as the project's handle. Subdomains are allowed and will be included in the handle. Handles won't include the \".eth\" extension.<0/><1/>juicebox.eth = @juicebox<2/>dao.juicebox.eth = @dao.juicebox"
+msgstr ""
+
 #: src/components/v2/shared/DistributionSplitsSection/index.tsx
 msgid "Choose how you would like to configure your payouts."
-msgstr "选择你想怎样配置你的支出。"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
 msgid "Claim {tokenTextPlural}"
@@ -1244,6 +1272,10 @@ msgstr "持续时间"
 msgid "Duration (seconds)"
 msgstr "时长（秒）"
 
+#: src/components/shared/formItems/ENSName.tsx
+msgid "ENS Name"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "ERC-20 tokens can only be minted once an ERC-20 token has been issued for this project."
@@ -1678,6 +1710,10 @@ msgstr "Juicebox加载动画"
 msgid "Juicebox project"
 msgstr "Juicebox项目"
 
+#: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
+msgid "Juicebox projects use <0>ENS names</0> as handles. Setting a handle involves 2 transactions:"
+msgstr ""
+
 #: src/components/Landing/TopProjectsSection.tsx
 msgid "Juicebox puts the fun back in funding so you can focus on building."
 msgstr ""
@@ -1973,6 +2009,10 @@ msgstr "一旦启动，你的第一个筹款周期 <0>不能再更改</0>。 你
 msgid "Other assets in this project's owner's wallet."
 msgstr "项目拥有者钱包内的其他资产"
 
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Other details"
+msgstr ""
+
 #: src/components/shared/Project/FundingProgressBar.tsx
 msgid "Overflow"
 msgstr "溢出"
@@ -2220,7 +2260,6 @@ msgstr "项目说明"
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v1/V1Create/index.tsx
 #: src/components/v2/V2Create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Project details"
 msgstr "项目详情"
 
@@ -2232,12 +2271,9 @@ msgstr "项目的详情可以随时进行编辑。"
 msgid "Project details reconfigurations will create a separate transaction."
 msgstr "项目细节的重新配置将会发起一个单独的交易。"
 
-#: src/components/shared/Project404.tsx
-msgid "Project for {ensName} not found"
-msgstr "未能找到 {ensName} 的项目。"
-
 #: src/components/v1/shared/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v1/shared/formItems/ProjectHandle/ProjectHandleFormItem.tsx
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Project handle"
 msgstr "项目标识"
 
@@ -2264,6 +2300,10 @@ msgstr "项目名称"
 #: src/components/v1/V1Create/index.tsx
 msgid "Project name, handle, links, and other details."
 msgstr "项目名称，标识，链接以及其他详细信息。"
+
+#: src/components/shared/Project404.tsx
+msgid "Project not found"
+msgstr ""
 
 #: src/components/v1/shared/Mod.tsx
 #: src/components/v1/shared/Mod.tsx
@@ -2332,6 +2372,10 @@ msgstr "你持有代币的项目。"
 #: src/components/shared/forms/TicketingForm.tsx
 msgid "Projects using a reserved rate of {reservedRateRiskyMin}% or more will appear risky to contributors, as a relatively small number of tokens will be received in exchange for paying your project."
 msgstr "项目使用的代币保留率大于或等于{reservedRateRiskyMin}% 会让捐款人觉得项目不安全，因为这种情况下给您的项目捐款从而获得的代币数量会比较少。"
+
+#: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
+msgid "Projects with a handle:<0/><1/>1. Are included in search results on the projects page<2/>2. Can be accessed via the URL: <3>juicebox.money/#{0}</3><4/><5/>(The original URL <6>juicebox.money/#{1}</6> will continue to work.)"
+msgstr ""
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTierModal.tsx
 msgid "Provide a link to additional information about this NFT."
@@ -2669,6 +2713,10 @@ msgstr "秒"
 msgid "See transaction"
 msgstr "查看交易"
 
+#: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
+msgid "Set ENS name"
+msgstr ""
+
 #: src/components/v2/shared/DistributionSplitsSection/SpecificLimitModal.tsx
 msgid "Set a distribution limit"
 msgstr "设置一个分配限额"
@@ -2680,6 +2728,26 @@ msgstr "设置筹款周期持续时间"
 #: src/components/v1/shared/forms/BudgetForm.tsx
 msgid "Set a funding cycle target"
 msgstr "设定筹款周期目标"
+
+#: src/components/v2/V2Project/NewDeployModal.tsx
+msgid "Set a project handle (optional)"
+msgstr ""
+
+#: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
+msgid "Set a text record for {0} with the key <0>\"juicebox\"</0> and the value <1>\"{projectId}\"</1> (this project's ID). You can do this on the <2>ENS app</2>, or use the button below (as long as your connected wallet owns or controls that ENS name)."
+msgstr ""
+
+#: src/components/v2/V2Project/NewDeployModal.tsx
+msgid "Set a unique name that will be visible in your project's URL, and that will allow your project to appear in search results."
+msgstr ""
+
+#: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
+msgid "Set project handle"
+msgstr ""
+
+#: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
+msgid "Set text record for {0}"
+msgstr ""
 
 #: src/components/v1/shared/forms/BudgetForm.tsx
 msgid "Set the amount of funds you'd like to raise each funding cycle. Any funds raised within the funding cycle target can be distributed by the project, and can't be redeemed by your project's token holders."
@@ -2782,9 +2850,13 @@ msgstr "目标"
 msgid "Target is 0: All funds will be considered overflow and can be redeemed by burning project tokens."
 msgstr "目标为 0 ：所有资金将被视为溢出，可以通过燃烧项目代币来赎回。"
 
+#: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
+msgid "Text record is set"
+msgstr ""
+
 #: src/components/v2/V2Create/forms/TokenForm/index.tsx
 msgid "The <0>issuance rate</0> of your second funding cycle will be <1>{0} tokens per 1 ETH</1>, then <2>{1} tokens per 1 ETH </2>for your third funding cycle, and so on."
-msgstr "项目第二个筹款的 <0>发行比率/0> 将会是 <1>{0} 个代币每1 ETH</1>， 然后第三个筹款是 <2>{1} 个代币每 1 ETH </2>，以此类推。"
+msgstr ""
 
 #: src/components/Landing/index.tsx
 msgid "The Decentralized Funding Platform. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."

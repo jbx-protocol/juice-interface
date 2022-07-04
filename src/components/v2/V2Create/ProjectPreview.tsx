@@ -52,6 +52,7 @@ export default function ProjectPreview({
     isArchived: false,
 
     projectId: 0,
+    handle: undefined,
     projectMetadata,
 
     createdAt: undefined,

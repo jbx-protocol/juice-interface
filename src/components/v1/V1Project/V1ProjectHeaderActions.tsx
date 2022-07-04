@@ -1,6 +1,5 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
-import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import {
@@ -15,6 +14,8 @@ import { useTransferTokensTx } from 'hooks/v1/transactor/TransferTokensTx'
 import { useAddToBalanceTx } from 'hooks/v1/transactor/AddToBalanceTx'
 import { useSetProjectUriTx } from 'hooks/v1/transactor/SetProjectUriTx'
 import useUnclaimedBalanceOfUser from 'hooks/v1/contractReader/UnclaimedBalanceOfUser'
+
+import { useIsUserAddress } from 'hooks/IsUserAddress'
 
 import EditProjectModal from './modals/EditProjectModal'
 
@@ -31,8 +32,6 @@ export default function V1ProjectHeaderActions() {
     owner,
     tokenSymbol,
   } = useContext(V1ProjectContext)
-  const { userAddress } = useContext(NetworkContext)
-
   const [migrateDrawerVisible, setMigrateDrawerVisible] =
     useState<boolean>(false)
   const [toolDrawerVisible, setToolDrawerVisible] = useState<boolean>(false)
@@ -46,10 +45,9 @@ export default function V1ProjectHeaderActions() {
 
   const unclaimedTokenBalance = useUnclaimedBalanceOfUser()
 
-  const allowMigrate =
-    terminal?.version === '1' &&
-    userAddress &&
-    owner?.toLowerCase() === userAddress?.toLowerCase()
+  const isOwner = useIsUserAddress(owner)
+
+  const allowMigrate = isOwner && terminal?.version === '1'
 
   const {
     theme: { colors },

@@ -10,14 +10,14 @@ import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export const V2ProjectTokenBalance = ({
   projectId,
+  handle,
   style,
   precision,
-  hideHandle,
 }: {
   projectId: number
+  handle?: string
   style?: CSSProperties
   precision?: number
-  hideHandle?: boolean
 }) => {
   const {
     theme: { colors },
@@ -40,10 +40,11 @@ export const V2ProjectTokenBalance = ({
         )}
       </span>
 
-      {!hideHandle && (
+      {handle && (
         <V2ProjectHandle
           style={{ color: colors.text.tertiary }}
           projectId={projectId}
+          handle={handle}
         />
       )}
     </div>

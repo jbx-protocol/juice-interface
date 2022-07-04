@@ -16,7 +16,7 @@ export default function useProjectENSName({
     functionName: 'ensNamePartsOf',
     args: projectId ? [projectId] : null,
     formatter: useCallback(
-      (val: string[]) => (val ? val.reverse().join('.') : undefined),
+      (val: string[]) => (val ? val.join('.') : undefined),
       [],
     ),
     updateOn: useMemo(

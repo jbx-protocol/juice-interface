@@ -25,7 +25,7 @@ export default function ReviewDeployTab() {
         <Space size="large" direction="vertical" style={{ width: '100%' }}>
           <ProjectDetailsSection />
           <FundingSummarySection />
-          {nftRewardTiers.length ? <NFTSummarySection /> : null}
+          {nftRewardTiers?.length ? <NFTSummarySection /> : null}
         </Space>
       </div>
 

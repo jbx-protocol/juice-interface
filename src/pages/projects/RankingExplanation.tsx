@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import ExternalLink from 'components/shared/ExternalLink'
+import ExternalLink from 'components/ExternalLink'
 
 // Explains how trending projects rankings are calculated
 export default function RankingExplanation({

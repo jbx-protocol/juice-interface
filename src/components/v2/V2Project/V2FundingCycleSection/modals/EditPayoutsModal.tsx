@@ -23,7 +23,7 @@ import { formatWad } from 'utils/formatNumber'
 
 import { ExclamationCircleOutlined, SettingOutlined } from '@ant-design/icons'
 
-import CurrencySymbol from 'components/shared/CurrencySymbol'
+import CurrencySymbol from 'components/CurrencySymbol'
 import { useHistory } from 'react-router-dom'
 
 import { ETH_PAYOUT_SPLIT_GROUP } from 'constants/v2/splits'

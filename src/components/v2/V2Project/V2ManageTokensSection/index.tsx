@@ -1,16 +1,16 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Descriptions, Space, Statistic } from 'antd'
-import SectionHeader from 'components/shared/SectionHeader'
+import SectionHeader from 'components/SectionHeader'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import * as constants from '@ethersproject/constants'
 import { NetworkContext } from 'contexts/networkContext'
 import useERC20BalanceOf from 'hooks/v2/contractReader/ERC20BalanceOf'
 
 import { CSSProperties, useContext, useState } from 'react'
-import FormattedAddress from 'components/shared/FormattedAddress'
+import FormattedAddress from 'components/FormattedAddress'
 import { formatPercent, formatWad } from 'utils/formatNumber'
 
-import IssueTokenButton from 'components/shared/IssueTokenButton'
+import IssueTokenButton from 'components/IssueTokenButton'
 import {
   useHasPermission,
   V2OperatorPermission,
@@ -20,9 +20,9 @@ import { tokenSymbolText } from 'utils/tokenSymbolText'
 import useTotalBalanceOf from 'hooks/v2/contractReader/TotalBalanceOf'
 import { ThemeContext } from 'contexts/themeContext'
 import useUserUnclaimedTokenBalance from 'hooks/v2/contractReader/UserUnclaimedTokenBalance'
-import ManageTokensModal from 'components/shared/ManageTokensModal'
+import ManageTokensModal from 'components/ManageTokensModal'
 
-import ParticipantsModal from 'components/shared/modals/ParticipantsModal'
+import ParticipantsModal from 'components/modals/ParticipantsModal'
 
 import V2RedeemModal from './V2RedeemModal'
 import V2ClaimTokensModal from './V2ClaimTokensModal'

@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Form, Select } from 'antd'
-import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
+import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 
 import {
   DurationUnitsOption,

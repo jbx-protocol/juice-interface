@@ -14,13 +14,11 @@ import { useTransferTokensTx } from 'hooks/v1/transactor/TransferTokensTx'
 import { useAddToBalanceTx } from 'hooks/v1/transactor/AddToBalanceTx'
 import { useSetProjectUriTx } from 'hooks/v1/transactor/SetProjectUriTx'
 import useUnclaimedBalanceOfUser from 'hooks/v1/contractReader/UnclaimedBalanceOfUser'
-
 import { useIsUserAddress } from 'hooks/IsUserAddress'
+import { ProjectToolsDrawer } from 'components/Project/ProjectToolsDrawer/ProjectToolsDrawer'
 
 import EditProjectModal from './modals/EditProjectModal'
-
 import MigrateV1Pt1Modal from './modals/MigrateV1Pt1Modal'
-import { ProjectToolsDrawer } from '../../shared/Project/ProjectToolsDrawer/ProjectToolsDrawer'
 
 export default function V1ProjectHeaderActions() {
   const {

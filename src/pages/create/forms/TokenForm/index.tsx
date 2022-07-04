@@ -5,7 +5,7 @@ import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
 import ReservedTokensFormItem from 'pages/create/forms/TokenForm/ReservedTokensFormItem'
 import { round } from 'lodash'
-import { ItemNoInput } from 'components/shared/formItems/ItemNoInput'
+import { ItemNoInput } from 'components/formItems/ItemNoInput'
 
 import {
   CSSProperties,
@@ -39,7 +39,7 @@ import {
 
 import { BigNumber } from '@ethersproject/bignumber'
 
-import { FormItems } from 'components/shared/formItems'
+import { FormItems } from 'components/formItems'
 
 import {
   getDefaultFundAccessConstraint,
@@ -49,18 +49,18 @@ import {
 
 import { SerializedV2FundAccessConstraint } from 'utils/v2/serializers'
 
-import SwitchHeading from 'components/shared/SwitchHeading'
+import SwitchHeading from 'components/SwitchHeading'
 
-import NumberSlider from 'components/shared/inputs/NumberSlider'
+import NumberSlider from 'components/inputs/NumberSlider'
 
-import FormItemWarningText from 'components/shared/FormItemWarningText'
+import FormItemWarningText from 'components/FormItemWarningText'
 import { formattedNum } from 'utils/formatNumber'
-import { DEFAULT_BONDING_CURVE_RATE_PERCENTAGE } from 'components/shared/formItems/ProjectRedemptionRate'
+import { DEFAULT_BONDING_CURVE_RATE_PERCENTAGE } from 'components/formItems/ProjectRedemptionRate'
 
 import { DISCOUNT_RATE_EXPLANATION } from 'components/v2/V2Project/V2FundingCycleSection/settingExplanations'
 import { getTotalSplitsPercentage } from 'utils/v2/distributions'
 import { useForm } from 'antd/lib/form/Form'
-import Callout from 'components/shared/Callout'
+import Callout from 'components/Callout'
 
 import { shadowCard } from 'constants/styles/shadowCard'
 import MintRateFormItem from './MintRateFormItem'

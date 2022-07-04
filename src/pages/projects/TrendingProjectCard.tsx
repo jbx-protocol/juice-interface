@@ -1,6 +1,6 @@
-import Loading from 'components/shared/Loading'
-import ProjectLogo from 'components/shared/ProjectLogo'
-import ETHAmount from 'components/shared/currency/ETHAmount'
+import Loading from 'components/Loading'
+import ProjectLogo from 'components/ProjectLogo'
+import ETHAmount from 'components/currency/ETHAmount'
 
 import { t, Trans, Plural } from '@lingui/macro'
 

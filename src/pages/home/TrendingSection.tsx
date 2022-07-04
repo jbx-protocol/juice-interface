@@ -8,7 +8,7 @@ import { Trans } from '@lingui/macro'
 
 import { useTrendingProjects } from 'hooks/Projects'
 import TrendingProjectCard from 'pages/projects/TrendingProjectCard'
-import Grid from 'components/shared/Grid'
+import Grid from 'components/Grid'
 
 import Payments from './Payments'
 

@@ -1,8 +1,8 @@
 import { RightCircleOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Col, Row, Space } from 'antd'
-import PayInputGroup from 'components/shared/inputs/Pay/PayInputGroup'
-import ProjectHeader from 'components/shared/Project/ProjectHeader'
+import PayInputGroup from 'components/inputs/Pay/PayInputGroup'
+import ProjectHeader from 'components/Project/ProjectHeader'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import { lazy, useContext, useState } from 'react'
@@ -21,10 +21,10 @@ import { weightedAmount } from 'utils/v2/math'
 import { useIsUserAddress } from 'hooks/IsUserAddress'
 
 import { v2ProjectRoute } from 'utils/routes'
+import V2BugNotice from 'components/v2/shared/V2BugNotice'
 
 import { textSecondary } from 'constants/styles/text'
 import { V2_PROJECT_IDS } from 'constants/v2/projectIds'
-import V2BugNotice from '../shared/V2BugNotice'
 import { RelaunchFundingCycleBanner } from './banners/RelaunchFundingCycleBanner'
 import NewDeployModal from './NewDeployModal'
 import ProjectActivity from './ProjectActivity'
@@ -37,7 +37,7 @@ import V2ProjectHeaderActions from './V2ProjectHeaderActions'
 
 const GUTTER_PX = 40
 
-const VolumeChart = lazy(() => import('../../shared/VolumeChart'))
+const VolumeChart = lazy(() => import('components/VolumeChart'))
 import { V2ReconfigureProjectHandleDrawer } from './V2ReconfigureProjectHandleDrawer'
 
 const AllAssetsButton = ({ onClick }: { onClick: VoidFunction }) => {

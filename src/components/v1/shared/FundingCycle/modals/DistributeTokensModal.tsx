@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Modal, Space } from 'antd'
-import FormattedAddress from 'components/shared/FormattedAddress'
+import FormattedAddress from 'components/FormattedAddress'
 import TicketModsList from 'components/v1/shared/TicketModsList'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import useReservedTokensOfProject from 'hooks/v1/contractReader/ReservedTokensOfProject'

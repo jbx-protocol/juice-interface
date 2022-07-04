@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Space } from 'antd'
-import FormItemWarningText from 'components/shared/FormItemWarningText'
+import FormItemWarningText from 'components/FormItemWarningText'
 
 export default function TokenMintingExtra({
   showMintingWarning,

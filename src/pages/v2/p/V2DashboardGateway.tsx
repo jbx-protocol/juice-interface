@@ -1,5 +1,5 @@
-import Loading from 'components/shared/Loading'
-import Project404 from 'components/shared/Project404'
+import Loading from 'components/Loading'
+import Project404 from 'components/Project404'
 import V2Dashboard from 'pages/v2/p'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { useParams } from 'react-router-dom'

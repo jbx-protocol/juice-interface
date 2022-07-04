@@ -1,8 +1,8 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { Statistic } from 'antd'
-import CurrencySymbol from 'components/shared/CurrencySymbol'
-import TooltipLabel from 'components/shared/TooltipLabel'
+import CurrencySymbol from 'components/CurrencySymbol'
+import TooltipLabel from 'components/TooltipLabel'
 import { formatWad } from 'utils/formatNumber'
 import {
   formatDiscountRate,
@@ -10,7 +10,7 @@ import {
   MAX_DISTRIBUTION_LIMIT,
 } from 'utils/v2/math'
 
-import FundingCycleDetailWarning from 'components/shared/Project/FundingCycleDetailWarning'
+import FundingCycleDetailWarning from 'components/Project/FundingCycleDetailWarning'
 import { detailedTimeString } from 'utils/formatTime'
 import {
   DISCOUNT_RATE_EXPLANATION,

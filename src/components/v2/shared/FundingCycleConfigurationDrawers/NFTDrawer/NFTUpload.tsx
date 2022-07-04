@@ -1,7 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Form, FormInstance, Upload } from 'antd'
 import { RcFile } from 'antd/lib/upload'
-import TooltipLabel from 'components/shared/TooltipLabel'
+import TooltipLabel from 'components/TooltipLabel'
 import { CSSProperties, useContext, useState } from 'react'
 
 import { LoadingOutlined, UploadOutlined } from '@ant-design/icons'

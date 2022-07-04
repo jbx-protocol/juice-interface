@@ -1,5 +1,5 @@
-import FeedbackFormButton from 'components/shared/FeedbackFormButton'
-import ScrollToTopButton from 'components/shared/ScrollToTopButton'
+import FeedbackFormButton from 'components/FeedbackFormButton'
+import ScrollToTopButton from 'components/ScrollToTopButton'
 
 import {
   V1ProjectContext,
@@ -27,8 +27,8 @@ import { useLocation, useParams } from 'react-router-dom'
 import { getTerminalName, getTerminalVersion } from 'utils/v1/terminals'
 import { V1CurrencyProvider } from 'providers/v1/V1CurrencyProvider'
 import { V1CurrencyName } from 'utils/v1/currency'
-import NewDeployNotAvailable from 'components/shared/NewDeployNotAvailable'
-import Project404 from 'components/shared/Project404'
+import NewDeployNotAvailable from 'components/NewDeployNotAvailable'
+import Project404 from 'components/Project404'
 import { usePageTitle } from 'hooks/PageTitle'
 
 import useOwnerOfProject from 'hooks/v1/contractReader/OwnerOfProject'
@@ -37,7 +37,7 @@ import { layouts } from 'constants/styles/layouts'
 import { projectTypes } from 'constants/v1/projectTypes'
 import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 
-import Loading from '../../components/shared/Loading'
+import Loading from '../../components/Loading'
 import V1Project from '../../components/v1/V1Project'
 
 export default function V1Dashboard() {

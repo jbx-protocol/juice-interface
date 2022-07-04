@@ -1,4 +1,4 @@
-import CurrencySymbol from 'components/shared/CurrencySymbol'
+import CurrencySymbol from 'components/CurrencySymbol'
 
 import { useEtherPrice } from 'hooks/EtherPrice'
 

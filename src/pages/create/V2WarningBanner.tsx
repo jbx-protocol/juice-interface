@@ -2,7 +2,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
 import { InfoCircleOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
-import ExternalLink from 'components/shared/ExternalLink'
+import ExternalLink from 'components/ExternalLink'
 import { helpPagePath } from 'utils/helpPageHelper'
 import useMobile from 'hooks/Mobile'
 

@@ -3,7 +3,7 @@ import { Button } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import ProjectDetailsForm, {
   ProjectDetailsFormFields,
-} from 'components/shared/forms/ProjectDetailsForm'
+} from 'components/forms/ProjectDetailsForm'
 
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'

@@ -2,14 +2,14 @@ import { InfoCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import Search from 'antd/lib/input/Search'
-import FeedbackFormButton from 'components/shared/FeedbackFormButton'
-import Loading from 'components/shared/Loading'
+import FeedbackFormButton from 'components/FeedbackFormButton'
+import Loading from 'components/Loading'
 
 import { ProjectCategory } from 'models/project-visibility'
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
 
-import Grid from 'components/shared/Grid'
-import ProjectCard, { ProjectCardProject } from 'components/shared/ProjectCard'
+import Grid from 'components/Grid'
+import ProjectCard, { ProjectCardProject } from 'components/ProjectCard'
 
 import { Link, useHistory, useLocation } from 'react-router-dom'
 

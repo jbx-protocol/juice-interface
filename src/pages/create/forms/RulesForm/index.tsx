@@ -9,7 +9,7 @@ import { ThemeContext } from 'contexts/themeContext'
 
 import { isAddress } from '@ethersproject/address'
 
-import ReconfigurationStrategySelector from 'components/shared/ReconfigurationStrategy/ReconfigurationStrategySelector'
+import ReconfigurationStrategySelector from 'components/ReconfigurationStrategy/ReconfigurationStrategySelector'
 
 import { BallotStrategy } from 'models/ballot'
 

@@ -34,7 +34,7 @@ import {
   V2_CURRENCY_ETH,
 } from 'utils/v2/currency'
 
-import ExternalLink from 'components/shared/ExternalLink'
+import ExternalLink from 'components/ExternalLink'
 
 import { Split } from 'models/v2/splits'
 
@@ -50,13 +50,13 @@ import {
 } from 'utils/formatTime'
 import { fromWad } from 'utils/formatNumber'
 
-import FormItemWarningText from 'components/shared/FormItemWarningText'
+import FormItemWarningText from 'components/FormItemWarningText'
 
-import SwitchHeading from 'components/shared/SwitchHeading'
+import SwitchHeading from 'components/SwitchHeading'
 import DistributionSplitsSection from 'components/v2/shared/DistributionSplitsSection'
 import { getTotalSplitsPercentage } from 'utils/v2/distributions'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { ItemNoInput } from 'components/shared/formItems/ItemNoInput'
+import { ItemNoInput } from 'components/formItems/ItemNoInput'
 import { helpPagePath } from 'utils/helpPageHelper'
 
 import isEqual from 'lodash/isEqual'

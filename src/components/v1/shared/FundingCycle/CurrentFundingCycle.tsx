@@ -1,4 +1,4 @@
-import { CardSection } from 'components/shared/CardSection'
+import { CardSection } from 'components/CardSection'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useContext } from 'react'
 

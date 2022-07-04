@@ -1,6 +1,6 @@
-import Loading from 'components/shared/Loading'
-import NewDeployNotAvailable from 'components/shared/NewDeployNotAvailable'
-import ScrollToTopButton from 'components/shared/ScrollToTopButton'
+import Loading from 'components/Loading'
+import NewDeployNotAvailable from 'components/NewDeployNotAvailable'
+import ScrollToTopButton from 'components/ScrollToTopButton'
 
 import {
   V2ProjectContext,
@@ -37,7 +37,7 @@ import {
 import { V2ArchivedProjectIds } from 'constants/v2/archivedProjects'
 import { layouts } from 'constants/styles/layouts'
 
-import Project404 from '../../../components/shared/Project404'
+import Project404 from '../../../components/Project404'
 import V2Project from '../../../components/v2/V2Project'
 
 export default function V2Dashboard({ projectId }: { projectId: number }) {

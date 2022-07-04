@@ -1,6 +1,6 @@
 import { InfoCircleOutlined } from '@ant-design/icons'
-import Grid from 'components/shared/Grid'
-import Loading from 'components/shared/Loading'
+import Grid from 'components/Grid'
+import Loading from 'components/Loading'
 import { useTrendingProjects } from 'hooks/Projects'
 
 import RankingExplanation from './RankingExplanation'

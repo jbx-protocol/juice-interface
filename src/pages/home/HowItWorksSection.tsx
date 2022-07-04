@@ -1,6 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Col, Divider, Row } from 'antd'
-import ExternalLink from 'components/shared/ExternalLink'
+import ExternalLink from 'components/ExternalLink'
 import { CSSProperties } from 'react'
 import { InfoCircleOutlined } from '@ant-design/icons'
 import useMobile from 'hooks/Mobile'

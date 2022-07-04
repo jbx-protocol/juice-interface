@@ -14,7 +14,7 @@ import { useHistory } from 'react-router-dom'
 import { BigNumber } from '@ethersproject/bignumber'
 import { NetworkContext } from 'contexts/networkContext'
 
-import TransactionModal from 'components/shared/TransactionModal'
+import TransactionModal from 'components/TransactionModal'
 
 import { useAppDispatch } from 'hooks/AppDispatch'
 

@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import ETHAmount from 'components/shared/currency/ETHAmount'
+import ETHAmount from 'components/currency/ETHAmount'
 import { ThemeContext } from 'contexts/themeContext'
 import useMobile from 'hooks/Mobile'
 import useSubgraphQuery from 'hooks/SubgraphQuery'

@@ -2,9 +2,9 @@ import { t, Trans } from '@lingui/macro'
 import { Col, Row, Space, Statistic } from 'antd'
 import { Gutter } from 'antd/lib/grid/row'
 
-import CurrencySymbol from 'components/shared/CurrencySymbol'
+import CurrencySymbol from 'components/CurrencySymbol'
 import PayoutModsList from 'components/v1/shared/PayoutModsList'
-import ProjectLogo from 'components/shared/ProjectLogo'
+import ProjectLogo from 'components/ProjectLogo'
 import TicketModsList from 'components/v1/shared/TicketModsList'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
@@ -35,7 +35,7 @@ import { orEmpty } from 'utils/orEmpty'
 
 import { V1CurrencyName } from 'utils/v1/currency'
 
-import FundingCycleDetailWarning from 'components/shared/Project/FundingCycleDetailWarning'
+import FundingCycleDetailWarning from 'components/Project/FundingCycleDetailWarning'
 
 import { getBallotStrategyByAddress } from 'constants/v1/ballotStrategies/getBallotStrategiesByAddress'
 import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'

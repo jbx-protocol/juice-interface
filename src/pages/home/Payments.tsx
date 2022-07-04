@@ -1,6 +1,6 @@
-import RichNote from 'components/shared/RichNote'
-import FormattedAddress from 'components/shared/FormattedAddress'
-import Loading from 'components/shared/Loading'
+import RichNote from 'components/RichNote'
+import FormattedAddress from 'components/FormattedAddress'
+import Loading from 'components/Loading'
 import V1ProjectHandle from 'components/v1/shared/V1ProjectHandle'
 
 import { ThemeContext } from 'contexts/themeContext'
@@ -8,7 +8,7 @@ import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 
-import ETHAmount from 'components/shared/currency/ETHAmount'
+import ETHAmount from 'components/currency/ETHAmount'
 import { Project } from 'models/subgraph-entities/vX/project'
 import V2ProjectHandle from 'components/v2/shared/V2ProjectHandle'
 

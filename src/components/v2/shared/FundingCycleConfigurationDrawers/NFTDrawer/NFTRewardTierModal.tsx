@@ -1,9 +1,9 @@
 import { t } from '@lingui/macro'
 import { Form, Input, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import { ModalMode } from 'components/shared/formItems/formHelpers'
+import { ModalMode } from 'components/formItems/formHelpers'
 import { NFTRewardTier } from 'models/v2/nftRewardTier'
-import TooltipLabel from 'components/shared/TooltipLabel'
+import TooltipLabel from 'components/TooltipLabel'
 import { useEffect } from 'react'
 
 import PaymentThresholdFormItem from './PaymentThresholdFormItem'

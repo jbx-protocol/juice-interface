@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import ExternalLink from 'components/shared/ExternalLink'
+import ExternalLink from 'components/ExternalLink'
 import React, { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 

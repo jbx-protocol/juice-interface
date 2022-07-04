@@ -1,6 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Col, Row, Space } from 'antd'
-import FeedbackFormButton from 'components/shared/FeedbackFormButton'
+import FeedbackFormButton from 'components/FeedbackFormButton'
 
 import { ThemeContext } from 'contexts/themeContext'
 import { CSSProperties, useContext } from 'react'

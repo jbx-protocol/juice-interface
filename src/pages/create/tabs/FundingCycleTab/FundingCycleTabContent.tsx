@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { CheckCircleFilled } from '@ant-design/icons'
 import { Button, Space } from 'antd'
-import RichButton from 'components/shared/RichButton'
+import RichButton from 'components/RichButton'
 import { useContext, useState } from 'react'
 
 import { ThemeContext } from 'contexts/themeContext'

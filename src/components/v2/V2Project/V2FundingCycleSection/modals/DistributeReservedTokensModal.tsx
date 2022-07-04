@@ -7,7 +7,7 @@ import { tokenSymbolText } from 'utils/tokenSymbolText'
 import SplitList from 'components/v2/shared/SplitList'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import useProjectReservedTokens from 'hooks/v2/contractReader/ProjectReservedTokens'
-import TransactionModal from 'components/shared/TransactionModal'
+import TransactionModal from 'components/TransactionModal'
 
 export default function DistributeReservedTokensModal({
   visible,

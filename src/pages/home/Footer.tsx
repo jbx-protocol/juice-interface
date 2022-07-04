@@ -2,7 +2,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
 import { CSSProperties } from 'react'
 import { Button } from 'antd'
-import ExternalLink from 'components/shared/ExternalLink'
+import ExternalLink from 'components/ExternalLink'
 
 import { Languages } from 'constants/languages/language-options'
 

@@ -47,20 +47,20 @@ import { getTerminalAddress } from 'utils/v1/terminals'
 
 import TicketingForm, {
   TicketingFormFields,
-} from 'components/shared/forms/TicketingForm'
+} from 'components/forms/TicketingForm'
 import ReconfigurationStrategyDrawer from 'components/v1/shared/ReconfigurationStrategyDrawer'
 import ProjectDetailsForm, {
   ProjectDetailsFormFields,
-} from 'components/shared/forms/ProjectDetailsForm'
+} from 'components/forms/ProjectDetailsForm'
 
 import BudgetForm from 'components/v1/shared/forms/BudgetForm'
 import IncentivesForm, {
   IncentivesFormFields,
-} from 'components/shared/forms/IncentivesForm'
+} from 'components/forms/IncentivesForm'
 import PayModsForm from 'components/v1/shared/forms/PayModsForm'
 import RestrictedActionsForm, {
   RestrictedActionsFormFields,
-} from 'components/shared/forms/RestrictedActionsForm'
+} from 'components/forms/RestrictedActionsForm'
 
 import { toDateSeconds } from 'utils/formatDate'
 

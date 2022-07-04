@@ -1,7 +1,7 @@
 import Landing from 'pages'
 import PrivacyPolicy from 'pages/privacy'
 import Projects from 'pages/projects'
-import Loading from 'components/shared/Loading'
+import Loading from 'components/Loading'
 import V1Dashboard from 'pages/p'
 import V2BugUpdates from 'pages/v2-bug-notice'
 

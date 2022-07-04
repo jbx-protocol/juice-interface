@@ -6,8 +6,8 @@ import { useForm } from 'antd/lib/form/Form'
 import Modal from 'antd/lib/modal/Modal'
 import RestrictedActionsForm, {
   RestrictedActionsFormFields,
-} from 'components/shared/forms/RestrictedActionsForm'
-import CurrencySymbol from 'components/shared/CurrencySymbol'
+} from 'components/forms/RestrictedActionsForm'
+import CurrencySymbol from 'components/CurrencySymbol'
 import PayoutModsList from 'components/v1/shared/PayoutModsList'
 import TicketModsList from 'components/v1/shared/TicketModsList'
 import ReconfigurationStrategyDrawer from 'components/v1/shared/ReconfigurationStrategyDrawer'
@@ -51,11 +51,11 @@ import BudgetForm from 'components/v1/shared/forms/BudgetForm'
 
 import IncentivesForm, {
   IncentivesFormFields,
-} from 'components/shared/forms/IncentivesForm'
+} from 'components/forms/IncentivesForm'
 import PayModsForm from 'components/v1/shared/forms/PayModsForm'
 import TicketingForm, {
   TicketingFormFields,
-} from 'components/shared/forms/TicketingForm'
+} from 'components/forms/TicketingForm'
 
 import { BallotStrategy } from 'models/ballot'
 

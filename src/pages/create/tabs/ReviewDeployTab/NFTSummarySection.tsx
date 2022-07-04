@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Col, Row } from 'antd'
-import Paragraph from 'components/shared/Paragraph'
+import Paragraph from 'components/Paragraph'
 import { ThemeContext } from 'contexts/themeContext'
 import { useAppSelector } from 'hooks/AppSelector'
 import { useContext } from 'react'

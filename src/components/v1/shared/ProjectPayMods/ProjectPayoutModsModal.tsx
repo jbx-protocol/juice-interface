@@ -1,17 +1,17 @@
 import { t, Trans } from '@lingui/macro'
 import { DatePicker, Form, Modal, Select } from 'antd'
-import CurrencySymbol from 'components/shared/CurrencySymbol'
-import { FormItems } from 'components/shared/formItems'
+import CurrencySymbol from 'components/CurrencySymbol'
+import { FormItems } from 'components/formItems'
 import {
   countDecimalPlaces,
   ModalMode,
   roundDown,
   validateEthAddress,
   validatePercentage,
-} from 'components/shared/formItems/formHelpers'
-import InputAccessoryButton from 'components/shared/InputAccessoryButton'
-import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
-import NumberSlider from 'components/shared/inputs/NumberSlider'
+} from 'components/formItems/formHelpers'
+import InputAccessoryButton from 'components/InputAccessoryButton'
+import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
+import NumberSlider from 'components/inputs/NumberSlider'
 
 import { ThemeContext } from 'contexts/themeContext'
 import { isAddress } from 'ethers/lib/utils'

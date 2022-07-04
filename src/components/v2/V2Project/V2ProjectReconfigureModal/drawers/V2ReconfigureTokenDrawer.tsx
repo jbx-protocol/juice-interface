@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Drawer } from 'antd'
-import TokenTabContent from 'components/v2/V2Create/forms/TokenForm'
+import TokenTabContent from 'pages/create/forms/TokenForm'
 
 import { drawerStyle } from 'constants/styles/drawerStyle'
 import { FundingDrawersSubtitles } from '..'

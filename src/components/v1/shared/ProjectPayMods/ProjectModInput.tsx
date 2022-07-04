@@ -1,7 +1,7 @@
 import { Button, Col, Row, Space } from 'antd'
 import { LockOutlined, CloseCircleOutlined } from '@ant-design/icons'
-import CurrencySymbol from 'components/shared/CurrencySymbol'
-import FormattedAddress from 'components/shared/FormattedAddress'
+import CurrencySymbol from 'components/CurrencySymbol'
+import FormattedAddress from 'components/FormattedAddress'
 
 import { ThemeContext } from 'contexts/themeContext'
 import { PropsWithChildren, useContext } from 'react'

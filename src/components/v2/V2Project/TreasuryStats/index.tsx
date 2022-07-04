@@ -1,10 +1,10 @@
 import { Skeleton, Space } from 'antd'
-import FundingProgressBar from 'components/shared/Project/FundingProgressBar'
+import FundingProgressBar from 'components/Project/FundingProgressBar'
 import { useContext } from 'react'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import useTerminalCurrentOverflow from 'hooks/v2/contractReader/TerminalCurrentOverflow'
 
-import { VolumeStatLine } from 'components/shared/Project/VolumeStatLine'
+import { VolumeStatLine } from 'components/Project/VolumeStatLine'
 
 import { ThemeContext } from 'contexts/themeContext'
 

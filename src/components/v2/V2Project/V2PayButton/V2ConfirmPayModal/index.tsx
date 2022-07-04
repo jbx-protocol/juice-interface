@@ -3,8 +3,8 @@ import { isAddress } from '@ethersproject/address'
 import { t, Trans } from '@lingui/macro'
 import { Checkbox, Descriptions, Form, Space, Switch } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import FormattedAddress from 'components/shared/FormattedAddress'
-import ImageUploader from 'components/shared/inputs/ImageUploader'
+import FormattedAddress from 'components/FormattedAddress'
+import ImageUploader from 'components/inputs/ImageUploader'
 import { NetworkContext } from 'contexts/networkContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
@@ -20,7 +20,7 @@ import {
 } from 'utils/v2/currency'
 import { usePayV2ProjectTx } from 'hooks/v2/transactor/PayV2ProjectTx'
 
-import { FormItems } from 'components/shared/formItems'
+import { FormItems } from 'components/formItems'
 
 import * as constants from '@ethersproject/constants'
 
@@ -29,13 +29,13 @@ import {
   V2FundingCycleRiskCount,
 } from 'utils/v2/fundingCycle'
 
-import Paragraph from 'components/shared/Paragraph'
+import Paragraph from 'components/Paragraph'
 
 import { weightedAmount } from 'utils/v2/math'
 
-import TransactionModal from 'components/shared/TransactionModal'
-import ProjectRiskNotice from 'components/shared/ProjectRiskNotice'
-import MemoFormItem from 'components/shared/inputs/Pay/MemoFormItem'
+import TransactionModal from 'components/TransactionModal'
+import ProjectRiskNotice from 'components/ProjectRiskNotice'
+import MemoFormItem from 'components/inputs/Pay/MemoFormItem'
 
 export default function V2ConfirmPayModal({
   visible,

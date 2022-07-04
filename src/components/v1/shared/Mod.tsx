@@ -7,10 +7,10 @@ import { ThemeContext } from 'contexts/themeContext'
 import { PayoutMod, TicketMod } from 'models/mods'
 import { useContext } from 'react'
 import { formatDate } from 'utils/formatDate'
+import FormattedAddress from 'components/FormattedAddress'
+import TooltipLabel from 'components/TooltipLabel'
 
-import FormattedAddress from '../../shared/FormattedAddress'
 import V1ProjectHandle from './V1ProjectHandle'
-import TooltipLabel from '../../shared/TooltipLabel'
 
 export default function Mod({
   mod,

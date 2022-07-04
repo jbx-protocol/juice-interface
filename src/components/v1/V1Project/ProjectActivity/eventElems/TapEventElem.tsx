@@ -1,7 +1,7 @@
-import CurrencySymbol from 'components/shared/CurrencySymbol'
-import FormattedAddress from 'components/shared/FormattedAddress'
+import CurrencySymbol from 'components/CurrencySymbol'
+import FormattedAddress from 'components/FormattedAddress'
 import V1ProjectHandle from 'components/v1/shared/V1ProjectHandle'
-import EtherscanLink from 'components/shared/EtherscanLink'
+import EtherscanLink from 'components/EtherscanLink'
 
 import { ThemeContext } from 'contexts/themeContext'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
@@ -11,7 +11,7 @@ import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
 
 import { Trans } from '@lingui/macro'
-import { smallHeaderStyle } from 'components/shared/activityEventElems/styles'
+import { smallHeaderStyle } from 'components/activityEventElems/styles'
 
 export default function TapEventElem({
   event,

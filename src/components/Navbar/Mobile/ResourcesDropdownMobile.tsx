@@ -1,6 +1,6 @@
 import { t } from '@lingui/macro'
 import { Menu } from 'antd'
-import ExternalLink from 'components/shared/ExternalLink'
+import ExternalLink from 'components/ExternalLink'
 
 import { navMenuItemStyles } from '../navStyles'
 import { resourcesMenuItems } from '../constants'

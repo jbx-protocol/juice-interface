@@ -3,7 +3,7 @@ import FundingCycleDrawer from 'components/v2/shared/FundingCycleConfigurationDr
 import { useFundingCycleDrawer } from 'components/v2/shared/FundingCycleConfigurationDrawers/useFundingCycleDrawer'
 import UnsavedChangesModal from 'components/v2/shared/UnsavedChangesModal'
 
-import RulesForm from '../../V2Create/forms/RulesForm'
+import RulesForm from '../../../../pages/create/forms/RulesForm'
 
 export default function RulesDrawer({
   visible,

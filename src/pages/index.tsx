@@ -10,12 +10,12 @@ import { fathom } from 'lib/fathom'
 
 import { ThemeOption } from 'constants/theme/theme-option'
 
-import Faq from './Faq'
-import Footer from './Footer'
-import TrendingSection from './TrendingSection'
-import { TopProjectsSection } from './TopProjectsSection'
-import { StatsSection } from './StatsSection'
-import { HowItWorksSection } from './HowItWorksSection'
+import Faq from './home/Faq'
+import Footer from './home/Footer'
+import TrendingSection from './home/TrendingSection'
+import { TopProjectsSection } from './home/TopProjectsSection'
+import { StatsSection } from './home/StatsSection'
+import { HowItWorksSection } from './home/HowItWorksSection'
 
 const BigHeader = ({
   text,

@@ -1,4 +1,4 @@
-import Landing from 'components/Landing'
+import Landing from 'pages'
 import PrivacyPolicy from 'pages/PrivacyPolicy'
 import Projects from 'pages/projects'
 import Loading from 'components/shared/Loading'

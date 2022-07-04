@@ -5,7 +5,7 @@ import { TransactionReceipt } from '@ethersproject/providers'
 import { TransactorInstance } from 'hooks/Transactor'
 
 import { Modal } from 'antd'
-import { JBDiscordLink } from 'components/Landing/QAs'
+import { JBDiscordLink } from 'pages/home/QAs'
 import EtherscanLink from 'components/shared/EtherscanLink'
 import CopyTextButton from 'components/shared/CopyTextButton'
 import TransactionModal from 'components/shared/TransactionModal'

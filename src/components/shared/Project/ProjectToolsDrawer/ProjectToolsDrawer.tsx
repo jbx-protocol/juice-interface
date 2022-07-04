@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
 import { Divider, Drawer, Space, Tabs } from 'antd'
-import { JBDiscordLink } from 'components/Landing/QAs'
+import { JBDiscordLink } from 'pages/home/QAs'
 import ArchiveV1Project from 'components/v1/V1Project/ArchiveV1Project'
 import ArchiveV2Project from 'components/v2/V2Project/ArchiveV2Project'
 import { useIsUserAddress } from 'hooks/IsUserAddress'

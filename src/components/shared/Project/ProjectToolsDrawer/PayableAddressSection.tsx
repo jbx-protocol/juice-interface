@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import { JBDiscordLink } from 'components/Landing/QAs'
+import { JBDiscordLink } from 'pages/home/QAs'
 import LaunchProjectPayerButton from 'components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerButton'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'

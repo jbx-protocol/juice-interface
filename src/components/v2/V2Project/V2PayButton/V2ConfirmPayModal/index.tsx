@@ -20,8 +20,6 @@ import {
 } from 'utils/v2/currency'
 import { usePayV2ProjectTx } from 'hooks/v2/transactor/PayV2ProjectTx'
 
-import { FormItems } from 'components/formItems'
-
 import * as constants from '@ethersproject/constants'
 
 import {
@@ -36,6 +34,7 @@ import { weightedAmount } from 'utils/v2/math'
 import TransactionModal from 'components/TransactionModal'
 import ProjectRiskNotice from 'components/ProjectRiskNotice'
 import MemoFormItem from 'components/inputs/Pay/MemoFormItem'
+import { EthAddressInput } from 'components/inputs/EthAddressInput'
 
 export default function V2ConfirmPayModal({
   visible,
@@ -240,20 +239,18 @@ export default function V2ConfirmPayModal({
           />
 
           {customBeneficiaryEnabled && (
-            <FormItems.EthAddress
-              defaultValue={undefined}
-              name={'beneficiary'}
-              onAddressChange={beneficiary => {
-                form.setFieldsValue({ beneficiary })
-              }}
-              formItemProps={{
-                rules: [
-                  {
-                    validator: validateCustomBeneficiary,
-                  },
-                ],
-              }}
-            />
+            <Form.Item
+              name="beneficiary"
+              rules={[
+                {
+                  validator: validateCustomBeneficiary,
+                  validateTrigger: 'onCreate',
+                  required: true,
+                },
+              ]}
+            >
+              <EthAddressInput />
+            </Form.Item>
           )}
 
           {hasIssuedTokens && (

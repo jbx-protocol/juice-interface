@@ -192,14 +192,14 @@ export default function FundingSummarySection() {
             />
           </Col>
           <Col md={8} xs={24}>
-            {hasDuration && (
-              <ReconfigurationStatistic ballotAddress={fundingCycle.ballot} />
-            )}
-          </Col>
-          <Col md={8} xs={24}>
             <AllowSetTerminalsStatistic
               allowSetTerminals={fundingCycleMetadata.global.allowSetTerminals}
             />
+          </Col>
+          <Col md={8} xs={24}>
+            {hasDuration && (
+              <ReconfigurationStatistic ballotAddress={fundingCycle.ballot} />
+            )}
           </Col>
         </Row>
         <Row gutter={rowGutter} style={{ width: '100%' }}>

@@ -7,6 +7,8 @@ type StakingNFTCarouselProps = {
   variants: VeNftVariant[]
   baseImagesHash: string
   form: FormInstance
+  //eslint-disable-next-line @typescript-eslint/no-explicit-any
+  tokenMetadata: any
 }
 
 export default function StakingNFTCarousel({
@@ -14,13 +16,16 @@ export default function StakingNFTCarousel({
   activeIdx,
   variants,
   baseImagesHash,
+  tokenMetadata,
 }: StakingNFTCarouselProps) {
   const prevVariant = activeIdx - 1 < 0 ? undefined : variants[activeIdx - 1]
   const prevVariantImage = prevVariant
     ? getNFTBaseImage(baseImagesHash, prevVariant)
     : undefined
   const currentVariant = variants[activeIdx]
-  const currentImage = getNFTBaseImage(baseImagesHash, currentVariant)
+  const currentImage = tokenMetadata
+    ? tokenMetadata.thumbnailUri
+    : getNFTBaseImage(baseImagesHash, currentVariant)
   const nextVariant =
     activeIdx + 1 >= variants.length ? undefined : variants[activeIdx + 1]
   const nextVariantImage = nextVariant

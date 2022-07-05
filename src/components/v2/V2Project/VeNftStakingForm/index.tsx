@@ -129,14 +129,14 @@ export default function StakeForNFTForm() {
   const projectName = projectMetadata?.name ?? 'Untitled Project'
   const votingPower = parseInt(tokensStaked) * (lockDuration / maxLockDuration)
 
-  const { data: nftTokenURI } = useNFTResolverTokenURI(
+  const { data: nftTokenUri } = useNFTResolverTokenURI(
     resolverAddress,
     parseWad(tokensStaked),
     lockDuration,
     lockDurationOptions,
   )
 
-  const { data: metadata, refetch } = useNFTMetadata(nftTokenURI)
+  const { data: metadata, refetch } = useNFTMetadata(nftTokenUri)
 
   const { data: allowance } = useERC20Allowance(
     JBX_CONTRACT_ADDRESS,
@@ -375,6 +375,7 @@ export default function StakeForNFTForm() {
               variants={variants}
               baseImagesHash={baseImagesHash}
               form={form}
+              tokenMetadata={metadata}
             />
           )}
           <Space size="middle" direction="vertical" style={{ width: '100%' }}>

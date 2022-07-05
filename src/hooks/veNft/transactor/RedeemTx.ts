@@ -1,4 +1,4 @@
-import { BigNumberish } from '@ethersproject/bignumber'
+import { BigNumber } from '@ethersproject/bignumber'
 import { useContext } from 'react'
 import { V2UserContext } from 'contexts/v2/userContext'
 
@@ -7,16 +7,21 @@ import { TransactorInstance } from 'hooks/Transactor'
 import { useNFTContract } from '../VeNftContract'
 import { VEBANNY_CONTRACT_ADDRESS } from 'constants/v2/nft/nftProject'
 
-export type ExtendLockTx = TransactorInstance<{
+export type RedeemVeNftTx = TransactorInstance<{
   tokenId: number
-  updatedDuration: BigNumberish
+  token: string
+  beneficiary: string
+  memo: string
+  terminal: string
 }>
 
-export function useExtendLockTx(): ExtendLockTx {
+export function useRedeemVeNftTx(): RedeemVeNftTx {
   const { transactor } = useContext(V2UserContext)
   const nftContract = useNFTContract(VEBANNY_CONTRACT_ADDRESS)
+  const minReturnedTokens = 0 // TODO will need a field for this in V2ConfirmPayOwnerModal
+  const bytes = '' //randomBytes(1)
 
-  return ({ tokenId, updatedDuration }, txOpts) => {
+  return ({ tokenId, token, beneficiary, memo, terminal }, txOpts) => {
     if (!transactor || !nftContract) {
       txOpts?.onDone?.()
       return Promise.resolve(false)
@@ -24,10 +29,23 @@ export function useExtendLockTx(): ExtendLockTx {
 
     return transactor(
       nftContract,
-      'extendLock',
-      [[[tokenId, updatedDuration]]],
+      'redeem',
+      [
+        [
+          {
+            tokenId,
+            token,
+            minReturnedTokens,
+            beneficiary,
+            memo,
+            bytes,
+            terminal,
+          },
+        ],
+      ],
       {
         ...txOpts,
+        value: BigNumber.from(1),
       },
     )
   }

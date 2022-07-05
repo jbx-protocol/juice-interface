@@ -80,27 +80,21 @@ export default function OwnedNFTCard({
               EXTEND LOCK
             </Button>
           </Row>
+          <Row>
+            <Button block onClick={() => setRedeemModalVisible(true)}>
+              REDEEM
+            </Button>
+          </Row>
           {remaining === 0 && (
-            <>
-              <Row>
-                <Button
-                  block
-                  disabled={remaining > 0}
-                  onClick={() => setRedeemModalVisible(true)}
-                >
-                  REDEEM
-                </Button>
-              </Row>
-              <Row>
-                <Button
-                  block
-                  disabled={remaining > 0}
-                  onClick={() => setUnlockModalVisible(true)}
-                >
-                  UNLOCK
-                </Button>
-              </Row>
-            </>
+            <Row>
+              <Button
+                block
+                disabled={remaining > 0}
+                onClick={() => setUnlockModalVisible(true)}
+              >
+                UNLOCK
+              </Button>
+            </Row>
           )}
         </Space>
       </div>
@@ -110,6 +104,7 @@ export default function OwnedNFTCard({
         token={token}
       />
       <RedeemVeNftModal
+        token={token}
         visible={redeemModalVisible}
         onCancel={() => setRedeemModalVisible(false)}
       />

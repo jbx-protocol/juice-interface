@@ -323,6 +323,7 @@ msgid "Address"
 msgstr "Address"
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/RedeemVeNftModal.tsx
 #: src/components/v2/V2Project/VeNftStakingForm/UnlockModal.tsx
 #: src/components/v2/V2Project/VeNftStakingForm/index.tsx
 msgid "Address required"
@@ -836,6 +837,7 @@ msgstr "Currently worth: <0><1/>{0}</0>"
 msgid "Currently, only project tokens claimed as ERC-20 tokens can be staked for NFTs."
 msgstr "Currently, only project tokens claimed as ERC-20 tokens can be staked for NFTs."
 
+#: src/components/v2/V2Project/VeNftStakingForm/RedeemVeNftModal.tsx
 #: src/components/v2/V2Project/VeNftStakingForm/UnlockModal.tsx
 msgid "Custom beneficiary"
 msgstr "Custom beneficiary"
@@ -1458,6 +1460,7 @@ msgid "Initial mint rate"
 msgstr "Initial mint rate"
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/RedeemVeNftModal.tsx
 #: src/components/v2/V2Project/VeNftStakingForm/UnlockModal.tsx
 #: src/components/v2/V2Project/VeNftStakingForm/index.tsx
 msgid "Invalid address"
@@ -2423,6 +2426,7 @@ msgstr "Seconds"
 msgid "See transaction"
 msgstr "See transaction"
 
+#: src/components/v2/V2Project/VeNftStakingForm/RedeemVeNftModal.tsx
 #: src/components/v2/V2Project/VeNftStakingForm/UnlockModal.tsx
 msgid "Send unlocked tokens to a custom address."
 msgstr "Send unlocked tokens to a custom address."

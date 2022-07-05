@@ -16,6 +16,7 @@ export interface PayEvent extends BaseProjectEntity, BaseEventEntity {
   beneficiary: string
   amount: BigNumber
   note: string
+  feeFromV2Project?: number
 }
 
 export type PayEventJson = Partial<
@@ -31,4 +32,7 @@ export const parsePayEventJson = (j: PayEventJson): Partial<PayEvent> => ({
   beneficiary: j.beneficiary,
   amount: j.amount ? BigNumber.from(j.amount) : undefined,
   note: j.note,
+  feeFromV2Project: j.feeFromV2Project
+    ? parseInt(j.feeFromV2Project)
+    : undefined,
 })

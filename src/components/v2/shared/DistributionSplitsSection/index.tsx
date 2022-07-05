@@ -3,10 +3,10 @@ import { Button, Form, Radio, Space } from 'antd'
 import { useCallback, useContext, useEffect, useState } from 'react'
 
 import { Split } from 'models/v2/splits'
-import { FormItemExt } from 'components/shared/formItems/formItemExt'
+import { FormItemExt } from 'components/formItems/formItemExt'
 import { fromWad, parseWad } from 'utils/formatNumber'
 import DistributionLimit from 'components/v2/V2Project/DistributionLimit'
-import TooltipIcon from 'components/shared/TooltipIcon'
+import TooltipIcon from 'components/TooltipIcon'
 import {
   adjustedSplitPercents,
   getNewDistributionLimit,

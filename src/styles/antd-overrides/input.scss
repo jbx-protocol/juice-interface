@@ -239,6 +239,16 @@ textarea.ant-input::placeholder {
   box-shadow: none !important;
 }
 
+
+.ant-upload {
+  color: var(--text-primary)
+}
+
+.ant-upload.ant-upload-select-picture-card {
+  background: var(--background-l1);
+  width: 100%
+}
+
 .ant-upload-list,
 .ant-upload-list-text {
   color: var(--text-secondary);

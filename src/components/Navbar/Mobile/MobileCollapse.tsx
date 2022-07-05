@@ -11,7 +11,7 @@ import { MenuOutlined } from '@ant-design/icons'
 import { ThemeContext } from 'contexts/themeContext'
 import { NetworkContext } from 'contexts/networkContext'
 
-import FeedbackFormButton from 'components/shared/FeedbackFormButton'
+import FeedbackFormButton from 'components/FeedbackFormButton'
 
 import Logo from '../Logo'
 import Account from '../Account'

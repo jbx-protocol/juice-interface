@@ -1,9 +1,9 @@
 import { t, Trans } from '@lingui/macro'
 import { Form, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
-import InputAccessoryButton from 'components/shared/InputAccessoryButton'
-import TooltipLabel from 'components/shared/TooltipLabel'
+import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
+import InputAccessoryButton from 'components/InputAccessoryButton'
+import TooltipLabel from 'components/TooltipLabel'
 
 import { CurrencyName } from 'constants/currency'
 

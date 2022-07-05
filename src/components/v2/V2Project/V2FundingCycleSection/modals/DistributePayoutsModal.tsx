@@ -1,9 +1,9 @@
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { Form, Space } from 'antd'
 import { t, Trans } from '@lingui/macro'
-import CurrencySymbol from 'components/shared/CurrencySymbol'
-import InputAccessoryButton from 'components/shared/InputAccessoryButton'
-import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
+import CurrencySymbol from 'components/CurrencySymbol'
+import InputAccessoryButton from 'components/InputAccessoryButton'
+import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { ThemeContext } from 'contexts/themeContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useContext, useEffect, useState } from 'react'
@@ -18,7 +18,7 @@ import { useETHPaymentTerminalFee } from 'hooks/v2/contractReader/ETHPaymentTerm
 import { BigNumber } from '@ethersproject/bignumber'
 
 import { formatFee } from 'utils/v2/math'
-import TransactionModal from 'components/shared/TransactionModal'
+import TransactionModal from 'components/TransactionModal'
 
 export default function DistributePayoutsModal({
   visible,

@@ -1,6 +1,6 @@
 import { BigNumberish } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
-import ProjectVersionBadge from 'components/shared/ProjectVersionBadge'
+import ProjectVersionBadge from 'components/ProjectVersionBadge'
 import { CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
 import { v2ProjectRoute } from 'utils/routes'

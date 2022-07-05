@@ -1,8 +1,8 @@
 import { Trans } from '@lingui/macro'
 import { Button, Skeleton, Space } from 'antd'
-import { CardSection } from 'components/shared/CardSection'
-import TooltipLabel from 'components/shared/TooltipLabel'
-import SpendingStats from 'components/shared/Project/SpendingStats'
+import { CardSection } from 'components/CardSection'
+import TooltipLabel from 'components/TooltipLabel'
+import SpendingStats from 'components/Project/SpendingStats'
 import SplitList from 'components/v2/shared/SplitList'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
@@ -153,6 +153,7 @@ export default function PayoutSplitsCard({
               totalValue={distributionLimit}
               projectOwnerAddress={projectOwnerAddress}
               showSplitValues={!distributionLimit?.eq(MAX_DISTRIBUTION_LIMIT)}
+              valueFormatProps={{ precision: 4 }}
             />
           ) : null}
         </div>

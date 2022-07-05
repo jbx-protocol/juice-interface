@@ -2,8 +2,8 @@ import { t, Trans } from '@lingui/macro'
 import { Form, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 
-import InputAccessoryButton from 'components/shared/InputAccessoryButton'
-import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
+import InputAccessoryButton from 'components/InputAccessoryButton'
+import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 
 import { CSSProperties, useContext, useState } from 'react'
 import { formatPercent, formatWad, fromWad, parseWad } from 'utils/formatNumber'
@@ -14,11 +14,11 @@ import useTotalBalanceOf from 'hooks/v2/contractReader/TotalBalanceOf'
 import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { formatRedemptionRate } from 'utils/v2/math'
-import CurrencySymbol from 'components/shared/CurrencySymbol'
+import CurrencySymbol from 'components/CurrencySymbol'
 import { useETHReceivedFromTokens } from 'hooks/v2/contractReader/ETHReceivedFromTokens'
 import { V2_CURRENCY_USD } from 'utils/v2/currency'
 import { useRedeemTokensTx } from 'hooks/v2/transactor/RedeemTokensTx'
-import TransactionModal from 'components/shared/TransactionModal'
+import TransactionModal from 'components/TransactionModal'
 
 const statsStyle: CSSProperties = {
   display: 'flex',

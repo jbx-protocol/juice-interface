@@ -1,7 +1,7 @@
 import { Tooltip } from 'antd'
 import { t, Trans } from '@lingui/macro'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
-import { CardSection } from 'components/shared/CardSection'
+import { CardSection } from 'components/CardSection'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import {
@@ -15,7 +15,7 @@ import { V1FundingCycle } from 'models/v1/fundingCycle'
 import CurrentFundingCycle from 'components/v1/shared/FundingCycle/CurrentFundingCycle'
 import QueuedFundingCycle from 'components/v1/shared/FundingCycle/QueuedFundingCycle'
 
-import FundingCycleSection from 'components/shared/Project/FundingCycleSection'
+import FundingCycleSection from 'components/Project/FundingCycleSection'
 
 import FundingHistory from './FundingHistory'
 import ReconfigureFundingModalTrigger from './ReconfigureFundingModalTrigger'

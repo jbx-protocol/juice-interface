@@ -1953,6 +1953,10 @@ msgstr "Aucune activité"
 msgid "No funding target: The project will control how all funds are distributed, and none can be redeemed by token holders."
 msgstr "Aucun objectif de financement : le projet contrôlera la manière dont tous les fonds sont distribués, et rien ne pourra être récupéré par les titulaires de tokens."
 
+#: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
+msgid "No funds available to distribute."
+msgstr ""
+
 #: src/components/v2/V2Project/DistributionLimit.tsx
 msgid "No funds can be distributed out of the treasury. Funds can only be accessed by token holders redeeming their tokens."
 msgstr "Aucun fonds ne peut être distribué en dehors de la trésorerie. Les fonds ne sont accessibles qu'aux détenteurs de tokens qui échangent leurs tokens."
@@ -1970,6 +1974,10 @@ msgstr "Seulement l'objectif du cycle de financement peut être distribué par l
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleHistory.tsx
 msgid "No past funding cycles"
 msgstr "Aucun cycle de financement précédent"
+
+#: src/components/v2/V2Project/V2FundingCycleSection/ReservedTokensSplitsCard.tsx
+msgid "No reserved tokens available to distribute."
+msgstr ""
 
 #: src/constants/v1/ballotStrategies/index.ts
 #: src/constants/v2/ballotStrategies/index.ts

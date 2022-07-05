@@ -1953,6 +1953,10 @@ msgstr "Henüz etkinlik yok"
 msgid "No funding target: The project will control how all funds are distributed, and none can be redeemed by token holders."
 msgstr "Finansman hedefi yok: Proje, tüm fonların nasıl dağıtılacağını kontrol eder ve hiçbiri token sahipleri tarafından talep edilemez."
 
+#: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
+msgid "No funds available to distribute."
+msgstr ""
+
 #: src/components/v2/V2Project/DistributionLimit.tsx
 msgid "No funds can be distributed out of the treasury. Funds can only be accessed by token holders redeeming their tokens."
 msgstr "Hazineden para dağıtılamaz. Fonlara yalnızca token'larını kullanan token sahipleri erişebilir."
@@ -1970,6 +1974,10 @@ msgstr "Tek bir finansman döngüsünde proje, finansman döngüsü hedefinden d
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleHistory.tsx
 msgid "No past funding cycles"
 msgstr "Geçmiş finansman döngüsü yok"
+
+#: src/components/v2/V2Project/V2FundingCycleSection/ReservedTokensSplitsCard.tsx
+msgid "No reserved tokens available to distribute."
+msgstr ""
 
 #: src/constants/v1/ballotStrategies/index.ts
 #: src/constants/v2/ballotStrategies/index.ts

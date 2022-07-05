@@ -1,8 +1,8 @@
 import { SettingOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
-import { Trans } from '@lingui/macro'
-import { Button, Skeleton, Space } from 'antd'
+import { t, Trans } from '@lingui/macro'
+import { Button, Skeleton, Space, Tooltip } from 'antd'
 import { CardSection } from 'components/CardSection'
 import FormattedAddress from 'components/FormattedAddress'
 import TooltipLabel from 'components/TooltipLabel'
@@ -75,6 +75,21 @@ export default function ReservedTokensSplitsCard({
     plural: false,
   })
 
+  const distributeButtonDisabled = isPreviewMode || reservedTokens?.eq(0)
+
+  function DistributeButton(): JSX.Element {
+    return (
+      <Button
+        type="ghost"
+        size="small"
+        onClick={() => setDistributeReservedTokensModalVisible(true)}
+        disabled={distributeButtonDisabled}
+      >
+        <Trans>Distribute {tokensText}</Trans>
+      </Button>
+    )
+  }
+
   return (
     <CardSection>
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
@@ -124,18 +139,19 @@ export default function ReservedTokensSplitsCard({
               {tokenAddress && tokenAddress !== constants.AddressZero ? (
                 <div style={smallHeaderStyle}>
                   {tokensTextSingular} contract address:{' '}
-                  <FormattedAddress address={tokenAddress} />
+                  <FormattedAddress address={tokenAddress} truncateTo={3} />
                 </div>
               ) : null}
             </div>
-            <Button
-              type="ghost"
-              size="small"
-              onClick={() => setDistributeReservedTokensModalVisible(true)}
-              disabled={isPreviewMode}
-            >
-              <Trans>Distribute {tokensText}</Trans>
-            </Button>
+            {reservedTokens?.eq(0) ? (
+              <Tooltip title={t`No reserved tokens available to distribute.`}>
+                <div>
+                  <DistributeButton />
+                </div>
+              </Tooltip>
+            ) : (
+              <DistributeButton />
+            )}
           </div>
         )}
 

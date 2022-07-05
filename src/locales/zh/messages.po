@@ -1953,6 +1953,10 @@ msgstr "暂无动态"
 msgid "No funding target: The project will control how all funds are distributed, and none can be redeemed by token holders."
 msgstr "不设定筹款目标：所有的资金如何分发都由此项目决定，代币持有者无法赎回。"
 
+#: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
+msgid "No funds available to distribute."
+msgstr ""
+
 #: src/components/v2/V2Project/DistributionLimit.tsx
 msgid "No funds can be distributed out of the treasury. Funds can only be accessed by token holders redeeming their tokens."
 msgstr "资金不能从金库分配出去。资金只能由代币持有人通过赎回代币来获得。"
@@ -1970,6 +1974,10 @@ msgstr "在单个筹款周期中，项目无法提取超出筹款目标的资金
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleHistory.tsx
 msgid "No past funding cycles"
 msgstr "没有历史筹款周期"
+
+#: src/components/v2/V2Project/V2FundingCycleSection/ReservedTokensSplitsCard.tsx
+msgid "No reserved tokens available to distribute."
+msgstr ""
 
 #: src/constants/v1/ballotStrategies/index.ts
 #: src/constants/v2/ballotStrategies/index.ts

@@ -1948,6 +1948,10 @@ msgstr ""
 msgid "No funding target: The project will control how all funds are distributed, and none can be redeemed by token holders."
 msgstr ""
 
+#: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
+msgid "No funds available to distribute."
+msgstr "No funds available to distribute."
+
 #: src/components/v2/V2Project/DistributionLimit.tsx
 msgid "No funds can be distributed out of the treasury. Funds can only be accessed by token holders redeeming their tokens."
 msgstr "No funds can be distributed out of the treasury. Funds can only be accessed by token holders redeeming their tokens."
@@ -1965,6 +1969,10 @@ msgstr ""
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleHistory.tsx
 msgid "No past funding cycles"
 msgstr ""
+
+#: src/components/v2/V2Project/V2FundingCycleSection/ReservedTokensSplitsCard.tsx
+msgid "No reserved tokens available to distribute."
+msgstr "No reserved tokens available to distribute."
 
 #: src/constants/v1/ballotStrategies/index.ts
 #: src/constants/v2/ballotStrategies/index.ts

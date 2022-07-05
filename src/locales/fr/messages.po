@@ -2726,6 +2726,10 @@ msgstr "Rechercher un projet par son identifiant"
 msgid "Seconds"
 msgstr "Secondes"
 
+#: src/pages/home/TrendingSection.tsx
+msgid "See More"
+msgstr ""
+
 #: src/components/EtherscanLink.tsx
 msgid "See transaction"
 msgstr "Voir la transaction"

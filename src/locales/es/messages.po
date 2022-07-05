@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-07-04 03:10\n"
+"PO-Revision-Date: 2022-07-05 03:07\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -688,7 +688,7 @@ msgstr ""
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
 msgid "Changes to payouts will take effect immediately."
-msgstr ""
+msgstr "Los cambios a los pagos surtirán efecto de inmediato."
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Changes to project details will take effect immediately."
@@ -2856,7 +2856,7 @@ msgstr ""
 
 #: src/pages/create/forms/TokenForm/index.tsx
 msgid "The <0>issuance rate</0> of your second funding cycle will be <1>{0} tokens per 1 ETH</1>, then <2>{1} tokens per 1 ETH </2>for your third funding cycle, and so on."
-msgstr ""
+msgstr "La <0>tasa de emisión</0> de tu segundo ciclo de financiamiento será <1>{0} tokens por 1 ETH</1>, entonces <2>{1} tokens por 1 ETH </2>para tu tercer ciclo de financiamiento y así sucesivamente."
 
 #: src/pages/index.tsx
 msgid "The Decentralized Funding Platform. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."

@@ -51,6 +51,10 @@ msgstr ""
 msgid "100% overflow"
 msgstr "100% overflow"
 
+#: src/components/forms/ProjectDetailsForm.tsx
+msgid "2 Items"
+msgstr ""
+
 #: src/pages/create/index.tsx
 msgid "2. Funding cycle"
 msgstr "2. Ciclo de financiamento"
@@ -66,6 +70,10 @@ msgstr ""
 #: src/components/VolumeChart/index.tsx
 msgid "24 hours"
 msgstr "24 horas"
+
+#: src/components/forms/ProjectDetailsForm.tsx
+msgid "3 Items"
+msgstr ""
 
 #: src/constants/v1/ballotStrategies/index.ts
 #: src/constants/v2/ballotStrategies/index.ts
@@ -1767,10 +1775,6 @@ msgstr "Tema claro"
 msgid "Link Juicebox V1 project"
 msgstr ""
 
-#: src/components/forms/ProjectDetailsForm.tsx
-msgid "Links"
-msgstr "Links"
-
 #: src/components/modals/ParticipantsModal.tsx
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 #: src/components/v2/V2Project/ProjectActivity/index.tsx
@@ -2257,6 +2261,14 @@ msgstr "A ID do projeto precisa ser um número."
 msgid "Project ID:"
 msgstr "ID do projeto:"
 
+#: src/components/forms/ProjectDetailsForm.tsx
+msgid "Project Links"
+msgstr ""
+
+#: src/components/forms/ProjectDetailsForm.tsx
+msgid "Project Page Customizations"
+msgstr ""
+
 #: src/components/modals/IssueTokenModal.tsx
 msgid "Project Token"
 msgstr "Token do Projeto"
@@ -2338,10 +2350,6 @@ msgstr "Proprietário do projeto (você)"
 #: src/pages/home/QAs.tsx
 msgid "Project owners can configure a delay period, meaning reconfigurations to an upcoming funding cycle must be submitted a certain number of days before it starts. For example, a 3-day delay period means reconfigurations must be submitted at least 3 days before the next funding cycle starts. This gives token holders time to react to the decision and reduces the chance of rug-pulls."
 msgstr "Donos de projeto podem configurar um período de demora, que significa que reconfigurações para um ciclo de financiamento futuro precisam ser submetidas um certo número de dias antes de seu início. Por exemplo, um período de demora de 3 dias significa que reconfigurações precisam ser submetidas pelo menos 3 dias antes do próximo ciclo de financiamento comece. Isso dá tempo para que os donos de tokens reajam às decisões e reduz o risco de ‘puxadas de tapete’."
-
-#: src/components/forms/ProjectDetailsForm.tsx
-msgid "Project page customizations"
-msgstr "Personalização da página do projeto"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/TokenDrawer.tsx

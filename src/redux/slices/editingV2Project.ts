@@ -215,6 +215,9 @@ const editingV2ProjectSlice = createSlice({
     setNftRewardsCid: (state, action: PayloadAction<string>) => {
       state.nftRewardsCid = action.payload
     },
+    setAllowSetTerminals: (state, action: PayloadAction<boolean>) => {
+      state.fundingCycleMetadata.global.allowSetTerminals = action.payload
+    },
   },
 })
 

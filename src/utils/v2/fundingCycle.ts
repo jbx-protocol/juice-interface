@@ -82,8 +82,10 @@ const parameters: {
     bits: 16,
     parser: val => {
       return {
-        allowSetTerminals: bigNumberToBoolean(BigNumber.from(val).shr(1)),
-        allowSetController: bigNumberToBoolean(BigNumber.from(val).shr(2)),
+        allowSetTerminals: bigNumberToBoolean(BigNumber.from(val).and(1)),
+        allowSetController: bigNumberToBoolean(
+          BigNumber.from(val).shr(1).and(1),
+        ),
       }
     },
   },

@@ -19,8 +19,6 @@ import { decodeV2FundingCycleMetadata } from '../fundingCycle'
  * @note Passing in an empty obj will use default values below
  */
 function packFundingCycleMetadata(packedMetadata: V2FundingCycleMetadata) {
-  const one = BigNumber.from(1)
-
   const {
     version,
     global,
@@ -42,9 +40,11 @@ function packFundingCycleMetadata(packedMetadata: V2FundingCycleMetadata) {
     dataSource, // address
   } = packedMetadata
 
+  const one = BigNumber.from(1)
+
   let packed = BigNumber.from(version)
   if (global.allowSetTerminals) packed = packed.or(one.shl(8))
-  if (global.allowSetController) packed = packed.or(one.shl(16))
+  if (global.allowSetController) packed = packed.or(one.shl(9))
   packed = packed.or(reservedRate.shl(24))
   packed = packed.or(invertPermyriad(redemptionRate).shl(40))
   packed = packed.or(invertPermyriad(ballotRedemptionRate).shl(56))

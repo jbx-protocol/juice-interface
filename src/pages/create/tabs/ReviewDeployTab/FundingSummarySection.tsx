@@ -42,6 +42,7 @@ import {
   DistributionSplitsStatistic,
   ReservedSplitsStatistic,
   InflationRateStatistic,
+  AllowSetTerminalsStatistic,
 } from './FundingAttributes'
 
 export default function FundingSummarySection() {
@@ -188,6 +189,11 @@ export default function FundingSummarySection() {
           <Col md={8} xs={24}>
             <AllowMintingStatistic
               allowMinting={fundingCycleMetadata?.allowMinting}
+            />
+          </Col>
+          <Col md={8} xs={24}>
+            <AllowSetTerminalsStatistic
+              allowSetTerminals={fundingCycleMetadata.global.allowSetTerminals}
             />
           </Col>
           <Col md={8} xs={24}>

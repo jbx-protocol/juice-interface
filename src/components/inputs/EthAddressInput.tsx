@@ -46,7 +46,7 @@ export function EthAddressInput({
       setENSName(ensNameForAddress)
       setAddressForENSName(address)
       setInput(ensNameForAddress)
-      triggerChange()
+      triggerChange(address)
     }
   }
 

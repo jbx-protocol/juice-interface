@@ -1890,6 +1890,10 @@ msgstr "Чеканить {tokensTokenLower}"
 msgid "Minutes"
 msgstr ""
 
+#: src/pages/home/TrendingSection.tsx
+msgid "More trending projects"
+msgstr ""
+
 #: src/components/ManageTokensModal.tsx
 msgid "Move your {tokensLabel} from the Juicebox contract to your wallet."
 msgstr "Переместите {tokensLabel} из контракта Juicebox в свой кошелек."

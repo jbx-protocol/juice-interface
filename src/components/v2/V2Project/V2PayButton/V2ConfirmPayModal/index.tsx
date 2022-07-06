@@ -1,10 +1,8 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { isAddress } from '@ethersproject/address'
 import { t, Trans } from '@lingui/macro'
-import { Checkbox, Descriptions, Form, Space, Switch } from 'antd'
+import { Descriptions, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import FormattedAddress from 'components/FormattedAddress'
-import ImageUploader from 'components/inputs/ImageUploader'
 import { NetworkContext } from 'contexts/networkContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
@@ -20,8 +18,6 @@ import {
 } from 'utils/v2/currency'
 import { usePayV2ProjectTx } from 'hooks/v2/transactor/PayV2ProjectTx'
 
-import * as constants from '@ethersproject/constants'
-
 import {
   getUnsafeV2FundingCycleProperties,
   V2FundingCycleRiskCount,
@@ -33,8 +29,8 @@ import { weightedAmount } from 'utils/v2/math'
 
 import TransactionModal from 'components/TransactionModal'
 import ProjectRiskNotice from 'components/ProjectRiskNotice'
-import MemoFormItem from 'components/inputs/Pay/MemoFormItem'
-import { EthAddressInput } from 'components/inputs/EthAddressInput'
+
+import { V2PayForm, V2PayFormType } from '../V2PayForm'
 
 export default function V2ConfirmPayModal({
   visible,
@@ -53,20 +49,15 @@ export default function V2ConfirmPayModal({
     fundingCycleMetadata,
     projectMetadata,
     projectId,
-    tokenAddress,
     tokenSymbol,
   } = useContext(V2ProjectContext)
   const converter = useCurrencyConverter()
   const payProjectTx = usePayV2ProjectTx()
 
   const [loading, setLoading] = useState<boolean>()
-  const [preferClaimed, setPreferClaimed] = useState<boolean>(false)
-  const [customBeneficiaryEnabled, setCustomBeneficiaryEnabled] =
-    useState<boolean>(false)
-  const [memo, setMemo] = useState<string>('')
   const [transactionPending, setTransactionPending] = useState<boolean>()
 
-  const [form] = useForm<{ beneficiary: string }>()
+  const [form] = useForm<V2PayFormType>()
 
   const usdAmount = converter.weiToUsd(weiAmount)
 
@@ -91,13 +82,17 @@ export default function V2ConfirmPayModal({
     ? V2FundingCycleRiskCount(fundingCycle)
     : undefined
 
-  const hasIssuedTokens = tokenAddress && tokenAddress !== constants.AddressZero
-
   async function pay() {
     if (!weiAmount) return
     await form.validateFields()
 
-    const beneficiary = form.getFieldValue('beneficiary')
+    const {
+      beneficiary,
+      memo: textMemo,
+      preferClaimed,
+      stickerUrls,
+      uploadedImage,
+    } = form.getFieldsValue()
     const txBeneficiary = beneficiary ? beneficiary : userAddress
 
     // Prompt wallet connect if no wallet connected
@@ -106,10 +101,21 @@ export default function V2ConfirmPayModal({
     }
     setLoading(true)
 
+    const imageUrls: string[] = []
+    if (uploadedImage) {
+      imageUrls.push(uploadedImage)
+    }
+    if (stickerUrls) {
+      imageUrls.push(...stickerUrls)
+    }
+    const csv = imageUrls.join(',')
+
+    const memo = (textMemo ?? '') + '\n' + csv
+
     const txSuccess = await payProjectTx(
       {
-        memo,
-        preferClaimedTokens: preferClaimed,
+        memo: memo,
+        preferClaimedTokens: !!preferClaimed,
         beneficiary: txBeneficiary,
         value: weiAmount,
       },
@@ -130,16 +136,6 @@ export default function V2ConfirmPayModal({
       setLoading(false)
       setTransactionPending(false)
     }
-  }
-
-  const validateCustomBeneficiary = () => {
-    const beneficiary = form.getFieldValue('beneficiary')
-    if (!beneficiary) {
-      return Promise.reject(t`Address required`)
-    } else if (!isAddress(beneficiary)) {
-      return Promise.reject(t`Invalid address`)
-    }
-    return Promise.resolve()
   }
 
   return (
@@ -212,67 +208,7 @@ export default function V2ConfirmPayModal({
             {formatWad(ownerTickets, { precision: 0 })}
           </Descriptions.Item>
         </Descriptions>
-        <Form form={form} layout="vertical">
-          <MemoFormItem value={memo} onChange={setMemo} />
-          <Form.Item>
-            <ImageUploader
-              text={t`Add image`}
-              onSuccess={url => {
-                if (!url) return
-                setMemo(memo.length ? memo + ' ' + url : url)
-              }}
-            />
-          </Form.Item>
-          <Form.Item
-            label={
-              <>
-                <Trans>Custom token beneficiary</Trans>
-                <Switch
-                  checked={customBeneficiaryEnabled}
-                  onChange={setCustomBeneficiaryEnabled}
-                  style={{ marginLeft: 10 }}
-                />
-              </>
-            }
-            extra={<Trans>Mint tokens to a custom address.</Trans>}
-            style={{ marginBottom: '1rem' }}
-          />
-
-          {customBeneficiaryEnabled && (
-            <Form.Item
-              name="beneficiary"
-              rules={[
-                {
-                  validator: validateCustomBeneficiary,
-                  validateTrigger: 'onCreate',
-                  required: true,
-                },
-              ]}
-            >
-              <EthAddressInput />
-            </Form.Item>
-          )}
-
-          {hasIssuedTokens && (
-            <Form.Item label={t`Receive ERC-20`}>
-              <Space align="start">
-                <Checkbox
-                  style={{ padding: 20 }}
-                  checked={preferClaimed}
-                  onChange={e => setPreferClaimed(e.target.checked)}
-                />
-                <label htmlFor="preferClaimed">
-                  <Trans>
-                    Check this to mint this project's ERC-20 tokens to your
-                    wallet. Leave unchecked to have your token balance tracked
-                    by Juicebox, saving gas on this transaction. You can always
-                    claim your ERC-20 tokens later.
-                  </Trans>
-                </label>
-              </Space>
-            </Form.Item>
-          )}
-        </Form>
+        <V2PayForm form={form} />
       </Space>
     </TransactionModal>
   )

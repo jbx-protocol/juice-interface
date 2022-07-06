@@ -73,13 +73,8 @@ export default function TrendingSection() {
               padding: '1rem 0 2rem 0',
             }}
           >
-            <Button
-              size="large"
-              type="primary"
-              href="/#/projects"
-              block={isMobile}
-            >
-              <Trans>See More</Trans>
+            <Button size="large" href="/#/projects" block={isMobile}>
+              <Trans>More trending projects</Trans>
             </Button>
           </Row>
         </Col>

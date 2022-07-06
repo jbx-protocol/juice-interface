@@ -1890,6 +1890,10 @@ msgstr "Criar {tokensTokenLower}"
 msgid "Minutes"
 msgstr "Minutos"
 
+#: src/pages/home/TrendingSection.tsx
+msgid "More trending projects"
+msgstr ""
+
 #: src/components/ManageTokensModal.tsx
 msgid "Move your {tokensLabel} from the Juicebox contract to your wallet."
 msgstr "Mova seus {tokensLabel} do contrato do Juicebox para sua carteira."
@@ -2725,10 +2729,6 @@ msgstr "Procurar projetos pelo identificador"
 #: src/constants/time.ts
 msgid "Seconds"
 msgstr "Segundos"
-
-#: src/pages/home/TrendingSection.tsx
-msgid "See More"
-msgstr ""
 
 #: src/components/EtherscanLink.tsx
 msgid "See transaction"

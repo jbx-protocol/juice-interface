@@ -1885,6 +1885,10 @@ msgstr "Mint {tokensTokenLower}"
 msgid "Minutes"
 msgstr "Minutes"
 
+#: src/pages/home/TrendingSection.tsx
+msgid "More trending projects"
+msgstr "More trending projects"
+
 #: src/components/ManageTokensModal.tsx
 msgid "Move your {tokensLabel} from the Juicebox contract to your wallet."
 msgstr "Move your {tokensLabel} from the Juicebox contract to your wallet."
@@ -2720,10 +2724,6 @@ msgstr ""
 #: src/constants/time.ts
 msgid "Seconds"
 msgstr "Seconds"
-
-#: src/pages/home/TrendingSection.tsx
-msgid "See More"
-msgstr "See More"
 
 #: src/components/EtherscanLink.tsx
 msgid "See transaction"

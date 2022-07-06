@@ -97,7 +97,7 @@ export const V2PayForm = ({ form }: { form: FormInstance<V2PayFormType> }) => {
           />
           {customBeneficiaryEnabled && (
             <Form.Item
-              noStyle
+              style={{ marginTop: '1rem', marginBottom: 0 }}
               name="beneficiary"
               rules={[
                 {

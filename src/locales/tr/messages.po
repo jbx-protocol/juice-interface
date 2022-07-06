@@ -51,10 +51,6 @@ msgstr ""
 msgid "100% overflow"
 msgstr "%100 taşma"
 
-#: src/components/forms/ProjectDetailsForm.tsx
-msgid "2 Items"
-msgstr ""
-
 #: src/pages/create/index.tsx
 msgid "2. Funding cycle"
 msgstr "2. Finansman döngüsü"
@@ -70,10 +66,6 @@ msgstr ""
 #: src/components/VolumeChart/index.tsx
 msgid "24 hours"
 msgstr "24 saat"
-
-#: src/components/forms/ProjectDetailsForm.tsx
-msgid "3 Items"
-msgstr ""
 
 #: src/constants/v1/ballotStrategies/index.ts
 #: src/constants/v2/ballotStrategies/index.ts

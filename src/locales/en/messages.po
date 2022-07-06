@@ -46,10 +46,6 @@ msgstr "1. Set ENS name"
 msgid "100% overflow"
 msgstr ""
 
-#: src/components/forms/ProjectDetailsForm.tsx
-msgid "2 Items"
-msgstr "2 Items"
-
 #: src/pages/create/index.tsx
 msgid "2. Funding cycle"
 msgstr "2. Funding cycle"
@@ -65,10 +61,6 @@ msgstr "2. Set text record"
 #: src/components/VolumeChart/index.tsx
 msgid "24 hours"
 msgstr "24 hours"
-
-#: src/components/forms/ProjectDetailsForm.tsx
-msgid "3 Items"
-msgstr "3 Items"
 
 #: src/constants/v1/ballotStrategies/index.ts
 #: src/constants/v2/ballotStrategies/index.ts

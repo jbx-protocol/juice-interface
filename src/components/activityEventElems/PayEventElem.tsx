@@ -132,6 +132,7 @@ export default function PayEventElem({
                 ? formatPayEventOverride(event)
                 : event.note) ?? ''
             }
+            style={{ color: colors.text.secondary }}
           />
         </div>
       )}

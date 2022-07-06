@@ -25,6 +25,7 @@ import { usePayV1ProjectTx } from 'hooks/v1/transactor/PayV1ProjectTx'
 import Paragraph from 'components/Paragraph'
 import ProjectRiskNotice from 'components/ProjectRiskNotice'
 import MemoFormItem from 'components/inputs/Pay/MemoFormItem'
+import Callout from 'components/Callout'
 
 import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
 
@@ -113,9 +114,14 @@ export default function V1ConfirmPayOwnerModal({
   const renderRiskNotice = () => {
     if (currentFC && riskCount && riskCount > 0) {
       return (
-        <ProjectRiskNotice
-          unsafeProperties={getUnsafeV1FundingCycleProperties(currentFC)}
-        />
+        <Callout>
+          <strong>
+            <Trans>Potential risks</Trans>
+          </strong>
+          <ProjectRiskNotice
+            unsafeProperties={getUnsafeV1FundingCycleProperties(currentFC)}
+          />
+        </Callout>
       )
     }
   }

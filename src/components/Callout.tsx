@@ -26,7 +26,7 @@ export default function Callout({
         ...style,
       }}
     >
-      <span style={{ marginRight: '1rem', lineHeight: 1.8 }}>
+      <span style={{ marginRight: '1rem', lineHeight: 1.6 }}>
         {iconComponent ?? <InfoCircleOutlined />}
       </span>
       <div style={{ width: '100%' }}>{children}</div>

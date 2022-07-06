@@ -1,7 +1,3 @@
-import { useContext } from 'react'
-import { ExclamationCircleOutlined } from '@ant-design/icons'
-
-import { ThemeContext } from 'contexts/themeContext'
 import { Trans } from '@lingui/macro'
 
 import {
@@ -14,10 +10,6 @@ export default function ProjectRiskNotice({
 }: {
   unsafeProperties: FundingCycleRiskFlags
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const unsafePropertyKeys = Object.keys(
     unsafeProperties,
   ) as (keyof FundingCycleRiskFlags)[]
@@ -27,13 +19,10 @@ export default function ProjectRiskNotice({
     .map(k => FUNDING_CYCLE_WARNING_TEXT()[k])
 
   return (
-    <div style={{ backgroundColor: colors.background.l1, padding: '1rem' }}>
-      <h4 style={{ color: colors.text.primary, fontWeight: 600 }}>
-        <ExclamationCircleOutlined /> <Trans>Potential risks</Trans>
-      </h4>
-      <p style={{ color: colors.text.secondary }}>
+    <div>
+      <p>
         <Trans>
-          Some properties of the project's current funding cycle may indicate
+          Some of the project's current funding cycle properties may indicate
           risk for contributors.
         </Trans>
       </p>

@@ -117,7 +117,15 @@ export default function ProjectActivity() {
       'id',
       {
         entity: 'payEvent',
-        keys: ['amount', 'timestamp', 'beneficiary', 'note', 'id', 'txHash'],
+        keys: [
+          'amount',
+          'timestamp',
+          'beneficiary',
+          'note',
+          'id',
+          'txHash',
+          'feeFromV2Project',
+        ],
       },
       {
         entity: 'deployedERC20Event',

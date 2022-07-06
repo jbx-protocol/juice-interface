@@ -8,7 +8,7 @@ msgstr ""
 "Language: id\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-07-05 03:07\n"
+"PO-Revision-Date: 2022-07-06 03:13\n"
 "Last-Translator: \n"
 "Language-Team: Indonesian\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -456,6 +456,11 @@ msgstr ""
 
 #: src/pages/create/forms/RulesForm/index.tsx
 #: src/pages/create/tabs/ReviewDeployTab/FundingAttributes.tsx
+msgid "Allow terminal configuration"
+msgstr ""
+
+#: src/pages/create/forms/RulesForm/index.tsx
+#: src/pages/create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Allow token minting"
 msgstr ""
 
@@ -465,6 +470,8 @@ msgstr ""
 
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+#: src/pages/create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/pages/create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 msgid "Allowed"
@@ -1058,6 +1065,8 @@ msgstr ""
 
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+#: src/pages/create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/pages/create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 msgid "Disabled"
@@ -2030,7 +2039,15 @@ msgid "Owner can mint tokens at any time."
 msgstr ""
 
 #: src/pages/create/tabs/ReviewDeployTab/FundingAttributes.tsx
+msgid "Owner can set the project's payment terminals."
+msgstr ""
+
+#: src/pages/create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Owner is not allowed to mint tokens."
+msgstr ""
+
+#: src/pages/create/tabs/ReviewDeployTab/FundingAttributes.tsx
+msgid "Owner isn't allowed to set the project's payment terminals."
 msgstr ""
 
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
@@ -2850,6 +2867,10 @@ msgstr ""
 msgid "Target is 0: All funds will be considered overflow and can be redeemed by burning project tokens."
 msgstr ""
 
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+msgid "Terminal configuration"
+msgstr ""
+
 #: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
 msgid "Text record is set"
 msgstr ""
@@ -2947,6 +2968,10 @@ msgstr ""
 
 #: src/components/modals/ReservedTokenReceiverModal.tsx
 msgid "The percentage this individual receives of the overall {reservedRate}% reserved token allocation"
+msgstr ""
+
+#: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+msgid "The project owner can add and remove payment terminals."
 msgstr ""
 
 #: src/constants/fundingWarningText.ts
@@ -3410,6 +3435,10 @@ msgstr ""
 
 #: src/pages/create/forms/RulesForm/TokenMintingExtra.tsx
 msgid "When enabled, the project owner can manually mint any amount of tokens to any address."
+msgstr ""
+
+#: src/pages/create/forms/RulesForm/index.tsx
+msgid "When enabled, the project owner can set the project's payment terminals."
 msgstr ""
 
 #: src/pages/create/forms/RulesForm/index.tsx

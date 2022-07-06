@@ -295,6 +295,25 @@ export default function FundingCycleDetails({
             )}
           </FundingCycleDetailWarning>
         </Descriptions.Item>
+        <Descriptions.Item
+          span={2}
+          label={
+            <TooltipLabel
+              label={<Trans>Terminal configuration</Trans>}
+              tip={
+                <Trans>
+                  The project owner can add and remove payment terminals.
+                </Trans>
+              }
+            />
+          }
+        >
+          {fundingCycleMetadata?.global.allowSetTerminals ? (
+            <Trans>Allowed</Trans>
+          ) : (
+            <Trans>Disabled</Trans>
+          )}
+        </Descriptions.Item>
       </Descriptions>
 
       <div>

@@ -67,7 +67,7 @@ const FormattedPercentageAmount = ({
             amountSubFee(parseWad(target), feePerbicent)
               ?.mul(percent)
               .div(10000),
-            { precision: 4, padEnd: true },
+            { precision: currencyName === 'USD' ? 2 : 4, padEnd: true },
           )}
         </span>
       )}

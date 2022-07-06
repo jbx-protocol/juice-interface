@@ -281,6 +281,28 @@ export function AllowMintingStatistic({
   )
 }
 
+export function AllowSetTerminalsStatistic({
+  allowSetTerminals,
+}: {
+  allowSetTerminals: boolean
+}) {
+  return (
+    <Statistic
+      title={
+        <TooltipLabel
+          label={t`Allow terminal configuration`}
+          tip={
+            allowSetTerminals
+              ? t`Owner can set the project's payment terminals.`
+              : t`Owner isn't allowed to set the project's payment terminals.`
+          }
+        />
+      }
+      valueRender={() => (allowSetTerminals ? t`Allowed` : t`Disabled`)}
+    />
+  )
+}
+
 export function ReconfigurationStatistic({
   ballotAddress,
 }: {

@@ -2431,8 +2431,11 @@ msgstr "Receba {receiveText}"
 msgid "Recipient"
 msgstr "Recipiente"
 
-#: src/components/Project/ProjectToolsDrawer/TransferOwnershipForm.tsx
 #: src/components/Project/ProjectToolsDrawer/TransferUnclaimedTokensForm.tsx
+msgid "Recipient Address"
+msgstr ""
+
+#: src/components/Project/ProjectToolsDrawer/TransferOwnershipForm.tsx
 msgid "Recipient address"
 msgstr "Endereço do recipiente"
 

@@ -283,6 +283,14 @@ textarea.ant-input::placeholder {
   color: var(--icon-action-primary) !important;
 }
 
+.ant-input-clear-icon {
+  color: var(--icon-secondary);
+
+  &:hover {
+    color: var(--icon-primary);
+  }
+}
+
 .anticon.ant-input-clear-icon {
   color: var(--icon-secondary);
 

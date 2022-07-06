@@ -12,6 +12,7 @@ import {
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import NumberSlider from 'components/inputs/NumberSlider'
+import { EthAddressInput } from 'components/inputs/EthAddressInput'
 
 import { ThemeContext } from 'contexts/themeContext'
 import { isAddress } from 'ethers/lib/utils'
@@ -35,6 +36,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { useForm } from 'antd/lib/form/Form'
 
 import { CurrencyName } from 'constants/currency'
+
 import { EditingPayoutMod } from './types'
 
 type ModType = 'project' | 'address'
@@ -224,21 +226,19 @@ export const ProjectPayoutModsModal = ({
         </Form.Item>
 
         {editingModType === 'address' ? (
-          <FormItems.EthAddress
+          <Form.Item
             name="beneficiary"
-            defaultValue={form.getFieldValue('beneficiary')}
-            formItemProps={{
-              label: 'Address',
-              rules: [
-                {
-                  validator: validatePayoutAddress,
-                },
-              ],
-            }}
-            onAddressChange={beneficiary =>
-              form.setFieldsValue({ beneficiary })
-            }
-          />
+            label="Address"
+            rules={[
+              {
+                validator: validatePayoutAddress,
+                validateTrigger: 'onCreate',
+                required: true,
+              },
+            ]}
+          >
+            <EthAddressInput />
+          </Form.Item>
         ) : (
           <FormItems.ProjectHandleFormItem
             name="handle"
@@ -253,29 +253,25 @@ export const ProjectPayoutModsModal = ({
           />
         )}
         {editingModType === 'project' ? (
-          <FormItems.EthAddress
+          <Form.Item
             name="beneficiary"
-            defaultValue={form.getFieldValue('beneficiary')}
-            formItemProps={{
-              label: t`Address`,
-              extra: t`The address that should receive the tokens minted from paying this project.`,
-              rules: [
-                {
-                  validator: () => {
-                    const address = form.getFieldValue('beneficiary')
-                    if (!address || !isAddress(address))
-                      return Promise.reject('Address is required')
-                    else if (address === constants.AddressZero)
-                      return Promise.reject('Cannot use zero address.')
-                    else return Promise.resolve()
-                  },
+            label={t`Address`}
+            extra={t`The address that should receive the tokens minted from paying this project.`}
+            rules={[
+              {
+                validator: (_, value) => {
+                  const address = value
+                  if (!address || !isAddress(address))
+                    return Promise.reject('Address is required')
+                  else if (address === constants.AddressZero)
+                    return Promise.reject('Cannot use zero address.')
+                  else return Promise.resolve()
                 },
-              ],
-            }}
-            onAddressChange={beneficiary =>
-              form.setFieldsValue({ beneficiary })
-            }
-          />
+              },
+            ]}
+          >
+            <EthAddressInput />
+          </Form.Item>
         ) : null}
 
         {/* Only show amount input if project has a funding target */}

@@ -2,10 +2,10 @@ import Modal from 'antd/lib/modal/Modal'
 import { t } from '@lingui/macro'
 import { FormInstance, Form, DatePicker } from 'antd'
 
-import { FormItems } from 'components/formItems'
-
 import NumberSlider from 'components/inputs/NumberSlider'
 import { useState } from 'react'
+
+import { EthAddressInput } from '../inputs/EthAddressInput'
 
 type ModalMode = 'Add' | 'Edit' | undefined
 
@@ -79,21 +79,20 @@ export default function ReservedTokenReceiverModal({
           if (e.key === 'Enter') onOk()
         }}
       >
-        <FormItems.EthAddress
+        <Form.Item
           name="beneficiary"
-          defaultValue={form.getFieldValue('beneficiary')}
-          formItemProps={{
-            label: t`Beneficiary address`,
-            extra: t`This address will receive the tokens minted from paying this project.`,
-            rules: [
-              {
-                validator: validateReservedTokenReceiver,
-              },
-            ],
-            required: true,
-          }}
-          onAddressChange={beneficiary => form.setFieldsValue({ beneficiary })}
-        />
+          label={t`Beneficiary address`}
+          extra={t`This address will receive the tokens minted from paying this project.`}
+          rules={[
+            {
+              validator: validateReservedTokenReceiver,
+              validateTrigger: 'onCreate',
+              required: true,
+            },
+          ]}
+        >
+          <EthAddressInput />
+        </Form.Item>
 
         <Form.Item label={t`Percentage allocation`} required={true}>
           <NumberSlider

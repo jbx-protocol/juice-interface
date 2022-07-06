@@ -1890,6 +1890,10 @@ msgstr "铸造 {tokensTokenLower}"
 msgid "Minutes"
 msgstr "分钟"
 
+#: src/pages/home/TrendingSection.tsx
+msgid "More trending projects"
+msgstr ""
+
 #: src/components/ManageTokensModal.tsx
 msgid "Move your {tokensLabel} from the Juicebox contract to your wallet."
 msgstr "将你的 {tokensLabel} 从 Juicebox 合约中取到你的钱包里。"

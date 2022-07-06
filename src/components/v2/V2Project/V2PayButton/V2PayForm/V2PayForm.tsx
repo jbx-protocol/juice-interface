@@ -2,7 +2,7 @@ import { SmileOutlined } from '@ant-design/icons'
 import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
 import { Checkbox, Form, Input, Space, Switch, Tooltip } from 'antd'
-import { FormInstance } from 'antd/lib/form/Form'
+import { FormInstance, useWatch } from 'antd/lib/form/Form'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
 import { AttachStickerModal } from 'components/modals/AttachStickerModal'
@@ -11,6 +11,7 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { isAddress } from 'ethers/lib/utils'
 import { useContext, useState } from 'react'
 
+import { ProjectPreferences } from 'constants/v2/projectPreferences'
 import { StickerSelection } from './StickerSelection'
 
 export interface V2PayFormType {
@@ -36,6 +37,11 @@ export const V2PayForm = ({ form }: { form: FormInstance<V2PayFormType> }) => {
 
   const hasIssuedTokens = tokenAddress !== constants.AddressZero
 
+  const stickerUrls = useWatch('stickerUrls', form)
+
+  const canAddMoreStickers =
+    (stickerUrls ?? []).length < ProjectPreferences.STICKER_MAX
+
   return (
     <>
       <Form form={form} layout="vertical">
@@ -60,14 +66,18 @@ export const V2PayForm = ({ form }: { form: FormInstance<V2PayFormType> }) => {
               top: 7,
             }}
           >
-            <Tooltip title={t`Attach a sticker`}>
-              <SmileOutlined
-                style={{ color: colors.text.secondary }}
-                onClick={() => {
-                  setAttachStickerModalVisible(true)
-                }}
-              />
-            </Tooltip>
+            {canAddMoreStickers ? (
+              <Tooltip title={t`Attach a sticker`}>
+                <SmileOutlined
+                  style={{ color: colors.text.secondary }}
+                  onClick={() => {
+                    setAttachStickerModalVisible(true)
+                  }}
+                />
+              </Tooltip>
+            ) : (
+              <SmileOutlined style={{ color: colors.text.disabled }} />
+            )}
           </div>
           <Form.Item name="stickerUrls">
             <StickerSelection />

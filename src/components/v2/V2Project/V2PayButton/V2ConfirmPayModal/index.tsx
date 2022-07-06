@@ -102,15 +102,20 @@ export default function V2ConfirmPayModal({
     setLoading(true)
 
     const imageUrls: string[] = []
+    let memoMetadata: Record<string, unknown> = { version: 1 }
     if (uploadedImage) {
+      memoMetadata = { ...memoMetadata, userUploadedImages: [uploadedImage] }
       imageUrls.push(uploadedImage)
     }
     if (stickerUrls) {
-      imageUrls.push(...stickerUrls)
+      memoMetadata = { ...memoMetadata, stickerUrls }
     }
-    const csv = imageUrls.join(',')
 
-    const memo = (textMemo ?? '') + '\n' + csv
+    const memo =
+      (textMemo ?? '') +
+      (Object.keys(memoMetadata).length
+        ? '\n' + JSON.stringify(memoMetadata)
+        : '')
 
     const txSuccess = await payProjectTx(
       {

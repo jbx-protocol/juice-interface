@@ -79,12 +79,14 @@ export default function ProjectDetailsForm({
             }}
           />
         </div>
-
         <div>
-          <h3>
-            <Trans>Project Links</Trans>
-          </h3>
-          <MinimalCollapse header={t`3 Items`}>
+          <MinimalCollapse
+            header={
+              <h3 style={{ marginBottom: 0 }}>
+                <Trans>Project Links</Trans>
+              </h3>
+            }
+          >
             <FormItems.ProjectLink name="infoUri" />
             <FormItems.ProjectTwitter name="twitter" />
             <FormItems.ProjectDiscord name="discord" />
@@ -92,11 +94,13 @@ export default function ProjectDetailsForm({
         </div>
 
         <div>
-          <h3>
-            <Trans>Project Page Customizations</Trans>
-          </h3>
-
-          <MinimalCollapse header={t`2 Items`}>
+          <MinimalCollapse
+            header={
+              <h3 style={{ marginBottom: 0 }}>
+                <Trans>Project Page Customizations</Trans>
+              </h3>
+            }
+          >
             <FormItems.ProjectPayButton name="payButton" />
             <FormItems.ProjectPayDisclosure name="payDisclosure" />
           </MinimalCollapse>

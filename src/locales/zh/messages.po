@@ -1397,6 +1397,10 @@ msgstr "常见问题解答"
 msgid "Failed to update project metadata"
 msgstr "更新项目元数据失败"
 
+#: src/components/activityEventElems/PayEventElem.tsx
+msgid "Fee from <0><1/></0>"
+msgstr ""
+
 #: src/components/inputs/ImageUploader.tsx
 msgid "File must be less than {formattedSize}{unit}"
 msgstr "文件大小必须小于 {formattedSize}{unit}"

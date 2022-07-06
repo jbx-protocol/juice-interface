@@ -1,16 +1,15 @@
-import RichNote from 'components/RichNote'
+import ETHAmount from 'components/currency/ETHAmount'
 import FormattedAddress from 'components/FormattedAddress'
 import Loading from 'components/Loading'
+import ProjectVersionBadge from 'components/ProjectVersionBadge'
+import RichNote from 'components/RichNote'
 import V1ProjectHandle from 'components/v1/shared/V1ProjectHandle'
-
+import V2ProjectHandle from 'components/v2/shared/V2ProjectHandle'
 import { ThemeContext } from 'contexts/themeContext'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
+import { Project } from 'models/subgraph-entities/vX/project'
 import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
-
-import ETHAmount from 'components/currency/ETHAmount'
-import { Project } from 'models/subgraph-entities/vX/project'
-import V2ProjectHandle from 'components/v2/shared/V2ProjectHandle'
 
 export default function Payments() {
   const {
@@ -38,10 +37,10 @@ export default function Payments() {
     return (
       <div style={{ color: colors.text.action.primary, fontWeight: 500 }}>
         {project.cv === '2' ? (
-          <V2ProjectHandle
-            projectId={project.projectId}
-            handle={project.handle}
-          />
+          <div style={{ display: 'flex', alignItems: 'baseline' }}>
+            <V2ProjectHandle projectId={project.projectId} />
+            <ProjectVersionBadge versionText="V2" size="small" />
+          </div>
         ) : (
           <V1ProjectHandle projectId={project.projectId} />
         )}

@@ -1397,6 +1397,10 @@ msgstr "FAQs"
 msgid "Failed to update project metadata"
 msgstr "Houve falha na atualização do metadado do projeto"
 
+#: src/components/activityEventElems/PayEventElem.tsx
+msgid "Fee from <0><1/></0>"
+msgstr ""
+
 #: src/components/inputs/ImageUploader.tsx
 msgid "File must be less than {formattedSize}{unit}"
 msgstr "O arquivo deve ter menos que {formattedSize}{unit}"

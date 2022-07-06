@@ -8,7 +8,7 @@ msgstr ""
 "Language: ru\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-07-06 03:13\n"
+"PO-Revision-Date: 2022-07-04 03:10\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -329,6 +329,7 @@ msgid "Add a payout"
 msgstr "Добавить выплату"
 
 #: src/components/inputs/Pay/MemoFormItem.tsx
+#: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "Add an on-chain memo to this payment."
 msgstr ""
 
@@ -341,7 +342,7 @@ msgid "Add handle"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
-#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
+#: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "Add image"
 msgstr "Добавить изображение"
 
@@ -392,10 +393,6 @@ msgstr ""
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Address"
 msgstr "Адрес"
-
-#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
-msgid "Address required"
-msgstr "Требуемый адрес"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
 msgid "Address:"
@@ -551,7 +548,8 @@ msgid "Assets"
 msgstr "Активы"
 
 #: src/components/inputs/Pay/MemoFormItem.tsx
-#: src/components/modals/AttachStickerModal.tsx
+#: src/components/modals/AttachStickerModal/AttachStickerModal.tsx
+#: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "Attach a sticker"
 msgstr ""
 
@@ -674,7 +672,7 @@ msgstr "Могу ли я изменить контракт своего прое
 msgid "Can I delete a project?"
 msgstr "Могу ли я удалить проект?"
 
-#: src/components/modals/AttachStickerModal.tsx
+#: src/components/modals/AttachStickerModal/AttachStickerModal.tsx
 #: src/components/v1/V1Project/modals/V1BalancesModal.tsx
 #: src/components/v2/V2Project/V2BalancesModal/V2BalancesModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/EditTokenAllocationModal.tsx
@@ -721,7 +719,7 @@ msgstr "Изменения вступят в силу в соответстви�
 msgid "Changes you make will take effect according to your <0>{0}</0> reconfiguration rule (the first funding cycle following <1>{1}</1> from now)."
 msgstr ""
 
-#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
+#: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "Check this to mint this project's ERC-20 tokens to your wallet. Leave unchecked to have your token balance tracked by Juicebox, saving gas on this transaction. You can always claim your ERC-20 tokens later."
 msgstr "Установите этот флажок, чтобы зачислить токены ERC-20 этого проекта на свой кошелек. Оставьте флажок не отмеченным, чтобы ваш баланс токенов отслеживался Juicebox, экономя газ на этой транзакции. Вы всегда можете потребовать свои токены ERC-20 позже."
 
@@ -964,7 +962,7 @@ msgid "Custom strategy"
 msgstr "Индивидуальная стратегия"
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
-#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
+#: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "Custom token beneficiary"
 msgstr "Пользовательский бенефициарий токенов"
 
@@ -1401,6 +1399,7 @@ msgstr ""
 msgid "Fee from <0><1/></0>"
 msgstr ""
 
+#: src/components/inputs/FormImageUploader.tsx
 #: src/components/inputs/ImageUploader.tsx
 msgid "File must be less than {formattedSize}{unit}"
 msgstr ""
@@ -1653,10 +1652,6 @@ msgstr "Первоначальная ставка эмиссии"
 msgid "Initial mint rate"
 msgstr ""
 
-#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
-msgid "Invalid address"
-msgstr "Неверный адрес"
-
 #: src/components/IssueTokenButton.tsx
 msgid "Issue ERC-20"
 msgstr "Выпуск ERC-20"
@@ -1834,6 +1829,7 @@ msgid "Memo"
 msgstr ""
 
 #: src/components/inputs/Pay/MemoFormItem.tsx
+#: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "Memo (optional)"
 msgstr ""
 
@@ -1873,7 +1869,7 @@ msgstr ""
 msgid "Mint tokens as ERC-20"
 msgstr ""
 
-#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
+#: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "Mint tokens to a custom address."
 msgstr "Чеканка жетонов на пользовательский адрес."
 
@@ -2431,7 +2427,7 @@ msgid "Read more"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
-#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
+#: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "Receive ERC-20"
 msgstr "Получить ERC-20"
 
@@ -3347,6 +3343,10 @@ msgstr ""
 msgid "Uploaded to: <0>{url}</0>"
 msgstr "Загружено : <0>{url}</0>"
 
+#: src/components/inputs/FormImageUploader.tsx
+msgid "Uploaded to: <0>{value}</0>"
+msgstr ""
+
 #: src/components/v2/shared/DistributionSplitsSection/PayoutConfigurationExplainerCollapse.tsx
 msgid "Use <0>Amounts</0> when you want to configure a <1>distribution limit</1>. Treasury funds that exceed the distribution limit are called <2>overflow</2>. Token holders can redeem (burn) their tokens for a portion of the overflow. <3>Learn more</3>."
 msgstr ""
@@ -3393,6 +3393,7 @@ msgid "Volume"
 msgstr "Объём"
 
 #: src/components/inputs/Pay/MemoFormItem.tsx
+#: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "WAGMI!"
 msgstr ""
 

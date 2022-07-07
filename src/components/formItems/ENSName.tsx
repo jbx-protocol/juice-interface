@@ -14,6 +14,7 @@ export default function ENSName({
 } & FormItemExt) {
   return (
     <Form.Item
+      {...formItemProps}
       name={name}
       label={hideLabel ? undefined : t`ENS Name`}
       rules={[
@@ -33,7 +34,6 @@ export default function ENSName({
           },
         },
       ]}
-      {...formItemProps}
     >
       <Input
         placeholder="juicebox"

@@ -14,7 +14,7 @@ export const AttachableSticker = ({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'middle',
-        padding: '20px 0',
+        padding: '1rem 0',
         cursor: 'pointer',
       }}
       className="hover-bg-l2"

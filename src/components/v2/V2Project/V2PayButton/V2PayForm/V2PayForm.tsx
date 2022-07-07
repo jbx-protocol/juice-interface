@@ -76,7 +76,9 @@ export const V2PayForm = ({ form }: { form: FormInstance<V2PayFormType> }) => {
                 />
               </Tooltip>
             ) : (
-              <SmileOutlined style={{ color: colors.text.disabled }} />
+              <SmileOutlined
+                style={{ color: colors.text.disabled, cursor: 'not-allowed' }}
+              />
             )}
           </div>
           <Form.Item name="stickerUrls">

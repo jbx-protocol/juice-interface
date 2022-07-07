@@ -23,7 +23,11 @@ export const StickerSelection = ({
     onChange?.(editedImages)
   }
   return (
-    <Space style={{ paddingTop: '0.8rem' }} direction="horizontal" align="end">
+    <Space
+      style={{ paddingTop: '0.8rem' }}
+      direction="horizontal"
+      align="start"
+    >
       {value?.map((url, i) => (
         <IconedImage
           key={`${i}-${url}`}

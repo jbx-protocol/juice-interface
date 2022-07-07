@@ -16,7 +16,7 @@ export const IconedImage = ({
   onClick: VoidFunction
 }) => {
   return (
-    <div style={{ position: 'relative' }}>
+    <div style={{ position: 'relative', padding: '1rem 0' }}>
       <Image key={url} width={width} src={url} />
       <div
         role="button"

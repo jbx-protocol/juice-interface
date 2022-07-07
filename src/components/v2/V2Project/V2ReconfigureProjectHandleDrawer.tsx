@@ -26,6 +26,7 @@ export function V2ReconfigureProjectHandleDrawer({
   const { handle, projectId } = useContext(V2ProjectContext)
   const [ensNameForm] = useForm<{ ensName: string }>()
 
+  const [ensNameIsValid, setEnsNameIsValid] = useState<boolean>()
   const [ensNameInputDisabled, setEnsNameInputDisabled] = useState<boolean>()
   const [loadingSetENSName, setLoadingSetENSName] = useState<boolean>()
   const [loadingSetTextRecord, setLoadingSetTextRecord] = useState<boolean>()
@@ -48,7 +49,9 @@ export function V2ReconfigureProjectHandleDrawer({
   function onSetENSNameFormSaved() {
     setLoadingSetENSName(true)
 
-    const ensName = ensNameForm.getFieldValue('ensName')
+    const ensName = String(ensNameForm.getFieldValue('ensName'))
+      .toLowerCase()
+      .trim()
 
     editV2ProjectHandleTx(
       { ensName },
@@ -157,8 +160,22 @@ export function V2ReconfigureProjectHandleDrawer({
         </div>
       ) : (
         <Form form={ensNameForm} onFinish={onSetENSNameFormSaved}>
-          <FormItems.ENSName name="ensName" hideLabel />
-          <Button htmlType="submit" loading={loadingSetENSName} type="primary">
+          <FormItems.ENSName
+            name="ensName"
+            hideLabel
+            onChange={() => {
+              ensNameForm
+                .validateFields()
+                .then(() => setEnsNameIsValid(true))
+                .catch(() => setEnsNameIsValid(false))
+            }}
+          />
+          <Button
+            htmlType="submit"
+            loading={loadingSetENSName}
+            disabled={!ensNameIsValid}
+            type="primary"
+          >
             <Trans>Set ENS name</Trans>
           </Button>
         </Form>

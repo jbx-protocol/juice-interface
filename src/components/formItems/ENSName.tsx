@@ -20,9 +20,16 @@ export default function ENSName({
         ...(formItemProps?.rules ?? []),
         {
           validator: (rule, value: string) => {
+            if (value !== value.toLowerCase()) {
+              return Promise.reject('Only lowercase letters')
+            }
+            if (value.includes(' ')) {
+              return Promise.reject('Spaces are not allowed')
+            }
             if (value.endsWith('.eth')) {
               return Promise.reject('Do not include .eth')
-            } else return Promise.resolve()
+            }
+            return Promise.resolve()
           },
         },
       ]}

@@ -163,6 +163,7 @@ export function V2ReconfigureProjectHandleDrawer({
           <FormItems.ENSName
             name="ensName"
             hideLabel
+            formItemProps={{ rules: [{ required: true }] }}
             onChange={() => {
               ensNameForm
                 .validateFields()

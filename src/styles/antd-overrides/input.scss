@@ -78,6 +78,7 @@
 
 .ant-form-item {
   margin-bottom: 16px;
+  color: var(--text-primary);
 }
 
 .ant-form-item-extra {
@@ -281,6 +282,14 @@ textarea.ant-input::placeholder {
 .ant-input-search-button {
   border: 1px solid var(--stroke-primary);
   color: var(--icon-action-primary) !important;
+}
+
+.ant-input-clear-icon {
+  color: var(--icon-secondary);
+
+  &:hover {
+    color: var(--icon-primary);
+  }
 }
 
 .anticon.ant-input-clear-icon {

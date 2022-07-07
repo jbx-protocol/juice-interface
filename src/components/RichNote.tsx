@@ -1,8 +1,7 @@
 import Autolinker from 'autolinker'
 import RichImgPreview from 'components/RichImgPreview'
-import { ThemeContext } from 'contexts/themeContext'
 import { useContentType } from 'hooks/ContentType'
-import { useContext, useMemo } from 'react'
+import { useMemo } from 'react'
 
 type RichNoteProps = {
   note: string | undefined
@@ -14,10 +13,6 @@ export default function RichNote({
   style,
   children,
 }: React.PropsWithChildren<RichNoteProps>) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const mediaLink = useMemo(() => {
     if (!note) return ''
 
@@ -50,7 +45,6 @@ export default function RichNote({
     <div style={{ marginTop: 5, ...style }}>
       <span
         style={{
-          color: colors.text.secondary,
           overflowWrap: 'break-word',
           paddingRight: '0.5rem',
         }}

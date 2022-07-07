@@ -9,6 +9,8 @@ import { PayEvent } from 'models/subgraph-entities/vX/pay-event'
 import { useCallback, useContext } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 
+import V2ProjectHandle from '../v2/shared/V2ProjectHandle'
+
 import {
   contentLineHeight,
   primaryContentFontSize,
@@ -31,7 +33,13 @@ export default function PayEventElem({
   event:
     | Pick<
         PayEvent,
-        'amount' | 'timestamp' | 'beneficiary' | 'note' | 'id' | 'txHash'
+        | 'amount'
+        | 'timestamp'
+        | 'beneficiary'
+        | 'note'
+        | 'id'
+        | 'txHash'
+        | 'feeFromV2Project'
       >
     | undefined
 }) {
@@ -107,15 +115,27 @@ export default function PayEventElem({
         </div>
       </div>
 
-      <div style={{ marginTop: 5 }}>
-        <RichNote
-          note={
-            (usePayEventOverrides
-              ? formatPayEventOverride(event)
-              : event.note) ?? ''
-          }
-        />
-      </div>
+      {event.feeFromV2Project ? (
+        <div style={{ marginTop: 5 }}>
+          <Trans>
+            Fee from{' '}
+            <span>
+              <V2ProjectHandle projectId={event.feeFromV2Project} />
+            </span>
+          </Trans>
+        </div>
+      ) : (
+        <div style={{ marginTop: 5 }}>
+          <RichNote
+            note={
+              (usePayEventOverrides
+                ? formatPayEventOverride(event)
+                : event.note) ?? ''
+            }
+            style={{ color: colors.text.secondary }}
+          />
+        </div>
+      )}
     </div>
   )
 }

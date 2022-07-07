@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import { Button, Skeleton, Space } from 'antd'
+import { Button, Skeleton, Space, Tooltip } from 'antd'
 import { CardSection } from 'components/CardSection'
 import TooltipLabel from 'components/TooltipLabel'
 import SpendingStats from 'components/Project/SpendingStats'
@@ -64,6 +64,32 @@ export default function PayoutSplitsCard({
   const hasDuration = fundingCycleDuration?.gt(0)
   const canEditPayouts = useHasPermission(V2OperatorPermission.SET_SPLITS)
 
+  const effectiveDistributionLimit = distributionLimit ?? BigNumber.from(0)
+  const distributedAmount = usedDistributionLimit ?? BigNumber.from(0)
+
+  const distributable = effectiveDistributionLimit.sub(distributedAmount)
+
+  const distributableAmount = balanceInDistributionLimitCurrency?.gt(
+    distributable,
+  )
+    ? distributable
+    : balanceInDistributionLimitCurrency
+
+  const distributeButtonDisabled = isPreviewMode || distributableAmount?.eq(0)
+
+  function DistributeButton(): JSX.Element {
+    return (
+      <Button
+        type="ghost"
+        size="small"
+        onClick={() => setDistributePayoutsModalVisible(true)}
+        disabled={distributeButtonDisabled}
+      >
+        <Trans>Distribute funds</Trans>
+      </Button>
+    )
+  }
+
   return (
     <CardSection>
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
@@ -87,9 +113,9 @@ export default function PayoutSplitsCard({
                 currency={V2CurrencyName(
                   distributionLimitCurrency?.toNumber() as V2CurrencyOption,
                 )}
-                projectBalanceInCurrency={balanceInDistributionLimitCurrency}
+                distributableAmount={distributableAmount}
                 targetAmount={distributionLimit ?? BigNumber.from(0)}
-                distributedAmount={usedDistributionLimit ?? BigNumber.from(0)}
+                distributedAmount={distributedAmount}
                 feePercentage={
                   ETHPaymentTerminalFee
                     ? formatFee(ETHPaymentTerminalFee)
@@ -98,15 +124,15 @@ export default function PayoutSplitsCard({
                 ownerAddress={projectOwnerAddress}
               />
             </Skeleton>
-
-            <Button
-              type="ghost"
-              size="small"
-              onClick={() => setDistributePayoutsModalVisible(true)}
-              disabled={isPreviewMode}
-            >
-              <Trans>Distribute funds</Trans>
-            </Button>
+            {distributableAmount?.eq(0) ? (
+              <Tooltip title={<Trans>No funds available to distribute.</Trans>}>
+                <div>
+                  <DistributeButton />
+                </div>
+              </Tooltip>
+            ) : (
+              <DistributeButton />
+            )}
           </div>
         )}
 

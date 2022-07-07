@@ -32,10 +32,12 @@ export default function FormattedAddress({
   address,
   label,
   tooltipDisabled,
+  truncateTo,
 }: {
   address: string | undefined
   label?: string
   tooltipDisabled?: boolean
+  truncateTo?: number
 }) {
   const [ensName, setEnsName] = useState<string | null>()
 
@@ -90,11 +92,19 @@ export default function FormattedAddress({
 
   if (!address) return null
 
+  const effectiveTruncateTo = truncateTo ?? 6
+  const frontTruncate = effectiveTruncateTo + 2 // account for 0x
+
   const formatted =
     ensName ??
     label ??
     (address
-      ? address.substring(0, 6) + '...' + address.substr(address.length - 6, 6)
+      ? address.substring(0, frontTruncate) +
+        '...' +
+        address.substr(
+          address.length - effectiveTruncateTo,
+          effectiveTruncateTo,
+        )
       : '')
 
   if (tooltipDisabled) {

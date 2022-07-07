@@ -141,6 +141,7 @@ export default function ProjectHeader({
             <Paragraph
               description={metadata.description}
               characterLimit={250}
+              style={{ color: colors.text.secondary }}
             />
           )}
           {owner && (

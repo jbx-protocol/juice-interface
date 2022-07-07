@@ -8,3 +8,7 @@
 .ant-checkbox-input:focus + .ant-checkbox-inner {
   border-color: var(--stroke-action-primary);
 }
+
+.ant-checkbox-wrapper {
+  color: var(--text-primary);
+}

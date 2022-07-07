@@ -1,10 +1,8 @@
 import { SettingOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
-import * as constants from '@ethersproject/constants'
-import { Trans } from '@lingui/macro'
-import { Button, Skeleton, Space } from 'antd'
+import { t, Trans } from '@lingui/macro'
+import { Button, Skeleton, Space, Tooltip } from 'antd'
 import { CardSection } from 'components/CardSection'
-import FormattedAddress from 'components/FormattedAddress'
 import TooltipLabel from 'components/TooltipLabel'
 import SplitList from 'components/v2/shared/SplitList'
 import { ThemeContext } from 'contexts/themeContext'
@@ -32,13 +30,8 @@ export default function ReservedTokensSplitsCard({
   reservedTokensSplits: Split[] | undefined
   reservedRate: BigNumber | undefined
 }) {
-  const {
-    tokenSymbol,
-    tokenAddress,
-    projectOwnerAddress,
-    projectId,
-    isPreviewMode,
-  } = useContext(V2ProjectContext)
+  const { tokenSymbol, projectOwnerAddress, projectId, isPreviewMode } =
+    useContext(V2ProjectContext)
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -69,11 +62,20 @@ export default function ReservedTokensSplitsCard({
     plural: true,
   })
 
-  const tokensTextSingular = tokenSymbolText({
-    tokenSymbol,
-    capitalize: true,
-    plural: false,
-  })
+  const distributeButtonDisabled = isPreviewMode || reservedTokens?.eq(0)
+
+  function DistributeButton(): JSX.Element {
+    return (
+      <Button
+        type="ghost"
+        size="small"
+        onClick={() => setDistributeReservedTokensModalVisible(true)}
+        disabled={distributeButtonDisabled}
+      >
+        <Trans>Distribute {tokensText}</Trans>
+      </Button>
+    )
+  }
 
   return (
     <CardSection>
@@ -121,21 +123,16 @@ export default function ReservedTokensSplitsCard({
                   </Trans>
                 }
               />
-              {tokenAddress && tokenAddress !== constants.AddressZero ? (
-                <div style={smallHeaderStyle}>
-                  {tokensTextSingular} contract address:{' '}
-                  <FormattedAddress address={tokenAddress} />
-                </div>
-              ) : null}
             </div>
-            <Button
-              type="ghost"
-              size="small"
-              onClick={() => setDistributeReservedTokensModalVisible(true)}
-              disabled={isPreviewMode}
-            >
-              <Trans>Distribute {tokensText}</Trans>
-            </Button>
+            {reservedTokens?.eq(0) ? (
+              <Tooltip title={t`No reserved tokens available to distribute.`}>
+                <div>
+                  <DistributeButton />
+                </div>
+              </Tooltip>
+            ) : (
+              <DistributeButton />
+            )}
           </div>
         )}
 

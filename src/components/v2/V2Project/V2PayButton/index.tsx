@@ -10,7 +10,7 @@ import useWeiConverter from 'hooks/WeiConverter'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { PayButtonProps } from 'components/inputs/Pay/PayInputGroup'
 
-import V2ConfirmPayModal from './V2ConfirmPayModal'
+import { V2ConfirmPayModal } from './V2ConfirmPayModal'
 
 export default function V2PayButton({
   payAmount,

@@ -8,7 +8,7 @@ msgstr ""
 "Language: fr\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-07-04 03:10\n"
+"PO-Revision-Date: 2022-07-05 03:07\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -729,7 +729,7 @@ msgstr ""
 
 #: src/components/v2/shared/DistributionSplitsSection/index.tsx
 msgid "Choose how you would like to configure your payouts."
-msgstr ""
+msgstr "Choisissez comment souhaitez-vous paramétrer vos paiements."
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
 msgid "Claim {tokenTextPlural}"
@@ -767,6 +767,7 @@ msgstr "Si vous réclamez {tokenTextLong} votre solde {tokenTextShort} sera conv
 #: src/components/v2/V2Project/V2DownloadActivityModal.tsx
 #: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/EditTokenAllocationModal.tsx
+#: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "Close"
 msgstr "Fermer"
 
@@ -961,6 +962,10 @@ msgstr "Stratégie personnalisée"
 #: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "Custom token beneficiary"
 msgstr "Bénéficiaire de token personnalisé"
+
+#: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
+msgid "Customize payment"
+msgstr ""
 
 #: src/components/formItems/ProjectPayButton.tsx
 msgid "Customize your project's \"pay\" button. Leave blank to use the default."
@@ -1556,6 +1561,10 @@ msgstr ""
 msgid "How your project will distribute funds."
 msgstr "Comment votre projet distribuera les fonds."
 
+#: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
+msgid "I accept this project's <0>risks</0>."
+msgstr ""
+
 #: src/components/PayWarningModal.tsx
 msgid "I understand"
 msgstr "Je comprends"
@@ -2012,8 +2021,11 @@ msgstr "Remarque"
 msgid "Note: Tokens can be minted manually when allowed in the current funding cycle. This can be changed by the project owner for upcoming cycles."
 msgstr "Remarque : Les tokens peuvent être frappés manuellement lorsqu'ils sont autorisés dans le cycle de financement en cours. Cela peut être modifié par le propriétaire du projet pour les prochains cycles."
 
-#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
+msgid "Notice from {0}"
+msgstr ""
+
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 msgid "Notice from {0}:"
 msgstr "Notification de {0} :"
 
@@ -2135,9 +2147,9 @@ msgstr "Payer {0}"
 msgid "Payer"
 msgstr "Payeur"
 
-#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
-msgid "Paying <0>{0}</0> is not an investment — it's a way to support the project. Any value or utility of the tokens you receive is determined by <1>{1}</1>."
-msgstr "Un paiement <0>{0}</0> n'est pas un investissement, c'est une façon de soutenir le projet. Toute valeur ou utilité des tokens que vous recevez est déterminée par <1>{1}></1>."
+#: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
+msgid "Paying <0>{0}</0> is not an investment — it's a way to support the project. <1>{1}</1> determines any value or utility of the tokens you receive."
+msgstr ""
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 msgid "Paying <0>{0}</0> is not an investment — it's a way to support the project. Any value or utility of the tokens you receive is determined by {1}."
@@ -2240,7 +2252,8 @@ msgstr "Veuillez contacter l'équipe de développeur de Juicebox via notre <0>Di
 msgid "Podcast"
 msgstr "Podcast"
 
-#: src/components/ProjectRiskNotice.tsx
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
+#: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "Potential risks"
 msgstr "Risques potentiels"
 
@@ -2819,8 +2832,8 @@ msgid "Some funding cycle properties may indicate risk for project contributors.
 msgstr "Certaines propriétés du cycle de financement peuvent indiquer un risque pour les contributeurs du projet."
 
 #: src/components/ProjectRiskNotice.tsx
-msgid "Some properties of the project's current funding cycle may indicate risk for contributors."
-msgstr "Certaines propriétés du cycle de financement actuel du projet peuvent indiquer un risque pour les contributeurs."
+msgid "Some of the project's current funding cycle properties may indicate risk for contributors."
+msgstr ""
 
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Something went wrong."
@@ -3568,6 +3581,10 @@ msgstr "Vous n'avez pas encore créé aucun projet."
 
 #: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSection/V1TokenMigrationModal/SetV1ProjectSection.tsx
 msgid "You must own this V1 project."
+msgstr ""
+
+#: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
+msgid "You must review and accept the risks."
 msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx

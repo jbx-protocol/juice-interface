@@ -1771,10 +1771,6 @@ msgstr "Tema luminoso"
 msgid "Link Juicebox V1 project"
 msgstr ""
 
-#: src/components/forms/ProjectDetailsForm.tsx
-msgid "Links"
-msgstr "Enlaces"
-
 #: src/components/modals/ParticipantsModal.tsx
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 #: src/components/v2/V2Project/ProjectActivity/index.tsx
@@ -2265,6 +2261,14 @@ msgstr "El ID de proyecto debe ser un número."
 msgid "Project ID:"
 msgstr "ID de proyecto:"
 
+#: src/components/forms/ProjectDetailsForm.tsx
+msgid "Project Links"
+msgstr ""
+
+#: src/components/forms/ProjectDetailsForm.tsx
+msgid "Project Page Customizations"
+msgstr ""
+
 #: src/components/modals/IssueTokenModal.tsx
 msgid "Project Token"
 msgstr "Token de proyecto"
@@ -2346,10 +2350,6 @@ msgstr "Dueño del proyecto (tú)"
 #: src/pages/home/QAs.tsx
 msgid "Project owners can configure a delay period, meaning reconfigurations to an upcoming funding cycle must be submitted a certain number of days before it starts. For example, a 3-day delay period means reconfigurations must be submitted at least 3 days before the next funding cycle starts. This gives token holders time to react to the decision and reduces the chance of rug-pulls."
 msgstr "Los propietarios de proyectos pueden configurar un período de demora, lo que significa que las reconfiguraciones para un próximo ciclo de financiamiento deben enviarse en un determinado número de días antes de que comience. Por ejemplo, un período de demora de 3 días significa que las reconfiguraciones deben enviarse al menos 3 días antes de que comience el próximo ciclo de financiación. Esto les da a los poseedores de tokens tiempo para reaccionar a la decisión y reduce la posibilidad de rug-pulls."
-
-#: src/components/forms/ProjectDetailsForm.tsx
-msgid "Project page customizations"
-msgstr "Personalizaciones de la página del proyecto"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/TokenDrawer.tsx

@@ -21,13 +21,13 @@ export default function ENSName({
         {
           validator: (rule, value: string) => {
             if (value !== value.toLowerCase()) {
-              return Promise.reject('Only lowercase letters')
+              return Promise.reject(t`Only lowercase letters`)
             }
             if (value.includes(' ')) {
-              return Promise.reject('Spaces are not allowed')
+              return Promise.reject(t`Spaces are not allowed`)
             }
             if (value.endsWith('.eth')) {
-              return Promise.reject('Do not include .eth')
+              return Promise.reject(t`Do not include .eth`)
             }
             return Promise.resolve()
           },

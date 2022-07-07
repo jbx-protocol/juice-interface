@@ -1222,6 +1222,10 @@ msgstr ""
 msgid "Do I need this?"
 msgstr "Do I need this?"
 
+#: src/components/formItems/ENSName.tsx
+msgid "Do not include .eth"
+msgstr "Do not include .eth"
+
 #: src/components/Navbar/constants.ts
 msgid "Docs"
 msgstr ""
@@ -2019,6 +2023,10 @@ msgstr ""
 #: src/pages/create/tabs/ReviewDeployTab/FundingSummarySection.tsx
 msgid "Once launched, your first funding cycle <0>can't be changed</0>. You can reconfigure upcoming funding cycles according to the project's <1>reconfiguration rules</1>."
 msgstr "Once launched, your first funding cycle <0>can't be changed</0>. You can reconfigure upcoming funding cycles according to the project's <1>reconfiguration rules</1>."
+
+#: src/components/formItems/ENSName.tsx
+msgid "Only lowercase letters"
+msgstr "Only lowercase letters"
 
 #: src/components/v1/V1Project/modals/V1BalancesModal.tsx
 #: src/components/v2/V2Project/V2BalancesModal/V2BalancesModal.tsx
@@ -2824,6 +2832,10 @@ msgstr "Some properties of the project's current funding cycle may indicate risk
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Something went wrong."
 msgstr "Something went wrong."
+
+#: src/components/formItems/ENSName.tsx
+msgid "Spaces are not allowed"
+msgstr "Spaces are not allowed"
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx

@@ -1227,6 +1227,10 @@ msgstr "Dois-je rendre mon projet open source pour utiliser Juicebox comme son m
 msgid "Do I need this?"
 msgstr ""
 
+#: src/components/formItems/ENSName.tsx
+msgid "Do not include .eth"
+msgstr ""
+
 #: src/components/Navbar/constants.ts
 msgid "Docs"
 msgstr "Documents"
@@ -2024,6 +2028,10 @@ msgstr "Notification de {0} :"
 #: src/pages/create/tabs/ReviewDeployTab/FundingSummarySection.tsx
 msgid "Once launched, your first funding cycle <0>can't be changed</0>. You can reconfigure upcoming funding cycles according to the project's <1>reconfiguration rules</1>."
 msgstr "Une fois lancé, votre premier cycle de financement <0>ne peut plus être modifié</0>. Vous pouvez reparamétrer les cycles de financement à venir selon les <1>règles de reparamétrage</1> du projet."
+
+#: src/components/formItems/ENSName.tsx
+msgid "Only lowercase letters"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/V1BalancesModal.tsx
 #: src/components/v2/V2Project/V2BalancesModal/V2BalancesModal.tsx
@@ -2829,6 +2837,10 @@ msgstr "Certaines propriétés du cycle de financement actuel du projet peuvent 
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Something went wrong."
 msgstr "Quelque chose a mal tourné."
+
+#: src/components/formItems/ENSName.tsx
+msgid "Spaces are not allowed"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx

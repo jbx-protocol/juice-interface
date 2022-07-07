@@ -93,7 +93,6 @@ export const V2PayForm = ({ form }: { form: FormInstance<V2PayFormType> }) => {
             <Switch
               checked={customBeneficiaryEnabled}
               onChange={setCustomBeneficiaryEnabled}
-              style={{ marginLeft: 10 }}
             />
             <span style={{ color: colors.text.primary, fontWeight: 500 }}>
               <Trans>Custom token beneficiary</Trans>

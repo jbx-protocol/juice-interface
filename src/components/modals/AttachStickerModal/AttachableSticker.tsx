@@ -13,7 +13,7 @@ export const AttachableSticker = ({
       style={{
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'middle',
+        alignItems: 'center',
         padding: '1rem 0',
         cursor: 'pointer',
       }}

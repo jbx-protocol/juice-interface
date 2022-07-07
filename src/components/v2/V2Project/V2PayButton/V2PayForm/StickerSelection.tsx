@@ -23,24 +23,16 @@ export const StickerSelection = ({
     onChange?.(editedImages)
   }
   return (
-    <>
-      <Space
-        style={{ paddingTop: '0.8rem' }}
-        direction="horizontal"
-        align="end"
-      >
-        {value?.map((url, i) => (
-          <IconedImage
-            key={`${i}-${url}`}
-            url={url}
-            width={50}
-            icon={
-              <CloseCircleFilled style={{ color: colors.text.secondary }} />
-            }
-            onClick={() => handleImageDeletion(i)}
-          />
-        ))}
-      </Space>
-    </>
+    <Space style={{ paddingTop: '0.8rem' }} direction="horizontal" align="end">
+      {value?.map((url, i) => (
+        <IconedImage
+          key={`${i}-${url}`}
+          url={url}
+          width={50}
+          icon={<CloseCircleFilled style={{ color: colors.text.secondary }} />}
+          onClick={() => handleImageDeletion(i)}
+        />
+      ))}
+    </Space>
   )
 }

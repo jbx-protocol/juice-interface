@@ -18,21 +18,15 @@ import {
 } from 'utils/v2/currency'
 import { usePayV2ProjectTx } from 'hooks/v2/transactor/PayV2ProjectTx'
 
-import {
-  getUnsafeV2FundingCycleProperties,
-  V2FundingCycleRiskCount,
-} from 'utils/v2/fundingCycle'
-
 import Paragraph from 'components/Paragraph'
-
 import { weightedAmount } from 'utils/v2/math'
-
 import TransactionModal from 'components/TransactionModal'
-import ProjectRiskNotice from 'components/ProjectRiskNotice'
+import Callout from 'components/Callout'
+import useMobile from 'hooks/Mobile'
 
 import { V2PayForm, V2PayFormType } from '../V2PayForm'
 
-export default function V2ConfirmPayModal({
+export function V2ConfirmPayModal({
   visible,
   weiAmount,
   onSuccess,
@@ -44,6 +38,8 @@ export default function V2ConfirmPayModal({
   onCancel?: VoidFunction
 }) {
   const { userAddress, onSelectWallet } = useContext(NetworkContext)
+  const isMobile = useMobile()
+
   const {
     fundingCycle,
     fundingCycleMetadata,
@@ -77,10 +73,6 @@ export default function V2ConfirmPayModal({
     weiAmount,
     'reserved',
   )
-
-  const riskCount = fundingCycle
-    ? V2FundingCycleRiskCount(fundingCycle)
-    : undefined
 
   async function pay() {
     if (!weiAmount) return
@@ -148,7 +140,7 @@ export default function V2ConfirmPayModal({
       transactionPending={transactionPending}
       title={t`Pay ${projectMetadata.name}`}
       visible={visible}
-      onOk={pay}
+      onOk={() => form.submit()}
       okText={t`Pay`}
       connectWalletText={t`Connect wallet to pay`}
       onCancel={onCancel}
@@ -157,31 +149,16 @@ export default function V2ConfirmPayModal({
       centered={true}
     >
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
-        <p>
-          <Trans>
-            Paying <strong>{projectMetadata.name}</strong> is not an investment
-            — it's a way to support the project. Any value or utility of the
-            tokens you receive is determined by{' '}
-            <strong>{projectMetadata.name}</strong>.
-          </Trans>
-        </p>
-
         {projectMetadata.payDisclosure && (
-          <div>
-            <h4>
-              <Trans>Notice from {projectMetadata.name}:</Trans>
-            </h4>
+          <Callout>
+            <strong>
+              <Trans>Notice from {projectMetadata.name}</Trans>
+            </strong>
             <Paragraph description={projectMetadata.payDisclosure} />
-          </div>
+          </Callout>
         )}
 
-        {riskCount && fundingCycle ? (
-          <ProjectRiskNotice
-            unsafeProperties={getUnsafeV2FundingCycleProperties(fundingCycle)}
-          />
-        ) : null}
-
-        <Descriptions column={1} bordered>
+        <Descriptions column={1} bordered size={isMobile ? 'small' : 'default'}>
           <Descriptions.Item label={t`Pay amount`} className="content-right">
             {formattedNum(usdAmount)} {V2CurrencyName(V2_CURRENCY_USD)} (
             {formatWad(weiAmount)} {V2CurrencyName(V2_CURRENCY_ETH)})
@@ -194,7 +171,7 @@ export default function V2ConfirmPayModal({
             className="content-right"
           >
             <div>{formatWad(receivedTickets, { precision: 0 })}</div>
-            <div>
+            <div style={{ fontSize: '0.7rem' }}>
               {userAddress ? (
                 <Trans>
                   To: <FormattedAddress address={userAddress} />
@@ -213,7 +190,8 @@ export default function V2ConfirmPayModal({
             {formatWad(ownerTickets, { precision: 0 })}
           </Descriptions.Item>
         </Descriptions>
-        <V2PayForm form={form} />
+
+        <V2PayForm form={form} onFinish={() => pay()} />
       </Space>
     </TransactionModal>
   )

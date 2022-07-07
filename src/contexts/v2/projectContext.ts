@@ -3,6 +3,7 @@ import { V2BallotState } from 'models/ballot'
 import { CV } from 'models/cv'
 import { ProjectMetadataV4 } from 'models/project-metadata'
 import { V2FundingCycle, V2FundingCycleMetadata } from 'models/v2/fundingCycle'
+import { NFTRewardTier } from 'models/v2/nftRewardTier'
 import { Split } from 'models/v2/splits'
 import { createContext } from 'react'
 
@@ -46,6 +47,9 @@ export type V2ProjectContextType = {
   primaryTerminalCurrentOverflow: BigNumber | undefined
   totalTokenSupply: BigNumber | undefined
 
+  nftRewardsCid: string | undefined
+  nftRewardTiers: NFTRewardTier[] | undefined
+
   loading: V2ProjectLoadingStates
 }
 
@@ -80,6 +84,9 @@ export const V2ProjectContext = createContext<V2ProjectContextType>({
 
   primaryTerminalCurrentOverflow: undefined,
   totalTokenSupply: undefined,
+
+  nftRewardsCid: undefined,
+  nftRewardTiers: undefined,
 
   loading: {
     ETHBalanceLoading: false,

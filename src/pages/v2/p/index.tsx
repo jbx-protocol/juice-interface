@@ -30,6 +30,9 @@ import { useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
 import { NO_CURRENCY, V2_CURRENCY_ETH, V2CurrencyName } from 'utils/v2/currency'
 
+import useIPFSToNFTRewards from 'hooks/v2/nftRewards/IPFSToNFTRewards'
+import { useNftCidOf } from 'hooks/v2/contractReader/NftCidOf'
+
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
@@ -163,6 +166,9 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
 
   const { data: ballotState } = useBallotState(projectId)
 
+  const { data: nftRewardsCid } = useNftCidOf(projectId)
+  const { data: nftRewardTiers } = useIPFSToNFTRewards(nftRewardsCid)
+
   const isArchived = projectId
     ? V2ArchivedProjectIds.includes(projectId) || projectMetadata?.archived
     : false
@@ -200,6 +206,9 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
     totalTokenSupply,
     ballotState,
     isArchived,
+
+    nftRewardsCid,
+    nftRewardTiers: nftRewardTiers ?? [],
 
     loading: {
       ETHBalanceLoading,

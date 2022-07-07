@@ -1,6 +1,6 @@
 import { NFTRewardTier } from 'models/v2/nftRewardTier'
 
-type CloudFunctionRewardTier = {
+export type CloudFunctionRewardTier = {
   edition: number
   isBooleanAmount: boolean
   name: string

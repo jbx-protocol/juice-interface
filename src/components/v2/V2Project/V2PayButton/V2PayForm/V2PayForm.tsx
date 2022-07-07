@@ -89,14 +89,16 @@ export const V2PayForm = ({ form }: { form: FormInstance<V2PayFormType> }) => {
           <FormImageUploader text={t`Add image`} />
         </Form.Item>
         <Form.Item extra={t`Mint tokens to a custom address.`}>
-          <span style={{ color: colors.text.primary, fontWeight: 500 }}>
-            <Trans>Custom token beneficiary</Trans>
-          </span>
-          <Switch
-            checked={customBeneficiaryEnabled}
-            onChange={setCustomBeneficiaryEnabled}
-            style={{ marginLeft: 10 }}
-          />
+          <Space>
+            <Switch
+              checked={customBeneficiaryEnabled}
+              onChange={setCustomBeneficiaryEnabled}
+              style={{ marginLeft: 10 }}
+            />
+            <span style={{ color: colors.text.primary, fontWeight: 500 }}>
+              <Trans>Custom token beneficiary</Trans>
+            </span>
+          </Space>
           {customBeneficiaryEnabled && (
             <Form.Item
               style={{ marginTop: '1rem', marginBottom: 0 }}
@@ -122,25 +124,42 @@ export const V2PayForm = ({ form }: { form: FormInstance<V2PayFormType> }) => {
           )}
         </Form.Item>
         {hasIssuedTokens ? (
-          <Form.Item label={t`Receive ERC-20`}>
-            <Space align="start">
-              <Checkbox
-                style={{ padding: 20 }}
-                onChange={e => {
-                  form.setFieldsValue({ preferClaimed: e.target.checked })
-                }}
-              />
-              <label htmlFor="preferClaimed">
-                <Trans>
-                  Check this to mint this project's ERC-20 tokens to your
-                  wallet. Leave unchecked to have your token balance tracked by
-                  Juicebox, saving gas on this transaction. You can always claim
-                  your ERC-20 tokens later.
-                </Trans>
-              </label>
-            </Space>
+          <Form.Item
+            extra={
+              <Trans>
+                Mint this project's ERC-20 tokens to your wallet. Leave
+                unchecked to have Juicebox track your token balance, saving gas
+                on this transaction. You can claim your ERC-20 tokens later.
+              </Trans>
+            }
+          >
+            <Checkbox
+              onChange={e =>
+                form.setFieldsValue({ preferClaimed: e.target.checked })
+              }
+            >
+              <Trans>Receive ERC-20</Trans>
+            </Checkbox>
           </Form.Item>
-        ) : null}
+        ) : // <Form.Item label={t`Receive ERC-20`}>
+        //   <Space align="start">
+        //     <Checkbox
+        //       style={{ padding: 20 }}
+        //       onChange={e => {
+        //         form.setFieldsValue({ preferClaimed: e.target.checked })
+        //       }}
+        //     />
+        //     <label htmlFor="preferClaimed">
+        //       <Trans>
+        //         Check this to mint this project's ERC-20 tokens to your
+        //         wallet. Leave unchecked to have your token balance tracked by
+        //         Juicebox, saving gas on this transaction. You can always claim
+        //         your ERC-20 tokens later.
+        //       </Trans>
+        //     </label>
+        //   </Space>
+        // </Form.Item>
+        null}
       </Form>
       <AttachStickerModal
         visible={attachStickerModalVisible}

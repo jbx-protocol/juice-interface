@@ -33,7 +33,11 @@ export const StickerSelection = ({
           key={`${i}-${url}`}
           url={url}
           width={50}
-          icon={<CloseCircleFilled style={{ color: colors.text.secondary }} />}
+          icon={
+            <CloseCircleFilled
+              style={{ color: colors.text.primary, fontSize: '1rem' }}
+            />
+          }
           onClick={() => handleImageDeletion(i)}
         />
       ))}

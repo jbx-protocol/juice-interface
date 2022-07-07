@@ -8,7 +8,7 @@ msgstr ""
 "Language: ja\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-07-06 03:13\n"
+"PO-Revision-Date: 2022-07-07 03:12\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -1397,6 +1397,10 @@ msgstr ""
 msgid "Failed to update project metadata"
 msgstr ""
 
+#: src/components/activityEventElems/PayEventElem.tsx
+msgid "Fee from <0><1/></0>"
+msgstr ""
+
 #: src/components/inputs/ImageUploader.tsx
 msgid "File must be less than {formattedSize}{unit}"
 msgstr ""
@@ -1767,10 +1771,6 @@ msgstr ""
 msgid "Link Juicebox V1 project"
 msgstr ""
 
-#: src/components/forms/ProjectDetailsForm.tsx
-msgid "Links"
-msgstr ""
-
 #: src/components/modals/ParticipantsModal.tsx
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 #: src/components/v2/V2Project/ProjectActivity/index.tsx
@@ -1890,6 +1890,10 @@ msgstr ""
 msgid "Minutes"
 msgstr ""
 
+#: src/pages/home/TrendingSection.tsx
+msgid "More trending projects"
+msgstr ""
+
 #: src/components/ManageTokensModal.tsx
 msgid "Move your {tokensLabel} from the Juicebox contract to your wallet."
 msgstr ""
@@ -1953,6 +1957,10 @@ msgstr ""
 msgid "No funding target: The project will control how all funds are distributed, and none can be redeemed by token holders."
 msgstr ""
 
+#: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
+msgid "No funds available to distribute."
+msgstr ""
+
 #: src/components/v2/V2Project/DistributionLimit.tsx
 msgid "No funds can be distributed out of the treasury. Funds can only be accessed by token holders redeeming their tokens."
 msgstr ""
@@ -1969,6 +1977,10 @@ msgstr ""
 #: src/components/v1/V1Project/FundingCycles/FundingHistory.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleHistory.tsx
 msgid "No past funding cycles"
+msgstr ""
+
+#: src/components/v2/V2Project/V2FundingCycleSection/ReservedTokensSplitsCard.tsx
+msgid "No reserved tokens available to distribute."
 msgstr ""
 
 #: src/constants/v1/ballotStrategies/index.ts
@@ -2257,6 +2269,14 @@ msgstr ""
 msgid "Project ID:"
 msgstr ""
 
+#: src/components/forms/ProjectDetailsForm.tsx
+msgid "Project Links"
+msgstr ""
+
+#: src/components/forms/ProjectDetailsForm.tsx
+msgid "Project Page Customizations"
+msgstr ""
+
 #: src/components/modals/IssueTokenModal.tsx
 msgid "Project Token"
 msgstr ""
@@ -2337,10 +2357,6 @@ msgstr ""
 
 #: src/pages/home/QAs.tsx
 msgid "Project owners can configure a delay period, meaning reconfigurations to an upcoming funding cycle must be submitted a certain number of days before it starts. For example, a 3-day delay period means reconfigurations must be submitted at least 3 days before the next funding cycle starts. This gives token holders time to react to the decision and reduces the chance of rug-pulls."
-msgstr ""
-
-#: src/components/forms/ProjectDetailsForm.tsx
-msgid "Project page customizations"
 msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
@@ -2427,8 +2443,11 @@ msgstr ""
 msgid "Recipient"
 msgstr ""
 
-#: src/components/Project/ProjectToolsDrawer/TransferOwnershipForm.tsx
 #: src/components/Project/ProjectToolsDrawer/TransferUnclaimedTokensForm.tsx
+msgid "Recipient Address"
+msgstr ""
+
+#: src/components/Project/ProjectToolsDrawer/TransferOwnershipForm.tsx
 msgid "Recipient address"
 msgstr ""
 

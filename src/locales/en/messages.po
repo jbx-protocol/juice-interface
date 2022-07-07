@@ -324,6 +324,7 @@ msgid "Add a payout"
 msgstr "Add a payout"
 
 #: src/components/inputs/Pay/MemoFormItem.tsx
+#: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "Add an on-chain memo to this payment."
 msgstr "Add an on-chain memo to this payment."
 
@@ -336,7 +337,7 @@ msgid "Add handle"
 msgstr "Add handle"
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
-#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
+#: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "Add image"
 msgstr ""
 
@@ -387,10 +388,6 @@ msgstr "Add token allocation"
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Address"
 msgstr ""
-
-#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
-msgid "Address required"
-msgstr "Address required"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
 msgid "Address:"
@@ -546,7 +543,8 @@ msgid "Assets"
 msgstr "Assets"
 
 #: src/components/inputs/Pay/MemoFormItem.tsx
-#: src/components/modals/AttachStickerModal.tsx
+#: src/components/modals/AttachStickerModal/AttachStickerModal.tsx
+#: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "Attach a sticker"
 msgstr "Attach a sticker"
 
@@ -669,7 +667,7 @@ msgstr ""
 msgid "Can I delete a project?"
 msgstr ""
 
-#: src/components/modals/AttachStickerModal.tsx
+#: src/components/modals/AttachStickerModal/AttachStickerModal.tsx
 #: src/components/v1/V1Project/modals/V1BalancesModal.tsx
 #: src/components/v2/V2Project/V2BalancesModal/V2BalancesModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/EditTokenAllocationModal.tsx
@@ -715,10 +713,6 @@ msgstr "Changes will take effect according to the project's custom ballot contra
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "Changes you make will take effect according to your <0>{0}</0> reconfiguration rule (the first funding cycle following <1>{1}</1> from now)."
 msgstr "Changes you make will take effect according to your <0>{0}</0> reconfiguration rule (the first funding cycle following <1>{1}</1> from now)."
-
-#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
-msgid "Check this to mint this project's ERC-20 tokens to your wallet. Leave unchecked to have your token balance tracked by Juicebox, saving gas on this transaction. You can always claim your ERC-20 tokens later."
-msgstr "Check this to mint this project's ERC-20 tokens to your wallet. Leave unchecked to have your token balance tracked by Juicebox, saving gas on this transaction. You can always claim your ERC-20 tokens later."
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 msgid "Check this to mint {tokenSymbol} ERC-20 to your wallet. Leave unchecked to have your token balance tracked by Juicebox, saving gas on this transaction. You can always claim your ERC-20 tokens later."
@@ -959,7 +953,7 @@ msgid "Custom strategy"
 msgstr ""
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
-#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
+#: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "Custom token beneficiary"
 msgstr "Custom token beneficiary"
 
@@ -1396,6 +1390,7 @@ msgstr "Failed to update project metadata"
 msgid "Fee from <0><1/></0>"
 msgstr "Fee from <0><1/></0>"
 
+#: src/components/inputs/FormImageUploader.tsx
 #: src/components/inputs/ImageUploader.tsx
 msgid "File must be less than {formattedSize}{unit}"
 msgstr "File must be less than {formattedSize}{unit}"
@@ -1648,10 +1643,6 @@ msgstr "Initial issuance rate"
 msgid "Initial mint rate"
 msgstr "Initial mint rate"
 
-#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
-msgid "Invalid address"
-msgstr "Invalid address"
-
 #: src/components/IssueTokenButton.tsx
 msgid "Issue ERC-20"
 msgstr "Issue ERC-20"
@@ -1829,6 +1820,7 @@ msgid "Memo"
 msgstr "Memo"
 
 #: src/components/inputs/Pay/MemoFormItem.tsx
+#: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "Memo (optional)"
 msgstr "Memo (optional)"
 
@@ -1859,6 +1851,10 @@ msgstr "Mint project tokens on demand"
 msgid "Mint rate"
 msgstr "Mint rate"
 
+#: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
+msgid "Mint this project's ERC-20 tokens to your wallet. Leave unchecked to have Juicebox track your token balance, saving gas on this transaction. You can claim your ERC-20 tokens later."
+msgstr "Mint this project's ERC-20 tokens to your wallet. Leave unchecked to have Juicebox track your token balance, saving gas on this transaction. You can claim your ERC-20 tokens later."
+
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 msgid "Mint tokens"
@@ -1868,7 +1864,7 @@ msgstr "Mint tokens"
 msgid "Mint tokens as ERC-20"
 msgstr "Mint tokens as ERC-20"
 
-#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
+#: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "Mint tokens to a custom address."
 msgstr "Mint tokens to a custom address."
 
@@ -2426,7 +2422,7 @@ msgid "Read more"
 msgstr "Read more"
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
-#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
+#: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "Receive ERC-20"
 msgstr "Receive ERC-20"
 
@@ -3342,6 +3338,10 @@ msgstr "Upload an image or video"
 msgid "Uploaded to: <0>{url}</0>"
 msgstr "Uploaded to: <0>{url}</0>"
 
+#: src/components/inputs/FormImageUploader.tsx
+msgid "Uploaded to: <0>{value}</0>"
+msgstr "Uploaded to: <0>{value}</0>"
+
 #: src/components/v2/shared/DistributionSplitsSection/PayoutConfigurationExplainerCollapse.tsx
 msgid "Use <0>Amounts</0> when you want to configure a <1>distribution limit</1>. Treasury funds that exceed the distribution limit are called <2>overflow</2>. Token holders can redeem (burn) their tokens for a portion of the overflow. <3>Learn more</3>."
 msgstr "Use <0>Amounts</0> when you want to configure a <1>distribution limit</1>. Treasury funds that exceed the distribution limit are called <2>overflow</2>. Token holders can redeem (burn) their tokens for a portion of the overflow. <3>Learn more</3>."
@@ -3388,6 +3388,7 @@ msgid "Volume"
 msgstr ""
 
 #: src/components/inputs/Pay/MemoFormItem.tsx
+#: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "WAGMI!"
 msgstr "WAGMI!"
 

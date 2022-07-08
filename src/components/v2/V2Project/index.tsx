@@ -107,6 +107,7 @@ export default function V2Project({
   const colSizeMd = singleColumnLayout ? 24 : 12
   const hasCurrentFundingCycle = fundingCycle?.number.gt(0)
   const hasQueuedFundingCycle = queuedFundingCycle?.number.gt(0)
+  const showAddHandle = isOwner && !isPreviewMode && !handle
 
   if (projectId === undefined) return null
 
@@ -141,9 +142,7 @@ export default function V2Project({
         isArchived={isArchived}
         handle={handle}
         onClickSetHandle={
-          isOwner && !isPreviewMode
-            ? () => setHandleModalVisible(true)
-            : undefined
+          showAddHandle ? () => setHandleModalVisible(true) : undefined
         }
       />
       {!isPreviewMode &&
@@ -211,7 +210,7 @@ export default function V2Project({
         onCancel={() => setBalancesModalVisible(false)}
         storeCidTx={editV2ProjectDetailsTx}
       />
-      {isOwner && !handle && (
+      {showAddHandle && (
         <V2ReconfigureProjectHandleDrawer
           visible={handleModalVisible}
           onFinish={() => setHandleModalVisible(false)}

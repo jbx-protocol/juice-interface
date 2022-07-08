@@ -3,8 +3,6 @@ import PrivacyPolicy from 'pages/privacy'
 import Projects from 'pages/projects'
 import Loading from 'components/Loading'
 import V1Dashboard from 'pages/p'
-import V2BugUpdates from 'pages/v2-bug-updates'
-
 import { fathom } from 'lib/fathom'
 import { V1CurrencyProvider } from 'providers/v1/V1CurrencyProvider'
 import { V2UserProvider } from 'providers/v2/UserProvider'
@@ -86,9 +84,6 @@ function JuiceboxSwitch() {
 
       <Route path="/privacy">
         <PrivacyPolicy />
-      </Route>
-      <Route path="/v2-bug-updates">
-        <V2BugUpdates />
       </Route>
       <Route path="/:route">
         <CatchallRedirect />

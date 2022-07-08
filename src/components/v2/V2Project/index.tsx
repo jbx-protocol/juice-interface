@@ -141,7 +141,9 @@ export default function V2Project({
         isArchived={isArchived}
         handle={handle}
         onClickSetHandle={
-          isOwner ? () => setHandleModalVisible(true) : undefined
+          isOwner && !isPreviewMode
+            ? () => setHandleModalVisible(true)
+            : undefined
         }
       />
       {!isPreviewMode &&

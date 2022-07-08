@@ -27,6 +27,7 @@ import TransactionModal from 'components/TransactionModal'
 import Callout from 'components/Callout'
 import useMobile from 'hooks/Mobile'
 import { maxEligibleRewardTier } from 'utils/v2/nftRewards'
+import { featureFlagEnabled } from 'utils/featureFlags'
 
 import { V2PayForm, V2PayFormType } from '../V2PayForm'
 import { NftReward } from './NftRewardCell'
@@ -105,7 +106,7 @@ export function V2ConfirmPayModal({
   )
   let nftReward: NFTRewardTier | null = null
 
-  if (nftRewardTiers) {
+  if (nftRewardTiers && featureFlagEnabled('nftRewards')) {
     nftReward = maxEligibleRewardTier({
       nftRewardTiers,
       ethPayAmount: parseFloat(fromWad(weiAmount)),

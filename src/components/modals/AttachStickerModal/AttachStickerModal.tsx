@@ -1,10 +1,8 @@
 import { t } from '@lingui/macro'
 import { Col, Modal, Row, Space } from 'antd'
 
-type PaymentMemoSticker = {
-  filepath: string
-  alt: string
-}
+import { AttachableSticker } from './AttachableSticker'
+import { PaymentMemoSticker } from './paymentMemoSticker'
 
 const PAYMENT_MEMO_STICKERS: PaymentMemoSticker[] = [
   {
@@ -39,30 +37,6 @@ export function AttachStickerModal({
   onSelect: (sticker: PaymentMemoSticker) => void
   onClose: VoidFunction
 }) {
-  function AttachableSticker({ sticker }: { sticker: PaymentMemoSticker }) {
-    return (
-      <Col md={8}>
-        <div
-          role="button"
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'middle',
-            padding: '20px 0',
-            cursor: 'pointer',
-          }}
-          className="hover-bg-l2"
-          onClick={() => {
-            onSelect(sticker)
-            onClose()
-          }}
-        >
-          <img src={sticker.filepath} alt={sticker.alt} height="75px" />
-        </div>
-      </Col>
-    )
-  }
-
   return (
     <Modal
       title={t`Attach a sticker`}
@@ -79,7 +53,15 @@ export function AttachStickerModal({
       >
         <Row style={{ width: '100%' }}>
           {PAYMENT_MEMO_STICKERS.map((sticker, index) => (
-            <AttachableSticker sticker={sticker} key={index} />
+            <Col md={8} key={index}>
+              <AttachableSticker
+                sticker={sticker}
+                onClick={() => {
+                  onSelect(sticker)
+                  onClose()
+                }}
+              />
+            </Col>
           ))}
         </Row>
       </Space>

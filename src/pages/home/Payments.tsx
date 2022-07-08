@@ -92,7 +92,10 @@ export default function Payments() {
                 </span>
               </div>
               <div>
-                <RichNote note={e.note} />
+                <RichNote
+                  note={e.note}
+                  style={{ color: colors.text.secondary }}
+                />
               </div>
             </div>
           ))}

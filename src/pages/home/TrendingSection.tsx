@@ -81,7 +81,7 @@ export default function TrendingSection() {
         <Col xs={24} md={12}>
           <Space direction="vertical" style={{ width: '100%' }} size="middle">
             <SmallHeader text={<Trans>Latest payments</Trans>} />
-            <div style={{ maxHeight: 600, overflow: 'auto' }}>
+            <div style={{ maxHeight: 784, overflow: 'auto' }}>
               <Payments />
             </div>
           </Space>

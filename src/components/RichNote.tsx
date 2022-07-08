@@ -39,6 +39,7 @@ export default function RichNote({
 
       {children}
 
+<<<<<<< HEAD
       {formattedMediaLinks?.length ? (
         <div style={{ display: 'block' }}>
           <Space size="middle" direction="vertical">
@@ -56,6 +57,16 @@ export default function RichNote({
               </Space>
             ))}
           </Space>
+=======
+      {mediaLink && (
+        <div>
+          <RichImgPreview
+            src={mediaLink}
+            style={{ marginTop: 10 }}
+            height={140}
+            width={140}
+          />
+>>>>>>> 175d92a6 (fix safari bug)
         </div>
       ) : null}
     </div>

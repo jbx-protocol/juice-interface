@@ -4,7 +4,7 @@ import useV2ContractReader from './V2ContractReader'
 
 export function useNftCidOf(projectId: number | undefined) {
   return useV2ContractReader<string>({
-    contract: V2ContractName.NFTRewards,
+    contract: V2ContractName.DeprecatedJBController, //TODO: NFTRewards,
     functionName: 'tokenURI',
     args: projectId ? [projectId] : null,
   })

@@ -1906,6 +1906,7 @@ msgstr "My Projects"
 msgid "NFT projects"
 msgstr "NFT projects"
 
+#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/index.tsx
 #: src/pages/create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 #: src/pages/create/tabs/ReviewDeployTab/NFTSummarySection.tsx
@@ -2881,6 +2882,10 @@ msgstr "Sum of percentages cannot exceed 100%"
 msgid "Sum of percentages cannot exceed 100%."
 msgstr "Sum of percentages cannot exceed 100%."
 
+#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
+msgid "Supporters receive this NFT for contributing at least <0>{0} ETH</0>."
+msgstr "Supporters receive this NFT for contributing at least <0>{0} ETH</0>."
+
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 msgid "Target"
@@ -3344,8 +3349,8 @@ msgid "Upload"
 msgstr ""
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTUpload.tsx
-msgid "Upload an image or video"
-msgstr "Upload an image or video"
+msgid "Upload an image"
+msgstr "Upload an image"
 
 #: src/components/inputs/ImageUploader.tsx
 msgid "Uploaded to: <0>{url}</0>"

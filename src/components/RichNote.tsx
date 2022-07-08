@@ -66,8 +66,8 @@ export default function RichNote({
           <RichImgPreview
             src={mediaLink}
             style={{ marginTop: 10 }}
-            width="100%"
             height={140}
+            width={140}
           />
         </div>
       )}

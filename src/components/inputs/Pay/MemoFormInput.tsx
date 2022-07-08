@@ -1,10 +1,10 @@
 import { t } from '@lingui/macro'
-import { Form, Input, Tooltip } from 'antd'
+import { Input, Tooltip } from 'antd'
 
-import { AttachStickerModal } from 'components/shared/modals/AttachStickerModal'
-import { BiSticker } from 'react-icons/bi'
 import { useContext, useState } from 'react'
 import { ThemeContext } from 'contexts/themeContext'
+import Sticker from 'components/icons/Sticker'
+import { AttachStickerModal } from 'components/modals/AttachStickerModal'
 
 export function MemoFormInput({
   value,
@@ -45,13 +45,9 @@ export function MemoFormInput({
           }}
         >
           <Tooltip title={t`Attach a sticker`}>
-            <BiSticker
-              style={{
-                height: 20,
-                width: 20,
-              }}
-              onClick={() => setAttachStickerModalVisible(true)}
-            />
+            <div onClick={() => setAttachStickerModalVisible(true)}>
+              <Sticker size={20} />
+            </div>
           </Tooltip>
         </div>
       </div>

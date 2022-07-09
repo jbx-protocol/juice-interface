@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { Space } from 'antd'
-import { CardSection } from 'components/shared/CardSection'
-import SectionHeader from 'components/shared/SectionHeader'
+import { CardSection } from 'components/CardSection'
+import SectionHeader from 'components/SectionHeader'
 
 export default function NoFundingCycle() {
   return (

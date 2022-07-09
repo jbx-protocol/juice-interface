@@ -5,7 +5,7 @@ import { useEthBalanceQuery } from 'hooks/EthBalance'
 import { useContext } from 'react'
 import { formatWad } from 'utils/formatNumber'
 
-import CurrencySymbol from '../shared/CurrencySymbol'
+import CurrencySymbol from 'components/CurrencySymbol'
 
 export default function Balance({
   address,

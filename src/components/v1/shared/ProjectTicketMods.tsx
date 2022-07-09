@@ -7,20 +7,26 @@ import { useForm } from 'antd/lib/form/Form'
 import { ThemeContext } from 'contexts/themeContext'
 import { TicketMod } from 'models/mods'
 import * as moment from 'moment'
-import { CSSProperties, useCallback, useContext, useState } from 'react'
+import {
+  CSSProperties,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from 'react'
 import { formatDate } from 'utils/formatDate'
 import { permyriadToPercent, percentToPermyriad } from 'utils/formatNumber'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 
-import ReservedTokenReceiverModal from 'components/shared/modals/ReservedTokenReceiverModal'
+import ReservedTokenReceiverModal from 'components/modals/ReservedTokenReceiverModal'
 import {
   validateEthAddress,
   validatePercentage,
-} from 'components/shared/formItems/formHelpers'
+} from 'components/formItems/formHelpers'
 
-import FormattedAddress from '../../shared/FormattedAddress'
-import { FormItemExt } from '../../shared/formItems/formItemExt'
+import FormattedAddress from 'components/FormattedAddress'
+import { FormItemExt } from 'components/formItems/formItemExt'
 
 type ModalMode = 'Add' | 'Edit' | undefined
 
@@ -184,9 +190,12 @@ export default function ProjectTicketMods({
 
   if (!mods) return null
 
-  const total = mods.reduce(
-    (acc, curr) => acc + parseFloat(permyriadToPercent(curr.percent ?? '0')),
-    0,
+  const total = useMemo(
+    () =>
+      parseFloat(
+        permyriadToPercent(mods.map(m => m.percent).reduce((a, b) => a + b, 0)),
+      ),
+    [mods],
   )
 
   const setReceiver = async () => {

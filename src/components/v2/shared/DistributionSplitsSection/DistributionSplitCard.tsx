@@ -3,7 +3,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { Split } from 'models/v2/splits'
 import { PropsWithChildren, useContext, useState } from 'react'
 import { parseWad } from 'utils/formatNumber'
-import FormattedAddress from 'components/shared/FormattedAddress'
+import FormattedAddress from 'components/FormattedAddress'
 import { BigNumber } from '@ethersproject/bignumber'
 
 import { formatDate } from 'utils/formatDate'
@@ -16,14 +16,11 @@ import {
   preciseFormatSplitPercent,
   SPLITS_TOTAL_PERCENT,
 } from 'utils/v2/math'
-import CurrencySymbol from 'components/shared/CurrencySymbol'
-import {
-  adjustedSplitPercents,
-  amountFromPercent,
-  getNewDistributionLimit,
-} from 'utils/v2/distributions'
+import CurrencySymbol from 'components/CurrencySymbol'
+import { amountFromPercent } from 'utils/v2/distributions'
 import { t, Trans } from '@lingui/macro'
-import TooltipIcon from 'components/shared/TooltipIcon'
+import TooltipIcon from 'components/TooltipIcon'
+import { round } from 'lodash'
 
 import DistributionSplitModal from './DistributionSplitModal'
 import { CurrencyName } from 'constants/currency'
@@ -38,28 +35,28 @@ const Parens = ({
 
 export default function DistributionSplitCard({
   split,
-  editableSplitIndex,
   splits,
-  editableSplits,
-  onSplitsChanged,
   distributionLimit,
-  setDistributionLimit,
   currencyName,
-  onCurrencyChange,
   isLocked,
   isProjectOwner,
+  editInputMode,
+  onSplitsChanged,
+  onSplitDelete,
+  setDistributionLimit,
+  onCurrencyChange,
 }: {
   split: Split
   splits: Split[]
-  editableSplits: Split[]
-  editableSplitIndex: number
-  onSplitsChanged: (splits: Split[]) => void
-  distributionLimit: string | undefined
-  setDistributionLimit: (distributionLimit: string) => void
+  distributionLimit?: string
   currencyName: CurrencyName
-  onCurrencyChange?: (currencyName: CurrencyName) => void
   isLocked?: boolean
   isProjectOwner?: boolean
+  editInputMode?: 'Distribution' | 'Percentage'
+  onSplitsChanged?: (splits: Split[]) => void
+  onSplitDelete?: (split: Split) => void
+  setDistributionLimit?: (distributionLimit: string) => void
+  onCurrencyChange?: (currencyName: CurrencyName) => void
 }) {
   const {
     theme: { colors, radii },
@@ -100,7 +97,6 @@ export default function DistributionSplitCard({
           (isLocked ? colors.stroke.disabled : colors.stroke.tertiary),
         borderRadius: radii.md,
       }}
-      key={split.beneficiary ?? '' + editableSplitIndex}
     >
       <Space
         direction="vertical"
@@ -209,11 +205,12 @@ export default function DistributionSplitCard({
                   {!distributionLimitIsInfinite && (
                     <span>
                       <CurrencySymbol currency={currencyName} />
-                      {parseFloat(
+                      {round(
                         amountFromPercent({
                           percent: preciseFormatSplitPercent(split.percent),
                           amount: distributionLimit,
-                        }).toFixed(4),
+                        }),
+                        currencyName === 'USD' ? 4 : 2,
                       )}
                     </span>
                   )}
@@ -269,30 +266,7 @@ export default function DistributionSplitCard({
           <Button
             type="text"
             onClick={e => {
-              let adjustedSplits = splits
-              // Adjust all split percents if
-              // - distributionLimit is not infinite
-              // - not deleting the last split
-              if (!distributionLimitIsInfinite && splits.length !== 1) {
-                const newDistributionLimit = getNewDistributionLimit({
-                  currentDistributionLimit: distributionLimit,
-                  newSplitAmount: 0,
-                  editingSplitPercent: splits[editableSplitIndex].percent,
-                }).toString()
-
-                adjustedSplits = adjustedSplitPercents({
-                  splits: editableSplits,
-                  oldDistributionLimit: distributionLimit,
-                  newDistributionLimit,
-                })
-                setDistributionLimit(newDistributionLimit)
-              }
-              if (splits.length === 1) setDistributionLimit('0')
-
-              onSplitsChanged([
-                ...adjustedSplits.slice(0, editableSplitIndex),
-                ...adjustedSplits.slice(editableSplitIndex + 1),
-              ])
+              onSplitDelete?.(split)
               e.stopPropagation()
             }}
             icon={<DeleteOutlined />}
@@ -303,16 +277,16 @@ export default function DistributionSplitCard({
       {!isLocked ? (
         <DistributionSplitModal
           visible={editSplitModalOpen}
+          overrideDistTypeWithPercentage={editInputMode === 'Percentage'}
           onSplitsChanged={onSplitsChanged}
-          editableSplits={editableSplits}
           mode={'Edit'}
           splits={splits}
+          editingSplit={split}
           distributionLimit={distributionLimit}
           setDistributionLimit={setDistributionLimit}
           onClose={() => setEditSplitModalOpen(false)}
           currencyName={currencyName}
           onCurrencyChange={onCurrencyChange}
-          editableSplitIndex={editableSplitIndex}
         />
       ) : null}
     </div>

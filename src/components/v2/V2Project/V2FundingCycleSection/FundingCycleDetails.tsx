@@ -10,10 +10,10 @@ import { formatDate } from 'utils/formatDate'
 import { formattedNum } from 'utils/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { V2CurrencyName } from 'utils/v2/currency'
-import TooltipLabel from 'components/shared/TooltipLabel'
+import TooltipLabel from 'components/TooltipLabel'
 
-import FundingCycleDetailWarning from 'components/shared/Project/FundingCycleDetailWarning'
-import EtherscanLink from 'components/shared/EtherscanLink'
+import FundingCycleDetailWarning from 'components/Project/FundingCycleDetailWarning'
+import EtherscanLink from 'components/EtherscanLink'
 
 import { getUnsafeV2FundingCycleProperties } from 'utils/v2/fundingCycle'
 
@@ -294,6 +294,25 @@ export default function FundingCycleDetails({
               <Trans>Disabled</Trans>
             )}
           </FundingCycleDetailWarning>
+        </Descriptions.Item>
+        <Descriptions.Item
+          span={2}
+          label={
+            <TooltipLabel
+              label={<Trans>Terminal configuration</Trans>}
+              tip={
+                <Trans>
+                  The project owner can add and remove payment terminals.
+                </Trans>
+              }
+            />
+          }
+        >
+          {fundingCycleMetadata?.global.allowSetTerminals ? (
+            <Trans>Allowed</Trans>
+          ) : (
+            <Trans>Disabled</Trans>
+          )}
         </Descriptions.Item>
       </Descriptions>
 

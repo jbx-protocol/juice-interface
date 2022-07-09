@@ -1,8 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Form, Modal, Switch } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import { FormItems } from 'components/shared/formItems'
-import MemoFormItem from 'components/shared/inputs/Pay/MemoFormItem'
+import MemoFormItem from 'components/inputs/Pay/MemoFormItem'
 
 import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
@@ -12,6 +11,8 @@ import { VeNftToken } from 'models/subgraph-entities/veNft/venft-token'
 import { useContext, useState } from 'react'
 
 import { V2ProjectContext } from 'contexts/v2/projectContext'
+
+import { EthAddressInput } from 'components/inputs/EthAddressInput'
 
 import { JBX_CONTRACT_ADDRESS } from 'constants/v2/nft/nftProject'
 
@@ -102,20 +103,17 @@ const RedeemVeNftModal = ({
         />
 
         {customBeneficiaryEnabled && (
-          <FormItems.EthAddress
-            defaultValue={undefined}
-            name={'beneficiary'}
-            onAddressChange={beneficiary => {
-              form.setFieldsValue({ beneficiary })
-            }}
-            formItemProps={{
-              rules: [
-                {
-                  validator: validateCustomBeneficiary,
-                },
-              ],
-            }}
-          />
+          <Form.Item
+            name="beneficiary"
+            label="Beneficiary"
+            rules={[
+              {
+                validator: validateCustomBeneficiary,
+              },
+            ]}
+          >
+            <EthAddressInput />
+          </Form.Item>
         )}
       </Form>
     </Modal>

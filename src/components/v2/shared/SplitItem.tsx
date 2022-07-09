@@ -6,17 +6,18 @@ import { useContext } from 'react'
 import { formatDate } from 'utils/formatDate'
 
 import { Split } from 'models/v2/splits'
-import TooltipLabel from 'components/shared/TooltipLabel'
-import FormattedAddress from 'components/shared/FormattedAddress'
+import TooltipLabel from 'components/TooltipLabel'
+import FormattedAddress from 'components/FormattedAddress'
 import { formatWad } from 'utils/formatNumber'
 import { BigNumber } from '@ethersproject/bignumber'
-import CurrencySymbol from 'components/shared/CurrencySymbol'
+import CurrencySymbol from 'components/CurrencySymbol'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { V2CurrencyName } from 'utils/v2/currency'
 import { formatSplitPercent, SPLITS_TOTAL_PERCENT } from 'utils/v2/math'
 import useMobile from 'hooks/Mobile'
 import { Link } from 'react-router-dom'
-import TooltipIcon from 'components/shared/TooltipIcon'
+import TooltipIcon from 'components/TooltipIcon'
+import { v2ProjectRoute } from 'utils/routes'
 
 export default function SplitItem({
   split,
@@ -70,7 +71,7 @@ export default function SplitItem({
             title={<Trans>Juicebox V2 project with ID {split.projectId}</Trans>}
           >
             <Link
-              to={`/v2/p/${split.projectId}`}
+              to={v2ProjectRoute({ projectId: split.projectId })}
               target="_blank"
               className="text-primary hover-text-action-primary hover-text-decoration-underline"
             >

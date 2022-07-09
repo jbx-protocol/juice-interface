@@ -1,16 +1,16 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
-import CurrencySymbol from 'components/shared/CurrencySymbol'
+import CurrencySymbol from 'components/CurrencySymbol'
 import { useContext, useState } from 'react'
 import { formatWad } from 'utils/formatNumber'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { V2_CURRENCY_USD } from 'utils/v2/currency'
-import PayWarningModal from 'components/shared/PayWarningModal'
+import PayWarningModal from 'components/PayWarningModal'
 import useWeiConverter from 'hooks/WeiConverter'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
-import { PayButtonProps } from 'components/shared/inputs/Pay/PayInputGroup'
+import { PayButtonProps } from 'components/inputs/Pay/PayInputGroup'
 
-import V2ConfirmPayModal from './V2ConfirmPayModal'
+import { V2ConfirmPayModal } from './V2ConfirmPayModal'
 
 export default function V2PayButton({
   payAmount,

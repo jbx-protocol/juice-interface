@@ -5,8 +5,8 @@ import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { CSSProperties, useContext } from 'react'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 
-import ProjectHeader from 'components/shared/ProjectHeader'
-import PayInputGroup from 'components/shared/inputs/Pay/PayInputGroup'
+import ProjectHeader from 'components/Project/ProjectHeader'
+import PayInputGroup from 'components/inputs/Pay/PayInputGroup'
 
 import { Suspense, lazy } from 'react'
 
@@ -19,7 +19,7 @@ import V1ProjectHeaderActions from './V1ProjectHeaderActions'
 import Rewards from './Rewards'
 import V1PayButton from './V1PayButton'
 
-const VolumeChart = lazy(() => import('./../../shared/VolumeChart'))
+const VolumeChart = lazy(() => import('components/VolumeChart'))
 
 export default function V1Project({
   style,

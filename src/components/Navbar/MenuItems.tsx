@@ -2,7 +2,7 @@ import { t, Trans } from '@lingui/macro'
 import { CSSProperties, useEffect, useState } from 'react'
 import { Dropdown, Menu, Space } from 'antd'
 import { DownOutlined, UpOutlined } from '@ant-design/icons'
-import ExternalLink from 'components/shared/ExternalLink'
+import ExternalLink from 'components/ExternalLink'
 
 import Logo from './Logo'
 import {

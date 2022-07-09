@@ -2,7 +2,7 @@ import { isAddress } from '@ethersproject/address'
 import { t, Trans } from '@lingui/macro'
 import { Form, Modal, Switch } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import { FormItems } from 'components/shared/formItems'
+import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { useUnlockTx } from 'hooks/veNft/transactor/UnlockTx'
@@ -95,20 +95,17 @@ const UnlockModal = ({
         />
 
         {customBeneficiaryEnabled && (
-          <FormItems.EthAddress
-            defaultValue={undefined}
-            name={'beneficiary'}
-            onAddressChange={beneficiary => {
-              form.setFieldsValue({ beneficiary })
-            }}
-            formItemProps={{
-              rules: [
-                {
-                  validator: validateCustomBeneficiary,
-                },
-              ],
-            }}
-          />
+          <Form.Item
+            name="beneficiary"
+            label="Beneficiary"
+            rules={[
+              {
+                validator: validateCustomBeneficiary,
+              },
+            ]}
+          >
+            <EthAddressInput />
+          </Form.Item>
         )}
       </Form>
     </Modal>

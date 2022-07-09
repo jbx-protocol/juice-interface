@@ -4,8 +4,8 @@ import { BigNumber } from '@ethersproject/bignumber'
 
 import { Space } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
-import CurrencySymbol from 'components/shared/CurrencySymbol'
-import Loading from 'components/shared/Loading'
+import CurrencySymbol from 'components/CurrencySymbol'
+import Loading from 'components/Loading'
 import { ThemeContext } from 'contexts/themeContext'
 
 import { useContext, useEffect, useState } from 'react'

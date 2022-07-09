@@ -1,6 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
-import ProjectToolDrawerModal from 'components/shared/modals/ProjectToolDrawerModal'
+import { ProjectToolsDrawer } from 'components/Project/ProjectToolsDrawer/ProjectToolsDrawer'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import {
@@ -16,7 +16,7 @@ import { useTransferUnclaimedTokensTx } from 'hooks/v2/transactor/TransferUnclai
 import useUserUnclaimedTokenBalance from 'hooks/v2/contractReader/UserUnclaimedTokenBalance'
 import { useDeployProjectPayerTx } from 'hooks/v2/transactor/DeployProjectPayerTx'
 
-import ProjectVersionBadge from 'components/shared/ProjectVersionBadge'
+import ProjectVersionBadge from 'components/ProjectVersionBadge'
 import { useEditV2ProjectDetailsTx } from 'hooks/v2/transactor/EditV2ProjectDetailsTx'
 
 import V2ReconfigureFundingModalTrigger from './V2ProjectReconfigureModal/V2ReconfigureModalTrigger'
@@ -57,7 +57,7 @@ export default function V2ProjectHeaderActions() {
           <ProjectVersionBadge versionText="V2" />
         </Tooltip>
       </span>
-      <ProjectToolDrawerModal
+      <ProjectToolsDrawer
         visible={toolDrawerVisible}
         onClose={() => setToolDrawerVisible(false)}
         unclaimedTokenBalance={unclaimedTokenBalance}

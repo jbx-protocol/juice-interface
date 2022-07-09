@@ -15,13 +15,13 @@ import {
   V2FundingCycleRiskCount,
 } from 'utils/v2/fundingCycle'
 import { serializeV2FundingCycleData } from 'utils/v2/serializers'
-import Loading from 'components/shared/Loading'
+import Loading from 'components/Loading'
 
 import FundingCycleSection, {
   TabType,
-} from 'components/shared/Project/FundingCycleSection'
+} from 'components/Project/FundingCycleSection'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { CardSection } from 'components/shared/CardSection'
+import { CardSection } from 'components/CardSection'
 
 import useProjectQueuedFundingCycle from 'hooks/v2/contractReader/ProjectQueuedFundingCycle'
 
@@ -47,7 +47,6 @@ export default function V2FundingCycleSection({
   } = useContext(V2ProjectContext)
 
   const canReconfigure = useHasPermission(V2OperatorPermission.RECONFIGURE)
-  const showReconfigureButton = canReconfigure && !isPreviewMode
 
   const {
     data: queuedFundingCycleResponse,
@@ -128,7 +127,7 @@ export default function V2FundingCycleSection({
     <FundingCycleSection
       tabs={tabs}
       reconfigureButton={
-        showReconfigureButton ? (
+        canReconfigure ? (
           <V2ReconfigureFundingModalTrigger
             hideProjectDetails
             triggerButton={(onClick: VoidFunction) => (

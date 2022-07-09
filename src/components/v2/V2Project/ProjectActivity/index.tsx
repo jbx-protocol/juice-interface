@@ -1,12 +1,12 @@
 import { DownloadOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Select, Space } from 'antd'
-import DeployedERC20EventElem from 'components/shared/activityEventElems/DeployedERC20EventElem'
-import PayEventElem from 'components/shared/activityEventElems/PayEventElem'
-import ProjectCreateEventElem from 'components/shared/activityEventElems/ProjectCreateEventElem'
-import RedeemEventElem from 'components/shared/activityEventElems/RedeemEventElem'
-import Loading from 'components/shared/Loading'
-import SectionHeader from 'components/shared/SectionHeader'
+import DeployedERC20EventElem from 'components/activityEventElems/DeployedERC20EventElem'
+import PayEventElem from 'components/activityEventElems/PayEventElem'
+import ProjectCreateEventElem from 'components/activityEventElems/ProjectCreateEventElem'
+import RedeemEventElem from 'components/activityEventElems/RedeemEventElem'
+import Loading from 'components/Loading'
+import SectionHeader from 'components/SectionHeader'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useInfiniteSubgraphQuery } from 'hooks/SubgraphQuery'
@@ -117,7 +117,15 @@ export default function ProjectActivity() {
       'id',
       {
         entity: 'payEvent',
-        keys: ['amount', 'timestamp', 'beneficiary', 'note', 'id', 'txHash'],
+        keys: [
+          'amount',
+          'timestamp',
+          'beneficiary',
+          'note',
+          'id',
+          'txHash',
+          'feeFromV2Project',
+        ],
       },
       {
         entity: 'deployedERC20Event',
@@ -158,6 +166,7 @@ export default function ProjectActivity() {
           'txHash',
           'caller',
           'beneficiary',
+          'beneficiaryDistributionAmount',
           'distributedAmount',
           'memo',
         ],

@@ -2,8 +2,8 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { Checkbox, Descriptions, Form, Modal, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import FormattedAddress from 'components/shared/FormattedAddress'
-import ImageUploader from 'components/shared/inputs/ImageUploader'
+import FormattedAddress from 'components/FormattedAddress'
+import ImageUploader from 'components/inputs/ImageUploader'
 import { emitErrorNotification } from 'utils/notifications'
 import { NetworkContext } from 'contexts/networkContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
@@ -22,9 +22,10 @@ import {
 } from 'utils/v1/fundingCycle'
 import { usePayV1ProjectTx } from 'hooks/v1/transactor/PayV1ProjectTx'
 
-import Paragraph from 'components/shared/Paragraph'
-import ProjectRiskNotice from 'components/shared/ProjectRiskNotice'
-import MemoFormItem from 'components/shared/inputs/Pay/MemoFormItem'
+import Paragraph from 'components/Paragraph'
+import ProjectRiskNotice from 'components/ProjectRiskNotice'
+import MemoFormItem from 'components/inputs/Pay/MemoFormItem'
+import Callout from 'components/Callout'
 
 import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
 
@@ -113,9 +114,14 @@ export default function V1ConfirmPayOwnerModal({
   const renderRiskNotice = () => {
     if (currentFC && riskCount && riskCount > 0) {
       return (
-        <ProjectRiskNotice
-          unsafeProperties={getUnsafeV1FundingCycleProperties(currentFC)}
-        />
+        <Callout>
+          <strong>
+            <Trans>Potential risks</Trans>
+          </strong>
+          <ProjectRiskNotice
+            unsafeProperties={getUnsafeV1FundingCycleProperties(currentFC)}
+          />
+        </Callout>
       )
     }
   }

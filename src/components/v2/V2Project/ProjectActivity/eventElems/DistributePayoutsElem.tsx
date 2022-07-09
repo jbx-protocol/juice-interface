@@ -1,6 +1,6 @@
-import CurrencySymbol from 'components/shared/CurrencySymbol'
-import FormattedAddress from 'components/shared/FormattedAddress'
-import EtherscanLink from 'components/shared/EtherscanLink'
+import CurrencySymbol from 'components/CurrencySymbol'
+import FormattedAddress from 'components/FormattedAddress'
+import EtherscanLink from 'components/EtherscanLink'
 
 import { ThemeContext } from 'contexts/themeContext'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
@@ -9,7 +9,7 @@ import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
 
 import { Trans } from '@lingui/macro'
-import { smallHeaderStyle } from 'components/shared/activityEventElems/styles'
+import { smallHeaderStyle } from 'components/activityEventElems/styles'
 import { DistributePayoutsEvent } from 'models/subgraph-entities/v2/distribute-payouts-event'
 
 export default function DistributePayoutsElem({
@@ -23,6 +23,7 @@ export default function DistributePayoutsElem({
         | 'txHash'
         | 'caller'
         | 'beneficiary'
+        | 'beneficiaryDistributionAmount'
         | 'distributedAmount'
         | 'memo'
       >
@@ -112,7 +113,7 @@ export default function DistributePayoutsElem({
           </div>
         ))}
 
-        {event.distributedAmount?.gt(0) && (
+        {event.beneficiaryDistributionAmount?.gt(0) && (
           <div
             style={{
               display: 'flex',
@@ -132,7 +133,7 @@ export default function DistributePayoutsElem({
               }
             >
               <CurrencySymbol currency="ETH" />
-              {formatWad(event.distributedAmount, { precision: 4 })}
+              {formatWad(event.beneficiaryDistributionAmount, { precision: 4 })}
             </div>
           </div>
         )}

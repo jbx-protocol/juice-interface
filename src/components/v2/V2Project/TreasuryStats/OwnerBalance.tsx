@@ -1,11 +1,11 @@
 import { Trans } from '@lingui/macro'
-import StatLine from 'components/shared/Project/StatLine'
+import StatLine from 'components/Project/StatLine'
 
 import { CSSProperties, useContext } from 'react'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import ETHAmount from 'components/shared/currency/ETHAmount'
+import ETHAmount from 'components/currency/ETHAmount'
 
-import EtherscanLink from 'components/shared/EtherscanLink'
+import EtherscanLink from 'components/EtherscanLink'
 
 import { useEthBalanceQuery } from 'hooks/EthBalance'
 

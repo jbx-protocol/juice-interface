@@ -78,6 +78,7 @@
 
 .ant-form-item {
   margin-bottom: 16px;
+  color: var(--text-primary);
 }
 
 .ant-form-item-extra {
@@ -151,6 +152,10 @@ input:-webkit-autofill-selected {
 
 .ant-input-textarea {
   width: 100%;
+}
+
+textarea.ant-input::placeholder {
+  color: var(--text-tertiary);
 }
 
 .ant-input-textarea-show-count::after {
@@ -235,6 +240,16 @@ input:-webkit-autofill-selected {
   box-shadow: none !important;
 }
 
+
+.ant-upload {
+  color: var(--text-primary)
+}
+
+.ant-upload.ant-upload-select-picture-card {
+  background: var(--background-l1);
+  width: 100%
+}
+
 .ant-upload-list,
 .ant-upload-list-text {
   color: var(--text-secondary);
@@ -260,10 +275,6 @@ input:-webkit-autofill-selected {
   min-height: 4px; // get error messages appearing closer to the input fields
 }
 
-// added this rule for when an the 'extra' prop is passed to FormItem (error message needs more space in this case)
-.ant-form-item-control-input-extra-and-error .ant-form-item-control-input {
-  min-height: 23px;
-}
 .ant-input-group-addon {
   background: transparent;
 }
@@ -271,6 +282,14 @@ input:-webkit-autofill-selected {
 .ant-input-search-button {
   border: 1px solid var(--stroke-primary);
   color: var(--icon-action-primary) !important;
+}
+
+.ant-input-clear-icon {
+  color: var(--icon-secondary);
+
+  &:hover {
+    color: var(--icon-primary);
+  }
 }
 
 .anticon.ant-input-clear-icon {
@@ -295,4 +314,12 @@ input:-webkit-autofill-selected {
 
 .ant-form-item-label > label .ant-form-item-optional {
   color: var(--text-primary);
+}
+
+.ant-input-number-disabled {
+  border: 1px solid var(--stroke-tertiary);
+}
+
+.ant-input-number-disabled input {
+  color: var(--text-tertiary) !important;
 }

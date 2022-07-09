@@ -4,12 +4,15 @@ import { useDeployProjectPayerTx } from 'hooks/v2/transactor/DeployProjectPayerT
 import { useIssueTokensTx } from 'hooks/v2/transactor/IssueTokensTx'
 import { CheckCircleFilled } from '@ant-design/icons'
 import { CSSProperties, useContext, useState } from 'react'
-import RichButton from 'components/shared/RichButton'
+import RichButton from 'components/RichButton'
 
 import { ThemeContext } from 'contexts/themeContext'
-import IssueTokenModal from 'components/shared/modals/IssueTokenModal'
+import IssueTokenModal from 'components/modals/IssueTokenModal'
+
+import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import LaunchProjectPayerModal from './LaunchProjectPayer/LaunchProjectPayerModal'
+import { V2ReconfigureProjectHandleDrawer } from './V2ReconfigureProjectHandleDrawer'
 
 export default function NewDeployModal({
   visible,
@@ -18,6 +21,7 @@ export default function NewDeployModal({
   visible: boolean
   onClose: VoidFunction
 }) {
+  const { handle } = useContext(V2ProjectContext)
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -26,6 +30,7 @@ export default function NewDeployModal({
     useState<boolean>(false)
   const [launchProjectPayerModalVisible, setLaunchProjectPayerModalVisible] =
     useState<boolean>(false)
+  const [handleModalVisible, setHandleModalVisible] = useState<boolean>(false)
 
   const [hasIssuedToken, setHasIssuedToken] = useState<boolean>()
   const [hasLaunchedPayableAddress, setHasLaunchedPayableAddress] =
@@ -61,6 +66,25 @@ export default function NewDeployModal({
       <div>
         <RichButton
           prefix="1"
+          heading={<Trans>Set a project handle (optional)</Trans>}
+          description={
+            <Trans>
+              Set a unique name that will be visible in your project's URL, and
+              that will allow your project to appear in search results.
+            </Trans>
+          }
+          onClick={() => setHandleModalVisible(true)}
+          disabled={!!handle}
+          icon={
+            handle ? (
+              <CheckCircleFilled style={{ color: seenColor }} />
+            ) : undefined
+          }
+          primaryColor={handle ? seenColor : undefined}
+          style={stepButtonStyle}
+        />
+        <RichButton
+          prefix="2"
           heading={<Trans>Issue an ERC-20 token (optional)</Trans>}
           description={
             <Trans>
@@ -79,7 +103,7 @@ export default function NewDeployModal({
           style={stepButtonStyle}
         />
         <RichButton
-          prefix="2"
+          prefix="3"
           heading={<Trans>Create a payable address (optional)</Trans>}
           description={
             <Trans>
@@ -98,6 +122,10 @@ export default function NewDeployModal({
           style={stepButtonStyle}
         />
       </div>
+      <V2ReconfigureProjectHandleDrawer
+        visible={handleModalVisible}
+        onFinish={() => setHandleModalVisible(false)}
+      />
       <IssueTokenModal
         visible={issueTokenModalVisible}
         useIssueTokensTx={useIssueTokensTx}

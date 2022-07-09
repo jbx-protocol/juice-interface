@@ -1,32 +1,21 @@
-import { HashRouter, Route, Switch, useLocation } from 'react-router-dom'
-import { Redirect, useParams } from 'react-router'
-import { Suspense, lazy, useEffect } from 'react'
-import V1Dashboard from 'components/v1/V1Dashboard'
-import Landing from 'components/Landing'
-import Projects from 'components/Projects'
-import Loading from 'components/shared/Loading'
-import { V1CurrencyProvider } from 'providers/v1/V1CurrencyProvider'
-import PrivacyPolicy from 'components/PrivacyPolicy'
-import V2BugUpdates from 'components/V2BugUpdates'
-import { t } from '@lingui/macro'
+import Landing from 'pages'
+import PrivacyPolicy from 'pages/privacy'
+import Projects from 'pages/projects'
+import Loading from 'components/Loading'
+import V1Dashboard from 'pages/p'
+import V2BugUpdates from 'pages/v2-bug-updates'
+
 import { fathom } from 'lib/fathom'
-
+import { V1CurrencyProvider } from 'providers/v1/V1CurrencyProvider'
 import { V2UserProvider } from 'providers/v2/UserProvider'
+import { usePageTitle } from 'hooks/PageTitle'
+import { lazy, Suspense, useEffect } from 'react'
+import { Redirect, useParams } from 'react-router'
+import { HashRouter, Route, Switch, useLocation } from 'react-router-dom'
 
-import { DEFAULT_SITE_TITLE } from 'constants/siteMetadata'
-
-const V1Create = lazy(() => import('components/v1/V1Create'))
-const V2Create = lazy(() => import('components/v2/V2Create'))
-const V2DashboardGateway = lazy(
-  () => import('components/v2/V2Dashboard/Gateway'),
-)
-
-const pageTitles = (): { [k in string]: string } => {
-  return {
-    '/create': t`Create project`,
-    '/projects': t`Projects`,
-  }
-}
+const V1Create = lazy(() => import('pages/v1/create'))
+const V2Create = lazy(() => import('pages/create'))
+const V2DashboardGateway = lazy(() => import('pages/v2/p/V2DashboardGateway'))
 
 function CatchallRedirect() {
   const route = useParams<{ route: string }>()['route']
@@ -40,15 +29,6 @@ function usePageViews() {
     fathom?.trackPageview({
       url: location.pathname,
     })
-  }, [location])
-}
-
-function usePageTitle() {
-  const location = useLocation()
-
-  useEffect(() => {
-    const name = pageTitles()[location.pathname]
-    document.title = name ? `${name} | Juicebox` : DEFAULT_SITE_TITLE
   }, [location])
 }
 
@@ -84,13 +64,14 @@ function JuiceboxSwitch() {
         <Projects />
       </Route>
 
-      <Route path="/p/:ensName(.*.eth)">
+      <Route path="/@:handle">
         <Suspense fallback={<Loading />}>
           <V2UserProvider>
             <V2DashboardGateway />
           </V2UserProvider>
         </Suspense>
       </Route>
+
       <Route path="/p/:handle">
         <V1Dashboard />
       </Route>

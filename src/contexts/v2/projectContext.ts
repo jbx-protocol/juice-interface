@@ -18,6 +18,7 @@ export type V2ProjectContextType = {
   isPreviewMode?: boolean
 
   projectId: number | undefined
+  handle: string | undefined
   createdAt: number | undefined
   cv: CV | undefined
   projectMetadata: ProjectMetadataV4 | undefined
@@ -53,6 +54,7 @@ export const V2ProjectContext = createContext<V2ProjectContextType>({
   isPreviewMode: false,
 
   projectId: undefined,
+  handle: undefined,
   createdAt: undefined,
   cv: undefined,
   projectMetadata: undefined,

@@ -1,10 +1,10 @@
 import { Skeleton, Space } from 'antd'
-import FundingProgressBar from 'components/shared/Project/FundingProgressBar'
+import FundingProgressBar from 'components/Project/FundingProgressBar'
 import { useContext } from 'react'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import useTerminalCurrentOverflow from 'hooks/v2/contractReader/TerminalCurrentOverflow'
 
-import { VolumeStatLine } from 'components/shared/Project/VolumeStatLine'
+import { VolumeStatLine } from 'components/Project/VolumeStatLine'
 
 import { ThemeContext } from 'contexts/themeContext'
 
@@ -16,9 +16,10 @@ export default function TreasuryStats() {
   const {
     balanceInDistributionLimitCurrency,
     distributionLimit,
-    terminals,
     projectId,
     totalVolume,
+    isPreviewMode,
+    primaryTerminal,
     loading: { distributionLimitLoading },
   } = useContext(V2ProjectContext)
 
@@ -28,11 +29,12 @@ export default function TreasuryStats() {
 
   const { data: overflow, loading: overflowLoading } =
     useTerminalCurrentOverflow({
-      terminal: terminals?.[0],
+      terminal: primaryTerminal,
       projectId,
     })
 
-  const fundingProgressBarLoading = overflowLoading || distributionLimitLoading
+  const fundingProgressBarLoading =
+    (!isPreviewMode && overflowLoading) || distributionLimitLoading
 
   return (
     <Space direction="vertical" style={{ display: 'flex' }}>

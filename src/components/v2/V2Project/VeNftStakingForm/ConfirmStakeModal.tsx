@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Col, Divider, Modal, Row, Image } from 'antd'
-import FormattedAddress from 'components/shared/FormattedAddress'
+import FormattedAddress from 'components/FormattedAddress'
 
 import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'

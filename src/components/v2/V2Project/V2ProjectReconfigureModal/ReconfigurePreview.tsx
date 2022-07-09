@@ -1,6 +1,7 @@
 import { Col, Row } from 'antd'
 import {
   AllowMintingStatistic,
+  AllowSetTerminalsStatistic,
   DiscountRateStatistic,
   DistributionLimitStatistic,
   DistributionSplitsStatistic,
@@ -12,7 +13,7 @@ import {
   RedemptionRateStatistic,
   ReservedSplitsStatistic,
   ReservedTokensStatistic,
-} from 'components/v2/V2Create/tabs/ReviewDeployTab/FundingAttributes'
+} from 'pages/create/tabs/ReviewDeployTab/FundingAttributes'
 import {
   V2FundAccessConstraint,
   V2FundingCycle,
@@ -156,12 +157,17 @@ export default function ReconfigurePreview({
         ) : null}
       </Row>
       <Row gutter={gutter} style={{ marginBottom: rowMargin }}>
-        <Col md={12} sm={12}>
+        <Col md={8}>
           <PausePayStatistic pausePay={fundingCycleMetadata.pausePay} />
         </Col>
-        <Col md={12} sm={12}>
+        <Col md={8}>
           <AllowMintingStatistic
             allowMinting={fundingCycleMetadata.allowMinting}
+          />
+        </Col>
+        <Col md={8}>
+          <AllowSetTerminalsStatistic
+            allowSetTerminals={fundingCycleMetadata.global.allowSetTerminals}
           />
         </Col>
       </Row>

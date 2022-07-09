@@ -8,7 +8,7 @@ import { MaxUint256 } from '@ethersproject/constants'
 import { useContext, useEffect, useMemo, useState } from 'react'
 import { NetworkContext } from 'contexts/networkContext'
 import { fromWad, parseWad } from 'utils/formatNumber'
-import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
+import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { BigNumber } from '@ethersproject/bignumber'
 import useERC20BalanceOf from 'hooks/v2/contractReader/ERC20BalanceOf'
 import { detailedTimeString } from 'utils/formatTime'
@@ -30,7 +30,7 @@ import StakingNFTCarousel from 'components/v2/V2Project/VeNftStakingForm/Staking
 
 import { useForm, useWatch } from 'antd/lib/form/Form'
 
-import { FormItems } from 'components/shared/formItems'
+import { EthAddressInput } from 'components/inputs/EthAddressInput'
 
 import { isAddress } from 'ethers/lib/utils'
 
@@ -354,20 +354,17 @@ export default function StakeForNFTForm() {
             style={{ marginBottom: '1rem' }}
           />
           {customBeneficiaryEnabled && (
-            <FormItems.EthAddress
-              defaultValue={''}
+            <Form.Item
               name="beneficiary"
-              onAddressChange={beneficiary => {
-                form.setFieldsValue({ beneficiary })
-              }}
-              formItemProps={{
-                rules: [
-                  {
-                    validator: validateCustomBeneficiary,
-                  },
-                ],
-              }}
-            />
+              label="Beneficiary"
+              rules={[
+                {
+                  validator: validateCustomBeneficiary,
+                },
+              ]}
+            >
+              <EthAddressInput />
+            </Form.Item>
           )}
           {variants && baseImagesHash && (
             <StakingNFTCarousel

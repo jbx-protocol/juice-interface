@@ -13,6 +13,11 @@ export default function useHandleForProjectId(
     contract: V1ContractName.Projects,
     functionName: 'handleOf',
     args: projectId ? [BigNumber.from(projectId).toHexString()] : null,
-    formatter: useCallback(val => parseBytes32String(val), []),
+    formatter: useCallback(val => {
+      if (val === undefined || val === null) {
+        return undefined
+      }
+      return parseBytes32String(val)
+    }, []),
   })
 }

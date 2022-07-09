@@ -24,6 +24,8 @@ import ManageTokensModal from 'components/shared/ManageTokensModal'
 
 import ParticipantsModal from 'components/shared/modals/ParticipantsModal'
 
+import { useVeNftEnabledForProject } from 'hooks/veNft/VeNftEnabledForProject'
+
 import V2RedeemModal from './V2RedeemModal'
 import V2ClaimTokensModal from './V2ClaimTokensModal'
 import V2MintModal from './V2MintModal'
@@ -98,6 +100,7 @@ export default function V2ManageTokensSection() {
     useHasPermission(V2OperatorPermission.MINT),
   )
   const projectAllowsMint = Boolean(fundingCycleMetadata?.allowMinting)
+  const veNftEnabled = useVeNftEnabledForProject(projectId)
 
   return (
     <>
@@ -234,6 +237,7 @@ export default function V2ManageTokensSection() {
         onCancel={() => setManageTokensModalVisible(false)}
         projectAllowsMint={projectAllowsMint}
         userHasMintPermission={userHasMintPermission}
+        veNftEnabled={veNftEnabled}
         hasOverflow={hasOverflow}
         tokenSymbol={tokenSymbol}
         tokenAddress={tokenAddress}

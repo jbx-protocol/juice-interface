@@ -54,6 +54,7 @@ export default function ManageTokensModal({
   visible,
   projectAllowsMint,
   userHasMintPermission,
+  veNftEnabled,
   hasOverflow,
   tokenSymbol,
   tokenAddress,
@@ -63,6 +64,7 @@ export default function ManageTokensModal({
 }: {
   userHasMintPermission: boolean
   projectAllowsMint: boolean
+  veNftEnabled: boolean
   onCancel?: VoidFunction
   visible?: boolean
   hasOverflow: boolean | undefined
@@ -76,7 +78,7 @@ export default function ManageTokensModal({
   const [redeemModalVisible, setRedeemModalVisible] = useState<boolean>(false)
   const [unstakeModalVisible, setUnstakeModalVisible] = useState<boolean>()
   const [mintModalVisible, setMintModalVisible] = useState<boolean>()
-  const [stakeDrawerVisible, setStakeDrawerVisible] = useState<boolean>(true)
+  const [stakeDrawerVisible, setStakeDrawerVisible] = useState<boolean>(false)
 
   const tokensLabel = tokenSymbolText({
     tokenSymbol: tokenSymbol,
@@ -141,16 +143,18 @@ export default function ManageTokensModal({
               onClick={() => setUnstakeModalVisible(true)}
             />
           )}
-          <RichButton
-            heading={<Trans>Stake {tokensLabel} for NFT</Trans>}
-            description={
-              <Trans>
-                Stake your {tokensLabel} to increase your voting weight and
-                claim your BannyVerse NFT.
-              </Trans>
-            }
-            onClick={() => setStakeDrawerVisible(true)}
-          />
+          {veNftEnabled && (
+            <RichButton
+              heading={<Trans>Stake {tokensLabel} for NFT</Trans>}
+              description={
+                <Trans>
+                  Stake your {tokensLabel} to increase your voting weight and
+                  claim your BannyVerse NFT.
+                </Trans>
+              }
+              onClick={() => setStakeDrawerVisible(true)}
+            />
+          )}
           {userHasMintPermission && projectAllowsMint && (
             <Tooltip
               title={

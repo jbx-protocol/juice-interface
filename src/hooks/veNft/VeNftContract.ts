@@ -6,7 +6,7 @@ import { NetworkContext } from 'contexts/networkContext'
 import * as constants from '@ethersproject/constants'
 import { useContext, useEffect, useState } from 'react'
 
-import { veBannyAbi } from 'constants/v2/nft/veBannyABI'
+import { veNftAbi } from 'constants/v2/veNft/veNftAbi'
 
 import { readProvider } from 'constants/readProvider'
 
@@ -25,9 +25,9 @@ export function useNFTContract(address: string | undefined) {
       ) {
         setContract(undefined)
       } else if (!accounts.length) {
-        setContract(new Contract(address, veBannyAbi, readProvider))
+        setContract(new Contract(address, veNftAbi, readProvider))
       } else {
-        setContract(new Contract(address, veBannyAbi, provider.getSigner()))
+        setContract(new Contract(address, veNftAbi, provider.getSigner()))
       }
     })
   }, [address, signingProvider])

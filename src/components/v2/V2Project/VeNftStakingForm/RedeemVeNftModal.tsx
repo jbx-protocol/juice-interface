@@ -14,7 +14,7 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 
-import { JBX_CONTRACT_ADDRESS } from 'constants/v2/nft/nftProject'
+import { JBX_CONTRACT_ADDRESS } from 'constants/v2/veNft/veNftProject'
 
 type RedeemVeNftModalProps = {
   token: VeNftToken

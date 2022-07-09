@@ -1,4 +1,4 @@
-export const veBannyAbi = [
+export const veNftAbi = [
   {
     inputs: [
       { internalType: 'uint256', name: '_projectId', type: 'uint256' },

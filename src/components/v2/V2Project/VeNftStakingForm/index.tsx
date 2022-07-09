@@ -36,8 +36,8 @@ import { isAddress } from 'ethers/lib/utils'
 
 import {
   JBX_CONTRACT_ADDRESS,
-  VEBANNY_CONTRACT_ADDRESS,
-} from 'constants/v2/nft/nftProject'
+  VENFT_CONTRACT_ADDRESS,
+} from 'constants/v2/veNft/veNftProject'
 
 import { shadowCard } from 'constants/styles/shadowCard'
 import StakedTokenStatsSection from './StakedTokenStatsSection'
@@ -141,7 +141,7 @@ export default function StakeForNFTForm() {
   const { data: allowance } = useERC20Allowance(
     JBX_CONTRACT_ADDRESS,
     userAddress,
-    VEBANNY_CONTRACT_ADDRESS,
+    VENFT_CONTRACT_ADDRESS,
   )
   const hasAdequateApproval = allowance
     ? allowance.gte(parseWad(tokensStaked))
@@ -155,7 +155,7 @@ export default function StakeForNFTForm() {
     }
 
     const txSuccess = await approveTx({
-      spender: VEBANNY_CONTRACT_ADDRESS,
+      spender: VENFT_CONTRACT_ADDRESS,
       amount: MaxUint256,
     })
 

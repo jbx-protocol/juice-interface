@@ -7,7 +7,7 @@ import * as constants from '@ethersproject/constants'
 import { useContext, useEffect, useState } from 'react'
 
 import { readProvider } from 'constants/readProvider'
-import { veBannyResolverABI } from 'constants/v2/nft/veBannyResolverABI'
+import { veNftResolverAbi } from 'constants/v2/veNft/veNftResolverAbi'
 
 export function useNFTResolverContract(address: string | undefined) {
   const [contract, setContract] = useState<Contract>()
@@ -24,10 +24,10 @@ export function useNFTResolverContract(address: string | undefined) {
       ) {
         setContract(undefined)
       } else if (!accounts.length) {
-        setContract(new Contract(address, veBannyResolverABI, readProvider))
+        setContract(new Contract(address, veNftResolverAbi, readProvider))
       } else {
         setContract(
-          new Contract(address, veBannyResolverABI, provider.getSigner()),
+          new Contract(address, veNftResolverAbi, provider.getSigner()),
         )
       }
     })

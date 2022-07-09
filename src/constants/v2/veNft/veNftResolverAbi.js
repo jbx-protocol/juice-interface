@@ -1,4 +1,4 @@
-export const veBannyResolverABI = [
+export const veNftResolverAbi = [
   {
     inputs: [],
     name: 'INSUFFICIENT_BALANCE',

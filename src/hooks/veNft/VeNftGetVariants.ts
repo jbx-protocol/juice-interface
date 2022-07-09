@@ -4,7 +4,7 @@ import { VeNftVariant } from 'models/veNft/veNftVariant'
 import { useQuery } from 'react-query'
 import { ipfsCidUrl } from 'utils/ipfs'
 
-import { VARIANTS_HASH } from 'constants/v2/nft/nftProject'
+import { VARIANTS_HASH } from 'constants/v2/veNft/veNftProject'
 
 type VeNftMetadataResponse = {
   metadata: {

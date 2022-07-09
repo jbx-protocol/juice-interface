@@ -86,7 +86,7 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
         value: false,
       },
     ],
-    url: process.env.REACT_APP_VEBANNY_SUBGRAPH_URL,
+    url: process.env.REACT_APP_VENFT_SUBGRAPH_URL,
   }).data
 
   const veNftProject: VeNftProjectContextType = {

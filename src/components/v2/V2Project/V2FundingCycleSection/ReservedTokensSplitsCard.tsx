@@ -17,6 +17,7 @@ import { CSSProperties, useContext, useState } from 'react'
 import { formatWad } from 'utils/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { formatReservedRate } from 'utils/v2/math'
+import { reloadWindow } from 'utils/windowUtils'
 
 import DistributeReservedTokensModal from './modals/DistributeReservedTokensModal'
 import { EditTokenAllocationModal } from './modals/EditTokenAllocationModal'
@@ -187,7 +188,7 @@ export default function ReservedTokensSplitsCard({
       <DistributeReservedTokensModal
         visible={distributeReservedTokensModalVisible}
         onCancel={() => setDistributeReservedTokensModalVisible(false)}
-        onConfirmed={() => window.location.reload()}
+        onConfirmed={reloadWindow}
       />
       <EditTokenAllocationModal
         visible={editTokenAllocationModalVisible}

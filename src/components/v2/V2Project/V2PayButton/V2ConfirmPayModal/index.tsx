@@ -26,33 +26,11 @@ import { weightedAmount } from 'utils/v2/math'
 import TransactionModal from 'components/TransactionModal'
 import Callout from 'components/Callout'
 import useMobile from 'hooks/Mobile'
-import { maxEligibleRewardTier } from 'utils/v2/nftRewards'
+import { maxEligibleRewardTier, MOCK_NFTs } from 'utils/v2/nftRewards'
 import { featureFlagEnabled } from 'utils/featureFlags'
 
 import { V2PayForm, V2PayFormType } from '../V2PayForm'
 import { NftReward } from './NftRewardCell'
-
-const MOCK_NFTs: NFTRewardTier[] = [
-  {
-    name: 'Penguin dude',
-    description:
-      "This NFT gives you an unbelievable amount of shit IRL. And it's a penguin wearing a hat.",
-    imageUrl:
-      'http://www.artrights.me/wp-content/uploads/2021/09/unnamed-1.png',
-    paymentThreshold: 1,
-    maxSupply: 10,
-    externalLink: 'https://juicebox.money',
-  },
-  {
-    name: 'Popcorn Banny',
-    description: 'This Banny loves to watch shit go down in the Discord. ',
-    imageUrl:
-      'https://jbx.mypinata.cloud/ipfs/QmW7TPgipVPag1W1iZPcJDE4YRv9Mb5wY9AvxgFcPaFEXH',
-    paymentThreshold: 0.1,
-    maxSupply: 10,
-    externalLink: 'https://juicebox.money',
-  },
-]
 
 /**
  * Produce payment memo with the following schema:

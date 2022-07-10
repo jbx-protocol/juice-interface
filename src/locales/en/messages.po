@@ -1906,6 +1906,7 @@ msgstr "My Projects"
 msgid "NFT projects"
 msgstr "NFT projects"
 
+#: src/components/v2/V2Project/NFTRewardsSection/index.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/index.tsx
 #: src/pages/create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
@@ -2439,6 +2440,10 @@ msgstr "Read more"
 #: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "Receive ERC-20"
 msgstr "Receive ERC-20"
+
+#: src/components/v2/V2Project/NFTRewardsSection/index.tsx
+msgid "Receive an NFT for contributing above a certain amount."
+msgstr "Receive an NFT for contributing above a certain amount."
 
 #: src/components/inputs/Pay/PayInputSubText.tsx
 msgid "Receive {receiveText}"

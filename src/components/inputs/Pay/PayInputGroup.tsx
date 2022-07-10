@@ -24,6 +24,8 @@ export type PayButtonProps = {
 }
 
 export default function PayInputGroup({
+  payAmount,
+  setPayAmount,
   PayButton,
   reservedRate,
   weight,
@@ -32,6 +34,8 @@ export default function PayInputGroup({
   weightingFn,
   disabled,
 }: {
+  payAmount: string
+  setPayAmount: (payAmount: string) => void
   PayButton: (props: PayButtonProps) => JSX.Element | null
   reservedRate: number | undefined
   weight: BigNumber | undefined
@@ -48,7 +52,6 @@ export default function PayInputGroup({
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const [payAmount, setPayAmount] = useState<string>('0')
   const [payInCurrency, setPayInCurrency] = useState<CurrencyOption>(ETH)
   const [isErrorField, setIsErrorField] = useState<boolean>(false)
 

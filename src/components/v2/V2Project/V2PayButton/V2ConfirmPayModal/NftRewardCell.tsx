@@ -17,11 +17,12 @@ export function NftReward({
       <img
         src={nftReward.imageUrl}
         alt={nftReward.name}
-        width={'50px'}
         height={'50px'}
         style={{
           marginLeft: 15,
           display: imageLoading ? 'none' : 'unset',
+          objectFit: 'cover',
+          width: '50px',
         }}
         onLoad={() => setImageLoading(false)}
       />

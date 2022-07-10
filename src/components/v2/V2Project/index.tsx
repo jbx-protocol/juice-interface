@@ -39,6 +39,7 @@ const GUTTER_PX = 40
 
 const VolumeChart = lazy(() => import('components/VolumeChart'))
 import { V2ReconfigureProjectHandleDrawer } from './V2ReconfigureProjectHandleDrawer'
+import { NFTRewardsSection } from './NFTRewardsSection'
 
 const AllAssetsButton = ({ onClick }: { onClick: VoidFunction }) => {
   const { theme } = useContext(ThemeContext)
@@ -79,6 +80,7 @@ export default function V2Project({
   )
 
   const [handleModalVisible, setHandleModalVisible] = useState<boolean>()
+  const [payAmount, setPayAmount] = useState<string>('0')
 
   const { data: queuedFundingCycleResponse } = useProjectQueuedFundingCycle({
     projectId,
@@ -148,15 +150,17 @@ export default function V2Project({
       {!isPreviewMode &&
         hasCurrentFundingCycle === false &&
         hasQueuedFundingCycle === false && <V2BugNotice />}
-      <Row gutter={GUTTER_PX} align="bottom">
+      <Row gutter={GUTTER_PX} align={'top'}>
         <Col md={colSizeMd} xs={24}>
           <TreasuryStats />
           <div style={{ textAlign: 'right' }}>
             <AllAssetsButton onClick={() => setBalancesModalVisible(true)} />
           </div>
         </Col>
-        <Col md={colSizeMd} xs={24} style={{ marginTop: GUTTER_PX }}>
+        <Col md={colSizeMd} xs={24}>
           <PayInputGroup
+            payAmount={payAmount}
+            setPayAmount={setPayAmount}
             PayButton={V2PayButton}
             reservedRate={fundingCycleMetadata?.reservedRate.toNumber()}
             weight={fundingCycle?.weight}
@@ -164,6 +168,10 @@ export default function V2Project({
             tokenSymbol={tokenSymbol}
             tokenAddress={tokenAddress}
             disabled={isPreviewMode || payIsDisabledPreV2Redeploy()}
+          />
+          <NFTRewardsSection
+            payAmount={payAmount}
+            setPayAmount={setPayAmount}
           />
         </Col>
       </Row>

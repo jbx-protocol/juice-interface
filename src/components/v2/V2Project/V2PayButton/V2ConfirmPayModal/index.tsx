@@ -54,6 +54,32 @@ const MOCK_NFTs: NFTRewardTier[] = [
   },
 ]
 
+/**
+ * Produce payment memo with the following schema:
+ * <text memo> <sticker URLs> <uploaded image URL>
+ */
+const buildPaymentMemo = ({
+  text = '',
+  imageUrl,
+  stickerUrls,
+}: {
+  text?: string
+  imageUrl?: string
+  stickerUrls?: string[]
+}) => {
+  let memo = `${text}`
+
+  if (stickerUrls?.length) {
+    memo += `\n${stickerUrls.join(' ')}`
+  }
+
+  if (imageUrl) {
+    memo += `\n${imageUrl}`
+  }
+
+  return memo
+}
+
 export function V2ConfirmPayModal({
   visible,
   weiAmount,
@@ -132,25 +158,13 @@ export function V2ConfirmPayModal({
     }
     setLoading(true)
 
-    const imageUrls: string[] = []
-    let memoMetadata: Record<string, unknown> = { version: 1 }
-    if (uploadedImage) {
-      memoMetadata = { ...memoMetadata, userUploadedImages: [uploadedImage] }
-      imageUrls.push(uploadedImage)
-    }
-    if (stickerUrls) {
-      memoMetadata = { ...memoMetadata, stickerUrls }
-    }
-
-    const memo =
-      (textMemo ?? '') +
-      (Object.keys(memoMetadata).length
-        ? '\n' + JSON.stringify(memoMetadata)
-        : '')
-
     const txSuccess = await payProjectTx(
       {
-        memo: memo,
+        memo: buildPaymentMemo({
+          text: textMemo,
+          imageUrl: uploadedImage,
+          stickerUrls,
+        }),
         preferClaimedTokens: !!preferClaimed,
         beneficiary: txBeneficiary,
         value: weiAmount,

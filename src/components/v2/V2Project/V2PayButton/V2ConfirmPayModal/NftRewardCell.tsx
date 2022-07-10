@@ -1,22 +1,31 @@
 import { Tooltip } from 'antd'
 import ExternalLink from 'components/ExternalLink'
+import Loading from 'components/Loading'
 import { NFTRewardTier } from 'models/v2/nftRewardTier'
+import { useState } from 'react'
 
 export function NftReward({
   nftReward,
 }: {
   nftReward: NFTRewardTier
 }): JSX.Element {
+  const [imageLoading, setImageLoading] = useState<boolean>(true)
+
   const nftImage = (
-    <img
-      src={nftReward.imageUrl}
-      alt={nftReward.name}
-      width={'50px'}
-      height={'50px'}
-      style={{
-        marginLeft: 15,
-      }}
-    />
+    <>
+      {imageLoading ? <Loading size={25} style={{ marginLeft: 15 }} /> : null}
+      <img
+        src={nftReward.imageUrl}
+        alt={nftReward.name}
+        width={'50px'}
+        height={'50px'}
+        style={{
+          marginLeft: 15,
+          display: imageLoading ? 'none' : 'unset',
+        }}
+        onLoad={() => setImageLoading(false)}
+      />
+    </>
   )
   const isLink = nftReward.externalLink.length
 

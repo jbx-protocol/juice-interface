@@ -199,7 +199,8 @@ export function V2ConfirmPayModal({
       onCancel={onCancel}
       confirmLoading={loading}
       width={640}
-      centered={true}
+      centered
+      destroyOnClose
     >
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
         {projectMetadata.payDisclosure && (

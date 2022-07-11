@@ -1,16 +1,16 @@
 import { t } from '@lingui/macro'
-import { Form, Input, Tooltip } from 'antd'
+import { Input, Tooltip } from 'antd'
 import { SmileOutlined } from '@ant-design/icons'
 import { AttachStickerModal } from 'components/modals/AttachStickerModal'
 import { useContext, useState } from 'react'
 import { ThemeContext } from 'contexts/themeContext'
 
-export default function MemoFormItem({
+export function MemoFormInput({
   value,
   onChange,
 }: {
-  value: string
-  onChange: (memo: string) => void
+  value?: string
+  onChange?: (memo: string) => void
 }) {
   const {
     theme: { colors },
@@ -20,11 +20,7 @@ export default function MemoFormItem({
     useState<boolean>(false)
 
   return (
-    <Form.Item
-      label={t`Memo (optional)`}
-      className={'antd-no-number-handler'}
-      extra={t`Add an on-chain memo to this payment.`}
-    >
+    <>
       <div
         style={{
           position: 'relative',
@@ -34,7 +30,7 @@ export default function MemoFormItem({
           placeholder={t`WAGMI!`}
           maxLength={256}
           value={value}
-          onChange={e => onChange(e.target.value)}
+          onChange={e => onChange?.(e.target.value)}
           showCount
           autoSize
         />
@@ -62,9 +58,9 @@ export default function MemoFormItem({
           const url = new URL(`${window.location.origin}${sticker.filepath}`)
           const urlString = url.toString()
 
-          onChange(value.length ? `${value} ${urlString}` : urlString)
+          onChange?.(value?.length ? `${value} ${urlString}` : urlString)
         }}
       />
-    </Form.Item>
+    </>
   )
 }

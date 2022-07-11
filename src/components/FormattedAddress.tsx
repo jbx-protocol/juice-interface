@@ -18,12 +18,16 @@ type EnsRecord = {
 const getStorageKey = () => 'jb_ensDict_' + readProvider.network.chainId
 
 const getEnsDict = () => {
-  try {
-    return JSON.parse(
-      window.localStorage.getItem(getStorageKey()) ?? '{}',
-    ) as Record<string, EnsRecord>
-  } catch (e) {
-    console.info('ENS storage not found')
+  if (typeof window !== 'undefined') {
+    try {
+      return JSON.parse(
+        window.localStorage.getItem(getStorageKey()) ?? '{}',
+      ) as Record<string, EnsRecord>
+    } catch (e) {
+      console.info('ENS storage not found')
+      return {}
+    }
+  } else {
     return {}
   }
 }

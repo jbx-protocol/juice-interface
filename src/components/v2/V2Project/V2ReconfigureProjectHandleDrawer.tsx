@@ -15,6 +15,7 @@ import { useCallback, useContext, useEffect, useState } from 'react'
 import { v2ProjectRoute } from 'utils/routes'
 
 import { drawerStyle } from 'constants/styles/drawerStyle'
+import { projectHandleENSTextRecordKey } from '../../../constants/projectHandleENSTextRecordKey'
 
 export function V2ReconfigureProjectHandleDrawer({
   visible,
@@ -192,7 +193,7 @@ export function V2ReconfigureProjectHandleDrawer({
         <Trans>
           Set a text record for{' '}
           {handle ? <strong>{handle}.eth</strong> : 'that ENS name'} with the
-          key <strong>"juicebox"</strong> and the value{' '}
+          key <strong>"{projectHandleENSTextRecordKey}"</strong> and the value{' '}
           <strong>"{projectId}"</strong> (this project's ID). You can do this on
           the{' '}
           <a

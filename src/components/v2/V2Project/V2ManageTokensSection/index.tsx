@@ -24,6 +24,8 @@ import ManageTokensModal from 'components/ManageTokensModal'
 
 import ParticipantsModal from 'components/modals/ParticipantsModal'
 
+import { reloadWindow } from 'utils/windowUtils'
+
 import V2RedeemModal from './V2RedeemModal'
 import V2ClaimTokensModal from './V2ClaimTokensModal'
 import V2MintModal from './V2MintModal'
@@ -131,7 +133,7 @@ export default function V2ManageTokensSection() {
                 <div style={{ marginBottom: 20 }}>
                   <IssueTokenButton
                     useIssueTokensTx={useIssueTokensTx}
-                    onCompleted={() => window.location.reload()}
+                    onCompleted={reloadWindow}
                   />
                 </div>
               )}

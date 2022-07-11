@@ -1,10 +1,8 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { isAddress } from '@ethersproject/address'
 import { t, Trans } from '@lingui/macro'
-import { Checkbox, Descriptions, Form, Space, Switch } from 'antd'
+import { Descriptions, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import FormattedAddress from 'components/FormattedAddress'
-import ImageUploader from 'components/inputs/ImageUploader'
 import { NetworkContext } from 'contexts/networkContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
@@ -20,23 +18,41 @@ import {
 } from 'utils/v2/currency'
 import { usePayV2ProjectTx } from 'hooks/v2/transactor/PayV2ProjectTx'
 
-import * as constants from '@ethersproject/constants'
-
-import {
-  getUnsafeV2FundingCycleProperties,
-  V2FundingCycleRiskCount,
-} from 'utils/v2/fundingCycle'
-
 import Paragraph from 'components/Paragraph'
-
 import { weightedAmount } from 'utils/v2/math'
-
 import TransactionModal from 'components/TransactionModal'
-import ProjectRiskNotice from 'components/ProjectRiskNotice'
-import MemoFormItem from 'components/inputs/Pay/MemoFormItem'
-import { EthAddressInput } from 'components/inputs/EthAddressInput'
+import Callout from 'components/Callout'
+import useMobile from 'hooks/Mobile'
 
-export default function V2ConfirmPayModal({
+import { V2PayForm, V2PayFormType } from '../V2PayForm'
+
+/**
+ * Produce payment memo with the following schema:
+ * <text memo> <sticker URLs> <uploaded image URL>
+ */
+const buildPaymentMemo = ({
+  text = '',
+  imageUrl,
+  stickerUrls,
+}: {
+  text?: string
+  imageUrl?: string
+  stickerUrls?: string[]
+}) => {
+  let memo = `${text}`
+
+  if (stickerUrls?.length) {
+    memo += `\n${stickerUrls.join(' ')}`
+  }
+
+  if (imageUrl) {
+    memo += `\n${imageUrl}`
+  }
+
+  return memo
+}
+
+export function V2ConfirmPayModal({
   visible,
   weiAmount,
   onSuccess,
@@ -48,25 +64,22 @@ export default function V2ConfirmPayModal({
   onCancel?: VoidFunction
 }) {
   const { userAddress, onSelectWallet } = useContext(NetworkContext)
+  const isMobile = useMobile()
+
   const {
     fundingCycle,
     fundingCycleMetadata,
     projectMetadata,
     projectId,
-    tokenAddress,
     tokenSymbol,
   } = useContext(V2ProjectContext)
   const converter = useCurrencyConverter()
   const payProjectTx = usePayV2ProjectTx()
 
   const [loading, setLoading] = useState<boolean>()
-  const [preferClaimed, setPreferClaimed] = useState<boolean>(false)
-  const [customBeneficiaryEnabled, setCustomBeneficiaryEnabled] =
-    useState<boolean>(false)
-  const [memo, setMemo] = useState<string>('')
   const [transactionPending, setTransactionPending] = useState<boolean>()
 
-  const [form] = useForm<{ beneficiary: string }>()
+  const [form] = useForm<V2PayFormType>()
 
   const usdAmount = converter.weiToUsd(weiAmount)
 
@@ -87,17 +100,17 @@ export default function V2ConfirmPayModal({
     'reserved',
   )
 
-  const riskCount = fundingCycle
-    ? V2FundingCycleRiskCount(fundingCycle)
-    : undefined
-
-  const hasIssuedTokens = tokenAddress && tokenAddress !== constants.AddressZero
-
   async function pay() {
     if (!weiAmount) return
     await form.validateFields()
 
-    const beneficiary = form.getFieldValue('beneficiary')
+    const {
+      beneficiary,
+      memo: textMemo,
+      preferClaimed,
+      stickerUrls,
+      uploadedImage,
+    } = form.getFieldsValue()
     const txBeneficiary = beneficiary ? beneficiary : userAddress
 
     // Prompt wallet connect if no wallet connected
@@ -108,8 +121,12 @@ export default function V2ConfirmPayModal({
 
     const txSuccess = await payProjectTx(
       {
-        memo,
-        preferClaimedTokens: preferClaimed,
+        memo: buildPaymentMemo({
+          text: textMemo,
+          imageUrl: uploadedImage,
+          stickerUrls,
+        }),
+        preferClaimedTokens: !!preferClaimed,
         beneficiary: txBeneficiary,
         value: weiAmount,
       },
@@ -132,22 +149,12 @@ export default function V2ConfirmPayModal({
     }
   }
 
-  const validateCustomBeneficiary = () => {
-    const beneficiary = form.getFieldValue('beneficiary')
-    if (!beneficiary) {
-      return Promise.reject(t`Address required`)
-    } else if (!isAddress(beneficiary)) {
-      return Promise.reject(t`Invalid address`)
-    }
-    return Promise.resolve()
-  }
-
   return (
     <TransactionModal
       transactionPending={transactionPending}
       title={t`Pay ${projectMetadata.name}`}
       visible={visible}
-      onOk={pay}
+      onOk={() => form.submit()}
       okText={t`Pay`}
       connectWalletText={t`Connect wallet to pay`}
       onCancel={onCancel}
@@ -156,31 +163,16 @@ export default function V2ConfirmPayModal({
       centered={true}
     >
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
-        <p>
-          <Trans>
-            Paying <strong>{projectMetadata.name}</strong> is not an investment
-            — it's a way to support the project. Any value or utility of the
-            tokens you receive is determined by{' '}
-            <strong>{projectMetadata.name}</strong>.
-          </Trans>
-        </p>
-
         {projectMetadata.payDisclosure && (
-          <div>
-            <h4>
-              <Trans>Notice from {projectMetadata.name}:</Trans>
-            </h4>
+          <Callout>
+            <strong>
+              <Trans>Notice from {projectMetadata.name}</Trans>
+            </strong>
             <Paragraph description={projectMetadata.payDisclosure} />
-          </div>
+          </Callout>
         )}
 
-        {riskCount && fundingCycle ? (
-          <ProjectRiskNotice
-            unsafeProperties={getUnsafeV2FundingCycleProperties(fundingCycle)}
-          />
-        ) : null}
-
-        <Descriptions column={1} bordered>
+        <Descriptions column={1} bordered size={isMobile ? 'small' : 'default'}>
           <Descriptions.Item label={t`Pay amount`} className="content-right">
             {formattedNum(usdAmount)} {V2CurrencyName(V2_CURRENCY_USD)} (
             {formatWad(weiAmount)} {V2CurrencyName(V2_CURRENCY_ETH)})
@@ -193,7 +185,7 @@ export default function V2ConfirmPayModal({
             className="content-right"
           >
             <div>{formatWad(receivedTickets, { precision: 0 })}</div>
-            <div>
+            <div style={{ fontSize: '0.7rem' }}>
               {userAddress ? (
                 <Trans>
                   To: <FormattedAddress address={userAddress} />
@@ -212,67 +204,8 @@ export default function V2ConfirmPayModal({
             {formatWad(ownerTickets, { precision: 0 })}
           </Descriptions.Item>
         </Descriptions>
-        <Form form={form} layout="vertical">
-          <MemoFormItem value={memo} onChange={setMemo} />
-          <Form.Item>
-            <ImageUploader
-              text={t`Add image`}
-              onSuccess={url => {
-                if (!url) return
-                setMemo(memo.length ? memo + ' ' + url : url)
-              }}
-            />
-          </Form.Item>
-          <Form.Item
-            label={
-              <>
-                <Trans>Custom token beneficiary</Trans>
-                <Switch
-                  checked={customBeneficiaryEnabled}
-                  onChange={setCustomBeneficiaryEnabled}
-                  style={{ marginLeft: 10 }}
-                />
-              </>
-            }
-            extra={<Trans>Mint tokens to a custom address.</Trans>}
-            style={{ marginBottom: '1rem' }}
-          />
 
-          {customBeneficiaryEnabled && (
-            <Form.Item
-              name="beneficiary"
-              rules={[
-                {
-                  validator: validateCustomBeneficiary,
-                  validateTrigger: 'onCreate',
-                  required: true,
-                },
-              ]}
-            >
-              <EthAddressInput />
-            </Form.Item>
-          )}
-
-          {hasIssuedTokens && (
-            <Form.Item label={t`Receive ERC-20`}>
-              <Space align="start">
-                <Checkbox
-                  style={{ padding: 20 }}
-                  checked={preferClaimed}
-                  onChange={e => setPreferClaimed(e.target.checked)}
-                />
-                <label htmlFor="preferClaimed">
-                  <Trans>
-                    Check this to mint this project's ERC-20 tokens to your
-                    wallet. Leave unchecked to have your token balance tracked
-                    by Juicebox, saving gas on this transaction. You can always
-                    claim your ERC-20 tokens later.
-                  </Trans>
-                </label>
-              </Space>
-            </Form.Item>
-          )}
-        </Form>
+        <V2PayForm form={form} onFinish={() => pay()} />
       </Space>
     </TransactionModal>
   )

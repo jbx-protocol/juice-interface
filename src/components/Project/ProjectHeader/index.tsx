@@ -7,7 +7,6 @@ import { ProjectMetadataV4 } from 'models/project-metadata'
 import Paragraph from 'components/Paragraph'
 import FormattedAddress from 'components/FormattedAddress'
 
-import { useProjectOwner } from 'hooks/v1/contractReader/ProjectOwner'
 import { Button, Tooltip } from 'antd'
 
 import SocialLinks from './SocialLinks'
@@ -18,17 +17,18 @@ export default function ProjectHeader({
   isArchived,
   actions,
   onClickSetHandle,
+  owner,
 }: {
   metadata?: ProjectMetadataV4
   isArchived?: boolean
   handle?: string
   actions?: JSX.Element
   onClickSetHandle?: VoidFunction
+  owner?: string
 }) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const { owner } = useProjectOwner()
 
   const headerHeight = 120
 
@@ -141,6 +141,7 @@ export default function ProjectHeader({
             <Paragraph
               description={metadata.description}
               characterLimit={250}
+              style={{ color: colors.text.secondary }}
             />
           )}
           {owner && (

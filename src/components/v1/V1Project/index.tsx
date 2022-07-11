@@ -40,6 +40,7 @@ export default function V1Project({
     tokenSymbol,
     tokenAddress,
     isPreviewMode,
+    owner,
     cv,
   } = useContext(V1ProjectContext)
 
@@ -56,6 +57,7 @@ export default function V1Project({
         metadata={metadata}
         handle={handle}
         isArchived={isArchived}
+        owner={owner}
         actions={<V1ProjectHeaderActions />}
       />
 

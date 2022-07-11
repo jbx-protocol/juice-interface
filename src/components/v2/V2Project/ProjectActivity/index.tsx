@@ -389,7 +389,7 @@ export default function ProjectActivity() {
               <Trans>ERC20 Deployed</Trans>
             </Select.Option>
             <Select.Option value="deployETHERC20ProjectPayer">
-              <Trans>ETH-ERC20 Created</Trans>
+              <Trans>ETH-ERC20 Address Created</Trans>
             </Select.Option>
             <Select.Option value="projectCreate">
               <Trans>Project Created</Trans>

@@ -1,10 +1,10 @@
 import { NetworkContext } from 'contexts/networkContext'
 import { useContext } from 'react'
-
+import { V2OperatorPermission } from 'models/v2/permissions'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import useProjectOwner from './ProjectOwner'
-import { useHasPermission, V2OperatorPermission } from './HasPermission'
+import { useHasPermissions } from './HasPermissions'
 
 export function useUserHasPermission(
   permission: V2OperatorPermission | V2OperatorPermission[],
@@ -14,7 +14,7 @@ export function useUserHasPermission(
 
   const { data: owner } = useProjectOwner(projectId)
 
-  const hasOperatorPermission = useHasPermission({
+  const hasOperatorPermission = useHasPermissions({
     operator: userAddress,
     account: owner,
     domain: projectId,

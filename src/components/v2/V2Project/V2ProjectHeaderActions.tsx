@@ -4,7 +4,8 @@ import { ProjectToolsDrawer } from 'components/Project/ProjectToolsDrawer/Projec
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useUserHasPermission } from 'hooks/v2/contractReader/UserHasPermission'
-import { V2OperatorPermission } from 'hooks/v2/contractReader/HasPermission'
+import { V2OperatorPermission } from 'models/v2/permissions'
+
 import { useContext, useState } from 'react'
 import { ToolOutlined } from '@ant-design/icons'
 

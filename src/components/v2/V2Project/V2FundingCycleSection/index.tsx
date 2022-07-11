@@ -5,7 +5,7 @@ import { t, Trans } from '@lingui/macro'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { ThemeContext } from 'contexts/themeContext'
 import { useUserHasPermission } from 'hooks/v2/contractReader/UserHasPermission'
-import { V2OperatorPermission } from 'hooks/v2/contractReader/HasPermission'
+import { V2OperatorPermission } from 'models/v2/permissions'
 import { useContext } from 'react'
 
 import {

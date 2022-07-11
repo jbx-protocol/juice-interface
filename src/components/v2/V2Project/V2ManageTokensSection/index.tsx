@@ -11,7 +11,7 @@ import FormattedAddress from 'components/FormattedAddress'
 import { formatPercent, formatWad } from 'utils/formatNumber'
 
 import IssueTokenButton from 'components/IssueTokenButton'
-import { V2OperatorPermission } from 'hooks/v2/contractReader/HasPermission'
+import { V2OperatorPermission } from 'models/v2/permissions'
 import { useUserHasPermission } from 'hooks/v2/contractReader/UserHasPermission'
 
 import { useIssueTokensTx } from 'hooks/v2/transactor/IssueTokensTx'

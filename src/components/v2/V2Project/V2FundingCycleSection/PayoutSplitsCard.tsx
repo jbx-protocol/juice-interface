@@ -18,7 +18,7 @@ import { Split } from 'models/v2/splits'
 import { BigNumber } from '@ethersproject/bignumber'
 import { detailedTimeString } from 'utils/formatTime'
 import { useUserHasPermission } from 'hooks/v2/contractReader/UserHasPermission'
-import { V2OperatorPermission } from 'hooks/v2/contractReader/HasPermission'
+import { V2OperatorPermission } from 'models/v2/permissions'
 
 import { reloadWindow } from 'utils/windowUtils'
 

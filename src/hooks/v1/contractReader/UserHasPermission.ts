@@ -4,7 +4,7 @@ import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1OperatorPermission } from 'models/v1/permissions'
 
 import { useProjectOwner } from './ProjectOwner'
-import { useHasPermissions } from './HasPermission'
+import { useHasPermissions } from './HasPermissions'
 
 export function useUserHasPermission(
   permission: V1OperatorPermission | V1OperatorPermission[],

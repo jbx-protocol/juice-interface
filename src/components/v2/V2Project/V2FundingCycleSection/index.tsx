@@ -4,10 +4,8 @@ import { SettingOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { ThemeContext } from 'contexts/themeContext'
-import {
-  useHasPermission,
-  V2OperatorPermission,
-} from 'hooks/v2/contractReader/HasPermission'
+import { useUserHasPermission } from 'hooks/v2/contractReader/UserHasPermission'
+import { V2OperatorPermission } from 'hooks/v2/contractReader/HasPermission'
 import { useContext } from 'react'
 
 import {
@@ -46,7 +44,7 @@ export default function V2FundingCycleSection({
     projectId,
   } = useContext(V2ProjectContext)
 
-  const canReconfigure = useHasPermission(V2OperatorPermission.RECONFIGURE)
+  const canReconfigure = useUserHasPermission(V2OperatorPermission.RECONFIGURE)
 
   const {
     data: queuedFundingCycleResponse,

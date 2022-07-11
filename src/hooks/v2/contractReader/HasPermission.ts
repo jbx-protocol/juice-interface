@@ -1,10 +1,5 @@
-import { NetworkContext } from 'contexts/networkContext'
-import { useContext } from 'react'
-
 import { V2ContractName } from 'models/v2/contracts'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
 
-import useProjectOwner from './ProjectOwner'
 import useContractReader from './V2ContractReader'
 
 export enum V2OperatorPermission {
@@ -28,35 +23,30 @@ export enum V2OperatorPermission {
   'SET_SPLITS' = 18,
 }
 
-export function useHasPermission(
-  permission: V2OperatorPermission | V2OperatorPermission[],
-) {
-  const { userAddress } = useContext(NetworkContext)
-  const { projectId, isPreviewMode } = useContext(V2ProjectContext)
-
-  const { data: owner } = useProjectOwner(projectId)
+export function useHasPermission({
+  operator,
+  account,
+  domain,
+  permissions,
+}: {
+  operator: string | undefined
+  account: string | undefined
+  domain: number | undefined
+  permissions: V2OperatorPermission[]
+}) {
   const hasOperatorPermission = useContractReader<boolean>({
     contract: V2ContractName.JBOperatorStore,
     functionName: 'hasPermissions',
     args:
-      userAddress && owner && projectId && !isPreviewMode
+      operator && account && domain !== undefined && permissions
         ? [
-            userAddress,
-            owner,
-            projectId,
-            Array.isArray(permission) ? permission : [permission],
+            operator, // _operator
+            account, // _account
+            domain, // _domain
+            permissions,
           ]
         : null,
   })
 
-  if (isPreviewMode) return false
-
-  const isOwner =
-    userAddress && owner && userAddress.toLowerCase() === owner.toLowerCase()
-
-  return (
-    isOwner ||
-    hasOperatorPermission.data ||
-    process.env.NODE_ENV === 'development'
-  )
+  return hasOperatorPermission
 }

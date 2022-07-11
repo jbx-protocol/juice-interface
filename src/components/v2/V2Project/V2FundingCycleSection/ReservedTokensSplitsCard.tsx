@@ -7,10 +7,8 @@ import TooltipLabel from 'components/TooltipLabel'
 import SplitList from 'components/v2/shared/SplitList'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import {
-  useHasPermission,
-  V2OperatorPermission,
-} from 'hooks/v2/contractReader/HasPermission'
+import { useUserHasPermission } from 'hooks/v2/contractReader/UserHasPermission'
+import { V2OperatorPermission } from 'hooks/v2/contractReader/HasPermission'
 import useProjectReservedTokens from 'hooks/v2/contractReader/ProjectReservedTokens'
 import { Split } from 'models/v2/splits'
 import { CSSProperties, useContext, useState } from 'react'
@@ -48,7 +46,7 @@ export default function ReservedTokensSplitsCard({
       projectId,
       reservedRate: reservedRate,
     })
-  const canEditTokens = useHasPermission(V2OperatorPermission.SET_SPLITS)
+  const canEditTokens = useUserHasPermission(V2OperatorPermission.SET_SPLITS)
 
   const smallHeaderStyle: CSSProperties = {
     fontSize: '.7rem',

@@ -7,7 +7,8 @@ const featureFlagKey = (baseKey: string) => {
 }
 
 const setFeatureFlag = (featureFlag: string, enabled: boolean) => {
-  localStorage.setItem(featureFlagKey(featureFlag), JSON.stringify(enabled))
+  localStorage &&
+    localStorage.setItem(featureFlagKey(featureFlag), JSON.stringify(enabled))
 }
 
 export const enableFeatureFlag = (featureFlag: string) => {
@@ -31,9 +32,12 @@ export const featureFlagEnabled = (featureFlag: string) => {
   const defaultEnabled = featureFlagDefaultEnabled(featureFlag)
 
   try {
-    return JSON.parse(
-      localStorage.getItem(featureFlagKey(featureFlag)) || `${defaultEnabled}`,
-    )
+    if (localStorage) {
+      return JSON.parse(
+        localStorage.getItem(featureFlagKey(featureFlag)) ||
+          `${defaultEnabled}`,
+      )
+    }
   } catch (e) {
     return defaultEnabled
   }

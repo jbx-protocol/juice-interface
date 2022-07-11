@@ -11,8 +11,7 @@ import { TicketMod } from 'models/mods'
 import { useContext, useLayoutEffect, useMemo, useState } from 'react'
 import { formatWad, permyriadToPercent } from 'utils/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
-import { OperatorPermission } from 'hooks/v1/contractReader/HasPermission'
-
+import { V1OperatorPermission } from 'models/v1/permissions'
 export default function TicketModsList({
   total,
   mods,
@@ -68,7 +67,7 @@ export default function TicketModsList({
   const ownerPercent = 10000 - (modsTotal ?? 0)
 
   const hasEditPermission = useUserHasPermission(
-    OperatorPermission.SetTicketMods,
+    V1OperatorPermission.SetTicketMods,
   )
 
   return (

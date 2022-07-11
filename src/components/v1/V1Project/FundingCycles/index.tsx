@@ -5,8 +5,7 @@ import { CardSection } from 'components/CardSection'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { useUserHasPermission } from 'hooks/v1/contractReader/UserHasPermission'
-import { OperatorPermission } from 'hooks/v1/contractReader/HasPermission'
-
+import { V1OperatorPermission } from 'models/v1/permissions'
 import { useContext } from 'react'
 
 import { fundingCycleRiskCount } from 'utils/v1/fundingCycle'
@@ -85,7 +84,7 @@ export default function FundingCycles({
     },
   ]
 
-  const canReconfigure = useUserHasPermission(OperatorPermission.Configure)
+  const canReconfigure = useUserHasPermission(V1OperatorPermission.Configure)
 
   if (!projectId) return null
   return (

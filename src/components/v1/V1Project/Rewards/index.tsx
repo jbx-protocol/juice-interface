@@ -10,7 +10,7 @@ import * as constants from '@ethersproject/constants'
 import useERC20BalanceOf from 'hooks/v1/contractReader/ERC20BalanceOf'
 import { useIssueTokensTx } from 'hooks/v1/transactor/IssueTokensTx'
 import { useUserHasPermission } from 'hooks/v1/contractReader/UserHasPermission'
-import { OperatorPermission } from 'hooks/v1/contractReader/HasPermission'
+import { V1OperatorPermission } from 'models/v1/permissions'
 import useReservedTokensOfProject from 'hooks/v1/contractReader/ReservedTokensOfProject'
 import useTotalBalanceOf from 'hooks/v1/contractReader/TotalBalanceOf'
 import useTotalSupplyOfProjectToken from 'hooks/v1/contractReader/TotalSupplyOfProjectToken'
@@ -75,7 +75,7 @@ export default function Rewards() {
     : false
 
   const hasIssueTicketsPermission = useUserHasPermission(
-    OperatorPermission.Issue,
+    V1OperatorPermission.Issue,
   )
 
   const labelStyle: CSSProperties = {
@@ -90,7 +90,7 @@ export default function Rewards() {
 
   const canPrintPreminedV1Tickets = Boolean(useCanPrintPreminedTokens())
   const userHasMintPermission = useUserHasPermission(
-    OperatorPermission.PrintTickets,
+    V1OperatorPermission.PrintTickets,
   )
 
   const projectAllowsMint = Boolean(

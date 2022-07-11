@@ -3,9 +3,9 @@ import { Button, Tooltip } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useUserHasPermission } from 'hooks/v1/contractReader/UserHasPermission'
+import { V1OperatorPermission } from 'models/v1/permissions'
 import { useContext, useState } from 'react'
 import { SettingOutlined, ToolOutlined } from '@ant-design/icons'
-import { OperatorPermission } from 'hooks/v1/contractReader/HasPermission'
 
 import { useSafeTransferFromTx } from 'hooks/v1/transactor/SafeTransferFromTx'
 import { useTransferTokensTx } from 'hooks/v1/transactor/TransferTokensTx'
@@ -35,8 +35,8 @@ export default function V1ProjectHeaderActions() {
     useState<boolean>(false)
 
   const hasEditPermission = useUserHasPermission([
-    OperatorPermission.SetHandle,
-    OperatorPermission.SetUri,
+    V1OperatorPermission.SetHandle,
+    V1OperatorPermission.SetUri,
   ])
 
   const unclaimedTokenBalance = useUnclaimedBalanceOfUser()

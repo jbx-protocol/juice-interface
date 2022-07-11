@@ -1,12 +1,13 @@
 import { NetworkContext } from 'contexts/networkContext'
 import { useContext } from 'react'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
+import { V1OperatorPermission } from 'models/v1/permissions'
 
 import { useProjectOwner } from './ProjectOwner'
-import { OperatorPermission, useHasPermissions } from './HasPermission'
+import { useHasPermissions } from './HasPermission'
 
 export function useUserHasPermission(
-  permission: OperatorPermission | OperatorPermission[],
+  permission: V1OperatorPermission | V1OperatorPermission[],
 ) {
   const { userAddress } = useContext(NetworkContext)
   const { projectId, isPreviewMode } = useContext(V1ProjectContext)

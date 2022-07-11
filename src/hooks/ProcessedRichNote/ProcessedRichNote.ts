@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 
+import { ProjectPreferences } from 'constants/v2/projectPreferences'
 import { loadAllMediaLinksPerLine } from './loadAllMediaLinksPerLine'
 
 const URLRegex = new RegExp(
@@ -31,9 +32,13 @@ export const useProcessedRichNote = (note: string | undefined) => {
   const [mediaLinksPerLine, setMediaLinksPerLine] =
     useState<Array<string[] | undefined>>()
   useEffect(() => {
-    loadAllMediaLinksPerLine(linksPerLine).then(mediaLinksPerLine =>
-      setMediaLinksPerLine(mediaLinksPerLine),
-    )
+    loadAllMediaLinksPerLine(linksPerLine).then(mediaLinksPerLine => {
+      // Slice the links to allow only 3 images per line.
+      mediaLinksPerLine = mediaLinksPerLine.map(line =>
+        line?.slice(0, ProjectPreferences.STICKER_MAX),
+      )
+      setMediaLinksPerLine(mediaLinksPerLine)
+    })
   }, [linksPerLine])
 
   /*

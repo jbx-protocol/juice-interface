@@ -1,6 +1,3 @@
-import { t } from '@lingui/macro'
-import SectionHeader from 'components/SectionHeader'
-import TooltipLabel from 'components/TooltipLabel'
 import { NFTRewardTier } from 'models/v2/nftRewardTier'
 import { useEffect, useState } from 'react'
 import { maxEligibleRewardTier, MOCK_NFTs } from 'utils/v2/nftRewards'
@@ -31,7 +28,6 @@ export function NFTRewardsSection({
         key={index}
         rewardTier={rewardTier}
         isSelected={isSelected}
-        isUnsaturated={payAmount !== '0' && !isSelected}
         onClick={e => {
           e.stopPropagation()
           setSelectedIndex(isSelected ? undefined : index)
@@ -58,19 +54,19 @@ export function NFTRewardsSection({
   }, [payAmount, nftRewardTiers])
 
   return (
-    <div style={{ marginTop: 20 }}>
-      <SectionHeader
+    <div style={{ marginTop: 5 }}>
+      {/* <SectionHeader
         text={
           <TooltipLabel
             label={t`NFT rewards`}
             tip={t`Receive an NFT for contributing above a certain amount.`}
           />
         }
-      />
+      /> */}
+      <span style={{ fontSize: 12 }}>+NFT</span>
       <div
         style={{
           display: 'flex',
-          marginTop: '15px',
         }}
       >
         {nftRewardTiers.map(renderRewardTier)}

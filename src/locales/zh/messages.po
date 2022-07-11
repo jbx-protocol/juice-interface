@@ -1911,7 +1911,6 @@ msgstr "我的项目"
 msgid "NFT projects"
 msgstr ""
 
-#: src/components/v2/V2Project/NFTRewardsSection/index.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/index.tsx
 #: src/pages/create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
@@ -2446,8 +2445,8 @@ msgstr ""
 msgid "Receive ERC-20"
 msgstr "接收 ERC-20 标准代币"
 
-#: src/components/v2/V2Project/NFTRewardsSection/index.tsx
-msgid "Receive an NFT for contributing above a certain amount."
+#: src/components/v2/V2Project/NFTRewardsSection/RewardTier.tsx
+msgid "Receive the <0>{0}</0> NFT when you contribute over <1>{1} ETH</1>."
 msgstr ""
 
 #: src/components/inputs/Pay/PayInputSubText.tsx

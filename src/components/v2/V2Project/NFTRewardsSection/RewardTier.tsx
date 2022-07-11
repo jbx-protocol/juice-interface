@@ -1,6 +1,5 @@
+import { Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
-import Paragraph from 'components/Paragraph'
-import SectionHeader from 'components/SectionHeader'
 import { ThemeContext } from 'contexts/themeContext'
 import { NFTRewardTier } from 'models/v2/nftRewardTier'
 import { MouseEventHandler, useContext } from 'react'
@@ -8,12 +7,10 @@ import { MouseEventHandler, useContext } from 'react'
 export function RewardTier({
   rewardTier,
   isSelected,
-  isUnsaturated, // unsaturate
   onClick,
 }: {
   rewardTier: NFTRewardTier
   isSelected: boolean
-  isUnsaturated: boolean
   onClick: MouseEventHandler<HTMLDivElement>
 }) {
   const {
@@ -21,53 +18,56 @@ export function RewardTier({
   } = useContext(ThemeContext)
 
   return (
-    <Tooltip
-      title={
-        <>
-          <SectionHeader text={rewardTier.name} />
-          <Paragraph description={rewardTier.description} characterLimit={74} />
-        </>
-      }
-      placement={'bottom'}
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-end',
+        marginRight: '25px',
+        cursor: 'pointer',
+        transition: 'all 0s',
+      }}
+      onClick={onClick}
     >
       <div
         style={{
+          backgroundColor: colors.background.l1,
+          width: '100px',
           display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'flex-end',
-          marginRight: '15px',
-          padding: '10px 10px 5px 10px',
-          cursor: 'pointer',
-          transition: 'all 0s',
-          backgroundColor: isSelected ? colors.background.l2 : 'unset',
-          boxShadow: isSelected ? '10px 10px ' + colors.background.l1 : 'unset',
+          justifyContent: 'center',
+          alignItems: 'center',
         }}
-        onClick={onClick}
       >
-        <div
+        <img
+          alt={rewardTier.name}
+          src={rewardTier.imageUrl}
+          height={'100px'}
           style={{
-            backgroundColor: colors.background.l1,
+            objectFit: 'cover',
             width: '100px',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
+            opacity: isSelected ? '100%' : '30%',
+          }}
+        />
+      </div>
+      <Tooltip
+        title={
+          <Trans>
+            Receive the <strong>{rewardTier.name}</strong> NFT when you
+            contribute over <strong>{rewardTier.paymentThreshold} ETH</strong>.
+          </Trans>
+        }
+        placement={'bottom'}
+      >
+        <span
+          style={{
+            fontWeight: isSelected ? 500 : 400,
+            marginTop: '3px',
+            fontSize: 13,
           }}
         >
-          <img
-            alt={rewardTier.name}
-            src={rewardTier.imageUrl}
-            height={'100px'}
-            style={{
-              filter: isUnsaturated ? 'grayscale(100%)' : 'unset',
-              objectFit: 'cover',
-              width: '100px',
-            }}
-          />
-        </div>
-        <span style={{ fontWeight: 500, marginTop: '5px' }}>
           {rewardTier.paymentThreshold} ETH
         </span>
-      </div>
-    </Tooltip>
+      </Tooltip>
+    </div>
   )
 }

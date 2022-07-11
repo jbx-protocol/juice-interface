@@ -1231,6 +1231,10 @@ msgstr "要把 Juicebox 用作项目的商业模式的话，我必须把项目�
 msgid "Do I need this?"
 msgstr ""
 
+#: src/components/formItems/ENSName.tsx
+msgid "Do not include .eth"
+msgstr ""
+
 #: src/components/Navbar/constants.ts
 msgid "Docs"
 msgstr "文档"
@@ -2042,6 +2046,10 @@ msgstr "通知自{0}:"
 msgid "Once launched, your first funding cycle <0>can't be changed</0>. You can reconfigure upcoming funding cycles according to the project's <1>reconfiguration rules</1>."
 msgstr "一旦启动，你的第一个筹款周期 <0>不能再更改</0>。 你可以按照项目的 <1>重新配置规则</1>来重新配置后续的筹款周期。"
 
+#: src/components/formItems/ENSName.tsx
+msgid "Only lowercase letters"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/V1BalancesModal.tsx
 #: src/components/v2/V2Project/V2BalancesModal/V2BalancesModal.tsx
 msgid "Other assets in this project's owner's wallet."
@@ -2847,6 +2855,10 @@ msgstr ""
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Something went wrong."
 msgstr "出错了。"
+
+#: src/components/formItems/ENSName.tsx
+msgid "Spaces are not allowed"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx

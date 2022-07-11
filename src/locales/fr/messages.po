@@ -1300,7 +1300,7 @@ msgid "ERC20 Deployed"
 msgstr "ERC20 Déployé"
 
 #: src/components/v2/V2Project/ProjectActivity/index.tsx
-msgid "ETH-ERC20 Created"
+msgid "ETH-ERC20 Address Created"
 msgstr ""
 
 #: src/components/v2/shared/DistributionSplitsSection/SpecificLimitModal.tsx

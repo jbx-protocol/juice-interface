@@ -1,10 +1,8 @@
-import { BigNumber } from '@ethersproject/bignumber'
-import { NetworkContext } from 'contexts/networkContext'
-import { V1ProjectContext } from 'contexts/v1/projectContext'
-import { V1ContractName } from 'models/v1/contracts'
-import { useContext } from 'react'
+import v1OperatorStoreJSON from '@jbx-protocol/contracts-v1/deployments/rinkeby/OperatorStore.json'
+import { Contract } from '@ethersproject/contracts'
 
 import useContractReader from './ContractReader'
+import { readProvider } from 'constants/readProvider'
 
 export enum OperatorPermission {
   'Configure' = 1,
@@ -26,30 +24,36 @@ export enum OperatorPermission {
   'PrintTickets' = 17,
 }
 
-export function useHasPermission(
-  permission: OperatorPermission | OperatorPermission[],
-) {
-  const { userAddress } = useContext(NetworkContext)
-  const { projectId, owner } = useContext(V1ProjectContext)
+export function useHasPermissions({
+  operator,
+  account,
+  domain,
+  permissionIndexes,
+}: {
+  operator: string | undefined
+  account: string | undefined
+  domain: number | undefined
+  permissionIndexes: OperatorPermission[]
+}) {
+  const contract = new Contract(
+    v1OperatorStoreJSON.address,
+    v1OperatorStoreJSON.abi,
+    readProvider,
+  )
 
   const hasOperatorPermission = useContractReader<boolean>({
-    contract: V1ContractName.OperatorStore,
+    contract,
     functionName: 'hasPermissions',
     args:
-      userAddress && owner && projectId
+      operator && account && domain !== undefined && permissionIndexes
         ? [
-            userAddress,
-            owner,
-            BigNumber.from(projectId).toHexString(),
-            Array.isArray(permission) ? permission : [permission],
+            operator, // _operator
+            account, // _account
+            domain, // _domain
+            permissionIndexes,
           ]
         : null,
   })
 
-  const isOwner =
-    userAddress && owner && userAddress.toLowerCase() === owner.toLowerCase()
-
-  return (
-    isOwner || hasOperatorPermission || process.env.NODE_ENV === 'development'
-  )
+  return hasOperatorPermission
 }

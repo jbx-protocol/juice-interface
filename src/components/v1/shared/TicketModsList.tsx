@@ -4,16 +4,14 @@ import ProjectTicketMods from 'components/v1/shared/ProjectTicketMods'
 import Mod from 'components/v1/shared/Mod'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { BigNumber } from '@ethersproject/bignumber'
-import {
-  OperatorPermission,
-  useHasPermission,
-} from 'hooks/v1/contractReader/HasPermission'
+import { useUserHasPermission } from 'hooks/v1/contractReader/UserHasPermission'
 import { useSetTicketModsTx } from 'hooks/v1/transactor/SetTicketModsTx'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { TicketMod } from 'models/mods'
 import { useContext, useLayoutEffect, useMemo, useState } from 'react'
 import { formatWad, permyriadToPercent } from 'utils/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
+import { OperatorPermission } from 'hooks/v1/contractReader/HasPermission'
 
 export default function TicketModsList({
   total,
@@ -69,7 +67,9 @@ export default function TicketModsList({
   const modsTotal = mods?.reduce((acc, curr) => acc + curr.percent, 0)
   const ownerPercent = 10000 - (modsTotal ?? 0)
 
-  const hasEditPermission = useHasPermission(OperatorPermission.SetTicketMods)
+  const hasEditPermission = useUserHasPermission(
+    OperatorPermission.SetTicketMods,
+  )
 
   return (
     <div>

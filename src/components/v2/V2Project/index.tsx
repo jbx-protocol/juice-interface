@@ -9,10 +9,8 @@ import { lazy, useContext, useState } from 'react'
 
 import { ThemeContext } from 'contexts/themeContext'
 import useMobile from 'hooks/Mobile'
-import {
-  useHasPermission,
-  V2OperatorPermission,
-} from 'hooks/v2/contractReader/HasPermission'
+import { useUserHasPermission } from 'hooks/v2/contractReader/UserHasPermission'
+import { V2OperatorPermission } from 'hooks/v2/contractReader/HasPermission'
 import useProjectQueuedFundingCycle from 'hooks/v2/contractReader/ProjectQueuedFundingCycle'
 import { useEditV2ProjectDetailsTx } from 'hooks/v2/transactor/EditV2ProjectDetailsTx'
 import { useHistory, useLocation } from 'react-router-dom'
@@ -47,6 +45,7 @@ const AllAssetsButton = ({ onClick }: { onClick: VoidFunction }) => {
     <span
       style={{ ...secondaryTextStyle, cursor: 'pointer' }}
       onClick={onClick}
+      role="button"
     >
       <Trans>All assets</Trans> <RightCircleOutlined />
     </span>
@@ -74,7 +73,7 @@ export default function V2Project({
     projectOwnerAddress,
     handle,
   } = useContext(V2ProjectContext)
-  const canReconfigureFundingCycles = useHasPermission(
+  const canReconfigureFundingCycles = useUserHasPermission(
     V2OperatorPermission.RECONFIGURE,
   )
 
@@ -95,7 +94,9 @@ export default function V2Project({
   const history = useHistory()
   const isMobile = useMobile()
 
-  const hasEditPermission = useHasPermission(V2OperatorPermission.RECONFIGURE)
+  const hasEditPermission = useUserHasPermission(
+    V2OperatorPermission.RECONFIGURE,
+  )
 
   const isOwner = useIsUserAddress(projectOwnerAddress)
 

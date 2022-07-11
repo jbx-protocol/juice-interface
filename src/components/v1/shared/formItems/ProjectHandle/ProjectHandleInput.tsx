@@ -24,7 +24,7 @@ interface ProjectHandleProps {
  * and doesn't have a `value` prop.
  *
  * Initially, it triggers `onChange` after ensuring the input contents are a string.
- * Then, it will trigger `onChange` in repsonse to the input's `onChange` handler.
+ * Then, it will trigger `onChange` in response to the input's `onChange` handler.
  *
  */
 export function ProjectHandleInput({

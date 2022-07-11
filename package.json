@@ -98,8 +98,9 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^11.1.0",
-    "@testing-library/react-hooks": "^8.0.0",
+    "@testing-library/react-hooks": "^8.0.1",
     "@testing-library/user-event": "^12.1.10",
+    "@types/uuid": "^8.3.4",
     "husky": "^7.0.0",
     "lint-staged": "13.0.0",
     "react-error-overlay": "6.0.9",

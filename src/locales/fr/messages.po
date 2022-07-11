@@ -328,7 +328,7 @@ msgstr ""
 msgid "Add a payout"
 msgstr "Ajouter un paiement"
 
-#: src/components/inputs/Pay/MemoFormItem.tsx
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "Add an on-chain memo to this payment."
 msgstr ""
@@ -548,7 +548,7 @@ msgstr "Êtes-vous sûr de vouloir recommencer ?"
 msgid "Assets"
 msgstr "Actifs"
 
-#: src/components/inputs/Pay/MemoFormItem.tsx
+#: src/components/inputs/Pay/MemoFormInput.tsx
 #: src/components/modals/AttachStickerModal/AttachStickerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "Attach a sticker"
@@ -1842,7 +1842,7 @@ msgstr "{MAX_DESCRIPTION_LENGTH} caractères au maximum"
 msgid "Memo"
 msgstr ""
 
-#: src/components/inputs/Pay/MemoFormItem.tsx
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "Memo (optional)"
 msgstr "Mémo (facultatif)"
@@ -3414,7 +3414,7 @@ msgstr "Version du contrat terminal utilisé par ce projet."
 msgid "Volume"
 msgstr "Volume"
 
-#: src/components/inputs/Pay/MemoFormItem.tsx
+#: src/components/inputs/Pay/MemoFormInput.tsx
 #: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "WAGMI!"
 msgstr "WAGMI !"

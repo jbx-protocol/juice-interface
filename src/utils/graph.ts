@@ -124,7 +124,7 @@ export interface SubgraphEntities {
   distributeToReservedTokenSplitEvent: DistributeToReservedTokenSplitEvent
   distributeToPayoutSplitEvent: DistributeToPayoutSplitEvent
   useAllowanceEvent: UseAllowanceEvent
-  ethERC20ProjectPayer: ETHERC20ProjectPayer
+  etherc20ProjectPayer: ETHERC20ProjectPayer
   deployETHERC20ProjectPayerEvent: DeployETHERC20ProjectPayerEvent
 }
 
@@ -162,7 +162,7 @@ export interface SubgraphQueryReturnTypes {
   }
   useAllowanceEvent: { useAllowanceEvents: UseAllowanceEventJson[] }
   mintTokensEvent: { mintTokensEvent: MintTokensEventJson[] }
-  ethERC20ProjectPayer: { ethERC20ProjectPayers: ETHERC20ProjectPayerJson[] }
+  etherc20ProjectPayer: { etherc20ProjectPayers: ETHERC20ProjectPayerJson[] }
   deployETHERC20ProjectPayerEvent: {
     deployETHERC20ProjectPayerEvents: DeployETHERC20ProjectPayerEventJson[]
   }
@@ -450,10 +450,10 @@ export function formatGraphResponse<E extends EntityKey>(
         return response.useAllowanceEvents.map(parseUseAllowanceEventJson)
       }
       break
-    case 'ethERC20ProjectPayer':
-      if ('ethERC20ProjectPayers' in response) {
+    case 'etherc20ProjectPayer':
+      if ('etherc20ProjectPayers' in response) {
         // @ts-ignore
-        return response.ethERC20ProjectPayers.map(parseETHERC20ProjectPayer)
+        return response.etherc20ProjectPayers.map(parseETHERC20ProjectPayer)
       }
       break
     case 'deployETHERC20ProjectPayerEvent':

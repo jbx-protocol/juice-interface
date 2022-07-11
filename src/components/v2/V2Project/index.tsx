@@ -39,6 +39,7 @@ const GUTTER_PX = 40
 
 const VolumeChart = lazy(() => import('components/VolumeChart'))
 import { V2ReconfigureProjectHandleDrawer } from './V2ReconfigureProjectHandleDrawer'
+import ProjectPayers from './ProjectPayers'
 
 const AllAssetsButton = ({ onClick }: { onClick: VoidFunction }) => {
   const { theme } = useContext(ThemeContext)
@@ -165,6 +166,7 @@ export default function V2Project({
             tokenAddress={tokenAddress}
             disabled={isPreviewMode || payIsDisabledPreV2Redeploy()}
           />
+          <ProjectPayers />
         </Col>
       </Row>
       <Row gutter={GUTTER_PX}>

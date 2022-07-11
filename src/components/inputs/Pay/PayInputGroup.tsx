@@ -1,17 +1,12 @@
-import { CSSProperties, useContext, useState } from 'react'
 import { BigNumber } from '@ethersproject/bignumber'
-
+import { Trans } from '@lingui/macro'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { CurrencyContext } from 'contexts/currencyContext'
-
-import { CurrencyOption } from 'models/currencyOption'
-
-import { WeightFunction } from 'utils/math'
-
 import { ThemeContext } from 'contexts/themeContext'
-
-import { Trans } from '@lingui/macro'
+import { CurrencyOption } from 'models/currencyOption'
+import { CSSProperties, useContext, useState } from 'react'
+import { WeightFunction } from 'utils/math'
 
 import PayInputSubText from './PayInputSubText'
 

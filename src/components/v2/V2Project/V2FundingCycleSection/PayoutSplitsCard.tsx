@@ -22,6 +22,8 @@ import {
   V2OperatorPermission,
 } from 'hooks/v2/contractReader/HasPermission'
 
+import { reloadWindow } from 'utils/windowUtils'
+
 import DistributePayoutsModal from './modals/DistributePayoutsModal'
 import { EditPayoutsModal } from './modals/EditPayoutsModal'
 
@@ -188,7 +190,7 @@ export default function PayoutSplitsCard({
       <DistributePayoutsModal
         visible={distributePayoutsModalVisible}
         onCancel={() => setDistributePayoutsModalVisible(false)}
-        onConfirmed={() => window.location.reload()}
+        onConfirmed={reloadWindow}
       />
       <EditPayoutsModal
         visible={editPayoutModalVisible}

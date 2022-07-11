@@ -98,13 +98,15 @@ export function TopLeftNavItems({
         text={t`FAQ`}
         route={undefined}
         onClick={() => {
-          if (onClickMenuItems) onClickMenuItems()
-          window.location.hash = '/'
-          setTimeout(() => {
-            document
-              .getElementById('faq')
-              ?.scrollIntoView({ behavior: 'smooth' })
-          }, 0)
+          if (typeof window !== 'undefined') {
+            if (onClickMenuItems) onClickMenuItems()
+            window.location.hash = '/'
+            setTimeout(() => {
+              document
+                .getElementById('faq')
+                ?.scrollIntoView({ behavior: 'smooth' })
+            }, 0)
+          }
         }}
       />
       <NavMenuItem

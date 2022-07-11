@@ -15,9 +15,11 @@ export default function CopyTextButton({
   const { colors } = useContext(ThemeContext).theme
   const [copied, setCopied] = useState<boolean>(false)
   const copyText = () => {
-    navigator.clipboard.writeText(value ?? '')
-    setCopied(true)
-    setTimeout(() => setCopied(false), 3000)
+    if (navigator) {
+      navigator.clipboard.writeText(value ?? '')
+      setCopied(true)
+      setTimeout(() => setCopied(false), 3000)
+    }
   }
   return (
     <Tooltip

@@ -249,10 +249,10 @@ export const formatGraphQuery = <E extends EntityKey, K extends EntityKeys<E>>(
     value?: string | number | keyof SubgraphEntities[E],
   ) => {
     if (value === undefined) return
-    args += (args.length ? ', ' : '') + `${name}: ` + value
+    args += (args.length ? ', ' : '') + `${name}: ` + String(value)
   }
   const formatWhere = (where: WhereConfig<E>) =>
-    `${where.key}${where.operator ? '_' + where.operator : ''}:` +
+    `${String(where.key)}${where.operator ? '_' + where.operator : ''}:` +
     (Array.isArray(where.value)
       ? `[${where.value
           .map(v => (typeof v === 'string' ? `"${v}"` : v))

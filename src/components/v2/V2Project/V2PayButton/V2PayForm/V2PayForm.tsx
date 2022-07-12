@@ -227,6 +227,9 @@ export const V2PayForm = ({
         visible={attachStickerModalVisible}
         onClose={() => setAttachStickerModalVisible(false)}
         onSelect={sticker => {
+          if (typeof window === 'undefined') {
+            return
+          }
           const url = new URL(`${window.location.origin}${sticker.filepath}`)
           const urlString = url.toString()
           const existingStickerUrls = (form.getFieldValue('stickerUrls') ??

@@ -4,6 +4,8 @@ import { CSSProperties } from 'react'
 import { Button } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 
+import { reloadWindow, scrollToTop } from 'utils/windowUtils'
+
 import { Languages } from 'constants/languages/language-options'
 
 export default function Footer() {
@@ -38,9 +40,9 @@ export default function Footer() {
 
   // Sets the new language with localStorage and reloads the page
   const setLanguage = (newLanguage: string) => {
-    localStorage.setItem('lang', newLanguage)
-    window.location.reload()
-    window.scrollTo(0, 0) // scroll to top of page after reload
+    localStorage && localStorage.setItem('lang', newLanguage)
+    reloadWindow()
+    scrollToTop()
   }
 
   const gitCommit = process.env.REACT_APP_VERSION

@@ -315,8 +315,10 @@ export default function V1Create() {
           resetProjectForm()
           dispatch(editingProjectActions.resetState())
 
-          window.location.hash =
-            '/p/' + editingProjectInfo.handle + '?newDeploy=true'
+          if (typeof window !== 'undefined') {
+            window.location.hash =
+              '/p/' + editingProjectInfo.handle + '?newDeploy=true'
+          }
         },
       },
     )

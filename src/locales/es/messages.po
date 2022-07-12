@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-07-11 03:01\n"
+"PO-Revision-Date: 2022-07-12 03:14\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -328,7 +328,7 @@ msgstr ""
 msgid "Add a payout"
 msgstr "Añadir un pago"
 
-#: src/components/inputs/Pay/MemoFormItem.tsx
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "Add an on-chain memo to this payment."
 msgstr "Añadir un memo on-chain a este pago."
@@ -548,7 +548,7 @@ msgstr "¿Estás seguro de que quieres volver a empezar?"
 msgid "Assets"
 msgstr "Activos"
 
-#: src/components/inputs/Pay/MemoFormItem.tsx
+#: src/components/inputs/Pay/MemoFormInput.tsx
 #: src/components/modals/AttachStickerModal/AttachStickerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "Attach a sticker"
@@ -1231,6 +1231,10 @@ msgstr "¿Tengo que volver mi proyecto de código abierto para usar Juicebox com
 msgid "Do I need this?"
 msgstr ""
 
+#: src/components/formItems/ENSName.tsx
+msgid "Do not include .eth"
+msgstr ""
+
 #: src/components/Navbar/constants.ts
 msgid "Docs"
 msgstr "Documentos"
@@ -1842,7 +1846,7 @@ msgstr "Máximo {MAX_DESCRIPTION_LENGTH} caracteres"
 msgid "Memo"
 msgstr "Memo"
 
-#: src/components/inputs/Pay/MemoFormItem.tsx
+#: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "Memo (optional)"
 msgstr "Memo (opcional)"
@@ -2041,6 +2045,10 @@ msgstr "Aviso de {0}:"
 #: src/pages/create/tabs/ReviewDeployTab/FundingSummarySection.tsx
 msgid "Once launched, your first funding cycle <0>can't be changed</0>. You can reconfigure upcoming funding cycles according to the project's <1>reconfiguration rules</1>."
 msgstr "Una vez lanzado, tu primer ciclo de financiamiento <0>no se puede cambiar</0>. Puedes reconfigurar los ciclos próximos de acuerdo a las <1>reglas de reconfiguración</1> del proyecto."
+
+#: src/components/formItems/ENSName.tsx
+msgid "Only lowercase letters"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/V1BalancesModal.tsx
 #: src/components/v2/V2Project/V2BalancesModal/V2BalancesModal.tsx
@@ -2848,6 +2856,10 @@ msgstr ""
 msgid "Something went wrong."
 msgstr "Algo salió mal."
 
+#: src/components/formItems/ENSName.tsx
+msgid "Spaces are not allowed"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 msgid "Spending"
@@ -3414,7 +3426,7 @@ msgstr "Versión del contrato terminal usado por este proyecto."
 msgid "Volume"
 msgstr "Volumen"
 
-#: src/components/inputs/Pay/MemoFormItem.tsx
+#: src/components/inputs/Pay/MemoFormInput.tsx
 #: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "WAGMI!"
 msgstr "WAGMI!"

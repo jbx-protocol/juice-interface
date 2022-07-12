@@ -22,9 +22,9 @@ import {
 } from 'utils/v1/fundingCycle'
 import { usePayV1ProjectTx } from 'hooks/v1/transactor/PayV1ProjectTx'
 
+import { MemoFormInput } from 'components/inputs/Pay/MemoFormInput'
 import Paragraph from 'components/Paragraph'
 import ProjectRiskNotice from 'components/ProjectRiskNotice'
-import MemoFormItem from 'components/inputs/Pay/MemoFormItem'
 import Callout from 'components/Callout'
 
 import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
@@ -44,7 +44,6 @@ export default function V1ConfirmPayOwnerModal({
 }) {
   const [loading, setLoading] = useState<boolean>()
   const [preferUnstaked, setPreferUnstaked] = useState<boolean>(false)
-  const [memo, setMemo] = useState<string>('')
 
   const [form] = useForm()
 
@@ -66,6 +65,8 @@ export default function V1ConfirmPayOwnerModal({
       onSelectWallet()
     }
     setLoading(true)
+
+    const memo = form.getFieldValue('memo')
 
     payProjectTx(
       {
@@ -190,16 +191,23 @@ export default function V1ConfirmPayOwnerModal({
           </Descriptions.Item>
         </Descriptions>
         <Form form={form} layout="vertical">
-          <MemoFormItem value={memo} onChange={setMemo} />
+          <Form.Item
+            name="memo"
+            label={t`Memo (optional)`}
+            className={'antd-no-number-handler'}
+            extra={t`Add an on-chain memo to this payment.`}
+          >
+            <MemoFormInput />
+          </Form.Item>
 
           <Form.Item>
             <ImageUploader
               text={t`Add image`}
               onSuccess={url => {
                 if (!url) return
-                const note = form.getFieldValue('note') || ''
+                const memo = form.getFieldValue('memo') || ''
                 form.setFieldsValue({
-                  note: note ? note + ' ' + url : url,
+                  memo: memo ? memo + ' ' + url : url,
                 })
               }}
             />

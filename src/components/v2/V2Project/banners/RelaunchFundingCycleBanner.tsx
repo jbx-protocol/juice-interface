@@ -18,6 +18,8 @@ import useProjectCurrentFundingCycle from 'hooks/v2/contractReader/ProjectCurren
 import useProjectSplits from 'hooks/v2/contractReader/ProjectSplits'
 import { useLaunchFundingCyclesTx } from 'hooks/v2/transactor/LaunchFundingCyclesTx'
 
+import { reloadWindow } from 'utils/windowUtils'
+
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
@@ -156,7 +158,7 @@ export function RelaunchFundingCycleBanner() {
         },
         onConfirmed() {
           setTransactionPending(false)
-          window.location.reload()
+          reloadWindow()
         },
       },
     )

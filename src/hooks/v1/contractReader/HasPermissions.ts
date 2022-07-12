@@ -3,7 +3,7 @@ import { V1OperatorPermission } from 'models/v1/permissions'
 
 import useContractReader from './ContractReader'
 
-export function useHasPermissions({
+export function useV1HasPermissions({
   operator,
   account,
   domain,

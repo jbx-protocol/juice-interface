@@ -4,9 +4,9 @@ import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1OperatorPermission } from 'models/v1/permissions'
 
 import { useProjectOwner } from './ProjectOwner'
-import { useHasPermissions } from './HasPermissions'
+import { useV1HasPermissions } from './HasPermissions'
 
-export function useUserHasPermission(
+export function useV1UserHasPermission(
   permission: V1OperatorPermission | V1OperatorPermission[],
 ) {
   const { userAddress } = useContext(NetworkContext)
@@ -14,7 +14,7 @@ export function useUserHasPermission(
 
   const { owner } = useProjectOwner()
 
-  const hasOperatorPermission = useHasPermissions({
+  const hasOperatorPermission = useV1HasPermissions({
     operator: userAddress,
     account: owner,
     domain: projectId,

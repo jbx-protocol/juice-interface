@@ -6,7 +6,7 @@ import { V1OperatorPermission } from 'models/v1/permissions'
 import { useProjectOwner } from './ProjectOwner'
 import { useV1HasPermissions } from './HasPermissions'
 
-export function useV1UserHasPermission(
+export function useV1ConnectedWalletHasPermission(
   permission: V1OperatorPermission | V1OperatorPermission[],
 ) {
   const { userAddress } = useContext(NetworkContext)

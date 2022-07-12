@@ -12,7 +12,7 @@ import { formatPercent, formatWad } from 'utils/formatNumber'
 
 import IssueTokenButton from 'components/IssueTokenButton'
 import { V2OperatorPermission } from 'models/v2/permissions'
-import { useV2UserHasPermission } from 'hooks/v2/contractReader/UserHasPermission'
+import { useV2ConnectedWalletHasPermission } from 'hooks/v2/contractReader/UserHasPermission'
 
 import { useIssueTokensTx } from 'hooks/v2/transactor/IssueTokensTx'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -62,7 +62,7 @@ export default function V2ManageTokensSection() {
 
   const hasIssuedERC20 = tokenAddress !== constants.AddressZero
 
-  const hasIssueTicketsPermission = useV2UserHasPermission(
+  const hasIssueTicketsPermission = useV2ConnectedWalletHasPermission(
     V2OperatorPermission.ISSUE,
   )
 
@@ -98,7 +98,7 @@ export default function V2ManageTokensSection() {
   const hasOverflow = Boolean(primaryTerminalCurrentOverflow?.gt(0))
 
   const userHasMintPermission = Boolean(
-    useV2UserHasPermission(V2OperatorPermission.MINT),
+    useV2ConnectedWalletHasPermission(V2OperatorPermission.MINT),
   )
   const projectAllowsMint = Boolean(fundingCycleMetadata?.allowMinting)
 

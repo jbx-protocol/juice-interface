@@ -6,7 +6,7 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 import useProjectOwner from './ProjectOwner'
 import { useV2HasPermissions } from './HasPermissions'
 
-export function useV2UserHasPermission(
+export function useV2ConnectedWalletHasPermission(
   permission: V2OperatorPermission | V2OperatorPermission[],
 ) {
   const { userAddress } = useContext(NetworkContext)

@@ -9,7 +9,7 @@ import { lazy, useContext, useState } from 'react'
 
 import { ThemeContext } from 'contexts/themeContext'
 import useMobile from 'hooks/Mobile'
-import { useV2UserHasPermission } from 'hooks/v2/contractReader/UserHasPermission'
+import { useV2ConnectedWalletHasPermission } from 'hooks/v2/contractReader/UserHasPermission'
 import { V2OperatorPermission } from 'models/v2/permissions'
 import useProjectQueuedFundingCycle from 'hooks/v2/contractReader/ProjectQueuedFundingCycle'
 import { useEditV2ProjectDetailsTx } from 'hooks/v2/transactor/EditV2ProjectDetailsTx'
@@ -73,7 +73,7 @@ export default function V2Project({
     projectOwnerAddress,
     handle,
   } = useContext(V2ProjectContext)
-  const canReconfigureFundingCycles = useV2UserHasPermission(
+  const canReconfigureFundingCycles = useV2ConnectedWalletHasPermission(
     V2OperatorPermission.RECONFIGURE,
   )
 
@@ -94,7 +94,7 @@ export default function V2Project({
   const history = useHistory()
   const isMobile = useMobile()
 
-  const hasEditPermission = useV2UserHasPermission(
+  const hasEditPermission = useV2ConnectedWalletHasPermission(
     V2OperatorPermission.RECONFIGURE,
   )
 

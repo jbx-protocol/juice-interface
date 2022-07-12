@@ -3,7 +3,7 @@ import { Button, Tooltip } from 'antd'
 import { ProjectToolsDrawer } from 'components/Project/ProjectToolsDrawer/ProjectToolsDrawer'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { useV2UserHasPermission } from 'hooks/v2/contractReader/UserHasPermission'
+import { useV2ConnectedWalletHasPermission } from 'hooks/v2/contractReader/UserHasPermission'
 import { V2OperatorPermission } from 'models/v2/permissions'
 
 import { useContext, useState } from 'react'
@@ -30,7 +30,7 @@ export default function V2ProjectHeaderActions() {
 
   const [toolDrawerVisible, setToolDrawerVisible] = useState<boolean>(false)
 
-  const canReconfigure = useV2UserHasPermission(
+  const canReconfigure = useV2ConnectedWalletHasPermission(
     V2OperatorPermission.RECONFIGURE,
   )
 

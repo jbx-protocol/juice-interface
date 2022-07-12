@@ -4,7 +4,7 @@ import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { CardSection } from 'components/CardSection'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { useV1UserHasPermission } from 'hooks/v1/contractReader/UserHasPermission'
+import { useV1ConnectedWalletHasPermission } from 'hooks/v1/contractReader/UserHasPermission'
 import { V1OperatorPermission } from 'models/v1/permissions'
 import { useContext } from 'react'
 
@@ -84,7 +84,9 @@ export default function FundingCycles({
     },
   ]
 
-  const canReconfigure = useV1UserHasPermission(V1OperatorPermission.Configure)
+  const canReconfigure = useV1ConnectedWalletHasPermission(
+    V1OperatorPermission.Configure,
+  )
 
   if (!projectId) return null
   return (

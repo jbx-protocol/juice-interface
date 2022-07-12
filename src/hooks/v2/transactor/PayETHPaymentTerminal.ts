@@ -16,7 +16,7 @@ type PayV2ProjectTx = TransactorInstance<{
   value: BigNumber
 }>
 
-export function usePayV2ProjectTx(): PayV2ProjectTx {
+export function usePayETHPaymentTerminalTx(): PayV2ProjectTx {
   const { transactor, contracts } = useContext(V2UserContext)
   const { projectId } = useContext(V2ProjectContext)
   const minReturnedTokens = 0 // TODO will need a field for this in V2ConfirmPayOwnerModal

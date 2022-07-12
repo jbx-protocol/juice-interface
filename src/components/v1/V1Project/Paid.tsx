@@ -203,6 +203,7 @@ export default function Paid() {
         <span
           style={{ ...secondaryTextStyle, cursor: 'pointer' }}
           onClick={() => setBalancesModalVisible(true)}
+          role="button"
         >
           <Trans>All assets</Trans> <RightCircleOutlined />
         </span>

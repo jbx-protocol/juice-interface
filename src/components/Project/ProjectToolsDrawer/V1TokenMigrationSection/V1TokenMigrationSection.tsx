@@ -2,7 +2,7 @@ import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import { MinimalCollapse } from 'components/MinimalCollapse'
 import { useContext, useState } from 'react'
-import { useV1ProjectOf } from 'hooks/v2/contractReader/V1ProjectOf'
+import { useV1ProjectIdOfV2Project } from 'hooks/v2/contractReader/V1ProjectIdOfV2Project'
 import { LoadingOutlined } from '@ant-design/icons'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 
@@ -13,9 +13,10 @@ export function V1TokenMigrationSection() {
     useState<boolean>(false)
   const { projectId } = useContext(V2ProjectContext)
 
-  const { data: v1Project, loading: v1ProjectLoading } = useV1ProjectOf(
-    !migrationModalVisible ? projectId : undefined, // reload project ID when the user closes the modal.
-  )
+  const { data: v1Project, loading: v1ProjectLoading } =
+    useV1ProjectIdOfV2Project(
+      !migrationModalVisible ? projectId : undefined, // reload project ID when the user closes the modal.
+    )
   const hasV1ProjectId = Boolean(v1Project?.toNumber() ?? 0 > 0)
 
   return (

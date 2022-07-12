@@ -88,8 +88,10 @@ export default function ProjectPreview({
     primaryTerminalCurrentOverflow: undefined,
     totalTokenSupply: undefined,
 
-    nftRewardsCid,
-    nftRewardTiers,
+    nftRewards: {
+      cid: nftRewardsCid,
+      rewardTiers: nftRewardTiers,
+    },
 
     loading: {
       ETHBalanceLoading: false,

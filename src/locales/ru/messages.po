@@ -2446,7 +2446,11 @@ msgid "Receive ERC-20"
 msgstr "Получить ERC-20"
 
 #: src/components/v2/V2Project/NFTRewardsSection/RewardTier.tsx
-msgid "Receive the <0>{0}</0> NFT when you contribute over <1>{1} ETH</1>."
+msgid "Receive this NFT when you contribute <0>{0}</0> - <<1>{1} ETH</1>."
+msgstr ""
+
+#: src/components/v2/V2Project/NFTRewardsSection/RewardTier.tsx
+msgid "Receive this NFT when you contribute at least <0>{0} ETH</0>."
 msgstr ""
 
 #: src/components/inputs/Pay/PayInputSubText.tsx
@@ -2890,10 +2894,6 @@ msgstr "Сумма процентов не может превышать 100%"
 #: src/components/v2/shared/DistributionSplitsSection/index.tsx
 msgid "Sum of percentages cannot exceed 100%."
 msgstr "Сумма процентов не может превышать 100%."
-
-#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
-msgid "Supporters receive this NFT for contributing at least <0>{0} ETH</0>."
-msgstr ""
 
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
@@ -3594,6 +3594,10 @@ msgstr ""
 
 #: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "You must review and accept the risks."
+msgstr ""
+
+#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
+msgid "You receive an NFT for contributing <0>{0} ETH</0>."
 msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx

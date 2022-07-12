@@ -1,7 +1,7 @@
 import { NFTRewardTier } from 'models/v2/nftRewardTier'
 
 // Returns the highest NFT reward tier that a payer is eligible given their pay amount
-export function maxEligibleRewardTier({
+export function getNFTRewardTier({
   ethPayAmount,
   nftRewardTiers,
 }: {

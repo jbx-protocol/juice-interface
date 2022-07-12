@@ -6,10 +6,12 @@ import { MouseEventHandler, useContext } from 'react'
 
 export function RewardTier({
   rewardTier,
+  nextRewardTier,
   isSelected,
   onClick,
 }: {
   rewardTier: NFTRewardTier
+  nextRewardTier: NFTRewardTier | undefined
   isSelected: boolean
   onClick: MouseEventHandler<HTMLDivElement>
 }) {
@@ -51,10 +53,23 @@ export function RewardTier({
       </div>
       <Tooltip
         title={
-          <Trans>
-            Receive the <strong>{rewardTier.name}</strong> NFT when you
-            contribute over <strong>{rewardTier.paymentThreshold} ETH</strong>.
-          </Trans>
+          <>
+            <h4>
+              <strong>{rewardTier.name}</strong>
+            </h4>
+            {nextRewardTier ? (
+              <Trans>
+                Receive this NFT when you contribute{' '}
+                <strong>{rewardTier.paymentThreshold}</strong> - {'<'}
+                <strong>{nextRewardTier.paymentThreshold} ETH</strong>.
+              </Trans>
+            ) : (
+              <Trans>
+                Receive this NFT when you contribute at least{' '}
+                <strong>{rewardTier.paymentThreshold} ETH</strong>.
+              </Trans>
+            )}
+          </>
         }
         placement={'bottom'}
       >

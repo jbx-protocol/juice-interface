@@ -26,7 +26,7 @@ import { weightedAmount } from 'utils/v2/math'
 import TransactionModal from 'components/TransactionModal'
 import Callout from 'components/Callout'
 import useMobile from 'hooks/Mobile'
-import { maxEligibleRewardTier, MOCK_NFTs } from 'utils/v2/nftRewards'
+import { getNFTRewardTier, MOCK_NFTs } from 'utils/v2/nftRewards'
 import { featureFlagEnabled } from 'utils/featureFlags'
 
 import { V2PayForm, V2PayFormType } from '../V2PayForm'
@@ -78,12 +78,12 @@ export function V2ConfirmPayModal({
     projectMetadata,
     projectId,
     tokenSymbol,
-    // nftRewardTiers
+    // nftReward: { rewardTiers }
   } = useContext(V2ProjectContext)
   const converter = useCurrencyConverter()
   const payProjectTx = usePayV2ProjectTx()
 
-  const nftRewardTiers = MOCK_NFTs
+  const nftRewardTiers = MOCK_NFTs //rewardTiers
 
   const [loading, setLoading] = useState<boolean>()
   const [transactionPending, setTransactionPending] = useState<boolean>()
@@ -108,10 +108,10 @@ export function V2ConfirmPayModal({
     weiAmount,
     'reserved',
   )
-  let nftReward: NFTRewardTier | null = null
+  let nftRewardTier: NFTRewardTier | null = null
 
   if (nftRewardTiers && featureFlagEnabled('nftRewards')) {
-    nftReward = maxEligibleRewardTier({
+    nftRewardTier = getNFTRewardTier({
       nftRewardTiers,
       ethPayAmount: parseFloat(fromWad(weiAmount)),
     })
@@ -221,22 +221,22 @@ export function V2ConfirmPayModal({
           >
             {formatWad(ownerTickets, { precision: 0 })}
           </Descriptions.Item>
-          {nftReward ? (
+          {nftRewardTier ? (
             <Descriptions.Item
               label={
                 <TooltipLabel
                   label={t`NFT rewards`}
                   tip={
                     <Trans>
-                      Supporters receive this NFT for contributing at least{' '}
-                      <strong>{nftReward.paymentThreshold} ETH</strong>.
+                      You receive an NFT for contributing{' '}
+                      <strong>{nftRewardTier.paymentThreshold} ETH</strong>.
                     </Trans>
                   }
                 />
               }
-              style={{ padding: '10px 24px' }}
+              style={{ padding: '0.625rem 1.5rem' }}
             >
-              <NftReward nftReward={nftReward} />
+              <NftReward nftReward={nftRewardTier} />
             </Descriptions.Item>
           ) : null}
         </Descriptions>

@@ -5,9 +5,11 @@ import { ipfsCidUrl } from 'utils/ipfs'
 
 import { CloudFunctionRewardTier } from './NFTRewardsToIPFS'
 
-function consolidateNftRewards(data: CloudFunctionRewardTier[]) {
+function transformNftRewardsData(
+  data: CloudFunctionRewardTier[],
+): NFTRewardTier[] {
   const nftRewardTiers: NFTRewardTier[] = []
-  data.forEach((rewardTier: CloudFunctionRewardTier) => {
+  data.map((rewardTier: CloudFunctionRewardTier) => {
     nftRewardTiers.push({
       name: rewardTier.name,
       description: rewardTier.description ?? '',
@@ -24,13 +26,13 @@ function consolidateNftRewards(data: CloudFunctionRewardTier[]) {
 
 // Calls a cloudfunction to upload to IPFS created by @tankbottoms
 // Returns cid which points to where this NFT data is stored on IPFS
-export default function useIPFSToNFTRewards(cid: string | undefined) {
+export default function useNFTRewards(cid: string | undefined) {
   return useQuery('nft-rewards', async () => {
     if (!cid) {
       return
     }
     const url = ipfsCidUrl(cid)
     const response = await axios.get(url)
-    return consolidateNftRewards(response.data)
+    return transformNftRewardsData(response.data)
   })
 }

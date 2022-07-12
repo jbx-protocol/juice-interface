@@ -47,8 +47,10 @@ export type V2ProjectContextType = {
   primaryTerminalCurrentOverflow: BigNumber | undefined
   totalTokenSupply: BigNumber | undefined
 
-  nftRewardsCid: string | undefined
-  nftRewardTiers: NFTRewardTier[] | undefined
+  nftRewards: {
+    cid: string | undefined
+    rewardTiers: NFTRewardTier[] | undefined
+  }
 
   loading: V2ProjectLoadingStates
 }
@@ -85,8 +87,10 @@ export const V2ProjectContext = createContext<V2ProjectContextType>({
   primaryTerminalCurrentOverflow: undefined,
   totalTokenSupply: undefined,
 
-  nftRewardsCid: undefined,
-  nftRewardTiers: undefined,
+  nftRewards: {
+    cid: undefined,
+    rewardTiers: undefined,
+  },
 
   loading: {
     ETHBalanceLoading: false,

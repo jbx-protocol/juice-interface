@@ -1,6 +1,7 @@
-import { Tooltip } from 'antd'
+import { Image, Tooltip } from 'antd'
 import ExternalLink from 'components/ExternalLink'
-import Loading from 'components/Loading'
+import { LoadingOutlined } from '@ant-design/icons'
+
 import { NFTRewardTier } from 'models/v2/nftRewardTier'
 import { useState } from 'react'
 
@@ -13,52 +14,54 @@ export function NftReward({
 
   const nftImage = (
     <>
-      {imageLoading ? <Loading size={25} style={{ marginLeft: 15 }} /> : null}
-      <img
-        src={nftReward.imageUrl}
-        alt={nftReward.name}
-        height={'50px'}
-        style={{
-          marginLeft: 15,
-          display: imageLoading ? 'none' : 'unset',
-          objectFit: 'cover',
-          width: '50px',
-        }}
-        onLoad={() => setImageLoading(false)}
-      />
+      {imageLoading ? (
+        <LoadingOutlined size={25} style={{ marginLeft: 15 }} />
+      ) : null}
+      <div style={{ marginLeft: 15 }}>
+        <Image
+          src={nftReward.imageUrl}
+          alt={nftReward.name}
+          height={'50px'}
+          style={{
+            display: imageLoading ? 'none' : 'unset',
+            objectFit: 'cover',
+            width: '50px',
+          }}
+          onLoad={() => setImageLoading(false)}
+        />
+      </div>
     </>
   )
-  const isLink = nftReward.externalLink.length
+  const isLink = nftReward.externalLink
 
   const className = `text-primary ${
     isLink
       ? 'hover-text-action-primary hover-text-decoration-underline'
-      : 'hover-unset'
+      : 'hover-color-unset'
   }`
 
   return (
-    <ExternalLink
+    <div
       style={{
         display: 'flex',
         justifyContent: 'flex-end',
         alignItems: 'center',
-        cursor: isLink ? 'pointer' : 'default',
       }}
-      className={className}
-      href={isLink ? nftReward.externalLink : undefined}
     >
-      <span
+      <ExternalLink
         style={{
           fontWeight: 500,
         }}
+        className={className}
+        href={isLink ? nftReward.externalLink : undefined}
       >
         {nftReward.name}
-      </span>
-      {nftReward.description.length ? (
+      </ExternalLink>
+      {nftReward.description ? (
         <Tooltip title={nftReward.description}>{nftImage}</Tooltip>
       ) : (
         nftImage
       )}
-    </ExternalLink>
+    </div>
   )
 }

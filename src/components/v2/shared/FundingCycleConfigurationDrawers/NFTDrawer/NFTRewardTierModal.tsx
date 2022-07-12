@@ -15,8 +15,8 @@ export type NFTFormFields = {
   paymentThreshold: number
   maxSupply: number
   name: string
-  externalLink: string
-  description: string
+  externalLink: string | undefined
+  description: string | undefined
   imageUrl: string // IPFS link
 }
 
@@ -107,11 +107,7 @@ export default function NFTRewardTierModal({
           name="description"
           rules={[{ max: 256 }]}
         >
-          <Input.TextArea
-            maxLength={256} // TODO: unknown
-            showCount
-            autoSize
-          />
+          <Input.TextArea maxLength={256} showCount autoSize />
         </Form.Item>
       </Form>
     </Modal>

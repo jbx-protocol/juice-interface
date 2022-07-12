@@ -1,6 +1,6 @@
 import { NFTRewardTier } from 'models/v2/nftRewardTier'
 import { useEffect, useState } from 'react'
-import { maxEligibleRewardTier, MOCK_NFTs } from 'utils/v2/nftRewards'
+import { getNFTRewardTier, MOCK_NFTs } from 'utils/v2/nftRewards'
 
 import { RewardTier } from './RewardTier'
 
@@ -27,6 +27,7 @@ export function NFTRewardsSection({
       <RewardTier
         key={index}
         rewardTier={rewardTier}
+        nextRewardTier={nftRewardTiers[index + 1]}
         isSelected={isSelected}
         onClick={e => {
           e.stopPropagation()
@@ -40,7 +41,7 @@ export function NFTRewardsSection({
   }
 
   useEffect(() => {
-    const highestEligibleRewardTier = maxEligibleRewardTier({
+    const highestEligibleRewardTier = getNFTRewardTier({
       nftRewardTiers,
       ethPayAmount: parseFloat(payAmount),
     })

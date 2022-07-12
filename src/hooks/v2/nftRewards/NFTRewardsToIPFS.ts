@@ -4,12 +4,12 @@ export type CloudFunctionRewardTier = {
   edition: number
   isBooleanAmount: boolean
   name: string
-  description: string
+  description: string | undefined
   shouldPreferSymbol: boolean
   minter: string
   publishers: string
   date: string //"2022-03-04T12:09:18.159Z",
-  uri: string
+  uri: string | undefined
   image: string
   attributes_tiers: number
   attributes_supply: number

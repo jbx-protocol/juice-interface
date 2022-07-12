@@ -9,7 +9,7 @@ import { readProvider } from 'constants/readProvider'
 import { readNetwork } from 'constants/networks'
 import { ContractReadResult } from './V2ContractReader'
 
-export function useV1ProjectIdOf(
+export function useV1ProjectIdOfV2Project(
   projectId: BigNumberish | undefined,
 ): ContractReadResult<BigNumber | undefined> {
   const [loading, setLoading] = useState<boolean>(false)

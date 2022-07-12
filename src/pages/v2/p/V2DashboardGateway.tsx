@@ -1,8 +1,9 @@
 import Loading from 'components/Loading'
 import Project404 from 'components/Project404'
-import V2Dashboard from 'pages/v2/p'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { useParams } from 'react-router-dom'
+
+import V2Dashboard from '.'
 
 export default function V2DashboardGateway() {
   const { handle, projectId }: { handle?: string; projectId?: string } =

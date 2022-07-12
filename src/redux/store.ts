@@ -22,12 +22,13 @@ export function createStore() {
 const store = createStore()
 
 store.subscribe(() => {
-  localStorage.setItem(
-    REDUX_STATE_LOCALSTORAGE_KEY,
-    JSON.stringify({
-      reduxState: store.getState(),
-    }),
-  )
+  localStorage &&
+    localStorage.setItem(
+      REDUX_STATE_LOCALSTORAGE_KEY,
+      JSON.stringify({
+        reduxState: store.getState(),
+      }),
+    )
 })
 
 export type RootState = ReturnType<typeof rootReducer>

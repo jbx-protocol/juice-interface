@@ -21,6 +21,11 @@ import {
   parseDistributeToTicketModEvent,
 } from '../v1/distribute-to-ticket-mod-event'
 import {
+  DeployETHERC20ProjectPayerEvent,
+  DeployETHERC20ProjectPayerEventJson,
+  parseDeployETHERC20ProjectPayerEventJson,
+} from '../v2/deploy-eth-erc20-project-payer-event'
+import {
   DistributePayoutsEvent,
   DistributePayoutsEventJson,
   parseDistributePayoutsEventJson,
@@ -92,6 +97,7 @@ export type ProjectEvent = {
   distributeToPayoutSplitEvent: Partial<DistributePayoutsEvent> | null
   distributeToReservedTokenSplitEvent: Partial<DistributeToReservedTokenSplitEvent> | null
   useAllowanceEvent: Partial<UseAllowanceEvent> | null
+  deployETHERC20ProjectPayerEvent: Partial<DeployETHERC20ProjectPayerEvent> | null
 }
 
 export type ProjectEventJson = Pick<
@@ -115,6 +121,7 @@ export type ProjectEventJson = Pick<
   distributeToReservedTokenSplitEvent: DistributeToReservedTokenSplitEventJson | null
   distributeToPayoutSplitEvent: DistributeToPayoutSplitEventJson | null
   useAllowanceEvent: UseAllowanceEventJson | null
+  deployETHERC20ProjectPayerEvent: DeployETHERC20ProjectPayerEventJson | null
 }
 
 export const parseProjectEventJson = (j: ProjectEventJson): ProjectEvent => ({
@@ -156,5 +163,10 @@ export const parseProjectEventJson = (j: ProjectEventJson): ProjectEvent => ({
     : null,
   useAllowanceEvent: j.useAllowanceEvent
     ? parseUseAllowanceEventJson(j.useAllowanceEvent)
+    : null,
+  deployETHERC20ProjectPayerEvent: j.deployETHERC20ProjectPayerEvent
+    ? parseDeployETHERC20ProjectPayerEventJson(
+        j.deployETHERC20ProjectPayerEvent,
+      )
     : null,
 })

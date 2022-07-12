@@ -23,6 +23,11 @@ import {
   TapEventJson,
 } from 'models/subgraph-entities/v1/tap-event'
 import {
+  DeployETHERC20ProjectPayerEvent,
+  DeployETHERC20ProjectPayerEventJson,
+  parseDeployETHERC20ProjectPayerEventJson,
+} from 'models/subgraph-entities/v2/deploy-eth-erc20-project-payer-event'
+import {
   DistributePayoutsEvent,
   DistributePayoutsEventJson,
   parseDistributePayoutsEventJson,
@@ -93,6 +98,12 @@ import {
   RedeemEventJson,
 } from 'models/subgraph-entities/vX/redeem-event'
 
+import {
+  ETHERC20ProjectPayer,
+  ETHERC20ProjectPayerJson,
+  parseETHERC20ProjectPayer,
+} from '../models/subgraph-entities/v2/eth-erc20-project-payer'
+
 export interface SubgraphEntities {
   protocolLog: ProtocolLog
   projectEvent: ProjectEvent
@@ -113,6 +124,8 @@ export interface SubgraphEntities {
   distributeToReservedTokenSplitEvent: DistributeToReservedTokenSplitEvent
   distributeToPayoutSplitEvent: DistributeToPayoutSplitEvent
   useAllowanceEvent: UseAllowanceEvent
+  ethERC20ProjectPayer: ETHERC20ProjectPayer
+  deployETHERC20ProjectPayerEvent: DeployETHERC20ProjectPayerEvent
 }
 
 export interface SubgraphQueryReturnTypes {
@@ -149,6 +162,10 @@ export interface SubgraphQueryReturnTypes {
   }
   useAllowanceEvent: { useAllowanceEvents: UseAllowanceEventJson[] }
   mintTokensEvent: { mintTokensEvent: MintTokensEventJson[] }
+  ethERC20ProjectPayer: { ethERC20ProjectPayers: ETHERC20ProjectPayerJson[] }
+  deployETHERC20ProjectPayerEvent: {
+    deployETHERC20ProjectPayerEvents: DeployETHERC20ProjectPayerEventJson[]
+  }
 }
 
 export type EntityKey = keyof SubgraphEntities
@@ -431,6 +448,20 @@ export function formatGraphResponse<E extends EntityKey>(
       if ('useAllowanceEvents' in response) {
         // @ts-ignore
         return response.useAllowanceEvents.map(parseUseAllowanceEventJson)
+      }
+      break
+    case 'ethERC20ProjectPayer':
+      if ('ethERC20ProjectPayers' in response) {
+        // @ts-ignore
+        return response.ethERC20ProjectPayers.map(parseETHERC20ProjectPayer)
+      }
+      break
+    case 'deployETHERC20ProjectPayerEvent':
+      if ('deployETHERC20ProjectPayerEvents' in response) {
+        // @ts-ignore
+        return response.deployETHERC20ProjectPayerEvents.map(
+          parseDeployETHERC20ProjectPayerEventJson,
+        )
       }
       break
   }

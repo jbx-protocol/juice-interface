@@ -11,10 +11,32 @@ export function useTransferProjectOwnershipTx(): TransactorInstance<{
   const { projectId, projectOwnerAddress } = useContext(V2ProjectContext)
 
   return ({ newOwnerAddress }, txOpts) => {
-    if (!transactor || !projectId || !contracts?.JBProjects) {
+    if (
+      !transactor ||
+      !projectId ||
+      !contracts?.JBProjects ||
+      !newOwnerAddress
+    ) {
+      const missingParam = !transactor
+        ? 'transactor'
+        : !projectId
+        ? 'projectId'
+        : !contracts?.JBProjects
+        ? 'contracts.JBProjects'
+        : !newOwnerAddress
+        ? 'newOwnerAddress'
+        : null
+
+      txOpts?.onError?.(
+        new DOMException(
+          `Missing ${missingParam ?? 'parameter` not found'} in v2 transactor`,
+        ),
+      )
+
       txOpts?.onDone?.()
       return Promise.resolve(false)
     }
+
     return transactor(
       contracts.JBProjects,
       'safeTransferFrom(address,address,uint256)',

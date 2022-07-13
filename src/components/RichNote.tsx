@@ -1,7 +1,7 @@
 import Autolinker from 'autolinker'
 import RichImgPreview from 'components/RichImgPreview'
-import { useContentType } from 'hooks/ContentType'
-import { useMemo } from 'react'
+import { Space } from 'antd'
+import { useProcessedRichNote } from 'hooks/ProcessedRichNote'
 
 type RichNoteProps = {
   note: string | undefined
@@ -13,64 +13,51 @@ export default function RichNote({
   style,
   children,
 }: React.PropsWithChildren<RichNoteProps>) {
-  const mediaLink = useMemo(() => {
-    if (!note) return ''
+  const { trimmedNote, formattedMediaLinks } = useProcessedRichNote(note)
 
-    const https = 'https://'
-    const http = 'http://'
-
-    if (note.includes(https)) {
-      return https + note.split(https)[1].split(' ')[0]
-    } else if (note.includes(http)) {
-      return http + note.split(http)[1].split(' ')[0]
-    }
-    return ''
-  }, [note])
-
-  const contentType = useContentType(mediaLink)
-
-  if (!note) return null
-
-  const sanitizedNote =
-    mediaLink &&
-    (contentType === 'image/jpeg' ||
-      contentType === 'image/jpg' ||
-      contentType === 'image/gif' ||
-      contentType === 'image/png' ||
-      contentType === 'image/svg')
-      ? note.replace(mediaLink, '')
-      : note
+  if (trimmedNote === undefined) return null
 
   return (
     <div style={{ marginTop: 5, ...style }}>
-      <span
-        style={{
-          overflowWrap: 'break-word',
-          paddingRight: '0.5rem',
-        }}
-        dangerouslySetInnerHTML={{
-          __html: Autolinker.link(sanitizedNote, {
-            sanitizeHtml: true,
-            truncate: {
-              length: 30,
-              location: 'smart',
-            },
-          }).replaceAll('\n', '<br>'),
-        }}
-      ></span>
+      {trimmedNote.length ? (
+        <span
+          style={{
+            overflowWrap: 'break-word',
+            paddingRight: '0.5rem',
+          }}
+          dangerouslySetInnerHTML={{
+            __html: Autolinker.link(trimmedNote, {
+              sanitizeHtml: true,
+              truncate: {
+                length: 30,
+                location: 'smart',
+              },
+            }).replaceAll('\n', '<br>'),
+          }}
+        ></span>
+      ) : null}
 
       {children}
 
-      {mediaLink && (
-        <div>
-          <RichImgPreview
-            src={mediaLink}
-            style={{ marginTop: 10 }}
-            width="100%"
-            height={140}
-          />
+      {formattedMediaLinks?.length ? (
+        <div style={{ display: 'block' }}>
+          <Space size="middle" direction="vertical">
+            {formattedMediaLinks.map((links, i) => (
+              <Space key={i} size="middle">
+                {links.map((link, i) => (
+                  <RichImgPreview
+                    key={i}
+                    src={link}
+                    style={{ marginTop: '0.5rem', padding: '0.5rem' }}
+                    width="100%"
+                    height="6rem"
+                  />
+                ))}
+              </Space>
+            ))}
+          </Space>
         </div>
-      )}
+      ) : null}
     </div>
   )
 }

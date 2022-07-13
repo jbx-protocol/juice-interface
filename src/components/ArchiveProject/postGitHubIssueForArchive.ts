@@ -40,7 +40,7 @@ export const postGitHubIssueForArchive = ({
     },
     {
       headers: {
-        Authorization: `Bearer ${process.env.REACT_APP_GITHUB_ACCESS_TOKEN}`,
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_GITHUB_ACCESS_TOKEN}`,
       },
     },
   )

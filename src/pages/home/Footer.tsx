@@ -45,7 +45,7 @@ export default function Footer() {
     scrollToTop()
   }
 
-  const gitCommit = process.env.REACT_APP_VERSION
+  const gitCommit = process.env.NEXT_PUBLIC_VERSION
   const gitCommitLink = `https://github.com/jbx-protocol/juice-interface/commit/${gitCommit}`
 
   return (
@@ -65,7 +65,7 @@ export default function Footer() {
         {link('Discord', 'https://discord.gg/6jXrJSyDFf')}
         {link('GitHub', 'https://github.com/jbx-protocol/juice-interface')}
         {link('Twitter', 'https://twitter.com/juiceboxETH')}
-        {link('Privacy Policy', '/#/privacy')}
+        {link('Privacy Policy', '/privacy')}
       </div>
 
       {gitCommit ? (

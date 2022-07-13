@@ -10,7 +10,7 @@ import { useLaunchProjectTx } from 'hooks/v2/transactor/LaunchProjectTx'
 import { useCallback, useContext, useState } from 'react'
 import { uploadProjectMetadata } from 'utils/ipfs'
 import { TransactionReceipt } from '@ethersproject/providers'
-import { useHistory } from 'react-router-dom'
+import { useRouter } from 'next/router'
 import { BigNumber } from '@ethersproject/bignumber'
 import { NetworkContext } from 'contexts/networkContext'
 
@@ -64,7 +64,7 @@ const getProjectIdFromReceipt = (txReceipt: TransactionReceipt): number => {
 
 export default function DeployProjectButton() {
   const launchProjectTx = useLaunchProjectTx()
-  const history = useHistory()
+  const router = useRouter()
 
   const { userAddress, onSelectWallet } = useContext(NetworkContext)
 
@@ -149,7 +149,7 @@ export default function DeployProjectButton() {
           // Reset Redux state/localstorage after deploying
           dispatch(editingV2ProjectActions.resetState())
 
-          history.push(`${v2ProjectRoute({ projectId })}?newDeploy=true`)
+          router.push(`${v2ProjectRoute({ projectId })}?newDeploy=true`)
         },
         onCancelled() {
           setDeployLoading(false)
@@ -170,7 +170,7 @@ export default function DeployProjectButton() {
     fundingCycleData,
     fundingCycleMetadata,
     fundAccessConstraints,
-    history,
+    router,
     nftRewardsCid,
     dispatch,
   ])

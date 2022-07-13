@@ -9,7 +9,7 @@ import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { useProjectsQuery } from 'hooks/Projects'
 import { RightCircleOutlined } from '@ant-design/icons'
 import { useContext } from 'react'
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import useMobile from 'hooks/Mobile'
 
 import { SectionHeading } from './SectionHeading'
@@ -26,61 +26,68 @@ const SmallProjectCardMobile = ({
 
   return (
     <Link
-      style={{
-        cursor: 'pointer',
-        overflow: 'hidden',
-        width: '100%',
-        padding: '0.5rem 1rem',
-        textAlign: 'center',
-        display: 'flex',
-        alignItems: 'center',
-        gap: 10,
-      }}
       key={`${project.id}_${project.cv}`}
-      to={
+      href={
         project.cv === '2'
           ? `/v2/p/${project.projectId}`
           : `/p/${project?.handle}`
       }
-      className="clickable-border"
     >
       <div
+        className="clickable-border"
         style={{
-          display: 'flex',
-          justifyContent: 'center',
-        }}
-      >
-        <ProjectLogo uri={metadata?.logoUri} name={metadata?.name} size={60} />
-      </div>
-
-      <div
-        style={{
-          fontWeight: 400,
+          cursor: 'pointer',
+          overflow: 'hidden',
           width: '100%',
+          padding: '0.5rem 1rem',
+          textAlign: 'center',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 10,
         }}
       >
-        {metadata ? (
-          <span
-            style={{
-              color: colors.text.primary,
-              margin: 0,
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-            }}
-          >
-            {metadata.name}
-          </span>
-        ) : (
-          <Skeleton paragraph={false} title={{ width: 120 }} active />
-        )}
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
+          <ProjectLogo
+            uri={metadata?.logoUri}
+            name={metadata?.name}
+            size={60}
+          />
+        </div>
 
         <div
           style={{
-            color: colors.text.primary,
-            fontWeight: 500,
+            fontWeight: 400,
+            width: '100%',
           }}
         >
-          <ETHAmount amount={project?.totalPaid} precision={0} /> raised
+          {metadata ? (
+            <span
+              style={{
+                color: colors.text.primary,
+                margin: 0,
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }}
+            >
+              {metadata.name}
+            </span>
+          ) : (
+            <Skeleton paragraph={false} title={{ width: 120 }} active />
+          )}
+
+          <div
+            style={{
+              color: colors.text.primary,
+              fontWeight: 500,
+            }}
+          >
+            <ETHAmount amount={project?.totalPaid} precision={0} /> raised
+          </div>
         </div>
       </div>
     </Link>
@@ -95,63 +102,70 @@ const SmallProjectCard = ({ project }: { project: ProjectCardProject }) => {
 
   return (
     <Link
-      style={{
-        cursor: 'pointer',
-        overflow: 'hidden',
-        width: 180,
-        padding: '1rem',
-        textAlign: 'center',
-      }}
       key={`${project.id}_${project.cv}`}
-      to={
+      href={
         project.cv === '2'
           ? `/v2/p/${project.projectId}`
           : `/p/${project?.handle}`
       }
-      className="clickable-border"
     >
       <div
         style={{
-          display: 'flex',
-          justifyContent: 'center',
-          marginBottom: '0.5rem',
+          cursor: 'pointer',
+          overflow: 'hidden',
+          width: 180,
+          padding: '1rem',
+          textAlign: 'center',
         }}
+        className="clickable-border"
       >
-        <ProjectLogo uri={metadata?.logoUri} name={metadata?.name} size={90} />
-      </div>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            marginBottom: '0.5rem',
+          }}
+        >
+          <ProjectLogo
+            uri={metadata?.logoUri}
+            name={metadata?.name}
+            size={90}
+          />
+        </div>
 
-      <div
-        style={{
-          flex: 1,
-          minWidth: 0,
-          fontWeight: 400,
-        }}
-      >
-        {metadata ? (
-          <span
-            style={{
-              color: colors.text.primary,
-              margin: 0,
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-            }}
-          >
-            {metadata.name}
-          </span>
-        ) : (
-          <Skeleton paragraph={false} title={{ width: 120 }} active />
-        )}
+        <div
+          style={{
+            flex: 1,
+            minWidth: 0,
+            fontWeight: 400,
+          }}
+        >
+          {metadata ? (
+            <span
+              style={{
+                color: colors.text.primary,
+                margin: 0,
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }}
+            >
+              {metadata.name}
+            </span>
+          ) : (
+            <Skeleton paragraph={false} title={{ width: 120 }} active />
+          )}
 
-        <div>
-          <span
-            style={{
-              color: colors.text.primary,
-              fontSize: '1rem',
-              fontWeight: 500,
-            }}
-          >
-            <ETHAmount amount={project?.totalPaid} precision={0} /> raised
-          </span>
+          <div>
+            <span
+              style={{
+                color: colors.text.primary,
+                fontSize: '1rem',
+                fontWeight: 500,
+              }}
+            >
+              <ETHAmount amount={project?.totalPaid} precision={0} /> raised
+            </span>
+          </div>
         </div>
       </div>
     </Link>
@@ -203,16 +217,13 @@ export function TopProjectsSection() {
                 marginBottom: '0.8rem',
               }}
             >
-              <Trans>
-                Join{' '}
-                <Link
-                  to="/projects"
-                  className="text-primary hover-text-decoration-underline"
-                >
-                  hundreds of projects
-                </Link>{' '}
-                sippin' the Juice.
-              </Trans>
+              <Trans>Join</Trans>{' '}
+              <Link href="/projects">
+                <a className="text-primary hover-text-decoration-underline">
+                  <Trans>hundreds of projects</Trans>
+                </a>
+              </Link>{' '}
+              <Trans>sippin' the Juice.</Trans>
             </p>
           </div>
 
@@ -246,7 +257,7 @@ export function TopProjectsSection() {
               <Button
                 size="large"
                 type="primary"
-                href="/#/create"
+                href="/create"
                 block={isMobile}
               >
                 <Trans>Start raising funds</Trans>

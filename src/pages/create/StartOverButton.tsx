@@ -1,20 +1,20 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Modal } from 'antd'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useHistory } from 'react-router-dom'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 
 export function StartOverButton() {
   const [startOverModalVisible, setStartOverModalVisible] =
     useState<boolean>(false)
 
-  const history = useHistory()
+  const router = useRouter()
   const dispatch = useDispatch()
 
   const resetV2CreateFlow = () => {
     dispatch(editingV2ProjectActions.resetState())
-    history.go(0)
+    router.reload()
   }
 
   return (

@@ -106,12 +106,13 @@ export function V2ReconfigureProjectHandleDrawer({
           1. Are included in search results on the projects page
           <br />
           2. Can be accessed via the URL:{' '}
-          <b>juicebox.money/#{v2ProjectRoute({ handle: 'handle' })}</b>
+          <b>juicebox.money{v2ProjectRoute({ handle: 'handle' })}</b>
           <br />
           <br />
-          (The original URL{' '}
-          <b>juicebox.money/#{v2ProjectRoute({ projectId })}</b> will continue
-          to work.)
+          (The original URL <b>
+            juicebox.money{v2ProjectRoute({ projectId })}
+          </b>{' '}
+          will continue to work.)
         </Trans>
       </p>
 

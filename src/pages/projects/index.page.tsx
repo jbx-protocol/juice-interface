@@ -11,7 +11,8 @@ import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import Grid from 'components/Grid'
 import ProjectCard, { ProjectCardProject } from 'components/ProjectCard'
 
-import { Link, useHistory, useLocation } from 'react-router-dom'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import { useInfiniteProjectsQuery, useProjectsSearch } from 'hooks/Projects'
 
@@ -38,19 +39,13 @@ export default function Projects() {
   const [selectedTab, setSelectedTab] = useState<ProjectCategory>(defaultTab)
 
   // Checks URL to see if tab has been set
-  const location = useLocation()
-  const history = useHistory()
+  const router = useRouter()
 
   const { userAddress } = useContext(NetworkContext)
 
-  const params = useMemo(
-    () => new URLSearchParams(location.search),
-    [location.search],
-  )
-
   useEffect(() => {
     setSelectedTab(() => {
-      switch (params.get('tab')) {
+      switch (router.query.tab) {
         case 'trending':
           return 'trending'
         case 'all':
@@ -63,10 +58,10 @@ export default function Projects() {
           return defaultTab
       }
     })
-  }, [userAddress, params])
+  }, [userAddress, router.query])
 
   const [searchText, setSearchText] = useState<string>(
-    params.get('search') ?? '',
+    (router.query.search as string | undefined) ?? '',
   )
 
   const [orderBy, setOrderBy] = useState<OrderByOption>('totalPaid')
@@ -145,7 +140,7 @@ export default function Projects() {
             <Trans>Projects on Juicebox</Trans>
           </h1>
 
-          <Link to="/create">
+          <Link href="/create">
             <Button type="primary" size="large">
               <Trans>Create project</Trans>
             </Button>
@@ -172,7 +167,7 @@ export default function Projects() {
           placeholder={t`Search projects by handle`}
           onSearch={val => {
             setSearchText(val)
-            history.push(`/projects?tab=all${val ? `&search=${val}` : ''}`)
+            router.push(`/projects?tab=all${val ? `&search=${val}` : ''}`)
           }}
           defaultValue={searchText}
           allowClear

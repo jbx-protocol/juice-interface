@@ -14,7 +14,7 @@ import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { fromWad } from 'utils/formatNumber'
 
 import { t } from '@lingui/macro'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useRouter } from 'next/router'
 
 import { v2ProjectRoute } from 'utils/routes'
 
@@ -36,13 +36,8 @@ export default function V2ReconfigureFundingModalTrigger({
   triggerButton?: (onClick: VoidFunction) => JSX.Element
 }) {
   // Checks URL to see if Modal is already opened
-  const location = useLocation()
-  const params = new URLSearchParams(location.search)
-  const initialReconfigureModalVisible = Boolean(
-    params.get('reconfigModalOpen'),
-  )
-
-  const history = useHistory()
+  const router = useRouter()
+  const initialReconfigureModalVisible = Boolean(router.query.reconfigModalOpen)
 
   const dispatch = useDispatch()
   const { projectId, fundingCycle, primaryTerminal } =
@@ -55,7 +50,7 @@ export default function V2ReconfigureFundingModalTrigger({
 
   if (initialReconfigureModalVisible && localStoreRef.current === undefined) {
     // Change URL without refreshing page
-    history.replace(v2ProjectRoute({ projectId }))
+    router.replace(v2ProjectRoute({ projectId }))
     handleModalOpen()
   }
 

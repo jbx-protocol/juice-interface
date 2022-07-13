@@ -11,7 +11,7 @@ import FundingDrawer from 'components/v2/shared/FundingCycleConfigurationDrawers
 import TokenDrawer from 'components/v2/shared/FundingCycleConfigurationDrawers/TokenDrawer'
 
 import RulesDrawer from 'components/v2/shared/FundingCycleConfigurationDrawers/RulesDrawer'
-import { useLocation } from 'react-router-dom'
+import { useRouter } from 'next/router'
 
 import { V2ReconfigureProjectDetailsDrawer } from './drawers/V2ReconfigureProjectDetailsDrawer'
 import V2ReconfigureUpcomingMessage from './V2ReconfigureUpcomingMessage'
@@ -79,9 +79,8 @@ export default function V2ProjectReconfigureModal({
   hideProjectDetails?: boolean
 }) {
   // Checks URL to see if fundingDrawer is already opened
-  const location = useLocation()
-  const params = new URLSearchParams(location.search)
-  const initialFundingDrawerVisible = Boolean(params.get('fundingDrawerOpen'))
+  const router = useRouter()
+  const initialFundingDrawerVisible = Boolean(router.query.fundingDrawerOpen)
 
   const { initialEditingData } = useInitialEditingData(visible)
   const editingProjectData = useEditingProjectData()

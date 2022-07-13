@@ -3,7 +3,7 @@ import { Space } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { ProjectCategory } from 'models/project-visibility'
 import { useContext } from 'react'
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 
 const TAB_TYPE_NAMES: { [k in ProjectCategory]: string } = {
   all: t`All`,
@@ -23,26 +23,27 @@ export default function ProjectsTabs({
 
   const Tab = ({ type }: { type: ProjectCategory }) => {
     return (
-      <Link
-        to={`/projects?tab=${type}`}
-        style={{
-          textTransform: 'uppercase',
-          cursor: 'pointer',
-          borderBottom: '2px solid transparent',
-          paddingBottom: 6,
-          fontWeight: 500,
-          ...(type === selectedTab
-            ? {
-                color: colors.text.primary,
-                borderColor: colors.text.primary,
-              }
-            : {
-                color: colors.text.secondary,
-                borderColor: 'transparent',
-              }),
-        }}
-      >
-        {TAB_TYPE_NAMES[type]}
+      <Link href={`/projects?tab=${type}`}>
+        <a
+          style={{
+            textTransform: 'uppercase',
+            cursor: 'pointer',
+            borderBottom: '2px solid transparent',
+            paddingBottom: 6,
+            fontWeight: 500,
+            ...(type === selectedTab
+              ? {
+                  color: colors.text.primary,
+                  borderColor: colors.text.primary,
+                }
+              : {
+                  color: colors.text.secondary,
+                  borderColor: 'transparent',
+                }),
+          }}
+        >
+          {TAB_TYPE_NAMES[type]}
+        </a>
       </Link>
     )
   }

@@ -23,7 +23,7 @@ import useUriOfProject from 'hooks/v1/contractReader/UriOfProject'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useMemo } from 'react'
-import { useLocation, useParams } from 'react-router-dom'
+import { useRouter } from 'next/router'
 import { getTerminalName, getTerminalVersion } from 'utils/v1/terminals'
 import { V1CurrencyProvider } from 'providers/v1/V1CurrencyProvider'
 import { V1CurrencyName } from 'utils/v1/currency'
@@ -41,11 +41,11 @@ import Loading from '../../components/Loading'
 import V1Project from '../../components/v1/V1Project'
 
 export default function V1Dashboard() {
-  const { handle }: { handle?: string } = useParams()
+  const router = useRouter()
+
   // Checks URL to see if user was just directed from project deploy
-  const location = useLocation()
-  const params = new URLSearchParams(location.search)
-  const isNewDeploy = Boolean(params.get('newDeploy'))
+  const handle = router.query.handle as string
+  const isNewDeploy = Boolean(router.query.newDeploy)
 
   const projectId = useProjectIdForHandle(handle)
   const owner = useOwnerOfProject(projectId)

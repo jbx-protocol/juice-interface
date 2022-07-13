@@ -26,7 +26,7 @@ export default function V2BugNotice() {
         While the current V2 contracts are being deprecated, creating new
         Juicebox projects has been temporarily disabled on the juicebox.money
         app. Payments to V2 projects with a 0 treasury balance have also been
-        disabled. <a href="/#/v2-bug-updates">More details</a>
+        disabled. <a href="/v2-bug-updates">More details</a>
       </p>
     </div>
   )

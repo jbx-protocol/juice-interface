@@ -24,7 +24,7 @@ import { formatWad } from 'utils/formatNumber'
 import { ExclamationCircleOutlined, SettingOutlined } from '@ant-design/icons'
 
 import CurrencySymbol from 'components/CurrencySymbol'
-import { useHistory } from 'react-router-dom'
+import { useRouter } from 'next/router'
 
 import { ETH_PAYOUT_SPLIT_GROUP } from 'constants/v2/splits'
 
@@ -125,7 +125,7 @@ const DistributionLimitHeader = ({
     loading: { distributionLimitLoading, fundingCycleLoading },
   } = useContext(V2ProjectContext)
 
-  const history = useHistory()
+  const router = useRouter()
   const currency = V2CurrencyName(
     distributionLimitCurrency?.toNumber() as V2CurrencyOption,
   )
@@ -135,10 +135,14 @@ const DistributionLimitHeader = ({
   const projectLoading = distributionLimitLoading && fundingCycleLoading
 
   const relocateToFundingDrawer = () => {
-    history.push({
-      search: '?reconfigModalOpen=true&fundingDrawerOpen=true',
+    router.push({
+      pathname: '/v2/p/[projectId]',
+      query: {
+        projectId: router.query.projectId,
+        reconfigModalOpen: true,
+        fundingDrawerOpen: true,
+      },
     })
-    history.go(0)
   }
 
   return (

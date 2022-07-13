@@ -6,7 +6,7 @@ import { useAppSelector } from 'hooks/AppSelector'
 import DeployProjectButton from './DeployProjectButton'
 import ProjectDetailsSection from './ProjectDetailsSection'
 import FundingSummarySection from './FundingSummarySection'
-import NFTSummarySection from './NFTSummarySection'
+import NftSummarySection from './NftSummarySection'
 import { StartOverButton } from '../../StartOverButton'
 
 export const rowGutter: [Gutter, Gutter] = [40, 30]
@@ -25,7 +25,7 @@ export default function ReviewDeployTab() {
         <Space size="large" direction="vertical" style={{ width: '100%' }}>
           <ProjectDetailsSection />
           <FundingSummarySection />
-          {nftRewardTiers?.length ? <NFTSummarySection /> : null}
+          {nftRewardTiers?.length ? <NftSummarySection /> : null}
         </Space>
       </div>
 

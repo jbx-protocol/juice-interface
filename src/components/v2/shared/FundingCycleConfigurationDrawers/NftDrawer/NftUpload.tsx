@@ -9,15 +9,9 @@ import { ThemeContext } from 'contexts/themeContext'
 import { emitErrorNotification } from 'utils/notifications'
 import { ipfsCidUrl, pinFileToIpfs } from 'utils/ipfs'
 
-const ALLOWED_FILE_TYPES = [
-  'image/jpeg',
-  'image/png',
-  'image/gif',
-  'video/mp4',
-  'video/webm',
-]
+const ALLOWED_FILE_TYPES = ['image/jpeg', 'image/png', 'image/gif']
 
-export default function NFTUpload({ form }: { form: FormInstance }) {
+export default function NftUpload({ form }: { form: FormInstance }) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -38,7 +32,7 @@ export default function NFTUpload({ form }: { form: FormInstance }) {
       emitErrorNotification('File must be less than 5000MB')
     }
     if (!fileIsAllowed) {
-      emitErrorNotification('File must be a JPG, PNG, GIF, MP4 or WEBM.')
+      emitErrorNotification('File must be a JPG, PNG or GIF')
     }
 
     return fileIsAllowed && isLt5000M
@@ -73,11 +67,11 @@ export default function NFTUpload({ form }: { form: FormInstance }) {
       >
         <div style={{ fontSize: 14 }}>
           <strong>
-            <Trans>Upload an image or video</Trans>
+            <Trans>Upload an image</Trans>
           </strong>
         </div>
-        <div style={{ color: colors.text.tertiary, fontSize: 12 }}>
-          JPG, PNG, GIF, MP4, WEBM
+        <div style={{ color: colors.text.secondary, fontSize: 12 }}>
+          JPG, PNG, GIF
         </div>
       </div>
     </div>

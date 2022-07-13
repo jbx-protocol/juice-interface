@@ -1,19 +1,19 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Space } from 'antd'
-import NFTRewardTierModal from 'components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NFTRewardTierModal'
+import NftRewardTierModal from 'components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal'
 import { ThemeContext } from 'contexts/themeContext'
 
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
-import { NFTRewardTier } from 'models/v2/nftRewardTier'
+import { NftRewardTier } from 'models/v2/nftRewardTier'
 import { useCallback, useContext, useState } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
-import useNFTRewardsToIPFS from 'hooks/v2/nftRewards/NFTRewardsToIPFS'
+import useNftRewardsToIPFS from 'hooks/v2/nftRewards/NftRewardsToIPFS'
 
 import { shadowCard } from 'constants/styles/shadowCard'
 
 import FundingCycleDrawer from '../FundingCycleDrawer'
-import NFTRewardTierCard from './NFTRewardTierCard'
+import NftRewardTierCard from './NftRewardTierCard'
 
 export const NFT_REWARDS_EXPLAINATION: JSX.Element = (
   <Trans>
@@ -22,7 +22,7 @@ export const NFT_REWARDS_EXPLAINATION: JSX.Element = (
   </Trans>
 )
 
-export default function NFTDrawer({
+export default function NftDrawer({
   visible,
   onClose,
 }: {
@@ -39,14 +39,14 @@ export default function NFTDrawer({
   const [addTierModalVisible, setAddTierModalVisible] = useState<boolean>(false)
   const [submitLoading, setSubmitLoading] = useState<boolean>(false)
 
-  const [rewardTiers, setRewardTiers] = useState<NFTRewardTier[]>(
+  const [rewardTiers, setRewardTiers] = useState<NftRewardTier[]>(
     nftRewardTiers ?? [],
   )
 
   const onNftFormSaved = useCallback(async () => {
     setSubmitLoading(true)
-    // Calls cloud function to store NFTRewards to IPFS
-    const cid = await useNFTRewardsToIPFS(rewardTiers)
+    // Calls cloud function to store NftRewards to IPFS
+    const cid = await useNftRewardsToIPFS(rewardTiers)
     dispatch(editingV2ProjectActions.setNftRewardTiers(rewardTiers))
     // Store cid (link to nfts on IPFS) to be used later in the deploy tx
     dispatch(editingV2ProjectActions.setNftRewardsCid(cid))
@@ -54,7 +54,7 @@ export default function NFTDrawer({
     onClose?.()
   }, [rewardTiers, dispatch, onClose])
 
-  const handleAddRewardTier = (newRewardTier: NFTRewardTier) => {
+  const handleAddRewardTier = (newRewardTier: NftRewardTier) => {
     setRewardTiers([...rewardTiers, newRewardTier])
   }
 
@@ -63,7 +63,7 @@ export default function NFTDrawer({
     newRewardTier,
   }: {
     index: number
-    newRewardTier: NFTRewardTier
+    newRewardTier: NftRewardTier
   }) => {
     return rewardTiers.map((tier, i) =>
       i === index
@@ -100,7 +100,7 @@ export default function NFTDrawer({
           <p>{NFT_REWARDS_EXPLAINATION}</p>
           <Space direction="vertical" size="large" style={{ width: '100%' }}>
             {rewardTiers.map((rewardTier, index) => (
-              <NFTRewardTierCard
+              <NftRewardTierCard
                 key={index}
                 rewardTier={rewardTier}
                 onChange={newRewardTier =>
@@ -133,7 +133,7 @@ export default function NFTDrawer({
           </span>
         </Button>
       </FundingCycleDrawer>
-      <NFTRewardTierModal
+      <NftRewardTierModal
         visible={addTierModalVisible}
         onChange={handleAddRewardTier}
         mode="Add"

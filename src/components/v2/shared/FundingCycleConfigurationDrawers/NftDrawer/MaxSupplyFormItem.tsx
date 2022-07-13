@@ -3,12 +3,12 @@ import { Form, FormInstance } from 'antd'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 
-import { NFTFormFields } from './NFTRewardTierModal'
+import { NftFormFields } from './NftRewardTierModal'
 
 export default function MaxSupplyFormItem({
   form,
 }: {
-  form: FormInstance<NFTFormFields>
+  form: FormInstance<NftFormFields>
 }) {
   const validateMaxSupply = () => {
     const value = form.getFieldValue('maxSupply')

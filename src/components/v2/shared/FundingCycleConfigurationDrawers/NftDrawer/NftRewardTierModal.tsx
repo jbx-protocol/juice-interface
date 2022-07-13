@@ -2,25 +2,25 @@ import { t } from '@lingui/macro'
 import { Form, Input, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { ModalMode } from 'components/formItems/formHelpers'
-import { NFTRewardTier } from 'models/v2/nftRewardTier'
+import { NftRewardTier } from 'models/v2/nftRewardTier'
 import TooltipLabel from 'components/TooltipLabel'
 import { useEffect } from 'react'
 
 import PaymentThresholdFormItem from './PaymentThresholdFormItem'
-import NFTUpload from './NFTUpload'
+import NftUpload from './NftUpload'
 import MaxSupplyFormItem from './MaxSupplyFormItem'
 import { NFT_REWARDS_EXPLAINATION } from '.'
 
-export type NFTFormFields = {
+export type NftFormFields = {
   paymentThreshold: number
   maxSupply: number
   name: string
-  externalLink: string
-  description: string
+  externalLink: string | undefined
+  description: string | undefined
   imageUrl: string // IPFS link
 }
 
-export default function NFTRewardTierModal({
+export default function NftRewardTierModal({
   visible,
   rewardTier,
   onClose,
@@ -28,13 +28,13 @@ export default function NFTRewardTierModal({
   onChange,
 }: {
   visible: boolean
-  rewardTier?: NFTRewardTier // null when mode === 'Add'
+  rewardTier?: NftRewardTier // null when mode === 'Add'
   onClose: VoidFunction
   isCreate?: boolean
   mode: ModalMode
-  onChange: (rewardTier: NFTRewardTier) => void
+  onChange: (rewardTier: NftRewardTier) => void
 }) {
-  const [nftForm] = useForm<NFTFormFields>()
+  const [nftForm] = useForm<NftFormFields>()
 
   const onFormSaved = async () => {
     await nftForm.validateFields()
@@ -46,7 +46,7 @@ export default function NFTRewardTierModal({
       name: nftForm.getFieldValue('name'),
       externalLink: nftForm.getFieldValue('externalLink'),
       description: nftForm.getFieldValue('description'),
-    } as NFTRewardTier
+    } as NftRewardTier
 
     onChange(newTier)
     onClose()
@@ -81,7 +81,7 @@ export default function NFTRewardTierModal({
       <Form layout="vertical" form={nftForm}>
         <PaymentThresholdFormItem form={nftForm} />
         <MaxSupplyFormItem form={nftForm} />
-        <NFTUpload form={nftForm} />
+        <NftUpload form={nftForm} />
         <Form.Item
           name={'name'}
           label={
@@ -107,11 +107,7 @@ export default function NFTRewardTierModal({
           name="description"
           rules={[{ max: 256 }]}
         >
-          <Input.TextArea
-            maxLength={256} // TODO: unknown
-            showCount
-            autoSize
-          />
+          <Input.TextArea maxLength={256} showCount autoSize />
         </Form.Item>
       </Form>
     </Modal>

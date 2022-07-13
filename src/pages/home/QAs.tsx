@@ -350,7 +350,7 @@ export default function QAs(): {
       a: (
         <Trans>
           <Link href="/p/peel" target="_blank">
-            <a>Peel</a>
+            Peel
           </Link>{' '}
           is the DAO that manages the juicebox.money frontend interface. You can
           reach out to Peel either through the{' '}

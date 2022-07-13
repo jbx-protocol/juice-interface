@@ -6,9 +6,9 @@ import { useV1ProjectIdOfV2Project } from 'hooks/v2/contractReader/V1ProjectIdOf
 import { LoadingOutlined } from '@ant-design/icons'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 
-import { V1TokenMigrationModal } from './V1TokenMigrationModal/V1TokenMigrationModal'
+import { V1TokenMigrationSetupModal } from './V1TokenMigrationSetupModal'
 
-export function V1TokenMigrationSection() {
+export function V1TokenMigrationSetupSection() {
   const [migrationModalVisible, setMigrationModalVisible] =
     useState<boolean>(false)
   const { projectId } = useContext(V2ProjectContext)
@@ -67,7 +67,7 @@ export function V1TokenMigrationSection() {
         <Trans>Set up token migration</Trans>
       </Button>
 
-      <V1TokenMigrationModal
+      <V1TokenMigrationSetupModal
         visible={migrationModalVisible}
         onOk={() => setMigrationModalVisible(false)}
         onCancel={() => setMigrationModalVisible(false)}

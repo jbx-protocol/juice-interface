@@ -5,10 +5,9 @@ import { useSetProjectTerminalsTx } from 'hooks/v2/transactor/SetProjectTerminal
 import { useCallback, useContext, useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { V2UserContext } from 'contexts/v2/userContext'
 
 import { StepSection } from './StepSection'
-import { JB_V1_TOKEN_PAYMENT_TERMINAL_ADDRESS } from 'constants/contracts'
-import { readNetwork } from 'constants/networks'
 
 export function AddTerminalSection({
   completed,
@@ -17,18 +16,20 @@ export function AddTerminalSection({
   completed: boolean
   onCompleted: VoidFunction
 }) {
+  const { contracts } = useContext(V2UserContext)
   const [addTerminalLoading, setAddTerminalLoading] = useState<boolean>(false)
   const setProjectTerminalsTx = useSetProjectTerminalsTx()
   const { terminals } = useContext(V2ProjectContext)
 
   const onAddTerminal = useCallback(async () => {
     setAddTerminalLoading(true)
-    const terminalAddress =
-      JB_V1_TOKEN_PAYMENT_TERMINAL_ADDRESS[readNetwork.name]
 
-    if (!terminalAddress) return
+    if (!contracts) return
 
-    const newTerminals = [...(terminals || []), terminalAddress]
+    const newTerminals = [
+      ...(terminals || []),
+      contracts.JBV1TokenPaymentTerminal.address,
+    ]
     try {
       const result = await setProjectTerminalsTx(
         { terminals: newTerminals },
@@ -44,7 +45,7 @@ export function AddTerminalSection({
       emitErrorNotification('Error adding migration terminal.')
       setAddTerminalLoading(false)
     }
-  }, [terminals, setProjectTerminalsTx, onCompleted])
+  }, [terminals, setProjectTerminalsTx, onCompleted, contracts])
 
   return (
     <StepSection

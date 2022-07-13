@@ -73,7 +73,7 @@
     "lint-staged": "lint-staged",
     "prepare": "husky install",
     "i18n:extract": "./scripts/extract-translations.sh",
-    "i18n:compile": "lingui compile",
+    "i18n:compile": "NODE_ENV=development lingui compile",
     "i18n:lint": "./scripts/lint-translations.sh",
     "postinstall": "yarn i18n:compile",
     "analyze": "yarn build && source-map-explorer 'build/static/js/*.js'",

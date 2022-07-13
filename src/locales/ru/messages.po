@@ -129,10 +129,6 @@ msgstr "<0/>{0}{1} распределено"
 msgid "<0><1/>{netDistributionAmount}</0> after {feePercentage}% JBX fee"
 msgstr "<0><1/>{netDistributionAmount}</0> после {feePercentage}% JBX комиссии"
 
-#: src/pages/home/QAs.tsx
-msgid "<0><1>Peel</1></0> is the DAO that manages the juicebox.money frontend interface. You can reach out to Peel either through the <2>Peel Discord</2> or the <3>Juicebox Discord</3>."
-msgstr ""
-
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "<0><1>This project has no overflow</1>, so you will not receive any ETH for burning tokens.</0>"
 msgstr "<0><1>В этом проекте нет переполнения</1>, поэтому вы не получите ETH за сжигание токенов..</0>"
@@ -223,6 +219,10 @@ msgstr "<0>Примечание:</0> Токены не могут быть во�
 
 #: src/components/formItems/ProjectRedemptionRate.tsx
 msgid "<0>On a lower redemption rate, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than other holders.</0> <1>A redemption rate of 100% means all tokens will have equal value regardless of when they are redeemed.</1>Learn more in this <2>short video</2>."
+msgstr ""
+
+#: src/pages/home/QAs.tsx
+msgid "<0>Peel</0> is the DAO that manages the juicebox.money frontend interface. You can reach out to Peel either through the <1>Peel Discord</1> or the <2>Juicebox Discord</2>."
 msgstr ""
 
 #: src/pages/create/forms/FundingForm/FundingCycleExplainerCollapse.tsx

@@ -129,10 +129,6 @@ msgstr "<0/>{0}{1} 已分发"
 msgid "<0><1/>{netDistributionAmount}</0> after {feePercentage}% JBX fee"
 msgstr "<0><1/>{netDistributionAmount}</0> 扣除 {feePercentage}% JBX 费用后"
 
-#: src/pages/home/QAs.tsx
-msgid "<0><1>Peel</1></0> is the DAO that manages the juicebox.money frontend interface. You can reach out to Peel either through the <2>Peel Discord</2> or the <3>Juicebox Discord</3>."
-msgstr ""
-
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "<0><1>This project has no overflow</1>, so you will not receive any ETH for burning tokens.</0>"
 msgstr "<0><1>这个项目目前筹集的资金并未溢出</1>，此时燃烧代币将不会收到 ETH。</0>"
@@ -224,6 +220,10 @@ msgstr "<0>请注意：</0> 该项目还未发行 ERC-20 形式的代币，因�
 #: src/components/formItems/ProjectRedemptionRate.tsx
 msgid "<0>On a lower redemption rate, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than other holders.</0> <1>A redemption rate of 100% means all tokens will have equal value regardless of when they are redeemed.</1>Learn more in this <2>short video</2>."
 msgstr "<0>赎回比率较低的情况下，每赎回一个代币都会提高剩余代币的价值，形成一种更长期持有的激励机制。</0> <1>100%的赎回率则意味着无论何时赎回，所有代币的价值都是一样的。</1>了解更多，请观看 <2>短视频</2>。"
+
+#: src/pages/home/QAs.tsx
+msgid "<0>Peel</0> is the DAO that manages the juicebox.money frontend interface. You can reach out to Peel either through the <1>Peel Discord</1> or the <2>Juicebox Discord</2>."
+msgstr ""
 
 #: src/pages/create/forms/FundingForm/FundingCycleExplainerCollapse.tsx
 msgid "<0>Recurring funding cycles</0>. For example, distribute funds from your project's treasury every week."

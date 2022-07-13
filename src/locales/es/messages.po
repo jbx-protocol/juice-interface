@@ -129,10 +129,6 @@ msgstr "<0/>{0}{1} distribuidos"
 msgid "<0><1/>{netDistributionAmount}</0> after {feePercentage}% JBX fee"
 msgstr "<0><1/>{netDistributionAmount}</0> después de la tarifa JBX de {feePercentage}%"
 
-#: src/pages/home/QAs.tsx
-msgid "<0><1>Peel</1></0> is the DAO that manages the juicebox.money frontend interface. You can reach out to Peel either through the <2>Peel Discord</2> or the <3>Juicebox Discord</3>."
-msgstr ""
-
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "<0><1>This project has no overflow</1>, so you will not receive any ETH for burning tokens.</0>"
 msgstr "<0><1>Este proyecto no tiene excedente</1>, así que no recibirás ETH por quemar tokens.</0>"
@@ -224,6 +220,10 @@ msgstr "<0>Nota:</0> Los tokens no se pueden reclamar porque no se ha emitido un
 #: src/components/formItems/ProjectRedemptionRate.tsx
 msgid "<0>On a lower redemption rate, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than other holders.</0> <1>A redemption rate of 100% means all tokens will have equal value regardless of when they are redeemed.</1>Learn more in this <2>short video</2>."
 msgstr "<0>En una tasa de canje menor, canjear un token incrementa el valor de cada token restante, creando un incentivo para mantener tokens más tiempo que otros poseedores.</0> <1>Una tasa de canje del 100% significa que todos los tokens tendrán el mismo valor, sin importar cuando se canjeen.</1>Aprende más en este <2>video corto</2>."
+
+#: src/pages/home/QAs.tsx
+msgid "<0>Peel</0> is the DAO that manages the juicebox.money frontend interface. You can reach out to Peel either through the <1>Peel Discord</1> or the <2>Juicebox Discord</2>."
+msgstr ""
 
 #: src/pages/create/forms/FundingForm/FundingCycleExplainerCollapse.tsx
 msgid "<0>Recurring funding cycles</0>. For example, distribute funds from your project's treasury every week."

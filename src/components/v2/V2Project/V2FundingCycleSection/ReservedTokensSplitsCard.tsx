@@ -7,16 +7,15 @@ import TooltipLabel from 'components/TooltipLabel'
 import SplitList from 'components/v2/shared/SplitList'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import {
-  useHasPermission,
-  V2OperatorPermission,
-} from 'hooks/v2/contractReader/HasPermission'
+import { useV2ConnectedWalletHasPermission } from 'hooks/v2/contractReader/V2ConnectedWalletHasPermission'
+import { V2OperatorPermission } from 'models/v2/permissions'
 import useProjectReservedTokens from 'hooks/v2/contractReader/ProjectReservedTokens'
 import { Split } from 'models/v2/splits'
 import { CSSProperties, useContext, useState } from 'react'
 import { formatWad } from 'utils/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { formatReservedRate } from 'utils/v2/math'
+import { reloadWindow } from 'utils/windowUtils'
 
 import DistributeReservedTokensModal from './modals/DistributeReservedTokensModal'
 import { EditTokenAllocationModal } from './modals/EditTokenAllocationModal'
@@ -47,7 +46,9 @@ export default function ReservedTokensSplitsCard({
       projectId,
       reservedRate: reservedRate,
     })
-  const canEditTokens = useHasPermission(V2OperatorPermission.SET_SPLITS)
+  const canEditTokens = useV2ConnectedWalletHasPermission(
+    V2OperatorPermission.SET_SPLITS,
+  )
 
   const smallHeaderStyle: CSSProperties = {
     fontSize: '.7rem',
@@ -187,7 +188,7 @@ export default function ReservedTokensSplitsCard({
       <DistributeReservedTokensModal
         visible={distributeReservedTokensModalVisible}
         onCancel={() => setDistributeReservedTokensModalVisible(false)}
-        onConfirmed={() => window.location.reload()}
+        onConfirmed={reloadWindow}
       />
       <EditTokenAllocationModal
         visible={editTokenAllocationModalVisible}

@@ -9,10 +9,8 @@ import { lazy, useContext, useState } from 'react'
 
 import { ThemeContext } from 'contexts/themeContext'
 import useMobile from 'hooks/Mobile'
-import {
-  useHasPermission,
-  V2OperatorPermission,
-} from 'hooks/v2/contractReader/HasPermission'
+import { useV2ConnectedWalletHasPermission } from 'hooks/v2/contractReader/V2ConnectedWalletHasPermission'
+import { V2OperatorPermission } from 'models/v2/permissions'
 import useProjectQueuedFundingCycle from 'hooks/v2/contractReader/ProjectQueuedFundingCycle'
 import { useEditV2ProjectDetailsTx } from 'hooks/v2/transactor/EditV2ProjectDetailsTx'
 import { useHistory, useLocation } from 'react-router-dom'
@@ -49,6 +47,7 @@ const AllAssetsButton = ({ onClick }: { onClick: VoidFunction }) => {
     <span
       style={{ ...secondaryTextStyle, cursor: 'pointer' }}
       onClick={onClick}
+      role="button"
     >
       <Trans>All assets</Trans> <RightCircleOutlined />
     </span>
@@ -76,7 +75,7 @@ export default function V2Project({
     projectOwnerAddress,
     handle,
   } = useContext(V2ProjectContext)
-  const canReconfigureFundingCycles = useHasPermission(
+  const canReconfigureFundingCycles = useV2ConnectedWalletHasPermission(
     V2OperatorPermission.RECONFIGURE,
   )
 
@@ -98,7 +97,9 @@ export default function V2Project({
   const history = useHistory()
   const isMobile = useMobile()
 
-  const hasEditPermission = useHasPermission(V2OperatorPermission.RECONFIGURE)
+  const hasEditPermission = useV2ConnectedWalletHasPermission(
+    V2OperatorPermission.RECONFIGURE,
+  )
 
   const isOwner = useIsUserAddress(projectOwnerAddress)
 
@@ -146,6 +147,7 @@ export default function V2Project({
         actions={!isPreviewMode ? <V2ProjectHeaderActions /> : undefined}
         isArchived={isArchived}
         handle={handle}
+        owner={projectOwnerAddress}
         onClickSetHandle={
           showAddHandle ? () => setHandleModalVisible(true) : undefined
         }

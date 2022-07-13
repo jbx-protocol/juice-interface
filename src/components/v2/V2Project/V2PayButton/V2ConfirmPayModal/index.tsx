@@ -19,7 +19,7 @@ import {
   V2_CURRENCY_ETH,
   V2_CURRENCY_USD,
 } from 'utils/v2/currency'
-import { usePayV2ProjectTx } from 'hooks/v2/transactor/PayV2ProjectTx'
+import { usePayETHPaymentTerminalTx } from 'hooks/v2/transactor/PayETHPaymentTerminal'
 
 import Paragraph from 'components/Paragraph'
 import { weightedAmount } from 'utils/v2/math'
@@ -81,7 +81,7 @@ export function V2ConfirmPayModal({
     // nftReward: { rewardTiers }
   } = useContext(V2ProjectContext)
   const converter = useCurrencyConverter()
-  const payProjectTx = usePayV2ProjectTx()
+  const payProjectTx = usePayETHPaymentTerminalTx()
 
   const nftRewardTiers = MOCK_NFTs //rewardTiers
 

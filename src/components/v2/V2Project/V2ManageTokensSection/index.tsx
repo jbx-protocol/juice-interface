@@ -11,10 +11,9 @@ import FormattedAddress from 'components/FormattedAddress'
 import { formatPercent, formatWad } from 'utils/formatNumber'
 
 import IssueTokenButton from 'components/IssueTokenButton'
-import {
-  useHasPermission,
-  V2OperatorPermission,
-} from 'hooks/v2/contractReader/HasPermission'
+import { V2OperatorPermission } from 'models/v2/permissions'
+import { useV2ConnectedWalletHasPermission } from 'hooks/v2/contractReader/V2ConnectedWalletHasPermission'
+
 import { useIssueTokensTx } from 'hooks/v2/transactor/IssueTokensTx'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import useTotalBalanceOf from 'hooks/v2/contractReader/TotalBalanceOf'
@@ -23,6 +22,8 @@ import useUserUnclaimedTokenBalance from 'hooks/v2/contractReader/UserUnclaimedT
 import ManageTokensModal from 'components/ManageTokensModal'
 
 import ParticipantsModal from 'components/modals/ParticipantsModal'
+
+import { reloadWindow } from 'utils/windowUtils'
 
 import V2RedeemModal from './V2RedeemModal'
 import V2ClaimTokensModal from './V2ClaimTokensModal'
@@ -61,7 +62,9 @@ export default function V2ManageTokensSection() {
 
   const hasIssuedERC20 = tokenAddress !== constants.AddressZero
 
-  const hasIssueTicketsPermission = useHasPermission(V2OperatorPermission.ISSUE)
+  const hasIssueTicketsPermission = useV2ConnectedWalletHasPermission(
+    V2OperatorPermission.ISSUE,
+  )
 
   const tokenText = tokenSymbolText({
     tokenSymbol: tokenSymbol,
@@ -95,7 +98,7 @@ export default function V2ManageTokensSection() {
   const hasOverflow = Boolean(primaryTerminalCurrentOverflow?.gt(0))
 
   const userHasMintPermission = Boolean(
-    useHasPermission(V2OperatorPermission.MINT),
+    useV2ConnectedWalletHasPermission(V2OperatorPermission.MINT),
   )
   const projectAllowsMint = Boolean(fundingCycleMetadata?.allowMinting)
 
@@ -131,7 +134,7 @@ export default function V2ManageTokensSection() {
                 <div style={{ marginBottom: 20 }}>
                   <IssueTokenButton
                     useIssueTokensTx={useIssueTokensTx}
-                    onCompleted={() => window.location.reload()}
+                    onCompleted={reloadWindow}
                   />
                 </div>
               )}

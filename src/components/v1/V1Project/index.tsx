@@ -68,8 +68,8 @@ export default function V1Project({
 
         <Col xs={24} md={column ? 24 : 12} style={{ marginTop: gutter }}>
           <PayInputGroup
-            payAmount={payAmount}
-            setPayAmount={setPayAmount}
+            payAmountETH={payAmount}
+            onChange={setPayAmount}
             PayButton={V1PayButton}
             reservedRate={reservedRate}
             weight={currentFC?.weight}

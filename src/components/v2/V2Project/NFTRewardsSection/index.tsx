@@ -1,15 +1,16 @@
-import { NFTRewardTier } from 'models/v2/nftRewardTier'
+import { Space } from 'antd'
+import { NftRewardTier } from 'models/v2/nftRewardTier'
 import { useEffect, useState } from 'react'
-import { getNFTRewardTier, MOCK_NFTs } from 'utils/v2/nftRewards'
+import { getNftRewardTier, MOCK_NFTs } from 'utils/v2/nftRewards'
 
 import { RewardTier } from './RewardTier'
 
-export function NFTRewardsSection({
-  payAmount,
-  setPayAmount,
+export function NftRewardsSection({
+  payAmountETH,
+  onPayAmountChange,
 }: {
-  payAmount: string
-  setPayAmount: (payAmount: string) => void
+  payAmountETH: string
+  onPayAmountChange: (payAmount: string) => void
 }) {
   // const {
   //   nftRewardTiers TODO (when NFT contracts are available)
@@ -21,18 +22,17 @@ export function NFTRewardsSection({
 
   if (!nftRewardTiers || nftRewardTiers.length < 1) return null
 
-  const renderRewardTier = (rewardTier: NFTRewardTier, index: number) => {
+  const renderRewardTier = (rewardTier: NftRewardTier, index: number) => {
     const isSelected = index === selectedIndex
     return (
       <RewardTier
-        key={index}
+        key={`${rewardTier.paymentThreshold}-${rewardTier.name}`}
         rewardTier={rewardTier}
-        nextRewardTier={nftRewardTiers[index + 1]}
+        rewardTierUpperLimit={nftRewardTiers[index + 1]?.paymentThreshold}
         isSelected={isSelected}
-        onClick={e => {
-          e.stopPropagation()
+        onClick={() => {
           setSelectedIndex(isSelected ? undefined : index)
-          setPayAmount(
+          onPayAmountChange(
             isSelected ? '0' : rewardTier.paymentThreshold.toString(),
           )
         }}
@@ -41,9 +41,9 @@ export function NFTRewardsSection({
   }
 
   useEffect(() => {
-    const highestEligibleRewardTier = getNFTRewardTier({
+    const highestEligibleRewardTier = getNftRewardTier({
       nftRewardTiers,
-      ethPayAmount: parseFloat(payAmount),
+      payAmountETH: parseFloat(payAmountETH),
     })
 
     // set selected as highest reward tier above a certain amount
@@ -52,26 +52,12 @@ export function NFTRewardsSection({
     } else {
       setSelectedIndex(undefined)
     }
-  }, [payAmount, nftRewardTiers])
+  }, [payAmountETH, nftRewardTiers])
 
   return (
     <div style={{ marginTop: 5 }}>
-      {/* <SectionHeader
-        text={
-          <TooltipLabel
-            label={t`NFT rewards`}
-            tip={t`Receive an NFT for contributing above a certain amount.`}
-          />
-        }
-      /> */}
-      <span style={{ fontSize: 12 }}>+NFT</span>
-      <div
-        style={{
-          display: 'flex',
-        }}
-      >
-        {nftRewardTiers.map(renderRewardTier)}
-      </div>
+      <div style={{ fontSize: '0.7rem' }}>+ NFT</div>
+      <Space size={'large'}>{nftRewardTiers.map(renderRewardTier)}</Space>
     </div>
   )
 }

@@ -22,6 +22,7 @@ import { useIsUserAddress } from 'hooks/IsUserAddress'
 
 import { v2ProjectRoute } from 'utils/routes'
 import V2BugNotice from 'components/v2/shared/V2BugNotice'
+import { featureFlagEnabled } from 'utils/featureFlags'
 
 import { textSecondary } from 'constants/styles/text'
 import { V2_PROJECT_IDS } from 'constants/v2/projectIds'
@@ -39,7 +40,7 @@ const GUTTER_PX = 40
 
 const VolumeChart = lazy(() => import('components/VolumeChart'))
 import { V2ReconfigureProjectHandleDrawer } from './V2ReconfigureProjectHandleDrawer'
-import { NFTRewardsSection } from './NFTRewardsSection'
+import { NftRewardsSection } from './NftRewardsSection'
 
 const AllAssetsButton = ({ onClick }: { onClick: VoidFunction }) => {
   const { theme } = useContext(ThemeContext)
@@ -130,6 +131,8 @@ export default function V2Project({
     return !hasCurrentFundingCycle
   }
 
+  const nftRewardsEnabled = featureFlagEnabled('nftRewards')
+
   return (
     <Space direction="vertical" size={GUTTER_PX} style={{ width: '100%' }}>
       {!hasCurrentFundingCycle &&
@@ -150,7 +153,7 @@ export default function V2Project({
       {!isPreviewMode &&
         hasCurrentFundingCycle === false &&
         hasQueuedFundingCycle === false && <V2BugNotice />}
-      <Row gutter={GUTTER_PX} align={'top'}>
+      <Row gutter={GUTTER_PX} align={nftRewardsEnabled ? 'top' : 'bottom'}>
         <Col md={colSizeMd} xs={24}>
           <TreasuryStats />
           <div style={{ textAlign: 'right' }}>
@@ -159,8 +162,8 @@ export default function V2Project({
         </Col>
         <Col md={colSizeMd} xs={24}>
           <PayInputGroup
-            payAmount={payAmount}
-            setPayAmount={setPayAmount}
+            payAmountETH={payAmount}
+            onChange={setPayAmount}
             PayButton={V2PayButton}
             reservedRate={fundingCycleMetadata?.reservedRate.toNumber()}
             weight={fundingCycle?.weight}
@@ -169,10 +172,12 @@ export default function V2Project({
             tokenAddress={tokenAddress}
             disabled={isPreviewMode || payIsDisabledPreV2Redeploy()}
           />
-          <NFTRewardsSection
-            payAmount={payAmount}
-            setPayAmount={setPayAmount}
-          />
+          {nftRewardsEnabled ? (
+            <NftRewardsSection
+              payAmountETH={payAmount}
+              onPayAmountChange={setPayAmount}
+            />
+          ) : null}
         </Col>
       </Row>
       <Row gutter={GUTTER_PX}>

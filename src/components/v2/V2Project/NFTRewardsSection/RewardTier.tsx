@@ -1,17 +1,17 @@
 import { Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
-import { NFTRewardTier } from 'models/v2/nftRewardTier'
+import { NftRewardTier } from 'models/v2/nftRewardTier'
 import { MouseEventHandler, useContext } from 'react'
 
 export function RewardTier({
   rewardTier,
-  nextRewardTier,
+  rewardTierUpperLimit,
   isSelected,
   onClick,
 }: {
-  rewardTier: NFTRewardTier
-  nextRewardTier: NFTRewardTier | undefined
+  rewardTier: NftRewardTier
+  rewardTierUpperLimit: number | undefined
   isSelected: boolean
   onClick: MouseEventHandler<HTMLDivElement>
 }) {
@@ -25,11 +25,11 @@ export function RewardTier({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'flex-end',
-        marginRight: '25px',
         cursor: 'pointer',
         transition: 'all 0s',
       }}
       onClick={onClick}
+      role="button"
     >
       <div
         style={{
@@ -57,11 +57,11 @@ export function RewardTier({
             <h4>
               <strong>{rewardTier.name}</strong>
             </h4>
-            {nextRewardTier ? (
+            {rewardTierUpperLimit ? (
               <Trans>
                 Receive this NFT when you contribute{' '}
                 <strong>{rewardTier.paymentThreshold}</strong> - {'<'}
-                <strong>{nextRewardTier.paymentThreshold} ETH</strong>.
+                <strong>{rewardTierUpperLimit} ETH</strong>.
               </Trans>
             ) : (
               <Trans>
@@ -77,7 +77,7 @@ export function RewardTier({
           style={{
             fontWeight: isSelected ? 500 : 400,
             marginTop: '3px',
-            fontSize: 13,
+            fontSize: '0.7rem',
           }}
         >
           {rewardTier.paymentThreshold} ETH

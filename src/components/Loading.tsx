@@ -1,18 +1,10 @@
 import { LoadingOutlined } from '@ant-design/icons'
 import { Spin } from 'antd'
-import { CSSProperties } from 'react'
 
-export default function Loading({
-  size,
-  style,
-}: {
-  size?: number
-  style?: CSSProperties
-}) {
+export default function Loading({ size }: { size?: number }) {
   return (
     <div
       style={{
-        ...style,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',

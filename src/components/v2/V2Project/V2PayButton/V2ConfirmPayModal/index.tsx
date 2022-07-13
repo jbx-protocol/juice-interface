@@ -8,7 +8,7 @@ import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import TooltipLabel from 'components/TooltipLabel'
 
-import { NFTRewardTier } from 'models/v2/nftRewardTier'
+import { NftRewardTier } from 'models/v2/nftRewardTier'
 
 import { useContext, useState } from 'react'
 import { formattedNum, formatWad, fromWad } from 'utils/formatNumber'
@@ -26,11 +26,11 @@ import { weightedAmount } from 'utils/v2/math'
 import TransactionModal from 'components/TransactionModal'
 import Callout from 'components/Callout'
 import useMobile from 'hooks/Mobile'
-import { getNFTRewardTier, MOCK_NFTs } from 'utils/v2/nftRewards'
+import { getNftRewardTier, MOCK_NFTs } from 'utils/v2/nftRewards'
 import { featureFlagEnabled } from 'utils/featureFlags'
 
 import { V2PayForm, V2PayFormType } from '../V2PayForm'
-import { NftReward } from './NftRewardCell'
+import { NftRewardCell } from './NftRewardCell'
 
 /**
  * Produce payment memo with the following schema:
@@ -108,12 +108,12 @@ export function V2ConfirmPayModal({
     weiAmount,
     'reserved',
   )
-  let nftRewardTier: NFTRewardTier | null = null
+  let nftRewardTier: NftRewardTier | null = null
 
   if (nftRewardTiers && featureFlagEnabled('nftRewards')) {
-    nftRewardTier = getNFTRewardTier({
+    nftRewardTier = getNftRewardTier({
       nftRewardTiers,
-      ethPayAmount: parseFloat(fromWad(weiAmount)),
+      payAmountETH: parseFloat(fromWad(weiAmount)),
     })
   }
 
@@ -236,7 +236,7 @@ export function V2ConfirmPayModal({
               }
               style={{ padding: '0.625rem 1.5rem' }}
             >
-              <NftReward nftReward={nftRewardTier} />
+              <NftRewardCell nftReward={nftRewardTier} />
             </Descriptions.Item>
           ) : null}
         </Descriptions>

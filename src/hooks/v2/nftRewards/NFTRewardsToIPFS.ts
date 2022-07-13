@@ -1,4 +1,4 @@
-import { NFTRewardTier } from 'models/v2/nftRewardTier'
+import { NftRewardTier } from 'models/v2/nftRewardTier'
 
 export type CloudFunctionRewardTier = {
   edition: number
@@ -18,8 +18,8 @@ export type CloudFunctionRewardTier = {
 
 // Calls a cloudfunction to upload to IPFS created by @tankbottoms
 // Returns cid which points to where this NFT data is stored on IPFS
-export default async function useNFTRewardsToIPFS(
-  nftRewards: NFTRewardTier[],
+export default async function useNftRewardsToIPFS(
+  nftRewards: NftRewardTier[],
 ): Promise<string> {
   const now = new Date().toISOString()
   const args: CloudFunctionRewardTier[] = []

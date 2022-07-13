@@ -11,7 +11,7 @@ import { ipfsCidUrl, pinFileToIpfs } from 'utils/ipfs'
 
 const ALLOWED_FILE_TYPES = ['image/jpeg', 'image/png', 'image/gif']
 
-export default function NFTUpload({ form }: { form: FormInstance }) {
+export default function NftUpload({ form }: { form: FormInstance }) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)

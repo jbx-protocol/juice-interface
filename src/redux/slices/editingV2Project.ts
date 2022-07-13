@@ -22,7 +22,7 @@ import {
   issuanceRateFrom,
   redemptionRateFrom,
 } from 'utils/v2/math'
-import { NFTRewardTier } from 'models/v2/nftRewardTier'
+import { NftRewardTier } from 'models/v2/nftRewardTier'
 
 import {
   ETH_PAYOUT_SPLIT_GROUP,
@@ -38,7 +38,7 @@ interface V2ProjectState {
   fundAccessConstraints: SerializedV2FundAccessConstraint[]
   payoutGroupedSplits: ETHPayoutGroupedSplits
   reservedTokensGroupedSplits: ReservedTokensGroupedSplits
-  nftRewardTiers: NFTRewardTier[]
+  nftRewardTiers: NftRewardTier[]
   nftRewardsCid: string | undefined // points to location of the NFT's json on IPFS
 }
 
@@ -209,7 +209,7 @@ const editingV2ProjectSlice = createSlice({
     setBallot: (state, action: PayloadAction<string>) => {
       state.fundingCycleData.ballot = action.payload
     },
-    setNftRewardTiers: (state, action: PayloadAction<NFTRewardTier[]>) => {
+    setNftRewardTiers: (state, action: PayloadAction<NftRewardTier[]>) => {
       state.nftRewardTiers = action.payload
     },
     setNftRewardsCid: (state, action: PayloadAction<string>) => {

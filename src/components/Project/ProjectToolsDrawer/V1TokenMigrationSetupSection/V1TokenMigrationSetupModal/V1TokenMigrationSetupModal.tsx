@@ -5,13 +5,13 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useV1ProjectIdOfV2Project } from 'hooks/v2/contractReader/V1ProjectIdOfV2Project'
 import { useContext, useState } from 'react'
 import { CheckCircleFilled } from '@ant-design/icons'
+import { useHasV1TokenPaymentTerminal } from 'hooks/v2/hasV1TokenPaymentTerminal'
 
 import { AddTerminalSection } from './AddTerminalSection'
 import { SetV1ProjectSection } from './SetV1ProjectSection'
-import { hasV1TokenPaymentTerminal } from './utils'
 
-export function V1TokenMigrationModal({ ...props }: ModalProps) {
-  const { terminals, projectId } = useContext(V2ProjectContext)
+export function V1TokenMigrationSetupModal({ ...props }: ModalProps) {
+  const { projectId } = useContext(V2ProjectContext)
   const [
     migrationTerminalSectionComplete,
     setMigrationTerminalSectionComplete,
@@ -20,7 +20,7 @@ export function V1TokenMigrationModal({ ...props }: ModalProps) {
     useState<boolean>(false)
 
   const hasMigrationTerminal =
-    hasV1TokenPaymentTerminal(terminals) || migrationTerminalSectionComplete
+    useHasV1TokenPaymentTerminal() || migrationTerminalSectionComplete
   const { data: v1Project } = useV1ProjectIdOfV2Project(projectId)
   const hasSetV1Project =
     Boolean(v1Project?.toNumber()) || v1ProjectSectionComplete

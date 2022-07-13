@@ -29,10 +29,18 @@ import V2RedeemModal from './V2RedeemModal'
 import V2ClaimTokensModal from './V2ClaimTokensModal'
 import V2MintModal from './V2MintModal'
 
-export default function V2ManageTokensSection() {
-  const [manageTokensModalVisible, setManageTokensModalVisible] =
-    useState<boolean>(false)
+const labelStyle: CSSProperties = {
+  width: 128,
+}
+const manageTokensRowStyle: CSSProperties = {
+  display: 'flex',
+  flexWrap: 'wrap',
+  gap: 5,
+  justifyContent: 'space-between',
+  width: '100%',
+}
 
+export default function V2ManageTokensSection() {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -47,40 +55,20 @@ export default function V2ManageTokensSection() {
     projectMetadata,
     cv,
   } = useContext(V2ProjectContext)
-
   const { userAddress } = useContext(NetworkContext)
 
-  const { data: claimedBalance } = useERC20BalanceOf(tokenAddress, userAddress)
-  const { data: unclaimedBalance } = useUserUnclaimedTokenBalance()
-
+  const [manageTokensModalVisible, setManageTokensModalVisible] =
+    useState<boolean>(false)
   const [participantsModalVisible, setParticipantsModalVisible] =
     useState<boolean>(false)
 
-  const labelStyle: CSSProperties = {
-    width: 128,
-  }
-
-  const hasIssuedERC20 = tokenAddress !== constants.AddressZero
-
-  const hasIssueTicketsPermission = useV2ConnectedWalletHasPermission(
-    V2OperatorPermission.ISSUE,
-  )
-
-  const tokenText = tokenSymbolText({
-    tokenSymbol: tokenSymbol,
-    capitalize: false,
-    plural: true,
-  })
-
+  const { data: claimedBalance } = useERC20BalanceOf(tokenAddress, userAddress)
+  const { data: unclaimedBalance } = useUserUnclaimedTokenBalance()
   const { data: totalBalance } = useTotalBalanceOf(userAddress, projectId)
 
   // %age of tokens the user owns.
   const userOwnershipPercentage =
     formatPercent(totalBalance, totalTokenSupply) || '0'
-
-  const showIssueTokensButton =
-    !hasIssuedERC20 && hasIssueTicketsPermission && !isPreviewMode
-
   const claimedBalanceFormatted = formatWad(claimedBalance ?? 0, {
     precision: 0,
   })
@@ -88,14 +76,20 @@ export default function V2ManageTokensSection() {
     precision: 0,
   })
 
-  const manageTokensRowStyle: CSSProperties = {
-    display: 'flex',
-    flexWrap: 'wrap',
-    gap: 5,
-    justifyContent: 'space-between',
-    width: '100%',
-  }
+  const tokenText = tokenSymbolText({
+    tokenSymbol: tokenSymbol,
+    capitalize: false,
+    plural: true,
+  })
+
   const hasOverflow = Boolean(primaryTerminalCurrentOverflow?.gt(0))
+
+  const hasIssuedERC20 = tokenAddress !== constants.AddressZero
+  const hasIssueTicketsPermission = useV2ConnectedWalletHasPermission(
+    V2OperatorPermission.ISSUE,
+  )
+  const showIssueTokensButton =
+    !hasIssuedERC20 && hasIssueTicketsPermission && !isPreviewMode
 
   const userHasMintPermission = Boolean(
     useV2ConnectedWalletHasPermission(V2OperatorPermission.MINT),

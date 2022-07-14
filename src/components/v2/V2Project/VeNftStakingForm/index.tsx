@@ -396,7 +396,9 @@ export default function StakeForNFTForm() {
         ) : (
           <div style={{ ...shadowCard(theme), padding: 25, marginBottom: 10 }}>
             <h3>
-              You don't own any $ve{tokenSymbolText({ tokenSymbol })} NFTs!
+              <Trans>
+                You don't own any $ve{tokenSymbolText({ tokenSymbol })} NFTs!
+              </Trans>
             </h3>
           </div>
         )}

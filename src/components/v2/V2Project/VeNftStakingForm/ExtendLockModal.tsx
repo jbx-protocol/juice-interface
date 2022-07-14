@@ -7,6 +7,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useExtendLockTx } from 'hooks/veNft/transactor/ExtendLockTx'
 import { NetworkContext } from 'contexts/networkContext'
 import { VeNftToken } from 'models/subgraph-entities/veNft/venft-token'
+import { Trans } from '@lingui/macro'
 
 type ExtendLockModalProps = {
   visible: boolean
@@ -63,9 +64,13 @@ const ExtendLockModal = ({
       onOk={extendLock}
       okText={`Extend Lock`}
     >
-      <h2>Extend Lock</h2>
+      <h2>
+        <Trans>Extend Lock</Trans>
+      </h2>
       <div style={{ color: colors.text.secondary }}>
-        <p>Set an updated duration for your staking position.</p>
+        <p>
+          <Trans>Set an updated duration for your staking position.</Trans>
+        </p>
       </div>
       <Form layout="vertical" style={{ width: '100%' }}>
         <Form.Item>

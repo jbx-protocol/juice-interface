@@ -74,8 +74,10 @@ const UnlockModal = ({
       <h2>Unlock Token</h2>
       <div style={{ color: colors.text.secondary }}>
         <p>
-          Unlocking this staking position will burn your NFT and return $
-          {tokenSymbol}.
+          <Trans>
+            Unlocking this staking position will burn your NFT and return $
+            {tokenSymbol}.
+          </Trans>
         </p>
       </div>
       <Form form={form} layout="vertical">

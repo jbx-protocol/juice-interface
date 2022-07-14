@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/macro'
 import { Col, Modal, Row, Image } from 'antd'
 import { VeNftProjectContext } from 'contexts/v2/veNftProjectContext'
 import { useContext } from 'react'
@@ -24,10 +25,16 @@ export default function StakingTokenRangesModal({
       okButtonProps={{ style: { display: 'none' } }}
     >
       <Row>
-        <Col span={6}>{tokenSymbol} range</Col>
+        <Col span={6}>
+          <Trans>{tokenSymbol} range</Trans>
+        </Col>
         <Col span={8}>NFT</Col>
-        <Col span={6}>Range</Col>
-        <Col span={4}>Banny</Col>
+        <Col span={6}>
+          <Trans>Range</Trans>
+        </Col>
+        <Col span={4}>
+          <Trans>Character</Trans>
+        </Col>
       </Row>
       {variants &&
         baseImagesHash &&

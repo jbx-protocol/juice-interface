@@ -81,9 +81,13 @@ const RedeemVeNftModal = ({
       onOk={redeem}
       okText={`Redeem`}
     >
-      <h2>Redeem Token</h2>
+      <h2>
+        <Trans>Redeem Token</Trans>
+      </h2>
       <div style={{ color: colors.text.secondary }}>
-        <p>Redeeming this NFT will burn the token and return...</p>
+        <p>
+          <Trans>Redeeming this NFT will burn the token and return...</Trans>
+        </p>
       </div>
       <Form form={form} layout="vertical">
         <MemoFormItem value={memo} onChange={setMemo} />

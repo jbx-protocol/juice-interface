@@ -1,4 +1,4 @@
-import { Plural } from '@lingui/macro'
+import { Plural, t, Trans } from '@lingui/macro'
 import { Col, Row } from 'antd'
 
 import { ThemeContext } from 'contexts/themeContext'
@@ -28,8 +28,12 @@ export default function StakedTokenStatsSection({
       <h3>Staking Summary:</h3>
       <Row>
         <Col span={8}>
-          <p>Total staked ${tokenSymbol}:</p>
-          <p>Total staked period:</p>
+          <p>
+            <Trans>Total staked ${tokenSymbol}:</Trans>
+          </p>
+          <p>
+            <Trans>Total staked period:</Trans>
+          </p>
         </Col>
         <Col span={16}>
           <p>
@@ -39,8 +43,8 @@ export default function StakedTokenStatsSection({
             {` ${totalStakedPeriodInDays} `}
             <Plural
               value={totalStakedPeriodInDays}
-              one="day"
-              other="days"
+              one={t`day`}
+              other={t`days`}
             />{' '}
           </p>
         </Col>

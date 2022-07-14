@@ -12,6 +12,7 @@ import ExtendLockModal from 'components/v2/V2Project/VeNftStakingForm/ExtendLock
 import RedeemVeNftModal from 'components/v2/V2Project/VeNftStakingForm/RedeemVeNftModal'
 import UnlockModal from 'components/v2/V2Project/VeNftStakingForm/UnlockModal'
 import { useNFTMetadata } from 'hooks/veNft/VeNftMetadata'
+import { Trans } from '@lingui/macro'
 
 type OwnedNFTCardProps = {
   token: VeNftToken
@@ -48,9 +49,15 @@ export default function OwnedNFTCard({
           <Col span={14}>
             <Row align="top" gutter={0}>
               <Col span={12}>
-                <p>Staked ${tokenSymbolText({ tokenSymbol })}:</p>
-                <p>Stake duration:</p>
-                <p>Time remaining:</p>
+                <p>
+                  <Trans>Staked ${tokenSymbolText({ tokenSymbol })}:</Trans>
+                </p>
+                <p>
+                  <Trans>Stake duration:</Trans>
+                </p>
+                <p>
+                  <Trans>Time remaining:</Trans>
+                </p>
               </Col>
               <Col span={12}>
                 <p>{formattedNum(fromWad(lockAmount))}</p>
@@ -77,12 +84,12 @@ export default function OwnedNFTCard({
         <Space direction="vertical" style={{ width: '100%' }}>
           <Row>
             <Button block onClick={() => setExtendLockModalVisible(true)}>
-              EXTEND LOCK
+              <Trans>EXTEND LOCK</Trans>
             </Button>
           </Row>
           <Row>
             <Button block onClick={() => setRedeemModalVisible(true)}>
-              REDEEM
+              <Trans>REDEEM</Trans>
             </Button>
           </Row>
           {remaining === 0 && (
@@ -92,7 +99,7 @@ export default function OwnedNFTCard({
                 disabled={remaining > 0}
                 onClick={() => setUnlockModalVisible(true)}
               >
-                UNLOCK
+                <Trans>UNLOCK</Trans>
               </Button>
             </Row>
           )}

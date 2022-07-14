@@ -81,7 +81,9 @@ export default function ConfirmStakeModal({
       onOk={lock}
       okText={`Lock $${tokenSymbol}`}
     >
-      <h2>Confirm Stake</h2>
+      <h2>
+        <Trans>Confirm Stake</Trans>
+      </h2>
       <div style={{ color: colors.text.secondary, textAlign: 'center' }}>
         <p>
           {votingPower} = {tokensStaked} ${tokenSymbol} * ({' '}
@@ -95,15 +97,25 @@ export default function ConfirmStakeModal({
         </Trans>
       </h4>
       <Divider />
-      <h4>$ve{tokenSymbol} NFT summary:</h4>
+      <h4>
+        <Trans>$ve{tokenSymbol} NFT summary:</Trans>
+      </h4>
       <Row>
         <Col span={14}>
           <Row align="top" gutter={0}>
             <Col span={12}>
-              <p>Staked ${tokenSymbol}:</p>
-              <p>Lock Duration:</p>
-              <p>$ve{tokenSymbol} Received:</p>
-              <p>Beneficiary:</p>
+              <p>
+                <Trans>Staked ${tokenSymbol}:</Trans>
+              </p>
+              <p>
+                <Trans>Lock Duration:</Trans>
+              </p>
+              <p>
+                <Trans>$ve{tokenSymbol} Received:</Trans>
+              </p>
+              <p>
+                <Trans>Beneficiary:</Trans>
+              </p>
             </Col>
             <Col span={12}>
               <p>{formattedNum(tokensStaked)}</p>

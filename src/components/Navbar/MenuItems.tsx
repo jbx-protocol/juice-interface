@@ -25,12 +25,22 @@ function NavMenuItem({
   onClick?: VoidFunction
 }) {
   const external = route?.startsWith('http')
+  if (external) {
+    return (
+      <ExternalLink
+        className="nav-menu-item hover-opacity"
+        style={navMenuItemStyles}
+        href={route}
+        onClick={onClick}
+        target="_blank"
+        rel="noreferrer"
+      >
+        {text}
+      </ExternalLink>
+    )
+  }
   return (
-    <Link
-      href={route}
-      onClick={onClick}
-      {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}
-    >
+    <Link href={route} onClick={onClick}>
       <a className="nav-menu-item hover-opacity" style={navMenuItemStyles}>
         {text}
       </a>

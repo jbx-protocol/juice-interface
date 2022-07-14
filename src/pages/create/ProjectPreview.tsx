@@ -30,7 +30,7 @@ export default function ProjectPreview({
     projectMetadata,
     payoutGroupedSplits,
     reservedTokensGroupedSplits,
-    nftRewardsCid,
+    nftRewardsCIDs,
     nftRewardTiers,
   } = useAppSelector(state => state.editingV2Project)
   const fundingCycleMetadata = useEditingV2FundingCycleMetadataSelector()
@@ -89,7 +89,7 @@ export default function ProjectPreview({
     totalTokenSupply: undefined,
 
     nftRewards: {
-      cid: nftRewardsCid,
+      CIDs: nftRewardsCIDs,
       rewardTiers: nftRewardTiers,
     },
 

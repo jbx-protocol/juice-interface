@@ -1,5 +1,5 @@
 export type NftRewardTier = {
-  paymentThreshold: number // ETH amount
+  contributionFloor: number // ETH amount
   maxSupply: number
   imageUrl: string // link to ipfs
   name: string

@@ -79,7 +79,7 @@ export default function DeployProjectButton() {
     projectMetadata,
     reservedTokensGroupedSplits,
     payoutGroupedSplits,
-    nftRewardsCid,
+    nftRewardsCIDs,
   } = useAppSelector(state => state.editingV2Project)
   const fundingCycleMetadata = useEditingV2FundingCycleMetadataSelector()
   const fundingCycleData = useEditingV2FundingCycleDataSelector()
@@ -110,7 +110,7 @@ export default function DeployProjectButton() {
     }
 
     const groupedSplits = [payoutGroupedSplits, reservedTokensGroupedSplits]
-    if (nftRewardsCid) {
+    if (nftRewardsCIDs) {
       // TODO: Set loading states true of nftTxGas and launchTxGas.
       // Call gas reader for gas of nft tx and launch tx within multicall.
       // Set value and loading states of nftTxGas and launchTxGas.
@@ -171,7 +171,7 @@ export default function DeployProjectButton() {
     fundingCycleMetadata,
     fundAccessConstraints,
     history,
-    nftRewardsCid,
+    nftRewardsCIDs,
     dispatch,
   ])
 

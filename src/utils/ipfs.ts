@@ -8,6 +8,7 @@ import axios from 'axios'
 import { IpfsCacheJsonData } from 'models/ipfs-cache/cache-data'
 import { IpfsCacheName } from 'models/ipfs-cache/cache-name'
 import { consolidateMetadata, ProjectMetadataV4 } from 'models/project-metadata'
+import { NftRewardTier } from 'models/v2/nftRewardTier'
 
 import { readNetwork } from 'constants/networks'
 import { IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
@@ -122,4 +123,39 @@ export const getPinnedListByTag = async (tag: keyof typeof IPFS_TAGS) => {
   const data = await axiosInstance.get(`/ipfs/pin?tag=${IPFS_TAGS[tag]}`)
 
   return data.data as PinataPinListResponse
+}
+
+async function nftRewardToIPFS(rewardTier: NftRewardTier): Promise<string> {
+  const res = await axiosInstance.post('/ipfs/pin', {
+    data: rewardTier,
+    options: {
+      pinataMetadata: {
+        keyvalues: {
+          tag: IPFS_TAGS.METADATA,
+        } as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+        name: rewardTier.name,
+      },
+    },
+  })
+  return res.data.IpfsHash as string
+}
+
+// Calls a cloudfunction to upload to IPFS created by @tankbottoms
+// Returns cid which points to where this NFT data is stored on IPFS
+export async function nftRewardsToIPFS(
+  nftRewards: NftRewardTier[],
+): Promise<string[]> {
+  console.info('>>> Uploading NFT reward tiers to IPFS: ', nftRewards)
+
+  const getCIDs = async () => {
+    return Promise.all(
+      nftRewards.map(rewardTier => nftRewardToIPFS(rewardTier)),
+    )
+  }
+
+  getCIDs().then(CIDs => {
+    console.info('>>> IPFS returned CIDs for each reward tier: ', CIDs)
+    return CIDs
+  })
+  return []
 }

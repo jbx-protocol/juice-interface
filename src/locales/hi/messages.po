@@ -503,7 +503,7 @@ msgid "Amount paid"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/PaymentThresholdFormItem.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/contributionFloorFormItem.tsx
 msgid "Amount required"
 msgstr ""
 
@@ -853,7 +853,7 @@ msgstr ""
 msgid "Contract address: {0}"
 msgstr ""
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/PaymentThresholdFormItem.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/contributionFloorFormItem.tsx
 msgid "Contribution threshold"
 msgstr ""
 
@@ -864,7 +864,7 @@ msgstr ""
 msgid "Contributor rate"
 msgstr ""
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/PaymentThresholdFormItem.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/contributionFloorFormItem.tsx
 msgid "Contributors receive the NFT when they contribute at least this amount."
 msgstr ""
 
@@ -3966,4 +3966,5 @@ msgstr ""
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "{userOwnershipPercentage}% of total supply"
 msgstr ""
+
 

@@ -6,14 +6,13 @@ import { NftRewardTier } from 'models/v2/nftRewardTier'
 import TooltipLabel from 'components/TooltipLabel'
 import { useEffect } from 'react'
 
-import PaymentThresholdFormItem from './PaymentThresholdFormItem'
+import ContributionFloorFormItem from './ContributionFloorFormItem'
 import NftUpload from './NftUpload'
-import MaxSupplyFormItem from './MaxSupplyFormItem'
+
 import { NFT_REWARDS_EXPLAINATION } from '.'
 
 export type NftFormFields = {
-  paymentThreshold: number
-  maxSupply: number
+  contributionFloor: number
   name: string
   externalLink: string | undefined
   description: string | undefined
@@ -40,8 +39,7 @@ export default function NftRewardTierModal({
     await nftForm.validateFields()
 
     const newTier = {
-      paymentThreshold: parseFloat(nftForm.getFieldValue('paymentThreshold')),
-      maxSupply: nftForm.getFieldValue('maxSupply'),
+      contributionFloor: parseFloat(nftForm.getFieldValue('contributionFloor')),
       imageUrl: nftForm.getFieldValue('imageUrl'),
       name: nftForm.getFieldValue('name'),
       externalLink: nftForm.getFieldValue('externalLink'),
@@ -63,8 +61,7 @@ export default function NftRewardTierModal({
         name: rewardTier.name,
         externalLink: rewardTier.externalLink,
         description: rewardTier.description,
-        paymentThreshold: rewardTier.paymentThreshold,
-        maxSupply: rewardTier.maxSupply,
+        contributionFloor: rewardTier.contributionFloor,
       })
     }
   })
@@ -79,8 +76,7 @@ export default function NftRewardTierModal({
     >
       <p>{NFT_REWARDS_EXPLAINATION}</p>
       <Form layout="vertical" form={nftForm}>
-        <PaymentThresholdFormItem form={nftForm} />
-        <MaxSupplyFormItem form={nftForm} />
+        <ContributionFloorFormItem form={nftForm} />
         <NftUpload form={nftForm} />
         <Form.Item
           name={'name'}

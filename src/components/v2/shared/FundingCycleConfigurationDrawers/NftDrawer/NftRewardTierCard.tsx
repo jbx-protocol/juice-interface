@@ -48,7 +48,7 @@ export default function NftRewardTierCard({
         >
           <div style={{ display: 'flex', alignItems: 'center', fontSize: 17 }}>
             <div style={{ color: colors.text.action.primary }}>
-              {rewardTier.paymentThreshold} ETH
+              {rewardTier.contributionFloor} ETH
             </div>
             <div style={{ display: 'flex', marginLeft: 45, fontWeight: 500 }}>
               <span>{rewardTier.name}</span>

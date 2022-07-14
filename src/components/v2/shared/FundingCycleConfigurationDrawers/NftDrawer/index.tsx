@@ -4,11 +4,12 @@ import NftRewardTierModal from 'components/v2/shared/FundingCycleConfigurationDr
 import { ThemeContext } from 'contexts/themeContext'
 
 import { useAppDispatch } from 'hooks/AppDispatch'
-import { useAppSelector } from 'hooks/AppSelector'
+// import { useAppSelector } from 'hooks/AppSelector'
 import { NftRewardTier } from 'models/v2/nftRewardTier'
 import { useCallback, useContext, useState } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
-import useNftRewardsToIPFS from 'hooks/v2/nftRewards/NftRewardsToIPFS'
+import { nftRewardsToIPFS } from 'utils/ipfs'
+import { MOCK_NFTs } from 'utils/v2/nftRewards'
 
 import { shadowCard } from 'constants/styles/shadowCard'
 
@@ -34,7 +35,8 @@ export default function NftDrawer({
     theme: { colors },
   } = useContext(ThemeContext)
   const dispatch = useAppDispatch()
-  const { nftRewardTiers } = useAppSelector(state => state.editingV2Project)
+  // const { nftRewardTiers } = useAppSelector(state => state.editingV2Project)
+  const nftRewardTiers = MOCK_NFTs
 
   const [addTierModalVisible, setAddTierModalVisible] = useState<boolean>(false)
   const [submitLoading, setSubmitLoading] = useState<boolean>(false)
@@ -46,10 +48,10 @@ export default function NftDrawer({
   const onNftFormSaved = useCallback(async () => {
     setSubmitLoading(true)
     // Calls cloud function to store NftRewards to IPFS
-    const cid = await useNftRewardsToIPFS(rewardTiers)
+    const CIDs = await nftRewardsToIPFS(rewardTiers)
     dispatch(editingV2ProjectActions.setNftRewardTiers(rewardTiers))
     // Store cid (link to nfts on IPFS) to be used later in the deploy tx
-    dispatch(editingV2ProjectActions.setNftRewardsCid(cid))
+    dispatch(editingV2ProjectActions.setNftRewardsCIDs(CIDs))
     setSubmitLoading(false)
     onClose?.()
   }, [rewardTiers, dispatch, onClose])

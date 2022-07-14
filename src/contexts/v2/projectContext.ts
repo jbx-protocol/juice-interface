@@ -48,7 +48,7 @@ export type V2ProjectContextType = {
   totalTokenSupply: BigNumber | undefined
 
   nftRewards: {
-    cid: string | undefined
+    CIDs: string[] | undefined
     rewardTiers: NftRewardTier[] | undefined
   }
 
@@ -88,7 +88,7 @@ export const V2ProjectContext = createContext<V2ProjectContextType>({
   totalTokenSupply: undefined,
 
   nftRewards: {
-    cid: undefined,
+    CIDs: undefined,
     rewardTiers: undefined,
   },
 

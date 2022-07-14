@@ -1,38 +1,33 @@
 import axios from 'axios'
 import { NftRewardTier } from 'models/v2/nftRewardTier'
-import { useQuery } from 'react-query'
+import { useQuery, UseQueryResult } from 'react-query'
 import { ipfsCidUrl } from 'utils/ipfs'
 
-import { CloudFunctionRewardTier } from './NftRewardsToIPFS'
-
-function transformNftRewardsData(
-  data: CloudFunctionRewardTier[],
-): NftRewardTier[] {
-  const nftRewardTiers: NftRewardTier[] = []
-  data.map((rewardTier: CloudFunctionRewardTier) => {
-    nftRewardTiers.push({
-      name: rewardTier.name,
-      description: rewardTier.description ?? '',
-      externalLink: rewardTier.uri,
-      imageUrl: rewardTier.image,
-      paymentThreshold: rewardTier.attributes_tiers,
-      maxSupply: rewardTier.attributes_supply,
-      rights: '',
-    } as NftRewardTier)
-  })
-
-  return nftRewardTiers
+async function getRewardTierOfCid(cid: string) {
+  const url = ipfsCidUrl(cid)
+  const response = await axios.get(url)
+  return response.data
 }
 
 // Calls a cloudfunction to upload to IPFS created by @tankbottoms
 // Returns cid which points to where this NFT data is stored on IPFS
-export default function useNftRewards(cid: string | undefined) {
+export default function useNftRewards(
+  CIDs: string[] | undefined,
+): UseQueryResult<NftRewardTier[]> {
   return useQuery('nft-rewards', async () => {
-    if (!cid) {
+    if (!CIDs?.length) {
       return
     }
-    const url = ipfsCidUrl(cid)
-    const response = await axios.get(url)
-    return transformNftRewardsData(response.data)
+
+    console.info('>>> Retreiving reward tiers from IPFS using CIDs: ', CIDs)
+    const getRewardTiers = async () => {
+      return Promise.all(CIDs.map(cid => getRewardTierOfCid(cid)))
+    }
+
+    getRewardTiers().then((rewardTiers: NftRewardTier[]) => {
+      console.info('>>> IPFS returned reward tiers: ', rewardTiers)
+      return rewardTiers
+    })
+    return getRewardTiers()
   })
 }

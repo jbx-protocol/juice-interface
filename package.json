@@ -62,11 +62,11 @@
   },
   "scripts": {
     "compile-styles": "lessc ./node_modules/antd/dist/antd.less ./src/styles/antd.css --js",
-    "prestart": "yarn compile-styles",
     "dev": "yarn prestart && next dev",
+    "prestart": "yarn compile-styles",
     "start": "ESLINT_NO_DEV_ERRORS=true NEXT_PUBLIC_VERSION=$(git rev-parse --short HEAD) next start",
-    "build": "NEXT_PUBLIC_VERSION=$(git rev-parse --short HEAD) next build",
     "prebuild": "yarn compile-styles && yarn i18n:compile",
+    "build": "NEXT_PUBLIC_VERSION=$(git rev-parse --short HEAD) next build",
     "test": "jest test",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./",
     "lint:fix": "yarn lint --fix",
@@ -76,7 +76,6 @@
     "i18n:compile": "NODE_ENV=development lingui compile",
     "i18n:lint": "./scripts/lint-translations.sh",
     "postinstall": "yarn i18n:compile",
-    "analyze": "yarn build && source-map-explorer 'build/static/js/*.js'",
     "format": "prettier --write './**/*.{js,jsx,ts,tsx}'",
     "pristine": "rm -Rf node_modules && yarn install",
     "find-deadcode": "ts-prune"

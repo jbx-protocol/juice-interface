@@ -61,6 +61,7 @@ export default function StakeForNFTForm() {
   } = useContext(VeNftProjectContext)
   const { theme } = useContext(ThemeContext)
 
+  const [tokenApprovalLoading, setTokenApprovalLoading] = useState<boolean>()
   const [form] = useForm<StakingFormProps>()
   const tokensStaked = useWatch('tokensStaked', form) || '1'
   const lockDuration = useWatch('lockDuration', form) || 0
@@ -143,6 +144,7 @@ export default function StakeForNFTForm() {
     userAddress,
     VENFT_CONTRACT_ADDRESS,
   )
+
   const hasAdequateApproval = allowance
     ? allowance.gte(parseWad(tokensStaked))
     : false
@@ -154,13 +156,24 @@ export default function StakeForNFTForm() {
       onSelectWallet()
     }
 
-    const txSuccess = await approveTx({
-      spender: VENFT_CONTRACT_ADDRESS,
-      amount: MaxUint256,
-    })
+    setTokenApprovalLoading(true)
+
+    const txSuccess = await approveTx(
+      {
+        spender: VENFT_CONTRACT_ADDRESS,
+        amount: MaxUint256,
+      },
+      {
+        onConfirmed() {
+          setTokenApprovalLoading(false)
+          //TODO: replace with next reload util
+          window && window.location.reload()
+        },
+      },
+    )
 
     if (!txSuccess) {
-      return
+      setTokenApprovalLoading(false)
     }
   }
 
@@ -207,7 +220,12 @@ export default function StakeForNFTForm() {
     }
     if (!hasAdequateApproval) {
       return (
-        <Button block style={{ whiteSpace: 'pre' }} onClick={approve}>
+        <Button
+          block
+          style={{ whiteSpace: 'pre' }}
+          onClick={approve}
+          loading={tokenApprovalLoading}
+        >
           Approve Token for Transaction
         </Button>
       )
@@ -418,6 +436,7 @@ export default function StakeForNFTForm() {
           maxLockDuration={maxLockDuration}
           tokenMetadata={metadata}
           onCancel={() => setConfirmStakeModalVisible(false)}
+          onCompleted={() => setConfirmStakeModalVisible(false)}
         />
       </Form>
     </>

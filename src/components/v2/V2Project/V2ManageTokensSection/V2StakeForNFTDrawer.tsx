@@ -1,5 +1,5 @@
 import { Drawer, DrawerProps } from 'antd'
-import StakeForNFTContent from 'components/v2/V2Project/VeNftStakingForm'
+import StakeForNFTContent from 'components/v2/V2Project/VeNftStakingForm/VeNftStakingForm'
 
 import { useMemo } from 'react'
 

@@ -8,12 +8,14 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useUnlockTx } from 'hooks/veNft/transactor/UnlockTx'
 import { VeNftToken } from 'models/subgraph-entities/veNft/venft-token'
 import { useContext, useState } from 'react'
+import { emitSuccessNotification } from 'utils/notifications'
 
 type UnlockModalProps = {
   visible: boolean
   token: VeNftToken
   tokenSymbol: string
   onCancel: VoidFunction
+  onCompleted: VoidFunction
 }
 
 const UnlockModal = ({
@@ -21,11 +23,13 @@ const UnlockModal = ({
   token,
   tokenSymbol,
   onCancel,
+  onCompleted,
 }: UnlockModalProps) => {
   const { userAddress, onSelectWallet } = useContext(NetworkContext)
   const { tokenId } = token
   const [customBeneficiaryEnabled, setCustomBeneficiaryEnabled] =
     useState(false)
+  const [loading, setLoading] = useState(false)
   const [form] = useForm<{ beneficiary: string }>()
   const {
     theme: { colors },
@@ -53,14 +57,26 @@ const UnlockModal = ({
 
     const beneficiary = form.getFieldValue('beneficiary')
     const txBeneficiary = beneficiary ? beneficiary : userAddress
+    setLoading(true)
 
-    const txSuccess = await unlockTx({
-      tokenId,
-      beneficiary: txBeneficiary,
-    })
+    const txSuccess = await unlockTx(
+      {
+        tokenId,
+        beneficiary: txBeneficiary,
+      },
+      {
+        onConfirmed() {
+          setLoading(false)
+          emitSuccessNotification(
+            t`Unlock successful. Results will be indexed in a few moments.`,
+          )
+          onCompleted()
+        },
+      },
+    )
 
     if (!txSuccess) {
-      return
+      setLoading(false)
     }
   }
 
@@ -70,6 +86,7 @@ const UnlockModal = ({
       onCancel={onCancel}
       onOk={unlock}
       okText={`Unlock`}
+      confirmLoading={loading}
     >
       <h2>Unlock Token</h2>
       <div style={{ color: colors.text.secondary }}>

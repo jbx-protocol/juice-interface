@@ -1,4 +1,4 @@
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Col, Divider, Modal, Row, Image } from 'antd'
 import FormattedAddress from 'components/FormattedAddress'
 
@@ -6,10 +6,11 @@ import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { useLockTx } from 'hooks/veNft/transactor/LockTx'
 
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { formattedNum, parseWad } from 'utils/formatNumber'
 
 import { detailedTimeString } from 'utils/formatTime'
+import { emitSuccessNotification } from 'utils/notifications'
 
 type ConfirmStakeModalProps = {
   visible: boolean
@@ -22,6 +23,7 @@ type ConfirmStakeModalProps = {
   //eslint-disable-next-line @typescript-eslint/no-explicit-any
   tokenMetadata: any
   onCancel: VoidFunction
+  onCompleted: VoidFunction
 }
 
 export default function ConfirmStakeModal({
@@ -34,11 +36,13 @@ export default function ConfirmStakeModal({
   maxLockDuration,
   tokenMetadata,
   onCancel,
+  onCompleted,
 }: ConfirmStakeModalProps) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
   const { userAddress, onSelectWallet } = useContext(NetworkContext)
+  const [loading, setLoading] = useState(false)
   const recipient = beneficiary !== '' ? beneficiary : userAddress!
 
   const tokensStakedInWad = parseWad(tokensStaked)
@@ -60,17 +64,30 @@ export default function ConfirmStakeModal({
       onSelectWallet()
     }
 
-    const txSuccess = await lockTx({
-      account: userAddress!,
-      value: tokensStakedInWad,
-      lockDuration: lockDuration,
-      beneficiary: recipient,
-      useJbToken: true,
-      allowPublicExtension: false,
-    })
+    setLoading(true)
+
+    const txSuccess = await lockTx(
+      {
+        account: userAddress!,
+        value: tokensStakedInWad,
+        lockDuration: lockDuration,
+        beneficiary: recipient,
+        useJbToken: true,
+        allowPublicExtension: false,
+      },
+      {
+        onConfirmed() {
+          setLoading(false)
+          emitSuccessNotification(
+            t`Lock successful. Results will be indexed in a few moments.`,
+          )
+          onCompleted()
+        },
+      },
+    )
 
     if (!txSuccess) {
-      return
+      setLoading(false)
     }
   }
 
@@ -80,6 +97,7 @@ export default function ConfirmStakeModal({
       onCancel={onCancel}
       onOk={lock}
       okText={`Lock $${tokenSymbol}`}
+      confirmLoading={loading}
     >
       <h2>
         <Trans>Confirm Stake</Trans>

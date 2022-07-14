@@ -7,23 +7,27 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useExtendLockTx } from 'hooks/veNft/transactor/ExtendLockTx'
 import { NetworkContext } from 'contexts/networkContext'
 import { VeNftToken } from 'models/subgraph-entities/veNft/venft-token'
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
+import { emitSuccessNotification } from 'utils/notifications'
 
 type ExtendLockModalProps = {
   visible: boolean
   token: VeNftToken
   onCancel: VoidFunction
+  onCompleted: VoidFunction
 }
 
 const ExtendLockModal = ({
   visible,
   token,
   onCancel,
+  onCompleted,
 }: ExtendLockModalProps) => {
   const { userAddress, onSelectWallet } = useContext(NetworkContext)
   const { tokenId } = token
   const { lockDurationOptions } = useContext(VeNftProjectContext)
   const [updatedDuration, setUpdatedDuration] = useState(0)
+  const [loading, setLoading] = useState(false)
   const lockDurationOptionsInSeconds = useMemo(() => {
     return lockDurationOptions
       ? lockDurationOptions.map((option: BigNumber) => {
@@ -47,13 +51,27 @@ const ExtendLockModal = ({
     if (!userAddress && onSelectWallet) {
       onSelectWallet()
     }
-    const txSuccess = await extendLockTx({
-      tokenId,
-      updatedDuration,
-    })
+
+    setLoading(true)
+
+    const txSuccess = await extendLockTx(
+      {
+        tokenId,
+        updatedDuration,
+      },
+      {
+        onConfirmed() {
+          setLoading(false)
+          emitSuccessNotification(
+            t`Extend lock successful. Results will be indexed in a few moments.`,
+          )
+          onCompleted()
+        },
+      },
+    )
 
     if (!txSuccess) {
-      return
+      setLoading(false)
     }
   }
 
@@ -63,6 +81,7 @@ const ExtendLockModal = ({
       onCancel={onCancel}
       onOk={extendLock}
       okText={`Extend Lock`}
+      confirmLoading={loading}
     >
       <h2>
         <Trans>Extend Lock</Trans>

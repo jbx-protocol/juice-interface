@@ -108,6 +108,7 @@ export default function OwnedNFTCard({
       <ExtendLockModal
         visible={extendLockModalVisible}
         onCancel={() => setExtendLockModalVisible(false)}
+        onCompleted={() => setExtendLockModalVisible(false)}
         token={token}
       />
       <RedeemVeNftModal
@@ -118,6 +119,7 @@ export default function OwnedNFTCard({
       <UnlockModal
         visible={unlockModalVisible}
         onCancel={() => setUnlockModalVisible(false)}
+        onCompleted={() => setUnlockModalVisible(false)}
         token={token}
         tokenSymbol={tokenSymbol}
       />

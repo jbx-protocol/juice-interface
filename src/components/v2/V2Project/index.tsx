@@ -35,6 +35,7 @@ import V2ProjectHeaderActions from './V2ProjectHeaderActions'
 const VolumeChart = lazy(() => import('components/VolumeChart'))
 import { V2ReconfigureProjectHandleDrawer } from './V2ReconfigureProjectHandleDrawer'
 import { NftRewardsSection } from './NftRewardsSection'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 
 const GUTTER_PX = 40
 
@@ -124,7 +125,7 @@ export default function V2Project({
     return !hasCurrentFundingCycle
   }
 
-  const nftRewardsEnabled = featureFlagEnabled('nftRewards')
+  const nftRewardsEnabled = featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)
 
   return (
     <Space direction="vertical" size={GUTTER_PX} style={{ width: '100%' }}>

@@ -29,11 +29,13 @@ import TooltipIcon from 'components/TooltipIcon'
 import { default as useV1HandleForProjectId } from 'hooks/v1/contractReader/HandleForProjectId'
 import { Link } from 'react-router-dom'
 import { useHasV1TokenPaymentTerminal } from 'hooks/v2/hasV1TokenPaymentTerminal'
+import { featureFlagEnabled } from 'utils/featureFlags'
 
 import V2RedeemModal from './V2RedeemModal'
 import V2ClaimTokensModal from './V2ClaimTokensModal'
 import V2MintModal from './V2MintModal'
 import { V1ProjectTokensSection } from './V1ProjectTokensSection/V1ProjectTokensSection'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 
 const labelStyle: CSSProperties = {
   width: '10.5rem',
@@ -75,6 +77,7 @@ export default function V2ManageTokensSection() {
   const hasV1TokenPaymentTerminal = useHasV1TokenPaymentTerminal()
   const v1ProjectHandle = useV1HandleForProjectId(v1ProjectId)
   const hasV1ProjectId = Boolean(v1ProjectId?.toNumber() ?? 0 > 0)
+  const v1TokenSwapEnabled = featureFlagEnabled(FEATURE_FLAGS.V1_TOKEN_SWAP)
 
   // %age of tokens the user owns.
   const userOwnershipPercentage =
@@ -100,7 +103,8 @@ export default function V2ManageTokensSection() {
   )
   const showIssueTokensButton =
     !hasIssuedERC20 && hasIssueTicketsPermission && !isPreviewMode
-  const showV1ProjectTokensSection = hasV1ProjectId && hasV1TokenPaymentTerminal
+  const showV1ProjectTokensSection =
+    v1TokenSwapEnabled && hasV1ProjectId && hasV1TokenPaymentTerminal
 
   const userHasMintPermission = Boolean(
     useV2ConnectedWalletHasPermission(V2OperatorPermission.MINT),

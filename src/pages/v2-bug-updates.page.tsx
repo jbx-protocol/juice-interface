@@ -1,3 +1,4 @@
+import ExternalLink from 'components/ExternalLink'
 import { v2ProjectRoute } from 'utils/routes'
 
 export default function V2BugUpdates() {
@@ -8,13 +9,13 @@ export default function V2BugUpdates() {
         A minor bug has been identified in the Juicebox protocol V2 contracts.
         No funds are in danger, and projects are unlikely to be affected. Link
         to bug description and fix:{' '}
-        <a
+        <ExternalLink
           href="https://github.com/jbx-protocol/juice-contracts-v2/pull/265"
           target="_blank"
           rel="noopener noreferrer"
         >
           github.com/jbx-protocol/juice-contracts-v2/pull/265
-        </a>
+        </ExternalLink>
       </p>
       <p>The bug has no impact on Juicebox V1 projects. </p>
       <br />

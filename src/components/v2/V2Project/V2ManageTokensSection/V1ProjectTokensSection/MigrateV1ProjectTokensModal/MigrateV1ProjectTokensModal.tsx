@@ -108,17 +108,16 @@ export function MigrateProjectTokensModal({
       {...props}
     >
       <Space size="large" direction="vertical" style={{ width: '100%' }}>
+        {!hasV1TokenTransferPermission && <GrantTransferPermissionCallout />}
         <TokenSwapDescription v1ProjectHandle={v1ProjectHandle} />
 
-        {hasV1TokenTransferPermission ? (
+        {hasV1TokenTransferPermission && (
           <MigrateV1ProjectTokensForm
             form={form}
             onFinish={() => swapTokens()}
             v1TokenSymbol={v1TokenSymbol}
             v1TokenBalance={v1TokenBalance}
           />
-        ) : (
-          <GrantTransferPermissionCallout />
         )}
       </Space>
     </TransactionModal>

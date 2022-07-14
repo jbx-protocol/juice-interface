@@ -1226,10 +1226,6 @@ msgstr ""
 msgid "Do I need this?"
 msgstr "Do I need this?"
 
-#: src/components/v2/V2Project/V2ManageTokensSection/V1ProjectTokensSection/MigrateV1ProjectTokensModal/TokenSwapDescription.tsx
-msgid "Do I need to swap my V1 tokens?"
-msgstr "Do I need to swap my V1 tokens?"
-
 #: src/components/formItems/ENSName.tsx
 msgid "Do not include .eth"
 msgstr "Do not include .eth"
@@ -3095,6 +3091,10 @@ msgstr "These attributes can be changed at any time."
 msgid "These settings will <0>not</0> be editable immediately within a funding cycle. They can only be changed for <1>upcoming</1> funding cycles."
 msgstr "These settings will <0>not</0> be editable immediately within a funding cycle. They can only be changed for <1>upcoming</1> funding cycles."
 
+#: src/components/v2/V2Project/V2ManageTokensSection/V1ProjectTokensSection/MigrateV1ProjectTokensModal/TokenSwapDescription.tsx
+msgid "This Juicebox V2 project also has a project on Juicebox V1. The project owner is allowing you to swap your V1 tokens for V2 tokens."
+msgstr "This Juicebox V2 project also has a project on Juicebox V1. The project owner is allowing you to swap your V1 tokens for V2 tokens."
+
 #: src/utils/ballot.ts
 msgid "This address is an unrecognized strategy contract. Make sure it is correct!"
 msgstr "This address is an unrecognized strategy contract. Make sure it is correct!"
@@ -3617,8 +3617,8 @@ msgid "You don't hold tokens for any Juicebox project."
 msgstr "You don't hold tokens for any Juicebox project."
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V1ProjectTokensSection/MigrateV1ProjectTokensModal/TokenSwapDescription.tsx
-msgid "You have <0>{0}</0> tokens on <1>Juicebox V1</1>. You can swap your <2>{1}</2> V1 tokens for V2 tokens."
-msgstr "You have <0>{0}</0> tokens on <1>Juicebox V1</1>. You can swap your <2>{1}</2> V1 tokens for V2 tokens."
+msgid "You have <0>{0}</0> tokens on <1>Juicebox V1</1>. You can swap your <2>{1}</2> V1 tokens for V2 tokens"
+msgstr "You have <0>{0}</0> tokens on <1>Juicebox V1</1>. You can swap your <2>{1}</2> V1 tokens for V2 tokens"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
 msgid "You have configured for all funds to be distributed from the treasury. Your current payouts do not sum to 100%, so the remainder will go to the project owner."
@@ -3689,8 +3689,8 @@ msgid "Your V1 balance"
 msgstr "Your V1 balance"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V1ProjectTokensSection/MigrateV1ProjectTokensModal/MigrateV1ProjectTokensForm.tsx
-msgid "Your V1 {tokenSymbolFormatted} balance:"
-msgstr "Your V1 {tokenSymbolFormatted} balance:"
+msgid "Your V1 {tokenSymbolFormatted} balance"
+msgstr "Your V1 {tokenSymbolFormatted} balance"
 
 #: src/components/v1/V1Project/Rewards/index.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx

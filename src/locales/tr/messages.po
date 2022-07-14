@@ -1231,10 +1231,6 @@ msgstr "Juicebox'ı iş modeli olarak kullanmak için projemi açık kaynak yapm
 msgid "Do I need this?"
 msgstr ""
 
-#: src/components/v2/V2Project/V2ManageTokensSection/V1ProjectTokensSection/MigrateV1ProjectTokensModal/TokenSwapDescription.tsx
-msgid "Do I need to swap my V1 tokens?"
-msgstr ""
-
 #: src/components/formItems/ENSName.tsx
 msgid "Do not include .eth"
 msgstr ""
@@ -3100,6 +3096,10 @@ msgstr "Bu nitelikler herhangi bir zamanda değiştirilebilir."
 msgid "These settings will <0>not</0> be editable immediately within a funding cycle. They can only be changed for <1>upcoming</1> funding cycles."
 msgstr "Bu ayarlar, bir finansman döngüsü içinde hemen <0>düzenlenemez</0>. Yalnızca <1>yaklaşan</1> finansman döngüleri için değiştirilebilirler."
 
+#: src/components/v2/V2Project/V2ManageTokensSection/V1ProjectTokensSection/MigrateV1ProjectTokensModal/TokenSwapDescription.tsx
+msgid "This Juicebox V2 project also has a project on Juicebox V1. The project owner is allowing you to swap your V1 tokens for V2 tokens."
+msgstr ""
+
 #: src/utils/ballot.ts
 msgid "This address is an unrecognized strategy contract. Make sure it is correct!"
 msgstr "Bu adres, tanınmayan bir strateji sözleşmesine aittir. Doğru olduğundan emin olun!"
@@ -3622,7 +3622,7 @@ msgid "You don't hold tokens for any Juicebox project."
 msgstr "Herhangi bir Juicebox projesi için token tutmuyorsunuz."
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V1ProjectTokensSection/MigrateV1ProjectTokensModal/TokenSwapDescription.tsx
-msgid "You have <0>{0}</0> tokens on <1>Juicebox V1</1>. You can swap your <2>{1}</2> V1 tokens for V2 tokens."
+msgid "You have <0>{0}</0> tokens on <1>Juicebox V1</1>. You can swap your <2>{1}</2> V1 tokens for V2 tokens"
 msgstr ""
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
@@ -3694,7 +3694,7 @@ msgid "Your V1 balance"
 msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V1ProjectTokensSection/MigrateV1ProjectTokensModal/MigrateV1ProjectTokensForm.tsx
-msgid "Your V1 {tokenSymbolFormatted} balance:"
+msgid "Your V1 {tokenSymbolFormatted} balance"
 msgstr ""
 
 #: src/components/v1/V1Project/Rewards/index.tsx

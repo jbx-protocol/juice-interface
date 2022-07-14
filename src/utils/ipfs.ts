@@ -140,8 +140,8 @@ async function nftRewardToIPFS(rewardTier: NftRewardTier): Promise<string> {
   return res.data.IpfsHash as string
 }
 
-// Calls a cloudfunction to upload to IPFS created by @tankbottoms
-// Returns cid which points to where this NFT data is stored on IPFS
+// Uploads each nft reward tier to an individual location on IPFS
+// returns an array of CIDs which point to each rewardTier on IPFS
 export async function nftRewardsToIPFS(
   nftRewards: NftRewardTier[],
 ): Promise<string[]> {

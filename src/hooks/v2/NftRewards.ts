@@ -9,8 +9,8 @@ async function getRewardTierOfCid(cid: string) {
   return response.data
 }
 
-// Calls a cloudfunction to upload to IPFS created by @tankbottoms
-// Returns cid which points to where this NFT data is stored on IPFS
+// Retreives each NftRewardTier from IPFS given an array of CIDs (IpfsHashes)
+// Returns an array of NftRewardTiers
 export default function useNftRewards(
   CIDs: string[] | undefined,
 ): UseQueryResult<NftRewardTier[]> {

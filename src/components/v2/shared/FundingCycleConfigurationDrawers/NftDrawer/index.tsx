@@ -4,12 +4,12 @@ import NftRewardTierModal from 'components/v2/shared/FundingCycleConfigurationDr
 import { ThemeContext } from 'contexts/themeContext'
 
 import { useAppDispatch } from 'hooks/AppDispatch'
-// import { useAppSelector } from 'hooks/AppSelector'
+import { useAppSelector } from 'hooks/AppSelector'
+
 import { NftRewardTier } from 'models/v2/nftRewardTier'
 import { useCallback, useContext, useState } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { nftRewardsToIPFS } from 'utils/ipfs'
-import { MOCK_NFTs } from 'utils/v2/nftRewards'
 
 import { shadowCard } from 'constants/styles/shadowCard'
 
@@ -35,8 +35,7 @@ export default function NftDrawer({
     theme: { colors },
   } = useContext(ThemeContext)
   const dispatch = useAppDispatch()
-  // const { nftRewardTiers } = useAppSelector(state => state.editingV2Project)
-  const nftRewardTiers = MOCK_NFTs
+  const { nftRewardTiers } = useAppSelector(state => state.editingV2Project)
 
   const [addTierModalVisible, setAddTierModalVisible] = useState<boolean>(false)
   const [submitLoading, setSubmitLoading] = useState<boolean>(false)

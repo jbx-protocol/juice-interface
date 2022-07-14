@@ -5,7 +5,6 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 import * as constants from '@ethersproject/constants'
 import { NetworkContext } from 'contexts/networkContext'
 import useERC20BalanceOf from 'hooks/v2/contractReader/ERC20BalanceOf'
-import { RightCircleOutlined } from '@ant-design/icons'
 
 import { CSSProperties, useContext, useState } from 'react'
 import FormattedAddress from 'components/FormattedAddress'
@@ -21,7 +20,7 @@ import useTotalBalanceOf from 'hooks/v2/contractReader/TotalBalanceOf'
 import { ThemeContext } from 'contexts/themeContext'
 import useUserUnclaimedTokenBalance from 'hooks/v2/contractReader/UserUnclaimedTokenBalance'
 import ManageTokensModal from 'components/ManageTokensModal'
-
+import { TextButton } from 'components/TextButton'
 import ParticipantsModal from 'components/modals/ParticipantsModal'
 
 import { reloadWindow } from 'utils/windowUtils'
@@ -180,22 +179,11 @@ export default function V2ManageTokensSection() {
                       {formatWad(totalTokenSupply, { precision: 0 })}{' '}
                       {tokenText}
                     </div>
-                    <span
-                      style={{
-                        cursor: 'pointer',
-                        fontSize: '0.8rem',
-                        fontWeight: 500,
-                        color: colors.text.tertiary,
-                        textTransform: 'uppercase',
-                      }}
+                    <TextButton
                       onClick={() => setParticipantsModalVisible(true)}
-                      role="button"
                     >
-                      <Space size="small">
-                        <Trans>Holders</Trans>
-                        <RightCircleOutlined />
-                      </Space>
-                    </span>
+                      <Trans>Holders</Trans>
+                    </TextButton>
                   </div>
                 </div>
               </Descriptions.Item>
@@ -204,7 +192,6 @@ export default function V2ManageTokensSection() {
                   <Descriptions.Item
                     label={t`Your balance`}
                     labelStyle={labelStyle}
-                    style={{ paddingBottom: '0.5rem' }}
                   >
                     <div style={manageTokensRowStyle}>
                       <div>

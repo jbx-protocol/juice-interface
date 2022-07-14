@@ -1,4 +1,3 @@
-import { RightCircleOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Col, Row, Space } from 'antd'
 import PayInputGroup from 'components/inputs/Pay/PayInputGroup'
@@ -7,7 +6,6 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import { lazy, useContext, useState } from 'react'
 
-import { ThemeContext } from 'contexts/themeContext'
 import useMobile from 'hooks/Mobile'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2/contractReader/V2ConnectedWalletHasPermission'
 import { V2OperatorPermission } from 'models/v2/permissions'
@@ -21,8 +19,8 @@ import { useIsUserAddress } from 'hooks/IsUserAddress'
 import { v2ProjectRoute } from 'utils/routes'
 import V2BugNotice from 'components/v2/shared/V2BugNotice'
 import { featureFlagEnabled } from 'utils/featureFlags'
+import { TextButton } from 'components/TextButton'
 
-import { textSecondary } from 'constants/styles/text'
 import { V2_PROJECT_IDS } from 'constants/v2/projectIds'
 import { RelaunchFundingCycleBanner } from './banners/RelaunchFundingCycleBanner'
 import NewDeployModal from './NewDeployModal'
@@ -34,23 +32,17 @@ import V2ManageTokensSection from './V2ManageTokensSection'
 import V2PayButton from './V2PayButton'
 import V2ProjectHeaderActions from './V2ProjectHeaderActions'
 
-const GUTTER_PX = 40
-
 const VolumeChart = lazy(() => import('components/VolumeChart'))
 import { V2ReconfigureProjectHandleDrawer } from './V2ReconfigureProjectHandleDrawer'
 import { NftRewardsSection } from './NftRewardsSection'
 
+const GUTTER_PX = 40
+
 const AllAssetsButton = ({ onClick }: { onClick: VoidFunction }) => {
-  const { theme } = useContext(ThemeContext)
-  const secondaryTextStyle = textSecondary(theme)
   return (
-    <span
-      style={{ ...secondaryTextStyle, cursor: 'pointer' }}
-      onClick={onClick}
-      role="button"
-    >
-      <Trans>All assets</Trans> <RightCircleOutlined />
-    </span>
+    <TextButton onClick={onClick}>
+      <Trans>All assets</Trans>
+    </TextButton>
   )
 }
 

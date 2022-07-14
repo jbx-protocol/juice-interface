@@ -404,7 +404,7 @@ msgstr "Adres"
 
 #: src/components/v2/V2Project/VeNftStakingForm/RedeemVeNftModal.tsx
 #: src/components/v2/V2Project/VeNftStakingForm/UnlockModal.tsx
-#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/VeNftStakingForm.tsx
 msgid "Address required"
 msgstr ""
 
@@ -975,7 +975,7 @@ msgstr "Güncel sahibi: {ownerAddress}"
 msgid "Currently worth: <0><1/>{0}</0>"
 msgstr "Güncel değeri: <0><1/>{0}</0>"
 
-#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/VeNftStakingForm.tsx
 msgid "Currently, only project tokens claimed as ERC-20 tokens can be staked for NFTs."
 msgstr ""
 
@@ -995,7 +995,7 @@ msgstr "Özel strateji"
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 #: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
-#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/VeNftStakingForm.tsx
 msgid "Custom token beneficiary"
 msgstr "Özel token faydalanıcısı"
 
@@ -1036,7 +1036,7 @@ msgstr "Oluşturma tarihi"
 msgid "Days"
 msgstr "Gün"
 
-#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/VeNftStakingForm.tsx
 msgid "Days Locked"
 msgstr ""
 
@@ -1432,6 +1432,10 @@ msgstr "Projeleri keşfedin"
 msgid "Extend Lock"
 msgstr ""
 
+#: src/components/v2/V2Project/VeNftStakingForm/ExtendLockModal.tsx
+msgid "Extend lock successful. Results will be indexed in a few moments."
+msgstr ""
+
 #: src/components/Navbar/MenuItems.tsx
 msgid "FAQ"
 msgstr "SSS"
@@ -1707,7 +1711,7 @@ msgstr "İlk basım oranı"
 
 #: src/components/v2/V2Project/VeNftStakingForm/RedeemVeNftModal.tsx
 #: src/components/v2/V2Project/VeNftStakingForm/UnlockModal.tsx
-#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/VeNftStakingForm.tsx
 msgid "Invalid address"
 msgstr ""
 
@@ -1836,13 +1840,17 @@ msgstr "Daha fazla yükle"
 msgid "Lock Duration:"
 msgstr ""
 
+#: src/components/v2/V2Project/VeNftStakingForm/ConfirmStakeModal.tsx
+msgid "Lock successful. Results will be indexed in a few moments."
+msgstr ""
+
 #: src/components/modals/ReservedTokenReceiverModal.tsx
 #: src/components/v1/shared/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Lock until"
 msgstr "Kilit süresi bitiş tarihi"
 
-#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/VeNftStakingForm.tsx
 msgid "Lock {tokenName} for Voting Power"
 msgstr ""
 
@@ -1908,7 +1916,7 @@ msgstr ""
 msgid "Migrate to Juicebox V1.1"
 msgstr "Juicebox V1.1'e geçiş yapın"
 
-#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/VeNftStakingForm.tsx
 msgid "Mint NFT to a custom address"
 msgstr ""
 
@@ -2647,7 +2655,7 @@ msgstr "Yenile"
 msgid "Relaunch your funding cycle on the new Juicebox V2 contracts."
 msgstr "Finansman döngünüzü yeni Juicebox V2 sözleşmelerinde yeniden başlatın."
 
-#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/VeNftStakingForm.tsx
 msgid "Remaining: {unstakedTokens}"
 msgstr ""
 
@@ -2947,7 +2955,7 @@ msgstr ""
 msgid "Stake your {tokensLabel} to increase your voting weight and claim your BannyVerse NFT."
 msgstr ""
 
-#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/VeNftStakingForm.tsx
 msgid "Stake {tokenName} (${0}) tokens in exchange for voting weight. In return, you will impact {projectName} governance and receive a choice NFT."
 msgstr ""
 
@@ -3459,6 +3467,10 @@ msgid "Unless payments are paused in your funding cycle settings, your project c
 msgstr ""
 
 #: src/components/v2/V2Project/VeNftStakingForm/UnlockModal.tsx
+msgid "Unlock successful. Results will be indexed in a few moments."
+msgstr ""
+
+#: src/components/v2/V2Project/VeNftStakingForm/UnlockModal.tsx
 msgid "Unlocking this staking position will burn your NFT and return ${tokenSymbol}."
 msgstr ""
 
@@ -3539,7 +3551,7 @@ msgstr "V2"
 msgid "Version of the terminal contract used by this project."
 msgstr "Bu proje tarafından kullanılan terminal sözleşmesinin sürümü."
 
-#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/VeNftStakingForm.tsx
 msgid "View Token Ranges"
 msgstr ""
 
@@ -3548,7 +3560,7 @@ msgstr ""
 msgid "Volume"
 msgstr "Hacim"
 
-#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/VeNftStakingForm.tsx
 msgid "Voting Power"
 msgstr ""
 
@@ -3710,7 +3722,7 @@ msgstr "{tokenSymbol} token'larınızı taşma için talep etmeden de kullanabil
 msgid "You don't have a funding cycle duration. Changes you make will take effect immediately."
 msgstr "Bir finansman döngüsü süreniz yok. Yaptığınız değişiklikler hemen geçerli olacaktır."
 
-#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/VeNftStakingForm.tsx
 msgid "You don't have enough tokens"
 msgstr ""
 
@@ -3718,7 +3730,7 @@ msgstr ""
 msgid "You don't hold tokens for any Juicebox project."
 msgstr "Herhangi bir Juicebox projesi için token tutmuyorsunuz."
 
-#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/VeNftStakingForm.tsx
 msgid "You don't own any $ve{0} NFTs!"
 msgstr ""
 
@@ -3746,7 +3758,7 @@ msgstr ""
 msgid "You must review and accept the risks."
 msgstr ""
 
-#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/VeNftStakingForm.tsx
 msgid "You must stake at least {minTokensAllowedToStake} tokens."
 msgstr ""
 
@@ -3977,7 +3989,7 @@ msgstr "{0} sahipleri"
 msgid "{0} reserved"
 msgstr "Rezerve {0}"
 
-#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/VeNftStakingForm.tsx
 msgid "{0} to lock"
 msgstr ""
 

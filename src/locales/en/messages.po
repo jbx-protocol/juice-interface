@@ -399,7 +399,7 @@ msgstr ""
 
 #: src/components/v2/V2Project/VeNftStakingForm/RedeemVeNftModal.tsx
 #: src/components/v2/V2Project/VeNftStakingForm/UnlockModal.tsx
-#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/VeNftStakingForm.tsx
 msgid "Address required"
 msgstr "Address required"
 
@@ -970,7 +970,7 @@ msgstr "Current owner: {ownerAddress}"
 msgid "Currently worth: <0><1/>{0}</0>"
 msgstr "Currently worth: <0><1/>{0}</0>"
 
-#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/VeNftStakingForm.tsx
 msgid "Currently, only project tokens claimed as ERC-20 tokens can be staked for NFTs."
 msgstr "Currently, only project tokens claimed as ERC-20 tokens can be staked for NFTs."
 
@@ -990,7 +990,7 @@ msgstr ""
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 #: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
-#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/VeNftStakingForm.tsx
 msgid "Custom token beneficiary"
 msgstr "Custom token beneficiary"
 
@@ -1031,7 +1031,7 @@ msgstr "Date created"
 msgid "Days"
 msgstr "Days"
 
-#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/VeNftStakingForm.tsx
 msgid "Days Locked"
 msgstr "Days Locked"
 
@@ -1427,6 +1427,10 @@ msgstr "Explore projects"
 msgid "Extend Lock"
 msgstr "Extend Lock"
 
+#: src/components/v2/V2Project/VeNftStakingForm/ExtendLockModal.tsx
+msgid "Extend lock successful. Results will be indexed in a few moments."
+msgstr "Extend lock successful. Results will be indexed in a few moments."
+
 #: src/components/Navbar/MenuItems.tsx
 msgid "FAQ"
 msgstr ""
@@ -1702,7 +1706,7 @@ msgstr "Initial mint rate"
 
 #: src/components/v2/V2Project/VeNftStakingForm/RedeemVeNftModal.tsx
 #: src/components/v2/V2Project/VeNftStakingForm/UnlockModal.tsx
-#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/VeNftStakingForm.tsx
 msgid "Invalid address"
 msgstr "Invalid address"
 
@@ -1831,13 +1835,17 @@ msgstr ""
 msgid "Lock Duration:"
 msgstr "Lock Duration:"
 
+#: src/components/v2/V2Project/VeNftStakingForm/ConfirmStakeModal.tsx
+msgid "Lock successful. Results will be indexed in a few moments."
+msgstr "Lock successful. Results will be indexed in a few moments."
+
 #: src/components/modals/ReservedTokenReceiverModal.tsx
 #: src/components/v1/shared/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Lock until"
 msgstr "Lock until"
 
-#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/VeNftStakingForm.tsx
 msgid "Lock {tokenName} for Voting Power"
 msgstr "Lock {tokenName} for Voting Power"
 
@@ -1903,7 +1911,7 @@ msgstr "Memo included on-chain"
 msgid "Migrate to Juicebox V1.1"
 msgstr "Migrate to Juicebox V1.1"
 
-#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/VeNftStakingForm.tsx
 msgid "Mint NFT to a custom address"
 msgstr "Mint NFT to a custom address"
 
@@ -2642,7 +2650,7 @@ msgstr "Refresh"
 msgid "Relaunch your funding cycle on the new Juicebox V2 contracts."
 msgstr "Relaunch your funding cycle on the new Juicebox V2 contracts."
 
-#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/VeNftStakingForm.tsx
 msgid "Remaining: {unstakedTokens}"
 msgstr "Remaining: {unstakedTokens}"
 
@@ -2942,7 +2950,7 @@ msgstr "Stake duration:"
 msgid "Stake your {tokensLabel} to increase your voting weight and claim your BannyVerse NFT."
 msgstr "Stake your {tokensLabel} to increase your voting weight and claim your BannyVerse NFT."
 
-#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/VeNftStakingForm.tsx
 msgid "Stake {tokenName} (${0}) tokens in exchange for voting weight. In return, you will impact {projectName} governance and receive a choice NFT."
 msgstr "Stake {tokenName} (${0}) tokens in exchange for voting weight. In return, you will impact {projectName} governance and receive a choice NFT."
 
@@ -3454,6 +3462,10 @@ msgid "Unless payments are paused in your funding cycle settings, your project c
 msgstr "Unless payments are paused in your funding cycle settings, your project can still receive payments directly through the Juicebox protocol contracts."
 
 #: src/components/v2/V2Project/VeNftStakingForm/UnlockModal.tsx
+msgid "Unlock successful. Results will be indexed in a few moments."
+msgstr "Unlock successful. Results will be indexed in a few moments."
+
+#: src/components/v2/V2Project/VeNftStakingForm/UnlockModal.tsx
 msgid "Unlocking this staking position will burn your NFT and return ${tokenSymbol}."
 msgstr "Unlocking this staking position will burn your NFT and return ${tokenSymbol}."
 
@@ -3534,7 +3546,7 @@ msgstr "V2"
 msgid "Version of the terminal contract used by this project."
 msgstr "Version of the terminal contract used by this project."
 
-#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/VeNftStakingForm.tsx
 msgid "View Token Ranges"
 msgstr "View Token Ranges"
 
@@ -3543,7 +3555,7 @@ msgstr "View Token Ranges"
 msgid "Volume"
 msgstr ""
 
-#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/VeNftStakingForm.tsx
 msgid "Voting Power"
 msgstr "Voting Power"
 
@@ -3705,7 +3717,7 @@ msgstr "You can still redeem your {tokenSymbol} tokens for overflow without clai
 msgid "You don't have a funding cycle duration. Changes you make will take effect immediately."
 msgstr "You don't have a funding cycle duration. Changes you make will take effect immediately."
 
-#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/VeNftStakingForm.tsx
 msgid "You don't have enough tokens"
 msgstr "You don't have enough tokens"
 
@@ -3713,7 +3725,7 @@ msgstr "You don't have enough tokens"
 msgid "You don't hold tokens for any Juicebox project."
 msgstr "You don't hold tokens for any Juicebox project."
 
-#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/VeNftStakingForm.tsx
 msgid "You don't own any $ve{0} NFTs!"
 msgstr "You don't own any $ve{0} NFTs!"
 
@@ -3741,7 +3753,7 @@ msgstr "You must own this V1 project."
 msgid "You must review and accept the risks."
 msgstr "You must review and accept the risks."
 
-#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/VeNftStakingForm.tsx
 msgid "You must stake at least {minTokensAllowedToStake} tokens."
 msgstr "You must stake at least {minTokensAllowedToStake} tokens."
 
@@ -3972,7 +3984,7 @@ msgstr ""
 msgid "{0} reserved"
 msgstr ""
 
-#: src/components/v2/V2Project/VeNftStakingForm/index.tsx
+#: src/components/v2/V2Project/VeNftStakingForm/VeNftStakingForm.tsx
 msgid "{0} to lock"
 msgstr "{0} to lock"
 

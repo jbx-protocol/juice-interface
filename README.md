@@ -86,9 +86,22 @@ Take the following steps to set up Juicebox's subgraph for local development:
 
 ### Usage
 
-1. Start the app.
+1. Run the app in dev mode
 
    ```bash
+   yarn dev
+   ```
+
+2. Build a production build
+
+   ```bash
+   yarn build
+   ```
+
+3. Run a production build locally
+
+   ```bash
+   yarn build
    yarn start
    ```
 
@@ -105,7 +118,7 @@ The frontend has two different providers that provide different levels of access
 
 ## Deployment
 
-Frontend application(s) are deployed automatically on pushes to `main` using [Fleek](https://app.fleek.co/#/sites/juicebox-kovan).
+Frontend application(s) are deployed automaticallyed on pushes to `main` using [Vercel](https://TODO.add.link.to.vercel)
 
 ## Theme
 

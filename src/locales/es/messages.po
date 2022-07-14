@@ -1816,6 +1816,7 @@ msgstr "Logo"
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 #: src/components/v1/shared/FundingCycle/modals/WithdrawModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V1ProjectTokensSection/MigrateV1ProjectTokensModal/MigrateV1ProjectTokensForm.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/MaxSupplyFormItem.tsx
@@ -3291,10 +3292,6 @@ msgstr "Los tokens acuñados de pagos a esta dirección pertenecerán al pagador
 msgid "Tokens receiver"
 msgstr "Beneficiario de los token"
 
-#: src/components/v2/V2Project/V2ManageTokensSection/V1ProjectTokensSection/MigrateV1ProjectTokensModal/MigrateV1ProjectTokensForm.tsx
-msgid "Tokens to migrate"
-msgstr ""
-
 #: src/components/v2/shared/SplitItem.tsx
 msgid "Tokens:"
 msgstr "Tokens:"
@@ -3444,6 +3441,10 @@ msgstr ""
 
 #: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupSection.tsx
 msgid "V1 token migration"
+msgstr ""
+
+#: src/components/v2/V2Project/V2ManageTokensSection/V1ProjectTokensSection/MigrateV1ProjectTokensModal/MigrateV1ProjectTokensForm.tsx
+msgid "V1 tokens to swap"
 msgstr ""
 
 #: src/pages/projects/ProjectsFilterAndSort.tsx

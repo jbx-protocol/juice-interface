@@ -1,5 +1,7 @@
 import { Trans } from '@lingui/macro'
-import { Form, FormInstance, FormProps, Input, Space, Statistic } from 'antd'
+import { Form, FormInstance, FormProps, Space, Statistic } from 'antd'
+import InputAccessoryButton from 'components/InputAccessoryButton'
+import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { formattedNum } from 'utils/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
@@ -20,10 +22,6 @@ export function MigrateV1ProjectTokensForm({
   const tokenSymbolFormatted = tokenSymbolText({
     tokenSymbol: v1TokenSymbol,
   })
-  const tokenSymbolFormattedPlural = tokenSymbolText({
-    tokenSymbol: v1TokenSymbol,
-    plural: v1TokenBalance !== 1,
-  })
 
   return (
     <Form form={form} layout="vertical" {...props}>
@@ -35,17 +33,32 @@ export function MigrateV1ProjectTokensForm({
 
         <Form.Item
           name="tokenAmount"
-          label={<Trans>Tokens to migrate</Trans>}
           rules={[
             {
-              required: true,
               message: <Trans>Tokens are required.</Trans>,
+              validator: async (_, value) => {
+                if (value === '0') throw new Error('Tokens are required')
+              },
             },
           ]}
         >
-          <Input
-            suffix={`V1 ${tokenSymbolFormattedPlural}`}
+          <FormattedNumberInput
+            onChange={val => {
+              form.setFieldsValue({ tokenAmount: val })
+            }}
             max={v1TokenBalance}
+            formItemProps={{
+              required: true,
+              label: <Trans>V1 tokens to swap</Trans>,
+            }}
+            accessory={
+              <InputAccessoryButton
+                content={<Trans>MAX</Trans>}
+                onClick={() =>
+                  form.setFieldsValue({ tokenAmount: v1TokenBalance })
+                }
+              />
+            }
           />
         </Form.Item>
       </Space>

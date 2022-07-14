@@ -1811,6 +1811,7 @@ msgstr ""
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 #: src/components/v1/shared/FundingCycle/modals/WithdrawModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V1ProjectTokensSection/MigrateV1ProjectTokensModal/MigrateV1ProjectTokensForm.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/MaxSupplyFormItem.tsx
@@ -3286,10 +3287,6 @@ msgstr "Tokens minted from payments to this address will belong to the payer by 
 msgid "Tokens receiver"
 msgstr "Tokens receiver"
 
-#: src/components/v2/V2Project/V2ManageTokensSection/V1ProjectTokensSection/MigrateV1ProjectTokensModal/MigrateV1ProjectTokensForm.tsx
-msgid "Tokens to migrate"
-msgstr "Tokens to migrate"
-
 #: src/components/v2/shared/SplitItem.tsx
 msgid "Tokens:"
 msgstr "Tokens:"
@@ -3440,6 +3437,10 @@ msgstr "V1 token holders can swap their tokens for your V2 tokens on your V2 pro
 #: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupSection.tsx
 msgid "V1 token migration"
 msgstr "V1 token migration"
+
+#: src/components/v2/V2Project/V2ManageTokensSection/V1ProjectTokensSection/MigrateV1ProjectTokensModal/MigrateV1ProjectTokensForm.tsx
+msgid "V1 tokens to swap"
+msgstr "V1 tokens to swap"
 
 #: src/pages/projects/ProjectsFilterAndSort.tsx
 msgid "V1.1"

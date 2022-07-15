@@ -30,16 +30,18 @@ export function MigrateProjectTokensModal({
 
   const [loading, setLoading] = useState<boolean>(false)
   const [transactionPending, setTransactionPending] = useState<boolean>(false)
+  const [permissionGranted, setPermissionGranted] = useState<boolean>(false)
 
   const [form] = Form.useForm<{ tokenAmount: string }>()
 
   const operator = contracts?.JBV1TokenPaymentTerminal.address
-  const hasV1TokenTransferPermission = useV1HasPermissions({
-    operator,
-    domain: 0,
-    account: userAddress,
-    permissionIndexes: [V1OperatorPermission.Transfer],
-  })
+  const hasV1TokenTransferPermission =
+    useV1HasPermissions({
+      operator,
+      domain: 0,
+      account: userAddress,
+      permissionIndexes: [V1OperatorPermission.Transfer],
+    }) || permissionGranted
   const payV1TokenPaymentTerminalTx = usePayV1TokenPaymentTerminal()
 
   const swapTokens = async () => {
@@ -108,7 +110,11 @@ export function MigrateProjectTokensModal({
       {...props}
     >
       <Space size="large" direction="vertical" style={{ width: '100%' }}>
-        {!hasV1TokenTransferPermission && <GrantTransferPermissionCallout />}
+        {!hasV1TokenTransferPermission && (
+          <GrantTransferPermissionCallout
+            onFinish={() => setPermissionGranted(true)}
+          />
+        )}
         <TokenSwapDescription v1ProjectHandle={v1ProjectHandle} />
 
         {hasV1TokenTransferPermission && (

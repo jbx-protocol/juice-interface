@@ -7,7 +7,11 @@ import { Trans } from '@lingui/macro'
 import { emitErrorNotification } from 'utils/notifications'
 import { V2UserContext } from 'contexts/v2/userContext'
 
-export function GrantTransferPermissionCallout() {
+export function GrantTransferPermissionCallout({
+  onFinish,
+}: {
+  onFinish?: VoidFunction
+}) {
   const { contracts } = useContext(V2UserContext)
   const [setPermissionLoading, setSetPermissionLoading] =
     useState<boolean>(false)
@@ -29,6 +33,8 @@ export function GrantTransferPermissionCallout() {
       if (!res) {
         throw new Error()
       }
+
+      onFinish?.()
     } catch (e) {
       emitErrorNotification('Set permission failed.')
     } finally {

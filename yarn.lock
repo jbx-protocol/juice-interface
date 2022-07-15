@@ -2885,38 +2885,10 @@
   dependencies:
     "@types/jest" "*"
 
-"@types/uglify-js@*":
-  version "3.13.3"
-  resolved "https://registry.yarnpkg.com/@types/uglify-js/-/uglify-js-3.13.3.tgz#556fd2ac75cc649aba21f87e0be7b1a7e9915bfe"
-  integrity sha512-9dmBYXt/rKxedUXfCvXSxyiPvpDXLkiRlv17DnqdhS+pRustL1967rI1jZVt1xysTO+xJGMoZzcy3cWC9+b6Tw==
-  dependencies:
-    source-map "^0.6.1"
-
 "@types/uuid@^8.3.4":
   version "8.3.4"
   resolved "https://registry.yarnpkg.com/@types/uuid/-/uuid-8.3.4.tgz#bd86a43617df0594787d38b735f55c805becf1bc"
   integrity sha512-c/I8ZRb51j+pYGAu5CrFMRxqZ2ke4y2grEBO5AUjgSkSk+qT2Ea+OdWElz/OiMf5MNpn2b17kuVBwZLQJXzihw==
-
-"@types/webpack-sources@*":
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/@types/webpack-sources/-/webpack-sources-3.2.0.tgz#16d759ba096c289034b26553d2df1bf45248d38b"
-  integrity sha512-Ft7YH3lEVRQ6ls8k4Ff1oB4jN6oy/XmU6tQISKdhfh+1mR+viZFphS6WL0IrtDOzvefmJg5a0s7ZQoRXwqTEFg==
-  dependencies:
-    "@types/node" "*"
-    "@types/source-list-map" "*"
-    source-map "^0.7.3"
-
-"@types/webpack@^4.41.8":
-  version "4.41.32"
-  resolved "https://registry.yarnpkg.com/@types/webpack/-/webpack-4.41.32.tgz#a7bab03b72904070162b2f169415492209e94212"
-  integrity sha512-cb+0ioil/7oz5//7tZUSwbrSAN/NWHrQylz5cW8G0dWTcF/g+/dSdMlKVZspBYuMAN1+WnwHrkxiRrLcwd0Heg==
-  dependencies:
-    "@types/node" "*"
-    "@types/tapable" "^1"
-    "@types/uglify-js" "*"
-    "@types/webpack-sources" "*"
-    anymatch "^3.0.0"
-    source-map "^0.6.0"
 
 "@types/yargs-parser@*":
   version "20.2.1"

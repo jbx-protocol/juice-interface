@@ -14,7 +14,7 @@ export function NftRewardCell({
 
   const nftImage = (
     <div style={{ marginLeft: 15 }}>
-      {imageLoading ? <LoadingOutlined size={25} /> : null}
+      {imageLoading ? <LoadingOutlined style={{ fontSize: '20px' }} /> : null}
       <Image
         src={nftReward.imageUrl}
         alt={nftReward.name}
@@ -25,6 +25,7 @@ export function NftRewardCell({
           width: '50px',
         }}
         onLoad={() => setImageLoading(false)}
+        onClick={e => e.stopPropagation()}
       />
     </div>
   )

@@ -498,7 +498,7 @@ msgid "Amount paid"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/PaymentThresholdFormItem.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/ContributionFloorFormItem.tsx
 msgid "Amount required"
 msgstr "Amount required"
 
@@ -848,7 +848,7 @@ msgstr "Connected wallet not authorized"
 msgid "Contract address: {0}"
 msgstr ""
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/PaymentThresholdFormItem.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/ContributionFloorFormItem.tsx
 msgid "Contribution threshold"
 msgstr "Contribution threshold"
 
@@ -859,7 +859,7 @@ msgstr "Contribution threshold"
 msgid "Contributor rate"
 msgstr "Contributor rate"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/PaymentThresholdFormItem.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/ContributionFloorFormItem.tsx
 msgid "Contributors receive the NFT when they contribute at least this amount."
 msgstr "Contributors receive the NFT when they contribute at least this amount."
 
@@ -1814,7 +1814,6 @@ msgstr ""
 #: src/components/v2/V2Project/V2ManageTokensSection/V1ProjectTokensSection/MigrateV1ProjectTokensModal/MigrateV1ProjectTokensForm.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/MaxSupplyFormItem.tsx
 msgid "MAX"
 msgstr "MAX"
 
@@ -1829,14 +1828,6 @@ msgstr "Manage your {0}"
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "Manage {tokenText}"
 msgstr "Manage {tokenText}"
-
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/MaxSupplyFormItem.tsx
-msgid "Maximum supply"
-msgstr "Maximum supply"
-
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/MaxSupplyFormItem.tsx
-msgid "Maximum supply required"
-msgstr "Maximum supply required"
 
 #: src/components/formItems/ProjectDescription.tsx
 msgid "Maximum {MAX_DESCRIPTION_LENGTH} characters"
@@ -3019,10 +3010,6 @@ msgstr "The maximum amount of funds that can be distributed from the treasury ea
 #: src/components/formItems/ProjectTarget.tsx
 msgid "The maximum amount of funds that can be distributed from this project in one funding cycle. Funds will be withdrawn in ETH no matter the currency you choose."
 msgstr "The maximum amount of funds that can be distributed from this project in one funding cycle. Funds will be withdrawn in ETH no matter the currency you choose."
-
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/MaxSupplyFormItem.tsx
-msgid "The maximum quantity of this NFT that can ever be minted."
-msgstr "The maximum quantity of this NFT that can ever be minted."
 
 #: src/pages/create/forms/TokenForm/MintRateFormItem.tsx
 msgid "The number of project tokens minted when 1 ETH is contributed in the first funding cycle."

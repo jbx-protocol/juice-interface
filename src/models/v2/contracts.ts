@@ -21,7 +21,7 @@ export enum V2ContractName {
   DeprecatedJBController = 'DeprecatedJBController',
   DeprecatedJBSplitsStore = 'DeprecatedJBSplitsStore',
   DeprecatedJBDirectory = 'DeprecatedJBDirectory',
-  // NftRewards = 'NftRewards', // TODO
+  // NftRewards = 'NftRewards',
 }
 
 export type V2Contracts = Record<V2ContractName, Contract>

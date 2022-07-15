@@ -1500,6 +1500,10 @@ msgstr ""
 msgid "Go to Etherscan"
 msgstr "Allez à Etherscan"
 
+#: src/components/v2/V2Project/V2ManageTokensSection/V1ProjectTokensSection/MigrateV1ProjectTokensModal/GrantTransferPermissionCallout.tsx
+msgid "Grant permission"
+msgstr ""
+
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 msgid "Handle"
 msgstr "Identifiant"
@@ -1812,6 +1816,7 @@ msgstr "Logo"
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 #: src/components/v1/shared/FundingCycle/modals/WithdrawModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
+#: src/components/v2/V2Project/V2ManageTokensSection/V1ProjectTokensSection/MigrateV1ProjectTokensModal/MigrateV1ProjectTokensForm.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/MaxSupplyFormItem.tsx
@@ -2916,6 +2921,18 @@ msgstr "La somme des pourcentages ne peut pas dépasser 100%"
 msgid "Sum of percentages cannot exceed 100%."
 msgstr "La somme des pourcentages ne peut pas dépasser 100%."
 
+#: src/components/v2/V2Project/V2ManageTokensSection/V1ProjectTokensSection/MigrateV1ProjectTokensModal/MigrateV1ProjectTokensModal.tsx
+msgid "Swap V1 {tokenSymbolFormattedPlural} for V2 {tokenSymbolFormattedPlural}"
+msgstr ""
+
+#: src/components/v2/V2Project/V2ManageTokensSection/V1ProjectTokensSection/MigrateV1ProjectTokensModal/MigrateV1ProjectTokensModal.tsx
+msgid "Swap for V2 {tokenSymbolFormattedPlural}"
+msgstr ""
+
+#: src/components/v2/V2Project/V2ManageTokensSection/V1ProjectTokensSection/V1ProjectTokensSection.tsx
+msgid "Swap for V2 {tokenText}"
+msgstr ""
+
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 msgid "Target"
@@ -3080,6 +3097,10 @@ msgstr "Ces attributs peuvent être modifiés à tout moment."
 msgid "These settings will <0>not</0> be editable immediately within a funding cycle. They can only be changed for <1>upcoming</1> funding cycles."
 msgstr "Ces paramètres<0> ne seront pas</0> modifiables immédiatement au cours d'un cycle de financement. Ils ne peuvent être modifiés que pour les cycles de financement <1>à venir</1>."
 
+#: src/components/v2/V2Project/V2ManageTokensSection/V1ProjectTokensSection/MigrateV1ProjectTokensModal/TokenSwapDescription.tsx
+msgid "This Juicebox V2 project also has a project on Juicebox V1. The project owner is allowing you to swap your V1 tokens for V2 tokens."
+msgstr ""
+
 #: src/utils/ballot.ts
 msgid "This address is an unrecognized strategy contract. Make sure it is correct!"
 msgstr "Cette adresse est un contrat stratégique non reconnu. Assurez-vous qu'il est correct !"
@@ -3237,6 +3258,10 @@ msgstr "Tokens <0>réservés pour le projet</0> quand 1 ETH est contribué."
 #: src/components/forms/TicketingForm.tsx
 msgid "Tokens are earned by anyone who pays your project, and can be redeemed for overflow if your project has set a funding target."
 msgstr "Les tokens sont gagnés par toute personne qui paie votre projet et peuvent être récupérés de l'overflow si votre projet a défini un objectif de financement."
+
+#: src/components/v2/V2Project/V2ManageTokensSection/V1ProjectTokensSection/MigrateV1ProjectTokensModal/MigrateV1ProjectTokensForm.tsx
+msgid "Tokens are required."
+msgstr ""
 
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 msgid "Tokens can be minted manually when allowed in the current funding cycle. The project owner can enable or disable minting for upcoming cycles."
@@ -3418,6 +3443,10 @@ msgstr ""
 msgid "V1 token migration"
 msgstr ""
 
+#: src/components/v2/V2Project/V2ManageTokensSection/V1ProjectTokensSection/MigrateV1ProjectTokensModal/MigrateV1ProjectTokensForm.tsx
+msgid "V1 tokens to swap"
+msgstr ""
+
 #: src/pages/projects/ProjectsFilterAndSort.tsx
 msgid "V1.1"
 msgstr "V1.1"
@@ -3593,6 +3622,10 @@ msgstr "Vous n'avez pas une durée de cycle de financement. Les modifications qu
 msgid "You don't hold tokens for any Juicebox project."
 msgstr "Vous ne détenez pas de tokens pour aucun projet Juicebox."
 
+#: src/components/v2/V2Project/V2ManageTokensSection/V1ProjectTokensSection/MigrateV1ProjectTokensModal/TokenSwapDescription.tsx
+msgid "You have <0>{0}</0> tokens on <1>Juicebox V1</1>. You can swap your <2>{1}</2> V1 tokens for V2 tokens"
+msgstr ""
+
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
 msgid "You have configured for all funds to be distributed from the treasury. Your current payouts do not sum to 100%, so the remainder will go to the project owner."
 msgstr "Vous avez configuré pour que tous les fonds soient distribués à partir de la trésorerie. Vos paiements actuels ne totalisent pas 100%, le reste ira donc au propriétaire du projet."
@@ -3608,6 +3641,10 @@ msgstr "Vous avez des modifications non sauvegardées. Voulez-vous vraiment les 
 #: src/pages/projects/MyProjects.tsx
 msgid "You haven't created any projects yet."
 msgstr "Vous n'avez pas encore créé aucun projet."
+
+#: src/components/v2/V2Project/V2ManageTokensSection/V1ProjectTokensSection/MigrateV1ProjectTokensModal/GrantTransferPermissionCallout.tsx
+msgid "You must grant permission to swap your tokens."
+msgstr ""
 
 #: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/SetV1ProjectSection.tsx
 msgid "You must own this V1 project."
@@ -3645,9 +3682,21 @@ msgstr ""
 msgid "You've completed this step."
 msgstr ""
 
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
+msgid "Your <0>@{v1ProjectHandle}</0> V1 token balance."
+msgstr ""
+
 #: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner.tsx
 msgid "Your Juicebox project has no active funding cycle. Launch a funding cycle to re-enable payments on your project."
 msgstr "Votre projet Juicebox n'a pas de cycle de financement actif. Lancez un cycle de financement pour réactiver les paiements dans votre projet."
+
+#: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
+msgid "Your V1 balance"
+msgstr ""
+
+#: src/components/v2/V2Project/V2ManageTokensSection/V1ProjectTokensSection/MigrateV1ProjectTokensModal/MigrateV1ProjectTokensForm.tsx
+msgid "Your V1 {tokenSymbolFormatted} balance"
+msgstr ""
 
 #: src/components/v1/V1Project/Rewards/index.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx

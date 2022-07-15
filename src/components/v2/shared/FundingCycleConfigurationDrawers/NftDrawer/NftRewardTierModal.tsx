@@ -39,7 +39,6 @@ export default function NftRewardTierModal({
 
   const onFormSaved = async () => {
     await nftForm.validateFields()
-    console.info('descriptioN: ', nftForm.getFieldValue('description'))
 
     const newTier = {
       contributionFloor: parseFloat(nftForm.getFieldValue('contributionFloor')),
@@ -48,8 +47,6 @@ export default function NftRewardTierModal({
       externalLink: nftForm.getFieldValue('externalLink'),
       description: nftForm.getFieldValue('description'),
     } as NftRewardTier
-
-    console.info('newTier: ', newTier)
 
     onChange(newTier)
     onClose()

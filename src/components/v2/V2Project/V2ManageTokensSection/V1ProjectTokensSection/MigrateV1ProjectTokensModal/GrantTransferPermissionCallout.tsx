@@ -37,6 +37,7 @@ export function GrantTransferPermissionCallout({
       onFinish?.()
     } catch (e) {
       emitErrorNotification('Set permission failed.')
+      throw e
     } finally {
       setSetPermissionLoading(false)
     }

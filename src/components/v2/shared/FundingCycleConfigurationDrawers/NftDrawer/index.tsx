@@ -9,7 +9,7 @@ import { useAppSelector } from 'hooks/AppSelector'
 import { NftRewardTier } from 'models/v2/nftRewardTier'
 import { useCallback, useContext, useState } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
-import { nftRewardsToIPFS } from 'utils/ipfs'
+import { uploadNftRewardsToIPFS } from 'utils/ipfs'
 
 import { shadowCard } from 'constants/styles/shadowCard'
 
@@ -49,7 +49,7 @@ export default function NftDrawer({
   const onNftFormSaved = useCallback(async () => {
     setSubmitLoading(true)
     // Calls cloud function to store NftRewards to IPFS
-    const CIDs = await nftRewardsToIPFS(rewardTiers)
+    const CIDs = await uploadNftRewardsToIPFS(rewardTiers)
     dispatch(editingV2ProjectActions.setNftRewardTiers(rewardTiers))
     // Store cid (link to nfts on IPFS) to be used later in the deploy tx
     dispatch(editingV2ProjectActions.setNftRewardsCIDs(CIDs))
@@ -113,18 +113,17 @@ export default function NftDrawer({
               />
             ))}
           </Space>
-          {rewardTiers.length < MAX_NFT_REWARD_TIERS ? (
-            <Button
-              type="dashed"
-              onClick={() => {
-                setAddTierModalVisible(true)
-              }}
-              style={{ marginTop: 15 }}
-              block
-            >
-              <Trans>Add reward tier</Trans>
-            </Button>
-          ) : null}
+          <Button
+            type="dashed"
+            onClick={() => {
+              setAddTierModalVisible(true)
+            }}
+            style={{ marginTop: 15 }}
+            disabled={rewardTiers.length >= MAX_NFT_REWARD_TIERS}
+            block
+          >
+            <Trans>Add reward tier</Trans>
+          </Button>
         </div>
         <Button
           onClick={onNftFormSaved}

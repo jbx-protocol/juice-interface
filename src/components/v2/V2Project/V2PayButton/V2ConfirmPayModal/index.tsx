@@ -31,6 +31,7 @@ import { featureFlagEnabled } from 'utils/featureFlags'
 
 import { V2PayForm, V2PayFormType } from '../V2PayForm'
 import { NftRewardCell } from './NftRewardCell'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 
 /**
  * Produce payment memo with the following schema:
@@ -110,7 +111,7 @@ export function V2ConfirmPayModal({
   )
   let nftRewardTier: NftRewardTier | null = null
 
-  if (nftRewardTiers && featureFlagEnabled('nftRewards')) {
+  if (nftRewardTiers && featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)) {
     nftRewardTier = getNftRewardTier({
       nftRewardTiers,
       payAmountETH: parseFloat(fromWad(weiAmount)),

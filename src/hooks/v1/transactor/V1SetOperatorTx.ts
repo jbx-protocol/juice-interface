@@ -15,14 +15,7 @@ export function useV1SetOperatorTx(): TransactorInstance<OperatorData> {
   const { signingProvider } = useContext(NetworkContext)
 
   return ({ operator, domain, permissionIndexes }: OperatorData, txOpts) => {
-    if (
-      !transactor ||
-      !signingProvider ||
-      !contracts?.OperatorStore ||
-      !operator ||
-      !domain ||
-      !permissionIndexes
-    ) {
+    if (!transactor || !signingProvider || !contracts?.OperatorStore) {
       txOpts?.onDone?.()
       return Promise.resolve(false)
     }

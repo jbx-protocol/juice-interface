@@ -19,6 +19,10 @@ import { useIsUserAddress } from 'hooks/IsUserAddress'
 import { v2ProjectRoute } from 'utils/routes'
 import V2BugNotice from 'components/v2/shared/V2BugNotice'
 import { featureFlagEnabled } from 'utils/featureFlags'
+import { CurrencyContext } from 'contexts/currencyContext'
+import { CurrencyOption } from 'models/currencyOption'
+import { useCurrencyConverter } from 'hooks/CurrencyConverter'
+import { fromWad } from 'utils/formatNumber'
 import { TextButton } from 'components/TextButton'
 
 import { V2_PROJECT_IDS } from 'constants/v2/projectIds'
@@ -68,12 +72,17 @@ export default function V2Project({
     projectOwnerAddress,
     handle,
   } = useContext(V2ProjectContext)
+  const {
+    currencies: { ETH },
+  } = useContext(CurrencyContext)
+
   const canReconfigureFundingCycles = useV2ConnectedWalletHasPermission(
     V2OperatorPermission.RECONFIGURE,
   )
 
   const [handleModalVisible, setHandleModalVisible] = useState<boolean>()
   const [payAmount, setPayAmount] = useState<string>('0')
+  const [payInCurrency, setPayInCurrency] = useState<CurrencyOption>(ETH)
 
   const { data: queuedFundingCycleResponse } = useProjectQueuedFundingCycle({
     projectId,
@@ -89,6 +98,8 @@ export default function V2Project({
   const isNewDeploy = Boolean(params.get('newDeploy'))
   const history = useHistory()
   const isMobile = useMobile()
+
+  const converter = useCurrencyConverter()
 
   const hasEditPermission = useV2ConnectedWalletHasPermission(
     V2OperatorPermission.RECONFIGURE,
@@ -127,6 +138,9 @@ export default function V2Project({
 
   const nftRewardsEnabled = featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)
 
+  const payAmountETH =
+    payInCurrency === ETH ? payAmount : fromWad(converter.usdToWei(payAmount))
+
   return (
     <Space direction="vertical" size={GUTTER_PX} style={{ width: '100%' }}>
       {!hasCurrentFundingCycle &&
@@ -158,7 +172,9 @@ export default function V2Project({
         <Col md={colSizeMd} xs={24}>
           <PayInputGroup
             payAmountETH={payAmount}
-            onChange={setPayAmount}
+            onPayAmountChange={setPayAmount}
+            payInCurrency={payInCurrency}
+            onPayInCurrencyChange={setPayInCurrency}
             PayButton={V2PayButton}
             reservedRate={fundingCycleMetadata?.reservedRate.toNumber()}
             weight={fundingCycle?.weight}
@@ -167,12 +183,10 @@ export default function V2Project({
             tokenAddress={tokenAddress}
             disabled={isPreviewMode || payIsDisabledPreV2Redeploy()}
           />
-          {nftRewardsEnabled ? (
-            <NftRewardsSection
-              payAmountETH={payAmount}
-              onPayAmountChange={setPayAmount}
-            />
-          ) : null}
+          <NftRewardsSection
+            payAmountETH={payAmountETH}
+            onPayAmountChange={setPayAmount}
+          />
         </Col>
       </Row>
       <Row gutter={GUTTER_PX}>

@@ -503,7 +503,7 @@ msgid "Amount paid"
 msgstr "支付数额"
 
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/PaymentThresholdFormItem.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/ContributionFloorFormItem.tsx
 msgid "Amount required"
 msgstr ""
 
@@ -853,7 +853,7 @@ msgstr "已链接钱包未授权"
 msgid "Contract address: {0}"
 msgstr "合约地址：{0}"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/PaymentThresholdFormItem.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/ContributionFloorFormItem.tsx
 msgid "Contribution threshold"
 msgstr ""
 
@@ -864,7 +864,7 @@ msgstr ""
 msgid "Contributor rate"
 msgstr "捐款铸造比率"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/PaymentThresholdFormItem.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/ContributionFloorFormItem.tsx
 msgid "Contributors receive the NFT when they contribute at least this amount."
 msgstr ""
 
@@ -1819,7 +1819,6 @@ msgstr "标志"
 #: src/components/v2/V2Project/V2ManageTokensSection/V1ProjectTokensSection/MigrateV1ProjectTokensModal/MigrateV1ProjectTokensForm.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/MaxSupplyFormItem.tsx
 msgid "MAX"
 msgstr "最大值"
 
@@ -1834,14 +1833,6 @@ msgstr ""
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "Manage {tokenText}"
 msgstr "管理 {tokenText}"
-
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/MaxSupplyFormItem.tsx
-msgid "Maximum supply"
-msgstr ""
-
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/MaxSupplyFormItem.tsx
-msgid "Maximum supply required"
-msgstr ""
 
 #: src/components/formItems/ProjectDescription.tsx
 msgid "Maximum {MAX_DESCRIPTION_LENGTH} characters"
@@ -3024,10 +3015,6 @@ msgstr "每个筹款周期可以从金库分配出去的最大金额。"
 #: src/components/formItems/ProjectTarget.tsx
 msgid "The maximum amount of funds that can be distributed from this project in one funding cycle. Funds will be withdrawn in ETH no matter the currency you choose."
 msgstr "单个筹款周期内，可从项目分配出去的资金上限。无论你选择用哪种货币进行分配，都是以 ETH 的形式提取资金。"
-
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/MaxSupplyFormItem.tsx
-msgid "The maximum quantity of this NFT that can ever be minted."
-msgstr ""
 
 #: src/pages/create/forms/TokenForm/MintRateFormItem.tsx
 msgid "The number of project tokens minted when 1 ETH is contributed in the first funding cycle."

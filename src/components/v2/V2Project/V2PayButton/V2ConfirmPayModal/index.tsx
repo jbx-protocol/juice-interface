@@ -230,7 +230,7 @@ export function V2ConfirmPayModal({
                   tip={
                     <Trans>
                       You receive an NFT for contributing{' '}
-                      <strong>{nftRewardTier.paymentThreshold} ETH</strong>.
+                      <strong>{nftRewardTier.contributionFloor} ETH</strong>.
                     </Trans>
                   }
                 />

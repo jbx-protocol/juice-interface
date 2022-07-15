@@ -8,6 +8,7 @@ import axios from 'axios'
 import { IpfsCacheJsonData } from 'models/ipfs-cache/cache-data'
 import { IpfsCacheName } from 'models/ipfs-cache/cache-name'
 import { consolidateMetadata, ProjectMetadataV4 } from 'models/project-metadata'
+import { NftRewardTier } from 'models/v2/nftRewardTier'
 
 import { readNetwork } from 'constants/networks'
 import { IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
@@ -34,6 +35,10 @@ export const IPFS_TAGS = {
     process.env.NODE_ENV === 'production'
       ? 'juicebox_project_logo'
       : 'DEV_juicebox_project_logo',
+  NFT_REWARDS:
+    process.env.NODE_ENV === 'production'
+      ? 'juicebox_nft_reward_tier'
+      : 'DEV_juicebox_nft_reward_tier',
 }
 
 // keyvalues will be upserted to existing metadata. A null value will remove an existing keyvalue
@@ -122,4 +127,31 @@ export const getPinnedListByTag = async (tag: keyof typeof IPFS_TAGS) => {
   const data = await axiosInstance.get(`/ipfs/pin?tag=${IPFS_TAGS[tag]}`)
 
   return data.data as PinataPinListResponse
+}
+
+async function uploadNftRewardToIPFS(
+  rewardTier: NftRewardTier,
+): Promise<string> {
+  const res = await axiosInstance.post('/ipfs/pin', {
+    data: rewardTier,
+    options: {
+      pinataMetadata: {
+        keyvalues: {
+          tag: IPFS_TAGS.NFT_REWARDS,
+        } as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+        name: rewardTier.name,
+      },
+    },
+  })
+  return res.data.IpfsHash as string
+}
+
+// Uploads each nft reward tier to an individual location on IPFS
+// returns an array of CIDs which point to each rewardTier on IPFS
+export async function uploadNftRewardsToIPFS(
+  nftRewards: NftRewardTier[],
+): Promise<string[]> {
+  return await Promise.all(
+    nftRewards.map(rewardTier => uploadNftRewardToIPFS(rewardTier)),
+  )
 }

@@ -60,13 +60,13 @@ export function RewardTier({
             {rewardTierUpperLimit ? (
               <Trans>
                 Receive this NFT when you contribute{' '}
-                <strong>{rewardTier.paymentThreshold}</strong> - {'<'}
+                <strong>{rewardTier.contributionFloor}</strong> - {'<'}
                 <strong>{rewardTierUpperLimit} ETH</strong>.
               </Trans>
             ) : (
               <Trans>
                 Receive this NFT when you contribute at least{' '}
-                <strong>{rewardTier.paymentThreshold} ETH</strong>.
+                <strong>{rewardTier.contributionFloor} ETH</strong>.
               </Trans>
             )}
           </>
@@ -80,7 +80,7 @@ export function RewardTier({
             fontSize: '0.7rem',
           }}
         >
-          {rewardTier.paymentThreshold} ETH
+          {rewardTier.contributionFloor} ETH
         </span>
       </Tooltip>
     </div>

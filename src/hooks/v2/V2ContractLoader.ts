@@ -129,6 +129,24 @@ const loadJBV1TokenPaymentTerminalContract = async (network: NetworkName) => {
   return contractJson
 }
 
+// const loadJBNftRewardsContract = async (network: NetworkName) => {
+// TODO
+// const contractJson = {
+//   abi: (
+//     await import(
+//       `@jbx-protocol/juice-nft-rewards/contracts/JBTieredLimitedNFTRewardDataSourceProjectDeployer.sol/JBTieredLimitedNFTRewardDataSourceProjectDeployer.json`
+//     )
+//   ).abi,
+//   address: (
+//     (await import(
+//       `@jbx-protocol/juice-nft-rewards/broadcast/Deploy.sol/${NETWORKS_BY_NAME[network].chainId}/run-latest.json`
+//     )) as ForgeDeploy
+//   ).receipts[0].contractAddress,
+// }
+
+// return contractJson
+// }
+
 const loadContract = async (
   contractName: V2ContractName,
   network: NetworkName,
@@ -143,7 +161,11 @@ const loadContract = async (
     contractJson = loadPublicResolverContract(network)
   } else if (contractName === V2ContractName.JBV1TokenPaymentTerminal) {
     contractJson = await loadJBV1TokenPaymentTerminalContract(network)
-  } else {
+  }
+  // else if (contractName === V2ContractName.NftRewards) {
+  //   contractJson = await loadJBNftRewardsContract(network)
+  // }
+  else {
     contractJson = await loadJuiceboxV2Contract(contractName, network)
   }
 

@@ -55,7 +55,7 @@ export default function NftSummarySection() {
             <p style={{ marginBottom: '10px' }}>
               <Trans>
                 <strong>Contribution threshold:</strong>{' '}
-                {rewardTier.paymentThreshold} ETH
+                {rewardTier.contributionFloor} ETH
               </Trans>
             </p>
             <p style={{ marginBottom: '10px' }}>

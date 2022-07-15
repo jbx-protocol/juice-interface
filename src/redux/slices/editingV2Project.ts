@@ -39,7 +39,7 @@ interface V2ProjectState {
   payoutGroupedSplits: ETHPayoutGroupedSplits
   reservedTokensGroupedSplits: ReservedTokensGroupedSplits
   nftRewardTiers: NftRewardTier[]
-  nftRewardsCid: string | undefined // points to location of the NFT's json on IPFS
+  nftRewardsCIDs: string[] | undefined // points to locations of the NFTs' json on IPFS
 }
 
 // Increment this version by 1 when making breaking changes.
@@ -109,7 +109,7 @@ export const defaultProjectState: V2ProjectState = {
   payoutGroupedSplits: EMPTY_PAYOUT_GROUPED_SPLITS,
   reservedTokensGroupedSplits: EMPTY_RESERVED_TOKENS_GROUPED_SPLITS,
   nftRewardTiers: [],
-  nftRewardsCid: undefined,
+  nftRewardsCIDs: undefined,
 }
 
 const editingV2ProjectSlice = createSlice({
@@ -212,8 +212,8 @@ const editingV2ProjectSlice = createSlice({
     setNftRewardTiers: (state, action: PayloadAction<NftRewardTier[]>) => {
       state.nftRewardTiers = action.payload
     },
-    setNftRewardsCid: (state, action: PayloadAction<string>) => {
-      state.nftRewardsCid = action.payload
+    setNftRewardsCIDs: (state, action: PayloadAction<string[]>) => {
+      state.nftRewardsCIDs = action.payload
     },
     setAllowSetTerminals: (state, action: PayloadAction<boolean>) => {
       state.fundingCycleMetadata.global.allowSetTerminals = action.payload

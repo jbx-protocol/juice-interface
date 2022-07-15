@@ -179,11 +179,16 @@ export default function V2ManageTokensSection() {
                   }}
                 >
                   <div>
-                    {formatWad(totalTokenSupply, { precision: 0 })} {tokenText}
+                    <div>
+                      {formatWad(totalTokenSupply, { precision: 0 })}{' '}
+                      {tokenText}
+                    </div>
+                    <TextButton
+                      onClick={() => setParticipantsModalVisible(true)}
+                    >
+                      <Trans>Holders</Trans>
+                    </TextButton>
                   </div>
-                  <TextButton onClick={() => setParticipantsModalVisible(true)}>
-                    <Trans>Holders</Trans>
-                  </TextButton>
                 </div>
               </Descriptions.Item>
               {userAddress ? (

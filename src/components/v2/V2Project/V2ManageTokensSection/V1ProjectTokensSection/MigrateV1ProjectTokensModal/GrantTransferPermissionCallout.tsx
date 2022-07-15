@@ -53,7 +53,9 @@ export function GrantTransferPermissionCallout({
         onClick={() => onGivePermissionClick()}
         type="primary"
       >
-        <Trans>Grant permission</Trans>
+        <span>
+          <Trans>Grant permission</Trans>
+        </span>
       </Button>
     </Callout>
   )

@@ -6,7 +6,7 @@ import { NetworkContext } from 'contexts/networkContext'
 import useMobile from 'hooks/Mobile'
 import { NetworkName } from 'models/network-name'
 import type { AppProps } from 'next/app'
-import React, { useContext, useLayoutEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { CoreAppWrapper, Head } from 'components/common'
 
 import { readNetwork } from 'constants/networks'
@@ -35,9 +35,8 @@ const AppWrapper: React.FC = ({ children }) => {
     NetworkName.rinkeby,
   ]
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!signerNetwork) return
-
     setSwitchNetworkModalVisible(signerNetwork !== networkName)
   }, [networkName, signerNetwork])
 

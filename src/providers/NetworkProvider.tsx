@@ -1,4 +1,5 @@
 import { Web3Provider } from '@ethersproject/providers'
+import { useRouter } from 'next/router'
 
 import { NetworkContext } from 'contexts/networkContext'
 import { NetworkName } from 'models/network-name'
@@ -8,14 +9,25 @@ import { initOnboard } from 'utils/onboard'
 import { API, Subscriptions, Wallet } from 'bnc-onboard/dist/src/interfaces'
 import { ThemeContext } from 'contexts/themeContext'
 
-import { reloadWindow } from 'utils/windowUtils'
-
 import { readNetwork } from 'constants/networks'
 import { NETWORKS } from 'constants/networks'
 
 const KEY_SELECTED_WALLET = 'selectedWallet'
 
+const debounceOverride = (func: VoidFunction, timeout = 1000) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let timer: any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (...args: any) => {
+    clearTimeout(timer)
+    timer = setTimeout(() => {
+      return func.apply(this, args)
+    }, timeout)
+  }
+}
+
 export const NetworkProvider: React.FC = ({ children }) => {
+  const router = useRouter()
   const { isDarkMode } = useContext(ThemeContext)
 
   const [signingProvider, setSigningProvider] = useState<Web3Provider>()
@@ -75,7 +87,14 @@ export const NetworkProvider: React.FC = ({ children }) => {
     const config: Subscriptions = {
       address: setAccount,
       wallet: selectWallet,
-      network: networkId => onNetworkChanged(NETWORKS[networkId]?.name),
+      network: networkId =>
+        /*
+         * A hack to mitigate the bug appearing here:
+         * https://github.com/jbx-protocol/juice-interface/issues/1410.
+         *
+         * Futher work is likely needed, but this is a decent enough band-aid.
+         */
+        debounceOverride(() => onNetworkChanged(NETWORKS[networkId]?.name))(),
     }
     setOnboard(initOnboard(config, isDarkMode))
   }, [isDarkMode, onNetworkChanged, onboard, resetWallet])
@@ -114,8 +133,8 @@ export const NetworkProvider: React.FC = ({ children }) => {
   useEffect(() => {
     if (!previousNetwork || !network) return
     if (previousNetwork === network) return
-    reloadWindow()
-  }, [network, previousNetwork])
+    router.reload()
+  }, [network, previousNetwork, router])
 
   return (
     <NetworkContext.Provider

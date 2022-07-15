@@ -2521,10 +2521,6 @@ msgid "Reconfigure funding"
 msgstr "Reconfigurar financiamento"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
-msgid "Reconfigure payouts and limit"
-msgstr "Reconfigurar pagamentos e limite"
-
-#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
 msgid "Reconfigure payouts as percentages of your distribution limit."
 msgstr "Reconfigurar os pagamentos como porcentagens do seu limite de distribuição."
 

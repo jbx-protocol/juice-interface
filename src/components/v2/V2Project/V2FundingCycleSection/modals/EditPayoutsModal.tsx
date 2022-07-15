@@ -21,10 +21,9 @@ import { NetworkContext } from 'contexts/networkContext'
 import { MAX_DISTRIBUTION_LIMIT, splitPercentFrom } from 'utils/v2/math'
 import { formatWad } from 'utils/formatNumber'
 
-import { ExclamationCircleOutlined, SettingOutlined } from '@ant-design/icons'
+import { ExclamationCircleOutlined } from '@ant-design/icons'
 
 import CurrencySymbol from 'components/CurrencySymbol'
-import { useRouter } from 'next/router'
 
 import { ETH_PAYOUT_SPLIT_GROUP } from 'constants/v2/splits'
 
@@ -125,7 +124,6 @@ const DistributionLimitHeader = ({
     loading: { distributionLimitLoading, fundingCycleLoading },
   } = useContext(V2ProjectContext)
 
-  const router = useRouter()
   const currency = V2CurrencyName(
     distributionLimitCurrency?.toNumber() as V2CurrencyOption,
   )
@@ -133,17 +131,6 @@ const DistributionLimitHeader = ({
     MAX_DISTRIBUTION_LIMIT,
   )
   const projectLoading = distributionLimitLoading && fundingCycleLoading
-
-  const relocateToFundingDrawer = () => {
-    router.push({
-      pathname: '/v2/p/[projectId]',
-      query: {
-        projectId: router.query.projectId,
-        reconfigModalOpen: true,
-        fundingDrawerOpen: true,
-      },
-    })
-  }
 
   return (
     <div style={{ display: 'flex', justifyContent: 'space-between', ...style }}>
@@ -167,15 +154,6 @@ const DistributionLimitHeader = ({
           )}
         </b>
       </Skeleton>
-      <Button
-        size="small"
-        icon={<SettingOutlined />}
-        onClick={relocateToFundingDrawer}
-      >
-        <span>
-          <Trans>Reconfigure payouts and limit</Trans>
-        </span>
-      </Button>
     </div>
   )
 }

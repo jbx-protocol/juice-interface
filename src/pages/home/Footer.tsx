@@ -2,6 +2,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
 import { CSSProperties } from 'react'
 import { Button } from 'antd'
+import Link from 'next/link'
 import ExternalLink from 'components/ExternalLink'
 
 import { reloadWindow, scrollToTop } from 'utils/windowUtils'
@@ -18,18 +19,25 @@ export default function Footer() {
     marginBottom: 30,
   }
 
-  const link = (text: string, link: string) => (
-    <a
-      style={{
-        color: colors.text.action.primary,
-        marginLeft: 10,
-        marginRight: 10,
-      }}
-      href={link}
-    >
-      {text}
-    </a>
-  )
+  const link = (text: string, link: string) => {
+    const style = {
+      color: colors.text.action.primary,
+      marginLeft: 10,
+      marginRight: 10,
+    }
+    if (link.startsWith('http')) {
+      return (
+        <ExternalLink style={style} href={link}>
+          {text}
+        </ExternalLink>
+      )
+    }
+    return (
+      <Link href={link}>
+        <a style={style}>{text}</a>
+      </Link>
+    )
+  }
 
   // Renders language links
   const languageLink = (lang: string) => (

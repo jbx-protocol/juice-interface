@@ -13,6 +13,7 @@ import { TransactionReceipt } from '@ethersproject/providers'
 import { useRouter } from 'next/router'
 import { BigNumber } from '@ethersproject/bignumber'
 import { NetworkContext } from 'contexts/networkContext'
+import { emitErrorNotification } from 'utils/notifications'
 
 import TransactionModal from 'components/TransactionModal'
 
@@ -116,49 +117,55 @@ export default function DeployProjectButton() {
       // Set value and loading states of nftTxGas and launchTxGas.
       // setGasReaderModalVisible(true)
     }
-    const txSuccessful = await launchProjectTx(
-      {
-        projectMetadataCID: uploadedMetadata.IpfsHash,
-        fundingCycleData,
-        fundingCycleMetadata,
-        fundAccessConstraints,
-        groupedSplits,
-      },
-      {
-        onDone() {
-          console.info('Transaction executed. Awaiting confirmation...')
-          setTransactionPending(true)
+    try {
+      const txSuccessful = await launchProjectTx(
+        {
+          projectMetadataCID: uploadedMetadata.IpfsHash,
+          fundingCycleData,
+          fundingCycleMetadata,
+          fundAccessConstraints,
+          groupedSplits,
         },
-        async onConfirmed(result) {
-          const txHash = result?.transaction?.hash
-          if (!txHash) {
-            return // TODO error notififcation
-          }
+        {
+          onDone() {
+            console.info('Transaction executed. Awaiting confirmation...')
+            setTransactionPending(true)
+          },
+          async onConfirmed(result) {
+            const txHash = result?.transaction?.hash
+            if (!txHash) {
+              return // TODO error notififcation
+            }
 
-          const txReceipt = await findTransactionReceipt(txHash)
-          if (!txReceipt) {
-            return // TODO error notififcation
-          }
-          console.info('Found tx receipt.')
+            const txReceipt = await findTransactionReceipt(txHash)
+            if (!txReceipt) {
+              return // TODO error notififcation
+            }
+            console.info('Found tx receipt.')
 
-          const projectId = getProjectIdFromReceipt(txReceipt)
-          if (projectId === undefined) {
-            return // TODO error notififcation
-          }
+            const projectId = getProjectIdFromReceipt(txReceipt)
+            if (projectId === undefined) {
+              return // TODO error notififcation
+            }
 
-          // Reset Redux state/localstorage after deploying
-          dispatch(editingV2ProjectActions.resetState())
+            // Reset Redux state/localstorage after deploying
+            dispatch(editingV2ProjectActions.resetState())
 
-          router.push(`${v2ProjectRoute({ projectId })}?newDeploy=true`)
+            router.push(`${v2ProjectRoute({ projectId })}?newDeploy=true`)
+          },
+          onCancelled() {
+            setDeployLoading(false)
+            setTransactionPending(false)
+          },
         },
-        onCancelled() {
-          setDeployLoading(false)
-          setTransactionPending(false)
-        },
-      },
-    )
+      )
 
-    if (!txSuccessful) {
+      if (!txSuccessful) {
+        setDeployLoading(false)
+        setTransactionPending(false)
+      }
+    } catch (error) {
+      emitErrorNotification(`Failure: ${error}`)
       setDeployLoading(false)
       setTransactionPending(false)
     }

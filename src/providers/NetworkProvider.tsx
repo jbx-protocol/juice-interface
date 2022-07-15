@@ -14,18 +14,6 @@ import { NETWORKS } from 'constants/networks'
 
 const KEY_SELECTED_WALLET = 'selectedWallet'
 
-const debounceOverride = (func: VoidFunction, timeout = 1000) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let timer: any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return (...args: any) => {
-    clearTimeout(timer)
-    timer = setTimeout(() => {
-      return func.apply(this, args)
-    }, timeout)
-  }
-}
-
 export const NetworkProvider: React.FC = ({ children }) => {
   const router = useRouter()
   const { isDarkMode } = useContext(ThemeContext)
@@ -87,14 +75,6 @@ export const NetworkProvider: React.FC = ({ children }) => {
     const config: Subscriptions = {
       address: setAccount,
       wallet: selectWallet,
-      network: networkId =>
-        /*
-         * A hack to mitigate the bug appearing here:
-         * https://github.com/jbx-protocol/juice-interface/issues/1410.
-         *
-         * Futher work is likely needed, but this is a decent enough band-aid.
-         */
-        debounceOverride(() => onNetworkChanged(NETWORKS[networkId]?.name))(),
     }
     setOnboard(initOnboard(config, isDarkMode))
   }, [isDarkMode, onNetworkChanged, onboard, resetWallet])

@@ -14,6 +14,7 @@ import RulesDrawer from '../../../../components/v2/shared/FundingCycleConfigurat
 
 import FundingCycleExplainer from '../../FundingCycleExplainer'
 import ProjectConfigurationFieldsContainer from '../../ProjectConfigurationFieldsContainer'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 
 export default function FundingCycleTabContent({
   onFinish,
@@ -44,7 +45,7 @@ export default function FundingCycleTabContent({
     setNftDrawerVisible(false)
   }
 
-  const isNftRewardsEnabled = featureFlagEnabled('nftRewards')
+  const isNftRewardsEnabled = featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)
 
   return (
     <ProjectConfigurationFieldsContainer showPreview>

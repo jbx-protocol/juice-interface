@@ -3,6 +3,7 @@ import Loading from 'components/Loading'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { NftRewardTier } from 'models/v2/nftRewardTier'
 import { useContext, useEffect, useState } from 'react'
+import { featureFlagEnabled } from 'utils/featureFlags'
 import { getNftRewardTier } from 'utils/v2/nftRewards'
 
 import { RewardTier } from './RewardTier'
@@ -15,14 +16,29 @@ export function NftRewardsSection({
   onPayAmountChange: (payAmount: string) => void
 }) {
   const {
-    nftRewards: { CIDs, rewardTiers },
+    nftRewards: { rewardTiers, loading },
   } = useContext(V2ProjectContext)
 
   const [selectedIndex, setSelectedIndex] = useState<number>()
 
-  // const nftRewardTiers = MOCK_NFTs
+  useEffect(() => {
+    if (!rewardTiers) return
+    const highestEligibleRewardTier = getNftRewardTier({
+      nftRewardTiers: rewardTiers,
+      payAmountETH: parseFloat(payAmountETH),
+    })
 
-  if (!rewardTiers || rewardTiers.length < 1) return null
+    // set selected as highest reward tier above a certain amount
+    if (highestEligibleRewardTier) {
+      setSelectedIndex(rewardTiers.indexOf(highestEligibleRewardTier))
+    } else {
+      setSelectedIndex(undefined)
+    }
+  }, [payAmountETH, rewardTiers])
+
+  const nftRewardsEnabled = featureFlagEnabled('nftRewards')
+
+  if (!rewardTiers || rewardTiers.length < 1 || !nftRewardsEnabled) return null
 
   const renderRewardTier = (rewardTier: NftRewardTier, index: number) => {
     const isSelected = index === selectedIndex
@@ -42,25 +58,10 @@ export function NftRewardsSection({
     )
   }
 
-  useEffect(() => {
-    if (!rewardTiers) return
-    const highestEligibleRewardTier = getNftRewardTier({
-      nftRewardTiers: rewardTiers,
-      payAmountETH: parseFloat(payAmountETH),
-    })
-
-    // set selected as highest reward tier above a certain amount
-    if (highestEligibleRewardTier) {
-      setSelectedIndex(rewardTiers.indexOf(highestEligibleRewardTier))
-    } else {
-      setSelectedIndex(undefined)
-    }
-  }, [payAmountETH, rewardTiers])
-
   return (
     <div style={{ marginTop: 5 }}>
       <div style={{ fontSize: '0.7rem' }}>+ NFT</div>
-      {CIDs && !rewardTiers.length ? (
+      {loading ? (
         <Loading />
       ) : (
         <Space size={'large'}>{rewardTiers.map(renderRewardTier)}</Space>

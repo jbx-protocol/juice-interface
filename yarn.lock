@@ -3355,7 +3355,7 @@
   resolved "https://registry.yarnpkg.com/@jbx-protocol/contracts-v1/-/contracts-v1-2.0.0.tgz#616dd2adb8603dd1067d29fa613e704737adc243"
   integrity sha512-70BvKKor6iM8eBTa4klH7iOA5+/oa0J5gMpazK5nECrn8U0xeKTB19v+jXmTu+26JYruZHzCKZVdV5aH+c8qnA==
 
-"@jbx-protocol/contracts-v2-4.0.0@npm:@jbx-protocol/contracts-v2@4.0.0", "@jbx-protocol/contracts-v2@^4.0.0":
+"@jbx-protocol/contracts-v2-4.0.0@npm:@jbx-protocol/contracts-v2@4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@jbx-protocol/contracts-v2/-/contracts-v2-4.0.0.tgz#0e1758c3be932993c7dbfa6b23addd10cc1855ea"
   integrity sha512-8B3UBPZYS4HCvRY25M8ROZi7mQdDrUMfq7dT3ucPVlE1KQLC8nBMwV2PiihgUamKpbQES9vhs7T4UIZbAv79rg==
@@ -3377,17 +3377,6 @@
   version "8.0.0"
   resolved "https://registry.yarnpkg.com/@jbx-protocol/contracts-v2/-/contracts-v2-8.0.0.tgz#25aee5766716947beb37ad08cdb3d30463a4b988"
   integrity sha512-0yFuhZBVHg+CGHNe9vPjbdSAhQSXVhFOQficc5ed1yzdG8ZaBSKg9ZdC351hJD7w7Mp9Vhf/0gh3ErYAv2OQqw==
-
-"@jbx-protocol/juice-nft-rewards@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@jbx-protocol/juice-nft-rewards/-/juice-nft-rewards-1.0.0.tgz#2e300b476fba0dfda6240c08acff9c6d5dc01945"
-  integrity sha512-OyzbSKDjYYVuBTnFtaaET7UIpXcPGQqBbWRjYPaZVeRcA5n+D1bvT9vqySHi/rZzt1d6i5SUactZnx31v3P1Kw==
-  dependencies:
-    "@jbx-protocol/contracts-v2" "^4.0.0"
-    "@openzeppelin/contracts" "^4.6.0"
-    "@paulrberg/contracts" "^3.7.0"
-    "@rari-capital/solmate" "^6.4.0"
-    prb-math "^2.4.3"
 
 "@jbx-protocol/juice-v1-token-terminal@1.0.1":
   version "1.0.1"
@@ -3976,12 +3965,7 @@
   resolved "https://registry.yarnpkg.com/@openzeppelin/contracts/-/contracts-4.6.0.tgz#c91cf64bc27f573836dba4122758b4743418c1b3"
   integrity sha512-8vi4d50NNya/bQqCmaVzvHNmwHvS0OBKb7HNtuNwEE3scXWrP31fKQoGxNMT+KbzmrNZzatE3QK5p2gFONI/hg==
 
-"@openzeppelin/contracts@^4.6.0":
-  version "4.7.0"
-  resolved "https://registry.yarnpkg.com/@openzeppelin/contracts/-/contracts-4.7.0.tgz#3092d70ea60e3d1835466266b1d68ad47035a2d5"
-  integrity sha512-52Qb+A1DdOss8QvJrijYYPSf32GUg2pGaG/yCxtaA3cu4jduouTdg4XZSMLW9op54m1jH7J8hoajhHKOPsoJFw==
-
-"@paulrberg/contracts@^3.4.0", "@paulrberg/contracts@^3.7.0":
+"@paulrberg/contracts@^3.4.0":
   version "3.7.0"
   resolved "https://registry.yarnpkg.com/@paulrberg/contracts/-/contracts-3.7.0.tgz#d7fb09d3d75f47f979a666bba19727571e419d98"
   integrity sha512-vOBN0P1xjT0rJqQs8DZ1B48qO0tHx6tabfGomsWC57EUMQzEYY/Kw8jS6uVbpeJRes1X+mPXcxmEoilAvUN7Ng==
@@ -4020,11 +4004,6 @@
     penpal "3.0.7"
     pocket-js-core "0.0.3"
     web3-provider-engine "16.0.1"
-
-"@rari-capital/solmate@^6.4.0":
-  version "6.4.0"
-  resolved "https://registry.yarnpkg.com/@rari-capital/solmate/-/solmate-6.4.0.tgz#c6ee4110c8075f14b415e420b13bd8bdbbc93d9e"
-  integrity sha512-BXWIHHbG5Zbgrxi0qVYe0Zs+bfx+XgOciVUACjuIApV0KzC0kY8XdO1higusIei/ZKCC+GUKdcdQZflxYPUTKQ==
 
 "@reduxjs/toolkit@^1.6.2":
   version "1.6.2"
@@ -16979,7 +16958,7 @@ postcss@^8.1.0:
     picocolors "^1.0.0"
     source-map-js "^1.0.2"
 
-prb-math@^2.4.1, prb-math@^2.4.3:
+prb-math@^2.4.1:
   version "2.4.3"
   resolved "https://registry.yarnpkg.com/prb-math/-/prb-math-2.4.3.tgz#a0121111aeae49fe5686db4aef422b785101bf7b"
   integrity sha512-t5jncEscKmWg7COkMkmbXXxSeDI6Xl21rxx5e+oxUCqskNvsu6Q9RqdVfGY6y+sMwyMQE8DJ/OOyQ9ExH1yfbw==

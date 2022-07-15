@@ -19,15 +19,10 @@ export default function useNftRewards(
       return
     }
 
-    console.info('>>> Retreiving reward tiers from IPFS using CIDs: ', CIDs)
     const getRewardTiers = async () => {
       return Promise.all(CIDs.map(cid => getRewardTierOfCid(cid)))
     }
 
-    getRewardTiers().then((rewardTiers: NftRewardTier[]) => {
-      console.info('>>> IPFS returned reward tiers: ', rewardTiers)
-      return rewardTiers
-    })
     return getRewardTiers()
   })
 }

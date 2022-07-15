@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Form, FormInstance, Upload } from 'antd'
+import { Form, FormInstance, Image, Upload } from 'antd'
 import { RcFile } from 'antd/lib/upload'
 import TooltipLabel from 'components/TooltipLabel'
 import { CSSProperties, useContext, useState } from 'react'
@@ -15,12 +15,14 @@ export default function NftUpload({ form }: { form: FormInstance }) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const [loading, setLoading] = useState<boolean>()
+  const [uploading, setUploading] = useState<boolean>()
+  const [imageRenderLoading, setImageRenderLoading] = useState<boolean>()
 
   const setValue = (cid?: string) => {
     const newUrl = cid ? ipfsCidUrl(cid) : undefined
     form.setFieldsValue({ imageUrl: newUrl })
-    setLoading(false)
+    setImageRenderLoading(true)
+    setUploading(false)
   }
 
   // check file type and size
@@ -54,7 +56,7 @@ export default function NftUpload({ form }: { form: FormInstance }) {
 
   const uploadButton = (
     <div>
-      {loading ? (
+      {uploading ? (
         <LoadingOutlined style={iconStyle} />
       ) : (
         <UploadOutlined style={iconStyle} />
@@ -94,19 +96,31 @@ export default function NftUpload({ form }: { form: FormInstance }) {
         showUploadList={false}
         beforeUpload={beforeUpload}
         customRequest={async req => {
-          setLoading(true)
+          setUploading(true)
           const res = await pinFileToIpfs(req.file)
           setValue(res.IpfsHash)
         }}
+        style={{ height: 'unset' }}
       >
         {imageUrl ? (
-          <img
-            src={imageUrl}
-            alt={form.getFieldValue('name') ?? 'new NFT'}
-            style={{
-              height: '100%',
-            }}
-          />
+          <>
+            {imageRenderLoading ? (
+              <LoadingOutlined
+                style={{ fontSize: '30px', color: colors.text.action.primary }}
+              />
+            ) : null}
+            <Image
+              src={imageUrl}
+              alt={form.getFieldValue('name') ?? 'New NFT reward'}
+              style={{
+                display: imageRenderLoading ? 'none' : 'unset',
+                height: '100%',
+                maxWidth: '90px',
+              }}
+              onLoad={() => setImageRenderLoading(false)}
+              onClick={e => e.stopPropagation()}
+            />
+          </>
         ) : (
           uploadButton
         )}

@@ -50,6 +50,7 @@ export type V2ProjectContextType = {
   nftRewards: {
     CIDs: string[] | undefined
     rewardTiers: NftRewardTier[] | undefined
+    loading: boolean | undefined
   }
 
   loading: V2ProjectLoadingStates
@@ -90,6 +91,7 @@ export const V2ProjectContext = createContext<V2ProjectContextType>({
   nftRewards: {
     CIDs: undefined,
     rewardTiers: undefined,
+    loading: undefined,
   },
 
   loading: {

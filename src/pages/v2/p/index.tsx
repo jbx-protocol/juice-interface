@@ -30,7 +30,7 @@ import { useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
 import { NO_CURRENCY, V2_CURRENCY_ETH, V2CurrencyName } from 'utils/v2/currency'
 
-import useNftRewards from 'hooks/v2/nftRewards/IPFSToNftRewards'
+import useNftRewards from 'hooks/v2/NftRewards'
 // import { useNftCIDsOf } from 'hooks/v2/contractReader/NftCIDsOf'
 import { MOCK_NFT_CIDs } from 'utils/v2/nftRewards'
 
@@ -167,9 +167,10 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
 
   const { data: ballotState } = useBallotState(projectId)
 
-  // const { data: nftRewardsCIDs } = useNftCIDsOf(projectId)
+  // const { data: nftRewardsCIDs, loading: nftRewardsCIDsLoading } = useNftCIDsOf(projectId)
   const nftRewardsCIDs = MOCK_NFT_CIDs
-  const { data: nftRewardTiers } = useNftRewards(nftRewardsCIDs)
+  const { data: nftRewardTiers, isLoading: nftRewardTiersLoading } =
+    useNftRewards(nftRewardsCIDs)
 
   const isArchived = projectId
     ? V2ArchivedProjectIds.includes(projectId) || projectMetadata?.archived
@@ -182,6 +183,8 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
   if (metadataError || !metadataCID) {
     return <Project404 projectId={projectId} />
   }
+
+  const nftsLoading = nftRewardTiersLoading // || nftRewardsCIDsLoading
 
   const project: V2ProjectContextType = {
     cv: '2',
@@ -212,6 +215,7 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
     nftRewards: {
       CIDs: nftRewardsCIDs,
       rewardTiers: nftRewardTiers ?? [],
+      loading: nftsLoading,
     },
 
     loading: {

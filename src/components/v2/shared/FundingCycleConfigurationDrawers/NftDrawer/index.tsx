@@ -23,6 +23,8 @@ export const NFT_REWARDS_EXPLAINATION: JSX.Element = (
   </Trans>
 )
 
+const MAX_NFT_REWARD_TIERS = 3
+
 export default function NftDrawer({
   visible,
   onClose,
@@ -111,16 +113,18 @@ export default function NftDrawer({
               />
             ))}
           </Space>
-          <Button
-            type="dashed"
-            onClick={() => {
-              setAddTierModalVisible(true)
-            }}
-            style={{ marginTop: 15 }}
-            block
-          >
-            <Trans>Add reward tier</Trans>
-          </Button>
+          {rewardTiers.length < MAX_NFT_REWARD_TIERS ? (
+            <Button
+              type="dashed"
+              onClick={() => {
+                setAddTierModalVisible(true)
+              }}
+              style={{ marginTop: 15 }}
+              block
+            >
+              <Trans>Add reward tier</Trans>
+            </Button>
+          ) : null}
         </div>
         <Button
           onClick={onNftFormSaved}

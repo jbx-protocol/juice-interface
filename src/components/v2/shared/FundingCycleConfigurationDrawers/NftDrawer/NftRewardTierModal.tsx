@@ -14,10 +14,12 @@ import { NFT_REWARDS_EXPLAINATION } from '.'
 export type NftFormFields = {
   contributionFloor: number
   name: string
-  externalLink: string | undefined
-  description: string | undefined
+  externalLink: string
+  description: string
   imageUrl: string // IPFS link
 }
+
+const MAX_DESCRIPTION_CHARS = 256
 
 export default function NftRewardTierModal({
   visible,
@@ -37,6 +39,7 @@ export default function NftRewardTierModal({
 
   const onFormSaved = async () => {
     await nftForm.validateFields()
+    console.info('descriptioN: ', nftForm.getFieldValue('description'))
 
     const newTier = {
       contributionFloor: parseFloat(nftForm.getFieldValue('contributionFloor')),
@@ -45,6 +48,8 @@ export default function NftRewardTierModal({
       externalLink: nftForm.getFieldValue('externalLink'),
       description: nftForm.getFieldValue('description'),
     } as NftRewardTier
+
+    console.info('newTier: ', newTier)
 
     onChange(newTier)
     onClose()
@@ -101,9 +106,13 @@ export default function NftRewardTierModal({
         <Form.Item
           label={t`Description`}
           name="description"
-          rules={[{ max: 256 }]}
+          rules={[{ max: MAX_DESCRIPTION_CHARS }]}
         >
-          <Input.TextArea maxLength={256} showCount autoSize />
+          <Input.TextArea
+            maxLength={MAX_DESCRIPTION_CHARS}
+            showCount
+            autoSize
+          />
         </Form.Item>
       </Form>
     </Modal>

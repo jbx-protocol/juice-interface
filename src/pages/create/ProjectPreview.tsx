@@ -91,6 +91,7 @@ export default function ProjectPreview({
     nftRewards: {
       CIDs: nftRewardsCIDs,
       rewardTiers: nftRewardTiers,
+      loading: undefined,
     },
 
     loading: {

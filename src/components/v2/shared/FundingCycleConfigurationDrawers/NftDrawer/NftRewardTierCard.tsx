@@ -1,9 +1,13 @@
-import { Button, Col, Row, Tooltip } from 'antd'
+import { Button, Col, Image, Row, Tooltip } from 'antd'
 import Paragraph from 'components/Paragraph'
 import { ThemeContext } from 'contexts/themeContext'
 import { NftRewardTier } from 'models/v2/nftRewardTier'
 import { useContext, useState } from 'react'
-import { LinkOutlined, DeleteOutlined } from '@ant-design/icons'
+import {
+  LinkOutlined,
+  DeleteOutlined,
+  LoadingOutlined,
+} from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 
 import NftRewardTierModal from './NftRewardTierModal'
@@ -20,9 +24,11 @@ export default function NftRewardTierCard({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+
   const [editTierModalVisible, setEditTierModalVisible] =
     useState<boolean>(false)
   const [linkHover, setLinkHover] = useState<boolean>(false)
+  const [imageLoading, setImageLoading] = useState<boolean>(true)
 
   if (!rewardTier) return null
   return (
@@ -46,11 +52,18 @@ export default function NftRewardTierCard({
             flexDirection: 'column',
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', fontSize: 17 }}>
-            <div style={{ color: colors.text.action.primary }}>
+          <Row
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              fontSize: 17,
+              width: '100%',
+            }}
+          >
+            <Col style={{ color: colors.text.action.primary }} md={7}>
               {rewardTier.contributionFloor} ETH
-            </div>
-            <div style={{ display: 'flex', marginLeft: 45, fontWeight: 500 }}>
+            </Col>
+            <Col style={{ display: 'flex', fontWeight: 500 }} md={15}>
               <span>{rewardTier.name}</span>
               {rewardTier.externalLink ? (
                 <a
@@ -72,8 +85,8 @@ export default function NftRewardTierCard({
                   <LinkOutlined />
                 </a>
               ) : null}
-            </div>
-          </div>
+            </Col>
+          </Row>
           {rewardTier.description && (
             <div style={{ fontSize: 13, marginTop: 15 }}>
               <Paragraph
@@ -91,7 +104,21 @@ export default function NftRewardTierCard({
             alignItems: 'center',
           }}
         >
-          <img src={rewardTier.imageUrl} alt={rewardTier.name} height="75px" />
+          {imageLoading ? (
+            <LoadingOutlined style={{ fontSize: '30px' }} />
+          ) : null}
+          <Image
+            src={rewardTier.imageUrl}
+            alt={rewardTier.name}
+            height={'90px'}
+            style={{
+              display: imageLoading ? 'none' : 'unset',
+              objectFit: 'cover',
+              maxWidth: '90px',
+            }}
+            onLoad={() => setImageLoading(false)}
+            onClick={e => e.stopPropagation()}
+          />
         </Col>
         <Col md={3}>
           <Tooltip title={<Trans>Delete NFT</Trans>}>

@@ -1,4 +1,6 @@
-import { MetaTagsElement } from './MetaTagsElement'
+import Head from 'next/head'
+
+import { metaTagsFormatted } from './metaTagsFormatted'
 
 export type TwitterCardType =
   | 'summary'
@@ -17,5 +19,11 @@ export interface TwitterSEOProps {
 }
 
 export const TwitterSEO = (props: TwitterSEOProps) => {
-  return MetaTagsElement(props, 'twitter')
+  return (
+    <Head>
+      {metaTagsFormatted(props, 'twitter')?.map(({ key, value }) => (
+        <meta key={key} property={key} content={value} />
+      ))}
+    </Head>
+  )
 }

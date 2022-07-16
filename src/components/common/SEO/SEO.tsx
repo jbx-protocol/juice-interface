@@ -24,13 +24,26 @@ export const SEO: FC<Props> = ({
     ? `${config.titleTemplate.replace(/%s/g, title)}`
     : config.title
   return (
-    <Head>
-      <title key="title">{formattedTitle}</title>
-      <meta
-        key="description"
-        name="description"
-        content={description ?? config.description}
-      />
+    <>
+      <Head>
+        <title key="title">{formattedTitle}</title>
+        <meta
+          key="description"
+          name="description"
+          content={description ?? config.description}
+        />
+        <meta key="robots" name="robots" content={robots ?? 'index,follow'} />
+        <meta
+          key="googlebot"
+          name="googlebot"
+          content={robots ?? 'index,follow'}
+        ></meta>
+        <meta
+          name="google-site-verification"
+          content="0Jp7zERBL5i76DiM-bODvBGgbjuVMEQGSuwOchP_ZnE"
+        />
+      </Head>
+
       <TwitterSEO
         title={formattedTitle}
         description={description ?? config.description}
@@ -40,6 +53,7 @@ export const SEO: FC<Props> = ({
         card={twitter?.card ?? (config.twitter.cardType as TwitterCardType)}
         image={twitter?.image ?? config.twitter.image}
       />
+
       <OpenGraphSEO
         type="website"
         title={formattedTitle}
@@ -53,18 +67,7 @@ export const SEO: FC<Props> = ({
         }}
       />
 
-      <meta key="robots" name="robots" content={robots ?? 'index,follow'} />
-      <meta
-        key="googlebot"
-        name="googlebot"
-        content={robots ?? 'index,follow'}
-      ></meta>
-      <meta
-        name="google-site-verification"
-        content="0Jp7zERBL5i76DiM-bODvBGgbjuVMEQGSuwOchP_ZnE"
-      />
-
-      {children}
-    </Head>
+      <Head>{children}</Head>
+    </>
   )
 }

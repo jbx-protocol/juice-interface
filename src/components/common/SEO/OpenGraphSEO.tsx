@@ -1,4 +1,6 @@
-import { MetaTagsElement } from './MetaTagsElement'
+import Head from 'next/head'
+
+import { metaTagsFormatted } from './metaTagsFormatted'
 
 export interface OpenGraphSEOProps {
   title?: string
@@ -20,13 +22,21 @@ export const OpenGraphSEO = ({
   siteName,
   image,
 }: OpenGraphSEOProps) => {
+  const rootTags =
+    metaTagsFormatted(
+      { title, type, description, site_name: siteName },
+      'og',
+    ) ?? []
+  const imageTags =
+    metaTagsFormatted(
+      { _root: image?.src, width: image?.width, height: image?.height },
+      'og:image',
+    ) ?? []
   return (
-    <>
-      {MetaTagsElement({ title, type, description, site_name: siteName }, 'og')}
-      {MetaTagsElement(
-        { _root: image?.src, width: image?.width, height: image?.height },
-        'og:image',
-      )}
-    </>
+    <Head>
+      {[...rootTags, ...imageTags].map(({ key, value }) => (
+        <meta key={key} property={key} content={value} />
+      ))}
+    </Head>
   )
 }

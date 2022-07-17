@@ -6,6 +6,7 @@ import { OpenGraphSEO } from './OpenGraphSEO'
 import { TwitterCardType, TwitterSEO, TwitterSEOProps } from './TwitterSEO'
 
 interface Props {
+  url?: string
   title?: string
   description?: string
   twitter?: TwitterSEOProps
@@ -14,6 +15,7 @@ interface Props {
 }
 
 export const SEO: FC<Props> = ({
+  url,
   title,
   description,
   twitter,
@@ -56,6 +58,7 @@ export const SEO: FC<Props> = ({
 
       <OpenGraphSEO
         type="website"
+        url={url ?? process.env.NEXT_PUBLIC_BASE_URL} // default to base url
         title={formattedTitle}
         description={description ?? config.description}
         siteName={config.title}

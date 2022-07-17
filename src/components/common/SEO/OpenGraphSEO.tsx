@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { metaTagsFormatted } from './metaTagsFormatted'
 
 export interface OpenGraphSEOProps {
+  url?: string
   title?: string
   type?: string
   description?: string
@@ -16,6 +17,7 @@ export interface OpenGraphSEOProps {
 }
 
 export const OpenGraphSEO = ({
+  url,
   title,
   type,
   description,
@@ -24,7 +26,7 @@ export const OpenGraphSEO = ({
 }: OpenGraphSEOProps) => {
   const rootTags =
     metaTagsFormatted(
-      { title, type, description, site_name: siteName },
+      { url, title, type, description, site_name: siteName },
       'og',
     ) ?? []
   const imageTags =

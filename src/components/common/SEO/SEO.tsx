@@ -60,7 +60,10 @@ export const SEO: FC<Props> = ({
         description={description ?? config.description}
         siteName={config.title}
         image={{
-          src: '/assets/banana-cover.png',
+          src:
+            (process.env.NEXT_PUBLIC_BASE_URL
+              ? process.env.NEXT_PUBLIC_BASE_URL
+              : '/') + 'assets/banana-cover.png',
           type: 'image/svg',
           width: '2870',
           height: '1245',

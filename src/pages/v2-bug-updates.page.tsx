@@ -9,11 +9,7 @@ export default function V2BugUpdates() {
         A minor bug has been identified in the Juicebox protocol V2 contracts.
         No funds are in danger, and projects are unlikely to be affected. Link
         to bug description and fix:{' '}
-        <ExternalLink
-          href="https://github.com/jbx-protocol/juice-contracts-v2/pull/265"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <ExternalLink href="https://github.com/jbx-protocol/juice-contracts-v2/pull/265">
           github.com/jbx-protocol/juice-contracts-v2/pull/265
         </ExternalLink>
       </p>

@@ -142,7 +142,7 @@ msgid "<0>A project can choose to reserve a percentage of tokens for itself. Ins
 msgstr "<0>Un proyecto puede elegir reservar un porcentaje de tokens para él mismo. En vez de ser distribuido para pagar usuarios, este porcentaje de tokens se acuña para el proyecto.</0><1>Tener estos tokens le da derecho a un proyecto una parte de su propio excedente.</1>"
 
 #: src/pages/create/tabs/ReviewDeployTab/NftSummarySection.tsx
-msgid "<0>Contribution threshold:</0> {0} ETH"
+msgid "<0>Contribution floor:</0> {0} ETH"
 msgstr ""
 
 #: src/pages/create/tabs/ReviewDeployTab/NftSummarySection.tsx
@@ -152,10 +152,6 @@ msgstr ""
 #: src/pages/create/forms/FundingForm/FundingCycleExplainerCollapse.tsx
 msgid "<0>Discount rate</0>, to reduce your project token's issuance rate (tokens per ETH) each funding cycle."
 msgstr "<0>Tasa de descuento</0>, para reducir la tasa de emisión del token de tu proyecto (tokens por ETH) cada ciclo de financiamiento."
-
-#: src/pages/create/tabs/ReviewDeployTab/NftSummarySection.tsx
-msgid "<0>External link: {0}</0>"
-msgstr ""
 
 #: src/pages/home/QAs.tsx
 msgid "<0>If you know how much your project needs to earn over some period of time to be sustainable, you can set a funding target with that amount. If your project earns more than that, the surplus funds are locked in an overflow pool. Anyone holding your project's tokens can claim a portion of the overflow pool in exchange for redeeming their tokens.</0><1>For more info, check out this <2>short video</2>.</1>"
@@ -192,10 +188,6 @@ msgstr "<0>Aprende más</0> acerca de ciclos de financiación."
 #: src/components/v1/shared/forms/BudgetForm.tsx
 msgid "<0>Learn more</0> about overflow."
 msgstr "<0>Aprende más</0> acerca del excedente."
-
-#: src/pages/create/tabs/ReviewDeployTab/NftSummarySection.tsx
-msgid "<0>Max. supply:</0> {0}"
-msgstr ""
 
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "<0>NOTE:</0> This project has a balance of 0. Projects cannot be migrated without a balance. To migrate this project, first pay it or use the button below to deposit 1 wei (0.000000000000000001 or 10<1>-18</1> ETH)."
@@ -253,6 +245,10 @@ msgstr "<0>El total de tokens del proyecto acuñados</0> cuando se contribuye 1 
 #: src/pages/home/QAs.tsx
 msgid "<0>Users fund your project by paying to use your app or service, or as a patron or investor by making a payment directly to your project's smart contract (like on this app).</0><1>For users paying through your app, you should route those funds through the Juicebox smart contracts so they receive tokens in return.</1>"
 msgstr "<0>Los usuarios financian su proyecto pagando por usar su aplicación o servicio, o como patrocinadores o inversores al realizar un pago directamente al contrato inteligente de su proyecto (como en esta aplicación).</0><1>Para los usuarios que pagan a través de su aplicación, debe canalizar esos fondos a través de los contratos inteligentes de Juicebox para que reciban tokens a cambio.</1>"
+
+#: src/pages/create/tabs/ReviewDeployTab/NftSummarySection.tsx
+msgid "<0>Website:</0>  <1>{0}</1>"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
 msgid "<0>Your unclaimed {tokenSymbol} tokens:</0> {0}"

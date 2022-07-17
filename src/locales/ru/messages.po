@@ -142,7 +142,7 @@ msgid "<0>A project can choose to reserve a percentage of tokens for itself. Ins
 msgstr ""
 
 #: src/pages/create/tabs/ReviewDeployTab/NftSummarySection.tsx
-msgid "<0>Contribution threshold:</0> {0} ETH"
+msgid "<0>Contribution floor:</0> {0} ETH"
 msgstr ""
 
 #: src/pages/create/tabs/ReviewDeployTab/NftSummarySection.tsx
@@ -151,10 +151,6 @@ msgstr ""
 
 #: src/pages/create/forms/FundingForm/FundingCycleExplainerCollapse.tsx
 msgid "<0>Discount rate</0>, to reduce your project token's issuance rate (tokens per ETH) each funding cycle."
-msgstr ""
-
-#: src/pages/create/tabs/ReviewDeployTab/NftSummarySection.tsx
-msgid "<0>External link: {0}</0>"
 msgstr ""
 
 #: src/pages/home/QAs.tsx
@@ -192,10 +188,6 @@ msgstr "<0>Подробнее</0> о продолжительности цикл
 #: src/components/v1/shared/forms/BudgetForm.tsx
 msgid "<0>Learn more</0> about overflow."
 msgstr "<0>Узнайте больше</0> о переполнении."
-
-#: src/pages/create/tabs/ReviewDeployTab/NftSummarySection.tsx
-msgid "<0>Max. supply:</0> {0}"
-msgstr ""
 
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "<0>NOTE:</0> This project has a balance of 0. Projects cannot be migrated without a balance. To migrate this project, first pay it or use the button below to deposit 1 wei (0.000000000000000001 or 10<1>-18</1> ETH)."
@@ -252,6 +244,10 @@ msgstr ""
 
 #: src/pages/home/QAs.tsx
 msgid "<0>Users fund your project by paying to use your app or service, or as a patron or investor by making a payment directly to your project's smart contract (like on this app).</0><1>For users paying through your app, you should route those funds through the Juicebox smart contracts so they receive tokens in return.</1>"
+msgstr ""
+
+#: src/pages/create/tabs/ReviewDeployTab/NftSummarySection.tsx
+msgid "<0>Website:</0>  <1>{0}</1>"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx

@@ -22,6 +22,19 @@ export function getNftRewardTier({
   return nftReward
 }
 
+// Sorts array of nft reward tiers by contributionFloor
+export function sortNftRewardTiers(
+  rewardTiers: NftRewardTier[],
+): NftRewardTier[] {
+  return rewardTiers.sort((a, b) =>
+    a.contributionFloor > b.contributionFloor
+      ? 1
+      : b.contributionFloor > a.contributionFloor
+      ? -1
+      : 0,
+  )
+}
+
 export const MOCK_NFTs: NftRewardTier[] = [
   {
     name: 'Popcorn Banny',

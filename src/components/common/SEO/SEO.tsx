@@ -2,14 +2,18 @@ import Head from 'next/head'
 import { FC, ReactNode } from 'react'
 
 import config from '../../../config/seo_meta.json'
-import { OpenGraphSEO } from './OpenGraphSEO'
-import { TwitterCardType, TwitterSEO, TwitterSEOProps } from './TwitterSEO'
+import { OpenGraphMetaTags } from './OpenGraphMetaTags'
+import {
+  TwitterCardType,
+  TwitterMetaTags,
+  TwitterMetaTagsProps,
+} from './TwitterMetaTags'
 
 interface Props {
   url?: string
   title?: string
   description?: string
-  twitter?: TwitterSEOProps
+  twitter?: TwitterMetaTagsProps
   robots?: string
   children?: ReactNode
 }
@@ -46,7 +50,7 @@ export const SEO: FC<Props> = ({
         />
       </Head>
 
-      <TwitterSEO
+      <TwitterMetaTags
         title={formattedTitle}
         description={description ?? config.description}
         handle={twitter?.handle ?? config.twitter.handle}
@@ -56,7 +60,7 @@ export const SEO: FC<Props> = ({
         image={twitter?.image ?? config.twitter.image}
       />
 
-      <OpenGraphSEO
+      <OpenGraphMetaTags
         type="website"
         url={url ?? process.env.NEXT_PUBLIC_BASE_URL} // default to base url
         title={formattedTitle}

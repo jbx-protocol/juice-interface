@@ -8,7 +8,7 @@ export type TwitterCardType =
   | 'app'
   | 'player'
 
-export interface TwitterSEOProps {
+export interface TwitterMetaTagsProps {
   title?: string
   description?: string
   handle?: string
@@ -18,7 +18,7 @@ export interface TwitterSEOProps {
   image?: string
 }
 
-export const TwitterSEO = (props: TwitterSEOProps) => {
+export const TwitterMetaTags = (props: TwitterMetaTagsProps) => {
   return (
     <Head>
       {metaTagsFormatted(props, 'twitter')?.map(({ key, value }) => (

@@ -2,7 +2,7 @@ import Head from 'next/head'
 
 import { metaTagsFormatted } from './metaTagsFormatted'
 
-export interface OpenGraphSEOProps {
+export interface OpenGraphMetaTagsProps {
   url?: string
   title?: string
   type?: string
@@ -16,14 +16,14 @@ export interface OpenGraphSEOProps {
   }
 }
 
-export const OpenGraphSEO = ({
+export const OpenGraphMetaTags = ({
   url,
   title,
   type,
   description,
   siteName,
   image,
-}: OpenGraphSEOProps) => {
+}: OpenGraphMetaTagsProps) => {
   const rootTags =
     metaTagsFormatted(
       { url, title, type, description, site_name: siteName },

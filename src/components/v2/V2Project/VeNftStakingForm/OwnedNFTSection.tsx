@@ -12,11 +12,13 @@ import { shadowCard } from 'constants/styles/shadowCard'
 type OwnedNFTsSectionProps = {
   userTokens: VeNftToken[]
   tokenSymbol: string
+  hasOverflow: boolean | undefined
 }
 
 export default function OwnedNFTSection({
   userTokens,
   tokenSymbol,
+  hasOverflow,
 }: OwnedNFTsSectionProps) {
   const { theme } = useContext(ThemeContext)
   return (
@@ -24,7 +26,12 @@ export default function OwnedNFTSection({
       <h3>$ve{tokenSymbolText({ tokenSymbol })} NFTs:</h3>
       <Space direction="vertical">
         {userTokens.map((token, i) => (
-          <OwnedNFTCard key={i} token={token} tokenSymbol={tokenSymbol} />
+          <OwnedNFTCard
+            key={i}
+            token={token}
+            tokenSymbol={tokenSymbol}
+            hasOverflow={hasOverflow}
+          />
         ))}
       </Space>
     </div>

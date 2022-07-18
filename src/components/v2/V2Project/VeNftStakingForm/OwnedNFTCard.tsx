@@ -1,4 +1,4 @@
-import { Button, Card, Col, Row, Image, Space } from 'antd'
+import { Button, Card, Col, Row, Image, Space, Tooltip } from 'antd'
 
 import { ThemeContext } from 'contexts/themeContext'
 import { VeNftToken } from 'models/subgraph-entities/veNft/venft-token'
@@ -17,11 +17,13 @@ import { Trans } from '@lingui/macro'
 type OwnedNFTCardProps = {
   token: VeNftToken
   tokenSymbol: string
+  hasOverflow: boolean | undefined
 }
 
 export default function OwnedNFTCard({
   token,
   tokenSymbol,
+  hasOverflow,
 }: OwnedNFTCardProps) {
   const [extendLockModalVisible, setExtendLockModalVisible] = useState(false)
   const [redeemModalVisible, setRedeemModalVisible] = useState(false)
@@ -40,6 +42,32 @@ export default function OwnedNFTCard({
     padding: '1rem',
     borderRadius: radii.md,
     background: colors.background.l0,
+  }
+
+  const renderRedeemButton = () => {
+    if (!hasOverflow) {
+      return (
+        <Button block onClick={() => setRedeemModalVisible(true)}>
+          <Trans>REDEEM</Trans>
+        </Button>
+      )
+    } else {
+      return (
+        <Tooltip
+          trigger={['hover']}
+          title={
+            <Trans>
+              A veNft can only be redeemed if the project currently has
+              overflow.
+            </Trans>
+          }
+        >
+          <Button block disabled>
+            <Trans>REDEEM</Trans>
+          </Button>
+        </Tooltip>
+      )
+    }
   }
 
   return (
@@ -87,11 +115,7 @@ export default function OwnedNFTCard({
               <Trans>EXTEND LOCK</Trans>
             </Button>
           </Row>
-          <Row>
-            <Button block onClick={() => setRedeemModalVisible(true)}>
-              <Trans>REDEEM</Trans>
-            </Button>
-          </Row>
+          <Row>{renderRedeemButton()}</Row>
           {remaining === 0 && (
             <Row>
               <Button

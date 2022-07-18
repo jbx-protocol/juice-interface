@@ -52,8 +52,12 @@ type StakingFormProps = {
 
 export default function StakeForNFTForm() {
   const { userAddress, onSelectWallet } = useContext(NetworkContext)
-  const { tokenSymbol, tokenName, projectMetadata } =
-    useContext(V2ProjectContext)
+  const {
+    tokenSymbol,
+    tokenName,
+    projectMetadata,
+    primaryTerminalCurrentOverflow,
+  } = useContext(V2ProjectContext)
   const {
     lockDurationOptions,
     resolverAddress,
@@ -67,6 +71,7 @@ export default function StakeForNFTForm() {
   const [form] = useForm<StakingFormProps>()
   const tokensStaked = useWatch('tokensStaked', form) || '1'
   const lockDuration = useWatch('lockDuration', form) || 0
+  const hasOverflow = Boolean(primaryTerminalCurrentOverflow?.gt(0))
 
   const [customBeneficiaryEnabled, setCustomBeneficiaryEnabled] =
     useState(false)
@@ -406,6 +411,7 @@ export default function StakeForNFTForm() {
             <OwnedNFTSection
               tokenSymbol={tokenSymbol!}
               userTokens={userTokens}
+              hasOverflow={hasOverflow}
             />
             <StakedTokenStatsSection
               tokenSymbol={tokenSymbol!}

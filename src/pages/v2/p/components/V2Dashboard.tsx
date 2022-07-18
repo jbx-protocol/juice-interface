@@ -82,16 +82,14 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
       'lockEnd',
       'lockUseJbToken',
       'lockAllowPublicExtension',
-      'isUnlocked',
+      'createdAt',
+      'unlockedAt',
+      'redeemedAt',
     ],
     where: [
       {
         key: 'owner',
         value: userAddress || '',
-      },
-      {
-        key: 'isUnlocked',
-        value: false,
       },
     ],
   }).data

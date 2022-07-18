@@ -10,7 +10,9 @@ export interface VeNftToken {
   lockDuration: number
   lockUseJbToken: boolean
   lockAllowPublicExtension: boolean
-  isUnlocked: boolean
+  createdAt: number
+  unlockedAt: number
+  redeemedAt: number
   variant?: VeNftVariant
 }
 
@@ -27,4 +29,7 @@ export const parseVeNftTokenJson = (
   lockDuration: parseInt(j.lockDuration),
   lockUseJbToken: j.lockUseJbToken === 'true',
   lockAllowPublicExtension: j.lockAllowPublicExtension === 'true',
+  createdAt: parseInt(j.createdAt),
+  unlockedAt: parseInt(j.unlockedAt),
+  redeemedAt: parseInt(j.redeemedAt),
 })

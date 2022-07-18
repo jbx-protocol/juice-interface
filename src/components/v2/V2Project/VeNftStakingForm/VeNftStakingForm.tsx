@@ -34,6 +34,8 @@ import { EthAddressInput } from 'components/inputs/EthAddressInput'
 
 import { isAddress } from 'ethers/lib/utils'
 
+import { reloadWindow } from 'utils/windowUtils'
+
 import {
   JBX_CONTRACT_ADDRESS,
   VENFT_CONTRACT_ADDRESS,
@@ -166,8 +168,7 @@ export default function StakeForNFTForm() {
       {
         onConfirmed() {
           setTokenApprovalLoading(false)
-          //TODO: replace with next reload util
-          window && window.location.reload()
+          reloadWindow()
         },
       },
     )

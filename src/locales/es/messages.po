@@ -4204,4 +4204,3 @@ msgstr "{unclaimedBalanceFormatted}{tokenText} reclamables"
 msgid "{userOwnershipPercentage}% of total supply"
 msgstr "{userOwnershipPercentage} % de suministro total"
 
-

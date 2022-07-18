@@ -25,10 +25,6 @@ module.exports = {
         source: '/@:projectId',
         destination: '/v2/p/:projectId',
       },
-      {
-        source: '/:handle',
-        destination: '/p/:handle',
-      },
     ]
   },
   pageExtensions: ['page.tsx', 'page.ts', 'page.jsx', 'page.js'],

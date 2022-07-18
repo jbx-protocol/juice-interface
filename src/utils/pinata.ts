@@ -1,13 +1,7 @@
-import pinataClient, { PinataMetadata } from '@pinata/sdk'
-import axios from 'axios'
+import pinataClient from '@pinata/sdk'
 
 const PINATA_PINNER_KEY = process.env.PINATA_PINNER_KEY
 const PINATA_PINNER_SECRET = process.env.PINATA_PINNER_SECRET
-
-export interface UploadFormData {
-  file: File
-  pinataMetadata: PinataMetadata
-}
 
 export const getPinata = () => {
   if (!PINATA_PINNER_KEY) {
@@ -19,23 +13,6 @@ export const getPinata = () => {
   }
 
   return pinataClient(PINATA_PINNER_KEY, PINATA_PINNER_SECRET)
-}
-
-export const pinFileToIpfs = async (form: UploadFormData) => {
-  // We use axios here because using `pinata.pinFileToIPFS()` leads to this issue: https://github.com/PinataCloud/Pinata-SDK/issues/84
-  const res = await axios.post(
-    'https://api.pinata.cloud/pinning/pinFileToIPFS',
-    form,
-    {
-      maxContentLength: Infinity, //this is needed to prevent axios from erroring out with large files
-      headers: {
-        'Content-Type': `multipart/form-data;`,
-        PINATA_PINNER_KEY,
-        PINATA_PINNER_SECRET,
-      },
-    },
-  )
-  return res.data
 }
 
 export const getPinnedListByTag = (tag: string) => {

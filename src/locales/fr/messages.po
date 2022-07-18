@@ -1390,6 +1390,15 @@ msgstr "Erreur lors du chargement des titulaires"
 msgid "Error loading payments"
 msgstr "Erreur lors du chargement des paiements"
 
+#: src/pages/api/ipfs/logo.page.ts
+msgid "Error parsing form"
+msgstr ""
+
+#: src/components/inputs/ImageUploader.tsx
+#: src/pages/api/ipfs/logo.page.ts
+msgid "Error uploading file"
+msgstr ""
+
 #: src/pages/index.page.tsx
 msgid "Explore projects"
 msgstr "Explorer des projets"

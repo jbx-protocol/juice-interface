@@ -76,7 +76,12 @@ export const pinFileToIpfs = async (
     )
   }
 
-  const res = await axios.post('/api/ipfs/logo', data)
+  const res = await axios.post('/api/ipfs/logo', data, {
+    maxContentLength: Infinity, //this is needed to prevent axios from erroring out with large files
+    headers: {
+      'Content-Type': `multipart/form-data;`,
+    },
+  })
 
   return res.data as PinataPinResponse
 }

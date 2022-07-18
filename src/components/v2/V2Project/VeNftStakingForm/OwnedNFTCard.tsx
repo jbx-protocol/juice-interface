@@ -45,7 +45,7 @@ export default function OwnedNFTCard({
   }
 
   const renderRedeemButton = () => {
-    if (!hasOverflow) {
+    if (hasOverflow) {
       return (
         <Button block onClick={() => setRedeemModalVisible(true)}>
           <Trans>REDEEM</Trans>

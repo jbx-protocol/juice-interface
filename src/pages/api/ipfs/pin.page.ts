@@ -14,7 +14,7 @@ interface ApiRequest extends NextApiRequest {
   }
 }
 
-export const handler = async (req: ApiRequest, res: NextApiResponse) => {
+const handler = async (req: ApiRequest, res: NextApiResponse) => {
   if (req.method === 'GET') {
     const { tag } = req.query
     if (!tag) return res.status(400)
@@ -23,7 +23,6 @@ export const handler = async (req: ApiRequest, res: NextApiResponse) => {
       const data = await getPinnedListByTag(tag)
       return res.json(data)
     } catch (e) {
-      console.error(e)
       return res.status(500)
     }
   }
@@ -36,11 +35,12 @@ export const handler = async (req: ApiRequest, res: NextApiResponse) => {
       const pinData = await pinata.pinJSONToIPFS(data, options)
 
       res.status(200).json({
-        pinData,
+        ...pinData,
       })
     } catch (error) {
-      console.error(error)
       return res.status(500)
     }
   }
 }
+
+export default handler

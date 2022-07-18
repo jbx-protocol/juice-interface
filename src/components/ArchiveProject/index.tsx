@@ -54,7 +54,7 @@ export default function ArchiveProject({
     // Create github issue when archive is requested
     // https://docs.github.com/en/rest/reference/issues#create-an-issue
     // Do this first, in case the user closes the page before the on-chain tx completes
-    axios.post(`/github/archive-project`, {
+    axios.post(`/api/github/archive-project`, {
       archived,
       projectId,
       metadata,

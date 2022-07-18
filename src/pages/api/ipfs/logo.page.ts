@@ -8,7 +8,7 @@ interface ApiRequest extends NextApiRequest {
   }
 }
 
-export const handler = async (req: ApiRequest, res: NextApiResponse) => {
+const handler = async (req: ApiRequest, res: NextApiResponse) => {
   try {
     const { data } = req.body
 
@@ -18,7 +18,8 @@ export const handler = async (req: ApiRequest, res: NextApiResponse) => {
       pinData,
     })
   } catch (error) {
-    console.error(error)
     return res.status(500)
   }
 }
+
+export default handler

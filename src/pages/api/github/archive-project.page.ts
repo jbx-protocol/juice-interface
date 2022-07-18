@@ -15,7 +15,7 @@ interface ArchiveProjectNextApiRequest extends NextApiRequest {
   }
 }
 
-export const handler = async (
+const handler = async (
   req: ArchiveProjectNextApiRequest,
   res: NextApiResponse,
 ) => {
@@ -70,7 +70,8 @@ export const handler = async (
       response,
     })
   } catch (error) {
-    console.error(error)
     return res.status(500)
   }
 }
+
+export default handler

@@ -7,7 +7,7 @@ interface ApiRequest extends NextApiRequest {
   }
 }
 
-export const handler = async (req: ApiRequest, res: NextApiResponse) => {
+const handler = async (req: ApiRequest, res: NextApiResponse) => {
   if (req.method === 'PUT') {
     const { cid } = req.query
 
@@ -16,8 +16,9 @@ export const handler = async (req: ApiRequest, res: NextApiResponse) => {
       const data = await pinata.hashMetadata(cid, req.body)
       return res.json(data)
     } catch (e) {
-      console.error(e)
       return res.status(500)
     }
   }
 }
+
+export default handler

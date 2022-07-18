@@ -4,7 +4,6 @@ import FeedbackFormButton from 'components/FeedbackFormButton'
 
 import { ThemeContext } from 'contexts/themeContext'
 import { CSSProperties, useContext } from 'react'
-import Link from 'next/link'
 import useMobile from 'hooks/Mobile'
 import { fathom } from 'lib/fathom'
 
@@ -156,20 +155,19 @@ export default function Landing() {
                       <Trans>
                         The Decentralized Funding Platform. Light enough for a
                         group of friends, powerful enough for a global network
-                        of anons.
-                      </Trans>{' '}
-                      <Link href="/p/juicebox">
+                        of anons.{' '}
                         <a
+                          href="/p/juicebox"
                           className="text-primary hover-text-decoration-underline"
                           style={{
                             textDecoration: 'underline',
                             fontWeight: 'inherit',
                           }}
                         >
-                          <Trans>Community-owned</Trans>
+                          Community-owned
                         </a>
-                      </Link>
-                      <Trans>, on Ethereum.</Trans>
+                        , on Ethereum.
+                      </Trans>
                     </div>
 
                     <BuiltForList />

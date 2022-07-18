@@ -217,13 +217,16 @@ export function TopProjectsSection() {
                 marginBottom: '0.8rem',
               }}
             >
-              <Trans>Join</Trans>{' '}
-              <Link href="/projects">
-                <a className="text-primary hover-text-decoration-underline">
-                  <Trans>hundreds of projects</Trans>
-                </a>
-              </Link>{' '}
-              <Trans>sippin' the Juice.</Trans>
+              <Trans>
+                Join{' '}
+                <a
+                  href="/projects"
+                  className="text-primary hover-text-decoration-underline"
+                >
+                  hundreds of projects
+                </a>{' '}
+                sippin' the Juice.
+              </Trans>
             </p>
           </div>
 

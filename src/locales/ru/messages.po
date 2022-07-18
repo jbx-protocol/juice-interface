@@ -247,7 +247,7 @@ msgid "<0>Users fund your project by paying to use your app or service, or as a 
 msgstr ""
 
 #: src/pages/create/tabs/ReviewDeployTab/NftSummarySection.tsx
-msgid "<0>Website:</0>  <1>{0}</1>"
+msgid "<0>Website:</0> <1>{0}</1>"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx

@@ -1,5 +1,7 @@
 import { NetworkContext } from 'contexts/networkContext'
 import { V2UserContext } from 'contexts/v2/userContext'
+import { getAddress } from '@ethersproject/address'
+
 import { useContext } from 'react'
 import {
   V2FundAccessConstraint,
@@ -25,6 +27,8 @@ type ContractNftRewardTierArg = {
   remainingQuantity: BigNumber //uint64
   initialQuantity: BigNumber //uint64
   tokenUri: string // full link to IPFS
+  votingUnits: BigNumber
+  reservedRate: BigNumber
 }
 
 // Maps cid to contributionFloor
@@ -48,6 +52,8 @@ function getJBDeployTieredNFTRewardDataSourceData({
       remainingQuantity: BigNumber.from(MaxUint48),
       initialQuantity: BigNumber.from(0),
       tokenUri: `${IPFS_GATEWAY_HOSTNAME}/${cid}`,
+      votingUnits: BigNumber.from(0),
+      reservedRate: BigNumber.from(0),
     })
   })
 
@@ -55,7 +61,7 @@ function getJBDeployTieredNFTRewardDataSourceData({
     directory,
     name: 'NAME',
     symbol: 'SYM',
-    tokenUriResolver: '',
+    tokenUriResolver: '0x0000000000000000000000000000000000000000',
     contractUri: 'ipfs://null',
     owner,
     contributionToken: ETH_TOKEN_ADDRESS,
@@ -103,7 +109,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<{
       getJBDeployTieredNFTRewardDataSourceData({
         nftRewards,
         owner: userAddress,
-        directory: contracts.JBDirectory.address,
+        directory: getAddress(contracts.JBDirectory.address),
       }), // _deployTieredNFTRewardDataSourceData
       {
         // _launchProjectData

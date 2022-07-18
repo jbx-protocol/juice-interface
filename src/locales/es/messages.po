@@ -247,7 +247,7 @@ msgid "<0>Users fund your project by paying to use your app or service, or as a 
 msgstr "<0>Los usuarios financian su proyecto pagando por usar su aplicación o servicio, o como patrocinadores o inversores al realizar un pago directamente al contrato inteligente de su proyecto (como en esta aplicación).</0><1>Para los usuarios que pagan a través de su aplicación, debe canalizar esos fondos a través de los contratos inteligentes de Juicebox para que reciban tokens a cambio.</1>"
 
 #: src/pages/create/tabs/ReviewDeployTab/NftSummarySection.tsx
-msgid "<0>Website:</0>  <1>{0}</1>"
+msgid "<0>Website:</0> <1>{0}</1>"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx

@@ -1,5 +1,4 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import axios, { AxiosError } from 'axios'
 import { getPinata, getPinnedListByTag } from 'utils/pinata'
 import { PinataMetadata } from '@pinata/sdk'
 
@@ -39,17 +38,9 @@ export const handler = async (req: ApiRequest, res: NextApiResponse) => {
       res.status(200).json({
         pinData,
       })
-    } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
-        const axiosError = error as AxiosError
-        res.status(500).json({
-          error: axiosError.message,
-        })
-      } else {
-        res.status(500).json({
-          error: error,
-        })
-      }
+    } catch (error) {
+      console.error(error)
+      return res.status(500)
     }
   }
 }

@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import axios, { AxiosError } from 'axios'
+import axios from 'axios'
 import { ProjectMetadataV4 } from 'models/project-metadata'
 import { CV } from 'models/cv'
 
@@ -69,16 +69,8 @@ export const handler = async (
     res.status(200).json({
       response,
     })
-  } catch (error: unknown) {
-    if (axios.isAxiosError(error)) {
-      const axiosError = error as AxiosError
-      res.status(500).json({
-        error: axiosError.message,
-      })
-    } else {
-      res.status(500).json({
-        error: error,
-      })
-    }
+  } catch (error) {
+    console.error(error)
+    return res.status(500)
   }
 }

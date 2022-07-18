@@ -1,3 +1,5 @@
+import { NetworkName } from 'models/network-name'
+
 const infuraId = process.env.NEXT_PUBLIC_INFURA_ID
 
 type NetworkInfo = {

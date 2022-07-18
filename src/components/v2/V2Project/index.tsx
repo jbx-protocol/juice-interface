@@ -3,15 +3,17 @@ import { Col, Row, Space } from 'antd'
 import PayInputGroup from 'components/inputs/Pay/PayInputGroup'
 import ProjectHeader from 'components/Project/ProjectHeader'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
+// TODO: Do we still need lazy loading?
+import VolumeChart from 'components/VolumeChart'
 
-import { lazy, useContext, useState } from 'react'
+import { useContext, useState } from 'react'
 
 import useMobile from 'hooks/Mobile'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2/contractReader/V2ConnectedWalletHasPermission'
 import { V2OperatorPermission } from 'models/v2/permissions'
 import useProjectQueuedFundingCycle from 'hooks/v2/contractReader/ProjectQueuedFundingCycle'
 import { useEditV2ProjectDetailsTx } from 'hooks/v2/transactor/EditV2ProjectDetailsTx'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useRouter } from 'next/router'
 import { weightedAmount } from 'utils/v2/math'
 
 import { useIsUserAddress } from 'hooks/IsUserAddress'
@@ -36,7 +38,6 @@ import V2ManageTokensSection from './V2ManageTokensSection'
 import V2PayButton from './V2PayButton'
 import V2ProjectHeaderActions from './V2ProjectHeaderActions'
 
-const VolumeChart = lazy(() => import('components/VolumeChart'))
 import { V2ReconfigureProjectHandleDrawer } from './V2ReconfigureProjectHandleDrawer'
 import { NftRewardsSection } from './NftRewardsSection'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
@@ -93,10 +94,8 @@ export default function V2Project({
   const editV2ProjectDetailsTx = useEditV2ProjectDetailsTx()
 
   // Checks URL to see if user was just directed from project deploy
-  const location = useLocation()
-  const params = new URLSearchParams(location.search)
-  const isNewDeploy = Boolean(params.get('newDeploy'))
-  const history = useHistory()
+  const router = useRouter()
+  const isNewDeploy = Boolean(router.query.newDeploy)
   const isMobile = useMobile()
 
   const converter = useCurrencyConverter()
@@ -121,7 +120,7 @@ export default function V2Project({
 
   const closeNewDeployModal = () => {
     // Change URL without refreshing page
-    history.replace(v2ProjectRoute({ projectId }))
+    router.replace(v2ProjectRoute({ projectId }))
     setNewDeployModalVisible(false)
   }
 

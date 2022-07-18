@@ -3,6 +3,7 @@ import { Trans } from '@lingui/macro'
 import { Button, Divider, Drawer } from 'antd'
 import Form, { useForm } from 'antd/lib/form/Form'
 import { FormItems } from 'components/formItems'
+import ExternalLink from 'components/ExternalLink'
 
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
@@ -106,12 +107,13 @@ export function V2ReconfigureProjectHandleDrawer({
           1. Are included in search results on the projects page
           <br />
           2. Can be accessed via the URL:{' '}
-          <b>juicebox.money/#{v2ProjectRoute({ handle: 'handle' })}</b>
+          <b>juicebox.money{v2ProjectRoute({ handle: 'handle' })}</b>
           <br />
           <br />
-          (The original URL{' '}
-          <b>juicebox.money/#{v2ProjectRoute({ projectId })}</b> will continue
-          to work.)
+          (The original URL <b>
+            juicebox.money{v2ProjectRoute({ projectId })}
+          </b>{' '}
+          will continue to work.)
         </Trans>
       </p>
 
@@ -120,14 +122,8 @@ export function V2ReconfigureProjectHandleDrawer({
       <p style={{ color: colors.text.primary }}>
         <Trans>
           Juicebox projects use{' '}
-          <a
-            href="https://ens.domains/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            ENS names
-          </a>{' '}
-          as handles. Setting a handle involves 2 transactions:
+          <ExternalLink href="https://ens.domains/">ENS names</ExternalLink> as
+          handles. Setting a handle involves 2 transactions:
         </Trans>
       </p>
 
@@ -196,17 +192,15 @@ export function V2ReconfigureProjectHandleDrawer({
           key <strong>"{projectHandleENSTextRecordKey}"</strong> and the value{' '}
           <strong>"{projectId}"</strong> (this project's ID). You can do this on
           the{' '}
-          <a
+          <ExternalLink
             href={
               projectEnsName
                 ? `https://app.ens.domains/name/${projectEnsName}/details`
                 : 'https://app.ens.domains'
             }
-            target="_blank"
-            rel="noopener noreferrer"
           >
             ENS app
-          </a>
+          </ExternalLink>
           , or use the button below (as long as your connected wallet owns or
           controls that ENS name).
         </Trans>

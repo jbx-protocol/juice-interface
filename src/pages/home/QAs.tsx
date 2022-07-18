@@ -1,7 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import ExternalLink from 'components/ExternalLink'
 import React, { ReactNode } from 'react'
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 
 export const OverflowVideoLink: React.FC = ({ children }) => (
   <ExternalLink href="https://youtu.be/9Mq5oDh0aBY">{children}</ExternalLink>
@@ -53,10 +53,7 @@ export default function QAs(): {
           <p>
             Juicebox is an open protocol on Ethereum that is funded using
             Juicebox itself. You can check out the contractualized budget specs{' '}
-            <ExternalLink href="https://juicebox.money/#/p/juicebox">
-              here
-            </ExternalLink>
-            .
+            <Link href="/p/juicebox">here</Link>.
           </p>
           <p>
             Projects building on Juicebox pay a {JB_FEE}% JBX membership fee
@@ -349,7 +346,7 @@ export default function QAs(): {
       q: <Trans>Who is Peel?</Trans>,
       a: (
         <Trans>
-          <Link to="/p/peel" target="_blank">
+          <Link href="/p/peel" target="_blank">
             Peel
           </Link>{' '}
           is the DAO that manages the juicebox.money frontend interface. You can

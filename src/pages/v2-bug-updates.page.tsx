@@ -1,3 +1,4 @@
+import ExternalLink from 'components/ExternalLink'
 import { v2ProjectRoute } from 'utils/routes'
 
 export default function V2BugUpdates() {
@@ -8,13 +9,9 @@ export default function V2BugUpdates() {
         A minor bug has been identified in the Juicebox protocol V2 contracts.
         No funds are in danger, and projects are unlikely to be affected. Link
         to bug description and fix:{' '}
-        <a
-          href="https://github.com/jbx-protocol/juice-contracts-v2/pull/265"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <ExternalLink href="https://github.com/jbx-protocol/juice-contracts-v2/pull/265">
           github.com/jbx-protocol/juice-contracts-v2/pull/265
-        </a>
+        </ExternalLink>
       </p>
       <p>The bug has no impact on Juicebox V1 projects. </p>
       <br />
@@ -41,7 +38,7 @@ export default function V2BugUpdates() {
         <h4>(Done) Enabling new projects and project migration.</h4>
         <p>
           To re-enable project creation, the JuiceboxDAO multisig members must
-          migrate the JuiceboxDAO project (https://juicebox.money/#
+          migrate the JuiceboxDAO project (https://juicebox.money/
           {v2ProjectRoute({ projectId: 1 })}) as soon as possible, so that it
           can start accepting fees from new projects.
         </p>

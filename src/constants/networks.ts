@@ -1,6 +1,6 @@
 import { NetworkName } from 'models/network-name'
 
-const infuraId = process.env.REACT_APP_INFURA_ID
+const infuraId = process.env.NEXT_PUBLIC_INFURA_ID
 
 type NetworkInfo = {
   name: NetworkName
@@ -13,14 +13,18 @@ type NetworkInfo = {
   gasPrice?: number
 }
 
+let hostname = 'localhost'
+if (typeof window !== 'undefined') {
+  hostname = window.location.hostname
+}
+
 export const NETWORKS: Record<number, NetworkInfo> = {
   31337: {
     name: NetworkName.localhost,
     color: '#666666',
     chainId: 31337,
     blockExplorer: '',
-    rpcUrl:
-      'http://' + window ? window.location.hostname : 'localhost' + ':8545',
+    rpcUrl: `http://${hostname}:8545`,
   },
   1: {
     name: NetworkName.mainnet,
@@ -102,4 +106,4 @@ export const NETWORKS_BY_NAME = Object.values(NETWORKS).reduce(
 )
 
 export const readNetwork =
-  NETWORKS_BY_NAME[process.env.REACT_APP_INFURA_NETWORK as NetworkName]
+  NETWORKS_BY_NAME[process.env.NEXT_PUBLIC_INFURA_NETWORK as NetworkName]

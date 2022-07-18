@@ -27,7 +27,7 @@ import useUsedDistributionLimit from 'hooks/v2/contractReader/UsedDistributionLi
 import { first } from 'lodash'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { useMemo } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useRouter } from 'next/router'
 import { NO_CURRENCY, V2_CURRENCY_ETH, V2CurrencyName } from 'utils/v2/currency'
 
 import useNftRewards from 'hooks/v2/NftRewards'
@@ -41,10 +41,11 @@ import {
 import { V2ArchivedProjectIds } from 'constants/v2/archivedProjects'
 import { layouts } from 'constants/styles/layouts'
 
-import Project404 from '../../../components/Project404'
-import V2Project from '../../../components/v2/V2Project'
+import Project404 from '../../../../components/Project404'
+import V2Project from '../../../../components/v2/V2Project'
 
 export default function V2Dashboard({ projectId }: { projectId: number }) {
+  const router = useRouter()
   const { data: metadataCID, loading: metadataURILoading } =
     useProjectMetadataContent(projectId)
 
@@ -84,9 +85,7 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
     projectId,
   })
 
-  const location = useLocation()
-  const params = new URLSearchParams(location.search)
-  const isNewDeploy = Boolean(params.get('newDeploy'))
+  const isNewDeploy = Boolean(router.query.newDeploy)
 
   const primaryTerminal = terminals?.[0] // TODO: make primaryTerminalOf hook and use it
 
@@ -176,7 +175,9 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
     ? V2ArchivedProjectIds.includes(projectId) || projectMetadata?.archived
     : false
 
-  if (metadataLoading || metadataURILoading) return <Loading />
+  if (metadataLoading || metadataURILoading) {
+    return <Loading />
+  }
   if (isNewDeploy && !metadataCID) {
     return <NewDeployNotAvailable handleOrId={projectId} />
   }
@@ -231,7 +232,6 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
     <V2ProjectContext.Provider value={project}>
       <div style={layouts.maxWidth}>
         <V2Project />
-
         <div style={{ textAlign: 'center', marginTop: '3rem' }}>
           <ScrollToTopButton />
         </div>

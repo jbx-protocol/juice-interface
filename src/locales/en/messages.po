@@ -21,10 +21,6 @@ msgstr "({0}%)"
 msgid "({realTokenAllocationPercent}% of all newly minted tokens)."
 msgstr "({realTokenAllocationPercent}% of all newly minted tokens)."
 
-#: src/pages/index.page.tsx
-msgid ", on Ethereum."
-msgstr ", on Ethereum."
-
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "0% fee"
 msgstr "0% fee"
@@ -778,10 +774,6 @@ msgstr "Close, I'll do these later"
 #: src/pages/home/HowItWorksSection.tsx
 msgid "Commit portions of your funds to the people or projects you want to support, or the contributors you want to pay. When you get paid, so do they."
 msgstr "Commit portions of your funds to the people or projects you want to support, or the contributors you want to pay. When you get paid, so do they."
-
-#: src/pages/index.page.tsx
-msgid "Community-owned"
-msgstr "Community-owned"
 
 #: src/pages/create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 msgid "Configure how your project will collect and spend funds."
@@ -1715,8 +1707,8 @@ msgid "JBX Fee ({feePercentage}%):"
 msgstr "JBX Fee ({feePercentage}%):"
 
 #: src/pages/home/TopProjectsSection.tsx
-msgid "Join"
-msgstr "Join"
+msgid "Join <0>hundreds of projects</0> sippin' the Juice."
+msgstr "Join <0>hundreds of projects</0> sippin' the Juice."
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Juicebox Project ID"
@@ -2945,8 +2937,8 @@ msgid "The <0>issuance rate</0> of your second funding cycle will be <1>{0} toke
 msgstr "The <0>issuance rate</0> of your second funding cycle will be <1>{0} tokens per 1 ETH</1>, then <2>{1} tokens per 1 ETH </2>for your third funding cycle, and so on."
 
 #: src/pages/index.page.tsx
-msgid "The Decentralized Funding Platform. Light enough for a group of friends, powerful enough for a global network of anons."
-msgstr "The Decentralized Funding Platform. Light enough for a group of friends, powerful enough for a global network of anons."
+msgid "The Decentralized Funding Platform. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."
+msgstr "The Decentralized Funding Platform. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."
 
 #: src/pages/v1/create/index.page.tsx
 msgid "The JBX protocol is unaudited, and projects built on it may be vulnerable to bugs or exploits. Be smart!"
@@ -3768,10 +3760,6 @@ msgstr ""
 msgid "hours"
 msgstr "hours"
 
-#: src/pages/home/TopProjectsSection.tsx
-msgid "hundreds of projects"
-msgstr "hundreds of projects"
-
 #: src/components/formItems/ProjectTwitter.tsx
 msgid "juiceboxETH"
 msgstr "juiceboxETH"
@@ -3819,10 +3807,6 @@ msgstr "projects"
 #: src/utils/formatTime.ts
 msgid "seconds"
 msgstr "seconds"
-
-#: src/pages/home/TopProjectsSection.tsx
-msgid "sippin' the Juice."
-msgstr "sippin' the Juice."
 
 #: src/utils/tokenSymbolText.ts
 msgid "token"

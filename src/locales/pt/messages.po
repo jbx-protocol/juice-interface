@@ -26,10 +26,6 @@ msgstr "({0}%)"
 msgid "({realTokenAllocationPercent}% of all newly minted tokens)."
 msgstr "({realTokenAllocationPercent}% de todos os tokens recentemente criados)."
 
-#: src/pages/index.page.tsx
-msgid ", on Ethereum."
-msgstr ""
-
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "0% fee"
 msgstr "0% de taxa"
@@ -783,10 +779,6 @@ msgstr "Feche, eu farei isso depois"
 #: src/pages/home/HowItWorksSection.tsx
 msgid "Commit portions of your funds to the people or projects you want to support, or the contributors you want to pay. When you get paid, so do they."
 msgstr "Garanta porções dos seus fundos para pessoas ou projetos que você quer apoiar, ou contribuidores que você quer pagar. Quando você for pago, eles também serão."
-
-#: src/pages/index.page.tsx
-msgid "Community-owned"
-msgstr ""
 
 #: src/pages/create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 msgid "Configure how your project will collect and spend funds."
@@ -1720,7 +1712,7 @@ msgid "JBX Fee ({feePercentage}%):"
 msgstr "Taxa de JBX ({feePercentage}%):"
 
 #: src/pages/home/TopProjectsSection.tsx
-msgid "Join"
+msgid "Join <0>hundreds of projects</0> sippin' the Juice."
 msgstr ""
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
@@ -2950,7 +2942,7 @@ msgid "The <0>issuance rate</0> of your second funding cycle will be <1>{0} toke
 msgstr "A <0>taxa de emissão</0> de seu segundo ciclo de financiamento será de <1>{0} tokens por 1 ETH</1>, depois <2>{1} tokens por 1 ETH </2>para o seu terceiro ciclo de financiamento e assim por diante."
 
 #: src/pages/index.page.tsx
-msgid "The Decentralized Funding Platform. Light enough for a group of friends, powerful enough for a global network of anons."
+msgid "The Decentralized Funding Platform. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."
 msgstr ""
 
 #: src/pages/v1/create/index.page.tsx
@@ -3773,10 +3765,6 @@ msgstr "controlar"
 msgid "hours"
 msgstr "horas"
 
-#: src/pages/home/TopProjectsSection.tsx
-msgid "hundreds of projects"
-msgstr ""
-
 #: src/components/formItems/ProjectTwitter.tsx
 msgid "juiceboxETH"
 msgstr "juiceboxETH"
@@ -3824,10 +3812,6 @@ msgstr "projetos"
 #: src/utils/formatTime.ts
 msgid "seconds"
 msgstr "segundos"
-
-#: src/pages/home/TopProjectsSection.tsx
-msgid "sippin' the Juice."
-msgstr ""
 
 #: src/utils/tokenSymbolText.ts
 msgid "token"

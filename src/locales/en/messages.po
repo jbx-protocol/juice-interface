@@ -309,6 +309,10 @@ msgstr ""
 msgid "A reserved rate of more than 90% is risky for contributors. Contributors won't receive many tokens for their contribution."
 msgstr "A reserved rate of more than 90% is risky for contributors. Contributors won't receive many tokens for their contribution."
 
+#: src/components/v2/V2Project/VeNftStakingForm/OwnedNFTCard.tsx
+msgid "A veNft can only be redeemed if the project currently has overflow."
+msgstr "A veNft can only be redeemed if the project currently has overflow."
+
 #: src/components/ProjectCard.tsx
 msgid "ARCHIVED"
 msgstr "ARCHIVED"
@@ -2506,6 +2510,7 @@ msgstr "Projects with a handle:<0/><1/>1. Are included in search results on the 
 msgid "Provide a link to additional information about this NFT."
 msgstr "Provide a link to additional information about this NFT."
 
+#: src/components/v2/V2Project/VeNftStakingForm/OwnedNFTCard.tsx
 #: src/components/v2/V2Project/VeNftStakingForm/OwnedNFTCard.tsx
 msgid "REDEEM"
 msgstr "REDEEM"

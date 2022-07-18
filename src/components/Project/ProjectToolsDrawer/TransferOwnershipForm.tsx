@@ -3,6 +3,7 @@ import { Button, Form } from 'antd'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useState } from 'react'
+import { emitErrorNotification } from 'utils/notifications'
 
 export function TransferOwnershipForm({
   useTransferProjectOwnershipTx,
@@ -28,6 +29,13 @@ export function TransferOwnershipForm({
         onConfirmed: () => {
           setLoadingTransferOwnership(false)
           transferOwnershipForm.resetFields()
+        },
+        onError: (error: DOMException) => {
+          setLoadingTransferOwnership(false)
+          emitErrorNotification(error.message)
+        },
+        onDone: () => {
+          setLoadingTransferOwnership(false)
         },
       },
     )

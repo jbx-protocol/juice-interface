@@ -13,9 +13,9 @@ import { NftRewardTier } from 'models/v2/nftRewardTier'
 import { readNetwork } from 'constants/networks'
 import { IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
 
-const JUICEBOX_API_HOSTNAME = 'api.juicebox.money'
+const NEXT_PUBLIC_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
 const axiosInstance = axios.create({
-  baseURL: `https://${JUICEBOX_API_HOSTNAME}/api`,
+  baseURL: `https://${NEXT_PUBLIC_BASE_URL}/api`,
 })
 
 export const IPFS_TAGS = {

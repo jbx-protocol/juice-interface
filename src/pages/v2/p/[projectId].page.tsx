@@ -1,7 +1,7 @@
 import Loading from 'components/Loading'
 import Project404 from 'components/Project404'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
-import { useRouter } from 'next/router'
+import { NextRouter, useRouter } from 'next/router'
 import { V2UserProvider } from 'providers/v2/UserProvider'
 
 import V2Dashboard from './components/V2Dashboard'
@@ -12,23 +12,30 @@ enum ProjectIdType {
 }
 
 function getProjectIdOrHandle(
-  projectId: string | undefined,
+  router: NextRouter,
 ):
   | { type: ProjectIdType.ProjectId; projectId: number }
   | { type: ProjectIdType.Handle; handle: string }
   | undefined {
+  const projectId = router.query.projectId as string | undefined
   if (!projectId?.length) return
 
-  if (!isNaN(parseInt(projectId))) {
-    return { type: ProjectIdType.ProjectId, projectId: parseInt(projectId) }
+  const isHandle = router.query.isHandle as string | undefined
+  if (isHandle && Boolean(isHandle)) {
+    return { type: ProjectIdType.Handle, handle: projectId }
   }
-  return { type: ProjectIdType.Handle, handle: projectId }
+
+  if (isNaN(parseInt(projectId))) {
+    return
+  }
+
+  // Fallback to parsing as a project id
+  return { type: ProjectIdType.ProjectId, projectId: parseInt(projectId) }
 }
 
 export default function V2ProjectPage() {
   const router = useRouter()
-  const _projectId = router.query.projectId as string | undefined
-  const projectIdOrHandle = getProjectIdOrHandle(_projectId)
+  const projectIdOrHandle = getProjectIdOrHandle(router)
 
   if (!projectIdOrHandle) {
     return <Project404 />

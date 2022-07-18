@@ -45,7 +45,6 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "ethereum-block-by-date": "^1.4.2",
     "ethers": "^5.1.0",
-    "fs": "^0.0.1-security",
     "less": "4.1.2",
     "lodash": "^4.17.21",
     "next": "^12.2.2",

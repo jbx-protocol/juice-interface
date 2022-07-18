@@ -13,7 +13,7 @@ import { getTerminalVersion } from 'utils/v1/terminals'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { Trans } from '@lingui/macro'
 
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 
 import { v2ProjectRoute } from 'utils/routes'
 
@@ -107,19 +107,23 @@ export default function ProjectCard({
 
   return (
     <Link
-      style={{
-        borderRadius: radii.lg,
-        cursor: 'pointer',
-        overflow: 'hidden',
-      }}
       key={`${_project.id}_${_project.cv}`}
-      to={
+      href={
         _project.cv === '2'
           ? v2ProjectRoute(_project)
           : `/p/${_project?.handle}`
       }
     >
-      <div style={cardStyle} className="clickable-border">
+      <div
+        style={{
+          borderRadius: radii.lg,
+          cursor: 'pointer',
+          overflow: 'hidden',
+
+          ...cardStyle,
+        }}
+        className="clickable-border"
+      >
         <div style={{ marginRight: 20 }}>
           <ProjectLogo
             uri={metadata?.logoUri}
@@ -127,7 +131,6 @@ export default function ProjectCard({
             size={110}
           />
         </div>
-
         <div
           style={{
             flex: 1,
@@ -201,7 +204,6 @@ export default function ProjectCard({
             </Tooltip>
           )}
         </div>
-
         {isArchived && (
           <div
             style={{
@@ -218,7 +220,6 @@ export default function ProjectCard({
             <Trans>ARCHIVED</Trans>
           </div>
         )}
-
         {!metadata && <Loading />}
       </div>
     </Link>

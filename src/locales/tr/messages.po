@@ -38,7 +38,7 @@ msgstr "1 yıl"
 msgid "1. Get funded."
 msgstr ""
 
-#: src/pages/create/index.tsx
+#: src/pages/create/index.page.tsx
 msgid "1. Project details"
 msgstr "1. Proje ayrıntıları"
 
@@ -51,7 +51,7 @@ msgstr ""
 msgid "100% overflow"
 msgstr "%100 taşma"
 
-#: src/pages/create/index.tsx
+#: src/pages/create/index.page.tsx
 msgid "2. Funding cycle"
 msgstr "2. Finansman döngüsü"
 
@@ -76,7 +76,7 @@ msgstr "3 günlük gecikme"
 msgid "3. Manage your funds"
 msgstr ""
 
-#: src/pages/create/index.tsx
+#: src/pages/create/index.page.tsx
 msgid "3. Review and deploy"
 msgstr "3. İncele ve Başlat"
 
@@ -105,7 +105,7 @@ msgstr "90 gün"
 msgid "<0/> Archived projects have not been modified or deleted on the blockchain, and can still be interacted with directly through the Juicebox contracts."
 msgstr "<0/> Arşivlenen projeler blok zincirinde değiştirilmemiştir veya silinmemiştir ve yine de doğrudan Juicebox sözleşmeleri aracılığıyla etkileşime girilebilir."
 
-#: src/pages/projects/index.tsx
+#: src/pages/projects/index.page.tsx
 msgid "<0/> The Juicebox protocol is open to anyone, and project configurations can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO or Peel. Do your own research and understand the risks before committing your funds."
 msgstr "<0/> Juicebox protokolü herkese açıktır ve proje yapılandırmaları çok farklı olabilir. Protokoldeki tüm projelerle etkileşime girmenin riskleri vardır. Protokole dayalı projeler JuiceboxDAO veya Peel tarafından incelenmez veya onaylanmaz, bu nedenle kendi araştırmanızı yapmalı ve fonlarınızı taahhüt etmeden önce riskleri anlamalısınız."
 
@@ -219,7 +219,7 @@ msgstr "<0>Daha düşük bir kullanım oranında, bir token'ı kullanmak, kalan 
 
 #: src/pages/home/QAs.tsx
 msgid "<0>Peel</0> is the DAO that manages the juicebox.money frontend interface. You can reach out to Peel either through the <1>Peel Discord</1> or the <2>Juicebox Discord</2>."
-msgstr "<0>Peel</0>, juicebox.money kullanıcı arayüzünü yöneten DAO'dur. Peel'e <1>Peel Discord</1> veya <2>Juicebox Discord</2> aracılığıyla ulaşabilirsiniz."
+msgstr ""
 
 #: src/pages/create/forms/FundingForm/FundingCycleExplainerCollapse.tsx
 msgid "<0>Recurring funding cycles</0>. For example, distribute funds from your project's treasury every week."
@@ -404,7 +404,7 @@ msgstr "Adres:"
 msgid "Address: <0/>"
 msgstr "Adres: <0/>"
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Adjust incentives for paying your project."
 msgstr "Projenize gelecek ödemeler için teşvikleri ayarlayın."
 
@@ -475,7 +475,7 @@ msgstr ""
 msgid "Allowed"
 msgstr "İzin verildi"
 
-#: src/pages/index.tsx
+#: src/pages/index.page.tsx
 msgid "Almost definitely."
 msgstr "Neredeyse kesinlikle."
 
@@ -539,7 +539,7 @@ msgid "Archived"
 msgstr "Arşivlendi"
 
 #: src/pages/create/StartOverButton.tsx
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Are you sure you want to start over?"
 msgstr "Baştan başlamak istediğinizden emin misiniz?"
 
@@ -606,7 +606,7 @@ msgstr "Faydalanıcı"
 msgid "Beneficiary address"
 msgstr "Faydalanıcı adresi"
 
-#: src/pages/index.tsx
+#: src/pages/index.page.tsx
 msgid "Big ups to the Ethereum community for crafting the infrastructure and economy to make Juicebox possible."
 msgstr "Juicebox'ı mümkün kılan altyapı ve ekonomiyi hazırladığı için Ethereum topluluğuna selamlar."
 
@@ -632,7 +632,7 @@ msgstr "Bağlılık eğrisi oranı"
 msgid "Bonding curve:"
 msgstr "Bağlılık eğrisi:"
 
-#: src/pages/index.tsx
+#: src/pages/index.page.tsx
 msgid "Built for:"
 msgstr "Şunlar için üretildi:"
 
@@ -700,7 +700,7 @@ msgstr ""
 msgid "Changes to project details will take effect immediately."
 msgstr "Proje detaylarında yapılan değişiklikler hemen etkili olacaktır."
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Changes to these attributes can be made at any time and will be applied to your project immediately."
 msgstr "Bu özellikler üzerinde herhangi bir zamanda değişiklik yapılabilir ve projenize hemen uygulanacaktır."
 
@@ -814,7 +814,7 @@ msgstr "Talep etmek için cüzdanınızı bağlayın"
 
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 #: src/pages/create/tabs/ReviewDeployTab/DeployProjectButton.tsx
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Connect wallet to deploy"
 msgstr "Başlatmak için cüzdanınızı bağlayın"
 
@@ -916,7 +916,7 @@ msgstr "Ödeme adresi oluşturun"
 
 #: src/hooks/PageTitle.ts
 #: src/pages/projects/MyProjects.tsx
-#: src/pages/projects/index.tsx
+#: src/pages/projects/index.page.tsx
 msgid "Create project"
 msgstr "Proje oluştur"
 
@@ -932,7 +932,7 @@ msgstr ""
 msgid "Crowdfund your project with ETH. Set a funding target to cover predictable expenses, and any extra funds (<0>overflow</0>) can be claimed by anyone holding your project's tokens alongside you."
 msgstr ""
 
-#: src/pages/index.tsx
+#: src/pages/index.page.tsx
 msgid "Crowdfunding"
 msgstr ""
 
@@ -984,7 +984,7 @@ msgstr "Döngü #{0}"
 msgid "Cycle #{0} -"
 msgstr ""
 
-#: src/pages/index.tsx
+#: src/pages/index.page.tsx
 msgid "DAOs"
 msgstr ""
 
@@ -1021,11 +1021,11 @@ msgstr "Token tahsisini sil"
 msgid "Deploy funding cycle configuration"
 msgstr ""
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Deploy project"
 msgstr "Projeyi başlat"
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Deploy project on {signerNetwork}"
 msgstr "Projeyi {signerNetwork} üzerinde başlat"
 
@@ -1055,7 +1055,7 @@ msgid "Design how your tokens should work."
 msgstr ""
 
 #: src/pages/home/HowItWorksSection.tsx
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Design your project"
 msgstr "Projenizi tasarlayın"
 
@@ -1393,7 +1393,7 @@ msgstr "Sahipler yüklenirken hata oluştu"
 msgid "Error loading payments"
 msgstr "Ödemeler yüklenirken hata oluştu"
 
-#: src/pages/index.tsx
+#: src/pages/index.page.tsx
 msgid "Explore projects"
 msgstr "Projeleri keşfedin"
 
@@ -1401,7 +1401,7 @@ msgstr "Projeleri keşfedin"
 msgid "FAQ"
 msgstr "SSS"
 
-#: src/pages/index.tsx
+#: src/pages/index.page.tsx
 msgid "FAQs"
 msgstr "SSS"
 
@@ -1422,7 +1422,7 @@ msgstr "Dosya {formattedSize}{unit} değerinden küçük olmalıdır"
 msgid "Fund and operate your thing, your way."
 msgstr ""
 
-#: src/pages/index.tsx
+#: src/pages/index.page.tsx
 msgid "Fund anything. Grow together."
 msgstr "Herhangi bir şeye fon sağlayın. Birlikte büyüyün."
 
@@ -1435,7 +1435,7 @@ msgstr "Finansman"
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v1/shared/forms/BudgetForm.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/NoFundingCycle.tsx
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Funding cycle"
 msgstr "Finansman döngüsü"
 
@@ -1470,7 +1470,7 @@ msgstr "Finansman döngüleri, katkı sahiplerini bilgilendirmeden, yeni bir dö
 #: src/components/v1/shared/FundingCycle/Spending.tsx
 #: src/components/v1/shared/forms/PayModsForm.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Funding distribution"
 msgstr "Finansman dağılımı"
 
@@ -1574,7 +1574,7 @@ msgstr "Projenizin rezerve token'larının %{reservedPercentage} kadarının nas
 msgid "How to Juice."
 msgstr ""
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "How your project will distribute funds."
 msgstr "Projenizin fonları nasıl dağıtacağı."
 
@@ -1653,11 +1653,11 @@ msgstr "Cüzdanda"
 
 #: src/components/forms/IncentivesForm.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Incentives"
 msgstr "Teşvikler"
 
-#: src/pages/index.tsx
+#: src/pages/index.page.tsx
 msgid "Indie creators and builders"
 msgstr "Bağımsız yaratıcılar ve geliştiriciler"
 
@@ -1771,8 +1771,8 @@ msgstr "Son ödemeler"
 msgid "Launch funding cycle"
 msgstr "Finansman döngüsünü başlat"
 
-#: src/pages/create/index.tsx
-#: src/pages/index.tsx
+#: src/pages/create/index.page.tsx
+#: src/pages/index.page.tsx
 msgid "Launch your project"
 msgstr "Projenizi başlatın"
 
@@ -1791,7 +1791,7 @@ msgstr ""
 #: src/components/modals/ParticipantsModal.tsx
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 #: src/components/v2/V2Project/ProjectActivity/index.tsx
-#: src/pages/projects/index.tsx
+#: src/pages/projects/index.page.tsx
 msgid "Load more"
 msgstr "Daha fazla yükle"
 
@@ -1916,7 +1916,7 @@ msgstr "{tokensLabel} token'larınızı Juicebox sözleşmesinden cüzdanınıza
 msgid "My Projects"
 msgstr "Projelerim"
 
-#: src/pages/index.tsx
+#: src/pages/index.page.tsx
 msgid "NFT projects"
 msgstr ""
 
@@ -2275,7 +2275,7 @@ msgstr "Potansiyel riskler"
 msgid "Preview"
 msgstr ""
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Preview:"
 msgstr "Önizleme:"
 
@@ -2318,8 +2318,8 @@ msgstr "Proje açıklaması"
 
 #: src/pages/create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
-#: src/pages/v1/create/index.tsx
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Project details"
 msgstr "Proje ayrıntıları"
 
@@ -2357,7 +2357,7 @@ msgstr "Proje başarıyla başlatıldı"
 msgid "Project name"
 msgstr "Proje adı"
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Project name, handle, links, and other details."
 msgstr "Proje adı, tanıtıcı, bağlantılar ve diğer ayrıntılar."
 
@@ -2413,7 +2413,7 @@ msgid "Projects can be created with an optional discount rate designed to incent
 msgstr "Projeler, isteğe bağlı olarak, erken destekçileri teşvik etmek için tasarlanmış bir indirim oranı ile oluşturulabilir. Projenize ödenen Eth başına ödüllendilen token miktarı, her yeni finansman döngüsünde iskonto oranı kadar azalacaktır. Yüksek bir indirim oranı, destekçileri projenizi daha erken desteklemeye teşvik edecektir."
 
 #: src/pages/home/StatsSection.tsx
-#: src/pages/projects/index.tsx
+#: src/pages/projects/index.page.tsx
 msgid "Projects on Juicebox"
 msgstr "Juicebox'taki projeler"
 
@@ -2430,7 +2430,7 @@ msgid "Projects using a reserved rate of {reservedRateRiskyMin}% or more will ap
 msgstr "%{reservedRateRiskyMin} veya daha fazla rezerve oranı kullanan projeler, projenize ödeme yapılması karşılığında nispeten az sayıda token alınacağından, katkıda bulunanlar açısından riskli görünecektir."
 
 #: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
-msgid "Projects with a handle:<0/><1/>1. Are included in search results on the projects page<2/>2. Can be accessed via the URL: <3>juicebox.money/#{0}</3><4/><5/>(The original URL <6>juicebox.money/#{1}</6> will continue to work.)"
+msgid "Projects with a handle:<0/><1/>1. Are included in search results on the projects page<2/>2. Can be accessed via the URL: <3>juicebox.money{0}</3><4/><5/>(The original URL <6>juicebox.money{1}</6> will continue to work.)"
 msgstr ""
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
@@ -2486,7 +2486,7 @@ msgstr ""
 msgid "Recipients will receive payouts in ETH."
 msgstr "Alıcılar ödemeleri ETH olarak alacaktır."
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Reconfiguration"
 msgstr "Yeniden yapılandırma"
 
@@ -2511,10 +2511,6 @@ msgstr "Yeniden yapılandır"
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Reconfigure funding"
 msgstr "Finansmanı yeniden yapılandır"
-
-#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
-msgid "Reconfigure payouts and limit"
-msgstr ""
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
 msgid "Reconfigure payouts as percentages of your distribution limit."
@@ -2626,7 +2622,7 @@ msgstr "Rezerve token tahsisleri"
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/pages/create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Reserved tokens"
 msgstr "Rezerve token'lar"
 
@@ -2652,16 +2648,16 @@ msgstr "Rezerve {tokensText}"
 msgid "Resources"
 msgstr "Kaynaklar"
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Restrict payments and printing tokens."
 msgstr "Ödemeleri ve token basımını kısıtlayın."
 
 #: src/components/forms/RestrictedActionsForm.tsx
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Restricted actions"
 msgstr "Kısıtlanmış eylemler"
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Review & Deploy"
 msgstr "İncele ve Dağıt"
 
@@ -2681,7 +2677,7 @@ msgstr ""
 msgid "Reward contributors with NFTs when they meet your configured funding criteria."
 msgstr ""
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Reward specific community members with tokens."
 msgstr "Belirli topluluk üyelerini token'larla ödüllendirin."
 
@@ -2697,7 +2693,7 @@ msgstr "Kurallar"
 msgid "Rules for determining how funding cycles can be reconfigured"
 msgstr "Finansman döngülerinin nasıl yeniden yapılandırılabileceğini belirleyen kurallar"
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Rules for how changes can be made to your project."
 msgstr "Projenizde nasıl değişiklik yapılabileceğine ilişkin kurallar."
 
@@ -2768,7 +2764,7 @@ msgstr "Token yapılandırmasını kaydet"
 msgid "Save tracked assets"
 msgstr "İzlenen varlıkları kaydet"
 
-#: src/pages/projects/index.tsx
+#: src/pages/projects/index.page.tsx
 msgid "Search projects by handle"
 msgstr "Tanıtıcıya göre proje ara"
 
@@ -2840,7 +2836,7 @@ msgstr ""
 msgid "Set up your Juicebox V2 project for migration from your Juicebox V1 project."
 msgstr ""
 
-#: src/pages/index.tsx
+#: src/pages/index.page.tsx
 msgid "Should you Juicebox?"
 msgstr "Juicebox’a katılmalı mısın?"
 
@@ -2876,8 +2872,8 @@ msgid "Start"
 msgstr "Başlangıç"
 
 #: src/pages/create/StartOverButton.tsx
-#: src/pages/v1/create/index.tsx
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Start Over"
 msgstr "Baştan Başla"
 
@@ -2945,11 +2941,11 @@ msgstr ""
 msgid "The <0>issuance rate</0> of your second funding cycle will be <1>{0} tokens per 1 ETH</1>, then <2>{1} tokens per 1 ETH </2>for your third funding cycle, and so on."
 msgstr "<0>Token çıkarma oranı</0>, ikinci finansman döngünüz için <1>1 ETH başına {0} token</1>, üçüncü finansman döngünüz için <2>1 ETH başına {1} token</2> olacak ve bu şekilde ilerleyecektir."
 
-#: src/pages/index.tsx
+#: src/pages/index.page.tsx
 msgid "The Decentralized Funding Platform. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."
-msgstr "Merkeziyetsiz Finansman Sağlama Platformu. Bir grup arkadaş için yeterince basit, anonim bireylerin oluşturduğu küresel bir ağ için yeterince güçlü. <0>Topluluğa ait</0> ve Ethereum üzerinde."
+msgstr ""
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "The JBX protocol is unaudited, and projects built on it may be vulnerable to bugs or exploits. Be smart!"
 msgstr "JBX protokolü denetlenmez ve bunun üzerine inşa edilen projeler hatalara veya açıklardan yararlanmaya karşı savunmasız olabilir. Dikkatli olunmalıdır!"
 
@@ -3000,7 +2996,7 @@ msgstr "Bu finansman döngüsü için dağıtım limiti 0'dır, yani Juicebox'ta
 msgid "The funds available to distribution for this funding cycle (before the {feePercentage}% JBX fee is subtracted). This number won't roll over to the next funding cycle, so funds should be distributed before this funding cycle ends."
 msgstr "Bu finansman döngüsü için dağıtılmaya uygun fonlar (%{feePercentage} JBX ücreti düşülmeden önce). Bu sayı bir sonraki finansman döngüsüne aktarılmayacaktır, bu nedenle fonlar bu finansman döngüsü sona ermeden dağıtılmalıdır."
 
-#: src/pages/index.tsx
+#: src/pages/index.page.tsx
 msgid "The future will be led by creators, and owned by communities."
 msgstr "Gelecek, içerik üreticileri tarafından yönetilecek ve topluluklara ait olacak."
 
@@ -3143,7 +3139,7 @@ msgstr ""
 msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
 msgstr "Bu oran, her token'ın herhangi bir zamanda kullanılabilecek taşma miktarını belirler. Daha düşük bir bağlılık eğrisinde, bir token'ı kullanmak, kalan her bir token'ın değerini artırır ve token'ları diğerlerinden daha uzun süre tutmak için bir teşvik yaratır. %100'lük bir bağlılık eğrisi, ne zaman kullanıldıklarına bakılmaksızın tüm token'ların eşit değere sahip olacağı anlamına gelir."
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "This will erase all of your changes."
 msgstr "Yaptığınız tüm değişiklikler silinecektir."
 
@@ -3560,7 +3556,7 @@ msgstr "<0/>{0} değerine yuvarlanacak"
 msgid "Will it work on L2s?"
 msgstr "L2'lerde çalışacak mı?"
 
-#: src/pages/index.tsx
+#: src/pages/index.page.tsx
 msgid "With Juicebox, projects are built and maintained by motivated punks getting paid transparently, and funded by a community of users and patrons who are rewarded as the projects they support succeed."
 msgstr "Juicebox ile projeler, motive olmuş punklar tarafından şeffaf bir şekilde ödenir ve destekledikleri projeler başarılı oldukça ödüllendirilen bir kullanıcı ve kullanıcı topluluğu tarafından finanse edilir ve sürdürülür."
 
@@ -3722,7 +3718,7 @@ msgstr "Projeniz Juicebox V2 sözleşmeleri üzerinde oluşturulacaktır. <0>Dah
 msgid "Your project will immediately appear active on the juicebox.money app. Please allow a few days for it to appear in the \"active\" projects list on the Projects page."
 msgstr "Projeniz juicebox.money uygulamasında hemen aktif olarak görünecektir. Projenizin projeler sayfasında, \"aktif projeler\" listesinde görünmesi için lütfen birkaç gün bekleyin."
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Your project's funding cycle target and duration."
 msgstr "Projenizin finansman döngüsü hedefi ve süresi."
 
@@ -3785,7 +3781,7 @@ msgstr "yükleniyor"
 msgid "locked until {lockedUntilFormatted}"
 msgstr "Kilit süresi bitiş tarihi {lockedUntilFormatted}"
 
-#: src/pages/projects/index.tsx
+#: src/pages/projects/index.page.tsx
 msgid "matching \"{searchText}\""
 msgstr "\"{searchText}\" ile eşleşen"
 
@@ -3799,7 +3795,7 @@ msgstr "veya <0><1>borsada {tokenText} satın alın<2/></1></0>"
 
 #: src/pages/projects/HoldingsProjects.tsx
 #: src/pages/projects/MyProjects.tsx
-#: src/pages/projects/index.tsx
+#: src/pages/projects/index.page.tsx
 msgid "project"
 msgstr "proje"
 
@@ -3809,7 +3805,7 @@ msgstr "proje sahibi"
 
 #: src/pages/projects/HoldingsProjects.tsx
 #: src/pages/projects/MyProjects.tsx
-#: src/pages/projects/index.tsx
+#: src/pages/projects/index.page.tsx
 msgid "projects"
 msgstr "projeler"
 

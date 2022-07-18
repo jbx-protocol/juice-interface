@@ -2,7 +2,6 @@ import { Trans } from '@lingui/macro'
 import TooltipIcon from 'components/TooltipIcon'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useContext } from 'react'
-import { Link } from 'react-router-dom'
 
 const TooltipDescription = () => {
   return (
@@ -26,8 +25,8 @@ export function TokenSwapDescription({
         <Trans>
           You have{' '}
           <span style={{ fontWeight: 600 }}>{projectMetadata?.name}</span>{' '}
-          tokens on <Link to={`/p/${v1ProjectHandle}`}>Juicebox V1</Link>. You
-          can swap your{' '}
+          tokens on <a href={`/p/${v1ProjectHandle}`}>Juicebox V1</a>. You can
+          swap your{' '}
           <span style={{ fontWeight: 600 }}>{projectMetadata?.name}</span> V1
           tokens for V2 tokens
         </Trans>{' '}

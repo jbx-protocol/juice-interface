@@ -17,7 +17,7 @@ on:
   workflow_dispatch:
 
 env:
-  REACT_APP_INFURA_NETWORK: mainnet
+  NEXT_PUBLIC_INFURA_NETWORK: mainnet
 
 jobs:
   run-yarn-tests:

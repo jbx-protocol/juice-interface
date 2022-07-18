@@ -20,6 +20,7 @@ import {
   V2_CURRENCY_USD,
 } from 'utils/v2/currency'
 import { usePayETHPaymentTerminalTx } from 'hooks/v2/transactor/PayETHPaymentTerminal'
+import { emitErrorNotification } from 'utils/notifications'
 
 import Paragraph from 'components/Paragraph'
 import { weightedAmount } from 'utils/v2/math'
@@ -137,31 +138,41 @@ export function V2ConfirmPayModal({
     }
     setLoading(true)
 
-    const txSuccess = await payProjectTx(
-      {
-        memo: buildPaymentMemo({
-          text: textMemo,
-          imageUrl: uploadedImage,
-          stickerUrls,
-        }),
-        preferClaimedTokens: !!preferClaimed,
-        beneficiary: txBeneficiary,
-        value: weiAmount,
-      },
-      {
-        onConfirmed() {
-          setLoading(false)
-          setTransactionPending(false)
-
-          onSuccess?.()
+    try {
+      const txSuccess = await payProjectTx(
+        {
+          memo: buildPaymentMemo({
+            text: textMemo,
+            imageUrl: uploadedImage,
+            stickerUrls,
+          }),
+          preferClaimedTokens: !!preferClaimed,
+          beneficiary: txBeneficiary,
+          value: weiAmount,
         },
-        onDone() {
-          setTransactionPending(true)
-        },
-      },
-    )
+        {
+          onConfirmed() {
+            setLoading(false)
+            setTransactionPending(false)
 
-    if (!txSuccess) {
+            onSuccess?.()
+          },
+          onError() {
+            setLoading(false)
+            setTransactionPending(false)
+          },
+          onDone() {
+            setTransactionPending(true)
+          },
+        },
+      )
+
+      if (!txSuccess) {
+        setLoading(false)
+        setTransactionPending(false)
+      }
+    } catch (error) {
+      emitErrorNotification(`Failure: ${error}`)
       setLoading(false)
       setTransactionPending(false)
     }

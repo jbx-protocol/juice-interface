@@ -38,7 +38,7 @@ msgstr "1 年"
 msgid "1. Get funded."
 msgstr ""
 
-#: src/pages/create/index.tsx
+#: src/pages/create/index.page.tsx
 msgid "1. Project details"
 msgstr "1. 项目详情"
 
@@ -51,7 +51,7 @@ msgstr ""
 msgid "100% overflow"
 msgstr "100% 溢出"
 
-#: src/pages/create/index.tsx
+#: src/pages/create/index.page.tsx
 msgid "2. Funding cycle"
 msgstr "2. 筹款周期"
 
@@ -76,7 +76,7 @@ msgstr "延迟三天生效"
 msgid "3. Manage your funds"
 msgstr ""
 
-#: src/pages/create/index.tsx
+#: src/pages/create/index.page.tsx
 msgid "3. Review and deploy"
 msgstr "3. 检查并部署"
 
@@ -105,7 +105,7 @@ msgstr "90 天"
 msgid "<0/> Archived projects have not been modified or deleted on the blockchain, and can still be interacted with directly through the Juicebox contracts."
 msgstr "<0/> 被存档的项目在区块链上并没有被修改或删除，用户仍然可以直接通过 Juicebox 合约进行交互。"
 
-#: src/pages/projects/index.tsx
+#: src/pages/projects/index.page.tsx
 msgid "<0/> The Juicebox protocol is open to anyone, and project configurations can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO or Peel. Do your own research and understand the risks before committing your funds."
 msgstr "<0/> Juicebox协议向所有人开放，不同项目的配置可能相差很大。与协议上的项目进行交互是存在风险的。在协议上部署的项目未经JuiceboxDAO或Peel的认可或审查。所以您应该在付款之前，做好自己的研究并了解其中的风险。"
 
@@ -219,7 +219,7 @@ msgstr "<0>赎回比率较低的情况下，每赎回一个代币都会提高剩
 
 #: src/pages/home/QAs.tsx
 msgid "<0>Peel</0> is the DAO that manages the juicebox.money frontend interface. You can reach out to Peel either through the <1>Peel Discord</1> or the <2>Juicebox Discord</2>."
-msgstr "<0>Peel</0>是一个 DAO，负责管理 juicebox.money 的前端页面。你可以通过<1>Peel</1> 或 <2>Juicebox</2> 的 Discord 服务器来接触 Peel。"
+msgstr ""
 
 #: src/pages/create/forms/FundingForm/FundingCycleExplainerCollapse.tsx
 msgid "<0>Recurring funding cycles</0>. For example, distribute funds from your project's treasury every week."
@@ -404,7 +404,7 @@ msgstr "地址："
 msgid "Address: <0/>"
 msgstr "地址： <0/>"
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Adjust incentives for paying your project."
 msgstr "调整激励措施，以便鼓励其他人或项目向你的项目付款。"
 
@@ -475,7 +475,7 @@ msgstr ""
 msgid "Allowed"
 msgstr "允许"
 
-#: src/pages/index.tsx
+#: src/pages/index.page.tsx
 msgid "Almost definitely."
 msgstr "答案是肯定的."
 
@@ -539,7 +539,7 @@ msgid "Archived"
 msgstr "已存档"
 
 #: src/pages/create/StartOverButton.tsx
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Are you sure you want to start over?"
 msgstr "你确定要重新开始吗？"
 
@@ -606,7 +606,7 @@ msgstr "受益人"
 msgid "Beneficiary address"
 msgstr "受益人钱包地址"
 
-#: src/pages/index.tsx
+#: src/pages/index.page.tsx
 msgid "Big ups to the Ethereum community for crafting the infrastructure and economy to make Juicebox possible."
 msgstr "依托于以太坊社区精心打造的基础设施和经济生态，Juicebox 才得以实现。"
 
@@ -632,7 +632,7 @@ msgstr "联合曲线比率"
 msgid "Bonding curve:"
 msgstr "联合曲线："
 
-#: src/pages/index.tsx
+#: src/pages/index.page.tsx
 msgid "Built for:"
 msgstr "服务的对象:"
 
@@ -700,7 +700,7 @@ msgstr ""
 msgid "Changes to project details will take effect immediately."
 msgstr "对项目详情的更改将立即生效。"
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Changes to these attributes can be made at any time and will be applied to your project immediately."
 msgstr "可以随时修改这些属性，并立即应用于你的项目。"
 
@@ -814,7 +814,7 @@ msgstr "连接钱包以领取"
 
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 #: src/pages/create/tabs/ReviewDeployTab/DeployProjectButton.tsx
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Connect wallet to deploy"
 msgstr "连接钱包以部署"
 
@@ -916,7 +916,7 @@ msgstr "创建可支付地址"
 
 #: src/hooks/PageTitle.ts
 #: src/pages/projects/MyProjects.tsx
-#: src/pages/projects/index.tsx
+#: src/pages/projects/index.page.tsx
 msgid "Create project"
 msgstr "创建项目"
 
@@ -932,7 +932,7 @@ msgstr ""
 msgid "Crowdfund your project with ETH. Set a funding target to cover predictable expenses, and any extra funds (<0>overflow</0>) can be claimed by anyone holding your project's tokens alongside you."
 msgstr ""
 
-#: src/pages/index.tsx
+#: src/pages/index.page.tsx
 msgid "Crowdfunding"
 msgstr ""
 
@@ -984,7 +984,7 @@ msgstr "周期 #{0}"
 msgid "Cycle #{0} -"
 msgstr ""
 
-#: src/pages/index.tsx
+#: src/pages/index.page.tsx
 msgid "DAOs"
 msgstr ""
 
@@ -1021,11 +1021,11 @@ msgstr "删除代币的分配方案"
 msgid "Deploy funding cycle configuration"
 msgstr "部署筹款周期配置"
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Deploy project"
 msgstr "部署项目"
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Deploy project on {signerNetwork}"
 msgstr "在{signerNetwork} 上部署项目"
 
@@ -1055,7 +1055,7 @@ msgid "Design how your tokens should work."
 msgstr ""
 
 #: src/pages/home/HowItWorksSection.tsx
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Design your project"
 msgstr "设计你的项目"
 
@@ -1393,7 +1393,7 @@ msgstr "加载持有人错误"
 msgid "Error loading payments"
 msgstr "加载付款信息错误"
 
-#: src/pages/index.tsx
+#: src/pages/index.page.tsx
 msgid "Explore projects"
 msgstr "探索项目"
 
@@ -1401,7 +1401,7 @@ msgstr "探索项目"
 msgid "FAQ"
 msgstr "常见问题解答"
 
-#: src/pages/index.tsx
+#: src/pages/index.page.tsx
 msgid "FAQs"
 msgstr "常见问题解答"
 
@@ -1422,7 +1422,7 @@ msgstr "文件大小必须小于 {formattedSize}{unit}"
 msgid "Fund and operate your thing, your way."
 msgstr ""
 
-#: src/pages/index.tsx
+#: src/pages/index.page.tsx
 msgid "Fund anything. Grow together."
 msgstr "运“筹”帷幄，共创未来。"
 
@@ -1435,7 +1435,7 @@ msgstr "筹款"
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v1/shared/forms/BudgetForm.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/NoFundingCycle.tsx
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Funding cycle"
 msgstr "筹款周期"
 
@@ -1470,7 +1470,7 @@ msgstr "新的筹款周期开始前即可重新配置筹款周期参数，无须
 #: src/components/v1/shared/FundingCycle/Spending.tsx
 #: src/components/v1/shared/forms/PayModsForm.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Funding distribution"
 msgstr "资金分发"
 
@@ -1574,7 +1574,7 @@ msgstr "项目的 {reservedPercentage}% 保留代币怎样进行分配。"
 msgid "How to Juice."
 msgstr ""
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "How your project will distribute funds."
 msgstr "您的项目将如何分配资金。"
 
@@ -1653,11 +1653,11 @@ msgstr "项目钱包余额"
 
 #: src/components/forms/IncentivesForm.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Incentives"
 msgstr "激励措施"
 
-#: src/pages/index.tsx
+#: src/pages/index.page.tsx
 msgid "Indie creators and builders"
 msgstr "独立创作者和建设者们"
 
@@ -1771,8 +1771,8 @@ msgstr "最近付款"
 msgid "Launch funding cycle"
 msgstr "启动筹款周期"
 
-#: src/pages/create/index.tsx
-#: src/pages/index.tsx
+#: src/pages/create/index.page.tsx
+#: src/pages/index.page.tsx
 msgid "Launch your project"
 msgstr "启动你的项目"
 
@@ -1791,7 +1791,7 @@ msgstr ""
 #: src/components/modals/ParticipantsModal.tsx
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 #: src/components/v2/V2Project/ProjectActivity/index.tsx
-#: src/pages/projects/index.tsx
+#: src/pages/projects/index.page.tsx
 msgid "Load more"
 msgstr "加载更多"
 
@@ -1916,7 +1916,7 @@ msgstr "将你的 {tokensLabel} 从 Juicebox 合约中取到你的钱包里。"
 msgid "My Projects"
 msgstr "我的项目"
 
-#: src/pages/index.tsx
+#: src/pages/index.page.tsx
 msgid "NFT projects"
 msgstr ""
 
@@ -2275,7 +2275,7 @@ msgstr "潜在风险"
 msgid "Preview"
 msgstr ""
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Preview:"
 msgstr "预览："
 
@@ -2318,8 +2318,8 @@ msgstr "项目说明"
 
 #: src/pages/create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
-#: src/pages/v1/create/index.tsx
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Project details"
 msgstr "项目详情"
 
@@ -2357,7 +2357,7 @@ msgstr "项目成功启动"
 msgid "Project name"
 msgstr "项目名称"
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Project name, handle, links, and other details."
 msgstr "项目名称，标识，链接以及其他详细信息。"
 
@@ -2413,7 +2413,7 @@ msgid "Projects can be created with an optional discount rate designed to incent
 msgstr "创建项目时，可选择配置一个折扣率用于激励早期支持者。 每个新的筹款周期，支付给项目的每笔金额所奖励的代币数量将按折扣率递减。更高的折扣率将激励支持者尽早资助你的项目。"
 
 #: src/pages/home/StatsSection.tsx
-#: src/pages/projects/index.tsx
+#: src/pages/projects/index.page.tsx
 msgid "Projects on Juicebox"
 msgstr "Juicebox 上的项目"
 
@@ -2430,7 +2430,7 @@ msgid "Projects using a reserved rate of {reservedRateRiskyMin}% or more will ap
 msgstr "项目使用的代币保留率大于或等于{reservedRateRiskyMin}% 会让捐款人觉得项目不安全，因为这种情况下给您的项目捐款从而获得的代币数量会比较少。"
 
 #: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
-msgid "Projects with a handle:<0/><1/>1. Are included in search results on the projects page<2/>2. Can be accessed via the URL: <3>juicebox.money/#{0}</3><4/><5/>(The original URL <6>juicebox.money/#{1}</6> will continue to work.)"
+msgid "Projects with a handle:<0/><1/>1. Are included in search results on the projects page<2/>2. Can be accessed via the URL: <3>juicebox.money{0}</3><4/><5/>(The original URL <6>juicebox.money{1}</6> will continue to work.)"
 msgstr ""
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
@@ -2486,7 +2486,7 @@ msgstr "接收人地址"
 msgid "Recipients will receive payouts in ETH."
 msgstr "收款人将收到以 ETH 支付的报酬。"
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Reconfiguration"
 msgstr "重新配置"
 
@@ -2511,10 +2511,6 @@ msgstr "重新配置"
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Reconfigure funding"
 msgstr "重新配置筹款"
-
-#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
-msgid "Reconfigure payouts and limit"
-msgstr ""
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
 msgid "Reconfigure payouts as percentages of your distribution limit."
@@ -2626,7 +2622,7 @@ msgstr "保留代币的分配方案"
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/pages/create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Reserved tokens"
 msgstr "保留代币"
 
@@ -2652,16 +2648,16 @@ msgstr "保留的 {tokensText}"
 msgid "Resources"
 msgstr "相关资料"
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Restrict payments and printing tokens."
 msgstr "限制付款以及铸造代币。"
 
 #: src/components/forms/RestrictedActionsForm.tsx
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Restricted actions"
 msgstr "受限操作"
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Review & Deploy"
 msgstr "检查并部署"
 
@@ -2681,7 +2677,7 @@ msgstr ""
 msgid "Reward contributors with NFTs when they meet your configured funding criteria."
 msgstr ""
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Reward specific community members with tokens."
 msgstr "用代币奖励特定的社区成员。"
 
@@ -2697,7 +2693,7 @@ msgstr "规则"
 msgid "Rules for determining how funding cycles can be reconfigured"
 msgstr "决定如何重新配置筹款周期的规则"
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Rules for how changes can be made to your project."
 msgstr "项目筹款周期配置的更改规则。"
 
@@ -2768,7 +2764,7 @@ msgstr "保存代币配置"
 msgid "Save tracked assets"
 msgstr "保存监测资产项"
 
-#: src/pages/projects/index.tsx
+#: src/pages/projects/index.page.tsx
 msgid "Search projects by handle"
 msgstr "通过标识搜索项目"
 
@@ -2840,7 +2836,7 @@ msgstr ""
 msgid "Set up your Juicebox V2 project for migration from your Juicebox V1 project."
 msgstr ""
 
-#: src/pages/index.tsx
+#: src/pages/index.page.tsx
 msgid "Should you Juicebox?"
 msgstr "你应该使用Juicebox吗?"
 
@@ -2876,8 +2872,8 @@ msgid "Start"
 msgstr "开始时间"
 
 #: src/pages/create/StartOverButton.tsx
-#: src/pages/v1/create/index.tsx
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Start Over"
 msgstr "重新来过"
 
@@ -2945,11 +2941,11 @@ msgstr ""
 msgid "The <0>issuance rate</0> of your second funding cycle will be <1>{0} tokens per 1 ETH</1>, then <2>{1} tokens per 1 ETH </2>for your third funding cycle, and so on."
 msgstr "项目第二个筹款的 <0>发行比率/0> 将会是 <1>{0} 个代币每1 ETH</1>， 然后第三个筹款是 <2>{1} 个代币每 1 ETH </2>，以此类推。"
 
-#: src/pages/index.tsx
+#: src/pages/index.page.tsx
 msgid "The Decentralized Funding Platform. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."
-msgstr "去中心化筹款平台。既简便易用方便一群好友创建项目，又强大到能支持一个全球性的匿名网络。 在以太坊上，<0>社区共有</0>。"
+msgstr ""
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "The JBX protocol is unaudited, and projects built on it may be vulnerable to bugs or exploits. Be smart!"
 msgstr "JBX 协议未经审计，基于它构建的项目可能受到 bug 的影响或漏洞被恶意利用。使用风险请自行承担！"
 
@@ -3000,7 +2996,7 @@ msgstr "当前筹款周期的分配限额为 0, 也就是说 Juicebox 里的所�
 msgid "The funds available to distribution for this funding cycle (before the {feePercentage}% JBX fee is subtracted). This number won't roll over to the next funding cycle, so funds should be distributed before this funding cycle ends."
 msgstr "当前筹款周期的可分配资金(未扣除 {feePercentage}% JBX 费用)。这一金额将不会滚动至下个筹款周期，所以应该在本筹款周期结束完成分配。"
 
-#: src/pages/index.tsx
+#: src/pages/index.page.tsx
 msgid "The future will be led by creators, and owned by communities."
 msgstr "创造者将引领未来, 而社区会拥有未来."
 
@@ -3143,7 +3139,7 @@ msgstr ""
 msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
 msgstr "这一比率决定了任何特定时间内每赎回一个代币可以获得的溢出金额。联合曲线比率较低的情况下，每赎回一个代币都会相应地提升所有剩余代币的赎回价值，这样就会形成一个代币长期持有的激励机制。联合曲线比率为 100% 时，则意味着无论什么时候赎回代币，每个代币获得的价值都将是相同的。"
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "This will erase all of your changes."
 msgstr "这将删除你所有的更改。"
 
@@ -3560,7 +3556,7 @@ msgstr "会被四舍五入成 <0/>{0}"
 msgid "Will it work on L2s?"
 msgstr "它能在 L2 上运行吗？"
 
-#: src/pages/index.tsx
+#: src/pages/index.page.tsx
 msgid "With Juicebox, projects are built and maintained by motivated punks getting paid transparently, and funded by a community of users and patrons who are rewarded as the projects they support succeed."
 msgstr "积极进取的朋克们通过 Juicebox 构建和维护项目，并以透明的方式获得报酬。用户和赞助者组成的社区对项目给予资助，而他们则可以在项目成功时获得回报。"
 
@@ -3722,7 +3718,7 @@ msgstr "你的项目将在 Juicebox V2 合约上创建。 <0>了解更多。</0>
 msgid "Your project will immediately appear active on the juicebox.money app. Please allow a few days for it to appear in the \"active\" projects list on the Projects page."
 msgstr "您的项目将立即在 juicebox.money 应用程序上显示为“活动”状态。请留出几天时间，让它显示在\"项目\"页面上的\"活动\"项目列表中。"
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Your project's funding cycle target and duration."
 msgstr "项目筹款周期的目标与持续时间。"
 
@@ -3785,7 +3781,7 @@ msgstr "加载中"
 msgid "locked until {lockedUntilFormatted}"
 msgstr "修改权限锁定至 {lockedUntilFormatted}"
 
-#: src/pages/projects/index.tsx
+#: src/pages/projects/index.page.tsx
 msgid "matching \"{searchText}\""
 msgstr "满足条件 \"{searchText}\""
 
@@ -3799,7 +3795,7 @@ msgstr "或是 <0><1>在交易所购买 {tokenText} <2/></1></0>"
 
 #: src/pages/projects/HoldingsProjects.tsx
 #: src/pages/projects/MyProjects.tsx
-#: src/pages/projects/index.tsx
+#: src/pages/projects/index.page.tsx
 msgid "project"
 msgstr "项目"
 
@@ -3809,7 +3805,7 @@ msgstr "项目拥有者"
 
 #: src/pages/projects/HoldingsProjects.tsx
 #: src/pages/projects/MyProjects.tsx
-#: src/pages/projects/index.tsx
+#: src/pages/projects/index.page.tsx
 msgid "projects"
 msgstr "项目"
 

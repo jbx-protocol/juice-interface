@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useRouter } from 'next/router'
 import { t } from '@lingui/macro'
 
 import { DEFAULT_SITE_TITLE } from 'constants/siteMetadata'
@@ -12,7 +12,7 @@ const pageTitles = (): { [k in string]: string } => {
 }
 
 export function usePageTitle({ title }: { title?: string } = {}) {
-  const location = useLocation()
+  const router = useRouter()
 
   useEffect(() => {
     if (title) {
@@ -20,7 +20,7 @@ export function usePageTitle({ title }: { title?: string } = {}) {
       return
     }
 
-    const name = pageTitles()[location.pathname]
+    const name = pageTitles()[router.pathname]
     document.title = name ? `${name} | Juicebox` : DEFAULT_SITE_TITLE
-  }, [location, title])
+  }, [router, title])
 }

@@ -11,6 +11,8 @@ import { uploadProjectMetadata } from 'utils/ipfs'
 import { emitErrorNotification } from 'utils/notifications'
 import { ThemeContext } from 'contexts/themeContext'
 
+import { reloadWindow } from 'utils/windowUtils'
+
 import { postGitHubIssueForArchive } from './postGitHubIssueForArchive'
 
 export default function ArchiveProject({
@@ -60,7 +62,7 @@ export default function ArchiveProject({
       {
         onConfirmed: () => {
           setIsLoadingArchive(false)
-          window.location.reload()
+          reloadWindow()
         },
       },
     )

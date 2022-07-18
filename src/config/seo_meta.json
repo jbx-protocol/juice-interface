@@ -1,0 +1,12 @@
+{
+  "title": "Juicebox | The Decentralized Funding Platform",
+  "titleTemplate": "%s - Juicebox",
+  "description": "Fund your thing with Juicebox. The funding platform for DAOs, decentralized crowdfunding, Web3 businesses and communities. Built on Ethereum.",
+  "twitter": {
+    "handle": "@juiceboxETH",
+    "site": "@juiceboxETH",
+    "creator": "@juiceboxETH",
+    "cardType": "summary_large_image",
+    "image": "https://jbx.mypinata.cloud/ipfs/QmQYomY5sFvG96FKy3BKFU7mmcSiJsRjSHURmJSMPHrALJ"
+  }
+}

@@ -1,4 +1,5 @@
 import { Web3Provider } from '@ethersproject/providers'
+import { useRouter } from 'next/router'
 
 import { NetworkContext } from 'contexts/networkContext'
 import { NetworkName } from 'models/network-name'
@@ -14,6 +15,7 @@ import { NETWORKS } from 'constants/networks'
 const KEY_SELECTED_WALLET = 'selectedWallet'
 
 export const NetworkProvider: React.FC = ({ children }) => {
+  const router = useRouter()
   const { isDarkMode } = useContext(ThemeContext)
 
   const [signingProvider, setSigningProvider] = useState<Web3Provider>()
@@ -25,7 +27,7 @@ export const NetworkProvider: React.FC = ({ children }) => {
   const resetWallet = useCallback(() => {
     onboard?.walletReset()
     setSigningProvider(undefined)
-    window.localStorage.setItem(KEY_SELECTED_WALLET, '')
+    window && window.localStorage.setItem(KEY_SELECTED_WALLET, '')
   }, [onboard])
 
   const selectWallet = async () => {
@@ -63,7 +65,8 @@ export const NetworkProvider: React.FC = ({ children }) => {
       if (newWallet.provider) {
         // Reset the account when a new wallet is connected, as it will be resolved by the provider.
         setAccount(undefined)
-        window.localStorage.setItem(KEY_SELECTED_WALLET, newWallet.name || '')
+        window &&
+          window.localStorage.setItem(KEY_SELECTED_WALLET, newWallet.name || '')
         setSigningProvider(new Web3Provider(newWallet.provider))
       } else {
         resetWallet()
@@ -72,7 +75,6 @@ export const NetworkProvider: React.FC = ({ children }) => {
     const config: Subscriptions = {
       address: setAccount,
       wallet: selectWallet,
-      network: networkId => onNetworkChanged(NETWORKS[networkId]?.name),
     }
     setOnboard(initOnboard(config, isDarkMode))
   }, [isDarkMode, onNetworkChanged, onboard, resetWallet])
@@ -101,7 +103,7 @@ export const NetworkProvider: React.FC = ({ children }) => {
   // Reconnect Wallet
   useEffect(() => {
     const previouslySelectedWallet =
-      window.localStorage.getItem(KEY_SELECTED_WALLET)
+      window && window.localStorage.getItem(KEY_SELECTED_WALLET)
     if (previouslySelectedWallet && onboard) {
       onboard.walletSelect(previouslySelectedWallet)
     }
@@ -111,8 +113,8 @@ export const NetworkProvider: React.FC = ({ children }) => {
   useEffect(() => {
     if (!previousNetwork || !network) return
     if (previousNetwork === network) return
-    window.location.reload()
-  }, [network, previousNetwork])
+    router.reload()
+  }, [network, previousNetwork, router])
 
   return (
     <NetworkContext.Provider

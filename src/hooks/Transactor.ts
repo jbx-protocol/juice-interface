@@ -13,6 +13,7 @@ import { emitErrorNotification } from 'utils/notifications'
 
 import * as Sentry from '@sentry/browser'
 import { t } from '@lingui/macro'
+import { windowOpen } from 'utils/windowUtils'
 
 type TransactorCallback = (e?: TransactionEvent, signer?: JsonRpcSigner) => void
 
@@ -85,7 +86,7 @@ export function useTransactor({
       const network = await provider.getNetwork()
 
       const notifyOpts: InitOptions = {
-        dappId: process.env.REACT_APP_BLOCKNATIVE_API_KEY,
+        dappId: process.env.NEXT_PUBLIC_BLOCKNATIVE_API_KEY,
         system: 'ethereum',
         networkId: network.chainId,
         darkMode: isDarkMode,
@@ -158,7 +159,7 @@ export function useTransactor({
         if (isNotifyNetwork) {
           const { emitter } = notify.hash(result.hash)
           emitter.on('all', transaction => ({
-            onclick: () => window.open(etherscanTxUrl + transaction.hash),
+            onclick: () => windowOpen(etherscanTxUrl + transaction.hash, false),
           }))
         } else {
           console.info('LOCAL TX SENT', result.hash)

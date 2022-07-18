@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router'
+import Link from 'next/link'
 import { t, Trans } from '@lingui/macro'
 import { CSSProperties, useEffect, useState } from 'react'
 import { Dropdown, Menu, Space } from 'antd'
@@ -10,6 +12,7 @@ import {
   navMenuItemStyles,
   topLeftNavStyles,
 } from './navStyles'
+
 import { resourcesMenuItems } from './constants'
 
 function NavMenuItem({
@@ -18,25 +21,30 @@ function NavMenuItem({
   onClick,
 }: {
   text: string
-  route?: string
+  route: string
   onClick?: VoidFunction
 }) {
   const external = route?.startsWith('http')
+  if (external) {
+    return (
+      <ExternalLink
+        className="nav-menu-item hover-opacity"
+        style={navMenuItemStyles}
+        href={route}
+        onClick={onClick}
+        target="_blank"
+        rel="noreferrer"
+      >
+        {text}
+      </ExternalLink>
+    )
+  }
   return (
-    <a
-      className="nav-menu-item hover-opacity"
-      href={route}
-      onClick={onClick}
-      {...(external
-        ? {
-            target: '_blank',
-            rel: 'noreferrer',
-          }
-        : {})}
-      style={navMenuItemStyles}
-    >
-      {text}
-    </a>
+    <Link href={route} onClick={onClick}>
+      <a className="nav-menu-item hover-opacity" style={navMenuItemStyles}>
+        {text}
+      </a>
+    </Link>
   )
 }
 
@@ -63,6 +71,7 @@ export function TopLeftNavItems({
   mobile?: boolean
   onClickMenuItems?: VoidFunction
 }) {
+  const router = useRouter()
   const [resourcesOpen, setResourcesOpen] = useState<boolean>(false)
   const dropdownIconStyle: CSSProperties = {
     fontSize: 13,
@@ -92,19 +101,22 @@ export function TopLeftNavItems({
       <NavMenuItem
         text={t`Projects`}
         onClick={onClickMenuItems}
-        route="/#/projects"
+        route="/projects"
       />
       <NavMenuItem
         text={t`FAQ`}
-        route={undefined}
+        route={'/#faq'}
         onClick={() => {
-          if (onClickMenuItems) onClickMenuItems()
-          window.location.hash = '/'
-          setTimeout(() => {
-            document
-              .getElementById('faq')
-              ?.scrollIntoView({ behavior: 'smooth' })
-          }, 0)
+          if (typeof window !== 'undefined') {
+            if (onClickMenuItems) onClickMenuItems()
+            router
+              .push('/')
+              .then(() =>
+                document
+                  .getElementById('faq')
+                  ?.scrollIntoView({ behavior: 'smooth' }),
+              )
+          }
         }}
       />
       <NavMenuItem

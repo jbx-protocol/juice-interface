@@ -1,7 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Form, Modal, Switch } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import MemoFormItem from 'components/inputs/Pay/MemoFormItem'
+import { MemoFormInput } from 'components/inputs/Pay/MemoFormInput'
 
 import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
@@ -90,7 +90,7 @@ const RedeemVeNftModal = ({
         </p>
       </div>
       <Form form={form} layout="vertical">
-        <MemoFormItem value={memo} onChange={setMemo} />
+        <MemoFormInput value={memo} onChange={setMemo} />
         <Form.Item
           label={
             <>

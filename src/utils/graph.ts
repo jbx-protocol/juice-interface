@@ -28,6 +28,11 @@ import {
   TapEventJson,
 } from 'models/subgraph-entities/v1/tap-event'
 import {
+  DeployETHERC20ProjectPayerEvent,
+  DeployETHERC20ProjectPayerEventJson,
+  parseDeployETHERC20ProjectPayerEventJson,
+} from 'models/subgraph-entities/v2/deploy-eth-erc20-project-payer-event'
+import {
   DistributePayoutsEvent,
   DistributePayoutsEventJson,
   parseDistributePayoutsEventJson,
@@ -98,6 +103,12 @@ import {
   RedeemEventJson,
 } from 'models/subgraph-entities/vX/redeem-event'
 
+import {
+  ETHERC20ProjectPayer,
+  ETHERC20ProjectPayerJson,
+  parseETHERC20ProjectPayer,
+} from '../models/subgraph-entities/v2/eth-erc20-project-payer'
+
 export interface SubgraphEntities {
   protocolLog: ProtocolLog
   projectEvent: ProjectEvent
@@ -119,6 +130,8 @@ export interface SubgraphEntities {
   distributeToPayoutSplitEvent: DistributeToPayoutSplitEvent
   useAllowanceEvent: UseAllowanceEvent
   veNftToken: VeNftToken
+  ethERC20ProjectPayer: ETHERC20ProjectPayer
+  deployETHERC20ProjectPayerEvent: DeployETHERC20ProjectPayerEvent
 }
 
 export interface SubgraphQueryReturnTypes {
@@ -156,6 +169,10 @@ export interface SubgraphQueryReturnTypes {
   useAllowanceEvent: { useAllowanceEvents: UseAllowanceEventJson[] }
   mintTokensEvent: { mintTokensEvent: MintTokensEventJson[] }
   veNftToken: { veNftTokens: VeNftTokenJson[] }
+  ethERC20ProjectPayer: { ethERC20ProjectPayers: ETHERC20ProjectPayerJson[] }
+  deployETHERC20ProjectPayerEvent: {
+    deployETHERC20ProjectPayerEvents: DeployETHERC20ProjectPayerEventJson[]
+  }
 }
 
 export type EntityKey = keyof SubgraphEntities
@@ -289,7 +306,7 @@ export const formatGraphQuery = <E extends EntityKey, K extends EntityKeys<E>>(
   )} } }`
 }
 
-const subgraphUrl = process.env.REACT_APP_SUBGRAPH_URL
+const subgraphUrl = process.env.NEXT_PUBLIC_SUBGRAPH_URL
 
 export function formatGraphResponse<E extends EntityKey>(
   entity: E,
@@ -446,6 +463,20 @@ export function formatGraphResponse<E extends EntityKey>(
         return response.veNftTokens.map(parseVeNftTokenJson)
       }
       break
+    case 'ethERC20ProjectPayer':
+      if ('ethERC20ProjectPayers' in response) {
+        // @ts-ignore
+        return response.ethERC20ProjectPayers.map(parseETHERC20ProjectPayer)
+      }
+      break
+    case 'deployETHERC20ProjectPayerEvent':
+      if ('deployETHERC20ProjectPayerEvents' in response) {
+        // @ts-ignore
+        return response.deployETHERC20ProjectPayerEvents.map(
+          parseDeployETHERC20ProjectPayerEventJson,
+        )
+      }
+      break
   }
 
   return []
@@ -457,7 +488,7 @@ export async function querySubgraph<
 >(opts: GraphQueryOpts<E, K> | null) {
   if (!subgraphUrl) {
     // This should _only_ happen in development
-    throw new Error('env.REACT_APP_SUBGRAPH_URL is missing')
+    throw new Error('env.NEXT_PUBLIC_SUBGRAPH_URL is missing')
   }
 
   if (!opts) return []

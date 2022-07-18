@@ -19,7 +19,7 @@ import {
   SubgraphQueryReturnTypes,
 } from '../utils/graph'
 
-const subgraphUrl = process.env.REACT_APP_SUBGRAPH_URL
+const subgraphUrl = process.env.NEXT_PUBLIC_SUBGRAPH_URL
 const staleTime = 60 * 1000 // 60 seconds
 
 // This looks up the entity type and constructs an object
@@ -67,7 +67,7 @@ export function useInfiniteSubgraphQuery<
 ) {
   if (!subgraphUrl) {
     // This should _only_ happen in development
-    throw new Error('env.REACT_APP_SUBGRAPH_URL is missing')
+    throw new Error('env.NEXT_PUBLIC_SUBGRAPH_URL is missing')
   }
   return useInfiniteQuery<
     GraphResult<E, K[]>,

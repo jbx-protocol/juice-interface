@@ -6,7 +6,8 @@ import {
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
-import { Button, Modal, Select } from 'antd'
+import { Button, Modal, Select, Space } from 'antd'
+import Callout from 'components/Callout'
 import CurrencySymbol from 'components/CurrencySymbol'
 import FormattedAddress from 'components/FormattedAddress'
 import Loading from 'components/Loading'
@@ -271,52 +272,53 @@ export default function ParticipantsModal({
             holders
           </Trans>
         </h4>
+        <Space direction="vertical">
+          {tokenAddress && tokenAddress !== constants.AddressZero && (
+            <div style={{ marginBottom: 20 }}>
+              <Trans>
+                Token address: <FormattedAddress address={tokenAddress} />
+              </Trans>
+            </div>
+          )}
 
-        {tokenAddress && tokenAddress !== constants.AddressZero && (
-          <div style={{ marginBottom: 20 }}>
+          <Callout>
             <Trans>
-              Token address: <FormattedAddress address={tokenAddress} />
+              This list is using an experimental data index and may be
+              inaccurate for some projects.
             </Trans>
-          </div>
-        )}
+          </Callout>
 
-        <p style={{ padding: 10, background: colors.background.l1 }}>
-          <Trans>
-            This list is using an experimental data index and may be inaccurate
-            for some projects.
-          </Trans>
-        </p>
+          {list}
 
-        {list}
+          {loading && (
+            <div>
+              <Loading />
+            </div>
+          )}
 
-        {loading && (
-          <div>
-            <Loading />
-          </div>
-        )}
-
-        {participants?.length % pageSize === 0 && !loading ? (
-          <div
-            style={{
-              textAlign: 'center',
-              color: colors.text.secondary,
-              cursor: 'pointer',
-            }}
-            onClick={() => setPageNumber(pageNumber + 1)}
-          >
-            <Trans>Load more</Trans>
-          </div>
-        ) : loading ? null : (
-          <div
-            style={{
-              textAlign: 'center',
-              padding: 10,
-              color: colors.text.secondary,
-            }}
-          >
-            <Trans>{participants.length} total</Trans>
-          </div>
-        )}
+          {participants?.length % pageSize === 0 && !loading ? (
+            <div
+              style={{
+                textAlign: 'center',
+                color: colors.text.secondary,
+                cursor: 'pointer',
+              }}
+              onClick={() => setPageNumber(pageNumber + 1)}
+            >
+              <Trans>Load more</Trans>
+            </div>
+          ) : loading ? null : (
+            <div
+              style={{
+                textAlign: 'center',
+                padding: 10,
+                color: colors.text.secondary,
+              }}
+            >
+              <Trans>{participants.length} total</Trans>
+            </div>
+          )}
+        </Space>
       </div>
 
       <DownloadParticipantsModal

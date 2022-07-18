@@ -10,9 +10,10 @@ import { useLaunchProjectTx } from 'hooks/v2/transactor/LaunchProjectTx'
 import { useCallback, useContext, useState } from 'react'
 import { uploadProjectMetadata } from 'utils/ipfs'
 import { TransactionReceipt } from '@ethersproject/providers'
-import { useHistory } from 'react-router-dom'
+import { useRouter } from 'next/router'
 import { BigNumber } from '@ethersproject/bignumber'
 import { NetworkContext } from 'contexts/networkContext'
+import { emitErrorNotification } from 'utils/notifications'
 
 import TransactionModal from 'components/TransactionModal'
 
@@ -64,7 +65,7 @@ const getProjectIdFromReceipt = (txReceipt: TransactionReceipt): number => {
 
 export default function DeployProjectButton() {
   const launchProjectTx = useLaunchProjectTx()
-  const history = useHistory()
+  const router = useRouter()
 
   const { userAddress, onSelectWallet } = useContext(NetworkContext)
 
@@ -79,7 +80,7 @@ export default function DeployProjectButton() {
     projectMetadata,
     reservedTokensGroupedSplits,
     payoutGroupedSplits,
-    nftRewardsCid,
+    nftRewardsCIDs,
   } = useAppSelector(state => state.editingV2Project)
   const fundingCycleMetadata = useEditingV2FundingCycleMetadataSelector()
   const fundingCycleData = useEditingV2FundingCycleDataSelector()
@@ -110,69 +111,75 @@ export default function DeployProjectButton() {
     }
 
     const groupedSplits = [payoutGroupedSplits, reservedTokensGroupedSplits]
-    if (nftRewardsCid) {
+    if (nftRewardsCIDs) {
       // TODO: Set loading states true of nftTxGas and launchTxGas.
       // Call gas reader for gas of nft tx and launch tx within multicall.
       // Set value and loading states of nftTxGas and launchTxGas.
       // setGasReaderModalVisible(true)
     }
-    const txSuccessful = await launchProjectTx(
-      {
-        projectMetadataCID: uploadedMetadata.IpfsHash,
-        fundingCycleData,
-        fundingCycleMetadata,
-        fundAccessConstraints,
-        groupedSplits,
-      },
-      {
-        onDone() {
-          console.info('Transaction executed. Awaiting confirmation...')
-          setTransactionPending(true)
+    try {
+      const txSuccessful = await launchProjectTx(
+        {
+          projectMetadataCID: uploadedMetadata.IpfsHash,
+          fundingCycleData,
+          fundingCycleMetadata,
+          fundAccessConstraints,
+          groupedSplits,
         },
-        async onConfirmed(result) {
-          const txHash = result?.transaction?.hash
-          if (!txHash) {
-            return // TODO error notififcation
-          }
+        {
+          onDone() {
+            console.info('Transaction executed. Awaiting confirmation...')
+            setTransactionPending(true)
+          },
+          async onConfirmed(result) {
+            const txHash = result?.transaction?.hash
+            if (!txHash) {
+              return // TODO error notififcation
+            }
 
-          const txReceipt = await findTransactionReceipt(txHash)
-          if (!txReceipt) {
-            return // TODO error notififcation
-          }
-          console.info('Found tx receipt.')
+            const txReceipt = await findTransactionReceipt(txHash)
+            if (!txReceipt) {
+              return // TODO error notififcation
+            }
+            console.info('Found tx receipt.')
 
-          const projectId = getProjectIdFromReceipt(txReceipt)
-          if (projectId === undefined) {
-            return // TODO error notififcation
-          }
+            const projectId = getProjectIdFromReceipt(txReceipt)
+            if (projectId === undefined) {
+              return // TODO error notififcation
+            }
 
-          // Reset Redux state/localstorage after deploying
-          dispatch(editingV2ProjectActions.resetState())
+            // Reset Redux state/localstorage after deploying
+            dispatch(editingV2ProjectActions.resetState())
 
-          history.push(`${v2ProjectRoute({ projectId })}?newDeploy=true`)
+            router.push(`${v2ProjectRoute({ projectId })}?newDeploy=true`)
+          },
+          onCancelled() {
+            setDeployLoading(false)
+            setTransactionPending(false)
+          },
         },
-        onCancelled() {
-          setDeployLoading(false)
-          setTransactionPending(false)
-        },
-      },
-    )
+      )
 
-    if (!txSuccessful) {
+      if (!txSuccessful) {
+        setDeployLoading(false)
+        setTransactionPending(false)
+      }
+    } catch (error) {
+      emitErrorNotification(`Failure: ${error}`)
       setDeployLoading(false)
       setTransactionPending(false)
     }
   }, [
-    launchProjectTx,
     projectMetadata,
-    payoutGroupedSplits,
-    reservedTokensGroupedSplits,
     fundingCycleData,
     fundingCycleMetadata,
     fundAccessConstraints,
-    history,
-    nftRewardsCid,
+    payoutGroupedSplits,
+    reservedTokensGroupedSplits,
+    nftRewardsCIDs,
+    launchProjectTx,
     dispatch,
+    router,
   ])
 
   return (

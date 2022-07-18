@@ -10,7 +10,7 @@ import { DeployProjectPayerTxArgs } from 'hooks/v2/transactor/DeployProjectPayer
 
 import { AddToProjectBalanceForm } from './AddToProjectBalanceForm'
 import { PayableAddressSection } from './PayableAddressSection'
-import { V1TokenMigrationSection } from './V1TokenMigrationSection/V1TokenMigrationSection'
+import { V1TokenMigrationSetupSection } from './V1TokenMigrationSetupSection'
 import { TransferOwnershipForm } from './TransferOwnershipForm'
 import { TransferUnclaimedTokensForm } from './TransferUnclaimedTokensForm'
 
@@ -69,7 +69,7 @@ export function ProjectToolsDrawer({
 
   const OwnerTools = (
     <Space direction="vertical" size="large" style={{ width: '100%' }}>
-      <V1TokenMigrationSection />
+      <V1TokenMigrationSetupSection />
 
       <Divider />
 

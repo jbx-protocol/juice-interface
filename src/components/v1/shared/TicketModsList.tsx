@@ -4,17 +4,14 @@ import ProjectTicketMods from 'components/v1/shared/ProjectTicketMods'
 import Mod from 'components/v1/shared/Mod'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { BigNumber } from '@ethersproject/bignumber'
-import {
-  OperatorPermission,
-  useHasPermission,
-} from 'hooks/v1/contractReader/HasPermission'
+import { useV1ConnectedWalletHasPermission } from 'hooks/v1/contractReader/V1ConnectedWalletHasPermission'
 import { useSetTicketModsTx } from 'hooks/v1/transactor/SetTicketModsTx'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { TicketMod } from 'models/mods'
 import { useContext, useLayoutEffect, useMemo, useState } from 'react'
 import { formatWad, permyriadToPercent } from 'utils/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
-
+import { V1OperatorPermission } from 'models/v1/permissions'
 export default function TicketModsList({
   total,
   mods,
@@ -69,7 +66,9 @@ export default function TicketModsList({
   const modsTotal = mods?.reduce((acc, curr) => acc + curr.percent, 0)
   const ownerPercent = 10000 - (modsTotal ?? 0)
 
-  const hasEditPermission = useHasPermission(OperatorPermission.SetTicketMods)
+  const hasEditPermission = useV1ConnectedWalletHasPermission(
+    V1OperatorPermission.SetTicketMods,
+  )
 
   return (
     <div>

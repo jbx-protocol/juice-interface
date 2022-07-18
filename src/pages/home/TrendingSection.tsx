@@ -73,7 +73,7 @@ export default function TrendingSection() {
               padding: '1rem 0 2rem 0',
             }}
           >
-            <Button size="large" href="/#/projects" block={isMobile}>
+            <Button size="large" href="/projects" block={isMobile}>
               <Trans>More trending projects</Trans>
             </Button>
           </Row>
@@ -81,7 +81,7 @@ export default function TrendingSection() {
         <Col xs={24} md={12}>
           <Space direction="vertical" style={{ width: '100%' }} size="middle">
             <SmallHeader text={<Trans>Latest payments</Trans>} />
-            <div style={{ maxHeight: 600, overflow: 'auto' }}>
+            <div style={{ maxHeight: 784, overflow: 'auto' }}>
               <Payments />
             </div>
           </Space>

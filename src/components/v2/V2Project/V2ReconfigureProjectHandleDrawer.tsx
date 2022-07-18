@@ -3,6 +3,7 @@ import { Trans } from '@lingui/macro'
 import { Button, Divider, Drawer } from 'antd'
 import Form, { useForm } from 'antd/lib/form/Form'
 import { FormItems } from 'components/formItems'
+import ExternalLink from 'components/ExternalLink'
 
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
@@ -15,6 +16,7 @@ import { useCallback, useContext, useEffect, useState } from 'react'
 import { v2ProjectRoute } from 'utils/routes'
 
 import { drawerStyle } from 'constants/styles/drawerStyle'
+import { projectHandleENSTextRecordKey } from '../../../constants/projectHandleENSTextRecordKey'
 
 export function V2ReconfigureProjectHandleDrawer({
   visible,
@@ -26,6 +28,7 @@ export function V2ReconfigureProjectHandleDrawer({
   const { handle, projectId } = useContext(V2ProjectContext)
   const [ensNameForm] = useForm<{ ensName: string }>()
 
+  const [ensNameIsValid, setEnsNameIsValid] = useState<boolean>()
   const [ensNameInputDisabled, setEnsNameInputDisabled] = useState<boolean>()
   const [loadingSetENSName, setLoadingSetENSName] = useState<boolean>()
   const [loadingSetTextRecord, setLoadingSetTextRecord] = useState<boolean>()
@@ -48,7 +51,9 @@ export function V2ReconfigureProjectHandleDrawer({
   function onSetENSNameFormSaved() {
     setLoadingSetENSName(true)
 
-    const ensName = ensNameForm.getFieldValue('ensName')
+    const ensName = String(ensNameForm.getFieldValue('ensName'))
+      .toLowerCase()
+      .trim()
 
     editV2ProjectHandleTx(
       { ensName },
@@ -102,12 +107,13 @@ export function V2ReconfigureProjectHandleDrawer({
           1. Are included in search results on the projects page
           <br />
           2. Can be accessed via the URL:{' '}
-          <b>juicebox.money/#{v2ProjectRoute({ handle: 'handle' })}</b>
+          <b>juicebox.money{v2ProjectRoute({ handle: 'handle' })}</b>
           <br />
           <br />
-          (The original URL{' '}
-          <b>juicebox.money/#{v2ProjectRoute({ projectId })}</b> will continue
-          to work.)
+          (The original URL <b>
+            juicebox.money{v2ProjectRoute({ projectId })}
+          </b>{' '}
+          will continue to work.)
         </Trans>
       </p>
 
@@ -116,14 +122,8 @@ export function V2ReconfigureProjectHandleDrawer({
       <p style={{ color: colors.text.primary }}>
         <Trans>
           Juicebox projects use{' '}
-          <a
-            href="https://ens.domains/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            ENS names
-          </a>{' '}
-          as handles. Setting a handle involves 2 transactions:
+          <ExternalLink href="https://ens.domains/">ENS names</ExternalLink> as
+          handles. Setting a handle involves 2 transactions:
         </Trans>
       </p>
 
@@ -157,8 +157,23 @@ export function V2ReconfigureProjectHandleDrawer({
         </div>
       ) : (
         <Form form={ensNameForm} onFinish={onSetENSNameFormSaved}>
-          <FormItems.ENSName name="ensName" hideLabel />
-          <Button htmlType="submit" loading={loadingSetENSName} type="primary">
+          <FormItems.ENSName
+            name="ensName"
+            hideLabel
+            formItemProps={{ rules: [{ required: true }] }}
+            onChange={() => {
+              ensNameForm
+                .validateFields()
+                .then(() => setEnsNameIsValid(true))
+                .catch(() => setEnsNameIsValid(false))
+            }}
+          />
+          <Button
+            htmlType="submit"
+            loading={loadingSetENSName}
+            disabled={!ensNameIsValid}
+            type="primary"
+          >
             <Trans>Set ENS name</Trans>
           </Button>
         </Form>
@@ -174,20 +189,18 @@ export function V2ReconfigureProjectHandleDrawer({
         <Trans>
           Set a text record for{' '}
           {handle ? <strong>{handle}.eth</strong> : 'that ENS name'} with the
-          key <strong>"juicebox"</strong> and the value{' '}
+          key <strong>"{projectHandleENSTextRecordKey}"</strong> and the value{' '}
           <strong>"{projectId}"</strong> (this project's ID). You can do this on
           the{' '}
-          <a
+          <ExternalLink
             href={
               projectEnsName
                 ? `https://app.ens.domains/name/${projectEnsName}/details`
                 : 'https://app.ens.domains'
             }
-            target="_blank"
-            rel="noopener noreferrer"
           >
             ENS app
-          </a>
+          </ExternalLink>
           , or use the button below (as long as your connected wallet owns or
           controls that ENS name).
         </Trans>

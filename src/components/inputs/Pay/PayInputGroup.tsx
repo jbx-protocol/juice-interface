@@ -24,6 +24,10 @@ export type PayButtonProps = {
 }
 
 export default function PayInputGroup({
+  payAmountETH,
+  payInCurrency,
+  onPayAmountChange,
+  onPayInCurrencyChange,
   PayButton,
   reservedRate,
   weight,
@@ -32,6 +36,10 @@ export default function PayInputGroup({
   weightingFn,
   disabled,
 }: {
+  payAmountETH: string
+  payInCurrency: CurrencyOption
+  onPayAmountChange: (payAmount: string) => void
+  onPayInCurrencyChange: (currency: CurrencyOption) => void
   PayButton: (props: PayButtonProps) => JSX.Element | null
   reservedRate: number | undefined
   weight: BigNumber | undefined
@@ -41,20 +49,19 @@ export default function PayInputGroup({
   disabled?: boolean
 }) {
   const {
-    currencyMetadata,
-    currencies: { USD, ETH },
-  } = useContext(CurrencyContext)
-  const {
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const [payAmount, setPayAmount] = useState<string>('0')
-  const [payInCurrency, setPayInCurrency] = useState<CurrencyOption>(ETH)
+  const {
+    currencyMetadata,
+    currencies: { USD, ETH },
+  } = useContext(CurrencyContext)
+
   const [isErrorField, setIsErrorField] = useState<boolean>(false)
 
   const togglePayInCurrency = () => {
     const newPayInCurrency = payInCurrency === ETH ? USD : ETH
-    setPayInCurrency(newPayInCurrency)
+    onPayInCurrencyChange(newPayInCurrency)
   }
 
   return (
@@ -77,9 +84,9 @@ export default function PayInputGroup({
             placeholder="0"
             onChange={val => {
               setIsErrorField(Number(val) <= 0)
-              setPayAmount(val ?? '0')
+              onPayAmountChange(val ?? '0')
             }}
-            value={payAmount}
+            value={payAmountETH}
             min={0}
             disabled={disabled}
             accessory={
@@ -93,7 +100,7 @@ export default function PayInputGroup({
           />
           <PayInputSubText
             payInCurrency={payInCurrency ?? ETH}
-            amount={payAmount}
+            amount={payAmountETH}
             reservedRate={reservedRate}
             weight={weight}
             tokenSymbol={tokenSymbol}
@@ -104,7 +111,7 @@ export default function PayInputGroup({
 
         <PayButton
           wrapperStyle={{ flex: 1 }}
-          payAmount={payAmount}
+          payAmount={payAmountETH}
           payInCurrency={payInCurrency}
           onError={() => setIsErrorField(true)}
           disabled={disabled}

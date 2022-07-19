@@ -172,6 +172,9 @@ export default function ProjectActivity() {
     where,
   })
 
+  const count =
+    projectEvents?.pages?.reduce((prev, cur) => prev + cur.length, 0) ?? 0
+
   const list = useMemo(
     () =>
       projectEvents?.pages.map(group =>
@@ -229,9 +232,6 @@ export default function ProjectActivity() {
   )
 
   const listStatus = useMemo(() => {
-    const count =
-      projectEvents?.pages?.reduce((prev, cur) => prev + cur.length, 0) ?? 0
-
     if (isLoading || isFetchingNextPage) {
       return (
         <div>
@@ -280,14 +280,7 @@ export default function ProjectActivity() {
         <Trans>{count} total</Trans>
       </div>
     )
-  }, [
-    projectEvents,
-    isLoading,
-    isFetchingNextPage,
-    hasNextPage,
-    fetchNextPage,
-    colors,
-  ])
+  }, [isLoading, isFetchingNextPage, hasNextPage, fetchNextPage, colors, count])
 
   return (
     <div>
@@ -306,6 +299,9 @@ export default function ProjectActivity() {
             type="text"
             icon={<DownloadOutlined />}
             onClick={() => setDownloadModalVisible(true)}
+            style={{
+              display: count > 0 ? 'inline-block' : 'none',
+            }}
           />
 
           <Select

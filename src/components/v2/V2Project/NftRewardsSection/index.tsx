@@ -19,8 +19,6 @@ export function NftRewardsSection({
     nftRewards: { CIDs, rewardTiers, loading },
   } = useContext(V2ProjectContext)
 
-  console.info('reward tiers loading: ', loading)
-
   const [selectedIndex, setSelectedIndex] = useState<number>()
 
   useEffect(() => {

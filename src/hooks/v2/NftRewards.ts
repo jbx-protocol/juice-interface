@@ -8,7 +8,6 @@ import { ipfsCidUrl } from 'utils/ipfs'
 async function getRewardTierOfCid(cid: string) {
   const url = ipfsCidUrl(cid)
   const response = await axios.get(url)
-  console.info('got obj: ', response.data)
   return response.data
 }
 
@@ -17,10 +16,8 @@ async function getRewardTierOfCid(cid: string) {
 export default function useNftRewards(
   CIDs: string[] | undefined,
 ): UseQueryResult<NftRewardTier[]> {
-  console.info('!!being ipfs lookup')
   return useQuery('nft-rewards', async () => {
     if (!CIDs?.length) {
-      console.info('!!no cidss!')
       return
     }
 

@@ -36,6 +36,7 @@ export function sortNftRewardTiers(
   )
 }
 
+// returns an array of CIDs from a given array of RewardTier obj's
 export function CIDsOfNftRewardTiersResponse(
   nftRewardTiersResponse: ContractNftRewardTier[],
 ): string[] {

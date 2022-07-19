@@ -138,7 +138,6 @@ export default function DeployProjectButton() {
         setTransactionPending(true)
       },
       async onConfirmed(result: TransactionEvent | undefined) {
-        console.info('confirmed!.')
         const txHash = result?.transaction?.hash
         if (!txHash) {
           return // TODO error notififcation
@@ -163,7 +162,6 @@ export default function DeployProjectButton() {
         router.push(`${v2ProjectRoute({ projectId })}?newDeploy=true`)
       },
       onCancelled() {
-        console.info('cancelled!.')
         setDeployLoading(false)
         setTransactionPending(false)
       },

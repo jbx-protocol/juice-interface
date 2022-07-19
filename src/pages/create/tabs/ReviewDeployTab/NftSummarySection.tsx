@@ -26,7 +26,7 @@ export default function NftSummarySection() {
             display: 'flex',
             width: '100%',
             marginTop: 30,
-            paddingBottom: '27px',
+            paddingBottom: '1.6875rem',
           }}
           key={index}
         >

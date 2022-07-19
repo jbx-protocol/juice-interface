@@ -14,9 +14,6 @@ import { rinkebyPublicResolver } from 'constants/contracts/rinkeby/PublicResolve
 import { NETWORKS_BY_NAME, readNetwork } from 'constants/networks'
 import { readProvider } from 'constants/readProvider'
 import { TEMPORARY_NFT_DEPLOYER_ABI } from './NftRewards'
-
-import { TEMPORARY_NFT_DATASOURCE_ABI } from 'constants/contracts/rinkeby/TEMPORARY_NFT_DATASOUCE_ABI'
-
 interface ForgeDeploy {
   receipts: { contractAddress: string }[]
 }
@@ -155,29 +152,6 @@ const loadJBNftRewardsDeployerContract = async (network: NetworkName) => {
   return temporaryNftDeployerContractJson
 }
 
-const loadJBNftRewardsDataSourceContract = async () => {
-  // const contractJson = {
-  //   abi: (
-  //     await import(
-  //       `@jbx-protocol/juice-nft-rewards/contracts/JBTieredLimitedNFTRewardDataSourceProjectDeployer.sol/JBTieredLimitedNFTRewardDataSourceProjectDeployer.json`
-  //     )
-  //   ).abi,
-  //   address: (
-  //     (await import(
-  //       `@jbx-protocol/juice-nft-rewards/broadcast/Deploy.sol/${NETWORKS_BY_NAME[network].chainId}/run-latest.json`
-  //     )) as ForgeDeploy
-  //   ).receipts[0].contractAddress,
-  // }
-  // return contractJson
-
-  const NftDeployerContractJson = {
-    address: '0x683D237748C6Ae861B079958404970c1671eba83',
-    abi: TEMPORARY_NFT_DATASOURCE_ABI,
-  }
-
-  return NftDeployerContractJson
-}
-
 const loadContract = async (
   contractName: V2ContractName,
   network: NetworkName,
@@ -197,10 +171,6 @@ const loadContract = async (
     V2ContractName.JBTieredLimitedNFTRewardDataSourceProjectDeployer
   ) {
     contractJson = await loadJBNftRewardsDeployerContract(network)
-  } else if (
-    contractName === V2ContractName.JBTieredLimitedNFTRewardDataSource
-  ) {
-    contractJson = await loadJBNftRewardsDataSourceContract()
   } else {
     contractJson = await loadJuiceboxV2Contract(contractName, network)
   }

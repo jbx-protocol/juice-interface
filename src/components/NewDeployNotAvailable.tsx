@@ -1,7 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
-
-import { useHistory } from 'react-router-dom'
+import { useRouter } from 'next/router'
 
 import { layouts } from 'constants/styles/layouts'
 import { padding } from 'constants/styles/padding'
@@ -11,7 +10,7 @@ export default function NewDeployNotAvailable({
 }: {
   handleOrId: string | number | undefined
 }) {
-  const history = useHistory()
+  const router = useRouter()
 
   return (
     <div
@@ -29,7 +28,7 @@ export default function NewDeployNotAvailable({
         </Trans>
         <br />
         <br />
-        <Button type="primary" onClick={() => history.go(0)}>
+        <Button type="primary" onClick={() => router.reload()}>
           <Trans>Refresh</Trans>
         </Button>
       </h2>

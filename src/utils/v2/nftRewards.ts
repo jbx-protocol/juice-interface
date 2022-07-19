@@ -1,4 +1,12 @@
+import { NetworkContext } from 'contexts/networkContext'
 import { NftRewardTier } from 'models/v2/nftRewardTier'
+import { useContext } from 'react'
+import { Contract } from '@ethersproject/contracts'
+import { TEMPORARY_NFT_DEPLOYER_ABI } from 'hooks/v2/NftRewards'
+
+import { readProvider } from 'constants/readProvider'
+
+const NftDataSourceContractAbi = TEMPORARY_NFT_DEPLOYER_ABI
 
 // Returns the highest NFT reward tier that a payer is eligible given their pay amount
 export function getNftRewardTier({
@@ -33,6 +41,13 @@ export function sortNftRewardTiers(
       ? -1
       : 0,
   )
+}
+
+export function getNftDataSourceContract(address: string): Contract {
+  const { signingProvider } = useContext(NetworkContext)
+
+  const signerOrProvider = signingProvider?.getSigner() ?? readProvider
+  return new Contract(address, NftDataSourceContractAbi, signerOrProvider)
 }
 
 export const MOCK_NFTs: NftRewardTier[] = [

@@ -23,6 +23,7 @@ export enum V2ContractName {
   DeprecatedJBDirectory = 'DeprecatedJBDirectory',
 
   JBTieredLimitedNFTRewardDataSourceProjectDeployer = 'JBTieredLimitedNFTRewardDataSourceProjectDeployer',
+  JBTieredLimitedNFTRewardDataSource = 'JBTieredLimitedNFTRewardDataSource',
 }
 
 export type V2Contracts = Record<V2ContractName, Contract>

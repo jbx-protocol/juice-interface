@@ -1,11 +1,11 @@
-import { V2ContractName } from 'models/v2/contracts'
+import { getNftDataSourceContract } from 'utils/v2/nftRewards'
 
 import useV2ContractReader from './V2ContractReader'
 
-export function useNftCIDsOf(projectId: number | undefined) {
+export function useNftCIDsOf(dataSourceAddress: string) {
   return useV2ContractReader<string[]>({
-    contract: V2ContractName.DeprecatedJBController, //TODO: NFTRewards,
-    functionName: 'tokenURI',
-    args: projectId ? [projectId] : null,
+    contract: getNftDataSourceContract(dataSourceAddress),
+    functionName: 'allTiers',
+    args: null,
   })
 }

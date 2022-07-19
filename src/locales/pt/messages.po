@@ -38,7 +38,7 @@ msgstr "1 ano"
 msgid "1. Get funded."
 msgstr ""
 
-#: src/pages/create/index.tsx
+#: src/pages/create/index.page.tsx
 msgid "1. Project details"
 msgstr "1. Detalhes do projeto"
 
@@ -51,7 +51,7 @@ msgstr ""
 msgid "100% overflow"
 msgstr "100% overflow"
 
-#: src/pages/create/index.tsx
+#: src/pages/create/index.page.tsx
 msgid "2. Funding cycle"
 msgstr "2. Ciclo de financiamento"
 
@@ -76,7 +76,7 @@ msgstr "3 dias de atraso"
 msgid "3. Manage your funds"
 msgstr ""
 
-#: src/pages/create/index.tsx
+#: src/pages/create/index.page.tsx
 msgid "3. Review and deploy"
 msgstr "3. Revisar e implementar"
 
@@ -105,7 +105,7 @@ msgstr "90 dias"
 msgid "<0/> Archived projects have not been modified or deleted on the blockchain, and can still be interacted with directly through the Juicebox contracts."
 msgstr "<0/> Os projetos arquivados não foram modificados ou excluídos no Blockchain e ainda podem ser integrados diretamente através dos contratos do Juicebox."
 
-#: src/pages/projects/index.tsx
+#: src/pages/projects/index.page.tsx
 msgid "<0/> The Juicebox protocol is open to anyone, and project configurations can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO or Peel. Do your own research and understand the risks before committing your funds."
 msgstr "<0/> O protocolo do Juicebox é aberto a qualquer pessoa e as configurações do projeto podem variar muito. Existem os riscos associados à interação com todos os projetos do protocolo. Projetos construídos no protocolo não são endossados ou controlados pelo JuiceboxDAO ou Peel. Faça sua própria pesquisa e entenda os riscos antes de autorizar seus fundos."
 
@@ -211,7 +211,7 @@ msgstr "<0>Em uma taxa de resgate menor, o resgate de um token aumenta o valor d
 
 #: src/pages/home/QAs.tsx
 msgid "<0>Peel</0> is the DAO that manages the juicebox.money frontend interface. You can reach out to Peel either through the <1>Peel Discord</1> or the <2>Juicebox Discord</2>."
-msgstr "<0>Peel</0> é a DAO que gere a parte da interface do juicebox.money. Pode contatar a Peel mediante <1>Discord de Peel</1> ou <2>Discord de Juicebox</2>."
+msgstr ""
 
 #: src/pages/create/forms/FundingForm/FundingCycleExplainerCollapse.tsx
 msgid "<0>Recurring funding cycles</0>. For example, distribute funds from your project's treasury every week."
@@ -358,11 +358,11 @@ msgstr "Adicionar pagamento"
 msgid "Add reward tier"
 msgstr ""
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/AddTerminalSection.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/AddTerminalSection.tsx
 msgid "Add terminal"
 msgstr ""
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/AddTerminalSection.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/AddTerminalSection.tsx
 msgid "Add the V1 Token Payment Terminal to your project."
 msgstr ""
 
@@ -400,7 +400,7 @@ msgstr "Endereço:"
 msgid "Address: <0/>"
 msgstr "Endereço:<0/>"
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Adjust incentives for paying your project."
 msgstr "Ajuste incentivos para o pagamento do seu projeto."
 
@@ -458,7 +458,7 @@ msgstr ""
 msgid "Allow token minting"
 msgstr "Permitir emissão de token"
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupSection.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupSection.tsx
 msgid "Allow your V1 project token holders to swap their tokens for your V2 project tokens."
 msgstr ""
 
@@ -471,7 +471,7 @@ msgstr ""
 msgid "Allowed"
 msgstr "Permitido"
 
-#: src/pages/index.tsx
+#: src/pages/index.page.tsx
 msgid "Almost definitely."
 msgstr "Definitivamente."
 
@@ -526,7 +526,6 @@ msgstr "Qualquer reconfiguração de um ciclo de financiamento próximo terá ef
 
 #: src/components/ArchiveProject/index.tsx
 #: src/components/ArchiveProject/index.tsx
-#: src/components/Project/ProjectToolsDrawer/ProjectToolsDrawer.tsx
 msgid "Archive project"
 msgstr "Arquivar projeto"
 
@@ -535,7 +534,7 @@ msgid "Archived"
 msgstr "Arquivado"
 
 #: src/pages/create/StartOverButton.tsx
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Are you sure you want to start over?"
 msgstr "Você tem certeza que quer começar novamente?"
 
@@ -602,7 +601,7 @@ msgstr "Beneficiário"
 msgid "Beneficiary address"
 msgstr "Endereço do beneficiário"
 
-#: src/pages/index.tsx
+#: src/pages/index.page.tsx
 msgid "Big ups to the Ethereum community for crafting the infrastructure and economy to make Juicebox possible."
 msgstr "Grandes aplausos à comunidade Ethereum por criar a infraestrutura e economia a fim de tornar o Juicebox possível."
 
@@ -628,7 +627,7 @@ msgstr "Taxa da curva de vínculo"
 msgid "Bonding curve:"
 msgstr "Curva de vínculo:"
 
-#: src/pages/index.tsx
+#: src/pages/index.page.tsx
 msgid "Built for:"
 msgstr "Construído para:"
 
@@ -696,7 +695,7 @@ msgstr "Mudanças nos pagamentos entrarão em vigor imediatamente."
 msgid "Changes to project details will take effect immediately."
 msgstr "Mudanças nos detalhes do projeto serão implementadas imediatamente."
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Changes to these attributes can be made at any time and will be applied to your project immediately."
 msgstr "As mudanças para esses atribuitos podem ser feitas a qualquer momento e irão ser aplicadas ao seu projeto imediatamente."
 
@@ -756,7 +755,6 @@ msgstr "Reivindicar os tokens {tokenSymbol} irá converter o seu saldo de {token
 msgid "Claiming {tokenTextLong} will convert your {tokenTextShort} balance to ERC-20 tokens and mint them to your wallet."
 msgstr "Reivindicar {tokenTextLong} irá converter o seu saldo de {tokenTextShort} para tokens ERC-20 e irá emiti-los em sua carteira."
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/V1TokenMigrationSetupModal.tsx
 #: src/components/TransactionModal.tsx
 #: src/components/modals/DownloadParticipantsModal.tsx
 #: src/components/v1/V1Project/V1DownloadActivityModal.tsx
@@ -765,6 +763,7 @@ msgstr "Reivindicar {tokenTextLong} irá converter o seu saldo de {tokenTextShor
 #: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/EditTokenAllocationModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/V1TokenMigrationSetupModal.tsx
 msgid "Close"
 msgstr "Fechar"
 
@@ -788,7 +787,7 @@ msgstr "Configurar restrições para seus ciclos de financiamento."
 msgid "Configure the dynamics of your project's token."
 msgstr "Configurar as dinâmicas de seu token de projeto."
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/SetV1ProjectSection.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/SetV1ProjectSection.tsx
 msgid "Configure which Juicebox V1 project you'd like to accept tokens for. Token holders of this V1 project will be able to swap their V1 tokens for V2 tokens."
 msgstr ""
 
@@ -810,7 +809,7 @@ msgstr "Conecte uma carteira para reivindicar"
 
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 #: src/pages/create/tabs/ReviewDeployTab/DeployProjectButton.tsx
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Connect wallet to deploy"
 msgstr "Conecte uma carteira para implementar"
 
@@ -912,7 +911,7 @@ msgstr "Criar endereço de pagamento"
 
 #: src/hooks/PageTitle.ts
 #: src/pages/projects/MyProjects.tsx
-#: src/pages/projects/index.tsx
+#: src/pages/projects/index.page.tsx
 msgid "Create project"
 msgstr "Criar projeto"
 
@@ -928,7 +927,7 @@ msgstr ""
 msgid "Crowdfund your project with ETH. Set a funding target to cover predictable expenses, and any extra funds (<0>overflow</0>) can be claimed by anyone holding your project's tokens alongside you."
 msgstr ""
 
-#: src/pages/index.tsx
+#: src/pages/index.page.tsx
 msgid "Crowdfunding"
 msgstr ""
 
@@ -980,7 +979,7 @@ msgstr "Ciclo #{0}"
 msgid "Cycle #{0} -"
 msgstr "Ciclo #{0} -"
 
-#: src/pages/index.tsx
+#: src/pages/index.page.tsx
 msgid "DAOs"
 msgstr ""
 
@@ -1017,11 +1016,11 @@ msgstr "Deletar alocação de token"
 msgid "Deploy funding cycle configuration"
 msgstr "Implemente a configuração do ciclo de financiamento"
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Deploy project"
 msgstr "Implementar projeto"
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Deploy project on {signerNetwork}"
 msgstr "Implementar projeto no {signerNetwork}"
 
@@ -1051,7 +1050,7 @@ msgid "Design how your tokens should work."
 msgstr ""
 
 #: src/pages/home/HowItWorksSection.tsx
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Design your project"
 msgstr "Crie seu projeto"
 
@@ -1223,7 +1222,7 @@ msgstr "Limite de distribuição: <0/>{0}"
 msgid "Do I have to make my project open source to use Juicebox as its business model?"
 msgstr "Tenho que fazer meu projeto de código aberto para usar Juicebox como seu modelo de negócios?"
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupSection.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupSection.tsx
 msgid "Do I need this?"
 msgstr ""
 
@@ -1389,7 +1388,7 @@ msgstr "Erro ao carregar titulares"
 msgid "Error loading payments"
 msgstr "Erro ao carregar pagamentos"
 
-#: src/pages/index.tsx
+#: src/pages/index.page.tsx
 msgid "Explore projects"
 msgstr "Explore projetos"
 
@@ -1397,7 +1396,7 @@ msgstr "Explore projetos"
 msgid "FAQ"
 msgstr "FAQ"
 
-#: src/pages/index.tsx
+#: src/pages/index.page.tsx
 msgid "FAQs"
 msgstr "FAQs"
 
@@ -1418,7 +1417,7 @@ msgstr "O arquivo deve ter menos que {formattedSize}{unit}"
 msgid "Fund and operate your thing, your way."
 msgstr ""
 
-#: src/pages/index.tsx
+#: src/pages/index.page.tsx
 msgid "Fund anything. Grow together."
 msgstr "Financie qualquer coisa. Cresça em conjunto."
 
@@ -1431,7 +1430,7 @@ msgstr "Financiamento"
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v1/shared/forms/BudgetForm.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/NoFundingCycle.tsx
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Funding cycle"
 msgstr "Ciclo de financiamento"
 
@@ -1466,7 +1465,7 @@ msgstr "Ciclos de financiamento podem ser reconfigurados momentos antes de um no
 #: src/components/v1/shared/FundingCycle/Spending.tsx
 #: src/components/v1/shared/forms/PayModsForm.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Funding distribution"
 msgstr "Distribuição de fundos"
 
@@ -1479,7 +1478,8 @@ msgstr "Objetivo de financiamento"
 msgid "Funds will be distributed to:"
 msgstr "Os fundos serão distribuídos para:"
 
-#: src/components/Project/ProjectToolsDrawer/ProjectToolsDrawer.tsx
+#: src/components/v1/V1Project/V1ProjectToolsDrawer.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V2ProjectToolsDrawer.tsx
 msgid "General"
 msgstr "Geral"
 
@@ -1570,7 +1570,7 @@ msgstr "Como os {reservedPercentage}% dos tokens reservados do seu projeto serã
 msgid "How to Juice."
 msgstr ""
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "How your project will distribute funds."
 msgstr "Como o seu projeto distribuirá fundos."
 
@@ -1608,7 +1608,7 @@ msgstr "Se você não aumentar a soma de todos os seus pagamentos (<0/>{distribu
 msgid "If you don't raise this amount, your splits will receive their percentage of whatever you raise."
 msgstr "Se você não arrecadar esta quantidade, os seus splits irão receber as porcentagens de tudo o que arrecadou."
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupSection.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupSection.tsx
 msgid "If you have Juicebox project on Juicebox V1 and V2, we recommend you migrate to V2 exclusively."
 msgstr ""
 
@@ -1649,11 +1649,11 @@ msgstr "Na carteira"
 
 #: src/components/forms/IncentivesForm.tsx
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Incentives"
 msgstr "Incentivos"
 
-#: src/pages/index.tsx
+#: src/pages/index.page.tsx
 msgid "Indie creators and builders"
 msgstr "Criadores e construtores indies"
 
@@ -1715,7 +1715,7 @@ msgstr ""
 msgid "Juicebox Project ID"
 msgstr "ID do projeto Juicebox"
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/SetV1ProjectSection.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/SetV1ProjectSection.tsx
 msgid "Juicebox V1 project ID"
 msgstr ""
 
@@ -1767,8 +1767,8 @@ msgstr "Últimos pagamentos"
 msgid "Launch funding cycle"
 msgstr "Lançar ciclo de financiamento"
 
-#: src/pages/create/index.tsx
-#: src/pages/index.tsx
+#: src/pages/create/index.page.tsx
+#: src/pages/index.page.tsx
 msgid "Launch your project"
 msgstr "Lance seu projeto"
 
@@ -1780,14 +1780,14 @@ msgstr "Deixar em branco para iniciar imediatamente."
 msgid "Light theme"
 msgstr "Tema claro"
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/SetV1ProjectSection.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/SetV1ProjectSection.tsx
 msgid "Link Juicebox V1 project"
 msgstr ""
 
 #: src/components/modals/ParticipantsModal.tsx
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 #: src/components/v2/V2Project/ProjectActivity/index.tsx
-#: src/pages/projects/index.tsx
+#: src/pages/projects/index.page.tsx
 msgid "Load more"
 msgstr "Carregar mais"
 
@@ -1912,7 +1912,7 @@ msgstr "Mova seus {tokensLabel} do contrato do Juicebox para sua carteira."
 msgid "My Projects"
 msgstr "Meus Projetos"
 
-#: src/pages/index.tsx
+#: src/pages/index.page.tsx
 msgid "NFT projects"
 msgstr ""
 
@@ -2084,7 +2084,8 @@ msgstr ""
 msgid "Owner token minting"
 msgstr "Proprietário do token emitido"
 
-#: src/components/Project/ProjectToolsDrawer/ProjectToolsDrawer.tsx
+#: src/components/v1/V1Project/V1ProjectToolsDrawer.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V2ProjectToolsDrawer.tsx
 msgid "Owner tools"
 msgstr "Ferramentas do proprietário"
 
@@ -2254,10 +2255,6 @@ msgstr "Porcentagens"
 msgid "Percentages must add up to 100% or less"
 msgstr "Porcentagens devem atingir 100% ou menos"
 
-#: src/components/Project/ProjectToolsDrawer/ProjectToolsDrawer.tsx
-msgid "Please contact the Juicebox dev team through our <0>Discord</0> to have your project archived."
-msgstr "Por favor, contacte o time dev do Juicebox através de nosso <0>Discord</0> para arquivar o seu projeto."
-
 #: src/components/Navbar/constants.ts
 msgid "Podcast"
 msgstr "Podcast"
@@ -2271,7 +2268,7 @@ msgstr "Riscos potenciais"
 msgid "Preview"
 msgstr ""
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Preview:"
 msgstr "Pré-visualizar:"
 
@@ -2314,8 +2311,8 @@ msgstr "Descrição do projeto"
 
 #: src/pages/create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
-#: src/pages/v1/create/index.tsx
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Project details"
 msgstr "Detalhes do projeto"
 
@@ -2353,7 +2350,7 @@ msgstr "Lançamento do projeto bem-sucedido"
 msgid "Project name"
 msgstr "Nome do projeto"
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Project name, handle, links, and other details."
 msgstr "Nome, identificador, links e outros detalhes do projeto."
 
@@ -2409,7 +2406,7 @@ msgid "Projects can be created with an optional discount rate designed to incent
 msgstr "Os projetos podem ser criados com uma taxa de desconto opcional com intuito de incentivar os colaboradores o quanto antes. A quantidade de tokens recompensados pelo montante pago para o seu projeto irá diminuir conforme a taxa de desconto a cada novo ciclo de financiamento. Uma taxa de desconto maior irá incentivar os apoiadores a financiar seu projeto o quanto antes."
 
 #: src/pages/home/StatsSection.tsx
-#: src/pages/projects/index.tsx
+#: src/pages/projects/index.page.tsx
 msgid "Projects on Juicebox"
 msgstr "Projetos no Juicebox"
 
@@ -2426,7 +2423,7 @@ msgid "Projects using a reserved rate of {reservedRateRiskyMin}% or more will ap
 msgstr "Projetos utilizando uma taxa de reserva de {reservedRateRiskyMin}% ou mais aparentarão ser mais arriscados para os contribuidores, pois uma quantia relativamente pequena de tokens será recebida em troca de pagar por seu projeto."
 
 #: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
-msgid "Projects with a handle:<0/><1/>1. Are included in search results on the projects page<2/>2. Can be accessed via the URL: <3>juicebox.money/#{0}</3><4/><5/>(The original URL <6>juicebox.money/#{1}</6> will continue to work.)"
+msgid "Projects with a handle:<0/><1/>1. Are included in search results on the projects page<2/>2. Can be accessed via the URL: <3>juicebox.money{0}</3><4/><5/>(The original URL <6>juicebox.money{1}</6> will continue to work.)"
 msgstr ""
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
@@ -2482,7 +2479,7 @@ msgstr "Endereço do recipiente"
 msgid "Recipients will receive payouts in ETH."
 msgstr "Recipientes receberão os pagamentos em ETH."
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Reconfiguration"
 msgstr "Reconfiguração"
 
@@ -2507,10 +2504,6 @@ msgstr "Reconfigurar"
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 msgid "Reconfigure funding"
 msgstr "Reconfigurar financiamento"
-
-#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
-msgid "Reconfigure payouts and limit"
-msgstr "Reconfigurar pagamentos e limite"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
 msgid "Reconfigure payouts as percentages of your distribution limit."
@@ -2622,7 +2615,7 @@ msgstr "Alocações de token reservado"
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/pages/create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Reserved tokens"
 msgstr "Tokens reservados"
 
@@ -2648,16 +2641,16 @@ msgstr "{tokensText} Reservados"
 msgid "Resources"
 msgstr "Recursos"
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Restrict payments and printing tokens."
 msgstr "Restringir pagamentos e impressão de tokens."
 
 #: src/components/forms/RestrictedActionsForm.tsx
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Restricted actions"
 msgstr "Ações restritas"
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Review & Deploy"
 msgstr "Revisar & Implementar"
 
@@ -2677,7 +2670,7 @@ msgstr ""
 msgid "Reward contributors with NFTs when they meet your configured funding criteria."
 msgstr ""
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Reward specific community members with tokens."
 msgstr "Recompense membros específicos da comunidade com tokens."
 
@@ -2693,7 +2686,7 @@ msgstr "Regras"
 msgid "Rules for determining how funding cycles can be reconfigured"
 msgstr "Regras para determinar quantos ciclos de financiamento podem ser reconfigurados"
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Rules for how changes can be made to your project."
 msgstr "Regras sobre como fazer mudanças no seu projeto."
 
@@ -2764,7 +2757,7 @@ msgstr "Salvar configuração de token"
 msgid "Save tracked assets"
 msgstr "Salvar ativos rastreados"
 
-#: src/pages/projects/index.tsx
+#: src/pages/projects/index.page.tsx
 msgid "Search projects by handle"
 msgstr "Procurar projetos pelo identificador"
 
@@ -2824,19 +2817,19 @@ msgstr "Defina a duração de seus ciclos de financiamento."
 msgid "Set this to the sum of all your payouts"
 msgstr "Defina isso na soma de todos os seus pagamentos"
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/V1TokenMigrationSetupModal.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/V1TokenMigrationSetupModal.tsx
 msgid "Set up V1 token migration"
 msgstr ""
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupSection.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupSection.tsx
 msgid "Set up token migration"
 msgstr ""
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/V1TokenMigrationSetupModal.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/V1TokenMigrationSetupModal.tsx
 msgid "Set up your Juicebox V2 project for migration from your Juicebox V1 project."
 msgstr ""
 
-#: src/pages/index.tsx
+#: src/pages/index.page.tsx
 msgid "Should you Juicebox?"
 msgstr "Você deveria usar o Juicebox?"
 
@@ -2872,8 +2865,8 @@ msgid "Start"
 msgstr "Começo"
 
 #: src/pages/create/StartOverButton.tsx
-#: src/pages/v1/create/index.tsx
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Start Over"
 msgstr "Comece novamente"
 
@@ -2889,11 +2882,11 @@ msgstr ""
 msgid "Start time (seconds, Unix time)"
 msgstr "Hora de início (segundos, tempo Unix)"
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/AddTerminalSection.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/AddTerminalSection.tsx
 msgid "Step 1. Add V1 token payment terminal"
 msgstr ""
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/SetV1ProjectSection.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/SetV1ProjectSection.tsx
 msgid "Step 2. Link your Juicebox V1 project"
 msgstr ""
 
@@ -2941,11 +2934,11 @@ msgstr ""
 msgid "The <0>issuance rate</0> of your second funding cycle will be <1>{0} tokens per 1 ETH</1>, then <2>{1} tokens per 1 ETH </2>for your third funding cycle, and so on."
 msgstr "A <0>taxa de emissão</0> de seu segundo ciclo de financiamento será de <1>{0} tokens por 1 ETH</1>, depois <2>{1} tokens por 1 ETH </2>para o seu terceiro ciclo de financiamento e assim por diante."
 
-#: src/pages/index.tsx
+#: src/pages/index.page.tsx
 msgid "The Decentralized Funding Platform. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."
-msgstr "A Plataforma de Financiamento Descentralizada. Suficiente ligeira para um grupo de amigos, suficiente poderosa para uma rede global de anônimos. <0>Propriedade de comunidade</0>, em Ethereum."
+msgstr ""
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "The JBX protocol is unaudited, and projects built on it may be vulnerable to bugs or exploits. Be smart!"
 msgstr "O protocolo JBX não é auditado e projetos criados nele podem estar vulneráveis a bugs ou exploits. Seja inteligente!"
 
@@ -2996,7 +2989,7 @@ msgstr "O limite de distribuição deste ciclo de financiamento é 0, o que sign
 msgid "The funds available to distribution for this funding cycle (before the {feePercentage}% JBX fee is subtracted). This number won't roll over to the next funding cycle, so funds should be distributed before this funding cycle ends."
 msgstr "Os fundos disponíveis para distribuição para este ciclo de financiamento (antes da taxa {feePercentage}% JBX ser subtraída). Esse valor não será mantido para o próximo ciclo de financiamento, portanto, fundos devem ser distribuídos antes do fim do ciclo de financiamento."
 
-#: src/pages/index.tsx
+#: src/pages/index.page.tsx
 msgid "The future will be led by creators, and owned by communities."
 msgstr "O futuro será liderado pelos criadores, e pertencente às comunidades."
 
@@ -3139,7 +3132,7 @@ msgstr ""
 msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
 msgstr "Esta taxa determina a quantidade de overflow que cada token pode ser resgatado a qualquer momento. Em uma curva de ligação menor, resgatar um token aumenta o valor de cada token remanescente, criando um incentivo para segurar tokens por mais tempo que outros. Uma curva de ligação de 100% significa que todos os tokens terão o mesmo valor independentemente de onde foram resgatados."
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "This will erase all of your changes."
 msgstr "Isso vai apagar todas as suas mudanças."
 
@@ -3147,7 +3140,7 @@ msgstr "Isso vai apagar todas as suas mudanças."
 msgid "This will reset the data for your new project. All changes will be lost."
 msgstr ""
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupSection.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupSection.tsx
 msgid "To do so, you need to give your V1 token holders the ability to exchange their V1 tokens for V2 tokens. Select <0>Set up token migration</0> below to get started."
 msgstr ""
 
@@ -3182,7 +3175,7 @@ msgstr "Beneficiário de token:"
 msgid "Token holders <0>cannot redeem their tokens</0> for any ETH when the redemption rate is 0."
 msgstr "Os titulares de token <0>não podem reivindicar os tokens deles</0> por quaisquer ETH quando a taxa de resgaste for 0."
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/AddTerminalSection.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/AddTerminalSection.tsx
 msgid "Token holders of your V1 project tokens will swap their V1 tokens for V2 tokens at a 1-to-1 exchange rate."
 msgstr ""
 
@@ -3279,9 +3272,10 @@ msgstr "Destinatário de tokens"
 msgid "Tokens:"
 msgstr "Tokens:"
 
-#: src/components/Project/ProjectToolsDrawer/ProjectToolsDrawer.tsx
 #: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
+#: src/components/v1/V1Project/V1ProjectToolsDrawer.tsx
 #: src/components/v2/V2Project/V2ProjectHeaderActions.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V2ProjectToolsDrawer.tsx
 msgid "Tools"
 msgstr "Ferramentas"
 
@@ -3418,11 +3412,11 @@ msgstr "Usar uma estratégia de reconfiguração é recomendado. Projetos sem es
 msgid "V1"
 msgstr "V1"
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/V1TokenMigrationSetupModal.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/V1TokenMigrationSetupModal.tsx
 msgid "V1 token holders can swap their tokens for your V2 tokens on your V2 project's <0>Tokens</0> section."
 msgstr ""
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupSection.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupSection.tsx
 msgid "V1 token migration"
 msgstr ""
 
@@ -3484,7 +3478,7 @@ msgstr "Quanto custa o Juicebox?"
 msgid "What is overflow?"
 msgstr "O que é overflow?"
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/AddTerminalSection.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/AddTerminalSection.tsx
 msgid "What is the V1 Token Payment Terminal?"
 msgstr ""
 
@@ -3556,7 +3550,7 @@ msgstr "Será arredondado para <0/>{0}"
 msgid "Will it work on L2s?"
 msgstr "Irá funcionar nos L2s?"
 
-#: src/pages/index.tsx
+#: src/pages/index.page.tsx
 msgid "With Juicebox, projects are built and maintained by motivated punks getting paid transparently, and funded by a community of users and patrons who are rewarded as the projects they support succeed."
 msgstr "Com Juicebox, projetos são construídos e mantidos por “punks” motivados, sendo pagos de forma transparente, e financiados por uma comunidade de usuários e patrocinadores que são recompensados conforme os projetos que eles apoiam são bem sucedidos."
 
@@ -3629,7 +3623,7 @@ msgstr "Você ainda não criou nenhum projeto."
 msgid "You must grant permission to swap your tokens."
 msgstr ""
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/SetV1ProjectSection.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/SetV1ProjectSection.tsx
 msgid "You must own this V1 project."
 msgstr ""
 
@@ -3657,11 +3651,11 @@ msgstr "Você receberá {minReturnedTokensFormatted} ETH"
 msgid "You'll be able to issue ERC-20 tokens once your project contract has been deployed. Until then, the protocol will track token balances, allowing your supporters to earn tokens and redeem for overflow in the meantime."
 msgstr "Você poderá emitir tokens ERC-20 uma vez que o contrato de seu projeto tenha sido lançado. Até lá, o protocolo rastreará os saldos de tokens, permitindo, enquanto isso, que os seus apoiadores ganhem tokens e os resgatem por overflow."
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/V1TokenMigrationSetupModal.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/V1TokenMigrationSetupModal.tsx
 msgid "You're all set!"
 msgstr ""
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/StepSection.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/StepSection.tsx
 msgid "You've completed this step."
 msgstr ""
 
@@ -3718,7 +3712,7 @@ msgstr "Seu projeto será criado nos contratos Juicebox V2. <0>Saiba mais.</0>"
 msgid "Your project will immediately appear active on the juicebox.money app. Please allow a few days for it to appear in the \"active\" projects list on the Projects page."
 msgstr "O seu projeto irá imediatamente aparecer ativo no app juicebox.money. Por favor, aguarde alguns dias para que apareça na lista de projetos \"ativos\" na Página de Projetos."
 
-#: src/pages/v1/create/index.tsx
+#: src/pages/v1/create/index.page.tsx
 msgid "Your project's funding cycle target and duration."
 msgstr "Objetivo e duração do ciclo de financiamento do seu projeto."
 
@@ -3781,7 +3775,7 @@ msgstr "carregando"
 msgid "locked until {lockedUntilFormatted}"
 msgstr "trancado até {lockedUntilFormatted}"
 
-#: src/pages/projects/index.tsx
+#: src/pages/projects/index.page.tsx
 msgid "matching \"{searchText}\""
 msgstr "coincidindo \"{searchText}\""
 
@@ -3795,7 +3789,7 @@ msgstr "ou <0><1> compre {tokenText} em troca<2/></1></0>"
 
 #: src/pages/projects/HoldingsProjects.tsx
 #: src/pages/projects/MyProjects.tsx
-#: src/pages/projects/index.tsx
+#: src/pages/projects/index.page.tsx
 msgid "project"
 msgstr "projeto"
 
@@ -3805,7 +3799,7 @@ msgstr "proprietário do projeto"
 
 #: src/pages/projects/HoldingsProjects.tsx
 #: src/pages/projects/MyProjects.tsx
-#: src/pages/projects/index.tsx
+#: src/pages/projects/index.page.tsx
 msgid "projects"
 msgstr "projetos"
 

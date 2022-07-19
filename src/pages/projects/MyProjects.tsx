@@ -8,7 +8,7 @@ import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { useMyProjectsQuery } from 'hooks/Projects'
 import { useContext } from 'react'
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 
 export default function MyProjects() {
   const { userAddress } = useContext(NetworkContext)
@@ -62,7 +62,7 @@ export default function MyProjects() {
               <Trans>You haven't created any projects yet.</Trans>
             </p>
 
-            <Link to="/create">
+            <Link href="/create">
               <Button type="primary">
                 <Trans>Create project</Trans>
               </Button>

@@ -18,6 +18,7 @@ import { parseEther } from 'ethers/lib/utils'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
 import { IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
 import { TransactorInstance } from '../../Transactor'
+import { JUICEBOX_MONEY_METADATA_DOMAIN } from 'constants/v2/metadataDomain'
 
 const DEFAULT_MUST_START_AT_OR_AFTER = '1' // start immediately
 const DEFAULT_MEMO = ''
@@ -112,8 +113,10 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<{
         directory: getAddress(contracts.JBDirectory.address),
       }), // _deployTieredNFTRewardDataSourceData
       {
-        // _launchProjectData
-        projectMetadata: projectMetadataCID,
+        projectMetadata: {
+          domain: JUICEBOX_MONEY_METADATA_DOMAIN,
+          content: projectMetadataCID,
+        },
         data: fundingCycleData,
         metadata: fundingCycleMetadata,
         mustStartAtOrAfter,
@@ -121,7 +124,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<{
         fundAccessConstraints,
         terminals: [contracts.JBETHPaymentTerminal.address], //  _terminals (contract address of the JBETHPaymentTerminal),
         memo: DEFAULT_MEMO,
-      },
+      }, // _launchProjectData
     ]
 
     return transactor(

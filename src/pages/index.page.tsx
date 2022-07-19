@@ -4,7 +4,6 @@ import FeedbackFormButton from 'components/FeedbackFormButton'
 
 import { ThemeContext } from 'contexts/themeContext'
 import { CSSProperties, useContext } from 'react'
-import { Link } from 'react-router-dom'
 import useMobile from 'hooks/Mobile'
 import { fathom } from 'lib/fathom'
 
@@ -94,9 +93,10 @@ export default function Landing() {
           type="primary"
           size="large"
           block={isMobile}
-          href={'/#/create'}
+          href={'/create'}
           onClick={() => {
-            fathom?.trackGoal('IIYVJKNC', 0)
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            ;(fathom as any)?.trackGoal('IIYVJKNC', 0)
           }}
           style={{
             marginRight: isMobile ? 0 : '0.8rem',
@@ -106,7 +106,7 @@ export default function Landing() {
           <Trans>Launch your project</Trans>
         </Button>
 
-        <Button size="large" block={isMobile} href="/#/projects">
+        <Button size="large" block={isMobile} href="/projects">
           <Trans>Explore projects</Trans>
         </Button>
       </div>
@@ -156,16 +156,16 @@ export default function Landing() {
                         The Decentralized Funding Platform. Light enough for a
                         group of friends, powerful enough for a global network
                         of anons.{' '}
-                        <Link
+                        <a
+                          href="/p/juicebox"
                           className="text-primary hover-text-decoration-underline"
-                          to="/p/juicebox"
                           style={{
                             textDecoration: 'underline',
                             fontWeight: 'inherit',
                           }}
                         >
                           Community-owned
-                        </Link>
+                        </a>
                         , on Ethereum.
                       </Trans>
                     </div>

@@ -14,9 +14,10 @@ import {
 import { useCallback, useContext, useState } from 'react'
 import { uploadProjectMetadata } from 'utils/ipfs'
 import { TransactionReceipt } from '@ethersproject/providers'
-import { useHistory } from 'react-router-dom'
+import { useRouter } from 'next/router'
 import { BigNumber } from '@ethersproject/bignumber'
 import { NetworkContext } from 'contexts/networkContext'
+import { emitErrorNotification } from 'utils/notifications'
 
 import TransactionModal from 'components/TransactionModal'
 
@@ -70,7 +71,7 @@ const getProjectIdFromReceipt = (txReceipt: TransactionReceipt): number => {
 export default function DeployProjectButton() {
   const launchProjectTx = useLaunchProjectTx()
   const launchProjectWithNftsTx = useLaunchProjectWithNftsTx()
-  const history = useHistory()
+  const router = useRouter()
 
   const { userAddress, onSelectWallet } = useContext(NetworkContext)
 
@@ -112,12 +113,15 @@ export default function DeployProjectButton() {
       return
     }
 
+    const hasNfts = nftRewardsCIDs && nftRewardsCIDs.length
+
     const txOpts = {
       onDone() {
         console.info('Transaction executed. Awaiting confirmation...')
         setTransactionPending(true)
       },
       async onConfirmed(result: TransactionEvent | undefined) {
+        console.info('confirmed!.')
         const txHash = result?.transaction?.hash
         if (!txHash) {
           return // TODO error notififcation
@@ -137,67 +141,78 @@ export default function DeployProjectButton() {
         // Reset Redux state/localstorage after deploying
         dispatch(editingV2ProjectActions.resetState())
 
-        history.push(`${v2ProjectRoute({ projectId })}?newDeploy=true`)
+        router.push(`${v2ProjectRoute({ projectId })}?newDeploy=true`)
       },
       onCancelled() {
+        console.info('cancelled!.')
         setDeployLoading(false)
         setTransactionPending(false)
       },
+    }
+
+    const handleProjectLaunchFailed = (error: string) => {
+      emitErrorNotification(`Failure: ${error}`)
+      setDeployLoading(false)
+      setTransactionPending(false)
     }
 
     const groupedSplits = [payoutGroupedSplits, reservedTokensGroupedSplits]
 
     let txSuccessful: boolean
 
-    if (nftRewardsCIDs) {
-      // create mapping from cids -> contributionFloor
-      const nftRewardsArg: TxNftArg = {}
+    try {
+      if (hasNfts) {
+        // create mapping from cids -> contributionFloor
+        const nftRewardsArg: TxNftArg = {}
 
-      nftRewardsCIDs.map((cid, index) => {
-        nftRewardsArg[cid] = nftRewardTiers[index].contributionFloor
-      })
+        nftRewardsCIDs.map((cid, index) => {
+          nftRewardsArg[cid] = nftRewardTiers[index].contributionFloor
+        })
+        console.info('calling launchProjectWithNftsTx')
 
-      txSuccessful = await launchProjectWithNftsTx(
-        {
-          projectMetadataCID: uploadedMetadata.IpfsHash,
-          fundingCycleData,
-          fundingCycleMetadata,
-          fundAccessConstraints,
-          groupedSplits,
-          nftRewards: nftRewardsArg,
-        },
-        txOpts,
-      )
-    } else {
-      txSuccessful = await launchProjectTx(
-        {
-          projectMetadataCID: uploadedMetadata.IpfsHash,
-          fundingCycleData,
-          fundingCycleMetadata,
-          fundAccessConstraints,
-          groupedSplits,
-        },
-        txOpts,
-      )
-    }
-
-    if (!txSuccessful) {
-      setDeployLoading(false)
-      setTransactionPending(false)
+        txSuccessful = await launchProjectWithNftsTx(
+          {
+            projectMetadataCID: uploadedMetadata.IpfsHash,
+            fundingCycleData,
+            fundingCycleMetadata,
+            fundAccessConstraints,
+            groupedSplits,
+            nftRewards: nftRewardsArg,
+          },
+          txOpts,
+        )
+      } else {
+        txSuccessful = await launchProjectTx(
+          {
+            projectMetadataCID: uploadedMetadata.IpfsHash,
+            fundingCycleData,
+            fundingCycleMetadata,
+            fundAccessConstraints,
+            groupedSplits,
+          },
+          txOpts,
+        )
+      }
+      if (!txSuccessful) {
+        setDeployLoading(false)
+        setTransactionPending(false)
+      }
+    } catch (error) {
+      handleProjectLaunchFailed(error as string)
     }
   }, [
     launchProjectTx,
     launchProjectWithNftsTx,
     projectMetadata,
-    payoutGroupedSplits,
-    reservedTokensGroupedSplits,
     fundingCycleData,
     fundingCycleMetadata,
     fundAccessConstraints,
+    payoutGroupedSplits,
+    reservedTokensGroupedSplits,
     nftRewardsCIDs,
     nftRewardTiers,
-    history,
     dispatch,
+    router,
   ])
 
   return (

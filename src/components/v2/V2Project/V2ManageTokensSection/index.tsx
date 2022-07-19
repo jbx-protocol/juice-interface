@@ -27,7 +27,6 @@ import { reloadWindow } from 'utils/windowUtils'
 import { useV1ProjectIdOfV2Project } from 'hooks/v2/contractReader/V1ProjectIdOfV2Project'
 import TooltipIcon from 'components/TooltipIcon'
 import { default as useV1HandleForProjectId } from 'hooks/v1/contractReader/HandleForProjectId'
-import { Link } from 'react-router-dom'
 import { useHasV1TokenPaymentTerminal } from 'hooks/v2/hasV1TokenPaymentTerminal'
 import { featureFlagEnabled } from 'utils/featureFlags'
 
@@ -248,12 +247,13 @@ export default function V2ManageTokensSection() {
                             tip={
                               <Trans>
                                 Your{' '}
-                                <Link
-                                  to={`/p/${v1ProjectHandle}`}
+                                <a
+                                  href={`/p/${v1ProjectHandle}`}
                                   target="_blank"
+                                  rel="noreferrer"
                                 >
                                   @{v1ProjectHandle}
-                                </Link>{' '}
+                                </a>{' '}
                                 V1 token balance.
                               </Trans>
                             }

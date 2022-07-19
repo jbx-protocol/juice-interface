@@ -15,7 +15,7 @@ import {
 import { ThemeContext } from 'contexts/themeContext'
 import { MAX_DISTRIBUTION_LIMIT, splitPercentFrom } from 'utils/v2/math'
 import { NetworkContext } from 'contexts/networkContext'
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 
 import { filter } from 'lodash'
 
@@ -252,7 +252,7 @@ export default function DistributionSplitsSection({
                     When distributing, payouts to Ethereum addresses incur a
                     2.5% JBX membership fee. Payouts to other Juicebox projects
                     don't incur fees. Your project will receive (the{' '}
-                    <Link to={v2ProjectRoute({ projectId: 1 })}>
+                    <Link href={v2ProjectRoute({ projectId: 1 })}>
                       JuiceboxDAO
                     </Link>{' '}
                     token) in return at the current issuance rate.

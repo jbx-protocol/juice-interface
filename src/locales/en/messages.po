@@ -357,11 +357,11 @@ msgstr "Add payout"
 msgid "Add reward tier"
 msgstr "Add reward tier"
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/AddTerminalSection.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/AddTerminalSection.tsx
 msgid "Add terminal"
 msgstr "Add terminal"
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/AddTerminalSection.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/AddTerminalSection.tsx
 msgid "Add the V1 Token Payment Terminal to your project."
 msgstr "Add the V1 Token Payment Terminal to your project."
 
@@ -457,7 +457,7 @@ msgstr "Allow terminal configuration"
 msgid "Allow token minting"
 msgstr "Allow token minting"
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupSection.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupSection.tsx
 msgid "Allow your V1 project token holders to swap their tokens for your V2 project tokens."
 msgstr "Allow your V1 project token holders to swap their tokens for your V2 project tokens."
 
@@ -525,7 +525,6 @@ msgstr ""
 
 #: src/components/ArchiveProject/index.tsx
 #: src/components/ArchiveProject/index.tsx
-#: src/components/Project/ProjectToolsDrawer/ProjectToolsDrawer.tsx
 msgid "Archive project"
 msgstr "Archive project"
 
@@ -755,7 +754,6 @@ msgstr "Claiming {tokenSymbol} tokens will convert your {tokenSymbol} balance to
 msgid "Claiming {tokenTextLong} will convert your {tokenTextShort} balance to ERC-20 tokens and mint them to your wallet."
 msgstr "Claiming {tokenTextLong} will convert your {tokenTextShort} balance to ERC-20 tokens and mint them to your wallet."
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/V1TokenMigrationSetupModal.tsx
 #: src/components/TransactionModal.tsx
 #: src/components/modals/DownloadParticipantsModal.tsx
 #: src/components/v1/V1Project/V1DownloadActivityModal.tsx
@@ -764,6 +762,7 @@ msgstr "Claiming {tokenTextLong} will convert your {tokenTextShort} balance to E
 #: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/EditTokenAllocationModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/V1TokenMigrationSetupModal.tsx
 msgid "Close"
 msgstr "Close"
 
@@ -787,7 +786,7 @@ msgstr "Configure restrictions for your funding cycles."
 msgid "Configure the dynamics of your project's token."
 msgstr "Configure the dynamics of your project's token."
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/SetV1ProjectSection.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/SetV1ProjectSection.tsx
 msgid "Configure which Juicebox V1 project you'd like to accept tokens for. Token holders of this V1 project will be able to swap their V1 tokens for V2 tokens."
 msgstr "Configure which Juicebox V1 project you'd like to accept tokens for. Token holders of this V1 project will be able to swap their V1 tokens for V2 tokens."
 
@@ -1222,7 +1221,7 @@ msgstr "Distribution limit: <0/>{0}"
 msgid "Do I have to make my project open source to use Juicebox as its business model?"
 msgstr ""
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupSection.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupSection.tsx
 msgid "Do I need this?"
 msgstr "Do I need this?"
 
@@ -1478,7 +1477,8 @@ msgstr "Funding target"
 msgid "Funds will be distributed to:"
 msgstr ""
 
-#: src/components/Project/ProjectToolsDrawer/ProjectToolsDrawer.tsx
+#: src/components/v1/V1Project/V1ProjectToolsDrawer.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V2ProjectToolsDrawer.tsx
 msgid "General"
 msgstr "General"
 
@@ -1607,7 +1607,7 @@ msgstr "If you don't raise the sum of all your payouts (<0/>{distributionLimit})
 msgid "If you don't raise this amount, your splits will receive their percentage of whatever you raise."
 msgstr "If you don't raise this amount, your splits will receive their percentage of whatever you raise."
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupSection.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupSection.tsx
 msgid "If you have Juicebox project on Juicebox V1 and V2, we recommend you migrate to V2 exclusively."
 msgstr "If you have Juicebox project on Juicebox V1 and V2, we recommend you migrate to V2 exclusively."
 
@@ -1714,7 +1714,7 @@ msgstr "Join <0>hundreds of projects</0> sippin' the Juice."
 msgid "Juicebox Project ID"
 msgstr "Juicebox Project ID"
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/SetV1ProjectSection.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/SetV1ProjectSection.tsx
 msgid "Juicebox V1 project ID"
 msgstr "Juicebox V1 project ID"
 
@@ -1779,7 +1779,7 @@ msgstr "Leave blank to start immediately."
 msgid "Light theme"
 msgstr ""
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/SetV1ProjectSection.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/SetV1ProjectSection.tsx
 msgid "Link Juicebox V1 project"
 msgstr "Link Juicebox V1 project"
 
@@ -2083,7 +2083,8 @@ msgstr "Owner isn't allowed to set the project's payment terminals."
 msgid "Owner token minting"
 msgstr "Owner token minting"
 
-#: src/components/Project/ProjectToolsDrawer/ProjectToolsDrawer.tsx
+#: src/components/v1/V1Project/V1ProjectToolsDrawer.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V2ProjectToolsDrawer.tsx
 msgid "Owner tools"
 msgstr "Owner tools"
 
@@ -2252,10 +2253,6 @@ msgstr "Percentages"
 #: src/components/v1/shared/ProjectTicketMods.tsx
 msgid "Percentages must add up to 100% or less"
 msgstr "Percentages must add up to 100% or less"
-
-#: src/components/Project/ProjectToolsDrawer/ProjectToolsDrawer.tsx
-msgid "Please contact the Juicebox dev team through our <0>Discord</0> to have your project archived."
-msgstr "Please contact the Juicebox dev team through our <0>Discord</0> to have your project archived."
 
 #: src/components/Navbar/constants.ts
 msgid "Podcast"
@@ -2819,15 +2816,15 @@ msgstr ""
 msgid "Set this to the sum of all your payouts"
 msgstr "Set this to the sum of all your payouts"
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/V1TokenMigrationSetupModal.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/V1TokenMigrationSetupModal.tsx
 msgid "Set up V1 token migration"
 msgstr "Set up V1 token migration"
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupSection.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupSection.tsx
 msgid "Set up token migration"
 msgstr "Set up token migration"
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/V1TokenMigrationSetupModal.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/V1TokenMigrationSetupModal.tsx
 msgid "Set up your Juicebox V2 project for migration from your Juicebox V1 project."
 msgstr "Set up your Juicebox V2 project for migration from your Juicebox V1 project."
 
@@ -2884,11 +2881,11 @@ msgstr "Start raising funds"
 msgid "Start time (seconds, Unix time)"
 msgstr "Start time (seconds, Unix time)"
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/AddTerminalSection.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/AddTerminalSection.tsx
 msgid "Step 1. Add V1 token payment terminal"
 msgstr "Step 1. Add V1 token payment terminal"
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/SetV1ProjectSection.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/SetV1ProjectSection.tsx
 msgid "Step 2. Link your Juicebox V1 project"
 msgstr "Step 2. Link your Juicebox V1 project"
 
@@ -3142,7 +3139,7 @@ msgstr "This will erase all of your changes."
 msgid "This will reset the data for your new project. All changes will be lost."
 msgstr "This will reset the data for your new project. All changes will be lost."
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupSection.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupSection.tsx
 msgid "To do so, you need to give your V1 token holders the ability to exchange their V1 tokens for V2 tokens. Select <0>Set up token migration</0> below to get started."
 msgstr "To do so, you need to give your V1 token holders the ability to exchange their V1 tokens for V2 tokens. Select <0>Set up token migration</0> below to get started."
 
@@ -3177,7 +3174,7 @@ msgstr "Token beneficiary:"
 msgid "Token holders <0>cannot redeem their tokens</0> for any ETH when the redemption rate is 0."
 msgstr "Token holders <0>cannot redeem their tokens</0> for any ETH when the redemption rate is 0."
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/AddTerminalSection.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/AddTerminalSection.tsx
 msgid "Token holders of your V1 project tokens will swap their V1 tokens for V2 tokens at a 1-to-1 exchange rate."
 msgstr "Token holders of your V1 project tokens will swap their V1 tokens for V2 tokens at a 1-to-1 exchange rate."
 
@@ -3274,9 +3271,10 @@ msgstr "Tokens receiver"
 msgid "Tokens:"
 msgstr "Tokens:"
 
-#: src/components/Project/ProjectToolsDrawer/ProjectToolsDrawer.tsx
 #: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
+#: src/components/v1/V1Project/V1ProjectToolsDrawer.tsx
 #: src/components/v2/V2Project/V2ProjectHeaderActions.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V2ProjectToolsDrawer.tsx
 msgid "Tools"
 msgstr ""
 
@@ -3413,11 +3411,11 @@ msgstr "Using a reconfiguration strategy is recommended. Projects with no strate
 msgid "V1"
 msgstr ""
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/V1TokenMigrationSetupModal.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/V1TokenMigrationSetupModal.tsx
 msgid "V1 token holders can swap their tokens for your V2 tokens on your V2 project's <0>Tokens</0> section."
 msgstr "V1 token holders can swap their tokens for your V2 tokens on your V2 project's <0>Tokens</0> section."
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupSection.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupSection.tsx
 msgid "V1 token migration"
 msgstr "V1 token migration"
 
@@ -3479,7 +3477,7 @@ msgstr ""
 msgid "What is overflow?"
 msgstr ""
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/AddTerminalSection.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/AddTerminalSection.tsx
 msgid "What is the V1 Token Payment Terminal?"
 msgstr "What is the V1 Token Payment Terminal?"
 
@@ -3624,7 +3622,7 @@ msgstr "You haven't created any projects yet."
 msgid "You must grant permission to swap your tokens."
 msgstr "You must grant permission to swap your tokens."
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/SetV1ProjectSection.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/SetV1ProjectSection.tsx
 msgid "You must own this V1 project."
 msgstr "You must own this V1 project."
 
@@ -3652,11 +3650,11 @@ msgstr "You will receive {minReturnedTokensFormatted} ETH"
 msgid "You'll be able to issue ERC-20 tokens once your project contract has been deployed. Until then, the protocol will track token balances, allowing your supporters to earn tokens and redeem for overflow in the meantime."
 msgstr ""
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/V1TokenMigrationSetupModal.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/V1TokenMigrationSetupModal.tsx
 msgid "You're all set!"
 msgstr "You're all set!"
 
-#: src/components/Project/ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/StepSection.tsx
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/StepSection.tsx
 msgid "You've completed this step."
 msgstr "You've completed this step."
 

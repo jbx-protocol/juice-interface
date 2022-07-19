@@ -7,27 +7,16 @@ import { V1OperatorPermission } from 'models/v1/permissions'
 import { useContext, useState } from 'react'
 import { SettingOutlined, ToolOutlined } from '@ant-design/icons'
 
-import { useSafeTransferFromTx } from 'hooks/v1/transactor/SafeTransferFromTx'
-import { useTransferTokensTx } from 'hooks/v1/transactor/TransferTokensTx'
-import { useAddToBalanceTx } from 'hooks/v1/transactor/AddToBalanceTx'
-import { useSetProjectUriTx } from 'hooks/v1/transactor/SetProjectUriTx'
-import useUnclaimedBalanceOfUser from 'hooks/v1/contractReader/UnclaimedBalanceOfUser'
 import { useIsUserAddress } from 'hooks/IsUserAddress'
-import { ProjectToolsDrawer } from 'components/Project/ProjectToolsDrawer/ProjectToolsDrawer'
+import { V1ProjectToolsDrawer } from 'components/v1/V1Project/V1ProjectToolsDrawer'
 
 import EditProjectModal from './modals/EditProjectModal'
 import MigrateV1Pt1Modal from './modals/MigrateV1Pt1Modal'
 
 export default function V1ProjectHeaderActions() {
-  const {
-    projectId,
-    handle,
-    metadata,
-    isPreviewMode,
-    terminal,
-    owner,
-    tokenSymbol,
-  } = useContext(V1ProjectContext)
+  const { projectId, handle, metadata, isPreviewMode, terminal, owner } =
+    useContext(V1ProjectContext)
+
   const [migrateDrawerVisible, setMigrateDrawerVisible] =
     useState<boolean>(false)
   const [toolDrawerVisible, setToolDrawerVisible] = useState<boolean>(false)
@@ -38,9 +27,6 @@ export default function V1ProjectHeaderActions() {
     V1OperatorPermission.SetHandle,
     V1OperatorPermission.SetUri,
   ])
-
-  const unclaimedTokenBalance = useUnclaimedBalanceOfUser()
-
   const isOwner = useIsUserAddress(owner)
 
   const allowMigrate = isOwner && terminal?.version === '1'
@@ -112,18 +98,9 @@ export default function V1ProjectHeaderActions() {
         visible={migrateDrawerVisible}
         onCancel={() => setMigrateDrawerVisible(false)}
       />
-      <ProjectToolsDrawer
+      <V1ProjectToolsDrawer
         visible={toolDrawerVisible}
         onClose={() => setToolDrawerVisible(false)}
-        unclaimedTokenBalance={unclaimedTokenBalance}
-        tokenSymbol={tokenSymbol}
-        ownerAddress={owner}
-        useTransferProjectOwnershipTx={useSafeTransferFromTx}
-        useTransferUnclaimedTokensTx={useTransferTokensTx}
-        useAddToBalanceTx={useAddToBalanceTx}
-        useSetProjectUriTx={useSetProjectUriTx}
-        useEditV2ProjectDetailsTx={() => undefined}
-        useDeployProjectPayerTx={() => undefined}
       />
       <EditProjectModal
         visible={editProjectModalVisible}

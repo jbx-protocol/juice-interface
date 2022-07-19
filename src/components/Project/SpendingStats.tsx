@@ -62,10 +62,10 @@ export default function SpendingStats({
           label={<Trans>AVAILABLE</Trans>}
           tip={
             <Trans>
-              The funds available to distribution for this funding cycle (before
-              the {feePercentage}% JBX fee is subtracted). This number won't
-              roll over to the next funding cycle, so funds should be
-              distributed before this funding cycle ends.
+              Funds available to distribute in this funding cycle (before the{' '}
+              {feePercentage}% JBX fee). This amount won't roll over to the next
+              funding cycle, so funds should be distributed before this funding
+              cycle ends.
             </Trans>
           }
         />

@@ -1477,6 +1477,10 @@ msgstr "Распределение финансирования"
 msgid "Funding target"
 msgstr "Цель финансирования"
 
+#: src/components/Project/SpendingStats.tsx
+msgid "Funds available to distribute in this funding cycle (before the {feePercentage}% JBX fee). This amount won't roll over to the next funding cycle, so funds should be distributed before this funding cycle ends."
+msgstr ""
+
 #: src/components/v1/shared/FundingCycle/modals/DistributeTokensModal.tsx
 #: src/components/v1/shared/FundingCycle/modals/WithdrawModal.tsx
 msgid "Funds will be distributed to:"
@@ -2843,8 +2847,8 @@ msgid "Since you have not set a funding duration, changes to these settings will
 msgstr "Поскольку вы не установили срок финансирования, изменения в этих настройках будут применены немедленно."
 
 #: src/components/Project/FundingCycleDetailsCard.tsx
-msgid "Some funding cycle properties may indicate risk for project contributors."
-msgstr "Некоторые свойства цикла финансирования могут указывать на риск для участников проекта."
+msgid "Some funding cycle settings may put project contributors at risk."
+msgstr ""
 
 #: src/components/ProjectRiskNotice.tsx
 msgid "Some of the project's current funding cycle properties may indicate risk for contributors."
@@ -2989,10 +2993,6 @@ msgstr "Баланс этого проекта в контракте Juicebox."
 msgid "The distribution limit for this funding cycle is 0, meaning all funds in Juicebox are currently considered overflow. Overflow can be redeemed by token holders, but not distributed."
 msgstr "Лимит распределения для этого цикла финансирования равен 0, то есть все средства в Juicebox в настоящее время считаются переполнением. Переполнение может быть выкуплено держателями токенов, но не распределено."
 
-#: src/components/Project/SpendingStats.tsx
-msgid "The funds available to distribution for this funding cycle (before the {feePercentage}% JBX fee is subtracted). This number won't roll over to the next funding cycle, so funds should be distributed before this funding cycle ends."
-msgstr "Средства, доступные для распределения в этом цикле финансирования (до вычитания {feePercentage}% комиссии JBX). Это число не переносится на следующий цикл финансирования, поэтому средства должны быть распределены до окончания этого цикла финансирования."
-
 #: src/pages/index.page.tsx
 msgid "The future will be led by creators, and owned by communities."
 msgstr "Будущее будет возглавляться создателями и принадлежать сообществам."
@@ -3128,7 +3128,7 @@ msgstr "В этом проекте используется версия V2 ко
 msgid "This project's balance in the Juicebox contract."
 msgstr ""
 
-#: src/components/Project/FundingCycleDetailsCard.tsx
+#: src/components/Project/BallotStateBadge.tsx
 msgid "This proposed reconfiguration hasn't passed the {0} period. It's not guaranteed to take effect in the upcoming funding cycle."
 msgstr ""
 

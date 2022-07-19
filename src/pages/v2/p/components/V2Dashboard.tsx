@@ -29,10 +29,10 @@ import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { useMemo } from 'react'
 import { useRouter } from 'next/router'
 import { NO_CURRENCY, V2_CURRENCY_ETH, V2CurrencyName } from 'utils/v2/currency'
+import { useNftRewardTiersOf } from 'hooks/v2/contractReader/NftRewardTiersOf'
 
 import useNftRewards from 'hooks/v2/NftRewards'
-// import { useNftCIDsOf } from 'hooks/v2/contractReader/NftCIDsOf'
-import { MOCK_NFT_CIDs } from 'utils/v2/nftRewards'
+import { CIDsOfNftRewardTiersResponse } from 'utils/v2/nftRewards'
 
 import {
   ETH_PAYOUT_SPLIT_GROUP,
@@ -166,11 +166,17 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
 
   const { data: ballotState } = useBallotState(projectId)
 
-  // const { data: nftRewardsCIDs, loading: nftRewardsCIDsLoading } = useNftCIDsOf(projectId)
-  const nftRewardsCIDs = MOCK_NFT_CIDs
+  const { data: nftRewardTiersResponse, loading: nftRewardsCIDsLoading } =
+    useNftRewardTiersOf(fundingCycleMetadata?.dataSource)
+
+  let nftRewardsCIDs: string[] = []
+  if (nftRewardTiersResponse) {
+    nftRewardsCIDs = CIDsOfNftRewardTiersResponse(nftRewardTiersResponse)
+  }
+  console.info('!!cids: ', nftRewardsCIDs)
   const { data: nftRewardTiers, isLoading: nftRewardTiersLoading } =
     useNftRewards(nftRewardsCIDs)
-
+  console.info('!!nftTiers: ', nftRewardTiers)
   const isArchived = projectId
     ? V2ArchivedProjectIds.includes(projectId) || projectMetadata?.archived
     : false
@@ -185,7 +191,7 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
     return <Project404 projectId={projectId} />
   }
 
-  const nftsLoading = nftRewardTiersLoading // || nftRewardsCIDsLoading
+  const nftsLoading = nftRewardTiersLoading || nftRewardsCIDsLoading
 
   const project: V2ProjectContextType = {
     cv: '2',

@@ -27,7 +27,7 @@ import { weightedAmount } from 'utils/v2/math'
 import TransactionModal from 'components/TransactionModal'
 import Callout from 'components/Callout'
 import useMobile from 'hooks/Mobile'
-import { getNftRewardTier, MOCK_NFTs } from 'utils/v2/nftRewards'
+import { getNftRewardTier } from 'utils/v2/nftRewards'
 import { featureFlagEnabled } from 'utils/featureFlags'
 
 import { V2PayForm, V2PayFormType } from '../V2PayForm'
@@ -80,12 +80,12 @@ export function V2ConfirmPayModal({
     projectMetadata,
     projectId,
     tokenSymbol,
-    // nftReward: { rewardTiers }
+    nftRewards: { rewardTiers },
   } = useContext(V2ProjectContext)
   const converter = useCurrencyConverter()
   const payProjectTx = usePayETHPaymentTerminalTx()
 
-  const nftRewardTiers = MOCK_NFTs //rewardTiers
+  const nftRewardTiers = rewardTiers //rewardTiers
 
   const [loading, setLoading] = useState<boolean>()
   const [transactionPending, setTransactionPending] = useState<boolean>()

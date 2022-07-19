@@ -1,5 +1,6 @@
 import { Trans } from '@lingui/macro'
-import { Col, Row } from 'antd'
+import { Col, Image, Row } from 'antd'
+import ExternalLink from 'components/ExternalLink'
 import Paragraph from 'components/Paragraph'
 import { ThemeContext } from 'contexts/themeContext'
 import { useAppSelector } from 'hooks/AppSelector'
@@ -25,7 +26,7 @@ export default function NftSummarySection() {
             display: 'flex',
             width: '100%',
             marginTop: 30,
-            paddingBottom: '15px',
+            paddingBottom: '27px',
           }}
           key={index}
         >
@@ -37,10 +38,12 @@ export default function NftSummarySection() {
               alignItems: 'center',
             }}
           >
-            <img
+            <Image
               src={rewardTier.imageUrl ?? '/assets/banana-od.png'}
               alt={rewardTier.name}
-              height="75px"
+              height="90px"
+              width="90px"
+              style={{ objectFit: 'cover' }}
             />
           </Col>
           <Col
@@ -54,15 +57,20 @@ export default function NftSummarySection() {
             <h3>{rewardTier.name}</h3>
             <p style={{ marginBottom: '10px' }}>
               <Trans>
-                <strong>Contribution threshold:</strong>{' '}
+                <strong>Contribution floor:</strong>{' '}
                 {rewardTier.contributionFloor} ETH
               </Trans>
             </p>
-            <p style={{ marginBottom: '10px' }}>
-              <Trans>
-                <strong>Max. supply:</strong> {rewardTier.maxSupply}
-              </Trans>
-            </p>
+            {rewardTier.externalLink && (
+              <span>
+                <Trans>
+                  <strong>Website:</strong>{' '}
+                  <ExternalLink href={rewardTier.externalLink}>
+                    {rewardTier.externalLink}
+                  </ExternalLink>
+                </Trans>
+              </span>
+            )}
           </Col>
           <Col
             md={12}
@@ -72,18 +80,13 @@ export default function NftSummarySection() {
               flexDirection: 'column',
             }}
           >
-            {rewardTier.externalLink && (
-              <Trans>
-                <strong>External link: {rewardTier.externalLink}</strong>
-              </Trans>
-            )}
             {rewardTier.description && (
-              <div style={{ marginTop: 15 }}>
+              <div style={{ marginTop: '47px' }}>
                 <Trans>
                   <strong>Description: </strong>
                   <Paragraph
                     description={rewardTier.description}
-                    characterLimit={74}
+                    characterLimit={124}
                   />
                 </Trans>
               </div>

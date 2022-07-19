@@ -85,7 +85,7 @@ export const defaultFundingCycleMetadata: SerializedV2FundingCycleMetadata =
     allowControllerMigration: false,
     holdFees: false,
     useTotalOverflowForRedemptions: false,
-    useDataSourceForPay: false,
+    useDataSourceForPay: true,
     useDataSourceForRedeem: false,
     dataSource: constants.AddressZero,
   })

@@ -16,8 +16,10 @@ export function NftRewardsSection({
   onPayAmountChange: (payAmount: string) => void
 }) {
   const {
-    nftRewards: { rewardTiers, loading },
+    nftRewards: { CIDs, rewardTiers, loading },
   } = useContext(V2ProjectContext)
+
+  console.info('reward tiers loading: ', loading)
 
   const [selectedIndex, setSelectedIndex] = useState<number>()
 
@@ -38,15 +40,19 @@ export function NftRewardsSection({
 
   const nftRewardsEnabled = featureFlagEnabled('nftRewards')
 
-  if (!rewardTiers || rewardTiers.length < 1 || !nftRewardsEnabled) return null
+  if (!CIDs || CIDs.length < 1 || !nftRewardsEnabled) return null
 
   const renderRewardTier = (rewardTier: NftRewardTier, index: number) => {
     const isSelected = index === selectedIndex
+    if (!rewardTiers) return
+
+    const nextRewardTier = rewardTiers[index + 1]
+
     return (
       <RewardTier
         key={`${rewardTier.contributionFloor}-${rewardTier.name}`}
         rewardTier={rewardTier}
-        rewardTierUpperLimit={rewardTiers[index + 1]?.contributionFloor}
+        rewardTierUpperLimit={nextRewardTier?.contributionFloor}
         isSelected={isSelected}
         onClick={() => {
           setSelectedIndex(isSelected ? undefined : index)
@@ -61,8 +67,16 @@ export function NftRewardsSection({
   return (
     <div style={{ marginTop: 5 }}>
       <div style={{ fontSize: '0.7rem' }}>+ NFT</div>
-      {loading ? (
-        <Loading />
+      {loading || !rewardTiers?.length ? (
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'flex-start',
+            paddingTop: '1rem',
+          }}
+        >
+          <Loading />
+        </div>
       ) : (
         <Space size={'large'}>{rewardTiers.map(renderRewardTier)}</Space>
       )}

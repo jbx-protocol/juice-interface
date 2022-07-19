@@ -10,6 +10,7 @@ import { NftRewardTier } from 'models/v2/nftRewardTier'
 import { useCallback, useContext, useState } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { uploadNftRewardsToIPFS } from 'utils/ipfs'
+import { sortNftRewardTiers } from 'utils/v2/nftRewards'
 
 import { shadowCard } from 'constants/styles/shadowCard'
 
@@ -58,7 +59,7 @@ export default function NftDrawer({
   }, [rewardTiers, dispatch, onClose])
 
   const handleAddRewardTier = (newRewardTier: NftRewardTier) => {
-    setRewardTiers([...rewardTiers, newRewardTier])
+    setRewardTiers(sortNftRewardTiers([...rewardTiers, newRewardTier].sort()))
   }
 
   const handleEditRewardTier = ({

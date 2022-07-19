@@ -7,6 +7,10 @@ import {
   useEditingV2FundingCycleMetadataSelector,
 } from 'hooks/AppSelector'
 import { useLaunchProjectTx } from 'hooks/v2/transactor/LaunchProjectTx'
+import {
+  TxNftArg,
+  useLaunchProjectWithNftsTx,
+} from 'hooks/v2/transactor/LaunchProjectWithNftsTx'
 import { useCallback, useContext, useState } from 'react'
 import { uploadProjectMetadata } from 'utils/ipfs'
 import { TransactionReceipt } from '@ethersproject/providers'
@@ -22,6 +26,7 @@ import { useAppDispatch } from 'hooks/AppDispatch'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 
 import { v2ProjectRoute } from 'utils/routes'
+import { TransactionEvent } from 'bnc-notify'
 
 import { readProvider } from 'constants/readProvider'
 import { readNetwork } from 'constants/networks'
@@ -29,11 +34,8 @@ import { readNetwork } from 'constants/networks'
 const CREATE_EVENT_IDX = 0
 const PROJECT_ID_TOPIC_IDX = 3
 
-// TODO: prepare for Tank's multicall function
-// type GasOfTx = {
-//   loading: boolean,
-//   value: BigNumber | undefined // gas in wei
-// }
+const NFT_CREATE_EVENT_IDX = 2
+const NFT_PROJECT_ID_TOPIC_IDX = 1
 
 const findTransactionReceipt = async (txHash: string) => {
   let retries = 5
@@ -55,7 +57,9 @@ const findTransactionReceipt = async (txHash: string) => {
  * Return the project ID created from a `launchProjectFor` transaction.
  * @param txReceipt receipt of `launchProjectFor` transaction
  */
-const getProjectIdFromReceipt = (txReceipt: TransactionReceipt): number => {
+const getProjectIdFromLaunchReceipt = (
+  txReceipt: TransactionReceipt,
+): number => {
   const projectIdHex =
     txReceipt?.logs[CREATE_EVENT_IDX]?.topics?.[PROJECT_ID_TOPIC_IDX]
   const projectId = BigNumber.from(projectIdHex).toNumber()
@@ -63,24 +67,40 @@ const getProjectIdFromReceipt = (txReceipt: TransactionReceipt): number => {
   return projectId
 }
 
+/**
+ * Return the project ID created from a `launchProjectFor` transaction.
+ * @param txReceipt receipt of `launchProjectFor` transaction
+ */
+const getProjectIdFromNftLaunchReceipt = (
+  txReceipt: TransactionReceipt,
+): number => {
+  const projectIdHex =
+    txReceipt?.logs[NFT_CREATE_EVENT_IDX]?.topics?.[NFT_PROJECT_ID_TOPIC_IDX]
+  const projectId = BigNumber.from(projectIdHex).toNumber()
+
+  return projectId
+}
+
 export default function DeployProjectButton() {
   const launchProjectTx = useLaunchProjectTx()
+  const launchProjectWithNftsTx = useLaunchProjectWithNftsTx()
   const router = useRouter()
 
   const { userAddress, onSelectWallet } = useContext(NetworkContext)
 
+  const {
+    projectMetadata: { name: projectName },
+  } = useAppSelector(state => state.editingV2Project)
+
   const [deployLoading, setDeployLoading] = useState<boolean>()
   const [transactionPending, setTransactionPending] = useState<boolean>()
-
-  // TODO: prepare for Tank's multicall function
-  // const [nftTxGas, setNftTxGas] = useState<GasOfTx>({loading: false, value: undefined})
-  // const [launchTxGas, setLaunchTxGas] = useState<GasOfTx>({loading: false, value: undefined})
 
   const {
     projectMetadata,
     reservedTokensGroupedSplits,
     payoutGroupedSplits,
     nftRewardsCIDs,
+    nftRewardTiers,
   } = useAppSelector(state => state.editingV2Project)
   const fundingCycleMetadata = useEditingV2FundingCycleMetadataSelector()
   const fundingCycleData = useEditingV2FundingCycleDataSelector()
@@ -110,66 +130,99 @@ export default function DeployProjectButton() {
       return
     }
 
-    const groupedSplits = [payoutGroupedSplits, reservedTokensGroupedSplits]
-    if (nftRewardsCIDs) {
-      // TODO: Set loading states true of nftTxGas and launchTxGas.
-      // Call gas reader for gas of nft tx and launch tx within multicall.
-      // Set value and loading states of nftTxGas and launchTxGas.
-      // setGasReaderModalVisible(true)
+    const hasNfts = nftRewardsCIDs && nftRewardsCIDs.length
+
+    const txOpts = {
+      onDone() {
+        console.info('Transaction executed. Awaiting confirmation...')
+        setTransactionPending(true)
+      },
+      async onConfirmed(result: TransactionEvent | undefined) {
+        console.info('confirmed!.')
+        const txHash = result?.transaction?.hash
+        if (!txHash) {
+          return // TODO error notififcation
+        }
+
+        const txReceipt = await findTransactionReceipt(txHash)
+        if (!txReceipt) {
+          return // TODO error notififcation
+        }
+        console.info('Found tx receipt.')
+
+        const projectId = hasNfts
+          ? getProjectIdFromNftLaunchReceipt(txReceipt)
+          : getProjectIdFromLaunchReceipt(txReceipt)
+        if (projectId === undefined) {
+          return // TODO error notififcation
+        }
+
+        // Reset Redux state/localstorage after deploying
+        dispatch(editingV2ProjectActions.resetState())
+
+        router.push(`${v2ProjectRoute({ projectId })}?newDeploy=true`)
+      },
+      onCancelled() {
+        console.info('cancelled!.')
+        setDeployLoading(false)
+        setTransactionPending(false)
+      },
     }
+
+    const handleProjectLaunchFailed = (error: string) => {
+      emitErrorNotification(`Failure: ${error}`)
+      setDeployLoading(false)
+      setTransactionPending(false)
+    }
+
+    const groupedSplits = [payoutGroupedSplits, reservedTokensGroupedSplits]
+
+    let txSuccessful: boolean
+
     try {
-      const txSuccessful = await launchProjectTx(
-        {
-          projectMetadataCID: uploadedMetadata.IpfsHash,
-          fundingCycleData,
-          fundingCycleMetadata,
-          fundAccessConstraints,
-          groupedSplits,
-        },
-        {
-          onDone() {
-            console.info('Transaction executed. Awaiting confirmation...')
-            setTransactionPending(true)
+      if (hasNfts && projectName) {
+        // create mapping from cids -> contributionFloor
+        const nftRewardsArg: TxNftArg = {}
+
+        nftRewardsCIDs.map((cid, index) => {
+          nftRewardsArg[cid] = nftRewardTiers[index].contributionFloor
+        })
+
+        txSuccessful = await launchProjectWithNftsTx(
+          {
+            projectName,
+            projectMetadataCID: uploadedMetadata.IpfsHash,
+            fundingCycleData,
+            fundingCycleMetadata,
+            fundAccessConstraints,
+            groupedSplits,
+            nftRewards: nftRewardsArg,
           },
-          async onConfirmed(result) {
-            const txHash = result?.transaction?.hash
-            if (!txHash) {
-              return // TODO error notififcation
-            }
-
-            const txReceipt = await findTransactionReceipt(txHash)
-            if (!txReceipt) {
-              return // TODO error notififcation
-            }
-            console.info('Found tx receipt.')
-
-            const projectId = getProjectIdFromReceipt(txReceipt)
-            if (projectId === undefined) {
-              return // TODO error notififcation
-            }
-
-            // Reset Redux state/localstorage after deploying
-            dispatch(editingV2ProjectActions.resetState())
-
-            router.push(`${v2ProjectRoute({ projectId })}?newDeploy=true`)
+          txOpts,
+        )
+      } else {
+        txSuccessful = await launchProjectTx(
+          {
+            projectMetadataCID: uploadedMetadata.IpfsHash,
+            fundingCycleData,
+            fundingCycleMetadata,
+            fundAccessConstraints,
+            groupedSplits,
           },
-          onCancelled() {
-            setDeployLoading(false)
-            setTransactionPending(false)
-          },
-        },
-      )
-
+          txOpts,
+        )
+      }
       if (!txSuccessful) {
         setDeployLoading(false)
         setTransactionPending(false)
       }
     } catch (error) {
-      emitErrorNotification(`Failure: ${error}`)
-      setDeployLoading(false)
-      setTransactionPending(false)
+      handleProjectLaunchFailed(error as string)
     }
   }, [
+    projectName,
+    launchProjectTx,
+    launchProjectWithNftsTx,
     projectMetadata,
     fundingCycleData,
     fundingCycleMetadata,
@@ -177,7 +230,7 @@ export default function DeployProjectButton() {
     payoutGroupedSplits,
     reservedTokensGroupedSplits,
     nftRewardsCIDs,
-    launchProjectTx,
+    nftRewardTiers,
     dispatch,
     router,
   ])

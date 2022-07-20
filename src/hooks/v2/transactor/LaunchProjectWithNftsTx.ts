@@ -1,7 +1,7 @@
 import { NetworkContext } from 'contexts/networkContext'
 import { V2UserContext } from 'contexts/v2/userContext'
 import { getAddress } from '@ethersproject/address'
-
+import * as constants from '@ethersproject/constants'
 import { useContext } from 'react'
 import {
   V2FundAccessConstraint,
@@ -13,7 +13,7 @@ import { GroupedSplits, SplitGroup } from 'models/v2/splits'
 
 import { BigNumber } from '@ethersproject/bignumber'
 import { MaxUint48 } from 'utils/v2/math'
-import { parseEther } from 'ethers/lib/utils'
+import { parseEther } from '@ethersproject/units'
 
 import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
 import { IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
@@ -38,35 +38,33 @@ export type TxNftArg = { [cid: string]: number }
 function getJBDeployTieredNFTRewardDataSourceData({
   projectName,
   nftRewards,
-  owner,
+  ownerAddress,
   directory,
 }: {
   projectName: string
   nftRewards: { [cid: string]: number }
-  owner: string
+  ownerAddress: string
   directory: string
 }) {
-  const tiersArg: ContractNftRewardTier[] = []
-
-  Object.keys(nftRewards).map(cid => {
+  const tiersArg: ContractNftRewardTier[] = Object.keys(nftRewards).map(cid => {
     const contributionFloorWei = parseEther(nftRewards[cid].toString())
-    tiersArg.push({
+    return {
       contributionFloor: contributionFloorWei,
       remainingQuantity: BigNumber.from(MaxUint48),
       initialQuantity: BigNumber.from(0),
-      tokenUri: `${IPFS_GATEWAY_HOSTNAME}/${cid}`,
+      tokenUri: `${IPFS_GATEWAY_HOSTNAME}/ipfs/${cid}`,
       votingUnits: BigNumber.from(0),
       reservedRate: BigNumber.from(0),
-    })
+    }
   })
 
   return {
     directory,
     name: projectName,
     symbol: 'NFT',
-    tokenUriResolver: '0x0000000000000000000000000000000000000000',
+    tokenUriResolver: constants.AddressZero,
     contractUri: 'ipfs://null',
-    owner,
+    owner: ownerAddress,
     contributionToken: ETH_TOKEN_ADDRESS,
     tiers: tiersArg,
     shouldMintByDefault: true,
@@ -114,7 +112,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<{
       getJBDeployTieredNFTRewardDataSourceData({
         projectName,
         nftRewards,
-        owner: userAddress,
+        ownerAddress: userAddress,
         directory: getAddress(contracts.JBDirectory.address),
       }), // _deployTieredNFTRewardDataSourceData
       {

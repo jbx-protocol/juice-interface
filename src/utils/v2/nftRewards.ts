@@ -40,13 +40,12 @@ export function sortNftRewardTiers(
 export function CIDsOfNftRewardTiersResponse(
   nftRewardTiersResponse: ContractNftRewardTier[],
 ): string[] {
-  const cids: string[] = []
-  nftRewardTiersResponse.map((contractRewardTier: ContractNftRewardTier) => {
-    const cid = contractRewardTier.tokenUri.split('/')[1]
-    if (cid) {
-      cids.push(cid)
-    }
-  })
+  const cids: string[] = nftRewardTiersResponse
+    .map((contractRewardTier: ContractNftRewardTier) => {
+      const cid = contractRewardTier.tokenUri.split('/').at(-1)
+      return cid ?? ''
+    })
+    .filter(cid => cid.length > 0)
   return cids
 }
 

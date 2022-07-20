@@ -59,7 +59,7 @@ export default function NftDrawer({
   }, [rewardTiers, dispatch, onClose])
 
   const handleAddRewardTier = (newRewardTier: NftRewardTier) => {
-    setRewardTiers(sortNftRewardTiers([...rewardTiers, newRewardTier].sort()))
+    setRewardTiers(sortNftRewardTiers([...rewardTiers, newRewardTier]))
   }
 
   const handleEditRewardTier = ({
@@ -69,7 +69,7 @@ export default function NftDrawer({
     index: number
     newRewardTier: NftRewardTier
   }) => {
-    return rewardTiers.map((tier, i) =>
+    const newRewardTiers = rewardTiers.map((tier, i) =>
       i === index
         ? {
             ...tier,
@@ -77,6 +77,7 @@ export default function NftDrawer({
           }
         : tier,
     )
+    setRewardTiers(newRewardTiers)
   }
 
   const handleDeleteRewardTier = (tierIndex: number) => {

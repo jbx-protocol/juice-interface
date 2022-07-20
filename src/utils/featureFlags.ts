@@ -1,6 +1,13 @@
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { readNetwork } from 'constants/networks'
 
-const FEATURE_FLAG_DEFAULTS: { [k: string]: { [j: string]: boolean } } = {}
+const FEATURE_FLAG_DEFAULTS: {
+  [featureFlag: string]: { [networkName: string]: boolean }
+} = {
+  [FEATURE_FLAGS.NFT_REWARDS]: {
+    rinkeby: true,
+  },
+}
 
 const featureFlagKey = (baseKey: string) => {
   return `${baseKey}_${readNetwork.name}`

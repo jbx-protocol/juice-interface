@@ -16,7 +16,7 @@ export function NftRewardsSection({
   onPayAmountChange: (payAmount: string) => void
 }) {
   const {
-    nftRewards: { CIDs, rewardTiers, loading },
+    nftRewards: { CIDs, rewardTiers, loading: nftsLoading },
   } = useContext(V2ProjectContext)
 
   const [selectedIndex, setSelectedIndex] = useState<number>()
@@ -65,7 +65,7 @@ export function NftRewardsSection({
   return (
     <div style={{ marginTop: 5 }}>
       <div style={{ fontSize: '0.7rem' }}>+ NFT</div>
-      {loading || !rewardTiers?.length ? (
+      {nftsLoading || (CIDs.length && !rewardTiers?.length) ? (
         <div
           style={{
             display: 'flex',
@@ -76,7 +76,11 @@ export function NftRewardsSection({
           <Loading />
         </div>
       ) : (
-        <Space size={'large'}>{rewardTiers.map(renderRewardTier)}</Space>
+        <>
+          {rewardTiers ? (
+            <Space size={'large'}>{rewardTiers.map(renderRewardTier)}</Space>
+          ) : null}
+        </>
       )}
     </div>
   )

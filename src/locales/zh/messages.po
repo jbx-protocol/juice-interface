@@ -809,6 +809,7 @@ msgstr "连接钱包以领取"
 
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 #: src/pages/create/tabs/ReviewDeployTab/DeployProjectButton.tsx
+#: src/pages/create/tabs/ReviewDeployTab/DeployProjectWithNftsButton.tsx
 #: src/pages/v1/create/index.page.tsx
 msgid "Connect wallet to deploy"
 msgstr "连接钱包以部署"
@@ -1030,6 +1031,7 @@ msgid "Deploy project payer contract"
 msgstr "部署项目的付款人合约"
 
 #: src/pages/create/tabs/ReviewDeployTab/DeployProjectButton.tsx
+#: src/pages/create/tabs/ReviewDeployTab/DeployProjectWithNftsButton.tsx
 msgid "Deploy project to {0}"
 msgstr "部署项目至 {0}"
 
@@ -1917,6 +1919,9 @@ msgid "NFT projects"
 msgstr ""
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
+msgid "NFT reward"
+msgstr ""
+
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
 #: src/pages/create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 #: src/pages/create/tabs/ReviewDeployTab/NftSummarySection.tsx
@@ -3632,7 +3637,7 @@ msgid "You must review and accept the risks."
 msgstr ""
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
-msgid "You receive an NFT for contributing <0>{0} ETH</0>."
+msgid "You receive an NFT for contributing over <0>{0} ETH</0>."
 msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx

@@ -804,6 +804,7 @@ msgstr "Connect wallet to claim"
 
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 #: src/pages/create/tabs/ReviewDeployTab/DeployProjectButton.tsx
+#: src/pages/create/tabs/ReviewDeployTab/DeployProjectWithNftsButton.tsx
 #: src/pages/v1/create/index.page.tsx
 msgid "Connect wallet to deploy"
 msgstr "Connect wallet to deploy"
@@ -1025,6 +1026,7 @@ msgid "Deploy project payer contract"
 msgstr "Deploy project payer contract"
 
 #: src/pages/create/tabs/ReviewDeployTab/DeployProjectButton.tsx
+#: src/pages/create/tabs/ReviewDeployTab/DeployProjectWithNftsButton.tsx
 msgid "Deploy project to {0}"
 msgstr "Deploy project to {0}"
 
@@ -1912,6 +1914,9 @@ msgid "NFT projects"
 msgstr "NFT projects"
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
+msgid "NFT reward"
+msgstr "NFT reward"
+
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
 #: src/pages/create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 #: src/pages/create/tabs/ReviewDeployTab/NftSummarySection.tsx
@@ -3627,8 +3632,8 @@ msgid "You must review and accept the risks."
 msgstr "You must review and accept the risks."
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
-msgid "You receive an NFT for contributing <0>{0} ETH</0>."
-msgstr "You receive an NFT for contributing <0>{0} ETH</0>."
+msgid "You receive an NFT for contributing over <0>{0} ETH</0>."
+msgstr "You receive an NFT for contributing over <0>{0} ETH</0>."
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "You will receive minimum {minReturnedTokensFormatted} ETH"

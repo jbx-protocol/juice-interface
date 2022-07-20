@@ -295,14 +295,13 @@ export default function ProjectActivity() {
         <SectionHeader text={t`Activity`} style={{ margin: 0 }} />
 
         <Space direction="horizontal" align="center" size="small">
-          <Button
-            type="text"
-            icon={<DownloadOutlined />}
-            onClick={() => setDownloadModalVisible(true)}
-            style={{
-              display: count > 0 ? 'inline-block' : 'none',
-            }}
-          />
+          {count > 0 && (
+            <Button
+              type="text"
+              icon={<DownloadOutlined />}
+              onClick={() => setDownloadModalVisible(true)}
+            />
+          )}
 
           <Select
             className="small"

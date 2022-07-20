@@ -1475,6 +1475,10 @@ msgstr "资金分发"
 msgid "Funding target"
 msgstr "筹款目标"
 
+#: src/components/Project/SpendingStats.tsx
+msgid "Funds available to distribute in this funding cycle (before the {feePercentage}% JBX fee). This amount won't roll over to the next funding cycle, so funds should be distributed before this funding cycle ends."
+msgstr ""
+
 #: src/components/v1/shared/FundingCycle/modals/DistributeTokensModal.tsx
 #: src/components/v1/shared/FundingCycle/modals/WithdrawModal.tsx
 msgid "Funds will be distributed to:"
@@ -2844,8 +2848,8 @@ msgid "Since you have not set a funding duration, changes to these settings will
 msgstr "鉴于你并未设置筹款持续时间，对这些设置的修改将会立即生效。"
 
 #: src/components/Project/FundingCycleDetailsCard.tsx
-msgid "Some funding cycle properties may indicate risk for project contributors."
-msgstr "一些筹款周期的配置可能会给项目贡献者们造成一些风险。"
+msgid "Some funding cycle settings may put project contributors at risk."
+msgstr ""
 
 #: src/components/ProjectRiskNotice.tsx
 msgid "Some of the project's current funding cycle properties may indicate risk for contributors."
@@ -2990,10 +2994,6 @@ msgstr "该项目在Juicebox合约中的余额。"
 msgid "The distribution limit for this funding cycle is 0, meaning all funds in Juicebox are currently considered overflow. Overflow can be redeemed by token holders, but not distributed."
 msgstr "当前筹款周期的分配限额为 0, 也就是说 Juicebox 里的所有资金都被视为溢出。溢出可供持币人赎回代币来换取，但不能用于分配。"
 
-#: src/components/Project/SpendingStats.tsx
-msgid "The funds available to distribution for this funding cycle (before the {feePercentage}% JBX fee is subtracted). This number won't roll over to the next funding cycle, so funds should be distributed before this funding cycle ends."
-msgstr "当前筹款周期的可分配资金(未扣除 {feePercentage}% JBX 费用)。这一金额将不会滚动至下个筹款周期，所以应该在本筹款周期结束完成分配。"
-
 #: src/pages/index.page.tsx
 msgid "The future will be led by creators, and owned by communities."
 msgstr "创造者将引领未来, 而社区会拥有未来."
@@ -3129,7 +3129,7 @@ msgstr "这个项目使用的是 V2 版本的 Juicebox 合约。"
 msgid "This project's balance in the Juicebox contract."
 msgstr "这个项目在 Juicebox 合约内的余额。"
 
-#: src/components/Project/FundingCycleDetailsCard.tsx
+#: src/components/Project/BallotStateBadge.tsx
 msgid "This proposed reconfiguration hasn't passed the {0} period. It's not guaranteed to take effect in the upcoming funding cycle."
 msgstr ""
 

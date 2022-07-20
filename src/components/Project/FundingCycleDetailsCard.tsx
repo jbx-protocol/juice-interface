@@ -1,8 +1,5 @@
-import {
-  ExclamationCircleOutlined,
-  ClockCircleOutlined,
-} from '@ant-design/icons'
-import { t, Trans } from '@lingui/macro'
+import { ExclamationCircleOutlined } from '@ant-design/icons'
+import { Trans } from '@lingui/macro'
 import { Collapse, Tooltip } from 'antd'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import { ThemeContext } from 'contexts/themeContext'
@@ -11,58 +8,9 @@ import { useContext } from 'react'
 import { detailedTimeUntil } from 'utils/formatTime'
 import { BallotState } from 'models/v2/fundingCycle'
 
-import { Badge, BadgeVariant } from '../Badge'
-import { getBallotStrategyByAddress } from 'constants/v2/ballotStrategies/getBallotStrategiesByAddress'
+import { BallotStateBadge } from './BallotStateBadge'
 
 const COLLAPSE_PANEL_KEY = 'funding-cycle-details'
-
-function BallotStateBadge({
-  ballotState,
-  ballotStrategyAddress,
-}: {
-  ballotState: BallotState
-  ballotStrategyAddress?: string
-}) {
-  const ballotStrategy = ballotStrategyAddress
-    ? getBallotStrategyByAddress(ballotStrategyAddress)
-    : undefined
-
-  // only show badge for ballot states 0 and 2 (don't show if ballot is 'approved'.)
-  const ballotStateVariantMap: { [k in BallotState]?: BadgeVariant } = {
-    0: 'warning',
-  }
-
-  const ballotStateLabelMap: { [k in BallotState]?: string } = {
-    0: 'Pending',
-  }
-
-  const ballotStateTooltips: { [k in BallotState]?: string } = {
-    0: t`This proposed reconfiguration hasn't passed the ${
-      ballotStrategy?.durationSeconds && ballotStrategy?.name
-        ? ballotStrategy.name
-        : 'delay'
-    } period. It's not guaranteed to take effect in the upcoming funding cycle.`,
-  }
-
-  const ballotStateIcons: { [k in BallotState]?: JSX.Element } = {
-    0: <ClockCircleOutlined />,
-  }
-
-  const variant = ballotStateVariantMap[ballotState]
-
-  if (!variant) return null
-
-  return (
-    <Badge
-      variant={variant}
-      style={{ marginLeft: '0.5rem', textTransform: 'capitalize' }}
-    >
-      <Tooltip title={ballotStateTooltips[ballotState]}>
-        {ballotStateIcons[ballotState]} {ballotStateLabelMap[ballotState]}
-      </Tooltip>
-    </Badge>
-  )
-}
 
 export default function FundingCycleDetailsCard({
   fundingCycleNumber,
@@ -145,26 +93,25 @@ export default function FundingCycleDetailsCard({
             }}
           >
             <div>
-              <span>
-                {fundingCycleDurationSeconds.gt(0) ? (
-                  <Trans>Cycle #{fundingCycleNumber.toString()}</Trans>
-                ) : (
-                  <Trans>Details</Trans>
-                )}
-              </span>
+              {fundingCycleDurationSeconds.gt(0) ||
+              (fundingCycleDurationSeconds.eq(0) &&
+                fundingCycleNumber.gt(0)) ? (
+                <Trans>Cycle #{fundingCycleNumber.toString()}</Trans>
+              ) : (
+                <Trans>Details</Trans>
+              )}
 
               {fundingCycleRiskCount > 0 && (
                 <span style={{ marginLeft: 10, color: colors.text.secondary }}>
                   <Tooltip
                     title={
                       <Trans>
-                        Some funding cycle properties may indicate risk for
-                        project contributors.
+                        Some funding cycle settings may put project contributors
+                        at risk.
                       </Trans>
                     }
                   >
-                    <ExclamationCircleOutlined style={{ marginRight: 6 }} />
-                    {fundingCycleRiskCount}
+                    <ExclamationCircleOutlined />
                   </Tooltip>
                 </span>
               )}

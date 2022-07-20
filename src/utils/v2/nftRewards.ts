@@ -42,7 +42,9 @@ export function CIDsOfNftRewardTiersResponse(
 ): string[] {
   const cids: string[] = nftRewardTiersResponse
     .map((contractRewardTier: ContractNftRewardTier) => {
-      const cid = contractRewardTier.tokenUri.split('/').at(-1)
+      const uriParts = contractRewardTier.tokenUri.split('/')
+      const cid = uriParts[uriParts.length - 1]
+
       return cid ?? ''
     })
     .filter(cid => cid.length > 0)

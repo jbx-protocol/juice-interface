@@ -28,7 +28,7 @@ import { v2ProjectRoute } from 'utils/routes'
 import { TransactionEvent } from 'bnc-notify'
 
 import { readNetwork } from 'constants/networks'
-import { findTransactionReceipt } from './DeployProjectButton'
+import { findTransactionReceipt } from './utils'
 
 const NFT_CREATE_EVENT_IDX = 2
 const NFT_PROJECT_ID_TOPIC_IDX = 1

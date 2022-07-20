@@ -48,6 +48,7 @@ export class CurrencyUtils {
         'to wei',
         e,
       )
+      return BigNumber.from(0)
     }
   }
 

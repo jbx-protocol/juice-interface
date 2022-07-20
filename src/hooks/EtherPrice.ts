@@ -6,7 +6,7 @@ import { fromWad } from 'utils/formatNumber'
 import useContractReader from './v1/contractReader/ContractReader'
 
 export function useEtherPrice() {
-  const [price, setPrice] = useState<number>()
+  const [price, setPrice] = useState<number>(0)
 
   useContractReader({
     contract: V1ContractName.Prices,

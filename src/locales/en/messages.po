@@ -137,8 +137,8 @@ msgid "<0>A project can choose to reserve a percentage of tokens for itself. Ins
 msgstr "<0>A project can choose to reserve a percentage of tokens for itself. Instead of being distributed to paying users, this percentage of tokens is instead minted for the project.</0><1>Holding these tokens entitles a project to a portion of its own overflow.</1>"
 
 #: src/pages/create/tabs/ReviewDeployTab/NftSummarySection.tsx
-msgid "<0>Contribution threshold:</0> {0} ETH"
-msgstr "<0>Contribution threshold:</0> {0} ETH"
+msgid "<0>Contribution floor:</0> {0} ETH"
+msgstr "<0>Contribution floor:</0> {0} ETH"
 
 #: src/pages/create/tabs/ReviewDeployTab/NftSummarySection.tsx
 msgid "<0>Description: </0><1/>"
@@ -147,10 +147,6 @@ msgstr "<0>Description: </0><1/>"
 #: src/pages/create/forms/FundingForm/FundingCycleExplainerCollapse.tsx
 msgid "<0>Discount rate</0>, to reduce your project token's issuance rate (tokens per ETH) each funding cycle."
 msgstr "<0>Discount rate</0>, to reduce your project token's issuance rate (tokens per ETH) each funding cycle."
-
-#: src/pages/create/tabs/ReviewDeployTab/NftSummarySection.tsx
-msgid "<0>External link: {0}</0>"
-msgstr "<0>External link: {0}</0>"
 
 #: src/pages/home/QAs.tsx
 msgid "<0>If you know how much your project needs to earn over some period of time to be sustainable, you can set a funding target with that amount. If your project earns more than that, the surplus funds are locked in an overflow pool. Anyone holding your project's tokens can claim a portion of the overflow pool in exchange for redeeming their tokens.</0><1>For more info, check out this <2>short video</2>.</1>"
@@ -187,10 +183,6 @@ msgstr ""
 #: src/components/v1/shared/forms/BudgetForm.tsx
 msgid "<0>Learn more</0> about overflow."
 msgstr ""
-
-#: src/pages/create/tabs/ReviewDeployTab/NftSummarySection.tsx
-msgid "<0>Max. supply:</0> {0}"
-msgstr "<0>Max. supply:</0> {0}"
 
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "<0>NOTE:</0> This project has a balance of 0. Projects cannot be migrated without a balance. To migrate this project, first pay it or use the button below to deposit 1 wei (0.000000000000000001 or 10<1>-18</1> ETH)."
@@ -248,6 +240,10 @@ msgstr "<0>Total project tokens minted</0> when 1 ETH is contributed. This can c
 #: src/pages/home/QAs.tsx
 msgid "<0>Users fund your project by paying to use your app or service, or as a patron or investor by making a payment directly to your project's smart contract (like on this app).</0><1>For users paying through your app, you should route those funds through the Juicebox smart contracts so they receive tokens in return.</1>"
 msgstr "<0>Users fund your project by paying to use your app or service, or as a patron or investor by making a payment directly to your project's smart contract (like on this app).</0><1>For users paying through your app, you should route those funds through the Juicebox smart contracts so they receive tokens in return.</1>"
+
+#: src/pages/create/tabs/ReviewDeployTab/NftSummarySection.tsx
+msgid "<0>Website:</0> <1>{0}</1>"
+msgstr "<0>Website:</0> <1>{0}</1>"
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
 msgid "<0>Your unclaimed {tokenSymbol} tokens:</0> {0}"
@@ -808,6 +804,7 @@ msgstr "Connect wallet to claim"
 
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 #: src/pages/create/tabs/ReviewDeployTab/DeployProjectButton.tsx
+#: src/pages/create/tabs/ReviewDeployTab/DeployProjectWithNftsButton.tsx
 #: src/pages/v1/create/index.page.tsx
 msgid "Connect wallet to deploy"
 msgstr "Connect wallet to deploy"
@@ -1029,6 +1026,7 @@ msgid "Deploy project payer contract"
 msgstr "Deploy project payer contract"
 
 #: src/pages/create/tabs/ReviewDeployTab/DeployProjectButton.tsx
+#: src/pages/create/tabs/ReviewDeployTab/DeployProjectWithNftsButton.tsx
 msgid "Deploy project to {0}"
 msgstr "Deploy project to {0}"
 
@@ -1916,6 +1914,9 @@ msgid "NFT projects"
 msgstr "NFT projects"
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
+msgid "NFT reward"
+msgstr "NFT reward"
+
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
 #: src/pages/create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 #: src/pages/create/tabs/ReviewDeployTab/NftSummarySection.tsx
@@ -3631,8 +3632,8 @@ msgid "You must review and accept the risks."
 msgstr "You must review and accept the risks."
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
-msgid "You receive an NFT for contributing <0>{0} ETH</0>."
-msgstr "You receive an NFT for contributing <0>{0} ETH</0>."
+msgid "You receive an NFT for contributing over <0>{0} ETH</0>."
+msgstr "You receive an NFT for contributing over <0>{0} ETH</0>."
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "You will receive minimum {minReturnedTokensFormatted} ETH"

@@ -11,6 +11,7 @@ const MaxUint232 = constants.MaxUint256.add(1)
   .div(2 ** 24)
   .sub(1)
 const MaxUint88 = 2 ** 88 - 1
+export const MaxUint48 = 2 ** 48 - 1
 
 export const MAX_RESERVED_RATE = TEN_THOUSAND
 export const MAX_REDEMPTION_RATE = TEN_THOUSAND

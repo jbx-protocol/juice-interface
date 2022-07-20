@@ -1,5 +1,5 @@
 import { Space } from 'antd'
-import Loading from 'components/Loading'
+import { LoadingOutlined } from '@ant-design/icons'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { NftRewardTier } from 'models/v2/nftRewardTier'
 import { useContext, useEffect, useState } from 'react'
@@ -7,6 +7,7 @@ import { featureFlagEnabled } from 'utils/featureFlags'
 import { getNftRewardTier } from 'utils/v2/nftRewards'
 
 import { RewardTier } from './RewardTier'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 
 export function NftRewardsSection({
   payAmountETH,
@@ -36,7 +37,7 @@ export function NftRewardsSection({
     }
   }, [payAmountETH, rewardTiers])
 
-  const nftRewardsEnabled = featureFlagEnabled('nftRewards')
+  const nftRewardsEnabled = featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)
 
   if (!CIDs || CIDs.length < 1 || !nftRewardsEnabled) return null
 
@@ -62,25 +63,15 @@ export function NftRewardsSection({
     )
   }
 
+  const loading = nftsLoading || (CIDs.length && !rewardTiers?.length)
+
   return (
-    <div style={{ marginTop: 5 }}>
-      <div style={{ fontSize: '0.7rem' }}>+ NFT</div>
-      {nftsLoading || (CIDs.length && !rewardTiers?.length) ? (
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'flex-start',
-            paddingTop: '1rem',
-          }}
-        >
-          <Loading />
-        </div>
-      ) : (
-        <>
-          {rewardTiers ? (
-            <Space size={'large'}>{rewardTiers.map(renderRewardTier)}</Space>
-          ) : null}
-        </>
+    <div>
+      <div style={{ fontSize: '0.7rem', marginBottom: '0.25rem' }}>
+        + NFT {loading && <LoadingOutlined />}
+      </div>
+      {!loading && rewardTiers && (
+        <Space size="middle">{rewardTiers.map(renderRewardTier)}</Space>
       )}
     </div>
   )

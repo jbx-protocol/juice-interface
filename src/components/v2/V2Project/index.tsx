@@ -1,29 +1,32 @@
-import { RightCircleOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Col, Row, Space } from 'antd'
 import PayInputGroup from 'components/inputs/Pay/PayInputGroup'
 import ProjectHeader from 'components/Project/ProjectHeader'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
+// TODO: Do we still need lazy loading?
+import VolumeChart from 'components/VolumeChart'
 
-import { lazy, useContext, useState } from 'react'
+import { useContext, useState } from 'react'
 
-import { ThemeContext } from 'contexts/themeContext'
 import useMobile from 'hooks/Mobile'
-import {
-  useHasPermission,
-  V2OperatorPermission,
-} from 'hooks/v2/contractReader/HasPermission'
+import { useV2ConnectedWalletHasPermission } from 'hooks/v2/contractReader/V2ConnectedWalletHasPermission'
+import { V2OperatorPermission } from 'models/v2/permissions'
 import useProjectQueuedFundingCycle from 'hooks/v2/contractReader/ProjectQueuedFundingCycle'
 import { useEditV2ProjectDetailsTx } from 'hooks/v2/transactor/EditV2ProjectDetailsTx'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useRouter } from 'next/router'
 import { weightedAmount } from 'utils/v2/math'
 
 import { useIsUserAddress } from 'hooks/IsUserAddress'
 
 import { v2ProjectRoute } from 'utils/routes'
 import V2BugNotice from 'components/v2/shared/V2BugNotice'
+import { featureFlagEnabled } from 'utils/featureFlags'
+import { CurrencyContext } from 'contexts/currencyContext'
+import { CurrencyOption } from 'models/currencyOption'
+import { useCurrencyConverter } from 'hooks/CurrencyConverter'
+import { fromWad } from 'utils/formatNumber'
+import { TextButton } from 'components/TextButton'
 
-import { textSecondary } from 'constants/styles/text'
 import { V2_PROJECT_IDS } from 'constants/v2/projectIds'
 import { RelaunchFundingCycleBanner } from './banners/RelaunchFundingCycleBanner'
 import NewDeployModal from './NewDeployModal'
@@ -35,22 +38,18 @@ import V2ManageTokensSection from './V2ManageTokensSection'
 import V2PayButton from './V2PayButton'
 import V2ProjectHeaderActions from './V2ProjectHeaderActions'
 
-const GUTTER_PX = 40
-
-const VolumeChart = lazy(() => import('components/VolumeChart'))
 import { V2ReconfigureProjectHandleDrawer } from './V2ReconfigureProjectHandleDrawer'
 import ProjectPayers from './ProjectPayers'
+import { NftRewardsSection } from './NftRewardsSection'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
+
+const GUTTER_PX = 40
 
 const AllAssetsButton = ({ onClick }: { onClick: VoidFunction }) => {
-  const { theme } = useContext(ThemeContext)
-  const secondaryTextStyle = textSecondary(theme)
   return (
-    <span
-      style={{ ...secondaryTextStyle, cursor: 'pointer' }}
-      onClick={onClick}
-    >
-      <Trans>All assets</Trans> <RightCircleOutlined />
-    </span>
+    <TextButton onClick={onClick}>
+      <Trans>All assets</Trans>
+    </TextButton>
   )
 }
 
@@ -75,11 +74,17 @@ export default function V2Project({
     projectOwnerAddress,
     handle,
   } = useContext(V2ProjectContext)
-  const canReconfigureFundingCycles = useHasPermission(
+  const {
+    currencies: { ETH },
+  } = useContext(CurrencyContext)
+
+  const canReconfigureFundingCycles = useV2ConnectedWalletHasPermission(
     V2OperatorPermission.RECONFIGURE,
   )
 
   const [handleModalVisible, setHandleModalVisible] = useState<boolean>()
+  const [payAmount, setPayAmount] = useState<string>('0')
+  const [payInCurrency, setPayInCurrency] = useState<CurrencyOption>(ETH)
 
   const { data: queuedFundingCycleResponse } = useProjectQueuedFundingCycle({
     projectId,
@@ -90,13 +95,15 @@ export default function V2Project({
   const editV2ProjectDetailsTx = useEditV2ProjectDetailsTx()
 
   // Checks URL to see if user was just directed from project deploy
-  const location = useLocation()
-  const params = new URLSearchParams(location.search)
-  const isNewDeploy = Boolean(params.get('newDeploy'))
-  const history = useHistory()
+  const router = useRouter()
+  const isNewDeploy = Boolean(router.query.newDeploy)
   const isMobile = useMobile()
 
-  const hasEditPermission = useHasPermission(V2OperatorPermission.RECONFIGURE)
+  const converter = useCurrencyConverter()
+
+  const hasEditPermission = useV2ConnectedWalletHasPermission(
+    V2OperatorPermission.RECONFIGURE,
+  )
 
   const isOwner = useIsUserAddress(projectOwnerAddress)
 
@@ -114,7 +121,7 @@ export default function V2Project({
 
   const closeNewDeployModal = () => {
     // Change URL without refreshing page
-    history.replace(v2ProjectRoute({ projectId }))
+    router.replace(v2ProjectRoute({ projectId }))
     setNewDeployModalVisible(false)
   }
 
@@ -128,6 +135,11 @@ export default function V2Project({
     // disable if there's no current funding cycle
     return !hasCurrentFundingCycle
   }
+
+  const nftRewardsEnabled = featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)
+
+  const payAmountETH =
+    payInCurrency === ETH ? payAmount : fromWad(converter.usdToWei(payAmount))
 
   return (
     <Space direction="vertical" size={GUTTER_PX} style={{ width: '100%' }}>
@@ -150,15 +162,19 @@ export default function V2Project({
       {!isPreviewMode &&
         hasCurrentFundingCycle === false &&
         hasQueuedFundingCycle === false && <V2BugNotice />}
-      <Row gutter={GUTTER_PX} align="bottom">
+      <Row gutter={GUTTER_PX} align={nftRewardsEnabled ? 'top' : 'bottom'}>
         <Col md={colSizeMd} xs={24}>
           <TreasuryStats />
           <div style={{ textAlign: 'right' }}>
             <AllAssetsButton onClick={() => setBalancesModalVisible(true)} />
           </div>
         </Col>
-        <Col md={colSizeMd} xs={24} style={{ marginTop: GUTTER_PX }}>
+        <Col md={colSizeMd} xs={24}>
           <PayInputGroup
+            payAmountETH={payAmount}
+            onPayAmountChange={setPayAmount}
+            payInCurrency={payInCurrency}
+            onPayInCurrencyChange={setPayInCurrency}
             PayButton={V2PayButton}
             reservedRate={fundingCycleMetadata?.reservedRate.toNumber()}
             weight={fundingCycle?.weight}
@@ -168,6 +184,10 @@ export default function V2Project({
             disabled={isPreviewMode || payIsDisabledPreV2Redeploy()}
           />
           <ProjectPayers />
+          <NftRewardsSection
+            payAmountETH={payAmountETH}
+            onPayAmountChange={setPayAmount}
+          />
         </Col>
       </Row>
       <Row gutter={GUTTER_PX}>

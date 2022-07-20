@@ -86,7 +86,7 @@ export function useTransactor({
       const network = await provider.getNetwork()
 
       const notifyOpts: InitOptions = {
-        dappId: process.env.REACT_APP_BLOCKNATIVE_API_KEY,
+        dappId: process.env.NEXT_PUBLIC_BLOCKNATIVE_API_KEY,
         system: 'ethereum',
         networkId: network.chainId,
         darkMode: isDarkMode,

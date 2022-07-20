@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import useProjectHandle from 'hooks/v2/contractReader/ProjectHandle'
 import { CSSProperties } from 'react'
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import { v2ProjectRoute } from 'utils/routes'
 
 export default function V2ProjectHandle({
@@ -14,14 +14,13 @@ export default function V2ProjectHandle({
   const { data: handle } = useProjectHandle({ projectId })
 
   return (
-    <Link
-      to={v2ProjectRoute({ projectId, handle })}
-      style={{ fontWeight: 500, ...style }}
-      className="text-primary hover-text-action-primary hover-text-decoration-underline"
-    >
-      <span style={{ marginRight: '0.5rem' }}>
+    <Link href={v2ProjectRoute({ projectId, handle })}>
+      <a
+        style={{ fontWeight: 500, marginRight: '0.5rem', ...style }}
+        className="text-primary hover-text-action-primary hover-text-decoration-underline"
+      >
         {handle ? `@${handle}` : <Trans>Project {projectId}</Trans>}
-      </span>
+      </a>
     </Link>
   )
 }

@@ -2,7 +2,7 @@ import { Button, Space, Tooltip } from 'antd'
 import { Trans } from '@lingui/macro'
 import { useState } from 'react'
 import { TransactorInstance } from 'hooks/Transactor'
-import { useHistory } from 'react-router-dom'
+import { useRouter } from 'next/router'
 import { SettingOutlined } from '@ant-design/icons'
 import { ButtonType } from 'antd/lib/button'
 import { SizeType } from 'antd/lib/config-provider/SizeContext'
@@ -35,7 +35,7 @@ export default function IssueTokenButton({
 }) {
   const [modalVisible, setModalVisible] = useState<boolean>(false)
 
-  const history = useHistory()
+  const router = useRouter()
 
   function IssueTokensButton() {
     return (
@@ -67,7 +67,7 @@ export default function IssueTokenButton({
     setModalVisible(false)
 
     // remove newDeploy=true query parameter
-    history.replace({
+    router.replace({
       search: '',
     })
   }

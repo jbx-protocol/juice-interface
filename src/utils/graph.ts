@@ -299,7 +299,7 @@ export const formatGraphQuery = <E extends EntityKey, K extends EntityKeys<E>>(
   )} } }`
 }
 
-const subgraphUrl = process.env.REACT_APP_SUBGRAPH_URL
+const subgraphUrl = process.env.NEXT_PUBLIC_SUBGRAPH_URL
 
 export function formatGraphResponse<E extends EntityKey>(
   entity: E,
@@ -475,7 +475,7 @@ export async function querySubgraph<
 >(opts: GraphQueryOpts<E, K> | null) {
   if (!subgraphUrl) {
     // This should _only_ happen in development
-    throw new Error('env.REACT_APP_SUBGRAPH_URL is missing')
+    throw new Error('env.NEXT_PUBLIC_SUBGRAPH_URL is missing')
   }
 
   if (!opts) return []

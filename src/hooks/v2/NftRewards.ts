@@ -15,10 +15,15 @@ async function getRewardTierOfCid(cid: string) {
 export default function useNftRewards(
   CIDs: string[] | undefined,
 ): UseQueryResult<NftRewardTier[]> {
-  return useQuery('nft-rewards', async () => {
-    if (!CIDs?.length) {
-      return
-    }
-    return Promise.all(CIDs.map(cid => getRewardTierOfCid(cid)))
-  })
+  return useQuery(
+    'nft-rewards',
+    async () => {
+      if (!CIDs?.length) {
+        return
+      }
+
+      return await Promise.all(CIDs.map(cid => getRewardTierOfCid(cid)))
+    },
+    { enabled: !!CIDs?.length },
+  )
 }

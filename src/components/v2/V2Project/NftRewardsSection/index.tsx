@@ -67,7 +67,7 @@ export function NftRewardsSection({
 
   return (
     <div>
-      <div style={{ fontSize: '0.7rem', marginBottom: '0.25rem' }}>
+      <div style={{ fontSize: '0.7rem', marginBottom: '0.35rem' }}>
         + NFT {loading && <LoadingOutlined />}
       </div>
       {!loading && rewardTiers && (

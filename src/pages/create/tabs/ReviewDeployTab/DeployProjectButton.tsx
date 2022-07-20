@@ -7,7 +7,6 @@ import {
   useEditingV2FundingCycleMetadataSelector,
 } from 'hooks/AppSelector'
 import { useLaunchProjectTx } from 'hooks/v2/transactor/LaunchProjectTx'
-
 import { useCallback, useContext, useState } from 'react'
 import { uploadProjectMetadata } from 'utils/ipfs'
 import { TransactionReceipt } from '@ethersproject/providers'
@@ -23,7 +22,6 @@ import { useAppDispatch } from 'hooks/AppDispatch'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 
 import { v2ProjectRoute } from 'utils/routes'
-import { TransactionEvent } from 'bnc-notify'
 
 import { readProvider } from 'constants/readProvider'
 import { readNetwork } from 'constants/networks'
@@ -31,7 +29,7 @@ import { readNetwork } from 'constants/networks'
 const CREATE_EVENT_IDX = 0
 const PROJECT_ID_TOPIC_IDX = 3
 
-export const findTransactionReceipt = async (txHash: string) => {
+const findTransactionReceipt = async (txHash: string) => {
   let retries = 5
   let receipt
   while (retries > 0 && !receipt) {
@@ -51,9 +49,7 @@ export const findTransactionReceipt = async (txHash: string) => {
  * Return the project ID created from a `launchProjectFor` transaction.
  * @param txReceipt receipt of `launchProjectFor` transaction
  */
-const getProjectIdFromLaunchReceipt = (
-  txReceipt: TransactionReceipt,
-): number => {
+const getProjectIdFromReceipt = (txReceipt: TransactionReceipt): number => {
   const projectIdHex =
     txReceipt?.logs[CREATE_EVENT_IDX]?.topics?.[PROJECT_ID_TOPIC_IDX]
   const projectId = BigNumber.from(projectIdHex).toNumber()
@@ -100,45 +96,6 @@ export default function DeployProjectButton() {
       return
     }
 
-    const txOpts = {
-      onDone() {
-        console.info('Transaction executed. Awaiting confirmation...')
-        setTransactionPending(true)
-      },
-      async onConfirmed(result: TransactionEvent | undefined) {
-        const txHash = result?.transaction?.hash
-        if (!txHash) {
-          return // TODO error notififcation
-        }
-
-        const txReceipt = await findTransactionReceipt(txHash)
-        if (!txReceipt) {
-          return // TODO error notififcation
-        }
-        console.info('Found tx receipt.')
-
-        const projectId = getProjectIdFromLaunchReceipt(txReceipt)
-        if (projectId === undefined) {
-          return // TODO error notififcation
-        }
-
-        // Reset Redux state/localstorage after deploying
-        dispatch(editingV2ProjectActions.resetState())
-
-        router.push(`${v2ProjectRoute({ projectId })}?newDeploy=true`)
-      },
-      onCancelled() {
-        setDeployLoading(false)
-        setTransactionPending(false)
-      },
-    }
-
-    const handleProjectLaunchFailed = (error: string) => {
-      emitErrorNotification(`Failure: ${error}`)
-      setDeployLoading(false)
-      setTransactionPending(false)
-    }
-
     const groupedSplits = [payoutGroupedSplits, reservedTokensGroupedSplits]
 
     try {
@@ -150,23 +107,57 @@ export default function DeployProjectButton() {
           fundAccessConstraints,
           groupedSplits,
         },
-        txOpts,
+        {
+          onDone() {
+            console.info('Transaction executed. Awaiting confirmation...')
+            setTransactionPending(true)
+          },
+          async onConfirmed(result) {
+            const txHash = result?.transaction?.hash
+            if (!txHash) {
+              return // TODO error notififcation
+            }
+
+            const txReceipt = await findTransactionReceipt(txHash)
+            if (!txReceipt) {
+              return // TODO error notififcation
+            }
+            console.info('Found tx receipt.')
+
+            const projectId = getProjectIdFromReceipt(txReceipt)
+            if (projectId === undefined) {
+              return // TODO error notififcation
+            }
+
+            // Reset Redux state/localstorage after deploying
+            dispatch(editingV2ProjectActions.resetState())
+
+            router.push(`${v2ProjectRoute({ projectId })}?newDeploy=true`)
+          },
+          onCancelled() {
+            setDeployLoading(false)
+            setTransactionPending(false)
+          },
+        },
       )
+
       if (!txSuccessful) {
         setDeployLoading(false)
         setTransactionPending(false)
       }
     } catch (error) {
-      handleProjectLaunchFailed(error as string)
+      emitErrorNotification(`Failure: ${error}`)
+      setDeployLoading(false)
+      setTransactionPending(false)
     }
   }, [
-    launchProjectTx,
     projectMetadata,
     fundingCycleData,
     fundingCycleMetadata,
     fundAccessConstraints,
     payoutGroupedSplits,
     reservedTokensGroupedSplits,
+    launchProjectTx,
     dispatch,
     router,
   ])

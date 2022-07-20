@@ -129,7 +129,7 @@ export function DeployProjectWithNftsButton() {
       },
     }
 
-    const handleProjectLaunchFailed = (error: string) => {
+    const handleProjectLaunchFailed = (error: Error) => {
       emitErrorNotification(`Failure: ${error}`)
       setDeployLoading(false)
       setTransactionPending(false)
@@ -166,7 +166,7 @@ export function DeployProjectWithNftsButton() {
         }
       }
     } catch (error) {
-      handleProjectLaunchFailed(error as string)
+      handleProjectLaunchFailed(error as Error)
     }
   }, [
     projectName,

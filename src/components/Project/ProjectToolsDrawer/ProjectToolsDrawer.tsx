@@ -13,6 +13,7 @@ import { PayableAddressSection } from './PayableAddressSection'
 import { V1TokenMigrationSection } from './V1TokenMigrationSection/V1TokenMigrationSection'
 import { TransferOwnershipForm } from './TransferOwnershipForm'
 import { TransferUnclaimedTokensForm } from './TransferUnclaimedTokensForm'
+import ProjectPayersSection from './ProjectPayersSection'
 
 const { TabPane } = Tabs
 
@@ -79,6 +80,10 @@ export function ProjectToolsDrawer({
           useTransferProjectOwnershipTx={useTransferProjectOwnershipTx}
         />
       </section>
+
+      <Divider />
+
+      <ProjectPayersSection />
 
       <Divider />
 

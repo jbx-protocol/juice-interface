@@ -1,3 +1,4 @@
+import { ThunderboltOutlined } from '@ant-design/icons'
 import { useContext, useState } from 'react'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useProjectPayers } from 'hooks/v2/ProjectPayers'
@@ -15,11 +16,10 @@ export default function ProjectPayers() {
     <div>
       {projectPayers && (
         <div
-          style={{ cursor: 'pointer', fontWeight: 500 }}
+          style={{ cursor: 'pointer', fontWeight: 500, fontSize: '0.8rem' }}
           onClick={() => setProjectPayersModalIsVisible(true)}
         >
-          {projectPayers?.length} ETH-ERC20 payment address
-          {projectPayers?.length > 1 ? 'es' : ''}
+          <ThunderboltOutlined /> Use payment address ({projectPayers.length})
         </div>
       )}
 

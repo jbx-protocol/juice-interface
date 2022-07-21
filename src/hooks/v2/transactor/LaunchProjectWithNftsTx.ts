@@ -10,6 +10,7 @@ import {
 } from 'models/v2/fundingCycle'
 
 import { GroupedSplits, SplitGroup } from 'models/v2/splits'
+import { ContractNftRewardTier } from 'models/v2/nftRewardTier'
 
 import { BigNumber } from '@ethersproject/bignumber'
 import { MaxUint48 } from 'utils/v2/math'
@@ -22,15 +23,6 @@ import { JUICEBOX_MONEY_METADATA_DOMAIN } from 'constants/v2/metadataDomain'
 
 const DEFAULT_MUST_START_AT_OR_AFTER = '1' // start immediately
 const DEFAULT_MEMO = ''
-
-export type ContractNftRewardTier = {
-  contributionFloor: BigNumber //uint128
-  remainingQuantity: BigNumber //uint64
-  initialQuantity: BigNumber //uint64
-  tokenUri: string // full link to IPFS
-  votingUnits: BigNumber
-  reservedRate: BigNumber
-}
 
 // Maps cid to contributionFloor
 export type TxNftArg = { [cid: string]: number }
@@ -52,7 +44,7 @@ function getJBDeployTieredNFTRewardDataSourceData({
       contributionFloor: contributionFloorWei,
       remainingQuantity: BigNumber.from(MaxUint48),
       initialQuantity: BigNumber.from(0),
-      tokenUri: `${IPFS_GATEWAY_HOSTNAME}/ipfs/${cid}`,
+      tokenUri: `https://${IPFS_GATEWAY_HOSTNAME}/ipfs/${cid}`,
       votingUnits: BigNumber.from(0),
       reservedRate: BigNumber.from(0),
     }

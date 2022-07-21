@@ -1,9 +1,9 @@
 import { Contract } from '@ethersproject/contracts'
 import * as constants from '@ethersproject/constants'
 import { useMemo } from 'react'
+import { ContractNftRewardTier } from 'models/v2/nftRewardTier'
 
 import useV2ContractReader from './V2ContractReader'
-import { ContractNftRewardTier } from '../transactor/LaunchProjectWithNftsTx'
 import { TEMPORARY_NFT_DATASOURCE_ABI } from 'constants/contracts/rinkeby/TEMPORARY_NFT_DATASOUCE_ABI'
 import { readProvider } from 'constants/readProvider'
 

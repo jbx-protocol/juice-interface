@@ -45,7 +45,7 @@ interface V2ProjectState {
 // Increment this version by 1 when making breaking changes.
 // When users return to the site and their local version is less than
 // this number, their state will be reset.
-export const REDUX_STORE_V2_PROJECT_VERSION = 4
+export const REDUX_STORE_V2_PROJECT_VERSION = 5
 
 const defaultProjectMetadataState: ProjectMetadataV4 = {
   name: '',
@@ -85,7 +85,7 @@ export const defaultFundingCycleMetadata: SerializedV2FundingCycleMetadata =
     allowControllerMigration: false,
     holdFees: false,
     useTotalOverflowForRedemptions: false,
-    useDataSourceForPay: true,
+    useDataSourceForPay: false,
     useDataSourceForRedeem: false,
     dataSource: constants.AddressZero,
   })

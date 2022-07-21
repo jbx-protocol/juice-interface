@@ -14,6 +14,8 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 
+import { emitSuccessNotification } from 'utils/notifications'
+
 import { JBX_CONTRACT_ADDRESS } from 'constants/v2/veNft/veNftProject'
 
 type RedeemVeNftModalProps = {
@@ -61,13 +63,22 @@ const RedeemVeNftModal = ({
 
     const txBeneficiary = beneficiary ? beneficiary : userAddress!
 
-    const txSuccess = await redeemTx({
-      tokenId,
-      token: JBX_CONTRACT_ADDRESS,
-      beneficiary: txBeneficiary,
-      memo,
-      terminal: primaryTerminal ? primaryTerminal : '',
-    })
+    const txSuccess = await redeemTx(
+      {
+        tokenId,
+        token: JBX_CONTRACT_ADDRESS,
+        beneficiary: txBeneficiary,
+        memo,
+        terminal: primaryTerminal ? primaryTerminal : '',
+      },
+      {
+        onConfirmed() {
+          emitSuccessNotification(
+            t`Redeem successful. Results will be indexed in a few moments.`,
+          )
+        },
+      },
+    )
 
     if (!txSuccess) {
       return

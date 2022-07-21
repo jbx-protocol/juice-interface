@@ -17,7 +17,7 @@ async function getRewardTierOfCid(cid: string): Promise<NftRewardTier> {
     externalLink: ipfsRewardTier.externalLink,
     contributionFloor: ipfsRewardTier.attributes.contributionFloor,
     maxSupply: ipfsRewardTier.attributes.maxSupply ?? DEFAULT_NFT_MAX_SUPPLY,
-    imageUrl: ipfsRewardTier.imageUrl,
+    imageUrl: ipfsRewardTier.image,
   }
 }
 

@@ -30,7 +30,6 @@ export type IPFSNftRewardTier = {
   name: string
   symbol: string | undefined
   description: string | undefined
-  imageUrl: string
   image: string // same as imageUrl
   imageDataUrl: string | undefined // image_data (Raw SVG image data, if you want to generate images on the fly (not recommended). Only use this if you're not including the image parameter.)
   artifactUri: string | undefined // artifactUri (optional, some legacy UX, wallets use this)

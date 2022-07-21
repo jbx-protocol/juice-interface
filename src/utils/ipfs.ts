@@ -137,7 +137,6 @@ async function uploadNftRewardToIPFS(
     description: rewardTier.description,
     name: rewardTier.name,
     externalLink: rewardTier.externalLink,
-    imageUrl: rewardTier.imageUrl,
     symbol: undefined,
     image: rewardTier.imageUrl,
     imageDataUrl: undefined,

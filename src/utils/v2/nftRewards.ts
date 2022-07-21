@@ -1,5 +1,4 @@
-import { ContractNftRewardTier } from 'hooks/v2/transactor/LaunchProjectWithNftsTx'
-import { NftRewardTier } from 'models/v2/nftRewardTier'
+import { ContractNftRewardTier, NftRewardTier } from 'models/v2/nftRewardTier'
 
 // Returns the highest NFT reward tier that a payer is eligible given their pay amount
 export function getNftRewardTier({

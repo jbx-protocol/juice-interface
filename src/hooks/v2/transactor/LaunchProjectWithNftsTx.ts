@@ -44,7 +44,7 @@ function getJBDeployTieredNFTRewardDataSourceData({
       contributionFloor: contributionFloorWei,
       remainingQuantity: BigNumber.from(MaxUint48),
       initialQuantity: BigNumber.from(0),
-      tokenUri: `${IPFS_GATEWAY_HOSTNAME}/ipfs/${cid}`,
+      tokenUri: `https://${IPFS_GATEWAY_HOSTNAME}/ipfs/${cid}`,
       votingUnits: BigNumber.from(0),
       reservedRate: BigNumber.from(0),
     }
@@ -113,7 +113,10 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<{
           content: projectMetadataCID,
         },
         data: fundingCycleData,
-        metadata: fundingCycleMetadata,
+        metadata: {
+          ...fundingCycleMetadata,
+          useDataSourceForPay: true,
+        },
         mustStartAtOrAfter,
         groupedSplits,
         fundAccessConstraints,

@@ -1,4 +1,4 @@
-import { NftRewardTier } from 'models/v2/nftRewardTier'
+import { ContractNftRewardTier, NftRewardTier } from 'models/v2/nftRewardTier'
 
 // Returns the highest NFT reward tier that a payer is eligible given their pay amount
 export function getNftRewardTier({
@@ -20,6 +20,34 @@ export function getNftRewardTier({
     })
   }
   return nftReward
+}
+
+// Sorts array of nft reward tiers by contributionFloor
+export function sortNftRewardTiers(
+  rewardTiers: NftRewardTier[],
+): NftRewardTier[] {
+  return rewardTiers.sort((a, b) =>
+    a.contributionFloor > b.contributionFloor
+      ? 1
+      : b.contributionFloor > a.contributionFloor
+      ? -1
+      : 0,
+  )
+}
+
+// returns an array of CIDs from a given array of RewardTier obj's
+export function CIDsOfNftRewardTiersResponse(
+  nftRewardTiersResponse: ContractNftRewardTier[],
+): string[] {
+  const cids: string[] = nftRewardTiersResponse
+    .map((contractRewardTier: ContractNftRewardTier) => {
+      const uriParts = contractRewardTier.tokenUri.split('/')
+      const cid = uriParts[uriParts.length - 1]
+
+      return cid ?? ''
+    })
+    .filter(cid => cid.length > 0)
+  return cids
 }
 
 export const MOCK_NFTs: NftRewardTier[] = [

@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-07-19 03:17\n"
+"PO-Revision-Date: 2022-07-21 03:06\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -142,7 +142,7 @@ msgid "<0>A project can choose to reserve a percentage of tokens for itself. Ins
 msgstr "<0>项目可以选择保留某个百分比的代币。这个百分比的代币会铸造给项目，而不是分发给付费的用户。</0><1>持有这些代币能让项目拥有一部分自己的溢出。</1>"
 
 #: src/pages/create/tabs/ReviewDeployTab/NftSummarySection.tsx
-msgid "<0>Contribution threshold:</0> {0} ETH"
+msgid "<0>Contribution floor:</0> {0} ETH"
 msgstr ""
 
 #: src/pages/create/tabs/ReviewDeployTab/NftSummarySection.tsx
@@ -152,10 +152,6 @@ msgstr ""
 #: src/pages/create/forms/FundingForm/FundingCycleExplainerCollapse.tsx
 msgid "<0>Discount rate</0>, to reduce your project token's issuance rate (tokens per ETH) each funding cycle."
 msgstr "<0>折扣率</0>, 以便每个周期降低项目的代币发行比率 (代币每 ETH) 。"
-
-#: src/pages/create/tabs/ReviewDeployTab/NftSummarySection.tsx
-msgid "<0>External link: {0}</0>"
-msgstr ""
 
 #: src/pages/home/QAs.tsx
 msgid "<0>If you know how much your project needs to earn over some period of time to be sustainable, you can set a funding target with that amount. If your project earns more than that, the surplus funds are locked in an overflow pool. Anyone holding your project's tokens can claim a portion of the overflow pool in exchange for redeeming their tokens.</0><1>For more info, check out this <2>short video</2>.</1>"
@@ -192,10 +188,6 @@ msgstr "<0>进一步了解</0> 筹款周期。"
 #: src/components/v1/shared/forms/BudgetForm.tsx
 msgid "<0>Learn more</0> about overflow."
 msgstr "<0>进一步了解</0> 溢出。"
-
-#: src/pages/create/tabs/ReviewDeployTab/NftSummarySection.tsx
-msgid "<0>Max. supply:</0> {0}"
-msgstr ""
 
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "<0>NOTE:</0> This project has a balance of 0. Projects cannot be migrated without a balance. To migrate this project, first pay it or use the button below to deposit 1 wei (0.000000000000000001 or 10<1>-18</1> ETH)."
@@ -253,6 +245,10 @@ msgstr "收到1 ETH 的捐款时<0>铸造的项目代币总数</0>。这个数�
 #: src/pages/home/QAs.tsx
 msgid "<0>Users fund your project by paying to use your app or service, or as a patron or investor by making a payment directly to your project's smart contract (like on this app).</0><1>For users paying through your app, you should route those funds through the Juicebox smart contracts so they receive tokens in return.</1>"
 msgstr "<0>用户通过付款使用你的应用或者服务来为你的项目提供资金支持，或者作为赞助人或投资人把资金直接打到项目的智能合约里（就像在这个应用上）。</0><1>对于通过你的应用来付款的用户，你应该通过 Juicebox 的智能合约来中转这些资金，这样用户就能相应地获得代币了。</1>"
+
+#: src/pages/create/tabs/ReviewDeployTab/NftSummarySection.tsx
+msgid "<0>Website:</0> <1>{0}</1>"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
 msgid "<0>Your unclaimed {tokenSymbol} tokens:</0> {0}"
@@ -813,6 +809,7 @@ msgstr "连接钱包以领取"
 
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 #: src/pages/create/tabs/ReviewDeployTab/DeployProjectButton.tsx
+#: src/pages/create/tabs/ReviewDeployTab/DeployProjectWithNftsButton.tsx
 #: src/pages/v1/create/index.page.tsx
 msgid "Connect wallet to deploy"
 msgstr "连接钱包以部署"
@@ -1034,6 +1031,7 @@ msgid "Deploy project payer contract"
 msgstr "部署项目的付款人合约"
 
 #: src/pages/create/tabs/ReviewDeployTab/DeployProjectButton.tsx
+#: src/pages/create/tabs/ReviewDeployTab/DeployProjectWithNftsButton.tsx
 msgid "Deploy project to {0}"
 msgstr "部署项目至 {0}"
 
@@ -1392,6 +1390,15 @@ msgstr "加载持有人错误"
 msgid "Error loading payments"
 msgstr "加载付款信息错误"
 
+#: src/pages/api/ipfs/logo.page.ts
+msgid "Error parsing form"
+msgstr ""
+
+#: src/components/inputs/ImageUploader.tsx
+#: src/pages/api/ipfs/logo.page.ts
+msgid "Error uploading file"
+msgstr ""
+
 #: src/pages/index.page.tsx
 msgid "Explore projects"
 msgstr "探索项目"
@@ -1476,6 +1483,10 @@ msgstr "资金分发"
 #: src/components/formItems/ProjectTarget.tsx
 msgid "Funding target"
 msgstr "筹款目标"
+
+#: src/components/Project/SpendingStats.tsx
+msgid "Funds available to distribute in this funding cycle (before the {feePercentage}% JBX fee). This amount won't roll over to the next funding cycle, so funds should be distributed before this funding cycle ends."
+msgstr ""
 
 #: src/components/v1/shared/FundingCycle/modals/DistributeTokensModal.tsx
 #: src/components/v1/shared/FundingCycle/modals/WithdrawModal.tsx
@@ -1921,6 +1932,9 @@ msgid "NFT projects"
 msgstr ""
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
+msgid "NFT reward"
+msgstr ""
+
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
 #: src/pages/create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 #: src/pages/create/tabs/ReviewDeployTab/NftSummarySection.tsx
@@ -2843,8 +2857,8 @@ msgid "Since you have not set a funding duration, changes to these settings will
 msgstr "鉴于你并未设置筹款持续时间，对这些设置的修改将会立即生效。"
 
 #: src/components/Project/FundingCycleDetailsCard.tsx
-msgid "Some funding cycle properties may indicate risk for project contributors."
-msgstr "一些筹款周期的配置可能会给项目贡献者们造成一些风险。"
+msgid "Some funding cycle settings may put project contributors at risk."
+msgstr ""
 
 #: src/components/ProjectRiskNotice.tsx
 msgid "Some of the project's current funding cycle properties may indicate risk for contributors."
@@ -2989,10 +3003,6 @@ msgstr "该项目在Juicebox合约中的余额。"
 msgid "The distribution limit for this funding cycle is 0, meaning all funds in Juicebox are currently considered overflow. Overflow can be redeemed by token holders, but not distributed."
 msgstr "当前筹款周期的分配限额为 0, 也就是说 Juicebox 里的所有资金都被视为溢出。溢出可供持币人赎回代币来换取，但不能用于分配。"
 
-#: src/components/Project/SpendingStats.tsx
-msgid "The funds available to distribution for this funding cycle (before the {feePercentage}% JBX fee is subtracted). This number won't roll over to the next funding cycle, so funds should be distributed before this funding cycle ends."
-msgstr "当前筹款周期的可分配资金(未扣除 {feePercentage}% JBX 费用)。这一金额将不会滚动至下个筹款周期，所以应该在本筹款周期结束完成分配。"
-
 #: src/pages/index.page.tsx
 msgid "The future will be led by creators, and owned by communities."
 msgstr "创造者将引领未来, 而社区会拥有未来."
@@ -3128,7 +3138,7 @@ msgstr "这个项目使用的是 V2 版本的 Juicebox 合约。"
 msgid "This project's balance in the Juicebox contract."
 msgstr "这个项目在 Juicebox 合约内的余额。"
 
-#: src/components/Project/FundingCycleDetailsCard.tsx
+#: src/components/Project/BallotStateBadge.tsx
 msgid "This proposed reconfiguration hasn't passed the {0} period. It's not guaranteed to take effect in the upcoming funding cycle."
 msgstr ""
 
@@ -3636,7 +3646,7 @@ msgid "You must review and accept the risks."
 msgstr ""
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
-msgid "You receive an NFT for contributing <0>{0} ETH</0>."
+msgid "You receive an NFT for contributing over <0>{0} ETH</0>."
 msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx

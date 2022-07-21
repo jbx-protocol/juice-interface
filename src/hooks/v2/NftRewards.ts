@@ -1,12 +1,24 @@
 import axios from 'axios'
-import { NftRewardTier } from 'models/v2/nftRewardTier'
+
+import { IPFSNftRewardTier, NftRewardTier } from 'models/v2/nftRewardTier'
 import { useQuery, UseQueryResult } from 'react-query'
 import { ipfsCidUrl } from 'utils/ipfs'
+import { MaxUint48 } from 'utils/v2/math'
 
-async function getRewardTierOfCid(cid: string) {
+const DEFAULT_NFT_MAX_SUPPLY = MaxUint48
+
+async function getRewardTierOfCid(cid: string): Promise<NftRewardTier> {
   const url = ipfsCidUrl(cid)
   const response = await axios.get(url)
-  return response.data
+  const ipfsRewardTier: IPFSNftRewardTier = response.data
+  return {
+    name: ipfsRewardTier.name,
+    description: ipfsRewardTier.description,
+    externalLink: ipfsRewardTier.externalLink,
+    contributionFloor: ipfsRewardTier.attributes.contributionFloor,
+    maxSupply: ipfsRewardTier.attributes.maxSupply ?? DEFAULT_NFT_MAX_SUPPLY,
+    imageUrl: ipfsRewardTier.image,
+  }
 }
 
 // Retreives each NftRewardTier from IPFS given an array of CIDs (IpfsHashes)
@@ -14,15 +26,15 @@ async function getRewardTierOfCid(cid: string) {
 export default function useNftRewards(
   CIDs: string[] | undefined,
 ): UseQueryResult<NftRewardTier[]> {
-  return useQuery('nft-rewards', async () => {
-    if (!CIDs?.length) {
-      return
-    }
+  return useQuery(
+    'nft-rewards',
+    async () => {
+      if (!CIDs?.length) {
+        return
+      }
 
-    const getRewardTiers = async () => {
-      return Promise.all(CIDs.map(cid => getRewardTierOfCid(cid)))
-    }
-
-    return getRewardTiers()
-  })
+      return await Promise.all(CIDs.map(cid => getRewardTierOfCid(cid)))
+    },
+    { enabled: !!CIDs?.length },
+  )
 }

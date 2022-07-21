@@ -8,7 +8,7 @@ msgstr ""
 "Language: hi\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-07-19 03:17\n"
+"PO-Revision-Date: 2022-07-21 03:06\n"
 "Last-Translator: \n"
 "Language-Team: Hindi\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -142,7 +142,7 @@ msgid "<0>A project can choose to reserve a percentage of tokens for itself. Ins
 msgstr ""
 
 #: src/pages/create/tabs/ReviewDeployTab/NftSummarySection.tsx
-msgid "<0>Contribution threshold:</0> {0} ETH"
+msgid "<0>Contribution floor:</0> {0} ETH"
 msgstr ""
 
 #: src/pages/create/tabs/ReviewDeployTab/NftSummarySection.tsx
@@ -151,10 +151,6 @@ msgstr ""
 
 #: src/pages/create/forms/FundingForm/FundingCycleExplainerCollapse.tsx
 msgid "<0>Discount rate</0>, to reduce your project token's issuance rate (tokens per ETH) each funding cycle."
-msgstr ""
-
-#: src/pages/create/tabs/ReviewDeployTab/NftSummarySection.tsx
-msgid "<0>External link: {0}</0>"
 msgstr ""
 
 #: src/pages/home/QAs.tsx
@@ -191,10 +187,6 @@ msgstr ""
 
 #: src/components/v1/shared/forms/BudgetForm.tsx
 msgid "<0>Learn more</0> about overflow."
-msgstr ""
-
-#: src/pages/create/tabs/ReviewDeployTab/NftSummarySection.tsx
-msgid "<0>Max. supply:</0> {0}"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
@@ -252,6 +244,10 @@ msgstr ""
 
 #: src/pages/home/QAs.tsx
 msgid "<0>Users fund your project by paying to use your app or service, or as a patron or investor by making a payment directly to your project's smart contract (like on this app).</0><1>For users paying through your app, you should route those funds through the Juicebox smart contracts so they receive tokens in return.</1>"
+msgstr ""
+
+#: src/pages/create/tabs/ReviewDeployTab/NftSummarySection.tsx
+msgid "<0>Website:</0> <1>{0}</1>"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/ConfirmUnstakeTokensModal.tsx
@@ -813,6 +809,7 @@ msgstr ""
 
 #: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 #: src/pages/create/tabs/ReviewDeployTab/DeployProjectButton.tsx
+#: src/pages/create/tabs/ReviewDeployTab/DeployProjectWithNftsButton.tsx
 #: src/pages/v1/create/index.page.tsx
 msgid "Connect wallet to deploy"
 msgstr ""
@@ -1034,6 +1031,7 @@ msgid "Deploy project payer contract"
 msgstr ""
 
 #: src/pages/create/tabs/ReviewDeployTab/DeployProjectButton.tsx
+#: src/pages/create/tabs/ReviewDeployTab/DeployProjectWithNftsButton.tsx
 msgid "Deploy project to {0}"
 msgstr ""
 
@@ -1392,6 +1390,15 @@ msgstr ""
 msgid "Error loading payments"
 msgstr ""
 
+#: src/pages/api/ipfs/logo.page.ts
+msgid "Error parsing form"
+msgstr ""
+
+#: src/components/inputs/ImageUploader.tsx
+#: src/pages/api/ipfs/logo.page.ts
+msgid "Error uploading file"
+msgstr ""
+
 #: src/pages/index.page.tsx
 msgid "Explore projects"
 msgstr ""
@@ -1475,6 +1482,10 @@ msgstr ""
 
 #: src/components/formItems/ProjectTarget.tsx
 msgid "Funding target"
+msgstr ""
+
+#: src/components/Project/SpendingStats.tsx
+msgid "Funds available to distribute in this funding cycle (before the {feePercentage}% JBX fee). This amount won't roll over to the next funding cycle, so funds should be distributed before this funding cycle ends."
 msgstr ""
 
 #: src/components/v1/shared/FundingCycle/modals/DistributeTokensModal.tsx
@@ -1921,6 +1932,9 @@ msgid "NFT projects"
 msgstr ""
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
+msgid "NFT reward"
+msgstr ""
+
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
 #: src/pages/create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 #: src/pages/create/tabs/ReviewDeployTab/NftSummarySection.tsx
@@ -2843,7 +2857,7 @@ msgid "Since you have not set a funding duration, changes to these settings will
 msgstr ""
 
 #: src/components/Project/FundingCycleDetailsCard.tsx
-msgid "Some funding cycle properties may indicate risk for project contributors."
+msgid "Some funding cycle settings may put project contributors at risk."
 msgstr ""
 
 #: src/components/ProjectRiskNotice.tsx
@@ -2989,10 +3003,6 @@ msgstr ""
 msgid "The distribution limit for this funding cycle is 0, meaning all funds in Juicebox are currently considered overflow. Overflow can be redeemed by token holders, but not distributed."
 msgstr ""
 
-#: src/components/Project/SpendingStats.tsx
-msgid "The funds available to distribution for this funding cycle (before the {feePercentage}% JBX fee is subtracted). This number won't roll over to the next funding cycle, so funds should be distributed before this funding cycle ends."
-msgstr ""
-
 #: src/pages/index.page.tsx
 msgid "The future will be led by creators, and owned by communities."
 msgstr ""
@@ -3128,7 +3138,7 @@ msgstr ""
 msgid "This project's balance in the Juicebox contract."
 msgstr ""
 
-#: src/components/Project/FundingCycleDetailsCard.tsx
+#: src/components/Project/BallotStateBadge.tsx
 msgid "This proposed reconfiguration hasn't passed the {0} period. It's not guaranteed to take effect in the upcoming funding cycle."
 msgstr ""
 
@@ -3636,7 +3646,7 @@ msgid "You must review and accept the risks."
 msgstr ""
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
-msgid "You receive an NFT for contributing <0>{0} ETH</0>."
+msgid "You receive an NFT for contributing over <0>{0} ETH</0>."
 msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx

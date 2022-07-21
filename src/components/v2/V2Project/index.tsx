@@ -73,6 +73,7 @@ export default function V2Project({
     isArchived,
     projectOwnerAddress,
     handle,
+    nftRewards: { CIDs: nftRewardsCids },
   } = useContext(V2ProjectContext)
   const {
     currencies: { ETH },
@@ -162,7 +163,10 @@ export default function V2Project({
       {!isPreviewMode &&
         hasCurrentFundingCycle === false &&
         hasQueuedFundingCycle === false && <V2BugNotice />}
-      <Row gutter={GUTTER_PX} align={nftRewardsEnabled ? 'top' : 'bottom'}>
+      <Row
+        gutter={GUTTER_PX}
+        align={nftRewardsEnabled && nftRewardsCids?.length ? 'top' : 'bottom'}
+      >
         <Col md={colSizeMd} xs={24}>
           <TreasuryStats />
           <div style={{ textAlign: 'right' }}>

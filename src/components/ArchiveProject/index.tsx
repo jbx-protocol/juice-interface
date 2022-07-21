@@ -12,8 +12,7 @@ import { emitErrorNotification } from 'utils/notifications'
 import { ThemeContext } from 'contexts/themeContext'
 
 import { reloadWindow } from 'utils/windowUtils'
-
-import { postGitHubIssueForArchive } from './postGitHubIssueForArchive'
+import axios from 'axios'
 
 export default function ArchiveProject({
   storeCidTx,
@@ -55,7 +54,13 @@ export default function ArchiveProject({
     // Create github issue when archive is requested
     // https://docs.github.com/en/rest/reference/issues#create-an-issue
     // Do this first, in case the user closes the page before the on-chain tx completes
-    postGitHubIssueForArchive({ archived, projectId, metadata, handle, cv })
+    axios.post(`/api/github/archive-project`, {
+      archived,
+      projectId,
+      metadata,
+      handle,
+      cv,
+    })
 
     const txSuccessful = await storeCidTx(
       { cid: uploadedMetadata.IpfsHash },

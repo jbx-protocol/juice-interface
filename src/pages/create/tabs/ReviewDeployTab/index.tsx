@@ -8,11 +8,13 @@ import ProjectDetailsSection from './ProjectDetailsSection'
 import FundingSummarySection from './FundingSummarySection'
 import NftSummarySection from './NftSummarySection'
 import { StartOverButton } from '../../StartOverButton'
+import { DeployProjectWithNftsButton } from './DeployProjectWithNftsButton'
 
 export const rowGutter: [Gutter, Gutter] = [40, 30]
 
 export default function ReviewDeployTab() {
   const { nftRewardTiers } = useAppSelector(state => state.editingV2Project)
+  const hasNfts = Boolean(nftRewardTiers?.length)
 
   const isMobile = useMobile()
   return (
@@ -25,11 +27,10 @@ export default function ReviewDeployTab() {
         <Space size="large" direction="vertical" style={{ width: '100%' }}>
           <ProjectDetailsSection />
           <FundingSummarySection />
-          {nftRewardTiers?.length ? <NftSummarySection /> : null}
+          {hasNfts ? <NftSummarySection /> : null}
         </Space>
       </div>
-
-      <DeployProjectButton />
+      {hasNfts ? <DeployProjectWithNftsButton /> : <DeployProjectButton />}
       <StartOverButton />
     </div>
   )

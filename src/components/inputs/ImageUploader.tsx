@@ -5,6 +5,7 @@ import { Button, Col, message, Row, Space, Upload } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext, useLayoutEffect, useState } from 'react'
 import { ipfsCidUrl, pinFileToIpfs } from 'utils/ipfs'
+import { emitErrorNotification } from 'utils/notifications'
 
 import ExternalLink from '../ExternalLink'
 
@@ -86,8 +87,12 @@ export default function ImageUploader({
               }}
               customRequest={async req => {
                 setLoadingUpload(true)
-                const res = await pinFileToIpfs(req.file, metadata)
-                setValue(res.IpfsHash)
+                try {
+                  const res = await pinFileToIpfs(req.file, metadata)
+                  setValue(res.IpfsHash)
+                } catch (err) {
+                  emitErrorNotification(t`Error uploading file`)
+                }
                 setLoadingUpload(false)
               }}
             >

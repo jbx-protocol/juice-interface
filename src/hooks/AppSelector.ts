@@ -35,6 +35,10 @@ export const useEditingV2FundingCycleMetadataSelector = () => {
     [serializedFundingCycleMetadata],
   )
 
+  // force useDataSourceForPay to false, for safety.
+  // https://github.com/jbx-protocol/juice-interface/issues/1473
+  fundingCycleMetadata.useDataSourceForPay = false
+
   return fundingCycleMetadata
 }
 

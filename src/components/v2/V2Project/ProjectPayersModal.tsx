@@ -6,8 +6,6 @@ import { ThemeContext } from 'contexts/themeContext'
 import { ETHERC20ProjectPayer } from 'models/subgraph-entities/v2/eth-erc20-project-payer'
 import { useContext } from 'react'
 
-import { MinimalCollapse } from 'components/MinimalCollapse'
-
 export default function ProjectPayersModal({
   visible,
   onCancel,
@@ -40,34 +38,6 @@ export default function ProjectPayersModal({
       title="ETH-ERC20 Payment addresses"
       okButtonProps={{ hidden: true }}
     >
-      <MinimalCollapse header="What are payment addresses?">
-        <p>
-          ETH-ERC20 Payment addresses are{' '}
-          <a
-            href="https://github.com/jbx-protocol/juice-contracts-v2/blob/main/contracts/JBETHERC20ProjectPayer.sol"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            smart contracts
-          </a>{' '}
-          that allow this project to be paid in <strong>ETH</strong> by sending
-          ETH directly to the contract, or in <strong>ERC20 tokens</strong> via
-          the contract's <strong>pay()</strong> function.
-        </p>
-        <p>
-          When a payment address is paid, its <strong>beneficiary</strong>{' '}
-          address will receive any minted project tokens.
-        </p>
-        <p>
-          <strong>Add to balance:</strong> payments to this contract will fund
-          the project without minting project tokens.
-        </p>
-        <p>
-          <strong>Auto claim:</strong> any minted tokens will automatically be
-          claimed as ERC20 (if this project has issued an ERC20 token).
-        </p>
-      </MinimalCollapse>
-
       {projectPayers?.length && (
         <Space direction="vertical" style={{ width: '100%', marginTop: gap }}>
           {projectPayers.map(p => (

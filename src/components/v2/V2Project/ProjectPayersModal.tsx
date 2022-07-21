@@ -3,8 +3,6 @@ import { Modal, Space } from 'antd'
 import FormattedAddress from 'components/FormattedAddress'
 import RichNote from 'components/RichNote'
 import { ThemeContext } from 'contexts/themeContext'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { useIsUserAddress } from 'hooks/IsUserAddress'
 import { ETHERC20ProjectPayer } from 'models/subgraph-entities/v2/eth-erc20-project-payer'
 import { useContext } from 'react'
 
@@ -32,10 +30,6 @@ export default function ProjectPayersModal({
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const { projectOwnerAddress } = useContext(V2ProjectContext)
-
-  const isOwner = useIsUserAddress(projectOwnerAddress)
-
   const gap = 30
 
   return (
@@ -46,7 +40,7 @@ export default function ProjectPayersModal({
       title="ETH-ERC20 Payment addresses"
       okButtonProps={{ hidden: true }}
     >
-      <MinimalCollapse header="What are thoooose?">
+      <MinimalCollapse header="What are payment addresses?">
         <p>
           ETH-ERC20 Payment addresses are{' '}
           <a
@@ -84,6 +78,7 @@ export default function ProjectPayersModal({
                 fontWeight: 500,
                 color: colors.text.secondary,
               }}
+              key={p.address}
             >
               <Space direction="vertical" style={{ width: '100%' }}>
                 <div

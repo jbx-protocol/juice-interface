@@ -11,6 +11,8 @@ import { useDeployProjectPayerTx } from 'hooks/v2/transactor/DeployProjectPayerT
 import { useEditV2ProjectDetailsTx } from 'hooks/v2/transactor/EditV2ProjectDetailsTx'
 import useUserUnclaimedTokenBalance from 'hooks/v2/contractReader/UserUnclaimedTokenBalance'
 
+import ProjectPayersSection from 'components/Project/ProjectToolsDrawer/ProjectPayersSection'
+
 import { V1TokenMigrationSetupSection } from './V1TokenMigrationSetupSection'
 import { AddToProjectBalanceForm } from '../../../Project/ProjectToolsDrawer/AddToProjectBalanceForm'
 import { PayableAddressSection } from '../../../Project/ProjectToolsDrawer/PayableAddressSection'
@@ -45,6 +47,10 @@ export function V2ProjectToolsDrawer({
           useTransferProjectOwnershipTx={useTransferProjectOwnershipTx}
         />
       </section>
+
+      <Divider />
+
+      <ProjectPayersSection />
 
       <Divider />
 

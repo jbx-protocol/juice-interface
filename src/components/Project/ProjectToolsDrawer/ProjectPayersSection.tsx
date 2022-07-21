@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
-import { Button } from 'antd'
+import { Button, Space } from 'antd'
 import LaunchProjectPayerButton from 'components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerButton'
-import ProjectPayersModal from 'components/v2/V2Project/ProjectPayers/ProjectPayersModal'
+import ProjectPayersModal from 'components/v2/V2Project/ProjectPayersModal'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useProjectPayers } from 'hooks/v2/ProjectPayers'
 import { useDeployProjectPayerTx } from 'hooks/v2/transactor/DeployProjectPayerTx'
@@ -21,26 +21,28 @@ export default function ProjectPayersSection() {
         <Trans>ETH-ERC20 Payment addresses</Trans>
       </h3>
 
-      {projectPayers && (
-        <Button onClick={() => setProjectPayersModalIsVisible(true)} block>
-          {projectPayers.length === 1 ? (
-            <Trans>1 payment address</Trans>
-          ) : (
-            <Trans>{projectPayers.length} payment addresses</Trans>
-          )}
-        </Button>
-      )}
+      <Space direction="vertical">
+        {projectPayers && (
+          <Button onClick={() => setProjectPayersModalIsVisible(true)} block>
+            {projectPayers.length === 1 ? (
+              <Trans>1 payment address</Trans>
+            ) : (
+              <Trans>{projectPayers.length} payment addresses</Trans>
+            )}
+          </Button>
+        )}
+
+        <LaunchProjectPayerButton
+          size="middle"
+          type="primary"
+          useDeployProjectPayerTx={useDeployProjectPayerTx}
+        />
+      </Space>
 
       <ProjectPayersModal
         visible={projectPayersModalIsVisible}
         onCancel={() => setProjectPayersModalIsVisible(false)}
         projectPayers={projectPayers}
-      />
-
-      <LaunchProjectPayerButton
-        size="middle"
-        type="default"
-        useDeployProjectPayerTx={useDeployProjectPayerTx}
       />
     </section>
   )

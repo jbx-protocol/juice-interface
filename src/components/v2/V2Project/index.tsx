@@ -39,7 +39,6 @@ import V2PayButton from './V2PayButton'
 import V2ProjectHeaderActions from './V2ProjectHeaderActions'
 
 import { V2ReconfigureProjectHandleDrawer } from './V2ReconfigureProjectHandleDrawer'
-import ProjectPayers from './ProjectPayers'
 import { NftRewardsSection } from './NftRewardsSection'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 
@@ -187,7 +186,6 @@ export default function V2Project({
             tokenAddress={tokenAddress}
             disabled={isPreviewMode || payIsDisabledPreV2Redeploy()}
           />
-          <ProjectPayers />
           <NftRewardsSection
             payAmountETH={payAmountETH}
             onPayAmountChange={setPayAmount}

@@ -3,20 +3,16 @@ import {
   PinataPinListResponse,
   PinataPinResponse,
 } from '@pinata/sdk'
-import axios from 'axios'
 
 import { IpfsCacheJsonData } from 'models/ipfs-cache/cache-data'
 import { IpfsCacheName } from 'models/ipfs-cache/cache-name'
 import { consolidateMetadata, ProjectMetadataV4 } from 'models/project-metadata'
 import { IPFSNftRewardTier, NftRewardTier } from 'models/v2/nftRewardTier'
 
+import axios from 'axios'
+
 import { readNetwork } from 'constants/networks'
 import { IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
-
-const JUICEBOX_API_HOSTNAME = 'api.juicebox.money'
-const axiosInstance = axios.create({
-  baseURL: `https://${JUICEBOX_API_HOSTNAME}/api`,
-})
 
 export const IPFS_TAGS = {
   [IpfsCacheName.trending]:
@@ -48,7 +44,7 @@ export const editMetadataForCid = async (
 ) => {
   if (!cid) return undefined
 
-  const pinRes = await axiosInstance.put(`/ipfs/pin/${cid}`, { ...options })
+  const pinRes = await axios.put(`/api/ipfs/pin/${cid}`, { ...options })
 
   return pinRes.data
 }
@@ -80,7 +76,12 @@ export const pinFileToIpfs = async (
     )
   }
 
-  const res = await axiosInstance.post('/ipfs/logo', data)
+  const res = await axios.post('/api/ipfs/logo', data, {
+    maxContentLength: Infinity, //this is needed to prevent axios from erroring out with large files
+    headers: {
+      'Content-Type': `multipart/form-data;`,
+    },
+  })
 
   return res.data as PinataPinResponse
 }
@@ -89,7 +90,7 @@ export const uploadProjectMetadata = async (
   metadata: Omit<ProjectMetadataV4, 'version'>,
   handle?: string,
 ) => {
-  const res = await axiosInstance.post('/ipfs/pin', {
+  const res = await axios.post('/api/ipfs/pin', {
     data: consolidateMetadata(metadata),
     options: {
       pinataMetadata: {
@@ -110,7 +111,7 @@ export const uploadIpfsJsonCache = async <T extends IpfsCacheName>(
   tag: T,
   data: IpfsCacheJsonData[T],
 ) => {
-  return await axiosInstance.post('/ipfs/pin', {
+  return await axios.post('/api/ipfs/pin', {
     data,
     options: {
       pinataMetadata: {
@@ -124,7 +125,7 @@ export const uploadIpfsJsonCache = async <T extends IpfsCacheName>(
 }
 
 export const getPinnedListByTag = async (tag: keyof typeof IPFS_TAGS) => {
-  const data = await axiosInstance.get(`/ipfs/pin?tag=${IPFS_TAGS[tag]}`)
+  const data = await axios.get(`/api/ipfs/pin?tag=${IPFS_TAGS[tag]}`)
 
   return data.data as PinataPinListResponse
 }
@@ -150,7 +151,7 @@ async function uploadNftRewardToIPFS(
       maxSupply: rewardTier.maxSupply,
     },
   }
-  const res = await axiosInstance.post('/ipfs/pin', {
+  const res = await axios.post('/ipfs/pin', {
     data: ipfsNftRewardTier,
     options: {
       pinataMetadata: {

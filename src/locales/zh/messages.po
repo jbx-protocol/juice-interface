@@ -315,8 +315,8 @@ msgstr "可提取"
 msgid "Activity"
 msgstr "最近动态"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftRewardTierModal.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftRewardTierModal.tsx
 msgid "Add NFT reward"
 msgstr ""
 
@@ -354,7 +354,7 @@ msgstr "添加新的支出"
 msgid "Add payout"
 msgstr "添加支出"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/index.tsx
 msgid "Add reward tier"
 msgstr ""
 
@@ -499,7 +499,7 @@ msgid "Amount paid"
 msgstr "支付数额"
 
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/ContributionFloorFormItem.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/ContributionFloorFormItem.tsx
 msgid "Amount required"
 msgstr ""
 
@@ -549,7 +549,7 @@ msgstr "资产"
 msgid "Attach a sticker"
 msgstr "上传一张贴图"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftUpload.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftUpload.tsx
 msgid "Attach the image to be associated with this NFT."
 msgstr ""
 
@@ -849,7 +849,7 @@ msgstr "已链接钱包未授权"
 msgid "Contract address: {0}"
 msgstr "合约地址：{0}"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/ContributionFloorFormItem.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/ContributionFloorFormItem.tsx
 msgid "Contribution threshold"
 msgstr ""
 
@@ -860,7 +860,7 @@ msgstr ""
 msgid "Contributor rate"
 msgstr "捐款铸造比率"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/ContributionFloorFormItem.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/ContributionFloorFormItem.tsx
 msgid "Contributors receive the NFT when they contribute at least this amount."
 msgstr ""
 
@@ -1001,7 +1001,7 @@ msgstr "创建日期"
 msgid "Days"
 msgstr "天"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierCard.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftRewardTierCard.tsx
 msgid "Delete NFT"
 msgstr ""
 
@@ -1043,7 +1043,7 @@ msgstr "已部署的 ERC20 标准代币"
 msgid "Deposit 1 wei to @{handle}"
 msgstr "存入 1 wei 给 @{handle}"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftRewardTierModal.tsx
 msgid "Description"
 msgstr ""
 
@@ -1312,7 +1312,7 @@ msgstr "如果金库资金足够，每个支出对象将在每个筹款周期收
 msgid "Each project has its own <0>ERC-20 tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
 msgstr "每个项目都有自己的<0>ERC-20代币</0>。每个资助项目的人都会获得项目代币作为回报。在项目方发行 ERC-20 代币之前，代币余额会由协议来记录。"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftRewardTierModal.tsx
 msgid "Edit NFT reward"
 msgstr ""
 
@@ -1503,7 +1503,7 @@ msgstr "通用"
 msgid "Give feedback"
 msgstr "提交反馈"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftRewardTierModal.tsx
 msgid "Give this NFT a name."
 msgstr ""
 
@@ -1644,7 +1644,7 @@ msgstr "如果你对创建一个项目感兴趣，却不知道该如何开始，
 msgid "If you're unsure if you need to claim, you probably don't."
 msgstr "如果你不确定你是否需要领取，那么你或许不需要。"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftUpload.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftUpload.tsx
 msgid "Image file"
 msgstr ""
 
@@ -1935,7 +1935,7 @@ msgstr ""
 msgid "NFT reward"
 msgstr ""
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/index.tsx
 #: src/pages/create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 #: src/pages/create/tabs/ReviewDeployTab/NftSummarySection.tsx
 msgid "NFT rewards"
@@ -1946,7 +1946,7 @@ msgstr ""
 msgid "NO LIMIT"
 msgstr "无限额"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftRewardTierModal.tsx
 #: src/pages/create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 msgid "Name"
@@ -2444,7 +2444,7 @@ msgstr "项目使用的代币保留率大于或等于{reservedRateRiskyMin}% 会
 msgid "Projects with a handle:<0/><1/>1. Are included in search results on the projects page<2/>2. Can be accessed via the URL: <3>juicebox.money{0}</3><4/><5/>(The original URL <6>juicebox.money{1}</6> will continue to work.)"
 msgstr ""
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftRewardTierModal.tsx
 msgid "Provide a link to additional information about this NFT."
 msgstr ""
 
@@ -2684,7 +2684,7 @@ msgstr "检查项目"
 msgid "Reward contributors with NFT's."
 msgstr ""
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/index.tsx
 msgid "Reward contributors with NFTs when they meet your configured funding criteria."
 msgstr ""
 
@@ -2717,11 +2717,11 @@ msgstr "关于如何重新配置该项目筹款周期的规则"
 msgid "Save"
 msgstr "保存"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftRewardTierModal.tsx
 msgid "Save NFT reward"
 msgstr ""
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/index.tsx
 msgid "Save NFT rewards"
 msgstr ""
 
@@ -3394,7 +3394,7 @@ msgstr "你对这个部分的改动在 <0>后面的</0> 筹款周期才会生效
 msgid "Upload"
 msgstr "上传"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftUpload.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftUpload.tsx
 msgid "Upload an image"
 msgstr ""
 
@@ -3466,7 +3466,7 @@ msgid "Wallet address"
 msgstr "钱包地址"
 
 #: src/components/formItems/ProjectLink.tsx
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftRewardTierModal.tsx
 #: src/pages/create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 msgid "Website"

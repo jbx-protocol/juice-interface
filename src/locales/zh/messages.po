@@ -530,7 +530,6 @@ msgstr "对之后的筹款周期进行重新配置，更改将在当前周期结
 
 #: src/components/ArchiveProject/index.tsx
 #: src/components/ArchiveProject/index.tsx
-#: src/components/Project/ProjectToolsDrawer/ProjectToolsDrawer.tsx
 msgid "Archive project"
 msgstr "存档项目"
 
@@ -911,9 +910,12 @@ msgid "Create an Ethereum address that can be used to pay your project directly.
 msgstr "创建一个可用于直接支付给你的项目的以太坊地址。"
 
 #: src/components/Project/ProjectToolsDrawer/PayableAddressSection.tsx
-#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Create payable address"
 msgstr "创建可支付地址"
+
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
+msgid "Create payment address"
+msgstr ""
 
 #: src/hooks/PageTitle.ts
 #: src/pages/projects/MyProjects.tsx
@@ -1022,6 +1024,14 @@ msgstr "删除代币的分配方案"
 msgid "Deploy funding cycle configuration"
 msgstr "部署筹款周期配置"
 
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerButton.tsx
+msgid "Deploy payment address"
+msgstr ""
+
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
+msgid "Deploy payment address contract"
+msgstr ""
+
 #: src/pages/v1/create/index.page.tsx
 msgid "Deploy project"
 msgstr "部署项目"
@@ -1029,11 +1039,6 @@ msgstr "部署项目"
 #: src/pages/v1/create/index.page.tsx
 msgid "Deploy project on {signerNetwork}"
 msgstr "在{signerNetwork} 上部署项目"
-
-#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerButton.tsx
-#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
-msgid "Deploy project payer contract"
-msgstr "部署项目的付款人合约"
 
 #: src/pages/create/tabs/ReviewDeployTab/DeployProjectButton.tsx
 #: src/pages/create/tabs/ReviewDeployTab/DeployProjectWithNftsButton.tsx
@@ -1043,6 +1048,10 @@ msgstr "部署项目至 {0}"
 #: src/components/activityEventElems/DeployedERC20EventElem.tsx
 msgid "Deployed ERC20 token"
 msgstr "已部署的 ERC20 标准代币"
+
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
+msgid "Deployed payment addresses can be found in the Tools drawer on the project page."
+msgstr ""
 
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "Deposit 1 wei to @{handle}"
@@ -1502,7 +1511,6 @@ msgstr ""
 msgid "Funds will be distributed to:"
 msgstr "资金将会分发给："
 
-#: src/components/Project/ProjectToolsDrawer/ProjectToolsDrawer.tsx
 #: src/components/v1/V1Project/V1ProjectToolsDrawer.tsx
 #: src/components/v2/V2Project/V2ProjectToolsDrawer/V2ProjectToolsDrawer.tsx
 msgid "General"
@@ -1640,10 +1648,6 @@ msgstr ""
 #: src/components/Project/ProjectToolsDrawer/PayableAddressSection.tsx
 msgid "If you have already deployed a payable address and have lost it, please contact the Juicebox team through <0>Discord.</0>"
 msgstr "如果你已经部署过可支付地址但把它弄丢了，请到<0>Discord</0>去联系 Juicebox 团队。"
-
-#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
-msgid "If you lose your address, please contact the Juicebox team through <0>Discord</0>."
-msgstr "如果你丢失了你的地址，请到<0>Discord</0>去联系 Juicebox 团队。"
 
 #: src/pages/home/QAs.tsx
 msgid "If you're interested in creating a project but still confused on how to get started, consider watching this <0>instructional video</0>. Also feel free to reach out in the <1>Juicebox Discord</1> where our team will be happy to help bring your project idea to life!"
@@ -2112,7 +2116,6 @@ msgstr ""
 msgid "Owner token minting"
 msgstr "项目方的代币铸造"
 
-#: src/components/Project/ProjectToolsDrawer/ProjectToolsDrawer.tsx
 #: src/components/v1/V1Project/V1ProjectToolsDrawer.tsx
 #: src/components/v2/V2Project/V2ProjectToolsDrawer/V2ProjectToolsDrawer.tsx
 msgid "Owner tools"
@@ -2283,10 +2286,6 @@ msgstr "百分比"
 #: src/components/v1/shared/ProjectTicketMods.tsx
 msgid "Percentages must add up to 100% or less"
 msgstr "百分比总数相加必须少于或等于100%"
-
-#: src/components/Project/ProjectToolsDrawer/ProjectToolsDrawer.tsx
-msgid "Please contact the Juicebox dev team through our <0>Discord</0> to have your project archived."
-msgstr ""
 
 #: src/components/Navbar/constants.ts
 msgid "Podcast"
@@ -3110,10 +3109,6 @@ msgstr ""
 msgid "This address is an unrecognized strategy contract. Make sure it is correct!"
 msgstr "此地址是一个未识别的策略合约。请确保这个地址是对的。"
 
-#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
-msgid "This address will disappear when you close this window. <0>Copy the address and save it now</0>."
-msgstr "关闭当前窗口，此地址将会消失。 <0>复制并保存此地址</0>。"
-
 #: src/components/v1/shared/Mod.tsx
 #: src/components/v2/shared/SplitItem.tsx
 msgid "This address will receive any tokens minted when the recipient project gets paid."
@@ -3301,7 +3296,6 @@ msgstr "代币接收方"
 msgid "Tokens:"
 msgstr "代币："
 
-#: src/components/Project/ProjectToolsDrawer/ProjectToolsDrawer.tsx
 #: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 #: src/components/v1/V1Project/V1ProjectToolsDrawer.tsx
 #: src/components/v2/V2Project/V2ProjectHeaderActions.tsx

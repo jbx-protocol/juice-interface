@@ -530,7 +530,6 @@ msgstr "Любая перенастройка на предстоящий цик
 
 #: src/components/ArchiveProject/index.tsx
 #: src/components/ArchiveProject/index.tsx
-#: src/components/Project/ProjectToolsDrawer/ProjectToolsDrawer.tsx
 msgid "Archive project"
 msgstr "Заархивировать проект"
 
@@ -911,9 +910,12 @@ msgid "Create an Ethereum address that can be used to pay your project directly.
 msgstr "Создать Ethereum-адрес, который можно использовать для прямой оплаты вашего проекта."
 
 #: src/components/Project/ProjectToolsDrawer/PayableAddressSection.tsx
-#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Create payable address"
 msgstr "Создать адреса для оплаты"
+
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
+msgid "Create payment address"
+msgstr ""
 
 #: src/hooks/PageTitle.ts
 #: src/pages/projects/MyProjects.tsx
@@ -1022,6 +1024,14 @@ msgstr ""
 msgid "Deploy funding cycle configuration"
 msgstr ""
 
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerButton.tsx
+msgid "Deploy payment address"
+msgstr ""
+
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
+msgid "Deploy payment address contract"
+msgstr ""
+
 #: src/pages/v1/create/index.page.tsx
 msgid "Deploy project"
 msgstr "Развернуть проект"
@@ -1029,11 +1039,6 @@ msgstr "Развернуть проект"
 #: src/pages/v1/create/index.page.tsx
 msgid "Deploy project on {signerNetwork}"
 msgstr "Развернуть проект на {signerNetwork}"
-
-#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerButton.tsx
-#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
-msgid "Deploy project payer contract"
-msgstr "Развернуть контракт с плательщиком по проекту"
 
 #: src/pages/create/tabs/ReviewDeployTab/DeployProjectButton.tsx
 #: src/pages/create/tabs/ReviewDeployTab/DeployProjectWithNftsButton.tsx
@@ -1043,6 +1048,10 @@ msgstr "Развернуть проект на {0}"
 #: src/components/activityEventElems/DeployedERC20EventElem.tsx
 msgid "Deployed ERC20 token"
 msgstr "Развернутый токен ERC20"
+
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
+msgid "Deployed payment addresses can be found in the Tools drawer on the project page."
+msgstr ""
 
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "Deposit 1 wei to @{handle}"
@@ -1502,7 +1511,6 @@ msgstr ""
 msgid "Funds will be distributed to:"
 msgstr "Средства будут распределены по следующим направлениям:"
 
-#: src/components/Project/ProjectToolsDrawer/ProjectToolsDrawer.tsx
 #: src/components/v1/V1Project/V1ProjectToolsDrawer.tsx
 #: src/components/v2/V2Project/V2ProjectToolsDrawer/V2ProjectToolsDrawer.tsx
 msgid "General"
@@ -1640,10 +1648,6 @@ msgstr ""
 #: src/components/Project/ProjectToolsDrawer/PayableAddressSection.tsx
 msgid "If you have already deployed a payable address and have lost it, please contact the Juicebox team through <0>Discord.</0>"
 msgstr "Если вы уже установили оплачиваемый адрес и потеряли его, пожалуйста, свяжитесь с командой Juicebox через <0>Discord.</0>"
-
-#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
-msgid "If you lose your address, please contact the Juicebox team through <0>Discord</0>."
-msgstr "Если вы потеряли свой адрес, пожалуйста, свяжитесь с командой Juicebox через <0>Discord</0>."
 
 #: src/pages/home/QAs.tsx
 msgid "If you're interested in creating a project but still confused on how to get started, consider watching this <0>instructional video</0>. Also feel free to reach out in the <1>Juicebox Discord</1> where our team will be happy to help bring your project idea to life!"
@@ -2112,7 +2116,6 @@ msgstr ""
 msgid "Owner token minting"
 msgstr ""
 
-#: src/components/Project/ProjectToolsDrawer/ProjectToolsDrawer.tsx
 #: src/components/v1/V1Project/V1ProjectToolsDrawer.tsx
 #: src/components/v2/V2Project/V2ProjectToolsDrawer/V2ProjectToolsDrawer.tsx
 msgid "Owner tools"
@@ -2283,10 +2286,6 @@ msgstr ""
 #: src/components/v1/shared/ProjectTicketMods.tsx
 msgid "Percentages must add up to 100% or less"
 msgstr "Сумма процентов должна составлять 100 % или меньше"
-
-#: src/components/Project/ProjectToolsDrawer/ProjectToolsDrawer.tsx
-msgid "Please contact the Juicebox dev team through our <0>Discord</0> to have your project archived."
-msgstr ""
 
 #: src/components/Navbar/constants.ts
 msgid "Podcast"
@@ -3110,10 +3109,6 @@ msgstr ""
 msgid "This address is an unrecognized strategy contract. Make sure it is correct!"
 msgstr "Этот адрес является непризнанным стратегическим контрактом. Убедитесь, что он правильный!"
 
-#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
-msgid "This address will disappear when you close this window. <0>Copy the address and save it now</0>."
-msgstr "Этот адрес исчезнет, когда вы закроете это окно. <0> Скопируйте адрес и сохраните его сейчас</0>."
-
 #: src/components/v1/shared/Mod.tsx
 #: src/components/v2/shared/SplitItem.tsx
 msgid "This address will receive any tokens minted when the recipient project gets paid."
@@ -3301,7 +3296,6 @@ msgstr "Получатель токенов"
 msgid "Tokens:"
 msgstr "Токены:"
 
-#: src/components/Project/ProjectToolsDrawer/ProjectToolsDrawer.tsx
 #: src/components/v1/V1Project/V1ProjectHeaderActions.tsx
 #: src/components/v1/V1Project/V1ProjectToolsDrawer.tsx
 #: src/components/v2/V2Project/V2ProjectHeaderActions.tsx

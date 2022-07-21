@@ -1,5 +1,7 @@
 import { TwitterOutlined } from '@ant-design/icons'
+import { Space } from 'antd'
 import Discord from 'components/icons/Discord'
+import { CSSProperties } from 'react'
 
 import ExternalLink from '../../ExternalLink'
 
@@ -17,7 +19,15 @@ const linkUrl = (url: string) => {
   }
   return 'https://' + url
 }
-const spacing = 20
+
+const linkStyle: CSSProperties = {
+  maxWidth: '20rem',
+  textOverflow: 'ellipsis',
+  overflow: 'hidden',
+  fontWeight: 500,
+  whiteSpace: 'pre',
+  display: 'block',
+}
 
 export default function SocialLinks({
   infoUri,
@@ -29,21 +39,18 @@ export default function SocialLinks({
   discord?: string
 }) {
   return (
-    <>
+    <Space>
       {infoUri && (
-        <ExternalLink
-          style={{ fontWeight: 500, marginRight: spacing }}
-          href={linkUrl(infoUri)}
-        >
-          {prettyUrl(infoUri)}
-        </ExternalLink>
+        <span>
+          <ExternalLink style={{ ...linkStyle }} href={linkUrl(infoUri)}>
+            {prettyUrl(infoUri)}
+          </ExternalLink>
+        </span>
       )}
       {twitter && (
         <ExternalLink
           style={{
-            fontWeight: 500,
-            marginRight: spacing,
-            whiteSpace: 'pre',
+            ...linkStyle,
           }}
           href={'https://twitter.com/' + twitter}
         >
@@ -56,11 +63,9 @@ export default function SocialLinks({
       {discord && (
         <ExternalLink
           style={{
-            fontWeight: 500,
             display: 'flex',
             alignItems: 'center',
-            marginRight: spacing,
-            whiteSpace: 'pre',
+            ...linkStyle,
           }}
           href={linkUrl(discord)}
         >
@@ -70,6 +75,6 @@ export default function SocialLinks({
           Discord
         </ExternalLink>
       )}
-    </>
+    </Space>
   )
 }

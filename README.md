@@ -11,7 +11,7 @@ Have an idea or suggestion? Create a [feature request](https://github.com/jbx-pr
 
 ## Report a bug
 
-Notice something broken? Create a [bug report](https://github.com/jbx-protocol/juice-interface/issues/new?assignees=&labels=bug&template=bug_report.md&title=%5BBUG%5D+).
+Notice something broken? Create a [bug report](sfttps://github.com/jbx-protocol/juice-interface/issues/new?assignees=&labels=bug&template=bug_report.md&title=%5BBUG%5D+).
 
 ## Development
 

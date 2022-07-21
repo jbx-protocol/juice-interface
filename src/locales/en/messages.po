@@ -2628,6 +2628,10 @@ msgstr "Reconfigure upcoming funding cycles"
 msgid "Redeem Token"
 msgstr "Redeem Token"
 
+#: src/components/v2/V2Project/VeNftStakingForm/RedeemVeNftModal.tsx
+msgid "Redeem successful. Results will be indexed in a few moments."
+msgstr "Redeem successful. Results will be indexed in a few moments."
+
 #: src/components/ManageTokensModal.tsx
 msgid "Redeem your {tokensLabel} for a portion of the project's overflow. Any {tokensLabel} you redeem will be burned."
 msgstr "Redeem your {tokensLabel} for a portion of the project's overflow. Any {tokensLabel} you redeem will be burned."

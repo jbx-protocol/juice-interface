@@ -2633,6 +2633,10 @@ msgstr "Перенастроить предстоящие циклы финан�
 msgid "Redeem Token"
 msgstr ""
 
+#: src/components/v2/V2Project/VeNftStakingForm/RedeemVeNftModal.tsx
+msgid "Redeem successful. Results will be indexed in a few moments."
+msgstr ""
+
 #: src/components/ManageTokensModal.tsx
 msgid "Redeem your {tokensLabel} for a portion of the project's overflow. Any {tokensLabel} you redeem will be burned."
 msgstr "Обменяйте свои {tokensLabel} на часть перелива проекта. Все {tokensLabel}, которые вы выкупите, будут сожжены."

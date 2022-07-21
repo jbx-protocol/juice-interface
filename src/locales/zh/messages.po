@@ -2633,6 +2633,10 @@ msgstr "重新配置以后的筹款周期"
 msgid "Redeem Token"
 msgstr ""
 
+#: src/components/v2/V2Project/VeNftStakingForm/RedeemVeNftModal.tsx
+msgid "Redeem successful. Results will be indexed in a few moments."
+msgstr ""
+
 #: src/components/ManageTokensModal.tsx
 msgid "Redeem your {tokensLabel} for a portion of the project's overflow. Any {tokensLabel} you redeem will be burned."
 msgstr "赎回你的 {tokensLabel} 来获取一部分项目的溢出资金。用于赎回的 {tokensLabel} 将会被燃烧掉。"

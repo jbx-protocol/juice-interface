@@ -4221,4 +4221,3 @@ msgstr "{unclaimedBalanceFormatted} {tokenText} reivindicável"
 msgid "{userOwnershipPercentage}% of total supply"
 msgstr "{userOwnershipPercentage}% de fornecimento total"
 
-

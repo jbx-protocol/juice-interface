@@ -1385,6 +1385,15 @@ msgstr "Error loading holders"
 msgid "Error loading payments"
 msgstr "Error loading payments"
 
+#: src/pages/api/ipfs/logo.page.ts
+msgid "Error parsing form"
+msgstr "Error parsing form"
+
+#: src/components/inputs/ImageUploader.tsx
+#: src/pages/api/ipfs/logo.page.ts
+msgid "Error uploading file"
+msgstr "Error uploading file"
+
 #: src/pages/index.page.tsx
 msgid "Explore projects"
 msgstr "Explore projects"

@@ -48,6 +48,7 @@ export function NftRewardCell({
       <ExternalLink
         style={{
           fontWeight: 500,
+          cursor: isLink ? 'pointer' : 'default',
         }}
         className={className}
         href={isLink ? nftReward.externalLink : undefined}

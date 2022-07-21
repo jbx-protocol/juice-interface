@@ -46,11 +46,11 @@ import { useNFTLockDurationOptions } from 'hooks/veNft/VeNftLockDurationOptions'
 import { useNFTResolverAddress } from 'hooks/veNft/VeNftResolverAddress'
 import useSymbolOfERC20 from 'hooks/SymbolOfERC20'
 
-import useNftRewards from 'hooks/v2/NftRewards'
-
-import { MOCK_NFT_CIDs } from 'utils/v2/nftRewards'
-
 import { useRouter } from 'next/router'
+import { useNftRewardTiersOf } from 'hooks/v2/contractReader/NftRewardTiersOf'
+
+import useNftRewards from 'hooks/v2/NftRewards'
+import { CIDsOfNftRewardTiersResponse } from 'utils/v2/nftRewards'
 
 import { layouts } from 'constants/styles/layouts'
 import { V2ArchivedProjectIds } from 'constants/v2/archivedProjects'
@@ -225,8 +225,13 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
 
   const { data: ballotState } = useBallotState(projectId)
 
-  // const { data: nftRewardsCIDs, loading: nftRewardsCIDsLoading } = useNftCIDsOf(projectId)
-  const nftRewardsCIDs = MOCK_NFT_CIDs
+  const { data: nftRewardTiersResponse, loading: nftRewardsCIDsLoading } =
+    useNftRewardTiersOf(fundingCycleMetadata?.dataSource)
+
+  let nftRewardsCIDs: string[] = []
+  if (nftRewardTiersResponse) {
+    nftRewardsCIDs = CIDsOfNftRewardTiersResponse(nftRewardTiersResponse)
+  }
   const { data: nftRewardTiers, isLoading: nftRewardTiersLoading } =
     useNftRewards(nftRewardsCIDs)
 
@@ -244,7 +249,7 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
     return <Project404 projectId={projectId} />
   }
 
-  const nftsLoading = nftRewardTiersLoading // || nftRewardsCIDsLoading
+  const nftsLoading = nftRewardTiersLoading || nftRewardsCIDsLoading
 
   const project: V2ProjectContextType = {
     cv: '2',

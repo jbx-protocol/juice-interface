@@ -1,13 +1,21 @@
 import axios from 'axios'
 
-import { NftRewardTier } from 'models/v2/nftRewardTier'
+import { IPFSNftRewardTier, NftRewardTier } from 'models/v2/nftRewardTier'
 import { useQuery, UseQueryResult } from 'react-query'
 import { ipfsCidUrl } from 'utils/ipfs'
 
-async function getRewardTierOfCid(cid: string) {
+async function getRewardTierOfCid(cid: string): Promise<NftRewardTier> {
   const url = ipfsCidUrl(cid)
   const response = await axios.get(url)
-  return response.data
+  const ipfsRewardTier: IPFSNftRewardTier = response.data
+  return {
+    name: ipfsRewardTier.name,
+    description: ipfsRewardTier.description,
+    externalLink: ipfsRewardTier.externalLink,
+    contributionFloor: ipfsRewardTier.contributionFloor,
+    maxSupply: ipfsRewardTier.maxSupply,
+    imageUrl: ipfsRewardTier.imageUrl,
+  }
 }
 
 // Retreives each NftRewardTier from IPFS given an array of CIDs (IpfsHashes)

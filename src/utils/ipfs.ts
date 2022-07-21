@@ -8,7 +8,7 @@ import axios from 'axios'
 import { IpfsCacheJsonData } from 'models/ipfs-cache/cache-data'
 import { IpfsCacheName } from 'models/ipfs-cache/cache-name'
 import { consolidateMetadata, ProjectMetadataV4 } from 'models/project-metadata'
-import { NftRewardTier } from 'models/v2/nftRewardTier'
+import { IPFSNftRewardTier, NftRewardTier } from 'models/v2/nftRewardTier'
 
 import { readNetwork } from 'constants/networks'
 import { IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
@@ -132,14 +132,32 @@ export const getPinnedListByTag = async (tag: keyof typeof IPFS_TAGS) => {
 async function uploadNftRewardToIPFS(
   rewardTier: NftRewardTier,
 ): Promise<string> {
+  const ipfsNftRewardTier: IPFSNftRewardTier = {
+    description: rewardTier.description,
+    name: rewardTier.name,
+    externalLink: rewardTier.externalLink,
+    imageUrl: rewardTier.imageUrl,
+    symbol: undefined,
+    image: rewardTier.imageUrl,
+    imageDataUrl: undefined,
+    artifactUri: undefined,
+    animationUri: undefined,
+    displayUri: undefined,
+    youtubeUri: undefined,
+    backgroundColor: undefined,
+    attributes: {
+      contributionFloor: rewardTier.contributionFloor,
+      maxSupply: rewardTier.maxSupply,
+    },
+  }
   const res = await axiosInstance.post('/ipfs/pin', {
-    data: rewardTier,
+    data: ipfsNftRewardTier,
     options: {
       pinataMetadata: {
         keyvalues: {
           tag: IPFS_TAGS.NFT_REWARDS,
         } as any, // eslint-disable-line @typescript-eslint/no-explicit-any
-        name: rewardTier.name,
+        name: ipfsNftRewardTier.name,
       },
     },
   })

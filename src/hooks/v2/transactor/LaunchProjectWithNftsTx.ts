@@ -113,10 +113,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<{
           content: projectMetadataCID,
         },
         data: fundingCycleData,
-        metadata: {
-          ...fundingCycleMetadata,
-          useDataSourceForPay: true,
-        },
+        metadata: fundingCycleMetadata,
         mustStartAtOrAfter,
         groupedSplits,
         fundAccessConstraints,

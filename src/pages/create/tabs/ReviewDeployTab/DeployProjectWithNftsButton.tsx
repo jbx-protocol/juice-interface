@@ -32,6 +32,9 @@ import { findTransactionReceipt } from './utils'
 
 const NFT_CREATE_EVENT_IDX = 2
 const NFT_PROJECT_ID_TOPIC_IDX = 1
+const FUNDING_CYCLE_METADATA_OVERRIDES = {
+  useDataSourceForPay: true,
+}
 
 /**
  * Return the project ID created from a `launchProjectFor` transaction.
@@ -153,7 +156,10 @@ export function DeployProjectWithNftsButton() {
             projectName,
             projectMetadataCID: uploadedMetadata.IpfsHash,
             fundingCycleData,
-            fundingCycleMetadata,
+            fundingCycleMetadata: {
+              ...fundingCycleMetadata,
+              ...FUNDING_CYCLE_METADATA_OVERRIDES,
+            },
             fundAccessConstraints,
             groupedSplits,
             nftRewards: nftRewardsArg,

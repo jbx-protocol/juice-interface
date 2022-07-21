@@ -151,7 +151,7 @@ async function uploadNftRewardToIPFS(
       maxSupply: rewardTier.maxSupply,
     },
   }
-  const res = await axios.post('/ipfs/pin', {
+  const res = await axios.post('/api/ipfs/pin', {
     data: ipfsNftRewardTier,
     options: {
       pinataMetadata: {

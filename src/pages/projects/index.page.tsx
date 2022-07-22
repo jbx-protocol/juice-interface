@@ -141,9 +141,11 @@ export default function Projects() {
           </h1>
 
           <Link href="/create">
-            <Button type="primary" size="large">
-              <Trans>Create project</Trans>
-            </Button>
+            <a>
+              <Button type="primary" size="large">
+                <Trans>Create project</Trans>
+              </Button>
+            </a>
           </Link>
         </div>
 

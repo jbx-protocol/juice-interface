@@ -114,114 +114,116 @@ export default function ProjectCard({
           : `/p/${_project?.handle}`
       }
     >
-      <div
-        style={{
-          borderRadius: radii.lg,
-          cursor: 'pointer',
-          overflow: 'hidden',
-
-          ...cardStyle,
-        }}
-        className="clickable-border"
-      >
-        <div style={{ marginRight: 20 }}>
-          <ProjectLogo
-            uri={metadata?.logoUri}
-            name={metadata?.name}
-            size={110}
-          />
-        </div>
+      <a>
         <div
           style={{
-            flex: 1,
-            minWidth: 0,
-            fontWeight: 400,
-          }}
-        >
-          {metadata ? (
-            <h2
-              style={{
-                color: colors.text.primary,
-                margin: 0,
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                fontSize: 21,
-              }}
-            >
-              {metadata.name}
-            </h2>
-          ) : (
-            <Skeleton paragraph={false} title={{ width: 120 }} active />
-          )}
+            borderRadius: radii.lg,
+            cursor: 'pointer',
+            overflow: 'hidden',
 
-          <div>
-            {_project?.handle && (
-              <span
+            ...cardStyle,
+          }}
+          className="clickable-border"
+        >
+          <div style={{ marginRight: 20 }}>
+            <ProjectLogo
+              uri={metadata?.logoUri}
+              name={metadata?.name}
+              size={110}
+            />
+          </div>
+          <div
+            style={{
+              flex: 1,
+              minWidth: 0,
+              fontWeight: 400,
+            }}
+          >
+            {metadata ? (
+              <h2
                 style={{
                   color: colors.text.primary,
-                  fontWeight: 500,
-                  marginRight: 10,
+                  margin: 0,
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  fontSize: 21,
                 }}
               >
-                @{_project?.handle}
-              </span>
+                {metadata.name}
+              </h2>
+            ) : (
+              <Skeleton paragraph={false} title={{ width: 120 }} active />
             )}
-            <span
+
+            <div>
+              {_project?.handle && (
+                <span
+                  style={{
+                    color: colors.text.primary,
+                    fontWeight: 500,
+                    marginRight: 10,
+                  }}
+                >
+                  @{_project?.handle}
+                </span>
+              )}
+              <span
+                style={{
+                  color: colors.text.tertiary,
+                  fontSize: '0.7rem',
+                  fontWeight: 500,
+                }}
+              >
+                V{terminalVersion ?? _project.cv}
+              </span>
+            </div>
+
+            <div>
+              <span style={{ color: colors.text.primary, fontWeight: 500 }}>
+                <ETHAmount amount={_project?.totalPaid} precision={precision} />{' '}
+              </span>
+
+              <span style={{ color: colors.text.secondary }}>
+                since{' '}
+                {!!_project?.createdAt &&
+                  formatDate(_project?.createdAt * 1000, 'yyyy-MM-DD')}
+              </span>
+            </div>
+
+            {metadata?.description && (
+              <Tooltip title={metadata.description} placement="bottom">
+                <div
+                  style={{
+                    maxHeight: 20,
+                    color: colors.text.tertiary,
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                  }}
+                >
+                  {metadata.description}
+                </div>
+              </Tooltip>
+            )}
+          </div>
+          {isArchived && (
+            <div
               style={{
-                color: colors.text.tertiary,
+                position: 'absolute',
+                top: 0,
+                right: 0,
+                padding: '2px 4px',
+                background: colors.background.l1,
                 fontSize: '0.7rem',
+                color: colors.text.tertiary,
                 fontWeight: 500,
               }}
             >
-              V{terminalVersion ?? _project.cv}
-            </span>
-          </div>
-
-          <div>
-            <span style={{ color: colors.text.primary, fontWeight: 500 }}>
-              <ETHAmount amount={_project?.totalPaid} precision={precision} />{' '}
-            </span>
-
-            <span style={{ color: colors.text.secondary }}>
-              since{' '}
-              {!!_project?.createdAt &&
-                formatDate(_project?.createdAt * 1000, 'yyyy-MM-DD')}
-            </span>
-          </div>
-
-          {metadata?.description && (
-            <Tooltip title={metadata.description} placement="bottom">
-              <div
-                style={{
-                  maxHeight: 20,
-                  color: colors.text.tertiary,
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                }}
-              >
-                {metadata.description}
-              </div>
-            </Tooltip>
+              <Trans>ARCHIVED</Trans>
+            </div>
           )}
+          {!metadata && <Loading />}
         </div>
-        {isArchived && (
-          <div
-            style={{
-              position: 'absolute',
-              top: 0,
-              right: 0,
-              padding: '2px 4px',
-              background: colors.background.l1,
-              fontSize: '0.7rem',
-              color: colors.text.tertiary,
-              fontWeight: 500,
-            }}
-          >
-            <Trans>ARCHIVED</Trans>
-          </div>
-        )}
-        {!metadata && <Loading />}
-      </div>
+      </a>
     </Link>
   )
 }

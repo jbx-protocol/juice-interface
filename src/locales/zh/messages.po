@@ -1812,6 +1812,10 @@ msgstr "加载更多"
 msgid "Lock until"
 msgstr "锁定至"
 
+#: src/components/veNft/VeNftHeader.tsx
+msgid "Lock {tokenName} for Voting Power"
+msgstr ""
+
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
 msgid "Locked:"
 msgstr "锁定："
@@ -2881,6 +2885,10 @@ msgstr "资金分配"
 msgid "Stake your {tokensLabel} to increase your voting weight and claim Governance NFTs."
 msgstr ""
 
+#: src/components/veNft/VeNftHeader.tsx
+msgid "Stake {tokenName} ({tokenSymbolDisplayText}) tokens in exchange for voting weight. In return, you will impact {projectName} governance and receive a choice governance NFT."
+msgstr ""
+
 #: src/components/ManageTokensModal.tsx
 msgid "Stake {tokensLabel} for NFT"
 msgstr ""
@@ -3372,6 +3380,10 @@ msgstr "取消项目的存档状态"
 #: src/components/AMMPrices/TokenAMMPriceRow.tsx
 msgid "Unavailable"
 msgstr "不可用"
+
+#: src/components/veNft/VeNftContent.tsx
+msgid "Unknown Project"
+msgstr ""
 
 #: src/components/ArchiveProject/index.tsx
 msgid "Unless payments are paused in your funding cycle settings, your project can still receive payments directly through the Juicebox protocol contracts."

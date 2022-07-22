@@ -19,6 +19,8 @@ import VeNftCarousel from 'components/veNft/veNftCarousel'
 import StakingTokenRangesModal from 'components/veNft/veNftStakingTokenRangesModal'
 import ConfirmStakeModal from 'components/veNft/veNftConfirmStakeModal'
 
+import Callout from 'components/Callout'
+
 import { shadowCard } from 'constants/styles/shadowCard'
 
 interface StakingFormProps {
@@ -96,12 +98,12 @@ const VeNftStakingForm = ({
       >
         <div style={{ ...shadowCard(theme), padding: 25, marginBottom: 10 }}>
           <Space size="middle" direction="vertical">
-            <h4>
+            <Callout>
               <Trans>
-                Currently, only project tokens claimed as ERC-20 tokens can be
-                staked for NFTs.
+                Only project tokens claimed as ERC-20 tokens can be staked for
+                NFTs.
               </Trans>
-            </h4>
+            </Callout>
           </Space>
           <TokensStakedInput
             form={form}

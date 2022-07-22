@@ -945,10 +945,6 @@ msgstr "Current owner: {ownerAddress}"
 msgid "Currently worth: <0><1/>{0}</0>"
 msgstr "Currently worth: <0><1/>{0}</0>"
 
-#: src/components/veNft/VeNftStakingForm.tsx
-msgid "Currently, only project tokens claimed as ERC-20 tokens can be staked for NFTs."
-msgstr "Currently, only project tokens claimed as ERC-20 tokens can be staked for NFTs."
-
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "Custom memo"
 msgstr "Custom memo"
@@ -1805,15 +1801,15 @@ msgstr "Link Juicebox V1 project"
 msgid "Load more"
 msgstr ""
 
+#: src/components/veNft/VeNftHeaderSection.tsx
+msgid "Lock ${tokenSymbolDisplayText} for Voting Power"
+msgstr "Lock ${tokenSymbolDisplayText} for Voting Power"
+
 #: src/components/modals/ReservedTokenReceiverModal.tsx
 #: src/components/v1/shared/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Lock until"
 msgstr "Lock until"
-
-#: src/components/veNft/VeNftHeaderSection.tsx
-msgid "Lock {tokenName} for Voting Power"
-msgstr "Lock {tokenName} for Voting Power"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
 msgid "Locked:"
@@ -2063,6 +2059,10 @@ msgstr "Once launched, your first funding cycle <0>can't be changed</0>. You can
 #: src/components/formItems/ENSName.tsx
 msgid "Only lowercase letters"
 msgstr "Only lowercase letters"
+
+#: src/components/veNft/VeNftStakingForm.tsx
+msgid "Only project tokens claimed as ERC-20 tokens can be staked for NFTs."
+msgstr "Only project tokens claimed as ERC-20 tokens can be staked for NFTs."
 
 #: src/components/v1/V1Project/modals/V1BalancesModal.tsx
 #: src/components/v2/V2Project/V2BalancesModal/V2BalancesModal.tsx
@@ -2885,12 +2885,16 @@ msgid "Stake your {tokensLabel} to increase your voting weight and claim Governa
 msgstr "Stake your {tokensLabel} to increase your voting weight and claim Governance NFTs."
 
 #: src/components/veNft/VeNftHeaderSection.tsx
-msgid "Stake {tokenName} ({tokenSymbolDisplayText}) tokens in exchange for voting weight. In return, you will impact {projectName} governance and receive a choice governance NFT."
-msgstr "Stake {tokenName} ({tokenSymbolDisplayText}) tokens in exchange for voting weight. In return, you will impact {projectName} governance and receive a choice governance NFT."
+msgid "Stake {tokenName} ({tokenSymbolDisplayText}) tokens in exchange for voting weight. In return, you'll impact {projectName} governance and receive a choice governance NFT."
+msgstr "Stake {tokenName} ({tokenSymbolDisplayText}) tokens in exchange for voting weight. In return, you'll impact {projectName} governance and receive a choice governance NFT."
 
 #: src/components/ManageTokensModal.tsx
 msgid "Stake {tokensLabel} for NFT"
 msgstr "Stake {tokensLabel} for NFT"
+
+#: src/components/veNft/VeNftSummaryStatsSection.tsx
+msgid "Staking Summary:"
+msgstr "Staking Summary:"
 
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
@@ -3318,12 +3322,12 @@ msgid "Total raised"
 msgstr "Total raised"
 
 #: src/components/veNft/VeNftSummaryStatsSection.tsx
-msgid "Total staked ${tokenSymbolDisplayText}:"
-msgstr "Total staked ${tokenSymbolDisplayText}:"
+msgid "Total staked period"
+msgstr "Total staked period"
 
 #: src/components/veNft/VeNftSummaryStatsSection.tsx
-msgid "Total staked period:"
-msgstr "Total staked period:"
+msgid "Total staked {tokenSymbolDisplayText}"
+msgstr "Total staked {tokenSymbolDisplayText}"
 
 #: src/components/v1/V1Project/Rewards/index.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx

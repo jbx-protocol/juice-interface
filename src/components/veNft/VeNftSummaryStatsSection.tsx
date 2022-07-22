@@ -1,5 +1,5 @@
-import { Trans } from '@lingui/macro'
-import { Row, Col } from 'antd'
+import { t, Trans } from '@lingui/macro'
+import { Descriptions } from 'antd'
 
 import { ThemeContext } from 'contexts/themeContext'
 import React, { useContext } from 'react'
@@ -17,7 +17,9 @@ const VeNftSummaryStatsSection = ({
 
   return (
     <div style={{ ...shadowCard(theme), padding: 25, marginBottom: 10 }}>
-      <h3>Staking Summary:</h3>
+      {/* <h3>
+        <Trans>Staking Summary:</Trans>
+      </h3>
       <Row>
         <Col span={8}>
           <p>
@@ -31,8 +33,20 @@ const VeNftSummaryStatsSection = ({
           <p>0</p>
           <p>0</p>
         </Col>
-        <br />
-      </Row>
+      </Row> */}
+      <Descriptions
+        title={
+          <h3>
+            <Trans>Staking Summary:</Trans>
+          </h3>
+        }
+        column={1}
+      >
+        <Descriptions.Item label={t`Total staked ${tokenSymbolDisplayText}`}>
+          0
+        </Descriptions.Item>
+        <Descriptions.Item label={t`Total staked period`}>0</Descriptions.Item>
+      </Descriptions>
     </div>
   )
 }

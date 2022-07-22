@@ -1,4 +1,5 @@
 import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons'
+import { t, Trans } from '@lingui/macro'
 import { Modal, Space } from 'antd'
 import FormattedAddress from 'components/FormattedAddress'
 import RichNote from 'components/RichNote'
@@ -59,18 +60,19 @@ export default function ProjectPayersModal({
                     color: colors.text.primary,
                   }}
                 >
-                  Payment address contract:{' '}
+                  <Trans>Payment address contract:</Trans>
                   <FormattedAddress address={p.address} />
                 </div>
                 <div
                   style={{ display: 'flex', justifyContent: 'space-between' }}
                 >
-                  Beneficiary: <FormattedAddress address={p.beneficiary} />
+                  <Trans>Beneficiary:</Trans>
+                  <FormattedAddress address={p.beneficiary} />
                 </div>
                 <div style={{ fontSize: '0.8rem' }}>
                   <Space size="large">
                     <span>
-                      Add to balance{' '}
+                      <Trans>Add to balance</Trans>{' '}
                       {p.preferAddToBalance ? (
                         <CheckCircleOutlined />
                       ) : (
@@ -78,7 +80,7 @@ export default function ProjectPayersModal({
                       )}
                     </span>
                     <span>
-                      Auto claim{' '}
+                      <Trans>Auto claim</Trans>{' '}
                       {p.preferClaimedTokens ? (
                         <CheckCircleOutlined />
                       ) : (
@@ -106,11 +108,9 @@ export default function ProjectPayersModal({
             textAlign: 'center',
           }}
         >
-          {projectPayers.length
-            ? `${projectPayers.length} payment address${
-                projectPayers.length === 1 ? '' : 'es'
-              }`
-            : 'No payment addresses'}
+          {projectPayers.length === 1
+            ? t`1 payment address`
+            : t`${projectPayers.length} payment addresses`}
         </div>
       ) : null}
     </Modal>

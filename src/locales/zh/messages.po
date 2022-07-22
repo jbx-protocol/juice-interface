@@ -34,6 +34,10 @@ msgstr "0% 费率"
 msgid "1 deployed payment address"
 msgstr ""
 
+#: src/components/v2/V2Project/ProjectPayersModal.tsx
+msgid "1 payment address"
+msgstr ""
+
 #: src/components/VolumeChart/index.tsx
 msgid "1 year"
 msgstr "1 年"
@@ -144,6 +148,14 @@ msgstr "<0>像 Juicebox 这种需要逐步兑现早期财务承诺的机制，�
 #: src/pages/home/QAs.tsx
 msgid "<0>A project can choose to reserve a percentage of tokens for itself. Instead of being distributed to paying users, this percentage of tokens is instead minted for the project.</0><1>Holding these tokens entitles a project to a portion of its own overflow.</1>"
 msgstr "<0>项目可以选择保留某个百分比的代币。这个百分比的代币会铸造给项目，而不是分发给付费的用户。</0><1>持有这些代币能让项目拥有一部分自己的溢出。</1>"
+
+#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
+msgid "<0>Add to balance:</0> payments to this contract will fund the project without minting project tokens."
+msgstr ""
+
+#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
+msgid "<0>Auto claim:</0> any minted tokens will automatically be claimed as ERC20 (if this project has issued an ERC20 token)."
+msgstr ""
 
 #: src/pages/create/tabs/ReviewDeployTab/NftSummarySection.tsx
 msgid "<0>Contribution floor:</0> {0} ETH"
@@ -319,8 +331,8 @@ msgstr "可提取"
 msgid "Activity"
 msgstr "最近动态"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftRewardTierModal.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftRewardTierModal.tsx
 msgid "Add NFT reward"
 msgstr ""
 
@@ -358,7 +370,7 @@ msgstr "添加新的支出"
 msgid "Add payout"
 msgstr "添加支出"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/index.tsx
 msgid "Add reward tier"
 msgstr ""
 
@@ -375,6 +387,7 @@ msgid "Add to Balance"
 msgstr "添加到余额"
 
 #: src/components/Project/ProjectToolsDrawer/AddToProjectBalanceForm.tsx
+#: src/components/v2/V2Project/ProjectPayersModal.tsx
 msgid "Add to balance"
 msgstr "添加到余额"
 
@@ -503,7 +516,7 @@ msgid "Amount paid"
 msgstr "支付数额"
 
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/ContributionFloorFormItem.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/ContributionFloorFormItem.tsx
 msgid "Amount required"
 msgstr ""
 
@@ -553,8 +566,12 @@ msgstr "资产"
 msgid "Attach a sticker"
 msgstr "上传一张贴图"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftUpload.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftUpload.tsx
 msgid "Attach the image to be associated with this NFT."
+msgstr ""
+
+#: src/components/v2/V2Project/ProjectPayersModal.tsx
+msgid "Auto claim"
 msgstr ""
 
 #: src/pages/create/forms/FundingForm/index.tsx
@@ -604,6 +621,10 @@ msgstr "受益人"
 #: src/components/modals/ReservedTokenReceiverModal.tsx
 msgid "Beneficiary address"
 msgstr "受益人钱包地址"
+
+#: src/components/v2/V2Project/ProjectPayersModal.tsx
+msgid "Beneficiary:"
+msgstr ""
 
 #: src/pages/index.page.tsx
 msgid "Big ups to the Ethereum community for crafting the infrastructure and economy to make Juicebox possible."
@@ -853,7 +874,7 @@ msgstr "已链接钱包未授权"
 msgid "Contract address: {0}"
 msgstr "合约地址：{0}"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/ContributionFloorFormItem.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/ContributionFloorFormItem.tsx
 msgid "Contribution threshold"
 msgstr ""
 
@@ -864,7 +885,7 @@ msgstr ""
 msgid "Contributor rate"
 msgstr "捐款铸造比率"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/ContributionFloorFormItem.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/ContributionFloorFormItem.tsx
 msgid "Contributors receive the NFT when they contribute at least this amount."
 msgstr ""
 
@@ -1008,7 +1029,7 @@ msgstr "创建日期"
 msgid "Days"
 msgstr "天"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierCard.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftRewardTierCard.tsx
 msgid "Delete NFT"
 msgstr ""
 
@@ -1057,7 +1078,7 @@ msgstr ""
 msgid "Deposit 1 wei to @{handle}"
 msgstr "存入 1 wei 给 @{handle}"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftRewardTierModal.tsx
 msgid "Description"
 msgstr ""
 
@@ -1322,6 +1343,10 @@ msgstr ""
 msgid "ETH-ERC20 Payment addresses"
 msgstr ""
 
+#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
+msgid "ETH-ERC20 Payment addresses are <0>smart contracts</0>that allow this project to be paid in <1>ETH</1> by sending ETH directly to the contract, or in <2>ERC20 tokens</2> via the contract's <3>pay()</3> function."
+msgstr ""
+
 #: src/components/v2/shared/DistributionSplitsSection/SpecificLimitModal.tsx
 msgid "Each payout will receive their percent of this total each funding cycle if there is enough in the treasury. Otherwise, they will receive their percent of whatever is in the treasury."
 msgstr "如果金库资金足够，每个支出对象将在每个筹款周期收到自己在这个总额里的对应份额。否则，他们将按各自的占比来分配金库剩余的资金。"
@@ -1330,7 +1355,7 @@ msgstr "如果金库资金足够，每个支出对象将在每个筹款周期收
 msgid "Each project has its own <0>ERC-20 tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
 msgstr "每个项目都有自己的<0>ERC-20代币</0>。每个资助项目的人都会获得项目代币作为回报。在项目方发行 ERC-20 代币之前，代币余额会由协议来记录。"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftRewardTierModal.tsx
 msgid "Edit NFT reward"
 msgstr ""
 
@@ -1521,7 +1546,7 @@ msgstr "通用"
 msgid "Give feedback"
 msgstr "提交反馈"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftRewardTierModal.tsx
 msgid "Give this NFT a name."
 msgstr ""
 
@@ -1658,7 +1683,7 @@ msgstr "如果你对创建一个项目感兴趣，却不知道该如何开始，
 msgid "If you're unsure if you need to claim, you probably don't."
 msgstr "如果你不确定你是否需要领取，那么你或许不需要。"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftUpload.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftUpload.tsx
 msgid "Image file"
 msgstr ""
 
@@ -1929,6 +1954,10 @@ msgstr "铸造 {tokensTokenLower}"
 msgid "Minutes"
 msgstr "分钟"
 
+#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
+msgid "More information"
+msgstr ""
+
 #: src/pages/home/TrendingSection.tsx
 msgid "More trending projects"
 msgstr ""
@@ -1949,7 +1978,7 @@ msgstr ""
 msgid "NFT reward"
 msgstr ""
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/index.tsx
 #: src/pages/create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 #: src/pages/create/tabs/ReviewDeployTab/NftSummarySection.tsx
 msgid "NFT rewards"
@@ -1960,7 +1989,7 @@ msgstr ""
 msgid "NO LIMIT"
 msgstr "无限额"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftRewardTierModal.tsx
 #: src/pages/create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 msgid "Name"
@@ -2205,6 +2234,10 @@ msgstr "因代币保留率为 100% 且支付后并不会获得相应的代币，
 #: src/components/v1/V1Project/V1PayButton.tsx
 msgid "Paying this project is currently disabled."
 msgstr "当前项目已暂停接收付款。"
+
+#: src/components/v2/V2Project/ProjectPayersModal.tsx
+msgid "Payment address contract:"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 msgid "Payment equivalent"
@@ -2458,7 +2491,7 @@ msgstr "项目使用的代币保留率大于或等于{reservedRateRiskyMin}% 会
 msgid "Projects with a handle:<0/><1/>1. Are included in search results on the projects page<2/>2. Can be accessed via the URL: <3>juicebox.money{0}</3><4/><5/>(The original URL <6>juicebox.money{1}</6> will continue to work.)"
 msgstr ""
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftRewardTierModal.tsx
 msgid "Provide a link to additional information about this NFT."
 msgstr ""
 
@@ -2698,7 +2731,7 @@ msgstr "检查项目"
 msgid "Reward contributors with NFT's."
 msgstr ""
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/index.tsx
 msgid "Reward contributors with NFTs when they meet your configured funding criteria."
 msgstr ""
 
@@ -2731,11 +2764,11 @@ msgstr "关于如何重新配置该项目筹款周期的规则"
 msgid "Save"
 msgstr "保存"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftRewardTierModal.tsx
 msgid "Save NFT reward"
 msgstr ""
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/index.tsx
 msgid "Save NFT rewards"
 msgstr ""
 
@@ -3404,7 +3437,7 @@ msgstr "你对这个部分的改动在 <0>后面的</0> 筹款周期才会生效
 msgid "Upload"
 msgstr "上传"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftUpload.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftUpload.tsx
 msgid "Upload an image"
 msgstr ""
 
@@ -3476,7 +3509,7 @@ msgid "Wallet address"
 msgstr "钱包地址"
 
 #: src/components/formItems/ProjectLink.tsx
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftRewardTierModal.tsx
 #: src/pages/create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 msgid "Website"
@@ -3517,6 +3550,10 @@ msgstr "什么是折扣率？"
 #: src/pages/home/QAs.tsx
 msgid "What's going on under the hood?"
 msgstr "里面究竟有什么乾坤？"
+
+#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
+msgid "When a payment address is paid, its <0>beneficiary</0> address will receive any minted project tokens."
+msgstr ""
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "When checked, payments to this address will mint this project's ERC-20 tokens to the beneficiary's wallet. Payments will cost more gas. When unchecked, Juicebox will track the beneficiary's new tokens when they pay. The beneficiary can claim their ERC-20 tokens at any time."
@@ -3892,6 +3929,10 @@ msgstr "给到你的 {0}"
 #: src/components/modals/ParticipantsModal.tsx
 msgid "{0} holders"
 msgstr "{0} 持有者"
+
+#: src/components/v2/V2Project/ProjectPayersModal.tsx
+msgid "{0} payment addresses"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx

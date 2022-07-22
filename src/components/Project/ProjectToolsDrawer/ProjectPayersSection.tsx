@@ -1,5 +1,6 @@
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Button, Space } from 'antd'
+import ExternalLink from 'components/ExternalLink'
 import { MinimalCollapse } from 'components/MinimalCollapse'
 import LaunchProjectPayerButton from 'components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerButton'
 import ProjectPayersModal from 'components/v2/V2Project/ProjectPayersModal'
@@ -23,32 +24,36 @@ export default function ProjectPayersSection() {
       </h3>
 
       <Space direction="vertical" size="middle" style={{ width: '100%' }}>
-        <MinimalCollapse header="More information">
+        <MinimalCollapse header={t`More information`}>
           <p>
-            ETH-ERC20 Payment addresses are{' '}
-            <a
-              href="https://github.com/jbx-protocol/juice-contracts-v2/blob/main/contracts/JBETHERC20ProjectPayer.sol"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              smart contracts
-            </a>{' '}
-            that allow this project to be paid in <strong>ETH</strong> by
-            sending ETH directly to the contract, or in{' '}
-            <strong>ERC20 tokens</strong> via the contract's{' '}
-            <strong>pay()</strong> function.
+            <Trans>
+              ETH-ERC20 Payment addresses are{' '}
+              <ExternalLink href="https://github.com/jbx-protocol/juice-contracts-v2/blob/main/contracts/JBETHERC20ProjectPayer.sol">
+                <Trans>smart contracts</Trans>
+              </ExternalLink>
+              that allow this project to be paid in <strong>ETH</strong> by
+              sending ETH directly to the contract, or in{' '}
+              <strong>ERC20 tokens</strong> via the contract's{' '}
+              <strong>pay()</strong> function.
+            </Trans>
           </p>
           <p>
-            When a payment address is paid, its <strong>beneficiary</strong>{' '}
-            address will receive any minted project tokens.
+            <Trans>
+              When a payment address is paid, its <strong>beneficiary</strong>{' '}
+              address will receive any minted project tokens.
+            </Trans>
           </p>
           <p>
-            <strong>Add to balance:</strong> payments to this contract will fund
-            the project without minting project tokens.
+            <Trans>
+              <strong>Add to balance:</strong> payments to this contract will
+              fund the project without minting project tokens.
+            </Trans>
           </p>
           <p>
-            <strong>Auto claim:</strong> any minted tokens will automatically be
-            claimed as ERC20 (if this project has issued an ERC20 token).
+            <Trans>
+              <strong>Auto claim:</strong> any minted tokens will automatically
+              be claimed as ERC20 (if this project has issued an ERC20 token).
+            </Trans>
           </p>
         </MinimalCollapse>
 

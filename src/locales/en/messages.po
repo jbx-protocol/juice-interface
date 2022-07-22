@@ -29,6 +29,10 @@ msgstr "0% fee"
 msgid "1 deployed payment address"
 msgstr "1 deployed payment address"
 
+#: src/components/v2/V2Project/ProjectPayersModal.tsx
+msgid "1 payment address"
+msgstr "1 payment address"
+
 #: src/components/VolumeChart/index.tsx
 msgid "1 year"
 msgstr "1 year"
@@ -139,6 +143,14 @@ msgstr "<0>A mechanism like Juicebox where upfront financial commitments should 
 #: src/pages/home/QAs.tsx
 msgid "<0>A project can choose to reserve a percentage of tokens for itself. Instead of being distributed to paying users, this percentage of tokens is instead minted for the project.</0><1>Holding these tokens entitles a project to a portion of its own overflow.</1>"
 msgstr "<0>A project can choose to reserve a percentage of tokens for itself. Instead of being distributed to paying users, this percentage of tokens is instead minted for the project.</0><1>Holding these tokens entitles a project to a portion of its own overflow.</1>"
+
+#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
+msgid "<0>Add to balance:</0> payments to this contract will fund the project without minting project tokens."
+msgstr "<0>Add to balance:</0> payments to this contract will fund the project without minting project tokens."
+
+#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
+msgid "<0>Auto claim:</0> any minted tokens will automatically be claimed as ERC20 (if this project has issued an ERC20 token)."
+msgstr "<0>Auto claim:</0> any minted tokens will automatically be claimed as ERC20 (if this project has issued an ERC20 token)."
 
 #: src/pages/create/tabs/ReviewDeployTab/NftSummarySection.tsx
 msgid "<0>Contribution floor:</0> {0} ETH"
@@ -314,8 +326,8 @@ msgstr ""
 msgid "Activity"
 msgstr ""
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftRewardTierModal.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftRewardTierModal.tsx
 msgid "Add NFT reward"
 msgstr "Add NFT reward"
 
@@ -353,7 +365,7 @@ msgstr "Add new payout"
 msgid "Add payout"
 msgstr "Add payout"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/index.tsx
 msgid "Add reward tier"
 msgstr "Add reward tier"
 
@@ -370,6 +382,7 @@ msgid "Add to Balance"
 msgstr ""
 
 #: src/components/Project/ProjectToolsDrawer/AddToProjectBalanceForm.tsx
+#: src/components/v2/V2Project/ProjectPayersModal.tsx
 msgid "Add to balance"
 msgstr ""
 
@@ -498,7 +511,7 @@ msgid "Amount paid"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/ContributionFloorFormItem.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/ContributionFloorFormItem.tsx
 msgid "Amount required"
 msgstr "Amount required"
 
@@ -548,9 +561,13 @@ msgstr "Assets"
 msgid "Attach a sticker"
 msgstr "Attach a sticker"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftUpload.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftUpload.tsx
 msgid "Attach the image to be associated with this NFT."
 msgstr "Attach the image to be associated with this NFT."
+
+#: src/components/v2/V2Project/ProjectPayersModal.tsx
+msgid "Auto claim"
+msgstr "Auto claim"
 
 #: src/pages/create/forms/FundingForm/index.tsx
 msgid "Automate funding cycles"
@@ -599,6 +616,10 @@ msgstr "Beneficiary"
 #: src/components/modals/ReservedTokenReceiverModal.tsx
 msgid "Beneficiary address"
 msgstr "Beneficiary address"
+
+#: src/components/v2/V2Project/ProjectPayersModal.tsx
+msgid "Beneficiary:"
+msgstr "Beneficiary:"
 
 #: src/pages/index.page.tsx
 msgid "Big ups to the Ethereum community for crafting the infrastructure and economy to make Juicebox possible."
@@ -848,7 +869,7 @@ msgstr "Connected wallet not authorized"
 msgid "Contract address: {0}"
 msgstr ""
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/ContributionFloorFormItem.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/ContributionFloorFormItem.tsx
 msgid "Contribution threshold"
 msgstr "Contribution threshold"
 
@@ -859,7 +880,7 @@ msgstr "Contribution threshold"
 msgid "Contributor rate"
 msgstr "Contributor rate"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/ContributionFloorFormItem.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/ContributionFloorFormItem.tsx
 msgid "Contributors receive the NFT when they contribute at least this amount."
 msgstr "Contributors receive the NFT when they contribute at least this amount."
 
@@ -1003,7 +1024,7 @@ msgstr "Date created"
 msgid "Days"
 msgstr "Days"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierCard.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftRewardTierCard.tsx
 msgid "Delete NFT"
 msgstr "Delete NFT"
 
@@ -1052,7 +1073,7 @@ msgstr "Deployed payment addresses can be found in the Tools drawer on the proje
 msgid "Deposit 1 wei to @{handle}"
 msgstr "Deposit 1 wei to @{handle}"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftRewardTierModal.tsx
 msgid "Description"
 msgstr "Description"
 
@@ -1317,6 +1338,10 @@ msgstr "ETH-ERC20 Address Created"
 msgid "ETH-ERC20 Payment addresses"
 msgstr "ETH-ERC20 Payment addresses"
 
+#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
+msgid "ETH-ERC20 Payment addresses are <0>smart contracts</0>that allow this project to be paid in <1>ETH</1> by sending ETH directly to the contract, or in <2>ERC20 tokens</2> via the contract's <3>pay()</3> function."
+msgstr "ETH-ERC20 Payment addresses are <0>smart contracts</0>that allow this project to be paid in <1>ETH</1> by sending ETH directly to the contract, or in <2>ERC20 tokens</2> via the contract's <3>pay()</3> function."
+
 #: src/components/v2/shared/DistributionSplitsSection/SpecificLimitModal.tsx
 msgid "Each payout will receive their percent of this total each funding cycle if there is enough in the treasury. Otherwise, they will receive their percent of whatever is in the treasury."
 msgstr "Each payout will receive their percent of this total each funding cycle if there is enough in the treasury. Otherwise, they will receive their percent of whatever is in the treasury."
@@ -1325,7 +1350,7 @@ msgstr "Each payout will receive their percent of this total each funding cycle 
 msgid "Each project has its own <0>ERC-20 tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
 msgstr "Each project has its own <0>ERC-20 tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftRewardTierModal.tsx
 msgid "Edit NFT reward"
 msgstr "Edit NFT reward"
 
@@ -1516,7 +1541,7 @@ msgstr "General"
 msgid "Give feedback"
 msgstr "Give feedback"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftRewardTierModal.tsx
 msgid "Give this NFT a name."
 msgstr "Give this NFT a name."
 
@@ -1653,7 +1678,7 @@ msgstr "If you're interested in creating a project but still confused on how to 
 msgid "If you're unsure if you need to claim, you probably don't."
 msgstr "If you're unsure if you need to claim, you probably don't."
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftUpload.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftUpload.tsx
 msgid "Image file"
 msgstr "Image file"
 
@@ -1924,6 +1949,10 @@ msgstr "Mint {tokensTokenLower}"
 msgid "Minutes"
 msgstr "Minutes"
 
+#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
+msgid "More information"
+msgstr "More information"
+
 #: src/pages/home/TrendingSection.tsx
 msgid "More trending projects"
 msgstr "More trending projects"
@@ -1944,7 +1973,7 @@ msgstr "NFT projects"
 msgid "NFT reward"
 msgstr "NFT reward"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/index.tsx
 #: src/pages/create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 #: src/pages/create/tabs/ReviewDeployTab/NftSummarySection.tsx
 msgid "NFT rewards"
@@ -1955,7 +1984,7 @@ msgstr "NFT rewards"
 msgid "NO LIMIT"
 msgstr "NO LIMIT"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftRewardTierModal.tsx
 #: src/pages/create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 msgid "Name"
@@ -2200,6 +2229,10 @@ msgstr ""
 #: src/components/v1/V1Project/V1PayButton.tsx
 msgid "Paying this project is currently disabled."
 msgstr ""
+
+#: src/components/v2/V2Project/ProjectPayersModal.tsx
+msgid "Payment address contract:"
+msgstr "Payment address contract:"
 
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 msgid "Payment equivalent"
@@ -2453,7 +2486,7 @@ msgstr "Projects using a reserved rate of {reservedRateRiskyMin}% or more will a
 msgid "Projects with a handle:<0/><1/>1. Are included in search results on the projects page<2/>2. Can be accessed via the URL: <3>juicebox.money{0}</3><4/><5/>(The original URL <6>juicebox.money{1}</6> will continue to work.)"
 msgstr "Projects with a handle:<0/><1/>1. Are included in search results on the projects page<2/>2. Can be accessed via the URL: <3>juicebox.money{0}</3><4/><5/>(The original URL <6>juicebox.money{1}</6> will continue to work.)"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftRewardTierModal.tsx
 msgid "Provide a link to additional information about this NFT."
 msgstr "Provide a link to additional information about this NFT."
 
@@ -2693,7 +2726,7 @@ msgstr ""
 msgid "Reward contributors with NFT's."
 msgstr "Reward contributors with NFT's."
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/index.tsx
 msgid "Reward contributors with NFTs when they meet your configured funding criteria."
 msgstr "Reward contributors with NFTs when they meet your configured funding criteria."
 
@@ -2726,11 +2759,11 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftRewardTierModal.tsx
 msgid "Save NFT reward"
 msgstr "Save NFT reward"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/index.tsx
 msgid "Save NFT rewards"
 msgstr "Save NFT rewards"
 
@@ -3399,7 +3432,7 @@ msgstr "Updates you make to this section will only be applied to <0>upcoming</0>
 msgid "Upload"
 msgstr ""
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftUpload.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftUpload.tsx
 msgid "Upload an image"
 msgstr "Upload an image"
 
@@ -3471,7 +3504,7 @@ msgid "Wallet address"
 msgstr "Wallet address"
 
 #: src/components/formItems/ProjectLink.tsx
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftRewardTierModal.tsx
 #: src/pages/create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 msgid "Website"
@@ -3512,6 +3545,10 @@ msgstr ""
 #: src/pages/home/QAs.tsx
 msgid "What's going on under the hood?"
 msgstr ""
+
+#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
+msgid "When a payment address is paid, its <0>beneficiary</0> address will receive any minted project tokens."
+msgstr "When a payment address is paid, its <0>beneficiary</0> address will receive any minted project tokens."
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "When checked, payments to this address will mint this project's ERC-20 tokens to the beneficiary's wallet. Payments will cost more gas. When unchecked, Juicebox will track the beneficiary's new tokens when they pay. The beneficiary can claim their ERC-20 tokens at any time."
@@ -3887,6 +3924,10 @@ msgstr ""
 #: src/components/modals/ParticipantsModal.tsx
 msgid "{0} holders"
 msgstr ""
+
+#: src/components/v2/V2Project/ProjectPayersModal.tsx
+msgid "{0} payment addresses"
+msgstr "{0} payment addresses"
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx

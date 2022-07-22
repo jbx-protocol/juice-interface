@@ -17,23 +17,6 @@ const VeNftSummaryStatsSection = ({
 
   return (
     <div style={{ ...shadowCard(theme), padding: 25, marginBottom: 10 }}>
-      {/* <h3>
-        <Trans>Staking Summary:</Trans>
-      </h3>
-      <Row>
-        <Col span={8}>
-          <p>
-            <Trans>Total staked ${tokenSymbolDisplayText}:</Trans>
-          </p>
-          <p>
-            <Trans>Total staked period:</Trans>
-          </p>
-        </Col>
-        <Col span={16}>
-          <p>0</p>
-          <p>0</p>
-        </Col>
-      </Row> */}
       <Descriptions
         title={
           <h3>

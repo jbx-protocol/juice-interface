@@ -106,118 +106,126 @@ export default function TrendingProjectCard({
         project.cv === '2' ? v2ProjectRoute(project) : `/p/${project?.handle}`
       }
     >
-      <div
-        style={{
-          borderRadius: radii.lg,
-          cursor: 'pointer',
-          overflow: 'hidden',
-        }}
-      >
-        <div style={cardStyle} className="clickable-border">
-          <div
-            style={{ marginRight: 20, display: 'flex', alignItems: 'center' }}
-          >
-            <div style={rankStyle}>{rank}</div>
-            <ProjectLogo
-              uri={metadata?.logoUri}
-              name={metadata?.name}
-              size={size === 'sm' ? 70 : 110}
-            />
-          </div>
+      <a>
+        <div
+          style={{
+            borderRadius: radii.lg,
+            cursor: 'pointer',
+            overflow: 'hidden',
+          }}
+        >
+          <div style={cardStyle} className="clickable-border">
+            <div
+              style={{ marginRight: 20, display: 'flex', alignItems: 'center' }}
+            >
+              <div style={rankStyle}>{rank}</div>
+              <ProjectLogo
+                uri={metadata?.logoUri}
+                name={metadata?.name}
+                size={size === 'sm' ? 70 : 110}
+              />
+            </div>
 
-          <div
-            style={{
-              flex: 1,
-              minWidth: 0,
-              fontWeight: 400,
-            }}
-          >
-            {metadata ? (
-              <h2
-                style={{
-                  color: colors.text.primary,
-                  margin: 0,
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  fontSize: size === 'sm' ? 16 : 21,
-                }}
-              >
-                {metadata.name}
-              </h2>
-            ) : (
-              <Skeleton paragraph={false} title={{ width: 120 }} active />
-            )}
-
-            {size === 'sm' ? null : (
-              <div>
-                {project.handle && (
-                  <span
-                    style={{
-                      color: colors.text.primary,
-                      fontWeight: 500,
-                      marginRight: 10,
-                    }}
-                  >
-                    @{project.handle}
-                  </span>
-                )}
-                <span
+            <div
+              style={{
+                flex: 1,
+                minWidth: 0,
+                fontWeight: 400,
+              }}
+            >
+              {metadata ? (
+                <h2
                   style={{
-                    color: colors.text.tertiary,
-                    fontSize: '0.7rem',
-                    fontWeight: 500,
+                    color: colors.text.primary,
+                    margin: 0,
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    fontSize: size === 'sm' ? 16 : 21,
                   }}
                 >
-                  V{terminalVersion ?? project.cv}
-                </span>
-              </div>
-            )}
+                  {metadata.name}
+                </h2>
+              ) : (
+                <Skeleton paragraph={false} title={{ width: 120 }} active />
+              )}
 
-            <div
-              style={{
-                color: colors.text.primary,
-                display: 'flex',
-                flexWrap: 'wrap',
-                width: '100%',
-              }}
-            >
-              <span
+              {size === 'sm' ? null : (
+                <div>
+                  {project.handle && (
+                    <span
+                      style={{
+                        color: colors.text.primary,
+                        fontWeight: 500,
+                        marginRight: 10,
+                      }}
+                    >
+                      @{project.handle}
+                    </span>
+                  )}
+                  <span
+                    style={{
+                      color: colors.text.tertiary,
+                      fontSize: '0.7rem',
+                      fontWeight: 500,
+                    }}
+                  >
+                    V{terminalVersion ?? project.cv}
+                  </span>
+                </div>
+              )}
+
+              <div
                 style={{
+                  color: colors.text.primary,
                   display: 'flex',
                   flexWrap: 'wrap',
-                  alignItems: 'baseline',
+                  width: '100%',
                 }}
               >
-                <span style={{ fontWeight: 600, marginTop: 3 }}>
-                  <ETHAmount
-                    amount={project.trendingVolume}
-                    precision={precision}
-                  />{' '}
+                <span
+                  style={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    alignItems: 'baseline',
+                  }}
+                >
+                  <span style={{ fontWeight: 600, marginTop: 3 }}>
+                    <ETHAmount
+                      amount={project.trendingVolume}
+                      precision={precision}
+                    />{' '}
+                  </span>
+                  <span
+                    style={{ fontWeight: 400, color: colors.text.secondary }}
+                  >
+                    <Trans>last {trendingWindowDays} days</Trans>{' '}
+                  </span>
+                  <span style={{ fontWeight: 600, color: colors.text.header }}>
+                    {percentGainText && <>{percentGainText}</>}
+                  </span>
                 </span>
-                <span style={{ fontWeight: 400, color: colors.text.secondary }}>
-                  <Trans>last {trendingWindowDays} days</Trans>{' '}
-                </span>
-                <span style={{ fontWeight: 600, color: colors.text.header }}>
-                  {percentGainText && <>{percentGainText}</>}
-                </span>
-              </span>
+              </div>
+
+              <div
+                style={{
+                  fontWeight: 400,
+                  color: colors.text.secondary,
+                  fontSize: 13,
+                  marginTop: 2,
+                }}
+              >
+                <Plural
+                  value={paymentCount}
+                  one="# payment"
+                  other="# payments"
+                />
+              </div>
             </div>
 
-            <div
-              style={{
-                fontWeight: 400,
-                color: colors.text.secondary,
-                fontSize: 13,
-                marginTop: 2,
-              }}
-            >
-              <Plural value={paymentCount} one="# payment" other="# payments" />
-            </div>
+            {!metadata && <Loading />}
           </div>
-
-          {!metadata && <Loading />}
         </div>
-      </div>
+      </a>
     </Link>
   )
 }

@@ -63,9 +63,11 @@ export default function MyProjects() {
             </p>
 
             <Link href="/create">
-              <Button type="primary">
-                <Trans>Create project</Trans>
-              </Button>
+              <a>
+                <Button type="primary">
+                  <Trans>Create project</Trans>
+                </Button>
+              </a>
             </Link>
           </div>
         ) : (

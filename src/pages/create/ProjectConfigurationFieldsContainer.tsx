@@ -34,6 +34,7 @@ export default function ProjectConfigurationFieldsContainer({
           style={{
             border: `1px solid ${colors.stroke.tertiary}`,
             padding: '1rem',
+            overflow: 'hidden',
           }}
         >
           <ProjectPreview singleColumnLayout />

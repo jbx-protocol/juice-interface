@@ -1,12 +1,12 @@
 ## Internationalization
 
-Juicebox uses [Crowdin](https://crowdin.com/project/juicebox-interface) for managing translations. A GitHub workflow uploads new strings for translation to the Crowdin project whenever code using the lingui translation macros is merged into main.
+Juicebox uses [Crowdin](https://crowdin.com/project/juicebox-interface) for managing translations. A GitHub workflow uploads new strings for translation to the Crowdin project whenever code using the lingui translation macros is merged into `main`.
 
 Every day, translations are synced back down from Crowdin to a pull request to `main`. We then merge these PR's into `main` manually.
 
 ### Marking strings for translation
 
-Any strings that are added or modified in the source code should be marked for translation. Use the `t` macro or the `Trans` component from the `@lingui/macro` library. [Learn more](https://lingui.js.org/ref/macro.html).
+Any user-facing strings that are added or modified in the source code should be marked for translation. Use the `t` macro or the `Trans` component from the `@lingui/macro` library. [Learn more](https://lingui.js.org/ref/macro.html).
 
 ```js
 const myString = t`Example text`

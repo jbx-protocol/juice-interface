@@ -16,19 +16,23 @@ Create a pull request (PR) that targets the `main` branch. A live Fleek preview 
 
 When your PR has met the [approval guidelines](#approval-guidelines) and is ready for review, `@mention` a [codeowner](.github/CODEOWNERS) and ask for a review.
 
+### Internationalization
+
+If you've added or changed any user-facing strings, you'll need to update the translation source files (externalization). [Learn more](./doc/internationalization.md) about how to externalize strings.
+
 ### Git workflow
 
 `main` is our main branch.
 
-Developers should create branches from the `main` branch. Once the code is ready, create a pull request that targets the `main` branch.
+Developers should create branches from the `main` branch. Once the code is ready, create a PR that targets the `main` branch.
 
-We use the **Squash and Merge** merge policy.
+We use the **Squash and Merge** policy for merging PRs.
 
 ### Approval guidelines
 
 Before your PR is merged, it must meet the following criteria:
 
-1. The PR follows the [Git workflow](#git-workflow) and contains no merge commits.
+1. The PR follows the [Git workflow](#git-workflow).
 1. All CI checks pass.
 1. The PR is approved by at least one [codeowner](.github/CODEOWNERS).
 1. Significant UI/UX changes are discussed by other design/dev contributors.

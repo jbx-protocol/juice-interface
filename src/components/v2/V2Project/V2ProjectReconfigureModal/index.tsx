@@ -11,6 +11,7 @@ import FundingDrawer from 'components/v2/shared/FundingCycleConfigurationDrawers
 import TokenDrawer from 'components/v2/shared/FundingCycleConfigurationDrawers/TokenDrawer'
 
 import RulesDrawer from 'components/v2/shared/FundingCycleConfigurationDrawers/RulesDrawer'
+import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import { V2ReconfigureProjectDetailsDrawer } from './drawers/V2ReconfigureProjectDetailsDrawer'
 import V2ReconfigureUpcomingMessage from './V2ReconfigureUpcomingMessage'
@@ -88,6 +89,11 @@ export default function V2ProjectReconfigureModal({
     editingProjectData,
     initialEditingData,
   })
+  const {
+    fundingCycleMetadata,
+    nftRewards: { CIDs: nftRewardsCids },
+  } = useContext(V2ProjectContext)
+
   const { reconfigureLoading, reconfigureFundingCycle } =
     useReconfigureFundingCycle({ editingProjectData, exit })
 
@@ -124,6 +130,10 @@ export default function V2ProjectReconfigureModal({
     openUnsavedChangesModal()
   }, [fundingHasSavedChanges, onCancel])
 
+  const nftsWithFalseDataSourceForPay = Boolean(
+    nftRewardsCids?.length && !fundingCycleMetadata?.useDataSourceForPay,
+  )
+
   return (
     <Modal
       title={<Trans>Project configuration</Trans>}
@@ -132,7 +142,7 @@ export default function V2ProjectReconfigureModal({
       onCancel={handleGlobalModalClose}
       okText={t`Deploy funding cycle configuration`}
       okButtonProps={{
-        disabled: !fundingHasSavedChanges,
+        disabled: !fundingHasSavedChanges && !nftsWithFalseDataSourceForPay,
         style: { marginBottom: '15px' },
       }}
       confirmLoading={reconfigureLoading}
@@ -166,14 +176,15 @@ export default function V2ProjectReconfigureModal({
           />
         )}
         {!hideProjectDetails && (
-          <ReconfigureButton
-            reconfigureHasChanges={false}
-            title={t`Other details`}
-            onClick={() => setProjectDetailsDrawerVisible(true)}
-          />
+          <>
+            <ReconfigureButton
+              reconfigureHasChanges={false}
+              title={t`Other details`}
+              onClick={() => setProjectDetailsDrawerVisible(true)}
+            />
+            <Divider />
+          </>
         )}
-
-        <Divider />
 
         <h4 style={{ marginBottom: 0 }}>
           <Trans>Reconfigure upcoming funding cycles</Trans>

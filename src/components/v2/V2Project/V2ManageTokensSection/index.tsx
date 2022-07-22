@@ -30,6 +30,8 @@ import { default as useV1HandleForProjectId } from 'hooks/v1/contractReader/Hand
 import { useHasV1TokenPaymentTerminal } from 'hooks/v2/hasV1TokenPaymentTerminal'
 import { featureFlagEnabled } from 'utils/featureFlags'
 
+import { useVeNftEnabled } from 'hooks/veNft/veNftEnabled'
+
 import V2RedeemModal from './V2RedeemModal'
 import V2ClaimTokensModal from './V2ClaimTokensModal'
 import V2MintModal from './V2MintModal'
@@ -109,6 +111,7 @@ export default function V2ManageTokensSection() {
     useV2ConnectedWalletHasPermission(V2OperatorPermission.MINT),
   )
   const projectAllowsMint = Boolean(fundingCycleMetadata?.allowMinting)
+  const veNftEnabled = useVeNftEnabled(projectId)
 
   return (
     <>
@@ -284,6 +287,7 @@ export default function V2ManageTokensSection() {
         onCancel={() => setManageTokensModalVisible(false)}
         projectAllowsMint={projectAllowsMint}
         userHasMintPermission={userHasMintPermission}
+        veNftEnabled={veNftEnabled}
         hasOverflow={hasOverflow}
         tokenSymbol={tokenSymbol}
         tokenAddress={tokenAddress}

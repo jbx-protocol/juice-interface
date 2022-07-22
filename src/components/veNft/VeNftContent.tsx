@@ -1,9 +1,13 @@
 import React, { useContext } from 'react'
-import VeNftHeader from 'components/veNft/VeNftHeader'
 
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { t } from '@lingui/macro'
+
+import VeNftHeaderSection from 'components/veNft/VeNftHeaderSection'
+import VeNftStakingForm from 'components/veNft/VeNftStakingForm'
+import VeNftOwnedTokensSection from 'components/veNft/VeNftOwnedTokensSection'
+import VeNftSummaryStatsSection from 'components/veNft/VeNftSummaryStatsSection'
 
 const VeNftContent = () => {
   const { tokenSymbol, tokenName, projectMetadata } =
@@ -14,10 +18,15 @@ const VeNftContent = () => {
 
   return (
     <>
-      <VeNftHeader
+      <VeNftHeaderSection
         tokenName={tokenName}
         tokenSymbolDisplayText={tokenSymbolDisplayText}
         projectName={projectName}
+      />
+      <VeNftStakingForm />
+      <VeNftOwnedTokensSection />
+      <VeNftSummaryStatsSection
+        tokenSymbolDisplayText={tokenSymbolDisplayText}
       />
     </>
   )

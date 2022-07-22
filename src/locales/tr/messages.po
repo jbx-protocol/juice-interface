@@ -950,6 +950,10 @@ msgstr "Güncel sahibi: {ownerAddress}"
 msgid "Currently worth: <0><1/>{0}</0>"
 msgstr "Güncel değeri: <0><1/>{0}</0>"
 
+#: src/components/veNft/VeNftStakingForm.tsx
+msgid "Currently, only project tokens claimed as ERC-20 tokens can be staked for NFTs."
+msgstr ""
+
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "Custom memo"
 msgstr "Özel not"
@@ -1812,7 +1816,7 @@ msgstr "Daha fazla yükle"
 msgid "Lock until"
 msgstr "Kilit süresi bitiş tarihi"
 
-#: src/components/veNft/VeNftHeader.tsx
+#: src/components/veNft/VeNftHeaderSection.tsx
 msgid "Lock {tokenName} for Voting Power"
 msgstr ""
 
@@ -2885,7 +2889,7 @@ msgstr "Harcama"
 msgid "Stake your {tokensLabel} to increase your voting weight and claim Governance NFTs."
 msgstr ""
 
-#: src/components/veNft/VeNftHeader.tsx
+#: src/components/veNft/VeNftHeaderSection.tsx
 msgid "Stake {tokenName} ({tokenSymbolDisplayText}) tokens in exchange for voting weight. In return, you will impact {projectName} governance and receive a choice governance NFT."
 msgstr ""
 
@@ -3318,6 +3322,14 @@ msgstr "Toplam fon:"
 msgid "Total raised"
 msgstr "Toplanan yekün"
 
+#: src/components/veNft/VeNftSummaryStatsSection.tsx
+msgid "Total staked ${tokenSymbolDisplayText}:"
+msgstr ""
+
+#: src/components/veNft/VeNftSummaryStatsSection.tsx
+msgid "Total staked period:"
+msgstr ""
+
 #: src/components/v1/V1Project/Rewards/index.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "Total supply"
@@ -3632,6 +3644,10 @@ msgstr "Bir finansman döngüsü süreniz yok. Yaptığınız değişiklikler he
 #: src/pages/projects/HoldingsProjects.tsx
 msgid "You don't hold tokens for any Juicebox project."
 msgstr "Herhangi bir Juicebox projesi için token tutmuyorsunuz."
+
+#: src/components/veNft/VeNftOwnedTokensSection.tsx
+msgid "You don't own any veNFTs!"
+msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V1ProjectTokensSection/MigrateV1ProjectTokensModal/TokenSwapDescription.tsx
 msgid "You have <0>{0}</0> tokens on <1>Juicebox V1</1>. You can swap your <2>{1}</2> V1 tokens for V2 tokens"

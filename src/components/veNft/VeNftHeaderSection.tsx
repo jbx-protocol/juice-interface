@@ -1,17 +1,17 @@
 import { Trans } from '@lingui/macro'
 import React from 'react'
 
-interface VeNftHeaderProps {
+interface VeNftHeaderSectionProps {
   tokenName: string | undefined
   tokenSymbolDisplayText: string
   projectName: string
 }
 
-const VeNftHeader = ({
+const VeNftHeaderSection = ({
   tokenName,
   tokenSymbolDisplayText,
   projectName,
-}: VeNftHeaderProps) => {
+}: VeNftHeaderSectionProps) => {
   return (
     <>
       <h1>
@@ -28,4 +28,4 @@ const VeNftHeader = ({
   )
 }
 
-export default VeNftHeader
+export default VeNftHeaderSection

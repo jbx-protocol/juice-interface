@@ -32,7 +32,9 @@ import { findTransactionReceipt } from './utils'
 
 const NFT_CREATE_EVENT_IDX = 2
 const NFT_PROJECT_ID_TOPIC_IDX = 1
-const FUNDING_CYCLE_METADATA_OVERRIDES = {
+
+// Projects with NFT rewards need useDataSourceForPay to be true for NFT rewards to work
+export const NFT_FUNDING_CYCLE_METADATA_OVERRIDES = {
   useDataSourceForPay: true,
 }
 
@@ -158,7 +160,7 @@ export function DeployProjectWithNftsButton() {
             fundingCycleData,
             fundingCycleMetadata: {
               ...fundingCycleMetadata,
-              ...FUNDING_CYCLE_METADATA_OVERRIDES,
+              ...NFT_FUNDING_CYCLE_METADATA_OVERRIDES,
             },
             fundAccessConstraints,
             groupedSplits,

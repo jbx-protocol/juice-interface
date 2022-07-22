@@ -1,13 +1,11 @@
 import { BigNumber } from '@ethersproject/bignumber'
 
-import { VENFT_CONTRACT_ADDRESS } from 'constants/veNft/veNftProject'
+import { useVeNftContract } from 'hooks/veNft/VeNftContract'
+import useV2ContractReader from 'hooks/v2/contractReader/V2ContractReader'
 
-import useV2ContractReader from '../v2/contractReader/V2ContractReader'
-import { useNFTContract } from './VeNftContract'
-
-export function useNFTLockDurationOptions() {
+export function useVeNftLockDurationOptions() {
   return useV2ContractReader<BigNumber[]>({
-    contract: useNFTContract(VENFT_CONTRACT_ADDRESS),
+    contract: useVeNftContract(),
     functionName: 'lockDurationOptions',
   })
 }

@@ -3,7 +3,7 @@ import { useContext } from 'react'
 import { V2UserContext } from 'contexts/v2/userContext'
 
 import { TransactorInstance } from 'hooks/Transactor'
-import { useNFTContract } from 'hooks/veNft/VeNftContract'
+import { useVeNftContract } from 'hooks/veNft/VeNftContract'
 
 import { VENFT_CONTRACT_ADDRESS } from 'constants/veNft/veNftProject'
 
@@ -18,7 +18,7 @@ export type LockTx = TransactorInstance<{
 
 export function useLockTx(): LockTx {
   const { transactor } = useContext(V2UserContext)
-  const nftContract = useNFTContract(VENFT_CONTRACT_ADDRESS)
+  const nftContract = useVeNftContract(VENFT_CONTRACT_ADDRESS)
 
   return (
     {

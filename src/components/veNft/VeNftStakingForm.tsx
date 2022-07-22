@@ -39,15 +39,16 @@ interface StakingFormProps {
 
 interface VeNftStakingFormProps {
   tokenSymbolDisplayText: string
-  lockDurationOptions: BigNumber[]
 }
 
 const VeNftStakingForm = ({
-  lockDurationOptions,
   tokenSymbolDisplayText,
 }: VeNftStakingFormProps) => {
   const { userAddress, onSelectWallet } = useContext(NetworkContext)
-  const { tokenAddress } = useContext(V2ProjectContext)
+  const {
+    tokenAddress,
+    veNft: { lockDurationOptions },
+  } = useContext(V2ProjectContext)
   const { theme } = useContext(ThemeContext)
 
   const [form] = useForm<StakingFormProps>()

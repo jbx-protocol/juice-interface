@@ -36,6 +36,8 @@ import { CIDsOfNftRewardTiersResponse } from 'utils/v2/nftRewards'
 
 import useNameOfERC20 from 'hooks/NameOfERC20'
 
+import { useVeNftLockDurationOptions } from 'hooks/veNft/VeNftLockDurationOptions'
+
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
@@ -195,6 +197,8 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
 
   const nftsLoading = nftRewardTiersLoading || nftRewardsCIDsLoading
 
+  const { data: lockDurationOptions } = useVeNftLockDurationOptions()
+
   const project: V2ProjectContextType = {
     cv: '2',
     handle,
@@ -230,7 +234,7 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
 
     veNft: {
       name: undefined,
-      lockDurationOptions: undefined,
+      lockDurationOptions: lockDurationOptions,
       baseImagesHash: undefined,
       resolverAddress: undefined,
       variants: undefined,

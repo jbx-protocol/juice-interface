@@ -58,7 +58,7 @@ export type V2ProjectContextType = {
 
   veNft: {
     name: string | undefined
-    lockDurationOptions: BigNumber | undefined
+    lockDurationOptions: BigNumber[] | undefined
     baseImagesHash: string | undefined
     resolverAddress: string | undefined
     variants: VeNftVariant[] | undefined

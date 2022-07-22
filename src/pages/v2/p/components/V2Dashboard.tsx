@@ -228,6 +228,15 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
       loading: nftsLoading,
     },
 
+    veNft: {
+      name: undefined,
+      lockDurationOptions: undefined,
+      baseImagesHash: undefined,
+      resolverAddress: undefined,
+      variants: undefined,
+      userTokens: undefined,
+    },
+
     loading: {
       ETHBalanceLoading,
       balanceInDistributionLimitCurrencyLoading,

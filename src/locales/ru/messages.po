@@ -1806,6 +1806,10 @@ msgstr ""
 msgid "Load more"
 msgstr "Загрузить ещё"
 
+#: src/components/veNft/VeNftHeaderSection.tsx
+msgid "Lock ${tokenSymbolDisplayText} for Voting Power"
+msgstr ""
+
 #: src/components/modals/ReservedTokenReceiverModal.tsx
 #: src/components/v1/shared/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
@@ -2059,6 +2063,10 @@ msgstr ""
 
 #: src/components/formItems/ENSName.tsx
 msgid "Only lowercase letters"
+msgstr ""
+
+#: src/components/veNft/VeNftStakingForm.tsx
+msgid "Only project tokens claimed as ERC-20 tokens can be staked for NFTs."
 msgstr ""
 
 #: src/components/v1/V1Project/modals/V1BalancesModal.tsx
@@ -2881,8 +2889,16 @@ msgstr "Расходы"
 msgid "Stake your {tokensLabel} to increase your voting weight and claim Governance NFTs."
 msgstr ""
 
+#: src/components/veNft/VeNftHeaderSection.tsx
+msgid "Stake {tokenName} ({tokenSymbolDisplayText}) tokens in exchange for voting weight. In return, you'll impact {projectName} governance and receive a choice governance NFT."
+msgstr ""
+
 #: src/components/ManageTokensModal.tsx
 msgid "Stake {tokensLabel} for NFT"
+msgstr ""
+
+#: src/components/veNft/VeNftSummaryStatsSection.tsx
+msgid "Staking Summary:"
 msgstr ""
 
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
@@ -3310,6 +3326,14 @@ msgstr "Всего средств:"
 msgid "Total raised"
 msgstr "Итого собрано"
 
+#: src/components/veNft/VeNftSummaryStatsSection.tsx
+msgid "Total staked period"
+msgstr ""
+
+#: src/components/veNft/VeNftSummaryStatsSection.tsx
+msgid "Total staked {tokenSymbolDisplayText}"
+msgstr ""
+
 #: src/components/v1/V1Project/Rewards/index.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "Total supply"
@@ -3372,6 +3396,10 @@ msgstr "Разархивировать проект"
 #: src/components/AMMPrices/TokenAMMPriceRow.tsx
 msgid "Unavailable"
 msgstr "Недоступно"
+
+#: src/components/veNft/VeNftContent.tsx
+msgid "Unknown Project"
+msgstr ""
 
 #: src/components/ArchiveProject/index.tsx
 msgid "Unless payments are paused in your funding cycle settings, your project can still receive payments directly through the Juicebox protocol contracts."
@@ -3620,6 +3648,10 @@ msgstr "У вас нет продолжительности цикла фина�
 #: src/pages/projects/HoldingsProjects.tsx
 msgid "You don't hold tokens for any Juicebox project."
 msgstr "Вы не владеете токенами ни для одного проекта Juicebox."
+
+#: src/components/veNft/VeNftOwnedTokensSection.tsx
+msgid "You don't own any veNFTs!"
+msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V1ProjectTokensSection/MigrateV1ProjectTokensModal/TokenSwapDescription.tsx
 msgid "You have <0>{0}</0> tokens on <1>Juicebox V1</1>. You can swap your <2>{1}</2> V1 tokens for V2 tokens"

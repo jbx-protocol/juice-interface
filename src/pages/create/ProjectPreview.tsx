@@ -83,6 +83,7 @@ export default function ProjectPreview({
     terminals: [],
     primaryTerminal: undefined,
     tokenSymbol: undefined,
+    tokenName: undefined,
     projectOwnerAddress: userAddress,
     ballotState: undefined,
     primaryTerminalCurrentOverflow: undefined,

@@ -34,6 +34,8 @@ import { useNftRewardTiersOf } from 'hooks/v2/contractReader/NftRewardTiersOf'
 import useNftRewards from 'hooks/v2/NftRewards'
 import { CIDsOfNftRewardTiersResponse } from 'utils/v2/nftRewards'
 
+import useNameOfERC20 from 'hooks/NameOfERC20'
+
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
@@ -127,6 +129,7 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
   })
 
   const tokenSymbol = useSymbolOfERC20(tokenAddress)
+  const tokenName = useNameOfERC20(tokenAddress)
 
   const { data: primaryTerminalCurrentOverflow } = useTerminalCurrentOverflow({
     projectId,
@@ -212,6 +215,7 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
     distributionLimitCurrency,
     balanceInDistributionLimitCurrency,
     tokenSymbol,
+    tokenName,
     projectOwnerAddress,
     primaryTerminalCurrentOverflow,
     totalTokenSupply,

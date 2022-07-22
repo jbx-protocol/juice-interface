@@ -25,6 +25,7 @@ export type V2ProjectContextType = {
   projectMetadata: ProjectMetadataV4 | undefined
   tokenAddress: string | undefined
   tokenSymbol: string | undefined
+  tokenName: string | undefined
   terminals: string[] | undefined // array of terminal addresses, 0xABC...
   primaryTerminal: string | undefined
   ETHBalance: BigNumber | undefined
@@ -66,6 +67,7 @@ export const V2ProjectContext = createContext<V2ProjectContextType>({
   projectMetadata: undefined,
   tokenAddress: undefined,
   tokenSymbol: undefined,
+  tokenName: undefined,
   terminals: undefined,
   primaryTerminal: undefined,
   ETHBalance: undefined,

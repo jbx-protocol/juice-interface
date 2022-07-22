@@ -1801,6 +1801,10 @@ msgstr "Link Juicebox V1 project"
 msgid "Load more"
 msgstr ""
 
+#: src/components/veNft/VeNftHeaderSection.tsx
+msgid "Lock ${tokenSymbolDisplayText} for Voting Power"
+msgstr "Lock ${tokenSymbolDisplayText} for Voting Power"
+
 #: src/components/modals/ReservedTokenReceiverModal.tsx
 #: src/components/v1/shared/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
@@ -2055,6 +2059,10 @@ msgstr "Once launched, your first funding cycle <0>can't be changed</0>. You can
 #: src/components/formItems/ENSName.tsx
 msgid "Only lowercase letters"
 msgstr "Only lowercase letters"
+
+#: src/components/veNft/VeNftStakingForm.tsx
+msgid "Only project tokens claimed as ERC-20 tokens can be staked for NFTs."
+msgstr "Only project tokens claimed as ERC-20 tokens can be staked for NFTs."
 
 #: src/components/v1/V1Project/modals/V1BalancesModal.tsx
 #: src/components/v2/V2Project/V2BalancesModal/V2BalancesModal.tsx
@@ -2876,9 +2884,17 @@ msgstr ""
 msgid "Stake your {tokensLabel} to increase your voting weight and claim Governance NFTs."
 msgstr "Stake your {tokensLabel} to increase your voting weight and claim Governance NFTs."
 
+#: src/components/veNft/VeNftHeaderSection.tsx
+msgid "Stake {tokenName} ({tokenSymbolDisplayText}) tokens in exchange for voting weight. In return, you'll impact {projectName} governance and receive a choice governance NFT."
+msgstr "Stake {tokenName} ({tokenSymbolDisplayText}) tokens in exchange for voting weight. In return, you'll impact {projectName} governance and receive a choice governance NFT."
+
 #: src/components/ManageTokensModal.tsx
 msgid "Stake {tokensLabel} for NFT"
 msgstr "Stake {tokensLabel} for NFT"
+
+#: src/components/veNft/VeNftSummaryStatsSection.tsx
+msgid "Staking Summary:"
+msgstr "Staking Summary:"
 
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
@@ -3305,6 +3321,14 @@ msgstr ""
 msgid "Total raised"
 msgstr "Total raised"
 
+#: src/components/veNft/VeNftSummaryStatsSection.tsx
+msgid "Total staked period"
+msgstr "Total staked period"
+
+#: src/components/veNft/VeNftSummaryStatsSection.tsx
+msgid "Total staked {tokenSymbolDisplayText}"
+msgstr "Total staked {tokenSymbolDisplayText}"
+
 #: src/components/v1/V1Project/Rewards/index.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "Total supply"
@@ -3367,6 +3391,10 @@ msgstr "Unarchive project"
 #: src/components/AMMPrices/TokenAMMPriceRow.tsx
 msgid "Unavailable"
 msgstr "Unavailable"
+
+#: src/components/veNft/VeNftContent.tsx
+msgid "Unknown Project"
+msgstr "Unknown Project"
 
 #: src/components/ArchiveProject/index.tsx
 msgid "Unless payments are paused in your funding cycle settings, your project can still receive payments directly through the Juicebox protocol contracts."
@@ -3615,6 +3643,10 @@ msgstr "You don't have a funding cycle duration. Changes you make will take effe
 #: src/pages/projects/HoldingsProjects.tsx
 msgid "You don't hold tokens for any Juicebox project."
 msgstr "You don't hold tokens for any Juicebox project."
+
+#: src/components/veNft/VeNftOwnedTokensSection.tsx
+msgid "You don't own any veNFTs!"
+msgstr "You don't own any veNFTs!"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V1ProjectTokensSection/MigrateV1ProjectTokensModal/TokenSwapDescription.tsx
 msgid "You have <0>{0}</0> tokens on <1>Juicebox V1</1>. You can swap your <2>{1}</2> V1 tokens for V2 tokens"

@@ -2872,6 +2872,14 @@ msgstr "Spaces are not allowed"
 msgid "Spending"
 msgstr ""
 
+#: src/components/ManageTokensModal.tsx
+msgid "Stake your {tokensLabel} to increase your voting weight and claim Governance NFTs."
+msgstr "Stake your {tokensLabel} to increase your voting weight and claim Governance NFTs."
+
+#: src/components/ManageTokensModal.tsx
+msgid "Stake {tokensLabel} for NFT"
+msgstr "Stake {tokensLabel} for NFT"
+
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Start"

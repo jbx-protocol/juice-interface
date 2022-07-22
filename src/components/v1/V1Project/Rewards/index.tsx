@@ -211,6 +211,7 @@ export default function Rewards() {
         onCancel={() => setManageTokensModalVisible(false)}
         projectAllowsMint={projectAllowsMint}
         userHasMintPermission={userHasMintPermission}
+        veNftEnabled={false}
         hasOverflow={hasOverflow}
         tokenSymbol={tokenSymbol}
         tokenAddress={tokenAddress}

@@ -7,6 +7,8 @@ import { tokenSymbolText } from 'utils/tokenSymbolText'
 import * as constants from '@ethersproject/constants'
 import { reloadWindow } from 'utils/windowUtils'
 
+import { VeNftDrawer } from './veNft/VeNftDrawer'
+
 const BURN_DEFINITION_LINK =
   'https://www.investopedia.com/tech/cryptocurrency-burning-can-it-manage-inflation/'
 
@@ -54,6 +56,7 @@ export default function ManageTokensModal({
   visible,
   projectAllowsMint,
   userHasMintPermission,
+  veNftEnabled,
   hasOverflow,
   tokenSymbol,
   tokenAddress,
@@ -63,6 +66,7 @@ export default function ManageTokensModal({
 }: {
   userHasMintPermission: boolean
   projectAllowsMint: boolean
+  veNftEnabled: boolean
   onCancel?: VoidFunction
   visible?: boolean
   hasOverflow: boolean | undefined
@@ -76,6 +80,7 @@ export default function ManageTokensModal({
   const [redeemModalVisible, setRedeemModalVisible] = useState<boolean>(false)
   const [unstakeModalVisible, setUnstakeModalVisible] = useState<boolean>()
   const [mintModalVisible, setMintModalVisible] = useState<boolean>()
+  const [veNftDrawerVisible, setVeNftDrawerVisible] = useState<boolean>(false)
 
   const tokensLabel = tokenSymbolText({
     tokenSymbol: tokenSymbol,
@@ -168,6 +173,18 @@ export default function ManageTokensModal({
               />
             </Tooltip>
           )}
+          {veNftEnabled && (
+            <RichButton
+              heading={<Trans>Stake {tokensLabel} for NFT</Trans>}
+              description={
+                <Trans>
+                  Stake your {tokensLabel} to increase your voting weight and
+                  claim Governance NFTs.
+                </Trans>
+              }
+              onClick={() => setVeNftDrawerVisible(true)}
+            />
+          )}
         </Space>
       </Modal>
 
@@ -185,6 +202,12 @@ export default function ManageTokensModal({
         visible={mintModalVisible}
         onCancel={() => setMintModalVisible(false)}
         onConfirmed={reloadWindow}
+      />
+      <VeNftDrawer
+        visible={veNftDrawerVisible}
+        onClose={() => {
+          setVeNftDrawerVisible(false)
+        }}
       />
     </>
   )

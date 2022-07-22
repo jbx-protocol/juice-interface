@@ -13,6 +13,14 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#: src/components/veNft/VeNftConfirmStakeModal.tsx
+msgid "$ve{tokenSymbolDisplayText} NFT summary:"
+msgstr "$ve{tokenSymbolDisplayText} NFT summary:"
+
+#: src/components/veNft/VeNftConfirmStakeModal.tsx
+msgid "$ve{tokenSymbolDisplayText} Received"
+msgstr "$ve{tokenSymbolDisplayText} Received"
+
 #: src/components/formItems/ProjectDiscountRate.tsx
 msgid "({0}%)"
 msgstr "({0}%)"
@@ -593,6 +601,7 @@ msgstr "Balance of the project owner's wallet."
 
 #: src/components/v1/V1Project/V1DownloadPaymentsModal.tsx
 #: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
+#: src/components/veNft/VeNftConfirmStakeModal.tsx
 msgid "Beneficiary"
 msgstr "Beneficiary"
 
@@ -790,7 +799,7 @@ msgstr "Configure the dynamics of your project's token."
 msgid "Configure which Juicebox V1 project you'd like to accept tokens for. Token holders of this V1 project will be able to swap their V1 tokens for V2 tokens."
 msgstr "Configure which Juicebox V1 project you'd like to accept tokens for. Token holders of this V1 project will be able to swap their V1 tokens for V2 tokens."
 
-#: src/components/veNft/veNftConfirmStakeModal.tsx
+#: src/components/veNft/VeNftConfirmStakeModal.tsx
 msgid "Confirm Stake"
 msgstr "Confirm Stake"
 
@@ -1822,6 +1831,14 @@ msgstr ""
 msgid "Lock ${tokenSymbolDisplayText} for Voting Power"
 msgstr "Lock ${tokenSymbolDisplayText} for Voting Power"
 
+#: src/components/veNft/VeNftConfirmStakeModal.tsx
+msgid "Lock Duration"
+msgstr "Lock Duration"
+
+#: src/components/veNft/VeNftConfirmStakeModal.tsx
+msgid "Lock successful. Results will be indexed in a few moments."
+msgstr "Lock successful. Results will be indexed in a few moments."
+
 #: src/components/modals/ReservedTokenReceiverModal.tsx
 #: src/components/v1/shared/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
@@ -2001,6 +2018,10 @@ msgstr "No active funding cycle."
 #: src/components/v2/V2Project/ProjectActivity/index.tsx
 msgid "No activity yet"
 msgstr ""
+
+#: src/components/veNft/VeNftConfirmStakeModal.tsx
+msgid "No beneficiary selected. Is your wallet connected?"
+msgstr "No beneficiary selected. Is your wallet connected?"
 
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 msgid "No funding target: The project will control how all funds are distributed, and none can be redeemed by token holders."
@@ -2917,6 +2938,10 @@ msgstr "Stake {tokenName} ({tokenSymbolDisplayText}) tokens in exchange for voti
 msgid "Stake {tokensLabel} for NFT"
 msgstr "Stake {tokensLabel} for NFT"
 
+#: src/components/veNft/VeNftConfirmStakeModal.tsx
+msgid "Staked {tokenSymbolDisplayText}"
+msgstr "Staked {tokenSymbolDisplayText}"
+
 #: src/components/veNft/VeNftSummaryStatsSection.tsx
 msgid "Staking Summary:"
 msgstr "Staking Summary:"
@@ -2951,6 +2976,10 @@ msgstr "Step 1. Add V1 token payment terminal"
 #: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/SetV1ProjectSection.tsx
 msgid "Step 2. Link your Juicebox V1 project"
 msgstr "Step 2. Link your Juicebox V1 project"
+
+#: src/components/veNft/VeNftStakingForm.tsx
+msgid "Successfully approved ERC-20 spending."
+msgstr "Successfully approved ERC-20 spending."
 
 #: src/components/v1/shared/PayoutModsList.tsx
 msgid "Sum of percentages cannot exceed 100%"
@@ -3660,6 +3689,10 @@ msgstr "Would you like to issue an ERC-20 token to be used as this project's tok
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 msgid "Yes"
 msgstr "Yes"
+
+#: src/components/veNft/VeNftConfirmStakeModal.tsx
+msgid "You are agreeing to IRREVOCABLY lock your tokens for {formattedLockDuration} in exchange for {votingPower} $ve{tokenSymbolDisplayText}"
+msgstr "You are agreeing to IRREVOCABLY lock your tokens for {formattedLockDuration} in exchange for {votingPower} $ve{tokenSymbolDisplayText}"
 
 #: src/components/forms/ProjectDetailsForm.tsx
 msgid "You can edit your project details after creation at any time, but the transaction will cost gas."

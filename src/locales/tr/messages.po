@@ -18,6 +18,14 @@ msgstr ""
 "X-Crowdin-File: messages.po\n"
 "X-Crowdin-File-ID: 9\n"
 
+#: src/components/veNft/VeNftConfirmStakeModal.tsx
+msgid "$ve{tokenSymbolDisplayText} NFT summary:"
+msgstr ""
+
+#: src/components/veNft/VeNftConfirmStakeModal.tsx
+msgid "$ve{tokenSymbolDisplayText} Received"
+msgstr ""
+
 #: src/components/formItems/ProjectDiscountRate.tsx
 msgid "({0}%)"
 msgstr "(%{0})"
@@ -598,6 +606,7 @@ msgstr "Proje sahibinin cüzdan bakiyesi."
 
 #: src/components/v1/V1Project/V1DownloadPaymentsModal.tsx
 #: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
+#: src/components/veNft/VeNftConfirmStakeModal.tsx
 msgid "Beneficiary"
 msgstr "Faydalanıcı"
 
@@ -795,7 +804,7 @@ msgstr "Proje token'ınızın dinamiklerini yapılandırın."
 msgid "Configure which Juicebox V1 project you'd like to accept tokens for. Token holders of this V1 project will be able to swap their V1 tokens for V2 tokens."
 msgstr ""
 
-#: src/components/veNft/veNftConfirmStakeModal.tsx
+#: src/components/veNft/VeNftConfirmStakeModal.tsx
 msgid "Confirm Stake"
 msgstr ""
 
@@ -1827,6 +1836,14 @@ msgstr "Daha fazla yükle"
 msgid "Lock ${tokenSymbolDisplayText} for Voting Power"
 msgstr ""
 
+#: src/components/veNft/VeNftConfirmStakeModal.tsx
+msgid "Lock Duration"
+msgstr ""
+
+#: src/components/veNft/VeNftConfirmStakeModal.tsx
+msgid "Lock successful. Results will be indexed in a few moments."
+msgstr ""
+
 #: src/components/modals/ReservedTokenReceiverModal.tsx
 #: src/components/v1/shared/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
@@ -2006,6 +2023,10 @@ msgstr "Aktif finansman döngüsü yok."
 #: src/components/v2/V2Project/ProjectActivity/index.tsx
 msgid "No activity yet"
 msgstr "Henüz etkinlik yok"
+
+#: src/components/veNft/VeNftConfirmStakeModal.tsx
+msgid "No beneficiary selected. Is your wallet connected?"
+msgstr ""
 
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 msgid "No funding target: The project will control how all funds are distributed, and none can be redeemed by token holders."
@@ -2922,6 +2943,10 @@ msgstr ""
 msgid "Stake {tokensLabel} for NFT"
 msgstr ""
 
+#: src/components/veNft/VeNftConfirmStakeModal.tsx
+msgid "Staked {tokenSymbolDisplayText}"
+msgstr ""
+
 #: src/components/veNft/VeNftSummaryStatsSection.tsx
 msgid "Staking Summary:"
 msgstr ""
@@ -2955,6 +2980,10 @@ msgstr ""
 
 #: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/SetV1ProjectSection.tsx
 msgid "Step 2. Link your Juicebox V1 project"
+msgstr ""
+
+#: src/components/veNft/VeNftStakingForm.tsx
+msgid "Successfully approved ERC-20 spending."
 msgstr ""
 
 #: src/components/v1/shared/PayoutModsList.tsx
@@ -3665,6 +3694,10 @@ msgstr "Bu projenin token'ı olarak kullanılmak üzere bir ERC-20 token'ı çı
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 msgid "Yes"
 msgstr "Evet"
+
+#: src/components/veNft/VeNftConfirmStakeModal.tsx
+msgid "You are agreeing to IRREVOCABLY lock your tokens for {formattedLockDuration} in exchange for {votingPower} $ve{tokenSymbolDisplayText}"
+msgstr ""
 
 #: src/components/forms/ProjectDetailsForm.tsx
 msgid "You can edit your project details after creation at any time, but the transaction will cost gas."

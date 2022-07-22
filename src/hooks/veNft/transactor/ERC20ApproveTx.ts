@@ -12,7 +12,7 @@ export type ERC20ApproveArgs = {
 }
 
 export default function useERC20Approve(
-  erc20address: string,
+  erc20address: string | undefined,
 ): TransactorInstance<ERC20ApproveArgs> {
   const { transactor } = useContext(V2UserContext)
   const contract = useErc20Contract(erc20address)

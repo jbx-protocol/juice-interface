@@ -315,8 +315,8 @@ msgstr "DISPONIBLE"
 msgid "Activity"
 msgstr "Activité"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftRewardTierModal.tsx
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftRewardTierModal.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
 msgid "Add NFT reward"
 msgstr ""
 
@@ -354,7 +354,7 @@ msgstr "Ajouter un nouveau paiement"
 msgid "Add payout"
 msgstr "Ajouter un paiement"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/index.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
 msgid "Add reward tier"
 msgstr ""
 
@@ -499,7 +499,7 @@ msgid "Amount paid"
 msgstr "Somme payée"
 
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/ContributionFloorFormItem.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/ContributionFloorFormItem.tsx
 msgid "Amount required"
 msgstr ""
 
@@ -549,7 +549,7 @@ msgstr "Actifs"
 msgid "Attach a sticker"
 msgstr "Ajouter un autocollant"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftUpload.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftUpload.tsx
 msgid "Attach the image to be associated with this NFT."
 msgstr ""
 
@@ -849,7 +849,7 @@ msgstr "Portefeuille connecté non autorisé"
 msgid "Contract address: {0}"
 msgstr "Adresse du contrat : {0}"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/ContributionFloorFormItem.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/ContributionFloorFormItem.tsx
 msgid "Contribution threshold"
 msgstr ""
 
@@ -860,7 +860,7 @@ msgstr ""
 msgid "Contributor rate"
 msgstr ""
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/ContributionFloorFormItem.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/ContributionFloorFormItem.tsx
 msgid "Contributors receive the NFT when they contribute at least this amount."
 msgstr ""
 
@@ -1001,7 +1001,7 @@ msgstr "Date créée"
 msgid "Days"
 msgstr "Jours"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftRewardTierCard.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierCard.tsx
 msgid "Delete NFT"
 msgstr ""
 
@@ -1043,7 +1043,7 @@ msgstr "Token ERC20 déployé"
 msgid "Deposit 1 wei to @{handle}"
 msgstr "Déposez 1 wei pour @{handle}"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftRewardTierModal.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
 msgid "Description"
 msgstr ""
 
@@ -1312,7 +1312,7 @@ msgstr "Chaque paiement recevra son pourcentage de ce total à chaque cycle de f
 msgid "Each project has its own <0>ERC-20 tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
 msgstr "Chaque projet a ses propres <0>tokens ERC-20</0>. Tous ceux qui financent un projet reçoivent en retour les tokens de ce projet. Les soldes de jetons seront suivis par le protocole jusqu'à ce que les jetons ERC-20 soient éventuellement émis par le propriétaire du projet."
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftRewardTierModal.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
 msgid "Edit NFT reward"
 msgstr ""
 
@@ -1503,7 +1503,7 @@ msgstr "Général"
 msgid "Give feedback"
 msgstr "Donner un feedback"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftRewardTierModal.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
 msgid "Give this NFT a name."
 msgstr ""
 
@@ -1644,7 +1644,7 @@ msgstr "Si vous souhaitez créer un projet, mais que vous ne savez toujours pas 
 msgid "If you're unsure if you need to claim, you probably don't."
 msgstr "Si vous n'êtes pas sûr de pouvoir le réclamer, probablement vous ne pouvez pas."
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftUpload.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftUpload.tsx
 msgid "Image file"
 msgstr ""
 
@@ -1935,7 +1935,7 @@ msgstr ""
 msgid "NFT reward"
 msgstr ""
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/index.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
 #: src/pages/create/tabs/FundingCycleTab/FundingCycleTabContent.tsx
 #: src/pages/create/tabs/ReviewDeployTab/NftSummarySection.tsx
 msgid "NFT rewards"
@@ -1946,7 +1946,7 @@ msgstr ""
 msgid "NO LIMIT"
 msgstr "AUCUNE LIMITE"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftRewardTierModal.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
 #: src/pages/create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 msgid "Name"
@@ -2444,7 +2444,7 @@ msgstr "Les projets utilisant un taux réservé de {reservedRateRiskyMin}% ou pl
 msgid "Projects with a handle:<0/><1/>1. Are included in search results on the projects page<2/>2. Can be accessed via the URL: <3>juicebox.money{0}</3><4/><5/>(The original URL <6>juicebox.money{1}</6> will continue to work.)"
 msgstr ""
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftRewardTierModal.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
 msgid "Provide a link to additional information about this NFT."
 msgstr ""
 
@@ -2684,7 +2684,7 @@ msgstr "Réviser le projet"
 msgid "Reward contributors with NFT's."
 msgstr ""
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/index.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
 msgid "Reward contributors with NFTs when they meet your configured funding criteria."
 msgstr ""
 
@@ -2717,11 +2717,11 @@ msgstr "Règles pour déterminer comment les cycles de financement peuvent être
 msgid "Save"
 msgstr "Sauvegarder"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftRewardTierModal.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
 msgid "Save NFT reward"
 msgstr ""
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/index.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
 msgid "Save NFT rewards"
 msgstr ""
 
@@ -3394,7 +3394,7 @@ msgstr "Les mises à jour que vous apportez à cette section ne seront appliqué
 msgid "Upload"
 msgstr "Importer"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftUpload.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftUpload.tsx
 msgid "Upload an image"
 msgstr ""
 
@@ -3466,7 +3466,7 @@ msgid "Wallet address"
 msgstr "Adresse du portefeuille"
 
 #: src/components/formItems/ProjectLink.tsx
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NFTDrawer/NftRewardTierModal.tsx
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
 #: src/pages/create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 msgid "Website"

@@ -243,6 +243,9 @@ textarea.ant-input::placeholder {
 
 .ant-upload {
   color: var(--text-primary);
+}
+
+.ant-upload-select-picture-card .ant-upload {
   min-height: 101px;
 }
 

@@ -2,9 +2,11 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { V2BallotState } from 'models/ballot'
 import { CV } from 'models/cv'
 import { ProjectMetadataV4 } from 'models/project-metadata'
+import { VeNftToken } from 'models/subgraph-entities/v2/venft-token'
 import { V2FundingCycle, V2FundingCycleMetadata } from 'models/v2/fundingCycle'
 import { NftRewardTier } from 'models/v2/nftRewardTier'
 import { Split } from 'models/v2/splits'
+import { VeNftVariant } from 'models/v2/veNftVariant'
 import { createContext } from 'react'
 
 type V2ProjectLoadingStates = {
@@ -54,6 +56,15 @@ export type V2ProjectContextType = {
     loading: boolean | undefined
   }
 
+  veNft: {
+    name: string | undefined
+    lockDurationOptions: BigNumber | undefined
+    baseImagesHash: string | undefined
+    resolverAddress: string | undefined
+    variants: VeNftVariant[] | undefined
+    userTokens: VeNftToken[] | undefined
+  }
+
   loading: V2ProjectLoadingStates
 }
 
@@ -94,6 +105,15 @@ export const V2ProjectContext = createContext<V2ProjectContextType>({
     CIDs: undefined,
     rewardTiers: undefined,
     loading: undefined,
+  },
+
+  veNft: {
+    name: undefined,
+    lockDurationOptions: undefined,
+    baseImagesHash: undefined,
+    resolverAddress: undefined,
+    variants: undefined,
+    userTokens: undefined,
   },
 
   loading: {

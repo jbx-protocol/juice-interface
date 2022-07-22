@@ -2877,6 +2877,14 @@ msgstr ""
 msgid "Spending"
 msgstr "资金分配"
 
+#: src/components/ManageTokensModal.tsx
+msgid "Stake your {tokensLabel} to increase your voting weight and claim Governance NFTs."
+msgstr ""
+
+#: src/components/ManageTokensModal.tsx
+msgid "Stake {tokensLabel} for NFT"
+msgstr ""
+
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Start"

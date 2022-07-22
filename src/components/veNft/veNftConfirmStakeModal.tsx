@@ -1,49 +1,44 @@
 import { t, Trans } from '@lingui/macro'
-import { Col, Divider, Modal, Row, Image } from 'antd'
+import { Col, Modal, Row, Image, Descriptions } from 'antd'
+import Callout from 'components/Callout'
 import FormattedAddress from 'components/FormattedAddress'
 
 import { NetworkContext } from 'contexts/networkContext'
-import { ThemeContext } from 'contexts/themeContext'
-import { useLockTx } from 'hooks/veNft/transactor/LockTx'
+import { useLockTx } from 'hooks/veNft/transactor/VeNftLockTx'
 
 import { useContext, useState } from 'react'
 import { formattedNum, parseWad } from 'utils/formatNumber'
 
 import { detailedTimeString } from 'utils/formatTime'
-import { emitSuccessNotification } from 'utils/notifications'
+import {
+  emitErrorNotification,
+  emitSuccessNotification,
+} from 'utils/notifications'
 
 type ConfirmStakeModalProps = {
   visible: boolean
-  tokenSymbol: string
+  tokenSymbolDisplayText: string
   tokensStaked: number
   votingPower: number
   lockDuration: number
   beneficiary: string
-  maxLockDuration: number
-  //eslint-disable-next-line @typescript-eslint/no-explicit-any
-  tokenMetadata: any
   onCancel: VoidFunction
   onCompleted: VoidFunction
 }
 
 export default function ConfirmStakeModal({
   visible,
-  tokenSymbol,
+  tokenSymbolDisplayText,
   tokensStaked,
   votingPower,
   lockDuration,
   beneficiary,
-  maxLockDuration,
-  tokenMetadata,
   onCancel,
   onCompleted,
 }: ConfirmStakeModalProps) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   const { userAddress, onSelectWallet } = useContext(NetworkContext)
   const [loading, setLoading] = useState(false)
-  const recipient = beneficiary !== '' ? beneficiary : userAddress!
+  const recipient = beneficiary !== '' ? beneficiary : userAddress
 
   const tokensStakedInWad = parseWad(tokensStaked)
 
@@ -51,14 +46,17 @@ export default function ConfirmStakeModal({
     timeSeconds: lockDuration,
     fullWords: true,
   })
-  const formattedMaxLockDuration = detailedTimeString({
-    timeSeconds: maxLockDuration,
-    fullWords: true,
-  })
 
   const lockTx = useLockTx()
 
   async function lock() {
+    if (!recipient) {
+      emitErrorNotification(
+        t`No beneficiary selected. Is your wallet connected?`,
+      )
+      return
+    }
+
     // Prompt wallet connect if no wallet connected
     if (!userAddress && onSelectWallet) {
       onSelectWallet()
@@ -96,59 +94,49 @@ export default function ConfirmStakeModal({
       visible={visible}
       onCancel={onCancel}
       onOk={lock}
-      okText={`Lock $${tokenSymbol}`}
+      okText={`Lock $${tokenSymbolDisplayText}`}
       confirmLoading={loading}
     >
       <h2>
         <Trans>Confirm Stake</Trans>
       </h2>
-      <div style={{ color: colors.text.secondary, textAlign: 'center' }}>
-        <p>
-          {votingPower} = {tokensStaked} ${tokenSymbol} * ({' '}
-          {formattedLockDuration} / {formattedMaxLockDuration} )
-        </p>
-      </div>
-      <h4>
+      <Callout>
         <Trans>
           You are agreeing to IRREVOCABLY lock your tokens for{' '}
-          {formattedLockDuration} in exchange for {votingPower} $ve{tokenSymbol}
+          {formattedLockDuration} in exchange for {votingPower} $ve
+          {tokenSymbolDisplayText}
         </Trans>
-      </h4>
-      <Divider />
-      <h4>
-        <Trans>$ve{tokenSymbol} NFT summary:</Trans>
-      </h4>
+      </Callout>
       <Row>
         <Col span={14}>
-          <Row align="top" gutter={0}>
-            <Col span={12}>
-              <p>
-                <Trans>Staked ${tokenSymbol}:</Trans>
-              </p>
-              <p>
-                <Trans>Lock Duration:</Trans>
-              </p>
-              <p>
-                <Trans>$ve{tokenSymbol} Received:</Trans>
-              </p>
-              <p>
-                <Trans>Beneficiary:</Trans>
-              </p>
-            </Col>
-            <Col span={12}>
-              <p>{formattedNum(tokensStaked)}</p>
-              <p>{formattedLockDuration}</p>
-              <p>{formattedNum(votingPower)}</p>
+          <Descriptions
+            title={
+              <h3>
+                <Trans>$ve{tokenSymbolDisplayText} NFT summary:</Trans>
+              </h3>
+            }
+            column={1}
+          >
+            <Descriptions.Item label={t`Staked ${tokenSymbolDisplayText}`}>
+              {formattedNum(tokensStaked)}
+            </Descriptions.Item>
+            <Descriptions.Item label={t`Lock Duration`}>
+              {formattedLockDuration}
+            </Descriptions.Item>
+            <Descriptions.Item label={t`$ve${tokenSymbolDisplayText} Received`}>
+              {formattedNum(votingPower, { precision: 2 })}
+            </Descriptions.Item>
+            <Descriptions.Item label={t`Beneficiary`}>
               <FormattedAddress address={recipient} />
-            </Col>
-          </Row>
+            </Descriptions.Item>
+          </Descriptions>
         </Col>
         <Col span={4} />
         <Col span={6}>
           <Image
-            src={tokenMetadata && tokenMetadata.thumbnailUri}
+            src={``} //TODO: add image
             preview={false}
-          ></Image>
+          />
         </Col>
       </Row>
     </Modal>

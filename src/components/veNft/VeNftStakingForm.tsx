@@ -15,9 +15,9 @@ import LockDurationSelectInput from 'components/veNft/formControls/LockDurationS
 import CustomBeneficiaryInput from 'components/veNft/formControls/CustomBeneficiaryInput'
 import StakingFormActionButton from 'components/veNft/formControls/StakingFormActionButton'
 import VotingPowerDisplayInput from 'components/veNft/formControls/VotingPowerDisplayInput'
-import VeNftCarousel from 'components/veNft/veNftCarousel'
+import VeNftCarousel from 'components/veNft/VeNftCarousel'
 import StakingTokenRangesModal from 'components/veNft/veNftStakingTokenRangesModal'
-import ConfirmStakeModal from 'components/veNft/veNftConfirmStakeModal'
+import ConfirmStakeModal from 'components/veNft/VeNftConfirmStakeModal'
 
 import Callout from 'components/Callout'
 
@@ -50,6 +50,7 @@ const VeNftStakingForm = ({
 
   const tokensStaked = useWatch('tokensStaked', form) || '1'
   const lockDuration = useWatch('lockDuration', form) || 0
+  const beneficiary = useWatch('beneficiary', form) || ''
 
   const lockDurationOptionsInSeconds = useMemo(() => {
     return lockDurationOptions
@@ -145,8 +146,13 @@ const VeNftStakingForm = ({
       />
       <ConfirmStakeModal
         visible={confirmStakeModalVisible}
-        onCancel={() => setConfirmStakeModalVisible(false)}
         tokenSymbolDisplayText={tokenSymbolDisplayText}
+        tokensStaked={parseInt(tokensStaked)}
+        lockDuration={lockDuration}
+        beneficiary={beneficiary}
+        votingPower={votingPower}
+        onCancel={() => setConfirmStakeModalVisible(false)}
+        onCompleted={() => setConfirmStakeModalVisible(false)}
       />
     </>
   )

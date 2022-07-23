@@ -310,6 +310,10 @@ msgstr "对之后筹款周期的重新配置，至少得提前七天提交。"
 msgid "A reserved rate of more than 90% is risky for contributors. Contributors won't receive many tokens for their contribution."
 msgstr "代币保留率超过90%对捐款人是有风险的。捐款人能获得的代币数量不多。"
 
+#: src/components/veNft/VeNftOwnedTokenCard.tsx
+msgid "A veNft can only be redeemed if the project currently has overflow."
+msgstr ""
+
 #: src/components/ProjectCard.tsx
 msgid "ARCHIVED"
 msgstr "已存档"
@@ -1330,6 +1334,10 @@ msgstr "部署 ERC-20 标准代币"
 msgid "ETH-ERC20 Address Created"
 msgstr ""
 
+#: src/components/veNft/VeNftOwnedTokenCard.tsx
+msgid "EXTEND LOCK"
+msgstr ""
+
 #: src/components/v2/shared/DistributionSplitsSection/SpecificLimitModal.tsx
 msgid "Each payout will receive their percent of this total each funding cycle if there is enough in the treasury. Otherwise, they will receive their percent of whatever is in the treasury."
 msgstr "如果金库资金足够，每个支出对象将在每个筹款周期收到自己在这个总额里的对应份额。否则，他们将按各自的占比来分配金库剩余的资金。"
@@ -1428,6 +1436,11 @@ msgstr ""
 #: src/pages/index.page.tsx
 msgid "Explore projects"
 msgstr "探索项目"
+
+#: src/components/veNft/VeNftExtendLockModal.tsx
+#: src/components/veNft/VeNftExtendLockModal.tsx
+msgid "Extend Lock"
+msgstr ""
 
 #: src/components/Navbar/MenuItems.tsx
 msgid "FAQ"
@@ -2502,6 +2515,11 @@ msgstr ""
 msgid "Provide a link to additional information about this NFT."
 msgstr ""
 
+#: src/components/veNft/VeNftOwnedTokenCard.tsx
+#: src/components/veNft/VeNftOwnedTokenCard.tsx
+msgid "REDEEM"
+msgstr ""
+
 #: src/pages/home/StatsSection.tsx
 msgid "Raised on Juicebox"
 msgstr ""
@@ -2610,6 +2628,14 @@ msgstr "重新配置之后的筹款"
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure upcoming funding cycles"
 msgstr "重新配置以后的筹款周期"
+
+#: src/components/veNft/VeNftRedeemModal.tsx
+msgid "Redeem"
+msgstr ""
+
+#: src/components/veNft/VeNftRedeemModal.tsx
+msgid "Redeem Token"
+msgstr ""
 
 #: src/components/ManageTokensModal.tsx
 msgid "Redeem your {tokensLabel} for a portion of the project's overflow. Any {tokensLabel} you redeem will be burned."
@@ -2939,6 +2965,10 @@ msgstr ""
 msgid "Spending"
 msgstr "资金分配"
 
+#: src/components/veNft/VeNftOwnedTokenCard.tsx
+msgid "Stake duration:"
+msgstr ""
+
 #: src/components/ManageTokensModal.tsx
 msgid "Stake your {tokensLabel} to increase your voting weight and claim Governance NFTs."
 msgstr ""
@@ -2949,6 +2979,10 @@ msgstr ""
 
 #: src/components/ManageTokensModal.tsx
 msgid "Stake {tokensLabel} for NFT"
+msgstr ""
+
+#: src/components/veNft/VeNftOwnedTokenCard.tsx
+msgid "Staked ${tokenSymbolDisplayText}:"
 msgstr ""
 
 #: src/components/veNft/VeNftConfirmStakeModal.tsx
@@ -3240,6 +3274,10 @@ msgstr "这将删除你所有的更改。"
 msgid "This will reset the data for your new project. All changes will be lost."
 msgstr ""
 
+#: src/components/veNft/VeNftOwnedTokenCard.tsx
+msgid "Time remaining:"
+msgstr ""
+
 #: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupSection.tsx
 msgid "To do so, you need to give your V1 token holders the ability to exchange their V1 tokens for V2 tokens. Select <0>Set up token migration</0> below to get started."
 msgstr ""
@@ -3450,6 +3488,10 @@ msgstr "Twitter"
 msgid "Twitter handle"
 msgstr "推特名"
 
+#: src/components/veNft/VeNftOwnedTokenCard.tsx
+msgid "UNLOCK"
+msgstr ""
+
 #: src/components/ArchiveProject/index.tsx
 #: src/components/ArchiveProject/index.tsx
 msgid "Unarchive project"
@@ -3466,6 +3508,14 @@ msgstr ""
 #: src/components/ArchiveProject/index.tsx
 msgid "Unless payments are paused in your funding cycle settings, your project can still receive payments directly through the Juicebox protocol contracts."
 msgstr "除非在项目筹款周期设置中将付款暂停，否则项目仍能通过 Juicebox 协议的合约直接收到付款。"
+
+#: src/components/veNft/VeNftUnlockModal.tsx
+msgid "Unlock"
+msgstr ""
+
+#: src/components/veNft/VeNftUnlockModal.tsx
+msgid "Unlock Token"
+msgstr ""
 
 #: src/components/v2/shared/UnsavedChangesModal.tsx
 msgid "Unsaved changes"
@@ -3882,6 +3932,11 @@ msgstr "计算 {0}% JBX 费用之后"
 msgid "called by <0/>"
 msgstr "由 <0/> 调用"
 
+#: src/components/veNft/VeNftSummaryStatsSection.tsx
+msgid "day"
+msgstr ""
+
+#: src/components/veNft/VeNftSummaryStatsSection.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 #: src/utils/formatTime.ts
 msgid "days"
@@ -4141,6 +4196,10 @@ msgstr "{tokensText} 已保留"
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "{tokensTokenUpper} amount"
 msgstr "{tokensTokenUpper} 数量"
+
+#: src/components/veNft/VeNftSummaryStatsSection.tsx
+msgid "{totalStakedPeriodInDays, plural, one {{0}} other {{1}}}"
+msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "{unclaimedBalanceFormatted} {tokenText} claimable"

@@ -37,12 +37,10 @@ import { CIDsOfNftRewardTiersResponse } from 'utils/v2/nftRewards'
 import useNameOfERC20 from 'hooks/NameOfERC20'
 
 import { useVeNftLockDurationOptions } from 'hooks/veNft/VeNftLockDurationOptions'
-
 import { useVeNftBaseImagesHash } from 'hooks/veNft/VeNftBaseImagesHash'
-
 import { useVeNftVariants } from 'hooks/veNft/VeNftVariants'
-
 import { useVeNftResolverAddress } from 'hooks/veNft/VeNftResolverAddress'
+import { useVeNftUserTokens } from 'hooks/veNft/VeNftUserTokens'
 
 import {
   ETH_PAYOUT_SPLIT_GROUP,
@@ -191,6 +189,7 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
   const { data: lockDurationOptions } = useVeNftLockDurationOptions()
   const { data: resolverAddress } = useVeNftResolverAddress()
   const { data: variants } = useVeNftVariants()
+  const { data: userTokens } = useVeNftUserTokens()
   const baseImagesHash = useVeNftBaseImagesHash()
 
   const isArchived = projectId
@@ -244,11 +243,11 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
 
     veNft: {
       name: veNftProjectName,
-      lockDurationOptions: lockDurationOptions,
-      baseImagesHash: baseImagesHash,
-      resolverAddress: resolverAddress,
-      variants: variants,
-      userTokens: undefined,
+      lockDurationOptions,
+      baseImagesHash,
+      resolverAddress,
+      variants,
+      userTokens,
     },
 
     loading: {

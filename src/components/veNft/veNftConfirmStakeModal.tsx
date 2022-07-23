@@ -5,6 +5,7 @@ import FormattedAddress from 'components/FormattedAddress'
 
 import { NetworkContext } from 'contexts/networkContext'
 import { useLockTx } from 'hooks/veNft/transactor/VeNftLockTx'
+import { VeNftTokenMetadata } from 'models/v2/veNft'
 
 import { useContext, useState } from 'react'
 import { formattedNum, parseWad } from 'utils/formatNumber'
@@ -22,6 +23,7 @@ type ConfirmStakeModalProps = {
   votingPower: number
   lockDuration: number
   beneficiary: string
+  tokenMetadata: VeNftTokenMetadata | undefined
   onCancel: VoidFunction
   onCompleted: VoidFunction
 }
@@ -33,6 +35,7 @@ export default function ConfirmStakeModal({
   votingPower,
   lockDuration,
   beneficiary,
+  tokenMetadata,
   onCancel,
   onCompleted,
 }: ConfirmStakeModalProps) {
@@ -134,7 +137,7 @@ export default function ConfirmStakeModal({
         <Col span={4} />
         <Col span={6}>
           <Image
-            src={``} //TODO: add image
+            src={tokenMetadata ? tokenMetadata.thumbnailUri : ''}
             preview={false}
           />
         </Col>

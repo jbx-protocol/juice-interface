@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { VeNftVariant } from 'models/v2/veNftVariant'
+import { VeNftVariant } from 'models/v2/veNft'
 import { useQuery } from 'react-query'
 import { ipfsCidUrl } from 'utils/ipfs'
 

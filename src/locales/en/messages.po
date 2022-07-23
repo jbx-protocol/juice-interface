@@ -723,7 +723,7 @@ msgstr "Changes will take effect according to the project's custom ballot contra
 msgid "Changes you make will take effect according to your <0>{0}</0> reconfiguration rule (the first funding cycle following <1>{1}</1> from now)."
 msgstr "Changes you make will take effect according to your <0>{0}</0> reconfiguration rule (the first funding cycle following <1>{1}</1> from now)."
 
-#: src/components/veNft/veNftStakingTokenRangesModal.tsx
+#: src/components/veNft/VeNftStakingTokenRangesModal.tsx
 msgid "Character"
 msgstr "Character"
 
@@ -2501,7 +2501,7 @@ msgstr "Provide a link to additional information about this NFT."
 msgid "Raised on Juicebox"
 msgstr "Raised on Juicebox"
 
-#: src/components/veNft/veNftStakingTokenRangesModal.tsx
+#: src/components/veNft/VeNftStakingTokenRangesModal.tsx
 msgid "Range"
 msgstr "Range"
 
@@ -4101,6 +4101,10 @@ msgstr "{paymentCount, plural, one {# payment} other {# payments}}"
 msgid "{reservedRate} {tokenSymbolPlural}/ETH ({0}%)"
 msgstr "{reservedRate} {tokenSymbolPlural}/ETH ({0}%)"
 
+#: src/components/veNft/VeNftStakingTokenRangesModal.tsx
+msgid "{tokenSymbolDisplayText} range"
+msgstr "{tokenSymbolDisplayText} range"
+
 #: src/components/veNft/formControls/TokensStakedInput.tsx
 msgid "{tokenSymbolDisplayText} to lock"
 msgstr "{tokenSymbolDisplayText} to lock"
@@ -4112,10 +4116,6 @@ msgstr "{tokenSymbolPluralCap} received per ETH paid to the treasury. This can c
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "{tokenSymbol} ERC-20 address"
 msgstr "{tokenSymbol} ERC-20 address"
-
-#: src/components/veNft/veNftStakingTokenRangesModal.tsx
-msgid "{tokenSymbol} range"
-msgstr "{tokenSymbol} range"
 
 #: src/components/AMMPrices/TokenAMMPriceRow.tsx
 msgid "{tokenSymbol}/ETH exchange rate on {exchangeName}."

@@ -728,7 +728,7 @@ msgstr "Изменения вступят в силу в соответстви�
 msgid "Changes you make will take effect according to your <0>{0}</0> reconfiguration rule (the first funding cycle following <1>{1}</1> from now)."
 msgstr ""
 
-#: src/components/veNft/veNftStakingTokenRangesModal.tsx
+#: src/components/veNft/VeNftStakingTokenRangesModal.tsx
 msgid "Character"
 msgstr ""
 
@@ -2506,7 +2506,7 @@ msgstr ""
 msgid "Raised on Juicebox"
 msgstr ""
 
-#: src/components/veNft/veNftStakingTokenRangesModal.tsx
+#: src/components/veNft/VeNftStakingTokenRangesModal.tsx
 msgid "Range"
 msgstr ""
 
@@ -4106,6 +4106,10 @@ msgstr "{paymentCount, plural, one {# платеж} other {# платежи}}"
 msgid "{reservedRate} {tokenSymbolPlural}/ETH ({0}%)"
 msgstr ""
 
+#: src/components/veNft/VeNftStakingTokenRangesModal.tsx
+msgid "{tokenSymbolDisplayText} range"
+msgstr ""
+
 #: src/components/veNft/formControls/TokensStakedInput.tsx
 msgid "{tokenSymbolDisplayText} to lock"
 msgstr ""
@@ -4117,10 +4121,6 @@ msgstr ""
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "{tokenSymbol} ERC-20 address"
 msgstr "{tokenSymbol} ERC20 адрес"
-
-#: src/components/veNft/veNftStakingTokenRangesModal.tsx
-msgid "{tokenSymbol} range"
-msgstr ""
 
 #: src/components/AMMPrices/TokenAMMPriceRow.tsx
 msgid "{tokenSymbol}/ETH exchange rate on {exchangeName}."

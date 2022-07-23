@@ -28,6 +28,10 @@ import { parseWad } from 'utils/formatNumber'
 
 import { emitSuccessNotification } from 'utils/notifications'
 
+import { useVeNftTokenMetadata } from 'hooks/veNft/VeNftTokenMetadata'
+
+import { useVeNftResolverTokenUri } from 'hooks/veNft/VeNftResolverTokenUri'
+
 import { shadowCard } from 'constants/styles/shadowCard'
 import { VENFT_CONTRACT_ADDRESS } from 'constants/veNft/veNftProject'
 
@@ -47,7 +51,7 @@ const VeNftStakingForm = ({
   const { userAddress, onSelectWallet } = useContext(NetworkContext)
   const {
     tokenAddress,
-    veNft: { lockDurationOptions },
+    veNft: { lockDurationOptions, resolverAddress, baseImagesHash, variants },
   } = useContext(V2ProjectContext)
   const { theme } = useContext(ThemeContext)
 
@@ -61,6 +65,14 @@ const VeNftStakingForm = ({
   const tokensStaked = useWatch('tokensStaked', form) || '1'
   const lockDuration = useWatch('lockDuration', form) || 0
   const beneficiary = useWatch('beneficiary', form) || ''
+
+  const { data: nftTokenUri } = useVeNftResolverTokenUri(
+    resolverAddress,
+    parseWad(tokensStaked),
+    lockDuration,
+    lockDurationOptions,
+  )
+  const { data: tokenMetadata, refetch } = useVeNftTokenMetadata(nftTokenUri)
 
   const lockDurationOptionsInSeconds = useMemo(() => {
     return lockDurationOptions
@@ -119,7 +131,7 @@ const VeNftStakingForm = ({
 
   const handleReviewButtonClick = async () => {
     await form.validateFields()
-    // refetch()
+    refetch()
     setConfirmStakeModalVisible(true)
   }
 
@@ -173,7 +185,15 @@ const VeNftStakingForm = ({
             </Col>
           </Row>
           <CustomBeneficiaryInput form={form} />
-          <VeNftCarousel />
+          {variants && baseImagesHash && (
+            <VeNftCarousel
+              tokensStaked={tokensStaked}
+              baseImagesHash={baseImagesHash}
+              variants={variants}
+              form={form}
+              tokenMetadata={tokenMetadata}
+            />
+          )}
           <Space size="middle" direction="vertical" style={{ width: '100%' }}>
             <Button block onClick={() => setTokenRangesModalVisible(true)}>
               <Trans>View Token Ranges</Trans>
@@ -199,6 +219,7 @@ const VeNftStakingForm = ({
         lockDuration={lockDuration}
         beneficiary={beneficiary}
         votingPower={votingPower}
+        tokenMetadata={tokenMetadata}
         onCancel={() => setConfirmStakeModalVisible(false)}
         onCompleted={() => setConfirmStakeModalVisible(false)}
       />

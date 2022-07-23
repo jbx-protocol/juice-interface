@@ -1,4 +1,4 @@
-import { VeNftVariant } from 'models/v2/veNftVariant'
+import { VeNftVariant } from 'models/v2/veNft'
 
 export const getVeNftBaseImage = (
   baseImagesHash: string,

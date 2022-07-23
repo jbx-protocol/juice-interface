@@ -19,7 +19,7 @@ import CustomBeneficiaryInput from 'components/veNft/formControls/CustomBenefici
 import StakingFormActionButton from 'components/veNft/formControls/StakingFormActionButton'
 import VotingPowerDisplayInput from 'components/veNft/formControls/VotingPowerDisplayInput'
 import VeNftCarousel from 'components/veNft/VeNftCarousel'
-import StakingTokenRangesModal from 'components/veNft/veNftStakingTokenRangesModal'
+import StakingTokenRangesModal from 'components/veNft/VeNftStakingTokenRangesModal'
 import ConfirmStakeModal from 'components/veNft/VeNftConfirmStakeModal'
 import Callout from 'components/Callout'
 

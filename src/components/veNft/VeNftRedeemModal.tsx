@@ -1,15 +1,89 @@
-import { Trans, t } from '@lingui/macro'
-import { Modal } from 'antd'
-import React from 'react'
+import { t, Trans } from '@lingui/macro'
+import { Form, Modal, Switch } from 'antd'
+import { useForm } from 'antd/lib/form/Form'
+import { MemoFormInput } from 'components/inputs/Pay/MemoFormInput'
 
-interface VeNftRedeemModalProps {
+import { NetworkContext } from 'contexts/networkContext'
+import { ThemeContext } from 'contexts/themeContext'
+import { isAddress } from 'ethers/lib/utils'
+import { useRedeemVeNftTx } from 'hooks/veNft/transactor/VeNftRedeemTx'
+import { useContext, useState } from 'react'
+
+import { V2ProjectContext } from 'contexts/v2/projectContext'
+
+import { EthAddressInput } from 'components/inputs/EthAddressInput'
+
+import { emitSuccessNotification } from 'utils/notifications'
+import { VeNftToken } from 'models/subgraph-entities/v2/venft-token'
+
+type VeNftRedeemModalProps = {
+  token: VeNftToken
   visible: boolean
   onCancel: VoidFunction
+  onCompleted: VoidFunction
 }
 
-const VeNftRedeemModal = ({ visible, onCancel }: VeNftRedeemModalProps) => {
-  const redeem = () => {
-    return
+const VeNftRedeemModal = ({
+  token,
+  visible,
+  onCancel,
+  onCompleted,
+}: VeNftRedeemModalProps) => {
+  const { userAddress, onSelectWallet } = useContext(NetworkContext)
+  const { primaryTerminal, tokenAddress } = useContext(V2ProjectContext)
+  const { tokenId } = token
+  const [customBeneficiaryEnabled, setCustomBeneficiaryEnabled] =
+    useState(false)
+  const [form] = useForm<{ beneficiary: string }>()
+  const [memo, setMemo] = useState('')
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
+
+  const redeemTx = useRedeemVeNftTx()
+
+  const validateCustomBeneficiary = () => {
+    const beneficiary = form.getFieldValue('beneficiary')
+    if (!beneficiary) {
+      return Promise.reject(t`Address required`)
+    } else if (!isAddress(beneficiary)) {
+      return Promise.reject(t`Invalid address`)
+    }
+    return Promise.resolve()
+  }
+
+  const redeem = async () => {
+    const { beneficiary } = form.getFieldsValue()
+    await form.validateFields()
+
+    // Prompt wallet connect if no wallet connected
+    if (!userAddress && onSelectWallet) {
+      onSelectWallet()
+    }
+
+    const txBeneficiary = beneficiary ? beneficiary : userAddress!
+
+    const txSuccess = await redeemTx(
+      {
+        tokenId,
+        token: tokenAddress || '',
+        beneficiary: txBeneficiary,
+        memo,
+        terminal: primaryTerminal ? primaryTerminal : '',
+      },
+      {
+        onConfirmed() {
+          emitSuccessNotification(
+            t`Redeem successful. Results will be indexed in a few moments.`,
+          )
+          onCompleted()
+        },
+      },
+    )
+
+    if (!txSuccess) {
+      return
+    }
   }
 
   return (
@@ -17,11 +91,47 @@ const VeNftRedeemModal = ({ visible, onCancel }: VeNftRedeemModalProps) => {
       visible={visible}
       onCancel={onCancel}
       onOk={redeem}
-      okText={t`Redeem`}
+      okText={`Redeem`}
     >
       <h2>
         <Trans>Redeem Token</Trans>
       </h2>
+      <div style={{ color: colors.text.secondary }}>
+        <p>
+          <Trans>Redeeming this NFT will burn the token and return...</Trans>
+        </p>
+      </div>
+      <Form form={form} layout="vertical">
+        <MemoFormInput value={memo} onChange={setMemo} />
+        <Form.Item
+          label={
+            <>
+              <Trans>Custom beneficiary</Trans>
+              <Switch
+                checked={customBeneficiaryEnabled}
+                onChange={setCustomBeneficiaryEnabled}
+                style={{ marginLeft: 10 }}
+              />
+            </>
+          }
+          extra={<Trans>Send unlocked tokens to a custom address.</Trans>}
+          style={{ marginBottom: '1rem' }}
+        />
+
+        {customBeneficiaryEnabled && (
+          <Form.Item
+            name="beneficiary"
+            label="Beneficiary"
+            rules={[
+              {
+                validator: validateCustomBeneficiary,
+              },
+            ]}
+          >
+            <EthAddressInput />
+          </Form.Item>
+        )}
+      </Form>
     </Modal>
   )
 }

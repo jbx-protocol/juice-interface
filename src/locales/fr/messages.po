@@ -402,6 +402,8 @@ msgstr "Ajouter l'allocation de token"
 msgid "Address"
 msgstr "Adresse"
 
+#: src/components/veNft/VeNftRedeemModal.tsx
+#: src/components/veNft/VeNftUnlockModal.tsx
 #: src/components/veNft/formControls/CustomBeneficiaryInput.tsx
 msgid "Address required"
 msgstr ""
@@ -975,6 +977,11 @@ msgstr "Propriétaire actuel: {ownerAddress}"
 msgid "Currently worth: <0><1/>{0}</0>"
 msgstr "Valeur actuelle : <0><1/>{0}</0>"
 
+#: src/components/veNft/VeNftRedeemModal.tsx
+#: src/components/veNft/VeNftUnlockModal.tsx
+msgid "Custom beneficiary"
+msgstr ""
+
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "Custom memo"
 msgstr "Customiser le mémo"
@@ -1438,8 +1445,11 @@ msgid "Explore projects"
 msgstr "Explorer des projets"
 
 #: src/components/veNft/VeNftExtendLockModal.tsx
-#: src/components/veNft/VeNftExtendLockModal.tsx
 msgid "Extend Lock"
+msgstr ""
+
+#: src/components/veNft/VeNftExtendLockModal.tsx
+msgid "Extend lock successful. Results will be indexed in a few moments."
 msgstr ""
 
 #: src/components/Navbar/MenuItems.tsx
@@ -1724,6 +1734,8 @@ msgstr "Taux d'émission initiale"
 msgid "Initial mint rate"
 msgstr "Taux de frappe initial"
 
+#: src/components/veNft/VeNftRedeemModal.tsx
+#: src/components/veNft/VeNftUnlockModal.tsx
 #: src/components/veNft/formControls/CustomBeneficiaryInput.tsx
 msgid "Invalid address"
 msgstr ""
@@ -2630,11 +2642,11 @@ msgid "Reconfigure upcoming funding cycles"
 msgstr "Reconfigurer les prochains cycles de financement"
 
 #: src/components/veNft/VeNftRedeemModal.tsx
-msgid "Redeem"
+msgid "Redeem Token"
 msgstr ""
 
 #: src/components/veNft/VeNftRedeemModal.tsx
-msgid "Redeem Token"
+msgid "Redeem successful. Results will be indexed in a few moments."
 msgstr ""
 
 #: src/components/ManageTokensModal.tsx
@@ -2659,6 +2671,10 @@ msgstr "Récupérer {tokensTextLong} pour ETH"
 #: src/components/v2/V2Project/ProjectActivity/index.tsx
 msgid "Redeemed"
 msgstr "Récupéré"
+
+#: src/components/veNft/VeNftRedeemModal.tsx
+msgid "Redeeming this NFT will burn the token and return..."
+msgstr ""
 
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 #: src/pages/create/forms/TokenForm/index.tsx
@@ -2875,6 +2891,11 @@ msgstr "Secondes"
 msgid "See transaction"
 msgstr "Voir la transaction"
 
+#: src/components/veNft/VeNftRedeemModal.tsx
+#: src/components/veNft/VeNftUnlockModal.tsx
+msgid "Send unlocked tokens to a custom address."
+msgstr ""
+
 #: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
 msgid "Set ENS name"
 msgstr ""
@@ -2901,6 +2922,10 @@ msgstr ""
 
 #: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Set a unique name that will be visible in your project's URL, and that will allow your project to appear in search results."
+msgstr ""
+
+#: src/components/veNft/VeNftExtendLockModal.tsx
+msgid "Set an updated duration for your staking position."
 msgstr ""
 
 #: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
@@ -3510,11 +3535,11 @@ msgid "Unless payments are paused in your funding cycle settings, your project c
 msgstr ""
 
 #: src/components/veNft/VeNftUnlockModal.tsx
-msgid "Unlock"
+msgid "Unlock successful. Results will be indexed in a few moments."
 msgstr ""
 
 #: src/components/veNft/VeNftUnlockModal.tsx
-msgid "Unlock Token"
+msgid "Unlocking this staking position will burn your NFT and return ${tokenSymbolDisplayText}."
 msgstr ""
 
 #: src/components/v2/shared/UnsavedChangesModal.tsx

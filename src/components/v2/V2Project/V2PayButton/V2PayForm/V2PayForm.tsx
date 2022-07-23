@@ -96,14 +96,13 @@ export const V2PayForm = ({
               >
                 {canAddMoreStickers ? (
                   <Tooltip title={t`Attach a sticker`}>
-                    <div
+                    <Sticker
+                      style={{ color: colors.text.secondary }}
+                      size={20}
                       onClick={() => {
                         setAttachStickerModalVisible(true)
                       }}
-                      style={{ color: colors.text.secondary }}
-                    >
-                      <Sticker size={20} />
-                    </div>
+                    />
                   </Tooltip>
                 ) : (
                   <div

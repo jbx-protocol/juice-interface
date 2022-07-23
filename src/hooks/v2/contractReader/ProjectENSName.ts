@@ -16,7 +16,8 @@ export default function useProjectENSName({
     functionName: 'ensNamePartsOf',
     args: projectId ? [projectId] : null,
     formatter: useCallback(
-      (val: string[]) => (val ? val.join('.') : undefined),
+      // JBProjectHandles stores ENS name parts in reverse order, so we format in reverse
+      (val?: string[]) => (val ? [...val].reverse().join('.') : ''),
       [],
     ),
     updateOn: useMemo(

@@ -1,127 +1,46 @@
 # juice-interface
 
-Juicebox frontend application.
+<div align="center">
+   <img width="75px" src="https://jbx.mypinata.cloud/ipfs/QmWXCt1zYAJBkNb7cLXTNRNisuWu9mRAmXTaW9CLFYkWVS"/>
+   <h2>
+      The <a href="https://juicebox.money">Juicebox</a> frontend application.
+   </h2>
+</div>
 
-- Mainnet: https://juicebox.money
-- Rinkeby: https://rinkeby.juicebox.money
+`juice-interface` is a web application for the [Juicebox](https://info.juicebox.money/) protocol.
+
+## Links
+
+| Name         | Link                                                                                                                                |
+| ------------ | ----------------------------------------------------------------------------------------------------------------------------------- |
+| Mainnet site | https://juicebox.money                                                                                                              |
+| Rinkeby site | https://rinkeby.juicebox.money                                                                                                      |
+| Subgraph     | [https://thegraph.com/explorer/subgraph...](https://thegraph.com/explorer/subgraph?id=FVmuv3TndQDNd2BWARV8Y27yuKKukryKXPzvAS5E7htC) |
 
 ## Suggest a feature
 
-Have an idea or suggestion? Create a [feature request](https://github.com/jbx-protocol/juice-interface/issues/new?assignees=&labels=idea&template=feature_request.md&title=%5BIDEA%5D+) or mention it in the [Discord](https://discord.gg/6jXrJSyDFf).
+Have an idea or suggestion? [Create a feature request](https://github.com/jbx-protocol/juice-interface/issues/new?assignees=&labels=idea&template=feature_request.md&title=%5BIDEA%5D+) (or mention it in [Discord](https://discord.gg/6jXrJSyDFf)).
 
 ## Report a bug
 
-Notice something broken? Create a [bug report](https://github.com/jbx-protocol/juice-interface/issues/new?assignees=&labels=bug&template=bug_report.md&title=%5BBUG%5D+).
-
-## Development
-
-### Installation
-
-1. Create a [fork](https://docs.github.com/en/get-started/quickstart/fork-a-repo) of this repository.
-1. Clone your fork and navigate to the root directory.
-1. Install project dependencies.
-
-   ```bash
-   yarn install
-   ```
-
-1. Create a `.env` file in the root directory which mirrors the `.example.env` file. Learn how to define each field in the `.env` file in [Setup](#setup).
-
-### Setup
-
-`juicebox-interface` relies on a number of services for development. Create an account for each of the following services:
-
-- [Infura](https://infura.io)
-- [Pinata](https://pinata.cloud)
-- [Blocknative](https://www.blocknative.com)
-
-The following sections describe how to set up each service for local development.
-
-#### Infura
-
-Juicebox uses [Infura](https://infura.io) to connect to an Ethereum network (mainnet, or one of the testnets).
-
-Take the following steps to create an Infura project for local development:
-
-1. Select **Create New Project** to begin creating a new Infura project.
-1. Select the **Ethereum** option from the **Product** dropdown.
-1. Enter a **Name** (for example, `juicebox-local`).
-1. Select **Create** to create the project.
-
-Next, copy the following fields into your `.env` file:
-
-- **Project ID**. In the `.env` file, copy the **Project ID** into the `NEXT_PUBLIC_INFURA_ID` variable.
-- **Endpoint**. This is the Ethereum network that will be used for testing. If you don't know which endpoint to use, select **mainnet**. In the `.env` file, copy the network name (e.g. 'mainnet', not the url) into the `NEXT_PUBLIC_INFURA_NETWORK` variable.
-
-#### Piñata
-
-Juicebox uses [Piñata](https://pinata.cloud) to store project metadata. Juicebox projects set a name, description, logo, and other details when creating the project. These details are saved on IPFS as a JSON file using Piñata, and the CID gets stored on-chain with the Juicebox project.
-
-Take the following steps to set up Piñata for local development:
-
-1. Create a Piñata API key ([learn more](https://docs.pinata.cloud/#your-api-keys)).
-   - Enable the **Admin** toggle in the **Admin** field.
-1. Copy the following fields into your `.env` file:
-   - **API Key**. In the `.env` file, copy the **API Key** into the `NEXT_PUBLIC_PINATA_PINNER_KEY` variable.
-   - **API Secret**. In the `.env` file, copy the **API Secret** into the `NEXT_PUBLIC_PINATA_PINNER_SECRET` variable.
-
-#### Blocknative
-
-Juicebox uses [Blocknative](https://www.blocknative.com) to onboard users by enabling wallet selection, connection, wallet checks, and real-time state updates.
-
-Take the following steps to set up Blocknative for local development:
-
-1. Create a Blocknative API key ([learn more](https://docs.blocknative.com/webhook-api#setup-api-key)).
-1. Copy the API key into the `NEXT_PUBLIC_BLOCKNATIVE_API_KEY` variable of the `.env` file.
-
-#### The Graph
-
-Juicebox uses [The Graph](https://thegraph.com) to query the Ethereum network using a GraphQL API.
-
-Take the following steps to set up Juicebox's subgraph for local development:
-
-1. Join [Peel's discord server](https://discord.gg/akpxJZ5HKR).
-2. Go to [the dev channel](https://discord.com/channels/939317843059679252/939705688563810304) and inquire about mainnet and rinkeby subgraph URLs.
-3. Copy the URL into the `NEXT_PUBLIC_SUBGRAPH_URL` variable of the `.env` file.
-
-### Usage
-
-1. Run the app in dev mode
-
-   ```bash
-   yarn dev
-   ```
-
-2. Build a production build
-
-   ```bash
-   yarn build
-   ```
-
-3. Run a production build locally
-
-   ```bash
-   yarn build
-   yarn start
-   ```
+Notice something broken? [Create a bug report](https://github.com/jbx-protocol/juice-interface/issues/new?assignees=&labels=bug&template=bug_report.md&title=%5BBUG%5D+).
 
 ## Contributing
 
-If you'd like to contribute code or translations to the repository, check out [`CONTRIBUTING.md`](CONTRIBUTING.md)
+Anyone can contribute! [Start here](CONTRIBUTING.md).
 
-## Web3 Providers
+For developers, [learn more](doc/development.md) about development.
 
-The frontend has two different providers that provide different levels of access to different chains:
+[Learn more](https://www.notion.so/juicebox/Frontend-26b80fcb50b34f3b9356fc7fc5286e05) about the Peel team.
 
-- `readProvider`: used to read from contracts on network of injected provider (`.env` file points you at testnet or mainnet)
-- `signingProvider`: your personal wallet, connected to via [Blocknative](https://docs.blocknative.com/onboard).
+## Support
 
-## Deployment
+Join the [JuiceboxDAO Discord](https://discord.gg/6jXrJSyDFf) and reach out to the development team for development support.
 
-Frontend application(s) are deployed automaticallyed on pushes to `main` using [Vercel](https://TODO.add.link.to.vercel)
+## Team
 
-## Theme
+[JuiceboxDAO](https://juicebox.money/p/juicebox) funds [Peel](https://juicebox.money/p/peel) to build and maintain the application. [Learn more](https://www.notion.so/juicebox/Frontend-26b80fcb50b34f3b9356fc7fc5286e05) about Peel.
 
-The app uses the `SemanticTheme` pattern defined in the [`src/models/semantic-theme/`](src/models/semantic-theme) directory. This allows mapping style properties to any number of enumerated `ThemeOption`s. Style properties are defined in the [`src/constants/theme/`](src/constants/theme) directory. Theme styles can be accessed via `ThemeContext` defined in [`src/contexts/themeContext.ts`](src/contexts/themeContext.ts) (and instantiated in [`src/hooks/JuiceTheme.tsx`](src/hooks/JuiceTheme.tsx)), or via CSS root variables.
-
-The app also relies on [antd](https://ant-design.gitee.io/) React components. We override some Antd styles to make Antd compatible with `SemanticTheme`. These overrides are defined in the [`src/styles/antd-overrides/`](src/styles/antd-overrides) directory.
+<a href="https://juicebox.money/p/juicebox">
+   <img width="150px" src="https://tools.juicebox.money/assets/juicebox-button-yellow.png" />
+</a>

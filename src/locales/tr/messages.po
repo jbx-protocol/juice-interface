@@ -728,6 +728,10 @@ msgstr "Değişiklikler, projenin özel oylama sözleşmesine göre yürürlüğ
 msgid "Changes you make will take effect according to your <0>{0}</0> reconfiguration rule (the first funding cycle following <1>{1}</1> from now)."
 msgstr "Yaptığınız değişiklikler, <0>{0}</0> yeniden yapılandırma kuralınıza göre geçerlilik kazanacaktır (şu andan itibaren <1>{1}</1>'den sonraki ilk finansman döngüsü)."
 
+#: src/components/veNft/veNftStakingTokenRangesModal.tsx
+msgid "Character"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 msgid "Check this to mint {tokenSymbol} ERC-20 to your wallet. Leave unchecked to have your token balance tracked by Juicebox, saving gas on this transaction. You can always claim your ERC-20 tokens later."
 msgstr "Cüzdanınıza {tokenSymbol} ERC-20 basmak için burayı işaretleyin. Token bakiyenizin Juicebox tarafından takip edilmesini sağlamak için işaretlemeden bırakın ve bu işlemde gazdan tasarruf edin. ERC-20 token'larınızı daha sonra her zaman talep edebilirsiniz."
@@ -2502,6 +2506,10 @@ msgstr ""
 msgid "Raised on Juicebox"
 msgstr ""
 
+#: src/components/veNft/veNftStakingTokenRangesModal.tsx
+msgid "Range"
+msgstr ""
+
 #: src/pages/projects/RankingExplanation.tsx
 msgid "Rankings based on number of contributions and volume gained in the last {trendingWindow} days. <0>See code</0>"
 msgstr "Katkı sayısına ve son {trendingWindow} gün içinde kazanılan hacme dayalı sıralamalar. <0>Kodu gör</0>"
@@ -3246,10 +3254,6 @@ msgstr "Kime: <0/>"
 #: src/utils/tokenSymbolText.ts
 msgid "Token"
 msgstr "Token"
-
-#: src/components/veNft/VeNftStakingTokenRangesModal.tsx
-msgid "Token Ranges"
-msgstr ""
 
 #: src/components/modals/ParticipantsModal.tsx
 msgid "Token address: <0/>"
@@ -4113,6 +4117,10 @@ msgstr "Hazineye ödenen ETH başına alınan {tokenSymbolPluralCap} token'ı. B
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "{tokenSymbol} ERC-20 address"
 msgstr "{tokenSymbol} ERC-20 addresi"
+
+#: src/components/veNft/veNftStakingTokenRangesModal.tsx
+msgid "{tokenSymbol} range"
+msgstr ""
 
 #: src/components/AMMPrices/TokenAMMPriceRow.tsx
 msgid "{tokenSymbol}/ETH exchange rate on {exchangeName}."

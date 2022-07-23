@@ -728,6 +728,10 @@ msgstr ""
 msgid "Changes you make will take effect according to your <0>{0}</0> reconfiguration rule (the first funding cycle following <1>{1}</1> from now)."
 msgstr "Mudanças que você fizer terão efeito de acordo com sua regra de reconfiguração <0>{0}</0> (o primeiro ciclo de financiamento após o <1>{1}</1> a partir de agora)."
 
+#: src/components/veNft/veNftStakingTokenRangesModal.tsx
+msgid "Character"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 msgid "Check this to mint {tokenSymbol} ERC-20 to your wallet. Leave unchecked to have your token balance tracked by Juicebox, saving gas on this transaction. You can always claim your ERC-20 tokens later."
 msgstr "Marque isso para emitir os tokens {tokenSymbol} ERC-20 do projeto para sua carteira. Deixe desmarcados para deixar que o Juicebox monitore o seu saldo de tokens, economizando o gás da transação. Você sempre pode reivindicar seus tokens posteriormente."
@@ -2502,6 +2506,10 @@ msgstr ""
 msgid "Raised on Juicebox"
 msgstr ""
 
+#: src/components/veNft/veNftStakingTokenRangesModal.tsx
+msgid "Range"
+msgstr ""
+
 #: src/pages/projects/RankingExplanation.tsx
 msgid "Rankings based on number of contributions and volume gained in the last {trendingWindow} days. <0>See code</0>"
 msgstr "Rankings baseados em número de contribuições e volume ganho nos últimos {trendingWindow} dias. <0>Ver código</0>"
@@ -3246,10 +3254,6 @@ msgstr "Para: <0/>"
 #: src/utils/tokenSymbolText.ts
 msgid "Token"
 msgstr "Token"
-
-#: src/components/veNft/VeNftStakingTokenRangesModal.tsx
-msgid "Token Ranges"
-msgstr ""
 
 #: src/components/modals/ParticipantsModal.tsx
 msgid "Token address: <0/>"
@@ -4113,6 +4117,10 @@ msgstr "{tokenSymbolPluralCap} recebido por ETH pagos para o tesouro. Isto pode 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "{tokenSymbol} ERC-20 address"
 msgstr "{tokenSymbol} Endereço ERC-20"
+
+#: src/components/veNft/veNftStakingTokenRangesModal.tsx
+msgid "{tokenSymbol} range"
+msgstr ""
 
 #: src/components/AMMPrices/TokenAMMPriceRow.tsx
 msgid "{tokenSymbol}/ETH exchange rate on {exchangeName}."

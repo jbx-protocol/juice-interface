@@ -38,6 +38,12 @@ import useNameOfERC20 from 'hooks/NameOfERC20'
 
 import { useVeNftLockDurationOptions } from 'hooks/veNft/VeNftLockDurationOptions'
 
+import { useVeNftBaseImagesHash } from 'hooks/veNft/VeNftBaseImagesHash'
+
+import { useVeNftVariants } from 'hooks/veNft/VeNftVariants'
+
+import { useVeNftResolverAddress } from 'hooks/veNft/VeNftResolverAddress'
+
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
@@ -181,7 +187,11 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
   const { data: nftRewardTiers, isLoading: nftRewardTiersLoading } =
     useNftRewards(nftRewardsCIDs)
 
+  const veNftProjectName = 'veBanny'
   const { data: lockDurationOptions } = useVeNftLockDurationOptions()
+  const { data: resolverAddress } = useVeNftResolverAddress()
+  const { data: variants } = useVeNftVariants()
+  const baseImagesHash = useVeNftBaseImagesHash()
 
   const isArchived = projectId
     ? V2ArchivedProjectIds.includes(projectId) || projectMetadata?.archived
@@ -233,11 +243,11 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
     },
 
     veNft: {
-      name: undefined,
+      name: veNftProjectName,
       lockDurationOptions: lockDurationOptions,
-      baseImagesHash: undefined,
-      resolverAddress: undefined,
-      variants: undefined,
+      baseImagesHash: baseImagesHash,
+      resolverAddress: resolverAddress,
+      variants: variants,
       userTokens: undefined,
     },
 

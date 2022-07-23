@@ -402,8 +402,6 @@ msgstr ""
 msgid "Address"
 msgstr "Адрес"
 
-#: src/components/veNft/VeNftRedeemModal.tsx
-#: src/components/veNft/VeNftUnlockModal.tsx
 #: src/components/veNft/formControls/CustomBeneficiaryInput.tsx
 msgid "Address required"
 msgstr ""
@@ -976,11 +974,6 @@ msgstr "Текущий владелец: {ownerAddress}"
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Currently worth: <0><1/>{0}</0>"
 msgstr "На данный момент стоит: <0><1/>{0}</0>"
-
-#: src/components/veNft/VeNftRedeemModal.tsx
-#: src/components/veNft/VeNftUnlockModal.tsx
-msgid "Custom beneficiary"
-msgstr ""
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "Custom memo"
@@ -1734,8 +1727,6 @@ msgstr "Первоначальная ставка эмиссии"
 msgid "Initial mint rate"
 msgstr ""
 
-#: src/components/veNft/VeNftRedeemModal.tsx
-#: src/components/veNft/VeNftUnlockModal.tsx
 #: src/components/veNft/formControls/CustomBeneficiaryInput.tsx
 msgid "Invalid address"
 msgstr ""
@@ -2890,11 +2881,6 @@ msgstr ""
 #: src/components/EtherscanLink.tsx
 msgid "See transaction"
 msgstr "Увидить трансакцию"
-
-#: src/components/veNft/VeNftRedeemModal.tsx
-#: src/components/veNft/VeNftUnlockModal.tsx
-msgid "Send unlocked tokens to a custom address."
-msgstr ""
 
 #: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
 msgid "Set ENS name"

@@ -45,9 +45,11 @@ export function MemoFormInput({
           }}
         >
           <Tooltip title={t`Attach a sticker`}>
-            <div onClick={() => setAttachStickerModalVisible(true)}>
-              <Sticker size={20} />
-            </div>
+            <Sticker
+              role="button"
+              onClick={() => setAttachStickerModalVisible(true)}
+              size={20}
+            />
           </Tooltip>
         </div>
       </div>

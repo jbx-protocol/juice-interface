@@ -105,14 +105,13 @@ export const V2PayForm = ({
                     />
                   </Tooltip>
                 ) : (
-                  <div
+                  <Sticker
+                    size={20}
                     style={{
                       color: colors.text.disabled,
                       cursor: 'not-allowed',
                     }}
-                  >
-                    <Sticker size={20} />
-                  </div>
+                  />
                 )}
               </div>
               <Form.Item name="stickerUrls">

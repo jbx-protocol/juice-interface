@@ -18,11 +18,11 @@ msgstr ""
 "X-Crowdin-File: messages.po\n"
 "X-Crowdin-File-ID: 9\n"
 
-#: src/components/veNft/veNftConfirmStakeModal.tsx
+#: src/components/veNft/VeNftConfirmStakeModal.tsx
 msgid "$ve{tokenSymbolDisplayText} NFT summary:"
 msgstr ""
 
-#: src/components/veNft/veNftConfirmStakeModal.tsx
+#: src/components/veNft/VeNftConfirmStakeModal.tsx
 msgid "$ve{tokenSymbolDisplayText} Received"
 msgstr ""
 
@@ -606,7 +606,7 @@ msgstr "Баланс кошелька владельца проекта."
 
 #: src/components/v1/V1Project/V1DownloadPaymentsModal.tsx
 #: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
-#: src/components/veNft/veNftConfirmStakeModal.tsx
+#: src/components/veNft/VeNftConfirmStakeModal.tsx
 msgid "Beneficiary"
 msgstr "Получатель"
 
@@ -804,7 +804,7 @@ msgstr "Настройте динамику токена вашего проек
 msgid "Configure which Juicebox V1 project you'd like to accept tokens for. Token holders of this V1 project will be able to swap their V1 tokens for V2 tokens."
 msgstr ""
 
-#: src/components/veNft/veNftConfirmStakeModal.tsx
+#: src/components/veNft/VeNftConfirmStakeModal.tsx
 msgid "Confirm Stake"
 msgstr ""
 
@@ -1836,11 +1836,11 @@ msgstr "Загрузить ещё"
 msgid "Lock ${tokenSymbolDisplayText} for Voting Power"
 msgstr ""
 
-#: src/components/veNft/veNftConfirmStakeModal.tsx
+#: src/components/veNft/VeNftConfirmStakeModal.tsx
 msgid "Lock Duration"
 msgstr ""
 
-#: src/components/veNft/veNftConfirmStakeModal.tsx
+#: src/components/veNft/VeNftConfirmStakeModal.tsx
 msgid "Lock successful. Results will be indexed in a few moments."
 msgstr ""
 
@@ -2024,7 +2024,7 @@ msgstr ""
 msgid "No activity yet"
 msgstr "Нет активности"
 
-#: src/components/veNft/veNftConfirmStakeModal.tsx
+#: src/components/veNft/VeNftConfirmStakeModal.tsx
 msgid "No beneficiary selected. Is your wallet connected?"
 msgstr ""
 
@@ -2943,7 +2943,7 @@ msgstr ""
 msgid "Stake {tokensLabel} for NFT"
 msgstr ""
 
-#: src/components/veNft/veNftConfirmStakeModal.tsx
+#: src/components/veNft/VeNftConfirmStakeModal.tsx
 msgid "Staked {tokenSymbolDisplayText}"
 msgstr ""
 
@@ -3247,7 +3247,7 @@ msgstr "Кому: <0/>"
 msgid "Token"
 msgstr "Токен"
 
-#: src/components/veNft/veNftStakingTokenRangesModal.tsx
+#: src/components/veNft/VeNftStakingTokenRangesModal.tsx
 msgid "Token Ranges"
 msgstr ""
 
@@ -3695,7 +3695,7 @@ msgstr "Хотите ли вы выпустить токен ERC-20, котор�
 msgid "Yes"
 msgstr "Да"
 
-#: src/components/veNft/veNftConfirmStakeModal.tsx
+#: src/components/veNft/VeNftConfirmStakeModal.tsx
 msgid "You are agreeing to IRREVOCABLY lock your tokens for {formattedLockDuration} in exchange for {votingPower} $ve{tokenSymbolDisplayText}"
 msgstr ""
 

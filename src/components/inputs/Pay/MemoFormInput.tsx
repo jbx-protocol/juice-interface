@@ -35,7 +35,9 @@ export function MemoFormInput({
           showCount
           autoSize
         />
-        <div
+        <Sticker
+          onClick={() => setAttachStickerModalVisible(true)}
+          size={20}
           style={{
             color: colors.text.secondary,
             fontSize: '.8rem',
@@ -43,11 +45,7 @@ export function MemoFormInput({
             right: 5,
             top: 7,
           }}
-        >
-          <div onClick={() => setAttachStickerModalVisible(true)}>
-            <Sticker size={20} />
-          </div>
-        </div>
+        />
       </div>
       <AttachStickerModal
         visible={attachStickerModalVisible}

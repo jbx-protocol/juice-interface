@@ -1,4 +1,3 @@
-import { SmileOutlined } from '@ant-design/icons'
 import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
 import { Checkbox, Form, Input, Modal, Space, Switch, Tooltip } from 'antd'
@@ -17,6 +16,8 @@ import {
   getUnsafeV2FundingCycleProperties,
   V2FundingCycleRiskCount,
 } from 'utils/v2/fundingCycle'
+
+import Sticker from 'components/icons/Sticker'
 
 import { ProjectPreferences } from 'constants/v2/projectPreferences'
 import { StickerSelection } from './StickerSelection'
@@ -95,20 +96,24 @@ export const V2PayForm = ({
               >
                 {canAddMoreStickers ? (
                   <Tooltip title={t`Attach a sticker`}>
-                    <SmileOutlined
-                      style={{ color: colors.text.secondary }}
+                    <div
                       onClick={() => {
                         setAttachStickerModalVisible(true)
                       }}
-                    />
+                      style={{ color: colors.text.secondary }}
+                    >
+                      <Sticker size={20} />
+                    </div>
                   </Tooltip>
                 ) : (
-                  <SmileOutlined
+                  <div
                     style={{
                       color: colors.text.disabled,
                       cursor: 'not-allowed',
                     }}
-                  />
+                  >
+                    <Sticker size={20} />
+                  </div>
                 )}
               </div>
               <Form.Item name="stickerUrls">

@@ -1,5 +1,5 @@
 import { t } from '@lingui/macro'
-import { Input, Tooltip } from 'antd'
+import { Input } from 'antd'
 
 import { useContext, useState } from 'react'
 import { ThemeContext } from 'contexts/themeContext'
@@ -44,13 +44,9 @@ export function MemoFormInput({
             top: 7,
           }}
         >
-          <Tooltip title={t`Attach a sticker`}>
-            <Sticker
-              role="button"
-              onClick={() => setAttachStickerModalVisible(true)}
-              size={20}
-            />
-          </Tooltip>
+          <div onClick={() => setAttachStickerModalVisible(true)}>
+            <Sticker size={20} />
+          </div>
         </div>
       </div>
       <AttachStickerModal

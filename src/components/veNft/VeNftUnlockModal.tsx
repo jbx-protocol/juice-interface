@@ -1,14 +1,14 @@
-import { isAddress } from '@ethersproject/address'
 import { t, Trans } from '@lingui/macro'
-import { Form, Modal, Switch } from 'antd'
+import { Form, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { useUnlockTx } from 'hooks/veNft/transactor/VeNftUnlockTx'
 import { VeNftToken } from 'models/subgraph-entities/v2/venft-token'
 import { useContext, useState } from 'react'
 import { emitSuccessNotification } from 'utils/notifications'
+
+import CustomBeneficiaryInput from 'components/veNft/formControls/CustomBeneficiaryInput'
 
 type UnlockModalProps = {
   visible: boolean
@@ -27,8 +27,6 @@ const UnlockModal = ({
 }: UnlockModalProps) => {
   const { userAddress, onSelectWallet } = useContext(NetworkContext)
   const { tokenId } = token
-  const [customBeneficiaryEnabled, setCustomBeneficiaryEnabled] =
-    useState(false)
   const [loading, setLoading] = useState(false)
   const [form] = useForm<{ beneficiary: string }>()
   const {
@@ -36,16 +34,6 @@ const UnlockModal = ({
   } = useContext(ThemeContext)
 
   const unlockTx = useUnlockTx()
-
-  const validateCustomBeneficiary = () => {
-    const beneficiary = form.getFieldValue('beneficiary')
-    if (!beneficiary) {
-      return Promise.reject(t`Address required`)
-    } else if (!isAddress(beneficiary)) {
-      return Promise.reject(t`Invalid address`)
-    }
-    return Promise.resolve()
-  }
 
   const unlock = async () => {
     await form.validateFields()
@@ -98,34 +86,7 @@ const UnlockModal = ({
         </p>
       </div>
       <Form form={form} layout="vertical">
-        <Form.Item
-          label={
-            <>
-              <Trans>Custom beneficiary</Trans>
-              <Switch
-                checked={customBeneficiaryEnabled}
-                onChange={setCustomBeneficiaryEnabled}
-                style={{ marginLeft: 10 }}
-              />
-            </>
-          }
-          extra={<Trans>Send unlocked tokens to a custom address.</Trans>}
-          style={{ marginBottom: '1rem' }}
-        />
-
-        {customBeneficiaryEnabled && (
-          <Form.Item
-            name="beneficiary"
-            label="Beneficiary"
-            rules={[
-              {
-                validator: validateCustomBeneficiary,
-              },
-            ]}
-          >
-            <EthAddressInput />
-          </Form.Item>
-        )}
+        <CustomBeneficiaryInput form={form} />
       </Form>
     </Modal>
   )

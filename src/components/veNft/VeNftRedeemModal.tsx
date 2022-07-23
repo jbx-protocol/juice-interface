@@ -1,20 +1,18 @@
 import { t, Trans } from '@lingui/macro'
-import { Form, Modal, Switch } from 'antd'
+import { Form, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { MemoFormInput } from 'components/inputs/Pay/MemoFormInput'
 
 import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { isAddress } from 'ethers/lib/utils'
 import { useRedeemVeNftTx } from 'hooks/veNft/transactor/VeNftRedeemTx'
+import { VeNftToken } from 'models/subgraph-entities/v2/venft-token'
 import { useContext, useState } from 'react'
 
-import { V2ProjectContext } from 'contexts/v2/projectContext'
-
-import { EthAddressInput } from 'components/inputs/EthAddressInput'
-
 import { emitSuccessNotification } from 'utils/notifications'
-import { VeNftToken } from 'models/subgraph-entities/v2/venft-token'
+
+import CustomBeneficiaryInput from 'components/veNft/formControls/CustomBeneficiaryInput'
+import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 type VeNftRedeemModalProps = {
   token: VeNftToken
@@ -32,8 +30,6 @@ const VeNftRedeemModal = ({
   const { userAddress, onSelectWallet } = useContext(NetworkContext)
   const { primaryTerminal, tokenAddress } = useContext(V2ProjectContext)
   const { tokenId } = token
-  const [customBeneficiaryEnabled, setCustomBeneficiaryEnabled] =
-    useState(false)
   const [form] = useForm<{ beneficiary: string }>()
   const [memo, setMemo] = useState('')
   const {
@@ -41,16 +37,6 @@ const VeNftRedeemModal = ({
   } = useContext(ThemeContext)
 
   const redeemTx = useRedeemVeNftTx()
-
-  const validateCustomBeneficiary = () => {
-    const beneficiary = form.getFieldValue('beneficiary')
-    if (!beneficiary) {
-      return Promise.reject(t`Address required`)
-    } else if (!isAddress(beneficiary)) {
-      return Promise.reject(t`Invalid address`)
-    }
-    return Promise.resolve()
-  }
 
   const redeem = async () => {
     const { beneficiary } = form.getFieldsValue()
@@ -103,34 +89,7 @@ const VeNftRedeemModal = ({
       </div>
       <Form form={form} layout="vertical">
         <MemoFormInput value={memo} onChange={setMemo} />
-        <Form.Item
-          label={
-            <>
-              <Trans>Custom beneficiary</Trans>
-              <Switch
-                checked={customBeneficiaryEnabled}
-                onChange={setCustomBeneficiaryEnabled}
-                style={{ marginLeft: 10 }}
-              />
-            </>
-          }
-          extra={<Trans>Send unlocked tokens to a custom address.</Trans>}
-          style={{ marginBottom: '1rem' }}
-        />
-
-        {customBeneficiaryEnabled && (
-          <Form.Item
-            name="beneficiary"
-            label="Beneficiary"
-            rules={[
-              {
-                validator: validateCustomBeneficiary,
-              },
-            ]}
-          >
-            <EthAddressInput />
-          </Form.Item>
-        )}
+        <CustomBeneficiaryInput form={form} />
       </Form>
     </Modal>
   )

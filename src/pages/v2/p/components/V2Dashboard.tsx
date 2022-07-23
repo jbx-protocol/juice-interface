@@ -36,7 +36,7 @@ import { CIDsOfNftRewardTiersResponse } from 'utils/v2/nftRewards'
 
 import useNameOfERC20 from 'hooks/NameOfERC20'
 
-import { useVeNftLockDurationOptions } from 'hooks/veNft/VeNftLockDurationOptions'
+import { BigNumber } from '@ethersproject/bignumber'
 
 import {
   ETH_PAYOUT_SPLIT_GROUP,
@@ -197,7 +197,8 @@ export default function V2Dashboard({ projectId }: { projectId: number }) {
 
   const nftsLoading = nftRewardTiersLoading || nftRewardsCIDsLoading
 
-  const { data: lockDurationOptions } = useVeNftLockDurationOptions()
+  // const { data: lockDurationOptions2 } = useVeNftLockDurationOptions()
+  const lockDurationOptions = [BigNumber.from(1)]
 
   const project: V2ProjectContextType = {
     cv: '2',

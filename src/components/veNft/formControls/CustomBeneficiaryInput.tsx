@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Form, FormInstance, Switch } from 'antd'
+import { Form, FormInstance, Space, Switch } from 'antd'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import { ThemeContext } from 'contexts/themeContext'
 import { isAddress } from 'ethers/lib/utils'
@@ -28,31 +28,20 @@ const CustomBeneficiaryInput = ({ form }: CustomBeneficiaryInputProps) => {
   }
 
   return (
-    <>
-      <Form.Item
-        label={
-          <>
-            <Trans>Custom token beneficiary</Trans>
-            <Switch
-              checked={customBeneficiaryEnabled}
-              onChange={setCustomBeneficiaryEnabled}
-              style={{ marginLeft: 10 }}
-            />
-          </>
-        }
-        extra={
-          <div style={{ color: colors.text.primary, marginBottom: 10 }}>
-            <p>
-              <Trans>Mint NFT to a custom address</Trans>
-            </p>
-          </div>
-        }
-        style={{ marginBottom: '1rem' }}
-      />
+    <Form.Item extra={t`Mint NFT to a custom address.`}>
+      <Space>
+        <Switch
+          checked={customBeneficiaryEnabled}
+          onChange={setCustomBeneficiaryEnabled}
+        />
+        <span style={{ color: colors.text.primary, fontWeight: 500 }}>
+          <Trans>Custom token beneficiary</Trans>
+        </span>
+      </Space>
       {customBeneficiaryEnabled && (
         <Form.Item
+          style={{ marginTop: '1rem', marginBottom: 0 }}
           name="beneficiary"
-          label="Beneficiary"
           rules={[
             {
               validator: validateCustomBeneficiary,
@@ -62,7 +51,7 @@ const CustomBeneficiaryInput = ({ form }: CustomBeneficiaryInputProps) => {
           <EthAddressInput />
         </Form.Item>
       )}
-    </>
+    </Form.Item>
   )
 }
 

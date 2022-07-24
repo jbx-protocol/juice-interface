@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import { CaretRightFilled, CheckCircleFilled } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
@@ -74,6 +75,7 @@ import { drawerStyle } from 'constants/styles/drawerStyle'
 const terminalVersion: V1TerminalVersion = '1.1'
 
 export default function V1Create() {
+  const router = useRouter()
   const { signerNetwork, userAddress, onSelectWallet } =
     useContext(NetworkContext)
   const { colors, radii } = useContext(ThemeContext).theme
@@ -315,22 +317,29 @@ export default function V1Create() {
           resetProjectForm()
           dispatch(editingProjectActions.resetState())
 
-          if (typeof window !== 'undefined') {
-            window.location.hash =
-              '/p/' + editingProjectInfo.handle + '?newDeploy=true'
-          }
+          router.push(`/p/${editingProjectInfo.handle}?newDeploy=true`)
         },
       },
     )
   }, [
-    dispatch,
-    editingFC,
-    editingProjectInfo.handle,
     editingProjectInfo.metadata,
+    editingProjectInfo.handle,
+    deployProjectTx,
+    editingFC.target,
+    editingFC.currency,
+    editingFC.duration,
+    editingFC.discountRate,
+    editingFC.cycleLimit,
+    editingFC.ballot,
+    editingFC.reserved,
+    editingFC.bondingCurveRate,
+    editingFC.payIsPaused,
+    editingFC.ticketPrintingIsAllowed,
     editingPayoutMods,
     editingTicketMods,
     resetProjectForm,
-    deployProjectTx,
+    dispatch,
+    router,
   ])
 
   const viewedCurrentStep = useCallback(() => {

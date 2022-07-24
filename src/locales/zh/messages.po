@@ -1008,10 +1008,6 @@ msgstr "创建日期"
 msgid "Days"
 msgstr "天"
 
-#: src/components/veNft/formControls/LockDurationSelectInput.tsx
-msgid "Days Locked"
-msgstr ""
-
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierCard.tsx
 msgid "Delete NFT"
 msgstr ""
@@ -1825,6 +1821,10 @@ msgstr "加载更多"
 msgid "Lock ${tokenSymbolDisplayText} for Voting Power"
 msgstr ""
 
+#: src/components/veNft/formControls/LockDurationSelectInput.tsx
+msgid "Lock duration"
+msgstr ""
+
 #: src/components/modals/ReservedTokenReceiverModal.tsx
 #: src/components/v1/shared/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
@@ -1886,7 +1886,7 @@ msgid "Migrate to Juicebox V1.1"
 msgstr "迁移至 Juicebox V1.1"
 
 #: src/components/veNft/formControls/CustomBeneficiaryInput.tsx
-msgid "Mint NFT to a custom address"
+msgid "Mint NFT to a custom address."
 msgstr ""
 
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
@@ -2084,7 +2084,7 @@ msgstr "一旦启动，你的第一个筹款周期 <0>不能再更改</0>。 你
 msgid "Only lowercase letters"
 msgstr ""
 
-#: src/components/veNft/VeNftStakingForm.tsx
+#: src/components/veNft/formControls/TokensStakedInput.tsx
 msgid "Only project tokens claimed as ERC-20 tokens can be staked for NFTs."
 msgstr ""
 
@@ -2620,10 +2620,6 @@ msgstr "刷新"
 #: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner.tsx
 msgid "Relaunch your funding cycle on the new Juicebox V2 contracts."
 msgstr "在新的 Juicebox 合约上启动项目的筹款周期。"
-
-#: src/components/veNft/formControls/TokensStakedInput.tsx
-msgid "Remaining: {unstakedTokens}"
-msgstr ""
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
@@ -3514,7 +3510,7 @@ msgid "Version of the terminal contract used by this project."
 msgstr "当前项目所使用的 Terminal 版本。"
 
 #: src/components/veNft/VeNftStakingForm.tsx
-msgid "View Token Ranges"
+msgid "View token ranges"
 msgstr ""
 
 #: src/components/Project/VolumeStatLine/VolumeStatLine.tsx
@@ -3523,7 +3519,7 @@ msgid "Volume"
 msgstr "总收入"
 
 #: src/components/veNft/formControls/VotingPowerDisplayInput.tsx
-msgid "Voting Power"
+msgid "VotePWR"
 msgstr ""
 
 #: src/components/inputs/Pay/MemoFormInput.tsx
@@ -3724,10 +3720,6 @@ msgstr ""
 msgid "You must review and accept the risks."
 msgstr ""
 
-#: src/components/veNft/formControls/TokensStakedInput.tsx
-msgid "You must stake at least {minTokensAllowedToStake} tokens."
-msgstr ""
-
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "You receive an NFT for contributing over <0>{0} ETH</0>."
 msgstr ""
@@ -3824,6 +3816,10 @@ msgstr "你的未领取代币余额： {0}"
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "Your unclaimed {tokenTextLong}"
 msgstr "你的待领取 {tokenTextLong} 代币"
+
+#: src/components/veNft/formControls/VotingPowerDisplayInput.tsx
+msgid "Your voting power"
+msgstr ""
 
 #: src/components/v2/V2Project/DistributionLimit.tsx
 #: src/pages/create/tabs/ReviewDeployTab/FundingAttributes.tsx
@@ -4050,6 +4046,10 @@ msgstr "{issuanceRate} 个代币 / ETH"
 msgid "{label}"
 msgstr "{label}"
 
+#: src/components/veNft/formControls/TokensStakedInput.tsx
+msgid "{minTokensAllowedToStake, plural, one {You must stake at least # token.} other {You must stake at least # tokens.}}"
+msgstr ""
+
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 msgid "{payerRate} (+ {reservedRate} reserved) {tokenSymbolPlural}/ETH"
 msgstr "{payerRate} (+ {reservedRate} 保留) {tokenSymbolPlural}/ETH"
@@ -4102,6 +4102,10 @@ msgstr "{tokensTokenUpper} 数量"
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "{unclaimedBalanceFormatted} {tokenText} claimable"
 msgstr "{unclaimedBalanceFormatted} {tokenText} 可领取"
+
+#: src/components/veNft/formControls/TokensStakedInput.tsx
+msgid "{unstakedTokens} {tokenSymbolDisplayText} remaining"
+msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "{userOwnershipPercentage}% of total supply"

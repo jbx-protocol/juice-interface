@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import { NetworkContext } from 'contexts/networkContext'
 import { useContext } from 'react'
@@ -21,20 +22,20 @@ const StakingFormActionButton = ({
     if (!userAddress && onSelectWallet) {
       return (
         <Button block onClick={() => onSelectWallet()}>
-          Connect Wallet
+          <Trans>Connect Wallet</Trans>
         </Button>
       )
     }
     if (!hasAdequateApproval) {
       return (
         <Button block onClick={approve}>
-          Approve Token for Transaction
+          <Trans>Approve Token for Transaction</Trans>
         </Button>
       )
     } else {
       return (
         <Button block onClick={onReviewButtonClick} type="primary">
-          Review and confirm stake
+          <Trans>Review and confirm stake</Trans>
         </Button>
       )
     }

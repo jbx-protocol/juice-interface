@@ -528,6 +528,10 @@ msgstr "Toutes les modifications que vous apportez prendront effet dans le <0>cy
 msgid "Any reconfiguration to an upcoming funding cycle will take effect once the current cycle ends. A project with no strategy may be vulnerable to being rug-pulled by its owner."
 msgstr "Tout reparamétrage d'un cycle de financement à venir sera effectif une fois que le cycle en cours aura fini."
 
+#: src/components/veNft/formControls/StakingFormActionButton.tsx
+msgid "Approve Token for Transaction"
+msgstr ""
+
 #: src/components/ArchiveProject/index.tsx
 #: src/components/ArchiveProject/index.tsx
 msgid "Archive project"
@@ -804,6 +808,10 @@ msgstr ""
 #: src/components/Navbar/Account.tsx
 msgid "Connect"
 msgstr "Connectez-vous"
+
+#: src/components/veNft/formControls/StakingFormActionButton.tsx
+msgid "Connect Wallet"
+msgstr ""
 
 #: src/components/TransactionModal.tsx
 msgid "Connect wallet"
@@ -2698,6 +2706,10 @@ msgstr "Actions restreintes"
 #: src/pages/v1/create/index.page.tsx
 msgid "Review & Deploy"
 msgstr "Réviser et appliquer"
+
+#: src/components/veNft/formControls/StakingFormActionButton.tsx
+msgid "Review and confirm stake"
+msgstr ""
 
 #: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner.tsx
 msgid "Review and launch funding cycle"

@@ -523,6 +523,10 @@ msgstr "Any changes you make will take effect in <0>funding cycle #{0}</0>. The 
 msgid "Any reconfiguration to an upcoming funding cycle will take effect once the current cycle ends. A project with no strategy may be vulnerable to being rug-pulled by its owner."
 msgstr ""
 
+#: src/components/veNft/formControls/StakingFormActionButton.tsx
+msgid "Approve Token for Transaction"
+msgstr "Approve Token for Transaction"
+
 #: src/components/ArchiveProject/index.tsx
 #: src/components/ArchiveProject/index.tsx
 msgid "Archive project"
@@ -799,6 +803,10 @@ msgstr "Congratulations on launching your project! The next steps are optional a
 #: src/components/Navbar/Account.tsx
 msgid "Connect"
 msgstr ""
+
+#: src/components/veNft/formControls/StakingFormActionButton.tsx
+msgid "Connect Wallet"
+msgstr "Connect Wallet"
 
 #: src/components/TransactionModal.tsx
 msgid "Connect wallet"
@@ -2693,6 +2701,10 @@ msgstr ""
 #: src/pages/v1/create/index.page.tsx
 msgid "Review & Deploy"
 msgstr ""
+
+#: src/components/veNft/formControls/StakingFormActionButton.tsx
+msgid "Review and confirm stake"
+msgstr "Review and confirm stake"
 
 #: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner.tsx
 msgid "Review and launch funding cycle"

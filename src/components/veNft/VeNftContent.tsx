@@ -9,6 +9,7 @@ import VeNftStakingForm from 'components/veNft/VeNftStakingForm'
 import VeNftOwnedTokensSection from 'components/veNft/VeNftOwnedTokensSection'
 import VeNftSummaryStatsSection from 'components/veNft/VeNftSummaryStatsSection'
 import { BigNumber } from '@ethersproject/bignumber'
+import { Space } from 'antd'
 
 const VeNftContent = () => {
   const { tokenSymbol, tokenName, projectMetadata } =
@@ -24,7 +25,7 @@ const VeNftContent = () => {
   ]
 
   return (
-    <>
+    <Space direction="vertical">
       <VeNftHeaderSection
         tokenName={tokenName}
         tokenSymbolDisplayText={tokenSymbolDisplayText}
@@ -38,7 +39,7 @@ const VeNftContent = () => {
       <VeNftSummaryStatsSection
         tokenSymbolDisplayText={tokenSymbolDisplayText}
       />
-    </>
+    </Space>
   )
 }
 

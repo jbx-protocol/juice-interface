@@ -20,29 +20,21 @@ const StakingFormActionButton = ({
   const renderActionButton = () => {
     if (!userAddress && onSelectWallet) {
       return (
-        <Button
-          block
-          style={{ whiteSpace: 'pre' }}
-          onClick={() => onSelectWallet()}
-        >
+        <Button block onClick={() => onSelectWallet()}>
           Connect Wallet
         </Button>
       )
     }
     if (!hasAdequateApproval) {
       return (
-        <Button block style={{ whiteSpace: 'pre' }} onClick={approve}>
+        <Button block onClick={approve}>
           Approve Token for Transaction
         </Button>
       )
     } else {
       return (
-        <Button
-          block
-          style={{ whiteSpace: 'pre' }}
-          onClick={onReviewButtonClick}
-        >
-          Review and Confirm Stake
+        <Button block onClick={onReviewButtonClick} type="primary">
+          Review and confirm stake
         </Button>
       )
     }

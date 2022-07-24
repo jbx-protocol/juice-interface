@@ -19,8 +19,6 @@ import VeNftCarousel from 'components/veNft/veNftCarousel'
 import StakingTokenRangesModal from 'components/veNft/veNftStakingTokenRangesModal'
 import ConfirmStakeModal from 'components/veNft/veNftConfirmStakeModal'
 
-import Callout from 'components/Callout'
-
 import { shadowCard } from 'constants/styles/shadowCard'
 
 interface StakingFormProps {
@@ -96,46 +94,43 @@ const VeNftStakingForm = ({
         form={form}
         initialValues={initialValues}
       >
-        <div style={{ ...shadowCard(theme), padding: 25, marginBottom: 10 }}>
-          <Space size="middle" direction="vertical">
-            <Callout>
-              <Trans>
-                Only project tokens claimed as ERC-20 tokens can be staked for
-                NFTs.
-              </Trans>
-            </Callout>
-          </Space>
-          <TokensStakedInput
-            form={form}
-            claimedBalance={claimedBalance}
-            tokenSymbolDisplayText={tokenSymbolDisplayText}
-            tokensStaked={tokensStaked}
-            minTokensAllowedToStake={minTokensAllowedToStake}
-          />
-          <Row>
-            <Col span={14}>
-              <LockDurationSelectInput
-                form={form}
-                lockDurationOptionsInSeconds={lockDurationOptionsInSeconds}
-              />
-            </Col>
-            <Col span={4}>
-              <p style={{ textAlign: 'center' }}>=</p>
-            </Col>
-            <Col span={6}>
+        <div style={{ ...shadowCard(theme), padding: 25 }}>
+          <Space direction="vertical" size={'large'} style={{ width: '100%' }}>
+            <div>
+              <Row gutter={20}>
+                <Col span={14}>
+                  <TokensStakedInput
+                    form={form}
+                    claimedBalance={claimedBalance}
+                    tokenSymbolDisplayText={tokenSymbolDisplayText}
+                    tokensStaked={tokensStaked}
+                    minTokensAllowedToStake={minTokensAllowedToStake}
+                  />
+                </Col>
+                <Col span={10}>
+                  <LockDurationSelectInput
+                    form={form}
+                    lockDurationOptionsInSeconds={lockDurationOptionsInSeconds}
+                  />
+                </Col>
+              </Row>
+
               <VotingPowerDisplayInput votingPower={votingPower} />
-            </Col>
-          </Row>
-          <CustomBeneficiaryInput form={form} />
-          <VeNftCarousel />
-          <Space size="middle" direction="vertical" style={{ width: '100%' }}>
-            <Button block onClick={() => setTokenRangesModalVisible(true)}>
-              <Trans>View Token Ranges</Trans>
-            </Button>
-            <StakingFormActionButton
-              hasAdequateApproval={hasAdequateApproval}
-              onReviewButtonClick={handleReviewButtonClick}
-            />
+            </div>
+
+            <CustomBeneficiaryInput form={form} />
+
+            <VeNftCarousel />
+
+            <Space size="middle" direction="vertical" style={{ width: '100%' }}>
+              <Button block onClick={() => setTokenRangesModalVisible(true)}>
+                <Trans>View token ranges</Trans>
+              </Button>
+              <StakingFormActionButton
+                hasAdequateApproval={hasAdequateApproval}
+                onReviewButtonClick={handleReviewButtonClick}
+              />
+            </Space>
           </Space>
         </div>
       </Form>

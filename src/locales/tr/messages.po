@@ -528,6 +528,10 @@ msgstr "Yaptığınız tüm değişiklikler <0>finansman döngüsü #{0}</0> iç
 msgid "Any reconfiguration to an upcoming funding cycle will take effect once the current cycle ends. A project with no strategy may be vulnerable to being rug-pulled by its owner."
 msgstr "Yaklaşan bir finansman döngüsüne yönelik herhangi bir yeniden yapılandırma, mevcut döngü sona erdiğinde yürürlüğe girecektir. Stratejisi olmayan bir proje, sahibi tarafından e-dolanrıcılığa karşı savunmasız olabilir."
 
+#: src/components/veNft/formControls/StakingFormActionButton.tsx
+msgid "Approve Token for Transaction"
+msgstr ""
+
 #: src/components/ArchiveProject/index.tsx
 #: src/components/ArchiveProject/index.tsx
 msgid "Archive project"
@@ -806,6 +810,10 @@ msgstr "Projenizi başlattığınız için tebrikler! Sonraki adımlar isteğe b
 #: src/components/Navbar/Account.tsx
 msgid "Connect"
 msgstr "Bağlan"
+
+#: src/components/veNft/formControls/StakingFormActionButton.tsx
+msgid "Connect Wallet"
+msgstr ""
 
 #: src/components/TransactionModal.tsx
 msgid "Connect wallet"
@@ -2700,6 +2708,10 @@ msgstr "Kısıtlanmış eylemler"
 #: src/pages/v1/create/index.page.tsx
 msgid "Review & Deploy"
 msgstr "İncele ve Dağıt"
+
+#: src/components/veNft/formControls/StakingFormActionButton.tsx
+msgid "Review and confirm stake"
+msgstr ""
 
 #: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner.tsx
 msgid "Review and launch funding cycle"

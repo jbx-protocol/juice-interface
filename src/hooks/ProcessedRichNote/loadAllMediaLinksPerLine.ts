@@ -8,26 +8,18 @@ const supportedContentTypes = [
   'image/svg',
 ]
 
-export const loadAllMediaLinksPerLine = async (
-  urlsPerLine: Array<string[] | null>,
-) => {
+export const loadAllMediaLinksPerLine = async (urlsPerLine: string[]) => {
   const mediaLinksPerLine: Array<string[] | undefined> = []
-  for (const urls of urlsPerLine) {
-    if (!urls) {
-      mediaLinksPerLine.push(undefined)
-      continue
-    }
-    const mediaLinks = (
-      await Promise.all(
-        urls.map(async url => {
-          if (!url) return undefined
-          const contentType = (await loadURLContentType(url)) ?? ''
-          if (!supportedContentTypes.includes(contentType)) return undefined
-          return url
-        }),
-      )
-    ).filter((url): url is string => !!url)
-    mediaLinksPerLine.push(mediaLinks.length ? mediaLinks : undefined)
-  }
+  const mediaLinks = (
+    await Promise.all(
+      urlsPerLine.map(async url => {
+        if (!url) return undefined
+        const contentType = (await loadURLContentType(url)) ?? ''
+        if (!supportedContentTypes.includes(contentType)) return undefined
+        return url
+      }),
+    )
+  ).filter((url): url is string => !!url)
+  mediaLinksPerLine.push(mediaLinks.length ? mediaLinks : undefined)
   return mediaLinksPerLine
 }

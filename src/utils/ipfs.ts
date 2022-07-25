@@ -12,7 +12,7 @@ import { IPFSNftRewardTier, NftRewardTier } from 'models/v2/nftRewardTier'
 import axios from 'axios'
 
 import { readNetwork } from 'constants/networks'
-import { IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
+import { DEFAULT_PINATA_GATEWAY, IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
 
 export const IPFS_TAGS = {
   [IpfsCacheName.trending]:
@@ -172,4 +172,11 @@ export async function uploadNftRewardsToIPFS(
   return await Promise.all(
     nftRewards.map(rewardTier => uploadNftRewardToIPFS(rewardTier)),
   )
+}
+
+// returns a native IPFS link (`ipfs://cid`) as a https link
+export function formatIpfsLink(ipfsLink: string) {
+  const ipfsLinkParts = ipfsLink.split('/')
+  const cid = ipfsLinkParts[ipfsLinkParts.length - 1]
+  return `https://${DEFAULT_PINATA_GATEWAY}/ipfs/${cid}`
 }

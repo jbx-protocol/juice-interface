@@ -1334,10 +1334,6 @@ msgstr ""
 msgid "ETH-ERC20 Address Created"
 msgstr ""
 
-#: src/components/veNft/VeNftOwnedTokenCard.tsx
-msgid "EXTEND LOCK"
-msgstr ""
-
 #: src/components/v2/shared/DistributionSplitsSection/SpecificLimitModal.tsx
 msgid "Each payout will receive their percent of this total each funding cycle if there is enough in the treasury. Otherwise, they will receive their percent of whatever is in the treasury."
 msgstr ""
@@ -1439,6 +1435,7 @@ msgstr ""
 
 #: src/components/veNft/VeNftExtendLockModal.tsx
 #: src/components/veNft/VeNftExtendLockModal.tsx
+#: src/components/veNft/VeNftOwnedTokenCard.tsx
 msgid "Extend Lock"
 msgstr ""
 
@@ -1853,6 +1850,7 @@ msgstr "Загрузить ещё"
 msgid "Lock ${tokenSymbolDisplayText} for Voting Power"
 msgstr ""
 
+#: src/components/veNft/VeNftOwnedTokenCard.tsx
 #: src/components/veNft/veNftConfirmStakeModal.tsx
 msgid "Lock Duration"
 msgstr ""
@@ -1870,6 +1868,10 @@ msgstr ""
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Lock until"
 msgstr "Заблокировать до"
+
+#: src/components/veNft/VeNftOwnedTokenCard.tsx
+msgid "Locked {tokenSymbolDisplayText}"
+msgstr ""
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
 msgid "Locked:"
@@ -2519,11 +2521,6 @@ msgstr ""
 msgid "Provide a link to additional information about this NFT."
 msgstr ""
 
-#: src/components/veNft/VeNftOwnedTokenCard.tsx
-#: src/components/veNft/VeNftOwnedTokenCard.tsx
-msgid "REDEEM"
-msgstr ""
-
 #: src/pages/home/StatsSection.tsx
 msgid "Raised on Juicebox"
 msgstr ""
@@ -2633,6 +2630,8 @@ msgstr "Перенастроить предстоящие финансирова
 msgid "Reconfigure upcoming funding cycles"
 msgstr "Перенастроить предстоящие циклы финансирования"
 
+#: src/components/veNft/VeNftOwnedTokenCard.tsx
+#: src/components/veNft/VeNftOwnedTokenCard.tsx
 #: src/components/veNft/VeNftRedeemModal.tsx
 msgid "Redeem"
 msgstr ""
@@ -2969,10 +2968,6 @@ msgstr ""
 msgid "Spending"
 msgstr "Расходы"
 
-#: src/components/veNft/VeNftOwnedTokenCard.tsx
-msgid "Stake duration:"
-msgstr ""
-
 #: src/components/ManageTokensModal.tsx
 msgid "Stake your {tokensLabel} to increase your voting weight and claim Governance NFTs."
 msgstr ""
@@ -2983,10 +2978,6 @@ msgstr ""
 
 #: src/components/ManageTokensModal.tsx
 msgid "Stake {tokensLabel} for NFT"
-msgstr ""
-
-#: src/components/veNft/VeNftOwnedTokenCard.tsx
-msgid "Staked ${tokenSymbolDisplayText}:"
 msgstr ""
 
 #: src/components/veNft/veNftConfirmStakeModal.tsx
@@ -3279,7 +3270,7 @@ msgid "This will reset the data for your new project. All changes will be lost."
 msgstr ""
 
 #: src/components/veNft/VeNftOwnedTokenCard.tsx
-msgid "Time remaining:"
+msgid "Time Remaining"
 msgstr ""
 
 #: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupSection.tsx
@@ -3492,10 +3483,6 @@ msgstr "Твиттер"
 msgid "Twitter handle"
 msgstr ""
 
-#: src/components/veNft/VeNftOwnedTokenCard.tsx
-msgid "UNLOCK"
-msgstr ""
-
 #: src/components/ArchiveProject/index.tsx
 #: src/components/ArchiveProject/index.tsx
 msgid "Unarchive project"
@@ -3513,6 +3500,7 @@ msgstr ""
 msgid "Unless payments are paused in your funding cycle settings, your project can still receive payments directly through the Juicebox protocol contracts."
 msgstr ""
 
+#: src/components/veNft/VeNftOwnedTokenCard.tsx
 #: src/components/veNft/VeNftUnlockModal.tsx
 msgid "Unlock"
 msgstr ""
@@ -4220,5 +4208,4 @@ msgstr ""
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "{userOwnershipPercentage}% of total supply"
 msgstr "{userOwnershipPercentage}% от общего объема предложения"
-
 

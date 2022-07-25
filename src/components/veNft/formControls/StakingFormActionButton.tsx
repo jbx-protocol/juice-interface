@@ -31,6 +31,7 @@ const StakingFormActionButton = ({
         <Button
           block
           onClick={onApproveButtonClick}
+          type="primary"
           loading={tokenApprovalLoading}
         >
           <Trans>Approve token for transaction</Trans>

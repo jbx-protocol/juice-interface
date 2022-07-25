@@ -1,8 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Form, Select } from 'antd'
 import { FormInstance } from 'antd/lib/form'
-import { ThemeContext } from 'contexts/themeContext'
-import { useContext } from 'react'
 import { detailedTimeString } from 'utils/formatTime'
 
 interface TokensStakedInputProps {
@@ -14,24 +12,8 @@ const LockDurationSelectInput = ({
   form,
   lockDurationOptionsInSeconds,
 }: TokensStakedInputProps) => {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   return (
-    <Form.Item
-      name="lockDuration"
-      extra={
-        <div
-          style={{
-            color: colors.text.primary,
-            marginBottom: 10,
-          }}
-        >
-          <Trans>Days Locked</Trans>
-        </div>
-      }
-    >
+    <Form.Item name="lockDuration" label={<Trans>Lock duration</Trans>}>
       <Select onChange={val => form.setFieldsValue({ lockDuration: val })}>
         {lockDurationOptionsInSeconds.map((duration: number) => {
           return (

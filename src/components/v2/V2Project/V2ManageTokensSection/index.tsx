@@ -30,7 +30,7 @@ import { default as useV1HandleForProjectId } from 'hooks/v1/contractReader/Hand
 import { useHasV1TokenPaymentTerminal } from 'hooks/v2/hasV1TokenPaymentTerminal'
 import { featureFlagEnabled } from 'utils/featureFlags'
 
-import { useVeNftEnabled } from 'hooks/veNft/veNftEnabled'
+import { useVeNftEnabled } from 'hooks/veNft/VeNftEnabled'
 
 import V2RedeemModal from './V2RedeemModal'
 import V2ClaimTokensModal from './V2ClaimTokensModal'

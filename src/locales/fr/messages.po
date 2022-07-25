@@ -18,6 +18,10 @@ msgstr ""
 "X-Crowdin-File: messages.po\n"
 "X-Crowdin-File-ID: 9\n"
 
+#: src/components/veNft/veNftConfirmStakeModal.tsx
+msgid "$ve{tokenSymbolDisplayText} Received"
+msgstr ""
+
 #: src/components/formItems/ProjectDiscountRate.tsx
 msgid "({0}%)"
 msgstr "({0}%)"
@@ -302,6 +306,10 @@ msgstr "Le reparamétrage d'un cycle de financement à venir doit être soumis a
 msgid "A reserved rate of more than 90% is risky for contributors. Contributors won't receive many tokens for their contribution."
 msgstr "Un taux réservé supérieur à 90% est risqué pour les contributeurs. Les contributeurs ne recevront pas beaucoup de tokens pour leur contribution."
 
+#: src/components/veNft/VeNftOwnedTokenCard.tsx
+msgid "A veNft can only be redeemed if the project currently has overflow."
+msgstr ""
+
 #: src/components/ProjectCard.tsx
 msgid "ARCHIVED"
 msgstr "ARCHIVÉ"
@@ -528,6 +536,10 @@ msgstr "Toutes les modifications que vous apportez prendront effet dans le <0>cy
 msgid "Any reconfiguration to an upcoming funding cycle will take effect once the current cycle ends. A project with no strategy may be vulnerable to being rug-pulled by its owner."
 msgstr "Tout reparamétrage d'un cycle de financement à venir sera effectif une fois que le cycle en cours aura fini."
 
+#: src/components/veNft/formControls/StakingFormActionButton.tsx
+msgid "Approve token for transaction"
+msgstr ""
+
 #: src/components/ArchiveProject/index.tsx
 #: src/components/ArchiveProject/index.tsx
 msgid "Archive project"
@@ -598,6 +610,7 @@ msgstr "Solde du portefeuille du propriétaire du projet."
 
 #: src/components/v1/V1Project/V1DownloadPaymentsModal.tsx
 #: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
+#: src/components/veNft/veNftConfirmStakeModal.tsx
 msgid "Beneficiary"
 msgstr "Bénéficiaire"
 
@@ -719,6 +732,10 @@ msgstr "Les modifications prendront effet selon les choix de projet du contrat a
 msgid "Changes you make will take effect according to your <0>{0}</0> reconfiguration rule (the first funding cycle following <1>{1}</1> from now)."
 msgstr "Les modifications que vous apportez prendront effet selon votre <0>{0}</0> règle de reconfiguration (le prochain cycle de financement à compter<1>{1}</1> de cette date)."
 
+#: src/components/veNft/veNftStakingTokenRangesModal.tsx
+msgid "Character"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 msgid "Check this to mint {tokenSymbol} ERC-20 to your wallet. Leave unchecked to have your token balance tracked by Juicebox, saving gas on this transaction. You can always claim your ERC-20 tokens later."
 msgstr "Cochez ceci pour frapper {tokenSymbol} ERC-20 vers votre portefeuille. Laissez décoché pour que votre solde soit suivi par Juicebox, tout en économisant du gaz dans cette transaction. Vous pouvez toujours réclamer vos tokens ERC-20 plus tard."
@@ -806,6 +823,10 @@ msgstr ""
 #: src/components/Navbar/Account.tsx
 msgid "Connect"
 msgstr "Connectez-vous"
+
+#: src/components/veNft/formControls/StakingFormActionButton.tsx
+msgid "Connect Wallet"
+msgstr ""
 
 #: src/components/TransactionModal.tsx
 msgid "Connect wallet"
@@ -1009,10 +1030,6 @@ msgstr "Date créée"
 #: src/constants/time.ts
 msgid "Days"
 msgstr "Jours"
-
-#: src/components/veNft/formControls/LockDurationSelectInput.tsx
-msgid "Days Locked"
-msgstr ""
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierCard.tsx
 msgid "Delete NFT"
@@ -1415,6 +1432,15 @@ msgstr ""
 #: src/pages/index.page.tsx
 msgid "Explore projects"
 msgstr "Explorer des projets"
+
+#: src/components/veNft/VeNftExtendLockModal.tsx
+#: src/components/veNft/VeNftOwnedTokenCard.tsx
+msgid "Extend Lock"
+msgstr ""
+
+#: src/components/veNft/VeNftExtendLockModal.tsx
+msgid "Extend lock successful. Results will be indexed in a few moments."
+msgstr ""
 
 #: src/components/Navbar/MenuItems.tsx
 msgid "FAQ"
@@ -1827,11 +1853,28 @@ msgstr "Télécharger d'avantage"
 msgid "Lock ${tokenSymbolDisplayText} for Voting Power"
 msgstr ""
 
+#: src/components/veNft/VeNftOwnedTokenCard.tsx
+#: src/components/veNft/veNftConfirmStakeModal.tsx
+msgid "Lock Duration"
+msgstr ""
+
+#: src/components/veNft/formControls/LockDurationSelectInput.tsx
+msgid "Lock duration"
+msgstr ""
+
+#: src/components/veNft/veNftConfirmStakeModal.tsx
+msgid "Lock successful. Results will be indexed in a few moments."
+msgstr ""
+
 #: src/components/modals/ReservedTokenReceiverModal.tsx
 #: src/components/v1/shared/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Lock until"
 msgstr "Bloquer jusqu'à"
+
+#: src/components/veNft/VeNftOwnedTokenCard.tsx
+msgid "Locked {tokenSymbolDisplayText}"
+msgstr ""
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
 msgid "Locked:"
@@ -1888,7 +1931,7 @@ msgid "Migrate to Juicebox V1.1"
 msgstr "Migrer vers Juicebox V1.1"
 
 #: src/components/veNft/formControls/CustomBeneficiaryInput.tsx
-msgid "Mint NFT to a custom address"
+msgid "Mint NFT to a custom address."
 msgstr ""
 
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
@@ -2007,6 +2050,10 @@ msgstr "Aucun cycle de financement actif."
 msgid "No activity yet"
 msgstr "Aucune activité"
 
+#: src/components/veNft/veNftConfirmStakeModal.tsx
+msgid "No beneficiary selected. Is your wallet connected?"
+msgstr ""
+
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 msgid "No funding target: The project will control how all funds are distributed, and none can be redeemed by token holders."
 msgstr "Aucun objectif de financement : le projet contrôlera la manière dont tous les fonds sont distribués, et rien ne pourra être récupéré par les titulaires de tokens."
@@ -2086,7 +2133,7 @@ msgstr "Une fois lancé, votre premier cycle de financement <0>ne peut plus êtr
 msgid "Only lowercase letters"
 msgstr ""
 
-#: src/components/veNft/VeNftStakingForm.tsx
+#: src/components/veNft/formControls/TokensStakedInput.tsx
 msgid "Only project tokens claimed as ERC-20 tokens can be staked for NFTs."
 msgstr ""
 
@@ -2481,6 +2528,10 @@ msgstr ""
 msgid "Raised on Juicebox"
 msgstr ""
 
+#: src/components/veNft/veNftStakingTokenRangesModal.tsx
+msgid "Range"
+msgstr ""
+
 #: src/pages/projects/RankingExplanation.tsx
 msgid "Rankings based on number of contributions and volume gained in the last {trendingWindow} days. <0>See code</0>"
 msgstr "Classements basés sur le nombre de contributions et le volume gagné au cours des derniers {trendingWindow} jours. <0>Voir le code</0>"
@@ -2582,6 +2633,19 @@ msgstr "Modifier les prochains financements"
 msgid "Reconfigure upcoming funding cycles"
 msgstr "Reconfigurer les prochains cycles de financement"
 
+#: src/components/veNft/VeNftOwnedTokenCard.tsx
+#: src/components/veNft/VeNftOwnedTokenCard.tsx
+msgid "Redeem"
+msgstr ""
+
+#: src/components/veNft/VeNftRedeemModal.tsx
+msgid "Redeem successful. Results will be indexed in a few moments."
+msgstr ""
+
+#: src/components/veNft/VeNftRedeemModal.tsx
+msgid "Redeem veNFT"
+msgstr ""
+
 #: src/components/ManageTokensModal.tsx
 msgid "Redeem your {tokensLabel} for a portion of the project's overflow. Any {tokensLabel} you redeem will be burned."
 msgstr "Récupérer vos {tokensLabel} d'une portion de l'overflow du projet. Aucun {tokensLabel} récupéré sera brûlé."
@@ -2605,6 +2669,10 @@ msgstr "Récupérer {tokensTextLong} pour ETH"
 msgid "Redeemed"
 msgstr "Récupéré"
 
+#: src/components/veNft/VeNftRedeemModal.tsx
+msgid "Redeeming this NFT will burn the token and return..."
+msgstr ""
+
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 #: src/pages/create/forms/TokenForm/index.tsx
 #: src/pages/create/tabs/ReviewDeployTab/FundingAttributes.tsx
@@ -2622,10 +2690,6 @@ msgstr "Actualiser"
 #: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner.tsx
 msgid "Relaunch your funding cycle on the new Juicebox V2 contracts."
 msgstr "Relancez votre cycle de financement dans les nouveaux contrats Juicebox V2."
-
-#: src/components/veNft/formControls/TokensStakedInput.tsx
-msgid "Remaining: {unstakedTokens}"
-msgstr ""
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
@@ -2704,6 +2768,10 @@ msgstr "Actions restreintes"
 #: src/pages/v1/create/index.page.tsx
 msgid "Review & Deploy"
 msgstr "Réviser et appliquer"
+
+#: src/components/veNft/formControls/StakingFormActionButton.tsx
+msgid "Review and confirm stake"
+msgstr ""
 
 #: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner.tsx
 msgid "Review and launch funding cycle"
@@ -2922,6 +2990,10 @@ msgstr ""
 msgid "Stake {tokensLabel} for NFT"
 msgstr ""
 
+#: src/components/veNft/veNftConfirmStakeModal.tsx
+msgid "Staked {tokenSymbolDisplayText}"
+msgstr ""
+
 #: src/components/veNft/VeNftSummaryStatsSection.tsx
 msgid "Staking Summary:"
 msgstr ""
@@ -2955,6 +3027,10 @@ msgstr ""
 
 #: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/SetV1ProjectSection.tsx
 msgid "Step 2. Link your Juicebox V1 project"
+msgstr ""
+
+#: src/components/veNft/VeNftStakingForm.tsx
+msgid "Successfully approved ERC-20 spending."
 msgstr ""
 
 #: src/components/v1/shared/PayoutModsList.tsx
@@ -3203,6 +3279,10 @@ msgstr "Cela effacera toutes vos modifications."
 msgid "This will reset the data for your new project. All changes will be lost."
 msgstr ""
 
+#: src/components/veNft/VeNftOwnedTokenCard.tsx
+msgid "Time Remaining"
+msgstr ""
+
 #: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupSection.tsx
 msgid "To do so, you need to give your V1 token holders the ability to exchange their V1 tokens for V2 tokens. Select <0>Set up token migration</0> below to get started."
 msgstr ""
@@ -3217,10 +3297,6 @@ msgstr "À : <0/>"
 #: src/utils/tokenSymbolText.ts
 msgid "Token"
 msgstr "Token"
-
-#: src/components/veNft/veNftStakingTokenRangesModal.tsx
-msgid "Token Ranges"
-msgstr ""
 
 #: src/components/modals/ParticipantsModal.tsx
 msgid "Token address: <0/>"
@@ -3434,6 +3510,22 @@ msgstr ""
 msgid "Unless payments are paused in your funding cycle settings, your project can still receive payments directly through the Juicebox protocol contracts."
 msgstr ""
 
+#: src/components/veNft/VeNftOwnedTokenCard.tsx
+msgid "Unlock"
+msgstr ""
+
+#: src/components/veNft/VeNftUnlockModal.tsx
+msgid "Unlock successful. Results will be indexed in a few moments."
+msgstr ""
+
+#: src/components/veNft/VeNftUnlockModal.tsx
+msgid "Unlock veNFT"
+msgstr ""
+
+#: src/components/veNft/VeNftUnlockModal.tsx
+msgid "Unlocking this staking position will burn your NFT and return ${tokenSymbolDisplayText}."
+msgstr ""
+
 #: src/components/v2/shared/UnsavedChangesModal.tsx
 msgid "Unsaved changes"
 msgstr "Modifications non sauvegardées"
@@ -3450,6 +3542,10 @@ msgstr ""
 #: src/components/v2/V2Project/V2FundingCycleSection/index.tsx
 msgid "Upcoming"
 msgstr "À venir"
+
+#: src/components/veNft/VeNftExtendLockModal.tsx
+msgid "Update your veNFT's lock duration."
+msgstr ""
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Updates you make to this section will only be applied to <0>upcoming</0> funding cycles."
@@ -3516,7 +3612,7 @@ msgid "Version of the terminal contract used by this project."
 msgstr "Version du contrat terminal utilisé par ce projet."
 
 #: src/components/veNft/VeNftStakingForm.tsx
-msgid "View Token Ranges"
+msgid "View token ranges"
 msgstr ""
 
 #: src/components/Project/VolumeStatLine/VolumeStatLine.tsx
@@ -3525,7 +3621,7 @@ msgid "Volume"
 msgstr "Volume"
 
 #: src/components/veNft/formControls/VotingPowerDisplayInput.tsx
-msgid "Voting Power"
+msgid "VotePWR"
 msgstr ""
 
 #: src/components/inputs/Pay/MemoFormInput.tsx
@@ -3666,6 +3762,10 @@ msgstr "Souhaitez-vous émettre un token ERC-20 à utiliser comme token de ce pr
 msgid "Yes"
 msgstr "Oui"
 
+#: src/components/veNft/veNftConfirmStakeModal.tsx
+msgid "You are agreeing to IRREVOCABLY lock your tokens for {formattedLockDuration} in exchange for {votingPower} $ve{tokenSymbolDisplayText}"
+msgstr ""
+
 #: src/components/forms/ProjectDetailsForm.tsx
 msgid "You can edit your project details after creation at any time, but the transaction will cost gas."
 msgstr "Vous pouvez modifier les détails de votre projet à tout moment après sa création, mais la transaction coûtera du gaz."
@@ -3724,10 +3824,6 @@ msgstr ""
 
 #: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "You must review and accept the risks."
-msgstr ""
-
-#: src/components/veNft/formControls/TokensStakedInput.tsx
-msgid "You must stake at least {minTokensAllowedToStake} tokens."
 msgstr ""
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
@@ -3827,6 +3923,10 @@ msgstr "Votre solde de tokens non réclamé : {0}"
 msgid "Your unclaimed {tokenTextLong}"
 msgstr "Vos {tokenTextLong} non réclamés"
 
+#: src/components/veNft/formControls/VotingPowerDisplayInput.tsx
+msgid "Your voting power"
+msgstr ""
+
 #: src/components/v2/V2Project/DistributionLimit.tsx
 #: src/pages/create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Zero"
@@ -3845,6 +3945,11 @@ msgstr "après {0}% de frais JBX"
 msgid "called by <0/>"
 msgstr "appelé par <0/>"
 
+#: src/components/veNft/VeNftSummaryStatsSection.tsx
+msgid "day"
+msgstr ""
+
+#: src/components/veNft/VeNftSummaryStatsSection.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 #: src/utils/formatTime.ts
 msgid "days"
@@ -4052,6 +4157,10 @@ msgstr "{issuanceRate} tokens / ETH"
 msgid "{label}"
 msgstr "{label}"
 
+#: src/components/veNft/formControls/TokensStakedInput.tsx
+msgid "{minTokensAllowedToStake, plural, one {You must stake at least # token.} other {You must stake at least # tokens.}}"
+msgstr ""
+
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 msgid "{payerRate} (+ {reservedRate} reserved) {tokenSymbolPlural}/ETH"
 msgstr "{payerRate} (+ {reservedRate} réservé) {tokenSymbolPlural}/ETH"
@@ -4068,6 +4177,10 @@ msgstr "{paymentCount, plural, one {# paiement} other {# paiements}}"
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "{reservedRate} {tokenSymbolPlural}/ETH ({0}%)"
 msgstr "{reservedRate} {tokenSymbolPlural}/ETH ({0}%)"
+
+#: src/components/veNft/veNftStakingTokenRangesModal.tsx
+msgid "{tokenSymbolDisplayText} range"
+msgstr ""
 
 #: src/components/veNft/formControls/TokensStakedInput.tsx
 msgid "{tokenSymbolDisplayText} to lock"
@@ -4101,9 +4214,17 @@ msgstr "{tokensText} réservés"
 msgid "{tokensTokenUpper} amount"
 msgstr "{tokensTokenUpper} montant"
 
+#: src/components/veNft/VeNftSummaryStatsSection.tsx
+msgid "{totalStakedPeriodInDays, plural, one {{0}} other {{1}}}"
+msgstr ""
+
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "{unclaimedBalanceFormatted} {tokenText} claimable"
 msgstr "{unclaimedBalanceFormatted} {tokenText} réclamable"
+
+#: src/components/veNft/formControls/TokensStakedInput.tsx
+msgid "{unstakedTokens} {tokenSymbolDisplayText} remaining"
+msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "{userOwnershipPercentage}% of total supply"

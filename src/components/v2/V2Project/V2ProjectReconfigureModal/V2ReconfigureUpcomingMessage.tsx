@@ -54,11 +54,32 @@ export default function V2ReconfigureUpcomingMessage() {
     )
   } else {
     return (
-      <Trans>
-        Any changes you make will take effect in{' '}
-        <strong>funding cycle #{currentFCNumber + 1}</strong>. The current
-        funding cycle (#{currentFCNumber}) won't be altered.
-      </Trans>
+      <>
+        <div>
+          <Trans>
+            Any changes you make will take effect in{' '}
+            <strong>funding cycle #{currentFCNumber + 1}</strong>. The current
+            funding cycle (#{currentFCNumber}) won't be altered.
+          </Trans>
+        </div>
+        <br />
+        <div>
+          <Trans>
+            Time remaining for changes made to affect the next funding cycle:
+          </Trans>
+        </div>
+        <div>
+          <strong>
+            {detailedTimeString({
+              timeSeconds: BigNumber.from(
+                secondsUntilNextFC - ballotStrategyLength,
+              ),
+              fullWords: true,
+            })}
+          </strong>
+          .
+        </div>
+      </>
     )
   }
 }

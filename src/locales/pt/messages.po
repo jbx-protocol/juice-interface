@@ -19,10 +19,6 @@ msgstr ""
 "X-Crowdin-File-ID: 9\n"
 
 #: src/components/veNft/veNftConfirmStakeModal.tsx
-msgid "$ve{tokenSymbolDisplayText} NFT summary:"
-msgstr ""
-
-#: src/components/veNft/veNftConfirmStakeModal.tsx
 msgid "$ve{tokenSymbolDisplayText} Received"
 msgstr ""
 
@@ -537,7 +533,7 @@ msgid "Any reconfiguration to an upcoming funding cycle will take effect once th
 msgstr "Qualquer reconfiguração de um ciclo de financiamento próximo terá efeito assim que o ciclo atual termine. Um projeto sem estratégia pode ser vulnerável e acabar sofrendo um golpe (rug-pull, por exemplo) pelo dono."
 
 #: src/components/veNft/formControls/StakingFormActionButton.tsx
-msgid "Approve Token for Transaction"
+msgid "Approve token for transaction"
 msgstr ""
 
 #: src/components/ArchiveProject/index.tsx
@@ -4157,5 +4153,4 @@ msgstr ""
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "{userOwnershipPercentage}% of total supply"
 msgstr "{userOwnershipPercentage}% de fornecimento total"
-
 

@@ -33,7 +33,7 @@ const StakingFormActionButton = ({
           onClick={onApproveButtonClick}
           loading={tokenApprovalLoading}
         >
-          <Trans>Approve Token for Transaction</Trans>
+          <Trans>Approve token for transaction</Trans>
         </Button>
       )
     } else {

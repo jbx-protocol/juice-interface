@@ -14,10 +14,6 @@ msgstr ""
 "Plural-Forms: \n"
 
 #: src/components/veNft/veNftConfirmStakeModal.tsx
-msgid "$ve{tokenSymbolDisplayText} NFT summary:"
-msgstr "$ve{tokenSymbolDisplayText} NFT summary:"
-
-#: src/components/veNft/veNftConfirmStakeModal.tsx
 msgid "$ve{tokenSymbolDisplayText} Received"
 msgstr "$ve{tokenSymbolDisplayText} Received"
 
@@ -532,8 +528,8 @@ msgid "Any reconfiguration to an upcoming funding cycle will take effect once th
 msgstr ""
 
 #: src/components/veNft/formControls/StakingFormActionButton.tsx
-msgid "Approve Token for Transaction"
-msgstr "Approve Token for Transaction"
+msgid "Approve token for transaction"
+msgstr "Approve token for transaction"
 
 #: src/components/ArchiveProject/index.tsx
 #: src/components/ArchiveProject/index.tsx
@@ -4152,5 +4148,4 @@ msgstr "{unstakedTokens} {tokenSymbolDisplayText} remaining"
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "{userOwnershipPercentage}% of total supply"
 msgstr "{userOwnershipPercentage}% of total supply"
-
 

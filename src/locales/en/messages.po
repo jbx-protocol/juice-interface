@@ -809,6 +809,7 @@ msgstr "Connect wallet to claim"
 msgid "Connect wallet to deploy"
 msgstr "Connect wallet to deploy"
 
+#: src/components/v1/shared/FundingCycle/modals/WithdrawModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributeReservedTokensModal.tsx
 msgid "Connect wallet to distribute"
@@ -1134,6 +1135,8 @@ msgid "Distribute available funds to other Ethereum wallets or Juicebox projects
 msgstr "Distribute available funds to other Ethereum wallets or Juicebox projects as payouts. Use this to pay contributors, charities, Juicebox projects you depend on, or anyone else. Funds are distributed whenever a withdrawal is made from your project."
 
 #: src/components/v1/shared/FundingCycle/Spending.tsx
+#: src/components/v1/shared/FundingCycle/modals/WithdrawModal.tsx
+#: src/components/v1/shared/FundingCycle/modals/WithdrawModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
@@ -3602,14 +3605,6 @@ msgstr ""
 #: src/pages/create/forms/FundingForm/index.tsx
 msgid "With no funding cycles, the project's owner can start a new funding cycle (Funding Cycle #2) on-demand. <0>Learn more.</0>"
 msgstr "With no funding cycles, the project's owner can start a new funding cycle (Funding Cycle #2) on-demand. <0>Learn more.</0>"
-
-#: src/components/v1/shared/FundingCycle/modals/WithdrawModal.tsx
-msgid "Withdraw"
-msgstr ""
-
-#: src/components/v1/shared/FundingCycle/modals/WithdrawModal.tsx
-msgid "Withdraw funds"
-msgstr "Withdraw funds"
 
 #: src/components/Navbar/constants.ts
 msgid "Workspace"

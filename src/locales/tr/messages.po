@@ -814,6 +814,7 @@ msgstr "Talep etmek için cüzdanınızı bağlayın"
 msgid "Connect wallet to deploy"
 msgstr "Başlatmak için cüzdanınızı bağlayın"
 
+#: src/components/v1/shared/FundingCycle/modals/WithdrawModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributeReservedTokensModal.tsx
 msgid "Connect wallet to distribute"
@@ -1139,6 +1140,8 @@ msgid "Distribute available funds to other Ethereum wallets or Juicebox projects
 msgstr "Uygun fonları diğer Ethereum cüzdanlarına veya Juicebox projelerine ödeme olarak dağıtın. Bunu katılımcılara, yardım kuruluşlarına, bağlı olduğunuz Juicebox projelerine veya başkalarına ödeme yapmak için kullanın. Projelerinizden para çekildiğinde fonlar dağıtılır."
 
 #: src/components/v1/shared/FundingCycle/Spending.tsx
+#: src/components/v1/shared/FundingCycle/modals/WithdrawModal.tsx
+#: src/components/v1/shared/FundingCycle/modals/WithdrawModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
@@ -3607,14 +3610,6 @@ msgstr "Juicebox ile projeler, motive olmuş punklar tarafından şeffaf bir şe
 #: src/pages/create/forms/FundingForm/index.tsx
 msgid "With no funding cycles, the project's owner can start a new funding cycle (Funding Cycle #2) on-demand. <0>Learn more.</0>"
 msgstr "Finansman döngüsü tanımlanmamışsa, proje sahibi talep üzerine yeni bir finansman döngüsü (2. Finansman Döngüsü) başlatabilir. <0>Daha fazla bilgi edinin.</0>"
-
-#: src/components/v1/shared/FundingCycle/modals/WithdrawModal.tsx
-msgid "Withdraw"
-msgstr "Çek"
-
-#: src/components/v1/shared/FundingCycle/modals/WithdrawModal.tsx
-msgid "Withdraw funds"
-msgstr "Fonları çek"
 
 #: src/components/Navbar/constants.ts
 msgid "Workspace"

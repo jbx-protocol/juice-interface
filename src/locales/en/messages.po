@@ -301,6 +301,10 @@ msgstr ""
 msgid "A reserved rate of more than 90% is risky for contributors. Contributors won't receive many tokens for their contribution."
 msgstr "A reserved rate of more than 90% is risky for contributors. Contributors won't receive many tokens for their contribution."
 
+#: src/components/veNft/VeNftOwnedTokenCard.tsx
+msgid "A veNft can only be redeemed if the project currently has overflow."
+msgstr "A veNft can only be redeemed if the project currently has overflow."
+
 #: src/components/ProjectCard.tsx
 msgid "ARCHIVED"
 msgstr "ARCHIVED"
@@ -1424,6 +1428,15 @@ msgstr "Error uploading file"
 msgid "Explore projects"
 msgstr "Explore projects"
 
+#: src/components/veNft/VeNftExtendLockModal.tsx
+#: src/components/veNft/VeNftOwnedTokenCard.tsx
+msgid "Extend Lock"
+msgstr "Extend Lock"
+
+#: src/components/veNft/VeNftExtendLockModal.tsx
+msgid "Extend lock successful. Results will be indexed in a few moments."
+msgstr "Extend lock successful. Results will be indexed in a few moments."
+
 #: src/components/Navbar/MenuItems.tsx
 msgid "FAQ"
 msgstr ""
@@ -1835,6 +1848,7 @@ msgstr ""
 msgid "Lock ${tokenSymbolDisplayText} for Voting Power"
 msgstr "Lock ${tokenSymbolDisplayText} for Voting Power"
 
+#: src/components/veNft/VeNftOwnedTokenCard.tsx
 #: src/components/veNft/veNftConfirmStakeModal.tsx
 msgid "Lock Duration"
 msgstr "Lock Duration"
@@ -1852,6 +1866,10 @@ msgstr "Lock successful. Results will be indexed in a few moments."
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Lock until"
 msgstr "Lock until"
+
+#: src/components/veNft/VeNftOwnedTokenCard.tsx
+msgid "Locked {tokenSymbolDisplayText}"
+msgstr "Locked {tokenSymbolDisplayText}"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
 msgid "Locked:"
@@ -2610,6 +2628,19 @@ msgstr "Reconfigure upcoming funding"
 msgid "Reconfigure upcoming funding cycles"
 msgstr "Reconfigure upcoming funding cycles"
 
+#: src/components/veNft/VeNftOwnedTokenCard.tsx
+#: src/components/veNft/VeNftOwnedTokenCard.tsx
+msgid "Redeem"
+msgstr "Redeem"
+
+#: src/components/veNft/VeNftRedeemModal.tsx
+msgid "Redeem successful. Results will be indexed in a few moments."
+msgstr "Redeem successful. Results will be indexed in a few moments."
+
+#: src/components/veNft/VeNftRedeemModal.tsx
+msgid "Redeem veNFT"
+msgstr "Redeem veNFT"
+
 #: src/components/ManageTokensModal.tsx
 msgid "Redeem your {tokensLabel} for a portion of the project's overflow. Any {tokensLabel} you redeem will be burned."
 msgstr "Redeem your {tokensLabel} for a portion of the project's overflow. Any {tokensLabel} you redeem will be burned."
@@ -2632,6 +2663,10 @@ msgstr "Redeem {tokensTextLong} for ETH"
 #: src/components/v2/V2Project/ProjectActivity/index.tsx
 msgid "Redeemed"
 msgstr "Redeemed"
+
+#: src/components/veNft/VeNftRedeemModal.tsx
+msgid "Redeeming this NFT will burn the token and return..."
+msgstr "Redeeming this NFT will burn the token and return..."
 
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 #: src/pages/create/forms/TokenForm/index.tsx
@@ -3239,6 +3274,10 @@ msgstr "This will erase all of your changes."
 msgid "This will reset the data for your new project. All changes will be lost."
 msgstr "This will reset the data for your new project. All changes will be lost."
 
+#: src/components/veNft/VeNftOwnedTokenCard.tsx
+msgid "Time Remaining"
+msgstr "Time Remaining"
+
 #: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupSection.tsx
 msgid "To do so, you need to give your V1 token holders the ability to exchange their V1 tokens for V2 tokens. Select <0>Set up token migration</0> below to get started."
 msgstr "To do so, you need to give your V1 token holders the ability to exchange their V1 tokens for V2 tokens. Select <0>Set up token migration</0> below to get started."
@@ -3466,6 +3505,22 @@ msgstr "Unknown Project"
 msgid "Unless payments are paused in your funding cycle settings, your project can still receive payments directly through the Juicebox protocol contracts."
 msgstr "Unless payments are paused in your funding cycle settings, your project can still receive payments directly through the Juicebox protocol contracts."
 
+#: src/components/veNft/VeNftOwnedTokenCard.tsx
+msgid "Unlock"
+msgstr "Unlock"
+
+#: src/components/veNft/VeNftUnlockModal.tsx
+msgid "Unlock successful. Results will be indexed in a few moments."
+msgstr "Unlock successful. Results will be indexed in a few moments."
+
+#: src/components/veNft/VeNftUnlockModal.tsx
+msgid "Unlock veNFT"
+msgstr "Unlock veNFT"
+
+#: src/components/veNft/VeNftUnlockModal.tsx
+msgid "Unlocking this staking position will burn your NFT and return ${tokenSymbolDisplayText}."
+msgstr "Unlocking this staking position will burn your NFT and return ${tokenSymbolDisplayText}."
+
 #: src/components/v2/shared/UnsavedChangesModal.tsx
 msgid "Unsaved changes"
 msgstr "Unsaved changes"
@@ -3482,6 +3537,10 @@ msgstr "Untrack token"
 #: src/components/v2/V2Project/V2FundingCycleSection/index.tsx
 msgid "Upcoming"
 msgstr ""
+
+#: src/components/veNft/VeNftExtendLockModal.tsx
+msgid "Update your veNFT's lock duration."
+msgstr "Update your veNFT's lock duration."
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Updates you make to this section will only be applied to <0>upcoming</0> funding cycles."
@@ -3881,6 +3940,11 @@ msgstr ""
 msgid "called by <0/>"
 msgstr "called by <0/>"
 
+#: src/components/veNft/VeNftSummaryStatsSection.tsx
+msgid "day"
+msgstr "day"
+
+#: src/components/veNft/VeNftSummaryStatsSection.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 #: src/utils/formatTime.ts
 msgid "days"
@@ -4144,6 +4208,10 @@ msgstr "{tokensText} reserved"
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "{tokensTokenUpper} amount"
 msgstr "{tokensTokenUpper} amount"
+
+#: src/components/veNft/VeNftSummaryStatsSection.tsx
+msgid "{totalStakedPeriodInDays, plural, one {{0}} other {{1}}}"
+msgstr "{totalStakedPeriodInDays, plural, one {{0}} other {{1}}}"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "{unclaimedBalanceFormatted} {tokenText} claimable"

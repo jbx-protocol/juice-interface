@@ -155,7 +155,7 @@ export default function RedeemModal({
       <Space direction="vertical" style={{ width: '100%' }}>
         <div>
           <p style={statsStyle}>
-            <Trans>Bonding curve:</Trans>{' '}
+            <Trans>Redemption rate:</Trans>{' '}
             <span>
               {fcMetadata?.bondingCurveRate !== undefined
                 ? fcMetadata.bondingCurveRate / 2

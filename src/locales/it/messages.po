@@ -620,11 +620,11 @@ msgstr ""
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
-msgid "Bonding curve rate"
+msgid "Redemption rate"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
-msgid "Bonding curve:"
+msgid "Redemption:"
 msgstr ""
 
 #: src/pages/index.page.tsx
@@ -4059,4 +4059,5 @@ msgstr ""
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "{userOwnershipPercentage}% of total supply"
 msgstr ""
+
 

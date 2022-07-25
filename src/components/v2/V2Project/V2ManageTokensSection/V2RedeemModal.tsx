@@ -104,7 +104,10 @@ export default function V2RedeemModal({
     if (redeemBN.eq(0)) {
       return Promise.reject(t`Required`)
     } else if (redeemBN.gt(totalBalance ?? 0)) {
-      return Promise.reject(t`Balance exceeded`)
+      return Promise.reject(t`Your balance exceeded`)
+    } else if (redeemBN.gt(totalTokenSupply ?? 0)) {
+      // Error message already showing for this case
+      return Promise.reject()
     }
     return Promise.resolve()
   }
@@ -135,6 +138,13 @@ export default function V2RedeemModal({
       },
     )
   }
+
+  const totalSupplyExceeded =
+    redeemAmount &&
+    parseFloat(redeemAmount) > parseFloat(fromWad(totalTokenSupply))
+  const personalBalanceExceeded =
+    redeemAmount && parseFloat(redeemAmount) > parseFloat(fromWad(totalBalance))
+  const inUSD = distributionLimitCurrency?.eq(V2_CURRENCY_USD)
 
   return (
     <TransactionModal
@@ -227,6 +237,7 @@ export default function V2RedeemModal({
         <div>
           <Form form={form}>
             <FormattedNumberInput
+              name="redeemAmount"
               min={0}
               step={0.001}
               placeholder="0"
@@ -244,15 +255,47 @@ export default function V2RedeemModal({
               onChange={val => setRedeemAmount(val)}
             />
           </Form>
-          {primaryTerminalCurrentOverflow?.gt(0) ? (
+          {totalSupplyExceeded ? (
+            <div style={{ color: colors.text.failure, marginTop: 20 }}>
+              <Trans>
+                You have exceeded the total token supply of{' '}
+                <strong>{formatWad(totalTokenSupply, { precision: 4 })}</strong>
+              </Trans>
+            </div>
+          ) : null}
+          {primaryTerminalCurrentOverflow?.gt(0) &&
+          !totalSupplyExceeded &&
+          minReturnedTokens?.gt(0) ? (
             <div style={{ fontWeight: 500, marginTop: 20 }}>
-              {distributionLimitCurrency?.eq(V2_CURRENCY_USD) ? (
-                <Trans>
-                  You will receive minimum {minReturnedTokensFormatted} ETH
-                </Trans>
-              ) : (
-                <Trans>You will receive {minReturnedTokensFormatted} ETH</Trans>
-              )}
+              <>
+                {!personalBalanceExceeded ? (
+                  <>
+                    {inUSD ? (
+                      <Trans>
+                        You will receive minimum {minReturnedTokensFormatted}{' '}
+                        ETH
+                      </Trans>
+                    ) : (
+                      <Trans>
+                        You will receive {minReturnedTokensFormatted} ETH
+                      </Trans>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    {inUSD ? (
+                      <Trans>
+                        You would receive minimum {minReturnedTokensFormatted}{' '}
+                        ETH
+                      </Trans>
+                    ) : (
+                      <Trans>
+                        You would receive {minReturnedTokensFormatted} ETH
+                      </Trans>
+                    )}
+                  </>
+                )}
+              </>
             </div>
           ) : null}
         </div>

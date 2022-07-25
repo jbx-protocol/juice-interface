@@ -1,4 +1,4 @@
-import { Form, Modal } from 'antd'
+import { Form } from 'antd'
 import { BigNumber } from '@ethersproject/bignumber'
 import { useContext, useEffect, useMemo, useState } from 'react'
 import { ThemeContext } from 'contexts/themeContext'
@@ -9,9 +9,9 @@ import { emitSuccessNotification } from 'utils/notifications'
 import { VeNftToken } from 'models/subgraph-entities/v2/venft-token'
 
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { useForm } from 'antd/lib/form/Form'
 
-import LockDurationSelectInput from './formControls/LockDurationSelectInput'
+import TransactionModal from 'components/TransactionModal'
+import LockDurationSelectInput from 'components/veNft/formControls/LockDurationSelectInput'
 
 type VeNftExtendLockModalProps = {
   visible: boolean
@@ -35,8 +35,9 @@ const VeNftExtendLockModal = ({
   const {
     veNft: { lockDurationOptions },
   } = useContext(V2ProjectContext)
-  const [form] = useForm<ExtendLockFormProps>()
+  const [form] = Form.useForm<ExtendLockFormProps>()
   const [loading, setLoading] = useState(false)
+  const [transactionPending, setTransactionPending] = useState(false)
   const lockDurationOptionsInSeconds = useMemo(() => {
     return lockDurationOptions
       ? lockDurationOptions.map((option: BigNumber) => {
@@ -75,7 +76,11 @@ const VeNftExtendLockModal = ({
         updatedDuration: lockDuration,
       },
       {
-        onConfirmed() {
+        onDone: () => {
+          setTransactionPending(true)
+        },
+        onConfirmed: () => {
+          setTransactionPending(false)
           setLoading(false)
           emitSuccessNotification(
             t`Extend lock successful. Results will be indexed in a few moments.`,
@@ -91,19 +96,18 @@ const VeNftExtendLockModal = ({
   }
 
   return (
-    <Modal
+    <TransactionModal
       visible={visible}
+      title={t`Extend Lock`}
       onCancel={onCancel}
       onOk={extendLock}
       okText={`Extend Lock`}
       confirmLoading={loading}
+      transactionPending={transactionPending}
     >
-      <h2>
-        <Trans>Extend Lock</Trans>
-      </h2>
       <div style={{ color: colors.text.secondary }}>
         <p>
-          <Trans>Set an updated duration for your staking position.</Trans>
+          <Trans>Update your veNFT's lock duration.</Trans>
         </p>
       </div>
       <Form
@@ -117,7 +121,7 @@ const VeNftExtendLockModal = ({
           lockDurationOptionsInSeconds={lockDurationOptionsInSeconds}
         />
       </Form>
-    </Modal>
+    </TransactionModal>
   )
 }
 

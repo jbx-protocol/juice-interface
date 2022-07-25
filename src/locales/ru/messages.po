@@ -2639,11 +2639,11 @@ msgid "Redeem"
 msgstr ""
 
 #: src/components/veNft/VeNftRedeemModal.tsx
-msgid "Redeem Token"
+msgid "Redeem successful. Results will be indexed in a few moments."
 msgstr ""
 
 #: src/components/veNft/VeNftRedeemModal.tsx
-msgid "Redeem successful. Results will be indexed in a few moments."
+msgid "Redeem veNFT"
 msgstr ""
 
 #: src/components/ManageTokensModal.tsx
@@ -2914,10 +2914,6 @@ msgstr ""
 
 #: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Set a unique name that will be visible in your project's URL, and that will allow your project to appear in search results."
-msgstr ""
-
-#: src/components/veNft/VeNftExtendLockModal.tsx
-msgid "Set an updated duration for your staking position."
 msgstr ""
 
 #: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
@@ -3523,6 +3519,10 @@ msgid "Unlock successful. Results will be indexed in a few moments."
 msgstr ""
 
 #: src/components/veNft/VeNftUnlockModal.tsx
+msgid "Unlock veNFT"
+msgstr ""
+
+#: src/components/veNft/VeNftUnlockModal.tsx
 msgid "Unlocking this staking position will burn your NFT and return ${tokenSymbolDisplayText}."
 msgstr ""
 
@@ -3542,6 +3542,10 @@ msgstr ""
 #: src/components/v2/V2Project/V2FundingCycleSection/index.tsx
 msgid "Upcoming"
 msgstr "Предстоящие"
+
+#: src/components/veNft/VeNftExtendLockModal.tsx
+msgid "Update your veNFT's lock duration."
+msgstr ""
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Updates you make to this section will only be applied to <0>upcoming</0> funding cycles."
@@ -4225,5 +4229,4 @@ msgstr ""
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "{userOwnershipPercentage}% of total supply"
 msgstr "{userOwnershipPercentage}% от общего объема предложения"
-
 

@@ -1,18 +1,19 @@
 import { t, Trans } from '@lingui/macro'
-import { Form, Modal } from 'antd'
+import { Form } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import { MemoFormInput } from 'components/inputs/Pay/MemoFormInput'
+import { useContext, useState } from 'react'
 
 import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
+import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useRedeemVeNftTx } from 'hooks/veNft/transactor/VeNftRedeemTx'
 import { VeNftToken } from 'models/subgraph-entities/v2/venft-token'
-import { useContext, useState } from 'react'
 
 import { emitSuccessNotification } from 'utils/notifications'
 
 import CustomBeneficiaryInput from 'components/veNft/formControls/CustomBeneficiaryInput'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
+import TransactionModal from 'components/TransactionModal'
+import { MemoFormInput } from 'components/inputs/Pay/MemoFormInput'
 
 type VeNftRedeemModalProps = {
   token: VeNftToken
@@ -31,6 +32,8 @@ const VeNftRedeemModal = ({
   const { primaryTerminal, tokenAddress } = useContext(V2ProjectContext)
   const { tokenId } = token
   const [form] = useForm<{ beneficiary: string }>()
+  const [loading, setLoading] = useState(false)
+  const [transactionPending, setTransactionPending] = useState(false)
   const [memo, setMemo] = useState('')
   const {
     theme: { colors },
@@ -42,12 +45,13 @@ const VeNftRedeemModal = ({
     const { beneficiary } = form.getFieldsValue()
     await form.validateFields()
 
-    // Prompt wallet connect if no wallet connected
     if (!userAddress && onSelectWallet) {
       onSelectWallet()
     }
 
     const txBeneficiary = beneficiary ? beneficiary : userAddress!
+
+    setLoading(true)
 
     const txSuccess = await redeemTx(
       {
@@ -58,7 +62,12 @@ const VeNftRedeemModal = ({
         terminal: primaryTerminal ? primaryTerminal : '',
       },
       {
-        onConfirmed() {
+        onDone: () => {
+          setTransactionPending(true)
+        },
+        onConfirmed: () => {
+          setTransactionPending(false)
+          setLoading(false)
           emitSuccessNotification(
             t`Redeem successful. Results will be indexed in a few moments.`,
           )
@@ -73,15 +82,15 @@ const VeNftRedeemModal = ({
   }
 
   return (
-    <Modal
+    <TransactionModal
       visible={visible}
+      title={t`Redeem veNFT`}
       onCancel={onCancel}
       onOk={redeem}
       okText={`Redeem`}
+      confirmLoading={loading}
+      transactionPending={transactionPending}
     >
-      <h2>
-        <Trans>Redeem Token</Trans>
-      </h2>
       <div style={{ color: colors.text.secondary }}>
         <p>
           <Trans>Redeeming this NFT will burn the token and return...</Trans>
@@ -91,7 +100,7 @@ const VeNftRedeemModal = ({
         <MemoFormInput value={memo} onChange={setMemo} />
         <CustomBeneficiaryInput form={form} />
       </Form>
-    </Modal>
+    </TransactionModal>
   )
 }
 

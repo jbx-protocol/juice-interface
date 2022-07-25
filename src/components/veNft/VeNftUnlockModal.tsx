@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Form, Modal } from 'antd'
+import { Form } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
@@ -9,6 +9,7 @@ import { useContext, useState } from 'react'
 import { emitSuccessNotification } from 'utils/notifications'
 
 import CustomBeneficiaryInput from 'components/veNft/formControls/CustomBeneficiaryInput'
+import TransactionModal from 'components/TransactionModal'
 
 type UnlockModalProps = {
   visible: boolean
@@ -28,6 +29,7 @@ const UnlockModal = ({
   const { userAddress, onSelectWallet } = useContext(NetworkContext)
   const { tokenId } = token
   const [loading, setLoading] = useState(false)
+  const [transactionPending, setTransactionPending] = useState(false)
   const [form] = useForm<{ beneficiary: string }>()
   const {
     theme: { colors },
@@ -38,7 +40,6 @@ const UnlockModal = ({
   const unlock = async () => {
     await form.validateFields()
 
-    // Prompt wallet connect if no wallet connected
     if (!userAddress && onSelectWallet) {
       onSelectWallet()
     }
@@ -53,7 +54,11 @@ const UnlockModal = ({
         beneficiary: txBeneficiary,
       },
       {
-        onConfirmed() {
+        onDone: () => {
+          setTransactionPending(true)
+        },
+        onConfirmed: () => {
+          setTransactionPending(false)
           setLoading(false)
           emitSuccessNotification(
             t`Unlock successful. Results will be indexed in a few moments.`,
@@ -69,14 +74,15 @@ const UnlockModal = ({
   }
 
   return (
-    <Modal
+    <TransactionModal
       visible={visible}
+      title={t`Unlock veNFT`}
       onCancel={onCancel}
       onOk={unlock}
       okText={`Unlock`}
       confirmLoading={loading}
+      transactionPending={transactionPending}
     >
-      <h2>Unlock Token</h2>
       <div style={{ color: colors.text.secondary }}>
         <p>
           <Trans>
@@ -88,7 +94,7 @@ const UnlockModal = ({
       <Form form={form} layout="vertical">
         <CustomBeneficiaryInput form={form} />
       </Form>
-    </Modal>
+    </TransactionModal>
   )
 }
 

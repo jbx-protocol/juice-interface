@@ -30,14 +30,6 @@ msgstr "(tüm yeni basılmış token'ların %{realTokenAllocationPercent} kadar�
 msgid "0% fee"
 msgstr "%0 ücret"
 
-#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
-msgid "1 deployed payment address"
-msgstr ""
-
-#: src/components/v2/V2Project/ProjectPayersModal.tsx
-msgid "1 payment address"
-msgstr ""
-
 #: src/components/VolumeChart/index.tsx
 msgid "1 year"
 msgstr "1 yıl"
@@ -3926,6 +3918,14 @@ msgstr "kullanılan token'lar"
 msgid "until"
 msgstr "sonra"
 
+#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
+msgid "{0, plural, one {# deployed payment address} other {# deployed payment addresses}}"
+msgstr ""
+
+#: src/components/v2/V2Project/ProjectPayersModal.tsx
+msgid "{0, plural, one {# payment address} other {# payment addresses}}"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 msgid "{0} after JBX fee"
@@ -3955,10 +3955,6 @@ msgstr "{0} katkı"
 msgid "{0} days"
 msgstr "{0} gün"
 
-#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
-msgid "{0} deployed payment addresses"
-msgstr ""
-
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "{0} for you"
@@ -3967,10 +3963,6 @@ msgstr "Size ait {0}"
 #: src/components/modals/ParticipantsModal.tsx
 msgid "{0} holders"
 msgstr "{0} sahipleri"
-
-#: src/components/v2/V2Project/ProjectPayersModal.tsx
-msgid "{0} payment addresses"
-msgstr ""
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx

@@ -25,14 +25,6 @@ msgstr "({realTokenAllocationPercent}% of all newly minted tokens)."
 msgid "0% fee"
 msgstr "0% fee"
 
-#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
-msgid "1 deployed payment address"
-msgstr "1 deployed payment address"
-
-#: src/components/v2/V2Project/ProjectPayersModal.tsx
-msgid "1 payment address"
-msgstr "1 payment address"
-
 #: src/components/VolumeChart/index.tsx
 msgid "1 year"
 msgstr "1 year"
@@ -3921,6 +3913,14 @@ msgstr ""
 msgid "until"
 msgstr ""
 
+#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
+msgid "{0, plural, one {# deployed payment address} other {# deployed payment addresses}}"
+msgstr "{0, plural, one {# deployed payment address} other {# deployed payment addresses}}"
+
+#: src/components/v2/V2Project/ProjectPayersModal.tsx
+msgid "{0, plural, one {# payment address} other {# payment addresses}}"
+msgstr "{0, plural, one {# payment address} other {# payment addresses}}"
+
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 msgid "{0} after JBX fee"
@@ -3950,10 +3950,6 @@ msgstr ""
 msgid "{0} days"
 msgstr ""
 
-#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
-msgid "{0} deployed payment addresses"
-msgstr "{0} deployed payment addresses"
-
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "{0} for you"
@@ -3962,10 +3958,6 @@ msgstr ""
 #: src/components/modals/ParticipantsModal.tsx
 msgid "{0} holders"
 msgstr ""
-
-#: src/components/v2/V2Project/ProjectPayersModal.tsx
-msgid "{0} payment addresses"
-msgstr "{0} payment addresses"
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx

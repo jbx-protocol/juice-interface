@@ -30,14 +30,6 @@ msgstr "（{realTokenAllocationPercent}% 新铸造的代币）。"
 msgid "0% fee"
 msgstr "0% 费率"
 
-#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
-msgid "1 deployed payment address"
-msgstr ""
-
-#: src/components/v2/V2Project/ProjectPayersModal.tsx
-msgid "1 payment address"
-msgstr ""
-
 #: src/components/VolumeChart/index.tsx
 msgid "1 year"
 msgstr "1 年"
@@ -3926,6 +3918,14 @@ msgstr "代币已赎回"
 msgid "until"
 msgstr "直到"
 
+#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
+msgid "{0, plural, one {# deployed payment address} other {# deployed payment addresses}}"
+msgstr ""
+
+#: src/components/v2/V2Project/ProjectPayersModal.tsx
+msgid "{0, plural, one {# payment address} other {# payment addresses}}"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 msgid "{0} after JBX fee"
@@ -3955,10 +3955,6 @@ msgstr "{0} 已贡献"
 msgid "{0} days"
 msgstr "{0} 天"
 
-#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
-msgid "{0} deployed payment addresses"
-msgstr ""
-
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "{0} for you"
@@ -3967,10 +3963,6 @@ msgstr "给到你的 {0}"
 #: src/components/modals/ParticipantsModal.tsx
 msgid "{0} holders"
 msgstr "{0} 持有者"
-
-#: src/components/v2/V2Project/ProjectPayersModal.tsx
-msgid "{0} payment addresses"
-msgstr ""
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx

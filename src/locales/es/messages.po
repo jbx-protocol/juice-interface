@@ -30,14 +30,6 @@ msgstr "({realTokenAllocationPercent}% de todos los tokens recién acuñados)."
 msgid "0% fee"
 msgstr "0% de comisión"
 
-#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
-msgid "1 deployed payment address"
-msgstr ""
-
-#: src/components/v2/V2Project/ProjectPayersModal.tsx
-msgid "1 payment address"
-msgstr ""
-
 #: src/components/VolumeChart/index.tsx
 msgid "1 year"
 msgstr "1 año"
@@ -3926,6 +3918,14 @@ msgstr "tokens canjeados"
 msgid "until"
 msgstr "hasta"
 
+#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
+msgid "{0, plural, one {# deployed payment address} other {# deployed payment addresses}}"
+msgstr ""
+
+#: src/components/v2/V2Project/ProjectPayersModal.tsx
+msgid "{0, plural, one {# payment address} other {# payment addresses}}"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 msgid "{0} after JBX fee"
@@ -3955,10 +3955,6 @@ msgstr "{0} contribuidos"
 msgid "{0} days"
 msgstr "{0} días"
 
-#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
-msgid "{0} deployed payment addresses"
-msgstr ""
-
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "{0} for you"
@@ -3967,10 +3963,6 @@ msgstr "{0} para ti"
 #: src/components/modals/ParticipantsModal.tsx
 msgid "{0} holders"
 msgstr "{0} holders"
-
-#: src/components/v2/V2Project/ProjectPayersModal.tsx
-msgid "{0} payment addresses"
-msgstr ""
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx

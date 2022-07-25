@@ -1,4 +1,13 @@
-import { Button, Card, Col, Row, Image, Space, Tooltip } from 'antd'
+import {
+  Button,
+  Card,
+  Col,
+  Row,
+  Image,
+  Space,
+  Tooltip,
+  Descriptions,
+} from 'antd'
 
 import { ThemeContext } from 'contexts/themeContext'
 
@@ -7,7 +16,7 @@ import { formattedNum, fromWad } from 'utils/formatNumber'
 import { detailedTimeString } from 'utils/formatTime'
 
 import { useVeNftTokenMetadata } from 'hooks/veNft/VeNftTokenMetadata'
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { VeNftToken } from 'models/subgraph-entities/v2/venft-token'
 
 import VeNftExtendLockModal from './VeNftExtendLockModal'
@@ -48,7 +57,7 @@ export default function OwnedVeNftCard({
     if (hasOverflow) {
       return (
         <Button block onClick={() => setRedeemModalVisible(true)}>
-          <Trans>REDEEM</Trans>
+          <Trans>Redeem</Trans>
         </Button>
       )
     } else {
@@ -63,7 +72,7 @@ export default function OwnedVeNftCard({
           }
         >
           <Button block disabled>
-            <Trans>REDEEM</Trans>
+            <Trans>Redeem</Trans>
           </Button>
         </Tooltip>
       )
@@ -75,34 +84,22 @@ export default function OwnedVeNftCard({
       <div style={{ color: colors.text.primary }}>
         <Row>
           <Col span={14}>
-            <Row align="top" gutter={0}>
-              <Col span={12}>
-                <p>
-                  <Trans>Staked ${tokenSymbolDisplayText}:</Trans>
-                </p>
-                <p>
-                  <Trans>Stake duration:</Trans>
-                </p>
-                <p>
-                  <Trans>Time remaining:</Trans>
-                </p>
-              </Col>
-              <Col span={12}>
-                <p>{formattedNum(fromWad(lockAmount))}</p>
-                <p>
-                  {detailedTimeString({
-                    timeSeconds: lockDuration,
-                    fullWords: true,
-                  })}
-                </p>
-                <p>
-                  {detailedTimeString({
-                    timeSeconds: remaining,
-                  })}{' '}
-                </p>
-              </Col>
-            </Row>
-            <Row align="top" gutter={0}></Row>
+            <Descriptions column={1}>
+              <Descriptions.Item label={t`Locked ${tokenSymbolDisplayText}`}>
+                {formattedNum(fromWad(lockAmount))}
+              </Descriptions.Item>
+              <Descriptions.Item label={t`Lock Duration`}>
+                {detailedTimeString({
+                  timeSeconds: lockDuration,
+                  fullWords: true,
+                })}
+              </Descriptions.Item>
+              <Descriptions.Item label={t`Time Remaining`}>
+                {detailedTimeString({
+                  timeSeconds: remaining,
+                })}
+              </Descriptions.Item>
+            </Descriptions>
           </Col>
           <Col span={4} />
           <Col span={6}>
@@ -112,7 +109,7 @@ export default function OwnedVeNftCard({
         <Space direction="vertical" style={{ width: '100%' }}>
           <Row>
             <Button block onClick={() => setExtendLockModalVisible(true)}>
-              <Trans>EXTEND LOCK</Trans>
+              <Trans>Extend Lock</Trans>
             </Button>
           </Row>
           <Row>{renderRedeemButton()}</Row>
@@ -123,7 +120,7 @@ export default function OwnedVeNftCard({
                 disabled={remaining > 0}
                 onClick={() => setUnlockModalVisible(true)}
               >
-                <Trans>UNLOCK</Trans>
+                <Trans>Unlock</Trans>
               </Button>
             </Row>
           )}

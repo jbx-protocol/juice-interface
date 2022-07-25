@@ -53,6 +53,11 @@ import {
   UseAllowanceEventJson,
 } from 'models/subgraph-entities/v2/use-allowance-event'
 import {
+  VeNftToken,
+  VeNftTokenJson,
+  parseVeNftTokenJson,
+} from 'models/subgraph-entities/v2/venft-token'
+import {
   DeployedERC20Event,
   DeployedERC20EventJson,
   parseDeployedERC20EventJson,
@@ -126,6 +131,7 @@ export interface SubgraphEntities {
   useAllowanceEvent: UseAllowanceEvent
   ethERC20ProjectPayer: ETHERC20ProjectPayer
   deployETHERC20ProjectPayerEvent: DeployETHERC20ProjectPayerEvent
+  veNftToken: VeNftToken
 }
 
 export interface SubgraphQueryReturnTypes {
@@ -166,6 +172,7 @@ export interface SubgraphQueryReturnTypes {
   deployETHERC20ProjectPayerEvent: {
     deployETHERC20ProjectPayerEvents: DeployETHERC20ProjectPayerEventJson[]
   }
+  veNftToken: { veNftTokens: VeNftTokenJson[] }
 }
 
 export type EntityKey = keyof SubgraphEntities
@@ -462,6 +469,12 @@ export function formatGraphResponse<E extends EntityKey>(
         return response.deployETHERC20ProjectPayerEvents.map(
           parseDeployETHERC20ProjectPayerEventJson,
         )
+      }
+      break
+    case 'veNftToken':
+      if ('veNftTokens' in response) {
+        // @ts-ignore
+        return response.veNftTokens.map(parseVeNftTokenJson)
       }
       break
   }

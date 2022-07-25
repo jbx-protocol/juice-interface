@@ -55,17 +55,35 @@ export default function ReservesEventElem({
         style={{
           display: 'flex',
           justifyContent: 'space-between',
+          alignContent: 'space-between',
         }}
       >
-        <div style={smallHeaderStyle(colors)}>
-          <Trans>
-            Distributed reserved{' '}
-            {tokenSymbolText({
-              tokenSymbol: tokenSymbol,
-              capitalize: false,
-              plural: true,
-            })}
-          </Trans>
+        <div>
+          <div style={smallHeaderStyle(colors)}>
+            <Trans>
+              Distributed reserved{' '}
+              {tokenSymbolText({
+                tokenSymbol: tokenSymbol,
+                capitalize: false,
+                plural: true,
+              })}
+            </Trans>
+          </div>
+          {distributeEvents?.length ? (
+            <div
+              style={{
+                color: colors.text.primary,
+                fontWeight: 500,
+              }}
+            >
+              {formatWad(event.count, { precision: 0 })}{' '}
+              {tokenSymbolText({
+                tokenSymbol: tokenSymbol,
+                capitalize: false,
+                plural: true,
+              })}
+            </div>
+          ) : null}
         </div>
 
         <div style={{ textAlign: 'right' }}>
@@ -128,18 +146,6 @@ export default function ReservesEventElem({
           </div>
         )}
       </div>
-
-      {distributeEvents?.length && distributeEvents?.length > 1 ? (
-        <div
-          style={{
-            color: colors.text.primary,
-            fontWeight: 500,
-            textAlign: 'right',
-          }}
-        >
-          {formatWad(event.count, { precision: 0 })}
-        </div>
-      ) : null}
     </div>
   )
 }

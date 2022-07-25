@@ -5,18 +5,18 @@ import { useContext } from 'react'
 
 interface StakingFormActionButtonProps {
   hasAdequateApproval: boolean
+  tokenApprovalLoading: boolean
+  onApproveButtonClick: () => void
   onReviewButtonClick: () => void
 }
 
 const StakingFormActionButton = ({
   hasAdequateApproval,
+  tokenApprovalLoading,
+  onApproveButtonClick,
   onReviewButtonClick,
 }: StakingFormActionButtonProps) => {
   const { userAddress, onSelectWallet } = useContext(NetworkContext)
-
-  const approve = () => {
-    return
-  }
 
   const renderActionButton = () => {
     if (!userAddress && onSelectWallet) {
@@ -28,8 +28,13 @@ const StakingFormActionButton = ({
     }
     if (!hasAdequateApproval) {
       return (
-        <Button block onClick={approve}>
-          <Trans>Approve Token for Transaction</Trans>
+        <Button
+          block
+          onClick={onApproveButtonClick}
+          type="primary"
+          loading={tokenApprovalLoading}
+        >
+          <Trans>Approve token for transaction</Trans>
         </Button>
       )
     } else {

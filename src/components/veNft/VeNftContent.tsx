@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import { Space } from 'antd'
 
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
@@ -8,21 +9,17 @@ import VeNftHeaderSection from 'components/veNft/VeNftHeaderSection'
 import VeNftStakingForm from 'components/veNft/VeNftStakingForm'
 import VeNftOwnedTokensSection from 'components/veNft/VeNftOwnedTokensSection'
 import VeNftSummaryStatsSection from 'components/veNft/VeNftSummaryStatsSection'
-import { BigNumber } from '@ethersproject/bignumber'
-import { Space } from 'antd'
 
 const VeNftContent = () => {
-  const { tokenSymbol, tokenName, projectMetadata } =
-    useContext(V2ProjectContext)
+  const {
+    tokenSymbol,
+    tokenName,
+    projectMetadata,
+    veNft: { userTokens },
+  } = useContext(V2ProjectContext)
 
   const tokenSymbolDisplayText = tokenSymbolText({ tokenSymbol })
   const projectName = projectMetadata?.name ?? t`Unknown Project`
-
-  const lockDurationOptions = [
-    BigNumber.from(1),
-    BigNumber.from(7),
-    BigNumber.from(30),
-  ]
 
   return (
     <Space direction="vertical">
@@ -31,12 +28,13 @@ const VeNftContent = () => {
         tokenSymbolDisplayText={tokenSymbolDisplayText}
         projectName={projectName}
       />
-      <VeNftStakingForm
+      <VeNftStakingForm tokenSymbolDisplayText={tokenSymbolDisplayText} />
+      <VeNftOwnedTokensSection
+        userTokens={userTokens}
         tokenSymbolDisplayText={tokenSymbolDisplayText}
-        lockDurationOptions={lockDurationOptions}
       />
-      <VeNftOwnedTokensSection />
       <VeNftSummaryStatsSection
+        userTokens={userTokens}
         tokenSymbolDisplayText={tokenSymbolDisplayText}
       />
     </Space>

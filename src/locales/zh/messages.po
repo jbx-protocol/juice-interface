@@ -1434,9 +1434,12 @@ msgid "Explore projects"
 msgstr "探索项目"
 
 #: src/components/veNft/VeNftExtendLockModal.tsx
-#: src/components/veNft/VeNftExtendLockModal.tsx
 #: src/components/veNft/VeNftOwnedTokenCard.tsx
 msgid "Extend Lock"
+msgstr ""
+
+#: src/components/veNft/VeNftExtendLockModal.tsx
+msgid "Extend lock successful. Results will be indexed in a few moments."
 msgstr ""
 
 #: src/components/Navbar/MenuItems.tsx
@@ -2632,12 +2635,15 @@ msgstr "重新配置以后的筹款周期"
 
 #: src/components/veNft/VeNftOwnedTokenCard.tsx
 #: src/components/veNft/VeNftOwnedTokenCard.tsx
-#: src/components/veNft/VeNftRedeemModal.tsx
 msgid "Redeem"
 msgstr ""
 
 #: src/components/veNft/VeNftRedeemModal.tsx
-msgid "Redeem Token"
+msgid "Redeem successful. Results will be indexed in a few moments."
+msgstr ""
+
+#: src/components/veNft/VeNftRedeemModal.tsx
+msgid "Redeem veNFT"
 msgstr ""
 
 #: src/components/ManageTokensModal.tsx
@@ -2662,6 +2668,10 @@ msgstr "燃烧 {tokensTextLong} 来赎回 ETH"
 #: src/components/v2/V2Project/ProjectActivity/index.tsx
 msgid "Redeemed"
 msgstr "赎回"
+
+#: src/components/veNft/VeNftRedeemModal.tsx
+msgid "Redeeming this NFT will burn the token and return..."
+msgstr ""
 
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 #: src/pages/create/forms/TokenForm/index.tsx
@@ -3501,12 +3511,19 @@ msgid "Unless payments are paused in your funding cycle settings, your project c
 msgstr "除非在项目筹款周期设置中将付款暂停，否则项目仍能通过 Juicebox 协议的合约直接收到付款。"
 
 #: src/components/veNft/VeNftOwnedTokenCard.tsx
-#: src/components/veNft/VeNftUnlockModal.tsx
 msgid "Unlock"
 msgstr ""
 
 #: src/components/veNft/VeNftUnlockModal.tsx
-msgid "Unlock Token"
+msgid "Unlock successful. Results will be indexed in a few moments."
+msgstr ""
+
+#: src/components/veNft/VeNftUnlockModal.tsx
+msgid "Unlock veNFT"
+msgstr ""
+
+#: src/components/veNft/VeNftUnlockModal.tsx
+msgid "Unlocking this staking position will burn your NFT and return ${tokenSymbolDisplayText}."
 msgstr ""
 
 #: src/components/v2/shared/UnsavedChangesModal.tsx
@@ -3525,6 +3542,10 @@ msgstr ""
 #: src/components/v2/V2Project/V2FundingCycleSection/index.tsx
 msgid "Upcoming"
 msgstr "未来"
+
+#: src/components/veNft/VeNftExtendLockModal.tsx
+msgid "Update your veNFT's lock duration."
+msgstr ""
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Updates you make to this section will only be applied to <0>upcoming</0> funding cycles."

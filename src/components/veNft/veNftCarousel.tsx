@@ -8,7 +8,7 @@ type StakingNFTCarouselProps = {
   variants: VeNftVariant[]
   baseImagesHash: string
   form: FormInstance
-  tokenMetadata: VeNftTokenMetadata
+  tokenMetadata: VeNftTokenMetadata | undefined
 }
 
 export default function StakingNFTCarousel({

@@ -1429,10 +1429,13 @@ msgid "Explore projects"
 msgstr "Explore projects"
 
 #: src/components/veNft/VeNftExtendLockModal.tsx
-#: src/components/veNft/VeNftExtendLockModal.tsx
 #: src/components/veNft/VeNftOwnedTokenCard.tsx
 msgid "Extend Lock"
 msgstr "Extend Lock"
+
+#: src/components/veNft/VeNftExtendLockModal.tsx
+msgid "Extend lock successful. Results will be indexed in a few moments."
+msgstr "Extend lock successful. Results will be indexed in a few moments."
 
 #: src/components/Navbar/MenuItems.tsx
 msgid "FAQ"
@@ -2627,13 +2630,16 @@ msgstr "Reconfigure upcoming funding cycles"
 
 #: src/components/veNft/VeNftOwnedTokenCard.tsx
 #: src/components/veNft/VeNftOwnedTokenCard.tsx
-#: src/components/veNft/VeNftRedeemModal.tsx
 msgid "Redeem"
 msgstr "Redeem"
 
 #: src/components/veNft/VeNftRedeemModal.tsx
-msgid "Redeem Token"
-msgstr "Redeem Token"
+msgid "Redeem successful. Results will be indexed in a few moments."
+msgstr "Redeem successful. Results will be indexed in a few moments."
+
+#: src/components/veNft/VeNftRedeemModal.tsx
+msgid "Redeem veNFT"
+msgstr "Redeem veNFT"
 
 #: src/components/ManageTokensModal.tsx
 msgid "Redeem your {tokensLabel} for a portion of the project's overflow. Any {tokensLabel} you redeem will be burned."
@@ -2657,6 +2663,10 @@ msgstr "Redeem {tokensTextLong} for ETH"
 #: src/components/v2/V2Project/ProjectActivity/index.tsx
 msgid "Redeemed"
 msgstr "Redeemed"
+
+#: src/components/veNft/VeNftRedeemModal.tsx
+msgid "Redeeming this NFT will burn the token and return..."
+msgstr "Redeeming this NFT will burn the token and return..."
 
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 #: src/pages/create/forms/TokenForm/index.tsx
@@ -3496,13 +3506,20 @@ msgid "Unless payments are paused in your funding cycle settings, your project c
 msgstr "Unless payments are paused in your funding cycle settings, your project can still receive payments directly through the Juicebox protocol contracts."
 
 #: src/components/veNft/VeNftOwnedTokenCard.tsx
-#: src/components/veNft/VeNftUnlockModal.tsx
 msgid "Unlock"
 msgstr "Unlock"
 
 #: src/components/veNft/VeNftUnlockModal.tsx
-msgid "Unlock Token"
-msgstr "Unlock Token"
+msgid "Unlock successful. Results will be indexed in a few moments."
+msgstr "Unlock successful. Results will be indexed in a few moments."
+
+#: src/components/veNft/VeNftUnlockModal.tsx
+msgid "Unlock veNFT"
+msgstr "Unlock veNFT"
+
+#: src/components/veNft/VeNftUnlockModal.tsx
+msgid "Unlocking this staking position will burn your NFT and return ${tokenSymbolDisplayText}."
+msgstr "Unlocking this staking position will burn your NFT and return ${tokenSymbolDisplayText}."
 
 #: src/components/v2/shared/UnsavedChangesModal.tsx
 msgid "Unsaved changes"
@@ -3520,6 +3537,10 @@ msgstr "Untrack token"
 #: src/components/v2/V2Project/V2FundingCycleSection/index.tsx
 msgid "Upcoming"
 msgstr ""
+
+#: src/components/veNft/VeNftExtendLockModal.tsx
+msgid "Update your veNFT's lock duration."
+msgstr "Update your veNFT's lock duration."
 
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Updates you make to this section will only be applied to <0>upcoming</0> funding cycles."

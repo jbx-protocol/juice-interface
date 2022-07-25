@@ -6,7 +6,7 @@ import { VeNftToken } from 'models/subgraph-entities/v2/venft-token'
 import { V2FundingCycle, V2FundingCycleMetadata } from 'models/v2/fundingCycle'
 import { NftRewardTier } from 'models/v2/nftRewardTier'
 import { Split } from 'models/v2/splits'
-import { VeNftVariant } from 'models/v2/veNftVariant'
+import { VeNftVariant } from 'models/v2/veNft'
 import { createContext } from 'react'
 
 type V2ProjectLoadingStates = {

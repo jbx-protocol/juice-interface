@@ -55,6 +55,7 @@ import {
 import {
   VeNftToken,
   VeNftTokenJson,
+  parseVeNftTokenJson,
 } from 'models/subgraph-entities/v2/venft-token'
 import {
   DeployedERC20Event,

@@ -1,10 +1,12 @@
 import { t, Trans } from '@lingui/macro'
-import { Col, Modal, Row, Image, Descriptions } from 'antd'
+import { Col, Row, Image, Descriptions } from 'antd'
 import Callout from 'components/Callout'
 import FormattedAddress from 'components/FormattedAddress'
+import TransactionModal from 'components/TransactionModal'
 
 import { NetworkContext } from 'contexts/networkContext'
 import { useLockTx } from 'hooks/veNft/transactor/VeNftLockTx'
+import { VeNftTokenMetadata } from 'models/v2/veNft'
 
 import { useContext, useState } from 'react'
 import { formattedNum, parseWad } from 'utils/formatNumber'
@@ -22,6 +24,7 @@ type ConfirmStakeModalProps = {
   votingPower: number
   lockDuration: number
   beneficiary: string
+  tokenMetadata: VeNftTokenMetadata | undefined
   onCancel: VoidFunction
   onCompleted: VoidFunction
 }
@@ -33,11 +36,13 @@ export default function ConfirmStakeModal({
   votingPower,
   lockDuration,
   beneficiary,
+  tokenMetadata,
   onCancel,
   onCompleted,
 }: ConfirmStakeModalProps) {
   const { userAddress, onSelectWallet } = useContext(NetworkContext)
   const [loading, setLoading] = useState(false)
+  const [transactionPending, setTransactionPending] = useState(false)
   const recipient = beneficiary !== '' ? beneficiary : userAddress
 
   const tokensStakedInWad = parseWad(tokensStaked)
@@ -57,7 +62,6 @@ export default function ConfirmStakeModal({
       return
     }
 
-    // Prompt wallet connect if no wallet connected
     if (!userAddress && onSelectWallet) {
       onSelectWallet()
     }
@@ -74,7 +78,11 @@ export default function ConfirmStakeModal({
         allowPublicExtension: false,
       },
       {
-        onConfirmed() {
+        onDone: () => {
+          setTransactionPending(true)
+        },
+        onConfirmed: () => {
+          setTransactionPending(false)
           setLoading(false)
           emitSuccessNotification(
             t`Lock successful. Results will be indexed in a few moments.`,
@@ -90,16 +98,15 @@ export default function ConfirmStakeModal({
   }
 
   return (
-    <Modal
+    <TransactionModal
       visible={visible}
+      title={t`Confirm Stake`}
       onCancel={onCancel}
       onOk={lock}
       okText={`Lock $${tokenSymbolDisplayText}`}
       confirmLoading={loading}
+      transactionPending={transactionPending}
     >
-      <h2>
-        <Trans>Confirm Stake</Trans>
-      </h2>
       <Callout>
         <Trans>
           You are agreeing to IRREVOCABLY lock your tokens for{' '}
@@ -127,11 +134,11 @@ export default function ConfirmStakeModal({
         <Col span={4} />
         <Col span={6}>
           <Image
-            src={``} //TODO: add image
+            src={tokenMetadata ? tokenMetadata.thumbnailUri : ''}
             preview={false}
           />
         </Col>
       </Row>
-    </Modal>
+    </TransactionModal>
   )
 }

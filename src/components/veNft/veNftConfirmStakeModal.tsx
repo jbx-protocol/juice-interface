@@ -112,14 +112,7 @@ export default function ConfirmStakeModal({
       </Callout>
       <Row>
         <Col span={14}>
-          <Descriptions
-            title={
-              <h3>
-                <Trans>$ve{tokenSymbolDisplayText} NFT summary:</Trans>
-              </h3>
-            }
-            column={1}
-          >
+          <Descriptions column={1}>
             <Descriptions.Item label={t`Staked ${tokenSymbolDisplayText}`}>
               {formattedNum(tokensStaked)}
             </Descriptions.Item>

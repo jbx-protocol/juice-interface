@@ -1,5 +1,5 @@
 import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons'
-import { t, Trans } from '@lingui/macro'
+import { plural, Trans } from '@lingui/macro'
 import { Modal, Space } from 'antd'
 import FormattedAddress from 'components/FormattedAddress'
 import RichNote from 'components/RichNote'
@@ -108,9 +108,10 @@ export default function ProjectPayersModal({
             textAlign: 'center',
           }}
         >
-          {projectPayers.length === 1
-            ? t`1 payment address`
-            : t`${projectPayers.length} payment addresses`}
+          {plural(projectPayers.length, {
+            one: '# payment address',
+            other: '# payment addresses',
+          })}
         </div>
       ) : null}
     </Modal>

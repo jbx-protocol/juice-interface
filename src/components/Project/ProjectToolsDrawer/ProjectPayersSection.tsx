@@ -1,4 +1,4 @@
-import { t, Trans } from '@lingui/macro'
+import { plural, t, Trans } from '@lingui/macro'
 import { Button, Space } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import { MinimalCollapse } from 'components/MinimalCollapse'
@@ -59,11 +59,10 @@ export default function ProjectPayersSection() {
 
         {projectPayers && (
           <Button onClick={() => setProjectPayersModalIsVisible(true)} block>
-            {projectPayers.length === 1 ? (
-              <Trans>1 deployed payment address</Trans>
-            ) : (
-              <Trans>{projectPayers.length} deployed payment addresses</Trans>
-            )}
+            {plural(projectPayers.length, {
+              one: '# deployed payment address',
+              other: '# deployed payment addresses',
+            })}
           </Button>
         )}
 

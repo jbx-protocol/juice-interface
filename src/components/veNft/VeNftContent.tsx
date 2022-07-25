@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import { Space } from 'antd'
 
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
@@ -17,7 +18,7 @@ const VeNftContent = () => {
   const projectName = projectMetadata?.name ?? t`Unknown Project`
 
   return (
-    <>
+    <Space direction="vertical">
       <VeNftHeaderSection
         tokenName={tokenName}
         tokenSymbolDisplayText={tokenSymbolDisplayText}
@@ -28,7 +29,7 @@ const VeNftContent = () => {
       <VeNftSummaryStatsSection
         tokenSymbolDisplayText={tokenSymbolDisplayText}
       />
-    </>
+    </Space>
   )
 }
 

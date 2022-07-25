@@ -1,4 +1,4 @@
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Form, Input } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
@@ -16,19 +16,13 @@ const VotingPowerDisplayInput = ({
 
   return (
     <Form.Item
-      extra={
-        <div
-          style={{
-            color: colors.text.primary,
-            marginBottom: 10,
-            textAlign: 'right',
-          }}
-        >
-          <Trans>Voting Power</Trans>
-        </div>
+      label={
+        <h3 style={{ marginBottom: 0, color: colors.text.primary }}>
+          <Trans>Your voting power</Trans>
+        </h3>
       }
     >
-      <Input disabled={true} value={`${votingPower} VotePWR`} />
+      <Input disabled value={votingPower} suffix={t`VotePWR`} />
     </Form.Item>
   )
 }

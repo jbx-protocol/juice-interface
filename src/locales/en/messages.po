@@ -4157,4 +4157,3 @@ msgstr "{unstakedTokens} {tokenSymbolDisplayText} remaining"
 msgid "{userOwnershipPercentage}% of total supply"
 msgstr "{userOwnershipPercentage}% of total supply"
 
-

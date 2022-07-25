@@ -13,6 +13,12 @@ export function useVeNftResolverTokenUri(
   return useV2ContractReader<string>({
     contract: useVeNftResolverContract(resolverAddress),
     functionName: 'tokenURI',
-    args: [1, amount, duration, 1, lockDurationOptions],
+    args: [
+      1, // _tokenId
+      amount, // _amount
+      duration, // _duration
+      1, // _lockEndTime
+      lockDurationOptions, // _lockDurationOptions
+    ],
   })
 }

@@ -560,9 +560,7 @@ msgstr "Você tem certeza que quer começar novamente?"
 msgid "Assets"
 msgstr "Ativos"
 
-#: src/components/inputs/Pay/MemoFormInput.tsx
 #: src/components/modals/AttachStickerModal/AttachStickerModal.tsx
-#: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "Attach a sticker"
 msgstr "Anexar um sticker"
 

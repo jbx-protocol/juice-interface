@@ -560,9 +560,7 @@ msgstr "你确定要重新开始吗？"
 msgid "Assets"
 msgstr "资产"
 
-#: src/components/inputs/Pay/MemoFormInput.tsx
 #: src/components/modals/AttachStickerModal/AttachStickerModal.tsx
-#: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "Attach a sticker"
 msgstr "上传一张贴图"
 

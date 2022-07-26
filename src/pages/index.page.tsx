@@ -88,7 +88,14 @@ export default function Landing() {
     const isMobile = useMobile()
 
     return (
-      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+      <div
+        style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: 8,
+          flexDirection: isMobile ? 'column' : 'row',
+        }}
+      >
         <Button
           type="primary"
           size="large"
@@ -105,7 +112,6 @@ export default function Landing() {
         >
           <Trans>Launch your project</Trans>
         </Button>
-
         <Button size="large" block={isMobile} href="/projects">
           <Trans>Explore projects</Trans>
         </Button>

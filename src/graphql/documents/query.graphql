@@ -1,0 +1,7 @@
+query Projects($where: Project_filter, $first: Int, $skip: Int) {
+  projects(where: $where, first: $first, skip: $skip) {
+    projectId
+    metadataUri
+    handle
+  }
+}

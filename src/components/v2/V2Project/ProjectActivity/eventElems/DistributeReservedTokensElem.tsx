@@ -12,7 +12,7 @@ import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { DistributeReservedTokensEvent } from 'models/subgraph-entities/v2/distribute-reserved-tokens-event'
 import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
-import { formatWad } from 'utils/formatNumber'
+import { formatWad, fromWad } from 'utils/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export default function DistributeReservedTokensEventElem({
@@ -92,7 +92,7 @@ export default function DistributeReservedTokensEventElem({
               {tokenSymbolText({
                 tokenSymbol: tokenSymbol,
                 capitalize: false,
-                plural: event.tokenCount.toNumber() !== 1,
+                plural: parseInt(fromWad(event.tokenCount) || '0') !== 1,
               })}
             </div>
           ) : null}

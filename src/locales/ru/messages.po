@@ -1814,6 +1814,10 @@ msgstr ""
 msgid "Lock until"
 msgstr "Заблокировать до"
 
+#: src/components/veNft/VeNftHeader.tsx
+msgid "Lock {tokenName} for Voting Power"
+msgstr ""
+
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
 msgid "Locked:"
 msgstr ""
@@ -2887,8 +2891,8 @@ msgstr "Расходы"
 msgid "Stake your {tokensLabel} to increase your voting weight and claim Governance NFTs."
 msgstr ""
 
-#: src/components/veNft/VeNftHeaderSection.tsx
-msgid "Stake {tokenName} ({tokenSymbolDisplayText}) tokens in exchange for voting weight. In return, you'll impact {projectName} governance and receive a choice governance NFT."
+#: src/components/veNft/VeNftHeader.tsx
+msgid "Stake {tokenName} ({tokenSymbolDisplayText}) tokens in exchange for voting weight. In return, you will impact {projectName} governance and receive a choice governance NFT."
 msgstr ""
 
 #: src/components/ManageTokensModal.tsx

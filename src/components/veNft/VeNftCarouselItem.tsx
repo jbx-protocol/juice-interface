@@ -1,5 +1,8 @@
-import { Col, Image } from 'antd'
+import { Col } from 'antd'
+import FallbackImage from 'components/FallbackImage'
+
 import { VeNftTokenMetadata, VeNftVariant } from 'models/v2/veNft'
+import { useCallback } from 'react'
 import { getVeNftBaseImage } from 'utils/v2/veNft'
 
 interface VeNftCarouselItemProps {
@@ -34,29 +37,36 @@ const VeNftCarouselItem = ({
     )
   }
 
-  const getCarouselImage = () => {
-    if (!variant) {
-      return undefined
-    }
-    if (isActive) {
-      return tokenMetadata
-        ? tokenMetadata.thumbnailUri
-        : getVeNftBaseImage(baseImagesHash, variant)
-    }
-    return getVeNftBaseImage(baseImagesHash, variant)
-  }
+  const getCarouselImage = useCallback(
+    (useFallback = false) => {
+      if (!variant) {
+        return undefined
+      }
+
+      if (isActive) {
+        return tokenMetadata
+          ? tokenMetadata.thumbnailUri
+          : getVeNftBaseImage(baseImagesHash, variant, useFallback)
+      }
+      return getVeNftBaseImage(baseImagesHash, variant, useFallback)
+    },
+    [baseImagesHash, variant, isActive, tokenMetadata],
+  )
 
   return (
     <Col span={8}>
       {variant && (
         <>
-          <Image
+          <FallbackImage
             src={getCarouselImage()}
-            preview={false}
-            style={style}
-            width={imgDims}
-            height={imgDims}
-            onClick={() => handleImageClick(variant)}
+            fallbackSrc={getCarouselImage(true)}
+            rest={{
+              preview: false,
+              style,
+              width: imgDims,
+              height: imgDims,
+              onClick: () => handleImageClick(variant),
+            }}
           />
           {variantRangeInfo(variant)}
         </>

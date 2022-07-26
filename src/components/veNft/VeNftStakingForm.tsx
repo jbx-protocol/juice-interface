@@ -18,9 +18,9 @@ import LockDurationSelectInput from 'components/veNft/formControls/LockDurationS
 import CustomBeneficiaryInput from 'components/veNft/formControls/CustomBeneficiaryInput'
 import StakingFormActionButton from 'components/veNft/formControls/StakingFormActionButton'
 import VotingPowerDisplayInput from 'components/veNft/formControls/VotingPowerDisplayInput'
-import VeNftCarousel from 'components/veNft/veNftCarousel'
-import StakingTokenRangesModal from 'components/veNft/veNftStakingTokenRangesModal'
-import ConfirmStakeModal from 'components/veNft/veNftConfirmStakeModal'
+import VeNftCarousel from 'components/veNft/VeNftCarousel'
+import StakingTokenRangesModal from 'components/veNft/VeNftStakingTokenRangesModal'
+import ConfirmStakeModal from 'components/veNft/VeNftConfirmStakeModal'
 
 import { reloadWindow } from 'utils/windowUtils'
 import { parseWad } from 'utils/formatNumber'

@@ -73,7 +73,6 @@ const TokensStakedInput = ({
         onChange={val => {
           form.setFieldsValue({ tokensStaked: val })
         }}
-        suffix={tokenSymbolDisplayText}
       />
     </Form.Item>
   )

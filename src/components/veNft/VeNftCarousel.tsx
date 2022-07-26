@@ -11,7 +11,7 @@ type StakingNFTCarouselProps = {
   tokenMetadata: VeNftTokenMetadata | undefined
 }
 
-export default function StakingNFTCarousel({
+export default function VeNftCarousel({
   form,
   tokensStaked,
   variants,

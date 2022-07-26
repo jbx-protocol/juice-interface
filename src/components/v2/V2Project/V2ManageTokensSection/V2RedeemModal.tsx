@@ -104,7 +104,7 @@ export default function V2RedeemModal({
     if (redeemBN.eq(0)) {
       return Promise.reject(t`Required`)
     } else if (redeemBN.gt(totalBalance ?? 0)) {
-      return Promise.reject(t`Your balance exceeded`)
+      return Promise.reject(t`Insufficient token balance`)
     } else if (redeemBN.gt(totalTokenSupply ?? 0)) {
       // Error message already showing for this case
       return Promise.reject()
@@ -268,11 +268,13 @@ export default function V2RedeemModal({
           minReturnedTokens?.gt(0) ? (
             <div style={{ fontWeight: 500, marginTop: 20 }}>
               <>
+                {/* If USD denominated, can only define the lower limit (not exact amount), hence 'at least' */}
+                {/* Using 4 full sentences for translation purposes */}
                 {!personalBalanceExceeded ? (
                   <>
                     {inUSD ? (
                       <Trans>
-                        You will receive minimum {minReturnedTokensFormatted}{' '}
+                        You will receive at least {minReturnedTokensFormatted}{' '}
                         ETH
                       </Trans>
                     ) : (
@@ -285,7 +287,7 @@ export default function V2RedeemModal({
                   <>
                     {inUSD ? (
                       <Trans>
-                        You would receive minimum {minReturnedTokensFormatted}{' '}
+                        You would receive at least {minReturnedTokensFormatted}{' '}
                         ETH
                       </Trans>
                     ) : (

@@ -1675,6 +1675,10 @@ msgstr "Initial issuance rate"
 msgid "Initial mint rate"
 msgstr "Initial mint rate"
 
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
+msgid "Insufficient token balance"
+msgstr "Insufficient token balance"
+
 #: src/components/IssueTokenButton.tsx
 msgid "Issue ERC-20"
 msgstr "Issue ERC-20"
@@ -3693,8 +3697,8 @@ msgid "You receive an NFT for contributing over <0>{0} ETH</0>."
 msgstr "You receive an NFT for contributing over <0>{0} ETH</0>."
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
-msgid "You will receive minimum {minReturnedTokensFormatted} ETH"
-msgstr "You will receive minimum {minReturnedTokensFormatted} ETH"
+msgid "You will receive at least {minReturnedTokensFormatted} ETH"
+msgstr "You will receive at least {minReturnedTokensFormatted} ETH"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "You will receive {0}{1} ETH"
@@ -3705,8 +3709,8 @@ msgid "You will receive {minReturnedTokensFormatted} ETH"
 msgstr "You will receive {minReturnedTokensFormatted} ETH"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
-msgid "You would receive minimum {minReturnedTokensFormatted} ETH"
-msgstr "You would receive minimum {minReturnedTokensFormatted} ETH"
+msgid "You would receive at least {minReturnedTokensFormatted} ETH"
+msgstr "You would receive at least {minReturnedTokensFormatted} ETH"
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "You would receive {minReturnedTokensFormatted} ETH"
@@ -3744,10 +3748,6 @@ msgstr "Your V1 {tokenSymbolFormatted} balance"
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "Your balance"
 msgstr ""
-
-#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
-msgid "Your balance exceeded"
-msgstr "Your balance exceeded"
 
 #: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner.tsx
 msgid "Your funding cycle configuration has been pre-populated using the configuration you originally launched with. If you need to customize it, contact us."

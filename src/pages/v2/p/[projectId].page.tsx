@@ -1,74 +1,131 @@
-import Loading from 'components/Loading'
-import Project404 from 'components/Project404'
-import useSubgraphQuery from 'hooks/SubgraphQuery'
-import { NextRouter, useRouter } from 'next/router'
+import axios from 'axios'
+import { consolidateMetadata, ProjectMetadataV4 } from 'models/project-metadata'
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { V2UserProvider } from 'providers/v2/UserProvider'
+import { paginateDepleteProjectsQueryCall } from 'utils/apollo'
+import { ipfsCidUrl } from 'utils/ipfs'
+import { V2ContractName } from 'models/v2/contracts'
+import { loadContract } from 'utils/contracts/loadContract'
+import { SEO } from 'components/common'
 
 import V2Dashboard from './components/V2Dashboard'
+import { readProvider } from 'constants/readProvider'
+import { readNetwork } from 'constants/networks'
+import { JUICEBOX_MONEY_METADATA_DOMAIN } from 'constants/v2/metadataDomain'
 
-enum ProjectIdType {
-  ProjectId,
-  Handle,
+async function getMetadataCidFromContract(projectId: number) {
+  const network = readNetwork.name
+  const contract = await loadContract(
+    V2ContractName.JBProjects,
+    network,
+    readProvider,
+  )
+  if (!contract) {
+    throw new Error(`contract not found ${V2ContractName.JBProjects}`)
+  }
+  const metadataCid = (await contract.metadataContentOf(
+    projectId,
+    JUICEBOX_MONEY_METADATA_DOMAIN,
+  )) as string
+  return metadataCid
 }
 
-function getProjectIdOrHandle(
-  router: NextRouter,
-):
-  | { type: ProjectIdType.ProjectId; projectId: number }
-  | { type: ProjectIdType.Handle; handle: string }
-  | undefined {
-  const projectId = router.query.projectId as string | undefined
-  if (!projectId?.length) return
-
-  const isHandle = router.query.isHandle as string | undefined
-  if (isHandle && Boolean(isHandle)) {
-    return { type: ProjectIdType.Handle, handle: projectId }
-  }
-
-  if (isNaN(parseInt(projectId))) {
-    return
-  }
-
-  // Fallback to parsing as a project id
-  return { type: ProjectIdType.ProjectId, projectId: parseInt(projectId) }
-}
-
-export default function V2ProjectPage() {
-  const router = useRouter()
-  const projectIdOrHandle = getProjectIdOrHandle(router)
-
-  if (!projectIdOrHandle) {
-    return <Project404 />
-  }
-
-  if (projectIdOrHandle.type === ProjectIdType.ProjectId) {
-    return (
-      <V2UserProvider>
-        <V2Dashboard projectId={projectIdOrHandle.projectId} />
-      </V2UserProvider>
-    )
-  }
-
-  // Need to load subgraph query
-  const { isLoading, data: projects } = useSubgraphQuery({
-    entity: 'project',
-    keys: ['projectId'],
-    where: [
-      { key: 'cv', value: '2' },
-      { key: 'handle', value: projectIdOrHandle.handle },
-    ],
+export const getStaticPaths: GetStaticPaths = async () => {
+  const projects = await paginateDepleteProjectsQueryCall({
+    variables: { where: { cv: '2' } },
   })
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const paths = projects.map(({ projectId }) => ({
+    params: { projectId: String(projectId) },
+  }))
+  return { paths: [{ params: { projectId: '4350' } }], fallback: true }
+}
 
-  if (isLoading) return <Loading />
+export const getStaticProps: GetStaticProps<{
+  metadata: ProjectMetadataV4
+  projectId: number
+}> = async context => {
+  if (!context.params) throw new Error('params not supplied')
+  const projectId = parseInt(context.params.projectId as string)
+  const metadataCid = await getMetadataCidFromContract(projectId)
+  const url = ipfsCidUrl(metadataCid)
+  try {
+    let metadata: ProjectMetadataV4 | undefined
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let error: any | undefined
+    do {
+      try {
+        if (error) {
+          // Back off for 3 secs - pinata rate limits for 180/min
+          const PINATA_RATE_LIMIT_SECONDS = 180
+          const SECONDS_IN_MINUTES = 60
+          await new Promise(resolve =>
+            setTimeout(
+              resolve,
+              (PINATA_RATE_LIMIT_SECONDS / SECONDS_IN_MINUTES) * 1000,
+            ),
+          )
+        }
+        const response = await axios.get(url)
+        metadata = consolidateMetadata(response.data)
+        error = undefined
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (e: any) {
+        const status = e?.response?.status
+        if (status === 404 || status === 400) {
+          console.error('Page not found', {
+            url,
+            projectId,
+          })
+          return { notFound: true }
+        }
+        console.warn('Failed to get url - backing off 3 seconds', {
+          status: status,
+          projectId,
+          url,
+          e,
+        })
+        error = e
+      }
+    } while (!metadata)
 
-  if (!projects?.length) {
-    return <Project404 handle={projectIdOrHandle.handle} />
+    Object.keys(metadata).forEach(key =>
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (metadata as any)[key] === undefined ? delete (metadata as any)[key] : {},
+    )
+    return {
+      props: { metadata, projectId },
+      revalidate: 60, // Revalidate the cached page every 60secs
+    }
+  } catch (e) {
+    console.error('Failed to load page props', e)
+    throw e
   }
+}
 
-  // If matching project found in query, return dashboard for that project.
+export default function V2ProjectPage({
+  metadata,
+  projectId,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
-    <V2UserProvider>
-      <V2Dashboard projectId={projects[0].projectId} />
-    </V2UserProvider>
+    <>
+      {metadata ? (
+        <SEO
+          title={metadata.name}
+          url={`${process.env.NEXT_PUBLIC_BASE_URL}v2/p/${projectId}`}
+          description={metadata.description}
+          twitter={{
+            card: 'summary',
+            creator: metadata.twitter,
+            handle: metadata.twitter,
+            image: metadata.logoUri,
+            site: metadata.twitter,
+          }}
+        />
+      ) : null}
+      <V2UserProvider>
+        <V2Dashboard metadata={metadata} projectId={projectId} />
+      </V2UserProvider>
+    </>
   )
 }

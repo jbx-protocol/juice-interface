@@ -189,12 +189,12 @@ export const getUnsafeV2FundingCycleProperties = (
   fundingCycle: V2FundingCycle,
 ): FundingCycleRiskFlags => {
   const metadata = decodeV2FundingCycleMetadata(fundingCycle.metadata)
-  const ballotAddress = getBallotStrategyByAddress(fundingCycle.ballot).address
+  const ballot = getBallotStrategyByAddress(fundingCycle.ballot)
   const reservedRatePercentage = parseFloat(fromWad(metadata?.reservedRate))
   const allowMinting = Boolean(metadata?.allowMinting)
 
   return unsafeFundingCycleProperties({
-    ballotAddress,
+    ballot,
     reservedRatePercentage,
     hasFundingDuration: fundingCycle.duration?.gt(0),
     allowMinting,

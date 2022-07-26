@@ -30,10 +30,11 @@ export const Head: VFC = () => {
         data-site="ERYRRJSV"
         defer
       ></script>
-      <script
-        defer
-        dangerouslySetInnerHTML={{
-          __html: `
+      {process.env.NODE_ENV === 'production' && (
+        <script
+          defer
+          dangerouslySetInnerHTML={{
+            __html: `
     (function(h,o,t,j,a,r){
       h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
       h._hjSettings={hjid:3077427,hjsv:6};
@@ -43,8 +44,9 @@ export const Head: VFC = () => {
       a.appendChild(r);
   })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
   `,
-        }}
-      ></script>
+          }}
+        ></script>
+      )}
     </SEO>
   )
 }

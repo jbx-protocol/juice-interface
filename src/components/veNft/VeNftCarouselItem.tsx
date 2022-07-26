@@ -1,5 +1,7 @@
 import { Col, Image } from 'antd'
+
 import { VeNftTokenMetadata, VeNftVariant } from 'models/v2/veNft'
+import { useCallback } from 'react'
 import { getVeNftBaseImage } from 'utils/v2/veNft'
 
 interface VeNftCarouselItemProps {
@@ -34,24 +36,29 @@ const VeNftCarouselItem = ({
     )
   }
 
-  const getCarouselImage = () => {
-    if (!variant) {
-      return undefined
-    }
-    if (isActive) {
-      return tokenMetadata
-        ? tokenMetadata.thumbnailUri
-        : getVeNftBaseImage(baseImagesHash, variant)
-    }
-    return getVeNftBaseImage(baseImagesHash, variant)
-  }
+  const getCarouselImage = useCallback(
+    ({ useFallback }: { useFallback: boolean }) => {
+      if (!variant) {
+        return undefined
+      }
+
+      if (isActive) {
+        return tokenMetadata
+          ? tokenMetadata.thumbnailUri
+          : getVeNftBaseImage(baseImagesHash, variant, { useFallback })
+      }
+      return getVeNftBaseImage(baseImagesHash, variant, { useFallback })
+    },
+    [baseImagesHash, variant, isActive, tokenMetadata],
+  )
 
   return (
     <Col span={8}>
       {variant && (
         <>
           <Image
-            src={getCarouselImage()}
+            src={getCarouselImage({ useFallback: false })}
+            fallback={getCarouselImage({ useFallback: true })}
             preview={false}
             style={style}
             width={imgDims}

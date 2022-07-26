@@ -1,9 +1,16 @@
 import { VeNftVariant } from 'models/v2/veNft'
 
+import { DEFAULT_PINATA_GATEWAY, IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
+
 export const getVeNftBaseImage = (
   baseImagesHash: string,
   variant: VeNftVariant,
+  options: {
+    useFallback?: boolean
+  } = { useFallback: false },
 ): string => {
+  const { useFallback } = options
   const padded = variant.id.toString().padStart(2, '0')
-  return `https://${process.env.NEXT_PUBLIC_PINATA_GATEWAY_HOSTNAME}/ipfs/${baseImagesHash}/characters/${padded}.png`
+  const gateway = useFallback ? DEFAULT_PINATA_GATEWAY : IPFS_GATEWAY_HOSTNAME
+  return `https://${gateway}/ipfs/${baseImagesHash}/characters/${padded}.png`
 }

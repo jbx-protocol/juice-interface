@@ -1,8 +1,6 @@
-import axios from 'axios'
-
 import { VeNftVariant } from 'models/v2/veNft'
 import { useQuery } from 'react-query'
-import { ipfsCidUrl } from 'utils/ipfs'
+import { ipfsGetWithFallback } from 'utils/ipfs'
 
 import { VARIANTS_HASH } from 'constants/veNft/veNftProject'
 
@@ -22,8 +20,7 @@ export function useVeNftVariants() {
         throw new Error('Variants hash not specified.')
       }
       const file = hash + '/characters.json'
-      const url = ipfsCidUrl(file)
-      const response = await axios.get(url)
+      const response = await ipfsGetWithFallback(file)
       const data: Record<string, VeNftMetadataResponse> = response.data
       const variants: VeNftVariant[] = Object.entries(data).map(
         ([id, variant]) => {

@@ -16,5 +16,5 @@ export const MaxUint232 = constants.MaxUint256.add(1)
   .div(2 ** 24)
   .sub(1)
 export const MaxUint88 = 2 ** 88 - 1
-export const MaxUint54 = BigNumber.from(10).pow(54).sub(1)
+export const MaxUint54 = BigNumber.from(2).pow(54).sub(1)
 export const MaxUint48 = 2 ** 48 - 1

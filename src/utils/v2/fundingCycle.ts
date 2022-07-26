@@ -23,11 +23,13 @@ import { MAX_DISTRIBUTION_LIMIT } from './math'
 export const hasDistributionLimit = (
   fundAccessConstraint: SerializedV2FundAccessConstraint | undefined,
 ): boolean => {
+  // Distribution limit defaults to Zero (which is a distribution limit)
+  if (!fundAccessConstraint) return true
+
   return Boolean(
-    fundAccessConstraint?.distributionLimit &&
-      !parseWad(fundAccessConstraint.distributionLimit).eq(
-        MAX_DISTRIBUTION_LIMIT,
-      ),
+    !parseWad(fundAccessConstraint.distributionLimit).eq(
+      MAX_DISTRIBUTION_LIMIT,
+    ),
   )
 }
 

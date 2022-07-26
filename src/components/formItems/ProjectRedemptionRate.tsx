@@ -221,11 +221,11 @@ export function ProjectRedemptionRate({
                   }}
                   disabled={disabled}
                 >
-                  {label ?? <Trans>Bonding curve rate</Trans>}
+                  {label ?? <Trans>Redemption rate</Trans>}
                 </SwitchHeading>
               ) : (
                 <FormItemLabel>
-                  {label ?? <Trans>Bonding curve rate</Trans>}
+                  {label ?? <Trans>Redemption rate</Trans>}
                 </FormItemLabel>
               )}
             </div>

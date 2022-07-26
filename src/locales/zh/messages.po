@@ -948,7 +948,6 @@ msgstr "创建一个可用于直接支付给你的项目的以太坊地址。"
 msgid "Create payable address"
 msgstr "创建可支付地址"
 
-#: src/hooks/PageTitle.ts
 #: src/pages/projects/MyProjects.tsx
 #: src/pages/projects/index.page.tsx
 msgid "Create project"
@@ -2513,7 +2512,6 @@ msgid "Project {projectId} not found"
 msgstr "项目 {projectId} 未找到"
 
 #: src/components/Navbar/MenuItems.tsx
-#: src/hooks/PageTitle.ts
 msgid "Projects"
 msgstr "项目"
 

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@apollo/client": "^3.6.9",
     "@babel/core": "^7.18.6",
     "@jbx-protocol/contracts-v1": "2.0.0",
     "@jbx-protocol/contracts-v2-4.0.0": "npm:@jbx-protocol/contracts-v2@4.0.0",
@@ -46,6 +47,7 @@
     "ethereum-block-by-date": "^1.4.2",
     "ethers": "^5.1.0",
     "formidable": "^2.0.1",
+    "graphql": "^16.5.0",
     "less": "4.1.2",
     "lodash": "^4.17.21",
     "next": "^12.2.2",
@@ -62,10 +64,12 @@
   },
   "scripts": {
     "compile-styles": "lessc ./node_modules/antd/dist/antd.less ./src/styles/antd.css --js",
+    "codegen": "graphql-code-generator --config codegen.yml -r dotenv/config",
+    "predev": "yarn compile-styles && yarn i18n:compile && yarn codegen",
     "dev": "yarn prestart && next dev",
     "prestart": "yarn compile-styles",
     "start": "ESLINT_NO_DEV_ERRORS=true NEXT_PUBLIC_VERSION=$(git rev-parse --short HEAD) next start",
-    "prebuild": "yarn compile-styles && yarn i18n:compile",
+    "prebuild": "yarn predev",
     "build": "NEXT_PUBLIC_VERSION=$(git rev-parse --short HEAD) next build",
     "test": "jest test",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./",
@@ -100,6 +104,12 @@
     ]
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^2.9.1",
+    "@graphql-codegen/introspection": "^2.2.0",
+    "@graphql-codegen/typescript": "^2.7.2",
+    "@graphql-codegen/typescript-operations": "^2.5.2",
+    "@graphql-codegen/typescript-react-apollo": "^3.3.2",
+    "@graphql-codegen/typescript-resolvers": "^2.7.2",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/react-hooks": "^8.0.1",

@@ -948,6 +948,10 @@ msgstr "Текущий владелец: {ownerAddress}"
 msgid "Currently worth: <0><1/>{0}</0>"
 msgstr "На данный момент стоит: <0><1/>{0}</0>"
 
+#: src/components/veNft/VeNftStakingForm.tsx
+msgid "Currently, only project tokens claimed as ERC-20 tokens can be staked for NFTs."
+msgstr ""
+
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "Custom memo"
 msgstr ""
@@ -1814,7 +1818,7 @@ msgstr ""
 msgid "Lock until"
 msgstr "Заблокировать до"
 
-#: src/components/veNft/VeNftHeader.tsx
+#: src/components/veNft/VeNftHeaderSection.tsx
 msgid "Lock {tokenName} for Voting Power"
 msgstr ""
 
@@ -2891,7 +2895,7 @@ msgstr "Расходы"
 msgid "Stake your {tokensLabel} to increase your voting weight and claim Governance NFTs."
 msgstr ""
 
-#: src/components/veNft/VeNftHeader.tsx
+#: src/components/veNft/VeNftHeaderSection.tsx
 msgid "Stake {tokenName} ({tokenSymbolDisplayText}) tokens in exchange for voting weight. In return, you will impact {projectName} governance and receive a choice governance NFT."
 msgstr ""
 

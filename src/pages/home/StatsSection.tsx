@@ -9,9 +9,11 @@ import { formattedNum } from 'utils/formatNumber'
 const Stat = ({
   value,
   label,
+  loading,
 }: {
   value: string | number | JSX.Element | undefined
   label: string | JSX.Element
+  loading: boolean
 }) => {
   const {
     theme: { colors },
@@ -34,7 +36,7 @@ const Stat = ({
           color: colors.text.brand.primary,
         }}
       >
-        {value}
+        {loading ? '-' : value}
       </div>
       <div style={{ fontSize: '1rem' }}>{label}</div>
     </div>
@@ -42,7 +44,7 @@ const Stat = ({
 }
 
 export function StatsSection() {
-  const { data: protocolLogs } = useSubgraphQuery({
+  const { data: protocolLogs, isLoading } = useSubgraphQuery({
     entity: 'protocolLog',
     keys: ['erc20Count', 'paymentsCount', 'projectsCount', 'volumePaid'],
   })
@@ -64,14 +66,17 @@ export function StatsSection() {
       <Stat
         value={stats?.projectsCount}
         label={<Trans>Projects on Juicebox</Trans>}
+        loading={isLoading}
       />
       <Stat
         value={<ETHAmount amount={stats?.volumePaid} />}
         label={<Trans>Raised on Juicebox</Trans>}
+        loading={isLoading}
       />
       <Stat
         value={formattedNum(stats?.paymentsCount)}
         label={<Trans>Payments made</Trans>}
+        loading={isLoading}
       />
     </section>
   )

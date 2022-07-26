@@ -3,6 +3,7 @@ import { useReconfigureV2FundingCycleTx } from 'hooks/v2/transactor/ReconfigureV
 import { useCallback, useContext, useState } from 'react'
 import { NFT_FUNDING_CYCLE_METADATA_OVERRIDES } from 'pages/create/tabs/ReviewDeployTab/DeployProjectWithNftsButton'
 import { BigNumber } from '@ethersproject/bignumber'
+import { revalidateProject } from 'utils/revalidateProject'
 
 import { EditingProjectData } from './editingProjectData'
 
@@ -26,6 +27,7 @@ export const useReconfigureFundingCycle = ({
   const {
     nftRewards: { CIDs: nftRewardsCids },
     fundingCycle,
+    projectId,
   } = useContext(V2ProjectContext)
 
   const reconfigureV2FundingCycleTx = useReconfigureV2FundingCycleTx()
@@ -102,7 +104,13 @@ export const useReconfigureFundingCycle = ({
             'Reconfigure transaction executed. Awaiting confirmation...',
           )
         },
-        onConfirmed() {
+        async onConfirmed() {
+          if (projectId) {
+            await revalidateProject({
+              cv: '2',
+              projectId: String(projectId),
+            })
+          }
           setReconfigureTxLoading(false)
           exit()
         },
@@ -113,16 +121,17 @@ export const useReconfigureFundingCycle = ({
       setReconfigureTxLoading(false)
     }
   }, [
-    editingFundAccessConstraints,
     editingFundingCycleData,
     editingFundingCycleMetadata,
+    editingFundAccessConstraints,
+    reconfigureV2FundingCycleTx,
     editingPayoutGroupedSplits,
     editingReservedTokensGroupedSplits,
     nftRewardsCids,
     fundingCycle,
     memo,
+    projectId,
     exit,
-    reconfigureV2FundingCycleTx,
   ])
 
   return { reconfigureLoading: reconfigureTxLoading, reconfigureFundingCycle }

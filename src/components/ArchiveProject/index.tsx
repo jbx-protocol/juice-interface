@@ -13,6 +13,8 @@ import { ThemeContext } from 'contexts/themeContext'
 
 import { reloadWindow } from 'utils/windowUtils'
 import axios from 'axios'
+import { revalidateProject } from 'utils/revalidateProject'
+import { V1TerminalVersion } from 'models/v1/terminals'
 
 export default function ArchiveProject({
   storeCidTx,
@@ -38,6 +40,28 @@ export default function ArchiveProject({
 
   const [isLoadingArchive, setIsLoadingArchive] = useState<boolean>(false)
 
+  const revalProject = async () => {
+    switch (cv) {
+      case '1':
+      case '1.1':
+        if (handle) {
+          await revalidateProject({
+            cv: cv as V1TerminalVersion,
+            handle,
+          })
+        }
+        break
+      case '2':
+        if (projectId) {
+          await revalidateProject({
+            cv: '2',
+            projectId: String(projectId),
+          })
+        }
+        break
+    }
+  }
+
   const setArchived = (archived: boolean) => async () => {
     if (!userAddress || userAddress.toLowerCase() !== owner?.toLowerCase()) {
       return emitErrorNotification(t`Connected wallet not authorized`)
@@ -51,6 +75,7 @@ export default function ArchiveProject({
     if (!uploadedMetadata.IpfsHash) {
       return emitErrorNotification(t`Failed to update project metadata`)
     }
+
     // Create github issue when archive is requested
     // https://docs.github.com/en/rest/reference/issues#create-an-issue
     // Do this first, in case the user closes the page before the on-chain tx completes
@@ -65,8 +90,9 @@ export default function ArchiveProject({
     const txSuccessful = await storeCidTx(
       { cid: uploadedMetadata.IpfsHash },
       {
-        onConfirmed: () => {
+        onConfirmed: async () => {
           setIsLoadingArchive(false)
+          await revalProject()
           reloadWindow()
         },
       },

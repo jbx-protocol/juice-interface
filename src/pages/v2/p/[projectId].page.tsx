@@ -34,11 +34,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const projects = await paginateDepleteProjectsQueryCall({
     variables: { where: { cv: '2' } },
   })
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const paths = projects.map(({ projectId }) => ({
     params: { projectId: String(projectId) },
   }))
-  return { paths: [{ params: { projectId: '4350' } }], fallback: true }
+  return { paths, fallback: true }
 }
 
 export const getStaticProps: GetStaticProps<{

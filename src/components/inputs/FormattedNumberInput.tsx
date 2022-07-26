@@ -18,6 +18,7 @@ export default function FormattedNumberInput({
   accessory,
   formItemProps,
   onChange,
+  onBlur,
   isInteger,
 }: {
   name?: string
@@ -32,6 +33,7 @@ export default function FormattedNumberInput({
   prefix?: string
   accessory?: JSX.Element
   onChange?: (val?: string) => void
+  onBlur?: (val?: string) => void
   isInteger?: boolean
 } & FormItemExt) {
   const thousandsSeparator = ','
@@ -100,6 +102,9 @@ export default function FormattedNumberInput({
             )
           }
           disabled={disabled}
+          onBlur={_value => {
+            onBlur?.(_value?.toString())
+          }}
           onChange={_value => {
             onChange?.(_value?.toString())
           }}

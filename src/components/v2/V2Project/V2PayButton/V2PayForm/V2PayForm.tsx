@@ -94,23 +94,20 @@ export const V2PayForm = ({
                   top: 7,
                 }}
               >
-                {canAddMoreStickers ? (
+                {
                   <Sticker
-                    style={{ color: colors.text.secondary }}
+                    style={{
+                      color: colors.text.secondary,
+                      cursor: canAddMoreStickers ? 'pointer' : 'not-allowed',
+                    }}
                     size={20}
                     onClick={() => {
-                      setAttachStickerModalVisible(true)
+                      canAddMoreStickers
+                        ? setAttachStickerModalVisible(true)
+                        : undefined
                     }}
                   />
-                ) : (
-                  <Sticker
-                    size={20}
-                    style={{
-                      color: colors.text.disabled,
-                      cursor: 'not-allowed',
-                    }}
-                  />
-                )}
+                }
               </div>
               <Form.Item name="stickerUrls">
                 <StickerSelection />

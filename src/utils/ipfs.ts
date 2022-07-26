@@ -54,7 +54,13 @@ export const logoNameForHandle = (handle: string) => `juicebox-@${handle}-logo`
 export const metadataNameForHandle = (handle: string) =>
   `juicebox-@${handle}-metadata`
 
-export const ipfsCidUrl = (hash: string, useFallback = false) => {
+export const ipfsCidUrl = (
+  hash: string,
+  options: {
+    useFallback?: boolean
+  } = { useFallback: false },
+): string => {
+  const { useFallback } = options
   if (useFallback) {
     return `https://${DEFAULT_PINATA_GATEWAY}/ipfs/${hash}`
   }
@@ -69,7 +75,7 @@ export const ipfsGetWithFallback = async (hash: string) => {
     return response
   } catch (error) {
     try {
-      const response = await axios.get(ipfsCidUrl(hash, true))
+      const response = await axios.get(ipfsCidUrl(hash, { useFallback: true }))
       return response
     } catch (error) {
       return { data: null }

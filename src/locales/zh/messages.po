@@ -18,7 +18,7 @@ msgstr ""
 "X-Crowdin-File: messages.po\n"
 "X-Crowdin-File-ID: 9\n"
 
-#: src/components/veNft/veNftConfirmStakeModal.tsx
+#: src/components/veNft/VeNftConfirmStakeModal.tsx
 msgid "$ve{tokenSymbolDisplayText} Received"
 msgstr ""
 
@@ -608,7 +608,7 @@ msgstr "项目拥有者钱包的余额"
 
 #: src/components/v1/V1Project/V1DownloadPaymentsModal.tsx
 #: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
-#: src/components/veNft/veNftConfirmStakeModal.tsx
+#: src/components/veNft/VeNftConfirmStakeModal.tsx
 msgid "Beneficiary"
 msgstr "受益人"
 
@@ -730,7 +730,7 @@ msgstr "变更的生效将照按项目自定义的选票合约来执行。"
 msgid "Changes you make will take effect according to your <0>{0}</0> reconfiguration rule (the first funding cycle following <1>{1}</1> from now)."
 msgstr "你作出的变更将按照你的 <0>{0}</0> 重新配置规则生效 (从现在开始<1>{1}</1> 后的第一个完整周期生效)。"
 
-#: src/components/veNft/veNftStakingTokenRangesModal.tsx
+#: src/components/veNft/VeNftStakingTokenRangesModal.tsx
 msgid "Character"
 msgstr ""
 
@@ -810,7 +810,7 @@ msgstr "设置项目代币的各项动能指标。"
 msgid "Configure which Juicebox V1 project you'd like to accept tokens for. Token holders of this V1 project will be able to swap their V1 tokens for V2 tokens."
 msgstr ""
 
-#: src/components/veNft/veNftConfirmStakeModal.tsx
+#: src/components/veNft/VeNftConfirmStakeModal.tsx
 msgid "Confirm Stake"
 msgstr ""
 
@@ -1851,8 +1851,8 @@ msgstr "加载更多"
 msgid "Lock ${tokenSymbolDisplayText} for Voting Power"
 msgstr ""
 
+#: src/components/veNft/VeNftConfirmStakeModal.tsx
 #: src/components/veNft/VeNftOwnedTokenCard.tsx
-#: src/components/veNft/veNftConfirmStakeModal.tsx
 msgid "Lock Duration"
 msgstr ""
 
@@ -1860,7 +1860,7 @@ msgstr ""
 msgid "Lock duration"
 msgstr ""
 
-#: src/components/veNft/veNftConfirmStakeModal.tsx
+#: src/components/veNft/VeNftConfirmStakeModal.tsx
 msgid "Lock successful. Results will be indexed in a few moments."
 msgstr ""
 
@@ -2048,7 +2048,7 @@ msgstr "没有活跃的筹款周期。"
 msgid "No activity yet"
 msgstr "暂无动态"
 
-#: src/components/veNft/veNftConfirmStakeModal.tsx
+#: src/components/veNft/VeNftConfirmStakeModal.tsx
 msgid "No beneficiary selected. Is your wallet connected?"
 msgstr ""
 
@@ -2526,7 +2526,7 @@ msgstr ""
 msgid "Raised on Juicebox"
 msgstr ""
 
-#: src/components/veNft/veNftStakingTokenRangesModal.tsx
+#: src/components/veNft/VeNftStakingTokenRangesModal.tsx
 msgid "Range"
 msgstr ""
 
@@ -2988,7 +2988,7 @@ msgstr ""
 msgid "Stake {tokensLabel} for NFT"
 msgstr ""
 
-#: src/components/veNft/veNftConfirmStakeModal.tsx
+#: src/components/veNft/VeNftConfirmStakeModal.tsx
 msgid "Staked {tokenSymbolDisplayText}"
 msgstr ""
 
@@ -3760,7 +3760,7 @@ msgstr "你是否要签发一个 ERC-20 标准代币来作为项目代币？"
 msgid "Yes"
 msgstr "确定"
 
-#: src/components/veNft/veNftConfirmStakeModal.tsx
+#: src/components/veNft/VeNftConfirmStakeModal.tsx
 msgid "You are agreeing to IRREVOCABLY lock your tokens for {formattedLockDuration} in exchange for {votingPower} $ve{tokenSymbolDisplayText}"
 msgstr ""
 
@@ -4176,7 +4176,7 @@ msgstr "{paymentCount, plural, one {# 笔付款} other {# 笔付款}}"
 msgid "{reservedRate} {tokenSymbolPlural}/ETH ({0}%)"
 msgstr "{reservedRate} {tokenSymbolPlural}/ETH ({0}%)"
 
-#: src/components/veNft/veNftStakingTokenRangesModal.tsx
+#: src/components/veNft/VeNftStakingTokenRangesModal.tsx
 msgid "{tokenSymbolDisplayText} range"
 msgstr ""
 
@@ -4227,4 +4227,5 @@ msgstr ""
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "{userOwnershipPercentage}% of total supply"
 msgstr "总供应量的 {userOwnershipPercentage}%"
+
 

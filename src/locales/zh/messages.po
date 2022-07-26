@@ -390,6 +390,10 @@ msgstr "添加代币的分配方案"
 msgid "Address"
 msgstr "地址"
 
+#: src/components/veNft/formControls/CustomBeneficiaryInput.tsx
+msgid "Address required"
+msgstr ""
+
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
 msgid "Address:"
 msgstr "地址："
@@ -789,6 +793,10 @@ msgstr "设置项目代币的各项动能指标。"
 msgid "Configure which Juicebox V1 project you'd like to accept tokens for. Token holders of this V1 project will be able to swap their V1 tokens for V2 tokens."
 msgstr ""
 
+#: src/components/veNft/veNftConfirmStakeModal.tsx
+msgid "Confirm Stake"
+msgstr ""
+
 #: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Congratulations on launching your project! The next steps are optional and can be completed at any time."
 msgstr "恭喜你成功创建项目！下面这些步骤是可选项，任何时候来完成都可以。"
@@ -963,6 +971,7 @@ msgstr "自定义策略"
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 #: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
+#: src/components/veNft/formControls/CustomBeneficiaryInput.tsx
 msgid "Custom token beneficiary"
 msgstr "自定义代币受益人"
 
@@ -1002,6 +1011,10 @@ msgstr "创建日期"
 #: src/constants/time.ts
 msgid "Days"
 msgstr "天"
+
+#: src/components/veNft/formControls/LockDurationSelectInput.tsx
+msgid "Days Locked"
+msgstr ""
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierCard.tsx
 msgid "Delete NFT"
@@ -1687,6 +1700,10 @@ msgstr "初始发行比率"
 msgid "Initial mint rate"
 msgstr "最初铸造比率"
 
+#: src/components/veNft/formControls/CustomBeneficiaryInput.tsx
+msgid "Invalid address"
+msgstr ""
+
 #: src/components/IssueTokenButton.tsx
 msgid "Issue ERC-20"
 msgstr "签发 ERC-20"
@@ -1875,6 +1892,10 @@ msgstr ""
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "Migrate to Juicebox V1.1"
 msgstr "迁移至 Juicebox V1.1"
+
+#: src/components/veNft/formControls/CustomBeneficiaryInput.tsx
+msgid "Mint NFT to a custom address"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
@@ -2608,6 +2629,10 @@ msgstr "刷新"
 msgid "Relaunch your funding cycle on the new Juicebox V2 contracts."
 msgstr "在新的 Juicebox 合约上启动项目的筹款周期。"
 
+#: src/components/veNft/formControls/TokensStakedInput.tsx
+msgid "Remaining: {unstakedTokens}"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Required"
@@ -3199,6 +3224,10 @@ msgstr "分配给：<0/>"
 msgid "Token"
 msgstr "代币"
 
+#: src/components/veNft/veNftStakingTokenRangesModal.tsx
+msgid "Token Ranges"
+msgstr ""
+
 #: src/components/modals/ParticipantsModal.tsx
 msgid "Token address: <0/>"
 msgstr "代币地址：<0/>"
@@ -3492,10 +3521,18 @@ msgstr "V2"
 msgid "Version of the terminal contract used by this project."
 msgstr "当前项目所使用的 Terminal 版本。"
 
+#: src/components/veNft/VeNftStakingForm.tsx
+msgid "View Token Ranges"
+msgstr ""
+
 #: src/components/Project/VolumeStatLine/VolumeStatLine.tsx
 #: src/components/VolumeChart/index.tsx
 msgid "Volume"
 msgstr "总收入"
+
+#: src/components/veNft/formControls/VotingPowerDisplayInput.tsx
+msgid "Voting Power"
+msgstr ""
 
 #: src/components/inputs/Pay/MemoFormInput.tsx
 #: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
@@ -3651,6 +3688,10 @@ msgstr "未领取的 {tokenSymbol} 代币，依然可以用来赎回溢出池中
 msgid "You don't have a funding cycle duration. Changes you make will take effect immediately."
 msgstr "你的项目未设置筹款周期时长。你做的更改将会立即生效。"
 
+#: src/components/veNft/formControls/TokensStakedInput.tsx
+msgid "You don't have enough tokens to stake."
+msgstr ""
+
 #: src/pages/projects/HoldingsProjects.tsx
 msgid "You don't hold tokens for any Juicebox project."
 msgstr "你目前未持有任何 Juicebox 项目的代币。"
@@ -3689,6 +3730,10 @@ msgstr ""
 
 #: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "You must review and accept the risks."
+msgstr ""
+
+#: src/components/veNft/formControls/TokensStakedInput.tsx
+msgid "You must stake at least {minTokensAllowedToStake} tokens."
 msgstr ""
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
@@ -4029,6 +4074,10 @@ msgstr "{paymentCount, plural, one {# 笔付款} other {# 笔付款}}"
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "{reservedRate} {tokenSymbolPlural}/ETH ({0}%)"
 msgstr "{reservedRate} {tokenSymbolPlural}/ETH ({0}%)"
+
+#: src/components/veNft/formControls/TokensStakedInput.tsx
+msgid "{tokenSymbolDisplayText} to lock"
+msgstr ""
 
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 msgid "{tokenSymbolPluralCap} received per ETH paid to the treasury. This can change over time according to the discount rate and reserved tokens amount of future funding cycles."

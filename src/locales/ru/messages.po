@@ -390,6 +390,10 @@ msgstr ""
 msgid "Address"
 msgstr "Адрес"
 
+#: src/components/veNft/formControls/CustomBeneficiaryInput.tsx
+msgid "Address required"
+msgstr ""
+
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
 msgid "Address:"
 msgstr "Адрес:"
@@ -789,6 +793,10 @@ msgstr "Настройте динамику токена вашего проек
 msgid "Configure which Juicebox V1 project you'd like to accept tokens for. Token holders of this V1 project will be able to swap their V1 tokens for V2 tokens."
 msgstr ""
 
+#: src/components/veNft/veNftConfirmStakeModal.tsx
+msgid "Confirm Stake"
+msgstr ""
+
 #: src/components/v2/V2Project/NewDeployModal.tsx
 msgid "Congratulations on launching your project! The next steps are optional and can be completed at any time."
 msgstr ""
@@ -963,6 +971,7 @@ msgstr "Индивидуальная стратегия"
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 #: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
+#: src/components/veNft/formControls/CustomBeneficiaryInput.tsx
 msgid "Custom token beneficiary"
 msgstr "Пользовательский бенефициарий токенов"
 
@@ -1002,6 +1011,10 @@ msgstr "Дата создания"
 #: src/constants/time.ts
 msgid "Days"
 msgstr "Дней"
+
+#: src/components/veNft/formControls/LockDurationSelectInput.tsx
+msgid "Days Locked"
+msgstr ""
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierCard.tsx
 msgid "Delete NFT"
@@ -1687,6 +1700,10 @@ msgstr "Первоначальная ставка эмиссии"
 msgid "Initial mint rate"
 msgstr ""
 
+#: src/components/veNft/formControls/CustomBeneficiaryInput.tsx
+msgid "Invalid address"
+msgstr ""
+
 #: src/components/IssueTokenButton.tsx
 msgid "Issue ERC-20"
 msgstr "Выпуск ERC-20"
@@ -1875,6 +1892,10 @@ msgstr ""
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "Migrate to Juicebox V1.1"
 msgstr "Перейти на Juicebox V1.1"
+
+#: src/components/veNft/formControls/CustomBeneficiaryInput.tsx
+msgid "Mint NFT to a custom address"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
@@ -2608,6 +2629,10 @@ msgstr "Обновить"
 msgid "Relaunch your funding cycle on the new Juicebox V2 contracts."
 msgstr ""
 
+#: src/components/veNft/formControls/TokensStakedInput.tsx
+msgid "Remaining: {unstakedTokens}"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Required"
@@ -3199,6 +3224,10 @@ msgstr "Кому: <0/>"
 msgid "Token"
 msgstr "Токен"
 
+#: src/components/veNft/veNftStakingTokenRangesModal.tsx
+msgid "Token Ranges"
+msgstr ""
+
 #: src/components/modals/ParticipantsModal.tsx
 msgid "Token address: <0/>"
 msgstr "Адрес токена: <0/>"
@@ -3492,10 +3521,18 @@ msgstr ""
 msgid "Version of the terminal contract used by this project."
 msgstr "Версия терминального контракта, используемая в этом проекте."
 
+#: src/components/veNft/VeNftStakingForm.tsx
+msgid "View Token Ranges"
+msgstr ""
+
 #: src/components/Project/VolumeStatLine/VolumeStatLine.tsx
 #: src/components/VolumeChart/index.tsx
 msgid "Volume"
 msgstr "Объём"
+
+#: src/components/veNft/formControls/VotingPowerDisplayInput.tsx
+msgid "Voting Power"
+msgstr ""
 
 #: src/components/inputs/Pay/MemoFormInput.tsx
 #: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
@@ -3651,6 +3688,10 @@ msgstr "Вы по-прежнему можете выкупить свои {token
 msgid "You don't have a funding cycle duration. Changes you make will take effect immediately."
 msgstr "У вас нет продолжительности цикла финансирования. Внесенные вами изменения вступят в силу немедленно."
 
+#: src/components/veNft/formControls/TokensStakedInput.tsx
+msgid "You don't have enough tokens to stake."
+msgstr ""
+
 #: src/pages/projects/HoldingsProjects.tsx
 msgid "You don't hold tokens for any Juicebox project."
 msgstr "Вы не владеете токенами ни для одного проекта Juicebox."
@@ -3689,6 +3730,10 @@ msgstr ""
 
 #: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "You must review and accept the risks."
+msgstr ""
+
+#: src/components/veNft/formControls/TokensStakedInput.tsx
+msgid "You must stake at least {minTokensAllowedToStake} tokens."
 msgstr ""
 
 #: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
@@ -4028,6 +4073,10 @@ msgstr "{paymentCount, plural, one {# платеж} other {# платежи}}"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "{reservedRate} {tokenSymbolPlural}/ETH ({0}%)"
+msgstr ""
+
+#: src/components/veNft/formControls/TokensStakedInput.tsx
+msgid "{tokenSymbolDisplayText} to lock"
 msgstr ""
 
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx

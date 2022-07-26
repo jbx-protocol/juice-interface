@@ -92,7 +92,7 @@ export default function DistributeReservedTokensEventElem({
               {tokenSymbolText({
                 tokenSymbol: tokenSymbol,
                 capitalize: false,
-                plural: true,
+                plural: event.tokenCount.toNumber() !== 1,
               })}
             </div>
           ) : null}

@@ -80,7 +80,7 @@ export default function ReservesEventElem({
               {tokenSymbolText({
                 tokenSymbol: tokenSymbol,
                 capitalize: false,
-                plural: true,
+                plural: event.count.toNumber() !== 1,
               })}
             </div>
           ) : null}

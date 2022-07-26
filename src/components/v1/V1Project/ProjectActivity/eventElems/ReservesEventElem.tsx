@@ -8,7 +8,7 @@ import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { PrintReservesEvent } from 'models/subgraph-entities/v1/print-reserves-event'
 import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
-import { formatWad } from 'utils/formatNumber'
+import { formatWad, fromWad } from 'utils/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export default function ReservesEventElem({
@@ -80,7 +80,7 @@ export default function ReservesEventElem({
               {tokenSymbolText({
                 tokenSymbol: tokenSymbol,
                 capitalize: false,
-                plural: event.count.toNumber() !== 1,
+                plural: parseInt(fromWad(event.count) || '0') !== 1,
               })}
             </div>
           ) : null}

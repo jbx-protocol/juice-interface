@@ -631,11 +631,11 @@ msgstr ""
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 msgid "Bonding curve rate"
-msgstr ""
+msgstr "Bonding curve rate"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Bonding curve:"
-msgstr ""
+msgstr "Bonding curve:"
 
 #: src/pages/index.page.tsx
 msgid "Built for:"

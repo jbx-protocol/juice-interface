@@ -8,7 +8,7 @@ msgstr ""
 "Language: id\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-07-23 03:00\n"
+"PO-Revision-Date: 2022-07-26 03:23\n"
 "Last-Translator: \n"
 "Language-Team: Indonesian\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -543,9 +543,7 @@ msgstr ""
 msgid "Assets"
 msgstr ""
 
-#: src/components/inputs/Pay/MemoFormInput.tsx
 #: src/components/modals/AttachStickerModal/AttachStickerModal.tsx
-#: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "Attach a sticker"
 msgstr ""
 

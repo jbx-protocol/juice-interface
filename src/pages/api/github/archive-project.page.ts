@@ -30,12 +30,16 @@ const handler = async (
   try {
     const { archived, projectId, metadata, handle, cv } = req.body
 
+    if (!projectId || !metadata || !handle) {
+      throw new Error()
+    }
+
     const headers = {
       Authorization: `Bearer ${githubToken}`,
     }
 
     const title = `[${archived ? 'ARCHIVE' : 'UNARCHIVE'}] Project: "${
-      metadata?.name
+      metadata.name
     }"`
 
     const body = `

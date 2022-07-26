@@ -582,7 +582,6 @@ msgid "Back to top"
 msgstr "Regresa arriba"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
-#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Balance exceeded"
 msgstr "Balance excedido"
 
@@ -613,18 +612,6 @@ msgstr "Número de bloque"
 msgid "Blog"
 msgstr "Blog"
 
-#: src/components/formItems/ProjectRedemptionRate.tsx
-#: src/components/formItems/ProjectRedemptionRate.tsx
-#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
-#: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
-#: src/pages/v1/create/ConfirmDeployProject.tsx
-msgid "Bonding curve rate"
-msgstr "Tasa de curva de adhesión"
-
-#: src/components/v1/V1Project/modals/RedeemModal.tsx
-msgid "Bonding curve:"
-msgstr "Curva de adhesión:"
-
 #: src/pages/index.page.tsx
 msgid "Built for:"
 msgstr "Construido para:"
@@ -636,6 +623,10 @@ msgstr "Quemar tokens del proyecto"
 #: src/components/ManageTokensModal.tsx
 msgid "Burn your {tokensLabel}. You won't receive ETH in return because this project has no overflow."
 msgstr "Quema tus {tokensLabel}. No recibirás ETH de regreso porque este proyecto no tiene excedente."
+
+#: src/components/ManageTokensModal.tsx
+msgid "Burn your {tokensLabel}. You won't receive ETH in return because this project's redemption rate is zero."
+msgstr ""
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "Burn {0} {tokensTextShort}"
@@ -676,6 +667,10 @@ msgstr "Cancelar"
 #: src/components/ManageTokensModal.tsx
 msgid "Cannot redeem tokens for ETH because this project has no overflow."
 msgstr "No se pueden canjear tokens por ETH porque este proyecto no tiene excedente."
+
+#: src/components/ManageTokensModal.tsx
+msgid "Cannot redeem tokens for ETH because this project's redemption rate is zero."
+msgstr ""
 
 #: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
 msgid "Change ENS name"
@@ -1683,6 +1678,10 @@ msgstr "Tasa de emisión inicial"
 msgid "Initial mint rate"
 msgstr "Tasa inicial de acuñación"
 
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
+msgid "Insufficient token balance"
+msgstr ""
+
 #: src/components/IssueTokenButton.tsx
 msgid "Issue ERC-20"
 msgstr "Emitir ERC-20"
@@ -2582,11 +2581,20 @@ msgstr "Canjear {tokensTextLong} por ETH"
 msgid "Redeemed"
 msgstr "Canjeado"
 
+#: src/components/formItems/ProjectRedemptionRate.tsx
+#: src/components/formItems/ProjectRedemptionRate.tsx
+#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 #: src/pages/create/forms/TokenForm/index.tsx
 #: src/pages/create/tabs/ReviewDeployTab/FundingAttributes.tsx
+#: src/pages/v1/create/ConfirmDeployProject.tsx
 msgid "Redemption rate"
 msgstr "Porcentaje de canje"
+
+#: src/components/v1/V1Project/modals/RedeemModal.tsx
+msgid "Redemption rate:"
+msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Redemption rate: <0>{0}%</0>"
@@ -3659,6 +3667,10 @@ msgstr ""
 msgid "You have configured for all funds to be distributed from the treasury. Your current payouts do not sum to 100%, so the remainder will go to the project owner."
 msgstr "Has configurado que todos los fondos sean distribuidos desde el tesoro. La suma de tus pagos actuales no es 100%, así que el remanente irá al dueño del proyecto."
 
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
+msgid "You have exceeded the total token supply of <0>{0}</0>"
+msgstr ""
+
 #: src/components/v1/shared/forms/BudgetForm.tsx
 msgid "You have set a funding cycle target."
 msgstr "Has establecido un objetivo del ciclo de financiamiento."
@@ -3688,8 +3700,8 @@ msgid "You receive an NFT for contributing over <0>{0} ETH</0>."
 msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
-msgid "You will receive minimum {minReturnedTokensFormatted} ETH"
-msgstr "Recibirás al menos {minReturnedTokensFormatted} ETH"
+msgid "You will receive at least {minReturnedTokensFormatted} ETH"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 msgid "You will receive {0}{1} ETH"
@@ -3698,6 +3710,14 @@ msgstr "Vas a recibir {0}{1} ETH"
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "You will receive {minReturnedTokensFormatted} ETH"
 msgstr "Recibirás {minReturnedTokensFormatted} ETH"
+
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
+msgid "You would receive at least {minReturnedTokensFormatted} ETH"
+msgstr ""
+
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
+msgid "You would receive {minReturnedTokensFormatted} ETH"
+msgstr ""
 
 #: src/components/forms/TicketingForm.tsx
 msgid "You'll be able to issue ERC-20 tokens once your project contract has been deployed. Until then, the protocol will track token balances, allowing your supporters to earn tokens and redeem for overflow in the meantime."

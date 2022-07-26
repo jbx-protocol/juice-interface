@@ -457,7 +457,7 @@ export default function ReconfigureFCModal({
               isRecurring(editingFC) &&
               hasFundingTarget(editingFC) && (
                 <Statistic
-                  title={t`Bonding curve rate`}
+                  title={t`Redemption rate`}
                   value={perbicentToPercent(editingFC.bondingCurveRate)}
                   suffix="%"
                 />

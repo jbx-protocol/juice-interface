@@ -39,7 +39,10 @@ export default function SocialLinks({
   discord?: string
 }) {
   return (
-    <Space size="middle">
+    <Space
+      size="middle"
+      style={{ flexWrap: 'wrap', columnGap: '1.5rem', rowGap: '0.5rem' }}
+    >
       {infoUri && (
         <span>
           <ExternalLink style={{ ...linkStyle }} href={linkUrl(infoUri)}>
@@ -68,7 +71,7 @@ export default function SocialLinks({
           href={linkUrl(discord)}
         >
           <span style={{ marginRight: 4 }}>
-            <Discord size={13} />
+            <Discord size={11} />
           </span>
           Discord
         </ExternalLink>

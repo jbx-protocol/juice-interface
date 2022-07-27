@@ -263,6 +263,10 @@ msgstr "<0>{tokenSymbol} ERC-20 地址：</0><1/>"
 msgid "@"
 msgstr "@"
 
+#: src/components/v2/shared/SplitItem.tsx
+msgid "@{handle}"
+msgstr ""
+
 #: src/components/Project404.tsx
 msgid "@{handle} not found"
 msgstr ""
@@ -1732,6 +1736,10 @@ msgid "Juicebox V1 project ID"
 msgstr ""
 
 #: src/components/v2/shared/SplitItem.tsx
+msgid "Juicebox V2 project"
+msgstr ""
+
+#: src/components/v2/shared/SplitItem.tsx
 msgid "Juicebox V2 project with ID {0}"
 msgstr "Juicebox V2 上标识为 {0} 的项目"
 
@@ -2405,6 +2413,10 @@ msgstr "项目代币"
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/TokenDrawer.tsx
 msgid "Project tokens <0>aren't ERC-20 tokens</0> by default. Once you deploy your project, you can issue an ERC-20 for your holders to claim. This is <1>optional</1>."
+msgstr ""
+
+#: src/components/v2/shared/SplitItem.tsx
+msgid "Project {0}"
 msgstr ""
 
 #: src/components/NewDeployNotAvailable.tsx
@@ -3403,6 +3415,7 @@ msgstr "取消项目的存档状态"
 msgid "Unavailable"
 msgstr "不可用"
 
+#: src/components/v2/shared/SplitItem.tsx
 #: src/components/veNft/VeNftContent.tsx
 msgid "Unknown Project"
 msgstr ""

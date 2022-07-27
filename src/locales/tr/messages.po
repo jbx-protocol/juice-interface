@@ -263,6 +263,10 @@ msgstr "<0>{tokenSymbol} ERC-20 adresi:</0> <1/>"
 msgid "@"
 msgstr "@"
 
+#: src/components/v2/shared/SplitItem.tsx
+msgid "@{handle}"
+msgstr ""
+
 #: src/components/Project404.tsx
 msgid "@{handle} not found"
 msgstr ""
@@ -1732,6 +1736,10 @@ msgid "Juicebox V1 project ID"
 msgstr ""
 
 #: src/components/v2/shared/SplitItem.tsx
+msgid "Juicebox V2 project"
+msgstr ""
+
+#: src/components/v2/shared/SplitItem.tsx
 msgid "Juicebox V2 project with ID {0}"
 msgstr "{0} Kimlikli Juicebox V2 projesi"
 
@@ -2405,6 +2413,10 @@ msgstr "Proje token'ı"
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/TokenDrawer.tsx
 msgid "Project tokens <0>aren't ERC-20 tokens</0> by default. Once you deploy your project, you can issue an ERC-20 for your holders to claim. This is <1>optional</1>."
+msgstr ""
+
+#: src/components/v2/shared/SplitItem.tsx
+msgid "Project {0}"
 msgstr ""
 
 #: src/components/NewDeployNotAvailable.tsx
@@ -3403,6 +3415,7 @@ msgstr "Projeyi arşivden kaldır"
 msgid "Unavailable"
 msgstr "Mevcut değil"
 
+#: src/components/v2/shared/SplitItem.tsx
 #: src/components/veNft/VeNftContent.tsx
 msgid "Unknown Project"
 msgstr ""

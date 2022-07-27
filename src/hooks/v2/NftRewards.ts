@@ -3,7 +3,8 @@ import axios from 'axios'
 import { IPFSNftRewardTier, NftRewardTier } from 'models/v2/nftRewardTier'
 import { useQuery, UseQueryResult } from 'react-query'
 import { ipfsCidUrl } from 'utils/ipfs'
-import { MaxUint48 } from 'utils/v2/math'
+
+import { MaxUint48 } from 'constants/numbers'
 
 const DEFAULT_NFT_MAX_SUPPLY = MaxUint48
 

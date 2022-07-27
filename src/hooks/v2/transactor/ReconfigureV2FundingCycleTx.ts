@@ -9,6 +9,7 @@ import { GroupedSplits, SplitGroup } from 'models/v2/splits'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { V2UserContext } from 'contexts/v2/userContext'
 import { TransactorInstance } from 'hooks/Transactor'
+import { isValidMustStartAtOrAfter } from 'utils/v2/fundingCycle'
 
 const DEFAULT_MUST_START_AT_OR_AFTER = '1'
 const DEFAULT_MEMO = ''
@@ -33,7 +34,12 @@ export function useReconfigureV2FundingCycleTx(): TransactorInstance<{
     },
     txOpts,
   ) => {
-    if (!transactor || !projectId || !contracts?.JBController) {
+    if (
+      !transactor ||
+      !projectId ||
+      !contracts?.JBController ||
+      !isValidMustStartAtOrAfter(mustStartAtOrAfter, fundingCycleData.duration)
+    ) {
       txOpts?.onDone?.()
       return Promise.resolve(false)
     }

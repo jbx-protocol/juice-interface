@@ -8,7 +8,11 @@ import { Wallet } from '@ethersproject/wallet'
 
 import { invertPermyriad } from 'utils/bigNumbers'
 
-import { decodeV2FundingCycleMetadata } from '../fundingCycle'
+import {
+  decodeV2FundingCycleMetadata,
+  isValidMustStartAtOrAfter,
+} from '../fundingCycle'
+import { MaxUint54 } from 'constants/numbers'
 
 /**
  * Returns a mock FundingCyleMetadata packed into a BigNumber
@@ -101,7 +105,7 @@ const createMetadata = ({
   }
 }
 
-describe('fundingCycle', () => {
+describe('fundingCycle utils', () => {
   describe('decodeV2FundingCycleMetadata', () => {
     it.each`
       flagsEnabled
@@ -121,5 +125,23 @@ describe('fundingCycle', () => {
         expect(decodeV2FundingCycleMetadata(packedMetadata)).toEqual(metadata)
       },
     )
+  })
+
+  describe('isValidMustStartAtOrAfter', () => {
+    it.each`
+      mustStartAtOrAfter  | duration            | isValid
+      ${0}                | ${0}                | ${true}
+      ${1}                | ${1}                | ${true}
+      ${MaxUint54.sub(1)} | ${0}                | ${true}
+      ${0}                | ${MaxUint54.sub(1)} | ${true}
+      ${0}                | ${MaxUint54}        | ${false}
+      ${MaxUint54}        | ${0}                | ${false}
+      ${0}                | ${MaxUint54.add(1)} | ${false}
+      ${MaxUint54.add(1)} | ${0}                | ${false}
+    `('returns correct result', ({ mustStartAtOrAfter, duration, isValid }) => {
+      expect(isValidMustStartAtOrAfter(mustStartAtOrAfter, duration)).toBe(
+        isValid,
+      )
+    })
   })
 })

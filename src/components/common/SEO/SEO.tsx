@@ -26,7 +26,6 @@ export const SEO: FC<Props> = ({
   robots,
   children,
 }) => {
-  console.info(url)
   const formatTwitterHandle = (handle: string | undefined) =>
     handle ? (handle.startsWith('@') ? handle : '@' + handle) : undefined
   const formattedTitle = title
@@ -67,7 +66,7 @@ export const SEO: FC<Props> = ({
 
       <OpenGraphMetaTags
         type="website"
-        // url={url ?? process.env.NEXT_PUBLIC_BASE_URL} // default to base url
+        url={url ?? process.env.NEXT_PUBLIC_BASE_URL} // default to base url
         title={formattedTitle}
         description={description ?? config.description}
         siteName={config.title}

@@ -62,6 +62,7 @@ import { BallotStrategy } from 'models/ballot'
 import { detailedTimeString, secondsUntil } from 'utils/formatTime'
 
 import { getBallotStrategyByAddress } from 'constants/v1/ballotStrategies/getBallotStrategiesByAddress'
+import { SECONDS_IN_DAY } from 'constants/numbers'
 
 const V1ReconfigureUpcomingMessage = ({
   currentFC,
@@ -73,7 +74,7 @@ const V1ReconfigureUpcomingMessage = ({
   const ballotStrategy = getBallotStrategyByAddress(currentFC.ballot)
   const ballotStrategyLength = ballotStrategy.durationSeconds
   const duration = currentFC.duration.toNumber()
-  const durationInSeconds = duration * 24 * 60 * 60
+  const durationInSeconds = duration * SECONDS_IN_DAY
   const secondsUntilNextFC = secondsUntil(
     currentFC.start.add(durationInSeconds),
   )

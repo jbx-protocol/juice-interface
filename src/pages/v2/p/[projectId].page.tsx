@@ -43,7 +43,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 
   return {
-    paths: [{ params: { projectId: String(V2_PROJECT_IDS.JUICEBOX_DAO) } }],
+    paths: [
+      { params: { projectId: String(V2_PROJECT_IDS.JUICEBOX_DAO) } },
+      { params: { projectId: String(4350) } },
+    ],
     fallback: true,
   }
 }

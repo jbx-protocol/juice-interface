@@ -9,11 +9,17 @@ export async function middleware(request: NextRequest) {
       pathname: request.nextUrl.pathname,
       handle,
     })
-    const projects = await paginateDepleteProjectsQueryCall({
-      variables: {
-        where: { cv: '2', handle },
-      },
-    })
+    let projects
+    try {
+      projects = await paginateDepleteProjectsQueryCall({
+        variables: {
+          where: { cv: '2', handle },
+        },
+      })
+    } catch (e) {
+      console.error('Failed to query projects', e)
+      throw e
+    }
     const url = request.nextUrl
     if (!projects.length) {
       console.info('Page not found', {

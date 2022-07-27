@@ -12,6 +12,7 @@ import V2Dashboard from './components/V2Dashboard'
 import { readProvider } from 'constants/readProvider'
 import { readNetwork } from 'constants/networks'
 import { JUICEBOX_MONEY_METADATA_DOMAIN } from 'constants/v2/metadataDomain'
+import { V2_PROJECT_IDS } from 'constants/v2/projectIds'
 
 async function getMetadataCidFromContract(projectId: number) {
   const network = readNetwork.name
@@ -31,13 +32,20 @@ async function getMetadataCidFromContract(projectId: number) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const projects = await paginateDepleteProjectsQueryCall({
-    variables: { where: { cv: '2' } },
-  })
-  const paths = projects.map(({ projectId }) => ({
-    params: { projectId: String(projectId) },
-  }))
-  return { paths, fallback: true }
+  if (process.env.BUILD_CACHE_V2_PROJECTS === 'true') {
+    const projects = await paginateDepleteProjectsQueryCall({
+      variables: { where: { cv: '2' } },
+    })
+    const paths = projects.map(({ projectId }) => ({
+      params: { projectId: String(projectId) },
+    }))
+    return { paths, fallback: true }
+  }
+
+  return {
+    paths: [{ params: { projectId: String(V2_PROJECT_IDS.JUICEBOX_DAO) } }],
+    fallback: true,
+  }
 }
 
 export const getStaticProps: GetStaticProps<{

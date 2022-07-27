@@ -44,21 +44,25 @@ import { layouts } from 'constants/styles/layouts'
 import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const projects = await paginateDepleteProjectsQueryCall({
-    variables: {
-      where: { cv_in: ['1', '1.1'] },
-    },
-  })
-  const paths = projects
-    .map(({ handle }) =>
-      handle
-        ? {
-            params: { handle },
-          }
-        : undefined,
-    )
-    .filter((i): i is { params: { handle: string } } => !!i)
-  return { paths, fallback: true }
+  if (process.env.BUILD_CACHE_V1_PROJECTS === 'true') {
+    const projects = await paginateDepleteProjectsQueryCall({
+      variables: {
+        where: { cv_in: ['1', '1.1'] },
+      },
+    })
+    const paths = projects
+      .map(({ handle }) =>
+        handle
+          ? {
+              params: { handle },
+            }
+          : undefined,
+      )
+      .filter((i): i is { params: { handle: string } } => !!i)
+    return { paths, fallback: true }
+  }
+
+  return { paths: [{ params: { handle: 'juicebox' } }], fallback: true }
 }
 
 export const getStaticProps: GetStaticProps<{

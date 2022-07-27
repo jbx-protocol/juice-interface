@@ -8,7 +8,7 @@ msgstr ""
 "Language: it\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-07-26 03:23\n"
+"PO-Revision-Date: 2022-07-27 03:11\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -582,7 +582,6 @@ msgid "Back to top"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
-#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Balance exceeded"
 msgstr ""
 
@@ -613,18 +612,6 @@ msgstr ""
 msgid "Blog"
 msgstr ""
 
-#: src/components/formItems/ProjectRedemptionRate.tsx
-#: src/components/formItems/ProjectRedemptionRate.tsx
-#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
-#: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
-#: src/pages/v1/create/ConfirmDeployProject.tsx
-msgid "Redemption rate"
-msgstr ""
-
-#: src/components/v1/V1Project/modals/RedeemModal.tsx
-msgid "Redemption:"
-msgstr ""
-
 #: src/pages/index.page.tsx
 msgid "Built for:"
 msgstr ""
@@ -635,6 +622,10 @@ msgstr ""
 
 #: src/components/ManageTokensModal.tsx
 msgid "Burn your {tokensLabel}. You won't receive ETH in return because this project has no overflow."
+msgstr ""
+
+#: src/components/ManageTokensModal.tsx
+msgid "Burn your {tokensLabel}. You won't receive ETH in return because this project's redemption rate is zero."
 msgstr ""
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
@@ -675,6 +666,10 @@ msgstr ""
 
 #: src/components/ManageTokensModal.tsx
 msgid "Cannot redeem tokens for ETH because this project has no overflow."
+msgstr ""
+
+#: src/components/ManageTokensModal.tsx
+msgid "Cannot redeem tokens for ETH because this project's redemption rate is zero."
 msgstr ""
 
 #: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
@@ -1683,6 +1678,10 @@ msgstr ""
 msgid "Initial mint rate"
 msgstr ""
 
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
+msgid "Insufficient token balance"
+msgstr ""
+
 #: src/components/IssueTokenButton.tsx
 msgid "Issue ERC-20"
 msgstr ""
@@ -2582,10 +2581,19 @@ msgstr ""
 msgid "Redeemed"
 msgstr ""
 
+#: src/components/formItems/ProjectRedemptionRate.tsx
+#: src/components/formItems/ProjectRedemptionRate.tsx
+#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 #: src/pages/create/forms/TokenForm/index.tsx
 #: src/pages/create/tabs/ReviewDeployTab/FundingAttributes.tsx
+#: src/pages/v1/create/ConfirmDeployProject.tsx
 msgid "Redemption rate"
+msgstr ""
+
+#: src/components/v1/V1Project/modals/RedeemModal.tsx
+msgid "Redemption rate:"
 msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
@@ -3659,6 +3667,10 @@ msgstr ""
 msgid "You have configured for all funds to be distributed from the treasury. Your current payouts do not sum to 100%, so the remainder will go to the project owner."
 msgstr ""
 
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
+msgid "You have exceeded the total token supply of <0>{0}</0>"
+msgstr ""
+
 #: src/components/v1/shared/forms/BudgetForm.tsx
 msgid "You have set a funding cycle target."
 msgstr ""
@@ -3688,7 +3700,7 @@ msgid "You receive an NFT for contributing over <0>{0} ETH</0>."
 msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
-msgid "You will receive minimum {minReturnedTokensFormatted} ETH"
+msgid "You will receive at least {minReturnedTokensFormatted} ETH"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
@@ -3697,6 +3709,14 @@ msgstr ""
 
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "You will receive {minReturnedTokensFormatted} ETH"
+msgstr ""
+
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
+msgid "You would receive at least {minReturnedTokensFormatted} ETH"
+msgstr ""
+
+#: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
+msgid "You would receive {minReturnedTokensFormatted} ETH"
 msgstr ""
 
 #: src/components/forms/TicketingForm.tsx
@@ -4057,5 +4077,4 @@ msgstr ""
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "{userOwnershipPercentage}% of total supply"
 msgstr ""
-
 

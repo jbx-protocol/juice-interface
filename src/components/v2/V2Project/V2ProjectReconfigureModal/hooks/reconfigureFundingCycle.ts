@@ -8,9 +8,11 @@ import { EditingProjectData } from './editingProjectData'
 
 export const useReconfigureFundingCycle = ({
   editingProjectData,
+  memo,
   exit,
 }: {
   editingProjectData: EditingProjectData
+  memo: string
   exit: VoidFunction
 }) => {
   const {
@@ -92,6 +94,7 @@ export const useReconfigureFundingCycle = ({
           editingPayoutGroupedSplits,
           editingReservedTokensGroupedSplits,
         ],
+        memo,
       },
       {
         onDone() {
@@ -117,6 +120,7 @@ export const useReconfigureFundingCycle = ({
     editingReservedTokensGroupedSplits,
     nftRewardsCids,
     fundingCycle,
+    memo,
     exit,
     reconfigureV2FundingCycleTx,
   ])

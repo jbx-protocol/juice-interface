@@ -97,15 +97,19 @@ export default function PayInputGroup({
                 disabled={disabled}
               />
             }
-          />
-          <PayInputSubText
-            payInCurrency={payInCurrency ?? ETH}
-            amount={payAmountETH}
-            reservedRate={reservedRate}
-            weight={weight}
-            tokenSymbol={tokenSymbol}
-            tokenAddress={tokenAddress}
-            weightingFn={weightingFn}
+            formItemProps={{
+              extra: (
+                <PayInputSubText
+                  payInCurrency={payInCurrency ?? ETH}
+                  amount={payAmountETH}
+                  reservedRate={reservedRate}
+                  weight={weight}
+                  tokenSymbol={tokenSymbol}
+                  tokenAddress={tokenAddress}
+                  weightingFn={weightingFn}
+                />
+              ),
+            }}
           />
         </div>
 

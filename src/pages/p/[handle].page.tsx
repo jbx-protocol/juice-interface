@@ -110,6 +110,7 @@ export const getStaticProps: GetStaticProps<{
           status: status,
           handle,
           url,
+          error: e.message,
         })
         error = e
       }

@@ -82,7 +82,7 @@ export const getStaticProps: GetStaticProps<{
           status: status,
           projectId,
           url,
-          e,
+          error: e.message,
         })
         error = e
       }

@@ -1,19 +1,52 @@
-import { Trans } from '@lingui/macro'
+import { Space } from 'antd'
 
 import { ThemeContext } from 'contexts/themeContext'
-import React, { useContext } from 'react'
+import { useContext } from 'react'
+
+import { Trans } from '@lingui/macro'
+
+import { VeNftToken } from 'models/subgraph-entities/v2/venft-token'
+
+import OwnedVeNftCard from 'components/veNft/VeNftOwnedTokenCard'
+
+import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import { shadowCard } from 'constants/styles/shadowCard'
 
-const VeNftOwnedTokensSection = () => {
+type OwnedNFTsSectionProps = {
+  userTokens: VeNftToken[] | undefined
+  tokenSymbolDisplayText: string
+}
+
+export default function OwnedNFTSection({
+  userTokens,
+  tokenSymbolDisplayText,
+}: OwnedNFTsSectionProps) {
   const { theme } = useContext(ThemeContext)
+  const { primaryTerminalCurrentOverflow } = useContext(V2ProjectContext)
+  const hasOverflow = Boolean(primaryTerminalCurrentOverflow?.gt(0))
+
   return (
     <div style={{ ...shadowCard(theme), padding: 25, marginBottom: 10 }}>
-      <h3>
-        <Trans>You don't own any veNFTs!</Trans>
-      </h3>
+      {userTokens && userTokens.length > 0 ? (
+        <>
+          <h3>$ve{tokenSymbolDisplayText} NFTs:</h3>
+          <Space direction="vertical">
+            {userTokens.map((token, i) => (
+              <OwnedVeNftCard
+                key={i}
+                token={token}
+                tokenSymbolDisplayText={tokenSymbolDisplayText}
+                hasOverflow={hasOverflow}
+              />
+            ))}
+          </Space>
+        </>
+      ) : (
+        <h3>
+          <Trans>You don't own any veNFTs!</Trans>
+        </h3>
+      )}
     </div>
   )
 }
-
-export default VeNftOwnedTokensSection

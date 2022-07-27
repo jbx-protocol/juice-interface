@@ -329,3 +329,7 @@ textarea.ant-input::placeholder {
 .ant-input-number-disabled input {
   color: var(--text-tertiary) !important;
 }
+
+.ant-form-item-label > label .ant-form-item-tooltip {
+  color: var(--text-secondary);
+}

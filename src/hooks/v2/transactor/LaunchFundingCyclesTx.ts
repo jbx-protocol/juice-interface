@@ -8,6 +8,7 @@ import {
 } from 'models/v2/fundingCycle'
 
 import { GroupedSplits, SplitGroup } from 'models/v2/splits'
+import { isValidMustStartAtOrAfter } from 'utils/v2/fundingCycle'
 
 import { TransactorInstance } from '../../Transactor'
 
@@ -40,7 +41,8 @@ export function useLaunchFundingCyclesTx(): TransactorInstance<{
       !transactor ||
       !userAddress ||
       !contracts?.JBController ||
-      !contracts?.JBETHPaymentTerminal
+      !contracts?.JBETHPaymentTerminal ||
+      !isValidMustStartAtOrAfter(mustStartAtOrAfter, fundingCycleData.duration)
     ) {
       return Promise.resolve(false)
     }

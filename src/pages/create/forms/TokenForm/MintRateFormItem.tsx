@@ -50,7 +50,7 @@ export default function MintRateFormItem({
         required
       >
         <FormattedNumberInput
-          min={1}
+          min={0}
           max={MAX_MINT_RATE}
           accessory={
             <span style={{ color: colors.text.primary, marginRight: 20 }}>

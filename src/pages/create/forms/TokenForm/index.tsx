@@ -266,6 +266,7 @@ export default function TokenForm({
 
   useEffect(() => {
     const hasFormUpdated =
+      initialValues.weight !== weight ||
       initialValues.reservedRate !== reservedRate ||
       initialValues.discountRate !== discountRate ||
       initialValues.redemptionRate !== redemptionRate

@@ -4,26 +4,24 @@ import { invertPermyriad } from 'utils/bigNumbers'
 import { fromWad, percentToPermyriad } from 'utils/formatNumber'
 import { WeightFunction } from 'utils/math'
 
-const TEN_THOUSAND = 10000
-const ONE_BILLION = 1000000000
-
-const MaxUint232 = constants.MaxUint256.add(1)
-  .div(2 ** 24)
-  .sub(1)
-const MaxUint88 = 2 ** 88 - 1
-export const MaxUint48 = 2 ** 48 - 1
+import {
+  MaxUint232,
+  MaxUint88,
+  ONE_BILLION,
+  ONE_MILLION,
+  TEN_THOUSAND,
+} from 'constants/numbers'
 
 export const MAX_RESERVED_RATE = TEN_THOUSAND
 export const MAX_REDEMPTION_RATE = TEN_THOUSAND
 export const MAX_DISCOUNT_RATE = ONE_BILLION
 export const SPLITS_TOTAL_PERCENT = ONE_BILLION
-const MAX_FEE = ONE_BILLION
 export const MAX_DISTRIBUTION_LIMIT = MaxUint232
 
-export const DEFAULT_MINT_RATE = 10 ** 6
+export const DEFAULT_MINT_RATE = ONE_MILLION
 export const MAX_MINT_RATE = Math.floor(MaxUint88 / 10 ** 18)
 
-export const DEFAULT_FUNDING_CYCLE_DURATION = 14
+const MAX_FEE = ONE_BILLION
 
 /**
  * Express a given discount rate (parts-per-billion) as a percentage.

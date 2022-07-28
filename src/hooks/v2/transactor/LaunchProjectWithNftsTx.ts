@@ -13,13 +13,14 @@ import { GroupedSplits, SplitGroup } from 'models/v2/splits'
 import { ContractNftRewardTier } from 'models/v2/nftRewardTier'
 
 import { BigNumber } from '@ethersproject/bignumber'
-import { MaxUint48 } from 'utils/v2/math'
 import { parseEther } from '@ethersproject/units'
+import { isValidMustStartAtOrAfter } from 'utils/v2/fundingCycle'
 
 import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
 import { IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
 import { TransactorInstance } from '../../Transactor'
 import { JUICEBOX_MONEY_METADATA_DOMAIN } from 'constants/v2/metadataDomain'
+import { MaxUint48 } from 'constants/numbers'
 
 const DEFAULT_MUST_START_AT_OR_AFTER = '1' // start immediately
 const DEFAULT_MEMO = ''
@@ -93,7 +94,8 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<{
       !transactor ||
       !userAddress ||
       !contracts?.JBController ||
-      !contracts.JBETHPaymentTerminal
+      !contracts.JBETHPaymentTerminal ||
+      !isValidMustStartAtOrAfter(mustStartAtOrAfter, fundingCycleData.duration)
     ) {
       txOpts?.onDone?.()
       return Promise.resolve(false)

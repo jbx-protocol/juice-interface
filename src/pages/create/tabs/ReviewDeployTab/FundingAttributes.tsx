@@ -308,22 +308,29 @@ export function ReconfigurationStatistic({
 }: {
   ballotAddress: string
 }) {
+  const riskWarningText = FUNDING_CYCLE_WARNING_TEXT()
+  const ballot = getBallotStrategyByAddress(ballotAddress)
+
+  const noBallot = ballot.durationSeconds === 0
+  const customBallot = ballot.unknown
+
+  const ballotWarningText = customBallot
+    ? riskWarningText.customBallot
+    : riskWarningText.noBallot
+
   return (
     <Statistic
       title={
         <TooltipLabel
-          label={t`Reconfiguration rules`}
+          label={t`Reconfiguration strategy`}
           tip={t`How long before your next funding cycle must you reconfigure in order for changes to take effect.`}
         />
       }
       valueRender={() => {
-        const ballot = getBallotStrategyByAddress(ballotAddress)
         return (
           <FundingCycleDetailWarning
-            showWarning={
-              !ballot.durationSeconds || ballot.durationSeconds === 0
-            }
-            tooltipTitle={FUNDING_CYCLE_WARNING_TEXT().ballot}
+            showWarning={noBallot || customBallot}
+            tooltipTitle={ballotWarningText}
           >
             <div>
               {ballot.name}{' '}

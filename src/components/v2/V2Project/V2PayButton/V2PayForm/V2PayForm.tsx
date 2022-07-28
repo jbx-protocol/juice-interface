@@ -1,7 +1,6 @@
-import { SmileOutlined } from '@ant-design/icons'
 import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
-import { Checkbox, Form, Input, Modal, Space, Switch, Tooltip } from 'antd'
+import { Checkbox, Form, Input, Modal, Space, Switch } from 'antd'
 import { FormInstance, FormProps, useWatch } from 'antd/lib/form/Form'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
@@ -17,6 +16,8 @@ import {
   getUnsafeV2FundingCycleProperties,
   V2FundingCycleRiskCount,
 } from 'utils/v2/fundingCycle'
+
+import Sticker from 'components/icons/Sticker'
 
 import { ProjectPreferences } from 'constants/v2/projectPreferences'
 import { StickerSelection } from './StickerSelection'
@@ -93,23 +94,20 @@ export const V2PayForm = ({
                   top: 7,
                 }}
               >
-                {canAddMoreStickers ? (
-                  <Tooltip title={t`Attach a sticker`}>
-                    <SmileOutlined
-                      style={{ color: colors.text.secondary }}
-                      onClick={() => {
-                        setAttachStickerModalVisible(true)
-                      }}
-                    />
-                  </Tooltip>
-                ) : (
-                  <SmileOutlined
+                {
+                  <Sticker
                     style={{
-                      color: colors.text.disabled,
-                      cursor: 'not-allowed',
+                      color: colors.text.secondary,
+                      cursor: canAddMoreStickers ? 'pointer' : 'not-allowed',
+                    }}
+                    size={20}
+                    onClick={() => {
+                      canAddMoreStickers
+                        ? setAttachStickerModalVisible(true)
+                        : undefined
                     }}
                   />
-                )}
+                }
               </div>
               <Form.Item name="stickerUrls">
                 <StickerSelection />

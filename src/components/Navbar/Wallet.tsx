@@ -1,5 +1,5 @@
 import FormattedAddress from 'components/FormattedAddress'
-import { LogoutOutlined } from '@ant-design/icons'
+import { LogoutOutlined, CrownOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 
 import { NetworkContext } from 'contexts/networkContext'
@@ -10,6 +10,8 @@ import { Dropdown, Menu } from 'antd'
 import EtherscanLink from 'components/EtherscanLink'
 import CopyTextButton from 'components/CopyTextButton'
 import useMobile from 'hooks/Mobile'
+
+import Link from 'next/link'
 
 import Balance from './Balance'
 
@@ -32,6 +34,19 @@ export default function Wallet({ userAddress }: { userAddress: string }) {
         <EtherscanLink value={userAddress} type="address" truncated={true} />{' '}
         <CopyTextButton value={userAddress} style={{ zIndex: 1 }} />
       </Menu.Item>
+      <Menu.Item
+        style={{
+          padding: menuItemPadding,
+          color: colors.text.primary,
+          display: 'flex',
+          justifyContent: 'space-between',
+        }}
+      >
+        <Link href="projects?tab=myprojects">
+          <Trans>My projects</Trans>
+        </Link>
+        <CrownOutlined />
+      </Menu.Item>
       {!isMobile && (
         <Menu.Item
           onClick={onLogOut}
@@ -53,7 +68,7 @@ export default function Wallet({ userAddress }: { userAddress: string }) {
   return (
     <Dropdown
       overlay={menu}
-      placement={!isMobile ? 'bottomRight' : 'topCenter'}
+      placement={!isMobile ? 'bottomRight' : 'top'}
       overlayStyle={{ padding: 0 }}
     >
       <div

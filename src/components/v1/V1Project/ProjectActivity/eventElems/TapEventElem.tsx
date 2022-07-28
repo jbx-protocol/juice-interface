@@ -67,10 +67,24 @@ export default function TapEventElem({
         style={{
           display: 'flex',
           justifyContent: 'space-between',
+          alignContent: 'space-between',
         }}
       >
-        <div style={smallHeaderStyle(colors)}>
-          <Trans>Distributed funds</Trans>
+        <div>
+          <div style={smallHeaderStyle(colors)}>
+            <Trans>Distributed funds</Trans>
+          </div>
+          {payoutEvents?.length ? (
+            <div
+              style={{
+                color: colors.text.primary,
+                fontWeight: 500,
+              }}
+            >
+              <CurrencySymbol currency="ETH" />
+              {formatWad(event.netTransferAmount, { precision: 4 })}
+            </div>
+          ) : null}
         </div>
 
         <div
@@ -149,19 +163,6 @@ export default function TapEventElem({
           </div>
         )}
       </div>
-
-      {payoutEvents?.length && payoutEvents.length > 1 ? (
-        <div
-          style={{
-            color: colors.text.primary,
-            fontWeight: 500,
-            textAlign: 'right',
-          }}
-        >
-          <CurrencySymbol currency="ETH" />
-          {formatWad(event.netTransferAmount, { precision: 4 })}
-        </div>
-      ) : null}
     </div>
   )
 }

@@ -1,9 +1,10 @@
 import { t } from '@lingui/macro'
-import { Input, Tooltip } from 'antd'
-import { SmileOutlined } from '@ant-design/icons'
-import { AttachStickerModal } from 'components/modals/AttachStickerModal'
+import { Input } from 'antd'
+
 import { useContext, useState } from 'react'
 import { ThemeContext } from 'contexts/themeContext'
+import Sticker from 'components/icons/Sticker'
+import { AttachStickerModal } from 'components/modals/AttachStickerModal'
 
 export function MemoFormInput({
   value,
@@ -34,7 +35,9 @@ export function MemoFormInput({
           showCount
           autoSize
         />
-        <div
+        <Sticker
+          onClick={() => setAttachStickerModalVisible(true)}
+          size={20}
           style={{
             color: colors.text.secondary,
             fontSize: '.8rem',
@@ -42,11 +45,7 @@ export function MemoFormInput({
             right: 5,
             top: 7,
           }}
-        >
-          <Tooltip title={t`Attach a sticker`}>
-            <SmileOutlined onClick={() => setAttachStickerModalVisible(true)} />
-          </Tooltip>
-        </div>
+        />
       </div>
       <AttachStickerModal
         visible={attachStickerModalVisible}

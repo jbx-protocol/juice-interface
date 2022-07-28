@@ -19,10 +19,12 @@ export default function FundingCycleDetailWarning({
 
   return (
     <Tooltip title={tooltipTitle}>
-      <span style={{ fontWeight: 500 }}>{children} </span>
-      <span style={{ color: colors.text.warn }}>
-        <ExclamationCircleOutlined />
-      </span>
+      <div style={{ display: 'flex' }}>
+        <span style={{ fontWeight: 500 }}>{children} </span>
+        <span style={{ color: colors.text.warn, marginLeft: '0.5rem' }}>
+          <ExclamationCircleOutlined />
+        </span>
+      </div>
     </Tooltip>
   )
 }

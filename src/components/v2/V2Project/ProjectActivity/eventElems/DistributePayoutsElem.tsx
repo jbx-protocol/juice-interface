@@ -9,7 +9,11 @@ import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
 
 import { Trans } from '@lingui/macro'
-import { smallHeaderStyle } from 'components/activityEventElems/styles'
+import {
+  contentLineHeight,
+  primaryContentFontSize,
+  smallHeaderStyle,
+} from 'components/activityEventElems/styles'
 import { DistributePayoutsEvent } from 'models/subgraph-entities/v2/distribute-payouts-event'
 
 export default function DistributePayoutsElem({
@@ -61,10 +65,24 @@ export default function DistributePayoutsElem({
         style={{
           display: 'flex',
           justifyContent: 'space-between',
+          alignContent: 'space-between',
         }}
       >
-        <div style={smallHeaderStyle(colors)}>
-          <Trans>Distributed funds</Trans>
+        <div>
+          <div style={smallHeaderStyle(colors)}>
+            <Trans>Distributed funds</Trans>
+          </div>
+          {distributePayoutsEvents?.length ? (
+            <div
+              style={{
+                lineHeight: contentLineHeight,
+                fontSize: primaryContentFontSize,
+              }}
+            >
+              <CurrencySymbol currency="ETH" />
+              {formatWad(event.distributedAmount, { precision: 4 })}
+            </div>
+          ) : null}
         </div>
 
         <div
@@ -138,19 +156,6 @@ export default function DistributePayoutsElem({
           </div>
         )}
       </div>
-
-      {distributePayoutsEvents?.length ? (
-        <div
-          style={{
-            color: colors.text.primary,
-            fontWeight: 500,
-            textAlign: 'right',
-          }}
-        >
-          <CurrencySymbol currency="ETH" />
-          {formatWad(event.distributedAmount, { precision: 4 })}
-        </div>
-      ) : null}
     </div>
   )
 }

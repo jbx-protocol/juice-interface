@@ -12,7 +12,7 @@ import { IPFSNftRewardTier, NftRewardTier } from 'models/v2/nftRewardTier'
 import axios from 'axios'
 
 import { readNetwork } from 'constants/networks'
-import { DEFAULT_PINATA_GATEWAY, IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
+import { IPFS_GATEWAY_HOSTNAME, DEFAULT_PINATA_GATEWAY } from 'constants/ipfs'
 
 export const IPFS_TAGS = {
   [IpfsCacheName.trending]:
@@ -54,10 +54,34 @@ export const logoNameForHandle = (handle: string) => `juicebox-@${handle}-logo`
 export const metadataNameForHandle = (handle: string) =>
   `juicebox-@${handle}-metadata`
 
-export const ipfsCidUrl = (hash: string) =>
-  `https://${IPFS_GATEWAY_HOSTNAME}/ipfs/${hash}`
+export const ipfsCidUrl = (
+  hash: string,
+  options: {
+    useFallback?: boolean
+  } = { useFallback: false },
+): string => {
+  const { useFallback } = options
+  if (useFallback) {
+    return `https://${DEFAULT_PINATA_GATEWAY}/ipfs/${hash}`
+  }
+  return `https://${IPFS_GATEWAY_HOSTNAME}/ipfs/${hash}`
+}
 
 export const cidFromUrl = (url: string | undefined) => url?.split('/').pop()
+
+export const ipfsGetWithFallback = async (hash: string) => {
+  try {
+    const response = await axios.get(ipfsCidUrl(hash))
+    return response
+  } catch (error) {
+    try {
+      const response = await axios.get(ipfsCidUrl(hash, { useFallback: true }))
+      return response
+    } catch (error) {
+      return { data: null }
+    }
+  }
+}
 
 export const pinFileToIpfs = async (
   file: File | Blob | string,

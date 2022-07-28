@@ -115,6 +115,10 @@ export default function FundingCycleDetails({
 
   const riskWarningText = FUNDING_CYCLE_WARNING_TEXT()
 
+  const ballotWarningText = unsafeFundingCycleProperties.noBallot
+    ? riskWarningText.noBallot
+    : riskWarningText.customBallot
+
   return (
     <div>
       <Descriptions
@@ -187,7 +191,7 @@ export default function FundingCycleDetails({
             span={2}
             label={
               <TooltipLabel
-                label={<Trans>Bonding curve rate</Trans>}
+                label={<Trans>Redemption rate</Trans>}
                 tip={
                   <Trans>
                     This rate determines the amount of overflow that each token
@@ -305,8 +309,11 @@ export default function FundingCycleDetails({
           :
         </span>{' '}
         <FundingCycleDetailWarning
-          showWarning={unsafeFundingCycleProperties.ballot}
-          tooltipTitle={riskWarningText.ballot}
+          showWarning={
+            unsafeFundingCycleProperties.noBallot ||
+            unsafeFundingCycleProperties.customBallot
+          }
+          tooltipTitle={ballotWarningText}
         >
           {ballotStrategy.name}
         </FundingCycleDetailWarning>

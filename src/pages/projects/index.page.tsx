@@ -62,8 +62,8 @@ export default function Projects() {
           return defaultTab
       }
     })
-    return setSearchText(router.query.search as string)
-  }, [userAddress, router.query, router.query.search])
+    setSearchText(router.query.search as string)
+  }, [userAddress, router.query.tab, router.query.search])
 
   const [orderBy, setOrderBy] = useState<OrderByOption>('totalPaid')
   const [includeV1, setIncludeV1] = useState<boolean>(true)

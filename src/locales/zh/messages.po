@@ -422,8 +422,8 @@ msgid "Adjust incentives for paying your project."
 msgstr "调整激励措施，以便鼓励其他人或项目向你的项目付款。"
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
-msgid "Advanced options (optional)"
-msgstr "高级选项（可选）"
+msgid "Advanced (optional)"
+msgstr ""
 
 #: src/pages/projects/ProjectsTabs.tsx
 msgid "All"
@@ -671,6 +671,10 @@ msgstr "默认的情况下，所有未分配资金可被分发给项目拥有者
 msgid "By default, newly minted tokens will go to the wallet who sends funds to the address. You can enable this to set the token beneficiary to a custom address."
 msgstr "默认情况下，新铸造代币会分发给向这个地址付款的钱包地址。打开此选项可以把代币受益人设置为一个自定义地址。"
 
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
+msgid "By default, the payer will receive any project tokens minted from the payment."
+msgstr ""
+
 #: src/pages/home/QAs.tsx
 msgid "Can I change my project's contract after it's been created?"
 msgstr "项目合约创建后，我还更改它吗?"
@@ -894,6 +898,10 @@ msgstr "捐款铸造比率"
 msgid "Contributors receive the NFT when they contribute at least this amount."
 msgstr ""
 
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
+msgid "Contributors who pay this address from a custodial service platform (like Coinbase) <0>won't receive project tokens</0>."
+msgstr ""
+
 #: src/pages/create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Contributors will be rewarded this amount of your project's tokens per ETH contributed."
 msgstr "捐款人每捐一个 ETH 就可以获得这个数量的项目代币。"
@@ -979,10 +987,6 @@ msgstr "当前项目方：{ownerAddress}"
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Currently worth: <0><1/>{0}</0>"
 msgstr "当前价值： <0><1/>{0}</0>"
-
-#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
-msgid "Custom memo"
-msgstr "自定义备注"
 
 #: src/components/ReconfigurationStrategy/ReconfigurationStrategySelector.tsx
 #: src/utils/ballot.ts
@@ -2287,8 +2291,8 @@ msgid "Payment equivalent"
 msgstr ""
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
-msgid "Payment made through payable address"
-msgstr "通过可支付地址支付的款项"
+msgid "Payment memo"
+msgstr ""
 
 #: src/components/RichImgPreview.tsx
 msgid "Payment memo image"
@@ -3181,8 +3185,8 @@ msgid "The number of project tokens minted when 1 ETH is contributed."
 msgstr "捐款 1 ETH 铸造的项目代币数量。"
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
-msgid "The onchain memo for each transaction made through the address. It will appear in the project's payment feed when someone pays this address."
-msgstr "通过这个地址进行的每一笔交易的链上备注。如果有人向这个地址付款，链上备注会出现在项目的付款情况一栏内。"
+msgid "The onchain memo for each payment made to this address. The project's payment feed will include the memo alongside the payment."
+msgstr ""
 
 #: src/components/modals/ReservedTokenReceiverModal.tsx
 msgid "The percentage this individual receives of the overall {reservedRate}% reserved token allocation"
@@ -3433,10 +3437,6 @@ msgstr "可以通过赎回代币，按当前筹款周期的赎回比率来获取
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "Tokens cannot be claimed because no ERC-20 token has been issued for this project. ERC-20 tokens must be issued by the project owner."
 msgstr "因为 ERC-20 代币还没有签发，所以目前还不能领取代币。ERC-20 代币必须由项目方来签发。"
-
-#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
-msgid "Tokens minted from payments to this address will belong to the payer by default. However, if someone pays the project through a custodial service platform such as Coinbase, <0>tokens can't be issued to their personal wallets and will be lost</0>."
-msgstr "向这个地址付款铸造出来的代币默认属于付款人。但是，如果有人通过类似 Coinbase 这样的托管式服务平台来给项目付款， <0>代币不会分发到他们的个人钱包且将会丢失</0>。"
 
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx

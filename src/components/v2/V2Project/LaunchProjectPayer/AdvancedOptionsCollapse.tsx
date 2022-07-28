@@ -1,18 +1,26 @@
 import { t, Trans } from '@lingui/macro'
-import { Collapse, Form, Input, Switch } from 'antd'
-import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
+import { Input, Space, Switch } from 'antd'
 import TooltipLabel from 'components/TooltipLabel'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { Dispatch, SetStateAction, useContext, useState } from 'react'
 import * as constants from '@ethersproject/constants'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
+import { MinimalCollapse } from 'components/MinimalCollapse'
 
 export default function AdvancedOptionsCollapse({
+  memo,
+  setMemo,
+  customBeneficiaryAddress,
+  setCustomBeneficiaryAddress,
   tokenMintingEnabled,
   setTokenMintingEnabled,
   preferClaimed,
   setPreferClaimed,
 }: {
+  memo: string | undefined
+  setMemo: Dispatch<SetStateAction<string | undefined>>
+  customBeneficiaryAddress: string | undefined
+  setCustomBeneficiaryAddress: Dispatch<SetStateAction<string | undefined>>
   tokenMintingEnabled: boolean
   setTokenMintingEnabled: Dispatch<SetStateAction<boolean>>
   preferClaimed: boolean
@@ -20,112 +28,103 @@ export default function AdvancedOptionsCollapse({
 }) {
   const { tokenAddress } = useContext(V2ProjectContext)
 
-  const [activeKey, setActiveKey] = useState<number>()
   const [customBeneficiaryEnabled, setCustomBeneficiaryEnabled] =
     useState<boolean>(false)
 
-  const advancedSettingsMargin = '20px'
-  const switchMargin = '20px'
+  const switchMargin = '1rem'
 
   return (
-    <Collapse style={{ border: 'none' }} activeKey={activeKey}>
-      <CollapsePanel
-        header={
-          <span onClick={() => setActiveKey(activeKey === 0 ? undefined : 0)}>
-            <Trans>Advanced options (optional)</Trans>
-          </span>
-        }
-        key={0}
-        style={{ border: 'none', marginLeft: '-18px' }}
-      >
-        <div style={{ paddingLeft: '24px', marginTop: '-15px' }}>
-          <div>
+    <MinimalCollapse header={<Trans>Advanced (optional)</Trans>}>
+      <Space size="middle" direction="vertical">
+        <div>
+          <TooltipLabel
+            label={t`Payment memo`}
+            tip={
+              <Trans>
+                The onchain memo for each payment made to this address. The
+                project's payment feed will include the memo alongside the
+                payment.
+              </Trans>
+            }
+          />
+          <Input
+            value={memo}
+            onChange={e => setMemo(e.target.value)}
+            type="string"
+            autoComplete="off"
+            style={{ marginTop: 5 }}
+          />
+        </div>
+        <div style={{ display: 'flex' }}>
+          <TooltipLabel
+            label={t`Token minting enabled`}
+            tip={t`Determines whether tokens will be minted from payments to this address.`}
+          />
+          <Switch
+            onChange={setTokenMintingEnabled}
+            checked={tokenMintingEnabled}
+            style={{ marginLeft: switchMargin }}
+          />
+        </div>
+        {tokenMintingEnabled &&
+        tokenAddress &&
+        tokenAddress !== constants.AddressZero ? (
+          <div style={{ display: 'flex' }}>
             <TooltipLabel
-              label={t`Custom memo`}
+              label={t`Mint tokens as ERC-20`}
               tip={
                 <Trans>
-                  The onchain memo for each transaction made through the
-                  address. It will appear in the project's payment feed when
-                  someone pays this address.
+                  When checked, payments to this address will mint this
+                  project's ERC-20 tokens to the beneficiary's wallet. Payments
+                  will cost more gas. When unchecked, Juicebox will track the
+                  beneficiary's new tokens when they pay. The beneficiary can
+                  claim their ERC-20 tokens at any time.
                 </Trans>
               }
             />
-            <Form.Item name="memo">
-              <Input
-                placeholder={t`Payment made through payable address`}
-                type="string"
-                autoComplete="off"
-                style={{ marginTop: 5 }}
-              />
-            </Form.Item>
+            <Switch
+              style={{ marginLeft: switchMargin }}
+              checked={preferClaimed}
+              onChange={setPreferClaimed}
+            />
           </div>
-          <div style={{ display: 'flex', marginTop: advancedSettingsMargin }}>
+        ) : null}
+
+        {tokenMintingEnabled ? (
+          <div
+            style={{
+              display: 'flex',
+            }}
+          >
             <TooltipLabel
-              label={t`Token minting enabled`}
-              tip={t`Determines whether tokens will be minted from payments to this address.`}
+              label={t`Custom token beneficiary`}
+              tip={
+                <Trans>
+                  By default, newly minted tokens will go to the wallet who
+                  sends funds to the address. You can enable this to set the
+                  token beneficiary to a custom address.
+                </Trans>
+              }
             />
             <Switch
-              onChange={setTokenMintingEnabled}
-              checked={tokenMintingEnabled}
+              onChange={checked => {
+                setCustomBeneficiaryEnabled(checked)
+                if (!checked) {
+                  setCustomBeneficiaryAddress(undefined)
+                }
+              }}
+              checked={customBeneficiaryEnabled}
               style={{ marginLeft: switchMargin }}
             />
           </div>
-          {tokenMintingEnabled ? (
-            <div
-              style={{
-                display: 'flex',
-                margin: `${advancedSettingsMargin} 0 14px`,
-              }}
-            >
-              <TooltipLabel
-                label={t`Custom token beneficiary`}
-                tip={
-                  <Trans>
-                    By default, newly minted tokens will go to the wallet who
-                    sends funds to the address. You can enable this to set the
-                    token beneficiary to a custom address.
-                  </Trans>
-                }
-              />
-              <Switch
-                onChange={checked => {
-                  setCustomBeneficiaryEnabled(checked)
-                }}
-                checked={customBeneficiaryEnabled}
-                style={{ marginLeft: switchMargin }}
-              />
-            </div>
-          ) : null}
-          {tokenMintingEnabled && customBeneficiaryEnabled ? (
-            <Form.Item name="customBeneficiaryAddress">
-              <EthAddressInput />
-            </Form.Item>
-          ) : null}
-          {tokenMintingEnabled &&
-          tokenAddress &&
-          tokenAddress !== constants.AddressZero ? (
-            <div style={{ display: 'flex', marginTop: advancedSettingsMargin }}>
-              <TooltipLabel
-                label={t`Mint tokens as ERC-20`}
-                tip={
-                  <Trans>
-                    When checked, payments to this address will mint this
-                    project's ERC-20 tokens to the beneficiary's wallet.
-                    Payments will cost more gas. When unchecked, Juicebox will
-                    track the beneficiary's new tokens when they pay. The
-                    beneficiary can claim their ERC-20 tokens at any time.
-                  </Trans>
-                }
-              />
-              <Switch
-                style={{ marginLeft: switchMargin }}
-                checked={preferClaimed}
-                onChange={setPreferClaimed}
-              />
-            </div>
-          ) : null}
-        </div>
-      </CollapsePanel>
-    </Collapse>
+        ) : null}
+        {tokenMintingEnabled && customBeneficiaryEnabled ? (
+          <EthAddressInput
+            value={customBeneficiaryAddress}
+            onChange={setCustomBeneficiaryAddress}
+          />
+        ) : null}
+      </Space>
+    </MinimalCollapse>
   )
 }

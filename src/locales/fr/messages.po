@@ -422,8 +422,8 @@ msgid "Adjust incentives for paying your project."
 msgstr "Définir des récompenses au paiement de votre projet."
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
-msgid "Advanced options (optional)"
-msgstr "Options avancées (facultatif)"
+msgid "Advanced (optional)"
+msgstr ""
 
 #: src/pages/projects/ProjectsTabs.tsx
 msgid "All"
@@ -671,6 +671,10 @@ msgstr "Par défaut, tous les fonds non assignés peuvent être distribués au p
 msgid "By default, newly minted tokens will go to the wallet who sends funds to the address. You can enable this to set the token beneficiary to a custom address."
 msgstr "Par défaut, les tokens nouvellement frappés iront au portefeuille qui envoie des fonds à l'adresse. Vous pouvez activer ceci pour associer le bénéficiaire de tokens à une adresse customisée."
 
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
+msgid "By default, the payer will receive any project tokens minted from the payment."
+msgstr ""
+
 #: src/pages/home/QAs.tsx
 msgid "Can I change my project's contract after it's been created?"
 msgstr "Puis-je changer mon contrat de projet après l'avoir créé ?"
@@ -894,6 +898,10 @@ msgstr ""
 msgid "Contributors receive the NFT when they contribute at least this amount."
 msgstr ""
 
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
+msgid "Contributors who pay this address from a custodial service platform (like Coinbase) <0>won't receive project tokens</0>."
+msgstr ""
+
 #: src/pages/create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Contributors will be rewarded this amount of your project's tokens per ETH contributed."
 msgstr "Les contributeurs recevront ce montant de tokens de votre projet par ETH contribué."
@@ -979,10 +987,6 @@ msgstr "Propriétaire actuel: {ownerAddress}"
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Currently worth: <0><1/>{0}</0>"
 msgstr "Valeur actuelle : <0><1/>{0}</0>"
-
-#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
-msgid "Custom memo"
-msgstr "Customiser le mémo"
 
 #: src/components/ReconfigurationStrategy/ReconfigurationStrategySelector.tsx
 #: src/utils/ballot.ts
@@ -2287,8 +2291,8 @@ msgid "Payment equivalent"
 msgstr ""
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
-msgid "Payment made through payable address"
-msgstr "Paiement effectué par le biais d'une adresse de facturation"
+msgid "Payment memo"
+msgstr ""
 
 #: src/components/RichImgPreview.tsx
 msgid "Payment memo image"
@@ -3181,8 +3185,8 @@ msgid "The number of project tokens minted when 1 ETH is contributed."
 msgstr ""
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
-msgid "The onchain memo for each transaction made through the address. It will appear in the project's payment feed when someone pays this address."
-msgstr "Le mémo en chaîne pour chaque transaction réalisée par biais de l'adresse. Il apparaîtra dans le flux de paiement du projet quand quelqu'un paie à cette adresse."
+msgid "The onchain memo for each payment made to this address. The project's payment feed will include the memo alongside the payment."
+msgstr ""
 
 #: src/components/modals/ReservedTokenReceiverModal.tsx
 msgid "The percentage this individual receives of the overall {reservedRate}% reserved token allocation"
@@ -3433,10 +3437,6 @@ msgstr "Les tokens peuvent être récupérés d'une partie de l'overflow d'ETH d
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "Tokens cannot be claimed because no ERC-20 token has been issued for this project. ERC-20 tokens must be issued by the project owner."
 msgstr "Les tokens ne peuvent pas être réclamés, car aucun token ERC-20 a été émis pour ce projet. Les tokens ERC-20 doivent être émis par le propriétaire du projet."
-
-#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
-msgid "Tokens minted from payments to this address will belong to the payer by default. However, if someone pays the project through a custodial service platform such as Coinbase, <0>tokens can't be issued to their personal wallets and will be lost</0>."
-msgstr "Les tokens frappés à partir des paiements à cette adresse appartiendront au payeur par défaut. Cependant, si quelqu'un paie le projet à partir d'une plateforme de service custodial, comme Coinbase, <0>les tokens ne peuvent pas être émis vers leurs portefeuilles personnels et seront perdus</0>."
 
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx

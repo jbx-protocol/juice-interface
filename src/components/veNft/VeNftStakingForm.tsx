@@ -32,6 +32,7 @@ import { useVeNftTokenMetadata } from 'hooks/veNft/VeNftTokenMetadata'
 import { useVeNftResolverTokenUri } from 'hooks/veNft/VeNftResolverTokenUri'
 
 import Callout from 'components/Callout'
+import { VeNftContext } from 'contexts/v2/veNftContext'
 
 import { shadowCard } from 'constants/styles/shadowCard'
 import { VENFT_CONTRACT_ADDRESS } from 'constants/veNft/veNftProject'
@@ -50,10 +51,9 @@ const VeNftStakingForm = ({
   tokenSymbolDisplayText,
 }: VeNftStakingFormProps) => {
   const { userAddress, onSelectWallet } = useContext(NetworkContext)
-  const {
-    tokenAddress,
-    veNft: { lockDurationOptions, resolverAddress, baseImagesHash, variants },
-  } = useContext(V2ProjectContext)
+  const { tokenAddress } = useContext(V2ProjectContext)
+  const { lockDurationOptions, resolverAddress, baseImagesHash, variants } =
+    useContext(VeNftContext)
   const { theme } = useContext(ThemeContext)
 
   const [form] = useForm<StakingFormProps>()

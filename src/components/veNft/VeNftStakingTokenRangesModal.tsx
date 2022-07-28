@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Col, Modal, Row, Image } from 'antd'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { VeNftContext } from 'contexts/v2/veNftContext'
 import { useContext } from 'react'
 import { getVeNftBaseImage } from 'utils/v2/veNft'
 
@@ -15,9 +15,7 @@ export default function StakingTokenRangesModal({
   tokenSymbolDisplayText,
   onCancel,
 }: StakingTokenRangesModalProps) {
-  const {
-    veNft: { baseImagesHash, variants },
-  } = useContext(V2ProjectContext)
+  const { baseImagesHash, variants } = useContext(VeNftContext)
 
   return (
     <Modal

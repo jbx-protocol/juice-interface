@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { formatIpfsLink } from 'utils/ipfs'
 
 import { ProjectPreferences } from 'constants/v2/projectPreferences'
-import { loadAllMediaLinksPerLine } from './loadAllMediaLinksPerLine'
+import { loadAllMediaLinks } from './loadAllMediaLinks'
 
 // Gets strings that start with 'https'
 const URLRegex = new RegExp(
@@ -43,7 +43,7 @@ export const useProcessedRichNote = (note: string | undefined) => {
       })
       .join(' ') ?? note
 
-  const linksPerLine = useMemo(() => {
+  const allLinks = useMemo(() => {
     // split from new line OR space
     const linksArray = formattedNote
       ?.split('\n')
@@ -62,38 +62,37 @@ export const useProcessedRichNote = (note: string | undefined) => {
   }, [formattedNote])
 
   /*
-   * Loaded in the useEffect below when `linksPerLine` is set.
+   * Loaded in the useEffect below when `loadAllMediaLinks` is loaded.
    */
-  const [mediaLinksPerLine, setMediaLinksPerLine] =
-    useState<Array<string[] | undefined>>()
+  const [mediaLinks, setMediaLinks] = useState<string[]>()
   useEffect(() => {
-    loadAllMediaLinksPerLine(linksPerLine).then(mediaLinksPerLine => {
-      // Slice the links to allow only 3 images per line.
-      mediaLinksPerLine = mediaLinksPerLine.map(line =>
-        line?.slice(0, ProjectPreferences.STICKER_MAX),
-      )
-      setMediaLinksPerLine(mediaLinksPerLine)
+    // loadAllMediaLinks does a more thorough check on each link than just regex .match()
+    loadAllMediaLinks(allLinks).then((links: string[]) => {
+      // Slice the links to allow only 3 images.
+      setMediaLinks(links.slice(0, ProjectPreferences.MAX_IMAGES_PAYMENT_MEMO))
     })
-  }, [linksPerLine])
+  }, [allLinks])
 
   /*
    * Trimmed note based on the loaded media links (removes the image links' text from the note)
    */
   const trimmedNote = useMemo(() => {
-    if (!mediaLinksPerLine || !formattedNote) return formattedNote
+    if (!mediaLinks || !formattedNote) return formattedNote
     // Checks each word of note and removes if it is a mediaLink
     let formattedNoteWords = formattedNote.split(/\s+/) // any whitespace
-    mediaLinksPerLine.forEach(links => {
+    mediaLinks.forEach(links => {
       if (!links) return
       formattedNoteWords = formattedNoteWords.filter(word => {
         return !links.includes(word)
       })
     })
     return formattedNoteWords.join(' ')
-  }, [mediaLinksPerLine, formattedNote])
+  }, [mediaLinks, formattedNote])
+
+  console.info('!!mediaLinks state: ', mediaLinks)
 
   return {
     trimmedNote,
-    formattedMediaLinks: mediaLinksPerLine?.filter((i): i is string[] => !!i),
+    formattedMediaLinks: mediaLinks?.filter(i => Boolean(i)),
   }
 }

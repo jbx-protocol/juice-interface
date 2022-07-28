@@ -1,3 +1,3 @@
 export const ProjectPreferences = {
-  STICKER_MAX: 3,
+  MAX_IMAGES_PAYMENT_MEMO: 3,
 }

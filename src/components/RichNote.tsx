@@ -41,19 +41,15 @@ export default function RichNote({
 
       {formattedMediaLinks?.length ? (
         <div style={{ display: 'block' }}>
-          <Space size="middle" direction="vertical">
-            {formattedMediaLinks.map((links, i) => (
-              <Space key={i} size="middle">
-                {links.map((link, i) => (
-                  <RichImgPreview
-                    key={i}
-                    src={link}
-                    style={{ marginTop: '0.5rem', padding: '0.5rem' }}
-                    width="100%"
-                    height="6rem"
-                  />
-                ))}
-              </Space>
+          <Space size="middle">
+            {formattedMediaLinks.map((link, i) => (
+              <RichImgPreview
+                key={i}
+                src={link}
+                style={{ marginTop: '0.5rem', padding: '0.5rem' }}
+                width="100%"
+                height="6rem"
+              />
             ))}
           </Space>
         </div>

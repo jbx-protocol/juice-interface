@@ -51,7 +51,7 @@ export const V2PayForm = ({
   const hasIssuedTokens = tokenAddress !== constants.AddressZero
 
   const canAddMoreStickers =
-    (stickerUrls ?? []).length < ProjectPreferences.STICKER_MAX
+    (stickerUrls ?? []).length < ProjectPreferences.MAX_IMAGES_PAYMENT_MEMO
 
   const riskCount = fundingCycle
     ? V2FundingCycleRiskCount(fundingCycle)
@@ -82,6 +82,7 @@ export const V2PayForm = ({
                 <Input.TextArea
                   placeholder={t`WAGMI!`}
                   maxLength={256}
+                  onPressEnter={e => e.preventDefault()} // prevent new lines in memo
                   showCount
                   autoSize
                 />

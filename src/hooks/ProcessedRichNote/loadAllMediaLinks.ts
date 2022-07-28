@@ -8,8 +8,7 @@ const supportedContentTypes = [
   'image/svg',
 ]
 
-export const loadAllMediaLinksPerLine = async (urlsPerLine: string[]) => {
-  const mediaLinksPerLine: Array<string[] | undefined> = []
+export const loadAllMediaLinks = async (urlsPerLine: string[]) => {
   const mediaLinks = (
     await Promise.all(
       urlsPerLine.map(async url => {
@@ -20,6 +19,5 @@ export const loadAllMediaLinksPerLine = async (urlsPerLine: string[]) => {
       }),
     )
   ).filter((url): url is string => !!url)
-  mediaLinksPerLine.push(mediaLinks.length ? mediaLinks : undefined)
-  return mediaLinksPerLine
+  return mediaLinks
 }

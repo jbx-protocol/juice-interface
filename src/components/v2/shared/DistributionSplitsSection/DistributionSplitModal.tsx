@@ -278,6 +278,8 @@ export default function DistributionSplitModal({
           s.beneficiary === editingSplit?.beneficiary &&
           s.projectId === editingSplit?.projectId,
       ),
+      // can have a token beneficiary who is also a payout
+      editingSplitType === 'project', // canBeDuplicate
     )
   }
 
@@ -460,7 +462,7 @@ export default function DistributionSplitModal({
                   marginLeft: 10,
                 }}
               >
-                <Trans>{form.getFieldValue('percent')}%</Trans>
+                <Trans>{form.getFieldValue('percent') ?? '0'}%</Trans>
                 <TooltipIcon
                   tip={
                     <Trans>

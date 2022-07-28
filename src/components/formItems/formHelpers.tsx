@@ -34,6 +34,7 @@ export function validateEthAddress(
   mods: PayoutMod[] | Split[],
   modalMode: ModalMode,
   editingModIndex: number | undefined,
+  canBeDuplicate?: boolean,
 ) {
   // If user edits an (already approved) address and doesn't change it, we accept
   if (
@@ -45,7 +46,7 @@ export function validateEthAddress(
     return Promise.reject('Address is required')
   else if (address === constants.AddressZero)
     return Promise.reject('Cannot use zero address')
-  else if (mods.some(mod => mod.beneficiary === address))
+  else if (!canBeDuplicate && mods.some(mod => mod.beneficiary === address))
     return Promise.reject('A payout for this address already exists')
   else return Promise.resolve()
 }

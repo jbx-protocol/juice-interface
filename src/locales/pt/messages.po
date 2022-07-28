@@ -434,10 +434,6 @@ msgstr "Tudo"
 msgid "All assets"
 msgstr "Todos os ativos"
 
-#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
-msgid "All changes will be applied to the <0>upcoming</0> funding cycle."
-msgstr "Todas as alterações serão aplicadas ao <0>próximo</0> ciclo de financiamento."
-
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 #: src/components/v2/V2Project/ProjectActivity/index.tsx
 msgid "All events"
@@ -532,6 +528,7 @@ msgstr "Quantidade:"
 msgid "Amounts"
 msgstr "Quantidades"
 
+#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "Any changes you make will take effect in <0>funding cycle #{0}</0>. The current funding cycle (#{currentFCNumber}) won't be altered."
 msgstr "Quaisquer mudanças que você fizer terão efeitos no <0>ciclo de financiamento #{0}</0>. O ciclo de financiamento atual (#{currentFCNumber}) não será alterado."
@@ -727,10 +724,12 @@ msgstr "Mudanças para a configuração de financiamento do seu projeto necessit
 msgid "Changes to your reserved token allocation will take effect immediately."
 msgstr ""
 
+#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "Changes will take effect according to the project's custom ballot contract."
 msgstr ""
 
+#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "Changes you make will take effect according to your <0>{0}</0> reconfiguration rule (the first funding cycle following <1>{1}</1> from now)."
 msgstr "Mudanças que você fizer terão efeito de acordo com sua regra de reconfiguração <0>{0}</0> (o primeiro ciclo de financiamento após o <1>{1}</1> a partir de agora)."
@@ -2409,6 +2408,7 @@ msgstr ""
 msgid "Project Token"
 msgstr "Token do Projeto"
 
+#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Project configuration"
 msgstr "Configuração do projeto"
@@ -2621,10 +2621,6 @@ msgstr "Estratégia de configuração"
 msgid "Reconfigure"
 msgstr "Reconfigurar"
 
-#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
-msgid "Reconfigure funding"
-msgstr "Reconfigurar financiamento"
-
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
 msgid "Reconfigure payouts as percentages of your distribution limit."
 msgstr "Reconfigurar os pagamentos como porcentagens do seu limite de distribuição."
@@ -2648,9 +2644,6 @@ msgid "Reconfigure upcoming"
 msgstr "Reconfigurar próximos ciclos"
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
-msgid "Reconfigure upcoming funding"
-msgstr "Reconfigurar financiamento futuro"
-
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure upcoming funding cycles"
 msgstr "Reconfigurar ciclos de financiamento futuros"
@@ -3319,6 +3312,11 @@ msgstr ""
 msgid "Time Remaining"
 msgstr ""
 
+#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
+msgid "Time remaining for changes made to affect the next funding cycle:"
+msgstr ""
+
 #: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupSection.tsx
 msgid "To do so, you need to give your V1 token holders the ability to exchange their V1 tokens for V2 tokens. Select <0>Set up token migration</0> below to get started."
 msgstr ""
@@ -3803,6 +3801,7 @@ msgstr "Você pode resgatar seus {tokenTextLong} para overflow sem reivindica-lo
 msgid "You can still redeem your {tokenSymbol} tokens for overflow without claiming them, and you can transfer your unclaimed {tokenSymbol} tokens to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
 msgstr "Você ainda pode resgatar seus tokens {tokenSymbol} para overflow sem reivindica-los e pode transferir seus tokens {tokenSymbol} não-reivindicados para outro endereço do menu de Ferramentas, o qual pode ser acessado pelo icone de chave-inglesa no canto superior direito deste projeto."
 
+#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "You don't have a funding cycle duration. Changes you make will take effect immediately."
 msgstr "Você não possui uma duração de ciclo de financiamento. Mudanças que você fizer terão efeito imediatamente."

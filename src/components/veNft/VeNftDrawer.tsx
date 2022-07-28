@@ -11,6 +11,8 @@ import { useVeNftResolverAddress } from 'hooks/veNft/VeNftResolverAddress'
 import { useVeNftUserTokens } from 'hooks/veNft/VeNftUserTokens'
 import { useVeNftVariants } from 'hooks/veNft/VeNftVariants'
 
+import { useVeNftName } from 'hooks/veNft/VeNftName'
+
 import { drawerStyle } from 'constants/styles/drawerStyle'
 
 export function VeNftDrawer({
@@ -20,7 +22,7 @@ export function VeNftDrawer({
   visible: boolean
   onClose: VoidFunction
 }) {
-  const veNftProjectName = 'veBanny'
+  const { data: name } = useVeNftName()
   const { data: lockDurationOptions } = useVeNftLockDurationOptions()
   const { data: resolverAddress } = useVeNftResolverAddress()
   const { data: variants } = useVeNftVariants()
@@ -32,7 +34,7 @@ export function VeNftDrawer({
   )
 
   const veNft: VeNftContextType = {
-    name: veNftProjectName,
+    name,
     lockDurationOptions,
     resolverAddress,
     variants,

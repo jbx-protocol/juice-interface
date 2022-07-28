@@ -74,6 +74,7 @@ export const getStaticProps: GetStaticProps<{
   const projects = await paginateDepleteProjectsQueryCall({
     variables: {
       where: { cv_in: ['1', '1.1'], handle },
+      first: 1,
     },
   })
   if (!projects[0]?.metadataUri) {

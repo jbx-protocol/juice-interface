@@ -40,7 +40,7 @@ export default function ArchiveProject({
 
   const [isLoadingArchive, setIsLoadingArchive] = useState<boolean>(false)
 
-  const revalProject = async () => {
+  const revalidateProjectAfterArchive = async () => {
     switch (cv) {
       case '1':
       case '1.1':
@@ -92,7 +92,7 @@ export default function ArchiveProject({
       {
         onConfirmed: async () => {
           setIsLoadingArchive(false)
-          await revalProject()
+          await revalidateProjectAfterArchive()
           reloadWindow()
         },
       },

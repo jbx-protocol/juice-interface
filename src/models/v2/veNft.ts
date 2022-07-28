@@ -3,6 +3,7 @@ export type VeNftVariant = {
   name: string
   tokensStakedMin: number
   tokensStakedMax?: number
+  imageUrl?: string
 }
 
 export type VeNftTokenMetadata = {

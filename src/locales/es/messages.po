@@ -327,6 +327,10 @@ msgstr "DISPONIBLE"
 msgid "Activity"
 msgstr "Actividad"
 
+#: src/components/veNft/VeNftAddLockDurationModal.tsx
+msgid "Add Lock Duration Option"
+msgstr ""
+
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
 #: src/components/veNft/VeNftRewardTierModal.tsx
@@ -356,6 +360,10 @@ msgstr ""
 #: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "Add image"
 msgstr "Añadir imagen"
+
+#: src/components/veNft/VeNftSetupModal.tsx
+msgid "Add lock duration option"
+msgstr ""
 
 #: src/components/v1/shared/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
@@ -1037,13 +1045,26 @@ msgstr "Fecha"
 msgid "Date created"
 msgstr "Fecha de creación"
 
+#: src/components/veNft/VeNftLockDurationOptionCard.tsx
+msgid "Day"
+msgstr ""
+
+#: src/components/veNft/VeNftLockDurationOptionCard.tsx
 #: src/constants/time.ts
 msgid "Days"
 msgstr "Días"
 
+#: src/components/veNft/VeNftAddLockDurationModal.tsx
+msgid "Days to lock tokens"
+msgstr ""
+
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierCard.tsx
 #: src/components/veNft/VeNftVariantCard.tsx
 msgid "Delete NFT"
+msgstr ""
+
+#: src/components/veNft/VeNftLockDurationOptionCard.tsx
+msgid "Delete Option"
 msgstr ""
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
@@ -1853,6 +1874,10 @@ msgstr "Últimos pagos"
 msgid "Launch funding cycle"
 msgstr "Lanzar ciclo de financiamiento"
 
+#: src/components/veNft/VeNftSetupModal.tsx
+msgid "Launch veNFT"
+msgstr ""
+
 #: src/pages/create/index.page.tsx
 #: src/pages/index.page.tsx
 msgid "Launch your project"
@@ -1884,6 +1909,10 @@ msgstr ""
 #: src/components/veNft/VeNftConfirmStakeModal.tsx
 #: src/components/veNft/VeNftOwnedTokenCard.tsx
 msgid "Lock Duration"
+msgstr ""
+
+#: src/components/veNft/VeNftSetupModal.tsx
+msgid "Lock Durations ({0} options)"
 msgstr ""
 
 #: src/components/veNft/formControls/LockDurationSelectInput.tsx
@@ -2865,6 +2894,10 @@ msgstr ""
 msgid "Save NFT rewards"
 msgstr ""
 
+#: src/components/veNft/VeNftAddLockDurationModal.tsx
+msgid "Save Option"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/EditProjectModal.tsx
 msgid "Save changes"
 msgstr "Guardar cambios"
@@ -2920,6 +2953,11 @@ msgstr "Guardar activos en seguimiento"
 msgid "Search projects by handle"
 msgstr "Buscar proyectos por usuario"
 
+#: src/components/veNft/VeNftLockDurationOptionCard.tsx
+msgid "Second"
+msgstr ""
+
+#: src/components/veNft/VeNftLockDurationOptionCard.tsx
 #: src/constants/time.ts
 msgid "Seconds"
 msgstr "Segundos"
@@ -4009,6 +4047,7 @@ msgstr "llamado por <0/>"
 msgid "day"
 msgstr ""
 
+#: src/components/veNft/VeNftAddLockDurationModal.tsx
 #: src/components/veNft/VeNftSummaryStatsSection.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 #: src/utils/formatTime.ts
@@ -4090,6 +4129,10 @@ msgstr "tokens canjeados"
 #: src/components/v1/shared/Mod.tsx
 msgid "until"
 msgstr "hasta"
+
+#: src/components/veNft/VeNftSetupModal.tsx
+msgid "veNFT Tiers ({0} variants)"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
@@ -4216,6 +4259,14 @@ msgstr "{issuanceRate} tokens / ETH"
 #: src/pages/projects/FilterCheckboxItem.tsx
 msgid "{label}"
 msgstr "{label}"
+
+#: src/components/veNft/VeNftLockDurationOptionCard.tsx
+msgid "{lockDurationOptionInDays} {lockDurationOptionInDays, plural, one {{0}} other {{1}}}"
+msgstr ""
+
+#: src/components/veNft/VeNftLockDurationOptionCard.tsx
+msgid "{lockDurationOption} {lockDurationOption, plural, one {{0}} other {{1}}}"
+msgstr ""
 
 #: src/components/veNft/formControls/TokensStakedInput.tsx
 msgid "{minTokensAllowedToStake, plural, one {You must stake at least # token.} other {You must stake at least # tokens.}}"

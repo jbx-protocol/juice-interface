@@ -9,7 +9,7 @@ import { truncateLongNumber } from 'utils/formatNumber'
 
 import VeNftRewardTierModal from './VeNftRewardTierModal'
 
-export default function VeNftvariantCard({
+export default function VeNftVariantCard({
   variant,
   nextVariant,
   onChange,
@@ -90,7 +90,7 @@ export default function VeNftvariantCard({
           <Image
             src={variant.imageUrl}
             alt={variant.name}
-            height={'90px'}
+            height={'60px'}
             style={{
               display: imageLoading ? 'none' : 'unset',
               objectFit: 'cover',

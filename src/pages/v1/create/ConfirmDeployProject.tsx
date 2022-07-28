@@ -277,7 +277,7 @@ export default function ConfirmDeployProject() {
               hasFundingTarget(editingFC) && (
                 <Col md={8} xs={24}>
                   <Statistic
-                    title={t`Bonding curve rate`}
+                    title={t`Redemption rate`}
                     value={perbicentToPercent(editingFC?.bondingCurveRate)}
                     suffix="%"
                   />

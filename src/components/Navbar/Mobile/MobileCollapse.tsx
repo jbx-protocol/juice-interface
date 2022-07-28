@@ -21,6 +21,8 @@ import ThemePickerMobile from './ThemePickerMobile'
 import { topNavStyles } from '../navStyles'
 import ResourcesDropdownMobile from './ResourcesDropdownMobile'
 
+const NAV_EXPANDED_KEY = 0
+
 export default function MobileCollapse() {
   const [activeKey, setActiveKey] = useState<0 | undefined>()
   const {
@@ -28,7 +30,11 @@ export default function MobileCollapse() {
   } = useContext(ThemeContext)
   const { signingProvider, onLogOut } = useContext(NetworkContext)
 
-  const isNavOpen = activeKey === 0
+  const isNavExpanded = activeKey === NAV_EXPANDED_KEY
+
+  const collapseNav = () => setActiveKey(undefined)
+  const expandNav = () => setActiveKey(NAV_EXPANDED_KEY)
+  const toggleNav = () => (isNavExpanded ? collapseNav() : expandNav())
 
   // Close collapse when clicking anywhere in the window except the collapse items
   useEffect(() => {
@@ -60,7 +66,7 @@ export default function MobileCollapse() {
           header={
             <Space
               onClick={e => {
-                setActiveKey(isNavOpen ? undefined : 0)
+                toggleNav()
                 e.stopPropagation()
               }}
             >
@@ -79,10 +85,7 @@ export default function MobileCollapse() {
           }
         >
           <Menu mode="inline" defaultSelectedKeys={['resources']}>
-            <TopLeftNavItems
-              mobile
-              onClickMenuItems={() => setActiveKey(isNavOpen ? undefined : 0)}
-            />
+            <TopLeftNavItems mobile onClickMenuItems={() => collapseNav()} />
 
             <ResourcesDropdownMobile />
 

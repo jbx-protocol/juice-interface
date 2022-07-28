@@ -2,15 +2,18 @@ import { t, Trans } from '@lingui/macro'
 import { Modal, Space, Tooltip } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import RichButton from 'components/RichButton'
-import { PropsWithChildren, useState } from 'react'
+import { PropsWithChildren, useContext, useState } from 'react'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import * as constants from '@ethersproject/constants'
 import { reloadWindow } from 'utils/windowUtils'
+import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import { VeNftDrawer } from './veNft/VeNftDrawer'
 
 const BURN_DEFINITION_LINK =
   'https://www.investopedia.com/tech/cryptocurrency-burning-can-it-manage-inflation/'
+
+export type RedeemDisabledReason = 'redemptionRateZero' | 'overflowZero'
 
 const BurnTokensHelp = () => {
   return (
@@ -23,17 +26,29 @@ const BurnTokensHelp = () => {
 
 const RedeemButtonTooltip = ({
   buttonDisabled,
+  redeemDisabledReason,
   children,
 }: PropsWithChildren<{
+  redeemDisabledReason?: RedeemDisabledReason
   buttonDisabled: boolean
 }>) => {
   return (
     <Tooltip
       title={
         buttonDisabled ? (
-          <Trans>
-            Cannot redeem tokens for ETH because this project has no overflow.
-          </Trans>
+          <>
+            {redeemDisabledReason === 'overflowZero' ? (
+              <Trans>
+                Cannot redeem tokens for ETH because this project has no
+                overflow.
+              </Trans>
+            ) : (
+              <Trans>
+                Cannot redeem tokens for ETH because this project's redemption
+                rate is zero.
+              </Trans>
+            )}
+          </>
         ) : (
           <BurnTokensHelp />
         )
@@ -77,6 +92,8 @@ export default function ManageTokensModal({
   ClaimTokensModal: (props: ModalProps) => JSX.Element | null
   MintModal: (props: ModalProps) => JSX.Element | null
 }) {
+  const { fundingCycleMetadata } = useContext(V2ProjectContext)
+
   const [redeemModalVisible, setRedeemModalVisible] = useState<boolean>(false)
   const [unstakeModalVisible, setUnstakeModalVisible] = useState<boolean>()
   const [mintModalVisible, setMintModalVisible] = useState<boolean>()
@@ -88,7 +105,12 @@ export default function ManageTokensModal({
     plural: true,
   })
 
-  const redeemDisabled = !hasOverflow
+  const redeemDisabled = Boolean(
+    !hasOverflow || fundingCycleMetadata?.redemptionRate.eq(0),
+  )
+  const redeemDisabledReason = !hasOverflow
+    ? 'overflowZero'
+    : 'redemptionRateZero'
   const hasIssuedTokens = tokenAddress && tokenAddress !== constants.AddressZero
 
   return (
@@ -106,7 +128,10 @@ export default function ManageTokensModal({
         centered
       >
         <Space direction="vertical" style={{ width: '100%' }}>
-          <RedeemButtonTooltip buttonDisabled={redeemDisabled}>
+          <RedeemButtonTooltip
+            buttonDisabled={redeemDisabled}
+            redeemDisabledReason={redeemDisabledReason}
+          >
             <RichButton
               heading={<Trans>Redeem {tokensLabel} for ETH</Trans>}
               description={
@@ -125,10 +150,19 @@ export default function ManageTokensModal({
               <RichButton
                 heading={<Trans>Burn {tokensLabel}</Trans>}
                 description={
-                  <Trans>
-                    Burn your {tokensLabel}. You won't receive ETH in return
-                    because this project has no overflow.
-                  </Trans>
+                  <>
+                    {redeemDisabledReason === 'overflowZero' ? (
+                      <Trans>
+                        Burn your {tokensLabel}. You won't receive ETH in return
+                        because this project has no overflow.
+                      </Trans>
+                    ) : (
+                      <Trans>
+                        Burn your {tokensLabel}. You won't receive ETH in return
+                        because this project's redemption rate is zero.
+                      </Trans>
+                    )}
+                  </>
                 }
                 onClick={() => setRedeemModalVisible(true)}
               />

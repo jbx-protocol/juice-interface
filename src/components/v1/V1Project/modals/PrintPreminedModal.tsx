@@ -69,7 +69,6 @@ export default function PrintPreminedModal({
       if (!terminal?.version) return
 
       const amountValidator = () => {
-        console.info('amountValidator: ', value)
         if (!value || value === '0') {
           return Promise.reject(t`Amount required`)
         }

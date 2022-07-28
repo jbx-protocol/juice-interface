@@ -13,6 +13,7 @@ import { V1CurrencyName } from 'utils/v1/currency'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { perbicentToPercent } from 'utils/formatNumber'
 import SpendingStats from 'components/Project/SpendingStats'
+import { useRouter } from 'next/router'
 
 export default function Spending({
   payoutMods,
@@ -23,6 +24,8 @@ export default function Spending({
     useContext(V1ProjectContext)
 
   const [withdrawModalVisible, setWithdrawModalVisible] = useState<boolean>()
+
+  const router = useRouter()
 
   if (!currentFC) return null
 
@@ -95,7 +98,7 @@ export default function Spending({
       <WithdrawModal
         visible={withdrawModalVisible}
         onCancel={() => setWithdrawModalVisible(false)}
-        onConfirmed={() => setWithdrawModalVisible(false)}
+        onConfirmed={() => router.reload()}
       />
     </div>
   )

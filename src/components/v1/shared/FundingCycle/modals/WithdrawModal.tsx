@@ -1,5 +1,4 @@
 import { Space } from 'antd'
-import Modal from 'antd/lib/modal/Modal'
 import { t, Trans } from '@lingui/macro'
 
 import CurrencySymbol from 'components/CurrencySymbol'
@@ -7,6 +6,7 @@ import FormattedAddress from 'components/FormattedAddress'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import PayoutModsList from 'components/v1/shared/PayoutModsList'
+import TransactionModal from 'components/TransactionModal'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
@@ -34,16 +34,17 @@ export default function WithdrawModal({
   onCancel?: VoidFunction
   onConfirmed?: VoidFunction
 }) {
-  const [loading, setLoading] = useState<boolean>()
-  const [tapAmount, setTapAmount] = useState<string>()
   const { balanceInCurrency, projectId, currentFC, currentPayoutMods, owner } =
     useContext(V1ProjectContext)
   const {
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const tapProjectTx = useTapProjectTx()
+  const [loading, setLoading] = useState<boolean>()
+  const [tapAmount, setTapAmount] = useState<string>()
+  const [transactionPending, setTransactionPending] = useState<boolean>()
 
+  const tapProjectTx = useTapProjectTx()
   const converter = useCurrencyConverter()
 
   useEffect(() => {
@@ -68,7 +69,7 @@ export default function WithdrawModal({
     ? untapped
     : balanceInCurrency
 
-  function tap() {
+  async function executeTapTx() {
     if (!currentFC || !tapAmount) return
 
     const minAmount = (
@@ -81,33 +82,46 @@ export default function WithdrawModal({
 
     setLoading(true)
 
-    tapProjectTx(
+    const txSuccessful = await tapProjectTx(
       {
         tapAmount: parseWad(tapAmount),
         currency: currentFC.currency.toNumber() as V1CurrencyOption,
         minAmount,
       },
       {
-        onDone: () => setLoading(false),
-        onConfirmed: () => onConfirmed && onConfirmed(),
+        onDone: () => {
+          setTransactionPending(true)
+        },
+        onConfirmed: () => {
+          setLoading(false)
+          setTransactionPending(false)
+          onConfirmed?.()
+        },
       },
     )
+
+    if (!txSuccessful) {
+      setLoading(false)
+      setTransactionPending(false)
+    }
   }
 
   return (
-    <Modal
-      title={t`Withdraw funds`}
+    <TransactionModal
+      title={t`Distribute funds`}
       visible={visible}
-      onOk={tap}
+      onOk={executeTapTx}
       onCancel={() => {
         setTapAmount(undefined)
-        onCancel && onCancel()
+        onCancel?.()
       }}
       okButtonProps={{
         disabled: !tapAmount || tapAmount === '0',
       }}
       confirmLoading={loading}
-      okText={t`Withdraw`}
+      transactionPending={transactionPending}
+      okText={t`Distribute funds`}
+      connectWalletText={t`Connect wallet to distribute`}
       width={640}
     >
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
@@ -228,6 +242,6 @@ export default function WithdrawModal({
           </p>
         )}
       </Space>
-    </Modal>
+    </TransactionModal>
   )
 }

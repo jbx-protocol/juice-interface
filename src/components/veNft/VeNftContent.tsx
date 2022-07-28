@@ -9,14 +9,13 @@ import VeNftHeaderSection from 'components/veNft/VeNftHeaderSection'
 import VeNftStakingForm from 'components/veNft/VeNftStakingForm'
 import VeNftOwnedTokensSection from 'components/veNft/VeNftOwnedTokensSection'
 import VeNftSummaryStatsSection from 'components/veNft/VeNftSummaryStatsSection'
+import { VeNftContext } from 'contexts/v2/veNftContext'
 
 const VeNftContent = () => {
-  const {
-    tokenSymbol,
-    tokenName,
-    projectMetadata,
-    veNft: { userTokens },
-  } = useContext(V2ProjectContext)
+  const { tokenSymbol, tokenName, projectMetadata } =
+    useContext(V2ProjectContext)
+
+  const { userTokens } = useContext(VeNftContext)
 
   const tokenSymbolDisplayText = tokenSymbolText({ tokenSymbol })
   const projectName = projectMetadata?.name ?? t`Unknown Project`

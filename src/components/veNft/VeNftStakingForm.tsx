@@ -22,7 +22,6 @@ import VeNftCarousel from 'components/veNft/VeNftCarousel'
 import StakingTokenRangesModal from 'components/veNft/VeNftStakingTokenRangesModal'
 import ConfirmStakeModal from 'components/veNft/VeNftConfirmStakeModal'
 
-import { reloadWindow } from 'utils/windowUtils'
 import { parseWad } from 'utils/formatNumber'
 
 import { emitSuccessNotification } from 'utils/notifications'
@@ -62,6 +61,8 @@ const VeNftStakingForm = ({
   const [confirmStakeModalVisible, setConfirmStakeModalVisible] =
     useState(false)
   const [tokenApprovalLoading, setTokenApprovalLoading] = useState(false)
+  const [optimisticAllowanceResult, setOptimisticAllowanceResult] =
+    useState(false)
 
   const tokensStaked = useWatch('tokensStaked', form) || '1'
   const lockDuration = useWatch('lockDuration', form) || 0
@@ -97,9 +98,9 @@ const VeNftStakingForm = ({
     userAddress,
     VENFT_CONTRACT_ADDRESS,
   )
-  const hasAdequateApproval = allowance
-    ? allowance.gte(parseWad(tokensStaked))
-    : false
+  const hasAdequateApproval =
+    optimisticAllowanceResult ||
+    (allowance ? allowance.gte(parseWad(tokensStaked)) : false)
 
   const votingPower = parseInt(tokensStaked) * (lockDuration / maxLockDuration)
 
@@ -120,7 +121,7 @@ const VeNftStakingForm = ({
         onConfirmed() {
           setTokenApprovalLoading(false)
           emitSuccessNotification(t`Successfully approved ERC-20 spending.`)
-          reloadWindow()
+          setOptimisticAllowanceResult(true)
         },
       },
     )

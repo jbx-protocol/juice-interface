@@ -27,7 +27,7 @@ export interface V2PayFormType {
   beneficiary?: string
   stickerUrls?: string[]
   uploadedImage?: string
-  preferClaimed?: boolean
+  preferClaimedTokens?: boolean
 }
 
 export const V2PayForm = ({
@@ -67,7 +67,6 @@ export const V2PayForm = ({
                 <Trans>Customize payment</Trans>
               </h3>
             }
-            style={{ marginBottom: '1rem' }}
           >
             <Form.Item
               label={t`Memo (optional)`}
@@ -113,9 +112,11 @@ export const V2PayForm = ({
                 <StickerSelection />
               </Form.Item>
             </Form.Item>
+
             <Form.Item name="uploadedImage">
               <FormImageUploader text={t`Add image`} />
             </Form.Item>
+
             <Form.Item extra={t`Mint tokens to a custom address.`}>
               <Space>
                 <Switch
@@ -150,8 +151,11 @@ export const V2PayForm = ({
                 </Form.Item>
               )}
             </Form.Item>
-            {hasIssuedTokens ? (
+
+            {hasIssuedTokens && (
               <Form.Item
+                name="preferClaimedTokens"
+                valuePropName="checked"
                 extra={
                   <Trans>
                     Mint this project's ERC-20 tokens to your wallet. Leave
@@ -161,15 +165,11 @@ export const V2PayForm = ({
                   </Trans>
                 }
               >
-                <Checkbox
-                  onChange={e =>
-                    form.setFieldsValue({ preferClaimed: e.target.checked })
-                  }
-                >
+                <Checkbox>
                   <Trans>Receive ERC-20</Trans>
                 </Checkbox>
               </Form.Item>
-            ) : null}
+            )}
           </MinimalCollapse>
 
           {projectMetadata && (

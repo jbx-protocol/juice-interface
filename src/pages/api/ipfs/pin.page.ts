@@ -34,7 +34,7 @@ const handler = async (req: ApiRequest, res: NextApiResponse) => {
       const pinata = getPinata()
       const pinData = await pinata.pinJSONToIPFS(data, options)
 
-      res.status(200).json({
+      return res.status(200).json({
         ...pinData,
       })
     } catch (error) {

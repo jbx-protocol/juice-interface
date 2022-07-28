@@ -1,8 +1,8 @@
-import axios from 'axios'
 import { AppWrapper, SEO } from 'components/common'
 import FeedbackFormButton from 'components/FeedbackFormButton'
 import NewDeployNotAvailable from 'components/NewDeployNotAvailable'
 import Project404 from 'components/Project404'
+import { findProjectMetadata } from 'utils/server'
 
 import {
   V1ProjectContext,
@@ -23,7 +23,7 @@ import useQueuedPayoutModsOfProject from 'hooks/v1/contractReader/QueuedPayoutMo
 import useQueuedTicketModsOfProject from 'hooks/v1/contractReader/QueuedTicketModsOfProject'
 import useTerminalOfProject from 'hooks/v1/contractReader/TerminalOfProject'
 import useTokenAddressOfProject from 'hooks/v1/contractReader/TokenAddressOfProject'
-import { consolidateMetadata, ProjectMetadataV4 } from 'models/project-metadata'
+import { ProjectMetadataV4 } from 'models/project-metadata'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { useRouter } from 'next/router'
@@ -80,57 +80,17 @@ export const getStaticProps: GetStaticProps<{
   if (!projects[0]?.metadataUri) {
     throw new Error(`Failed to load metadata uri for ${context.params}`)
   }
+
   const url = ipfsCidUrl(projects[0].metadataUri)
   try {
-    let metadata: ProjectMetadataV4 | undefined
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let error: any | undefined
-    do {
-      try {
-        if (error) {
-          // Back off for 3 secs - pinata rate limits for 180/min
-          const PINATA_RATE_LIMIT_SECONDS = 180
-          const SECONDS_IN_MINUTES = 60
-          await new Promise(resolve =>
-            setTimeout(
-              resolve,
-              (PINATA_RATE_LIMIT_SECONDS / SECONDS_IN_MINUTES) * 1000,
-            ),
-          )
-        }
-        const response = await axios.get(url)
-        metadata = consolidateMetadata(response.data)
-        error = undefined
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } catch (e: any) {
-        const status = e?.response?.status
-        if (status === 404 || status === 400) {
-          console.error('Page not found', {
-            url,
-            handle,
-          })
-          return { notFound: true }
-        }
-        console.warn('Failed to get url - backing off 3 seconds', {
-          status: status,
-          handle,
-          url,
-          error: e.message,
-        })
-        error = e
-      }
-    } while (!metadata)
+    const metadata = await findProjectMetadata({ url })
+    return { props: { metadata, handle } }
 
-    Object.keys(metadata).forEach(key =>
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (metadata as any)[key] === undefined ? delete (metadata as any)[key] : {},
-    )
-    return {
-      props: { metadata, handle },
-      revalidate: 60, // Revalidate the cached page every 60secs
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (e: any) {
+    if (e?.response?.status === 404 || e?.response?.status === 400) {
+      return { notFound: true }
     }
-  } catch (e) {
-    console.error('Failed to load page props', e)
     throw e
   }
 }

@@ -1,14 +1,15 @@
 import * as constants from '@ethersproject/constants'
+import { BallotStrategy } from 'models/ballot'
 
 import { RESERVED_RATE_WARNING_THRESHOLD_PERCENT } from 'constants/fundingWarningText'
 
 export default function unsafeFundingCycleProperties({
-  ballotAddress,
+  ballot,
   reservedRatePercentage,
   hasFundingDuration,
   allowMinting,
 }: {
-  ballotAddress: string | undefined
+  ballot: BallotStrategy
   reservedRatePercentage: number | undefined
   hasFundingDuration: boolean | undefined
   allowMinting: boolean | undefined
@@ -17,7 +18,8 @@ export default function unsafeFundingCycleProperties({
   // This object is based on type FundingCycle
   const configFlags = {
     duration: false,
-    ballot: false,
+    noBallot: false,
+    customBallot: false,
     allowMinting: false,
     metadataReservedRate: false,
     metadataMaxReservedRate: false,
@@ -28,8 +30,15 @@ export default function unsafeFundingCycleProperties({
    * Funding cycle reconfigurations can be created moments before a new cycle begins,
    * giving project owners an opportunity to take advantage of contributors, for example by withdrawing overflow.
    */
-  if (ballotAddress === constants.AddressZero) {
-    configFlags.ballot = true
+  if (ballot.address === constants.AddressZero) {
+    configFlags.noBallot = true
+  }
+
+  /**
+   * Custom, unverified ballot address
+   */
+  if (ballot.unknown) {
+    configFlags.customBallot = true
   }
 
   /**

@@ -8,7 +8,7 @@ import Link from 'next/link'
 const TAB_TYPE_NAMES: { [k in ProjectCategory]: string } = {
   all: t`All`,
   holdings: t`Holdings`,
-  myprojects: t`My Projects`,
+  myprojects: t`My projects`,
   trending: t`Trending`,
 }
 

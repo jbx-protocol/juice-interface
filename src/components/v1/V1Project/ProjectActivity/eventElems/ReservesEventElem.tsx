@@ -8,7 +8,7 @@ import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { PrintReservesEvent } from 'models/subgraph-entities/v1/print-reserves-event'
 import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
-import { formatWad } from 'utils/formatNumber'
+import { formatWad, fromWad } from 'utils/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export default function ReservesEventElem({
@@ -55,17 +55,35 @@ export default function ReservesEventElem({
         style={{
           display: 'flex',
           justifyContent: 'space-between',
+          alignContent: 'space-between',
         }}
       >
-        <div style={smallHeaderStyle(colors)}>
-          <Trans>
-            Distributed reserved{' '}
-            {tokenSymbolText({
-              tokenSymbol: tokenSymbol,
-              capitalize: false,
-              plural: true,
-            })}
-          </Trans>
+        <div>
+          <div style={smallHeaderStyle(colors)}>
+            <Trans>
+              Distributed reserved{' '}
+              {tokenSymbolText({
+                tokenSymbol: tokenSymbol,
+                capitalize: false,
+                plural: true,
+              })}
+            </Trans>
+          </div>
+          {distributeEvents?.length ? (
+            <div
+              style={{
+                color: colors.text.primary,
+                fontWeight: 500,
+              }}
+            >
+              {formatWad(event.count, { precision: 0 })}{' '}
+              {tokenSymbolText({
+                tokenSymbol: tokenSymbol,
+                capitalize: false,
+                plural: parseInt(fromWad(event.count) || '0') !== 1,
+              })}
+            </div>
+          ) : null}
         </div>
 
         <div style={{ textAlign: 'right' }}>
@@ -128,18 +146,6 @@ export default function ReservesEventElem({
           </div>
         )}
       </div>
-
-      {distributeEvents?.length && distributeEvents?.length > 1 ? (
-        <div
-          style={{
-            color: colors.text.primary,
-            fontWeight: 500,
-            textAlign: 'right',
-          }}
-        >
-          {formatWad(event.count, { precision: 0 })}
-        </div>
-      ) : null}
     </div>
   )
 }

@@ -20,8 +20,7 @@ import { useSetProjectSplits } from 'hooks/v2/transactor/SetProjectSplits'
 import { NetworkContext } from 'contexts/networkContext'
 import { MAX_DISTRIBUTION_LIMIT, splitPercentFrom } from 'utils/v2/math'
 import { formatWad } from 'utils/formatNumber'
-
-import { ExclamationCircleOutlined } from '@ant-design/icons'
+import Callout from 'components/Callout'
 
 import CurrencySymbol from 'components/CurrencySymbol'
 
@@ -85,31 +84,6 @@ const getLockedSplits = (splits: Split[]) => {
 const getEditableSplits = (splits: Split[]) => {
   const editableSplits = splits.filter(split => !isLockedSplit(split))
   return editableSplits
-}
-
-const DescriptionParagraphOne = () => (
-  <p>
-    <Trans>
-      Reconfigure payouts as percentages of your distribution limit.
-    </Trans>
-  </p>
-)
-const DescriptionParagraphTwo = () => {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-  return (
-    <p>
-      <Space size="small">
-        <ExclamationCircleOutlined
-          style={{
-            color: colors.text.warn,
-          }}
-        />
-        <Trans>Changes to payouts will take effect immediately.</Trans>
-      </Space>
-    </p>
-  )
 }
 
 const DistributionLimitHeader = ({
@@ -293,17 +267,23 @@ export const EditPayoutsModal = ({
       <Modal
         visible={visible}
         confirmLoading={modalLoading}
-        title="Edit payouts"
-        okText="Save payouts"
-        cancelText={modalLoading ? 'Close' : 'Cancel'}
+        title={<Trans>Edit payouts</Trans>}
+        okText={<Trans>Save payouts</Trans>}
+        cancelText={modalLoading ? t`Close` : t`Cancel`}
         onOk={() => onSplitsConfirmed(editingSplits)}
         onCancel={onCancel}
         width={720}
       >
-        <div>
-          <DescriptionParagraphOne />
-          <DescriptionParagraphTwo />
-        </div>
+        <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+          <div>
+            <Trans>
+              Reconfigure payouts as percentages of your distribution limit.
+            </Trans>
+          </div>
+          <Callout>
+            <Trans>Changes to payouts will take effect immediately.</Trans>
+          </Callout>
+        </Space>
         <DistributionLimitHeader style={{ marginTop: 32, marginBottom: 16 }} />
         <Space
           direction="vertical"

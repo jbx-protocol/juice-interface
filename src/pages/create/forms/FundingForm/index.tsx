@@ -38,10 +38,7 @@ import ExternalLink from 'components/ExternalLink'
 
 import { Split } from 'models/v2/splits'
 
-import {
-  DEFAULT_FUNDING_CYCLE_DURATION,
-  MAX_DISTRIBUTION_LIMIT,
-} from 'utils/v2/math'
+import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2/math'
 
 import {
   deriveDurationUnit,
@@ -76,6 +73,8 @@ type FundingFormFields = {
   durationEnabled?: boolean
   totalSplitsPercentage?: number
 }
+
+const DEFAULT_FUNDING_CYCLE_DURATION = 14
 
 export default function FundingForm({
   onFormUpdated,

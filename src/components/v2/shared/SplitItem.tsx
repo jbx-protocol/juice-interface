@@ -1,5 +1,5 @@
 import { CrownFilled, LockOutlined } from '@ant-design/icons'
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
@@ -18,6 +18,7 @@ import useMobile from 'hooks/Mobile'
 import Link from 'next/link'
 import TooltipIcon from 'components/TooltipIcon'
 import { v2ProjectRoute } from 'utils/routes'
+import useProjectHandle from 'hooks/v2/contractReader/ProjectHandle'
 
 export default function SplitItem({
   split,
@@ -42,6 +43,10 @@ export default function SplitItem({
     theme: { colors },
   } = useContext(ThemeContext)
 
+  const { data: handle } = split.projectId
+    ? useProjectHandle({ projectId: parseInt(split.projectId) })
+    : { data: undefined }
+
   const isProjectOwner = projectOwnerAddress === split.beneficiary
   const isJuiceboxProject = split.projectId
     ? BigNumber.from(split.projectId).gt(0)
@@ -62,25 +67,40 @@ export default function SplitItem({
   const itemFontSize = isMobile ? '0.9rem' : 'unset'
 
   const JuiceboxProjectBeneficiary = () => {
+    const getProjectTooltip = () => {
+      return split.projectId
+        ? t`Juicebox V2 project with ID ${parseInt(split.projectId)}`
+        : t`Juicebox V2 project`
+    }
+    const getProjectLabel = () => {
+      if (handle) {
+        return t`@${handle}`
+      }
+      if (split.projectId) {
+        return t`Project ${parseInt(split.projectId)}`
+      }
+      return t`Unknown Project`
+    }
     return (
       <div>
-        {/* TODO figure out project "handles" with ENS resolution */}
-
-        <div style={{ fontWeight: 500 }}>
-          <Tooltip
-            title={<Trans>Juicebox V2 project with ID {split.projectId}</Trans>}
-          >
-            <Link
-              href={v2ProjectRoute({ projectId: split.projectId })}
-              target="_blank"
-            >
-              <a className="text-primary hover-text-action-primary hover-text-decoration-underline">
-                @{split.projectId}
-              </a>
-            </Link>
+        <div>
+          <Tooltip title={getProjectTooltip()}>
+            <span>
+              <Link
+                href={v2ProjectRoute({ projectId: split.projectId })}
+                target="_blank"
+              >
+                <a
+                  className="text-primary hover-text-action-primary hover-text-decoration-underline"
+                  style={{ fontWeight: 500 }}
+                >
+                  {getProjectLabel()}
+                </a>
+              </Link>
+            </span>
           </Tooltip>
-          :
         </div>
+
         <div
           style={{
             fontSize: '.8rem',

@@ -1924,11 +1924,8 @@ msgstr ""
 msgid "Move your {tokensLabel} from the Juicebox contract to your wallet."
 msgstr "Переместите {tokensLabel} из контракта Juicebox в свой кошелек."
 
-#: src/pages/projects/ProjectsTabs.tsx
-msgid "My Projects"
-msgstr "Мои проекты"
-
 #: src/components/Navbar/Wallet.tsx
+#: src/pages/projects/ProjectsTabs.tsx
 msgid "My projects"
 msgstr ""
 

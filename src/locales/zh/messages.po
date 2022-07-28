@@ -434,10 +434,6 @@ msgstr "全部"
 msgid "All assets"
 msgstr "所有资产"
 
-#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
-msgid "All changes will be applied to the <0>upcoming</0> funding cycle."
-msgstr "所有更改会应用于 <0>之后的</0> 筹款周期。"
-
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 #: src/components/v2/V2Project/ProjectActivity/index.tsx
 msgid "All events"
@@ -532,6 +528,7 @@ msgstr "金额："
 msgid "Amounts"
 msgstr "金额"
 
+#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "Any changes you make will take effect in <0>funding cycle #{0}</0>. The current funding cycle (#{currentFCNumber}) won't be altered."
 msgstr "你做出的任何变更将会在 <0>筹款周期 #{0}</0>生效。目前的 (#{currentFCNumber}) 筹款周期将不会受到影响。"
@@ -727,10 +724,12 @@ msgstr "对项目资金的变动需要经过社区的批准阶段才能生效，
 msgid "Changes to your reserved token allocation will take effect immediately."
 msgstr ""
 
+#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "Changes will take effect according to the project's custom ballot contract."
 msgstr "变更的生效将照按项目自定义的选票合约来执行。"
 
+#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "Changes you make will take effect according to your <0>{0}</0> reconfiguration rule (the first funding cycle following <1>{1}</1> from now)."
 msgstr "你作出的变更将按照你的 <0>{0}</0> 重新配置规则生效 (从现在开始<1>{1}</1> 后的第一个完整周期生效)。"
@@ -2409,6 +2408,7 @@ msgstr ""
 msgid "Project Token"
 msgstr "项目代币"
 
+#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Project configuration"
 msgstr "项目设置"
@@ -2621,10 +2621,6 @@ msgstr "重新配置策略"
 msgid "Reconfigure"
 msgstr "重新配置"
 
-#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
-msgid "Reconfigure funding"
-msgstr "重新配置筹款"
-
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
 msgid "Reconfigure payouts as percentages of your distribution limit."
 msgstr ""
@@ -2648,9 +2644,6 @@ msgid "Reconfigure upcoming"
 msgstr "重新配置之后的筹款"
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
-msgid "Reconfigure upcoming funding"
-msgstr "重新配置之后的筹款"
-
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure upcoming funding cycles"
 msgstr "重新配置以后的筹款周期"
@@ -3319,6 +3312,11 @@ msgstr ""
 msgid "Time Remaining"
 msgstr ""
 
+#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
+msgid "Time remaining for changes made to affect the next funding cycle:"
+msgstr ""
+
 #: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupSection.tsx
 msgid "To do so, you need to give your V1 token holders the ability to exchange their V1 tokens for V2 tokens. Select <0>Set up token migration</0> below to get started."
 msgstr ""
@@ -3803,6 +3801,7 @@ msgstr "你可以直接赎回你的 {tokenTextLong} 代币来获取溢出，不�
 msgid "You can still redeem your {tokenSymbol} tokens for overflow without claiming them, and you can transfer your unclaimed {tokenSymbol} tokens to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
 msgstr "未领取的 {tokenSymbol} 代币，依然可以用来赎回溢出池中的 ETH，也可以在工具菜单中把代币直接转给其他地址。点击右上角的扳手按钮可以打开工具菜单。"
 
+#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "You don't have a funding cycle duration. Changes you make will take effect immediately."
 msgstr "你的项目未设置筹款周期时长。你做的更改将会立即生效。"

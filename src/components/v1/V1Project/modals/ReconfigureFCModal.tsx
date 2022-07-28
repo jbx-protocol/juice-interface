@@ -20,7 +20,7 @@ import { useEditingV1FundingCycleSelector } from 'hooks/AppSelector'
 import { useTerminalFee } from 'hooks/v1/TerminalFee'
 import { useConfigureProjectTx } from 'hooks/v1/transactor/ConfigureProjectTx'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
-import { V1FundingCycleMetadata } from 'models/v1/fundingCycle'
+import { V1FundingCycle, V1FundingCycleMetadata } from 'models/v1/fundingCycle'
 import { PayoutMod, TicketMod } from 'models/mods'
 import React, {
   useCallback,
@@ -59,7 +59,86 @@ import TicketingForm, {
 
 import { BallotStrategy } from 'models/ballot'
 
+import { detailedTimeString, secondsUntil } from 'utils/formatTime'
+
 import { getBallotStrategyByAddress } from 'constants/v1/ballotStrategies/getBallotStrategiesByAddress'
+import { SECONDS_IN_DAY } from 'constants/numbers'
+
+const V1ReconfigureUpcomingMessage = ({
+  currentFC,
+}: {
+  currentFC: V1FundingCycle | undefined
+}) => {
+  if (!currentFC) return null
+  const currentFCNumber = currentFC.number.toNumber()
+  const ballotStrategy = getBallotStrategyByAddress(currentFC.ballot)
+  const ballotStrategyLength = ballotStrategy.durationSeconds
+  const duration = currentFC.duration.toNumber()
+  const durationInSeconds = duration * SECONDS_IN_DAY
+  const secondsUntilNextFC = secondsUntil(
+    currentFC.start.add(durationInSeconds),
+  )
+  if (!duration || duration === 0) {
+    // If duration is unset/0, changes take effect immediately to current FC
+    return (
+      <Trans>
+        You don't have a funding cycle duration. Changes you make will take
+        effect immediately.
+      </Trans>
+    )
+  } else if (ballotStrategyLength === undefined) {
+    return (
+      <Trans>
+        Changes will take effect according to the project's custom ballot
+        contract.
+      </Trans>
+    )
+  } else if (ballotStrategyLength > secondsUntilNextFC) {
+    return (
+      <Trans>
+        Changes you make will take effect according to your{' '}
+        <strong>{ballotStrategy.name}</strong> reconfiguration rule (the first
+        funding cycle following{' '}
+        <strong>
+          {detailedTimeString({
+            timeSeconds: BigNumber.from(ballotStrategyLength),
+            fullWords: true,
+          })}
+        </strong>{' '}
+        from now).
+      </Trans>
+    )
+  } else {
+    return (
+      <>
+        <div>
+          <Trans>
+            Any changes you make will take effect in{' '}
+            <strong>funding cycle #{currentFCNumber + 1}</strong>. The current
+            funding cycle (#{currentFCNumber}) won't be altered.
+          </Trans>
+        </div>
+        <br />
+        <div>
+          <Trans>
+            Time remaining for changes made to affect the next funding cycle:
+          </Trans>
+        </div>
+        <div>
+          <strong>
+            {detailedTimeString({
+              timeSeconds: BigNumber.from(
+                secondsUntilNextFC - ballotStrategyLength,
+              ),
+              fullWords: true,
+            })}
+          </strong>
+          .
+        </div>
+      </>
+    )
+  }
+}
 
 export default function ReconfigureFCModal({
   visible,
@@ -326,6 +405,7 @@ export default function ReconfigureFCModal({
 
   return (
     <Modal
+      title={<Trans>Project configuration</Trans>}
       visible={visible}
       onOk={reconfigure}
       confirmLoading={loading}
@@ -334,23 +414,12 @@ export default function ReconfigureFCModal({
       width={600}
     >
       <div>
-        {currentFC?.duration.gt(0) ? (
-          <React.Fragment>
-            <h1 style={{ marginBottom: 20 }}>
-              <Trans>Reconfigure upcoming funding</Trans>
-            </h1>
-            <p>
-              <Trans>
-                All changes will be applied to the <strong>upcoming</strong>{' '}
-                funding cycle.
-              </Trans>
-            </p>
-          </React.Fragment>
-        ) : (
-          <h1 style={{ marginBottom: 20 }}>
-            <Trans>Reconfigure funding</Trans>
-          </h1>
-        )}
+        <h4 style={{ marginBottom: 0 }}>
+          <Trans>Reconfigure upcoming funding cycles</Trans>
+        </h4>
+        <p>
+          <V1ReconfigureUpcomingMessage currentFC={currentFC} />
+        </p>
 
         <Space direction="vertical" size="large" style={{ width: '100%' }}>
           <div>

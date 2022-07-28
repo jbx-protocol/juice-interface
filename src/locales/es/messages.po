@@ -434,10 +434,6 @@ msgstr "Todos"
 msgid "All assets"
 msgstr "Todos los activos"
 
-#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
-msgid "All changes will be applied to the <0>upcoming</0> funding cycle."
-msgstr "Todos los cambios se aplicarán al <0>siguiente </0>ciclo de financiación."
-
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 #: src/components/v2/V2Project/ProjectActivity/index.tsx
 msgid "All events"
@@ -532,6 +528,7 @@ msgstr "Cantidad:"
 msgid "Amounts"
 msgstr "Cantidades"
 
+#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "Any changes you make will take effect in <0>funding cycle #{0}</0>. The current funding cycle (#{currentFCNumber}) won't be altered."
 msgstr "Cualquier cambio que hagas surtirá efecto en el <0>ciclo de financiamiento#{0}</0>. El ciclo de financiamiento actual. (#{currentFCNumber}) no será alterado."
@@ -727,10 +724,12 @@ msgstr "Los cambios a las configuraciones de financiamiento de tu proyecto requi
 msgid "Changes to your reserved token allocation will take effect immediately."
 msgstr ""
 
+#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "Changes will take effect according to the project's custom ballot contract."
 msgstr "Los cambios surtirán efecto de acuerdo al contrato personalizado de votación del proyecto."
 
+#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "Changes you make will take effect according to your <0>{0}</0> reconfiguration rule (the first funding cycle following <1>{1}</1> from now)."
 msgstr "Los cambios que hagas surtirán efecto de acuerdo a tu <0>{0}</0> regla de reconfiguración (primer ciclo de financiamiento siguiente <1>{1}</1> desde ahora)."
@@ -2409,6 +2408,7 @@ msgstr ""
 msgid "Project Token"
 msgstr "Token de proyecto"
 
+#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Project configuration"
 msgstr "Configuración de proyecto"
@@ -2621,10 +2621,6 @@ msgstr "Estrategia de reconfiguración"
 msgid "Reconfigure"
 msgstr "Reconfigurar"
 
-#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
-msgid "Reconfigure funding"
-msgstr "Reconfigurar financiamiento"
-
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
 msgid "Reconfigure payouts as percentages of your distribution limit."
 msgstr "Reconfigurar pagos como porcentajes de tu límite de distribución."
@@ -2648,9 +2644,6 @@ msgid "Reconfigure upcoming"
 msgstr "Reconfigurar próximos"
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
-msgid "Reconfigure upcoming funding"
-msgstr "Reconfigurar financiamientos próximos"
-
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure upcoming funding cycles"
 msgstr "Reconfigurar ciclos de financiamiento próximos"
@@ -3319,6 +3312,11 @@ msgstr "Esto reiniciará los datos para tu nuevo proyecto. Todos los cambios se 
 msgid "Time Remaining"
 msgstr ""
 
+#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
+msgid "Time remaining for changes made to affect the next funding cycle:"
+msgstr ""
+
 #: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupSection.tsx
 msgid "To do so, you need to give your V1 token holders the ability to exchange their V1 tokens for V2 tokens. Select <0>Set up token migration</0> below to get started."
 msgstr ""
@@ -3803,6 +3801,7 @@ msgstr "Puedes canjear tus {tokenTextLong} por excedente sin reclamarlos. Puedes
 msgid "You can still redeem your {tokenSymbol} tokens for overflow without claiming them, and you can transfer your unclaimed {tokenSymbol} tokens to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
 msgstr "Todavía, puedes canjear tus tokens {tokenSymbol} por el exceso sin reclamarlos y puedes transferir tus tokens {tokenSymbol} sin reclamar a otra dirección desde el menú de Herramientas, el cual puedes encontrar en el icóno de la llave inglesa en la esquina superior derecha de este proyecto."
 
+#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "You don't have a funding cycle duration. Changes you make will take effect immediately."
 msgstr "No tienes una duración de ciclo de financiamiento. Los cambios que hagas surtirán efecto de inmediato."

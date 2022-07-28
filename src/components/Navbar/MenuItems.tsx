@@ -21,9 +21,22 @@ function NavMenuItem({
   onClick,
 }: {
   text: string
-  route: string
+  route?: string
   onClick?: VoidFunction
 }) {
+  if (!route) {
+    return (
+      <div
+        className="nav-menu-item hover-opacity"
+        onClick={onClick}
+        role="button"
+        style={navMenuItemStyles}
+      >
+        {text}
+      </div>
+    )
+  }
+
   const external = route?.startsWith('http')
   if (external) {
     return (
@@ -40,8 +53,12 @@ function NavMenuItem({
     )
   }
   return (
-    <Link href={route} onClick={onClick}>
-      <a className="nav-menu-item hover-opacity" style={navMenuItemStyles}>
+    <Link href={route}>
+      <a
+        className="nav-menu-item hover-opacity"
+        onClick={onClick}
+        style={navMenuItemStyles}
+      >
         {text}
       </a>
     </Link>
@@ -105,18 +122,13 @@ export function TopLeftNavItems({
       />
       <NavMenuItem
         text={t`FAQ`}
-        route={'/#faq'}
         onClick={() => {
-          if (typeof window !== 'undefined') {
-            if (onClickMenuItems) onClickMenuItems()
-            router
-              .push('/')
-              .then(() =>
-                document
-                  .getElementById('faq')
-                  ?.scrollIntoView({ behavior: 'smooth' }),
-              )
-          }
+          router.push('/').then(() => {
+            document
+              .getElementById('faq')
+              ?.scrollIntoView({ behavior: 'smooth' })
+            onClickMenuItems?.()
+          })
         }}
       />
       <NavMenuItem

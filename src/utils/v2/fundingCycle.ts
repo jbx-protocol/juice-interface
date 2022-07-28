@@ -19,15 +19,18 @@ import {
 import { FundingCycleRiskFlags } from 'constants/fundingWarningText'
 import { getBallotStrategyByAddress } from 'constants/v2/ballotStrategies/getBallotStrategiesByAddress'
 import { MAX_DISTRIBUTION_LIMIT } from './math'
+import { MaxUint54 } from 'constants/numbers'
 
 export const hasDistributionLimit = (
   fundAccessConstraint: SerializedV2FundAccessConstraint | undefined,
 ): boolean => {
+  // Distribution limit defaults to Zero (which is a distribution limit)
+  if (!fundAccessConstraint) return true
+
   return Boolean(
-    fundAccessConstraint?.distributionLimit &&
-      !parseWad(fundAccessConstraint.distributionLimit).eq(
-        MAX_DISTRIBUTION_LIMIT,
-      ),
+    !parseWad(fundAccessConstraint.distributionLimit).eq(
+      MAX_DISTRIBUTION_LIMIT,
+    ),
   )
 }
 
@@ -211,4 +214,17 @@ export const V2FundingCycleRiskCount = (
   return Object.values(getUnsafeV2FundingCycleProperties(fundingCycle)).filter(
     v => v === true,
   ).length
+}
+
+/**
+ * _mustStartAtOrAfter + _duration > type(uint54).max
+ * @param mustStartAtOrAfter
+ */
+export const isValidMustStartAtOrAfter = (
+  mustStartAtOrAfter: string,
+  fundingCycleDuration: BigNumber,
+): boolean => {
+  return BigNumber.from(mustStartAtOrAfter)
+    .add(fundingCycleDuration)
+    .lt(MaxUint54)
 }

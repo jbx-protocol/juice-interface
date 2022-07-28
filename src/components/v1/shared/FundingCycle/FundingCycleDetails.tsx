@@ -187,7 +187,7 @@ export default function FundingCycleDetails({
             span={2}
             label={
               <TooltipLabel
-                label={<Trans>Bonding curve rate</Trans>}
+                label={<Trans>Redemption rate</Trans>}
                 tip={
                   <Trans>
                     This rate determines the amount of overflow that each token

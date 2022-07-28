@@ -8,6 +8,7 @@ import {
 } from 'models/v2/fundingCycle'
 
 import { GroupedSplits, SplitGroup } from 'models/v2/splits'
+import { isValidMustStartAtOrAfter } from 'utils/v2/fundingCycle'
 
 import { TransactorInstance } from '../../Transactor'
 import { JUICEBOX_MONEY_METADATA_DOMAIN } from 'constants/v2/metadataDomain'
@@ -41,7 +42,8 @@ export function useLaunchProjectTx(): TransactorInstance<{
       !transactor ||
       !userAddress ||
       !contracts?.JBController ||
-      !contracts.JBETHPaymentTerminal
+      !contracts.JBETHPaymentTerminal ||
+      !isValidMustStartAtOrAfter(mustStartAtOrAfter, fundingCycleData.duration)
     ) {
       txOpts?.onDone?.()
       return Promise.resolve(false)

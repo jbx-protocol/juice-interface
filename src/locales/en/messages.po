@@ -1988,9 +1988,10 @@ msgstr "More trending projects"
 msgid "Move your {tokensLabel} from the Juicebox contract to your wallet."
 msgstr "Move your {tokensLabel} from the Juicebox contract to your wallet."
 
+#: src/components/Navbar/Wallet.tsx
 #: src/pages/projects/ProjectsTabs.tsx
-msgid "My Projects"
-msgstr "My Projects"
+msgid "My projects"
+msgstr "My projects"
 
 #: src/pages/index.page.tsx
 msgid "NFT projects"

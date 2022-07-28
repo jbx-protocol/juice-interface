@@ -313,7 +313,7 @@ textarea.ant-input::placeholder {
 }
 
 // added a wrapping Form.Item on FormattedNumberInput which gave it Form.Item's margin-bottom
-.formatted-number-input .ant-form-item {
+.ant-form-item.formatted-number-input {
   margin-bottom: 0;
   width: 100%;
 }

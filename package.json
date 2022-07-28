@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@apollo/client": "^3.6.9",
+    "@apollo/client": "3.6.9",
     "@babel/core": "^7.18.6",
     "@jbx-protocol/contracts-v1": "2.0.0",
     "@jbx-protocol/contracts-v2-4.0.0": "npm:@jbx-protocol/contracts-v2@4.0.0",

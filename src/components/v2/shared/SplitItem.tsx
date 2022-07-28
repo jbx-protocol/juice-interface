@@ -83,18 +83,24 @@ export default function SplitItem({
     }
     return (
       <div>
-        <div style={{ fontWeight: 500 }}>
-          <Link
-            href={v2ProjectRoute({ projectId: split.projectId })}
-            target="_blank"
-          >
-            <Tooltip title={getProjectTooltip()}>
-              <a className="text-primary hover-text-action-primary hover-text-decoration-underline">
-                {getProjectLabel()}
-              </a>
-            </Tooltip>
-          </Link>
+        <div>
+          <Tooltip title={getProjectTooltip()}>
+            <span>
+              <Link
+                href={v2ProjectRoute({ projectId: split.projectId })}
+                target="_blank"
+              >
+                <a
+                  className="text-primary hover-text-action-primary hover-text-decoration-underline"
+                  style={{ fontWeight: 500 }}
+                >
+                  {getProjectLabel()}
+                </a>
+              </Link>
+            </span>
+          </Tooltip>
         </div>
+
         <div
           style={{
             fontSize: '.8rem',

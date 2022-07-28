@@ -837,6 +837,7 @@ msgstr "连接钱包以领取"
 msgid "Connect wallet to deploy"
 msgstr "连接钱包以部署"
 
+#: src/components/v1/shared/FundingCycle/modals/WithdrawModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributeReservedTokensModal.tsx
 msgid "Connect wallet to distribute"
@@ -1163,6 +1164,8 @@ msgid "Distribute available funds to other Ethereum wallets or Juicebox projects
 msgstr "把可用资金分发给其他以太坊钱包或者其他Juicebox项目。使用这项功能付款给项目的贡献者、慈善机构、其他帮助你的Juicebox项目、或是任何其他人。无论什么时候从您项目提款，资金都会自动进行发放。"
 
 #: src/components/v1/shared/FundingCycle/Spending.tsx
+#: src/components/v1/shared/FundingCycle/modals/WithdrawModal.tsx
+#: src/components/v1/shared/FundingCycle/modals/WithdrawModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
@@ -3748,14 +3751,6 @@ msgstr "积极进取的朋克们通过 Juicebox 构建和维护项目，并以�
 #: src/pages/create/forms/FundingForm/index.tsx
 msgid "With no funding cycles, the project's owner can start a new funding cycle (Funding Cycle #2) on-demand. <0>Learn more.</0>"
 msgstr "没有筹款周期的话，项目方可以按自己需要开始一个新的筹款周期 (第二个筹款周期)。 <0>了解更多。</0>"
-
-#: src/components/v1/shared/FundingCycle/modals/WithdrawModal.tsx
-msgid "Withdraw"
-msgstr "提取"
-
-#: src/components/v1/shared/FundingCycle/modals/WithdrawModal.tsx
-msgid "Withdraw funds"
-msgstr "提取资金"
 
 #: src/components/Navbar/constants.ts
 msgid "Workspace"

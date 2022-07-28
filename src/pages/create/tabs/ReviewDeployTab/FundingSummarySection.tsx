@@ -26,6 +26,7 @@ import {
 import { NetworkContext } from 'contexts/networkContext'
 
 import { V2FundingCycle } from 'models/v2/fundingCycle'
+import Callout from 'components/Callout'
 
 import { rowGutter } from '.'
 
@@ -116,10 +117,10 @@ export default function FundingSummarySection() {
 
   return (
     <div style={{ marginTop: 20 }}>
-      <h2 style={{ marginBottom: 0 }}>
+      <h2>
         <Trans>Funding cycle details</Trans>
       </h2>
-      <p style={{ marginBottom: 15 }}>
+      <Callout style={{ marginBottom: 15 }}>
         {hasDuration ? (
           <Trans>
             Once launched, your first funding cycle{' '}
@@ -133,7 +134,7 @@ export default function FundingSummarySection() {
             will be applied immediately.
           </Trans>
         )}
-      </p>
+      </Callout>
       <Space size="large" direction="vertical" style={{ width: '100%' }}>
         <DistributionLimitStatistic
           distributionLimit={distributionLimit}

@@ -1711,6 +1711,10 @@ msgstr "您的项目将如何分配资金。"
 msgid "I accept this project's <0>risks</0>."
 msgstr ""
 
+#: src/pages/create/tabs/ReviewDeployTab/index.tsx
+msgid "I have read and accept the <0>Terms of Service</0>."
+msgstr ""
+
 #: src/components/PayWarningModal.tsx
 msgid "I understand"
 msgstr "我明白了"
@@ -3957,6 +3961,10 @@ msgstr ""
 msgid "You must own this V1 project."
 msgstr ""
 
+#: src/pages/create/tabs/ReviewDeployTab/index.tsx
+msgid "You must review and accept the Terms of Service."
+msgstr ""
+
 #: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "You must review and accept the risks."
 msgstr ""
@@ -4397,4 +4405,5 @@ msgstr ""
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "{userOwnershipPercentage}% of total supply"
 msgstr "总供应量的 {userOwnershipPercentage}%"
+
 

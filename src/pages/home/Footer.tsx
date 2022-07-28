@@ -74,6 +74,7 @@ export default function Footer() {
         {link('GitHub', 'https://github.com/jbx-protocol/juice-interface')}
         {link('Twitter', 'https://twitter.com/juiceboxETH')}
         {link('Privacy Policy', '/privacy')}
+        {link('Terms of Service', '/privacy')}
       </div>
 
       {gitCommit ? (

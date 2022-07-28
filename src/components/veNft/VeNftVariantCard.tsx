@@ -5,6 +5,8 @@ import { DeleteOutlined, LoadingOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { VeNftVariant } from 'models/v2/veNft'
 
+import { truncateLongNumber } from 'utils/formatNumber'
+
 import VeNftRewardTierModal from './VeNftRewardTierModal'
 
 export default function VeNftvariantCard({
@@ -28,9 +30,12 @@ export default function VeNftvariantCard({
 
   const tokensStakedLabel = () => {
     if (nextVariant) {
-      return `${variant.tokensStakedMin} - ${nextVariant.tokensStakedMin - 1}`
+      return `${truncateLongNumber(
+        variant.tokensStakedMin,
+        2,
+      )} - ${truncateLongNumber(nextVariant.tokensStakedMin - 1, 2)}`
     }
-    return `${variant.tokensStakedMin}+`
+    return `${truncateLongNumber(variant.tokensStakedMin, 2)}+`
   }
 
   if (!variant) return null

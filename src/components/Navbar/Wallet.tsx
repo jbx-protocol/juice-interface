@@ -42,7 +42,9 @@ export default function Wallet({ userAddress }: { userAddress: string }) {
           justifyContent: 'space-between',
         }}
       >
-        <Link href="projects?tab=myprojects">My Projects</Link>
+        <Link href="projects?tab=myprojects">
+          <Trans>My projects</Trans>
+        </Link>
         <CrownOutlined />
       </Menu.Item>
       {!isMobile && (

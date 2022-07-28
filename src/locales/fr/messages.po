@@ -1928,6 +1928,10 @@ msgstr "Transférer vos {tokensLabel} du contrat Juicebox vers votre portefeuill
 msgid "My Projects"
 msgstr "Mes Projets"
 
+#: src/components/Navbar/Wallet.tsx
+msgid "My projects"
+msgstr ""
+
 #: src/pages/index.page.tsx
 msgid "NFT projects"
 msgstr ""

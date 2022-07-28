@@ -1928,6 +1928,10 @@ msgstr "将你的 {tokensLabel} 从 Juicebox 合约中取到你的钱包里。"
 msgid "My Projects"
 msgstr "我的项目"
 
+#: src/components/Navbar/Wallet.tsx
+msgid "My projects"
+msgstr ""
+
 #: src/pages/index.page.tsx
 msgid "NFT projects"
 msgstr ""

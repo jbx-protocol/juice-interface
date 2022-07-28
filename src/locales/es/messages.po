@@ -1928,6 +1928,10 @@ msgstr "Mueve tus {tokensLabel} del contrato de Juicebox a tu billetera."
 msgid "My Projects"
 msgstr "Mis proyectos"
 
+#: src/components/Navbar/Wallet.tsx
+msgid "My projects"
+msgstr ""
+
 #: src/pages/index.page.tsx
 msgid "NFT projects"
 msgstr ""

@@ -1993,9 +1993,10 @@ msgstr ""
 msgid "Move your {tokensLabel} from the Juicebox contract to your wallet."
 msgstr "Mova seus {tokensLabel} do contrato do Juicebox para sua carteira."
 
+#: src/components/Navbar/Wallet.tsx
 #: src/pages/projects/ProjectsTabs.tsx
-msgid "My Projects"
-msgstr "Meus Projetos"
+msgid "My projects"
+msgstr ""
 
 #: src/pages/index.page.tsx
 msgid "NFT projects"

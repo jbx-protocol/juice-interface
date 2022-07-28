@@ -115,6 +115,10 @@ export default function FundingCycleDetails({
 
   const riskWarningText = FUNDING_CYCLE_WARNING_TEXT()
 
+  const ballotWarningText = unsafeFundingCycleProperties.noBallot
+    ? riskWarningText.noBallot
+    : riskWarningText.customBallot
+
   return (
     <div>
       <Descriptions
@@ -305,8 +309,11 @@ export default function FundingCycleDetails({
           :
         </span>{' '}
         <FundingCycleDetailWarning
-          showWarning={unsafeFundingCycleProperties.ballot}
-          tooltipTitle={riskWarningText.ballot}
+          showWarning={
+            unsafeFundingCycleProperties.noBallot ||
+            unsafeFundingCycleProperties.customBallot
+          }
+          tooltipTitle={ballotWarningText}
         >
           {ballotStrategy.name}
         </FundingCycleDetailWarning>

@@ -70,9 +70,15 @@ export default function V2FundingCycleSection({
     return <NoFundingCycle />
   }
 
-  const tabText = ({ text }: { text: string }) => {
+  const tabText = ({
+    text,
+    hideRiskFlag,
+  }: {
+    text: string
+    hideRiskFlag?: boolean
+  }) => {
     const hasRisks = fundingCycle && V2FundingCycleRiskCount(fundingCycle)
-    if (!hasRisks) {
+    if (!hasRisks || hideRiskFlag) {
       return text
     }
 
@@ -114,7 +120,7 @@ export default function V2FundingCycleSection({
       },
     {
       key: 'history',
-      label: tabText({ text: t`History` }),
+      label: tabText({ text: t`History`, hideRiskFlag: true }),
       content: (
         <CardSection>
           <FundingCycleHistory />

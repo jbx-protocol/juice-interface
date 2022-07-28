@@ -2585,13 +2585,13 @@ msgstr "Yeniden yapılandırma"
 
 #: src/components/v1/shared/ReconfigurationStrategyDrawer.tsx
 #: src/pages/create/forms/RulesForm/index.tsx
-#: src/pages/create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Reconfiguration rules"
 msgstr "Yeniden yapılandırma kuralları"
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
+#: src/pages/create/tabs/ReviewDeployTab/FundingAttributes.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 msgid "Reconfiguration strategy"
 msgstr "Yeniden yapılandırma stratejisi"
@@ -3173,6 +3173,10 @@ msgstr "Bu kişinin toplam %{reservedRate} rezerve token tahsisinden aldığı y
 
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "The project owner can add and remove payment terminals."
+msgstr ""
+
+#: src/constants/fundingWarningText.ts
+msgid "The project owner is using an unverified contract for its reconfiguration strategy."
 msgstr ""
 
 #: src/constants/fundingWarningText.ts

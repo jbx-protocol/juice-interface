@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Collapse, Form, Input, Switch } from 'antd'
+import { Collapse, Input, Switch } from 'antd'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import TooltipLabel from 'components/TooltipLabel'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
@@ -8,11 +8,19 @@ import * as constants from '@ethersproject/constants'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 
 export default function AdvancedOptionsCollapse({
+  memo,
+  setMemo,
+  customBeneficiaryAddress,
+  setCustomBeneficiaryAddress,
   tokenMintingEnabled,
   setTokenMintingEnabled,
   preferClaimed,
   setPreferClaimed,
 }: {
+  memo: string | undefined
+  setMemo: Dispatch<SetStateAction<string | undefined>>
+  customBeneficiaryAddress: string | undefined
+  setCustomBeneficiaryAddress: Dispatch<SetStateAction<string | undefined>>
   tokenMintingEnabled: boolean
   setTokenMintingEnabled: Dispatch<SetStateAction<boolean>>
   preferClaimed: boolean
@@ -50,14 +58,14 @@ export default function AdvancedOptionsCollapse({
                 </Trans>
               }
             />
-            <Form.Item name="memo">
-              <Input
-                placeholder={t`Payment made through payable address`}
-                type="string"
-                autoComplete="off"
-                style={{ marginTop: 5 }}
-              />
-            </Form.Item>
+            <Input
+              value={memo}
+              onChange={e => setMemo(e.target.value)}
+              placeholder={t`Payment made through payable address`}
+              type="string"
+              autoComplete="off"
+              style={{ marginTop: 5 }}
+            />
           </div>
           <div style={{ display: 'flex', marginTop: advancedSettingsMargin }}>
             <TooltipLabel
@@ -90,6 +98,9 @@ export default function AdvancedOptionsCollapse({
               <Switch
                 onChange={checked => {
                   setCustomBeneficiaryEnabled(checked)
+                  if (!checked) {
+                    setCustomBeneficiaryAddress(undefined)
+                  }
                 }}
                 checked={customBeneficiaryEnabled}
                 style={{ marginLeft: switchMargin }}
@@ -97,9 +108,10 @@ export default function AdvancedOptionsCollapse({
             </div>
           ) : null}
           {tokenMintingEnabled && customBeneficiaryEnabled ? (
-            <Form.Item name="customBeneficiaryAddress">
-              <EthAddressInput />
-            </Form.Item>
+            <EthAddressInput
+              value={customBeneficiaryAddress}
+              onChange={setCustomBeneficiaryAddress}
+            />
           ) : null}
           {tokenMintingEnabled &&
           tokenAddress &&

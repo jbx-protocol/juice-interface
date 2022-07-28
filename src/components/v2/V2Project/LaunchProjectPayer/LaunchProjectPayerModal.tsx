@@ -1,18 +1,16 @@
 import { t, Trans } from '@lingui/macro'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 
 import { TransactionReceipt } from '@ethersproject/providers'
 import { TransactorInstance } from 'hooks/Transactor'
 
-import { Form, Modal } from 'antd'
-import { useForm } from 'antd/lib/form/Form'
+import { Modal } from 'antd'
 import { JBDiscordLink } from 'pages/home/QAs'
 import EtherscanLink from 'components/EtherscanLink'
 import CopyTextButton from 'components/CopyTextButton'
 import TransactionModal from 'components/TransactionModal'
 import { DeployProjectPayerTxArgs } from 'hooks/v2/transactor/DeployProjectPayerTx'
 import { emitErrorNotification } from 'utils/notifications'
-import { NetworkContext } from 'contexts/networkContext'
 
 import { readProvider } from 'constants/readProvider'
 
@@ -44,25 +42,28 @@ export default function LaunchProjectPayerModal({
     | undefined
   onConfirmed?: VoidFunction
 }) {
-  const { userAddress } = useContext(NetworkContext)
-
   const [loadingProjectPayer, setLoadingProjectPayer] = useState<boolean>()
   const [transactionPending, setTransactionPending] = useState<boolean>()
   const [projectPayerAddress, setProjectPayerAddress] = useState<string>()
 
   const [tokenMintingEnabled, setTokenMintingEnabled] = useState<boolean>(true)
+  const [customBeneficiaryAddress, setCustomBeneficiaryAddress] =
+    useState<string>()
   const [preferClaimed, setPreferClaimed] = useState<boolean>(false)
-
-  const [form] = useForm<{
-    memo: string
-    customBeneficiaryAddress: string
-  }>()
+  const [memo, setMemo] = useState<string>()
 
   const [confirmedModalVisible, setConfirmedModalVisible] = useState<boolean>()
   // TODO: load project payer and show different thing in this section if the project already has one
   // (Issue: #897)
 
   const deployProjectPayerTx = useDeployProjectPayerTx()
+
+  const resetStates = () => {
+    setTokenMintingEnabled(true)
+    setCustomBeneficiaryAddress(undefined)
+    setPreferClaimed(false)
+    setMemo(undefined)
+  }
 
   async function deployProjectPayer() {
     if (!deployProjectPayerTx) return
@@ -71,10 +72,8 @@ export default function LaunchProjectPayerModal({
 
     const txSuccess = await deployProjectPayerTx(
       {
-        customBeneficiaryAddress: form.getFieldValue(
-          'customBeneficiaryAddress',
-        ),
-        customMemo: form.getFieldValue('memo'),
+        customBeneficiaryAddress,
+        customMemo: memo,
         tokenMintingEnabled,
         preferClaimed,
       },
@@ -108,7 +107,7 @@ export default function LaunchProjectPayerModal({
       setLoadingProjectPayer(false)
       setTransactionPending(false)
     }
-    form.resetFields()
+    resetStates()
   }
 
   return (
@@ -142,17 +141,16 @@ export default function LaunchProjectPayerModal({
         </p>
         {/* TODO: we should consider reworking this */}
         {/* Form that controls internals of the AdvancedOptionsCollapse */}
-        <Form
-          form={form}
-          initialValues={{ customBeneficiaryAddress: userAddress }}
-        >
-          <AdvancedOptionsCollapse
-            tokenMintingEnabled={tokenMintingEnabled}
-            setTokenMintingEnabled={setTokenMintingEnabled}
-            preferClaimed={preferClaimed}
-            setPreferClaimed={setPreferClaimed}
-          />
-        </Form>
+        <AdvancedOptionsCollapse
+          memo={memo}
+          setMemo={setMemo}
+          customBeneficiaryAddress={customBeneficiaryAddress}
+          setCustomBeneficiaryAddress={setCustomBeneficiaryAddress}
+          tokenMintingEnabled={tokenMintingEnabled}
+          setTokenMintingEnabled={setTokenMintingEnabled}
+          preferClaimed={preferClaimed}
+          setPreferClaimed={setPreferClaimed}
+        />
       </TransactionModal>
       <Modal
         visible={confirmedModalVisible}

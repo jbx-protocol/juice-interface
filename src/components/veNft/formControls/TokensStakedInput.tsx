@@ -61,11 +61,6 @@ const TokensStakedInput = ({
           {unstakedTokens} {tokenSymbolDisplayText} remaining
         </Trans>
       }
-      tooltip={
-        <Trans>
-          Only project tokens claimed as ERC-20 tokens can be staked for NFTs.
-        </Trans>
-      }
     >
       <FormattedNumberInput
         name="tokensStaked"

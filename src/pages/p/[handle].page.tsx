@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { SEO } from 'components/common'
+import { AppWrapper, SEO } from 'components/common'
 import FeedbackFormButton from 'components/FeedbackFormButton'
 import NewDeployNotAvailable from 'components/NewDeployNotAvailable'
 import Project404 from 'components/Project404'
@@ -155,7 +155,9 @@ export default function V1HandlePage({
           }}
         />
       ) : null}
-      <V1Dashboard metadata={metadata} />
+      <AppWrapper>
+        <V1Dashboard metadata={metadata} />
+      </AppWrapper>
     </>
   )
 }

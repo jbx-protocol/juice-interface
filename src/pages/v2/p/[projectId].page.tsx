@@ -6,7 +6,7 @@ import { paginateDepleteProjectsQueryCall } from 'utils/apollo'
 import { ipfsCidUrl } from 'utils/ipfs'
 import { V2ContractName } from 'models/v2/contracts'
 import { loadContract } from 'utils/contracts/loadContract'
-import { SEO } from 'components/common'
+import { AppWrapper, SEO } from 'components/common'
 
 import V2Dashboard from './components/V2Dashboard'
 import { readProvider } from 'constants/readProvider'
@@ -130,9 +130,11 @@ export default function V2ProjectPage({
           }}
         />
       ) : null}
-      <V2UserProvider>
-        <V2Dashboard metadata={metadata} projectId={projectId} />
-      </V2UserProvider>
+      <AppWrapper>
+        <V2UserProvider>
+          <V2Dashboard metadata={metadata} projectId={projectId} />
+        </V2UserProvider>
+      </AppWrapper>
     </>
   )
 }

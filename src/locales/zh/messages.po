@@ -2135,7 +2135,7 @@ msgstr "一旦启动，你的第一个筹款周期 <0>不能再更改</0>。 你
 msgid "Only lowercase letters"
 msgstr ""
 
-#: src/components/veNft/formControls/TokensStakedInput.tsx
+#: src/components/veNft/VeNftStakingForm.tsx
 msgid "Only project tokens claimed as ERC-20 tokens can be staked for NFTs."
 msgstr ""
 

@@ -2135,7 +2135,7 @@ msgstr "Una vez lanzado, tu primer ciclo de financiamiento <0>no se puede cambia
 msgid "Only lowercase letters"
 msgstr ""
 
-#: src/components/veNft/formControls/TokensStakedInput.tsx
+#: src/components/veNft/VeNftStakingForm.tsx
 msgid "Only project tokens claimed as ERC-20 tokens can be staked for NFTs."
 msgstr ""
 

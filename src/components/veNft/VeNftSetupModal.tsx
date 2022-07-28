@@ -16,8 +16,18 @@ const VeNftSetupModal = ({ visible, onCancel }: VeNftSetupModalProps) => {
   const [addTierModalVisible, setAddTierModalVisible] = useState(false)
   const [variants, setVariants] = useState<VeNftVariant[]>([])
 
+  const sortVariants = (variants: VeNftVariant[]): VeNftVariant[] => {
+    return variants.sort((a, b) =>
+      a.tokensStakedMin > b.tokensStakedMin
+        ? 1
+        : b.tokensStakedMin > a.tokensStakedMin
+        ? -1
+        : 0,
+    )
+  }
+
   const handleAddVariant = (variant: VeNftVariant) => {
-    setVariants([...variants, variant])
+    setVariants(sortVariants([...variants, variant]))
   }
 
   const handleEditVariant = (index: number, newVariant: VeNftVariant) => {

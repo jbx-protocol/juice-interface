@@ -21,7 +21,7 @@ export function MinimalCollapse({
       {...props}
     >
       <CollapsePanel key="1" header={header}>
-        {children}
+        <div style={{ paddingLeft: '1.5rem' }}>{children}</div>
       </CollapsePanel>
     </Collapse>
   )

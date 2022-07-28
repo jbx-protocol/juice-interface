@@ -4,11 +4,12 @@ import { useState } from 'react'
 import { TransactionReceipt } from '@ethersproject/providers'
 import { TransactorInstance } from 'hooks/Transactor'
 
-import { Modal } from 'antd'
+import { Modal, Space } from 'antd'
 import { JBDiscordLink } from 'pages/home/QAs'
 import EtherscanLink from 'components/EtherscanLink'
 import CopyTextButton from 'components/CopyTextButton'
 import TransactionModal from 'components/TransactionModal'
+import Callout from 'components/Callout'
 import { DeployProjectPayerTxArgs } from 'hooks/v2/transactor/DeployProjectPayerTx'
 import { emitErrorNotification } from 'utils/notifications'
 
@@ -122,35 +123,40 @@ export default function LaunchProjectPayerModal({
         confirmLoading={loadingProjectPayer}
         transactionPending={transactionPending}
       >
-        <p>
-          <Trans>
-            Create an Ethereum address that can be used to pay your project
-            directly.
-          </Trans>
-        </p>
-        <p>
-          <Trans>
-            Tokens minted from payments to this address will belong to the payer
-            by default. However, if someone pays the project through a custodial
-            service platform such as Coinbase,{' '}
-            <strong>
-              tokens can't be issued to their personal wallets and will be lost
-            </strong>
-            .
-          </Trans>
-        </p>
-        {/* TODO: we should consider reworking this */}
-        {/* Form that controls internals of the AdvancedOptionsCollapse */}
-        <AdvancedOptionsCollapse
-          memo={memo}
-          setMemo={setMemo}
-          customBeneficiaryAddress={customBeneficiaryAddress}
-          setCustomBeneficiaryAddress={setCustomBeneficiaryAddress}
-          tokenMintingEnabled={tokenMintingEnabled}
-          setTokenMintingEnabled={setTokenMintingEnabled}
-          preferClaimed={preferClaimed}
-          setPreferClaimed={setPreferClaimed}
-        />
+        <Space direction="vertical" size="middle">
+          <div>
+            <Trans>
+              Create an Ethereum address that can be used to pay your project
+              directly.
+            </Trans>
+          </div>
+          <div>
+            <Trans>
+              By default, the payer will receive any project tokens minted from
+              the payment.
+            </Trans>
+          </div>
+
+          <Callout>
+            <Trans>
+              Contributors who pay this address from a custodial service
+              platform (like Coinbase){' '}
+              <strong>won't receive project tokens</strong>.
+            </Trans>
+          </Callout>
+          {/* TODO: we should consider reworking this */}
+          {/* Form that controls internals of the AdvancedOptionsCollapse */}
+          <AdvancedOptionsCollapse
+            memo={memo}
+            setMemo={setMemo}
+            customBeneficiaryAddress={customBeneficiaryAddress}
+            setCustomBeneficiaryAddress={setCustomBeneficiaryAddress}
+            tokenMintingEnabled={tokenMintingEnabled}
+            setTokenMintingEnabled={setTokenMintingEnabled}
+            preferClaimed={preferClaimed}
+            setPreferClaimed={setPreferClaimed}
+          />
+        </Space>
       </TransactionModal>
       <Modal
         visible={confirmedModalVisible}

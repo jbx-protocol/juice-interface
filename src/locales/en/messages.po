@@ -417,8 +417,8 @@ msgid "Adjust incentives for paying your project."
 msgstr "Adjust incentives for paying your project."
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
-msgid "Advanced options (optional)"
-msgstr "Advanced options (optional)"
+msgid "Advanced (optional)"
+msgstr "Advanced (optional)"
 
 #: src/pages/projects/ProjectsTabs.tsx
 msgid "All"
@@ -666,6 +666,10 @@ msgstr "By default, all unallocated funds can be distributed to the project owne
 msgid "By default, newly minted tokens will go to the wallet who sends funds to the address. You can enable this to set the token beneficiary to a custom address."
 msgstr "By default, newly minted tokens will go to the wallet who sends funds to the address. You can enable this to set the token beneficiary to a custom address."
 
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
+msgid "By default, the payer will receive any project tokens minted from the payment."
+msgstr "By default, the payer will receive any project tokens minted from the payment."
+
 #: src/pages/home/QAs.tsx
 msgid "Can I change my project's contract after it's been created?"
 msgstr ""
@@ -887,6 +891,10 @@ msgstr "Contributor rate"
 msgid "Contributors receive the NFT when they contribute at least this amount."
 msgstr "Contributors receive the NFT when they contribute at least this amount."
 
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
+msgid "Contributors who pay this address from a custodial service platform (like Coinbase) <0>won't receive project tokens</0>."
+msgstr "Contributors who pay this address from a custodial service platform (like Coinbase) <0>won't receive project tokens</0>."
+
 #: src/pages/create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Contributors will be rewarded this amount of your project's tokens per ETH contributed."
 msgstr "Contributors will be rewarded this amount of your project's tokens per ETH contributed."
@@ -972,10 +980,6 @@ msgstr "Current owner: {ownerAddress}"
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Currently worth: <0><1/>{0}</0>"
 msgstr "Currently worth: <0><1/>{0}</0>"
-
-#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
-msgid "Custom memo"
-msgstr "Custom memo"
 
 #: src/components/ReconfigurationStrategy/ReconfigurationStrategySelector.tsx
 #: src/utils/ballot.ts
@@ -2279,8 +2283,8 @@ msgid "Payment equivalent"
 msgstr "Payment equivalent"
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
-msgid "Payment made through payable address"
-msgstr "Payment made through payable address"
+msgid "Payment memo"
+msgstr "Payment memo"
 
 #: src/components/RichImgPreview.tsx
 msgid "Payment memo image"
@@ -3172,8 +3176,8 @@ msgid "The number of project tokens minted when 1 ETH is contributed."
 msgstr "The number of project tokens minted when 1 ETH is contributed."
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
-msgid "The onchain memo for each transaction made through the address. It will appear in the project's payment feed when someone pays this address."
-msgstr "The onchain memo for each transaction made through the address. It will appear in the project's payment feed when someone pays this address."
+msgid "The onchain memo for each payment made to this address. The project's payment feed will include the memo alongside the payment."
+msgstr "The onchain memo for each payment made to this address. The project's payment feed will include the memo alongside the payment."
 
 #: src/components/modals/ReservedTokenReceiverModal.tsx
 msgid "The percentage this individual receives of the overall {reservedRate}% reserved token allocation"
@@ -3424,10 +3428,6 @@ msgstr "Tokens can be redeemed for a portion of this project's ETH overflow, acc
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "Tokens cannot be claimed because no ERC-20 token has been issued for this project. ERC-20 tokens must be issued by the project owner."
 msgstr "Tokens cannot be claimed because no ERC-20 token has been issued for this project. ERC-20 tokens must be issued by the project owner."
-
-#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
-msgid "Tokens minted from payments to this address will belong to the payer by default. However, if someone pays the project through a custodial service platform such as Coinbase, <0>tokens can't be issued to their personal wallets and will be lost</0>."
-msgstr "Tokens minted from payments to this address will belong to the payer by default. However, if someone pays the project through a custodial service platform such as Coinbase, <0>tokens can't be issued to their personal wallets and will be lost</0>."
 
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx

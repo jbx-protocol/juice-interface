@@ -35,7 +35,7 @@ import { shadowCard } from 'constants/styles/shadowCard'
 import { VENFT_CONTRACT_ADDRESS } from 'constants/veNft/veNftProject'
 
 interface StakingFormProps {
-  tokensStaked: string
+  tokensStaked: number
   lockDuration: number
   beneficiary: string
 }
@@ -61,7 +61,7 @@ const VeNftStakingForm = ({
     useState(false)
   const [tokenApprovalLoading, setTokenApprovalLoading] = useState(false)
 
-  const tokensStaked = useWatch('tokensStaked', form) || '1'
+  const tokensStaked = useWatch('tokensStaked', form) || 1
   const lockDuration = useWatch('lockDuration', form) || 0
   const beneficiary = useWatch('beneficiary', form) || ''
 
@@ -99,7 +99,7 @@ const VeNftStakingForm = ({
     ? allowance.gte(parseWad(tokensStaked))
     : false
 
-  const votingPower = parseInt(tokensStaked) * (lockDuration / maxLockDuration)
+  const votingPower = tokensStaked * (lockDuration / maxLockDuration)
 
   const approveTx = useERC20Approve(tokenAddress)
   const approve = async () => {
@@ -140,7 +140,7 @@ const VeNftStakingForm = ({
   }, [lockDurationOptionsInSeconds, form])
 
   const initialValues: StakingFormProps = {
-    tokensStaked: minTokensAllowedToStake.toString(),
+    tokensStaked: minTokensAllowedToStake,
     lockDuration: 0,
     beneficiary: '',
   }
@@ -211,7 +211,7 @@ const VeNftStakingForm = ({
       <ConfirmStakeModal
         visible={confirmStakeModalVisible}
         tokenSymbolDisplayText={tokenSymbolDisplayText}
-        tokensStaked={parseInt(tokensStaked)}
+        tokensStaked={tokensStaked}
         lockDuration={lockDuration}
         beneficiary={beneficiary}
         votingPower={votingPower}

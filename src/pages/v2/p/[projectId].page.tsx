@@ -7,6 +7,7 @@ import { V2ContractName } from 'models/v2/contracts'
 import { loadContract } from 'utils/contracts/loadContract'
 import { AppWrapper, SEO } from 'components/common'
 import { findProjectMetadata } from 'utils/server'
+import Loading from 'components/Loading'
 
 import V2Dashboard from './components/V2Dashboard'
 import { readProvider } from 'constants/readProvider'
@@ -92,7 +93,11 @@ export default function V2ProjectPage({
       ) : null}
       <AppWrapper>
         <V2UserProvider>
-          <V2Dashboard metadata={metadata} projectId={projectId} />
+          {metadata ? (
+            <V2Dashboard metadata={metadata} projectId={projectId} />
+          ) : (
+            <Loading />
+          )}
         </V2UserProvider>
       </AppWrapper>
     </>

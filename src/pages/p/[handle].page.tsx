@@ -117,7 +117,7 @@ export default function V1HandlePage({
         />
       ) : null}
       <AppWrapper>
-        <V1Dashboard metadata={metadata} />
+        {metadata ? <V1Dashboard metadata={metadata} /> : <Loading />}
       </AppWrapper>
     </>
   )

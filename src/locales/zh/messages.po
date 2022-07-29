@@ -3164,10 +3164,6 @@ msgstr ""
 msgid "The <0>issuance rate</0> of your second funding cycle will be <1>{0} tokens per 1 ETH</1>, then <2>{1} tokens per 1 ETH </2>for your third funding cycle, and so on."
 msgstr "项目第二个筹款的 <0>发行比率/0> 将会是 <1>{0} 个代币每1 ETH</1>， 然后第三个筹款是 <2>{1} 个代币每 1 ETH </2>，以此类推。"
 
-#: src/pages/index.page.tsx
-msgid "The Decentralized Funding Platform. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."
-msgstr "去中心化筹款平台。既简便易用方便一群好友创建项目，又强大到能支持一个全球性的匿名网络。 在以太坊上，<0>社区共有</0>。"
-
 #: src/pages/v1/create/index.page.tsx
 msgid "The JBX protocol is unaudited, and projects built on it may be vulnerable to bugs or exploits. Be smart!"
 msgstr "JBX 协议未经审计，基于它构建的项目可能受到 bug 的影响或漏洞被恶意利用。使用风险请自行承担！"
@@ -3246,6 +3242,10 @@ msgstr ""
 #: src/components/modals/ReservedTokenReceiverModal.tsx
 msgid "The percentage this individual receives of the overall {reservedRate}% reserved token allocation"
 msgstr "这个个体收到的全部 {reservedRate}% 保留代币分配方案中的百分比"
+
+#: src/pages/index.page.tsx
+msgid "The programmable funding protocol. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."
+msgstr ""
 
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "The project owner can add and remove payment terminals."

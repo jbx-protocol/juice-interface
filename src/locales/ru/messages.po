@@ -329,6 +329,8 @@ msgstr "Активность"
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/veNft/VeNftRewardTierModal.tsx
+#: src/components/veNft/VeNftRewardTierModal.tsx
 msgid "Add NFT reward"
 msgstr ""
 
@@ -368,6 +370,7 @@ msgid "Add payout"
 msgstr "Добавить выплату"
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
+#: src/components/veNft/VeNftSetupModal.tsx
 msgid "Add reward tier"
 msgstr ""
 
@@ -513,6 +516,7 @@ msgstr "Оплаченная сумма"
 
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/ContributionFloorFormItem.tsx
+#: src/components/veNft/formControls/TokensStakedMinInput.tsx
 msgid "Amount required"
 msgstr ""
 
@@ -883,6 +887,7 @@ msgid "Contract address: {0}"
 msgstr "Адрес контракта: {0}"
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/ContributionFloorFormItem.tsx
+#: src/components/veNft/formControls/TokensStakedMinInput.tsx
 msgid "Contribution threshold"
 msgstr ""
 
@@ -894,6 +899,7 @@ msgid "Contributor rate"
 msgstr ""
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/ContributionFloorFormItem.tsx
+#: src/components/veNft/formControls/TokensStakedMinInput.tsx
 msgid "Contributors receive the NFT when they contribute at least this amount."
 msgstr ""
 
@@ -1036,6 +1042,7 @@ msgid "Days"
 msgstr "Дней"
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierCard.tsx
+#: src/components/veNft/VeNftVariantCard.tsx
 msgid "Delete NFT"
 msgstr ""
 
@@ -1349,6 +1356,7 @@ msgid "Each project has its own <0>ERC-20 tokens</0>. Anyone who contributes fun
 msgstr "Каждый проект имеет свои собственные <0>ERC-20 токены</0>. Каждый, кто вносит средства в проект, получает взамен токены этого проекта. Остатки токенов будут отслеживаться протоколом до тех пор, пока владелец проекта не выпустит токены ERC-20 по своему усмотрению."
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/veNft/VeNftRewardTierModal.tsx
 msgid "Edit NFT reward"
 msgstr ""
 
@@ -1390,6 +1398,10 @@ msgstr "Изменить распределение токенов"
 #: src/components/v2/V2Project/V2BalancesModal/V2BalancesModal.tsx
 msgid "Edit tracked assets"
 msgstr "Изменить отслеживаемые активы"
+
+#: src/components/veNft/VeNftSetupSection.tsx
+msgid "Enable veNFT Governance"
+msgstr ""
 
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
@@ -1550,6 +1562,7 @@ msgid "Give feedback"
 msgstr "Оставьте свой отзыв"
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/veNft/VeNftRewardTierModal.tsx
 msgid "Give this NFT a name."
 msgstr ""
 
@@ -2032,6 +2045,7 @@ msgid "NO LIMIT"
 msgstr "БЕЗ ОГРАНИЧЕНИЯ"
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/veNft/VeNftRewardTierModal.tsx
 #: src/pages/create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 msgid "Name"
@@ -2843,6 +2857,7 @@ msgid "Save"
 msgstr "Сохранить"
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/veNft/VeNftRewardTierModal.tsx
 msgid "Save NFT reward"
 msgstr ""
 
@@ -2917,6 +2932,10 @@ msgstr "Увидить трансакцию"
 msgid "Set ENS name"
 msgstr ""
 
+#: src/components/veNft/VeNftSetupModal.tsx
+msgid "Set Up veNFT Governance"
+msgstr ""
+
 #: src/components/v2/shared/DistributionSplitsSection/SpecificLimitModal.tsx
 msgid "Set a distribution limit"
 msgstr ""
@@ -2963,6 +2982,11 @@ msgstr ""
 
 #: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/V1TokenMigrationSetupModal.tsx
 msgid "Set up V1 token migration"
+msgstr ""
+
+#: src/components/veNft/VeNftSetupModal.tsx
+#: src/components/veNft/VeNftSetupSection.tsx
+msgid "Set up and launch veNFT governance for your project."
 msgstr ""
 
 #: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupSection.tsx

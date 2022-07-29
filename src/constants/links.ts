@@ -1,2 +1,1 @@
-export const TERMS_OF_SERVICE_URL =
-  'https://juicebox-legal.on.fleek.co/user/legal/Juicebox/tos'
+export const TERMS_OF_SERVICE_URL = 'https://info.juicebox.money/tos'

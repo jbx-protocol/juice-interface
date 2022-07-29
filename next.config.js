@@ -12,6 +12,7 @@ module.exports = {
         __DEV__: process.env.NODE_ENV !== 'production',
       }),
     )
+    config.experiments = { ...config.experiments, topLevelAwait: true }
 
     return config
   },

@@ -4050,10 +4050,6 @@ msgstr "您的项目按筹款周期来进行筹款。每个筹款周期都有一
 msgid "Your project will appear archived, and won't be able to receive payments through the juicebox.money app. You can unarchive a project at any time. Allow a few days for your project to appear under the \"archived\" filter on the Projects page."
 msgstr "项目将显示已被归档，并将无法通过 juicebox.money 接收付款。你可以随时取消项目的归档。项目仍会在项目页面的“已归档”一项下面显示几天。"
 
-#: src/pages/create/V2WarningBanner.tsx
-msgid "Your project will be created on the Juicebox V2 contracts. <0>Learn more.</0>"
-msgstr "你的项目将在 Juicebox V2 合约上创建。 <0>了解更多。</0>"
-
 #: src/components/ArchiveProject/index.tsx
 msgid "Your project will immediately appear active on the juicebox.money app. Please allow a few days for it to appear in the \"active\" projects list on the Projects page."
 msgstr "您的项目将立即在 juicebox.money 应用程序上显示为“活动”状态。请留出几天时间，让它显示在\"项目\"页面上的\"活动\"项目列表中。"
@@ -4405,5 +4401,4 @@ msgstr ""
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "{userOwnershipPercentage}% of total supply"
 msgstr "总供应量的 {userOwnershipPercentage}%"
-
 

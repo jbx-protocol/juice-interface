@@ -7,7 +7,7 @@ import ExternalLink from 'components/ExternalLink'
 import { useContext } from 'react'
 import { ThemeContext } from 'contexts/themeContext'
 
-import DeployProjectButton from './DeployProjectButton'
+import { DeployProjectButton } from './DeployProjectButton'
 import ProjectDetailsSection from './ProjectDetailsSection'
 import FundingSummarySection from './FundingSummarySection'
 import NftSummarySection from './NftSummarySection'
@@ -37,48 +37,52 @@ export default function ReviewDeployTab() {
           marginBottom: '2rem',
         }}
       >
-        <Space size="large" direction="vertical" style={{ width: '100%' }}>
+        <Space direction="vertical" style={{ width: '100%', gap: 20 }}>
           <ProjectDetailsSection />
           <FundingSummarySection />
           {hasNfts ? <NftSummarySection /> : null}
-        </Space>
 
-        <Form form={form}>
-          <Form.Item
-            name="termsOfServiceCheckbox"
-            valuePropName="checked"
-            rules={[
-              {
-                validator: (_, value) =>
-                  value
-                    ? Promise.resolve()
-                    : Promise.reject(
-                        new Error(
-                          t`You must review and accept the Terms of Service.`,
+          <Form form={form}>
+            <Form.Item
+              name="termsOfServiceCheckbox"
+              valuePropName="checked"
+              rules={[
+                {
+                  validator: (_, value) =>
+                    value
+                      ? Promise.resolve()
+                      : Promise.reject(
+                          new Error(
+                            t`You must review and accept the Terms of Service.`,
+                          ),
                         ),
-                      ),
-              },
-            ]}
-            style={{
-              padding: '1rem',
-              border: `1px solid ${colors.stroke.secondary}`,
-              marginBottom: 0,
-            }}
-          >
-            <Checkbox>
-              <Trans>
-                I have read and accept the{' '}
-                <ExternalLink href={TERMS_OF_SERVICE_URL}>
-                  Terms of Service
-                </ExternalLink>
-                .
-              </Trans>
-            </Checkbox>
-          </Form.Item>
-        </Form>
+                },
+              ]}
+              style={{
+                padding: '1rem',
+                border: `1px solid ${colors.stroke.secondary}`,
+                marginBottom: 0,
+              }}
+            >
+              <Checkbox>
+                <Trans>
+                  I have read and accept the{' '}
+                  <ExternalLink href={TERMS_OF_SERVICE_URL}>
+                    Terms of Service
+                  </ExternalLink>
+                  .
+                </Trans>
+              </Checkbox>
+            </Form.Item>
+          </Form>
+        </Space>
       </div>
 
-      {hasNfts ? <DeployProjectWithNftsButton /> : <DeployProjectButton />}
+      {hasNfts ? (
+        <DeployProjectWithNftsButton form={form} />
+      ) : (
+        <DeployProjectButton form={form} />
+      )}
       <StartOverButton />
     </div>
   )

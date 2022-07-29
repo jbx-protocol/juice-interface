@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import { Button } from 'antd'
+import { Button, FormInstance } from 'antd'
 import {
   useAppSelector,
   useEditingV2FundAccessConstraintsSelector,
@@ -41,7 +41,7 @@ const getProjectIdFromReceipt = (txReceipt: TransactionReceipt): number => {
   return projectId
 }
 
-export default function DeployProjectButton() {
+export function DeployProjectButton({ form }: { form: FormInstance }) {
   const launchProjectTx = useLaunchProjectTx()
   const router = useRouter()
 
@@ -146,10 +146,24 @@ export default function DeployProjectButton() {
     router,
   ])
 
+  const onButtonClick = async () => {
+    try {
+      await form.validateFields()
+    } catch {
+      return
+    }
+
+    if (!userAddress) {
+      return onSelectWallet?.()
+    }
+
+    return deployProject()
+  }
+
   return (
     <>
       <Button
-        onClick={userAddress ? deployProject : onSelectWallet}
+        onClick={onButtonClick}
         type="primary"
         htmlType="submit"
         size="large"

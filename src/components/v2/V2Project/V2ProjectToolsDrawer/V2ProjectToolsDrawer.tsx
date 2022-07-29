@@ -66,6 +66,12 @@ export function V2ProjectToolsDrawer({
     </Space>
   )
 
+  const VeNftTools = (
+    <Space direction="vertical" size="large" style={{ width: '100%' }}>
+      <VeNftSetupSection />
+    </Space>
+  )
+
   return (
     <Drawer
       visible={visible}
@@ -104,6 +110,11 @@ export function V2ProjectToolsDrawer({
         {isOwnerWallet && (
           <TabPane tab={<Trans>Owner tools</Trans>} key="2">
             {OwnerTools}
+          </TabPane>
+        )}
+        {veNftEnabled && (
+          <TabPane tab={<Trans>Owner tools</Trans>} key="2">
+            {VeNftTools}
           </TabPane>
         )}
       </Tabs>

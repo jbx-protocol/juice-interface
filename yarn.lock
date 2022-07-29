@@ -1828,6 +1828,11 @@
   resolved "https://registry.yarnpkg.com/@jbx-protocol/contracts-v2/-/contracts-v2-8.0.0.tgz#25aee5766716947beb37ad08cdb3d30463a4b988"
   integrity sha512-0yFuhZBVHg+CGHNe9vPjbdSAhQSXVhFOQficc5ed1yzdG8ZaBSKg9ZdC351hJD7w7Mp9Vhf/0gh3ErYAv2OQqw==
 
+"@jbx-protocol/contracts-v2@^8.0.1":
+  version "8.0.2"
+  resolved "https://registry.yarnpkg.com/@jbx-protocol/contracts-v2/-/contracts-v2-8.0.2.tgz#6afe6e02df28ce6f24161feeef92c2a830ccc041"
+  integrity sha512-QSL5gcFPupl5t8coORnQz4kOlsYYxuuq8lzdvwAN37v6PnoyzQ2To4bsJUI0PqAHfcsIu/jBsXK7lq+KGMvEXQ==
+
 "@jbx-protocol/juice-v1-token-terminal@1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@jbx-protocol/juice-v1-token-terminal/-/juice-v1-token-terminal-1.0.1.tgz#b3855be69d4ebce57747cee2603df88f7ed23aad"
@@ -1837,6 +1842,24 @@
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@jbx-protocol/project-handles/-/project-handles-2.0.0.tgz#9b70cdd34d4e985003c59f48643063a983322557"
   integrity sha512-kpfIuUYzF9wTUjFw02e1Pl3GkV7PtrnNddcKxveE/IgLhVp4qlVuukasJockaLrYeV4qzQ/2YVg+6RTjMNZ38Q==
+
+"@jbx-protocol/ve-nft@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@jbx-protocol/ve-nft/-/ve-nft-0.0.1.tgz#0b3dda9e44dd03fa84185892c106781e98c4cb41"
+  integrity sha512-lc8SyvXvjhPWjm7U3wOUzze4Amgnzt1tVX3izjUTrrZFs7MevgnhQvwEQG9iNiH+yZU0Zlhe/ClzohsblGtwgw==
+  dependencies:
+    "@jbx-protocol/contracts-v2" "^8.0.1"
+    "@nomiclabs/hardhat-etherscan" "^2.1.4"
+    "@openzeppelin/contracts" "4.5.0-rc.0"
+    "@paulrberg/contracts" "^3.4.0"
+    dotenv "^10.0.0"
+    esm "^3.2.25"
+    glob "^7.2.0"
+    hardhat-deploy-ethers "^0.3.0-beta.10"
+    prettier "^2.4.0"
+    prettier-plugin-solidity "^1.0.0-beta.19"
+    solhint "^3.3.6"
+    solhint-plugin-prettier "^0.0.5"
 
 "@jest/console@^28.1.3":
   version "28.1.3"
@@ -2488,6 +2511,11 @@
   version "3.4.1-solc-0.7-2"
   resolved "https://registry.yarnpkg.com/@openzeppelin/contracts/-/contracts-3.4.1-solc-0.7-2.tgz#371c67ebffe50f551c3146a9eec5fe6ffe862e92"
   integrity sha512-tAG9LWg8+M2CMu7hIsqHPaTyG4uDzjr6mhvH96LvOpLZZj6tgzTluBt+LsCf1/QaYrlis6pITvpIaIhE+iZB+Q==
+
+"@openzeppelin/contracts@4.5.0-rc.0":
+  version "4.5.0-rc.0"
+  resolved "https://registry.yarnpkg.com/@openzeppelin/contracts/-/contracts-4.5.0-rc.0.tgz#dbe4c4380ddf715230fd14da7818142e0c6ba020"
+  integrity sha512-B6mKfiivxytZLAVgPARXZ5Q/grRpplASm7VgY73PdO3u5ckF6ibMpNwZYT/16Ys3ORaDyylSgJI1PttLZiJ0Lw==
 
 "@openzeppelin/contracts@^4.5.0-rc.0":
   version "4.6.0"

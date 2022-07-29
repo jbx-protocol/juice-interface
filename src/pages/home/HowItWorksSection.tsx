@@ -110,8 +110,8 @@ export function HowItWorksSection() {
               <p>
                 <InfoCircleOutlined />{' '}
                 <Trans>
-                  Juicebox is new, unaudited, and not guaranteed to work
-                  perfectly. Before spending money, do your own research:{' '}
+                  Juicebox is new and not guaranteed to work perfectly. Before
+                  spending money, do your own research:{' '}
                   <ExternalLink href="https://discord.gg/6jXrJSyDFf">
                     ask questions
                   </ExternalLink>

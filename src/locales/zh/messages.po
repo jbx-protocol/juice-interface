@@ -827,14 +827,6 @@ msgstr "关闭"
 msgid "Close, I'll do these later"
 msgstr "关闭，我晚点再做这些"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
-msgid "Collection name"
-msgstr ""
-
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
-msgid "Collection symbol"
-msgstr ""
-
 #: src/pages/home/HowItWorksSection.tsx
 msgid "Commit portions of your funds to the people or projects you want to support, or the contributors you want to pay. When you get paid, so do they."
 msgstr "提前设定把您资金的一部分自动分拨给您想要支持的人或项目，或者您需要支付的贡献者。您获得收入的同时，他们也会收到相应款项。"
@@ -2158,10 +2150,6 @@ msgstr "下一页：概览及部署"
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 msgid "No"
 msgstr "取消"
-
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
-msgid "No NFT reward tiers"
-msgstr ""
 
 #: src/components/v2/V2Project/V2FundingCycleSection/NoFundingCycle.tsx
 msgid "No active funding cycle."
@@ -3937,10 +3925,6 @@ msgstr "你可以直接赎回你的 {tokenTextLong} 代币来获取溢出，不�
 msgid "You can still redeem your {tokenSymbol} tokens for overflow without claiming them, and you can transfer your unclaimed {tokenSymbol} tokens to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
 msgstr "未领取的 {tokenSymbol} 代币，依然可以用来赎回溢出池中的 ETH，也可以在工具菜单中把代币直接转给其他地址。点击右上角的扳手按钮可以打开工具菜单。"
 
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
-msgid "You collection's symbol will apply to the whole collection of reward tiers on NFT marketplaces (like OpenSea)."
-msgstr ""
-
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "You don't have a funding cycle duration. Changes you make will take effect immediately."
@@ -4054,10 +4038,6 @@ msgstr ""
 #: src/components/v2/V2Project/V2ManageTokensSection/index.tsx
 msgid "Your balance"
 msgstr "你的余额"
-
-#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
-msgid "Your collection's name will apply to the whole collection of reward tiers on NFT marketplaces (like OpenSea)."
-msgstr ""
 
 #: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner.tsx
 msgid "Your funding cycle configuration has been pre-populated using the configuration you originally launched with. If you need to customize it, contact us."

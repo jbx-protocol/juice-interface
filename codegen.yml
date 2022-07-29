@@ -1,5 +1,5 @@
 overwrite: true
-schema: ${NEXT_PUBLIC_SUBGRAPH_URL}
+schema: ${GRAPHQL_SCHEMA_SUBGRAPH_URL}
 documents: 'src/graphql/**/*.graphql'
 generates:
   src/generated/graphql.tsx:

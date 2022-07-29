@@ -1,6 +1,9 @@
 import { NetworkName } from 'models/network-name'
+import { isBrowser } from 'utils/isBrowser'
 
-const infuraId = process.env.NEXT_PUBLIC_INFURA_ID
+const infuraId = isBrowser()
+  ? process.env.NEXT_PUBLIC_INFURA_ID
+  : process.env.PRE_RENDER_INFURA_ID
 
 type NetworkInfo = {
   name: NetworkName

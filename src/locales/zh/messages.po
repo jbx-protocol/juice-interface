@@ -1458,6 +1458,10 @@ msgstr "编辑监测的资产"
 msgid "Enable veNFT Governance"
 msgstr ""
 
+#: src/components/veNft/VeNftSetUnclaimedTokensPermissionSection.tsx
+msgid "Enable veNFT to Spend Unclaimed Tokens"
+msgstr ""
+
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Enabled"
@@ -3395,6 +3399,10 @@ msgstr ""
 msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
 msgstr "这一比率决定了任何特定时间内每赎回一个代币可以获得的溢出金额。联合曲线比率较低的情况下，每赎回一个代币都会相应地提升所有剩余代币的赎回价值，这样就会形成一个代币长期持有的激励机制。联合曲线比率为 100% 时，则意味着无论什么时候赎回代币，每个代币获得的价值都将是相同的。"
 
+#: src/components/veNft/VeNftSetUnclaimedTokensPermissionSection.tsx
+msgid "This will enable your project's veNFT contract to spend unclaimed tokens in addition to project ERC-20 tokens."
+msgstr ""
+
 #: src/pages/v1/create/index.page.tsx
 msgid "This will erase all of your changes."
 msgstr "这将删除你所有的更改。"
@@ -4166,6 +4174,10 @@ msgstr "代币已赎回"
 #: src/components/v1/shared/Mod.tsx
 msgid "until"
 msgstr "直到"
+
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V2ProjectToolsDrawer.tsx
+msgid "veNFT"
+msgstr ""
 
 #: src/components/veNft/VeNftSetupModal.tsx
 msgid "veNFT Tiers ({0} variants)"

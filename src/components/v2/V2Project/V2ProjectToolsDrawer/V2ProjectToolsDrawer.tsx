@@ -113,7 +113,7 @@ export function V2ProjectToolsDrawer({
           </TabPane>
         )}
         {veNftEnabled && (
-          <TabPane tab={<Trans>Owner tools</Trans>} key="2">
+          <TabPane tab={<Trans>veNFT</Trans>} key="2">
             {VeNftTools}
           </TabPane>
         )}

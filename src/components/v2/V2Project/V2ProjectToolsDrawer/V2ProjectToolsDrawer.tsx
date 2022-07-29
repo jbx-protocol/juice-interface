@@ -11,6 +11,7 @@ import { useDeployProjectPayerTx } from 'hooks/v2/transactor/DeployProjectPayerT
 import { useEditV2ProjectDetailsTx } from 'hooks/v2/transactor/EditV2ProjectDetailsTx'
 import useUserUnclaimedTokenBalance from 'hooks/v2/contractReader/UserUnclaimedTokenBalance'
 
+import ProjectPayersSection from 'components/Project/ProjectToolsDrawer/ProjectPayersSection'
 import { featureFlagEnabled } from 'utils/featureFlags'
 
 import VeNftSetupSection from 'components/veNft/VeNftSetupSection'
@@ -52,6 +53,10 @@ export function V2ProjectToolsDrawer({
           useTransferProjectOwnershipTx={useTransferProjectOwnershipTx}
         />
       </section>
+
+      <Divider />
+
+      <ProjectPayersSection />
 
       <Divider />
 

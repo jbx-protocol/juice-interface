@@ -5,7 +5,6 @@ import { TransactionReceipt } from '@ethersproject/providers'
 import { TransactorInstance } from 'hooks/Transactor'
 
 import { Modal, Space } from 'antd'
-import { JBDiscordLink } from 'pages/home/QAs'
 import EtherscanLink from 'components/EtherscanLink'
 import CopyTextButton from 'components/CopyTextButton'
 import TransactionModal from 'components/TransactionModal'
@@ -115,8 +114,8 @@ export default function LaunchProjectPayerModal({
     <>
       <TransactionModal
         visible={visible}
-        title={t`Create payable address`}
-        okText={t`Deploy project payer contract`}
+        title={t`Create payment address`}
+        okText={t`Deploy payment address contract`}
         connectWalletText={t`Connect wallet to deploy`}
         onOk={deployProjectPayer}
         onCancel={() => onClose()}
@@ -176,14 +175,8 @@ export default function LaunchProjectPayerModal({
         <CopyTextButton value={projectPayerAddress} style={{ fontSize: 25 }} />
         <p style={{ marginTop: 30 }}>
           <Trans>
-            This address will disappear when you close this window.{' '}
-            <strong>Copy the address and save it now</strong>.
-          </Trans>
-        </p>
-        <p>
-          <Trans>
-            If you lose your address, please contact the Juicebox team through{' '}
-            <JBDiscordLink>Discord</JBDiscordLink>.
+            Deployed payment addresses can be found in the Tools drawer on the
+            project page.
           </Trans>
         </p>
       </Modal>

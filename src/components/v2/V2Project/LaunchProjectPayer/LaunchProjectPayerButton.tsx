@@ -38,7 +38,7 @@ export default function LaunchProjectPayerButton({
           type={type ?? 'primary'}
           disabled={disabled}
         >
-          <span>{text ?? <Trans>Deploy project payer contract</Trans>}</span>
+          <span>{text ?? <Trans>Deploy payment address</Trans>}</span>
         </Button>
       </Tooltip>
     )

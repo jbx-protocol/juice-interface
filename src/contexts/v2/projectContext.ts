@@ -54,6 +54,10 @@ export type V2ProjectContextType = {
     loading: boolean | undefined
   }
 
+  veNft: {
+    contractAddress: string | undefined
+  }
+
   loading: V2ProjectLoadingStates
 }
 
@@ -94,6 +98,10 @@ export const V2ProjectContext = createContext<V2ProjectContextType>({
     CIDs: undefined,
     rewardTiers: undefined,
     loading: undefined,
+  },
+
+  veNft: {
+    contractAddress: undefined,
   },
 
   loading: {

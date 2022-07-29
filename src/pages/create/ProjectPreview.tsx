@@ -94,6 +94,10 @@ export default function ProjectPreview({
       loading: undefined,
     },
 
+    veNft: {
+      contractAddress: undefined,
+    },
+
     loading: {
       ETHBalanceLoading: false,
       balanceInDistributionLimitCurrencyLoading: false,

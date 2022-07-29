@@ -16,6 +16,9 @@ export enum V2ContractName {
   JBProjectHandles = 'JBProjectHandles',
   PublicResolver = 'PublicResolver',
 
+  JBVeNftDeployer = 'JBVeNftDeployer',
+  JBVeTokenUriResolver = 'JBVeTokenUriResolver',
+
   JBV1TokenPaymentTerminal = 'JBV1TokenPaymentTerminal',
 
   DeprecatedJBController = 'DeprecatedJBController',

@@ -52,7 +52,7 @@ const VeNftStakingForm = ({
 }: VeNftStakingFormProps) => {
   const { userAddress, onSelectWallet } = useContext(NetworkContext)
   const { tokenAddress } = useContext(V2ProjectContext)
-  const { lockDurationOptions, resolverAddress, baseImagesHash, variants } =
+  const { lockDurationOptions, baseImagesHash, variants } =
     useContext(VeNftContext)
   const { theme } = useContext(ThemeContext)
 
@@ -68,7 +68,6 @@ const VeNftStakingForm = ({
   const beneficiary = useWatch('beneficiary', form) || ''
 
   const { data: nftTokenUri } = useVeNftResolverTokenUri(
-    resolverAddress,
     parseWad(tokensStaked),
     lockDuration,
     lockDurationOptions,

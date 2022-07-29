@@ -11,11 +11,17 @@ import { useDeployProjectPayerTx } from 'hooks/v2/transactor/DeployProjectPayerT
 import { useEditV2ProjectDetailsTx } from 'hooks/v2/transactor/EditV2ProjectDetailsTx'
 import useUserUnclaimedTokenBalance from 'hooks/v2/contractReader/UserUnclaimedTokenBalance'
 
+import ProjectPayersSection from 'components/Project/ProjectToolsDrawer/ProjectPayersSection'
+import { featureFlagEnabled } from 'utils/featureFlags'
+
+import VeNftSetupSection from 'components/veNft/VeNftSetupSection'
+
 import { V1TokenMigrationSetupSection } from './V1TokenMigrationSetupSection'
 import { AddToProjectBalanceForm } from '../../../Project/ProjectToolsDrawer/AddToProjectBalanceForm'
 import { PayableAddressSection } from '../../../Project/ProjectToolsDrawer/PayableAddressSection'
 import { TransferOwnershipForm } from '../../../Project/ProjectToolsDrawer/TransferOwnershipForm'
 import { TransferUnclaimedTokensForm } from '../../../Project/ProjectToolsDrawer/TransferUnclaimedTokensForm'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 
 const { TabPane } = Tabs
 
@@ -33,6 +39,8 @@ export function V2ProjectToolsDrawer({
 
   const isOwnerWallet = useIsUserAddress(projectOwnerAddress)
 
+  const veNftEnabled = featureFlagEnabled(FEATURE_FLAGS.VENFT)
+
   const OwnerTools = (
     <Space direction="vertical" size="large" style={{ width: '100%' }}>
       <V1TokenMigrationSetupSection />
@@ -48,7 +56,18 @@ export function V2ProjectToolsDrawer({
 
       <Divider />
 
+      <ProjectPayersSection />
+
+      <Divider />
+
       <ArchiveV2Project editV2ProjectDetailsTx={editV2ProjectDetailsTx} />
+
+      {veNftEnabled && (
+        <>
+          <Divider />
+          <VeNftSetupSection />
+        </>
+      )}
     </Space>
   )
 

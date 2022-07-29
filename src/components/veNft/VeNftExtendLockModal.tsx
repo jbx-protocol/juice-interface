@@ -8,10 +8,9 @@ import { t, Trans } from '@lingui/macro'
 import { emitSuccessNotification } from 'utils/notifications'
 import { VeNftToken } from 'models/subgraph-entities/v2/venft-token'
 
-import { V2ProjectContext } from 'contexts/v2/projectContext'
-
 import TransactionModal from 'components/TransactionModal'
 import LockDurationSelectInput from 'components/veNft/formControls/LockDurationSelectInput'
+import { VeNftContext } from 'contexts/v2/veNftContext'
 
 type VeNftExtendLockModalProps = {
   visible: boolean
@@ -32,9 +31,7 @@ const VeNftExtendLockModal = ({
 }: VeNftExtendLockModalProps) => {
   const { userAddress, onSelectWallet } = useContext(NetworkContext)
   const { tokenId } = token
-  const {
-    veNft: { lockDurationOptions },
-  } = useContext(V2ProjectContext)
+  const { lockDurationOptions } = useContext(VeNftContext)
   const [form] = Form.useForm<ExtendLockFormProps>()
   const [loading, setLoading] = useState(false)
   const [transactionPending, setTransactionPending] = useState(false)

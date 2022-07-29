@@ -95,15 +95,6 @@ export default function ProjectPreview({
       loading: undefined,
     },
 
-    veNft: {
-      name: undefined,
-      lockDurationOptions: undefined,
-      baseImagesHash: undefined,
-      resolverAddress: undefined,
-      variants: undefined,
-      userTokens: undefined,
-    },
-
     loading: {
       ETHBalanceLoading: false,
       balanceInDistributionLimitCurrencyLoading: false,

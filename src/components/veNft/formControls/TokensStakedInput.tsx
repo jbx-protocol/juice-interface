@@ -1,6 +1,5 @@
 import { plural, t, Trans } from '@lingui/macro'
-import { Form } from 'antd'
-import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
+import { Form, InputNumber } from 'antd'
 import { BigNumber } from '@ethersproject/bignumber'
 import { FormInstance } from 'rc-field-form'
 import { useEffect } from 'react'
@@ -10,7 +9,7 @@ interface TokensStakedInputProps {
   form: FormInstance
   claimedBalance: BigNumber | undefined
   tokenSymbolDisplayText: string
-  tokensStaked: string
+  tokensStaked: number
   minTokensAllowedToStake: number
 }
 
@@ -23,7 +22,7 @@ const TokensStakedInput = ({
 }: TokensStakedInputProps) => {
   const totalBalanceInWad = fromWad(claimedBalance)
   const unstakedTokens = claimedBalance
-    ? parseInt(totalBalanceInWad) - parseInt(tokensStaked)
+    ? parseInt(totalBalanceInWad) - tokensStaked
     : 0
 
   useEffect(() => {
@@ -32,7 +31,7 @@ const TokensStakedInput = ({
   }, [minTokensAllowedToStake, form])
 
   const validateTokensStaked = () => {
-    const tokensStaked = parseInt(form.getFieldValue('tokensStaked'))
+    const tokensStaked = form.getFieldValue('tokensStaked')
     if (tokensStaked < minTokensAllowedToStake) {
       return Promise.reject(
         plural(minTokensAllowedToStake, {
@@ -62,9 +61,11 @@ const TokensStakedInput = ({
         </Trans>
       }
     >
-      <FormattedNumberInput
+      <InputNumber
         name="tokensStaked"
         value={tokensStaked}
+        min={0}
+        style={{ width: '100%' }}
         onChange={val => {
           form.setFieldsValue({ tokensStaked: val })
         }}

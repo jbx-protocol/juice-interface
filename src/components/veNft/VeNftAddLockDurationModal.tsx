@@ -1,0 +1,59 @@
+import { t, Trans } from '@lingui/macro'
+import { Form, Modal } from 'antd'
+import { useForm } from 'antd/lib/form/Form'
+import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
+
+import { SECONDS_IN_DAY } from 'constants/numbers'
+
+export type FormFields = {
+  lockDuration: string
+}
+
+export default function VeNftAddLockDurationModal({
+  visible,
+  onClose,
+  onChange,
+}: {
+  visible: boolean
+  onClose: VoidFunction
+  onChange: (lockDurationOption: number) => void
+}) {
+  const [nftForm] = useForm<FormFields>()
+
+  const onFormSaved = async () => {
+    await nftForm.validateFields()
+
+    const lockDurationOptionInSeconds =
+      parseInt(nftForm.getFieldValue('lockDuration').split(' ')[0]) *
+      SECONDS_IN_DAY
+
+    onChange(lockDurationOptionInSeconds)
+    onClose()
+  }
+
+  return (
+    <Modal
+      visible={visible}
+      okText={t`Save Option`}
+      onOk={onFormSaved}
+      onCancel={onClose}
+      title={t`Add Lock Duration Option`}
+    >
+      <Form layout="vertical" form={nftForm}>
+        <Form.Item name="lockDuration" required={true}>
+          <FormattedNumberInput
+            suffix={t` days`}
+            min={1}
+            onChange={val => {
+              nftForm.setFieldsValue({ lockDuration: val })
+            }}
+            formItemProps={{
+              required: true,
+              label: <Trans>Days to lock tokens</Trans>,
+            }}
+          />
+        </Form.Item>
+      </Form>
+    </Modal>
+  )
+}

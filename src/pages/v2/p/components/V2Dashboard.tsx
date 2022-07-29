@@ -31,12 +31,6 @@ import { CIDsOfNftRewardTiersResponse } from 'utils/v2/nftRewards'
 import useNameOfERC20 from 'hooks/NameOfERC20'
 import { ProjectMetadataV4 } from 'models/project-metadata'
 
-import { useVeNftLockDurationOptions } from 'hooks/veNft/VeNftLockDurationOptions'
-import { useVeNftBaseImagesHash } from 'hooks/veNft/VeNftBaseImagesHash'
-import { useVeNftVariants } from 'hooks/veNft/VeNftVariants'
-import { useVeNftResolverAddress } from 'hooks/veNft/VeNftResolverAddress'
-import { useVeNftUserTokens } from 'hooks/veNft/VeNftUserTokens'
-
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
@@ -167,13 +161,6 @@ export default function V2Dashboard({
   const { data: nftRewardTiers, isLoading: nftRewardTiersLoading } =
     useNftRewards(nftRewardsCIDs)
 
-  const veNftProjectName = 'veBanny'
-  const { data: lockDurationOptions } = useVeNftLockDurationOptions()
-  const { data: resolverAddress } = useVeNftResolverAddress()
-  const { data: variants } = useVeNftVariants()
-  const { data: userTokens } = useVeNftUserTokens()
-  const baseImagesHash = useVeNftBaseImagesHash()
-
   const isArchived = projectId
     ? V2ArchivedProjectIds.includes(projectId) || projectMetadata?.archived
     : false
@@ -211,15 +198,6 @@ export default function V2Dashboard({
       CIDs: nftRewardsCIDs,
       rewardTiers: nftRewardTiers ?? [],
       loading: nftsLoading,
-    },
-
-    veNft: {
-      name: veNftProjectName,
-      lockDurationOptions,
-      baseImagesHash,
-      resolverAddress,
-      variants,
-      userTokens,
     },
 
     loading: {

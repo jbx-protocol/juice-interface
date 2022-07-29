@@ -168,7 +168,7 @@ function Landing() {
                       }}
                     >
                       <Trans>
-                        The Decentralized Funding Platform. Light enough for a
+                        The programmable funding protocol. Light enough for a
                         group of friends, powerful enough for a global network
                         of anons.{' '}
                         <a

@@ -5,7 +5,7 @@ import { useState } from 'react'
 import VeNftSetupModal from 'components/veNft/VeNftSetupModal'
 
 const VeNftSetupSection = () => {
-  const [setupModalVisible, setSetupModalVisible] = useState(true)
+  const [setupModalVisible, setSetupModalVisible] = useState(false)
 
   return (
     <>

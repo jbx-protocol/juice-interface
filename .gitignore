@@ -40,3 +40,6 @@ src/generated
 
 # tsc
 *.tsbuildinfo
+
+src/locales/**/*
+!src/locales/messages.pot

@@ -4,7 +4,7 @@ import { VeNftTokenMetadata, VeNftVariant } from 'models/v2/veNft'
 import VeNftCarouselItem from 'components/veNft/VeNftCarouselItem'
 
 type StakingNFTCarouselProps = {
-  tokensStaked: string
+  tokensStaked: number
   variants: VeNftVariant[]
   baseImagesHash: string
   form: FormInstance
@@ -21,7 +21,7 @@ export default function VeNftCarousel({
   const activeIdx = variants
     ? Math.max(
         variants.findIndex(variant => {
-          const curTokens = parseInt(tokensStaked)
+          const curTokens = tokensStaked
           return (
             variant.tokensStakedMin <= curTokens &&
             (variant.tokensStakedMax

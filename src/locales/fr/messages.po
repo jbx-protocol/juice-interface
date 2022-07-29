@@ -1424,6 +1424,10 @@ msgstr "Modifier les actifs suivis"
 msgid "Enable veNFT Governance"
 msgstr ""
 
+#: src/components/veNft/VeNftSetUnclaimedTokensPermissionSection.tsx
+msgid "Enable veNFT to Spend Unclaimed Tokens"
+msgstr ""
+
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Enabled"
@@ -3362,6 +3366,10 @@ msgstr ""
 msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
 msgstr "Ce taux détermine le montant oveflow pour lequel chaque token peut être récupérer à un moment donné. Sur une courbe de liaison inférieure, le rachat d'un token augmente la valeur de chaque token restant, ce qui incite à holder les tokens plus longtemps que les autres. Une courbe de liaison de 100 % signifie que tous les tokens auront la même valeur, quel que soit le moment où ils sont échangés."
 
+#: src/components/veNft/VeNftSetUnclaimedTokensPermissionSection.tsx
+msgid "This will enable your project's veNFT contract to spend unclaimed tokens in addition to project ERC-20 tokens."
+msgstr ""
+
 #: src/pages/v1/create/index.page.tsx
 msgid "This will erase all of your changes."
 msgstr "Cela effacera toutes vos modifications."
@@ -4129,6 +4137,10 @@ msgstr "tokens récupérés"
 #: src/components/v1/shared/Mod.tsx
 msgid "until"
 msgstr "jusqu'à"
+
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V2ProjectToolsDrawer.tsx
+msgid "veNFT"
+msgstr ""
 
 #: src/components/veNft/VeNftSetupModal.tsx
 msgid "veNFT Tiers ({0} variants)"

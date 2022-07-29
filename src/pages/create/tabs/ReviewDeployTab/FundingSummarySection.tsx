@@ -116,7 +116,7 @@ export default function FundingSummarySection() {
     ) ?? '0'
 
   return (
-    <div style={{ marginTop: 20 }}>
+    <div>
       <h2>
         <Trans>Funding cycle details</Trans>
       </h2>

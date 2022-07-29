@@ -1,7 +1,7 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 
 const subgraphUri = () => {
-  const _subgraphUrl = process.env.NEXT_PUBLIC_SUBGRAPH_URL
+  const _subgraphUrl = process.env.GRAPHQL_SCHEMA_SUBGRAPH_URL
   if (!_subgraphUrl) {
     throw new Error('NEXT_PUBLIC_SUBGRAPH_URL not defined')
   }

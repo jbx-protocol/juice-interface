@@ -5,6 +5,13 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: @lingui/cli\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
 
 msgid "$ve{tokenSymbolDisplayText} Received"
 msgstr ""
@@ -3008,3 +3015,4 @@ msgstr ""
 
 msgid "{userOwnershipPercentage}% of total supply"
 msgstr ""
+

@@ -3,7 +3,7 @@ yarn i18n:extract
 
 # get all translation files that were updated
 # from `yarn i18n:extract`
-LOCALE_CHANGED_FILES=$(git diff --name-only src/locales)
+LOCALE_CHANGED_FILES=$(git diff --name-only src/locales/messages.pot)
 
 # Bail if there were changes to translation files
 # that weren't included in the commit.
@@ -12,7 +12,7 @@ if ! [ -z "$LOCALE_CHANGED_FILES" ]; then
   exit 1
 else
   # bail if .po files contain git merge conflict diff artefact (like <<<<< HEAD)
-  for File in $(find src/locales -maxdepth 2 -regex '.*.po')
+  for File in $(find src/locales -maxdepth 2 -regex 'messages.pot')
   do
     if grep -e '<<<' -e '>>>' -e '====' "$File"; then
       echo "🍎 Translation source files contain artefacts from git merge conflict."

@@ -976,7 +976,6 @@ msgstr "Create payable address"
 msgid "Create payment address"
 msgstr "Create payment address"
 
-#: src/hooks/PageTitle.ts
 #: src/pages/projects/MyProjects.tsx
 #: src/pages/projects/index.page.tsx
 msgid "Create project"
@@ -2590,7 +2589,6 @@ msgid "Project {projectId} not found"
 msgstr "Project {projectId} not found"
 
 #: src/components/Navbar/MenuItems.tsx
-#: src/hooks/PageTitle.ts
 msgid "Projects"
 msgstr ""
 

@@ -13,7 +13,7 @@ interface Props {
   url?: string
   title?: string
   description?: string
-  twitter?: TwitterMetaTagsProps
+  twitter?: Omit<TwitterMetaTagsProps, 'title' | 'description'>
   robots?: string
   children?: ReactNode
 }
@@ -26,6 +26,8 @@ export const SEO: FC<Props> = ({
   robots,
   children,
 }) => {
+  const formatTwitterHandle = (handle: string | undefined) =>
+    handle ? (handle.startsWith('@') ? handle : '@' + handle) : undefined
   const formattedTitle = title
     ? `${config.titleTemplate.replace(/%s/g, title)}`
     : config.title
@@ -53,9 +55,11 @@ export const SEO: FC<Props> = ({
       <TwitterMetaTags
         title={formattedTitle}
         description={description ?? config.description}
-        handle={twitter?.handle ?? config.twitter.handle}
-        site={twitter?.site ?? config.twitter.site}
-        creator={twitter?.creator ?? config.twitter.creator}
+        handle={formatTwitterHandle(twitter?.handle ?? config.twitter.handle)}
+        site={formatTwitterHandle(twitter?.site ?? config.twitter.site)}
+        creator={formatTwitterHandle(
+          twitter?.creator ?? config.twitter.creator,
+        )}
         card={twitter?.card ?? (config.twitter.cardType as TwitterCardType)}
         image={twitter?.image ?? config.twitter.image}
       />

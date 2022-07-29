@@ -2,10 +2,13 @@ import { t, Trans } from '@lingui/macro'
 import { Button, Divider, Form, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { FormItems } from 'components/formItems'
+
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useSetProjectHandleTx } from 'hooks/v1/transactor/SetProjectHandleTx'
 import { useSetProjectUriTx } from 'hooks/v1/transactor/SetProjectUriTx'
 import { ProjectMetadataV4 } from 'models/project-metadata'
-import { useEffect, useState } from 'react'
+import { V1TerminalVersion } from 'models/v1/terminals'
+import { useContext, useEffect, useState } from 'react'
 import {
   cidFromUrl,
   editMetadataForCid,
@@ -13,6 +16,7 @@ import {
   metadataNameForHandle,
   uploadProjectMetadata,
 } from 'utils/ipfs'
+import { revalidateProject } from 'utils/revalidateProject'
 
 import { PROJECT_PAY_CHARACTER_LIMIT } from 'constants/numbers'
 
@@ -45,6 +49,7 @@ export default function EditProjectModal({
   onSuccess?: VoidFunction
   onCancel?: VoidFunction
 }) {
+  const { cv } = useContext(V1ProjectContext)
   const [loadingSetURI, setLoadingSetURI] = useState<boolean>()
   const [loadingSetHandle, setLoadingSetHandle] = useState<boolean>()
   const [projectInfoForm] = useForm<ProjectInfoFormFields>()
@@ -102,8 +107,12 @@ export default function EditProjectModal({
       { cid: uploadedMetadata.IpfsHash },
       {
         onDone: () => setLoadingSetURI(false),
-        onConfirmed: () => {
+        onConfirmed: async () => {
           if (onSuccess) onSuccess()
+
+          if (cv) {
+            await revalidateProject({ cv: cv as V1TerminalVersion, handle })
+          }
 
           // Set name for new metadata file
           editMetadataForCid(uploadedMetadata.IpfsHash, {

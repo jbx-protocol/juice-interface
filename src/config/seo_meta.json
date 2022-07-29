@@ -1,7 +1,7 @@
 {
-  "title": "Juicebox | The Decentralized Funding Platform",
+  "title": "Juicebox",
   "titleTemplate": "%s - Juicebox",
-  "description": "Fund your thing with Juicebox. The funding platform for DAOs, decentralized crowdfunding, Web3 businesses and communities. Built on Ethereum.",
+  "description": "The programmable funding protocol. Built for DAOs, crowdfunding, Web3 businesses and communities. Fund your thing on Ethereum.",
   "twitter": {
     "handle": "@juiceboxETH",
     "site": "@juiceboxETH",

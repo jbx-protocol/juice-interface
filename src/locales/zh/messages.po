@@ -335,8 +335,14 @@ msgstr "可提取"
 msgid "Activity"
 msgstr "最近动态"
 
+#: src/components/veNft/VeNftAddLockDurationModal.tsx
+msgid "Add Lock Duration Option"
+msgstr ""
+
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/veNft/VeNftRewardTierModal.tsx
+#: src/components/veNft/VeNftRewardTierModal.tsx
 msgid "Add NFT reward"
 msgstr ""
 
@@ -363,6 +369,10 @@ msgstr ""
 msgid "Add image"
 msgstr "添加图片"
 
+#: src/components/veNft/VeNftSetupModal.tsx
+msgid "Add lock duration option"
+msgstr ""
+
 #: src/components/v1/shared/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Add new payout"
@@ -376,6 +386,7 @@ msgid "Add payout"
 msgstr "添加支出"
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
+#: src/components/veNft/VeNftSetupModal.tsx
 msgid "Add reward tier"
 msgstr ""
 
@@ -442,10 +453,6 @@ msgstr "全部"
 #: src/components/v2/V2Project/index.tsx
 msgid "All assets"
 msgstr "所有资产"
-
-#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
-msgid "All changes will be applied to the <0>upcoming</0> funding cycle."
-msgstr "所有更改会应用于 <0>之后的</0> 筹款周期。"
 
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 #: src/components/v2/V2Project/ProjectActivity/index.tsx
@@ -526,6 +533,7 @@ msgstr "支付数额"
 
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/ContributionFloorFormItem.tsx
+#: src/components/veNft/formControls/TokensStakedMinInput.tsx
 msgid "Amount required"
 msgstr ""
 
@@ -541,6 +549,7 @@ msgstr "金额："
 msgid "Amounts"
 msgstr "金额"
 
+#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "Any changes you make will take effect in <0>funding cycle #{0}</0>. The current funding cycle (#{currentFCNumber}) won't be altered."
 msgstr "你做出的任何变更将会在 <0>筹款周期 #{0}</0>生效。目前的 (#{currentFCNumber}) 筹款周期将不会受到影响。"
@@ -744,10 +753,12 @@ msgstr "对项目资金的变动需要经过社区的批准阶段才能生效，
 msgid "Changes to your reserved token allocation will take effect immediately."
 msgstr ""
 
+#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "Changes will take effect according to the project's custom ballot contract."
 msgstr "变更的生效将照按项目自定义的选票合约来执行。"
 
+#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "Changes you make will take effect according to your <0>{0}</0> reconfiguration rule (the first funding cycle following <1>{1}</1> from now)."
 msgstr "你作出的变更将按照你的 <0>{0}</0> 重新配置规则生效 (从现在开始<1>{1}</1> 后的第一个完整周期生效)。"
@@ -901,6 +912,7 @@ msgid "Contract address: {0}"
 msgstr "合约地址：{0}"
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/ContributionFloorFormItem.tsx
+#: src/components/veNft/formControls/TokensStakedMinInput.tsx
 msgid "Contribution threshold"
 msgstr ""
 
@@ -912,6 +924,7 @@ msgid "Contributor rate"
 msgstr "捐款铸造比率"
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/ContributionFloorFormItem.tsx
+#: src/components/veNft/formControls/TokensStakedMinInput.tsx
 msgid "Contributors receive the NFT when they contribute at least this amount."
 msgstr ""
 
@@ -1052,12 +1065,26 @@ msgstr "日期"
 msgid "Date created"
 msgstr "创建日期"
 
+#: src/components/veNft/VeNftLockDurationOptionCard.tsx
+msgid "Day"
+msgstr ""
+
+#: src/components/veNft/VeNftLockDurationOptionCard.tsx
 #: src/constants/time.ts
 msgid "Days"
 msgstr "天"
 
+#: src/components/veNft/VeNftAddLockDurationModal.tsx
+msgid "Days to lock tokens"
+msgstr ""
+
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierCard.tsx
+#: src/components/veNft/VeNftVariantCard.tsx
 msgid "Delete NFT"
+msgstr ""
+
+#: src/components/veNft/VeNftLockDurationOptionCard.tsx
+msgid "Delete Option"
 msgstr ""
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
@@ -1385,6 +1412,7 @@ msgid "Each project has its own <0>ERC-20 tokens</0>. Anyone who contributes fun
 msgstr "每个项目都有自己的<0>ERC-20代币</0>。每个资助项目的人都会获得项目代币作为回报。在项目方发行 ERC-20 代币之前，代币余额会由协议来记录。"
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/veNft/VeNftRewardTierModal.tsx
 msgid "Edit NFT reward"
 msgstr ""
 
@@ -1426,6 +1454,10 @@ msgstr "编辑代币的分发"
 #: src/components/v2/V2Project/V2BalancesModal/V2BalancesModal.tsx
 msgid "Edit tracked assets"
 msgstr "编辑监测的资产"
+
+#: src/components/veNft/VeNftSetupSection.tsx
+msgid "Enable veNFT Governance"
+msgstr ""
 
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
@@ -1586,6 +1618,7 @@ msgid "Give feedback"
 msgstr "提交反馈"
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/veNft/VeNftRewardTierModal.tsx
 msgid "Give this NFT a name."
 msgstr ""
 
@@ -1872,6 +1905,10 @@ msgstr "最近付款"
 msgid "Launch funding cycle"
 msgstr "启动筹款周期"
 
+#: src/components/veNft/VeNftSetupModal.tsx
+msgid "Launch veNFT"
+msgstr ""
+
 #: src/pages/create/index.page.tsx
 #: src/pages/index.page.tsx
 msgid "Launch your project"
@@ -1903,6 +1940,10 @@ msgstr ""
 #: src/components/veNft/VeNftConfirmStakeModal.tsx
 #: src/components/veNft/VeNftOwnedTokenCard.tsx
 msgid "Lock Duration"
+msgstr ""
+
+#: src/components/veNft/VeNftSetupModal.tsx
+msgid "Lock Durations ({0} options)"
 msgstr ""
 
 #: src/components/veNft/formControls/LockDurationSelectInput.tsx
@@ -2068,6 +2109,7 @@ msgid "NO LIMIT"
 msgstr "无限额"
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/veNft/VeNftRewardTierModal.tsx
 #: src/pages/create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 msgid "Name"
@@ -2448,6 +2490,7 @@ msgstr ""
 msgid "Project Token"
 msgstr "项目代币"
 
+#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Project configuration"
 msgstr "项目设置"
@@ -2660,10 +2703,6 @@ msgstr "重新配置策略"
 msgid "Reconfigure"
 msgstr "重新配置"
 
-#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
-msgid "Reconfigure funding"
-msgstr "重新配置筹款"
-
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
 msgid "Reconfigure payouts as percentages of your distribution limit."
 msgstr ""
@@ -2687,9 +2726,6 @@ msgid "Reconfigure upcoming"
 msgstr "重新配置之后的筹款"
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
-msgid "Reconfigure upcoming funding"
-msgstr "重新配置之后的筹款"
-
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure upcoming funding cycles"
 msgstr "重新配置以后的筹款周期"
@@ -2889,11 +2925,16 @@ msgid "Save"
 msgstr "保存"
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/veNft/VeNftRewardTierModal.tsx
 msgid "Save NFT reward"
 msgstr ""
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
 msgid "Save NFT rewards"
+msgstr ""
+
+#: src/components/veNft/VeNftAddLockDurationModal.tsx
+msgid "Save Option"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/EditProjectModal.tsx
@@ -2951,6 +2992,11 @@ msgstr "保存监测资产项"
 msgid "Search projects by handle"
 msgstr "通过标识搜索项目"
 
+#: src/components/veNft/VeNftLockDurationOptionCard.tsx
+msgid "Second"
+msgstr ""
+
+#: src/components/veNft/VeNftLockDurationOptionCard.tsx
 #: src/constants/time.ts
 msgid "Seconds"
 msgstr "秒"
@@ -2961,6 +3007,10 @@ msgstr "查看交易"
 
 #: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
 msgid "Set ENS name"
+msgstr ""
+
+#: src/components/veNft/VeNftSetupModal.tsx
+msgid "Set Up veNFT Governance"
 msgstr ""
 
 #: src/components/v2/shared/DistributionSplitsSection/SpecificLimitModal.tsx
@@ -3009,6 +3059,11 @@ msgstr "把这个设置为你所有支出对象的总额"
 
 #: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/V1TokenMigrationSetupModal.tsx
 msgid "Set up V1 token migration"
+msgstr ""
+
+#: src/components/veNft/VeNftSetupModal.tsx
+#: src/components/veNft/VeNftSetupSection.tsx
+msgid "Set up and launch veNFT governance for your project."
 msgstr ""
 
 #: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupSection.tsx
@@ -3148,10 +3203,6 @@ msgstr ""
 msgid "The <0>issuance rate</0> of your second funding cycle will be <1>{0} tokens per 1 ETH</1>, then <2>{1} tokens per 1 ETH </2>for your third funding cycle, and so on."
 msgstr "项目第二个筹款的 <0>发行比率/0> 将会是 <1>{0} 个代币每1 ETH</1>， 然后第三个筹款是 <2>{1} 个代币每 1 ETH </2>，以此类推。"
 
-#: src/pages/index.page.tsx
-msgid "The Decentralized Funding Platform. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."
-msgstr "去中心化筹款平台。既简便易用方便一群好友创建项目，又强大到能支持一个全球性的匿名网络。 在以太坊上，<0>社区共有</0>。"
-
 #: src/pages/v1/create/index.page.tsx
 msgid "The JBX protocol is unaudited, and projects built on it may be vulnerable to bugs or exploits. Be smart!"
 msgstr "JBX 协议未经审计，基于它构建的项目可能受到 bug 的影响或漏洞被恶意利用。使用风险请自行承担！"
@@ -3230,6 +3281,10 @@ msgstr ""
 #: src/components/modals/ReservedTokenReceiverModal.tsx
 msgid "The percentage this individual receives of the overall {reservedRate}% reserved token allocation"
 msgstr "这个个体收到的全部 {reservedRate}% 保留代币分配方案中的百分比"
+
+#: src/pages/index.page.tsx
+msgid "The programmable funding protocol. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."
+msgstr ""
 
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "The project owner can add and remove payment terminals."
@@ -3352,6 +3407,11 @@ msgstr ""
 
 #: src/components/veNft/VeNftOwnedTokenCard.tsx
 msgid "Time Remaining"
+msgstr ""
+
+#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
+msgid "Time remaining for changes made to affect the next funding cycle:"
 msgstr ""
 
 #: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupSection.tsx
@@ -3842,6 +3902,7 @@ msgstr "你可以直接赎回你的 {tokenTextLong} 代币来获取溢出，不�
 msgid "You can still redeem your {tokenSymbol} tokens for overflow without claiming them, and you can transfer your unclaimed {tokenSymbol} tokens to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
 msgstr "未领取的 {tokenSymbol} 代币，依然可以用来赎回溢出池中的 ETH，也可以在工具菜单中把代币直接转给其他地址。点击右上角的扳手按钮可以打开工具菜单。"
 
+#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "You don't have a funding cycle duration. Changes you make will take effect immediately."
 msgstr "你的项目未设置筹款周期时长。你做的更改将会立即生效。"
@@ -4025,6 +4086,7 @@ msgstr "由 <0/> 调用"
 msgid "day"
 msgstr ""
 
+#: src/components/veNft/VeNftAddLockDurationModal.tsx
 #: src/components/veNft/VeNftSummaryStatsSection.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 #: src/utils/formatTime.ts
@@ -4106,6 +4168,10 @@ msgstr "代币已赎回"
 #: src/components/v1/shared/Mod.tsx
 msgid "until"
 msgstr "直到"
+
+#: src/components/veNft/VeNftSetupModal.tsx
+msgid "veNFT Tiers ({0} variants)"
+msgstr ""
 
 #: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
 msgid "{0, plural, one {# deployed payment address} other {# deployed payment addresses}}"
@@ -4240,6 +4306,14 @@ msgstr "{issuanceRate} 个代币 / ETH"
 #: src/pages/projects/FilterCheckboxItem.tsx
 msgid "{label}"
 msgstr "{label}"
+
+#: src/components/veNft/VeNftLockDurationOptionCard.tsx
+msgid "{lockDurationOptionInDays} {lockDurationOptionInDays, plural, one {{0}} other {{1}}}"
+msgstr ""
+
+#: src/components/veNft/VeNftLockDurationOptionCard.tsx
+msgid "{lockDurationOption} {lockDurationOption, plural, one {{0}} other {{1}}}"
+msgstr ""
 
 #: src/components/veNft/formControls/TokensStakedInput.tsx
 msgid "{minTokensAllowedToStake, plural, one {You must stake at least # token.} other {You must stake at least # tokens.}}"

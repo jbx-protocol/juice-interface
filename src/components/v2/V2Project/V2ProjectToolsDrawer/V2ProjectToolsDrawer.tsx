@@ -56,13 +56,6 @@ export function V2ProjectToolsDrawer({
       <Divider />
 
       <ArchiveV2Project editV2ProjectDetailsTx={editV2ProjectDetailsTx} />
-
-      {veNftEnabled && (
-        <>
-          <Divider />
-          <VeNftSetupSection />
-        </>
-      )}
     </Space>
   )
 

@@ -54,7 +54,7 @@ const _Wrapper: React.FC = ({ children }) => {
     router.push(router.asPath.replace('/#/', ''))
   }
 
-  const { signerNetwork } = useContext(NetworkContext)
+  const { signerNetwork, userAddress } = useContext(NetworkContext)
 
   const isMobile = useMobile()
 
@@ -66,9 +66,10 @@ const _Wrapper: React.FC = ({ children }) => {
   ]
 
   useEffect(() => {
-    if (!signerNetwork) return
+    if (!signerNetwork || !userAddress) return
+
     setSwitchNetworkModalVisible(signerNetwork !== networkName)
-  }, [networkName, signerNetwork])
+  }, [networkName, signerNetwork, userAddress])
 
   return (
     <>

@@ -322,6 +322,10 @@ msgstr ""
 msgid "Activity"
 msgstr ""
 
+#: src/components/veNft/VeNftAddLockDurationModal.tsx
+msgid "Add Lock Duration Option"
+msgstr "Add Lock Duration Option"
+
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
 #: src/components/veNft/VeNftRewardTierModal.tsx
@@ -351,6 +355,10 @@ msgstr "Add handle"
 #: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "Add image"
 msgstr ""
+
+#: src/components/veNft/VeNftSetupModal.tsx
+msgid "Add lock duration option"
+msgstr "Add lock duration option"
 
 #: src/components/v1/shared/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
@@ -1032,14 +1040,27 @@ msgstr "Date"
 msgid "Date created"
 msgstr "Date created"
 
+#: src/components/veNft/VeNftLockDurationOptionCard.tsx
+msgid "Day"
+msgstr "Day"
+
+#: src/components/veNft/VeNftLockDurationOptionCard.tsx
 #: src/constants/time.ts
 msgid "Days"
 msgstr "Days"
+
+#: src/components/veNft/VeNftAddLockDurationModal.tsx
+msgid "Days to lock tokens"
+msgstr "Days to lock tokens"
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierCard.tsx
 #: src/components/veNft/VeNftVariantCard.tsx
 msgid "Delete NFT"
 msgstr "Delete NFT"
+
+#: src/components/veNft/VeNftLockDurationOptionCard.tsx
+msgid "Delete Option"
+msgstr "Delete Option"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
 msgid "Delete payout"
@@ -1848,6 +1869,10 @@ msgstr "Latest payments"
 msgid "Launch funding cycle"
 msgstr "Launch funding cycle"
 
+#: src/components/veNft/VeNftSetupModal.tsx
+msgid "Launch veNFT"
+msgstr "Launch veNFT"
+
 #: src/pages/create/index.page.tsx
 #: src/pages/index.page.tsx
 msgid "Launch your project"
@@ -1880,6 +1905,10 @@ msgstr "Lock ${tokenSymbolDisplayText} for Voting Power"
 #: src/components/veNft/VeNftOwnedTokenCard.tsx
 msgid "Lock Duration"
 msgstr "Lock Duration"
+
+#: src/components/veNft/VeNftSetupModal.tsx
+msgid "Lock Durations ({0} options)"
+msgstr "Lock Durations ({0} options)"
 
 #: src/components/veNft/formControls/LockDurationSelectInput.tsx
 msgid "Lock duration"
@@ -2860,6 +2889,10 @@ msgstr "Save NFT reward"
 msgid "Save NFT rewards"
 msgstr "Save NFT rewards"
 
+#: src/components/veNft/VeNftAddLockDurationModal.tsx
+msgid "Save Option"
+msgstr "Save Option"
+
 #: src/components/v1/V1Project/modals/EditProjectModal.tsx
 msgid "Save changes"
 msgstr "Save changes"
@@ -2915,6 +2948,11 @@ msgstr "Save tracked assets"
 msgid "Search projects by handle"
 msgstr ""
 
+#: src/components/veNft/VeNftLockDurationOptionCard.tsx
+msgid "Second"
+msgstr "Second"
+
+#: src/components/veNft/VeNftLockDurationOptionCard.tsx
 #: src/constants/time.ts
 msgid "Seconds"
 msgstr "Seconds"
@@ -4004,6 +4042,7 @@ msgstr "called by <0/>"
 msgid "day"
 msgstr "day"
 
+#: src/components/veNft/VeNftAddLockDurationModal.tsx
 #: src/components/veNft/VeNftSummaryStatsSection.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 #: src/utils/formatTime.ts
@@ -4085,6 +4124,10 @@ msgstr ""
 #: src/components/v1/shared/Mod.tsx
 msgid "until"
 msgstr ""
+
+#: src/components/veNft/VeNftSetupModal.tsx
+msgid "veNFT Tiers ({0} variants)"
+msgstr "veNFT Tiers ({0} variants)"
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
@@ -4211,6 +4254,14 @@ msgstr "{issuanceRate} tokens / ETH"
 #: src/pages/projects/FilterCheckboxItem.tsx
 msgid "{label}"
 msgstr "{label}"
+
+#: src/components/veNft/VeNftLockDurationOptionCard.tsx
+msgid "{lockDurationOptionInDays} {lockDurationOptionInDays, plural, one {{0}} other {{1}}}"
+msgstr "{lockDurationOptionInDays} {lockDurationOptionInDays, plural, one {{0}} other {{1}}}"
+
+#: src/components/veNft/VeNftLockDurationOptionCard.tsx
+msgid "{lockDurationOption} {lockDurationOption, plural, one {{0}} other {{1}}}"
+msgstr "{lockDurationOption} {lockDurationOption, plural, one {{0}} other {{1}}}"
 
 #: src/components/veNft/formControls/TokensStakedInput.tsx
 msgid "{minTokensAllowedToStake, plural, one {You must stake at least # token.} other {You must stake at least # tokens.}}"

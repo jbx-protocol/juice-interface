@@ -129,7 +129,7 @@ export interface SubgraphEntities {
   distributeToReservedTokenSplitEvent: DistributeToReservedTokenSplitEvent
   distributeToPayoutSplitEvent: DistributeToPayoutSplitEvent
   useAllowanceEvent: UseAllowanceEvent
-  ethERC20ProjectPayer: ETHERC20ProjectPayer
+  etherc20ProjectPayer: ETHERC20ProjectPayer
   deployETHERC20ProjectPayerEvent: DeployETHERC20ProjectPayerEvent
   veNftToken: VeNftToken
 }
@@ -168,7 +168,7 @@ export interface SubgraphQueryReturnTypes {
   }
   useAllowanceEvent: { useAllowanceEvents: UseAllowanceEventJson[] }
   mintTokensEvent: { mintTokensEvent: MintTokensEventJson[] }
-  ethERC20ProjectPayer: { ethERC20ProjectPayers: ETHERC20ProjectPayerJson[] }
+  etherc20ProjectPayer: { etherc20ProjectPayers: ETHERC20ProjectPayerJson[] }
   deployETHERC20ProjectPayerEvent: {
     deployETHERC20ProjectPayerEvents: DeployETHERC20ProjectPayerEventJson[]
   }
@@ -256,10 +256,10 @@ export const formatGraphQuery = <E extends EntityKey, K extends EntityKeys<E>>(
     value?: string | number | keyof SubgraphEntities[E],
   ) => {
     if (value === undefined) return
-    args += (args.length ? ', ' : '') + `${name}: ` + value
+    args += (args.length ? ', ' : '') + `${name}: ` + String(value)
   }
   const formatWhere = (where: WhereConfig<E>) =>
-    `${where.key}${where.operator ? '_' + where.operator : ''}:` +
+    `${String(where.key)}${where.operator ? '_' + where.operator : ''}:` +
     (Array.isArray(where.value)
       ? `[${where.value
           .map(v => (typeof v === 'string' ? `"${v}"` : v))
@@ -457,10 +457,10 @@ export function formatGraphResponse<E extends EntityKey>(
         return response.useAllowanceEvents.map(parseUseAllowanceEventJson)
       }
       break
-    case 'ethERC20ProjectPayer':
-      if ('ethERC20ProjectPayers' in response) {
+    case 'etherc20ProjectPayer':
+      if ('etherc20ProjectPayers' in response) {
         // @ts-ignore
-        return response.ethERC20ProjectPayers.map(parseETHERC20ProjectPayer)
+        return response.etherc20ProjectPayers.map(parseETHERC20ProjectPayer)
       }
       break
     case 'deployETHERC20ProjectPayerEvent':

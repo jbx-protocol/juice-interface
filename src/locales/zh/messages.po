@@ -145,6 +145,14 @@ msgstr "<0>像 Juicebox 这种需要逐步兑现早期财务承诺的机制，�
 msgid "<0>A project can choose to reserve a percentage of tokens for itself. Instead of being distributed to paying users, this percentage of tokens is instead minted for the project.</0><1>Holding these tokens entitles a project to a portion of its own overflow.</1>"
 msgstr "<0>项目可以选择保留某个百分比的代币。这个百分比的代币会铸造给项目，而不是分发给付费的用户。</0><1>持有这些代币能让项目拥有一部分自己的溢出。</1>"
 
+#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
+msgid "<0>Add to balance:</0> payments to this contract will fund the project without minting project tokens."
+msgstr ""
+
+#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
+msgid "<0>Auto claim:</0> any minted tokens will automatically be claimed as ERC20 (if this project has issued an ERC20 token)."
+msgstr ""
+
 #: src/pages/create/tabs/ReviewDeployTab/NftSummarySection.tsx
 msgid "<0>Contribution floor:</0> {0} ETH"
 msgstr ""
@@ -395,6 +403,7 @@ msgid "Add to Balance"
 msgstr "添加到余额"
 
 #: src/components/Project/ProjectToolsDrawer/AddToProjectBalanceForm.tsx
+#: src/components/v2/V2Project/ProjectPayersModal.tsx
 msgid "Add to balance"
 msgstr "添加到余额"
 
@@ -581,6 +590,10 @@ msgstr "上传一张贴图"
 msgid "Attach the image to be associated with this NFT."
 msgstr ""
 
+#: src/components/v2/V2Project/ProjectPayersModal.tsx
+msgid "Auto claim"
+msgstr ""
+
 #: src/pages/create/forms/FundingForm/index.tsx
 msgid "Automate funding cycles"
 msgstr "自动化筹款周期"
@@ -628,6 +641,10 @@ msgstr "受益人"
 #: src/components/modals/ReservedTokenReceiverModal.tsx
 msgid "Beneficiary address"
 msgstr "受益人钱包地址"
+
+#: src/components/v2/V2Project/ProjectPayersModal.tsx
+msgid "Beneficiary:"
+msgstr ""
 
 #: src/pages/index.page.tsx
 msgid "Big ups to the Ethereum community for crafting the infrastructure and economy to make Juicebox possible."
@@ -957,9 +974,12 @@ msgid "Create an Ethereum address that can be used to pay your project directly.
 msgstr "创建一个可用于直接支付给你的项目的以太坊地址。"
 
 #: src/components/Project/ProjectToolsDrawer/PayableAddressSection.tsx
-#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Create payable address"
 msgstr "创建可支付地址"
+
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
+msgid "Create payment address"
+msgstr ""
 
 #: src/hooks/PageTitle.ts
 #: src/pages/projects/MyProjects.tsx
@@ -1079,6 +1099,14 @@ msgstr "删除代币的分配方案"
 msgid "Deploy funding cycle configuration"
 msgstr "部署筹款周期配置"
 
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerButton.tsx
+msgid "Deploy payment address"
+msgstr ""
+
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
+msgid "Deploy payment address contract"
+msgstr ""
+
 #: src/pages/v1/create/index.page.tsx
 msgid "Deploy project"
 msgstr "部署项目"
@@ -1086,11 +1114,6 @@ msgstr "部署项目"
 #: src/pages/v1/create/index.page.tsx
 msgid "Deploy project on {signerNetwork}"
 msgstr "在{signerNetwork} 上部署项目"
-
-#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerButton.tsx
-#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
-msgid "Deploy project payer contract"
-msgstr "部署项目的付款人合约"
 
 #: src/pages/create/tabs/ReviewDeployTab/DeployProjectButton.tsx
 #: src/pages/create/tabs/ReviewDeployTab/DeployProjectWithNftsButton.tsx
@@ -1100,6 +1123,10 @@ msgstr "部署项目至 {0}"
 #: src/components/activityEventElems/DeployedERC20EventElem.tsx
 msgid "Deployed ERC20 token"
 msgstr "已部署的 ERC20 标准代币"
+
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
+msgid "Deployed payment addresses can be found in the Tools drawer on the project page."
+msgstr ""
 
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "Deposit 1 wei to @{handle}"
@@ -1366,6 +1393,14 @@ msgstr "部署 ERC-20 标准代币"
 
 #: src/components/v2/V2Project/ProjectActivity/index.tsx
 msgid "ETH-ERC20 Address Created"
+msgstr ""
+
+#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
+msgid "ETH-ERC20 Payment addresses"
+msgstr ""
+
+#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
+msgid "ETH-ERC20 Payment addresses are <0>smart contracts</0>that allow this project to be paid in <1>ETH</1> by sending ETH directly to the contract, or in <2>ERC20 tokens</2> via the contract's <3>pay()</3> function."
 msgstr ""
 
 #: src/components/v2/shared/DistributionSplitsSection/SpecificLimitModal.tsx
@@ -1711,10 +1746,6 @@ msgstr ""
 msgid "If you have already deployed a payable address and have lost it, please contact the Juicebox team through <0>Discord.</0>"
 msgstr "如果你已经部署过可支付地址但把它弄丢了，请到<0>Discord</0>去联系 Juicebox 团队。"
 
-#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
-msgid "If you lose your address, please contact the Juicebox team through <0>Discord</0>."
-msgstr "如果你丢失了你的地址，请到<0>Discord</0>去联系 Juicebox 团队。"
-
 #: src/pages/home/QAs.tsx
 msgid "If you're interested in creating a project but still confused on how to get started, consider watching this <0>instructional video</0>. Also feel free to reach out in the <1>Juicebox Discord</1> where our team will be happy to help bring your project idea to life!"
 msgstr "如果你对创建一个项目感兴趣，却不知道该如何开始，可以考虑看看这个<0>教学视频</0>。也可以在 <1>Juicebox Discord</1> 中寻求帮助，我们的团队将很乐意帮助您实现您的项目想法！"
@@ -2041,6 +2072,10 @@ msgstr "铸造 {tokensTokenLower}"
 msgid "Minutes"
 msgstr "分钟"
 
+#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
+msgid "More information"
+msgstr ""
+
 #: src/pages/home/TrendingSection.tsx
 msgid "More trending projects"
 msgstr ""
@@ -2327,6 +2362,10 @@ msgstr "因代币保留率为 100% 且支付后并不会获得相应的代币，
 #: src/components/v1/V1Project/V1PayButton.tsx
 msgid "Paying this project is currently disabled."
 msgstr "当前项目已暂停接收付款。"
+
+#: src/components/v2/V2Project/ProjectPayersModal.tsx
+msgid "Payment address contract:"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 msgid "Payment equivalent"
@@ -3311,10 +3350,6 @@ msgstr ""
 msgid "This address is an unrecognized strategy contract. Make sure it is correct!"
 msgstr "此地址是一个未识别的策略合约。请确保这个地址是对的。"
 
-#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
-msgid "This address will disappear when you close this window. <0>Copy the address and save it now</0>."
-msgstr "关闭当前窗口，此地址将会消失。 <0>复制并保存此地址</0>。"
-
 #: src/components/v1/shared/Mod.tsx
 #: src/components/v2/shared/SplitItem.tsx
 msgid "This address will receive any tokens minted when the recipient project gets paid."
@@ -3770,6 +3805,10 @@ msgstr "什么是折扣率？"
 msgid "What's going on under the hood?"
 msgstr "里面究竟有什么乾坤？"
 
+#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
+msgid "When a payment address is paid, its <0>beneficiary</0> address will receive any minted project tokens."
+msgstr ""
+
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "When checked, payments to this address will mint this project's ERC-20 tokens to the beneficiary's wallet. Payments will cost more gas. When unchecked, Juicebox will track the beneficiary's new tokens when they pay. The beneficiary can claim their ERC-20 tokens at any time."
 msgstr "勾选此项，向这个地址付款会把 ERC-20 标准代币铸造到受益人钱包地址。付款的 gas 费用会增加。取消勾选，则付款后受益人的新代币将在 Juicebox 协议内托管。受益人可以随时来提取自己的 ERC-20 代币。"
@@ -4132,6 +4171,14 @@ msgstr "直到"
 
 #: src/components/veNft/VeNftSetupModal.tsx
 msgid "veNFT Tiers ({0} variants)"
+msgstr ""
+
+#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
+msgid "{0, plural, one {# deployed payment address} other {# deployed payment addresses}}"
+msgstr ""
+
+#: src/components/v2/V2Project/ProjectPayersModal.tsx
+msgid "{0, plural, one {# payment address} other {# payment addresses}}"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx

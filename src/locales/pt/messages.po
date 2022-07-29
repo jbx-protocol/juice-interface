@@ -145,6 +145,14 @@ msgstr "<0>Um mecanismo como Juicebox, em que os compromissos financeiros devem 
 msgid "<0>A project can choose to reserve a percentage of tokens for itself. Instead of being distributed to paying users, this percentage of tokens is instead minted for the project.</0><1>Holding these tokens entitles a project to a portion of its own overflow.</1>"
 msgstr "<0>Um projeto pode escolher reservar uma porcentagem de tokens para ele mesmo. Ao em vez de ser distribuído para pagar os usuários, a porcentagem de tokens é emitida para o projeto.</0><1>Manter esses tokens dá direito a um projeto para uma parte de seu próprio overflow.</1>"
 
+#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
+msgid "<0>Add to balance:</0> payments to this contract will fund the project without minting project tokens."
+msgstr ""
+
+#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
+msgid "<0>Auto claim:</0> any minted tokens will automatically be claimed as ERC20 (if this project has issued an ERC20 token)."
+msgstr ""
+
 #: src/pages/create/tabs/ReviewDeployTab/NftSummarySection.tsx
 msgid "<0>Contribution floor:</0> {0} ETH"
 msgstr ""
@@ -395,6 +403,7 @@ msgid "Add to Balance"
 msgstr "Adicionar ao saldo"
 
 #: src/components/Project/ProjectToolsDrawer/AddToProjectBalanceForm.tsx
+#: src/components/v2/V2Project/ProjectPayersModal.tsx
 msgid "Add to balance"
 msgstr "Adicionar ao saldo"
 
@@ -581,6 +590,10 @@ msgstr "Anexar um sticker"
 msgid "Attach the image to be associated with this NFT."
 msgstr ""
 
+#: src/components/v2/V2Project/ProjectPayersModal.tsx
+msgid "Auto claim"
+msgstr ""
+
 #: src/pages/create/forms/FundingForm/index.tsx
 msgid "Automate funding cycles"
 msgstr "Automatizar ciclos de financiamento"
@@ -628,6 +641,10 @@ msgstr "Beneficiário"
 #: src/components/modals/ReservedTokenReceiverModal.tsx
 msgid "Beneficiary address"
 msgstr "Endereço do beneficiário"
+
+#: src/components/v2/V2Project/ProjectPayersModal.tsx
+msgid "Beneficiary:"
+msgstr ""
 
 #: src/pages/index.page.tsx
 msgid "Big ups to the Ethereum community for crafting the infrastructure and economy to make Juicebox possible."
@@ -957,9 +974,12 @@ msgid "Create an Ethereum address that can be used to pay your project directly.
 msgstr "Criar um endereço Ethereum que pode ser usado para pagar ao seu projeto diretamente."
 
 #: src/components/Project/ProjectToolsDrawer/PayableAddressSection.tsx
-#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Create payable address"
 msgstr "Criar endereço de pagamento"
+
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
+msgid "Create payment address"
+msgstr ""
 
 #: src/hooks/PageTitle.ts
 #: src/pages/projects/MyProjects.tsx
@@ -1079,6 +1099,14 @@ msgstr "Deletar alocação de token"
 msgid "Deploy funding cycle configuration"
 msgstr "Implemente a configuração do ciclo de financiamento"
 
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerButton.tsx
+msgid "Deploy payment address"
+msgstr ""
+
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
+msgid "Deploy payment address contract"
+msgstr ""
+
 #: src/pages/v1/create/index.page.tsx
 msgid "Deploy project"
 msgstr "Implementar projeto"
@@ -1086,11 +1114,6 @@ msgstr "Implementar projeto"
 #: src/pages/v1/create/index.page.tsx
 msgid "Deploy project on {signerNetwork}"
 msgstr "Implementar projeto no {signerNetwork}"
-
-#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerButton.tsx
-#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
-msgid "Deploy project payer contract"
-msgstr "Implantar contrato de pagador do projeto"
 
 #: src/pages/create/tabs/ReviewDeployTab/DeployProjectButton.tsx
 #: src/pages/create/tabs/ReviewDeployTab/DeployProjectWithNftsButton.tsx
@@ -1100,6 +1123,10 @@ msgstr "Implementar o projeto para {0}"
 #: src/components/activityEventElems/DeployedERC20EventElem.tsx
 msgid "Deployed ERC20 token"
 msgstr "Token ERC20 implementado"
+
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
+msgid "Deployed payment addresses can be found in the Tools drawer on the project page."
+msgstr ""
 
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "Deposit 1 wei to @{handle}"
@@ -1366,6 +1393,14 @@ msgstr "ERC20 Implementado"
 
 #: src/components/v2/V2Project/ProjectActivity/index.tsx
 msgid "ETH-ERC20 Address Created"
+msgstr ""
+
+#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
+msgid "ETH-ERC20 Payment addresses"
+msgstr ""
+
+#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
+msgid "ETH-ERC20 Payment addresses are <0>smart contracts</0>that allow this project to be paid in <1>ETH</1> by sending ETH directly to the contract, or in <2>ERC20 tokens</2> via the contract's <3>pay()</3> function."
 msgstr ""
 
 #: src/components/v2/shared/DistributionSplitsSection/SpecificLimitModal.tsx
@@ -1711,10 +1746,6 @@ msgstr ""
 msgid "If you have already deployed a payable address and have lost it, please contact the Juicebox team through <0>Discord.</0>"
 msgstr "Se você já implantou um endereço de pagamento e o perdeu, por favor, contate o time do Juicebox por meio do <0>Discord.</0>"
 
-#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
-msgid "If you lose your address, please contact the Juicebox team through <0>Discord</0>."
-msgstr "Se você perder seu endereço, por favor contate o time do Juicebox através do <0>Discord</0>."
-
 #: src/pages/home/QAs.tsx
 msgid "If you're interested in creating a project but still confused on how to get started, consider watching this <0>instructional video</0>. Also feel free to reach out in the <1>Juicebox Discord</1> where our team will be happy to help bring your project idea to life!"
 msgstr "Se está interessado em criar um projeto, mas ainda está confuso sobre como começar, considere assistir a este <0>vídeo instrutivo</0>. Também se sinta livre para nos contatar no <1>Discord do Juicebox</1>, no qual nosso time estará muito feliz em ajudar a trazer a ideia do seu projeto à vida!"
@@ -2041,6 +2072,10 @@ msgstr "Criar {tokensTokenLower}"
 msgid "Minutes"
 msgstr "Minutos"
 
+#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
+msgid "More information"
+msgstr ""
+
 #: src/pages/home/TrendingSection.tsx
 msgid "More trending projects"
 msgstr ""
@@ -2327,6 +2362,10 @@ msgstr "O pagamento deste projeto está atualmente desabilitado, pois a taxa de 
 #: src/components/v1/V1Project/V1PayButton.tsx
 msgid "Paying this project is currently disabled."
 msgstr "O pagamento deste projeto está atualmente indisponível."
+
+#: src/components/v2/V2Project/ProjectPayersModal.tsx
+msgid "Payment address contract:"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 msgid "Payment equivalent"
@@ -3311,10 +3350,6 @@ msgstr ""
 msgid "This address is an unrecognized strategy contract. Make sure it is correct!"
 msgstr "Este endereço é um contrato de estratégia não reconhecido. Tenha certeza que está correto!"
 
-#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
-msgid "This address will disappear when you close this window. <0>Copy the address and save it now</0>."
-msgstr "O endereço irá desaparecer quando você fechar essa janela. <0>Copie o endereço e salve agora</0>."
-
 #: src/components/v1/shared/Mod.tsx
 #: src/components/v2/shared/SplitItem.tsx
 msgid "This address will receive any tokens minted when the recipient project gets paid."
@@ -3770,6 +3805,10 @@ msgstr "O que é uma taxa de desconto?"
 msgid "What's going on under the hood?"
 msgstr "Como funciona o Juicebox?"
 
+#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
+msgid "When a payment address is paid, its <0>beneficiary</0> address will receive any minted project tokens."
+msgstr ""
+
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "When checked, payments to this address will mint this project's ERC-20 tokens to the beneficiary's wallet. Payments will cost more gas. When unchecked, Juicebox will track the beneficiary's new tokens when they pay. The beneficiary can claim their ERC-20 tokens at any time."
 msgstr "Quando avaliados, os pagamentos para esse endereço irá emitir os ERC-20 tokens do projeto para a carteira do beneficiário. Os pagamentos irão custar mais gás. Quando não avaliados, o Juicebox irá rastrear os tokens dos novos beneficiários quando forem pagos. O beneficiário pode reivindicar os ERC-20 tokens dele a qualquer momento."
@@ -4132,6 +4171,14 @@ msgstr "até"
 
 #: src/components/veNft/VeNftSetupModal.tsx
 msgid "veNFT Tiers ({0} variants)"
+msgstr ""
+
+#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
+msgid "{0, plural, one {# deployed payment address} other {# deployed payment addresses}}"
+msgstr ""
+
+#: src/components/v2/V2Project/ProjectPayersModal.tsx
+msgid "{0, plural, one {# payment address} other {# payment addresses}}"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx

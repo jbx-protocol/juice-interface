@@ -30,23 +30,49 @@ export const findProjectMetadata = async ({
       return metadata
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
-      const status = e?.response?.status
-      if (status === 504 || status === 500 || e?.code === 'ECONNRESET') {
-        console.info('IPFS request timed out, retrying', {
+      if (isTemporaryServiceError(e)) {
+        console.info('IPFS request temporarily unavailable, retry shortly', {
           url,
-          status,
+          status: e?.status,
           code: e?.code,
           error: e?.message,
         })
-        continue
       }
       console.info('IPFS request responded with error', {
         url,
-        status,
+        status: e?.status,
         code: e?.code,
         error: e?.message,
       })
       throw e
     }
   }
+}
+
+/**
+ * Checks if the response has returned a value that might be resolvable by
+ * trying again at a later time.
+ */
+function isTemporaryServiceError({
+  status,
+  code,
+}: {
+  status: number | undefined
+  code: string | undefined
+}) {
+  if (code) {
+    // Code returned when websocket resets
+    return code === 'ECONNRESET'
+  }
+  if (status) {
+    switch (status) {
+      case 500:
+      case 503:
+      case 504:
+        return true
+      default:
+        return false
+    }
+  }
+  return false
 }

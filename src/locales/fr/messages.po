@@ -110,8 +110,8 @@ msgid "<0/> Archived projects have not been modified or deleted on the blockchai
 msgstr "<0/> Les projets archivés n'ont pas été modifiés ou supprimés de la blockchain et peuvent toujours être intégrés directement à travers les contrats Juicebox."
 
 #: src/pages/projects/index.page.tsx
-msgid "<0/> The Juicebox protocol is open to anyone, and project configurations can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO or Peel. Do your own research and understand the risks before committing your funds."
-msgstr "<0/> Le protocole Juicebox est ouvert à tous et les paramètres du projet peuvent varier considérablement. Il y a des risques associés à l'interaction avec tous les projets du protocole. Les projets développés à partir du protocole ne sont ni approuvés, ni vérifiés par JuiceboxDAO. Vous devez faire votre propre recherche et comprendre les risques avant d'engager vos fonds."
+msgid "<0/> The Juicebox protocol is open to anyone, and project configurations can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO or Peel. Do your own research and understand the <1>risks</1> before committing your funds."
+msgstr ""
 
 #: src/components/Project/SpendingStats.tsx
 msgid "<0/> owner balance"
@@ -1835,7 +1835,7 @@ msgid "Juicebox V2 project with ID {0}"
 msgstr "Projet Juicebox V2 avec Identifiant {0}"
 
 #: src/pages/home/HowItWorksSection.tsx
-msgid "Juicebox is new and not guaranteed to work perfectly. Before spending money, do your own research: <0>ask questions</0>, <1>check out the code</1>, and understand the risks!"
+msgid "Juicebox isn't guaranteed to be free of bugs or exploits. Before spending money, do your own research. <0>Ask questions</0>, check out the <1>code</1>, and understand the <2>risks</2>!"
 msgstr ""
 
 #: src/components/TransactionModal.tsx

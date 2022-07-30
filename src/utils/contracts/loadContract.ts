@@ -7,7 +7,10 @@ import { mainnetPublicResolver } from 'constants/contracts/mainnet/PublicResolve
 import { rinkebyPublicResolver } from 'constants/contracts/rinkeby/PublicResolver'
 import { TEMPORARY_NFT_DEPLOYER_ABI } from 'constants/contracts/rinkeby/TEMPORY_NFT_DEPLOYER_ABI'
 import { NETWORKS_BY_NAME } from 'constants/networks'
-import { VENFT_RESOLVER_ADDRESS } from 'constants/veNft/veNftProject'
+import {
+  VENFT_DEPLOYER_ADDRESS,
+  VENFT_RESOLVER_ADDRESS,
+} from 'constants/veNft/veNftProject'
 
 export const loadContract = async (
   contractName: V2ContractName,
@@ -29,7 +32,7 @@ export const loadContract = async (
   ) {
     contractJson = await loadJBNftRewardsDeployerContract()
   } else if (contractName === V2ContractName.JBVeNftDeployer) {
-    contractJson = await loadVeNftDeployer(network)
+    contractJson = await loadVeNftDeployer()
   } else if (contractName === V2ContractName.JBVeTokenUriResolver) {
     contractJson = await loadVeTokenUriResolver()
   } else {
@@ -130,18 +133,20 @@ const loadJBNftRewardsDeployerContract = async () => {
   return temporaryNftDeployerContractJson
 }
 
-const loadVeNftDeployer = async (network: NetworkName) => {
+const loadVeNftDeployer = async () => {
   const contractJson = {
     abi: (
       await import(
         `@jbx-protocol/ve-nft/out/JBVeNftDeployer.sol/JBVeNftDeployer.json`
       )
     ).abi,
-    address: (
-      (await import(
-        `@jbx-protocol/ve-nft/broadcast/deploy.sol/${NETWORKS_BY_NAME[network].chainId}/run-latest.json`
-      )) as ForgeDeploy
-    ).receipts[0].contractAddress,
+    address: VENFT_DEPLOYER_ADDRESS,
+    // TODO: replace when broadcast is updated
+    // address: (
+    //   (await import(
+    //     `@jbx-protocol/ve-nft/broadcast/deploy.sol/${NETWORKS_BY_NAME[network].chainId}/run-latest.json`
+    //   )) as ForgeDeploy
+    // ).receipts[0].contractAddress,
   }
 
   return contractJson

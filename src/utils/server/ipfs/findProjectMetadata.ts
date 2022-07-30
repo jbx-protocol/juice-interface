@@ -37,6 +37,7 @@ export const findProjectMetadata = async ({
           code: e?.code,
           error: e?.message,
         })
+        continue
       }
       console.info('IPFS request responded with error', {
         url,

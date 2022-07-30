@@ -30,10 +30,12 @@ export const findProjectMetadata = async ({
       return metadata
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
-      if (isTemporaryServiceError(e)) {
+      if (
+        isTemporaryServiceError({ status: e?.response?.status, code: e?.code })
+      ) {
         console.info('IPFS request temporarily unavailable, retry shortly', {
           url,
-          status: e?.status,
+          status: e?.response?.status,
           code: e?.code,
           error: e?.message,
         })
@@ -41,7 +43,7 @@ export const findProjectMetadata = async ({
       }
       console.info('IPFS request responded with error', {
         url,
-        status: e?.status,
+        status: e?.response?.status,
         code: e?.code,
         error: e?.message,
       })

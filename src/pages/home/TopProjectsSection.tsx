@@ -95,7 +95,7 @@ const SmallProjectCardMobile = ({
     </Link>
   )
 }
-
+const fun = 'fun'
 const SmallProjectCard = ({ project }: { project: ProjectCardProject }) => {
   const {
     theme: { colors },
@@ -210,7 +210,7 @@ export function TopProjectsSection() {
               }}
             >
               <Trans>
-                Juicebox puts the fun back in funding so you can focus on
+                Juicebox puts the {fun} back in funding so you can focus on
                 building.
               </Trans>
             </p>

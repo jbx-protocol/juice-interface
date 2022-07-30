@@ -1276,7 +1276,7 @@ msgstr ""
 msgid "Juicebox projects use <0>ENS names</0> as handles. Setting a handle involves 2 transactions:"
 msgstr ""
 
-msgid "Juicebox puts the fun back in funding so you can focus on building."
+msgid "Juicebox puts the {fun} back in funding so you can focus on building."
 msgstr ""
 
 msgid "Last paid"

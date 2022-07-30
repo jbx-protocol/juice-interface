@@ -13,7 +13,8 @@ export default function Footer() {
   const { colors } = useContext(ThemeContext).theme
 
   const footerLinksStyles: CSSProperties = {
-    display: 'grid',
+    display: 'flex',
+    flexWrap: 'wrap',
     rowGap: 10,
     justifyContent: 'center',
     marginBottom: 30,
@@ -66,10 +67,10 @@ export default function Footer() {
         textAlign: 'center',
       }}
     >
-      <div style={{ ...footerLinksStyles, display: 'flex', flexWrap: 'wrap' }}>
+      <div style={{ ...footerLinksStyles }}>
         {Object.keys(Languages).map(languageLink)}
       </div>
-      <div style={{ ...footerLinksStyles, display: 'flex' }}>
+      <div style={{ ...footerLinksStyles }}>
         {link('Discord', 'https://discord.gg/6jXrJSyDFf')}
         {link('GitHub', 'https://github.com/jbx-protocol/juice-interface')}
         {link('Twitter', 'https://twitter.com/juiceboxETH')}

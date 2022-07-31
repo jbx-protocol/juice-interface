@@ -106,11 +106,12 @@ export default function MobileCollapse() {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
+              marginTop: '1rem',
             }}
           >
             <Account />
             {signingProvider ? (
-              <Button onClick={onLogOut} style={{ marginTop: 10 }}>
+              <Button onClick={onLogOut} style={{ marginTop: 10 }} block>
                 <Trans>Disconnect</Trans>
               </Button>
             ) : null}

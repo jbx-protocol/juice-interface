@@ -12,7 +12,7 @@ export default function Account() {
 
   if (!signingProvider) {
     return (
-      <Button onClick={onSelectWallet}>
+      <Button onClick={onSelectWallet} block>
         <Trans>Connect</Trans>
       </Button>
     )

@@ -62,30 +62,6 @@ const OwnerSplitCard = ({ splits }: { splits: Split[] }) => {
   )
 }
 
-const isLockedSplit = (split: Split) => {
-  const now = new Date().valueOf() / 1000
-  const { payoutSplits } = useContext(V2ProjectContext)
-  // Checks if the given split exists in the projectContext splits.
-  // If it doesn't, then it means it was just added or edited is which case
-  // we want to still be able to edit it
-  const confirmedSplitsIncludesSplit =
-    payoutSplits?.find(confirmedSplit => isEqual(confirmedSplit, split)) !==
-    undefined
-  return (
-    split.lockedUntil && split.lockedUntil > now && confirmedSplitsIncludesSplit
-  )
-}
-
-const getLockedSplits = (splits: Split[]) => {
-  const lockedSplits = splits.filter(split => isLockedSplit(split))
-  return lockedSplits
-}
-
-const getEditableSplits = (splits: Split[]) => {
-  const editableSplits = splits.filter(split => !isLockedSplit(split))
-  return editableSplits
-}
-
 const DistributionLimitHeader = ({
   style,
 }: {
@@ -166,19 +142,38 @@ export const EditPayoutsModal = ({
   // added with a lockedUntil
   const [editingSplits, setEditingSplits] = useState<Split[]>([])
 
+  const isLockedSplit = useCallback(
+    ({ split }: { split: Split }) => {
+      const now = new Date().valueOf() / 1000
+      // Checks if the given split exists in the projectContext splits.
+      // If it doesn't, then it means it was just added or edited is which case
+      // we want to still be able to edit it
+      const confirmedSplitsIncludesSplit =
+        contextPayoutSplits?.find(confirmedSplit =>
+          isEqual(confirmedSplit, split),
+        ) !== undefined
+      return (
+        split.lockedUntil &&
+        split.lockedUntil > now &&
+        confirmedSplitsIncludesSplit
+      )
+    },
+    [contextPayoutSplits],
+  )
+
   // Load original splits from context into editing splits.
   useEffect(() => {
     setEditingSplits(contextPayoutSplits ?? [])
   }, [contextPayoutSplits, visible])
 
   const lockedSplits = useMemo(
-    () => getLockedSplits(editingSplits),
-    [editingSplits],
+    () => editingSplits.filter(split => isLockedSplit({ split })),
+    [editingSplits, isLockedSplit],
   )
 
   const editableSplits = useMemo(
-    () => getEditableSplits(editingSplits),
-    [editingSplits],
+    () => editingSplits.filter(split => !isLockedSplit({ split })),
+    [editingSplits, isLockedSplit],
   )
 
   const [addSplitModalVisible, setAddSplitModalVisible] =

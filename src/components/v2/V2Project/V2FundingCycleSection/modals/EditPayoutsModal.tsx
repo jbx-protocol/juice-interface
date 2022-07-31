@@ -62,25 +62,6 @@ const OwnerSplitCard = ({ splits }: { splits: Split[] }) => {
   )
 }
 
-const isLockedSplit = ({
-  split,
-  projectSplits,
-}: {
-  split: Split
-  projectSplits: Split[] | undefined
-}) => {
-  const now = new Date().valueOf() / 1000
-  // Checks if the given split exists in the projectContext splits.
-  // If it doesn't, then it means it was just added or edited is which case
-  // we want to still be able to edit it
-  const confirmedSplitsIncludesSplit =
-    projectSplits?.find(confirmedSplit => isEqual(confirmedSplit, split)) !==
-    undefined
-  return (
-    split.lockedUntil && split.lockedUntil > now && confirmedSplitsIncludesSplit
-  )
-}
-
 const DistributionLimitHeader = ({
   style,
 }: {
@@ -161,25 +142,38 @@ export const EditPayoutsModal = ({
   // added with a lockedUntil
   const [editingSplits, setEditingSplits] = useState<Split[]>([])
 
+  const isLockedSplit = useCallback(
+    ({ split }: { split: Split }) => {
+      const now = new Date().valueOf() / 1000
+      // Checks if the given split exists in the projectContext splits.
+      // If it doesn't, then it means it was just added or edited is which case
+      // we want to still be able to edit it
+      const confirmedSplitsIncludesSplit =
+        contextPayoutSplits?.find(confirmedSplit =>
+          isEqual(confirmedSplit, split),
+        ) !== undefined
+      return (
+        split.lockedUntil &&
+        split.lockedUntil > now &&
+        confirmedSplitsIncludesSplit
+      )
+    },
+    [contextPayoutSplits],
+  )
+
   // Load original splits from context into editing splits.
   useEffect(() => {
     setEditingSplits(contextPayoutSplits ?? [])
   }, [contextPayoutSplits, visible])
 
   const lockedSplits = useMemo(
-    () =>
-      editingSplits.filter(split =>
-        isLockedSplit({ split, projectSplits: contextPayoutSplits }),
-      ),
-    [contextPayoutSplits, editingSplits],
+    () => editingSplits.filter(split => isLockedSplit({ split })),
+    [editingSplits, isLockedSplit],
   )
 
   const editableSplits = useMemo(
-    () =>
-      editingSplits.filter(
-        split => !isLockedSplit({ split, projectSplits: contextPayoutSplits }),
-      ),
-    [contextPayoutSplits, editingSplits],
+    () => editingSplits.filter(split => !isLockedSplit({ split })),
+    [editingSplits, isLockedSplit],
   )
 
   const [addSplitModalVisible, setAddSplitModalVisible] =

@@ -1,7 +1,7 @@
 import pinataClient from '@pinata/sdk'
 
-const PINATA_PINNER_KEY = process.env.PINATA_PINNER_KEY
-const PINATA_PINNER_SECRET = process.env.PINATA_PINNER_SECRET
+const PINATA_PINNER_KEY = process.env.NEXT_PUBLIC_PINATA_PINNER_KEY
+const PINATA_PINNER_SECRET = process.env.NEXT_PUBLIC_PINATA_PINNER_SECRET
 
 export const getPinata = () => {
   if (!PINATA_PINNER_KEY) {

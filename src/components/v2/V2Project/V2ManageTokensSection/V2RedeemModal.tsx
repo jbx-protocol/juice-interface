@@ -1,30 +1,24 @@
 import { t, Trans } from '@lingui/macro'
-import { Form, Space } from 'antd'
+import { Descriptions, Form, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 
-import { CSSProperties, useContext, useState } from 'react'
-import { formatPercent, formatWad, fromWad, parseWad } from 'utils/formatNumber'
+import { useContext, useState } from 'react'
+import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
 
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import useTotalBalanceOf from 'hooks/v2/contractReader/TotalBalanceOf'
 import { NetworkContext } from 'contexts/networkContext'
-import { ThemeContext } from 'contexts/themeContext'
 import { formatRedemptionRate } from 'utils/v2/math'
 import { useETHReceivedFromTokens } from 'hooks/v2/contractReader/ETHReceivedFromTokens'
 import { V2_CURRENCY_USD } from 'utils/v2/currency'
 import { useRedeemTokensTx } from 'hooks/v2/transactor/RedeemTokensTx'
 import TransactionModal from 'components/TransactionModal'
 import ETHAmount from 'components/currency/ETHAmount'
-
-const statsStyle: CSSProperties = {
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'baseline',
-}
+import Callout from 'components/Callout'
 
 // This doubles as the 'Redeem' and 'Burn' modal depending on if project has overflow
 export default function V2RedeemModal({
@@ -36,9 +30,6 @@ export default function V2RedeemModal({
   onCancel?: VoidFunction
   onConfirmed?: VoidFunction
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   const { userAddress } = useContext(NetworkContext)
   const {
     tokenSymbol,
@@ -67,8 +58,6 @@ export default function V2RedeemModal({
 
   if (!fundingCycle || !fundingCycleMetadata) return null
 
-  const share = formatPercent(totalBalance, totalTokenSupply)
-
   // 0.5% slippage for USD-denominated projects
   const minReturnedTokens = distributionLimitCurrency?.eq(V2_CURRENCY_USD)
     ? rewardAmount?.mul(1000).div(1005)
@@ -88,15 +77,17 @@ export default function V2RedeemModal({
   })
 
   let modalTitle: string
-  // Defining whole sentence for translations
-  if (primaryTerminalCurrentOverflow?.gt(0)) {
+
+  const hasOverflow = primaryTerminalCurrentOverflow?.gt(0)
+  const hasRedemptionRate = fundingCycleMetadata.redemptionRate.gt(0)
+
+  const canRedeem = hasOverflow && hasRedemptionRate
+
+  if (canRedeem) {
     modalTitle = t`Redeem ${tokensTextLong} for ETH`
   } else {
     modalTitle = t`Burn ${tokensTextLong}`
   }
-
-  const minReturnedTokensFormatted =
-    formatWad(minReturnedTokens, { precision: 8 }) || '--'
 
   const validateRedeemAmount = () => {
     const redeemBN = parseWad(redeemAmount ?? 0)
@@ -167,104 +158,97 @@ export default function V2RedeemModal({
       width={540}
       centered
     >
-      <Space direction="vertical" style={{ width: '100%' }}>
+      <Space direction="vertical" style={{ width: '100%' }} size="large">
         <div>
-          <p style={statsStyle}>
-            <Trans>
-              Redemption rate:{' '}
-              <span>
-                {formatRedemptionRate(fundingCycleMetadata.redemptionRate)}%
-              </span>
-            </Trans>
-          </p>
-          <div style={statsStyle}>
-            <Trans>
-              {tokenSymbolText({ tokenSymbol: tokenSymbol, capitalize: true })}{' '}
-              balance:{' '}
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'flex-end',
-                }}
-              >
-                <div>
-                  {formatWad(totalBalance ?? 0, { precision: 0 })}{' '}
-                  {tokensTextShort}
-                </div>
-                <div
-                  style={{
-                    cursor: 'default',
-                    fontSize: '0.8rem',
-                    fontWeight: 500,
-                    color: colors.text.tertiary,
-                  }}
-                >
-                  ({share}% of supply)
-                </div>
+          {canRedeem ? (
+            <Space direction="vertical" size="middle">
+              <Callout>
+                <Trans>Tokens are burned when they are redeemed.</Trans>
+              </Callout>
+              <div>
+                <Trans>
+                  Redeem your tokens for a portion of this project's overflow.
+                  The current funding cycle's <strong>redemption rate</strong>{' '}
+                  determines your redemption value.
+                </Trans>
               </div>
-            </Trans>
-          </div>
-          <p style={statsStyle}>
-            <Trans>
-              Currently worth:{' '}
-              <span>
-                <ETHAmount amount={maxClaimable} />
-              </span>
-            </Trans>
-          </p>
-        </div>
-        <p>
-          {primaryTerminalCurrentOverflow?.gt(0) ? (
-            <Trans>
-              Tokens can be redeemed for a portion of this project's ETH
-              overflow, according to the redemption rate of the current funding
-              cycle.{' '}
-              <span style={{ fontWeight: 500, color: colors.text.warn }}>
-                Tokens are burned when they are redeemed.
-              </span>
-            </Trans>
+            </Space>
           ) : (
-            <span style={{ fontWeight: 500, color: colors.text.warn }}>
-              <Trans>
-                <strong>This project has no overflow</strong>, so you will not
-                receive any ETH for burning tokens.
-              </Trans>
-            </span>
+            <Callout>
+              {!hasOverflow && (
+                <Trans>
+                  <strong>This project has no overflow</strong>. You won't
+                  receive any ETH for burning your tokens.
+                </Trans>
+              )}
+              {!hasRedemptionRate && (
+                <Trans>
+                  <strong>This project has a 0% redemption rate</strong>. You
+                  won't receive any ETH for burning your tokens.
+                </Trans>
+              )}
+            </Callout>
           )}
-        </p>
-        <div>
-          <Form form={form}>
-            <FormattedNumberInput
-              name="redeemAmount"
-              min={0}
-              step={0.001}
-              placeholder="0"
-              value={redeemAmount}
-              accessory={
-                <InputAccessoryButton
-                  content={t`MAX`}
-                  onClick={() => setRedeemAmount(fromWad(totalBalance))}
-                />
-              }
-              formItemProps={{
-                rules: [{ validator: validateRedeemAmount }],
-              }}
-              disabled={totalBalance?.eq(0)}
-              onChange={val => setRedeemAmount(val)}
-            />
-          </Form>
-          {totalSupplyExceeded ? (
-            <div style={{ color: colors.text.failure, marginTop: 20 }}>
+        </div>
+
+        <Descriptions
+          column={1}
+          contentStyle={{ display: 'block', textAlign: 'right' }}
+        >
+          <Descriptions.Item label={<Trans>Redemption rate</Trans>}>
+            {formatRedemptionRate(fundingCycleMetadata.redemptionRate)}%
+          </Descriptions.Item>
+          <Descriptions.Item
+            label={
               <Trans>
-                You have exceeded the total token supply of{' '}
-                <strong>{formatWad(totalTokenSupply, { precision: 4 })}</strong>
+                Your{' '}
+                {tokenSymbolText({
+                  tokenSymbol,
+                })}{' '}
+                balance
               </Trans>
-            </div>
-          ) : null}
-          {primaryTerminalCurrentOverflow?.gt(0) &&
-          !totalSupplyExceeded &&
-          minReturnedTokens?.gt(0) ? (
+            }
+          >
+            {formatWad(totalBalance ?? 0, { precision: 0 })} {tokensTextShort}
+          </Descriptions.Item>
+          <Descriptions.Item label={<Trans>Redemption value</Trans>}>
+            <ETHAmount amount={maxClaimable} />
+          </Descriptions.Item>
+        </Descriptions>
+
+        <div>
+          <Form form={form} layout="vertical">
+            <Form.Item
+              label={
+                canRedeem ? (
+                  <Trans>Tokens to redeem</Trans>
+                ) : (
+                  <Trans>Tokens to burn</Trans>
+                )
+              }
+            >
+              <FormattedNumberInput
+                name="redeemAmount"
+                min={0}
+                step={0.001}
+                placeholder="0"
+                value={redeemAmount}
+                accessory={
+                  <InputAccessoryButton
+                    content={t`MAX`}
+                    onClick={() => setRedeemAmount(fromWad(totalBalance))}
+                  />
+                }
+                formItemProps={{
+                  rules: [{ validator: validateRedeemAmount }],
+                }}
+                disabled={totalBalance?.eq(0)}
+                onChange={val => setRedeemAmount(val)}
+              />
+            </Form.Item>
+          </Form>
+
+          {canRedeem && !totalSupplyExceeded && minReturnedTokens?.gt(0) ? (
             <div style={{ fontWeight: 500, marginTop: 20 }}>
               <>
                 {/* If USD denominated, can only define the lower limit (not exact amount), hence 'at least' */}
@@ -273,12 +257,13 @@ export default function V2RedeemModal({
                   <>
                     {inUSD ? (
                       <Trans>
-                        You will receive at least {minReturnedTokensFormatted}{' '}
-                        ETH
+                        You will receive at least{' '}
+                        <ETHAmount amount={minReturnedTokens} />
                       </Trans>
                     ) : (
                       <Trans>
-                        You will receive {minReturnedTokensFormatted} ETH
+                        You will receive{' '}
+                        <ETHAmount amount={minReturnedTokens} />
                       </Trans>
                     )}
                   </>
@@ -286,12 +271,13 @@ export default function V2RedeemModal({
                   <>
                     {inUSD ? (
                       <Trans>
-                        You would receive at least {minReturnedTokensFormatted}{' '}
-                        ETH
+                        You would receive at least{' '}
+                        <ETHAmount amount={minReturnedTokens} />
                       </Trans>
                     ) : (
                       <Trans>
-                        You would receive {minReturnedTokensFormatted} ETH
+                        You would receive{' '}
+                        <ETHAmount amount={minReturnedTokens} />
                       </Trans>
                     )}
                   </>

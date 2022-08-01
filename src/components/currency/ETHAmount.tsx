@@ -25,7 +25,7 @@ export default function ETHAmount({
   padEnd?: boolean
   fallback?: string
 }) {
-  if (amount === undefined) return <span>{fallback}</span> ?? null
+  if (amount === undefined) return fallback ? <span>{fallback}</span> : null
 
   if (amount?.isZero()) {
     return (

@@ -3,6 +3,11 @@ export const reloadWindow = () => {
   window.location.reload()
 }
 
+export const redirectTo = (href: string) => {
+  if (typeof window === 'undefined') return
+  window.location.href = href
+}
+
 export const scrollToTop = () => {
   if (typeof window === 'undefined') return
   window.scrollTo({ top: 0, behavior: 'smooth' })

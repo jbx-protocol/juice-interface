@@ -13,7 +13,6 @@ import {
 import { useCallback, useContext, useState } from 'react'
 import { uploadProjectMetadata } from 'utils/ipfs'
 import { TransactionReceipt } from '@ethersproject/providers'
-import { useRouter } from 'next/router'
 import { BigNumber } from '@ethersproject/bignumber'
 import { NetworkContext } from 'contexts/networkContext'
 import { emitErrorNotification } from 'utils/notifications'
@@ -26,6 +25,7 @@ import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 
 import { v2ProjectRoute } from 'utils/routes'
 import { TransactionEvent } from 'bnc-notify'
+import { redirectTo } from 'utils/windowUtils'
 
 import { readNetwork } from 'constants/networks'
 import { findTransactionReceipt } from './utils'
@@ -54,7 +54,6 @@ const getProjectIdFromNftLaunchReceipt = (
 
 export function DeployProjectWithNftsButton({ form }: { form: FormInstance }) {
   const launchProjectWithNftsTx = useLaunchProjectWithNftsTx()
-  const router = useRouter()
 
   const { userAddress, onSelectWallet } = useContext(NetworkContext)
 
@@ -126,7 +125,7 @@ export function DeployProjectWithNftsButton({ form }: { form: FormInstance }) {
         // Reset Redux state/localstorage after deploying
         dispatch(editingV2ProjectActions.resetState())
 
-        router.push(`${v2ProjectRoute({ projectId })}?newDeploy=true`)
+        redirectTo(`${v2ProjectRoute({ projectId })}?newDeploy=true`)
       },
       onCancelled() {
         setDeployLoading(false)
@@ -188,7 +187,6 @@ export function DeployProjectWithNftsButton({ form }: { form: FormInstance }) {
     nftRewardsCIDs,
     nftRewardTiers,
     dispatch,
-    router,
   ])
 
   const onButtonClick = async () => {

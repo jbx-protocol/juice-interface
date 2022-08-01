@@ -13,6 +13,7 @@ import { Provider } from 'react-redux'
 import { ThemeProvider } from 'providers/ThemeProvider'
 import { NetworkProvider } from 'providers/NetworkProvider'
 import store from 'redux/store'
+import { redirectTo } from 'utils/windowUtils'
 
 import { readNetwork } from 'constants/networks'
 
@@ -51,7 +52,7 @@ const _Wrapper: React.FC = ({ children }) => {
 
   const router = useRouter()
   if (router.asPath.match(/^\/#\//)) {
-    router.push(router.asPath.replace('/#/', ''))
+    redirectTo(router.asPath.replace('/#/', ''))
   }
 
   const { signerNetwork, userAddress } = useContext(NetworkContext)

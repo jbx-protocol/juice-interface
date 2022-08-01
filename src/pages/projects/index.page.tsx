@@ -4,7 +4,6 @@ import { Button } from 'antd'
 import Search from 'antd/lib/input/Search'
 import FeedbackFormButton from 'components/FeedbackFormButton'
 import Loading from 'components/Loading'
-import { AppWrapper } from 'components/common'
 
 import { ProjectCategory } from 'models/project-visibility'
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
@@ -21,7 +20,6 @@ import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 
 import { CV } from 'models/cv'
-import { redirectTo } from 'utils/windowUtils'
 
 import { layouts } from 'constants/styles/layouts'
 import TrendingProjects from './TrendingProjects'
@@ -31,21 +29,13 @@ import ProjectsFilterAndSort from './ProjectsFilterAndSort'
 import ArchivedProjectsMessage from './ArchivedProjectsMessage'
 import MyProjects from './MyProjects'
 
-export default function ProjectsPage() {
-  return (
-    <AppWrapper>
-      <Projects />
-    </AppWrapper>
-  )
-}
-
 type OrderByOption = 'createdAt' | 'totalPaid'
 
 const pageSize = 20
 
 const defaultTab: ProjectCategory = 'trending'
 
-function Projects() {
+export default function Projects() {
   const [selectedTab, setSelectedTab] = useState<ProjectCategory>(defaultTab)
 
   // Checks URL to see if tab has been set
@@ -179,7 +169,7 @@ function Projects() {
           placeholder={t`Search projects by handle`}
           onSearch={val => {
             setSearchText(val)
-            redirectTo(`/projects?tab=all${val ? `&search=${val}` : ''}`)
+            router.push(`/projects?tab=all${val ? `&search=${val}` : ''}`)
           }}
           defaultValue={searchText}
           allowClear

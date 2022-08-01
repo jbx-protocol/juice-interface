@@ -824,6 +824,14 @@ msgstr "Cerrar"
 msgid "Close, I'll do these later"
 msgstr "Cerrar, los haré después"
 
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
+msgid "Collection name (optional)"
+msgstr ""
+
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
+msgid "Collection symbol (optional)"
+msgstr ""
+
 #: src/pages/home/HowItWorksSection.tsx
 msgid "Commit portions of your funds to the people or projects you want to support, or the contributors you want to pay. When you get paid, so do they."
 msgstr "Asigna porciones de tus fondos para la gente o proyectos que quieres apoyar, o a los colaboradores a los que les quieres pagar. Cuando te pagan, también a ellos."
@@ -3374,6 +3382,10 @@ msgstr "Este es la cantidad máxima de fondos que pueden dejar el tesoro en cada
 msgid "This list is using an experimental data index and may be inaccurate for some projects."
 msgstr "Está lista está usando un índice experimental de datos y puede ser incorrecta para algunos proyectos."
 
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
+msgid "This name will apply to this whole collection of reward tiers on OpenSea."
+msgstr ""
+
 #: src/components/v1/V1Project/V1PayButton.tsx
 #: src/components/v2/V2Project/V2PayButton/index.tsx
 msgid "This project is archived and can't be paid."
@@ -3398,6 +3410,10 @@ msgstr ""
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
 msgstr "Esta tasa determina la cantidad de excedente por la que cada token puede ser canjeado en cualquier momento dado. En una menor curva de adhesión, canjear un token incrementa el valor de cada token restante, creando un incentivo para holdear tokens por más tiempo que otros. Una curva de adhesión del 100% significa que todos los tokens tendrán un valor igual sin importar cuando hayan sido canjeados."
+
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
+msgid "This short symbol will apply to this whole collection of reward tiers on OpenSea."
+msgstr ""
 
 #: src/components/veNft/VeNftSetUnclaimedTokensPermissionSection.tsx
 msgid "This will enable your project's veNFT contract to spend unclaimed tokens in addition to project ERC-20 tokens."

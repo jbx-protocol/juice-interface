@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Button, Space } from 'antd'
+import { Button, Form, Input, Space } from 'antd'
 import NftRewardTierModal from 'components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal'
 import { ThemeContext } from 'contexts/themeContext'
 
@@ -11,6 +11,7 @@ import { useCallback, useContext, useState } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { uploadNftRewardsToIPFS } from 'utils/ipfs'
 import { sortNftRewardTiers } from 'utils/v2/nftRewards'
+import TooltipLabel from 'components/TooltipLabel'
 
 import { shadowCard } from 'constants/styles/shadowCard'
 
@@ -38,25 +39,40 @@ export default function NftDrawer({
     theme: { colors },
   } = useContext(ThemeContext)
   const dispatch = useAppDispatch()
-  const { nftRewardTiers } = useAppSelector(state => state.editingV2Project)
+  const {
+    nftRewards: {
+      rewardTiers: savedRewardTiers,
+      collectionName: savedCollectionName,
+      collectionSymbol: savedCollectionSymbol,
+    },
+  } = useAppSelector(state => state.editingV2Project)
 
   const [addTierModalVisible, setAddTierModalVisible] = useState<boolean>(false)
   const [submitLoading, setSubmitLoading] = useState<boolean>(false)
 
   const [rewardTiers, setRewardTiers] = useState<NftRewardTier[]>(
-    nftRewardTiers ?? [],
+    savedRewardTiers ?? [],
+  )
+
+  const [collectionName, setCollectionName] = useState<string | undefined>(
+    savedCollectionName,
+  )
+  const [collectionSymbol, setCollectionSymbol] = useState<string | undefined>(
+    savedCollectionSymbol,
   )
 
   const onNftFormSaved = useCallback(async () => {
     setSubmitLoading(true)
     // Calls cloud function to store NftRewards to IPFS
     const CIDs = await uploadNftRewardsToIPFS(rewardTiers)
+    dispatch(editingV2ProjectActions.setNftRewardsName(collectionName))
+    dispatch(editingV2ProjectActions.setNftRewardsSymbol(collectionSymbol))
     dispatch(editingV2ProjectActions.setNftRewardTiers(rewardTiers))
     // Store cid (link to nfts on IPFS) to be used later in the deploy tx
     dispatch(editingV2ProjectActions.setNftRewardsCIDs(CIDs))
     setSubmitLoading(false)
     onClose?.()
-  }, [rewardTiers, dispatch, onClose])
+  }, [rewardTiers, dispatch, onClose, collectionSymbol, collectionName])
 
   const handleAddRewardTier = (newRewardTier: NftRewardTier) => {
     setRewardTiers(sortNftRewardTiers([...rewardTiers, newRewardTier]))
@@ -103,6 +119,39 @@ export default function NftDrawer({
           }}
         >
           <p>{NFT_REWARDS_EXPLAINATION}</p>
+          <Form layout="vertical">
+            <Form.Item
+              label={
+                <TooltipLabel
+                  label={t`Collection name (optional)`}
+                  tip={t`This name will apply to this whole collection of reward tiers on OpenSea.`}
+                />
+              }
+            >
+              <Input
+                type="string"
+                value={collectionName}
+                autoComplete="off"
+                onChange={e => setCollectionName(e.target.value)}
+              />
+            </Form.Item>
+            <Form.Item
+              name={'symbol'}
+              label={
+                <TooltipLabel
+                  label={t`Collection symbol (optional)`}
+                  tip={t`This short symbol will apply to this whole collection of reward tiers on OpenSea.`}
+                />
+              }
+            >
+              <Input
+                type="string"
+                value={collectionSymbol}
+                autoComplete="off"
+                onChange={e => setCollectionSymbol(e.target.value)}
+              />
+            </Form.Item>
+          </Form>
           <Space direction="vertical" size="large" style={{ width: '100%' }}>
             {rewardTiers.map((rewardTier, index) => (
               <NftRewardTierCard

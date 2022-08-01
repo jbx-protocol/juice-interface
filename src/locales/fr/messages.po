@@ -824,6 +824,14 @@ msgstr "Fermer"
 msgid "Close, I'll do these later"
 msgstr "Fermez, je ferai ceux-ci plus tard"
 
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
+msgid "Collection name (optional)"
+msgstr ""
+
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
+msgid "Collection symbol (optional)"
+msgstr ""
+
 #: src/pages/home/HowItWorksSection.tsx
 msgid "Commit portions of your funds to the people or projects you want to support, or the contributors you want to pay. When you get paid, so do they."
 msgstr "Destinez des parties de vos fonds à des personnes ou à des projets que vous voulez soutenir, ou à des contributeurs que vous voulez payer. Lorsque vous êtes payé, eux aussi le seront."
@@ -3374,6 +3382,10 @@ msgstr "Ceci est le montant maximal de fonds qui peut sortir de la trésorerie �
 msgid "This list is using an experimental data index and may be inaccurate for some projects."
 msgstr "Cette liste utilise un index de données expérimental et peut être inexacte pour certains projets."
 
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
+msgid "This name will apply to this whole collection of reward tiers on OpenSea."
+msgstr ""
+
 #: src/components/v1/V1Project/V1PayButton.tsx
 #: src/components/v2/V2Project/V2PayButton/index.tsx
 msgid "This project is archived and can't be paid."
@@ -3398,6 +3410,10 @@ msgstr ""
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
 msgstr "Ce taux détermine le montant oveflow pour lequel chaque token peut être récupérer à un moment donné. Sur une courbe de liaison inférieure, le rachat d'un token augmente la valeur de chaque token restant, ce qui incite à holder les tokens plus longtemps que les autres. Une courbe de liaison de 100 % signifie que tous les tokens auront la même valeur, quel que soit le moment où ils sont échangés."
+
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
+msgid "This short symbol will apply to this whole collection of reward tiers on OpenSea."
+msgstr ""
 
 #: src/components/veNft/VeNftSetUnclaimedTokensPermissionSection.tsx
 msgid "This will enable your project's veNFT contract to spend unclaimed tokens in addition to project ERC-20 tokens."

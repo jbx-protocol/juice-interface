@@ -824,6 +824,14 @@ msgstr "Закрыть"
 msgid "Close, I'll do these later"
 msgstr ""
 
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
+msgid "Collection name (optional)"
+msgstr ""
+
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
+msgid "Collection symbol (optional)"
+msgstr ""
+
 #: src/pages/home/HowItWorksSection.tsx
 msgid "Commit portions of your funds to the people or projects you want to support, or the contributors you want to pay. When you get paid, so do they."
 msgstr "Выделите часть своих средств людям или проектам, которых вы хотите поддержать, или спонсорам, которым вы хотите платить. Когда вам платят, им тоже платят."
@@ -3374,6 +3382,10 @@ msgstr ""
 msgid "This list is using an experimental data index and may be inaccurate for some projects."
 msgstr "Этот список использует экспериментальный индекс данных и может быть неточным для некоторых проектов."
 
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
+msgid "This name will apply to this whole collection of reward tiers on OpenSea."
+msgstr ""
+
 #: src/components/v1/V1Project/V1PayButton.tsx
 #: src/components/v2/V2Project/V2PayButton/index.tsx
 msgid "This project is archived and can't be paid."
@@ -3398,6 +3410,10 @@ msgstr ""
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
 msgstr "Эта ставка определяет количество переполнения, за которое каждый токен может быть выкуплен в любой момент времени. При более низкой кривой связывания выкуп токена увеличивает стоимость каждого оставшегося токена, создавая стимул держать токены дольше, чем другие. Кривая облигаций, равная 100%, означает, что все токены будут иметь одинаковую ценность независимо от того, когда они будут выкуплены."
+
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
+msgid "This short symbol will apply to this whole collection of reward tiers on OpenSea."
+msgstr ""
 
 #: src/components/veNft/VeNftSetUnclaimedTokensPermissionSection.tsx
 msgid "This will enable your project's veNFT contract to spend unclaimed tokens in addition to project ERC-20 tokens."

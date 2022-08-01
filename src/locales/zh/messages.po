@@ -824,6 +824,14 @@ msgstr "关闭"
 msgid "Close, I'll do these later"
 msgstr "关闭，我晚点再做这些"
 
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
+msgid "Collection name (optional)"
+msgstr ""
+
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
+msgid "Collection symbol (optional)"
+msgstr ""
+
 #: src/pages/home/HowItWorksSection.tsx
 msgid "Commit portions of your funds to the people or projects you want to support, or the contributors you want to pay. When you get paid, so do they."
 msgstr "提前设定把您资金的一部分自动分拨给您想要支持的人或项目，或者您需要支付的贡献者。您获得收入的同时，他们也会收到相应款项。"
@@ -3374,6 +3382,10 @@ msgstr "这是每个筹款周期可以从金库分配出去的最大资金数量
 msgid "This list is using an experimental data index and may be inaccurate for some projects."
 msgstr "这个列表是通过实验性的数据索引统计而得到的，对某些项目来说可能并不精确。"
 
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
+msgid "This name will apply to this whole collection of reward tiers on OpenSea."
+msgstr ""
+
 #: src/components/v1/V1Project/V1PayButton.tsx
 #: src/components/v2/V2Project/V2PayButton/index.tsx
 msgid "This project is archived and can't be paid."
@@ -3398,6 +3410,10 @@ msgstr ""
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
 msgstr "这一比率决定了任何特定时间内每赎回一个代币可以获得的溢出金额。联合曲线比率较低的情况下，每赎回一个代币都会相应地提升所有剩余代币的赎回价值，这样就会形成一个代币长期持有的激励机制。联合曲线比率为 100% 时，则意味着无论什么时候赎回代币，每个代币获得的价值都将是相同的。"
+
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
+msgid "This short symbol will apply to this whole collection of reward tiers on OpenSea."
+msgstr ""
 
 #: src/components/veNft/VeNftSetUnclaimedTokensPermissionSection.tsx
 msgid "This will enable your project's veNFT contract to spend unclaimed tokens in addition to project ERC-20 tokens."

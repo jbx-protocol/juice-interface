@@ -13,8 +13,10 @@ import { DeployProjectWithNftsButton } from './DeployProjectWithNftsButton'
 export const rowGutter: [Gutter, Gutter] = [40, 30]
 
 export default function ReviewDeployTab() {
-  const { nftRewardTiers } = useAppSelector(state => state.editingV2Project)
-  const hasNfts = Boolean(nftRewardTiers?.length)
+  const {
+    nftRewards: { rewardTiers },
+  } = useAppSelector(state => state.editingV2Project)
+  const hasNfts = Boolean(rewardTiers?.length)
 
   const isMobile = useMobile()
   return (

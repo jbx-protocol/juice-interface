@@ -38,8 +38,12 @@ interface V2ProjectState {
   fundAccessConstraints: SerializedV2FundAccessConstraint[]
   payoutGroupedSplits: ETHPayoutGroupedSplits
   reservedTokensGroupedSplits: ReservedTokensGroupedSplits
-  nftRewardTiers: NftRewardTier[]
-  nftRewardsCIDs: string[] | undefined // points to locations of the NFTs' json on IPFS
+  nftRewards: {
+    rewardTiers: NftRewardTier[]
+    CIDs: string[] | undefined // points to locations of the NFTs' json on IPFS
+    collectionSymbol: string | undefined
+    collectionName: string | undefined
+  }
 }
 
 // Increment this version by 1 when making breaking changes.
@@ -108,8 +112,12 @@ export const defaultProjectState: V2ProjectState = {
   fundAccessConstraints: [],
   payoutGroupedSplits: EMPTY_PAYOUT_GROUPED_SPLITS,
   reservedTokensGroupedSplits: EMPTY_RESERVED_TOKENS_GROUPED_SPLITS,
-  nftRewardTiers: [],
-  nftRewardsCIDs: undefined,
+  nftRewards: {
+    rewardTiers: [],
+    CIDs: undefined,
+    collectionSymbol: undefined,
+    collectionName: undefined,
+  },
 }
 
 const editingV2ProjectSlice = createSlice({
@@ -210,10 +218,16 @@ const editingV2ProjectSlice = createSlice({
       state.fundingCycleData.ballot = action.payload
     },
     setNftRewardTiers: (state, action: PayloadAction<NftRewardTier[]>) => {
-      state.nftRewardTiers = action.payload
+      state.nftRewards.rewardTiers = action.payload
     },
     setNftRewardsCIDs: (state, action: PayloadAction<string[]>) => {
-      state.nftRewardsCIDs = action.payload
+      state.nftRewards.CIDs = action.payload
+    },
+    setNftRewardsSymbol: (state, action: PayloadAction<string | undefined>) => {
+      state.nftRewards.collectionSymbol = action.payload
+    },
+    setNftRewardsName: (state, action: PayloadAction<string | undefined>) => {
+      state.nftRewards.collectionName = action.payload
     },
     setAllowSetTerminals: (state, action: PayloadAction<boolean>) => {
       state.fundingCycleMetadata.global.allowSetTerminals = action.payload

@@ -819,6 +819,14 @@ msgstr "Close"
 msgid "Close, I'll do these later"
 msgstr "Close, I'll do these later"
 
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
+msgid "Collection name (optional)"
+msgstr "Collection name (optional)"
+
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
+msgid "Collection symbol (optional)"
+msgstr "Collection symbol (optional)"
+
 #: src/pages/home/HowItWorksSection.tsx
 msgid "Commit portions of your funds to the people or projects you want to support, or the contributors you want to pay. When you get paid, so do they."
 msgstr "Commit portions of your funds to the people or projects you want to support, or the contributors you want to pay. When you get paid, so do they."
@@ -3369,6 +3377,10 @@ msgstr "This is the maximum amount of funds that can leave the treasury each fun
 msgid "This list is using an experimental data index and may be inaccurate for some projects."
 msgstr ""
 
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
+msgid "This name will apply to this whole collection of reward tiers on OpenSea."
+msgstr "This name will apply to this whole collection of reward tiers on OpenSea."
+
 #: src/components/v1/V1Project/V1PayButton.tsx
 #: src/components/v2/V2Project/V2PayButton/index.tsx
 msgid "This project is archived and can't be paid."
@@ -3393,6 +3405,10 @@ msgstr "This proposed reconfiguration hasn't passed the {0} period. It's not gua
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
 msgstr "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
+
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
+msgid "This short symbol will apply to this whole collection of reward tiers on OpenSea."
+msgstr "This short symbol will apply to this whole collection of reward tiers on OpenSea."
 
 #: src/components/veNft/VeNftSetUnclaimedTokensPermissionSection.tsx
 msgid "This will enable your project's veNFT contract to spend unclaimed tokens in addition to project ERC-20 tokens."

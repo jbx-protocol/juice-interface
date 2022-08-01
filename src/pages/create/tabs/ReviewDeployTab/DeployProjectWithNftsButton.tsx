@@ -69,8 +69,7 @@ export function DeployProjectWithNftsButton() {
     projectMetadata,
     reservedTokensGroupedSplits,
     payoutGroupedSplits,
-    nftRewardsCIDs,
-    nftRewardTiers,
+    nftRewards: { CIDs, rewardTiers, collectionName, collectionSymbol },
   } = useAppSelector(state => state.editingV2Project)
   const fundingCycleMetadata = useEditingV2FundingCycleMetadataSelector()
   const fundingCycleData = useEditingV2FundingCycleDataSelector()
@@ -145,17 +144,18 @@ export function DeployProjectWithNftsButton() {
     let txSuccessful: boolean
 
     try {
-      if (projectName && nftRewardsCIDs) {
+      if (projectName && CIDs) {
         // create mapping from cids -> contributionFloor
         const nftRewardsArg: TxNftArg = {}
 
-        nftRewardsCIDs.map((cid, index) => {
-          nftRewardsArg[cid] = nftRewardTiers[index].contributionFloor
+        CIDs.map((cid, index) => {
+          nftRewardsArg[cid] = rewardTiers[index].contributionFloor
         })
 
         txSuccessful = await launchProjectWithNftsTx(
           {
-            projectName,
+            collectionName: collectionName ?? projectName,
+            collectionSymbol: collectionSymbol ?? '',
             projectMetadataCID: uploadedMetadata.IpfsHash,
             fundingCycleData,
             fundingCycleMetadata: {
@@ -185,8 +185,10 @@ export function DeployProjectWithNftsButton() {
     fundAccessConstraints,
     payoutGroupedSplits,
     reservedTokensGroupedSplits,
-    nftRewardsCIDs,
-    nftRewardTiers,
+    CIDs,
+    rewardTiers,
+    collectionName,
+    collectionSymbol,
     dispatch,
     router,
   ])

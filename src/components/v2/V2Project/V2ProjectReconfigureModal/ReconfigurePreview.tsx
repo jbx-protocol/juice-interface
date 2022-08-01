@@ -1,4 +1,4 @@
-import { Col, Row } from 'antd'
+import { Col, Row, Space } from 'antd'
 import {
   AllowMintingStatistic,
   AllowSetTerminalsStatistic,
@@ -110,7 +110,7 @@ export default function ReconfigurePreview({
     ) ?? '0'
 
   return (
-    <div style={{ padding: '0 0px' }}>
+    <Space direction="vertical" size="middle">
       <Row gutter={gutter} style={{ marginBottom: rowMargin }}>
         <Col md={12} sm={12}>
           <DurationStatistic duration={fundingCycle.duration} />
@@ -196,6 +196,6 @@ export default function ReconfigurePreview({
           projectOwnerAddress={userAddress}
         />
       )}
-    </div>
+    </Space>
   )
 }

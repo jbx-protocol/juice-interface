@@ -384,6 +384,7 @@ export function DistributionSplitsStatistic({
           totalValue={totalValue}
           projectOwnerAddress={projectOwnerAddress}
           showSplitValues={showSplitValues}
+          valueFormatProps={{ precision: 2 }}
         />
       )}
     />

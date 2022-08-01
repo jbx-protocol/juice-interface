@@ -93,7 +93,6 @@ export default function ReconfigurePreview({
   )
 
   const gutter = 20
-  const rowMargin = 20
 
   const secondRowColWidth = hasDuration && hasDistributionLimit ? 8 : 12
 
@@ -111,7 +110,7 @@ export default function ReconfigurePreview({
 
   return (
     <Space direction="vertical" size="middle">
-      <Row gutter={gutter} style={{ marginBottom: rowMargin }}>
+      <Row gutter={gutter}>
         <Col md={12} sm={12}>
           <DurationStatistic duration={fundingCycle.duration} />
         </Col>
@@ -122,7 +121,7 @@ export default function ReconfigurePreview({
           />
         </Col>
       </Row>
-      <Row gutter={gutter} style={{ marginBottom: rowMargin }}>
+      <Row gutter={gutter}>
         <Col md={12} sm={12}>
           <InflationRateStatistic
             inflationRate={
@@ -136,7 +135,7 @@ export default function ReconfigurePreview({
           <IssuanceRateStatistic issuanceRate={issuanceRate} />
         </Col>
       </Row>
-      <Row gutter={gutter} style={{ marginBottom: rowMargin }}>
+      <Row gutter={gutter}>
         <Col md={secondRowColWidth} sm={12}>
           <ReservedTokensStatistic
             reservedRate={reservedRate}
@@ -156,7 +155,7 @@ export default function ReconfigurePreview({
           </Col>
         ) : null}
       </Row>
-      <Row gutter={gutter} style={{ marginBottom: rowMargin }}>
+      <Row gutter={gutter}>
         <Col md={8}>
           <PausePayStatistic pausePay={fundingCycleMetadata.pausePay} />
         </Col>
@@ -171,7 +170,7 @@ export default function ReconfigurePreview({
           />
         </Col>
       </Row>
-      <Row gutter={gutter} style={{ marginBottom: rowMargin }}>
+      <Row gutter={gutter}>
         {hasDuration ? (
           <Col span={24}>
             <ReconfigurationStatistic ballotAddress={fundingCycle.ballot} />

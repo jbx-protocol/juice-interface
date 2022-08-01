@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import CurrencySymbol from 'components/CurrencySymbol'
+import ETHAmount from 'components/currency/ETHAmount'
 import EtherscanLink from 'components/EtherscanLink'
 import FormattedAddress from 'components/FormattedAddress'
 import { ThemeContext } from 'contexts/themeContext'
@@ -91,8 +91,9 @@ export default function RedeemEventElem({
       </div>
 
       <div style={{ color: colors.text.secondary }}>
-        <CurrencySymbol currency="ETH" />
-        {formatWad(event.returnAmount, { precision: 4 })} overflow received
+        <Trans>
+          <ETHAmount amount={event.returnAmount} /> overflow received
+        </Trans>
       </div>
     </div>
   )

@@ -7,30 +7,29 @@ import { betweenZeroAndOne } from 'utils/bigNumbers'
 import CurrencySymbol from '../CurrencySymbol'
 
 import ETHToUSD from './ETHToUSD'
-
-const MAX_PRECISION = 6
+import { PRECISION_ETH } from 'constants/currency'
 
 /**
  * Render a given amount formatted as ETH. Displays USD amount in a tooltip on hover.
  */
 export default function ETHAmount({
   amount,
-  precision = 0,
+  precision = PRECISION_ETH,
   padEnd = false,
+  fallback,
 }: {
-  amount?: BigNumber | string
+  amount: BigNumber | string | undefined
   precision?: number
   padEnd?: boolean
+  fallback?: string
 }) {
   // Account for being passed a string amount or a BigNumber amount
   const isBetweenZeroAndOne =
     (BigNumber.isBigNumber(amount) && betweenZeroAndOne(amount)) ||
     betweenZeroAndOne(parseWad(amount))
-
   const decimalsCount = fromWad(amount).split('.')[1]?.length ?? 0
-
   const precisionAdjusted = isBetweenZeroAndOne
-    ? Math.min(decimalsCount, MAX_PRECISION)
+    ? Math.min(decimalsCount, PRECISION_ETH)
     : precision
 
   const formattedETHAmount = formatWad(amount, {
@@ -38,7 +37,7 @@ export default function ETHAmount({
     padEnd,
   })
 
-  if (amount === undefined) return null
+  if (amount === undefined) return <span>{fallback}</span> ?? null
 
   if (Number(formattedETHAmount) === 0) {
     return (

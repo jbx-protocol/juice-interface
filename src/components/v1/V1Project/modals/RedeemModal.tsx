@@ -2,7 +2,7 @@ import { t, Trans } from '@lingui/macro'
 import { Modal, Space, Form } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 
-import CurrencySymbol from 'components/CurrencySymbol'
+import ETHAmount from 'components/currency/ETHAmount'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 
@@ -174,8 +174,7 @@ export default function RedeemModal({
             <Trans>
               Currently worth:{' '}
               <span>
-                <CurrencySymbol currency="ETH" />
-                {formatWad(maxClaimable, { precision: 4 })}
+                <ETHAmount amount={maxClaimable} />
               </span>
             </Trans>
           </p>

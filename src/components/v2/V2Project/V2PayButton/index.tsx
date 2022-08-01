@@ -1,6 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
-import CurrencySymbol from 'components/CurrencySymbol'
+import ETHAmount from 'components/currency/ETHAmount'
 import { useContext, useState } from 'react'
 import { formatWad } from 'utils/formatNumber'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
@@ -72,9 +72,8 @@ export default function V2PayButton({
       {payInCurrency === V2_CURRENCY_USD && (
         <div style={{ fontSize: '.7rem' }}>
           <Trans>
-            Paid as <CurrencySymbol currency="ETH" />
+            Paid as <ETHAmount amount={formatWad(weiPayAmt) || '0'} />
           </Trans>
-          {formatWad(weiPayAmt) || '0'}
         </div>
       )}
 

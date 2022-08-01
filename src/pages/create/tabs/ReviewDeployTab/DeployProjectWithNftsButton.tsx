@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import { Button } from 'antd'
+import { Button, FormInstance } from 'antd'
 import {
   useAppSelector,
   useEditingV2FundAccessConstraintsSelector,
@@ -52,7 +52,7 @@ const getProjectIdFromNftLaunchReceipt = (
   return projectId
 }
 
-export function DeployProjectWithNftsButton() {
+export function DeployProjectWithNftsButton({ form }: { form: FormInstance }) {
   const launchProjectWithNftsTx = useLaunchProjectWithNftsTx()
   const router = useRouter()
 
@@ -191,10 +191,24 @@ export function DeployProjectWithNftsButton() {
     router,
   ])
 
+  const onButtonClick = async () => {
+    try {
+      await form.validateFields()
+    } catch {
+      return
+    }
+
+    if (!userAddress) {
+      return onSelectWallet?.()
+    }
+
+    return deployProject()
+  }
+
   return (
     <>
       <Button
-        onClick={userAddress ? deployProject : onSelectWallet}
+        onClick={onButtonClick}
         type="primary"
         htmlType="submit"
         size="large"

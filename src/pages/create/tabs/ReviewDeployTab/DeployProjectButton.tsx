@@ -10,7 +10,6 @@ import { useLaunchProjectTx } from 'hooks/v2/transactor/LaunchProjectTx'
 import { useCallback, useContext, useState } from 'react'
 import { uploadProjectMetadata } from 'utils/ipfs'
 import { TransactionReceipt } from '@ethersproject/providers'
-import { useRouter } from 'next/router'
 import { BigNumber } from '@ethersproject/bignumber'
 import { NetworkContext } from 'contexts/networkContext'
 import { emitErrorNotification } from 'utils/notifications'
@@ -22,6 +21,7 @@ import { useAppDispatch } from 'hooks/AppDispatch'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 
 import { v2ProjectRoute } from 'utils/routes'
+import { redirectTo } from 'utils/windowUtils'
 
 import { readNetwork } from 'constants/networks'
 import { findTransactionReceipt } from './utils'
@@ -43,7 +43,6 @@ const getProjectIdFromReceipt = (txReceipt: TransactionReceipt): number => {
 
 export default function DeployProjectButton() {
   const launchProjectTx = useLaunchProjectTx()
-  const router = useRouter()
 
   const { userAddress, onSelectWallet } = useContext(NetworkContext)
 
@@ -116,7 +115,7 @@ export default function DeployProjectButton() {
             // Reset Redux state/localstorage after deploying
             dispatch(editingV2ProjectActions.resetState())
 
-            router.push(`${v2ProjectRoute({ projectId })}?newDeploy=true`)
+            redirectTo(`${v2ProjectRoute({ projectId })}?newDeploy=true`)
           },
           onCancelled() {
             setDeployLoading(false)
@@ -143,7 +142,6 @@ export default function DeployProjectButton() {
     reservedTokensGroupedSplits,
     launchProjectTx,
     dispatch,
-    router,
   ])
 
   return (

@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router'
 import { CaretRightFilled, CheckCircleFilled } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
@@ -67,6 +66,7 @@ import RestrictedActionsForm, {
 import { toDateSeconds } from 'utils/formatDate'
 
 import { BallotStrategy } from 'models/ballot'
+import { redirectTo } from 'utils/windowUtils'
 
 import ConfirmDeployProject from './ConfirmDeployProject'
 
@@ -84,7 +84,6 @@ export default function V1CreatePage() {
 }
 
 function V1Create() {
-  const router = useRouter()
   const { signerNetwork, userAddress, onSelectWallet } =
     useContext(NetworkContext)
   const { colors, radii } = useContext(ThemeContext).theme
@@ -326,7 +325,7 @@ function V1Create() {
           resetProjectForm()
           dispatch(editingProjectActions.resetState())
 
-          router.push(`/p/${editingProjectInfo.handle}?newDeploy=true`)
+          redirectTo(`/p/${editingProjectInfo.handle}?newDeploy=true`)
         },
       },
     )
@@ -348,7 +347,6 @@ function V1Create() {
     editingTicketMods,
     resetProjectForm,
     dispatch,
-    router,
   ])
 
   const viewedCurrentStep = useCallback(() => {

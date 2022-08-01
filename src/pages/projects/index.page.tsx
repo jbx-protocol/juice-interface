@@ -21,6 +21,7 @@ import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 
 import { CV } from 'models/cv'
+import { redirectTo } from 'utils/windowUtils'
 
 import { layouts } from 'constants/styles/layouts'
 import TrendingProjects from './TrendingProjects'
@@ -178,7 +179,7 @@ function Projects() {
           placeholder={t`Search projects by handle`}
           onSearch={val => {
             setSearchText(val)
-            router.push(`/projects?tab=all${val ? `&search=${val}` : ''}`)
+            redirectTo(`/projects?tab=all${val ? `&search=${val}` : ''}`)
           }}
           defaultValue={searchText}
           allowClear

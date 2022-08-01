@@ -12,7 +12,6 @@ import ProjectDetailsTabContent from './tabs/ProjectDetailsTab/ProjectDetailsTab
 import FundingCycleTabContent from './tabs/FundingCycleTab/FundingCycleTabContent'
 import { TabContentProps } from './models'
 import ReviewDeployTab from './tabs/ReviewDeployTab'
-import V2WarningBanner from './V2WarningBanner'
 
 export default function V2CreatePage() {
   return (
@@ -57,7 +56,6 @@ function V2Create() {
   return (
     <V2UserProvider>
       <V2CurrencyProvider>
-        <V2WarningBanner />
         <div
           style={{
             maxWidth: 1200,

@@ -113,9 +113,21 @@ msgstr "<0/> Les projets archivés n'ont pas été modifiés ou supprimés de la
 msgid "<0/> The Juicebox protocol is open to anyone, and project configurations can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO or Peel. Do your own research and understand the risks before committing your funds."
 msgstr "<0/> Le protocole Juicebox est ouvert à tous et les paramètres du projet peuvent varier considérablement. Il y a des risques associés à l'interaction avec tous les projets du protocole. Les projets développés à partir du protocole ne sont ni approuvés, ni vérifiés par JuiceboxDAO. Vous devez faire votre propre recherche et comprendre les risques avant d'engager vos fonds."
 
+#: src/components/modals/ParticipantsModal.tsx
+msgid "<0/> contributed"
+msgstr ""
+
+#: src/components/activityEventElems/RedeemEventElem.tsx
+msgid "<0/> overflow received"
+msgstr ""
+
 #: src/components/Project/SpendingStats.tsx
 msgid "<0/> owner balance"
 msgstr "<0/> solde du propriétaire"
+
+#: src/components/v1/shared/FundingCycle/modals/WithdrawModal.tsx
+msgid "<0/> will go to the project owner: <1/>"
+msgstr ""
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "<0/>{0} after {feePercentage}% JBX membership fee"
@@ -1017,8 +1029,8 @@ msgstr "Propriétaire actuel: {ownerAddress}"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
-msgid "Currently worth: <0><1/>{0}</0>"
-msgstr "Valeur actuelle : <0><1/>{0}</0>"
+msgid "Currently worth: <0><1/></0>"
+msgstr ""
 
 #: src/components/ReconfigurationStrategy/ReconfigurationStrategySelector.tsx
 #: src/utils/ballot.ts
@@ -4212,10 +4224,6 @@ msgstr "{0} solde"
 msgid "{0} balance: <0><1>{1} {tokensTextShort}</1><2>({share}% of supply)</2></0>"
 msgstr "{0} solde : <0><1>{1} {tokensTextShort}</1><2>({share}% d'offre)</2></0>"
 
-#: src/components/modals/ParticipantsModal.tsx
-msgid "{0} contributed"
-msgstr "{0} contribué"
-
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 msgid "{0} days"
 msgstr "{0} jours"
@@ -4245,10 +4253,6 @@ msgstr "{0} total"
 #: src/components/modals/ParticipantsModal.tsx
 msgid "{0} unclaimed"
 msgstr "{0} non réclamé"
-
-#: src/components/v1/shared/FundingCycle/modals/WithdrawModal.tsx
-msgid "{0} will go to the project owner: <0/>"
-msgstr "{0} ira au propriétaire du projet : <0/>"
 
 #: src/components/v1/V1Project/FundingCycles/FundingHistory.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleHistory.tsx

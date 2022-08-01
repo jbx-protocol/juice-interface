@@ -177,7 +177,7 @@ export default function V2RedeemModal({
               </span>
             </Trans>
           </p>
-          <p style={statsStyle}>
+          <div style={statsStyle}>
             <Trans>
               {tokenSymbolText({ tokenSymbol: tokenSymbol, capitalize: true })}{' '}
               balance:{' '}
@@ -204,7 +204,7 @@ export default function V2RedeemModal({
                 </div>
               </div>
             </Trans>
-          </p>
+          </div>
           <p style={statsStyle}>
             <Trans>
               Currently worth:{' '}

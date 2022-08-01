@@ -18,7 +18,7 @@ export default function ETHAmount({
   padEnd = false,
   fallback,
 }: {
-  amount: BigNumber | string | undefined
+  amount: BigNumber | undefined
   precision?: number
   padEnd?: boolean
   fallback?: string

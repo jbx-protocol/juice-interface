@@ -3,7 +3,7 @@ import { Button, Tooltip } from 'antd'
 import ETHAmount from 'components/currency/ETHAmount'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useContext, useState } from 'react'
-import { formatWad, fromWad } from 'utils/formatNumber'
+import { fromWad } from 'utils/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 import useWeiConverter from 'hooks/WeiConverter'
 import PayWarningModal from 'components/PayWarningModal'
@@ -102,7 +102,7 @@ export default function V1PayButton({
       {payInCurrency === V1_CURRENCY_USD && (
         <div style={{ fontSize: '.7rem' }}>
           <Trans>
-            Paid as <ETHAmount amount={formatWad(weiPayAmt) || '0'} />
+            Paid as <ETHAmount amount={weiPayAmt} />
           </Trans>
         </div>
       )}

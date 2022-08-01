@@ -113,9 +113,21 @@ msgstr "<0/> Arşivlenen projeler blok zincirinde değiştirilmemiştir veya sil
 msgid "<0/> The Juicebox protocol is open to anyone, and project configurations can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO or Peel. Do your own research and understand the risks before committing your funds."
 msgstr "<0/> Juicebox protokolü herkese açıktır ve proje yapılandırmaları çok farklı olabilir. Protokoldeki tüm projelerle etkileşime girmenin riskleri vardır. Protokole dayalı projeler JuiceboxDAO veya Peel tarafından incelenmez veya onaylanmaz, bu nedenle kendi araştırmanızı yapmalı ve fonlarınızı taahhüt etmeden önce riskleri anlamalısınız."
 
+#: src/components/modals/ParticipantsModal.tsx
+msgid "<0/> contributed"
+msgstr ""
+
+#: src/components/activityEventElems/RedeemEventElem.tsx
+msgid "<0/> overflow received"
+msgstr ""
+
 #: src/components/Project/SpendingStats.tsx
 msgid "<0/> owner balance"
 msgstr "<0/> sahip bakiyesi"
+
+#: src/components/v1/shared/FundingCycle/modals/WithdrawModal.tsx
+msgid "<0/> will go to the project owner: <1/>"
+msgstr ""
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "<0/>{0} after {feePercentage}% JBX membership fee"
@@ -1017,8 +1029,8 @@ msgstr "Güncel sahibi: {ownerAddress}"
 
 #: src/components/v1/V1Project/modals/RedeemModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
-msgid "Currently worth: <0><1/>{0}</0>"
-msgstr "Güncel değeri: <0><1/>{0}</0>"
+msgid "Currently worth: <0><1/></0>"
+msgstr ""
 
 #: src/components/ReconfigurationStrategy/ReconfigurationStrategySelector.tsx
 #: src/utils/ballot.ts
@@ -4212,10 +4224,6 @@ msgstr "{0} bakiyesi"
 msgid "{0} balance: <0><1>{1} {tokensTextShort}</1><2>({share}% of supply)</2></0>"
 msgstr "{0} bakiyesi: <0><1>{1} {tokensTextShort}</1><2>(arzın %{share} kadarı)</2></0>"
 
-#: src/components/modals/ParticipantsModal.tsx
-msgid "{0} contributed"
-msgstr "{0} katkı"
-
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 msgid "{0} days"
 msgstr "{0} gün"
@@ -4245,10 +4253,6 @@ msgstr "Toplam {0}"
 #: src/components/modals/ParticipantsModal.tsx
 msgid "{0} unclaimed"
 msgstr ""
-
-#: src/components/v1/shared/FundingCycle/modals/WithdrawModal.tsx
-msgid "{0} will go to the project owner: <0/>"
-msgstr "{0} proje sahibine gidecek: <0/>"
 
 #: src/components/v1/V1Project/FundingCycles/FundingHistory.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleHistory.tsx

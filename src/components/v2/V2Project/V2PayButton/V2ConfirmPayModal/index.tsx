@@ -21,6 +21,7 @@ import {
 } from 'utils/v2/currency'
 import { usePayETHPaymentTerminalTx } from 'hooks/v2/transactor/PayETHPaymentTerminal'
 import { emitErrorNotification } from 'utils/notifications'
+import { ThemeContext } from 'contexts/themeContext'
 
 import Paragraph from 'components/Paragraph'
 import { weightedAmount } from 'utils/v2/math'
@@ -72,8 +73,9 @@ export function V2ConfirmPayModal({
   onCancel?: VoidFunction
 }) {
   const { userAddress, onSelectWallet } = useContext(NetworkContext)
-  const isMobile = useMobile()
-
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
   const {
     fundingCycle,
     fundingCycleMetadata,
@@ -82,17 +84,17 @@ export function V2ConfirmPayModal({
     tokenSymbol,
     nftRewards: { rewardTiers },
   } = useContext(V2ProjectContext)
-  const converter = useCurrencyConverter()
-  const payProjectTx = usePayETHPaymentTerminalTx()
-
-  const nftRewardTiers = rewardTiers //rewardTiers
 
   const [loading, setLoading] = useState<boolean>()
   const [transactionPending, setTransactionPending] = useState<boolean>()
-
   const [form] = useForm<V2PayFormType>()
 
+  const converter = useCurrencyConverter()
+  const payProjectTx = usePayETHPaymentTerminalTx()
+  const isMobile = useMobile()
+
   const usdAmount = converter.weiToUsd(weiAmount)
+  const nftRewardTiers = rewardTiers //rewardTiers
 
   if (!fundingCycle || !projectId || !projectMetadata) return null
 
@@ -110,8 +112,13 @@ export function V2ConfirmPayModal({
     weiAmount,
     'reserved',
   )
-  let nftRewardTier: NftRewardTier | null = null
 
+  const tokenText = tokenSymbolText({
+    tokenSymbol,
+    plural: true,
+  })
+
+  let nftRewardTier: NftRewardTier | null = null
   if (nftRewardTiers && featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)) {
     nftRewardTier = getNftRewardTier({
       nftRewardTiers,
@@ -193,11 +200,19 @@ export function V2ConfirmPayModal({
     >
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
         {projectMetadata.payDisclosure && (
-          <Callout>
+          <Callout
+            style={{
+              background: 'none',
+              border: '1px solid' + colors.stroke.secondary,
+            }}
+          >
             <strong>
               <Trans>Notice from {projectMetadata.name}</Trans>
             </strong>
-            <Paragraph description={projectMetadata.payDisclosure} />
+            <Paragraph
+              description={projectMetadata.payDisclosure}
+              style={{ fontStyle: 'italic', fontSize: '0.8rem' }}
+            />
           </Callout>
         )}
 
@@ -207,13 +222,12 @@ export function V2ConfirmPayModal({
             {formatWad(weiAmount)} {V2CurrencyName(V2_CURRENCY_ETH)})
           </Descriptions.Item>
           <Descriptions.Item
-            label={t`${tokenSymbolText({
-              capitalize: true,
-              plural: true,
-            })} for you`}
+            label={<Trans>Tokens for you</Trans>}
             className="content-right"
           >
-            <div>{formatWad(receivedTickets, { precision: 0 })}</div>
+            <div>
+              {formatWad(receivedTickets, { precision: 0 })} {tokenText}
+            </div>
             <div style={{ fontSize: '0.7rem' }}>
               {userAddress ? (
                 <Trans>
@@ -223,14 +237,20 @@ export function V2ConfirmPayModal({
             </div>
           </Descriptions.Item>
           <Descriptions.Item
-            label={t`${tokenSymbolText({
-              tokenSymbol: tokenSymbol,
-              capitalize: true,
-              plural: true,
-            })} reserved`}
+            label={
+              <TooltipLabel
+                label={t`Tokens reserved`}
+                tip={
+                  <Trans>
+                    This project reserves some of the newly minted tokens for
+                    itself.
+                  </Trans>
+                }
+              />
+            }
             className="content-right"
           >
-            {formatWad(ownerTickets, { precision: 0 })}
+            {formatWad(ownerTickets, { precision: 0 })} {tokenText}
           </Descriptions.Item>
           {nftRewardTier ? (
             <Descriptions.Item

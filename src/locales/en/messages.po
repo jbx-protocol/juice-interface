@@ -1030,10 +1030,6 @@ msgstr ""
 msgid "Custom token beneficiary"
 msgstr "Custom token beneficiary"
 
-#: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
-msgid "Customize payment"
-msgstr "Customize payment"
-
 #: src/components/formItems/ProjectPayButton.tsx
 msgid "Customize your project's \"pay\" button. Leave blank to use the default."
 msgstr "Customize your project's \"pay\" button. Leave blank to use the default."
@@ -1928,6 +1924,10 @@ msgstr "Launch your project"
 msgid "Leave blank to start immediately."
 msgstr "Leave blank to start immediately."
 
+#: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
+msgid "Leave unchecked to have Juicebox track your token balance, saving gas on this transaction. You can claim your ERC-20 tokens later."
+msgstr "Leave unchecked to have Juicebox track your token balance, saving gas on this transaction. You can claim your ERC-20 tokens later."
+
 #: src/components/Navbar/Mobile/ThemePickerMobile.tsx
 msgid "Light theme"
 msgstr ""
@@ -2053,8 +2053,8 @@ msgid "Mint rate"
 msgstr "Mint rate"
 
 #: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
-msgid "Mint this project's ERC-20 tokens to your wallet. Leave unchecked to have Juicebox track your token balance, saving gas on this transaction. You can claim your ERC-20 tokens later."
-msgstr "Mint this project's ERC-20 tokens to your wallet. Leave unchecked to have Juicebox track your token balance, saving gas on this transaction. You can claim your ERC-20 tokens later."
+msgid "Mint this project's ERC-20 tokens to your wallet."
+msgstr "Mint this project's ERC-20 tokens to your wallet."
 
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
@@ -2366,10 +2366,6 @@ msgid "Paying <0>{0}</0> is not an investment — it's a way to support the proj
 msgstr "Paying <0>{0}</0> is not an investment — it's a way to support the project. Any value or utility of the tokens you receive is determined by {1}."
 
 #: src/components/v1/V1Project/V1PayButton.tsx
-msgid "Paying this project is currently disabled, because the token reserved rate is 100% and no tokens will be earned by making a payment."
-msgstr ""
-
-#: src/components/v1/V1Project/V1PayButton.tsx
 msgid "Paying this project is currently disabled."
 msgstr ""
 
@@ -2389,6 +2385,10 @@ msgstr "Payment memo"
 msgid "Payment memo image"
 msgstr "Payment memo image"
 
+#: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
+msgid "Payment options"
+msgstr "Payment options"
+
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Payments"
@@ -2396,8 +2396,8 @@ msgstr ""
 
 #: src/components/v1/V1Project/V1PayButton.tsx
 #: src/components/v2/V2Project/V2PayButton/index.tsx
-msgid "Payments are paused for the current funding cycle."
-msgstr ""
+msgid "Payments are paused in this funding cycle."
+msgstr "Payments are paused in this funding cycle."
 
 #: src/pages/home/StatsSection.tsx
 msgid "Payments made"
@@ -2659,9 +2659,12 @@ msgid "Read more"
 msgstr "Read more"
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
-#: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "Receive ERC-20"
 msgstr "Receive ERC-20"
+
+#: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
+msgid "Receive ERC-20 tokens"
+msgstr "Receive ERC-20 tokens"
 
 #: src/components/v2/V2Project/NftRewardsSection/RewardTier.tsx
 msgid "Receive this NFT when you contribute <0>{0}</0> - <<1>{rewardTierUpperLimit} ETH</1>."
@@ -3395,6 +3398,10 @@ msgstr "This project is archived and can't be paid."
 msgid "This project is currently using the Juicebox V1 terminal contract. New features introduced in V1.1 allow the project owner to:"
 msgstr "This project is currently using the Juicebox V1 terminal contract. New features introduced in V1.1 allow the project owner to:"
 
+#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
+msgid "This project reserves some of the newly minted tokens for itself."
+msgstr "This project reserves some of the newly minted tokens for itself."
+
 #: src/components/v2/V2Project/V2ProjectHeaderActions.tsx
 msgid "This project uses the V2 version of the Juicebox contracts."
 msgstr "This project uses the V2 version of the Juicebox contracts."
@@ -3551,10 +3558,18 @@ msgstr "Tokens can be redeemed for a portion of this project's ETH overflow, acc
 msgid "Tokens cannot be claimed because no ERC-20 token has been issued for this project. ERC-20 tokens must be issued by the project owner."
 msgstr "Tokens cannot be claimed because no ERC-20 token has been issued for this project. ERC-20 tokens must be issued by the project owner."
 
+#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
+msgid "Tokens for you"
+msgstr "Tokens for you"
+
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "Tokens receiver"
 msgstr "Tokens receiver"
+
+#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
+msgid "Tokens reserved"
+msgstr "Tokens reserved"
 
 #: src/components/v2/shared/SplitItem.tsx
 msgid "Tokens:"
@@ -3779,6 +3794,10 @@ msgstr "WAGMI!"
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Wallet address"
 msgstr "Wallet address"
+
+#: src/components/v1/V1Project/V1PayButton.tsx
+msgid "We've disabled payments because the project has opted to reserve 100% of new tokens. You would receive no tokens from your payment."
+msgstr "We've disabled payments because the project has opted to reserve 100% of new tokens. You would receive no tokens from your payment."
 
 #: src/components/formItems/ProjectLink.tsx
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
@@ -4233,7 +4252,6 @@ msgid "{0} days"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
-#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "{0} for you"
 msgstr ""
 
@@ -4242,7 +4260,6 @@ msgid "{0} holders"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
-#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "{0} reserved"
 msgstr ""
 

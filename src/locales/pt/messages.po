@@ -1035,10 +1035,6 @@ msgstr "Estratégia personalizada"
 msgid "Custom token beneficiary"
 msgstr "Titular de token personalizado"
 
-#: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
-msgid "Customize payment"
-msgstr ""
-
 #: src/components/formItems/ProjectPayButton.tsx
 msgid "Customize your project's \"pay\" button. Leave blank to use the default."
 msgstr "Personalize o botão de \"pagar\" do seu projeto. Deixe em branco para utilizar o padrão."
@@ -1933,6 +1929,10 @@ msgstr "Lance seu projeto"
 msgid "Leave blank to start immediately."
 msgstr "Deixar em branco para iniciar imediatamente."
 
+#: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
+msgid "Leave unchecked to have Juicebox track your token balance, saving gas on this transaction. You can claim your ERC-20 tokens later."
+msgstr ""
+
 #: src/components/Navbar/Mobile/ThemePickerMobile.tsx
 msgid "Light theme"
 msgstr "Tema claro"
@@ -2058,7 +2058,7 @@ msgid "Mint rate"
 msgstr "Taxa de emissão"
 
 #: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
-msgid "Mint this project's ERC-20 tokens to your wallet. Leave unchecked to have Juicebox track your token balance, saving gas on this transaction. You can claim your ERC-20 tokens later."
+msgid "Mint this project's ERC-20 tokens to your wallet."
 msgstr ""
 
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
@@ -2371,10 +2371,6 @@ msgid "Paying <0>{0}</0> is not an investment — it's a way to support the proj
 msgstr "Pagar <0>{0}</0> não é um investimento — é uma forma de apoiar o projeto. Qualquer valor ou aplicabilidade dos tokens que recebe está determinado por {1}."
 
 #: src/components/v1/V1Project/V1PayButton.tsx
-msgid "Paying this project is currently disabled, because the token reserved rate is 100% and no tokens will be earned by making a payment."
-msgstr "O pagamento deste projeto está atualmente desabilitado, pois a taxa de reserva do token exclusivo está em 100% e nenhum token será ganhado ao fazer o pagamento."
-
-#: src/components/v1/V1Project/V1PayButton.tsx
 msgid "Paying this project is currently disabled."
 msgstr "O pagamento deste projeto está atualmente indisponível."
 
@@ -2394,6 +2390,10 @@ msgstr ""
 msgid "Payment memo image"
 msgstr "A imagem da nota de pagamento"
 
+#: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
+msgid "Payment options"
+msgstr ""
+
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Payments"
@@ -2401,8 +2401,8 @@ msgstr "Pagamentos"
 
 #: src/components/v1/V1Project/V1PayButton.tsx
 #: src/components/v2/V2Project/V2PayButton/index.tsx
-msgid "Payments are paused for the current funding cycle."
-msgstr "Os pagamentos estão pausados para para o atual ciclo de financiamento."
+msgid "Payments are paused in this funding cycle."
+msgstr ""
 
 #: src/pages/home/StatsSection.tsx
 msgid "Payments made"
@@ -2664,9 +2664,12 @@ msgid "Read more"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
-#: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "Receive ERC-20"
 msgstr "Receber ERC-20"
+
+#: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
+msgid "Receive ERC-20 tokens"
+msgstr ""
 
 #: src/components/v2/V2Project/NftRewardsSection/RewardTier.tsx
 msgid "Receive this NFT when you contribute <0>{0}</0> - <<1>{rewardTierUpperLimit} ETH</1>."
@@ -3400,6 +3403,10 @@ msgstr "Este projeto está arquivado e não pode ser pago."
 msgid "This project is currently using the Juicebox V1 terminal contract. New features introduced in V1.1 allow the project owner to:"
 msgstr "Este projeto está atualmente usando o contrato de terminal do Juicebox V1. Novas adições introduzidas na V1.1 permitem ao dono do projeto:"
 
+#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
+msgid "This project reserves some of the newly minted tokens for itself."
+msgstr ""
+
 #: src/components/v2/V2Project/V2ProjectHeaderActions.tsx
 msgid "This project uses the V2 version of the Juicebox contracts."
 msgstr "Este projeto usa a versão V2 dos contratos do Juicebox."
@@ -3556,10 +3563,18 @@ msgstr "Tokens podem ser resgatados por uma porção do overflow em ETH deste pr
 msgid "Tokens cannot be claimed because no ERC-20 token has been issued for this project. ERC-20 tokens must be issued by the project owner."
 msgstr "Tokens não podem ser reivindicados, pois nenhum token ERC-20 foi emitido para este projeto. Tokens ERC-20 devem ser emitidos pelo proprietário do projeto."
 
+#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
+msgid "Tokens for you"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "Tokens receiver"
 msgstr "Destinatário de tokens"
+
+#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
+msgid "Tokens reserved"
+msgstr ""
 
 #: src/components/v2/shared/SplitItem.tsx
 msgid "Tokens:"
@@ -3784,6 +3799,10 @@ msgstr "WAGMI!"
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Wallet address"
 msgstr "Endereço da carteira"
+
+#: src/components/v1/V1Project/V1PayButton.tsx
+msgid "We've disabled payments because the project has opted to reserve 100% of new tokens. You would receive no tokens from your payment."
+msgstr ""
 
 #: src/components/formItems/ProjectLink.tsx
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
@@ -4238,7 +4257,6 @@ msgid "{0} days"
 msgstr "{0} dias"
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
-#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "{0} for you"
 msgstr "{0} para você"
 
@@ -4247,7 +4265,6 @@ msgid "{0} holders"
 msgstr "{0} titulares"
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
-#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "{0} reserved"
 msgstr "{0} reservado"
 

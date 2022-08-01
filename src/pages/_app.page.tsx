@@ -8,7 +8,7 @@ import '../styles/index.scss'
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
-      {/* Default HEAD - overwitten by specific page SEO */}
+      {/* Default HEAD - overwritten by specific page SEO */}
       <Head />
       <Component {...pageProps} />
     </>

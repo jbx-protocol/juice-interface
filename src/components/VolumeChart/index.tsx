@@ -1,6 +1,6 @@
 import { Select, Space } from 'antd'
 import { t, Trans } from '@lingui/macro'
-import ETHAmount from 'components/currency/ETHAmount'
+import CurrencySymbol from 'components/CurrencySymbol'
 
 import { ThemeContext } from 'contexts/themeContext'
 import moment from 'moment'
@@ -304,7 +304,8 @@ export default function VolumeChart({
                     </div>
                     {payload[0].payload.tapped ? (
                       <div>
-                        -<ETHAmount amount={payload[0].payload.tapped} />
+                        -<CurrencySymbol currency="ETH" />
+                        {payload[0].payload.tapped}
                         <div
                           style={{
                             fontSize: '0.7rem',
@@ -317,7 +318,8 @@ export default function VolumeChart({
                       </div>
                     ) : (
                       <div>
-                        <ETHAmount amount={payload[0].payload.value} />
+                        <CurrencySymbol currency="ETH" />
+                        {payload[0].payload.value}
                       </div>
                     )}
                   </div>

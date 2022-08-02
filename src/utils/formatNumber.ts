@@ -241,3 +241,25 @@ export const formatPercent = (
   }
   return (sharePct?.toNumber() / 100).toString()
 }
+
+export const truncateLongNumber = (num: number, digits: number) => {
+  const lookup = [
+    { value: 1, symbol: '' },
+    { value: 1e3 - 1, symbol: 'K' },
+    { value: 1e6 - 1, symbol: 'M' },
+    { value: 1e9 - 1, symbol: 'B' },
+    { value: 1e12 - 1, symbol: 'T' },
+    { value: 1e15 - 1, symbol: 'P' },
+    { value: 1e18 - 1, symbol: 'E' },
+  ]
+  const rx = /\.0+$|(\.[0-9]*[1-9])0+$/
+  const item = lookup
+    .slice()
+    .reverse()
+    .find(function (item) {
+      return num >= item.value
+    })
+  return item
+    ? (num / item.value).toFixed(digits).replace(rx, '$1') + item.symbol
+    : '0'
+}

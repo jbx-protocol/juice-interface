@@ -82,6 +82,7 @@ export default function Wallet({ userAddress }: { userAddress: string }) {
           background: colors.background.l2,
           cursor: 'default',
           userSelect: 'all',
+          width: '100%',
         }}
       >
         <FormattedAddress address={userAddress} tooltipDisabled={true} />

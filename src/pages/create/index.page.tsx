@@ -1,20 +1,25 @@
 import { Tabs } from 'antd'
 import { useContext, useState } from 'react'
-
+import { AppWrapper } from 'components/common'
 import { V2UserProvider } from 'providers/v2/UserProvider'
-
 import { t, Trans } from '@lingui/macro'
 import { ThemeContext } from 'contexts/themeContext'
 import useMobile from 'hooks/Mobile'
 import { V2CurrencyProvider } from 'providers/v2/V2CurrencyProvider'
-
 import { scrollToTop } from 'utils/windowUtils'
 
 import ProjectDetailsTabContent from './tabs/ProjectDetailsTab/ProjectDetailsTabContent'
 import FundingCycleTabContent from './tabs/FundingCycleTab/FundingCycleTabContent'
 import { TabContentProps } from './models'
 import ReviewDeployTab from './tabs/ReviewDeployTab'
-import V2WarningBanner from './V2WarningBanner'
+
+export default function V2CreatePage() {
+  return (
+    <AppWrapper>
+      <V2Create />
+    </AppWrapper>
+  )
+}
 
 const { TabPane } = Tabs
 
@@ -42,7 +47,7 @@ const TABS: TabConfig[] = [
   },
 ]
 
-export default function V2Create() {
+function V2Create() {
   const { colors } = useContext(ThemeContext).theme
   const [activeTab, setActiveTab] = useState<string>('0')
 
@@ -51,7 +56,6 @@ export default function V2Create() {
   return (
     <V2UserProvider>
       <V2CurrencyProvider>
-        <V2WarningBanner />
         <div
           style={{
             maxWidth: 1200,

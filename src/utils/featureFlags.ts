@@ -7,6 +7,9 @@ const FEATURE_FLAG_DEFAULTS: {
   [FEATURE_FLAGS.NFT_REWARDS]: {
     rinkeby: true,
   },
+  [FEATURE_FLAGS.VENFT]: {
+    rinkeby: true,
+  },
 }
 
 const featureFlagKey = (baseKey: string) => {

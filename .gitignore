@@ -33,3 +33,7 @@ src/styles/antd.css
 # Optional REPL history
 .node_repl_history
 .next
+
+# GraphQL Codegen
+graphql.schema.json
+src/generated

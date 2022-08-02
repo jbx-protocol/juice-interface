@@ -121,12 +121,11 @@ export function V2ConfirmPayModal({
 
   async function pay() {
     if (!weiAmount) return
-    await form.validateFields()
 
     const {
       beneficiary,
       memo: textMemo,
-      preferClaimed,
+      preferClaimedTokens,
       stickerUrls,
       uploadedImage,
     } = form.getFieldsValue()
@@ -146,7 +145,7 @@ export function V2ConfirmPayModal({
             imageUrl: uploadedImage,
             stickerUrls,
           }),
-          preferClaimedTokens: !!preferClaimed,
+          preferClaimedTokens: Boolean(preferClaimedTokens),
           beneficiary: txBeneficiary,
           value: weiAmount,
         },

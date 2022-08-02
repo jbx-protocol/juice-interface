@@ -81,14 +81,19 @@ export default function PayoutSplitsCard({
 
   function DistributeButton(): JSX.Element {
     return (
-      <Button
-        type="ghost"
-        size="small"
-        onClick={() => setDistributePayoutsModalVisible(true)}
-        disabled={distributeButtonDisabled}
+      <Tooltip
+        title={<Trans>No funds available to distribute.</Trans>}
+        visible={distributeButtonDisabled ? undefined : false}
       >
-        <Trans>Distribute funds</Trans>
-      </Button>
+        <Button
+          type="ghost"
+          size="small"
+          onClick={() => setDistributePayoutsModalVisible(true)}
+          disabled={distributeButtonDisabled}
+        >
+          <Trans>Distribute funds</Trans>
+        </Button>
+      </Tooltip>
     )
   }
 
@@ -126,15 +131,10 @@ export default function PayoutSplitsCard({
                 ownerAddress={projectOwnerAddress}
               />
             </Skeleton>
-            {distributableAmount?.eq(0) ? (
-              <Tooltip title={<Trans>No funds available to distribute.</Trans>}>
-                <div>
-                  <DistributeButton />
-                </div>
-              </Tooltip>
-            ) : (
+
+            <div>
               <DistributeButton />
-            )}
+            </div>
           </div>
         )}
 

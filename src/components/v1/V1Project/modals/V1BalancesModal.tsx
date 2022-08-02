@@ -15,6 +15,9 @@ import { uploadProjectMetadata } from 'utils/ipfs'
 
 import { t, Trans } from '@lingui/macro'
 
+import { V1TerminalVersion } from 'models/v1/terminals'
+import { revalidateProject } from 'utils/revalidateProject'
+
 import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
 
 export function V1BalancesModal({
@@ -27,7 +30,7 @@ export function V1BalancesModal({
   const [editModalVisible, setEditModalVisible] = useState<boolean>()
   const [loading, setLoading] = useState<boolean>()
   const [editingTokenRefs, setEditingTokenRefs] = useState<TokenRef[]>([])
-  const { owner, metadata, handle } = useContext(V1ProjectContext)
+  const { owner, metadata, handle, cv } = useContext(V1ProjectContext)
   const setProjectUriTx = useSetProjectUriTx()
 
   useEffect(() => {
@@ -60,7 +63,10 @@ export function V1BalancesModal({
     setProjectUriTx(
       { cid: uploadedMetadata.IpfsHash },
       {
-        onDone: () => {
+        onDone: async () => {
+          if (cv) {
+            await revalidateProject({ cv: cv as V1TerminalVersion, handle })
+          }
           setLoading(false)
           setEditModalVisible(false)
         },

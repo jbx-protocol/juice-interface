@@ -1,18 +1,16 @@
 import { t, Trans } from '@lingui/macro'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 
 import { TransactionReceipt } from '@ethersproject/providers'
 import { TransactorInstance } from 'hooks/Transactor'
 
-import { Form, Modal } from 'antd'
-import { useForm } from 'antd/lib/form/Form'
-import { JBDiscordLink } from 'pages/home/QAs'
+import { Modal, Space } from 'antd'
 import EtherscanLink from 'components/EtherscanLink'
 import CopyTextButton from 'components/CopyTextButton'
 import TransactionModal from 'components/TransactionModal'
+import Callout from 'components/Callout'
 import { DeployProjectPayerTxArgs } from 'hooks/v2/transactor/DeployProjectPayerTx'
 import { emitErrorNotification } from 'utils/notifications'
-import { NetworkContext } from 'contexts/networkContext'
 
 import { readProvider } from 'constants/readProvider'
 
@@ -44,25 +42,28 @@ export default function LaunchProjectPayerModal({
     | undefined
   onConfirmed?: VoidFunction
 }) {
-  const { userAddress } = useContext(NetworkContext)
-
   const [loadingProjectPayer, setLoadingProjectPayer] = useState<boolean>()
   const [transactionPending, setTransactionPending] = useState<boolean>()
   const [projectPayerAddress, setProjectPayerAddress] = useState<string>()
 
   const [tokenMintingEnabled, setTokenMintingEnabled] = useState<boolean>(true)
+  const [customBeneficiaryAddress, setCustomBeneficiaryAddress] =
+    useState<string>()
   const [preferClaimed, setPreferClaimed] = useState<boolean>(false)
-
-  const [form] = useForm<{
-    memo: string
-    customBeneficiaryAddress: string
-  }>()
+  const [memo, setMemo] = useState<string>()
 
   const [confirmedModalVisible, setConfirmedModalVisible] = useState<boolean>()
   // TODO: load project payer and show different thing in this section if the project already has one
   // (Issue: #897)
 
   const deployProjectPayerTx = useDeployProjectPayerTx()
+
+  const resetStates = () => {
+    setTokenMintingEnabled(true)
+    setCustomBeneficiaryAddress(undefined)
+    setPreferClaimed(false)
+    setMemo(undefined)
+  }
 
   async function deployProjectPayer() {
     if (!deployProjectPayerTx) return
@@ -71,10 +72,8 @@ export default function LaunchProjectPayerModal({
 
     const txSuccess = await deployProjectPayerTx(
       {
-        customBeneficiaryAddress: form.getFieldValue(
-          'customBeneficiaryAddress',
-        ),
-        customMemo: form.getFieldValue('memo'),
+        customBeneficiaryAddress,
+        customMemo: memo,
         tokenMintingEnabled,
         preferClaimed,
       },
@@ -108,51 +107,55 @@ export default function LaunchProjectPayerModal({
       setLoadingProjectPayer(false)
       setTransactionPending(false)
     }
-    form.resetFields()
+    resetStates()
   }
 
   return (
     <>
       <TransactionModal
         visible={visible}
-        title={t`Create payable address`}
-        okText={t`Deploy project payer contract`}
+        title={t`Create payment address`}
+        okText={t`Deploy payment address contract`}
         connectWalletText={t`Connect wallet to deploy`}
         onOk={deployProjectPayer}
         onCancel={() => onClose()}
         confirmLoading={loadingProjectPayer}
         transactionPending={transactionPending}
       >
-        <p>
-          <Trans>
-            Create an Ethereum address that can be used to pay your project
-            directly.
-          </Trans>
-        </p>
-        <p>
-          <Trans>
-            Tokens minted from payments to this address will belong to the payer
-            by default. However, if someone pays the project through a custodial
-            service platform such as Coinbase,{' '}
-            <strong>
-              tokens can't be issued to their personal wallets and will be lost
-            </strong>
-            .
-          </Trans>
-        </p>
-        {/* TODO: we should consider reworking this */}
-        {/* Form that controls internals of the AdvancedOptionsCollapse */}
-        <Form
-          form={form}
-          initialValues={{ customBeneficiaryAddress: userAddress }}
-        >
+        <Space direction="vertical" size="middle">
+          <div>
+            <Trans>
+              Create an Ethereum address that can be used to pay your project
+              directly.
+            </Trans>
+          </div>
+          <div>
+            <Trans>
+              By default, the payer will receive any project tokens minted from
+              the payment.
+            </Trans>
+          </div>
+
+          <Callout>
+            <Trans>
+              Contributors who pay this address from a custodial service
+              platform (like Coinbase){' '}
+              <strong>won't receive project tokens</strong>.
+            </Trans>
+          </Callout>
+          {/* TODO: we should consider reworking this */}
+          {/* Form that controls internals of the AdvancedOptionsCollapse */}
           <AdvancedOptionsCollapse
+            memo={memo}
+            setMemo={setMemo}
+            customBeneficiaryAddress={customBeneficiaryAddress}
+            setCustomBeneficiaryAddress={setCustomBeneficiaryAddress}
             tokenMintingEnabled={tokenMintingEnabled}
             setTokenMintingEnabled={setTokenMintingEnabled}
             preferClaimed={preferClaimed}
             setPreferClaimed={setPreferClaimed}
           />
-        </Form>
+        </Space>
       </TransactionModal>
       <Modal
         visible={confirmedModalVisible}
@@ -172,14 +175,8 @@ export default function LaunchProjectPayerModal({
         <CopyTextButton value={projectPayerAddress} style={{ fontSize: 25 }} />
         <p style={{ marginTop: 30 }}>
           <Trans>
-            This address will disappear when you close this window.{' '}
-            <strong>Copy the address and save it now</strong>.
-          </Trans>
-        </p>
-        <p>
-          <Trans>
-            If you lose your address, please contact the Juicebox team through{' '}
-            <JBDiscordLink>Discord</JBDiscordLink>.
+            Deployed payment addresses can be found in the Tools drawer on the
+            project page.
           </Trans>
         </p>
       </Modal>

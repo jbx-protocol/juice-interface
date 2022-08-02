@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from 'react'
-import { Collapse, Space, Button, Menu } from 'antd'
+import { Collapse, Button, Menu } from 'antd'
 import { Header } from 'antd/lib/layout/layout'
 
 import { Trans } from '@lingui/macro'
@@ -64,10 +64,11 @@ export default function MobileCollapse() {
           key={0}
           showArrow={false}
           header={
-            <Space
-              onClick={e => {
-                toggleNav()
-                e.stopPropagation()
+            <div
+              style={{
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'space-between',
               }}
             >
               <a href="/" style={{ display: 'inline-block' }}>
@@ -76,12 +77,14 @@ export default function MobileCollapse() {
               <MenuOutlined
                 style={{
                   color: colors.icon.primary,
-                  fontSize: 20,
+                  fontSize: '1.5rem',
                   paddingTop: 6,
                   paddingLeft: 10,
                 }}
+                onClick={toggleNav}
+                role="button"
               />
-            </Space>
+            </div>
           }
         >
           <Menu mode="inline" defaultSelectedKeys={['resources']}>
@@ -106,11 +109,12 @@ export default function MobileCollapse() {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
+              marginTop: '1rem',
             }}
           >
             <Account />
             {signingProvider ? (
-              <Button onClick={onLogOut} style={{ marginTop: 10 }}>
+              <Button onClick={onLogOut} style={{ marginTop: 10 }} block>
                 <Trans>Disconnect</Trans>
               </Button>
             ) : null}

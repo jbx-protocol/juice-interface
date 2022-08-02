@@ -140,6 +140,14 @@ msgstr "<0>A mechanism like Juicebox where upfront financial commitments should 
 msgid "<0>A project can choose to reserve a percentage of tokens for itself. Instead of being distributed to paying users, this percentage of tokens is instead minted for the project.</0><1>Holding these tokens entitles a project to a portion of its own overflow.</1>"
 msgstr "<0>A project can choose to reserve a percentage of tokens for itself. Instead of being distributed to paying users, this percentage of tokens is instead minted for the project.</0><1>Holding these tokens entitles a project to a portion of its own overflow.</1>"
 
+#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
+msgid "<0>Add to balance:</0> payments to this contract will fund the project without minting project tokens."
+msgstr "<0>Add to balance:</0> payments to this contract will fund the project without minting project tokens."
+
+#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
+msgid "<0>Auto claim:</0> any minted tokens will automatically be claimed as ERC20 (if this project has issued an ERC20 token)."
+msgstr "<0>Auto claim:</0> any minted tokens will automatically be claimed as ERC20 (if this project has issued an ERC20 token)."
+
 #: src/pages/create/tabs/ReviewDeployTab/NftSummarySection.tsx
 msgid "<0>Contribution floor:</0> {0} ETH"
 msgstr "<0>Contribution floor:</0> {0} ETH"
@@ -322,8 +330,14 @@ msgstr ""
 msgid "Activity"
 msgstr ""
 
+#: src/components/veNft/VeNftAddLockDurationModal.tsx
+msgid "Add Lock Duration Option"
+msgstr "Add Lock Duration Option"
+
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/veNft/VeNftRewardTierModal.tsx
+#: src/components/veNft/VeNftRewardTierModal.tsx
 msgid "Add NFT reward"
 msgstr "Add NFT reward"
 
@@ -350,6 +364,10 @@ msgstr "Add handle"
 msgid "Add image"
 msgstr ""
 
+#: src/components/veNft/VeNftSetupModal.tsx
+msgid "Add lock duration option"
+msgstr "Add lock duration option"
+
 #: src/components/v1/shared/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Add new payout"
@@ -363,6 +381,7 @@ msgid "Add payout"
 msgstr "Add payout"
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
+#: src/components/veNft/VeNftSetupModal.tsx
 msgid "Add reward tier"
 msgstr "Add reward tier"
 
@@ -379,6 +398,7 @@ msgid "Add to Balance"
 msgstr ""
 
 #: src/components/Project/ProjectToolsDrawer/AddToProjectBalanceForm.tsx
+#: src/components/v2/V2Project/ProjectPayersModal.tsx
 msgid "Add to balance"
 msgstr ""
 
@@ -417,8 +437,8 @@ msgid "Adjust incentives for paying your project."
 msgstr "Adjust incentives for paying your project."
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
-msgid "Advanced options (optional)"
-msgstr "Advanced options (optional)"
+msgid "Advanced (optional)"
+msgstr "Advanced (optional)"
 
 #: src/pages/projects/ProjectsTabs.tsx
 msgid "All"
@@ -427,10 +447,6 @@ msgstr "All"
 #: src/components/v1/V1Project/Paid.tsx
 #: src/components/v2/V2Project/index.tsx
 msgid "All assets"
-msgstr ""
-
-#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
-msgid "All changes will be applied to the <0>upcoming</0> funding cycle."
 msgstr ""
 
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
@@ -512,6 +528,7 @@ msgstr ""
 
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/ContributionFloorFormItem.tsx
+#: src/components/veNft/formControls/TokensStakedMinInput.tsx
 msgid "Amount required"
 msgstr "Amount required"
 
@@ -527,6 +544,7 @@ msgstr "Amount:"
 msgid "Amounts"
 msgstr "Amounts"
 
+#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "Any changes you make will take effect in <0>funding cycle #{0}</0>. The current funding cycle (#{currentFCNumber}) won't be altered."
 msgstr "Any changes you make will take effect in <0>funding cycle #{0}</0>. The current funding cycle (#{currentFCNumber}) won't be altered."
@@ -566,6 +584,10 @@ msgstr "Attach a sticker"
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftUpload.tsx
 msgid "Attach the image to be associated with this NFT."
 msgstr "Attach the image to be associated with this NFT."
+
+#: src/components/v2/V2Project/ProjectPayersModal.tsx
+msgid "Auto claim"
+msgstr "Auto claim"
 
 #: src/pages/create/forms/FundingForm/index.tsx
 msgid "Automate funding cycles"
@@ -614,6 +636,10 @@ msgstr "Beneficiary"
 #: src/components/modals/ReservedTokenReceiverModal.tsx
 msgid "Beneficiary address"
 msgstr "Beneficiary address"
+
+#: src/components/v2/V2Project/ProjectPayersModal.tsx
+msgid "Beneficiary:"
+msgstr "Beneficiary:"
 
 #: src/pages/index.page.tsx
 msgid "Big ups to the Ethereum community for crafting the infrastructure and economy to make Juicebox possible."
@@ -666,6 +692,10 @@ msgstr "By default, all unallocated funds can be distributed to the project owne
 msgid "By default, newly minted tokens will go to the wallet who sends funds to the address. You can enable this to set the token beneficiary to a custom address."
 msgstr "By default, newly minted tokens will go to the wallet who sends funds to the address. You can enable this to set the token beneficiary to a custom address."
 
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
+msgid "By default, the payer will receive any project tokens minted from the payment."
+msgstr "By default, the payer will receive any project tokens minted from the payment."
+
 #: src/pages/home/QAs.tsx
 msgid "Can I change my project's contract after it's been created?"
 msgstr ""
@@ -677,6 +707,7 @@ msgstr ""
 #: src/components/modals/AttachStickerModal/AttachStickerModal.tsx
 #: src/components/v1/V1Project/modals/V1BalancesModal.tsx
 #: src/components/v2/V2Project/V2BalancesModal/V2BalancesModal.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/EditTokenAllocationModal.tsx
 msgid "Cancel"
 msgstr "Cancel"
@@ -717,10 +748,12 @@ msgstr "Changes to your project's funding configuration require a community-appr
 msgid "Changes to your reserved token allocation will take effect immediately."
 msgstr "Changes to your reserved token allocation will take effect immediately."
 
+#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "Changes will take effect according to the project's custom ballot contract."
 msgstr "Changes will take effect according to the project's custom ballot contract."
 
+#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "Changes you make will take effect according to your <0>{0}</0> reconfiguration rule (the first funding cycle following <1>{1}</1> from now)."
 msgstr "Changes you make will take effect according to your <0>{0}</0> reconfiguration rule (the first funding cycle following <1>{1}</1> from now)."
@@ -775,6 +808,7 @@ msgstr "Claiming {tokenTextLong} will convert your {tokenTextShort} balance to E
 #: src/components/v1/V1Project/V1DownloadPaymentsModal.tsx
 #: src/components/v2/V2Project/V2DownloadActivityModal.tsx
 #: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/EditTokenAllocationModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 #: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/V1TokenMigrationSetupModal.tsx
@@ -873,6 +907,7 @@ msgid "Contract address: {0}"
 msgstr ""
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/ContributionFloorFormItem.tsx
+#: src/components/veNft/formControls/TokensStakedMinInput.tsx
 msgid "Contribution threshold"
 msgstr "Contribution threshold"
 
@@ -884,8 +919,13 @@ msgid "Contributor rate"
 msgstr "Contributor rate"
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/ContributionFloorFormItem.tsx
+#: src/components/veNft/formControls/TokensStakedMinInput.tsx
 msgid "Contributors receive the NFT when they contribute at least this amount."
 msgstr "Contributors receive the NFT when they contribute at least this amount."
+
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
+msgid "Contributors who pay this address from a custodial service platform (like Coinbase) <0>won't receive project tokens</0>."
+msgstr "Contributors who pay this address from a custodial service platform (like Coinbase) <0>won't receive project tokens</0>."
 
 #: src/pages/create/tabs/ReviewDeployTab/FundingAttributes.tsx
 msgid "Contributors will be rewarded this amount of your project's tokens per ETH contributed."
@@ -929,11 +969,13 @@ msgid "Create an Ethereum address that can be used to pay your project directly.
 msgstr "Create an Ethereum address that can be used to pay your project directly."
 
 #: src/components/Project/ProjectToolsDrawer/PayableAddressSection.tsx
-#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Create payable address"
 msgstr "Create payable address"
 
-#: src/hooks/PageTitle.ts
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
+msgid "Create payment address"
+msgstr "Create payment address"
+
 #: src/pages/projects/MyProjects.tsx
 #: src/pages/projects/index.page.tsx
 msgid "Create project"
@@ -972,10 +1014,6 @@ msgstr "Current owner: {ownerAddress}"
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Currently worth: <0><1/>{0}</0>"
 msgstr "Currently worth: <0><1/>{0}</0>"
-
-#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
-msgid "Custom memo"
-msgstr "Custom memo"
 
 #: src/components/ReconfigurationStrategy/ReconfigurationStrategySelector.tsx
 #: src/utils/ballot.ts
@@ -1021,13 +1059,27 @@ msgstr "Date"
 msgid "Date created"
 msgstr "Date created"
 
+#: src/components/veNft/VeNftLockDurationOptionCard.tsx
+msgid "Day"
+msgstr "Day"
+
+#: src/components/veNft/VeNftLockDurationOptionCard.tsx
 #: src/constants/time.ts
 msgid "Days"
 msgstr "Days"
 
+#: src/components/veNft/VeNftAddLockDurationModal.tsx
+msgid "Days to lock tokens"
+msgstr "Days to lock tokens"
+
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierCard.tsx
+#: src/components/veNft/VeNftVariantCard.tsx
 msgid "Delete NFT"
 msgstr "Delete NFT"
+
+#: src/components/veNft/VeNftLockDurationOptionCard.tsx
+msgid "Delete Option"
+msgstr "Delete Option"
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
 msgid "Delete payout"
@@ -1041,6 +1093,14 @@ msgstr "Delete token allocation"
 msgid "Deploy funding cycle configuration"
 msgstr "Deploy funding cycle configuration"
 
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerButton.tsx
+msgid "Deploy payment address"
+msgstr "Deploy payment address"
+
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
+msgid "Deploy payment address contract"
+msgstr "Deploy payment address contract"
+
 #: src/pages/v1/create/index.page.tsx
 msgid "Deploy project"
 msgstr "Deploy project"
@@ -1048,11 +1108,6 @@ msgstr "Deploy project"
 #: src/pages/v1/create/index.page.tsx
 msgid "Deploy project on {signerNetwork}"
 msgstr "Deploy project on {signerNetwork}"
-
-#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerButton.tsx
-#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
-msgid "Deploy project payer contract"
-msgstr "Deploy project payer contract"
 
 #: src/pages/create/tabs/ReviewDeployTab/DeployProjectButton.tsx
 #: src/pages/create/tabs/ReviewDeployTab/DeployProjectWithNftsButton.tsx
@@ -1062,6 +1117,10 @@ msgstr "Deploy project to {0}"
 #: src/components/activityEventElems/DeployedERC20EventElem.tsx
 msgid "Deployed ERC20 token"
 msgstr "Deployed ERC20 token"
+
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
+msgid "Deployed payment addresses can be found in the Tools drawer on the project page."
+msgstr "Deployed payment addresses can be found in the Tools drawer on the project page."
 
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "Deposit 1 wei to @{handle}"
@@ -1330,6 +1389,14 @@ msgstr "ERC20 Deployed"
 msgid "ETH-ERC20 Address Created"
 msgstr "ETH-ERC20 Address Created"
 
+#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
+msgid "ETH-ERC20 Payment addresses"
+msgstr "ETH-ERC20 Payment addresses"
+
+#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
+msgid "ETH-ERC20 Payment addresses are <0>smart contracts</0>that allow this project to be paid in <1>ETH</1> by sending ETH directly to the contract, or in <2>ERC20 tokens</2> via the contract's <3>pay()</3> function."
+msgstr "ETH-ERC20 Payment addresses are <0>smart contracts</0>that allow this project to be paid in <1>ETH</1> by sending ETH directly to the contract, or in <2>ERC20 tokens</2> via the contract's <3>pay()</3> function."
+
 #: src/components/v2/shared/DistributionSplitsSection/SpecificLimitModal.tsx
 msgid "Each payout will receive their percent of this total each funding cycle if there is enough in the treasury. Otherwise, they will receive their percent of whatever is in the treasury."
 msgstr "Each payout will receive their percent of this total each funding cycle if there is enough in the treasury. Otherwise, they will receive their percent of whatever is in the treasury."
@@ -1339,6 +1406,7 @@ msgid "Each project has its own <0>ERC-20 tokens</0>. Anyone who contributes fun
 msgstr "Each project has its own <0>ERC-20 tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/veNft/VeNftRewardTierModal.tsx
 msgid "Edit NFT reward"
 msgstr "Edit NFT reward"
 
@@ -1352,6 +1420,7 @@ msgid "Edit payout"
 msgstr "Edit payout"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
 msgid "Edit payouts"
 msgstr "Edit payouts"
 
@@ -1379,6 +1448,14 @@ msgstr "Edit token allocation"
 #: src/components/v2/V2Project/V2BalancesModal/V2BalancesModal.tsx
 msgid "Edit tracked assets"
 msgstr "Edit tracked assets"
+
+#: src/components/veNft/VeNftSetupSection.tsx
+msgid "Enable veNFT Governance"
+msgstr "Enable veNFT Governance"
+
+#: src/components/veNft/VeNftSetUnclaimedTokensPermissionSection.tsx
+msgid "Enable veNFT to Spend Unclaimed Tokens"
+msgstr "Enable veNFT to Spend Unclaimed Tokens"
 
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
@@ -1539,6 +1616,7 @@ msgid "Give feedback"
 msgstr "Give feedback"
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/veNft/VeNftRewardTierModal.tsx
 msgid "Give this NFT a name."
 msgstr "Give this NFT a name."
 
@@ -1628,6 +1706,10 @@ msgstr ""
 msgid "I accept this project's <0>risks</0>."
 msgstr "I accept this project's <0>risks</0>."
 
+#: src/pages/create/tabs/ReviewDeployTab/index.tsx
+msgid "I have read and accept the <0>Terms of Service</0>."
+msgstr "I have read and accept the <0>Terms of Service</0>."
+
 #: src/components/PayWarningModal.tsx
 msgid "I understand"
 msgstr "I understand"
@@ -1665,10 +1747,6 @@ msgstr "If you have Juicebox project on Juicebox V1 and V2, we recommend you mig
 #: src/components/Project/ProjectToolsDrawer/PayableAddressSection.tsx
 msgid "If you have already deployed a payable address and have lost it, please contact the Juicebox team through <0>Discord.</0>"
 msgstr "If you have already deployed a payable address and have lost it, please contact the Juicebox team through <0>Discord.</0>"
-
-#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
-msgid "If you lose your address, please contact the Juicebox team through <0>Discord</0>."
-msgstr "If you lose your address, please contact the Juicebox team through <0>Discord</0>."
 
 #: src/pages/home/QAs.tsx
 msgid "If you're interested in creating a project but still confused on how to get started, consider watching this <0>instructional video</0>. Also feel free to reach out in the <1>Juicebox Discord</1> where our team will be happy to help bring your project idea to life!"
@@ -1829,6 +1907,10 @@ msgstr "Latest payments"
 msgid "Launch funding cycle"
 msgstr "Launch funding cycle"
 
+#: src/components/veNft/VeNftSetupModal.tsx
+msgid "Launch veNFT"
+msgstr "Launch veNFT"
+
 #: src/pages/create/index.page.tsx
 #: src/pages/index.page.tsx
 msgid "Launch your project"
@@ -1861,6 +1943,10 @@ msgstr "Lock ${tokenSymbolDisplayText} for Voting Power"
 #: src/components/veNft/VeNftOwnedTokenCard.tsx
 msgid "Lock Duration"
 msgstr "Lock Duration"
+
+#: src/components/veNft/VeNftSetupModal.tsx
+msgid "Lock Durations ({0} options)"
+msgstr "Lock Durations ({0} options)"
 
 #: src/components/veNft/formControls/LockDurationSelectInput.tsx
 msgid "Lock duration"
@@ -1988,6 +2074,10 @@ msgstr "Mint {tokensTokenLower}"
 msgid "Minutes"
 msgstr "Minutes"
 
+#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
+msgid "More information"
+msgstr "More information"
+
 #: src/pages/home/TrendingSection.tsx
 msgid "More trending projects"
 msgstr "More trending projects"
@@ -2021,6 +2111,7 @@ msgid "NO LIMIT"
 msgstr "NO LIMIT"
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/veNft/VeNftRewardTierModal.tsx
 #: src/pages/create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 msgid "Name"
@@ -2139,7 +2230,7 @@ msgstr "Once launched, your first funding cycle <0>can't be changed</0>. You can
 msgid "Only lowercase letters"
 msgstr "Only lowercase letters"
 
-#: src/components/veNft/formControls/TokensStakedInput.tsx
+#: src/components/veNft/VeNftStakingForm.tsx
 msgid "Only project tokens claimed as ERC-20 tokens can be staked for NFTs."
 msgstr "Only project tokens claimed as ERC-20 tokens can be staked for NFTs."
 
@@ -2274,13 +2365,17 @@ msgstr ""
 msgid "Paying this project is currently disabled."
 msgstr ""
 
+#: src/components/v2/V2Project/ProjectPayersModal.tsx
+msgid "Payment address contract:"
+msgstr "Payment address contract:"
+
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 msgid "Payment equivalent"
 msgstr "Payment equivalent"
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
-msgid "Payment made through payable address"
-msgstr "Payment made through payable address"
+msgid "Payment memo"
+msgstr "Payment memo"
 
 #: src/components/RichImgPreview.tsx
 msgid "Payment memo image"
@@ -2397,6 +2492,7 @@ msgstr "Project Page Customizations"
 msgid "Project Token"
 msgstr "Project Token"
 
+#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Project configuration"
 msgstr "Project configuration"
@@ -2501,7 +2597,6 @@ msgid "Project {projectId} not found"
 msgstr "Project {projectId} not found"
 
 #: src/components/Navbar/MenuItems.tsx
-#: src/hooks/PageTitle.ts
 msgid "Projects"
 msgstr ""
 
@@ -2609,10 +2704,6 @@ msgstr ""
 msgid "Reconfigure"
 msgstr "Reconfigure"
 
-#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
-msgid "Reconfigure funding"
-msgstr "Reconfigure funding"
-
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
 msgid "Reconfigure payouts as percentages of your distribution limit."
 msgstr "Reconfigure payouts as percentages of your distribution limit."
@@ -2636,9 +2727,6 @@ msgid "Reconfigure upcoming"
 msgstr "Reconfigure upcoming"
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
-msgid "Reconfigure upcoming funding"
-msgstr "Reconfigure upcoming funding"
-
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure upcoming funding cycles"
 msgstr "Reconfigure upcoming funding cycles"
@@ -2838,12 +2926,17 @@ msgid "Save"
 msgstr ""
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/veNft/VeNftRewardTierModal.tsx
 msgid "Save NFT reward"
 msgstr "Save NFT reward"
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
 msgid "Save NFT rewards"
 msgstr "Save NFT rewards"
+
+#: src/components/veNft/VeNftAddLockDurationModal.tsx
+msgid "Save Option"
+msgstr "Save Option"
 
 #: src/components/v1/V1Project/modals/EditProjectModal.tsx
 msgid "Save changes"
@@ -2864,6 +2957,7 @@ msgid "Save payout"
 msgstr "Save payout"
 
 #: src/components/v1/shared/forms/PayModsForm.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
 msgid "Save payouts"
 msgstr "Save payouts"
 
@@ -2899,6 +2993,11 @@ msgstr "Save tracked assets"
 msgid "Search projects by handle"
 msgstr ""
 
+#: src/components/veNft/VeNftLockDurationOptionCard.tsx
+msgid "Second"
+msgstr "Second"
+
+#: src/components/veNft/VeNftLockDurationOptionCard.tsx
 #: src/constants/time.ts
 msgid "Seconds"
 msgstr "Seconds"
@@ -2910,6 +3009,10 @@ msgstr "See transaction"
 #: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
 msgid "Set ENS name"
 msgstr "Set ENS name"
+
+#: src/components/veNft/VeNftSetupModal.tsx
+msgid "Set Up veNFT Governance"
+msgstr "Set Up veNFT Governance"
 
 #: src/components/v2/shared/DistributionSplitsSection/SpecificLimitModal.tsx
 msgid "Set a distribution limit"
@@ -2958,6 +3061,11 @@ msgstr "Set this to the sum of all your payouts"
 #: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/V1TokenMigrationSetupModal.tsx
 msgid "Set up V1 token migration"
 msgstr "Set up V1 token migration"
+
+#: src/components/veNft/VeNftSetupModal.tsx
+#: src/components/veNft/VeNftSetupSection.tsx
+msgid "Set up and launch veNFT governance for your project."
+msgstr "Set up and launch veNFT governance for your project."
 
 #: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupSection.tsx
 msgid "Set up token migration"
@@ -3096,10 +3204,6 @@ msgstr "Text record is set"
 msgid "The <0>issuance rate</0> of your second funding cycle will be <1>{0} tokens per 1 ETH</1>, then <2>{1} tokens per 1 ETH </2>for your third funding cycle, and so on."
 msgstr "The <0>issuance rate</0> of your second funding cycle will be <1>{0} tokens per 1 ETH</1>, then <2>{1} tokens per 1 ETH </2>for your third funding cycle, and so on."
 
-#: src/pages/index.page.tsx
-msgid "The Decentralized Funding Platform. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."
-msgstr "The Decentralized Funding Platform. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."
-
 #: src/pages/v1/create/index.page.tsx
 msgid "The JBX protocol is unaudited, and projects built on it may be vulnerable to bugs or exploits. Be smart!"
 msgstr ""
@@ -3172,12 +3276,16 @@ msgid "The number of project tokens minted when 1 ETH is contributed."
 msgstr "The number of project tokens minted when 1 ETH is contributed."
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
-msgid "The onchain memo for each transaction made through the address. It will appear in the project's payment feed when someone pays this address."
-msgstr "The onchain memo for each transaction made through the address. It will appear in the project's payment feed when someone pays this address."
+msgid "The onchain memo for each payment made to this address. The project's payment feed will include the memo alongside the payment."
+msgstr "The onchain memo for each payment made to this address. The project's payment feed will include the memo alongside the payment."
 
 #: src/components/modals/ReservedTokenReceiverModal.tsx
 msgid "The percentage this individual receives of the overall {reservedRate}% reserved token allocation"
 msgstr "The percentage this individual receives of the overall {reservedRate}% reserved token allocation"
+
+#: src/pages/index.page.tsx
+msgid "The programmable funding protocol. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."
+msgstr "The programmable funding protocol. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."
 
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "The project owner can add and remove payment terminals."
@@ -3243,10 +3351,6 @@ msgstr "This Juicebox V2 project also has a project on Juicebox V1. The project 
 msgid "This address is an unrecognized strategy contract. Make sure it is correct!"
 msgstr "This address is an unrecognized strategy contract. Make sure it is correct!"
 
-#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
-msgid "This address will disappear when you close this window. <0>Copy the address and save it now</0>."
-msgstr "This address will disappear when you close this window. <0>Copy the address and save it now</0>."
-
 #: src/components/v1/shared/Mod.tsx
 #: src/components/v2/shared/SplitItem.tsx
 msgid "This address will receive any tokens minted when the recipient project gets paid."
@@ -3294,6 +3398,10 @@ msgstr "This proposed reconfiguration hasn't passed the {0} period. It's not gua
 msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
 msgstr "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
 
+#: src/components/veNft/VeNftSetUnclaimedTokensPermissionSection.tsx
+msgid "This will enable your project's veNFT contract to spend unclaimed tokens in addition to project ERC-20 tokens."
+msgstr "This will enable your project's veNFT contract to spend unclaimed tokens in addition to project ERC-20 tokens."
+
 #: src/pages/v1/create/index.page.tsx
 msgid "This will erase all of your changes."
 msgstr "This will erase all of your changes."
@@ -3305,6 +3413,11 @@ msgstr "This will reset the data for your new project. All changes will be lost.
 #: src/components/veNft/VeNftOwnedTokenCard.tsx
 msgid "Time Remaining"
 msgstr "Time Remaining"
+
+#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
+msgid "Time remaining for changes made to affect the next funding cycle:"
+msgstr "Time remaining for changes made to affect the next funding cycle:"
 
 #: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupSection.tsx
 msgid "To do so, you need to give your V1 token holders the ability to exchange their V1 tokens for V2 tokens. Select <0>Set up token migration</0> below to get started."
@@ -3424,10 +3537,6 @@ msgstr "Tokens can be redeemed for a portion of this project's ETH overflow, acc
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "Tokens cannot be claimed because no ERC-20 token has been issued for this project. ERC-20 tokens must be issued by the project owner."
 msgstr "Tokens cannot be claimed because no ERC-20 token has been issued for this project. ERC-20 tokens must be issued by the project owner."
-
-#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
-msgid "Tokens minted from payments to this address will belong to the payer by default. However, if someone pays the project through a custodial service platform such as Coinbase, <0>tokens can't be issued to their personal wallets and will be lost</0>."
-msgstr "Tokens minted from payments to this address will belong to the payer by default. However, if someone pays the project through a custodial service platform such as Coinbase, <0>tokens can't be issued to their personal wallets and will be lost</0>."
 
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
@@ -3701,6 +3810,10 @@ msgstr ""
 msgid "What's going on under the hood?"
 msgstr ""
 
+#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
+msgid "When a payment address is paid, its <0>beneficiary</0> address will receive any minted project tokens."
+msgstr "When a payment address is paid, its <0>beneficiary</0> address will receive any minted project tokens."
+
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "When checked, payments to this address will mint this project's ERC-20 tokens to the beneficiary's wallet. Payments will cost more gas. When unchecked, Juicebox will track the beneficiary's new tokens when they pay. The beneficiary can claim their ERC-20 tokens at any time."
 msgstr "When checked, payments to this address will mint this project's ERC-20 tokens to the beneficiary's wallet. Payments will cost more gas. When unchecked, Juicebox will track the beneficiary's new tokens when they pay. The beneficiary can claim their ERC-20 tokens at any time."
@@ -3794,6 +3907,7 @@ msgstr "You can redeem your {tokenTextLong} for overflow without claiming them. 
 msgid "You can still redeem your {tokenSymbol} tokens for overflow without claiming them, and you can transfer your unclaimed {tokenSymbol} tokens to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
 msgstr "You can still redeem your {tokenSymbol} tokens for overflow without claiming them, and you can transfer your unclaimed {tokenSymbol} tokens to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
 
+#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "You don't have a funding cycle duration. Changes you make will take effect immediately."
 msgstr "You don't have a funding cycle duration. Changes you make will take effect immediately."
@@ -3841,6 +3955,10 @@ msgstr "You must grant permission to swap your tokens."
 #: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/SetV1ProjectSection.tsx
 msgid "You must own this V1 project."
 msgstr "You must own this V1 project."
+
+#: src/pages/create/tabs/ReviewDeployTab/index.tsx
+msgid "You must review and accept the Terms of Service."
+msgstr "You must review and accept the Terms of Service."
 
 #: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "You must review and accept the risks."
@@ -3927,10 +4045,6 @@ msgstr ""
 msgid "Your project will appear archived, and won't be able to receive payments through the juicebox.money app. You can unarchive a project at any time. Allow a few days for your project to appear under the \"archived\" filter on the Projects page."
 msgstr "Your project will appear archived, and won't be able to receive payments through the juicebox.money app. You can unarchive a project at any time. Allow a few days for your project to appear under the \"archived\" filter on the Projects page."
 
-#: src/pages/create/V2WarningBanner.tsx
-msgid "Your project will be created on the Juicebox V2 contracts. <0>Learn more.</0>"
-msgstr "Your project will be created on the Juicebox V2 contracts. <0>Learn more.</0>"
-
 #: src/components/ArchiveProject/index.tsx
 msgid "Your project will immediately appear active on the juicebox.money app. Please allow a few days for it to appear in the \"active\" projects list on the Projects page."
 msgstr "Your project will immediately appear active on the juicebox.money app. Please allow a few days for it to appear in the \"active\" projects list on the Projects page."
@@ -3977,6 +4091,7 @@ msgstr "called by <0/>"
 msgid "day"
 msgstr "day"
 
+#: src/components/veNft/VeNftAddLockDurationModal.tsx
 #: src/components/veNft/VeNftSummaryStatsSection.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 #: src/utils/formatTime.ts
@@ -4058,6 +4173,22 @@ msgstr ""
 #: src/components/v1/shared/Mod.tsx
 msgid "until"
 msgstr ""
+
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V2ProjectToolsDrawer.tsx
+msgid "veNFT"
+msgstr "veNFT"
+
+#: src/components/veNft/VeNftSetupModal.tsx
+msgid "veNFT Tiers ({0} variants)"
+msgstr "veNFT Tiers ({0} variants)"
+
+#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
+msgid "{0, plural, one {# deployed payment address} other {# deployed payment addresses}}"
+msgstr "{0, plural, one {# deployed payment address} other {# deployed payment addresses}}"
+
+#: src/components/v2/V2Project/ProjectPayersModal.tsx
+msgid "{0, plural, one {# payment address} other {# payment addresses}}"
+msgstr "{0, plural, one {# payment address} other {# payment addresses}}"
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
@@ -4184,6 +4315,14 @@ msgstr "{issuanceRate} tokens / ETH"
 #: src/pages/projects/FilterCheckboxItem.tsx
 msgid "{label}"
 msgstr "{label}"
+
+#: src/components/veNft/VeNftLockDurationOptionCard.tsx
+msgid "{lockDurationOptionInDays} {lockDurationOptionInDays, plural, one {{0}} other {{1}}}"
+msgstr "{lockDurationOptionInDays} {lockDurationOptionInDays, plural, one {{0}} other {{1}}}"
+
+#: src/components/veNft/VeNftLockDurationOptionCard.tsx
+msgid "{lockDurationOption} {lockDurationOption, plural, one {{0}} other {{1}}}"
+msgstr "{lockDurationOption} {lockDurationOption, plural, one {{0}} other {{1}}}"
 
 #: src/components/veNft/formControls/TokensStakedInput.tsx
 msgid "{minTokensAllowedToStake, plural, one {You must stake at least # token.} other {You must stake at least # tokens.}}"

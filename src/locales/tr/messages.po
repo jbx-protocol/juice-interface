@@ -145,6 +145,14 @@ msgstr "<0>Juicebox gibi, önceden verilen finansal taahhütlerin zaman içinde 
 msgid "<0>A project can choose to reserve a percentage of tokens for itself. Instead of being distributed to paying users, this percentage of tokens is instead minted for the project.</0><1>Holding these tokens entitles a project to a portion of its own overflow.</1>"
 msgstr "<0>Bir proje, token'ların bir yüzdesini kendisi için rezerve etmeyi seçebilir. Bu token yüzdesi, ödeme yapan kullanıcılara dağıtılmak yerine proje için basılır.</0><1>Bu token'ları tutmak, projeye kendi taşma payının bir kısmını alma hakkı verir.</1>"
 
+#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
+msgid "<0>Add to balance:</0> payments to this contract will fund the project without minting project tokens."
+msgstr ""
+
+#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
+msgid "<0>Auto claim:</0> any minted tokens will automatically be claimed as ERC20 (if this project has issued an ERC20 token)."
+msgstr ""
+
 #: src/pages/create/tabs/ReviewDeployTab/NftSummarySection.tsx
 msgid "<0>Contribution floor:</0> {0} ETH"
 msgstr ""
@@ -327,8 +335,14 @@ msgstr "MEVCUT"
 msgid "Activity"
 msgstr "Etkinlik"
 
+#: src/components/veNft/VeNftAddLockDurationModal.tsx
+msgid "Add Lock Duration Option"
+msgstr ""
+
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/veNft/VeNftRewardTierModal.tsx
+#: src/components/veNft/VeNftRewardTierModal.tsx
 msgid "Add NFT reward"
 msgstr ""
 
@@ -355,6 +369,10 @@ msgstr ""
 msgid "Add image"
 msgstr "Resim ekle"
 
+#: src/components/veNft/VeNftSetupModal.tsx
+msgid "Add lock duration option"
+msgstr ""
+
 #: src/components/v1/shared/ProjectPayMods/ProjectPayoutModsModal.tsx
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Add new payout"
@@ -368,6 +386,7 @@ msgid "Add payout"
 msgstr "Ödeme ekle"
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
+#: src/components/veNft/VeNftSetupModal.tsx
 msgid "Add reward tier"
 msgstr ""
 
@@ -384,6 +403,7 @@ msgid "Add to Balance"
 msgstr "Bakiyeye Ekle"
 
 #: src/components/Project/ProjectToolsDrawer/AddToProjectBalanceForm.tsx
+#: src/components/v2/V2Project/ProjectPayersModal.tsx
 msgid "Add to balance"
 msgstr "Bakiyeye ekle"
 
@@ -422,8 +442,8 @@ msgid "Adjust incentives for paying your project."
 msgstr "Projenize gelecek ödemeler için teşvikleri ayarlayın."
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
-msgid "Advanced options (optional)"
-msgstr "Gelişmiş seçenekler (isteğe bağlı)"
+msgid "Advanced (optional)"
+msgstr ""
 
 #: src/pages/projects/ProjectsTabs.tsx
 msgid "All"
@@ -433,10 +453,6 @@ msgstr "Hepsi"
 #: src/components/v2/V2Project/index.tsx
 msgid "All assets"
 msgstr "Tüm varlıklar"
-
-#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
-msgid "All changes will be applied to the <0>upcoming</0> funding cycle."
-msgstr "Tüm değişiklikler <0>yaklaşan</0> finansman döngüsüne uygulanacaktır."
 
 #: src/components/v1/V1Project/ProjectActivity/index.tsx
 #: src/components/v2/V2Project/ProjectActivity/index.tsx
@@ -517,6 +533,7 @@ msgstr "Ödenen miktar"
 
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/ContributionFloorFormItem.tsx
+#: src/components/veNft/formControls/TokensStakedMinInput.tsx
 msgid "Amount required"
 msgstr ""
 
@@ -532,6 +549,7 @@ msgstr "Miktar:"
 msgid "Amounts"
 msgstr "Miktarlar"
 
+#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "Any changes you make will take effect in <0>funding cycle #{0}</0>. The current funding cycle (#{currentFCNumber}) won't be altered."
 msgstr "Yaptığınız tüm değişiklikler <0>finansman döngüsü #{0}</0> içinde geçerli olacaktır. Mevcut finansman döngüsü (#{currentFCNumber}) değiştirilmeyecektir."
@@ -570,6 +588,10 @@ msgstr ""
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftUpload.tsx
 msgid "Attach the image to be associated with this NFT."
+msgstr ""
+
+#: src/components/v2/V2Project/ProjectPayersModal.tsx
+msgid "Auto claim"
 msgstr ""
 
 #: src/pages/create/forms/FundingForm/index.tsx
@@ -619,6 +641,10 @@ msgstr "Faydalanıcı"
 #: src/components/modals/ReservedTokenReceiverModal.tsx
 msgid "Beneficiary address"
 msgstr "Faydalanıcı adresi"
+
+#: src/components/v2/V2Project/ProjectPayersModal.tsx
+msgid "Beneficiary:"
+msgstr ""
 
 #: src/pages/index.page.tsx
 msgid "Big ups to the Ethereum community for crafting the infrastructure and economy to make Juicebox possible."
@@ -671,6 +697,10 @@ msgstr "Aksi istenmediği takdirde, tahsis edilmemiş bütün fonlar proje sahib
 msgid "By default, newly minted tokens will go to the wallet who sends funds to the address. You can enable this to set the token beneficiary to a custom address."
 msgstr "Varsayılan olarak, yeni basılan token'lar, adrese fon gönderen cüzdana gider. Token faydalanıcısını özel bir adres olarak belirlemek için bunu etkinleştirebilirsiniz."
 
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
+msgid "By default, the payer will receive any project tokens minted from the payment."
+msgstr ""
+
 #: src/pages/home/QAs.tsx
 msgid "Can I change my project's contract after it's been created?"
 msgstr "Projemin sözleşmesini oluşturulduktan sonra değiştirebilir miyim?"
@@ -682,6 +712,7 @@ msgstr "Bir projeyi silebilir miyim?"
 #: src/components/modals/AttachStickerModal/AttachStickerModal.tsx
 #: src/components/v1/V1Project/modals/V1BalancesModal.tsx
 #: src/components/v2/V2Project/V2BalancesModal/V2BalancesModal.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/EditTokenAllocationModal.tsx
 msgid "Cancel"
 msgstr "İptal"
@@ -722,10 +753,12 @@ msgstr "Projenizin finansman yapılandırmasında yapılan değişikliklerin yü
 msgid "Changes to your reserved token allocation will take effect immediately."
 msgstr ""
 
+#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "Changes will take effect according to the project's custom ballot contract."
 msgstr "Değişiklikler, projenin özel oylama sözleşmesine göre yürürlüğe girecektir."
 
+#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "Changes you make will take effect according to your <0>{0}</0> reconfiguration rule (the first funding cycle following <1>{1}</1> from now)."
 msgstr "Yaptığınız değişiklikler, <0>{0}</0> yeniden yapılandırma kuralınıza göre geçerlilik kazanacaktır (şu andan itibaren <1>{1}</1>'den sonraki ilk finansman döngüsü)."
@@ -780,6 +813,7 @@ msgstr "{tokenTextLong} token'larınızı talep etmeniz, {tokenTextShort} bakiye
 #: src/components/v1/V1Project/V1DownloadPaymentsModal.tsx
 #: src/components/v2/V2Project/V2DownloadActivityModal.tsx
 #: src/components/v2/V2Project/V2DownloadPaymentsModal.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/EditTokenAllocationModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 #: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/V1TokenMigrationSetupModal.tsx
@@ -878,6 +912,7 @@ msgid "Contract address: {0}"
 msgstr "Sözleşme Adresi: {0}"
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/ContributionFloorFormItem.tsx
+#: src/components/veNft/formControls/TokensStakedMinInput.tsx
 msgid "Contribution threshold"
 msgstr ""
 
@@ -889,7 +924,12 @@ msgid "Contributor rate"
 msgstr "Katkıda bulunan oranı"
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/ContributionFloorFormItem.tsx
+#: src/components/veNft/formControls/TokensStakedMinInput.tsx
 msgid "Contributors receive the NFT when they contribute at least this amount."
+msgstr ""
+
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
+msgid "Contributors who pay this address from a custodial service platform (like Coinbase) <0>won't receive project tokens</0>."
 msgstr ""
 
 #: src/pages/create/tabs/ReviewDeployTab/FundingAttributes.tsx
@@ -934,11 +974,13 @@ msgid "Create an Ethereum address that can be used to pay your project directly.
 msgstr "Projenize doğrudan ödeme yapmak için kullanılabilecek bir Ethereum adresi oluşturun."
 
 #: src/components/Project/ProjectToolsDrawer/PayableAddressSection.tsx
-#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
 msgid "Create payable address"
 msgstr "Ödeme adresi oluşturun"
 
-#: src/hooks/PageTitle.ts
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
+msgid "Create payment address"
+msgstr ""
+
 #: src/pages/projects/MyProjects.tsx
 #: src/pages/projects/index.page.tsx
 msgid "Create project"
@@ -977,10 +1019,6 @@ msgstr "Güncel sahibi: {ownerAddress}"
 #: src/components/v2/V2Project/V2ManageTokensSection/V2RedeemModal.tsx
 msgid "Currently worth: <0><1/>{0}</0>"
 msgstr "Güncel değeri: <0><1/>{0}</0>"
-
-#: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
-msgid "Custom memo"
-msgstr "Özel not"
 
 #: src/components/ReconfigurationStrategy/ReconfigurationStrategySelector.tsx
 #: src/utils/ballot.ts
@@ -1026,12 +1064,26 @@ msgstr "Tarih"
 msgid "Date created"
 msgstr "Oluşturma tarihi"
 
+#: src/components/veNft/VeNftLockDurationOptionCard.tsx
+msgid "Day"
+msgstr ""
+
+#: src/components/veNft/VeNftLockDurationOptionCard.tsx
 #: src/constants/time.ts
 msgid "Days"
 msgstr "Gün"
 
+#: src/components/veNft/VeNftAddLockDurationModal.tsx
+msgid "Days to lock tokens"
+msgstr ""
+
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierCard.tsx
+#: src/components/veNft/VeNftVariantCard.tsx
 msgid "Delete NFT"
+msgstr ""
+
+#: src/components/veNft/VeNftLockDurationOptionCard.tsx
+msgid "Delete Option"
 msgstr ""
 
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitCard.tsx
@@ -1046,6 +1098,14 @@ msgstr "Token tahsisini sil"
 msgid "Deploy funding cycle configuration"
 msgstr ""
 
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerButton.tsx
+msgid "Deploy payment address"
+msgstr ""
+
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
+msgid "Deploy payment address contract"
+msgstr ""
+
 #: src/pages/v1/create/index.page.tsx
 msgid "Deploy project"
 msgstr "Projeyi başlat"
@@ -1053,11 +1113,6 @@ msgstr "Projeyi başlat"
 #: src/pages/v1/create/index.page.tsx
 msgid "Deploy project on {signerNetwork}"
 msgstr "Projeyi {signerNetwork} üzerinde başlat"
-
-#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerButton.tsx
-#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
-msgid "Deploy project payer contract"
-msgstr "Proje ödeyen sözleşmesini devreye al"
 
 #: src/pages/create/tabs/ReviewDeployTab/DeployProjectButton.tsx
 #: src/pages/create/tabs/ReviewDeployTab/DeployProjectWithNftsButton.tsx
@@ -1067,6 +1122,10 @@ msgstr "Projeyi {0} ağında başlat"
 #: src/components/activityEventElems/DeployedERC20EventElem.tsx
 msgid "Deployed ERC20 token"
 msgstr "Devreye alınan ERC20 token'ı"
+
+#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
+msgid "Deployed payment addresses can be found in the Tools drawer on the project page."
+msgstr ""
 
 #: src/components/v1/V1Project/modals/MigrateV1Pt1Modal.tsx
 msgid "Deposit 1 wei to @{handle}"
@@ -1335,6 +1394,14 @@ msgstr ""
 msgid "ETH-ERC20 Address Created"
 msgstr ""
 
+#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
+msgid "ETH-ERC20 Payment addresses"
+msgstr ""
+
+#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
+msgid "ETH-ERC20 Payment addresses are <0>smart contracts</0>that allow this project to be paid in <1>ETH</1> by sending ETH directly to the contract, or in <2>ERC20 tokens</2> via the contract's <3>pay()</3> function."
+msgstr ""
+
 #: src/components/v2/shared/DistributionSplitsSection/SpecificLimitModal.tsx
 msgid "Each payout will receive their percent of this total each funding cycle if there is enough in the treasury. Otherwise, they will receive their percent of whatever is in the treasury."
 msgstr "Her ödeme, finansman döngülerinin her birinde, hazinede yeterli tutar mevcutsa bu toplamdan ona ait olan yüzdeyi alacaktır. Aksi halde, hazinede bulunan tutar ne kadarsa bu tutar üzerinden yüzde alacaktır."
@@ -1344,6 +1411,7 @@ msgid "Each project has its own <0>ERC-20 tokens</0>. Anyone who contributes fun
 msgstr "Her projenin kendi <0>ERC-20 token'ları</0> vardır. Bir projeye fon sağlayan herkes, karşılığında o projenin token'larını alır. Proje sahibi isteğe bağlı olarak ERC-20 token'ı çıkarana kadar, token bakiyeleri protokol tarafından izlenecektir."
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/veNft/VeNftRewardTierModal.tsx
 msgid "Edit NFT reward"
 msgstr ""
 
@@ -1357,6 +1425,7 @@ msgid "Edit payout"
 msgstr "Ödemeyi düzenle"
 
 #: src/components/v2/V2Project/V2FundingCycleSection/PayoutSplitsCard.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
 msgid "Edit payouts"
 msgstr ""
 
@@ -1384,6 +1453,14 @@ msgstr "Token tahsisini düzenle"
 #: src/components/v2/V2Project/V2BalancesModal/V2BalancesModal.tsx
 msgid "Edit tracked assets"
 msgstr "İzlenen varlıkları düzenleyin"
+
+#: src/components/veNft/VeNftSetupSection.tsx
+msgid "Enable veNFT Governance"
+msgstr ""
+
+#: src/components/veNft/VeNftSetUnclaimedTokensPermissionSection.tsx
+msgid "Enable veNFT to Spend Unclaimed Tokens"
+msgstr ""
 
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
@@ -1544,6 +1621,7 @@ msgid "Give feedback"
 msgstr "Geribildirim verin"
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/veNft/VeNftRewardTierModal.tsx
 msgid "Give this NFT a name."
 msgstr ""
 
@@ -1633,6 +1711,10 @@ msgstr "Projenizin fonları nasıl dağıtacağı."
 msgid "I accept this project's <0>risks</0>."
 msgstr ""
 
+#: src/pages/create/tabs/ReviewDeployTab/index.tsx
+msgid "I have read and accept the <0>Terms of Service</0>."
+msgstr ""
+
 #: src/components/PayWarningModal.tsx
 msgid "I understand"
 msgstr "Anladım"
@@ -1670,10 +1752,6 @@ msgstr ""
 #: src/components/Project/ProjectToolsDrawer/PayableAddressSection.tsx
 msgid "If you have already deployed a payable address and have lost it, please contact the Juicebox team through <0>Discord.</0>"
 msgstr "Ödeme adresini devreye aldığınız halde bu adresi kaybettiyseniz lütfen <0>Discord</0> aracılığıyla Juicebox ekibiyle iletişime geçin."
-
-#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
-msgid "If you lose your address, please contact the Juicebox team through <0>Discord</0>."
-msgstr "Adresinizi kaybederseniz, lütfen <0>Discord</0> aracılığıyla Juicebox ekibiyle iletişime geçin."
 
 #: src/pages/home/QAs.tsx
 msgid "If you're interested in creating a project but still confused on how to get started, consider watching this <0>instructional video</0>. Also feel free to reach out in the <1>Juicebox Discord</1> where our team will be happy to help bring your project idea to life!"
@@ -1834,6 +1912,10 @@ msgstr "Son ödemeler"
 msgid "Launch funding cycle"
 msgstr "Finansman döngüsünü başlat"
 
+#: src/components/veNft/VeNftSetupModal.tsx
+msgid "Launch veNFT"
+msgstr ""
+
 #: src/pages/create/index.page.tsx
 #: src/pages/index.page.tsx
 msgid "Launch your project"
@@ -1865,6 +1947,10 @@ msgstr ""
 #: src/components/veNft/VeNftConfirmStakeModal.tsx
 #: src/components/veNft/VeNftOwnedTokenCard.tsx
 msgid "Lock Duration"
+msgstr ""
+
+#: src/components/veNft/VeNftSetupModal.tsx
+msgid "Lock Durations ({0} options)"
 msgstr ""
 
 #: src/components/veNft/formControls/LockDurationSelectInput.tsx
@@ -1993,6 +2079,10 @@ msgstr "{tokensTokenLower} token'larını bas"
 msgid "Minutes"
 msgstr "Dakika"
 
+#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
+msgid "More information"
+msgstr ""
+
 #: src/pages/home/TrendingSection.tsx
 msgid "More trending projects"
 msgstr ""
@@ -2026,6 +2116,7 @@ msgid "NO LIMIT"
 msgstr "LİMİT YOK"
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/veNft/VeNftRewardTierModal.tsx
 #: src/pages/create/tabs/ReviewDeployTab/ProjectDetailsSection.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 msgid "Name"
@@ -2144,7 +2235,7 @@ msgstr "Bir kez başlatıldığında, ilk finansman döngünüz <0>değiştirile
 msgid "Only lowercase letters"
 msgstr ""
 
-#: src/components/veNft/formControls/TokensStakedInput.tsx
+#: src/components/veNft/VeNftStakingForm.tsx
 msgid "Only project tokens claimed as ERC-20 tokens can be staked for NFTs."
 msgstr ""
 
@@ -2279,13 +2370,17 @@ msgstr "Bu projeye ödeme şu anda devredışı çünkü rezerve token oranı %1
 msgid "Paying this project is currently disabled."
 msgstr "Bu projeye ödeme şu anda devredışı."
 
+#: src/components/v2/V2Project/ProjectPayersModal.tsx
+msgid "Payment address contract:"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 msgid "Payment equivalent"
 msgstr ""
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
-msgid "Payment made through payable address"
-msgstr "Ödeme adresi üzerinden yapılan ödeme"
+msgid "Payment memo"
+msgstr ""
 
 #: src/components/RichImgPreview.tsx
 msgid "Payment memo image"
@@ -2402,6 +2497,7 @@ msgstr ""
 msgid "Project Token"
 msgstr "Proje Token'ı"
 
+#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Project configuration"
 msgstr "Proje proje yapılandırması"
@@ -2506,7 +2602,6 @@ msgid "Project {projectId} not found"
 msgstr "Proje {projectId} bulunamadı"
 
 #: src/components/Navbar/MenuItems.tsx
-#: src/hooks/PageTitle.ts
 msgid "Projects"
 msgstr "Projeler"
 
@@ -2614,10 +2709,6 @@ msgstr "Yeniden yapılandırma stratejisi"
 msgid "Reconfigure"
 msgstr "Yeniden yapılandır"
 
-#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
-msgid "Reconfigure funding"
-msgstr "Finansmanı yeniden yapılandır"
-
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
 msgid "Reconfigure payouts as percentages of your distribution limit."
 msgstr ""
@@ -2641,9 +2732,6 @@ msgid "Reconfigure upcoming"
 msgstr "Yaklaşanları yeniden yapılandır"
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
-msgid "Reconfigure upcoming funding"
-msgstr "Yaklaşan finansmanı yeniden yapılandır"
-
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Reconfigure upcoming funding cycles"
 msgstr "Yaklaşan finansman döngülerini yeniden yapılandır"
@@ -2843,11 +2931,16 @@ msgid "Save"
 msgstr "Kaydet"
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
+#: src/components/veNft/VeNftRewardTierModal.tsx
 msgid "Save NFT reward"
 msgstr ""
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
 msgid "Save NFT rewards"
+msgstr ""
+
+#: src/components/veNft/VeNftAddLockDurationModal.tsx
+msgid "Save Option"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/EditProjectModal.tsx
@@ -2869,6 +2962,7 @@ msgid "Save payout"
 msgstr "Ödemeyi kaydet"
 
 #: src/components/v1/shared/forms/PayModsForm.tsx
+#: src/components/v2/V2Project/V2FundingCycleSection/modals/EditPayoutsModal.tsx
 msgid "Save payouts"
 msgstr "Ödemeleri kaydet"
 
@@ -2904,6 +2998,11 @@ msgstr "İzlenen varlıkları kaydet"
 msgid "Search projects by handle"
 msgstr "Tanıtıcıya göre proje ara"
 
+#: src/components/veNft/VeNftLockDurationOptionCard.tsx
+msgid "Second"
+msgstr ""
+
+#: src/components/veNft/VeNftLockDurationOptionCard.tsx
 #: src/constants/time.ts
 msgid "Seconds"
 msgstr "Saniye"
@@ -2914,6 +3013,10 @@ msgstr "İşlemi gör"
 
 #: src/components/v2/V2Project/V2ReconfigureProjectHandleDrawer.tsx
 msgid "Set ENS name"
+msgstr ""
+
+#: src/components/veNft/VeNftSetupModal.tsx
+msgid "Set Up veNFT Governance"
 msgstr ""
 
 #: src/components/v2/shared/DistributionSplitsSection/SpecificLimitModal.tsx
@@ -2962,6 +3065,11 @@ msgstr "Bunu tüm ödemelerinizin toplamı olarak ayarlayın"
 
 #: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/V1TokenMigrationSetupModal.tsx
 msgid "Set up V1 token migration"
+msgstr ""
+
+#: src/components/veNft/VeNftSetupModal.tsx
+#: src/components/veNft/VeNftSetupSection.tsx
+msgid "Set up and launch veNFT governance for your project."
 msgstr ""
 
 #: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupSection.tsx
@@ -3101,10 +3209,6 @@ msgstr ""
 msgid "The <0>issuance rate</0> of your second funding cycle will be <1>{0} tokens per 1 ETH</1>, then <2>{1} tokens per 1 ETH </2>for your third funding cycle, and so on."
 msgstr "<0>Token çıkarma oranı</0>, ikinci finansman döngünüz için <1>1 ETH başına {0} token</1>, üçüncü finansman döngünüz için <2>1 ETH başına {1} token</2> olacak ve bu şekilde ilerleyecektir."
 
-#: src/pages/index.page.tsx
-msgid "The Decentralized Funding Platform. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."
-msgstr "Merkeziyetsiz Finansman Sağlama Platformu. Bir grup arkadaş için yeterince basit, anonim bireylerin oluşturduğu küresel bir ağ için yeterince güçlü. <0>Topluluğa ait</0> ve Ethereum üzerinde."
-
 #: src/pages/v1/create/index.page.tsx
 msgid "The JBX protocol is unaudited, and projects built on it may be vulnerable to bugs or exploits. Be smart!"
 msgstr "JBX protokolü denetlenmez ve bunun üzerine inşa edilen projeler hatalara veya açıklardan yararlanmaya karşı savunmasız olabilir. Dikkatli olunmalıdır!"
@@ -3177,12 +3281,16 @@ msgid "The number of project tokens minted when 1 ETH is contributed."
 msgstr "1 ETH katkıda bulunulduğunda basılan proje token'larının sayısı."
 
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
-msgid "The onchain memo for each transaction made through the address. It will appear in the project's payment feed when someone pays this address."
-msgstr "Adres aracılığıyla yapılan her işlem için zincir üstü not. Birisi bu adrese ödeme yaptığında projenin ödeme akışında bu not görünecektir."
+msgid "The onchain memo for each payment made to this address. The project's payment feed will include the memo alongside the payment."
+msgstr ""
 
 #: src/components/modals/ReservedTokenReceiverModal.tsx
 msgid "The percentage this individual receives of the overall {reservedRate}% reserved token allocation"
 msgstr "Bu kişinin toplam %{reservedRate} rezerve token tahsisinden aldığı yüzde"
+
+#: src/pages/index.page.tsx
+msgid "The programmable funding protocol. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."
+msgstr ""
 
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "The project owner can add and remove payment terminals."
@@ -3248,10 +3356,6 @@ msgstr ""
 msgid "This address is an unrecognized strategy contract. Make sure it is correct!"
 msgstr "Bu adres, tanınmayan bir strateji sözleşmesine aittir. Doğru olduğundan emin olun!"
 
-#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
-msgid "This address will disappear when you close this window. <0>Copy the address and save it now</0>."
-msgstr "Pencereyi kapattığınızda bu adres kaybolacaktır. <0>Adresi kopyalayın ve şimdi kaydedin</0>."
-
 #: src/components/v1/shared/Mod.tsx
 #: src/components/v2/shared/SplitItem.tsx
 msgid "This address will receive any tokens minted when the recipient project gets paid."
@@ -3299,6 +3403,10 @@ msgstr ""
 msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
 msgstr "Bu oran, her token'ın herhangi bir zamanda kullanılabilecek taşma miktarını belirler. Daha düşük bir bağlılık eğrisinde, bir token'ı kullanmak, kalan her bir token'ın değerini artırır ve token'ları diğerlerinden daha uzun süre tutmak için bir teşvik yaratır. %100'lük bir bağlılık eğrisi, ne zaman kullanıldıklarına bakılmaksızın tüm token'ların eşit değere sahip olacağı anlamına gelir."
 
+#: src/components/veNft/VeNftSetUnclaimedTokensPermissionSection.tsx
+msgid "This will enable your project's veNFT contract to spend unclaimed tokens in addition to project ERC-20 tokens."
+msgstr ""
+
 #: src/pages/v1/create/index.page.tsx
 msgid "This will erase all of your changes."
 msgstr "Yaptığınız tüm değişiklikler silinecektir."
@@ -3309,6 +3417,11 @@ msgstr ""
 
 #: src/components/veNft/VeNftOwnedTokenCard.tsx
 msgid "Time Remaining"
+msgstr ""
+
+#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
+msgid "Time remaining for changes made to affect the next funding cycle:"
 msgstr ""
 
 #: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupSection.tsx
@@ -3429,10 +3542,6 @@ msgstr "Token'lar, mevcut finansman döngüsünün kullanım oranına göre bu p
 #: src/components/v2/V2Project/V2ManageTokensSection/V2ClaimTokensModal.tsx
 msgid "Tokens cannot be claimed because no ERC-20 token has been issued for this project. ERC-20 tokens must be issued by the project owner."
 msgstr "Bu proje için herhangi bir ERC-20 token'ı çıkarılmamış olduğundan token'lar talep edilemez. ERC-20 token'ları proje sahibi tarafından çıkarılmalıdır."
-
-#: src/components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerModal.tsx
-msgid "Tokens minted from payments to this address will belong to the payer by default. However, if someone pays the project through a custodial service platform such as Coinbase, <0>tokens can't be issued to their personal wallets and will be lost</0>."
-msgstr "Bu adrese yapılan ödemelerden basılan token'lar varsayılan olarak ödeyene ait olacaktır. Ancak, birisi projeye Coinbase gibi bir emanet hizmeti platformu aracılığıyla ödeme yaparsa <0>token'lar kişisel cüzdanlarına çıkarılamaz ve kaybedilir</0>."
 
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
@@ -3706,6 +3815,10 @@ msgstr "İndirim oranı nedir?"
 msgid "What's going on under the hood?"
 msgstr "Kaputun altında neler oluyor?"
 
+#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
+msgid "When a payment address is paid, its <0>beneficiary</0> address will receive any minted project tokens."
+msgstr ""
+
 #: src/components/v2/V2Project/LaunchProjectPayer/AdvancedOptionsCollapse.tsx
 msgid "When checked, payments to this address will mint this project's ERC-20 tokens to the beneficiary's wallet. Payments will cost more gas. When unchecked, Juicebox will track the beneficiary's new tokens when they pay. The beneficiary can claim their ERC-20 tokens at any time."
 msgstr "İşaretlendiğinde, bu adrese yapılan ödemeler, bu projenin ERC-20 token'larını faydalanıcının cüzdanına basacaktır. Ödemeler daha fazla gas ücretine mal olacaktır. İşaret kaldırılırsa Juicebox, ödeme yaptığında faydalanıcının yeni token'larını takip edecektir. Faydalanıcı, ERC-20 token'larını istediği zaman talep edebilir."
@@ -3799,6 +3912,7 @@ msgstr "{tokenTextLong} token'larınızı hak talebinde bulunmadan taşma için 
 msgid "You can still redeem your {tokenSymbol} tokens for overflow without claiming them, and you can transfer your unclaimed {tokenSymbol} tokens to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
 msgstr "{tokenSymbol} token'larınızı taşma için talep etmeden de kullanabilir ve talep edilmemiş {tokenSymbol} token'larınızı, bu projenin sağ üst köşesindeki anahtar simgesiyle erişebileceğiniz Araçlar menüsünden başka bir adrese aktarabilirsiniz."
 
+#: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "You don't have a funding cycle duration. Changes you make will take effect immediately."
 msgstr "Bir finansman döngüsü süreniz yok. Yaptığınız değişiklikler hemen geçerli olacaktır."
@@ -3845,6 +3959,10 @@ msgstr ""
 
 #: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/SetV1ProjectSection.tsx
 msgid "You must own this V1 project."
+msgstr ""
+
+#: src/pages/create/tabs/ReviewDeployTab/index.tsx
+msgid "You must review and accept the Terms of Service."
 msgstr ""
 
 #: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
@@ -3932,10 +4050,6 @@ msgstr "Projeniz finansman döngüleri boyunca finanse edilir. Bir finansman dö
 msgid "Your project will appear archived, and won't be able to receive payments through the juicebox.money app. You can unarchive a project at any time. Allow a few days for your project to appear under the \"archived\" filter on the Projects page."
 msgstr ""
 
-#: src/pages/create/V2WarningBanner.tsx
-msgid "Your project will be created on the Juicebox V2 contracts. <0>Learn more.</0>"
-msgstr "Projeniz Juicebox V2 sözleşmeleri üzerinde oluşturulacaktır. <0>Daha fazla bilgi edinin</0>"
-
 #: src/components/ArchiveProject/index.tsx
 msgid "Your project will immediately appear active on the juicebox.money app. Please allow a few days for it to appear in the \"active\" projects list on the Projects page."
 msgstr "Projeniz juicebox.money uygulamasında hemen aktif olarak görünecektir. Projenizin projeler sayfasında, \"aktif projeler\" listesinde görünmesi için lütfen birkaç gün bekleyin."
@@ -3982,6 +4096,7 @@ msgstr ""
 msgid "day"
 msgstr ""
 
+#: src/components/veNft/VeNftAddLockDurationModal.tsx
 #: src/components/veNft/VeNftSummaryStatsSection.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 #: src/utils/formatTime.ts
@@ -4063,6 +4178,22 @@ msgstr "kullanılan token'lar"
 #: src/components/v1/shared/Mod.tsx
 msgid "until"
 msgstr "sonra"
+
+#: src/components/v2/V2Project/V2ProjectToolsDrawer/V2ProjectToolsDrawer.tsx
+msgid "veNFT"
+msgstr ""
+
+#: src/components/veNft/VeNftSetupModal.tsx
+msgid "veNFT Tiers ({0} variants)"
+msgstr ""
+
+#: src/components/Project/ProjectToolsDrawer/ProjectPayersSection.tsx
+msgid "{0, plural, one {# deployed payment address} other {# deployed payment addresses}}"
+msgstr ""
+
+#: src/components/v2/V2Project/ProjectPayersModal.tsx
+msgid "{0, plural, one {# payment address} other {# payment addresses}}"
+msgstr ""
 
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/pages/v1/create/ConfirmDeployProject.tsx
@@ -4189,6 +4320,14 @@ msgstr "{issuanceRate} token / ETH"
 #: src/pages/projects/FilterCheckboxItem.tsx
 msgid "{label}"
 msgstr "{label}"
+
+#: src/components/veNft/VeNftLockDurationOptionCard.tsx
+msgid "{lockDurationOptionInDays} {lockDurationOptionInDays, plural, one {{0}} other {{1}}}"
+msgstr ""
+
+#: src/components/veNft/VeNftLockDurationOptionCard.tsx
+msgid "{lockDurationOption} {lockDurationOption, plural, one {{0}} other {{1}}}"
+msgstr ""
 
 #: src/components/veNft/formControls/TokensStakedInput.tsx
 msgid "{minTokensAllowedToStake, plural, one {You must stake at least # token.} other {You must stake at least # tokens.}}"

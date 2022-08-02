@@ -21,7 +21,7 @@ import { useAppDispatch } from 'hooks/AppDispatch'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 
 import { v2ProjectRoute } from 'utils/routes'
-import { redirectTo } from 'utils/windowUtils'
+import { useRouter } from 'next/router'
 
 import { readNetwork } from 'constants/networks'
 import { findTransactionReceipt } from './utils'
@@ -43,6 +43,7 @@ const getProjectIdFromReceipt = (txReceipt: TransactionReceipt): number => {
 
 export function DeployProjectButton({ form }: { form: FormInstance }) {
   const launchProjectTx = useLaunchProjectTx()
+  const router = useRouter()
 
   const { userAddress, onSelectWallet } = useContext(NetworkContext)
 
@@ -115,7 +116,7 @@ export function DeployProjectButton({ form }: { form: FormInstance }) {
             // Reset Redux state/localstorage after deploying
             dispatch(editingV2ProjectActions.resetState())
 
-            redirectTo(`${v2ProjectRoute({ projectId })}?newDeploy=true`)
+            router.push(`${v2ProjectRoute({ projectId })}?newDeploy=true`)
           },
           onCancelled() {
             setDeployLoading(false)
@@ -142,6 +143,7 @@ export function DeployProjectButton({ form }: { form: FormInstance }) {
     reservedTokensGroupedSplits,
     launchProjectTx,
     dispatch,
+    router,
   ])
 
   const onButtonClick = async () => {

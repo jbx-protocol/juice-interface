@@ -1,7 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Col, Row, Space } from 'antd'
 import FeedbackFormButton from 'components/FeedbackFormButton'
-import { AppWrapper } from 'components/common'
 
 import { ThemeContext } from 'contexts/themeContext'
 import { CSSProperties, useContext } from 'react'
@@ -16,14 +15,6 @@ import TrendingSection from './home/TrendingSection'
 import { TopProjectsSection } from './home/TopProjectsSection'
 import { StatsSection } from './home/StatsSection'
 import { HowItWorksSection } from './home/HowItWorksSection'
-
-export default function LandingPage() {
-  return (
-    <AppWrapper>
-      <Landing />
-    </AppWrapper>
-  )
-}
 
 const BigHeader = ({
   text,
@@ -47,7 +38,7 @@ const BigHeader = ({
   )
 }
 
-function Landing() {
+export default function Landing() {
   const { theme, forThemeOption } = useContext(ThemeContext)
   const colors = theme.colors
   const isMobile = useMobile()

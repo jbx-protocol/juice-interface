@@ -828,11 +828,11 @@ msgid "Close, I'll do these later"
 msgstr "Fermez, je ferai ceux-ci plus tard"
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
-msgid "Collection name (optional)"
+msgid "Collection name"
 msgstr ""
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
-msgid "Collection symbol (optional)"
+msgid "Collection symbol"
 msgstr ""
 
 #: src/pages/home/HowItWorksSection.tsx

@@ -823,12 +823,12 @@ msgid "Close, I'll do these later"
 msgstr "Close, I'll do these later"
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
-msgid "Collection name (optional)"
-msgstr "Collection name (optional)"
+msgid "Collection name"
+msgstr "Collection name"
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
-msgid "Collection symbol (optional)"
-msgstr "Collection symbol (optional)"
+msgid "Collection symbol"
+msgstr "Collection symbol"
 
 #: src/pages/home/HowItWorksSection.tsx
 msgid "Commit portions of your funds to the people or projects you want to support, or the contributors you want to pay. When you get paid, so do they."

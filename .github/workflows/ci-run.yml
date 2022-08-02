@@ -73,6 +73,9 @@ jobs:
       - name: Install packages
         run: yarn install
 
+      - name: Codegen
+        run: 'yarn codegen'
+
       - name: Lint translations
         run: 'yarn lint:ts'
 

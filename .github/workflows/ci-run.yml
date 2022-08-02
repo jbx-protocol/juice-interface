@@ -33,7 +33,7 @@ jobs:
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-  
+
       - name: Install packages
         run: yarn install
 
@@ -51,7 +51,7 @@ jobs:
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-  
+
       - name: Install packages
         run: yarn install
 
@@ -69,7 +69,7 @@ jobs:
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-  
+
       - name: Install packages
         run: yarn install
 
@@ -82,6 +82,7 @@ jobs:
   next-build:
     name: Build
     runs-on: ubuntu-latest
+    needs: compile
 
     steps:
       - uses: actions/checkout@v3
@@ -90,11 +91,9 @@ jobs:
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-  
+
       - name: Install packages
         run: yarn install
 
       - name: Build NextJS app
         run: 'yarn build'
-
-  

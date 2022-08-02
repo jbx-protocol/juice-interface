@@ -37,3 +37,6 @@ src/styles/antd.css
 # GraphQL Codegen
 graphql.schema.json
 src/generated
+
+# tsc
+*.tsbuildinfo

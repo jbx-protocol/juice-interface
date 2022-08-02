@@ -4,6 +4,7 @@ import ExternalLink from 'components/ExternalLink'
 import { CSSProperties } from 'react'
 import { InfoCircleOutlined } from '@ant-design/icons'
 import useMobile from 'hooks/Mobile'
+import { helpPagePath } from 'utils/helpPageHelper'
 
 import { OverflowVideoLink } from './QAs'
 import { SectionHeading } from './SectionHeading'
@@ -110,16 +111,20 @@ export function HowItWorksSection() {
               <p>
                 <InfoCircleOutlined />{' '}
                 <Trans>
-                  Juicebox is new, unaudited, and not guaranteed to work
-                  perfectly. Before spending money, do your own research:{' '}
+                  Juicebox isn't guaranteed to be free of bugs or exploits.
+                  Before spending money, do your own research.{' '}
                   <ExternalLink href="https://discord.gg/6jXrJSyDFf">
-                    ask questions
+                    Ask questions
                   </ExternalLink>
-                  ,{' '}
+                  , check out the{' '}
                   <ExternalLink href="https://github.com/jbx-protocol/juice-interface">
-                    check out the code
+                    code
                   </ExternalLink>
-                  , and understand the risks!
+                  , and understand the{' '}
+                  <ExternalLink href={helpPagePath('/dev/learn/risks')}>
+                    risks
+                  </ExternalLink>
+                  !
                 </Trans>
               </p>
             </div>

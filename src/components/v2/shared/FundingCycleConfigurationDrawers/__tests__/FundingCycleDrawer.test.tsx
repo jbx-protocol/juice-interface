@@ -33,7 +33,9 @@ describe('FundingCycleDrawer', () => {
 
     test('handleDrawCloseClick when form not updated will close drawer', () => {
       let drawerWasClosed = false
-      const result = instanceUnderTest(() => (drawerWasClosed = true))
+      const result = instanceUnderTest(
+        jest.fn().mockImplementation(() => (drawerWasClosed = true)),
+      )
       act(() => {
         result.current.handleDrawerCloseClick()
       })
@@ -43,7 +45,9 @@ describe('FundingCycleDrawer', () => {
 
     test('handleDrawCloseClick when form updated will open modal and not close drawer', () => {
       let drawerWasClosed = false
-      const result = instanceUnderTest(() => (drawerWasClosed = true))
+      const result = instanceUnderTest(
+        jest.fn().mockImplementation(() => (drawerWasClosed = true)),
+      )
       act(() => result.current.setFormUpdated(true))
       act(() => {
         result.current.handleDrawerCloseClick()

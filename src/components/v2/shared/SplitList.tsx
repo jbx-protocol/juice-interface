@@ -48,7 +48,7 @@ export default function SplitList({
             />
           </div>
         ))}
-      {ownerPercentage ? (
+      {ownerPercentage && reservedRate ? (
         <SplitItem
           split={{
             beneficiary: projectOwnerAddress,

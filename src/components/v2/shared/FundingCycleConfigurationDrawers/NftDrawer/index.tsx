@@ -11,7 +11,6 @@ import { useCallback, useContext, useState } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { uploadNftRewardsToIPFS } from 'utils/ipfs'
 import { sortNftRewardTiers } from 'utils/v2/nftRewards'
-import TooltipLabel from 'components/TooltipLabel'
 
 import { shadowCard } from 'constants/styles/shadowCard'
 
@@ -121,12 +120,9 @@ export default function NftDrawer({
           <p>{NFT_REWARDS_EXPLAINATION}</p>
           <Form layout="vertical">
             <Form.Item
-              label={
-                <TooltipLabel
-                  label={t`Collection name (optional)`}
-                  tip={t`This name will apply to this whole collection of reward tiers on OpenSea.`}
-                />
-              }
+              requiredMark="optional"
+              label={t`Collection name`}
+              tooltip={t`This name will apply to this whole collection of reward tiers on OpenSea.`}
             >
               <Input
                 type="string"
@@ -136,13 +132,9 @@ export default function NftDrawer({
               />
             </Form.Item>
             <Form.Item
-              name={'symbol'}
-              label={
-                <TooltipLabel
-                  label={t`Collection symbol (optional)`}
-                  tip={t`This short symbol will apply to this whole collection of reward tiers on OpenSea.`}
-                />
-              }
+              requiredMark="optional"
+              label={t`Collection symbol`}
+              tooltip={t`This short symbol will apply to this whole collection of reward tiers on OpenSea.`}
             >
               <Input
                 type="string"

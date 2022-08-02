@@ -1,12 +1,14 @@
 import { Tooltip } from 'antd'
 
 import { BigNumber } from '@ethersproject/bignumber'
-import { formatWad, parseWad } from 'utils/formatNumber'
+import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
 import { betweenZeroAndOne } from 'utils/bigNumbers'
 
 import CurrencySymbol from '../CurrencySymbol'
 
 import ETHToUSD from './ETHToUSD'
+
+const MAX_PRECISION = 6
 
 /**
  * Render a given amount formatted as ETH. Displays USD amount in a tooltip on hover.
@@ -25,7 +27,11 @@ export default function ETHAmount({
     (BigNumber.isBigNumber(amount) && betweenZeroAndOne(amount)) ||
     betweenZeroAndOne(parseWad(amount))
 
-  const precisionAdjusted = isBetweenZeroAndOne ? 4 : precision
+  const decimalsCount = fromWad(amount).split('.')[1]?.length ?? 0
+
+  const precisionAdjusted = isBetweenZeroAndOne
+    ? Math.min(decimalsCount, MAX_PRECISION)
+    : precision
 
   const formattedETHAmount = formatWad(amount, {
     precision: precisionAdjusted,

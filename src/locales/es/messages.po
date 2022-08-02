@@ -110,8 +110,8 @@ msgid "<0/> Archived projects have not been modified or deleted on the blockchai
 msgstr "<0/> Los proyectos archivados no han sido modificados o eliminados en la blockchain, y todavía pueden ser interactuados directamente a través de los contratos de Juicebox."
 
 #: src/pages/projects/index.page.tsx
-msgid "<0/> The Juicebox protocol is open to anyone, and project configurations can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO or Peel. Do your own research and understand the risks before committing your funds."
-msgstr "<0/> El protocolo Juicebox está abierto para cualquiera, y las configuraciones de proyectos pueden cambiar ampliamente. Existen riesgos asociados con interactuar con todos los proyectos en el protocolo. Los proyectos construidos en el protocolo no son respaldados o investigados por JuiceboxDAO o Peel. Haz tu propia investigación y comprende los riesgos antes de comprometer tus fondos."
+msgid "<0/> The Juicebox protocol is open to anyone, and project configurations can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO or Peel. Do your own research and understand the <1>risks</1> before committing your funds."
+msgstr ""
 
 #: src/components/Project/SpendingStats.tsx
 msgid "<0/> owner balance"
@@ -169,13 +169,9 @@ msgstr "<0>Tasa de descuento</0>, para reducir la tasa de emisión del token de 
 msgid "<0>If you know how much your project needs to earn over some period of time to be sustainable, you can set a funding target with that amount. If your project earns more than that, the surplus funds are locked in an overflow pool. Anyone holding your project's tokens can claim a portion of the overflow pool in exchange for redeeming their tokens.</0><1>For more info, check out this <2>short video</2>.</1>"
 msgstr "<0>Sí sabes cuanto necesita obtener tu proyecto en un periodo para ser sostenible, puedes establecer un objetivo de financiamiento con esa cantidad. Si tu proyecto gana más que eso, el sobrante se bloquea en un fondo de excedente. Cualquiera que posea los tokens de tu proyecto puede reclamar una porción del fondo de excedente a cambio de canjear sus tokens.</0><1> Para más información, revisa este <2>video corto</2>.</1>"
 
-#: src/components/PayWarningModal.tsx
-msgid "<0>Juicebox contracts</0> are unaudited, and may be vulnerable to bugs or hacks. All funds moved through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable for any losses by projects or their supporters."
-msgstr "<0>Los contratos de Juicebox</0> no están auditados, y pueden ser vulnerables a errores o hackeos. Todos los fondos movidos a través de Juicebox pueden perderse o ser robados. JuiceboxDAO y Peel no son responsables de las pérdidas de los proyectos o sus patrocinadores."
-
 #: src/pages/home/QAs.tsx
-msgid "<0>Juicebox has handled tens of thousands of ETH through its protocol, and has so far had 0 security mishaps.</0> <1>However, Juicebox is still experimental software. Although the Juicebox contract team have done their part to shape the smart contracts for public use and have tested the code thoroughly, the risk of exploits is never 0%.</1><2>Due to their public nature, any exploits to the contracts may have irreversible consequences, including loss of funds. Please use Juicebox with caution.</2>"
-msgstr "<0>Juicebox ha manejado decenas de miles de ETH a través de su protocolo, y hasta ahora no ha tenido ningún percance de seguridad.</0> <1>De cualquier forma, Juicebox es aún software experimental. Aunque el equipo de contratos de Juicebox ha hecho su parte para dar forma a los contratos inteligentes para uso público y ha probado el código a fondo, el riesgo de vulnerabilidades nunca es del 0 %.</1><2>Debido a su naturaleza pública, cualquier explotación de los contratos pueden tener consecuencias irreversibles, incluida la pérdida de fondos. Utilice Juicebox con precaución.</2>"
+msgid "<0>Juicebox has handled tens of thousands of ETH through its protocol, and has so far had 0 security mishaps.</0> <1>However, Juicebox is still experimental software. Although the Juicebox contract team have done their part to shape the smart contracts for public use and have tested the code thoroughly, the risk of exploits is never 0%.</1><2>Due to their public nature, any exploits to the contracts may have irreversible consequences, including loss of funds. Please use Juicebox with caution.</2><3><4>Learn more</4> about the risks.</3>"
+msgstr ""
 
 #: src/pages/home/QAs.tsx
 msgid "<0>Juicebox is a governance-minimal protocol. There are only a few levers that can be tuned, none of which impose changes for users without their consent. The Juicebox governance smart contract can adjust these levers.</0><1>The Juicebox protocol is governed by a community of JBX token holders who vote on proposals fortnightly.</1>"
@@ -236,6 +232,10 @@ msgstr "<0>El objetivo es 0.</0> El balance completo del proyecto será consider
 #: src/pages/home/QAs.tsx
 msgid "<0>That's the plan, but the core Juicebox contracts will first be deployed to Ethereum Mainnet.</0><1>The contract team will soon start working on L2 payment terminals for Juicebox projects.</1>"
 msgstr "<0>Ese es el plan, pero los contratos básicos de Juicebox primero serán activados en la red principal de Ethereum.</0><1>El equipo de contratos pronto comenzarán a trabajar en terminales de pago L2 para proyectos Juicebox.</1>"
+
+#: src/pages/home/QAs.tsx
+msgid "<0>The Juicebox V2 smart contracts have had multiple security audits. <1>Read the audit reports.</1></0><2>While Juicebox has been audited, it is still experimental software, and there are risks. Please use Juicebox with caution.</2><3><4>Learn more</4> about the risks.</3>"
+msgstr ""
 
 #: src/pages/home/QAs.tsx
 msgid "<0>There are unit tests written for every condition of every function in the contracts, and integration tests for every workflow that the protocol supports.</0><1>There was also a script written to iteratively run the integration tests using a random input generator, prioritizing edge cases. The code has successfully passed over 1 million test cases through this stress-testing script.</1> <2>The code could always use more eyes and more critique to further the community's confidence. Join our <3>Discord</3> and check out the code on <4>GitHub</4> to work with us.</2>"
@@ -352,9 +352,12 @@ msgstr "Añadir un pago"
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Add an on-chain memo to this payment."
 msgstr "Añadir un memo on-chain a este pago."
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Add an on-chain memo to this reconfiguration."
+msgstr ""
 
 #: src/components/Project/ProjectToolsDrawer/AddToProjectBalanceForm.tsx
 msgid "Add funds to this project's balance without minting tokens."
@@ -989,6 +992,7 @@ msgstr "Crear dirección pagable"
 msgid "Create payment address"
 msgstr ""
 
+#: src/hooks/PageTitle.ts
 #: src/pages/projects/MyProjects.tsx
 #: src/pages/projects/index.page.tsx
 msgid "Create project"
@@ -1415,8 +1419,8 @@ msgid "Each payout will receive their percent of this total each funding cycle i
 msgstr "Cada pago recibirá su porcentaje de este total cada ciclo de financiamiento si hay suficiente en el tesoro. En caso contrario, recibirán el porcentaje de lo que haya en el tesoro."
 
 #: src/pages/home/QAs.tsx
-msgid "Each project has its own <0>ERC-20 tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
-msgstr "Cada proyecto tiene sus propios <0>tokens ERC-20</0>. Todo el que financia un proyecto obtiene los tokens del proyecto a cambio. Los balances de tokens se registrarán por el protocolo hasta que los tokens ERC-20 sean emitidos por el dueño del proyecto."
+msgid "Each project has its own <0>tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
+msgstr ""
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
 #: src/components/veNft/VeNftRewardTierModal.tsx
@@ -1645,6 +1649,10 @@ msgstr ""
 msgid "Handle"
 msgstr "Usuario"
 
+#: src/pages/home/QAs.tsx
+msgid "Has Juicebox been audited?"
+msgstr ""
+
 #: src/components/PayWarningModal.tsx
 msgid "Heads up"
 msgstr "Atención"
@@ -1717,6 +1725,10 @@ msgstr "Cómo tu proyecto distribuirá los fondos."
 
 #: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "I accept this project's <0>risks</0>."
+msgstr ""
+
+#: src/pages/create/tabs/ReviewDeployTab/index.tsx
+msgid "I have read and accept the <0>Terms of Service</0>."
 msgstr ""
 
 #: src/components/PayWarningModal.tsx
@@ -1873,7 +1885,7 @@ msgid "Juicebox V2 project with ID {0}"
 msgstr "Proyecto de Juicebox V2 con ID {0}"
 
 #: src/pages/home/HowItWorksSection.tsx
-msgid "Juicebox is new, unaudited, and not guaranteed to work perfectly. Before spending money, do your own research: <0>ask questions</0>, <1>check out the code</1>, and understand the risks!"
+msgid "Juicebox isn't guaranteed to be free of bugs or exploits. Before spending money, do your own research. <0>Ask questions</0>, check out the <1>code</1>, and understand the <2>risks</2>!"
 msgstr ""
 
 #: src/components/TransactionModal.tsx
@@ -2606,6 +2618,7 @@ msgid "Project {projectId} not found"
 msgstr "Proyecto {projectId} no encontrado"
 
 #: src/components/Navbar/MenuItems.tsx
+#: src/hooks/PageTitle.ts
 msgid "Projects"
 msgstr "Proyectos"
 
@@ -3336,6 +3349,10 @@ msgstr "El objetivo para este ciclo de financiamiento es 0, lo que significa que
 msgid "The total funds this Juicebox project has received since it was created."
 msgstr "Los fondos totales que este proyecto Juicebox ha recibido desde que fue creado."
 
+#: src/components/PayWarningModal.tsx
+msgid "The<0>Juicebox contracts</0> may be vulnerable to bugs or hacks. All funds moved through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable for any losses by projects or their supporters."
+msgstr ""
+
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "There are no payouts defined for this funding cycle. The project owner will receive all available funds."
 msgstr "No hay pagos definidos para este ciclo de financiamiento. El dueño del proyecto recibirá todos los fondos disponibles."
@@ -3973,6 +3990,10 @@ msgstr ""
 msgid "You must own this V1 project."
 msgstr ""
 
+#: src/pages/create/tabs/ReviewDeployTab/index.tsx
+msgid "You must review and accept the Terms of Service."
+msgstr ""
+
 #: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "You must review and accept the risks."
 msgstr ""
@@ -4057,10 +4078,6 @@ msgstr "Tu proyecto está financiado a través de los ciclos de financiamiento. 
 #: src/components/ArchiveProject/index.tsx
 msgid "Your project will appear archived, and won't be able to receive payments through the juicebox.money app. You can unarchive a project at any time. Allow a few days for your project to appear under the \"archived\" filter on the Projects page."
 msgstr "Tu proyecto aparecerá archivado, y no podrá recibir pagos a través de la app juicebox.money. Puedes desarchivar un proyecto en cualquier momento. Dale unos días a tu proyecto para que aparezca bajo el filtro \"archivado\" en la página de Proyectos."
-
-#: src/pages/create/V2WarningBanner.tsx
-msgid "Your project will be created on the Juicebox V2 contracts. <0>Learn more.</0>"
-msgstr "Tu proyecto será creado en los contratos de Juicebox V2. <0>Aprende más.</0>"
 
 #: src/components/ArchiveProject/index.tsx
 msgid "Your project will immediately appear active on the juicebox.money app. Please allow a few days for it to appear in the \"active\" projects list on the Projects page."

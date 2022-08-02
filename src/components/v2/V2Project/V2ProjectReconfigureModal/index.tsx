@@ -154,11 +154,7 @@ export default function V2ProjectReconfigureModal({
       centered
       destroyOnClose
     >
-      <Space
-        direction="vertical"
-        size="middle"
-        style={{ width: '100%', marginBottom: 40 }}
-      >
+      <Space direction="vertical" size="middle" style={{ width: '100%' }}>
         {!hideProjectDetails && (
           <>
             <h4 style={{ marginBottom: 0 }}>
@@ -210,26 +206,30 @@ export default function V2ProjectReconfigureModal({
           reconfigureHasChanges={rulesDrawerHasSavedChanges}
           onClick={() => setRulesDrawerVisible(true)}
         />
+        <ReconfigurePreview
+          payoutSplits={editingProjectData.editingPayoutGroupedSplits.splits}
+          reserveSplits={
+            editingProjectData.editingReservedTokensGroupedSplits.splits
+          }
+          fundingCycleMetadata={editingProjectData.editingFundingCycleMetadata}
+          fundingCycleData={editingProjectData.editingFundingCycleData}
+          fundAccessConstraints={
+            editingProjectData.editingFundAccessConstraints
+          }
+        />
+
+        <Form layout="vertical">
+          <Form.Item
+            name="memo"
+            label={t`Memo (optional)`}
+            className={'antd-no-number-handler'}
+            extra={t`Add an on-chain memo to this reconfiguration.`}
+          >
+            <MemoFormInput value={memo} onChange={setMemo} />
+          </Form.Item>
+        </Form>
       </Space>
-      <ReconfigurePreview
-        payoutSplits={editingProjectData.editingPayoutGroupedSplits.splits}
-        reserveSplits={
-          editingProjectData.editingReservedTokensGroupedSplits.splits
-        }
-        fundingCycleMetadata={editingProjectData.editingFundingCycleMetadata}
-        fundingCycleData={editingProjectData.editingFundingCycleData}
-        fundAccessConstraints={editingProjectData.editingFundAccessConstraints}
-      />
-      <Form layout="vertical">
-        <Form.Item
-          name="memo"
-          label={t`Memo (optional)`}
-          className={'antd-no-number-handler'}
-          extra={t`Add an on-chain memo to this payment.`}
-        >
-          <MemoFormInput value={memo} onChange={setMemo} />
-        </Form.Item>
-      </Form>
+
       {hideProjectDetails ? null : (
         <V2ReconfigureProjectDetailsDrawer
           visible={projectDetailsDrawerVisible}

@@ -4,7 +4,6 @@ import { Button } from 'antd'
 import Search from 'antd/lib/input/Search'
 import FeedbackFormButton from 'components/FeedbackFormButton'
 import Loading from 'components/Loading'
-import { AppWrapper } from 'components/common'
 
 import { ProjectCategory } from 'models/project-visibility'
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
@@ -21,6 +20,8 @@ import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 
 import { CV } from 'models/cv'
+import ExternalLink from 'components/ExternalLink'
+import { helpPagePath } from 'utils/helpPageHelper'
 
 import { layouts } from 'constants/styles/layouts'
 import TrendingProjects from './TrendingProjects'
@@ -30,21 +31,13 @@ import ProjectsFilterAndSort from './ProjectsFilterAndSort'
 import ArchivedProjectsMessage from './ArchivedProjectsMessage'
 import MyProjects from './MyProjects'
 
-export default function ProjectsPage() {
-  return (
-    <AppWrapper>
-      <Projects />
-    </AppWrapper>
-  )
-}
-
 type OrderByOption = 'createdAt' | 'totalPaid'
 
 const pageSize = 20
 
 const defaultTab: ProjectCategory = 'trending'
 
-function Projects() {
+export default function Projects() {
   const [selectedTab, setSelectedTab] = useState<ProjectCategory>(defaultTab)
 
   // Checks URL to see if tab has been set
@@ -165,7 +158,10 @@ function Projects() {
               and project configurations can vary widely. There are risks
               associated with interacting with all projects on the protocol.
               Projects built on the protocol are not endorsed or vetted by
-              JuiceboxDAO or Peel. Do your own research and understand the risks
+              JuiceboxDAO or Peel. Do your own research and understand the{' '}
+              <ExternalLink href={helpPagePath('/dev/learn/risks')}>
+                risks
+              </ExternalLink>{' '}
               before committing your funds.
             </Trans>
           </p>

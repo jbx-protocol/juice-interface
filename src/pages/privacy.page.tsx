@@ -1,16 +1,6 @@
-import { AppWrapper } from 'components/common'
-
 import ExternalLink from '../components/ExternalLink'
 
-export default function PrivacyPolicyPage() {
-  return (
-    <AppWrapper>
-      <PrivacyPolicy />
-    </AppWrapper>
-  )
-}
-
-function PrivacyPolicy() {
+export default function PrivacyPolicy() {
   return (
     <div style={{ padding: '40px', maxWidth: '1080px', margin: '0 auto' }}>
       <h1>Privacy Policy</h1>

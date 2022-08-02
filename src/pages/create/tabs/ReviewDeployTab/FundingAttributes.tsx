@@ -378,13 +378,16 @@ export function DistributionSplitsStatistic({
         />
       }
       valueRender={() => (
-        <SplitList
-          splits={splits}
-          currency={currency}
-          totalValue={totalValue}
-          projectOwnerAddress={projectOwnerAddress}
-          showSplitValues={showSplitValues}
-        />
+        <div style={{ fontSize: '0.9rem' }}>
+          <SplitList
+            splits={splits}
+            currency={currency}
+            totalValue={totalValue}
+            projectOwnerAddress={projectOwnerAddress}
+            showSplitValues={showSplitValues}
+            valueFormatProps={{ precision: 2 }}
+          />
+        </div>
       )}
     />
   )
@@ -408,11 +411,13 @@ export function ReservedSplitsStatistic({
         />
       }
       valueRender={() => (
-        <SplitList
-          splits={splits}
-          projectOwnerAddress={projectOwnerAddress}
-          totalValue={undefined}
-        />
+        <div style={{ fontSize: '0.9rem' }}>
+          <SplitList
+            splits={splits}
+            projectOwnerAddress={projectOwnerAddress}
+            totalValue={undefined}
+          />
+        </div>
       )}
     />
   )

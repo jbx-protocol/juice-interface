@@ -1,4 +1,4 @@
-import { Col, Row } from 'antd'
+import { Col, Row, Space } from 'antd'
 import {
   AllowMintingStatistic,
   AllowSetTerminalsStatistic,
@@ -93,7 +93,6 @@ export default function ReconfigurePreview({
   )
 
   const gutter = 20
-  const rowMargin = 20
 
   const secondRowColWidth = hasDuration && hasDistributionLimit ? 8 : 12
 
@@ -110,8 +109,8 @@ export default function ReconfigurePreview({
     ) ?? '0'
 
   return (
-    <div style={{ padding: '0 0px' }}>
-      <Row gutter={gutter} style={{ marginBottom: rowMargin }}>
+    <Space direction="vertical" size="middle">
+      <Row gutter={gutter}>
         <Col md={12} sm={12}>
           <DurationStatistic duration={fundingCycle.duration} />
         </Col>
@@ -122,7 +121,7 @@ export default function ReconfigurePreview({
           />
         </Col>
       </Row>
-      <Row gutter={gutter} style={{ marginBottom: rowMargin }}>
+      <Row gutter={gutter}>
         <Col md={12} sm={12}>
           <InflationRateStatistic
             inflationRate={
@@ -136,7 +135,7 @@ export default function ReconfigurePreview({
           <IssuanceRateStatistic issuanceRate={issuanceRate} />
         </Col>
       </Row>
-      <Row gutter={gutter} style={{ marginBottom: rowMargin }}>
+      <Row gutter={gutter}>
         <Col md={secondRowColWidth} sm={12}>
           <ReservedTokensStatistic
             reservedRate={reservedRate}
@@ -156,7 +155,7 @@ export default function ReconfigurePreview({
           </Col>
         ) : null}
       </Row>
-      <Row gutter={gutter} style={{ marginBottom: rowMargin }}>
+      <Row gutter={gutter}>
         <Col md={8}>
           <PausePayStatistic pausePay={fundingCycleMetadata.pausePay} />
         </Col>
@@ -171,7 +170,7 @@ export default function ReconfigurePreview({
           />
         </Col>
       </Row>
-      <Row gutter={gutter} style={{ marginBottom: rowMargin }}>
+      <Row gutter={gutter}>
         {hasDuration ? (
           <Col span={24}>
             <ReconfigurationStatistic ballotAddress={fundingCycle.ballot} />
@@ -196,6 +195,6 @@ export default function ReconfigurePreview({
           projectOwnerAddress={userAddress}
         />
       )}
-    </div>
+    </Space>
   )
 }

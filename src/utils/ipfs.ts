@@ -197,3 +197,10 @@ export async function uploadNftRewardsToIPFS(
     nftRewards.map(rewardTier => uploadNftRewardToIPFS(rewardTier)),
   )
 }
+
+// returns a native IPFS link (`ipfs://cid`) as a https link
+export function formatIpfsLink(ipfsLink: string) {
+  const ipfsLinkParts = ipfsLink.split('/')
+  const cid = ipfsLinkParts[ipfsLinkParts.length - 1]
+  return `https://${DEFAULT_PINATA_GATEWAY}/ipfs/${cid}`
+}

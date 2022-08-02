@@ -18,6 +18,8 @@ on:
 
 env:
   NEXT_PUBLIC_INFURA_NETWORK: mainnet
+  PRE_RENDER_INFURA_ID: ${{ secrets.PRE_RENDER_INFURA_ID }}
+  GRAPHQL_SCHEMA_SUBGRAPH_URL: ${{ secrets.GRAPHQL_SCHEMA_SUBGRAPH_URL }}
 
 jobs:
   run-yarn-tests:

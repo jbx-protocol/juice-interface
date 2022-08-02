@@ -76,8 +76,8 @@ jobs:
       - name: Codegen
         run: 'yarn codegen'
 
-      - name: Lint translations
-        run: 'yarn lint:ts'
+      - name: Compile
+        run: 'yarn ts:compile'
 
   next-build:
     name: Build

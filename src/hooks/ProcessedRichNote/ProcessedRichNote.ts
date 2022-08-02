@@ -89,8 +89,6 @@ export const useProcessedRichNote = (note: string | undefined) => {
     return formattedNoteWords.join(' ')
   }, [mediaLinks, formattedNote])
 
-  console.info('!!mediaLinks state: ', mediaLinks)
-
   return {
     trimmedNote,
     formattedMediaLinks: mediaLinks?.filter(i => Boolean(i)),

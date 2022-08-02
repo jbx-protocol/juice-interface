@@ -1,16 +1,7 @@
-import { AppWrapper } from 'components/common'
 import ExternalLink from 'components/ExternalLink'
 import { v2ProjectRoute } from 'utils/routes'
 
-export default function V2BugUpdatesPage() {
-  return (
-    <AppWrapper>
-      <V2BugUpdates />
-    </AppWrapper>
-  )
-}
-
-function V2BugUpdates() {
+export default function V2BugUpdates() {
   return (
     <div style={{ maxWidth: 800, margin: '0 auto', padding: 20 }}>
       <h1>Juicebox V2 Contracts Bug</h1>

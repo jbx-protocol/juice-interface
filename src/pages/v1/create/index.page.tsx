@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import { CaretRightFilled, CheckCircleFilled } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
@@ -44,7 +45,6 @@ import {
   uploadProjectMetadata,
 } from 'utils/ipfs'
 import { getTerminalAddress } from 'utils/v1/terminals'
-import { AppWrapper } from 'components/common'
 
 import TicketingForm, {
   TicketingFormFields,
@@ -66,7 +66,6 @@ import RestrictedActionsForm, {
 import { toDateSeconds } from 'utils/formatDate'
 
 import { BallotStrategy } from 'models/ballot'
-import { redirectTo } from 'utils/windowUtils'
 
 import ConfirmDeployProject from './ConfirmDeployProject'
 
@@ -75,15 +74,8 @@ import { drawerStyle } from 'constants/styles/drawerStyle'
 
 const terminalVersion: V1TerminalVersion = '1.1'
 
-export default function V1CreatePage() {
-  return (
-    <AppWrapper>
-      <V1Create />
-    </AppWrapper>
-  )
-}
-
-function V1Create() {
+export default function V1Create() {
+  const router = useRouter()
   const { signerNetwork, userAddress, onSelectWallet } =
     useContext(NetworkContext)
   const { colors, radii } = useContext(ThemeContext).theme
@@ -325,7 +317,7 @@ function V1Create() {
           resetProjectForm()
           dispatch(editingProjectActions.resetState())
 
-          redirectTo(`/p/${editingProjectInfo.handle}?newDeploy=true`)
+          router.push(`/p/${editingProjectInfo.handle}?newDeploy=true`)
         },
       },
     )
@@ -347,6 +339,7 @@ function V1Create() {
     editingTicketMods,
     resetProjectForm,
     dispatch,
+    router,
   ])
 
   const viewedCurrentStep = useCallback(() => {

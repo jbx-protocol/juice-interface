@@ -1,3 +1,5 @@
+import Loading from 'components/Loading'
+import NewDeployNotAvailable from 'components/NewDeployNotAvailable'
 import ScrollToTopButton from 'components/ScrollToTopButton'
 
 import {
@@ -5,6 +7,8 @@ import {
   V2ProjectContextType,
 } from 'contexts/v2/projectContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
+import { usePageTitle } from 'hooks/PageTitle'
+import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { useProjectsQuery } from 'hooks/Projects'
 import useSymbolOfERC20 from 'hooks/SymbolOfERC20'
 import { useBallotState } from 'hooks/v2/contractReader/BallotState'
@@ -12,6 +16,7 @@ import { usePaymentTerminalBalance } from 'hooks/v2/contractReader/PaymentTermin
 import useProjectCurrentFundingCycle from 'hooks/v2/contractReader/ProjectCurrentFundingCycle'
 import useProjectDistributionLimit from 'hooks/v2/contractReader/ProjectDistributionLimit'
 import useProjectHandle from 'hooks/v2/contractReader/ProjectHandle'
+import useProjectMetadataContent from 'hooks/v2/contractReader/ProjectMetadataContent'
 import useProjectOwner from 'hooks/v2/contractReader/ProjectOwner'
 import useProjectSplits from 'hooks/v2/contractReader/ProjectSplits'
 import useProjectTerminals from 'hooks/v2/contractReader/ProjectTerminals'
@@ -22,6 +27,7 @@ import useUsedDistributionLimit from 'hooks/v2/contractReader/UsedDistributionLi
 import { first } from 'lodash'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { useMemo } from 'react'
+import { useRouter } from 'next/router'
 import { NO_CURRENCY, V2_CURRENCY_ETH, V2CurrencyName } from 'utils/v2/currency'
 import { useNftRewardTiersOf } from 'hooks/v2/contractReader/NftRewardTiersOf'
 
@@ -29,7 +35,6 @@ import useNftRewards from 'hooks/v2/NftRewards'
 import { CIDsOfNftRewardTiersResponse } from 'utils/v2/nftRewards'
 
 import useNameOfERC20 from 'hooks/NameOfERC20'
-import { ProjectMetadataV4 } from 'models/project-metadata'
 
 import {
   ETH_PAYOUT_SPLIT_GROUP,
@@ -38,15 +43,26 @@ import {
 import { V2ArchivedProjectIds } from 'constants/v2/archivedProjects'
 import { layouts } from 'constants/styles/layouts'
 
+import Project404 from '../../../../components/Project404'
 import V2Project from '../../../../components/v2/V2Project'
 
-export default function V2Dashboard({
-  projectId,
-  metadata: projectMetadata,
-}: {
-  projectId: number
-  metadata: ProjectMetadataV4
-}) {
+export default function V2Dashboard({ projectId }: { projectId: number }) {
+  const router = useRouter()
+  const { data: metadataCID, loading: metadataURILoading } =
+    useProjectMetadataContent(projectId)
+
+  const {
+    data: projectMetadata,
+    error: metadataError,
+    isLoading: metadataLoading,
+  } = useProjectMetadata(metadataCID)
+
+  usePageTitle({
+    title: projectMetadata?.name
+      ? `${projectMetadata.name} | Juicebox`
+      : undefined,
+  })
+
   const { data: projects } = useProjectsQuery({
     projectId,
     keys: ['createdAt', 'totalPaid'],
@@ -70,6 +86,8 @@ export default function V2Dashboard({
   const { data: terminals } = useProjectTerminals({
     projectId,
   })
+
+  const isNewDeploy = Boolean(router.query.newDeploy)
 
   const primaryTerminal = terminals?.[0] // TODO: make primaryTerminalOf hook and use it
 
@@ -164,6 +182,16 @@ export default function V2Dashboard({
   const isArchived = projectId
     ? V2ArchivedProjectIds.includes(projectId) || projectMetadata?.archived
     : false
+
+  if (metadataLoading || metadataURILoading) {
+    return <Loading />
+  }
+  if (isNewDeploy && !metadataCID) {
+    return <NewDeployNotAvailable handleOrId={projectId} />
+  }
+  if (metadataError || !metadataCID) {
+    return <Project404 projectId={projectId} />
+  }
 
   const nftsLoading = nftRewardTiersLoading || nftRewardsCIDsLoading
 

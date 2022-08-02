@@ -20,6 +20,8 @@ import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 
 import { CV } from 'models/cv'
+import ExternalLink from 'components/ExternalLink'
+import { helpPagePath } from 'utils/helpPageHelper'
 
 import { layouts } from 'constants/styles/layouts'
 import TrendingProjects from './TrendingProjects'
@@ -156,7 +158,10 @@ export default function Projects() {
               and project configurations can vary widely. There are risks
               associated with interacting with all projects on the protocol.
               Projects built on the protocol are not endorsed or vetted by
-              JuiceboxDAO or Peel. Do your own research and understand the risks
+              JuiceboxDAO or Peel. Do your own research and understand the{' '}
+              <ExternalLink href={helpPagePath('/dev/learn/risks')}>
+                risks
+              </ExternalLink>{' '}
               before committing your funds.
             </Trans>
           </p>

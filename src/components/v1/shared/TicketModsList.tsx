@@ -100,7 +100,7 @@ export default function TicketModsList({
             ))
         : null}
 
-      {ownerPercent > 0 && (
+      {ownerPercent > 0 && reservedRate > 0 && (
         <Mod
           mod={{ beneficiary: owner, percent: ownerPercent }}
           value={

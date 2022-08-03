@@ -22,6 +22,7 @@ import {
   parseWad,
 } from 'utils/formatNumber'
 import { amountSubFee, feeForAmount } from 'utils/math'
+import ETHAmount from 'components/currency/ETHAmount'
 
 import { V1_CURRENCY_USD } from 'constants/v1/currency'
 
@@ -68,6 +69,13 @@ export default function WithdrawModal({
   const withdrawable = balanceInCurrency?.gt(untapped)
     ? untapped
     : balanceInCurrency
+
+  const convertedAmountSubFee = amountSubFee(
+    currentFC.currency.eq(V1_CURRENCY_USD)
+      ? converter.usdToWei(tapAmount)
+      : parseWad(tapAmount),
+    currentFC.fee,
+  )
 
   async function executeTapTx() {
     if (!currentFC || !tapAmount) return
@@ -194,16 +202,7 @@ export default function WithdrawModal({
 
           <div style={{ color: colors.text.primary, marginBottom: 10 }}>
             <span style={{ fontWeight: 500 }}>
-              <CurrencySymbol currency="ETH" />
-              {formatWad(
-                amountSubFee(
-                  currentFC.currency.eq(V1_CURRENCY_USD)
-                    ? converter.usdToWei(tapAmount)
-                    : parseWad(tapAmount),
-                  currentFC.fee,
-                ),
-                { precision: 4 },
-              )}
+              <ETHAmount amount={convertedAmountSubFee} />
             </span>{' '}
             <Trans>
               after {perbicentToPercent(currentFC.fee?.toString())}% JBX fee
@@ -226,18 +225,9 @@ export default function WithdrawModal({
           </div>
         ) : (
           <p>
-            <CurrencySymbol currency="ETH" />
             <Trans>
-              {formatWad(
-                amountSubFee(
-                  currentFC.currency.eq(V1_CURRENCY_USD)
-                    ? converter.usdToWei(tapAmount)
-                    : parseWad(tapAmount),
-                  currentFC.fee,
-                ),
-                { precision: 4 },
-              )}{' '}
-              will go to the project owner: <FormattedAddress address={owner} />
+              <ETHAmount amount={convertedAmountSubFee} /> will go to the
+              project owner: <FormattedAddress address={owner} />
             </Trans>
           </p>
         )}

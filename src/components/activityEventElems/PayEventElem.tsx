@@ -93,7 +93,7 @@ export default function PayEventElem({
               fontSize: primaryContentFontSize,
             }}
           >
-            <ETHAmount amount={event.amount} precision={4} />
+            <ETHAmount amount={event.amount} />
           </div>
         </div>
 

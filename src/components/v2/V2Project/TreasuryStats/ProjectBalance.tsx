@@ -38,7 +38,7 @@ export default function ProjectBalance({ style }: { style?: CSSProperties }) {
         >
           {distributionLimitCurrency?.eq(V2_CURRENCY_USD) && (
             <span style={textSecondary(theme)}>
-              <ETHAmount amount={ETHBalance} precision={4} padEnd={true} />{' '}
+              <ETHAmount amount={ETHBalance} padEnd />{' '}
             </span>
           )}
           <V2CurrencyAmount

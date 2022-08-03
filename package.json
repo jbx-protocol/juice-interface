@@ -25,7 +25,6 @@
     "@types/node": "^12.0.0",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
-    "@types/react-redux": "^7.1.24",
     "@typescript-eslint/eslint-plugin": "5.27.0",
     "@typescript-eslint/parser": "5.27.0",
     "@uniswap/sdk": "3.0.3",

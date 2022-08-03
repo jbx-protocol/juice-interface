@@ -1,7 +1,8 @@
 import { t, Trans } from '@lingui/macro'
-import { Button, Form, Input, Space } from 'antd'
+import { Button, Empty, Form, Input, Space } from 'antd'
 import NftRewardTierModal from 'components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal'
 import { ThemeContext } from 'contexts/themeContext'
+import { PlusCircleOutlined } from '@ant-design/icons'
 
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
@@ -122,7 +123,7 @@ export default function NftDrawer({
             <Form.Item
               requiredMark="optional"
               label={t`Collection name`}
-              tooltip={t`This name will apply to this whole collection of reward tiers on OpenSea.`}
+              tooltip={t`Your collection's name will apply to the whole collection of reward tiers on NFT marketplaces (like OpenSea).`}
             >
               <Input
                 type="string"
@@ -134,7 +135,7 @@ export default function NftDrawer({
             <Form.Item
               requiredMark="optional"
               label={t`Collection symbol`}
-              tooltip={t`This short symbol will apply to this whole collection of reward tiers on OpenSea.`}
+              tooltip={t`You collection's symbol will apply to the whole collection of reward tiers on NFT marketplaces (like OpenSea).`}
             >
               <Input
                 type="string"
@@ -156,6 +157,15 @@ export default function NftDrawer({
               />
             ))}
           </Space>
+
+          {rewardTiers?.length === 0 && (
+            <Empty
+              description={t`No NFT reward tiers`}
+              image={Empty.PRESENTED_IMAGE_SIMPLE}
+              style={{ marginBottom: 0 }}
+            />
+          )}
+
           <Button
             type="dashed"
             onClick={() => {
@@ -164,8 +174,11 @@ export default function NftDrawer({
             style={{ marginTop: 15 }}
             disabled={rewardTiers.length >= MAX_NFT_REWARD_TIERS}
             block
+            icon={<PlusCircleOutlined />}
           >
-            <Trans>Add reward tier</Trans>
+            <span>
+              <Trans>Add reward tier</Trans>
+            </span>
           </Button>
         </div>
         <Button

@@ -131,6 +131,7 @@ const VeNftSetupModal = ({ visible, onCancel }: VeNftSetupModalProps) => {
               />
             ))}
           </Space>
+
           <Button
             type="dashed"
             onClick={() => {

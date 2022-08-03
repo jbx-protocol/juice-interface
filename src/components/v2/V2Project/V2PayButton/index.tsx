@@ -42,7 +42,7 @@ export default function V2PayButton({
   if (isArchived) {
     disabledMessage = t`This project is archived and can't be paid.`
   } else if (fundingCycleMetadata.pausePay) {
-    disabledMessage = t`Payments are paused for the current funding cycle.`
+    disabledMessage = t`Payments are paused in this funding cycle.`
   }
 
   const isPayDisabled = Boolean(disabledMessage) || disabled

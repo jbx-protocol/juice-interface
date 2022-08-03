@@ -1055,10 +1055,6 @@ msgstr "自定义策略"
 msgid "Custom token beneficiary"
 msgstr "自定义代币受益人"
 
-#: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
-msgid "Customize payment"
-msgstr ""
-
 #: src/components/formItems/ProjectPayButton.tsx
 msgid "Customize your project's \"pay\" button. Leave blank to use the default."
 msgstr "定制项目的 \"付款“ 按钮。留空则使用默认值。"
@@ -1953,6 +1949,10 @@ msgstr "启动你的项目"
 msgid "Leave blank to start immediately."
 msgstr "留空以便马上开始。"
 
+#: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
+msgid "Leave unchecked to have Juicebox track your token balance, saving gas on this transaction. You can claim your ERC-20 tokens later."
+msgstr ""
+
 #: src/components/Navbar/Mobile/ThemePickerMobile.tsx
 msgid "Light theme"
 msgstr "浅色主题"
@@ -2078,7 +2078,7 @@ msgid "Mint rate"
 msgstr "铸造比率"
 
 #: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
-msgid "Mint this project's ERC-20 tokens to your wallet. Leave unchecked to have Juicebox track your token balance, saving gas on this transaction. You can claim your ERC-20 tokens later."
+msgid "Mint this project's ERC-20 tokens to your wallet."
 msgstr ""
 
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
@@ -2395,10 +2395,6 @@ msgid "Paying <0>{0}</0> is not an investment — it's a way to support the proj
 msgstr "向 <0>{0}</0> 支付并不是投资 —— 而是支持项目的一种方式。你收到代币的价值和效用都由 {1} 决定。"
 
 #: src/components/v1/V1Project/V1PayButton.tsx
-msgid "Paying this project is currently disabled, because the token reserved rate is 100% and no tokens will be earned by making a payment."
-msgstr "因代币保留率为 100% 且支付后并不会获得相应的代币，该项目的支付功能目前已禁用。"
-
-#: src/components/v1/V1Project/V1PayButton.tsx
 msgid "Paying this project is currently disabled."
 msgstr "当前项目已暂停接收付款。"
 
@@ -2418,6 +2414,10 @@ msgstr ""
 msgid "Payment memo image"
 msgstr "付款留言图片"
 
+#: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
+msgid "Payment options"
+msgstr ""
+
 #: src/components/v1/shared/FundingCycle/FundingCycleDetails.tsx
 #: src/components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails.tsx
 msgid "Payments"
@@ -2425,8 +2425,8 @@ msgstr "支付"
 
 #: src/components/v1/V1Project/V1PayButton.tsx
 #: src/components/v2/V2Project/V2PayButton/index.tsx
-msgid "Payments are paused for the current funding cycle."
-msgstr "当前筹款周期暂停付款。"
+msgid "Payments are paused in this funding cycle."
+msgstr ""
 
 #: src/pages/home/StatsSection.tsx
 msgid "Payments made"
@@ -2688,9 +2688,12 @@ msgid "Read more"
 msgstr ""
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
-#: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "Receive ERC-20"
 msgstr "接收 ERC-20 标准代币"
+
+#: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
+msgid "Receive ERC-20 tokens"
+msgstr ""
 
 #: src/components/v2/V2Project/NftRewardsSection/RewardTier.tsx
 msgid "Receive this NFT when you contribute <0>{0}</0> - <<1>{rewardTierUpperLimit} ETH</1>."
@@ -3424,6 +3427,10 @@ msgstr "项目已被归档，无法收到付款。"
 msgid "This project is currently using the Juicebox V1 terminal contract. New features introduced in V1.1 allow the project owner to:"
 msgstr "这个项目正在使用 Juicebox V1 Terminal 合约。V1.1 的新特性使得项目拥有者可以："
 
+#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
+msgid "This project reserves some of the newly minted tokens for itself."
+msgstr ""
+
 #: src/components/v2/V2Project/V2ProjectHeaderActions.tsx
 msgid "This project uses the V2 version of the Juicebox contracts."
 msgstr "这个项目使用的是 V2 版本的 Juicebox 合约。"
@@ -3580,10 +3587,18 @@ msgstr "可以通过赎回代币，按当前筹款周期的赎回比率来获取
 msgid "Tokens cannot be claimed because no ERC-20 token has been issued for this project. ERC-20 tokens must be issued by the project owner."
 msgstr "因为 ERC-20 代币还没有签发，所以目前还不能领取代币。ERC-20 代币必须由项目方来签发。"
 
+#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
+msgid "Tokens for you"
+msgstr ""
+
 #: src/components/v1/V1Project/modals/PrintPreminedModal.tsx
 #: src/components/v2/V2Project/V2ManageTokensSection/V2MintModal.tsx
 msgid "Tokens receiver"
 msgstr "代币接收方"
+
+#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
+msgid "Tokens reserved"
+msgstr ""
 
 #: src/components/v2/shared/SplitItem.tsx
 msgid "Tokens:"
@@ -3808,6 +3823,10 @@ msgstr "WAGMI！"
 #: src/components/v2/shared/DistributionSplitsSection/DistributionSplitModal.tsx
 msgid "Wallet address"
 msgstr "钱包地址"
+
+#: src/components/v1/V1Project/V1PayButton.tsx
+msgid "We've disabled payments because the project has opted to reserve 100% of new tokens. You would receive no tokens from your payment."
+msgstr ""
 
 #: src/components/formItems/ProjectLink.tsx
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
@@ -4266,7 +4285,6 @@ msgid "{0} days"
 msgstr "{0} 天"
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
-#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "{0} for you"
 msgstr "给到你的 {0}"
 
@@ -4275,7 +4293,6 @@ msgid "{0} holders"
 msgstr "{0} 持有者"
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
-#: src/components/v2/V2Project/V2PayButton/V2ConfirmPayModal/index.tsx
 msgid "{0} reserved"
 msgstr "{0} 已保留"
 

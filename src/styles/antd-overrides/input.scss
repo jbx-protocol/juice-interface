@@ -319,7 +319,8 @@ textarea.ant-input::placeholder {
 }
 
 .ant-form-item-label > label .ant-form-item-optional {
-  color: var(--text-primary);
+  color: var(--text-secondary);
+  font-weight: 400;
 }
 
 .ant-input-number-disabled {

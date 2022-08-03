@@ -32,5 +32,5 @@ jobs:
           download_translations: false
           project_id: '492549'
           token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
-          source: 'src/locales/en/messages.po'
+          source: 'src/locales/messages.pot'
           translation: 'src/locales/%two_letters_code%/%original_file_name%'

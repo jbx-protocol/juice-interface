@@ -71,9 +71,9 @@ export default function V1PayButton({
   if (isArchived) {
     disabledMessage = t`This project is archived and can't be paid.`
   } else if (isV1AndMaxRR || isMoonAndMaxRR) {
-    disabledMessage = t`Paying this project is currently disabled, because the token reserved rate is 100% and no tokens will be earned by making a payment.`
+    disabledMessage = t`We've disabled payments because the project has opted to reserve 100% of new tokens. You would receive no tokens from your payment.`
   } else if (fcMetadata.payIsPaused) {
-    disabledMessage = t`Payments are paused for the current funding cycle.`
+    disabledMessage = t`Payments are paused in this funding cycle.`
   }
 
   const onPayButtonClick = () => {

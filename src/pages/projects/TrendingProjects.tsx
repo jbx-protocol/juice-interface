@@ -8,15 +8,10 @@ import TrendingProjectCard from './TrendingProjectCard'
 
 export default function TrendingProjects({
   count, // number of trending project cards to show
-  trendingWindowDays,
 }: {
   count: number
-  trendingWindowDays: number
 }) {
-  const { data: projects, isLoading } = useTrendingProjects(
-    count,
-    trendingWindowDays,
-  )
+  const { data: projects, isLoading } = useTrendingProjects(count)
 
   return (
     <div>
@@ -28,7 +23,6 @@ export default function TrendingProjects({
               size={'lg'}
               rank={i + 1}
               key={`${p.id}_${p.cv}`}
-              trendingWindowDays={trendingWindowDays}
             />
           ))}
         </Grid>
@@ -41,8 +35,7 @@ export default function TrendingProjects({
       )}
 
       <p style={{ marginBottom: 40, marginTop: 40, maxWidth: 800 }}>
-        <InfoCircleOutlined />{' '}
-        <RankingExplanation trendingWindow={trendingWindowDays} />
+        <InfoCircleOutlined /> <RankingExplanation />
       </p>
     </div>
   )

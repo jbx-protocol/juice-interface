@@ -23,7 +23,7 @@ export default function V2CreatePage() {
 
 const { TabPane } = Tabs
 
-const TabText: React.FC = ({ children }) => {
+const TabText: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => {
   return <span style={{ fontSize: 18 }}>{children}</span>
 }
 

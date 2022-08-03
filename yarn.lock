@@ -3023,28 +3023,28 @@
   resolved "https://registry.yarnpkg.com/@ledgerhq/logs/-/logs-6.10.0.tgz#c012c1ecc1a0e53d50e6af381618dca5268461c1"
   integrity sha512-lLseUPEhSFUXYTKj6q7s2O3s2vW2ebgA11vMAlKodXGf5AFw4zUoEbTz9CoFOC9jS6xY4Qr8BmRnxP/odT4Uuw==
 
-"@lingui/babel-plugin-extract-messages@^3.13.0":
-  version "3.13.0"
-  resolved "https://registry.yarnpkg.com/@lingui/babel-plugin-extract-messages/-/babel-plugin-extract-messages-3.13.0.tgz#cab57047a8e6d34903f3378eda6907f54210d6d4"
-  integrity sha512-akDiMq+CrF3m4ENA3DlEj+XfskZow6SqvrkOUVIStow5kUqcCBow635W7+YAem2TJNxH+CpVgpGV24osiQx+ZQ==
+"@lingui/babel-plugin-extract-messages@^3.14.0":
+  version "3.14.0"
+  resolved "https://registry.yarnpkg.com/@lingui/babel-plugin-extract-messages/-/babel-plugin-extract-messages-3.14.0.tgz#c3b2cbeaf3f3318fa165bd8db598ca74600a04bb"
+  integrity sha512-4lcDgVdjYiObuFdDwnAG3jJxS+d3YLq4i7qywlHgjIqteKUH01S3paJRXhZaPvLGl56HarSq0kt8Pymxw8lOrA==
   dependencies:
     "@babel/generator" "^7.11.6"
     "@babel/runtime" "^7.11.2"
-    "@lingui/conf" "^3.13.0"
+    "@lingui/conf" "^3.14.0"
     mkdirp "^1.0.4"
 
-"@lingui/cli@^3.13.0":
-  version "3.13.0"
-  resolved "https://registry.yarnpkg.com/@lingui/cli/-/cli-3.13.0.tgz#d3ffa2143ee524ac436467336bf2db082f8f678b"
-  integrity sha512-hK/7z+hqxT9CSzUQUQEefurbjmZCJldLG9kbSp8mNgJ+XLAv1mWPve79pYCbtMK7M7vbyU4uG0ncnH+pHKFF/w==
+"@lingui/cli@^3.14.0":
+  version "3.14.0"
+  resolved "https://registry.yarnpkg.com/@lingui/cli/-/cli-3.14.0.tgz#846ddd754e1b0dd19da19d3e6b3feede3279dc00"
+  integrity sha512-QZURsIf7A97tf28b/ffpeL0DekA6tBmcwnj4FBui1SbQqJw1d4IPg2bUM5VRn3/25vhqpi9Uhx5m9x7Vv8QfCQ==
   dependencies:
     "@babel/generator" "^7.11.6"
     "@babel/parser" "^7.11.5"
     "@babel/plugin-syntax-jsx" "^7.10.4"
     "@babel/runtime" "^7.11.2"
     "@babel/types" "^7.11.5"
-    "@lingui/babel-plugin-extract-messages" "^3.13.0"
-    "@lingui/conf" "^3.13.0"
+    "@lingui/babel-plugin-extract-messages" "^3.14.0"
+    "@lingui/conf" "^3.14.0"
     babel-plugin-macros "^3.0.1"
     bcp-47 "^1.0.7"
     chalk "^4.1.0"
@@ -3070,10 +3070,10 @@
     pseudolocale "^1.1.0"
     ramda "^0.27.1"
 
-"@lingui/conf@^3.13.0":
-  version "3.13.0"
-  resolved "https://registry.yarnpkg.com/@lingui/conf/-/conf-3.13.0.tgz#caaef1b29e59e0e40adea92eb942edd676b239f7"
-  integrity sha512-1vl7NEZWMuiM2JCqnvlGmoyqlwB4isSEZrzvKWGAGMRLxMuuKR6PrH1Khgl4x2WRLZxfEysXTe6YR08Ra68irQ==
+"@lingui/conf@^3.14.0":
+  version "3.14.0"
+  resolved "https://registry.yarnpkg.com/@lingui/conf/-/conf-3.14.0.tgz#1b2c20d556b6ea78e530a07a934be219a0d6c662"
+  integrity sha512-5GMAbIRad9FavqYsfZCRAwjcOLzE7tONDJe9lSYE5SSJbbG01RI5kR5P0B84DUhTI6cGXau+1dAcP9K+JbEx+g==
   dependencies:
     "@babel/runtime" "^7.11.2"
     "@endemolshinegroup/cosmiconfig-typescript-loader" "^3.0.2"
@@ -3082,36 +3082,36 @@
     jest-validate "^26.5.2"
     lodash.get "^4.4.2"
 
-"@lingui/core@^3.13.0":
-  version "3.13.0"
-  resolved "https://registry.yarnpkg.com/@lingui/core/-/core-3.13.0.tgz#0b83ba400b0b4abb24a86eb9e24cf9148cb2d84b"
-  integrity sha512-UDmI8UL59rLmQDDjBK8JFMX0+i3+pncl3fWG+tD2cXNJkN+MEBrhECTQ2lsM1tCk09AfiATglPPXm1e0tLxxOw==
+"@lingui/core@^3.14.0":
+  version "3.14.0"
+  resolved "https://registry.yarnpkg.com/@lingui/core/-/core-3.14.0.tgz#62e6b5e3d17b3f2ecd84b3f821d591763055aa89"
+  integrity sha512-ertREq9oi9B/umxpd/pInm9uFO8FLK2/0FXfDmMqvH5ydswWn/c9nY5YO4W1h4/8LWO45mewypOIyjoue4De1w==
   dependencies:
     "@babel/runtime" "^7.11.2"
     make-plural "^6.2.2"
     messageformat-parser "^4.1.3"
 
-"@lingui/detect-locale@^3.13.0":
-  version "3.13.0"
-  resolved "https://registry.yarnpkg.com/@lingui/detect-locale/-/detect-locale-3.13.0.tgz#fb703f055e189d861dc05fe8cc4ac14395409855"
-  integrity sha512-psOk1BQRzxOIUVc6jCXdn3GzsuNqHDk5Jk0cTX73+dMMKv8KxzYb2UXcatl/BDaeUHSvQ5xP69FpqUv+40gsMg==
+"@lingui/detect-locale@^3.14.0":
+  version "3.14.0"
+  resolved "https://registry.yarnpkg.com/@lingui/detect-locale/-/detect-locale-3.14.0.tgz#efbec423a8bf0e2785db320c5d015e4023ae8f8b"
+  integrity sha512-IELWULt9I+iyVlxGES21cXoOwTcPSIisElAmr3/KJlqvJ9zXT3s4w4Jxw9j5oHJjdxBDRkifwpnVmGd57wrmzg==
 
-"@lingui/macro@^3.13.0":
-  version "3.13.0"
-  resolved "https://registry.yarnpkg.com/@lingui/macro/-/macro-3.13.0.tgz#accb4a97ff7109d76647a1114f6527037cab5fef"
-  integrity sha512-TmwAiFnxtutDEKp7KFtUmq5vIfv56zn0FV0ZgrISUcW1liVlRyqW6YnQ7cv4AzsPnkBhO2+O2YVoHY1r5owMvA==
+"@lingui/macro@^3.14.0":
+  version "3.14.0"
+  resolved "https://registry.yarnpkg.com/@lingui/macro/-/macro-3.14.0.tgz#4d97cd548967c2b4b2b2f92715eec4d69e84545c"
+  integrity sha512-NxTRrhrZ/cUO9PX/4vWys90Ku58+ExxHuE30IuDnnDldWhWlOdycmjDt9tB+yIiUdFym/veSxBs+h114FzG5mA==
   dependencies:
     "@babel/runtime" "^7.11.2"
-    "@lingui/conf" "^3.13.0"
+    "@lingui/conf" "^3.14.0"
     ramda "^0.27.1"
 
-"@lingui/react@^3.13.0":
-  version "3.13.0"
-  resolved "https://registry.yarnpkg.com/@lingui/react/-/react-3.13.0.tgz#3c0710b5d9d49e09e580a736681fabc80038ce85"
-  integrity sha512-FS5NqWHh8Ngj1jnF9Yg+lqnIaMT0SjPBzOT6MpiO36tsWNFAdehqM589utvBmaU0eeV+/CyTF02GH6rd4PjMBg==
+"@lingui/react@^3.14.0":
+  version "3.14.0"
+  resolved "https://registry.yarnpkg.com/@lingui/react/-/react-3.14.0.tgz#e3e6732a9d172c8ecb4f82fb8558b1766f5cee31"
+  integrity sha512-ow9Mtru7f0T2S9AwnPWRejppcucCW0LmoDR3P4wqHjL+eH5f8a6nxd2doxGieC91/2i4qqW88y4K/zXJxwRSQw==
   dependencies:
     "@babel/runtime" "^7.11.2"
-    "@lingui/core" "^3.13.0"
+    "@lingui/core" "^3.14.0"
 
 "@metamask/obs-store@^7.0.0":
   version "7.0.0"
@@ -3864,7 +3864,7 @@
   dependencies:
     "@types/node" "*"
 
-"@types/hoist-non-react-statics@^3.3.0":
+"@types/hoist-non-react-statics@^3.3.0", "@types/hoist-non-react-statics@^3.3.1":
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/@types/hoist-non-react-statics/-/hoist-non-react-statics-3.3.1.tgz#1124aafe5118cb591977aeb1ceaaed1070eb039f"
   integrity sha512-iMIqiko6ooLrTh1joXodJK5X9xeEALT1kM5G3ZLhD3hszxBdIEd5C75U834D9mLcINgD4OyZf5uQXjkuYydWvA==
@@ -3993,10 +3993,17 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-dom@^17", "@types/react-dom@^17.0.1":
+"@types/react-dom@^17.0.1":
   version "17.0.9"
   resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-17.0.9.tgz#441a981da9d7be117042e1a6fd3dac4b30f55add"
   integrity sha512-wIvGxLfgpVDSAMH5utdL9Ngm5Owu0VsGmldro3ORLXV8CShrL8awVj06NuEXFQ5xyaYfdca7Sgbk/50Ri1GdPg==
+  dependencies:
+    "@types/react" "*"
+
+"@types/react-dom@^18.0.6":
+  version "18.0.6"
+  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-18.0.6.tgz#36652900024842b74607a17786b6662dd1e103a1"
+  integrity sha512-/5OFZgfIPSwy+YuIBP/FgJnQnsxhZhjjrnxudMddeblOouIodEQ75X14Rr4wGSG/bknL+Omy9iWlLo1u/9GzAA==
   dependencies:
     "@types/react" "*"
 
@@ -4014,20 +4021,29 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-redux@^7.1.16":
-  version "7.1.18"
-  resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-7.1.18.tgz#2bf8fd56ebaae679a90ebffe48ff73717c438e04"
-  integrity sha512-9iwAsPyJ9DLTRH+OFeIrm9cAbIj1i2ANL3sKQFATqnPWRbg+jEFXyZOKHiQK/N86pNRXbb4HRxAxo0SIX1XwzQ==
+"@types/react-redux@^7.1.24":
+  version "7.1.24"
+  resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-7.1.24.tgz#6caaff1603aba17b27d20f8ad073e4c077e975c0"
+  integrity sha512-7FkurKcS1k0FHZEtdbbgN8Oc6b+stGSfZYjQGicofJ0j4U0qIn/jaSvnP2pLwZKiai3/17xqqxkkrxTgN8UNbQ==
   dependencies:
     "@types/hoist-non-react-statics" "^3.3.0"
     "@types/react" "*"
     hoist-non-react-statics "^3.3.0"
     redux "^4.0.0"
 
-"@types/react@*", "@types/react@^17", "@types/react@^17.0.0":
+"@types/react@*", "@types/react@^17.0.0":
   version "17.0.24"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.24.tgz#7e1b3f78d0fc53782543f9bce6d949959a5880bd"
   integrity sha512-eIpyco99gTH+FTI3J7Oi/OH8MZoFMJuztNRimDOJwH4iGIsKV2qkGnk4M9VzlaVWeEEWLWSQRy0FEA0Kz218cg==
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/scheduler" "*"
+    csstype "^3.0.2"
+
+"@types/react@^18.0.15":
+  version "18.0.15"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.0.15.tgz#d355644c26832dc27f3e6cbf0c4f4603fc4ab7fe"
+  integrity sha512-iz3BtLuIYH1uWdsv6wXYdhozhqj20oD4/Hk2DNXIn1kFsmp9x8d9QB6FnPhfkbhd2PgEONt9Q1x/ebkwjfFLow==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -4068,6 +4084,11 @@
   integrity sha512-Gk9vaXfbzc5zCXI9eYE9BI5BNHEp4D3FWjgqBE/ePGYElLAP+KvxBcsdkwfIVvezs605oiyd/VrpiHe3Oeg+Aw==
   dependencies:
     "@types/jest" "*"
+
+"@types/use-sync-external-store@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@types/use-sync-external-store/-/use-sync-external-store-0.0.3.tgz#b6725d5f4af24ace33b36fafd295136e75509f43"
+  integrity sha512-EwmlvuaxPNej9+T4v5AuBPJa2x2UOJVdjCtDHgcDqitUeOtjnJKJ+apYjVcAoBEMjKW1VVFGZLUb5+qqa09XFA==
 
 "@types/uuid@^8.3.4":
   version "8.3.4"
@@ -14410,17 +14431,17 @@ react-query@^3.33.2:
     broadcast-channel "^3.4.1"
     match-sorter "^6.0.2"
 
-react-redux@^7.2.2:
-  version "7.2.5"
-  resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-7.2.5.tgz#213c1b05aa1187d9c940ddfc0b29450957f6a3b8"
-  integrity sha512-Dt29bNyBsbQaysp6s/dN0gUodcq+dVKKER8Qv82UrpeygwYeX1raTtil7O/fftw/rFqzaf6gJhDZRkkZnn6bjg==
+react-redux@^8.0.2:
+  version "8.0.2"
+  resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-8.0.2.tgz#bc2a304bb21e79c6808e3e47c50fe1caf62f7aad"
+  integrity sha512-nBwiscMw3NoP59NFCXFf02f8xdo+vSHT/uZ1ldDwF7XaTpzm+Phk97VT4urYBl5TYAPNVaFm12UHAEyzkpNzRA==
   dependencies:
     "@babel/runtime" "^7.12.1"
-    "@types/react-redux" "^7.1.16"
+    "@types/hoist-non-react-statics" "^3.3.1"
+    "@types/use-sync-external-store" "^0.0.3"
     hoist-non-react-statics "^3.3.2"
-    loose-envify "^1.4.0"
-    prop-types "^15.7.2"
-    react-is "^16.13.1"
+    react-is "^18.0.0"
+    use-sync-external-store "^1.0.0"
 
 react-resize-detector@^6.6.3:
   version "6.7.6"
@@ -16705,7 +16726,7 @@ use-deep-compare-effect@^1.6.1:
     "@types/react" "^17.0.0"
     dequal "^2.0.2"
 
-use-sync-external-store@1.2.0:
+use-sync-external-store@1.2.0, use-sync-external-store@^1.0.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/use-sync-external-store/-/use-sync-external-store-1.2.0.tgz#7dbefd6ef3fe4e767a0cf5d7287aacfb5846928a"
   integrity sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==

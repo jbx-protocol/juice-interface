@@ -11,7 +11,9 @@ import { readNetwork } from 'constants/networks'
 
 const KEY_SELECTED_WALLET = 'selectedWallet'
 
-export const NetworkProvider: React.FC = ({ children }) => {
+export const NetworkProvider: React.FC<React.PropsWithChildren<unknown>> = ({
+  children,
+}) => {
   const router = useRouter()
   const { isDarkMode } = useContext(ThemeContext)
 

@@ -4,7 +4,9 @@ import { useV1ContractLoader } from 'hooks/v1/V1ContractLoader'
 import { useGasPriceQuery } from 'hooks/GasPrice'
 import { useTransactor } from 'hooks/Transactor'
 
-export const V1UserProvider: React.FC = ({ children }) => {
+export const V1UserProvider: React.FC<React.PropsWithChildren<unknown>> = ({
+  children,
+}) => {
   const contracts = useV1ContractLoader()
 
   const { data: gasPrice } = useGasPriceQuery('average')

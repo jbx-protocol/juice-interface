@@ -20,7 +20,9 @@ import useMobile from 'hooks/Mobile'
  * is still an issue, but the current structure allows opengraph and twitter
  * meta tags to be setup correctly.
  */
-export const AppWrapper: React.FC = ({ children }) => {
+export const CoreAppWrapper: React.FC<React.PropsWithChildren<unknown>> = ({
+  children,
+}) => {
   return (
     <React.StrictMode>
       <ReactQueryProvider>

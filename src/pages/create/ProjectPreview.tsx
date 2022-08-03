@@ -30,8 +30,7 @@ export default function ProjectPreview({
     projectMetadata,
     payoutGroupedSplits,
     reservedTokensGroupedSplits,
-    nftRewardsCIDs,
-    nftRewardTiers,
+    nftRewards: { CIDs: nftRewardsCIDs, rewardTiers: nftRewardTiers },
   } = useAppSelector(state => state.editingV2Project)
   const fundingCycleMetadata = useEditingV2FundingCycleMetadataSelector()
   const fundingCycleData = useEditingV2FundingCycleDataSelector()

@@ -45,6 +45,10 @@ export default function Projects() {
 
   const { userAddress } = useContext(NetworkContext)
 
+  const [searchText, setSearchText] = useState<string>(
+    (router.query.search as string | undefined) ?? '',
+  )
+
   useEffect(() => {
     setSelectedTab(() => {
       switch (router.query.tab) {
@@ -60,11 +64,8 @@ export default function Projects() {
           return defaultTab
       }
     })
-  }, [userAddress, router.query])
-
-  const [searchText, setSearchText] = useState<string>(
-    (router.query.search as string | undefined) ?? '',
-  )
+    setSearchText(router.query.search as string)
+  }, [userAddress, router.query.tab, router.query.search])
 
   const [orderBy, setOrderBy] = useState<OrderByOption>('totalPaid')
   const [includeV1, setIncludeV1] = useState<boolean>(true)
@@ -177,6 +178,7 @@ export default function Projects() {
             router.push(`/projects?tab=all${val ? `&search=${val}` : ''}`)
           }}
           defaultValue={searchText}
+          key={searchText}
           allowClear
         />
 

@@ -7,7 +7,9 @@ import { useAppSelector } from 'hooks/AppSelector'
 import { useContext } from 'react'
 
 export default function NftSummarySection() {
-  const { nftRewardTiers } = useAppSelector(state => state.editingV2Project)
+  const {
+    nftRewards: { rewardTiers },
+  } = useAppSelector(state => state.editingV2Project)
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -16,11 +18,11 @@ export default function NftSummarySection() {
       <h2 style={{ marginBottom: 0 }}>
         <Trans>NFT rewards</Trans>
       </h2>
-      {nftRewardTiers.map((rewardTier, index) => (
+      {rewardTiers.map((rewardTier, index) => (
         <Row
           style={{
             borderBottom:
-              index !== nftRewardTiers.length - 1
+              index !== rewardTiers.length - 1
                 ? `1px solid ${colors.stroke.tertiary}`
                 : 'unset',
             display: 'flex',

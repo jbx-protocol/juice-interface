@@ -28,16 +28,16 @@ export default function NftUpload({ form }: { form: FormInstance }) {
   // check file type and size
   const beforeUpload = (file: RcFile) => {
     const fileIsAllowed = ALLOWED_FILE_TYPES.includes(file.type)
-    const isLt5000M = file.size / 1024 / 1024 < 5000
+    const isLt50000M = file.size / 1024 / 1024 < 50000
 
-    if (!isLt5000M) {
-      emitErrorNotification('File must be less than 5000MB')
+    if (!isLt50000M) {
+      emitErrorNotification('File must be less than 50000MB')
     }
     if (!fileIsAllowed) {
       emitErrorNotification('File must be a JPG, PNG or GIF')
     }
 
-    return fileIsAllowed && isLt5000M
+    return fileIsAllowed && isLt50000M
   }
 
   const iconStyle: CSSProperties = {

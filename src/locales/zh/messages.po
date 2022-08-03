@@ -110,8 +110,8 @@ msgid "<0/> Archived projects have not been modified or deleted on the blockchai
 msgstr "<0/> 被存档的项目在区块链上并没有被修改或删除，用户仍然可以直接通过 Juicebox 合约进行交互。"
 
 #: src/pages/projects/index.page.tsx
-msgid "<0/> The Juicebox protocol is open to anyone, and project configurations can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO or Peel. Do your own research and understand the risks before committing your funds."
-msgstr "<0/> Juicebox协议向所有人开放，不同项目的配置可能相差很大。与协议上的项目进行交互是存在风险的。在协议上部署的项目未经JuiceboxDAO或Peel的认可或审查。所以您应该在付款之前，做好自己的研究并了解其中的风险。"
+msgid "<0/> The Juicebox protocol is open to anyone, and project configurations can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO or Peel. Do your own research and understand the <1>risks</1> before committing your funds."
+msgstr ""
 
 #: src/components/modals/ParticipantsModal.tsx
 msgid "<0/> contributed"
@@ -181,13 +181,9 @@ msgstr "<0>折扣率</0>, 以便每个周期降低项目的代币发行比率 (�
 msgid "<0>If you know how much your project needs to earn over some period of time to be sustainable, you can set a funding target with that amount. If your project earns more than that, the surplus funds are locked in an overflow pool. Anyone holding your project's tokens can claim a portion of the overflow pool in exchange for redeeming their tokens.</0><1>For more info, check out this <2>short video</2>.</1>"
 msgstr "<0>如果你知道你的项目某个时间段内要赚多少钱才能维持运营，你可以把那个金额设定为筹款目标。要是项目赚取的比这个目标要高，盈余资金就会锁定在溢出池中。任何持有项目代币的人都可以通过赎回他们的代币来获取溢出池的一部分资金。</0><1>更多资讯，请观看这个 <2>短片</2>。</1>"
 
-#: src/components/PayWarningModal.tsx
-msgid "<0>Juicebox contracts</0> are unaudited, and may be vulnerable to bugs or hacks. All funds moved through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable for any losses by projects or their supporters."
-msgstr "<0>Juicebox 合约</0>未经审计，可能容易出 BUG 或者被攻击。所有通过 Juicebox 转移的资金都可能丢失或被盗。JuiceboxDAO 不对项目或其支持者造成的任何损失负责。"
-
 #: src/pages/home/QAs.tsx
-msgid "<0>Juicebox has handled tens of thousands of ETH through its protocol, and has so far had 0 security mishaps.</0> <1>However, Juicebox is still experimental software. Although the Juicebox contract team have done their part to shape the smart contracts for public use and have tested the code thoroughly, the risk of exploits is never 0%.</1><2>Due to their public nature, any exploits to the contracts may have irreversible consequences, including loss of funds. Please use Juicebox with caution.</2>"
-msgstr "<0>Juicebox 通过它的协议已处理过数万个 ETH，到目前为止尚未发生过任何安全问题。</0> <1>但是，Juicebox仍然属于试验性质的软件。即使 Juicebox 合约开发团队已经尽力完善这些智能合约供公共使用，也彻底测试过代码，但不能说就完全不存在漏洞的风险。</1><2>鉴于合约的公共属性，任何对这些合约恶意利用都可能会带来不可逆转的后果，包括资金的损失。请谨慎使用 Juicebox。</2>"
+msgid "<0>Juicebox has handled tens of thousands of ETH through its protocol, and has so far had 0 security mishaps.</0> <1>However, Juicebox is still experimental software. Although the Juicebox contract team have done their part to shape the smart contracts for public use and have tested the code thoroughly, the risk of exploits is never 0%.</1><2>Due to their public nature, any exploits to the contracts may have irreversible consequences, including loss of funds. Please use Juicebox with caution.</2><3><4>Learn more</4> about the risks.</3>"
+msgstr ""
 
 #: src/pages/home/QAs.tsx
 msgid "<0>Juicebox is a governance-minimal protocol. There are only a few levers that can be tuned, none of which impose changes for users without their consent. The Juicebox governance smart contract can adjust these levers.</0><1>The Juicebox protocol is governed by a community of JBX token holders who vote on proposals fortnightly.</1>"
@@ -248,6 +244,10 @@ msgstr "<0>筹款目标设置为0。</0> 项目的全部余额将被视为溢出
 #: src/pages/home/QAs.tsx
 msgid "<0>That's the plan, but the core Juicebox contracts will first be deployed to Ethereum Mainnet.</0><1>The contract team will soon start working on L2 payment terminals for Juicebox projects.</1>"
 msgstr "<0>有这个计划， 但核心 Juicebox 合约会首先部署到以太坊主网。</0><1>合约团队将很快开始为 Juicebox 项目开发 L2 上面的付款终端。</1>"
+
+#: src/pages/home/QAs.tsx
+msgid "<0>The Juicebox V2 smart contracts have had multiple security audits. <1>Read the audit reports.</1></0><2>While Juicebox has been audited, it is still experimental software, and there are risks. Please use Juicebox with caution.</2><3><4>Learn more</4> about the risks.</3>"
+msgstr ""
 
 #: src/pages/home/QAs.tsx
 msgid "<0>There are unit tests written for every condition of every function in the contracts, and integration tests for every workflow that the protocol supports.</0><1>There was also a script written to iteratively run the integration tests using a random input generator, prioritizing edge cases. The code has successfully passed over 1 million test cases through this stress-testing script.</1> <2>The code could always use more eyes and more critique to further the community's confidence. Join our <3>Discord</3> and check out the code on <4>GitHub</4> to work with us.</2>"
@@ -364,9 +364,12 @@ msgstr "添加支出对象"
 
 #: src/components/v1/V1Project/modals/V1ConfirmPayOwnerModal.tsx
 #: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
-#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
 msgid "Add an on-chain memo to this payment."
 msgstr "给这笔付款添加一个链上备注"
+
+#: src/components/v2/V2Project/V2ProjectReconfigureModal/index.tsx
+msgid "Add an on-chain memo to this reconfiguration."
+msgstr ""
 
 #: src/components/Project/ProjectToolsDrawer/AddToProjectBalanceForm.tsx
 msgid "Add funds to this project's balance without minting tokens."
@@ -836,6 +839,14 @@ msgstr "关闭"
 msgid "Close, I'll do these later"
 msgstr "关闭，我晚点再做这些"
 
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
+msgid "Collection name"
+msgstr ""
+
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
+msgid "Collection symbol"
+msgstr ""
+
 #: src/pages/home/HowItWorksSection.tsx
 msgid "Commit portions of your funds to the people or projects you want to support, or the contributors you want to pay. When you get paid, so do they."
 msgstr "提前设定把您资金的一部分自动分拨给您想要支持的人或项目，或者您需要支付的贡献者。您获得收入的同时，他们也会收到相应款项。"
@@ -993,6 +1004,7 @@ msgstr "创建可支付地址"
 msgid "Create payment address"
 msgstr ""
 
+#: src/hooks/PageTitle.ts
 #: src/pages/projects/MyProjects.tsx
 #: src/pages/projects/index.page.tsx
 msgid "Create project"
@@ -1419,8 +1431,8 @@ msgid "Each payout will receive their percent of this total each funding cycle i
 msgstr "如果金库资金足够，每个支出对象将在每个筹款周期收到自己在这个总额里的对应份额。否则，他们将按各自的占比来分配金库剩余的资金。"
 
 #: src/pages/home/QAs.tsx
-msgid "Each project has its own <0>ERC-20 tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
-msgstr "每个项目都有自己的<0>ERC-20代币</0>。每个资助项目的人都会获得项目代币作为回报。在项目方发行 ERC-20 代币之前，代币余额会由协议来记录。"
+msgid "Each project has its own <0>tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
+msgstr ""
 
 #: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal.tsx
 #: src/components/veNft/VeNftRewardTierModal.tsx
@@ -1649,6 +1661,10 @@ msgstr ""
 msgid "Handle"
 msgstr "标识"
 
+#: src/pages/home/QAs.tsx
+msgid "Has Juicebox been audited?"
+msgstr ""
+
 #: src/components/PayWarningModal.tsx
 msgid "Heads up"
 msgstr "注意"
@@ -1721,6 +1737,10 @@ msgstr "您的项目将如何分配资金。"
 
 #: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
 msgid "I accept this project's <0>risks</0>."
+msgstr ""
+
+#: src/pages/create/tabs/ReviewDeployTab/index.tsx
+msgid "I have read and accept the <0>Terms of Service</0>."
 msgstr ""
 
 #: src/components/PayWarningModal.tsx
@@ -1877,7 +1897,7 @@ msgid "Juicebox V2 project with ID {0}"
 msgstr "Juicebox V2 上标识为 {0} 的项目"
 
 #: src/pages/home/HowItWorksSection.tsx
-msgid "Juicebox is new, unaudited, and not guaranteed to work perfectly. Before spending money, do your own research: <0>ask questions</0>, <1>check out the code</1>, and understand the risks!"
+msgid "Juicebox isn't guaranteed to be free of bugs or exploits. Before spending money, do your own research. <0>Ask questions</0>, check out the <1>code</1>, and understand the <2>risks</2>!"
 msgstr ""
 
 #: src/components/TransactionModal.tsx
@@ -2150,6 +2170,10 @@ msgstr "下一页：概览及部署"
 #: src/pages/v1/create/ConfirmDeployProject.tsx
 msgid "No"
 msgstr "取消"
+
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
+msgid "No NFT reward tiers"
+msgstr ""
 
 #: src/components/v2/V2Project/V2FundingCycleSection/NoFundingCycle.tsx
 msgid "No active funding cycle."
@@ -2610,6 +2634,7 @@ msgid "Project {projectId} not found"
 msgstr "项目 {projectId} 未找到"
 
 #: src/components/Navbar/MenuItems.tsx
+#: src/hooks/PageTitle.ts
 msgid "Projects"
 msgstr "项目"
 
@@ -3340,6 +3365,10 @@ msgstr "当前筹款周期的目标为零，意味着目前所有资金都视作
 msgid "The total funds this Juicebox project has received since it was created."
 msgstr "这个 Juicebox 项目创建后总共收到的资金。"
 
+#: src/components/PayWarningModal.tsx
+msgid "The<0>Juicebox contracts</0> may be vulnerable to bugs or hacks. All funds moved through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable for any losses by projects or their supporters."
+msgstr ""
+
 #: src/components/v2/V2Project/V2FundingCycleSection/modals/DistributePayoutsModal.tsx
 msgid "There are no payouts defined for this funding cycle. The project owner will receive all available funds."
 msgstr "当前筹款周期没有设置支出。项目拥有者将获得所有的可用资金。"
@@ -3920,6 +3949,10 @@ msgstr "你可以直接赎回你的 {tokenTextLong} 代币来获取溢出，不�
 msgid "You can still redeem your {tokenSymbol} tokens for overflow without claiming them, and you can transfer your unclaimed {tokenSymbol} tokens to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
 msgstr "未领取的 {tokenSymbol} 代币，依然可以用来赎回溢出池中的 ETH，也可以在工具菜单中把代币直接转给其他地址。点击右上角的扳手按钮可以打开工具菜单。"
 
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
+msgid "You collection's symbol will apply to the whole collection of reward tiers on NFT marketplaces (like OpenSea)."
+msgstr ""
+
 #: src/components/v1/V1Project/modals/ReconfigureFCModal.tsx
 #: src/components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage.tsx
 msgid "You don't have a funding cycle duration. Changes you make will take effect immediately."
@@ -3967,6 +4000,10 @@ msgstr ""
 
 #: src/components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection/V1TokenMigrationSetupModal/SetV1ProjectSection.tsx
 msgid "You must own this V1 project."
+msgstr ""
+
+#: src/pages/create/tabs/ReviewDeployTab/index.tsx
+msgid "You must review and accept the Terms of Service."
 msgstr ""
 
 #: src/components/v2/V2Project/V2PayButton/V2PayForm/V2PayForm.tsx
@@ -4030,6 +4067,10 @@ msgstr ""
 msgid "Your balance"
 msgstr "你的余额"
 
+#: src/components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/index.tsx
+msgid "Your collection's name will apply to the whole collection of reward tiers on NFT marketplaces (like OpenSea)."
+msgstr ""
+
 #: src/components/v2/V2Project/banners/RelaunchFundingCycleBanner.tsx
 msgid "Your funding cycle configuration has been pre-populated using the configuration you originally launched with. If you need to customize it, contact us."
 msgstr "你的筹款周期配置已按你原来启动项目时的配置进行预填。如果你需要自己定制，请联系我们。"
@@ -4053,10 +4094,6 @@ msgstr "您的项目按筹款周期来进行筹款。每个筹款周期都有一
 #: src/components/ArchiveProject/index.tsx
 msgid "Your project will appear archived, and won't be able to receive payments through the juicebox.money app. You can unarchive a project at any time. Allow a few days for your project to appear under the \"archived\" filter on the Projects page."
 msgstr "项目将显示已被归档，并将无法通过 juicebox.money 接收付款。你可以随时取消项目的归档。项目仍会在项目页面的“已归档”一项下面显示几天。"
-
-#: src/pages/create/V2WarningBanner.tsx
-msgid "Your project will be created on the Juicebox V2 contracts. <0>Learn more.</0>"
-msgstr "你的项目将在 Juicebox V2 合约上创建。 <0>了解更多。</0>"
 
 #: src/components/ArchiveProject/index.tsx
 msgid "Your project will immediately appear active on the juicebox.money app. Please allow a few days for it to appear in the \"active\" projects list on the Projects page."

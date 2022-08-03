@@ -74,6 +74,7 @@
     "build": "NEXT_PUBLIC_VERSION=$(git rev-parse --short HEAD) next build",
     "test": "jest test",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./",
+    "ts:compile": "tsc --noEmit --incremental",
     "lint:fix": "yarn lint --fix",
     "lint-staged": "lint-staged",
     "prepare": "husky install",

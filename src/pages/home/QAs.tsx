@@ -2,6 +2,7 @@ import { t, Trans } from '@lingui/macro'
 import ExternalLink from 'components/ExternalLink'
 import React, { ReactNode } from 'react'
 import Link from 'next/link'
+import { helpPagePath } from 'utils/helpPageHelper'
 
 export const OverflowVideoLink: React.FC = ({ children }) => (
   <ExternalLink href="https://youtu.be/9Mq5oDh0aBY">{children}</ExternalLink>
@@ -91,7 +92,7 @@ export default function QAs(): {
         <Trans>
           Each project has its own{' '}
           <ExternalLink href="https://youtu.be/cqZhNzZoMh8">
-            ERC-20 tokens
+            tokens
           </ExternalLink>
           . Anyone who contributes funds to a project receives that project's
           tokens in return. Token balances will be tracked by the protocol until
@@ -285,6 +286,12 @@ export default function QAs(): {
             irreversible consequences, including loss of funds. Please use
             Juicebox with caution.
           </p>
+          <p>
+            <ExternalLink href={helpPagePath('/dev/learn/risks')}>
+              Learn more
+            </ExternalLink>{' '}
+            about the risks.
+          </p>
         </Trans>
       ),
     },
@@ -311,6 +318,29 @@ export default function QAs(): {
               GitHub
             </ExternalLink>{' '}
             to work with us.
+          </p>
+        </Trans>
+      ),
+    },
+    {
+      q: <Trans>Has Juicebox been audited?</Trans>,
+      a: (
+        <Trans>
+          <p>
+            The Juicebox V2 smart contracts have had multiple security audits.{' '}
+            <ExternalLink href={helpPagePath('dev/resources/security')}>
+              Read the audit reports.
+            </ExternalLink>
+          </p>
+          <p>
+            While Juicebox has been audited, it is still experimental software,
+            and there are risks. Please use Juicebox with caution.
+          </p>
+          <p>
+            <ExternalLink href={helpPagePath('/dev/learn/risks')}>
+              Learn more
+            </ExternalLink>{' '}
+            about the risks.
           </p>
         </Trans>
       ),

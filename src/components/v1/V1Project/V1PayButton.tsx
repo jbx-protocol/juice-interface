@@ -21,6 +21,7 @@ export default function V1PayButton({
   payInCurrency,
   onError,
   wrapperStyle,
+  disabled,
 }: PayButtonProps) {
   const { projectId, currentFC, metadata, isArchived, terminal } =
     useContext(V1ProjectContext)
@@ -59,7 +60,8 @@ export default function V1PayButton({
       isV1AndMaxRR || // v1 projects who still use 100% RR to disable pay
       currentFC.configured.eq(0) || // Edge case, see sequoiacapitaldao
       isMoonAndMaxRR || // Edge case for MoonDAO
-      isArchived) ??
+      isArchived ||
+      disabled) ??
     false
 
   let disabledMessage: string | undefined = shouldDisableButton

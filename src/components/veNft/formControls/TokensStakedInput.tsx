@@ -7,7 +7,7 @@ import { fromWad } from 'utils/formatNumber'
 
 interface TokensStakedInputProps {
   form: FormInstance
-  claimedBalance: BigNumber | undefined
+  tokenBalance: BigNumber | undefined
   tokenSymbolDisplayText: string
   tokensStaked: number
   minTokensAllowedToStake: number
@@ -15,13 +15,13 @@ interface TokensStakedInputProps {
 
 const TokensStakedInput = ({
   form,
-  claimedBalance,
+  tokenBalance,
   tokenSymbolDisplayText,
   tokensStaked,
   minTokensAllowedToStake,
 }: TokensStakedInputProps) => {
-  const totalBalanceInWad = fromWad(claimedBalance)
-  const unstakedTokens = claimedBalance
+  const totalBalanceInWad = fromWad(tokenBalance)
+  const unstakedTokens = totalBalanceInWad
     ? parseInt(totalBalanceInWad) - tokensStaked
     : 0
 

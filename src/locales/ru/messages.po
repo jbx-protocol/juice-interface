@@ -1,52 +1,50 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2022-01-15 13:53+1000\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Generator: @lingui/cli\n"
-"Language: ru\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-07-26 03:23\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2022-08-03 04:10\n"
 "Last-Translator: \n"
+"Language: ru_RU\n"
 "Language-Team: Russian\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
 "X-Crowdin-Project: juicebox-interface\n"
 "X-Crowdin-Project-ID: 492549\n"
 "X-Crowdin-Language: ru\n"
-"X-Crowdin-File: messages.po\n"
-"X-Crowdin-File-ID: 9\n"
+"X-Crowdin-File: messages.pot\n"
+"X-Crowdin-File-ID: 2852\n"
 
 msgid "$ve{tokenSymbolDisplayText} Received"
 msgstr ""
 
 msgid "({0}%)"
-msgstr "({0}%)"
+msgstr ""
 
 msgid "({realTokenAllocationPercent}% of all newly minted tokens)."
-msgstr "({realTokenAllocationPercent}% всех вновь выпущенных токенов)."
+msgstr ""
 
 msgid "0% fee"
-msgstr "0% комиссия"
+msgstr ""
 
 msgid "1 year"
-msgstr "1 год"
+msgstr ""
 
 msgid "1. Get funded."
 msgstr ""
 
 msgid "1. Project details"
-msgstr "1. Детали проекта"
+msgstr ""
 
 msgid "1. Set ENS name"
 msgstr ""
 
 msgid "100% overflow"
-msgstr "100% превышение"
+msgstr ""
 
 msgid "2. Funding cycle"
-msgstr "2. Цикл финансирования"
+msgstr ""
 
 msgid "2. Give ownership"
 msgstr ""
@@ -55,52 +53,52 @@ msgid "2. Set text record"
 msgstr ""
 
 msgid "24 hours"
-msgstr "24 часа"
+msgstr ""
 
 msgid "3-day delay"
-msgstr "3-дневная задержка"
+msgstr ""
 
 msgid "3. Manage your funds"
 msgstr ""
 
 msgid "3. Review and deploy"
-msgstr "3. Обзор и развертывание"
+msgstr ""
 
 msgid "30 days"
-msgstr "30 дней"
+msgstr ""
 
 msgid "4. Build trust."
 msgstr ""
 
 msgid "7 days"
-msgstr "7 дней"
+msgstr ""
 
 msgid "7-day delay"
-msgstr "7-дневная задержка"
+msgstr ""
 
 msgid "90 days"
-msgstr "90 дней"
+msgstr ""
 
 msgid "<0/> Archived projects have not been modified or deleted on the blockchain, and can still be interacted with directly through the Juicebox contracts."
-msgstr "<0/> Архивные проекты не были изменены или удалены в блокчейне, и с ними по-прежнему можно взаимодействовать напрямую через контракты Juicebox."
+msgstr ""
 
 msgid "<0/> The Juicebox protocol is open to anyone, and project configurations can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO or Peel. Do your own research and understand the <1>risks</1> before committing your funds."
 msgstr ""
 
 msgid "<0/> owner balance"
-msgstr "<0/> баланс владельца"
+msgstr ""
 
 msgid "<0/>{0} after {feePercentage}% JBX membership fee"
-msgstr "<0/>{0} после {feePercentage}% членского взноса JBX"
+msgstr ""
 
 msgid "<0/>{0}{1} distributed"
-msgstr "<0/>{0}{1} распределено"
+msgstr ""
 
 msgid "<0><1/>{netDistributionAmount}</0> after {feePercentage}% JBX fee"
-msgstr "<0><1/>{netDistributionAmount}</0> после {feePercentage}% JBX комиссии"
+msgstr ""
 
 msgid "<0><1>This project has no overflow</1>, so you will not receive any ETH for burning tokens.</0>"
-msgstr "<0><1>В этом проекте нет переполнения</1>, поэтому вы не получите ETH за сжигание токенов..</0>"
+msgstr ""
 
 msgid "<0>A bonding curve rewards people who wait longer to redeem your tokens for overflow.</0><1>For example, with a bonding curve of 70%, redeeming 10% of the token supply at any given time will claim around 7% of the total overflow.</1><2>The rest is left to share between token holders.</2>,<3>For more info, check out this <4>short video</4> on bonding curves.</3>"
 msgstr ""
@@ -139,40 +137,40 @@ msgid "<0>Juicebox is an open protocol on Ethereum that is funded using Juicebox
 msgstr ""
 
 msgid "<0>Learn more</0> about burning tokens."
-msgstr "<0>Узнайте больше</0> о сжигании токенов."
+msgstr ""
 
 msgid "<0>Learn more</0> about funding cycle duration."
-msgstr "<0>Подробнее</0> о продолжительности цикла финансирования."
+msgstr ""
 
 msgid "<0>Learn more</0> about funding cycles."
-msgstr "<0>Подробнее</0> о продолжительности цикла финансирования."
+msgstr ""
 
 msgid "<0>Learn more</0> about overflow."
-msgstr "<0>Узнайте больше</0> о переполнении."
+msgstr ""
 
 msgid "<0>NOTE:</0> This project has a balance of 0. Projects cannot be migrated without a balance. To migrate this project, first pay it or use the button below to deposit 1 wei (0.000000000000000001 or 10<1>-18</1> ETH)."
-msgstr "<0>ПРИМЕЧАНИЕ:</0>Этот проект имеет баланс 0. Проекты не могут быть перенесены без баланса. Чтобы перенести этот проект, сначала оплатите его или используйте кнопку ниже, чтобы внести 1 wei (0.000000000000000001 or 10<1>-18</1> ETH)."
+msgstr ""
 
 msgid "<0>No duration set.</0>Funding can be reconfigured at any time. Reconfigurations will start a new funding cycle."
-msgstr "<0> Продолжительность не установлена.</0> Финансирование может быть перенастроено в любое время. При изменении конфигурации начинается новый цикл финансирования."
+msgstr ""
 
 msgid "<0>Note:</0> These properties will <1>not</1> be editable immediately within a funding cycle. They can only be changed for <2>upcoming</2> funding cycles."
-msgstr "<0> Примечание. </0> Свойства цикла финансирования <1>n не <1>n будут редактируемыми непосредственно в цикле финансирования. Их можно изменить только на <2> предстоящих <2> цикла финансирования."
+msgstr ""
 
 msgid "<0>Note:</0> Tokens cannot be claimed because no ERC-20 token has been issued for this project. ERC-20 tokens must be issued by the project owner."
-msgstr "<0>Примечание:</0> Токены не могут быть востребованы, поскольку для этого проекта не выпущен токен ERC-20. Токены ERC-20 должны быть выпущены владельцем проекта."
+msgstr ""
 
 msgid "<0>On a lower redemption rate, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than other holders.</0> <1>A redemption rate of 100% means all tokens will have equal value regardless of when they are redeemed.</1>Learn more in this <2>short video</2>."
 msgstr ""
 
 msgid "<0>Peel</0> is the DAO that manages the juicebox.money frontend interface. You can reach out to Peel either through the <1>Peel Discord</1> or the <2>Juicebox Discord</2>."
-msgstr "<0>Peel</0> - это DAO, управляющее интерфейсом фронтенда juicebox.money. Вы можете связаться с Peel либо через <1>Peel Discord</1>, либо через <2>Juicebox Discord</2>."
+msgstr ""
 
 msgid "<0>Recurring funding cycles</0>. For example, distribute funds from your project's treasury every week."
 msgstr ""
 
 msgid "<0>Target is 0.</0> The project's entire balance will be considered overflow. <1>Learn more</1> about overflow."
-msgstr "<0>Цель - 0.</0> Весь баланс проекта будет считаться переполнением. <1> Узнайте больше</1> о переполнении."
+msgstr ""
 
 msgid "<0>That's the plan, but the core Juicebox contracts will first be deployed to Ethereum Mainnet.</0><1>The contract team will soon start working on L2 payment terminals for Juicebox projects.</1>"
 msgstr ""
@@ -184,7 +182,7 @@ msgid "<0>There are unit tests written for every condition of every function in 
 msgstr ""
 
 msgid "<0>This project has no overflow</0>, so you will not receive any ETH for burning tokens."
-msgstr "<0>У этого проекта нет переполнения</0>, поэтому вы не получите никаких ETH за сжигание токенов."
+msgstr ""
 
 msgid "<0>This website (juicebox.money) connects to the Juicebox protocol's smart contracts, deployed on the Ethereum network. (note: anyone else can make a website that also connects to these same smart contracts. For now, don't trust any site other than this one to access the Juicebox protocol).</0><1>Creating a Juicebox project mints you an NFT (ERC-721) representing ownership over it. Whoever owns this NFT can configure the rules of the game and how payouts are distributed.</1><2>The project's tokens that are minted and distributed as a result of a received payment are ERC-20's. The amount of tokens minted and distributed are proportional to the volume of payments received, weighted by the project's discount rate over time.</2>"
 msgstr ""
@@ -199,13 +197,13 @@ msgid "<0>Website:</0> <1>{0}</1>"
 msgstr ""
 
 msgid "<0>Your unclaimed {tokenSymbol} tokens:</0> {0}"
-msgstr "<0>Ваши невостребованные {tokenSymbol} токены:</0> {0}"
+msgstr ""
 
 msgid "<0>{tokenSymbol} ERC-20 address:</0> <1/>"
-msgstr "<0>{tokenSymbol} ERC20 адрес:</0> <1/>"
+msgstr ""
 
 msgid "@"
-msgstr "@"
+msgstr ""
 
 msgid "@{handle}"
 msgstr ""
@@ -214,40 +212,40 @@ msgid "@{handle} not found"
 msgstr ""
 
 msgid "A project can be archived by its owner from the tools menu on the project page."
-msgstr "Проект может быть архивирован его владельцем из меню инструментов на странице проекта."
+msgstr ""
 
 msgid "A project can reserve a percentage of the tokens minted from payments it receives. Reserved tokens can be distributed according to the allocation below at any time."
 msgstr ""
 
 msgid "A project can reserve a percentage of tokens minted from every payment it receives. Reserved tokens can be distributed according to the allocation below at any time."
-msgstr "Проект может резервировать процент выпущенных токенов с каждого платежа, который он получает. Зарезервированные токены могут быть распределены в соответствии с приведенным ниже распределением в любое время."
+msgstr ""
 
 msgid "A project's handle is used in its URL, and allows it to be included in search results on the projects page."
 msgstr ""
 
 msgid "A project's lifetime is defined in funding cycles. If a funding target is set, the project can withdraw no more than the target for the duration of the cycle."
-msgstr "Срок действия проекта определен в циклах финансирования. Если установлен целевой показатель финансирования, проект может вывести не более целевого показателя на период действия цикла."
+msgstr ""
 
 msgid "A reconfiguration to an upcoming funding cycle must be submitted at least 3 days before it starts."
-msgstr "Реконфигурацию/план изменений для предстоящего цикла финансирования необходимо отправить не менее чем за 7 дней до его начала."
+msgstr ""
 
 msgid "A reconfiguration to an upcoming funding cycle must be submitted at least 7 days before it starts."
-msgstr "Реконфигурацию/план изменений для предстоящего цикла финансирования необходимо отправить не менее чем за 3 дня до его начала."
+msgstr ""
 
 msgid "A reserved rate of more than 90% is risky for contributors. Contributors won't receive many tokens for their contribution."
-msgstr "Резервная ставка более 90% является рискованной для вкладчиков. Вкладчики не получат много токенов за свой вклад."
+msgstr ""
 
 msgid "A veNft can only be redeemed if the project currently has overflow."
 msgstr ""
 
 msgid "ARCHIVED"
-msgstr "АРХИВИРОВАНО"
+msgstr ""
 
 msgid "AVAILABLE"
-msgstr "ДОСТУПНО"
+msgstr ""
 
 msgid "Activity"
-msgstr "Активность"
+msgstr ""
 
 msgid "Add Lock Duration Option"
 msgstr ""
@@ -256,7 +254,7 @@ msgid "Add NFT reward"
 msgstr ""
 
 msgid "Add a payout"
-msgstr "Добавить выплату"
+msgstr ""
 
 msgid "Add an on-chain memo to this payment."
 msgstr ""
@@ -265,13 +263,13 @@ msgid "Add an on-chain memo to this reconfiguration."
 msgstr ""
 
 msgid "Add funds to this project's balance without minting tokens."
-msgstr "Пополняйте средства на баланс этого проекта без создания жетонов."
+msgstr ""
 
 msgid "Add handle"
 msgstr ""
 
 msgid "Add image"
-msgstr "Добавить изображение"
+msgstr ""
 
 msgid "Add lock duration option"
 msgstr ""
@@ -280,7 +278,7 @@ msgid "Add new payout"
 msgstr ""
 
 msgid "Add payout"
-msgstr "Добавить выплату"
+msgstr ""
 
 msgid "Add reward tier"
 msgstr ""
@@ -292,10 +290,10 @@ msgid "Add the V1 Token Payment Terminal to your project."
 msgstr ""
 
 msgid "Add to Balance"
-msgstr "Добавить к балансу"
+msgstr ""
 
 msgid "Add to balance"
-msgstr "Добавить к балансу"
+msgstr ""
 
 msgid "Add token"
 msgstr ""
@@ -304,67 +302,67 @@ msgid "Add token allocation"
 msgstr ""
 
 msgid "Address"
-msgstr "Адрес"
+msgstr ""
 
 msgid "Address required"
 msgstr ""
 
 msgid "Address:"
-msgstr "Адрес:"
+msgstr ""
 
 msgid "Address: <0/>"
-msgstr "Адреса: {0}/>"
+msgstr ""
 
 msgid "Adjust incentives for paying your project."
-msgstr "Отрегулируйте стимулы для оплаты вашего проекта."
+msgstr ""
 
 msgid "Advanced (optional)"
 msgstr ""
 
 msgid "All"
-msgstr "Все"
+msgstr ""
 
 msgid "All assets"
-msgstr "Все активы"
+msgstr ""
 
 msgid "All events"
-msgstr "Все события"
+msgstr ""
 
 msgid "All funds can be distributed by the project. The project will have no overflow (the same as setting the target to infinity)."
-msgstr "все средства могут быть распределены по проекту, и в проекте не будет переполнения. (Это то же самое, что и установка цели на бесконечность)."
+msgstr ""
 
 msgid "All funds received by the treasury will be distributed. Token holders will receive <0>no ETH</0> when burning their tokens."
 msgstr ""
 
 msgid "All {0} will go to the project owner:"
-msgstr "Все {0} будут направлены владельцу проекта:"
+msgstr ""
 
 msgid "Allocate a portion of your project's reserved tokens to other Ethereum wallets or Juicebox projects."
-msgstr "Выделите часть зарезервированных токенов вашего проекта на другие кошельки Ethereum или проекты Juicebox."
+msgstr ""
 
 msgid "Allow minting tokens"
-msgstr "Разрешить майнинг токенов"
+msgstr ""
 
 msgid "Allow terminal configuration"
 msgstr ""
 
 msgid "Allow token minting"
-msgstr "Разрешить минтить токены"
+msgstr ""
 
 msgid "Allow your V1 project token holders to swap their tokens for your V2 project tokens."
 msgstr ""
 
 msgid "Allowed"
-msgstr "Разрешено"
+msgstr ""
 
 msgid "Almost definitely."
-msgstr "Почти определенно."
+msgstr ""
 
 msgid "Amount"
-msgstr "Количество"
+msgstr ""
 
 msgid "Amount of ERC-20 tokens to claim"
-msgstr "Количество токенов ERC-20, на которые можно претендовать"
+msgstr ""
 
 msgid "Amount of newly minted project tokens <0>reserved for the project</0> when 1 ETH is contributed. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner."
 msgstr ""
@@ -373,13 +371,13 @@ msgid "Amount of newly minted project tokens <0>reserved for the project</0> whe
 msgstr ""
 
 msgid "Amount paid"
-msgstr "Оплаченная сумма"
+msgstr ""
 
 msgid "Amount required"
 msgstr ""
 
 msgid "Amount to distribute"
-msgstr "Сумма к распределению"
+msgstr ""
 
 msgid "Amount:"
 msgstr ""
@@ -388,25 +386,25 @@ msgid "Amounts"
 msgstr ""
 
 msgid "Any changes you make will take effect in <0>funding cycle #{0}</0>. The current funding cycle (#{currentFCNumber}) won't be altered."
-msgstr "Любые внесенные вами изменения вступят в силу в <0>цикле финансирования #{0}</0>. Текущий цикл финансирования (#{currentFCNumber}) не будет изменен."
+msgstr ""
 
 msgid "Any reconfiguration to an upcoming funding cycle will take effect once the current cycle ends. A project with no strategy may be vulnerable to being rug-pulled by its owner."
-msgstr "Любая перенастройка на предстоящий цикл финансирования вступит в силу после завершения текущего цикла. Проект, не имеющий стратегии или плана, может быть уязвим для владельца."
+msgstr ""
 
 msgid "Approve token for transaction"
 msgstr ""
 
 msgid "Archive project"
-msgstr "Заархивировать проект"
+msgstr ""
 
 msgid "Archived"
-msgstr "В архиве"
+msgstr ""
 
 msgid "Are you sure you want to start over?"
-msgstr "Вы уверены, что хотите начать все сначала?"
+msgstr ""
 
 msgid "Assets"
-msgstr "Активы"
+msgstr ""
 
 msgid "Attach a sticker"
 msgstr ""
@@ -424,67 +422,67 @@ msgid "Automated funding cycles enable the following characteristics:"
 msgstr ""
 
 msgid "Available after fee:"
-msgstr "Доступно после комиссии:"
+msgstr ""
 
 msgid "Available funds are distributed according to the payouts below."
-msgstr "Доступные средства распределяются в соответствии с приведенными ниже выплатами."
+msgstr ""
 
 msgid "Available funds can be distributed according to the payouts below{0}."
 msgstr ""
 
 msgid "Available:"
-msgstr "Доступно:"
+msgstr ""
 
 msgid "Back to top"
-msgstr "Вернуться наверх"
+msgstr ""
 
 msgid "Balance exceeded"
-msgstr "Баланс превышен"
+msgstr ""
 
 msgid "Balance of the project owner's wallet."
-msgstr "Баланс кошелька владельца проекта."
+msgstr ""
 
 msgid "Beneficiary"
-msgstr "Получатель"
+msgstr ""
 
 msgid "Beneficiary address"
-msgstr "Адрес получателя"
+msgstr ""
 
 msgid "Beneficiary:"
 msgstr ""
 
 msgid "Big ups to the Ethereum community for crafting the infrastructure and economy to make Juicebox possible."
-msgstr "Большое спасибо сообществу Ethereum за создание инфраструктуры и экономики, что сделало Juicebox возможным."
+msgstr ""
 
 msgid "Block number"
-msgstr "Номер блока"
+msgstr ""
 
 msgid "Blog"
-msgstr "Блог"
+msgstr ""
 
 msgid "Built for:"
-msgstr "Создан для:"
+msgstr ""
 
 msgid "Burn project tokens"
-msgstr "Сжечь токены проекта"
+msgstr ""
 
 msgid "Burn your {tokensLabel}. You won't receive ETH in return because this project has no overflow."
-msgstr "Сожгите свой {tokensLabel}. Вы не получите ETH взамен, потому что у этого проекта нет перетока."
+msgstr ""
 
 msgid "Burn your {tokensLabel}. You won't receive ETH in return because this project's redemption rate is zero."
 msgstr ""
 
 msgid "Burn {0} {tokensTextShort}"
-msgstr "Сжечь {0} {tokensTextShort}"
+msgstr ""
 
 msgid "Burn {tokensLabel}"
-msgstr "Сжечь {tokensLabel}"
+msgstr ""
 
 msgid "Burn {tokensTextLong}"
-msgstr "Сжечь {tokensTextLong}"
+msgstr ""
 
 msgid "By default, all unallocated funds can be distributed to the project owner's wallet."
-msgstr "По умолчанию все нераспределенные средства могут быть распределены на кошелек владельца проекта."
+msgstr ""
 
 msgid "By default, newly minted tokens will go to the wallet who sends funds to the address. You can enable this to set the token beneficiary to a custom address."
 msgstr ""
@@ -493,16 +491,16 @@ msgid "By default, the payer will receive any project tokens minted from the pay
 msgstr ""
 
 msgid "Can I change my project's contract after it's been created?"
-msgstr "Могу ли я изменить контракт своего проекта после его создания?"
+msgstr ""
 
 msgid "Can I delete a project?"
-msgstr "Могу ли я удалить проект?"
+msgstr ""
 
 msgid "Cancel"
-msgstr "Отменить"
+msgstr ""
 
 msgid "Cannot redeem tokens for ETH because this project has no overflow."
-msgstr "Невозможно обменять токены на ETH, так как в этом проекте нет переполнения."
+msgstr ""
 
 msgid "Cannot redeem tokens for ETH because this project's redemption rate is zero."
 msgstr ""
@@ -517,19 +515,19 @@ msgid "Changes to payouts will take effect immediately."
 msgstr ""
 
 msgid "Changes to project details will take effect immediately."
-msgstr "Изменения в деталях проекта вступят в силу немедленно."
+msgstr ""
 
 msgid "Changes to these attributes can be made at any time and will be applied to your project immediately."
-msgstr "Изменения этих атрибутов можно внести в любое время, и они будут немедленно применены к вашему проекту."
+msgstr ""
 
 msgid "Changes to your project's funding configuration require a community-approved period to take effect, which acts as a safeguard against rug pulls. Your supporters don't have to trust you — even though they already do."
-msgstr "Изменения в конфигурации финансирования вашего проекта требуют одобренного сообществом периода для вступления в силу, что служит защитой от перетягивания ковра. Ваши сторонники не обязаны доверять вам — даже если они уже доверяют."
+msgstr ""
 
 msgid "Changes to your reserved token allocation will take effect immediately."
 msgstr ""
 
 msgid "Changes will take effect according to the project's custom ballot contract."
-msgstr "Изменения вступят в силу в соответствии с пользовательским контрактом проекта."
+msgstr ""
 
 msgid "Changes you make will take effect according to your <0>{0}</0> reconfiguration rule (the first funding cycle following <1>{1}</1> from now)."
 msgstr ""
@@ -538,7 +536,7 @@ msgid "Character"
 msgstr ""
 
 msgid "Check this to mint {tokenSymbol} ERC-20 to your wallet. Leave unchecked to have your token balance tracked by Juicebox, saving gas on this transaction. You can always claim your ERC-20 tokens later."
-msgstr "Проверьте это, чтобы минтить {tokenSymbol} ERC-20 на ваш кошелек. Оставьте флажок не отмеченным, чтобы ваш баланс токенов отслеживался Juicebox, экономя газ на этой транзакции. Вы всегда можете потребовать свои токены ERC-20 позже."
+msgstr ""
 
 msgid "Choose an ENS name to use as the project's handle. Subdomains are allowed and will be included in the handle. Handles won't include the \".eth\" extension.<0/><1/>juicebox.eth = @juicebox<2/>dao.juicebox.eth = @dao.juicebox"
 msgstr ""
@@ -553,22 +551,22 @@ msgid "Claim {tokenTextPlural} as ERC-20 tokens"
 msgstr ""
 
 msgid "Claim {tokenTextShort}"
-msgstr "Требовать {tokenTextShort}"
+msgstr ""
 
 msgid "Claim {tokenTextShort} as ERC-20 tokens"
-msgstr "Получить {tokenTextShort} в качестве токенов ERC-20"
+msgstr ""
 
 msgid "Claim {tokensLabel} as ERC-20"
-msgstr "Получить {tokensLabel} как ERC-20"
+msgstr ""
 
 msgid "Claiming {tokenSymbol} tokens will convert your {tokenSymbol} balance to ERC-20 tokens and mint them to your wallet."
-msgstr "Требование {tokenSymbol} токенов конвертирует ваш {tokenSymbol} баланс в токены ERC-20 и отчеканит их в вашем кошельке."
+msgstr ""
 
 msgid "Claiming {tokenTextLong} will convert your {tokenTextShort} balance to ERC-20 tokens and mint them to your wallet."
-msgstr "Требование {tokenTextLong} токенов конвертирует ваш {tokenTextShort} баланс в токены ERC-20 и отчеканит их в вашем кошельке."
+msgstr ""
 
 msgid "Close"
-msgstr "Закрыть"
+msgstr ""
 
 msgid "Close, I'll do these later"
 msgstr ""
@@ -580,16 +578,16 @@ msgid "Collection symbol"
 msgstr ""
 
 msgid "Commit portions of your funds to the people or projects you want to support, or the contributors you want to pay. When you get paid, so do they."
-msgstr "Выделите часть своих средств людям или проектам, которых вы хотите поддержать, или спонсорам, которым вы хотите платить. Когда вам платят, им тоже платят."
+msgstr ""
 
 msgid "Configure how your project will collect and spend funds."
-msgstr "Настройте, как ваш проект будет собирать и расходовать средства."
+msgstr ""
 
 msgid "Configure restrictions for your funding cycles."
-msgstr "Настройте ограничения для ваших циклов финансирования."
+msgstr ""
 
 msgid "Configure the dynamics of your project's token."
-msgstr "Настройте динамику токена вашего проекта."
+msgstr ""
 
 msgid "Configure which Juicebox V1 project you'd like to accept tokens for. Token holders of this V1 project will be able to swap their V1 tokens for V2 tokens."
 msgstr ""
@@ -601,7 +599,7 @@ msgid "Congratulations on launching your project! The next steps are optional an
 msgstr ""
 
 msgid "Connect"
-msgstr "Подключиться"
+msgstr ""
 
 msgid "Connect Wallet"
 msgstr ""
@@ -613,7 +611,7 @@ msgid "Connect wallet to claim"
 msgstr ""
 
 msgid "Connect wallet to deploy"
-msgstr "Подключите кошелёк для развертывания"
+msgstr ""
 
 msgid "Connect wallet to distribute"
 msgstr ""
@@ -622,22 +620,22 @@ msgid "Connect wallet to issue"
 msgstr ""
 
 msgid "Connect wallet to pay"
-msgstr "Подключите кошелёк для оплаты"
+msgstr ""
 
 msgid "Connect wallet to transfer"
 msgstr ""
 
 msgid "Connect your wallet to see your holdings."
-msgstr "Подключите свой кошелек, чтобы увидеть свои активы."
+msgstr ""
 
 msgid "Connect your wallet to see your projects."
-msgstr "Подключите свой кошелек, чтобы увидеть свои проекты."
+msgstr ""
 
 msgid "Connected wallet not authorized"
-msgstr "Подключенный кошелек не авторизован"
+msgstr ""
 
 msgid "Contract address: {0}"
-msgstr "Адрес контракта: {0}"
+msgstr ""
 
 msgid "Contribution threshold"
 msgstr ""
@@ -652,25 +650,25 @@ msgid "Contributors who pay this address from a custodial service platform (like
 msgstr ""
 
 msgid "Contributors will be rewarded this amount of your project's tokens per ETH contributed."
-msgstr "За каждый внесенный ETH вкладчики получат это количество токенов вашего проекта."
+msgstr ""
 
 msgid "Contributors will not receive any tokens in exchange for paying this project."
-msgstr "Участники не получат никаких токенов в обмен на оплату этого проекта."
+msgstr ""
 
 msgid "Contributors will receive <0>{discountRatePercent}%</0> more tokens for contributions they make this funding cycle compared to the next funding cycle."
 msgstr ""
 
 msgid "Contributors will receive a relatively small portion of tokens in exchange for paying this project."
-msgstr "Участники получат относительно небольшую часть токенов в обмен на оплату этого проекта."
+msgstr ""
 
 msgid "Contributors will see this message before they pay your project."
-msgstr "Вкладчики увидят это сообщение до того, как оплатят ваш проект."
+msgstr ""
 
 msgid "Copied!"
-msgstr "Скопировано!"
+msgstr ""
 
 msgid "Copy to clipboard"
-msgstr "Копировать в буфер обмена"
+msgstr ""
 
 msgid "Create a payable address (optional)"
 msgstr ""
@@ -679,19 +677,19 @@ msgid "Create an Ethereum address for your project. Enables direct payments with
 msgstr ""
 
 msgid "Create an Ethereum address that can be used to pay your project directly."
-msgstr "Создать Ethereum-адрес, который можно использовать для прямой оплаты вашего проекта."
+msgstr ""
 
 msgid "Create payable address"
-msgstr "Создать адреса для оплаты"
+msgstr ""
 
 msgid "Create payment address"
 msgstr ""
 
 msgid "Create project"
-msgstr "Создать проект"
+msgstr ""
 
 msgid "Create your own ERC-20 token to represent stake in your project. Contributors will receive these tokens when they pay your project."
-msgstr "Создать свой собственный токен ERC-20 для представления доли в вашем проекте. Вкладчики будут получать эти токены при оплате вашего проекта."
+msgstr ""
 
 msgid "Created ETH-ERC20 payment address"
 msgstr ""
@@ -703,22 +701,22 @@ msgid "Crowdfunding"
 msgstr ""
 
 msgid "Current"
-msgstr "Текущий"
+msgstr ""
 
 msgid "Current 3rd Party Exchange Rates"
-msgstr "Текущие курсы обмена валют сторонних организаций"
+msgstr ""
 
 msgid "Current owner: {ownerAddress}"
-msgstr "Текущий владелец: {ownerAddress}"
+msgstr ""
 
 msgid "Currently worth: <0><1/>{0}</0>"
-msgstr "На данный момент стоит: <0><1/>{0}</0>"
+msgstr ""
 
 msgid "Custom strategy"
-msgstr "Индивидуальная стратегия"
+msgstr ""
 
 msgid "Custom token beneficiary"
-msgstr "Пользовательский бенефициарий токенов"
+msgstr ""
 
 msgid "Customize payment"
 msgstr ""
@@ -727,7 +725,7 @@ msgid "Customize your project's \"pay\" button. Leave blank to use the default."
 msgstr ""
 
 msgid "Cycle #{0}"
-msgstr "Цикл #{0}"
+msgstr ""
 
 msgid "Cycle #{0} -"
 msgstr ""
@@ -736,19 +734,19 @@ msgid "DAOs"
 msgstr ""
 
 msgid "Dark theme"
-msgstr "Тёмная тема"
+msgstr ""
 
 msgid "Date"
-msgstr "Дата"
+msgstr ""
 
 msgid "Date created"
-msgstr "Дата создания"
+msgstr ""
 
 msgid "Day"
 msgstr ""
 
 msgid "Days"
-msgstr "Дней"
+msgstr ""
 
 msgid "Days to lock tokens"
 msgstr ""
@@ -775,22 +773,22 @@ msgid "Deploy payment address contract"
 msgstr ""
 
 msgid "Deploy project"
-msgstr "Развернуть проект"
+msgstr ""
 
 msgid "Deploy project on {signerNetwork}"
-msgstr "Развернуть проект на {signerNetwork}"
+msgstr ""
 
 msgid "Deploy project to {0}"
-msgstr "Развернуть проект на {0}"
+msgstr ""
 
 msgid "Deployed ERC20 token"
-msgstr "Развернутый токен ERC20"
+msgstr ""
 
 msgid "Deployed payment addresses can be found in the Tools drawer on the project page."
 msgstr ""
 
 msgid "Deposit 1 wei to @{handle}"
-msgstr "Депозит 1 wei на @{handle}"
+msgstr ""
 
 msgid "Description"
 msgstr ""
@@ -799,25 +797,25 @@ msgid "Design how your tokens should work."
 msgstr ""
 
 msgid "Design your project"
-msgstr "Создай свой проект"
+msgstr ""
 
 msgid "Details"
-msgstr "Подробности"
+msgstr ""
 
 msgid "Determines whether tokens will be minted from payments to this address."
 msgstr ""
 
 msgid "Disabled"
-msgstr "Отключен"
+msgstr ""
 
 msgid "Disabled when your funding cycle's distribution limit is <0>No limit</0> (infinite)"
-msgstr "Отключен, если лимит распределения вашего цикла финансирования <0>Нет лимита</0> (бесконечный)"
+msgstr ""
 
 msgid "Disabled when your project's funding cycle duration is 0."
-msgstr "Отключено, если длительность цикла финансирования вашего проекта равна 0."
+msgstr ""
 
 msgid "Disabled when your project's funding cycle has no duration."
-msgstr "Отключен, если цикл финансирования вашего проекта не имеет продолжительности."
+msgstr ""
 
 msgid "Discard"
 msgstr ""
@@ -826,22 +824,22 @@ msgid "Disclose any details to your contributors before they pay your project."
 msgstr ""
 
 msgid "Disconnect"
-msgstr "Отключиться"
+msgstr ""
 
 msgid "Discord"
-msgstr "Дискорд"
+msgstr ""
 
 msgid "Discord link"
 msgstr ""
 
 msgid "Discount rate"
-msgstr "Учетная ставка "
+msgstr ""
 
 msgid "Display ERC-20 and other Juicebox project tokens that this project owner holds."
 msgstr ""
 
 msgid "Display ERC-20 tokens and other Juicebox project tokens that are in this project's owner's wallet."
-msgstr "Отображение токенов ERC-20 и других токенов проекта Juicebox, которые находятся в кошельке владельца этого проекта."
+msgstr ""
 
 msgid "Distribute a percentage of all funds received to entities. Your distribution limit will be <0>infinite</0>."
 msgstr ""
@@ -850,25 +848,25 @@ msgid "Distribute a specific amount of funds to entities each funding cycle. You
 msgstr ""
 
 msgid "Distribute available funds to other Ethereum wallets or Juicebox projects as payouts. Use this to pay contributors, charities, Juicebox projects you depend on, or anyone else. Funds are distributed whenever a withdrawal is made from your project."
-msgstr "Распределяйте доступные средства на другие кошельки Ethereum или проекты Juicebox в качестве выплат. Используйте это, чтобы платить вкладчикам, благотворительным организациям, проектам Juicebox, от которых вы зависите, или кому-либо еще. Средства распределяются всякий раз, когда производится вывод средств из вашего проекта."
+msgstr ""
 
 msgid "Distribute funds"
-msgstr "Распределить средства"
+msgstr ""
 
 msgid "Distribute reserved {tokenTextPlural}"
-msgstr "Распространить зарезервированные {tokenTextPlural}"
+msgstr ""
 
 msgid "Distribute {tokenTextPlural}"
-msgstr "Распределить {tokenTextPlural}"
+msgstr ""
 
 msgid "Distribute {tokensText}"
-msgstr "Распределить {tokensText}"
+msgstr ""
 
 msgid "Distributed"
-msgstr "Распределено"
+msgstr ""
 
 msgid "Distributed Funds"
-msgstr "Распределенные средства"
+msgstr ""
 
 msgid "Distributed Reserves"
 msgstr ""
@@ -892,22 +890,22 @@ msgid "Distribution Limit <0/>:"
 msgstr ""
 
 msgid "Distribution limit"
-msgstr "Лимит распределения"
+msgstr ""
 
 msgid "Distribution limit is 0: All funds will be considered overflow and can be redeemed by token holders."
-msgstr "Лимит распределения равен 0: Все средства будут считаться переполненными и могут быть выкуплены держателями токенов."
+msgstr ""
 
 msgid "Distribution limit is infinite. <0>The project will control how all funds are distributed, and none can be redeemed by token holders.</0>"
 msgstr ""
 
 msgid "Distribution limit, duration and payouts"
-msgstr "Лимит распределения, продолжительность и выплаты"
+msgstr ""
 
 msgid "Distribution limit: <0/>{0}"
 msgstr ""
 
 msgid "Do I have to make my project open source to use Juicebox as its business model?"
-msgstr "Должен ли я сделать свой проект открытым, чтобы использовать Juicebox в качестве бизнес-модели?"
+msgstr ""
 
 msgid "Do I need this?"
 msgstr ""
@@ -916,31 +914,31 @@ msgid "Do not include .eth"
 msgstr ""
 
 msgid "Docs"
-msgstr "Документы"
+msgstr ""
 
 msgid "Documentation on v1.1 contracts"
-msgstr "Документация по контрактам версии 1.1"
+msgstr ""
 
 msgid "Does a project benefit from its own overflow?"
-msgstr "Выигрывает ли проект от собственного переполнения?"
+msgstr ""
 
 msgid "Done"
-msgstr "Готово"
+msgstr ""
 
 msgid "Download CSV"
-msgstr "Скачать CSV"
+msgstr ""
 
 msgid "Download CSV of payments"
-msgstr "Скачать CSV данных о платежах"
+msgstr ""
 
 msgid "Download CSV of project activity"
-msgstr "Скачать CSV о активности проекта"
+msgstr ""
 
 msgid "Download CSV of {0} holders"
-msgstr "Загрузить CSV из {0} держателей"
+msgstr ""
 
 msgid "Duration"
-msgstr "Продолжительность"
+msgstr ""
 
 msgid "Duration (seconds)"
 msgstr ""
@@ -949,7 +947,7 @@ msgid "ENS Name"
 msgstr ""
 
 msgid "ERC-20 tokens can only be minted once an ERC-20 token has been issued for this project."
-msgstr "Токены ERC-20 могут быть отчеканены только после выпуска токена ERC-20 для данного проекта."
+msgstr ""
 
 msgid "ERC20 Deployed"
 msgstr ""
@@ -982,19 +980,19 @@ msgid "Edit payouts"
 msgstr ""
 
 msgid "Edit project"
-msgstr "Редактировать проект"
+msgstr ""
 
 msgid "Edit project details"
-msgstr "Редактирование деталей проекта"
+msgstr ""
 
 msgid "Edit reserved token allocation"
-msgstr "Изменить зарезервированное распределение токенов"
+msgstr ""
 
 msgid "Edit token allocation"
-msgstr "Изменить распределение токенов"
+msgstr ""
 
 msgid "Edit tracked assets"
-msgstr "Изменить отслеживаемые активы"
+msgstr ""
 
 msgid "Enable veNFT Governance"
 msgstr ""
@@ -1003,10 +1001,10 @@ msgid "Enable veNFT to Spend Unclaimed Tokens"
 msgstr ""
 
 msgid "Enabled"
-msgstr "Разрешено"
+msgstr ""
 
 msgid "Enabling this allows the project owner to manually mint any amount of tokens to any address."
-msgstr "Включение этой опции позволяет владельцу проекта вручную минтить любое количество токенов на любой адрес."
+msgstr ""
 
 msgid "Enabling this will mint {tokenSymbol} ERC-20 tokens. Otherwise unclaimed {tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver."
 msgstr ""
@@ -1018,13 +1016,13 @@ msgid "Enabling token minting will appear risky to contributors."
 msgstr ""
 
 msgid "End"
-msgstr "Конец"
+msgstr ""
 
 msgid "Error loading holders"
-msgstr "Ошибка загрузки владельцев"
+msgstr ""
 
 msgid "Error loading payments"
-msgstr "Ошибка загрузки платежей"
+msgstr ""
 
 msgid "Error parsing form"
 msgstr ""
@@ -1042,10 +1040,10 @@ msgid "Extend lock successful. Results will be indexed in a few moments."
 msgstr ""
 
 msgid "FAQ"
-msgstr "FAQ (Вопросы)"
+msgstr ""
 
 msgid "FAQs"
-msgstr "FAQ (Вопросы)"
+msgstr ""
 
 msgid "Failed to update project metadata"
 msgstr ""
@@ -1063,16 +1061,16 @@ msgid "Fund anything. Grow together."
 msgstr ""
 
 msgid "Funding"
-msgstr "Финансирование"
+msgstr ""
 
 msgid "Funding cycle"
-msgstr "Цикл финансирования"
+msgstr ""
 
 msgid "Funding cycle details"
-msgstr "Детали цикла финансирования"
+msgstr ""
 
 msgid "Funding cycle duration"
-msgstr "Продолжительность цикла финансирования"
+msgstr ""
 
 msgid "Funding cycle preview"
 msgstr ""
@@ -1081,67 +1079,67 @@ msgid "Funding cycle required."
 msgstr ""
 
 msgid "Funding cycle target"
-msgstr "Цель цикла финансирования"
+msgstr ""
 
 msgid "Funding cycles can be reconfigured moments before a new cycle begins, without notifying contributors."
-msgstr "Циклы финансирования можно изменить за несколько минут до начала нового цикла без уведомления вкладчиков."
+msgstr ""
 
 msgid "Funding distribution"
-msgstr "Распределение финансирования"
+msgstr ""
 
 msgid "Funding target"
-msgstr "Цель финансирования"
+msgstr ""
 
 msgid "Funds available to distribute in this funding cycle (before the {feePercentage}% JBX fee). This amount won't roll over to the next funding cycle, so funds should be distributed before this funding cycle ends."
 msgstr ""
 
 msgid "Funds will be distributed to:"
-msgstr "Средства будут распределены по следующим направлениям:"
+msgstr ""
 
 msgid "General"
 msgstr ""
 
 msgid "Give feedback"
-msgstr "Оставьте свой отзыв"
+msgstr ""
 
 msgid "Give this NFT a name."
 msgstr ""
 
 msgid "Go to Etherscan"
-msgstr "Перейти к Etherscan"
+msgstr ""
 
 msgid "Grant permission"
 msgstr ""
 
 msgid "Handle"
-msgstr "Никнейм"
+msgstr ""
 
 msgid "Has Juicebox been audited?"
 msgstr ""
 
 msgid "Heads up"
-msgstr "Уведомления"
+msgstr ""
 
 msgid "History"
-msgstr "История"
+msgstr ""
 
 msgid "Holders"
-msgstr "Держатели"
+msgstr ""
 
 msgid "Holdings"
-msgstr "Держатели"
+msgstr ""
 
 msgid "Hours"
 msgstr ""
 
 msgid "How decentralized is Juicebox?"
-msgstr "Насколько децентрализован Juicebox?"
+msgstr ""
 
 msgid "How do I archive a project?"
-msgstr "Как я могу заархивировать проект?"
+msgstr ""
 
 msgid "How do I create a project?"
-msgstr "Как я могу создать проект?"
+msgstr ""
 
 msgid "How do I decide?"
 msgstr ""
@@ -1153,13 +1151,13 @@ msgid "How does it work?"
 msgstr ""
 
 msgid "How have the contracts been tested?"
-msgstr "Как проверялись контракты?"
+msgstr ""
 
 msgid "How long before your next funding cycle must you reconfigure in order for changes to take effect."
-msgstr "За какое время до следующего цикла финансирования необходимо изменить конфигурацию, чтобы изменения вступили в силу."
+msgstr ""
 
 msgid "How long one funding cycle will last. Funding cycle <0>reconfigurations</0> will only take effect for <1>upcoming</1> funding cycles, i.e. once a current funding cycle has ended."
-msgstr "Как долго продлится один цикл финансирования. Цикл финансирования <0> перенастройки <0> вступят в силу только для <1> предстоящих <1> циклов финансирования, т. е. после завершения текущего цикла финансирования."
+msgstr ""
 
 msgid "How the {reservedPercentage}% of your project's reserved tokens will be split."
 msgstr ""
@@ -1168,7 +1166,7 @@ msgid "How to Juice."
 msgstr ""
 
 msgid "How your project will distribute funds."
-msgstr "Как ваш проект будет зарабатывать деньги и управлять ими."
+msgstr ""
 
 msgid "I accept this project's <0>risks</0>."
 msgstr ""
@@ -1177,7 +1175,7 @@ msgid "I have read and accept the <0>Terms of Service</0>."
 msgstr ""
 
 msgid "I understand"
-msgstr "Я понимаю"
+msgstr ""
 
 msgid "ID"
 msgstr ""
@@ -1186,10 +1184,10 @@ msgid "ID: {projectId}"
 msgstr ""
 
 msgid "If locked, this can't be edited or removed until the lock expires or the funding cycle is reconfigured."
-msgstr "Если блокировка заблокирована, ее нельзя изменить или удалить, пока не истечет срок блокировки или не будет изменена конфигурация цикла финансирования."
+msgstr ""
 
 msgid "If locked, this split can't be edited or removed until the lock expires or the funding cycle is reconfigured."
-msgstr "Если этот раздел заблокирован, его нельзя редактировать или удалить, пока не истечет срок блокировки или не будет изменена конфигурация цикла финансирования."
+msgstr ""
 
 msgid "If you don't raise the sum of all your payouts (<0/>{distributionLimit}), this address will receive {0}% of all the funds you raise."
 msgstr ""
@@ -1201,28 +1199,28 @@ msgid "If you have Juicebox project on Juicebox V1 and V2, we recommend you migr
 msgstr ""
 
 msgid "If you have already deployed a payable address and have lost it, please contact the Juicebox team through <0>Discord.</0>"
-msgstr "Если вы уже установили оплачиваемый адрес и потеряли его, пожалуйста, свяжитесь с командой Juicebox через <0>Discord.</0>"
+msgstr ""
 
 msgid "If you're interested in creating a project but still confused on how to get started, consider watching this <0>instructional video</0>. Also feel free to reach out in the <1>Juicebox Discord</1> where our team will be happy to help bring your project idea to life!"
-msgstr "Если вы заинтересованы в создании проекта, но не знаете, как начать, посмотрите это <0>инструктивное видео</0>. Также не стесняйтесь обращаться в <1>Juicebox Discord</1>, где наша команда будет рада помочь воплотить вашу идею проекта в жизнь!"
+msgstr ""
 
 msgid "If you're unsure if you need to claim, you probably don't."
-msgstr "Если вы не уверены, нужно ли вам предъявлять претензии, вы, вероятно, этого не делаете."
+msgstr ""
 
 msgid "Image file"
 msgstr ""
 
 msgid "In Juicebox"
-msgstr "В Juicebox"
+msgstr ""
 
 msgid "In treasury"
-msgstr "В казначействе"
+msgstr ""
 
 msgid "In wallet"
-msgstr "В кошельке"
+msgstr ""
 
 msgid "Incentives"
-msgstr "Поощрения"
+msgstr ""
 
 msgid "Indie creators and builders"
 msgstr ""
@@ -1231,7 +1229,7 @@ msgid "Infinite (no limit)"
 msgstr ""
 
 msgid "Initial issuance rate"
-msgstr "Первоначальная ставка эмиссии"
+msgstr ""
 
 msgid "Initial mint rate"
 msgstr ""
@@ -1243,37 +1241,37 @@ msgid "Invalid address"
 msgstr ""
 
 msgid "Issue ERC-20"
-msgstr "Выпуск ERC-20"
+msgstr ""
 
 msgid "Issue ERC-20 token"
-msgstr "Выпуск токенов ERC-20"
+msgstr ""
 
 msgid "Issue an ERC-20 to be used as this project's token. Once issued, anyone can claim their existing token balance in the new token."
-msgstr "Выпустите токен ERC-20, который будет использоваться в качестве токена этого проекта. После выпуска любой желающий может заявить о своем существующем балансе токенов в новом токене."
+msgstr ""
 
 msgid "Issue an ERC-20 token (optional)"
 msgstr ""
 
 msgid "Issue token"
-msgstr "Выдача токенов"
+msgstr ""
 
 msgid "It isn't possible to remove a project's data from the blockchain, but we can hide it in the app if you'd like to prevent people from seeing or interacting with it — just let us know in <0>Discord</0>. Keep in mind people will still be able to use your project by interacting directly with the contract."
-msgstr "Удалить данные проекта из блокчейна невозможно, но мы можем скрыть их в приложении, если вы хотите, чтобы люди не могли видеть их или взаимодействовать с ними - просто сообщите нам об этом в <0>Discord</0>. Помните, что люди по-прежнему смогут использовать ваш проект, взаимодействуя непосредственно с контрактом."
+msgstr ""
 
 msgid "It'd be a lot cooler if you did"
-msgstr "Было бы намного круче, если бы вы это сделали"
+msgstr ""
 
 msgid "JBX Fee ({0}%):"
-msgstr "Комиссия JBX ({0}%):"
+msgstr ""
 
 msgid "JBX Fee ({feePercentage}%):"
-msgstr "Комиссия JBX ({feePercentage}%):"
+msgstr ""
 
 msgid "Join <0>hundreds of projects</0> sippin' the Juice."
 msgstr ""
 
 msgid "Juicebox Project ID"
-msgstr "ID проекта Juicebox"
+msgstr ""
 
 msgid "Juicebox V1 project ID"
 msgstr ""
@@ -1288,10 +1286,10 @@ msgid "Juicebox isn't guaranteed to be free of bugs or exploits. Before spending
 msgstr ""
 
 msgid "Juicebox loading animation"
-msgstr "Juicebox загружающаяся анимация"
+msgstr ""
 
 msgid "Juicebox project"
-msgstr "Проект Juicebox"
+msgstr ""
 
 msgid "Juicebox projects use <0>ENS names</0> as handles. Setting a handle involves 2 transactions:"
 msgstr ""
@@ -1300,16 +1298,16 @@ msgid "Juicebox puts the fun back in funding so you can focus on building."
 msgstr ""
 
 msgid "Last paid"
-msgstr "Последний платеж"
+msgstr ""
 
 msgid "Later"
-msgstr "Позже"
+msgstr ""
 
 msgid "Latest"
-msgstr "Последние"
+msgstr ""
 
 msgid "Latest payments"
-msgstr "Последние платежи"
+msgstr ""
 
 msgid "Launch funding cycle"
 msgstr ""
@@ -1324,13 +1322,13 @@ msgid "Leave blank to start immediately."
 msgstr ""
 
 msgid "Light theme"
-msgstr "Светлая тема"
+msgstr ""
 
 msgid "Link Juicebox V1 project"
 msgstr ""
 
 msgid "Load more"
-msgstr "Загрузить ещё"
+msgstr ""
 
 msgid "Lock ${tokenSymbolDisplayText} for Voting Power"
 msgstr ""
@@ -1348,7 +1346,7 @@ msgid "Lock successful. Results will be indexed in a few moments."
 msgstr ""
 
 msgid "Lock until"
-msgstr "Заблокировать до"
+msgstr ""
 
 msgid "Locked {tokenSymbolDisplayText}"
 msgstr ""
@@ -1357,19 +1355,19 @@ msgid "Locked:"
 msgstr ""
 
 msgid "Logo"
-msgstr "Логотип"
+msgstr ""
 
 msgid "MAX"
-msgstr "Максимум"
+msgstr ""
 
 msgid "Manage"
-msgstr "Управление"
+msgstr ""
 
 msgid "Manage your {0}"
 msgstr ""
 
 msgid "Manage {tokenText}"
-msgstr "Управление {tokenText}"
+msgstr ""
 
 msgid "Maximum {MAX_DESCRIPTION_LENGTH} characters"
 msgstr ""
@@ -1384,19 +1382,19 @@ msgid "Memo included on-chain"
 msgstr ""
 
 msgid "Migrate to Juicebox V1.1"
-msgstr "Перейти на Juicebox V1.1"
+msgstr ""
 
 msgid "Mint NFT to a custom address."
 msgstr ""
 
 msgid "Mint as ERC-20"
-msgstr "Минтить как ERC-20"
+msgstr ""
 
 msgid "Mint new {tokensLabel} into an account. Only a project's owner, a designated operator, or one of its terminal's delegates can mint its tokens."
-msgstr "Чеканить новые {tokensLabel} на счет. Чеканить токены может только владелец проекта, назначенный оператор или один из делегатов его терминала."
+msgstr ""
 
 msgid "Mint project tokens on demand"
-msgstr "Создание токенов проекта по требованию"
+msgstr ""
 
 msgid "Mint rate"
 msgstr ""
@@ -1411,13 +1409,13 @@ msgid "Mint tokens as ERC-20"
 msgstr ""
 
 msgid "Mint tokens to a custom address."
-msgstr "Чеканка жетонов на пользовательский адрес."
+msgstr ""
 
 msgid "Mint {tokensLabel}"
-msgstr "Чеканить {tokensLabel}"
+msgstr ""
 
 msgid "Mint {tokensTokenLower}"
-msgstr "Чеканить {tokensTokenLower}"
+msgstr ""
 
 msgid "Minutes"
 msgstr ""
@@ -1429,7 +1427,7 @@ msgid "More trending projects"
 msgstr ""
 
 msgid "Move your {tokensLabel} from the Juicebox contract to your wallet."
-msgstr "Переместите {tokensLabel} из контракта Juicebox в свой кошелек."
+msgstr ""
 
 msgid "My projects"
 msgstr ""
@@ -1444,25 +1442,25 @@ msgid "NFT rewards"
 msgstr ""
 
 msgid "NO LIMIT"
-msgstr "БЕЗ ОГРАНИЧЕНИЯ"
+msgstr ""
 
 msgid "Name"
-msgstr "Название"
+msgstr ""
 
 msgid "New"
-msgstr "Новый"
+msgstr ""
 
 msgid "Newly minted {tokenSymbolPlural} <0>received by contributors</0> per ETH they contribute to the treasury."
 msgstr ""
 
 msgid "Next: Funding cycle"
-msgstr "Следующее: Цикл финансирования"
+msgstr ""
 
 msgid "Next: Review and deploy"
-msgstr "Следующее: Обзор и развертывание"
+msgstr ""
 
 msgid "No"
-msgstr "Нет"
+msgstr ""
 
 msgid "No NFT reward tiers"
 msgstr ""
@@ -1471,13 +1469,13 @@ msgid "No active funding cycle."
 msgstr ""
 
 msgid "No activity yet"
-msgstr "Нет активности"
+msgstr ""
 
 msgid "No beneficiary selected. Is your wallet connected?"
 msgstr ""
 
 msgid "No funding target: The project will control how all funds are distributed, and none can be redeemed by token holders."
-msgstr "Нет цели финансирования: проект будет контролировать, как распределяются все средства, и ничего не может быть обменяно владельцами токенов."
+msgstr ""
 
 msgid "No funds available to distribute."
 msgstr ""
@@ -1486,43 +1484,43 @@ msgid "No funds can be distributed out of the treasury. Funds can only be access
 msgstr ""
 
 msgid "No limit (infinite)"
-msgstr "Без ограничений (бесконечный)"
+msgstr ""
 
 msgid "No more than the funding cycle target can be distributed by the project in a single funding cycle."
-msgstr "Не более одного целевого показателя цикла финансирования можно распределить по проекту в рамках одного цикла финансирования."
+msgstr ""
 
 msgid "No past funding cycles"
-msgstr "Нет прошлых циклов финансирования"
+msgstr ""
 
 msgid "No reserved tokens available to distribute."
 msgstr ""
 
 msgid "No strategy"
-msgstr "Нет стратегии/или плана"
+msgstr ""
 
 msgid "No target"
-msgstr "Нет цели"
+msgstr ""
 
 msgid "No target set."
-msgstr "Цель не установлена."
+msgstr ""
 
 msgid "Not a valid ETH address"
 msgstr ""
 
 msgid "Not set"
-msgstr "Не установлено"
+msgstr ""
 
 msgid "Note"
-msgstr "Примечание"
+msgstr ""
 
 msgid "Note: Tokens can be minted manually when allowed in the current funding cycle. This can be changed by the project owner for upcoming cycles."
-msgstr "Примечание: Токены могут быть отчеканены вручную, если это разрешено в текущем цикле финансирования. Это может быть изменено владельцем проекта для последующих циклов."
+msgstr ""
 
 msgid "Notice from {0}"
 msgstr ""
 
 msgid "Notice from {0}:"
-msgstr "Уведомление от {0}:"
+msgstr ""
 
 msgid "Once launched, your first funding cycle <0>can't be changed</0>. You can reconfigure upcoming funding cycles according to the project's <1>reconfiguration rules</1>."
 msgstr ""
@@ -1534,7 +1532,7 @@ msgid "Only project tokens claimed as ERC-20 tokens can be staked for NFTs."
 msgstr ""
 
 msgid "Other assets in this project's owner's wallet."
-msgstr "Другие активы в кошельке владельца этого проекта."
+msgstr ""
 
 msgid "Other details"
 msgstr ""
@@ -1543,19 +1541,19 @@ msgid "Overflow"
 msgstr ""
 
 msgid "Overflow is created if your project's balance exceeds your funding cycle target. Overflow can be redeemed by your project's token holders."
-msgstr "Переполнение создается, если остаток вашего проекта превышает цель цикла финансирования. Переполнение может быть использовано владельцами токенов вашего проекта."
+msgstr ""
 
 msgid "Owned by: <0/>"
 msgstr ""
 
 msgid "Owner can mint tokens at any time."
-msgstr "Владелец может минтить токены в любое время."
+msgstr ""
 
 msgid "Owner can set the project's payment terminals."
 msgstr ""
 
 msgid "Owner is not allowed to mint tokens."
-msgstr "Владельцу не разрешается минтить токены."
+msgstr ""
 
 msgid "Owner isn't allowed to set the project's payment terminals."
 msgstr ""
@@ -1570,52 +1568,52 @@ msgid "Paid"
 msgstr ""
 
 msgid "Paid as <0/>"
-msgstr "Оплачено как <0/>"
+msgstr ""
 
 msgid "Pause payments"
-msgstr "Приостановить платежи"
+msgstr ""
 
 msgid "Pause received payments"
-msgstr "Приостановить полученные платежи"
+msgstr ""
 
 msgid "Paused"
-msgstr "Приостановлено"
+msgstr ""
 
 msgid "Pay"
-msgstr "Оплатить"
+msgstr ""
 
 msgid "Pay amount"
-msgstr "Сумма платежа"
+msgstr ""
 
 msgid "Pay amount must be greater than 0."
-msgstr "Сумма платежа должна быть больше 0."
+msgstr ""
 
 msgid "Pay button"
-msgstr "Кнопка \"Оплатить\""
+msgstr ""
 
 msgid "Pay button text"
-msgstr "Кнопка оплаты"
+msgstr ""
 
 msgid "Pay disclosure"
-msgstr "Раскрытие информации о платеже"
+msgstr ""
 
 msgid "Pay {0}"
-msgstr "Заплатить {0}"
+msgstr ""
 
 msgid "Payer"
-msgstr "Плательщик"
+msgstr ""
 
 msgid "Paying <0>{0}</0> is not an investment — it's a way to support the project. <1>{1}</1> determines any value or utility of the tokens you receive."
 msgstr ""
 
 msgid "Paying <0>{0}</0> is not an investment — it's a way to support the project. Any value or utility of the tokens you receive is determined by {1}."
-msgstr "Оплата {0} не является вложением – это способ поддержать проект. Любое значение или ценность полученных вами токенов определяется {1}."
+msgstr ""
 
 msgid "Paying this project is currently disabled, because the token reserved rate is 100% and no tokens will be earned by making a payment."
-msgstr "Платеж этого проекта в настоящее время отключен, потому что ставка зарезервированного токена 100% и токены не будут заработаны путем совершения этого платежа."
+msgstr ""
 
 msgid "Paying this project is currently disabled."
-msgstr "Оплата этого проекта в настоящее время отключена."
+msgstr ""
 
 msgid "Payment address contract:"
 msgstr ""
@@ -1630,40 +1628,40 @@ msgid "Payment memo image"
 msgstr ""
 
 msgid "Payments"
-msgstr "Платежи"
+msgstr ""
 
 msgid "Payments are paused for the current funding cycle."
-msgstr "Платежи приостановлены для текущего цикла финансирования."
+msgstr ""
 
 msgid "Payments made"
 msgstr ""
 
 msgid "Payments paused"
-msgstr "Платежи приостановлены"
+msgstr ""
 
 msgid "Payout is locked"
 msgstr ""
 
 msgid "Payout recipients"
-msgstr "Получатели выплат"
+msgstr ""
 
 msgid "Payouts"
 msgstr ""
 
 msgid "Payouts (optional)"
-msgstr "Выплаты (необязательно)"
+msgstr ""
 
 msgid "Payouts to Ethereum addresses incur a 2.5% JBX membership fee"
 msgstr ""
 
 msgid "Payouts to Ethereum addresses incur a {feePercentage}% fee. Your project will receive JBX in return at the current issuance rate."
-msgstr "При выплатах на адреса Ethereum взимается комиссия в размере {feePercentage}%. Ваш проект получит взамен JBX по текущему курсу."
+msgstr ""
 
 msgid "Peel"
-msgstr "Peel"
+msgstr ""
 
 msgid "Percent"
-msgstr "Процент"
+msgstr ""
 
 msgid "Percentage allocation"
 msgstr ""
@@ -1675,19 +1673,19 @@ msgid "Percentages"
 msgstr ""
 
 msgid "Percentages must add up to 100% or less"
-msgstr "Сумма процентов должна составлять 100 % или меньше"
+msgstr ""
 
 msgid "Podcast"
-msgstr "Подкаст"
+msgstr ""
 
 msgid "Potential risks"
-msgstr "Потенциальные риски"
+msgstr ""
 
 msgid "Preview"
 msgstr ""
 
 msgid "Preview:"
-msgstr "Предварительный просмотр:"
+msgstr ""
 
 msgid "Project Created"
 msgstr ""
@@ -1696,7 +1694,7 @@ msgid "Project ID must be a number."
 msgstr ""
 
 msgid "Project ID:"
-msgstr "ID проекта:"
+msgstr ""
 
 msgid "Project Links"
 msgstr ""
@@ -1705,61 +1703,61 @@ msgid "Project Page Customizations"
 msgstr ""
 
 msgid "Project Token"
-msgstr "Токен проекта"
+msgstr ""
 
 msgid "Project configuration"
-msgstr "Конфигурация проекта"
+msgstr ""
 
 msgid "Project created by"
 msgstr ""
 
 msgid "Project description"
-msgstr "Описание Проекта"
+msgstr ""
 
 msgid "Project details"
-msgstr "Детали проекта"
+msgstr ""
 
 msgid "Project details can be edited at any time."
 msgstr ""
 
 msgid "Project details reconfigurations will create a separate transaction."
-msgstr "Для изменения конфигурации деталей проекта будет создана отдельная транзакция."
+msgstr ""
 
 msgid "Project handle"
-msgstr "Никнейм проекта"
+msgstr ""
 
 msgid "Project handle must be unique."
-msgstr "Никнейм проекта должен быть уникальным."
+msgstr ""
 
 msgid "Project is accepting payments this funding cycle."
-msgstr "Проект принимает платежи в этом цикле финансирования."
+msgstr ""
 
 msgid "Project is not accepting payments this funding cycle."
-msgstr "Проект не принимает платежи в этом цикле финансирования."
+msgstr ""
 
 msgid "Project launch successful"
 msgstr ""
 
 msgid "Project name"
-msgstr "Название проекта"
+msgstr ""
 
 msgid "Project name, handle, links, and other details."
-msgstr "Название проекта, описание, ссылки и другие детали."
+msgstr ""
 
 msgid "Project not found"
 msgstr ""
 
 msgid "Project owner"
-msgstr "Владелец проекта"
+msgstr ""
 
 msgid "Project owner (you)"
-msgstr "Владелец проекта (вы)"
+msgstr ""
 
 msgid "Project owners can configure a delay period, meaning reconfigurations to an upcoming funding cycle must be submitted a certain number of days before it starts. For example, a 3-day delay period means reconfigurations must be submitted at least 3 days before the next funding cycle starts. This gives token holders time to react to the decision and reduces the chance of rug-pulls."
-msgstr "Владельцы проектов могут настроить период задержки, что означает, что изменения в конфигурации предстоящего цикла финансирования должны быть представлены за определенное определенное количество дней до его начала. Например, период задержки в 3 дня означает, что изменения конфигурации должны быть представлены не позднее чем за 3 дня до начала следующего цикла финансирования. Это дает держателям токенов время отреагировать на принятое решение и снижает вероятность rug-pulls."
+msgstr ""
 
 msgid "Project token"
-msgstr "Токен проекта"
+msgstr ""
 
 msgid "Project tokens <0>aren't ERC-20 tokens</0> by default. Once you deploy your project, you can issue an ERC-20 for your holders to claim. This is <1>optional</1>."
 msgstr ""
@@ -1774,25 +1772,25 @@ msgid "Project {projectId}"
 msgstr ""
 
 msgid "Project {projectId} not found"
-msgstr "Проект {projectId} не найден"
+msgstr ""
 
 msgid "Projects"
-msgstr "Проекты"
+msgstr ""
 
 msgid "Projects can be created with an optional discount rate designed to incentivize supporters to contribute earlier rather than later. The amount of tokens rewarded per amount paid to your project will decrease by the discount rate with each new funding cycle. A higher discount rate will incentivize supporters to pay your project earlier rather than later."
-msgstr "Проекты могут быть созданы с дополнительной ставкой скидки, призванной стимулировать сторонников делать взносы раньше, а не позже. Количество токенов, начисляемых на сумму, внесенную в ваш проект, будет уменьшаться на величину дисконтной ставки с каждым новым циклом финансирования. Более высокая ставка скидки будет стимулировать сторонников вносить деньги в ваш проект раньше, чем позже."
+msgstr ""
 
 msgid "Projects on Juicebox"
-msgstr "Проекты в Juicebox"
+msgstr ""
 
 msgid "Projects that you have created."
-msgstr "Проекты, которые вы создали."
+msgstr ""
 
 msgid "Projects that you hold tokens for."
-msgstr "Проекты, в которых вы держите токены."
+msgstr ""
 
 msgid "Projects using a reserved rate of {reservedRateRiskyMin}% or more will appear risky to contributors, as a relatively small number of tokens will be received in exchange for paying your project."
-msgstr "Проекты, использующие зарезервированную ставку в размере {reservedRateRiskyMin}% или выше, будут казаться вкладчикам рискованными, поскольку в обмен на оплату вашего проекта будет получено относительно небольшое количество токенов."
+msgstr ""
 
 msgid "Projects with a handle:<0/><1/>1. Are included in search results on the projects page<2/>2. Can be accessed via the URL: <3>juicebox.money{0}</3><4/><5/>(The original URL <6>juicebox.money{1}</6> will continue to work.)"
 msgstr ""
@@ -1807,7 +1805,7 @@ msgid "Range"
 msgstr ""
 
 msgid "Rankings based on number of contributions and volume gained in the last {trendingWindow} days. <0>See code</0>"
-msgstr "Рейтинг, основанный на количестве вкладов и объеме, полученном за последние {trendingWindow} дней. <0>Увидеть код</0>"
+msgstr ""
 
 msgid "Read less"
 msgstr ""
@@ -1816,7 +1814,7 @@ msgid "Read more"
 msgstr ""
 
 msgid "Receive ERC-20"
-msgstr "Получить ERC-20"
+msgstr ""
 
 msgid "Receive this NFT when you contribute <0>{0}</0> - <<1>{rewardTierUpperLimit} ETH</1>."
 msgstr ""
@@ -1825,7 +1823,7 @@ msgid "Receive this NFT when you contribute at least <0>{0} ETH</0>."
 msgstr ""
 
 msgid "Receive {receiveText}"
-msgstr "Получить{receiveText}"
+msgstr ""
 
 msgid "Recipient"
 msgstr ""
@@ -1837,19 +1835,19 @@ msgid "Recipient address"
 msgstr ""
 
 msgid "Recipients will receive payouts in ETH."
-msgstr "Пользователи будут получать выплаты в ETH."
+msgstr ""
 
 msgid "Reconfiguration"
-msgstr "Реконфигурация"
+msgstr ""
 
 msgid "Reconfiguration rules"
-msgstr "Правила реконфигурации"
+msgstr ""
 
 msgid "Reconfiguration strategy"
-msgstr "Стратегия изменения конфигурации"
+msgstr ""
 
 msgid "Reconfigure"
-msgstr "Перенастройте"
+msgstr ""
 
 msgid "Reconfigure payouts as percentages of your distribution limit."
 msgstr ""
@@ -1858,16 +1856,16 @@ msgid "Reconfigure project and funding details"
 msgstr ""
 
 msgid "Reconfigure project details"
-msgstr "Перенастроить детали проекта"
+msgstr ""
 
 msgid "Reconfigure token"
-msgstr "Перенастроить токен"
+msgstr ""
 
 msgid "Reconfigure upcoming"
-msgstr "Перенастроить предстоящие "
+msgstr ""
 
 msgid "Reconfigure upcoming funding cycles"
-msgstr "Перенастроить предстоящие циклы финансирования"
+msgstr ""
 
 msgid "Redeem"
 msgstr ""
@@ -1879,16 +1877,16 @@ msgid "Redeem veNFT"
 msgstr ""
 
 msgid "Redeem your {tokensLabel} for a portion of the project's overflow. Any {tokensLabel} you redeem will be burned."
-msgstr "Обменяйте свои {tokensLabel} на часть перелива проекта. Все {tokensLabel}, которые вы выкупите, будут сожжены."
+msgstr ""
 
 msgid "Redeem {0} {tokensTextShort} for ETH"
-msgstr "Обменять {0} {tokensTextShort} за ETH"
+msgstr ""
 
 msgid "Redeem {tokensLabel} for ETH"
-msgstr "Обменять {tokensLabel} за ETH"
+msgstr ""
 
 msgid "Redeem {tokensTextLong} for ETH"
-msgstr "Обменять {tokensTextLong} за ETH"
+msgstr ""
 
 msgid "Redeemed"
 msgstr ""
@@ -1897,67 +1895,67 @@ msgid "Redeeming this NFT will burn the token and return..."
 msgstr ""
 
 msgid "Redemption rate"
-msgstr "Коэффициент выкупа"
+msgstr ""
 
 msgid "Redemption rate:"
 msgstr ""
 
 msgid "Redemption rate: <0>{0}%</0>"
-msgstr "Ставка выкупа: <0>{0}%</0>"
+msgstr ""
 
 msgid "Refresh"
-msgstr "Обновить"
+msgstr ""
 
 msgid "Relaunch your funding cycle on the new Juicebox V2 contracts."
 msgstr ""
 
 msgid "Required"
-msgstr "Требуется"
+msgstr ""
 
 msgid "Reserve a percentage of freshly minted tokens for your project to use."
 msgstr ""
 
 msgid "Reserved rate"
-msgstr "Резервная ставка"
+msgstr ""
 
 msgid "Reserved rate is 0% but has reserved token allocation. Consider adding a reserved rate that is greater than zero, or remove the token allocation."
-msgstr "Зарезервированная ставка равна 0%, но зарезервировано выделение токенов. Рассмотрите возможность добавления зарезервированной ставки, которая больше нуля, или снимите выделение токенов."
+msgstr ""
 
 msgid "Reserved token allocation"
 msgstr ""
 
 msgid "Reserved token allocation (optional)"
-msgstr "Зарезервированные распределения токенов (необязательно)"
+msgstr ""
 
 msgid "Reserved token allocations"
-msgstr "Зарезервированные распределения токенов"
+msgstr ""
 
 msgid "Reserved tokens"
-msgstr "Зарезервированные токены"
+msgstr ""
 
 msgid "Reserved {0}"
-msgstr "Зарезервировано {0}"
+msgstr ""
 
 msgid "Reserved {tokenSymbolPlural}"
-msgstr "Зарезервировано {tokenSymbolPlural}"
+msgstr ""
 
 msgid "Reserved {tokenTextPlural}: <0>{reservedTokensFormatted} {tokenTextPlural}</0>"
-msgstr "Зарезервировано {tokenTextPlural}: <0>{reservedTokensFormatted} {tokenTextPlural}</0>"
+msgstr ""
 
 msgid "Reserved {tokensText}"
-msgstr "Зарезервировано {tokensText}"
+msgstr ""
 
 msgid "Resources"
-msgstr "Pесурсы"
+msgstr ""
 
 msgid "Restrict payments and printing tokens."
-msgstr "Ограничить платежи и печать токенов."
+msgstr ""
 
 msgid "Restricted actions"
-msgstr "Ограниченные действия"
+msgstr ""
 
 msgid "Review & Deploy"
-msgstr "Обзор & Развертывание"
+msgstr ""
 
 msgid "Review and confirm stake"
 msgstr ""
@@ -1966,7 +1964,7 @@ msgid "Review and launch funding cycle"
 msgstr ""
 
 msgid "Review project"
-msgstr "Просмотр проекта"
+msgstr ""
 
 msgid "Reward contributors with NFT's."
 msgstr ""
@@ -1975,22 +1973,22 @@ msgid "Reward contributors with NFTs when they meet your configured funding crit
 msgstr ""
 
 msgid "Reward specific community members with tokens."
-msgstr "Награждайте определенных членов сообщества токенами."
+msgstr ""
 
 msgid "Rules"
-msgstr "Правила"
+msgstr ""
 
 msgid "Rules for determining how funding cycles can be reconfigured"
-msgstr "Правила определения того, как можно изменить конфигурацию циклов финансирования"
+msgstr ""
 
 msgid "Rules for how changes can be made to your project."
-msgstr "Правила внесения изменений в ваш проект."
+msgstr ""
 
 msgid "Rules for how this project's funding cycles can be reconfigured."
-msgstr "Правила изменения конфигурации циклов финансирования этого проекта."
+msgstr ""
 
 msgid "Save"
-msgstr "Сохранить"
+msgstr ""
 
 msgid "Save NFT reward"
 msgstr ""
@@ -2002,40 +2000,40 @@ msgid "Save Option"
 msgstr ""
 
 msgid "Save changes"
-msgstr "Сохранить изменения"
+msgstr ""
 
 msgid "Save funding configuration"
-msgstr "Сохранить конфигурацию финансирования"
+msgstr ""
 
 msgid "Save handle"
-msgstr "Сохранить имя"
+msgstr ""
 
 msgid "Save payout"
 msgstr ""
 
 msgid "Save payouts"
-msgstr "Сохранить платежи"
+msgstr ""
 
 msgid "Save project details"
-msgstr "Сохранить детали проекта"
+msgstr ""
 
 msgid "Save reconfiguration"
-msgstr "Сохранить перенастройки"
+msgstr ""
 
 msgid "Save rules"
-msgstr "Сохранить правила"
+msgstr ""
 
 msgid "Save token allocation"
-msgstr "Сохранить распределение токена"
+msgstr ""
 
 msgid "Save token configuration"
-msgstr "Сохранить конфигурацию токена"
+msgstr ""
 
 msgid "Save tracked assets"
-msgstr "Сохранить отслеживаемые активы"
+msgstr ""
 
 msgid "Search projects by handle"
-msgstr "Поиск проектов по имени"
+msgstr ""
 
 msgid "Second"
 msgstr ""
@@ -2044,7 +2042,7 @@ msgid "Seconds"
 msgstr ""
 
 msgid "See transaction"
-msgstr "Увидить трансакцию"
+msgstr ""
 
 msgid "Set ENS name"
 msgstr ""
@@ -2056,10 +2054,10 @@ msgid "Set a distribution limit"
 msgstr ""
 
 msgid "Set a funding cycle duration"
-msgstr "Установите продолжительность цикла финансирования"
+msgstr ""
 
 msgid "Set a funding cycle target"
-msgstr "Установите продолжительность цикла финансирования"
+msgstr ""
 
 msgid "Set a project handle (optional)"
 msgstr ""
@@ -2077,10 +2075,10 @@ msgid "Set text record for {0}"
 msgstr ""
 
 msgid "Set the amount of funds you'd like to raise each funding cycle. Any funds raised within the funding cycle target can be distributed by the project, and can't be redeemed by your project's token holders."
-msgstr "Установите количество средств для каждого цикла финансирования. Любые средства, собранные в рамках цикла финансирования, могут быть распределены по проекту и не могут быть использованы владельцами токенов вашего проекта."
+msgstr ""
 
 msgid "Set the length of your funding cycles."
-msgstr "Установите длину циклов финансирования."
+msgstr ""
 
 msgid "Set this to the sum of all your payouts"
 msgstr ""
@@ -2098,10 +2096,10 @@ msgid "Set up your Juicebox V2 project for migration from your Juicebox V1 proje
 msgstr ""
 
 msgid "Should you Juicebox?"
-msgstr "Следует ли вам заниматься Juicebox?"
+msgstr ""
 
 msgid "Since you have not set a funding duration, changes to these settings will be applied immediately."
-msgstr "Поскольку вы не установили срок финансирования, изменения в этих настройках будут применены немедленно."
+msgstr ""
 
 msgid "Some funding cycle settings may put project contributors at risk."
 msgstr ""
@@ -2110,13 +2108,13 @@ msgid "Some of the project's current funding cycle properties may indicate risk 
 msgstr ""
 
 msgid "Something went wrong."
-msgstr "Что-то пошло не так."
+msgstr ""
 
 msgid "Spaces are not allowed"
 msgstr ""
 
 msgid "Spending"
-msgstr "Расходы"
+msgstr ""
 
 msgid "Stake your {tokensLabel} to increase your voting weight and claim Governance NFTs."
 msgstr ""
@@ -2134,10 +2132,10 @@ msgid "Staking Summary:"
 msgstr ""
 
 msgid "Start"
-msgstr "Начать"
+msgstr ""
 
 msgid "Start Over"
-msgstr "Начать заново"
+msgstr ""
 
 msgid "Start over"
 msgstr ""
@@ -2158,10 +2156,10 @@ msgid "Successfully approved ERC-20 spending."
 msgstr ""
 
 msgid "Sum of percentages cannot exceed 100%"
-msgstr "Сумма процентов не может превышать 100%"
+msgstr ""
 
 msgid "Sum of percentages cannot exceed 100%."
-msgstr "Сумма процентов не может превышать 100%."
+msgstr ""
 
 msgid "Swap V1 {tokenSymbolFormattedPlural} for V2 {tokenSymbolFormattedPlural}"
 msgstr ""
@@ -2173,10 +2171,10 @@ msgid "Swap for V2 {tokenText}"
 msgstr ""
 
 msgid "Target"
-msgstr "Цель"
+msgstr ""
 
 msgid "Target is 0: All funds will be considered overflow and can be redeemed by burning project tokens."
-msgstr "Цель - 0: Все средства будут считаться переполненными и могут быть использованы при сжигании токенов."
+msgstr ""
 
 msgid "Terminal configuration"
 msgstr ""
@@ -2188,49 +2186,49 @@ msgid "The <0>issuance rate</0> of your second funding cycle will be <1>{0} toke
 msgstr ""
 
 msgid "The JBX protocol is unaudited, and projects built on it may be vulnerable to bugs or exploits. Be smart!"
-msgstr "Протокол JBX не прошел аудит, и проекты, построенные на нем, могут быть уязвимы для ошибок или эксплойтов. "
+msgstr ""
 
 msgid "The address of any smart contract deployed on {0} that implements <0>this interface</0>."
-msgstr "Адрес любого смарт-контракта, развернутого на {0}, который реализует <0>этот интерфейс</0>."
+msgstr ""
 
 msgid "The address that should receive the tokens minted from paying this project."
-msgstr "Адрес, который должен получить токены, которые не были обменены для оплаты этого проекта."
+msgstr ""
 
 msgid "The amount of tokens minted to the receiver will be calculated based on if they had paid this amount to the project in the current funding cycle."
 msgstr ""
 
 msgid "The amount of tokens this project has reserved. These tokens can be distributed to reserved token beneficiaries."
-msgstr "Количество токенов, зарезервированных данным проектом. Эти токены могут быть распределены среди бенефициаров зарезервированных токенов."
+msgstr ""
 
 msgid "The amount of tokens to mint to the receiver."
-msgstr "Количество токенов для передачи получателю."
+msgstr ""
 
 msgid "The amount that has been distributed from the Juicebox balance in this funding cycle, out of the current distribution limit. No more than the distribution limit can be distributed in a single funding cycle—any remaining ETH in Juicebox is overflow, until the next cycle begins."
-msgstr "Сумма, которая была распределена из баланса Juicebox в этом цикле финансирования, из текущего лимита распределения. За один цикл финансирования может быть распределено не более лимита распределения - все оставшиеся ETH в Juicebox переполняются до начала следующего цикла."
+msgstr ""
 
 msgid "The amount that has been distributed from the Juicebox balance in this funding cycle, out of the current funding target. No more than the funding target can be distributed in a single funding cycle—any remaining ETH in Juicebox is overflow, until the next cycle begins."
-msgstr "Сумма, которая была распределена из баланса Juicebox в этом цикле финансирования, из текущего целевого показателя финансирования. Объем средств не превышает целевого показателя финансирования в рамках одного цикла финансирования: любой оставшийся ETH в Juicebox переполнен, до начала следующего цикла."
+msgstr ""
 
 msgid "The balance of the project owner's wallet."
-msgstr "Баланс кошелька владельца проекта."
+msgstr ""
 
 msgid "The balance of this project in the Juicebox contract."
-msgstr "Баланс этого проекта в контракте Juicebox."
+msgstr ""
 
 msgid "The distribution limit for this funding cycle is 0, meaning all funds in Juicebox are currently considered overflow. Overflow can be redeemed by token holders, but not distributed."
-msgstr "Лимит распределения для этого цикла финансирования равен 0, то есть все средства в Juicebox в настоящее время считаются переполнением. Переполнение может быть выкуплено держателями токенов, но не распределено."
+msgstr ""
 
 msgid "The future will be led by creators, and owned by communities."
-msgstr "Будущее будет возглавляться создателями и принадлежать сообществам."
+msgstr ""
 
 msgid "The maximum amount of funds allowed to be distributed from the project's treasury each funding cycle."
-msgstr "Максимальная сумма средств, которую разрешено распределять из казны проекта в каждом цикле финансирования."
+msgstr ""
 
 msgid "The maximum amount of funds that can be distributed from the treasury each funding cycle."
 msgstr ""
 
 msgid "The maximum amount of funds that can be distributed from this project in one funding cycle. Funds will be withdrawn in ETH no matter the currency you choose."
-msgstr "Максимальная сумма средств, которая может быть распределена из этого проекта за один цикл финансирования. Средства будут выводиться в ETH независимо от выбранной вами валюты."
+msgstr ""
 
 msgid "The number of project tokens minted when 1 ETH is contributed in the first funding cycle."
 msgstr ""
@@ -2254,25 +2252,25 @@ msgid "The project owner is using an unverified contract for its reconfiguration
 msgstr ""
 
 msgid "The project owner may mint any supply of tokens at any time, diluting the token share of all existing contributors."
-msgstr "Владелец проекта может чеканить любое количество токенов в любое время, уменьшая долю токенов всех существующих участников."
+msgstr ""
 
 msgid "The project owner may reconfigure this funding cycle at any time, without notice."
-msgstr "Владелец проекта может изменить конфигурацию этого цикла финансирования в любое время без предварительного уведомления."
+msgstr ""
 
 msgid "The project token's issuance rate will decrease by this percentage every funding cycle. A higher discount rate will incentivize contributors to pay the project earlier."
 msgstr ""
 
 msgid "The ratio of tokens rewarded per payment amount will decrease by this percentage with each new funding cycle. A higher discount rate will incentivize supporters to pay your project earlier than later."
-msgstr "Соотношение вознаграждения токенов на сумму платежа будет уменьшаться на этот процент с каждым новым циклом финансирования. Более высокая учетная ставка будет стимулировать сторонников платить за ваш проект раньше, чем позже."
+msgstr ""
 
 msgid "The redemption rate determines the amount of overflow each token can be redeemed for at any given time. On a lower redemption rate, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than other holders. A redemption rate of 100% means all tokens will have equal value regardless of when they are redeemed."
-msgstr "Коэффициент выкупа определяет количество перелива, за которое каждый токен может быть выкуплен в любой момент времени. При более низкой ставке выкупа, выкуп токена увеличивает стоимость каждого оставшегося токена, создавая стимул держать токены дольше, чем другие держатели. Коэффициент выкупа 100% означает, что все токены будут иметь равную ценность независимо от того, когда они будут выкуплены."
+msgstr ""
 
 msgid "The redemption rate determines the amount of overflow each token can be redeemed for."
 msgstr ""
 
 msgid "The target for this funding cycle is 0, meaning all funds in Juicebox are currently considered overflow. Overflow can be redeemed by token holders, but not distributed."
-msgstr "Целью данного цикла финансирования является 0, то есть все средства в Juicebox в настоящее время считаются переполнением. Переполнение может быть использовано держателями токенов, но не распределено."
+msgstr ""
 
 msgid "The total funds this Juicebox project has received since it was created."
 msgstr ""
@@ -2284,43 +2282,43 @@ msgid "There are no payouts defined for this funding cycle. The project owner wi
 msgstr ""
 
 msgid "There are no reserved token recipients defined for this funding cycle. The project owner will receive all available tokens."
-msgstr "Для данного цикла финансирования не определены резервные получатели токенов. Владелец проекта получит все доступные токены."
+msgstr ""
 
 msgid "These attributes can be changed at any time."
-msgstr "Эти параметры могут быть изменены в любое время."
+msgstr ""
 
 msgid "These settings will <0>not</0> be editable immediately within a funding cycle. They can only be changed for <1>upcoming</1> funding cycles."
-msgstr "Эти настройки <0> не <0> будут доступны для редактирования немедленно в течение цикла финансирования. Они могут быть изменены только для <1> предстоящих <1> циклов финансирования."
+msgstr ""
 
 msgid "This Juicebox V2 project also has a project on Juicebox V1. The project owner is allowing you to swap your V1 tokens for V2 tokens."
 msgstr ""
 
 msgid "This address is an unrecognized strategy contract. Make sure it is correct!"
-msgstr "Этот адрес является непризнанным стратегическим контрактом. Убедитесь, что он правильный!"
+msgstr ""
 
 msgid "This address will receive any tokens minted when the recipient project gets paid."
-msgstr "Этот адрес будет получать все токены, сделанные при оплате проекта получателя."
+msgstr ""
 
 msgid "This address will receive the tokens minted from paying this project."
 msgstr ""
 
 msgid "This funding cycle may pose risks to contributors. Check the funding cycle details before paying this project."
-msgstr "Этот цикл финансирования может представлять риски для вкладчиков. Перед оплатой этого проекта проверьте детали цикла финансирования."
+msgstr ""
 
 msgid "This is the maximum amount of funds that can leave the treasury each funding cycle."
 msgstr ""
 
 msgid "This list is using an experimental data index and may be inaccurate for some projects."
-msgstr "Этот список использует экспериментальный индекс данных и может быть неточным для некоторых проектов."
+msgstr ""
 
 msgid "This project is archived and can't be paid."
 msgstr ""
 
 msgid "This project is currently using the Juicebox V1 terminal contract. New features introduced in V1.1 allow the project owner to:"
-msgstr "Этот проект в настоящее время использует терминальный контракт Juicebox V1. Новые функции, представленные в версии 1.1, позволяют владельцу проекта:"
+msgstr ""
 
 msgid "This project uses the V2 version of the Juicebox contracts."
-msgstr "В этом проекте используется версия V2 контрактов Juicebox."
+msgstr ""
 
 msgid "This project's balance in the Juicebox contract."
 msgstr ""
@@ -2329,13 +2327,13 @@ msgid "This proposed reconfiguration hasn't passed the {0} period. It's not guar
 msgstr ""
 
 msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
-msgstr "Эта ставка определяет количество переполнения, за которое каждый токен может быть выкуплен в любой момент времени. При более низкой кривой связывания выкуп токена увеличивает стоимость каждого оставшегося токена, создавая стимул держать токены дольше, чем другие. Кривая облигаций, равная 100%, означает, что все токены будут иметь одинаковую ценность независимо от того, когда они будут выкуплены."
+msgstr ""
 
 msgid "This will enable your project's veNFT contract to spend unclaimed tokens in addition to project ERC-20 tokens."
 msgstr ""
 
 msgid "This will erase all of your changes."
-msgstr "Это удалит все ваши изменения."
+msgstr ""
 
 msgid "This will reset the data for your new project. All changes will be lost."
 msgstr ""
@@ -2350,13 +2348,13 @@ msgid "To do so, you need to give your V1 token holders the ability to exchange 
 msgstr ""
 
 msgid "To: <0/>"
-msgstr "Кому: <0/>"
+msgstr ""
 
 msgid "Token"
-msgstr "Токен"
+msgstr ""
 
 msgid "Token address: <0/>"
-msgstr "Адрес токена: <0/>"
+msgstr ""
 
 msgid "Token amount"
 msgstr ""
@@ -2374,34 +2372,34 @@ msgid "Token holders of your V1 project tokens will swap their V1 tokens for V2 
 msgstr ""
 
 msgid "Token minting"
-msgstr "Производство токенов"
+msgstr ""
 
 msgid "Token minting allows the project owner to mint project tokens at any time."
-msgstr "Минтинг токенов позволяет владельцу проекта выпускать токены проекта в любое время."
+msgstr ""
 
 msgid "Token minting enabled"
 msgstr ""
 
 msgid "Token minting is only available for V1.1 projects. Token minting can be enabled or disabled by reconfiguring the project's funding cycle."
-msgstr "Создание токенов доступно только для проектов версии 1.1. Возможность создания токенов может быть включена или отключена путем изменения конфигурации цикла финансирования проекта."
+msgstr ""
 
 msgid "Token name"
-msgstr "Название токена"
+msgstr ""
 
 msgid "Token name is required"
 msgstr ""
 
 msgid "Token redeem value"
-msgstr "Стоимость погашения токенов"
+msgstr ""
 
 msgid "Token symbol"
-msgstr "Символ токена"
+msgstr ""
 
 msgid "Token symbol is required"
 msgstr ""
 
 msgid "Tokens"
-msgstr "Жетоны"
+msgstr ""
 
 msgid "Tokens <0>contributors will receive</0> when they contribute 1 ETH."
 msgstr ""
@@ -2410,7 +2408,7 @@ msgid "Tokens <0>reserved for the project</0> when 1 ETH is contributed."
 msgstr ""
 
 msgid "Tokens are earned by anyone who pays your project, and can be redeemed for overflow if your project has set a funding target."
-msgstr "Токены зарабатываются любым, кто оплачивает ваш проект, и могут быть обменены на реальные деньги которые находятся в излишке, если ваш проект установил цель финансирования."
+msgstr ""
 
 msgid "Tokens are required."
 msgstr ""
@@ -2419,31 +2417,31 @@ msgid "Tokens can be minted manually when allowed in the current funding cycle. 
 msgstr ""
 
 msgid "Tokens can be redeemed for a portion of a project's <0>overflow</0>, letting you benefit from its success. After all, you helped it get there. The token may also give you exclusive member-only privledges, and allow you to contribute to the governance of the community."
-msgstr "Жетоны можно обменять на часть <0>переполнения</0> проекта, что позволит вам воспользоваться его успехом. В конце концов, вы помогли ему достичь успеха. Токен также может дать вам эксклюзивные привилегии только-для-членов сообщества и позволить вам внести свой вклад в управление сообществом."
+msgstr ""
 
 msgid "Tokens can be redeemed for a portion of this project's ETH overflow, according to the bonding curve rate of the current funding cycle. <0>Tokens are burned when they are redeemed.</0>"
-msgstr "Токены могут быть выкуплены за часть переполнения ETH данного проекта в соответствии со скоростью ставки кривой связывания текущего цикла финансирования. <0> Токены сгорают, когда их выкупают.</0>"
+msgstr ""
 
 msgid "Tokens can be redeemed for a portion of this project's ETH overflow, according to the redemption rate of the current funding cycle. <0>Tokens are burned when they are redeemed.</0>"
-msgstr "Токены могут быть выкуплены за часть переполненного ETH данного проекта в соответствии со скоростью выкупа в текущем цикле финансирования. <0> Токены сгорают, когда их выкупают.</0>"
+msgstr ""
 
 msgid "Tokens cannot be claimed because no ERC-20 token has been issued for this project. ERC-20 tokens must be issued by the project owner."
-msgstr "Токены не могут быть востребованы, поскольку для этого проекта не выпущен токен ERC-20. Токены ERC-20 должны быть выпущены владельцем проекта."
+msgstr ""
 
 msgid "Tokens receiver"
-msgstr "Получатель токенов"
+msgstr ""
 
 msgid "Tokens:"
-msgstr "Токены:"
+msgstr ""
 
 msgid "Tools"
-msgstr "Инструменты"
+msgstr ""
 
 msgid "Total funds:"
-msgstr "Всего средств:"
+msgstr ""
 
 msgid "Total raised"
-msgstr "Итого собрано"
+msgstr ""
 
 msgid "Total staked period"
 msgstr ""
@@ -2452,46 +2450,46 @@ msgid "Total staked {tokenSymbolDisplayText}"
 msgstr ""
 
 msgid "Total supply"
-msgstr "Общее предложение"
+msgstr ""
 
 msgid "Total: {0}%"
-msgstr "Итого: {0}%"
+msgstr ""
 
 msgid "Transaction failed"
 msgstr ""
 
 msgid "Transaction pending..."
-msgstr "Транзакция ожидается..."
+msgstr ""
 
 msgid "Transaction unsuccessful"
 msgstr ""
 
 msgid "Transfer ownership"
-msgstr "Передача права собственности"
+msgstr ""
 
 msgid "Transfer unclaimed {tokenSymbolShort}"
-msgstr "Передача невостребованного {tokenSymbolShort}"
+msgstr ""
 
 msgid "Transfer {tokenSymbolShort}"
-msgstr "Перевод {tokenSymbolShort}"
+msgstr ""
 
 msgid "Trending"
-msgstr "Тенденции"
+msgstr ""
 
 msgid "Trending projects"
 msgstr ""
 
 msgid "Twitter"
-msgstr "Твиттер"
+msgstr ""
 
 msgid "Twitter handle"
 msgstr ""
 
 msgid "Unarchive project"
-msgstr "Разархивировать проект"
+msgstr ""
 
 msgid "Unavailable"
-msgstr "Недоступно"
+msgstr ""
 
 msgid "Unknown Project"
 msgstr ""
@@ -2512,31 +2510,31 @@ msgid "Unlocking this staking position will burn your NFT and return ${tokenSymb
 msgstr ""
 
 msgid "Unsaved changes"
-msgstr "Несохраненные изменения"
+msgstr ""
 
 msgid "Untitled project"
-msgstr "Безымянный проект"
+msgstr ""
 
 msgid "Untrack token"
 msgstr ""
 
 msgid "Upcoming"
-msgstr "Предстоящие"
+msgstr ""
 
 msgid "Update your veNFT's lock duration."
 msgstr ""
 
 msgid "Updates you make to this section will only be applied to <0>upcoming</0> funding cycles."
-msgstr "Обновления, внесенные вами в этот раздел, будут применяться только к <0>предстоящим</0> циклам финансирования."
+msgstr ""
 
 msgid "Upload"
-msgstr "загрузить"
+msgstr ""
 
 msgid "Upload an image"
 msgstr ""
 
 msgid "Uploaded to: <0>{url}</0>"
-msgstr "Загружено : <0>{url}</0>"
+msgstr ""
 
 msgid "Uploaded to: <0>{value}</0>"
 msgstr ""
@@ -2548,13 +2546,13 @@ msgid "Use <0>Percentages</0> when you want to configure an <1>infinite distribu
 msgstr ""
 
 msgid "Using a duration is recommended. Allowing funding cycles to be reconfigured at any time will appear risky to contributors."
-msgstr "Рекомендуется использовать продолжительность. Предоставление возможности изменения конфигурации циклов финансирования в любое время покажется вкладчикам рискованным."
+msgstr ""
 
 msgid "Using a reconfiguration strategy is recommended. Projects with no strategy will appear risky to contributors."
-msgstr "Рекомендуется использовать стратегию реконфигурации. Проекты без стратегии покажутся участникам рискованными."
+msgstr ""
 
 msgid "V1"
-msgstr "V1"
+msgstr ""
 
 msgid "V1 token holders can swap their tokens for your V2 tokens on your V2 project's <0>Tokens</0> section."
 msgstr ""
@@ -2566,19 +2564,19 @@ msgid "V1 tokens to swap"
 msgstr ""
 
 msgid "V1.1"
-msgstr "V1.1"
+msgstr ""
 
 msgid "V2"
 msgstr ""
 
 msgid "Version of the terminal contract used by this project."
-msgstr "Версия терминального контракта, используемая в этом проекте."
+msgstr ""
 
 msgid "View token ranges"
 msgstr ""
 
 msgid "Volume"
-msgstr "Объём"
+msgstr ""
 
 msgid "VotePWR"
 msgstr ""
@@ -2587,37 +2585,37 @@ msgid "WAGMI!"
 msgstr ""
 
 msgid "Wallet address"
-msgstr "Адрес кошелька"
+msgstr ""
 
 msgid "Website"
-msgstr "Веб-сайт"
+msgstr ""
 
 msgid "What are automated funding cycles?"
 msgstr ""
 
 msgid "What are community tokens?"
-msgstr "Что такое токены сообщества?"
+msgstr ""
 
 msgid "What are the risks?"
-msgstr "Какие риски?"
+msgstr ""
 
 msgid "What does Juicebox cost?"
-msgstr "Сколько стоит Juicebox?"
+msgstr ""
 
 msgid "What is overflow?"
-msgstr "Что такое переполнение или излишек финансов?"
+msgstr ""
 
 msgid "What is the V1 Token Payment Terminal?"
 msgstr ""
 
 msgid "What's a bonding curve?"
-msgstr "Что такое кривая связи?"
+msgstr ""
 
 msgid "What's a discount rate?"
-msgstr "Что такое дисконтная ставка?"
+msgstr ""
 
 msgid "What's going on under the hood?"
-msgstr "Что творится под капотом?"
+msgstr ""
 
 msgid "When a payment address is paid, its <0>beneficiary</0> address will receive any minted project tokens."
 msgstr ""
@@ -2629,55 +2627,55 @@ msgid "When distributing, payouts to Ethereum addresses incur a 2.5% JBX members
 msgstr ""
 
 msgid "When enabled, the project owner can manually mint any amount of tokens to any address."
-msgstr "Если эта функция включена, владелец проекта может вручную минтить любое количество токенов на любой адрес."
+msgstr ""
 
 msgid "When enabled, the project owner can set the project's payment terminals."
 msgstr ""
 
 msgid "When enabled, your project cannot receive direct payments."
-msgstr "Если эта функция включена, ваш проект не сможет получать прямые платежи."
+msgstr ""
 
 msgid "When someone pays your project, they'll receive your project's tokens in return. Tokens can be redeemed for a portion of your project's overflow funds; when you win, your community wins with you. Leverage your project's token to grant governance rights, community access, or other membership perks."
-msgstr "Когда кто-то платит вашему проекту, он получает взамен токены вашего проекта. Токены могут быть обменены на часть средств вашего проекта; когда вы выигрываете, ваше сообщество выигрывает вместе с вами. Используйте токены вашего проекта для предоставления прав управления, доступа к сообществу или других привилегий для участников."
+msgstr ""
 
 msgid "When token minting is allowed, the owner of this project has permission to mint any number of tokens to any address at their discretion. This has the effect of diluting all current token holders, without increasing the project's treasury balance. The project owner can reconfigure this along with all other properties of the funding cycle."
-msgstr "Когда допускается обработка токенов, владелец этого проекта имеет разрешение на удаление любого количества токенов на любой адрес по своему усмотрению. Это влечет за собой размытие всех текущих владельцев токенов без увеличения казначейского баланса проекта. Владелец проекта может перенастроить это вместе со всеми остальными свойствами цикла финансирования."
+msgstr ""
 
 msgid "Whenever someone pays your project, this percentage of the newly minted tokens will be reserved and the rest will go to the payer. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner. Once tokens are reserved, anyone can \"mint\" them, which distributes them to their intended receivers."
 msgstr ""
 
 msgid "Who funds Juicebox projects?"
-msgstr "Кто финансирует проекты Juicebox?"
+msgstr ""
 
 msgid "Who is Peel?"
-msgstr "Кто такой Peel?"
+msgstr ""
 
 msgid "Why Ethereum?"
-msgstr "Почему Эфириум/Ethereum?"
+msgstr ""
 
 msgid "Why should I want to own a project's tokens?"
-msgstr "Почему я должен владеть токенами проекта?"
+msgstr ""
 
 msgid "Will be rounded to <0/>{0}"
 msgstr ""
 
 msgid "Will it work on L2s?"
-msgstr "Будет ли работать на L2?"
+msgstr ""
 
 msgid "With Juicebox, projects are built and maintained by motivated punks getting paid transparently, and funded by a community of users and patrons who are rewarded as the projects they support succeed."
-msgstr "С помощью Juicebox проекты создаются и поддерживаются мотивированными панками, получающими оплату и финансируемыми сообществом пользователей и покровителей, которые получают вознаграждение по мере успеха проектов, которые они поддерживают."
+msgstr ""
 
 msgid "With no funding cycles, the project's owner can start a new funding cycle (Funding Cycle #2) on-demand. <0>Learn more.</0>"
 msgstr ""
 
 msgid "Workspace"
-msgstr "Рабочее пространство"
+msgstr ""
 
 msgid "Would you like to issue an ERC-20 token to be used as this project's token?"
-msgstr "Хотите ли вы выпустить токен ERC-20, который будет использоваться в качестве токена этого проекта?"
+msgstr ""
 
 msgid "Yes"
-msgstr "Да"
+msgstr ""
 
 msgid "You are agreeing to IRREVOCABLY lock your tokens for {formattedLockDuration} in exchange for {votingPower} $ve{tokenSymbolDisplayText}"
 msgstr ""
@@ -2686,22 +2684,22 @@ msgid "You can edit your project details after creation at any time, but the tra
 msgstr ""
 
 msgid "You can redeem your {tokenTextLong} for overflow without claiming them. You can transfer your unclaimed {tokenTextLong} to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
-msgstr "Вы можете выкупить свои {tokenTextLong} для переполнения, не заявляя о них. Вы можете перевести невостребованный {tokenTextLong} на другой адрес из меню Инструменты, доступ к которому можно получить с помощью значка гаечного ключа в правом верхнем углу этого проекта."
+msgstr ""
 
 msgid "You can still redeem your {tokenSymbol} tokens for overflow without claiming them, and you can transfer your unclaimed {tokenSymbol} tokens to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
-msgstr "Вы по-прежнему можете выкупить свои {tokenSymbol} токены для переполнения, не требуя их, и вы можете перевести свои невостребованные {tokenSymbol} токены на другой адрес из меню «Инструменты», доступ к которому можно получить с помощью значка гаечного ключа в правом верхнем углу этого проекта."
+msgstr ""
 
 msgid "You collection's symbol will apply to the whole collection of reward tiers on NFT marketplaces (like OpenSea)."
 msgstr ""
 
 msgid "You don't have a funding cycle duration. Changes you make will take effect immediately."
-msgstr "У вас нет продолжительности цикла финансирования. Внесенные вами изменения вступят в силу немедленно."
+msgstr ""
 
 msgid "You don't have enough tokens to stake."
 msgstr ""
 
 msgid "You don't hold tokens for any Juicebox project."
-msgstr "Вы не владеете токенами ни для одного проекта Juicebox."
+msgstr ""
 
 msgid "You don't own any veNFTs!"
 msgstr ""
@@ -2716,13 +2714,13 @@ msgid "You have exceeded the total token supply of <0>{0}</0>"
 msgstr ""
 
 msgid "You have set a funding cycle target."
-msgstr "Вы установили цель цикла финансирования."
+msgstr ""
 
 msgid "You have unsaved changes. Are you sure you want to discard them?"
 msgstr ""
 
 msgid "You haven't created any projects yet."
-msgstr "Вы еще не создали ни одного проекта."
+msgstr ""
 
 msgid "You must grant permission to swap your tokens."
 msgstr ""
@@ -2743,10 +2741,10 @@ msgid "You will receive at least {minReturnedTokensFormatted} ETH"
 msgstr ""
 
 msgid "You will receive {0}{1} ETH"
-msgstr "Вы получите {0}{1} ETH"
+msgstr ""
 
 msgid "You will receive {minReturnedTokensFormatted} ETH"
-msgstr "Вы получите {minReturnedTokensFormatted} ETH"
+msgstr ""
 
 msgid "You would receive at least {minReturnedTokensFormatted} ETH"
 msgstr ""
@@ -2755,7 +2753,7 @@ msgid "You would receive {minReturnedTokensFormatted} ETH"
 msgstr ""
 
 msgid "You'll be able to issue ERC-20 tokens once your project contract has been deployed. Until then, the protocol will track token balances, allowing your supporters to earn tokens and redeem for overflow in the meantime."
-msgstr "Вы сможете выпускать ERC-20 токены после того, как ваш контракт по проекту будет установлен. До тех пор протокол будет отслеживать балансы токенов, позволяя вашим сторонникам заработать токены и использовать их для переполнения."
+msgstr ""
 
 msgid "You're all set!"
 msgstr ""
@@ -2776,7 +2774,7 @@ msgid "Your V1 {tokenSymbolFormatted} balance"
 msgstr ""
 
 msgid "Your balance"
-msgstr "Ваш баланс"
+msgstr ""
 
 msgid "Your collection's name will apply to the whole collection of reward tiers on NFT marketplaces (like OpenSea)."
 msgstr ""
@@ -2785,34 +2783,34 @@ msgid "Your funding cycle configuration has been pre-populated using the configu
 msgstr ""
 
 msgid "Your new payable address:"
-msgstr "Ваш новый адрес для оплаты:"
+msgstr ""
 
 msgid "Your project can still receive payments directly through the Juicebox protocol contracts."
 msgstr ""
 
 msgid "Your project cannot receive direct payments while paused."
-msgstr "Ваш проект не может получать прямые платежи в то время как он приостановлен."
+msgstr ""
 
 msgid "Your project is funded across funding cycles. A funding cycle has a funding target and a duration. Your project's funding cycle configuration will depend on the kind of project you're starting."
-msgstr "Ваш проект финансируется через циклы финансирования. Цикл финансирования имеет цель финансирования и продолжительность. Конфигурация цикла финансирования вашего проекта будет зависеть от типа проекта, который вы начинаете."
+msgstr ""
 
 msgid "Your project will appear archived, and won't be able to receive payments through the juicebox.money app. You can unarchive a project at any time. Allow a few days for your project to appear under the \"archived\" filter on the Projects page."
 msgstr ""
 
 msgid "Your project will immediately appear active on the juicebox.money app. Please allow a few days for it to appear in the \"active\" projects list on the Projects page."
-msgstr "Ваш проект сразу станет активным в приложении juicebox.money. Пожалуйста, дайте несколько дней, чтобы он появился в списке \"активных\" проектов на странице Проекты."
+msgstr ""
 
 msgid "Your project's funding cycle target and duration."
-msgstr "Цель и продолжительность цикла финансирования вашего проекта."
+msgstr ""
 
 msgid "Your transaction has been submitted and is awaiting confirmation."
-msgstr "Ваша транзакция была отправлена и ожидает подтверждения."
+msgstr ""
 
 msgid "Your unclaimed token balance: {0}"
 msgstr ""
 
 msgid "Your unclaimed {tokenTextLong}"
-msgstr "Ваш невостребованный {tokenTextLong}"
+msgstr ""
 
 msgid "Your voting power"
 msgstr ""
@@ -2821,7 +2819,7 @@ msgid "Zero"
 msgstr ""
 
 msgid "after {0}% JBX fee"
-msgstr "после  {0}% комиссии JBX"
+msgstr ""
 
 msgid "called by <0/>"
 msgstr ""
@@ -2830,61 +2828,61 @@ msgid "day"
 msgstr ""
 
 msgid "days"
-msgstr "дней"
+msgstr ""
 
 msgid "handle"
-msgstr "никнейм"
+msgstr ""
 
 msgid "hours"
-msgstr "часы"
+msgstr ""
 
 msgid "juiceboxETH"
-msgstr "juiceboxETH"
+msgstr ""
 
 msgid "last {trendingWindowDays} days"
-msgstr "последние {trendingWindowDays} дней"
+msgstr ""
 
 msgid "loading"
-msgstr "загрузка"
+msgstr ""
 
 msgid "locked until {lockedUntilFormatted}"
-msgstr "заблокировано до {lockedUntilFormatted}"
+msgstr ""
 
 msgid "matching \"{searchText}\""
-msgstr "соответствие с\"{searchText}\""
+msgstr ""
 
 msgid "minutes"
-msgstr "минуты"
+msgstr ""
 
 msgid "or <0><1>buy {tokenText} on exchange<2/></1></0>"
-msgstr "или <0><1>купить {tokenText} на бирже <2/></1></0>"
+msgstr ""
 
 msgid "project"
-msgstr "проект"
+msgstr ""
 
 msgid "project owner"
-msgstr "владелец проекта"
+msgstr ""
 
 msgid "projects"
-msgstr "проекты"
+msgstr ""
 
 msgid "seconds"
-msgstr "секунды"
+msgstr ""
 
 msgid "token"
-msgstr "токен"
+msgstr ""
 
 msgid "tokens"
-msgstr "токены"
+msgstr ""
 
 msgid "tokens per ETH contributed"
 msgstr ""
 
 msgid "tokens redeemed"
-msgstr "погашенных токенов"
+msgstr ""
 
 msgid "until"
-msgstr "до"
+msgstr ""
 
 msgid "veNFT"
 msgstr ""
@@ -2899,49 +2897,49 @@ msgid "{0, plural, one {# payment address} other {# payment addresses}}"
 msgstr ""
 
 msgid "{0} after JBX fee"
-msgstr "{0} после комиссии JBX"
+msgstr ""
 
 msgid "{0} ago"
-msgstr "{0} лет назад"
+msgstr ""
 
 msgid "{0} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
-msgstr "{0} распределяются среди всех, кто платит этому проекту. Если проект установил цель финансирования, токены могут быть выкуплены за часть переполнения проекта независимо от того, были ли они еще востребованы."
+msgstr ""
 
 msgid "{0} balance"
-msgstr "{0} баланс"
+msgstr ""
 
 msgid "{0} balance: <0><1>{1} {tokensTextShort}</1><2>({share}% of supply)</2></0>"
-msgstr "{0} баланс: <0><1>{1} {tokensTextShort}</1><2>({share}% от предложения)</2></0>"
+msgstr ""
 
 msgid "{0} contributed"
-msgstr "{0} внесли вклад"
+msgstr ""
 
 msgid "{0} days"
-msgstr "{0} дней"
+msgstr ""
 
 msgid "{0} for you"
-msgstr "{0} для вас"
+msgstr ""
 
 msgid "{0} holders"
-msgstr "{0} держатели"
+msgstr ""
 
 msgid "{0} reserved"
-msgstr "{0} зарезервировано"
+msgstr ""
 
 msgid "{0} tokens/ETH"
 msgstr ""
 
 msgid "{0} total"
-msgstr "{0} всего"
+msgstr ""
 
 msgid "{0} unclaimed"
 msgstr ""
 
 msgid "{0} will go to the project owner: <0/>"
-msgstr "{0} будет перенаправлен владельцу проекта: <0/>"
+msgstr ""
 
 msgid "{0} withdrawn"
-msgstr "{0} снято"
+msgstr ""
 
 msgid "{0} {tokenTextPlural} reserved"
 msgstr ""
@@ -2953,31 +2951,31 @@ msgid "{0}% of all newly minted tokens."
 msgstr ""
 
 msgid "{0}% of supply"
-msgstr "{0}% от поставки"
+msgstr ""
 
 msgid "{0}% to <0/>"
-msgstr "{0}% до <0/>"
+msgstr ""
 
 msgid "{0}% to {1}"
-msgstr "{0}% к {1}"
+msgstr ""
 
 msgid "{0}/{1} withdrawn"
-msgstr "{0}{1} снято"
+msgstr ""
 
 msgid "{0}{1}"
-msgstr "{0}{1}"
+msgstr ""
 
 msgid "{count} total"
-msgstr "Итого {количество}"
+msgstr ""
 
 msgid "{exchangeName} has no market for {tokenSymbol}."
-msgstr "{exchangeName} не имеет пула ликвидности для {tokenSymbol}."
+msgstr ""
 
 msgid "{formattedTimeLeft} left"
-msgstr "{formattedTimeLeft} осталось"
+msgstr ""
 
 msgid "{formattedTimeLeft} until #{0}"
-msgstr "{formattedTimeLeft} до #{0}"
+msgstr ""
 
 msgid "{inflationRate} tokens / ETH"
 msgstr ""
@@ -2986,7 +2984,7 @@ msgid "{issuanceRate} tokens / ETH"
 msgstr ""
 
 msgid "{label}"
-msgstr "{название}"
+msgstr ""
 
 msgid "{lockDurationOptionInDays} {lockDurationOptionInDays, plural, one {{0}} other {{1}}}"
 msgstr ""
@@ -2998,13 +2996,13 @@ msgid "{minTokensAllowedToStake, plural, one {You must stake at least # token.} 
 msgstr ""
 
 msgid "{payerRate} (+ {reservedRate} reserved) {tokenSymbolPlural}/ETH"
-msgstr "{payerRate} (+ {reservedRate} зарезервировано) {tokenSymbolPlural}/ETH"
+msgstr ""
 
 msgid "{payerRate} {tokenSymbolPlural}/ETH"
-msgstr "{payerRate} {tokenSymbolPlural}/ETH"
+msgstr ""
 
 msgid "{paymentCount, plural, one {# payment} other {# payments}}"
-msgstr "{paymentCount, plural, one {# платеж} other {# платежи}}"
+msgstr ""
 
 msgid "{reservedRate} {tokenSymbolPlural}/ETH ({0}%)"
 msgstr ""
@@ -3019,22 +3017,22 @@ msgid "{tokenSymbolPluralCap} received per ETH paid to the treasury. This can ch
 msgstr ""
 
 msgid "{tokenSymbol} ERC-20 address"
-msgstr "{tokenSymbol} ERC20 адрес"
+msgstr ""
 
 msgid "{tokenSymbol}/ETH exchange rate on {exchangeName}."
-msgstr "Обменный курс {tokenSymbol}/ETH на {exchangeName}."
+msgstr ""
 
 msgid "{tokenTextSingular} recipients"
-msgstr "{tokenTextSingular} получатели"
+msgstr ""
 
 msgid "{tokensLabel} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
-msgstr "{tokensLabel} распространяются среди всех, кто оплачивает этот проект. Если проектустановил целевой показатель финансирования, токены могут быть выкуплены для частипереполнения проекта независимо от того, были ли они еще востребованы или нет."
+msgstr ""
 
 msgid "{tokensText} reserved"
-msgstr "{tokensText} зарезервировано"
+msgstr ""
 
 msgid "{tokensTokenUpper} amount"
-msgstr "{tokensTokenUpper} количество"
+msgstr ""
 
 msgid "{totalStakedPeriodInDays, plural, one {{0}} other {{1}}}"
 msgstr ""
@@ -3046,5 +3044,5 @@ msgid "{unstakedTokens} {tokenSymbolDisplayText} remaining"
 msgstr ""
 
 msgid "{userOwnershipPercentage}% of total supply"
-msgstr "{userOwnershipPercentage}% от общего объема предложения"
+msgstr ""
 

@@ -1819,8 +1819,14 @@ msgstr ""
 msgid "Range"
 msgstr ""
 
+<<<<<<< HEAD
 msgid "Rankings based on number of contributions and volume gained in the last {trendingWindow} days. <0>See code</0>"
 msgstr "Classements basés sur le nombre de contributions et le volume gagné au cours des derniers {trendingWindow} jours. <0>Voir le code</0>"
+=======
+#: src/pages/projects/RankingExplanation.tsx
+msgid "Rankings based on number of contributions and volume gained in the last {trendingWindowDays} days. <0>See code</0>"
+msgstr ""
+>>>>>>> 0768174c0 (i18n)
 
 msgid "Read less"
 msgstr ""

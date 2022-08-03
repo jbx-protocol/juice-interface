@@ -59,7 +59,7 @@ export const VolumeStatLine = ({
           >
             <ETHAmount
               amount={totalVolume ?? BigNumber.from(0)}
-              precision={4}
+              precision={2}
             />
           </span>
         </span>

@@ -21,3 +21,6 @@ export const CURRENCY_METADATA: Record<CurrencyName, CurrencyMetadata> = {
     symbol: 'US$',
   },
 }
+
+export const PRECISION_USD = 2
+export const PRECISION_ETH = 4

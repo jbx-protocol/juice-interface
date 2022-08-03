@@ -1,7 +1,8 @@
 import { t, Trans } from '@lingui/macro'
-import { Button, Space } from 'antd'
+import { Button, Empty, Form, Input, Space } from 'antd'
 import NftRewardTierModal from 'components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal'
 import { ThemeContext } from 'contexts/themeContext'
+import { PlusCircleOutlined } from '@ant-design/icons'
 
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
@@ -38,25 +39,40 @@ export default function NftDrawer({
     theme: { colors },
   } = useContext(ThemeContext)
   const dispatch = useAppDispatch()
-  const { nftRewardTiers } = useAppSelector(state => state.editingV2Project)
+  const {
+    nftRewards: {
+      rewardTiers: savedRewardTiers,
+      collectionName: savedCollectionName,
+      collectionSymbol: savedCollectionSymbol,
+    },
+  } = useAppSelector(state => state.editingV2Project)
 
   const [addTierModalVisible, setAddTierModalVisible] = useState<boolean>(false)
   const [submitLoading, setSubmitLoading] = useState<boolean>(false)
 
   const [rewardTiers, setRewardTiers] = useState<NftRewardTier[]>(
-    nftRewardTiers ?? [],
+    savedRewardTiers ?? [],
+  )
+
+  const [collectionName, setCollectionName] = useState<string | undefined>(
+    savedCollectionName,
+  )
+  const [collectionSymbol, setCollectionSymbol] = useState<string | undefined>(
+    savedCollectionSymbol,
   )
 
   const onNftFormSaved = useCallback(async () => {
     setSubmitLoading(true)
     // Calls cloud function to store NftRewards to IPFS
     const CIDs = await uploadNftRewardsToIPFS(rewardTiers)
+    dispatch(editingV2ProjectActions.setNftRewardsName(collectionName))
+    dispatch(editingV2ProjectActions.setNftRewardsSymbol(collectionSymbol))
     dispatch(editingV2ProjectActions.setNftRewardTiers(rewardTiers))
     // Store cid (link to nfts on IPFS) to be used later in the deploy tx
     dispatch(editingV2ProjectActions.setNftRewardsCIDs(CIDs))
     setSubmitLoading(false)
     onClose?.()
-  }, [rewardTiers, dispatch, onClose])
+  }, [rewardTiers, dispatch, onClose, collectionSymbol, collectionName])
 
   const handleAddRewardTier = (newRewardTier: NftRewardTier) => {
     setRewardTiers(sortNftRewardTiers([...rewardTiers, newRewardTier]))
@@ -103,6 +119,32 @@ export default function NftDrawer({
           }}
         >
           <p>{NFT_REWARDS_EXPLAINATION}</p>
+          <Form layout="vertical">
+            <Form.Item
+              requiredMark="optional"
+              label={t`Collection name`}
+              tooltip={t`Your collection's name will apply to the whole collection of reward tiers on NFT marketplaces (like OpenSea).`}
+            >
+              <Input
+                type="string"
+                value={collectionName}
+                autoComplete="off"
+                onChange={e => setCollectionName(e.target.value)}
+              />
+            </Form.Item>
+            <Form.Item
+              requiredMark="optional"
+              label={t`Collection symbol`}
+              tooltip={t`You collection's symbol will apply to the whole collection of reward tiers on NFT marketplaces (like OpenSea).`}
+            >
+              <Input
+                type="string"
+                value={collectionSymbol}
+                autoComplete="off"
+                onChange={e => setCollectionSymbol(e.target.value)}
+              />
+            </Form.Item>
+          </Form>
           <Space direction="vertical" size="large" style={{ width: '100%' }}>
             {rewardTiers.map((rewardTier, index) => (
               <NftRewardTierCard
@@ -115,6 +157,15 @@ export default function NftDrawer({
               />
             ))}
           </Space>
+
+          {rewardTiers?.length === 0 && (
+            <Empty
+              description={t`No NFT reward tiers`}
+              image={Empty.PRESENTED_IMAGE_SIMPLE}
+              style={{ marginBottom: 0 }}
+            />
+          )}
+
           <Button
             type="dashed"
             onClick={() => {
@@ -123,8 +174,11 @@ export default function NftDrawer({
             style={{ marginTop: 15 }}
             disabled={rewardTiers.length >= MAX_NFT_REWARD_TIERS}
             block
+            icon={<PlusCircleOutlined />}
           >
-            <Trans>Add reward tier</Trans>
+            <span>
+              <Trans>Add reward tier</Trans>
+            </span>
           </Button>
         </div>
         <Button

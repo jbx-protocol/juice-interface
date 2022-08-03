@@ -20,15 +20,18 @@ export const rowGutter: [Gutter, Gutter] = [40, 30]
 
 export default function ReviewDeployTab() {
   const {
+    nftRewards: { rewardTiers },
+  } = useAppSelector(state => state.editingV2Project)
+
+  const {
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const { nftRewardTiers } = useAppSelector(state => state.editingV2Project)
   const isMobile = useMobile()
 
   const [form] = Form.useForm<{ termsOfServiceCheckbox: boolean }>()
 
-  const hasNfts = Boolean(nftRewardTiers?.length)
+  const hasNfts = Boolean(rewardTiers?.length)
 
   return (
     <div style={isMobile ? { padding: '0 1rem' } : {}}>

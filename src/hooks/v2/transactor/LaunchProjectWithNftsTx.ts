@@ -29,12 +29,14 @@ const DEFAULT_MEMO = ''
 export type TxNftArg = { [cid: string]: number }
 
 function getJBDeployTieredNFTRewardDataSourceData({
-  projectName,
+  collectionName,
+  collectionSymbol,
   nftRewards,
   ownerAddress,
   directory,
 }: {
-  projectName: string
+  collectionName: string
+  collectionSymbol: string
   nftRewards: { [cid: string]: number }
   ownerAddress: string
   directory: string
@@ -53,8 +55,8 @@ function getJBDeployTieredNFTRewardDataSourceData({
 
   return {
     directory,
-    name: projectName,
-    symbol: 'NFT',
+    name: collectionName,
+    symbol: collectionSymbol,
     tokenUriResolver: constants.AddressZero,
     contractUri: 'ipfs://null',
     owner: ownerAddress,
@@ -65,7 +67,8 @@ function getJBDeployTieredNFTRewardDataSourceData({
 }
 
 export function useLaunchProjectWithNftsTx(): TransactorInstance<{
-  projectName: string
+  collectionName: string
+  collectionSymbol: string
   projectMetadataCID: string
   fundingCycleData: V2FundingCycleData
   fundingCycleMetadata: V2FundingCycleMetadata
@@ -79,7 +82,8 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<{
 
   return (
     {
-      projectName,
+      collectionName,
+      collectionSymbol,
       projectMetadataCID,
       fundingCycleData,
       fundingCycleMetadata,
@@ -104,7 +108,8 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<{
     const args = [
       userAddress, // _owner
       getJBDeployTieredNFTRewardDataSourceData({
-        projectName,
+        collectionName,
+        collectionSymbol,
         nftRewards,
         ownerAddress: userAddress,
         directory: getAddress(contracts.JBDirectory.address),

@@ -1,46 +1,129 @@
+import { AppWrapper, SEO } from 'components/common'
 import FeedbackFormButton from 'components/FeedbackFormButton'
-import ScrollToTopButton from 'components/ScrollToTopButton'
+import NewDeployNotAvailable from 'components/NewDeployNotAvailable'
+import Project404 from 'components/Project404'
+import { findProjectMetadata } from 'utils/server'
 
 import {
   V1ProjectContext,
   V1ProjectContextType,
 } from 'contexts/v1/projectContext'
-import { useProjectMetadata } from 'hooks/ProjectMetadata'
+import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useProjectsQuery } from 'hooks/Projects'
+import useSymbolOfERC20 from 'hooks/SymbolOfERC20'
 import useBalanceOfProject from 'hooks/v1/contractReader/BalanceOfProject'
 import useCurrentFundingCycleOfProject from 'hooks/v1/contractReader/CurrentFundingCycleOfProject'
 import useCurrentPayoutModsOfProject from 'hooks/v1/contractReader/CurrentPayoutModsOfProject'
 import useCurrentTicketModsOfProject from 'hooks/v1/contractReader/CurrentTicketModsOfProject'
 import useOverflowOfProject from 'hooks/v1/contractReader/OverflowOfProject'
+import useOwnerOfProject from 'hooks/v1/contractReader/OwnerOfProject'
 import useProjectIdForHandle from 'hooks/v1/contractReader/ProjectIdForHandle'
 import useQueuedFundingCycleOfProject from 'hooks/v1/contractReader/QueuedFundingCycleOfProject'
 import useQueuedPayoutModsOfProject from 'hooks/v1/contractReader/QueuedPayoutModsOfProject'
 import useQueuedTicketModsOfProject from 'hooks/v1/contractReader/QueuedTicketModsOfProject'
-import useSymbolOfERC20 from 'hooks/SymbolOfERC20'
 import useTerminalOfProject from 'hooks/v1/contractReader/TerminalOfProject'
 import useTokenAddressOfProject from 'hooks/v1/contractReader/TokenAddressOfProject'
-import useUriOfProject from 'hooks/v1/contractReader/UriOfProject'
-import { useCurrencyConverter } from 'hooks/CurrencyConverter'
+import { ProjectMetadataV4 } from 'models/project-metadata'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
-import { useMemo } from 'react'
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { useRouter } from 'next/router'
-import { getTerminalName, getTerminalVersion } from 'utils/v1/terminals'
 import { V1CurrencyProvider } from 'providers/v1/V1CurrencyProvider'
+import { useMemo } from 'react'
+import { ipfsCidUrl } from 'utils/ipfs'
 import { V1CurrencyName } from 'utils/v1/currency'
-import NewDeployNotAvailable from 'components/NewDeployNotAvailable'
-import Project404 from 'components/Project404'
-import { usePageTitle } from 'hooks/PageTitle'
+import ScrollToTopButton from 'components/ScrollToTopButton'
 
-import useOwnerOfProject from 'hooks/v1/contractReader/OwnerOfProject'
-
-import { layouts } from 'constants/styles/layouts'
-import { projectTypes } from 'constants/v1/projectTypes'
-import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
+import { getTerminalName, getTerminalVersion } from 'utils/v1/terminals'
+import { paginateDepleteProjectsQueryCall } from 'utils/apollo'
 
 import Loading from '../../components/Loading'
 import V1Project from '../../components/v1/V1Project'
 
-export default function V1Dashboard() {
+import { projectTypes } from 'constants/v1/projectTypes'
+import { layouts } from 'constants/styles/layouts'
+import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  if (process.env.BUILD_CACHE_V1_PROJECTS === 'true') {
+    const projects = await paginateDepleteProjectsQueryCall({
+      variables: {
+        where: { cv_in: ['1', '1.1'] },
+      },
+    })
+    const paths = projects
+      .map(({ handle }) =>
+        handle
+          ? {
+              params: { handle },
+            }
+          : undefined,
+      )
+      .filter((i): i is { params: { handle: string } } => !!i)
+    return { paths, fallback: true }
+  }
+
+  return { paths: [{ params: { handle: 'juicebox' } }], fallback: true }
+}
+
+export const getStaticProps: GetStaticProps<{
+  metadata: ProjectMetadataV4
+  handle: string
+}> = async context => {
+  if (!context.params) throw new Error('params not supplied')
+  const handle = context.params.handle as string
+  const projects = await paginateDepleteProjectsQueryCall({
+    variables: {
+      where: { cv_in: ['1', '1.1'], handle },
+      first: 1,
+    },
+  })
+  if (!projects[0]?.metadataUri) {
+    throw new Error(`Failed to load metadata uri for ${context.params}`)
+  }
+
+  const url = ipfsCidUrl(projects[0].metadataUri)
+  try {
+    const metadata = await findProjectMetadata({ url })
+    return { props: { metadata, handle } }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (e: any) {
+    if (e?.response?.status === 404 || e?.response?.status === 400) {
+      return { notFound: true }
+    }
+    throw e
+  }
+}
+
+export default function V1HandlePage({
+  metadata,
+  handle,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
+  // Checks URL to see if user was just directed from project deploy
+  return (
+    <>
+      {metadata ? (
+        <SEO
+          title={metadata.name}
+          url={`${process.env.NEXT_PUBLIC_BASE_URL}p/${handle}`}
+          description={metadata.description}
+          twitter={{
+            card: 'summary',
+            creator: metadata.twitter,
+            handle: metadata.twitter,
+            image: metadata.logoUri,
+            site: metadata.twitter,
+          }}
+        />
+      ) : null}
+      <AppWrapper>
+        {metadata ? <V1Dashboard metadata={metadata} /> : <Loading />}
+      </AppWrapper>
+    </>
+  )
+}
+
+function V1Dashboard({ metadata }: { metadata: ProjectMetadataV4 }) {
   const router = useRouter()
 
   // Checks URL to see if user was just directed from project deploy
@@ -90,12 +173,6 @@ export default function V1Dashboard() {
     [balance, converter, currentFC],
   )
   const overflow = useOverflowOfProject(projectId, terminalName)
-  const uri = useUriOfProject(projectId)
-  const { data: metadata } = useProjectMetadata(uri)
-
-  usePageTitle({
-    title: metadata?.name ? `${metadata.name} | Juicebox` : undefined,
-  })
 
   const { data: projects } = useProjectsQuery({
     projectId: projectId?.toNumber(),

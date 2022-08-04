@@ -11,7 +11,6 @@ import { V1UserProvider } from 'providers/v1/UserProvider'
 import React, { useContext, useEffect, useState } from 'react'
 import { Provider } from 'react-redux'
 import { ThemeProvider } from 'providers/ThemeProvider'
-import { NetworkProvider } from 'providers/NetworkProvider'
 import store from 'redux/store'
 import { redirectTo } from 'utils/windowUtils'
 
@@ -32,12 +31,10 @@ export const AppWrapper: React.FC = ({ children }) => {
         <Provider store={store}>
           <LanguageProvider>
             <ThemeProvider>
-              <NetworkProvider>
-                {/* TODO: Remove v1 provider */}
-                <V1UserProvider>
-                  <_Wrapper>{children}</_Wrapper>
-                </V1UserProvider>
-              </NetworkProvider>
+              {/* TODO: Remove v1 provider */}
+              <V1UserProvider>
+                <_Wrapper>{children}</_Wrapper>
+              </V1UserProvider>
             </ThemeProvider>
           </LanguageProvider>
         </Provider>

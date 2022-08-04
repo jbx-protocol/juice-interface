@@ -18,6 +18,7 @@ import {
 } from 'utils/v2/fundingCycle'
 
 import Sticker from 'components/icons/Sticker'
+import TooltipIcon from 'components/TooltipIcon'
 
 import { ProjectPreferences } from 'constants/v2/projectPreferences'
 import { StickerSelection } from './StickerSelection'
@@ -61,13 +62,31 @@ export const V2PayForm = ({
     <>
       <Form form={form} layout="vertical" {...props}>
         <Space direction="vertical" size="large">
-          <MinimalCollapse
-            header={
-              <h3 style={{ margin: 0 }}>
-                <Trans>Customize payment</Trans>
-              </h3>
-            }
-          >
+          {hasIssuedTokens && (
+            <Form.Item
+              name="preferClaimedTokens"
+              valuePropName="checked"
+              style={{ margin: 0 }}
+              extra={
+                <Trans>Mint this project's ERC-20 tokens to your wallet.</Trans>
+              }
+            >
+              <Checkbox>
+                <Trans>Receive ERC-20 tokens</Trans>{' '}
+                <TooltipIcon
+                  tip={
+                    <Trans>
+                      Leave unchecked to have Juicebox track your token balance,
+                      saving gas on this transaction. You can claim your ERC-20
+                      tokens later.
+                    </Trans>
+                  }
+                ></TooltipIcon>
+              </Checkbox>
+            </Form.Item>
+          )}
+
+          <MinimalCollapse header={<Trans>Payment options</Trans>}>
             <Form.Item
               label={t`Memo (optional)`}
               className={'antd-no-number-handler'}
@@ -152,25 +171,6 @@ export const V2PayForm = ({
                 </Form.Item>
               )}
             </Form.Item>
-
-            {hasIssuedTokens && (
-              <Form.Item
-                name="preferClaimedTokens"
-                valuePropName="checked"
-                extra={
-                  <Trans>
-                    Mint this project's ERC-20 tokens to your wallet. Leave
-                    unchecked to have Juicebox track your token balance, saving
-                    gas on this transaction. You can claim your ERC-20 tokens
-                    later.
-                  </Trans>
-                }
-              >
-                <Checkbox>
-                  <Trans>Receive ERC-20</Trans>
-                </Checkbox>
-              </Form.Item>
-            )}
           </MinimalCollapse>
 
           {projectMetadata && (

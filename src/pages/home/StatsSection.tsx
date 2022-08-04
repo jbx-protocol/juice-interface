@@ -69,7 +69,7 @@ export function StatsSection() {
         loading={isLoading}
       />
       <Stat
-        value={<ETHAmount amount={stats?.volumePaid} />}
+        value={<ETHAmount amount={stats?.volumePaid} precision={0} />}
         label={<Trans>Raised on Juicebox</Trans>}
         loading={isLoading}
       />

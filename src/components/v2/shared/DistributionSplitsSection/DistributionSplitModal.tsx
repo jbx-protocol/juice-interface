@@ -48,7 +48,7 @@ type AddOrEditSplitFormFields = {
 }
 
 type SplitType = 'project' | 'address'
-type DistributionType = 'amount' | 'percent'
+type DistributionType = 'amount' | 'percent' | 'both'
 
 // Using both state and a form in this modal. I know it seems over the top,
 // but the state is necessary to link the percent and amount fields, and the form
@@ -99,7 +99,7 @@ export default function DistributionSplitModal({
 
   const [editingSplitType, setEditingSplitType] = useState<SplitType>('address')
   const [distributionType, setDistributionType] = useState<DistributionType>(
-    distributionLimitIsInfinite ? 'percent' : 'amount',
+    distributionLimitIsInfinite ? 'percent' : 'both',
   )
   const [projectId, setProjectId] = useState<string | undefined>()
   const [newDistributionLimit, setNewDistributionLimit] = useState<string>()
@@ -133,7 +133,7 @@ export default function DistributionSplitModal({
       setDistributionType('percent')
       return
     }
-    setDistributionType(distributionLimitIsInfinite ? 'percent' : 'amount')
+    setDistributionType(distributionLimitIsInfinite ? 'percent' : 'both')
   }, [distributionLimitIsInfinite, overrideDistTypeWithPercentage, visible])
 
   // Set the initial info for form from split
@@ -252,14 +252,12 @@ export default function DistributionSplitModal({
 
     const newPercent = getDistributionPercentFromAmount({
       amount: newAmount,
-      distributionLimit: newDistributionLimit,
+      distributionLimit: parseFloat(distributionLimit ?? ''),
     })
 
     setNewDistributionLimit(newDistributionLimit.toString())
-    setAmount(newAmount)
-    form.setFieldsValue({
-      percent: preciseFormatSplitPercent(newPercent),
-    })
+
+    form.setFieldsValue({ percent: preciseFormatSplitPercent(newPercent) })
   }
 
   // Validates new payout receiving address
@@ -408,7 +406,7 @@ export default function DistributionSplitModal({
         ) : null}
 
         {/* Only show amount input if project distribution limit is not infinite */}
-        {distributionLimit && distributionType === 'amount' ? (
+        {!distributionLimitIsInfinite && distributionType === 'both' ? (
           <Form.Item
             className="ant-form-item-extra-only"
             label={t`Distribution`}
@@ -479,32 +477,39 @@ export default function DistributionSplitModal({
               </div>
             </div>
           </Form.Item>
-        ) : (
-          <Form.Item>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-              }}
-            >
-              <span style={{ flex: 1 }}>
-                <NumberSlider
-                  onChange={(percentage: number | undefined) => {
-                    form.setFieldsValue({ percent: percentage })
-                  }}
-                  step={0.01}
-                  defaultValue={0}
-                  sliderValue={form.getFieldValue('percent') ?? 0}
-                  suffix="%"
-                  name="percent"
-                  formItemProps={{
-                    rules: [{ validator: validatePayoutPercentage }],
-                  }}
-                />
-              </span>
-            </div>
-          </Form.Item>
-        )}
+        ) : null}
+        <Form.Item label="Percent">
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            <span style={{ flex: 1 }}>
+              <NumberSlider
+                onChange={(percentage: number | undefined) => {
+                  if (!percentage) return
+
+                  const newAmount = amountFromPercent({
+                    percent: percentage,
+                    amount: distributionLimit || '',
+                  })
+
+                  form.setFieldsValue({ percent: percentage })
+                  setAmount(newAmount)
+                }}
+                step={0.01}
+                defaultValue={0}
+                sliderValue={form.getFieldValue('percent')}
+                suffix="%"
+                name="percent"
+                formItemProps={{
+                  rules: [{ validator: validatePayoutPercentage }],
+                }}
+              />
+            </span>
+          </div>
+        </Form.Item>
         <Form.Item
           name="lockedUntil"
           label={t`Lock until`}

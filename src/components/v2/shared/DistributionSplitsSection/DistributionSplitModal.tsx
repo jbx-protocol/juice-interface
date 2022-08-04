@@ -406,7 +406,7 @@ export default function DistributionSplitModal({
         ) : null}
 
         {/* Only show amount input if project distribution limit is not infinite */}
-        {!distributionLimitIsInfinite && distributionType === 'both' ? (
+        {distributionLimit && distributionType === 'both' ? (
           <Form.Item
             className="ant-form-item-extra-only"
             label={t`Distribution`}
@@ -490,13 +490,16 @@ export default function DistributionSplitModal({
                 onChange={(percentage: number | undefined) => {
                   if (!percentage) return
 
-                  const newAmount = amountFromPercent({
-                    percent: percentage,
-                    amount: distributionLimit || '',
-                  })
+                  // Only trigger amount logic if we distribution limit exists since Percentage input is available in both cases
+                  if (distributionLimit) {
+                    const newAmount = amountFromPercent({
+                      percent: percentage,
+                      amount: distributionLimit || '',
+                    })
+                    setAmount(newAmount)
+                  }
 
                   form.setFieldsValue({ percent: percentage })
-                  setAmount(newAmount)
                 }}
                 step={0.01}
                 defaultValue={0}

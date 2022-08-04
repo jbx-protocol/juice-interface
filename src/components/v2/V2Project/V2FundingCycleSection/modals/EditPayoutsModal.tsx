@@ -226,7 +226,6 @@ export const EditPayoutsModal = ({
       return (
         <DistributionSplitCard
           key={split.beneficiary ?? index}
-          editInputMode="Percentage" // Required for edit payouts
           split={split}
           splits={editingSplits}
           distributionLimit={

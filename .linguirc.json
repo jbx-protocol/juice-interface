@@ -11,5 +11,9 @@
     "origins": false
   },
   "orderBy": "messageId",
-  "locales": ["zh", "ru", "tr", "es", "pt", "fr"]
+  "fallbackLocales": {
+    "default": "en"
+  },
+  "locales": ["en", "zh", "ru", "tr", "es", "pt", "fr"],
+  "sourceLocale": "en"
 }

@@ -85,7 +85,7 @@ export default function Payments() {
                 }}
               >
                 <span style={{ fontSize: '1rem', fontWeight: 500 }}>
-                  <ETHAmount amount={e.amount} precision={4} />
+                  <ETHAmount amount={e.amount} precision={2} />
                 </span>
                 <span>
                   <FormattedAddress address={e.beneficiary} />

@@ -14,11 +14,11 @@ import useTotalBalanceOf from 'hooks/v2/contractReader/TotalBalanceOf'
 import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { formatRedemptionRate } from 'utils/v2/math'
-import CurrencySymbol from 'components/CurrencySymbol'
 import { useETHReceivedFromTokens } from 'hooks/v2/contractReader/ETHReceivedFromTokens'
 import { V2_CURRENCY_USD } from 'utils/v2/currency'
 import { useRedeemTokensTx } from 'hooks/v2/transactor/RedeemTokensTx'
 import TransactionModal from 'components/TransactionModal'
+import ETHAmount from 'components/currency/ETHAmount'
 
 const statsStyle: CSSProperties = {
   display: 'flex',
@@ -177,7 +177,7 @@ export default function V2RedeemModal({
               </span>
             </Trans>
           </p>
-          <p style={statsStyle}>
+          <div style={statsStyle}>
             <Trans>
               {tokenSymbolText({ tokenSymbol: tokenSymbol, capitalize: true })}{' '}
               balance:{' '}
@@ -204,13 +204,12 @@ export default function V2RedeemModal({
                 </div>
               </div>
             </Trans>
-          </p>
+          </div>
           <p style={statsStyle}>
             <Trans>
               Currently worth:{' '}
               <span>
-                <CurrencySymbol currency="ETH" />
-                {formatWad(maxClaimable, { precision: 4 })}
+                <ETHAmount amount={maxClaimable} />
               </span>
             </Trans>
           </p>

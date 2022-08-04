@@ -7,6 +7,7 @@ import { betweenZeroAndOne } from 'utils/bigNumbers'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 
 import CurrencySymbol from '../CurrencySymbol'
+import { PRECISION_USD } from 'constants/currency'
 
 /**
  * Render a given amount formatted as USD. Displays ETH amount in a tooltip on hover.
@@ -27,7 +28,7 @@ export default function USDAmount({
     (BigNumber.isBigNumber(amount) && betweenZeroAndOne(amount)) ||
     betweenZeroAndOne(parseWad(amount))
 
-  const precisionAdjusted = isBetweenZeroAndOne ? 2 : precision
+  const precisionAdjusted = isBetweenZeroAndOne ? PRECISION_USD : precision
 
   const formattedUSDAmount = formatWad(amount, {
     precision: precisionAdjusted ?? 0,

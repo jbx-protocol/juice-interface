@@ -2189,6 +2189,9 @@ msgstr ""
 msgid "Text record is set"
 msgstr ""
 
+msgid "The <0>Juicebox contracts</0> may be vulnerable to bugs or hacks. All funds moved through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable for any losses by projects or their supporters."
+msgstr ""
+
 msgid "The <0>issuance rate</0> of your second funding cycle will be <1>{0} tokens per 1 ETH</1>, then <2>{1} tokens per 1 ETH </2>for your third funding cycle, and so on."
 msgstr ""
 
@@ -2280,9 +2283,6 @@ msgid "The target for this funding cycle is 0, meaning all funds in Juicebox are
 msgstr ""
 
 msgid "The total funds this Juicebox project has received since it was created."
-msgstr ""
-
-msgid "The<0>Juicebox contracts</0> may be vulnerable to bugs or hacks. All funds moved through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable for any losses by projects or their supporters."
 msgstr ""
 
 msgid "There are no payouts defined for this funding cycle. The project owner will receive all available funds."

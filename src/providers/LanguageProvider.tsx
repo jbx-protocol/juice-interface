@@ -8,7 +8,6 @@ import {
 import { I18nProvider } from '@lingui/react'
 import { ReactNode, useEffect } from 'react'
 import { en, zh, ru, tr, es, pt, fr } from 'make-plural/plurals'
-import defaultLocale from 'locales/en/messages'
 
 import { SUPPORTED_LOCALES, DEFAULT_LOCALE } from 'constants/locale'
 
@@ -36,8 +35,10 @@ const getLocale = (): string => {
 }
 
 const activateDefaultLocale = () => {
-  const { messages } = defaultLocale
-  i18n.load(DEFAULT_LOCALE, messages)
+  // Load an empty object for English messages.
+  // English doesn't need to be translated (it's already in english),
+  // so we can display the text as-is.
+  i18n.load(DEFAULT_LOCALE, {})
   i18n.activate(DEFAULT_LOCALE)
 }
 

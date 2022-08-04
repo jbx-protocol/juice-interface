@@ -1,25 +1,23 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2022-01-15 13:53+1000\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Generator: @lingui/cli\n"
-"Language: zh\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-07-26 03:23\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2022-08-04 04:13\n"
 "Last-Translator: \n"
+"Language: zh_CN\n"
 "Language-Team: Chinese Simplified\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Crowdin-Project: juicebox-interface\n"
 "X-Crowdin-Project-ID: 492549\n"
 "X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: messages.po\n"
-"X-Crowdin-File-ID: 9\n"
+"X-Crowdin-File: messages.pot\n"
+"X-Crowdin-File-ID: 2852\n"
 
 msgid "$ve{tokenSymbolDisplayText} Received"
-msgstr ""
+msgstr "$ve{tokenSymbolDisplayText} received"
 
 msgid "({0}%)"
 msgstr "({0}%)"
@@ -214,7 +212,7 @@ msgid "<0>{tokenSymbol} ERC-20 address:</0> <1/>"
 msgstr "<0>{tokenSymbol} ERC-20 地址：</0><1/>"
 
 msgid "@"
-msgstr "@"
+msgstr ""
 
 msgid "@{handle}"
 msgstr ""
@@ -835,7 +833,7 @@ msgid "Disconnect"
 msgstr "断开连接"
 
 msgid "Discord"
-msgstr "Discord"
+msgstr ""
 
 msgid "Discord link"
 msgstr ""
@@ -1189,7 +1187,7 @@ msgid "ID"
 msgstr "标识"
 
 msgid "ID: {projectId}"
-msgstr "ID: {projectId}"
+msgstr ""
 
 msgid "If locked, this can't be edited or removed until the lock expires or the funding cycle is reconfigured."
 msgstr "如果锁定了，这一项就不能编辑或删除，除非锁定失效或重新配置筹款周期。"
@@ -1669,7 +1667,7 @@ msgid "Payouts to Ethereum addresses incur a {feePercentage}% fee. Your project 
 msgstr "项目支出分配到其他以太地址需缴纳一个 {feePercentage}% 的费用。支付费用后，你的项目将按当前的发行比率收到 JBX 代币。"
 
 msgid "Peel"
-msgstr "Peel"
+msgstr ""
 
 msgid "Percent"
 msgstr "百分比"
@@ -2503,7 +2501,7 @@ msgid "Trending projects"
 msgstr ""
 
 msgid "Twitter"
-msgstr "Twitter"
+msgstr ""
 
 msgid "Twitter handle"
 msgstr "推特名"
@@ -2575,7 +2573,7 @@ msgid "Using a reconfiguration strategy is recommended. Projects with no strateg
 msgstr "推荐设置一个修改配置的策略（延迟生效）。对于贡献者来说，没有策略的项目是具有风险的。"
 
 msgid "V1"
-msgstr "V1"
+msgstr ""
 
 msgid "V1 token holders can swap their tokens for your V2 tokens on your V2 project's <0>Tokens</0> section."
 msgstr ""
@@ -2587,10 +2585,10 @@ msgid "V1 tokens to swap"
 msgstr ""
 
 msgid "V1.1"
-msgstr "V1.1"
+msgstr ""
 
 msgid "V2"
-msgstr "V2"
+msgstr ""
 
 msgid "Version of the terminal contract used by this project."
 msgstr "当前项目所使用的 Terminal 版本。"
@@ -2863,7 +2861,7 @@ msgid "hours"
 msgstr "小时"
 
 msgid "juiceboxETH"
-msgstr "juiceboxETH"
+msgstr ""
 
 msgid "last {trendingWindowDays} days"
 msgstr "最近 {trendingWindowDays} 天"
@@ -2983,7 +2981,7 @@ msgid "{0}/{1} withdrawn"
 msgstr "已提取 {0}/{1}"
 
 msgid "{0}{1}"
-msgstr "{0}{1}"
+msgstr ""
 
 msgid "{count} total"
 msgstr "总共 {count}"
@@ -3004,7 +3002,7 @@ msgid "{issuanceRate} tokens / ETH"
 msgstr "{issuanceRate} 个代币 / ETH"
 
 msgid "{label}"
-msgstr "{label}"
+msgstr ""
 
 msgid "{lockDurationOptionInDays} {lockDurationOptionInDays, plural, one {{0}} other {{1}}}"
 msgstr ""
@@ -3019,13 +3017,13 @@ msgid "{payerRate} (+ {reservedRate} reserved) {tokenSymbolPlural}/ETH"
 msgstr "{payerRate} (+ {reservedRate} 保留) {tokenSymbolPlural}/ETH"
 
 msgid "{payerRate} {tokenSymbolPlural}/ETH"
-msgstr "{payerRate} {tokenSymbolPlural}/ETH"
+msgstr ""
 
 msgid "{paymentCount, plural, one {# payment} other {# payments}}"
 msgstr "{paymentCount, plural, one {# 笔付款} other {# 笔付款}}"
 
 msgid "{reservedRate} {tokenSymbolPlural}/ETH ({0}%)"
-msgstr "{reservedRate} {tokenSymbolPlural}/ETH ({0}%)"
+msgstr ""
 
 msgid "{tokenSymbolDisplayText} range"
 msgstr ""

@@ -1,28 +1,26 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2022-01-15 13:53+1000\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Generator: @lingui/cli\n"
-"Language: es\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-07-26 03:23\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2022-08-04 04:13\n"
 "Last-Translator: \n"
+"Language: es_ES\n"
 "Language-Team: Spanish\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Crowdin-Project: juicebox-interface\n"
 "X-Crowdin-Project-ID: 492549\n"
 "X-Crowdin-Language: es-ES\n"
-"X-Crowdin-File: messages.po\n"
-"X-Crowdin-File-ID: 9\n"
+"X-Crowdin-File: messages.pot\n"
+"X-Crowdin-File-ID: 2852\n"
 
 msgid "$ve{tokenSymbolDisplayText} Received"
 msgstr ""
 
 msgid "({0}%)"
-msgstr "({0}%)"
+msgstr ""
 
 msgid "({realTokenAllocationPercent}% of all newly minted tokens)."
 msgstr "({realTokenAllocationPercent}% de todos los tokens recién acuñados)."
@@ -214,7 +212,7 @@ msgid "<0>{tokenSymbol} ERC-20 address:</0> <1/>"
 msgstr "<0>{tokenSymbol} dirección de ERC-20:</0><1/>"
 
 msgid "@"
-msgstr "@"
+msgstr ""
 
 msgid "@{handle}"
 msgstr ""
@@ -469,7 +467,7 @@ msgid "Block number"
 msgstr "Número de bloque"
 
 msgid "Blog"
-msgstr "Blog"
+msgstr ""
 
 msgid "Built for:"
 msgstr "Construido para:"
@@ -835,7 +833,7 @@ msgid "Disconnect"
 msgstr "Desconectar"
 
 msgid "Discord"
-msgstr "Discord"
+msgstr ""
 
 msgid "Discord link"
 msgstr "Enlace a Discord"
@@ -1105,7 +1103,7 @@ msgid "Funds will be distributed to:"
 msgstr "Los fondos serán distribuidos a:"
 
 msgid "General"
-msgstr "General"
+msgstr ""
 
 msgid "Give feedback"
 msgstr "Da retroalimentación"
@@ -1132,7 +1130,7 @@ msgid "History"
 msgstr "Historial"
 
 msgid "Holders"
-msgstr "Holders"
+msgstr ""
 
 msgid "Holdings"
 msgstr "Tenencias"
@@ -1186,10 +1184,10 @@ msgid "I understand"
 msgstr "Entiendo"
 
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 msgid "ID: {projectId}"
-msgstr "ID: {projectId}"
+msgstr ""
 
 msgid "If locked, this can't be edited or removed until the lock expires or the funding cycle is reconfigured."
 msgstr "Si está bloqueado, esto no se puede editar o remover hasta que el bloqueo caduque o el ciclo de financiamiento sea reconfigurado."
@@ -1366,7 +1364,7 @@ msgid "Locked:"
 msgstr "Bloqueado:"
 
 msgid "Logo"
-msgstr "Logo"
+msgstr ""
 
 msgid "MAX"
 msgstr "MÁXIMO"
@@ -1384,7 +1382,7 @@ msgid "Maximum {MAX_DESCRIPTION_LENGTH} characters"
 msgstr "Máximo {MAX_DESCRIPTION_LENGTH} caracteres"
 
 msgid "Memo"
-msgstr "Memo"
+msgstr ""
 
 msgid "Memo (optional)"
 msgstr "Memo (opcional)"
@@ -1471,7 +1469,7 @@ msgid "Next: Review and deploy"
 msgstr "Siguiente: Revisar y desplegar"
 
 msgid "No"
-msgstr "No"
+msgstr ""
 
 msgid "No NFT reward tiers"
 msgstr ""
@@ -1669,7 +1667,7 @@ msgid "Payouts to Ethereum addresses incur a {feePercentage}% fee. Your project 
 msgstr "Pagos a direcciones Ethereum incurren en un {feePercentage}% de cuota. Tu proyecto recibirá JBX de regreso acorde a la tasa de emisión actual."
 
 msgid "Peel"
-msgstr "Peel"
+msgstr ""
 
 msgid "Percent"
 msgstr "Porcentaje"
@@ -1687,7 +1685,7 @@ msgid "Percentages must add up to 100% or less"
 msgstr "Los porcentajes deben sumar 100% o menos"
 
 msgid "Podcast"
-msgstr "Podcast"
+msgstr ""
 
 msgid "Potential risks"
 msgstr "Riesgos potenciales"
@@ -2368,7 +2366,7 @@ msgid "To: <0/>"
 msgstr "Para: <0/>"
 
 msgid "Token"
-msgstr "Token"
+msgstr ""
 
 msgid "Token address: <0/>"
 msgstr "Dirección del token: <0/>"
@@ -2416,7 +2414,7 @@ msgid "Token symbol is required"
 msgstr "Se requiere el símbolo del Token"
 
 msgid "Tokens"
-msgstr "Tokens"
+msgstr ""
 
 msgid "Tokens <0>contributors will receive</0> when they contribute 1 ETH."
 msgstr "Los tokens que <0>los contribuyentes recibirán</0> cuando contribuyan 1 ETH."
@@ -2455,7 +2453,7 @@ msgid "Tokens reserved"
 msgstr ""
 
 msgid "Tokens:"
-msgstr "Tokens:"
+msgstr ""
 
 msgid "Tools"
 msgstr "Herramientas"
@@ -2476,7 +2474,7 @@ msgid "Total supply"
 msgstr "Suministro total"
 
 msgid "Total: {0}%"
-msgstr "Total: {0}%"
+msgstr ""
 
 msgid "Transaction failed"
 msgstr "La transacción falló"
@@ -2503,7 +2501,7 @@ msgid "Trending projects"
 msgstr ""
 
 msgid "Twitter"
-msgstr "Twitter"
+msgstr ""
 
 msgid "Twitter handle"
 msgstr "Identificador de Twitter"
@@ -2575,7 +2573,7 @@ msgid "Using a reconfiguration strategy is recommended. Projects with no strateg
 msgstr "Se recomienda usar una estrategia de reconfiguración. Los proyectos sin estrategia les parecerán arriesgados a los colaboradores."
 
 msgid "V1"
-msgstr "V1"
+msgstr ""
 
 msgid "V1 token holders can swap their tokens for your V2 tokens on your V2 project's <0>Tokens</0> section."
 msgstr ""
@@ -2587,10 +2585,10 @@ msgid "V1 tokens to swap"
 msgstr ""
 
 msgid "V1.1"
-msgstr "V1.1"
+msgstr ""
 
 msgid "V2"
-msgstr "V2"
+msgstr ""
 
 msgid "Version of the terminal contract used by this project."
 msgstr "Versión del contrato terminal usado por este proyecto."
@@ -2605,7 +2603,7 @@ msgid "VotePWR"
 msgstr ""
 
 msgid "WAGMI!"
-msgstr "WAGMI!"
+msgstr ""
 
 msgid "Wallet address"
 msgstr "Dirección de billetera virtual"
@@ -2863,7 +2861,7 @@ msgid "hours"
 msgstr "horas"
 
 msgid "juiceboxETH"
-msgstr "juiceboxETH"
+msgstr ""
 
 msgid "last {trendingWindowDays} days"
 msgstr "últimos {trendingWindowDays} días"
@@ -2896,10 +2894,10 @@ msgid "seconds"
 msgstr "segundos"
 
 msgid "token"
-msgstr "token"
+msgstr ""
 
 msgid "tokens"
-msgstr "tokens"
+msgstr ""
 
 msgid "tokens per ETH contributed"
 msgstr "tokens por cada ETH contribuido"
@@ -2944,13 +2942,13 @@ msgid "{0} for you"
 msgstr "{0} para ti"
 
 msgid "{0} holders"
-msgstr "{0} holders"
+msgstr ""
 
 msgid "{0} reserved"
 msgstr "{0} reservados"
 
 msgid "{0} tokens/ETH"
-msgstr "{0} tokens/ETH"
+msgstr ""
 
 msgid "{0} total"
 msgstr "{0} en total"
@@ -2965,7 +2963,7 @@ msgid "{0} {tokenTextPlural} reserved"
 msgstr "{0} {tokenTextPlural} reservados"
 
 msgid "{0}%"
-msgstr "{0}%"
+msgstr ""
 
 msgid "{0}% of all newly minted tokens."
 msgstr "{0}% de todos los tokens recién acuñados."
@@ -2983,10 +2981,10 @@ msgid "{0}/{1} withdrawn"
 msgstr "{0}/{1} retirado"
 
 msgid "{0}{1}"
-msgstr "{0}{1}"
+msgstr ""
 
 msgid "{count} total"
-msgstr "{count} total"
+msgstr ""
 
 msgid "{exchangeName} has no market for {tokenSymbol}."
 msgstr "{exchangeName} no tiene mercado para el token {tokenSymbol}."
@@ -2998,13 +2996,13 @@ msgid "{formattedTimeLeft} until #{0}"
 msgstr "{formattedTimeLeft} hasta #{0}"
 
 msgid "{inflationRate} tokens / ETH"
-msgstr "{inflationRate} tokens / ETH"
+msgstr ""
 
 msgid "{issuanceRate} tokens / ETH"
-msgstr "{issuanceRate} tokens / ETH"
+msgstr ""
 
 msgid "{label}"
-msgstr "{label}"
+msgstr ""
 
 msgid "{lockDurationOptionInDays} {lockDurationOptionInDays, plural, one {{0}} other {{1}}}"
 msgstr ""
@@ -3019,13 +3017,13 @@ msgid "{payerRate} (+ {reservedRate} reserved) {tokenSymbolPlural}/ETH"
 msgstr "{payerRate} (+ {reservedRate} reservada) {tokenSymbolPlural}/ETH"
 
 msgid "{payerRate} {tokenSymbolPlural}/ETH"
-msgstr "{payerRate} {tokenSymbolPlural}/ETH"
+msgstr ""
 
 msgid "{paymentCount, plural, one {# payment} other {# payments}}"
 msgstr "{paymentCount, plural, one {# pago} other {# pagos}}"
 
 msgid "{reservedRate} {tokenSymbolPlural}/ETH ({0}%)"
-msgstr "{reservedRate} {tokenSymbolPlural}/ETH ({0}%)"
+msgstr ""
 
 msgid "{tokenSymbolDisplayText} range"
 msgstr ""

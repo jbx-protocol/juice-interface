@@ -1,22 +1,20 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2022-01-15 13:53+1000\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Generator: @lingui/cli\n"
-"Language: tr\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-07-26 03:23\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2022-08-04 04:13\n"
 "Last-Translator: \n"
+"Language: tr_TR\n"
 "Language-Team: Turkish\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Crowdin-Project: juicebox-interface\n"
 "X-Crowdin-Project-ID: 492549\n"
 "X-Crowdin-Language: tr\n"
-"X-Crowdin-File: messages.po\n"
-"X-Crowdin-File-ID: 9\n"
+"X-Crowdin-File: messages.pot\n"
+"X-Crowdin-File-ID: 2852\n"
 
 msgid "$ve{tokenSymbolDisplayText} Received"
 msgstr ""
@@ -214,7 +212,7 @@ msgid "<0>{tokenSymbol} ERC-20 address:</0> <1/>"
 msgstr "<0>{tokenSymbol} ERC-20 adresi:</0> <1/>"
 
 msgid "@"
-msgstr "@"
+msgstr ""
 
 msgid "@{handle}"
 msgstr ""
@@ -469,7 +467,7 @@ msgid "Block number"
 msgstr "Blok numarası"
 
 msgid "Blog"
-msgstr "Blog"
+msgstr ""
 
 msgid "Built for:"
 msgstr "Şunlar için üretildi:"
@@ -835,7 +833,7 @@ msgid "Disconnect"
 msgstr "Bağlantıyı kes"
 
 msgid "Discord"
-msgstr "Discord"
+msgstr ""
 
 msgid "Discord link"
 msgstr ""
@@ -1366,7 +1364,7 @@ msgid "Locked:"
 msgstr "Kilitlendi:"
 
 msgid "Logo"
-msgstr "Logo"
+msgstr ""
 
 msgid "MAX"
 msgstr "MAKS"
@@ -1669,7 +1667,7 @@ msgid "Payouts to Ethereum addresses incur a {feePercentage}% fee. Your project 
 msgstr "Ethereum adreslerine yapılan ödemeler için %{feePercentage} ücret alınır. Bunun karşılığında projeniz, mevcut token çıkarma oranında JBX alacaktır."
 
 msgid "Peel"
-msgstr "Peel"
+msgstr ""
 
 msgid "Percent"
 msgstr "Yüzde"
@@ -1687,7 +1685,7 @@ msgid "Percentages must add up to 100% or less"
 msgstr "Yüzdelerin toplamı %100 veya daha az olmalıdır"
 
 msgid "Podcast"
-msgstr "Podcast"
+msgstr ""
 
 msgid "Potential risks"
 msgstr "Potansiyel riskler"
@@ -2368,7 +2366,7 @@ msgid "To: <0/>"
 msgstr "Kime: <0/>"
 
 msgid "Token"
-msgstr "Token"
+msgstr ""
 
 msgid "Token address: <0/>"
 msgstr "Token adresi: <0/>"
@@ -2503,7 +2501,7 @@ msgid "Trending projects"
 msgstr ""
 
 msgid "Twitter"
-msgstr "Twitter"
+msgstr ""
 
 msgid "Twitter handle"
 msgstr "Twitter tanıtıcısı"
@@ -2575,7 +2573,7 @@ msgid "Using a reconfiguration strategy is recommended. Projects with no strateg
 msgstr "Yeniden yapılandırma stratejisi kullanılması önerilir. Stratejisi olmayan projeler, katkıda bulunanlar açısından riskli görünecektir."
 
 msgid "V1"
-msgstr "V1"
+msgstr ""
 
 msgid "V1 token holders can swap their tokens for your V2 tokens on your V2 project's <0>Tokens</0> section."
 msgstr ""
@@ -2587,10 +2585,10 @@ msgid "V1 tokens to swap"
 msgstr ""
 
 msgid "V1.1"
-msgstr "V1.1"
+msgstr ""
 
 msgid "V2"
-msgstr "V2"
+msgstr ""
 
 msgid "Version of the terminal contract used by this project."
 msgstr "Bu proje tarafından kullanılan terminal sözleşmesinin sürümü."
@@ -2605,7 +2603,7 @@ msgid "VotePWR"
 msgstr ""
 
 msgid "WAGMI!"
-msgstr "WAGMI!"
+msgstr ""
 
 msgid "Wallet address"
 msgstr "Cüzdan adresi"
@@ -2863,7 +2861,7 @@ msgid "hours"
 msgstr "saat"
 
 msgid "juiceboxETH"
-msgstr "juiceboxETH"
+msgstr ""
 
 msgid "last {trendingWindowDays} days"
 msgstr "son {trendingWindowDays} gün"
@@ -2896,7 +2894,7 @@ msgid "seconds"
 msgstr "saniye"
 
 msgid "token"
-msgstr "token"
+msgstr ""
 
 msgid "tokens"
 msgstr "token'lar"
@@ -2983,7 +2981,7 @@ msgid "{0}/{1} withdrawn"
 msgstr "{0}/{1} çekildi"
 
 msgid "{0}{1}"
-msgstr "{0}{1}"
+msgstr ""
 
 msgid "{count} total"
 msgstr "toplam {count}"
@@ -3004,7 +3002,7 @@ msgid "{issuanceRate} tokens / ETH"
 msgstr "{issuanceRate} token / ETH"
 
 msgid "{label}"
-msgstr "{label}"
+msgstr ""
 
 msgid "{lockDurationOptionInDays} {lockDurationOptionInDays, plural, one {{0}} other {{1}}}"
 msgstr ""
@@ -3019,7 +3017,7 @@ msgid "{payerRate} (+ {reservedRate} reserved) {tokenSymbolPlural}/ETH"
 msgstr "{payerRate} (+ {reservedRate} rezerve) {tokenSymbolPlural}/ETH"
 
 msgid "{payerRate} {tokenSymbolPlural}/ETH"
-msgstr "{payerRate} {tokenSymbolPlural}/ETH"
+msgstr ""
 
 msgid "{paymentCount, plural, one {# payment} other {# payments}}"
 msgstr "{paymentCount, plural, one {# ödeme} other {# ödeme}}"

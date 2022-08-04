@@ -478,7 +478,7 @@ export default function DistributionSplitModal({
             </div>
           </Form.Item>
         ) : null}
-        <Form.Item label="Percent">
+        <Form.Item>
           <div
             style={{
               display: 'flex',

@@ -15,6 +15,7 @@
     "@lingui/macro": "^3.13.0",
     "@lingui/react": "^3.13.0",
     "@pinata/sdk": "^1.1.23",
+    "@rainbow-me/rainbowkit": "^0.4.5",
     "@reduxjs/toolkit": "^1.6.2",
     "@sentry/react": "^6.18.2",
     "@sentry/tracing": "^6.18.2",
@@ -46,7 +47,7 @@
     "eslint-plugin-react": "7.30.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "ethereum-block-by-date": "^1.4.2",
-    "ethers": "^5.1.0",
+    "ethers": "^5.6.9",
     "formidable": "^2.0.1",
     "graphql": "^16.5.0",
     "less": "4.1.2",
@@ -61,7 +62,8 @@
     "sass": "^1.52.1",
     "typescript": "4.4.3",
     "use-deep-compare-effect": "^1.6.1",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "wagmi": "^0.6.0"
   },
   "scripts": {
     "compile-styles": "lessc ./node_modules/antd/dist/antd.less ./src/styles/antd.css --js",

@@ -2,7 +2,7 @@ import { Space } from 'antd'
 import { Header } from 'antd/lib/layout/layout'
 import useMobile from 'hooks/Mobile'
 
-import Account from './Account'
+import ConnectButton from './ConnectButton'
 import MobileCollapse from './Mobile/MobileCollapse'
 import { TopLeftNavItems } from './MenuItems'
 import NavLanguageSelector from './NavLanguageSelector'
@@ -18,7 +18,7 @@ export default function Navbar() {
       <Space size="middle" style={{ ...topRightNavStyles }}>
         <NavLanguageSelector />
         <ThemePicker />
-        <Account />
+        <ConnectButton />
       </Space>
     </Header>
   ) : (

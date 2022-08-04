@@ -1,6 +1,6 @@
+import { useAccount } from 'wagmi'
 import { t, Trans } from '@lingui/macro'
 import { Modal, ModalProps } from 'antd'
-import { NetworkContext } from 'contexts/networkContext'
 
 import { ThemeContext } from 'contexts/themeContext'
 import { PropsWithChildren, useContext } from 'react'
@@ -53,7 +53,7 @@ const PendingTransactionModalBody = () => {
  * are replaced with a juicy loading state.
  */
 export default function TransactionModal(props: TransactionModalProps) {
-  const { userAddress } = useContext(NetworkContext)
+  const { address: userAddress } = useAccount()
   const okText = userAddress
     ? props.okText
     : props.connectWalletText ?? t`Connect wallet`

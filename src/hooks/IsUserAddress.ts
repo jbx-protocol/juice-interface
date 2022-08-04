@@ -1,8 +1,7 @@
-import { NetworkContext } from 'contexts/networkContext'
-import { useContext } from 'react'
+import { useAccount } from 'wagmi'
 
 export function useIsUserAddress(address: string | undefined) {
-  const { userAddress } = useContext(NetworkContext)
+  const { address: userAddress } = useAccount()
 
   return (
     address !== undefined &&

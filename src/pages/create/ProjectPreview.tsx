@@ -3,7 +3,7 @@ import {
   V2ProjectContextType,
 } from 'contexts/v2/projectContext'
 import { BigNumber } from '@ethersproject/bignumber'
-import { useContext } from 'react'
+import { useAccount } from 'wagmi'
 
 import {
   useAppSelector,
@@ -11,8 +11,6 @@ import {
   useEditingV2FundingCycleDataSelector,
   useEditingV2FundingCycleMetadataSelector,
 } from 'hooks/AppSelector'
-
-import { NetworkContext } from 'contexts/networkContext'
 
 import { V2FundingCycle } from 'models/v2/fundingCycle'
 
@@ -35,7 +33,7 @@ export default function ProjectPreview({
   const fundingCycleMetadata = useEditingV2FundingCycleMetadataSelector()
   const fundingCycleData = useEditingV2FundingCycleDataSelector()
   const fundAccessConstraints = useEditingV2FundAccessConstraintsSelector()
-  const { userAddress } = useContext(NetworkContext)
+  const { address: userAddress } = useAccount()
 
   const fundingCycle: V2FundingCycle = {
     ...fundingCycleData,

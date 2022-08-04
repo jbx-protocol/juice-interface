@@ -1,3 +1,4 @@
+import { useAccount } from 'wagmi'
 import { ThemeContext } from 'contexts/themeContext'
 
 import { Trans } from '@lingui/macro'
@@ -7,7 +8,6 @@ import { MessageOutlined } from '@ant-design/icons'
 import { useContext } from 'react'
 
 import { feedbackFormURL } from 'utils/feedbackFormURL'
-import { NetworkContext } from 'contexts/networkContext'
 
 import ExternalLink from './ExternalLink'
 
@@ -19,7 +19,7 @@ export default function FeedbackFormButton({
   projectHandle?: string
 }) {
   const { isDarkMode } = useContext(ThemeContext)
-  const { userAddress } = useContext(NetworkContext)
+  const { address: userAddress } = useAccount()
 
   const formUrl = feedbackFormURL({
     referrer: 'stoned-banny',

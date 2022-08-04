@@ -1,3 +1,4 @@
+import { useAccount } from 'wagmi'
 import { t, Trans } from '@lingui/macro'
 import { Button, Form, Radio, Space } from 'antd'
 import { useCallback, useContext, useEffect, useState } from 'react'
@@ -14,7 +15,6 @@ import {
 } from 'utils/v2/distributions'
 import { ThemeContext } from 'contexts/themeContext'
 import { MAX_DISTRIBUTION_LIMIT, splitPercentFrom } from 'utils/v2/math'
-import { NetworkContext } from 'contexts/networkContext'
 import Link from 'next/link'
 
 import { filter } from 'lodash'
@@ -50,7 +50,7 @@ export default function DistributionSplitsSection({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const { userAddress } = useContext(NetworkContext)
+  const { address: userAddress } = useAccount()
 
   const distributionLimitIsInfinite =
     !distributionLimit || parseWad(distributionLimit).eq(MAX_DISTRIBUTION_LIMIT)

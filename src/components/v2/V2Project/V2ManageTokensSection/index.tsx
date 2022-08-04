@@ -1,9 +1,9 @@
+import { useAccount } from 'wagmi'
 import { t, Trans } from '@lingui/macro'
 import { Button, Descriptions, Space, Statistic } from 'antd'
 import SectionHeader from 'components/SectionHeader'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import * as constants from '@ethersproject/constants'
-import { NetworkContext } from 'contexts/networkContext'
 import useERC20BalanceOf from 'hooks/v2/contractReader/ERC20BalanceOf'
 
 import { CSSProperties, useContext, useState } from 'react'
@@ -64,7 +64,7 @@ export default function V2ManageTokensSection() {
     projectMetadata,
     cv,
   } = useContext(V2ProjectContext)
-  const { userAddress } = useContext(NetworkContext)
+  const { address: userAddress } = useAccount()
 
   const [manageTokensModalVisible, setManageTokensModalVisible] =
     useState<boolean>(false)

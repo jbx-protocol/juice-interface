@@ -1,4 +1,4 @@
-import { NetworkContext } from 'contexts/networkContext'
+import { useAccount } from 'wagmi'
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { useContext } from 'react'
@@ -15,7 +15,7 @@ export function useRedeemTokensTx(): TransactorInstance<{
   minReturnedTokens: BigNumber
 }> {
   const { transactor, contracts } = useContext(V2UserContext)
-  const { userAddress } = useContext(NetworkContext)
+  const { address: userAddress } = useAccount()
   const { projectId } = useContext(V2ProjectContext)
 
   return ({ redeemAmount, minReturnedTokens }, txOpts) => {

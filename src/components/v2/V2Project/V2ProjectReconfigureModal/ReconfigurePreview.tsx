@@ -1,3 +1,4 @@
+import { useAccount } from 'wagmi'
 import { Col, Row, Space } from 'antd'
 import {
   AllowMintingStatistic,
@@ -21,8 +22,6 @@ import {
   V2FundingCycleMetadata,
 } from 'models/v2/fundingCycle'
 import { BigNumber } from '@ethersproject/bignumber'
-import { useContext } from 'react'
-import { NetworkContext } from 'contexts/networkContext'
 import { getDefaultFundAccessConstraint } from 'utils/v2/fundingCycle'
 import { V2CurrencyName } from 'utils/v2/currency'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
@@ -49,7 +48,7 @@ export default function ReconfigurePreview({
   fundingCycleData: V2FundingCycleData
   fundAccessConstraints: V2FundAccessConstraint[]
 }) {
-  const { userAddress } = useContext(NetworkContext)
+  const { address: userAddress } = useAccount()
 
   const fundingCycle: V2FundingCycle = {
     ...fundingCycleData,

@@ -1,4 +1,4 @@
-import { NetworkContext } from 'contexts/networkContext'
+import { useAccount } from 'wagmi'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { BigNumber } from '@ethersproject/bignumber'
 import { useContext } from 'react'
@@ -16,7 +16,7 @@ export default function useTerminalCurrentReclaimableOverflow({
   terminal: string | undefined
 }) {
   const { projectId } = useContext(V2ProjectContext)
-  const { userAddress } = useContext(NetworkContext)
+  const { address: userAddress } = useAccount()
 
   const { data: totalBalance, loading: totalBalanceLoading } =
     useTotalBalanceOf(userAddress, projectId)

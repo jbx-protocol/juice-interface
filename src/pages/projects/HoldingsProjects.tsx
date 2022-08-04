@@ -2,14 +2,14 @@ import { t, Trans } from '@lingui/macro'
 import Grid from 'components/Grid'
 import Loading from 'components/Loading'
 import ProjectCard from 'components/ProjectCard'
-import { NetworkContext } from 'contexts/networkContext'
+import { useAccount } from 'wagmi'
 import { ThemeContext } from 'contexts/themeContext'
 import { useHoldingsProjectsQuery } from 'hooks/Projects'
 import React, { useContext } from 'react'
 import { InfoCircleOutlined } from '@ant-design/icons'
 
 export default function HoldingsProjects() {
-  const { userAddress } = useContext(NetworkContext)
+  const { address: userAddress } = useAccount()
 
   const { data: projects, isLoading } = useHoldingsProjectsQuery(userAddress)
 

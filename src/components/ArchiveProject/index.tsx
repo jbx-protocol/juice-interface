@@ -1,8 +1,8 @@
+import { useAccount } from 'wagmi'
 import { t, Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 
-import { NetworkContext } from 'contexts/networkContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { CV } from 'models/cv'
 import { ProjectMetadataV4 } from 'models/project-metadata'
@@ -33,7 +33,7 @@ export default function ArchiveProject({
   canTakePaymentsWhenArchived?: boolean
   cv: CV
 }) {
-  const { userAddress } = useContext(NetworkContext)
+  const { address: userAddress } = useAccount()
   const {
     theme: { colors },
   } = useContext(ThemeContext)

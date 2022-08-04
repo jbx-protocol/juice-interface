@@ -1,4 +1,4 @@
-import { NetworkContext } from 'contexts/networkContext'
+import { useAccount } from 'wagmi'
 import { BigNumber } from '@ethersproject/bignumber'
 import { useContext } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbers'
@@ -11,7 +11,7 @@ import useContractReader from './V2ContractReader'
 
 /** Returns unclaimed balance of user with `userAddress`. */
 export default function useUserUnclaimedTokenBalance() {
-  const { userAddress } = useContext(NetworkContext)
+  const { address: userAddress } = useAccount()
   const { projectId } = useContext(V2ProjectContext)
 
   return useContractReader<BigNumber>({

@@ -1,9 +1,8 @@
-import { NetworkContext } from 'contexts/networkContext'
+import { useAccount } from 'wagmi'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
-import { useContext } from 'react'
 
 export const useVeNftUserTokens = () => {
-  const { userAddress } = useContext(NetworkContext)
+  const { address: userAddress } = useAccount()
   return useSubgraphQuery({
     entity: 'veNftToken',
     keys: [

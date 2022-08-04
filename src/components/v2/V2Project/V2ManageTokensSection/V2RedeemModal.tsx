@@ -1,3 +1,4 @@
+import { useAccount } from 'wagmi'
 import { t, Trans } from '@lingui/macro'
 import { Descriptions, Form, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
@@ -11,7 +12,6 @@ import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import useTotalBalanceOf from 'hooks/v2/contractReader/TotalBalanceOf'
-import { NetworkContext } from 'contexts/networkContext'
 import { formatRedemptionRate } from 'utils/v2/math'
 import { useETHReceivedFromTokens } from 'hooks/v2/contractReader/ETHReceivedFromTokens'
 import { V2_CURRENCY_USD } from 'utils/v2/currency'
@@ -30,7 +30,7 @@ export default function V2RedeemModal({
   onCancel?: VoidFunction
   onConfirmed?: VoidFunction
 }) {
-  const { userAddress } = useContext(NetworkContext)
+  const { address: userAddress } = useAccount()
   const {
     tokenSymbol,
     fundingCycle,

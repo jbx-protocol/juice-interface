@@ -1,14 +1,13 @@
 import Navbar from 'components/Navbar'
 import { Layout, Modal, Space } from 'antd'
 import { Content } from 'antd/lib/layout/layout'
-import { NetworkContext } from 'contexts/networkContext'
 import useMobile from 'hooks/Mobile'
 import { NetworkName } from 'models/network-name'
 import { useRouter } from 'next/router'
 import LanguageProvider from 'providers/LanguageProvider'
 import ReactQueryProvider from 'providers/ReactQueryProvider'
 import { V1UserProvider } from 'providers/v1/UserProvider'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Provider } from 'react-redux'
 import { ThemeProvider } from 'providers/ThemeProvider'
 import store from 'redux/store'
@@ -44,15 +43,15 @@ export const AppWrapper: React.FC = ({ children }) => {
 }
 
 const _Wrapper: React.FC = ({ children }) => {
-  const [switchNetworkModalVisible, setSwitchNetworkModalVisible] =
-    useState<boolean>()
+  const [switchNetworkModalVisible] = useState<boolean>()
 
   const router = useRouter()
   if (router.asPath.match(/^\/#\//)) {
     redirectTo(router.asPath.replace('/#/', ''))
   }
 
-  const { signerNetwork, userAddress } = useContext(NetworkContext)
+  // TODO
+  // const { signerNetwork, userAddress } = useContext(NetworkContext)
 
   const isMobile = useMobile()
 
@@ -63,11 +62,11 @@ const _Wrapper: React.FC = ({ children }) => {
     NetworkName.rinkeby,
   ]
 
-  useEffect(() => {
-    if (!signerNetwork || !userAddress) return
+  // useEffect(() => {
+  //   if (!signerNetwork || !userAddress) return
 
-    setSwitchNetworkModalVisible(signerNetwork !== networkName)
-  }, [networkName, signerNetwork, userAddress])
+  //   setSwitchNetworkModalVisible(signerNetwork !== networkName)
+  // }, [networkName, signerNetwork, userAddress])
 
   return (
     <>

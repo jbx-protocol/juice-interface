@@ -1,4 +1,4 @@
-import { NetworkContext } from 'contexts/networkContext'
+import { useAccount } from 'wagmi'
 import { V2UserContext } from 'contexts/v2/userContext'
 import { getAddress } from '@ethersproject/address'
 import * as constants from '@ethersproject/constants'
@@ -78,7 +78,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<{
   nftRewards: TxNftArg
 }> {
   const { transactor, contracts } = useContext(V2UserContext)
-  const { userAddress } = useContext(NetworkContext)
+  const { address: userAddress } = useAccount()
 
   return (
     {

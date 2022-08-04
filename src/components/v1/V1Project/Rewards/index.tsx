@@ -1,9 +1,9 @@
+import { useAccount } from 'wagmi'
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { Button, Descriptions, Space, Statistic } from 'antd'
 
 import FormattedAddress from 'components/FormattedAddress'
-import { NetworkContext } from 'contexts/networkContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import * as constants from '@ethersproject/constants'
@@ -35,7 +35,7 @@ export default function Rewards() {
   const [participantsModalVisible, setParticipantsModalVisible] =
     useState<boolean>(false)
 
-  const { userAddress } = useContext(NetworkContext)
+  const { address: userAddress } = useAccount()
   const {
     projectId,
     handle,

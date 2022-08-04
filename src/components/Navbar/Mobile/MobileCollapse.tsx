@@ -14,7 +14,7 @@ import { NetworkContext } from 'contexts/networkContext'
 import FeedbackFormButton from 'components/FeedbackFormButton'
 
 import Logo from '../Logo'
-import Account from '../Account'
+import ConnectButton from '../ConnectButton'
 import NavLanguageSelector from '../NavLanguageSelector'
 import { TopLeftNavItems } from '../MenuItems'
 import ThemePickerMobile from './ThemePickerMobile'
@@ -112,7 +112,7 @@ export default function MobileCollapse() {
               marginTop: '1rem',
             }}
           >
-            <Account />
+            <ConnectButton />
             {signingProvider ? (
               <Button onClick={onLogOut} style={{ marginTop: 10 }} block>
                 <Trans>Disconnect</Trans>

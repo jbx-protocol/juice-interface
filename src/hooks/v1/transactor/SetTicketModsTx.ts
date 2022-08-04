@@ -1,4 +1,4 @@
-import { NetworkContext } from 'contexts/networkContext'
+import { useAccount } from 'wagmi'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1UserContext } from 'contexts/v1/userContext'
 import { BigNumber } from '@ethersproject/bignumber'
@@ -13,7 +13,7 @@ export function useSetTicketModsTx(): TransactorInstance<{
   ticketMods: TicketMod[]
 }> {
   const { transactor, contracts } = useContext(V1UserContext)
-  const { userAddress } = useContext(NetworkContext)
+  const { address: userAddress } = useAccount()
   const { projectId, terminal } = useContext(V1ProjectContext)
 
   return ({ configured, ticketMods }, txOpts) => {

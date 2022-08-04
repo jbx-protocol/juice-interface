@@ -1,3 +1,4 @@
+import { useAccount } from 'wagmi'
 import { t, Trans } from '@lingui/macro'
 import { Button, Modal, Skeleton, Space } from 'antd'
 import DistributionSplitCard from 'components/v2/shared/DistributionSplitsSection/DistributionSplitCard'
@@ -17,7 +18,6 @@ import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { V2CurrencyName } from 'utils/v2/currency'
 import { useSetProjectSplits } from 'hooks/v2/transactor/SetProjectSplits'
-import { NetworkContext } from 'contexts/networkContext'
 import { MAX_DISTRIBUTION_LIMIT, splitPercentFrom } from 'utils/v2/math'
 import { formatWad } from 'utils/formatNumber'
 import Callout from 'components/Callout'
@@ -27,7 +27,7 @@ import CurrencySymbol from 'components/CurrencySymbol'
 import { ETH_PAYOUT_SPLIT_GROUP } from 'constants/v2/splits'
 
 const OwnerSplitCard = ({ splits }: { splits: Split[] }) => {
-  const { userAddress } = useContext(NetworkContext)
+  const { address: userAddress } = useAccount()
   const { distributionLimit, distributionLimitCurrency } =
     useContext(V2ProjectContext)
   const remainingSplitsPercentage = 100 - getTotalSplitsPercentage(splits)

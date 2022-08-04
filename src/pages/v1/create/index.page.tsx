@@ -72,6 +72,7 @@ import ConfirmDeployProject from './ConfirmDeployProject'
 
 import { getBallotStrategyByAddress } from 'constants/v1/ballotStrategies/getBallotStrategiesByAddress'
 import { drawerStyle } from 'constants/styles/drawerStyle'
+import { readNetwork } from 'constants/networks'
 
 const terminalVersion: V1TerminalVersion = '1.1'
 
@@ -85,8 +86,7 @@ export default function V1CreatePage() {
 
 function V1Create() {
   const router = useRouter()
-  const { signerNetwork, userAddress, onSelectWallet } =
-    useContext(NetworkContext)
+  const { userAddress, onSelectWallet } = useContext(NetworkContext)
   const { colors, radii } = useContext(ThemeContext).theme
   const [currentStep, setCurrentStep] = useState<number>()
   const [viewedSteps, setViewedSteps] = useState<number[]>([])
@@ -787,9 +787,7 @@ function V1Create() {
           visible={deployProjectModalVisible}
           okText={
             userAddress
-              ? signerNetwork
-                ? t`Deploy project on ${signerNetwork}`
-                : t`Deploy project`
+              ? t`Deploy project on ${readNetwork.name}`
               : t`Connect wallet to deploy`
           }
           onOk={userAddress ? deployProject : onSelectWallet}

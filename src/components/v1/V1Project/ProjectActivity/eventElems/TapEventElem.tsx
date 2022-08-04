@@ -1,4 +1,3 @@
-import CurrencySymbol from 'components/CurrencySymbol'
 import FormattedAddress from 'components/FormattedAddress'
 import V1ProjectHandle from 'components/v1/shared/V1ProjectHandle'
 import EtherscanLink from 'components/EtherscanLink'
@@ -8,10 +7,10 @@ import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { TapEvent } from 'models/subgraph-entities/v1/tap-event'
 import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
-import { formatWad } from 'utils/formatNumber'
 
 import { Trans } from '@lingui/macro'
 import { smallHeaderStyle } from 'components/activityEventElems/styles'
+import ETHAmount from 'components/currency/ETHAmount'
 
 export default function TapEventElem({
   event,
@@ -81,8 +80,7 @@ export default function TapEventElem({
                 fontWeight: 500,
               }}
             >
-              <CurrencySymbol currency="ETH" />
-              {formatWad(event.netTransferAmount, { precision: 4 })}
+              <ETHAmount amount={event.netTransferAmount} />
             </div>
           ) : null}
         </div>
@@ -129,8 +127,7 @@ export default function TapEventElem({
             </div>
 
             <div style={{ color: colors.text.secondary }}>
-              <CurrencySymbol currency="ETH" />
-              {formatWad(e.modCut, { precision: 4 })}
+              <ETHAmount amount={e.modCut} />
             </div>
           </div>
         ))}
@@ -157,8 +154,7 @@ export default function TapEventElem({
                   : { fontWeight: 500 }
               }
             >
-              <CurrencySymbol currency="ETH" />
-              {formatWad(event.beneficiaryTransferAmount, { precision: 4 })}
+              <ETHAmount amount={event.beneficiaryTransferAmount} />
             </div>
           </div>
         )}

@@ -80,11 +80,8 @@ export const useProcessedRichNote = (note: string | undefined) => {
     if (!mediaLinks || !formattedNote) return formattedNote
     // Checks each word of note and removes if it is a mediaLink
     let formattedNoteWords = formattedNote.split(/\s+/) // any whitespace
-    mediaLinks.forEach(links => {
-      if (!links) return
-      formattedNoteWords = formattedNoteWords.filter(word => {
-        return !links.includes(word)
-      })
+    formattedNoteWords = formattedNoteWords.filter(word => {
+      return !mediaLinks.includes(word)
     })
     return formattedNoteWords.join(' ')
   }, [mediaLinks, formattedNote])

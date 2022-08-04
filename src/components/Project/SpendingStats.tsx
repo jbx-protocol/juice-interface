@@ -84,16 +84,18 @@ export default function SpendingStats({
         </div>
 
         <div>
-          <Tooltip
-            title={<Trans>Balance of the project owner's wallet.</Trans>}
-          >
-            <Space>
-              <Balance address={ownerAddress} />
-              <Trans>
-                <CrownFilled /> owner balance
-              </Trans>
-            </Space>
-          </Tooltip>
+          <Space>
+            <Balance address={ownerAddress} />
+            <Tooltip
+              title={<Trans>Balance of the project owner's wallet.</Trans>}
+            >
+              <span>
+                <Trans>
+                  <CrownFilled /> owner balance
+                </Trans>
+              </span>
+            </Tooltip>
+          </Space>
         </div>
       </div>
     </div>

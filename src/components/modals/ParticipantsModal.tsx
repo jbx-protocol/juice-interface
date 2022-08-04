@@ -8,7 +8,7 @@ import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
 import { Button, Modal, Select, Space } from 'antd'
 import Callout from 'components/Callout'
-import CurrencySymbol from 'components/CurrencySymbol'
+import ETHAmount from 'components/currency/ETHAmount'
 import FormattedAddress from 'components/FormattedAddress'
 import Loading from 'components/Loading'
 import { ThemeContext } from 'contexts/themeContext'
@@ -208,9 +208,8 @@ export default function ParticipantsModal({
                   <FormattedAddress address={p.wallet} />
                 </div>
                 <div style={smallHeaderStyle}>
-                  <CurrencySymbol currency="ETH" />
                   <Trans>
-                    {formatWad(p.totalPaid, { precision: 6 })} contributed
+                    <ETHAmount amount={p.totalPaid} /> contributed
                   </Trans>
                 </div>
               </div>

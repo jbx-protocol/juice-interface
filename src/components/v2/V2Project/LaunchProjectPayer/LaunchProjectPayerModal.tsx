@@ -11,9 +11,10 @@ import TransactionModal from 'components/TransactionModal'
 import Callout from 'components/Callout'
 import { DeployProjectPayerTxArgs } from 'hooks/v2/transactor/DeployProjectPayerTx'
 import { emitErrorNotification } from 'utils/notifications'
+import { verifyProjectPayer } from 'utils/verifyProjectPayer'
 
 import { readProvider } from 'constants/readProvider'
-
+import { readNetwork } from 'constants/networks'
 import AdvancedOptionsCollapse from './AdvancedOptionsCollapse'
 
 const DEPLOY_EVENT_IDX = 0
@@ -100,6 +101,11 @@ export default function LaunchProjectPayerModal({
           setLoadingProjectPayer(false)
           setTransactionPending(false)
           setConfirmedModalVisible(true)
+
+          await verifyProjectPayer({
+            contractAddress: newProjectPayerAddress,
+            networkName: readNetwork.name,
+          })
         },
       },
     )

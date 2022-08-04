@@ -7,6 +7,14 @@ import { CSSProperties } from 'react'
 import { readNetwork } from 'constants/networks'
 import ExternalLink from './ExternalLink'
 
+export const getEtherscanBaseUrl = (networkName: NetworkName) => {
+  let subdomain = ''
+  if (networkName !== NetworkName.mainnet) {
+    subdomain = networkName + '.'
+  }
+  return `https://${subdomain}etherscan.io`
+}
+
 export default function EtherscanLink({
   value,
   type,
@@ -26,14 +34,12 @@ export default function EtherscanLink({
       value.substring(0, 6) + '...' + value.substring(value.length - 4)
   }
 
-  let subdomain = ''
-  if (readNetwork.name !== NetworkName.mainnet) {
-    subdomain = readNetwork.name + '.'
-  }
+  const etherscanBaseUrl = getEtherscanBaseUrl(readNetwork.name)
+
   const linkProps = {
     className: 'hover-action',
     style: { ...style, fontWeight: 400 },
-    href: `https://${subdomain}etherscan.io/${type}/${value}`,
+    href: `${etherscanBaseUrl}/${type}/${value}`,
   }
 
   if (type === 'tx') {

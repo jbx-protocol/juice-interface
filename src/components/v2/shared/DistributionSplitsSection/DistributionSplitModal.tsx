@@ -490,7 +490,7 @@ export default function DistributionSplitModal({
                 onChange={(percentage: number | undefined) => {
                   if (!percentage) return
 
-                  // Only trigger amount logic if we distribution limit exists since Percentage input is available in both cases
+                  // Only trigger amount logic if distribution limit exists since Percentage input is available in both cases
                   if (distributionLimit) {
                     const newAmount = amountFromPercent({
                       percent: percentage,

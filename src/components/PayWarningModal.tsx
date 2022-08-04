@@ -25,7 +25,7 @@ export default function PayWarningModal({
       </h2>
       <p style={{ fontWeight: 500 }}>
         <Trans>
-          The
+          The{' '}
           <ExternalLink href="https://github.com/jbx-protocol/juice-contracts">
             Juicebox contracts
           </ExternalLink>{' '}

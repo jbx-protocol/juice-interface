@@ -55,8 +55,11 @@ jobs:
       - name: Install packages
         run: yarn install
 
-      - name: Lint translations
+      - name: Lint translations template
         run: 'yarn i18n:lint'
+
+      - name: Lint translation source files
+        run: './scripts/lint-translations.sh'
 
   compile:
     name: Compile Typescript

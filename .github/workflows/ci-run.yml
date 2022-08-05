@@ -60,8 +60,16 @@ jobs:
       - name: Lint translations template
         run: 'yarn i18n:lint'
 
+      - uses: tj-actions/changed-files@v24.1
+        with:
+          files: |
+            **/*.po
+
       - name: Lint translation source files
-        run: ./scripts/lint-translations.sh ${{ github.base_ref }}
+        if: steps.changed-files-specific.outputs.any_changed == 'true'
+        run: |
+          echo "🍎 PRs should not change .po files. Only changes to the messages.pot are allowed."
+          exit 1
 
   compile:
     name: Compile Typescript

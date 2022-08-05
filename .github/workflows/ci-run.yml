@@ -62,8 +62,7 @@ jobs:
 
       - uses: tj-actions/changed-files@v24.1
         with:
-          files: |
-            **/*.po
+          files: '*.po'
 
       - name: Lint translation source files
         if: steps.changed-files-specific.outputs.any_changed == 'true'

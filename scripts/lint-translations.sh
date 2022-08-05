@@ -1,6 +1,6 @@
 # get all translation files that were updated
 # from `yarn i18n:extract`
-CHANGED_FILES=$(git diff main..HEAD --name-only -- src/locales/**/*.po)
+CHANGED_FILES=$(git diff main --name-only -- src/locales/**/*.po)
 
 # Bail if there were changes to the template file.
 # that weren't included in the commit.

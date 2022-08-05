@@ -65,7 +65,7 @@ jobs:
           files: '*.po'
 
       - name: Lint translation source files
-        if: steps.changed-files-specific.outputs.any_changed == 'true'
+        if: steps.changed-files.outputs.any_changed == 'true'
         run: |
           echo "🍎 PRs should not change .po files. Only changes to the messages.pot are allowed."
           exit 1

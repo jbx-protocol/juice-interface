@@ -605,9 +605,6 @@ msgstr ""
 msgid "Congratulations on launching your project! The next steps are optional and can be completed at any time."
 msgstr ""
 
-msgid "Connect"
-msgstr ""
-
 msgid "Connect Wallet"
 msgstr ""
 

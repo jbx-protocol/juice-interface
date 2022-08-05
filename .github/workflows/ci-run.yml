@@ -61,10 +61,11 @@ jobs:
         run: 'yarn i18n:lint'
 
       - uses: tj-actions/changed-files@v24.1
+        id: changed-files
         with:
-          files: '*.po'
+          files: '**/*.po'
 
-      - name: Lint translation source files
+      - name: Check for modified translation source files
         if: steps.changed-files.outputs.any_changed == 'true'
         run: |
           echo "🍎 PRs should not change .po files. Only changes to the messages.pot are allowed."

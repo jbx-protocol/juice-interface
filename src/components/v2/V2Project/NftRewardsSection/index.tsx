@@ -57,7 +57,7 @@ export function NftRewardsSection({
     const nextRewardTier = rewardTiers[index + 1]
 
     return (
-      <Col md={8}>
+      <Col md={8} xs={8}>
         {!loading ? (
           <RewardTier
             key={`${rewardTier.contributionFloor}-${rewardTier.name}`}
@@ -80,7 +80,7 @@ export function NftRewardsSection({
   }
 
   return (
-    <div style={{ marginTop: '30px', width: '100%' }}>
+    <div style={{ width: 'unset' }}>
       <SectionHeader
         text={t`Unlockable NFT rewards`}
         style={{ marginBottom: 0 }}
@@ -88,7 +88,7 @@ export function NftRewardsSection({
       <span
         style={{
           color: colors.text.tertiary,
-          fontSize: '11px',
+          fontSize: '0.69rem',
         }}
       >
         <Trans>Contribute to unlock an NFT reward.</Trans>

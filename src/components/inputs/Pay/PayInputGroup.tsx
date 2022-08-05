@@ -66,13 +66,13 @@ export default function PayInputGroup({
 
   return (
     <>
-      {isErrorField ? (
-        <span style={{ color: colors.text.failure, fontSize: '0.7rem' }}>
-          <Trans>Pay amount must be greater than 0.</Trans>
-        </span>
-      ) : (
-        <div style={{ height: '22px' }}></div>
-      )}
+      <div style={{ height: '22px' }}>
+        {isErrorField ? (
+          <span style={{ color: colors.text.failure, fontSize: '0.7rem' }}>
+            <Trans>Pay amount must be greater than 0.</Trans>
+          </span>
+        ) : null}
+      </div>
       <div
         style={{
           display: 'flex',

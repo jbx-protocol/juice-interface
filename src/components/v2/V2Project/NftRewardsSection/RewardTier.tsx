@@ -2,7 +2,7 @@ import { Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { NftRewardTier } from 'models/v2/nftRewardTier'
-import { MouseEventHandler, useContext } from 'react'
+import { CSSProperties, MouseEventHandler, useContext } from 'react'
 
 import { LockOutlined, CheckOutlined } from '@ant-design/icons'
 
@@ -27,11 +27,30 @@ export function RewardTier({
     ? colors.background.l0
     : colors.background.l2
 
+  const imageHeight = '146px'
+
   function RewardIcon() {
+    const iconStyle: CSSProperties = {
+      position: 'absolute',
+      right: 25,
+      top: 10,
+      fontSize: 15,
+      color: isSelected ? colors.background.l0 : colors.text.secondary,
+      backgroundColor: isSelected
+        ? colors.background.action.primary
+        : colors.background.l0,
+      borderRadius: '100%',
+      height: '25px',
+      width: '25px',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+    }
+
     return (
       <Tooltip
         title={
-          <>
+          <span style={{ fontSize: '0.7rem' }}>
             {rewardTierUpperLimit ? (
               <Trans>
                 Receive this NFT when you contribute{' '}
@@ -44,24 +63,16 @@ export function RewardTier({
                 <strong>{rewardTier.contributionFloor} ETH</strong>.
               </Trans>
             )}
-          </>
+          </span>
         }
+        overlayInnerStyle={{
+          padding: '7px 10px',
+          lineHeight: '1rem',
+          maxWidth: '210px',
+        }}
         placement={'bottom'}
       >
-        <div
-          style={{
-            position: 'absolute',
-            right: 25,
-            top: 10,
-            fontSize: 15,
-            color: isSelected ? colors.background.l0 : colors.text.secondary,
-            backgroundColor: isSelected
-              ? colors.background.action.primary
-              : colors.background.l0,
-            borderRadius: '100%',
-            padding: '0 5px',
-          }}
-        >
+        <div style={iconStyle}>
           {isSelected ? <CheckOutlined /> : <LockOutlined />}
         </div>
       </Tooltip>
@@ -70,15 +81,16 @@ export function RewardTier({
 
   return (
     <div
+      className={`${isSelected ? 'selected-box-shadow' : ''} hover-box-shadow`}
       style={{
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'flex-start',
         cursor: 'pointer',
-        transition: 'all 0s',
-        border: isSelected
+        outline: isSelected
           ? `2px solid ${colors.stroke.action.primary}`
-          : '2px solid rgba(0,0,0,0)',
+          : 'rgba(0,0,0,0)',
+        transition: 'box-shadow 0.25s',
       }}
       onClick={onClick}
       role="button"
@@ -91,7 +103,7 @@ export function RewardTier({
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          height: '146px',
+          height: imageHeight,
         }}
       >
         <img
@@ -100,7 +112,7 @@ export function RewardTier({
           style={{
             objectFit: 'cover',
             width: '100%',
-            maxHeight: '146px',
+            maxHeight: imageHeight,
             filter: isSelected ? 'unset' : 'brightness(50%)',
           }}
         />

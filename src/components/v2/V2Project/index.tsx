@@ -25,7 +25,7 @@ import { CurrencyOption } from 'models/currencyOption'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { fromWad } from 'utils/formatNumber'
 import { TextButton } from 'components/TextButton'
-import { MOCK_NFT_CIDs } from 'utils/v2/nftRewards'
+import useMobile from 'hooks/Mobile'
 
 import { V2_PROJECT_IDS } from 'constants/v2/projectIds'
 import { RelaunchFundingCycleBanner } from './banners/RelaunchFundingCycleBanner'
@@ -46,7 +46,10 @@ const GUTTER_PX = 40
 
 const AllAssetsButton = ({ onClick }: { onClick: VoidFunction }) => {
   return (
-    <TextButton onClick={onClick}>
+    <TextButton
+      onClick={onClick}
+      style={{ fontWeight: 400, fontSize: '0.8rem' }}
+    >
       <Trans>All assets</Trans>
     </TextButton>
   )
@@ -72,14 +75,12 @@ export default function V2Project({
     isArchived,
     projectOwnerAddress,
     handle,
-    // nftRewards: { CIDs: nftRewardsCids },
   } = useContext(V2ProjectContext)
   const {
     currencies: { ETH },
   } = useContext(CurrencyContext)
 
-  // TODO!!!!!!!!!!!!!!!
-  const nftRewardsCids = MOCK_NFT_CIDs
+  const isMobile = useMobile()
 
   const canReconfigureFundingCycles = useV2ConnectedWalletHasPermission(
     V2OperatorPermission.RECONFIGURE,
@@ -164,16 +165,44 @@ export default function V2Project({
       {!isPreviewMode &&
         hasCurrentFundingCycle === false &&
         hasQueuedFundingCycle === false && <V2BugNotice />}
-      <Row
-        gutter={GUTTER_PX}
-        align={nftRewardsEnabled && nftRewardsCids?.length ? 'top' : 'bottom'}
-      >
+      <Row gutter={GUTTER_PX} align={'bottom'}>
         <Col md={colSizeMd} xs={24}>
-          <Space size="large" direction="vertical">
-            <TreasuryStats />
-            <div style={{ textAlign: 'right' }}>
-              <AllAssetsButton onClick={() => setBalancesModalVisible(true)} />
+          <TreasuryStats />
+          <div style={{ textAlign: 'right' }}>
+            <AllAssetsButton onClick={() => setBalancesModalVisible(true)} />
+          </div>
+        </Col>
+        <Col md={colSizeMd} xs={24}>
+          <PayInputGroup
+            payAmountETH={payAmount}
+            onPayAmountChange={setPayAmount}
+            payInCurrency={payInCurrency}
+            onPayInCurrencyChange={setPayInCurrency}
+            PayButton={V2PayButton}
+            reservedRate={fundingCycleMetadata?.reservedRate.toNumber()}
+            weight={fundingCycle?.weight}
+            weightingFn={weightedAmount}
+            tokenSymbol={tokenSymbol}
+            tokenAddress={tokenAddress}
+            disabled={isPreviewMode || payIsDisabledPreV2Redeploy()}
+          />
+          {(isMobile && nftRewardsEnabled) || isPreviewMode ? (
+            <div style={{ marginTop: '30px' }}>
+              <NftRewardsSection
+                payAmountETH={payAmountETH}
+                onPayAmountChange={setPayAmount}
+              />
             </div>
+          ) : null}
+        </Col>
+      </Row>
+      <Row gutter={GUTTER_PX}>
+        <Col md={colSizeMd} xs={24}>
+          <Space
+            direction="vertical"
+            size={GUTTER_PX}
+            style={{ width: '100%' }}
+          >
             {!isPreviewMode ? (
               <VolumeChart
                 style={{ height: 240 }}
@@ -186,28 +215,24 @@ export default function V2Project({
             <V2FundingCycleSection expandCard={expandFundingCycleCard} />
           </Space>
         </Col>
-        <Col md={colSizeMd} xs={24} style={{ marginTop: '30px' }}>
-          <Space size="large" direction="vertical" style={{ width: '100%' }}>
-            <PayInputGroup
-              payAmountETH={payAmount}
-              onPayAmountChange={setPayAmount}
-              payInCurrency={payInCurrency}
-              onPayInCurrencyChange={setPayInCurrency}
-              PayButton={V2PayButton}
-              reservedRate={fundingCycleMetadata?.reservedRate.toNumber()}
-              weight={fundingCycle?.weight}
-              weightingFn={weightedAmount}
-              tokenSymbol={tokenSymbol}
-              tokenAddress={tokenAddress}
-              disabled={isPreviewMode || payIsDisabledPreV2Redeploy()}
-            />
-            <NftRewardsSection
-              payAmountETH={payAmountETH}
-              onPayAmountChange={setPayAmount}
-            />
-            {!isPreviewMode ? <ProjectActivity /> : null}
-          </Space>
-        </Col>
+
+        {!isPreviewMode ? (
+          <Col
+            md={colSizeMd}
+            xs={24}
+            style={{ marginTop: isMobile ? GUTTER_PX : 0 }}
+          >
+            <Space size="large" direction="vertical" style={{ width: '100%' }}>
+              {!isMobile && nftRewardsEnabled ? (
+                <NftRewardsSection
+                  payAmountETH={payAmountETH}
+                  onPayAmountChange={setPayAmount}
+                />
+              ) : null}
+              <ProjectActivity />
+            </Space>
+          </Col>
+        ) : null}
       </Row>
       <NewDeployModal
         visible={newDeployModalVisible}

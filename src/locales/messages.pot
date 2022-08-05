@@ -2768,7 +2768,7 @@ msgstr ""
 msgid "You must review and accept the risks."
 msgstr ""
 
-msgid "You receive an NFT for contributing over <0>{0} ETH</0>."
+msgid "You receive this NFT for contributing over <0>{0} ETH</0>."
 msgstr ""
 
 msgid "You will receive <0/>"

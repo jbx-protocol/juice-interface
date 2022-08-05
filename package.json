@@ -84,7 +84,7 @@
     "i18n:lint": "./scripts/lint-translations-template.sh",
     "postinstall": "yarn i18n:compile",
     "format": "prettier --write './**/*.{js,jsx,ts,tsx}'",
-    "pristine": "rm -Rf node_modules && yarn install",
+    "pristine": "rm -Rf node_modules && yarn cache clean --all && yarn install",
     "find-deadcode": "ts-prune"
   },
   "browser": {

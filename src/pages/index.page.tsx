@@ -15,12 +15,13 @@ import TrendingSection from './home/TrendingSection'
 import { TopProjectsSection } from './home/TopProjectsSection'
 import { StatsSection } from './home/StatsSection'
 import { HowItWorksSection } from './home/HowItWorksSection'
+import { HeroHeading, HeroSubheading } from './home/strings'
 
 const BigHeader = ({
   text,
   style,
 }: {
-  text: string
+  text: string | JSX.Element
   style?: CSSProperties
 }) => {
   return (
@@ -143,7 +144,7 @@ export default function Landing() {
               <div>
                 <Space direction="vertical" size="large">
                   <BigHeader
-                    text={t`Fund anything. Grow together.`}
+                    text={<HeroHeading />}
                     style={{ fontSize: !isMobile ? '3.8rem' : '2.3rem' }}
                   />
                   <div
@@ -158,22 +159,7 @@ export default function Landing() {
                         marginBottom: '1rem',
                       }}
                     >
-                      <Trans>
-                        The programmable funding protocol. Light enough for a
-                        group of friends, powerful enough for a global network
-                        of anons.{' '}
-                        <a
-                          href="/p/juicebox"
-                          className="text-primary hover-text-decoration-underline"
-                          style={{
-                            textDecoration: 'underline',
-                            fontWeight: 'inherit',
-                          }}
-                        >
-                          Community-owned
-                        </a>
-                        , on Ethereum.
-                      </Trans>
+                      <HeroSubheading />
                     </div>
 
                     <BuiltForList />

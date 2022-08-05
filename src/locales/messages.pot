@@ -1832,7 +1832,7 @@ msgstr ""
 msgid "Range"
 msgstr ""
 
-msgid "Rankings based on number of contributions and volume gained in the last {trendingWindow} days. <0>See code</0>"
+msgid "Rankings based on number of contributions and volume gained in the last {trendingWindowDays} days. <0>See code</0>"
 msgstr ""
 
 msgid "Read less"

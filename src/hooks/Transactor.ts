@@ -1,11 +1,12 @@
+import { Signer } from 'ethers/lib/ethers'
+import { useNetwork, useSigner } from 'wagmi'
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 import { hexlify } from '@ethersproject/bytes'
 import { Contract } from '@ethersproject/contracts'
 import { Deferrable } from '@ethersproject/properties'
-import { JsonRpcSigner, TransactionRequest } from '@ethersproject/providers'
+import { TransactionRequest } from '@ethersproject/providers'
 import { parseUnits } from '@ethersproject/units'
 import Notify, { InitOptions, TransactionEvent } from 'bnc-notify'
-import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { useCallback, useContext } from 'react'
 
@@ -15,7 +16,9 @@ import * as Sentry from '@sentry/browser'
 import { t } from '@lingui/macro'
 import { windowOpen } from 'utils/windowUtils'
 
-type TransactorCallback = (e?: TransactionEvent, signer?: JsonRpcSigner) => void
+import { useWalletConnect } from './WalletConnect'
+
+type TransactorCallback = (e?: TransactionEvent, signer?: Signer) => void
 
 type TransactorOptions = {
   value?: BigNumberish
@@ -37,16 +40,6 @@ export type TransactorInstance<T = undefined> = (
   txOpts?: Omit<TransactorOptions, 'value'>,
 ) => ReturnType<Transactor>
 
-// Check user has their wallet connected. If not, show select wallet prompt
-const checkWalletConnected = (
-  onSelectWallet: VoidFunction,
-  userAddress?: string,
-) => {
-  if (!userAddress && onSelectWallet) {
-    onSelectWallet()
-  }
-}
-
 // wrapper around BlockNative's Notify.js
 // https://docs.blocknative.com/notify
 export function useTransactor({
@@ -54,11 +47,9 @@ export function useTransactor({
 }: {
   gasPrice?: BigNumber
 }): Transactor | undefined {
-  const {
-    signingProvider: provider,
-    onSelectWallet,
-    userAddress,
-  } = useContext(NetworkContext)
+  const { data: signer } = useSigner()
+  const { chain } = useNetwork()
+  const { connect, isConnected } = useWalletConnect()
 
   const { isDarkMode } = useContext(ThemeContext)
 
@@ -69,26 +60,17 @@ export function useTransactor({
       args: any[], // eslint-disable-line @typescript-eslint/no-explicit-any
       options?: TransactorOptions,
     ) => {
-      if (!onSelectWallet) return false
-
-      if (!provider) {
-        onSelectWallet()
-        if (options?.onDone) options.onDone()
+      if (!isConnected) {
+        connect()
         return false
       }
 
-      checkWalletConnected(onSelectWallet, userAddress)
-
-      if (!provider) return false
-
-      const signer = provider.getSigner()
-
-      const network = await provider.getNetwork()
+      if (!signer || !chain) return false
 
       const notifyOpts: InitOptions = {
         dappId: process.env.NEXT_PUBLIC_BLOCKNATIVE_API_KEY,
         system: 'ethereum',
-        networkId: network.chainId,
+        networkId: chain.id,
         darkMode: isDarkMode,
         transactionHandler: txInformation => {
           console.info('HANDLE TX', txInformation)
@@ -104,12 +86,12 @@ export function useTransactor({
       const notify = Notify(notifyOpts)
 
       let etherscanNetwork = ''
-      if (network.name && network.chainId > 1) {
-        etherscanNetwork = network.name + '.'
+      if (chain.name && chain.id > 1) {
+        etherscanNetwork = chain.name + '.'
       }
 
       let etherscanTxUrl = 'https://' + etherscanNetwork + 'etherscan.io/tx/'
-      if (network.chainId === 100) {
+      if (chain.id === 100) {
         etherscanTxUrl = 'https://blockscout.com/poa/xdai/tx/'
       }
 
@@ -153,8 +135,7 @@ export function useTransactor({
         console.info('RESULT:', result)
 
         // if it is a valid Notify.js network, use that, if not, just send a default notification
-        const isNotifyNetwork =
-          [1, 3, 4, 5, 42, 100].indexOf(network.chainId) >= 0
+        const isNotifyNetwork = [1, 3, 4, 5, 42, 100].indexOf(chain.id) >= 0
 
         if (isNotifyNetwork) {
           const { emitter } = notify.hash(result.hash)
@@ -200,6 +181,6 @@ export function useTransactor({
         return false
       }
     },
-    [onSelectWallet, provider, isDarkMode, gasPrice, userAddress],
+    [isConnected, signer, chain, isDarkMode, connect, gasPrice],
   )
 }

@@ -259,7 +259,7 @@ export function V2ConfirmPayModal({
                   label={t`NFT reward`}
                   tip={
                     <Trans>
-                      You receive an NFT for contributing over{' '}
+                      You receive this NFT for contributing over{' '}
                       <strong>{nftRewardTier.contributionFloor} ETH</strong>.
                     </Trans>
                   }

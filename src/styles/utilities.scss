@@ -36,3 +36,11 @@
     color: unset
   }
 }
+
+.hover-box-shadow:hover {
+  box-shadow: 3px 0px 11px 0px var(--boxShadow-primary)
+}
+
+.selected-box-shadow {
+  box-shadow: 2px 0px 10px 0px var(--boxShadow-primary)
+}

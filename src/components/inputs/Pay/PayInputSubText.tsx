@@ -17,6 +17,8 @@ import useWeiConverter from 'hooks/WeiConverter'
 import { CurrencyOption } from 'models/currencyOption'
 import { formatIssuanceRate } from 'utils/v2/math'
 import { formattedNum } from 'utils/formatNumber'
+import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { getNftRewardTier } from 'utils/v2/nftRewards'
 
 /**
  * Help text shown below the Pay input field.
@@ -49,6 +51,10 @@ export default function PayInputSubText({
   } = useContext(ThemeContext)
 
   const {
+    nftRewards: { rewardTiers: nftRewardTiers },
+  } = useContext(V2ProjectContext)
+
+  const {
     currencyMetadata,
     currencies: { ETH },
   } = useContext(CurrencyContext)
@@ -57,6 +63,14 @@ export default function PayInputSubText({
     currency: payInCurrency,
     amount: amount,
   })
+
+  const isEligibleForNft =
+    nftRewardTiers && amount
+      ? getNftRewardTier({
+          nftRewardTiers: nftRewardTiers,
+          payAmountETH: parseFloat(amount),
+        })
+      : false
 
   const tokenText = tokenSymbolText({
     tokenSymbol,
@@ -78,7 +92,9 @@ export default function PayInputSubText({
         plural: receivedTickets !== '1',
       })
 
-      return `${receivedTickets} ${tokenReceiveText}`
+      return `${receivedTickets} ${tokenReceiveText} ${
+        isEligibleForNft ? '+ NFT' : ''
+      }`
     }
 
     const receivedTickets = formatReceivedTickets(
@@ -102,12 +118,24 @@ export default function PayInputSubText({
     ETH,
     reservedRate,
     tokenSymbol,
+    isEligibleForNft,
     weightingFn,
   ])
 
   return (
-    <div style={{ fontSize: '.7rem' }}>
-      <Trans>Receive {receiveText}</Trans>
+    <div
+      style={{
+        fontSize: '.65rem',
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'space-between',
+        marginTop: '3px',
+        color: colors.text.secondary,
+      }}
+    >
+      <span>
+        <Trans>Receive {receiveText}</Trans>
+      </span>
       {tokenSymbol && tokenAddress && (
         <div>
           <Trans>
@@ -128,6 +156,7 @@ export default function PayInputSubText({
                   color: colors.text.action.primary,
                   cursor: 'pointer',
                   padding: '0.5rem 0',
+                  fontWeight: 500,
                 }}
               >
                 buy {tokenText} on exchange

@@ -1,16 +1,13 @@
 import { Web3Provider } from '@ethersproject/providers'
-import { useRouter } from 'next/router'
-
-import { NetworkContext } from 'contexts/networkContext'
-import { NetworkName } from 'models/network-name'
-import { useCallback, useContext, useEffect, useState } from 'react'
-
 import { initOnboard } from 'utils/onboard'
 import { API, Subscriptions, Wallet } from 'bnc-onboard/dist/src/interfaces'
+
+import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
+import { useRouter } from 'next/router'
+import { useCallback, useContext, useEffect, useState } from 'react'
 
 import { readNetwork } from 'constants/networks'
-import { NETWORKS } from 'constants/networks'
 
 const KEY_SELECTED_WALLET = 'selectedWallet'
 
@@ -19,9 +16,7 @@ export const NetworkProvider: React.FC = ({ children }) => {
   const { isDarkMode } = useContext(ThemeContext)
 
   const [signingProvider, setSigningProvider] = useState<Web3Provider>()
-  const [previousNetwork, setPreviousNetwork] = useState<NetworkName>()
-  const [network, setNetwork] = useState<NetworkName>()
-  const [account, setAccount] = useState<string>()
+  const [userAddress, setUserAddress] = useState<string>()
   const [onboard, setOnboard] = useState<API>()
 
   const resetWallet = useCallback(() => {
@@ -30,7 +25,7 @@ export const NetworkProvider: React.FC = ({ children }) => {
     window && window.localStorage.setItem(KEY_SELECTED_WALLET, '')
   }, [onboard])
 
-  const selectWallet = async () => {
+  const onSelectWallet = useCallback(async () => {
     resetWallet()
 
     // Open select wallet modal.
@@ -43,28 +38,16 @@ export const NetworkProvider: React.FC = ({ children }) => {
 
     // Wait for wallet selection initialization
     await onboard?.walletCheck()
-  }
+  }, [onboard, resetWallet])
 
-  const logOut = async () => {
-    resetWallet()
-  }
-
-  const onNetworkChanged = useCallback(
-    (newNetwork: NetworkName | undefined) => {
-      setPreviousNetwork(network)
-      setNetwork(newNetwork)
-    },
-    [network],
-  )
-
-  // Initialize Network
+  // Initialize Onboard
   useEffect(() => {
     if (onboard) return
 
-    const selectWallet = async (newWallet: Wallet) => {
+    const onSwitchWallet = async (newWallet: Wallet) => {
       if (newWallet.provider) {
         // Reset the account when a new wallet is connected, as it will be resolved by the provider.
-        setAccount(undefined)
+        setUserAddress(undefined)
         window &&
           window.localStorage.setItem(KEY_SELECTED_WALLET, newWallet.name || '')
         setSigningProvider(new Web3Provider(newWallet.provider))
@@ -72,33 +55,25 @@ export const NetworkProvider: React.FC = ({ children }) => {
         resetWallet()
       }
     }
+
+    const onSwitchNetwork = (chainId: number) => {
+      if (chainId) {
+        setSigningProvider(p =>
+          p ? new Web3Provider(p.provider, chainId) : undefined,
+        )
+      } else {
+        setSigningProvider(undefined)
+      }
+    }
+
     const config: Subscriptions = {
-      address: setAccount,
-      wallet: selectWallet,
+      address: setUserAddress,
+      wallet: onSwitchWallet,
+      network: onSwitchNetwork,
     }
+
     setOnboard(initOnboard(config, isDarkMode))
-  }, [isDarkMode, onNetworkChanged, onboard, resetWallet])
-
-  // On darkmode changed
-  useEffect(() => {
-    if (onboard) {
-      onboard.config({ darkMode: isDarkMode })
-    }
-  }, [isDarkMode, onboard])
-
-  // Refresh Network
-  useEffect(() => {
-    async function getNetwork() {
-      await signingProvider?.ready
-
-      const network = signingProvider?.network?.chainId
-        ? NETWORKS[signingProvider.network.chainId]
-        : undefined
-
-      onNetworkChanged(network?.name)
-    }
-    getNetwork()
-  }, [onNetworkChanged, signingProvider])
+  }, [isDarkMode, onboard, resetWallet, router])
 
   // Reconnect Wallet
   useEffect(() => {
@@ -109,24 +84,26 @@ export const NetworkProvider: React.FC = ({ children }) => {
     }
   }, [onboard])
 
-  // Refresh when network changes
-  useEffect(() => {
-    if (!previousNetwork || !network) return
-    if (previousNetwork === network) return
-    router.reload()
-  }, [network, previousNetwork, router])
+  const usingCorrectNetwork =
+    signingProvider?.network?.chainId === readNetwork.chainId
+
+  const walletIsReady = useCallback(async () => {
+    if (!userAddress || !onboard) {
+      await onSelectWallet()
+      return false
+    }
+    return await onboard.walletCheck()
+  }, [userAddress, onboard, onSelectWallet])
 
   return (
     <NetworkContext.Provider
       value={{
-        signerNetwork: network,
-        signingProvider:
-          signingProvider && network === readNetwork.name && account
-            ? signingProvider
-            : undefined,
-        userAddress: account,
-        onSelectWallet: selectWallet,
-        onLogOut: logOut,
+        shouldSwitchNetwork: signingProvider && !usingCorrectNetwork,
+        signingProvider: usingCorrectNetwork ? signingProvider : undefined,
+        userAddress,
+        walletIsReady,
+        onSelectWallet,
+        onLogOut: resetWallet,
       }}
     >
       {children}

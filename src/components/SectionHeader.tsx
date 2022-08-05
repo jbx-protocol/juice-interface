@@ -26,7 +26,7 @@ export default function SectionHeader({
     fontWeight:
       forThemeOption &&
       forThemeOption({
-        [ThemeOption.light]: 600,
+        [ThemeOption.light]: 500,
         [ThemeOption.dark]: 400,
       }),
     ...style,

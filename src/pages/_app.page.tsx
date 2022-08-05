@@ -6,10 +6,10 @@ import '../styles/antd.css'
 import '../styles/index.scss'
 import '@rainbow-me/rainbowkit/styles.css'
 
-import { NetworkProvider } from 'providers/NetworkProvider'
 import { WagmiConfig } from 'wagmi'
 import { appInfo, chains, wagmiClient } from 'utils/onboard'
 import { RainbowKitProvider } from '@rainbow-me/rainbowkit'
+import { NetworkProvider } from 'providers/NetworkProvider'
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (

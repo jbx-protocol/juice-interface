@@ -46,6 +46,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - uses: actions/cache@v2
         with:
@@ -58,8 +60,16 @@ jobs:
       - name: Lint translations template
         run: 'yarn i18n:lint'
 
-      - name: Lint translation source files
-        run: './scripts/lint-translations.sh'
+      - uses: tj-actions/changed-files@v24.1
+        id: changed-files
+        with:
+          files: '**/*.po'
+
+      - name: Check for modified translation source files
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: |
+          echo "🍎 PRs should not change .po files. Only changes to the messages.pot are allowed."
+          exit 1
 
   compile:
     name: Compile Typescript

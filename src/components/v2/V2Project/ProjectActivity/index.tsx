@@ -333,7 +333,7 @@ export default function ProjectActivity() {
   }, [isLoading, isFetchingNextPage, hasNextPage, fetchNextPage, colors, count])
 
   return (
-    <div>
+    <div style={{ marginTop: '20px' }}>
       <div
         style={{
           display: 'flex',

@@ -8,7 +8,6 @@ import VolumeChart from 'components/VolumeChart'
 
 import { useContext, useState } from 'react'
 
-import useMobile from 'hooks/Mobile'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2/contractReader/V2ConnectedWalletHasPermission'
 import { V2OperatorPermission } from 'models/v2/permissions'
 import useProjectQueuedFundingCycle from 'hooks/v2/contractReader/ProjectQueuedFundingCycle'
@@ -26,6 +25,7 @@ import { CurrencyOption } from 'models/currencyOption'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { fromWad } from 'utils/formatNumber'
 import { TextButton } from 'components/TextButton'
+import useMobile from 'hooks/Mobile'
 
 import { V2_PROJECT_IDS } from 'constants/v2/projectIds'
 import { RelaunchFundingCycleBanner } from './banners/RelaunchFundingCycleBanner'
@@ -46,7 +46,10 @@ const GUTTER_PX = 40
 
 const AllAssetsButton = ({ onClick }: { onClick: VoidFunction }) => {
   return (
-    <TextButton onClick={onClick}>
+    <TextButton
+      onClick={onClick}
+      style={{ fontWeight: 400, fontSize: '0.8rem' }}
+    >
       <Trans>All assets</Trans>
     </TextButton>
   )
@@ -72,11 +75,12 @@ export default function V2Project({
     isArchived,
     projectOwnerAddress,
     handle,
-    nftRewards: { CIDs: nftRewardsCids },
   } = useContext(V2ProjectContext)
   const {
     currencies: { ETH },
   } = useContext(CurrencyContext)
+
+  const isMobile = useMobile()
 
   const canReconfigureFundingCycles = useV2ConnectedWalletHasPermission(
     V2OperatorPermission.RECONFIGURE,
@@ -97,7 +101,6 @@ export default function V2Project({
   // Checks URL to see if user was just directed from project deploy
   const router = useRouter()
   const isNewDeploy = Boolean(router.query.newDeploy)
-  const isMobile = useMobile()
 
   const converter = useCurrencyConverter()
 
@@ -162,10 +165,7 @@ export default function V2Project({
       {!isPreviewMode &&
         hasCurrentFundingCycle === false &&
         hasQueuedFundingCycle === false && <V2BugNotice />}
-      <Row
-        gutter={GUTTER_PX}
-        align={nftRewardsEnabled && nftRewardsCids?.length ? 'top' : 'bottom'}
-      >
+      <Row gutter={GUTTER_PX} align={'bottom'}>
         <Col md={colSizeMd} xs={24}>
           <TreasuryStats />
           <div style={{ textAlign: 'right' }}>
@@ -186,10 +186,14 @@ export default function V2Project({
             tokenAddress={tokenAddress}
             disabled={isPreviewMode || payIsDisabledPreV2Redeploy()}
           />
-          <NftRewardsSection
-            payAmountETH={payAmountETH}
-            onPayAmountChange={setPayAmount}
-          />
+          {(isMobile && nftRewardsEnabled) || isPreviewMode ? (
+            <div style={{ marginTop: '30px' }}>
+              <NftRewardsSection
+                payAmountETH={payAmountETH}
+                onPayAmountChange={setPayAmount}
+              />
+            </div>
+          ) : null}
         </Col>
       </Row>
       <Row gutter={GUTTER_PX}>
@@ -218,7 +222,15 @@ export default function V2Project({
             xs={24}
             style={{ marginTop: isMobile ? GUTTER_PX : 0 }}
           >
-            <ProjectActivity />
+            <Space size="large" direction="vertical" style={{ width: '100%' }}>
+              {!isMobile && nftRewardsEnabled ? (
+                <NftRewardsSection
+                  payAmountETH={payAmountETH}
+                  onPayAmountChange={setPayAmount}
+                />
+              ) : null}
+              <ProjectActivity />
+            </Space>
           </Col>
         ) : null}
       </Row>

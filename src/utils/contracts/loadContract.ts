@@ -1,7 +1,8 @@
 import { Contract, ContractInterface } from '@ethersproject/contracts'
-import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
+import { JsonRpcProvider } from '@ethersproject/providers'
 import { NetworkName } from 'models/network-name'
 import { V2ContractName } from 'models/v2/contracts'
+import { Signer } from 'ethers/lib/ethers'
 
 import { mainnetPublicResolver } from 'constants/contracts/mainnet/PublicResolver'
 import { rinkebyPublicResolver } from 'constants/contracts/rinkeby/PublicResolver'
@@ -11,7 +12,7 @@ import { NETWORKS_BY_NAME } from 'constants/networks'
 export const loadContract = async (
   contractName: V2ContractName,
   network: NetworkName,
-  signerOrProvider: JsonRpcSigner | JsonRpcProvider,
+  signerOrProvider: Signer | JsonRpcProvider,
 ): Promise<Contract | undefined> => {
   let contractJson: { abi: ContractInterface; address: string } | undefined =
     undefined

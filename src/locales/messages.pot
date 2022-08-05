@@ -185,7 +185,10 @@ msgstr ""
 msgid "<0>There are unit tests written for every condition of every function in the contracts, and integration tests for every workflow that the protocol supports.</0><1>There was also a script written to iteratively run the integration tests using a random input generator, prioritizing edge cases. The code has successfully passed over 1 million test cases through this stress-testing script.</1> <2>The code could always use more eyes and more critique to further the community's confidence. Join our <3>Discord</3> and check out the code on <4>GitHub</4> to work with us.</2>"
 msgstr ""
 
-msgid "<0>This project has no overflow</0>, so you will not receive any ETH for burning tokens."
+msgid "<0>This project has a 0% redemption rate</0>. You won't receive any ETH for burning your tokens."
+msgstr ""
+
+msgid "<0>This project has no overflow</0>. You won't receive any ETH for burning your tokens."
 msgstr ""
 
 msgid "<0>This website (juicebox.money) connects to the Juicebox protocol's smart contracts, deployed on the Ethereum network. (note: anyone else can make a website that also connects to these same smart contracts. For now, don't trust any site other than this one to access the Juicebox protocol).</0><1>Creating a Juicebox project mints you an NFT (ERC-721) representing ownership over it. Whoever owns this NFT can configure the rules of the game and how payouts are distributed.</1><2>The project's tokens that are minted and distributed as a result of a received payment are ERC-20's. The amount of tokens minted and distributed are proportional to the volume of payments received, weighted by the project's discount rate over time.</2>"
@@ -1883,6 +1886,9 @@ msgstr ""
 msgid "Redeem veNFT"
 msgstr ""
 
+msgid "Redeem your tokens for a portion of this project's overflow. The current funding cycle's <0>redemption rate</0> determines your redemption value."
+msgstr ""
+
 msgid "Redeem your {tokensLabel} for a portion of the project's overflow. Any {tokensLabel} you redeem will be burned."
 msgstr ""
 
@@ -1907,7 +1913,7 @@ msgstr ""
 msgid "Redemption rate:"
 msgstr ""
 
-msgid "Redemption rate: <0>{0}%</0>"
+msgid "Redemption value"
 msgstr ""
 
 msgid "Refresh"
@@ -2417,6 +2423,9 @@ msgstr ""
 msgid "Tokens <0>reserved for the project</0> when 1 ETH is contributed."
 msgstr ""
 
+msgid "Tokens are burned when they are redeemed."
+msgstr ""
+
 msgid "Tokens are earned by anyone who pays your project, and can be redeemed for overflow if your project has set a funding target."
 msgstr ""
 
@@ -2429,10 +2438,7 @@ msgstr ""
 msgid "Tokens can be redeemed for a portion of a project's <0>overflow</0>, letting you benefit from its success. After all, you helped it get there. The token may also give you exclusive member-only privledges, and allow you to contribute to the governance of the community."
 msgstr ""
 
-msgid "Tokens can be redeemed for a portion of this project's ETH overflow, according to the bonding curve rate of the current funding cycle. <0>Tokens are burned when they are redeemed.</0>"
-msgstr ""
-
-msgid "Tokens can be redeemed for a portion of this project's ETH overflow, according to the redemption rate of the current funding cycle. <0>Tokens are burned when they are redeemed.</0>"
+msgid "Tokens can be redeemed for a portion of this project's overflow, according to the redemption rate of the current funding cycle. <0>Tokens are burned when they are redeemed.</0>"
 msgstr ""
 
 msgid "Tokens cannot be claimed because no ERC-20 token has been issued for this project. ERC-20 tokens must be issued by the project owner."
@@ -2445,6 +2451,12 @@ msgid "Tokens receiver"
 msgstr ""
 
 msgid "Tokens reserved"
+msgstr ""
+
+msgid "Tokens to burn"
+msgstr ""
+
+msgid "Tokens to redeem"
 msgstr ""
 
 msgid "Tokens:"
@@ -2729,9 +2741,6 @@ msgstr ""
 msgid "You have configured for all funds to be distributed from the treasury. Your current payouts do not sum to 100%, so the remainder will go to the project owner."
 msgstr ""
 
-msgid "You have exceeded the total token supply of <0>{0}</0>"
-msgstr ""
-
 msgid "You have set a funding cycle target."
 msgstr ""
 
@@ -2756,19 +2765,19 @@ msgstr ""
 msgid "You receive an NFT for contributing over <0>{0} ETH</0>."
 msgstr ""
 
-msgid "You will receive at least {minReturnedTokensFormatted} ETH"
+msgid "You will receive <0/>"
+msgstr ""
+
+msgid "You will receive at least <0/>"
 msgstr ""
 
 msgid "You will receive {0}{1} ETH"
 msgstr ""
 
-msgid "You will receive {minReturnedTokensFormatted} ETH"
+msgid "You would receive <0/>"
 msgstr ""
 
-msgid "You would receive at least {minReturnedTokensFormatted} ETH"
-msgstr ""
-
-msgid "You would receive {minReturnedTokensFormatted} ETH"
+msgid "You would receive at least <0/>"
 msgstr ""
 
 msgid "You'll be able to issue ERC-20 tokens once your project contract has been deployed. Until then, the protocol will track token balances, allowing your supporters to earn tokens and redeem for overflow in the meantime."
@@ -2832,6 +2841,9 @@ msgid "Your unclaimed {tokenTextLong}"
 msgstr ""
 
 msgid "Your voting power"
+msgstr ""
+
+msgid "Your {0} balance"
 msgstr ""
 
 msgid "Zero"
@@ -2925,9 +2937,6 @@ msgid "{0} are distributed to anyone who pays this project. If the project has s
 msgstr ""
 
 msgid "{0} balance"
-msgstr ""
-
-msgid "{0} balance: <0><1>{1} {tokensTextShort}</1><2>({share}% of supply)</2></0>"
 msgstr ""
 
 msgid "{0} days"

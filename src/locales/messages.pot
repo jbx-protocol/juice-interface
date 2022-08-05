@@ -779,10 +779,7 @@ msgstr ""
 msgid "Deploy payment address contract"
 msgstr ""
 
-msgid "Deploy project"
-msgstr ""
-
-msgid "Deploy project on {signerNetwork}"
+msgid "Deploy project on {0}"
 msgstr ""
 
 msgid "Deploy project to {0}"

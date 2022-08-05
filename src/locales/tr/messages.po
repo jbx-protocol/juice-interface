@@ -780,8 +780,11 @@ msgstr ""
 msgid "Deploy payment address contract"
 msgstr ""
 
-msgid "Deploy project on {0}"
-msgstr ""
+msgid "Deploy project"
+msgstr "Projeyi başlat"
+
+msgid "Deploy project on {signerNetwork}"
+msgstr "Projeyi {signerNetwork} üzerinde başlat"
 
 msgid "Deploy project to {0}"
 msgstr "Projeyi {0} ağında başlat"

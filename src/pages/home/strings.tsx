@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 
-export const HeroHeading = () => <Trans>Fund anything. Grow together. </Trans>
+export const HeroHeading = () => <Trans>Fund anything. Gasdrow together. </Trans>
 
 export const HeroSubheading = () => (
   <Trans>

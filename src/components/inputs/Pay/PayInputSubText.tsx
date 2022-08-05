@@ -106,8 +106,18 @@ export default function PayInputSubText({
   ])
 
   return (
-    <div style={{ fontSize: '.7rem' }}>
-      <Trans>Receive {receiveText}</Trans>
+    <div
+      style={{
+        fontSize: '.65rem',
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'space-between',
+        marginTop: '3px',
+      }}
+    >
+      <span style={{ color: colors.text.secondary }}>
+        <Trans>Receive {receiveText}</Trans>
+      </span>
       {tokenSymbol && tokenAddress && (
         <div>
           <Trans>
@@ -128,6 +138,7 @@ export default function PayInputSubText({
                   color: colors.text.action.primary,
                   cursor: 'pointer',
                   padding: '0.5rem 0',
+                  fontWeight: 500,
                 }}
               >
                 buy {tokenText} on exchange

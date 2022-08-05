@@ -648,9 +648,6 @@ msgstr "Подключенный кошелек не авторизован"
 msgid "Contract address: {0}"
 msgstr "Адрес контракта: {0}"
 
-msgid "Contribute to unlock an NFT reward."
-msgstr ""
-
 msgid "Contribution threshold"
 msgstr ""
 
@@ -2530,9 +2527,6 @@ msgid "Unlock successful. Results will be indexed in a few moments."
 msgstr ""
 
 msgid "Unlock veNFT"
-msgstr ""
-
-msgid "Unlockable NFT rewards"
 msgstr ""
 
 msgid "Unlocking this staking position will burn your NFT and return ${tokenSymbolDisplayText}."

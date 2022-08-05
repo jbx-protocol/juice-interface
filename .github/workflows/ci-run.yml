@@ -61,7 +61,7 @@ jobs:
         run: 'yarn i18n:lint'
 
       - name: Lint translation source files
-        run: './scripts/lint-translations.sh'
+        run: ./scripts/lint-translations.sh ${{ github.base_ref }}
 
   compile:
     name: Compile Typescript

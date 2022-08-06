@@ -1,33 +1,48 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
-import { Checkbox, Descriptions, Form, Modal, Space } from 'antd'
-import { useForm } from 'antd/lib/form/Form'
+import { Checkbox, Descriptions, Form, Input, Modal, Space } from 'antd'
+import { useForm, useWatch } from 'antd/lib/form/Form'
 import FormattedAddress from 'components/FormattedAddress'
-import ImageUploader from 'components/inputs/ImageUploader'
-import { emitErrorNotification } from 'utils/notifications'
 import { NetworkContext } from 'contexts/networkContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
-import * as constants from '@ethersproject/constants'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
+import { emitErrorNotification } from 'utils/notifications'
 
+import { usePayV1ProjectTx } from 'hooks/v1/transactor/PayV1ProjectTx'
 import { useContext, useState } from 'react'
-import { V1CurrencyName } from 'utils/v1/currency'
 import { formattedNum, formatWad } from 'utils/formatNumber'
 import { weightedRate } from 'utils/math'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
+import { V1CurrencyName } from 'utils/v1/currency'
 import {
   decodeFundingCycleMetadata,
   fundingCycleRiskCount,
   getUnsafeV1FundingCycleProperties,
 } from 'utils/v1/fundingCycle'
-import { usePayV1ProjectTx } from 'hooks/v1/transactor/PayV1ProjectTx'
 
-import { MemoFormInput } from 'components/inputs/Pay/MemoFormInput'
+import Callout from 'components/Callout'
 import Paragraph from 'components/Paragraph'
 import ProjectRiskNotice from 'components/ProjectRiskNotice'
-import Callout from 'components/Callout'
+
+import Sticker from 'components/icons/Sticker'
+import { FormImageUploader } from 'components/inputs/FormImageUploader'
+import { AttachStickerModal } from 'components/modals/AttachStickerModal'
+import { StickerSelection } from 'components/v2/V2Project/V2PayButton/V2PayForm/StickerSelection'
+
+import { buildPaymentMemo } from 'utils/buildPaymentMemo'
+
+import { ThemeContext } from 'contexts/themeContext'
 
 import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
+import { ProjectPreferences } from 'constants/v1/projectPreferences'
+
+export interface V1PayFormType {
+  memo?: string
+  stickerUrls?: string[]
+  uploadedImage?: string
+  preferUnstaked?: boolean
+}
 
 export default function V1ConfirmPayOwnerModal({
   visible,
@@ -42,10 +57,17 @@ export default function V1ConfirmPayOwnerModal({
   onCancel?: VoidFunction
   payButtonText: string
 }) {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
   const [loading, setLoading] = useState<boolean>()
-  const [preferUnstaked, setPreferUnstaked] = useState<boolean>(false)
 
-  const [form] = useForm()
+  const [form] = useForm<V1PayFormType>()
+
+  const [attachStickerModalVisible, setAttachStickerModalVisible] =
+    useState<boolean>(false)
+
+  const stickerUrls = useWatch('stickerUrls', form)
 
   const { userAddress, onSelectWallet } = useContext(NetworkContext)
   const { tokenSymbol, tokenAddress, currentFC, metadata } =
@@ -54,11 +76,21 @@ export default function V1ConfirmPayOwnerModal({
 
   const payProjectTx = usePayV1ProjectTx()
 
+  const canAddMoreStickers =
+    (stickerUrls ?? []).length < ProjectPreferences.MAX_IMAGES_PAYMENT_MEMO
+
   const usdAmount = converter.weiToUsd(weiAmount)
 
   async function pay() {
     if (!weiAmount) return
     await form.validateFields()
+
+    const {
+      memo: textMemo,
+      stickerUrls,
+      uploadedImage,
+      preferUnstaked,
+    } = form.getFieldsValue()
 
     // Prompt wallet connect if no wallet connected
     if (!userAddress && onSelectWallet) {
@@ -66,12 +98,14 @@ export default function V1ConfirmPayOwnerModal({
     }
     setLoading(true)
 
-    const memo = form.getFieldValue('memo')
-
     payProjectTx(
       {
-        note: memo,
-        preferUnstaked,
+        note: buildPaymentMemo({
+          text: textMemo,
+          imageUrl: uploadedImage,
+          stickerUrls,
+        }),
+        preferUnstaked: preferUnstaked ?? false,
         value: weiAmount,
       },
       {
@@ -195,43 +229,87 @@ export default function V1ConfirmPayOwnerModal({
             name="memo"
             label={t`Memo (optional)`}
             className={'antd-no-number-handler'}
-            extra={t`Add an on-chain memo to this payment.`}
+            style={{ marginBottom: 0 }}
           >
-            <MemoFormInput />
+            <Form.Item
+              name="memo"
+              extra={t`Add an on-chain memo to this payment.`}
+              style={{ marginBottom: 0 }}
+            >
+              <Input.TextArea
+                placeholder={t`WAGMI!`}
+                maxLength={256}
+                onPressEnter={e => e.preventDefault()} // prevent new lines in memo
+                showCount
+                autoSize
+              />
+            </Form.Item>
+            <div
+              style={{
+                fontSize: '.8rem',
+                position: 'absolute',
+                right: 7,
+                top: 7,
+              }}
+            >
+              {
+                <Sticker
+                  style={{
+                    color: colors.text.secondary,
+                    cursor: canAddMoreStickers ? 'pointer' : 'not-allowed',
+                  }}
+                  size={20}
+                  onClick={() => {
+                    canAddMoreStickers
+                      ? setAttachStickerModalVisible(true)
+                      : undefined
+                  }}
+                />
+              }
+            </div>
+            <Form.Item name="stickerUrls">
+              <StickerSelection />
+            </Form.Item>
           </Form.Item>
 
-          <Form.Item>
-            <ImageUploader
-              text={t`Add image`}
-              onSuccess={url => {
-                if (!url) return
-                const memo = form.getFieldValue('memo') || ''
-                form.setFieldsValue({
-                  memo: memo ? memo + ' ' + url : url,
-                })
-              }}
-            />
+          <Form.Item name="uploadedImage">
+            <FormImageUploader text={t`Add image`} />
           </Form.Item>
           {hasIssuedTokens && (
-            <Form.Item label={t`Receive ERC-20`}>
-              <Space align="start">
-                <Checkbox
-                  style={{ padding: 20 }}
-                  checked={preferUnstaked}
-                  onChange={e => setPreferUnstaked(e.target.checked)}
-                />
-                <label htmlFor="preferUnstaked">
-                  <Trans>
-                    Check this to mint {tokenSymbol} ERC-20 to your wallet.
-                    Leave unchecked to have your token balance tracked by
-                    Juicebox, saving gas on this transaction. You can always
-                    claim your ERC-20 tokens later.
-                  </Trans>
-                </label>
-              </Space>
+            <Form.Item
+              name="preferUnstaked"
+              valuePropName="checked"
+              extra={
+                <Trans>
+                  Check this to mint {tokenSymbol} ERC-20 to your wallet. Leave
+                  unchecked to have your token balance tracked by Juicebox,
+                  saving gas on this transaction. You can always claim your
+                  ERC-20 tokens later.
+                </Trans>
+              }
+            >
+              <Checkbox>
+                <Trans>Receive ERC-20</Trans>
+              </Checkbox>
             </Form.Item>
           )}
         </Form>
+        <AttachStickerModal
+          visible={attachStickerModalVisible}
+          onClose={() => setAttachStickerModalVisible(false)}
+          onSelect={sticker => {
+            if (typeof window === 'undefined') {
+              return
+            }
+            const url = new URL(`${window.location.origin}${sticker.filepath}`)
+            const urlString = url.toString()
+            const existingStickerUrls = (form.getFieldValue('stickerUrls') ??
+              []) as string[]
+            form.setFieldsValue({
+              stickerUrls: existingStickerUrls.concat(urlString),
+            })
+          }}
+        />
       </Space>
     </Modal>
   )

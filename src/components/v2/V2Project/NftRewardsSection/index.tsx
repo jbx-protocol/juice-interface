@@ -1,10 +1,13 @@
-import { Space } from 'antd'
+import { Col, Row } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { NftRewardTier } from 'models/v2/nftRewardTier'
 import { useContext, useEffect, useState } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { getNftRewardTier } from 'utils/v2/nftRewards'
+import { t, Trans } from '@lingui/macro'
+import SectionHeader from 'components/SectionHeader'
+import { ThemeContext } from 'contexts/themeContext'
 
 import { RewardTier } from './RewardTier'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
@@ -16,6 +19,9 @@ export function NftRewardsSection({
   payAmountETH: string
   onPayAmountChange: (payAmount: string) => void
 }) {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
   const {
     nftRewards: { CIDs, rewardTiers, loading: nftsLoading },
   } = useContext(V2ProjectContext)
@@ -41,38 +47,57 @@ export function NftRewardsSection({
 
   if (!CIDs || CIDs.length < 1 || !nftRewardsEnabled) return null
 
+  const loading = nftsLoading || (CIDs.length && !rewardTiers?.length)
+
   const renderRewardTier = (rewardTier: NftRewardTier, index: number) => {
     const isSelected = index === selectedIndex
+    const notEligible = rewardTier.contributionFloor > parseFloat(payAmountETH)
     if (!rewardTiers) return
 
     const nextRewardTier = rewardTiers[index + 1]
 
     return (
-      <RewardTier
-        key={`${rewardTier.contributionFloor}-${rewardTier.name}`}
-        rewardTier={rewardTier}
-        rewardTierUpperLimit={nextRewardTier?.contributionFloor}
-        isSelected={isSelected}
-        onClick={() => {
-          setSelectedIndex(isSelected ? undefined : index)
-          onPayAmountChange(
-            isSelected ? '0' : rewardTier.contributionFloor.toString(),
-          )
-        }}
-      />
+      <Col md={8} xs={8}>
+        {!loading ? (
+          <RewardTier
+            key={`${rewardTier.contributionFloor}-${rewardTier.name}`}
+            rewardTier={rewardTier}
+            rewardTierUpperLimit={nextRewardTier?.contributionFloor}
+            isSelected={isSelected}
+            notEligible={notEligible}
+            onClick={() => {
+              setSelectedIndex(isSelected ? undefined : index)
+              onPayAmountChange(
+                isSelected ? '0' : rewardTier.contributionFloor.toString(),
+              )
+            }}
+          />
+        ) : (
+          <LoadingOutlined />
+        )}
+      </Col>
     )
   }
 
-  const loading = nftsLoading || (CIDs.length && !rewardTiers?.length)
-
   return (
-    <div>
-      <div style={{ fontSize: '0.7rem', marginBottom: '0.35rem' }}>
-        + NFT {loading && <LoadingOutlined />}
-      </div>
-      {!loading && rewardTiers && (
-        <Space size="middle">{rewardTiers.map(renderRewardTier)}</Space>
-      )}
+    <div style={{ width: 'unset' }}>
+      <SectionHeader
+        text={t`Unlockable NFT rewards`}
+        style={{ marginBottom: 0 }}
+      />
+      <span
+        style={{
+          color: colors.text.tertiary,
+          fontSize: '0.69rem',
+        }}
+      >
+        <Trans>Contribute to unlock an NFT reward.</Trans>
+      </span>
+      {rewardTiers ? (
+        <Row style={{ marginTop: '15px' }} gutter={24}>
+          {rewardTiers.map(renderRewardTier)}
+        </Row>
+      ) : null}
     </div>
   )
 }

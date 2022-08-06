@@ -9,7 +9,7 @@ import CurrencySymbol from '../CurrencySymbol'
 import ETHToUSD from './ETHToUSD'
 import { PRECISION_ETH } from 'constants/currency'
 
-const MIN_AMOUNT = parseWad(0.00001)
+const MIN_AMOUNT = parseWad(0.0001)
 
 /**
  * Render a given amount formatted as ETH. Displays USD amount in a tooltip on hover.
@@ -41,12 +41,26 @@ export default function ETHAmount({
     ? Math.min(decimalsCount, PRECISION_ETH)
     : precision
 
-  const formattedETHAmount = amount?.lte(MIN_AMOUNT)
-    ? '~0'
-    : formatWad(amount, {
-        precision: precisionAdjusted,
-        padEnd,
-      })
+  if (amount?.lte(MIN_AMOUNT)) {
+    return (
+      <Tooltip
+        title={
+          <span>
+            <CurrencySymbol currency="ETH" />
+            {formatWad(amount, { precision: 8 })}
+          </span>
+        }
+      >
+        <CurrencySymbol currency="ETH" />
+        ~0
+      </Tooltip>
+    )
+  }
+
+  const formattedETHAmount = formatWad(amount, {
+    precision: precisionAdjusted,
+    padEnd,
+  })
 
   return (
     <Tooltip title={<ETHToUSD ethAmount={amount} />}>

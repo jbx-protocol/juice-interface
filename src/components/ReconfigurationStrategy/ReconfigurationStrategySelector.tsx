@@ -1,7 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { Form, Input, Space } from 'antd'
 import * as constants from '@ethersproject/constants'
-import { NetworkContext } from 'contexts/networkContext'
 import { useContext, useState } from 'react'
 import { ThemeContext } from 'contexts/themeContext'
 
@@ -13,6 +12,7 @@ import { createCustomStrategy } from 'utils/ballot'
 
 import ExternalLink from '../ExternalLink'
 import FormItemWarningText from '../FormItemWarningText'
+import { readNetwork } from 'constants/networks'
 
 const CUSTOM_STRATEGY_INDEX = -1
 
@@ -23,14 +23,13 @@ function CustomStrategyInput({
   value?: string
   onChange: (address: string) => void
 }) {
-  const { signerNetwork } = useContext(NetworkContext)
   return (
     <div>
       <Form.Item
         extra={
           <Trans>
             The address of any smart contract deployed on{' '}
-            {signerNetwork ?? 'mainnet'} that implements{' '}
+            {readNetwork.name ?? 'mainnet'} that implements{' '}
             <ExternalLink href="https://github.com/jbx-protocol/juice-contracts-v1/blob/main/contracts/FundingCycles.sol">
               this interface
             </ExternalLink>

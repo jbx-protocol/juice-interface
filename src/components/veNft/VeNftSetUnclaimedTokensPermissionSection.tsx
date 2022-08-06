@@ -1,17 +1,17 @@
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
-import { NetworkContext } from 'contexts/networkContext'
 import { useUnclaimedTokensPermissionTx } from 'hooks/veNft/transactor/VeNftUnclaimedTokenPermissions'
-import { useContext, useState } from 'react'
+import { useWallet } from 'hooks/Wallet'
+import { useState } from 'react'
 
 const VeNftSetUnclaimedTokensPermissionSection = () => {
-  const { userAddress, onSelectWallet } = useContext(NetworkContext)
+  const { checkNetworkSupported, checkWalletConnected } = useWallet()
   const [loading, setLoading] = useState(false)
   const unclaimedTokensPermissionTx = useUnclaimedTokensPermissionTx()
 
   async function unclaimedTokensPermission() {
-    if (!userAddress && onSelectWallet) {
-      onSelectWallet()
+    if (!checkNetworkSupported() || !checkWalletConnected()) {
+      return
     }
 
     setLoading(true)

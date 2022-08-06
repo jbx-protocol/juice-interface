@@ -1,8 +1,8 @@
-import RainbowKit from '@rainbow-me/rainbowkit'
+import { ConnectButton as RainbowKitConnectButton } from '@rainbow-me/rainbowkit'
 
 export default function ConnectButton() {
   return (
-    <RainbowKit.ConnectButton
+    <RainbowKitConnectButton
       accountStatus="avatar"
       chainStatus="icon"
       showBalance

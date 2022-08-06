@@ -3,7 +3,6 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { useContext, useEffect, useMemo, useState } from 'react'
 import { ThemeContext } from 'contexts/themeContext'
 import { useExtendLockTx } from 'hooks/veNft/transactor/VeNftExtendLockTx'
-import { NetworkContext } from 'contexts/networkContext'
 import { t, Trans } from '@lingui/macro'
 import { emitSuccessNotification } from 'utils/notifications'
 import { VeNftToken } from 'models/subgraph-entities/v2/venft-token'
@@ -11,6 +10,7 @@ import { VeNftToken } from 'models/subgraph-entities/v2/venft-token'
 import TransactionModal from 'components/TransactionModal'
 import LockDurationSelectInput from 'components/veNft/formControls/LockDurationSelectInput'
 import { VeNftContext } from 'contexts/v2/veNftContext'
+import { useWallet } from 'hooks/Wallet'
 
 type VeNftExtendLockModalProps = {
   visible: boolean
@@ -29,7 +29,7 @@ const VeNftExtendLockModal = ({
   onCancel,
   onCompleted,
 }: VeNftExtendLockModalProps) => {
-  const { userAddress, onSelectWallet } = useContext(NetworkContext)
+  const { checkNetworkSupported, checkWalletConnected } = useWallet()
   const { tokenId } = token
   const { lockDurationOptions } = useContext(VeNftContext)
   const [form] = Form.useForm<ExtendLockFormProps>()
@@ -59,8 +59,8 @@ const VeNftExtendLockModal = ({
   const extendLockTx = useExtendLockTx()
 
   const extendLock = async () => {
-    if (!userAddress && onSelectWallet) {
-      onSelectWallet()
+    if (!checkNetworkSupported() || !checkWalletConnected()) {
+      return
     }
 
     const lockDuration = form.getFieldValue('lockDuration')

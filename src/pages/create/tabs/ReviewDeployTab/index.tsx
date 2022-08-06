@@ -7,7 +7,7 @@ import ExternalLink from 'components/ExternalLink'
 import { useContext } from 'react'
 import { ThemeContext } from 'contexts/themeContext'
 
-import { DeployProjectButton } from './DeployProjectButton'
+import { DeployProjectButton } from './DeployProjectButton/DeployProjectButton'
 import ProjectDetailsSection from './ProjectDetailsSection'
 import FundingSummarySection from './FundingSummarySection'
 import NftSummarySection from './NftSummarySection'

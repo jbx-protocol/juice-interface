@@ -10,16 +10,16 @@ import {
   TxNftArg,
   useLaunchProjectWithNftsTx,
 } from 'hooks/v2/transactor/LaunchProjectWithNftsTx'
-import { useCallback, useContext, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { uploadProjectMetadata } from 'utils/ipfs'
 import { TransactionReceipt } from '@ethersproject/providers'
 import { BigNumber } from '@ethersproject/bignumber'
-import { NetworkContext } from 'contexts/networkContext'
 import { emitErrorNotification } from 'utils/notifications'
 
 import TransactionModal from 'components/TransactionModal'
 
 import { useAppDispatch } from 'hooks/AppDispatch'
+import { useWallet } from 'hooks/Wallet'
 
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 
@@ -56,7 +56,8 @@ export function DeployProjectWithNftsButton({ form }: { form: FormInstance }) {
   const launchProjectWithNftsTx = useLaunchProjectWithNftsTx()
   const router = useRouter()
 
-  const { userAddress, onSelectWallet } = useContext(NetworkContext)
+  const { isConnected, checkNetworkSupported, checkWalletConnected } =
+    useWallet()
 
   const {
     projectMetadata: { name: projectName },
@@ -200,8 +201,8 @@ export function DeployProjectWithNftsButton({ form }: { form: FormInstance }) {
       return
     }
 
-    if (!userAddress) {
-      return onSelectWallet?.()
+    if (!checkNetworkSupported() || !checkWalletConnected()) {
+      return
     }
 
     return deployProject()
@@ -218,7 +219,7 @@ export function DeployProjectWithNftsButton({ form }: { form: FormInstance }) {
         loading={deployLoading}
       >
         <span>
-          {userAddress ? (
+          {isConnected ? (
             <Trans>Deploy project to {readNetwork.name}</Trans>
           ) : (
             <Trans>Connect wallet to deploy</Trans>

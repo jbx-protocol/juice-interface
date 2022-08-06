@@ -4,7 +4,6 @@ import { Head } from 'components/common'
 import { WagmiConfig } from 'wagmi'
 import { appInfo, chains, wagmiClient } from 'utils/onboard'
 import { RainbowKitProvider } from '@rainbow-me/rainbowkit'
-import { NetworkProvider } from 'providers/NetworkProvider'
 
 import '../styles/antd.css'
 import '../styles/index.scss'
@@ -17,9 +16,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       <Head />
       <WagmiConfig client={wagmiClient}>
         <RainbowKitProvider appInfo={appInfo} chains={chains}>
-          <NetworkProvider>
-            <Component {...pageProps} />
-          </NetworkProvider>
+          <Component {...pageProps} />
         </RainbowKitProvider>
       </WagmiConfig>
     </>

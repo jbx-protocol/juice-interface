@@ -1,7 +1,7 @@
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { V2UserContext } from 'contexts/v2/userContext'
 import { useContext } from 'react'
-import { NetworkContext } from 'contexts/networkContext'
+import { useSigner } from 'wagmi'
 
 import { TransactorInstance } from '../../Transactor'
 
@@ -10,13 +10,13 @@ export function useSetV1ProjectIdTx(): TransactorInstance<{
 }> {
   const { transactor, contracts } = useContext(V2UserContext)
   const { projectId } = useContext(V2ProjectContext)
-  const { signingProvider } = useContext(NetworkContext)
+  const { data: signer } = useSigner()
 
   return ({ v1ProjectId }, txOpts) => {
     if (
       !transactor ||
       !projectId ||
-      !signingProvider ||
+      !signer ||
       !contracts?.JBV1TokenPaymentTerminal
     ) {
       txOpts?.onDone?.()

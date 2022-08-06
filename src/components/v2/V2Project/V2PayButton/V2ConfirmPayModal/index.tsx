@@ -3,10 +3,10 @@ import { t, Trans } from '@lingui/macro'
 import { Descriptions, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import FormattedAddress from 'components/FormattedAddress'
-import { NetworkContext } from 'contexts/networkContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import TooltipLabel from 'components/TooltipLabel'
+import { useWallet } from 'hooks/Wallet'
 
 import { NftRewardTier } from 'models/v2/nftRewardTier'
 
@@ -72,7 +72,8 @@ export function V2ConfirmPayModal({
   onSuccess?: VoidFunction
   onCancel?: VoidFunction
 }) {
-  const { userAddress, onSelectWallet } = useContext(NetworkContext)
+  const { userAddress, checkNetworkSupported, checkWalletConnected } =
+    useWallet()
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -139,8 +140,8 @@ export function V2ConfirmPayModal({
     const txBeneficiary = beneficiary ? beneficiary : userAddress
 
     // Prompt wallet connect if no wallet connected
-    if (!userAddress && onSelectWallet) {
-      onSelectWallet()
+    if (!checkNetworkSupported() || !checkWalletConnected()) {
+      return
     }
     setLoading(true)
 

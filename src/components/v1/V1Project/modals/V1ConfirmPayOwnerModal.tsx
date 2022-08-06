@@ -5,7 +5,6 @@ import { useForm } from 'antd/lib/form/Form'
 import FormattedAddress from 'components/FormattedAddress'
 import ImageUploader from 'components/inputs/ImageUploader'
 import { emitErrorNotification } from 'utils/notifications'
-import { NetworkContext } from 'contexts/networkContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import * as constants from '@ethersproject/constants'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
@@ -21,6 +20,7 @@ import {
   getUnsafeV1FundingCycleProperties,
 } from 'utils/v1/fundingCycle'
 import { usePayV1ProjectTx } from 'hooks/v1/transactor/PayV1ProjectTx'
+import { useWallet } from 'hooks/Wallet'
 
 import { MemoFormInput } from 'components/inputs/Pay/MemoFormInput'
 import Paragraph from 'components/Paragraph'
@@ -47,7 +47,8 @@ export default function V1ConfirmPayOwnerModal({
 
   const [form] = useForm()
 
-  const { userAddress, onSelectWallet } = useContext(NetworkContext)
+  const { userAddress, checkNetworkSupported, checkWalletConnected } =
+    useWallet()
   const { tokenSymbol, tokenAddress, currentFC, metadata } =
     useContext(V1ProjectContext)
   const converter = useCurrencyConverter()
@@ -61,8 +62,8 @@ export default function V1ConfirmPayOwnerModal({
     await form.validateFields()
 
     // Prompt wallet connect if no wallet connected
-    if (!userAddress && onSelectWallet) {
-      onSelectWallet()
+    if (!checkNetworkSupported() || !checkWalletConnected()) {
+      return
     }
     setLoading(true)
 

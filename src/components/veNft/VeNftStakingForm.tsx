@@ -6,7 +6,6 @@ import { useContext, useMemo, useState, useEffect } from 'react'
 import { useForm, useWatch } from 'antd/lib/form/Form'
 import { BigNumber } from '@ethersproject/bignumber'
 
-import { NetworkContext } from 'contexts/networkContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import useERC20BalanceOf from 'hooks/v2/contractReader/ERC20BalanceOf'
@@ -21,6 +20,7 @@ import VotingPowerDisplayInput from 'components/veNft/formControls/VotingPowerDi
 import VeNftCarousel from 'components/veNft/VeNftCarousel'
 import StakingTokenRangesModal from 'components/veNft/VeNftStakingTokenRangesModal'
 import ConfirmStakeModal from 'components/veNft/VeNftConfirmStakeModal'
+import { useWallet } from 'hooks/Wallet'
 
 import { reloadWindow } from 'utils/windowUtils'
 import { parseWad } from 'utils/formatNumber'
@@ -50,7 +50,8 @@ interface VeNftStakingFormProps {
 const VeNftStakingForm = ({
   tokenSymbolDisplayText,
 }: VeNftStakingFormProps) => {
-  const { userAddress, onSelectWallet } = useContext(NetworkContext)
+  const { userAddress, checkNetworkSupported, checkWalletConnected } =
+    useWallet()
   const { tokenAddress } = useContext(V2ProjectContext)
   const { lockDurationOptions, resolverAddress, baseImagesHash, variants } =
     useContext(VeNftContext)
@@ -105,8 +106,8 @@ const VeNftStakingForm = ({
 
   const approveTx = useERC20Approve(tokenAddress)
   const approve = async () => {
-    if (!userAddress && onSelectWallet) {
-      onSelectWallet()
+    if (!checkNetworkSupported() || !checkWalletConnected()) {
+      return
     }
 
     setTokenApprovalLoading(true)

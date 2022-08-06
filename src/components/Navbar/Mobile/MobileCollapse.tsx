@@ -1,15 +1,12 @@
 import { useState, useContext, useEffect } from 'react'
-import { Collapse, Button, Menu } from 'antd'
+import { Collapse, Menu } from 'antd'
 import { Header } from 'antd/lib/layout/layout'
-
-import { Trans } from '@lingui/macro'
 
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 
 import { MenuOutlined } from '@ant-design/icons'
 
 import { ThemeContext } from 'contexts/themeContext'
-import { NetworkContext } from 'contexts/networkContext'
 
 import FeedbackFormButton from 'components/FeedbackFormButton'
 
@@ -28,7 +25,6 @@ export default function MobileCollapse() {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const { signingProvider, onLogOut } = useContext(NetworkContext)
 
   const isNavExpanded = activeKey === NAV_EXPANDED_KEY
 
@@ -113,11 +109,6 @@ export default function MobileCollapse() {
             }}
           >
             <ConnectButton />
-            {signingProvider ? (
-              <Button onClick={onLogOut} style={{ marginTop: 10 }} block>
-                <Trans>Disconnect</Trans>
-              </Button>
-            ) : null}
           </div>
         </CollapsePanel>
       </Collapse>

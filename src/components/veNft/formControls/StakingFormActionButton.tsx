@@ -1,8 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
-import { NetworkContext } from 'contexts/networkContext'
-import { useContext } from 'react'
-
+import { useWallet } from 'hooks/Wallet'
 interface StakingFormActionButtonProps {
   hasAdequateApproval: boolean
   tokenApprovalLoading: boolean
@@ -16,12 +14,12 @@ const StakingFormActionButton = ({
   onApproveButtonClick,
   onReviewButtonClick,
 }: StakingFormActionButtonProps) => {
-  const { userAddress, onSelectWallet } = useContext(NetworkContext)
+  const { isConnected, connect } = useWallet()
 
   const renderActionButton = () => {
-    if (!userAddress && onSelectWallet) {
+    if (!isConnected) {
       return (
-        <Button block onClick={() => onSelectWallet()}>
+        <Button block onClick={connect}>
           <Trans>Connect Wallet</Trans>
         </Button>
       )

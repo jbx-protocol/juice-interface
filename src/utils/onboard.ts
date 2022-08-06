@@ -20,7 +20,7 @@ const dappId = process.env.NEXT_PUBLIC_BLOCKNATIVE_API_KEY
 
 // TODO
 
-export const { chains, provider, webSocketProvider } = configureChains(
+const { chains, provider, webSocketProvider } = configureChains(
   [readNetwork.name === NetworkName.mainnet ? chain.mainnet : chain.rinkeby],
   [
     infuraProvider({ apiKey: process.env.NEXT_PUBLIC_INFURA_ID }),
@@ -28,7 +28,7 @@ export const { chains, provider, webSocketProvider } = configureChains(
   ],
 )
 
-export const appInfo = { appName }
+const appInfo = { appName }
 
 export const { wallets } = getDefaultWallets({
   appName,
@@ -50,8 +50,8 @@ export const connectors = connectorsForWallets([
 export const wagmiClient = createClient({
   autoConnect: true,
   connectors,
-  provider,
-  webSocketProvider,
+  provider: provider,
+  webSocketProvider: webSocketProvider,
 })
 
 // TODO(odd-amphora): Add support for Formatic, Portis, etc. if requested.
@@ -106,3 +106,5 @@ export function initOnboard(subscriptions: Subscriptions, darkMode: boolean) {
     ],
   })
 }
+
+export { chains, appInfo }

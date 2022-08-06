@@ -16,7 +16,7 @@ import * as Sentry from '@sentry/browser'
 import { t } from '@lingui/macro'
 import { windowOpen } from 'utils/windowUtils'
 
-import { useWalletConnect } from './WalletConnect'
+import { useWallet } from './Wallet'
 
 type TransactorCallback = (e?: TransactionEvent, signer?: Signer) => void
 
@@ -49,7 +49,7 @@ export function useTransactor({
 }): Transactor | undefined {
   const { data: signer } = useSigner()
   const { chain } = useNetwork()
-  const { connect, isConnected } = useWalletConnect()
+  const { checkNetworkSupported, checkWalletConnected } = useWallet()
 
   const { isDarkMode } = useContext(ThemeContext)
 
@@ -60,8 +60,7 @@ export function useTransactor({
       args: any[], // eslint-disable-line @typescript-eslint/no-explicit-any
       options?: TransactorOptions,
     ) => {
-      if (!isConnected) {
-        connect()
+      if (!checkNetworkSupported() || !checkWalletConnected()) {
         options?.onDone?.()
         return false
       }
@@ -185,6 +184,13 @@ export function useTransactor({
         return false
       }
     },
-    [isConnected, signer, chain, isDarkMode, connect, gasPrice],
+    [
+      checkNetworkSupported,
+      checkWalletConnected,
+      signer,
+      chain,
+      isDarkMode,
+      gasPrice,
+    ],
   )
 }

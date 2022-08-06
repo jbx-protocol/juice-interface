@@ -6,7 +6,8 @@ import { Button, Col, Drawer, DrawerProps, Row, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import Modal from 'antd/lib/modal/Modal'
 import V1Project from 'components/v1/V1Project'
-import { NetworkContext } from 'contexts/networkContext'
+import { useNetwork } from 'wagmi'
+import { useWallet } from 'hooks/Wallet'
 import {
   V1ProjectContext,
   V1ProjectContextType,
@@ -72,7 +73,6 @@ import ConfirmDeployProject from './ConfirmDeployProject'
 
 import { getBallotStrategyByAddress } from 'constants/v1/ballotStrategies/getBallotStrategiesByAddress'
 import { drawerStyle } from 'constants/styles/drawerStyle'
-import { readNetwork } from 'constants/networks'
 
 const terminalVersion: V1TerminalVersion = '1.1'
 
@@ -86,7 +86,8 @@ export default function V1CreatePage() {
 
 function V1Create() {
   const router = useRouter()
-  const { userAddress, onSelectWallet } = useContext(NetworkContext)
+  const { chain } = useNetwork()
+  const { userAddress, connect, isConnected } = useWallet()
   const { colors, radii } = useContext(ThemeContext).theme
   const [currentStep, setCurrentStep] = useState<number>()
   const [viewedSteps, setViewedSteps] = useState<number[]>([])
@@ -786,11 +787,13 @@ function V1Create() {
         <Modal
           visible={deployProjectModalVisible}
           okText={
-            userAddress
-              ? t`Deploy project on ${readNetwork.name}`
+            isConnected
+              ? chain
+                ? t`Deploy project on ${chain.name}`
+                : t`Deploy project`
               : t`Connect wallet to deploy`
           }
-          onOk={userAddress ? deployProject : onSelectWallet}
+          onOk={isConnected ? deployProject : connect}
           confirmLoading={loadingCreate}
           width={800}
           onCancel={() => setDeployProjectModalVisible(false)}

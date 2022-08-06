@@ -515,6 +515,9 @@ msgstr ""
 msgid "Change ENS name"
 msgstr ""
 
+msgid "Change networks to deploy"
+msgstr ""
+
 msgid "Change project handle"
 msgstr ""
 
@@ -776,6 +779,9 @@ msgstr ""
 msgid "Deploy payment address contract"
 msgstr ""
 
+msgid "Deploy project"
+msgstr ""
+
 msgid "Deploy project on {0}"
 msgstr ""
 
@@ -822,9 +828,6 @@ msgid "Discard"
 msgstr ""
 
 msgid "Disclose any details to your contributors before they pay your project."
-msgstr ""
-
-msgid "Disconnect"
 msgstr ""
 
 msgid "Discord"

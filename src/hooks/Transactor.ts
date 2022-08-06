@@ -62,10 +62,14 @@ export function useTransactor({
     ) => {
       if (!isConnected) {
         connect()
+        options?.onDone?.()
         return false
       }
 
-      if (!signer || !chain) return false
+      if (!signer || !chain) {
+        options?.onDone?.()
+        return false
+      }
 
       const notifyOpts: InitOptions = {
         dappId: process.env.NEXT_PUBLIC_BLOCKNATIVE_API_KEY,

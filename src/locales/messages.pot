@@ -1061,7 +1061,7 @@ msgstr ""
 msgid "Fund and operate your thing, your way."
 msgstr ""
 
-msgid "Fund anything. Grow together."
+msgid "Fund anything."
 msgstr ""
 
 msgid "Funding"
@@ -1286,6 +1286,9 @@ msgstr ""
 msgid "Juicebox V2 project with ID {0}"
 msgstr ""
 
+msgid "Juicebox gives you the tools to automate your funding so you can focus on building."
+msgstr ""
+
 msgid "Juicebox isn't guaranteed to be free of bugs or exploits. Before spending money, do your own research. <0>Ask questions</0>, check out the <1>code</1>, and understand the <2>risks</2>!"
 msgstr ""
 
@@ -1296,9 +1299,6 @@ msgid "Juicebox project"
 msgstr ""
 
 msgid "Juicebox projects use <0>ENS names</0> as handles. Setting a handle involves 2 transactions:"
-msgstr ""
-
-msgid "Juicebox puts the fun back in funding so you can focus on building."
 msgstr ""
 
 msgid "Last paid"
@@ -2258,7 +2258,7 @@ msgstr ""
 msgid "The percentage this individual receives of the overall {reservedRate}% reserved token allocation"
 msgstr ""
 
-msgid "The programmable funding protocol. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."
+msgid "The programmable funding protocol for builders and creators. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."
 msgstr ""
 
 msgid "The project owner can add and remove payment terminals."

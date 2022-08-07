@@ -1,11 +1,11 @@
 import { Trans } from '@lingui/macro'
 
-export const HeroHeading = () => <Trans>Fund anything. Grow together. </Trans>
+export const HeroHeading = () => <Trans>Fund anything.</Trans>
 
 export const HeroSubheading = () => (
   <Trans>
-    The programmable funding protocol. Light enough for a group of friends,
-    powerful enough for a global network of anons.{' '}
+    The programmable funding protocol for builders and creators. Light enough
+    for a group of friends, powerful enough for a global network of anons.{' '}
     <a
       href="/p/juicebox"
       className="text-primary hover-text-decoration-underline"
@@ -26,7 +26,8 @@ export const TopProjectsHeading = () => (
 
 export const TopProjectsSubheadingOne = () => (
   <Trans>
-    Juicebox puts the fun back in funding so you can focus on building.
+    Juicebox gives you the tools to automate your funding so you can focus on
+    building.
   </Trans>
 )
 

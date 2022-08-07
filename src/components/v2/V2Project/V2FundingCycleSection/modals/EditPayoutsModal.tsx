@@ -21,6 +21,8 @@ import { NetworkContext } from 'contexts/networkContext'
 import { MAX_DISTRIBUTION_LIMIT, splitPercentFrom } from 'utils/v2/math'
 import { formatWad } from 'utils/formatNumber'
 import Callout from 'components/Callout'
+import { UploadOutlined } from '@ant-design/icons'
+import TooltipLabel from 'components/TooltipLabel'
 
 import CurrencySymbol from 'components/CurrencySymbol'
 
@@ -90,19 +92,26 @@ const DistributionLimitHeader = ({
         title={false}
         active
       >
-        <b>
-          <Trans>Cycle #{fundingCycle?.number.toString()} -</Trans>{' '}
-          {distributionLimitIsInfinite ? (
-            t`No limit (infinite)`
-          ) : (
+        <TooltipLabel
+          tip={<Trans>Funding Cycle #{fundingCycle?.number.toString()} </Trans>}
+          label={
             <>
-              <Trans>
-                Distribution limit: <CurrencySymbol currency={currency} />
-                {formatWad(distributionLimit)}
-              </Trans>
+              {distributionLimitIsInfinite ? (
+                <Trans>No limit (infinite)</Trans>
+              ) : distributionLimit?.eq(0) ? (
+                <Trans>Zero Distribution Limit</Trans>
+              ) : (
+                <Trans>
+                  <CurrencySymbol currency={currency} />
+
+                  <Trans>
+                    {formatWad(distributionLimit)} Distribution Limit
+                  </Trans>
+                </Trans>
+              )}
             </>
-          )}
-        </b>
+          }
+        />
       </Skeleton>
     </div>
   )
@@ -269,7 +278,11 @@ export const EditPayoutsModal = ({
         onCancel={onCancel}
         width={720}
       >
-        <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+        <Space
+          direction="vertical"
+          size="middle"
+          style={{ width: '100%', marginBottom: '2rem' }}
+        >
           <div>
             <Trans>
               Reconfigure payouts as percentages of your distribution limit.
@@ -279,12 +292,19 @@ export const EditPayoutsModal = ({
             <Trans>Changes to payouts will take effect immediately.</Trans>
           </Callout>
         </Space>
-        <DistributionLimitHeader style={{ marginTop: 32, marginBottom: 16 }} />
+
         <Space
           direction="vertical"
           style={{ width: '100%', minHeight: 0 }}
-          size="large"
+          size="middle"
         >
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <DistributionLimitHeader />
+
+            <a>
+              <UploadOutlined /> Upload CSV
+            </a>
+          </div>
           <Space style={{ width: '100%' }} direction="vertical" size="small">
             {editableSplits.map((split, index) =>
               renderSplitCard(split, index),
@@ -305,6 +325,7 @@ export const EditPayoutsModal = ({
               <Trans>Sum of percentages cannot exceed 100%.</Trans>
             </span>
           )}
+
           <div
             style={{
               display: 'flex',
@@ -323,6 +344,7 @@ export const EditPayoutsModal = ({
               <Trans>Total: {totalSplitsPercentage.toFixed(2)}%</Trans>
             </div>
           </div>
+
           <Button
             type="dashed"
             onClick={() => {

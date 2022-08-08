@@ -2,6 +2,7 @@ import { Trans } from '@lingui/macro'
 import { Col, Image, Row } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import Paragraph from 'components/Paragraph'
+import { NFT_IMAGE_SIDE_LENGTH } from 'components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftUpload'
 import { ThemeContext } from 'contexts/themeContext'
 import { useAppSelector } from 'hooks/AppSelector'
 import { useContext } from 'react'
@@ -43,8 +44,8 @@ export default function NftSummarySection() {
             <Image
               src={rewardTier.imageUrl ?? '/assets/banana-od.png'}
               alt={rewardTier.name}
-              height="90px"
-              width="90px"
+              height={NFT_IMAGE_SIDE_LENGTH}
+              width={NFT_IMAGE_SIDE_LENGTH}
               style={{ objectFit: 'cover' }}
             />
           </Col>

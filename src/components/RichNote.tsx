@@ -47,7 +47,7 @@ export default function RichNote({
                 key={i}
                 src={link}
                 style={{ marginTop: '0.5rem', padding: '0.5rem' }}
-                maxHeight={6rem}
+                maxHeight="6rem"
                 height="auto"
                 width="100%"
               />

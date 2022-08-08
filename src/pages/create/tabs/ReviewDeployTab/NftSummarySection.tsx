@@ -58,12 +58,20 @@ export default function NftSummarySection() {
             }}
           >
             <h3>{rewardTier.name}</h3>
-            <p style={{ marginBottom: '10px' }}>
+            <p style={{ marginBottom: 0 }}>
               <Trans>
                 <strong>Contribution floor:</strong>{' '}
                 {rewardTier.contributionFloor} ETH
               </Trans>
             </p>
+            {rewardTier.maxSupply && (
+              <span>
+                <Trans>
+                  <strong>Max. supply:</strong>{' '}
+                  <span>{rewardTier.maxSupply}</span>
+                </Trans>
+              </span>
+            )}
             {rewardTier.externalLink && (
               <span>
                 <Trans>

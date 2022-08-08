@@ -11,6 +11,7 @@ import {
 import { Trans } from '@lingui/macro'
 
 import NftRewardTierModal from './NftRewardTierModal'
+import { NFT_IMAGE_SIDE_LENGTH } from './NftUpload'
 
 export default function NftRewardTierCard({
   rewardTier,
@@ -110,11 +111,11 @@ export default function NftRewardTierCard({
           <Image
             src={rewardTier.imageUrl}
             alt={rewardTier.name}
-            height={'90px'}
+            height={NFT_IMAGE_SIDE_LENGTH}
+            width={NFT_IMAGE_SIDE_LENGTH}
             style={{
               display: imageLoading ? 'none' : 'unset',
               objectFit: 'cover',
-              maxWidth: '90px',
             }}
             onLoad={() => setImageLoading(false)}
             onClick={e => e.stopPropagation()}

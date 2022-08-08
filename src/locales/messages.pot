@@ -1214,6 +1214,9 @@ msgstr ""
 msgid "Image file"
 msgstr ""
 
+msgid "Image will be cropped to a square in thumbnail previews on the Juicebox app."
+msgstr ""
+
 msgid "In Juicebox"
 msgstr ""
 

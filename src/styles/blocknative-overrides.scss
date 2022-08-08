@@ -38,11 +38,13 @@
 
   // Select wallet, connect button
   button.bn-onboard-custom.bn-onboard-icon-button {
-    border: 1px solid var(--stroke-action-secondary);
+    border: 1px solid var(--stroke-tertiary);
     color: var(--text-primary);
-    opacity: 0.5;
+    transition: background-color 250ms;
+    
     &:hover {
-      opacity: 1;
+      color: var(--text-primary);
+      background-color: var(--background-l2);
     }
   }
 

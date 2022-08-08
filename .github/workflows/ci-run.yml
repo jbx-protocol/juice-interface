@@ -40,37 +40,6 @@ jobs:
       - name: Tests with yarn
         run: yarn test
 
-  lint-translations:
-    name: Lint translation source files
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - uses: actions/cache@v2
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-
-      - name: Install packages
-        run: yarn install
-
-      - name: Lint translations template
-        run: 'yarn i18n:lint'
-
-      - uses: tj-actions/changed-files@v24.1
-        id: changed-files
-        with:
-          files: '**/*.po'
-
-      - name: Check for modified translation source files
-        if: steps.changed-files.outputs.any_changed == 'true'
-        run: |
-          echo "🍎 PRs should not change .po files. Only changes to the messages.pot are allowed."
-          exit 1
-
   compile:
     name: Compile Typescript
     runs-on: ubuntu-latest

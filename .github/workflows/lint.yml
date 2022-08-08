@@ -1,0 +1,52 @@
+name: Lint
+
+on:
+  pull_request:
+    types:
+      - ready_for_review
+      - reopened
+      - opened
+      - synchronize
+    branches:
+      - main
+
+  # manual trigger from Github UI - Action tab
+  workflow_dispatch:
+
+env:
+  NEXT_PUBLIC_INFURA_NETWORK: mainnet
+  PRE_RENDER_INFURA_ID: ${{ secrets.PRE_RENDER_INFURA_ID }}
+  GRAPHQL_SCHEMA_SUBGRAPH_URL: ${{ secrets.GRAPHQL_SCHEMA_SUBGRAPH_URL }}
+
+jobs:
+  lint-translations:
+    name: Lint translation source files
+    runs-on: ubuntu-latest
+    if: github.repository == 'octo-org/octo-repo-prod'
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Install packages
+        run: yarn install
+
+      - name: Lint translations template
+        run: 'yarn i18n:lint'
+
+      - uses: tj-actions/changed-files@v24.1
+        id: changed-files
+        with:
+          files: '**/*.po'
+
+      - name: Check for modified translation source files
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: |
+          echo "🍎 PRs should not change .po files. Only changes to the messages.pot are allowed."
+          exit 1

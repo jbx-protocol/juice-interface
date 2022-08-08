@@ -8,6 +8,7 @@ import { getNftRewardTier } from 'utils/v2/nftRewards'
 import { t, Trans } from '@lingui/macro'
 import SectionHeader from 'components/SectionHeader'
 import { ThemeContext } from 'contexts/themeContext'
+import useMobile from 'hooks/Mobile'
 
 import { RewardTier } from './RewardTier'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
@@ -25,6 +26,8 @@ export function NftRewardsSection({
   const {
     nftRewards: { CIDs, rewardTiers, loading: nftsLoading },
   } = useContext(V2ProjectContext)
+
+  const isMobile = useMobile()
 
   const [selectedIndex, setSelectedIndex] = useState<number>()
 
@@ -94,7 +97,7 @@ export function NftRewardsSection({
         <Trans>Contribute to unlock an NFT reward.</Trans>
       </span>
       {rewardTiers ? (
-        <Row style={{ marginTop: '15px' }} gutter={24}>
+        <Row style={{ marginTop: '15px' }} gutter={isMobile ? 8 : 24}>
           {rewardTiers.map(renderRewardTier)}
         </Row>
       ) : null}

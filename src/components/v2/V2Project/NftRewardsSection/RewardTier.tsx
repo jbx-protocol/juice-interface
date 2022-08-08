@@ -27,7 +27,8 @@ export function RewardTier({
     ? colors.background.l0
     : colors.background.l2
 
-  const imageHeight = '146px'
+  // Images render as squares in thumbnails
+  const imageSideLength = '146px'
 
   function RewardIcon() {
     const iconStyle: CSSProperties = {
@@ -91,6 +92,7 @@ export function RewardTier({
           ? `2px solid ${colors.stroke.action.primary}`
           : 'rgba(0,0,0,0)',
         transition: 'box-shadow 0.25s',
+        height: '100%',
       }}
       onClick={onClick}
       role="button"
@@ -103,7 +105,7 @@ export function RewardTier({
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          height: imageHeight,
+          // height: imageSideLength,
         }}
       >
         <img
@@ -111,8 +113,8 @@ export function RewardTier({
           src={rewardTier.imageUrl}
           style={{
             objectFit: 'cover',
-            width: '100%',
-            maxHeight: imageHeight,
+            width: imageSideLength,
+            height: imageSideLength,
             filter: isSelected ? 'unset' : 'brightness(50%)',
           }}
         />
@@ -125,6 +127,10 @@ export function RewardTier({
           width: '100%',
           padding: '8px 10px 5px',
           borderTop: `1px solid ${colors.stroke.tertiary}`,
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center,',
         }}
       >
         <h5

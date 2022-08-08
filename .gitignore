@@ -26,6 +26,7 @@ mnemonic.txt
 
 # i18n
 src/locales/**/*.js
+src/locales/en/messages.po
 
 # compiled artifacts
 src/styles/antd.css

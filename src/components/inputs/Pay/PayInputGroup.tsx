@@ -66,11 +66,13 @@ export default function PayInputGroup({
 
   return (
     <>
-      {isErrorField && (
-        <span style={{ color: colors.text.failure, fontSize: '0.7rem' }}>
-          <Trans>Pay amount must be greater than 0.</Trans>
-        </span>
-      )}
+      <div style={{ height: '22px' }}>
+        {isErrorField ? (
+          <span style={{ color: colors.text.failure, fontSize: '0.7rem' }}>
+            <Trans>Pay amount must be greater than 0.</Trans>
+          </span>
+        ) : null}
+      </div>
       <div
         style={{
           display: 'flex',
@@ -97,19 +99,6 @@ export default function PayInputGroup({
                 disabled={disabled}
               />
             }
-            formItemProps={{
-              extra: (
-                <PayInputSubText
-                  payInCurrency={payInCurrency ?? ETH}
-                  amount={payAmountETH}
-                  reservedRate={reservedRate}
-                  weight={weight}
-                  tokenSymbol={tokenSymbol}
-                  tokenAddress={tokenAddress}
-                  weightingFn={weightingFn}
-                />
-              ),
-            }}
           />
         </div>
 
@@ -121,6 +110,15 @@ export default function PayInputGroup({
           disabled={disabled}
         />
       </div>
+      <PayInputSubText
+        payInCurrency={payInCurrency ?? ETH}
+        amount={payAmountETH}
+        reservedRate={reservedRate}
+        weight={weight}
+        tokenSymbol={tokenSymbol}
+        tokenAddress={tokenAddress}
+        weightingFn={weightingFn}
+      />
     </>
   )
 }

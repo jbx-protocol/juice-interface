@@ -10,7 +10,6 @@ import { Dropdown, Menu } from 'antd'
 import EtherscanLink from 'components/EtherscanLink'
 import CopyTextButton from 'components/CopyTextButton'
 import useMobile from 'hooks/Mobile'
-
 import Link from 'next/link'
 
 import Balance from './Balance'
@@ -42,8 +41,10 @@ export default function Wallet({ userAddress }: { userAddress: string }) {
           justifyContent: 'space-between',
         }}
       >
-        <Link href="projects?tab=myprojects">
-          <Trans>My projects</Trans>
+        <Link href="/projects?tab=myprojects">
+          <a>
+            <Trans>My projects</Trans>
+          </a>
         </Link>
         <CrownOutlined />
       </Menu.Item>

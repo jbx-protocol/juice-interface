@@ -18,6 +18,14 @@ export default function ETHToUSD({
     padEnd: true,
   })
 
+  if (usdAmount?.eq(0)) {
+    return (
+      <span>
+        <CurrencySymbol currency="USD" />0
+      </span>
+    )
+  }
+
   if (usdAmount?.gt(0)) {
     return (
       <span>

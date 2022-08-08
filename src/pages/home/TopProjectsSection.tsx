@@ -13,6 +13,11 @@ import Link from 'next/link'
 import useMobile from 'hooks/Mobile'
 
 import { SectionHeading } from './SectionHeading'
+import {
+  TopProjectsHeading,
+  TopProjectsSubheadingOne,
+  TopProjectsSubheadingTwo,
+} from './strings'
 
 const SmallProjectCardMobile = ({
   project,
@@ -198,7 +203,7 @@ export function TopProjectsSection() {
         <Space direction="vertical" style={{ width: '100%' }} size="large">
           <div>
             <SectionHeading>
-              <Trans>Fund and operate your thing, your way.</Trans>
+              <TopProjectsHeading />
             </SectionHeading>
 
             <p
@@ -209,10 +214,7 @@ export function TopProjectsSection() {
                 color: colors.text.primary,
               }}
             >
-              <Trans>
-                Juicebox puts the fun back in funding so you can focus on
-                building.
-              </Trans>
+              <TopProjectsSubheadingOne />
             </p>
             <p
               style={{
@@ -221,16 +223,7 @@ export function TopProjectsSection() {
                 marginBottom: '0.8rem',
               }}
             >
-              <Trans>
-                Join{' '}
-                <a
-                  href="/projects"
-                  className="text-primary hover-text-decoration-underline"
-                >
-                  hundreds of projects
-                </a>{' '}
-                sippin' the Juice.
-              </Trans>
+              <TopProjectsSubheadingTwo />
             </p>
           </div>
 

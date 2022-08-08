@@ -28,7 +28,7 @@ export default function OwnedNFTSection({
   const hasOverflow = Boolean(primaryTerminalCurrentOverflow?.gt(0))
 
   return (
-    <>
+    <div>
       {userTokens && userTokens.length > 0 ? (
         <>
           <div style={{ ...shadowCard(theme), padding: 25, marginBottom: 10 }}>
@@ -56,6 +56,6 @@ export default function OwnedNFTSection({
           </h3>
         </div>
       )}
-    </>
+    </div>
   )
 }

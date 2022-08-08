@@ -19,8 +19,9 @@ import {
 
 import Sticker from 'components/icons/Sticker'
 
+import { StickerSelection } from 'components/Project/StickerSelection'
+
 import { ProjectPreferences } from 'constants/v2/projectPreferences'
-import { StickerSelection } from './StickerSelection'
 
 export interface V2PayFormType {
   memo?: string

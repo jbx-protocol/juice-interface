@@ -28,7 +28,7 @@ import ProjectRiskNotice from 'components/ProjectRiskNotice'
 import Sticker from 'components/icons/Sticker'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
 import { AttachStickerModal } from 'components/modals/AttachStickerModal'
-import { StickerSelection } from 'components/v2/V2Project/V2PayButton/V2PayForm/StickerSelection'
+import { StickerSelection } from 'components/Project/StickerSelection'
 
 import { buildPaymentMemo } from 'utils/buildPaymentMemo'
 

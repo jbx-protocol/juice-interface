@@ -10,7 +10,7 @@ import {
 } from 'models/v2/fundingCycle'
 
 import { GroupedSplits, SplitGroup } from 'models/v2/splits'
-import { ContractNftRewardTier } from 'models/v2/nftRewardTier'
+import { ContractNftRewardTier, NftRewardTier } from 'models/v2/nftRewardTier'
 
 import { BigNumber } from '@ethersproject/bignumber'
 import { parseEther } from '@ethersproject/units'
@@ -26,7 +26,7 @@ const DEFAULT_MUST_START_AT_OR_AFTER = '1' // start immediately
 const DEFAULT_MEMO = ''
 
 // Maps cid to contributionFloor
-export type TxNftArg = { [cid: string]: number }
+export type TxNftArg = { [cid: string]: NftRewardTier }
 
 function getJBDeployTieredNFTRewardDataSourceData({
   collectionName,
@@ -37,15 +37,21 @@ function getJBDeployTieredNFTRewardDataSourceData({
 }: {
   collectionName: string
   collectionSymbol: string
-  nftRewards: { [cid: string]: number }
+  nftRewards: TxNftArg
   ownerAddress: string
   directory: string
 }) {
   const tiersArg: ContractNftRewardTier[] = Object.keys(nftRewards).map(cid => {
-    const contributionFloorWei = parseEther(nftRewards[cid].toString())
+    const contributionFloorWei = parseEther(
+      nftRewards[cid].contributionFloor.toString(),
+    )
+    const maxSupply = nftRewards[cid].maxSupply
+    const remainingQuantity = maxSupply
+      ? BigNumber.from(maxSupply)
+      : BigNumber.from(MaxUint48)
     return {
       contributionFloor: contributionFloorWei,
-      remainingQuantity: BigNumber.from(MaxUint48),
+      remainingQuantity,
       initialQuantity: BigNumber.from(0),
       tokenUri: `https://${IPFS_GATEWAY_HOSTNAME}/ipfs/${cid}`,
       votingUnits: BigNumber.from(0),

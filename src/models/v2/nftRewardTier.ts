@@ -3,7 +3,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 // How we store reward tiers for use around the app
 export type NftRewardTier = {
   contributionFloor: number // ETH amount
-  maxSupply: number
+  maxSupply: number | undefined
   imageUrl: string // link to ipfs
   name: string
   externalLink: string | undefined

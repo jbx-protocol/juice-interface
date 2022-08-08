@@ -10,9 +10,11 @@ import ContributionFloorFormItem from './ContributionFloorFormItem'
 import NftUpload from './NftUpload'
 
 import { NFT_REWARDS_EXPLAINATION } from '.'
+import MaxSupplyFormItem from './MaxSupplyFormItem'
 
 export type NftFormFields = {
   contributionFloor: number
+  maxSupply: number | undefined
   name: string
   externalLink: string
   description: string
@@ -42,6 +44,7 @@ export default function NftRewardTierModal({
 
     const newTier = {
       contributionFloor: parseFloat(nftForm.getFieldValue('contributionFloor')),
+      maxSupply: nftForm.getFieldValue('maxSupply'),
       imageUrl: nftForm.getFieldValue('imageUrl'),
       name: nftForm.getFieldValue('name'),
       externalLink: nftForm.getFieldValue('externalLink'),
@@ -60,6 +63,7 @@ export default function NftRewardTierModal({
     if (rewardTier) {
       nftForm.setFieldsValue({
         imageUrl: rewardTier.imageUrl,
+        maxSupply: rewardTier.maxSupply,
         name: rewardTier.name,
         externalLink: rewardTier.externalLink,
         description: rewardTier.description,
@@ -78,8 +82,6 @@ export default function NftRewardTierModal({
     >
       <p>{NFT_REWARDS_EXPLAINATION}</p>
       <Form layout="vertical" form={nftForm}>
-        <ContributionFloorFormItem form={nftForm} />
-        <NftUpload form={nftForm} />
         <Form.Item
           name={'name'}
           label={
@@ -89,6 +91,12 @@ export default function NftRewardTierModal({
         >
           <Input type="string" autoComplete="off" />
         </Form.Item>
+        <ContributionFloorFormItem form={nftForm} />
+        <NftUpload form={nftForm} />
+        <MaxSupplyFormItem
+          value={nftForm.getFieldValue('maxSupply')}
+          onChange={value => nftForm.setFieldsValue({ maxSupply: value })}
+        />
         <Form.Item
           name={'externalLink'}
           label={

@@ -410,7 +410,7 @@ export default function DistributionSplitModal({
         ) : null}
 
         {/* Only show amount input if project distribution limit is not infinite */}
-        {distributionLimit || distributionType === 'both' ? (
+        {distributionLimit && distributionType === 'both' ? (
           <Form.Item
             className="ant-form-item-extra-only"
             label={t`Distribution`}

@@ -98,6 +98,9 @@ msgstr ""
 msgid "<0/>{0}{1} distributed"
 msgstr ""
 
+msgid "<0><1/>{0}</0> Distribution Limit"
+msgstr ""
+
 msgid "<0><1/>{netDistributionAmount}</0> after {feePercentage}% JBX fee"
 msgstr ""
 
@@ -210,6 +213,9 @@ msgid "<0>Website:</0> <1>{0}</1>"
 msgstr ""
 
 msgid "<0>Your unclaimed {tokenSymbol} tokens:</0> {0}"
+msgstr ""
+
+msgid "<0>Zero</0> Distribution Limit"
 msgstr ""
 
 msgid "<0>{tokenSymbol} ERC-20 address:</0> <1/>"
@@ -740,9 +746,6 @@ msgstr ""
 msgid "Cycle #{0}"
 msgstr ""
 
-msgid "Cycle #{0} -"
-msgstr ""
-
 msgid "DAOs"
 msgstr ""
 
@@ -911,9 +914,6 @@ msgstr ""
 msgid "Distribution limit, duration and payouts"
 msgstr ""
 
-msgid "Distribution limit: <0/>{0}"
-msgstr ""
-
 msgid "Do I have to make my project open source to use Juicebox as its business model?"
 msgstr ""
 
@@ -1074,6 +1074,9 @@ msgid "Fund anything."
 msgstr ""
 
 msgid "Funding"
+msgstr ""
+
+msgid "Funding Cycle #{0}"
 msgstr ""
 
 msgid "Funding cycle"
@@ -2586,6 +2589,9 @@ msgid "Updates you make to this section will only be applied to <0>upcoming</0> 
 msgstr ""
 
 msgid "Upload"
+msgstr ""
+
+msgid "Upload CSV"
 msgstr ""
 
 msgid "Upload an image"
